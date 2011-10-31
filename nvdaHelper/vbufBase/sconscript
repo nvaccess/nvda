@@ -3,17 +3,13 @@ Import([
 	'remoteLib',
 ])
 
-debugObj=env.Object("./debug","../common/debug.cpp")
-
 vbufBaseStaticLib=env.StaticLibrary(
 	target="vbufBase_static",
 	source=[
 		"storage.cpp",
 		"utils.cpp",
-		"lock.cpp",
 		"backend.cpp",
-		debugObj,
-		remoteLib[1] if not env['nvdaHelperDebug'] else remoteLib[2],
+		remoteLib[1] if 'symbols' not in env['nvdaHelperDebugFlags'] else remoteLib[2],
 	],
 )
 

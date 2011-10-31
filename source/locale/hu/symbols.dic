@@ -1,0 +1,90 @@
+﻿#locale/hu/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	pont	all	always
+! sentence ending	felkiáltójel	all	always
+? sentence ending	kérdőjel	all	always
+; phrase ending	pontosvessző	most	always
+: phrase ending	kettőspont	most	always
+decimal point		none	always
+in-word '	aposztrof	all	norep
+negative number	minusz	none	norep
+
+# Whitespace
+\0	üres	char
+\t	tab
+\n	újsor	char
+\f	oldaltörés	none
+\r	sor vége	char
+ 	szóköz	char
+ 	szóköz	char	# no-break space
+
+# Standard punctuation/symbols
+!	felkiáltójel	all
+"	macskaköröm	most
+\#	kettőskereszt	most
+$	dollár	some
+£	font	some
+€	euro	some
+%	százalék	some
+&	és	some
+'	aposztrof	all
+(	balzárójel	most
+)	jobbzárójel	most
+*	csillag	most
++	plusz	most
+,	vessző	all	always
+-	minusz	most
+.	pont	some
+/	per	some
+:	kettőspont	most
+;	pontosvessző	most
+<	kisebb	most
+>	nagyobb	most
+=	egyenlő	most
+?	kérdőjel	all
+@	kukac	some
+[	nyitószögletes	most
+]	zárószögletes	most
+\\	bekszles	most
+^	fölfelényíl	most
+_	aláhúzás	most
+`	tompa ékezet	most
+{	kezdőkapcsos	most
+}	végkapcsos	most
+|	függőlegesvonal	most
+~	tilde	most
+
+# Other characters
+•	listaelem	some
+…	pont pont pont	all	never	# Unicode harompont (egy karakter!!!)
+...	pont pont pont	all	never	# harom normal ASCII pont egymas utan!!!
+	listaelem	some
+“	bal idézőjel	most
+”	jobb idézőjel	most
+‘	bal aposztrof	most
+’	jobb aposztrof	most
+–	gondolatjel	most
+—	kötőjel	most
+●	kör	most
+¨	diaeresis	most

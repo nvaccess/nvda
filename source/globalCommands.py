@@ -8,6 +8,7 @@ import time
 import tones
 import keyboardHandler
 import mouseHandler
+import eventHandler
 import controlTypes
 import api
 import textInfos
@@ -30,6 +31,7 @@ import ui
 import braille
 import inputCore
 import virtualBuffers
+import characterProcessing
 from baseObject import ScriptableObject
 
 class GlobalCommands(ScriptableObject):
@@ -43,11 +45,14 @@ class GlobalCommands(ScriptableObject):
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
 	def script_toggleCurrentAppSleepMode(self,gesture):
-		curApp=api.getFocusObject().appModule
+		curFocus=api.getFocusObject()
+		curApp=curFocus.appModule
 		if curApp.sleepMode:
 			curApp.sleepMode=False
 			ui.message(_("Sleep mode off"))
+			eventHandler.executeEvent("gainFocus",curFocus)
 		else:
+			eventHandler.executeEvent("loseFocus",curFocus)
 			curApp.sleepMode=True
 			ui.message(_("Sleep mode on"))
 	script_toggleCurrentAppSleepMode.__doc__=_("Toggles  sleep mode on and off for  the active application.")
@@ -188,15 +193,17 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("speak command keys")+" "+onOff)
 	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
 
-	def script_toggleSpeakPunctuation(self,gesture):
-		if config.conf["speech"]["speakPunctuation"]:
-			onOff=_("off")
-			config.conf["speech"]["speakPunctuation"]=False
+	def script_cycleSpeechSymbolLevel(self,gesture):
+		curLevel = config.conf["speech"]["symbolLevel"]
+		for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS:
+			if level > curLevel:
+				break
 		else:
-			onOff=_("on")
-			config.conf["speech"]["speakPunctuation"]=True
-		ui.message(_("speak punctuation")+" "+onOff)
-	script_toggleSpeakPunctuation.__doc__=_("Toggles on and off the speaking of punctuation. When on NVDA will say the names of punctuation symbols, when off it will be up to the synthesizer as to how it speaks punctuation")
+			level = characterProcessing.SYMLVL_NONE
+		name = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[level]
+		config.conf["speech"]["symbolLevel"] = level
+		ui.message(_("symbol level %s") % name)
+	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
 
 	def script_moveMouseToNavigatorObject(self,gesture):
 		obj=api.getNavigatorObject() 
@@ -238,7 +245,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(pos)
 		else:
 			speech.speakMessage(_("No flat review for this object"))
-	script_navigatorObject_moveToFlatReviewAtObjectPosition.__doc__=_("Switches to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object")
+	script_navigatorObject_moveToFlatReviewAtObjectPosition.__doc__=_("Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object")
 
 	def script_navigatorObject_moveToObjectAtFlatReviewPosition(self,gesture):
 		pos=api.getReviewPosition()
@@ -321,9 +328,20 @@ class GlobalCommands(ScriptableObject):
 		obj=api.getNavigatorObject()
 		if not isinstance(obj,NVDAObject):
 			speech.speakMessage(_("no focus"))
-		obj.setFocus()
-		speech.speakMessage(_("move focus"))
-	script_navigatorObject_moveFocus.__doc__=_("Sets the keyboard focus to the navigator object")
+		if scriptHandler.getLastScriptRepeatCount()==0:
+			ui.message(_("move focus"))
+			obj.setFocus()
+		else:
+			review=api.getReviewPosition()
+			try:
+				review.updateCaret()
+			except NotImplementedError:
+				ui.message(_("no caret"))
+				return
+			info=review.copy()
+			info.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+	script_navigatorObject_moveFocus.__doc__=_("Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor")
 
 	def script_navigatorObject_parent(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -337,7 +355,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No parents"))
-	script_navigatorObject_parent.__doc__=_("Sets the navigator object to the parent of the object it is currently on and speaks it")
+	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
 
 	def script_navigatorObject_next(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -351,7 +369,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No next"))
-	script_navigatorObject_next.__doc__=_("Sets the navigator object to the object next to the one it is currently on and speaks it")
+	script_navigatorObject_next.__doc__=_("Moves the navigator object to the next object")
 
 	def script_navigatorObject_previous(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -365,7 +383,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No previous"))
-	script_navigatorObject_previous.__doc__=_("Sets the navigator object to the object previous to the one it is currently on and speaks it")
+	script_navigatorObject_previous.__doc__=_("Moves the navigator object to the previous object")
 
 	def script_navigatorObject_firstChild(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -379,7 +397,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No children"))
-	script_navigatorObject_firstChild.__doc__=_("Sets the navigator object to the first child object of the one it is currently on and speaks it")
+	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object it contains")
 
 	def script_navigatorObject_doDefaultAction(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -422,12 +440,13 @@ class GlobalCommands(ScriptableObject):
 	def script_review_currentLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
-		if scriptHandler.getLastScriptRepeatCount()==0:
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 		else:
-			speech.speakSpelling(info._get_text())
-	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled")
-
+			speech.spellTextInfo(info,useCharacterDescriptions=bool(scriptCount>1))
+	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions.")
+ 
 	def script_review_nextLine(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
@@ -463,11 +482,12 @@ class GlobalCommands(ScriptableObject):
 	def script_review_currentWord(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_WORD)
-		if scriptHandler.getLastScriptRepeatCount()==0:
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if scriptCount==0:
 			speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
 		else:
-			speech.speakSpelling(info._get_text())
-	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. If this key is pressed twice, the word will be spelled")
+			speech.spellTextInfo(info,useCharacterDescriptions=bool(scriptCount>1))
+	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions")
 
 	def script_review_nextWord(self,gesture):
 		info=api.getReviewPosition().copy()
@@ -512,16 +532,19 @@ class GlobalCommands(ScriptableObject):
 	def script_review_currentCharacter(self,gesture):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_CHARACTER)
-		if scriptHandler.getLastScriptRepeatCount()==0:
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+		elif scriptCount==1:
+			speech.spellTextInfo(info,useCharacterDescriptions=True)
 		else:
 			try:
-				c = ord(info._get_text())
+				c = ord(info.text)
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
 			except:
 				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
-	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. If this key is pressed twice, ascii and hexadecimal values are spoken for the character")
+	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal")
 
 	def script_review_nextCharacter(self,gesture):
 		lineInfo=api.getReviewPosition().copy()
@@ -552,18 +575,6 @@ class GlobalCommands(ScriptableObject):
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 
-	def script_review_moveCaretHere(self,gesture):
-		review=api.getReviewPosition()
-		try:
-			review.updateCaret()
-		except NotImplementedError:
-			ui.message(_("no caret"))
-			return
-		info=review.copy()
-		info.expand(textInfos.UNIT_LINE)
-		speech.speakTextInfo(info,reason=speech.REASON_CARET)
-	script_review_moveCaretHere.__doc__=_("Moves the system caret to the position of the review cursor , in the current navigator object")
-
 	def script_speechMode(self,gesture):
 		curMode=speech.speechMode
 		speech.speechMode=speech.speechMode_talk
@@ -592,7 +603,8 @@ class GlobalCommands(ScriptableObject):
 		if parent:
 			parent.treeInterceptor.rootNVDAObject.setFocus()
 			import eventHandler
-			eventHandler.executeEvent("gainFocus",parent.treeInterceptor.rootNVDAObject)
+			import wx
+			wx.CallLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
 	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
 
 	def script_toggleVirtualBufferPassThrough(self,gesture):
@@ -641,14 +653,7 @@ class GlobalCommands(ScriptableObject):
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,
 		}
-		o=api.getFocusObject()
-		v=o.treeInterceptor
-		if v and not v.passThrough:
-			o=v
-		try:
-			info=o.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError, RuntimeError):
-			info=o.makeTextInfo(textInfos.POSITION_FIRST)
+		info=api.getReviewPosition()
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
 		for field in info.getTextWithFields(formatConfig):
@@ -659,7 +664,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("No formatting information"))
 			return
 		ui.message(text)
-	script_reportFormatting.__doc__ = _("Reports formatting info for the current cursor position within a document")
+	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document")
 
 	def script_reportCurrentFocus(self,gesture):
 		focusObject=api.getFocusObject()
@@ -674,16 +679,28 @@ class GlobalCommands(ScriptableObject):
 
 	def script_reportStatusLine(self,gesture):
 		obj = api.getStatusBar()
-		if not obj:
-			ui.message(_("no status bar found"))
+		found=False
+		if obj:
+			text = api.getStatusBarText(obj)
+			api.setNavigatorObject(obj)
+			found=True
+		else:
+			info=api.getForegroundObject().flatReviewPosition
+			if info:
+				info.expand(textInfos.UNIT_STORY)
+				info.collapse(True)
+				info.expand(textInfos.UNIT_LINE)
+				text=info.text
+				info.collapse()
+				api.setReviewPosition(info)
+				found=True
+		if not found:
+			ui.message(_("No status line found"))
 			return
-		text = api.getStatusBarText(obj)
-
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			ui.message(text)
 		else:
 			speech.speakSpelling(text)
-		api.setNavigatorObject(obj)
 	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it")
 
 	def script_toggleMouseTracking(self,gesture):
@@ -716,8 +733,7 @@ class GlobalCommands(ScriptableObject):
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
 		if obj:
-			speech.speakObject(obj,reason=speech.REASON_QUERY)
-			obj.speakDescendantObjects()
+			sayAllHandler.readObjects(obj)
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
 	def script_test_navigatorDisplayModelText(self,gesture):
@@ -812,36 +828,36 @@ class GlobalCommands(ScriptableObject):
 		ui.message(message)
 	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
 
-	def script_activateGeneralSettingsDialog(self,gesture):
-		mainFrame.onGeneralSettingsCommand(None)
+	def script_activateGeneralSettingsDialog(self, gesture):
+		wx.CallAfter(mainFrame.onGeneralSettingsCommand, None)
 	script_activateGeneralSettingsDialog.__doc__ = _("Shows the NVDA general settings dialog")
 
-	def script_activateSynthesizerDialog(self,gesture):
-		mainFrame.onSynthesizerCommand(None)
+	def script_activateSynthesizerDialog(self, gesture):
+		wx.CallAfter(mainFrame.onSynthesizerCommand, None)
 	script_activateSynthesizerDialog.__doc__ = _("Shows the NVDA synthesizer dialog")
 
-	def script_activateVoiceDialog(self,gesture):
-		mainFrame.onVoiceCommand(None)
+	def script_activateVoiceDialog(self, gesture):
+		wx.CallAfter(mainFrame.onVoiceCommand, None)
 	script_activateVoiceDialog.__doc__ = _("Shows the NVDA voice settings dialog")
 
-	def script_activateKeyboardSettingsDialog(self,gesture):
-		mainFrame.onKeyboardSettingsCommand(None)
+	def script_activateKeyboardSettingsDialog(self, gesture):
+		wx.CallAfter(mainFrame.onKeyboardSettingsCommand, None)
 	script_activateKeyboardSettingsDialog.__doc__ = _("Shows the NVDA keyboard settings dialog")
 
-	def script_activateMouseSettingsDialog(self,gesture):
-		mainFrame.onMouseSettingsCommand(None)
+	def script_activateMouseSettingsDialog(self, gesture):
+		wx.CallAfter(mainFrame.onMouseSettingsCommand, None)
 	script_activateMouseSettingsDialog.__doc__ = _("Shows the NVDA mouse settings dialog")
 
-	def script_activateObjectPresentationDialog(self,gesture):
-		mainFrame. onObjectPresentationCommand(None)
+	def script_activateObjectPresentationDialog(self, gesture):
+		wx.CallAfter(mainFrame. onObjectPresentationCommand, None)
 	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
 
-	def script_activateVirtualBuffersDialog(self,gesture):
-		mainFrame.onVirtualBuffersCommand(None)
-	script_activateVirtualBuffersDialog.__doc__ = _("Shows the NVDA virtual buffers settings dialog")
+	def script_activateBrowseModeDialog(self, gesture):
+		wx.CallAfter(mainFrame.onBrowseModeCommand, None)
+	script_activateBrowseModeDialog.__doc__ = _("Shows the NVDA browse mode settings dialog")
 
-	def script_activateDocumentFormattingDialog(self,gesture):
-		mainFrame.onDocumentFormattingCommand(None)
+	def script_activateDocumentFormattingDialog(self, gesture):
+		wx.CallAfter(mainFrame.onDocumentFormattingCommand, None)
 	script_activateDocumentFormattingDialog.__doc__ = _("Shows the NVDA document formatting settings dialog")
 
 	def script_saveConfiguration(self,gesture):
@@ -984,7 +1000,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+shift+numpadMinus": "navigatorObject_moveFocus",
 		"kb(laptop):NVDA+shift+backspace": "navigatorObject_moveFocus",
 		"kb:NVDA+numpadDelete": "navigatorObject_currentDimensions",
-		"kb(desktop):NVDA+delete": "navigatorObject_currentDimensions",
+		"kb(laptop):NVDA+delete": "navigatorObject_currentDimensions",
 
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
@@ -1015,8 +1031,6 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+shift+o": "review_endOfLine",
 		"kb:numpadPlus": "review_sayAll",
 		"kb(laptop):NVDA+shift+downArrow": "review_sayAll",
-		"kb:control+numpadMinus": "review_moveCaretHere",
-		"kb(laptop):NVDA+control+backspace": "review_moveCaretHere",
 		"kb:NVDA+f9": "review_markStartForCopy",
 		"kb:NVDA+f10": "review_copy",
 
@@ -1051,7 +1065,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+k": "activateKeyboardSettingsDialog",
 		"kb:NVDA+control+m": "activateMouseSettingsDialog",
 		"kb:NVDA+control+o": "activateObjectPresentationDialog",
-		"kb:NVDA+control+b": "activateVirtualBuffersDialog",
+		"kb:NVDA+control+b": "activateBrowseModeDialog",
 		"kb:NVDA+control+d": "activateDocumentFormattingDialog",
 
 		# Save/reload configuration
@@ -1062,7 +1076,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+2": "toggleSpeakTypedCharacters",
 		"kb:NVDA+3": "toggleSpeakTypedWords",
 		"kb:NVDA+4": "toggleSpeakCommandKeys",
-		"kb:NVDA+p": "toggleSpeakPunctuation",
+		"kb:NVDA+p": "cycleSpeechSymbolLevel",
 		"kb:NVDA+s": "speechMode",
 		"kb(desktop):NVDA+m": "toggleMouseTracking",
 		"kb(laptop):NVDA+shift+m": "toggleMouseTracking",

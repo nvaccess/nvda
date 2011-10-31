@@ -13,13 +13,13 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <cstdio>
-#include <cassert>
 #include <cwchar>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <objbase.h>
 #include <ia2.h>
 #include "nvdaControllerInternal.h"
-#include <common/log.h>
+#include "log.h"
 #include "nvdaHelperRemote.h"
 #include "dllmain.h"
 #include "IA2Support.h"
@@ -50,22 +50,26 @@ IID ia2Iids[]={
 #define IAccessible2ProxyIID IID_IAccessible2
 
 IID _ia2PSClsidBackups[ARRAYSIZE(ia2Iids)]={0};
-BOOL isIA2Installed=FALSE;
+bool isIA2Installed=FALSE;
 HINSTANCE IA2DllHandle=0;
 DWORD IA2RegCooky=0;
-BOOL isIA2Initialized=FALSE;
+HANDLE IA2UIThreadHandle=NULL;
+DWORD IA2UIThreadID=0;
+HANDLE IA2UIThreadUninstalledEvent=NULL;
+UINT wm_uninstallIA2Support=0;
+bool isIA2Initialized=FALSE;
 
-BOOL installIA2Support() {
+bool installIA2Support() {
 	LPFNGETCLASSOBJECT IA2Dll_DllGetClassObject;
 	int i;
 	int res;
-	if(isIA2Installed) return TRUE;
+	if(isIA2Installed) return FALSE;
 	if((IA2DllHandle=CoLoadLibrary(IA2DllPath,FALSE))==NULL) {
 		LOG_ERROR(L"CoLoadLibrary failed");
 		return FALSE;
 	}
 	IA2Dll_DllGetClassObject=(LPFNGETCLASSOBJECT)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllGetClassObject");
-	assert(IA2Dll_DllGetClassObject); //IAccessible2 proxy dll must have this function
+	nhAssert(IA2Dll_DllGetClassObject); //IAccessible2 proxy dll must have this function
 	IUnknown* ia2ClassObjPunk=NULL;
 	if((res=IA2Dll_DllGetClassObject(IAccessible2ProxyIID,IID_IUnknown,(LPVOID*)&ia2ClassObjPunk))!=S_OK) {
 		LOG_ERROR(L"Error calling DllGetClassObject, code "<<res);
@@ -89,36 +93,29 @@ BOOL installIA2Support() {
 	return TRUE;
 }
 
-BOOL uninstallIA2Support() {
+bool uninstallIA2Support() {
 	int i;
 	LPFNDLLCANUNLOADNOW IA2Dll_DllCanUnloadNow;
-	if(isIA2Installed) {
+	if(!isIA2Installed)
+		return FALSE;
 	for(i=0;i<ARRAYSIZE(ia2Iids);++i) {
-			CoRegisterPSClsid(ia2Iids[i],_ia2PSClsidBackups[i]);
-		}
-		CoRevokeClassObject(IA2RegCooky);
-		IA2Dll_DllCanUnloadNow=(LPFNDLLCANUNLOADNOW)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllCanUnloadNow");
-		assert(IA2Dll_DllCanUnloadNow); //IAccessible2 proxy dll must have this function
-		if(IA2Dll_DllCanUnloadNow()==S_OK) {
-			CoFreeLibrary(IA2DllHandle);
-		}
-		IA2DllHandle=0;
-		isIA2Installed=FALSE;
+		CoRegisterPSClsid(ia2Iids[i],_ia2PSClsidBackups[i]);
 	}
+	CoRevokeClassObject(IA2RegCooky);
+	IA2Dll_DllCanUnloadNow=(LPFNDLLCANUNLOADNOW)GetProcAddress(static_cast<HMODULE>(IA2DllHandle),"DllCanUnloadNow");
+	nhAssert(IA2Dll_DllCanUnloadNow); //IAccessible2 proxy dll must have this function
+	if(IA2Dll_DllCanUnloadNow()==S_OK) {
+		CoFreeLibrary(IA2DllHandle);
+	}
+	IA2DllHandle=0;
+	isIA2Installed=FALSE;
 	return TRUE;
 }
 
-BOOL IA2Support_initialize() {
-	assert(!isIA2Initialized);
+bool IA2Support_initialize() {
+	nhAssert(!isIA2Initialized);
 	wsprintf(IA2DllPath,L"%s\\IAccessible2Proxy.dll",dllDirectory);
 	isIA2Initialized=TRUE;
-	installIA2Support();
-	return TRUE;
-}
-
-BOOL IA2Support_terminate() {
-	assert(isIA2Initialized);
-	uninstallIA2Support();
 	return TRUE;
 }
 
@@ -126,12 +123,25 @@ void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, H
 	if (eventID != EVENT_SYSTEM_FOREGROUND && eventID != EVENT_OBJECT_FOCUS)
 		return;
 	if (installIA2Support()) {
+		IA2UIThreadHandle=OpenThread(SYNCHRONIZE,false,threadID);
+		IA2UIThreadID=threadID;
 		// IA2 support successfully installed, so this hook isn't needed anymore.
 		unregisterWinEventHook(IA2Support_winEventProcHook);
 	}
 }
 
+LRESULT CALLBACK IA2Support_uninstallerHook(int code, WPARAM wParam, LPARAM lParam) {
+	MSG* pmsg=(MSG*)lParam;
+	if(pmsg->message==wm_uninstallIA2Support) {
+		uninstallIA2Support();
+		SetEvent(IA2UIThreadUninstalledEvent);
+	}
+	return 0;
+}
+
 void IA2Support_inProcess_initialize() {
+	if (isIA2Installed)
+		return;
 	// Try to install IA2 support on focus/foreground changes.
 	// This hook will be unregistered by the callback once IA2 support is successfully installed.
 	registerWinEventHook(IA2Support_winEventProcHook);
@@ -140,5 +150,24 @@ void IA2Support_inProcess_initialize() {
 void IA2Support_inProcess_terminate() {
 	// This will do nothing if the hook isn't registered.
 	unregisterWinEventHook(IA2Support_winEventProcHook);
-	uninstallIA2Support();
+	if(!isIA2Installed||!IA2UIThreadHandle) {
+		return;
+	}
+	//Check if the UI thread is still alive, if not there's nothing for us to do
+	if(WaitForSingleObject(IA2UIThreadHandle,0)==0) {
+		return;
+	}
+	//Instruct the UI thread to uninstall IA2
+	IA2UIThreadUninstalledEvent=CreateEvent(NULL,true,false,NULL);
+	registerWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
+	wm_uninstallIA2Support=RegisterWindowMessage(L"wm_uninstallIA2Support");
+	PostThreadMessage(IA2UIThreadID,wm_uninstallIA2Support,0,0);
+	HANDLE waitHandles[2]={IA2UIThreadUninstalledEvent,IA2UIThreadHandle};
+	int res=WaitForMultipleObjects(2,waitHandles,false,10000);
+	if(res!=WAIT_OBJECT_0&&res!=WAIT_OBJECT_0+1) {
+		LOG_DEBUGWARNING(L"WaitForMultipleObjects returned "<<res);
+	}
+	unregisterWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
+	CloseHandle(IA2UIThreadUninstalledEvent);
+	CloseHandle(IA2UIThreadHandle);
 }

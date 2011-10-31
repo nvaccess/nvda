@@ -16,10 +16,24 @@ import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
 from NVDAObjects.behaviors import EditableText, LiveText
+import watchdog
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
 
+try:
+	GhostWindowFromHungWindow=ctypes.windll.user32.GhostWindowFromHungWindow
+except AttributeError:
+	GhostWindowFromHungWindow=None
+
+def isUsableWindow(windowHandle):
+	if not ctypes.windll.user32.IsWindowEnabled(windowHandle):
+		return False
+	if not ctypes.windll.user32.IsWindowVisible(windowHandle):
+		return False
+	if GhostWindowFromHungWindow and ctypes.windll.user32.GhostWindowFromHungWindow(windowHandle):
+		return False
+	return True
 
 class WindowProcessHandleContainer(object):
 	"""
@@ -63,6 +77,9 @@ An NVDAObject for a window
 		windowClassName=winUser.getClassName(windowHandle)
 		#The desktop window should stay as a window
 		if windowClassName=="#32769":
+			return
+		#If this window has a ghost window its too dangerous to try any higher APIs 
+		if GhostWindowFromHungWindow and GhostWindowFromHungWindow(windowHandle):
 			return
 		if windowClassName=="EXCEL7" and (relation=='focus' or isinstance(relation,tuple)): 
 			from . import excel
@@ -185,10 +202,10 @@ An NVDAObject for a window
 			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW)
 
 	def _get_windowText(self):
-		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
+		textLength=watchdog.cancellableSendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
-		winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
-		return textBuf.value+u"\0"
+		watchdog.cancellableSendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
+		return textBuf.value
 
 	def _get_processID(self):
 		if hasattr(self,"_processIDThreadID"):
@@ -204,21 +221,21 @@ An NVDAObject for a window
 
 	def _get_next(self):
 		nextWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDNEXT)
-		while nextWindow and (not winUser.isWindowVisible(nextWindow) or not winUser.isWindowEnabled(nextWindow)):
+		while nextWindow and not isUsableWindow(nextWindow):
 			nextWindow=winUser.getWindow(nextWindow,winUser.GW_HWNDNEXT)
 		if nextWindow:
 			return Window(windowHandle=nextWindow)
 
 	def _get_previous(self):
 		prevWindow=winUser.getWindow(self.windowHandle,winUser.GW_HWNDPREV)
-		while prevWindow and (not winUser.isWindowVisible(prevWindow) or not winUser.isWindowEnabled(prevWindow)):
+		while prevWindow and not isUsableWindow(prevWindow):
 			prevWindow=winUser.getWindow(prevWindow,winUser.GW_HWNDPREV)
 		if prevWindow:
 			return Window(windowHandle=prevWindow)
 
 	def _get_firstChild(self):
 		childWindow=winUser.getTopWindow(self.windowHandle)
-		while childWindow and (not winUser.isWindowVisible(childWindow) or not winUser.isWindowEnabled(childWindow)):
+		while childWindow and not isUsableWindow(childWindow):
 			childWindow=winUser.getWindow(childWindow,winUser.GW_HWNDNEXT)
 		if childWindow:
 			return Window(windowHandle=childWindow)
@@ -229,7 +246,7 @@ An NVDAObject for a window
 		while nextWindow:
 			childWindow=nextWindow
 			nextWindow=winUser.getWindow(childWindow,winUser.GW_HWNDNEXT)
-		while childWindow and (not winUser.isWindowVisible(childWindow) or not winUser.isWindowEnabled(childWindow)):
+		while childWindow and not isUsableWindow(childWindow):
 			childWindow=winUser.getWindow(childWindow,winUser.GW_HWNDPREV)
 		if childWindow:
 			return Window(windowHandle=childWindow)
@@ -390,7 +407,7 @@ windowClassMap={
 	"TSpinEdit":"Edit",
 	"ThunderRT6TextBox":"Edit",
 	"TMemo":"Edit",
-	"RICHEDIT":"Edit",
+	"RICHEDIT":"RichEdit",
 	"TPasswordEdit":"Edit",
 	"THppEdit.UnicodeClass":"Edit",
 	"TUnicodeTextEdit.UnicodeClass":"Edit",

@@ -12,38 +12,59 @@
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
+import os
+import shutil
+
 Import(
 	'env',
 	'sourceDir',
+	'sourceTypelibDir',
 	'libInstallDir',
 	'clientInstallDir',
 )
 
 TARGET_ARCH=env['TARGET_ARCH']
-debug=env['nvdaHelperDebug']
+debug=env['nvdaHelperDebugFlags']
 
 #Some defines and includes for the environment
-env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}')])
-env.Append(CXXFLAGS=['/EHsc'])
+env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WINXP')])
+env.Append(CXXFLAGS=['/EHsc','/W3','/WX'])
 env.Append(CPPPATH=['#/include',Dir('.').abspath])
 env.Append(LINKFLAGS='/incremental:no')
+env.Append(LINKFLAGS='/release') #We always want a checksum in the header
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
-if not debug:
-	env.Append(CPPDEFINES=['NDEBUG'])
-	env.Append(CCFLAGS=['/O2','/MT'])
-	env.Append(LINKFLAGS='/release')
+if 'noOptimize' in debug:
+	env.Append(CCFLAGS=['/Od'])
 else:
+	env.Append(CCFLAGS=['/O2','/GL'])
+	env.Append(LINKFLAGS=['/LTCG'])
+
+if 'debugCRT' in debug:
+	env.Append(CCFLAGS=['/MTd'])
+else:
+	env.Append(CCFLAGS=['/MT'])
+	env.Append(CPPDEFINES=['NDEBUG'])
+
+if 'RTC' in debug:
+	env.Append(CCFLAGS=['/RTCsu'])
+
+if 'symbols' in debug:
 	env.Append(PDB='${TARGET}.pdb')
-	env.Append(CCFLAGS=['/Od','/MTd'])
+	env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
 
 Export('env')
 
 acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
 Export('acrobatAccessRPCStubs')
+if TARGET_ARCH=='x86':
+	env.Install(sourceTypelibDir,acrobatAccessRPCStubs[0]) #typelib
 
 ia2RPCStubs=env.SConscript('ia2_sconscript')
 Export('ia2RPCStubs')
+env.Install(libInstallDir,ia2RPCStubs[0]) #proxy dll
+if TARGET_ARCH=='x86':
+	env.Install(sourceTypelibDir,ia2RPCStubs[1]) #typelib
 
 if TARGET_ARCH=='x86':
 	localLib=env.SConscript('local/sconscript')
@@ -54,7 +75,7 @@ clientLib=env.SConscript('client/sconscript')
 Export('clientLib')
 env.Install(clientInstallDir,clientLib)
 
-minHookLib=env.SConscript('minHook_sconscript')
+minHookLib=env.SConscript('minHook/sconscript')
 Export('minHookLib')
 env.Install(libInstallDir,minHookLib)
 
@@ -80,3 +101,6 @@ env.Install(libInstallDir,geckoVBufBackend)
 
 mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
 env.Install(libInstallDir,mshtmlVBufBackend)
+
+if TARGET_ARCH=='x86' and os.path.isdir(Dir('#include/espeak').abspath):
+	env.SConscript('espeak/sconscript')

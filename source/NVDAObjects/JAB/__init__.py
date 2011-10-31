@@ -182,7 +182,7 @@ class JAB(Window):
 		windowHandle=kwargs['windowHandle']
 		if relation=="focus":
 			vmID=ctypes.c_int()
-			accContext=ctypes.c_int()
+			accContext=JABHandler.JOBJECT64()
 			JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
 			jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
 		elif isinstance(relation,tuple):
@@ -388,3 +388,29 @@ class JAB(Window):
 		if self.role in [controlTypes.ROLE_LIST] and isinstance(parent,JAB) and parent.role==controlTypes.ROLE_COMBOBOX:
 			return
 		super(JAB,self).reportFocus()
+
+	def _get__actions(self):
+		actions = JABHandler.AccessibleActions()
+		JABHandler.bridgeDll.getAccessibleActions(self.jabContext.vmID, self.jabContext.accContext, actions)
+		return actions.actionInfo[:actions.actionsCount]
+
+	def _get_actionCount(self):
+		return len(self._actions)
+
+	def getActionName(self, index=None):
+		if index is None:
+			index = self.defaultActionIndex
+		try:
+			return self._actions[index].name
+		except IndexError:
+			raise NotImplementedError
+
+	def doAction(self, index=None):
+		if index is None:
+			index = self.defaultActionIndex
+		try:
+			JABHandler.bridgeDll.doAccessibleActions(self.jabContext.vmID, self.jabContext.accContext,
+				JABHandler.AccessibleActionsToDo(actionsCount=1, actions=(self._actions[index],)),
+				JABHandler.jint())
+		except (IndexError, RuntimeError):
+			raise NotImplementedError

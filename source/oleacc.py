@@ -141,7 +141,7 @@ def LresultFromObject(wParam,obj):
 	@rtype: int
 	""" 
 	objIID=obj._iid_
-	return oledll.oleacc.LresultFromObject(byref(objIID),obj._com_pointers_[objIID])
+	return oledll.oleacc.LresultFromObject(byref(objIID),wParam,obj)
 
 def ObjectFromLresult(res,wParam,interface):
 	"""

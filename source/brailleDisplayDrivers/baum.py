@@ -199,26 +199,29 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return command, arg
 
 	def _handleResponse(self, command, arg):
-		updateKeys = False
-		executeKeys = False
-
 		if command == BAUM_CELL_COUNT:
 			self.numCells = ord(arg)
 		elif command == BAUM_DEVICE_ID:
 			self._deviceID = arg
 
 		elif command in KEY_NAMES:
-			updateKeys = True
 			arg = sum(ord(byte) << offset * 8 for offset, byte in enumerate(arg))
 			if arg < self._keysDown.get(command, 0):
 				# Release.
 				if not self._ignoreKeyReleases:
 					# The first key released executes the key combination.
-					executeKeys = True
+					try:
+						inputCore.manager.executeGesture(InputGesture(self._keysDown))
+					except inputCore.NoInputGestureAction:
+						pass
+					# Any further releases are just the rest of the keys in the combination being released,
+					# so they should be ignored.
+					self._ignoreKeyReleases = True
 			else:
 				# Press.
 				# This begins a new key combination.
 				self._ignoreKeyReleases = False
+			self._keysDown[command] = arg
 
 		elif command == BAUM_POWERDOWN:
 			log.debug("Power down")
@@ -227,19 +230,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		else:
 			log.debugWarning("Unknown command {command!r}, arg {arg!r}".format(command=command, arg=arg))
-
-		if executeKeys:
-			try:
-				inputCore.manager.executeGesture(InputGesture(self._keysDown))
-			except inputCore.NoInputGestureAction:
-				pass
-			# Any further releases are just the rest of the keys in the combination being released,
-			# so they should be ignored.
-			self._ignoreKeyReleases = True
-		if updateKeys:
-			# We must update key state after execution instead of before because
-			# execution needs to include the key that was just released.
-			self._keysDown[command] = arg
 
 	def display(self, cells):
 		# cells will already be padded up to numCells.

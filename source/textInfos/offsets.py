@@ -5,6 +5,9 @@
 #Copyright (C) 2006 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 import re
+import ctypes
+import NVDAHelper
+import config
 import textInfos
 
 class Offsets(object):
@@ -143,6 +146,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	"""
 
 	detectFormattingAfterCursorMaybeSlow=True #: honours documentFormatting config option if true - set to false if this is not at all slow.
+	useUniscribe=True #Use uniscribe to calculate word offsets etc
  
 
 	def __eq__(self,other):
@@ -167,9 +171,21 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		raise NotImplementedError
 
 	def _getStoryText(self):
+		"""Retrieve the entire text of the object.
+		@return: The entire text of the object.
+		@rtype: unicode
+		"""
 		raise NotImplementedError
 
 	def _getTextRange(self,start,end):
+		"""Retrieve the text in a given offset range.
+		@param start: The start offset.
+		@type start: int
+		@param end: The end offset (exclusive).
+		@type end: int
+		@return: The text contained in the requested range.
+		@rtype: unicode
+		"""
 		raise NotImplementedError
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
@@ -193,12 +209,24 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getWordOffsets(self,offset):
 		lineStart,lineEnd=self._getLineOffsets(offset)
 		lineText=self._getTextRange(lineStart,lineEnd)
+		#Convert NULL and non-breaking space to space to make sure that words will break on them
+		lineText=lineText.translate({0:u' ',0xa0:u' '})
+		if self.useUniscribe:
+			start=ctypes.c_int()
+			end=ctypes.c_int()
+			#uniscribe does some strange things when you give it a string  with not more than two alphanumeric chars in a row.
+			#Inject two alphanumeric characters at the end to fix this 
+			lineText+="xx"
+			if NVDAHelper.localLib.calculateWordOffsets(lineText,len(lineText),offset-lineStart,ctypes.byref(start),ctypes.byref(end)):
+				return start.value+lineStart,min(end.value+lineStart,lineEnd)
+		#Fall back to the older word offsets detection that only breaks on non alphanumeric
 		start=findStartOfWord(lineText,offset-lineStart)+lineStart
 		end=findEndOfWord(lineText,offset-lineStart)+lineStart
 		return [start,end]
 
 	def _getLineNumFromOffset(self,offset):
-		raise NotImplementedError
+		return None
+
 
 	def _getLineOffsets(self,offset):
 		text=self._getStoryText()

@@ -1,0 +1,94 @@
+﻿#locale/it/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s\],;:»]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s\]!,;:»]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s\]\?,;:»]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	punto	most	always
+! sentence ending	punto esclamativo	all	always
+? sentence ending	punto di domanda	all	always
+; phrase ending	punto e virgola	most	always
+: phrase ending	due punti	most	always
+decimal point		none	always
+in-word '	apostrofo	all	norep
+negative number	meno	none	norep
+
+# Whitespace
+\0	vuoto	char	# null
+\t	tab
+\n	nuova riga	char
+\f	fine pagina	none
+\r	ritorno a capo	char
+ 	spazio	char
+ 	spazio	char	# no-break space
+
+# Standard punctuation/symbols
+!	punto esclamativo	all
+"	virgolette	most
+\#	cancelletto	some
+$	dollari	all	norep
+£	lire sterline	all	norep
+€	euro	all	norep
+%	percento	some
+&	and	some
+'	apostrofo	all
+(	aperta parentesi	most
+)	chiusa parentesi	most
+*	asterisco	some	norep
++	più	some	norep	always
+,	virgola	all	always
+-	trattino	most
+.	punto	some
+/	barra	some
+:	due punti	most	norep
+;	punto e virgola	most
+<	minore di	most
+>	maggiore di	most
+=	uguale	some	always
+?	punto di domanda	all
+@	chiocciola	some
+[	aperta parentesi quadra	most
+]	chiusa parentesi quadra	most
+\\	controbarra	most	always
+^	accento circonflesso	most
+_	sottolineato	most	always
+`	accento grave	most
+{	aperta parentesi graffa	most
+}	chiusa parentesi graffa	most
+|	barra verticale	most
+~	tilde	most
+
+# Other characters
+•	puntato	some
+…	punto punto punto	some	always
+...	punto punto punto	some	always
+	puntato	some
+“	aperte virgolette	most
+”	chiuse virgolette	most
+«	aperte doppie virgolette	most
+»	chiuse doppie virgolette	most
+‘	aperto apostrofo	most
+’	chiuso apostrofo	most
+–	trattino	most
+—	trattino lungo	most
+●	puntato	most
+¨	dieresi	most
+‎	marcatore da sinistra a destra	char
+‏	marcatore da destra a sinistra	char

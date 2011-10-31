@@ -1,6 +1,6 @@
 #synthDrivers/sapi5.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2011 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -12,6 +12,7 @@ import comtypes.client
 from comtypes import COMError
 import _winreg
 import globalVars
+import speech
 from synthDriverHandler import SynthDriver,VoiceInfo
 import config
 import nvwave
@@ -22,10 +23,10 @@ class constants:
 	SVSFPurgeBeforeSpeak = 2
 	SVSFIsXML = 8
 
-COM_CLASS = "SAPI.SPVoice"
-
 class SynthDriver(SynthDriver):
 	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
+
+	COM_CLASS = "SAPI.SPVoice"
 
 	name="sapi5"
 	description="Microsoft Speech API version 5"
@@ -33,7 +34,7 @@ class SynthDriver(SynthDriver):
 	@classmethod
 	def check(cls):
 		try:
-			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,COM_CLASS)
+			r=_winreg.OpenKey(_winreg.HKEY_CLASSES_ROOT,cls.COM_CLASS)
 			r.Close()
 			return True
 		except:
@@ -79,7 +80,7 @@ class SynthDriver(SynthDriver):
 		if bookmark!="" and bookmark is not None:
 			return int(bookmark)
 		else:
-			return -1
+			return None
 
 	def _set_rate(self,rate):
 		self.tts.Rate = (rate-50)/5
@@ -92,7 +93,7 @@ class SynthDriver(SynthDriver):
 		self.tts.Volume = value
 
 	def _initTts(self):
-		self.tts=comtypes.client.CreateObject(COM_CLASS)
+		self.tts=comtypes.client.CreateObject(self.COM_CLASS)
 		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
@@ -108,23 +109,25 @@ class SynthDriver(SynthDriver):
 		self._initTts()
 		self.tts.voice=v[i]
 
-	def performSpeak(self,text,index=None,isCharacter=False):
-		flags=constants.SVSFIsXML
-		text=text.replace("<","&lt;")
+	def speak(self,speechSequence):
+		textList=[]
+		for item in speechSequence:
+			if isinstance(item,basestring):
+				textList.append(item.replace("<","&lt;"))
+			elif isinstance(item,speech.IndexCommand):
+				textList.append("<Bookmark Mark=\"%d\" />"%item.index)
+			elif isinstance(item,speech.CharacterModeCommand):
+				textList.append("<spell>" if item.state else "</spell>")
+			elif isinstance(item,speech.SpeechCommand):
+				log.debugWarning("Unsupported speech command: %s"%item)
+			else:
+				log.error("Unknown speech: %s"%item)
+		text="".join(textList)
+		#Pitch must always be hardcoded
 		pitch=(self._pitch/2)-25
-		if isinstance(index,int):
-			bookmarkXML="<Bookmark Mark=\"%d\" />"%index
-		else:
-			bookmarkXML=""
+		text="<pitch absmiddle=\"%s\">%s</pitch>"%(pitch,text)
 		flags=constants.SVSFIsXML|constants.SVSFlagsAsync
-		if isCharacter: text = "<spell>%s</spell>."%text
-		self.tts.Speak("<pitch absmiddle=\"%s\">%s%s</pitch>"%(pitch,bookmarkXML,text),flags)
-
-	def speakText(self,text,index=None):
-		self.performSpeak(text,index)
-
-	def speakCharacter(self,text,index=None):
-		self.performSpeak(text,index,True)
+		self.tts.Speak(text,flags)
 
 	def cancel(self):
 		#if self.tts.Status.RunningState == 2:

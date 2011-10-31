@@ -100,10 +100,11 @@ class py2exe(build_exe.py2exe):
 		return mfest, rid
 
 def getLocaleDataFiles():
-	NVDALocaleFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")]
+	NVDALocaleFiles=[(os.path.dirname(f), (f,)) for f in glob("locale/*/LC_MESSAGES/*.mo")+glob("locale/*/*.dic")]
 	wxDir=wx.__path__[0]
 	wxLocaleFiles=[(os.path.dirname(f)[len(wxDir)+1:], (f,)) for f in glob(wxDir+"/locale/*/LC_MESSAGES/*.mo")]
-	return NVDALocaleFiles+wxLocaleFiles
+	NVDALocaleGestureMaps=[(os.path.dirname(f), (f,)) for f in glob("locale/*/gestures.ini")]
+	return NVDALocaleFiles+wxLocaleFiles+NVDALocaleGestureMaps
 
 def getRecursiveDataFiles(dest,source,excludes=()):
 	rulesList=[]
@@ -140,6 +141,7 @@ setup(
 			"description":"NVDA application",
 			"product_version":version,
 			"copyright":copyright,
+			"company_name":publisher,
 		},
 		{
 			"script": "nvda_slave.pyw",
@@ -148,6 +150,7 @@ setup(
 			"description": "NVDA slave",
 			"product_version": version,
 			"copyright": copyright,
+			"company_name": publisher,
 		},
 	],
 	service=[{
@@ -157,6 +160,7 @@ setup(
 		"description": "NVDA service",
 		"product_version": version,
 		"copyright": copyright,
+		"company_name": publisher,
 		"uac_info": ("requireAdministrator", False),
 		"cmdline_style": "pywin32",
 	}],
@@ -165,22 +169,21 @@ setup(
 		"excludes": ["comInterfaces", "Tkinter",
 			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","brailleDisplayDrivers","synthDrivers"],
-		# Can be removed once included by a bundled module.
-		"includes": ["objbase"],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),
 		("documentation", ['../copying.txt', '../contributors.txt']),
-		("lib", glob("lib/*.dll") + glob("lib/*.pdb")),
-		("lib64", glob("lib64/*.dll") + glob("lib64/*.exe") + glob("lib64/*.pdb")),
+		("lib", glob("lib/*.dll")),
+		("lib64", glob("lib64/*.dll") + glob("lib64/*.exe")),
 		("comInterfaces", glob("comInterfaces/*%s"%compiledModExtention)),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*"))
 	] + (
 		getLocaleDataFiles()
-		+ getRecursiveDataFiles("synthDrivers", "synthDrivers", excludes=("*%s"%sourceModExtention,"*%s"%compiledModExtention))
+		+ getRecursiveDataFiles("synthDrivers", "synthDrivers",
+			excludes=("*%s" % sourceModExtention, "*%s" % compiledModExtention, "*.exp", "*.lib", "*.pdb"))
 		+ getRecursiveDataFiles("brailleDisplayDrivers", "brailleDisplayDrivers", excludes=("*%s"%sourceModExtention,"*%s"%compiledModExtention))
-		+ getRecursiveDataFiles('documentation', '../user_docs', excludes=('*.t2t', '*.t2tconf'))
+		+ getRecursiveDataFiles('documentation', '../user_docs', excludes=('*.t2t', '*.t2tconf', '*/developerGuide.*'))
 	),
 )

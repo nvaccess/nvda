@@ -24,7 +24,6 @@ import winKernel
 import config
 import NVDAObjects #Catches errors before loading default appModule
 import api
-import unicodedata
 import appModules
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
@@ -124,39 +123,35 @@ def fetchAppModule(processID,appName):
 	@returns: the appModule, or None if not found
 	@rtype: AppModule
 	"""  
-	friendlyAppName=appName
-
 	# First, check whether the module exists.
 	# We need to do this separately because even though an ImportError is raised when a module can't be found, it might also be raised for other reasons.
-	try:
-		exists = doesAppModuleExist(appName)
-	except UnicodeEncodeError:
-		# Since Python can't handle unicode characters in module names, we need to decompose unicode string and strip out accents.
-		appName = unicodedata.normalize("NFD", appName)
-		exists = doesAppModuleExist(appName)
+	# Python 2.x can't properly handle unicode module names, so convert them.
+	modName = appName.encode("mbcs")
 
-	if exists:
+	if doesAppModuleExist(modName):
 		try:
-			return __import__("appModules.%s" % appName, globals(), locals(), ("appModules",)).AppModule(processID, friendlyAppName)
+			return __import__("appModules.%s" % modName, globals(), locals(), ("appModules",)).AppModule(processID, appName)
 		except:
-			log.error("error in appModule %s"%appName, exc_info=True)
+			log.error("error in appModule %r"%modName, exc_info=True)
+			# We can't present a message which isn't unicode, so use appName, not modName.
 			ui.message(_("Error in appModule %s")%appName)
 
 	# Use the base AppModule.
-	return AppModule(processID, friendlyAppName)
+	return AppModule(processID, appName)
 
 def reloadAppModules():
 	"""Reloads running appModules.
 	especially, it clears the cache of running appModules and deletes them from sys.modules.
 	Each appModule will be reloaded immediately as a reaction on a first event coming from the process.
 	"""
-	global runningTable, appModules
-	runningTable={}
+	global appModules
+	terminate()
 	del appModules
 	mods=[k for k,v in sys.modules.iteritems() if k.startswith("appModules") and v is not None]
 	for mod in mods:
 		del sys.modules[mod]
 	import appModules
+	initialize()
 
 def initialize():
 	"""Initializes the appModule subsystem. 
@@ -210,7 +205,7 @@ class AppModule(baseObject.ScriptableObject):
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 
 	def __repr__(self):
-		return "<%s (appName %s, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
+		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
 
 	def _get_appModuleName(self):
 		return self.__class__.__module__.split('.')[-1]

@@ -4,63 +4,24 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import time
-import re
-import ctypes
 from comtypes import COMError
 import comtypes.automation
 import wx
 import oleacc
-import textInfos.offsets
+import textInfos
+import colors
 import eventHandler
 import gui
-import gui.scriptUI
 import winUser
 import controlTypes
-import speech
 from . import Window
 from .. import NVDAObjectTextInfo
-import appModuleHandler
-from logHandler import log
+import scriptHandler
 
-re_dollaredAddress=re.compile(r"^\$?([a-zA-Z]+)\$?([0-9]+)")
+xlA1 = 1
 
-class CellEditDialog(gui.scriptUI.ModalDialog):
-
-	def __init__(self,cell):
-		super(CellEditDialog,self).__init__(None)
-		self._cell=cell
-
-	def onCellTextChar(self,evt):
-		if evt.GetKeyCode() == wx.WXK_RETURN:
-			if evt.AltDown():
-				i=self._cellText.GetInsertionPoint()
-				self._cellText.Replace(i,i,"\n")
-			else:
-				self.onOk(None)
-			return
-		evt.Skip(True)
-
-	def onOk(self,evt):
-		self._cell.formulaLocal=self._cellText.GetValue()
-		self.dialog.EndModal(wx.ID_OK)
-
-	def makeDialog(self):
-		d=wx.Dialog(gui.mainFrame, wx.ID_ANY, title=_("NVDA Excel Cell Editor"))
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		mainSizer.Add(wx.StaticText(d,wx.ID_ANY, label=_("Enter cell contents")))
-		self._cellText=wx.TextCtrl(d, wx.ID_ANY, size=(300, 200), style=wx.TE_RICH|wx.TE_MULTILINE)
-		self._cellText.Bind(wx.EVT_KEY_DOWN, self.onCellTextChar)
-		self._cellText.SetValue(self._cell.formulaLocal)
-		mainSizer.Add(self._cellText)
-		mainSizer.Add(d.CreateButtonSizer(wx.OK|wx.CANCEL))
-		d.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		d.SetSizer(mainSizer)
-		self._cellText.SetFocus()
-		return d
-
-class ExcelWindow(Window):
-	"""A base that all Excel NVDAObjects inherit from, which contains some useful static methods."""
+class ExcelBase(Window):
+	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
 
 	@staticmethod
 	def excelWindowObjectFromWindow(windowHandle):
@@ -71,16 +32,10 @@ class ExcelWindow(Window):
 		return comtypes.client.dynamic.Dispatch(pDispatch)
 
 	@staticmethod
-	def getCellAddress(cell):
-		return re_dollaredAddress.sub(r"\1\2",cell.Address())
+	def getCellAddress(cell, external=False):
+		return cell.Address(False, False, xlA1, external)
 
-class Excel7Window(ExcelWindow):
-	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
-
-	def _get_excelWindowObject(self):
-		return self.excelWindowObjectFromWindow(self.windowHandle)
-
-	def event_gainFocus(self):
+	def fireFocusOnSelection(self):
 		selection=self.excelWindowObject.Selection
 		if selection.Count>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
@@ -88,7 +43,16 @@ class Excel7Window(ExcelWindow):
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
 		eventHandler.executeEvent("gainFocus",obj)
 
-class ExcelWorksheet(ExcelWindow):
+class Excel7Window(ExcelBase):
+	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
+
+	def _get_excelWindowObject(self):
+		return self.excelWindowObjectFromWindow(self.windowHandle)
+
+	def event_gainFocus(self):
+		self.fireFocusOnSelection()
+
+class ExcelWorksheet(ExcelBase):
 
 	role=controlTypes.ROLE_TABLE
 
@@ -96,10 +60,16 @@ class ExcelWorksheet(ExcelWindow):
 		self.excelWindowObject=excelWindowObject
 		self.excelWorksheetObject=excelWorksheetObject
 		super(ExcelWorksheet,self).__init__(windowHandle=windowHandle)
-		self.initOverlayClass()
+		for gesture in self.__changeSelectionGestures:
+			self.bindGesture(gesture, "changeSelection")
 
 	def _get_name(self):
 		return self.excelWorksheetObject.name
+
+	def _isEqual(self, other):
+		if not super(ExcelWorksheet, self)._isEqual(other):
+			return False
+		return self.excelWorksheetObject.index == other.excelWorksheetObject.index
 
 	def _get_firstChild(self):
 		cell=self.excelWorksheetObject.cells(1,1)
@@ -107,13 +77,10 @@ class ExcelWorksheet(ExcelWindow):
 
 	def script_changeSelection(self,gesture):
 		gesture.send()
-		selection=self.excelWindowObject.Selection
-		if selection.Count>1:
-			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
-		else:
-			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
-		eventHandler.executeEvent("gainFocus",obj)
-	script_changeSelection.__doc__=_("Extends the selection and speaks the last selected cell")
+		if scriptHandler.isScriptWaiting():
+			# Prevent lag if keys are pressed rapidly.
+			return
+		self.fireFocusOnSelection()
 	script_changeSelection.canPropagate=True
 
 	__changeSelectionGestures = (
@@ -145,11 +112,10 @@ class ExcelWorksheet(ExcelWindow):
 		"kb:shift+control+end",
 		"kb:shift+space",
 		"kb:control+space",
+		"kb:control+pageUp",
+		"kb:control+pageDown",
+		"kb:control+v",
 	)
-
-	def initOverlayClass(self):
-		for gesture in self.__changeSelectionGestures:
-			self.bindGesture(gesture, "changeSelection")
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
 
@@ -164,9 +130,18 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['bold']=fontObj.bold
 			formatField['italic']=fontObj.italic
 			formatField['underline']=fontObj.underline
+		if formatConfig['reportColor']:
+			try:
+				formatField['color']=colors.RGB.fromCOLORREF(int(fontObj.color))
+			except COMError:
+				pass
+			try:
+				formatField['background-color']=colors.RGB.fromCOLORREF(int(self.obj.excelCellObject.interior.color))
+			except COMError:
+				pass
 		return formatField,(self._startOffset,self._endOffset)
 
-class ExcelCell(ExcelWindow):
+class ExcelCell(ExcelBase):
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
@@ -196,8 +171,12 @@ class ExcelCell(ExcelWindow):
 	def _isEqual(self,other):
 		if not super(ExcelCell,self)._isEqual(other):
 			return False
-		thisAddr=self.getCellAddress(self.excelCellObject)
-		otherAddr=self.getCellAddress(other.excelCellObject)
+		thisAddr=self.getCellAddress(self.excelCellObject,True)
+		try:
+			otherAddr=self.getCellAddress(other.excelCellObject,True)
+		except COMError:
+			#When cutting and pasting the old selection can become broken
+			return False
 		return thisAddr==otherAddr
 
 	def _get_name(self):
@@ -229,26 +208,21 @@ class ExcelCell(ExcelWindow):
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
-	def script_editCell(self,gesture):
-		cellEditDialog=CellEditDialog(self.excelWindowObject.ActiveCell)
-		cellEditDialog.run()
+class ExcelSelection(ExcelBase):
 
-	def initOverlayClass(self):
-		self.bindGesture("kb:f2", "editCell")
-
-class ExcelSelection(ExcelWindow):
-
-	role=controlTypes.ROLE_GROUPING
+	role=controlTypes.ROLE_TABLECELL
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelRangeObject=None):
 		self.excelWindowObject=excelWindowObject
 		self.excelRangeObject=excelRangeObject
 		super(ExcelSelection,self).__init__(windowHandle=windowHandle)
 
-	def _get_name(self):
-		return _("selection")
+	def _get_states(self):
+		states=super(ExcelSelection,self).states
+		states.add(controlTypes.STATE_SELECTED)
+		return states
 
-	def _get_value(self):
+	def _get_name(self):
 		firstCell=self.excelRangeObject.Item(1)
 		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
 		return _("%s %s through %s %s")%(self.getCellAddress(firstCell),firstCell.Text,self.getCellAddress(lastCell),lastCell.Text)
@@ -257,3 +231,8 @@ class ExcelSelection(ExcelWindow):
 		worksheet=self.excelRangeObject.Worksheet
 		return ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=worksheet)
 
+	#Its useful for an excel selection to be announced with reportSelection script
+	def makeTextInfo(self,position):
+		if position==textInfos.POSITION_SELECTION:
+			position=textInfos.POSITION_ALL
+		return super(ExcelSelection,self).makeTextInfo(position)

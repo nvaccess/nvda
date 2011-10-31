@@ -15,11 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef TYPEDCHARACTER_H
 #define TYPEDCHARACTER_H
 
-#include <windows.h>
 #include <wchar.h>
-
-//Event IDs
-#define EVENT_TYPEDCHARACTER 0x1000
 
 void typedCharacter_inProcess_initialize();
 void typedCharacter_inProcess_terminate();

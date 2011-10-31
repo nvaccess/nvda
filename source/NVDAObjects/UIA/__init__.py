@@ -12,7 +12,7 @@ import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithAutoSelectDetection
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -21,6 +21,7 @@ class UIATextInfo(textInfos.TextInfo):
 		"word":UIAHandler.TextUnit_Word,
 		"line":UIAHandler.TextUnit_Line,
 		"paragraph":UIAHandler.TextUnit_Paragraph,
+		"readingChunk":UIAHandler.TextUnit_Line,
 	}
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
@@ -44,7 +45,7 @@ class UIATextInfo(textInfos.TextInfo):
 	def __init__(self,obj,position):
 		super(UIATextInfo,self).__init__(obj,position)
 		if isinstance(position,UIAHandler.IUIAutomationTextRange):
-			self._rangeObj=position.Clone()
+			self._rangeObj=position
 		elif position in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			sel=self.obj.UIATextPattern.GetSelection()
 			if sel.length>0:
@@ -53,8 +54,23 @@ class UIATextInfo(textInfos.TextInfo):
 				raise NotImplementedError("UIAutomationTextRangeArray is empty")
 			if position==textInfos.POSITION_CARET:
 				self.collapse()
+		elif isinstance(position,UIATextInfo): #bookmark
+			self._rangeObj=position._rangeObj
+		elif position==textInfos.POSITION_FIRST:
+			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self.collapse()
+		elif position==textInfos.POSITION_LAST:
+			self._rangeObj=self.obj.UIATextPattern.documentRange
+			self.collapse(True)
+		elif position==textInfos.POSITION_ALL:
+			self._rangeObj=self.obj.UIATextPattern.documentRange
 		else:
-			self._rangeObj=self.obj.UIATextPattern.DocumentRange
+			raise ValueError("Unknown position %s"%position)
+
+	def __eq__(self,other):
+		if self is other: return True
+		if self.__class__ is not other.__class__: return False
+		return bool(self._rangeObj.compare(other._rangeObj))
 
 	def _get_bookmark(self):
 		return self.copy()
@@ -90,7 +106,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return res
 
 	def copy(self):
-		return self.__class__(self.obj,self._rangeObj)
+		return self.__class__(self.obj,self._rangeObj.clone())
 
 	def collapse(self,end=False):
 		if end:
@@ -120,13 +136,18 @@ class UIATextInfo(textInfos.TextInfo):
 			target=UIAHandler.TextPatternRangeEndpoint_End
 		self._rangeObj.MoveEndpointByRange(src,other._rangeObj,target)
 
+	def updateSelection(self):
+		self._rangeObj.Select()
+
+	updateCaret = updateSelection
+
 class UIA(Window):
 
 	liveNVDAObjectTable=weakref.WeakValueDictionary()
 
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo==UIATextInfo:
-			clsList.append(EditableTextWithAutoSelectDetection)
+			clsList.append(EditableTextWithoutAutoSelectDetection)
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
@@ -142,6 +163,14 @@ class UIA(Window):
 			clsList.append(SensitiveSlider) 
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
+		elif UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId:
+			try:
+				if not self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
+					clsList.append(ComboBoxWithoutValuePattern)
+			except COMError:
+				pass
+		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
+			clsList.append(ListItem)
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
@@ -179,8 +208,7 @@ class UIA(Window):
 			obj=super(UIA,cls).__new__(cls)
 			if not obj:
 				return None
-			if runtimeId:
-				cls.liveNVDAObjectTable[runtimeId]=obj
+			obj.UIARuntimeId=runtimeId
 		obj.UIAElement=UIAElement
 		return obj
 
@@ -191,14 +219,14 @@ class UIA(Window):
 		self._doneInit=True
 
 		if not UIAElement:
-			raise ValueError("needs either a UIA element or window handle")
+			raise ValueError("needs a UIA element")
 
 		UIACachedWindowHandle=UIAElement.cachedNativeWindowHandle
 		self.UIAIsWindowElement=bool(UIACachedWindowHandle)
-		if not windowHandle:
+		if UIACachedWindowHandle:
 			windowHandle=UIACachedWindowHandle
-			if not windowHandle:
-				windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
+		if not windowHandle:
+			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
@@ -206,6 +234,12 @@ class UIA(Window):
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
 			self.value=""
+
+		# UIARuntimeId is set by __new__.
+		if self.UIARuntimeId:
+			# This must be the last thing in the constructor,
+			# as this object should only be cached if construction succeeds.
+			self.liveNVDAObjectTable[self.UIARuntimeId]=self
 
 	def _isEqual(self,other):
 		if not isinstance(other,UIA):
@@ -235,6 +269,36 @@ class UIA(Window):
 
 	def setFocus(self):
 		self.UIAElement.setFocus()
+
+	def _get_devInfo(self):
+		info=super(UIA,self).devInfo
+		info.append("UIAElement: %r"%self.UIAElement)
+		try:
+			ret=self.UIAElement.currentAutomationID
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA automationID: %s"%ret)
+		try:
+			ret=self.UIAElement.currentFrameworkID
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA frameworkID: %s"%ret)
+		try:
+			ret=str(self.UIAElement.getRuntimeID())
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA runtimeID: %s"%ret)
+		try:
+			ret=self.UIAElement.cachedProviderDescription
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA providerDescription: %s"%ret)
+		try:
+			ret=self.UIAElement.currentClassName
+		except Exception as e:
+			ret="Exception: %s"%e
+		info.append("UIA className: %s"%ret)
+		return info
 
 	def _get_name(self):
 		try:
@@ -430,6 +494,12 @@ class UIA(Window):
 			return
 		raise NotImplementedError
 
+	def _get_hasFocus(self):
+		try:
+			return self.UIAElement.currentHasKeyboardFocus
+		except COMError:
+			return False
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
@@ -490,3 +560,35 @@ class ControlPanelLink(UIA):
 			desc=desc[i+1:]
 		return desc
 
+class ComboBoxWithoutValuePattern(UIA):
+	"""A combo box without the Value pattern.
+	UIA combo boxes don't necessarily support the Value pattern unless they take arbitrary text values.
+	However, NVDA expects combo boxes to have a value and to fire valueChange events.
+	The value is obtained by retrieving the selected item's name.
+	The valueChange event is fired on this object by L{ListItem.event_stateChange}.
+	"""
+
+	def _get_UIASelectionPattern(self):
+		punk = self.UIAElement.GetCurrentPattern(UIAHandler.UIA_SelectionPatternId)
+		if punk:
+			self.UIASelectionPattern = punk.QueryInterface(UIAHandler.IUIAutomationSelectionPattern)
+		else:
+			self.UIASelectionPattern = None
+		return self.UIASelectionPattern
+
+	def _get_value(self):
+		try:
+			return self.UIASelectionPattern.GetCurrentSelection().GetElement(0).CurrentName
+		except COMError:
+			return None
+
+class ListItem(UIA):
+
+	def event_stateChange(self):
+		if not self.hasFocus:
+			parent = self.parent
+			if parent and isinstance(parent, ComboBoxWithoutValuePattern):
+				# This is an item in a combo box without the Value pattern.
+				# This item has been selected, so notify the combo box that its value has changed.
+				parent.event_valueChange()
+		super(ListItem, self).event_stateChange()

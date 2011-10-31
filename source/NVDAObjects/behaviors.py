@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>
+#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter VÃ¡gner <peter.v@datagate.sk>
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 """
@@ -31,11 +31,11 @@ class ProgressBar(NVDAObject):
 		if pbConf["progressBarOutputMode"]=="off" or controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
 			return super(ProgressBar,self).event_valueChange()
 		val=self.value
-		if val:
-			val=val.rstrip('%\x00')
-		if not val:
-			return super(ProgressBar,self).event_valueChange()
-		percentage = min(max(0.0, float(val)), 100.0)
+		try:
+			percentage = min(max(0.0, float(val.strip("%\0"))), 100.0)
+		except (AttributeError, ValueError):
+			log.debugWarning("Invalid value: %r" % val)
+			return super(ProgressBar, self).event_valueChange()
 		if not pbConf["reportBackgroundProgressBars"] and not self.isInForeground:
 			return
 		try:
@@ -74,7 +74,7 @@ class Dialog(NVDAObject):
 			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
-			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW,controlTypes.ROLE_GROUPING):
+			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW,controlTypes.ROLE_GROUPING,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_SECTION,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_UNKNOWN):
 				textList.append(cls.getDialogText(child))
 				continue
 			# We only want text from certain controls.
@@ -92,9 +92,9 @@ class Dialog(NVDAObject):
 			if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
 				continue
 			childName=child.name
-			#Ignore objects that have another object directly after them with the same name, as this object is probably just a label for that object.
+			#Ignore objects that have another object directly after them with the same name that use NVDAObjectTextInfo (i.e.  name is part of the text), as this object is probably just a label for that object.
 			#However, graphics, static text, separators and Windows are ok.
-			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE) and children[index+1].name==childName:
+			if childName and index<(childCount-1) and children[index+1].TextInfo is NVDAObjectTextInfo and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE) and children[index+1].name==childName:
 				continue
 			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:

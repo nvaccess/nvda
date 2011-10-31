@@ -18,10 +18,12 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef IA2SUPPORT_H
 #define IA2SUPPORT_H
 
+bool installIA2Support();
+bool uninstallIA2Support();
+
 //Private functions
-BOOL IA2Support_initialize();
+bool IA2Support_initialize();
 void IA2Support_inProcess_initialize();
 void IA2Support_inProcess_terminate();
-BOOL IA2Support_terminate();
 
 #endif

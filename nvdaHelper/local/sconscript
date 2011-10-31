@@ -47,6 +47,16 @@ vbufRPCHeader,vbufRPCClientSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="VBuf_",
 )
 
+nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCClientSource=env.MSRPCStubs(
+	target="./nvdaInProcUtils",
+	source=[
+		"../interfaces/nvdaInProcUtils/nvdaInProcUtils.idl",
+		"../interfaces/nvdaInProcUtils/nvdaInProcUtils.acf",
+	],
+	MSRPCStubs_noServer=True,
+	MSRPCStubs_prefix="nvdaInProcUtils_",
+)
+
 displayModelRPCHeader,displayModelRPCClientSource=env.MSRPCStubs(
 	target="./displayModel",
 	source=[
@@ -63,6 +73,7 @@ localLib=env.SharedLibrary(
 		"nvdaHelperLocal.cpp",
 		"beeps.cpp",
 		vbufRPCClientSource,
+		nvdaInProcUtilsRPCClientSource,
 		displayModelRPCClientSource,
 		'rpcSrv.cpp',
 		'nvdaController.c',
@@ -70,11 +81,17 @@ localLib=env.SharedLibrary(
 		controllerRPCServerSource,
 		'nvdaControllerInternal.c',
 		controllerInternalRPCServerSource,
+		"dllImportTableHooks.cpp",
+		"nvdaHelperLocal.def",
+		"textUtils.cpp",
 	],
 	LIBS=[
 		"user32",
+		"usp10",
+		"ole32",
 		"oleaut32",
 		"rpcrt4",
+		"shlwapi",
 	],
 )
 

@@ -12,18 +12,19 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include "nvdaHelperRemote.h"
 #include "nvdaControllerInternal.h"
 #include "inputLangChange.h"
 
 LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
-	static int lastInputLangChange=0;
+	static LPARAM lastInputLangChange=0;
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	if((pcwp->message==WM_INPUTLANGCHANGE)&&(pcwp->lParam!=lastInputLangChange)) {
 		wchar_t buf[KL_NAMELENGTH];
 		GetKeyboardLayoutName(buf);
-		nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),pcwp->lParam,buf);
+		nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),static_cast<unsigned long>(pcwp->lParam),buf);
 		lastInputLangChange=pcwp->lParam;
 	}
 	return 0;

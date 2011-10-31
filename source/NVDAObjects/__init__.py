@@ -526,14 +526,17 @@ class NVDAObject(baseObject.ScriptableObject):
 			text=self.makeTextInfo(textInfos.POSITION_ALL).text
 			return self.presType_content if text and not text.isspace() else self.presType_layout
 
-		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR):
+		if role in (controlTypes.ROLE_UNKNOWN, controlTypes.ROLE_PANE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_ROOTPANE, controlTypes.ROLE_LAYEREDPANE, controlTypes.ROLE_SCROLLPANE, controlTypes.ROLE_SECTION,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_TITLEBAR,controlTypes.ROLE_LABEL):
 			return self.presType_layout
 		name = self.name
 		description = self.description
-		if not name and not description and role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_LABEL,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
-			return self.presType_layout
-		if not name and not description and role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and not config.conf["documentFormatting"]["reportTables"]:
-			return self.presType_layout
+		if not name and not description:
+			if role in (controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANEL, controlTypes.ROLE_PROPERTYPAGE, controlTypes.ROLE_TEXTFRAME, controlTypes.ROLE_GROUPING,controlTypes.ROLE_OPTIONPANE,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_FORM,controlTypes.ROLE_TABLEBODY):
+				return self.presType_layout
+			if role == controlTypes.ROLE_TABLE and not config.conf["documentFormatting"]["reportTables"]:
+				return self.presType_layout
+			if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN,controlTypes.ROLE_TABLECELL) and (not config.conf["documentFormatting"]["reportTables"] or not config.conf["documentFormatting"]["reportTableCellCoords"]):
+				return self.presType_layout
 		if role in (controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLECOLUMN):
 			try:
 				table=self.table
@@ -708,18 +711,6 @@ Tries to force this object to take the focus.
 		"""
 		return None
 
-	def speakDescendantObjects(self,hashList=None):
-		"""Speaks all the descendants of this object.
-		"""
-		if hashList is None:
-			hashList=[]
-		for child in self.children:
-			h=hash(child)
-			if h not in hashList:
-				hashList.append(h)
-				speech.speakObject(child)
-				child.speakDescendantObjects(hashList=hashList)
-
 	def reportFocus(self):
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
@@ -841,9 +832,9 @@ This code is executed if a gain focus event is received by this object.
 		newTime=time.time()
 		oldTime=getattr(self,'_basicTextTime',0)
 		if newTime-oldTime>0.5:
-			self._basicText=" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
+			self._basicText=u" ".join([x for x in self.name, self.value, self.description if isinstance(x, basestring) and len(x) > 0 and not x.isspace()])
 			if len(self._basicText)==0:
-				self._basicText="\n"
+				self._basicText=u""
 		else:
 			self._basicTextTime=newTime
 		return self._basicText

@@ -84,11 +84,12 @@ def terminateRunningNVDA(window):
 		winKernel.closeHandle(h)
 
 	# The process is refusing to exit gracefully, so kill it forcefully.
-	h = winKernel.openProcess(winKernel.PROCESS_TERMINATE, False, processID)
+	h = winKernel.openProcess(winKernel.PROCESS_TERMINATE | winKernel.SYNCHRONIZE, False, processID)
 	if not h:
 		raise OSError("Could not open process for termination")
 	try:
 		winKernel.TerminateProcess(h, 1)
+		winKernel.waitForSingleObject(h, 2000)
 	finally:
 		winKernel.closeHandle(h)
 
@@ -108,6 +109,22 @@ if globalVars.appArgs.quit or (oldAppWindowHandle and not globalVars.appArgs.rep
 	sys.exit(0)
 elif globalVars.appArgs.check_running:
 	# NVDA is not running.
+	sys.exit(1)
+
+UOI_NAME = 2
+def getInputDesktopName():
+	desktop = ctypes.windll.user32.OpenInputDesktop(0, False, 0)
+	name = ctypes.create_unicode_buffer(256)
+	ctypes.windll.user32.GetUserObjectInformationW(desktop, UOI_NAME, ctypes.byref(name), ctypes.sizeof(name), None)
+	ctypes.windll.user32.CloseDesktop(desktop)
+	return name.value
+
+#Ensure multiple instances are not fully started by using a mutex
+ERROR_ALREADY_EXISTS=0XB7
+desktopName=getInputDesktopName()
+mutex=ctypes.windll.kernel32.CreateMutexW(None,True,u"Local\\NVDA_%s"%desktopName)
+if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
+	if mutex: ctypes.windll.kernel32.CloseHandle(mutex)
 	sys.exit(1)
 
 #Initialize the config path (make sure it exists)
@@ -143,5 +160,6 @@ except:
 finally:
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
+	ctypes.windll.kernel32.CloseHandle(mutex)
 
 log.info("NVDA exit")

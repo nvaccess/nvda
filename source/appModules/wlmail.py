@@ -10,6 +10,7 @@ import api
 import winUser
 from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.IAccessible.MSHTML import MSHTML
+import msimn 
 
 class AboutBlankDocument(MSHTML):
 	"""A document called about:blank which hosts the HTML message composer document using viewlink.
@@ -30,13 +31,21 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "Internet Explorer_Server" and obj.role == controlTypes.ROLE_DOCUMENT and obj.HTMLNode and obj.HTMLNode.document.url=="about:blank": 
 			clsList.insert(0, AboutBlankDocument)
-		elif obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
-			import msimn 
+		elif obj.windowClassName=="SysListView32" and obj.windowControlID in (128,129,130) and obj.role==controlTypes.ROLE_LISTITEM:
 			clsList.insert(0,msimn.MessageRuleListItem)
+		elif obj.windowClassName=="SysListView32" and obj.role==controlTypes.ROLE_LISTITEM and obj.parent.name=="Outlook Express Message List":
+			clsList.insert(0,msimn.MessageListItem)
 
 	def event_gainFocus(self,obj,nextHandler):
 		nextHandler()
 		#Force focus to move to something sane when landing on a plain text message window
+		if obj.windowClassName=="ME_DocHost" and obj.windowControlID==1000 and obj.role==controlTypes.ROLE_PANE:
+			firstChild=obj.firstChild
+			if firstChild: 
+				firstChild=obj.firstChild
+				if firstChild:
+					firstChild.setFocus()
+				return
 		if obj.windowClassName=="ATH_Note" and obj.event_objectID==winUser.OBJID_CLIENT and obj.IAccessibleChildID==0:
 			api.processPendingEvents()
 			if obj==api.getFocusObject() and controlTypes.STATE_FOCUSED in obj.states:

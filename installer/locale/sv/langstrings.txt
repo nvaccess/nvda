@@ -1,0 +1,32 @@
+;Swedish
+LangString msg_WelcomePageTitle ${LANG_SWEDISH} "Instalation för ${PRODUCT}, Version ${VERSION}"
+LangString msg_WelcomePageText ${LANG_SWEDISH} "Välkommen till installationsprogrammet för ${PRODUCT}, en fri och open-source skärmläsare för Windows.$\n\
+Copyright 2006 - 2011 NVDA bidragsgivare.$\n\
+Denna guide kommer att leda dig genom installationen av ${PRODUCT}; det rekommenderas att andra program avslutas innan du fortsätter med installationen.$\n"
+LangString msg_NVDAWebSite ${LANG_SWEDISH} "Besök NVDA's officiella hemsida"
+LangString msg_NVDARunning ${LANG_SWEDISH} "En annan instans av NVDA används. Denna kommar att avslutas innan installationen kan fortsätta."
+LangString msg_pagePrevInstallLabel ${LANG_SWEDISH} "En tidigare installation av NVDA hittades på ditt system. Det rekommenderas starkt att du  avinstallera den innan du fortsätter med installationen."
+LangString msg_pagePrevInstallUninstallCheckBox ${LANG_ENGLISH} "Avinstallera (rekommenderat)"
+LangString shortcut_uninstall $(LANG_ENGLISH) "Avinstallera"
+LangString shortcut_website $(LANG_SWEDISH) "Hemsida"
+LangString shortcut_exploreUserConfigDir $(LANG_ENGLISH) "Utforska användarkonfigurationsmapp"
+LangString docFolder $(LANG_ENGLISH) "Dokumentation"
+LangString shortcut_keycom $(LANG_ENGLISH) "Tangentbordskommandon"
+LangString shortcut_userguide $(LANG_ENGLISH) "Användarhandboken"
+LangString path_userguide $(LANG_ENGLISH) "en\userGuide.html"
+LangString path_keycomfile $(LANG_ENGLISH) "en\keyCommands.html"
+LangString UNLOG_HEADER ${LANG_ENGLISH} "=========== Avinstallations Log \
+                                         var vänlig, redigera inte den här filen ==========="
+LangString UNLOG_DAT_NOT_FOUND ${LANG_ENGLISH} "Kunde inte hitta ${UNINST_DAT}, \
+                                                omöjligt att utföra avinstallationen."
+LangString UNLOG_DEL_FILE ${LANG_ENGLISH} 'Ta bort filen "$R9"?'
+LangString UNLOG_DEL_DIR ${LANG_ENGLISH} 'Ta bort mappen "$R9"?'
+LangString UNLOG_EMPTY_DIR ${LANG_ENGLISH} "Tidigare installation upptäcks vid $0.$\n\
+                                            Nödvändiga filen ${UNINSTALL_LOG}.dat saknas.$\n$\n\
+                                            Det rekommenderas starkt att välja en \
+                                            tom mapp och göra en ny installation."
+LangString UNLOG_ERROR_LOG ${LANG_ENGLISH} "Fel i loggen ${UNINSTALL_LOG}."
+LangString UNLOG_ERROR_CREATE ${LANG_ENGLISH} "Fel vid skapandet av ${UNINSTALL_LOG}."
+
+LangString section_service ${LANG_ENGLISH} "NVDA service (stöd i Windows inloggningsskärm / säkerhet dialogrutor)"
+LangString section_desktopShortcut ${LANG_ENGLISH} "Skapa genväg på skrivbordet och kortkommando (ctrl+alt+n)"

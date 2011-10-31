@@ -22,9 +22,10 @@ CLSCTX_INPROC_SERVER=1
 CLSCTX_LOCAL_SERVER=4
 
 #Special Mozilla gecko MSAA constant additions
-NAVRELATION_LABELLED_BY=0x1002
+NAVRELATION_LABEL_FOR=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 NAVRELATION_NODE_CHILD_OF=0x1005
+NAVRELATION_EMBEDS=0x1009
 
 # IAccessible2 relations (not included in the typelib)
 IA2_RELATION_FLOWS_FROM = "flowsFrom"
@@ -98,10 +99,6 @@ class OrderedWinEventLimiter(object):
 		@param threadID: the threadID of the winEvent
 		@type threadID: integer
 		"""
-		#Filter out any events for UIA windows
-		if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
-			return
-
 		if eventID==winUser.EVENT_OBJECT_FOCUS:
 			if objectID in (winUser.OBJID_SYSMENU,winUser.OBJID_MENU) and childID==0:
 				# This is a focus event on a menu bar itself, which is just silly. Ignore it.
@@ -339,10 +336,11 @@ IAccessible2StatesToNVDAStates={
 winEventHookIDs=[]
 
 def normalizeIAccessible(pacc):
-	if isinstance(pacc,comtypes.client.lazybind.Dispatch) or isinstance(pacc,comtypes.client.dynamic._Dispatch) or isinstance(pacc,IUnknown):
-		pacc=pacc.QueryInterface(IAccessible)
-	elif not isinstance(pacc,IAccessible):
-		raise ValueError("pacc %s is not, or can not be converted to, an IAccessible"%str(pacc))
+	if not isinstance(pacc,IAccessible):
+		try:
+			pacc=pacc.QueryInterface(IAccessible)
+		except COMError:
+			raise RuntimeError("%s Not an IAccessible"%pacc)
 	if not isinstance(pacc,IAccessible2):
 		try:
 			s=pacc.QueryInterface(IServiceProvider)
@@ -357,10 +355,6 @@ def normalizeIAccessible(pacc):
 	return pacc
 
 def accessibleObjectFromEvent(window,objectID,childID):
-	wmResult=c_long()
-	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
-		log.debugWarning("Window %d dead or not responding: %s" % (window, ctypes.WinError()))
-		return None
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
@@ -524,6 +518,12 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 	#Ignore any events with invalid window handles
 	if not window or not winUser.isWindow(window):
 		return None
+	#Make sure this window does not have a ghost window if possible
+	if NVDAObjects.window.GhostWindowFromHungWindow and NVDAObjects.window.GhostWindowFromHungWindow(window):
+		return None
+	#We do not support MSAA object proxied from native UIA
+	if UIAHandler.handler and UIAHandler.handler.isUIAWindow(window):
+		return None
 	obj=None
 	if useCache:
 		#See if we already know an object by this win event info
@@ -677,7 +677,7 @@ def processFocusNVDAEvent(obj,force=False):
 	@rtype: boolean
 	"""
 	if not force and isinstance(obj,NVDAObjects.IAccessible.IAccessible):
-		focus=api.getFocusObject()
+		focus=eventHandler.lastQueuedFocusObject
 		if isinstance(focus,NVDAObjects.IAccessible.IAccessible) and focus.isDuplicateIAccessibleEvent(obj):
 			return True
 		if not obj.shouldAllowIAccessibleFocusEvent:
@@ -806,7 +806,14 @@ def _fakeFocus(oldFocus):
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
+accPropServices=None
+
 def initialize():
+	global accPropServices
+	try:
+		accPropServices=comtypes.client.CreateObject(CAccPropServices)
+	except (WindowsError,COMError) as e:
+		log.debugWarning("AccPropServices is not available: %s"%e)
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
@@ -865,18 +872,22 @@ def getIAccIdentity(pacc,childID):
 	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
 	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
 	try:
+		if accPropServices:
+			hwnd,objectID,childID=accPropServices.DecomposeHwndIdentityString(stringPtr,stringSize)
+			return dict(windowHandle=hwnd,objectID=c_int(objectID).value,childID=childID)
 		stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
 		fields=struct.unpack('IIiI',stringPtr.contents.raw)
+		d={}
+		d['childID']=fields[3]
+		if fields[0]&2:
+			d['menuHandle']=fields[2]
+		else:
+			d['objectID']=fields[2]
+			d['windowHandle']=fields[1]
+		return d
 	finally:
 		windll.ole32.CoTaskMemFree(stringPtr)
-	d={}
-	d['childID']=fields[3]
-	if fields[0]&2:
-		d['menuHandle']=fields[2]
-	else:
-		d['objectID']=fields[2]
-		d['windowHandle']=fields[1]
-	return d
+ 
 
 def findGroupboxObject(obj):
 	prevWindow=winUser.getPreviousWindow(obj.windowHandle)
@@ -1008,3 +1019,15 @@ def splitIA2Attribs(attribsString):
 		# Add this key/value pair to the dict.
 		attribsDict[key] = tmp
 	return attribsDict
+
+def isMarshalledIAccessible(IAccessibleObject):
+	"""Looks at the location of the first function in the IAccessible object's vtable (IUnknown::AddRef) to see if it was implemented in oleacc.dll (its local) or ole32.dll (its marshalled)."""
+	if not isinstance(IAccessibleObject,IAccessible):
+		raise TypeError("object should be of type IAccessible, not %s"%IAccessibleObject)
+	buf=create_unicode_buffer(1024)
+	from comtypes import _compointer_base
+	addr=POINTER(c_void_p).from_address(super(_compointer_base,IAccessibleObject).value).contents.value
+	handle=HANDLE()
+	windll.kernel32.GetModuleHandleExW(6,addr,byref(handle))
+	windll.kernel32.GetModuleFileNameW(handle,buf,1024)
+	return not buf.value.lower().endswith('oleacc.dll')

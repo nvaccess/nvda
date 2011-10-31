@@ -8,6 +8,7 @@ import ctypes
 from comtypes import COMError, GUID
 import comtypes.client
 import comtypes.automation
+import NVDAHelper
 from logHandler import log
 import winUser
 import oleacc
@@ -22,6 +23,8 @@ from ..behaviors import EditableTextWithoutAutoSelectDetection
  
 #Word constants
 
+wdCollapseEnd=0
+wdCollapseStart=1
 #Indexing
 wdActiveEndAdjustedPageNumber=1
 wdActiveEndPageNumber=3
@@ -62,6 +65,8 @@ wdGoToLine=3
 
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
 
+wm_winword_expandToLine=ctypes.windll.user32.RegisterWindowMessageW(u"wm_winword_expandToLine")
+
 NVDAUnitsToWordUnits={
 	textInfos.UNIT_CHARACTER:wdCharacter,
 	textInfos.UNIT_WORD:wdWord,
@@ -99,39 +104,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return True
 
 	def _expandToLineAtCaret(self):
-		import braille
-		if braille.handler.enabled and self.obj.WinwordVersion<12:
-			from ctypes import c_long, pointer
-			rangeLeft=c_long()
-			rangeTop=c_long()
-			rangeWidth=c_long()
-			rangeHeight=c_long()
-			self.obj.WinwordWindowObject.getPoint(pointer(rangeLeft),pointer(rangeTop),pointer(rangeWidth),pointer(rangeHeight),self._rangeObj)
-			clientLeft,clientTop,clientWidth,clientHeight=self.obj.location
-			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft,rangeTop)
-			self._rangeObj.Start=tempRange.Start
-			tempRange=self.obj.WinwordWindowObject.rangeFromPoint(clientLeft+clientWidth,rangeTop)
-			self._rangeObj.End=tempRange.Start
-		elif braille.handler.enabled:
-			curLineNum=self._rangeObj.Information(wdFirstCharacterLineNumber)
-			tempRange=self._rangeObj.goto(wdGoToLine,wdGoToAbsolute,curLineNum)
-			start=tempRange.Start
-			tempRange=self._rangeObj.goto(wdGoToLine,wdGoToAbsolute,curLineNum+1)
-			end=tempRange.End
-			if start==end:
-				tempRange.Move(wdStory,1)
-				end=tempRange.end
-			self._rangeObj.SetRange(start,end)
-		else:
-			sel=self.obj.WinwordSelectionObject
-			oldSel=sel.range
-			app=sel.application
-			app.ScreenUpdating=False
-			self._rangeObj.select()
-			sel.Expand(wdLine)
-			self._rangeObj=sel.range
-			oldSel.Select()
-			app.ScreenUpdating=True
+		lineStart=ctypes.c_int()
+		lineEnd=ctypes.c_int()
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_expandToLine(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,ctypes.byref(lineStart),ctypes.byref(lineEnd))
+		if res!=0:
+			raise ctypes.WinError(res)
+		self._rangeObj.setRange(lineStart.value,lineEnd.value)
 
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
@@ -296,15 +274,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return False
 
 	def collapse(self,end=False):
-		a=self._rangeObj.Start
-		b=self._rangeObj.end
-		startOffset=min(a,b)
-		endOffset=max(a,b)
-		if not end:
-			offset=startOffset
-		else:
-			offset=endOffset
-		self._rangeObj.SetRange(offset,offset)
+		if end:
+			oldEndOffset=self._rangeObj.end
+		self._rangeObj.collapse(wdCollapseEnd if end else wdCollapseStart)
+		if end and self._rangeObj.end<oldEndOffset:
+			raise RuntimeError
 
 	def copy(self):
 		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
@@ -329,6 +303,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		else:
 			moveFunc=self._rangeObj.Move
 		res=moveFunc(unit,direction)
+		#units higher than character and word expand to contain the last text plus the insertion point offset in the document
+		#However move from a character before will incorrectly move to this offset which makes move/expand contridictory to each other
+		#Make sure that move fails if it lands on the final offset but the unit is bigger than character/word
+		if direction>0 and endPoint!="end" and unit not in (wdCharacter,wdWord)  and (self._rangeObj.start+1)==self.obj.WinwordDocumentObject.characters.count:
+			return 0
 		return res
 
 	def _get_bookmark(self):
@@ -374,12 +353,24 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			self._WinwordDocumentObject=windowObject.document
  		return self._WinwordDocumentObject
 
+	def _get_WinwordApplicationObject(self):
+		if not getattr(self,'_WinwordApplicationObject',None): 
+			self._WinwordApplicationObject=self.WinwordWindowObject.application
+ 		return self._WinwordApplicationObject
+
 	def _get_WinwordSelectionObject(self):
 		if not getattr(self,'_WinwordSelectionObject',None):
 			windowObject=self.WinwordWindowObject
 			if not windowObject: return None
 			self._WinwordSelectionObject=windowObject.selection
 		return self._WinwordSelectionObject
+
+	def script_tab(self,gesture):
+		gesture.send()
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		if info._rangeObj.tables.count>0:
+			info.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 
 	def script_nextRow(self,gesture):
 		info=self.makeTextInfo("caret")
@@ -430,6 +421,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			speech.speakMessage(_("edge of table"))
 
 	__gestures = {
+		"kb:tab": "tab",
+		"kb:shift+tab": "tab",
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+leftArrow": "previousColumn",

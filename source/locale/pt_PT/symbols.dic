@@ -1,0 +1,92 @@
+﻿#locale/pt_PT/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#URL: http://www.nvda-project.org/
+#Copyright (c) 2010-2011 Diogo Costa and Elton Lopes
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"')\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"')\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	ponto	all	always
+! sentence ending	exclamação	all	always
+? sentence ending	interrogação	all	always
+; phrase ending	ponto e vírgula	most	always
+: phrase ending	dois pontos	most	always
+decimal point		none	always
+in-word '	apóstrofo	all	norep
+
+# Whitespace
+\0	em branco	char	# vazio
+\t	tab
+\n	quebra de linha	char
+\f	quebra de página	none
+\r	retorno	char
+ 	espaço	char
+ 	espaço	char	# no-break space
+
+# Standard punctuation/symbols
+!	exclamação	all
+"	aspas	most
+\#	cardinal	most
+$	cifrão	some
+£	libra	some
+€	euro	some
+%	porcento	some
+&	e comercial	some
+'	apóstrofo	all
+(	abrir parêntesis	most
+)	fechar parêntesis	most
+*	asterisco	most
++	mais	most
+,	vírgula	all	always
+-	hífen	most
+.	ponto	all
+/	barra	some
+:	dois pontos	most
+;	ponto e vírgula	most
+<	menor que	most
+>	maior que	most
+=	igual	most
+?	interrogação	all
+@	arroba	some
+[	abrir parêntesis rectos	most
+]	fechar parêntesis rectos	most
+\\	barra invertida	most
+^	circunflexo	most
+_	sublinhado	most
+`	grave	most
+{	abrir chavetas	most
+}	fechar chavetas	most
+|	barra vertical	most
+~	til	most
+
+# Other characters
+•	ponto	some
+…	ponto ponto ponto	all	always
+...	ponto ponto ponto	all	always
+·	ponto	some
+“	abrir aspas	most
+”	fechar aspas	most
+‘	apóstrofo esquerdo	most
+’	apóstrofo direito	most
+–	travessão	most
+—	travessão	most
+●	asterisco	most
+¨	trema	most
+‎	marca da esquerda para a direita	char
+‏	marca da direita para a esquerda	char

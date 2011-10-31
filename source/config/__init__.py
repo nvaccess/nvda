@@ -55,13 +55,14 @@ confspec = ConfigObj(StringIO(
 [speech]
 	# The synthesiser to use
 	synth = string(default=auto)
-	speakPunctuation = boolean(default=False)
+	symbolLevel = integer(default=100)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
-outputDevice = string(default=default)
+	outputDevice = string(default=default)
+	autoLanguageSwitching = boolean(default=true)
+	autoDialectSwitching = boolean(default=false)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
-		raisePitchForCapitals = boolean(default=true)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
@@ -126,6 +127,7 @@ outputDevice = string(default=default)
 	autoPassThroughOnFocusChange = boolean(default=true)
 	autoPassThroughOnCaretMove = boolean(default=false)
 	passThroughAudioIndication = boolean(default=true)
+	autoSayAllOnPageLoad = boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
@@ -143,6 +145,7 @@ outputDevice = string(default=default)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
 	reportTableHeaders = boolean(default=True)
+	reportTableCellCoords = boolean(default=True)
 	reportLinks = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
@@ -154,6 +157,11 @@ outputDevice = string(default=default)
 	followFocus = boolean(default=True)
 	followCaret = boolean(default=True)
 	followMouse = boolean(default=False)
+
+[UIA]
+	minWindowsVersion = float(default=6.1)
+	enabled = boolean(default=true)
+
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
@@ -186,21 +194,6 @@ def load():
 		globalVars.configFileError=_("Errors in configuration file '%s':\n%s")%(conf.filename,"\n".join(errorList))
 	if globalVars.configFileError:
 		log.warn(globalVars.configFileError)
-
-def updateSynthConfig(synth):
-	"""Makes sure that the config contains a specific synth section for the given synth name and assigns the appropriate config spec.
-@param synth: the synth
-@type synth: l{synthDriverHandler.BaseSynthDriver}
-""" 
-	speech = conf["speech"]
-	# If there are no settings for this synth, make sure there are defaults.
-	if not speech.has_key(synth.name):
-		speech[synth.name] = {}
-		speech[synth.name].configspec=synth.getConfigSpec()
-		conf.validate(val, copy = True,section=speech[synth.name])
-		return True
-	else:
-		return False
 
 def save():
 	"""Saves the configuration to the config file.

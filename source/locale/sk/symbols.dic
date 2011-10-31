@@ -1,0 +1,128 @@
+﻿#locale/sk/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Others
+decimal point	(?<=\d)\,(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	bodka	all	always	# bodka na konci vety
+! sentence ending	výkričník	all	always	# výkričnik na konci vety
+? sentence ending	otáznik	all	always	# otáznik na konci vety
+; phrase ending	bodkočiarka	most	always	# bodkočiarka v prostriedku vety
+: phrase ending	dvojbodka	most	always	# dvojbodka v prostriedku vety
+decimal point		none	always	# desatinná čiarka
+in-word '	apostrof	all	norep	# apostrof vo vnútri slova
+negative number	mínus	none	norep	# záporné číslo
+
+# Whitespace
+\0	prázdny	char	# znak 0
+\t	tab	# tabulátor
+\v	vertikálny tab	# vertikálny tabulátor
+\n	nový riadok	char	# line feed
+\f	zlom strany	none	# zlom strany
+\r	koniec riadku	char	# carriage return
+ 	medzera	char	# medzera
+ 	medzera	char	# tvrdá medzera
+
+# Standard punctuation/symbols
+!	výkričník	all
+"	úvodzovky	most
+\#	krížik	most
+$	dolár	some
+£	libra	some
+€	euro	some
+%	percento	some
+&	and	some
+'	apostrof	some
+(	zátvorka	most
+)	zatvoriť	most
+*	hviezda	some
++	plus	some
+,	čiarka	all	always
+-	pomlčka	most
+.	bodka	all
+/	lomeno	some
+:	dvojbodka	most
+;	bodkočiarka	most
+<	menší	most
+>	väčší	most
+=	rovná sa	most
+?	otáznik	all
+@	zavináč	some
+[	hranatá zátvorka	most
+]	hranatá zatvoriť	most
+\\	opačné lomeno	most
+^	striežka	most
+_	podčiarknutie	most
+`	akcent	most
+{	zložená zátvorka	most
+}	zložená zatvoriť	most
+|	zvislá čiara	most
+~	vlnovka	most
+
+# Other characters
+•	odrážka	some
+…	bodka bodka bodka	all	always
+...	bodka bodka bodka	all	always
+	odrážka	some
+“	horné úvodzovky	most
+”	dolné úvodzovky	most
+–	dlhá pomlčka	most
+—	dlhšia pomlčka	most
+●	krúžok	most
+¨	prehláska	most
+‎	znak z ľava do prava 	char
+‏	znak z prava do ľava	char
+¡	obrátený výkričník	most
+¦	prerušená čiara	most
+ª	horný index a	most
+«	dvojitá lomená zátvorka	most
+­	mäkká pomlčka	most
+²	na druhú	most
+³	na tretiu	most
+´	dĺžeň	most
+·	bodka v prostriedku	most
+¸	cedila	most
+¹	na prvú	most
+»	dvojitá lomená zatvoriť	most
+¿	obrátený otáznik	most
+‘	ľavá úvodzovka	most
+’	pravá úvodzovka	most
+‡	dvojitý kríž	most
+‣	odrážka trojuholník	most
+‰	promile	most
+§	paragraf	most
+÷	deleno	some
+×	krát	some
+°	stupňov	some
+¢	centov	some
+¤	značka meny	some
+−	mínus	some
+±	plus mínus	some
+¼	štvrtina	some
+½	polovica	some
+¾	tri štvrtiny	some
+¬	logické not	some
+æ	aé	some
+þ	pomlčka nad	some
+™	trademark	some
+®	registered	some
+©	copiright	some
+¥	jen	some
+₨	rupia	some
+⅓	tretina	some
+⅔	dve tretiny	some
+√	odmocnina	some
+∞	nekonečno	some
+≠	nerovná sa	most
+ß	ostré s	some
+ə	šwa	most
+■	čierny štvorček	some
+

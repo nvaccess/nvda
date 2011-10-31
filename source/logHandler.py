@@ -20,7 +20,6 @@ RPC_S_CALL_FAILED_DNE = 1727
 E_ACCESSDENIED = -2147024891
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 RPC_E_CALL_REJECTED = -2147418111
-RPC_E_CALL_CANCELED = -2147418110
 RPC_E_DISCONNECTED = -2147417848
 
 moduleCache={}
@@ -135,12 +134,14 @@ class Logger(logging.Logger):
 			return
 		self._log(log.IO, msg, args, **kwargs)
 
-	def exception(self, msg="", exc_info=True):
+	def exception(self, msg="", exc_info=True, **kwargs):
 		"""Log an exception at an appropriate levle.
 		Normally, it will be logged at level "ERROR".
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
 		"""
 		import comtypes
+		import watchdog
+		from watchdog import RPC_E_CALL_CANCELED
 		if exc_info is True:
 			exc_info = sys.exc_info()
 
@@ -148,12 +149,13 @@ class Logger(logging.Logger):
 		if (
 			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, RPC_E_CALL_CANCELED))
 			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED, RPC_E_DISCONNECTED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
+			or isinstance(exc, watchdog.CallCancelled)
 		):
 			level = self.DEBUGWARNING
 		else:
 			level = self.ERROR
 
-		self._log(level, msg, (), exc_info=exc_info)
+		self._log(level, msg, (), exc_info=exc_info, **kwargs)
 
 class FileHandler(logging.StreamHandler):
 
@@ -175,7 +177,10 @@ class FileHandler(logging.StreamHandler):
 		# Only play the error sound if this is a test version.
 		shouldPlayErrorSound = versionInfo and versionInfo.isTestVersion
 		if record.levelno>=logging.CRITICAL:
-			winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
+			try:
+				winsound.PlaySound("SystemHand",winsound.SND_ALIAS)
+			except:
+				pass
 		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
 			try:
 				nvwave.playWaveFile("waves\\error.wav")
@@ -239,7 +244,7 @@ def _getDefaultLogFilePath():
 		return ".\\nvda.log"
 
 def _excepthook(*exc_info):
-	log.error("", exc_info=exc_info, codepath="unhandled exception")
+	log.exception(exc_info=exc_info, codepath="unhandled exception")
 
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
@@ -252,10 +257,16 @@ def initialize():
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
-	if not globalVars.appArgs.logFileName:
-		globalVars.appArgs.logFileName = _getDefaultLogFilePath()
-	# Our FileHandler always outputs in UTF-8.
-	logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
+	if globalVars.appArgs.secure:
+		# Don't log in secure mode.
+		logHandler = logging.NullHandler()
+		# There's no point in logging anything at all, since it'll go nowhere.
+		log.setLevel(100)
+	else:
+		if not globalVars.appArgs.logFileName:
+			globalVars.appArgs.logFileName = _getDefaultLogFilePath()
+		# Our FileHandler always outputs in UTF-8.
+		logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
 	logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
@@ -266,8 +277,9 @@ def initialize():
 def setLogLevelFromConfig():
 	"""Set the log level based on the current configuration.
 	"""
-	if globalVars.appArgs.logLevel != 0:
-		# Log level was overridden on the command line, so don't set it.
+	if globalVars.appArgs.logLevel != 0 or globalVars.appArgs.secure:
+		# Log level was overridden on the command line or we're running in secure mode,
+		# so don't set it.
 		return
 	import config
 	levelName=config.conf["general"]["loggingLevel"]

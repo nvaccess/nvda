@@ -53,7 +53,6 @@ def isPendingItems(queue):
 		res=True
 	else:
 		res=False
-	log.debug("pending events in %s: %s"%(queue.__name__,res))
 	return res
 
 def pumpAll():

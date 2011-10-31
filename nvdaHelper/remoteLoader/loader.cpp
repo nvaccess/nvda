@@ -14,6 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <cstdio>
 #include <cassert>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <remote/nvdaHelperRemote.h>
 
@@ -22,7 +23,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR cmdline, 
 	#ifndef NDEBUG
 	Beep(440,100);
 	#endif
-	res=injection_initialize();
+	res=injection_initialize(0);
 	assert(res!=0); //nvdaHelper_initialize
 	// Wait for input or EOF.
 	getc(stdin);

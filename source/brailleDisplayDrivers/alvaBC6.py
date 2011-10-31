@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2009-2010 Optelec B.V. <http://www.optelec.com/>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2009-2011 Optelec B.V. <http://www.optelec.com/>, James Teh <jamie@jantrid.net>
 
 import braille
 import queueHandler
@@ -58,12 +58,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		AlvaLib.AlvaOpen(0)
 		self._alva_NumCells = 0
 		self._keysDown = set()
-		self._keyCallback = ALVA_PKEYCALLBACK(self._keyCallback)
-		AlvaLib.AlvaSetKeyCallback(0, self._keyCallback, None)
+		self._ignoreKeyReleases = False
+		self._keyCallbackInst = ALVA_PKEYCALLBACK(self._keyCallback)
+		AlvaLib.AlvaSetKeyCallback(0, self._keyCallbackInst, None)
 
 	def terminate(self):
 		super(BrailleDisplayDriver, self).terminate()
 		AlvaLib.AlvaClose(1)
+		# Drop the ctypes function instance for the key callback,
+		# as it is holding a reference to an instance method, which causes a reference cycle.
+		self._keyCallbackInst = None
 
 	def _get_numCells(self):
 		if self._alva_NumCells==0:
@@ -80,24 +84,31 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		AlvaLib.AlvaSendBraille(0, cells, 0, len(cells))
 
 	def _keyCallback(self, dev, key, userData):
-		group = (key >> 8) & 0xFF
+		group = (key >> 8) & 0x7F
 		number = key & 0xFF
 		if key & ALVA_RELEASE_MASK:
-			# The key is being released.
-			if self._keysDown:
+			# Release.
+			if not self._ignoreKeyReleases and self._keysDown:
 				try:
 					inputCore.manager.executeGesture(InputGesture(self._keysDown))
 				except inputCore.NoInputGestureAction:
 					pass
-				self._keysDown.clear()
+				# Any further releases are just the rest of the keys in the combination being released,
+				# so they should be ignored.
+				self._ignoreKeyReleases = True
+			self._keysDown.discard((group, number))
 		else:
+			# Press.
 			if group == ALVA_CR_GROUP:
+				# Execute routing keys when pressed instead of released.
 				try:
 					inputCore.manager.executeGesture(InputGesture(((group, number),)))
 				except inputCore.NoInputGestureAction:
 					pass
 			else:
 				self._keysDown.add((group, number))
+				# This begins a new key combination.
+				self._ignoreKeyReleases = False
 		return False
 
 	gestureMap = inputCore.GlobalGestureMap({

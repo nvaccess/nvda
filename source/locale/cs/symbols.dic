@@ -1,0 +1,122 @@
+﻿#locale/cs/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Others
+decimal point	(?<=\d)\,(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	tečka	all	always	# tečka na konci věty
+! sentence ending	vykřičník	all	always	# vykřičník na konci věty
+? sentence ending	otazník	all	always	# otazník na konci věty
+; phrase ending	středník	most	always	# středník uprostřed věty
+: phrase ending	dvojtečka	most	always	# dvojtečka uprostřed věty
+decimal point		none	always	# desetinná čárka
+in-word '	apostrof	all	norep	# apostrof uvnitř slova
+negative number	mínus	none	norep	# záporné číslo
+
+# Whitespace
+\0	prázdný	char	# znak 0
+\t	tab	# tabulátor
+\n	nový řádek	char	# line feed
+\f	zlom strany	none	# zlom strany
+\r	konec řádku	char	# konec řádku
+ 	mezera	char	# mezera
+ 	mezera	char	# tvrdá mezera
+
+# Standard punctuation/symbols
+!	vykřičník	all
+"	uvozovky	most
+\#	křížek	most
+$	dolar	some
+£	libra	some
+€	euro	some
+%	procento	some
+&	ampersand	some
+'	apostrof	some
+(	levá závorka	most
+)	pravá závorka	most
+*	hvězdička	most
++	plus	most
+,	čárka	all	always
+-	pomlčka	most
+.	tečka	all
+/	lomeno	some
+:	dvojtečka	most
+;	středník	most
+<	menší	most
+>	větší	most
+=	rovná se	most
+?	otazník	all
+@	zavináč	some
+[	levá hranatá	most
+]	pravá hranatá	most
+\\	obrácené lomítko	most
+^	stříška	most
+_	podtržení	most
+`	akcent	most
+{	levá složená	most
+}	pravá složená	most
+|	svislá čára	most
+~	vlnovka	most
+
+
+# Other characters
+•	odrážka	some
+…	tečka tečka tečka	all	always
+..	tečka tečka	some
+...	tečka tečka tečka	all	always
+	odrážka	some
+“	horní uvozovky	most
+”	dolní uvozovky	most
+‘	levá uvozovka	most
+’	pravá uvozovka	most
+–	dlouhá pomlčka	most
+—	delší pomlčka	most
+●	kroužek	most
+¨	přehláska	most
+‎	znak zleva doprava 	char
+‏	znak zprava doleva	char
+¡	obrácený vykřičník	most
+¦	přerušená čára	most
+«	dvojitá lomená závorka	most
+­	měkká pomlčka	most
+»	dvojitá lomená zavřít	most
+¹	na první	most
+²	na druhou	most
+³	na třetí	most
+´	čárka	most
+ˇ	háček	most
+¿	obrácený otazník	most
+‡	dvojitý kříž	most
+‣	odrážka trojúhelník	most
+‰	promile	most
+÷	děleno	some
+×	krát	some
+°	stupňů	some
+¢	centů	some
+¤	značka měny	some
+−	mínus	some
+±	plus mínus	some
+¼	čtvrtina	some
+¾	tři čtvrtiny	some
+⅓	třetina	some
+⅔	dvě třetiny	some
+½	polovina	some
+™	týem	some
+®	registrováno	some
+©	copiright	some
+¥	jen	some
+₨	rupie	some
+√	odmocnina	some
+∞	nekonečno	some
+≠	nerovná se	most
+ß	ostré es	some
+ľ	měkké el	char	norep
+ô	o se stříškou	char	norep

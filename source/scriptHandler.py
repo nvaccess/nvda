@@ -26,6 +26,9 @@ def _makeKbEmulateScript(scriptName):
 	keyName = scriptName[3:]
 	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)
 	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)
+	if isinstance(scriptName, unicode):
+		# __name__ must be str; i.e. can't be unicode.
+		scriptName = scriptName.encode("mbcs")
 	func.__name__ = "script_%s" % scriptName
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % keyName
 	return func
@@ -52,6 +55,11 @@ def findScript(gesture):
 	focus = api.getFocusObject()
 	if not focus:
 		return None
+
+	# Import late to avoid circular import.
+	# We need to import this here because this might be the first import of this module
+	# and it might be needed by global maps.
+	import globalCommands
 
 	globalMapScripts = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
@@ -99,8 +107,6 @@ def findScript(gesture):
 			return func
 
 	# Global commands.
-	# Import late to avoid circular import.
-	import globalCommands
 	func = _getObjScript(globalCommands.commands, gesture, globalMapScripts)
 	if func:
 		return func

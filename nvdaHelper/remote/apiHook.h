@@ -15,10 +15,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef _APIHOOK_H
 #define _APIHOOK_H
 
-#ifdef __CPLUSCPLUS
-extern "C" {
-#endif
-
 /**
  * Initializes API hooking subsystem.
  * @return success flag
@@ -51,15 +47,11 @@ template<typename funcType> funcType _apiHook_hookFunction_tpl(const char* modul
 /**
  * Actually hooks all requested hook functions.
  */
-	BOOL apiHook_enableHooks();
+	bool apiHook_enableHooks();
 
 /**
  * unhooks all functions previously hooked with apiHook_hookFunction and terminates API hooking subsystem.
  */
-BOOL apiHook_terminate();
-
-#ifdef __CPLUSCPLUS
-extern "C" {
-#endif
+bool apiHook_terminate();
 
 #endif

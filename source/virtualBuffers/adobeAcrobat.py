@@ -7,6 +7,7 @@ import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
+import languageHandler
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 
@@ -33,6 +34,13 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			attrs["level"] = level
 		return super(AdobeAcrobat_TextInfo, self)._normalizeControlField(attrs)
 
+	def _normalizeFormatField(self, attrs):
+		try:
+			attrs["language"] = languageHandler.normalizeLanguage(attrs["language"])
+		except KeyError:
+			pass
+		return attrs
+
 class AdobeAcrobat(VirtualBuffer):
 	TextInfo = AdobeAcrobat_TextInfo
 	programmaticScrollMayFireEvent = True
@@ -57,7 +65,7 @@ class AdobeAcrobat(VirtualBuffer):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		return obj.windowHandle, obj.event_objectID if obj.event_objectID > 0 else obj.event_childID
+		return obj.windowHandle, obj.accID
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType in ("link", "unvisitedLink"):
@@ -88,6 +96,8 @@ class AdobeAcrobat(VirtualBuffer):
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
+		elif nodeType=="comboBox":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]}
 		else:
 			return None
 		return attrs

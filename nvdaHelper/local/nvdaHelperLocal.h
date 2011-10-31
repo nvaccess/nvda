@@ -14,11 +14,13 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #ifndef NVDAHELPERLOCAL_H
 #define NVDAHELPERLOCAL_H
-#include <windows.h>
+#include <rpc.h>
 
-#define DLLEXPORT extern "C" __declspec(dllexport)
-
-DLLEXPORT handle_t createConnection(int processID);
-DLLEXPORT void destroyConnection(handle_t bindingHandle);
+handle_t createConnection(int processID);
+void destroyConnection(handle_t bindingHandle);
+LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult);
+void cancelSendMessage();
+void nvdaHelperLocal_initialize();
+void nvdaHelperLocal_terminate();
 
 #endif

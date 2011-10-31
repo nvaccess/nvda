@@ -14,6 +14,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <string>
 #include <map>
+#define WIN32_LEAN_AND_MEAN 
+#include <windows.h>
+#include <ole2.h>
+#include <rpc.h>
 #include "displayModelRemote.h"
 #include "gdiHooks.h"
 
@@ -24,7 +28,7 @@ BOOL CALLBACK EnumChildWindowsProc(HWND hwnd, LPARAM lParam) {
 	return TRUE;
 }
 
-error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, const int minHorizontalWhitespace, const int minVerticalWhitespace, BSTR* textBuf, BSTR* characterRectsBuf) {
+error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, const int minHorizontalWhitespace, const int minVerticalWhitespace, boolean useXML, BSTR* textBuf, BSTR* characterRectsBuf) {
 	HWND hwnd=(HWND)windowHandle;
 	deque<HWND> windowDeque;
 	EnumChildWindows(hwnd,EnumChildWindowsProc,(LPARAM)&windowDeque);
@@ -57,13 +61,13 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	if(tempModel) {
 		wstring text;
 		deque<RECT> characterRects;
-		tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,hasDescendantWindows,text,characterRects);
+		tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,hasDescendantWindows,useXML!=false,text,characterRects);
 		if(hasDescendantWindows) {
 			tempModel->requestDelete();
 		} else {
 			tempModel->release();
 		}
-		*textBuf=SysAllocStringLen(text.c_str(),text.size());
+		*textBuf=SysAllocStringLen(text.c_str(),static_cast<UINT>(text.size()));
 		size_t cpBufSize=characterRects.size()*4;
 		// Hackishly use a BSTR to contain points.
 		wchar_t* cpTempBuf=(wchar_t*)malloc(cpBufSize*sizeof(wchar_t));
@@ -74,7 +78,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 			*(cpTempBufIt++)=(wchar_t)cpIt->right;
 			*(cpTempBufIt++)=(wchar_t)cpIt->bottom;
 		}
-		*characterRectsBuf=SysAllocStringLen(cpTempBuf,cpBufSize);
+		*characterRectsBuf=SysAllocStringLen(cpTempBuf,static_cast<UINT>(cpBufSize));
 		free(cpTempBuf);
 	}
 	return 0;

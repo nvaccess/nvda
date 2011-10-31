@@ -8,6 +8,7 @@ from comtypes import COMError
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 import eventHandler
+from scriptHandler import isScriptWaiting
 
 class Client(IAccessible):
 
@@ -69,6 +70,49 @@ class Container(IAccessible):
 			return
 
 		return super(Container, self).event_gainFocus()
+
+
+class TableRow(Container):
+
+	value=None
+	description=None
+
+	def _get_activeChild(self):
+		# QT doesn't do accFocus properly, so find the active child ourselves.
+		child = self.firstChild
+		while child:
+			states = child.states
+			if controlTypes.STATE_FOCUSED in states:
+				return child
+			child = child.next
+		return None
+
+
+class TableCell(IAccessible):
+
+	value=None
+
+	def script_nextColumn(self,gesture):
+		gesture.send()
+		if not isScriptWaiting():
+			next=self.next
+			if next and controlTypes.STATE_FOCUSED in next.states:
+				eventHandler.executeEvent("gainFocus", next)
+
+	def script_previousColumn(self,gesture):
+		gesture.send()
+		if not isScriptWaiting():
+			previous=self.previous
+			if previous and controlTypes.STATE_FOCUSED in previous.states:
+				eventHandler.executeEvent("gainFocus", previous)
+
+	__gestures = {
+		"kb:tab": "nextColumn",
+		"kb:rightArrow": "nextColumn",
+		"kb:shift+tab": "previousColumn",
+		"kb:leftArrow": "previousColumn",
+	}
+
 
 class TreeViewItem(IAccessible):
 

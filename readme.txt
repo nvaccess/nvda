@@ -13,23 +13,16 @@ General dependencies:
 	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython 2.8 unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.44.03 or later, Windows dll:
+	* eSpeak, version 1.45.46 or later:
 		* Official web site: http://espeak.sourceforge.net/
-		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
-	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
-		* Extract the archive into the source\synthDrivers directory.
-	* IAccessible2, version 1.1.0.0 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2
+		* Download the espeak source archive. Note that it must be an official source archive from the espeak website containing already compiled phoneme data, not straight from svn. 
+		* Extract it in to include/espeak so that include/espeak/src, include/espeak/dictsource, include/espeak/platforms and include/espeak/espeak-data all exist.
+	* IAccessible2, version 1.2.1 or later: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2
 		* Download the merged IDL and copy it to include\ia2\ia2.idl.
-		* The proxy dll and typelib are also required.
-			* Pre-built versions have been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy ia2.tlb into the source\typelibs directory.
-		* Copy the 32 bit version of the proxy dll into the source\lib directory, naming it IAccessible2Proxy.dll.
-		* Copy the 64 bit version of the proxy dll into the source\lib64 directory, naming it IAccessible2Proxy.dll.
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
-	* liblouis, version 2.1.1 or later, Windows dll and Python bindings:
+	* liblouis, version 2.3.0 or later, Windows dll and Python bindings:
 		* Official web site: http://code.google.com/p/liblouis/
 		* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
 		* Copy the louis Python package directory into the source directory.
@@ -45,9 +38,6 @@ General dependencies:
 		* This can be found in the client files archive available from http://www.adobe.com/devnet/acrobat/interapplication_communication.html
 			* The archive is named something like Acrobat_Accessibility_9.1.zip.
 		* Extract the AcrobatAccess.idl file into include\AcrobatAccess.
-		* The typelib is also required.
-			* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/AcrobatAccess.tlb
-		* Copy AcrobatAccess.tlb into the source\typelibs directory.
 	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
 		* Copy FlashAccessibility.tlb into the source\typelibs directory.
 	* txt2tags, version 2.5 or later: http://txt2tags.sourceforge.net/
@@ -75,11 +65,11 @@ To use the ALVA BC640/680 braille display driver:
 		* Copy alvaw32.dll into the source\brailleDisplayDrivers directory.
 
 To use the MDV Lilli braille display driver:
-	* lilli.dll: http://www.nvda-project.org/3rdParty/lilli.dll
+	* lilli.dll, version 2.1.0.0: http://www.nvda-project.org/3rdParty/lilli.dll
 		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
 
 To use the Handy Tech braille display driver:
-	* Handy Tech Braille SDK: http://www.openbraille.org/tech.html
+	* Handy Tech Braille SDK, version 1.3.0.2 or later: https://www.handytech.de/en/normal/service/downloads/ht-software/brailledriver/
 		* Copy these files from the SDK's prog directory into NVDA's source\brailleDisplayDrivers\handyTech directory: HtBrailleDriverServer.dll, HtBrailleDriverServer.tlb, sbsupport.dll, dealers.dat
 	* If you want to be able to use this driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
@@ -94,14 +84,31 @@ To build a portable archive:
 
 To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
-	* NSIS UAC plug-in, version 0.0.11d or later: http://nsis.sourceforge.net/UAC_plug-in
+	* NSIS UAC plug-in, version 0.0.11d:
+		* Official web site: http://nsis.sourceforge.net/UAC_plug-in
+		* NVDA does not work with recent versions. Direct link to 0.0.11d: http://stashbox.org/560965/UAC%20v0.0.11d.zip
 		* Copy the ANSI build of UAC.dll (found in release\a in the archive) into the installer directory.
+
+To generate developer documentation:
+	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
 scons source
-You should do this again whenever the version of comtypes changes or new language files are added.
+You should do this again whenever the version of comtypes changes or language files are added or changed.
+
+=== Compiling NVDAHelper with Debugging Options ===
+Among other things, preparing the source tree builds the NVDAHelper libraries.  
+If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlags command line variable. It takes one or more of the following flags:
+	* symbols: debugging symbols will be added to the DLLs and pdb files will be generated for use with a debugger. (symbols are produced by default, but if specifying nvdaHelperDebugFlags and you want symbols it is still necessary to  specify this keyword.)
+	* debugCRT: the libraries will be linked against the debug C runtime and assertions will be enabled. (By default, the normal CRT is used and assertions are disabled.)
+	* noOptimize: All compiler optimizations will be disabled. (Optimization 2 [/O2] is used by default.)
+	* RTC: runtime checks (stack corruption, uninitialized variables, etc.) will be enabled. (The default is no runtime checks.)
+The special keywords none and all can also be used in place of the individual flags.
+
+An example follows that enables symbols and disables optimizations:
+scons source nvdaHelperDebugflags=symbols,noOptimize
 
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.
@@ -123,12 +130,21 @@ To build an installer, type:
 scons installer
 The installer will be placed in the output directory.
 
+To generate developer documentation, type:
+scons devDocs
+The developer docs will be placed in the devDocs folder in the output directory.
+
+To generate an archive of debug symbols for the various dll/exe binaries, type:
+scons symbolsArchive
+The archive will be placed in the output directory.
+ 
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.
 	* release: Whether this is a release version.
 	* publisher: The publisher of this build.
 	* certFile: The certificate file with which to sign executables. The certificate must be in pfx format and contain the private key.
 	* certPassword: The password for the private key in the signing certificate. If omitted, no password will be assumed.
+	* certTimestampServer: The URL of the timestamping server to use to timestamp authenticode signatures. If omitted, signatures will not be timestamped.
 	* outputDir: The directory where the final built archives and such will be placed.
 	* targetArchitectures: The target architectures that NVDA should support. Possible values are all, x86 and x86_64. This should generally be left as the default.
 

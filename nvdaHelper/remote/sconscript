@@ -60,12 +60,23 @@ displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="displayModelRemote_",
 )
 
+nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCServerSource=env.MSRPCStubs(
+	target="./nvdaInProcUtils",
+	source=[
+		"../interfaces/nvdaInProcUtils/nvdaInProcUtils.idl",
+		"../interfaces/nvdaInProcUtils/nvdaInProcUtils.acf",
+	],
+	MSRPCStubs_noClient=True,
+	MSRPCStubs_prefix="nvdaInProcUtils_",
+)
+
 ia2utilsObj=env.Object("./ia2utils","../common/ia2utils.cpp")
 
 remoteLib=env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=[
 		"injection.cpp",
+		"log.cpp",
 		"inProcess.cpp",
 		"apiHook.cpp",
 		"inputLangChange.cpp",
@@ -73,21 +84,23 @@ remoteLib=env.SharedLibrary(
 		"ia2Support.cpp",
 		"ia2LiveRegions.cpp",
 		ia2utilsObj,
-		ia2RPCStubs[2],
+		env.Object('_ia2_i',ia2RPCStubs[3]),
 		"rpcSrv.cpp",
 		"vbufRemote.cpp",
 		vbufRPCServerSource,
 		winIPCUtilsObj,
 		controllerRPCClientSource,
 		controllerInternalRPCClientSource,
+		"winword.cpp",
 		"gdiHooks.cpp",
 		"displayModel.cpp",
 		"displayModelRemote.cpp",
 		displayModelRPCServerSource,
+		nvdaInProcUtilsRPCServerSource,
 		"nvdaHelperRemote.def",
 	],
 	LIBS=[
-		minHookLib[1 if not env['nvdaHelperDebug'] else 2],
+		minHookLib[1 if 'symbols' not in env['nvdaHelperDebugFlags'] else 2],
 		"user32",
 		"gdi32",
 		"ole32",

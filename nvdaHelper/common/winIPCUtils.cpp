@@ -15,12 +15,13 @@ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 #include <cwchar>
 #include <string>
 #include <sstream>
+#define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include "winIPCUtils.h"
 
 using namespace std;
 
-int generateDesktopSpecificNamespace(wchar_t* buf, int cch) {
+size_t generateDesktopSpecificNamespace(wchar_t* buf, size_t cch) {
 	DWORD sessionId=0;
 	ProcessIdToSessionId(GetCurrentProcessId(),&sessionId);
 	HANDLE hDesk=GetThreadDesktop(GetCurrentThreadId());
@@ -28,8 +29,8 @@ int generateDesktopSpecificNamespace(wchar_t* buf, int cch) {
 	GetUserObjectInformation(hDesk,UOI_NAME,deskName,sizeof(deskName),NULL);
 	wostringstream s;
 	s<<sessionId<<"."<<deskName;
-	int len=s.str().length();
-	if(!buf||(cch<=0)) return len;
+	size_t len=s.str().length();
+	if(!buf||(cch==0)) return len;
 	wcsncpy(buf,s.str().c_str(),cch);
 	return min(len,cch);
 }

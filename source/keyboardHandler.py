@@ -20,6 +20,8 @@ import api
 import winInputHook
 import inputCore
 
+ignoreInjected=False
+
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
 VK_WIN = "windows"
@@ -66,7 +68,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter
 		#Injected keys should be ignored
-		if injected:
+		if ignoreInjected and injected:
 			return True
 
 		keyCode = (vkCode, extended)
@@ -117,7 +119,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 	"""
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers
-		if injected:
+		if ignoreInjected and injected:
 			return True
 
 		keyCode = (vkCode, extended)
@@ -200,6 +202,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		#: @type: str
 		self.layout = config.conf["keyboard"]["keyboardLayout"]
 		self.modifiers = modifiers = set(modifiers)
+		# Don't double up if this is a modifier key repeat.
+		modifiers.discard((vkCode, isExtended))
 		if vkCode in (winUser.VK_DIVIDE, winUser.VK_MULTIPLY, winUser.VK_SUBTRACT, winUser.VK_ADD) and winUser.getKeyState(winUser.VK_NUMLOCK) & 1:
 			# Some numpad keys have the same vkCode regardless of numlock.
 			# For these keys, treat numlock as a modifier.
@@ -232,12 +236,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
-	def _get__keyNames(self):
-		mainKey = self.mainKeyName
-
-		if self.isModifier:
-			return (mainKey,)
-
+	def _get_modifierNames(self):
 		modTexts = set()
 		for modVk, modExt in self.generalizedModifiers:
 			if isNVDAModifierKey(modVk, modExt):
@@ -245,16 +244,22 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else:
 				modTexts.add(self.getVkName(modVk, None))
 
-		return tuple(modTexts) + (mainKey,)
+		return modTexts
 
-	def _get_keyName(self):
-		return "+".join(self._keyNames)
+	def _get__keyNamesInDisplayOrder(self):
+		return tuple(self.modifierNames) + (self.mainKeyName,)
+
+	def _get_logIdentifier(self):
+		return u"kb({layout}):{key}".format(layout=self.layout,
+			key="+".join(self._keyNamesInDisplayOrder))
 
 	def _get_displayName(self):
-		return "+".join(localizedKeyLabels.get(key, key) for key in self._keyNames)
+		return "+".join(localizedKeyLabels.get(key, key) for key in self._keyNamesInDisplayOrder)
 
 	def _get_identifiers(self):
-		keyName = self.keyName.lower()
+		keyNames = set(self.modifierNames)
+		keyNames.add(self.mainKeyName)
+		keyName = "+".join(keyNames).lower()
 		return (
 			u"kb({layout}):{key}".format(layout=self.layout, key=keyName),
 			u"kb:{key}".format(key=keyName)
@@ -264,14 +269,12 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
 			# Don't report volume controlling keys.
 			return False
-		if self.vkCode == winUser.VK_SPACE:
-			return False
 		# Aside from space, a key name of more than 1 character is a command.
-		if len(self.mainKeyName) > 1:
+		if self.vkCode != winUser.VK_SPACE and len(self.mainKeyName) > 1:
 			return True
 		# If this key has modifiers other than shift, it is a command; e.g. shift+f is text, but control+f is a command.
 		modifiers = self.generalizedModifiers
-		if modifiers and modifiers != frozenset((winUser.VK_SHIFT,)):
+		if modifiers and (len(modifiers) > 1 or tuple(modifiers)[0][0] != winUser.VK_SHIFT):
 			return True
 		return False
 
@@ -296,33 +299,38 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			state=_("on") if toggleState else _("off")))
 
 	def send(self):
-		keys = []
-		for vk, ext in self.generalizedModifiers:
-			if vk == VK_WIN:
-				if winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768:
+		global ignoreInjected
+		try:
+			ignoreInjected=True
+			keys = []
+			for vk, ext in self.generalizedModifiers:
+				if vk == VK_WIN:
+					if winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768:
+						# Already down.
+						continue
+					vk = winUser.VK_LWIN
+				elif winUser.getKeyState(vk) & 32768:
 					# Already down.
 					continue
-				vk = winUser.VK_LWIN
-			elif winUser.getKeyState(vk) & 32768:
-				# Already down.
-				continue
-			keys.append((vk, ext))
-		keys.append((self.vkCode, self.isExtended))
+				keys.append((vk, 0, ext))
+			keys.append((self.vkCode, self.scanCode, self.isExtended))
 
-		if winUser.getKeyState(self.vkCode) & 32768:
-			# This key is already down, so send a key up for it first.
-			winUser.keybd_event(self.vkCode, 0, self.isExtended + 2, 0)
+			if winUser.getKeyState(self.vkCode) & 32768:
+				# This key is already down, so send a key up for it first.
+				winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, 0)
 
-		# Send key down events for these keys.
-		for vk, ext in keys:
-			winUser.keybd_event(vk, 0, ext, 0)
-		# Send key up events for the keys in reverse order.
-		for vk, ext in reversed(keys):
-			winUser.keybd_event(vk, 0, ext + 2, 0)
+			# Send key down events for these keys.
+			for vk, scan, ext in keys:
+				winUser.keybd_event(vk, scan, ext, 0)
+			# Send key up events for the keys in reverse order.
+			for vk, scan, ext in reversed(keys):
+				winUser.keybd_event(vk, scan, ext + 2, 0)
 
-		if not queueHandler.isPendingItems(queueHandler.eventQueue):
-			time.sleep(0.01)
-			wx.Yield()
+			if not queueHandler.isPendingItems(queueHandler.eventQueue):
+				time.sleep(0.01)
+				wx.Yield()
+		finally:
+			ignoreInjected=False
 
 	@classmethod
 	def fromName(cls, name):

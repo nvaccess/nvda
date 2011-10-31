@@ -7,12 +7,13 @@
 import sys
 import os
 import itertools
-from configobj import ConfigObj
+import configobj
 import baseObject
 import scriptHandler
 import queueHandler
 import api
 import speech
+import characterProcessing
 import config
 import watchdog
 from logHandler import log
@@ -42,12 +43,25 @@ class InputGesture(baseObject.AutoPropertyObject):
 		A single identifier should take the form: C{source:id}
 		where C{source} is a few characters representing the source of this gesture
 		and C{id} is the specific gesture.
-		An example identifier is: C{kb(desktop):NVDA+1}
+		If C{id} consists of multiple items with indeterminate order,
+		they should be separated by a + sign and they should be in Python set order.
+		Also, the entire identifier should be in lower case.
+		An example identifier is: C{kb(desktop):nvda+1}
 		Subclasses must implement this method.
 		@return: One or more identifiers which uniquely identify this gesture.
 		@rtype: list or tuple of str
 		"""
 		raise NotImplementedError
+
+	def _get_logIdentifier(self):
+		"""A single identifier which will be logged for this gesture.
+		This identifier should be usable in input gesture maps, but should be as readable as possible to the user.
+		For example, it might sort key names in a particular order
+		and it might contain mixed case.
+		This is in contrast to L{identifiers}, which must be normalized.
+		The base implementation returns the first identifier from L{identifiers}.
+		"""
+		return self.identifiers[0]
 
 	def _get_displayName(self):
 		"""The name of this gesture as presented to the user.
@@ -112,6 +126,9 @@ class GlobalGestureMap(object):
 		@type entries: mapping of str to mapping
 		"""
 		self._map = {}
+		#: Indicates that the last load or update contained an error.
+		#: @type: bool
+		self.lastUpdateContainedError = False
 		if entries:
 			self.update(entries)
 
@@ -119,6 +136,7 @@ class GlobalGestureMap(object):
 		"""Clear this map.
 		"""
 		self._map.clear()
+		self.lastUpdateContainedError = False
 
 	def add(self, gesture, module, className, script,replace=False):
 		"""Add a gesture mapping.
@@ -158,7 +176,12 @@ class GlobalGestureMap(object):
 		@param filename: The name of the file to load.
 		@type: str
 		"""
-		conf = ConfigObj(filename, file_error=True, encoding="UTF-8")
+		try:
+			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
+		except (configobj.ConfigObjError,UnicodeDecodeError), e:
+			log.warning("Error in gesture map '%s': %s"%(filename, e))
+			self.lastUpdateContainedError = True
+			return
 		self.update(conf)
 
 	def update(self, entries):
@@ -179,11 +202,13 @@ class GlobalGestureMap(object):
 		@param entries: The items to add.
 		@type entries: mapping of str to mapping
 		"""
+		self.lastUpdateContainedError = False
 		for locationName, location in entries.iteritems():
 			try:
 				module, className = locationName.rsplit(".", 1)
 			except:
 				log.error("Invalid module/class specification: %s" % locationName)
+				self.lastUpdateContainedError = True
 				continue
 			for script, gestures in location.iteritems():
 				if script == "None":
@@ -197,6 +222,7 @@ class GlobalGestureMap(object):
 						self.add(gesture, module, className, script)
 					except:
 						log.error("Invalid gesture: %s" % gesture)
+						self.lastUpdateContainedError = True
 						continue
 
 	def getScriptsForGesture(self, gesture):
@@ -264,11 +290,13 @@ class InputManager(baseObject.AutoPropertyObject):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.pauseSpeech, speechEffect == gesture.SPEECHEFFECT_PAUSE)
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
-			log.io("Input: %s" % gesture.identifiers[0])
+			log.io("Input: %s" % gesture.logIdentifier)
 
-		if self.isInputHelpActive and not getattr(script, "bypassInputHelp", False):
-			queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture)
-			return
+		if self.isInputHelpActive:
+			bypass = getattr(script, "bypassInputHelp", False)
+			queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass)
+			if not bypass:
+				return
 
 		if gesture.isModifier:
 			raise NoInputGestureAction
@@ -284,17 +312,17 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		raise NoInputGestureAction
 
-	def _handleInputHelp(self, gesture):
+	def _handleInputHelp(self, gesture, onlyLog=False):
 		textList = [gesture.displayName]
 		script = gesture.script
 		runScript = False
+		logMsg = "Input help: gesture %s"%gesture.logIdentifier
 		if script:
 			scriptName = scriptHandler.getScriptName(script)
+			logMsg+=", bound to script %s" % scriptName
 			scriptLocation = scriptHandler.getScriptLocation(script)
-			logMsg = "Input help: gesture %s, bound to script %s" % (gesture.identifiers[0], scriptName)
 			if scriptLocation:
 				logMsg += " on %s" % scriptLocation
-			log.info(logMsg)
 			if scriptName == "toggleInputHelp":
 				runScript = True
 			else:
@@ -302,10 +330,14 @@ class InputManager(baseObject.AutoPropertyObject):
 				if desc:
 					textList.append(desc)
 
+		log.info(logMsg)
+		if onlyLog:
+			return
+
 		import braille
 		braille.handler.message("\t\t".join(textList))
 		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
-		speech.speakText(textList[0], reason=speech.REASON_MESSAGE, expandPunctuation=True)
+		speech.speakText(textList[0], reason=speech.REASON_MESSAGE, symbolLevel=characterProcessing.SYMLVL_ALL)
 		for text in textList[1:]:
 			speech.speakMessage(text)
 
@@ -325,7 +357,10 @@ class InputManager(baseObject.AutoPropertyObject):
 		try:
 			self.localeGestureMap.load(os.path.join("locale", lang, "gestures.ini"))
 		except IOError:
-			log.debugWarning("No locale gesture map for language %s" % lang)
+			try:
+				self.localeGestureMap.load(os.path.join("locale", lang.split('_')[0], "gestures.ini"))
+			except IOError:
+				log.debugWarning("No locale gesture map for language %s" % lang)
 
 	def emulateGesture(self, gesture):
 		"""Convenience method to emulate a gesture.
@@ -345,15 +380,30 @@ class InputManager(baseObject.AutoPropertyObject):
 
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
+	Any items separated by a + sign after the source are considered to be of indeterminate order
+	and are reordered into Python set ordering.
+	Then the entire identifier is converted to lower case.
 	"""
 	prefix, main = identifier.split(":", 1)
 	main = main.split("+")
-	# The order of all parts except the last doesn't matter as far as the user is concerned,
+	# The order of the parts doesn't matter as far as the user is concerned,
 	# but we need them to be in a determinate order so they will match other gesture identifiers.
-	# Rather than sorting, just use Python's set ordering.
-	main = "+".join(itertools.chain(frozenset(main[:-1]), main[-1:]))
+	# We use Python's set ordering.
+	main = "+".join(frozenset(main))
 	return u"{0}:{1}".format(prefix, main).lower()
 
 #: The singleton input manager instance.
 #: @type: L{InputManager}
-manager = InputManager()
+manager = None
+
+def initialize():
+	"""Initializes input core, creating a global L{InputManager} singleton.
+	"""
+	global manager
+	manager=InputManager()
+
+def terminate():
+	"""Terminates input core.
+	"""
+	global manager
+	manager=None

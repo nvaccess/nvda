@@ -13,11 +13,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <list>
- #include <cassert>
 #include <windows.h>
 #include <oleidl.h>
 #include <mshtml.h>
-#include <common/debug.h>
+#include <remote/log.h>
 #include "mshtml.h"
 #include "node.h"
 
@@ -36,7 +35,7 @@ class CDispatchChangeSink : public IDispatch {
 	refCount(1),
 	hasFired(false),
 	allowDelete(true) {
-		assert(storageNode);
+		nhAssert(storageNode);
 		this->storageNode=storageNode;
 		incBackendLibRefCount();
 	}
@@ -45,14 +44,14 @@ class CDispatchChangeSink : public IDispatch {
 		decBackendLibRefCount();
 	}
 
-	void CDispatchChangeSink::onChange() {
+	void onChange() {
 		if(hasFired||allowDelete) {
 			return;
 		}
 		hasFired=true;
-		DEBUG_MSG(L"Marking storage node as invalid");
+		LOG_DEBUG(L"Marking storage node as invalid");
 		this->storageNode->backend->invalidateSubtree(this->storageNode);
-		DEBUG_MSG(L"Done");
+		LOG_DEBUG(L"Done");
 	}
 
 	HRESULT STDMETHODCALLTYPE IUnknown::QueryInterface(REFIID riid, void** pvpObject) {
@@ -84,7 +83,7 @@ class CDispatchChangeSink : public IDispatch {
 				#ifdef DEBUG
 				Beep(660,50);
 				#endif
-				DEBUG_MSG(L"refCount hit 0 before it should, not deleting, node info: " << this->storageNode->getDebugInfo());
+				LOG_DEBUG(L"refCount hit 0 before it should, not deleting, node info: " << this->storageNode->getDebugInfo());
 			}
 			return 0;
 		}
@@ -93,12 +92,12 @@ class CDispatchChangeSink : public IDispatch {
 
 	HRESULT STDMETHODCALLTYPE IDispatch::Invoke(DISPID  dispIdMember, REFIID  riid, LCID  lcid, WORD  wFlags, DISPPARAMS FAR*  pDispParams, VARIANT FAR*  pVarResult, EXCEPINFO FAR*  pExcepInfo, unsigned int FAR*  puArgErr) {
 		if(dispIdMember==0) {
-			DEBUG_MSG(L"calling onChange");
+			LOG_DEBUG(L"calling onChange");
 			this->onChange();
-			DEBUG_MSG(L"Done, returning S_OK");
+			LOG_DEBUG(L"Done, returning S_OK");
 			return S_OK;
 		}
-		DEBUG_MSG(L"invoke called with unknown member ID, returning E_INVALIDARG");
+		LOG_DEBUG(L"invoke called with unknown member ID, returning E_INVALIDARG");
 		return E_INVALIDARG;
 	}
 
@@ -129,7 +128,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 	CHTMLChangeSink(MshtmlVBufStorage_controlFieldNode_t* storageNode) {
 		int res;
 		this->refCount=1;
-		assert(storageNode);
+		nhAssert(storageNode);
 		this->storageNode=storageNode;
 		this->pMarkupPointerBegin=NULL;
 		this->pMarkupPointerEnd=NULL;
@@ -173,7 +172,7 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 	}
 
 	ULONG STDMETHODCALLTYPE IUnknown::Release() {
-		assert(this->refCount>0);
+		nhAssert(this->refCount>0);
 		this->refCount--;
 		if(this->refCount==0) {
 			delete this;
@@ -183,13 +182,13 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 	}
 
 	HRESULT STDMETHODCALLTYPE IHTMLChangeSink::Notify() {
-		DEBUG_MSG(L"notify called for dirty range");
+		LOG_DEBUG(L"notify called for dirty range");
 		if(this->storageNode->HTMLChangeSinkCookey==0) {
-			DEBUG_MSG(L"Cookey not set yet!");
+			LOG_DEBUG(L"Cookey not set yet!");
 			return E_FAIL;
 		}
 		if(this->storageNode->pMarkupContainer2->GetAndClearDirtyRange(this->storageNode->HTMLChangeSinkCookey,this->pMarkupPointerBegin,this->pMarkupPointerEnd)!=S_OK) {
-			DEBUG_MSG(L"Could not get and clear dirty range on IMarkupContainer2");
+			LOG_DEBUG(L"Could not get and clear dirty range on IMarkupContainer2");
 			return E_FAIL;
 		}
 		IHTMLElement* pHTMLElement=NULL;
@@ -227,22 +226,21 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 					break;
 				}
 			}
-			assert(invalidNode);
+			nhAssert(invalidNode);
 		}
 		if(invalidNode) {
 			this->storageNode->backend->invalidateSubtree(invalidNode);
 		}
-		DEBUG_MSG(L"notify done, returning S_OK");
+		LOG_DEBUG(L"notify done, returning S_OK");
 		return S_OK;
 	}
 
 };
 
-MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock) {
-	int res;
+MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
 	VARIANT_BOOL varBool;
-	assert(backend);
-	assert(pHTMLDOMNode);
+	nhAssert(backend);
+	nhAssert(pHTMLDOMNode);
 	this->backend=backend;
 	this->pHTMLElement2=NULL;
 	this->propChangeSink=NULL;
@@ -251,7 +249,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 	this->HTMLChangeSinkCookey=0;
 	pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&(this->pHTMLElement2));
 	if(!this->pHTMLElement2) {
-		DEBUG_MSG(L"Could not queryInterface from IHTMLDOMNode to IHTMLElement2");
+		LOG_DEBUG(L"Could not queryInterface from IHTMLDOMNode to IHTMLElement2");
 	}
 	if(this->pHTMLElement2) {
 		CDispatchChangeSink* propChangeSink=new CDispatchChangeSink(this);
@@ -261,7 +259,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 		if((pHTMLElement2->attachEvent(L"onpropertychange",propChangeSink,&varBool)==S_OK)&&varBool) {
 			this->propChangeSink=propChangeSink;
 		} else {
-			DEBUG_MSG(L"Error attaching onPropertyChange event sink to IHTMLElement2 at "<<pHTMLElement2);
+			LOG_DEBUG(L"Error attaching onPropertyChange event sink to IHTMLElement2 at "<<pHTMLElement2);
 			propChangeSink->allowDelete=true;
 			propChangeSink->Release();
 		}
@@ -277,7 +275,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 			if((pHTMLElement2->attachEvent(L"onload",loadSink,&varBool)==S_OK)&&varBool) {
 				this->loadSink=loadSink;
 			} else {
-				DEBUG_MSG(L"Error attaching onload event sink to IHTMLElement2 at "<<pHTMLElement2);
+				LOG_DEBUG(L"Error attaching onload event sink to IHTMLElement2 at "<<pHTMLElement2);
 				loadSink->allowDelete=true;
 				loadSink->Release();
 			}
@@ -296,20 +294,20 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
 				if(this->pMarkupContainer2) {
 					this->pHTMLChangeSink=new CHTMLChangeSink(this);
 					if(pMarkupContainer2->RegisterForDirtyRange(this->pHTMLChangeSink,&(this->HTMLChangeSinkCookey))!=S_OK) {
-						DEBUG_MSG(L"Could not register dirty range notifications on IMarkupContainer2");
+						LOG_DEBUG(L"Could not register dirty range notifications on IMarkupContainer2");
 						this->pMarkupContainer2->Release();
 						this->pMarkupContainer2=NULL;
 						this->pHTMLChangeSink->Release();
 						this->pHTMLChangeSink=NULL;
 					}
 				} else {
-					DEBUG_MSG(L"Could not queryInterface from IDispatch to IMarkupContainer2");
+					LOG_DEBUG(L"Could not queryInterface from IDispatch to IMarkupContainer2");
 				}
 			} else {
-				DEBUG_MSG(L"Could not get document of IHTMLDOMNode2");
+				LOG_DEBUG(L"Could not get document of IHTMLDOMNode2");
 			}
 		} else {
-			DEBUG_MSG(L"Could not queryInterface from IHTMLDOMNode to IHTMLDOMNode2");
+			LOG_DEBUG(L"Could not queryInterface from IHTMLDOMNode to IHTMLDOMNode2");
 		}
 	}
 	if(nodeName!=NULL) {
@@ -319,17 +317,17 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
  
 MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 	if(this->propChangeSink) {
-		assert(this->pHTMLElement2);
+		nhAssert(this->pHTMLElement2);
 		if(pHTMLElement2->detachEvent(L"onpropertychange",this->propChangeSink)!=S_OK) {
-			DEBUG_MSG(L"Error detaching onpropertychange event sink from IHTMLElement2");
+			LOG_DEBUG(L"Error detaching onpropertychange event sink from IHTMLElement2");
 		}
 		static_cast<CDispatchChangeSink*>(this->propChangeSink)->allowDelete=true;
 		this->propChangeSink->Release();
 	}
 	if(this->loadSink) {
-		assert(this->pHTMLElement2);
+		nhAssert(this->pHTMLElement2);
 		if(pHTMLElement2->detachEvent(L"onload",this->loadSink)!=S_OK) {
-			DEBUG_MSG(L"Error detaching onload event sink from IHTMLElement2");
+			LOG_DEBUG(L"Error detaching onload event sink from IHTMLElement2");
 		}
 		static_cast<CDispatchChangeSink*>(this->loadSink)->allowDelete=true;
 		this->loadSink->Release();
@@ -338,9 +336,9 @@ MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 		this->pHTMLElement2->Release();
 	}
 	if(this->pHTMLChangeSink) {
-		assert(this->pMarkupContainer2);
+		nhAssert(this->pMarkupContainer2);
 		if(this->pMarkupContainer2->UnRegisterForDirtyRange(this->HTMLChangeSinkCookey)!=S_OK) {
-			DEBUG_MSG(L"Error unregistering for dirty range notifications on IMarkupContainer2");
+			LOG_DEBUG(L"Error unregistering for dirty range notifications on IMarkupContainer2");
 		}
 		this->pMarkupContainer2->Release();
 		this->pHTMLChangeSink->Release();

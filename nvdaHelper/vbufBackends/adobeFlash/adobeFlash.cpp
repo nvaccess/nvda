@@ -13,10 +13,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <sstream>
-#include <cassert>
 #include <map>
 #include <windows.h>
 #include <oleacc.h>
+#include <remote/log.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include "adobeFlash.h"
@@ -64,7 +64,7 @@ void CALLBACK AdobeFlashVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHO
 }
 
 VBufStorage_fieldNode_t* AdobeFlashVBufBackend_t::renderControlContent(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, IAccessible* pacc, long accChildID) {
-	assert(buffer);
+	nhAssert(buffer);
 
 	int res;
 	//all IAccessible methods take a variant for childID, get one ready
@@ -83,7 +83,7 @@ int id=accChildID;
 
 	//Add this node to the buffer
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,docHandle,id,TRUE);
-	assert(parentNode); //new node must have been created
+	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 
 	wostringstream s;
@@ -166,7 +166,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 		//Could not get the IAccessible pointer from the WM_GETOBJECT result
 		return;
 	}
-	assert(pacc); //must get a valid IAccessible object
+	nhAssert(pacc); //must get a valid IAccessible object
 	if(ID==0) {
 		VBufStorage_controlFieldNode_t* parentNode=buffer->addControlFieldNode(NULL,NULL,docHandle,ID,TRUE);
 		parentNode->addAttribute(L"IAccessible::role",L"10");
@@ -177,7 +177,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 		VARIANT varChild;
 		varChild.vt=VT_I4;
 		HRESULT hRes;
-		for(int i=1;i<1000&&childIDsByLocation.size()<childCount;++i) {
+		for(int i=1;i<1000&&static_cast<long>(childIDsByLocation.size())<childCount;++i) {
 			IDispatch* childDisp=NULL;
 			varChild.lVal=i;
 			hRes=pacc->get_accChild(varChild,&childDisp);
@@ -205,4 +205,11 @@ AdobeFlashVBufBackend_t::AdobeFlashVBufBackend_t(int docHandle, int ID): VBufBac
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
 	VBufBackend_t* backend=new AdobeFlashVBufBackend_t(docHandle,ID);
 	return backend;
+}
+
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+	if(reason==DLL_PROCESS_ATTACH) {
+		_CrtSetReportHookW2(_CRT_RPTHOOK_INSTALL,(_CRT_REPORT_HOOKW)NVDALogCrtReportHook);
+	}
+	return true;
 }

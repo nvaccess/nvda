@@ -9,9 +9,12 @@ class AppModule(appModuleHandler.AppModule):
 	def event_NVDAObject_init(self,obj):
 		if isinstance(obj,NVDAObjects.IAccessible.IAccessible):
 			obj.shouldAllowIAccessibleFocusEvent=True
-			if obj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW and obj.windowClassName=="WebViewWindowClass":
-				#Disable a safety mechonism in our IAccessible support as in iTunes it causes an infinit ancestry.
-				obj.parentUsesSuperOnWindowRootIAccessible=False
+			if obj.windowClassName=="WebViewWindowClass":
+				if obj.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
+					#Disable a safety mechonism in our IAccessible support as in iTunes it causes an infinit ancestry.
+					obj.parentUsesSuperOnWindowRootIAccessible=False
+				else:
+					obj.hasEncodedAccDescription=True
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName

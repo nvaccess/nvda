@@ -1,0 +1,573 @@
+NVDA NVDA_VERSION Handbuch fr Entwickler
+
+
+%!includeconf: ../userGuide.t2tconf
+
+% Remove double spacing from the beginning of each line as txt2tags seems to indent preformatted text by two spaces
+%!PostProc(html): '^  ' ''
+
+= Inhaltsverzeichnis =[toc]
+%%toc
+
++ Einleitung +
+Dieses Handbuch stellt informationen zur Entwicklung von NVDA und dessen Komponenten sowie ihre Û¢ersetzungen bereit.
+(HINWEIS: Dies ist lediglich eine Einfhrung. Fr die komplette Referenz ist es fr Entwickler empfehlenswert sich die Code-Dokumentation durchzulesen.)
+
+++ Eine Anmerkung zu Python ++
+NVDA und dessen Erweiterungen werden in der Programmiersprache Python geschrieben.
+Das Ziel dieses Handbuches ist nicht, Ihnen Python beizubringen, lediglich stellt es Beispiele zur Veranschaulichung der Syntax in Python bereit.
+Die Dokumentationen und weitere Materialien sind auf den englischsprachigen Seiten von [Python www.python.org] zu finden.
+
++ Û¢ersetzung +
+Damit NVDA mehrere Sprachen/Sprachrã´­e untersttzt, muss es bersetzt und sprachspezifische Daten zur Verfgung gestellt werden.
+
+++ Beschreibungen der Sonderzeichen ++
+Manchmal kann es schwierig bis unmíµší»©ch sein, zwei Zeichen voneinander zu unterscheiden. 
+Zwei Zeichen kíµ¶í½¥n beispielsweise identisch ausgesprochen werden, auch wenn es eigentlich víµ®í»©g unterschiedliche Zeichen sind.
+Um dieses problem zu lí¶Ší´®, kíµ¶í½¥n Zeichenbeschreibungen bereitgestellt werden, die jedes Zeichen eindeutig beschreiben.
+
+Zeichenbeschreibungen fr einen Sprachraum kíµ¶í½¥n in einer Datei characterdescriptions.dic bereitgestellt werden, die sich im Verzeichnis des jeweiligen Sprachraums befinden muss.
+Die Datei muss utf-8-codiert werden.
+Leerzeilen und Zeilen, die mit einem "#" beginnen, werden ignoriert.
+alle anderen Zeilen mssen ein Zeichen gefolgt von einem Tabulator und dessen Beschreibung enthalten. 
+
+zum Beispiel:
+```
+# Dies ist ein Kommentar
+a	Anton
+b	Berta
+```
+
+Ein vollstã­¤iges Beispiel finden Sie in der Datei "locale\de\characterDescriptions.dic".
+
+++ Aussprache der Symbole ++
+Fr Sprachausgabennutzer ist es oft sinnvoll, beim zwichenweisen Navigieren Sonderzeichen als Wí¶‡í³¥r angesagt zu bekommen.
+Unglcklicherweise sprechen verschiedene Sprachausgaben die Sonderzeichen sehr unterschiedlich aus. Manche Sprachausgaben erlauben keine Kontrolle ber die Aussprache von Sonderzeichen.
+Hierfr kíµ¶í½¥n Informationen ber die Aussprache von Sonderzeichen in NVDA mitgegeben werden.
+
+Dies kann sprachspezifisch in der UTF8-kodierten Datei namens "Symbols.dic" im Verzeichnis des jeweiligen Sprachraums erfolgen.
+Leerzeilen und Zeilen, die mit einem "#" beginnen, werden ignoriert.
+Alle Sprachrã´­e erben die Sonderzeichenaussprache des Englischen.
+
+Die Datei enthã«´ zwei Abschnitte.
+
++++ Komplexe Symbole definieren +++
+Der erste Abschnitt ist optional und enthã«´ Definitionen komplexer Symbole in Form regulã±¥r Ausdrcke.
+Complex symbols are symbols which aren't simply a character or sequence of characters, but instead require a more complicated match.
+An example is the full stop (.) sentence ending in English.
+The "." is used for multiple purposes, so a more complicated check is required to determine whether this refers to the end of a sentence.
+
+The complex symbols section begins with the line:
+```
+complexSymbols:
+```
+
+Subsequent lines contain a textual identifier used to identify the symbol, a tab and the regular expression pattern for that symbol.
+For example:
+```
+. sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+```
+
+Again, the English symbols are inherited by all other locales, so you need not include any complex symbols already defined for English.
+
++++ Symbol-Informationen definieren +++
+The second section provides information about when and how to pronounce all symbols.
+It begins with the line:
+```
+symbols:
+```
+
+Subsequent lines should contain several fields separated by tabs.
+The only mandatory fields are the identifier and replacement.
+The default will be used for omitted fields.
+The fields are as follows:
+- identifier: The identifier of the symbol.
+In most cases, this is just the character or characters of the symbol.
+However, it can also be the identifier of a complex symbol.
+Certain characters cannot be typed into the file, so the following special sequences can be used:
+- \0: Null
+- \t: Tabulator
+- \n: Zeilenumbruch
+- \r: Zeilenumbruch zum Zeilenanfang
+- \f: form feed
+- \#: #-Zeichen (bení¶Ží¸§t einen Backslash, da dieses #-Zeichen sonst als Kommentar angesehen wird)
+- replacement: The text which should be spoken for the symbol.
+- level: The symbol level at which the symbol should be spoken.
+The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
+This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
+"char" means that the symbol should only be pronounced when moving by character.
+The default is to inherit the value or "all" if there is nothing to inherit.
+- preserve: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
+For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
+This field should be one of the following:
+- never: Never preserve the symbol.
+- always: Always preserve the symbol.
+- norep: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
+- -: Use the default.
+The default is to inherit the value or "never" if there is nothing to inherit.
+-
+Finally, a display name for the symbol can be provided in a comment after a tab at the end of the line.
+This will be shown to users when editing the symbol information and is especially useful for translators to define translated names for English complex symbols.
+
+Hierzu einige Beispiele:
+```
+(	runde Klammer auf	most
+```
+This means that the "(" character should be spoken as "left paren" only when the symbol level is set to most or higher; i.e. most or all.
+```
+,	Komma	all	always
+```
+This means that the "," character should be spoken as "comma" when the symbol level is set to all and that the character itself should always be preserved so that the synthesiser will pause appropriately.
+```
+. sentence ending	point	# . fin de phrase
+```
+This line appears in the French symbols.dic file.
+It means that the ". sentence ending" complex symbol should be spoken as "point".
+Level and preserve are not specified, so they will be taken from English.
+A display name is provided so that French users will know what the symbol represents.
+
+Please see the file locale\en\symbols.dic for the English definitions which are inherited for all locales.
+This is also a good full example.
+
++ Plugins +
+
+++ Û¢ersicht ++
+Mittels der Plugins erhalten Sie die Míµší»©chkeit, das Verhalten global oder in bestimmten Anwendungen nach Ihren Wnschen anzupassen.
+Das sind unter anderem:
+- Auf bestimmte Ereignisse reagieren, wenn sich zum Beispiel der Fokus verschiebt oder wenn sich die Eigenschaften eines Objekts ã­¤ern.
+- Befehle implementieren, die an bestimmte Tastendrcke oder andere Eingabemethoden gebunden werden kíµ¶í½¥n.
+- Das Verhalten bestimmter Steuerelemente beeinflussen oder weitere Funktionen hinzufgen.
+- Untersttzung fr Textinhalte oder komplexe Dokumente anpassen oder hinzufgen.
+-
+
+This section provides an introduction to developing plugins.
+Developers should consult the code documentation for a complete reference.
+
+++ Typen der Plugins ++
+Folgende zwei Typen der Plugins gibt es:
+- Anwendungsmodule: Enthalten speziellen Code fr eine bestimmte Anwendung.
+Ein Anwendungsmodul nimmt Ereignisse fr eine bestimmte Anwendung entgegen, auch wenn die Anwendung momentan nicht fokussiert ist.
+Wenn eine Anwendung fokussiert ist, kann der Nutzer sã¬´liche Befehle ausfhren, die im Anwendungsmodul definiert und an Eingabemethoden zugewiesen wurden.
+- Allgemeine Plugins: Diese enthalten Code, die berall, auch in allen Anwendungen funktionieren. 
+Dabei nehmen Sie alle Ereignisse von allen Elementen im Betriebssystem entgegen.
+Befehle, die in allgemeinen Plugins an Eingabemethoden zugewiesen wurden, kíµ¶í½¥n unabhã­§ig davon ausgefhrt werden, welche Anwendung grade aktiv ist.
+-
+
+Wenn Sie vorhaben die Zugã­§lichkeit von NVDA fr bestimmte Anwendungen zu verbessern, sind die Anwendungsmodule empfehlelnswert.
+Im Gegensatz, wenn Sie vorhaben globalen Code fr NVDA zu entwickeln, der systemweit zugã­§lich sein soll, zum Beispiel um sich die Signalstã±«e von Funknetzwerken anzeigen zu lassen, ist ein allgemeines Plugin empfehlenswert.
+
+Anwendungsmodule und die allgemeinen Plugins sind sehr ã§®lich.
+Dies sind beides Python-Quelldateien (mit der Erweiterung .py), die dabei eine spezielle Klasse definieren, die sã¬´liche Ereignisse, Skripte und Komponenten beinhalten und die Zugriffssteuerung der eigenen Klassen, Textpassagen und komplexen Dokumenten definieren.
+Dabei unterscheiden sie sich jedoch in einigen Punkten.
+
+Die folgenden Abschnitte beschreiben separat die Anwendungsmodule und die allgemeinen Plugins AnschlieÞ¥nd werden wieder allgemeinere Punkte erlã´´ert.
+
+++ Grundlagen eines Anwendungsmoduls ++
+Anwendungsmodule besitzen die Erweiterung .py und haben den gleichen Namen wie die Anwendungen, fr die sie verwendet werden sollen. 
+Ein Anwendungsmodul fr den Editor msste zum Beispiel notepad.py heiÞ¥n, weil die ausfhrbare Datei des Editors notepad.exe heiÞ´.
+
+Anwendungsmodule mssen im Unterordner "appModules" der Benutzerkonfiguration von nvda liegen. 
+Weitere Informationen ber den Standort Ihres benutzerspezifischen Konfigurationsverzeichnisses finden Sie im Benutzerhandbuch von NVDA.
+
+Anwendungsmodule mssen eine Klasse "appModule" definieren, die alle Eigenschaften und Methoden von appModuleHandler.AppModule erbt.
+Diese Klasse kann dann Ereignisse, Scripte, Eingabemethodenzuweisungen und anderen Code enthalten.
+Details hierzu lesen Sie weiter unten.
+
+Sobald NVDA erkennt, dass eine bestimmte Anwendung gestartet wird, wird dessen Anwendungsmodul geladen.
+Wenn die betreffende Anwendung oder NVDA beendet wird, wird auch das Anwendungsmodul wieder entladen.
+
+++ Beispiel 1: Ein Anwendungsmodul erzeugt Signaltíµ¶í³ bei Ereignissen, wenn sich der Fokus verã­¤ert ++[Example1]
+Das folgende anwendungsmodul gibt jedes mal einen Signalton wieder, wenn sich innerhalb des Editors der Fokus ã­¤ert.
+Dieses Beispiel veranschaulicht den grundsã³ºlichen Aufbau eines Anwendungsmoduls.
+
+Fgen sie den Folgenden code zwischen den Start- und Endmarken (jedoch nicht die Marken selbst) in eine Datei mit dem Namen notepad.py und speichern Sie diese im Unterverzeichnis appmodules in ihrer benutzerspezifischen nvda-Konfiguration.
+Û¢ernehmen Sie hierbei auch alle Tab- und Leerzeichen.
+
+Starten Sie anschlieÞ¥nd nvda neu oder wã§¬en Sie Plugins neu laden" aus dem Men Extras, damit die Ã®derungen wirksam werden.
+
+Õ¦fnen Sie zu guter Letzt den Editor und bewegen Sie den Fokus innerhalb der Anwendung (z.B. innerhalb des Mens, innerhalb von Dialogfeldern etc).
+Sie sollten jedes mal einen Signalton hí¶†í´®, wenn sich der Fokus ã­¤ert.
+Wenn sie sich jedoch auÞ¥rhalb des Editors (z.B. im Explorer) befinden, sollten Sie keine Signaltíµ¶í³ hí¶†í´®.
+ 
+```
+--- Beginn ---
+# nvda-Anwendungsmodul fr den Editor
+# Beispiel 1 aus dem Entwicklerhandbuch
+
+import appModuleHandler
+
+class AppModule(appModuleHandler.AppModule):
+
+	def event_gainFocus(self, obj, nextHandler):
+		import tones
+		tones.beep(550, 50)
+		nextHandler()
+
+--- Ende ---
+```
+
+Dieses anwendungsmodul beginnt mit zwei Kommentarzeilen, die den Zweck des Anwendungsmoduls beschreiben.
+
+AnschlieÞ¥nd wird das Modul "appmodule" importiert, das die Basisklasse fr Anwendungsmodule zur Verfgung stellt.
+
+Als nã¢¨stes wird eine Klasse namens AppModule definiert, die von appModuleHandler.AppModule abgeleitet ist.
+
+Innerhalb der Klasse werden ein oder mehr Ereignisse, scripte oder Eingabemethodenzuweisungen definiert.
+Dieses Beispiel definiert ein Ereignis namens gainfocus (event_gainFocus), das bei jeder Ausfhrung einen kurzen Signalton abspielt.
+Die Implementierung des Ereignisses ist fr dieses Beispiel noch nicht wichtig, wichtig ist lediglich die Definition der Klasse.
+
+Ereignisse werden weiter unten in diesem Handbuch nã§¥r erlã´´ert.
+
+Denken Sie - wie bei anderen Beispielen in diesem handbuch - daran, das erstellte anwendungsmodul zu lí¶Ší²¨en und nvda neu zu starten bzw. die Plugins neuzuladen, wenn sie ihre Tests abgeschlossen haben, um das ursprngliche Verhalten von nvda wiederherzustellen.
+
+++ Grundlagen der Allgemeinen Plugins ++
+Global Plugin files have a .py extension, and should have a short unique name which identifies  what they do. 
+
+Global Plugin  files must be placed in the globalPlugins subdirectory of the user's NVDA user configuration directory.
+For more information on where to find the user configuration directory, please see the NVDA user guide.
+
+Global Plugins must define a class called GlobalPlugin, which inherits from globalPluginHandler.GlobalPlugin.
+This class can then define event and script methods, gesture bindings and other code.
+This will all be covered in depth later.
+
+NVDA loads all global plugins as soon as it starts, and unloads them on exit. 
+
+++ Beispiel 2: Eine Standarderweiterung - Ein Skript zur Ansage der NVDA-Version ++
+The following example Global Plugin Allows you to press NVDA+shift+v while anywhere in the Operating System to find out NVDA's version. 
+This example is only to show you the basic layout of a Global Plugin.
+
+Copy and paste the code between (but not including) the start and end markers into a new text file with a name of example2.py, which should be saved in the globalPlugins subdirectory.
+Be very careful to keep all tabs and spaces intact.
+
+Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
+
+From anywhere, you can now press NVDA+shift+v to have NVDA's version spoken and brailled.
+
+```
+--- Beginn ---
+# Version announcement plugin for NVDA
+# Developer guide example 2
+
+import globalPluginHandler
+import ui
+import versionInfo
+
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+
+	def script_announceNVDAVersion(self, gesture):
+		ui.message(versionInfo.version)
+
+	__gestures={
+		"kb:NVDA+shift+v": "announceNVDAVersion",
+	}
+
+--- Ende ---
+```
+
+This Global Plugin file starts with two comment lines, which describe what the file is for.
+
+It then imports the globalPluginHandler module, so that the Global Plugin has access to the base GlobalPlugin class.
+
+It also imports a few other modules, namely ui and versionInfo, which  this specific plugin needs in order for it to perform the necessary actions to announce the version.
+
+Next, it defines a class called GlobalPlugin, which is inherited from globalPluginHandler.GlobalPlugin.
+
+Inside this class, it defines 1 or more events, scripts or gesture bindings.
+In this example, it defines a script method that performs the version announcement, and provides a binding from NVDA+shift+v to this script.
+However, the details of the script and its binding are not important for the purposes of this example.
+The most important part is the class itself.
+ 
+As with other examples in this guide, remember to delete the created Global Plugin when finished testing and then restart NVDA or reload plugins, so that original functionality is restored.
+
+++ NVDA-Objekte ++
+NVDA represents controls and other GUI elements as NVDA Objects.
+These NVDA Objects contain standardised properties, such as name, role, value, states and description, which allow other parts of NVDA to query or present information about a control in a generalised way.
+For example, the OK button in a dialog would be represented as an NVDA Object with a name of "OK" and a role of button.
+Similarly, a checkbox with a label of "I agree" would have a name of "I agree", a role of checkbox, and if currently checked, a state of checked.
+
+As there are many different GUI Toolkits and platform and accessibility APIs, NVDA Objects abstract these differences into a standard form that NVDA can use, regardless of the toolkit or API a particular control is made with.
+For example,  the Ok button just discussed could be a widget in a Java application, an MSAA object, an IAccessible2 object or a UI Automation element. 
+
+NVDA Objects have many properties.
+Some of the most useful are:
+- name: the label of the control.
+- role: one of the ROLE_* constants from NVDA's controlTypes module.
+Button, dialog, editableText, window and checkbox are examples of roles.
+- states: a set of 0 or more of the STATE_* constants from NVDA's controlTypes module.
+Focusable, focused, selected, selectable, expanded, collapsed and checked are some examples of states.
+- value: the value of the control; e.g. the percentage of a scroll bar or the current setting of a combo box.
+- description: a sentence or two describing what the control does (usually the same as its tooltip).
+- location: the object's left, top, width and height positions in screen coordinates.  
+- parent: this object's parent object.
+For example, a list item object's parent would be the list containing it.
+- next: the object directly after this one on the same level in logical order.
+For example, a menu item NVDA Object's next object is most likely another menu item within the same menu.
+- previous: like next but in reverse.
+- firstChild: the first direct child object of this object.
+For example, a list's first child would be the first list item.
+- lastChild: the last direct child of this object.
+  - children: a list of all the direct children of this object; e.g. all the menu items in a menu.
+-
+
+There are also a few simplified navigation properties such as simpleParent, simpleNext, simpleFirstChild and simpleLastChild.
+These are like their respective navigation properties described above, but NVDA filters out unuseful objects.
+These properties are used when NVDA's simple review mode is turned on, which is the default.
+These simple properties may be easier to use, but the real navigation properties more closely reflect the underlying Operating System structure.
+
+When developing plugins, most of the time, it is not important what toolkit or API backs an NVDA Object, as the plugin will usually only access standard properties such as name, role and value.
+However, as plugins become more advanced, it is certainly possible to delve deeper into NVDA Objects to find out toolkit or API specific information if required.
+
+Plugins make use of NVDA Objects in three particular ways:
+- Most events that plugins receive take an argument which is the NVDA Object on which the event occurred.
+For example, event_gainFocus takes the NVDA Object that represents the control gaining focus.
+- Scripts, events or other code may fetch objects of interest such as the NVDA Object with focus, NVDA's current navigator object, or perhaps the Desktop NVDA Object.
+The code may then retreave information from that object or perhaps even retreave another object related to it (e.g. its parent, first child, etc.).
+- the Plugin may define its own custom NVDA Object classes which will be used to wrap a specific control to give it extra functionality, mutate its properties, etc.
+-
+
+Just like App Modules and Global Plugins, NVDA Objects can also define events, scripts and gesture bindings. 
+ 
+++ Skripte und Tastenanbindung ++
+App Modules, Global Plugins and NVDA Objects can define special methods which can be bound to a particular piece of input such as a key press.
+NVDA refers to these methods as scripts.
+
+A script is a standard Python instance method with a name starting with "script_"; e.g. "script_sayDateTime".
+
+A script method takes two arguments:
+- self: a reference to the App Module, Global Plugin or NVDA Object instance the script was called on.
+- gesture: an Input Gesture object, which represents the input that caused the script to run.
+-
+
+As well as the actual script method, some form of gesture binding must be defined, so that NVDA knows what input should execute the script.
+
+To bind a gesture to a script, a special "__gestures" Python dictionary can be defined as a class variable on the App Module, Global Plugin or NVDA Object.
+These dictionaries should contain gesture identifier strings pointing to the name of the requested script, without the "script_" prefix.
+
+There are more advanced ways of binding gestures in a more dynamic fashion, though the __gestures dictionary is the simplest.
+ 
+A gesture identifier string is a simple string representation of a piece of input.
+It consists of a two leter character code denoting the source of the input, an optional device in brackets, a colon (:) and one or more names separated by a plus (+) denoting the actual keys or input values.
+
+Some examples of gesture string identifiers are:
+- "kb:NVDA+shift+v"
+- "br(freedomScientific):leftWizWheelUp"
+- "kb(laptop):NVDA+t"
+-
+
+Currently, the only input sources in NVDA are:
+- kb: keyboard input
+- br: braille input
+-
+
+When NVDA receives input, it looks for a matching gesture binding in a particular order.
+Once a gesture binding is found, the script is executed and no further bindings are used, nore is that particular gesture passed on automatically to the Operating System.
+
+The order for gesture binding lookup is:
+- Loaded Global Plugins
+- App Module of the active application
+- Tree Interceptor of the NVDA Object with focus if any; e.g. a virtualBuffer
+- NVDA Object with focus
+- Global Commands (built in commands like quitting NVDA, object navigation commands, etc.)
+-
+
+++ Beispiel 3: Ein globales Plugin zum Aufspren von Windows-Klassen und Steuerelementen ++
+The following Global Plugin allows you to press NVDA+leftArrow to have the window class of the current focus announced, and NVDA+rightArrow to have the window control ID of the current focus announced.
+This example shows you how to define one or more scripts and gesture bindings on a class such as an App Module, Global Plugin or NVDA Object.
+ 
+Copy and paste the code between (but not including) the start and end markers into a new text file with a name of example3.py, which should be saved in the globalPlugins subdirectory.
+Be very careful to keep all tabs and spaces intact.
+
+Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
+
+```
+--- Beginn ---
+#Window utility scripts for NVDA
+#Developer guide example 3
+
+import globalPluginHandler
+import ui
+import api
+
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+
+	def script_announceWindowClassName(self, gesture):
+		focusObj = api.getFocusObject()
+		name = focusObj.name
+		windowClassName = focusObj.windowClassName
+		ui.message("class for %s window: %s" % (name, windowClassName))
+
+	def script_announceWindowControlID(self, gesture):
+		focusObj = api.getFocusObject()
+		name = focusObj.name
+		windowControlID = focusObj.windowControlID
+		ui.message("Control ID for %s window: %d" % (name, windowControlID))
+
+	__gestures = {
+		"kb:NVDA+leftArrow": "announceWindowClassName",
+		"kb:NVDA+rightArrow": "announceWindowControlID",
+	}
+
+--- Ende ---
+```
+
+++ Ereignisse ++
+When NVDA detects particular toolkit, API or Operating System events, it abstracts these and fires its own internal events on plugins and NVDA Objects.
+
+Although most events are related to a specific NVDA Object (e.g. name change, gain focus, state change, etc.), these events can be handled at various levels. 
+When an event is handled, it is stopped from going further down the chain.
+However, code inside the event can choose to propagate it further if needed.
+
+The order of levels through which the event passes until an event method is found is:
+- Loaded Global Plugins
+- The App Module associated with the NVDA Object on which the event was fired
+- The Tree Interceptor (if any) associated with the NVDAObject on which the event was fired
+- the NVDAObject itself.
+-
+
+Events are Python instance methods, with a name starting with "event_" followed by the actual name of the event (e.g. gainFocus).
+
+These event methods take slightly different arguments depending at what level they are defined.
+
+If an event for an NVDA Object is defined on an NVDA Object itself, the method only takes one mandatory argument which is the 'self' argument; i.e. the NVDA Object instance).
+Some events may take extra arguments, though this is quite rare.
+
+If an event for an NVDA Object is defined on a Global Plugin, App Module or Tree Interceptor, the event takes the following arguments:
+- self: the instance of the Global Plugin, App Module or Tree Interceptor
+- obj: the NVDA Object on which the event was fired
+- nextHandler: a function that when called will propagate the event further down the chain.
+-
+
+Some common NVDA Object events are:
+- foreground: this NVDA Object has become the new foreground object; i.e. active top-level object
+- gainFocus
+- loseFocus
+- nameChange
+- valueChange
+- stateChange
+- caret: when the caret (insertion point) within this NVDA Object moves
+- locationChange: physical screen location changes
+-
+
+There are  many other events, though those listed above are usually the most useful.
+
+For an example of an event handled by an App Module, please refer to [example 1 #Example1] (focus beeps in notepad).
+
+++ Die Schlafmodus-Variablen der Anwendungsmodule ++
+App Modules have one very useful property called "sleepMode", which if set to true almost completely disables NVDA within that application.
+Sleep Mode is very useful for self voicing applications that have their own screen reading functionality, or perhaps even some games that need full use of the keyboard.
+
+Although sleep mode can be toggled on and off by the user with the key command NVDA+shift+s, a developer can choose to have sleep mode enabled by default for an application.
+This is done by providing an App Module for that application which simply sets sleepMode to True in the AppModule class.
+
+++ Beispiel 4: Ein Schlafmodus-Anwendungsmodul ++
+The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of the application you wish to enable sleep mode for.
+Die Datei muss, wie immer, die Endung .py erhalten.
+
+```
+--- Beginn ---
+import appModuleHandler
+
+class AppModule(appModuleHandler.AppModule):
+
+	sleepMode = True
+
+--- Ende ---
+```
+ 
+++ Eigene NVDA-Objektklassen angeben ++
+Providing custom NVDA Object classes is probably the most powerful and useful way to improve the experience of an application in an NVDA plugin.
+This method allows you to place all the needed logic for a particular control altogether in one NVDA Object class for that control, rather than scattering code for many controls across a plugin's events.
+
+There are two steps to providing a custom NVDA Object class:
+- Define the NVDA Object class and its events, scripts, gesture bindings and overridden properties.
+- Tell NVDA to use this NVDA Object class in specific situations by handling it in the plugin's chooseNVDAObjectOverlayClasses method.
+-
+
+When defining a custom NVDAObject class, you have many NVDAObject base classes to choose from.
+These base classes contain the base support for the particular accessibility or OS API underlying the control, such as win32, MSAA or Java access Bridge.
+You should usually inherit your custom NVDAObject class from the highest base class you need in order to choose your class in the first place.
+For example, if you choose to use your custom NVDAObject class when the window class name is "Edit" and the window control ID is 15, you should probably inherit from NVDAObjects.window.Window, as clearly you are aware that this is a Window object.
+Similarly, if you match on MSAA's accRole property, you would probably need to inherit from NVDAObjects.IAccessible.IAccessible.
+You should also consider what properties you are going to override on the custom NVDA Object.
+For instance, if you are going to override an IAccessible specific property, such as shouldAllowIAccessibleFocusEvent, then you need to inherit from NVDAObjects.IAccessible.IAccessible.
+
+the chooseNVDAObjectOverlayClasses method can be implemented on app modules or global plugin classes.
+It takes 3 arguments:
++ self: the app module or global plugin instance.
++ obj: the NVDAObject for which classes are being chosen.
++ clsList: a Python list of NVDAObject classes that will be used for obj.
++
+
+Inside this method, you should decide which custom NVDA Object class(es) (if any) this NVDA Object should use by checking its properties, etc.
+If a custom class should be used, it must be inserted into the class list, usually at the beginning. 
+You can also remove classes chosen by NVDA from the class list, although this is rarely required.
+
+++ Beispiel 5: Das Eingabefeld in Notepad beschriften, welches ein eigenes NVDA-Objekt verwendet ++
+This app module for notepad makes NVDA report Notepad's main edit field as having a name of "content".
+That is, when it receives focus, NVDA will say "Content edit".
+
+Der folgende Code kann kopiert und in eine Textdatei eingefgt werden, welche den Namen notepad.py tragen muss und im Ordner AppModules gespeichert wird.
+
+
+```
+--- Beginn ---
+import appModuleHandler
+from NVDAObjects.window import Window
+
+class AppModule(appModuleHandler.AppModule):
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
+			clsList.insert(0, LabelledEditField)
+
+class LabelledEditField(Window):
+
+	name="Content"
+
+--- Ende ---
+```
+
++ NVDA Python Console +
+
+The NVDA Python console emulates the interactive Python interpreter from within NVDA.
+It is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
+
+++ Usage ++
+The console can be activated in two ways:
+- By pressing NVDA+control+z.
+If activated in this fashion, a snapshot of the current state of NVDA at the time the key was pressed will be taken and saved in certain variables available in the console.
+See [Snapshot Variables #PythonConsoleSnapshotVariables] for more details.
+- By selecting Tools -> Python console from the NVDA system tray menu.
+-
+
+The console is similar to the standard interactive Python interpreter.
+Input is accepted one line at a time.
+The current line is processed when enter is pressed.
+You can navigate through the history of previously entered lines using the up and down arrow keys.
+
+Output (responses from the interpreter) will be spoken when enter is pressed.
+The f6 key toggles between the input and output controls.
+
+Closing the console window simply hides it.
+This allows the user to return to the session as it was left when it was closed, including history and variables.
+
+
+++ Namespace ++
+
++++ Automatic Imports +++
+For convenience, the following modules and variables are automatically imported in the console:
+sys, os, wx, log (from logHandler), api, queueHandler, speech, braille
+
++++ Snapshot Variablen +++[PythonConsoleSnapshotVariables]
+Whenever NVDA+control+z is pressed, certain variables available in the console will be assigned according to the current state of NVDA.
+Diese Variablen sind:
+- focus: The current focus object
+- focusAnc: The ancestors of the current focus object
+- fdl: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
+- fg: The current foreground object
+- nav: The current navigator object
+- mouse: The current mouse object
+- brlRegions: The braille regions from the active braille buffer
+-
+
+Ende des Dokuments.

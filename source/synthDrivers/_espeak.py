@@ -119,13 +119,17 @@ t_espeak_callback=CFUNCTYPE(c_int,POINTER(c_short),c_int,POINTER(espeak_EVENT))
 def callback(wav,numsamples,event):
 	try:
 		global player, isSpeaking, lastIndex
-		lastIndex = event.contents.user_data
+		if not isSpeaking:
+			return 1
+		for e in event:
+			if e.type==espeakEVENT_MARK:
+				lastIndex=int(e.id.name)
+			elif e.type==espeakEVENT_LIST_TERMINATED:
+				break
 		if not wav:
 			player.idle()
 			isSpeaking = False
 			return 0
-		if not isSpeaking:
-			return 1
 		if numsamples > 0:
 			try:
 				player.feed(string_at(wav, numsamples * sizeof(c_short)))
@@ -163,23 +167,19 @@ def _execWhenDone(func, *args, **kwargs):
 	else:
 		func(*args, **kwargs)
 
-def _speak(msg, index=None,isCharacter=False):
+def _speak(text):
 	global isSpeaking
 	uniqueID=c_int()
 	isSpeaking = True
-	flags = espeakCHARS_WCHAR 
-	if isCharacter: 
-		flags |= espeakSSML
-		msg = "<say-as type=spell-out>%s</say-as>"%msg
+	flags = espeakCHARS_WCHAR | espeakSSML 
+	return espeakDLL.espeak_Synth(text,0,0,0,0,flags,byref(uniqueID),0)
 
-	return espeakDLL.espeak_Synth(unicode(msg),0,0,0,0,flags,byref(uniqueID),index)
-
-def speak(msg, index=None,isCharacter=False):
+def speak(text):
 	global bgQueue
-	_execWhenDone(_speak, msg, index, isCharacter, mustBeAsync=True)
+	_execWhenDone(_speak, text, mustBeAsync=True)
 
 def stop():
-	global isSpeaking, bgQueue
+	global isSpeaking, bgQueue, lastIndex
 	# Kill all speech from now.
 	# We still want parameter changes to occur, so requeue them.
 	params = []
@@ -196,6 +196,7 @@ def stop():
 		bgQueue.put(item)
 	isSpeaking = False
 	player.stop()
+	lastIndex=None
 
 def pause(switch):
 	global player

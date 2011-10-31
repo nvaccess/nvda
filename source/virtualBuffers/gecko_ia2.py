@@ -1,7 +1,7 @@
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word
 import treeInterceptorHandler
 import controlTypes
-import NVDAObjects.IAccessible
+import NVDAObjects.IAccessible.mozilla
 import NVDAObjects.behaviors
 import winUser
 import IAccessibleHandler
@@ -12,6 +12,7 @@ from comtypes.gen.IAccessible2Lib import IAccessible2
 from comtypes import COMError
 import aria
 import config
+from NVDAObjects.IAccessible import normalizeIA2TextFormatField
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
@@ -31,6 +32,13 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			states.add(controlTypes.STATE_DRAGGABLE)
 		elif grabbed == "true":
 			states.add(controlTypes.STATE_DRAGGING)
+		sorted = attrs.get("IAccessible2::attribute_sort")
+		if sorted=="ascending":
+			states.add(controlTypes.STATE_SORTED_ASCENDING)
+		elif sorted=="descending":
+			states.add(controlTypes.STATE_SORTED_DESCENDING)
+		elif sorted=="other":
+			states.add(controlTypes.STATE_SORTED)
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.STATE_DROPTARGET)
 		if role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
@@ -49,15 +57,25 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs["landmark"]=landmark
 		return super(Gecko_ia2_TextInfo,self)._normalizeControlField(attrs)
 
+	def _normalizeFormatField(self, attrs):
+		normalizeIA2TextFormatField(attrs)
+		return attrs
+
 class Gecko_ia2(VirtualBuffer):
 
 	TextInfo=Gecko_ia2_TextInfo
 
 	def __init__(self,rootNVDAObject):
 		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
+		self._initialScrollObj = None
 
 	def _get_shouldPrepare(self):
-		return super(Gecko_ia2,self).shouldPrepare and controlTypes.STATE_BUSY not in self.rootNVDAObject.states
+		if not super(Gecko_ia2, self).shouldPrepare:
+			return False
+		if isinstance(self.rootNVDAObject, NVDAObjects.IAccessible.mozilla.Gecko1_9) and controlTypes.STATE_BUSY in self.rootNVDAObject.states:
+			# If the document is busy in Gecko 1.9, it isn't safe to create a buffer yet.
+			return False
+		return True
 
 	def __contains__(self,obj):
 		#Special code to handle Mozilla combobox lists
@@ -70,13 +88,13 @@ class Gecko_ia2(VirtualBuffer):
 		if not (isinstance(obj,NVDAObjects.IAccessible.IAccessible) and isinstance(obj.IAccessibleObject,IAccessibleHandler.IAccessible2)) or not obj.windowClassName.startswith('Mozilla') or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle,obj.windowHandle):
 			return False
 		if self.rootNVDAObject.windowHandle==obj.windowHandle:
-			ID=obj.IAccessibleObject.uniqueID
+			ID=obj.IA2UniqueID
 			try:
 				self.rootNVDAObject.IAccessibleObject.accChild(ID)
-			except:
-				return False
+			except COMError:
+				return ID==self.rootNVDAObject.IA2UniqueID
 
-		return self._isNVDAObjectInApplication(obj)
+		return not self._isNVDAObjectInApplication(obj)
 
 	def _get_isAlive(self):
 		if self.isLoading:
@@ -88,7 +106,7 @@ class Gecko_ia2(VirtualBuffer):
 		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_DEFUNCT in states or controlTypes.STATE_READONLY not in states:
 			return False
 		try:
-			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IAccessibleObject.uniqueID):
+			if not NVDAObjects.IAccessible.getNVDAObjectFromEvent(root.windowHandle,winUser.OBJID_CLIENT,root.IA2UniqueID):
 				return False
 		except:
 			return False
@@ -99,7 +117,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self,obj):
 		docHandle=obj.windowHandle
-		ID=obj.IAccessibleObject.uniqueID
+		ID=obj.IA2UniqueID
 		return docHandle,ID
 
 	def _shouldIgnoreFocus(self, obj):
@@ -123,6 +141,8 @@ class Gecko_ia2(VirtualBuffer):
 			obj.doAction()
 		except:
 			log.debugWarning("could not programmatically activate field, trying mouse")
+			while obj and controlTypes.STATE_OFFSCREEN in obj.states and obj!=self.rootNVDAObject:
+				obj=obj.parent
 			l=obj.location
 			if l:
 				x=(l[0]+l[2]/2)
@@ -190,8 +210,12 @@ class Gecko_ia2(VirtualBuffer):
 		return nextHandler()
 
 	def event_scrollingStart(self, obj, nextHandler):
+		if not self.isReady:
+			self._initialScrollObj = obj
+			return nextHandler()
 		if not self._handleScrollTo(obj):
 			return nextHandler()
+	event_scrollingStart.ignoreIsReady = True
 
 	def _getNearestTableCell(self, tableID, startPos, origRow, origCol, origRowSpan, origColSpan, movement, axis):
 		if not axis:
@@ -225,3 +249,9 @@ class Gecko_ia2(VirtualBuffer):
 			return self.rootNVDAObject.IAccessibleObject.accValue(0)
 		except COMError:
 			return None
+
+	def _getInitialCaretPos(self):
+		initialPos = super(Gecko_ia2,self)._getInitialCaretPos()
+		if initialPos:
+			return initialPos
+		return self._initialScrollObj

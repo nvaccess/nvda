@@ -1,0 +1,134 @@
+﻿complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	nokta	all	always
+! sentence ending	ünlem	all	always
+? sentence ending	soru	all	always
+; phrase ending	noktalıvirgül	most	always
+: phrase ending	ikinokta	most	always
+decimal point		none	always
+in-word '	apostrof	all	norep
+negative number	minus	none	norep
+
+# Whitespace
+\0	boş	char	# null
+\t	sekme
+\n	yeni satır	char
+\f	sayfa geçişi	none
+\r	satır sonu	char
+ 	aralık	char
+ 	aralık	char	# no-break space
+
+# Standard punctuation/symbols
+!	ünlem	all
+"	tırnak	most
+\#	diyez	most
+$	dolar	all	norep
+£	paund	all	norep
+€	euro	all	norep
+%	yüzde	some
+&	ve	some
+'	apostrof	all
+(	açparantez	most
+)	kapaparantez	most
+*	çarpı	most
++	artı	most
+,	virgül	all	always
+-	tire	most
+.	nokta	all
+/	bölü	some
+:	ikinokta	most	norep
+;	noktalıvirgül	most
+<	küçüktür	most
+>	büyüktür	most
+=	eşittir	most
+?	soru	all
+@	et	some
+[	aç köşeli parantez	most
+]	kapa köşeli parantez	most
+\\	tersbölü	most
+^	düzeltme imi	most
+_	alt çizgi	most
+`	graav	most
+{	aç küme parantezi	most
+}	kapa küme parantezi	most
+|	dikçizgi	most
+~	tilda	most
+
+# Other characters
+•	madde imi	some
+…	üçnokta	all	always
+...	üç nokta	all	always
+	madde imi	some
+“	tırnakaç	most
+”	tırnakkapa	most
+‘	tektırnakaç	most
+’	tektırnakkapa	most
+–	ORTA TİRE	most
+—	uzuntire	most
+●	yıldız	most
+¨	diaeresis	most
+���	soldan sağa işareti	char
+���	sağdan sola işareti	char
+➔	Sağ ok	some
+¡	ters ünlem	most
+¦	kırık çizgi	most
+«	çift kancalı parantezaç	most
+¸	cedila	most
+»	çift kancalı parantez kapa	most
+¿	ters soru	most
+‣	üçgen madde imi	most
+§	paragraf	most
+÷	bölü	some
+×	çarpı	some
+°	derece	some
+¢	sens	some
+¤	sembol	some
+−	eksi	some
+±	artı eksi	some
+¼	bir bölü dört	some
+½	bir bölü iki	some
+¾	üç bölü dört	some
+¬	seçimli çizgi	some
+æ	ai	some
+þ	şe	some
+™	marka	some
+®	kayıtlı	some
+©	kopyahakkı	some
+¥	yen	some
+√	ve	some
+∞	sekiz	some
+α	alfa	some
+β	beta	some
+γ	gamma	some
+δ	delta	some
+ε	epsilon	some
+ζ	zeta	some
+η	eta	some
+θ	theta	some
+κ	kapa	some
+λ	lambda	some
+μ	mu	some
+ν	nu	some
+π	pi	some
+ρ	ro	some
+σ	sigma	some
+τ	tao	some
+υ	upsilon	some
+φ	fi	some
+ω	omega	some

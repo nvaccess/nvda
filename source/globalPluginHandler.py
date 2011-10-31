@@ -25,16 +25,13 @@ def listPlugins():
 			continue
 		yield plugin
 
-def loadGlobalPlugins():
+def initialize():
+	config.addConfigDirsToPythonPackagePath(globalPlugins)
 	for plugin in listPlugins():
 		try:
 			runningPlugins.add(plugin())
 		except:
 			log.error("Error initializing global plugin %r" % plugin, exc_info=True)
-
-def initialize():
-	config.addConfigDirsToPythonPackagePath(globalPlugins)
-	loadGlobalPlugins()
 
 def terminate():
 	for plugin in list(runningPlugins):
@@ -45,6 +42,8 @@ def terminate():
 			log.exception("Error terminating global plugin %r" % plugin)
 
 def reloadGlobalPlugins():
+	"""Reloads running global plugins.
+	"""
 	global globalPlugins
 	terminate()
 	del globalPlugins
@@ -52,7 +51,7 @@ def reloadGlobalPlugins():
 	for mod in mods:
 		del sys.modules[mod]
 	import globalPlugins
-	loadGlobalPlugins()
+	initialize()
 
 class GlobalPlugin(baseObject.ScriptableObject):
 	"""Base global plugin.

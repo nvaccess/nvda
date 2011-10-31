@@ -22,7 +22,9 @@ def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
 
 def changeVoice(synth, voice):
-	synth.voice = voice
+	# This function can be called with no voice if the synth doesn't support the voice setting (only has one voice).
+	if voice:
+		synth.voice = voice
 	c=config.conf["speech"][synth.name]
 	c.configspec=synth.getConfigSpec()
 	config.conf.validate(config.val, copy = True,section = c)
@@ -73,20 +75,19 @@ def setSynth(name):
 		prevSynthName = None
 	try:
 		newSynth=_getSynthDriver(name)()
-		updatedConfig=config.updateSynthConfig(newSynth)
-		if not updatedConfig:
+		if name in config.conf["speech"]:
 			newSynth.loadSettings()
 		else:
+			# Create the new section.
+			config.conf["speech"][name]={}
 			if newSynth.isSupported("voice"):
-				#We need to call changeVoice here so voice dictionaries can be managed
-				changeVoice(newSynth,newSynth.voice)
+				voice=newSynth.voice
+			else:
+				voice=None
+			# We need to call changeVoice here so that required initialisation can be performed.
+			changeVoice(newSynth,voice)
 			newSynth.saveSettings() #save defaults
 		_curSynth=newSynth
-		#start or update the synthSettingsRing (for those synths which do not support 'voice')
-		if not newSynth.isSupported('voice'):
-			if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(newSynth)
-			else:  globalVars.settingsRing = SynthSettingsRing(newSynth)
-			speechDictHandler.loadVoiceDict(newSynth)
 		config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
 		return True
@@ -138,6 +139,14 @@ class NumericSynthSetting(SynthSetting):
 		self.minStep=minStep
 		self.normalStep=max(normalStep,minStep)
 		self.largeStep=max(largeStep,self.normalStep)
+
+class BooleanSynthSetting(SynthSetting):
+	"""Represents a boolean synthesiser setting such as rate boost.
+	"""
+	configSpec = "boolean(default=False)"
+
+	def __init__(self, name, i18nName, availableInSynthSettingsRing=False):
+		super(BooleanSynthSetting, self).__init__(name, i18nName, availableInSynthSettingsRing)
 
 class SynthDriver(baseObject.AutoPropertyObject):
 	"""Abstract base synthesizer driver.
@@ -235,17 +244,55 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		@postcondition: This driver can no longer be used.
 		"""
 
+	def speak(self,speechSequence):
+		"""
+		Speaks the given sequence of text and speech commands.
+		This base implementation will fallback to making use of the old speakText and speakCharacter methods. But new synths should override this method to support its full functionality.
+		@param speechSequence: a list of text strings and SpeechCommand objects (such as index and parameter changes).
+		@type speechSequence: list of string and L{speechCommand}
+		"""
+		import speech
+		lastIndex=None
+		text=""
+		origSpeakFunc=self.speakText
+		speechSequence=iter(speechSequence)
+		while True:
+			item = next(speechSequence,None)
+			if text and (item is None or isinstance(item,(speech.IndexCommand,speech.CharacterModeCommand))):
+				# Either we're about to handle a command or this is the end of the sequence.
+				# Speak the text since the last command we handled.
+				origSpeakFunc(text,index=lastIndex)
+				text=""
+				lastIndex=None
+			if item is None:
+				# No more items.
+				break
+			if isinstance(item,basestring):
+				# Merge the text between commands into a single chunk.
+				text+=item
+			elif isinstance(item,speech.IndexCommand):
+				lastIndex=item.index
+			elif isinstance(item,speech.CharacterModeCommand):
+				origSpeakFunc=self.speakCharacter if item.state else self.speakText
+			elif isinstance(item,speech.SpeechCommand):
+				log.debugWarning("Unknown speech command: %s"%item)
+			else:
+				log.error("Unknown item in speech sequence: %s"%item)
+
 	def speakText(self, text, index=None):
 		"""Speak some text.
+		This method is deprecated. Instead implement speak.
 		@param text: The chunk of text to speak.
 		@type text: str
 		@param index: An index (bookmark) to associate with this chunk of text, C{None} if no index.
 		@type index: int
 		@note: If C{index} is provided, the C{lastIndex} property should return this index when the synth is speaking this chunk of text.
 		"""
+		raise NotImplementedError
 
 	def speakCharacter(self, character, index=None):
 		"""Speak some character.
+		This method is deprecated. Instead implement speak.
 		@param character: The character to speak.
 		@type character: str
 		@param index: An index (bookmark) to associate with this chunk of speech, C{None} if no index.
@@ -392,16 +439,21 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	def loadSettings(self):
 		c=config.conf["speech"][self.name]
 		if self.isSupported("voice"):
-			voice=c["voice"]
+			voice=c.get("voice",None)
 			try:
 				changeVoice(self,voice)
 			except LookupError:
 				log.warning("No such voice: %s" % voice)
 				# Update the configuration with the correct voice.
 				c["voice"]=self.voice
-				# We need to call changeVoice here so voice dictionaries can be managed
+				# We need to call changeVoice here so that required initialisation can be performed.
 				changeVoice(self,self.voice)
-		[setattr(self,s.name,c[s.name]) for s in self.supportedSettings if not s.name=="voice" and c[s.name] is not None]
+		else:
+			changeVoice(self,None)
+		for s in self.supportedSettings:
+			if s.name=="voice" or c[s.name] is None:
+				continue
+			setattr(self,s.name,c[s.name])
 
 	def _get_initialSettingsRingSetting (self):
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:
