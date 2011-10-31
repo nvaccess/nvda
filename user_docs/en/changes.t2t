@@ -7,6 +7,12 @@
 
 == New Features ==
 - By selecting report line indentation in the document formatting dialogue, NVDA will announce the number of leading tabs and spaces of the current line in the order that they are entered. (#373)
+- NVDA can now detect key presses generated from alternative keyboard input emulation such as on-screen keyboards and speech recognition software.
+- NVDA can now detect colors in Windows command consoles.
+
+
+== Changes ==
+- Commands to describe the current character or to spell the current word or line now  will spell in the appropriate language according to the text, if auto language switching is turned on and the appropriate language information is available.
 
 
 = 2011.3 =
