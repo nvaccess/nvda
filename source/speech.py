@@ -329,6 +329,45 @@ def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 		speechSequence.append(text)
 	speak(speechSequence,symbolLevel=symbolLevel)
 
+RE_INDENTATION_SPLIT = re.compile(r"^([^\S\r\n\f\v]*)(.*)$", re.UNICODE | re.DOTALL)
+def splitTextIndentation(text):
+	"""Splits indentation from the rest of the text.
+	@param text: The text to split.
+	@type text: basestring
+	@return: Tuple of indentation and content.
+	@rtype: (basestring, basestring)
+	"""
+	return RE_INDENTATION_SPLIT.match(text).groups()
+
+RE_INDENTATION_CONVERT = re.compile(r"(?P<char>\s)(?P=char)*", re.UNICODE)
+def getIndentationSpeech(indentation):
+	"""Retrieves the phrase to be spoken for a given string of indentation.
+	@param indentation: The string of indentation.
+	@type indentation: basestring
+	@return: The phrase to be spoken.
+	@rtype: unicode
+	"""
+	# Translators: no indent is spoken when the user moves from a line that has indentation, to one that 
+	# does not.
+	if not indentation:
+		return _("no indent")
+
+	res = []
+	locale=languageHandler.getLanguage()
+	for m in RE_INDENTATION_CONVERT.finditer(indentation):
+		raw = m.group()
+		symbol = characterProcessing.processSpeechSymbol(locale, raw[0])
+		count = len(raw)
+		if symbol == raw[0]:
+			# There is no replacement for this character, so do nothing.
+			res.append(raw)
+		elif count == 1:
+			res.append(symbol)
+		else:
+			res.append(u"{count} {symbol}".format(count=count, symbol=symbol))
+
+	return " ".join(res)
+
 def speak(speechSequence,symbolLevel=None):
 	"""Speaks a sequence of text and speech commands
 	@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
@@ -578,6 +617,8 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 	extraDetail=unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD)
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
+	reportIndentation=unit==textInfos.UNIT_LINE and formatConfig["reportLineIndentation"]
+
 	speechSequence=[]
 	#Fetch the last controlFieldStack, or make a blank one
 	controlFieldStackCache=getattr(info.obj,'_speakTextInfo_controlFieldStackCache',[]) if useCache else []
@@ -673,8 +714,17 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 	#Also make sure that LangChangeCommand objects are added before any controlField or formatField speech
 	relativeSpeechSequence=[]
 	inTextChunk=False
+	allIndentation=""
+	indentationDone=False
 	for command in textWithFields:
 		if isinstance(command,basestring):
+			if reportIndentation and not indentationDone:
+				indentation,command=splitTextIndentation(command)
+				# Combine all indentation into one string for later processing.
+				allIndentation+=indentation
+				if command:
+					# There was content after the indentation, so there is no more indentation.
+					indentationDone=True
 			if command:
 				if inTextChunk:
 					relativeSpeechSequence[-1]+=command
@@ -714,6 +764,16 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=REASON_Q
 				if autoLanguageSwitching and newLanguage!=lastLanguage:
 					relativeSpeechSequence.append(LangChangeCommand(newLanguage))
 					lastLanguage=newLanguage
+	if reportIndentation and allIndentation!=getattr(info.obj,"_speakTextInfo_lineIndentationCache",""):
+		indentationSpeech=getIndentationSpeech(allIndentation)
+		if autoLanguageSwitching and speechSequence[-1].lang is not None:
+			# Indentation must be spoken in the default language,
+			# but the initial format field specified a different language.
+			# Insert the indentation before the LangChangeCommand.
+			speechSequence.insert(-1, indentationSpeech)
+		else:
+			speechSequence.append(indentationSpeech)
+		info.obj._speakTextInfo_lineIndentationCache=allIndentation
 	# Don't add this text if it is blank.
 	relativeBlank=True
 	for x in relativeSpeechSequence:
