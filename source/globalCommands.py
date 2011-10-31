@@ -444,7 +444,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 		else:
-			speech.speakSpelling(info.text,useCharacterDescriptions=bool(scriptCount>1))
+			speech.spellTextInfo(info,useCharacterDescriptions=bool(scriptCount>1))
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions.")
  
 	def script_review_nextLine(self,gesture):
@@ -486,7 +486,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount==0:
 			speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
 		else:
-			speech.speakSpelling(info.text,useCharacterDescriptions=bool(scriptCount>1))
+			speech.spellTextInfo(info,useCharacterDescriptions=bool(scriptCount>1))
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions")
 
 	def script_review_nextWord(self,gesture):
@@ -536,7 +536,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 		elif scriptCount==1:
-			speech.speakSpelling(info.text,useCharacterDescriptions=True)
+			speech.spellTextInfo(info,useCharacterDescriptions=True)
 		else:
 			try:
 				c = ord(info.text)

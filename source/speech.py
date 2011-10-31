@@ -90,15 +90,14 @@ def getLastSpeechIndex():
 
 def cancelSpeech():
 	"""Interupts the synthesizer from currently speaking"""
-	global beenCanceled, isPaused, _speakSpellingGenID
+	global beenCanceled, isPaused, _speakSpellingGenerator
 	# Import only for this function to avoid circular import.
 	import sayAllHandler
 	sayAllHandler.stop()
 	speakWithoutPauses._pendingSpeechSequence=[]
 	speakWithoutPauses.lastSentIndex=None
-	if _speakSpellingGenID:
-		queueHandler.cancelGeneratorObject(_speakSpellingGenID)
-		_speakSpellingGenID=None
+	if _speakSpellingGenerator and _speakSpellingGenerator.gi_frame:
+		_speakSpellingGenerator.close()
 	if beenCanceled:
 		return
 	elif speechMode==speechMode_off:
@@ -132,10 +131,22 @@ def getCurrentLanguage():
 		language=languageHandler.getLanguage()
 	return language
 
-_speakSpellingGenID = None
+def spellTextInfo(info,useCharacterDescriptions=False):
+	"""Spells the text from the given TextInfo, honouring any LangChangeCommand objects it finds if autoLanguageSwitching is enabled."""
+	if not config.conf['speech']['autoLanguageSwitching']:
+		speakSpelling(info.text,useCharacterDescriptions=useCharacterDescriptions)
+		return
+	curLanguage=None
+	for field in info.getTextWithFields({}):
+		if isinstance(field,basestring):
+			speakSpelling(field,curLanguage,useCharacterDescriptions=useCharacterDescriptions)
+		elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
+			curLanguage=field.field.get('language')
+
+_speakSpellingGenerator=None
 
 def speakSpelling(text,locale=None,useCharacterDescriptions=False):
-	global beenCanceled, _speakSpellingGenID
+	global beenCanceled, _speakSpellingGenerator
 	import speechViewer
 	if speechViewer.isActive:
 		speechViewer.appendText(text)
@@ -155,49 +166,57 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 		return getSynth().speak((_("blank"),))
 	if not text.isspace():
 		text=text.rstrip()
-	gen=_speakSpellingGen(text,locale,useCharacterDescriptions)
-	try:
-		# Speak the first character before this function returns.
-		next(gen)
-	except StopIteration:
-		return
-	_speakSpellingGenID=queueHandler.registerGeneratorObject(gen)
+	if _speakSpellingGenerator and _speakSpellingGenerator.gi_frame:
+		_speakSpellingGenerator.send((text,locale,useCharacterDescriptions))
+	else:
+		_speakSpellingGenerator=_speakSpellingGen(text,locale,useCharacterDescriptions)
+		try:
+			# Speak the first character before this function returns.
+			next(_speakSpellingGenerator)
+		except StopIteration:
+			return
+		queueHandler.registerGeneratorObject(_speakSpellingGenerator)
 
 def _speakSpellingGen(text,locale,useCharacterDescriptions):
-	textLength=len(text)
 	synth=getSynth()
 	synthConfig=config.conf["speech"][synth.name]
-	for count,char in enumerate(text): 
-		uppercase=char.isupper()
-		charDesc=None
-		if useCharacterDescriptions:
-			charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
-		if charDesc:
-			#Consider changing to multiple synth speech calls
-			char=charDesc[0] if textLength>1 else u"\u3001".join(charDesc)
-		else:
-			char=characterProcessing.processSpeechSymbol(locale,char)
-		if uppercase and synthConfig["sayCapForCapitals"]:
-			char=_("cap %s")%char
-		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
-			oldPitch=synthConfig["pitch"]
-			synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
-		index=count+1
-		log.io("Speaking character %r"%char)
-		speechSequence=[LangChangeCommand(locale)] if config.conf['speech']['autoLanguageSwitching'] else []
-		if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
-			speechSequence.append(CharacterModeCommand(True))
-		if index is not None:
-			speechSequence.append(IndexCommand(index))
-		speechSequence.append(char)
-		synth.speak(speechSequence)
-		if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
-			synth.pitch=oldPitch
-		while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
-			yield
-			yield
-		if uppercase and  synthConfig["beepForCapitals"]:
-			tones.beep(2000,50)
+	buf=[(text,locale,useCharacterDescriptions)]
+	for text,locale,useCharacterDescriptions in buf:
+		textLength=len(text)
+		for count,char in enumerate(text): 
+			uppercase=char.isupper()
+			charDesc=None
+			if useCharacterDescriptions:
+				charDesc=characterProcessing.getCharacterDescription(locale,char.lower())
+			if charDesc:
+				#Consider changing to multiple synth speech calls
+				char=charDesc[0] if textLength>1 else u"\u3001".join(charDesc)
+			else:
+				char=characterProcessing.processSpeechSymbol(locale,char)
+			if uppercase and synthConfig["sayCapForCapitals"]:
+				char=_("cap %s")%char
+			if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
+				oldPitch=synthConfig["pitch"]
+				synth.pitch=max(0,min(oldPitch+synthConfig["capPitchChange"],100))
+			index=count+1
+			log.io("Speaking character %r"%char)
+			speechSequence=[LangChangeCommand(locale)] if config.conf['speech']['autoLanguageSwitching'] else []
+			if len(char) == 1 and synthConfig["useSpellingFunctionality"]:
+				speechSequence.append(CharacterModeCommand(True))
+			if index is not None:
+				speechSequence.append(IndexCommand(index))
+			speechSequence.append(char)
+			synth.speak(speechSequence)
+			if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
+				synth.pitch=oldPitch
+			while textLength>1 and (isPaused or getLastSpeechIndex()!=index):
+				for x in xrange(2):
+					args=yield
+					if args: buf.append(args)
+			if uppercase and  synthConfig["beepForCapitals"]:
+				tones.beep(2000,50)
+		args=yield
+		if args: buf.append(args)
 
 def speakObjectProperties(obj,reason=REASON_QUERY,index=None,**allowedProperties):
 	if speechMode==speechMode_off:
