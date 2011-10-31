@@ -43,6 +43,10 @@ CONSOLE_COLORS_TO_RGB=( #http://en.wikipedia.org/wiki/Color_Graphics_Adapter
 	RGB(0xFF,0xFF,0xFF), #white (high intensity)
 )
 
+COMMON_LVB_UNDERSCORE=0x8000
+
+
+
 @wincon.PHANDLER_ROUTINE
 def _consoleCtrlHandler(event):
 	if event in (wincon.CTRL_C_EVENT,wincon.CTRL_BREAK_EVENT):
@@ -233,15 +237,19 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 					commands.append("".join(lastText))
 					lastText=[]
 				commands.append(textInfos.FieldCommand("formatChange",field))
-			if not c.Attributes==lastAttr and formatConfig["reportColor"]:
+			if not c.Attributes==lastAttr:
 				formatField=textInfos.FormatField()
-				formatField["color"]=CONSOLE_COLORS_TO_RGB[c.Attributes&0x0f]
-				formatField["background-color"]=CONSOLE_COLORS_TO_RGB[(c.Attributes>>4)&0x0f]
-				if lastText:
-					commands.append("".join(lastText))
-					lastText=[]
-				command=textInfos.FieldCommand("formatChange", formatField)
-				commands.append(command)
+				if formatConfig['reportColor']:
+					formatField["color"]=CONSOLE_COLORS_TO_RGB[c.Attributes&0x0f]
+					formatField["background-color"]=CONSOLE_COLORS_TO_RGB[(c.Attributes>>4)&0x0f]
+				if formatConfig['reportFontAttributes'] and c.Attributes&COMMON_LVB_UNDERSCORE:
+					formatField['underline']=True
+				if formatField:
+					if lastText:
+						commands.append("".join(lastText))
+						lastText=[]
+					command=textInfos.FieldCommand("formatChange", formatField)
+					commands.append(command)
 				lastAttr=c.Attributes
 			lastText.append(c.Char)
 		commands.append("".join(lastText))
