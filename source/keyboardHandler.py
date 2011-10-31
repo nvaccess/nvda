@@ -300,21 +300,21 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	def send(self):
 		global ignoreInjected
-		try:
-			ignoreInjected=True
-			keys = []
-			for vk, ext in self.generalizedModifiers:
-				if vk == VK_WIN:
-					if winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768:
-						# Already down.
-						continue
-					vk = winUser.VK_LWIN
-				elif winUser.getKeyState(vk) & 32768:
+		keys = []
+		for vk, ext in self.generalizedModifiers:
+			if vk == VK_WIN:
+				if winUser.getKeyState(winUser.VK_LWIN) & 32768 or winUser.getKeyState(winUser.VK_RWIN) & 32768:
 					# Already down.
 					continue
-				keys.append((vk, 0, ext))
-			keys.append((self.vkCode, self.scanCode, self.isExtended))
+				vk = winUser.VK_LWIN
+			elif winUser.getKeyState(vk) & 32768:
+				# Already down.
+				continue
+			keys.append((vk, 0, ext))
+		keys.append((self.vkCode, self.scanCode, self.isExtended))
 
+		try:
+			ignoreInjected=True
 			if winUser.getKeyState(self.vkCode) & 32768:
 				# This key is already down, so send a key up for it first.
 				winUser.keybd_event(self.vkCode, self.scanCode, self.isExtended + 2, 0)
