@@ -8,11 +8,13 @@ import wx
 import winUser
 import winKernel
 import wincon
+from colors import RGB
 import eventHandler
 from logHandler import log
 import speech
 import textInfos
 import api
+import config
 
 #: How often to check whether the console is dead (in ms).
 CHECK_DEAD_INTERVAL = 100
@@ -21,6 +23,29 @@ consoleObject=None #:The console window that is currently in the foreground.
 consoleWinEventHookHandles=[] #:a list of currently registered console win events.
 consoleOutputHandle=None
 checkDeadTimer=None
+
+CONSOLE_COLORS_TO_RGB=( #http://en.wikipedia.org/wiki/Color_Graphics_Adapter
+	RGB(0x00,0x00,0x00), #black
+	RGB(0x00,0x00,0xAA), #blue
+	RGB(0x00,0xAA,0x00), #green
+	RGB(0x00,0xAA,0xAA), #cyan
+	RGB(0xAA,0x00,0x00), #red
+	RGB(0xAA,0x00,0xAA), #magenta
+	RGB(0xAA,0x55, 0x00), #brown
+	RGB(0xAA,0xAA,0xAA), #white
+	RGB(0x55,0x55,0x55), #gray
+	RGB(0x55,0x55,0xFF), #light blue
+	RGB(0x55,0xFF,0x55), #light green
+	RGB(0x55,0xFF,0xFF), #light cyan
+	RGB(0xFF,0x55,0x55), #light red
+	RGB(0xFF,0x55,0xFF), #light magenta
+	RGB(0xFF,0xFF,0x55), #yellow
+	RGB(0xFF,0xFF,0xFF), #white (high intensity)
+)
+
+COMMON_LVB_UNDERSCORE=0x8000
+
+
 
 @wincon.PHANDLER_ROUTINE
 def _consoleCtrlHandler(event):
@@ -127,15 +152,19 @@ def terminate():
 
 class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 
+	_cache_consoleScreenBufferInfo=True
+	def _get_consoleScreenBufferInfo(self):
+		return wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+
 	def _offsetFromConsoleCoord(self,x,y):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		val=y-consoleScreenBufferInfo.srWindow.Top
 		val*=consoleScreenBufferInfo.dwSize.x
 		val+=x
 		return val
 
 	def _consoleCoordFromOffset(self,offset):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		x=offset%consoleScreenBufferInfo.dwSize.x
 		y=offset-x
 		y/=consoleScreenBufferInfo.dwSize.x
@@ -143,7 +172,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return x,y
 
 	def _getOffsetFromPoint(self,x,y):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
 		relativeX=x-screenLeft
 		relativeY=y-screenTop
@@ -153,11 +182,10 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		characterHeight=screenHeight/numLines
 		characterX=(relativeX/characterWidth)+consoleScreenBufferInfo.srWindow.Left
 		characterY=(relativeY/characterHeight)+consoleScreenBufferInfo.srWindow.Top
-		offset=self._offsetFromConsoleCoord(characterX,characterY)
-		return offset
+		return self._offsetFromConsoleCoord(characterX,characterY)
 
 	def _getPointFromOffset(self,offset):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		characterX,characterY=self._consoleCoordFromOffset(offset)
 		screenLeft,screenTop,screenWidth,screenHeight=self.obj.location
 		lineLength=(consoleScreenBufferInfo.srWindow.Right+1)-consoleScreenBufferInfo.srWindow.Left
@@ -171,7 +199,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return textInfos.Point(x,y)
 
 	def _getCaretOffset(self):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		return self._offsetFromConsoleCoord(consoleScreenBufferInfo.dwCursorPosition.x,consoleScreenBufferInfo.dwCursorPosition.y)
 
 	def _getSelectionOffsets(self):
@@ -183,12 +211,56 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start=end=self._getCaretOffset()
 		return start,end
 
+	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf["documentFormatting"]
+		commands=[]
+		left,top=self._consoleCoordFromOffset(self._startOffset)
+		right,bottom=self._consoleCoordFromOffset(self._endOffset-1)
+		rect=wincon.SMALL_RECT(left,top,right,bottom)
+		if bottom-top>0: #offsets span multiple lines
+			rect.Left=0
+			rect.Right=self.consoleScreenBufferInfo.dwSize.x-1
+			length=self.consoleScreenBufferInfo.dwSize.x*(bottom-top+1)
+		else:
+			length=self._endOffset-self._startOffset
+		buf=wincon.ReadConsoleOutput(consoleOutputHandle, length, rect)
+		if bottom-top>0:
+			buf=buf[left:len(buf)-(self.consoleScreenBufferInfo.dwSize.x-right)+1]
+		lastAttr=None
+		lastText=[]
+		boundEnd=self._startOffset
+		for i,c in enumerate(buf):
+			if self._startOffset+i==boundEnd:
+				field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(boundEnd,formatConfig)
+				if lastText:
+					commands.append("".join(lastText))
+					lastText=[]
+				commands.append(textInfos.FieldCommand("formatChange",field))
+			if not c.Attributes==lastAttr:
+				formatField=textInfos.FormatField()
+				if formatConfig['reportColor']:
+					formatField["color"]=CONSOLE_COLORS_TO_RGB[c.Attributes&0x0f]
+					formatField["background-color"]=CONSOLE_COLORS_TO_RGB[(c.Attributes>>4)&0x0f]
+				if formatConfig['reportFontAttributes'] and c.Attributes&COMMON_LVB_UNDERSCORE:
+					formatField['underline']=True
+				if formatField:
+					if lastText:
+						commands.append("".join(lastText))
+						lastText=[]
+					command=textInfos.FieldCommand("formatChange", formatField)
+					commands.append(command)
+				lastAttr=c.Attributes
+			lastText.append(c.Char)
+		commands.append("".join(lastText))
+		return commands
+
 	def _getTextRange(self,start,end):
 		startX,startY=self._consoleCoordFromOffset(start)
 		return wincon.ReadConsoleOutputCharacter(consoleOutputHandle,end-start,startX,startY)
 
 	def _getLineOffsets(self,offset):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		x,y=self._consoleCoordFromOffset(offset)
 		x=0
 		start=self._offsetFromConsoleCoord(x,y)
@@ -196,12 +268,12 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start,end
 
 	def _getLineNumFromOffset(self,offset):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		x,y=self._consoleCoordFromOffset(offset)
 		return y-consoleScreenBufferInfo.srWindow.Top
 
 	def _getStoryLength(self):
-		consoleScreenBufferInfo=wincon.GetConsoleScreenBufferInfo(consoleOutputHandle)
+		consoleScreenBufferInfo=self.consoleScreenBufferInfo
 		return consoleScreenBufferInfo.dwSize.x*((consoleScreenBufferInfo.srWindow.Bottom+1)-consoleScreenBufferInfo.srWindow.Top)
 
 	def _get_clipboardText(self):

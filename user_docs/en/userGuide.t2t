@@ -26,7 +26,7 @@ Major highlights include:
 - Translated into many languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
-- Support for common accessibility  interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation
+- Support for common accessibility  interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
 - support for Windows Command Prompt and console applications
 -
 
@@ -535,7 +535,7 @@ This allows you to choose the amount of punctuation and other symbols that shoul
 For example, when set to all, all symbols will be spoken as words.
 This option applies to all synthesizers, not just the currently active synthesizer.
 
-==== Capital pitch change percentage ==
+==== Capital pitch change percentage ====
 This edit field  allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
 This value is a percentage, where a negative value lowers the pitch and a positive value raises it.
 For no pitch change you would use 0.
@@ -796,6 +796,7 @@ You can configure announcement of:
 - spelling errors
 - page numbers
 - line numbers
+- line indentation
 - tables
 - table row/column headers
 - table cell coordinates
@@ -1110,7 +1111,10 @@ Each entry key can only be listed once per section, including None.
 Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
 -
 
-Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), an optional sub-device or keyboard layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
+Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), a sub-device or layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
+For keyboard gestures, the part in brackets is the keyboard layout and is optional.
+If not specified, the gesture will apply to all keyboard layouts.
+For braille display gestures, the part in brackets identifies the specific braille display and is mandatory.
 
 In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
 + Turn on Input Help.

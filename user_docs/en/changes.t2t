@@ -3,6 +3,18 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.1 =
+
+== New Features ==
+- NVDA can announce the number of leading tabs and spaces of the current line in the order that they are entered. This can be enabled by selecting report line indentation in the document formatting dialogue. (#373)
+- NVDA can now detect key presses generated from alternative keyboard input emulation such as on-screen keyboards and speech recognition software.
+- NVDA can now detect colors in Windows command consoles.
+
+
+== Changes ==
+- Commands to describe the current character or to spell the current word or line now  will spell in the appropriate language according to the text, if auto language switching is turned on and the appropriate language information is available.
+
+
 = 2011.3 =
 Highlights of this release include automatic speech language switching when reading documents with appropriate language information; support for 64 bit Java Runtime Environments; reporting of text formatting in browse mode in Mozilla applications; better handling of application crashes and freezes; and initial fixes for Windows 8.
 
@@ -56,6 +68,7 @@ Highlights of this release include automatic speech language switching when read
 - In browse mode in applications using Mozilla Gecko 10 and later (e.g. Firefox 10), the cursor is more often positioned correctly when loading a page with a target anchor. (#360)
 - In browse mode in Mozilla Gecko applications (e.g. Firefox), labels for image maps are now rendered.
 - With mouse tracking enabled, moving the mouse over certain editable text fields (such as in Synaptics Pointing Device Settings and SpeechLab SpeakText) no longer causes the application to crash. (#672)
+- NVDA now functions correctly in several about dialogs in applications distributed with Windows XP, including the About dialog in Notepad and the About Windows dialog. (#1853, #1855)
 
 
 == Changes for Developers ==

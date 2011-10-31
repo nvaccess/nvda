@@ -96,6 +96,9 @@ def readTextHelper_generator(info,cursor):
 	lastSentIndex=0
 	lastReceivedIndex=0
 	cursorIndexMap={}
+	if not info.obj:
+		# The object died, so we should too.
+		return
 	reader=info.copy()
 	if not reader.isCollapsed:
 		reader.collapse()

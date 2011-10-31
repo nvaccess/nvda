@@ -5,6 +5,8 @@
 #Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
 
 """Common support for editable text.
+@note: If you want editable text functionality for an NVDAObject,
+	you should use the EditableText classes in L{NVDAObjects.behaviors}.
 """
 
 import time

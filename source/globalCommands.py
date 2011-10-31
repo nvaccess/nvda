@@ -444,7 +444,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 		else:
-			speech.speakSpelling(info.text,useCharacterDescriptions=bool(scriptCount>1))
+			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions.")
  
 	def script_review_nextLine(self,gesture):
@@ -486,7 +486,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount==0:
 			speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
 		else:
-			speech.speakSpelling(info.text,useCharacterDescriptions=bool(scriptCount>1))
+			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions")
 
 	def script_review_nextWord(self,gesture):
@@ -536,7 +536,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 		elif scriptCount==1:
-			speech.speakSpelling(info.text,useCharacterDescriptions=True)
+			speech.spellTextInfo(info,useCharacterDescriptions=True)
 		else:
 			try:
 				c = ord(info.text)
@@ -653,17 +653,30 @@ class GlobalCommands(ScriptableObject):
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
 			"reportBlockQuotes":False,
 		}
+		textList=[]
 		info=api.getReviewPosition()
+
+		# First, fetch indentation.
+		line=info.copy()
+		line.expand(textInfos.UNIT_LINE)
+		indentation,content=speech.splitTextIndentation(line.text)
+		if indentation:
+			textList.append(speech.getIndentationSpeech(indentation))
+		
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
 		for field in info.getTextWithFields(formatConfig):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
 		text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
-		if not text:
+		if text:
+			textList.append(text)
+
+		if not textList:
 			ui.message(_("No formatting information"))
 			return
-		ui.message(text)
+
+		ui.message(" ".join(textList))
 	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document")
 
 	def script_reportCurrentFocus(self,gesture):

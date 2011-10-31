@@ -682,7 +682,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 					speech.speakSelectionMessage(_("selected %s"), info.text)
 				else:
 					info.expand(textInfos.UNIT_LINE)
-					speech.speakTextInfo(info, reason=speech.REASON_CARET)
+					speech.speakTextInfo(info, reason=speech.REASON_CARET, unit=textInfos.UNIT_LINE)
 
 		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)

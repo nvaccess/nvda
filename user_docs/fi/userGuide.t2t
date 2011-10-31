@@ -147,14 +147,15 @@ Kun syöteohje on käytössä, NVDA kertoo mitä tahansa näppäintä painettaes
 Syöteohjetilassa näppäimet eivät suorita niiden varsinaisia toimintoja, joten mitä tahansa näppäimiä voidaan painaa vapaasti.
 
 +++ Näppäimistöasettelut +++
-NVDA:n mukana tulee tällä hetkellä kaksi näppäimistöasettelua, yksi pöytäkoneille ja yksi kannettaville.
+NVDA:n mukana tulee tällä hetkellä kaksi näppäimistöasettelua.
+Toinen on tarkoitettu pöytäkoneille ja toinen kannettaville.
 NVDA käyttää oletusarvoisesti pöytäkoneiden näppäimistöasettelua, mutta kannettaville tarkoitettu asettelu voidaan  ottaa käyttöön Näppäimistöasetukset-valintaikkunasta, joka löytyy NVDA-valikon Asetukset-alavalikosta.
 
 Pöytäkoneiden näppäimistöasettelussa käytetään runsaasti numeroryhmän näppäimiä (Numlockin on oltava pois päältä).
-Vaikka useimmissa kannettavissa tietokoneissa ei olekaan fyysistä numeroryhmää, niin joissakin sellaista voidaan kuitenkin jäljitellä pitämällä FN-näppäintä alhaalla sekä painamalla kirjaimia ja numeroita näppäimistön oikeanpuoleisesta osasta (7, 8, 9, u, i, o, j, k, l jne).
+Vaikka useimmissa kannettavissa tietokoneissa ei olekaan fyysistä numeroryhmää, niin joissakin sellaista voidaan kuitenkin jäljitellä pitämällä FN-näppäintä alhaalla ja painamalla kirjaimia ja numeroita näppäimistön oikeanpuoleisesta osasta (7, 8, 9, u, i, o, j, k, l jne).
 Jos käytettävässä kannettavassa ei voi tehdä tätä, tai Numlockin pois päältä kytkeminen ei ole mahdollista, voidaan ottaa käyttöön kannettavien näppäimistöasettelu.
 
-+	+ NVDA-valikko ++
+++ NVDA-valikko ++
 NVDA-valikosta voidaan säätää NVDA:n asetuksia, lukea ohjetta, tallentaa ja palauttaa asetukset, muokata puhesanastoja, käyttää lisätyökaluja sekä sulkea NVDA.
 
 NVDA-valikkoon päästään kaikkialta Windowsista NVDA:n ollessa käynnissä painamalla NVDA+n.
@@ -178,12 +179,12 @@ Kun valikko tulee näkyviin, siinä voidaan liikkua nuolinäppäimillä ja valit
 ++ Järjestelmätietojen lukeminen ++
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Lue päiväys/aika | NVDA+f12 | Kertoo kerran painettaessa nykyisen kellonajan, kahdesti painettaessa päiväyksen |
-| Lue akun tila | NVDA+Shift+b | Lukee akun tilan, ts. onko verkkovirta käytössä tai nykyisen akun varauksen. |
-| Lue leikepöydällä oleva teksti | NVDA+c | Lukee leikepöydällä olevan tekstin. |
- %kc:endInclude
+| Lue päiväys/aika | NVDA+f12 | Lukee kerran painettaessa nykyisen kellonajan, kahdesti painettaessa päiväyksen. |
+| Lue akun tila | NVDA+Shift+b | Lukee akun tilan, ts. onko verkkovirta käytössä tai kertoo nykyisen varauksen tason prosentteina. |
+| Lue leikepöydällä oleva teksti | NVDA+c | Lukee leikepöydällä mahdollisesti olevan tekstin. |
+%kc:endInclude
 
-+ NVDA:lla navigoiminen +
+ + NVDA:lla navigoiminen +
 NVDA:n avulla voidaan tutkia järjestelmää ja liikkua siinä useilla tavoilla mukaan lukien sekä normaali vuorovaikutus että tekstin lukeminen.
 
 ++ Objektit ++[Objektit]
@@ -191,7 +192,7 @@ Jokainen sovellus ja itse käyttöjärjestelmä koostuvat useista objekteista.
 Objekti on yksittäinen kohde, kuten tekstikatkelma, painike, valintaruutu, liukusäädin, lista tai muokattava tekstikenttä.
 
 ++ Järjestelmäkohdistuksella navigoiminen ++[Jarjestelmakohdistus]
-Järjestelmäkohdistus, tunnetaan myös yksinkertaisesti kohdistuksena, on [objekti #Objektit], joka vastaanottaa näppäimistöltä painetut näppäimet.
+Järjestelmäkohdistus, tunnetaan myös yksinkertaisesti kohdistuksena, on [objekti #Objektit], joka vastaanottaa näppäimistön näppäinpainallukset.
 Jos esimerkiksi kirjoitetaan muokattavaan tekstikenttään, kohdistus on kyseisessä kentässä.
 
 Yleisin tapa liikkua NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten sarkain ja Shift+sarkain eteen- ja taaksepäin säätimien välillä liikkumiseen, painamalla Alt valikkoriville siirtymiseen, käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+sarkain avointen sovellusten välillä siirtymiseen.
@@ -218,7 +219,7 @@ NVDA:ssa on seuraavat järjestelmäkohdistimeen liittyvät näppäinkomennot:
 || Nimi | Näppäinkomento | Kuvaus |
 | Lue kaikki | NVDA+alanuoli | alkaa lukemaan järjestelmäkohdistimen nykyisestä sijainnista lähtien siirtäen samalla sitä |
 | Lue nykyinen rivi | NVDA+ylänuoli | Lukee järjestelmäkohdistimen kohdalla olevan rivin. Kahdesti painettaessa rivi tavataan. |
-| Lue valittu teksti | NVDA+Shift+ylänuoli | Lukee kaiken valitun tekstin |
+| Lue valittu teksti | NVDA+Shift+ylänuoli | Lukee kaiken valittuna olevan tekstin |
 
 
 Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
@@ -231,8 +232,8 @@ Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
 
 ++ Objektinavigointi ++[Objektinavigointi]
 Toisinaan voi olla tarpeen tutkia nykyistä sovellusta tai käyttöjärjestelmää siirtämättä [kohdistusta #Jarjestelmakohdistus].
-	Saatat myös haluta siirtyä [objekteihin #Objektit], joihin ei pääse normaalisti näppäimistöllä.
-Tällaisissa tapauksissa voidaan käyttää objektinavigointia.
+Saatat myös haluta siirtyä [objekteihin #Objektit], joihin ei pääse normaalisti näppäimistöllä.
+  Tällaisissa tapauksissa voidaan käyttää objektinavigointia.
 
 Objektinavigoinnin avulla on mahdollista liikkua yksittäisten objektien välillä ja saada niistä tietoja.
 Kun objektiin siirrytään, NVDA lukee sen samalla tavalla kuin järjestelmäkohdistuksenkin.
@@ -266,14 +267,14 @@ Seuraavia näppäimiä käytetään objekti kerrallaan navigoimiseen:
 Huomautus: Numlockin on oltava pois päältä, jotta numeroryhmän näppäimet toimisivat oikein.
 
 ++ Tekstin lukeminen ++[Tekstinlukeminen]
-NVDA:lla voidaan lukea nykyisen [navigointiobjektin #Objektinavigointi] sisältö (mukaan lukien [kokonaistarkastelu #Kokonaistarkastelu]) merkki, sana tai rivi kerrallaan.
+NVDA:lla voidaan lukea nykyisen [navigointiobjektin #Objektinavigointi] sisältö ([kokonaistarkastelu #Kokonaistarkastelu] mukaan lukien) merkki, sana tai rivi kerrallaan.
 Tästä on eniten hyötyä Windowsin komentokehotteessa ja muissa paikoissa, joissa on rajoitettu [järjestelmäkohdistin #Jarjestelmakohdistin] tai sitä ei ole lainkaan.
 
 Kun tarkastelukohdistinta siirretään, järjestelmäkohdistin ei seuraa mukana, joten tekstin lukeminen onnistuu muokkauskohtaa menettämättä.
 Kun järjestelmäkohdistin liikkuu, tarkastelukohdistin seuraa kuitenkin oletusarvoisesti mukana.
 Tätä asetusta voidaan myös muuttaa.
 
-tekstin lukemiseen voidaan käyttää seuraavia näppäinkomentoja:
+Seuraavat tekstinlukukomennot ovat käytettävissä:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 | Siirrä ylimmälle riville | Shift+numeroryhmän 7 | NVDA+7 | Siirtää tarkastelukohdistimen tekstin ylimmälle riville |
@@ -531,13 +532,13 @@ Asetus ei ole oletusarvoisesti käytössä.
 
 %kc:setting
 ==== Välimerkki- ja symbolitaso ====
-Key: NVDA+p
+Pikanäppäin: NVDA+p
 
 Tästä voidaan valita sanoina luettavien välimerkkien ja muiden symboleiden määrä.
 Esimerkiksi kun tasoksi on valittu kaikki, kaikki symbolit luetaan sanoina.
 Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin, eikä pelkästään käytössä olevaan.
 
-==== Äänenkorkeuden muutos isoille kirjaimille (%) ====
+==== Äänenkorkeuden muutos isoille kirjaimille ====
 Tähän muokkauskenttään voidaan syöttää prosenttiluku, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
 Negatiivinen arvo laskee ja positiivinen nostaa äänenkorkeutta.
 Mikäli äänenkorkeuden ei haluta muuttuvan, on arvoksi asetettava 0.
@@ -596,7 +597,7 @@ Tämä asetus säätää sitä, kuinka kauan järjestelmän ilmoitukset näytet�
 
 %kc:setting
 ==== Pistenäyttö seuraa ====
-Key: NVDA+Ctrl+t
+Pikanäppäin: NVDA+Ctrl+t
 
 Tällä asetuksella voidaan valita, seuraako pistenäyttö järjestelmän kohdistusta vai navigointiobjektia/tarkastelukohdistinta.
 
@@ -620,13 +621,13 @@ Jos tämä valintaruutu on valittuna, numeroryhmän Insert-näppäintä voidaan 
 
 %kc:setting
 ==== Lue kirjoitetut merkit ====
-Key: NVDA+2
+Pikanäppäin: NVDA+2
 
 Kun tämä valintaruutu on valittuna, NVDA lukee kaikki kirjoitetut merkit.
 
 %kc:setting
 ==== Lue kirjoitetut sanat ====
-Key: NVDA+3
+Pikanäppäin: NVDA+3
 
 Kun tämä valintaruutu on valittuna, NVDA lukee kaikki kirjoitetut sanat.
 
@@ -637,7 +638,7 @@ Tämän vuoksi siitä varoittaminen voi olla varsin hyödyllistä.
 
 %kc:setting
 ==== Lue komentonäppäimet ====
-Key: NVDA+4
+Pikanäppäin: NVDA+4
 
 Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painetut näppäimet, jotka eivät ole merkkejä.
 Näitä ovat sellaiset näppäinyhdistelmät kuin Ctrl+jokin muu kirjain.
@@ -685,7 +686,7 @@ Kun tämä asetus on käytössä, tarkastelukohdistin sijoitetaan aina samaan ob
 
 %kc:setting
 ==== Seuraa järjestelmäkohdistinta ====
-Key: NVDA+6
+Pikanäppäin: NVDA+6
 
 Kun tämä asetus on käytössä, tarkastelukohdistin siirretään automaattisesti järjestelmäkohdistimen kohdalle joka kerta sen liikkuessa.
 
@@ -701,7 +702,7 @@ Se sisältää seuraavat asetukset:
 
 ==== Lue työkaluvihjeet ====
 Kun tämä valintaruutu on valittuna, NVDA lukee työkaluvihjeet niiden tullessa näkyviin.
-Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen), kun hiiri siirretään niiden päälle tai kun kohdistus siirretään niihin.
+Monet ikkunat ja säätimet näyttävät pienen ilmoituksen (tai työkaluvihjeen), kun hiiri siirretään niiden päälle tai toisinaan kun kohdistus siirretään niihin.
 
 ==== Lue kuplailmoitukset ====
 Kun tämä valintaruutu on valittuna, NVDA lukee kuplailmoitukset niiden tullessa näkyviin.
@@ -709,10 +710,10 @@ Kuplailmoitukset ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia
 
 ==== Lue objektien pikanäppäimet ====
 Kun tämä valintaruutu on valittuna, NVDA kertoo objektiin tai säätimeen liitetyn pikanäppäimen.
-Valikkorivin Tiedosto-valikolla voi esimerkiksi olla pikanäppäin Alt+t.
+Valikkopalkin Tiedosto-valikolla voi esimerkiksi olla pikanäppäin Alt+t.
 
 ==== Lue objektien sijaintitiedot ====
-Tällä asetuksella voidaan valita, luetaanko objektin sijainti (esim. 1 / 4) siirryttäessä siihen kohdistuksella tai objektinavigoinnilla.
+Tällä asetuksella voidaan määrittää, luetaanko objektin sijainti (esim. 1 / 4) siirryttäessä siihen kohdistuksella tai objektinavigoinnilla.
 
 ==== Arvaa objektien sijaintitiedot, mikäli ei saatavilla ====
 Jos objektien sijaintitietojen lukeminen on käytössä, tämän asetuksen avulla NVDA voi arvata objektien sijaintitiedot silloin, kun niitä ei ole muuten saatavilla jostakin säätimestä.
@@ -728,21 +729,22 @@ Tätä valintaruutua ei kannata valita, jos ei haluta kuulla objektien kuvauksia
 | Näppäinkomento pöytäkoneissa | NVDA+u |
 | Näppäinkomento kannettavissa | NVDA+Ctrl+f2 |
 
-Tästä yhdistelmäruudusta voidaan säätää, miten NVDA ilmoittaa edistymispalkkien päivityksistä.
+Tästä yhdistelmäruudusta voidaan säätää, miten NVDA ilmaisee edistymispalkkien päivittymisen.
+
 Seuraavat vaihtoehdot ovat käytettävissä:
 - Pois: Edistymispalkkeja ei lueta.
 - Lue: Edistymispalkit luetaan prosentteina. Joka kerta kun edistymispalkki muuttuu, NVDA lukee sen uuden arvon.
-- Anna äänimerkki: NVDA antaa äänimerkin joka kerta edistymispalkin muuttuessa. Mitä korkeampi äänimerkki, sitä lähempänä loppua edistymispalkki on .
+- Anna äänimerkki: NVDA antaa äänimerkin joka kerta edistymispalkin muuttuessa. Mitä korkeampi äänimerkki, sitä lähempänä loppua edistymispalkki on.
 - Lue ja anna äänimerkki: NVDA sekä lukee edistymispalkin arvon että antaa äänimerkin.
 -
 
 ==== Ilmaise taustalla olevat edistymispalkit ====
 Kun tämä asetus on käytössä, NVDA ilmaisee edistymispalkin päivitykset, vaikkei se ole edustalla (aktiivisena).
-Jos sellainen ikkuna pienennetään, jossa on edistymispalkki tai siirrytään pois sellaisesta, NVDA seuraa edistymispalkkia, jolloin voidaan tehdä samalla jotain muuta.
+Jos edistymispalkin sisältävä ikkuna pienennetään tai siirrytään pois sellaisesta, NVDA seuraa edistymispalkkia, jolloin voidaan tehdä samalla jotain muuta.
 
 %kc:setting
 ==== Lue dynaamisen sisällön muutokset ====
-Key: NVDA+5
+Pikanäppäin: NVDA+5
 
 Ottaa käyttöön tai poistaa käytöstä uuden sisällön lukemisen tietyissä objekteissa, kuten pääteohjelmissa ja keskusteluohjelmien historiasäätimissä.
 
@@ -759,7 +761,7 @@ Tämä asettaa rivimäärän, joka selaustilassa siirrytään painettaessa Page 
 
 %kc:setting
 ==== Käytä ruutuasettelua ====
-Key: NVDA+v
+Pikanäppäin: NVDA+v
 
 Tällä asetuksella voidaan määrittää, sijoitetaanko sellainen sisältö kuten linkit ja muut kentät selaustilassa omille riveilleen, vai säilytetäänkö ne sellaisina kuin ne ruudulla näytetään.
 Jos asetus on käytössä, kentät jätetään sellaisiksi kuin ne ruudulla näytetään, jos asetus poistetaan käytöstä, kentät sijoitetaan omille riveilleen.
@@ -934,16 +936,16 @@ Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puhe
 
 ++ Microsoft Speech Platform ++
 Microsoft Speech Platform tarjoaa useille kielille puheääniä, joita käytetään tavallisesti palvelinpohjaisten puhesovellusten kehittämiseeen.
-Näitä puheääniä voidaan käyttää myös NVDA:n kanssa.
-
+Näitä puheääniä voidaan käyttää myös NVDA:lla.
+                                                          
 Niiden käyttämiseksi on asennettava seuraavat kaksi komponenttia:
-- Microsoft Speech Platform - Server Runtime (Versio 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime (Versio 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
 - Microsoft Speech Platform - Server Runtime Languages (Versio 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
 -
 
 ++ Audiologic TTS 3 ++
 Tämä on kaupallinen italiankielinen puhesyntetisaattori.
-Se on asennettava tietokoneelle, jotta sitä voidaan käyttää NVDA:n kanssa.
+Se on asennettava tietokoneelle, jotta sitä voidaan käyttää NVDA:lla.
 Katso lisätietoja Audiologicin web-sivustolta osoitteesta www.audiologic.it.
 
 Tämä syntetisaattori ei tue [tavaustoimintoa #Tavaustoiminto].
@@ -959,8 +961,9 @@ Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
 ++ Freedom Scientific Focus/PAC Mate ++
 Kaikkia [Freedom Scientificin http://www.freedomscientific.com/] Focus- ja PAC Mate -pistenäyttöjä tuetaan sekä USB-liitännällä että bluetooth-yhteydellä.
-Niiden käyttämiseksi täytyy asentaa ajurit, jotka voi ladata osoitteesta http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
+Niiden käyttämiseksi täytyy asentaa ajurit, jotka ovat ladattavissa osoitteesta http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Ajuri tukee kaikkia Freedom Scientificin pistenäyttöjä, vaikka sivulla mainitaankin vain Focus 40 Blue.
+Jos käytössä on 64-bittinen Windows ja ajurit on jo asennettu jonkin toisen ruudunlukijan mukana, edellä mainitun linkin takaa löytyvät ajurit on silti asennettava, sillä muissa ei luultavasti ole NVDA:n tarvitsemia tiedostoja.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso pistenäytön käyttöoppaasta kuvaukset siitä, mistä nämä näppäimet löytyvät.
@@ -989,7 +992,7 @@ Katso pistenäytön käyttöoppaasta kuvaukset siitä, mistä nämä näppäimet
 | Siirrä pistenäyttö seuraavalle riville | t4 |
 | Vieritä pistenäyttöä eteenpäin | t5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäin | sp1 |
+| Shift+sarkain-näppäimet | sp1 |
 | Alt-näppäin | sp2 |
 | Escape-näppäin | sp3 |
 | Sarkain-näppäin | sp4 |
@@ -999,9 +1002,9 @@ Katso pistenäytön käyttöoppaasta kuvaukset siitä, mistä nämä näppäimet
 | oikea nuolinäppäin | spRight |
 | Enter-näppäin | spEnter |
 | NVDA-valikko | sp1+sp3 |
-| Windows+d-näppäin (pienennä kaikki sovellukset) | sp1+sp4 |
+| Windows+d-näppäimet (pienennä kaikki sovellukset) | sp1+sp4 |
 | Windows-näppäin | sp2+sp3 |
-| Alt+sarkain-näppäin | sp2+sp4 |
+| Alt+sarkain-näppäimet | sp2+sp4 |
 %kc:endInclude
 
 ++ Handy Tech ++
@@ -1017,7 +1020,7 @@ Katso pistenäytön käyttöoppaasta kuvaukset siitä, mistä nämä näppäimet
 | Siirrä pistenäyttö edelliselle riville | b4 |
 | Siirrä pistenäyttö seuraavalle riville | b5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäin | esc |
+| Shift+sarkain-näppäimet | esc |
 | Alt-näppäin | b2+b4+b5 |
 | Escape-näppäin | b4+b6 |
 | sarkain-näppäin | enter |
@@ -1041,10 +1044,10 @@ Katso pistenäytön käyttöoppaasta kuvaukset siitä, mistä nämä näppäimet
 | Siirrä pistenäyttö edelliselle riville | UP |
 | Siirrä pistenäyttö seuraavalle riville | DN |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäin | SLF |
+| Shift+sarkain-näppäimet | SLF |
 | sarkain-näppäin | SRG |
-| Alt+sarkain-näppäin | SDN |
-| Alt+Shift+sarkain-näppäin | SUP |
+| Alt+sarkain-näppäimet | SDN |
+| Alt+Shift+sarkain-näppäimet | SUP |
 %kc:endInclude
 
 ++ Baum/Humanware/APH ++
