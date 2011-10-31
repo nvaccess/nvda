@@ -96,7 +96,7 @@ def cancelSpeech():
 	sayAllHandler.stop()
 	speakWithoutPauses._pendingSpeechSequence=[]
 	speakWithoutPauses.lastSentIndex=None
-	if _speakSpellingGenerator and _speakSpellingGenerator.gi_frame:
+	if _speakSpellingGenerator:
 		_speakSpellingGenerator.close()
 	if beenCanceled:
 		return
