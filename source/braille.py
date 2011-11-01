@@ -90,6 +90,8 @@ roleLabels = {
 	controlTypes.ROLE_DIALOG: _("dlg"),
 	controlTypes.ROLE_TREEVIEW: _("tv"),
 	controlTypes.ROLE_TABLE: _("tb"),
+	# Translators: Displayed in braille for an object which is a separator.
+	controlTypes.ROLE_SEPARATOR: _("-----"),
 }
 
 positiveStateLabels = {
@@ -244,8 +246,21 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
+	states = propertyValues.get("states")
+	positionInfo = propertyValues.get("positionInfo")
+	level = positionInfo.get("level") if positionInfo else None
 	if role is not None:
-		if name and role in speech.silentRolesOnFocus:
+		if role == controlTypes.ROLE_HEADING and level:
+			# Translators: Displayed in braille for a heading with a level.
+			# %s is replaced with the level.
+			roleText = _("h%s") % level
+			level = None
+		elif role == controlTypes.ROLE_LINK and states and controlTypes.STATE_VISITED in states:
+			states = states.copy()
+			states.discard(controlTypes.STATE_VISITED)
+			# Translators: Displayed in braille for a link which has been visited.
+			roleText = _("vlnk")
+		elif name and role in speech.silentRolesOnFocus:
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
@@ -255,7 +270,6 @@ def getBrailleTextForProperties(**propertyValues):
 	value = propertyValues.get("value")
 	if value and role not in speech.silentValuesForRoles:
 		textList.append(value)
-	states = propertyValues.get("states")
 	if states:
 		positiveStates = speech.processPositiveStates(role, states, speech.REASON_FOCUS, states)
 		textList.extend(positiveStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in positiveStates)
@@ -269,13 +283,11 @@ def getBrailleTextForProperties(**propertyValues):
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
-	positionInfo = propertyValues.get("positionInfo")
 	if positionInfo:
 		indexInGroup = positionInfo.get("indexInGroup")
 		similarItemsInGroup = positionInfo.get("similarItemsInGroup")
 		if indexInGroup and similarItemsInGroup:
 			textList.append(_("%s of %s") % (indexInGroup, similarItemsInGroup))
-		level = positionInfo.get("level")
 		if level is not None:
 			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 			# %s is replaced with the level.
