@@ -385,10 +385,11 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				return offset,offset+1
 			#Find the start of the word (possibly moving through space to get to the word first)
 			tempOffset=relativeOffset
-			while tempOffset>0 and lineText[tempOffset].isspace():
+			while tempOffset>=0 and lineText[tempOffset].isspace():
 				tempOffset-=1
-			while tempOffset>0 and not lineText[tempOffset].isspace():
+			while tempOffset>=0 and not lineText[tempOffset].isspace():
 				tempOffset-=1
+			tempOffset+=1
 			start=lineStart+tempOffset
 			startOnSpace=True if tempOffset<lineTextLen and lineText[tempOffset].isspace() else False
 			#Find the end of the word and trailing space
