@@ -9,6 +9,7 @@ import re
 import baseObject
 import config
 import speech
+import controlTypes
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -27,6 +28,66 @@ class ControlField(Field):
 	For example, a piece of text might be contained within a table, button, form, etc.
 	This field contains information about such a control, such as its role, name and description.
 	"""
+
+	#: This field should never be presented to the user.
+	PRESCAT_SILENT = "silent"
+	#: This field is usually a single line.
+	PRESCAT_SINGLELINE = "singleLine"
+	#: This field is only ever a marker; i.e. single character.
+	PRESCAT_MARKER = "marker"
+	#: This field is usually a multi-line container.
+	PRESCAT_MULTILINE = "multiLine"
+	PRESCAT_GENERIC = None
+
+	def getPresentationCategory(self, ancestors, formatConfig, reason=speech.REASON_CARET):
+		role = self.get("role", controlTypes.ROLE_UNKNOWN)
+		states = self.get("states", set())
+
+		if formatConfig["includeLayoutTables"]:
+			tableLayout = None
+		else:
+			# Find the nearest table.
+			if role == controlTypes.ROLE_TABLE:
+				# This is the nearest table.
+				tableLayout = self.get("table-layout", None)
+			else:
+				# Search ancestors for the nearest table.
+				for anc in reversed(ancestors):
+					if anc.get("role") == controlTypes.ROLE_TABLE:
+						tableLayout = anc.get("table-layout", None)
+						break
+				else:
+					# No table in the ancestors.
+					tableLayout = None
+
+		# Honour verbosity configuration.
+		if reason in (speech.REASON_CARET, speech.REASON_SAYALL, speech.REASON_FOCUS) and (
+			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
+			(role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
+			(role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
+			(role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"]) or
+			(role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+		):
+			return self.PRESCAT_SILENT
+
+		if (
+			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON)
+			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
+			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
+		):
+			return self.PRESCAT_SINGLELINE
+		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_EMBEDDEDOBJECT):
+			return self.PRESCAT_MARKER
+		elif (
+			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU)
+			or (role == controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
+			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
+			or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
+			or (role == controlTypes.ROLE_TABLE and not tableLayout)
+		):
+			return self.PRESCAT_MULTILINE
+
+		return self.PRESCAT_GENERIC
 
 class FieldCommand(object):
 	"""A command indicating a L{Field} in a sequence of text and fields.

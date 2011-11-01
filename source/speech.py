@@ -841,6 +841,10 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 
+	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
+	if presCat==attrs.PRESCAT_SILENT:
+		return None
+
 	childCount=int(attrs.get('_childcount',"0"))
 	if reason==REASON_FOCUS or attrs.get('alwaysReportName',False):
 		name=attrs.get('name',"")
@@ -855,42 +859,15 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		description=""
 	level=attrs.get('level',None)
 
-	# Remove the clickable state from controls that are clearly clickable according to their role
-	# or where it just isn't useful.
-	if role in (controlTypes.ROLE_LINK,controlTypes.ROLE_BUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_TOGGLEBUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_SLIDER,controlTypes.ROLE_DOCUMENT):
+	# Remove the clickable state from controls that are already reported in some other way.
+	if presCat!=attrs.PRESCAT_GENERIC:
 		states=states.copy()
 		states.discard(controlTypes.STATE_CLICKABLE)
 
-	if formatConfig["includeLayoutTables"]:
-		tableLayout=None
+	if presCat != attrs.PRESCAT_GENERIC:
+		tableID = attrs.get("table-id")
 	else:
-		# Find the nearest table.
-		if role==controlTypes.ROLE_TABLE:
-			# This is the nearest table.
-			tableLayout=attrs.get('table-layout',None)
-		else:
-			# Search ancestors for the nearest table.
-			for x in reversed(ancestorAttrs):
-				if x.get("role")==controlTypes.ROLE_TABLE:
-					tableLayout=x.get('table-layout',None)
-					break
-			else:
-				# No table in the ancestors.
-				tableLayout=None
-	if not tableLayout:
-		tableID=attrs.get('table-id')
-	else:
-		tableID=None
-
-	# Honour verbosity configuration.
-	if reason in (REASON_CARET,REASON_SAYALL,REASON_FOCUS) and (
-		(role==controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
-		(role==controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
-		(role==controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
-		(role in (controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROWHEADER,controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"]) or
-		(role in (controlTypes.ROLE_LIST,controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
-	):
-		return ""
+		tableID = None
 
 	roleText=getSpeechTextForProperties(reason=reason,role=role)
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
@@ -906,26 +883,13 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# speakExitForLine: When moving by line, speak when the user exits the control.
 	# speakExitForOther: When moving by word or character, speak when the user exits the control.
 	speakEntry=speakWithinForLine=speakExitForLine=speakExitForOther=False
-	if (
-		role in (controlTypes.ROLE_LINK,controlTypes.ROLE_HEADING,controlTypes.ROLE_BUTTON,controlTypes.ROLE_RADIOBUTTON,controlTypes.ROLE_CHECKBOX,controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_TAB,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_SLIDER,controlTypes.ROLE_SPINBUTTON,controlTypes.ROLE_COMBOBOX,controlTypes.ROLE_PROGRESSBAR,controlTypes.ROLE_TOGGLEBUTTON)
-		or (role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
-		or (role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
-	):
-		# This node is usually a single line.
+	if presCat == attrs.PRESCAT_SINGLELINE:
 		speakEntry=True
 		speakWithinForLine=True
 		speakExitForOther=True
-	elif role in (controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_EMBEDDEDOBJECT):
-		# This node is only ever a marker; i.e. single character.
+	elif presCat == attrs.PRESCAT_MARKER:
 		speakEntry=True
-	elif (
-		role in (controlTypes.ROLE_BLOCKQUOTE,controlTypes.ROLE_FRAME,controlTypes.ROLE_INTERNALFRAME,controlTypes.ROLE_TOOLBAR,controlTypes.ROLE_MENUBAR,controlTypes.ROLE_POPUPMENU)
-		or (role==controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
-		or (role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
-		or (role==controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
-		or (role==controlTypes.ROLE_TABLE and tableID)
-	):
-		# This node is usually a multiline container.
+	elif presCat == attrs.PRESCAT_MULTILINE:
 		speakEntry=True
 		speakExitForLine=True
 		speakExitForOther=True
