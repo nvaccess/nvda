@@ -328,25 +328,48 @@ class ReviewNVDAObjectRegion(NVDAObjectRegion):
 	def routeTo(self, braillePos):
 		pass
 
-def getControlFieldBraille(field, reportStart):
-	# If this isn't the requested endpoint of the node, there's nothing to report.
+def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
+	presCat = field.getPresentationCategory(ancestors, formatConfig)
+	if presCat == field.PRESCAT_SILENT:
+		return None
 	if reportStart:
-		if field.get("_startOfNode") != "1":
+		# If this is a multi-line field, only report it if this is the start of the node.
+		if presCat == field.PRESCAT_MULTILINE and field.get("_startOfNode") != "1":
 			return None
 	else:
-		if field.get("_endOfNode") != "1":
+		# We only report ends for multi-line fields
+		# and only if this is the end of the node.
+		if presCat != field.PRESCAT_MULTILINE or field.get("_endOfNode") != "1":
 			return None
 
-	# FIXME
-	role = field.get("role")
-	if reportStart and role == controlTypes.ROLE_LINK:
-		return u"lnk"
-	elif role == controlTypes.ROLE_LIST:
-		text = u"list"
-		if not reportStart:
-			text += u" end"
-		return text
-	return None
+	role = field.get("role", controlTypes.ROLE_UNKNOWN)
+	states = field.get("states", set())
+	# Remove the clickable state from controls that are already reported in some other way.
+	if presCat != field.PRESCAT_GENERIC:
+		states=states.copy()
+		states.discard(controlTypes.STATE_CLICKABLE)
+
+	if presCat == field.PRESCAT_GENERIC:
+		# The only item we report for these fields is clickable, if present.
+		if controlTypes.STATE_CLICKABLE in states:
+			return getBrailleTextForProperties(states=frozenset({controlTypes.STATE_CLICKABLE}))
+		return None
+
+	elif reportStart:
+		props = {"role": role, "states": states}
+		if config.conf["presentation"]["reportKeyboardShortcuts"]:
+			kbShortcut = field.get("keyboardShortcut")
+			if kbShortcut:
+				props["keyboardShortcut"] = kbShortcut
+		level = field.get("level")
+		if level:
+			props["positionInfo"] = {"level": level}
+		return getBrailleTextForProperties(**props)
+	else:
+		# Translators: Displayed in braille at the end of a control field such as a list or table.
+		# %s is replaced with the control's role.
+		return (_("%s end") %
+			getBrailleTextForProperties(role=role))
 
 class TextInfoRegion(Region):
 
@@ -404,7 +427,7 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
-	def _addTextWithFields(self, fields, isSelection=False):
+	def _addTextWithFields(self, fields, formatConfig, isSelection=False):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
 		typeform = louis.plain_text
@@ -435,8 +458,8 @@ class TextInfoRegion(Region):
 					typeform = self._getTypeformFromFormatField(field)
 				elif cmd == "controlStart":
 					# Place this field on a stack so we can access it for controlEnd.
+					text = getControlFieldBraille(field, ctrlFields, True, formatConfig)
 					ctrlFields.append(field)
-					text = getControlFieldBraille(field, True)
 					if not text:
 						continue
 					# Separate this field text from the rest of the text.
@@ -451,7 +474,7 @@ class TextInfoRegion(Region):
 					self._rawToContentPos.extend((self._currentContentPos,) * textLen)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
-					text = getControlFieldBraille(field, False)
+					text = getControlFieldBraille(field, ctrlFields, False, formatConfig)
 					if not text:
 						continue
 					# Separate this field text from the rest of the text.
@@ -494,13 +517,13 @@ class TextInfoRegion(Region):
 		chunk = line.copy()
 		chunk.collapse()
 		chunk.setEndPoint(sel, "endToStart")
-		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig))
+		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig), formatConfig)
 		# Now, the selection itself.
-		self._addTextWithFields(sel.getTextWithFields(formatConfig=formatConfig), isSelection=True)
+		self._addTextWithFields(sel.getTextWithFields(formatConfig=formatConfig), formatConfig, isSelection=True)
 		# Finally, get the chunk from the end of the selection to the end of the line.
 		chunk.setEndPoint(line, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
-		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig))
+		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig), formatConfig)
 		# Strip line ending characters, but add a space in case the cursor is at the end of the line.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
 		del self.rawTextTypeforms[len(self.rawText) - 1:]
