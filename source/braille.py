@@ -352,7 +352,7 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 	if presCat == field.PRESCAT_GENERIC:
 		# The only item we report for these fields is clickable, if present.
 		if controlTypes.STATE_CLICKABLE in states:
-			return getBrailleTextForProperties(states=frozenset({controlTypes.STATE_CLICKABLE}))
+			return getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE})
 		return None
 
 	elif reportStart:
