@@ -30,39 +30,60 @@ class HelpCommand(object):
 		return pydoc.help(*args,**kwargs)
 
 class ExitConsoleCommand(object):
-
 	"""
 	An object that can be used as an exit command that can close the console or print a friendly message for its repr.
 	"""
 
-	def __init__(self,consoleUIObject):
-		if not isinstance(consoleUIObject,ConsoleUI):
-			raise ValueError("consoleUIObject must be of type ConsoleUI")
-		self.consoleUIObject=consoleUIObject
+	def __init__(self, exitFunc):
+		self._exitFunc = exitFunc
 
 	_reprMessage=_("Type exit() to exit the console")
 	def __repr__(self):
 		return self._reprMessage
 
 	def __call__(self):
-		self.consoleUIObject.Close()
+		self._exitFunc()
 
 #: The singleton Python console UI instance.
 consoleUI = None
 
 class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
-	"""An interactive Python console which directs output to supplied functions.
-	This is necessary for a Python console facilitated by a GUI.
+	"""An interactive Python console for NVDA which directs output to supplied functions.
+	This is necessary for a Python console with input/output other than stdin/stdout/stderr.
 	Input is always received via the L{push} method.
-	This console also handles redirection of stdout and stderr and prevents clobbering of the gettext "_" builtin.
+	This console handles redirection of stdout and stderr and prevents clobbering of the gettext "_" builtin.
+	The console's namespace is populated with useful modules
+	and can be updated with a snapshot of NVDA's state using L{updateNamespaceSnapshotVars}.
 	"""
 
-	def __init__(self, outputFunc, echoFunc, setPromptFunc, **kwargs):
-		# Can't use super here because stupid code.InteractiveConsole doesn't sub-class object. Grrr!
-		code.InteractiveConsole.__init__(self, **kwargs)
+	def __init__(self, outputFunc, setPromptFunc, exitFunc, echoFunc=None, **kwargs):
 		self._output = outputFunc
 		self._echo = echoFunc
 		self._setPrompt = setPromptFunc
+
+		#: The namespace available to the console. This can be updated externally.
+		#: @type: dict
+		# Populate with useful modules.
+		exitCmd = ExitConsoleCommand(exitFunc)
+		self.namespace = {
+			"help": HelpCommand(),
+			"exit": exitCmd,
+			"quit": exitCmd,
+			"sys": sys,
+			"os": os,
+			"wx": wx,
+			"log": log,
+			"api": api,
+			"queueHandler": queueHandler,
+			"speech": speech,
+			"braille": braille,
+		}
+		#: The variables last added to the namespace containing a snapshot of NVDA's state.
+		#: @type: dict
+		self._namespaceSnapshotVars = None
+
+		# Can't use super here because stupid code.InteractiveConsole doesn't sub-class object. Grrr!
+		code.InteractiveConsole.__init__(self, locals=self.namespace, **kwargs)
 		self.prompt = ">>>"
 
 	def _set_prompt(self, prompt):
@@ -76,7 +97,8 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		self._output(data)
 
 	def push(self, line):
-		self._echo("%s %s\n" % (self.prompt, line))
+		if self._echo:
+			self._echo("%s %s\n" % (self.prompt, line))
 		# Capture stdout/stderr output as well as code interaction.
 		stdout, stderr = sys.stdout, sys.stderr
 		sys.stdout = sys.stderr = self
@@ -87,6 +109,36 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		__builtin__._ = saved_
 		self.prompt = "..." if more else ">>>"
 		return more
+
+	def updateNamespaceSnapshotVars(self):
+		"""Update the console namespace with a snapshot of NVDA's current state.
+		This creates/updates variables for the current focus, navigator object, etc.
+		"""
+		self._namespaceSnapshotVars = {
+			"focus": api.getFocusObject(),
+			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
+			"focusAnc": list(api.getFocusAncestors()),
+			"fdl": api.getFocusDifferenceLevel(),
+			"fg": api.getForegroundObject(),
+			"nav": api.getNavigatorObject(),
+			"review":api.getReviewPosition(),
+			"mouse": api.getMouseObject(),
+			"brlRegions": braille.handler.buffer.regions,
+		}
+		self.namespace.update(self._namespaceSnapshotVars)
+
+	def removeNamespaceSnapshotVars(self):
+		"""Remove the variables from the console namespace containing the last snapshot of NVDA's state.
+		This removes the variables added by L{updateNamespaceSnapshotVars}.
+		"""
+		if not self._namespaceSnapshotVars:
+			return
+		for key in self._namespaceSnapshotVars:
+			try:
+				del self.namespace[key]
+			except KeyError:
+				pass
+		self._namespaceSnapshotVars = None
 
 class ConsoleUI(wx.Frame):
 	"""The NVDA Python console GUI.
@@ -110,27 +162,7 @@ class ConsoleUI(wx.Frame):
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
 
-		#: The namespace available to the console. This can be updated externally.
-		#: @type: dict
-		# Populate with useful modules.
-		self.namespace = {
-			"help":HelpCommand(),
-			"exit":ExitConsoleCommand(self),
-			"quit":ExitConsoleCommand(self),
-			"sys": sys,
-			"os": os,
-			"wx": wx,
-			"log": log,
-			"api": api,
-			"queueHandler": queueHandler,
-			"speech": speech,
-			"braille": braille,
-		}
-		#: The variables last added to the namespace containing a snapshot of NVDA's state.
-		#: @type: dict
-		self._namespaceSnapshotVars = None
-
-		self.console = PythonConsole(outputFunc=self.output, echoFunc=self.echo, setPromptFunc=self.setPrompt, locals=self.namespace)
+		self.console = PythonConsole(outputFunc=self.output, echoFunc=self.echo, setPromptFunc=self.setPrompt, exitFunc=self.Close)
 		# Even the most recent line has a position in the history, so initialise with one blank line.
 		self.inputHistory = [""]
 		self.inputHistoryPos = 0
@@ -142,7 +174,7 @@ class ConsoleUI(wx.Frame):
 
 	def onClose(self, evt):
 		self.Hide()
-		self.removeNamespaceSnapshotVars()
+		self.console.removeNamespaceSnapshotVars()
 
 	def output(self, data):
 		self.outputCtrl.write(data)
@@ -208,36 +240,6 @@ class ConsoleUI(wx.Frame):
 		elif key == wx.WXK_ESCAPE:
 			self.Close()
 		evt.Skip()
-
-	def updateNamespaceSnapshotVars(self):
-		"""Update the console namespace with a snapshot of NVDA's current state.
-		This creates/updates variables for the current focus, navigator object, etc.
-		"""
-		self._namespaceSnapshotVars = {
-			"focus": api.getFocusObject(),
-			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
-			"focusAnc": list(api.getFocusAncestors()),
-			"fdl": api.getFocusDifferenceLevel(),
-			"fg": api.getForegroundObject(),
-			"nav": api.getNavigatorObject(),
-			"review":api.getReviewPosition(),
-			"mouse": api.getMouseObject(),
-			"brlRegions": braille.handler.buffer.regions,
-		}
-		self.namespace.update(self._namespaceSnapshotVars)
-
-	def removeNamespaceSnapshotVars(self):
-		"""Remove the variables from the console namespace containing the last snapshot of NVDA's state.
-		This removes the variables added by L{updateNamespaceSnapshotVars}.
-		"""
-		if not self._namespaceSnapshotVars:
-			return
-		for key in self._namespaceSnapshotVars:
-			try:
-				del self.namespace[key]
-			except KeyError:
-				pass
-		self._namespaceSnapshotVars = None
 
 def initialize():
 	"""Initialize the NVDA Python console GUI.
