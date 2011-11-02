@@ -458,7 +458,10 @@ class TextInfoRegion(Region):
 					typeform = self._getTypeformFromFormatField(field)
 				elif cmd == "controlStart":
 					# Place this field on a stack so we can access it for controlEnd.
-					text = getControlFieldBraille(field, ctrlFields, True, formatConfig)
+					if self._skipFieldsNotAtStartOfNode and field.get("_startOfNode") != "1":
+						text = None
+					else:
+						text = getControlFieldBraille(field, ctrlFields, True, formatConfig)
 					ctrlFields.append(field)
 					if not text:
 						continue
@@ -486,6 +489,10 @@ class TextInfoRegion(Region):
 		if isSelection and self._selectionStart is None:
 			# There is no selection. This is a cursor.
 			self.cursorPos = len(self.rawText)
+		if not self._skipFieldsNotAtStartOfNode:
+			# We only render fields that aren't at the start of their nodes for the first part of the line.
+			# Otherwise, we'll render fields that have already been rendered.
+			self._skipFieldsNotAtStartOfNode = True
 
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
@@ -510,6 +517,7 @@ class TextInfoRegion(Region):
 		self._rawToContentPos = []
 		self._currentContentPos = 0
 		self._selectionStart = self._selectionEnd = None
+		self._skipFieldsNotAtStartOfNode = False
 
 		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the line.
 		# Therefore, grab the line in three parts.
