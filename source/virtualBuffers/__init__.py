@@ -220,6 +220,16 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
 
+	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
+		textList = []
+		landmark = field.get("landmark")
+		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode") == "1":
+			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+		text = super(VirtualBufferTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
+		if text:
+			textList.append(text)
+		return " ".join(textList)
+
 	def _get_focusableNVDAObjectAtStart(self):
 		try:
 			newNode, newStart, newEnd = next(self.obj._iterNodesByType("focusable", "up", self._startOffset))
