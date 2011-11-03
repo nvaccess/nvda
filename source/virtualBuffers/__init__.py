@@ -223,7 +223,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		textList = []
 		landmark = field.get("landmark")
-		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode") == "1":
+		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
 			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		text = super(VirtualBufferTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:

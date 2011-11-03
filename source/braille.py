@@ -332,12 +332,12 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	if reportStart:
 		# If this is a multi-line field, only report it if this is the start of the node.
-		if presCat == field.PRESCAT_CONTAINER and field.get("_startOfNode") != "1":
+		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
 			return None
 	else:
 		# We only report ends for multi-line fields
 		# and only if this is the end of the node.
-		if presCat != field.PRESCAT_CONTAINER or field.get("_endOfNode") != "1":
+		if presCat != field.PRESCAT_CONTAINER or not field.get("_endOfNode"):
 			return None
 
 	role = field.get("role", controlTypes.ROLE_UNKNOWN)
@@ -452,7 +452,7 @@ class TextInfoRegion(Region):
 					typeform = self._getTypeformFromFormatField(field)
 				elif cmd == "controlStart":
 					# Place this field on a stack so we can access it for controlEnd.
-					if self._skipFieldsNotAtStartOfNode and field.get("_startOfNode") != "1":
+					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
 						text = None
 					else:
 						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)

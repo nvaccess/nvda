@@ -21,6 +21,16 @@ class XMLTextParser(object):
 		else:
 			raise ValueError("Unknown tag name: %s"%tagName)
 
+		# Normalise attributes common to both field types.
+		try:
+			newAttrs["_startOfNode"] = newAttrs["_startOfNode"] == "1"
+		except KeyError:
+			pass
+		try:
+			newAttrs["_endOfNode"] = newAttrs["_endOfNode"] == "1"
+		except KeyError:
+			pass
+
 	def _EndElementHandler(self,tagName):
 		if tagName=="control":
 			self._commandList.append(textInfos.FieldCommand("controlEnd",None))
