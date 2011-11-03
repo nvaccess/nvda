@@ -421,11 +421,11 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
-	def _addTextWithFields(self, fields, formatConfig, isSelection=False):
+	def _addTextWithFields(self, info, formatConfig, isSelection=False):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
 		typeform = louis.plain_text
-		for command in fields:
+		for command in info.getTextWithFields(formatConfig=formatConfig):
 			if isinstance(command, basestring):
 				if not command:
 					continue
@@ -455,7 +455,7 @@ class TextInfoRegion(Region):
 					if self._skipFieldsNotAtStartOfNode and field.get("_startOfNode") != "1":
 						text = None
 					else:
-						text = getControlFieldBraille(field, ctrlFields, True, formatConfig)
+						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
 					ctrlFields.append(field)
 					if not text:
 						continue
@@ -519,13 +519,13 @@ class TextInfoRegion(Region):
 		chunk = line.copy()
 		chunk.collapse()
 		chunk.setEndPoint(sel, "endToStart")
-		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig), formatConfig)
+		self._addTextWithFields(chunk, formatConfig)
 		# Now, the selection itself.
-		self._addTextWithFields(sel.getTextWithFields(formatConfig=formatConfig), formatConfig, isSelection=True)
+		self._addTextWithFields(sel, formatConfig, isSelection=True)
 		# Finally, get the chunk from the end of the selection to the end of the line.
 		chunk.setEndPoint(line, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
-		self._addTextWithFields(chunk.getTextWithFields(formatConfig=formatConfig), formatConfig)
+		self._addTextWithFields(chunk, formatConfig)
 		# Strip line ending characters, but add a space in case the cursor is at the end of the line.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
 		del self.rawTextTypeforms[len(self.rawText) - 1:]

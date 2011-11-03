@@ -411,6 +411,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		return speech.getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason)
 
+	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
+		# Import late to avoid circular import.
+		import braille
+		return braille.getControlFieldBraille(field, ancestors, reportStart, formatConfig)
+
 	def getEmbeddedObject(self, offset=0):
 		"""Retrieve the embedded object associated with a particular embedded object character.
 		Where a text implementation allows other objects to be embedded in the text, embedded objects are represented by an embedded object character (\uFFFC).
