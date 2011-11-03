@@ -29,15 +29,14 @@ class ControlField(Field):
 	This field contains information about such a control, such as its role, name and description.
 	"""
 
-	#: This field should never be presented to the user.
-	PRESCAT_SILENT = "silent"
-	#: This field is usually a single line.
+	#: This field is usually a single line item; e.g. a link or heading.
 	PRESCAT_SINGLELINE = "singleLine"
-	#: This field is only ever a marker; i.e. single character.
+	#: This field is a marker; e.g. a separator or table cell.
 	PRESCAT_MARKER = "marker"
-	#: This field is usually a multi-line container.
-	PRESCAT_MULTILINE = "multiLine"
-	PRESCAT_GENERIC = None
+	#: This field is a container, usually multi-line.
+	PRESCAT_CONTAINER = "container"
+	#: This field is just for layout.
+	PRESCAT_LAYOUT = None
 
 	def getPresentationCategory(self, ancestors, formatConfig, reason=speech.REASON_CARET):
 		role = self.get("role", controlTypes.ROLE_UNKNOWN)
@@ -68,7 +67,8 @@ class ControlField(Field):
 			(role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"]) or
 			(role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 		):
-			return self.PRESCAT_SILENT
+			# This is just layout as far as the user is concerned.
+			return self.PRESCAT_LAYOUT
 
 		if (
 			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON)
@@ -76,7 +76,7 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_EMBEDDEDOBJECT):
+		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
 			return self.PRESCAT_MARKER
 		elif (
 			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU)
@@ -85,9 +85,9 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
 			or (role == controlTypes.ROLE_TABLE and not tableLayout)
 		):
-			return self.PRESCAT_MULTILINE
+			return self.PRESCAT_CONTAINER
 
-		return self.PRESCAT_GENERIC
+		return self.PRESCAT_LAYOUT
 
 class FieldCommand(object):
 	"""A command indicating a L{Field} in a sequence of text and fields.

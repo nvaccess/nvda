@@ -925,9 +925,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		formatConfig=config.conf["documentFormatting"]
 
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
-	if presCat==attrs.PRESCAT_SILENT:
-		return None
-
 	childCount=int(attrs.get('_childcount',"0"))
 	if reason==REASON_FOCUS or attrs.get('alwaysReportName',False):
 		name=attrs.get('name',"")
@@ -942,7 +939,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		description=""
 	level=attrs.get('level',None)
 
-	if presCat != attrs.PRESCAT_GENERIC:
+	if presCat != attrs.PRESCAT_LAYOUT:
 		tableID = attrs.get("table-id")
 	else:
 		tableID = None
@@ -967,7 +964,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		speakExitForOther=True
 	elif presCat == attrs.PRESCAT_MARKER:
 		speakEntry=True
-	elif presCat == attrs.PRESCAT_MULTILINE:
+	elif presCat == attrs.PRESCAT_CONTAINER:
 		speakEntry=True
 		speakExitForLine=True
 		speakExitForOther=True
