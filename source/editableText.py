@@ -64,7 +64,7 @@ class EditableText(ScriptableObject):
 		except:
 			return
 		if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self:
-			api.setReviewPosition(info.copy())
+			api.setReviewPosition(info)
 		if speakUnit:
 			info.expand(speakUnit)
 			speech.speakTextInfo(info, unit=speakUnit, reason=speech.REASON_CARET)
