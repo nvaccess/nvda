@@ -69,7 +69,7 @@ class EditableText(ScriptableObject):
 			elapsed += retryInterval
 		return (False,newInfo)
 
-	def _caretScriptPostMovedHelper(self, speakUnit,info=None):
+	def _caretScriptPostMovedHelper(self, speakUnit, info=None):
 		if isScriptWaiting():
 			return
 		if not info:
@@ -123,13 +123,14 @@ class EditableText(ScriptableObject):
 		else:
 			delChunk=""
 		gesture.send()
-		if not self._hasCaretMoved(oldBookmark):
+		caretMoved,newInfo=self._hasCaretMoved(oldBookmark)
+		if not caretMoved:
 			return
 		if len(delChunk)>1:
 			speech.speakMessage(delChunk)
 		else:
 			speech.speakSpelling(delChunk)
-		self._caretScriptPostMovedHelper(None)
+		self._caretScriptPostMovedHelper(None,newInfo)
 
 	def script_caret_backspaceCharacter(self,gesture):
 		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,gesture)
@@ -146,8 +147,8 @@ class EditableText(ScriptableObject):
 		bookmark=info.bookmark
 		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(bookmark)
-		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER)
+		caretMoved,newInfo=self._hasCaretMoved(bookmark)
+		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,newInfo)
 		braille.handler.handleCaretMove(self)
 
 	__gestures = {
