@@ -344,10 +344,6 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 
 	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	states = field.get("states", set())
-	# Remove the clickable state from controls that are already reported in some other way.
-	if presCat != field.PRESCAT_GENERIC:
-		states=states.copy()
-		states.discard(controlTypes.STATE_CLICKABLE)
 
 	if presCat == field.PRESCAT_GENERIC:
 		# The only item we report for these fields is clickable, if present.

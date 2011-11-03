@@ -562,6 +562,10 @@ def processPositiveStates(role, states, reason, positiveStates):
 	if role == controlTypes.ROLE_COMBOBOX:
 		# Combo boxes inherently have a popup, so don't report it.
 		positiveStates.discard(controlTypes.STATE_HASPOPUP)
+	if role in (controlTypes.ROLE_LINK, controlTypes.ROLE_BUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_SLIDER, controlTypes.ROLE_DOCUMENT):
+		# This control is clearly clickable according to its role
+		# or reporting clickable just isn't useful.
+		positiveStates.discard(controlTypes.STATE_CLICKABLE)
 	if reason == REASON_QUERY:
 		return positiveStates
 	positiveStates.discard(controlTypes.STATE_DEFUNCT)
@@ -937,11 +941,6 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	else:
 		description=""
 	level=attrs.get('level',None)
-
-	# Remove the clickable state from controls that are already reported in some other way.
-	if presCat!=attrs.PRESCAT_GENERIC:
-		states=states.copy()
-		states.discard(controlTypes.STATE_CLICKABLE)
 
 	if presCat != attrs.PRESCAT_GENERIC:
 		tableID = attrs.get("table-id")
