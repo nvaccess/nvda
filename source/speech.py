@@ -1012,7 +1012,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return _("out of %s")%roleText
 
 	# Special cases
-	elif not extraDetail and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
+	elif not extraDetail and not speakEntry and fieldType in ("start_addedToControlFieldStack","start_relative")  and controlTypes.STATE_CLICKABLE in states: 
 		# Clickable.
 		return getSpeechTextForProperties(states=set([controlTypes.STATE_CLICKABLE]))
 
