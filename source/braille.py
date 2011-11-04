@@ -331,11 +331,11 @@ class ReviewNVDAObjectRegion(NVDAObjectRegion):
 def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	if reportStart:
-		# If this is a multi-line field, only report it if this is the start of the node.
+		# If this is a container, only report it if this is the start of the node.
 		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
 			return None
 	else:
-		# We only report ends for multi-line fields
+		# We only report ends for containers
 		# and only if this is the end of the node.
 		if presCat != field.PRESCAT_CONTAINER or not field.get("_endOfNode"):
 			return None
