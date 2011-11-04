@@ -395,6 +395,12 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 		return (_("%s end") %
 			getBrailleTextForProperties(role=role))
 
+def getFormatFieldBraille(field):
+	linePrefix = field.get("line-prefix")
+	if linePrefix:
+		return linePrefix
+	return None
+	
 class TextInfoRegion(Region):
 
 	def __init__(self, obj):
@@ -451,6 +457,18 @@ class TextInfoRegion(Region):
 			typeform |= louis.underline
 		return typeform
 
+	def _addFieldText(self, text):
+		# Separate this field text from the rest of the text.
+		if self.rawText:
+			text = " %s " % text
+		else:
+			text += " "
+		self.rawText += text
+		textLen = len(text)
+		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
+		# Map this field text to the start of the field's content.
+		self._rawToContentPos.extend((self._currentContentPos,) * textLen)
+
 	def _addTextWithFields(self, info, formatConfig, isSelection=False):
 		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
 		ctrlFields = []
@@ -480,6 +498,10 @@ class TextInfoRegion(Region):
 				field = command.field
 				if cmd == "formatChange":
 					typeform = self._getTypeformFromFormatField(field)
+					text = getFormatFieldBraille(field)
+					if not text:
+						continue
+					self._addFieldText(text)
 				elif cmd == "controlStart":
 					# Place this field on a stack so we can access it for controlEnd.
 					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
@@ -489,16 +511,7 @@ class TextInfoRegion(Region):
 					ctrlFields.append(field)
 					if not text:
 						continue
-					# Separate this field text from the rest of the text.
-					if self.rawText:
-						text = " %s " % text
-					else:
-						text += " "
-					self.rawText += text
-					textLen = len(text)
-					self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
-					# Map this field text to the start of the field's content.
-					self._rawToContentPos.extend((self._currentContentPos,) * textLen)
+					self._addFieldText(text)
 				elif cmd == "controlEnd":
 					field = ctrlFields.pop()
 					text = getControlFieldBraille(field, ctrlFields, False, formatConfig)
