@@ -48,14 +48,17 @@ class ControlField(Field):
 			# Find the nearest table.
 			if role == controlTypes.ROLE_TABLE:
 				# This is the nearest table.
-				if self.get("table-layout", None):
-					return self.PRESCAT_LAYOUT
-			# Search ancestors for the nearest table.
-			for anc in reversed(ancestors):
-				if anc.get("role") != controlTypes.ROLE_TABLE:
-					continue
-				if anc.get("table-layout", None):
-					return self.PRESCAT_LAYOUT
+				table = self
+			else:
+				# Search ancestors for the nearest table.
+				for anc in reversed(ancestors):
+					if anc.get("role") == controlTypes.ROLE_TABLE:
+						table = anc
+						break
+				else:
+					table = None
+			if table and table.get("table-layout", None):
+				return self.PRESCAT_LAYOUT
 		if reason in (speech.REASON_CARET, speech.REASON_SAYALL, speech.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 			(role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
