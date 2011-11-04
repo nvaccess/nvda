@@ -347,11 +347,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def move(self,unit,direction,endPoint=None):
 		"""Moves one or both of the endpoints of this object by the given unit and direction.
-@param unit: the unit to move by
-@type unit: string
-@param direction: a positive value moves forward by a number of units, a negative value moves back a number of units
-@type: int
-@param: endPoint: Either None, "start" or "end". If "start" then the start of the range is moved, if "end" then the end of the range is moved, if None - not specified then collapse to start and move both start and end.
+		@param unit: the unit to move by; one of the UNIT_* constants.
+		@param direction: a positive value moves forward by a number of units, a negative value moves back a number of units
+		@type: int
+		@param endPoint: Either None, "start" or "end". If "start" then the start of the range is moved, if "end" then the end of the range is moved, if None - not specified then collapse to start and move both start and end.
+		@return: The number of units moved;
+			negative indicates backward movement, positive indicates forward movement,
+			0 means no movement.
+		@rtype: int
 """
 		raise NotImplementedError
 

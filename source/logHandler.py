@@ -9,6 +9,7 @@ from logging import _levelNames as levelNames
 import inspect
 import winsound
 import traceback
+import re
 import nvwave
 from types import MethodType
 import globalVars
@@ -75,6 +76,19 @@ def getCodePath(f):
 			className=arg0.__class__.__name__
 	return ".".join([x for x in path,className,funcName if x])
 
+# Function to strip the base path of our code from traceback text to improve readability.
+if getattr(sys, "frozen", None):
+	# We're running a py2exe build.
+	# The base path already seems to be stripped in this case, so do nothing.
+	def stripBasePathFromTracebackText(text):
+		return text
+else:
+	BASE_PATH = os.path.split(__file__)[0] + os.sep
+	TB_BASE_PATH_PREFIX = '  File "'
+	TB_BASE_PATH_MATCH = TB_BASE_PATH_PREFIX + BASE_PATH
+	def stripBasePathFromTracebackText(text):
+		return text.replace(TB_BASE_PATH_MATCH, TB_BASE_PATH_PREFIX)
+
 class Logger(logging.Logger):
 	# Import standard levels for convenience.
 	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
@@ -110,7 +124,8 @@ class Logger(logging.Logger):
 		if stack_info:
 			if stack_info is True:
 				stack_info = traceback.extract_stack(f)
-			msg += "\nStack trace:\n" + "".join(traceback.format_list(stack_info)).rstrip()
+			msg += ("\nStack trace:\n"
+				+ stripBasePathFromTracebackText("".join(traceback.format_list(stack_info)).rstrip()))
 
 		res = logging.Logger._log(self,level, msg, args, exc_info, extra)
 
@@ -198,6 +213,9 @@ class Formatter(logging.Formatter):
 			# If there are any errors, just replace the character, as there's nothing else we can do.
 			s = unicode(s, "mbcs", "replace")
 		return s
+
+	def formatException(self, ex):
+		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
 
 class StreamRedirector(object):
 	"""Redirects an output stream to a logger.

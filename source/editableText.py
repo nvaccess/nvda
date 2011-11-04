@@ -37,34 +37,48 @@ class EditableText(ScriptableObject):
 	shouldFireCaretMovementFailedEvents = False
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=0.03):
+		"""
+		Waits for the caret to move, for a timeout to elapse, or for a new focus event or script to be queued.
+		@param bookmark: a bookmark representing the position of the caret before  it was instructed to move
+		@type bookmark: bookmark
+		@param retryInterval: the interval of time in seconds this method should  wait before checking the caret each time.
+		@type retryInterval: float 
+		@param timeout: the over all amount of time in seconds the method should wait before giving up completely.
+		@type timeout: float
+		@return: a tuple containing a boolean denoting whether this method timed out, and  a TextInfo representing the old or updated caret position or None if interupted by a script or focus event.
+		@rtype: tuple
+ 		"""
 		elapsed = 0
+		newInfo=None
 		while elapsed < timeout:
 			if isScriptWaiting():
-				return False
+				return (False,None)
 			api.processPendingEvents(processEventQueue=False)
 			if eventHandler.isPendingEvents("gainFocus"):
-				return True
+				return (True,None)
 			#The caret may stop working as the focus jumps, we want to stay in the while loop though
 			try:
-				newBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
+				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+				newBookmark = newInfo.bookmark
 			except (RuntimeError,NotImplementedError):
-				pass
+				newInfo=None
 			else:
 				if newBookmark!=bookmark:
-					return True
+					return (True,newInfo)
 			time.sleep(retryInterval)
 			elapsed += retryInterval
-		return False
+		return (False,newInfo)
 
-	def _caretScriptPostMovedHelper(self, speakUnit):
+	def _caretScriptPostMovedHelper(self, speakUnit, info=None):
 		if isScriptWaiting():
 			return
-		try:
-			info = self.makeTextInfo(textInfos.POSITION_CARET)
-		except:
-			return
+		if not info:
+			try:
+				info = self.makeTextInfo(textInfos.POSITION_CARET)
+			except:
+				return
 		if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self:
-			api.setReviewPosition(info.copy())
+			api.setReviewPosition(info)
 		if speakUnit:
 			info.expand(speakUnit)
 			speech.speakTextInfo(info, unit=speakUnit, reason=speech.REASON_CARET)
@@ -77,9 +91,10 @@ class EditableText(ScriptableObject):
 			return
 		bookmark=info.bookmark
 		gesture.send()
-		if not self._hasCaretMoved(bookmark) and self.shouldFireCaretMovementFailedEvents:
+		caretMoved,newInfo=self._hasCaretMoved(bookmark) 
+		if not caretMoved and self.shouldFireCaretMovementFailedEvents:
 			eventHandler.executeEvent("caretMovementFailed", self, gesture=gesture)
-		self._caretScriptPostMovedHelper(unit)
+		self._caretScriptPostMovedHelper(unit,newInfo)
 
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
@@ -108,13 +123,14 @@ class EditableText(ScriptableObject):
 		else:
 			delChunk=""
 		gesture.send()
-		if not self._hasCaretMoved(oldBookmark):
+		caretMoved,newInfo=self._hasCaretMoved(oldBookmark)
+		if not caretMoved:
 			return
 		if len(delChunk)>1:
 			speech.speakMessage(delChunk)
 		else:
 			speech.speakSpelling(delChunk)
-		self._caretScriptPostMovedHelper(None)
+		self._caretScriptPostMovedHelper(None,newInfo)
 
 	def script_caret_backspaceCharacter(self,gesture):
 		self._backspaceScriptHelper(textInfos.UNIT_CHARACTER,gesture)
@@ -131,8 +147,8 @@ class EditableText(ScriptableObject):
 		bookmark=info.bookmark
 		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		self._hasCaretMoved(bookmark)
-		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER)
+		caretMoved,newInfo=self._hasCaretMoved(bookmark)
+		self._caretScriptPostMovedHelper(textInfos.UNIT_CHARACTER,newInfo)
 		braille.handler.handleCaretMove(self)
 
 	__gestures = {
