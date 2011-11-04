@@ -42,24 +42,20 @@ class ControlField(Field):
 		role = self.get("role", controlTypes.ROLE_UNKNOWN)
 		states = self.get("states", set())
 
-		if formatConfig["includeLayoutTables"]:
-			tableLayout = None
-		else:
+		# Honour verbosity configuration.
+		if not formatConfig["includeLayoutTables"] and role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
+			# The user doesn't want layout tables.
 			# Find the nearest table.
 			if role == controlTypes.ROLE_TABLE:
 				# This is the nearest table.
-				tableLayout = self.get("table-layout", None)
-			else:
-				# Search ancestors for the nearest table.
-				for anc in reversed(ancestors):
-					if anc.get("role") == controlTypes.ROLE_TABLE:
-						tableLayout = anc.get("table-layout", None)
-						break
-				else:
-					# No table in the ancestors.
-					tableLayout = None
-
-		# Honour verbosity configuration.
+				if self.get("table-layout", None):
+					return self.PRESCAT_LAYOUT
+			# Search ancestors for the nearest table.
+			for anc in reversed(ancestors):
+				if anc.get("role") != controlTypes.ROLE_TABLE:
+					continue
+				if anc.get("table-layout", None):
+					return self.PRESCAT_LAYOUT
 		if reason in (speech.REASON_CARET, speech.REASON_SAYALL, speech.REASON_FOCUS) and (
 			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
 			(role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
@@ -79,11 +75,10 @@ class ControlField(Field):
 		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
 			return self.PRESCAT_MARKER
 		elif (
-			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU)
+			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_TABLE)
 			or (role == controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
 			or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
-			or (role == controlTypes.ROLE_TABLE and not tableLayout)
 		):
 			return self.PRESCAT_CONTAINER
 
