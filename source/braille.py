@@ -249,6 +249,9 @@ def getBrailleTextForProperties(**propertyValues):
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
+	rowNumber = propertyValues.get("rowNumber")
+	columnNumber = propertyValues.get("columnNumber")
+	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
 	if role is not None:
 		if role == controlTypes.ROLE_HEADING and level:
 			# Translators: Displayed in braille for a heading with a level.
@@ -260,7 +263,7 @@ def getBrailleTextForProperties(**propertyValues):
 			states.discard(controlTypes.STATE_VISITED)
 			# Translators: Displayed in braille for a link which has been visited.
 			roleText = _("vlnk")
-		elif name and role in speech.silentRolesOnFocus:
+		elif (name or rowNumber or columnNumber) and role in speech.silentRolesOnFocus:
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
@@ -292,6 +295,19 @@ def getBrailleTextForProperties(**propertyValues):
 			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 			# %s is replaced with the level.
 			textList.append(_('lv %s')%positionInfo['level'])
+	if rowNumber:
+		if includeTableCellCoords: 
+			# Translators: Displayed in braille for a table cell row number.
+			# %s is replaced with the row number.
+			textList.append(_("r%s") % rowNumber)
+	if columnNumber:
+		columnHeaderText = propertyValues.get("columnHeaderText")
+		if columnHeaderText:
+			textList.append(columnHeaderText)
+		if includeTableCellCoords:
+			# Translators: Displayed in braille for a table cell column number.
+			# %s is replaced with the column number.
+			textList.append(_("c%s") % columnNumber)
 	return " ".join([x for x in textList if x])
 
 class NVDAObjectRegion(Region):
@@ -348,6 +364,20 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 		if controlTypes.STATE_CLICKABLE in states:
 			return getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE})
 		return None
+
+	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER) and field.get("table-id"):
+		# Table cell.
+		reportTableHeaders = formatConfig["reportTableHeaders"]
+		reportTableCellCoords = formatConfig["reportTableCellCoords"]
+		props = {
+			"states": states,
+			"rowNumber": field.get("table-rownumber"),
+			"columnNumber": field.get("table-columnnumber"),
+			"includeTableCellCoords": reportTableCellCoords
+		}
+		if reportTableHeaders:
+			props["columnHeaderText"] = field.get("table-columnheadertext")
+		return getBrailleTextForProperties(**props)
 
 	elif reportStart:
 		props = {"role": role, "states": states}
