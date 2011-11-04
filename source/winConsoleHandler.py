@@ -212,9 +212,11 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start,end
 
 	def getTextWithFields(self,formatConfig=None):
+		commands=[]
+		if self.isCollapsed:
+			return commands
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		commands=[]
 		left,top=self._consoleCoordFromOffset(self._startOffset)
 		right,bottom=self._consoleCoordFromOffset(self._endOffset-1)
 		rect=wincon.SMALL_RECT(left,top,right,bottom)

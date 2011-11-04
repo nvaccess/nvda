@@ -18,7 +18,7 @@ NVDA allows blind and vision impaired people to access and interact with the Win
 Major highlights include:
 - Support for popular applications including web browsers, email clients, internet chat programs and office suites
 - Builtin  speech synthesizer supporting over 20 languages
-- announcement of textual formatting where available such as font name and size, style and spelling errors
+- reporting of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
 - Support for many refreshable braille displays
 - Ability to run entirely from a USB stick or other portable media without the need for installation
@@ -142,8 +142,8 @@ If you wish to cause one of the NVDA modifier keys to act like its original key 
 Many key commands are mentioned through out the rest of this user guide, but an easy way to explore all the different key commands is to turn on input help.
 
 To turn on input help, press NVDA+1.
-To turn it off again, press NVDA+1 again.
-While in input help, pressing any key will announce what it does (if in deed it does do something).
+To turn it off, press NVDA+1 again.
+While in input help, pressing any key will report what it does (if indeed it does do something).
 The keys will not actually perform their function while in input help mode, so you can press what ever keys you like.
 
 +++ Keyboard Layouts +++
@@ -202,7 +202,7 @@ There are some key commands that are useful when moving with the System focus:
 %kc:beginInclude
 || Name | key | Description |
 | Report current focus | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information  |
-| Report title | NVDA+t | Announces the title of the currently active window. Pressing twice will spell the information. Pressing thrice will copy it to the clipboard |
+| Report title | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing thrice will copy it to the clipboard |
 | Read active window | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
 | Report Status Bar | NVDA+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location |
 %kc:endInclude
@@ -261,7 +261,7 @@ To navigate by object, use the following keys:
 | Move to focus object | NVDA+numpadMinus | NVDA+backspace | Moves to the object that currently has the system focus, and also places  the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | Activates the current navigator object (similar to  clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Announces the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
+| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Reports the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
 %kc:endInclude
 
 note: numpad keys require numlock key to be turned off to work properly.
@@ -293,7 +293,7 @@ The following key commands are available for reviewing text:
 | Say all with review | numpadPlus | NVDA+shift+downArrow | Reads from the current position of the review cursor, moving it as it goes |
 | copy from review cursor | NVDA+f9 | NVDA+f9 | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
 | Copy to review cursor | NVDA+f10 | NVDA+f10 | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will  be copied to the Windows clipboard |
-| Report text formatting | NVDA+f | Announces the formatting of the text where the review cursor  is currently situated |
+| Report text formatting | NVDA+f | Reports the formatting of the text where the review cursor  is currently situated |
 %kc:endInclude
 
 note: numpad keys require numlock key to be turned off to work properly.
@@ -354,7 +354,7 @@ This includes documents in Mozilla Firefox, Microsoft Internet Explorer, Google 
 
 In browse mode, the content of the document is made available in a flat representation that can be navigated with the cursor keys as if it were a normal text document.
 All of NVDA's [system caret #SystemCaret] key commands will work in this mode; e.g. say all, report formatting, table navigation commands, etc.
-Information such as whether text is a link, heading, etc. is announced along with the text as you move.
+Information such as whether text is a link, heading, etc. is reported along with the text as you move.
 
 Sometimes, you will need to interact directly with controls in these documents.
 You do this by switching to focus mode, where all keys are passed to the control.
@@ -416,7 +416,7 @@ Once you have chosen an item, you can use the provided buttons in the dialog to 
 
 ++ Embedded Objects ++
 Pages can include rich content using technologies such as Adobe Flash and Sun Java.
-Where these are encountered in  browse mode, NVDA will announce "embedded object".
+Where these are encountered in  browse mode, NVDA will report "embedded object".
 You can press enter on these objects to interact with them.
 If it is accessible, you can then tab around it and interact with it like any other application.
 A key command is provided to return to the original page containing the embedded object:
@@ -695,15 +695,15 @@ Found in the Preferences menu under "Object Presentation...".
 This dialog box contains the following options:
 
 ==== Report Tool Tips ====
-A checkbox that when checked tells NVDA to announce tool tips as they appear.
+A checkbox that when checked tells NVDA to report tool tips as they appear.
 Many Windows and controls show a small message (or tool tip) when you move the mouse pointer over them, or sometimes when you move the focus to them.
 
 ==== Report Help Balloons ====
-This checkbox when checked tells NVDA to announce help balloons as they appear.
+This checkbox when checked tells NVDA to report help balloons as they appear.
 Help Balloons are like tool tips, but are usually larger in size, and are associated with system events such as a network cable being unplugged, or perhaps to alert you about Windows security issues.
 
 ==== Report Object Shortcut Keys ====
-When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is announced.
+When this checkbox is checked, NVDA will include the shortcut key that is associated with a certain object or control when it is reported.
 For example the File menu on a menu bar may have a shortcut key of alt+f.
 
 ==== Report object position information ====
@@ -712,10 +712,10 @@ This option lets you choose whether you wish to have an object's position (e.g. 
 ==== Guess Object Position Information when unavailable ====
 If reporting of object position information is turned on, this option allows NVDA to guess object position information when it is otherwize unavailable for a particular control.
 
-When on, NVDA will announce position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
- 
+When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
+
 ==== Report Object descriptions ====
-Uncheck this checkbox if you feel you don't need to hear the description announced along with objects.
+Uncheck this checkbox if you don't wish to have the description reported along with objects.
 
 %kc:setting
 ==== Progress bar output ====
@@ -766,8 +766,8 @@ This option is enabled by default.
 When disabled this option makes NVDA only report tables that contain tabular data (where it makes sense to know that this is a table).
 But if enabled, NVDA will also report tables used purely for visual presentation.
 
-==== Configuring announcement of fields such as links and headings ====
-Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are spoken when navigating, such as links, headings and tables.
+==== Configuring reporting of fields such as links and headings ====
+Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are reported when navigating, such as links, headings and tables.
 
 ==== Automatic focus mode for focus changes ====
 This option allows focus mode to be invoked if focus changes.
@@ -783,10 +783,10 @@ If this option is enabled, NVDA will play special sounds when it switches betwee
 +++ Document Formatting Settings (NVDA+control+d) +++[DocumentFormattingSettings]
 This dialog box is found in the Preferences menu, under "Document Formatting...".
 
-Most of the checkboxes in this dialog are for configuring what type of formatting you wish to hear automatically as you move the cursor around documents.
+Most of the checkboxes in this dialog are for configuring what type of formatting you wish to have reported as you move the cursor around documents.
 For example, if you check the report font name checkbox, each time you arrow onto text with a different font, the name of the font will be announced.
 
-You can configure announcement of:
+You can configure reporting of:
 - font name
 - font size
 - font attributes
@@ -811,7 +811,7 @@ You can configure announcement of:
 If enabled, this setting tells NVDA to try and detect all the formatting changes on a line as it speaks it, even if doing this may slow down NVDA's performance.
 
 By default, NVDA will detect the formatting at the position of the System caret / Review Cursor, and in some instances may detect formatting on the rest of the line, only if it is not going to cause a performance decrease.
- 
+
 Enable this option while  proof reading documents in applications such as Microsoft Word, where formatting is important.
 
 +++ Speech dictionaries +++

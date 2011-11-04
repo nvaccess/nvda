@@ -355,6 +355,12 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			self._endOffset=other._endOffset
 		else:
 			raise ValueError("bad argument - which: %s"%which)
+		if self._startOffset>self._endOffset:
+			# start should never be after end.
+			if which in ("startToStart","startToEnd"):
+				self._endOffset=self._startOffset
+			else:
+				self._startOffset=self._endOffset
 
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:

@@ -13,17 +13,23 @@ class XMLTextParser(object):
 
 	def _startElementHandler(self,tagName,attrs):
 		if tagName=='control':
-			newAttrs=textInfos.ControlField()
-			for name,value in attrs.iteritems():
-				newAttrs[name]=value
+			newAttrs=textInfos.ControlField(attrs)
 			self._commandList.append(textInfos.FieldCommand("controlStart",newAttrs))
 		elif tagName=='text':
-			newAttrs=textInfos.FormatField()
-			for name,value in attrs.iteritems():
-				newAttrs[name]=value
+			newAttrs=textInfos.FormatField(attrs)
 			self._commandList.append(textInfos.FieldCommand("formatChange",newAttrs))
 		else:
 			raise ValueError("Unknown tag name: %s"%tagName)
+
+		# Normalise attributes common to both field types.
+		try:
+			newAttrs["_startOfNode"] = newAttrs["_startOfNode"] == "1"
+		except KeyError:
+			pass
+		try:
+			newAttrs["_endOfNode"] = newAttrs["_endOfNode"] == "1"
+		except KeyError:
+			pass
 
 	def _EndElementHandler(self,tagName):
 		if tagName=="control":
