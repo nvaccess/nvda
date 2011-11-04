@@ -913,7 +913,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(info.UNIT_CONTROLFIELD)
-		if gesture.mainKeyName in ("extendedleft", "extendedup", "extendedprior"):
+		if gesture.mainKeyName in ("leftArrow", "upArrow", "pageUp"):
 			info.collapse()
 		else:
 			info.collapse(end=True)
