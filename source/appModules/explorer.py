@@ -14,7 +14,7 @@ import mouseHandler
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import sysListView32, IAccessible
 
-#Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
+#win8hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
 class SearchBoxClient(IAccessible):
 	shouldAllowIAccessibleFocusEvent=False
 
