@@ -41,7 +41,7 @@ negative number	Minus	none	norep
 \f	Seitenumbruch	none
 \r	Neue Zeile	char
  	Leerzeichen	char
- 	Geschütztes Leerzeichen	char
+ 	Leerzeichen	char	# Geschütztes Leerzeichen
 
 # Standardsymbole und -satzzeichen
 !	Ausrufezeichen	all
@@ -62,7 +62,6 @@ $	Dollar	all	norep
 +	Pluszeichen	most
 ,	Komma	all	always
 -	Bindestrich	most
-.	Punkt	some
 /	Schrägstrich	some
 :	Doppelpunkt	most
 ;	Semikolon	most
@@ -84,15 +83,15 @@ _	Unterstrich	most
 °	Grad	most
 
 # Weitere Zeichen
-•	sternförmiges Aufzählungszeichen	some
-Þ	pfeilförmiges Aufzählungszeichen	some
+•	Aufzählungszeichen	some
+Þ	Aufzählungszeichen	some
 …	Punkt Punkt Punkt	all	always
 ...	Punkt Punkt Punkt	all	always
-	rundes Aufzählungszeichen	some
-“	typografisches Anführungszeichen oben	most
-”	typografisches Anführungszeichen unten	most
-‘	Englisches Anführungszeichen oben 	most
-’	Englisches Anführungszeichen unten	most
+	Aufzählungszeichen	some
+“	Anführungszeichen oben	most
+”	Anführungszeichen unten	most
+‘	Anführungszeichen oben 	most
+’	Anführungszeichen unten	most
 «	doppelt gewinkelte Klammer zu	most
 »	doppelt gewinkelte Klammer auf	most
 –	Strich	most
@@ -109,5 +108,8 @@ _	Unterstrich	most
 ±	Plus Minus	some
 ×	mal	some
 ÷	Divisionszeichen	some
-‏	Pfeil nach links	char
-‎	Pfeil nach rechts	char
+‏	von rechts nach links Markierung	char
+‎	von links nach rechts Markierung	char
+■	schwarzes Quadrat 	some
+➔	Pfeil nach rechts	some
+ 
