@@ -639,6 +639,12 @@ class ReviewTextInfoRegion(TextInfoRegion):
 	def _setCursor(self, info):
 		api.setReviewPosition(info)
 
+def rindex(seq, item, start, end):
+	for index in xrange(end - 1, start - 1, -1):
+		if seq[index] == item:
+			return index
+	raise ValueError("%r is not in sequence" % item)
+
 class BrailleBuffer(baseObject.AutoPropertyObject):
 
 	def __init__(self, handler):
@@ -710,21 +716,31 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return bufferPos - self.windowStartPos
 
 	def _get_windowEndPos(self):
+		maxPos = self.windowStartPos + self.handler.displaySize
+		cellsLen = len(self.brailleCells)
+		if maxPos >= cellsLen:
+			return cellsLen
 		try:
-			lineEnd = self.brailleCells.index(-1, self.windowStartPos)
+			# Try not to split words across windows.
+			# To do this, break on the furthest possible space.
+			return rindex(self.brailleCells, 0, self.windowStartPos, maxPos)
 		except ValueError:
-			lineEnd = len(self.brailleCells)
-		return min(lineEnd, self.windowStartPos + self.handler.displaySize)
+			pass
+		return maxPos
 
 	def _set_windowEndPos(self, endPos):
-		lineStart = endPos - 1
-		# Find the end of the previous line.
-		while lineStart >= 0:
-			if self.brailleCells[lineStart] == -1:
-				break
-			lineStart -= 1
-		lineStart += 1
-		self.windowStartPos = max(endPos - self.handler.displaySize, lineStart)
+		minPos = endPos - self.handler.displaySize
+		if minPos < 0:
+			self.windowStartPos = 0
+			return
+		try:
+			# Try not to split words across windows.
+			# To do this, break on the furthest possible space.
+			self.windowStartPos = self.brailleCells.index(0, minPos, endPos)
+			return
+		except IndexError:
+			pass
+		self.windowStartPos = minPos
 
 	def scrollForward(self):
 		oldStart = self.windowStartPos
