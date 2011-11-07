@@ -36,51 +36,52 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define wdLine 5
 
 UINT wm_winword_expandToLine=0;
-
 typedef struct {
 	int offset;
 	int lineStart;
 	int lineEnd;
 } winword_expandToLine_args;
+void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
+	//Fetch all needed objects
+	IDispatchPtr pDispatchWindow=NULL;
+	if(AccessibleObjectFromWindow(hwnd,OBJID_NATIVEOM,IID_IDispatch,(void**)&pDispatchWindow)!=S_OK) {
+		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
+		return;
+	}
+	IDispatchPtr pDispatchApplication=NULL;
+	if(_com_dispatch_propget(pDispatchWindow,DISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK) {
+		LOG_DEBUGWARNING(L"window.application failed");
+		return;
+	}
+	IDispatchPtr pDispatchSelection=NULL;
+	if(_com_dispatch_propget(pDispatchApplication,DISPID_APPLICATION_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
+		LOG_DEBUGWARNING(L"application.selection failed");
+		return;
+	}
+	IDispatch* pDispatchOldSelRange=NULL;
+	if(_com_dispatch_propget(pDispatchSelection,DISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK) {
+		LOG_DEBUGWARNING(L"selection.range failed");
+		return;
+	}
+	//Disable screen updating as we will be moving the selection temporarily
+	_com_dispatch_propput(pDispatchApplication,DISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
+	//Move the selection to the given range
+	_com_dispatch_method(pDispatchSelection,DISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
+	//Expand the selection to the line
+	_com_dispatch_method(pDispatchSelection,DISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
+	//Collect the start and end offsets of the selection
+	_com_dispatch_propget(pDispatchSelection,DISPID_RANGE_START,VT_I4,&(args->lineStart));
+	_com_dispatch_propget(pDispatchSelection,DISPID_RANGE_END,VT_I4,&(args->lineEnd));
+	//Move the selection back to its original location
+	_com_dispatch_method(pDispatchOldSelRange,DISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
+	//Reenable screen updating
+	_com_dispatch_propput(pDispatchApplication,DISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+}
 
 LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	if(pcwp->message==wm_winword_expandToLine) {
-		winword_expandToLine_args* args=reinterpret_cast<winword_expandToLine_args*>(pcwp->wParam);
-		//Fetch all needed objects
-		IDispatchPtr pDispatchWindow=NULL;
-		if(AccessibleObjectFromWindow(pcwp->hwnd,OBJID_NATIVEOM,IID_IDispatch,(void**)&pDispatchWindow)!=S_OK) {
-			LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
-			return 0;
-		}
-		IDispatchPtr pDispatchApplication=NULL;
-		if(_com_dispatch_propget(pDispatchWindow,DISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK) {
-			LOG_DEBUGWARNING(L"window.application failed");
-			return 0;
-		}
-		IDispatchPtr pDispatchSelection=NULL;
-		if(_com_dispatch_propget(pDispatchApplication,DISPID_APPLICATION_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
-			LOG_DEBUGWARNING(L"application.selection failed");
-			return 0;
-		}
-		IDispatch* pDispatchOldSelRange=NULL;
-		if(_com_dispatch_propget(pDispatchSelection,DISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK) {
-			LOG_DEBUGWARNING(L"selection.range failed");
-			return 0;
-		}
-		//Disable screen updating as we will be moving the selection temporarily
-		_com_dispatch_propput(pDispatchApplication,DISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
-		//Move the selection to the given range
-		_com_dispatch_method(pDispatchSelection,DISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
-		//Expand the selection to the line
-		_com_dispatch_method(pDispatchSelection,DISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
-		//Collect the start and end offsets of the selection
-		_com_dispatch_propget(pDispatchSelection,DISPID_RANGE_START,VT_I4,&(args->lineStart));
-		_com_dispatch_propget(pDispatchSelection,DISPID_RANGE_END,VT_I4,&(args->lineEnd));
-		//Move the selection back to its original location
-		_com_dispatch_method(pDispatchOldSelRange,DISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
-		//Reenable screen updating
-		_com_dispatch_propput(pDispatchApplication,DISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+		winword_expandToLine_helper(pcwp->hwnd,reinterpret_cast<winword_expandToLine_args*>(pcwp->wParam));
 	}
 	return 0;
 }
