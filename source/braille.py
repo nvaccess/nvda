@@ -738,7 +738,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			# To do this, break on the furthest possible space.
 			self.windowStartPos = self.brailleCells.index(0, minPos, endPos)
 			return
-		except IndexError:
+		except ValueError:
 			pass
 		self.windowStartPos = minPos
 
