@@ -20,7 +20,7 @@ class espeak_VOICE(ctypes.Structure):
 	]
 
 env=env.Clone()
-env.Append(CXXFLAGS='/W0')
+env.Append(CCFLAGS='/W0')
 env.Append(CPPDEFINES=[('BUILDING_DLL',1)])
 env.Prepend(CPPPATH='#include/espeak/platforms/windows/windows_dll/src')
 
