@@ -9,7 +9,7 @@
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[^\W_])['’]
+in-word '	(?<=[^\W_])['’'"'”]
 negative number	(?<!\w)-(?=\d)
 
 symbols:
@@ -43,6 +43,7 @@ $	dolar	all	norep
 €	euro	all	norep
 %	yüzde	some
 &	ve	some
+′	apostrof	all
 '	apostrof	all
 (	açparantez	most
 )	kapaparantez	most
@@ -51,6 +52,7 @@ $	dolar	all	norep
 ,	virgül	all	always
 -	tire	most
 .	nokta	all
+·	nokta	all
 /	bölü	some
 :	ikinokta	most	norep
 ;	noktalıvirgül	most
