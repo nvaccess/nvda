@@ -26,13 +26,13 @@ Tärkeimpiä ominaisuuksia ovat:
 - Käännökset useille eri kielille
 - Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
 - Mahdollisuus käyttää Windowsin kirjautumis- ja muissa suojatuissa ruuduissa
-- Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation
+- Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
 - Tuki Windowsin komentokehotteelle ja konsolisovelluksille
 -
 
 ++ Kansainvälistäminen ++
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on englannin lisäksi käännetty seuraaville 34 kielelle: afrikaani, albania, arabia, brasilianportugali, bulgaria, espanja, galisia, georgia, heprea, hindi, hollanti, islanti, italia, japani, kroatia, mandariini- ja perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on saatavilla englannin lisäksi seuraavilla 34 kielellä: afrikaans, albania, arabia, brasilianportugali, bulgaria, espanja, galisia, georgia, heprea, hindi, hollanti, islanti, italia, japani, kroatia, mandariini- ja perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -204,7 +204,7 @@ Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 | Lue nykyinen kohdistus | NVDA+sarkain | Kertoo nykyisen objektin tai säätimen, jossa järjestelmän kohdistus on. Kahdesti painettaessa tiedot tavataan. |
 | Lue nimi | NVDA+t | Lukee aktiivisen ikkunan nimen. Kahdesti painettaessa nimi tavataan, kolmesti painettaessa se kopioidaan leikepöydälle. |
 | Lue aktiivinen ikkuna | NVDA+b | Lukee kaikki aktiivisen ikkunan säätimet (hyödyllinen valintaikkunoissa) |
-| Lue tilapalkki | NVDA+End | Lukee tilapalkin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle |
+| Lue tilarivi | NVDA+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle |
 %kc:endInclude
 
 ++ Järjestelmäkohdistimella navigoiminen ++[Jarjestelmakohdistin]
@@ -319,7 +319,7 @@ Tarkastelukohdistimen nykyisen sijainnin sisältävään objektiin voidaan siirt
 Kahta seuraavaa komentoa käytetään kokonaistarkasteluun tai siitä pois siirtymiseen:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
-| Siirry kokonaistarkasteluun | NVDA+numeroryhmän 7 | NVDA+Page up | Siirtää kokonaistarkasteluun tarkastelukohdistimen nykyisessä kohdassa. Tämä mahdollistaa koko ruudun tai asiakirjan sisällön lukemisen tekstinlukukomennoilla. |
+| Siirry kokonaistarkasteluun | NVDA+numeroryhmän 7 | NVDA+Page up | Siirtää kokonaistarkasteluun tarkastelukohdistimen nykyisessä kohdassa. Tämä mahdollistaa koko ruudun tai dokumentin sisällön lukemisen tekstinlukukomennoilla. |
 | Siirrä objektiin | NVDA+numeroryhmän 1 | NVDA+Page down | Siirtää objektiin, jossa tarkastelukohdistimen kohdalla oleva teksti on kokonaistarkastelussa |
 %kc:endInclude
 
@@ -349,7 +349,7 @@ Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kos
 %kc:endInclude
 
 + Selaustila +
-Monimutkaiset, ei-muokattavat asiakirjat kuten web-sivut, näytetään NVDA:ssa selaustilassa.
+Monimutkaiset, ei-muokattavat dokumentit kuten web-sivut, näytetään NVDA:ssa selaustilassa.
 Näihin kuuluvat Mozilla Firefox-, Internet Explorer-, Google Chrome- ja Adobe Reader- dokumentit sekä Flash-sisältö.
 
 Selaustilassa dokumentin sisältö on käytettävissä kokonaisesityksenä, jossa voidaan liikkua nuolinäppäimillä, aivan kuin se olisi tavallinen tekstiasiakirja.
@@ -527,7 +527,7 @@ Tällä hetkellä vain eSpeak-syntetisaattori tukee automaattista kielen vaihtam
 
 ==== Vaihda murretta automaattisesti ====
 Jos automaattinen kielen vaihtaminen on käytössä, Tällä valintaruudulla voidaan määrittää, vaihdetaanko murretta pelkän kielen sijasta.
-Jos esim. amerikanenglantia puhuvalla äänellä luetaan  dokumenttia, jonka mukaan osa tekstistä on englanninenglantia, niin silloin tämän asetuksen ollessa käytössä syntetisaattori vaihtaa aksenttiaan.
+Jos esim. amerikanenglantia puhuvalla äänellä luetaan  dokumenttia, jonka kielimäärityksen mukaan osa tekstistä on englanninenglantia, niin silloin tämän asetuksen ollessa käytössä syntetisaattori vaihtaa aksenttiaan.
 Asetus ei ole oletusarvoisesti käytössä.
 
 %kc:setting
@@ -710,7 +710,7 @@ Kuplailmoitukset ovat työkaluvihjeiden kaltaisia, mutta ovat yleensä suurempia
 
 ==== Lue objektien pikanäppäimet ====
 Kun tämä valintaruutu on valittuna, NVDA kertoo objektiin tai säätimeen liitetyn pikanäppäimen.
-Valikkopalkin Tiedosto-valikolla voi esimerkiksi olla pikanäppäin Alt+t.
+Valikkorivin Tiedosto-valikolla voi esimerkiksi olla pikanäppäin Alt+t.
 
 ==== Lue objektien sijaintitiedot ====
 Tällä asetuksella voidaan määrittää, luetaanko objektin sijainti (esim. 1 / 4) siirryttäessä siihen kohdistuksella tai objektinavigoinnilla.
@@ -770,12 +770,12 @@ Jos asetus on käytössä, kentät jätetään sellaisiksi kuin ne ruudulla näy
 Tämä asetus määrittää, luetaanko sivu selaustilassa automaattisesti sen avauduttua.
 Asetus on oletusarvoisesti käytössä.
 
-==== Lue sijoittelutaulukot ====
+==== Lue asettelutaulukot ====
 Kun tämä asetus ei ole käytössä, NVDA lukee vain taulukot, joissa on taulukoitua tietoa (jolloin on järkevää saada tietää, että kyseessä on taulukko).
 Jos asetus on käytössä, NVDA lukee myös taulukot, joita käytetään puhtaasti visuaaliseen esittämiseen.
 
 ==== Kenttien, kuten linkkien ja otsikoiden, lukemisen määrittäminen ====
-Katso [Asiakirjojen muotoiluasetukset -valintaikkunassa #Asiakirjojenmuotoiluasetukset] asetuksia määrittääksesi kentät, jotka puhutaan, kuten linkit, otsikot ja taulukot.
+Katso [Dokumenttien muotoiluasetukset -valintaikkunassa #Dokumenttienmuotoiluasetukset] asetuksia määrittääksesi luettavat kentät, kuten linkit, otsikot ja taulukot.
   
 ==== Automaattinen vuorovaikutustila kohdistuksen muuttuessa ====
 Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön jos kohdistus muuttuu.
@@ -786,13 +786,13 @@ Kun tämä asetus on käytössä, NVDA siirtyy automaattisesti vuorovaikutustila
 Jos esim. web-sivua nuolinäppäimillä selatessa tullaan muokkauskentän kohdalle, NVDA ottaa vuorovaikutustilan käyttöön automaattisesti.
 Jos kentästä siirrytään pois nuolinäppäimillä, NVDA vaihtaa takaisin selaustilaan.
 
-==== Ilmaise vuorovaikutus- ja selaustilat äänimerkeillä ====
+==== Ilmaise vuorovaikutus- ja selaustilat äänimerkillä ====
 Jos tämä asetus on käytössä, NVDA soittaa äänimerkin vaihtaessaan selaus- ja vuorovaikutustilojen välillä sen sijaan, että siitä ilmoitettaisiin puheena.
 
-+++ Asiakirjojen muotoiluasetukset (NVDA+Ctrl+d) +++[Asiakirjojenmuotoiluasetukset]
-Tämä valintaikkuna löytyy Asetukset-valikon "Asiakirjojen muotoilu..." -kohdasta.
++++ Dokumenttien muotoiluasetukset (NVDA+Ctrl+d) +++[Dokumenttienmuotoiluasetukset]
+Tämä valintaikkuna löytyy Asetukset-valikon "Dokumenttien muotoilu..." -kohdasta.
 
-Useimmilla tämän valintaikkunan valintaruuduilla voidaan määrittää, minkä tyyppisiä muotoilutietoja halutaan kuulla automaattisesti liikutettaessa kohdistinta asiakirjoissa.
+Useimmilla tämän valintaikkunan valintaruuduilla voidaan määrittää, minkä tyyppisiä muotoilutietoja halutaan kuulla automaattisesti liikutettaessa kohdistinta dokumenteissa.
 Jos esimerkiksi valitaan Lue fontti -valintaruutu, joka kerta, kun liikutaan nuolinäppäimillä tekstin kohdalle, jonka fontti eroaa aikaisemmasta, NVDA kertoo fontin nimen.
 
 Seuraavien tietojen lukeminen voidaan määrittää:
@@ -820,7 +820,7 @@ Jos tämä asetus on käytössä, NVDA yrittää havaita kaikki rivillä olevat 
 
 NVDA havaitsee oletusarvoisesti järjestelmä- ja tarkastelukohdistimen kohdalla olevat muotoilut, ja joissakin tapauksissa lopunkin rivin, mutta vain, jos se ei aiheuta suorituskyvyn heikkenemistä.
  
-Tämä asetus kannattaa ottaa käyttöön oikoluettaessa asiakirjoja sellaisissa sovelluksissa kuin Microsoft Word, kun muotoilut ovat tärkeitä.
+Tämä asetus kannattaa ottaa käyttöön oikoluettaessa dokumentteja sellaisissa sovelluksissa kuin Microsoft Word, kun muotoilut ovat tärkeitä.
 
 +++ Puhesanastot +++
 Asetukset-valikosta löytyvä Puhesanastot-valikko sisältää valintaikkunoita, joista voidaan muuttaa tapaa, jolla NVDA lausuu tietyt sanat tai ilmaisut.
@@ -1115,7 +1115,10 @@ Kukin avainsana, None mukaan lukien, voi olla samassa lohkossa vain kerran.
 Pilkkuun päättyvät komentotunnisteet on laitettava lainaus- (") tai heittomerkkien (') sisään.
 -
 
-Komentotunnisteet koostuvat kaksikirjaimisista laitekoodeista (näppäimistöllä kb ja pistenäytöllä br), valinnaisesta alilaitteesta tai aaltosuluissa olevasta näppäimistöasettelusta, kaksoispisteestä sekä yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
+ Komentotunnisteet koostuvat kaksikirjaimisesta laitekoodista (näppäimistöllä kb ja pistenäytöllä br), hakasuluissa olevasta alilaitteesta tai   näppäimistöasettelusta, kaksoispisteestä ja yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
+Näppäimistön syötekomennoissa hakasuluissa oleva osa on näppäimistöasettelu, joka on valinnainen.
+Jos tätä ei määritetä, syötekomentoa käytetään kaikissa näppäimistöasetteluissa.
+Pistenäytön syötekomennoissa hakasuluissa oleva osa määrittää halutun pistenäytön, joka on pakollinen.
 
 Komentotunnisteiden ja skriptien sekä luokan ja moduulin nimi saadaan selville seuraavasti:
 + Otetaan syöteohje käyttöön.
