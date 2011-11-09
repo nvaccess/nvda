@@ -729,10 +729,16 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return maxPos
 
 	def _set_windowEndPos(self, endPos):
-		minPos = endPos - self.handler.displaySize
-		if minPos < 0:
-			self.windowStartPos = 0
-			return
+		# Get the last region currently displayed.
+		region, regionPos = self.bufferPosToRegionPos(endPos - 1)
+		if region.focusToHardLeft:
+			# Only scroll to the start of this region.
+			minPos = endPos - regionPos - 1
+		else:
+			minPos = endPos - self.handler.displaySize
+			if minPos < 0:
+				self.windowStartPos = 0
+				return
 		try:
 			# Try not to split words across windows.
 			# To do this, break on the furthest possible space.
