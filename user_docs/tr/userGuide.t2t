@@ -19,14 +19,14 @@ En dikkat çeken özelliklere şunlar dahildir:
 - internet web tarayıcıları, e-posta programları, sohbet programları ve ofis gibi popüler uygulamalara destek
 - 20'den fazla dili destekleyen ve programla gelen konuşma sentezleyicileri
 - Mevcut olduğunda, yazıtipi adı ve boyutu, sitili, ve imla hataları gibi metin biçimlendirmelerinin bildirimi
-- Mouse altındaki metnin otomatik bildirimi ve mouse hareketlerinin isteğe bağlı sesle gösterimi
+- Fare altındaki metnin otomatik bildirimi ve fare hareketlerinin isteğe bağlı sesle gösterimi
 - Birçok Braille refreshable ekranına destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
 - Birçok dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
-- Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
+- Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
 - Windows Komut İstemi ve Console uygulamalarının desteklenmesi
 -
 
@@ -259,7 +259,7 @@ Nesneler arasında dolaşmak için aşağıdaki tuşları kullanın:
 | bir sonraki nesneye gitme | NVDA+numaratör6 | control+NVDA+l | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
 | İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+ö | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
 | Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya konumlandırır |
-| Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | Sistem odağı bir şeyin üzerindeyken oraya mouse ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
+| Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
 | Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
 | Geçerli nesne sunucusunun boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | nesne sunucusunun konumundaki nesnenin ekrandaki genişlik, yükseklik, ekranın soluna ve üstüne mesafesi gibi bilgilerini yüzdelik cinsinden belirtir |
 %kc:endInclude
@@ -327,7 +327,7 @@ Aşağıdaki 2 tuş komutuyla, ekran incelemesine geçilebilir veya nesne sunucu
 Fare ile hareket ederken, varsayılan olarak NVDA, fare   ile üzerine gelinen   kontrolleri okur.
 Desteklendiğinde, NVDA metnin paragrafını okur. ancak bazı kontroller sadece satırın okunmasına izin vermektedir.
 
-NVDA ayrıca, mouse hareket ettikçe üzerinde bulunduğu nesnenin liste, düğme gibi türünü de okuyacak biçimde ayarlanabilmektedir.
+NVDA ayrıca, fare hareket ettikçe üzerinde bulunduğu nesnenin liste, düğme gibi türünü de okuyacak biçimde ayarlanabilmektedir.
 Bu, özellikle tamamen kör olanlar için sadece metnin yeterli olmadığı durumlarda çok yararlıdır.
 
 NVDA, kullanıcıların ekran boyutlarına göre farenin tam olarak nerede olduğunu anlayabilmelerini sağlamak için, farenin o anki koordinatlarını bip sesleriyle çalmaktadır.
@@ -337,7 +337,7 @@ Fare ekranın sağ veya sol tarafına doğru hareket ettikçe, kullanıcıların
 Bu ekstra fare seçenekleri varsayılan olarak kapalıdır.
 Ancak bunların avantajlarından faydalanmak isterseniz, tercihler menüsü içinde bulunan fare ayarları bölümünden bu özellikleri ayarlayabilirsiniz.
 
-Fareyi hareket ettirmek için, fiziksel mouse veya laptoplarda mouse pedi bölümüne ihtiyaç olmasına karşın, NVDA'nın mouse ile ilgili bir kaç komutu da bulunmaktadır:
+Fareyi hareket ettirmek için, fiziksel fare veya laptoplarda fare pedi bölümüne ihtiyaç olmasına karşın, NVDA'nın fare ile ilgili bir kaç komutu da bulunmaktadır:
 %kc:beginInclude
 || Ad | Masaüstü klavye komutu | Dizüstü Klavye komutu | Tanım |
 | Sol fare tıklaması | numaratörBölü | NVDA+Sol Yön Tuşu | Sol fare düğmesine bir kez tıklar çift tıklamak için tuşlara peşpeşe 2 kez basılabilir |
