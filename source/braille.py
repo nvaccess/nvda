@@ -716,33 +716,40 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return bufferPos - self.windowStartPos
 
 	def _get_windowEndPos(self):
-		maxPos = self.windowStartPos + self.handler.displaySize
+		endPos = self.windowStartPos + self.handler.displaySize
 		cellsLen = len(self.brailleCells)
-		if maxPos >= cellsLen:
+		if endPos >= cellsLen:
 			return cellsLen
 		try:
 			# Try not to split words across windows.
-			# To do this, break on the furthest possible space.
-			return rindex(self.brailleCells, 0, self.windowStartPos, maxPos)
+			# To do this, break after the furthest possible space.
+			return min(rindex(self.brailleCells, 0, self.windowStartPos, endPos) + 1,
+				endPos)
 		except ValueError:
 			pass
-		return maxPos
+		return endPos
 
 	def _set_windowEndPos(self, endPos):
+		startPos = endPos - self.handler.displaySize
 		# Get the last region currently displayed.
 		region, regionPos = self.bufferPosToRegionPos(endPos - 1)
 		if region.focusToHardLeft:
 			# Only scroll to the start of this region.
-			minPos = endPos - regionPos - 1
+			restrictPos = endPos - regionPos - 1
 		else:
-			minPos = endPos - self.handler.displaySize
-			if minPos < 0:
-				self.windowStartPos = 0
-				return
+			restrictPos = 0
+		if startPos <= restrictPos:
+			self.windowStartPos = restrictPos
+			return
 		try:
 			# Try not to split words across windows.
-			# To do this, break on the furthest possible space.
-			self.windowStartPos = self.brailleCells.index(0, minPos, endPos)
+			# To do this, break after the furthest possible block of spaces.
+			startPos = self.brailleCells.index(0, startPos, endPos)
+			# Skip past spaces.
+			for startPos in xrange(startPos, endPos):
+				if self.brailleCells[startPos] != 0:
+					break
+			self.windowStartPos = startPos
 			return
 		except ValueError:
 			pass
