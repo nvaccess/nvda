@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import ctypes
-from comtypes import COMError, GUID
+from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
 import NVDAHelper
@@ -284,7 +284,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
 
 	def _get_text(self):
-		text=self._rangeObj.text
+		text=BSTR()
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,self._rangeObj.end,0,ctypes.byref(text))
+		text=text.value
 		if not text:
 			text=""
 		return text
