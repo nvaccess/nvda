@@ -749,11 +749,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			for startPos in xrange(startPos, endPos):
 				if self.brailleCells[startPos] != 0:
 					break
-			self.windowStartPos = startPos
-			return
 		except ValueError:
 			pass
-		self.windowStartPos = minPos
+		self.windowStartPos = startPos
 
 	def scrollForward(self):
 		oldStart = self.windowStartPos
