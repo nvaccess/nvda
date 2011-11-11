@@ -6,7 +6,7 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$). sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
 ... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
@@ -16,8 +16,9 @@ complexSymbols:
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[^\W_])['’]
+in-word -	(?<=[^\W_])[-]
 negative number	(?<!\w)-(?=\d)
+dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -32,6 +33,7 @@ symbols:
 : phrase ending	dos puntos	most	always
 decimal point		none	always
 in-word '	apóstrofo	all	norep
+in-word -	guión	all	norep
 negative number	menos	none	norep
 
 # Whitespace
