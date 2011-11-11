@@ -40,6 +40,9 @@ using namespace std;
 #define DISPID_RANGE_SELECT 65535
 #define DISPID_RANGE_START 3
 #define DISPID_RANGE_END 4
+#define DISPID_RANGE_INFORMATION 313
+#define DISPID_RANGE_SPELLINGERRORS 316
+#define DISPID_SPELLINGERRORS_COUNT 1
 
 #define wdWord 2
 #define wdLine 5
@@ -47,6 +50,14 @@ using namespace std;
 
 #define wdCollapseEnd 0
 #define wdCollapseStart 1
+
+#define wdActiveEndAdjustedPageNumber 1
+#define wdFirstCharacterLineNumber 10
+#define wdWithInTable 12
+#define wdStartOfRangeRowNumber 13
+#define wdMaximumNumberOfRows 15
+#define wdStartOfRangeColumnNumber 16
+#define wdMaximumNumberOfColumns 18
 
 UINT wm_winword_expandToLine=0;
 typedef struct {
@@ -91,6 +102,25 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_propput(pDispatchApplication,DISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
+void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, wostringstream& s) {
+	int iVal=0;
+	_com_dispatch_method(pDispatchRange,DISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber);
+	s<<L"page-number=\""<<iVal<<L"\" ";
+	iVal=0;
+	_com_dispatch_method(pDispatchRange,DISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber);
+	s<<L"line-number=\""<<iVal<<L"\" ";
+	iVal=0;
+	{
+		IDispatchPtr pDispatchSpellingErrors=NULL;
+		if(_com_dispatch_propget(pDispatchRange,DISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)==S_OK&&pDispatchSpellingErrors) {
+			_com_dispatch_propget(pDispatchSpellingErrors,DISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
+			if(iVal>0) {
+				s<<L"invalid-spelling=\""<<iVal<<L"\" ";
+			}
+		}
+	} 
+}
+
 UINT wm_winword_getTextInRange=0;
 typedef struct {
 	int startOffset;
@@ -132,8 +162,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		//Try moving
 		//But if characterFormatting doesn't work, and word doesn't work, or no units were moved then break out of the loop
 		if((
-			_com_dispatch_method(pDispatchRange,DISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacterFormatting,1)!=S_OK\
-			&&_com_dispatch_method(pDispatchRange,DISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK
+			_com_dispatch_method(pDispatchRange,DISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacterFormatting,1)!=S_OK&&
+			_com_dispatch_method(pDispatchRange,DISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK
 		)||unitsMoved<=0) {
 			break;
 		}
@@ -143,7 +173,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			_com_dispatch_propput(pDispatchRange,DISPID_RANGE_END,VT_I4,args->endOffset);
 			chunkEndOffset=args->endOffset;
 		}
-		s<<L"<text>";
+		s<<L"<text ";
+		generateXMLAttribsForFormatting(pDispatchRange,s);
+		s<<L">";
 		_com_dispatch_propget(pDispatchRange,DISPID_RANGE_TEXT,VT_BSTR,&text);
 		if(text) {
 			s<<text;
