@@ -6,9 +6,11 @@
 Traduzido por Marlin Rodrigues da Silva
 
 = 2011.3 =
+Os destaques desta versão incluem a mudança automática do idioma do sintetizador de voz ao ler documentos que forneçam a informação apropriada do idioma; suporte para Java 64 bit; anúncio da formatação de texto no modo de navegação para aplicativos da Mozilla; melhoras no controle de falhas e travamentos em aplicativos; resoluções iniciais para o Windows 8.
 
 == Novas Características ==
 - O NVDA agora pode alterar o idioma do sintetizador eSpeak ao ler certos documentos da web/pdf que forneçam a informação apropriada do idioma. A mudança automática do idioma//dialeto pode ser ativada ou desativada através do Diálogo de Opções de Voz. (#845)
+- Java Access Bridge 2.0.2 agora é suportado, o que inclui suporte para Java 64 bit.
 - No Mozilla Gecko (isto é, Firefox) os níveis dos cabeçalhos agora são anunciados quando se usa a navegação de objetos.
 - A formatação de textos agora é informada quando se usa o modo de navegação no Mozilla Gecko (isto é, Firefox e Thunderbird). (#394)
 - Textos com sublinhado e/ou taxado agora podem ser detectados e informados em controles de texto standard IAccessible2 tais como em aplicativos da Mozilla.
@@ -18,6 +20,7 @@ Traduzido por Marlin Rodrigues da Silva
 - A porcentagem da mudança de tom ao anunciar uma letra maiúscula agora é configurável a partir do Diálogo de Opções de Voz. Todavia, esta substituirá a antiga caixa de seleção Aumentar Tom Para Maiúsculas. (portanto para desativar esse recurso, ajuste a porcentagem para 0). (#255)
 - Textos e a cor de fundo agora são inclusos no anúncio de formatação de células no Microsoft Excel. (#1655)
 - Em aplicativos que usam Java Access Bridge, o comando ativar objeto  de navegação atual agora funciona em controles onde é apropriado. (#1744)
+- Suporte Básico para o aplicativo Design Science MathPlayer.
 
 
 == Alterações ==
@@ -27,6 +30,8 @@ Traduzido por Marlin Rodrigues da Silva
 - A automatização da leitura contínua de um documento quando este é carregado no modo de navegação foi tornada opcional mediante uma configuração no Diálogo de Opções do Modo de Navegação. (#414)
 - Ao tentar ler a barra de status (Desktop NVDA+end), caso o objeto real da barra de status não possa ser encontrado, o NVDA em seu lugar irá usar a última linha de texto escrita na tela para o aplicativo ativo. (#649)
 - Ao efetuar leitura contínua em documentos no modo de navegação, o NVDA agora irá fazer pausa ao fim de cabeçalhos e outros elementos no bloco de seu nível, em lugar de ler o texto junto com  o próximo bloco de texto como uma sentença longa.
+- No modo de navegação, ao pressionar enter ou espaço numa guia agora ela é ativada em lugar de altermnar para o modo de foco. (#1760)
+- Atualizado o sintetizador eSpeak para a versão 1.45.46.
 
 
 == Correção de Falhas ==
@@ -48,6 +53,18 @@ Traduzido por Marlin Rodrigues da Silva
 - O NVDA já não falha ao ler uma célula no Microsoft Excel depois de algo ser colado na mesma usando control+v. (#1781)
 - No Adobe Reader, informações estranhas sobre o documento já não são anunciadas ao mover-se para um controle numa página different no modo de foco. (#1659)
 - Em aplicativos que usam Mozilla Gecko (tal como o Firefox), em modo de navegação, botões de alternância agora são detectados e anunciados corretamente. (#1757)
+- O NVDA agora pode ler corretamente a Barra de Enderesso do Windows Explorer na pré-visualização de desenvolvimento do Windows 8.
+- O NVDA já não trava aplicativos tais como winver e wordpad na pré-visualização de desenvolvimento do Windows 8 devido a má tradução de hieróglifos.
+- No modo de navegação em aplicativos que usam Mozilla Gecko 10 e superior (isto é, Firefox 10), o cursor é posicionado com mais freqüência corretamente ao carregar uma página na qual exista uma âncora. (#360)
+- No modo de navegação em aplicativos que usam Mozilla Gecko (Firefox, por exemplo), etiquetas para mapas de imagens agora são espostas.
+- Com a captura de mouse ativada, movendo-se o mouse por sobre certos campos de texto editáveis já não faz com que trave o aplicativo. (#672)
+- O NVDA agora  funciona corretamente em vários diálogos "sobre" em aplicativos distribuídos com o Windows XP, incluindo o diálogo "sobre" no Notepad e o diálogo "sobre" o Windows. (#1853, #1855)
+
+
+== Alterações para Desenvolvedores ==
+- O NVDA agora pode instruir aos sintetizadores de voz para alternar o idioma em  seções particulares da fala.
+ - Para suportar essa função, os drivers precisam ter controle de speech.LangChangeCommand em seqüências passadas para SynthDriver.speak().
+ - Os objetos para SynthDriver devem também fornecer a informação do idioma para OS OBJETOS DE VoiceInfo (ou substituir o atributo do idioma para retomar o idioma atual). Caso contrário, o idioma da interface do usuário do NVDA será usado.
 
 
 == 2011.2 ==
