@@ -220,6 +220,16 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
 
+	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
+		textList = []
+		landmark = field.get("landmark")
+		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
+			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+		text = super(VirtualBufferTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
+		if text:
+			textList.append(text)
+		return " ".join(textList)
+
 	def _get_focusableNVDAObjectAtStart(self):
 		try:
 			newNode, newStart, newEnd = next(self.obj._iterNodesByType("focusable", "up", self._startOffset))
@@ -682,7 +692,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 					speech.speakSelectionMessage(_("selected %s"), info.text)
 				else:
 					info.expand(textInfos.UNIT_LINE)
-					speech.speakTextInfo(info, reason=speech.REASON_CARET)
+					speech.speakTextInfo(info, reason=speech.REASON_CARET, unit=textInfos.UNIT_LINE)
 
 		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
@@ -903,7 +913,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(info.UNIT_CONTROLFIELD)
-		if gesture.mainKeyName in ("extendedleft", "extendedup", "extendedprior"):
+		if gesture.mainKeyName in ("leftArrow", "upArrow", "pageUp"):
 			info.collapse()
 		else:
 			info.collapse(end=True)

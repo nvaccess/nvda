@@ -9,6 +9,7 @@ import re
 import baseObject
 import config
 import speech
+import controlTypes
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -27,6 +28,64 @@ class ControlField(Field):
 	For example, a piece of text might be contained within a table, button, form, etc.
 	This field contains information about such a control, such as its role, name and description.
 	"""
+
+	#: This field is usually a single line item; e.g. a link or heading.
+	PRESCAT_SINGLELINE = "singleLine"
+	#: This field is a marker; e.g. a separator or table cell.
+	PRESCAT_MARKER = "marker"
+	#: This field is a container, usually multi-line.
+	PRESCAT_CONTAINER = "container"
+	#: This field is just for layout.
+	PRESCAT_LAYOUT = None
+
+	def getPresentationCategory(self, ancestors, formatConfig, reason=speech.REASON_CARET):
+		role = self.get("role", controlTypes.ROLE_UNKNOWN)
+		states = self.get("states", set())
+
+		# Honour verbosity configuration.
+		if not formatConfig["includeLayoutTables"] and role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
+			# The user doesn't want layout tables.
+			# Find the nearest table.
+			if role == controlTypes.ROLE_TABLE:
+				# This is the nearest table.
+				table = self
+			else:
+				# Search ancestors for the nearest table.
+				for anc in reversed(ancestors):
+					if anc.get("role") == controlTypes.ROLE_TABLE:
+						table = anc
+						break
+				else:
+					table = None
+			if table and table.get("table-layout", None):
+				return self.PRESCAT_LAYOUT
+		if reason in (speech.REASON_CARET, speech.REASON_SAYALL, speech.REASON_FOCUS) and (
+			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
+			(role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
+			(role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
+			(role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"]) or
+			(role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+		):
+			# This is just layout as far as the user is concerned.
+			return self.PRESCAT_LAYOUT
+
+		if (
+			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON)
+			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
+			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
+		):
+			return self.PRESCAT_SINGLELINE
+		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
+			return self.PRESCAT_MARKER
+		elif (
+			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_TABLE)
+			or (role == controlTypes.ROLE_EDITABLETEXT and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states) and controlTypes.STATE_MULTILINE in states)
+			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
+			or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
+		):
+			return self.PRESCAT_CONTAINER
+
+		return self.PRESCAT_LAYOUT
 
 class FieldCommand(object):
 	"""A command indicating a L{Field} in a sequence of text and fields.
@@ -286,11 +345,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def move(self,unit,direction,endPoint=None):
 		"""Moves one or both of the endpoints of this object by the given unit and direction.
-@param unit: the unit to move by
-@type unit: string
-@param direction: a positive value moves forward by a number of units, a negative value moves back a number of units
-@type: int
-@param: endPoint: Either None, "start" or "end". If "start" then the start of the range is moved, if "end" then the end of the range is moved, if None - not specified then collapse to start and move both start and end.
+		@param unit: the unit to move by; one of the UNIT_* constants.
+		@param direction: a positive value moves forward by a number of units, a negative value moves back a number of units
+		@type: int
+		@param endPoint: Either None, "start" or "end". If "start" then the start of the range is moved, if "end" then the end of the range is moved, if None - not specified then collapse to start and move both start and end.
+		@return: The number of units moved;
+			negative indicates backward movement, positive indicates forward movement,
+			0 means no movement.
+		@rtype: int
 """
 		raise NotImplementedError
 
@@ -349,6 +411,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def getControlFieldSpeech(self, attrs, ancestorAttrs, fieldType, formatConfig=None, extraDetail=False, reason=None):
 		return speech.getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason)
+
+	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
+		# Import late to avoid circular import.
+		import braille
+		return braille.getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 
 	def getEmbeddedObject(self, offset=0):
 		"""Retrieve the embedded object associated with a particular embedded object character.

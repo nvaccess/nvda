@@ -9,7 +9,7 @@
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[^\W_])['’]
+in-word '	(?<=[^\W_])['’'"'”]
 negative number	(?<!\w)-(?=\d)
 
 symbols:
@@ -43,6 +43,7 @@ $	dolar	all	norep
 €	euro	all	norep
 %	yüzde	some
 &	ve	some
+′	apostrof	all
 '	apostrof	all
 (	açparantez	most
 )	kapaparantez	most
@@ -51,6 +52,7 @@ $	dolar	all	norep
 ,	virgül	all	always
 -	tire	most
 .	nokta	all
+·	nokta	all
 /	bölü	some
 :	ikinokta	most	norep
 ;	noktalıvirgül	most
@@ -73,6 +75,7 @@ _	alt çizgi	most
 # Other characters
 •	madde imi	some
 …	üçnokta	all	always
+...	üç nokta	all	always
 	madde imi	some
 “	tırnakaç	most
 ”	tırnakkapa	most
@@ -84,6 +87,7 @@ _	alt çizgi	most
 ¨	diaeresis	most
 ���	soldan sağa işareti	char
 ���	sağdan sola işareti	char
+➔	Sağ ok	some
 ¡	ters ünlem	most
 ¦	kırık çizgi	most
 «	çift kancalı parantezaç	most

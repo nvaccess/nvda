@@ -396,7 +396,7 @@ class CompoundDocument(EditableText, TreeInterceptor):
 		else:
 			if info.isCollapsed:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=speech.REASON_CARET)
 			else:
 				speech.speakSelectionMessage(_("selected %s"), info.text)
 			braille.handler.handleGainFocus(self)

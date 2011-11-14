@@ -529,8 +529,7 @@ class LabelledEditField(Window):
 --- end ---
 ```
 
-+ NVDA Python Console +
-
++ NVDA Python Console +[PythonConsole]
 The NVDA Python console emulates the interactive Python interpreter from within NVDA.
 It is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 
@@ -553,7 +552,7 @@ The f6 key toggles between the input and output controls.
 Closing the console window simply hides it.
 This allows the user to return to the session as it was left when it was closed, including history and variables.
 
-++ Namespace ++
+++ Namespace ++[PythonConsoleNamespace]
 
 +++ Automatic Imports +++
 For convenience, the following modules and variables are automatically imported in the console:
@@ -569,4 +568,24 @@ These variables are:
 - nav: The current navigator object
 - mouse: The current mouse object
 - brlRegions: The braille regions from the active braille buffer
+-
+
++ Remote Python Console +
+A remote Python console is available for situations where remote debugging of NVDA is useful.
+It is similar to the [local Python console #PythonConsole] discussed above, but is accessed via TCP.
+
+Please be aware that this is a huge security risk.
+You should only enable it if you are connected to trusted networks.
+
+++ Usage ++
+To enable the remote Python console, use the local Python console to import remotePythonConsole and call remotePythonConsole.initialize().
+You can then connect to it via TCP port 6832.
+
+History of previously entered lines is not supported.
+
+The namespace is the same as [the namespace in the local Python console #PythonConsoleNamespace].
+
+There are some special functions:
+- snap(): Takes a snapshot of the current state of NVDA and saves it in the [snapshot variables #PythonConsoleSnapshotVariables].
+- rmSnap(): Removes all snapshot variables.
 -

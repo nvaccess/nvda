@@ -104,8 +104,9 @@ class NMLVDispInfoStruct(Structure):
 	]
 
 def getListGroupInfo(windowHandle,groupIndex):
-	(processID,threadID)=winUser.getWindowThreadProcessID(windowHandle)
 	processHandle=oleacc.GetProcessHandleFromHwnd(windowHandle)
+	if not processHandle:
+		return None
 	localInfo=LVGROUP()
 	localInfo.cbSize=sizeof(LVGROUP)
 	localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
@@ -158,7 +159,7 @@ class GroupingItem(Window):
 		self.groupInfo=groupInfo
 
 	def _isEqual(self,other):
-		return isinstance(other,self.__class__) and self.groupInfo==othergroupInfo
+		return isinstance(other,self.__class__) and self.groupInfo==other.groupInfo
 
 	def _set_groupInfo(self,info):
 		self._groupInfoTime=time.time()
@@ -194,13 +195,12 @@ class GroupingItem(Window):
 
 	def initOverlayClass(self):
 		for gesture in ("kb:leftArrow", "kb:rightArrow"):
-			self.bindeGesture(gesture, "collapseOrExpand")
+			self.bindGesture(gesture, "collapseOrExpand")
 
 class ListItem(IAccessible):
 
 	def _get_lvAppImageID(self):
 		item=LVItemStruct(iItem=self.IAccessibleChildID-1,mask=LVIF_IMAGE)
-		(processID,threadID)=winUser.getWindowThreadProcessID(self.windowHandle)
 		processHandle=self.processHandle
 		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(LVItemStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
