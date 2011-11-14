@@ -6,6 +6,8 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
+... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s…])\…(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])(\s\!|\!)(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s!])(\s\?|\?)(?=[\"'”’)\s]|$)
 # Phrase endings.
@@ -17,6 +19,7 @@ percent	(?<=\d)\ ?\%(?!\w)
 dates	(((0?[1-9]|[12]\d|3[01])\.(0?[13578]|1[02])\.((1[6-9]|[2-9]\d)?\d{2}|\d))|((0?[1-9]|[12]\d|30)\.(0?[13456789]|1[012])\.((1[6-9]|[2-9]\d)?\d{2}|\d))|((0?[1-9]|1\d|2[0-8])\.]0?2\.]((1[6-9]|[2-9]\d)?\d{2}|\d))|(29\.0?2\.((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00|[048])))
 euro	^(0|(([1-9]{1}|[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{2}){1}(\ [0-9]{3}){0,})),(([0-9]{2})|\-\-)([\ ]{1})(€){1}$
 thousands	(^(((\d)|(\d\d)|(\d\d\d))(\xA0|\x20))*((\d)|(\d\d)|(\d\d\d))([,.]\d*)?$)
+in-word -	(?<=[^\W_])[-]
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -25,16 +28,18 @@ symbols:
 . sentence ending	piste	all	always
 ! sentence ending	huuto	all	always
 ? sentence ending	kysymys	all	always
+... sentence ending	piste piste piste	all	always
+… sentence ending	piste piste piste	all	always
 ; phrase ending	puolipiste	most	always
 : phrase ending	kaksoispiste	most	always
 decimal point		none	always
 in-word '	heitto	all	norep
-in-word š	sh	all	norep
 negative number	miinus	none	norep
 percent	prosenttia	none	norep
 dates	 	all	always
 euro	euroa	all	norep
 thousands	 	all	always
+in-word -	viiva	all	norep
 
 # Whitespace
 \0	tyhjä	char	# nollamerkki
@@ -55,8 +60,8 @@ $	dollari	all	norep
 %	prosentti	some
 &	et	some
 '	heitto	all
-(	alkusulku	most
-)	loppusulku	most
+(	alkusulku	most	norep
+)	loppusulku	most	norep
 *	tähti	some
 +	plus	some
 ,	pilkku	all	always
@@ -97,7 +102,7 @@ _	alaviiva	most
 ‎	nuoli vasemmalta oikealle	char
 ‏	nuoli oikealta vasemmalle	char
 ­	pehmeä tavuviiva	all
-█	sitova viiva	all
+‑	sitova viiva	all
 »	kulmalainaus oikealle	all
 →	nuoli oikealle	all
 −	miinus	some

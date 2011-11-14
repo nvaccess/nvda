@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 24 giugno 2011
+Ultimo Aggiornamento del manuale originale: 8 novembre 2011
 traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 
@@ -26,12 +26,12 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Tradotto in moltissime lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
-- Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
+- Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
 -
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-NVDA è stato tradotto in oltre 20 lingue, tra le quali Arabo, portoghese-brasiliano, croato, Ceco, finlandese, ungherese, francese, galiziano, tedesco, italiano, giapponese, portoghese, russo, slovacco, cinese tradizionale, afrikaans, Thai, spagnolo, polacco, ucraino e vietnamita.
+NVDA è stato tradotto in 34 lingue ossia Afrikaans, Albanese, Arabo, portoghese-brasiliano, Bulgaro, croato, Ceco, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, Spagnolo, Svedese, cinese tradizionale, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -462,6 +462,15 @@ Un controllo che va da 0 a 100, (0 indica il volume più basso, 100 il più alto
 ==== Inflessione ====
 Un controllo che permette di selezionare con quanta inflessione (aumento e decadimento del pitch) la sintesi vocale debba parlare.  Al momento soltanto Espeak fornisce questa funzionalità.
 
+==== Cambio automatico della lingua ====
+Questa casella di controllo permette di stabilire se NVDA debba cambiare al volo la lingua con cui parla, nel caso all'interno del testo che si sta leggendo siano presenti i marcatori appositi.
+Questa opzione risulta abilitata di default.
+Inoltre, si ricorda che soltanto Espeak al momento supporta questa funzionalità.
+
+==== cambiamento automatico dialetti (quando supportato) ====
+Se l'impostazione cambio automatico della lingua è attiva, questa casella di controllo farà in modo che NVDA modifichi anche il dialetto della lingua in uso. Ad esempio, potrebbe essere possibile passare da un "american English" ad un "british English".
+L'impostazione è disabilitata di default.
+
 %kc:setting
 ==== Livello di punteggiatura/simboli ====
 Tasto: NVDA+p
@@ -470,8 +479,10 @@ Questa opzione permette di stabilire la quantità di punteggiatura e di altri si
 Ad esempio, se impostata su tutto, tutti i simboli verranno annunciati in parole.
 Questa impostazione viene applicata a tutti i sintetizzatori, non soltanto a quello usato al momento.
   
-==== Aumenta il tono per le maiuscole ====
-Questa impostazione, se attivata, aumenterà il tono della sintesi vocale in presenza di maiuscole.
+==== Percentuale di cambio tono  per lettere maiuscole ====
+Questo campo editazione permette di digitare un numero che sarà equivalente alla variazione di altezza (pitch) effettuato dalla sintesi vocale in presenza di lettere maiuscole.
+Questo valore lavora in percentuale, perciò un valore negativo abbasserà il pitch, mentre uno positivo lo alzerà.
+Per non effettuare alcuna modifica, digitare 0.
 
 ==== Leggi Cap prima delle Maiuscole ====
 Una casella di controllo che, se attivata, istruisce NVDA a dire la parola "CAP" in presenza di una lettera maiuscola, se raggiunta scorrendo il testo con le frecce o se digitata a mano. Di solito, la parola CAP viene pronunciata con un'altezza di tono maggiore, ma poiché non tutti i sintetizzatori supportano questa opzione, è possibile che tale caratteristica non funzioni correttamente.
@@ -671,7 +682,11 @@ Tasto: NVDA+v
 
 Questa casella di controllo modifica la modalità di visualizzazione di alcuni elementi, come ad esempio link o campi editazione. In sostanza, se la casella di controllo viene attivata, tali elementi vengono presentati all'utente esattamente come essi sono visualizzati sullo schermo, quindi, ad esempio, possono esservi più link in una stessa riga. Se invece la casella di controllo è disattivata, il buffer virtuale si occuperà di presentare ciascun elemento in una riga differente, permettendo una navigazione più comoda ma meno simile alla disposizione reale degli oggetti.
   
-==== leggi le tabelle di layout ====
+==== Dire tutto Automaticamente al caricamento di una pagina web ====
+Questa casella di controllo commuta la lettura automatica delle pagine web una volta caricate.
+Essa risulta attiva da impostazioni predefinite.
+  
+  ==== leggi le tabelle di layout ====
 Quando questa casella di controllo è disattivata, NVDA riporterà all'utente soltanto le tabelle che contengono effettivamente dati. è probabilmente la scelta consigliata, in ogni modo, se invece si attiva la casella di controllo, NVDA riporterà anche quelle tabelle che, pur non contenendo dati, esistono per uno scopo puramente visivo, magari per migliorare l'aspetto di una pagina web.
   
 ==== Configurare l'annuncio di campi come links e intestazioni ====
@@ -800,7 +815,7 @@ Vi sono anche numerose varianti che possono essere usate per modificare il timbr
 ++ Microsoft Speech API versione 4 (SAPI 4) ++
 Sapi4 è una vecchia tecnologia Microsoft da usare nei programmi di sintesi vocale.
 Molti di questi sintetizzatori possono essere acquistati o scaricati liberamente da varie aziende o siti web.
-Quando si utilizzano queste sintesi vocali con NVDA, le scelte disponibili (a cui si accede attraverso la [finestra impostazioni voce #VoiceSettings] o modificando le [impostazioni al volo del sintetizzatore #SynthSettingsRing]) conterranno tutte le voci di tutte le tecnologie Sapi4 installate nel sistema.
+Quando si utilizzano queste sintesi vocali con NVDA le scelte disponibili (a cui si accede attraverso la [finestra impostazioni voce #VoiceSettings] o modificando le [impostazioni al volo del sintetizzatore #SynthSettingsRing]) conterranno tutte le voci di tutte le tecnologie Sapi4 installate nel sistema.
 
 Se si possiedono delle voci Sapi4 installate ma non appaiono nell'elenco di sintetizzatori di NVDA, si prega di installare Sapi4.0 RunTime binaries, scaricabili da http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
@@ -809,6 +824,15 @@ Sapi5 è uno standard Microsoft da usare nei programmi di sintesi vocale.
 Molti di questi sintetizzatori possono essere acquistati o scaricati liberamente da varie aziende o siti web, inoltre generalmente almeno una di queste voci risulta già installata sul proprio sistema. (nota del traduttore: la voce preinstallata è in inglese].
 
 Quando si utilizzano queste sintesi vocali con NVDA, le scelte disponibili (a cui si accede attraverso la [finestra impostazioni voce #VoiceSettings] o modificando le [impostazioni al volo del sintetizzatore #SynthSettingsRing]) conterranno tutte le voci di tutte le tecnologie Sapi5 installate nel sistema.
+
+++ Microsoft Speech Platform ++
+La piattaforma Microsoft Speech fornisce supporto per diverse lingue, e generalmente è utilizzata nello sviluppo di applicazioni lato server.
+Queste voci possono essere utilizzate anche con NVDA.
+
+Per usare queste voci, è necessaria l'installazione di due componenti:
+- Microsoft Speech Platform - Server Runtime (Version 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+
 
 ++ Audiologic Tts3 ++
 Si tratta di una sintesi vocale commerciale espressamente rivolta al mercato italiano. Per farla funzionare bisogna possedere una regolare licenza installata sul proprio pc.
@@ -830,7 +854,7 @@ Sono supportati Tutti i Display Braille Focus e Pac Mate prodotti da [Freedom Sc
 per un corretto funzionamento è necessario avere installati nel proprio sistema i drivers per display Braille Freedom Scientific.
 Nel caso non si sia in possesso di tali drivers, è possibile scaricarli dall'indirizzo http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Sebbene nella pagina sia nominata solo la barra Focus 40, il driver funzionerà per tutti i modelli Freedom.
-
+Da notare che se nel proprio sistema si sta utilizzando una versione di Windows a 64 bit e i driver sono già stati installati da un altro screen reader, è probabile che sia necessario installare comunque il pacchetto, in quanto difficilmente quello screen reader avrà installato tutti i file utilizzati da NVDA.
 Segue un elenco dei tasti associati con NVDA:
 Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
 %kc:beginInclude
@@ -982,6 +1006,9 @@ Gli identificatori di gesture terminanti con una virgola devonoessere racchiusi 
 -
 
 Gli identificatori di gesture consistono in un codice di due lettere che si riferiscono al dispositivo in questione (kb per la tastiera e br per i display braille), di un dispositivo secondario opzionale o un layout tastiera tra parentesi tonde, il segno dei DuePunti,  ed infine uno o più nomi di tasti separati dal segno più (+).
+Per le gesture tastiera, la parte tra parentesi è il layout tastiera e comunque risulta opzionale.
+Se non specificato, le gesture si applicheranno a tutti i layout tastiera.
+Per le gesture braille, la parte tra parentesi rappresenta il Display Braille specifico ed è obbligatoria.
 
 Per scoprire gli identificatori di gesture, i nomi di script e classe e modulo a cui appartengono, fare come segue:
 + Attivare l'aiuto Immissione dati, conosciuto anche come aiuto tastiera.
