@@ -201,7 +201,8 @@ int WebKitVBufBackend_t::getNativeHandleForNode(VBufStorage_controlFieldNode_t* 
 	unregisterWindowsHook(WH_CALLWNDPROC, callWndProcHook);
 	if (res <= 0)
 		return 0;
-	return res;
+	// LResultFromObject always returns a 32 bit value.
+	return (int)res;
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
