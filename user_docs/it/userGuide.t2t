@@ -1,7 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 8 novembre 2011
-traduzione a cura di Simone Dal Maso e Gianluca Casalino
-
+Ultimo Aggiornamento del manuale originale: 8 novembre 2011, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Comandi da tastiera Guida Rapida
@@ -10,10 +8,13 @@ traduzione a cura di Simone Dal Maso e Gianluca Casalino
 %%toc
 
 + Introduzione +
-NVDA (NonVisual desktop access) è uno screen reader per i sistemi operativi Windows che permette ad un non vedente di interagire con il computer, ricevendo le informazioni attraverso una sintesi vocale o un display braille e permettendo quindi l'accesso al sistema operativo ed a numerose applicazioni di terze parti senza costi aggiuntivi, allo stesso modo delle persone vedenti. 
+NVDA (NonVisual desktop access) è uno screen reader completamente libero e gratuito per i sistemi operativi Windows.
+Il prodotto permette ad un non vedente di interagire con il computer, ricevendo le informazioni attraverso una sintesi vocale o un display braille e permettendo quindi l'accesso al sistema operativo ed a numerose applicazioni di terze parti senza costi aggiuntivi, allo stesso modo delle persone vedenti. 
 Lo screen reader è sviluppato da [NV Access http://www.nvaccess.org/], con contributi dalle varie comunità.
 
 ++Caratteristiche principali++
+NVDA permette alle persone non vedenti di accedere ed interagire con il sistema operativo Windows e con diverse applicazioni di terze parti.
+
 Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Supporto alle applicazioni più comuni come browsers web, posta elettronica, wordprocessor e software per chattare.
 - sintesi vocale incorporata capace di parlare più di 20 lingue
@@ -49,8 +50,9 @@ NVDA inoltre supporta moltissimi tipi di tabelle braille, permettendo quindi un 
 ++ Licenza e Copyright ++
 NVDA  copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 
-NVDA è coperto dalla licenza GNU versione 2. Siete liberi di condividere e modificare questo programma come volete, a patto che voi distribuiate la licenza assieme al software e rendiate disponibile il sorgente a chiunque ne faccia richiesta. Questo si applica a copie originali e modificate del software ed a qualsiasi programma che utilizzi codice proveniente da questo software.
-
+NVDA è coperto dalla licenza GNU versione 2. 
+Siete liberi di condividere e modificare questo programma come volete, a patto che voi distribuiate la licenza assieme al software e rendiate disponibile il sorgente a chiunque ne faccia richiesta. 
+Questo si applica a copie originali e modificate del software ed a qualsiasi programma che utilizzi codice proveniente da questo software.
 Per maggiori informazioni è possibile [Leggere l'intera licenza. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Requisiti di sistema +
@@ -65,7 +67,8 @@ Se non si possiede ancora una copia di NVDA, è possibile scaricarla dal sito or
 
 Accedere alla sezione download e si troveràà l'apposito link per scaricarlo. In alternativa è anche possibile prelevare il software dal [sito della comunità italiana: http://www.nvda.it]
 
-Vi sono due diverse distribuzioni dello screen reader: una è costituita da un file eseguibile che contiene un installer, che guiderà l'utente tramite la sintesi vocale passo passo per tutto il processo d'installazione, cosicché poi si potrà lanciare NVDA direttamente dal menu avvio.
+Vi sono due diverse distribuzioni dello screen reader
+Una è costituita da un file eseguibile che contiene un installer, che guiderà l'utente tramite la sintesi vocale passo passo per tutto il processo d'installazione, cosicché poi si potrà lanciare NVDA direttamente dal menu avvio.
 L'altra invece è chiamata "portable" e permette di eseguire il software su qualsiasi computer si voglia, basta lanciare il file autoestraente e seguire le istruzioni riportate a schermo: questa versione è adatta ad essere salvata anche su una chiavetta USB o su un cd.
 
 Ricordiamo che per gestire le finestre di Login di Windows, i messaggi del Controllo Utente (UAC) o altre schermate di sicurezza, nonché le applicazioni eseguite come Amministratore nei sistemi Windows vista e successivi, bisogna necessariamente utilizzare la versione Installer di NVDA.
@@ -76,14 +79,20 @@ Questa tipologia di finestre non risulta accessibile utilizzando la versione Por
 ++ L'installer di NVDA ++
 Se si dispone dell'installer di NVDA, premere semplicemente invio sul file o fare doppio click col mouse e l'installazione inizierà.
  
-Non appena il programma di installazione sarà stato caricato in memoria, verrà emesso il suono di benvenuto di NVDA. A questo punto, ne verrà lanciata una copia temporanea per permettere all'utente di portare a termine l'installazione seguendo le semplici istruzioni. Da notare che se si stava utilizzando già NVDA al momento dell'installazione, apparirà un messaggio a schermo dove l'utente verrà informato che la copia precedente di NVDA verrà chiusa automaticamente. Basterà premere invio per confermare l'operazione. Questo risulta necessario affinché l'installer possa aggiornare tutti i file in maniera corretta. A questo punto, se si disponeva già di una copia di NVDA, questa verrà automaticamente disinstallata, a meno che l'utente non disattivi la relativa casella di controllo, ed inizierà l'installazione della nuova versione.
+Non appena il programma di installazione sarà stato caricato in memoria, verrà emesso il suono di benvenuto di NVDA. 
+A questo punto, ne verrà lanciata una copia temporanea per permettere all'utente di portare a termine l'installazione seguendo le semplici istruzioni. 
+Da notare che se si stava utilizzando già NVDA al momento dell'installazione, apparirà un messaggio a schermo dove l'utente verrà informato che la copia precedente di NVDA verrà chiusa automaticamente. Basterà premere invio per confermare l'operazione. 
+Questo risulta necessario affinché l'installer possa aggiornare tutti i file in maniera corretta. 
+A questo punto, se si disponeva già di una copia di NVDA, questa verrà automaticamente disinstallata, a meno che l'utente non disattivi la relativa casella di controllo, ed inizierà l'installazione della nuova versione.
 
-Alla fine dell'installazione, è possibile che il software richieda il riavvio del computer.
- 
-Risulta molto importante effettuare questa operazione, in modo da non dover incorrere in conseguenze indesiderate. Se invece non si riceve alcun messaggio in tal senso, premere semplicemente il pulsante fine e la nuova copia di NVDA funzionerà correttamente.
+Alla fine dell'installazione, il programma notificherà che la procedura è terminata.
+Nel caso si stia reinstallando NVDA, è possibile che il software richieda il riavvio del computer.
+ Risulta molto importante effettuare questa operazione, in modo da non dover incorrere in conseguenze indesiderate. 
+Se invece non si riceve alcun messaggio in tal senso, premere semplicemente il pulsante fine e la nuova copia di NVDA funzionerà correttamente.
   
 ++ NVDA versione portable ++
-Se si dispone della versione portable di NVDA, tutto ciò che è necessario fare è lanciare il file autoestraente e seguire le istruzioni riportate a schermo. Ciò consiste semplicemente nello scegliere la cartella dove verranno estratti i file.
+Se si dispone della versione portable di NVDA, tutto ciò che è necessario fare è lanciare il file autoestraente e seguire le istruzioni riportate a schermo. 
+Ciò consiste semplicemente nello scegliere la cartella dove verranno estratti i file.
 
 +++NVDA Portable in una chiavetta USB+++
 E' possibile copiare NVDA in una chiavetta USB in modo da poterlo poi utilizzare in qualsiasi computer.
@@ -95,28 +104,33 @@ Se ad esempio la lettera della propria chiavetta corrisponde ad e:\, possiamo di
 Si noti che sebbene sia possibile quindi utilizzare NVDA in qualsiasi computer, questo non significa che lo screen reader si avvierà non appena sarà inserita la chiavetta sul pc. 
 
 Per informazioni su come avviare NVDA in automatico da una chiavetta, fare riferimento al seguente articolo in inglese:
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
-oppure consultare la sezione Faq Domande e risposte nel sito della comunità italiana 
-http://www.nvda.it.
+http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive oppure consultare la sezione Faq Domande e risposte nel sito della comunità italiana http://www.nvda.it.
 
 + Iniziare con NVDA +
 
 ++ Avviare NVDA ++
-Se si è installato NVDA tramite l'installer, per avviarlo basta premere semplicemente control+alt+n, o scegliere la voce NVDA dal menu NVDA sotto programmi del menu avvio. In alternativa è possibile digitare NVDA dalla finestra di dialogo  esegui e premere invio.
+Se si è installato NVDA tramite l'installer, per avviarlo basta premere semplicemente control+alt+n, o scegliere la voce NVDA dal menu NVDA sotto programmi del menu avvio. 
+In alternativa è possibile digitare NVDA dalla finestra di dialogo  esegui e premere invio.
  
 Per avviare la versione portable, spostarsi nella cartella nella quale si è scompattato NVDA e premere invio o far doppio click su NVDA.exe.
  
-Appena NVDA si avvia, si udiranno una serie di suoni ascendenti (segno che NVDA si sta caricando). Si dovrebbe poi sentire il messaggio“NVDA attivato. A seconda della velocità del proprio computer o che si stia lanciando NVDA da una chiavetta USB o da qualsiasi altro supporto lento, NVDA potrebbe richiedere più tempo per avviarsi. In questo caso dovrebbe venir annunciato "caricamento in corso, attendere prego".
+Appena NVDA si avvia, si udiranno una serie di suoni ascendenti (segno che NVDA si sta caricando). Si dovrebbe poi sentire il messaggio“NVDA attivato. 
+A seconda della velocità del proprio computer o che si stia lanciando NVDA da una chiavetta USB o da qualsiasi altro supporto lento, NVDA potrebbe richiedere più tempo per avviarsi. 
+In questo caso dovrebbe venir annunciato "caricamento in corso, attendere prego".
 
-Nel caso questo non avvenga o si senta il suono d'errore di sistema o una serie di suoni discendenti, significa che si è verificato un errore in NVDA ed è necessario comunicare possibilmente il bug agli sviluppatori. Consultare il sito di NVDA su come procedere per farlo.
+Nel caso questo non avvenga o si senta il suono d'errore di sistema o una serie di suoni discendenti, significa che si è verificato un errore in NVDA ed è necessario comunicare possibilmente il bug agli sviluppatori. 
+Consultare il sito di NVDA su come procedere per farlo.
 
-Quando NVDA si avvia per la prima volta, sarete accolti da una finestra di benvenuto che fornirà informazioni basilari sulle impostazioni del tasto funzione "NVDA" e sul menu. Si vedano le sezioni successive di questo documento per ulteriori dettagli. La finestra di dialogo contiene due caselle di controllo.
+Quando NVDA si avvia per la prima volta, sarete accolti da una finestra di benvenuto che fornirà informazioni basilari sulle impostazioni del tasto funzione "NVDA" e sul menu. 
+Si vedano le sezioni successive di questo documento per ulteriori dettagli. 
+La finestra di dialogo contiene due caselle di controllo.
 La prima consente di stabilire se NVDA debba usare il tasto "Blocca Maiuscole" come tasto funzione "NVDA", la seconda invece permette di decidere se questa finestra debba presentarsi ad ogni avvio dello Screen Reader.
  
 ++ Sui comandi da tastiera di NVDA ++
 
 +++ Il tasto funzione NVDA +++
-La maggior parte dei comandi da tastiera di NVDA è costituita dalla combinazione del tasto funzione NVDA più qualsiasi altro tasto o serie di tasti. Fanno eccezione i tasti di revisione del testo che utilizzano i soli tasti del tastierino numerico.
+La maggior parte dei comandi da tastiera di NVDA è costituita dalla combinazione del tasto funzione NVDA più qualsiasi altro tasto o serie di tasti. 
+Fanno eccezione i tasti di revisione del testo che utilizzano i soli tasti del tastierino numerico.
 
 NVDA può essere configurato in modo tale che sia il tasto Insert del tastierino numerico, sia l'Insert della tastiera estesa e il tasto Blocca Maiuscole agiscano contemporaneamente come tasto funzione NVDA.
 
@@ -127,8 +141,10 @@ Se si desidera che uno dei tasti funzione NVDA agisca usando la sua funzione ori
 +++ Modalità Aiuto immissione +++
 La maggior parte dei comandi verranno citati in seguito nella presente guida, ma una maniera pratica per conoscerli, è di attivare l'aiuto immissione.
 
-Per farlo basta premere NVDA+1 e per disattivarlo basta ripremerlo nuovamente.
-Durante tale modalità, verranno annunciate le funzionalità associate ai vari tasti o combinazioni di essi se presenti senza però eseguirle. Si è perciò liberi di premere ciò che si desidera senza preoccuparsi degli effetti.
+Per farlo basta premere NVDA+1.
+Per disattivarlo basta ripremerlo nuovamente.
+Durante tale modalità, verranno annunciate le funzionalità associate ai vari tasti o combinazioni di essi se presenti senza però eseguirle. 
+Si è perciò liberi di premere ciò che si desidera senza preoccuparsi degli effetti.
  
 +++ Layout Tastiera +++
 Al momento NVDA viene distribuito con due set di comandi per le tastiere.
@@ -143,7 +159,9 @@ Se il portatile in proprio possesso non è in grado di compiere questa operazion
 Il menu di NVDA consente di controllare le impostazioni dello screen reader, accedere all'aiuto in linea, salvare/ricaricare le configurazioni, modificare i dizionari per le sintesi vocali, leggere i file di log e uscire dal programma.
 
 Per accedere al menu di NVDA da qualsiasi punto ci si trovi in Windows mentre NVDA è in esecuzione, basterà premere la combinazione di tasti NVDA+n.
-In alternativa, si può ricorrere alla System Tray, premendo Windows+B per raggiungerla e scorrendo con le frecce sino ad arrivare alla voce NVDA, premendo infine il tasto applicazione, generalmente situato accanto al control di destra. Una volta che il menu appare, è possibile scorrerlo con le frecce direzionali, mentre per attivare un elemento come sempre è sufficiente premere invio.
+In alternativa, si può ricorrere alla System Tray.
+ Vi sono due modi, o premendo Windows+B per raggiungerla e scorrendo con le frecce sino ad arrivare alla voce NVDA, premendo infine il tasto applicazione, generalmente situato accanto al control di destra, Oppure, cliccare direttamente l'icona di NVDA sulla System Tray.
+ Una volta che il menu appare, è possibile scorrerlo con le frecce direzionali, mentre per attivare un elemento come sempre è sufficiente premere invio.
 
 ++ Comandi di base da tastiera ++
 %kc:beginInclude
@@ -176,6 +194,7 @@ Un oggetto è un elemento singolo come un pezzo di testo, un bottone, una casell
 ++ Esplorare con il focus di sistema ++[SystemFocus]
 Il focus di sistema, conosciuto semplicemente anche come focus, è l' [oggetto #Objects] che riceve la pressione dei tasti sulla tastiera.
 Ad esempio, se si sta scrivendo in un campo editazione, quel campo editazione ha il focus.
+
 Il modo più comune di esplorare le finestre con NVDA è proprio quello di utilizzare i normali comandi da tastiera come tab e shift tab per muoversi avanti ed indietro attraverso i vari controlli, alt per accedere alla barra dei menu quindi le frecce per esplorare i menu stessi ed alt-tab per spostarsi tra le applicazioni in esecuzione.
 Così facendo, NVDA fornirà informazioni sull'oggetto sul quale è posizionato il focus, come il suo nome, tipo, valore, stato, descrizione, tasto caldo e informazioni sulla posizione.
 
@@ -190,6 +209,7 @@ Esistono alcuni comandi da tastiera utili per seguire il focus:
 
 ++ Esplorare con il cursore di sistema ++[SystemCaret]
 Quando un [oggetto #Objects] che permette l'esplorazione o la modifica del testo è [focalizzato #SystemFocus], ci si può spostare nel testo utilizzando il cursore di sistema, conosciuto anche semplicemente come cursore.
+
 Quando il focus si trova in un oggetto che contiene il cursore di sistema, si possono utilizzare i tasti di direzione, pagina su, pagina giù, inizio, fine, etc per muoversi nel testo.
 Naturalmente se il controllo lo prevede sarà anche possibile modificare il testo.
 NVDA leggerà non appena ci si sposterà per caratteri, parole e righe, notificando inoltre il testo selezionato o deselezionato. 
@@ -200,6 +220,7 @@ NVDA fornisce i seguenti comandi quando si lavora con il cursore di sistema:
 | Dire Tutto | NVDA+Freccia Giù | Inizia a leggere dalla posizione del cursore di sistema sino alla fine del documento, spostando il cursore man mano che la lettura continua |
 | Legge Riga Corrente | NVDA+freccia su | Legge la riga sulla quale si trova il cursore di sistema. Premendo la combinazione due volte viene effettuato lo spelling della riga. |
 | Legge Selezione corrente | NVDA+Shift+freccia su | Legge il testo selezionato ammesso che ve ne sia uno. |
+
 
 Se ci si trova all'interno di una tabella, sono disponibili i seguenti comandi:
 || Nome | Tasto | Descrizione | 
@@ -213,20 +234,23 @@ Se ci si trova all'interno di una tabella, sono disponibili i seguenti comandi:
 Talvolta, è possibile che si desideri esaminare l'applicazione corrente o il sistema operativo senza però spostare il [focus #SystemFocus].
 Inoltre potrebbe essere necessario lavorare con [oggetti #Objects] che non possono essere normalmente raggiunti utilizzando la tastiera.
 In questi casi, si può utilizzare la navigazione ad oggetti.
+
 Essa permette di ottenere informazioni e spostarsi tra singoli oggetti.
 Quando ci si sposta su un oggetto, NVDA lo annuncerà similmente a come avviene con il focus di sistema.
 Se invece si desidera esplorare il testo così come appare sullo schermo, è possibile utilizzare la [navigazione in linea #FlatReview].
+
 Onde evitare di doversi muovere indietro ed avanti tra ogni singolo oggetto del sistema, gli oggetti sono raggruppati in maniera gerarchica.
 Questo significa che alcuni oggetti contengono altri oggetti e che bisogna spostarvisi all'interno  per ottenerne le informazioni.
 Per esempio, come sappiamo un elenco contiene vari elementi, per cui bisognerà spostarsi all'interno dell'elenco per ottenere accesso ai suoi elementi.
 Se si è raggiunto un elemento di un elenco, ci si può spostare all'oggetto che lo contiene per ritornare all'elenco.
-
 Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'interno di essa per accedere ai controlli della stessa.
+
 L'oggetto che attualmente viene esplorato è chiamato navigatore ad oggetti.
 Una volta che viene raggiunto un oggetto, è possibile esplorarlo utilizzando i [comandi di revisione #ReviewingText].
 Da impostazioni predefinite, il navigatore ad oggetti si sposta in concomitanza con il focus di sistema, tuttavia questo comportamento può essere modificato, attivando o disattivando la relativa opzione.
 
 Per navigare ad oggetti, utilizzare i tasti seguenti:
+
 %kc:beginInclude
 || Nome | layout Desktop | layout Laptop | Descrizione |
 | Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+control+i | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti |
@@ -247,7 +271,8 @@ NVDA permette di leggere il contenuto dell' [oggetto corrente #ObjectNavigation]
 Questo risulta utile principalmente nel prompt dei comandi di Windows o in tutte quelle situazioni dove il  [cursore di sistema #SystemCaret] non esiste o ha funzioni limitate.
 
 Quando si sposta il cursore di controllo, il cursore di sistema non lo segue, cosicché sarà possibile esplorare il testo senza perdere la propria posizione.
-Comunque, da impostazioni predefinite, quando il cursore di sistema si sposta, il cursore di controllo lo segue. Tale impostazione può essere modificata attivandola o disattivandola.
+Comunque, da impostazioni predefinite, quando il cursore di sistema si sposta, il cursore di controllo lo segue. 
+Tale impostazione può essere modificata attivandola o disattivandola.
 
 Sono disponibili i seguenti tasti caldi per esplorare il testo:
 %kc:beginInclude
@@ -297,7 +322,8 @@ I seguenti due comandi vengono utilizzati per attivare o meno la navigazione in 
 %kc:endInclude  
 
 ++ Esplorare con il mouse ++
-Quando si muove il mouse, NVDA di default leggerà sempre il testo che si trova alla posizione del mouse stesso, man mano che esso viene spostato. Laddove supportato, NVDA leggerà il paragrafo contenente il testo, sebbene alcuni controlli saranno disponibili esclusivamente con la lettura riga per riga.
+Quando si muove il mouse, NVDA di default leggerà sempre il testo che si trova alla posizione del mouse stesso, man mano che esso viene spostato. 
+Laddove supportato, NVDA leggerà il paragrafo contenente il testo, sebbene alcuni controlli saranno disponibili esclusivamente con la lettura riga per riga.
 
 NVDA può anche essere configurato in modo tale da leggere il tipo di controllo o l' [oggetto #Objects] sul quale è posizionato il mouse (ad esempio elenchi, bottoni, etc), cosa che può risultare utile ad utenti totalmente privi di vista, laddove le informazioni fornite dal solo testo non sono sufficientemente chiare.
 
