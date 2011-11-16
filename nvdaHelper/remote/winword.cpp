@@ -260,7 +260,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		//Try moving
 		//But if characterFormatting doesn't work, and word doesn't work, or no units were moved then break out of the loop
 		if((
-			_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacterFormatting,1)!=S_OK&&
+			((formatConfig&formatConfig_reportSpellingErrors)||(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacterFormatting,1)!=S_OK))&&
 			_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK
 		)||unitsMoved<=0) {
 			break;
