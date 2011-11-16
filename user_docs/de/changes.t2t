@@ -17,7 +17,7 @@ Die wichtigsten neuerungen sind u.a. das automatische Wechseln der Synthesizersp
 - Das maß, in dem die Stimme bei Großbuchstaben angehoben werden soll, kann nun im Dialog Stimmeneinstellungen konfiguriert werden. Die Angabe erfolgt hier in %. Dies ersetzt das alte Kontrollkästchen "Stimme bei Großbuchstaben anheben". Um die Funktion abzuschalten, geben Sie einen wert von 0 an. (#255)
 - Text- und Hintergrundfarbe werden nun mit angesagt, wenn man sich in Microsoft Excel die Formatierung der Zellen ansagen lässt. (#1655)
 - In Anwendungen, in welchen die Java Access Bridge Verwendung findet, funktioniert nun der Befehl "Aktuelles Navigator-Objekt aktivieren" auf passenden Elementen. (#1744)
-- Basic support for Design Science MathPlayer.
+- grundlegende Unterstützung für Design Science MathPlayer.
 
 
 == Änderungen ==
@@ -53,16 +53,16 @@ Die wichtigsten neuerungen sind u.a. das automatische Wechseln der Synthesizersp
 - In der Entwicklervorschau von Windows 8 wird nun die Addressleiste im Explorer korrekt erkannt.
 - In der Entwicklervorschau von windows 8 wird Wordpad nun nicht mehr abstürzen.
 - Wenn in Gecko 10 (z.B. Firefox 10) eine Seite mit einem Zielanker geladen wird, wird der Cursor nun richtig positioniert. (#360)
-- In browse mode in Mozilla Gecko applications (e.g. Firefox), labels for image maps are now rendered.
-- With mouse tracking enabled, moving the mouse over certain editable text fields (such as in Synaptics Pointing Device Settings and SpeechLab SpeakText) no longer causes the application to crash. (#672)
-- NVDA now functions correctly in several about dialogs in applications distributed with Windows XP, including the About dialog in Notepad and the About Windows dialog. (#1853, #1855)
-- Fixed reviewing by word in Windows Edit controls. (#1877)
+- in Gecko-Anwendungen wie Firefox werden nun Beschriftungen von Image-map-links korrekt verarbeitet.
+- Wenn Sie bei aktiverter mausverfolgung den Mauszeiger in ein Eingabefeld bewegen (wie z.B. in den Einstellungen für Synaptics Pointing Device oder SpeechLab SpeakText) bringt nvda die Anwendung nicht mehr zum Absturz (#672)
+- NVDA wertet nun die Winfo-dialoge zahlreicher Anwendungen korrekt aus, die mit Windows XP mitgeliefert werden, wie z.B. den Info-dialog des Editors oder im Info-Dialog zu Windows. (#1853, #1855)
+- Wortweise Navigation in Eingabefeldern behoben. (#1877)
 
 
 == Änderungen für Entwickler ==
-- NVDA can now instruct speech synthesizers to switch languages for particular sections of speech.
- - To support this, drivers must handle speech.LangChangeCommand in sequences past to SynthDriver.speak().
- - SynthDriver objects should also provide the language argument to VoiceInfo objects (or override the language attribute to retrieve the current language). Otherwise, NVDA's user interface language will be used.
+- NVDA kann nun Sprachausgaben anweisen, die Sprache in bestimmten Textpassagen zu wechseln.
+ - um dies zu untestützen, müssen die Treiber speech.LangChangeCommand in Sequenzen verarbeiten, die über den Befehl SynthDriver.speak() an den Synthesizer übergeben werden.
+ - SynthDriver -Objekte sollten zudem das Attribut language als argument an VoiceInfo-objekte übergeben (oder das language-Attribut überschreiben, um die aktuelle Sprache abzufragen). Andernfalls wird die in nvda eingestellte sprache für die Benutzeroberfläche verwendet.
 
 
 = 2011.2 =
