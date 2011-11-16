@@ -40,6 +40,6 @@ interface NvdaInProcUtils {
 
 	error_status_t winword_expandToLine([in] const long windowHandle, [in] const int offset, [out] int* lineStart, [out] int* lineEnd);
 
-	error_status_t winword_getTextInRange([in] const long windowHandle, [in] const int startOffset, [in] const int endOffset, [in] const long flags, [out] BSTR* text); 
+	error_status_t winword_getTextInRange([in] const long windowHandle, [in] const int startOffset, [in] const int endOffset, [in] const long formatConfig, [out] BSTR* text); 
 
 }

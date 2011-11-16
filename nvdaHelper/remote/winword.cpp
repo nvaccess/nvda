@@ -76,6 +76,21 @@ using namespace std;
 #define wdAlignParagraphRight 2
 #define wdAlignParagraphJustify 3
 
+#define formatConfig_reportFontName 1
+#define formatConfig_reportFontSize 2
+#define formatConfig_reportFontAttributes 4
+#define formatConfig_reportColor 8
+#define formatConfig_reportAlignment 16
+#define formatConfig_reportStyle 32
+#define formatConfig_reportSpellingErrors 64
+#define formatConfig_reportPage 128
+#define formatConfig_reportLineNumber 256
+#define formatConfig_reportLineIndentation 512
+#define formatConfig_reportTables 1024
+
+#define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes)
+#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables)
+ 
 UINT wm_winword_expandToLine=0;
 typedef struct {
 	int offset;
@@ -119,36 +134,36 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
-void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, bool initialFormat, wostringstream& formatAttribsStream) {
+void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int formatConfig, wostringstream& formatAttribsStream) {
 	int iVal=0;
-	if(initialFormat) {
-		_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber);
+	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)) {
 		formatAttribsStream<<L"page-number=\""<<iVal<<L"\" ";
-		iVal=0;
-		_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber);
+	}
+	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
 		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
+	}
+	if(formatConfig&formatConfig_reportAlignment) {
 		IDispatchPtr pDispatchParagraphFormat=NULL;
 		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
-			iVal=0;
-			_com_dispatch_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_ALIGNMENT,VT_I4,&iVal);
-			switch(iVal) {
-				case wdAlignParagraphLeft:
-				formatAttribsStream<<L"text-align=\"left\" ";
-				break;
-				case wdAlignParagraphCenter:
-				formatAttribsStream<<L"text-align=\"center\" ";
-				break;
-				case wdAlignParagraphRight:
-				formatAttribsStream<<L"text-align=\"right\" ";
-				break;
-				case wdAlignParagraphJustify:
-				formatAttribsStream<<L"text-align=\"justified\" ";
-				break;
+			if(_com_dispatch_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_ALIGNMENT,VT_I4,&iVal)==S_OK) {
+				switch(iVal) {
+					case wdAlignParagraphLeft:
+					formatAttribsStream<<L"text-align=\"left\" ";
+					break;
+					case wdAlignParagraphCenter:
+					formatAttribsStream<<L"text-align=\"center\" ";
+					break;
+					case wdAlignParagraphRight:
+					formatAttribsStream<<L"text-align=\"right\" ";
+					break;
+					case wdAlignParagraphJustify:
+					formatAttribsStream<<L"text-align=\"justified\" ";
+					break;
+				}
 			}
 		}
-		return;
 	}
-	{
+	if(formatConfig&formatConfig_reportStyle) {
 		IDispatchPtr pDispatchStyle=NULL;
 		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_STYLE,VT_DISPATCH,&pDispatchStyle)==S_OK&&pDispatchStyle) {
 			BSTR nameLocal=NULL;
@@ -159,42 +174,36 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, bool initialForm
 			}
 		}
 	}
-	{
+	if(formatConfig&formatConfig_fontFlags) {
 		IDispatchPtr pDispatchFont=NULL;
 		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont)==S_OK&&pDispatchFont) {
 			BSTR fontName=NULL;
-			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_NAME,VT_BSTR,&fontName);
-			if(fontName) {
+			if((formatConfig&formatConfig_reportFontName)&&(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_NAME,VT_BSTR,&fontName)==S_OK)&&fontName) {
 				formatAttribsStream<<L"font-name=\""<<fontName<<L"\" ";
 				SysFreeString(fontName);
 			}
-			iVal=0;
-			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_I4,&iVal);
-			formatAttribsStream<<L"font-size=\""<<iVal<<L"pt\" ";
-			iVal=0;
-			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_BOLD,VT_I4,&iVal);
-			if(iVal) {
-				formatAttribsStream<<L"bold=\"1\" ";
+			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_I4,&iVal)==S_OK)) {
+				formatAttribsStream<<L"font-size=\""<<iVal<<L"pt\" ";
 			}
-			iVal=0;
-			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_ITALIC,VT_I4,&iVal);
-			if(iVal) {
-				formatAttribsStream<<L"italic=\"1\" ";
-			}
-			iVal=0;
-			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_UNDERLINE,VT_I4,&iVal);
-			if(iVal) {
-				formatAttribsStream<<L"underline=\"1\" ";
-			}
-			iVal=0;
-			if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
-				formatAttribsStream<<L"text-position=\"super\" ";
-			} else if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
-				formatAttribsStream<<L"text-position=\"sub\" ";
+			if(formatConfig&formatConfig_reportFontAttributes) {
+				if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_BOLD,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"bold=\"1\" ";
+				}
+				if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_ITALIC,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"italic=\"1\" ";
+				}
+				if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_UNDERLINE,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"underline=\"1\" ";
+				}
+				if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"text-position=\"super\" ";
+				} else if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+					formatAttribsStream<<L"text-position=\"sub\" ";
+				}
 			}
 		}
 	} 
-	{
+	if(formatConfig&formatConfig_reportSpellingErrors) {
 		IDispatchPtr pDispatchSpellingErrors=NULL;
 		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)==S_OK&&pDispatchSpellingErrors) {
 			_com_dispatch_propget(pDispatchSpellingErrors,wdDISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
@@ -209,7 +218,7 @@ UINT wm_winword_getTextInRange=0;
 typedef struct {
 	int startOffset;
 	int endOffset;
-	long flags;
+	long formatConfig;
 	BSTR text;
 } winword_getTextInRange_args;
 void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args) {
@@ -238,6 +247,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	wostringstream XMLStream;
 	XMLStream<<L"<control>";
 	//Collapse the range
+	int initialformatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
+	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
 	_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 	int chunkEndOffset=args->startOffset;
 	int unitsMoved=0;
@@ -262,12 +273,19 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		}
 		XMLStream<<L"<text ";
 		if(firstLoop) {
-			generateXMLAttribsForFormatting(pDispatchRange,firstLoop,initialFormatAttribsStream);
-			firstLoop=false;
+			generateXMLAttribsForFormatting(pDispatchRange,initialformatConfig,initialFormatAttribsStream);
 		}
 		XMLStream<<initialFormatAttribsStream.str();
-		generateXMLAttribsForFormatting(pDispatchRange,false,XMLStream);
+		generateXMLAttribsForFormatting(pDispatchRange,formatConfig,XMLStream);
 		XMLStream<<L">";
+		if(firstLoop) {
+			//If there is no general formatting to look for  then expand all the way to the end
+			if(!formatConfig) {
+				_com_dispatch_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
+				chunkEndOffset=args->endOffset;
+			}
+			firstLoop=false;
+		}
 		_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
 		if(text) {
 			XMLStream<<text;
@@ -301,8 +319,8 @@ error_status_t nvdaInProcUtils_winword_expandToLine(handle_t bindingHandle, cons
 	return RPC_S_OK;
 }
 
-error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, const long windowHandle, const int startOffset, const int endOffset, const long flags, BSTR* text) { 
-	winword_getTextInRange_args args={startOffset,endOffset,flags,NULL};
+error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, const long windowHandle, const int startOffset, const int endOffset, const long formatConfig, BSTR* text) { 
+	winword_getTextInRange_args args={startOffset,endOffset,formatConfig,NULL};
 	DWORD_PTR wmRes=0;
 	SendMessageTimeout((HWND)windowHandle,wm_winword_getTextInRange,(WPARAM)&args,0,SMTO_ABORTIFHUNG,2000,&wmRes);
 	*text=args.text;

@@ -204,8 +204,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def getTextWithFields(self,formatConfig=None):
+		if not formatConfig:
+			formatConfig=config.conf['documentFormatting']
 		text=BSTR()
-		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,self._rangeObj.end,0,ctypes.byref(text))
+		formatConfigFlags=sum(2**x for x,y in enumerate(formatConfig.itervalues(),-1) if y and x>=0)  
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,self._rangeObj.end,formatConfigFlags,ctypes.byref(text))
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
 		return commandList
 		if not formatConfig:
