@@ -9,6 +9,7 @@ from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
 import NVDAHelper
+import XMLFormatting
 from logHandler import log
 import winUser
 import oleacc
@@ -203,6 +204,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def getTextWithFields(self,formatConfig=None):
+		text=BSTR()
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,self._rangeObj.end,0,ctypes.byref(text))
+		commandList=XMLFormatting.XMLTextParser().parse(text.value)
+		return commandList
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		range=self._rangeObj.duplicate
@@ -284,9 +289,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return WordDocumentTextInfo(self.obj,None,_rangeObj=self._rangeObj)
 
 	def _get_text(self):
-		text=BSTR()
-		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,self._rangeObj.end,0,ctypes.byref(text))
-		text=text.value
+		text=self._rangeObj.text
 		if not text:
 			text=""
 		return text

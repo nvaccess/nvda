@@ -26,23 +26,35 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
-#define DISPID_DOCUMENT_RANGE 2000
-#define DISPID_WINDOW_DOCUMENT 2
-#define DISPID_WINDOW_APPLICATION 1000
-#define DISPID_APPLICATION_SELECTION 5
-#define DISPID_APPLICATION_SCREENUPDATING 26
-#define DISPID_SELECTION_RANGE 400
-#define DISPID_SELECTION_SETRANGE 100
-#define DISPID_RANGE_MOVEEND 111
-#define DISPID_RANGE_COLLAPSE 101
-#define DISPID_RANGE_TEXT 0
-#define DISPID_RANGE_EXPAND 129
-#define DISPID_RANGE_SELECT 65535
-#define DISPID_RANGE_START 3
-#define DISPID_RANGE_END 4
-#define DISPID_RANGE_INFORMATION 313
-#define DISPID_RANGE_SPELLINGERRORS 316
-#define DISPID_SPELLINGERRORS_COUNT 1
+#define wdDISPID_DOCUMENT_RANGE 2000
+#define wdDISPID_WINDOW_DOCUMENT 2
+#define wdDISPID_WINDOW_APPLICATION 1000
+#define wdDISPID_APPLICATION_SELECTION 5
+#define wdDISPID_APPLICATION_SCREENUPDATING 26
+#define wdDISPID_SELECTION_RANGE 400
+#define wdDISPID_SELECTION_SETRANGE 100
+#define wdDISPID_RANGE_MOVEEND 111
+#define wdDISPID_RANGE_COLLAPSE 101
+#define wdDISPID_RANGE_TEXT 0
+#define wdDISPID_RANGE_EXPAND 129
+#define wdDISPID_RANGE_SELECT 65535
+#define wdDISPID_RANGE_START 3
+#define wdDISPID_RANGE_END 4
+#define wdDISPID_RANGE_INFORMATION 313
+#define wdDISPID_RANGE_STYLE 151
+#define wdDISPID_STYLE_NAMELOCAL 0
+#define wdDISPID_RANGE_SPELLINGERRORS 316
+#define wdDISPID_SPELLINGERRORS_COUNT 1
+#define wdDISPID_RANGE_FONT 5
+#define wdDISPID_FONT_BOLD 130
+#define wdDISPID_FONT_ITALIC 131
+#define wdDISPID_FONT_UNDERLINE 140
+#define wdDISPID_FONT_NAME 142
+#define wdDISPID_FONT_SIZE 141
+#define wdDISPID_FONT_SUBSCRIPT 138
+#define wdDISPID_FONT_SUPERSCRIPT 139
+#define wdDISPID_RANGE_PARAGRAPHFORMAT 1102
+#define wdDISPID_PARAGRAPHFORMAT_ALIGNMENT 101
 
 #define wdWord 2
 #define wdLine 5
@@ -59,6 +71,11 @@ using namespace std;
 #define wdStartOfRangeColumnNumber 16
 #define wdMaximumNumberOfColumns 18
 
+#define wdAlignParagraphLeft 0
+#define wdAlignParagraphCenter 1
+#define wdAlignParagraphRight 2
+#define wdAlignParagraphJustify 3
+
 UINT wm_winword_expandToLine=0;
 typedef struct {
 	int offset;
@@ -73,49 +90,116 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		return;
 	}
 	IDispatchPtr pDispatchApplication=NULL;
-	if(_com_dispatch_propget(pDispatchWindow,DISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK) {
+	if(_com_dispatch_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK) {
 		LOG_DEBUGWARNING(L"window.application failed");
 		return;
 	}
 	IDispatchPtr pDispatchSelection=NULL;
-	if(_com_dispatch_propget(pDispatchApplication,DISPID_APPLICATION_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
+	if(_com_dispatch_propget(pDispatchApplication,wdDISPID_APPLICATION_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
 	IDispatch* pDispatchOldSelRange=NULL;
-	if(_com_dispatch_propget(pDispatchSelection,DISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK) {
+	if(_com_dispatch_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
 	//Disable screen updating as we will be moving the selection temporarily
-	_com_dispatch_propput(pDispatchApplication,DISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
+	_com_dispatch_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
 	//Move the selection to the given range
-	_com_dispatch_method(pDispatchSelection,DISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
+	_com_dispatch_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 	//Expand the selection to the line
-	_com_dispatch_method(pDispatchSelection,DISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
+	_com_dispatch_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
 	//Collect the start and end offsets of the selection
-	_com_dispatch_propget(pDispatchSelection,DISPID_RANGE_START,VT_I4,&(args->lineStart));
-	_com_dispatch_propget(pDispatchSelection,DISPID_RANGE_END,VT_I4,&(args->lineEnd));
+	_com_dispatch_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
+	_com_dispatch_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
 	//Move the selection back to its original location
-	_com_dispatch_method(pDispatchOldSelRange,DISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
+	_com_dispatch_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
 	//Reenable screen updating
-	_com_dispatch_propput(pDispatchApplication,DISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+	_com_dispatch_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
-void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, wostringstream& s) {
+void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, bool initialFormat, wostringstream& formatAttribsStream) {
 	int iVal=0;
-	_com_dispatch_method(pDispatchRange,DISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber);
-	s<<L"page-number=\""<<iVal<<L"\" ";
-	iVal=0;
-	_com_dispatch_method(pDispatchRange,DISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber);
-	s<<L"line-number=\""<<iVal<<L"\" ";
-	iVal=0;
+	if(initialFormat) {
+		_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber);
+		formatAttribsStream<<L"page-number=\""<<iVal<<L"\" ";
+		iVal=0;
+		_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber);
+		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
+		IDispatchPtr pDispatchParagraphFormat=NULL;
+		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
+			iVal=0;
+			_com_dispatch_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_ALIGNMENT,VT_I4,&iVal);
+			switch(iVal) {
+				case wdAlignParagraphLeft:
+				formatAttribsStream<<L"text-align=\"left\" ";
+				break;
+				case wdAlignParagraphCenter:
+				formatAttribsStream<<L"text-align=\"center\" ";
+				break;
+				case wdAlignParagraphRight:
+				formatAttribsStream<<L"text-align=\"right\" ";
+				break;
+				case wdAlignParagraphJustify:
+				formatAttribsStream<<L"text-align=\"justified\" ";
+				break;
+			}
+		}
+		return;
+	}
+	{
+		IDispatchPtr pDispatchStyle=NULL;
+		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_STYLE,VT_DISPATCH,&pDispatchStyle)==S_OK&&pDispatchStyle) {
+			BSTR nameLocal=NULL;
+			_com_dispatch_propget(pDispatchStyle,wdDISPID_STYLE_NAMELOCAL,VT_BSTR,&nameLocal);
+			if(nameLocal) {
+				formatAttribsStream<<L"style=\""<<nameLocal<<L"\" ";
+				SysFreeString(nameLocal);
+			}
+		}
+	}
+	{
+		IDispatchPtr pDispatchFont=NULL;
+		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont)==S_OK&&pDispatchFont) {
+			BSTR fontName=NULL;
+			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_NAME,VT_BSTR,&fontName);
+			if(fontName) {
+				formatAttribsStream<<L"font-name=\""<<fontName<<L"\" ";
+				SysFreeString(fontName);
+			}
+			iVal=0;
+			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_I4,&iVal);
+			formatAttribsStream<<L"font-size=\""<<iVal<<L"pt\" ";
+			iVal=0;
+			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_BOLD,VT_I4,&iVal);
+			if(iVal) {
+				formatAttribsStream<<L"bold=\"1\" ";
+			}
+			iVal=0;
+			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_ITALIC,VT_I4,&iVal);
+			if(iVal) {
+				formatAttribsStream<<L"italic=\"1\" ";
+			}
+			iVal=0;
+			_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_UNDERLINE,VT_I4,&iVal);
+			if(iVal) {
+				formatAttribsStream<<L"underline=\"1\" ";
+			}
+			iVal=0;
+			if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+				formatAttribsStream<<L"text-position=\"super\" ";
+			} else if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+				formatAttribsStream<<L"text-position=\"sub\" ";
+			}
+		}
+	} 
 	{
 		IDispatchPtr pDispatchSpellingErrors=NULL;
-		if(_com_dispatch_propget(pDispatchRange,DISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)==S_OK&&pDispatchSpellingErrors) {
-			_com_dispatch_propget(pDispatchSpellingErrors,DISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
+		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)==S_OK&&pDispatchSpellingErrors) {
+			_com_dispatch_propget(pDispatchSpellingErrors,wdDISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
 			if(iVal>0) {
-				s<<L"invalid-spelling=\""<<iVal<<L"\" ";
+				formatAttribsStream<<L"invalid-spelling=\""<<iVal<<L"\" ";
 			}
 		}
 	} 
@@ -138,55 +222,63 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	}
 	//Get the active document for the window
 	IDispatchPtr pDispatchDocument=NULL;
-	if(_com_dispatch_propget(pDispatchWindow,DISPID_WINDOW_DOCUMENT,VT_DISPATCH,&pDispatchDocument)!=S_OK) {
+	if(_com_dispatch_propget(pDispatchWindow,wdDISPID_WINDOW_DOCUMENT,VT_DISPATCH,&pDispatchDocument)!=S_OK) {
 		LOG_DEBUGWARNING(L"window.document failed");
 		return;
 	}
 	//Create a range of the document using the given start and end offsets
 	IDispatchPtr pDispatchRange=NULL;
-	if(_com_dispatch_method(pDispatchDocument,DISPID_DOCUMENT_RANGE,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRange,L"\x0003\x0003",args->startOffset,args->endOffset)!=S_OK) {
+	if(_com_dispatch_method(pDispatchDocument,wdDISPID_DOCUMENT_RANGE,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRange,L"\x0003\x0003",args->startOffset,args->endOffset)!=S_OK) {
 		LOG_DEBUGWARNING(L"document.range("<<(args->startOffset)<<L","<<(args->endOffset)<<L") failed");
 		return;
 	}
+	//A temporary stringstream for initial formatting
+	wostringstream initialFormatAttribsStream;
 	//Start writing the output xml to a stringstream
-	wostringstream s;
-	s<<L"<control>";
+	wostringstream XMLStream;
+	XMLStream<<L"<control>";
 	//Collapse the range
-	_com_dispatch_method(pDispatchRange,DISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
+	_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 	int chunkEndOffset=args->startOffset;
 	int unitsMoved=0;
 	BSTR text=NULL;
 	//Walk the range from the given start to end by characterFormatting or word units
 	//And grab any text and formatting and generate appropriate xml
+	bool firstLoop=true;
 	do {
 		//Try moving
 		//But if characterFormatting doesn't work, and word doesn't work, or no units were moved then break out of the loop
 		if((
-			_com_dispatch_method(pDispatchRange,DISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacterFormatting,1)!=S_OK&&
-			_com_dispatch_method(pDispatchRange,DISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK
+			_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacterFormatting,1)!=S_OK&&
+			_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK
 		)||unitsMoved<=0) {
 			break;
 		}
-		_com_dispatch_propget(pDispatchRange,DISPID_RANGE_END,VT_I4,&chunkEndOffset);
+		_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
 		//Make sure  that the end is not past the requested end after the move
 		if(chunkEndOffset>(args->endOffset)) {
-			_com_dispatch_propput(pDispatchRange,DISPID_RANGE_END,VT_I4,args->endOffset);
+			_com_dispatch_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
 			chunkEndOffset=args->endOffset;
 		}
-		s<<L"<text ";
-		generateXMLAttribsForFormatting(pDispatchRange,s);
-		s<<L">";
-		_com_dispatch_propget(pDispatchRange,DISPID_RANGE_TEXT,VT_BSTR,&text);
+		XMLStream<<L"<text ";
+		if(firstLoop) {
+			generateXMLAttribsForFormatting(pDispatchRange,firstLoop,initialFormatAttribsStream);
+			firstLoop=false;
+		}
+		XMLStream<<initialFormatAttribsStream.str();
+		generateXMLAttribsForFormatting(pDispatchRange,false,XMLStream);
+		XMLStream<<L">";
+		_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
 		if(text) {
-			s<<text;
+			XMLStream<<text;
 			SysFreeString(text);
 			text=NULL;
 		}
-		s<<L"</text>";
-		_com_dispatch_method(pDispatchRange,DISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseEnd);
+		XMLStream<<L"</text>";
+		_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseEnd);
 	} while(chunkEndOffset<(args->endOffset));
-	s<<L"</control>";
-	args->text=SysAllocString(s.str().c_str());
+	XMLStream<<L"</control>";
+	args->text=SysAllocString(XMLStream.str().c_str());
 }
 
 LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
