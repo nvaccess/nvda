@@ -75,8 +75,7 @@ confspec = ConfigObj(StringIO(
 	cursorBlinkRate = integer(default=500,min=0,max=2000)
 	messageTimeout = integer(default=4,min=1,max=20)
 	tetherTo = string(default="focus")
-
-
+	readByParagraph = boolean(default=false)
 
 # Presentation settings
 [presentation]
