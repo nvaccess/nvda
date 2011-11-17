@@ -18,6 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <comdef.h>
 #include <windows.h>
 #include <oleacc.h>
+#include <common/xml.h>
 #include "log.h"
 #include "nvdaHelperRemote.h"
 #include "nvdaInProcUtils.h"
@@ -94,7 +95,7 @@ using namespace std;
 #define formatConfig_reportLists 1024
 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes)
-#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportLists)
+#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables)
  
 UINT wm_winword_expandToLine=0;
 typedef struct {
@@ -319,7 +320,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialformatConfig,initialFormatAttribsStream);
 		}
 		XMLStream<<initialFormatAttribsStream.str();
-		generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
+		generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,(firstLoop?formatConfig:formatConfig&~formatConfig_reportLists),XMLStream);
 		XMLStream<<L">";
 		if(firstLoop) {
 			//If there is no general formatting to look for  then expand all the way to the end
@@ -331,7 +332,11 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		}
 		_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
 		if(text) {
-			XMLStream<<text;
+			wstring tempText;
+			for(int i=0;text[i]!=L'\0';++i) {
+				appendCharToXML(text[i],tempText);
+			}
+			XMLStream<<tempText;
 			SysFreeString(text);
 			text=NULL;
 		}
