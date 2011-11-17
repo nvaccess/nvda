@@ -224,29 +224,21 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,self._rangeObj.end,formatConfigFlags,ctypes.byref(text))
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
+		for index in xrange(len(commandList)):
+			if isinstance(commandList[index],textInfos.FieldCommand):
+				field=commandList[index].field
+				if isinstance(field,textInfos.FormatField):
+					commandList[index].field=self._normalizeFormatField(field)
 		return commandList
-		if not formatConfig:
-			formatConfig=config.conf["documentFormatting"]
-		range=self._rangeObj.duplicate
-		range.Collapse()
-		if not formatConfig["detectFormatAfterCursor"]:
-			range.expand(wdCharacter)
-			field=textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig))
-			return [field,self.text]
-		commandList=[]
-		endLimit=self._rangeObj.end
-		range=self._rangeObj.duplicate
-		range.Collapse()
-		while range.end<endLimit:
-			self._expandFormatRange(range)
-			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
-			commandList.append(range.text)
-			end=range.end
-			range.start=end
-			#Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
-			if range.end<end:
-				break
-		return commandList
+
+	def _normalizeFormatField(self,field):
+		if field.pop('inTable',False):
+			tableInfo={}
+			for k in ('table-row-count','table-column-count','table-row-number','table-column-number'):
+				val=field.pop(k,0)
+				tableInfo[k[6:]]=val
+			field['table-info']=tableInfo
+		return field
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE and self.basePosition not in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):

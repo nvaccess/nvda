@@ -147,6 +147,21 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
 		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
 	}
+	if((formatConfig&formatConfig_reportTables)&&_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdWithInTable)==S_OK&&iVal) {
+		formatAttribsStream<<L"inTable=\""<<iVal<<L"\" ";
+		if(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdMaximumNumberOfRows)==S_OK) {
+			formatAttribsStream<<L"table-row-count=\""<<iVal<<L"\" ";
+		}
+		if(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdMaximumNumberOfColumns)==S_OK) {
+			formatAttribsStream<<L"table-column-count=\""<<iVal<<L"\" ";
+		}
+		if(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeRowNumber)==S_OK) {
+			formatAttribsStream<<L"table-row-number=\""<<iVal<<L"\" ";
+		}
+		if(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeColumnNumber)==S_OK) {
+			formatAttribsStream<<L"table-column-number=\""<<iVal<<L"\" ";
+		}
+	}
 	if(formatConfig&formatConfig_reportAlignment) {
 		IDispatchPtr pDispatchParagraphFormat=NULL;
 		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
