@@ -434,7 +434,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@raise NotImplementedError: If not supported.
 		"""
 		raise NotImplementedError
-		
+
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
 	"""Convert a string so that it contains only CRLF line endings.
