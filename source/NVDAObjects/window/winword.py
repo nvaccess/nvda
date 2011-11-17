@@ -82,6 +82,20 @@ NVDAUnitsToWordUnits={
 	textInfos.UNIT_READINGCHUNK:wdSentence,
 }
 
+formatConfigFlagsMap={
+	"reportFontName":1,
+	"reportFontSize":2,
+	"reportFontAttributes":4,
+	"reportColor":8,
+	"reportAlignment":16,
+	"reportStyle":32,
+	"reportSpellingErrors":64,
+	"reportPage":128,
+	"reportLineNumber":256,
+	"reportTables":512,
+	"reportLists":1024,
+}
+
 class WordDocumentTextInfo(textInfos.TextInfo):
 
 	def _moveInTable(self,c=0,r=0):
@@ -207,7 +221,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if not formatConfig:
 			formatConfig=config.conf['documentFormatting']
 		text=BSTR()
-		formatConfigFlags=sum(2**x for x,y in enumerate(formatConfig.itervalues(),-1) if y and x>=0)  
+		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,self._rangeObj.end,formatConfigFlags,ctypes.byref(text))
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
 		return commandList

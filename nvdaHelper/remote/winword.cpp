@@ -55,6 +55,11 @@ using namespace std;
 #define wdDISPID_FONT_SUPERSCRIPT 139
 #define wdDISPID_RANGE_PARAGRAPHFORMAT 1102
 #define wdDISPID_PARAGRAPHFORMAT_ALIGNMENT 101
+#define wdDISPID_RANGE_LISTFORMAT 68
+#define wdDISPID_LISTFORMAT_LISTSTRING 75
+#define wdDISPID_RANGE_PARAGRAPHS 59
+#define wdDISPID_PARAGRAPHS_ITEM 0
+#define wdDISPID_PARAGRAPH_RANGE 0
 
 #define wdWord 2
 #define wdLine 5
@@ -85,11 +90,11 @@ using namespace std;
 #define formatConfig_reportSpellingErrors 64
 #define formatConfig_reportPage 128
 #define formatConfig_reportLineNumber 256
-#define formatConfig_reportLineIndentation 512
-#define formatConfig_reportTables 1024
+#define formatConfig_reportTables 512
+#define formatConfig_reportLists 1024
 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes)
-#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables)
+#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportLists)
  
 UINT wm_winword_expandToLine=0;
 typedef struct {
@@ -134,7 +139,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
-void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int formatConfig, wostringstream& formatAttribsStream) {
+void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream) {
 	int iVal=0;
 	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)) {
 		formatAttribsStream<<L"page-number=\""<<iVal<<L"\" ";
@@ -160,6 +165,28 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int formatConfig
 					formatAttribsStream<<L"text-align=\"justified\" ";
 					break;
 				}
+			}
+		}
+	}
+	if(formatConfig&formatConfig_reportLists) {
+		IDispatchPtr pDispatchListFormat=NULL;
+		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_LISTFORMAT,VT_DISPATCH,&pDispatchListFormat)==S_OK&&pDispatchListFormat) {
+			BSTR listString=NULL;
+			if(_com_dispatch_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTSTRING,VT_BSTR,&listString)==S_OK&&listString) {
+				if(SysStringLen(listString)>0) {
+					IDispatchPtr pDispatchParagraphs=NULL;
+					IDispatchPtr pDispatchParagraph=NULL;
+					IDispatchPtr pDispatchParagraphRange=NULL;
+					if(
+						_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)==S_OK&&pDispatchParagraphs\
+						&&_com_dispatch_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph\
+						&&_com_dispatch_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange\
+						&&_com_dispatch_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal==startOffset\
+					) {
+						formatAttribsStream<<L"line-prefix=\""<<listString<<L"\" ";
+					}
+				}
+				SysFreeString(listString);
 			}
 		}
 	}
@@ -250,7 +277,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	int initialformatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
 	_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
-	int chunkEndOffset=args->startOffset;
+	int chunkStartOffset=args->startOffset;
+	int chunkEndOffset=chunkStartOffset;
 	int unitsMoved=0;
 	BSTR text=NULL;
 	//Walk the range from the given start to end by characterFormatting or word units
@@ -273,10 +301,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		}
 		XMLStream<<L"<text ";
 		if(firstLoop) {
-			generateXMLAttribsForFormatting(pDispatchRange,initialformatConfig,initialFormatAttribsStream);
+			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialformatConfig,initialFormatAttribsStream);
 		}
 		XMLStream<<initialFormatAttribsStream.str();
-		generateXMLAttribsForFormatting(pDispatchRange,formatConfig,XMLStream);
+		generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
 		XMLStream<<L">";
 		if(firstLoop) {
 			//If there is no general formatting to look for  then expand all the way to the end
@@ -294,6 +322,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		}
 		XMLStream<<L"</text>";
 		_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseEnd);
+		chunkStartOffset=chunkEndOffset;
 	} while(chunkEndOffset<(args->endOffset));
 	XMLStream<<L"</control>";
 	args->text=SysAllocString(XMLStream.str().c_str());
