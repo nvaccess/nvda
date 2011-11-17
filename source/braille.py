@@ -400,7 +400,7 @@ def getFormatFieldBraille(field):
 	if linePrefix:
 		return linePrefix
 	return None
-	
+
 class TextInfoRegion(Region):
 
 	def __init__(self, obj):
@@ -527,25 +527,29 @@ class TextInfoRegion(Region):
 			# There is no selection. This is a cursor.
 			self.cursorPos = len(self.rawText)
 		if not self._skipFieldsNotAtStartOfNode:
-			# We only render fields that aren't at the start of their nodes for the first part of the line.
+			# We only render fields that aren't at the start of their nodes for the first part of the reading unit.
 			# Otherwise, we'll render fields that have already been rendered.
 			self._skipFieldsNotAtStartOfNode = True
 
+	def _getReadingUnit(self):
+		return textInfos.UNIT_PARAGRAPH if config.conf["braille"]["readByParagraph"] else textInfos.UNIT_LINE
+
 	def update(self):
 		formatConfig = config.conf["documentFormatting"]
+		unit = self._getReadingUnit()
 		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
 		# so use the original cursor TextInfo for line and copy for cursor.
-		self._line = line = self._getCursor()
-		cursor = line.copy()
-		# Get the line at the cursor.
-		line.expand(textInfos.UNIT_LINE)
+		self._readingInfo = readingInfo = self._getCursor()
+		cursor = readingInfo.copy()
+		# Get the reading unit at the cursor.
+		readingInfo.expand(unit)
 		# Get the selection.
 		sel = self._getSelection()
-		# Restrict the selection to the line at the cursor.
-		if sel.compareEndPoints(line, "startToStart") < 0:
-			sel.setEndPoint(line, "startToStart")
-		if sel.compareEndPoints(line, "endToEnd") > 0:
-			sel.setEndPoint(line, "endToEnd")
+		# Restrict the selection to the reading unit at the cursor.
+		if sel.compareEndPoints(readingInfo, "startToStart") < 0:
+			sel.setEndPoint(readingInfo, "startToStart")
+		if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
+			sel.setEndPoint(readingInfo, "endToEnd")
 		self.rawText = ""
 		self.rawTextTypeforms = []
 		self.cursorPos = None
@@ -556,27 +560,27 @@ class TextInfoRegion(Region):
 		self._selectionStart = self._selectionEnd = None
 		self._skipFieldsNotAtStartOfNode = False
 
-		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the line.
-		# Therefore, grab the line in three parts.
-		# First, the chunk from the start of the line to the start of the selection.
-		chunk = line.copy()
+		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
+		# Therefore, grab the reading unit in three parts.
+		# First, the chunk from the start of the reading unit to the start of the selection.
+		chunk = readingInfo.copy()
 		chunk.collapse()
 		chunk.setEndPoint(sel, "endToStart")
 		self._addTextWithFields(chunk, formatConfig)
 		# Now, the selection itself.
 		self._addTextWithFields(sel, formatConfig, isSelection=True)
-		# Finally, get the chunk from the end of the selection to the end of the line.
-		chunk.setEndPoint(line, "endToEnd")
+		# Finally, get the chunk from the end of the selection to the end of the reading unit.
+		chunk.setEndPoint(readingInfo, "endToEnd")
 		chunk.setEndPoint(sel, "startToEnd")
 		self._addTextWithFields(chunk, formatConfig)
-		# Strip line ending characters, but add a space in case the cursor is at the end of the line.
+		# Strip line ending characters, but add a space in case the cursor is at the end of the reading unit.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
 		del self.rawTextTypeforms[len(self.rawText) - 1:]
 		self.rawTextTypeforms.append(louis.plain_text)
 
-		# If this is not the first line, hide all previous regions.
+		# If this is not the start of the object, hide all previous regions.
 		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
-		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
+		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
 		# If this is a multiline control, position it at the absolute left of the display when focused.
 		self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
@@ -591,28 +595,41 @@ class TextInfoRegion(Region):
 				self.brailleCells[pos] |= DOT7 | DOT8
 
 	def routeTo(self, braillePos):
+		if braillePos == self.brailleCursorPos:
+			# The cursor is already at this position,
+			# so activate the position.
+			try:
+				self._getCursor().activate()
+			except NotImplementedError:
+				pass
+			return
+
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
-		# pos is relative to the start of the line.
-		# Therefore, get the start of the line...
-		dest = self._line.copy()
+		# pos is relative to the start of the reading unit.
+		# Therefore, get the start of the reading unit...
+		dest = self._readingInfo.copy()
 		dest.collapse()
 		# and move pos characters from there.
 		dest.move(textInfos.UNIT_CHARACTER, pos)
 		self._setCursor(dest)
 
 	def nextLine(self):
-		dest = self._line.copy()
-		moved = dest.move(textInfos.UNIT_LINE, 1)
+		dest = self._readingInfo.copy()
+		moved = dest.move(self._getReadingUnit(), 1)
 		if not moved:
 			return
 		dest.collapse()
 		self._setCursor(dest)
 
 	def previousLine(self, start=False):
-		dest = self._line.copy()
+		dest = self._readingInfo.copy()
 		dest.collapse()
-		# If the end of the line is desired, move to the last character.
-		moved = dest.move(textInfos.UNIT_LINE if start else textInfos.UNIT_CHARACTER, -1)
+		if start:
+			unit = self._getReadingUnit()
+		else:
+			# If the end of the reading unit is desired, move to the last character.
+			unit = textInfos.UNIT_CHARACTER
+		moved = dest.move(unit, -1)
 		if not moved:
 			return
 		dest.collapse()

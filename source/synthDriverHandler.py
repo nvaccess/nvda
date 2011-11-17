@@ -153,12 +153,13 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	Each synthesizer driver should be a separate Python module in the root synthDrivers directory containing a SynthDriver class which inherits from this base class.
 	
 	At a minimum, synth drivers must set L{name} and L{description} and override the L{check} method.
+	The methods L{speak}, L{cancel} and L{pause} should be overridden as appropriate.
 	L{supportedSettings} should be set as appropriate for the settings supported by the synthesiser.
 	There are factory functions to create L{SynthSetting} instances for common settings; e.g. L{VoiceSetting} and L{RateSetting}.
-	The properties for each setting (e.g. L{voice} and L{pitch}) are created by overriding getters and setters;
-	for example, L{_get_pitch} and L{_set_pitch} for L{pitch}.
-	The methods L{speakText}, L{speakCharacter}, L{cancel} and L{pause} should be overridden as appropriate.
-	If L{speakCharacter} is not overridden, L{speakText} will be used by default.
+	Each setting is retrieved and set using attributes named after the setting;
+	e.g. the L{voice} attribute is used for the L{voice} setting.
+	These will usually be properties.
+	The L{lastIndex} attribute should also be provided.
 	@ivar supportedSettings: The settings supported by the synthesiser.
 	@type supportedSettings: list or tuple of L{SynthSetting}
 	@ivar voice: Unique string identifying the current voice.

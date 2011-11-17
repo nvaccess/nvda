@@ -242,6 +242,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.obj.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
 		return self.obj.getNVDAObjectFromIdentifier(docHandle.value,ID.value)
 
+	def activate(self):
+		self.obj._activatePosition(self)
+
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
 		("link", _("Lin&ks")),
