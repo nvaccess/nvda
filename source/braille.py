@@ -595,6 +595,15 @@ class TextInfoRegion(Region):
 				self.brailleCells[pos] |= DOT7 | DOT8
 
 	def routeTo(self, braillePos):
+		if braillePos == self.brailleCursorPos:
+			# The cursor is already at this position,
+			# so activate the position.
+			try:
+				self._getCursor().activate()
+			except NotImplementedError:
+				pass
+			return
+
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
 		# Therefore, get the start of the reading unit...

@@ -428,6 +428,13 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	def activate(self):
+		"""Activate this position.
+		For example, this might activate the object at this position or click the point at this position.
+		@raise NotImplementedError: If not supported.
+		"""
+		raise NotImplementedError
+		
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
 	"""Convert a string so that it contains only CRLF line endings.

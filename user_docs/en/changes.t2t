@@ -15,6 +15,7 @@
 - Support for the hedo ProfiLine USB braille display. (#1863)
 - NVDA now avoids splitting words in braille when possible. (#1890)
 - It is now possible to have braille displayed by paragraphs instead of lines, which may allow for more fluent reading of large amounts of text. This is configurable using the Read by paragraphs option in the Braille Settings dialog. (#1891)
+- In browse mode, you can activate the object under the cursor using a braille display. This is done by pressing the cursor routing key where the cursor is located (which means pressing it twice if the cursor is not already there). (#1893)
 
 
 == Changes ==
@@ -23,11 +24,13 @@
 
 == Bug Fixes ==
 - In Windows 8, focus is no longer incorrectly moved away from the Windows Explorer search field, which was  not allowing NVDA to   interact with it.
- 
+
 
 == Changes for Developers ==
 - There is now a remote Python console for situations where remote debugging is useful. See the Developer Guide for details.
 - The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
+- TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
+ - This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
 
 
 = 2011.3 =
