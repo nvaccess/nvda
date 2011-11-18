@@ -30,7 +30,7 @@ using namespace std;
 #define wdDISPID_DOCUMENT_RANGE 2000
 #define wdDISPID_WINDOW_DOCUMENT 2
 #define wdDISPID_WINDOW_APPLICATION 1000
-#define wdDISPID_APPLICATION_SELECTION 5
+#define wdDISPID_WINDOW_SELECTION 4
 #define wdDISPID_APPLICATION_SCREENUPDATING 26
 #define wdDISPID_SELECTION_RANGE 400
 #define wdDISPID_SELECTION_SETRANGE 100
@@ -39,6 +39,7 @@ using namespace std;
 #define wdDISPID_RANGE_TEXT 0
 #define wdDISPID_RANGE_EXPAND 129
 #define wdDISPID_RANGE_SELECT 65535
+#define wdDISPID_RANGE_SETRANGE 100
 #define wdDISPID_RANGE_START 3
 #define wdDISPID_RANGE_END 4
 #define wdDISPID_RANGE_INFORMATION 313
@@ -116,7 +117,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		return;
 	}
 	IDispatchPtr pDispatchSelection=NULL;
-	if(_com_dispatch_propget(pDispatchApplication,wdDISPID_APPLICATION_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
+	if(_com_dispatch_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
@@ -272,18 +273,20 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
-	//Get the active document for the window
-	IDispatchPtr pDispatchDocument=NULL;
-	if(_com_dispatch_propget(pDispatchWindow,wdDISPID_WINDOW_DOCUMENT,VT_DISPATCH,&pDispatchDocument)!=S_OK) {
-		LOG_DEBUGWARNING(L"window.document failed");
+		//Get the current selection
+		IDispatchPtr pDispatchSelection=NULL;
+	if(_com_dispatch_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
+		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
-	//Create a range of the document using the given start and end offsets
+	//Make a copy of the selection as an independent range
 	IDispatchPtr pDispatchRange=NULL;
-	if(_com_dispatch_method(pDispatchDocument,wdDISPID_DOCUMENT_RANGE,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRange,L"\x0003\x0003",args->startOffset,args->endOffset)!=S_OK) {
-		LOG_DEBUGWARNING(L"document.range("<<(args->startOffset)<<L","<<(args->endOffset)<<L") failed");
+	if(_com_dispatch_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchRange)!=S_OK) {
+		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
+	//Move the range to the requested offsets
+	_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->startOffset,args->endOffset);
 	//A temporary stringstream for initial formatting
 	wostringstream initialFormatAttribsStream;
 	//Start writing the output xml to a stringstream
