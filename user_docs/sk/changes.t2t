@@ -4,18 +4,21 @@
 %!includeconf: ../changes.t2tconf
 
 = 2011.3 =
+Prednosti tejto verzie zahŕňajú automatické prepínanie jazyka hlasového výstupu ak je z aktuálneho dokumentu možné získať potrebné informácie, podpora pre 64 bit java knižnice, oznamovanie formátovania textu v aplikáciách Mozilla v režime prehliadania, vylepšené správenie pri pádoch a mrznutí aplikácií a základná podpora pre Windows 8.
 
 == Nové vlastnosti ==
 - NVDA dokáže počas čítania niektorých webových a PDF dokumentov s dostatočne presnou informáciou o jazyku textu meniť jazyk hlasového výstupu eSpeak. Automatické prepínanie jazyka a dialektu je možné nastaviť v dialógu nastavenia hlasu. (#845) 
+- Podpora pre Java Access Bridge 2.0.2 čo zahŕňa podporu pre 64 bitové knižnice java.
 - V oknách Mozilla Gecko je počas objektovej navigácie oznamovaná úroveň nadpisov.
-- V režime prehliadania je možné oznamovať formátovanie textu v produktoch Mozilla.. (#394)
-- NVDA dokáže detekovať podčiarknutý a prečiarknutý text v editačných poliach IAccessible2 (nap. v aplikáciách Mozilla).
+- V režime prehliadania je možné oznamovať formátovanie textu v produktoch Mozilla. (#394)
+- NVDA dokáže detekovať podčiarknutý a prečiarknutý text v editačných poliach IAccessible2 (napr. v aplikáciách Mozilla).
 - Pri čítaní dokumentov v programe Adobe reader sú čítané počty stĺpcov a riadkov tabuľky.
 - Nový ovládač hlasového výstupu pre hlasy Microsoft Speech Platform. (#1735)
 - Pri pohybe systémovým kurzorom sú v programe IBM Lotus Symphony oznamované čísla riadkov a čísla strán. (#1632)
 - V dialógu nastavenia hlasu je možné nastaviť počet percent, o ktoré sa zvýši hlas pri vyslovovaní veľkých písmen. Toto je náhrada za voľbu Veľké písmená čítať zvýšeným hlasom a teda ak túto vlastnosť chcete vypnúť nastavte počet percent na 0. (#255)
 - Pri oznamovaní formátovania v programe Microsoft excel sú zahrnuté informácie o farbe textu a pozadia. (#1655)
 - V prístupných java aplikáciách je možné použiť príkaz aktivovať navigačný objekt (NVDA+numpad enter). (#1744)
+- Základná podpora pre Design Science MathPlayer.
 
 
 == Zmeny ==
@@ -25,12 +28,15 @@
 - V dialógu režim prehliadania je možné nastaviť či sa po načítaní dokumentu automaticky spustí plynulé čítanie. (#414)
 - Ak pri pokuse o prečítanie stavového riadku nie je možné zamerať skutočný objekt stavového riadku, NVDA prečíta spodný riadok aplikačného okna vypísaný na obrazovku. (#649)
 - Počas plynulého čítania v režime prehliadania NVDA urobí prestávku v čítaní na konci nadpisov a iných blokov. Doteraz bol celý text prečítaný v jednom kuse.
+- V režime prehliadania stlačenie klávesu enter alebo medzerník na záložke aktivuje záložku namiesto prepnutia do režimu fokusu. (#1760)
+- Aktualizovaný hlasový výstup eSpeak na verziu 1.45.47.
+
 
 == Opravy ==
 - V programe internet explorer a ostatných oknách MSHTML NVDA nebude oznamovať odrážky a číslovanie v zoznamoch, ak autor nastavil, že sa tieto nemajú zobrazovať (štýl zoznamu je none). (#1671)
 - Reštart NVDA po zamrznutí (napr. stlačením NVDA+Control+n) nespustí NVDA znovu prv, než sa skutočne ukončí zamrznutá kópia..
 - V extrémnych prípadoch stláčanie klávesu backspace a kurzorových klávesov nespôsobuje problémy v okne príkazového riadku windows. (#1612)
-- V zoznámových rámikoch WPF alebo iných zoznamových rámikoch sprístupnených cez UIAccess, v ktorých nemožno editovať text je správne oznamovaná vybratá položka.
+- V zoznámových rámikoch WPF alebo iných zoznamových rámikoch sprístupnených cez UIAutomation, v ktorých nemožno editovať text je správne oznamovaná vybratá položka.
 - V programe Adobe reader je pri čítaní dokumentov možné prechádzať po riadkoch v tabuľke. Hlavička tabuľky nie je viac oznamovaná ako riadok 0. (#1731)
 - V programe Adobe Reader je pri čítaní tabuliek možné vojsť do alebo prejsť kurzorom cez prázdne bunky.
 - Zbytočné informácie o pozícii ako napr. 0 z 0 úroveň 0 nie sú viac oznamované v brailly.
@@ -42,8 +48,17 @@
 - NVDA sa dokáže zotaviť z mnohých neočakávaných situácií. Napríklad pád nezávislej aplikácii spôsoboval kompletné pád NVDA. (#1408)
 - NVDA neodmieta pri čítaní dokumentu v režime prehliadania z Gecko2 (Mozilla Firefox a pod) zobraziť špecifické časti stránky, ktoré sú štýlované ako display:table. (#1373)
 - NVDA neoznamuje obsah štítkov, keď ich podradené objekty získajú fokus. Zabraňuje to viacnásobnému oznamovaniu názvov niektorých prvkov formulára v programoch Firefox (gecko) a internet explorer (MSHTML). (#1650)
+- NVDA neodmieta prečítať bunku v programe Microsoft Excel po prilepení pomocou ctrl+v. (#1781)
 - V režime fokusu v programe Adobe reader nie sú oznamované nadbitočné informácie pri prechode na prvok na ďalšej / predchádzajúcej stránke. (#1659)
 - V aplikáciách Mozilla / Gecko napr. Firefox, sú správne oznamované stavové tlačidlá. (#1757)
+- NVDA dokáže prečítať panel z adresov programu Windows explorer vo Windows 8 developer preview.
+- NVDA nespôsobí pád aplikácií ako napríklad winver a wordpad vo Windows 8 developer preview.
+- V aplikáciách založených na Mozilla gecko 10 napr. Firefox 10 je po načítaní stránky v režime prehliadania správne nasledovaná kotva odkazu.. (#360)
+- V režime prehliadania sú v aplikáciách Mozilla čítané názvy častí obrázkových máp.
+- Pri zapnutom sledovaní myši prechod myšou cez určité editačné polia napr. v dialógu nastavení ukazovacích zariadení Synaptics nespôsobí pád aplikácie. (#672)
+- NVDA pracuje správne v dialógoch o programe aplikácií distribuovaných so systémom Windows XP. (#1853, #1855)
+- Opravená navigácia po slovách v editačných poliach Windows. (#1877)
+- Pri opustení editačného poľa stlačením ľavej šípky, šípky hore alebo page up je správne prepnuté do režimu prehliadania ak je v dialógu Režim prehliadania zaškrtnuté Automaticky aktivovať režim fokusu pri pohybe kurzorom. (#1733)
 
 
 

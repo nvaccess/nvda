@@ -5,99 +5,92 @@
 
 complexSymbols:
 # Sonderzeichen	Regulärer Ausdruck
-# Satzzeichen
-. Satzende	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! Satzende	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? Satzende	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-
-# Satzzeichen für Phrasen
-; Phrasenende	(?<=[^\s;]);(?=\s|$)
-: Phrasenende	(?<=[^\s:]):(?=\s|$)
-
 # Weitere
-decimal point	(?<=\d)\,(?=\d)
 date separator	(?<=\d\d)\.(?=\d\d)
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=\d)
 
 symbols:
 # Identifizierungszeichen	Ersetzungen[[	Ebene][	Bereich]][	# Angezeigter Name]
 
 # Komplexe Symbole
-. Satzende	Punkt	all	always
-! Satzende	Ausrufezeichen	all	always
-? Satzende	Fragezeichen	all	always
-; Phrasenende	Semikolon	most	always
-: Phrasenende	Doppelpunkt	most	always
-decimal point		none	always
+. sentence ending	punkt
+! sentence ending	Ausrufezeichen
+? sentence ending	Fragezeichen
+; phrase ending	Semikolon
+: phrase ending	Doppelpunkt
 date separator		none	always
-in-word '	Apostroph	all	norep
-negative number	Minus	none	norep
+in-word '	Apostroph
 
 # Unsichtbare Zeichen
 \0	leer	char	# Null
 \t	Tabulator
-\n	Zeilenumbruch	char
-\f	Seitenumbruch	none
-\r	Neue Zeile	char
- 	Leerzeichen	char
- 	Leerzeichen	char	# Geschütztes Leerzeichen
+\n	Zeilenumbruch
+\f	Seitenumbruch
+\r	Neue Zeile
+ 	Leerzeichen
+ 	Leerzeichen		# Geschütztes Leerzeichen
 
 # Standardsymbole und -satzzeichen
-!	Ausrufezeichen	all
-"	Anführungszeichen	most
-\#	Nummernzeichen	most
-§	Paragraf	some
-$	Dollar	all	norep
-£	Pfund	all	norep
-¥	Yen	all	norep
-€	Euro	all	norep
-¢	Cent	all	norep
-%	Prozent	some
-&	Und	some
-'	Apostroph	all
-(	runde Klammer auf	most
-)	runde Klammer zu	most
-*	Stern	most
-+	Pluszeichen	most
-,	Komma	all	always
--	Bindestrich	most
-/	Schrägstrich	some
-:	Doppelpunkt	most
-;	Semikolon	most
-<	Kleinerzeichen	most
->	Größerzeichen	most
-=	Gleichheitszeichen	most
-?	Fragezeichen	all
-@	Klammeraffe	some
-[	eckige Klammer auf	most
-]	eckige Klammer zu	most
-\\	Backslash	most
-^	Dach	most
-_	Unterstrich	most
-`	Apostroph	most
-{	geschweifte Klammer auf	most
-}	geschweifte Klammer zu	most
-|	senkrechter Strich	most
-~	Tilde	most
-°	Grad	most
+!	Ausrufezeichen
+"	Anführungszeichen
+\#	Nummernzeichen
+$	Dollar
+£	Pfund
+€	Euro
+%	Prozent
+&	Und
+'	Apostroph
+(	runde Klammer auf
+)	runde Klammer zu
+*	Stern
++	Pluszeichen
+,	Komma
+-	Bindestrich
+.	punkt
+/	Schrägstrich
+:	Doppelpunkt
+;	Semikolon
+<	Kleinerzeichen
+>	Größerzeichen
+=	Gleichheitszeichen
+?	Fragezeichen
+@	Klammeraffe
+[	eckige Klammer auf
+]	eckige Klammer zu
+\\	Backslash
+^	Dach
+_	Unterstrich
+`	Apostroph
+{	geschweifte Klammer auf
+}	geschweifte Klammer zu
+|	senkrechter Strich
+~	Tilde
 
 # Weitere Zeichen
 •	Aufzählungszeichen	some
-Þ	Aufzählungszeichen	some
-…	Punkt Punkt Punkt	all	always
-...	Punkt Punkt Punkt	all	always
+…	Punkt Punkt Punkt
+...	Punkt Punkt Punkt
 	Aufzählungszeichen	some
-“	Anführungszeichen oben	most
-”	Anführungszeichen unten	most
-‘	Anführungszeichen oben 	most
-’	Anführungszeichen unten	most
+“	Anführungszeichen oben
+”	Anführungszeichen unten
+‘	Anführungszeichen oben 
+’	Anführungszeichen unten
+–	Strich
+—	Gedankenstrich
+●	Kreis
+¨	Trema
+‏	von rechts nach links Markierung
+‎	von links nach rechts Markierung
+■	schwarzes Quadrat 
+➔	Pfeil nach rechts
+ 
+ 
+§ Paragraf some
+¥	Yen	all	norep
+¢	Cent	all	norep
+°	Grad	most
+Þ	Aufzählungszeichen	some
 «	doppelt gewinkelte Klammer zu	most
 »	doppelt gewinkelte Klammer auf	most
-–	Strich	most
-—	Gedankenstrich	most
-●	Kreis	most
-¨	Trema	most
 µ	My	most
 ¹	hoch gestellte Eins	some
 ²	hoch gestellte Zwei	some
@@ -108,8 +101,4 @@ _	Unterstrich	most
 ±	Plus Minus	some
 ×	mal	some
 ÷	Divisionszeichen	some
-‏	von rechts nach links Markierung	char
-‎	von links nach rechts Markierung	char
-■	schwarzes Quadrat 	some
-➔	Pfeil nach rechts	some
- 
+
