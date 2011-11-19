@@ -774,8 +774,8 @@ Asetus on oletusarvoisesti käytössä.
 Kun tämä asetus ei ole käytössä, NVDA lukee vain taulukot, joissa on taulukoitua tietoa (jolloin on järkevää saada tietää, että kyseessä on taulukko).
 Jos asetus on käytössä, NVDA lukee myös taulukot, joita käytetään puhtaasti visuaaliseen esittämiseen.
 
-==== Kenttien, kuten linkkien ja otsikoiden, lukemisen määrittäminen ====
-Katso [Dokumenttien muotoiluasetukset -valintaikkunassa #Dokumenttienmuotoiluasetukset] asetuksia määrittääksesi luettavat kentät, kuten linkit, otsikot ja taulukot.
+==== Elementtien lukemisen määrittäminen ====
+Katso [Dokumenttien muotoiluasetukset -valintaikkunassa #Dokumenttienmuotoiluasetukset] olevia asetuksia määrittääksesi luettavat elementit, kuten linkit, otsikot ja taulukot.
   
 ==== Automaattinen vuorovaikutustila kohdistuksen muuttuessa ====
 Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön jos kohdistus muuttuu.
@@ -783,11 +783,11 @@ Kun esim. siirrytään web-sivulla sarkaimella lomakkeen kohdalle tämän asetuk
 
 ==== Automaattinen vuorovaikutustila kohdistinta liikutettaessa ====
 Kun tämä asetus on käytössä, NVDA siirtyy automaattisesti vuorovaikutustilaan ja siitä pois nuolinäppäimillä liikuttaessa.
-Jos esim. web-sivua nuolinäppäimillä selatessa tullaan muokkauskentän kohdalle, NVDA ottaa vuorovaikutustilan käyttöön automaattisesti.
-Jos kentästä siirrytään pois nuolinäppäimillä, NVDA vaihtaa takaisin selaustilaan.
+Jos esim. web-sivua nuolinäppäimillä selattaessa tullaan muokkauskentän kohdalle, NVDA ottaa vuorovaikutustilan käyttöön automaattisesti.
+Jos kentästä siirrytään pois nuolinäppäimillä, palataan takaisin selaustilaan.
 
 ==== Ilmaise vuorovaikutus- ja selaustilat äänimerkillä ====
-Jos tämä asetus on käytössä, NVDA soittaa äänimerkin vaihtaessaan selaus- ja vuorovaikutustilojen välillä sen sijaan, että siitä ilmoitettaisiin puheena.
+Jos tämä asetus on käytössä, NVDA soittaa äänimerkin vaihtaessaan selaus- ja vuorovaikutustilojen välillä sen sijaan, että siitä ilmoitettaisiin puheella.
 
 +++ Dokumenttien muotoiluasetukset (NVDA+Ctrl+d) +++[Dokumenttienmuotoiluasetukset]
 Tämä valintaikkuna löytyy Asetukset-valikon "Dokumenttien muotoilu..." -kohdasta.
@@ -804,7 +804,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - värit
 - tekstityyli
 - taulukot
-- taulukoiden rivien ja sarakkeiden otsikot
+- taulukon rivien ja sarakkeiden ylätunnisteet
 - sivunumerot
 - rivinumerot
 - kirjoitusvirheet
