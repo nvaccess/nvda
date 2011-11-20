@@ -64,6 +64,31 @@ wdGoToPrevious=3
 wdGoToPage=1
 wdGoToLine=3
 
+wdCommentsStory=4
+wdEndnotesStory=3
+wdEvenPagesFooterStory=8
+wdEvenPagesHeaderStory=6
+wdFirstPageFooterStory=11
+wdFirstPageHeaderStory=10
+wdFootnotesStory=2
+wdMainTextStory=1
+wdPrimaryFooterStory=9
+wdPrimaryHeaderStory=7
+wdTextFrameStory=5
+
+storyTypeLocalizedLabels={
+	wdCommentsStory:_("Comments"),
+	wdEndnotesStory:_("Endnotes"),
+	wdEvenPagesFooterStory:_("Even pages footer"),
+	wdEvenPagesHeaderStory:_("Even pages header"),
+	wdFirstPageFooterStory:_("First page footer"),
+	wdFirstPageHeaderStory:_("First page header"),
+	wdFootnotesStory:_("Footnotes"),
+	wdPrimaryFooterStory:_("Primary footer"),
+	wdPrimaryHeaderStory:_("Primary header"),
+	wdTextFrameStory:_("Text frame"),
+}
+
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
 
 wm_winword_expandToLine=ctypes.windll.user32.RegisterWindowMessageW(u"wm_winword_expandToLine")
@@ -227,9 +252,21 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		for index in xrange(len(commandList)):
 			if isinstance(commandList[index],textInfos.FieldCommand):
 				field=commandList[index].field
-				if isinstance(field,textInfos.FormatField):
+				if isinstance(field,textInfos.ControlField):
+					commandList[index].field=self._normalizeControlField(field)
+				elif isinstance(field,textInfos.FormatField):
 					commandList[index].field=self._normalizeFormatField(field)
 		return commandList
+
+	def _normalizeControlField(self,field):
+		storyType=int(field.pop('wdStoryType',0))
+		if storyType:
+			name=storyTypeLocalizedLabels.get(storyType,None)
+			if name:
+				field['name']=name
+				field['alwaysReportName']=True
+				field['role']=controlTypes.ROLE_FRAME
+		return field
 
 	def _normalizeFormatField(self,field):
 		if field.pop('inTable',False):

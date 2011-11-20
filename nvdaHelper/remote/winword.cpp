@@ -34,6 +34,7 @@ using namespace std;
 #define wdDISPID_APPLICATION_SCREENUPDATING 26
 #define wdDISPID_SELECTION_RANGE 400
 #define wdDISPID_SELECTION_SETRANGE 100
+#define wdDISPID_RANGE_STORYTYPE 7
 #define wdDISPID_RANGE_MOVEEND 111
 #define wdDISPID_RANGE_COLLAPSE 101
 #define wdDISPID_RANGE_TEXT 0
@@ -291,7 +292,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	wostringstream initialFormatAttribsStream;
 	//Start writing the output xml to a stringstream
 	wostringstream XMLStream;
-	XMLStream<<L"<control>";
+	int storyType=0;
+	_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_STORYTYPE,VT_I4,&storyType);
+	XMLStream<<L"<control wdStoryType=\""<<storyType<<L"\">";
 	//Collapse the range
 	int initialformatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
