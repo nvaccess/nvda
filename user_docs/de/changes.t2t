@@ -57,6 +57,7 @@ Die wichtigsten neuerungen sind u.a. das automatische Wechseln der Synthesizersp
 - Wenn Sie bei aktiverter mausverfolgung den Mauszeiger in ein Eingabefeld bewegen (wie z.B. in den Einstellungen für Synaptics Pointing Device oder SpeechLab SpeakText) bringt nvda die Anwendung nicht mehr zum Absturz (#672)
 - NVDA wertet nun die Winfo-dialoge zahlreicher Anwendungen korrekt aus, die mit Windows XP mitgeliefert werden, wie z.B. den Info-dialog des Editors oder im Info-Dialog zu Windows. (#1853, #1855)
 - Wortweise Navigation in Eingabefeldern behoben. (#1877)
+- Wenn Sie sich mit Pfeil nach links, Pfeil nach oben oder seite rauf aus einem Eingabefeld bewegen, während Sie sich im Fokus Modus befinden, wächselt NVDA nun richtig in den Lesemodus, wenn "Bei Bewegungen des System-Cursors automatisch den Fokusmodus einschalten" aktiviert ist. (#1733)
 
 
 == Änderungen für Entwickler ==
