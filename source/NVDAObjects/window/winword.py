@@ -259,6 +259,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return commandList
 
 	def _normalizeControlField(self,field):
+		role=field.pop('role',None)
+		if role=="footnote":
+			role=controlTypes.ROLE_FOOTNOTE
+		elif role=="endnote":
+			role=controlTypes.ROLE_ENDNOTE
+		else:
+			role=controlTypes.ROLE_UNKNOWN
+		field['role']=role
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)

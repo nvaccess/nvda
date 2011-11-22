@@ -63,6 +63,14 @@ using namespace std;
 #define wdDISPID_RANGE_PARAGRAPHS 59
 #define wdDISPID_PARAGRAPHS_ITEM 0
 #define wdDISPID_PARAGRAPH_RANGE 0
+#define wdDISPID_RANGE_FOOTNOTES 54
+#define wdDISPID_FOOTNOTES_ITEM 0
+#define wdDISPID_FOOTNOTES_COUNT 2
+#define wdDISPID_FOOTNOTE_INDEX 6
+#define wdDISPID_RANGE_ENDNOTES 55
+#define wdDISPID_ENDNOTES_ITEM 0
+#define wdDISPID_ENDNOTES_COUNT 2
+#define wdDISPID_ENDNOTE_INDEX 6
 
 #define wdWord 2
 #define wdLine 5
@@ -259,6 +267,52 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	} 
 }
 
+int getEndnoteIndex(IDispatch* pDispatchRange) {
+	IDispatchPtr pDispatchNotes=NULL;
+	IDispatchPtr pDispatchNote=NULL;
+	int count=0;
+	int index=0;
+	try {
+	if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_ENDNOTES,VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
+		return 0;
+	}
+	if(_com_dispatch_propget(pDispatchNotes,wdDISPID_ENDNOTES_COUNT,VT_I4,&count)!=S_OK||count==0) {
+		return 0;
+	}
+	if(_com_dispatch_method(pDispatchNotes,wdDISPID_ENDNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",1)!=S_OK||!pDispatchNote) {
+		return 0;
+	}
+	_com_dispatch_propget(pDispatchNote,wdDISPID_ENDNOTE_INDEX,VT_I4,&index);
+	} catch(_com_error) {
+	Beep(330,50);
+	index=0;
+	}
+	return index;
+}
+
+int getFootnoteIndex(IDispatch* pDispatchRange) {
+	IDispatchPtr pDispatchNotes=NULL;
+	IDispatchPtr pDispatchNote=NULL;
+	int count=0;
+	int index=0;
+	try {
+	if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_FOOTNOTES,VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
+		return 0;
+	}
+	if(_com_dispatch_propget(pDispatchNotes,wdDISPID_FOOTNOTES_COUNT,VT_I4,&count)!=S_OK||count==0) {
+		return 0;
+	}
+	if(_com_dispatch_method(pDispatchNotes,wdDISPID_FOOTNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",1)!=S_OK||!pDispatchNote) {
+		return 0;
+	}
+	_com_dispatch_propget(pDispatchNote,wdDISPID_FOOTNOTE_INDEX,VT_I4,&index);
+	} catch(_com_error) {
+	Beep(660,50);
+	index=0;
+	}
+	return index;
+}
+
 UINT wm_winword_getTextInRange=0;
 typedef struct {
 	int startOffset;
@@ -321,10 +375,19 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			_com_dispatch_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
 			chunkEndOffset=args->endOffset;
 		}
-		XMLStream<<L"<text ";
 		if(firstLoop) {
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialformatConfig,initialFormatAttribsStream);
 		}
+		_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
+		if(text&&text[0]==L'\02') {
+			int index=getFootnoteIndex(pDispatchRange);
+			if(index>0) {
+				XMLStream<<L"<control role=\"footnote\"><text "<<initialFormatAttribsStream.str()<<L">"<<index<<L"</text></control>";
+			} else if((index=getEndnoteIndex(pDispatchRange))>0) { 
+				XMLStream<<L"<control role=\"endnote\"><text "<<initialFormatAttribsStream.str()<<L">"<<index<<L"</text></control>";
+			}
+		}
+		XMLStream<<L"<text ";
 		XMLStream<<initialFormatAttribsStream.str();
 		generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,(firstLoop?formatConfig:formatConfig&~formatConfig_reportLists),XMLStream);
 		XMLStream<<L">";
@@ -336,7 +399,6 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			firstLoop=false;
 		}
-		_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
 		if(text) {
 			wstring tempText;
 			for(int i=0;text[i]!=L'\0';++i) {
