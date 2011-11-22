@@ -121,62 +121,62 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		return;
 	}
 	IDispatchPtr pDispatchApplication=NULL;
-	if(_com_dispatch_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK) {
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK) {
 		LOG_DEBUGWARNING(L"window.application failed");
 		return;
 	}
 	IDispatchPtr pDispatchSelection=NULL;
-	if(_com_dispatch_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
 	IDispatch* pDispatchOldSelRange=NULL;
-	if(_com_dispatch_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK) {
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
 	//Disable screen updating as we will be moving the selection temporarily
-	_com_dispatch_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
+	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,false);
 	//Move the selection to the given range
-	_com_dispatch_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
+	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_SELECTION_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->offset,args->offset);
 	//Expand the selection to the line
-	_com_dispatch_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
+	_com_dispatch_raw_method(pDispatchSelection,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdLine);
 	//Collect the start and end offsets of the selection
-	_com_dispatch_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
-	_com_dispatch_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
+	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_START,VT_I4,&(args->lineStart));
+	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
 	//Move the selection back to its original location
-	_com_dispatch_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
+	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
 	//Reenable screen updating
-	_com_dispatch_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
 
 void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream) {
 	int iVal=0;
-	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)) {
+	if((formatConfig&formatConfig_reportPage)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdActiveEndAdjustedPageNumber)==S_OK)) {
 		formatAttribsStream<<L"page-number=\""<<iVal<<L"\" ";
 	}
-	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
+	if((formatConfig&formatConfig_reportLineNumber)&&(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdFirstCharacterLineNumber)==S_OK)) {
 		formatAttribsStream<<L"line-number=\""<<iVal<<L"\" ";
 	}
-	if((formatConfig&formatConfig_reportTables)&&_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdWithInTable)==S_OK&&iVal) {
+	if((formatConfig&formatConfig_reportTables)&&_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdWithInTable)==S_OK&&iVal) {
 		formatAttribsStream<<L"inTable=\""<<iVal<<L"\" ";
-		if(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdMaximumNumberOfRows)==S_OK) {
+		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdMaximumNumberOfRows)==S_OK) {
 			formatAttribsStream<<L"table-row-count=\""<<iVal<<L"\" ";
 		}
-		if(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdMaximumNumberOfColumns)==S_OK) {
+		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdMaximumNumberOfColumns)==S_OK) {
 			formatAttribsStream<<L"table-column-count=\""<<iVal<<L"\" ";
 		}
-		if(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeRowNumber)==S_OK) {
+		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeRowNumber)==S_OK) {
 			formatAttribsStream<<L"table-row-number=\""<<iVal<<L"\" ";
 		}
-		if(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeColumnNumber)==S_OK) {
+		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeColumnNumber)==S_OK) {
 			formatAttribsStream<<L"table-column-number=\""<<iVal<<L"\" ";
 		}
 	}
 	if(formatConfig&formatConfig_reportAlignment) {
 		IDispatchPtr pDispatchParagraphFormat=NULL;
-		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
-			if(_com_dispatch_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_ALIGNMENT,VT_I4,&iVal)==S_OK) {
+		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHFORMAT,VT_DISPATCH,&pDispatchParagraphFormat)==S_OK&&pDispatchParagraphFormat) {
+			if(_com_dispatch_raw_propget(pDispatchParagraphFormat,wdDISPID_PARAGRAPHFORMAT_ALIGNMENT,VT_I4,&iVal)==S_OK) {
 				switch(iVal) {
 					case wdAlignParagraphLeft:
 					formatAttribsStream<<L"text-align=\"left\" ";
@@ -196,18 +196,18 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	}
 	if(formatConfig&formatConfig_reportLists) {
 		IDispatchPtr pDispatchListFormat=NULL;
-		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_LISTFORMAT,VT_DISPATCH,&pDispatchListFormat)==S_OK&&pDispatchListFormat) {
+		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_LISTFORMAT,VT_DISPATCH,&pDispatchListFormat)==S_OK&&pDispatchListFormat) {
 			BSTR listString=NULL;
-			if(_com_dispatch_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTSTRING,VT_BSTR,&listString)==S_OK&&listString) {
+			if(_com_dispatch_raw_propget(pDispatchListFormat,wdDISPID_LISTFORMAT_LISTSTRING,VT_BSTR,&listString)==S_OK&&listString) {
 				if(SysStringLen(listString)>0) {
 					IDispatchPtr pDispatchParagraphs=NULL;
 					IDispatchPtr pDispatchParagraph=NULL;
 					IDispatchPtr pDispatchParagraphRange=NULL;
 					if(
-						_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)==S_OK&&pDispatchParagraphs\
-						&&_com_dispatch_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph\
-						&&_com_dispatch_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange\
-						&&_com_dispatch_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal==startOffset\
+						_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)==S_OK&&pDispatchParagraphs\
+						&&_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)==S_OK&&pDispatchParagraph\
+						&&_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_RANGE,VT_DISPATCH,&pDispatchParagraphRange)==S_OK&&pDispatchParagraphRange\
+						&&_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal==startOffset\
 					) {
 						formatAttribsStream<<L"line-prefix=\""<<listString<<L"\" ";
 					}
@@ -218,9 +218,9 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	}
 	if(formatConfig&formatConfig_reportStyle) {
 		IDispatchPtr pDispatchStyle=NULL;
-		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_STYLE,VT_DISPATCH,&pDispatchStyle)==S_OK&&pDispatchStyle) {
+		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_STYLE,VT_DISPATCH,&pDispatchStyle)==S_OK&&pDispatchStyle) {
 			BSTR nameLocal=NULL;
-			_com_dispatch_propget(pDispatchStyle,wdDISPID_STYLE_NAMELOCAL,VT_BSTR,&nameLocal);
+			_com_dispatch_raw_propget(pDispatchStyle,wdDISPID_STYLE_NAMELOCAL,VT_BSTR,&nameLocal);
 			if(nameLocal) {
 				formatAttribsStream<<L"style=\""<<nameLocal<<L"\" ";
 				SysFreeString(nameLocal);
@@ -229,28 +229,28 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	}
 	if(formatConfig&formatConfig_fontFlags) {
 		IDispatchPtr pDispatchFont=NULL;
-		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont)==S_OK&&pDispatchFont) {
+		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont)==S_OK&&pDispatchFont) {
 			BSTR fontName=NULL;
-			if((formatConfig&formatConfig_reportFontName)&&(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_NAME,VT_BSTR,&fontName)==S_OK)&&fontName) {
+			if((formatConfig&formatConfig_reportFontName)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_NAME,VT_BSTR,&fontName)==S_OK)&&fontName) {
 				formatAttribsStream<<L"font-name=\""<<fontName<<L"\" ";
 				SysFreeString(fontName);
 			}
-			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_I4,&iVal)==S_OK)) {
+			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_I4,&iVal)==S_OK)) {
 				formatAttribsStream<<L"font-size=\""<<iVal<<L"pt\" ";
 			}
 			if(formatConfig&formatConfig_reportFontAttributes) {
-				if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_BOLD,VT_I4,&iVal)==S_OK&&iVal) {
+				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_BOLD,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"bold=\"1\" ";
 				}
-				if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_ITALIC,VT_I4,&iVal)==S_OK&&iVal) {
+				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_ITALIC,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"italic=\"1\" ";
 				}
-				if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_UNDERLINE,VT_I4,&iVal)==S_OK&&iVal) {
+				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_UNDERLINE,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"underline=\"1\" ";
 				}
-				if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"text-position=\"super\" ";
-				} else if(_com_dispatch_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
+				} else if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUBSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"text-position=\"sub\" ";
 				}
 			}
@@ -258,8 +258,8 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	} 
 	if(formatConfig&formatConfig_reportSpellingErrors) {
 		IDispatchPtr pDispatchSpellingErrors=NULL;
-		if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)==S_OK&&pDispatchSpellingErrors) {
-			_com_dispatch_propget(pDispatchSpellingErrors,wdDISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
+		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)==S_OK&&pDispatchSpellingErrors) {
+			_com_dispatch_raw_propget(pDispatchSpellingErrors,wdDISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
 			if(iVal>0) {
 				formatAttribsStream<<L"invalid-spelling=\""<<iVal<<L"\" ";
 			}
@@ -272,21 +272,16 @@ int getEndnoteIndex(IDispatch* pDispatchRange) {
 	IDispatchPtr pDispatchNote=NULL;
 	int count=0;
 	int index=0;
-	try {
-	if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_ENDNOTES,VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_ENDNOTES,VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
 		return 0;
 	}
-	if(_com_dispatch_propget(pDispatchNotes,wdDISPID_ENDNOTES_COUNT,VT_I4,&count)!=S_OK||count==0) {
+	if(_com_dispatch_raw_propget(pDispatchNotes,wdDISPID_ENDNOTES_COUNT,VT_I4,&count)!=S_OK||count==0) {
 		return 0;
 	}
-	if(_com_dispatch_method(pDispatchNotes,wdDISPID_ENDNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",1)!=S_OK||!pDispatchNote) {
+	if(_com_dispatch_raw_method(pDispatchNotes,wdDISPID_ENDNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",1)!=S_OK||!pDispatchNote) {
 		return 0;
 	}
-	_com_dispatch_propget(pDispatchNote,wdDISPID_ENDNOTE_INDEX,VT_I4,&index);
-	} catch(_com_error) {
-	Beep(330,50);
-	index=0;
-	}
+	_com_dispatch_raw_propget(pDispatchNote,wdDISPID_ENDNOTE_INDEX,VT_I4,&index);
 	return index;
 }
 
@@ -295,21 +290,16 @@ int getFootnoteIndex(IDispatch* pDispatchRange) {
 	IDispatchPtr pDispatchNote=NULL;
 	int count=0;
 	int index=0;
-	try {
-	if(_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_FOOTNOTES,VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_FOOTNOTES,VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
 		return 0;
 	}
-	if(_com_dispatch_propget(pDispatchNotes,wdDISPID_FOOTNOTES_COUNT,VT_I4,&count)!=S_OK||count==0) {
+	if(_com_dispatch_raw_propget(pDispatchNotes,wdDISPID_FOOTNOTES_COUNT,VT_I4,&count)!=S_OK||count==0) {
 		return 0;
 	}
-	if(_com_dispatch_method(pDispatchNotes,wdDISPID_FOOTNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",1)!=S_OK||!pDispatchNote) {
+	if(_com_dispatch_raw_method(pDispatchNotes,wdDISPID_FOOTNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",1)!=S_OK||!pDispatchNote) {
 		return 0;
 	}
-	_com_dispatch_propget(pDispatchNote,wdDISPID_FOOTNOTE_INDEX,VT_I4,&index);
-	} catch(_com_error) {
-	Beep(660,50);
-	index=0;
-	}
+	_com_dispatch_raw_propget(pDispatchNote,wdDISPID_FOOTNOTE_INDEX,VT_I4,&index);
 	return index;
 }
 
@@ -330,29 +320,29 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	}
 		//Get the current selection
 		IDispatchPtr pDispatchSelection=NULL;
-	if(_com_dispatch_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_SELECTION,VT_DISPATCH,&pDispatchSelection)!=S_OK||!pDispatchSelection) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
 	//Make a copy of the selection as an independent range
 	IDispatchPtr pDispatchRange=NULL;
-	if(_com_dispatch_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchRange)!=S_OK) {
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchRange)!=S_OK) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
 	//Move the range to the requested offsets
-	_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->startOffset,args->endOffset);
+	_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_SETRANGE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003\x0003",args->startOffset,args->endOffset);
 	//A temporary stringstream for initial formatting
 	wostringstream initialFormatAttribsStream;
 	//Start writing the output xml to a stringstream
 	wostringstream XMLStream;
 	int storyType=0;
-	_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_STORYTYPE,VT_I4,&storyType);
+	_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_STORYTYPE,VT_I4,&storyType);
 	XMLStream<<L"<control wdStoryType=\""<<storyType<<L"\">";
 	//Collapse the range
 	int initialformatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
-	_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
+	_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 	int chunkStartOffset=args->startOffset;
 	int chunkEndOffset=chunkStartOffset;
 	int unitsMoved=0;
@@ -364,21 +354,21 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		//Try moving
 		//But if characterFormatting doesn't work, and word doesn't work, or no units were moved then break out of the loop
 		if((
-			((formatConfig&formatConfig_reportSpellingErrors)||(_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacterFormatting,1)!=S_OK))&&
-			_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK
+			((formatConfig&formatConfig_reportSpellingErrors)||(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacterFormatting,1)!=S_OK))&&
+			_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK
 		)||unitsMoved<=0) {
 			break;
 		}
-		_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
+		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
 		//Make sure  that the end is not past the requested end after the move
 		if(chunkEndOffset>(args->endOffset)) {
-			_com_dispatch_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
+			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
 			chunkEndOffset=args->endOffset;
 		}
 		if(firstLoop) {
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialformatConfig,initialFormatAttribsStream);
 		}
-		_com_dispatch_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
+		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
 		if(text&&text[0]==L'\02') {
 			int index=getFootnoteIndex(pDispatchRange);
 			if(index>0) {
@@ -394,7 +384,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		if(firstLoop) {
 			//If there is no general formatting to look for  then expand all the way to the end
 			if(!formatConfig) {
-				_com_dispatch_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
+				_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
 				chunkEndOffset=args->endOffset;
 			}
 			firstLoop=false;
@@ -409,7 +399,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			text=NULL;
 		}
 		XMLStream<<L"</text>";
-		_com_dispatch_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseEnd);
+		_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseEnd);
 		chunkStartOffset=chunkEndOffset;
 	} while(chunkEndOffset<(args->endOffset));
 	XMLStream<<L"</control>";
