@@ -248,6 +248,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		text=BSTR()
 		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,self._rangeObj.end,formatConfigFlags,ctypes.byref(text))
+		if res or not text:
+			log.debugWarning("winword_getTextInRange failed with %d"%res)
+			return [self.text]
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
 		for index in xrange(len(commandList)):
 			if isinstance(commandList[index],textInfos.FieldCommand):
