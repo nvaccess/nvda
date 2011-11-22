@@ -116,12 +116,12 @@ typedef struct {
 void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	//Fetch all needed objects
 	IDispatchPtr pDispatchWindow=NULL;
-	if(AccessibleObjectFromWindow(hwnd,OBJID_NATIVEOM,IID_IDispatch,(void**)&pDispatchWindow)!=S_OK) {
+	if(AccessibleObjectFromWindow(hwnd,OBJID_NATIVEOM,IID_IDispatch,(void**)&pDispatchWindow)!=S_OK||!pDispatchWindow) {
 		LOG_DEBUGWARNING(L"AccessibleObjectFromWindow failed");
 		return;
 	}
 	IDispatchPtr pDispatchApplication=NULL;
-	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK) {
+	if(_com_dispatch_raw_propget(pDispatchWindow,wdDISPID_WINDOW_APPLICATION,VT_DISPATCH,&pDispatchApplication)!=S_OK||!pDispatchApplication) {
 		LOG_DEBUGWARNING(L"window.application failed");
 		return;
 	}
@@ -131,7 +131,7 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		return;
 	}
 	IDispatch* pDispatchOldSelRange=NULL;
-	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK) {
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK||!pDispatchOldSelRange) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
@@ -326,7 +326,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	}
 	//Make a copy of the selection as an independent range
 	IDispatchPtr pDispatchRange=NULL;
-	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchRange)!=S_OK) {
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchRange)!=S_OK||!pDispatchRange) {
 		LOG_DEBUGWARNING(L"selection.range failed");
 		return;
 	}
