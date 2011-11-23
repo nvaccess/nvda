@@ -73,6 +73,8 @@ using namespace std;
 #define wdDISPID_ENDNOTE_INDEX 6
 #define wdDISPID_RANGE_HYPERLINKS 156
 #define wdDISPID_HYPERLINKS_COUNT 1
+#define wdDISPID_RANGE_COMMENTS 56
+#define wdDISPID_COMMENTS_COUNT 2
 
 #define wdWord 2
 #define wdLine 5
@@ -106,6 +108,7 @@ using namespace std;
 #define formatConfig_reportTables 512
 #define formatConfig_reportLists 1024
 #define formatConfig_reportLinks 2048
+#define formatConfig_reportComments 4096
  
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables)
@@ -160,6 +163,18 @@ int getHyperlinkCount(IDispatch* pDispatchRange) {
 		return 0;
 	}
 	if(_com_dispatch_raw_propget(pDispatchHyperlinks,wdDISPID_HYPERLINKS_COUNT,VT_I4,&count)!=S_OK||count<=0) {
+		return 0;
+	}
+	return count;
+}
+
+int getCommentCount(IDispatch* pDispatchRange) {
+	IDispatchPtr pDispatchComments=NULL;
+	int count=0;
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_COMMENTS,VT_DISPATCH,&pDispatchComments)!=S_OK||!pDispatchComments) {
+		return 0;
+	}
+	if(_com_dispatch_raw_propget(pDispatchComments,wdDISPID_COMMENTS_COUNT,VT_I4,&count)!=S_OK||count<=0) {
 		return 0;
 	}
 	return count;
@@ -360,8 +375,11 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	//Collapse the range
 	int initialformatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
-	if(getHyperlinkCount(pDispatchRange)==0) {
+	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)==0) {
 		formatConfig&=~formatConfig_reportLinks;
+	}
+	if((formatConfig&formatConfig_reportComments)&&getCommentCount(pDispatchRange)==0) {
+		formatConfig&=~formatConfig_reportComments;
 	}
 	_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 	int chunkStartOffset=args->startOffset;
@@ -420,6 +438,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			text=NULL;
 		}
 		XMLStream<<L"</text>";
+		if((formatConfig&formatConfig_reportComments)&&getCommentCount(pDispatchRange)>0) {
+			XMLStream<<L"<text comment=\"1\" "<<initialFormatAttribsStream.str()<<L"> </text>";
+		}
 		_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseEnd);
 		chunkStartOffset=chunkEndOffset;
 	} while(chunkEndOffset<(args->endOffset));

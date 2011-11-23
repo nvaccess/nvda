@@ -120,6 +120,7 @@ formatConfigFlagsMap={
 	"reportTables":512,
 	"reportLists":1024,
 	"reportLinks":2048,
+	"reportComments":4096,
 }
 
 class WordDocumentTextInfo(textInfos.TextInfo):
