@@ -71,6 +71,8 @@ using namespace std;
 #define wdDISPID_ENDNOTES_ITEM 0
 #define wdDISPID_ENDNOTES_COUNT 2
 #define wdDISPID_ENDNOTE_INDEX 6
+#define wdDISPID_RANGE_HYPERLINKS 156
+#define wdDISPID_HYPERLINKS_COUNT 1
 
 #define wdWord 2
 #define wdLine 5
@@ -103,7 +105,8 @@ using namespace std;
 #define formatConfig_reportLineNumber 256
 #define formatConfig_reportTables 512
 #define formatConfig_reportLists 1024
-
+#define formatConfig_reportLinks 2048
+ 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables)
  
@@ -148,6 +151,18 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
 	//Reenable screen updating
 	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+}
+
+int getHyperlinkCount(IDispatch* pDispatchRange) {
+	IDispatchPtr pDispatchHyperlinks=NULL;
+	int count=0;
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_HYPERLINKS,VT_DISPATCH,&pDispatchHyperlinks)!=S_OK||!pDispatchHyperlinks) {
+		return 0;
+	}
+	if(_com_dispatch_raw_propget(pDispatchHyperlinks,wdDISPID_HYPERLINKS_COUNT,VT_I4,&count)!=S_OK||count<=0) {
+		return 0;
+	}
+	return count;
 }
 
 void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset, int endOffset, int formatConfig, wostringstream& formatAttribsStream) {
@@ -215,6 +230,9 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				SysFreeString(listString);
 			}
 		}
+	}
+	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)>0) {
+		formatAttribsStream<<L"link=\"1\" ";
 	}
 	if(formatConfig&formatConfig_reportStyle) {
 		IDispatchPtr pDispatchStyle=NULL;
@@ -342,6 +360,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	//Collapse the range
 	int initialformatConfig=(args->formatConfig)&formatConfig_initialFormatFlags;
 	int formatConfig=(args->formatConfig)&(~formatConfig_initialFormatFlags);
+	if(getHyperlinkCount(pDispatchRange)==0) {
+		formatConfig&=~formatConfig_reportLinks;
+	}
 	_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 	int chunkStartOffset=args->startOffset;
 	int chunkEndOffset=chunkStartOffset;
