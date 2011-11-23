@@ -12,7 +12,16 @@ class XMLTextParser(object):
 		self._commandList=[]
 
 	def _startElementHandler(self,tagName,attrs):
-		if tagName=='control':
+		if tagName=='unich':
+			data=attrs.get('value',None)
+			if data is not None:
+				try:
+					data=unichr(int(data))
+				except ValueError:
+					data=u'\ufffd'
+				self._CharacterDataHandler(data)
+			return
+		elif tagName=='control':
 			newAttrs=textInfos.ControlField(attrs)
 			self._commandList.append(textInfos.FieldCommand("controlStart",newAttrs))
 		elif tagName=='text':
@@ -34,7 +43,7 @@ class XMLTextParser(object):
 	def _EndElementHandler(self,tagName):
 		if tagName=="control":
 			self._commandList.append(textInfos.FieldCommand("controlEnd",None))
-		elif tagName=="text":
+		elif tagName in ("text","unich"):
 			pass
 		else:
 			raise ValueError("unknown tag name: %s"%tagName)
