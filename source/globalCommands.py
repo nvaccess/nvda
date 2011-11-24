@@ -651,7 +651,7 @@ class GlobalCommands(ScriptableObject):
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
 			"reportPage":False,"reportLineNumber":False,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
-			"reportBlockQuotes":False,
+			"reportBlockQuotes":False,"reportComments":False,
 		}
 		textList=[]
 		info=api.getReviewPosition()
