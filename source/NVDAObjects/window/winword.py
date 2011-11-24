@@ -265,7 +265,15 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 
 	def _normalizeControlField(self,field):
 		role=field.pop('role',None)
-		if role=="footnote":
+		if role=="table":
+			role=controlTypes.ROLE_TABLE
+			field['table-rowcount']=int(field.get('table-rowcount',0))
+			field['table-columncount']=int(field.get('table-columncount',0))
+		elif role=="tableCell":
+			role=controlTypes.ROLE_TABLECELL
+			field['table-rownumber']=int(field.get('table-rownumber',0))
+			field['table-columnnumber']=int(field.get('table-columnnumber',0))
+		elif role=="footnote":
 			role=controlTypes.ROLE_FOOTNOTE
 		elif role=="endnote":
 			role=controlTypes.ROLE_ENDNOTE
@@ -282,12 +290,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return field
 
 	def _normalizeFormatField(self,field):
-		if field.pop('inTable',False):
-			tableInfo={}
-			for k in ('table-row-count','table-column-count','table-row-number','table-column-number'):
-				val=field.pop(k,0)
-				tableInfo[k[6:]]=val
-			field['table-info']=tableInfo
 		return field
 
 	def expand(self,unit):
