@@ -63,6 +63,7 @@ using namespace std;
 #define wdDISPID_RANGE_PARAGRAPHS 59
 #define wdDISPID_PARAGRAPHS_ITEM 0
 #define wdDISPID_PARAGRAPH_RANGE 0
+#define wdDISPID_PARAGRAPH_OUTLINELEVEL 202
 #define wdDISPID_RANGE_FOOTNOTES 54
 #define wdDISPID_FOOTNOTES_ITEM 0
 #define wdDISPID_FOOTNOTES_COUNT 2
@@ -117,9 +118,10 @@ using namespace std;
 #define formatConfig_reportLists 1024
 #define formatConfig_reportLinks 2048
 #define formatConfig_reportComments 4096
+#define formatConfig_reportHeadings 8192
  
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes)
-#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables)
+#define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
  
 UINT wm_winword_expandToLine=0;
 typedef struct {
@@ -162,6 +164,23 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
 	//Reenable screen updating
 	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
+}
+
+int generateHeadingXML(IDispatch* pDispatchRange, wostringstream& XMLStream) {
+	IDispatchPtr pDispatchParagraphs=NULL;
+	IDispatchPtr pDispatchParagraph=NULL;
+	int level=0;
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_PARAGRAPHS,VT_DISPATCH,&pDispatchParagraphs)!=S_OK||!pDispatchParagraphs) {
+		return 0;
+	}
+	if(_com_dispatch_raw_method(pDispatchParagraphs,wdDISPID_PARAGRAPHS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchParagraph,L"\x0003",1)!=S_OK||!pDispatchParagraph) {
+		return 0;
+	}
+	if(_com_dispatch_raw_propget(pDispatchParagraph,wdDISPID_PARAGRAPH_OUTLINELEVEL,VT_I4,&level)!=S_OK||level<=0||level>=7) {
+		return 0;
+	}
+	XMLStream<<L"<control role=\"heading\" level=\""<<level<<L"\">";
+	return 1;
 }
 
 int getHyperlinkCount(IDispatch* pDispatchRange) {
@@ -461,6 +480,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		if(firstLoop) {
 			if(initialFormatConfig&formatConfig_reportTables) {
 				neededClosingControlTagCount+=generateTableXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
+			}
+			if(initialFormatConfig&formatConfig_reportHeadings) {
+				neededClosingControlTagCount+=generateHeadingXML(pDispatchRange,XMLStream);
 			}
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
 		}

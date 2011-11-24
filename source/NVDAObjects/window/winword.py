@@ -121,6 +121,7 @@ formatConfigFlagsMap={
 	"reportLists":1024,
 	"reportLinks":2048,
 	"reportComments":4096,
+	"reportHeadings":8192,
 }
 
 class WordDocumentTextInfo(textInfos.TextInfo):
@@ -265,7 +266,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 
 	def _normalizeControlField(self,field):
 		role=field.pop('role',None)
-		if role=="table":
+		if role=="heading":
+			role=controlTypes.ROLE_HEADING
+		elif role=="table":
 			role=controlTypes.ROLE_TABLE
 			field['table-rowcount']=int(field.get('table-rowcount',0))
 			field['table-columncount']=int(field.get('table-columncount',0))
