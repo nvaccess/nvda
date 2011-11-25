@@ -20,13 +20,13 @@ symbols:
 date separator		none	always
 
 # Whitespace
-\0	leer
+\0	leer			# null
 \t	tabulator
 \n	Zeilenumbruch
 \f	Seitenumbruch
 \r	neue Zeile
  	Leerzeichen
- 	Leerzeichen
+ 	Leerzeichen			# geschütztes Leerzeichen
 
 # Standard punctuation/symbols
 !	Ausrufezeichen
@@ -37,7 +37,7 @@ $	dollar
 €	euro
 %	prozent
 &	und
-' apostroph
+'	apostroph
 (	runde Klammer auf
 )	runde Klammer zu
 *	stern
