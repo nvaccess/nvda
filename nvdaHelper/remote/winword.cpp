@@ -85,6 +85,7 @@ using namespace std;
 #define wdDISPID_CELLS_ITEM 0
 #define wdDISPID_CELL_RANGE 0
 
+#define wdCommentsStory 4
 
 #define wdWord 2
 #define wdLine 5
@@ -456,7 +457,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)==0) {
 		formatConfig&=~formatConfig_reportLinks;
 	}
-	if((formatConfig&formatConfig_reportComments)&&getCommentCount(pDispatchRange)==0) {
+	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory||getCommentCount(pDispatchRange)==0)) {
 		formatConfig&=~formatConfig_reportComments;
 	}
 	_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
