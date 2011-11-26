@@ -18,6 +18,7 @@ import speech
 import config
 import textInfos
 import textInfos.offsets
+import colors
 import controlTypes
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
@@ -293,6 +294,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return field
 
 	def _normalizeFormatField(self,field):
+		color=field.pop('color',None)
+		if color is not None:
+			field['color']=colors.RGB.fromCOLORREF(int(color))
 		return field
 
 	def expand(self,unit):

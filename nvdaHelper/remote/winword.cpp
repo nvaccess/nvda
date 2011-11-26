@@ -49,6 +49,7 @@ using namespace std;
 #define wdDISPID_RANGE_SPELLINGERRORS 316
 #define wdDISPID_SPELLINGERRORS_COUNT 1
 #define wdDISPID_RANGE_FONT 5
+#define wdDISPID_FONT_COLOR 159
 #define wdDISPID_FONT_BOLD 130
 #define wdDISPID_FONT_ITALIC 131
 #define wdDISPID_FONT_UNDERLINE 140
@@ -119,8 +120,9 @@ using namespace std;
 #define formatConfig_reportLinks 2048
 #define formatConfig_reportComments 4096
 #define formatConfig_reportHeadings 8192
+
  
-#define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes)
+#define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
  
 UINT wm_winword_expandToLine=0;
@@ -341,6 +343,9 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 			if((formatConfig&formatConfig_reportFontSize)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SIZE,VT_I4,&iVal)==S_OK)) {
 				formatAttribsStream<<L"font-size=\""<<iVal<<L"pt\" ";
+			}
+			if((formatConfig&formatConfig_reportColor)&&(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_COLOR,VT_I4,&iVal)==S_OK)) {
+				formatAttribsStream<<L"color=\""<<iVal<<L"\" ";
 			}
 			if(formatConfig&formatConfig_reportFontAttributes) {
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_BOLD,VT_I4,&iVal)==S_OK&&iVal) {
