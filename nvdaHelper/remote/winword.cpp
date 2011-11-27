@@ -84,6 +84,10 @@ using namespace std;
 #define wdDISPID_RANGE_CELLS 57
 #define wdDISPID_CELLS_ITEM 0
 #define wdDISPID_CELL_RANGE 0
+#define wdDISPID_TABLE_COLUMNS 100
+#define wdDISPID_COLUMNS_COUNT 2
+#define wdDISPID_TABLE_ROWS 101
+#define wdDISPID_ROWS_COUNT 2
 
 #define wdCommentsStory 4
 
@@ -210,62 +214,69 @@ int getCommentCount(IDispatch* pDispatchRange) {
 	return count;
 }
 
+bool fetchTableInfo(IDispatch* pDispatchTable, int* rowCount, int* columnCount, int* nestingLevel) {
+	IDispatchPtr pDispatchRows=NULL;
+	IDispatchPtr pDispatchColumns=NULL;
+	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_ROWS,VT_DISPATCH,&pDispatchRows)==S_OK&&pDispatchRows) {
+		_com_dispatch_raw_propget(pDispatchRows,wdDISPID_ROWS_COUNT,VT_I4,rowCount);
+	}
+	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_COLUMNS,VT_DISPATCH,&pDispatchColumns)==S_OK&&pDispatchColumns) {
+		_com_dispatch_raw_propget(pDispatchColumns,wdDISPID_COLUMNS_COUNT,VT_I4,columnCount);
+	}
+	_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_NESTINGLEVEL,VT_I4,nestingLevel);
+	return true;
+}
+
 int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, wostringstream& XMLStream) {
 	int numTags=0;
 	int iVal=0;
-	if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdWithInTable)==S_OK&&iVal) {
-		numTags+=1;
-		XMLStream<<L"<control role=\"table\" table-id=\"1\" ";
-		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdMaximumNumberOfRows)==S_OK) {
-			XMLStream<<L"table-rowcount=\""<<iVal<<L"\" ";
-		}
-		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdMaximumNumberOfColumns)==S_OK) {
-			XMLStream<<L"table-columncount=\""<<iVal<<L"\" ";
-		}
-		IDispatchPtr pDispatchTables=NULL;
-		IDispatchPtr pDispatchTable=NULL;
-		if(
-			_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TABLES,VT_DISPATCH,&pDispatchTables)==S_OK&&pDispatchTables\
-			&&_com_dispatch_raw_method(pDispatchTables,wdDISPID_TABLES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchTable,L"\x0003",1)==S_OK&&pDispatchTable\
-		) {
-			if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_NESTINGLEVEL,VT_I4,&iVal)==S_OK&&iVal>0) {
-				XMLStream<<L"level=\""<<iVal<<L"\" ";
-			}
-			IDispatchPtr pDispatchTableRange=NULL;
-			if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_RANGE,VT_DISPATCH,&pDispatchTableRange)==S_OK&&pDispatchTableRange) {
-				if(_com_dispatch_raw_propget(pDispatchTableRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
-					XMLStream<<L"_startOfNode=\"1\" ";
-				}
-				if(_com_dispatch_raw_propget(pDispatchTableRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
-					XMLStream<<L"_endOfNode=\"1\" ";
-				}
-			}
-		}
-		numTags+=1;
-		XMLStream<<L"><control role=\"tableCell\" table-id=\"1\" ";
-		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeRowNumber)==S_OK) {
-			XMLStream<<L"table-rownumber=\""<<iVal<<L"\" ";
-		}
-		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeColumnNumber)==S_OK) {
-			XMLStream<<L"table-columnnumber=\""<<iVal<<L"\" ";
-		}
-		IDispatchPtr pDispatchCells=NULL;
-		IDispatchPtr pDispatchCell=NULL;
-		IDispatchPtr pDispatchCellRange=NULL;
-		if(
-			_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_CELLS,VT_DISPATCH,&pDispatchCells)==S_OK&&pDispatchCells\
-			&&_com_dispatch_raw_method(pDispatchCells,wdDISPID_CELLS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchCell,L"\x0003",1)==S_OK&&pDispatchCell\
-			&&_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_RANGE,VT_DISPATCH,&pDispatchCellRange)==S_OK&&pDispatchCellRange\
-		) {
-			if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
-				XMLStream<<L"_startOfNode=\"1\" ";
-			}
-			if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
-				XMLStream<<L"_endOfNode=\"1\" ";
-			}
-		}
-		XMLStream<<L">";
+	IDispatchPtr pDispatchTables=NULL;
+	IDispatchPtr pDispatchTable=NULL;
+	int rowCount=0;
+	int columnCount=0;
+	int nestingLevel=0;
+	if(
+		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TABLES,VT_DISPATCH,&pDispatchTables)!=S_OK||!pDispatchTables\
+		||_com_dispatch_raw_method(pDispatchTables,wdDISPID_TABLES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchTable,L"\x0003",1)!=S_OK||!pDispatchTable\
+		||!fetchTableInfo(pDispatchTable,&rowCount,&columnCount,&nestingLevel)\
+	) {
+		return 0;
 	}
+	numTags+=1;
+	XMLStream<<L"<control role=\"table\" table-id=\"1\" table-rowcount=\""<<rowCount<<L"\" table-columncount=\""<<columnCount<<L"\" level=\""<<nestingLevel<<L"\" ";
+	IDispatchPtr pDispatchTableRange=NULL;
+	if(_com_dispatch_raw_propget(pDispatchTable,wdDISPID_TABLE_RANGE,VT_DISPATCH,&pDispatchTableRange)==S_OK&&pDispatchTableRange) {
+		if(_com_dispatch_raw_propget(pDispatchTableRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
+			XMLStream<<L"_startOfNode=\"1\" ";
+		}
+		if(_com_dispatch_raw_propget(pDispatchTableRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
+			XMLStream<<L"_endOfNode=\"1\" ";
+		}
+	}
+	numTags+=1;
+	XMLStream<<L"><control role=\"tableCell\" table-id=\"1\" ";
+	if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeRowNumber)==S_OK) {
+		XMLStream<<L"table-rownumber=\""<<iVal<<L"\" ";
+	}
+	if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeColumnNumber)==S_OK) {
+		XMLStream<<L"table-columnnumber=\""<<iVal<<L"\" ";
+	}
+	IDispatchPtr pDispatchCells=NULL;
+	IDispatchPtr pDispatchCell=NULL;
+	IDispatchPtr pDispatchCellRange=NULL;
+	if(
+		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_CELLS,VT_DISPATCH,&pDispatchCells)==S_OK&&pDispatchCells\
+		&&_com_dispatch_raw_method(pDispatchCells,wdDISPID_CELLS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchCell,L"\x0003",1)==S_OK&&pDispatchCell\
+		&&_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_RANGE,VT_DISPATCH,&pDispatchCellRange)==S_OK&&pDispatchCellRange\
+	) {
+		if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
+			XMLStream<<L"_startOfNode=\"1\" ";
+		}
+		if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
+			XMLStream<<L"_endOfNode=\"1\" ";
+		}
+	}
+	XMLStream<<L">";
 	return numTags;
 }
 

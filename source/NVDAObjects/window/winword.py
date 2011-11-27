@@ -8,6 +8,7 @@ import ctypes
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
+import ui
 import NVDAHelper
 import XMLFormatting
 from logHandler import log
@@ -126,26 +127,6 @@ formatConfigFlagsMap={
 }
 
 class WordDocumentTextInfo(textInfos.TextInfo):
-
-	def _moveInTable(self,c=0,r=0):
-		try:
-			cell=self._rangeObj.cells[1]
-		except:
-			return False
-		try:
-			columnIndex=cell.columnIndex
-			rowIndex=cell.rowIndex
-		except:
-			return False
-		if columnIndex==1 and c<0:
-			return False
-		if rowIndex==1 and r<0:
-			return False
-		try:
-			self._rangeObj=self._rangeObj.tables[1].columns[columnIndex+c].cells[rowIndex+r].range
-		except:
-			return False
-		return True
 
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
@@ -445,53 +426,60 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 
-	def script_nextRow(self,gesture):
-		info=self.makeTextInfo("caret")
-		if not info._rangeObj.Information(wdWithInTable):
- 			speech.speakMessage(_("not in table"))
-			return
-		if info._moveInTable(0,1):
-			info.updateCaret()
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+	def _moveInTable(self,row=True,forward=True):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		commandList=info.getTextWithFields()
+		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.ROLE_TABLE or commandList[2].field.get('role',None)!=controlTypes.ROLE_TABLECELL:
+			ui.message(_("Not in table"))
+			return False
+		rowCount=commandList[1].field.get('table-rowcount',1)
+		columnCount=commandList[1].field.get('table-columncount',1)
+		rowNumber=commandList[2].field.get('table-rownumber',1)
+		columnNumber=commandList[2].field.get('table-columnnumber',1)
+		if row:
+			rowNumber+=1 if forward else -1
 		else:
-			speech.speakMessage(_("edge of table"))
+			columnNumber+=1 if forward else -1
+		if rowNumber<1 or rowNumber>rowCount or columnNumber<1 or columnNumber>columnCount:
+			ui.message(_("Edge of table"))
+			return False
+		try:
+			table=info._rangeObj.tables[1]
+		except COMError:
+			log.debugWarning("Could not get MS Word table object indicated in XML")
+			ui.message(_("Not in table"))
+			return False
+		while (columnNumber if row else rowNumber)>0:
+			try:
+				cell=table.cell(rowNumber,columnNumber)
+				break
+			except COMError:
+				cell=None
+				if row:
+					columnNumber-=1
+				else:
+					rowNumber-=1
+		if not cell:
+			ui.message(_("edge of table"))
+			return False
+		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=cell.range)
+		speech.speakTextInfo(newInfo,reason=speech.REASON_CARET)
+		newInfo.collapse()
+		newInfo.updateCaret()
+		return True
+
+	def script_nextRow(self,gesture):
+		self._moveInTable(row=True,forward=True)
 
 	def script_previousRow(self,gesture):
-		info=self.makeTextInfo("caret")
-		if not info._rangeObj.Information(wdWithInTable):
- 			speech.speakMessage(_("not in table"))
-			return
-		if info._moveInTable(0,-1):
-			info.updateCaret()
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
-		else:
-			speech.speakMessage(_("edge of table"))
+		self._moveInTable(row=True,forward=False)
 
 	def script_nextColumn(self,gesture):
-		info=self.makeTextInfo("caret")
-		if not info._rangeObj.Information(wdWithInTable):
- 			speech.speakMessage(_("not in table"))
-			return
-		if info._moveInTable(1,0):
-			info.updateCaret()
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
-		else:
-			speech.speakMessage(_("edge of table"))
+		self._moveInTable(row=False,forward=True)
 
 	def script_previousColumn(self,gesture):
-		info=self.makeTextInfo("caret")
-		if not info._rangeObj.Information(wdWithInTable):
- 			speech.speakMessage(_("not in table"))
-			return
-		if info._moveInTable(-1,0):
-			info.updateCaret()
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
-		else:
-			speech.speakMessage(_("edge of table"))
+		self._moveInTable(row=False,forward=False)
 
 	__gestures = {
 		"kb:tab": "tab",
