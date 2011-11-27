@@ -5,6 +5,38 @@
 
 Traduzido por Marlin Rodrigues da Silva
 
+= 2012.1 =
+
+== Novas Características ==
+- O NVDA agora pode anunciar o número de tabs e espaços inseridos na linha atual. Isso pode ser abilitado selecionando Anunciar Identação das Linhas no Diálogo de Formatação de Documentos. (#373)
+- Agora é possível detectar o pressionamento de teclas efetuado por emulação de entradas de teclado por vias alternativas tais como teclados espostos na tela e softwares para reconhecimento de voz.
+- O NVDA agora pode detectar cores em consoles de comandos do Windows.
+- Negrito, itálico e sublinhado agora são indicados em braille usando sinais apropriados para a tabela de tradução configurada. (#538)
+- O braille agora indica textos selecionados usando pontos 7 e 8. (#889)
+-  O braille agora anuncia informação sobre controles presentes em documentos tais como links, botões e cabeçalhos. (#202)
+- Suporte para a linha braille USB hedo ProfiLine. (#1863)
+- O NVDA agora evita palavras separadas nas linhas braille quando possível. (#1890)
+- Agora é possível ter o braille exibido por parágrafos ao invés de linhas, o que pode permitir uma leitura mais fluente em textos muito extensos. Pode-se configurar essa funcionalidade através da opção Ler por Parágrafos no diálogo de Opções de Braille. (#1891)
+- No Modo de Navegação, você agora pode ativar o objeto sob o cursor usando uma linha braille. Isso é feito pressionando-se a tecla do sensor onde o cursor está posicionado (o que significa que deve-se pressioná-lo duas vezes se o cursor ainda não estiver neste local). (#1893)
+
+
+== Alterações ==
+- Os comandos para descrever o atual caractere ou para soletrar a palavra ou linha atual agora os farão no idioma apropriado de acordo com o texto, se a alternância automática de idioma estiver ativada e a informação apropriada do idioma estiver disponível.
+
+
+== Correção de Falhas ==
+- No Windows 8, o foco já não é incorretamente deslocado para fora do campo de pesquisa do Windows Explorer, o que não permitia que o NVDA interagisse com ele.
+- O Modo de Navegação agora é usado para conteúdos de Adobe Flash em tela cheia.
+- Corrigida uma deficiência na qualidade de áudio em alguns casos em que eram usadas vozes Microsoft Speech API version 5 com a saída de áudio ajustada para outra que não fosse a padrão (Mapeador de Som da Microsoft). (#749)
+
+
+== Alterações para  Desenvolvedores ==
+- Agora existe um console Python remoto para situações onde seja necessária uma depuração remota. Consulte o Guia do Desenvolvedor para mais detalhes.
+- The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
+- TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
+ - Isto é usado pelo braille para ativar a posição usando a tecla sensor em linhas braille. Todavia, podem existir outras formas de entrada futuramente.
+
+
 = 2011.3 =
 Os destaques desta versão incluem a mudança automática do idioma do sintetizador de voz ao ler documentos que forneçam a informação apropriada do idioma; suporte para Java 64 bit; anúncio da formatação de texto no modo de navegação para aplicativos da Mozilla; melhoras no controle de falhas e travamentos em aplicativos; resoluções iniciais para o Windows 8.
 
@@ -32,7 +64,7 @@ Os destaques desta versão incluem a mudança automática do idioma do sintetiza
 - Ao tentar ler a barra de status (Desktop NVDA+end), caso o objeto real da barra de status não possa ser encontrado, o NVDA em seu lugar irá usar a última linha de texto escrita na tela para o aplicativo ativo. (#649)
 - Ao efetuar leitura contínua em documentos no modo de navegação, o NVDA agora irá fazer pausa ao fim de cabeçalhos e outros elementos no bloco de seu nível, em lugar de ler o texto junto com  o próximo bloco de texto como uma sentença longa.
 - No modo de navegação, ao pressionar enter ou espaço numa guia agora ela é ativada em lugar de altermnar para o modo de foco. (#1760)
-- Atualizado o sintetizador eSpeak para a versão 1.45.46.
+- Atualizado o sintetizador eSpeak para a versão 1.45.47.
 
 
 == Correção de Falhas ==
