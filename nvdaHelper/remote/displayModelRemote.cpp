@@ -28,7 +28,7 @@ BOOL CALLBACK EnumChildWindowsProc(HWND hwnd, LPARAM lParam) {
 	return TRUE;
 }
 
-error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, const int minHorizontalWhitespace, const int minVerticalWhitespace, boolean useXML, BSTR* textBuf, BSTR* characterRectsBuf) {
+error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, const int minHorizontalWhitespace, const int minVerticalWhitespace, boolean useXML, BSTR* textBuf, BSTR* characterLocationsBuf) {
 	HWND hwnd=(HWND)windowHandle;
 	deque<HWND> windowDeque;
 	EnumChildWindows(hwnd,EnumChildWindowsProc,(LPARAM)&windowDeque);
@@ -60,25 +60,26 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	}
 	if(tempModel) {
 		wstring text;
-		deque<RECT> characterRects;
-		tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,hasDescendantWindows,useXML!=false,text,characterRects);
+		deque<charLocation_t> characterLocations;
+		tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,hasDescendantWindows,useXML!=false,text,characterLocations);
 		if(hasDescendantWindows) {
 			tempModel->requestDelete();
 		} else {
 			tempModel->release();
 		}
 		*textBuf=SysAllocStringLen(text.c_str(),static_cast<UINT>(text.size()));
-		size_t cpBufSize=characterRects.size()*4;
+		size_t cpBufSize=characterLocations.size()*5;
 		// Hackishly use a BSTR to contain points.
 		wchar_t* cpTempBuf=(wchar_t*)malloc(cpBufSize*sizeof(wchar_t));
 		wchar_t* cpTempBufIt=cpTempBuf;
-		for(deque<RECT>::const_iterator cpIt=characterRects.begin();cpIt!=characterRects.end();++cpIt) {
+		for(deque<charLocation_t>::const_iterator cpIt=characterLocations.begin();cpIt!=characterLocations.end();++cpIt) {
 			*(cpTempBufIt++)=(wchar_t)cpIt->left;
 			*(cpTempBufIt++)=(wchar_t)cpIt->top;
 			*(cpTempBufIt++)=(wchar_t)cpIt->right;
 			*(cpTempBufIt++)=(wchar_t)cpIt->bottom;
+			*(cpTempBufIt++)=(wchar_t)cpIt->baseline;
 		}
-		*characterRectsBuf=SysAllocStringLen(cpTempBuf,static_cast<UINT>(cpBufSize));
+		*characterLocationsBuf=SysAllocStringLen(cpTempBuf,static_cast<UINT>(cpBufSize));
 		free(cpTempBuf);
 	}
 	return 0;
