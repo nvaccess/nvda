@@ -138,7 +138,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return textInfos.Point(x, y)
 
 	def _getOffsetFromPoint(self, x, y):
-		for charOffset, (charLeft, charTop, charRight, charBottom) in enumerate(self._textAndRects[1]):
+		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
 			if charLeft<=x<charRight and charTop<=y<charBottom:
 				return charOffset
 		raise LookupError
