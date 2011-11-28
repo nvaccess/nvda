@@ -230,9 +230,13 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf['documentFormatting']
+		startOffset=self._rangeObj.start
+		endOffset=self._rangeObj.end
+		if startOffset==endOffset:
+			return []
 		text=BSTR()
 		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
-		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,self._rangeObj.end,formatConfigFlags,ctypes.byref(text))
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
 		if res or not text:
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
 			return [self.text]
