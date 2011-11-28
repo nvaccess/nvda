@@ -15,10 +15,10 @@ O NVDA é desenvolvido pela [NV Access http://www.nvaccess.org/], , com contribu
 ++ Características Gerais ++
 O NonVisual Desktop Access permite às pessoas cegas ou com deficiência visual acessar e interagir com o sistema operacional Windows e diversas aplicações de terceiros. 
 
-As características principais são: 
+Suas características mais notáveis são: 
 - Suporte para aplicações populares incluindo navegadores web, clientes de e-mail, programas de conversação pela internet e suítes de escritório;
 - Sintetizador de voz integrado que suporta mais de 20 idiomas;
-- Anúncio da formatação do texto onde esteja disponível tal como nome e tamanho da fonte, estilo e erros de ortografia;
+- Anúncio da formatação do texto onde esteja disponível tal como nome e tamanho da fonte, estilo e erros ortográficos;
 - Anúncio automático do texto sob o mouse e indicação opcional em áudio de sua posição;
 - Suporte para diversas linhas braille;
 - Capacidade para  ser executado diretamente através de dispositivos USB e outros dispositivos portáteis sem necessitar de instalação;
@@ -26,7 +26,7 @@ As características principais são:
 - Tradução para vários idiomas;
 - Suporte para as modernas versões do sistema operacional Windows  incluindo variantes de 32 e 64 bit;
 - Possibilidade de uso na  tela de logon do Windows   e outras telas de segurança;
-- Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation;
+- Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superior) ;
 - Suporte para o Prompt de comando do Windows e aplicações de console.
 -
 ++ Internacionalização ++
@@ -207,7 +207,7 @@ Existem alguns comandos de teclado úteis quando se move com o foco:
 Quando um [objeto #Objects] que permite navegação e ou edição de texto recebe o [foco #SystemFocus], você pode mover-se pelo texto usando o cursor do sistema, também conhecido como cursor de edição.
 Quando o foco está sobre um objeto que tem o cursor do sistema, pode usar as setas, page up, page down, home, and, etc. para mover-se ao longo do texto.
 Pode também alterar o texto se o controle permitir edição.
-O NVDA anunciará como se mover por Carácter, palavra, linha e também informará quando um texto for selecionado ou desselecionado.
+O NVDA anunciará como se mover por Caractere, palavra, linha e também informará quando um texto for selecionado ou desselecionado.
  
 Este leitor de telas fornece os seguintes comandos em relação ao cursor do sistema:
 %kc:beginInclude
@@ -296,7 +296,7 @@ Para ajudá-lo a assimilar estas teclas de atalho, atente que os comandos básic
 O esquema é ilustrado como se segue: 
 | Linha Anterior | Linha Atual | Próxima Linha |
 | Palavra Anterior | Palavra Atual | Próxima Palavra |
-| Carácter Anterior | Carácter Atual | Próximo Carácter |
+| Caractere Anterior | Caractere Atual | Próximo Caractere |
 
 ++ Revisão Plana ++[FlatReview]
 Enquanto geralmente você pode revisar o conteúdo de apenas um [objeto #Objects] individualmente, há alguns objetos nos quais é possível acessar o conteúdo dos objetos contidos neles.
@@ -371,7 +371,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 | Procurar anterior | NVDA+shift+f3 | Procura pela ocorrência de texto anterior  já procurada no documento |
 %kc:endInclude
 
-++ Navegação por Carácter ++
+++ Navegação por Caractere ++
 Quando estiver no modo de navegação, o NVDA também fornece teclas de apenas um caractere para uma navegação rápida, as quais permitem saltar para determinados campos no documento.   
 
 %kc:beginInclude
@@ -545,7 +545,7 @@ Esta é uma caixa de seleção que se marcada informa ao NVDA para anunciar a pa
 Normalmente, o NVDA aumenta ligeiramente o tom para qualquer letra maiúscula, mas alguns sintetizadores não suportam corretamente esta configuração, assim, poderá ser usada  esta opção.
 
 ==== Bipar em maiúsculas ====
-Se esta caixa de seleção estiver marcada, o NVDA reproduzirá um pequeno beep cada vez que falar um Carácter maiúsculo.
+Se esta caixa de seleção estiver marcada, o NVDA reproduzirá um pequeno beep cada vez que falar um Caractere maiúsculo.
 Tal como a caixa de seleção "dizer cap antes de maiúsculas", esta é útil para sintetizadores que não possam alterar seu tom em letras maiúsculas.
 
 ==== Usar Soletragem Melhorada Quando Suportado ====[VoiceSpellingFunctionality]
@@ -599,6 +599,13 @@ Esta opção é um campo numérico que controla durante quanto tempo são aprese
 Tecla: NVDA+control+t
 
 Esta opção permite-lhe escolher se a linha Braille seguirá o cursor do sistema, ou se segue o navegador de objetos / cursor de exploração.
+
+==== Ler por Parágrafo ====
+Se ativada, o braille será exibido por parágrafos em lugar de linhas.
+Além disso, os comandos de mover para a linha anterior e para a próxima linha irão mover respectivamente por parágrafos.
+Isso significa que você não terá que deslocar a linha braille ao fim de cada linha mesmo quando um maior texto for ajustado na mesma.
+  Isso pode permitir uma leitura mais fluente   em textos muito extensos.
+Ela está desativada por padrão.
 
 +++ Opções de Teclado (NVDA+Ctrl+K) +++
 Esta caixa de diálogo encontra-se no menu Preferências, no item "Opções do teclado...".
@@ -798,6 +805,7 @@ Pode configurar o anúncio de:
 - Erros Ortográficos
 - Número das Páginas
 - Número das Linhas
+- Identação das Linhas
 - Tabelas
 - Cabeçalhos de Linhas e Colunas das Tabelas
 - Coordenadas de Células em Tabelas
@@ -913,7 +921,7 @@ Esta seção contém informação sobre os sintetizadores de voz suportados pelo
 ++ eSpeak ++
 O sintetizador [eSpeak http://espeak.sourceforge.net/] é compilado diretamente para o NVDA e não necessita instalar nenhum outro driver ou componente especial.
 O eSpeak é iniciado com o NVDA por padrão.
-Por ter sido compilado para o NVDA, ele é uma boa escolha para quando se executa o NVDA num dispositivo USB ou CD noutros sistemas.
+Por ter sido compilado para o NVDA, ele é uma boa escolha para quando se executa o NVDA num dispositivo USB ou CD em outros sistemas.
 
 Cada voz que vem com o eSpeak fala um idioma diferente.
 Existem cerca de 20 idiomas suportados por ele.
@@ -937,8 +945,8 @@ A Plataforma de Fala da Microsoft disponibiliza vozes para muitos idiomas que s�
 Essas vozes também podem ser usadas com o NVDA.
 
 Para usá-las, você necessitará instalar dois componentes:
-- Microsoft Speech Platform - Server Runtime (Versão 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
-• Microsoft Speech Platform - Server Runtime Languages (Versão 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+- Microsoft Speech Platform - Server Runtime (Versão 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime Languages (Versão 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
 -
 
 ++ Audiologic Tts3 ++
@@ -960,9 +968,11 @@ Esta seção contém informação sobre as linhas Braille suportadas pelo NVDA.
 
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Todas as linhas Focus e PAC Mate da [Freedom Scientific http://www.freedomscientific.com/] são suportadasquando conectadas via USB ou bluetooth.
-Necessitará dos drivers para as linhas Braille da Freedom Scientific instalados em seu sistema.
+Será necessário instalar os drivers para as linhas Braille da Freedom Scientific em seu sistema.
 Se ainda não tem os mesmos, pode obtê-los em http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Ainda que esta página menciona somente a linha Focus Blue 40, este driver suporta todos os terminais da Freedom Scientific. 
+
+Se seu sistema é 64 bit  e os drivers já foram instalados por outro leitor de telas, provavelmente você continuará necessitando instalar os drivers do link acima, pois os arquivos necessários para o NVDA provavelmente não foram instalados pelo outro other leitor de telas.
 
 A seguir estão as teclas de comando dessa linha para o NVDA.
 Por favor veja a documentação da mesma para descrições de onde essas teclas se encontram.
@@ -1010,7 +1020,7 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 
 ++ Linhas Handy Tech ++
 O NVDA suporta todos os terminais [Handy Tech http://www.handytech.de/] quando conectados via USB OU bluetooth.
-Para alguns terminais USB mais antigos, precisará instalar os drivers USB da Handy Tech em seu sistema.
+Para alguns terminais USB mais antigos, será necessário instalar os drivers USB da Handy Tech em seu sistema.
 
 A seguir estão as teclas de comando dessa linha para o NVDA.
  Por favor consulte a documentação da mesma para descrições de onde essas teclas se encontram.
@@ -1062,9 +1072,9 @@ Estão incluidas:
 - APH: Refreshabraille
 -
 
-Algumas outras linhas braille fabricadas pela Baum podem funcionar, embora não tenham sido testadas.
+Algumas outras linhas braille fabricadas pela Baum podem funcionar, embora ainda não tenham sido testadas.
 
-Caso conecte via USB, primeiro deve instalar os drivers USB fornecidos pelo fabricante.
+Caso queira conectar via USB, primeiro deve instalar os drivers USB fornecidos pelo fabricante.
 Para a APH Refreshabraille, o modo USB deve ajustar-se à série.
 
 A seguir estão as teclas de comando dessa linha para o NVDA.
@@ -1085,6 +1095,23 @@ Para linhas que tenham joystick:
 | tecla seta a esquerda | esquerda |
 | tecla seta a direita | direita |
 | tecla enter | selecionar |
+%kc:endInclude
+
+++ hedo ProfiLine USB ++
+A linha USB hedo ProfiLine disponível em [hedo Reha-Technik  http://www.hedo.de/] é suportada.
+Será antes necessário  instalar os drivers para USB fornecidos pelo fabricante.
+
+A segui estão as teclas de comando para esta linha braille com o NVDA.
+Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
+%kc:beginInclude
+|| Nome | Tecla |
+| Mover Linha Braille para Trás | K1 |
+| Mover Linha Braille para a Frente | K3 |
+| Mover Linha Braille para a Linha Anterior | B2 |
+| Mover Linha Braille para a Próxima Linha | B5 |
+| Ir para a Célula Braille | sensor |
+| Alternar Vínculo do Braille | K2 |
+| Leitura Contína | B6 |
 %kc:endInclude
 
 ++ BRLTTY ++
@@ -1108,7 +1135,7 @@ Por favor consulte as [tabelas de documentação de teclas para o BRLTTY http://
 + Tópicos Avançados +
 
 ++ Remapeando Teclas de Comando e outros Gestos de Entrada ++
-Os usuários poderão criar ou modificar mapas dos gestos de entrada (tais como pressionamento de teclas) para scripts en un arquivo especial na pasta de configurações do usuário do NVDA.
+Os usuários agora poderão criar ou modificar mapas dos gestos de entrada (tais como pressionamento de teclas) para scripts en un arquivo especial na pasta de configurações do usuário do NVDA.
 Este arquivo é denominado gestures.ini.
 
 Este arquivo utiliza a sintaxi estândar dos arquivos ini.
@@ -1124,6 +1151,9 @@ Identificadores de gestos terminados com vírgula devem ser colocados entre aspa
 -
 
 os identificadores de gestos consistem num código de dispositivo de duas letras (kb para teclado e br para linha braille), um subdispositivo opcional ou layout de teclado entre colchetes, um sinal dois pontos, e depois um ou mais nomes de teclas separados por um sinal de mais (+). 
+ Para gestos de teclado, a parte entre couchetes representa o leiaut de teclado e é opcional.
+Caso ela não seja especificada, o gesto será aplicado a todos os leiauts de teclado.
+Para gestos de linha braille, a parte entre couchetes identifica a linha braille específica e é obrigatória.
 
 Para encontrar os identificadores de gesto assim como os nomes dos scripts e a classe e o módulo no qual estão contidos pode:
 
@@ -1133,7 +1163,7 @@ Para encontrar os identificadores de gesto assim como os nomes dos scripts e a c
 + Ativar o visualizador do log no menú ferramentas. 
 + examinar as entradas recentes do log.
 Uma destas proporciona informação sobre o gesto de entrada enviado, incluindo o módulo.classe e script si está vinculado a um.
-+
+
 
 Segue um exemplo de como vincular NVDA+shift+t ao script data/hora.
 

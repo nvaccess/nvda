@@ -22,7 +22,7 @@ NVDA oferuje między innymi:
 - Tłumaczenie na wiele języków.
 - Wsparcie dla nowszych systemów operacyjnych Windows, zarówno 32 jak i 64 bitowych
 - Możliwość dostępu do ekranu logowania w systemie oraz innych zabezpieczonych ekranów.
-- Wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge, UI Automation i iAccessible2.
+- Wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge. UI Automation i iAccessible2 są także wspierane, jednak ich obsługa dostępna jest tylko pod kontrolą systemu windows7.
 - Wsparcie dla wiersza poleceń systemu Windows i aplikacji konsolowych.
 -
 
@@ -524,16 +524,13 @@ Czas wygasania komunikatów: Pole liczbowe określające w sekundach, jak długo
 ==== Brajl związany z ====
 Skrót Klawiszowy: NVDA+kontrol+t
 
-Podczas pracy z monitorem brajlowskim możesz zmieniać źródło, z którego jest pobierany tekst prezentowany na urządzeniu, za pomocą skrótu Kontrol+NVDA+T. 
-<<<<<<< TREE
+Podczas pracy z monitorem brajlowskim możesz zmieniać źródło, z którego jest pobierany tekst prezentowany na urządzeniu, za pomocą skrótu Kontrol+NVDA+T.
 Skrót ten przełącza między dwiema opcjami: punkt uwagi oraz punkt przeglądu. 
-Opcja "punkt uwagiTT" oznacza, że monitor brajlowski prezentuje to, do czego mamy dostęp za pomocą strzałek lub klawisza Tab, czyli poprzez nawigowanie za pomocą punktu uwagi. 
+Opcja "punkt uwagi oznacza, że monitor brajlowski prezentuje to, do czego mamy dostęp za pomocą strzałek lub klawisza Tab, czyli poprzez nawigowanie za pomocą punktu uwagi. 
 Opcja "punkt przeglądu" oznacza, że monitor brajlowski prezentuje tekst zawarty w obiektach na ekranie, po którym można się poruszać niezależnie od punktu uwagi.
-=======
-Skrót ten przełącza między dwiema opcjami: punkt uwagi oraz punkt przeglądu. 
-Opcja "punkt uwagi" oznacza, że monitor brajlowski prezentuje to, do czego mamy dostęp za pomocą strzałek lub klawisza Tab, czyli poprzez nawigowanie za pomocą punktu uwagi. 
-Opcja "punkt przeglądu" oznacza, że monitor brajlowski prezentuje tekst zawarty w obiektach na ekranie, po którym można się poruszać niezależnie od punktu uwagi.
->>>>>>> MERGE-SOURCE
+==== czytaj akapit ====
+Gdy zaznaczysz to pole, monitor brajlowski będzie wyświetlać tekst akapitami, nie liniami. Komenda przejścia do następnej linii będzie przenosić do następnego akapitu. Oznacza to, że nie musisz zawijać linijki na końcu każdej linii, nawet gdy na samej linijce zmieści się więcej tekstu. Użyteczne przy czytaniu większych porcji tekstu. Opcja domyślnie jest wyłączona.
+
 
 +++ Ustawienia Klawiatury (NVDA+kontrol+k) +++
 Okno "Ustawienia klawiatury ..." znajduje się w menu ustawień nvda. 

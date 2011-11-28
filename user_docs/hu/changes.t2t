@@ -3,6 +3,74 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2011.3 =
+
+A 2011.3 verzió főbb újdonságai: 
+- automatikus nyelvváltás olyan dokumentumoknál, melyek rendelkeznek a megfelelő nyelvi információkkal
+- a 64 bites java futtatókörnyezetek támogatása
+- formázás felolvasása a Mozilla-alkalmazásokban interaktív módban
+- az alkalmazások összeomlásának, lefagyásának jobb kezelése
+- hibajavítások windows 8-cal történő használathoz
+
+=== Újdonságok ===
+
+- Az NVDA valós időben képes megváltoztatni az Espeak beszédszintetizátor nyelvét és dialektusát, ha olyan web/pdf dokumentumokat olvasunk, amelyek tartalmazzák a megfelelő nyelvi információkat. Az automatikus nyelv- és dialektus váltás be- és kikapcsolható a beszédbeállítások párbeszédpanelen. (#845)
+- az NVDA már támogatja a Java Access Bridge 2.02 használatát, mely lehetővé teszi a 64 bites java futtatókörnyezetek használatát.
+- A program már képes felolvasni a címsorokat a navigátorkurzor használatakor a Mozilla Gecko böngészőmotort (a továbbiakban: Mozilla Gecko) használó alkalmazásokban, pl. a Firefoxban.
+- Az NVDA már észleli a szövegek formázását a Mozilla Gecko-t használó alkalmazásokban (pl. Firefox, Thunderbird) böngésző mód esetén is. (#394)
+- Az alá- és áthúzást a program már érzékeli és felolvassa a hagyományos IAccessible2 szöveges vezérlőelemekben, mint pl. amilyenek a mozilla alkalmazásokban vannak.
+- Az adobe readerben böngésző módban a program már felolvassa a táblázatok oszlopainak és sorainak számát.
+- Az NVDA támogatja a Microsoft Speech Platform beszédszintetizátort (#1735).
+- Az IBM Lotus Symphony alkalmazásban a program a kurzor mozgásakor felolvassa az oldalak és a sorok számát.
+- A beszédbeállítások párbeszédpanelen százalékosan adható meg, hogy milyen magasan emelje meg a hangot a beszédszintetizátor nagybetű kimondásakor. Ez váltotta fel a korábban alkalmazott hangmagasság megemelése nagybetűk esetén jelölőnégyzetet. A funkció kikapcsolásához állítsuk be az értékét 0%-ra (#255).
+- A Microsoft Excel programban a cella formázási információinál az NVDA már felolvassa a szöveg és háttér színét is (#1655).
+- A Java Access Bridge-et használó alkalmazásokban a jelenlegi elem aktiválása parancs most már megfelelően használható a megfelelő vezérlőelemeken (#1744).
+- Az NVDA már alap szintű támogatást nyújt a Design Science MathPlayerhez.
+
+
+== Változások ==
+- Az NVDA már újraindítja magát, ha összeomlik.
+- Egyes braille-ban kiírandó információk lerövidültek (#1288).
+- A teljes ablak felolvasása szkript (NVDA-b) tovább fejlődött úgy, hogy most már kiszűri a felesleges vezérlőelemeket, és sokkal könnyebb elnémítani (#1499).
+- A dokumentumok automatikus folyamatos felolvasása betöltéskor opció most már tetszés szerint be- és kikapcsolható a böngésző mód párbeszédpanelen (#414).
+- Amikor megpróbáljuk az állapotsort felolvastatni (asztali kiosztásnál NVDA+end), de az állapotsor nem található, az NVDA az aktív alkalmazásban kiírt szöveg utolsó sorát olvassa fel (#649).
+- Böngészőmódban folyamatos felolvasáskor az NVDA szünetet tart a címsorok végén és más elkülöníthető (blokk szintű) elemeknél, nem olvassa össze az utána következő elemmel, mintha az egy hosszú mondat lenne.
+- Böngésző módban folyamatos felolvasás közben egy vezérlőelemen szóközt vagy tabot nyomva a program aktiválja azt, nem pedig űrlap módba lép (#1760).
+- Az Espeak beszédszintetizátort az 1.45.47 verzióra frissítették.
+
+
+== Javítások ==
+- Az NVDA már nem mutatja a listaelem szimbólumokat vagy számozást az internet explorerben vagy más MS HTML vezérlőkön, ha annak megjelenítését a dokumentum készítője letiltotta (pl. ha a lista stílusa "none" értékre van beállítva) (#1671).
+- Az NVDA újraindításakor (pl. ha lefagy (kontroll+alt+N)) már nem zárja be úgy az előző másolatot, hogy az újat el ne indítaná.
+- A backspace vagy a nyilak megnyomása a Windows parancssorban már nem okoz furcsa jelenségeket bizonyos esetekben (#1612).
+- a WPF és esetleg más olyan kombinált listamezőkben, amelyek UI Automation megoldást használnak, ha nem engedélyezett a szöveg átírása, a program a kijelölt elemet helyesen olvassa fel.
+- Az adobe readerben böngésző módban most már bármikor lehetőség van a fejlécről a sorra és a sorról a fejlécre lépni az előző és a következő sorra lépés paranccsal, valamint most már a fejlécet nem olvassa nulladik sornak a program (#1731).
+- Az adobe readerben böngészőmódban most már egy táblázatban rá lehet lépni üres cellára is, így ez át is ugorható.
+- A program már nem írja ki braille-ban a mutathatatlan pozícióinformációkat, pl. nulladik a nullából a nulladik szinten.
+- Ha a braille kurzor követi az áttekintőkurzort, most már lehetséges sík áttekintésben átnézni az ablak tartalmát (#1711).
+- Egy vezérlőelem szövegét a program már nem írja ki kétszer a braille kijelzőre bizonyos esetekben, pl. wordpadban a dokumentum elejére történő visszagörgetéskor.
+- Az internet explorerben böngészőmódban nem lép interaktív módba  a program egy fájl feltöltésére szolgáló gomb aktiválásakor, hanem helyesen mutatja a fájlfeltöltő párbeszédpanelt (#1720).
+- A program most már nem olvassa fel a dinamikusan változó tartalmakat alvó módban (pl. parancssorban), ha az alvó módot az adott alkalmazásban bekapcsoltuk (#1662)
+- Böngésző módban a kombinált listamezők kinyitására és bezárására szolgáló alt+lenyíl és alt+felnyíl parancsok működése most már hatékonyabb (#1630).
+- Az NVDA már sokkal több olyan esetben helyre tudja állítani magát lefagyott, vagy összeomlott alkalmazások esetén, melyek korábban az NVDA instabilitását eredményezték (#1408).
+- Az NVDA a Mozilla Gecko-t használó alkalmazásokban (pl. firefox) böngésző módban már helyesen jeleníti meg a dokumentumot bizonyos igen speciális esetekben, pl. amikor egy elemet "display:table" stílusúnak határoztak meg (#1373).
+- Az NVDA már nem olvassa fel a címke vezérlőelemeket, ha a fókusz azokban megváltozik. Így egyes űrlapok címkéi Nem kerülnek kétszeri bemondásra a Mozilla alkalmazásokban (Gecko) és az internet explorerben (MS-HTML vezérlőelemek) (#1650).
+- Az NVDA már felolvassa egy cella tartalmát a Microsoft Excel programban, ha a control+v billentyűparanccsal beillesztés történik. (#1781).
+- Az adobe readerben az NVDA interaktív módban már nem olvas fel a dokumentumhoz tartozó felesleges információkat egy másik lapon található vezérlőelemre lépéskor (#1659).
+- A Mozilla Gecko alkalmazásokban (pl. Firefox) az NVDA a ki-be kapcsolható gombokat helyesen észleli és olvassa fel (#1757).
+- Az NVDA helyesen olvassa fel az internet explorer címsorát a windows 8 fejlesztői verziójában.
+- Az NVDA már nem omlaszt össze alkalmazásokat (pl. winver, wordpad) a windows 8 fejlesztői verziója alatt a rossz glyph fordítás miatt 
+- A Gecko 10-et vagy újabb böngészőmotort használó alkalmazásokban (pl. Firefox 10) az NVDA már sokkal gyakrabban állítja be helyes pozícióba a kurzort horgonyt tartalmazó dokumentumok betöltésekor (#360).
+- Mozilla Gecko-t használó alkalmazásokban (pl. Firefox) a képtérképek feliratait az NVDA most már helyesen értelmezi.
+- Ha az egér követése be van kapcsolva, az egérmutatónak bizonyos szerkeszthető szövegmezők feletti átvitelekor (pl. Synaptics Pointing Device beállítások ablakában vagy SpeechLab speaktextnél) az NVDA már nem omlasztja össze ezeket az alkalmazásokat (#672).
+- Az NVDA most már jól működik bizonyos névjegyablakokban, pl. a Windows Xp-hez mellékelt jegyzettömbben vagy a Windows Xp névjegyablakában (#1853, #1855).
+
+
+== Változások fejlesztőknek ==
+- Az NVDA most már képes átállítani a beszédszintetizátor nyelvét a szöveg bizonyos részeinek helyes felolvasásához.
+- Ehhez a drivereknek kezelniük kell a speech.LangChangeCommand eseményt, mely a SynthDriver.speak() függvénynek adódik át.
+- A SynthDriver objektumot öröklő objektumoknak rendelkezniük kell a VoiceInfo típusú nyelv argumentummal (vagy felül kell írnia a nyel attribútumot). Egyéb esetben az NVDA alapértelmezett felhasználói felület nyelve lesz használva.
+
 = 2011.2 =
 
 E kiadás főbb újdonságai: nagyobb fejlesztések, melyek a következők: a központozási és szimbólumok beállításai egyénileg beállítható szintekkel, az egyéni cimkézés és karakterleírások, folyamatos felolvasásnál a sorok végén a szünetek megszüntetése, az internet explorerben az "aria jobb támogatása", az XFA/LiveCycle PDF dokumentumok jobb támogatása az Adobe Readerben, több alkalmazásban a kiírt szövegekhez való jobb hozzáférés, az alkalmazások által a képernyőre írt szövegek formázási és betűszín-információinak felolvasása.

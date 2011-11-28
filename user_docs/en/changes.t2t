@@ -28,6 +28,9 @@
 == Bug Fixes ==
 - In Windows 8, focus is no longer incorrectly moved away from the Windows Explorer search field, which was  not allowing NVDA to   interact with it.
 - Major performance  improvements when reading and navigating Microsoft word documents while automatic reporting of formatting is enabled, thus now making it quite comfortable to proof read formatting etc. Performance may be also improved over all for some users.
+- Browse mode is now used for full screen Adobe Flash content.
+- Fixed poor audio quality in some cases when using Microsoft Speech API version 5 voices with the audio output device set to something other than the default (Microsoft Sound Mapper). (#749)
+- Again allow NVDA to be used with the "no speech" synthesizer, relying purely   on braille or the speech viewer. (#1963)
 
 
 == Changes for Developers ==
@@ -52,6 +55,7 @@ Highlights of this release include automatic speech language switching when read
 - The percentage of how much the pitch changes when speaking a capital letter is now configurable from the voice settings dialog. However, this does replace the older raise pitch for capitals checkbox (therefore to turn off this feature set the percentage to 0). (#255)
 - Text and background color is now included in the reporting of formatting for cells in Microsoft Excel. (#1655)
 - In applications using the Java Access Bridge, the activate current navigator object command now works on controls where appropriate. (#1744)
+- New language: Tamil.
 - Basic support for Design Science MathPlayer.
 
 

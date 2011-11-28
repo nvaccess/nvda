@@ -92,22 +92,26 @@ class SynthDriver(SynthDriver):
 	def _set_volume(self,value):
 		self.tts.Volume = value
 
-	def _initTts(self):
+	def _initTts(self, voice=None):
 		self.tts=comtypes.client.CreateObject(self.COM_CLASS)
+		if voice:
+			# #749: It seems that SAPI 5 doesn't reset the audio parameters when the voice is changed,
+			# but only when the audio output is changed.
+			# Therefore, set the voice before setting the audio output.
+			# Otherwise, we will get poor speech quality in some cases.
+			self.tts.voice = voice
 		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
 		if outputDeviceID>=0:
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 
 	def _set_voice(self,value):
-		v=self.tts.GetVoices()
-		for i in range(len(v)):
-			if value==v[i].Id:
+		for voice in self.tts.GetVoices():
+			if value==voice.Id:
 				break
 		else:
 			# Voice not found.
 			return
-		self._initTts()
-		self.tts.voice=v[i]
+		self._initTts(voice=voice)
 
 	def speak(self,speechSequence):
 		textList=[]

@@ -81,11 +81,11 @@ size_t displayModel_t::getChunkCount() {
 	return chunksByYX.size();
 }
 
-void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, const RECT* clippingRect) {
+void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, const RECT* clippingRect) {
 	displayModelChunk_t* chunk=new displayModelChunk_t;
 	LOG_DEBUG(L"created new chunk at "<<chunk);
 	chunk->rect=rect;
-	chunk->baselineFromTop=baselineFromTop;
+	chunk->baseline=baseline;
 	chunk->text=text;
 	chunk->formatInfo=formatInfo;
 	chunk->characterXArray.push_back(rect.left);
@@ -107,7 +107,7 @@ void displayModel_t::insertChunk(const RECT& rect, int baselineFromTop, const ws
 }
 
 void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
-	chunksByYX[make_pair(chunk->rect.top+chunk->baselineFromTop,chunk->rect.left)]=chunk;
+	chunksByYX[make_pair(chunk->baseline,chunk->rect.left)]=chunk;
 }
 
 void displayModel_t::clearAll() {
@@ -211,6 +211,7 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 		(chunk->rect.top)+=deltaY;
 		(chunk->rect.right)+=deltaX;
 		(chunk->rect.bottom)+=deltaY;
+		chunk->baseline+=deltaY;
 		//Tweek its character x coordinates to match where its going in the destination model
 		for(deque<int>::iterator x=chunk->characterXArray.begin();x!=chunk->characterXArray.end();++x) (*x)+=deltaX;
 		//Truncate the chunk so it does not stick outside of the destination rectangle
@@ -239,10 +240,11 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 	}
 }
 
-void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, bool useXML, wstring& text, deque<RECT>& characterRects) {
+void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, bool useXML, wstring& text, deque<charLocation_t>& characterLocations) {
+	charLocation_t tempCharLocation;
 	RECT tempRect;
 	wstring curLineText;
-	deque<RECT> curLineCharacterRects;
+	deque<charLocation_t> curLineCharacterLocations;
 	int curLineMinTop=-1;
 	int curLineMaxBottom=-1;
 	int curLineBaseline=-1;
@@ -285,11 +287,12 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 				} else {
 					curLineText+=L'\0';
 				}
-				tempRect.left=lastChunkRight;
-				tempRect.top=curLineBaseline-1;
-				tempRect.right=chunk->rect.left;
-				tempRect.bottom=curLineBaseline+1;
-				curLineCharacterRects.push_back(tempRect);
+				tempCharLocation.left=lastChunkRight;
+				tempCharLocation.top=curLineBaseline-1;
+				tempCharLocation.right=chunk->rect.left;
+				tempCharLocation.bottom=curLineBaseline+1;
+				tempCharLocation.baseline=curLineBaseline;
+				curLineCharacterLocations.push_back(tempCharLocation);
 			}
 			//Add text from this chunk to the current line
 			if(useXML) {
@@ -300,12 +303,13 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			//Copy the character X positions from this chunk  in to the current line
 			deque<int>::const_iterator cxaIt=chunk->characterXArray.begin();
 			while(cxaIt!=chunk->characterXArray.end()) {
-				tempRect.left=*cxaIt;
-				tempRect.top=chunk->rect.top;
+				tempCharLocation.left=*cxaIt;
+				tempCharLocation.top=chunk->rect.top;
 				++cxaIt;
-				tempRect.right=(cxaIt!=chunk->characterXArray.end())?*cxaIt:chunk->rect.right;
-				tempRect.bottom=chunk->rect.bottom;
-				curLineCharacterRects.push_back(tempRect);
+				tempCharLocation.right=(cxaIt!=chunk->characterXArray.end())?*cxaIt:chunk->rect.right;
+				tempCharLocation.bottom=chunk->rect.bottom;
+				tempCharLocation.baseline=chunk->baseline;
+				curLineCharacterLocations.push_back(tempCharLocation);
 			}
 		lastChunkRight=chunk->rect.right;
 		}
@@ -315,25 +319,27 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 				//There is space between this line and the last,
 				//Insert a blank line in between.
 				text+=(useXML?L"<text>\n</text>":L"\n");
-				tempRect.left=rect.left;
-				tempRect.top=lastLineBottom;
-				tempRect.right=rect.right;
-				tempRect.bottom=curLineMinTop;
-				characterRects.push_back(tempRect);
+				tempCharLocation.left=rect.left;
+				tempCharLocation.top=lastLineBottom;
+				tempCharLocation.right=rect.right;
+				tempCharLocation.bottom=curLineMinTop;
+				tempCharLocation.baseline=-1;
+				characterLocations.push_back(tempCharLocation);
 			}
 			//Insert this line in to the output.
 			text.append(curLineText);
-			characterRects.insert(characterRects.end(),curLineCharacterRects.begin(),curLineCharacterRects.end());
+			characterLocations.insert(characterLocations.end(),curLineCharacterLocations.begin(),curLineCharacterLocations.end());
 			//Add a linefeed to complete the line
 			text+=(useXML?L"<text>\n</text>":L"\n");
-			tempRect.left=lastChunkRight;
-			tempRect.top=curLineBaseline-1;
-			tempRect.right=rect.right;
-			tempRect.bottom=curLineBaseline+1;
-			characterRects.push_back(tempRect);
+			tempCharLocation.left=lastChunkRight;
+			tempCharLocation.top=curLineBaseline-1;
+			tempCharLocation.right=rect.right;
+			tempCharLocation.bottom=curLineBaseline+1;
+			tempCharLocation.baseline=curLineBaseline;
+			characterLocations.push_back(tempCharLocation);
 			//Reset the current line values
 			curLineText.clear();
-			curLineCharacterRects.clear();
+			curLineCharacterLocations.clear();
 			lastChunkRight=rect.left;
 			lastLineBottom=curLineMaxBottom;
 			if(chunk&&isTempChunk) delete chunk;
@@ -343,10 +349,11 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 		//There is a gap between the bottom of the final line and the bottom of the requested rectangle,
 		//So add a blank line.
 		text+=(useXML?L"<text>\n</text>":L"\n");
-		tempRect.left=rect.left;
-		tempRect.top=lastLineBottom;
-		tempRect.right=rect.right;
-		tempRect.bottom=rect.bottom;
-		characterRects.push_back(tempRect);
+		tempCharLocation.left=rect.left;
+		tempCharLocation.top=lastLineBottom;
+		tempCharLocation.right=rect.right;
+		tempCharLocation.bottom=rect.bottom;
+		tempCharLocation.baseline=-1;
+		characterLocations.push_back(tempCharLocation);
 	}
 }

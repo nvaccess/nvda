@@ -1,115 +1,99 @@
 ﻿#locale/de/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011 NV Access, Inc.
+#Copyright (c) 2011 NV Access Inc
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
-# Sonderzeichen	Regulärer Ausdruck
-# Satzzeichen
-. Satzende	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! Satzende	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? Satzende	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-
-# Satzzeichen für Phrasen
-; Phrasenende	(?<=[^\s;]);(?=\s|$)
-: Phrasenende	(?<=[^\s:]):(?=\s|$)
-
-# Weitere
+# identifier	regexp
+# Others
 decimal point	(?<=\d)\,(?=\d)
 date separator	(?<=\d\d)\.(?=\d\d)
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=\d)
 
 symbols:
-# Identifizierungszeichen	Ersetzungen[[	Ebene][	Bereich]][	# Angezeigter Name]
-
-# Komplexe Symbole
-. Satzende	Punkt	all	always
-! Satzende	Ausrufezeichen	all	always
-? Satzende	Fragezeichen	all	always
-; Phrasenende	Semikolon	most	always
-: Phrasenende	Doppelpunkt	most	always
-decimal point		none	always
+# identifier	replacement[[	level][	preserve]][	# display name]
+# Complex symbols
+. sentence ending	punkt
+! sentence ending	Ausrufezeichen
+? sentence ending	Fragezeichen
+; phrase ending	semikolon
+: phrase ending	doppelpunkt
 date separator		none	always
-in-word '	Apostroph	all	norep
-negative number	Minus	none	norep
 
-# Unsichtbare Zeichen
-\0	leer	char	# Null
-\t	Tabulator
-\n	Zeilenumbruch	char
-\f	Seitenumbruch	none
-\r	Neue Zeile	char
- 	Leerzeichen	char
- 	Leerzeichen	char	# Geschütztes Leerzeichen
+# Whitespace
+\0	leer			# null
+\t	tabulator
+\n	Zeilenumbruch
+\f	Seitenumbruch
+\r	neue Zeile
+ 	Leerzeichen
+ 	Leerzeichen			# geschütztes Leerzeichen
 
-# Standardsymbole und -satzzeichen
-!	Ausrufezeichen	all
-"	Anführungszeichen	most
-\#	Nummernzeichen	most
+# Standard punctuation/symbols
+!	Ausrufezeichen
+"	Anführungszeichen
+\#	Nummernzeichen
+$	dollar
+£	Pfund
+€	euro
+%	prozent
+&	und
+'	apostroph
+(	runde Klammer auf
+)	runde Klammer zu
+*	stern
++	Pluszeichen
+,	komma
+-	Bindestrich
+.	punkt
+/	Schrägstrich
+:	doppelpunkt
+;	semikolon
+<	Kleinerzeichen
+>	Größerzeichen
+=	Gleichheitszeichen
+?	Fragezeichen
+@	Klammeraffe
+[	eckige Klammer auf
+]	eckige Klammer zu
+\\	backslash
+^	dach
+_	Unterstrich
+`	graav
+{	geschweifte Klammer auf
+}	geschweifte Klammer zu
+|	senkrechter Strich
+~	tilde
+
+# Other characters
+•	Aufzählungszeichen
+…	punkt punkt punkt
+...	punkt punkt punkt
+	Aufzählungszeichen
+“	Anführungszeichen
+”	Anführungszeichen
+‘	Anführungszeichen
+’	Anführungszeichen
+–	Strich
+—	Gedankenstrich
+●	Kreis
+¨	trema
+‎	links nach rechts markierung
+‏	rechts nach links Markierung
+■	schwarzes Quadrat
+➔	Pfeil nach rechts
 §	Paragraf	some
-$	Dollar	all	norep
-£	Pfund	all	norep
-¥	Yen	all	norep
-€	Euro	all	norep
 ¢	Cent	all	norep
-%	Prozent	some
-&	Und	some
-'	Apostroph	all
-(	runde Klammer auf	most
-)	runde Klammer zu	most
-*	Stern	most
-+	Pluszeichen	most
-,	Komma	all	always
--	Bindestrich	most
-/	Schrägstrich	some
-:	Doppelpunkt	most
-;	Semikolon	most
-<	Kleinerzeichen	most
->	Größerzeichen	most
-=	Gleichheitszeichen	most
-?	Fragezeichen	all
-@	Klammeraffe	some
-[	eckige Klammer auf	most
-]	eckige Klammer zu	most
-\\	Backslash	most
-^	Dach	most
-_	Unterstrich	most
-`	Apostroph	most
-{	geschweifte Klammer auf	most
-}	geschweifte Klammer zu	most
-|	senkrechter Strich	most
-~	Tilde	most
+¥	Yen	all	norep
 °	Grad	most
-
-# Weitere Zeichen
-•	Aufzählungszeichen	some
-Þ	Aufzählungszeichen	some
-…	Punkt Punkt Punkt	all	always
-...	Punkt Punkt Punkt	all	always
-	Aufzählungszeichen	some
-“	Anführungszeichen oben	most
-”	Anführungszeichen unten	most
-‘	Anführungszeichen oben 	most
-’	Anführungszeichen unten	most
 «	doppelt gewinkelte Klammer zu	most
 »	doppelt gewinkelte Klammer auf	most
-–	Strich	most
-—	Gedankenstrich	most
-●	Kreis	most
-¨	Trema	most
 µ	My	most
 ¹	hoch gestellte Eins	some
 ²	hoch gestellte Zwei	some
 ³	hoch gestellte Drei	some
-®	Eingetragenes Warenzeichen	some
-™	Eingetragenes Warenzeichen	some
+®	eingetragenes Warenzeichen	some
+™	eingetragenes Warenzeichen	some
 ©	Copyright	some
 ±	Plus Minus	some
 ×	mal	some
 ÷	Divisionszeichen	some
-‏	von rechts nach links Markierung	char
-‎	von links nach rechts Markierung	char
-■	schwarzes Quadrat 	some
-➔	Pfeil nach rechts	some
- 

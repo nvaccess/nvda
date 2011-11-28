@@ -395,8 +395,10 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	RECT textRect={textLeft,textTop,textLeft+resultTextSize->cx,textTop+resultTextSize->cy};
 	//We must store chunks using device coordinates, not logical coordinates, as its possible for the DC's viewport to move or resize.
 	//For example, in Windows 7, menu items are always drawn at the same DC coordinates, but the DC is moved downward each time.
+	POINT baselinePoint={textRect.left,textRect.top+tm.tmAscent};
+	dcPointsToScreenPoints(hdc,&baselinePoint,1);
 	dcPointsToScreenPoints(hdc,(LPPOINT)&textRect,2);
-
+	//Calculate the real physical baselineFromTop
 	//Clear a space for the text in the model, though take clipping in to account
 	RECT tempRect;
 	if(lprc&&(fuOptions&ETO_CLIPPED)&&IntersectRect(&tempRect,&textRect,&clearRect)) {
@@ -422,7 +424,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
 		formatInfo.backgroundColor=GetBkColor(hdc);
-		model->insertChunk(textRect,tm.tmAscent,newText,characterEndXArray,formatInfo,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
+		model->insertChunk(textRect,baselinePoint.y,newText,characterEndXArray,formatInfo,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		HWND hwnd=WindowFromDC(hdc);
 		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}
