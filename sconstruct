@@ -55,6 +55,9 @@ except WindowsError:
 # Get the path to pygettext.
 pygettext = os.path.join(sys.exec_prefix, "Tools", "i18n", "pygettext.py")
 
+# Get the path to epydoc.
+EPYDOC = os.path.join(sys.exec_prefix, "scripts", "epydoc.py")
+
 def keyCommandsDocTool(env):
 	import keyCommandsDoc
 	kcdAction=env.Action(
@@ -285,6 +288,17 @@ def makePot(target, source, env):
 
 devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
 devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
+
+devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
+	"cd", sourceDir.path, "&&",
+	sys.executable, EPYDOC,
+	"--output", "${TARGET.abspath}",
+	"--quiet", "--html", "--include-log", "--no-frames",
+	"--name", "NVDA", "--url", "http://www.nvda-project.org/",
+	"*.py", "appModules", "brailleDisplayDrivers", r"comInterfaces\__init__.py",
+	"config", "globalPlugins", "gui", "NVDAObjects",
+	"synthDrivers", "textInfos", "virtualBuffers",
+]])
 
 env.Alias('devDocs',devDocsOutputDir)
 env.Clean('devDocs',devDocsOutputDir)
