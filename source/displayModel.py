@@ -147,7 +147,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		#Enumerate the character rectangles
 		a=enumerate(self._textAndRects[1])
 		#Convert calculate center points for all the rectangles
-		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
+		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom,charBaseline) in a)
 		#Calculate distances from all center points to the given x and y
 		#But place the distance before the character offset, to make sorting by distance easier
 		c=((math.sqrt(abs(x-cx)**2+abs(y-cy)**2),charOffset) for charOffset,(cx,cy) in b)
