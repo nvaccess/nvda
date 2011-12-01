@@ -55,7 +55,6 @@ import eventHandler
 import winKernel
 import winUser
 import speech
-import sayAllHandler
 import api
 import queueHandler
 import NVDAObjects.IAccessible
