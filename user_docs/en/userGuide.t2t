@@ -231,19 +231,22 @@ When within a table, the following key commands are also available:
 %kc:endInclude
 
 ++ Object Navigation ++
-Sometimes, you may wish to explore the current application or the Operating System without moving the [focus #SystemFocus].
+Most of the time, you will work with applications using commands which move the [focus #SystemFocus] and the [caret #SystemCaret].
+However, sometimes, you may wish to explore the current application or the Operating System without moving the focus or caret.
 You may also wish to work with [objects #Objects] that cannot be accessed normally using the keyboard.
 In these cases, you can use object navigation.
 
-Object navigation allows you to move between and obtain information about individual objects.
+Object navigation allows you to move between and obtain information about individual [objects #Objects].
 When you move to an object, NVDA will report it similarly to the way it reports the system focus.
 For a way to review all text as it appears on the screen, you can instead use [flat review #FlatReview].
 
 Rather than having to move back and forth between every single object on the system, the objects are organized hierarchically.
 This means that some objects contain other objects and you must move inside them to access the objects they contain.
 For example, a list contains list items, so you must move inside the list in order to access its items.
-If you have moved to a list item, you can move to its containing object to get back to the list and then move past it if you wish.
-Similarly, if you encounter a toolbar, you must move inside the toolbar to access the controls in the toolbar.
+If you have moved to a list item, moving next and previous will take you to other list items in the same list.
+Moving to a list item's containing object will take you back to the list.
+You can then move past the list if you wish to access other objects.
+Similarly, a toolbar contains controls, so you must move inside the toolbar to access the controls in the toolbar.
 
 The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review it using the [text review commands #ReviewingText].
@@ -268,7 +271,8 @@ note: numpad keys require numlock key to be turned off to work properly.
 
 ++ Reviewing Text ++[ReviewingText]
 NVDA allows you to read the contents of the current [navigator object #ObjectNavigation] (including [flat review #FlatReview]) by character, word or line.
-This is mostly useful in Windows command console windows and other places where there is a limited or non-existant [system caret #SystemCaret].
+This is mostly useful in places (including Windows command consoles) where there is no [system caret #SystemCaret].
+For example, you might use it to review the text of a long information message in a dialog.
 
 When moving the review cursor, the System caret does not follow along, so you can review text with out losing your editing position.
 However, by default, when the System caret moves, the review cursor follows along.
@@ -357,7 +361,8 @@ All of NVDA's [system caret #SystemCaret] key commands will work in this mode; e
 Information such as whether text is a link, heading, etc. is reported along with the text as you move.
 
 Sometimes, you will need to interact directly with controls in these documents.
-You do this by switching to focus mode, where all keys are passed to the control.
+For example, you will need to do this for editable text fields and lists so that you can type characters and use the cursor keys to work with the control.
+You do this by switching to focus mode, where almost all keys are passed to the control.
 When in Browse mode, by default, NVDA will automatically switch to focus mode if you tab to or click on a particular control that requires it.
 Conversely, tabbing to or clicking on a control that does not require focus mode will switch back to browse mode.
 You can also press enter or space to switch to focus mode on controls that require it.
