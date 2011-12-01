@@ -267,7 +267,7 @@ To navigate by object, use the following keys:
 | Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Reports the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
 %kc:endInclude
 
-note: numpad keys require numlock key to be turned off to work properly.
+Note: numpad keys require numlock key to be turned off to work properly.
 
 ++ Reviewing Text ++[ReviewingText]
 NVDA allows you to read the contents of the current [navigator object #ObjectNavigation] (including [flat review #FlatReview]) by character, word or line.
@@ -289,18 +289,18 @@ The following key commands are available for reviewing text:
 | Move to previous word in review | numpad4 | NVDA+j | Moves the review cursor to the previous word in the text |
 | Report current word in review | numpad5 | NVDA+k | Announces the current word in the text where the review cursor is positioned. Pressing twice spells the word. Pressing three times spells the word using character descriptions. |
 | Move to next word in review | numpad6 | NVDA+l | Move the review cursor to the next word in the text |
-| move to start of line in review | shift+numpad1 | NVDA+shift+u | Moves the review cursor to the start of the current line in the text |
+| Move to start of line in review | shift+numpad1 | NVDA+shift+u | Moves the review cursor to the start of the current line in the text |
 | Move to previous character in review | numpad1 | NVDA+m | Moves the review cursor to the previous character on the current line in the text |
 | Report current character in review | numpad2 | NVDA+comma | Announces the current character on the line of text where the review cursor is positioned. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal. |
 | Move to next character in review | numpad3 | NVDA+dot | Move the review cursor to the next character on the current line of text |
 | Move to end of line in review | shift+numpad3 | NVDA+shift+o | Moves the review cursor to the end of the current line of text |
 | Say all with review | numpadPlus | NVDA+shift+downArrow | Reads from the current position of the review cursor, moving it as it goes |
-| copy from review cursor | NVDA+f9 | NVDA+f9 | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
+| Copy from review cursor | NVDA+f9 | NVDA+f9 | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
 | Copy to review cursor | NVDA+f10 | NVDA+f10 | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
 | Report text formatting | NVDA+f | Reports the formatting of the text where the review cursor is currently situated |
 %kc:endInclude
 
-note: numpad keys require numlock key to be turned off to work properly.
+Note: numpad keys require numlock key to be turned off to work properly.
 
 To help you remember these commands, note that the basic text review commands are organized in a grid of three by three, with top to bottom being line, word and character and left to right being previous, current and next.
 The layout is illustrated as follows:
@@ -349,7 +349,7 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 | Right mouse click | numpadMultiply | NVDA+rightArrow | Clicks the right mouse button once. |
 | Right mouse button lock | shift+numpadMultiply | NVDA+shift+rightArrow | Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands |
 | Move mouse to current navigator object | NVDA+numpadDivide | NVDA+shift+f9 | Moves the mouse to the location of the current navigator object and review cursor |
-| navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+f10 | Set the navigator object to the object located at the position of the mouse |
+| Navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+f10 | Set the navigator object to the object located at the position of the mouse |
 %kc:endInclude
 
 + Browse Mode +
@@ -496,7 +496,7 @@ This option allows you to choose the sound card that NVDA should instruct the se
 +++ Voice Settings (NVDA+control+v) +++[VoiceSettings]
 The Voice Settings dialog, found in the Preferences menu, contains options that let you change the sound of the speech.
 For a quicker alternative way of controlling speech parameters from anywhere, please see the [Synth Settings Ring #SynthSettingsRing] section.
- 
+
 The Voice Settings dialog box contains the following options:
 
 ==== Voice ====
@@ -530,7 +530,7 @@ Currently only the eSpeak synthesizer supports automatic language switching.
 
 ==== Automatic Dialect switching ====
 If automatic language switching is turned on, this checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes. E.g. If reading in an English U.S. voice but a document states some text is in English U.K. then if this feature is enabled the synthesizer will switch accents.
-this option is disabled by default.
+This option is disabled by default.
 
 %kc:setting
 ==== Punctuation/Symbol Level ====
