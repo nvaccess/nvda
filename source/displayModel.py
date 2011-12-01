@@ -26,11 +26,11 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	if not text or not cpBuf:
 		return u"",[]
 
-	characterRects = []
+	characterLocations = []
 	cpBufIt = iter(cpBuf)
 	for cp in cpBufIt:
-		characterRects.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt))))
-	return text, characterRects
+		characterLocations.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt)), c_short(ord(next(cpBufIt))).value))
+	return text, characterLocations
 
 def requestTextChangeNotifications(obj, enable):
 	"""Request or cancel notifications for when the display text changes in an NVDAObject.
@@ -138,7 +138,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return textInfos.Point(x, y)
 
 	def _getOffsetFromPoint(self, x, y):
-		for charOffset, (charLeft, charTop, charRight, charBottom) in enumerate(self._textAndRects[1]):
+		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
 			if charLeft<=x<charRight and charTop<=y<charBottom:
 				return charOffset
 		raise LookupError
@@ -147,7 +147,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		#Enumerate the character rectangles
 		a=enumerate(self._textAndRects[1])
 		#Convert calculate center points for all the rectangles
-		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
+		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom,charBaseline) in a)
 		#Calculate distances from all center points to the given x and y
 		#But place the distance before the character offset, to make sorting by distance easier
 		c=((math.sqrt(abs(x-cx)**2+abs(y-cy)**2),charOffset) for charOffset,(cx,cy) in b)
@@ -200,9 +200,17 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		caretRect.right=min(objRect.right,tempPoint.x)
 		caretRect.bottom=min(objRect.bottom,tempPoint.y)
 		import speech
-		for charOffset, (charLeft, charTop, charRight, charBottom) in enumerate(self._textAndRects[1]):
-			#speech.speakMessage("caret %d,%d char %d,%d"%(caretRect.top,caretRect.bottom,charTop,charBottom))
-			if caretRect.left>=charLeft and caretRect.right<=charRight and ((caretRect.top<=charTop and caretRect.bottom>=charBottom) or (caretRect.top>=charTop and caretRect.bottom<=charBottom)):
+		#speech.speakMessage("caret %s, %s, %s, %s"%(caretRect.left,caretRect.top,caretRect.right,caretRect.bottom))
+		#caretRect.top+=1
+		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
+			#Real text with a character baseline
+			#The caret must be  anywhere before the horizontal center of the character and the bottom of the caret must touch or go through the character baseline
+			if charBaseline>=0 and caretRect.left<((charLeft+charRight)/2) and caretRect.top<charBaseline<=caretRect.bottom:
+				return charOffset
+		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
+			#vertical whitespace (possible blank lines)
+			#The caret must be fully contained in the whitespace to match
+			if charBaseline==-1 and caretRect.left>=charLeft and caretRect.right<=charRight and not (caretRect.bottom<=charTop or charBottom<=caretRect.top):
 				return charOffset
 		raise RuntimeError
 

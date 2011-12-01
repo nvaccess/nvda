@@ -20,6 +20,14 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <common/lock.h>
 
+typedef struct {
+	int left;
+	int top;
+	int right;
+	int bottom;
+	int baseline;
+} charLocation_t;
+
 struct displayModelFormatInfo_t {
 	wchar_t fontName[32];
 	int fontSize;
@@ -32,7 +40,7 @@ struct displayModelFormatInfo_t {
 
 struct displayModelChunk_t{
 	RECT rect;
-	int baselineFromTop;
+	int baseline;
 	std::wstring text;
 	std::deque<int> characterXArray;
 	displayModelFormatInfo_t formatInfo;
@@ -90,7 +98,7 @@ class displayModel_t: public LockableAutoFreeObject  {
  * @param characterEndXArray an array of x positions for the end of each character.
  * @param clippingRect a optional pointer to a rectangle which if specified will be used to clip the text so that none falls outside this rectangle. 
  */
-	void insertChunk(const RECT& rect, int baselineFromTop, const std::wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, const RECT* clippingRect);
+	void insertChunk(const RECT& rect, int baseline, const std::wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, const RECT* clippingRect);
 
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.
@@ -124,7 +132,7 @@ class displayModel_t: public LockableAutoFreeObject  {
  * @param text a string in which all the rendered text will be placed.
  * @param characterPoints a deque in which the points for each character in text will be placed.
  */
-	void renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, bool useXML, std::wstring& text, std::deque<RECT>& characterRects);
+	void renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, bool useXML, std::wstring& text, std::deque<charLocation_t>& characterLocations);
 
 };
 

@@ -407,7 +407,7 @@ the NVDAObject for IAccessible
 		if windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from mozilla import GeckoPluginWindowRoot
 			clsList.append(GeckoPluginWindowRoot)
-		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary"):
+		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen"):
 			# This is possibly a Flash object.
 			from . import adobeFlash
 			adobeFlash.findExtraOverlayClasses(self, clsList)

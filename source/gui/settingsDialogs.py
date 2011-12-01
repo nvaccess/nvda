@@ -1026,6 +1026,10 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer.Add(self.tetherList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
+		item = self.readByParagraphCheckBox = wx.CheckBox(self, label=_("Read by &paragraph"))
+		item.Value = config.conf["braille"]["readByParagraph"]
+		settingsSizer.Add(item, border=10, flag=wx.BOTTOM)
+
 	def postInit(self):
 		self.displayList.SetFocus()
 
@@ -1049,6 +1053,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		if 1 <= val <= 20:
 			config.conf["braille"]["messageTimeout"] = val
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
+		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 class SpeechSymbolsDialog(SettingsDialog):

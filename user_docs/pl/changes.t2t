@@ -3,12 +3,16 @@
 
 %!includeconf: ../changes.t2tconf
 
+
+
 = 2011.3 =
+Najważniejsze cechy tego wydania to dodana funkcjonalność automatycznej zmiany języka syntezatora mowy zgodnie z językiem czytanego dokumentu o ile zawiera on odpowiednie informacje o języku, wsparcie dla 64 bitowych wersji java runtime environment, odczyt informacji formatowania w trybie przeglądania (mozilla), leprza obsługa braku odpowiedzi aplikacji oraz pierwsze przymiarki do wsparcia dla windows8.
 
 
 == Nowe Funkcje ==
 
-- W trakcie czytania dokumentu pdf, nvda może zmieniać język syntezatora e-speak w locie. Oznacza to, że gdy czytany dokument napisano np. w języku angielskim i zostało to odpowiednio zadeklarowane przez twórcę tego dokumentu, nvda przełączy się na angielski głos syntezatora e-speak. Funkcja ta może zostać wyłączona lub włączona na rządanie, przy użyciu odpowiednich pól wyboru w oknie ustawienia głosu. (#845)
+- W trakcie czytania dokumentu pdf/przeglądania strony www z odpowiednio zdeklarowanym językiem zawartości, nvda może zmieniać język syntezatora e-speak w locie. Oznacza to, że gdy czytany dokument napisano np. w języku angielskim i zostało to odpowiednio zadeklarowane przez jego twórcę, nvda przełączy się na angielski głos syntezatora e-speak. Funkcja ta może zostać wyłączona lub włączona na rządanie, przy użyciu odpowiednich pól wyboru w oknie ustawienia głosu. (#845)
+- Java Access Bridge 2.0.2 jest już wspierany. Zarówno w wersji 32, jak i 64 bitowej.
 - Poziomy nagłówków w dokumentach gecko np. firefox, są odczytywane także przez nawigację obiektową.
 - Informacje o formatowaniu tekstu są dostępne również w trybie przeglądania. Dotyczy to programów Mozilla Firefox, Thunderbird). (#394)
 - Program automatycznie wykrywa i zgłasza przekreślenia w tekście kontrolek aplikacji opartych o IAccessible2 , jak np. w produktach Mozilli.
@@ -16,6 +20,9 @@
 - Dodano wsparcie dla syntezatorów działających pod Microsoft Speech Platworm. (#1735)
 - Program zgłasza liczbę stron i linii podczas ruchów kursora w IBM Lotus Symphony. (#1632)
 - W oknie 'ustawienia głosu' dodano pole, w którym użytkownik może określić stopień zmiany wysokości głosu dla wielkich liter. Opcja ta zastępuje pole wyboru 'wyższy głos dla wielkich liter'. Aby wyłączyć tę funkcjonalność, wpisz 0.
+- Kolor tekstu i tła jest już zgłaszany w informacji o formatowaniu komórek podczas pracy z Microsoft Excel. (#1655)
+- W aplikacjach do których użycia konieczny jest Java Access Bridge, komenda aktywująca obiekt nawigacyjny działa prawidłowo. (#1744)
+- Podstawowe wsparcie dla Design Science MathPlayer.
 
 
 == Zmiany ==
@@ -27,7 +34,7 @@
 
 == Poprawki ==
 - NVDA nie pokazuje wypunktowań lub numeracji w listach na stronach prezentowanych przy użyciu Internet Explorer, gdy autor zadeklarował, że nie powinny być widoczne. (#1671).
-= Restart NVDA, którego przyczyną było zawieszenie się programu, wykonany przy użyciu skrótu klawiszowego uruchamiającego screenreader, nie powinien kończyć się jego zamknięciem bez wznowienia działania.
+- Restart NVDA, którego przyczyną było zawieszenie się programu, wykonany przy użyciu skrótu klawiszowego uruchamiającego screenreader, nie powinien kończyć się jego zamknięciem bez wznowienia działania.
 - Wciśnięcie klawisza backspace lub którejś ze strzałek nie będzie się już kończyć dziwnymi efektami w pewnych przypadkach. (#1612)
 - Elementy list rozwijanych, nie dające możliwości edycji tekstu powinny być prawidłowo zgłaszane przez program.
 - Możliwa jest nawigacja po liniach rozpoczynając od linii nagłówka w programie Adobe Reader. Linia nagłówka nie jest już także odczytywana jako zerowa. (#1731)

@@ -354,7 +354,7 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
-			speech.speakMessage(_("No parents"))
+			speech.speakMessage(_("No containing object"))
 	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
 
 	def script_navigatorObject_next(self,gesture):
@@ -396,8 +396,8 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
-			speech.speakMessage(_("No children"))
-	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object it contains")
+			speech.speakMessage(_("No objects inside"))
+	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
 
 	def script_navigatorObject_doDefaultAction(self,gesture):
 		curObject=api.getNavigatorObject()

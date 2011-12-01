@@ -25,7 +25,7 @@ Najvýznamnejšie prednosti programu:
 - Preložený do mnohých jazykov
 - Podpora pre moderné operačné systémy Windows, 32 aj 64 bitové verzie
 - Možnosť spúšťania na prihlasovacej obrazovke a iných zabezpečených obrazovkách Windows
-- Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation
+- Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation len vo Windows 7 a novších)
 - Podpora pre prostredie príkazového riadku Windows a konzolové aplikácie
 -
 
@@ -917,7 +917,7 @@ Platforma Microsoft Speech poskytuje TTS služby pre rôzne jazyky.
 Tieto hlasy je možné použiť aj s NVDA.
 
 Aby Ste mohli používať tieto hlasy, je potrebné nainštalovať dva komponenty:
-- Microsoft Speech Platform - Server Runtime (Verzia 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime (Verzia 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
 - Microsoft Speech Platform - Server Runtime Languages (Verzia 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
 
 
@@ -943,6 +943,7 @@ Podporované sú všetky braillovské riadky Focus a PAC Mate od spoločnosti [F
 Pre správnu funkčnosť musíte mať v systéme nainštalované ovládače braillovských riadkov Freedom scientific.
 Ak ich ešte nemáte, môžete ich stiahnuť zo stránky: http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Aj keď na stránke sa hovorí len o riadku Focus 40 Blue, ovládač spolupracuje so všetkými zobrazovačmi Freedom scientific.
+Ak máte nainštalovanú 64 bitovú edíciu Windows a používate aj iný odčítač obrazovky, budete pravdepodobne musieť tiež nainštalovať ovládač, pretože potrebné súbory sa nemuseli nainštalovať počas inštalácii iného odčítača.
 
 Nasleduje zoznam klávesových príkazov pre tento typ riadku.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov..
@@ -1095,6 +1096,9 @@ Je možné odstrániť mapovanie nejakého už použitého vstupného príkazu a
 - 
 
 Identifikátor vstupného príkazu pozostáva z dvoj znakového identifikátora zariadenia (kb pre klávesnicu, br pre braillovský riadok), nepovinného identifikátora subzariadenia, alebo rozloženia klávesov v zátvorke, dvojbodky a zoznamu identifikátorov klávesov oddelených znakom plus (+).
+Pre gestá z klávesnice časť v zátvorke znamená rozloženie klávesov a nie je povinná.
+Ak nie je zadaná, gesto sa použije pre všetky rozloženia klávesov.
+Pre gestá braillských riadkov časť v zátvorke identifikuje špecifický ovládač zariadenia a je povinná.
 
 Na získanie identifikátorov vstupných príkazov, názvov modulov, tried a skriptov je možné:
 + aktivovať nápovedu vstupu.
