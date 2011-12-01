@@ -335,3 +335,17 @@ def filterFileName(name):
 	for c in invalidChars:
 		name=name.replace(c,'_')
 	return name
+
+def getCaretObject():
+	"""Gets the object which contains the caret.
+	This is normally the focus object.
+	However, if the focus object has a tree interceptor which is not in focus mode,
+	the tree interceptor will be returned.
+	@return: The object containing the caret.
+	@rtype: L{baseObject.ScriptableObject}
+	"""
+	obj = getFocusObject()
+	ti = obj.treeInterceptor
+	if ti and ti.isReady and not ti.passThrough:
+		return ti
+	return obj
