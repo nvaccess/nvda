@@ -27,14 +27,28 @@ const UINT WM_LRESULT_FROM_IACCESSIBLE = RegisterWindowMessage(L"VBufBackend_lre
 int idCounter = 0;
 
 IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
-	int res;
-	IAccessible* pacc=NULL;
-	VARIANT varChild;
-	if((res=AccessibleObjectFromEvent((HWND)docHandle,OBJID_CLIENT,ID,&pacc,&varChild))!=S_OK) {
+	// We want to bypass oleacc proxying,
+	// so retrieve the IAccessible directly rather than using AccessibleObjectFromEvent.
+	LRESULT lres;
+	if (!(lres = SendMessage((HWND)docHandle, WM_GETOBJECT, 0, OBJID_CLIENT)))
 		return NULL;
-	}
-	VariantClear(&varChild);
-	return pacc;
+	IAccessible* root = NULL;
+	if (ObjectFromLresult(lres, IID_IAccessible, 0, (void**)&root) != S_OK)
+		return NULL;
+	VARIANT varChild;
+	varChild.vt = VT_I4;
+	varChild.lVal = 0;
+	IDispatch* childDisp;
+	HRESULT hres = root->get_accChild(varChild, &childDisp);
+	root->Release();
+	if (hres != S_OK)
+		return NULL;
+	IAccessible* childAcc;
+	hres = childDisp->QueryInterface(IID_IAccessible, (void**)&childAcc);
+	childDisp->Release();
+	if (hres != S_OK)
+		return NULL;
+	return childAcc;
 }
 
 class WebKitVBufStorage_controlFieldNode_t: public VBufStorage_controlFieldNode_t {
