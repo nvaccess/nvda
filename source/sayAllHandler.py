@@ -89,19 +89,21 @@ def readObjectsHelper_generator(obj):
 			yield
 		yield
 
-def readText(info,cursor):
-	_startGenerator(readTextHelper_generator(info,cursor))
+def readText(cursor):
+	_startGenerator(readTextHelper_generator(cursor))
 
-def readTextHelper_generator(info,cursor):
+def readTextHelper_generator(cursor):
+	if cursor==CURSOR_CARET:
+		try:
+			reader=api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError):
+			return
+	else:
+		reader=api.getReviewPosition()
+
 	lastSentIndex=0
 	lastReceivedIndex=0
 	cursorIndexMap={}
-	if not info.obj:
-		# The object died, so we should too.
-		return
-	reader=info.copy()
-	if not reader.isCollapsed:
-		reader.collapse()
 	keepReading=True
 	keepUpdating=True
 	while keepUpdating:
@@ -129,7 +131,7 @@ def readTextHelper_generator(info,cursor):
 					keepReading=False
 		else:
 			# We'll wait for speech to catch up a bit before sending more text.
-			if speech.speakWithoutPauses.lastSentIndex is None or (lastSentIndex-speech.speakWithoutPauses.lastSentIndex)>=10:				# There is a 
+			if speech.speakWithoutPauses.lastSentIndex is None or (lastSentIndex-speech.speakWithoutPauses.lastSentIndex)>=10:
 				# There is a large chunk of pending speech
 				# Force speakWithoutPauses to send text to the synth so we can move on.
 				speech.speakWithoutPauses(None)

@@ -628,20 +628,11 @@ class GlobalCommands(ScriptableObject):
 	script_showGui.__doc__=_("Shows the NVDA menu")
 
 	def script_review_sayAll(self,gesture):
-		info=api.getReviewPosition().copy()
-		sayAllHandler.readText(info,sayAllHandler.CURSOR_REVIEW)
+		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
 	script_review_sayAll.__doc__ = _("reads from the review cursor  up to end of current text, moving the review cursor as it goes")
 
 	def script_sayAll(self,gesture):
-		o=api.getFocusObject()
-		ti=o.treeInterceptor
-		if ti and not ti.passThrough:
-			o=ti
-		try:
-			info=o.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError, RuntimeError):
-			return
-		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
 
 	def script_reportFormatting(self,gesture):
