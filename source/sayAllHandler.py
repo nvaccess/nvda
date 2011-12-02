@@ -145,6 +145,18 @@ def readTextHelper_generator(cursor):
 					updater.updateCaret()
 				if cursor!=CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 					api.setReviewPosition(updater)
+		elif not keepReading and lastReceivedIndex==lastSentIndex:
+			# All text has been spoken.
+			# Turn the page and start again if the object supports it.
+			if isinstance(reader.obj,textInfos.DocumentWithPageTurns):
+				try:
+					reader.obj.turnPage()
+				except RuntimeError:
+					pass
+				else:
+					reader=reader.obj.makeTextInfo(textInfos.POSITION_FIRST)
+					keepReading=True
+
 		while speech.isPaused:
 			yield
 		yield
