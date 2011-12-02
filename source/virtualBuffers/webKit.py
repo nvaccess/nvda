@@ -1,3 +1,4 @@
+import ctypes
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
@@ -64,7 +65,16 @@ class WebKit(VirtualBuffer):
 			IAccessibleChildID=0)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		return obj.windowHandle, obj.event_childID
+		if obj == self.rootNVDAObject:
+			return obj.windowHandle, 0
+		if not self.isReady or obj.event_childID is None:
+			# We can only retrieve the node for objects obtained from events.
+			raise LookupError
+		node = NVDAHelper.localLib.VBuf_getNodeForNativeHandle(self.VBufHandle, obj.event_childID)
+		docHandle=ctypes.c_int()
+		ID=ctypes.c_int()
+		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.VBufHandle, node, ctypes.byref(docHandle), ctypes.byref(ID))
+		return docHandle.value, ID.value
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="formField":
