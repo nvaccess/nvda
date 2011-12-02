@@ -37,7 +37,7 @@ IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 		return NULL;
 	VARIANT varChild;
 	varChild.vt = VT_I4;
-	varChild.lVal = 0;
+	varChild.lVal = ID;
 	IDispatch* childDisp;
 	HRESULT hres = root->get_accChild(varChild, &childDisp);
 	root->Release();
