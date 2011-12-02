@@ -15,7 +15,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef VIRTUALBUFFER_BACKENDS_WEBKIT_H
 #define VIRTUALBUFFER_BACKENDS_WEBKIT_H
 
+#include <map>
 #include <vbufBase/backend.h>
+
+class WebKitVBufStorage_controlFieldNode_t;
 
 class WebKitVBufBackend_t: public VBufBackend_t {
 	private:
@@ -36,11 +39,17 @@ class WebKitVBufBackend_t: public VBufBackend_t {
 
 	//virtual ~WebKitVBufBackend_t();
 
+	std::map<IAccessible*, WebKitVBufStorage_controlFieldNode_t*> accessiblesToNodes;
+
+	friend class WebKitVBufStorage_controlFieldNode_t;
+
 	public:
 
 	WebKitVBufBackend_t(int docHandle, int ID);
 
 	virtual int getNativeHandleForNode(VBufStorage_controlFieldNode_t* node);
+
+	virtual VBufStorage_controlFieldNode_t* getNodeForNativeHandle(int nativeHandle);
 
 };
 

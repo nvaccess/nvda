@@ -23,6 +23,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 using namespace std;
 
 const UINT WM_LRESULT_FROM_IACCESSIBLE = RegisterWindowMessage(L"VBufBackend_lresultFromIAccessible");
+const UINT WM_IACCESSIBLE_FROM_CHILDID = RegisterWindowMessage(L"VBufBackend_IAccessibleFromChildID");
 
 int idCounter = 0;
 
@@ -53,16 +54,20 @@ IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 
 class WebKitVBufStorage_controlFieldNode_t: public VBufStorage_controlFieldNode_t {
 	public:
-	WebKitVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, IAccessible* accessibleObj): VBufStorage_controlFieldNode_t(docHandle, ID, isBlock) {
+	WebKitVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, IAccessible* accessibleObj, WebKitVBufBackend_t* backend): VBufStorage_controlFieldNode_t(docHandle, ID, isBlock) {
 		this->accessibleObj = accessibleObj;
+		this->backend = backend;
+		backend->accessiblesToNodes[accessibleObj] = this;
 	}
 
 	~WebKitVBufStorage_controlFieldNode_t() {
+		this->backend->accessiblesToNodes.erase(this->accessibleObj);
 		this->accessibleObj->Release();
 	}
 
 	protected:
 	IAccessible* accessibleObj;
+	WebKitVBufBackend_t* backend;
 	friend class WebKitVBufBackend_t;
 };
 
@@ -87,7 +92,7 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 
 	//Add this node to the buffer
 	parentNode = buffer->addControlFieldNode(parentNode, previousNode, 
-		new WebKitVBufStorage_controlFieldNode_t(docHandle, id, true, pacc));
+		new WebKitVBufStorage_controlFieldNode_t(docHandle, id, true, pacc, this));
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 
@@ -199,6 +204,12 @@ LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
 	if (pcwp->message == WM_LRESULT_FROM_IACCESSIBLE) {
 		*(LRESULT*)pcwp->lParam = LresultFromObject(IID_IAccessible, 0,
 			(IUnknown*)pcwp->wParam);
+	} else if (pcwp->message == WM_IACCESSIBLE_FROM_CHILDID) {
+		IAccessible* acc = IAccessibleFromIdentifier((int)pcwp->hwnd, (int)pcwp->wParam);
+		if (acc) {
+			acc->Release();
+		}
+		*(IAccessible**) pcwp->lParam = acc;
 	}
 	return 0;
 }
@@ -217,6 +228,22 @@ int WebKitVBufBackend_t::getNativeHandleForNode(VBufStorage_controlFieldNode_t* 
 		return 0;
 	// LResultFromObject always returns a 32 bit value.
 	return (int)res;
+}
+
+VBufStorage_controlFieldNode_t* WebKitVBufBackend_t::getNodeForNativeHandle(int nativeHandle) {
+	IAccessible* acc;
+	// This method will be called in an RPC thread.
+	// IAccessibleFromIdentifier must be called in the thread in which the object was created.
+	registerWindowsHook(WH_CALLWNDPROC, callWndProcHook);
+	SendMessage((HWND)rootDocHandle, WM_IACCESSIBLE_FROM_CHILDID,
+		(WPARAM)nativeHandle, (LPARAM)&acc);
+	unregisterWindowsHook(WH_CALLWNDPROC, callWndProcHook);
+	if (!acc)
+		return NULL;
+	map<IAccessible*, WebKitVBufStorage_controlFieldNode_t*>::const_iterator it;
+	if ((it = accessiblesToNodes.find(acc)) == accessiblesToNodes.end())
+		return NULL;
+	return it->second;
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {
