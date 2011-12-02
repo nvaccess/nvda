@@ -67,7 +67,7 @@ class WebKit(VirtualBuffer):
 	def getIdentifierFromNVDAObject(self,obj):
 		if obj == self.rootNVDAObject:
 			return obj.windowHandle, 0
-		if not self.isReady or obj.event_childID is None:
+		if not self.isReady or not obj.event_childID:
 			# We can only retrieve the node for objects obtained from events.
 			raise LookupError
 		node = NVDAHelper.localLib.VBuf_getNodeForNativeHandle(self.VBufHandle, obj.event_childID)
