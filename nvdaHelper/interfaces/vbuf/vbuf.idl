@@ -186,4 +186,14 @@ interface VBuf {
  */
 	int getNativeHandleForNode([in] VBufRemote_bufferHandle_t buffer, [in] VBufRemote_nodeHandle_t node);
 
+/**
+ * Retrieve a node given the native handle for its underlying object.
+ * This handle identifies the object out-of-process.
+ * The way in which it is used is implementation specific.
+ * @param buffer the virtual buffer to use
+ * @param handle the handle in question.
+ * @return the node or 0 on error.
+ */
+	VBufRemote_nodeHandle_t getNodeForNativeHandle([in] VBufRemote_bufferHandle_t buffer, [in] int handle);
+
 }
