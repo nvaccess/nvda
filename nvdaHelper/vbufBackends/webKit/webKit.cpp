@@ -135,9 +135,11 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 
 	//Get the child count
 	long childCount=0;
-	if((res=pacc->get_accChildCount(&childCount))!=S_OK) {
+	if(role==ROLE_SYSTEM_COMBOBOX||(role==ROLE_SYSTEM_LIST&&!(states&STATE_SYSTEM_READONLY))) {
+		// We don't want this node's children.
 		childCount=0;
-	}
+	} else
+		pacc->get_accChildCount(&childCount);
 
 	// Iterate through the children.
 	if (childCount > 0) {
@@ -219,7 +221,7 @@ int WebKitVBufBackend_t::getNativeHandleForNode(VBufStorage_controlFieldNode_t* 
 		return 0;
 	LRESULT res = 0;
 	// This method will be called in an RPC thread.
-		// LresultFromObject must be called in the thread in which the object was created.
+	// LresultFromObject must be called in the thread in which the object was created.
 	registerWindowsHook(WH_CALLWNDPROC, callWndProcHook);
 	SendMessage((HWND)rootDocHandle, WM_LRESULT_FROM_IACCESSIBLE,
 		(WPARAM)static_cast<WebKitVBufStorage_controlFieldNode_t*>(node)->accessibleObj, (LPARAM)&res);
