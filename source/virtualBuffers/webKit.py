@@ -126,3 +126,6 @@ class WebKit(VirtualBuffer):
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		winUser.setCursorPos(oldX,oldY)
+
+	def _shouldSetFocusToObj(self,obj):
+		return obj.role!=controlTypes.ROLE_GROUPING and super(WebKit,self)._shouldSetFocusToObj(obj)
