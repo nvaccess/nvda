@@ -170,6 +170,8 @@ class Logger(logging.Logger):
 		else:
 			level = self.ERROR
 
+		if not self.isEnabledFor(level):
+			return
 		self._log(level, msg, (), exc_info=exc_info, **kwargs)
 
 class FileHandler(logging.StreamHandler):

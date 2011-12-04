@@ -27,6 +27,9 @@ badUIAWindowClassNames=[
 	"CommonPlacesWrapperWndClass",
 	"SysMonthCal32",
 	"SUPERGRID", #Outlook 2010 message list
+	"RichEdit",
+	"RichEdit20",
+	"RICHEDIT50W",
 ]
 
 UIAControlTypesToNVDARoles={
@@ -202,9 +205,10 @@ class UIAHandler(COMObject):
 		now=time.time()
 		v=self.UIAWindowHandleCache.get(hwnd,None)
 		if not v or (now-v[1])>0.5:
+			import NVDAObjects.window
 			if windll.kernel32.GetCurrentProcessId()==winUser.getWindowThreadProcessID(hwnd)[0]:
 				isUIA=False
-			elif winUser.getClassName(hwnd) in badUIAWindowClassNames:
+			elif NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd)) in badUIAWindowClassNames:
 				isUIA=False
 			else:
 				isUIA=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)

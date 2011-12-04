@@ -601,11 +601,11 @@ Tecla: NVDA+control+t
 Esta opção permite-lhe escolher se a linha Braille seguirá o cursor do sistema, ou se segue o navegador de objetos / cursor de exploração.
 
 ==== Ler por Parágrafo ====
-Se ativada, o braille será exibido por parágrafos em lugar de linhas.
+Caso seja ativada, o braille será exibido por parágrafos em lugar de linhas.
 Além disso, os comandos de mover para a linha anterior e para a próxima linha irão mover respectivamente por parágrafos.
-Isso significa que você não terá que deslocar a linha braille ao fim de cada linha mesmo quando um maior texto for ajustado na mesma.
+Isso significa que você não terá que deslocar a linha braille ao fim de cada linha ainda quando um maior texto for ajustado na mesma.
   Isso pode permitir uma leitura mais fluente   em textos muito extensos.
-Ela está desativada por padrão.
+Esta opção está desativada por padrão.
 
 +++ Opções de Teclado (NVDA+Ctrl+K) +++
 Esta caixa de diálogo encontra-se no menu Preferências, no item "Opções do teclado...".
@@ -1109,7 +1109,24 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 | Mover Linha Braille para a Frente | K3 |
 | Mover Linha Braille para a Linha Anterior | B2 |
 | Mover Linha Braille para a Próxima Linha | B5 |
-| Ir para a Célula Braille | sensor |
+| Guiar para a Célula Braille | sensor |
+| Alternar Vínculo do Braille | K2 |
+| Leitura Contína | B6 |
+%kc:endInclude
+
+++ hedo MobilLine USB ++
+A linha USB hedo MobilLine disponível em [hedo Reha-Technik  http://www.hedo.de/] é suportada.
+Será antes necessário  instalar os drivers para USB fornecidos pelo fabricante.
+
+A segui estão as teclas de comando para esta linha braille com o NVDA.
+Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
+%kc:beginInclude
+|| Nome | Tecla |
+| Mover Linha Braille para Trás | K1 |
+| Mover Linha Braille para a Frente | K3 |
+| Mover Linha Braille para a Linha Anterior | B2 |
+| Mover Linha Braille para a Próxima Linha | B5 |
+| Guiar para a Célula Braille | sensor |
 | Alternar Vínculo do Braille | K2 |
 | Leitura Contína | B6 |
 %kc:endInclude

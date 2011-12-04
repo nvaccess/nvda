@@ -3,6 +3,33 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.1 =
+
+== Uudet ominaisuudet ==
+- NVDA voi kertoa järjestyksessä nykyisen rivin alussa olevien sisennysten ja välilyöntien määrän. Asetus voidaan ottaa käyttöön Lue rivien sisennykset -valintaruudulla Dokumenttien muotoiluasetukset -valintaikkunasta. (#373)
+- NVDA havaitsee nyt vaihtoehtoisen näppäimistösyöte-emulaation, kuten ruutunäppäimistöjen ja puheentunnistusohjelmistojen, tuottamat näppäinpainallukset.
+- NVDA havaitsee nyt värit Windowsin komentokonsoleissa.
+- Lihavointi, kursiivi ja alleviivaus ilmaistaan nyt pistenäytöllä käytettävässä pistetaulukossa määritetyillä merkeillä. (#538)
+- Valittu teksti ilmaistaan nyt pistenäytöllä pisteillä 7 ja 8. (#889)
+- Pistenäytöllä näytetään nyt tiedot dokumenteissa olevista säätimistä, kuten linkeistä, painikkeista ja otsikoista. (#202)
+- Tuki hedo ProfiLine USB -pistenäytölle. (#1863)
+- NVDA välttää nyt sanojen jakamista pistenäytöllä aina kun mahdollista. (#1890)
+- Tekstin näyttäminen pistenäytöllä on nyt mahdollista kappaleittain, mikä voi mahdollistaa suurten tekstimäärien sujuvamman lukemisen. Tämä on määritettävissä Lue kappaleittain -asetuksella Pistenäytön asetukset -valintaikkunassa. (#1891)
+- Kohdistimen alla oleva objekti voidaan aktivoida selaustilassa pistenäytöltä. Tämä tehdään painamalla kosketuskohdistinnäppäintä kohdistimen kohdalla (mikä tarkoittaa sen kahdesti painamista, mikäli kohdistin ei jo ole siinä). (#1893)
+
+
+== Muutokset ==
+- Nykyisen merkin kuvailu- ja sanan tai rivin tavauskomennot tavaavat nyt tekstin kielen mukaisesti, mikäli automaattinen kielen vaihtaminen on käytössä ja asianmukainen kielimääritys on käytettävissä.
+
+
+== Korjatut ohjelmavirheet ==
+- Kohdistusta ei enää Windows 8:ssa siirretä virheellisesti pois Resurssienhallinnan hakukentästä, mikä esti kyseisen kentän käytön NVDA:lla.
+- Selaustilaa käytetään nyt koko ruudun Adobe Flash -sisällölle.
+- Korjattu huono äänenlaatu joissakin tapauksissa käytettäessä Microsoft Speech API version 5 puheääniä, kun äänilaitteeksi on määritetty jokin muu kuin oletusarvoisesti käytettävä Microsoft Sound Mapper. (#749)
+- NVDA:n käyttäminen "Ei puhetta" -syntetisaattorilla on jälleen mahdollista. (#1963)
+- Objektinavigointikomentoja käytettäessä ei enää ilmoiteta "Ei alemman tason objekteja" tai "Ei ylemmän tason objekteja", vaan käytetään ilmoituksia, jotka ovat yhdenmukaisia käyttöoppaassa mainittujen termien kanssa.
+
+
 = 2011.3 =
 Tämän julkaisun tärkeimpiä uusia ominaisuuksia ovat automaattinen puhesyntetisaattorin kielen vaihtaminen luettaessa asianmukaisen kielimäärityksen sisältäviä dokumentteja, tuki 64-bittisille ajonaikaisille Java-ympäristöille, tekstin muotoilutietojen lukeminen selaustilassa Mozilla-sovelluksissa, parempi sovellusten kaatumisten ja jumittumisten käsittely ja alustavat Windows 8:n käyttöön liittyvät korjaukset.
 

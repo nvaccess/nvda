@@ -187,8 +187,8 @@ class GlyphTranslator {
 		DWORD cmapLen;
 		PBYTE p=getTTFData(hdc,"cmap",&cmapLen);
 		if(p==NULL) return;
-		CmapHeader* header=(CmapHeader*)((DWORD)p);
-		EncodingRecord* encodings=(EncodingRecord*)((DWORD)p+sizeof(CmapHeader));
+		CmapHeader* header=(CmapHeader*)p;
+		EncodingRecord* encodings=(EncodingRecord*)(p+sizeof(CmapHeader));
 		DWORD off=0;
 		LOG_DEBUG("Number of encodings: "<<header->numTables);
 		for(int i=0; i<header->numTables; i++) {
