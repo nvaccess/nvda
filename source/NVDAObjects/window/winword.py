@@ -136,69 +136,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise ctypes.WinError(res)
 		self._rangeObj.setRange(lineStart.value,lineEnd.value)
 
-	def _getFormatFieldAtRange(self,range,formatConfig):
-		formatField=textInfos.FormatField()
-		fontObj=None
-		paraFormatObj=None
-		listString=range.ListFormat.ListString
-		if listString and range.Paragraphs[1].range.start==range.start:
-			formatField['line-prefix']=listString
-		if formatConfig["reportSpellingErrors"] and range.spellingErrors.count>0: 
-			formatField["invalid-spelling"]=True
-		if formatConfig["reportLineNumber"]:
-			formatField["line-number"]=range.Information(wdFirstCharacterLineNumber)
-		if formatConfig["reportPage"]:
-			formatField["page-number"]=range.Information(wdActiveEndAdjustedPageNumber)
-		if formatConfig["reportStyle"]:
-			formatField["style"]=range.style.nameLocal
-		if formatConfig["reportTables"] and range.Information(wdWithInTable):
-			tableInfo={}
-			tableInfo["column-count"]=range.Information(wdMaximumNumberOfColumns)
-			tableInfo["row-count"]=range.Information(wdMaximumNumberOfRows)
-			tableInfo["column-number"]=range.Information(wdStartOfRangeColumnNumber)
-			tableInfo["row-number"]=range.Information(wdStartOfRangeRowNumber)
-			formatField["table-info"]=tableInfo
-		if formatConfig["reportAlignment"]:
-			if not paraFormatObj: paraFormatObj=range.paragraphFormat
-			alignment=paraFormatObj.alignment
-			if alignment==wdAlignParagraphLeft:
-				formatField["text-align"]="left"
-			elif alignment==wdAlignParagraphCenter:
-				formatField["text-align"]="center"
-			elif alignment==wdAlignParagraphRight:
-				formatField["text-align"]="right"
-			elif alignment==wdAlignParagraphJustify:
-				formatField["text-align"]="justify"
-		if formatConfig["reportFontName"]:
-			if not fontObj: fontObj=range.font
-			formatField["font-name"]=fontObj.name
-		if formatConfig["reportFontSize"]:
-			if not fontObj: fontObj=range.font
-			formatField["font-size"]="%spt"%fontObj.size
-		if formatConfig["reportFontAttributes"]:
-			if not fontObj: fontObj=range.font
-			formatField["bold"]=bool(fontObj.bold)
-			formatField["italic"]=bool(fontObj.italic)
-			formatField["underline"]=bool(fontObj.underline)
-			if fontObj.superscript:
-				formatField["text-position"]="super"
-			elif fontObj.subscript:
-				formatField["text-position"]="sub"
-		return formatField
-
-	def _expandFormatRange(self,range):
-		startLimit=self._rangeObj.start
-		endLimit=self._rangeObj.end
-		#Only Office 2007 onwards supports moving by format changes, -- and only moveEnd works.
-		try:
-			range.MoveEnd(13,1)
-		except:
-			range.Expand(wdWord)
-		if range.start<startLimit:
-			range.start=startLimit
-		if range.end>endLimit:
-			range.end=endLimit
-
 	def __init__(self,obj,position,_rangeObj=None):
 		super(WordDocumentTextInfo,self).__init__(obj,position)
 		if _rangeObj:
