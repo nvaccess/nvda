@@ -234,6 +234,9 @@ class UIA(Window):
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
 			self.value=""
+		elif self.role==controlTypes.ROLE_WINDOW and self.UIAIsWindowElement:
+			import displayModel
+			self.TextInfo=displayModel.DisplayModelTextInfo
 
 		# UIARuntimeId is set by __new__.
 		if self.UIARuntimeId:
