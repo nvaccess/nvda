@@ -170,17 +170,19 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 		free(varChildren);
 	} else {
 
-		// No children, so this is a text leaf node.
+		// No children, so fetch content from this leaf node.
 		BSTR tempBstr = NULL;
 		wstring content;
 
-		if (pacc->get_accName(varChild, &tempBstr) == S_OK) {
+		if ((role != ROLE_SYSTEM_TEXT || !(states & STATE_SYSTEM_FOCUSABLE)) && role != ROLE_SYSTEM_COMBOBOX
+				&& pacc->get_accName(varChild, &tempBstr) == S_OK && tempBstr) {
 			content = tempBstr;
 			SysFreeString(tempBstr);
-		} else if (pacc->get_accValue(varChild, &tempBstr) == S_OK) {
+		} else if (pacc->get_accValue(varChild, &tempBstr) == S_OK && tempBstr) {
 			content = tempBstr;
 			SysFreeString(tempBstr);
-		} else if (states & STATE_SYSTEM_FOCUSABLE) {
+		}
+		if (content.empty() && states & STATE_SYSTEM_FOCUSABLE) {
 			// This node is focusable, but contains no text.
 			// Therefore, add it with a space so that the user can get to it.
 			content = L" ";
