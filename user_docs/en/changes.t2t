@@ -28,6 +28,7 @@
 - Fixed poor audio quality in some cases when using Microsoft Speech API version 5 voices with the audio output device set to something other than the default (Microsoft Sound Mapper). (#749)
 - Again allow NVDA to be used with the "no speech" synthesizer, relying purely   on braille or the speech viewer. (#1963)
 - Object navigation commands no longer report "No children" and "No parents", but instead report messages consistent with the documentation.
+- When NVDA is configured to use a language other than English, the name of the tab key is now reported in the correct language.
 
 
 == Changes for Developers ==
