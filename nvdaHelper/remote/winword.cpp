@@ -480,12 +480,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	//And grab any text and formatting and generate appropriate xml
 	bool firstLoop=true;
 	do {
-		//Try moving
-		//But if characterFormatting doesn't work, and word doesn't work, or no units were moved then break out of the loop
-		if((
-			((formatConfig&formatConfig_reportSpellingErrors)||(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacterFormatting,1)!=S_OK))&&
-			_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK
-		)||unitsMoved<=0) {
+		//Move the end by word
+		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdWord,1)!=S_OK||unitsMoved<=0) {
 			break;
 		}
 		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
