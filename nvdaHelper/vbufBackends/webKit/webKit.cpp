@@ -76,7 +76,6 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 ) {
 	nhAssert(buffer);
 
-	int res;
 	VBufStorage_fieldNode_t* tempNode;
 	//all IAccessible methods take a variant for childID, get one ready
 	VARIANT varChild;
@@ -102,7 +101,7 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 	long role = 0;
 	VARIANT varRole;
 	VariantInit(&varRole);
-	if((res=pacc->get_accRole(varChild,&varRole))!=S_OK) {
+	if(pacc->get_accRole(varChild,&varRole)!=S_OK) {
 		s<<0;
 	} else if(varRole.vt==VT_BSTR) {
 		s << varRole.bstrVal;
@@ -117,7 +116,7 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 	varChild.lVal=0;
 	VARIANT varState;
 	VariantInit(&varState);
-	if((res=pacc->get_accState(varChild,&varState))!=S_OK) {
+	if(pacc->get_accState(varChild,&varState)!=S_OK) {
 		varState.vt=VT_I4;
 		varState.lVal=0;
 	}
@@ -151,13 +150,13 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 		if((varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))==NULL) {
 			return NULL;
 		}
-		if((res=AccessibleChildren(pacc,0,childCount,varChildren,(long*)(&childCount)))!=S_OK) {
+		if(AccessibleChildren(pacc,0,childCount,varChildren,(long*)(&childCount))!=S_OK) {
 			childCount=0;
 		}
 		for(int i=0;i<childCount;i++) {
 			if(varChildren[i].vt==VT_DISPATCH) {
 				IAccessible* childPacc=NULL;
-				if((res=varChildren[i].pdispVal->QueryInterface(IID_IAccessible,(void**)(&childPacc)))!=S_OK) {
+				if(varChildren[i].pdispVal->QueryInterface(IID_IAccessible,(void**)(&childPacc))!=S_OK) {
 					childPacc=NULL;
 				}
 				if(childPacc) {
@@ -175,10 +174,10 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 		BSTR tempBstr = NULL;
 		wstring content;
 
-		if ((res = pacc->get_accName(varChild, &tempBstr)) == S_OK) {
+		if (pacc->get_accName(varChild, &tempBstr) == S_OK) {
 			content = tempBstr;
 			SysFreeString(tempBstr);
-		} else if ((res = pacc->get_accValue(varChild, &tempBstr)) == S_OK) {
+		} else if (pacc->get_accValue(varChild, &tempBstr) == S_OK) {
 			content = tempBstr;
 			SysFreeString(tempBstr);
 		} else if (states & STATE_SYSTEM_FOCUSABLE) {
