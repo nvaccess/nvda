@@ -135,10 +135,10 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 	//Get the child count
 	long childCount=0;
 	if (role == ROLE_SYSTEM_COMBOBOX
-			|| (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
-			// Editable text fields sometimes have children with no content.
-			|| (role == ROLE_SYSTEM_TEXT && states & STATE_SYSTEM_FOCUSABLE)
-		) {
+		|| (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY))
+		// Editable text fields sometimes have children with no content.
+		|| (role == ROLE_SYSTEM_TEXT && states & STATE_SYSTEM_FOCUSABLE)
+	) {
 		// We don't want this node's children.
 		childCount=0;
 	} else
