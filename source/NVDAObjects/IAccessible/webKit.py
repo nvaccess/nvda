@@ -6,6 +6,7 @@
 
 import IAccessibleHandler
 import controlTypes
+import braille
 from . import IAccessible
 
 """NVDAObjects for WebKit.
@@ -29,6 +30,12 @@ class Document(IAccessible):
 		from virtualBuffers.webKit import WebKit
 		return WebKit
 
+class EditableText(Node):
+
+	def event_valueChange(self):
+		# We don't want the value to be spoken every time it is changed.
+		braille.handler.handleUpdate(self)
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for WebKit objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -38,4 +45,6 @@ def findExtraOverlayClasses(obj, clsList):
 		return
 	if role == controlTypes.ROLE_DOCUMENT:
 		clsList.append(Document)
+	elif role == controlTypes.ROLE_EDITABLETEXT:
+		clsList.append(EditableText)
 	clsList.append(Node)
