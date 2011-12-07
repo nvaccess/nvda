@@ -1,3 +1,9 @@
+#virtualBuffers/webKit.py
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 2011 NV Access Inc
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+
 import ctypes
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
