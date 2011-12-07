@@ -84,7 +84,7 @@ class WebKit(VirtualBuffer):
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="formField":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TEXT]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="list":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
 		elif nodeType=="listItem":
@@ -92,7 +92,7 @@ class WebKit(VirtualBuffer):
 		elif nodeType=="button":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
 		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="radioButton":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON]}
 		elif nodeType=="comboBox":
