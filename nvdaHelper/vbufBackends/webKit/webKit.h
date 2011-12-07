@@ -27,6 +27,8 @@ class WebKitVBufBackend_t: public VBufBackend_t {
 		VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode
 	);
 
+	int idCounter;
+
 	protected:
 
 	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);

@@ -25,8 +25,6 @@ using namespace std;
 const UINT WM_LRESULT_FROM_IACCESSIBLE = RegisterWindowMessage(L"VBufBackend_lresultFromIAccessible");
 const UINT WM_IACCESSIBLE_FROM_CHILDID = RegisterWindowMessage(L"VBufBackend_IAccessibleFromChildID");
 
-int idCounter = 0;
-
 IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
 	// We want to bypass oleacc proxying,
 	// so retrieve the IAccessible directly rather than using AccessibleObjectFromEvent.
@@ -251,7 +249,7 @@ void WebKitVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 	// pacc will be released later.
 }
 
-WebKitVBufBackend_t::WebKitVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
+WebKitVBufBackend_t::WebKitVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID), idCounter(-1) {
 }
 
 LRESULT CALLBACK callWndProcHook(int code, WPARAM wParam,LPARAM lParam) {
