@@ -61,8 +61,10 @@ class WebKitVBufStorage_controlFieldNode_t: public VBufStorage_controlFieldNode_
 	}
 
 	~WebKitVBufStorage_controlFieldNode_t() {
-		this->backend->accessiblesToNodes.erase(this->accessibleObj);
-		this->accessibleObj->Release();
+		if (accessibleObj) {
+			backend->accessiblesToNodes.erase(accessibleObj);
+			accessibleObj->Release();
+		}
 	}
 
 	protected:
@@ -197,10 +199,55 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 	return parentNode;
 }
 
+void CALLBACK WebKitVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	switch (eventID) {
+		case EVENT_OBJECT_VALUECHANGE:
+		case EVENT_OBJECT_STATECHANGE:
+			break;
+		default:
+			return;
+	}
+
+	WebKitVBufBackend_t* backend = NULL;
+	for (VBufBackendSet_t::iterator it = runningBackends.begin(); it != runningBackends.end(); ++it) {
+		HWND rootWindow = (HWND)(*it)->rootDocHandle;
+		if (hwnd == rootWindow || IsChild(rootWindow, hwnd)) {
+			backend = static_cast<WebKitVBufBackend_t*>(*it);
+			break;
+		}
+	}
+	if (!backend)
+		return;
+
+	IAccessible* acc = IAccessibleFromIdentifier((int)hwnd, childID);
+	acc->Release();
+	map<IAccessible*, WebKitVBufStorage_controlFieldNode_t*>::const_iterator it;
+	if ((it = backend->accessiblesToNodes.find(acc)) == backend->accessiblesToNodes.end())
+		return;
+	backend->invalidateSubtree(it->second);
+}
+
+void WebKitVBufBackend_t::renderThread_initialize() {
+	registerWinEventHook(renderThread_winEventProcHook);
+	VBufBackend_t::renderThread_initialize();
+}
+
+void WebKitVBufBackend_t::renderThread_terminate() {
+	unregisterWinEventHook(renderThread_winEventProcHook);
+	VBufBackend_t::renderThread_terminate();
+}
+
 void WebKitVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
-	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,ID);
+	IAccessible* pacc = NULL;
+	if (oldNode) {
+		pacc = static_cast<WebKitVBufStorage_controlFieldNode_t*>(oldNode)->accessibleObj;
+		// This accessible will now be used by a new node,
+		// so make sure the old node doesn't clean it up.
+		static_cast<WebKitVBufStorage_controlFieldNode_t*>(oldNode)->accessibleObj = NULL;
+	} else
+		pacc = IAccessibleFromIdentifier(docHandle,ID);
 	nhAssert(pacc); //must get a valid IAccessible object
-	this->fillVBuf(docHandle,pacc,buffer,NULL,NULL);
+	this->fillVBuf(docHandle, pacc, buffer, NULL, NULL);
 	// pacc will be released later.
 }
 
