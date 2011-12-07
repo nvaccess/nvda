@@ -201,6 +201,7 @@ void WebKitVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,ID);
 	nhAssert(pacc); //must get a valid IAccessible object
 	this->fillVBuf(docHandle,pacc,buffer,NULL,NULL);
+	// pacc will be released later.
 }
 
 WebKitVBufBackend_t::WebKitVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
