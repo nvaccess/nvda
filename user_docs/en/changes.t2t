@@ -16,6 +16,7 @@
 - NVDA now avoids splitting words in braille when possible. (#1890)
 - It is now possible to have braille displayed by paragraphs instead of lines, which may allow for more fluent reading of large amounts of text. This is configurable using the Read by paragraphs option in the Braille Settings dialog. (#1891)
 - In browse mode, you can activate the object under the cursor using a braille display. This is done by pressing the cursor routing key where the cursor is located (which means pressing it twice if the cursor is not already there). (#1893)
+- Basic support for web areas in iTunes such as the Store. Other applications using WebKit 1 may also be supported. (#734)
 
 
 == Changes ==
@@ -28,6 +29,7 @@
 - Fixed poor audio quality in some cases when using Microsoft Speech API version 5 voices with the audio output device set to something other than the default (Microsoft Sound Mapper). (#749)
 - Again allow NVDA to be used with the "no speech" synthesizer, relying purely   on braille or the speech viewer. (#1963)
 - Object navigation commands no longer report "No children" and "No parents", but instead report messages consistent with the documentation.
+- When NVDA is configured to use a language other than English, the name of the tab key is now reported in the correct language.
 
 
 == Changes for Developers ==

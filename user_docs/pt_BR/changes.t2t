@@ -14,7 +14,7 @@ Traduzido por Marlin Rodrigues da Silva
 - Negrito, itálico e sublinhado agora são indicados em braille usando sinais apropriados para a tabela de tradução configurada. (#538)
 - O braille agora indica textos selecionados usando pontos 7 e 8. (#889)
 -  O braille agora anuncia informação sobre controles presentes em documentos tais como links, botões e cabeçalhos. (#202)
-- Suporte para a linha braille USB hedo ProfiLine. (#1863)
+- Suporte para as linhas braille USB ProfiLine e mobilLine da hedo. (#1863, #1897) 
 - O NVDA agora evita palavras separadas nas linhas braille quando possível. (#1890)
 - Agora é possível ter o braille exibido por parágrafos ao invés de linhas, o que pode permitir uma leitura mais fluente em textos muito extensos. Pode-se configurar essa funcionalidade através da opção Ler por Parágrafos no diálogo de Opções de Braille. (#1891)
 - No Modo de Navegação, você agora pode ativar o objeto sob o cursor usando uma linha braille. Isso é feito pressionando-se a tecla do sensor onde o cursor está posicionado (o que significa que deve-se pressioná-lo duas vezes se o cursor ainda não estiver neste local). (#1893)
@@ -27,7 +27,9 @@ Traduzido por Marlin Rodrigues da Silva
 == Correção de Falhas ==
 - No Windows 8, o foco já não é incorretamente deslocado para fora do campo de pesquisa do Windows Explorer, o que não permitia que o NVDA interagisse com ele.
 - O Modo de Navegação agora é usado para conteúdos de Adobe Flash em tela cheia.
-- Corrigida uma deficiência na qualidade de áudio em alguns casos em que eram usadas vozes Microsoft Speech API version 5 com a saída de áudio ajustada para outra que não fosse a padrão (Mapeador de Som da Microsoft). (#749)
+- Corrigida uma deficiência na qualidade de áudio que havia em alguns casos em que eram usadas vozes Microsoft Speech API version 5 com a saída de áudio ajustada para outra que não fosse a padrão (Mapeador de Som da Microsoft). (#749)
+- é novamente possível usar o NVDA sem fala a fim de valer-se apenas do braille ou do exibidor de fala. (#1963)
+Os comandos da navegação de objetos já não anunciam "sem filhos" e "sem pais", e em lugar disso, anunciam mensagens em concordância com a documentação. Ono idioma original)
 
 
 == Alterações para  Desenvolvedores ==

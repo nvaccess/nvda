@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: main-4804\n"
+"Project-Id-Version: main-4822\n"
 "POT-Creation-Date: 2007-03-07 08:26+Central Europe Standard Time\n"
-"PO-Revision-Date: 2011-11-26 10:05+Central Europe Standard Time\n"
+"PO-Revision-Date: 2011-12-02 14:55+Central Europe Standard Time\n"
 "Last-Translator: Peter Vágner <peter.v@datagate.sk>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
-#: IAccessibleHandler.py:695
+#: IAccessibleHandler.py:694
 msgid "Secure Desktop"
 msgstr "Zabezpečená pracovná plocha"
 
@@ -573,11 +573,11 @@ msgstr "h%s"
 msgid "vlnk"
 msgstr "nodk"
 
-#: braille.py:280 speech.py:871
+#: braille.py:280 speech.py:874
 msgid "not %s"
 msgstr "ne %s"
 
-#: braille.py:293 speech.py:879
+#: braille.py:293 speech.py:882
 msgid "%s of %s"
 msgstr "%s z %s"
 
@@ -729,8 +729,8 @@ msgid "orange"
 msgstr "oranžová"
 
 #: compoundDocuments.py:401
-#: globalCommands.py:119 speech.py:305
-#: speech.py:492 speech.py:505
+#: globalCommands.py:119 speech.py:308
+#: speech.py:495 speech.py:508
 #: virtualBuffers\__init__.py:695
 msgid "selected %s"
 msgstr "vybrané %s"
@@ -832,7 +832,7 @@ msgstr "bublinková nápoveda"
 msgid "tool tip"
 msgstr "kontextová nápoveda"
 
-#: controlTypes.py:201 speech.py:1132
+#: controlTypes.py:201 speech.py:1135
 msgid "link"
 msgstr "odkaz"
 
@@ -1252,7 +1252,7 @@ msgstr "názov písma"
 msgid "font size"
 msgstr "veľkosť písma"
 
-#: controlTypes.py:308 speech.py:1084
+#: controlTypes.py:308 speech.py:1087
 msgid "bold"
 msgstr "tučné"
 
@@ -1272,11 +1272,11 @@ msgstr "farba popredia"
 msgid "background color"
 msgstr "farba pozadia"
 
-#: controlTypes.py:313 speech.py:1106
+#: controlTypes.py:313 speech.py:1109
 msgid "superscript"
 msgstr "horný index"
 
-#: controlTypes.py:314 speech.py:1108
+#: controlTypes.py:314 speech.py:1111
 msgid "subscript"
 msgstr "dolný index"
 
@@ -1799,8 +1799,8 @@ msgstr ""
 "mový kurzor na miesto, kam ukazuje prehliadací kurzor."
 
 #: globalCommands.py:357
-msgid "No parents"
-msgstr "Žiadne nadradené objekty"
+msgid "No containing object"
+msgstr "Žiadny nadradený objekt"
 
 #: globalCommands.py:358
 msgid "Moves the navigator object to the object containing it"
@@ -1823,11 +1823,11 @@ msgid "Moves the navigator object to the previous object"
 msgstr "Premiestni navigačný objekt na predchádzajúci objekt"
 
 #: globalCommands.py:399
-msgid "No children"
-msgstr "Žiadne podradené objekty"
+msgid "No objects inside"
+msgstr "žiadne vnorené objekty"
 
 #: globalCommands.py:400
-msgid "Moves the navigator object to the first object it contains"
+msgid "Moves the navigator object to the first object inside it"
 msgstr "Premiestni navigačný objekt na prvý podradený objekt"
 
 #: globalCommands.py:410
@@ -2103,7 +2103,7 @@ msgstr "Neoznamovať aktualizáciu indikátora priebehu"
 
 #: globalCommands.py:770
 msgid "speak progress bar updates"
-msgstr "Čítať aktualizáciu indikátora priebehu"
+msgstr "Oznamovať aktualizáciu indikátora priebehu"
 
 #: globalCommands.py:773
 msgid "beep for progress bar updates"
@@ -2123,7 +2123,7 @@ msgstr ""
 
 #: globalCommands.py:787
 msgid "report dynamic content changes"
-msgstr "Čítať dynamicky menený obsah"
+msgstr "Oznamovať dynamicky menený obsah"
 
 #: globalCommands.py:788
 msgid ""
@@ -2900,7 +2900,7 @@ msgstr "Nastavenia myši"
 
 #: gui\settingsDialogs.py:556
 msgid "Report mouse &shape changes"
-msgstr "Hlásiť zmeny &tvaru kurzora myši"
+msgstr "Oznamovať zmeny &tvaru kurzora myši"
 
 #: gui\settingsDialogs.py:559
 msgid "Enable mouse &tracking"
@@ -2964,15 +2964,15 @@ msgstr "Čítať a pípať"
 
 #: gui\settingsDialogs.py:635
 msgid "Report &tooltips"
-msgstr "Čítať kon&textovú nápovedu"
+msgstr "Oznamovať kon&textovú nápovedu"
 
 #: gui\settingsDialogs.py:638
 msgid "Report &help balloons"
-msgstr "Čítať &bublinkovú nápovedu"
+msgstr "Oznamovať &bublinkovú nápovedu"
 
 #: gui\settingsDialogs.py:641
 msgid "Report object shortcut &keys"
-msgstr "Čítať skratkové &klávesy objektov"
+msgstr "Oznamovať skratkové &klávesy objektov"
 
 #: gui\settingsDialogs.py:644
 msgid "Report object &position information"
@@ -3000,7 +3000,7 @@ msgstr "Oznamovať aktualizáciu indikátorov priebehu na pozadí"
 
 #: gui\settingsDialogs.py:669
 msgid "Report dynamic &content changes"
-msgstr "Čítať dynamicky menený obsah"
+msgstr "Oznamovať dynamicky menený obsah"
 
 #: gui\settingsDialogs.py:689
 msgid "Browse mode"
@@ -3049,7 +3049,7 @@ msgstr ""
 
 #: gui\settingsDialogs.py:753
 msgid "Report font &name"
-msgstr "Čítať &názov písma"
+msgstr "Oznamovať &názov písma"
 
 #: gui\settingsDialogs.py:756
 msgid "Report font &size"
@@ -3057,11 +3057,11 @@ msgstr "Oznamovať &veľkosť písma"
 
 #: gui\settingsDialogs.py:759
 msgid "Report font attri&butes"
-msgstr "Čítať v&lastnosti písma"
+msgstr "Oznamovať v&lastnosti písma"
 
 #: gui\settingsDialogs.py:762
 msgid "Report &alignment"
-msgstr "Čítať &zarovnanie"
+msgstr "Oznamovať &zarovnanie"
 
 #: gui\settingsDialogs.py:765
 msgid "Report &colors"
@@ -3533,156 +3533,156 @@ msgstr "NVDA python konzola"
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "Emuluje stlačenie klávesu %s na systémovej klávesnici"
 
-#: speech.py:165 speech.py:327
-#: speech.py:820
+#: speech.py:168 speech.py:330
+#: speech.py:823
 msgid "blank"
 msgstr "prázdny"
 
-#: speech.py:196
+#: speech.py:199
 msgid "cap %s"
 msgstr "Veľké %s"
 
-#: speech.py:352
+#: speech.py:355
 msgid "no indent"
 msgstr "neodsadené"
 
-#: speech.py:435
+#: speech.py:438
 msgid "%d characters"
 msgstr "%d znakov"
 
-#: speech.py:487
+#: speech.py:490
 msgid "selecting %s"
 msgstr "Vybrané %s"
 
-#: speech.py:498
+#: speech.py:501
 msgid "unselecting %s"
 msgstr "Nevybrané %s"
 
-#: speech.py:500
+#: speech.py:503
 msgid "selection removed"
 msgstr "Výber vymazaný."
 
-#: speech.py:869
+#: speech.py:872
 msgid "done dragging"
 msgstr "akcia ťahať a pustiť ukončená"
 
-#: speech.py:885 speech.py:888
+#: speech.py:888 speech.py:891
 msgid "level %s"
 msgstr "úroveň %s"
 
-#: speech.py:901 speech.py:1177
+#: speech.py:904 speech.py:1180
 msgid "row %s"
 msgstr "Riadok %s"
 
-#: speech.py:908 speech.py:1173
+#: speech.py:911 speech.py:1176
 msgid "column %s"
 msgstr "Stĺpec %s"
 
-#: speech.py:913
+#: speech.py:916
 msgid "with %s rows and %s columns"
 msgstr "s %s riadkami a %s stĺpcami"
 
-#: speech.py:915
+#: speech.py:918
 msgid "with %s columns"
 msgstr "má %s riadkov"
 
-#: speech.py:917
+#: speech.py:920
 msgid "with %s rows"
 msgstr "má %s stĺpcov"
 
-#: speech.py:986
+#: speech.py:989
 msgid "with %s items"
 msgstr "má %s položiek"
 
-#: speech.py:1012 speech.py:1132
+#: speech.py:1015 speech.py:1135
 msgid "out of %s"
 msgstr "mimo %s"
 
-#: speech.py:1036
+#: speech.py:1039
 msgid "page %s"
 msgstr "Strana %s"
 
-#: speech.py:1043
+#: speech.py:1046
 msgid "style %s"
 msgstr "Štýl %s"
 
-#: speech.py:1045
+#: speech.py:1048
 msgid "default style"
 msgstr "Predvolený štýl"
 
-#: speech.py:1073
+#: speech.py:1076
 msgid "on {backgroundColor}"
 msgstr "na {backgroundColor}"
 
-#: speech.py:1078
+#: speech.py:1081
 msgid "line %s"
 msgstr "Riadok %s"
 
-#: speech.py:1084
+#: speech.py:1087
 msgid "no bold"
 msgstr "Nie tučné"
 
-#: speech.py:1089
+#: speech.py:1092
 msgid "italic"
 msgstr "kurzíva"
 
-#: speech.py:1089
+#: speech.py:1092
 msgid "no italic"
 msgstr "Nie kurzíva"
 
-#: speech.py:1094
+#: speech.py:1097
 msgid "no strikethrough"
 msgstr "Neprečiarknuté"
 
-#: speech.py:1094
+#: speech.py:1097
 msgid "strikethrough"
 msgstr "Prečiarknuté"
 
-#: speech.py:1099
+#: speech.py:1102
 msgid "not underlined"
 msgstr "Nepodčiarknuté"
 
-#: speech.py:1099
+#: speech.py:1102
 msgid "underlined"
 msgstr "Podčiarknuté"
 
-#: speech.py:1110
+#: speech.py:1113
 msgid "baseline"
 msgstr "Bez indexov"
 
-#: speech.py:1118
+#: speech.py:1121
 msgid "align left"
 msgstr "Zarovnané vľavo"
 
-#: speech.py:1120
+#: speech.py:1123
 msgid "align center"
 msgstr "Zarovnané na stred"
 
-#: speech.py:1122
+#: speech.py:1125
 msgid "align right"
 msgstr "Zarovnané vpravo"
 
-#: speech.py:1124
+#: speech.py:1127
 msgid "align justify"
 msgstr "Zarovnané do bloku"
 
-#: speech.py:1126
+#: speech.py:1129
 msgid "align default"
 msgstr "Predvolené zarovnanie"
 
-#: speech.py:1139
+#: speech.py:1142
 msgid "spelling error"
 msgstr "Pravopisná chyba"
 
-#: speech.py:1141
+#: speech.py:1144
 msgid "out of spelling error"
 msgstr "Mimo pravopisnej chyby"
 
-#: speech.py:1159
+#: speech.py:1162
 msgid "out of table"
 msgstr "Mimo tabuľky"
 
-#: speech.py:1168
+#: speech.py:1171
 msgid "table with %s columns and %s rows"
 msgstr "Tabuľka s %s stĺpcami a %s riadkami"
 

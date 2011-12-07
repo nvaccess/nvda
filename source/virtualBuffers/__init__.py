@@ -891,7 +891,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if controlTypes.STATE_FOCUSABLE not in states and controlTypes.STATE_FOCUSED not in states:
 			return False
 		role = obj.role
-		if controlTypes.STATE_READONLY in states and role != controlTypes.ROLE_EDITABLETEXT:
+		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX):
 			return False
 		if reason == speech.REASON_CARET:
 			return role == controlTypes.ROLE_EDITABLETEXT or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
