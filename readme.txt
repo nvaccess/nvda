@@ -137,7 +137,7 @@ The developer docs will be placed in the devDocs folder in the output directory.
 To generate an archive of debug symbols for the various dll/exe binaries, type:
 scons symbolsArchive
 The archive will be placed in the output directory.
- 
+
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.
 	* release: Whether this is a release version.
