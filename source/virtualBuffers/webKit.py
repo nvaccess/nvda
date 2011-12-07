@@ -68,7 +68,7 @@ class WebKit(VirtualBuffer):
 			return None
 		return NVDAObjects.IAccessible.IAccessible(
 			IAccessibleObject=oleacc.ObjectFromLresult(lresult, 0, oleacc.IAccessible),
-			IAccessibleChildID=0)
+			IAccessibleChildID=0, windowHandle=self.rootDocHandle)
 
 	def getIdentifierFromNVDAObject(self,obj):
 		if obj == self.rootNVDAObject:
