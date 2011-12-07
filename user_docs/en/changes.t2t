@@ -17,6 +17,7 @@
 - It is now possible to have braille displayed by paragraphs instead of lines, which may allow for more fluent reading of large amounts of text. This is configurable using the Read by paragraphs option in the Braille Settings dialog. (#1891)
 - In browse mode, you can activate the object under the cursor using a braille display. This is done by pressing the cursor routing key where the cursor is located (which means pressing it twice if the cursor is not already there). (#1893)
 - Basic support for web areas in iTunes such as the Store. Other applications using WebKit 1 may also be supported. (#734)
+- In books in Adobe Digital Editions 1.8.1 and later, pages are now turned automatically when using say all. (#1978)
 
 
 == Changes ==
@@ -37,6 +38,7 @@
 - The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
 - TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
  - This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
+- TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
 
 
 = 2011.3 =

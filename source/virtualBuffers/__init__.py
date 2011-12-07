@@ -685,8 +685,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if not self.passThrough:
 			if doSayAll:
 				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=speech.REASON_FOCUS)
-				info=self.makeTextInfo(textInfos.POSITION_CARET)
-				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+				sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 			else:
 				# Speak it like we would speak focus on any other document object.
 				speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)

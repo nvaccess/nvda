@@ -444,3 +444,15 @@ def convertToCrlf(text):
 	@rtype: str
 	"""
 	return RE_EOL.sub("\r\n", text)
+
+class DocumentWithPageTurns(baseObject.ScriptableObject):
+	"""A document which supports multiple pages of text, but only exposes one page at a time.
+	"""
+
+	def turnPage(self, previous=False):
+		"""Switch to the next/previous page of text.
+		@param previous: C{True} to turn to the previous page, C{False} to turn to the next.
+		@type previous: bool
+		@raise RuntimeError: If there are no further pages.
+		"""
+		raise NotImplementedError
