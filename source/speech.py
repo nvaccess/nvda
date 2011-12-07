@@ -308,10 +308,10 @@ def speakObject(obj,reason=REASON_QUERY,index=None):
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
-				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=reason)
+				speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=REASON_CARET)
 		except:
 			newInfo=obj.makeTextInfo(textInfos.POSITION_ALL)
-			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=reason)
+			speakTextInfo(newInfo,unit=textInfos.UNIT_PARAGRAPH,reason=REASON_CARET)
 
 def speakText(text,index=None,reason=REASON_MESSAGE,symbolLevel=None):
 	"""Speaks some text.
@@ -989,7 +989,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		return roleText+" "+_("with %s items")%childCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
-		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount"))))
+		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
 	elif fieldType in ("start_addedToControlFieldStack","start_relative") and role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLECOLUMNHEADER,controlTypes.ROLE_TABLEROWHEADER) and tableID:
 		# Table cell.
 		reportTableHeaders = formatConfig["reportTableHeaders"]
@@ -1133,6 +1133,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldLink=attrsCache.get("link") if attrsCache is not None else None
 		if (link or oldLink is not None) and link!=oldLink:
 			text=_("link") if link else _("out of %s")%_("link")
+			textList.append(text)
+	if  formatConfig["reportComments"]:
+		comment=attrs.get("comment")
+		oldComment=attrsCache.get("comment") if attrsCache is not None else None
+		if comment and comment!=oldComment:
+			text=_("has comment")
 			textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
 		invalidSpelling=attrs.get("invalid-spelling")

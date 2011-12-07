@@ -5,10 +5,12 @@
 #See the file COPYING for more details.
 
 import ctypes
-from comtypes import COMError, GUID
+from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
+import ui
 import NVDAHelper
+import XMLFormatting
 from logHandler import log
 import winUser
 import oleacc
@@ -17,6 +19,7 @@ import speech
 import config
 import textInfos
 import textInfos.offsets
+import colors
 import controlTypes
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
@@ -63,6 +66,31 @@ wdGoToPrevious=3
 wdGoToPage=1
 wdGoToLine=3
 
+wdCommentsStory=4
+wdEndnotesStory=3
+wdEvenPagesFooterStory=8
+wdEvenPagesHeaderStory=6
+wdFirstPageFooterStory=11
+wdFirstPageHeaderStory=10
+wdFootnotesStory=2
+wdMainTextStory=1
+wdPrimaryFooterStory=9
+wdPrimaryHeaderStory=7
+wdTextFrameStory=5
+
+storyTypeLocalizedLabels={
+	wdCommentsStory:_("Comments"),
+	wdEndnotesStory:_("Endnotes"),
+	wdEvenPagesFooterStory:_("Even pages footer"),
+	wdEvenPagesHeaderStory:_("Even pages header"),
+	wdFirstPageFooterStory:_("First page footer"),
+	wdFirstPageHeaderStory:_("First page header"),
+	wdFootnotesStory:_("Footnotes"),
+	wdPrimaryFooterStory:_("Primary footer"),
+	wdPrimaryHeaderStory:_("Primary header"),
+	wdTextFrameStory:_("Text frame"),
+}
+
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
 
 wm_winword_expandToLine=ctypes.windll.user32.RegisterWindowMessageW(u"wm_winword_expandToLine")
@@ -81,27 +109,24 @@ NVDAUnitsToWordUnits={
 	textInfos.UNIT_READINGCHUNK:wdSentence,
 }
 
-class WordDocumentTextInfo(textInfos.TextInfo):
+formatConfigFlagsMap={
+	"reportFontName":1,
+	"reportFontSize":2,
+	"reportFontAttributes":4,
+	"reportColor":8,
+	"reportAlignment":16,
+	"reportStyle":32,
+	"reportSpellingErrors":64,
+	"reportPage":128,
+	"reportLineNumber":256,
+	"reportTables":512,
+	"reportLists":1024,
+	"reportLinks":2048,
+	"reportComments":4096,
+	"reportHeadings":8192,
+}
 
-	def _moveInTable(self,c=0,r=0):
-		try:
-			cell=self._rangeObj.cells[1]
-		except:
-			return False
-		try:
-			columnIndex=cell.columnIndex
-			rowIndex=cell.rowIndex
-		except:
-			return False
-		if columnIndex==1 and c<0:
-			return False
-		if rowIndex==1 and r<0:
-			return False
-		try:
-			self._rangeObj=self._rangeObj.tables[1].columns[columnIndex+c].cells[rowIndex+r].range
-		except:
-			return False
-		return True
+class WordDocumentTextInfo(textInfos.TextInfo):
 
 	def _expandToLineAtCaret(self):
 		lineStart=ctypes.c_int()
@@ -110,69 +135,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if res!=0:
 			raise ctypes.WinError(res)
 		self._rangeObj.setRange(lineStart.value,lineEnd.value)
-
-	def _getFormatFieldAtRange(self,range,formatConfig):
-		formatField=textInfos.FormatField()
-		fontObj=None
-		paraFormatObj=None
-		listString=range.ListFormat.ListString
-		if listString and range.Paragraphs[1].range.start==range.start:
-			formatField['line-prefix']=listString
-		if formatConfig["reportSpellingErrors"] and range.spellingErrors.count>0: 
-			formatField["invalid-spelling"]=True
-		if formatConfig["reportLineNumber"]:
-			formatField["line-number"]=range.Information(wdFirstCharacterLineNumber)
-		if formatConfig["reportPage"]:
-			formatField["page-number"]=range.Information(wdActiveEndAdjustedPageNumber)
-		if formatConfig["reportStyle"]:
-			formatField["style"]=range.style.nameLocal
-		if formatConfig["reportTables"] and range.Information(wdWithInTable):
-			tableInfo={}
-			tableInfo["column-count"]=range.Information(wdMaximumNumberOfColumns)
-			tableInfo["row-count"]=range.Information(wdMaximumNumberOfRows)
-			tableInfo["column-number"]=range.Information(wdStartOfRangeColumnNumber)
-			tableInfo["row-number"]=range.Information(wdStartOfRangeRowNumber)
-			formatField["table-info"]=tableInfo
-		if formatConfig["reportAlignment"]:
-			if not paraFormatObj: paraFormatObj=range.paragraphFormat
-			alignment=paraFormatObj.alignment
-			if alignment==wdAlignParagraphLeft:
-				formatField["text-align"]="left"
-			elif alignment==wdAlignParagraphCenter:
-				formatField["text-align"]="center"
-			elif alignment==wdAlignParagraphRight:
-				formatField["text-align"]="right"
-			elif alignment==wdAlignParagraphJustify:
-				formatField["text-align"]="justify"
-		if formatConfig["reportFontName"]:
-			if not fontObj: fontObj=range.font
-			formatField["font-name"]=fontObj.name
-		if formatConfig["reportFontSize"]:
-			if not fontObj: fontObj=range.font
-			formatField["font-size"]="%spt"%fontObj.size
-		if formatConfig["reportFontAttributes"]:
-			if not fontObj: fontObj=range.font
-			formatField["bold"]=bool(fontObj.bold)
-			formatField["italic"]=bool(fontObj.italic)
-			formatField["underline"]=bool(fontObj.underline)
-			if fontObj.superscript:
-				formatField["text-position"]="super"
-			elif fontObj.subscript:
-				formatField["text-position"]="sub"
-		return formatField
-
-	def _expandFormatRange(self,range):
-		startLimit=self._rangeObj.start
-		endLimit=self._rangeObj.end
-		#Only Office 2007 onwards supports moving by format changes, -- and only moveEnd works.
-		try:
-			range.MoveEnd(13,1)
-		except:
-			range.Expand(wdWord)
-		if range.start<startLimit:
-			range.start=startLimit
-		if range.end>endLimit:
-			range.end=endLimit
 
 	def __init__(self,obj,position,_rangeObj=None):
 		super(WordDocumentTextInfo,self).__init__(obj,position)
@@ -204,27 +166,60 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
-			formatConfig=config.conf["documentFormatting"]
-		range=self._rangeObj.duplicate
-		range.Collapse()
-		if not formatConfig["detectFormatAfterCursor"]:
-			range.expand(wdCharacter)
-			field=textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig))
-			return [field,self.text]
-		commandList=[]
-		endLimit=self._rangeObj.end
-		range=self._rangeObj.duplicate
-		range.Collapse()
-		while range.end<endLimit:
-			self._expandFormatRange(range)
-			commandList.append(textInfos.FieldCommand("formatChange",self._getFormatFieldAtRange(range,formatConfig)))
-			commandList.append(range.text)
-			end=range.end
-			range.start=end
-			#Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
-			if range.end<end:
-				break
+			formatConfig=config.conf['documentFormatting']
+		startOffset=self._rangeObj.start
+		endOffset=self._rangeObj.end
+		if startOffset==endOffset:
+			return []
+		text=BSTR()
+		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
+		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
+		if res or not text:
+			log.debugWarning("winword_getTextInRange failed with %d"%res)
+			return [self.text]
+		commandList=XMLFormatting.XMLTextParser().parse(text.value)
+		for index in xrange(len(commandList)):
+			if isinstance(commandList[index],textInfos.FieldCommand):
+				field=commandList[index].field
+				if isinstance(field,textInfos.ControlField):
+					commandList[index].field=self._normalizeControlField(field)
+				elif isinstance(field,textInfos.FormatField):
+					commandList[index].field=self._normalizeFormatField(field)
 		return commandList
+
+	def _normalizeControlField(self,field):
+		role=field.pop('role',None)
+		if role=="heading":
+			role=controlTypes.ROLE_HEADING
+		elif role=="table":
+			role=controlTypes.ROLE_TABLE
+			field['table-rowcount']=int(field.get('table-rowcount',0))
+			field['table-columncount']=int(field.get('table-columncount',0))
+		elif role=="tableCell":
+			role=controlTypes.ROLE_TABLECELL
+			field['table-rownumber']=int(field.get('table-rownumber',0))
+			field['table-columnnumber']=int(field.get('table-columnnumber',0))
+		elif role=="footnote":
+			role=controlTypes.ROLE_FOOTNOTE
+		elif role=="endnote":
+			role=controlTypes.ROLE_ENDNOTE
+		else:
+			role=controlTypes.ROLE_UNKNOWN
+		field['role']=role
+		storyType=int(field.pop('wdStoryType',0))
+		if storyType:
+			name=storyTypeLocalizedLabels.get(storyType,None)
+			if name:
+				field['name']=name
+				field['alwaysReportName']=True
+				field['role']=controlTypes.ROLE_FRAME
+		return field
+
+	def _normalizeFormatField(self,field):
+		color=field.pop('color',None)
+		if color is not None:
+			field['color']=colors.RGB.fromCOLORREF(int(color))
+		return field
 
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE and self.basePosition not in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
@@ -372,53 +367,60 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			info.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(info,reason=speech.REASON_CARET)
 
-	def script_nextRow(self,gesture):
-		info=self.makeTextInfo("caret")
-		if not info._rangeObj.Information(wdWithInTable):
- 			speech.speakMessage(_("not in table"))
-			return
-		if info._moveInTable(0,1):
-			info.updateCaret()
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+	def _moveInTable(self,row=True,forward=True):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		commandList=info.getTextWithFields()
+		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.ROLE_TABLE or commandList[2].field.get('role',None)!=controlTypes.ROLE_TABLECELL:
+			ui.message(_("Not in table"))
+			return False
+		rowCount=commandList[1].field.get('table-rowcount',1)
+		columnCount=commandList[1].field.get('table-columncount',1)
+		rowNumber=commandList[2].field.get('table-rownumber',1)
+		columnNumber=commandList[2].field.get('table-columnnumber',1)
+		if row:
+			rowNumber+=1 if forward else -1
 		else:
-			speech.speakMessage(_("edge of table"))
+			columnNumber+=1 if forward else -1
+		if rowNumber<1 or rowNumber>rowCount or columnNumber<1 or columnNumber>columnCount:
+			ui.message(_("Edge of table"))
+			return False
+		try:
+			table=info._rangeObj.tables[1]
+		except COMError:
+			log.debugWarning("Could not get MS Word table object indicated in XML")
+			ui.message(_("Not in table"))
+			return False
+		while (columnNumber if row else rowNumber)>0:
+			try:
+				cell=table.cell(rowNumber,columnNumber)
+				break
+			except COMError:
+				cell=None
+				if row:
+					columnNumber-=1
+				else:
+					rowNumber-=1
+		if not cell:
+			ui.message(_("edge of table"))
+			return False
+		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=cell.range)
+		speech.speakTextInfo(newInfo,reason=speech.REASON_CARET)
+		newInfo.collapse()
+		newInfo.updateCaret()
+		return True
+
+	def script_nextRow(self,gesture):
+		self._moveInTable(row=True,forward=True)
 
 	def script_previousRow(self,gesture):
-		info=self.makeTextInfo("caret")
-		if not info._rangeObj.Information(wdWithInTable):
- 			speech.speakMessage(_("not in table"))
-			return
-		if info._moveInTable(0,-1):
-			info.updateCaret()
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
-		else:
-			speech.speakMessage(_("edge of table"))
+		self._moveInTable(row=True,forward=False)
 
 	def script_nextColumn(self,gesture):
-		info=self.makeTextInfo("caret")
-		if not info._rangeObj.Information(wdWithInTable):
- 			speech.speakMessage(_("not in table"))
-			return
-		if info._moveInTable(1,0):
-			info.updateCaret()
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
-		else:
-			speech.speakMessage(_("edge of table"))
+		self._moveInTable(row=False,forward=True)
 
 	def script_previousColumn(self,gesture):
-		info=self.makeTextInfo("caret")
-		if not info._rangeObj.Information(wdWithInTable):
- 			speech.speakMessage(_("not in table"))
-			return
-		if info._moveInTable(-1,0):
-			info.updateCaret()
-			info.expand(textInfos.UNIT_CELL)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
-		else:
-			speech.speakMessage(_("edge of table"))
+		self._moveInTable(row=False,forward=False)
 
 	__gestures = {
 		"kb:tab": "tab",

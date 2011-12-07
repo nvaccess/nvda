@@ -10,6 +10,9 @@
 - NVDA can now detect key presses generated from alternative keyboard input emulation such as on-screen keyboards and speech recognition software.
 - NVDA can now detect colors in Windows command consoles.
 - Bold, italic and underline are now indicated in braille using signs appropriate to the configured translation table. (#538)
+- Much more information is now reported in Microsoft Word documents, including:
+ - Inline information such as footnote and endnote numbers, heading levels, the existance of comments, table nesting levels, links, and text color;
+ - Reporting when entering document sections such as the comments story, footnotes and endnotes stories, and header and footer stories.
 - Braille now indicates selected text using dots 7 and 8. (#889)
 - Braille now reports information about controls within documents such as links, buttons and headings. (#202)
 - Support for the hedo ProfiLine and MobilLine USB braille displays. (#1863, #1897)
@@ -26,6 +29,7 @@
 
 == Bug Fixes ==
 - In Windows 8, focus is no longer incorrectly moved away from the Windows Explorer search field, which was  not allowing NVDA to   interact with it.
+- Major performance  improvements when reading and navigating Microsoft word documents while automatic reporting of formatting is enabled, thus now making it quite comfortable to proof read formatting etc. Performance may be also improved over all for some users.
 - Browse mode is now used for full screen Adobe Flash content.
 - Fixed poor audio quality in some cases when using Microsoft Speech API version 5 voices with the audio output device set to something other than the default (Microsoft Sound Mapper). (#749)
 - Again allow NVDA to be used with the "no speech" synthesizer, relying purely   on braille or the speech viewer. (#1963)
