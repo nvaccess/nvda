@@ -34,5 +34,5 @@ class BookContent(DocumentWithPageTurns, UIA):
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.role == controlTypes.ROLE_DOCUMENT:
+		if isinstance(obj, UIA) and obj.role == controlTypes.ROLE_DOCUMENT:
 			clsList.insert(0, BookContent)
