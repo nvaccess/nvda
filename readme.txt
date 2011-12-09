@@ -22,13 +22,10 @@ General dependencies:
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
-	* liblouis, version 2.3.0 or later, Windows dll and Python bindings:
+	* liblouis, version 2.3.0 or later:
 		* Official web site: http://code.google.com/p/liblouis/
-		* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy the louis Python package directory into the source directory.
-		* Copy the liblouis dll into the source directory.
-		* Copy the liblouis translation tables into the source\louis\tables directory.
-			* In the pre-built version, this has already been done.
+		* Download the liblouis source archive.
+		* Extract the contents of the top level directory in the archive into include\liblouis.
 	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/
 		* Extract the archive into the root of your NVDA source distribution.
 	* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
