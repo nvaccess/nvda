@@ -111,3 +111,5 @@ env.Install(libInstallDir,webKitVBufBackend)
 
 if TARGET_ARCH=='x86' and os.path.isdir(Dir('#include/espeak').abspath):
 	env.SConscript('espeak/sconscript')
+if TARGET_ARCH=='x86' and os.path.isdir(Dir('#include/liblouis').abspath):
+	env.SConscript('liblouis/sconscript')
