@@ -76,15 +76,28 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 ) {
 	nhAssert(buffer);
 
-	VBufStorage_fieldNode_t* tempNode;
 	//all IAccessible methods take a variant for childID, get one ready
 	VARIANT varChild;
 	varChild.vt=VT_I4;
 	varChild.lVal=0;
 
+	// Get role with accRole
+	VARIANT varRole;
+	VariantInit(&varRole);
+	pacc->get_accRole(varChild, &varRole);
+
+	if (varRole.vt == VT_I4 && varRole.lVal == ROLE_SYSTEM_COLUMN) {
+		// WebKit provides both row and column representations for tables,
+		// duplicating the table cells.
+		// We never want the column representation.
+		return NULL;
+	}
+	// varRole is still needed. It will be cleaned up later.
+
 	int id = ++idCounter;
 	//Make sure that we don't already know about this object -- protect from loops
 	if(buffer->getControlFieldNodeWithIdentifier(docHandle,id)!=NULL) {
+		VariantClear(&varRole);
 		pacc->Release();
 		return NULL;
 	}
@@ -94,14 +107,12 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 		new WebKitVBufStorage_controlFieldNode_t(docHandle, id, true, pacc, this));
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
+	VBufStorage_fieldNode_t* tempNode;
 
 	wostringstream s;
 
-	// Get role with accRole
 	long role = 0;
-	VARIANT varRole;
-	VariantInit(&varRole);
-	if(pacc->get_accRole(varChild,&varRole)!=S_OK) {
+	if(varRole.vt==VT_EMPTY) {
 		s<<0;
 	} else if(varRole.vt==VT_BSTR) {
 		s << varRole.bstrVal;
