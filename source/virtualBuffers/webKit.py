@@ -109,6 +109,8 @@ class WebKit(VirtualBuffer):
 			attrs={"IAccessible::role":["H1","H2","H3","H4","H5","H6"]}
 		elif nodeType=="link":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1]}
+		elif nodeType=="table":
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TABLE]}
 		else:
 			return None
 		return attrs
