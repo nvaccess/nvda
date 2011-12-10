@@ -217,8 +217,8 @@ class AdobeAcrobatVBufStorage_controlFieldNode_t: public VBufStorage_controlFiel
 	friend class AdobeAcrobatVBufBackend_t;
 };
 
-VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
-	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
+	AdobeAcrobatVBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	TableInfo* tableInfo
 ) {
 	int res;
@@ -254,9 +254,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 
 	//Add this node to the buffer
 	LOG_DEBUG(L"Adding Node to buffer");
-	VBufStorage_controlFieldNode_t* oldParentNode = parentNode;
-	parentNode = buffer->addControlFieldNode(parentNode, previousNode, 
-		new AdobeAcrobatVBufStorage_controlFieldNode_t(docHandle, ID, true));
+	AdobeAcrobatVBufStorage_controlFieldNode_t* oldParentNode = parentNode;
+	parentNode = static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(buffer->addControlFieldNode(parentNode, previousNode, 
+		new AdobeAcrobatVBufStorage_controlFieldNode_t(docHandle, ID, true)));
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
 	LOG_DEBUG(L"Added  node at "<<parentNode);
@@ -316,7 +316,6 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 	}
 
 	BSTR stdName = NULL;
-	wstring* lang = &static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(parentNode)->language;
 	if (domElement) {
 		// Get stdName.
 		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
@@ -334,14 +333,14 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 		// Get language.
 		BSTR srcLang = NULL;
 		if (domElement->GetAttribute(L"Lang", NULL, &srcLang) == S_OK && srcLang) {
-			*lang = srcLang;
+			parentNode->language = srcLang;
 			SysFreeString(srcLang);
 		}
 	}
 
 	// If this node has no language, inherit it from its parent node.
-	if (oldParentNode && lang->empty())
-		*lang = static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(oldParentNode)->language;
+	if (oldParentNode && parentNode->language.empty())
+		parentNode->language = oldParentNode->language;
 
 	//Get the child count
 	int childCount=0;
@@ -454,7 +453,7 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			// Render the name before this node,
 			// as the label is often not a separate node and thus won't be rendered into the buffer.
 			tempNode = buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
-			tempNode->addAttribute(L"language", *lang);
+			tempNode->addAttribute(L"language", parentNode->language);
 		}
 
 		// Hereafter, tempNode is the text node (if any).
@@ -463,9 +462,9 @@ VBufStorage_fieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAcc
 			// Acrobat renders "Checked"/"Unchecked" as the text for radio buttons/check boxes, which is not what we want.
 			// Render the name (if any) as the text for radio buttons and check boxes.
 			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
-				tempNode->addAttribute(L"language", *lang);
+				tempNode->addAttribute(L"language", parentNode->language);
 		} else
-			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent, *lang);
+			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent, parentNode->language);
 		if (tempNode) {
 			// There was text.
 			previousNode = tempNode;

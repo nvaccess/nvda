@@ -23,11 +23,13 @@ typedef struct {
 	int curColumnNumber;
 } TableInfo;
 
+class AdobeAcrobatVBufStorage_controlFieldNode_t;
+
 class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 	private:
 
-	VBufStorage_fieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
-		VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+	AdobeAcrobatVBufStorage_controlFieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
+		AdobeAcrobatVBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 		TableInfo* tableInfo = NULL
 	);
 
