@@ -1030,6 +1030,10 @@ class BrailleSettingsDialog(SettingsDialog):
 		item.Value = config.conf["braille"]["readByParagraph"]
 		settingsSizer.Add(item, border=10, flag=wx.BOTTOM)
 
+		item = self.wordWrapCheckBox = wx.CheckBox(self, label=_("Avoid splitting &words when possible"))
+		item.Value = config.conf["braille"]["wordWrap"]
+		settingsSizer.Add(item, border=10, flag=wx.BOTTOM)
+
 	def postInit(self):
 		self.displayList.SetFocus()
 
@@ -1054,6 +1058,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			config.conf["braille"]["messageTimeout"] = val
 		braille.handler.tether = self.tetherValues[self.tetherList.GetSelection()][0]
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
+		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 class SpeechSymbolsDialog(SettingsDialog):

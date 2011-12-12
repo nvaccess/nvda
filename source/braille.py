@@ -737,6 +737,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		cellsLen = len(self.brailleCells)
 		if endPos >= cellsLen:
 			return cellsLen
+		if not config.conf["braille"]["wordWrap"]:
+			return endPos
 		try:
 			# Try not to split words across windows.
 			# To do this, break after the furthest possible space.
@@ -757,6 +759,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			restrictPos = 0
 		if startPos <= restrictPos:
 			self.windowStartPos = restrictPos
+			return
+		if not config.conf["braille"]["wordWrap"]:
+			self.windowStartPos = startPos
 			return
 		try:
 			# Try not to split words across windows.

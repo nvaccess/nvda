@@ -76,6 +76,7 @@ confspec = ConfigObj(StringIO(
 	messageTimeout = integer(default=4,min=1,max=20)
 	tetherTo = string(default="focus")
 	readByParagraph = boolean(default=false)
+	wordWrap = boolean(default=true)
 
 # Presentation settings
 [presentation]

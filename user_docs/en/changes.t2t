@@ -16,7 +16,7 @@
 - Braille now indicates selected text using dots 7 and 8. (#889)
 - Braille now reports information about controls within documents such as links, buttons and headings. (#202)
 - Support for the hedo ProfiLine and MobilLine USB braille displays. (#1863, #1897)
-- NVDA now avoids splitting words in braille when possible. (#1890)
+- NVDA now avoids splitting words in braille when possible by default. This can be disabled in the Braille Settings dialog. (#1890, #1946)
 - It is now possible to have braille displayed by paragraphs instead of lines, which may allow for more fluent reading of large amounts of text. This is configurable using the Read by paragraphs option in the Braille Settings dialog. (#1891)
 - In browse mode, you can activate the object under the cursor using a braille display. This is done by pressing the cursor routing key where the cursor is located (which means pressing it twice if the cursor is not already there). (#1893)
 - Basic support for web areas in iTunes such as the Store. Other applications using WebKit 1 may also be supported. (#734)
