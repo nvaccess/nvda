@@ -126,7 +126,6 @@ using namespace std;
 #define formatConfig_reportComments 4096
 #define formatConfig_reportHeadings 8192
 
- 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
  
@@ -510,14 +509,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		}
 		XMLStream<<L"<text ";
 		XMLStream<<initialFormatAttribsStream.str();
-		generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,(firstLoop?formatConfig:formatConfig&~formatConfig_reportLists),XMLStream);
+		generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
 		XMLStream<<L">";
 		if(firstLoop) {
-			//If there is no general formatting to look for  then expand all the way to the end
-			if(!formatConfig) {
-				_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
-				chunkEndOffset=args->endOffset;
-			}
+			formatConfig&=(~formatConfig_reportLists);
 			firstLoop=false;
 		}
 		if(text) {
