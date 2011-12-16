@@ -370,7 +370,9 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_CHARACTER)
-		commandList=info.getTextWithFields()
+		formatConfig=config.conf['documentFormatting'].copy()
+		formatConfig['reportTables']=True
+		commandList=info.getTextWithFields(formatConfig)
 		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.ROLE_TABLE or commandList[2].field.get('role',None)!=controlTypes.ROLE_TABLECELL:
 			ui.message(_("Not in table"))
 			return False
