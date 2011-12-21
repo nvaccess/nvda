@@ -6,7 +6,6 @@ import winKernel
 from ctypes import *
 from comtypes import BSTR
 import winUser
-import speech
 import eventHandler
 import queueHandler
 import api

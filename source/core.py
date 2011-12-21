@@ -164,6 +164,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
 	log.debug("Creating wx application instance")
+	import NVDAHelper
+	log.debug("Initializing NVDAHelper")
+	NVDAHelper.initialize()
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
@@ -196,9 +199,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import braille
 	log.debug("Initializing braille")
 	braille.initialize()
-	import NVDAHelper
-	log.debug("Initializing NVDAHelper")
-	NVDAHelper.initialize()
 	import displayModel
 	log.debug("Initializing displayModel")
 	displayModel.initialize()
