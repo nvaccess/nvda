@@ -17,15 +17,15 @@ def localeNameToWindowsLCID(localeName):
 	@returns: a Windows LCID
 	@rtype: integer
 	""" 
-	localeName=locale.normalize(localeName)
-	if '.' in localeName:
-		localeName=localeName.split('.')[0]
 	#Windows Vista is able to convert locale names to LCIDs
 	func_LocaleNameToLCID=getattr(ctypes.windll.kernel32,'LocaleNameToLCID',None)
 	if func_LocaleNameToLCID is not None:
 		localeName=localeName.replace('_','-')
 		LCID=func_LocaleNameToLCID(unicode(localeName),0)
 	else: #Windows doesn't have this functionality, manually search Python's windows_locale dictionary for the LCID
+		localeName=locale.normalize(localeName)
+		if '.' in localeName:
+			localeName=localeName.split('.')[0]
 		LCList=[x[0] for x in locale.windows_locale.iteritems() if x[1]==localeName]
 		if len(LCList)>0:
 			LCID=LCList[0]
