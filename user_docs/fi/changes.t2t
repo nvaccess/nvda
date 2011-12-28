@@ -10,24 +10,32 @@
 - NVDA havaitsee nyt vaihtoehtoisen näppäimistösyöte-emulaation, kuten ruutunäppäimistöjen ja puheentunnistusohjelmistojen, tuottamat näppäinpainallukset.
 - NVDA havaitsee nyt värit Windowsin komentokonsoleissa.
 - Lihavointi, kursiivi ja alleviivaus ilmaistaan nyt pistenäytöllä käytettävässä pistetaulukossa määritetyillä merkeillä. (#538)
+- Microsoft Word -dokumenteissa luetaan nyt paljon enemmän tietoja, mukaan lukien:
+ - Ala- ja loppuviitteiden numerot, otsikkotasot, kommentit, taulukon sisäkkäiset tasot, linkit ja tekstin väri
+ - Ilmoitus tultaessa dokumentin eri osiin, kuten kommenttiselitteeseen, ala- ja loppuviite- sekä ylä- ja alatunnisteselitteisiin.
 - Valittu teksti ilmaistaan nyt pistenäytöllä pisteillä 7 ja 8. (#889)
 - Pistenäytöllä näytetään nyt tiedot dokumenteissa olevista säätimistä, kuten linkeistä, painikkeista ja otsikoista. (#202)
-- Tuki hedo ProfiLine USB -pistenäytölle. (#1863)
-- NVDA välttää nyt sanojen jakamista pistenäytöllä aina kun mahdollista. (#1890)
+- Tuki hedo ProfiLine- ja MobilLine USB -pistenäytöille. (#1863, #1897)
+- NVDA välttää nyt oletusarvoisesti sanojen katkaisemista pistenäytöllä aina kun mahdollista. Asetus voidaan poistaa käytöstä Pistenäytön asetukset -valintaikkunassa. (#1890, #1946)
 - Tekstin näyttäminen pistenäytöllä on nyt mahdollista kappaleittain, mikä voi mahdollistaa suurten tekstimäärien sujuvamman lukemisen. Tämä on määritettävissä Lue kappaleittain -asetuksella Pistenäytön asetukset -valintaikkunassa. (#1891)
 - Kohdistimen alla oleva objekti voidaan aktivoida selaustilassa pistenäytöltä. Tämä tehdään painamalla kosketuskohdistinnäppäintä kohdistimen kohdalla (mikä tarkoittaa sen kahdesti painamista, mikäli kohdistin ei jo ole siinä). (#1893)
+- Alkeellinen tuki iTunesin web-osioille, kuten Storelle. Mahdollisesti myös muita WebKit 1:tä käyttäviä sovelluksia tuetaan. (#734)
+- Kirjojen sivuja käännetään nyt automaattisesti Adobe Digital Editions 1.8.1:ssä ja uudemmissa lue kaikki -toimintoa käytettäessä. (#1978)
 
 
 == Muutokset ==
 - Nykyisen merkin kuvailu- ja sanan tai rivin tavauskomennot tavaavat nyt tekstin kielen mukaisesti, mikäli automaattinen kielen vaihtaminen on käytössä ja asianmukainen kielimääritys on käytettävissä.
+- NVDA suodattaa nyt hyvin pitkät kuvien ja linkkien URL-osoitteista arvatut nimet (30 merkkiä tai enemmän), sillä ne ovat todennäköisimmin turhia ja haittaavat vain tekstin lukemista. (#1989)
 
 
 == Korjatut ohjelmavirheet ==
 - Kohdistusta ei enää Windows 8:ssa siirretä virheellisesti pois Resurssienhallinnan hakukentästä, mikä esti kyseisen kentän käytön NVDA:lla.
+- Merkittäviä suorituskyvyn parannuksia luettaessa ja liikuttaessa Microsoft word -dokumenteissa automaattisen muotoilutietojen lukemisen ollessa käytössä, eli muotoilujen oikolukeminen jne on nyt jokseenkin vaivatonta. Joillakin käyttäjillä myös yleinen suorituskyky voi parantua.
 - Selaustilaa käytetään nyt koko ruudun Adobe Flash -sisällölle.
 - Korjattu huono äänenlaatu joissakin tapauksissa käytettäessä Microsoft Speech API version 5 puheääniä, kun äänilaitteeksi on määritetty jokin muu kuin oletusarvoisesti käytettävä Microsoft Sound Mapper. (#749)
 - NVDA:n käyttäminen "Ei puhetta" -syntetisaattorilla on jälleen mahdollista. (#1963)
 - Objektinavigointikomentoja käytettäessä ei enää ilmoiteta "Ei alemman tason objekteja" tai "Ei ylemmän tason objekteja", vaan käytetään ilmoituksia, jotka ovat yhdenmukaisia käyttöoppaassa mainittujen termien kanssa.
+- Kun NVDA on määritetty käyttämään muuta kieltä kuin englantia, sarkain-näppäimen nimi sanotaan nyt asianmukaisesti kyseisellä kielellä.
 
 
 = 2011.3 =
