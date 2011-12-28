@@ -3,6 +3,48 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.1 =
+
+== neue Funktionen ==
+- Nvda kann nun die Anzahl führender Tabs und Leerzeichen in der aktuellen Zeile in der Reihenfolge angeben, in der sie eingegeben wurden. Dies kann in den einstellungen zur Dokumentformatierung mit der Option "Zeileneinrückungen ansagen" eingestellt werden. (#373)
+- NVDA kann nun Tastendrücke erkennen, die mittels Eingabeemulationen wie etwa bildschirmtastaturen oder Spracherkennungssoftware erzeugt wurden.
+- Farben in Konsolenanwendungen werden nun korrekt erkannt.
+- Wenn Text fett, unterstrichen oder kursiv formatiert ist, wird er nun in Braille mit Hilfe von Zeichen dargestellt, die zur aktuell eingestellten Übersetzungstabelle passen. (#538)
+**- Much more information is now reported in Microsoft Word documents, including:
+** - Inline information such as footnote and endnote numbers, heading levels, the existance of comments, table nesting levels, links, and text color;
+** - Reporting when entering document sections such as the comments story, footnotes and endnotes stories, and header and footer stories.
+- Markierter Text wird nun in Braille durch Unterstreichen mit den Punkten 7 und 8 angezeigt. (#889)
+- in Braille werden nun Steuerelemente innerhalb eines Textes als solche dargestellt (wie z.B. Links, Überschriften oder Schalter. (#202)
+- Unterstützung für die hedo ProfiLine und MobilLine USB Braillezeilen. (#1863, #1897)
+- Wenn möglich verhindert NVDA nun standardmäßig den Wortumbruch in Braille. Dies kann in den Braille-Einstellungen ausgeschaltet werden. (#1890, #1946)
+- Text kann auf der Braillezeile Absatzweise anstatt Zeilenweise angezeigt werden. Dies erlaubt ein flüssigeres Lesen großer Textmengen. Die Einstellung kann über die Option "absatzweise lesen" in den Braille-Einstellungen konfiguriert werden. (#1891)
+- im lesemodus können Sie nun durch einmaliges Drücken einer Routingtaste der Braillezeile das Objekt unter dem Cursor aktivieren. Dies bedeutet, dass Sie die Routingtaste zweimal drücken müssen, falls sich der Cursor noch nicht auf dem Objekt befindet. (#1893)
+**- Grundlegende Unterstützung für Internet-Bereiche wie z. B. der Shop. Andere Anwendungen, welche auf WebKit 1 beruhen, werden möglicherweise ebenfals unterstützt. (#734)
+**- In books in Adobe Digital Editions 1.8.1 and later, pages are now turned automatically when using say all. (#1978)
+
+
+== Änderungen ==
+- Die Befehle zum Beschreiben des aktuellen Zeichens Bzw. zum Buchstabieren der aktuellen Zeile und des aktuellen Wortes berücksichtigen die im Dokument hinterlegte Sprache, falls der automatische sprachenwechsel aktiviert ist.
+
+
+== Fehlerkorrekturen ==
+- In windows 8 wird der Fokus nun nicht mehr unerwartet aus dem Suchfeld springen. Dieser Fehler machte es unmöglich, mit nvda mit dem windows-suchfeld zu arbeiten.
+**- Major performance  improvements when reading and navigating Microsoft word documents while automatic reporting of formatting is enabled, thus now making it quite comfortable to proof read formatting etc. Performance may be also improved over all for some users.
+- Für Flash-Inhalte, die im Vollbildmodus dargestellt werden, wird nun der Lesemodus benutzt.
+- Probleme mit der Klangqualität in einigen Fällen behoben, in denen als Ausgabegerät etwas anderes eingestellt ist als "Microsoft Sound Mapper". Dies betrifft vor allem Microsoft Sapi Version 5. (#749)
+- Die Auswahl von "keine Sprache" im Sprachausgabendialog ist jetzt wieder möglich. Das ist nützlich, falls nvda nur mit einer Braillezeile oder dem Sprachbetrachter als Ausgabemedium betrieben wird. (#1963)
+- Die Befehle zur Objektnavigation geben nun nicht mehr "keine Kinder" bzw. "keine Eltern" aus. Die Meldungen wurden der Dokumentation angepasst. Dies gilt für die englische Benutzeroberfläche!
+- Wenn in NVDA eine andere Sprache als englisch eingestellt wurde, wird der Name der Tabulator-Taste nun in der richtigen Sprache angesagt. 
+
+
+== Änderungen für Entwickler ==
+- Es gibt nun eine Remote-Python-Konsole. Diese ist für Situationen gedacht, in denen es sinvoll ist, nvda über ein Netzwerk hinweg aus der Ferne zu warten. Weitere Informationen hierzu finden Sie im nvda-Entwicklerhandbuch.
+- Aus Gründen der besseren lesbarkeit wird beim Zurückverfolgen von Fehlern in den protokollen der Basispfad aus Dateireferenzen gestrichen. (#1880)
+- TextInfo-Objekte haben nun eine Methode namens Activate(), die das Aktivieren der von textinfo zurückgegebenen Position erlaubt.
+ - Dies erlaubt das Aktivieren unter Verwendung der Routingtasten einer Braillezeile. Hierfür könnte es jedoch in Zukunft andere Methoden geben.
+**- TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
+
+
 = 2011.3 =
 Die wichtigsten neuerungen sind u.a. das automatische Wechseln der Synthesizersprache passend zur Dokumentsprache; Unterstützung für 64-Bit-Java-Laufzeitumgebungen; Angabe von Textformatierungen im Lesemodus in Mozilla-Gecko-Anwendungen; Bessere Behandlung von Programmabstürzen; sowie anfängliche Unterstützung für Windows 8.
 
@@ -17,6 +59,7 @@ Die wichtigsten neuerungen sind u.a. das automatische Wechseln der Synthesizersp
 - Das maß, in dem die Stimme bei Großbuchstaben angehoben werden soll, kann nun im Dialog Stimmeneinstellungen konfiguriert werden. Die Angabe erfolgt hier in %. Dies ersetzt das alte Kontrollkästchen "Stimme bei Großbuchstaben anheben". Um die Funktion abzuschalten, geben Sie einen wert von 0 an. (#255)
 - Text- und Hintergrundfarbe werden nun mit angesagt, wenn man sich in Microsoft Excel die Formatierung der Zellen ansagen lässt. (#1655)
 - In Anwendungen, in welchen die Java Access Bridge Verwendung findet, funktioniert nun der Befehl "Aktuelles Navigator-Objekt aktivieren" auf passenden Elementen. (#1744)
+- Sprache Tamil hinzugefügt.
 - grundlegende Unterstützung für Design Science MathPlayer.
 
 

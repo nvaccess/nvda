@@ -1,53 +1,55 @@
 ﻿#locale/de/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011 NV Access Inc
+#Copyright (c) 2011 NV Access, Inc.
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
-# identifier	regexp
-# Others
-decimal point	(?<=\d)\,(?=\d)
+# Sonderzeichen	Regulärer Ausdruck
+# Weitere
 date separator	(?<=\d\d)\.(?=\d\d)
 
 symbols:
-# identifier	replacement[[	level][	preserve]][	# display name]
-# Complex symbols
+# Identifizierungszeichen	Ersetzungen[[	Ebene][	Bereich]][	# Angezeigter Name]
+
+# Komplexe Symbole
 . sentence ending	punkt
 ! sentence ending	Ausrufezeichen
 ? sentence ending	Fragezeichen
-; phrase ending	semikolon
-: phrase ending	doppelpunkt
+; phrase ending	Semikolon
+: phrase ending	Doppelpunkt
+; phrase ending	Semikolon
 date separator		none	always
+in-word '	Apostroph
 
-# Whitespace
-\0	leer			# null
-\t	tabulator
+# Unsichtbare Zeichen
+\0	leer	char	# Null
+\t	Tabulator
 \n	Zeilenumbruch
 \f	Seitenumbruch
-\r	neue Zeile
+\r	Neue Zeile
  	Leerzeichen
- 	Leerzeichen			# geschütztes Leerzeichen
+ 	Leerzeichen	# Geschütztes Leerzeichen
 
-# Standard punctuation/symbols
+# Standardsymbole und -satzzeichen
 !	Ausrufezeichen
 "	Anführungszeichen
 \#	Nummernzeichen
-$	dollar
+$	Dollar
 £	Pfund
-€	euro
-%	prozent
-&	und
-'	apostroph
+€	Euro
+%	Prozent
+&	Und
+'	Apostroph
 (	runde Klammer auf
 )	runde Klammer zu
-*	stern
+*	Stern
 +	Pluszeichen
-,	komma
+,	Komma
 -	Bindestrich
 .	punkt
 /	Schrägstrich
-:	doppelpunkt
-;	semikolon
+:	Doppelpunkt
+;	Semikolon
 <	Kleinerzeichen
 >	Größerzeichen
 =	Gleichheitszeichen
@@ -55,45 +57,49 @@ $	dollar
 @	Klammeraffe
 [	eckige Klammer auf
 ]	eckige Klammer zu
-\\	backslash
-^	dach
+\\	Backslash
+^	Dach
 _	Unterstrich
-`	graav
+`	Apostroph
 {	geschweifte Klammer auf
 }	geschweifte Klammer zu
 |	senkrechter Strich
-~	tilde
+~	Tilde
 
-# Other characters
-•	Aufzählungszeichen
-…	punkt punkt punkt
-...	punkt punkt punkt
-	Aufzählungszeichen
-“	Anführungszeichen
-”	Anführungszeichen
-‘	Anführungszeichen
-’	Anführungszeichen
+# Weitere Zeichen
+•	Aufzählungszeichen	some
+…	Punkt Punkt Punkt
+...	Punkt Punkt Punkt
+	Aufzählungszeichen	some
+“	Anführungszeichen oben
+”	Anführungszeichen unten
+‘	Anführungszeichen oben 
+’	Anführungszeichen unten
 –	Strich
 —	Gedankenstrich
 ●	Kreis
-¨	trema
-‎	links nach rechts markierung
-‏	rechts nach links Markierung
-■	schwarzes Quadrat
+¨	Trema
+‏	von rechts nach links Markierung
+‎	von links nach rechts Markierung
+■	schwarzes Quadrat 
 ➔	Pfeil nach rechts
+ 
+ 
 §	Paragraf	some
-¢	Cent	all	norep
 ¥	Yen	all	norep
+¢	Cent	all	norep
 °	Grad	most
-«	doppelt gewinkelte Klammer zu	most
-»	doppelt gewinkelte Klammer auf	most
+Þ	Bullet	some
+«	doppelt gewinkelte Klammer auf	most
+»	doppelt gewinkelte Klammer zu	most
 µ	My	most
 ¹	hoch gestellte Eins	some
 ²	hoch gestellte Zwei	some
 ³	hoch gestellte Drei	some
-®	eingetragenes Warenzeichen	some
-™	eingetragenes Warenzeichen	some
+®	Eingetragenes Warenzeichen	some
+™	Eingetragenes Warenzeichen	some
 ©	Copyright	some
 ±	Plus Minus	some
 ×	mal	some
 ÷	Divisionszeichen	some
+
