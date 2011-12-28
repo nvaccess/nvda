@@ -231,20 +231,23 @@ Cando esteas nunha táboa, as seguintes teclas de ordes tamén están dispoñibl
 %kc:endInclude
 
 ++ Navegación de Obxectos ++
-Ás veces, quererás explorar a aplicación actual ou o Sistema Operativo sen mover o [foco #SystemFocus].
-Tamén poderás querer traballar con [obxectos #Objects] que non podan accederse normalmente utilizando o teclado.
+A maior parte do tempo, traballarás con aplicacións utilizando ordes que moven o [foco #SystemFocus] e o [cursor #SystemCaret].
+Sen embargo, ás veces, poderías querer explorar a aplicación actual ou o Sistema Operativo sen mover o foco ou o cursor.
+Tamén poderías querer traballar con [obxectos #Objects] que non podan accederse normalmente utilizando o teclado.
 Nestos casos, podes utilizar a navegación de obxectos.
 
-A navegación de obxectos permíteche moverte entre e obter información acerca dos obxectos individuales.
+A Navegación de obxectos permíteche moverte e obter información acerca de [obxectos #Objects] individuais.
 Cando te movas a un obxecto, NVDA anunciaráo de xeito similar ó anunciado do foco do sistema.
 Para unha maneira de revisar todo o texto segundo apareza na pantalla, podes utilizar no seu lugar [revisión chan #FlatReview].
 
 Máis que moverse cara atrás e adiante entre cada simple obxecto no sistema, os obxectos agrúpanse xerárquicamente.
 Esto significa que debes moverte dentro dalgúns obxectos para acceder ós obxectos que conteñan.
 Por exemplo, unha lista contén elementos de lista, así debes moverte dentro da lista para acceder ós seus elementos.
-Se te moviches a un elemento de lista, podes moverte ó seu obxecto contedor para voltar á lista e entón pasala se o desexas.
-De igual xeito, se atopas unha barra de ferramentas, debes moverte dentro dela para acceder ós controis na barra de ferramentas.
-
+Se te moveches a un elemento de lista, movendo seguinte e anterior levarache a outros elementos de lista na mesma lista.
+Movendo a un elemento de lista que conteña obxectos voltarache á lista.
+Tamén podes pasar a lista se desexas acceder a outros obxectos.
+De igual xeito, nunha barra de ferramentas que conteñña controis, debes moverte dentro da barra de ferramentas para acceder ós controis na mesma.
+ 
 O obxecto actualmente en revisión chámase navegador de objetos.
 Unha vez que navegues a un obxecto, podes revisalo utilizando as [ordes de revisión de texto #ReviewingText].
 De xeito predeterminado, o navegador de obxectos móvese xunto co foco  do Sistema, aíndaque este comportamento pode activarse e desactivarse.
@@ -268,7 +271,8 @@ nota: as teclas do teclado numérico requiren que a tecla BloqNum estea desactiv
 
 ++ Revisando o Texto ++[ReviewingText]
 NVDA permíteche ler o contido do actual [navegador de obxectos #ObjectNavigation] (incluíndo [revisión chan #FlatReview]) por carácteres, palabras ou liñas.
-Esto é principalmente útil na consola do Dos de windows e outros lugares onde non haxa a existencia dun [cursor do sistema #SystemCaret].ou este sexa limitado.
+Esto é principalmente útil en lugares (incluindo consolas de ordes de Windows) onde non hai [cursor do sistema #SystemCaret].
+Por exemplo, utilizaríalo para revisar o texto dunha mensaxe longa de información nun diálogo.
 
 Cando se move o cursor de revisión, o cursor do Sistema non o segue, así podes revisar texto sen perder a posición de edición.
 Nemmbargantes, de xeito predeterminado, cando o curssor do Sistema se move, o cursor de revisión sígueo.
@@ -357,7 +361,8 @@ Todas as teclas de ordes do [cursor do sistema #SystemCaret] do NVDA funcionará
 A información tal como se un texto é unha liga, cabeceira etc anúnciase xunto co texto segundo te movas.
 
 Ás veces, necesitarás interactuar directamente con controis nestos documentos.
-Esto falo cambiando a modo foco, onde todas as teclas se pasan ó control.
+Por exemplo, necesitarás facer esto para campos de texto editable e listas así que podes teclear carácteres e utilizar as teclas de cursor para traballar co control.
+Fai esto para cambiar a modo foco, onde case todas as teclas se pasan ó control.
 Cando se está en modo Navegación, por defecto, NVDA cambiará automáticamente a modo foco se tabulas cara ou fas clic sobre un control en particular que o requira.
 En cambio, tabulando ou facendo clic sobre un control que non requira modo foco voltará a modo navegación.
 Tamén podes premer intro ou espazo para cambiar a modo foco en controis que o requiran.
@@ -597,7 +602,14 @@ Esta opción é un campo numérico que controla durante canto tempo se amosan as
 ==== O Braille segue a ====
 Tecla: NVDA+control+t
 
-Esta opción permíteche escoller se a liñ braille seguirá ó foco do sistema, ou se seguirá ó navegador de obxectos / cursor de revisión.
+Esta opción permíteche escoller se a liña braille seguirá ó foco do sistema, ou se seguirá ó navegador de obxectos / cursor de revisión.
+
+==== Ler por Parágrafo ====
+Se está activada, o braille amosarase por parágrafos en lugar de por liñas.
+Tamén, as ordes de liña seguinte e anterior moverán por parágrafos en concordancia.
+Esto significa que non tes que desprazar a liña ó final de cada liña incluso donde haya más texto del que cabe en la línea.
+Esto podería permitir unha mayor fluideza lendo longas cantidades de texto.
+Está desactivada de maneira predeterminada.
 
 +++ Opcións de Teclado (NVDA+control+k)+++
 Este cadro de diálogo atópase no menú Preferencias, baixo "Opcións de teclado...". 
@@ -1076,6 +1088,24 @@ Para liñas que teñan un joystick:
 | Tecla intro | seleccionar |
 %kc:endInclude
 
+++ hedo ProfiLine USB ++
+A hedo ProfiLine USB de [hedo Reha-Technik  http://www.hedo.de/] está soportada.
+Primeiro debes instalar os controladores USB proporcionados polo fabricante.
+
+Seguidamente van as asignacións de teclas para esta liña co NVDA.
+Por favor mira a documentación da liña para descripcións de onde poden atoparse estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar a liña braille cara atrás | K1 |
+| Desprazar a liña braille cara adiante | K3 |
+| Mover a liña braille a liña anterior | B2 |
+| Mover a liña braille a seguinte liña | B5 |
+| Ir a celda braille | routing |
+| Conmutar seguemento braille | K2 |
+| Ler todo | B6 |
+%kc:endInclude
+
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] é un programa por separado que pode utilizarse para soportar moitas liñas braille.
 Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
@@ -1173,4 +1203,3 @@ However, it is not possible for users to define complex symbols.
 Se requires información adicional ou asistencia referente ó NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.
 Aquí, podes atopar documentación adicional,  así como soporte técnico e recursos para a comunidade. 
 Este sitio tamén proporciona información e recursos concernintes ó desenrolo do NVDA.
-
