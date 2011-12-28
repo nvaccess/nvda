@@ -1,10 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ta Version 2main-4622\n"
-"POT-Creation-Date: 2011-11-26 19:03+E. Australia Standard Time\n"
-"PO-Revision-Date: 2011-12-03 11:31+0530\n"
+"POT-Creation-Date: 2011-12-13 19:04+E. Australia Standard Time\n"
+"PO-Revision-Date: 2011-12-25 19:42+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,7 +14,7 @@ msgstr ""
 "X-Poedit-Country: India\n"
 
 # Thanks: http://www.ta.wiktionary.org/
-#: IAccessibleHandler.py:695
+#: IAccessibleHandler.py:694
 msgid "Secure Desktop"
 msgstr "பாதுகாப்பான மேசைத்தளம்"
 
@@ -25,7 +26,7 @@ msgstr "தெரியாத வரைவு"
 msgid "layout %s"
 msgstr "வரைவு %s"
 
-#: NVDAObjects\IAccessible\__init__.py:1472
+#: NVDAObjects\IAccessible\__init__.py:1475
 msgid "Taskbar"
 msgstr "பணிப்பட்டை"
 
@@ -33,12 +34,12 @@ msgstr "பணிப்பட்டை"
 msgid "%s items"
 msgstr "%s உருப்படிகள்"
 
-#: NVDAObjects\UIA\__init__.py:486
+#: NVDAObjects\UIA\__init__.py:489
 msgid "invoke"
 msgstr "அழை"
 
 #: NVDAObjects\behaviors.py:53
-#: globalCommands.py:822
+#: globalCommands.py:813
 msgid "%d percent"
 msgstr "%d விழுக்காடு"
 
@@ -64,18 +65,57 @@ msgstr "சூத்திரமுள்ளது"
 msgid "%s %s through %s %s"
 msgstr "%s %s முதல் %s %s வரை"
 
-#: NVDAObjects\window\winword.py:378
-#: NVDAObjects\window\winword.py:390
-#: NVDAObjects\window\winword.py:402
-#: NVDAObjects\window\winword.py:414
-msgid "not in table"
+#: NVDAObjects\window\winword.py:82
+msgid "Comments"
+msgstr "கருத்துகள்"
+
+#: NVDAObjects\window\winword.py:83
+msgid "Endnotes"
+msgstr "இறுதிக் குறிப்புகள்"
+
+#: NVDAObjects\window\winword.py:84
+msgid "Even pages footer"
+msgstr "இரட்டைப் படை பக்கங்களின் அடியுரை"
+
+#: NVDAObjects\window\winword.py:85
+msgid "Even pages header"
+msgstr "இரட்டைப் படை பக்கங்களின் மேலுரை"
+
+#: NVDAObjects\window\winword.py:86
+msgid "First page footer"
+msgstr "முதல் பக்க அடியுரை"
+
+#: NVDAObjects\window\winword.py:87
+msgid "First page header"
+msgstr "முதல் பக்க மேலுரை"
+
+#: NVDAObjects\window\winword.py:88
+msgid "Footnotes"
+msgstr "அடிக்குறிப்புகள்"
+
+#: NVDAObjects\window\winword.py:89
+msgid "Primary footer"
+msgstr "முதன்மையான அடியுரை"
+
+#: NVDAObjects\window\winword.py:90
+msgid "Primary header"
+msgstr "முதன்மையான மேலுரை"
+
+#: NVDAObjects\window\winword.py:91
+msgid "Text frame"
+msgstr "உரைச் சட்டகம்"
+
+#: NVDAObjects\window\winword.py:375
+#: NVDAObjects\window\winword.py:392
+msgid "Not in table"
 msgstr "அட்டவணையில் இல்லை"
 
-#: NVDAObjects\window\winword.py:385
-#: NVDAObjects\window\winword.py:397
-#: NVDAObjects\window\winword.py:409
-#: NVDAObjects\window\winword.py:421
-#: virtualBuffers\__init__.py:1243
+#: NVDAObjects\window\winword.py:386
+msgid "Edge of table"
+msgstr "அட்டவணையின் விளிம்பு"
+
+#: NVDAObjects\window\winword.py:405
+#: virtualBuffers\__init__.py:1242
 msgid "edge of table"
 msgstr "அட்டவணையின் விளிம்பு"
 
@@ -121,7 +161,7 @@ msgstr "செய்திக் குழு:"
 
 #: appModules\msimn.py:23
 msgid "CC:"
-msgstr "நகலைப் பெறுபவர்:"
+msgstr "நகல் பெறுநர்:"
 
 #: appModules\msimn.py:24
 msgid "Subject:"
@@ -138,11 +178,11 @@ msgstr "தேதி:"
 
 #: appModules\msimn.py:27
 msgid "Forward to:"
-msgstr "முன்னனுப்புதலைப் பெறுபவர்:"
+msgstr "முன்னனுப்புதல் பெறுநர்:"
 
 #: appModules\msimn.py:28
 msgid "Answer to:"
-msgstr "பதிலைப் பெறுபவர்:"
+msgstr "பதில் பெறுநர்:"
 
 #: appModules\msimn.py:29
 msgid "Organisation:"
@@ -158,7 +198,7 @@ msgstr "திறவுச்சொற்கள்:"
 
 #: appModules\msimn.py:32
 msgid "BCC:"
-msgstr "பிறர் அறியாமல் நகலைப் பெறுபவர்:"
+msgstr "மறை நகல் பெறுநர்:"
 
 #: appModules\msimn.py:95
 #: appModules\outlook.py:28
@@ -220,14 +260,14 @@ msgstr "வலது"
 #: globalCommands.py:171
 #: globalCommands.py:181
 #: globalCommands.py:191
-#: globalCommands.py:724
-#: globalCommands.py:785
-#: globalCommands.py:795
-#: globalCommands.py:805
+#: globalCommands.py:715
+#: globalCommands.py:776
+#: globalCommands.py:786
+#: globalCommands.py:796
 #: gui\settingsDialogs.py:883
 #: keyboardHandler.py:299
 #: synthSettingsRing.py:74
-#: virtualBuffers\__init__.py:788
+#: virtualBuffers\__init__.py:787
 msgid "on"
 msgstr "இயக்கு"
 
@@ -238,15 +278,15 @@ msgstr "இயக்கு"
 #: globalCommands.py:178
 #: globalCommands.py:188
 #: globalCommands.py:583
-#: globalCommands.py:721
-#: globalCommands.py:782
-#: globalCommands.py:792
-#: globalCommands.py:802
+#: globalCommands.py:712
+#: globalCommands.py:773
+#: globalCommands.py:783
+#: globalCommands.py:793
 #: gui\settingsDialogs.py:628
 #: gui\settingsDialogs.py:883
 #: keyboardHandler.py:299
 #: synthSettingsRing.py:74
-#: virtualBuffers\__init__.py:788
+#: virtualBuffers\__init__.py:787
 msgid "off"
 msgstr "நிறுத்து"
 
@@ -571,12 +611,12 @@ msgid "vlnk"
 msgstr "பாதொடு"
 
 #: braille.py:280
-#: speech.py:871
+#: speech.py:874
 msgid "not %s"
 msgstr "%s இல்லை"
 
 #: braille.py:293
-#: speech.py:879
+#: speech.py:882
 msgid "%s of %s"
 msgstr "%s, மொத்தம் %s"
 
@@ -729,10 +769,10 @@ msgstr "செம்மஞ்சள்"
 
 #: compoundDocuments.py:401
 #: globalCommands.py:119
-#: speech.py:305
-#: speech.py:492
-#: speech.py:505
-#: virtualBuffers\__init__.py:695
+#: speech.py:308
+#: speech.py:495
+#: speech.py:508
+#: virtualBuffers\__init__.py:694
 msgid "selected %s"
 msgstr "தெரிவு செய்யப்பட்டது %s"
 
@@ -744,11 +784,11 @@ msgstr "பழுதடைந்துள்ள அமைவடிவாக்�
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, %s இயல்பாக்கப்படுகிறது"
 
-#: config\__init__.py:187
+#: config\__init__.py:189
 msgid "Error parsing configuration file: %s"
 msgstr "அமைவடிவாக்க கோப்பினை கடத்துவதில் பிழை %s"
 
-#: config\__init__.py:194
+#: config\__init__.py:196
 msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
@@ -834,7 +874,7 @@ msgid "tool tip"
 msgstr "கருவித் துணுக்குதவி"
 
 #: controlTypes.py:201
-#: speech.py:1132
+#: speech.py:1135
 msgid "link"
 msgstr "தொடுப்பு"
 
@@ -847,6 +887,7 @@ msgid "tree view item"
 msgstr "கிளைப்பிரிவு தோற்ற உருப்படி"
 
 #: controlTypes.py:204
+#: keyLabels.py:72
 msgid "tab"
 msgstr "தத்தல்"
 
@@ -896,11 +937,11 @@ msgstr "கருவிப்பட்டை"
 
 #: controlTypes.py:216
 msgid "column header"
-msgstr "செங்குத்து வரிசையின் தலைப்பு"
+msgstr "செங்குத்து வரிசையின் மேலுரை"
 
 #: controlTypes.py:217
 msgid "row header"
-msgstr "கிடைவரிசையின் தலைப்பு"
+msgstr "கிடைவரிசையின் மேலுரை"
 
 #: controlTypes.py:218
 msgid "drop down button"
@@ -957,7 +998,7 @@ msgstr "உரைத் தொகுதி"
 
 #: controlTypes.py:231
 msgid "table header"
-msgstr "அட்டவணைத் தலைப்பு"
+msgstr "அட்டவணை மேலுரை"
 
 #: controlTypes.py:232
 msgid "table body"
@@ -1033,7 +1074,7 @@ msgstr "கண்ணாடிப் பலகை"
 
 #: controlTypes.py:251
 msgid "header"
-msgstr "தலைப்பு"
+msgstr "மேலுரை"
 
 #: controlTypes.py:252
 msgid "image map"
@@ -1254,7 +1295,7 @@ msgid "font size"
 msgstr "எழுத்துரு அளவு"
 
 #: controlTypes.py:308
-#: speech.py:1084
+#: speech.py:1087
 msgid "bold"
 msgstr "அடர்த்தி"
 
@@ -1275,12 +1316,12 @@ msgid "background color"
 msgstr "பின்னணி நிறம்"
 
 #: controlTypes.py:313
-#: speech.py:1106
+#: speech.py:1109
 msgid "superscript"
 msgstr "மேலெழுத்து"
 
 #: controlTypes.py:314
-#: speech.py:1108
+#: speech.py:1111
 msgid "subscript"
 msgstr "கீழெழுத்து"
 
@@ -1306,7 +1347,7 @@ msgstr "தரவு உருப்படி"
 
 #: controlTypes.py:321
 msgid "header item"
-msgstr "தலைப்பு உருப்படி"
+msgstr "மேலுரை உருப்படி"
 
 #: controlTypes.py:322
 msgid "thumb control"
@@ -1382,7 +1423,7 @@ msgstr "தேவைப்படுகிறது"
 
 #: controlTypes.py:343
 msgid "defunct"
-msgstr "செயலற்றுப்போன"
+msgstr "செயலற்றுப்போனது"
 
 #: controlTypes.py:344
 msgid "invalid entry"
@@ -1610,7 +1651,7 @@ msgstr "தட்டச்சு செய்த எழுத்துகளை�
 
 #: globalCommands.py:174
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "தட்டச்சு செய்த எழுத்துகளைப் படிக்கும் வசதியை இயக்கவோ, நிறுத்தவோச் செய்கிறது"
+msgstr "தட்டச்சு செய்த எழுத்துகளைப் படிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
 #: globalCommands.py:183
 msgid "speak typed words"
@@ -1618,15 +1659,15 @@ msgstr "தட்டச்சு செய்த சொற்களைப் ப
 
 #: globalCommands.py:184
 msgid "Toggles on and off the speaking of typed words"
-msgstr "தட்டச்சு செய்த சொற்களைப் படிக்கும் வசதியை இயக்கவோ, நிறுத்தவோச் செய்கிறது"
+msgstr "தட்டச்சு செய்த சொற்களைப் படிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
 #: globalCommands.py:193
 msgid "speak command keys"
-msgstr "கட்டளை விசைகளைப் படி"
+msgstr "கட்டளை விசைகள் அறிவிப்பு:"
 
 #: globalCommands.py:194
 msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
-msgstr "குறிப்பான எழுத்துகளாக இல்லாத எழுத்துகளைத் தட்டச்சு செய்யும்பொழுது, அதை படிக்கும் வசதியை இயக்கவோ, நிறுத்தவோச் செய்கிறது"
+msgstr "குறிப்பான எழுத்துகளாக இல்லாத விசைகளை அழுத்தும்பொழுது, அதை படிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது. எடுத்துக்காட்டாக, கண்ட்ரோல், ஷிஃப்ட் விசைகளைக் கூறலாம்"
 
 #: globalCommands.py:205
 msgid "symbol level %s"
@@ -1679,7 +1720,7 @@ msgid "no navigator object"
 msgstr "வழிகாட்டி பொருள் இல்லை"
 
 #: globalCommands.py:292
-#: globalCommands.py:743
+#: globalCommands.py:734
 msgid "%s copied to clipboard"
 msgstr "%s பிடிப்புப்பலகைக்கு நகலெடுக்கப்பட்டது"
 
@@ -1712,7 +1753,7 @@ msgid "Sets the navigator object to the current focus, and the review cursor to 
 msgstr "வழிகாட்டி பொருளை தற்போதைய குவிமையத்திற்குள் நகர்த்தி, முடிந்தால், மறுபரிசீலனைச் சுட்டியை கணினியின் சுட்டியிருக்கும் இடத்திற்கு நகர்த்தும்"
 
 #: globalCommands.py:330
-#: globalCommands.py:690
+#: globalCommands.py:681
 msgid "no focus"
 msgstr "குவிமையம் ஏதுமில்லை"
 
@@ -1729,8 +1770,8 @@ msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twi
 msgstr "ஒருமுறை அழுத்தினால் விசைப்பலகையின் குவிமையத்தை வழிகாட்டி பொருளுடன் பொருத்தும், இருமுறை அழுத்தினால் கணினியின் சுட்டியை மறுபரிசீலனைச் சுட்டியுடன் பொருத்தும்"
 
 #: globalCommands.py:357
-msgid "No parents"
-msgstr "பெற்றோர்கள் ஏதுமில்லை"
+msgid "No containing object"
+msgstr "உள்ளடக்கம் கொண்ட பொருள் ஏதுமில்லை"
 
 #: globalCommands.py:358
 msgid "Moves the navigator object to the object containing it"
@@ -1753,11 +1794,11 @@ msgid "Moves the navigator object to the previous object"
 msgstr "வழிகாட்டி பொருளை முந்தைய பொருளுக்கு நகர்த்தும்"
 
 #: globalCommands.py:399
-msgid "No children"
-msgstr "குழந்தைகள் ஏதுமில்லை"
+msgid "No objects inside"
+msgstr "உள்ளே பொருட்கள் ஏதுமில்லை"
 
 #: globalCommands.py:400
-msgid "Moves the navigator object to the first object it contains"
+msgid "Moves the navigator object to the first object inside it"
 msgstr "தனக்குள் இருக்கும் முதற்பொருளுக்கு வழிகாட்டி பொருளை நகர்த்தும்"
 
 #: globalCommands.py:410
@@ -1868,265 +1909,265 @@ msgstr "என்விடிஏவை விட்டு வெளியேற�
 msgid "Shows the NVDA menu"
 msgstr "என்விடிஏ பட்டியலைக் காண்பிக்கும்"
 
-#: globalCommands.py:633
+#: globalCommands.py:632
 msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
 msgstr "தற்பொழுது மறுபரிசீலனைச் சுட்டி இருக்குமிடத்திலிருந்து ஆவணத்தின் இறுதி வரைப் படிக்கும். அப்படி படிக்கும்பொழுது, மறுபரிசீலனைச் சுட்டியும் உடன் நகரும்"
 
-#: globalCommands.py:645
+#: globalCommands.py:636
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "தற்பொழுது கணினிச் சுட்டி இருக்குமிடத்திலிருந்து உரையின் இறுதி வரைப் படிக்கும். அப்படிப் படிக்கும்பொழுது, கணினிச் சுட்டியும் நகரும்"
 
-#: globalCommands.py:676
+#: globalCommands.py:667
 msgid "No formatting information"
-msgstr "வடிவமைப்புக் குறித்தத் தகவல் ஏதுமில்லை"
+msgstr "வடிவமைப்புத் தகவல் ஏதுமில்லை"
 
-#: globalCommands.py:680
+#: globalCommands.py:671
 msgid "Reports formatting info for the current review cursor position within a document"
 msgstr "ஒரு ஆவணத்தில் மறுபரிசீலனைச் சுட்டியின் நிலையிலுள்ள வடிவமைப்பின் தகவலை அறிவிக்கும்"
 
-#: globalCommands.py:691
+#: globalCommands.py:682
 msgid "reports the object with focus"
 msgstr "குவிமையத்தைக் கொண்ட பொருளை அறிவிக்கும்"
 
-#: globalCommands.py:711
+#: globalCommands.py:702
 msgid "No status line found"
 msgstr "நிலைமைப்பட்டை காணப்படவில்லை"
 
-#: globalCommands.py:717
+#: globalCommands.py:708
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "தற்போதைய செயலியின் நிலைமைப்பட்டையைப் படித்து, வழிகாட்டியை அவிடத்திற்கு நகர்த்தும்"
 
-#: globalCommands.py:726
+#: globalCommands.py:717
 msgid "Mouse tracking"
 msgstr "சொடுக்கியைப் பின்தொடர்"
 
-#: globalCommands.py:727
+#: globalCommands.py:718
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "சொடுக்கி நகரும்பொழுது, தகவலை அறிவிக்கும் நிலையை மாற்றும்"
 
-#: globalCommands.py:735
+#: globalCommands.py:726
 msgid "no title"
 msgstr "தலைப்பு ஏதுமில்லை"
 
-#: globalCommands.py:744
+#: globalCommands.py:735
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
 msgstr "தற்போதைய செயலியின் தலைப்பையோ, முன்னணியிலிருக்கும் சாளரத்தின் தலைப்பையோப் படிக்கும். இருமுறை அழுத்தினால், தலைப்பை ஒற்றை எழுத்துகளாகப் படிக்கும். மும்முறை அழுத்தினால், தலைப்பை பிடிப்புப்பலகைக்கு நகலெடுக்கும்"
 
-#: globalCommands.py:750
+#: globalCommands.py:741
 msgid "speaks the current foreground object"
 msgstr "தற்போதைய முன்னணிப் பொருளைப் பேசும்"
 
-#: globalCommands.py:761
+#: globalCommands.py:752
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "தற்போதைய வழிகாட்டி பொருளின் தகவலை செயற்குறிப்பேட்டில் பதிவு செய்யும். இது என்விடிஏ உருவாக்குநர்களுக்குப் பயன்படும். மேலும், பதிவாகியுள்ள தகவலை ஆராய செயற்குறிப்பேட்டுத் தோற்றத்தை முடிக்கிவிடும்"
 
-#: globalCommands.py:767
+#: globalCommands.py:758
 msgid "no progress bar updates"
 msgstr "முன்னேற்றப்பட்டைப் புதுப்பித்தல்களை அறிவிக்காது"
 
-#: globalCommands.py:770
+#: globalCommands.py:761
 msgid "speak progress bar updates"
 msgstr "முன்னேற்றப்பட்டைப் புதுப்பித்தல்களைப் பேசு"
 
-#: globalCommands.py:773
+#: globalCommands.py:764
 msgid "beep for progress bar updates"
 msgstr "முன்னேற்றப்பட்டை புதுப்பித்தல்களுக்கு சிற்றொலிகளை எழுப்பு"
 
-#: globalCommands.py:776
+#: globalCommands.py:767
 msgid "beep and speak progress bar updates"
 msgstr "முன்னேற்றப்பட்டைப் புதுப்பித்தல்களுக்கு பேசவும், சிற்றொலிகளை எழுப்பவும் செய்"
 
-#: globalCommands.py:778
+#: globalCommands.py:769
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "முன்னேற்றப்பட்டைப் புதுப்பித்தல்களை அறிவிக்கும் பேசு, சிற்றொலிகளை எழுப்பு, பேசவும் சிற்றொலிகளை எழுப்பவும் செய், நிறுத்து ஆகிய நான்கு நிலைகளுக்கு ஊடாகச் சுழலும்"
 
-#: globalCommands.py:787
+#: globalCommands.py:778
 msgid "report dynamic content changes"
 msgstr "ஆற்றல்மிகு உள்ளடக்க மாற்றங்களை அறிவி"
 
-#: globalCommands.py:788
+#: globalCommands.py:779
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "ஆற்றல்மிகு உள்ளடக்க மாற்றங்களை இயக்கவோ, நிறுத்தவோ செய்யும். டாஸ் சாளரத்தில் தோன்றும் புது உரைகளை உதாரணமாகச் சொல்லலாம்"
 
-#: globalCommands.py:797
+#: globalCommands.py:788
 msgid "caret moves review cursor"
 msgstr "மறுபரிசீலனைச் சுட்டியைக் கணினிச் சுட்டி நகர்த்துகிறது"
 
-#: globalCommands.py:798
+#: globalCommands.py:789
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "கணினிச் சுட்டி நகர்வதால் மறுபரிசீலனைச் சுட்டியும் நகர்வதை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#: globalCommands.py:807
+#: globalCommands.py:798
 msgid "focus moves navigator object"
 msgstr "குவிமையம் கணினிச் சுட்டியை நகர்த்துகிறது"
 
-#: globalCommands.py:808
+#: globalCommands.py:799
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "குவிமையத்தில் ஏற்படும் மாற்றங்களினால் வழிகாட்டி பொருளின் நகர்வை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#: globalCommands.py:820
+#: globalCommands.py:811
 msgid "no system battery"
 msgstr "கனிப்பொறி மின்கலம் ஏதுமில்லை"
 
-#: globalCommands.py:823
+#: globalCommands.py:814
 msgid "AC power on"
 msgstr "மாறுதிசை மின்னோட்டம் இயக்கத்திலுள்ளது"
 
-#: globalCommands.py:825
+#: globalCommands.py:816
 msgid "%d hours and %d minutes remaining"
 msgstr "%d மணியும், %d நிமிடங்களும் எஞ்சியுள்ளன"
 
-#: globalCommands.py:827
+#: globalCommands.py:818
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "மாறுதிசை மின்னோட்டம் பொருத்தப்படாதபொழுது, மின்கலத்தின் நிலைமையையும், மீதமிருக்கும் நேரத்தையும் அறிவிக்கும்"
 
-#: globalCommands.py:831
+#: globalCommands.py:822
 msgid "Pass next key through"
 msgstr "அடுத்த விசையை நேரடியாக அனுப்பு"
 
-#: globalCommands.py:832
+#: globalCommands.py:823
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "அடுத்ததாக அழுத்தப்படும் விசையை என்விடிஏ கையாளாது. அவ்விசை உள்ளீட்டை செயலிக்கு அனுப்பி வைத்துவிடும்"
 
-#: globalCommands.py:837
+#: globalCommands.py:828
 msgid "Currently running application is %s"
 msgstr "தற்பொழுது செயற்பட்டுக்கொண்டிருக்கும் செயலியின் பெயர் %s."
 
-#: globalCommands.py:840
+#: globalCommands.py:831
 msgid " and currently loaded module is %s"
 msgstr "தற்பொழுது ஏற்றப்பட்டிருக்கும் என்விடிஏ நிரல் செயலியின் பெயர் %s"
 
-#: globalCommands.py:842
+#: globalCommands.py:833
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "தற்பொழுது இயக்கத்திலுள்ள செயலியின் கோப்பின் பெயரையும், அதற்கிணையாக ஏற்றப்பட்டுள்ள என்விடிஏ நிரல் செயலியின் பெயரையும் பேசும்"
 
-#: globalCommands.py:846
+#: globalCommands.py:837
 msgid "Shows the NVDA general settings dialog"
 msgstr "என்விடிஏ பொது அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:850
+#: globalCommands.py:841
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "என்விடிஏ ஒலிப்பான் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:854
+#: globalCommands.py:845
 msgid "Shows the NVDA voice settings dialog"
 msgstr "என்விடிஏ குரல் அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:858
+#: globalCommands.py:849
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "என்விடிஏ விசைப்பலகை அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:862
+#: globalCommands.py:853
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "என்விடிஏ சொடுக்கி அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:866
+#: globalCommands.py:857
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "என்விடிஏ பொருள் காட்சியளிப்பு அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:870
+#: globalCommands.py:861
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr "என்விடிஏ உலாவும் நிலை அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:874
+#: globalCommands.py:865
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "என்விடிஏ ஆவண வடிவமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:878
+#: globalCommands.py:869
 msgid "Saves the current NVDA configuration"
 msgstr "தற்போதைய என்விடிஏ அமைவடிவத்தை சேமிக்கிறது"
 
-#: globalCommands.py:882
+#: globalCommands.py:873
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "தற்போதைய மாற்றங்களை நீக்கிவிட்டு, சேமித்து வைத்திருக்கும் என்விடிஏ அமைவடிவத்தை ஏற்றுகிறது"
 
-#: globalCommands.py:892
+#: globalCommands.py:883
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "என்விடிஏ உருவாக்குவதில் பயன்படும் பைத்தன் கட்டுப்பாட்டு மையத்தை இயக்குகிறது"
 
-#: globalCommands.py:897
+#: globalCommands.py:888
 #: gui\settingsDialogs.py:1017
 msgid "review"
 msgstr "மறுபரிசீலனை"
 
-#: globalCommands.py:900
+#: globalCommands.py:891
 #: gui\settingsDialogs.py:1017
 msgid "focus"
 msgstr "குவிமையம்"
 
-#: globalCommands.py:901
+#: globalCommands.py:892
 msgid "Braille tethered to %s"
 msgstr "இதனுடன் பிரெயில் கட்டப்பட்டுள்ளது %s"
 
-#: globalCommands.py:902
+#: globalCommands.py:893
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "பிரெயில் கட்டப்படுவதை குவிமைய நிலைக்கும், மறுபரிசீலனை நிலைக்கும் ஊடாக மாற்றுகிறது"
 
-#: globalCommands.py:910
+#: globalCommands.py:901
 msgid "There is no text on the clipboard"
 msgstr "பிடிப்புப்பலகையில் எந்த உரையும் இல்லை"
 
-#: globalCommands.py:915
+#: globalCommands.py:906
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "பிடிப்புப்பலகையில் பெருமளவு உரையுள்ளது. அது %s எழுத்துகள் நீளமுடையது"
 
-#: globalCommands.py:916
+#: globalCommands.py:907
 msgid "Reports the text on the Windows clipboard"
 msgstr "சாளரத்தின் பிடிப்புப்பலகையிலுள்ள உரையை அறிவிக்கும்"
 
-#: globalCommands.py:920
+#: globalCommands.py:911
 msgid "Start marked"
 msgstr "துவக்கம் குறிக்கப்பட்டது"
 
-#: globalCommands.py:921
+#: globalCommands.py:912
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "பிடிப்புப்பலகையில் நகலெடுக்க, மறுபரிசீலனைச் சுட்டியின் தற்போதைய நிலையை துவக்கமாக குறித்துக்கொள்கிறது"
 
-#: globalCommands.py:925
+#: globalCommands.py:916
 msgid "No start marker set"
 msgstr "துவக்கக் குறி ஏதும் வரையரைச் செய்யப்படவில்லை"
 
-#: globalCommands.py:929
+#: globalCommands.py:920
 msgid "The start marker must reside within the same object"
 msgstr "துவக்கக் குறி, அதே பொருளின் உள்ளாக இருக்க வேண்டும்"
 
-#: globalCommands.py:934
+#: globalCommands.py:925
 msgid "Review selection copied to clipboard"
 msgstr "மறுபரிசீலனை தெரிவு, பிடிப்புப்பலகைக்கு நகலெடுக்கப்பட்டது"
 
-#: globalCommands.py:936
+#: globalCommands.py:927
 msgid "No text to copy"
 msgstr "நகலெடுக்க உரை ஏதுமில்லை"
 
-#: globalCommands.py:939
+#: globalCommands.py:930
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "முந்தைய துவக்கக் குறியிலிருந்து தற்போதைய மறுபரிசீலனைச் சுட்டியின் நிலைவரை பிடிப்புப்பலகைக்கு நகலெடுக்கும்"
 
-#: globalCommands.py:943
+#: globalCommands.py:934
 msgid "Scrolls the braille display back"
 msgstr "பிரெயில் காட்சியளிப்பைப் பின்நகர்த்தும்"
 
-#: globalCommands.py:948
+#: globalCommands.py:939
 msgid "Scrolls the braille display forward"
 msgstr "பிரெயில் காட்சியளிப்பை முன்நகர்த்தும்"
 
-#: globalCommands.py:953
+#: globalCommands.py:944
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "பிரெயில் சிறுகட்டத்திற்குளிருக்கும் பொருளிடம் சுட்டியை நகர்த்தும், அல்லது அப்பொருளை இயக்கும்"
 
-#: globalCommands.py:958
+#: globalCommands.py:949
 msgid "Moves the braille display to the previous line"
 msgstr "பிரெயில் காட்சியளிப்பை முந்தைய வரிக்கு நகர்த்தும்"
 
-#: globalCommands.py:963
+#: globalCommands.py:954
 msgid "Moves the braille display to the next line"
 msgstr "பிரெயில் காட்சியளிப்பை அடுத்த வரிக்கு நகர்த்தும்"
 
-#: globalCommands.py:970
+#: globalCommands.py:961
 msgid "Plugins reloaded"
 msgstr "நீட்சிகள் மறுஏற்றம் செய்யப்படுகிறது"
 
-#: globalCommands.py:971
+#: globalCommands.py:962
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "என்விடிஏவை மறுஇயக்கம் செய்யாமல், செயலி நிரற்கூறுகளையும், முழு நீட்சிகளையும் மறுஏற்றம் செய்கிறது. இது என்பிடிஏ உருவாக்குபவர்களுக்கு பயனுள்ளதாக இருக்கும்"
 
@@ -2580,7 +2621,7 @@ msgstr "ஆங்கில முகப்பெழுத்து சுரு�
 
 #: gui\settingsDialogs.py:411
 msgid "Say &cap before capitals"
-msgstr "ஆங்கில முகப்பெழுத்துகளுக்கு முன், &Cap என்ருச் சொல்"
+msgstr "ஆங்கில முகப்பெழுத்துகளுக்கு முன், %Cap என்று சொல்"
 
 #: gui\settingsDialogs.py:414
 msgid "&Beep for capitals"
@@ -2768,7 +2809,7 @@ msgstr "கணினிச் சுட்டி நகரும்பொழு�
 
 #: gui\settingsDialogs.py:718
 msgid "Audio indication of focus and browse modes"
-msgstr "குவிமைய நிலை, உலாவும் நிலைக்கான ஒலி சமிக்ஞை"
+msgstr "குவிமைய நிலை, உலாவும் நிலைக்கான ஒலிச் சைகை"
 
 #: gui\settingsDialogs.py:747
 msgid "Document formatting"
@@ -2859,7 +2900,7 @@ msgid "&Pattern"
 msgstr "அசல் உரை"
 
 #: gui\settingsDialogs.py:845
-#: gui\settingsDialogs.py:1086
+#: gui\settingsDialogs.py:1091
 msgid "&Replacement"
 msgstr "பதிலமர்வு"
 
@@ -2888,7 +2929,7 @@ msgid "Pattern"
 msgstr "அசல் உரை"
 
 #: gui\settingsDialogs.py:880
-#: gui\settingsDialogs.py:1074
+#: gui\settingsDialogs.py:1079
 msgid "Replacement"
 msgstr "பதிலமர்வு"
 
@@ -2948,35 +2989,39 @@ msgstr "பிரெயில் இதனுடன் கட்டப்பட�
 msgid "Read by &paragraph"
 msgstr "பத்தியாகப் படி"
 
-#: gui\settingsDialogs.py:1039
+#: gui\settingsDialogs.py:1033
+msgid "Avoid splitting &words when possible"
+msgstr "இயலும் இடங்களில் சொற்களின் பிரிவைத் தவிர்த்தல்"
+
+#: gui\settingsDialogs.py:1043
 msgid "Braille Display Error"
 msgstr "பிரெயில் காட்சியளிப்பில் பிழை"
 
-#: gui\settingsDialogs.py:1039
+#: gui\settingsDialogs.py:1043
 msgid "Could not load the %s display."
 msgstr "%s காட்சியளிப்பை ஏற்ற முடியவில்லை."
 
-#: gui\settingsDialogs.py:1060
+#: gui\settingsDialogs.py:1065
 msgid "Symbol Pronunciation"
 msgstr "குறியெழுத்து உச்சரிப்பு"
 
-#: gui\settingsDialogs.py:1071
+#: gui\settingsDialogs.py:1076
 msgid "&Symbols"
 msgstr "குறியெழுத்துகள்"
 
-#: gui\settingsDialogs.py:1073
+#: gui\settingsDialogs.py:1078
 msgid "Symbol"
 msgstr "குறியெழுத்து"
 
-#: gui\settingsDialogs.py:1075
+#: gui\settingsDialogs.py:1080
 msgid "Level"
 msgstr "நிலை"
 
-#: gui\settingsDialogs.py:1084
+#: gui\settingsDialogs.py:1089
 msgid "Change symbol"
 msgstr "குறியெழுத்தை மாற்று"
 
-#: gui\settingsDialogs.py:1092
+#: gui\settingsDialogs.py:1097
 msgid "&Level"
 msgstr "&நிலை"
 
@@ -3066,7 +3111,7 @@ msgstr "கட்டுப்பாடு"
 
 #: keyLabels.py:29
 msgid "alt"
-msgstr "alt"
+msgstr "நிலை மாற்றி"
 
 #: keyLabels.py:30
 msgid "shift"
@@ -3094,11 +3139,11 @@ msgstr "இடைவெளி"
 
 #: keyLabels.py:36
 msgid "page up"
-msgstr "பக்க மேல் நகர்வு"
+msgstr "பக்கம் மேல்"
 
 #: keyLabels.py:37
 msgid "page down"
-msgstr "பக்க கீழ் நகர்வு"
+msgstr "பக்கம் கீழ்"
 
 #: keyLabels.py:38
 msgid "end"
@@ -3222,11 +3267,11 @@ msgstr "வலது மாற்று அழுத்தி"
 
 #: keyLabels.py:68
 msgid "left alt"
-msgstr "இடது alt"
+msgstr "இடது நிலை மாற்றி"
 
 #: keyLabels.py:69
 msgid "right alt"
-msgstr "வலது alt"
+msgstr "வலது நிலை மாற்றி"
 
 #: keyLabels.py:70
 msgid "right windows"
@@ -3264,161 +3309,165 @@ msgstr "என்விடிஏ பைத்தன் கட்டுப்ப�
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "விசைப்பலகையில் %s என்று தட்டச்சு செய்ததற்கு ஈடாகும்"
 
-#: speech.py:165
-#: speech.py:327
-#: speech.py:820
+#: speech.py:168
+#: speech.py:330
+#: speech.py:823
 msgid "blank"
 msgstr "வெற்றிடம்"
 
-#: speech.py:196
+#: speech.py:199
 msgid "cap %s"
 msgstr "cap %s"
 
-#: speech.py:352
+#: speech.py:355
 msgid "no indent"
 msgstr "வரித் துவக்க ஒழுங்கு ஏதுமில்லை"
 
-#: speech.py:435
+#: speech.py:438
 msgid "%d characters"
 msgstr "%d எழுத்துகள்"
 
-#: speech.py:487
+#: speech.py:490
 msgid "selecting %s"
 msgstr "%s தெரிவாகிறது"
 
-#: speech.py:498
+#: speech.py:501
 msgid "unselecting %s"
 msgstr "%s தெரிவு விலக்கப்படுகிறது"
 
-#: speech.py:500
+#: speech.py:503
 msgid "selection removed"
 msgstr "தெரிவு நீக்கப்பட்டது"
 
-#: speech.py:869
+#: speech.py:872
 msgid "done dragging"
 msgstr "இழுக்கப்படுவது முடிந்தது"
 
-#: speech.py:885
 #: speech.py:888
+#: speech.py:891
 msgid "level %s"
 msgstr "நிலை %s"
 
-#: speech.py:901
-#: speech.py:1177
+#: speech.py:904
+#: speech.py:1186
 msgid "row %s"
 msgstr "கிடைவரிசை %s"
 
-#: speech.py:908
-#: speech.py:1173
+#: speech.py:911
+#: speech.py:1182
 msgid "column %s"
 msgstr "செங்குத்து வரிசை %s"
 
-#: speech.py:913
+#: speech.py:916
 msgid "with %s rows and %s columns"
 msgstr "%s கிடைவரிசைகளையும், %s செங்குத்து வரிசைகளையும் கொண்டது"
 
-#: speech.py:915
+#: speech.py:918
 msgid "with %s columns"
 msgstr "%s செங்குத்து வரிசைகளைக் கொண்டது"
 
-#: speech.py:917
+#: speech.py:920
 msgid "with %s rows"
 msgstr "%s கிடைவரிசைகளைக் கொண்டது"
 
-#: speech.py:986
+#: speech.py:989
 msgid "with %s items"
 msgstr "%s உருப்படிகளைக் கொண்டது"
 
-#: speech.py:1012
-#: speech.py:1132
+#: speech.py:1015
+#: speech.py:1135
 msgid "out of %s"
 msgstr "%s வெளியே"
 
-#: speech.py:1036
+#: speech.py:1039
 msgid "page %s"
 msgstr "பக்கம் %s"
 
-#: speech.py:1043
+#: speech.py:1046
 msgid "style %s"
 msgstr "பாங்கு %s"
 
-#: speech.py:1045
+#: speech.py:1048
 msgid "default style"
 msgstr "இயல்பான பாங்கு"
 
-#: speech.py:1073
+#: speech.py:1076
 msgid "on {backgroundColor}"
 msgstr "இயக்கம் {backgroundColor}"
 
-#: speech.py:1078
+#: speech.py:1081
 msgid "line %s"
 msgstr "வரி %s"
 
-#: speech.py:1084
+#: speech.py:1087
 msgid "no bold"
 msgstr "அடர்த்தியில்லை"
 
-#: speech.py:1089
+#: speech.py:1092
 msgid "italic"
 msgstr "வலப்பக்கச் சாய்வு"
 
-#: speech.py:1089
+#: speech.py:1092
 msgid "no italic"
 msgstr "வலப்பக்கச் சாய்வு இல்லை"
 
-#: speech.py:1094
+#: speech.py:1097
 msgid "no strikethrough"
 msgstr "ஊடாகக் கோடிடப்படவில்லை"
 
-#: speech.py:1094
+#: speech.py:1097
 msgid "strikethrough"
 msgstr "ஊடாகக் கோடிடப்பட்டது"
 
-#: speech.py:1099
+#: speech.py:1102
 msgid "not underlined"
 msgstr "அடிக்கோடு இடப்படவில்லை"
 
-#: speech.py:1099
+#: speech.py:1102
 msgid "underlined"
 msgstr "அடிக்கோடு இடப்பட்டது"
 
-#: speech.py:1110
+#: speech.py:1113
 msgid "baseline"
 msgstr "அடித்தளக் கோடு"
 
-#: speech.py:1118
+#: speech.py:1121
 msgid "align left"
 msgstr "இடது ஒழுங்கு"
 
-#: speech.py:1120
+#: speech.py:1123
 msgid "align center"
 msgstr "நடு ஒழுங்கு"
 
-#: speech.py:1122
+#: speech.py:1125
 msgid "align right"
 msgstr "வலது ஒழுங்கு"
 
-#: speech.py:1124
+#: speech.py:1127
 msgid "align justify"
 msgstr "இருபுற ஒழுங்கு"
 
-#: speech.py:1126
+#: speech.py:1129
 msgid "align default"
 msgstr "இயல்பான ஒழுங்கு"
 
-#: speech.py:1139
+#: speech.py:1141
+msgid "has comment"
+msgstr "கருத்து உள்ளது"
+
+#: speech.py:1148
 msgid "spelling error"
 msgstr "எழுத்துப் பிழை"
 
-#: speech.py:1141
+#: speech.py:1150
 msgid "out of spelling error"
 msgstr "எழுத்துப் பிழைக்கு வெளியே"
 
-#: speech.py:1159
+#: speech.py:1168
 msgid "out of table"
 msgstr "அட்டவணைக்கு வெளியே"
 
-#: speech.py:1168
+#: speech.py:1177
 msgid "table with %s columns and %s rows"
 msgstr "%s செங்குத்து வரிசையும், %s கிடைவரிசையும் கொண்ட அட்டவணை"
 
@@ -3517,12 +3566,12 @@ msgstr ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} இது எல்லோருக்குமான பொது (இரண்டாம் பதிப்பு) உரிமத்தின் கீழ் வருகிறது. இம்மென்பொருளை தாங்கள் மாற்றவோ பிறருடன் பகிர்ந்துக் கொள்ளவோ தடையில்லை. அப்படிச் செய்யும்பொழுது, இம்மென்பொருளின் உரிமத்தையும், திறமூலத்தையும் கேட்பவர்களுக்குக் கொடுக்க வேண்டும். இந்த விதி, இம்மென்பொருளின் மூலத்திற்கும், மாற்றப்பட்ட வடிவத்திற்கும், இம்மென்பொருளிலிருந்து பெறப்பட்ட பிற பணிகளுக்கும் பொருந்தும். \n"
+"{name} இது எல்லோருக்குமான பொது (இரண்டாம் பதிப்பு) உரிமத்தின் கீழ் வருகிறது. இம்மென்பொருளை தாங்கள் மாற்றவோ பிறருடன் பகிர்ந்துக் கொள்ளவோ தடையில்லை. அப்படி செய்யும்பொழுது, இம்மென்பொருளின் உரிமத்தையும், திறமூலத்தையும் கேட்பவர்களுக்குக் கொடுக்க வேண்டும். இந்த விதி, இம்மென்பொருளின் மூலத்திற்கும், மாற்றப்பட்ட வடிவத்திற்கும், இம்மென்பொருளிலிருந்து பெறப்பட்ட பிற பணிகளுக்கும் பொருந்தும். \n"
 "கூடுதல் தகவல்களுக்கு, உதவி பட்டியலிலுள்ள உரிம விவரங்களைக் காணவும்.\n"
 "உரிமத்தைப் படிப்பதற்கான இணைய முகவரி: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
 "{name} இம்மென்பொருளை உருவாக்கியது NV Access நிறுவனம். இந்நிறுவனம், இலாப நோக்கில்லாமல், பார்வையற்றவர்களுக்கும், பார்வைக் குறைப்பாடுள்ளவர்களுக்கும், இலவச திறமூல தீர்வுகளால் உதவவும், மேம்படுத்தவும், தன்னை ஈடுபடுத்தியுள்ளது.\n"
-"என்விடிஏ பயனுள்ளதாக இருந்து, அது மேலும் மேம்பட வேண்டுமென்று விரும்பினால், என்விடிஏவிற்கு நன்கொடை அளிப்பதைப் பற்றி சிந்தியுங்கள். இதற்கு, என்விடிஏ பட்டியலிலுள்ள 'நன்கொடையளியுங்கள்' உருப்படியைத் தேர்ந்தெடுக்கவும்."
+"என்விடிஏ பயனுள்ளதாக இருந்து, அது மேலும் மேம்பட வேண்டுமென்று தாங்கள் விரும்பினால், என்விடிஏவிற்கு நன்கொடை அளிப்பதைப் பற்றி சிந்தியுங்கள். இதற்கு, என்விடிஏ பட்டியலிலுள்ள 'நன்கொடையளியுங்கள்' உருப்படியைத் தேர்ந்தெடுக்கவும்."
 
 #: virtualBuffers\__init__.py:219
 #: virtualBuffers\__init__.py:227
@@ -3569,469 +3618,475 @@ msgstr "புத்தாக்கு"
 msgid "Loading document..."
 msgstr "ஆவணம் ஏற்றப்படுகிறது..."
 
-#: virtualBuffers\__init__.py:776
+#: virtualBuffers\__init__.py:775
 msgid "activates the current object in the document"
 msgstr "ஆவணத்திலுள்ள தற்போதைய பொருளை இயங்கச் செய்கிறது"
 
-#: virtualBuffers\__init__.py:784
+#: virtualBuffers\__init__.py:783
 msgid "Refreshes the document content"
 msgstr "ஆவண உள்ளடக்கத்தை புத்தாக்கம் செய்கிறது"
 
-#: virtualBuffers\__init__.py:789
+#: virtualBuffers\__init__.py:788
 msgid "use screen layout %s"
 msgstr "திரை வரைவு பயன்பாடு %s"
 
-#: virtualBuffers\__init__.py:790
+#: virtualBuffers\__init__.py:789
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
-msgstr "ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரை வரைவு பாதுகாக்கப்பட்டிருந்தால், அதை இயக்கவோ, நிறுத்தவோச் செய்கிறது"
+msgstr "ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரை வரைவு பாதுகாக்கப்பட்டிருந்தால், அதை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#: virtualBuffers\__init__.py:873
+#: virtualBuffers\__init__.py:872
 msgid "Presents a list of links, headings or landmarks"
 msgstr "தொடுப்புகள், தலைப்புகள், அல்லது நிலக்குறிகளின் வரிசைப் பட்டியலைக் காண்பிக்கிறது"
 
-#: virtualBuffers\__init__.py:1237
+#: virtualBuffers\__init__.py:1236
 msgid "Not in a table cell"
 msgstr "அட்டவணையின் சிறுகட்டத்தில் இல்லை"
 
-#: virtualBuffers\__init__.py:1253
+#: virtualBuffers\__init__.py:1252
 msgid "moves to the next table row"
 msgstr "அடுத்த அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1257
+#: virtualBuffers\__init__.py:1256
 msgid "moves to the previous table row"
 msgstr "முந்தைய அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1261
+#: virtualBuffers\__init__.py:1260
 msgid "moves to the next table column"
 msgstr "அடுத்த அட்டவணைச் செங்குத்து வரிசைக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1265
+#: virtualBuffers\__init__.py:1264
 msgid "moves to the previous table column"
 msgstr "முந்தைய அட்டவணைச் செங்குத்து வரிசைக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1352
+#: virtualBuffers\__init__.py:1351
 msgid "moves to the next heading"
 msgstr "அடுத்த தலைப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1352
+#: virtualBuffers\__init__.py:1351
 msgid "no next heading"
 msgstr "அடுத்த தலைப்பு ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1353
+#: virtualBuffers\__init__.py:1352
 msgid "moves to the previous heading"
 msgstr "முந்தைய தலைப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1353
+#: virtualBuffers\__init__.py:1352
 msgid "no previous heading"
 msgstr "முந்தைய தலைப்பு ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1354
+#: virtualBuffers\__init__.py:1353
 msgid "moves to the next heading at level 1"
 msgstr "அடுத்த தலைப்பு நிலை ஒன்றிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1354
+#: virtualBuffers\__init__.py:1353
 msgid "no next heading at level 1"
 msgstr "அடுத்த தலைப்பு நிலை 1 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1355
+#: virtualBuffers\__init__.py:1354
 msgid "moves to the previous heading at level 1"
 msgstr "முந்தைய தலைப்பு நிலை ஒன்றிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1355
+#: virtualBuffers\__init__.py:1354
 msgid "no previous heading at level 1"
 msgstr "முந்தைய தலைப்பு நிலை 1 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1356
+#: virtualBuffers\__init__.py:1355
 msgid "moves to the next heading at level 2"
 msgstr "அடுத்த தலைப்பு நிலை இரண்டிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1356
+#: virtualBuffers\__init__.py:1355
 msgid "no next heading at level 2"
 msgstr "அடுத்த தலைப்பு நிலை 2 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1357
+#: virtualBuffers\__init__.py:1356
 msgid "moves to the previous heading at level 2"
 msgstr "முந்தைய தலைப்பு நிலை இரண்டிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1357
+#: virtualBuffers\__init__.py:1356
 msgid "no previous heading at level 2"
 msgstr "முந்தைய தலைப்பு நிலை 2 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1358
+#: virtualBuffers\__init__.py:1357
 msgid "moves to the next heading at level 3"
 msgstr "அடுத்த தலைப்பு நிலை மூன்றிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1358
+#: virtualBuffers\__init__.py:1357
 msgid "no next heading at level 3"
 msgstr "அடுத்த தலைப்பு நிலை 3 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1359
+#: virtualBuffers\__init__.py:1358
 msgid "moves to the previous heading at level 3"
 msgstr "முந்தைய தலைப்பு நிலை மூன்றிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1359
+#: virtualBuffers\__init__.py:1358
 msgid "no previous heading at level 3"
 msgstr "முந்தைய தலைப்பு நிலை 3 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1360
+#: virtualBuffers\__init__.py:1359
 msgid "moves to the next heading at level 4"
 msgstr "அடுத்த தலைப்பு நிலை நான்கிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1360
+#: virtualBuffers\__init__.py:1359
 msgid "no next heading at level 4"
 msgstr "அடுத்த தலைப்பு நிலை 4 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1361
+#: virtualBuffers\__init__.py:1360
 msgid "moves to the previous heading at level 4"
 msgstr "முந்தைய  தலைப்பு நிலை நான்கிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1361
+#: virtualBuffers\__init__.py:1360
 msgid "no previous heading at level 4"
 msgstr "முந்தைய தலைப்பு நிலை 4 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1362
+#: virtualBuffers\__init__.py:1361
 msgid "moves to the next heading at level 5"
 msgstr "அடுத்த தலைப்பு நிலை ஐந்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1362
+#: virtualBuffers\__init__.py:1361
 msgid "no next heading at level 5"
 msgstr "அடுத்த தலைப்பு நிலை 5 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1363
+#: virtualBuffers\__init__.py:1362
 msgid "moves to the previous heading at level 5"
 msgstr "முந்தைய தலைப்பு நிலை ஐந்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1363
+#: virtualBuffers\__init__.py:1362
 msgid "no previous heading at level 5"
 msgstr "முந்தைய தலைப்பு நிலை 5 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1364
+#: virtualBuffers\__init__.py:1363
 msgid "moves to the next heading at level 6"
 msgstr "அடுத்த தலைப்பு நிலை ஆறிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1364
+#: virtualBuffers\__init__.py:1363
 msgid "no next heading at level 6"
 msgstr "அடுத்த தலைப்பு நிலை 6 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1365
+#: virtualBuffers\__init__.py:1364
 msgid "moves to the previous heading at level 6"
 msgstr "முந்தைய தலைப்பு நிலை ஆறிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1365
+#: virtualBuffers\__init__.py:1364
 msgid "no previous heading at level 6"
 msgstr "முந்தைய தலைப்பு நிலை 6 ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1366
+#: virtualBuffers\__init__.py:1365
 msgid "moves to the next table"
 msgstr "அடுத்த அட்டவணைக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1366
+#: virtualBuffers\__init__.py:1365
 msgid "no next table"
 msgstr "அடுத்த அட்டவணை ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1367
+#: virtualBuffers\__init__.py:1366
 msgid "moves to the previous table"
 msgstr "முந்தைய அட்டவணைக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1367
+#: virtualBuffers\__init__.py:1366
 msgid "no previous table"
 msgstr "முந்தைய அட்டவணை ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1368
+#: virtualBuffers\__init__.py:1367
 msgid "moves to the next link"
 msgstr "அடுத்த தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1368
+#: virtualBuffers\__init__.py:1367
 msgid "no next link"
 msgstr "அடுத்த தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1369
+#: virtualBuffers\__init__.py:1368
 msgid "moves to the previous link"
 msgstr "முந்தைய தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1369
+#: virtualBuffers\__init__.py:1368
 msgid "no previous link"
 msgstr "முந்தைய தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1370
+#: virtualBuffers\__init__.py:1369
 msgid "moves to the next visited link"
 msgstr "அடுத்த பார்த்த தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1370
+#: virtualBuffers\__init__.py:1369
 msgid "no next visited link"
 msgstr "அடுத்த பார்த்த தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1371
+#: virtualBuffers\__init__.py:1370
 msgid "moves to the previous visited link"
 msgstr "முந்தைய பார்த்த தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1371
+#: virtualBuffers\__init__.py:1370
 msgid "no previous visited link"
 msgstr "முந்தைய பார்த்த தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1372
+#: virtualBuffers\__init__.py:1371
 msgid "moves to the next unvisited link"
 msgstr "அடுத்த பார்க்காதத் தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1372
+#: virtualBuffers\__init__.py:1371
 msgid "no next unvisited link"
 msgstr "அடுத்த பார்க்காதத் தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1373
+#: virtualBuffers\__init__.py:1372
 msgid "moves to the previous unvisited link"
 msgstr "முந்தைய பார்க்காதத் தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1373
+#: virtualBuffers\__init__.py:1372
 msgid "no previous unvisited link"
 msgstr "முந்தைய பார்க்காதத் தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1374
+#: virtualBuffers\__init__.py:1373
 msgid "moves to the next form field"
 msgstr "அடுத்த படிவக் களத்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1374
+#: virtualBuffers\__init__.py:1373
 msgid "no next form field"
 msgstr "அடுத்த படிவக் களம் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1375
+#: virtualBuffers\__init__.py:1374
 msgid "moves to the previous form field"
 msgstr "முந்தைய படிவக் களத்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1375
+#: virtualBuffers\__init__.py:1374
 msgid "no previous form field"
 msgstr "முந்தைய படிவக் களம் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1376
+#: virtualBuffers\__init__.py:1375
 msgid "moves to the next list"
 msgstr "அடுத்த வரிசைப் பட்டியலுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1376
+#: virtualBuffers\__init__.py:1375
 msgid "no next list"
 msgstr "அடுத்த வரிசைப் பட்டியல் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1377
+#: virtualBuffers\__init__.py:1376
 msgid "moves to the previous list"
 msgstr "முந்தைய வரிசைப் பட்டியலுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1377
+#: virtualBuffers\__init__.py:1376
 msgid "no previous list"
 msgstr "முந்தைய வரிசைப் பட்டியல் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1378
+#: virtualBuffers\__init__.py:1377
 msgid "moves to the next list item"
 msgstr "அடுத்த வரிசைப் பட்டியல் உருப்படிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1378
+#: virtualBuffers\__init__.py:1377
 msgid "no next list item"
 msgstr "அடுத்த வரிசைப் பட்டியல் உருப்படி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1379
+#: virtualBuffers\__init__.py:1378
 msgid "moves to the previous list item"
 msgstr "முந்தைய வரிசைப் பட்டியல் உருப்படிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1379
+#: virtualBuffers\__init__.py:1378
 msgid "no previous list item"
 msgstr "முந்தைய வரிசைப் பட்டியல் உருப்படி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1380
+#: virtualBuffers\__init__.py:1379
 msgid "moves to the next button"
 msgstr "அடுத்த பொத்தானுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1380
+#: virtualBuffers\__init__.py:1379
 msgid "no next button"
 msgstr "அடுத்த பொத்தான் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1381
+#: virtualBuffers\__init__.py:1380
 msgid "moves to the previous button"
 msgstr "முந்தைய பொத்தானுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1381
+#: virtualBuffers\__init__.py:1380
 msgid "no previous button"
 msgstr "முந்தைய பொத்தான் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1382
+#: virtualBuffers\__init__.py:1381
 msgid "moves to the next edit field"
 msgstr "அடுத்த தொகு களத்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1382
+#: virtualBuffers\__init__.py:1381
 msgid "no next edit field"
 msgstr "அடுத்த தொகு களம் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1383
+#: virtualBuffers\__init__.py:1382
 msgid "moves to the previous edit field"
 msgstr "முந்தைய தொகு களத்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1383
+#: virtualBuffers\__init__.py:1382
 msgid "no previous edit field"
 msgstr "முந்தைய தொகு களம் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1384
+#: virtualBuffers\__init__.py:1383
 msgid "moves to the next frame"
 msgstr "அடுத்த சட்டகத்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1384
+#: virtualBuffers\__init__.py:1383
 msgid "no next frame"
 msgstr "அடுத்த சட்டகம் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1385
+#: virtualBuffers\__init__.py:1384
 msgid "moves to the previous frame"
 msgstr "முந்தைய சட்டகத்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1385
+#: virtualBuffers\__init__.py:1384
 msgid "no previous frame"
 msgstr "முந்தைய சட்டகம் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1386
+#: virtualBuffers\__init__.py:1385
 msgid "moves to the next separator"
 msgstr "அடுத்த பிரிப்பானுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1386
+#: virtualBuffers\__init__.py:1385
 msgid "no next separator"
 msgstr "அடுத்த பிரிப்பான் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1387
+#: virtualBuffers\__init__.py:1386
 msgid "moves to the previous separator"
 msgstr "முந்தைய பிரிப்பானுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1387
+#: virtualBuffers\__init__.py:1386
 msgid "no previous separator"
 msgstr "முந்தைய பிரிப்பான் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1388
+#: virtualBuffers\__init__.py:1387
 msgid "moves to the next radio button"
 msgstr "அடுத்த வானொலிப் பொத்தானுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1388
+#: virtualBuffers\__init__.py:1387
 msgid "no next radio button"
 msgstr "அடுத்த வானொலிப் பொத்தான் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1389
+#: virtualBuffers\__init__.py:1388
 msgid "moves to the previous radio button"
 msgstr "முந்தைய வானொலிப் பொத்தானுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1389
+#: virtualBuffers\__init__.py:1388
 msgid "no previous radio button"
 msgstr "முந்தைய வானொலிப் பொத்தான் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1390
+#: virtualBuffers\__init__.py:1389
 msgid "moves to the next combo box"
 msgstr "அடுத்த சேர்க்கைப் பெட்டிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1390
+#: virtualBuffers\__init__.py:1389
 msgid "no next combo box"
 msgstr "அடுத்த சேர்க்கைப் பெட்டி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1391
+#: virtualBuffers\__init__.py:1390
 msgid "moves to the previous combo box"
 msgstr "முந்தைய சேர்க்கைப் பெட்டிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1391
+#: virtualBuffers\__init__.py:1390
 msgid "no previous combo box"
 msgstr "முந்தைய சேர்க்கைப் பெட்டி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1392
+#: virtualBuffers\__init__.py:1391
 msgid "moves to the next check box"
 msgstr "அடுத்த தேர்வுப் பெட்டிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1392
+#: virtualBuffers\__init__.py:1391
 msgid "no next check box"
 msgstr "அடுத்த தேர்வுப் பெட்டி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1393
+#: virtualBuffers\__init__.py:1392
 msgid "moves to the previous check box"
 msgstr "முந்தைய தேர்வுப் பெட்டிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1393
+#: virtualBuffers\__init__.py:1392
 msgid "no previous check box"
 msgstr "முந்தைய தேர்வுப் பெட்டி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1394
+#: virtualBuffers\__init__.py:1393
 msgid "moves to the next graphic"
 msgstr "அடுத்த வரைப்பட விளக்கத்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1394
+#: virtualBuffers\__init__.py:1393
 msgid "no next graphic"
 msgstr "அடுத்த வரைப்பட விளக்கம் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1395
+#: virtualBuffers\__init__.py:1394
 msgid "moves to the previous graphic"
 msgstr "முந்தைய வரைப்பட விளக்கத்திற்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1395
+#: virtualBuffers\__init__.py:1394
 msgid "no previous graphic"
 msgstr "முந்தைய வரைப்பட விளக்கம் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1396
+#: virtualBuffers\__init__.py:1395
 msgid "moves to the next block quote"
 msgstr "அடுத்த உரைத் தொகுதிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1396
+#: virtualBuffers\__init__.py:1395
 msgid "no next block quote"
 msgstr "அடுத்த உரைத் தொகுதி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1397
+#: virtualBuffers\__init__.py:1396
 msgid "moves to the previous block quote"
 msgstr "முந்தைய உரைத் தொகுதிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1397
+#: virtualBuffers\__init__.py:1396
 msgid "no previous block quote"
 msgstr "முந்தைய உரைத் தொகுதி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1398
+#: virtualBuffers\__init__.py:1397
 msgid "no more text after a block of links"
 msgstr "தொடுப்புகளின் தொகுதிக்குப் பிறகு உரை ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1398
+#: virtualBuffers\__init__.py:1397
 msgid "skips forward past a block of links"
 msgstr "தொடுப்புகளின் தொகுதியைத் தாண்டி முன்செல்கிறது"
 
-#: virtualBuffers\__init__.py:1399
+#: virtualBuffers\__init__.py:1398
 msgid "no more text before a block of links"
 msgstr "தொடுப்புகளின் தொகுதிக்கு முன் உரை ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1399
+#: virtualBuffers\__init__.py:1398
 msgid "skips backward past a block of links"
 msgstr "தொடுப்புகளின் தொகுதியைப் தாண்டிப் பின்செல்கிறது"
 
-#: virtualBuffers\__init__.py:1400
+#: virtualBuffers\__init__.py:1399
 msgid "moves to the next landmark"
 msgstr "அடுத்த நிலக்குறிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1400
+#: virtualBuffers\__init__.py:1399
 msgid "no next landmark"
 msgstr "அடுத்த நிலக்குறி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1401
+#: virtualBuffers\__init__.py:1400
 msgid "moves to the previous landmark"
 msgstr "முந்தைய நிலக்குறிக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1401
+#: virtualBuffers\__init__.py:1400
 msgid "no previous landmark"
 msgstr "முந்தைய நிலக்குறி ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1402
+#: virtualBuffers\__init__.py:1401
 msgid "moves to the next embedded object"
 msgstr "அடுத்தப் பதிந்துள்ள பொருளுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1402
+#: virtualBuffers\__init__.py:1401
 msgid "no next embedded object"
 msgstr "அடுத்தப் பதிந்துள்ள பொருள் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1403
+#: virtualBuffers\__init__.py:1402
 msgid "moves to the previous embedded object"
 msgstr "முந்தையப் பதிந்துள்ள பொருளுக்கு நகர்கிறது"
 
-#: virtualBuffers\__init__.py:1403
+#: virtualBuffers\__init__.py:1402
 msgid "no previous embedded object"
 msgstr "முந்தையப் பதிந்துள்ள பொருள் ஏதுமில்லை"
 
-#: virtualBuffers\__init__.py:1416
+#: virtualBuffers\__init__.py:1415
 msgid "browse mode"
 msgstr "உலாவும் நிலை"
 
-#: virtualBuffers\__init__.py:1416
+#: virtualBuffers\__init__.py:1415
 msgid "focus mode"
 msgstr "குவிமைய நிலை"
+
+#~ msgid "No parents"
+#~ msgstr "பெற்றோர்கள் ஏதுமில்லை"
+
+#~ msgid "No children"
+#~ msgstr "குழந்தைகள் ஏதுமில்லை"
 
 #~ msgid "selection"
 #~ msgstr "தெரிவு"
