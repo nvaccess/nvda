@@ -3,6 +3,49 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.1 =
+
+== Nuevas Características ==
+- NVDA puede anunciar el número de las pestañas o espacios al inicio en la línea actual en el orden en que se introdujeron. Esto puede activarse seleccionando anunciar sangrado de línea en el diálogo Formateado de documento. (#373)
+- NVDA ahora puede detectar la pulsación de teclas generadas desde la emulación de entrada de teclado tal como en programas de teclado en pantalla o de reconocimiento de voz.
+- NVDA ahora puede detectar colores en ventanas órdenes de consola.
+- Las negritas, cursivas y subrayados ahora se indican en braille utilizando signos apropiados a la tabla de transcripción configurada. (#538)
+- Ahora se  anuncia mucha más información en documentos de Microsoft Word, incluyendo: 
+ - Información en línea tal como números de encabezados y notas al pie, niveles de encabezado, la existencia de comentarios, niveles de anidamiento de tabla, enlaces, y color de texto;
+ - Se anuncia cuando se entra a las secciones del documento tales como al histórico de comentarios, al histórico de notas al pie y notas finales, y a los históricos de encabezados y pies.
+- El braille ahora indica texto seleccionado utilizando los puntos 7 y 8. (#889)
+- El braille ahora anuncia información acerca de controles dentro de documentos tales como enlaces, botones y encabezados. (#202)
+- Soporte para líneas braille hedo ProfiLine USB y MobilLine. (#1863, #1897)
+- NVDA ahora evita la separación de palabras en braille cuando sea posible de forma predeterminada.  Esto puede desactivarse en el diálogo Opciones de Braille. (#1890, #1946)
+- Ahora es posible mostrar braille por párrafos en lugar de líneas, lo cual podría permitir más fluidez al leer grandes cantidades de texto. Esto es configurable utilizando la opción Leer por párrafos en el diálogo de Opciones de Braille. (#1891)
+- En modo navegación, puedes activar el objeto bajo el cursor utilizando una línea braille. Esto se hace pulsando la tecla de guiado de cursor donde se localice el cursor (lo cual significa pulsarlo dos veces si el cursor no está todavía allí). (#1893)
+- Soporte básico para áreas web en iTunes tal como en la Store. Otras aplicaciones que utilicen WebKit 1 también podrían soportarse. (#734)
+- En libros en Adobe Digital Editions 1.8.1 y posteriores, ahora las páginas se pasan automáticamente cuando se utiliza leer todo.  (#1978)
+
+
+== Cambios ==
+- Las órdenes para describir el carácter actual o para deletrear la palabra o línea actual ahora deletrearán en el idioma apropiado de acuerdo con el texto, si el cambio automático de idioma está activado y la información de idioma adecuada está disponible.
+- Ahora NVDA filtrará los nombres extremadamente largos (30 caracteres o más) deducidos de URLs de gráfícos y enlaces dado que lo más probable es que sean basura que obstaculice la lectura. 
+
+
+== Corrección de Fallos ==
+- En Windows 8, el foco ya no se mueve incorrectamente del campo de Búsqueda de Windows Explorer, lo cual no permitía a NVDA interactuar con él.
+- Mejoras en el rendimiento cuando se lee y se navega por documentos de Microsoft word mientras el anunciado automático del formato está activado, así ahora es un poco más confortable probar a leer el formato etc. El rendimiento también podría mejorarse sobre todo para algunos usuarios.
+- El modo navegación ahora se utiliza para todo el contenido de pantalla de Adobe Flash.
+- Corregida la mala calidad de audio en algunos casos cuando se utilizan voces de Microsoft Speech API version 5 con el dispositivo de salida de audio configurado a algún otro que el predeterminado (Microsoft Sound Mapper). (#749)
+- Se permite de nuevo a NVDA utilizar el sintetizador "no speech", confiando únicamente en el braille o en elVisualizador de Voz. (#1963)
+- Las órdenes de navegación de objetos ya no anuncian "Sin hijos" y "Sin padres", pero en cambio anuncian mensajes consistentes con la documentación.
+- Cuando NVDA se configuró para utilizar otro idioma que el Inglés, el nombre de la tecla tab ahora se anuncia en el idioma adecuado. 
+
+== Cambios para desarrolladores ==
+- There is now a remote Python console for situations where remote debugging is useful. See the Developer Guide for details.
+- The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
+- TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
+- This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
+- TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
+ 
+
+
 = 2011.3 =
 Lo subrayable en esta versión incluye el cambio automático de idioma de la voz cuando se leen documentos con la información de idioma apropiada;  soporte para ambientes Java Runtime de 64 bit; anunciado de formato de texto en Modo navegación en aplicaciones de Mozilla; mejor manejo de rupturas y cuelgues de aplicaciones; y correcciones iniciales para Windows 8.
 

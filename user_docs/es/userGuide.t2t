@@ -232,10 +232,12 @@ Cuando estés en una tabla, las siguientes teclas de órdenes también están di
 
 ++ Navegación de Objetos ++
 A veces, querrás explorar la aplicación actual o el Sistema Operativo sin mover el [foco #SystemFocus].
-También podrás querer trabajar con [objetos #Objects] que no pueden accederse normalmente utilizando el teclado.
+	La mayor parte del tiempo, trabajarás con aplicaciones utilizando  órdenes que muevan [el foco #SystemFocus] y [el cursor #SystemCaret].
+Sin embargo, a veces, podrías querer explorar la aplicación actual o el Sistema Operativo sin mover el foco o el cursor.
+También podrías querer trabajar con [objetos #Objects] que no pueden accederse normalmente utilizando el teclado.
 En estos casos, puedes utilizar la navegación de objetos.
 
-La navegación de objetos te permite moverte entre y obtener información acerca de objetos individuales.
+La navegación de objetos te permite moverte entre y obtener información acerca de [objetos #Objects] individuales.
 Cuando te muevas a un objeto, NVDA lo anunciará de modo similar al anunciado del foco del sistema.
 Para una manera de revisar todo el texto según aparezca en la pantalla, puedes utilizar a cambio [revisión plana #FlatReview].
 
@@ -244,7 +246,11 @@ Esto significa que debes moverte dentro de algunos objetos para acceder a los ob
 Por ejemplo, una lista contiene elementos de lista, así debes moverte dentro de la lista para acceder a sus elementos.
 Si te has movido a un elemento de lista, te puedes mover a su objeto contenedor para volver a la lista y entonces pasarla si lo deseas.
 De modo similar, si encuentras una barra de herramientas, debes moverte dentro de ella para acceder a los controles en la barra de herramientas.
-
+Si te has movido a un elemento de lista, moviéndote al siguiente y al anterior te llevará a otros elementos de lista en la misma lista.
+Moviéndote a un elemento de lista conteniendo un objeto te llevará atrás en la lista.
+Entonces puedes pasar de la lista si deseas acceder a otros objetos.
+Del mismo modo, en una barra de herramientas conteniendo controles, debes moverte dentro de la barra de herramientas para acceder a los controles de la misma.
+ 
 El objeto actualmente en revisión se llama navegador de objetos.
 Una vez que navegues a un objeto, puedes revisarlo utilizando las [órdenes de revisión de texto #ReviewingText].
 De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema, aunque este comportamiento puede activarse y desactivarse.
@@ -268,7 +274,8 @@ nota: las teclas del teclado numérico requieren que la tecla BloqNum esté desa
 
 ++ Revisando Texto ++[ReviewingText]
 NVDA te permite leer el contenido del actual [navegador de objetos #ObjectNavigation] (incluyendo [revisión plana #FlatReview]) por carácteres, palabras o líneas.
-Esto es principalmente útil en la consola del Dos de Windows y otros lugares donde no haya la existencia de un  [cursor del sistema #SystemCaret]. o éste sea limitado.
+Esto es principalmente útil en lugares (incluyendo la consola del Dos de Windows) donde no haya la existencia de un  [cursor del sistema #SystemCaret].
+Por ejemplo, lo utilizarías para revisar el texto de un largo mensaje de información en un diálogo.
 
 Cuando se mueve el cursor de revisión, el cursor del Sistema no lo sigue, así puedes revisar texto sin perder la posición de edición.
 No obstante, de forma predeterminada, cuando el cursor del Sistema se mueve, el cursor de revisión lo sigue.
@@ -358,6 +365,8 @@ La información tal como si el texto es un enlace,  encabezado, etc. se anuncia 
 
 A veces, necesitarás interactuar directamente con controles en estos documentos.
 Esto lo haces cambiando a modo foco, donde todas las teclas se pasan al control.
++Por ejemplo, necesitarás hacer esto para campos de texto editable y listas tal que puedas escribir carácteres y utilizar las teclas de cursor para trabajar con el control.
+Haz esto para cambiar a modo foco, donde casi todas las teclas se pasen al control.
 Cuando se está en modo Navegación, por defecto, NVDA cambiará automáticamente a modo foco si tabulas a o haces clic sobre un control en particular que lo requiera.
 En cambio, tabulando o haciendo clic sobre un control que no requiera modo foco retornará a modo navegación.
 También puedes pulsar intro o espacio para cambiar a modo foco en controles que lo requieran.
@@ -598,6 +607,13 @@ Esta opción es un campo numérico que controla durante cuánto tiempo se muestr
 Tecla: NVDA+control+t
 
 Esta opción te permite elegir si la línea braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión.
+
+==== Leer por Párrafo ====
+Si está activado, el braille se mostrará por párrafos en lugar de por líneas.
+También, las órdenes de línea siguiente y anterior moverán por párrafos en concordancia.
+Esto significa que no tienes desplazamiento de la línea braille al final de cada línea incluso cuándo haya más texto del que cabe en la línea braille.
+Esto podría permitir una lectura más fluida de grandes cantidades de texto.
+Esto está desactivado de forma predeterminada.
 
 +++ Opciones de Teclado (NVDA+control+k)+++
 Este cuadro de diálogo se encuentra en el menú Preferencias, bajo "Opciones de teclado...". 
@@ -1076,6 +1092,24 @@ Para líneas que tengan un joystick:
 | Tecla intro | seleccionar |
 %kc:endInclude
 
+++ hedo ProfiLine USB ++
+La hedo ProfiLine USB de [hedo Reha-Technik  http://www.hedo.de/] está soportada.
+Primero debes instalar los controladores USB proporcionados por el fabricante.
+
+Seguidamente van las asignaciones de teclas para esta línea con NVDA.
+Por favor mira la documentación de la línea para descripciones de dónde se pueden encontrar estas teclas.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar línea braille atrás | K1 |
+| Desplazar línea braille hacia adelante | K3 |
+| Mover línea braille a línea anterior | B2 |
+| Mover línea braille a siguiente línea | B5 |
+| Enrutar a la celda braille | routing |
+| Conmutar seguimiento braille | K2 |
+| Leer todo | B6 |
+%kc:endInclude
+
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] es un programa por separado que puede utilizarse para soportar muchas líneas braille.
 Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
@@ -1161,16 +1195,15 @@ De esta manera, si utilizas alt en un gesto, pulsando esta tecla la combinación
 Por lo tanto, probablemente es mejor sólo utilizar Shift, control y la tecla modificadora NVDA como modificadores.
 
 ++ Personalización Avanzada de Pronunciación de Símbolos ++
-Es posible personalizar la pronunciación de la puntuación y otros símbolos beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
-For example, you can specify whether the raw symbol should be sent to the synthesizer (e.g. to cause a pause or change in inflection) and you can add custom symbols.
+Es posible personalizar la pronunciación de la puntuación y otros símbolos más allá de lo que puede hacerse utilizando el [diálogo Pronunciación de Puntuación y símbolos #SymbolPronunciation].
+Por ejemplo, puedes especificar si el símbolo dibujado debería enviarse al sintetizador (ej. para causar una pausa o cambio en la entonación) y puedes añadir símbolos personalizados. 
 
-To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
-The file is called symbols-xx.dic, where xx is the language code.
-The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
-However, it is not possible for users to define complex symbols.
+Para hacer esto, debes editar el fichero de información de pronunciación de símbolos en tu directorio de configuración de usuario de NVDA.
+El fichero se llama symbols-xx.dic, donde xx es el código de idioma.
+El formato de este fichero se documentó en la sección Symbol Pronunciation de la Guía de Desarrollo de NVDA, que está disponible desde [La sección del desarrollador del sitio Web de NVDA NVDA_URLwiki/Development].
+Por lo tanto, no es posible para los usuarios definir símbolos complejos. 
 
 + Información Adicional +
 Si requieres de información adicional o asistencia con respecto a NVDA, por favor visita el sitio Web de NVDA en NVDA_URL.
 Aquí, puedes encontrar documentación adicional, así como soporte técnico y recursos de la comunidad.
 Este Sitio también proporciona información y recursos concernientes al desarrollo de NVDA.
-
