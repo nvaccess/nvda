@@ -562,6 +562,13 @@ Tasto: NVDA+control+t
 
 Questa impostazione permette di decidere se il display braille seguirà il focus di sistema oppure il navigatore ad oggetti (cursore di controllo).
 
+====Lettura per paragrafi====
+Se attivata, il braille verrà visualizzato per paragrafi invece che per righe.
+Inoltre, i comandi per spostarsi alla riga precedente/successiva andranno al paragrafo precedente/successivo.
+Questo significa che non sarà necessario utilizzare lo scrolling ogni volta quando ci si trova alla fine di una riga.
+La lettura dovrebbe risultare più fluente in presenza di grosse porzioni di testo.
+L'opzione risulta disabilitata da impostazioni predefinite.
+
 +++ Impostazioni tastiera (NVDA+control+k) +++
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce "impostazioni tastiera...". Contiene le seguenti opzioni:
 
@@ -746,6 +753,7 @@ la maggior parte delle caselle di controllo in questa finestra di dialogo servon
 - numeri di pagina
 - numeri di riga
 - errori di ortografia
+- Rientri riga
 - collegamenti
 - intestazioni
 - elenchi
@@ -989,6 +997,23 @@ Per i modelli che possiedono un Joystick:
 | FrecciaSinistra | left |
 | FrecciaDestra | right |
 | Tasto Invio | select |
+%kc:endInclude
+
+++ hedo ProfiLine USB ++
+ Il modello hedo ProfiLine USB prodotto dalla [hedo Reha-Technik  http://www.hedo.de/] è pienamente supportato.
+E' necessario prima installare i driver USB forniti dal costruttore.
+
+Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri display braille indietro | K1 |
+| Scorri display braille avanti | K3 |
+| Sposta display braille alla riga precedente | B2 |
+| Sposta Display Braille alla riga successiva  | B5 |
+| Route to braille cell | routing |
+| Commuta inseguimento Braille | K2 |
+| Dire tutto | B6 |
 %kc:endInclude
 
 
