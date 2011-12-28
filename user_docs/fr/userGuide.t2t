@@ -60,7 +60,7 @@ NVDA propose de nombreux codes braille couvrant un grand ensemble de langues. Da
 ++ Licence et Copyright ++
 NVDA est Copyright (C) NVDA_COPYRIGHT_YEARS NVDA contributers.
 
-NVDA est couvert par la licence GNU General Public License (Version 2). Vous avez le droit de distribuer ou modifier ce logiciel comme il vous plaît pourvu que vous distribuiez la licence avec le logiciel, et rendiez disponible l'intégralité du code source pour toute personne qui le veut. Ceci s'applique aussi bien à la version originale qu'aux copies modifiées  de ce logiciel, et aussi à tout logiciel qui utilise du code tiré de ce logiciel.
+NVDA est couvert par la licence GNU General Public License (Version 2). Vous avez le droit de distribuer ou modifier ce logiciel comme il vous plaît pourvu que vous distribuiez la licence avec le logiciel, et rendiez disponible l'intégralité du code source pour toute personne qui le veut. Ceci s'applique aussi bien à la version originale qu'aux copies modifiées  de ce logiciel, et aussi à tout travail dérivé.
 Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://www.gnu.org/licenses/gpl.html]>
 
 + Configuration système requise +
@@ -222,19 +222,22 @@ Dans un tableau, vous disposez également des touches de commandes suivantes :
 %kc:endInclude
 
 ++ Naviguer par Objet ++
-Parfois, vous pouvez avoir besoin d'explorer l'application en cours ou le système sans déplacer le [focus #SystemFocus].
+La plupart du temps, vous travaillerez avec les applications en utilisant des commandes qui déplacent le [focus #SystemFocus] et le [curseur #SystemCaret].
+Cepandant, vous pouvez parfois avoir besoin d'explorer l'application en cours ou le système sans déplacer le [focus #SystemFocus].
 Vous pouvez aussi avoir besoin d'accéder à des [objets #Objects] inaccessibles par les commandes clavier habituelles.
 Dans ces cas, vous pouvez utiliser la navigation par objet.
 
-La navigation par objet vous permet de vous déplacer parmi les différents objets et d'obtenir des informations à leur sujet.
+La navigation par objet vous permet de vous déplacer parmi les différents (objets #Objects) et d'obtenir des informations à leur sujet.
 Quand vous atteignez un objet, NVDA l'annoncera de la même manière qu'il annonce le focus système.
 Si vous désirez explorer tout le texte tel qu'il se présente à l'écran, vous pouvez également utiliser la [revue à plat. #FlatReview]
 
  Pour ne pas avoir à errer entre tous les objets présents dans le système, ceux-ci sont groupés hiérarchiquement.
 Cela signifie que vous devez entrer dans certains objets pour voir les objets qu'ils contiennent.
-Par exemple, au lieu de trouver tous les éléments d'une liste quand vous en rencontrez une, vous devez d'abord entrer dans la liste, c'est-à-dire aller à son premier objet enfant pour voir la liste des éléments.
-Vous pourrez sortir de la liste, (retourner à l'objet parent) pour continuer votre exploration après la liste.
-De la même manière, si vous rencontrez une barre d'outils, vous devrez y entrer, (aller au premier objet enfant) pour voir l'ensemble des contrôles présents dans la barre d'outils.
+Par exemple, une liste contient des éléments de liste, vous devez donc entrer dans la liste pour voir ces éléments.
+Si vous êtes sur un élément de liste, aller à l'élément suivant ou précédent vous amènera à un autre élément de la même liste.
+Si vous allez sur l'objet contenant les éléments de la liste, vous serez ramené à la liste.
+Vous pourrez alors la quitter si vous désirez accéder à d'autres objets.
+De la même manière, une barre d'outils contient des contrôles, vous devrez donc entrer dans la barre d'outils pour accéder aux contrôles qu'elle contient.
 
 L'objet en cours de revue s'appelle l'objet navigateur.
 Quand vous atteignez un objet, vous pouvez l'examiner en utilisant les [commandes de revue de texte #ReviewingText].
@@ -257,8 +260,9 @@ Pour naviguer par objet, utilisez les touches suivantes :
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
 
 ++ Revue de Texte ++[ReviewingText]
-NVDA vous permet de lire le contenu de [l'objet navigateur courant #ObjectNavigation]  par caractère, mot ou ligne. Ceci est particulièrement utile dans les fenêtres de console DOS et d'autres applications où le [curseur système #SystemCaret] est réduit ou inexistant.
-
+NVDA vous permet de lire le contenu de [l'objet navigateur courant #ObjectNavigation]  par caractère, mot ou ligne. 
+Ceci est particulièrement utile dans la console de commandes Windows et d'autres applications où le [curseur système #SystemCaret] est inexistant.
+Par exemple, cela peut servir à consulter le texte d'un long message dans un dialogue.
 Quand vous déplacez le curseur de revue, le curseur système ne bouge pas, ainsi vous pouvez explorer un texte sans perdre votre position d'édition actuelle.
 Cependant, par défaut,  quand le curseur système bouge, le curseur de revue le suit. Ceci peut être désactivé.
 
@@ -339,7 +343,8 @@ Cela concerne les documents sous Mozilla Firefox, Microsoft Internet Explorer, G
 Le mode navigation offre une représentation platement textuelle du document dans laquelle on peut se déplacer avec les flèches de navigation. Des informations indiquant si le texte est un lien, un titre etc sont annoncées avec le texte pendant que vous vous déplacez.
 
 Parfois, vous devrez interagir directement avec les contrôles contenus dans ces documents.
-Cela se fait en passant en mode formulaire, mode dans lequel toutes les touches sont passées directement au contrôle.
+Par exemple, vous devrez le faire pour les zones d'éditions et les listes pour pouvoir entrer du texte ou utiliser le curseur pour travailler avec les contrôles.
+Cela se fait en passant en mode formulaire, mode dans lequel presque toutes les touches sont passées directement au contrôle.
 En mode navigation, par défaut, NVDA passera automatiquement en mode formulaire si vous tabulez ou cliquez sur un champ qui le requiert. Notez que presser la barre d'espace ou la touche entrée passera également NVDA en mode formulaire si le champ le permet. Vous pouvez aussi passer manuellement NVDA en mode formulaire par la combinaison de touches NVDA+Espace. Si NVDA passe automatiquement en mode formulaire suite à un clic, une pression de la touche Tab, Espace, ou Entrée, Il repassera en mode navigation si vous tabulez ou cliquez sur un champ qui le requiert, ou si vous appuyez sur la touche Echap. Cependant, si vous passez manuellement en mode formulaire par la combinaison NVDA+Espace, NVDA restera en mode formulaire jusqu'à ce que vous retourniez manuellement en mode navigation.
 %kc:beginInclude
 || Nom | Touche | Description |
@@ -558,6 +563,13 @@ Touche : NVDA+control+t
 
 Cette option vous permet de choisir si le braille suivra le focus système ou le curseur de l'objet navigateur.
 
+==== Lecture par Paragraphe ====
+Si cette option est activée, le braille sera affiché par paragraphe au lieu d'être affiché par ligne.
+De la même manière, les commandes de ligne précédente et ligne suivante navigueront par paragraphe.
+Cela signifie que vous n'aurez pas besoin de faire défiler l'afficheur à la fin de chaque ligne même si plus de texte peut entre sur l'afficheur.
+Cela permet une lecture plus fluide des textes volumineux.
+Par défaut, cette option est désactivée.
+
 +++ Paramètres du clavier (NVDA+control+k) +++
 Cette boîte de dialogue se trouve dans le menu Préférences,  sous "Paramètres du clavier...". Elle comprend les options suivantes :
 
@@ -726,6 +738,7 @@ On peut configurer les annonces suivantes :
 - titres des lignes et colonnes d'un tableau
 - numéros de page
 - numéros de ligne
+- indentation de ligne
 - fautes d'orthographe
 - liens
 - titres
@@ -810,8 +823,8 @@ Pendant que la visionneuse de parole est active, elle se met constamment à jour
 La console Python NVDA, située dans Outils du menu NVDA, est un outil de développement utile pour dépanner, inspecter le code ou inspecter la hiérarchie d'accessibilité d'une application.
  Pour plus d'informations, veuillez consulter le Guide du Développeur disponible dans [la section développement du site web de NVDA NVDA_URLwiki/Development].
 
-++ Rechargement des plugins ++
-Cet élément, quand on l'active, recharge les modules d'applications et les plugins généraux sans avoir à redémarrer NVDA ce qui peut être utile pour les développeurs.
+++ Rechargement des Greffons ++
+Cet élément, quand on l'active, recharge les modules d'applications et les greffons généraux sans avoir à redémarrer NVDA ce qui peut être utile pour les développeurs.
 
 + Synthétiseurs de parole pris en charge +[SupportedSpeechSynths]
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
@@ -970,6 +983,25 @@ Pour les terminaux possédant un joystick:
 | Flèche droite | droite |
 | Touche entrée | select |
 %kc:endInclude
+
+
++++ hedo ProfiLine USB ++
+Le terminal hedo ProfiLine USB de [hedo Reha-Technik  http://www.hedo.de/] est supporté.
+Vous devrez tout d'abord installer le pilote USB fourni par le constructeur.
+
+Voici les assignations de touches pour ce terminal sous NVDA.
+Veuillez consulter la documentation du terminal pour savoir où se trouvent ces touches.
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement arrière de l'affichage | K1 |
+| Défilement avant de l'affichage | K3 |
+| Ligne précédente | B2 |
+| Ligne suivante | B5 |
+| Aller à la cellule braille | routing |
+| Bascule Braille suit | K2 |
+| Dire tout | B6 |
+%kc:endInclude
+
 
 ++ Le programme BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
