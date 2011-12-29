@@ -122,7 +122,7 @@ class MainFrame(wx.Frame):
 
 	def onRevertToSavedConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration)
-		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration applied"))
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration applied"))
 
 	def onSaveConfigurationCommand(self,evt):
 		if globalVars.appArgs.secure:
@@ -130,7 +130,7 @@ class MainFrame(wx.Frame):
 			return
 		try:
 			config.save()
-			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("configuration saved"))
+			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration saved"))
 		except:
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
@@ -141,7 +141,7 @@ class MainFrame(wx.Frame):
 		try:
 			dialog(self, *args, **kwargs).Show()
 		except SettingsDialog.MultiInstanceError:
-			messageBox(_("Please close  the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR)
+			messageBox(_("Please close the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR)
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
@@ -236,13 +236,13 @@ class SysTrayIcon(wx.TaskBarIcon):
 		menu_preferences=wx.Menu()
 		item = menu_preferences.Append(wx.ID_ANY,_("&General settings..."),_("General settings"))
 		self.Bind(wx.EVT_MENU, frame.onGeneralSettingsCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer..."),_(" the synthesizer to use"))
+		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer..."),_("Change the synthesizer to be used"))
 		self.Bind(wx.EVT_MENU, frame.onSynthesizerCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings..."),_("Choose the voice, rate, pitch and volume  to use"))
+		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings..."),_("Choose the voice, rate, pitch and volume to use"))
 		self.Bind(wx.EVT_MENU, frame.onVoiceCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("B&raille settings..."))
 		self.Bind(wx.EVT_MENU, frame.onBrailleCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard Settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
+		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
 		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
@@ -252,15 +252,15 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Browse mode..."),_("Change virtual buffers specific settings")) 
 		self.Bind(wx.EVT_MENU, frame.onBrowseModeCommand, item)
-		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change Settings of document properties")) 
+		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change settings of document properties")) 
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
-			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("dialog where you can set default dictionary by adding dictionary entries to the list"))
+			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("A dialog where you can set default dictionary by adding dictionary entries to the list"))
 			self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
-			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
+			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
 			self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
-		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
+		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
 		if not globalVars.appArgs.secure:
@@ -285,7 +285,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_help.Append(wx.ID_ANY, _("User guide"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
-			item = menu_help.Append(wx.ID_ANY, _("Keyboard Command Quick Reference"))
+			item = menu_help.Append(wx.ID_ANY, _("Keyboard command quick reference"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("keyCommands.html")), item)
 			item = menu_help.Append(wx.ID_ANY, _("What's &new"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
