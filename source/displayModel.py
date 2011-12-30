@@ -9,6 +9,7 @@ import winUser
 import NVDAHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
+import watchdog
 
 _getWindowTextInRect=None
 _requestTextChangeNotificationsForWindow=None
@@ -21,20 +22,30 @@ def initialize():
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML=False):
-	text, cpBuf = _getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML)
+	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML)
 	if not text or not cpBuf:
-		return "",[]
+		return u"",[]
 
-	characterRects = []
+	characterLocations = []
 	cpBufIt = iter(cpBuf)
 	for cp in cpBufIt:
-		characterRects.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt))))
-	return text, characterRects
+		characterLocations.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt)), c_short(ord(next(cpBufIt))).value))
+	return text, characterLocations
 
 def requestTextChangeNotifications(obj, enable):
+	"""Request or cancel notifications for when the display text changes in an NVDAObject.
+	A textChange event (event_textChange) will be fired on the object when its text changes.
+	Note that this event does not provide any information about the changed text itself.
+	It is important to request that notifications be cancelled when you no longer require them or when the object is no longer in use,
+	as otherwise, resources will not be released.
+	@param obj: The NVDAObject for which text change notifications are desired.
+	@type obj: NVDAObject
+	@param enable: C{True} to enable notifications, C{False} to disable them.
+	@type enable: bool
+	"""
 	if not enable:
 		_textChangeNotificationObjs.remove(obj)
-	_requestTextChangeNotificationsForWindow(obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
+	watchdog.cancellableExecute(_requestTextChangeNotificationsForWindow, obj.appModule.helperLocalBindingHandle, obj.windowHandle, enable)
 	if enable:
 		_textChangeNotificationObjs.append(obj)
 
@@ -56,7 +67,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			left, top, width, height = self.obj.location
 		except TypeError:
 			# No location; nothing we can do.
-			return "", []
+			return u"", []
 		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace,useXML)
 
 	def _getStoryText(self):
@@ -72,10 +83,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		start=self._startOffset
 		end=self._endOffset
 		if start==end:
-			return ""
+			return u""
 		text=self._get__textAndRects(useXML=True)[0]
 		if not text:
-			return ""
+			return u""
 		text="<control>%s</control>"%text
 		commandList=XMLFormatting.XMLTextParser().parse(text)
 		#Strip  unwanted commands and text from the start and the end to honour the requested offsets
@@ -127,7 +138,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return textInfos.Point(x, y)
 
 	def _getOffsetFromPoint(self, x, y):
-		for charOffset, (charLeft, charTop, charRight, charBottom) in enumerate(self._textAndRects[1]):
+		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
 			if charLeft<=x<charRight and charTop<=y<charBottom:
 				return charOffset
 		raise LookupError
@@ -136,7 +147,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		#Enumerate the character rectangles
 		a=enumerate(self._textAndRects[1])
 		#Convert calculate center points for all the rectangles
-		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
+		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom,charBaseline) in a)
 		#Calculate distances from all center points to the given x and y
 		#But place the distance before the character offset, to make sorting by distance easier
 		c=((math.sqrt(abs(x-cx)**2+abs(y-cy)**2),charOffset) for charOffset,(cx,cy) in b)
@@ -189,9 +200,17 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		caretRect.right=min(objRect.right,tempPoint.x)
 		caretRect.bottom=min(objRect.bottom,tempPoint.y)
 		import speech
-		for charOffset, (charLeft, charTop, charRight, charBottom) in enumerate(self._textAndRects[1]):
-			#speech.speakMessage("caret %d,%d char %d,%d"%(caretRect.top,caretRect.bottom,charTop,charBottom))
-			if caretRect.left>=charLeft and caretRect.right<=charRight and ((caretRect.top<=charTop and caretRect.bottom>=charBottom) or (caretRect.top>=charTop and caretRect.bottom<=charBottom)):
+		#speech.speakMessage("caret %s, %s, %s, %s"%(caretRect.left,caretRect.top,caretRect.right,caretRect.bottom))
+		#caretRect.top+=1
+		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
+			#Real text with a character baseline
+			#The caret must be  anywhere before the horizontal center of the character and the bottom of the caret must touch or go through the character baseline
+			if charBaseline>=0 and caretRect.left<((charLeft+charRight)/2) and caretRect.top<charBaseline<=caretRect.bottom:
+				return charOffset
+		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
+			#vertical whitespace (possible blank lines)
+			#The caret must be fully contained in the whitespace to match
+			if charBaseline==-1 and caretRect.left>=charLeft and caretRect.right<=charRight and not (caretRect.bottom<=charTop or charBottom<=caretRect.top):
 				return charOffset
 		raise RuntimeError
 

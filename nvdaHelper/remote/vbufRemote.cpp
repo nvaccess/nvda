@@ -162,6 +162,23 @@ int VBufRemote_getLineOffsets(VBufRemote_bufferHandle_t buffer, int offset, int 
 	return res;
 }
 
+int VBufRemote_getNativeHandleForNode(VBufRemote_bufferHandle_t buffer, VBufRemote_nodeHandle_t node) {
+	VBufBackend_t* backend=(VBufBackend_t*)buffer;
+	VBufStorage_controlFieldNode_t* realNode=(VBufStorage_controlFieldNode_t*)node;
+	backend->lock.acquire();
+	int res=backend->getNativeHandleForNode(realNode);
+	backend->lock.release();
+	return res;
+}
+
+VBufRemote_nodeHandle_t VBufRemote_getNodeForNativeHandle(VBufRemote_bufferHandle_t buffer, int nativeHandle) {
+	VBufBackend_t* backend=(VBufBackend_t*)buffer;
+	backend->lock.acquire();
+	VBufStorage_controlFieldNode_t* node=backend->getNodeForNativeHandle(nativeHandle);
+	backend->lock.release();
+	return (VBufRemote_nodeHandle_t)node;
+}
+
 //Special cleanup method for VBufRemote when client is lost
 void __RPC_USER VBufRemote_bufferHandle_t_rundown(VBufRemote_bufferHandle_t buffer) {
 	VBufRemote_destroyBuffer(&buffer);

@@ -38,14 +38,20 @@ class SynthDriver(SynthDriver):
 		log.info("Using eSpeak version %s" % _espeak.info())
 		lang=languageHandler.getLanguage()
 		_espeak.setVoiceByLanguage(lang)
+		self._language=lang
 		self._variantDict=_espeak.getVariantDict()
 		self.variant="max"
 		self.rate=30
 		self.pitch=40
 		self.inflection=75
 
+	def _get_language(self):
+		return self._language
+
 	def speak(self,speechSequence):
+		defaultLanguage=self._language
 		textList=[]
+		langChanged=False
 		for item in speechSequence:
 			if isinstance(item,basestring):
 				s=unicode(item)
@@ -57,10 +63,17 @@ class SynthDriver(SynthDriver):
 				textList.append("<mark name=\"%d\" />"%item.index)
 			elif isinstance(item,speech.CharacterModeCommand):
 				textList.append("<say-as type=\"spell-out\">" if item.state else "</say-as>")
+			elif isinstance(item,speech.LangChangeCommand):
+				if langChanged:
+					textList.append("</voice>")
+				textList.append("<voice xml:lang=\"%s\">"%(item.lang if item.lang else defaultLanguage).replace('_','-'))
+				langChanged=True
 			elif isinstance(item,speech.SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s"%item)
 			else:
 				log.error("Unknown speech: %s"%item)
+		if langChanged:
+			textList.append("</voice>")
 		text=u"".join(textList)
 		_espeak.speak(text)
 
@@ -120,15 +133,13 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVoices(self):
 		voices=OrderedDict()
 		for v in _espeak.getVoiceList():
-			l=v.languages[1:].split('-')[0:2]
-			if len(l)==2:
-				language="%s_%s"%(l[0],l[1].upper())
-			else:
-				language=l[0]
-			voices[v.identifier]=VoiceInfo(v.identifier,v.name,language)
+			l=v.languages[1:]
+			voices[v.identifier]=VoiceInfo(v.identifier,v.name,l)
 		return voices
 
 	def _get_voice(self):
+		curVoice=getattr(self,'_voice',None)
+		if curVoice: return curVoice
 		curVoice = _espeak.getCurrentVoice()
 		if not curVoice:
 			return ""
@@ -137,7 +148,9 @@ class SynthDriver(SynthDriver):
 	def _set_voice(self, identifier):
 		if not identifier:
 			return
-		_espeak.setVoiceAndVariant(voice=identifier)
+		self._voice=identifier
+		_espeak.setVoiceAndVariant(voice=identifier,variant=self._variant)
+		self._language=super(SynthDriver,self).language
 
 	def _get_lastIndex(self):
 		return _espeak.lastIndex

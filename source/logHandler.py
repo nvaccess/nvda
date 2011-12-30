@@ -20,7 +20,6 @@ RPC_S_CALL_FAILED_DNE = 1727
 E_ACCESSDENIED = -2147024891
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 RPC_E_CALL_REJECTED = -2147418111
-RPC_E_CALL_CANCELED = -2147418110
 RPC_E_DISCONNECTED = -2147417848
 
 moduleCache={}
@@ -76,6 +75,19 @@ def getCodePath(f):
 			className=arg0.__class__.__name__
 	return ".".join([x for x in path,className,funcName if x])
 
+# Function to strip the base path of our code from traceback text to improve readability.
+if getattr(sys, "frozen", None):
+	# We're running a py2exe build.
+	# The base path already seems to be stripped in this case, so do nothing.
+	def stripBasePathFromTracebackText(text):
+		return text
+else:
+	BASE_PATH = os.path.split(__file__)[0] + os.sep
+	TB_BASE_PATH_PREFIX = '  File "'
+	TB_BASE_PATH_MATCH = TB_BASE_PATH_PREFIX + BASE_PATH
+	def stripBasePathFromTracebackText(text):
+		return text.replace(TB_BASE_PATH_MATCH, TB_BASE_PATH_PREFIX)
+
 class Logger(logging.Logger):
 	# Import standard levels for convenience.
 	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
@@ -111,7 +123,8 @@ class Logger(logging.Logger):
 		if stack_info:
 			if stack_info is True:
 				stack_info = traceback.extract_stack(f)
-			msg += "\nStack trace:\n" + "".join(traceback.format_list(stack_info)).rstrip()
+			msg += ("\nStack trace:\n"
+				+ stripBasePathFromTracebackText("".join(traceback.format_list(stack_info)).rstrip()))
 
 		res = logging.Logger._log(self,level, msg, args, exc_info, extra)
 
@@ -135,12 +148,14 @@ class Logger(logging.Logger):
 			return
 		self._log(log.IO, msg, args, **kwargs)
 
-	def exception(self, msg="", exc_info=True):
+	def exception(self, msg="", exc_info=True, **kwargs):
 		"""Log an exception at an appropriate levle.
 		Normally, it will be logged at level "ERROR".
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
 		"""
 		import comtypes
+		import watchdog
+		from watchdog import RPC_E_CALL_CANCELED
 		if exc_info is True:
 			exc_info = sys.exc_info()
 
@@ -148,12 +163,15 @@ class Logger(logging.Logger):
 		if (
 			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, RPC_E_CALL_CANCELED))
 			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED, RPC_E_DISCONNECTED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
+			or isinstance(exc, watchdog.CallCancelled)
 		):
 			level = self.DEBUGWARNING
 		else:
 			level = self.ERROR
 
-		self._log(level, msg, (), exc_info=exc_info)
+		if not self.isEnabledFor(level):
+			return
+		self._log(level, msg, (), exc_info=exc_info, **kwargs)
 
 class RemoteHandler(logging.Handler):
 
@@ -211,6 +229,9 @@ class Formatter(logging.Formatter):
 			s = unicode(s, "mbcs", "replace")
 		return s
 
+	def formatException(self, ex):
+		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
+
 class StreamRedirector(object):
 	"""Redirects an output stream to a logger.
 	"""
@@ -256,7 +277,7 @@ def _getDefaultLogFilePath():
 		return ".\\nvda.log"
 
 def _excepthook(*exc_info):
-	log.error("", exc_info=exc_info, codepath="unhandled exception")
+	log.exception(exc_info=exc_info, codepath="unhandled exception")
 
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")

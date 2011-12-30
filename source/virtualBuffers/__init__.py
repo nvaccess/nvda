@@ -25,6 +25,7 @@ import ui
 import aria
 import nvwave
 import treeInterceptorHandler
+import watchdog
 
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
@@ -77,9 +78,26 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
 		return self.obj.getNVDAObjectFromIdentifier(docHandle,ID)
 
-	def _getOffsetsFromNVDAObject(self,obj):
+	def _getOffsetsFromNVDAObjectInBuffer(self,obj):
 		docHandle,ID=self.obj.getIdentifierFromNVDAObject(obj)
 		return self._getOffsetsFromFieldIdentifier(docHandle,ID)
+
+	def _getOffsetsFromNVDAObject(self, obj):
+		ancestorCount = 0
+		while True:
+			try:
+				return self._getOffsetsFromNVDAObjectInBuffer(obj)
+			except LookupError:
+				pass
+			# Interactive list/combo box descendants aren't rendered into the buffer, even though they are still considered part of it.
+			# Use the list/combo box in this case.
+			if ancestorCount == 2:
+				# This is not a list/combo box descendant.
+				break
+			obj = obj.parent
+			ancestorCount += 1
+			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX):
+				break
 
 	def __init__(self,obj,position):
 		self.obj=obj
@@ -202,6 +220,16 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList.append(super(VirtualBufferTextInfo, self).getControlFieldSpeech(attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason))
 		return " ".join(textList)
 
+	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
+		textList = []
+		landmark = field.get("landmark")
+		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
+			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
+		text = super(VirtualBufferTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
+		if text:
+			textList.append(text)
+		return " ".join(textList)
+
 	def _get_focusableNVDAObjectAtStart(self):
 		try:
 			newNode, newStart, newEnd = next(self.obj._iterNodesByType("focusable", "up", self._startOffset))
@@ -213,6 +241,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		ID=ctypes.c_int()
 		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.obj.VBufHandle, newNode, ctypes.byref(docHandle), ctypes.byref(ID))
 		return self.obj.getNVDAObjectFromIdentifier(docHandle.value,ID.value)
+
+	def activate(self):
+		self.obj._activatePosition(self)
 
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
@@ -557,6 +588,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		del self._loadProgressCallLater
 		self.isLoading = False
 		if not success:
+			self.passThrough=True
 			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
@@ -570,7 +602,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def unloadBuffer(self):
 		if self.VBufHandle is not None:
 			try:
-				NVDAHelper.localLib.VBuf_destroyBuffer(ctypes.byref(ctypes.c_int(self.VBufHandle)))
+				watchdog.cancellableExecute(NVDAHelper.localLib.VBuf_destroyBuffer, ctypes.byref(ctypes.c_int(self.VBufHandle)))
 			except WindowsError:
 				pass
 			self.VBufHandle=None
@@ -633,6 +665,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		This event is only fired upon entering this buffer when it was not the current buffer before.
 		This is different to L{event_gainFocus}, which is fired when an object inside this buffer gains focus, even if that object is in the same buffer.
 		"""
+		doSayAll=False
 		if not self._hadFirstGainFocus:
 			# This buffer is gaining focus for the first time.
 			# Fake a focus event on the focus object, as the buffer may have missed the actual focus event.
@@ -645,16 +678,15 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				initialPos = self._getInitialCaretPos()
 				if initialPos:
 					self.selection = self.makeTextInfo(initialPos)
-				speech.cancelSpeech()
 				reportPassThrough(self)
-				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=speech.REASON_FOCUS)
-				info=self.makeTextInfo(textInfos.POSITION_CARET)
-				sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+				doSayAll=config.conf['virtualBuffers']['autoSayAllOnPageLoad']
 			self._hadFirstGainFocus = True
 
-		else:
-			# This buffer has had focus before.
-			if not self.passThrough:
+		if not self.passThrough:
+			if doSayAll:
+				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=speech.REASON_FOCUS)
+				sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
+			else:
 				# Speak it like we would speak focus on any other document object.
 				speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)
 				info = self.selection
@@ -662,7 +694,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 					speech.speakSelectionMessage(_("selected %s"), info.text)
 				else:
 					info.expand(textInfos.UNIT_LINE)
-					speech.speakTextInfo(info, reason=speech.REASON_CARET)
+					speech.speakTextInfo(info, reason=speech.REASON_CARET, unit=textInfos.UNIT_LINE)
 
 		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
@@ -859,13 +891,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if controlTypes.STATE_FOCUSABLE not in states and controlTypes.STATE_FOCUSED not in states:
 			return False
 		role = obj.role
-		if controlTypes.STATE_READONLY in states and role != controlTypes.ROLE_EDITABLETEXT:
+		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX):
 			return False
 		if reason == speech.REASON_CARET:
 			return role == controlTypes.ROLE_EDITABLETEXT or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
-		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON):
+		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_TAB):
 			return True
-		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_TAB, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON) or controlTypes.STATE_EDITABLE in states:
+		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON) or controlTypes.STATE_EDITABLE in states:
 			return True
 		return False
 
@@ -883,7 +915,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		# Therefore, move the virtual caret to the same edge of the field.
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(info.UNIT_CONTROLFIELD)
-		if gesture.mainKeyName in ("extendedleft", "extendedup", "extendedprior"):
+		if gesture.mainKeyName in ("leftArrow", "upArrow", "pageUp"):
 			info.collapse()
 		else:
 			info.collapse(end=True)
@@ -901,11 +933,18 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
 	def script_collapseOrExpandControl(self, gesture):
-		gesture.send()
-		if not self.passThrough or self.disableAutoPassThrough:
-			return
-		self.passThrough = False
-		reportPassThrough(self)
+		if self.passThrough:
+			gesture.send()
+			if not self.disableAutoPassThrough:
+				self.passThrough = False
+				reportPassThrough(self)
+		else:
+			oldFocus = api.getFocusObject()
+			oldFocusStates = oldFocus.states
+			gesture.send()
+			if oldFocus.role == controlTypes.ROLE_COMBOBOX and controlTypes.STATE_COLLAPSED in oldFocusStates:
+				self.passThrough = True
+				reportPassThrough(self)
 	script_collapseOrExpandControl.ignoreTreeInterceptorPassThrough = True
 
 	def _tabOverride(self, direction):
@@ -996,6 +1035,10 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				log.exception("Error executing focusEntered event: %s" % parent)
 
 	def event_gainFocus(self, obj, nextHandler):
+		if not self.isReady:
+			if self.passThrough:
+				nextHandler()
+			return
 		if not self.passThrough and self._lastFocusObj==obj:
 			# This was the last non-document node with focus, so don't handle this focus event.
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
@@ -1053,6 +1096,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				return nextHandler()
 
 		self._postGainFocus(obj)
+
+	event_gainFocus.ignoreIsReady=True
 
 	def _handleScrollTo(self, obj):
 		"""Handle scrolling the buffer to a given object in response to an event.

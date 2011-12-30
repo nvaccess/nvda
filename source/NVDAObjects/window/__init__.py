@@ -16,6 +16,7 @@ import displayModel
 import eventHandler
 from NVDAObjects import NVDAObject
 from NVDAObjects.behaviors import EditableText, LiveText
+import watchdog
 
 re_WindowsForms=re.compile(r'^WindowsForms[0-9]*\.(.*)\.app\..*$')
 re_ATL=re.compile(r'^ATL:(.*)$')
@@ -201,9 +202,9 @@ An NVDAObject for a window
 			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW)
 
 	def _get_windowText(self):
-		textLength=winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
+		textLength=watchdog.cancellableSendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)
 		textBuf=ctypes.create_unicode_buffer(textLength+2)
-		winUser.sendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
+		watchdog.cancellableSendMessage(self.windowHandle,winUser.WM_GETTEXT,textLength+1,textBuf)
 		return textBuf.value
 
 	def _get_processID(self):
@@ -406,7 +407,7 @@ windowClassMap={
 	"TSpinEdit":"Edit",
 	"ThunderRT6TextBox":"Edit",
 	"TMemo":"Edit",
-	"RICHEDIT":"Edit",
+	"RICHEDIT":"RichEdit",
 	"TPasswordEdit":"Edit",
 	"THppEdit.UnicodeClass":"Edit",
 	"TUnicodeTextEdit.UnicodeClass":"Edit",

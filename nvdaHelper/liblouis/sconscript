@@ -1,0 +1,50 @@
+import os
+import re
+
+Import([
+	"env",
+	"sourceDir",
+])
+
+louisRootDir = env.Dir("#include/liblouis")
+louisSourceDir = louisRootDir.Dir("liblouis")
+outDir = sourceDir.Dir("louis")
+
+RE_AC_INIT = re.compile(r"^AC_INIT\((?P<name>.*), (?P<version>.*), (?P<maintainer>.*)\)")
+def getLouisVersion():
+	# Get the version from configure.ac.
+	with file(louisRootDir.File("configure.ac").abspath) as f:
+		for line in f:
+			m = RE_AC_INIT.match(line)
+			if m:
+				return m.group("version")
+	return "unknown"
+
+env = env.Clone()
+env.Append(CCFLAGS="/W0")
+env.Append(CPPDEFINES=[
+	("PACKAGE_VERSION", r'\"%s\"' % getLouisVersion()),
+	("UNICODE_BITS", 16),
+])
+env.Prepend(CPPPATH=[".", louisSourceDir])
+
+liblouisH = env.Substfile("liblouis.h", louisSourceDir.File("liblouis.h.in"),
+	SUBST_DICT={"@WIDECHAR_TYPE@": "unsigned short int"})
+
+sourceFiles = [
+	"compileTranslationTable.c",
+	"lou_translateString.c",
+	"lou_backTranslateString.c",
+	"wrappers.c",
+]
+objs = [env.Object("%s.obj" % f, louisSourceDir.File(f)) for f in sourceFiles]
+louisLib = env.SharedLibrary("liblouis", objs + ["liblouis.def"])
+env.Install(sourceDir, louisLib)
+
+louisPython = env.Substfile(outDir.File("__init__.py"), louisRootDir.File("python/louis/__init__.py.in"),
+	SUBST_DICT={"###LIBLOUIS_SONAME###": louisLib[0].name})
+
+env.Install(outDir.Dir("tables"),
+	[f for f in env.Glob("%s/tables/*" % louisRootDir)
+		if f.name not in ("Makefile", "Makefile.am", "README", "maketablelist.sh")
+	])

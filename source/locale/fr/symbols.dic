@@ -7,13 +7,13 @@ complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])(\s\!|\!)(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s!])(\s\?|\?)(?=[\"'”’)\s]|$)
+! sentence ending	((?<=[^\s!])\!(?=[\"'”’)\s]|$)|(?<=[^\s]\s)\!(?=[\"'”’)\s]|$))
+? sentence ending	((?<=[^\s?])\?(?=[\"'”’.)\s]|$)|(?<=[^\s]\s)\?(?=[\"'”’.)\s]|$))
 ... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
-… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s…])\…(?=[\"'”’)\s]|$)
 # Phrase endings.
-; phrase ending	(?<=[^\s!])(\s\;|\;)(?=[\"'”’)\s]|$)
-: phrase ending	(?<=[^\s!])(\s\:|\:)(?=[\"'”’)\s]|$)
+; phrase ending	(?<=[^\s;])(\s\;|\;)(?=[\"'”’)\s]|$)
+: phrase ending	(?<=[^\s:])(\s\:|\:)(?=[\"'”’)\s]|$)
 # Others
 decimal point	(?<=\d)\,(?=\d)
 in-word -	(?<=[^\W_])[-]
@@ -55,14 +55,16 @@ in-word -	tiret	all	norep
  	espace insécable	# espace insécable
 
 # Standard punctuation/symbols
-!	point dexclamation
+!	point dexclamation	some
 "	guillemet
 \#	dièse
-$	dollar	none
+$	dollar
 £	livre
-€	euro	none
+€	euro
+¢	Centimes
+¥	Yen
 %	pourcent
-&	et	none
+&	et
 '	apostrophe
 (	parenthèse gauche
 )	parenthèse droite
@@ -77,7 +79,7 @@ $	dollar	none
 <	inférieur
 >	supérieur
 =	égal
-?	point dinterrogation
+?	point dinterrogation	some
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
@@ -101,13 +103,38 @@ _	souligné
 ’	apostrophe droite
 –	tiret demicadratin
 —	tiret cadratin
-§	paragraphe	most
+§	paragraphe
 ●	astérisque
 ¨	tréma
-‎	gauche à droite	char
-‏	droite à gauche	char
-°	degré	none
+‎	gauche à droite
+‏	droite à gauche
 ©	copyright	some	norep
+■	carré noir
+‰	pour-mille
+„	guillemet vers le bas	none
+∞	infini	none
+➔	flèche droite
+°	degrés
+«	guillemet ouvert
+»	guillemet fermé
+µ	micro
+¹	puissance 1
+²	puissance 2
+³	puissance 3
+®	marque registrée
+™	marque de fabrique
+©	Copyright
+±	Plus ou Moins
+×	fois
+÷	divisé par
 
 # Fix pronunciation of some words
 no francs	f	none	norep
+
+# Fixes for some synthesizers
+ô	o circonflexe	char	norep
+Ô	o circonflexe	char	norep
+y	igrèque	char	norep
+Y	igrèque	char	norep
+À	a accent grave	char	norep
+à	a accent grave	char	norep

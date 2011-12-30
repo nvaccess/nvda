@@ -621,12 +621,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 		parentNode->addAttribute(L"name",name);
 	}
 	if(childCount>0||(width>0&&height>0)) {
-		//If there is an IAccessibleHypertext interface, then we should scan for embedded object chars
-		//treet the text between the embedded object chars as normal text
-		//Look up the IAccessible2 objects at the positions of the embedded object chars
-		//Add the text and IA2 objects in order to a vector for later adding to the buffer
-		if(paccHypertext&&IA2Text!=NULL&&IA2TextLength>0&&!IA2TextIsUnneededSpace) {
-		LOG_DEBUG(L"scanning text");
+		if(IA2Text!=NULL&&IA2TextLength>0&&!IA2TextIsUnneededSpace) {
+			// Process IAccessibleText.
+			LOG_DEBUG(L"scanning text");
 			int chunkStart=0;
 			long attribsStart = 0;
 			long attribsEnd = 0;
@@ -663,7 +660,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 						attribsEnd=IA2TextLength;
 					}
 				}
-				if(IA2Text[i]==0xfffc) {
+				if(paccHypertext&&IA2Text[i]==0xfffc) {
 					// Embedded object char.
 					LOG_DEBUG(L"embedded object char at "<<i);
 					// The next chunk of text shouldn't include this char.
@@ -716,12 +713,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 				}
 			}
 			LOG_DEBUG(L"End of scan");
-		} else  if(IA2TextLength>0&&!IA2TextIsUnneededSpace) {
-			LOG_DEBUG(L"add IA2Text to childVector");
-			if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,IA2Text))!=NULL) {
-				previousNode=tempNode;
-			}
-		} 
+		} else if (role==ROLE_SYSTEM_GRAPHIC&&childCount>0&&name) {
+			// This is an image map with a name, so render the name.
+			previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
+		}
 		if(IA2Text!=NULL) {
 			LOG_DEBUG(L"Freeing IA2Text");
 			SysFreeString(IA2Text);
@@ -769,7 +764,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 			}
 			if(childCount==0) {
 				LOG_DEBUG(L"ChildCount is 0, so add accessible value or name as text");
-				if(role==ROLE_SYSTEM_LINK||role==ROLE_SYSTEM_PUSHBUTTON||role==ROLE_SYSTEM_MENUITEM) {
+				if(role==ROLE_SYSTEM_LINK||role==ROLE_SYSTEM_PUSHBUTTON||role==IA2_ROLE_TOGGLE_BUTTON||role==ROLE_SYSTEM_MENUITEM||(role==ROLE_SYSTEM_TEXT&&(states&STATE_SYSTEM_READONLY)&&!(states&STATE_SYSTEM_FOCUSABLE))) {
 					LOG_DEBUG(L"For buttons and links we use the name as the text");
 					if(name!=NULL) {
 						LOG_DEBUG(L"adding name to buffer");

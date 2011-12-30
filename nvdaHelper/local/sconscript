@@ -81,6 +81,7 @@ localLib=env.SharedLibrary(
 		controllerRPCServerSource,
 		'nvdaControllerInternal.c',
 		controllerInternalRPCServerSource,
+		"dllImportTableHooks.cpp",
 		"nvdaHelperLocal.def",
 		"textUtils.cpp",
 	],
@@ -90,6 +91,7 @@ localLib=env.SharedLibrary(
 		"ole32",
 		"oleaut32",
 		"rpcrt4",
+		"shlwapi",
 	],
 )
 

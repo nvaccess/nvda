@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import itertools
 import queueHandler
 import config
 import speech
@@ -45,60 +46,64 @@ def isRunning():
 def readObjects(obj):
 	_startGenerator(readObjectsHelper_generator(obj))
 
+def generateObjectSubtreeSpeech(obj,indexGen):
+	index=indexGen.next()
+	speech.speakObject(obj,reason=speech.REASON_SAYALL,index=index)
+	yield obj,index
+	child=obj.simpleFirstChild
+	while child:
+		childSpeech=generateObjectSubtreeSpeech(child,indexGen)
+		for r in childSpeech:
+			yield r
+		child=child.simpleNext
+
 def readObjectsHelper_generator(obj):
-	levelsIndexMap={}
-	updateObj=obj
+	lastSentIndex=0
+	lastReceivedIndex=0
+	speechGen=generateObjectSubtreeSpeech(obj,itertools.count())
+	objIndexMap={}
 	keepReading=True
 	keepUpdating=True
-	indexCount=0
-	lastSpokenIndex=0
-	endIndex=0
 	while keepUpdating:
+		# lastReceivedIndex might be None if other speech was interspersed with this say all.
+		# In this case, we want to send more text in case this was the last chunk spoken.
+		if lastReceivedIndex is None or (lastSentIndex-lastReceivedIndex)<=1:
+			if keepReading:
+				try:
+					o,lastSentIndex=speechGen.next()
+				except StopIteration:
+					keepReading=False
+					continue
+				objIndexMap[lastSentIndex]=o
+		receivedIndex=speech.getLastSpeechIndex()
+		if receivedIndex!=lastReceivedIndex and (lastReceivedIndex!=0 or receivedIndex!=None): 
+			lastReceivedIndex=receivedIndex
+			lastReceivedObj=objIndexMap.get(lastReceivedIndex)
+			if lastReceivedObj is not None:
+				api.setNavigatorObject(lastReceivedObj)
+			#Clear old objects from the map
+			for i in objIndexMap.keys():
+				if i<=lastReceivedIndex:
+					del objIndexMap[i]
 		while speech.isPaused:
 			yield
-			continue
-		if keepReading:
-			speech.speakObject(obj,index=indexCount,reason=speech.REASON_SAYALL)
-			up=[]
-			down=[]
-			obj=obj.getNextInFlow(up=up,down=down)
-			if not obj:
-				endIndex=indexCount
-				keepReading=False
-			indexCount+=1
-			levelsIndexMap[indexCount]=(len(up),len(down))
-		spokenIndex=speech.getLastSpeechIndex()
-		if spokenIndex is None:
-			spokenIndex=0
-		for count in range(spokenIndex-lastSpokenIndex):
-			upLen,downLen=levelsIndexMap.get(lastSpokenIndex+count+1,(0,0))
-			if upLen==0 and downLen==0:
-				tones.beep(880,50)
-			if upLen>0:
-				for count in range(upLen+1):
-					tones.beep(880*(1.25**count),50)
-					time.sleep(0.025)
-			if downLen>0:
-				for count in range(downLen+1):
-					tones.beep(880/(1.25**count),50)
-					time.sleep(0.025)
-			updateObj=updateObj.nextInFlow
-			api.setNavigatorObject(updateObj)
-		if not keepReading and spokenIndex>=endIndex:
-			keepUpdating=False
-		lastSpokenIndex=spokenIndex
 		yield
 
-def readText(info,cursor):
-	_startGenerator(readTextHelper_generator(info,cursor))
+def readText(cursor):
+	_startGenerator(readTextHelper_generator(cursor))
 
-def readTextHelper_generator(info,cursor):
+def readTextHelper_generator(cursor):
+	if cursor==CURSOR_CARET:
+		try:
+			reader=api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError):
+			return
+	else:
+		reader=api.getReviewPosition()
+
 	lastSentIndex=0
 	lastReceivedIndex=0
 	cursorIndexMap={}
-	reader=info.copy()
-	if not reader.isCollapsed:
-		reader.collapse()
 	keepReading=True
 	keepUpdating=True
 	while keepUpdating:
@@ -126,7 +131,7 @@ def readTextHelper_generator(info,cursor):
 					keepReading=False
 		else:
 			# We'll wait for speech to catch up a bit before sending more text.
-			if speech.speakWithoutPauses.lastSentIndex is None or (lastSentIndex-speech.speakWithoutPauses.lastSentIndex)>=10:				# There is a 
+			if speech.speakWithoutPauses.lastSentIndex is None or (lastSentIndex-speech.speakWithoutPauses.lastSentIndex)>=10:
 				# There is a large chunk of pending speech
 				# Force speakWithoutPauses to send text to the synth so we can move on.
 				speech.speakWithoutPauses(None)
@@ -140,6 +145,18 @@ def readTextHelper_generator(info,cursor):
 					updater.updateCaret()
 				if cursor!=CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 					api.setReviewPosition(updater)
+		elif not keepReading and lastReceivedIndex==lastSentIndex:
+			# All text has been spoken.
+			# Turn the page and start again if the object supports it.
+			if isinstance(reader.obj,textInfos.DocumentWithPageTurns):
+				try:
+					reader.obj.turnPage()
+				except RuntimeError:
+					pass
+				else:
+					reader=reader.obj.makeTextInfo(textInfos.POSITION_FIRST)
+					keepReading=True
+
 		while speech.isPaused:
 			yield
 		yield

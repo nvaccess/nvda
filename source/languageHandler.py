@@ -17,15 +17,15 @@ def localeNameToWindowsLCID(localeName):
 	@returns: a Windows LCID
 	@rtype: integer
 	""" 
-	localeName=locale.normalize(localeName)
-	if '.' in localeName:
-		localeName=localeName.split('.')[0]
 	#Windows Vista is able to convert locale names to LCIDs
 	func_LocaleNameToLCID=getattr(ctypes.windll.kernel32,'LocaleNameToLCID',None)
 	if func_LocaleNameToLCID is not None:
 		localeName=localeName.replace('_','-')
 		LCID=func_LocaleNameToLCID(unicode(localeName),0)
 	else: #Windows doesn't have this functionality, manually search Python's windows_locale dictionary for the LCID
+		localeName=locale.normalize(localeName)
+		if '.' in localeName:
+			localeName=localeName.split('.')[0]
 		LCList=[x[0] for x in locale.windows_locale.iteritems() if x[1]==localeName]
 		if len(LCList)>0:
 			LCID=LCList[0]
@@ -106,3 +106,20 @@ def setLanguage(lang):
 
 def getLanguage():
 	return curLang
+
+def normalizeLanguage(lang):
+	"""
+	Normalizes a  language-dialect string  in to a standard form we can deal with.
+	Converts  any dash to underline, and makes sure that language is lowercase and dialect is upercase.
+	"""
+	lang=lang.replace('-','_')
+	ld=lang.split('_')
+	ld[0]=ld[0].lower()
+	#Filter out meta languages such as x-western
+	if ld[0]=='x':
+		return None
+	if len(ld)>=2:
+		ld[1]=ld[1].upper()
+	return "_".join(ld)
+
+

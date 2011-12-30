@@ -1,0 +1,105 @@
+﻿#locale/de/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access, Inc.
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# Sonderzeichen	Regulärer Ausdruck
+# Weitere
+date separator	(?<=\d\d)\.(?=\d\d)
+
+symbols:
+# Identifizierungszeichen	Ersetzungen[[	Ebene][	Bereich]][	# Angezeigter Name]
+
+# Komplexe Symbole
+. sentence ending	punkt
+! sentence ending	Ausrufezeichen
+? sentence ending	Fragezeichen
+; phrase ending	Semikolon
+: phrase ending	Doppelpunkt
+; phrase ending	Semikolon
+date separator		none	always
+in-word '	Apostroph
+
+# Unsichtbare Zeichen
+\0	leer	char	# Null
+\t	Tabulator
+\n	Zeilenumbruch
+\f	Seitenumbruch
+\r	Neue Zeile
+ 	Leerzeichen
+ 	Leerzeichen	# Geschütztes Leerzeichen
+
+# Standardsymbole und -satzzeichen
+!	Ausrufezeichen
+"	Anführungszeichen
+\#	Nummernzeichen
+$	Dollar
+£	Pfund
+€	Euro
+%	Prozent
+&	Und
+'	Apostroph
+(	runde Klammer auf
+)	runde Klammer zu
+*	Stern
++	Pluszeichen
+,	Komma
+-	Bindestrich
+.	punkt
+/	Schrägstrich
+:	Doppelpunkt
+;	Semikolon
+<	Kleinerzeichen
+>	Größerzeichen
+=	Gleichheitszeichen
+?	Fragezeichen
+@	Klammeraffe
+[	eckige Klammer auf
+]	eckige Klammer zu
+\\	Backslash
+^	Dach
+_	Unterstrich
+`	Apostroph
+{	geschweifte Klammer auf
+}	geschweifte Klammer zu
+|	senkrechter Strich
+~	Tilde
+
+# Weitere Zeichen
+•	Aufzählungszeichen	some
+…	Punkt Punkt Punkt
+...	Punkt Punkt Punkt
+	Aufzählungszeichen	some
+“	Anführungszeichen oben
+”	Anführungszeichen unten
+‘	Anführungszeichen oben 
+’	Anführungszeichen unten
+–	Strich
+—	Gedankenstrich
+●	Kreis
+¨	Trema
+‏	von rechts nach links Markierung
+‎	von links nach rechts Markierung
+■	schwarzes Quadrat 
+➔	Pfeil nach rechts
+ 
+ 
+§	Paragraf	some
+¥	Yen	all	norep
+¢	Cent	all	norep
+°	Grad	most
+Þ	Bullet	some
+«	doppelt gewinkelte Klammer auf	most
+»	doppelt gewinkelte Klammer zu	most
+µ	My	most
+¹	hoch gestellte Eins	some
+²	hoch gestellte Zwei	some
+³	hoch gestellte Drei	some
+®	Eingetragenes Warenzeichen	some
+™	Eingetragenes Warenzeichen	some
+©	Copyright	some
+±	Plus Minus	some
+×	mal	some
+÷	Divisionszeichen	some
+

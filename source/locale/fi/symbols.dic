@@ -6,6 +6,8 @@
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
+... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s…])\…(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])(\s\!|\!)(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s!])(\s\?|\?)(?=[\"'”’)\s]|$)
 # Phrase endings.
@@ -25,11 +27,12 @@ symbols:
 . sentence ending	piste	all	always
 ! sentence ending	huuto	all	always
 ? sentence ending	kysymys	all	always
+... sentence ending	piste piste piste	all	always
+… sentence ending	piste piste piste	all	always
 ; phrase ending	puolipiste	most	always
 : phrase ending	kaksoispiste	most	always
 decimal point		none	always
 in-word '	heitto	all	norep
-in-word š	sh	all	norep
 negative number	miinus	none	norep
 percent	prosenttia	none	norep
 dates	 	all	always
@@ -86,20 +89,20 @@ _	alaviiva	most
 …	piste piste piste	all	always
 ...	piste piste piste	all	always
 	luettelomerkki	most
-“	lainaus	most
+“	vasen lainaus	most
 ”	lainaus	most
-‘	heitto	most
+‘	vasen yksinkertainen lainaus	most
 ’	heitto	most
-–	pitkä viiva	most
-—	pitempi viiva	most
+–	lyhyt ajatusviiva	most
+—	pitkä ajatusviiva	most
+­	pehmeä tavuviiva	most
 ●	tähti	some
 ¨	treema	most
 ‎	nuoli vasemmalta oikealle	char
 ‏	nuoli oikealta vasemmalle	char
-­	pehmeä tavuviiva	all
-█	sitova viiva	all
-»	kulmalainaus oikealle	all
-→	nuoli oikealle	all
+­	pehmeä tavuviiva	most
+‑	sitova viiva	most
+→	nuoli oikealle	most
 −	miinus	some
 ►	musta osoitin oikealle	all
 ⇒	kaksoisnuoli oikealle	all
@@ -114,11 +117,37 @@ _	alaviiva	most
 ♣	musta risti all
 ♦	musta ruutu	all
 ★	musta tähti	all
-¡	käänteinen huuto	all
-¦	rikkinäinen palkki	most
-©	copyright	most
-«	kaksoiskulmasulku	most
-¿	käänteinen kysymys	all
+■	musta neliö	some
+➔	nuoli oikealle	some
+¡	käänteinen huuto	most
+¦	katkopystyviiva	most
+ª	feminiinisen järjestysluvun merkki	some
+º	maskuliinisen järjestysluvun merkki	some
+¹	potenssiin 1	some	# yläindeksi 1
+²	potenssiin 2	some	# yläindeksi 2
+³	potenssiin 3	some	# yläindeksi 3
+´	akuuttiaksentti	most
+·	rivinkeskinen piste	most
+¸	sedilji	most
+‣	kolmikulmainen luettelomerkki	most
+©	copyright	some
+ß	saksalainen kaksois äss	some
+š	hattu äss
+Š	iso hattu äss
+ž	hattu tset
+Ž	iso hattu tset
+æ	tanskalainen ää
+Æ	iso tanskalainen ää
+ø	tanskalainen öö
+Ø	iso tanskalainen öö
+œ	oo ee ligatuuri
+Œ	iso oo ee ligatuuri
+ð	eth
+Ð	iso eth
+«	kaksoiskulmalainaus vasemmalle
+»	kaksoiskulmalainaus oikealle
+µ	mikro	some
+¿	käänteinen kysymys	most
 †	risti	most
 ‡	kaksoisristi	most
 ☼	valkoinen aurinko säteineen	most
@@ -130,27 +159,33 @@ _	alaviiva	most
 ʎ	y ylösalaisin	some
 ˜	pieni tilde	most
 þ	thorn	some
-æ	aa ee	some
+Þ	iso thorn	some
+ç	see sedilji
+Ç	iso see sedilji
 ‰	promille	most
-§	pykälä	some
-÷	jakomerkki	some
-×	kertomerkki	some
-°	aste	some
-¢	sentti	some
-¤	valuuttasymboli	some
+§	pykälä	all
+¶	kappale
+¯	viiva aksentti
+÷	jaettuna	most
+×	kertaa	most
+°	astetta	some
+¢	sentti	all	norep
+¤	valuuttamerkki	some
 ≠	eri suuri kuin	some
 ∞	ääretön	some
 √	neliöjuuri	some
-½	puolikas	some
+½	yksi kahdesosa	some
 ⅔	kaksi kolmasosaa	some
 ⅓	yksi kolmasosa	some
-±	plus miinus	some
+¾	kolme neljäsosaa	some
 ¼	yksi neljäsosa	some
+¬	negaatio	some
+±	plus miinus	most
 ₨	rupia	some
-™	tavaramerkki	some
-®	rekisteröity	some
-©	copyright	some
-¥	jeni	some
+™	tavaramerkki	most
+®	rekisteröity tavaramerkki	most
+©	copyright	most
+¥	jeni	all	norep
 Α	iso alfa	some
 Β	iso beetta	some
 Γ	iso gamma	some

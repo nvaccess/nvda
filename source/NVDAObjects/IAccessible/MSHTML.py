@@ -77,6 +77,7 @@ nodeNamesToNVDARoles={
 	"APPLET":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"FIELDSET":controlTypes.ROLE_GROUPING,
+	"OPTION":controlTypes.ROLE_LISTITEM,
 }
 
 def IAccessibleFromHTMLNode(HTMLNode):
@@ -264,9 +265,9 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 	def _get_text(self):
 		text=self._rangeObj.text
 		if not text:
-			text=""
+			text=u""
 		if controlTypes.STATE_PROTECTED in self.obj.states:
-			text='*'*len(text)
+			text=u'*'*len(text)
 		return text
 
 	def move(self,unit,direction, endPoint=None):
@@ -350,11 +351,11 @@ class MSHTML(IAccessible):
 	def findOverlayClasses(self,clsList):
 		if self.TextInfo == MSHTMLTextInfo:
 			clsList.append(EditableTextWithoutAutoSelectDetection)
-		#fix for #974
-		#this fails on some control in vs2008 new project wizard
 		nodeName = self.HTMLNodeName
 		if nodeName:
-			if nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
+			if nodeName=="SELECT" and self.windowStyle&winUser.WS_POPUP:
+				clsList.append(PopupList)
+			elif nodeNamesToNVDARoles.get(nodeName) == controlTypes.ROLE_DOCUMENT:
 				clsList.append(Body)
 			elif nodeName == "OBJECT":
 				clsList.append(Object)
@@ -526,7 +527,7 @@ class MSHTML(IAccessible):
 			if nodeName:
 				if nodeName in ("OBJECT","EMBED","APPLET"):
 					return controlTypes.ROLE_EMBEDDEDOBJECT
-				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME"):
+				if self.HTMLNodeHasAncestorIAccessible or nodeName in ("BODY","FRAMESET","FRAME","IFRAME","LABEL"):
 					return nodeNamesToNVDARoles.get(nodeName,controlTypes.ROLE_TEXTFRAME)
 		if self.IAccessibleChildID>0:
 			states=super(MSHTML,self).states
@@ -817,6 +818,14 @@ class PluginWindow(IAccessible):
 	# MSHTML fires focus on this window after the plugin may already have fired a focus event.
 	# We don't want this to override the focus event fired by the plugin.
 	shouldAllowIAccessibleFocusEvent = False
+
+class PopupList(MSHTML):
+	"""
+	Temporary popup lists created when expanding a combo box have a correct accParent which points back to the combobox, so use that. The parentElement  points to a temporary document fragment which is not useful.
+	"""
+
+	def _get_parent(self):
+		return super(MSHTML,self).parent
 
 class RootClient(IAccessible):
 	"""The top level client of an MSHTML control.

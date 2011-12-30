@@ -18,5 +18,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 handle_t createConnection(int processID);
 void destroyConnection(handle_t bindingHandle);
+LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult);
+void cancelSendMessage();
+void nvdaHelperLocal_initialize();
+void nvdaHelperLocal_terminate();
 
 #endif

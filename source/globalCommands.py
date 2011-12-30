@@ -8,6 +8,7 @@ import time
 import tones
 import keyboardHandler
 import mouseHandler
+import eventHandler
 import controlTypes
 import api
 import textInfos
@@ -44,11 +45,14 @@ class GlobalCommands(ScriptableObject):
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
 	def script_toggleCurrentAppSleepMode(self,gesture):
-		curApp=api.getFocusObject().appModule
+		curFocus=api.getFocusObject()
+		curApp=curFocus.appModule
 		if curApp.sleepMode:
 			curApp.sleepMode=False
 			ui.message(_("Sleep mode off"))
+			eventHandler.executeEvent("gainFocus",curFocus)
 		else:
+			eventHandler.executeEvent("loseFocus",curFocus)
 			curApp.sleepMode=True
 			ui.message(_("Sleep mode on"))
 	script_toggleCurrentAppSleepMode.__doc__=_("Toggles  sleep mode on and off for  the active application.")
@@ -350,7 +354,7 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
-			speech.speakMessage(_("No parents"))
+			speech.speakMessage(_("No containing object"))
 	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
 
 	def script_navigatorObject_next(self,gesture):
@@ -392,8 +396,8 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=speech.REASON_QUERY)
 		else:
-			speech.speakMessage(_("No children"))
-	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object it contains")
+			speech.speakMessage(_("No objects inside"))
+	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
 
 	def script_navigatorObject_doDefaultAction(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -440,7 +444,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
 		else:
-			speech.speakSpelling(info.text,useCharacterDescriptions=bool(scriptCount>1))
+			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions.")
  
 	def script_review_nextLine(self,gesture):
@@ -482,7 +486,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount==0:
 			speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
 		else:
-			speech.speakSpelling(info.text,useCharacterDescriptions=bool(scriptCount>1))
+			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions")
 
 	def script_review_nextWord(self,gesture):
@@ -532,7 +536,7 @@ class GlobalCommands(ScriptableObject):
 		if scriptCount==0:
 			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
 		elif scriptCount==1:
-			speech.speakSpelling(info.text,useCharacterDescriptions=True)
+			speech.spellTextInfo(info,useCharacterDescriptions=True)
 		else:
 			try:
 				c = ord(info.text)
@@ -624,20 +628,11 @@ class GlobalCommands(ScriptableObject):
 	script_showGui.__doc__=_("Shows the NVDA menu")
 
 	def script_review_sayAll(self,gesture):
-		info=api.getReviewPosition().copy()
-		sayAllHandler.readText(info,sayAllHandler.CURSOR_REVIEW)
+		sayAllHandler.readText(sayAllHandler.CURSOR_REVIEW)
 	script_review_sayAll.__doc__ = _("reads from the review cursor  up to end of current text, moving the review cursor as it goes")
 
 	def script_sayAll(self,gesture):
-		o=api.getFocusObject()
-		ti=o.treeInterceptor
-		if ti and not ti.passThrough:
-			o=ti
-		try:
-			info=o.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError, RuntimeError):
-			return
-		sayAllHandler.readText(info,sayAllHandler.CURSOR_CARET)
+		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 	script_sayAll.__doc__ = _("reads from the system caret up to the end of the text, moving the caret as it goes")
 
 	def script_reportFormatting(self,gesture):
@@ -647,19 +642,32 @@ class GlobalCommands(ScriptableObject):
 			"reportStyle":True,"reportAlignment":True,"reportSpellingErrors":True,
 			"reportPage":False,"reportLineNumber":False,"reportTables":False,
 			"reportLinks":False,"reportHeadings":False,"reportLists":False,
-			"reportBlockQuotes":False,
+			"reportBlockQuotes":False,"reportComments":False,
 		}
+		textList=[]
 		info=api.getReviewPosition()
+
+		# First, fetch indentation.
+		line=info.copy()
+		line.expand(textInfos.UNIT_LINE)
+		indentation,content=speech.splitTextIndentation(line.text)
+		if indentation:
+			textList.append(speech.getIndentationSpeech(indentation))
+		
 		info.expand(textInfos.UNIT_CHARACTER)
 		formatField=textInfos.FormatField()
 		for field in info.getTextWithFields(formatConfig):
 			if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
 				formatField.update(field.field)
 		text=speech.getFormatFieldSpeech(formatField,formatConfig=formatConfig) if formatField else None
-		if not text:
+		if text:
+			textList.append(text)
+
+		if not textList:
 			ui.message(_("No formatting information"))
 			return
-		ui.message(text)
+
+		ui.message(" ".join(textList))
 	script_reportFormatting.__doc__ = _("Reports formatting info for the current review cursor position within a document")
 
 	def script_reportCurrentFocus(self,gesture):
@@ -675,16 +683,28 @@ class GlobalCommands(ScriptableObject):
 
 	def script_reportStatusLine(self,gesture):
 		obj = api.getStatusBar()
-		if not obj:
-			ui.message(_("no status bar found"))
+		found=False
+		if obj:
+			text = api.getStatusBarText(obj)
+			api.setNavigatorObject(obj)
+			found=True
+		else:
+			info=api.getForegroundObject().flatReviewPosition
+			if info:
+				info.expand(textInfos.UNIT_STORY)
+				info.collapse(True)
+				info.expand(textInfos.UNIT_LINE)
+				text=info.text
+				info.collapse()
+				api.setReviewPosition(info)
+				found=True
+		if not found:
+			ui.message(_("No status line found"))
 			return
-		text = api.getStatusBarText(obj)
-
 		if scriptHandler.getLastScriptRepeatCount()==0:
 			ui.message(text)
 		else:
 			speech.speakSpelling(text)
-		api.setNavigatorObject(obj)
 	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it")
 
 	def script_toggleMouseTracking(self,gesture):
@@ -717,8 +737,7 @@ class GlobalCommands(ScriptableObject):
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
 		if obj:
-			speech.speakObject(obj,reason=speech.REASON_QUERY)
-			obj.speakDescendantObjects()
+			sayAllHandler.readObjects(obj)
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
 
 	def script_test_navigatorDisplayModelText(self,gesture):
@@ -859,7 +878,7 @@ class GlobalCommands(ScriptableObject):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()
-		pythonConsole.consoleUI.updateNamespaceSnapshotVars()
+		pythonConsole.consoleUI.console.updateNamespaceSnapshotVars()
 		pythonConsole.activate()
 	script_activatePythonConsole.__doc__ = _("Activates the NVDA Python Console, primarily useful for development")
 

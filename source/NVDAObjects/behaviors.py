@@ -31,11 +31,11 @@ class ProgressBar(NVDAObject):
 		if pbConf["progressBarOutputMode"]=="off" or controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
 			return super(ProgressBar,self).event_valueChange()
 		val=self.value
-		if val:
-			val=val.rstrip('%\x00')
-		if not val:
-			return super(ProgressBar,self).event_valueChange()
-		percentage = min(max(0.0, float(val)), 100.0)
+		try:
+			percentage = min(max(0.0, float(val.strip("%\0"))), 100.0)
+		except (AttributeError, ValueError):
+			log.debugWarning("Invalid value: %r" % val)
+			return super(ProgressBar, self).event_valueChange()
 		if not pbConf["reportBackgroundProgressBars"] and not self.isInForeground:
 			return
 		try:

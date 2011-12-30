@@ -7,6 +7,7 @@ import edit
 import winUser
 import winKernel
 import ctypes
+import watchdog
 
 # Messages
 AEM_GETINDEX          =(winUser.WM_USER + 2106)
@@ -52,18 +53,22 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		ciChar=AECHARINDEX()
 		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winUser.sendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
-		winKernel.readProcessMemory(processHandle,internalCiChar,ctypes.byref(ciChar),ctypes.sizeof(ciChar),None)
-		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
+		try:
+			watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
+			winKernel.readProcessMemory(processHandle,internalCiChar,ctypes.byref(ciChar),ctypes.sizeof(ciChar),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return ciChar.nLine
 
 	def _getStoryLength(self):
 		ciChar=AECHARINDEX()
 		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winUser.sendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_LASTCHAR,internalCiChar)
-		end=winUser.sendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
-		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
+		try:
+			watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_LASTCHAR,internalCiChar)
+			end=watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return end+1
 
 	def _getLineOffsets(self,offset):
@@ -73,10 +78,12 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		ciChar=AECHARINDEX()
 		processHandle=self.obj.processHandle
 		internalCiChar=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(ciChar),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winUser.sendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
-		winUser.sendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_NEXTLINE,internalCiChar)
-		end=winUser.sendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
-		winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
+		try:
+			watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_RICHOFFSETTOINDEX,offset,internalCiChar)
+			watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_GETINDEX,AEGI_NEXTLINE,internalCiChar)
+			end=watchdog.cancellableSendMessage(self.obj.windowHandle,AEM_INDEXTORICHOFFSET,0,internalCiChar)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCiChar,0,winKernel.MEM_RELEASE)
 		return (start,end)
 
 
@@ -96,7 +103,7 @@ class AkelEdit(edit.RichEdit20):
 			self.bindGesture(gesture, "caret_moveByLine")
 
 	def _getControlVersion(self):
-		res=winUser.sendMessage(self.windowHandle,AEM_CONTROLVERSION,None,None)
+		res=watchdog.cancellableSendMessage(self.windowHandle,AEM_CONTROLVERSION,None,None)
 		major=winUser.LOBYTE(winUser.LOWORD(res))
 		minor=winUser.HIBYTE(winUser.LOWORD(res))
 		version=major+(0.1*minor)

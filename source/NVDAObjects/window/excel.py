@@ -9,6 +9,7 @@ import comtypes.automation
 import wx
 import oleacc
 import textInfos
+import colors
 import eventHandler
 import gui
 import winUser
@@ -113,6 +114,7 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+space",
 		"kb:control+pageUp",
 		"kb:control+pageDown",
+		"kb:control+v",
 	)
 
 class ExcelCellTextInfo(NVDAObjectTextInfo):
@@ -128,6 +130,15 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField['bold']=fontObj.bold
 			formatField['italic']=fontObj.italic
 			formatField['underline']=fontObj.underline
+		if formatConfig['reportColor']:
+			try:
+				formatField['color']=colors.RGB.fromCOLORREF(int(fontObj.color))
+			except COMError:
+				pass
+			try:
+				formatField['background-color']=colors.RGB.fromCOLORREF(int(self.obj.excelCellObject.interior.color))
+			except COMError:
+				pass
 		return formatField,(self._startOffset,self._endOffset)
 
 class ExcelCell(ExcelBase):
@@ -199,17 +210,19 @@ class ExcelCell(ExcelBase):
 
 class ExcelSelection(ExcelBase):
 
-	role=controlTypes.ROLE_GROUPING
+	role=controlTypes.ROLE_TABLECELL
 
 	def __init__(self,windowHandle=None,excelWindowObject=None,excelRangeObject=None):
 		self.excelWindowObject=excelWindowObject
 		self.excelRangeObject=excelRangeObject
 		super(ExcelSelection,self).__init__(windowHandle=windowHandle)
 
-	def _get_name(self):
-		return _("selection")
+	def _get_states(self):
+		states=super(ExcelSelection,self).states
+		states.add(controlTypes.STATE_SELECTED)
+		return states
 
-	def _get_value(self):
+	def _get_name(self):
 		firstCell=self.excelRangeObject.Item(1)
 		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
 		return _("%s %s through %s %s")%(self.getCellAddress(firstCell),firstCell.Text,self.getCellAddress(lastCell),lastCell.Text)
@@ -218,3 +231,8 @@ class ExcelSelection(ExcelBase):
 		worksheet=self.excelRangeObject.Worksheet
 		return ExcelWorksheet(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelWorksheetObject=worksheet)
 
+	#Its useful for an excel selection to be announced with reportSelection script
+	def makeTextInfo(self,position):
+		if position==textInfos.POSITION_SELECTION:
+			position=textInfos.POSITION_ALL
+		return super(ExcelSelection,self).makeTextInfo(position)

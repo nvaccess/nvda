@@ -200,8 +200,11 @@ VBufStorage_textFieldNode_t* VBufStorage_fieldNode_t::locateTextFieldNodeAtOffse
 	return NULL;
 }
 
-void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring& text) {
+void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset) {
 	wostringstream s;
+	s<<L"_startOfNode=\""<<(startOffset==0?1:0)<<L"\" ";
+	s<<L"_endOfNode=\""<<(endOffset>=this->length?1:0)<<L"\" ";
+	s<<L"isBlock=\""<<this->isBlock<<L"\" ";
 	int childCount=0;
 	for(VBufStorage_fieldNode_t* child=this->firstChild;child!=NULL;child=child->next) {
 		++childCount;
@@ -227,11 +230,11 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	}
 }
 
-void VBufStorage_fieldNode_t::generateMarkupOpeningTag(std::wstring& text) {
+void VBufStorage_fieldNode_t::generateMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset) {
 	text+=L"<";
 	this->generateMarkupTagName(text);
 	text+=L" ";
-	this->generateAttributesForMarkupOpeningTag(text);
+	this->generateAttributesForMarkupOpeningTag(text,startOffset,endOffset);
 	text+=L">";
 }
 
@@ -251,7 +254,7 @@ void VBufStorage_fieldNode_t::getTextInRange(int startOffset, int endOffset, std
 	nhAssert(startOffset<endOffset); //startOffset must be before endOffset
 	nhAssert(endOffset<=this->length); //endOffset can't be bigger than node length
 	if(useMarkup) {
-		this->generateMarkupOpeningTag(text);
+		this->generateMarkupOpeningTag(text,startOffset,endOffset);
 	}
 	nhAssert(this->firstChild!=NULL||this->length==0); //Length of a node with out children can not be greater than 0
 	int childStart=0;
@@ -350,11 +353,11 @@ void VBufStorage_controlFieldNode_t::generateMarkupTagName(std::wstring& text) {
 	text+=L"control";
 }
 
-void VBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring& text) {
+void VBufStorage_controlFieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset) {
 	std::wostringstream s;
 	s<<L"controlIdentifier_docHandle=\""<<identifier.docHandle<<L"\" controlIdentifier_ID=\""<<identifier.ID<<L"\" ";
 	text+=s.str();
-	this->VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(text);
+	this->VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(text,startOffset,endOffset);
 }
 
 void VBufStorage_controlFieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffer) {
@@ -396,7 +399,7 @@ void VBufStorage_textFieldNode_t::generateMarkupTagName(std::wstring& text) {
 void VBufStorage_textFieldNode_t::getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup) {
 	LOG_DEBUG(L"getting text between offsets "<<startOffset<<L" and "<<endOffset);
 	if(useMarkup) {
-		this->generateMarkupOpeningTag(text);
+		this->generateMarkupOpeningTag(text,startOffset,endOffset);
 	}
 	nhAssert(startOffset>=0); //StartOffset must be not negative
 	nhAssert(startOffset<endOffset); //StartOffset must be less than endOffset

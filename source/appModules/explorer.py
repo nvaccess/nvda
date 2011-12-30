@@ -14,7 +14,12 @@ import mouseHandler
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import sysListView32, IAccessible
 
-#Class for menu items  for Windows Places and Frequently used Programs (in start menu)
+#win8hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
+class SearchBoxClient(IAccessible):
+	shouldAllowIAccessibleFocusEvent=False
+
+
+ #Class for menu items  for Windows Places and Frequently used Programs (in start menu)
 class SysListView32MenuItem(sysListView32.ListItem):
 
 	#When focus moves to these items, an extra focus is fired on the parent
@@ -75,6 +80,10 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 		role = obj.role
+
+		if windowClass in ("Search Box","UniversalSearchBand") and role==controlTypes.ROLE_PANE and isinstance(obj,IAccessible):
+			clsList.insert(0,SearchBoxClient)
+			return
 
 		if windowClass == "ToolbarWindow32" and role == controlTypes.ROLE_POPUPMENU:
 			parent = obj.parent

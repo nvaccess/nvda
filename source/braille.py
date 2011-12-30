@@ -65,6 +65,7 @@ TABLES = (
 	("No-No-g3.ctb", _("Norwegian grade 3")),
 	("Pl-Pl-g1.utb", _("Polish grade 1")),
 	("Pt-Pt-g1.utb", _("Portuguese grade 1")),
+	("Pt-Pt-g2.ctb", _("Portuguese grade 2")),
 	("ru-ru-g1.utb", _("Russian grade 1")),
 	("Se-Se-g1.utb", _("Swedish grade 1")),
 	("sk-sk-g1.utb", _("Slovak")),
@@ -90,16 +91,39 @@ roleLabels = {
 	controlTypes.ROLE_DIALOG: _("dlg"),
 	controlTypes.ROLE_TREEVIEW: _("tv"),
 	controlTypes.ROLE_TABLE: _("tb"),
+	# Translators: Displayed in braille for an object which is a separator.
+	controlTypes.ROLE_SEPARATOR: _("-----"),
 }
 
 positiveStateLabels = {
+	# Translators: Displayed in braille when an object (e.g. a check box) is checked.
 	controlTypes.STATE_CHECKED: _("(x)"),
+	# Translators: Displayed in braille when an object (e.g. a check box) is half checked.
+	controlTypes.STATE_HALFCHECKED: _("(-)"),
+	# Translators: Displayed in braille when an object is selected.
 	controlTypes.STATE_SELECTED: _("sel"),
+	# Translators: Displayed in braille when an object has a popup (usually a sub-menu).
 	controlTypes.STATE_HASPOPUP: _("submnu"),
+	# Translators: Displayed in braille when an object supports autocompletion.
+	controlTypes.STATE_AUTOCOMPLETE: _("..."),
+	# Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
+	controlTypes.STATE_EXPANDED: _("-"),
+	# Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
+	controlTypes.STATE_COLLAPSED: _("+"),
+	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
+	controlTypes.STATE_READONLY: _("ro"),
 }
 negativeStateLabels = {
+	# Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 	controlTypes.STATE_CHECKED: _("( )"),
 }
+
+DOT7 = 64
+DOT8 = 128
+
+def NVDAObjectHasUsefulText(obj):
+	import displayModel
+	return issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo) or obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states
 
 def _getDisplayDriver(name):
 	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
@@ -134,6 +158,10 @@ class Region(object):
 		#: The translated braille representation of this region.
 		#: @type: [int, ...]
 		self.brailleCells = []
+		#: liblouis typeform flags for each character in L{rawText},
+		#: C{None} if no typeform info.
+		#: @type: [int, ...]
+		self.rawTextTypeforms = None
 		#: A list mapping positions in L{rawText} to positions in L{brailleCells}.
 		#: @type: [int, ...]
 		self.rawToBraillePos = []
@@ -153,7 +181,9 @@ class Region(object):
 	def update(self):
 		"""Update this region.
 		Subclasses should extend this to update L{rawText} and L{cursorPos} if necessary.
-		The base class method handles translation of L{rawText} into braille, placing the result in L{brailleCells}. L{rawToBraillePos} and L{brailleToRawPos} are updated according to the translation.
+		The base class method handles translation of L{rawText} into braille, placing the result in L{brailleCells}.
+		Typeform information from L{rawTextTypeforms} is used, if any.
+		L{rawToBraillePos} and L{brailleToRawPos} are updated according to the translation.
 		L{brailleCursorPos} is similarly updated based on L{cursorPos}.
 		@postcondition: L{brailleCells} and L{brailleCursorPos} are updated and ready for rendering.
 		"""
@@ -164,7 +194,10 @@ class Region(object):
 		braille, self.brailleToRawPos, self.rawToBraillePos, brailleCursorPos = louis.translate(
 			[os.path.join(TABLES_DIR, config.conf["braille"]["translationTable"]),
 				"braille-patterns.cti"],
-			text, mode=mode, cursorPos=self.cursorPos or 0)
+			text,
+			# liblouis mutates typeform if it is a list.
+			typeform=tuple(self.rawTextTypeforms) if isinstance(self.rawTextTypeforms, list) else self.rawTextTypeforms,
+			mode=mode, cursorPos=self.cursorPos or 0)
 		# liblouis gives us back a character string of cells, so convert it to a list of ints.
 		# For some reason, the highest bit is set, so only grab the lower 8 bits.
 		self.brailleCells = [ord(cell) & 255 for cell in braille]
@@ -177,7 +210,9 @@ class Region(object):
 			# HACK: Work around a liblouis bug whereby the returned cursor position is not within the braille cells returned.
 			if brailleCursorPos >= len(self.brailleCells):
 				brailleCursorPos = len(self.brailleCells) - 1
-			self.brailleCursorPos = brailleCursorPos
+		else:
+			brailleCursorPos = None
+		self.brailleCursorPos = brailleCursorPos
 
 	def routeTo(self, braillePos):
 		"""Handle a cursor routing request.
@@ -212,8 +247,24 @@ def getBrailleTextForProperties(**propertyValues):
 	if name:
 		textList.append(name)
 	role = propertyValues.get("role")
+	states = propertyValues.get("states")
+	positionInfo = propertyValues.get("positionInfo")
+	level = positionInfo.get("level") if positionInfo else None
+	rowNumber = propertyValues.get("rowNumber")
+	columnNumber = propertyValues.get("columnNumber")
+	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
 	if role is not None:
-		if name and role in speech.silentRolesOnFocus:
+		if role == controlTypes.ROLE_HEADING and level:
+			# Translators: Displayed in braille for a heading with a level.
+			# %s is replaced with the level.
+			roleText = _("h%s") % level
+			level = None
+		elif role == controlTypes.ROLE_LINK and states and controlTypes.STATE_VISITED in states:
+			states = states.copy()
+			states.discard(controlTypes.STATE_VISITED)
+			# Translators: Displayed in braille for a link which has been visited.
+			roleText = _("vlnk")
+		elif (name or rowNumber or columnNumber) and role in speech.silentRolesOnFocus:
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
@@ -223,7 +274,6 @@ def getBrailleTextForProperties(**propertyValues):
 	value = propertyValues.get("value")
 	if value and role not in speech.silentValuesForRoles:
 		textList.append(value)
-	states = propertyValues.get("states")
 	if states:
 		positiveStates = speech.processPositiveStates(role, states, speech.REASON_FOCUS, states)
 		textList.extend(positiveStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in positiveStates)
@@ -237,12 +287,28 @@ def getBrailleTextForProperties(**propertyValues):
 	keyboardShortcut = propertyValues.get("keyboardShortcut")
 	if keyboardShortcut:
 		textList.append(keyboardShortcut)
-	positionInfo = propertyValues.get("positionInfo")
 	if positionInfo:
-		if 'indexInGroup' in positionInfo and 'similarItemsInGroup' in positionInfo:
-			textList.append(_("%s of %s")%(positionInfo['indexInGroup'],positionInfo['similarItemsInGroup']))
-		if 'level' in positionInfo:
-			textList.append(_('level %s')%positionInfo['level'])
+		indexInGroup = positionInfo.get("indexInGroup")
+		similarItemsInGroup = positionInfo.get("similarItemsInGroup")
+		if indexInGroup and similarItemsInGroup:
+			textList.append(_("%s of %s") % (indexInGroup, similarItemsInGroup))
+		if level is not None:
+			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
+			# %s is replaced with the level.
+			textList.append(_('lv %s')%positionInfo['level'])
+	if rowNumber:
+		if includeTableCellCoords: 
+			# Translators: Displayed in braille for a table cell row number.
+			# %s is replaced with the row number.
+			textList.append(_("r%s") % rowNumber)
+	if columnNumber:
+		columnHeaderText = propertyValues.get("columnHeaderText")
+		if columnHeaderText:
+			textList.append(columnHeaderText)
+		if includeTableCellCoords:
+			# Translators: Displayed in braille for a table cell column number.
+			# %s is replaced with the column number.
+			textList.append(_("c%s") % columnNumber)
 	return " ".join([x for x in textList if x])
 
 class NVDAObjectRegion(Region):
@@ -264,7 +330,7 @@ class NVDAObjectRegion(Region):
 
 	def update(self):
 		obj = self.obj
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value, states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
+		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value if not NVDAObjectHasUsefulText(obj) else None , states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
@@ -278,6 +344,63 @@ class ReviewNVDAObjectRegion(NVDAObjectRegion):
 
 	def routeTo(self, braillePos):
 		pass
+
+def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
+	presCat = field.getPresentationCategory(ancestors, formatConfig)
+	if reportStart:
+		# If this is a container, only report it if this is the start of the node.
+		if presCat == field.PRESCAT_CONTAINER and not field.get("_startOfNode"):
+			return None
+	else:
+		# We only report ends for containers
+		# and only if this is the end of the node.
+		if presCat != field.PRESCAT_CONTAINER or not field.get("_endOfNode"):
+			return None
+
+	role = field.get("role", controlTypes.ROLE_UNKNOWN)
+	states = field.get("states", set())
+
+	if presCat == field.PRESCAT_LAYOUT:
+		# The only item we report for these fields is clickable, if present.
+		if controlTypes.STATE_CLICKABLE in states:
+			return getBrailleTextForProperties(states={controlTypes.STATE_CLICKABLE})
+		return None
+
+	elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER) and field.get("table-id"):
+		# Table cell.
+		reportTableHeaders = formatConfig["reportTableHeaders"]
+		reportTableCellCoords = formatConfig["reportTableCellCoords"]
+		props = {
+			"states": states,
+			"rowNumber": field.get("table-rownumber"),
+			"columnNumber": field.get("table-columnnumber"),
+			"includeTableCellCoords": reportTableCellCoords
+		}
+		if reportTableHeaders:
+			props["columnHeaderText"] = field.get("table-columnheadertext")
+		return getBrailleTextForProperties(**props)
+
+	elif reportStart:
+		props = {"role": role, "states": states}
+		if config.conf["presentation"]["reportKeyboardShortcuts"]:
+			kbShortcut = field.get("keyboardShortcut")
+			if kbShortcut:
+				props["keyboardShortcut"] = kbShortcut
+		level = field.get("level")
+		if level:
+			props["positionInfo"] = {"level": level}
+		return getBrailleTextForProperties(**props)
+	else:
+		# Translators: Displayed in braille at the end of a control field such as a list or table.
+		# %s is replaced with the control's role.
+		return (_("%s end") %
+			getBrailleTextForProperties(role=role))
+
+def getFormatFieldBraille(field):
+	linePrefix = field.get("line-prefix")
+	if linePrefix:
+		return linePrefix
+	return None
 
 class TextInfoRegion(Region):
 
@@ -294,8 +417,19 @@ class TextInfoRegion(Region):
 		# Terminals are inherently multiline, so they don't have the multiline state.
 		return (self.obj.role == controlTypes.ROLE_TERMINAL or controlTypes.STATE_MULTILINE in self.obj.states)
 
+	def _getCursor(self):
+		"""Retrieve the collapsed cursor.
+		This should be the start or end of the selection returned by L{_getSelection}.
+		@return: The cursor.
+		"""
+		try:
+			return self.obj.makeTextInfo(textInfos.POSITION_CARET)
+		except:
+			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
+
 	def _getSelection(self):
 		"""Retrieve the selection.
+		The start or end of this should be the cursor returned by L{_getCursor}.
 		@return: The selection.
 		@rtype: L{textInfos.TextInfo}
 		"""
@@ -314,58 +448,189 @@ class TextInfoRegion(Region):
 		except NotImplementedError:
 			log.debugWarning("", exc_info=True)
 
+	def _getTypeformFromFormatField(self, field):
+		typeform = louis.plain_text
+		if field.get("bold", False):
+			typeform |= louis.bold
+		if field.get("italic", False):
+			typeform |= louis.italic
+		if field.get("underline", False):
+			typeform |= louis.underline
+		return typeform
+
+	def _addFieldText(self, text):
+		# Separate this field text from the rest of the text.
+		if self.rawText:
+			text = " %s " % text
+		else:
+			text += " "
+		self.rawText += text
+		textLen = len(text)
+		self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
+		# Map this field text to the start of the field's content.
+		self._rawToContentPos.extend((self._currentContentPos,) * textLen)
+
+	def _addTextWithFields(self, info, formatConfig, isSelection=False):
+		shouldMoveCursorToFirstContent = not isSelection and self.cursorPos is not None
+		ctrlFields = []
+		typeform = louis.plain_text
+		for command in info.getTextWithFields(formatConfig=formatConfig):
+			if isinstance(command, basestring):
+				if not command:
+					continue
+				if isSelection and self._selectionStart is None:
+					# This is where the content begins.
+					self._selectionStart = len(self.rawText)
+				elif shouldMoveCursorToFirstContent:
+					# This is the first piece of content after the cursor.
+					# Position the cursor here, as it may currently be positioned on control field text.
+					self.cursorPos = len(self.rawText)
+					shouldMoveCursorToFirstContent = False
+				self.rawText += command
+				self.rawTextTypeforms.extend((typeform,) * len(command))
+				endPos = self._currentContentPos + len(command)
+				self._rawToContentPos.extend(xrange(self._currentContentPos, endPos))
+				self._currentContentPos = endPos
+				if isSelection:
+					# The last time this is set will be the end of the content.
+					self._selectionEnd = len(self.rawText)
+			elif isinstance(command, textInfos.FieldCommand):
+				cmd = command.command
+				field = command.field
+				if cmd == "formatChange":
+					typeform = self._getTypeformFromFormatField(field)
+					text = getFormatFieldBraille(field)
+					if not text:
+						continue
+					self._addFieldText(text)
+				elif cmd == "controlStart":
+					# Place this field on a stack so we can access it for controlEnd.
+					if self._skipFieldsNotAtStartOfNode and not field.get("_startOfNode"):
+						text = None
+					else:
+						text = info.getControlFieldBraille(field, ctrlFields, True, formatConfig)
+					ctrlFields.append(field)
+					if not text:
+						continue
+					self._addFieldText(text)
+				elif cmd == "controlEnd":
+					field = ctrlFields.pop()
+					text = getControlFieldBraille(field, ctrlFields, False, formatConfig)
+					if not text:
+						continue
+					# Separate this field text from the rest of the text.
+					self.rawText += " %s " % text
+					textLen = len(text)
+					self.rawTextTypeforms.extend((louis.plain_text,) * textLen)
+					# Map this field text to the end of the field's content.
+					self._rawToContentPos.extend((self._currentContentPos - 1,) * textLen)
+		if isSelection and self._selectionStart is None:
+			# There is no selection. This is a cursor.
+			self.cursorPos = len(self.rawText)
+		if not self._skipFieldsNotAtStartOfNode:
+			# We only render fields that aren't at the start of their nodes for the first part of the reading unit.
+			# Otherwise, we'll render fields that have already been rendered.
+			self._skipFieldsNotAtStartOfNode = True
+
+	def _getReadingUnit(self):
+		return textInfos.UNIT_PARAGRAPH if config.conf["braille"]["readByParagraph"] else textInfos.UNIT_LINE
+
 	def update(self):
+		formatConfig = config.conf["documentFormatting"]
+		unit = self._getReadingUnit()
 		# HACK: Some TextInfos only support UNIT_LINE properly if they are based on POSITION_CARET,
-		# so use the original caret TextInfo for line and copy for caret.
-		self._line = line = self._getSelection()
-		line.collapse()
-		caret = line.copy()
-		# Get the line at the caret.
-		line.expand(textInfos.UNIT_LINE)
-		# Not all text APIs support offsets, so we can't always get the offset of the caret relative to the start of the line.
-		# Therefore, grab the line in two parts.
-		# First, the chunk from the start of the line up to the caret.
-		chunk = line.copy()
+		# so use the original cursor TextInfo for line and copy for cursor.
+		self._readingInfo = readingInfo = self._getCursor()
+		cursor = readingInfo.copy()
+		# Get the reading unit at the cursor.
+		readingInfo.expand(unit)
+		# Get the selection.
+		sel = self._getSelection()
+		# Restrict the selection to the reading unit at the cursor.
+		if sel.compareEndPoints(readingInfo, "startToStart") < 0:
+			sel.setEndPoint(readingInfo, "startToStart")
+		if sel.compareEndPoints(readingInfo, "endToEnd") > 0:
+			sel.setEndPoint(readingInfo, "endToEnd")
+		self.rawText = ""
+		self.rawTextTypeforms = []
+		self.cursorPos = None
+		# The output includes text representing fields which isn't part of the real content in the control.
+		# Therefore, maintain a map of positions in the output to positions in the content.
+		self._rawToContentPos = []
+		self._currentContentPos = 0
+		self._selectionStart = self._selectionEnd = None
+		self._skipFieldsNotAtStartOfNode = False
+
+		# Not all text APIs support offsets, so we can't always get the offset of the selection relative to the start of the reading unit.
+		# Therefore, grab the reading unit in three parts.
+		# First, the chunk from the start of the reading unit to the start of the selection.
+		chunk = readingInfo.copy()
 		chunk.collapse()
-		chunk.setEndPoint(caret, "endToEnd")
-		self.rawText = chunk.text or ""
-		# The cursor position is the length of this chunk, as its end is the caret.
-		self.cursorPos = len(self.rawText)
-		# Now, get the chunk from the caret to the end of the line.
-		chunk.setEndPoint(line, "endToEnd")
-		chunk.setEndPoint(caret, "startToStart")
-		# Strip line ending characters, but add a space in case the caret is at the end of the line.
-		self.rawText += (chunk.text or "").rstrip("\r\n\0\v\f") + " "
-		# If this is not the first line, hide all previous regions.
-		start = caret.obj.makeTextInfo(textInfos.POSITION_FIRST)
-		self.hidePreviousRegions = (start.compareEndPoints(line, "startToStart") < 0)
+		chunk.setEndPoint(sel, "endToStart")
+		self._addTextWithFields(chunk, formatConfig)
+		# Now, the selection itself.
+		self._addTextWithFields(sel, formatConfig, isSelection=True)
+		# Finally, get the chunk from the end of the selection to the end of the reading unit.
+		chunk.setEndPoint(readingInfo, "endToEnd")
+		chunk.setEndPoint(sel, "startToEnd")
+		self._addTextWithFields(chunk, formatConfig)
+		# Strip line ending characters, but add a space in case the cursor is at the end of the reading unit.
+		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
+		del self.rawTextTypeforms[len(self.rawText) - 1:]
+		self.rawTextTypeforms.append(louis.plain_text)
+
+		# If this is not the start of the object, hide all previous regions.
+		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
+		self.hidePreviousRegions = (start.compareEndPoints(readingInfo, "startToStart") < 0)
 		# If this is a multiline control, position it at the absolute left of the display when focused.
 		self.focusToHardLeft = self._isMultiline()
 		super(TextInfoRegion, self).update()
 
+		if self._selectionStart is not None:
+			# Mark the selection with dots 7 and 8.
+			if self._selectionEnd >= len(self.rawText):
+				brailleSelEnd = len(self.brailleCells)
+			else:
+				brailleSelEnd = self.rawToBraillePos[self._selectionEnd]
+			for pos in xrange(self.rawToBraillePos[self._selectionStart], brailleSelEnd):
+				self.brailleCells[pos] |= DOT7 | DOT8
+
 	def routeTo(self, braillePos):
-		pos = self.brailleToRawPos[braillePos]
-		# pos is relative to the start of the line.
-		# Therefore, get the start of the line...
-		dest = self._line.copy()
+		if braillePos == self.brailleCursorPos:
+			# The cursor is already at this position,
+			# so activate the position.
+			try:
+				self._getCursor().activate()
+			except NotImplementedError:
+				pass
+			return
+
+		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
+		# pos is relative to the start of the reading unit.
+		# Therefore, get the start of the reading unit...
+		dest = self._readingInfo.copy()
 		dest.collapse()
 		# and move pos characters from there.
 		dest.move(textInfos.UNIT_CHARACTER, pos)
 		self._setCursor(dest)
 
 	def nextLine(self):
-		dest = self._line.copy()
-		moved = dest.move(textInfos.UNIT_LINE, 1)
+		dest = self._readingInfo.copy()
+		moved = dest.move(self._getReadingUnit(), 1)
 		if not moved:
 			return
 		dest.collapse()
 		self._setCursor(dest)
 
 	def previousLine(self, start=False):
-		dest = self._line.copy()
+		dest = self._readingInfo.copy()
 		dest.collapse()
-		# If the end of the line is desired, move to the last character.
-		moved = dest.move(textInfos.UNIT_LINE if start else textInfos.UNIT_CHARACTER, -1)
+		if start:
+			unit = self._getReadingUnit()
+		else:
+			# If the end of the reading unit is desired, move to the last character.
+			unit = textInfos.UNIT_CHARACTER
+		moved = dest.move(unit, -1)
 		if not moved:
 			return
 		dest.collapse()
@@ -384,11 +649,19 @@ class CursorManagerRegion(TextInfoRegion):
 
 class ReviewTextInfoRegion(TextInfoRegion):
 
-	def _getSelection(self):
+	def _getCursor(self):
 		return api.getReviewPosition().copy()
+
+	_getSelection = _getCursor
 
 	def _setCursor(self, info):
 		api.setReviewPosition(info)
+
+def rindex(seq, item, start, end):
+	for index in xrange(end - 1, start - 1, -1):
+		if seq[index] == item:
+			return index
+	raise ValueError("%r is not in sequence" % item)
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
 
@@ -461,21 +734,47 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return bufferPos - self.windowStartPos
 
 	def _get_windowEndPos(self):
+		endPos = self.windowStartPos + self.handler.displaySize
+		cellsLen = len(self.brailleCells)
+		if endPos >= cellsLen:
+			return cellsLen
+		if not config.conf["braille"]["wordWrap"]:
+			return endPos
 		try:
-			lineEnd = self.brailleCells.index(-1, self.windowStartPos)
+			# Try not to split words across windows.
+			# To do this, break after the furthest possible space.
+			return min(rindex(self.brailleCells, 0, self.windowStartPos, endPos) + 1,
+				endPos)
 		except ValueError:
-			lineEnd = len(self.brailleCells)
-		return min(lineEnd, self.windowStartPos + self.handler.displaySize)
+			pass
+		return endPos
 
 	def _set_windowEndPos(self, endPos):
-		lineStart = endPos - 1
-		# Find the end of the previous line.
-		while lineStart >= 0:
-			if self.brailleCells[lineStart] == -1:
-				break
-			lineStart -= 1
-		lineStart += 1
-		self.windowStartPos = max(endPos - self.handler.displaySize, lineStart)
+		startPos = endPos - self.handler.displaySize
+		# Get the last region currently displayed.
+		region, regionPos = self.bufferPosToRegionPos(endPos - 1)
+		if region.focusToHardLeft:
+			# Only scroll to the start of this region.
+			restrictPos = endPos - regionPos - 1
+		else:
+			restrictPos = 0
+		if startPos <= restrictPos:
+			self.windowStartPos = restrictPos
+			return
+		if not config.conf["braille"]["wordWrap"]:
+			self.windowStartPos = startPos
+			return
+		try:
+			# Try not to split words across windows.
+			# To do this, break after the furthest possible block of spaces.
+			startPos = self.brailleCells.index(0, startPos, endPos)
+			# Skip past spaces.
+			for startPos in xrange(startPos, endPos):
+				if self.brailleCells[startPos] != 0:
+					break
+		except ValueError:
+			pass
+		self.windowStartPos = startPos
 
 	def scrollForward(self):
 		oldStart = self.windowStartPos
@@ -651,7 +950,7 @@ def getFocusRegions(obj, review=False):
 	from cursorManager import CursorManager
 	if isinstance(obj, CursorManager):
 		region2 = (ReviewTextInfoRegion if review else CursorManagerRegion)(obj)
-	elif isinstance(obj, TreeInterceptor) or obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states:
+	elif isinstance(obj, TreeInterceptor) or NVDAObjectHasUsefulText(obj): 
 		region2 = (ReviewTextInfoRegion if review else TextInfoRegion)(obj)
 	else:
 		region2 = None

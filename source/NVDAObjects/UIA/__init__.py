@@ -163,6 +163,14 @@ class UIA(Window):
 			clsList.append(SensitiveSlider) 
 		if UIAControlType==UIAHandler.UIA_TreeItemControlTypeId:
 			clsList.append(TreeviewItem)
+		elif UIAControlType==UIAHandler.UIA_ComboBoxControlTypeId:
+			try:
+				if not self.UIAElement.getCurrentPropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId):
+					clsList.append(ComboBoxWithoutValuePattern)
+			except COMError:
+				pass
+		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
+			clsList.append(ListItem)
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
@@ -226,6 +234,9 @@ class UIA(Window):
 		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
 			self.TextInfo=UIATextInfo
 			self.value=""
+		elif self.role==controlTypes.ROLE_WINDOW and self.UIAIsWindowElement:
+			import displayModel
+			self.TextInfo=displayModel.DisplayModelTextInfo
 
 		# UIARuntimeId is set by __new__.
 		if self.UIARuntimeId:
@@ -486,6 +497,12 @@ class UIA(Window):
 			return
 		raise NotImplementedError
 
+	def _get_hasFocus(self):
+		try:
+			return self.UIAElement.currentHasKeyboardFocus
+		except COMError:
+			return False
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
@@ -546,3 +563,35 @@ class ControlPanelLink(UIA):
 			desc=desc[i+1:]
 		return desc
 
+class ComboBoxWithoutValuePattern(UIA):
+	"""A combo box without the Value pattern.
+	UIA combo boxes don't necessarily support the Value pattern unless they take arbitrary text values.
+	However, NVDA expects combo boxes to have a value and to fire valueChange events.
+	The value is obtained by retrieving the selected item's name.
+	The valueChange event is fired on this object by L{ListItem.event_stateChange}.
+	"""
+
+	def _get_UIASelectionPattern(self):
+		punk = self.UIAElement.GetCurrentPattern(UIAHandler.UIA_SelectionPatternId)
+		if punk:
+			self.UIASelectionPattern = punk.QueryInterface(UIAHandler.IUIAutomationSelectionPattern)
+		else:
+			self.UIASelectionPattern = None
+		return self.UIASelectionPattern
+
+	def _get_value(self):
+		try:
+			return self.UIASelectionPattern.GetCurrentSelection().GetElement(0).CurrentName
+		except COMError:
+			return None
+
+class ListItem(UIA):
+
+	def event_stateChange(self):
+		if not self.hasFocus:
+			parent = self.parent
+			if parent and isinstance(parent, ComboBoxWithoutValuePattern):
+				# This is an item in a combo box without the Value pattern.
+				# This item has been selected, so notify the combo box that its value has changed.
+				parent.event_valueChange()
+		super(ListItem, self).event_stateChange()

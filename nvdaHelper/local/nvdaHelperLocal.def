@@ -1,10 +1,14 @@
 EXPORTS
 	createConnection
 	destroyConnection
+	cancellableSendMessageTimeout
+	cancelSendMessage
+	_notifySendMessageCancelled
+	nvdaHelperLocal_initialize
+	nvdaHelperLocal_terminate
 	generateBeep
-	startServer
-	stopServer
 	nvdaInProcUtils_winword_expandToLine
+	nvdaInProcUtils_winword_getTextInRange
 	VBuf_createBuffer
 	VBuf_destroyBuffer
 	VBuf_findNodeByAttributes
@@ -12,6 +16,8 @@ EXPORTS
 	VBuf_getFieldNodeOffsets
 	VBuf_getIdentifierFromControlFieldNode
 	VBuf_getLineOffsets
+	VBuf_getNativeHandleForNode
+	VBuf_getNodeForNativeHandle
 	VBuf_getSelectionOffsets
 	VBuf_getTextInRange
 	VBuf_getTextLength

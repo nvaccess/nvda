@@ -1,0 +1,109 @@
+﻿#locale/ta/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011 NV Access Inc
+# Thanks: Association for the Rights of the Visually Challenged (ARVIC), Coimbatore, Tamil Nadu, India
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	முற்றுப் புள்ளி	all	always
+! sentence ending	வியப்பு!	all	always
+? sentence ending	கேள்வி?	all	always
+; phrase ending	அரைப் புள்ளி	most	always
+: phrase ending	முக்கால் புள்ளி	most	always
+decimal point	புள்ளி	none	always
+in-word '	ஒற்றை மேற்கோள்	all	norep
+negative number	கழித்தல்	none	norep
+
+# Whitespace
+\0	வெற்றிடம்	char	# null
+\t	தத்தல்
+\n	வரி ஊட்டம்	char
+\f	பக்க முறிவு	none
+\r	வெற்றிடம்	char
+ 	இடைவெளி	char
+ 	இடைவெளி	char	# no-break space
+
+# Standard punctuation/symbols
+!	வியப்பு!	all
+"	மேற்கோள்	most
+\#	எண்	most
+$	டாலர்	all	norep
+£	pound	all	norep
+€	euro	all	norep
+%	விழுக்காடு	some
+&	மற்றும்	some
+'	ஒற்றை மேற்கோள்	all
+(	இட பிறை	most
+)	வல பிறை	most
+*	பெருக்கல்	most
++	கூட்டல்	most
+,	கால் புள்ளி	all	always
+-	இணைக்கோடு	most
+.	புள்ளி	some
+/	சாய்வு	some
+:	முக்கால் புள்ளி	most	norep
+;	அரைப் புள்ளி	most
+<	குறைவு	most
+>	மிகுதி	most
+=	சமன்பாடு	most
+?	கேள்வி?	all
+@	at	some
+[	இட அடைப்பு	most
+]	வல அடைப்பு	most
+\\	பின்சாய்வு	most
+^	caret	most
+_	அடிக்கோடு	most
+`	graav	most
+{	இட கணம்	most
+}	வல கணம்	most
+|	செங்குத்து	most
+~	tilda	most
+
+# Other characters
+•	தோட்டா	none
+…	புள்ளி புள்ளி புள்ளி	all	always
+...	புள்ளி புள்ளி புள்ளி	all	always
+	தோட்டா	none
+“	இட மேற்கோள்	most
+”	வல மேற்கோள்	most
+‘	இட ஒற்றை மேற்கோள்	most
+’	வல ஒற்றை மேற்கோள்	most
+–	en dash	most
+—	em dash	most
+●	வட்டம்	most
+¨	diaeresis	most
+‎	left to right mark	char
+‏	right to left mark	char
+■	கருஞ்சதுரம்	some
+➔	வலது அம்பு	some
+§	section	all
+°	degrees	some
+«	double left pointing angle bracket
+»	double right pointing angle bracket
+µ	micro	some
+¹	superscript 1	some
+²	superscript 2	some
+³	superscript 3	some
+®	பதிவு	some
+™	வணிகம்	some
+©	காப்புரிமை	some
+±	கூட்டல் அல்லது கழித்தல்	most
+×	தடவை	most
+÷	வகுத்தல்	most

@@ -72,7 +72,7 @@ def nvdaFsBrlWndProc(hwnd,msg,wParam,lParam):
 				gesture=WizWheelGesture(isDown,isRight)
 				try:
 					inputCore.manager.executeGesture(gesture)
-				except NoInputGestureAction:
+				except inputCore.NoInputGestureAction:
 					pass
 		return 0
 	else:

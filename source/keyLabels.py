@@ -69,4 +69,5 @@ localizedKeyLabels = {
 	'rightAlt': _("right alt"),
 	'rightWindows': _("right windows"),
 	'break': _("break"),
+	'tab': _("tab"),
 }

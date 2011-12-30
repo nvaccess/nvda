@@ -2,6 +2,7 @@
 #define NVDAHELPER_XML_H
 
 #include <string>
+#include <sstream>
 
 inline void appendCharToXML(const wchar_t c, std::wstring& xml) {
 	switch(c) {
@@ -25,7 +26,9 @@ inline void appendCharToXML(const wchar_t c, std::wstring& xml) {
 			xml+=c;
 		} else {
 			// Invalid XML character.
-			xml += 0xfffd; // Unicode replacement character
+			std::wostringstream s;
+			s<<L"<unich value=\""<<((unsigned short)c)<<L"\" />";
+			xml += s.str();
 		}
 	}
 }

@@ -187,8 +187,8 @@ class GlyphTranslator {
 		DWORD cmapLen;
 		PBYTE p=getTTFData(hdc,"cmap",&cmapLen);
 		if(p==NULL) return;
-		CmapHeader* header=(CmapHeader*)((DWORD)p);
-		EncodingRecord* encodings=(EncodingRecord*)((DWORD)p+sizeof(CmapHeader));
+		CmapHeader* header=(CmapHeader*)p;
+		EncodingRecord* encodings=(EncodingRecord*)(p+sizeof(CmapHeader));
 		DWORD off=0;
 		LOG_DEBUG("Number of encodings: "<<header->numTables);
 		for(int i=0; i<header->numTables; i++) {
@@ -395,8 +395,10 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	RECT textRect={textLeft,textTop,textLeft+resultTextSize->cx,textTop+resultTextSize->cy};
 	//We must store chunks using device coordinates, not logical coordinates, as its possible for the DC's viewport to move or resize.
 	//For example, in Windows 7, menu items are always drawn at the same DC coordinates, but the DC is moved downward each time.
+	POINT baselinePoint={textRect.left,textRect.top+tm.tmAscent};
+	dcPointsToScreenPoints(hdc,&baselinePoint,1);
 	dcPointsToScreenPoints(hdc,(LPPOINT)&textRect,2);
-
+	//Calculate the real physical baselineFromTop
 	//Clear a space for the text in the model, though take clipping in to account
 	RECT tempRect;
 	if(lprc&&(fuOptions&ETO_CLIPPED)&&IntersectRect(&tempRect,&textRect,&clearRect)) {
@@ -422,7 +424,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
 		formatInfo.backgroundColor=GetBkColor(hdc);
-		model->insertChunk(textRect,tm.tmAscent,newText,characterEndXArray,formatInfo,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
+		model->insertChunk(textRect,baselinePoint.y,newText,characterEndXArray,formatInfo,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		HWND hwnd=WindowFromDC(hdc);
 		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}
@@ -742,10 +744,8 @@ BOOL allow_ScriptStringAnalyseArgsByAnalysis=FALSE;
 typedef HRESULT(WINAPI *ScriptStringAnalyse_funcType)(HDC,const void*,int,int,int,DWORD,int,SCRIPT_CONTROL*,SCRIPT_STATE*,const int*,SCRIPT_TABDEF*,const BYTE*,SCRIPT_STRING_ANALYSIS*);
 ScriptStringAnalyse_funcType real_ScriptStringAnalyse=NULL;
 HRESULT WINAPI fake_ScriptStringAnalyse(HDC hdc,const void* pString, int cString, int cGlyphs, int iCharset, DWORD dwFlags, int iRectWidth, SCRIPT_CONTROL* psControl, SCRIPT_STATE* psState, const int* piDx, SCRIPT_TABDEF* pTabdef, const BYTE* pbInClass, SCRIPT_STRING_ANALYSIS* pssa) {
-	TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
 	//Call the real ScriptStringAnalyse
 	HRESULT res=real_ScriptStringAnalyse(hdc,pString,cString,cGlyphs,iCharset,dwFlags,iRectWidth,psControl,psState,piDx,pTabdef,pbInClass,pssa);
-	TlsSetValue(tls_index_inTextOutHook,(LPVOID)0);
 	//We only want to go on if  there's safe arguments
 	//We also need to acquire access to our scriptString analysis map
 	if(res!=S_OK||!pString||cString<=0||!pssa||!allow_ScriptStringAnalyseArgsByAnalysis) return res;
@@ -788,7 +788,9 @@ typedef HRESULT(WINAPI *ScriptStringOut_funcType)(SCRIPT_STRING_ANALYSIS,int,int
 ScriptStringOut_funcType real_ScriptStringOut=NULL;
 HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UINT uOptions,const RECT *prc,int iMinSel,int iMaxSel,BOOL fDisabled) {
 	//Call the real ScriptStringOut
+	TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
 	HRESULT res=real_ScriptStringOut(ssa,iX,iY,uOptions,prc,iMinSel,iMaxSel,fDisabled);
+	TlsSetValue(tls_index_inTextOutHook,(LPVOID)0);
 	//If ScriptStringOut was successful we can go on
 	//We also need to acquire access to our Script analysis map
 	if(res!=S_OK||!ssa||!allow_ScriptStringAnalyseArgsByAnalysis) return res;

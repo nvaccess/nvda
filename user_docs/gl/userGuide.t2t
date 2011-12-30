@@ -231,20 +231,23 @@ Cando esteas nunha táboa, as seguintes teclas de ordes tamén están dispoñibl
 %kc:endInclude
 
 ++ Navegación de Obxectos ++
-Ás veces, quererás explorar a aplicación actual ou o Sistema Operativo sen mover o [foco #SystemFocus].
-Tamén poderás querer traballar con [obxectos #Objects] que non podan accederse normalmente utilizando o teclado.
+A maior parte do tempo, traballarás con aplicacións utilizando ordes que moven o [foco #SystemFocus] e o [cursor #SystemCaret].
+Sen embargo, ás veces, poderías querer explorar a aplicación actual ou o Sistema Operativo sen mover o foco ou o cursor.
+Tamén poderías querer traballar con [obxectos #Objects] que non podan accederse normalmente utilizando o teclado.
 Nestos casos, podes utilizar a navegación de obxectos.
 
-A navegación de obxectos permíteche moverte entre e obter información acerca dos obxectos individuales.
+A Navegación de obxectos permíteche moverte e obter información acerca de [obxectos #Objects] individuais.
 Cando te movas a un obxecto, NVDA anunciaráo de xeito similar ó anunciado do foco do sistema.
 Para unha maneira de revisar todo o texto segundo apareza na pantalla, podes utilizar no seu lugar [revisión chan #FlatReview].
 
 Máis que moverse cara atrás e adiante entre cada simple obxecto no sistema, os obxectos agrúpanse xerárquicamente.
 Esto significa que debes moverte dentro dalgúns obxectos para acceder ós obxectos que conteñan.
 Por exemplo, unha lista contén elementos de lista, así debes moverte dentro da lista para acceder ós seus elementos.
-Se te moviches a un elemento de lista, podes moverte ó seu obxecto contedor para voltar á lista e entón pasala se o desexas.
-De igual xeito, se atopas unha barra de ferramentas, debes moverte dentro dela para acceder ós controis na barra de ferramentas.
-
+Se te moveches a un elemento de lista, movendo seguinte e anterior levarache a outros elementos de lista na mesma lista.
+Movendo a un elemento de lista que conteña obxectos voltarache á lista.
+Tamén podes pasar a lista se desexas acceder a outros obxectos.
+De igual xeito, nunha barra de ferramentas que conteñña controis, debes moverte dentro da barra de ferramentas para acceder ós controis na mesma.
+ 
 O obxecto actualmente en revisión chámase navegador de objetos.
 Unha vez que navegues a un obxecto, podes revisalo utilizando as [ordes de revisión de texto #ReviewingText].
 De xeito predeterminado, o navegador de obxectos móvese xunto co foco  do Sistema, aíndaque este comportamento pode activarse e desactivarse.
@@ -268,7 +271,8 @@ nota: as teclas do teclado numérico requiren que a tecla BloqNum estea desactiv
 
 ++ Revisando o Texto ++[ReviewingText]
 NVDA permíteche ler o contido do actual [navegador de obxectos #ObjectNavigation] (incluíndo [revisión chan #FlatReview]) por carácteres, palabras ou liñas.
-Esto é principalmente útil na consola do Dos de windows e outros lugares onde non haxa a existencia dun [cursor do sistema #SystemCaret].ou este sexa limitado.
+Esto é principalmente útil en lugares (incluindo consolas de ordes de Windows) onde non hai [cursor do sistema #SystemCaret].
+Por exemplo, utilizaríalo para revisar o texto dunha mensaxe longa de información nun diálogo.
 
 Cando se move o cursor de revisión, o cursor do Sistema non o segue, así podes revisar texto sen perder a posición de edición.
 Nemmbargantes, de xeito predeterminado, cando o curssor do Sistema se move, o cursor de revisión sígueo.
@@ -357,7 +361,8 @@ Todas as teclas de ordes do [cursor do sistema #SystemCaret] do NVDA funcionará
 A información tal como se un texto é unha liga, cabeceira etc anúnciase xunto co texto segundo te movas.
 
 Ás veces, necesitarás interactuar directamente con controis nestos documentos.
-Esto falo cambiando a modo foco, onde todas as teclas se pasan ó control.
+Por exemplo, necesitarás facer esto para campos de texto editable e listas así que podes teclear carácteres e utilizar as teclas de cursor para traballar co control.
+Fai esto para cambiar a modo foco, onde case todas as teclas se pasan ó control.
 Cando se está en modo Navegación, por defecto, NVDA cambiará automáticamente a modo foco se tabulas cara ou fas clic sobre un control en particular que o requira.
 En cambio, tabulando ou facendo clic sobre un control que non requira modo foco voltará a modo navegación.
 Tamén podes premer intro ou espazo para cambiar a modo foco en controis que o requiran.
@@ -518,6 +523,15 @@ Esta opción é unha barra de desprazamento que vai dende 0 ata 100, (sendo 0 o 
 ==== Entoación ====
 Esta opción é unha barra de desprazamento que che permite elexir canta entoación (subida e caída no ton) o sintetizador debería utilizar para falar. (Soamente o sintetizador Espeak proporciona esta opción actualmente).
 
+==== Cambio Automático de Lingua ====
+Esta casiña de verificación permíteche activar ou desactivar se NVDA debería cambiar as linguas do sintetizador de voz ó vo, se o marcado de linguas está dispoñible no texto a ler.
+Esta opción está activada de maneira predeterminada.
+Actualmente só o sintetizador eSpeak sopporta o cambio automático de lingua.
+
+==== Cambio Automático de Dialecto ====
+Se o cambio automático de idioma está activado, esta casiña de verificación permíteche activar ou desactivar  se os cambios de dialecto deberíanse facer, en lugar de só cambiar a lingua actual. Ex.: Se se está lendo nunha voz Inglés U.S. pero partes dun documento teñen algún texto en Inglés U.K. entón se esta característica está activada o sintetizador cambiará o seu acento.
+Esta opción está desactivada de forma predeterminada.
+
 %kc:setting
 ==== Nivel de Pontoación/símbolos ====
 Tecla: NVDA+p
@@ -526,8 +540,10 @@ Esto permíteche escoller a cantidade de pontoación e outros símbolos que debe
 Por exemplo, cando se configura a toda, todos os símbolos se dirán como palabras.
 Esta opción aplícase a todos os sintetizadores, non só ó sintetizador activo actualmente.
 
-==== Aumentar Ton para Maiúsculas ====
-Esta opción, se está marcada, aumentará o ton para maiúsculas.
+==== Cambio da Porcentaxe de Ton para Maiúsculas ====
+Este campo de edición permíteche teclear a cantidade na que o ton da voz cambiará cando se fale unha letra maiúscula.
+Este valor é unha porcentaxe, onde un valor negativo baixa o ton e un valor positivo súbeo.
+Para non cambiar o ton utilizarías o 0.
 
 ==== Dicir Maius" antes de Maiúsculas ====
 Esta opción é unha casiña de verificación, que cando está marcada di ó NVDA que diga a palabra "maius" antes de calquera letra en maiúscula, cando se navega sobre ela ou falándoo cando está sendo escribida.
@@ -586,7 +602,14 @@ Esta opción é un campo numérico que controla durante canto tempo se amosan as
 ==== O Braille segue a ====
 Tecla: NVDA+control+t
 
-Esta opción permíteche escoller se a liñ braille seguirá ó foco do sistema, ou se seguirá ó navegador de obxectos / cursor de revisión.
+Esta opción permíteche escoller se a liña braille seguirá ó foco do sistema, ou se seguirá ó navegador de obxectos / cursor de revisión.
+
+==== Ler por Parágrafo ====
+Se está activada, o braille amosarase por parágrafos en lugar de por liñas.
+Tamén, as ordes de liña seguinte e anterior moverán por parágrafos en concordancia.
+Esto significa que non tes que desprazar a liña ó final de cada liña incluso donde haya más texto del que cabe en la línea.
+Esto podería permitir unha mayor fluideza lendo longas cantidades de texto.
+Está desactivada de maneira predeterminada.
 
 +++ Opcións de Teclado (NVDA+control+k)+++
 Este cadro de diálogo atópase no menú Preferencias, baixo "Opcións de teclado...". 
@@ -747,6 +770,10 @@ Tecla: NVDA+v
 
 Esta opción permíteche especificar se o contido no modo navegación debería colocar cousas como ligas e outros campos na súa propria liña, ou se debería conservalos no fluxo de texto segundo sexa amosado visualmente. Se a opción está activada, entón as cousas permanecerán segundo sexan amosadas visualmente, pero se está desactivada, entón os campos serán colocados na súa propria liña.
 
+==== Falar Todo Automáticamente ó Cargar a Páxina ====
+Esta casiña de verificación conmuta a fala automática dunha páxina despois de cargala en modo navegación.
+Esta opción está activada por defecto.
+
 ==== Anunciar táboas de deseño ====
 Cando se desactiva esta opción fas que NVDA só anuncie táboas que conteñen datos tabulares (l que che da a coñecer que eso é una táboa). 
 pero se a activas, NVDA tamén anunciará táboas utilizadas puramente para representación visual.
@@ -781,6 +808,7 @@ Podes configurar o anunciado de:
 - Erros de ortografía
 - números de páxina
 - números de liña
+- sangría de liña
 - táboas
 - cabeceiras de fila/columna de táboa
 - Coordinadas de celdas da táboa
@@ -911,6 +939,15 @@ SAPI 5 é un estándar de Microsoft para sintetizadores de voz software.
 Moitos sintetizadores de voz que cumpren con este estándar poderán comprarse ou descargarse gratuitamente dende varias compañías e sitios web, aíndaque probablemente o teu sistema xa virá con ól menos unha voz SAPI 5 preinstalada.
 Cando se utiliza este sintetizador co NVDA, as voces dispoñibles (ás que se accede dende o [diálogo Opcións de Voz #VoiceSettings] ou dende o [Grupo de opcións de sintetizador #SynthSettingsRing]) conterán todas as voces de todos os motores SAPI 5 instalados atopados no teu sistema.
 
+++ Microsoft Speech Platform ++
+A Microsoft Speech Platform proporciona voces para moitas linguas que se utilizan habitualmente no desenvolvemento de aplicacións basadas en servidores de fala. 
+Estas voces tamén poden utilizarse co NVDA.
+
+Para utilizar estas voces, necesitarás instalar dous compoñentes:
+- Microsoft Speech Platform - Server Runtime (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
+- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+-
+
 ++ Audiologic Tts3 ++
 Este é un sintetizador de voz commercial específicamente para a lingua italiana.
 Debes ter este sintetizador instalado no teu sistema para poder utilizalo co NVDA.
@@ -932,6 +969,7 @@ Todas as liñas Focus e PAC Mate de [Freedom Scientific http://www.freedomscient
 Necesitarás os controladores de liñas braille de Freedom Scientific instalados no teu sistema.
 Se non os tes aínda, podes obtelos dende http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Aíndaque esta páxina só menciona a liña Focus 40 Blue, o controlador soporta todas as liñas de Freedom Scientific.
+Se o teu sistema executa un Windows de 64 bit e os controladores xa se instalaron por outro lector de pantalla, posiblemente aínda necesitarás instalar os controladores dende esta liga, posto que os ficheiros que require NVDA posiblemente non foron instalados polo outro lector de pantalla.
 
 Seguidamente van as asociacións de teclas para esta liña co NVDA.
 Por favor mira a documentación da liña para descripcións de onde poden atoparse estas teclas.
@@ -1050,6 +1088,24 @@ Para liñas que teñan un joystick:
 | Tecla intro | seleccionar |
 %kc:endInclude
 
+++ hedo ProfiLine USB ++
+A hedo ProfiLine USB de [hedo Reha-Technik  http://www.hedo.de/] está soportada.
+Primeiro debes instalar os controladores USB proporcionados polo fabricante.
+
+Seguidamente van as asignacións de teclas para esta liña co NVDA.
+Por favor mira a documentación da liña para descripcións de onde poden atoparse estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar a liña braille cara atrás | K1 |
+| Desprazar a liña braille cara adiante | K3 |
+| Mover a liña braille a liña anterior | B2 |
+| Mover a liña braille a seguinte liña | B5 |
+| Ir a celda braille | routing |
+| Conmutar seguemento braille | K2 |
+| Ler todo | B6 |
+%kc:endInclude
+
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] é un programa por separado que pode utilizarse para soportar moitas liñas braille.
 Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
@@ -1080,12 +1136,15 @@ Cada sección proporciona mapeados para scripts nun módulo particular python e 
 - O nome de sección debería ser o módulo Python e clase separados por un punto (.).
  - As teclas de cada sección son os nomes dos scripts cos que desexas concordar.
   Alternativamente, podes utilizar None para desvincular xestos de entrada dun script ó que estaban vinculados anteriormente.
- - O valor de cada tecla é unha lista separada con coma (,) de  identificadores deo xesto os que representan os distintos xestos de entrada que deberían concordar con ese script en particular.
--
+Cada entrada de tecla só pode listarse unha vez por sección, incluindo None.
+  - O valor de cada tecla é unha lista separada con coma (,) de  identificadores do xesto os que representan os distintos xestos de entrada que deberían concordar con ese script en particular.
+Os identificadores de xesto que rematan nunha coma deben pecharse entre comiñas (" ou ').
+  -
 
 Os identificadores de xesto consisten nun código de dispositivo de dúas letras (kb para teclado e br para liña braille), un subdispositivo opcional ou distribución de teclado entre corchetes, uns dous pontos, e despóis un ou máis nomes de teclas separados por un signo máis (+).
-
-Pódense proporcionar múltiples teclas para cada sección, e pódense proporcionar múltiples secciones no ficheiro.
+Para xestos de teclado, a parte entre chaves é a distribución de teclado e é opcional.
+Se non se especificou, o xesto aplicarase a todas as distribucións de teclado.
+Para xestos da liña braille, a parte entre chaves identifica a liña braille específica e é obrigatoria.
 
 De cara a atopar os identificadores de xesto así coma os nomes de scripts e a clase e o módulo no cal están contidos, podes:
 + activar a Axuda de entrada
@@ -1144,4 +1203,3 @@ However, it is not possible for users to define complex symbols.
 Se requires información adicional ou asistencia referente ó NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.
 Aquí, podes atopar documentación adicional,  así como soporte técnico e recursos para a comunidade. 
 Este sitio tamén proporciona información e recursos concernintes ó desenrolo do NVDA.
-

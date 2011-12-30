@@ -11,11 +11,14 @@ complexSymbols:
 行末の感嘆符	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
 行末の疑問符	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
 
+
 # Others
 decimal point	(?<=\d)\.(?=\d)
+comma between numbers	(?<=\d)\,(?=\d)
 複数のピリオド	(?<=\.)\.|\.(?=\.)
 単語中のピリオド	(?<=[\w])\.+(?=[\w])
 数字の間のゼンカクピリオド	(?<=[\d])．(?=[\d])
+数字の間のゼンカクカンマ	(?<=[\d])，(?=[\d])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -26,28 +29,17 @@ symbols:
 ? sentence ending	クエスチョン	some	never
 ; phrase ending	セミコロン	some	never
 : phrase ending	コロン	some	never
-decimal point	テン	some	never
+decimal point		none	always
+comma between numbers		none	always
 in-word '	アポストロフィ	some
+negative number	マイナス
 行末の丸	マル	some
 行末の感嘆符	カンタンフ	some
 行末の疑問符	ギモンフ	some
 複数のピリオド	ドット	some
 単語中のピリオド	ドット	some
-数字の間のゼンカクピリオド	テン	one	norep
-
-
-# Other characters
-•	バレット
-…	サンテン
-	バレット
-“	ヒダリニジューインヨーフ
-”	ミギニジューインヨーフ
-–	エンダッシュ
-—	エムダッシュ
-●	クロマル
-¨	ウムラウト
-‎	ヒダリカラみぎマーク
-‏	ミギカラヒダリマーク
+数字の間のゼンカクピリオド		none	always
+数字の間のゼンカクカンマ		none	always
 
 # Whitespace
 \0	ブランク
@@ -56,27 +48,29 @@ in-word '	アポストロフィ	some
 \f	カイページ
 \r	フッキ
  	スペース
- 	スペース	# no-break space
+	 	スペース	# no-break space
 
-# Standard punctuation/symbols
+# Standard punctuation/symbols	
 !	カンタンフ	some
 "	コーテーション	some
 \#	シャープ	some
 $	ドル	some
 ￡	ポンド	some
-€	ユーロ	some
-%	パーセント	some
+?	ユーロ	some
+￠	セント	some
+\	エンマーク	some
+	%	パーセント	some
 &	アンド	some
 '	アポストロフィ	some
 (	カッコ	some
 )	トジカッコ	some
 *	アスタリスク	some
 +	プラス	some
-,	カンマ	some	never
+,	カンマ	never
 -	ハイフン	some
 .	ピリオド	some
 /	スラッシュ	some
-:	コロン	some	never
+:	コロン	never
 ;	セミコロン	some
 <	ショーナリ	some
 >	ダイナリ	some
@@ -85,7 +79,6 @@ $	ドル	some
 @	アット	some
 [	ダイカッコ	some
 ]	トジダイカッコ	some
-\\	エンマーク	some
 ^	ベキジョー	some
 _	アンダー	some
 `	アクサングラーブ	some
@@ -94,15 +87,47 @@ _	アンダー	some
 |	タテセン	some
 ~	チルダ	some
 
-#Japanese Double Bytes Symbols
+# Other characters
+•	バレット
+…	サンテン
+...	ドットドットドット
+	バレット
+“	ヒダリニジューインヨーフ
+”	ミギニジューインヨーフ
+‘	ヒダリインヨーフ
+’	ミギインヨーフ
+–	エンダッシュ
+—	エムダッシュ
+●	クロマル
+¨	ウムラウト
+‎	ヒダリカラミギマーク
+‏	ミギカラヒダリマーク
+■	クロシカク
+➔	ミギヤジルシ
+§	セクション
+°	ドｼｰ
+≪	ヒジョーニチイサイキゴー
+≫	ヒジョーニオオキイキゴー
+μ	マイクロ
+¹	シタツキイチ
+²	シタツキニ
+³	シタツキサン
+®	アール
+™	トレードマーク
+©	シー
+±	プラスマイナス
+×	カケル
+÷	ワル
+
+	#Japanese Double Bytes Symbols
 ｡	マル	some
 ｢	カギヒラキ	some
 ｣	カギトジ	some
 ､	テン	some
 ･	ナカテン	some
-ﾞ	ダクテン	most
-ﾟ	ハンダクテン	most
-　	クウハク	most
+ﾞ	ダクテン	never
+ﾟ	ハンダクテン	never
+　	クウハク	moste
 、	テン	some
 。	マル	some
 ，	カンマ	some
@@ -112,8 +137,8 @@ _	アンダー	some
 ；	セミコロン	some
 ？	ギモンフ	some
 ！	カンタンフ	some
-゛	ダクテン	most
-゜	ハンダクテン	most
+#゛	ダクテン	most
+#゜	ハンダクテン	most
 ´	アクサンティギュー	most
 ｀	アクサングラーブ	most
 ¨	ウムラウト	most
@@ -127,7 +152,7 @@ _	アンダー	some
 〃	オナジク	most
 仝	ドージョー	most
 々	クリカエシキゴー	most
-〆	シメ	some
+〆	シメ	most
 〇	カンスージゼロ	most
 ―	ダッシュ	some
 ‐	ハイフン	some

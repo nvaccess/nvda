@@ -13,24 +13,19 @@ General dependencies:
 	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython 2.8 unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.45.03 or later, Windows dll:
+	* eSpeak, version 1.46.01 or later:
 		* Official web site: http://espeak.sourceforge.net/
-		* The Windows dll is tricky to build, so a pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy espeak.dll and espeak-data into the source\synthDrivers directory.
-	* Additional variants for eSpeak: http://www.nvda-project.org/espeak-variants/
-		* Extract the archive into the source\synthDrivers directory.
-	* IAccessible2, version 1.2.1 or later: http://www.linuxfoundation.org/en/Accessibility/IAccessible2
+		* Download the espeak source archive. Note that it must be an official source archive from the espeak website containing already compiled phoneme data, not straight from svn. 
+		* Extract it in to include/espeak so that include/espeak/src, include/espeak/dictsource, include/espeak/platforms and include/espeak/espeak-data all exist.
+	* IAccessible2, version 1.2.1 or later: http://www.linuxfoundation.org/collaborate/workgroups/accessibility/iaccessible2
 		* Download the merged IDL and copy it to include\ia2\ia2.idl.
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
-	* liblouis, version 2.3.0 or later, Windows dll and Python bindings:
+	* liblouis, version 2.3.0 or later:
 		* Official web site: http://code.google.com/p/liblouis/
-		* A pre-built version has been provided for convenience at http://www.nvda-project.org/3rdParty/
-		* Copy the louis Python package directory into the source directory.
-		* Copy the liblouis dll into the source directory.
-		* Copy the liblouis translation tables into the source\louis\tables directory.
-			* In the pre-built version, this has already been done.
+		* Download the liblouis source archive.
+		* Extract the contents of the top level directory in the archive into include\liblouis.
 	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/
 		* Extract the archive into the root of your NVDA source distribution.
 	* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
@@ -139,7 +134,7 @@ The developer docs will be placed in the devDocs folder in the output directory.
 To generate an archive of debug symbols for the various dll/exe binaries, type:
 scons symbolsArchive
 The archive will be placed in the output directory.
- 
+
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.
 	* release: Whether this is a release version.

@@ -7,14 +7,22 @@ import winUser
 import NVDAHelper
 import ctypes
 import IAccessibleHandler
+import languageHandler
 import oleacc
 from logHandler import log
 import textInfos
 import api
 import aria
 import config
+import watchdog
 
 class MSHTMLTextInfo(VirtualBufferTextInfo):
+
+	def _normalizeFormatField(self, attrs):
+		language=attrs.get('language')
+		if language:
+			attrs['language']=languageHandler.normalizeLanguage(language)
+		return attrs
 
 	def _normalizeControlField(self,attrs):
 		level=None
@@ -145,6 +153,12 @@ class MSHTML(VirtualBuffer):
 	def __contains__(self,obj):
 		if not obj.windowClassName.startswith("Internet Explorer_"):
 			return False
+		#'select' tag lists have MSAA list items which do not relate to real HTML nodes.
+		#Go up one parent for these and use it instead
+		if isinstance(obj,NVDAObjects.IAccessible.IAccessible) and not isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML) and obj.role==controlTypes.ROLE_LISTITEM:
+			parent=obj.parent
+			if parent and isinstance(parent,NVDAObjects.IAccessible.MSHTML.MSHTML):
+				obj=parent
 		#Combo box lists etc are popup windows, so rely on accessibility hierarchi instead of window hierarchi for those.
 		#However only helps in IE8.
 		if obj.windowStyle&winUser.WS_POPUP:
@@ -171,8 +185,13 @@ class MSHTML(VirtualBuffer):
 		root=self.rootNVDAObject
 		if not root:
 			return False
-		if not root.IAccessibleRole:
-			# The root object is dead.
+		try:
+			if not root.IAccessibleRole:
+				# The root object is dead.
+				return False
+		except watchdog.CallCancelled:
+			# #1831: If the root object isn't responding, treat the buffer as dead.
+			# Otherwise, we'll keep querying it on every focus change and freezing.
 			return False
 		states=root.states
 		if not winUser.isWindow(root.windowHandle) or controlTypes.STATE_EDITABLE in states:
@@ -186,6 +205,8 @@ class MSHTML(VirtualBuffer):
 		return NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=HTMLNode)
 
 	def getIdentifierFromNVDAObject(self,obj):
+		if not isinstance(obj,NVDAObjects.IAccessible.MSHTML.MSHTML):
+			raise LookupError
 		docHandle=obj.windowHandle
 		ID=obj.HTMLNodeUniqueNumber
 		return docHandle,ID
@@ -264,3 +285,14 @@ class MSHTML(VirtualBuffer):
 			return self.rootNVDAObject.HTMLNode.document.url
 		except COMError:
 			return None
+
+	def shouldPassThrough(self, obj, reason=None):
+		try:
+			if not reason and not self.passThrough and obj.HTMLNodeName == "INPUT" and obj.HTMLNode.type == "file":
+				# #1720: The user is activating a file input control in browse mode.
+				# The NVDAObject for this is an editable text field,
+				# but we want to activate the browse button instead of editing the field.
+				return False
+		except COMError:
+			pass
+		return super(MSHTML, self).shouldPassThrough(obj, reason)

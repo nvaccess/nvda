@@ -159,7 +159,7 @@ Var StartMenuFolder
 !include "locale\pt_pt\langstrings.txt"
 !include "locale\pt_br\langstrings.txt"
 !include "locale\ru\langstrings.txt"
-;!include "locale\se\langstrings.txt"
+;!include "locale\sv\langstrings.txt"
 !include "locale\sk\langstrings.txt"
 !include "locale\sr\langstrings.txt"
 !include "locale\sq\langstrings.txt"

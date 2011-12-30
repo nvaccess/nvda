@@ -9,7 +9,6 @@ import config
 from ctypes import *
 from ctypes.wintypes import *
 import winKernel
-import winUser
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog
 import appModuleHandler
@@ -21,6 +20,7 @@ import api
 import mouseHandler
 import oleacc
 from keyboardHandler import KeyboardInputGesture
+import watchdog
 
 #contact list window messages
 CLM_FIRST=0x1000    #this is the same as LVM_FIRST
@@ -125,23 +125,25 @@ class AppModule(appModuleHandler.AppModule):
 class mirandaIMContactList(IAccessible):
 
 	def _get_name(self):
-		hItem=winUser.sendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
+		hItem=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
 		internalBuf=winKernel.virtualAllocEx(self.processHandle,None,MAXITEMTEXTLEN,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		winUser.sendMessage(self.windowHandle,CLM_GETITEMTEXT,hItem,internalBuf)
-		buf=create_unicode_buffer(MAXITEMTEXTLEN)
-		winKernel.readProcessMemory(self.processHandle,internalBuf,buf,MAXITEMTEXTLEN,None)
-		text=buf.value
-		statusMsgPtr=winUser.sendMessage(self.windowHandle,CLM_GETSTATUSMSG,hItem,0)
-		if statusMsgPtr>0:
-			buf2=create_unicode_buffer(MAXSTATUSMSGLEN)
-			winKernel.readProcessMemory(self.processHandle,statusMsgPtr,buf2,MAXSTATUSMSGLEN,None)
-			text="%s %s"%(text,buf2.value)
-		winKernel.virtualFreeEx(self.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
+		try:
+			watchdog.cancellableSendMessage(self.windowHandle,CLM_GETITEMTEXT,hItem,internalBuf)
+			buf=create_unicode_buffer(MAXITEMTEXTLEN)
+			winKernel.readProcessMemory(self.processHandle,internalBuf,buf,MAXITEMTEXTLEN,None)
+			text=buf.value
+			statusMsgPtr=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETSTATUSMSG,hItem,0)
+			if statusMsgPtr>0:
+				buf2=create_unicode_buffer(MAXSTATUSMSGLEN)
+				winKernel.readProcessMemory(self.processHandle,statusMsgPtr,buf2,MAXSTATUSMSGLEN,None)
+				text="%s %s"%(text,buf2.value)
+		finally:
+			winKernel.virtualFreeEx(self.processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 		return text
 
 	def _get_role(self):
-		hItem=winUser.sendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
-		iType=winUser.sendMessage(self.windowHandle,CLM_GETITEMTYPE,hItem,0)
+		hItem=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
+		iType=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETITEMTYPE,hItem,0)
 		if iType==CLCIT_DIVIDER or iType==CLCIT_INVALID: #some clists treat invalid as divider
 			return controlTypes.ROLE_SEPARATOR
 		else:
@@ -149,8 +151,8 @@ class mirandaIMContactList(IAccessible):
 
 	def _get_states(self):
 		newStates=super(mirandaIMContactList,self)._get_states()
-		hItem=winUser.sendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
-		state=winUser.sendMessage(self.windowHandle,CLM_GETEXPAND,hItem,0)
+		hItem=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETSELECTION,0,0)
+		state=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETEXPAND,hItem,0)
 		if state==CLE_EXPAND:
 			newStates.add(controlTypes.STATE_EXPANDED)
 		elif state==CLE_COLLAPSE:

@@ -60,10 +60,11 @@ confspec = ConfigObj(StringIO(
 	symbolLevel = integer(default=100)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
+	autoLanguageSwitching = boolean(default=true)
+	autoDialectSwitching = boolean(default=false)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
-		raisePitchForCapitals = boolean(default=true)
 		sayCapForCapitals = boolean(default=false)
 		beepForCapitals = boolean(default=false)
 		useSpellingFunctionality = boolean(default=true)
@@ -76,8 +77,8 @@ confspec = ConfigObj(StringIO(
 	cursorBlinkRate = integer(default=500,min=0,max=2000)
 	messageTimeout = integer(default=4,min=1,max=20)
 	tetherTo = string(default="focus")
-
-
+	readByParagraph = boolean(default=false)
+	wordWrap = boolean(default=true)
 
 # Presentation settings
 [presentation]
@@ -128,6 +129,7 @@ confspec = ConfigObj(StringIO(
 	autoPassThroughOnFocusChange = boolean(default=true)
 	autoPassThroughOnCaretMove = boolean(default=false)
 	passThroughAudioIndication = boolean(default=true)
+	autoSayAllOnPageLoad = boolean(default=true)
 
 #Settings for document reading (such as MS Word and wordpad)
 [documentFormatting]
@@ -142,11 +144,13 @@ confspec = ConfigObj(StringIO(
 	reportSpellingErrors = boolean(default=true)
 	reportPage = boolean(default=true)
 	reportLineNumber = boolean(default=False)
+	reportLineIndentation = boolean(default=False)
 	reportTables = boolean(default=true)
 	includeLayoutTables = boolean(default=False)
 	reportTableHeaders = boolean(default=True)
 	reportTableCellCoords = boolean(default=True)
 	reportLinks = boolean(default=true)
+	reportComments = boolean(default=true)
 	reportLists = boolean(default=true)
 	reportHeadings = boolean(default=true)
 	reportBlockQuotes = boolean(default=true)

@@ -12,6 +12,9 @@
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
+import os
+import shutil
+
 Import(
 	'env',
 	'sourceDir',
@@ -22,20 +25,24 @@ Import(
 
 TARGET_ARCH=env['TARGET_ARCH']
 debug=env['nvdaHelperDebugFlags']
+release=env['release']
 
 #Some defines and includes for the environment
 env.Append(CPPDEFINES=['UNICODE','_CRT_SECURE_NO_DEPRECATE',('LOGLEVEL','${nvdaHelperLogLevel}'),('_WIN32_WINNT','_WIN32_WINNT_WINXP')])
-env.Append(CXXFLAGS=['/EHsc','/W3','/WX'])
+env.Append(CCFLAGS=['/W3','/WX'])
+env.Append(CXXFLAGS=['/EHsc'])
 env.Append(CPPPATH=['#/include',Dir('.').abspath])
-env.Append(LINKFLAGS='/incremental:no')
+env.Append(LINKFLAGS=['/incremental:no','/WX'])
 env.Append(LINKFLAGS='/release') #We always want a checksum in the header
 env.Append(MIDLFLAGS='/x64' if TARGET_ARCH=='x86_64' else '/win32')
 
 if 'noOptimize' in debug:
 	env.Append(CCFLAGS=['/Od'])
 else:
-	env.Append(CCFLAGS=['/O2','/GL'])
-	env.Append(LINKFLAGS=['/LTCG'])
+	env.Append(CCFLAGS='/O2')
+	if release:
+		env.Append(CCFLAGS='/GL')
+		env.Append(LINKFLAGS=['/LTCG'])
 
 if 'debugCRT' in debug:
 	env.Append(CCFLAGS=['/MTd'])
@@ -98,3 +105,11 @@ env.Install(libInstallDir,geckoVBufBackend)
 
 mshtmlVBufBackend=env.SConscript('vbufBackends/mshtml/sconscript')
 env.Install(libInstallDir,mshtmlVBufBackend)
+
+webKitVBufBackend=env.SConscript('vbufBackends/webKit/sconscript')
+env.Install(libInstallDir,webKitVBufBackend)
+
+if TARGET_ARCH=='x86' and os.path.isdir(Dir('#include/espeak').abspath):
+	env.SConscript('espeak/sconscript')
+if TARGET_ARCH=='x86' and os.path.isdir(Dir('#include/liblouis').abspath):
+	env.SConscript('liblouis/sconscript')

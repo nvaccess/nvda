@@ -41,7 +41,7 @@ See the file locale\en\characterDescriptions.dic for a full example.
 
 ++ Symbol Pronunciation ++
 It is often useful to hear punctuation and other symbols pronounced as words when reading text, particularly when moving by character.
-Unfortunately, the pronunciation of symbols is inconsistent between speech synthesisers and many  synthesisers do not speak many symbols and/or do not allow control over what symbols are spoken.
+Unfortunately, the pronunciation of symbols is inconsistent between speech synthesisers and many synthesisers do not speak many symbols and/or do not allow control over what symbols are spoken.
 Therefore, NVDA allows information about symbol pronunciation to be provided.
 
 This is done for a locale by providing a file named symbols.dic in the directory for the locale.
@@ -175,8 +175,8 @@ App Modules must define a class called AppModule, which inherits from appModuleH
 This class can then define event and script methods, gesture bindings and other code.
 This will all be covered in depth later.
 
-NVDA loads an App Module for an application as soon as it noticies the application is running.
-The App Module is unloaded once the application is closed or when NVDA is exiting. 
+NVDA loads an App Module for an application as soon as it notices the application is running.
+The App Module is unloaded once the application is closed or when NVDA is exiting.
 
 ++ Example 1: An App Module that Beeps on Focus Change Events ++[Example1]
 The following example App Module makes NVDA beep each time the focus changes within the notepad application.
@@ -190,7 +190,7 @@ Once saved in the correct location, either restart NVDA or choose Reload Plugins
 Finally, open Notepad and move the focus around the application; e.g. move along the menu bar, open some dialog boxes, etc.
 You should hear beeps each time the focus changes.
 Note though that if you move outside of Notepad - for instance, to Windows Explorer - you do not hear beeps.
- 
+
 ```
 --- start ---
 # Notepad App Module for NVDA
@@ -223,19 +223,19 @@ Events will be covered in greater detail later.
 As with other examples in this guide, remember to delete the created app module when you are finished testing and then restart NVDA or reload plugins, so that original functionality is restored.
 
 ++ Basics of a Global Plugin ++
-Global Plugin files have a .py extension, and should have a short unique name which identifies  what they do. 
+Global Plugin files have a .py extension, and should have a short unique name which identifies what they do.
 
-Global Plugin  files must be placed in the globalPlugins subdirectory of the user's NVDA user configuration directory.
+Global Plugin files must be placed in the globalPlugins subdirectory of the user's NVDA user configuration directory.
 For more information on where to find the user configuration directory, please see the NVDA user guide.
 
 Global Plugins must define a class called GlobalPlugin, which inherits from globalPluginHandler.GlobalPlugin.
 This class can then define event and script methods, gesture bindings and other code.
 This will all be covered in depth later.
 
-NVDA loads all global plugins as soon as it starts, and unloads them on exit. 
+NVDA loads all global plugins as soon as it starts, and unloads them on exit.
 
 ++ Example 2: a Global Plugin Providing a Script to Announce the NVDA Version ++
-The following example Global Plugin Allows you to press NVDA+shift+v while anywhere in the Operating System to find out NVDA's version. 
+The following example Global Plugin Allows you to press NVDA+shift+v while anywhere in the Operating System to find out NVDA's version.
 This example is only to show you the basic layout of a Global Plugin.
 
 Copy and paste the code between (but not including) the start and end markers into a new text file with a name of example2.py, which should be saved in the globalPlugins subdirectory.
@@ -270,7 +270,7 @@ This Global Plugin file starts with two comment lines, which describe what the f
 
 It then imports the globalPluginHandler module, so that the Global Plugin has access to the base GlobalPlugin class.
 
-It also imports a few other modules, namely ui and versionInfo, which  this specific plugin needs in order for it to perform the necessary actions to announce the version.
+It also imports a few other modules, namely ui and versionInfo, which this specific plugin needs in order for it to perform the necessary actions to announce the version.
 
 Next, it defines a class called GlobalPlugin, which is inherited from globalPluginHandler.GlobalPlugin.
 
@@ -278,7 +278,7 @@ Inside this class, it defines 1 or more events, scripts or gesture bindings.
 In this example, it defines a script method that performs the version announcement, and provides a binding from NVDA+shift+v to this script.
 However, the details of the script and its binding are not important for the purposes of this example.
 The most important part is the class itself.
- 
+
 As with other examples in this guide, remember to delete the created Global Plugin when finished testing and then restart NVDA or reload plugins, so that original functionality is restored.
 
 ++ NVDA Objects ++
@@ -288,7 +288,7 @@ For example, the OK button in a dialog would be represented as an NVDA Object wi
 Similarly, a checkbox with a label of "I agree" would have a name of "I agree", a role of checkbox, and if currently checked, a state of checked.
 
 As there are many different GUI Toolkits and platform and accessibility APIs, NVDA Objects abstract these differences into a standard form that NVDA can use, regardless of the toolkit or API a particular control is made with.
-For example,  the Ok button just discussed could be a widget in a Java application, an MSAA object, an IAccessible2 object or a UI Automation element. 
+For example, the Ok button just discussed could be a widget in a Java application, an MSAA object, an IAccessible2 object or a UI Automation element.
 
 NVDA Objects have many properties.
 Some of the most useful are:
@@ -299,7 +299,7 @@ Button, dialog, editableText, window and checkbox are examples of roles.
 Focusable, focused, selected, selectable, expanded, collapsed and checked are some examples of states.
 - value: the value of the control; e.g. the percentage of a scroll bar or the current setting of a combo box.
 - description: a sentence or two describing what the control does (usually the same as its tooltip).
-- location: the object's left, top, width and height positions in screen coordinates.  
+- location: the object's left, top, width and height positions in screen coordinates.
 - parent: this object's parent object.
 For example, a list item object's parent would be the list containing it.
 - next: the object directly after this one on the same level in logical order.
@@ -308,7 +308,7 @@ For example, a menu item NVDA Object's next object is most likely another menu i
 - firstChild: the first direct child object of this object.
 For example, a list's first child would be the first list item.
 - lastChild: the last direct child of this object.
-  - children: a list of all the direct children of this object; e.g. all the menu items in a menu.
+- children: a list of all the direct children of this object; e.g. all the menu items in a menu.
 -
 
 There are also a few simplified navigation properties such as simpleParent, simpleNext, simpleFirstChild and simpleLastChild.
@@ -327,8 +327,8 @@ The code may then retreave information from that object or perhaps even retreave
 - the Plugin may define its own custom NVDA Object classes which will be used to wrap a specific control to give it extra functionality, mutate its properties, etc.
 -
 
-Just like App Modules and Global Plugins, NVDA Objects can also define events, scripts and gesture bindings. 
- 
+Just like App Modules and Global Plugins, NVDA Objects can also define events, scripts and gesture bindings.
+
 ++ Scripts and Gesture Bindings ++
 App Modules, Global Plugins and NVDA Objects can define special methods which can be bound to a particular piece of input such as a key press.
 NVDA refers to these methods as scripts.
@@ -346,7 +346,7 @@ To bind a gesture to a script, a special "__gestures" Python dictionary can be d
 These dictionaries should contain gesture identifier strings pointing to the name of the requested script, without the "script_" prefix.
 
 There are more advanced ways of binding gestures in a more dynamic fashion, though the __gestures dictionary is the simplest.
- 
+
 A gesture identifier string is a simple string representation of a piece of input.
 It consists of a two leter character code denoting the source of the input, an optional device in brackets, a colon (:) and one or more names separated by a plus (+) denoting the actual keys or input values.
 
@@ -375,7 +375,7 @@ The order for gesture binding lookup is:
 ++ Example 3: A Global Plugin to Find out Window Class and Control ID ++
 The following Global Plugin allows you to press NVDA+leftArrow to have the window class of the current focus announced, and NVDA+rightArrow to have the window control ID of the current focus announced.
 This example shows you how to define one or more scripts and gesture bindings on a class such as an App Module, Global Plugin or NVDA Object.
- 
+
 Copy and paste the code between (but not including) the start and end markers into a new text file with a name of example3.py, which should be saved in the globalPlugins subdirectory.
 Be very careful to keep all tabs and spaces intact.
 
@@ -415,7 +415,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 ++ Events ++
 When NVDA detects particular toolkit, API or Operating System events, it abstracts these and fires its own internal events on plugins and NVDA Objects.
 
-Although most events are related to a specific NVDA Object (e.g. name change, gain focus, state change, etc.), these events can be handled at various levels. 
+Although most events are related to a specific NVDA Object (e.g. name change, gain focus, state change, etc.), these events can be handled at various levels.
 When an event is handled, it is stopped from going further down the chain.
 However, code inside the event can choose to propagate it further if needed.
 
@@ -450,7 +450,7 @@ Some common NVDA Object events are:
 - locationChange: physical screen location changes
 -
 
-There are  many other events, though those listed above are usually the most useful.
+There are many other events, though those listed above are usually the most useful.
 
 For an example of an event handled by an App Module, please refer to [example 1 #Example1] (focus beeps in notepad).
 
@@ -464,7 +464,7 @@ This is done by providing an App Module for that application which simply sets s
 ++ Example 4: A Sleep Mode App Module ++
 
 The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of the application you wish to enable sleep mode for.
-As always, the file  must have a .py extension.
+As always, the file must have a .py extension.
 
 ```
 --- start ---
@@ -476,7 +476,7 @@ class AppModule(appModuleHandler.AppModule):
 
 --- end ---
 ```
- 
+
 ++ Providing Custom NVDA Object Classes ++
 Providing custom NVDA Object classes is probably the most powerful and useful way to improve the experience of an application in an NVDA plugin.
 This method allows you to place all the needed logic for a particular control altogether in one NVDA Object class for that control, rather than scattering code for many controls across a plugin's events.
@@ -502,7 +502,7 @@ It takes 3 arguments:
 +
 
 Inside this method, you should decide which custom NVDA Object class(es) (if any) this NVDA Object should use by checking its properties, etc.
-If a custom class should be used, it must be inserted into the class list, usually at the beginning. 
+If a custom class should be used, it must be inserted into the class list, usually at the beginning.
 You can also remove classes chosen by NVDA from the class list, although this is rarely required.
 
 ++ Example 5: Labelling the Notepad Edit Field using a Custom NVDA Object ++
@@ -529,8 +529,7 @@ class LabelledEditField(Window):
 --- end ---
 ```
 
-+ NVDA Python Console +
-
++ NVDA Python Console +[PythonConsole]
 The NVDA Python console emulates the interactive Python interpreter from within NVDA.
 It is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 
@@ -553,7 +552,7 @@ The f6 key toggles between the input and output controls.
 Closing the console window simply hides it.
 This allows the user to return to the session as it was left when it was closed, including history and variables.
 
-++ Namespace ++
+++ Namespace ++[PythonConsoleNamespace]
 
 +++ Automatic Imports +++
 For convenience, the following modules and variables are automatically imported in the console:
@@ -569,4 +568,24 @@ These variables are:
 - nav: The current navigator object
 - mouse: The current mouse object
 - brlRegions: The braille regions from the active braille buffer
+-
+
++ Remote Python Console +
+A remote Python console is available for situations where remote debugging of NVDA is useful.
+It is similar to the [local Python console #PythonConsole] discussed above, but is accessed via TCP.
+
+Please be aware that this is a huge security risk.
+You should only enable it if you are connected to trusted networks.
+
+++ Usage ++
+To enable the remote Python console, use the local Python console to import remotePythonConsole and call remotePythonConsole.initialize().
+You can then connect to it via TCP port 6832.
+
+History of previously entered lines is not supported.
+
+The namespace is the same as [the namespace in the local Python console #PythonConsoleNamespace].
+
+There are some special functions:
+- snap(): Takes a snapshot of the current state of NVDA and saves it in the [snapshot variables #PythonConsoleSnapshotVariables].
+- rmSnap(): Removes all snapshot variables.
 -

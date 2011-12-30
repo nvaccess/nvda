@@ -22,7 +22,7 @@ CLSCTX_INPROC_SERVER=1
 CLSCTX_LOCAL_SERVER=4
 
 #Special Mozilla gecko MSAA constant additions
-NAVRELATION_LABELLED_BY=0x1002
+NAVRELATION_LABEL_FOR=0x1002
 NAVRELATION_LABELLED_BY=0x1003
 NAVRELATION_NODE_CHILD_OF=0x1005
 NAVRELATION_EMBEDS=0x1009
@@ -55,7 +55,6 @@ import eventHandler
 import winKernel
 import winUser
 import speech
-import sayAllHandler
 import api
 import queueHandler
 import NVDAObjects.IAccessible
@@ -355,10 +354,6 @@ def normalizeIAccessible(pacc):
 	return pacc
 
 def accessibleObjectFromEvent(window,objectID,childID):
-	wmResult=c_long()
-	if windll.user32.SendMessageTimeoutW(window,winUser.WM_NULL,0,0,winUser.SMTO_ABORTIFHUNG,2000,byref(wmResult))==0:
-		log.debugWarning("Window %d dead or not responding: %s" % (window, ctypes.WinError()))
-		return None
 	try:
 		pacc,childID=oleacc.AccessibleObjectFromEvent(window,objectID,childID)
 	except Exception as e:
@@ -810,7 +805,14 @@ def _fakeFocus(oldFocus):
 #Register internal object event with IAccessible
 cWinEventCallback=WINFUNCTYPE(None,c_int,c_int,c_int,c_int,c_int,c_int,c_int)(winEventCallback)
 
+accPropServices=None
+
 def initialize():
+	global accPropServices
+	try:
+		accPropServices=comtypes.client.CreateObject(CAccPropServices)
+	except (WindowsError,COMError) as e:
+		log.debugWarning("AccPropServices is not available: %s"%e)
 	for eventType in winEventIDsToNVDAEventNames.keys():
 		hookID=winUser.setWinEventHook(eventType,eventType,0,cWinEventCallback,0,0,0)
 		if hookID:
@@ -869,18 +871,22 @@ def getIAccIdentity(pacc,childID):
 	IAccIdentityObject=pacc.QueryInterface(IAccIdentity)
 	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
 	try:
+		if accPropServices:
+			hwnd,objectID,childID=accPropServices.DecomposeHwndIdentityString(stringPtr,stringSize)
+			return dict(windowHandle=hwnd,objectID=c_int(objectID).value,childID=childID)
 		stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
 		fields=struct.unpack('IIiI',stringPtr.contents.raw)
+		d={}
+		d['childID']=fields[3]
+		if fields[0]&2:
+			d['menuHandle']=fields[2]
+		else:
+			d['objectID']=fields[2]
+			d['windowHandle']=fields[1]
+		return d
 	finally:
 		windll.ole32.CoTaskMemFree(stringPtr)
-	d={}
-	d['childID']=fields[3]
-	if fields[0]&2:
-		d['menuHandle']=fields[2]
-	else:
-		d['objectID']=fields[2]
-		d['windowHandle']=fields[1]
-	return d
+ 
 
 def findGroupboxObject(obj):
 	prevWindow=winUser.getPreviousWindow(obj.windowHandle)
