@@ -93,6 +93,8 @@ roleLabels = {
 	controlTypes.ROLE_TABLE: _("tb"),
 	# Translators: Displayed in braille for an object which is a separator.
 	controlTypes.ROLE_SEPARATOR: _("-----"),
+	# Translators: Displayed in braille for an object which is a graphic.
+	controlTypes.ROLE_GRAPHIC: _("gra"),
 }
 
 positiveStateLabels = {
