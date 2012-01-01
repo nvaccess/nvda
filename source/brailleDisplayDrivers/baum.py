@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #brailleDisplayDrivers/baum.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
