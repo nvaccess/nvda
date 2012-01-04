@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2006-2012 NV Access Limited
 
 """Common support for editable text.
 @note: If you want editable text functionality for an NVDAObject,
@@ -18,6 +18,7 @@ import config
 import eventHandler
 from scriptHandler import isScriptWaiting
 import textInfos
+import controlTypes
 
 class EditableText(ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
@@ -81,7 +82,7 @@ class EditableText(ScriptableObject):
 			api.setReviewPosition(info)
 		if speakUnit:
 			info.expand(speakUnit)
-			speech.speakTextInfo(info, unit=speakUnit, reason=speech.REASON_CARET)
+			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.REASON_CARET)
 
 	def _caretMovementScriptHelper(self, gesture, unit):
 		try:

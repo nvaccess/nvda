@@ -1,3 +1,8 @@
+#controlTypes.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2007-2012 NV Access Limited
 
 ROLE_UNKNOWN=0
 ROLE_WINDOW=1
@@ -178,7 +183,7 @@ STATE_SORTED_ASCENDING=0x100000000
 STATE_SORTED_DESCENDING=0x200000000
 STATES_SORTED=frozenset([STATE_SORTED,STATE_SORTED_ASCENDING,STATE_SORTED_DESCENDING])
 
-speechRoleLabels={
+roleLabels={
 	ROLE_UNKNOWN:_("unknown"),
 	ROLE_WINDOW:_("window"),
 	ROLE_TITLEBAR:_("title bar"),
@@ -323,7 +328,7 @@ speechRoleLabels={
 	ROLE_CALENDAR:_("calendar"),
 }
 
-speechStateLabels={
+stateLabels={
 	STATE_UNAVAILABLE:_("unavailable"),
 	STATE_FOCUSED:_("focused"),
 	STATE_SELECTED:_("selected"),
@@ -359,3 +364,115 @@ speechStateLabels={
 	STATE_SORTED_ASCENDING:_("sorted ascending"),
 	STATE_SORTED_DESCENDING:_("sorted descending"),
 }
+
+silentRolesOnFocus={
+	ROLE_PANE,
+	ROLE_ROOTPANE,
+	ROLE_FRAME,
+	ROLE_UNKNOWN,
+	ROLE_APPLICATION,
+	ROLE_TABLECELL,
+	ROLE_LISTITEM,
+	ROLE_MENUITEM,
+	ROLE_CHECKMENUITEM,
+	ROLE_TREEVIEWITEM,
+}
+
+silentValuesForRoles={
+	ROLE_CHECKBOX,
+	ROLE_RADIOBUTTON,
+	ROLE_LINK,
+	ROLE_MENUITEM,
+	ROLE_APPLICATION,
+}
+
+#{ Output reasons
+# These constants are used to specify the reason that a given piece of output was generated.
+#: An object to be reported due to a focus change or similar.
+REASON_FOCUS="focus"
+#: An ancestor of the focus object to be reported due to a focus change or similar.
+REASON_FOCUSENTERED="focusEntered"
+#: An item under the mouse.
+REASON_MOUSE="mouse"
+#: A response to a user query.
+REASON_QUERY="query"
+#: Reporting a change to an object.
+REASON_CHANGE="change"
+#: A generic, screen reader specific message.
+REASON_MESSAGE="message"
+#: Text reported as part of a say all.
+REASON_SAYALL="sayAll"
+#: Content reported due to caret movement or similar.
+REASON_CARET="caret"
+#: No output, but any state should be cached as if output had occurred.
+REASON_ONLYCACHE="onlyCache"
+#}
+
+def processPositiveStates(role, states, reason, positiveStates):
+	positiveStates = positiveStates.copy()
+	# The user never cares about certain states.
+	if role==ROLE_EDITABLETEXT:
+		positiveStates.discard(STATE_EDITABLE)
+	if role!=ROLE_LINK:
+		positiveStates.discard(STATE_VISITED)
+	positiveStates.discard(STATE_SELECTABLE)
+	positiveStates.discard(STATE_FOCUSABLE)
+	positiveStates.discard(STATE_CHECKABLE)
+	if STATE_DRAGGING in positiveStates:
+		# It's obvious that the control is draggable if it's being dragged.
+		positiveStates.discard(STATE_DRAGGABLE)
+	if role == ROLE_COMBOBOX:
+		# Combo boxes inherently have a popup, so don't report it.
+		positiveStates.discard(STATE_HASPOPUP)
+	if role in (ROLE_LINK, ROLE_BUTTON, ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_TOGGLEBUTTON, ROLE_MENUITEM, ROLE_TAB, ROLE_SLIDER, ROLE_DOCUMENT):
+		# This control is clearly clickable according to its role
+		# or reporting clickable just isn't useful.
+		positiveStates.discard(STATE_CLICKABLE)
+	if reason == REASON_QUERY:
+		return positiveStates
+	positiveStates.discard(STATE_DEFUNCT)
+	positiveStates.discard(STATE_MODAL)
+	positiveStates.discard(STATE_FOCUSED)
+	positiveStates.discard(STATE_OFFSCREEN)
+	positiveStates.discard(STATE_INVISIBLE)
+	if reason != REASON_CHANGE:
+		positiveStates.discard(STATE_LINKED)
+		if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_MENUITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states:
+			positiveStates.discard(STATE_SELECTED)
+	if role != ROLE_EDITABLETEXT:
+		positiveStates.discard(STATE_READONLY)
+	if role == ROLE_CHECKBOX:
+		positiveStates.discard(STATE_PRESSED)
+	if role == ROLE_MENUITEM:
+		# The user doesn't usually care if a menu item is expanded or collapsed.
+		positiveStates.discard(STATE_COLLAPSED)
+		positiveStates.discard(STATE_EXPANDED)
+	return positiveStates
+
+def processNegativeStates(role, states, reason, negativeStates):
+	speakNegatives = set()
+	# Add the negative selected state if the control is selectable,
+	# but only if it is either focused or this is something other than a change event.
+	# The condition stops "not selected" from being spoken in some broken controls
+	# when the state change for the previous focus is issued before the focus change.
+	if role in (ROLE_LISTITEM, ROLE_TREEVIEWITEM, ROLE_TABLEROW) and STATE_SELECTABLE in states and (reason != REASON_CHANGE or STATE_FOCUSED in states):
+		speakNegatives.add(STATE_SELECTED)
+	# Restrict "not checked" in a similar way to "not selected".
+	if (role in (ROLE_CHECKBOX, ROLE_RADIOBUTTON, ROLE_CHECKMENUITEM) or STATE_CHECKABLE in states)  and (STATE_HALFCHECKED not in states) and (reason != REASON_CHANGE or STATE_FOCUSED in states):
+		speakNegatives.add(STATE_CHECKED)
+	if reason == REASON_CHANGE:
+		# We want to speak this state only if it is changing to negative.
+		speakNegatives.add(STATE_DROPTARGET)
+		# We were given states which have changed to negative.
+		# Return only those supplied negative states which should be spoken;
+		# i.e. the states in both sets.
+		speakNegatives &= negativeStates
+		if STATES_SORTED & negativeStates and not STATES_SORTED & states:
+			# If the object has just stopped being sorted, just report not sorted.
+			# The user doesn't care how it was sorted before.
+			speakNegatives.add(STATE_SORTED)
+		return speakNegatives
+	else:
+		# This is not a state change; only positive states were supplied.
+		# Return all negative states which should be spoken, excluding the positive states.
+		return speakNegatives - states

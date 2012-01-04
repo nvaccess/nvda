@@ -1,6 +1,6 @@
-#NVDAObjects/baseType.py
+#NVDAObjects/__init__.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-20012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -714,7 +714,7 @@ Tries to force this object to take the focus.
 	def reportFocus(self):
 		"""Announces this object in a way suitable such that it gained focus.
 		"""
-		speech.speakObject(self,reason=speech.REASON_FOCUS)
+		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 
 	def event_typedCharacter(self,ch):
 		speech.speakTypedCharacters(ch)
@@ -756,7 +756,7 @@ Tries to force this object to take the focus.
 
 	def event_stateChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self,states=True, reason=speech.REASON_CHANGE)
+			speech.speakObjectProperties(self,states=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
 
 	def event_focusEntered(self):
@@ -764,7 +764,7 @@ Tries to force this object to take the focus.
 			speech.cancelSpeech()
 			return
 		if self.isPresentableFocusAncestor:
-			speech.speakObject(self,reason=speech.REASON_FOCUSENTERED)
+			speech.speakObject(self,reason=controlTypes.REASON_FOCUSENTERED)
 
 	def event_gainFocus(self):
 		"""
@@ -787,17 +787,17 @@ This code is executed if a gain focus event is received by this object.
 
 	def event_valueChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, value=True, reason=speech.REASON_CHANGE)
+			speech.speakObjectProperties(self, value=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
 
 	def event_nameChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, name=True, reason=speech.REASON_CHANGE)
+			speech.speakObjectProperties(self, name=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
 
 	def event_descriptionChange(self):
 		if self is api.getFocusObject():
-			speech.speakObjectProperties(self, description=True, reason=speech.REASON_CHANGE)
+			speech.speakObjectProperties(self, description=True, reason=controlTypes.REASON_CHANGE)
 		braille.handler.handleUpdate(self)
 
 	def event_caret(self):

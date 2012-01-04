@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2008-2011 James Teh <jamie@jantrid.net>, Michael Curran <mick@kulgan.net>
+#Copyright (C) 2008-2012 NV Access Limited
 
 import itertools
 import os
@@ -16,7 +16,6 @@ from logHandler import log
 import controlTypes
 import api
 import textInfos
-import speech
 import brailleDisplayDrivers
 import inputCore
 
@@ -243,7 +242,6 @@ class TextRegion(Region):
 		self.rawText = text
 
 def getBrailleTextForProperties(**propertyValues):
-	# TODO: Don't use speech functions.
 	textList = []
 	name = propertyValues.get("name")
 	if name:
@@ -266,21 +264,21 @@ def getBrailleTextForProperties(**propertyValues):
 			states.discard(controlTypes.STATE_VISITED)
 			# Translators: Displayed in braille for a link which has been visited.
 			roleText = _("vlnk")
-		elif (name or rowNumber or columnNumber) and role in speech.silentRolesOnFocus:
+		elif (name or rowNumber or columnNumber) and role in controlTypes.silentRolesOnFocus:
 			roleText = None
 		else:
-			roleText = roleLabels.get(role, controlTypes.speechRoleLabels[role])
+			roleText = roleLabels.get(role, controlTypes.roleLabels[role])
 	else:
 		role = propertyValues.get("_role")
 		roleText = None
 	value = propertyValues.get("value")
-	if value and role not in speech.silentValuesForRoles:
+	if value and role not in controlTypes.silentValuesForRoles:
 		textList.append(value)
 	if states:
-		positiveStates = speech.processPositiveStates(role, states, speech.REASON_FOCUS, states)
-		textList.extend(positiveStateLabels.get(state, controlTypes.speechStateLabels[state]) for state in positiveStates)
-		negativeStates = speech.processNegativeStates(role, states, speech.REASON_FOCUS, None)
-		textList.extend(negativeStateLabels.get(state, _("not %s") % controlTypes.speechStateLabels[state]) for state in negativeStates)
+		positiveStates = controlTypes.processPositiveStates(role, states, controlTypes.REASON_FOCUS, states)
+		textList.extend(positiveStateLabels.get(state, controlTypes.stateLabels[state]) for state in positiveStates)
+		negativeStates = controlTypes.processNegativeStates(role, states, controlTypes.REASON_FOCUS, None)
+		textList.extend(negativeStateLabels.get(state, _("not %s") % controlTypes.stateLabels[state]) for state in negativeStates)
 	if roleText:
 		textList.append(roleText)
 	description = propertyValues.get("description")

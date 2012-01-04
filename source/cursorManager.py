@@ -1,6 +1,6 @@
 #cursorManager.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -17,6 +17,7 @@ import api
 import speech
 import config
 import braille
+import controlTypes
 
 class CursorManager(baseObject.ScriptableObject):
 	"""
@@ -72,7 +73,7 @@ class CursorManager(baseObject.ScriptableObject):
 			info.move(unit,direction)
 		self.selection=info
 		info.expand(unit)
-		speech.speakTextInfo(info,unit=unit,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=unit,reason=controlTypes.REASON_CARET)
 		if not oldInfo.isCollapsed:
 			speech.speakSelectionChange(oldInfo,self.selection)
 
@@ -93,7 +94,7 @@ class CursorManager(baseObject.ScriptableObject):
 			self.selection=info
 			speech.cancelSpeech()
 			info.move(textInfos.UNIT_LINE,1,endPoint="end")
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
 		else:
 			wx.CallAfter(gui.messageBox,_('text "%s" not found')%text,_("Find Error"),wx.OK|wx.ICON_ERROR)
 		CursorManager._lastFindText=text

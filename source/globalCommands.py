@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>, Aleksey Sadovoy <lex@onm.su>, Rui Batista<ruiandrebatista@gmail.com>
+#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista
 
 import time
 import tones
@@ -70,7 +70,7 @@ class GlobalCommands(ScriptableObject):
 			info=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_LINE)
 		if scriptHandler.getLastScriptRepeatCount()==0:
-			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
 			speech.speakSpelling(info.text)
 	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
@@ -292,7 +292,7 @@ class GlobalCommands(ScriptableObject):
 					if api.copyToClip(text):
 						speech.speakMessage(_("%s copied to clipboard")%text)
 		else:
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
+			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 	script_navigatorObject_current.__doc__=_("Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard")
 
 	def script_navigatorObject_currentDimensions(self,gesture):
@@ -322,7 +322,7 @@ class GlobalCommands(ScriptableObject):
 			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(pos)
 		speech.speakMessage(_("move to focus"))
-		speech.speakObject(obj,reason=speech.REASON_QUERY)
+		speech.speakObject(obj,reason=controlTypes.REASON_QUERY)
 	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible.")
 
 	def script_navigatorObject_moveFocus(self,gesture):
@@ -341,7 +341,7 @@ class GlobalCommands(ScriptableObject):
 				return
 			info=review.copy()
 			info.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
 	script_navigatorObject_moveFocus.__doc__=_("Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor")
 
 	def script_navigatorObject_parent(self,gesture):
@@ -353,7 +353,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
+			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No containing object"))
 	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
@@ -367,7 +367,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
+			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No next"))
 	script_navigatorObject_next.__doc__=_("Moves the navigator object to the next object")
@@ -381,7 +381,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
+			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No previous"))
 	script_navigatorObject_previous.__doc__=_("Moves the navigator object to the previous object")
@@ -395,7 +395,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=speech.REASON_QUERY)
+			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
 		else:
 			speech.speakMessage(_("No objects inside"))
 	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
@@ -423,7 +423,7 @@ class GlobalCommands(ScriptableObject):
 		api.setReviewPosition(info.copy())
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("top"))
-		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	script_review_top.__doc__=_("Moves the review cursor to the top line of the current navigator object and speaks it")
 
 	def script_review_previousLine(self,gesture):
@@ -435,7 +435,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object and speaks it")
 
 	def script_review_currentLine(self,gesture):
@@ -443,7 +443,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
-			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 		else:
 			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	script_review_currentLine.__doc__=_("Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions.")
@@ -457,7 +457,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
 
 	def script_review_bottom(self,gesture):
@@ -465,7 +465,7 @@ class GlobalCommands(ScriptableObject):
 		api.setReviewPosition(info.copy())
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("bottom"))
-		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	script_review_bottom.__doc__=_("Moves the review cursor to the bottom line of the current navigator object and speaks it")
 
 	def script_review_previousWord(self,gesture):
@@ -477,7 +477,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("top"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
+		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object and speaks it")
 
 	def script_review_currentWord(self,gesture):
@@ -485,7 +485,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_WORD)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
-			speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
+			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 		else:
 			speech.spellTextInfo(info,useCharacterDescriptions=scriptCount>1)
 	script_review_currentWord.__doc__=_("Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions")
@@ -499,7 +499,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("bottom"))
-		speech.speakTextInfo(info,reason=speech.REASON_CARET,unit=textInfos.UNIT_WORD)
+		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object and speaks it")
 
 	def script_review_startOfLine(self,gesture):
@@ -509,7 +509,7 @@ class GlobalCommands(ScriptableObject):
 		api.setReviewPosition(info.copy())
 		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakMessage(_("left"))
-		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	script_review_startOfLine.__doc__=_("Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it")
 
 	def script_review_previousCharacter(self,gesture):
@@ -523,11 +523,11 @@ class GlobalCommands(ScriptableObject):
 			speech.speakMessage(_("left"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 		else:
 			api.setReviewPosition(charInfo.copy())
 			charInfo.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object and speaks it")
 
 	def script_review_currentCharacter(self,gesture):
@@ -535,7 +535,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_CHARACTER)
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
-			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 		elif scriptCount==1:
 			speech.spellTextInfo(info,useCharacterDescriptions=True)
 		else:
@@ -544,7 +544,7 @@ class GlobalCommands(ScriptableObject):
 				speech.speakMessage("%d," % c)
 				speech.speakSpelling(hex(c))
 			except:
-				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+				speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	script_review_currentCharacter.__doc__=_("Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal")
 
 	def script_review_nextCharacter(self,gesture):
@@ -558,11 +558,11 @@ class GlobalCommands(ScriptableObject):
 			speech.speakMessage(_("right"))
 			reviewInfo=api.getReviewPosition().copy()
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 		else:
 			api.setReviewPosition(charInfo.copy())
 			charInfo.expand(textInfos.UNIT_CHARACTER)
-			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object and speaks it")
 
 	def script_review_endOfLine(self,gesture):
@@ -573,7 +573,7 @@ class GlobalCommands(ScriptableObject):
 		api.setReviewPosition(info.copy())
 		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakMessage(_("right"))
-		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	script_review_endOfLine.__doc__=_("Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it")
 
 	def script_speechMode(self,gesture):
@@ -675,7 +675,7 @@ class GlobalCommands(ScriptableObject):
 		focusObject=api.getFocusObject()
 		if isinstance(focusObject,NVDAObject):
 			if scriptHandler.getLastScriptRepeatCount()==0:
-				speech.speakObject(focusObject, reason=speech.REASON_QUERY)
+				speech.speakObject(focusObject, reason=controlTypes.REASON_QUERY)
 			else:
 				speech.speakSpelling(focusObject.name)
 		else:

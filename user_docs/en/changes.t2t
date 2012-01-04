@@ -47,6 +47,9 @@
 - TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
  - This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
 - TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
+- Several control and output constants have been renamed or moved. (#228)
+ - speech.REASON_* constants have been moved to controlTypes.
+ - In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
 
 
 = 2011.3 =

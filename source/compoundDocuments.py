@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010 James Teh <jamie@jantrid.net>
+#Copyright (C) 2010-2012 NV Access Limited
 
 import winUser
 import textInfos
@@ -388,7 +388,7 @@ class CompoundDocument(EditableText, TreeInterceptor):
 		return eventHandler.lastQueuedFocusObject
 
 	def event_treeInterceptor_gainFocus(self):
-		speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)
+		speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
 		try:
 			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except RuntimeError:
@@ -396,7 +396,7 @@ class CompoundDocument(EditableText, TreeInterceptor):
 		else:
 			if info.isCollapsed:
 				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=speech.REASON_CARET)
+				speech.speakTextInfo(info, unit=textInfos.UNIT_LINE, reason=controlTypes.REASON_CARET)
 			else:
 				speech.speakSelectionMessage(_("selected %s"), info.text)
 			braille.handler.handleGainFocus(self)

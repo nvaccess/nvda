@@ -1,6 +1,6 @@
 #NVDAObjects/IAccessible.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -1191,10 +1191,10 @@ the NVDAObject for IAccessible
 		if self in api.getFocusAncestors():
 			return
 		speech.cancelSpeech()
-		speech.speakObject(self, reason=speech.REASON_FOCUS)
+		speech.speakObject(self, reason=controlTypes.REASON_FOCUS)
 		for child in self.recursiveDescendants:
 			if controlTypes.STATE_FOCUSABLE in child.states:
-				speech.speakObject(child, reason=speech.REASON_FOCUS)
+				speech.speakObject(child, reason=controlTypes.REASON_FOCUS)
 
 	def event_caret(self):
 		super(IAccessible, self).event_caret()
@@ -1401,7 +1401,7 @@ class Tooltip(IAccessible):
 	def event_show(self):
 		# TODO: Abstract this somehow.
 		if (config.conf["presentation"]["reportTooltips"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_TOOLTIP)) or (config.conf["presentation"]["reportHelpBalloons"] and (self.IAccessibleRole==oleacc.ROLE_SYSTEM_HELPBALLOON)):
-			speech.speakObject(self,reason=speech.REASON_FOCUS)
+			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 			# TODO: Don't use getBrailleTextForProperties directly.
 			braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 

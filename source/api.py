@@ -1,6 +1,6 @@
 #api.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -76,7 +76,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 			safetyCount+=1
 		else:
 			try:
-				log.error("Never ending focus ancestry: last object: %s, %s, window class %s, application name %s"%(tempObj.name,controlTypes.speechRoleLabels[tempObj.role],tempObj.windowClassName,tempObj.appModule.appName))
+				log.error("Never ending focus ancestry: last object: %s, %s, window class %s, application name %s"%(tempObj.name,controlTypes.roleLabels[tempObj.role],tempObj.windowClassName,tempObj.appModule.appName))
 			except:
 				pass
 			tempObj=getDesktopObject()
