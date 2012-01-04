@@ -87,9 +87,9 @@ class MessageListItem(sysListView32.ListItem):
 		nameList=[]
 		imageState=watchdog.cancellableSendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12
 		if imageState==5:
-			nameList.append(controlTypes.stabeLabels[controlTypes.STATE_COLLAPSED])
+			nameList.append(controlTypes.stateLabels[controlTypes.STATE_COLLAPSED])
 		elif imageState==6:
-			nameList.append(controlTypes.stabeLabels[controlTypes.STATE_EXPANDED])
+			nameList.append(controlTypes.stateLabels[controlTypes.STATE_EXPANDED])
 		if self.isUnread:
 			nameList.append(_("unread"))
 		name=super(MessageListItem,self).name

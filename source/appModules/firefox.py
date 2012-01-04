@@ -18,7 +18,7 @@ class AppModule(appModuleHandler.AppModule):
 			if statusBar:
 				statusText = api.getStatusBarText(statusBar)
 				speech.cancelSpeech()
-				speech.speakMessage(controlTypes.stabeLabels[controlTypes.STATE_BUSY])
+				speech.speakMessage(controlTypes.stateLabels[controlTypes.STATE_BUSY])
 				speech.speakMessage(statusText)
 				return
 		nextHandler()

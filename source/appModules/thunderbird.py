@@ -22,7 +22,7 @@ class AppModule(appModuleHandler.AppModule):
 				except:
 					# Fall back to reading the entire status bar.
 					statusText = api.getStatusBarText(statusBar)
-				speech.speakMessage(controlTypes.stabeLabels[controlTypes.STATE_BUSY])
+				speech.speakMessage(controlTypes.stateLabels[controlTypes.STATE_BUSY])
 				speech.speakMessage(statusText)
 				return
 		nextHandler()
