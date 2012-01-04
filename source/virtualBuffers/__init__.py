@@ -888,9 +888,10 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if reason == self.REASON_QUICKNAV:
 			return False
 		states = obj.states
-		if controlTypes.STATE_FOCUSABLE not in states and controlTypes.STATE_FOCUSED not in states:
-			return False
 		role = obj.role
+		# Menus sometimes get focus due to menuStart events even though they don't report as focused/focusable.
+		if controlTypes.STATE_FOCUSABLE not in states and controlTypes.STATE_FOCUSED not in states and role != controlTypes.ROLE_POPUPMENU:
+			return False
 		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX):
 			return False
 		if reason == speech.REASON_CARET:
