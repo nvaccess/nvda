@@ -60,11 +60,11 @@ class ControlField(Field):
 			if table and table.get("table-layout", None):
 				return self.PRESCAT_LAYOUT
 		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
-			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
-			(role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
-			(role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
-			(role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"]) or
-			(role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
+			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
+			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
+			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
+			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
