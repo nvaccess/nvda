@@ -71,8 +71,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start.value, end.value
 
 	def _getPointFromOffset(self,offset):
-		o=self._getNVDAObjectFromOffset(offset)
-		return textInfos.Point(o.location[0],o.location[1])
+		o = self._getNVDAObjectFromOffset(offset)
+		left, top, width, height = o.location
+		return textInfos.Point(left + width / 2, top + height / 2)
 
 	def _getNVDAObjectFromOffset(self,offset):
 		docHandle,ID=self._getFieldIdentifierFromOffset(offset)

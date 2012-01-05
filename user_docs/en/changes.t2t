@@ -41,6 +41,7 @@
 - When NVDA is configured to use a language other than English, the name of the tab key is now reported in the correct language.
 - In Mozilla Gecko (e.g. Firefox), NVDA no longer intermittently switches to browse mode while navigating menus in documents. (#2025)
 - In Calculator, the backspace key now reports the updated result instead of reporting nothing. (#2030)
+- In browse mode, the move mouse to current navigator object command now routes to the center of the object at the review cursor instead of the top left, making it more accurate it some cases. (#2029)
 
 
 == Changes for Developers ==
