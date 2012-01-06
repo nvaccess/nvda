@@ -876,7 +876,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""Determine whether pass through mode should be enabled or disabled for a given object.
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
-		@param reason: The reason for this query; one of the speech reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
+		@param reason: The reason for this query; one of the output reasons, L{REASON_QUICKNAV}, or C{None} for manual pass through mode activation by the user.
 		@return: C{True} if pass through mode should be enabled, C{False} if it should be disabled.
 		"""
 		if reason and (
