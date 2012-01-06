@@ -1,6 +1,6 @@
 #appModules/winamp.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -118,7 +118,7 @@ class winampPlaylistEditor(winampMainWindow):
 		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
-			speech.speakObject(self,reason=speech.REASON_FOCUS)
+			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 
 	def event_nameChange(self):
 		return super(winampMainWindow,self).event_nameChange()

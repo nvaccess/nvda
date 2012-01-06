@@ -1,6 +1,6 @@
 #appModules/thunderbird.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -22,7 +22,7 @@ class AppModule(appModuleHandler.AppModule):
 				except:
 					# Fall back to reading the entire status bar.
 					statusText = api.getStatusBarText(statusBar)
-				speech.speakMessage(controlTypes.speechStateLabels[controlTypes.STATE_BUSY])
+				speech.speakMessage(controlTypes.stateLabels[controlTypes.STATE_BUSY])
 				speech.speakMessage(statusText)
 				return
 		nextHandler()

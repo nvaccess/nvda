@@ -1,3 +1,9 @@
+#NVDAObjects/UIA/__init__.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2009-2012 NV Access Limited
+
 from ctypes.wintypes import POINT
 from comtypes import COMError
 import weakref
@@ -547,7 +553,7 @@ class SensitiveSlider(UIA):
 	def event_valueChange(self):
 		focusParent=api.getFocusObject().parent
 		if self==focusParent:
-			speech.speakObjectProperties(self,value=True,reason=speech.REASON_CHANGE)
+			speech.speakObjectProperties(self,value=True,reason=controlTypes.REASON_CHANGE)
 		else:
 			super(SensitiveSlider,self).event_valueChange()
 

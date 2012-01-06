@@ -19,7 +19,7 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 	calcCommandChars=['!','=','@','#']
 
 	calcCommandGestures=(
-		"kb:back","kb:escape","kb:enter","kb:numpadEnter",
+		"kb:backspace","kb:escape","kb:enter","kb:numpadEnter",
 		"kb:f2","kb:f3","kb:f4","kb:f5","kb:f6","kb:f7","kb:f8","kb:f9",
 		"kb:l","kb:n","kb:o","kb:p","kb:r","kb:s","kb:t",
 	)

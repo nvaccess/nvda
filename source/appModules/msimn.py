@@ -1,6 +1,6 @@
 #appModules/msimn.py - Outlook Express appModule
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -10,7 +10,6 @@ import displayModel
 import textInfos
 import api
 import appModuleHandler
-import speech
 from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.IAccessible import sysListView32
 import watchdog
@@ -88,9 +87,9 @@ class MessageListItem(sysListView32.ListItem):
 		nameList=[]
 		imageState=watchdog.cancellableSendMessage(self.windowHandle,sysListView32.LVM_GETITEMSTATE,self.IAccessibleChildID-1,sysListView32.LVIS_STATEIMAGEMASK)>>12
 		if imageState==5:
-			nameList.append(controlTypes.speechStateLabels[controlTypes.STATE_COLLAPSED])
+			nameList.append(controlTypes.stateLabels[controlTypes.STATE_COLLAPSED])
 		elif imageState==6:
-			nameList.append(controlTypes.speechStateLabels[controlTypes.STATE_EXPANDED])
+			nameList.append(controlTypes.stateLabels[controlTypes.STATE_EXPANDED])
 		if self.isUnread:
 			nameList.append(_("unread"))
 		name=super(MessageListItem,self).name

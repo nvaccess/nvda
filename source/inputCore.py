@@ -19,6 +19,7 @@ import watchdog
 from logHandler import log
 import globalVars
 import languageHandler
+import controlTypes
 
 """Core framework for handling input from the user.
 Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
@@ -337,7 +338,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		import braille
 		braille.handler.message("\t\t".join(textList))
 		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
-		speech.speakText(textList[0], reason=speech.REASON_MESSAGE, symbolLevel=characterProcessing.SYMLVL_ALL)
+		speech.speakText(textList[0], reason=controlTypes.REASON_MESSAGE, symbolLevel=characterProcessing.SYMLVL_ALL)
 		for text in textList[1:]:
 			speech.speakMessage(text)
 

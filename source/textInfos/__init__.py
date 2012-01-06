@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2006-2012 NV Access Limited
 
 import weakref
 import re
@@ -38,7 +38,7 @@ class ControlField(Field):
 	#: This field is just for layout.
 	PRESCAT_LAYOUT = None
 
-	def getPresentationCategory(self, ancestors, formatConfig, reason=speech.REASON_CARET):
+	def getPresentationCategory(self, ancestors, formatConfig, reason=controlTypes.REASON_CARET):
 		role = self.get("role", controlTypes.ROLE_UNKNOWN)
 		states = self.get("states", set())
 
@@ -59,12 +59,13 @@ class ControlField(Field):
 					table = None
 			if table and table.get("table-layout", None):
 				return self.PRESCAT_LAYOUT
-		if reason in (speech.REASON_CARET, speech.REASON_SAYALL, speech.REASON_FOCUS) and (
-			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"]) or 
-			(role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"]) or
-			(role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"]) or
-			(role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"]) or
-			(role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+		if reason in (controlTypes.REASON_CARET, controlTypes.REASON_SAYALL, controlTypes.REASON_FOCUS) and (
+			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
+			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
+			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
+			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
+			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
+			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT

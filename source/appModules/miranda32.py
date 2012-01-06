@@ -1,6 +1,6 @@
 #appModules/miranda32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -163,7 +163,7 @@ class mirandaIMContactList(IAccessible):
 		gesture.send()
 		if not isScriptWaiting():
 			api.processPendingEvents()
-			speech.speakObject(self,reason=speech.REASON_FOCUS)
+			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 			braille.handler.handleGainFocus(self)
 
 	__changeItemGestures = (

@@ -71,8 +71,9 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start.value, end.value
 
 	def _getPointFromOffset(self,offset):
-		o=self._getNVDAObjectFromOffset(offset)
-		return textInfos.Point(o.location[0],o.location[1])
+		o = self._getNVDAObjectFromOffset(offset)
+		left, top, width, height = o.location
+		return textInfos.Point(left + width / 2, top + height / 2)
 
 	def _getNVDAObjectFromOffset(self,offset):
 		docHandle,ID=self._getFieldIdentifierFromOffset(offset)
@@ -519,7 +520,7 @@ class ElementsListDialog(wx.Dialog):
 
 	def _reportElement(self, element):
 		speech.cancelSpeech()
-		speech.speakTextInfo(element,reason=speech.REASON_FOCUS)
+		speech.speakTextInfo(element,reason=controlTypes.REASON_FOCUS)
 
 class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInterceptor):
 
@@ -684,17 +685,17 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 
 		if not self.passThrough:
 			if doSayAll:
-				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=speech.REASON_FOCUS)
+				speech.speakObjectProperties(self.rootNVDAObject,name=True,states=True,reason=controlTypes.REASON_FOCUS)
 				sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 			else:
 				# Speak it like we would speak focus on any other document object.
-				speech.speakObject(self.rootNVDAObject, reason=speech.REASON_FOCUS)
+				speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
 				info = self.selection
 				if not info.isCollapsed:
 					speech.speakSelectionMessage(_("selected %s"), info.text)
 				else:
 					info.expand(textInfos.UNIT_LINE)
-					speech.speakTextInfo(info, reason=speech.REASON_CARET, unit=textInfos.UNIT_LINE)
+					speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
 
 		reportPassThrough(self)
 		braille.handler.handleGainFocus(self)
@@ -724,11 +725,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			reportPassThrough(self)
 		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
 			obj.setFocus()
-			speech.speakObject(obj, reason=speech.REASON_FOCUS)
+			speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
 		else:
 			self._activateNVDAObject(obj)
 
-	def _set_selection(self, info, reason=speech.REASON_CARET):
+	def _set_selection(self, info, reason=controlTypes.REASON_CARET):
 		super(VirtualBuffer, self)._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
@@ -740,7 +741,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self._lastCaretPosition = caret.bookmark
 		if config.conf['reviewCursor']['followCaret'] and api.getNavigatorObject() is self.rootNVDAObject:
 			api.setReviewPosition(info)
-		if reason == speech.REASON_FOCUS:
+		if reason == controlTypes.REASON_FOCUS:
 			focusObj = api.getFocusObject()
 			if focusObj==self.rootNVDAObject:
 				return
@@ -838,7 +839,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			if info.compareEndPoints(fieldInfo, "endToEnd") > 0:
 				# We've expanded past the end of the field, so limit to the end of the field.
 				info.setEndPoint(fieldInfo, "endToEnd")
-		speech.speakTextInfo(info, reason=speech.REASON_FOCUS)
+		speech.speakTextInfo(info, reason=controlTypes.REASON_FOCUS)
 		info.collapse()
 		self._set_selection(info, reason=self.REASON_QUICKNAV)
 
@@ -880,25 +881,32 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		if reason and (
 			self.disableAutoPassThrough
-			or (reason == speech.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
-			or (reason == speech.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
+			or (reason == controlTypes.REASON_FOCUS and not config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
+			or (reason == controlTypes.REASON_CARET and not config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		):
 			# This check relates to auto pass through and auto pass through is disabled, so don't change the pass through state.
 			return self.passThrough
 		if reason == self.REASON_QUICKNAV:
 			return False
 		states = obj.states
-		if controlTypes.STATE_FOCUSABLE not in states and controlTypes.STATE_FOCUSED not in states:
-			return False
 		role = obj.role
+		# Menus sometimes get focus due to menuStart events even though they don't report as focused/focusable.
+		if controlTypes.STATE_FOCUSABLE not in states and controlTypes.STATE_FOCUSED not in states and role != controlTypes.ROLE_POPUPMENU:
+			return False
 		if controlTypes.STATE_READONLY in states and role not in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_COMBOBOX):
 			return False
-		if reason == speech.REASON_CARET:
+		if reason == controlTypes.REASON_CARET:
 			return role == controlTypes.ROLE_EDITABLETEXT or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_EDITABLE in states)
-		if reason == speech.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_TAB):
+		if reason == controlTypes.REASON_FOCUS and role in (controlTypes.ROLE_LISTITEM, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_TAB):
 			return True
 		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON) or controlTypes.STATE_EDITABLE in states:
 			return True
+		if reason == controlTypes.REASON_FOCUS:
+			# If this is a focus change, pass through should be enabled for certain ancestor containers.
+			while obj != self.rootNVDAObject:
+				if obj.role == controlTypes.ROLE_TOOLBAR:
+					return True
+				obj = obj.parent
 		return False
 
 	def event_caretMovementFailed(self, obj, nextHandler, gesture=None):
@@ -987,11 +995,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			# This node is already focused, so we need to move to and speak this node here.
 			newCaret = newInfo.copy()
 			newCaret.collapse()
-			self._set_selection(newCaret,reason=speech.REASON_FOCUS)
+			self._set_selection(newCaret,reason=controlTypes.REASON_FOCUS)
 			if self.passThrough:
 				obj.event_gainFocus()
 			else:
-				speech.speakTextInfo(newInfo,reason=speech.REASON_FOCUS)
+				speech.speakTextInfo(newInfo,reason=controlTypes.REASON_FOCUS)
 		else:
 			# This node doesn't have the focus, so just set focus to it. The gainFocus event will handle the rest.
 			obj.setFocus()
@@ -1057,7 +1065,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		except:
 			# This object is not in the virtual buffer, even though it resides beneath the document.
 			# Automatic pass through should be enabled in certain circumstances where this occurs.
-			if not self.passThrough and self.shouldPassThrough(obj,reason=speech.REASON_FOCUS):
+			if not self.passThrough and self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS):
 				self.passThrough=True
 				reportPassThrough(self)
 				self._replayFocusEnteredEvents()
@@ -1074,24 +1082,24 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				# If pass-through is disabled, cancel speech, as a focus change should cause page reading to stop.
 				# This must be done before auto-pass-through occurs, as we want to stop page reading even if pass-through will be automatically enabled by this focus change.
 				speech.cancelSpeech()
-			self.passThrough=self.shouldPassThrough(obj,reason=speech.REASON_FOCUS)
+			self.passThrough=self.shouldPassThrough(obj,reason=controlTypes.REASON_FOCUS)
 			if not self.passThrough:
 				# We read the info from the buffer instead of the control itself.
-				speech.speakTextInfo(focusInfo,reason=speech.REASON_FOCUS)
+				speech.speakTextInfo(focusInfo,reason=controlTypes.REASON_FOCUS)
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
-				speech.speakObject(obj,speech.REASON_ONLYCACHE)
+				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 			else:
 				if not oldPassThrough:
 					self._replayFocusEnteredEvents()
 				nextHandler()
 			focusInfo.collapse()
-			self._set_selection(focusInfo,reason=speech.REASON_FOCUS)
+			self._set_selection(focusInfo,reason=controlTypes.REASON_FOCUS)
 		else:
 			# The virtual buffer caret was already at the focused node.
 			if not self.passThrough:
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
-				speech.speakObject(obj,speech.REASON_ONLYCACHE)
+				speech.speakObject(obj,controlTypes.REASON_ONLYCACHE)
 			else:
 				return nextHandler()
 
@@ -1127,7 +1135,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if not scrollInfo.isOverlapping(caretInfo):
 			if scrollInfo.isCollapsed:
 				scrollInfo.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(scrollInfo,reason=speech.REASON_CARET)
+			speech.speakTextInfo(scrollInfo,reason=controlTypes.REASON_CARET)
 			scrollInfo.collapse()
 			self.selection = scrollInfo
 			return True
@@ -1243,7 +1251,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			# Retrieve the cell on which we started.
 			info = next(self._iterTableCells(tableID, row=origRow, column=origCol))
 
-		speech.speakTextInfo(info,formatConfig=formatConfig,reason=speech.REASON_CARET)
+		speech.speakTextInfo(info,formatConfig=formatConfig,reason=controlTypes.REASON_CARET)
 		info.collapse()
 		self.selection = info
 

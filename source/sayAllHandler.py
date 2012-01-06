@@ -1,6 +1,6 @@
 #sayAllHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -13,6 +13,7 @@ import globalVars
 import api
 import tones
 import time
+import controlTypes
 
 CURSOR_CARET=0
 CURSOR_REVIEW=1
@@ -48,7 +49,7 @@ def readObjects(obj):
 
 def generateObjectSubtreeSpeech(obj,indexGen):
 	index=indexGen.next()
-	speech.speakObject(obj,reason=speech.REASON_SAYALL,index=index)
+	speech.speakObject(obj,reason=controlTypes.REASON_SAYALL,index=index)
 	yield obj,index
 	child=obj.simpleFirstChild
 	while child:
@@ -121,7 +122,7 @@ def readTextHelper_generator(cursor):
 					speech.speakWithoutPauses(None)
 					keepReading=False
 					continue
-				speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=speech.REASON_SAYALL,index=index)
+				speech.speakTextInfo(reader,unit=textInfos.UNIT_READINGCHUNK,reason=controlTypes.REASON_SAYALL,index=index)
 				lastSentIndex=index
 				cursorIndexMap[index]=bookmark
 				try:

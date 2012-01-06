@@ -1,6 +1,6 @@
 #appModules/totalcmd.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -41,7 +41,7 @@ class TCList(IAccessible):
 		if self.name:
 			speakList=[]
 			if controlTypes.STATE_SELECTED in self.states:
-				speakList.append(controlTypes.speechStateLabels[controlTypes.STATE_SELECTED])
+				speakList.append(controlTypes.stateLabels[controlTypes.STATE_SELECTED])
 			speakList.append(self.name.split("\\")[-1])
 			speech.speakMessage(" ".join(speakList))
 		else:

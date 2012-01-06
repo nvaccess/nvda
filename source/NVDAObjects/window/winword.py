@@ -1,6 +1,6 @@
 #appModules/winword.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -365,7 +365,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		if info._rangeObj.tables.count>0:
 			info.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(info,reason=speech.REASON_CARET)
+			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
 
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -407,7 +407,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 			ui.message(_("edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=cell.range)
-		speech.speakTextInfo(newInfo,reason=speech.REASON_CARET)
+		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET)
 		newInfo.collapse()
 		newInfo.updateCaret()
 		return True
