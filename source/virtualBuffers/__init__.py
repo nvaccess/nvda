@@ -901,6 +901,12 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return True
 		if role in (controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_LIST, controlTypes.ROLE_SLIDER, controlTypes.ROLE_TABCONTROL, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM, controlTypes.ROLE_SPINBUTTON) or controlTypes.STATE_EDITABLE in states:
 			return True
+		if reason == controlTypes.REASON_FOCUS:
+			# If this is a focus change, pass through should be enabled for certain ancestor containers.
+			while obj != self.rootNVDAObject:
+				if obj.role == controlTypes.ROLE_TOOLBAR:
+					return True
+				obj = obj.parent
 		return False
 
 	def event_caretMovementFailed(self, obj, nextHandler, gesture=None):
