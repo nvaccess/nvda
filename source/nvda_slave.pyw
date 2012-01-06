@@ -22,6 +22,9 @@ def main():
 		elif action=="install":
 			import installer
 			installer.install(args[0],args[1],bool(int(args[2])),bool(int(args[3])),bool(int(args[4])))
+		elif action=="updateInstall":
+			import installer
+			installer.update()
 		elif action=="launchNVDA":
 			import subprocess
 			import shellapi

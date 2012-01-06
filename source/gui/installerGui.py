@@ -3,6 +3,7 @@ import ctypes
 import wx
 import config
 import versionInfo
+import installer
 import gui
 
 class InstallerDialog(wx.Dialog):
@@ -23,7 +24,7 @@ class InstallerDialog(wx.Dialog):
 
 		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Install &to folder:")), wx.HORIZONTAL)
 		# FIXME: Don't use os.getenv to get the path to Program Files.
-		ctrl = self.programFolderEdit = wx.TextCtrl(self, value=os.path.join(unicode(os.getenv("ProgramFiles")), versionInfo.name))
+		ctrl = self.programFolderEdit = wx.TextCtrl(self, value=installer.getInstallPath())
 		sizer.Add(ctrl)
 		ctrl = wx.Button(self, label=_("Browse..."))
 		ctrl.Bind(wx.EVT_BUTTON, self.onBrowseForProgramFolder)
@@ -32,7 +33,7 @@ class InstallerDialog(wx.Dialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self, label=_("&Start Menu folder:")))
-		ctrl = self.startMenuFolderEdit = wx.TextCtrl(self, value=versionInfo.name)
+		ctrl = self.startMenuFolderEdit = wx.TextCtrl(self, value=installer.getStartMenuFolder())
 		sizer.Add(ctrl)
 		advancedSizer.Add(sizer)
 
@@ -69,6 +70,12 @@ class InstallerDialog(wx.Dialog):
 				self.programFolderEdit.Value = d.Path
 
 	def onInstall(self, evt):
+		if not installer.validateStartMenuFolder(self.startMenuFolderEdit.Value):
+			gui.messageBox(_("Start menu folder already exists, please choose another name."), _("Invalid start menu folder"), wx.OK|wx.ICON_WARNING)
+			return
+		if not installer.validateInstallPath(self.programFolderEdit.Value):
+			gui.messageBox(_("NVDA cannot be installed to %s, please choose another location.")%self.programFolderEdit.value, _("Invalid program folder"), wx.OK|wx.ICON_WARNING)
+			return
 		self.Hide()
 		self.progressDialog = IndeterminateProgressDialog(self, _("Installing NVDA"), _("Please wait while NVDA is being installed."))
 		config.execElevated(config.SLAVE_FILENAME,["install",self.programFolderEdit.Value,self.startMenuFolderEdit.Value,str(int(self.installServiceCheckbox.Value)),str(int(self.createDesktopShortcutCheckbox.Value)),str(int(self.startOnLogonCheckbox.Value))],wait=True)
@@ -77,6 +84,34 @@ class InstallerDialog(wx.Dialog):
 
 	def onCancel(self, evt):
 		self.Destroy()
+
+class UpdaterDialog(wx.Dialog):
+
+	def __init__(self, parent):
+		super(UpdaterDialog, self).__init__(parent, title=_("Update NVDA"))
+		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		ctrl = wx.Button(self, label=_("&Update"), id=wx.ID_OK)
+		ctrl.Bind(wx.EVT_BUTTON, self.onUpdate)
+		sizer.Add(ctrl)
+		sizer.Add(wx.Button(self, id=wx.ID_CANCEL))
+		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		mainSizer.Add(sizer)
+
+		self.Sizer = mainSizer
+
+	def onUpdate(self, evt):
+		self.Hide()
+		self.progressDialog = IndeterminateProgressDialog(self, _("Updating NVDA installation"), _("Please wait while NVDA is being updated."))
+		config.execElevated(config.SLAVE_FILENAME,["updateInstall"],wait=True)
+		self.progressDialog.done()
+		self.Destroy()
+
+	def onCancel(self, evt):
+		self.Destroy()
+
 
 class IndeterminateProgressDialog(wx.ProgressDialog):
 
@@ -99,7 +134,6 @@ def createPortableCopy():
 		createAutorun=(ctypes.windll.kernel32.GetDriveTypeW(os.path.splitdrive(path)[0]+u'\\')==2 and gui.messageBox(_("Would you like to create an autorun file for your removable drive to allow NVDA to start automatically?"), _("Removable Drive Detected"), wx.YES_NO|wx.ICON_QUESTION) == wx.YES)
 
 		d = IndeterminateProgressDialog(gui.mainFrame, _("Creating Portable Copy"), _("Please wait while a portable copy of NVDA is created."))
-		import installer
 		try:
 			installer.CreatePortableCopy(path,copyUserConfig=copyUserConfig,createAutorun=createAutorun)
 		except OSError:

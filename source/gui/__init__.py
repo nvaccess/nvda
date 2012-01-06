@@ -237,8 +237,12 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from gui.installerGui import InstallerDialog
-		InstallerDialog(self).Show()
+		from gui.installerGui import InstallerDialog, UpdaterDialog
+		import installer
+		if installer.isPreviousInstall():
+			UpdaterDialog(self).Show()
+		else:
+			InstallerDialog(self).Show()
 		self.postPopup()
 
 class SysTrayIcon(wx.TaskBarIcon):
@@ -296,8 +300,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
 			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
-			item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
-			self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
+			if not config.isInstalledCopy():
+				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
+				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
 		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
 		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)

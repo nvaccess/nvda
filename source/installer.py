@@ -8,6 +8,7 @@ import tempfile
 import shutil
 import shellapi
 import languageHandler
+import config
 import versionInfo
 from logHandler import log
 
@@ -19,13 +20,17 @@ def _getWSH():
 		_wsh=comtypes.client.CreateObject("wScript.Shell",dynamic=True)
 	return _wsh
 
+defaultStartMenuFolder=versionInfo.name
+defaultInstallPath=os.path.join(unicode(os.getenv("ProgramFiles")), versionInfo.name)
+
 def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,workingDirectory=None,hotkey=None,prependSpecialFolder=None):
 	wsh=_getWSH()
 	if prependSpecialFolder:
 		specialPath=wsh.SpecialFolders(prependSpecialFolder)
 		path=os.path.join(specialPath,path)
+	log.info("Creating shortcut at %s"%path)
 	if not os.path.isdir(os.path.dirname(path)):
-		os.makedirs(path)
+		os.makedirs(os.path.dirname(path))
 	short=wsh.CreateShortcut(path)
 	short.TargetPath=targetPath
 	if arguments:
@@ -38,15 +43,36 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 		short.workingDirectory=workingDirectory
 	short.Save()
 
-def deleteShortcut(path,prependSpecialFolder=None):
-	wsh=_getWSH()
-	if prependSpecialFolder:
-		specialPath=wsh.SpecialFolders(prependSpecialFolder)
-		path=os.path.join(specialPath,path)
+def getStartMenuFolder(noDefault=False):
 	try:
-		os.remove(path)
-	except OSError:
-		pass
+		with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,u"SOFTWARE\\NVDA") as k:
+			return _winreg.QueryValueEx(k,u"Start Menu Folder")[0]
+	except WindowsError:
+		return defaultStartMenuFolder if not noDefault else None
+
+def getInstallPath(noDefault=False):
+	try:
+		k=_winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
+		return _winreg.QueryValueEx(k,"UninstallDirectory")[0]
+	except WindowsError:
+		return defaultInstallPath if not noDefault else None
+
+def isPreviousInstall():
+	return bool(getInstallPath(True))
+
+def validateStartMenuFolder(startMenuFolder):
+	if startMenuFolder==getStartMenuFolder():
+		return True
+	wsh=_getWSH()
+	specialPath=wsh.SpecialFolders("AllUsersPrograms")
+	oldStartMenuFolder=getStartMenuFolder(True)
+	startMenuPath=os.path.join(specialPath,startMenuFolder)
+	return (oldStartMenuFolder and os.stat(startMenuPath)==os.stat(os.path.join(specialPath,oldStartMenuFolder))) or (not os.path.isfile(startMenuPath) and not os.path.isdir(startMenuPath))
+
+def validateInstallPath(installPath):
+	if installPath==defaultInstallPath:
+		return True
+	return False
 
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
@@ -162,19 +188,17 @@ def unregisterInstallation(forUpdate=False):
 		nvda_service.removeService()
 	except:
 		pass
-	deleteShortcut(u"nvda.lnk",prependSpecialFolder="AllUsersDesktop")
-	try:
-		with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE,u"SOFTWARE\\NVDA") as k:
-			startMenuFolder=_winreg.QueryValueEx(k,u"startMenuFolder")[0]
-	except WindowsError:
-		startMenuFolder=None
+	wsh=_getWSH()
+	if not forUpdate:
+		desktopPath=wsh.SpecialFolders("AllUsersDesktop")
+		try:
+			os.remove(os.path.join(desktopPath,"nvda.lnk"))
+		except WindowsError:
+			pass
+	startMenuFolder=getStartMenuFolder()
 	if startMenuFolder:
-		deleteShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),prependSpecialFolder="AllUsersPrograms")
-		deleteShortcut(os.path.join(startMenuFolder,_("NVDA Website")+".lnk"),prependSpecialFolder="AllUsersPrograms")
-		deleteShortcut(os.path.join(startMenuFolder,_("Uninstall NVDA")+".lnk"),prependSpecialFolder="AllUsersPrograms")
-		deleteShortcut(os.path.join(startMenuFolder,_("Explore NVDA user configuration directory")+".lnk"),prependSpecialFolder="AllUsersPrograms")
-		deleteShortcut(os.path.join(startMenuFolder,_("Documentation"),_("Key Command quick reference")+".lnk"),prependSpecialFolder="AllUsersPrograms")
-		deleteShortcut(os.path.join(startMenuFolder,_("Documentation"),_("User Guide")+".lnk"),prependSpecialFolder="AllUsersPrograms")
+		programsPath=wsh.SpecialFolders("AllUsersPrograms")
+		shutil.rmtree(os.path.join(programsPath,startMenuFolder))
 	if not forUpdate:
 		try:
 			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda",0,0)
@@ -184,7 +208,8 @@ def unregisterInstallation(forUpdate=False):
 			pass
 
 def install(installDir,startMenuFolder,shouldInstallService=True,shouldCreateDesktopShortcut=True,shouldRunAtLogon=None,forUpdate=False):
-	unregisterInstallation(forUpdate)
+	if forUpdate:
+		unregisterInstallation(forUpdate)
 	#Remove all the main executables always
 	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
 		f=os.path.join(installDir,f)
@@ -200,6 +225,9 @@ def install(installDir,startMenuFolder,shouldInstallService=True,shouldCreateDes
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
 	registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldCreateDesktopShortcut,shouldRunAtLogon)
+
+def update():
+	install(getInstallPath(),getStartMenuFolder(),shouldInstallService=config.isServiceInstalled())
 
 autorunTemplate="""[AutoRun]
 open={exe}
