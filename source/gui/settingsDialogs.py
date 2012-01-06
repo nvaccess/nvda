@@ -104,7 +104,8 @@ class SettingsDialog(wx.Dialog):
 		self.Destroy()
 
 class GeneralSettingsDialog(SettingsDialog):
-	title = _("General settings")
+	# Translators: This is the label for the general settings dialog.
+	title = _("General Settings")
 	LOG_LEVELS = (
 		(log.INFO, _("info")),
 		(log.DEBUGWARNING, _("debug warning")),
@@ -217,6 +218,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		super(GeneralSettingsDialog, self).onOk(evt)
 
 class SynthesizerDialog(SettingsDialog):
+	# Translators: This is the label for the synthesizer dialog.
 	title = _("Synthesizer")
 
 	def makeSettings(self, settingsSizer):
@@ -321,7 +323,8 @@ class VoiceSettingsSlider(wx.Slider):
 		self.SetValue(newValue)
 
 class VoiceSettingsDialog(SettingsDialog):
-	title = _("Voice settings")
+	# Translators: This is the label for the voice settings dialog.
+	title = _("Voice Settings")
 
 	@classmethod
 	def _setSliderStepSizes(cls, slider, setting):
@@ -495,6 +498,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		super(VoiceSettingsDialog, self).onOk(evt)
 
 class KeyboardSettingsDialog(SettingsDialog):
+	# Translators: This is the label for the keyboard settings dialog.
 	title = _("Keyboard Settings")
 
 	def makeSettings(self, settingsSizer):
@@ -550,7 +554,8 @@ class KeyboardSettingsDialog(SettingsDialog):
 		super(KeyboardSettingsDialog, self).onOk(evt)
 
 class MouseSettingsDialog(SettingsDialog):
-	title = _("Mouse settings")
+	# Translators: This is the label for the mouse settings dialog.
+	title = _("Mouse Settings")
 
  	def makeSettings(self, settingsSizer):
 		self.shapeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report mouse &shape changes"))
@@ -596,7 +601,8 @@ class MouseSettingsDialog(SettingsDialog):
 		super(MouseSettingsDialog, self).onOk(evt)
 
 class ReviewCursorDialog(SettingsDialog):
-	title = _("Review cursor settings")
+	# Translators: This is the label for the review cursor settings dialog.
+	title = _("Review Cursor Settings")
 
 	def makeSettings(self, settingsSizer):
 		self.followFocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow &keyboard focus"))
@@ -623,7 +629,8 @@ class ReviewCursorDialog(SettingsDialog):
 		super(ReviewCursorDialog, self).onOk(evt)
 
 class ObjectPresentationDialog(SettingsDialog):
-	title = _("Object presentation")
+	# Translators: This is the label for the object presentation dialog.
+	title = _("Object Presentation")
 	progressLabels = (
 		("off", _("off")),
 		("speak", _("Speak")),
@@ -686,7 +693,8 @@ class ObjectPresentationDialog(SettingsDialog):
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class BrowseModeDialog(SettingsDialog):
-	title = _("Browse mode")
+	# Translators: This is the label for the browse mode settings dialog.
+	title = _("Browse Mode")
 
 	def makeSettings(self, settingsSizer):
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
@@ -744,7 +752,8 @@ class BrowseModeDialog(SettingsDialog):
 		super(BrowseModeDialog, self).onOk(evt)
 
 class DocumentFormattingDialog(SettingsDialog):
-	title = _("Document formatting")
+	# Translators: This is the label for the document formatting dialog.
+	title = _("Document Formatting")
 
 	def makeSettings(self, settingsSizer):
 		self.detectFormatAfterCursorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Announce formatting changes after the cursor (can cause a lag)"))
@@ -839,7 +848,8 @@ class DocumentFormattingDialog(SettingsDialog):
 
 class DictionaryEntryDialog(wx.Dialog):
 
-	def __init__(self,parent,title=_("Edit dictionary entry")):
+	# Translators: This is the label for the edit dictionary entry dialog.
+	def __init__(self, parent, title=_("Edit Dictionary Entry")):
 		super(DictionaryEntryDialog,self).__init__(parent,title=title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
@@ -921,6 +931,7 @@ class DictionaryDialog(SettingsDialog):
 		super(DictionaryDialog, self).onOk(evt)
 
 	def OnAddClick(self,evt):
+		# Translators: This is the label for the add dictionary entry dialog.
 		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
 		if entryDialog.ShowModal()==wx.ID_OK:
 			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue())))
@@ -966,6 +977,7 @@ class DictionaryDialog(SettingsDialog):
 		self.dictList.SetFocus()
 
 class BrailleSettingsDialog(SettingsDialog):
+	# Translators: This is the label for the braille settings dialog.
 	title = _("Braille Settings")
 
 	def makeSettings(self, settingsSizer):
@@ -1066,6 +1078,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 class SpeechSymbolsDialog(SettingsDialog):
+	# Translators: This is the label for the symbol pronunciation dialog.
 	title = _("Symbol Pronunciation")
 
 	def makeSettings(self, settingsSizer):
