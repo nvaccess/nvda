@@ -637,7 +637,7 @@ the NVDAObject for IAccessible
 			return False
 		if self.location!=other.location:
 			return False
- 		if self.IAccessibleRole!=other.IAccessibleRole:
+		if self.IAccessibleRole!=other.IAccessibleRole:
 			return False
 		if self.name!=other.name:
 			return False
@@ -1213,7 +1213,7 @@ the NVDAObject for IAccessible
 			caretInDocument=False
 			while parent:
 				if parent==inDocument:
- 					caretInDocument=True
+					caretInDocument=True
 					break
 				parent=parent.parent
 			if not caretInDocument:

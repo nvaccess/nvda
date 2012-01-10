@@ -168,7 +168,7 @@ An NVDAObject for a window
 		if hasattr(self,"_windowClassName"):
 			return self._windowClassName
 		name=winUser.getClassName(self.windowHandle)
- 		self._windowClassName=name
+		self._windowClassName=name
 		return name
 
 	def _get_windowControlID(self):
@@ -278,7 +278,7 @@ An NVDAObject for a window
 	def _get_isWindowUnicode(self):
 		if not hasattr(self,'_isWindowUnicode'):
 			self._isWindowUnicode=bool(ctypes.windll.user32.IsWindowUnicode(self.windowHandle))
- 		return self._isWindowUnicode
+		return self._isWindowUnicode
 
 	def correctAPIForRelation(self,obj,relation=None):
 		if not obj:

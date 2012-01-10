@@ -41,7 +41,7 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
- 		state = _("on") if inputCore.manager.isInputHelpActive else _("off")
+		state = _("on") if inputCore.manager.isInputHelpActive else _("off")
 		ui.message(_("input help %s")%state)
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
@@ -821,7 +821,7 @@ class GlobalCommands(ScriptableObject):
 	def script_passNextKeyThrough(self,gesture):
 		keyboardHandler.passNextKeyThrough()
 		ui.message(_("Pass next key through"))
- 	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
+	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
 
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()

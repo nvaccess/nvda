@@ -339,19 +339,19 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 				log.debugWarning("Could not get MS Word object model",exc_info=True)
 				return None
 			self._WinwordWindowObject=comtypes.client.dynamic.Dispatch(pDispatch)
- 		return self._WinwordWindowObject
+		return self._WinwordWindowObject
 
 	def _get_WinwordDocumentObject(self):
 		if not getattr(self,'_WinwordDocumentObject',None): 
 			windowObject=self.WinwordWindowObject
 			if not windowObject: return None
 			self._WinwordDocumentObject=windowObject.document
- 		return self._WinwordDocumentObject
+		return self._WinwordDocumentObject
 
 	def _get_WinwordApplicationObject(self):
 		if not getattr(self,'_WinwordApplicationObject',None): 
 			self._WinwordApplicationObject=self.WinwordWindowObject.application
- 		return self._WinwordApplicationObject
+		return self._WinwordApplicationObject
 
 	def _get_WinwordSelectionObject(self):
 		if not getattr(self,'_WinwordSelectionObject',None):

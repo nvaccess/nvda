@@ -213,7 +213,7 @@ def getVoiceList():
 	voiceList=[]
 	for voice in voices:
 		if not voice: break
- 		voiceList.append(voice.contents)
+		voiceList.append(voice.contents)
 	return voiceList
 
 def getCurrentVoice():

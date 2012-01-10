@@ -113,7 +113,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		(log.DEBUG, _("debug"))
 	)
 
- 	def makeSettings(self, settingsSizer):
+	def makeSettings(self, settingsSizer):
 		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
 		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take affect):"))
 		languageSizer.Add(languageLabel)
@@ -557,7 +557,7 @@ class MouseSettingsDialog(SettingsDialog):
 	# Translators: This is the label for the mouse settings dialog.
 	title = _("Mouse Settings")
 
- 	def makeSettings(self, settingsSizer):
+	def makeSettings(self, settingsSizer):
 		self.shapeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report mouse &shape changes"))
 		self.shapeCheckBox.SetValue(config.conf["mouse"]["reportMouseShapeChanges"])
 		settingsSizer.Add(self.shapeCheckBox,border=10,flag=wx.BOTTOM)
