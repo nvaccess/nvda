@@ -163,14 +163,21 @@ class EditableTextNode(EditableText, AcrobatNode):
 
 class AcrobatSDIWindowClient(IAccessible):
 
-	def __init__(self, **kwargs):
-		super(AcrobatSDIWindowClient, self).__init__(**kwargs)
-		if not self.name and self.parent:
-			# There are two client objects, one with a name and one without.
-			# The unnamed object (probably manufactured by Acrobat) has broken next and previous relationships.
-			# The unnamed object's parent is the named object, but when descending into the named object, the unnamed object is skipped.
-			# Given the brokenness of the unnamed object, just skip it completely and use the parent when it is encountered.
-			self.IAccessibleObject = self.IAccessibleObject.accParent
+	def initOverlayClass(self):
+		if self.name or not self.parent:
+			return
+		# HACK: There are three client objects, one with a name and two without.
+		# The unnamed objects (probably manufactured by Acrobat) have broken next and previous relationships.
+		# The unnamed objects' parent/grandparent is the named object, but when descending into the named object, the unnamed objects are skipped.
+		# Given the brokenness of the unnamed objects, just skip them completely and use the parent/grandparent when they are encountered.
+		try:
+			acc = self.IAccessibleObject.accParent
+			if not acc.accName(0):
+				acc = acc.accParent
+		except COMError:
+			return
+		self.IAccessibleObject = acc
+		self.invalidateCache()
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Acrobat objects.
