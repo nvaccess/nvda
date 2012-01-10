@@ -1,6 +1,6 @@
 #aria.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2009 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2009-2012 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -64,12 +64,17 @@ ariaSortValuesToNVDAStates={
 	'other':controlTypes.STATE_SORTED,
 }
 
-
 landmarkRoles = {
+	# Translators: Reported for the banner landmark, normally found on web pages.
 	"banner": _("banner"),
+	# Translators: Reported for the complementary landmark, normally found on web pages.
 	"complementary": _("complementary"),
+	# Translators: Reported for the contentinfo landmark, normally found on web pages.
 	"contentinfo": _("content info"),
+	# Translators: Reported for the main landmark, normally found on web pages.
 	"main": _("main"),
+	# Translators: Reported for the navigation landmark, normally found on web pages.
 	"navigation": _("navigation"),
+	# Translators: Reported for the search landmark, normally found on web pages.
 	"search": _("search"),
 }
