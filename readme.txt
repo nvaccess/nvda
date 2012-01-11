@@ -13,7 +13,7 @@ General dependencies:
 	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython 2.8 unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.46.01 or later:
+	* eSpeak, version 1.46.02 or later:
 		* Official web site: http://espeak.sourceforge.net/
 		* Download the espeak source archive. Note that it must be an official source archive from the espeak website containing already compiled phoneme data, not straight from svn. 
 		* Extract it in to include/espeak so that include/espeak/src, include/espeak/dictsource, include/espeak/platforms and include/espeak/espeak-data all exist.
