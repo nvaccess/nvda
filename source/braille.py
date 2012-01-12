@@ -24,75 +24,203 @@ TABLES_DIR = r"louis\tables"
 
 #: The table filenames and descriptions.
 TABLES = (
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("ar-ar-g1.utb", _("Arabic grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("bg.ctb", _("Bulgarian 8 dot computer braille")),
+      	# Translators: The name of a braille table displayed in the
+      	# braille settings dialog.
 	("cy-cy-g1.utb", _("Welsh grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("cy-cy-g2.ctb", _("Welsh grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("cz-cz-g1.utb", _("Czech grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("da-dk-g1.utb", _("Danish grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("de-de-comp8.ctb", _("German 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("de-de-g0.utb", _("German grade 0")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("de-de-g1.ctb", _("German grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("de-de-g2.ctb", _("German grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("en-gb-g1.utb", _("English (U.K.) grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("en-GB-g2.ctb", _("English (U.K.) grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("en-us-comp6.ctb", _("English (U.S.) 6 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("en-us-comp8.ctb", _("English (U.S.) 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("en-us-g1.ctb", _("English (U.S.) grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("en-us-g2.ctb", _("English (U.S.) grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Es-Es-g1.utb", _("Spanish grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("fr-ca-g1.utb", _("French (Canada) grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Fr-Ca-g2.ctb", _("French (Canada) grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("fr-bfu-g2.ctb", _("French (unified) Grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("gr-gr-g1.utb", _("Greek (Greece) grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("gez-g1.ctb", _("Ethiopic grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("he.ctb", _("Hebrew 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("hi-in-g1.utb", _("Hindi grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("hr.ctb", _("Croatian 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("hu1.ctb", _("Hungarian 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("it-it-g1.utb2", _("Italian grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Lv-Lv-g1.utb", _("Latvian grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("nl-be-g1.utb", _("Dutch (Belgium) grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Nl-Nl-g1.utb", _("Dutch (netherlands) grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("no-no.ctb", _("Norwegian 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("No-No-g0.utb", _("Norwegian grade 0")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("No-No-g1.ctb", _("Norwegian grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("No-No-g2.ctb", _("Norwegian grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("No-No-g3.ctb", _("Norwegian grade 3")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Pl-Pl-g1.utb", _("Polish grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Pt-Pt-g1.utb", _("Portuguese grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Pt-Pt-g2.ctb", _("Portuguese grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("ru-ru-g1.utb", _("Russian grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("Se-Se-g1.utb", _("Swedish grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("sk-sk-g1.utb", _("Slovak")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("sl-si-g1.utb", _("Slovene grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("sr-g1.ctb", _("Serbian grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("tr.ctb", _("Turkish grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("UEBC-g1.utb", _("Unified English Braille Code grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("UEBC-g2.ctb", _("Unified English Braille Code grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("zh-hk.ctb", _("Chinese (Hong Kong, Cantonese)")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)")),
 )
 
 roleLabels = {
+	# Translators: Displayed in braille for an object which is a
+	# editable text area.
 	controlTypes.ROLE_EDITABLETEXT: _("edt"),
+	# Translators: Displayed in braille for an object which is a
+	# list.
 	controlTypes.ROLE_LIST: _("lst"),
+	# Translators: Displayed in braille for an object which is a
+	# menubar.
 	controlTypes.ROLE_MENUBAR: _("mnubar"),
+	# Translators: Displayed in braille for an object which is a
+	# popup menu.
 	controlTypes.ROLE_POPUPMENU: _("mnu"),
+	# Translators: Displayed in braille for an object which is a
+	# button.
 	controlTypes.ROLE_BUTTON: _("btn"),
+	# Translators: Displayed in braille for an object which is a
+	# checkbox.
 	controlTypes.ROLE_CHECKBOX: _("chk"),
+	# Translators: Displayed in braille for an object which is a
+	# radiobutton.
 	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
+	# Translators: Displayed in braille for an object which is a
+	# combobox.
 	controlTypes.ROLE_COMBOBOX: _("cbo"),
+	# Translators: Displayed in braille for an object which is a
+	# link.
 	controlTypes.ROLE_LINK: _("lnk"),
+	# Translators: Displayed in braille for an object which is a
+	# dialog.
 	controlTypes.ROLE_DIALOG: _("dlg"),
+	# Translators: Displayed in braille for an object which is a
+	# treeview.
 	controlTypes.ROLE_TREEVIEW: _("tv"),
+	# Translators: Displayed in braille for an object which is a
+	# table.
 	controlTypes.ROLE_TABLE: _("tb"),
-	# Translators: Displayed in braille for an object which is a separator.
+	# Translators: Displayed in braille for an object which is a
+	# separator.
 	controlTypes.ROLE_SEPARATOR: _("-----"),
-	# Translators: Displayed in braille for an object which is a graphic.
+	# Translators: Displayed in braille for an object which is a
+	# graphic.
 	controlTypes.ROLE_GRAPHIC: _("gra"),
 }
 
