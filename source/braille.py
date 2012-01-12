@@ -180,29 +180,29 @@ TABLES = (
 )
 
 roleLabels = {
-	# Translators: Displayed in braille for an object which is a
-	# editable text area.
+	# Translators: Displayed in braille for an object which is an
+	# editable text field.
 	controlTypes.ROLE_EDITABLETEXT: _("edt"),
 	# Translators: Displayed in braille for an object which is a
 	# list.
 	controlTypes.ROLE_LIST: _("lst"),
 	# Translators: Displayed in braille for an object which is a
-	# menubar.
+	# menu bar.
 	controlTypes.ROLE_MENUBAR: _("mnubar"),
 	# Translators: Displayed in braille for an object which is a
-	# popup menu.
+	# menu.
 	controlTypes.ROLE_POPUPMENU: _("mnu"),
 	# Translators: Displayed in braille for an object which is a
 	# button.
 	controlTypes.ROLE_BUTTON: _("btn"),
 	# Translators: Displayed in braille for an object which is a
-	# checkbox.
+	# check box.
 	controlTypes.ROLE_CHECKBOX: _("chk"),
 	# Translators: Displayed in braille for an object which is a
-	# radiobutton.
+	# radio button.
 	controlTypes.ROLE_RADIOBUTTON: _("rbtn"),
 	# Translators: Displayed in braille for an object which is a
-	# combobox.
+	# combo box.
 	controlTypes.ROLE_COMBOBOX: _("cbo"),
 	# Translators: Displayed in braille for an object which is a
 	# link.
@@ -211,7 +211,7 @@ roleLabels = {
 	# dialog.
 	controlTypes.ROLE_DIALOG: _("dlg"),
 	# Translators: Displayed in braille for an object which is a
-	# treeview.
+	# tree view.
 	controlTypes.ROLE_TREEVIEW: _("tv"),
 	# Translators: Displayed in braille for an object which is a
 	# table.
