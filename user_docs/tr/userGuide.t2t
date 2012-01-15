@@ -32,17 +32,17 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Uluslararasılaşma ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 34 dile de çevrilmiştir. Afrikaca, Almanca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Fince, Fransızca, Galiçyaca, Geleneksel Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İtalyanca, İzlanda dili, Japonca, Lehçe, Macarca, Polonyaca, Portekizce, Rumence, Rusca, Sırpça, Slovakca, Tayca, Tayvan Mandarin, Türkçe, Ukraynaca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 34 dile de çevrilmiştir. Afrikaca, Almanca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Fince, Fransızca, Galiçyaca, Geleneksel Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İtalyanca, İzlanda dili, Japonca, Lehçe, Macarca, Portekizce, Rumence, Rusca, Sırpça, Slovakca, Tayca, Tayvan Mandarin, Türkçe, Ukraynaca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++
-Kendi mesajları ve arayüzünü birçok dilde sağlamanın ötesinde, NVDA Kullanıcıların bir içeriği konuşma sentezleyici olan istedikleri dilde okuyabilmelerine olanak tanır.
+Kendi mesajları ve arayüzünü birçok dilde sağlamanın ötesinde, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
 
-NVDA ücretsiz, açık kaynak kodlu ve çok dilli bir sentezleyici olan [eSpeak http://espeak.sourceforge.net/], sentezleyicisiyle birlikte gelmektedir.
+NVDA ücretsiz, açık kaynak kodlu ve çok dilli bir sentezleyici olan [eSpeak http://espeak.sourceforge.net/], sentezleyicisiyle birlikte dağıtılmaktadır.
 
 NVDA tarafından desteklenen diğer sentezleyicilerle ilgili bilgi [Desteklenen Konuşma Sentezleyicileri #SupportedSpeechSynths] bölümünden alınabilir.
 
 ++ Braille Desteği ++
-Braille Rfreshable ekranı olan kullanıcılar için NVDA kendi bilgilerini braille olarak da göstermektedir.
+NVDA birçok braille ekranı da desteklemektedir.
 Lütfen desteklenen braille ekranlarla ilgili bilgi için  [Desteklenen Braille Ekranlar  #SupportedBrailleDisplays] bölümüne bakın.
 
 NVDA bazı dillerde kısaltmalı, kısaltmasız ve bilgisayar braille kodlarını desteklemektedir.
@@ -68,8 +68,8 @@ Bir NVDA kopyanız yoksa, aşağıdaki bağlantıdan programı indirebilirsiniz.
 Buradan Download bölümüne giderek programın en son sürümünün indirme lingine ulaşabilirsiniz.
 
 Şu an NVDA 2 biçimde paketlenmiştir.
-Birincisi bir yükleyicidir ve programı başlat menüsünden istediğiniz an çalıştırabilmeniz için konuşmalı kurulum yapmanızı sağlar.
-Diğeri kendi kendine çıkarılabilen bir arşiv dosyasıdır ve NVDA programının istediğiniz an USB veya CD'den çalıştırılabilmesini sağlayan tam taşınabilir sürümünü içerir.
+Birincisi bir yükleyicidir ve programı başlat menüsünden istediğiniz an çalıştırabilmeniz için konuşma desteğiyle sisteme kurulum yapmanızı sağlar.
+Diğeri kendi kendine çıkarılabilen bir arşiv dosyasıdır (self extracting archive) ve NVDA programının istediğiniz an USB veya CD'den çalıştırılabilmesini sağlayan tam taşınabilir sürümünü içerir.
 
 Windows logon Ekranı, Kullanıcı Hesabı Kontrolü ekranı (UAC), ve diğer güvenlik ekranları ile Windows Vista ve sonrası ile birlikte yönetici olarak çalışan uygulamalara erişebilmek için, programı sisteminize yükleyiciyi kullanarak kurmanız gerekmektedir.
 Bu ekranlara NVDA programının taşınabilir kopyasıyla erişilemez.
@@ -79,8 +79,8 @@ Bu ekranlara NVDA programının taşınabilir kopyasıyla erişilemez.
 ++ NVDA yükleyicisi ++
 Bir NVDA kurulum dosyanız varsa, yalnızca giriş tuşuna basın veya dosya üzerinde çift sol tıklayarak kurulumu başlatın.
 
-Kurulum programı yüklenirken NVDA kurulum müziğini duyacaksınız.
-Yüklendiğinde, NVDA'nın geçici kopyası Kurulumun yönergelerini takip ederek programı kurmanızı sağlayacaktır.
+Kurulum programı yüklenmeye başladığında NVDA kurulum müziğini duyacaksınız.
+Daha sonra, NVDA'nın geçici kopyası Kurulumun yönergelerini takip ederek programı kurmanızı sağlayacaktır.
 Kurulum sırasında NVDA'nın başka bir kopyası çalışıyorsa, bir mesaj, çalışan NVDA kopyasının kapanacağı konusunda sizi uyaracaktır.
 Bu mesaj üzerinde girişe bastığınızda, elinizdeki NVDA kopyası kapanarak geçici NVDA kopyası çalışmaya başlayacaktır. Bu, kurulumun değişen dosyaları doğru biçimde güncelleyebilmesi için gereklidir.
 Bu aşamada, NVDA'nın başka bir kopyası sisteminizde kuruluysa, NVDA yükleyicisi öncelikle bu kopyayı bilgisayarınızdan kaldıracak ve daha sonra Yeni NVDA'yı kurmaya başlayacaktır.
@@ -114,15 +114,15 @@ Ayrıca Çalıştır bölümüne NVDA yazıp girişe basarak da programı başla
 
 Taşınabilir sürümü başlatmak için, NVDA'yı çıkarttığınız dizine gidin ve NVDA'.exe dosyası üzerinde girişe basın veya çift tıklatın.
 
-NVDA başlarken, yükselen bir dizi ses duyacaksınız. bu NVDA'nın açıldığını göstermek içindir.
+NVDA başlarken, kalından inceye doğru yükselen bir dizi ses duyacaksınız. bu NVDA'nın açıldığını anlatmak içindir.
 Bilgisayarınızın hızına bağlı olarak, ya da NVDA'yı USB bellek gibi daha yavaş bir yerden çalıştırıyorsanız, programın başlaması biraz zaman alabilir.
 Programın başlaması ekstra daha fazla zaman alıyorsa, NVDA "NVDA başlıyor, Lütfen bekleyiniz..." şeklinde bir Uyarı vermelidir.
 
-Bunlardan hiçbirini duymuyorsanız, ya da Windows'un hata sesini veya inen bir dizi ses duyuyorsanız, NVDA'nın bir hatası var demektir ve programı geliştirenlere bu olası bagı bildirmeniz gerekebilir.
+Bunlardan hiçbirini duymuyorsanız, ya da Windows'un hata sesini veya kalınlaşan bir dizi ses duyuyorsanız, NVDA'nın bir hatası var demektir ve programı geliştirenlere bu olası bagı bildirmeniz gerekebilir.
 Bunu nasıl yapacağınızı öğrenmek için lütfen NVDA web sayfasını ziyaret edin.
 
 NVDA ilk kez başladığında, NVDA değişken tuşu ve NVDA menüsü hakkında temel bilgiler veren bir iletişim kutusuyla karşılanacaksınız.
-Lütfen bu konularla ilgili ilerki bölümlere bakın.
+Lütfen bu konularla ilgili sonraki bölümlere bakın.
 Bu iletişim kutusunda ayrıca 2 onay kutusu bulunmaktadır.
 Birincisi, büyük harf kilidi tuşunun NVDA tarafından değişken tuş olarak kullanılıp kullanılmayacağını kontrol ederken, ikincisi, karşılaştığınız hoşgeldin mesajının NVDA her açıldığında görüntülenip görüntülenmemesini kontrol eder.
 
@@ -799,24 +799,25 @@ Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür 
 Örneğin, yazı Tipi Adını Bildir onay kutusunu işaretlerseniz, oklarla başka bir yazı tipiyle yazılan bir metne her gittiğinizde, yazı tipi adı bildirilecektir.
 
 Şunların bildirimini ayarlayabilirsiniz:
-- yazı tipi adı
-- yazı tipi boyutu
-- yazı tipi özellikleri
-- metin hizzalaması
-- renkler
-- metin sitilleri
-- yazım hataları
-- sayfa numaraları
-- satır numaraları
-- satır girintisi
-- tablolar
-- tablo satır/sütun başlıkları
-- tablo hücre koordinatları
-- bağlantılar
-- başlıklar
-- listeler
-- alıntılar
-- sınır imleri
+- Yazı tipi adı
+- Yazı tipi boyutu
+- Yazı tipi özellikleri
+- Metin hizzalaması
+- Renkler
+- Metin sitilleri
+- Yazım hataları
+- Sayfa numaraları
+- Satır numaraları
+- Satır girintisi
+- Tablolar
+- Tablo satır/sütun başlıkları
+- Tablo hücre koordinatları
+- Bağlantılar
+- Başlıklar
+- Listeler
+- Alıntılar
+- Sınır imleri
+- Çerçeveler
 -
 
 ==== imleç sonrasındaki biçim değişikliklerini bildir ====
