@@ -633,7 +633,7 @@ Diese Option legt fest, ob die Braillezeile dem System-Cursor oder dem Navigator
 ==== absatzweise lesen ====
 wenn diese Option aktiviert ist, erfolgt die anzeige in Braille nicht zeilen- sondern absatzweise.
 Ebenso bewirken die Tasten zum zeilenweisen navigieren in diesem Modus eine absatzweise Navigation.
-**Dies bedeutet, dass sie  die Braillezeile nicht am ende jeder Zeile weiterscrollen müssen, auch wenn mehr Text auf die Zeile passen würde.
+Dies bedeutet, dass sie  die Braillezeile nicht am ende jeder Zeile weiterscrollen müssen, auch wenn mehr Text auf die Zeile passen würde.
 Dies erlaubt Ihnen ein flüssigeres lesen größerer Textmengen.
 Diese Option ist standardmäßig deaktiviert.
 
@@ -826,24 +826,25 @@ Die Einstellungen zu den Dokumentformatierungen finden Sie im Menü "Einstellung
 Mit den meisten Kontrollfeldern in diesem Dialogfenster steuern Sie die Ansage der Formatierungen, die Sie während des Navigierens in einem Dokument angesagt bekommen möchten. Zum Beispiel soll der Name der Schriftart angesagt werden oder die Schriftgröße. Aktivieren Sie dazu die entsprechenden Kontrollfelder und bei jeder auftretenden Änderung im Text des Dokuments werden diese Informationen von NVDA jedes Mal angesagt.
 
 Konfigurieren können Sie die Meldungen von:
-- Name der Schriftart
+- Schriftartennamen
 - Schriftgröße
-- Attribute der Schrift
+- Schriftattribute
 - Ausrichtung
 - Farben
-- Textdarstellung
+- Layout
 - Rechtschreibfehler
 - Seitenwechsel
 - Zeilennummern
 - Zeileneinrückungen
 - Tabellen
-- *Reihen- und Spaltenüberschriften von Tabellen
-- *Zellkoordinaten in Tabellen
-- *Links
-- *Überschriften
+- Spalten- und Reihenüberschriften von Tabellen
+- Zellkoordinaten in Tabellen
+- Links
+- Überschriften
 - Listen
 - Zitatblöcke
-- *Sprungmarken
+- Sprungmarken
+- Rahmen
 -
 
 Hinweise: die mit einem Stern markierten Optionen wirken sich auch auf die Darstellung in Braille aus, obgleich es in deren Beschriftung "... ANSAGEN" heißt.
@@ -1223,7 +1224,7 @@ Es gibt über den [Dialog zur Aussprache von Satz- und Sonderzeichen #SymbolPron
 Hierfür müssen Sie die Symboldefinitionsdatei bearbeiten, die sich im Konfigurationsverzeichnis von NVDA des in Windows angemeldeten Benutzers befindet. 
 Der Name der Datei hat das Format "symbols-xx.dic", wobei xx der zweistellige Sprachencode ist.
 Das Format der Datei ist im Entwicklerhandbuch dokumentiert, welches Sie in englischer Sprache im [Abschnitt für Entwickler auf der NVDA-Webseite NVDA_URLwiki/Development] finden können.
-*Hinweis*: Es ist Anwendern jedoch nicht möglich, komplexe Symbole zu definieren.
+Hinweis: Es ist Anwendern jedoch nicht möglich, komplexe Symbole zu definieren.
 
 
 ++ Hinweise zu Java auf 64-Bit-Plattformen ++

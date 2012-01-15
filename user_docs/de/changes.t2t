@@ -10,31 +10,42 @@
 - NVDA kann nun Tastendrücke erkennen, die mittels Eingabeemulationen wie etwa bildschirmtastaturen oder Spracherkennungssoftware erzeugt wurden.
 - Farben in Konsolenanwendungen werden nun korrekt erkannt.
 - Wenn Text fett, unterstrichen oder kursiv formatiert ist, wird er nun in Braille mit Hilfe von Zeichen dargestellt, die zur aktuell eingestellten Übersetzungstabelle passen. (#538)
-**- Much more information is now reported in Microsoft Word documents, including:
-** - Inline information such as footnote and endnote numbers, heading levels, the existance of comments, table nesting levels, links, and text color;
-** - Reporting when entering document sections such as the comments story, footnotes and endnotes stories, and header and footer stories.
+- In Microsoft Word werden mehr Informationen ausgegeben:
+ - Zeilen-informationen wie die Nummern von Fuß- und Endnoten,  Überschriftsebenen, die Existenz von Kommentaren, den Grad der Verschachtelung von Tabellen, links, sowie Textfarben;
+ - Meldungen beim Betreten bzw. verlassen von Abschnitten, Kopf- und Fußzeilen, Endnoten etc.
 - Markierter Text wird nun in Braille durch Unterstreichen mit den Punkten 7 und 8 angezeigt. (#889)
 - in Braille werden nun Steuerelemente innerhalb eines Textes als solche dargestellt (wie z.B. Links, Überschriften oder Schalter. (#202)
 - Unterstützung für die hedo ProfiLine und MobilLine USB Braillezeilen. (#1863, #1897)
 - Wenn möglich verhindert NVDA nun standardmäßig den Wortumbruch in Braille. Dies kann in den Braille-Einstellungen ausgeschaltet werden. (#1890, #1946)
 - Text kann auf der Braillezeile Absatzweise anstatt Zeilenweise angezeigt werden. Dies erlaubt ein flüssigeres Lesen großer Textmengen. Die Einstellung kann über die Option "absatzweise lesen" in den Braille-Einstellungen konfiguriert werden. (#1891)
 - im lesemodus können Sie nun durch einmaliges Drücken einer Routingtaste der Braillezeile das Objekt unter dem Cursor aktivieren. Dies bedeutet, dass Sie die Routingtaste zweimal drücken müssen, falls sich der Cursor noch nicht auf dem Objekt befindet. (#1893)
-**- Grundlegende Unterstützung für Internet-Bereiche wie z. B. der Shop. Andere Anwendungen, welche auf WebKit 1 beruhen, werden möglicherweise ebenfals unterstützt. (#734)
-**- In books in Adobe Digital Editions 1.8.1 and later, pages are now turned automatically when using say all. (#1978)
+- Grundlegende Unterstützung für Internet-Bereiche in Itunes wie z. B. der Store. Andere Anwendungen, welche auf WebKit 1 beruhen, werden möglicherweise ebenfalls unterstützt. (#734)
+- In büchern in Adobe Digital Editions 1.8.1 und höher erfolgt nun ein automatischer Seitenwechsel, wenn Sie die Funktion «alles lesen» verwenden. (#1978)
+- neue Braille-Übersetzungstabelle: Portugiesische Kurzschrift. (#2014)
+- In den Einstellungen für Dokumentformatierungen kann nun eingestellt werden, ob Rahmen in Dokumenten angesagt werden sollen. (#1900)
+- Bei der Verwendung von Openbook wird automatisch der Schlafmodus aktiviert. (#1209)
 
 
 == Änderungen ==
 - Die Befehle zum Beschreiben des aktuellen Zeichens Bzw. zum Buchstabieren der aktuellen Zeile und des aktuellen Wortes berücksichtigen die im Dokument hinterlegte Sprache, falls der automatische sprachenwechsel aktiviert ist.
+- Sprachausgabe eSpeak auf 1.46.02 aktualisiert.
+- Wenn bei der Darstellung von Links und Grafiken der Name aus der Adresse ermittelt werden muss, werden Namen ausgefiltert, die länger als 30 zeichen sind. Derart lange Namen enthalten meist nutzlose Informationen. (#1989)
+- einige neue verkürzte Klassennamen in Braille hinzugefügt (#1955)
 
 
 == Fehlerkorrekturen ==
 - In windows 8 wird der Fokus nun nicht mehr unerwartet aus dem Suchfeld springen. Dieser Fehler machte es unmöglich, mit nvda mit dem windows-suchfeld zu arbeiten.
-**- Major performance  improvements when reading and navigating Microsoft word documents while automatic reporting of formatting is enabled, thus now making it quite comfortable to proof read formatting etc. Performance may be also improved over all for some users.
+- Optimierungen beim Lesen von und Navigieren in Microsoft Word-Dokumenten, wenn die ausgabe von Formatierungen eingeschaltet ist, sodass man konfortabel die Formatierung o. Ä. prüfen kann. Einige Benutzer werden möglicherweise eine Geschwindigkeitssteigerung bemerken. 
 - Für Flash-Inhalte, die im Vollbildmodus dargestellt werden, wird nun der Lesemodus benutzt.
 - Probleme mit der Klangqualität in einigen Fällen behoben, in denen als Ausgabegerät etwas anderes eingestellt ist als "Microsoft Sound Mapper". Dies betrifft vor allem Microsoft Sapi Version 5. (#749)
 - Die Auswahl von "keine Sprache" im Sprachausgabendialog ist jetzt wieder möglich. Das ist nützlich, falls nvda nur mit einer Braillezeile oder dem Sprachbetrachter als Ausgabemedium betrieben wird. (#1963)
 - Die Befehle zur Objektnavigation geben nun nicht mehr "keine Kinder" bzw. "keine Eltern" aus. Die Meldungen wurden der Dokumentation angepasst. Dies gilt für die englische Benutzeroberfläche!
 - Wenn in NVDA eine andere Sprache als englisch eingestellt wurde, wird der Name der Tabulator-Taste nun in der richtigen Sprache angesagt. 
+- In Gecko-Anwendungen wie Mozilla Firefox wird nun nicht mehr in den Lesemodus gewechselt, wenn Sie innerhalb von Dokumenten in Menüs navigieren. (#2025)
+- Wenn im Rechner die Rücktaste gedrückt wird, wird nun der aktualisierte Inhalt der Anzeige angesagt und angezeigt. (#2030)
+- Wenn im Lesemodus die Maus zum Navigator-Objekt gezogen wird, wird der mauszeiger nun in die Mitte des Objekts bewegt, was in manchen Fällen bessere Ergebnisse liefert. (#2029)
+- Wenn im Lesemodus mit automatischem Wechsel in den Fokusmodus eine Symbolleiste den Fokus erhält, so wird der Lesemodus automatisch verlassen. (#1339)
+- der Befehl zum Ausgeben der Titelleiste funktioniert im Acrobat Reader wieder.
 
 
 == Änderungen für Entwickler ==
@@ -42,7 +53,10 @@
 - Aus Gründen der besseren lesbarkeit wird beim Zurückverfolgen von Fehlern in den protokollen der Basispfad aus Dateireferenzen gestrichen. (#1880)
 - TextInfo-Objekte haben nun eine Methode namens Activate(), die das Aktivieren der von textinfo zurückgegebenen Position erlaubt.
  - Dies erlaubt das Aktivieren unter Verwendung der Routingtasten einer Braillezeile. Hierfür könnte es jedoch in Zukunft andere Methoden geben.
-**- TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
+- TreeInterceptors und NVDAObjects, welche nur eine Seite beinhalten, können automatischen Seitenwechsel während alles lesen unterstützen, wenn sie textInfos.DocumentWithPageTurns verwenden.
+- Einige Konstanten für Steuerelemente und ausgaben wurden umbenannt Bzw. verschoben. (#228)
+ - speech.REASON_*-Konstanten wurden in die Steuerelemente verschoben.
+ - Bei den Steuerelementen wurden speechRoleLabels und speechStateLabe
 
 
 = 2011.3 =
