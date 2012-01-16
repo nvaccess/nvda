@@ -218,7 +218,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		rects=self._textAndRects[1]
 		if offset>=len(rects):
 			raise RuntimeError("offset %d out of range")
-		left,top,right,bottom=rects[offset]
+		left,top,right,bottom,baseline=rects[offset]
 		x=left #+(right-left)/2
 		y=top+(bottom-top)/2
 		oldX,oldY=winUser.getCursorPos()
