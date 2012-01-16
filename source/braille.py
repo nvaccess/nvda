@@ -241,6 +241,8 @@ positiveStateLabels = {
 	controlTypes.STATE_COLLAPSED: _("+"),
 	# Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
 	controlTypes.STATE_READONLY: _("ro"),
+	# Translators: Displayed in braille when an object is clickable.
+	controlTypes.STATE_CLICKABLE: _("clk"),
 }
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object (e.g. a check box) is not checked.
