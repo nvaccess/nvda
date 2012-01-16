@@ -1,8 +1,9 @@
-﻿Guia do Usuário do NVDA NVDA_VERSION
+﻿Guía do Usuário do NVDA NVDA_VERSION
 
 Traduzido por Marlin Rodrigues da Silva
 
 %!includeconf: ../userGuide.t2tconf
+%!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 %kc:title: REFERÊNCIA RÁPIDA DE TECLAS DE ATALHO DO NVDA
 = Índice =[toc]
 %%toc
@@ -814,9 +815,10 @@ Pode configurar o anúncio de:
 - Listas
 - Blocos de citação
 - Marcas de Seção
+- Frames
 -
 
-==== Anunciar Mudanças de Formato Após Cursor ====
+==== Anunciar Mudanças de Formato Após o Cursor ====
 Se ativada, esta opção faz com que o NVDA tente detectar todas as alterações de formatação na linha conforme a anuncia, mesmo que isto possa diminuir seu desempenho.
 
 Por padrão, o NVDA irá detectar a formatação na posição do cursor do sistema/cursor de exploração e em alguns casos poderá detectar a formatação do resto da linha, desde que não diminua o seu desempenho.
@@ -924,7 +926,7 @@ O eSpeak é iniciado com o NVDA por padrão.
 Por ter sido compilado para o NVDA, ele é uma boa escolha para quando se executa o NVDA num dispositivo USB ou CD em outros sistemas.
 
 Cada voz que vem com o eSpeak fala um idioma diferente.
-Existem cerca de 20 idiomas suportados por ele.
+Existem cerca de 50 idiomas suportados por ele.
 
 Existem também muitas variantes que podem ser escolhidas para alterar o som da voz.
 
