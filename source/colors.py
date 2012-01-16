@@ -92,7 +92,7 @@ RGBToNames={
 	# For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
 	RGB(0x00,0xff,0x00):_('lime'),
 	RGB(0x80,0x80,0x80):_('grey'),
-	# Translators: the color olive green.
+	# Translators: the color olive.
 	# For more info see: http://en.wikipedia.org/wiki/Olive_%28color%29#Olive
 	RGB(0x80,0x80,0x00):_('olive'),
 	RGB(0xff,0xff,0xff):_('white'),
