@@ -42,6 +42,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
 		state = _("on") if inputCore.manager.isInputHelpActive else _("off")
+		# Translators: This will be presented when the input help is toggled.
 		ui.message(_("input help %s")%state)
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
@@ -50,11 +51,13 @@ class GlobalCommands(ScriptableObject):
 		curApp=curFocus.appModule
 		if curApp.sleepMode:
 			curApp.sleepMode=False
+			# Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 			ui.message(_("Sleep mode off"))
 			eventHandler.executeEvent("gainFocus",curFocus)
 		else:
 			eventHandler.executeEvent("loseFocus",curFocus)
 			curApp.sleepMode=True
+			# Translators: This is presented when sleep mode is activated, the focused application is self vocing, such as klango or openbook.
 			ui.message(_("Sleep mode on"))
 	script_toggleCurrentAppSleepMode.__doc__=_("Toggles  sleep mode on and off for  the active application.")
 	script_toggleCurrentAppSleepMode.allowInSleepMode=True
@@ -89,18 +92,22 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleLeftMouseButton(self,gesture):
 		if winUser.getKeyState(winUser.VK_LBUTTON)&32768:
+			# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 			ui.message(_("left mouse button unlock"))
 			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 		else:
+			# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 			ui.message(_("left mouse button lock"))
 			winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 	script_toggleLeftMouseButton.__doc__=_("Locks or unlocks the left mouse button")
 
 	def script_toggleRightMouseButton(self,gesture):
 		if winUser.getKeyState(winUser.VK_RBUTTON)&32768:
+			# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 			ui.message(_("right mouse button unlock"))
 			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
 		else:
+			# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 			ui.message(_("right mouse button lock"))
 			winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
 	script_toggleRightMouseButton.__doc__=_("Locks or unlocks the right mouse button")
@@ -811,9 +818,11 @@ class GlobalCommands(ScriptableObject):
 		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
 			ui.message(_("no system battery"))
 			return
+		# Translators: This is presented to inform the user of the current battery percentage.
 		text = _("%d percent") % sps.BatteryLifePercent + " "
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
 		elif sps.BatteryLifeTime!=0xffffffff: 
+			# Translators: This is the estimated remaining runtime of the laptop battery.
 			text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
 		ui.message(text)
 	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")

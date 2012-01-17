@@ -159,6 +159,7 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 		locale=defaultLanguage
 
 	if not text:
+		# Translators: This is spoken when nvda moves to an empty line.
 		return getSynth().speak((_("blank"),))
 	if not text.isspace():
 		text=text.rstrip()
@@ -190,6 +191,7 @@ def _speakSpellingGen(text,locale,useCharacterDescriptions):
 			else:
 				char=characterProcessing.processSpeechSymbol(locale,char)
 			if uppercase and synthConfig["sayCapForCapitals"]:
+				# Translators: cap will be spoken before the given letter when it is capitalized.
 				char=_("cap %s")%char
 			if uppercase and synth.isSupported("pitch") and synthConfig["capPitchChange"]:
 				oldPitch=synthConfig["pitch"]
@@ -299,6 +301,7 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		try:
 			info=obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			if not info.isCollapsed:
+				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 				speakSelectionMessage(_("selected %s"),info.text)
 			else:
 				info.expand(textInfos.UNIT_LINE)
@@ -321,6 +324,7 @@ def speakText(text,index=None,reason=controlTypes.REASON_MESSAGE,symbolLevel=Non
 		speechSequence.append(IndexCommand(index))
 	if text is not None:
 		if isBlank(text):
+			# Translators: This is spoken when the line is considered blank.
 			text=_("blank")
 		speechSequence.append(text)
 	speak(speechSequence,symbolLevel=symbolLevel)
@@ -346,6 +350,7 @@ def getIndentationSpeech(indentation):
 	# Translators: no indent is spoken when the user moves from a line that has indentation, to one that 
 	# does not.
 	if not indentation:
+		# Translators: This is spoken when the given line has no indentation.
 		return _("no indent")
 
 	res = []
@@ -429,6 +434,7 @@ def speakSelectionMessage(message,text):
 	if len(text) < 512:
 		speakMessage(message % text)
 	else:
+		# Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 		speakMessage(message % _("%d characters") % len(text))
 
 def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True,generalize=False):
@@ -481,17 +487,20 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 			for text in selectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
+				# Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
 				speakSelectionMessage(_("selecting %s"),text)
 		elif len(selectedTextList)>0:
 			text=newInfo.text
 			if len(text)==1:
 				text=characterProcessing.processSpeechSymbol(locale,text)
+			# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 			speakSelectionMessage(_("selected %s"),text)
 	if speakUnselected:
 		if not generalize:
 			for text in unselectedTextList:
 				if  len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
+				# Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
 				speakSelectionMessage(_("unselecting %s"),text)
 		elif len(unselectedTextList)>0:
 			speakMessage(_("selection removed"))
@@ -499,6 +508,7 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				text=newInfo.text
 				if len(text)==1:
 					text=characterProcessing.processSpeechSymbol(locale,text)
+				# Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 				speakSelectionMessage(_("selected %s"),text)
 
 def speakTypedCharacters(ch):
@@ -724,6 +734,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 
 	# If there is nothing  that should cause the TextInfo to be considered non-blank, blank should be reported, unless we are doing a say all.
 	if reason != controlTypes.REASON_SAYALL and isTextBlank:
+		# Translators: This is spoken when the line is considered blank.
 		speechSequence.append(_("blank"))
 
 	#Cache a copy of the new controlFieldStack for future use
