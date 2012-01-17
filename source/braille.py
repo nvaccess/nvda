@@ -30,8 +30,8 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("bg.ctb", _("Bulgarian 8 dot computer braille")),
-      	# Translators: The name of a braille table displayed in the
-      	# braille settings dialog.
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("cy-cy-g1.utb", _("Welsh grade 1")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
