@@ -897,7 +897,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		try:
 			# Try not to split words across windows.
 			# To do this, break after the furthest possible block of spaces.
-			startPos = self.brailleCells.index(0, startPos, endPos)
+			# Find the start of the first block of spaces.
+			# Search from 1 cell before in case startPos is just after a space.
+			startPos = self.brailleCells.index(0, startPos - 1, endPos)
 			# Skip past spaces.
 			for startPos in xrange(startPos, endPos):
 				if self.brailleCells[startPos] != 0:
@@ -906,12 +908,15 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			pass
 		self.windowStartPos = startPos
 
-	def scrollForward(self):
+	def _nextWindow(self):
 		oldStart = self.windowStartPos
 		end = self.windowEndPos
 		if end < len(self.brailleCells):
 			self.windowStartPos = end
-		if self.windowStartPos == oldStart:
+		return self.windowStartPos != oldStart
+
+	def scrollForward(self):
+		if not self._nextWindow():
 			# The window could not be scrolled, so try moving to the next line.
 			if self.regions:
 				self.regions[-1].nextLine()
@@ -919,11 +924,14 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			# Scrolling succeeded.
 			self.updateDisplay()
 
-	def scrollBack(self):
+	def _previousWindow(self):
 		start = self.windowStartPos
 		if start > 0:
 			self.windowEndPos = start
-		if self.windowStartPos == start:
+		return self.windowStartPos != start
+
+	def scrollBack(self):
+		if not self._previousWindow():
 			# The window could not be scrolled, so try moving to the previous line.
 			if self.regions:
 				self.regions[-1].previousLine()
@@ -933,10 +941,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 
 	def scrollTo(self, region, pos):
 		pos = self.regionPosToBufferPos(region, pos)
-		if pos >= self.windowEndPos:
-			self.windowEndPos = pos + 1
-		elif pos < self.windowStartPos:
-			self.windowStartPos = pos
+		while pos >= self.windowEndPos:
+			if not self._nextWindow():
+				break
+		while pos < self.windowStartPos:
+			if not self._previousWindow():
+				break
 		self.updateDisplay()
 
 	def focus(self, region):
