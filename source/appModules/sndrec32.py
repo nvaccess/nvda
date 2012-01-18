@@ -8,10 +8,15 @@ import appModuleHandler
 import controlTypes
 
 mainWindowButtonNames={
+	# Translators: This is the name of a button in sound recorder.
 	205:_("Rewind"),
+	# Translators: This is the name of a button in sound recorder.
 	206:_("Fast forward"),
+	# Translators: This is the name of a button in sound recorder.
 	207:_("Play"),
+	# Translators: This is the name of a button in sound recorder.
 	208:_("Stop"),
+	# Translators: This is the name of a button in sound recorder.
 	209:_("Record")
 }
 

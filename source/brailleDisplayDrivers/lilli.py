@@ -40,6 +40,7 @@ def convertLilliCells(cell):
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "lilli"
+	# Translators: Name of a braille display.
 	description = _("MDV Lilli")
 
 	@classmethod

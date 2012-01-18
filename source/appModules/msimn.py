@@ -16,19 +16,33 @@ import watchdog
 
 #Labels for the header fields of an email, by control ID
 envelopeNames={
+	# Translators: This is presented in outlook or live mail to indicate email attachments.
 	1000:_("Attachments"),
+	# Translators: This is presented in outlook or live mail when creating a new email 'to:' or 'recipient:'
 	1001:_("To:"),
+	# Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 	1002:_("Newsgroup:"),
+	# Translators: This is presented in outlook or live mail, email carbon copy
 	1003:_("CC:"),
+	# Translators: This is presented in outlook or live mail, email subject
 	1004:_("Subject:"),
+	# Translators: This is presented in outlook or live mail, email sender
 	1005:_("From:"),
+	# Translators: This is presented in outlook or live mail, date of email
 	1016:_("Date:"),
+	# Translators: This is presented in outlook or live mail
 	1018:_("Forward to:"),
+	# Translators: This is presented in outlook or live mail
 	1019:_("Answer to:"),
+	# Translators: This is presented in outlook or live mail
 	1020:_("Organisation:"),
+	# Translators: This is presented in outlook or live mail
 	1021:_("Distribution:"),
+	# Translators: This is presented in outlook or live mail
 	1022:_("Key words:"),
+	# Translators: This is presented in outlook or live mail, email blind carbon copy
 	1026:_("BCC:"),
+	# Translators: This is presented in outlook or live mail, email sender
 	1037:_("From:"),
 }
 
@@ -91,6 +105,7 @@ class MessageListItem(sysListView32.ListItem):
 		elif imageState==6:
 			nameList.append(controlTypes.stateLabels[controlTypes.STATE_EXPANDED])
 		if self.isUnread:
+			# Translators: Displayed in outlook or live mail to indicate an email is unread
 			nameList.append(_("unread"))
 		name=super(MessageListItem,self).name
 		if name:

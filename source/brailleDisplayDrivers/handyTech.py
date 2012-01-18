@@ -45,6 +45,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	"""Handy Tech braille display driver.
 	"""
 	name = "handyTech"
+	# Translators: Names of braille displays.
 	description = _("Handy Tech braille displays")
 
 	@classmethod

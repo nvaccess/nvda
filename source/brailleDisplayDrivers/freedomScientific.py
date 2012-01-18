@@ -87,6 +87,7 @@ nvdaFsBrlWndCls.lpszClassName=u"nvdaFsBrlWndCls"
 class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 
 	name="freedomScientific"
+	# Translators: Names of braille displays.
 	description=_("Freedom Scientific Focus/PAC Mate series")
 
 	@classmethod
@@ -94,7 +95,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		return bool(fsbLib)
 
 	wizWheelActions=[
+		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 		(_("display scroll"),("globalCommands","GlobalCommands","braille_scrollBack"),("globalCommands","GlobalCommands","braille_scrollForward")),
+		# Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line..
 		(_("line scroll"),("globalCommands","GlobalCommands","braille_previousLine"),("globalCommands","GlobalCommands","braille_nextLine")),
 	]
 

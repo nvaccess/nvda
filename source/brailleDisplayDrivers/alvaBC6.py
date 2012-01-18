@@ -41,6 +41,7 @@ except:
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "alvaBC6"
+	# Translators: The name of a braille display.
 	description = _("ALVA BC640/680 series")
 
 	@classmethod
