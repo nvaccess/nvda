@@ -89,6 +89,11 @@ To build an installer:
 To generate developer documentation:
 	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
 
+To generate a gettext translation template:
+	* xgettext from GNU gettext:
+		* A Windows build is available at http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/
+		* Copy xgettext.exe into the tools directory.
+
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
@@ -134,6 +139,9 @@ The developer docs will be placed in the devDocs folder in the output directory.
 To generate an archive of debug symbols for the various dll/exe binaries, type:
 scons symbolsArchive
 The archive will be placed in the output directory.
+
+To generate a gettext translation template (for translators), type:
+scons pot
 
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.
