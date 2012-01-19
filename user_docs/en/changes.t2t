@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.1 =
+Highlights of this release include features for more fluent reading of braille; indication of document formatting in braille; access to much more formatting information and improved performance in Microsoft Word; and support for the iTunes Store.
 
 == New Features ==
 - NVDA can announce the number of leading tabs and spaces of the current line in the order that they are entered. This can be enabled by selecting report line indentation in the document formatting dialogue. (#373)
@@ -48,6 +49,7 @@
 - In browse mode with automatic focus mode for focus changes enabled, focusing on a toolbar will now switch to focus mode. (#1339)
 - The report title command works correctly again in Adobe Reader.
 - With automatic focus mode for focus changes enabled, focus mode is now correctly used for focused table cells; e.g. in ARIA grids. (#1763)
+- In iTunes, position information in certain lists is now reported correctly.
 
 
 == Changes for Developers ==
