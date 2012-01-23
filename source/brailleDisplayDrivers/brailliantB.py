@@ -56,7 +56,6 @@ FIRST_ROUTING_KEY = 80
 def _getPorts():
 	# USB.
 	with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\Vid_1c71&Pid_c005") as rootKey:
-		index = 0
 		for index in itertools.count():
 			try:
 				keyName = _winreg.EnumKey(rootKey, index)
