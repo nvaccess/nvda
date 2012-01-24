@@ -80,6 +80,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls):
+		try:
+			next(_getPorts())
+		except StopIteration:
+			# No possible ports found.
+			return False
 		return True
 
 	def __init__(self):
