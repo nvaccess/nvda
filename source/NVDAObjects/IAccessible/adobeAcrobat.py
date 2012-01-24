@@ -179,6 +179,15 @@ class AcrobatSDIWindowClient(IAccessible):
 		self.IAccessibleObject = acc
 		self.invalidateCache()
 
+class BadFocusStates(AcrobatNode):
+	"""An object which reports focus states when it shouldn't.
+	"""
+
+	def _get_states(self):
+		states = super(BadFocusStates, self).states
+		states.difference_update({controlTypes.STATE_FOCUSABLE, controlTypes.STATE_FOCUSED})
+		return states
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Acrobat objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -193,7 +202,13 @@ def findExtraOverlayClasses(obj, clsList):
 		else:
 			clsList.append(RootNode)
 
-	elif role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_FOCUSABLE in obj.states:
-		clsList.append(EditableTextNode)
+	elif role == controlTypes.ROLE_EDITABLETEXT:
+		states = obj.states
+		if {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:
+			# HACK: Acrobat sets focus states on text nodes beneath links,
+			# making them appear as read only editable text fields.
+			clsList.append(BadFocusStates)
+		elif controlTypes.STATE_FOCUSABLE in states:
+			clsList.append(EditableTextNode)
 
 	clsList.append(AcrobatNode)
