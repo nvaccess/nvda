@@ -193,17 +193,17 @@ def findExtraOverlayClasses(obj, clsList):
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
 	role = obj.role
-	if obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT:
-		# Root node.
-		if role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
-			clsList.append(Document)
-		elif role == controlTypes.ROLE_EDITABLETEXT:
+	states = obj.states
+	if role == controlTypes.ROLE_DOCUMENT or (role == controlTypes.ROLE_PAGE and controlTypes.STATE_READONLY in states):
+		clsList.append(Document)
+	elif obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT:
+		# Other root node.
+		if role == controlTypes.ROLE_EDITABLETEXT:
 			clsList.append(RootTextNode)
 		else:
 			clsList.append(RootNode)
 
 	elif role == controlTypes.ROLE_EDITABLETEXT:
-		states = obj.states
 		if {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:
 			# HACK: Acrobat sets focus states on text nodes beneath links,
 			# making them appear as read only editable text fields.
