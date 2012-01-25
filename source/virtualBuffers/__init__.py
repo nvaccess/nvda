@@ -903,7 +903,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return True
 		if reason == controlTypes.REASON_FOCUS:
 			# If this is a focus change, pass through should be enabled for certain ancestor containers.
-			while obj != self.rootNVDAObject:
+			while obj and obj != self.rootNVDAObject:
 				if obj.role == controlTypes.ROLE_TOOLBAR:
 					return True
 				obj = obj.parent
