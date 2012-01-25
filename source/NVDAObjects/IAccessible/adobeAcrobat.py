@@ -59,7 +59,6 @@ class AcrobatNode(IAccessible):
 			try:
 				self.accID = serv.QueryService(SID_AccID, IAccID).get_accID()
 			except COMError:
-				log.debugWarning("Failed to get ID from IAccID", exc_info=True)
 				self.accID = None
 
 		# Get the IPDDomNode.
@@ -67,7 +66,6 @@ class AcrobatNode(IAccessible):
 			self.pdDomNode = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(self.IAccessibleChildID)
 		except COMError:
 			self.pdDomNode = None
-			log.debugWarning("Error getting IPDDomNode")
 
 		if self.pdDomNode:
 			# If this node has IPDDomElement, query to that.
