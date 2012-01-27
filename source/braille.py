@@ -74,7 +74,7 @@ TABLES = (
 	("en-us-g2.ctb", _("English (U.S.) grade 2")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("Es-Es-g1.utb", _("Spanish grade 1")),
+	("es-g1.ctb", _("Spanish grade 1")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille")),
