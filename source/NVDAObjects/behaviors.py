@@ -76,7 +76,9 @@ class Dialog(NVDAObject):
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW,controlTypes.ROLE_GROUPING,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_SECTION,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_UNKNOWN):
-				textList.append(cls.getDialogText(child))
+				childText=cls.getDialogText(child)
+				if childText:
+					textList.append(childText)
 				continue
 			# We only want text from certain controls.
 			if not (
@@ -100,7 +102,8 @@ class Dialog(NVDAObject):
 			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
 				childText=child.basicText
-			textList.append(childText)
+			if childText:
+				textList.append(childText)
 		return " ".join(textList)
 
 	def _get_description(self):
