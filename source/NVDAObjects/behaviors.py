@@ -95,13 +95,18 @@ class Dialog(NVDAObject):
 			if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
 				continue
 			childName=child.name
-			#Ignore objects that have another object directly after them with the same name that use NVDAObjectTextInfo (i.e.  name is part of the text), as this object is probably just a label for that object.
-			#However, graphics, static text, separators and Windows are ok.
-			if childName and index<(childCount-1) and children[index+1].TextInfo is NVDAObjectTextInfo and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE) and children[index+1].name==childName:
+			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE) and children[index+1].name==childName:
+				# This is almost certainly the label for the next object, so skip it.
 				continue
+			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole==controlTypes.ROLE_LABEL
 			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
-			if not childText or childText.isspace() and child.TextInfo!=NVDAObjectTextInfo:
+			if not childText or childText.isspace() and child.TextInfo is not NVDAObjectTextInfo:
 				childText=child.basicText
+				isNameIncluded=True
+			if not isNameIncluded:
+				# The label isn't in the text, so explicitly include it first.
+				if childName:
+					textList.append(childName)
 			if childText:
 				textList.append(childText)
 		return " ".join(textList)
