@@ -59,10 +59,12 @@ class Dialog(NVDAObject):
 	"""
 
 	@classmethod
-	def getDialogText(cls,obj):
+	def getDialogText(cls,obj,allowFocusedDescendants=True):
 		"""This classmethod walks through the children of the given object, and collects up and returns any text that seems to be  part of a dialog's message text.
 		@param obj: the object who's children you want to collect the text from
 		@type obj: L{IAccessible}
+		@param allowFocusedDescendants: if false no text will be returned at all if one of the descendants is focused.
+		@type allowFocusedDescendants: boolean
 		"""
 		children=obj.children
 		textList=[]
@@ -76,10 +78,17 @@ class Dialog(NVDAObject):
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (controlTypes.ROLE_PROPERTYPAGE,controlTypes.ROLE_PANE,controlTypes.ROLE_PANEL,controlTypes.ROLE_WINDOW,controlTypes.ROLE_GROUPING,controlTypes.ROLE_PARAGRAPH,controlTypes.ROLE_SECTION,controlTypes.ROLE_TEXTFRAME,controlTypes.ROLE_UNKNOWN):
-				childText=cls.getDialogText(child)
+				#Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
+				#Stops double reporting when focus is in a property page in a dialog
+				childText=cls.getDialogText(child,not isinstance(child,Dialog))
 				if childText:
 					textList.append(childText)
+				elif childText is None:
+					return None
 				continue
+			#If the child is focused  we should just stop and return None
+			if not allowFocusedDescendants and controlTypes.STATE_FOCUSED in child.states:
+				return None
 			# We only want text from certain controls.
 			if not (
 				 # Static text, labels and links
