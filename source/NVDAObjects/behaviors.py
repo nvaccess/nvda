@@ -109,7 +109,7 @@ class Dialog(NVDAObject):
 					textList.append(childName)
 			if childText:
 				textList.append(childText)
-		return " ".join(textList)
+		return "\n".join(textList)
 
 	def _get_description(self):
 		superDesc = super(Dialog, self).description
