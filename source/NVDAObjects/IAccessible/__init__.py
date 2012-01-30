@@ -1370,14 +1370,14 @@ class NUIDialogClient(Dialog):
 class Groupbox(IAccessible):
 
 	def _get_description(self):
-		next=self.next
+		next=self.simpleNext
 		if next and next.name==self.name and next.role==controlTypes.ROLE_GRAPHIC:
-			next=next.next
+			next=next.simpleNext
 		if next and next.role==controlTypes.ROLE_STATICTEXT:
-			nextNext=next.next
+			nextNext=next.simpleNext
 			if nextNext and nextNext.name!=next.name:
 				return next.name
-		return super(Groupbox,self)._get_description()
+		return super(Groupbox,self).description
 
 class TrayClockWClass(IAccessible):
 	"""
