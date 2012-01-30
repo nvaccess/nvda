@@ -57,7 +57,8 @@ Highlights of this release include features for more fluent reading of braille; 
 - The labels of some editable text fields are no longer incorrectly included when reporting the text of a dialog. (#1960)
 - The description of groupings is once again reported if reporting of object descriptions is enabled.
 - The human readable sizes are now included in the text of the Windows Explorer drive properties dialog.
-
+- Double reporting of propertyPage  text has been suppressed in some cases. (#218)
+  
 
 == Changes for Developers ==
 - There is now a remote Python console for situations where remote debugging is useful. See the Developer Guide for details.
