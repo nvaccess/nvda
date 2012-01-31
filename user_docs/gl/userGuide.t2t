@@ -799,24 +799,25 @@ A maioría das casiñas de verificación neste diálogo son para configurar que 
 Por Exemplo, se verificas a casiña de verificación anunciar o nome da fonte, cada vez que navegues polo texto cunha fonte diferente, o nome da fonte serache anunciado.
 
 Podes configurar o anunciado de:
-- nome de fonte
-- tamano de fonte
-- atributos de fonte
+- Nome de fonte
+- Tamano de fonte
+- Atributos de fonte
 - Alineamento do texto
-- cores
-- estilo do texto
+- Cores
+- Estilo do texto
 - Erros de ortografía
-- números de páxina
-- números de liña
-- sangría de liña
-- táboas
-- cabeceiras de fila/columna de táboa
+- Números de páxina
+- Números de liña
+- Sangría de liña
+- Táboas
+- Cabeceiras de fila/columna de táboa
 - Coordinadas de celdas da táboa
-- ligas
-- cabeceiras
-- listas
-- citas
+- Ligas
+- Cabeceiras
+- Listas
+- Citas
 - Zoas
+- Marcos
 -
 
 ==== Anunciar cambios de formato despois do cursor ====
@@ -1105,6 +1106,35 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 | Ler todo | B6 |
 %kc:endInclude
 
+++ HumanWare Brailliant Series BI/B ++
+As liñas braille Brailliant series BI e B de [HumanWare http://www.humanware.com/], incluíndo BI 32, BI 40 e B 80, están soportadas cando se conectan a través do USB ou bluetooth.
+Se a conectas a través de USB, primeiro debes instalar os controladores USB proporcionados polo fabricante.
+
+Seguidamente van as asignacións de teclas para esta liña co NVDA.
+Por favor mira a documentación da liña para descripcións de onde poden atoparse estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar liña braille cara atrás | esquerda |
+| Desprazar liña braille cara adiante | dereita |
+| Mover liña braille á liña anterior | arriba |
+| Mover liña braille á liña seguinte | abaixo |
+| Guiar ata a celda braille | sensores |
+| Activar/desactivar seguemento de braille | arriba+abaixo |
+| tecla flecha arriba | espazo+ponto1 |
+| tecla flecha abaixo | espazo+ponto4 |
+| tecla flecha esquerda | espazo+ponto3 |
+| tecla flecha dereita | espazo+ponto6 |
+| Menú NVDA | c1+c3+c4+c5 (comando n) |
+| tecla shift+tab | espazo+ponto1+ponto3 |
+| tecla tab | espazo+ponto4+ponto6 |
+| tecla alt | espazo+ponto1+ponto3+ponto4 (espazo+m) |
+| tecla escape | espazo+ponto1+ponto5 (espazo+e) |
+| tecla intro | ponto8 |
+| tecla windows+d (minimizar todas as aplicacións) | c1+c4+c5 (comando d) |
+| tecla windows | espazo+ponto3+ponto4 |
+| tecla alt+tab | espazo+ponto2+ponto3+ponto4+ponto5 (espazo+t) |
+| Ler todo | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] é un programa por separado que pode utilizarse para soportar moitas liñas braille.
