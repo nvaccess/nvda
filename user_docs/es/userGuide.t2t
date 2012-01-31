@@ -231,8 +231,7 @@ Cuando estés en una tabla, las siguientes teclas de órdenes también están di
 %kc:endInclude
 
 ++ Navegación de Objetos ++
-A veces, querrás explorar la aplicación actual o el Sistema Operativo sin mover el [foco #SystemFocus].
-	La mayor parte del tiempo, trabajarás con aplicaciones utilizando  órdenes que muevan [el foco #SystemFocus] y [el cursor #SystemCaret].
+La mayor parte del tiempo, trabajarás con aplicaciones utilizando  órdenes que muevan [el foco #SystemFocus] y [el cursor #SystemCaret].
 Sin embargo, a veces, podrías querer explorar la aplicación actual o el Sistema Operativo sin mover el foco o el cursor.
 También podrías querer trabajar con [objetos #Objects] que no pueden accederse normalmente utilizando el teclado.
 En estos casos, puedes utilizar la navegación de objetos.
@@ -245,8 +244,6 @@ Más que moverse atrás y adelante entre cada simple objeto en el sistema, los o
 Esto significa que debes moverte dentro de algunos objetos para acceder a los objetos que contengan.
 Por ejemplo, una lista contiene elementos de lista, así debes moverte dentro de la lista para acceder a sus elementos.
 Si te has movido a un elemento de lista, te puedes mover a su objeto contenedor para volver a la lista y entonces pasarla si lo deseas.
-De modo similar, si encuentras una barra de herramientas, debes moverte dentro de ella para acceder a los controles en la barra de herramientas.
-Si te has movido a un elemento de lista, moviéndote al siguiente y al anterior te llevará a otros elementos de lista en la misma lista.
 Moviéndote a un elemento de lista conteniendo un objeto te llevará atrás en la lista.
 Entonces puedes pasar de la lista si deseas acceder a otros objetos.
 Del mismo modo, en una barra de herramientas conteniendo controles, debes moverte dentro de la barra de herramientas para acceder a los controles de la misma.
@@ -364,7 +361,6 @@ Todas las teclas de órdenes de [cursor del sistema #SystemCaret] de NVDA funcio
 La información tal como si el texto es un enlace,  encabezado, etc. se anuncia junto con el texto según te muevas.
 
 A veces, necesitarás interactuar directamente con controles en estos documentos.
-Esto lo haces cambiando a modo foco, donde todas las teclas se pasan al control.
 +Por ejemplo, necesitarás hacer esto para campos de texto editable y listas tal que puedas escribir carácteres y utilizar las teclas de cursor para trabajar con el control.
 Haz esto para cambiar a modo foco, donde casi todas las teclas se pasen al control.
 Cuando se está en modo Navegación, por defecto, NVDA cambiará automáticamente a modo foco si tabulas a o haces clic sobre un control en particular que lo requiera.
@@ -684,7 +680,7 @@ Si la casilla de verificación 'reproducir audio cuando el ratón se mueva' est�
 Esto está desverificado de forma predeterminada.
 
 +++ Opciones de Cursor de Revisión +++
-Se encuentra en el menú Preferencias bajo Cursor de Revisión...
+Se encuentra en el menú Preferencias bajo "Cursor de Revisión..."
 Este diálogo contiene las siguientes opciones:
 
 %kc:setting
@@ -803,24 +799,25 @@ La mayoría de las casillas de verificación en este diálogo son para configura
 Por Ejemplo, si marcas la casilla de verificación anunciar el nombre de la fuente, cada vez que navegues por el texto con una fuente diferente, el nombre de la fuente será anunciado.
 
 Puedes configurar el anunciado de:
-- nombre de fuente
-- tamaño de fuente
-- atributos de fuente
-- alineación del texto
-- colores
-- estilo del texto
-- errores de ortografía
-- números de página
-- números de línea
-- sangría de línea
-- tablas
-- encabezados de fila/columna de tabla
-- coordenadas de celdas de tabla
-- enlaces
-- encabezados
-- listas
-- citas
+- Nombre de fuente
+- Tamaño de fuente
+- Atributos de fuente
+- Alineación del texto
+- Colores
+- Estilo del texto
+- Errores de ortografía
+- Números de página
+- Números de línea
+- Sangría de línea
+- Tablas
+- Encabezados de fila/columna de tabla
+- Coordenadas de celdas de tabla
+- Enlaces
+- Encabezados
+- Listas
+- Citas
 - Zonas
+- Marcos
 -
 
 ==== Anunciar cambios de formato después del cursor ====
@@ -1104,11 +1101,40 @@ Por favor mira la documentación de la línea para descripciones de dónde se pu
 | Desplazar línea braille hacia adelante | K3 |
 | Mover línea braille a línea anterior | B2 |
 | Mover línea braille a siguiente línea | B5 |
-| Enrutar a la celda braille | routing |
+| Enrutar a la celda braille | sensores |
 | Conmutar seguimiento braille | K2 |
 | Leer todo | B6 |
 %kc:endInclude
 
+++ HumanWare Brailliant Series BI/B ++
+Las líneas braille Brailliant series BI y B de [HumanWare http://www.humanware.com/], incluyendo BI 32, BI 40 y B 80, están soportadas cuando se conectan a través del USB o bluetooth.
+Si la conectas a través de USB, primero debes instalar los controladores USB proporcionados por el fabricante.
+
+Seguidamente van las asignaciones de teclas para esta línea con NVDA.
+Por favor mira la documentación de la línea para descripciones de dónde pueden encontrarse estas teclas.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar línea braille hacia atrás | izquierda |
+| Desplazar línea braille hacia adelante | derecha |
+| Mover línea braille a la línea anterior | arriba |
+| Mover línea braille a la línea siguiente | abajo |
+| Guiar hasta la celda braille | sensores |
+| Activar/desactivar seguimiento de braille | arriba+abajo |
+| tecla flecha arriba | espacio+punto1 |
+| tecla flecha abajo | espacio+punto4 |
+| tecla flecha izquierda | espacio+punto3 |
+| tecla flecha derecha | espacio+punto6 |
+| Menú NVDA | c1+c3+c4+c5 (comando n) |
+| tecla shift+tab | espacio+punto1+punto3 |
+| tecla tab | espacio+punto4+punto6 |
+| tecla alt | espacio+punto1+punto3+punto4 (espacio+m) |
+| tecla escape | espacio+punto1+punto5 (espacio+e) |
+| tecla intro | punto8 |
+| tecla windows+d (minimizar todas las aplicaciones) | c1+c4+c5 (comando d) |
+| tecla windows | espacio+punto3+punto4 |
+| tecla alt+tab | espacio+punto2+punto3+punto4+punto5 (espacio+t) |
+| Leer todo | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] es un programa por separado que puede utilizarse para soportar muchas líneas braille.

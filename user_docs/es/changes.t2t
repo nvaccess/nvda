@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.1 =
+Lo subrayable de esta versión incluye características para una lectura más fluída en braille; indicación de formato de documento en braille; acceso a mucha más información de formato y mejora del rendimiento en Microsoft Word; y soporte para la Store de iTunes.
+
 
 == Nuevas Características ==
 - NVDA puede anunciar el número de las pestañas o espacios al inicio en la línea actual en el orden en que se introdujeron. Esto puede activarse seleccionando anunciar sangrado de línea en el diálogo Formateado de documento. (#373)
@@ -21,11 +23,20 @@
 - En modo navegación, puedes activar el objeto bajo el cursor utilizando una línea braille. Esto se hace pulsando la tecla de guiado de cursor donde se localice el cursor (lo cual significa pulsarlo dos veces si el cursor no está todavía allí). (#1893)
 - Soporte básico para áreas web en iTunes tal como en la Store. Otras aplicaciones que utilicen WebKit 1 también podrían soportarse. (#734)
 - En libros en Adobe Digital Editions 1.8.1 y posteriores, ahora las páginas se pasan automáticamente cuando se utiliza leer todo.  (#1978)
+- Nueva tabla de transcripción braille: Portugués grado 2. (#2014)
+- Ahora puedes configurar si se anuncian los marcos en documentos desde el diálogo de preferencias de Formato de Documentos. (#1900)
+- El modo durmiente se activa automáticamente cuando se utiliza OpenBook. (#1209)
+- En Poedit, los traductores ahora pueden leer los comentarios añadidos y extraídos automáticamente para el traductor. Los mensajes que estén sin traducir o provisionales se marcan con un asterisco y se escucha un pitido cuando se navegue sobre ellos (#1811).
+- Soporte para las líneas braille de HumanWare Brailliant series BI y B. (#1990)
 
 
 == Cambios ==
 - Las órdenes para describir el carácter actual o para deletrear la palabra o línea actual ahora deletrearán en el idioma apropiado de acuerdo con el texto, si el cambio automático de idioma está activado y la información de idioma adecuada está disponible.
+- Actualizado el sintetizador de voz eSpeak a 1.46.02.
 - Ahora NVDA filtrará los nombres extremadamente largos (30 caracteres o más) deducidos de URLs de gráfícos y enlaces dado que lo más probable es que sean basura que obstaculice la lectura. 
+- Se ha abreviado alguna información mostrada en braille. (#1955, #2043)
+- Cuando los cursores de sistema o de revisión se mueven, ahora el braille se desplaza de igual modo como si se desplazase manualmente. Esto lo hace más apropiado cuando el braille se configuró para leer por párrafos y/o para evitar partición de palabras. (#1996)
+- Actualizado a una nueva tabla de transcripción braille Española de grado 1. 
 
 
 == Corrección de Fallos ==
@@ -36,14 +47,30 @@
 - Se permite de nuevo a NVDA utilizar el sintetizador "no speech", confiando únicamente en el braille o en elVisualizador de Voz. (#1963)
 - Las órdenes de navegación de objetos ya no anuncian "Sin hijos" y "Sin padres", pero en cambio anuncian mensajes consistentes con la documentación.
 - Cuando NVDA se configuró para utilizar otro idioma que el Inglés, el nombre de la tecla tab ahora se anuncia en el idioma adecuado. 
+- En Mozilla Gecko (ej.: Firefox), NVDA ya no cambia intermitentemente a modo navegación mientras se navega por menús en documentos. (#2025)
+- En la Calculadora, la tecla retroceso ahora anuncia el resultado actualizado en lugar de no anunciar nada. (#2030)
+- En modo navegación, la orden mover el ratón al navegador de objetos actual ahora se mueve al centro del objeto en el cursor de revisión en lugar de a la esquina izquierda superior, haciéndolo más preciso en algunos casos. (#2029)
+- En modo navegación con el modo foco automático para cambios del foco activado, el enfocado de una barra de herramientas ahora cambiará a modo foco. (#1339)
+- La orden anunciar título funciona correctamente de nuevo en Adobe Reader.
+- Con el modo foco automático para cambios del foco activado, el modo foco ahora se utiliza correctamente para las celdas de tabla enfocadas; ej.: en regillas ARIA. (#1763
+- En iTunes, la información de posición en ciertas listas ahora se anuncia correctamente.
+- En Adobe Reader, algunos enlaces ya no se tratan como conteniendo campos de texto editable de sólo lectura.
+- Las etiquetas de algunos campos de texto editable ya no se incluyen incorrectamente cuando se anuncia el texto de un diálogo. (#1960)
+- La descripción de grupos se anuncia una vez de nuevo si el anunciado de descripciones de objeto está activado.
+- Los tamaños legibles ahora se incluyen en el texto del diálogo de propiedades de la unidad en Windows Explorer.
+- El anunciado doble de texto en páginas de propiedades ha sido suprimido en algunos casos. (#218)
+
 
 == Cambios para desarrolladores ==
-- There is now a remote Python console for situations where remote debugging is useful. See the Developer Guide for details.
-- The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
+- Ahora hay una Consola Python remota para situaciones donde la depuración remota es útil. Mira la Developer Guide para detalles.
+- La ruta base del código de NVDA is now stripped from tracebacks in the log to improve readability. (#1880)
 - TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
 - This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
 - TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
- 
+- Several control and output constants have been renamed or moved. (#228)
+- speech.REASON_* constants have been moved to controlTypes.
+- In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
+
 
 
 = 2011.3 =
