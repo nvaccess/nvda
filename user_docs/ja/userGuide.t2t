@@ -1059,7 +1059,7 @@ NVDAは、[MDV http://www.mdvbologna.it/]社製のLilliディスプレイをサ�
 %kc:endInclude
 
 ++ Baum社/Humanware社/APH社製点字ディスプレイ ++
-NVDAは、USBまたはbluetooth接続されたいくつかの[Baum http://www.baum.de/cms/en/]社、[HumanWare http://www.humanware.com/]社及び[APH http://www.aph.org/]製のディスプレイをサポートしています。
+USBまたはbluetooth接続されたいくつかの[Baum http://www.baum.de/cms/en/]社、[HumanWare http://www.humanware.com/]社及び[APH http://www.aph.org/]製のディスプレイをサポートしています。
 サポートしているディスプレイには以下のものが含まれます。
 - Baum社: SuperVario, PocketVario
 - HumanWare社: Brailliant, BrailleConnect
@@ -1121,6 +1121,36 @@ APH製のRefreshabrailleを使用する場合、USBモードをシリアルに�
 | 点字セルに移動 | routing |
 | 点字表示を切り替え | K2 |
 | すべて読み上げ | B6 |
+%kc:endInclude
+
+++ HumanWare製Brailliant BI/Bシリーズ ++
+USBまたはBluetooth接続された[HumanWare http://www.humanware.com/]製の BI 32、BI 40及びB 80を含むBrailliant BI及びBシリーズディスプレーがサポートされました。
+USB接続されている場合、最初に製造元から提供されたUSBドライバーをインストールする必要があります。
+
+以下は、このディスプレイ上で使用できるNVDA用のキー割り当てです。
+各キーの位置については、ディスプレイの説明書を参照してください。
+%kc:beginInclude
+|| 名称 | キー |
+| 点字表示を前にスクロール | 左 |
+| 点字表示を後にスクロール | 右 |
+| 点字表示を前の行に移動 | 上 |
+| 点字表示を次の行に移動 | 下 |
+| 点字セルに移動 | タッチカーソル |
+| 点字表示の切り替え | 上＋下 |
+| 上矢印キー | スペース+1の点 |
+| 下矢印キー | スペース+4の点 |
+| 左矢印キー | スペース+3の点 |
+| 右矢印キー | スペース+6の点 |
+| NVDAメニュー | c1+c3+c4+c5 (コマンド N) |
+| Shift+Tabキー | スペース+1の点+3の点 |
+| Tabキー | スペース+4の点+6の点 |
+| Altキー | スペース+1の点+3の点+4の点 (スペース+m) |
+| エスケープキー | スペース+1の点+5の点 (スペース+e) |
+| Enterキー | 8の点 |
+| Windows+Dキー (すべてのアプリケーションを最小化) | c1+c4+c5 (コマンド+ D) |
+| Windowsキー | スペース+3の点+4の点 |
+| Alt+Tabキー | スペース+2の点+3の点+4の点+5の点 (スペース+t) |
+| すべて読み上げ | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
 ++ BRLTTY ++

@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.1 =
+このリリースにおけるハイライトには、より高速に点字を読むための機能、ドキュメントの書式の点字での確認、Microsoftワードでのより多くの書式情報へのアクセス及びパフォーマンスの向上、iTunesストアのサポートがあります。
 
 == 新機能 ==
 - 現在行の先頭にあるタブやスペースの数を入力されている順に通知できるようになりました。書式設定ダイアログ内の行インデントの通知で有効化できます。 (#373)
@@ -21,11 +22,20 @@
 - ブラウズモード使用中に、カーソル位置のオブジェクトを点字ディスプレイから有効化できるようになりました。カーソルがオブジェクト上にある時にタッチカーソルを押してください (カーソルがまだそこにない場合は2度押してください）。 (#1893)
 - iTunes Storeなどで使用されている、iTunesのWeb領域のサポートを開始しました。WebKit 1を使用している他のアプリケーションもサポートできるかもしれません。 (#734)
 - Adobe Digital Editions 1.8.1以降において、すべて読み上げを使用中の場合、自動的にページをめくれるようになりました。 (#1978)
+- 新しい点字の変換テーブル: ポルトガル語2級を追加しました。 (#2014)
+- ドキュメント内のフレームを通知するかどうかを書式設定ダイアログから変更できるようになりました。 (#1900)
+- OpenBookを使用する際、自動的にスリープモードを有効化するようにしました。 (#1209)
+- Poeditにおいて、翻訳者によって追加されたコメント及び自動的に展開されたコメントをを読むことができます。み翻訳や翻訳があいまいなメッセージはアスタリスクでマークされ、そこに移動するとビープ音が聞こえます。 (#1811)
+- HumanWare社製のBrailliant BI及びBシリーズのディスプレーをサポートしました。 (#1990)
 
 
 == 変更点 ==
+- eSpeak音声エンジンを1.46.02に更新しました。
 - 現在文字の説明や現在の単語や行のスペル読みにおいて、自動言語切り換えが有効で、適切な言語情報が提供されている場合、適切な言語が使用できるようになりました。
 - 画像及びリンクURLから推測されたとても長い名前（30文字以上）を無効なものとして除外するようになりました。 (#1989)
+- いくつかの点字で表示される情報が短縮されました。 (#1955, #2043)
+- キャレットまたはレビューカーソルが移動する時、点字も手動でスクロールさせたのと同じようにスクロールするようになりました。これにより、点字を段落単位で読むように設定している時に、より正確に単語を分断することなくめるようになりました。 (#1996)
+- 最新のスペイン語1級点字変換テーブルに更新しました。
 
 
 == バグ修正 ==
@@ -36,6 +46,18 @@
 - 点字のみまたはスピーチビューアー使用時であっても、「音声なし」音声エンジンが使用できるようになりました。 (#1963)
 - オブジェクトナビゲーションコマンドでは、「子オブジェクトなし」または「親オブジェクトなし」という通知はなくなり、ドキュメントで一貫したメッセージを通知するようになりました。
 - NVDAを英語以外の言語で使用しているとき、Tabキーの名称がその言語で正しく通知されるようになりました。
+- Mozilla Gecko (例えばFirefox) において、ドキュメント内のメニューを移動中に断続的にブラウズモードに切り替わらないようになりました。 (#2025)
+- 計算機内でバックスペースキーを押した場合、何も読み上げないのでなく、更新された結果を読み上げるようになりました。 (#2030)
+- ブラウズモード内のマウスポインターを現在のナビゲーターオブジェクトに移動コマンドが、いくつかの状況でより正確にレビューカーソルを移動するために、オブジェクトの左上に移動する代わりに、中心に移動するようになりました。 (#2029)
+- ブラウズモードのフォーカスの変化を追跡する自動フォーカスモードが有効でツールバーにフォーカスした場合、フォーカスモードに変更されるようになりました。 (#1339)
+- Adobe Reader上で、タイトルの通知コマンドが正しく動作するように改善しました。
+- フォーカスの変化を追跡する自動フォーカスモードが有効な場合、ARIAグリッドのようなフォーカスのあるテーブル上でフォーカスモードが正しく利用できるようになりました。 (#1763)
+- iTunesにおいて、特定のリストの位置情報が正しく通知されるようになりました。
+- Adobe Readerにおいて、いくつかのリンクが読み取り専用テキストを含んでいるように取り扱われないようになりました。
+- 編集可能なテキストフィールドのラベルを、ダイアログを通知する際に誤って含まないようにしました。 (#1960)
+- オブジェクトの説明の通知が有効な場合、グループの説明がまた通知されるようになりました。
+- Windowsエクスプローラーのドライブのプロパティーダイアログにおいて、人が読めるサイズのテキストを含むようになりました。
+- いくつかの場合において、プロパティーページのテキストが2度通知される問題を抑制しました。 (#218)
 
 
 %== 開発者向けの変更 ==
@@ -44,6 +66,9 @@
 %- TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
 % - This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
 %- TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
+%- Several control and output constants have been renamed or moved. (#228)
+ %- speech.REASON_* constants have been moved to controlTypes.
+ %- In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
 
 
 = 2011.3 =
@@ -112,21 +137,22 @@
 
 
 = 2011.2 =
-Highlights of this release include major improvements concerning punctuation and symbols, including configurable levels, custom labelling and character descriptions; no pauses at the end of lines during say all; improved support for ARIA in Internet Explorer; better support for XFA/LiveCycle PDF documents in Adobe Reader; access to text written to the screen in more applications; and access to formatting and color information for text written to the screen.
+このリリースにおけるハイライトには、変更可能な読み上げレベルや読み方のカスタマイズ、文字の説明読みを含む句読点及び記号読み上げの強化、すべて読み上げ中の行末の無音の抑制、Internet ExplorerにおけるARIA対応の強化、Adobe Reader内のXFA/LiveCycleのサポート強化、より多くのアプリケーションで書かれたテキストへのアクセス、画面上のテキストの書式情報へのアクセスが含まれています。
 
 == 新機能 ==
-- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictagraphic languages such as traditional Chinese, one or more example phraises using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions. (#55)
-- More text can be seen in flat review for applications such as Mozilla Thunderbird that write their text directly to the display as glyphs.
-- It is now possible to choose from several levels of punctuation and symbol announcement. (#332)
-- When punctuation or other symbols are repeated more than four times, the number of repetitions is now announced instead of speaking the repeated symbols. (#43)
-- New braille translation tables: Norwegian 8 dot computer braille, Ethiopic grade 1, Slovene grade 1, Serbian grade 1. (#1456)
-- Speech no longer unnaturally pauses at the end of each line when using the say all command. (#149)
-- NVDA will now announce whether something is sorted (according to the aria-sort property) in web browsers. (#1500)
-- Unicode Braille Patterns are now displayed correctly on braille displays. (#1505)
-- In Internet Explorer and other MSHTML controls when focus moves inside a group of controls (surrounded by a fieldset), NVDA will now announce the name of the group (the legend). (#535)
-- In Internet Explorer and other MSHTML controls, the aria-labelledBy and aria-describedBy properties are now honoured.
-- in Internet Explorer and other MSHTML controls, support for ARIA list, gridcell, slider and progressbar controls has been improved.
-- Users can now change the pronunciation of punctuation and other symbols, as well as the symbol level at which they are spoken. (#271, #1516)
+- 現在文字の確認コマンドをすばやく2度続けて押すことで、任意の文字の説明を聞くことができるようになりました。英語に関しては、この機能で標準的な英語アルファベットのフォネティック読みが行われます。表意文字である繁体字中国語のような言語では、指定された文字を利用する複数のフレーズの例が提供されます。また、現在単語の読み上げや現在行の読み上げコマンドを3度続けて押すと、単語や行が前述の説明を用いてスペル読みされます。
+- 例えばMozilla Thunderbirdで直接書きこまれたテキストのような、アプリケーションのフラットレビューにおいて、より多くのテキストが見えるようになりました。
+- いくつかのレベルから句読点や記号の通知方法を選択できるようになりました。 (#332)
+- 句読点や他の記号が4戸以上連続している場合、繰り返し同じ記号を読む代わりに記号の個数を通知するようになりました。 (#43)
+- 新しい点字の変換テーブル: ノルウェイご8点コンピューター点字、エチオピア語1級、スロベニア語1級、セルビア語1級を追加しました。 (#1456)
+- すべて読み上げを実行中に、各行末で音声が不自然に一時停止しないようになりました。 (#149)
+- (aria-sortプロパティーによって) Webブラウザー上で何かが並べ替えられた場合にそれを通知するようになりました。 (#1500)
+- Unicodeによる点字のパターンが正しく点字ディスプレーに表示できるようになりました。 (#1505)
+- Internet Explorer及びその他のMSHTMLコントローラーにおいて、フォーカスが (fieldsetで囲まれた) コントロールのグループ内に移動したときに、グループの名称 (legend)  を読み上げるようになりました。 (#535)
+- Internet Explorer及びその他のMSHTMLコントローラーにおいて、aria-labelledBy及びaria-describedByプロパティーに対応しました。
+ - Internet Explorer及びその他のMSHTMLコントローラーにおいて、ARIA list、gridcell、slider及びprogressbar controlのサポートが強化されました。
+ - 利用者自身が句読点及びその他の記号の発音と読み上げレベルを変更できるようになりました。
+ 
 - In Microsoft Excel, the name of the active sheet is now reported when switching sheets with control+pageUp or control+pageDown. (#760)
 - When navigating a table in Microsoft Word with the tab key NVDA will now announce the current cell as you move. (#159)
 - You can now configure whether table cell coordinates are reported from the Document Formatting preferences dialog. (#719)

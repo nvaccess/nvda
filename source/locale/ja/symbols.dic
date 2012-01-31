@@ -48,7 +48,7 @@ negative number	マイナス
 \f	カイページ
 \r	フッキ
  	スペース
-	 	スペース	# no-break space
+ 	スペース	# no-break space
 
 # Standard punctuation/symbols	
 !	カンタンフ	some
@@ -56,21 +56,21 @@ negative number	マイナス
 \#	シャープ	some
 $	ドル	some
 ￡	ポンド	some
-?	ユーロ	some
+€	ユーロ	some
 ￠	セント	some
 \	エンマーク	some
-	%	パーセント	some
+%	パーセント	some
 &	アンド	some
 '	アポストロフィ	some
 (	カッコ	some
 )	トジカッコ	some
 *	アスタリスク	some
 +	プラス	some
-,	カンマ	never
+,	カンマ	-	never
 -	ハイフン	some
 .	ピリオド	some
 /	スラッシュ	some
-:	コロン	never
+:	コロン	some	norep
 ;	セミコロン	some
 <	ショーナリ	some
 >	ダイナリ	some
@@ -105,29 +105,31 @@ _	アンダー	some
 ■	クロシカク
 ➔	ミギヤジルシ
 §	セクション
-°	ドｼｰ
+°	ド
 ≪	ヒジョーニチイサイキゴー
 ≫	ヒジョーニオオキイキゴー
 μ	マイクロ
-¹	シタツキイチ
-²	シタツキニ
-³	シタツキサン
+¹	ウワツキイチ
+²	ウワツキニ
+³	ウワツキサン
 ®	アール
-™	トレードマーク
+™	ティーエム
 ©	シー
 ±	プラスマイナス
 ×	カケル
 ÷	ワル
 
-	#Japanese Double Bytes Symbols
+# Japanese Double Bytes Symbols
+ｰ	チョーオン	char	always
 ｡	マル	some
 ｢	カギヒラキ	some
 ｣	カギトジ	some
 ､	テン	some
 ･	ナカテン	some
-ﾞ	ダクテン	never
-ﾟ	ハンダクテン	never
-　	クウハク	moste
+ﾞ	ダクテン	char	always
+ﾟ	ハンダクテン	char	always
+　	クウハク	most
+ー	チョーオン	char	always
 、	テン	some
 。	マル	some
 ，	カンマ	some
@@ -137,8 +139,8 @@ _	アンダー	some
 ；	セミコロン	some
 ？	ギモンフ	some
 ！	カンタンフ	some
-#゛	ダクテン	most
-#゜	ハンダクテン	most
+゛	ダクテン	char	always
+゜	ハンダクテン	char	always
 ´	アクサンティギュー	most
 ｀	アクサングラーブ	most
 ¨	ウムラウト	most
@@ -493,3 +495,4 @@ _	アンダー	some
 ∵	ナゼナラバ	most
 ∩	キャップ	most
 ∪	カップ	most
+
