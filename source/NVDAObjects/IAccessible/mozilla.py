@@ -149,6 +149,10 @@ class GeckoPluginWindowRoot(IAccessible):
 
 	def _get_parent(self):
 		parent=super(GeckoPluginWindowRoot,self).parent
+		if parent.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT:
+			# Skip the window wrapping the plugin window,
+			# which doesn't expose a Gecko accessible in Gecko >= 11.
+			parent=parent.parent.parent
 		ver=_getGeckoVersion(parent)
 		if ver and not ver.startswith('1.'):
 			res=IAccessibleHandler.accNavigate(parent.IAccessibleObject,0,IAccessibleHandler.NAVRELATION_EMBEDS)
@@ -158,7 +162,6 @@ class GeckoPluginWindowRoot(IAccessible):
 					return obj
 		return parent
 
- 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
