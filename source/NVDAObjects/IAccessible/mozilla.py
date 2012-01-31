@@ -10,7 +10,7 @@ import winUser
 from comtypes import IServiceProvider, COMError
 import eventHandler
 import controlTypes
-from . import IAccessible, Dialog
+from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
 
 class Mozilla(IAccessible):
@@ -145,7 +145,8 @@ def _getGeckoVersion(obj):
 	appMod._geckoVersion = ver
 	return ver
 
-class GeckoPluginWindowRoot(IAccessible):
+class GeckoPluginWindowRoot(WindowRoot):
+	parentUsesSuperOnWindowRootIAccessible = False
 
 	def _get_parent(self):
 		parent=super(GeckoPluginWindowRoot,self).parent
