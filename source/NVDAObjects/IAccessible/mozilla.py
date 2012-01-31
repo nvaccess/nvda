@@ -159,8 +159,13 @@ class GeckoPluginWindowRoot(WindowRoot):
 			res=IAccessibleHandler.accNavigate(parent.IAccessibleObject,0,IAccessibleHandler.NAVRELATION_EMBEDS)
 			if res:
 				obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-				if obj and controlTypes.STATE_OFFSCREEN not in obj.states:
-					return obj
+				if obj:
+					if controlTypes.STATE_OFFSCREEN not in obj.states:
+						return obj
+					else:
+						log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
+			else:
+				log.debugWarning("NAVRELATION_EMBEDS failed")
 		return parent
 
 def findExtraOverlayClasses(obj, clsList):
