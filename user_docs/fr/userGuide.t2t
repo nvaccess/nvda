@@ -1123,6 +1123,36 @@ Veuillez consulter la documentation du terminal pour savoir où se trouvent ces 
 | Dire tout | B6 |
 %kc:endInclude
 
+++ HumanWare Séries Brailliant BI/B ++
+Les séries de terminaux Brilliant BI & B de [HumanWare http://www.humanware.com/], incluant le BI 32, BI40 et B 80 sont supportés quand ils sont connectés via USB ou bluetooth.
+S'ils sont connecté en USB, vous devez d'abord installer le pilote USB fourni par le constructeur.
+
+Voici les assignations de touches pour ce terminal sous NVDA.
+Veuillez consulter la documentation du terminal pour savoir où se trouvent ces touches.
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement arrière de l'affichage | gauche |
+| Défilement avant de l'affichage | droite |
+| Ligne précédente | haut |
+| Ligne suivante | bas |
+| Aller à la cellule braille | routing |
+| Bascule d'attachement du Braille | haut+bas |
+| Touche FlècheHaut | espace+point1 |
+| Touche FlècheBas | espace+point4 |
+| Touche FlècheGauche | espace+point3 |
+| Touche FlècheDroite | espace+point6 |
+| Menu NVDA | c1+c3+c4+c5 (commande n) |
+| Touche maj+tab | espace+point1+point3 |
+| Touche tab | espace+point4+point6 |
+| Touche alt | espace+point1+point3+point4 (espace+m) |
+| Touche échap | espace+point1+point5 (espace+e) |
+| Touche entrer | point8 |
+| Touche windows+d (minimiser toutes les applications) | c1+c4+c5 (commande d) |
+| Touche windows | espace+point3+point4 |
+| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| Dire tout | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
 Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://brl.thefreecat.org/brltty/].
