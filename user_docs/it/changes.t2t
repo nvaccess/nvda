@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.1 =
+Le principali novità di questa versione si concentrano su una lettura del braille molto più fluida; la formattazione dei documenti è indicata anche in braille; accesso a molte più informazioni di formattazione e una migliore gestione di Microsoft Word; inoltre, accesso semplificato e intuitivo all'Itunes Store. 
+
 == Novità ==
 - NVDA è in grado di annunciare il numero di spazi e di rientri nella riga attuale, nell'ordine in cui sono stati inseriti. Questo può essere attivato selezionando l'opzione annuncia rientri riga nella finestra di dialogo formattazione documento. (#373)
 - NVDA è in grado di rilevare la pressione dei tasti proveniente da tastiere alternative che lavorano in emulazione come tastiere a schermo o programmi di riconoscimento vocale.
@@ -15,17 +17,24 @@
 - In braille, i puntini 7 e 8 indicano la selezione del testo. (#889)
 - Vengono riportate in braille informazioni sui controlli contenuti nei documenti, come link, intestazioni e pulsanti. (#202)
 - Supporto per  i display Braille hedo ProfiLine e MobilLine USB. (#1863, #1897)
-- Quando possibile, NVDA cerca di non spezzare più le parole in braille. (#1890)
 - NVDA ora cerca di evitare di spezzare le parole in braille di default. Questo può venir disattivato nelle impostazioni braille. (#1890, #1946)
 - E' ora possibile usufruire in braille della lettura per paragrafi, oltre che per righe, che dovrebbe offrire una consultazione più comoda in grandi porzioni di testo. Tale opzione è selezionabile dalle impostazioni Braille, voce lettura per paragrafi. (#1891)
 - In modalità navigazione, è possibile attivare un oggetto direttamente utilizzando una barra braille. Sarà sufficiente fare doppio click con il cursor routing corrispondente, oppure, nel caso il cursore sia già alla posizione desiderata, basterà un click solo. (#1893)
 - Introdotto un supporto di base nelle aree web di Itunes, come lo store. Possono essere supportate anche altre applicazioni che utilizzino WebKit 1. (#734)
 - Nei libri in Adobe Digital Edition 1.8.1 e versioni successive, le pagine verranno girate automaticamente anche utilizzando l'opzione dire tutto. (#1978)
-
-
+- Nuova tabella di traduzione Braille: Portoghese Grado 2. (#2014)
+- E' ora possibile configurare dalla finestra Formato documento se i frame debbano essere annunciati o meno, tramite l'opzione Leggi Frame. (#1900)
+- Viene attivata automaticamente la modalità riposo per il programma Openbook. (#1209)
+- In Poedit, ora i traduttori sono in grado di leggere automaticamente i commenti estratti e i commenti aggiunti nelle traduzioni. I messaggi che risultano non ancora tradotti o che sono incerti sono marcati con un asterisco e viene prodotto un beep quando li si raggiunge. (#1811)
+- Supporto per i Display Braille Serie HumanWare Brailliant BI e B (#1990)
 
 == Cambiamenti ==
 - Il comando che consente di ottenere una descrizione del carattere attuale o di ascoltare lo spelling della parola o della riga ora funzionerà esattamente con la lingua del testo, se l'opzione cambio lingua automatica risulta attiva e sono disponibili le informazioni appropriate per la lingua.
+- Aggiornata Espeak alla versione 1.46.02.
+- NVDA non visualizzerà nomi più lunghi di 30 caratteri quando essi vengono presi da grafici o link degli URL, in quanto generalmente si tratta di informazioni di poco conto che disturbano la lettura. (#1989)
+- Molte informazioni in braille sono state abbreviate. (#1955, #2043)
+- Quando il cursore, oppure il cursore di controllo, viene spostato, il Braille lo seguirà correttamente come se avvenisse uno scorrimento manuale. Il risultato è una lettura più fluida quando l'opzione "lettura per paragrafi", o "evita di spezzare le parole", è attiva. (#1996)
+- Aggiornamento alla nuova tabella Braille Spagnola Grado1
 
 
 == Bug corretti ==
@@ -36,6 +45,18 @@
 - NVDA ora funziona nuovamente con i display braille, anche se la sintesi vocale è impostata su Nessun Sintetizzatore. (#1963)
 - I comandi per la navigazione ad oggetti non annunceranno più  nessun oggetto genitore/figlio, ma utilizzeranno gli stessi termini della documentazione.
 - Quando NVDA viene configurato nell'utilizzare una lingua diversa dall'inglese, il nome del tasto tab viene annunciato nella lingua corretta.
+- Nelle applicazioni Mozilla Gecko (ad esempio Firefox), NVDA non attiverà più in maniera intermittente la modalità navigazione quando si esplorano i menu nei documenti. (#2025)
+- Nella calcolatrice, la pressione del tasto Backspace ora annuncia il risultato aggiornato, piuttosto che non dire nulla. (#2030)
+- Nella modalità navigazione,  il comando "sposta il puntatore del mouse sull'oggetto attuale del navigatore) ora porterà il mouse al centro dell'oggetto sul quale è situato il cursore di controllo, invece che in alto a sinistra, il che rende questa operazione più accurata in alcune circostanze. (#2029)
+- In modalità navigazione, se l'opzione Modalita' focus automatica per i cambiamenti del focus è attiva, il portarsi in una barra degli strumenti farà attivare la modalità focus. (#1339)
+- Il comando Leggi titolo ora funziona di nuovo correttamente in Adobe Reader.
+- Quando l'opzione "modalità del focus automatica per i cambiamenti del focus" è attiva, viene utilizzata correttamente la modalità focus nelle tabelle e naturalmente nelle celle (esempio griglie). (#1763)
+- In Itunes, la posizione in alcune visualizzazioni ad elenco è ora riportata correttamente.
+- In Adobe Reader,  alcuni link non sono più trattati come campi editazione di sola lettura.
+- Le etichette di alcuni campi editazione non vengono più incluse in maniera non corretta quando viene annunciato il testo di una finestra di dialogo. (#1960)
+- Viene annunciata nuovamente la descrizione dei raggruppamenti, se l'opzione annuncia descrizione degli oggetti è attiva.
+- La finestra di dialogo inerente le proprietà di un'unità disco in risorse del computer  viene gestita in maniera migliore indipendentemente dalla dimensione dei caratteri.
+- E' stato sistemato un problema che causava la doppia lettura del testo nelle finestre proprietà. (#218)
 
 
 == Cambiamenti per sviluppatori ==

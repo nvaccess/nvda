@@ -231,18 +231,22 @@ Se ci si trova all'interno di una tabella, sono disponibili i seguenti comandi:
 %kc:endInclude
 
 ++ Navigazione ad oggetti ++
-Talvolta, è possibile che si desideri esaminare l'applicazione corrente o il sistema operativo senza però spostare il [focus #SystemFocus].
+Il più delle volte, l'utente interagisce con l'applicazione utilizzando comandi che spostano direttamente il [focus #SystemFocus] e il [cursore #SystemCaret].
+Vi sono però alcune circostanze nelle quali può essere utile esaminare l'applicazione corrente o il sistema operativo senza però spostare il focus o il cursore.
 Inoltre potrebbe essere necessario lavorare con [oggetti #Objects] che non possono essere normalmente raggiunti utilizzando la tastiera.
 In questi casi, si può utilizzare la navigazione ad oggetti.
 
-Essa permette di ottenere informazioni e spostarsi tra singoli oggetti.
+Essa permette di ottenere informazioni e spostarsi tra singoli [oggetti #Objects].
+
 Quando ci si sposta su un oggetto, NVDA lo annuncerà similmente a come avviene con il focus di sistema.
 Se invece si desidera esplorare il testo così come appare sullo schermo, è possibile utilizzare la [navigazione in linea #FlatReview].
 
 Onde evitare di doversi muovere indietro ed avanti tra ogni singolo oggetto del sistema, gli oggetti sono raggruppati in maniera gerarchica.
 Questo significa che alcuni oggetti contengono altri oggetti e che bisogna spostarvisi all'interno  per ottenerne le informazioni.
 Per esempio, come sappiamo un elenco contiene vari elementi, per cui bisognerà spostarsi all'interno dell'elenco per ottenere accesso ai suoi elementi.
-Se si è raggiunto un elemento di un elenco, ci si può spostare all'oggetto che lo contiene per ritornare all'elenco.
+Se ci si è portati ad un elemento di un elenco, i comandi per andare all'oggetto successivo o precedente  faranno in modo che ci si sposti all'elemento successivo o precedente dell'elenco.
+Lo spostarsi su  un oggetto che contiene un elemento di un elenco riporterà all'elenco stesso.
+Sarà quindi necessario spostarsi tra l'elenco per raggiungere altri oggetti.
 Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'interno di essa per accedere ai controlli della stessa.
 
 L'oggetto che attualmente viene esplorato è chiamato navigatore ad oggetti.
@@ -269,6 +273,7 @@ Nota, Per utilizzare il tastierino numerico, il tasto NumLock deve essere impost
 ++ Controllare il testo ++
 NVDA permette di leggere il contenuto dell' [oggetto corrente #ObjectNavigation] inclusa la [navigazione in linea #FlatReview]) carattere per carattere, parola per parola o riga per riga.
 Questo risulta utile principalmente nel prompt dei comandi di Windows o in tutte quelle situazioni dove il  [cursore di sistema #SystemCaret] non esiste o ha funzioni limitate.
+Ad esempio, può venir buono nel leggere il contenuto di lunghi testi in una finestra di dialogo.
 
 Quando si sposta il cursore di controllo, il cursore di sistema non lo segue, cosicché sarà possibile esplorare il testo senza perdere la propria posizione.
 Comunque, da impostazioni predefinite, quando il cursore di sistema si sposta, il cursore di controllo lo segue. 
@@ -352,6 +357,7 @@ Tutte le combinazioni di tasti di NVDA dedicate al [cursore di sistema #SystemCa
 Verranno annunciate  anche le informazioni inerenti il tipo di controllo su cui ci si trova, ad esempio link, intestazioni, etc.
 
 Talvolta, risulterà necessario anche interagire direttamente con i controlli presenti in questi documenti.
+Ad esempio, si può aver bisogno di questo nei campi editazione o negli elenchi in modo che sia possibile digitare i caratteri ed utilizzare i tasti cursore per lavorare con i controlli.
 Questo viene effettuato attivando la modalità focus, dove tutti i tasti verranno passati direttamente ai controlli.
 Se ci si trova nella modalità navigazione e si preme tab o si fa click su un controllo, NVDA attiverà automaticamente la modalità Focus se tale controllo lo richiede.
 Da notare che la pressione del tasto invio o spazio in questo tipo di controlli attiverà comunque la modalità focus.
@@ -569,7 +575,7 @@ Questo significa che non sarà necessario utilizzare lo scrolling ogni volta qua
 La lettura dovrebbe risultare più fluente in presenza di grosse porzioni di testo.
 L'opzione risulta disabilitata da impostazioni predefinite.
 
-+++ Impostazioni tastiera (NVDA+control+k) +++
++++ Impostazioni Tastiera (NVDA+control+k) +++
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce "impostazioni tastiera...". Contiene le seguenti opzioni:
 
 ==== Layout tastiera ====
@@ -632,7 +638,7 @@ Attivando questa casella di controllo si farà in modo che NVDA emetta dei segna
 ==== La luminosità controlla il volume delle coordinate audio ====
 Se la casella di controllo "coordinate audio quando il mouse si sposta" è attiva, allora, attivando quest'opzione, il volume dei beeps delle coordinate audio è controllato dal livello di luminosità dello schermo, riferito alla posizione attuale del mouse. Dal momento che ci possono essere problemi di prestazioni con Windows Vista, questa caratteristica viene disattivata nelle impostazioni predefinite.
 
-+++ Impostazioni cursore di controllo +++
++++ Impostazioni Cursore di Controllo +++
 Situata sul menu preferenze alla voce cursore di controllo..., questa finestra di dialogo contiene le seguenti opzioni:
 
 %kc:setting
@@ -743,22 +749,22 @@ la maggior parte delle caselle di controllo in questa finestra di dialogo servon
 - nome carattere
 - dimensione carattere
 - attributi carattere
-- stile
+- Allineamento testo
 - Colori
-- allineamento del testo
 - stile del testo
+- Errori ortografici
+- Numeri di pagina
+- Numeri di riga
+- Rientro righe
 - tabelle
 - intestazioni riga/colonna delle tabelle
 - Coordinate delle celle delle tabelle
-- numeri di pagina
-- numeri di riga
-- errori di ortografia
-- Rientri riga
 - collegamenti
 - intestazioni
 - elenchi
 - Blocchi tra virgolette
 - Sezioni
+- Frame
 -
    
 ==== Leggi i cambiamenti di formattazione dopo il cursore ====
@@ -1016,6 +1022,52 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Dire tutto | B6 |
 %kc:endInclude
 
+++ hedo MobilLine USB ++
+La Barra Braille hedo MobilLine USB prodotta dalla hedo Reha-Technik http://www.hedo.de/] è pienamente supportata.
+E' prima necessario installare i driver USB forniti dal produttore.
+
+Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri Display Braille indietro | K1 |
+| Scorri Display Braille avanti | K3 |
+| Sposta Display Braille alla riga precedente | B2 |
+| Sposta Display Braille alla riga successiva | B5 |
+| Route to braille cell | routing |
+| Commuta inseguimento Braille | K2 |
+| Dire tutto | B6 |
+%kc:endInclude
+ 
+++ HumanWare Brailliant BI/B Series ++
+Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare http://www.humanware.com/], comprese BI 32, BI 40 e B 80, sono supportate quando connesse tramite USB o Bluetooth.
+In caso di connessione tramite USB, è necessario prima installare i driver sviluppati dal produttore.
+
+Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri Display Braille indietro | Sinistra |
+| Scorri Display Braille avanti | Destra |
+| Sposta Display Braille alla riga precedente | Su |
+| Sposta Display Braille alla riga successiva | Giù |
+| Route to braille cell | routing |
+| Commuta inseguimento Braille | su+giù |
+| Tasto Freccia su | spazio+punto1 |
+| Tasto Freccia giù | spazio+Punto4 |
+| Tasto Freccia Sinistra | spazio+punto3 |
+| Tasto Freccia Destra | spazio+punto6 |
+| NVDA Menu | c1+c3+c4+c5 (command n) |
+| shift+Tasto tab | spazio+punto1+punto3 |
+| Tasto tab | spazio+punto4+punto6 |
+| Tasto alt | spazio+punto1+punto3+punto4 (spazio+m) |
+| Tasto esc | spazio+punto1+punto5 (spazio+e) |
+| Tasto Invio | punto8 |
+| Tasto windows+d (Riduci a icona tutte le applicazioni) | c1+c4+c5 (command d) |
+| Tasto windows | spazio+punto3+punto4 |
+| Tasto alt+tab | spazio+punto2+punto3+punto4+punto5 (spazio+t) |
+| Dire Tutto | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
 
 ++ altri drivers non ufficiali ++
 Sul sito della comunità italiana di NVDA sono presenti, alla voce download, drivers che non sono inclusi nello screen reader per ragioni tecniche e che verranno inseriti in seguito. Al momento possono essere scaricati drivers per la barra braille MB408l prodotta dalla MDV (Istituto Cavazza), per il Braillesense e SyncBraille prodotti dalla Hims, e per  i display Papenmeier, funzionanti però questi ultimi soltanto con la vecchia versione 2010.2, in quanto nessun utente si è dimostrato interessato per questi driver, e nessuno ci ha mai aiutato con i test. 
