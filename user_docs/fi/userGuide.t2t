@@ -1,8 +1,8 @@
-﻿NVDA NVDA_VERSION käyttöopas
+﻿NVDA NVDA_VERSION -käyttöopas
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION näppäinkomentojen pikaopas
+%kc:title: NVDA NVDA_VERSION - näppäinkomentojen pikaopas
 
 = Sisällys =[toc]
 %%toc
@@ -1121,6 +1121,36 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 | Siirrä pistesoluun | Kosketuskohdistinnäppäimet |
 | Vaihda Pistenäyttö seuraa -asetusta | K2 |
 | Lue kaikki | B6 |
+%kc:endInclude
+
+++ HumanWare Brailliant BI/B ++
+[HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä, mukaan lukien BI 32, BI 40 ja B 80, tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetooth-yhteydellä.
+USB-liitäntää käytettäessä on ensin asennettava valmistajan ajurit .
+
+Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | vasen |
+| Vieritä pistenäyttöä eteenpäin | oikea |
+| Siirrä pistenäyttö edelliselle riville | ylös |
+| Siirrä pistenäyttö seuraavalle riville | alas |
+| Siirrä pistesoluun | Kosketuskohdistinnäppäimet |
+| Vaihda Pistenäyttö seuraa -asetusta | ylös+alas |
+| ylänuolinäppäin | välilyönti+piste1 |
+| alanuolinäppäin | välilyönti+piste4 |
+| vasen nuolinäppäin | välilyönti+piste3 |
+| oikea nuolinäppäin | välilyönti+piste6 |
+| NVDA-valikko | c1+c3+c4+c5 (komento n) |
+| Shift+sarkain-näppäinyhdistelmä | välilyönti+piste1+piste3 |
+| sarkain-näppäin | välilyönti+piste4+piste6 |
+| Alt-näppäin | välilyönti+piste1+piste3+piste4 (välilyönti+m) |
+| Escape-näppäin | välilyönti+piste1+piste5 (välilyönti+e) |
+| Enter-näppäin | piste8 |
+| Windows+d-näppäinyhdistelmä (pienennä kaikki sovellukset) | c1+c4+c5 (komento d) |
+| Windows-näppäin | välilyönti+piste3+piste4 |
+| Alt+sarkain-näppäinyhdistelmä | välilyönti+piste2+piste3+piste4+piste5 (välilyönti+t) |
+| Lue kaikki | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
 ++ BRLTTY ++
