@@ -1144,6 +1144,22 @@ Bitte sehen sie in der Dokumentation ihrer Braillezeile nach, wo die entsprechen
 %kc:endInclude
 
 
+++ HumanWare Brailliant BI/B-Serie ++
+Die Braillezeilen der Serien BI und bB von  [HumanWare http://www.humanware.de/], so u.a.  die BI 32, BI 40 und B 80, werden unterstützt, sofern sie via USB oder bluetooth verbunden sind.
+Wenn sie die Zeile über USB anschließen wollen, müssen sie zunächst den usb-Treiber des herstellers installieren.
+
+Folgende Tastenkombinationen sind bei diesen Braillezeilen verfügbar
+Bitte sehen Sie in der Dokumentation der Braillezeile nach wo die entsprechenden Tasten zu finden sind.
+%kc:beginInclude
+|| Name | Taste |
+| Braillezeile zurückscrollen | links |
+| Braillezeile vorwärtsscrollen | rechts |
+| Braillezeile zur vorigen Zeile bewegen | auf |
+| Braillezeile zur nächsten Zeile bewegen | ab |
+| Cursor zum Braille-modul bewegen | routing |
+%kc:endInclude
+
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit der Sie viele weitere Braillezeilen ansteuern können.
 Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://brl.thefreecat.org/brltty/].

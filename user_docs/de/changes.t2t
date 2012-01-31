@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.1 =
+**Die wichtigsten Neuerungen für diese Version beinhalten Funktionen, um Braille flüssiger lesen zu können; Kennzeichnungen für Dokumentformatierungen in Braille; Zugriff auf viel mehr Formatierungsinformationen und verbesserte Geschwindigkeit in Microsoft Word; und Unterstützung für den Itunes Store.
+
 
 == neue Funktionen ==
 - Nvda kann nun die Anzahl führender Tabs und Leerzeichen in der aktuellen Zeile in der Reihenfolge angeben, in der sie eingegeben wurden. Dies kann in den einstellungen zur Dokumentformatierung mit der Option "Zeileneinrückungen ansagen" eingestellt werden. (#373)
@@ -24,13 +26,16 @@
 - neue Braille-Übersetzungstabelle: Portugiesische Kurzschrift. (#2014)
 - In den Einstellungen für Dokumentformatierungen kann nun eingestellt werden, ob Rahmen in Dokumenten angesagt werden sollen. (#1900)
 - Bei der Verwendung von Openbook wird automatisch der Schlafmodus aktiviert. (#1209)
+**- In Poedit können Übersetzer nun vom Übersetzer selbst erstellte Kommentare sowie automatisch eingefügte Kommentare lesen. Automatisch übersetzte oder noch nicht übersetzte Meldungen werden mit einem Stern markiert. Zudem wird ein Signalton ausgegeben, wenn Sie darauf navigieren. (#1811)
+**- Unterstützung für die HumanWare Brailliant Serien BI und B Braillezeilen. (#1990)
 
 
 == Änderungen ==
 - Die Befehle zum Beschreiben des aktuellen Zeichens Bzw. zum Buchstabieren der aktuellen Zeile und des aktuellen Wortes berücksichtigen die im Dokument hinterlegte Sprache, falls der automatische sprachenwechsel aktiviert ist.
 - Sprachausgabe eSpeak auf 1.46.02 aktualisiert.
 - Wenn bei der Darstellung von Links und Grafiken der Name aus der Adresse ermittelt werden muss, werden Namen ausgefiltert, die länger als 30 zeichen sind. Derart lange Namen enthalten meist nutzlose Informationen. (#1989)
-- einige neue verkürzte Klassennamen in Braille hinzugefügt (#1955)
+- einige neue verkürzte Klassennamen in Braille hinzugefügt (#1955, #2043)
+**- Wenn der Systemcursor oder der nvda-Cursor bewegt wird, wird die Braillezeile so mitbewegt, wie wenn man die Braillezeile manuell weiterbewegen würde. Dies erleichtert das lesen, wenn die Einstellungen Absatzweise lesen und/oder Umbrechen von Wörtern verhindern aktiviert ist. (#1996)
 
 
 == Fehlerkorrekturen ==
@@ -46,6 +51,8 @@
 - Wenn im Lesemodus die Maus zum Navigator-Objekt gezogen wird, wird der mauszeiger nun in die Mitte des Objekts bewegt, was in manchen Fällen bessere Ergebnisse liefert. (#2029)
 - Wenn im Lesemodus mit automatischem Wechsel in den Fokusmodus eine Symbolleiste den Fokus erhält, so wird der Lesemodus automatisch verlassen. (#1339)
 - der Befehl zum Ausgeben der Titelleiste funktioniert im Acrobat Reader wieder.
+**- Wenn die Option Bei Änderungen des Fokuses automatisch den Fokusmodus einschalten aktiviert ist, wird der Fokus-Modus korrekt für fokusierte Tabellenzeilen z.B. in ARIA Gittern verwendet. (#1763)
+- In Adobe Reader werden einige Links nicht mehr fälschlicherweise als Nur-Lesen-Eingabefelder erkannt.
 
 
 == Änderungen für Entwickler ==
@@ -172,7 +179,7 @@ Die wichtigsten Neuerungen in dieser Version beinhalten große Verbesserungen im
 - Das Script reportCurrentFormatting (NVDA+f) zeigt nun nicht mehr die Formatierungen am System-cursor, sondern die formatierungen am nvda-Cursor an. Die meisten Anwender werden keinen Unterschied bemerken, weil der nvda-Cursor standardmäßig dem Systemcursor folgt. Jetzt ist es jedoch möglich, z.B. im Flächenmodus die Formatierungen bestimmter Bildschirmbereiche abzufragen.
 
 
-== Fehlerbehebungen ==
+== Fehlerkorrekturen ==
 - Wenn sie mit nvda+Leertaste den Fokus-modus erzwungen haben und ein Kombinationsfeld schließen, wird nun nicht mehr zurück in den browser-modus gewechselt (#1386)
 - in Gecko-/mshell-Dokumenten (Firefox bzw. Internet Explorer) wird nun Text korrekt verarbeitet, wenn er auf einer einzigen Zeile steht. Bisher wurde solcher Text immer auf mehrere zeilen verteilt. (#1378)
 - Wenn die Braillezeile an den Navigator gekoppelt wird und der Navigator auf einen virtuellen Puffer bewegt wird (entweder manuell oder durch eine Fokusänderung), wird nun der Inhalt des virtuellen Puffers korrekt dargestellt. (#1406, #1407)
@@ -248,9 +255,9 @@ Die wichtigsten Neuerungen in dieser Version beinhalten große Verbesserungen im
 
 
 = 2011.1.1 =
+Dieses Release behebt wichtige Fehler und Sicherheitsprobleme, welche in NVDA 2011.1 gefunden wurden.
 
-== Fehlerbehebungen ==
-
+== Fehlerkorrekturen ==
 - Der Eintrag "Donate" (Spenden) im Menü ist nun bei sonstigen Sicherheitshinweisen, im Windows Anmeldebildschirm sowie u. a. der Benutzerkontensteuerung ausgeblendet. Dies stellte ein Sicherheitsrisiko dar. (#1419)
 - Es ist nun nicht länger möglich die benutzerdefinierte Konfiguration von NVDA während dieser Sicherheitsebenen zu kopieren oder einzufügen. Dies stellt ebenso ein Sicherheitsrisiko dar. (#1421)
 - In Firefox 4 funktioniert nun der Befehl "NVDA+STRG+Leertaste" für die eingebetteten Inhalte in der Virtuellen Ansicht. (#1429)
@@ -289,7 +296,7 @@ Unterstützung globaler Erweiterungen; die korrekte Anzeige von Aufzählungen un
 - Die Tasten für die lautstärkeregelung und Stummschaltung werden nun in der Eingabehilfe erkannt. Dies könnte hilfreich sein, falls sich Anwender über die Funktionsweise dieser Tasten unsicher sind.
 
 
-== Fehlerbehebungen ==
+== Fehlerkorrekturen ==
 - Beim Hinzufügen eines Eintrags im Aussprachewörterbuch lautet nun der Titel des Dialogs "Wörterbucheintrag hinzufügen" anstelle "Wörterbucheintrag bearbeiten". (#924)
 - Im Dialog des Aussprachewörterbuchs werden die Spalten für den Regulären Ausdruck und die Beachtung der Groß-/Kleinschreibung nun in der eingestellten Sprache angezeigt.
 - Im AOL Instant Messenger (AIM) werden die Positionsinformationen nun als Baumansicht angesagt.
@@ -891,7 +898,3 @@ die wichtigsten Neuerungen dieser version sind u.a. die Unterstützung von 64-bi
 - NVDA fragt nun nach, ob er nach einem Sprachenwechsel die Konfiguration speichern und neu starten soll. Ein Neustart von nvda ist nach einem sprachenwechsel notwendig.
 - Wenn bei der Auswahl eines Synthesizers aus dem Sprachausgabendialog dieser nicht geladen werden kann, wird der Anwender darüber informiert.
 - Wird ein Synthesizer das erste mal geladen, wird nach einer passenden Stimme gesucht Bzw. passende Werte für Geschwindigkeit, Lautstärke und Stimmhöhe eingestellt. Dies behebt Probleme mit den sapi4-Versionen von Eloquence und viavoice, die bisher zu schnell gesprochen haben.
-
-
-
-Ende des Dokuments.
