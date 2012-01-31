@@ -498,7 +498,7 @@ Pode utilizar as setas para ouvir os diversos itens.
 As setas Acima e Esquerda sobem pela lista, enquanto as Setas Abaixo e Direita descem pela lista.
 
 ==== Variante ====
-Se usa o eSpeak que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar a Variante do sintetizador com a qual deve falar.
+Caso esteja usando o eSpeak que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar a Variante do sintetizador com a qual deve falar.
 As variantes do eSpeak assemelham-se às vozes, mas proporcionam atributos ligeiramente diferentes da voz principal.
 Algumas variantes são semelhantes a homens, mulheres e outras são similares a sapos.
 
@@ -935,7 +935,7 @@ SAPI 4 é um standard antigo da Microsoft para os softwares sintetizadores de vo
 Muitos sintetizadores de voz que trabalham com este standard podem ser comprados ou baixados em várias empresas ou sites da Web.
 Quando este sintetizador é utilizado com o NVDA, as vozes disponíveis (que podem ser encontradas no [Diálogo de Opções de Voz #VoiceSettings] ou desde o [Anel de Configurações de Voz #SynthSettingsRing]) contêm todas as vozes dos motores SAPI 4 que se encontram instaladas em seu sistema.
 
-Se possui sintetizadores SAPI 4 instalados mas o sintetizador não aparece na lista do NVDA, instale por favor o runtime binaries do SAPI 4.0, disponível em http://ativex.microsoft.com/ativex/controls/sapi/spchapi.exe.
+Se possui sintetizadores SAPI 4 instalados mas o sintetizador não aparece na lista do NVDA, instale por favor o runtime binaries do SAPI 4.0, que se encontra disponível no enderesso http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 O SAPI 5 é um standard da Microsoft para os softwares sintetizadores de voz.
@@ -1105,6 +1105,7 @@ Será antes necessário  instalar os drivers para USB fornecidos pelo fabricante
 
 A segui estão as teclas de comando para esta linha braille com o NVDA.
 Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
+
 %kc:beginInclude
 || Nome | Tecla |
 | Mover Linha Braille para Trás | K1 |
@@ -1133,17 +1134,48 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 | Leitura Contína | B6 |
 %kc:endInclude
 
+++ HumanWare Brailliant BI/B Series ++
+As linhas braille Brailliant BI e B series, disponíveis em [HumanWare http://www.humanware.com/], incluindo as linhas BI 32, BI 40 e B 80, são suportadas quando conectadas via USB ou bluetooth.
+Para conectar via USB, você antes precisa instalar os drivers USB fornecidos pelo fabricante.
+
+A segui estão as teclas de comando para esta linha braille com o NVDA.
+Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
+ 
+%kc:beginInclude
+|| Nome | Tecla |
+| Deslocar linha braille para trás | esquerda |
+| Deslocar linha braille para a frente | direita |
+| Mover linha braille para a linha anterior | cima |
+| Mover linha braille para a linha seguinte | baixo |
+| Guiar para a cela braille | sensor |
+| Alternar braille vinculado a | cima+baixo |
+| Tecla seta acima | espaço+ponto1 |
+| Tecla seta abaixo | espaço+ponto4 |
+| Tecla seta a esquerda | espaço+ponto3 |
+| Tecla seta a direita | espaço+ponto6 |
+| Menu do NVDA | c1+c3+c4+c5 (comando n) |
+| Tecla shift+tab | espaço+ponto1+ponto3 |
+| Tecla tab | espaço+ponto4+ponto6 |
+| Tecla alt | espaço+ponto1+ponto3+ponto4 (espaço+m) |
+| Tecla escape | espaço+ponto1+ponto5 (espaço+e) |
+| Tecla enter | ponto8 |
+| Tecla windows+d (minimizar todos os applicativos) | c1+c4+c5 (comando d) |
+| Tecla windows | espaço+ponto3+ponto4 |
+| Tecla alt+tab | espaço+ponto2+ponto3+ponto4+ponto5 (espaço+t) |
+| Leitura Contínua | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
-Para utilizá-lo, terá que instalar o BRLTTY para o Windows.
-Deverá baixá-lo  e instalar o último pacote de instalação, que se denominará, por exemplo, brltty-win-4.2-2.exe.
+Para utilizá-lo, será necessário instalar o BRLTTY para o Windows.
+Você deverá baixá-lo  e instalar o último pacote de instalação, que se denominará, por exemplo, brltty-win-4.2-2.exe.
 Quando configurar a linha e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se utiliza uma linha USB e já tem os drivers do fabricante instalados.
 
 A seguir encontram-se os comandos BRLTTY para o NVDA.
 Por favor consulte as [tabelas de documentação de teclas para o BRLTTY http://mielke.cc/brltty/doc/drivers/] para obter informações sobre como estão mapeados os comandos do BRLTTY para controlar cada linha braille.
  
 %kc:beginInclude
-|| Nome | Comando BRLTTY |
+| Nome | Comando BRLTTY |
 | Mover linha braille para trás | fwinlt (caminha uma janela à esquerda) |
 | Mover  linha braille para a frente | fwinrt (Caminha uma janela à direita) |
 | Mover linha braille para a linha anterior | lnup (sobe uma linha) |
