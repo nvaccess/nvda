@@ -229,6 +229,8 @@ void CALLBACK WebKitVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK h
 		return;
 
 	IAccessible* acc = IAccessibleFromIdentifier((int)hwnd, childID);
+	if (!acc)
+		return;
 	acc->Release();
 	map<IAccessible*, WebKitVBufStorage_controlFieldNode_t*>::const_iterator it;
 	if ((it = backend->accessiblesToNodes.find(acc)) == backend->accessiblesToNodes.end())
