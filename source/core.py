@@ -89,7 +89,10 @@ def restart():
 	"""Restarts NVDA by starting a new copy with -r."""
 	import subprocess
 	import shellapi
-	shellapi.ShellExecute(None,None,unicode(sys.executable),unicode(subprocess.list2cmdline(sys.argv+['-r'])),None,0)
+	shellapi.ShellExecute(None, None,
+		sys.executable.decode("mbcs"),
+		subprocess.list2cmdline(sys.argv + ["-r"]).decode("mbcs"),
+		None, 0)
 
 def resetConfiguration():
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
