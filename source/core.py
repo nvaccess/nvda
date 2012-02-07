@@ -55,6 +55,7 @@ import time
 import logHandler
 import globalVars
 from logHandler import log
+import addonHandler
 
 # Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
 # This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
@@ -113,6 +114,8 @@ def resetConfiguration():
 	lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
+	# Addons
+	addonHandler.initialize()
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -170,6 +173,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
+	log.debug("Initializing addons system.")
+	addonHandler.initialize()
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
