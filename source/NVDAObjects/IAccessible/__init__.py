@@ -261,7 +261,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getParagraphOffsets(self,offset):
 		try:
-			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+			if offset>self.obj.IAccessibleTextObject.nCharacters:
 				return offset,offset+1
 		except COMError:
 			pass
