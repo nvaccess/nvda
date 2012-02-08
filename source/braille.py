@@ -706,6 +706,7 @@ class TextInfoRegion(Region):
 		self._addTextWithFields(chunk, formatConfig)
 		# Strip line ending characters, but add a space in case the cursor is at the end of the reading unit.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
+		self._rawToContentPos.append(self._currentContentPos)
 		del self.rawTextTypeforms[len(self.rawText) - 1:]
 		self.rawTextTypeforms.append(louis.plain_text)
 
