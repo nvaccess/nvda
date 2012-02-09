@@ -252,6 +252,9 @@ The object currently being reviewed is called the navigator object.
 Once you navigate to an object, you can review it using the [text review commands #ReviewingText].
 By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
 
+Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
+If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
+
 To navigate by object, use the following keys:
 
 %kc:beginInclude
@@ -277,6 +280,9 @@ For example, you might use it to review the text of a long information message i
 When moving the review cursor, the System caret does not follow along, so you can review text without losing your editing position.
 However, by default, when the System caret moves, the review cursor follows along.
 This can be toggled on and off.
+
+Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
+If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
 
 The following key commands are available for reviewing text:
 %kc:beginInclude
@@ -319,6 +325,9 @@ If you haven't used object navigation, this will usually be the object that has 
 For example, if the navigator object was a button, you will usually be positioned on the text of the button in flat review.
 You can then review the text using the [text review commands #ReviewingText].
 You can also navigate directly to the object encompassing the current position of the review cursor, allowing you to use [object navigation #ObjectNavigation] from there.
+
+Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
+If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
 
 The following two commands are used for switching to/from flat review:
 %kc:beginInclude
@@ -599,7 +608,7 @@ This option is a numerical field that allows you to change the blink rate of the
 This option is a numerical field that controls how long system messages are displayed on the braille display.
 
 %kc:setting
-==== Braille Tethered to ====
+==== Braille Tethered to ====[BrailleTether]
 Key: NVDA+control+t
 
 This option allows you to choose whether the braille display will follow the system focus, or whether it follows the navigator object / review cursor.
