@@ -80,7 +80,6 @@ confspec = ConfigObj(StringIO(
 
 # Presentation settings
 [presentation]
-		reportClassOfClientObjects = boolean(default=false)
 		reportKeyboardShortcuts = boolean(default=true)
 		reportObjectPositionInformation = boolean(default=true)
 		guessObjectPositionInformationWhenUnavailable = boolean(default=false)
