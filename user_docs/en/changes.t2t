@@ -63,6 +63,7 @@ Highlights of this release include features for more fluent reading of braille; 
 - Improved tracking of the caret in editable text fields which rely on text written to the screen. In particular, this improves editing in the Microsoft Excel cell editor and the Eudora message editor. (#1658)
 - In Firefox 11, the move to containing virtual buffer command (NVDA+control+space) now works as it should to escape embedded objects such as Flash content.
 - NVDA now restarts itself correctly (e.g. after changing the configured language) when it is located in a directory which contains non-ASCII characters. (#2079)
+- Braille correctly respects the settings for reporting of object shortcut keys, position information and descriptions.
 
 
 == Changes for Developers ==

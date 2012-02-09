@@ -460,7 +460,14 @@ class NVDAObjectRegion(Region):
 
 	def update(self):
 		obj = self.obj
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value if not NVDAObjectHasUsefulText(obj) else None , states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
+		presConfig = config.conf["presentation"]
+		text = getBrailleTextForProperties(name=obj.name, role=obj.role,
+			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
+			states=obj.states,
+			description=obj.description if presConfig["reportObjectDescriptions"] else None,
+			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
+			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
+		)
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
