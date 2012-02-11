@@ -1180,7 +1180,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
 			config.conf["braille"]["display"] = name
-			log.info("Loaded braille display driver %s" % name)
+			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
 			return True
 		except:
 			log.error("Error initializing display driver", exc_info=True)
