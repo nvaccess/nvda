@@ -129,6 +129,12 @@ class Dialog(NVDAObject):
 
 	value = None
 
+	def _get_isPresentableFocusAncestor(self):
+		# Only fetch this the first time it is requested,
+		# as it is very slow due to getDialogText and the answer shouldn't change anyway.
+		self.isPresentableFocusAncestor = res = super(Dialog, self).isPresentableFocusAncestor
+		return res
+
 class EditableText(editableText.EditableText, NVDAObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
 	This does not handle selection changes.
