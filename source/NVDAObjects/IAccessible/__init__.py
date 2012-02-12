@@ -1379,6 +1379,13 @@ class Groupbox(IAccessible):
 				return next.name
 		return super(Groupbox,self).description
 
+	def _get_isPresentableFocusAncestor(self):
+		# Only fetch this the first time it is requested,
+		# as it is a bit slow due to the description property
+		# and the answer shouldn't change anyway.
+		self.isPresentableFocusAncestor = res = super(Groupbox, self).isPresentableFocusAncestor
+		return res
+
 class TrayClockWClass(IAccessible):
 	"""
 	Based on NVDAObject but the role is changed to clock.
