@@ -65,7 +65,7 @@ Highlights of this release include features for more fluent reading of braille; 
 - NVDA now restarts itself correctly (e.g. after changing the configured language) when it is located in a directory which contains non-ASCII characters. (#2079)
 - Braille correctly respects the settings for reporting of object shortcut keys, position information and descriptions.
 - In Mozilla applications, switching between browse and focus modes is no longer slow with braille enabled. (#2095)
-- Routing the cursor to the space at the end of the line/paragraph using braille cursor routing keys in some editable text fields no longer routes to the start of the text. (#2096)
+- Routing the cursor to the space at the end of the line/paragraph using braille cursor routing keys in some editable text fields now works correctly instead of routing to the start of the text. (#2096)
 
 
 == Changes for Developers ==
