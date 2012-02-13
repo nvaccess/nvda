@@ -64,6 +64,7 @@ Highlights of this release include features for more fluent reading of braille; 
 - In Firefox 11, the move to containing virtual buffer command (NVDA+control+space) now works as it should to escape embedded objects such as Flash content.
 - NVDA now restarts itself correctly (e.g. after changing the configured language) when it is located in a directory which contains non-ASCII characters. (#2079)
 - Braille correctly respects the settings for reporting of object shortcut keys, position information and descriptions.
+- In Mozilla applications, switching between browse and focus modes is no longer slow with braille enabled. (#2095)
 
 
 == Changes for Developers ==
