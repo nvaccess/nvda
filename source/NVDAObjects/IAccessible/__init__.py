@@ -1369,12 +1369,24 @@ class NUIDialogClient(Dialog):
 
 class Groupbox(IAccessible):
 
+	def _getNextSkipWindows(self, obj):
+		res = obj.next
+		if res:
+			return res
+		res = obj.parent
+		if not res or res.role != controlTypes.ROLE_WINDOW:
+			return None
+		res = res.next
+		if not res or res.role != controlTypes.ROLE_WINDOW:
+			return None
+		return res.firstChild
+
 	def _get_description(self):
-		next=self.simpleNext
+		next=self._getNextSkipWindows(self)
 		if next and next.name==self.name and next.role==controlTypes.ROLE_GRAPHIC:
-			next=next.simpleNext
+			next=self._getNextSkipWindows(next)
 		if next and next.role==controlTypes.ROLE_STATICTEXT:
-			nextNext=next.simpleNext
+			nextNext=self._getNextSkipWindows(next)
 			if nextNext and nextNext.name!=next.name:
 				return next.name
 		return super(Groupbox,self).description
