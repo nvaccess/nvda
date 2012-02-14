@@ -77,6 +77,7 @@ Highlights of this release include features for more fluent reading of braille; 
 - Several control and output constants have been renamed or moved. (#228)
  - speech.REASON_* constants have been moved to controlTypes.
  - In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
+- Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
 
 
 = 2011.3 =

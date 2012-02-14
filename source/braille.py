@@ -978,12 +978,18 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self.brailleCells = []
 		self.cursorPos = None
 		start = 0
+		if log.isEnabledFor(log.IO):
+			logRegions = []
 		for region in self.visibleRegions:
+			if log.isEnabledFor(log.IO):
+				logRegions.append(region.rawText)
 			cells = region.brailleCells
 			self.brailleCells.extend(cells)
 			if region.brailleCursorPos is not None:
 				self.cursorPos = start + region.brailleCursorPos
 			start += len(cells)
+		if log.isEnabledFor(log.IO):
+			log.io("Braille regions text: %r" % logRegions)
 
 	def updateDisplay(self):
 		if self is self.handler.buffer:
@@ -1111,6 +1117,27 @@ def getFocusRegions(obj, review=False):
 		region2.update()
 		yield region2
 
+def formatCellsForLog(cells):
+	"""Formats a sequence of braille cells so that it is suitable for logging.
+	The output contains the dot numbers for each cell, with each cell separated by a space.
+	A C{-} indicates an empty cell.
+	@param cells: The cells to format.
+	@type cells: sequence of int
+	@return: The formatted cells.
+	@rtype: str
+	"""
+	ret = []
+	for cell in cells:
+		if not cell:
+			ret.append("-")
+			continue
+		dots = []
+		for dot in xrange(8):
+			if cell & (1 << dot):
+				dots.append(str(dot + 1))
+		ret.append("".join(dots))
+	return " ".join(ret)
+
 class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
@@ -1212,6 +1239,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def update(self):
 		cells = self.buffer.windowBrailleCells
+		if log.isEnabledFor(log.IO):
+			log.io("Braille window dots: %s" % formatCellsForLog(cells))
 		# cells might not be the full length of the display.
 		# Therefore, pad it with spaces to fill the display.
 		self._cells = cells + [0] * (self.displaySize - len(cells))
