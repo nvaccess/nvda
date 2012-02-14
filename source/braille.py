@@ -1126,17 +1126,13 @@ def formatCellsForLog(cells):
 	@return: The formatted cells.
 	@rtype: str
 	"""
-	ret = []
-	for cell in cells:
-		if not cell:
-			ret.append("-")
-			continue
-		dots = []
-		for dot in xrange(8):
-			if cell & (1 << dot):
-				dots.append(str(dot + 1))
-		ret.append("".join(dots))
-	return " ".join(ret)
+	# optimisation: This gets called a lot, so needs to be as efficient as possible.
+	# List comprehensions without function calls are faster than loops.
+	# For str.join, list comprehensions are faster than generator comprehensions.
+	return " ".join([
+		"".join([str(dot + 1) for dot in xrange(8) if cell & (1 << dot)])
+		if cell else "-"
+		for cell in cells])
 
 class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
