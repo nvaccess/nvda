@@ -27,6 +27,8 @@ Le principali novità di questa versione si concentrano su una lettura del brail
 - Viene attivata automaticamente la modalità riposo per il programma Openbook. (#1209)
 - In Poedit, ora i traduttori sono in grado di leggere automaticamente i commenti estratti e i commenti aggiunti nelle traduzioni. I messaggi che risultano non ancora tradotti o che sono incerti sono marcati con un asterisco e viene prodotto un beep quando li si raggiunge. (#1811)
 - Supporto per i Display Braille Serie HumanWare Brailliant BI e B (#1990)
+- Nuova Lingua: Norvegese Bokmål.
+
 
 == Cambiamenti ==
 - Il comando che consente di ottenere una descrizione del carattere attuale o di ascoltare lo spelling della parola o della riga ora funzionerà esattamente con la lingua del testo, se l'opzione cambio lingua automatica risulta attiva e sono disponibili le informazioni appropriate per la lingua.
@@ -35,6 +37,7 @@ Le principali novità di questa versione si concentrano su una lettura del brail
 - Molte informazioni in braille sono state abbreviate. (#1955, #2043)
 - Quando il cursore, oppure il cursore di controllo, viene spostato, il Braille lo seguirà correttamente come se avvenisse uno scorrimento manuale. Il risultato è una lettura più fluida quando l'opzione "lettura per paragrafi", o "evita di spezzare le parole", è attiva. (#1996)
 - Aggiornamento alla nuova tabella Braille Spagnola Grado1
+- Aggiornamento a libblouis braille translator 2.4.0.
 
 
 == Bug corretti ==
@@ -57,6 +60,10 @@ Le principali novità di questa versione si concentrano su una lettura del brail
 - Viene annunciata nuovamente la descrizione dei raggruppamenti, se l'opzione annuncia descrizione degli oggetti è attiva.
 - La finestra di dialogo inerente le proprietà di un'unità disco in risorse del computer  viene gestita in maniera migliore indipendentemente dalla dimensione dei caratteri.
 - E' stato sistemato un problema che causava la doppia lettura del testo nelle finestre proprietà. (#218)
+- Migliorato l'inseguimento del cursore nei campi di testo editabili che si basano sul testo scritto a schermo. In particolare, si possono notare grossi benefici nella modifica del contenuto delle celle in Microsoft Excel e nella gestione della composizione messaggi in Eudora. (#1658)
+- In Firefox11, il comando control+NVDA+spazio ora si comporta in maniera corretta, ad esempio nell'uscire da oggetti Flash.
+- Nelle applicazioni Mozilla, cambiare dalla modalità navigazione alla modalità focus ora funziona correttamente anche con il braille attivo. (#2095)
+- Se si utilizza un tasto cursor routing per spostare il cursore all'ultimo carattere di una riga o di un paragrafo, e questo carattere è uno spazio bianco, NVDA eseguirà l'operazione correttamente invece di portare il cursore all'inizio del testo. (#2096)
 
 
 == Cambiamenti per sviluppatori ==
@@ -64,6 +71,7 @@ Le principali novità di questa versione si concentrano su una lettura del brail
 - Il percorso di base del codice di NVDA viene catturato dal traceback nei log, per migliorarne la lettura. (#1880)
 - Gli oggetti TextInfo  ora possiedono il metodo activate() per attivare la posizione rappresentata da Textinfo.
 - Questo viene usato dai display braille per attivare la posizione con i cursor routing, ma vi saranno altre chiamate in futuro.
+
 
 = 2011.3 =
 == Novità ==
@@ -104,7 +112,7 @@ Le principali novità di questa versione si concentrano su una lettura del brail
 - Un testo con un controllo di testo non viene più visualizzato due volte in braille, ad esempio muovendosi indietro dall'inizio di un documento in wordpad.
 - Nella modalità navigazione in Internet Explorer, la pressione del tasto invio in un pulsante file upload ora mostrerà correttamente la finestra di dialogo di selezione file, invece di attivare la modalità focus. (#1720)
 - I cambiamenti di contenuti dinamici come nelle finestre Dos non vengono più riportati se la modalità riposo per quell'applicazione è attiva. (#1662)
-Nella modalità navigazione, il comportamento dei comandi alt+freccia su e alt+freccia giù per comprimere o espandere una casella combinata è stato migliorato. (#1630)
+- Nella modalità navigazione, il comportamento dei comandi alt+freccia su e alt+freccia giù per comprimere o espandere una casella combinata è stato migliorato. (#1630)
 - NVDA riesce ad essere più reattivo e a non bloccarsi in alcune situazioni dove applicazioni esterne non rispondono più (#1408)
 - Nei documenti Mozilla Gecko (ad esempio Firefox), in modalità navigazione,  NVDA non interpreterà più male il testo in alcune situazioni specifiche dove un elemento utilizzava lo stile display:table. #(1373)
 - NVDA non annuncerà più i controlli di un etichetta quando il focus si sposta all'interno di essi. Inoltre le etichette per alcuni campi nei forum non verranno più annunciate due volte in Firefox (Gecko) e Internet Explorer (MSHTML). (#1650)
