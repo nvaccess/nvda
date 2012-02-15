@@ -17,13 +17,13 @@ NVDA ermöglicht den blinden und sehbehinderten Menschen das Arbeiten mit den Wi
 
 Die wichtigsten Highlights sind:
 - Unterstützung der am weitesten verbreiteten Anwendungen einschließlich Web-Browser, E-Mail-Clients, Programme für Internet-Chats und Office-Pakete.
-- Integrierte Sprachausgabe, welche über 20 Landessprachen unterstützt.
+- Integrierte Sprachausgabe, welche über 43 Landessprachen unterstützt.
 - Ansagen der Textformatierungen wie zum Beispiel Namen der Schriftarten, Schriftgröße, Textausrichtung und Rechtschreibfehler.
 - Automatische Ansage der Mausposition und optionaler Audiokoordinaten.
 - Unterstützung für zahlreiche Braillezeilen.
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung der Sprachausgaben.
-- Übersetzt in mehreren Sprachen.
+- Übersetzt in 36 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
@@ -32,7 +32,7 @@ Die wichtigsten Highlights sind:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 34 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch,, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Thai, Traditionelles Chinesisch, taiwanesisches Mandarin, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 36 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch,, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles Chinesisch, taiwanesisches Mandarin, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung mit der Sprachausgabe ++
 Abgesehen von der Bereitstellung der Schnittstelle für Meldungen in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser über eine Sprachausgabe für dessen Sprache verfügt.
@@ -961,7 +961,7 @@ Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Spracha
 ++ eSpeak ++
 Die in NVDA fest integrierte [eSpeak http://espeak.sourceforge.net/]-Sprachausgabe erfordert keine speziellen Treiber oder an extra installierten Komponenten. Beim Starten von NVDA wird sie als Standard verwendet. Das hat den enormen Vorteil, dass NVDA auf einen Betriebssystemen via einem USB-Stick oder von einer CD-ROM ohne weiteres betrieben werden kann.
 
-Jede Stimme, die mit eSpeak ausgeliefert wird, hat eine andere Sprache. Somit werden rund 20 unterschiedliche Sprachen unterstützt.
+Jede Stimme, die mit eSpeak ausgeliefert wird, spricht eine andere Sprache. Somit werden rund 43 unterschiedliche Sprachen unterstützt.
 
 Es gibt auch eine Vielzahl von Varianten, wo der ausgewählte Klang der Stimme geändert werden kann.
 
@@ -1157,6 +1157,21 @@ Bitte sehen Sie in der Dokumentation der Braillezeile nach wo die entsprechenden
 | Braillezeile zur vorigen Zeile bewegen | auf |
 | Braillezeile zur nächsten Zeile bewegen | ab |
 | Cursor zum Braille-modul bewegen | routing |
+|Braillezeile koppeln an | auf+ab |
+| Taste Pfeil nach oben | Leertaste+Punkt1 |
+| Taste Pfeil nach unten | Leertaste+Punkt4 |
+| Taste Pfeil nach links | Leertaste+Punkt3 |
+| Taste Pfeil nach links | Leertaste+Punkt6 |
+| NVDA-Menü | c1+c3+c4+c5 (Befehl n) |
+| Umschalt+Tabulator-Taste | Leertaste+Punkt1+Punkt3 |
+| Tabulator-Taste | Leertaste+Punkt4+Punkt6 |
+| Alt-Taste | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+m) |
+| Escape-Taste | Leertaste+Punkt1+Punkt5 (Leertaste+e) |
+| Eingabetaste | Punkt8 |
+| Windowstaste+d (alle Anwendungen minimieren) | c1+c4+c5 (Befehl d) |
+| Windows-Taste | Leertaste+Punkt3+Punkt4 |
+| Alt+Tabulatortaste | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+t) |
+| Alles lesen | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
 
