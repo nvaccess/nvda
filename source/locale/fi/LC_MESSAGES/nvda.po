@@ -3,15 +3,16 @@
 #
 msgid ""
 msgstr ""
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-01-23 06:29+0000\n"
-"PO-Revision-Date: 2012-01-23 10:01+0200\n"
+"POT-Creation-Date: 2012-02-13 07:25+0000\n"
+"PO-Revision-Date: 2012-02-13 13:23+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Project-Id-Version: \n"
+"Language: \n"
 
 #: globalCommands.py:841
 #, python-format
@@ -56,7 +57,7 @@ msgstr "%s kohdistin"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:526
+#: braille.py:533
 #, python-format
 msgid "%s end"
 msgstr "%s lop"
@@ -91,7 +92,7 @@ msgstr "Kiih&dytys:"
 msgid "&Activate"
 msgstr "&Avaa"
 
-#: gui/settingsDialogs.py:905
+#: gui/settingsDialogs.py:1037
 msgid "&Add"
 msgstr "&Lisää"
 
@@ -99,7 +100,9 @@ msgstr "&Lisää"
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "Käynnistä NVDA &automaattisesti kirjauduttuani Windowsiin"
 
-#: gui/settingsDialogs.py:417
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:436
 msgid "&Beep for capitals"
 msgstr "Anna äänimerkki iso&jen kirjainten kohdalla"
 
@@ -107,7 +110,7 @@ msgstr "Anna äänimerkki iso&jen kirjainten kohdalla"
 msgid "&Browse mode..."
 msgstr "S&elaustila..."
 
-#: gui/settingsDialogs.py:862
+#: gui/settingsDialogs.py:994
 msgid "&Comment"
 msgstr "&Kommentti"
 
@@ -115,11 +118,11 @@ msgstr "&Kommentti"
 msgid "&Default dictionary..."
 msgstr "&Oletus..."
 
-#: gui/settingsDialogs.py:889
+#: gui/settingsDialogs.py:1021
 msgid "&Dictionary entries"
 msgstr "&Sanastomerkinnät"
 
-#: gui/settingsDialogs.py:908
+#: gui/settingsDialogs.py:1040
 msgid "&Edit"
 msgstr "&Muokkaa"
 
@@ -143,7 +146,9 @@ msgstr "&Ohje"
 msgid "&Inflection"
 msgstr "&Sävy:"
 
-#: gui/settingsDialogs.py:506
+#. Translators: This is the label for a combobox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:529
 msgid "&Keyboard layout:"
 msgstr "&Näppäimistöasettelu:"
 
@@ -159,11 +164,13 @@ msgstr "Kie&li:"
 msgid "&Language (requires restart to fully take affect):"
 msgstr "&Kieli (edellyttää NVDA:n uudelleenkäynnistämistä):"
 
-#: gui/settingsDialogs.py:1114
+#: gui/settingsDialogs.py:1246
 msgid "&Level"
 msgstr "&Taso"
 
-#: gui/settingsDialogs.py:700
+#. Translators: This is the label for a textfield in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:781
 msgid "&Maximum number of characters on one line"
 msgstr "&Merkkien enimmäismäärä rivillä:"
 
@@ -175,7 +182,9 @@ msgstr "&Hiiri..."
 msgid "&Move to"
 msgstr "&Siirry"
 
-#: gui/settingsDialogs.py:705
+#. Translators: This is the label for a textfield in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:788
 msgid "&Number of lines per page"
 msgstr "R&ivien enimmäismäärä sivulla:"
 
@@ -183,7 +192,7 @@ msgstr "R&ivien enimmäismäärä sivulla:"
 msgid "&Object presentation..."
 msgstr "&Objektien lukeminen..."
 
-#: gui/settingsDialogs.py:856
+#: gui/settingsDialogs.py:988
 msgid "&Pattern"
 msgstr "&Korvattava"
 
@@ -203,12 +212,12 @@ msgstr "Välimerkkien ja symbolien lausuminen..."
 msgid "&Rate"
 msgstr "&Nopeus:"
 
-#: gui/settingsDialogs.py:911
+#: gui/settingsDialogs.py:1043
 msgid "&Remove"
 msgstr "&Poista"
 
-#: gui/settingsDialogs.py:859
-#: gui/settingsDialogs.py:1108
+#: gui/settingsDialogs.py:991
+#: gui/settingsDialogs.py:1240
 msgid "&Replacement"
 msgstr "K&orvaava"
 
@@ -224,7 +233,7 @@ msgstr "&Tallenna asetukset"
 msgid "&Save configuration on exit"
 msgstr "&Tallenna asetukset suljettaessa"
 
-#: gui/settingsDialogs.py:1093
+#: gui/settingsDialogs.py:1225
 msgid "&Symbols"
 msgstr "&Symbolit"
 
@@ -232,7 +241,9 @@ msgstr "&Symbolit"
 msgid "&Synthesizer..."
 msgstr "&Syntetisaattori..."
 
-#: gui/settingsDialogs.py:226
+#. Translators: This is a label for the select
+#. synthesizer combobox in the synthesizer dialog.
+#: gui/settingsDialogs.py:228
 msgid "&Synthesizer:"
 msgstr "&Syntetisaattori:"
 
@@ -331,11 +342,13 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Avaa NVDA:n Python-konsolin, hyödyllinen pääasiassa kehittäjille"
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui/settingsDialogs.py:935
+#: gui/settingsDialogs.py:1067
 msgid "Add Dictionary Entry"
 msgstr "Lisää sanastomerkintä"
 
-#: gui/settingsDialogs.py:759
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:855
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "Lue kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
@@ -363,37 +376,49 @@ msgstr "Haluatko varmasti sulkea NVDA:n?"
 msgid "Attachments"
 msgstr "Liitteet"
 
-#: gui/settingsDialogs.py:726
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:820
 msgid "Audio indication of focus and browse modes"
 msgstr "Ilmaise vuorovaikutus- ja selaustilat äänimerkillä"
 
-#: gui/settingsDialogs.py:713
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:800
 msgid "Automatic &Say All on page load"
 msgstr "Lue si&vu automaattisesti sen avauduttua"
 
 #. Translators: Automatic comments is the name of the poedit
 #. window that displays comments extracted from code.
-#: appModules/poedit.py:115
+#: appModules/poedit.py:119
 msgid "Automatic comments:"
 msgstr "Automaattiset kommentit:"
 
-#: gui/settingsDialogs.py:398
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:411
 msgid "Automatic dialect switching (when supported)"
 msgstr "Vaihda murretta automaattisesti (mikäli mahdollista)"
 
-#: gui/settingsDialogs.py:723
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:815
 msgid "Automatic focus mode for caret movement"
 msgstr "Automaattinen vuorovaikutustila kohdistinta liikutettaessa"
 
-#: gui/settingsDialogs.py:720
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:810
 msgid "Automatic focus mode for focus changes"
 msgstr "Automaattinen vuorovaikutustila kohdistuksen muuttuessa"
 
-#: gui/settingsDialogs.py:395
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:406
 msgid "Automatic language switching (when supported)"
 msgstr "Vaihda kieltä automaattisesti (mikäli mahdollista)"
 
-#: gui/settingsDialogs.py:1049
+#: gui/settingsDialogs.py:1181
 msgid "Avoid splitting &words when possible"
 msgstr "Vältä &sanojen katkaisua, kun mahdollista"
 
@@ -415,24 +440,26 @@ msgstr "Asetustiedoston muoto virheellinen"
 msgid "Baum/HumanWare/APH braille displays"
 msgstr "Baum/HumanWare/APH"
 
-#: gui/settingsDialogs.py:637
+#: gui/settingsDialogs.py:696
 msgid "Beep"
 msgstr "Anna äänimerkki"
 
-#: gui/settingsDialogs.py:534
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:570
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä"
 
-#: gui/settingsDialogs.py:985
+#: gui/settingsDialogs.py:1117
 msgid "Braille &display:"
 msgstr "Piste&näyttö:"
 
-#: gui/settingsDialogs.py:1059
+#: gui/settingsDialogs.py:1191
 msgid "Braille Display Error"
 msgstr "Pistenäyttövirhe"
 
 #. Translators: This is the label for the braille settings dialog.
-#: gui/settingsDialogs.py:981
+#: gui/settingsDialogs.py:1113
 msgid "Braille Settings"
 msgstr "Pistenäytön asetukset"
 
@@ -441,12 +468,12 @@ msgstr "Pistenäytön asetukset"
 msgid "Braille tethered to %s"
 msgstr "Pistenäyttö seuraa %s"
 
-#: gui/settingsDialogs.py:1032
+#: gui/settingsDialogs.py:1164
 msgid "Braille tethered to:"
 msgstr "Pistenäyttö seuraa:"
 
 #. Translators: This is the label for the browse mode settings dialog.
-#: gui/settingsDialogs.py:697
+#: gui/settingsDialogs.py:776
 msgid "Browse Mode"
 msgstr "Selaustila"
 
@@ -465,11 +492,11 @@ msgstr "Kopio:"
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr "Asetuksia ei voida tallentaa - NVDA suojatussa tilassa"
 
-#: gui/settingsDialogs.py:409
+#: gui/settingsDialogs.py:424
 msgid "Capital pitch change percentage"
 msgstr "Äänenkorkeuden muutos isoille kirjaimille"
 
-#: gui/settingsDialogs.py:865
+#: gui/settingsDialogs.py:997
 msgid "Case &sensitive"
 msgstr "Sama &kirjainkoko"
 
@@ -485,7 +512,7 @@ msgstr "Muuta objektien lukuasetuksia"
 msgid "Change settings of document properties"
 msgstr "Muuta dokumenttien muotoiluasetuksia"
 
-#: gui/settingsDialogs.py:1106
+#: gui/settingsDialogs.py:1238
 msgid "Change symbol"
 msgstr "Muuta symbolia"
 
@@ -521,7 +548,7 @@ msgstr "Napsauttaa kerran hiiren vasenta painiketta hiiren nykyisessä sijainnis
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Napsauttaa kerran hiiren oikeaa painiketta hiiren nykyisessä sijainnissa"
 
-#: gui/settingsDialogs.py:892
+#: gui/settingsDialogs.py:1024
 msgid "Comment"
 msgstr "Kommentti"
 
@@ -531,7 +558,7 @@ msgstr "Kommentit"
 
 #. Translators: 'comments:' is the name of the poedit window
 #. that displays comments entered by the translator.
-#: appModules/poedit.py:123
+#: appModules/poedit.py:127
 msgid "Comments:"
 msgstr "Kommentit:"
 
@@ -571,16 +598,19 @@ msgstr "Automaattisten kommenttien ikkunaa ei löytynyt."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
-#: appModules/poedit.py:101
+#: appModules/poedit.py:103
 msgid "Could not find comment window."
 msgstr "Kommentti-ikkunaa ei löytynyt."
 
-#: gui/settingsDialogs.py:1059
+#: gui/settingsDialogs.py:1191
 #, python-format
 msgid "Could not load the %s display."
 msgstr "Pistenäyttöä %s ei voitu ladata."
 
-#: gui/settingsDialogs.py:261
+#. Translators: This message is presented when
+#. NVDA is unable to load the selected
+#. synthesizer.
+#: gui/settingsDialogs.py:270
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "Syntetisaattoria %s ei voitu ladata."
@@ -600,7 +630,7 @@ msgstr "Kroatia, 8 pisteen tietokonemerkistö"
 msgid "Currently running application is %s"
 msgstr "Nykyinen sovellus on %s"
 
-#: gui/settingsDialogs.py:1016
+#: gui/settingsDialogs.py:1148
 msgid "Cursor blink rate (ms)"
 msgstr "&Kohdistimen vilkkumisnopeus (ms):"
 
@@ -659,7 +689,7 @@ msgid "Document &formatting..."
 msgstr "&Dokumenttien muotoilu..."
 
 #. Translators: This is the label for the document formatting dialog.
-#: gui/settingsDialogs.py:756
+#: gui/settingsDialogs.py:850
 msgid "Document Formatting"
 msgstr "Dokumenttien muotoilu"
 
@@ -684,7 +714,7 @@ msgstr "Hollanti (Alankomaat), taso 1"
 msgid "E&xit"
 msgstr "&Sulje"
 
-#: gui/settingsDialogs.py:1011
+#: gui/settingsDialogs.py:1143
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Laajenna kohdistimen kohdalla oleva sana"
 
@@ -693,7 +723,7 @@ msgid "Edge of table"
 msgstr "Taulukon reuna"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
-#: gui/settingsDialogs.py:852
+#: gui/settingsDialogs.py:984
 msgid "Edit Dictionary Entry"
 msgstr "Muokkaa sanastomerkintää"
 
@@ -706,7 +736,9 @@ msgstr "Elementtilista"
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "Jäljittelee %s-näppäimen painamista näppäimistöltä"
 
-#: gui/settingsDialogs.py:564
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:606
 msgid "Enable mouse &tracking"
 msgstr "Käytä hiiren &seurantaa"
 
@@ -772,7 +804,7 @@ msgstr "Virhe kielitiedostossa %s"
 msgid "Error in appModule %s"
 msgstr "Virhe sovellusmoduulissa %s"
 
-#: config/__init__.py:190
+#: config/__init__.py:189
 #, python-format
 msgid "Error parsing configuration file: %s"
 msgstr "Virhe jäsenneltäessä asetustiedostoa: %s"
@@ -782,7 +814,7 @@ msgstr "Virhe jäsenneltäessä asetustiedostoa: %s"
 msgid "Error saving log: %s"
 msgstr "Virhe tallennettaessa lokia: %s"
 
-#: config/__init__.py:197
+#: config/__init__.py:196
 #, python-format
 msgid ""
 "Errors in configuration file '%s':\n"
@@ -837,15 +869,21 @@ msgstr "Ensimmäisen sivun alatunniste"
 msgid "First page header"
 msgstr "Ensimmäisen sivun ylätunniste"
 
-#: gui/settingsDialogs.py:608
+#. Translators: This is the label for a checkbox in the
+#. review cursor settings dialog.
+#: gui/settingsDialogs.py:661
 msgid "Follow &keyboard focus"
 msgstr "Seu&raa näppäimistökohdistusta"
 
-#: gui/settingsDialogs.py:614
+#. Translators: This is the label for a checkbox in the
+#. review cursor settings dialog.
+#: gui/settingsDialogs.py:671
 msgid "Follow &mouse cursor"
 msgstr "Seuraa &hiirikohdistinta"
 
-#: gui/settingsDialogs.py:611
+#. Translators: This is the label for a checkbox in the
+#. review cursor settings dialog.
+#: gui/settingsDialogs.py:666
 msgid "Follow System &Caret"
 msgstr "Seuraa järjestelmä&kohdistinta"
 
@@ -942,7 +980,9 @@ msgstr "Saksa, taso 2"
 msgid "Greek (Greece) grade 1"
 msgstr "Kreikka, taso 1"
 
-#: gui/settingsDialogs.py:654
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:723
 msgid "Guess object &position information when unavailable"
 msgstr "Ar&vaa objektien sijaintitiedot, kun niitä ei ole käytettävissä"
 
@@ -964,7 +1004,7 @@ msgid "Hindi grade 1"
 msgstr "Hindi, taso 1"
 
 #. Translators: The name of a series of braille displays.
-#: brailleDisplayDrivers/brailliantB.py:80
+#: brailleDisplayDrivers/brailliantB.py:79
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B"
 
@@ -1010,7 +1050,7 @@ msgid "Key words:"
 msgstr "Avainsanat:"
 
 #. Translators: This is the label for the keyboard settings dialog.
-#: gui/settingsDialogs.py:502
+#: gui/settingsDialogs.py:523
 msgid "Keyboard Settings"
 msgstr "Näppäimistöasetukset"
 
@@ -1018,7 +1058,8 @@ msgstr "Näppäimistöasetukset"
 msgid "Keyboard command quick reference"
 msgstr "Näppäinkomentojen pikaopas"
 
-#: gui/settingsDialogs.py:511
+#. Translators: This is the name of a combobox in the keyboard settings dialog.
+#: gui/settingsDialogs.py:535
 msgid "Keyboard layout"
 msgstr "Näppäimistöasettelu"
 
@@ -1048,7 +1089,7 @@ msgstr "Kielitiedoston virhe"
 msgid "Latvian grade 1"
 msgstr "Latvia, taso 1"
 
-#: gui/settingsDialogs.py:1097
+#: gui/settingsDialogs.py:1229
 msgid "Level"
 msgstr "Taso"
 
@@ -1060,7 +1101,7 @@ msgstr "Lisenssi"
 msgid "Lin&ks"
 msgstr "Lin&kit"
 
-#: core.py:178
+#: core.py:181
 msgid "Loading NVDA. Please wait..."
 msgstr "Käynnistetään NVDA, odota..."
 
@@ -1097,12 +1138,12 @@ msgstr "MDV Lilli"
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "Merkitsee tarkastelukohdistimen nykyisen sijainnin kopioitavan tekstin alkukohdaksi"
 
-#: gui/settingsDialogs.py:1024
+#: gui/settingsDialogs.py:1156
 msgid "Message timeout (sec)"
 msgstr "&Ilmoitusten aikakatkaisu (sek):"
 
 #. Translators: This is the label for the mouse settings dialog.
-#: gui/settingsDialogs.py:558
+#: gui/settingsDialogs.py:596
 msgid "Mouse Settings"
 msgstr "Hiiriasetukset"
 
@@ -1113,6 +1154,10 @@ msgstr "Hiiren seuranta"
 #: globalCommands.py:238
 msgid "Move navigator object to mouse"
 msgstr "Siirrä navigointiobjekti hiiren kohdalle"
+
+#: globalCommands.py:269
+msgid "Moves navigator object to the object represented by the text at the position of the review cursor within flat review"
+msgstr "Siirtää navigointiobjektin siihen objektiin, jossa tarkastelukohdistimen kohdalla oleva teksti on kokonaistarkastelussa"
 
 #: globalCommands.py:964
 msgid "Moves the braille display to the next line"
@@ -1194,10 +1239,6 @@ msgstr "Siirtyy ruudun tai dokumentin kokonaistarkasteluun mikäli mahdollista, 
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr "Siirtää seuraavaan käytettävissä olevaan asetukseen syntetisaattorin asetusrenkaassa"
 
-#: globalCommands.py:269
-msgid "Moves to the object represented by the text at the position of the review cursor within flat review"
-msgstr "Siirtää objektiin, jossa tarkastelukohdistimen kohdalla oleva teksti on kokonaistarkastelussa"
-
 #: globalCommands.py:172
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "Siirtää edelliseen käytettävissä olevaan asetukseen syntetisaattorin asetusrenkaassa"
@@ -1214,7 +1255,7 @@ msgstr "NVDA:n Python-konsoli"
 msgid "NVDA Speech Viewer"
 msgstr "Näytä NVDA:n puhe"
 
-#: core.py:268
+#: core.py:271
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -1238,7 +1279,7 @@ msgstr "Ei pistenäyttöä"
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
 #. comments window in poedit.
-#: appModules/poedit.py:97
+#: appModules/poedit.py:99
 msgid "No comment."
 msgstr "Ei kommenttia."
 
@@ -1358,7 +1399,7 @@ msgid "Not in table"
 msgstr "Ei taulukossa"
 
 #. Translators: This is the label for the object presentation dialog.
-#: gui/settingsDialogs.py:633
+#: gui/settingsDialogs.py:692
 msgid "Object Presentation"
 msgstr "Objektien lukeminen"
 
@@ -1376,7 +1417,11 @@ msgstr "Asetukset"
 msgid "Organisation:"
 msgstr "Yritys:"
 
-#: gui/settingsDialogs.py:241
+#. Translators: This is the label for the select output
+#. device combo in the synthesizer dialog. Examples of
+#. of an output device are default soundcard, usb
+#. headphones, etc.
+#: gui/settingsDialogs.py:247
 msgid "Output &device:"
 msgstr "Ääni&laite:"
 
@@ -1384,7 +1429,7 @@ msgstr "Ääni&laite:"
 msgid "Pass next key through"
 msgstr "Välitä seuraava näppäinpainallus"
 
-#: gui/settingsDialogs.py:893
+#: gui/settingsDialogs.py:1025
 msgid "Pattern"
 msgstr "Korvattava"
 
@@ -1439,15 +1484,21 @@ msgstr "Ensisijainen alatunniste"
 msgid "Primary header"
 msgstr "Ensisijainen ylätunniste"
 
-#: gui/settingsDialogs.py:661
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:734
 msgid "Progress &bar output:"
 msgstr "E&distymispalkkien päivitykset:"
 
-#: gui/settingsDialogs.py:664
+#. Translators: This is the name of a combobox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:739
 msgid "Progress bar output"
 msgstr "Edistymispalkkien päivitykset"
 
-#: gui/settingsDialogs.py:402
+#. Translators: This is the label for a combobox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:417
 msgid "Punctuation/symbol &level:"
 msgstr "Välimerkki- ja symboli&taso:"
 
@@ -1465,7 +1516,7 @@ msgstr "Sulkee NVDA:n"
 msgid "Rate boos&t"
 msgstr "Nopeuden te&hostus"
 
-#: gui/settingsDialogs.py:1045
+#: gui/settingsDialogs.py:1177
 msgid "Read by &paragraph"
 msgstr "Lue &kappaleittain"
 
@@ -1487,11 +1538,11 @@ msgstr "Päivitetty"
 msgid "Refreshes the document content"
 msgstr "Päivittää dokumentin sisällön"
 
-#: gui/settingsDialogs.py:896
+#: gui/settingsDialogs.py:1028
 msgid "Regexp"
 msgstr "Sääntöl"
 
-#: gui/settingsDialogs.py:867
+#: gui/settingsDialogs.py:999
 msgid "Regular &expression"
 msgstr "Sääntöl&auseke"
 
@@ -1503,129 +1554,195 @@ msgstr "Lataa liitännäiset uudelleen"
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "Lataa uudelleen sovellusmoduulit ja yleisliitännäiset ilman NVDA:n uudelleenkäynnistystä, mikä voi olla hyödyllistä kehittäjille"
 
-#: gui/settingsDialogs.py:894
-#: gui/settingsDialogs.py:1096
+#: gui/settingsDialogs.py:1026
+#: gui/settingsDialogs.py:1228
 msgid "Replacement"
 msgstr "Korvaava"
 
-#: gui/settingsDialogs.py:771
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:875
 msgid "Report &alignment"
 msgstr "Lue t&asaus"
 
-#: gui/settingsDialogs.py:774
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:880
 msgid "Report &colors"
 msgstr "Lue &värit"
 
-#: gui/settingsDialogs.py:807
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:931
 msgid "Report &headings"
 msgstr "Lue otsi&kot"
 
-#: gui/settingsDialogs.py:645
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:708
 msgid "Report &help balloons"
 msgstr "Lue &kuplailmoitukset"
 
-#: gui/settingsDialogs.py:786
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:900
 msgid "Report &line numbers"
 msgstr "Lue rivi&numerot"
 
-#: gui/settingsDialogs.py:804
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:926
 msgid "Report &links"
 msgstr "Lue &linkit"
 
-#: gui/settingsDialogs.py:783
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:895
 msgid "Report &pages"
 msgstr "Lue sivunume&rot"
 
-#: gui/settingsDialogs.py:580
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:627
 msgid "Report &role when mouse enters object"
 msgstr "Lue hiiren alla olevan objektin &rooli"
 
-#: gui/settingsDialogs.py:795
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:911
 msgid "Report &tables"
 msgstr "Lue &taulukot"
 
-#: gui/settingsDialogs.py:642
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:703
 msgid "Report &tooltips"
 msgstr "Lue &työkaluvihjeet"
 
-#: gui/settingsDialogs.py:673
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:750
 msgid "Report background progress bars"
 msgstr "Ilmaise taustalla olevat edistymispalkit"
 
-#: gui/settingsDialogs.py:813
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:941
 msgid "Report block &quotes"
 msgstr "Lue kappaleenvai&hdolliset sisennykset"
 
-#: gui/settingsDialogs.py:676
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:755
 msgid "Report dynamic &content changes"
 msgstr "Lue d&ynaamisen sisällön muutokset"
 
-#: gui/settingsDialogs.py:762
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:860
 msgid "Report font &name"
 msgstr "Lue &fontti"
 
-#: gui/settingsDialogs.py:765
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:865
 msgid "Report font &size"
 msgstr "Lue f&onttikoko"
 
-#: gui/settingsDialogs.py:768
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:870
 msgid "Report font attri&butes"
 msgstr "Lue fontin &määreet"
 
-#: gui/settingsDialogs.py:819
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:951
 msgid "Report fra&mes"
 msgstr "Lue keh&ykset"
 
-#: gui/settingsDialogs.py:716
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:805
 msgid "Report l&ayout tables"
 msgstr "Lue as&ettelutaulukot"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
-#: gui/settingsDialogs.py:792
+#: gui/settingsDialogs.py:906
 msgid "Report l&ine indentation"
 msgstr "Lue rivien sise&nnykset"
 
-#: gui/settingsDialogs.py:810
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:936
 msgid "Report l&ists"
 msgstr "Lue li&stat"
 
-#: gui/settingsDialogs.py:816
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:946
 msgid "Report lan&dmarks"
 msgstr "Lue maam&erkit"
 
-#: gui/settingsDialogs.py:561
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:601
 msgid "Report mouse &shape changes"
 msgstr "Lue &hiirikohdistimen muutokset"
 
-#: gui/settingsDialogs.py:657
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:728
 msgid "Report object &descriptions"
 msgstr "Lue objektien k&uvaukset"
 
-#: gui/settingsDialogs.py:651
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:718
 msgid "Report object &position information"
 msgstr "Lue objektien sij&aintitiedot"
 
-#: gui/settingsDialogs.py:648
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:713
 msgid "Report object shortcut &keys"
 msgstr "Lue objektien &pikanäppäimet"
 
-#: gui/settingsDialogs.py:780
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:890
 msgid "Report spelling errors"
 msgstr "Lue kirjoitusv&irheet"
 
-#: gui/settingsDialogs.py:777
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:885
 msgid "Report st&yle"
 msgstr "Lue t&yylimääreet"
 
-#: gui/settingsDialogs.py:801
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:921
 msgid "Report table cell c&oordinates"
 msgstr "Lue taulukon solujen koor&dinaatit"
 
-#: gui/settingsDialogs.py:798
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:916
 msgid "Report table row/column h&eaders"
 msgstr "Lue taulukon rivien &ja sarakkeiden ylätunnisteet"
+
+#. Translators: The description of an NVDA command for Poedit.
+#: appModules/poedit.py:84
+msgid "Reports any comments in the automatic comments window"
+msgstr "Lukee kaikki automaattisten kommenttien ikkunassa olevat kommentit."
+
+#. Translators: The description of an NVDA command for Poedit.
+#: appModules/poedit.py:105
+msgid "Reports any comments in the comments window"
+msgstr "Lukee kaikki kommentti-ikkunassa olevat kommentit."
 
 #: globalCommands.py:679
 msgid "Reports formatting info for the current review cursor position within a document"
@@ -1676,7 +1793,7 @@ msgid "Review &cursor..."
 msgstr "&Tarkastelukohdistin..."
 
 #. Translators: This is the label for the review cursor settings dialog.
-#: gui/settingsDialogs.py:605
+#: gui/settingsDialogs.py:656
 msgid "Review Cursor Settings"
 msgstr "Tarkastelukohdistimen asetukset"
 
@@ -1707,7 +1824,9 @@ msgstr "Tallenna nimellä"
 msgid "Saves the current NVDA configuration"
 msgstr "Tallentaa NVDA:n nykyiset asetukset"
 
-#: gui/settingsDialogs.py:414
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:431
 msgid "Say &cap before capitals"
 msgstr "Sano &iso ennen isoja kirjaimia"
 
@@ -1781,7 +1900,9 @@ msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n käyttämää puhesynt
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Avaa valintaikkunan, jossa voidaan muuttaa käytettävän syntetisaattorin puheääniasetuksia"
 
-#: gui/settingsDialogs.py:617
+#. Translators: This is the label for a checkbox in the
+#. review cursor settings dialog.
+#: gui/settingsDialogs.py:676
 msgid "Simple review mode"
 msgstr "Yksinkertainen objektinavigointi"
 
@@ -1813,23 +1934,29 @@ msgstr "Slovenia, taso 1"
 msgid "Spanish grade 1"
 msgstr "Espanja, taso 1"
 
-#: gui/settingsDialogs.py:636
+#: gui/settingsDialogs.py:695
 msgid "Speak"
 msgstr "Lue"
 
-#: gui/settingsDialogs.py:638
+#: gui/settingsDialogs.py:697
 msgid "Speak and beep"
 msgstr "Lue ja anna äänimerkki"
 
-#: gui/settingsDialogs.py:537
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:575
 msgid "Speak command &keys"
 msgstr "Lue k&omentonäppäimet"
 
-#: gui/settingsDialogs.py:528
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:560
 msgid "Speak typed &characters"
 msgstr "Lue &kirjoitetut merkit"
 
-#: gui/settingsDialogs.py:531
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:565
 msgid "Speak typed &words"
 msgstr "Lue kirjoitetut &sanat"
 
@@ -1882,12 +2009,12 @@ msgstr "Asetukset kopioitu onnistuneesti"
 msgid "Swedish grade 1"
 msgstr "Ruotsi, taso 1"
 
-#: gui/settingsDialogs.py:1095
+#: gui/settingsDialogs.py:1227
 msgid "Symbol"
 msgstr "Symboli"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui/settingsDialogs.py:1082
+#: gui/settingsDialogs.py:1214
 msgid "Symbol Pronunciation"
 msgstr "Symbolien lausuminen"
 
@@ -1896,11 +2023,11 @@ msgstr "Symbolien lausuminen"
 msgid "Synthesizer"
 msgstr "Puhesyntetisaattori"
 
-#: gui/settingsDialogs.py:261
+#: gui/settingsDialogs.py:270
 msgid "Synthesizer Error"
 msgstr "Syntetisaattorivirhe"
 
-#: NVDAObjects/IAccessible/__init__.py:1475
+#: NVDAObjects/IAccessible/__init__.py:1482
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -1908,7 +2035,9 @@ msgstr "Tehtäväpalkki"
 msgid "Temporary dictionary"
 msgstr "Tilapäissanasto"
 
-#: gui/settingsDialogs.py:568
+#. Translators: This is the label for a combobox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:612
 msgid "Text &unit resolution:"
 msgstr "Teksti&yksikön tarkkuus:"
 
@@ -1998,13 +2127,13 @@ msgstr "Ottaa käyttöön tai poistaa käytöstä tietojen lukemisen hiiren liik
 msgid "Tools"
 msgstr "Työkalut"
 
-#: gui/settingsDialogs.py:999
+#: gui/settingsDialogs.py:1131
 msgid "Translation &table:"
 msgstr "Piste&taulukko:"
 
 #. Translators: this is the label for the edit area in poedit
 #. that contains a translation.
-#: appModules/poedit.py:119
+#: appModules/poedit.py:123
 msgid "Translation:"
 msgstr "Käännös:"
 
@@ -2046,16 +2175,22 @@ msgstr "Englanti (yhdenmukaistettu), taso 1"
 msgid "Unified English Braille Code grade 2"
 msgstr "Englanti (yhdenmukaistettu), taso 2"
 
-#: gui/settingsDialogs.py:710
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:795
 msgid "Use &screen layout (when supported)"
 msgstr "Käytä &ruutuasettelua"
 
-#: gui/settingsDialogs.py:420
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:441
 msgid "Use &spelling functionality if supported"
 msgstr "Käytä tava&ustoimintoa, mikäli mahdollista"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 #: gui/__init__.py:412
-#: gui/settingsDialogs.py:519
+#: gui/settingsDialogs.py:545
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 
@@ -2067,11 +2202,15 @@ msgstr "Käytä NVDA:ta &Windowsin kirjautumisruudussa (edellyttää järjestelm
 msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
 msgstr "Käytä &nykyisiä tallennettuja asetuksia kirjautumis- ja muissa suojatuissa ruuduissa (edellyttää järjestelmänvalvojan oikeuksia)"
 
-#: gui/settingsDialogs.py:525
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:555
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Käytä laajennettua Insert-näppäintä NVDA-näppäimenä"
 
-#: gui/settingsDialogs.py:522
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:550
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Käytä numeroryhmän Insert-näppäintä NVDA-näppäimenä"
 
@@ -2092,7 +2231,7 @@ msgid "View log"
 msgstr "Näytä loki"
 
 #. Translators: This is the label for the voice settings dialog.
-#: gui/settingsDialogs.py:327
+#: gui/settingsDialogs.py:336
 msgid "Voice Settings"
 msgstr "Ääniasetukset"
 
@@ -2206,7 +2345,8 @@ msgstr "tasaus"
 msgid "all"
 msgstr "kaikki"
 
-#: keyLabels.py:29
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:51
 msgid "alt"
 msgstr "alt"
 
@@ -2218,7 +2358,8 @@ msgstr "animaatio"
 msgid "application"
 msgstr "sovellus"
 
-#: keyLabels.py:46
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:85
 msgid "applications"
 msgstr "sovellukset"
 
@@ -2232,7 +2373,8 @@ msgstr "akvamariini"
 msgid "attachment"
 msgstr "liite"
 
-#: keyLabels.py:8
+#. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
+#: keyLabels.py:9
 msgid "back"
 msgstr "edellinen"
 
@@ -2240,7 +2382,8 @@ msgstr "edellinen"
 msgid "background color"
 msgstr "taustaväri"
 
-#: keyLabels.py:26
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:45
 msgid "backspace"
 msgstr "askelpalautin"
 
@@ -2305,11 +2448,14 @@ msgstr "alareuna"
 msgid "box"
 msgstr "kenttä"
 
-#: keyLabels.py:71
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:135
 msgid "break"
 msgstr "pause"
 
-#: gui/settingsDialogs.py:586
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:637
 msgid "brightness controls audio coordinates volume"
 msgstr "Äänikoordinaattien &voimakkuutta säädetään kirkkauden mukaan"
 
@@ -2317,7 +2463,8 @@ msgstr "Äänikoordinaattien &voimakkuutta säädetään kirkkauden mukaan"
 msgid "browse mode"
 msgstr "selaustila"
 
-#: keyLabels.py:11
+#. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
+#: keyLabels.py:15
 msgid "browser stop"
 msgstr "keskeytä sivun lataus"
 
@@ -2356,7 +2503,8 @@ msgstr "kangas"
 msgid "cap %s"
 msgstr "iso %s"
 
-#: keyLabels.py:27
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:47
 msgid "caps lock"
 msgstr "caps lock"
 
@@ -2372,7 +2520,7 @@ msgstr "hattu"
 msgid "caret moves review cursor"
 msgstr "järjestelmäkohdistin siirtää tarkastelukohdistinta"
 
-#: gui/settingsDialogs.py:895
+#: gui/settingsDialogs.py:1027
 msgid "case"
 msgstr "Kirjainkoko"
 
@@ -2471,7 +2619,8 @@ msgstr "sisältötiedot"
 msgid "copied to clipboard"
 msgstr "kopioitu leikepöydälle"
 
-#: keyLabels.py:28
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:49
 msgid "ctrl"
 msgstr "control"
 
@@ -2479,11 +2628,13 @@ msgstr "control"
 msgid "cursor"
 msgstr "kohdistin"
 
-#: keyLabels.py:24
+#. Translators: This is the name of the launch custom application 1 key found on multimedia keyboards to launch a user-defined application.
+#: keyLabels.py:41
 msgid "custom application 1"
 msgstr "oma sovellus 1"
 
-#: keyLabels.py:25
+#. Translators: This is the name of the launch custom application 2 key found on multimedia keyboards to launch a user-defined application.
+#: keyLabels.py:43
 msgid "custom application 2"
 msgstr "oma sovellus 2"
 
@@ -2528,7 +2679,8 @@ msgstr "oletustyyli"
 msgid "defunct"
 msgstr "puuttuu"
 
-#: keyLabels.py:40
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:73
 msgid "delete"
 msgstr "del"
 
@@ -2580,7 +2732,8 @@ msgstr "dokumentti"
 msgid "done dragging"
 msgstr "vedetty"
 
-#: keyLabels.py:45
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:83
 msgid "down arrow"
 msgstr "alas"
 
@@ -2631,7 +2784,8 @@ msgstr "muokattava"
 msgid "edt"
 msgstr "muo"
 
-#: keyLabels.py:22
+#. Translators: This is the name of the launch email key found on multimedia keyboards to open an email client.
+#: keyLabels.py:37
 msgid "email"
 msgstr "sähköposti"
 
@@ -2640,7 +2794,8 @@ msgstr "sähköposti"
 msgid "embedded object"
 msgstr "upotettu objekti"
 
-#: keyLabels.py:38
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:69
 msgid "end"
 msgstr "end"
 
@@ -2648,7 +2803,8 @@ msgstr "end"
 msgid "end note"
 msgstr "loppuviite"
 
-#: keyLabels.py:32
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:57
 msgid "enter"
 msgstr "enter"
 
@@ -2656,7 +2812,8 @@ msgstr "enter"
 msgid "equation"
 msgstr "yhtälö"
 
-#: keyLabels.py:34
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:61
 msgid "escape"
 msgstr "esc"
 
@@ -2664,7 +2821,8 @@ msgstr "esc"
 msgid "expanded"
 msgstr "avattu"
 
-#: keyLabels.py:13
+#. Translators: This is the name of the favorites key found on multimedia keyboards to open favorites in the web-browser.
+#: keyLabels.py:19
 msgid "favorites"
 msgstr "suosikit"
 
@@ -2697,7 +2855,7 @@ msgid "find the previous occurrence of the previously entered text string from t
 msgstr "Etsi aiemmin annetun tekstin edellinen esiintymä kohdistimen nykyisestä paikasta lähtien"
 
 #: globalCommands.py:901
-#: gui/settingsDialogs.py:1033
+#: gui/settingsDialogs.py:1165
 msgid "focus"
 msgstr "kohdistusta"
 
@@ -2745,7 +2903,8 @@ msgstr "edustan väri"
 msgid "form"
 msgstr "lomake"
 
-#: keyLabels.py:9
+#. Translators: This is the name of the forward key found on multimedia keyboards for controlling the web-browser.
+#: keyLabels.py:11
 msgid "forward"
 msgstr "seuraava"
 
@@ -2857,11 +3016,13 @@ msgstr "otsikko 6"
 msgid "help balloon"
 msgstr "kuplailmoitus"
 
-#: keyLabels.py:39
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:71
 msgid "home"
 msgstr "home"
 
-#: keyLabels.py:14
+#. Translators: This is the name of the home key found on multimedia keyboards to goto the home page in the web-browser.
+#: keyLabels.py:21
 msgid "home page"
 msgstr "kotisivu"
 
@@ -2946,11 +3107,13 @@ msgstr "näppäimistöasettelu %s"
 msgid "left"
 msgstr "vasen"
 
-#: keyLabels.py:68
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:129
 msgid "left alt"
 msgstr "vasen alt"
 
-#: keyLabels.py:42
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:77
 msgid "left arrow"
 msgstr "vasen"
 
@@ -2958,7 +3121,8 @@ msgstr "vasen"
 msgid "left click"
 msgstr "vasen napsautus"
 
-#: keyLabels.py:63
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:119
 msgid "left control"
 msgstr "vasen control"
 
@@ -2972,11 +3136,13 @@ msgstr "vasen hiiripainike lukittu"
 msgid "left mouse button unlock"
 msgstr "vasen hiiripainike vapautettu"
 
-#: keyLabels.py:66
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:125
 msgid "left shift"
 msgstr "vasen vaihto"
 
-#: keyLabels.py:65
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:123
 msgid "left windows"
 msgstr "vasen windows"
 
@@ -3064,7 +3230,8 @@ msgstr "mies 1"
 msgid "male 2"
 msgstr "mies 2"
 
-#: keyLabels.py:23
+#. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
+#: keyLabels.py:39
 msgid "media player"
 msgstr "mediasoitin"
 
@@ -3333,7 +3500,8 @@ msgstr "siirtää edellisen avatun linkin kohdalle"
 msgid "multi line"
 msgstr "monirivinen"
 
-#: keyLabels.py:15
+#. Translators: This is the name of the mute key found on multimedia keyboards to control playback volume.
+#: keyLabels.py:23
 msgid "mute"
 msgstr "mykistä"
 
@@ -3346,7 +3514,8 @@ msgstr "navigaatio"
 msgid "navy blue"
 msgstr "laivastonsininen"
 
-#: keyLabels.py:18
+#. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
+#: keyLabels.py:29
 msgid "next track"
 msgstr "seuraava kappale"
 
@@ -3630,67 +3799,83 @@ msgstr "ei alleviivausta"
 msgid "note"
 msgstr "viite"
 
-#: keyLabels.py:47
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:87
 msgid "num lock"
 msgstr "num lock"
 
-#: keyLabels.py:56
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:105
 msgid "numpad 1"
 msgstr "numeroryhmän 1"
 
-#: keyLabels.py:53
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:99
 msgid "numpad 2"
 msgstr "numeroryhmän 2"
 
-#: keyLabels.py:55
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:103
 msgid "numpad 3"
 msgstr "numeroryhmän 3"
 
-#: keyLabels.py:50
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:93
 msgid "numpad 4"
 msgstr "numeroryhmän 4"
 
-#: keyLabels.py:58
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:109
 msgid "numpad 5"
 msgstr "numeroryhmän 5"
 
-#: keyLabels.py:51
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:95
 msgid "numpad 6"
 msgstr "numeroryhmän 6"
 
-#: keyLabels.py:57
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:107
 msgid "numpad 7"
 msgstr "numeroryhmän 7"
 
-#: keyLabels.py:52
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:97
 msgid "numpad 8"
 msgstr "numeroryhmän 8"
 
-#: keyLabels.py:54
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:101
 msgid "numpad 9"
 msgstr "numeroryhmän 9"
 
-#: keyLabels.py:41
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:75
 msgid "numpad delete"
 msgstr "numeroryhmän del"
 
-#: keyLabels.py:59
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:111
 msgid "numpad divide"
 msgstr "numeroryhmän kautta"
 
-#: keyLabels.py:33
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:59
 msgid "numpad enter"
 msgstr "numeroryhmän enter"
 
-#: keyLabels.py:61
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:115
 msgid "numpad minus"
 msgstr "numeroryhmän miinus"
 
-#: keyLabels.py:60
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:113
 msgid "numpad multiply"
 msgstr "numeroryhmän tähti"
 
-#: keyLabels.py:62
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:117
 msgid "numpad plus"
 msgstr "numeroryhmän plus"
 
@@ -3711,8 +3896,8 @@ msgstr "objektilla ei ole sijaintia"
 #: synthSettingsRing.py:74
 #: appModules/winamp.py:79
 #: appModules/winamp.py:89
-#: gui/settingsDialogs.py:635
-#: gui/settingsDialogs.py:897
+#: gui/settingsDialogs.py:694
+#: gui/settingsDialogs.py:1029
 #: virtualBuffers/__init__.py:788
 msgid "off"
 msgstr "pois"
@@ -3739,7 +3924,7 @@ msgstr "oliivi"
 #: synthSettingsRing.py:74
 #: appModules/winamp.py:77
 #: appModules/winamp.py:87
-#: gui/settingsDialogs.py:897
+#: gui/settingsDialogs.py:1029
 #: virtualBuffers/__init__.py:788
 msgid "on"
 msgstr "päällä"
@@ -3785,11 +3970,13 @@ msgstr "sivu"
 msgid "page %s"
 msgstr "sivu %s"
 
-#: keyLabels.py:37
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:67
 msgid "page down"
 msgstr "sivu alas"
 
-#: keyLabels.py:36
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:65
 msgid "page up"
 msgstr "sivu ylös"
 
@@ -3810,11 +3997,14 @@ msgstr "kappale"
 msgid "password edit"
 msgstr "salasanan syöttökenttä"
 
-#: gui/settingsDialogs.py:583
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:632
 msgid "play audio coordinates when mouse moves"
 msgstr "Ilmaise hiiren &koordinaatit äänimerkeillä"
 
-#: keyLabels.py:21
+#. Translators: This is the name of the play/pause key found on multimedia keyboards to play/pause the current playing track in the mediaplayer.
+#: keyLabels.py:35
 msgid "play pause"
 msgstr "toista pysäytä"
 
@@ -3822,11 +4012,13 @@ msgstr "toista pysäytä"
 msgid "pressed"
 msgstr "painettu"
 
-#: keyLabels.py:19
+#. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
+#: keyLabels.py:31
 msgid "previous track"
 msgstr "edellinen kappale"
 
-#: keyLabels.py:48
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:89
 msgid "print screen"
 msgstr "print screen"
 
@@ -3896,7 +4088,8 @@ msgstr "punainen"
 msgid "redundant object"
 msgstr "tarpeeton objekti"
 
-#: keyLabels.py:10
+#. Translators: This is the name of the refresh key found on multimedia keyboards for controlling the web-browser.
+#: keyLabels.py:13
 msgid "refresh"
 msgstr "päivitä"
 
@@ -3917,7 +4110,7 @@ msgid "required"
 msgstr "pakollinen"
 
 #: globalCommands.py:898
-#: gui/settingsDialogs.py:1033
+#: gui/settingsDialogs.py:1165
 msgid "review"
 msgstr "tarkastelukohdistinta"
 
@@ -3931,11 +4124,13 @@ msgstr "muokattava"
 msgid "right"
 msgstr "oikea"
 
-#: keyLabels.py:69
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:131
 msgid "right alt"
 msgstr "oikea alt"
 
-#: keyLabels.py:43
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:79
 msgid "right arrow"
 msgstr "oikea"
 
@@ -3943,7 +4138,8 @@ msgstr "oikea"
 msgid "right click"
 msgstr "oikea napsautus"
 
-#: keyLabels.py:64
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:121
 msgid "right control"
 msgstr "oikea control"
 
@@ -3957,11 +4153,13 @@ msgstr "oikea hiiripainike lukittu"
 msgid "right mouse button unlock"
 msgstr "oikea hiiripainike vapautettu"
 
-#: keyLabels.py:67
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:127
 msgid "right shift"
 msgstr "oikea vaihto"
 
-#: keyLabels.py:70
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:133
 msgid "right windows"
 msgstr "oikea windows"
 
@@ -3996,7 +4194,8 @@ msgstr "viivain"
 msgid "scroll bar"
 msgstr "vierityspalkki"
 
-#: keyLabels.py:49
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:91
 msgid "scroll lock"
 msgstr "scroll lock"
 
@@ -4009,7 +4208,8 @@ msgstr "vierityspaneeli"
 msgid "search"
 msgstr "haku"
 
-#: keyLabels.py:12
+#. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
+#: keyLabels.py:17
 msgid "search page"
 msgstr "hakusivu"
 
@@ -4064,7 +4264,8 @@ msgstr "erotin"
 msgid "shape"
 msgstr "kaava"
 
-#: keyLabels.py:30
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:53
 msgid "shift"
 msgstr "vaihto"
 
@@ -4100,7 +4301,8 @@ msgstr "lajiteltu laskevasti"
 msgid "sound"
 msgstr "ääni"
 
-#: keyLabels.py:35
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:63
 msgid "space"
 msgstr "väli"
 
@@ -4149,7 +4351,8 @@ msgstr "jaettu paneeli"
 msgid "status bar"
 msgstr "tilarivi"
 
-#: keyLabels.py:20
+#. Translators: This is the name of the stop key found on multimedia keyboards to stop the current playing track in the mediaplayer.
+#: keyLabels.py:33
 msgid "stop"
 msgstr "pysäytä"
 
@@ -4196,8 +4399,9 @@ msgstr "yläindeksi"
 msgid "symbol level %s"
 msgstr "symbolitaso %s"
 
+#. Translators: This is the name of a key on the keyboard.
 #: controlTypes.py:209
-#: keyLabels.py:72
+#: keyLabels.py:137
 msgid "tab"
 msgstr "sarkain"
 
@@ -4263,7 +4467,8 @@ msgstr "tekstiä \"%s\" ei löydy"
 msgid "text frame"
 msgstr "tekstikehys"
 
-#: gui/settingsDialogs.py:572
+#. Translators: This is the name of a combobox in the mouse settings dialog.
+#: gui/settingsDialogs.py:617
 msgid "text reporting unit"
 msgstr "tekstinlukuyksikkö"
 
@@ -4347,7 +4552,8 @@ msgstr "lukematon"
 msgid "unselecting %s"
 msgstr "ei valita %s"
 
-#: keyLabels.py:44
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:81
 msgid "up arrow"
 msgstr "ylös"
 
@@ -4369,11 +4575,13 @@ msgstr "avattu"
 msgid "vlnk"
 msgstr "alnk"
 
-#: keyLabels.py:16
+#. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
+#: keyLabels.py:25
 msgid "volume down"
 msgstr "vähennä äänenvoimakkuutta"
 
-#: keyLabels.py:17
+#. Translators: This is the name of the volume up key found on multimedia keyboards to increase playback volume.
+#: keyLabels.py:27
 msgid "volume up"
 msgstr "lisää äänenvoimakkuutta"
 
@@ -4389,7 +4597,8 @@ msgstr "tyhjä tila"
 msgid "window"
 msgstr "ikkuna"
 
-#: keyLabels.py:31
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:55
 msgid "windows"
 msgstr "windows"
 
