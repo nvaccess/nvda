@@ -5,13 +5,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-01-23 06:29+0000\n"
-"PO-Revision-Date: 2012-01-29 22:36-0300\n"
+"POT-Creation-Date: 2012-02-13 07:25+0000\n"
+"PO-Revision-Date: 2012-02-14 19:04-0300\n"
 "Last-Translator: Cleverson Casarin Uliana <clever92000@yahoo.com.br>\n"
 "Language-Team: pt_BR <clever92000@yahoo.com.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Poedit-Language: Portuguese\n"
 "X-Poedit-Country: BRAZIL\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -61,7 +62,7 @@ msgstr "cursor %s"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:526
+#: braille.py:533
 #, python-format
 msgid "%s end"
 msgstr "fim de %s"
@@ -96,7 +97,7 @@ msgstr "A&celeração"
 msgid "&Activate"
 msgstr "&Ativar"
 
-#: gui/settingsDialogs.py:905
+#: gui/settingsDialogs.py:1037
 msgid "&Add"
 msgstr "&Adicionar"
 
@@ -104,7 +105,9 @@ msgstr "&Adicionar"
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "Iniciar o NVDA &automaticamente após o logon no Windows"
 
-#: gui/settingsDialogs.py:417
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:436
 msgid "&Beep for capitals"
 msgstr "&Bipar em maiúsculas"
 
@@ -112,7 +115,7 @@ msgstr "&Bipar em maiúsculas"
 msgid "&Browse mode..."
 msgstr "Modo d&e navegação..."
 
-#: gui/settingsDialogs.py:862
+#: gui/settingsDialogs.py:994
 msgid "&Comment"
 msgstr "&Comentário"
 
@@ -120,11 +123,11 @@ msgstr "&Comentário"
 msgid "&Default dictionary..."
 msgstr "&Padrão..."
 
-#: gui/settingsDialogs.py:889
+#: gui/settingsDialogs.py:1021
 msgid "&Dictionary entries"
 msgstr "Entradas do &dicionário"
 
-#: gui/settingsDialogs.py:908
+#: gui/settingsDialogs.py:1040
 msgid "&Edit"
 msgstr "&Editar"
 
@@ -148,7 +151,9 @@ msgstr "A&juda"
 msgid "&Inflection"
 msgstr "&Inflecção"
 
-#: gui/settingsDialogs.py:506
+#. Translators: This is the label for a combobox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:529
 msgid "&Keyboard layout:"
 msgstr "&leiaute de teclado:"
 
@@ -164,11 +169,13 @@ msgstr "I&dioma"
 msgid "&Language (requires restart to fully take affect):"
 msgstr "Idioma (só é a&lterado ao reiniciar:)"
 
-#: gui/settingsDialogs.py:1114
+#: gui/settingsDialogs.py:1246
 msgid "&Level"
 msgstr "&Grau"
 
-#: gui/settingsDialogs.py:700
+#. Translators: This is the label for a textfield in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:781
 msgid "&Maximum number of characters on one line"
 msgstr "Má&ximo de caracteres numa linha"
 
@@ -180,7 +187,9 @@ msgstr "Opções de &mouse..."
 msgid "&Move to"
 msgstr "&Mover para"
 
-#: gui/settingsDialogs.py:705
+#. Translators: This is the label for a textfield in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:788
 msgid "&Number of lines per page"
 msgstr "&Linhas por página"
 
@@ -188,7 +197,7 @@ msgstr "&Linhas por página"
 msgid "&Object presentation..."
 msgstr "Apresentação de &objetos..."
 
-#: gui/settingsDialogs.py:856
+#: gui/settingsDialogs.py:988
 msgid "&Pattern"
 msgstr "&Original"
 
@@ -208,12 +217,12 @@ msgstr "&Pronúncia de pontuação e sinais..."
 msgid "&Rate"
 msgstr "v&elocidade"
 
-#: gui/settingsDialogs.py:911
+#: gui/settingsDialogs.py:1043
 msgid "&Remove"
 msgstr "&Remover"
 
-#: gui/settingsDialogs.py:859
-#: gui/settingsDialogs.py:1108
+#: gui/settingsDialogs.py:991
+#: gui/settingsDialogs.py:1240
 msgid "&Replacement"
 msgstr "&Substituto"
 
@@ -229,7 +238,7 @@ msgstr "&Salvar configuração"
 msgid "&Save configuration on exit"
 msgstr "&Salvar configuração ao sair"
 
-#: gui/settingsDialogs.py:1093
+#: gui/settingsDialogs.py:1225
 msgid "&Symbols"
 msgstr "&Sinais"
 
@@ -237,7 +246,9 @@ msgstr "&Sinais"
 msgid "&Synthesizer..."
 msgstr "&Sintetizador..."
 
-#: gui/settingsDialogs.py:226
+#. Translators: This is a label for the select
+#. synthesizer combobox in the synthesizer dialog.
+#: gui/settingsDialogs.py:228
 msgid "&Synthesizer:"
 msgstr "&Sintetizador:"
 
@@ -336,11 +347,13 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Ativa o terminal Python do NVDA, útil sobretudo para desenvolvimento"
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui/settingsDialogs.py:935
+#: gui/settingsDialogs.py:1067
 msgid "Add Dictionary Entry"
 msgstr "Adicionar Entrada de Dicionário"
 
-#: gui/settingsDialogs.py:759
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:855
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "Anuncia mudanças de formato após cursor (pode causar lentidão)"
 
@@ -368,37 +381,49 @@ msgstr "Tem certeza que quer sair do NVDA ?"
 msgid "Attachments"
 msgstr "anexos"
 
-#: gui/settingsDialogs.py:726
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:820
 msgid "Audio indication of focus and browse modes"
 msgstr "Indicação sonora de mudança entre modo de foco e de navegação"
 
-#: gui/settingsDialogs.py:713
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:800
 msgid "Automatic &Say All on page load"
 msgstr "&Leitura contínua automática ao carregar a página"
 
 #. Translators: Automatic comments is the name of the poedit
 #. window that displays comments extracted from code.
-#: appModules/poedit.py:115
+#: appModules/poedit.py:119
 msgid "Automatic comments:"
 msgstr "Comentários automáticos:"
 
-#: gui/settingsDialogs.py:398
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:411
 msgid "Automatic dialect switching (when supported)"
 msgstr "Alternância Automática de dialeto quando suportado"
 
-#: gui/settingsDialogs.py:723
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:815
 msgid "Automatic focus mode for caret movement"
 msgstr "Modo de foco automático quando o cursor da aplicação muda"
 
-#: gui/settingsDialogs.py:720
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:810
 msgid "Automatic focus mode for focus changes"
 msgstr "Modo de foco automático quando o foco muda"
 
-#: gui/settingsDialogs.py:395
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:406
 msgid "Automatic language switching (when supported)"
 msgstr "Alternância automática de idioma quando suportado"
 
-#: gui/settingsDialogs.py:1049
+#: gui/settingsDialogs.py:1181
 msgid "Avoid splitting &words when possible"
 msgstr "&Quando possível, não quebrar palavras"
 
@@ -420,24 +445,26 @@ msgstr "Erro de sintaxe no arquivo de configuração"
 msgid "Baum/HumanWare/APH braille displays"
 msgstr "Linhas braile Baum/HumanWare/APH"
 
-#: gui/settingsDialogs.py:637
+#: gui/settingsDialogs.py:696
 msgid "Beep"
 msgstr "Bipar"
 
-#: gui/settingsDialogs.py:534
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:570
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Apita se digitar letras minúsculas com caps lock ligado"
 
-#: gui/settingsDialogs.py:985
+#: gui/settingsDialogs.py:1117
 msgid "Braille &display:"
 msgstr "&Linha braile:"
 
-#: gui/settingsDialogs.py:1059
+#: gui/settingsDialogs.py:1191
 msgid "Braille Display Error"
 msgstr "Erro na Linha Braile"
 
 #. Translators: This is the label for the braille settings dialog.
-#: gui/settingsDialogs.py:981
+#: gui/settingsDialogs.py:1113
 msgid "Braille Settings"
 msgstr "Opções de Braile"
 
@@ -446,12 +473,12 @@ msgstr "Opções de Braile"
 msgid "Braille tethered to %s"
 msgstr "Braile vinvulado a %s"
 
-#: gui/settingsDialogs.py:1032
+#: gui/settingsDialogs.py:1164
 msgid "Braille tethered to:"
 msgstr "Braile vinculado a:"
 
 #. Translators: This is the label for the browse mode settings dialog.
-#: gui/settingsDialogs.py:697
+#: gui/settingsDialogs.py:776
 msgid "Browse Mode"
 msgstr "Modo de navegação"
 
@@ -470,11 +497,11 @@ msgstr "CC:"
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr "Impossível salvar configuração; NVDA em modo seguro"
 
-#: gui/settingsDialogs.py:409
+#: gui/settingsDialogs.py:424
 msgid "Capital pitch change percentage"
 msgstr "Percentagem para mudança de tom em maiúsculas"
 
-#: gui/settingsDialogs.py:865
+#: gui/settingsDialogs.py:997
 msgid "Case &sensitive"
 msgstr "distinguir &maiúsculas de minúsculas"
 
@@ -490,7 +517,7 @@ msgstr "Alterar leitura de objetos"
 msgid "Change settings of document properties"
 msgstr "alterar opções para propriedades de documentos"
 
-#: gui/settingsDialogs.py:1106
+#: gui/settingsDialogs.py:1238
 msgid "Change symbol"
 msgstr "Alterar sinal"
 
@@ -526,7 +553,7 @@ msgstr "Clica uma vez com o botão esquerdo do mause na posição atual"
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Clica uma vez com o botão direito do mause na posição atual"
 
-#: gui/settingsDialogs.py:892
+#: gui/settingsDialogs.py:1024
 msgid "Comment"
 msgstr "Comentário"
 
@@ -536,7 +563,7 @@ msgstr "Commentários"
 
 #. Translators: 'comments:' is the name of the poedit window
 #. that displays comments entered by the translator.
-#: appModules/poedit.py:123
+#: appModules/poedit.py:127
 msgid "Comments:"
 msgstr "Commentários:"
 
@@ -576,16 +603,19 @@ msgstr "Não consegui achar a janela de comentários automáticos."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
-#: appModules/poedit.py:101
+#: appModules/poedit.py:103
 msgid "Could not find comment window."
 msgstr "Não consegui achar a janela de comentários."
 
-#: gui/settingsDialogs.py:1059
+#: gui/settingsDialogs.py:1191
 #, python-format
 msgid "Could not load the %s display."
 msgstr "Não consegui carregar a linha braile %s."
 
-#: gui/settingsDialogs.py:261
+#. Translators: This message is presented when
+#. NVDA is unable to load the selected
+#. synthesizer.
+#: gui/settingsDialogs.py:270
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "Não foi possível carregar o sintetizador %s."
@@ -605,7 +635,7 @@ msgstr "Croata, computador braile de 8 pontos"
 msgid "Currently running application is %s"
 msgstr "Aplicação atualmente executando é %s."
 
-#: gui/settingsDialogs.py:1016
+#: gui/settingsDialogs.py:1148
 msgid "Cursor blink rate (ms)"
 msgstr "Velocidade de intermitência do cursor (milésimos)"
 
@@ -664,7 +694,7 @@ msgid "Document &formatting..."
 msgstr "&Formatação de documentos..."
 
 #. Translators: This is the label for the document formatting dialog.
-#: gui/settingsDialogs.py:756
+#: gui/settingsDialogs.py:850
 msgid "Document Formatting"
 msgstr "Formatação de documentos"
 
@@ -689,7 +719,7 @@ msgstr "Holandês (Holanda) grau 1"
 msgid "E&xit"
 msgstr "s&air"
 
-#: gui/settingsDialogs.py:1011
+#: gui/settingsDialogs.py:1143
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "E&xpandir para braile de computador a palavra sob o cursor"
 
@@ -698,7 +728,7 @@ msgid "Edge of table"
 msgstr "Beira da tabela"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
-#: gui/settingsDialogs.py:852
+#: gui/settingsDialogs.py:984
 msgid "Edit Dictionary Entry"
 msgstr "Editar entrada"
 
@@ -711,7 +741,9 @@ msgstr "Lista de Elementos"
 msgid "Emulates pressing %s on the system keyboard"
 msgstr "Emula o pressionar de %s no teclado do sistema"
 
-#: gui/settingsDialogs.py:564
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:606
 msgid "Enable mouse &tracking"
 msgstr "Habilitar ras&treamento do mouse"
 
@@ -777,7 +809,7 @@ msgstr "Erro no arquivo de idioma %s"
 msgid "Error in appModule %s"
 msgstr "Erro no módulo de aplicação %s"
 
-#: config/__init__.py:190
+#: config/__init__.py:189
 #, python-format
 msgid "Error parsing configuration file: %s"
 msgstr "Erro a analizar arquivo de configuração: %s"
@@ -787,7 +819,7 @@ msgstr "Erro a analizar arquivo de configuração: %s"
 msgid "Error saving log: %s"
 msgstr "Erro a salvar log: %s"
 
-#: config/__init__.py:197
+#: config/__init__.py:196
 #, python-format
 msgid ""
 "Errors in configuration file '%s':\n"
@@ -842,15 +874,21 @@ msgstr "Rodapé de primeira página"
 msgid "First page header"
 msgstr "Cabeçalho de primeira página"
 
-#: gui/settingsDialogs.py:608
+#. Translators: This is the label for a checkbox in the
+#. review cursor settings dialog.
+#: gui/settingsDialogs.py:661
 msgid "Follow &keyboard focus"
 msgstr "A&companhar foco do teclado"
 
-#: gui/settingsDialogs.py:614
+#. Translators: This is the label for a checkbox in the
+#. review cursor settings dialog.
+#: gui/settingsDialogs.py:671
 msgid "Follow &mouse cursor"
 msgstr "Acompanhar cursor do &mouse"
 
-#: gui/settingsDialogs.py:611
+#. Translators: This is the label for a checkbox in the
+#. review cursor settings dialog.
+#: gui/settingsDialogs.py:666
 msgid "Follow System &Caret"
 msgstr "Acompanhar &Cursor do sistema"
 
@@ -947,7 +985,9 @@ msgstr "Alemão grau 2"
 msgid "Greek (Greece) grade 1"
 msgstr "Grego (Grécia) grau 1"
 
-#: gui/settingsDialogs.py:654
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:723
 msgid "Guess object &position information when unavailable"
 msgstr "Deduzir &posição do objeto quando não disponível"
 
@@ -969,7 +1009,7 @@ msgid "Hindi grade 1"
 msgstr "hindiano grau 1"
 
 #. Translators: The name of a series of braille displays.
-#: brailleDisplayDrivers/brailliantB.py:80
+#: brailleDisplayDrivers/brailliantB.py:79
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B series"
 
@@ -1015,7 +1055,7 @@ msgid "Key words:"
 msgstr "Palavras chave:"
 
 #. Translators: This is the label for the keyboard settings dialog.
-#: gui/settingsDialogs.py:502
+#: gui/settingsDialogs.py:523
 msgid "Keyboard Settings"
 msgstr "Opções de teclado"
 
@@ -1023,7 +1063,8 @@ msgstr "Opções de teclado"
 msgid "Keyboard command quick reference"
 msgstr "Referência rápida de teclas de atalho"
 
-#: gui/settingsDialogs.py:511
+#. Translators: This is the name of a combobox in the keyboard settings dialog.
+#: gui/settingsDialogs.py:535
 msgid "Keyboard layout"
 msgstr "leiaute de teclado"
 
@@ -1053,7 +1094,7 @@ msgstr "Erro no idioma"
 msgid "Latvian grade 1"
 msgstr "letão grau 1"
 
-#: gui/settingsDialogs.py:1097
+#: gui/settingsDialogs.py:1229
 msgid "Level"
 msgstr "Grau"
 
@@ -1065,7 +1106,7 @@ msgstr "licença"
 msgid "Lin&ks"
 msgstr "Lin&ques"
 
-#: core.py:178
+#: core.py:181
 msgid "Loading NVDA. Please wait..."
 msgstr "Carregando o NVDA; por favor aguarde..."
 
@@ -1102,12 +1143,12 @@ msgstr "MDV Lilli"
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "Marca a posição atual do cursor de exploração como o início do texto a ser copiado"
 
-#: gui/settingsDialogs.py:1024
+#: gui/settingsDialogs.py:1156
 msgid "Message timeout (sec)"
 msgstr "Tempo limite de mensagem (segundos)"
 
 #. Translators: This is the label for the mouse settings dialog.
-#: gui/settingsDialogs.py:558
+#: gui/settingsDialogs.py:596
 msgid "Mouse Settings"
 msgstr "Opções de mouse"
 
@@ -1118,6 +1159,10 @@ msgstr "Captura de mause"
 #: globalCommands.py:238
 msgid "Move navigator object to mouse"
 msgstr "Mover objeto de navegação para mause"
+
+#: globalCommands.py:269
+msgid "Moves navigator object to the object represented by the text at the position of the review cursor within flat review"
+msgstr "Move o navegador de objetos para o objeto representado pelo texto na posição do cursor de exploração dentro da exploração plana"
 
 #: globalCommands.py:964
 msgid "Moves the braille display to the next line"
@@ -1199,10 +1244,6 @@ msgstr "Move para a revisão plana da tela (ou documento se estiver num) e posic
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr "Vai para a próxima opção disponível no círculo das opções de sintetizador"
 
-#: globalCommands.py:269
-msgid "Moves to the object represented by the text at the position of the review cursor within flat review"
-msgstr "Move para o objeto representado pelo texto na posição do cursor de exploração dentro da exploração plana"
-
 #: globalCommands.py:172
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "Vai para a próxima opção disponível no círculo das opções de sintetizador"
@@ -1219,7 +1260,7 @@ msgstr "Console Python do NVDA"
 msgid "NVDA Speech Viewer"
 msgstr "Exibidor da Fala do NVDA"
 
-#: core.py:268
+#: core.py:271
 msgid "NVDA started"
 msgstr "NVDA ativado"
 
@@ -1243,7 +1284,7 @@ msgstr "sem braile"
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
 #. comments window in poedit.
-#: appModules/poedit.py:97
+#: appModules/poedit.py:99
 msgid "No comment."
 msgstr "Sem comentário."
 
@@ -1363,7 +1404,7 @@ msgid "Not in table"
 msgstr "Não está em tabela"
 
 #. Translators: This is the label for the object presentation dialog.
-#: gui/settingsDialogs.py:633
+#: gui/settingsDialogs.py:692
 msgid "Object Presentation"
 msgstr "Apresentação de objetos"
 
@@ -1381,7 +1422,11 @@ msgstr "Opções"
 msgid "Organisation:"
 msgstr "Organização"
 
-#: gui/settingsDialogs.py:241
+#. Translators: This is the label for the select output
+#. device combo in the synthesizer dialog. Examples of
+#. of an output device are default soundcard, usb
+#. headphones, etc.
+#: gui/settingsDialogs.py:247
 msgid "Output &device:"
 msgstr "&Dispositivo de saída:"
 
@@ -1389,7 +1434,7 @@ msgstr "&Dispositivo de saída:"
 msgid "Pass next key through"
 msgstr "passar a próxima tecla"
 
-#: gui/settingsDialogs.py:893
+#: gui/settingsDialogs.py:1025
 msgid "Pattern"
 msgstr "Original"
 
@@ -1444,15 +1489,21 @@ msgstr "Rodapé principal"
 msgid "Primary header"
 msgstr "Cabeçalho principal"
 
-#: gui/settingsDialogs.py:661
+#. Translators: This is the label for a combobox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:734
 msgid "Progress &bar output:"
 msgstr "&Barras de progresso:"
 
-#: gui/settingsDialogs.py:664
+#. Translators: This is the name of a combobox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:739
 msgid "Progress bar output"
 msgstr "Comportamento em barras de progresso"
 
-#: gui/settingsDialogs.py:402
+#. Translators: This is the label for a combobox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:417
 msgid "Punctuation/symbol &level:"
 msgstr "Grau de sinais de &pontuação:"
 
@@ -1470,7 +1521,7 @@ msgstr "Sai do NVDA"
 msgid "Rate boos&t"
 msgstr "Aumen&to especial de velocidade"
 
-#: gui/settingsDialogs.py:1045
+#: gui/settingsDialogs.py:1177
 msgid "Read by &paragraph"
 msgstr "Ler por &parágrafo"
 
@@ -1492,11 +1543,11 @@ msgstr "atualizado"
 msgid "Refreshes the document content"
 msgstr "Atualiza o conteúdo do documento"
 
-#: gui/settingsDialogs.py:896
+#: gui/settingsDialogs.py:1028
 msgid "Regexp"
 msgstr "Expressão regular"
 
-#: gui/settingsDialogs.py:867
+#: gui/settingsDialogs.py:999
 msgid "Regular &expression"
 msgstr "&Expressão regular"
 
@@ -1508,129 +1559,195 @@ msgstr "Recarrega plug-ins"
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "Recarrega módulos de aplicação e plug-ins globais sem reiniciar o NVDA; pode ser útil a desenvolvedores"
 
-#: gui/settingsDialogs.py:894
-#: gui/settingsDialogs.py:1096
+#: gui/settingsDialogs.py:1026
+#: gui/settingsDialogs.py:1228
 msgid "Replacement"
 msgstr "Substituto"
 
-#: gui/settingsDialogs.py:771
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:875
 msgid "Report &alignment"
 msgstr "Anunciar &alinhamento"
 
-#: gui/settingsDialogs.py:774
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:880
 msgid "Report &colors"
 msgstr "Anunciar &cores"
 
-#: gui/settingsDialogs.py:807
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:931
 msgid "Report &headings"
 msgstr "Anunciar &cabeçalhos"
 
-#: gui/settingsDialogs.py:645
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:708
 msgid "Report &help balloons"
 msgstr "Anunciar balões de aj&uda"
 
-#: gui/settingsDialogs.py:786
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:900
 msgid "Report &line numbers"
 msgstr "Anunciar o número de cada &linha"
 
-#: gui/settingsDialogs.py:804
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:926
 msgid "Report &links"
 msgstr "Anunciar lin&ques"
 
-#: gui/settingsDialogs.py:783
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:895
 msgid "Report &pages"
 msgstr "Anunciar &páginas"
 
-#: gui/settingsDialogs.py:580
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:627
 msgid "Report &role when mouse enters object"
 msgstr "Anunciar &tipo do objeto quando o mouse entra nele"
 
-#: gui/settingsDialogs.py:795
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:911
 msgid "Report &tables"
 msgstr "Anunciar ta&belas"
 
-#: gui/settingsDialogs.py:642
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:703
 msgid "Report &tooltips"
 msgstr "Anunciar &dicas de ferramentas"
 
-#: gui/settingsDialogs.py:673
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:750
 msgid "Report background progress bars"
 msgstr "Anunciar barras de progresso não visíveis"
 
-#: gui/settingsDialogs.py:813
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:941
 msgid "Report block &quotes"
 msgstr "Anunciar blocos de cita&ção"
 
-#: gui/settingsDialogs.py:676
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:755
 msgid "Report dynamic &content changes"
 msgstr "Anunciar atualizações nos &conteúdos dinâmicos"
 
-#: gui/settingsDialogs.py:762
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:860
 msgid "Report font &name"
 msgstr "Anunciar nome d&a fonte"
 
-#: gui/settingsDialogs.py:765
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:865
 msgid "Report font &size"
 msgstr "Anunciar taman&ho da fonte"
 
-#: gui/settingsDialogs.py:768
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:870
 msgid "Report font attri&butes"
 msgstr "Anunciar atri&butos da fonte"
 
-#: gui/settingsDialogs.py:819
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:951
 msgid "Report fra&mes"
 msgstr "Anunciar frei&mes"
 
-#: gui/settingsDialogs.py:716
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:805
 msgid "Report l&ayout tables"
 msgstr "Anunciar tabelas de &leiaute"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
-#: gui/settingsDialogs.py:792
+#: gui/settingsDialogs.py:906
 msgid "Report l&ine indentation"
 msgstr "Anunciar indentação de l&inha"
 
-#: gui/settingsDialogs.py:810
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:936
 msgid "Report l&ists"
 msgstr "Anunciar l&istas"
 
-#: gui/settingsDialogs.py:816
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:946
 msgid "Report lan&dmarks"
 msgstr "Anunciar &marcas de seção"
 
-#: gui/settingsDialogs.py:561
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:601
 msgid "Report mouse &shape changes"
 msgstr "A&nunciar mudanças no formato do mouse"
 
-#: gui/settingsDialogs.py:657
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:728
 msgid "Report object &descriptions"
 msgstr "anunciar &descrições dos objetos"
 
-#: gui/settingsDialogs.py:651
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:718
 msgid "Report object &position information"
 msgstr "anunciar &Posição do objeto "
 
-#: gui/settingsDialogs.py:648
+#. Translators: This is the label for a checkbox in the
+#. object presentation settings dialog.
+#: gui/settingsDialogs.py:713
 msgid "Report object shortcut &keys"
 msgstr "Anunciar te&clas de atalho dos objetos"
 
-#: gui/settingsDialogs.py:780
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:890
 msgid "Report spelling errors"
 msgstr "Anunciar erros ortográficos"
 
-#: gui/settingsDialogs.py:777
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:885
 msgid "Report st&yle"
 msgstr "Anunciar est&ilo"
 
-#: gui/settingsDialogs.py:801
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:921
 msgid "Report table cell c&oordinates"
 msgstr "Anunciar c&oordenadas de células em tabelas"
 
-#: gui/settingsDialogs.py:798
+#. Translators: This is the label for a checkbox in the
+#. document formatting settings dialog.
+#: gui/settingsDialogs.py:916
 msgid "Report table row/column h&eaders"
 msgstr "Anunciar os cab&eçalhos de linhas e colunas das tabelas"
+
+#. Translators: The description of an NVDA command for Poedit.
+#: appModules/poedit.py:84
+msgid "Reports any comments in the automatic comments window"
+msgstr "Anuncia quaisquer comentários na janela de comentários automáticos."
+
+#. Translators: The description of an NVDA command for Poedit.
+#: appModules/poedit.py:105
+msgid "Reports any comments in the comments window"
+msgstr "Anuncia quaisquer comentários na janela de comentários."
 
 #: globalCommands.py:679
 msgid "Reports formatting info for the current review cursor position within a document"
@@ -1681,7 +1798,7 @@ msgid "Review &cursor..."
 msgstr "&Cursor de exploração..."
 
 #. Translators: This is the label for the review cursor settings dialog.
-#: gui/settingsDialogs.py:605
+#: gui/settingsDialogs.py:656
 msgid "Review Cursor Settings"
 msgstr "Opções do cursor de exploração"
 
@@ -1712,7 +1829,9 @@ msgstr "Salvar como"
 msgid "Saves the current NVDA configuration"
 msgstr "Salva a configuração atual do NVDA"
 
-#: gui/settingsDialogs.py:414
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:431
 msgid "Say &cap before capitals"
 msgstr "Dizer &cap antes de maiúsculas"
 
@@ -1786,7 +1905,9 @@ msgstr "Exibe a janela de sintetizadores para o NVDA"
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Exibe a janela de opções de voz do NVDA"
 
-#: gui/settingsDialogs.py:617
+#. Translators: This is the label for a checkbox in the
+#. review cursor settings dialog.
+#: gui/settingsDialogs.py:676
 msgid "Simple review mode"
 msgstr "Modo simples de exploração"
 
@@ -1818,23 +1939,29 @@ msgstr "esloveno grau 1"
 msgid "Spanish grade 1"
 msgstr "Espanhol grau 1"
 
-#: gui/settingsDialogs.py:636
+#: gui/settingsDialogs.py:695
 msgid "Speak"
 msgstr "Falar"
 
-#: gui/settingsDialogs.py:638
+#: gui/settingsDialogs.py:697
 msgid "Speak and beep"
 msgstr "Falar e bipar"
 
-#: gui/settingsDialogs.py:537
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:575
 msgid "Speak command &keys"
 msgstr "Falar tec&las de comando"
 
-#: gui/settingsDialogs.py:528
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:560
 msgid "Speak typed &characters"
 msgstr "Falar caracteres &digitados"
 
-#: gui/settingsDialogs.py:531
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:565
 msgid "Speak typed &words"
 msgstr "Falar &palavras digitadas"
 
@@ -1887,12 +2014,12 @@ msgstr "Configurações do usuário copiadas com sucesso"
 msgid "Swedish grade 1"
 msgstr "Sueco grau 1"
 
-#: gui/settingsDialogs.py:1095
+#: gui/settingsDialogs.py:1227
 msgid "Symbol"
 msgstr "Sinal"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui/settingsDialogs.py:1082
+#: gui/settingsDialogs.py:1214
 msgid "Symbol Pronunciation"
 msgstr "Pronúncia do Sinal"
 
@@ -1901,11 +2028,11 @@ msgstr "Pronúncia do Sinal"
 msgid "Synthesizer"
 msgstr "Sintetizador"
 
-#: gui/settingsDialogs.py:261
+#: gui/settingsDialogs.py:270
 msgid "Synthesizer Error"
 msgstr "Erro de sintetizador"
 
-#: NVDAObjects/IAccessible/__init__.py:1475
+#: NVDAObjects/IAccessible/__init__.py:1482
 msgid "Taskbar"
 msgstr "Barra de tarefas"
 
@@ -1913,7 +2040,9 @@ msgstr "Barra de tarefas"
 msgid "Temporary dictionary"
 msgstr "Dicionário temporário"
 
-#: gui/settingsDialogs.py:568
+#. Translators: This is the label for a combobox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:612
 msgid "Text &unit resolution:"
 msgstr "&Unidade de texto:"
 
@@ -2003,13 +2132,13 @@ msgstr "Alterna o anúncio de informações conforme o mause é movido."
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: gui/settingsDialogs.py:999
+#: gui/settingsDialogs.py:1131
 msgid "Translation &table:"
 msgstr "&Tabela de tradução:"
 
 #. Translators: this is the label for the edit area in poedit
 #. that contains a translation.
-#: appModules/poedit.py:119
+#: appModules/poedit.py:123
 msgid "Translation:"
 msgstr "Tradução:"
 
@@ -2051,16 +2180,22 @@ msgstr "Código Braile Inglês Unificado grau 1"
 msgid "Unified English Braille Code grade 2"
 msgstr "Código Braile Inglês Unificado grau 2"
 
-#: gui/settingsDialogs.py:710
+#. Translators: This is the label for a checkbox in the
+#. browse mode settings dialog.
+#: gui/settingsDialogs.py:795
 msgid "Use &screen layout (when supported)"
 msgstr "U&sar apresentação da tela (quando suportado)"
 
-#: gui/settingsDialogs.py:420
+#. Translators: This is the label for a checkbox in the
+#. voice settings dialog.
+#: gui/settingsDialogs.py:441
 msgid "Use &spelling functionality if supported"
 msgstr "Usar soletragem &melhorada quando suportado"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
 #: gui/__init__.py:412
-#: gui/settingsDialogs.py:519
+#: gui/settingsDialogs.py:545
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Usar CapsLock como uma tecla modificadora do NVDA"
 
@@ -2072,11 +2207,15 @@ msgstr "Usar o NVDA no logon do Windows (requer privilégios administrativos)"
 msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
 msgstr "Usar as opções salvas atuais no logon e outras telas seguras (requer privilégios administrativos)"
 
-#: gui/settingsDialogs.py:525
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:555
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Usar Insert estendida como uma tecla modificadora do NVDA"
 
-#: gui/settingsDialogs.py:522
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:550
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Usar Insert do teclado numérico como uma tecla modificadora do NVDA"
 
@@ -2097,7 +2236,7 @@ msgid "View log"
 msgstr "ver log"
 
 #. Translators: This is the label for the voice settings dialog.
-#: gui/settingsDialogs.py:327
+#: gui/settingsDialogs.py:336
 msgid "Voice Settings"
 msgstr "Opções de voz"
 
@@ -2211,7 +2350,8 @@ msgstr "alinhamento"
 msgid "all"
 msgstr "tudo"
 
-#: keyLabels.py:29
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:51
 msgid "alt"
 msgstr "alt"
 
@@ -2223,7 +2363,8 @@ msgstr "animação"
 msgid "application"
 msgstr "aplicação"
 
-#: keyLabels.py:46
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:85
 msgid "applications"
 msgstr "aplicações"
 
@@ -2237,7 +2378,8 @@ msgstr "aqua"
 msgid "attachment"
 msgstr "anexo"
 
-#: keyLabels.py:8
+#. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
+#: keyLabels.py:9
 msgid "back"
 msgstr "para trás"
 
@@ -2245,7 +2387,8 @@ msgstr "para trás"
 msgid "background color"
 msgstr "cor de fundo"
 
-#: keyLabels.py:26
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:45
 msgid "backspace"
 msgstr "béc speice"
 
@@ -2310,11 +2453,14 @@ msgstr "fim"
 msgid "box"
 msgstr "caixa"
 
-#: keyLabels.py:71
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:135
 msgid "break"
 msgstr "quebra"
 
-#: gui/settingsDialogs.py:586
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:637
 msgid "brightness controls audio coordinates volume"
 msgstr "brilho controla volume das coordenadas sonoras"
 
@@ -2322,7 +2468,8 @@ msgstr "brilho controla volume das coordenadas sonoras"
 msgid "browse mode"
 msgstr "modo de navegação"
 
-#: keyLabels.py:11
+#. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
+#: keyLabels.py:15
 msgid "browser stop"
 msgstr "parar navegação"
 
@@ -2361,7 +2508,8 @@ msgstr "vela"
 msgid "cap %s"
 msgstr "cap %s"
 
-#: keyLabels.py:27
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:47
 msgid "caps lock"
 msgstr "caps loc"
 
@@ -2377,7 +2525,7 @@ msgstr "circunflexo"
 msgid "caret moves review cursor"
 msgstr "Cursor do sistema move o cursor de exploração"
 
-#: gui/settingsDialogs.py:895
+#: gui/settingsDialogs.py:1027
 msgid "case"
 msgstr "caixa"
 
@@ -2476,7 +2624,8 @@ msgstr "informação de conteúdo"
 msgid "copied to clipboard"
 msgstr "copiado para área de transferência"
 
-#: keyLabels.py:28
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:49
 msgid "ctrl"
 msgstr "control"
 
@@ -2484,11 +2633,13 @@ msgstr "control"
 msgid "cursor"
 msgstr "cursor"
 
-#: keyLabels.py:24
+#. Translators: This is the name of the launch custom application 1 key found on multimedia keyboards to launch a user-defined application.
+#: keyLabels.py:41
 msgid "custom application 1"
 msgstr "aplicaçãon pessoal 1"
 
-#: keyLabels.py:25
+#. Translators: This is the name of the launch custom application 2 key found on multimedia keyboards to launch a user-defined application.
+#: keyLabels.py:43
 msgid "custom application 2"
 msgstr "aplicaçãon pessoal 2"
 
@@ -2533,7 +2684,8 @@ msgstr "estilo padrão"
 msgid "defunct"
 msgstr "inutilizado"
 
-#: keyLabels.py:40
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:73
 msgid "delete"
 msgstr "del"
 
@@ -2585,7 +2737,8 @@ msgstr "documento"
 msgid "done dragging"
 msgstr "sôlto"
 
-#: keyLabels.py:45
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:83
 msgid "down arrow"
 msgstr "baixo"
 
@@ -2636,7 +2789,8 @@ msgstr "editável"
 msgid "edt"
 msgstr "edt"
 
-#: keyLabels.py:22
+#. Translators: This is the name of the launch email key found on multimedia keyboards to open an email client.
+#: keyLabels.py:37
 msgid "email"
 msgstr "e-mail"
 
@@ -2645,7 +2799,8 @@ msgstr "e-mail"
 msgid "embedded object"
 msgstr "objeto embutido"
 
-#: keyLabels.py:38
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:69
 msgid "end"
 msgstr "end"
 
@@ -2653,7 +2808,8 @@ msgstr "end"
 msgid "end note"
 msgstr "nota de adendo"
 
-#: keyLabels.py:32
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:57
 msgid "enter"
 msgstr "ênter"
 
@@ -2661,7 +2817,8 @@ msgstr "ênter"
 msgid "equation"
 msgstr "equação"
 
-#: keyLabels.py:34
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:61
 msgid "escape"
 msgstr "squeipe"
 
@@ -2669,7 +2826,8 @@ msgstr "squeipe"
 msgid "expanded"
 msgstr "expandido"
 
-#: keyLabels.py:13
+#. Translators: This is the name of the favorites key found on multimedia keyboards to open favorites in the web-browser.
+#: keyLabels.py:19
 msgid "favorites"
 msgstr "favoritos"
 
@@ -2702,7 +2860,7 @@ msgid "find the previous occurrence of the previously entered text string from t
 msgstr "procura a ocorrência anterior da cadeia textual digitada anteriormente, a partir da posição atual do cursor"
 
 #: globalCommands.py:901
-#: gui/settingsDialogs.py:1033
+#: gui/settingsDialogs.py:1165
 msgid "focus"
 msgstr "foco"
 
@@ -2750,7 +2908,8 @@ msgstr "cor de tela"
 msgid "form"
 msgstr "formulário"
 
-#: keyLabels.py:9
+#. Translators: This is the name of the forward key found on multimedia keyboards for controlling the web-browser.
+#: keyLabels.py:11
 msgid "forward"
 msgstr "para frente"
 
@@ -2862,11 +3021,13 @@ msgstr "cabeçalho 6"
 msgid "help balloon"
 msgstr "balão de ajuda"
 
-#: keyLabels.py:39
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:71
 msgid "home"
 msgstr "roume"
 
-#: keyLabels.py:14
+#. Translators: This is the name of the home key found on multimedia keyboards to goto the home page in the web-browser.
+#: keyLabels.py:21
 msgid "home page"
 msgstr "página inicial"
 
@@ -2951,11 +3112,13 @@ msgstr "leiaute %s"
 msgid "left"
 msgstr "esquerda"
 
-#: keyLabels.py:68
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:129
 msgid "left alt"
 msgstr "alt esquerdo"
 
-#: keyLabels.py:42
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:77
 msgid "left arrow"
 msgstr "esquerda"
 
@@ -2963,7 +3126,8 @@ msgstr "esquerda"
 msgid "left click"
 msgstr "clique esquerdo"
 
-#: keyLabels.py:63
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:119
 msgid "left control"
 msgstr "control esquerdo"
 
@@ -2977,11 +3141,13 @@ msgstr "pressiona botão esquerdo do mause"
 msgid "left mouse button unlock"
 msgstr "solta botão esquerdo do mause"
 
-#: keyLabels.py:66
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:125
 msgid "left shift"
 msgstr "chift esquerdo"
 
-#: keyLabels.py:65
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:123
 msgid "left windows"
 msgstr "uíndous esquerdo"
 
@@ -3069,7 +3235,8 @@ msgstr "masculina 1"
 msgid "male 2"
 msgstr "masculina 2"
 
-#: keyLabels.py:23
+#. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
+#: keyLabels.py:39
 msgid "media player"
 msgstr "tocador"
 
@@ -3338,7 +3505,8 @@ msgstr "volta ao linque visitado anterior"
 msgid "multi line"
 msgstr "multilinha"
 
-#: keyLabels.py:15
+#. Translators: This is the name of the mute key found on multimedia keyboards to control playback volume.
+#: keyLabels.py:23
 msgid "mute"
 msgstr "mudo"
 
@@ -3351,7 +3519,8 @@ msgstr "navegação"
 msgid "navy blue"
 msgstr "azul marinho"
 
-#: keyLabels.py:18
+#. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
+#: keyLabels.py:29
 msgid "next track"
 msgstr "próxima faixa"
 
@@ -3635,67 +3804,83 @@ msgstr "não sublinhado"
 msgid "note"
 msgstr "nota"
 
-#: keyLabels.py:47
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:87
 msgid "num lock"
 msgstr "num loc"
 
-#: keyLabels.py:56
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:105
 msgid "numpad 1"
 msgstr "1 do teclado numérico"
 
-#: keyLabels.py:53
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:99
 msgid "numpad 2"
 msgstr "2 do teclado numérico"
 
-#: keyLabels.py:55
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:103
 msgid "numpad 3"
 msgstr "3 do teclado numérico"
 
-#: keyLabels.py:50
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:93
 msgid "numpad 4"
 msgstr "4 do teclado numérico"
 
-#: keyLabels.py:58
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:109
 msgid "numpad 5"
 msgstr "5 do teclado numérico"
 
-#: keyLabels.py:51
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:95
 msgid "numpad 6"
 msgstr "6 do teclado numérico"
 
-#: keyLabels.py:57
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:107
 msgid "numpad 7"
 msgstr "7 do teclado numérico"
 
-#: keyLabels.py:52
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:97
 msgid "numpad 8"
 msgstr "8 do teclado numérico"
 
-#: keyLabels.py:54
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:101
 msgid "numpad 9"
 msgstr "9 do teclado numérico"
 
-#: keyLabels.py:41
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:75
 msgid "numpad delete"
 msgstr "del do teclado numérico"
 
-#: keyLabels.py:59
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:111
 msgid "numpad divide"
 msgstr "barra do teclado numérico"
 
-#: keyLabels.py:33
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:59
 msgid "numpad enter"
 msgstr "ênter do teclado numérico"
 
-#: keyLabels.py:61
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:115
 msgid "numpad minus"
 msgstr "menos do teclado numérico"
 
-#: keyLabels.py:60
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:113
 msgid "numpad multiply"
 msgstr "asterisco do teclado numérico"
 
-#: keyLabels.py:62
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:117
 msgid "numpad plus"
 msgstr "mais do teclado numérico"
 
@@ -3716,8 +3901,8 @@ msgstr "objeto sem local"
 #: synthSettingsRing.py:74
 #: appModules/winamp.py:79
 #: appModules/winamp.py:89
-#: gui/settingsDialogs.py:635
-#: gui/settingsDialogs.py:897
+#: gui/settingsDialogs.py:694
+#: gui/settingsDialogs.py:1029
 #: virtualBuffers/__init__.py:788
 msgid "off"
 msgstr "desativado"
@@ -3744,7 +3929,7 @@ msgstr "oliva"
 #: synthSettingsRing.py:74
 #: appModules/winamp.py:77
 #: appModules/winamp.py:87
-#: gui/settingsDialogs.py:897
+#: gui/settingsDialogs.py:1029
 #: virtualBuffers/__init__.py:788
 msgid "on"
 msgstr "ativado"
@@ -3790,11 +3975,13 @@ msgstr "página"
 msgid "page %s"
 msgstr "página %s"
 
-#: keyLabels.py:37
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:67
 msgid "page down"
 msgstr "peije dáun"
 
-#: keyLabels.py:36
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:65
 msgid "page up"
 msgstr "peige ap"
 
@@ -3815,11 +4002,14 @@ msgstr "parágrafo"
 msgid "password edit"
 msgstr "edição de senha"
 
-#: gui/settingsDialogs.py:583
+#. Translators: This is the label for a checkbox in the
+#. mouse settings dialog.
+#: gui/settingsDialogs.py:632
 msgid "play audio coordinates when mouse moves"
 msgstr "Tocar sons de coordenada quando o mouse é movido"
 
-#: keyLabels.py:21
+#. Translators: This is the name of the play/pause key found on multimedia keyboards to play/pause the current playing track in the mediaplayer.
+#: keyLabels.py:35
 msgid "play pause"
 msgstr "toca e pausa"
 
@@ -3827,11 +4017,13 @@ msgstr "toca e pausa"
 msgid "pressed"
 msgstr "pressionado"
 
-#: keyLabels.py:19
+#. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
+#: keyLabels.py:31
 msgid "previous track"
 msgstr "faixa anterior"
 
-#: keyLabels.py:48
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:89
 msgid "print screen"
 msgstr "print scrin"
 
@@ -3901,7 +4093,8 @@ msgstr "vermelho"
 msgid "redundant object"
 msgstr "objeto redundante"
 
-#: keyLabels.py:10
+#. Translators: This is the name of the refresh key found on multimedia keyboards for controlling the web-browser.
+#: keyLabels.py:13
 msgid "refresh"
 msgstr "atualiza"
 
@@ -3922,7 +4115,7 @@ msgid "required"
 msgstr "exigido"
 
 #: globalCommands.py:898
-#: gui/settingsDialogs.py:1033
+#: gui/settingsDialogs.py:1165
 msgid "review"
 msgstr "explorar"
 
@@ -3936,11 +4129,13 @@ msgstr "editável"
 msgid "right"
 msgstr "direita"
 
-#: keyLabels.py:69
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:131
 msgid "right alt"
 msgstr "alt direito"
 
-#: keyLabels.py:43
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:79
 msgid "right arrow"
 msgstr "direita"
 
@@ -3948,7 +4143,8 @@ msgstr "direita"
 msgid "right click"
 msgstr "clique direito"
 
-#: keyLabels.py:64
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:121
 msgid "right control"
 msgstr "control direito"
 
@@ -3962,11 +4158,13 @@ msgstr "pressiona botão direito do mause"
 msgid "right mouse button unlock"
 msgstr "solta botão direito do mause"
 
-#: keyLabels.py:67
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:127
 msgid "right shift"
 msgstr "chift direito"
 
-#: keyLabels.py:70
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:133
 msgid "right windows"
 msgstr "uíndous direito"
 
@@ -4001,7 +4199,8 @@ msgstr "régua"
 msgid "scroll bar"
 msgstr "barra de rolagem"
 
-#: keyLabels.py:49
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:91
 msgid "scroll lock"
 msgstr "scrôl loc"
 
@@ -4014,7 +4213,8 @@ msgstr "painel de rolagem"
 msgid "search"
 msgstr "busca"
 
-#: keyLabels.py:12
+#. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
+#: keyLabels.py:17
 msgid "search page"
 msgstr "página de busca"
 
@@ -4069,7 +4269,8 @@ msgstr "separador"
 msgid "shape"
 msgstr "forma"
 
-#: keyLabels.py:30
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:53
 msgid "shift"
 msgstr "chift"
 
@@ -4105,7 +4306,8 @@ msgstr "ordem decrescente"
 msgid "sound"
 msgstr "som"
 
-#: keyLabels.py:35
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:63
 msgid "space"
 msgstr "espaço"
 
@@ -4154,7 +4356,8 @@ msgstr "painel de divisão"
 msgid "status bar"
 msgstr "barra de status"
 
-#: keyLabels.py:20
+#. Translators: This is the name of the stop key found on multimedia keyboards to stop the current playing track in the mediaplayer.
+#: keyLabels.py:33
 msgid "stop"
 msgstr "parar"
 
@@ -4201,8 +4404,9 @@ msgstr "superescrito"
 msgid "symbol level %s"
 msgstr "grau de sinais %s"
 
+#. Translators: This is the name of a key on the keyboard.
 #: controlTypes.py:209
-#: keyLabels.py:72
+#: keyLabels.py:137
 msgid "tab"
 msgstr "tab"
 
@@ -4268,7 +4472,8 @@ msgstr "texto \"%s\" não achado"
 msgid "text frame"
 msgstr "freime de texto"
 
-#: gui/settingsDialogs.py:572
+#. Translators: This is the name of a combobox in the mouse settings dialog.
+#: gui/settingsDialogs.py:617
 msgid "text reporting unit"
 msgstr "unidade mínima de texto a anunciar"
 
@@ -4352,7 +4557,8 @@ msgstr "não lida"
 msgid "unselecting %s"
 msgstr "desselecionando %s"
 
-#: keyLabels.py:44
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:81
 msgid "up arrow"
 msgstr "cima"
 
@@ -4374,11 +4580,13 @@ msgstr "visitado"
 msgid "vlnk"
 msgstr "lnkv"
 
-#: keyLabels.py:16
+#. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
+#: keyLabels.py:25
 msgid "volume down"
 msgstr "diminui volume"
 
-#: keyLabels.py:17
+#. Translators: This is the name of the volume up key found on multimedia keyboards to increase playback volume.
+#: keyLabels.py:27
 msgid "volume up"
 msgstr "aumenta volume"
 
@@ -4394,7 +4602,8 @@ msgstr "espaço em branco"
 msgid "window"
 msgstr "janela"
 
-#: keyLabels.py:31
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:55
 msgid "windows"
 msgstr "uíndous"
 
