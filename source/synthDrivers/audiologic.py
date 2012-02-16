@@ -6,7 +6,7 @@
 
 from collections import OrderedDict
 import _audiologic
-from synthDriverHandler import SynthDriver
+from synthDriverHandler import SynthDriver, VoiceInfo
 import _winreg
 
 class SynthDriver(SynthDriver):
@@ -43,7 +43,7 @@ class SynthDriver(SynthDriver):
 		_audiologic.TtsStop()
 
 	def _getAvailableVoices(self):
-		return OrderedDict(("",synthDriverHandler.VoiceInfo("", "Tts3",language="it")))
+		return OrderedDict(("",VoiceInfo("", "Tts3",language="it")))
 
 	def _get_voice(self):
 		return ""
