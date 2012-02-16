@@ -3,12 +3,74 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.1 =
+Ezen kiadás főbb újdonságai közé tartoznak a braille hatékonyabb olvasását segítő lehetőségek, a dokumentum formázásának hatékonyabb szöveges és braille hozzáférése, megnövelt Microsoft Word támogatás, valamint az iTunes Store támogatása.
+
+== Újdonságok ==
+- Az NVDA már bemondja a szóközös és tabulátoros igazítást az aktuális sor olvasásakor, a begépelt sorrendben. E lehetőség a Dokumentum formázás párbeszédpanel, igazítás bemondása jelölőnégyzetével szabályozható. (#373)
+- Az NVDA már észleli a leütött billentyűket alternatív beviteli eszközöknél, pl. képernyőn megjelenő billentyűzet, vagy szövegfelismerő szoftver esetén.
+- Az NVDA már felismeri a színeket a Windows parancssor használatakor.
+- A félkövér, dőlt és aláhúzott betűparaméterek már braille-ben is megjelennek, a fordítási táblának megfelelően. (#538)
+- Most már sokkal több információ hangzik el Microsoft Word dokumentumok használatakor, mint pl.:
+ - Szövegszerkezeti információk, pl. a lábjegyzetek és végjegyzetek számai, címsorok, megjegyzések léte, táblázat beágyazási szintek, hivatkozások, valamint színfelismerés az egyes dokumentumrészekbe lépéskor, pl. lábjegyzetek, végjegyzetek, fej és láblécek, stb.
+- Braille használatakor a hetes és nyolcas pont már jelzi a kijelölt szöveget. (#889)
+- Braille használata esetén az NVDA információt nyújt egyes vezérlőelemekről, mint pl. hivatkozások, gombok, vagy címsorok. (#202)
+- Az NVDA már támogatja a hedo ProfiLine és MobilLine USB braille kijelzőket. (#1863, #1897)
+- Az NVDA alapértelmezetten igyekszik elkerülni a szavak tördelését braille esetén. Ez a Braille Kijelző Beállítások párbeszédpanelen kikapcsolható. (#1890, #1946)
+- Most már lehetőség vanbraille esetén  bekezdéseket megjeleníteni sorok helyett, mely nagyméretű szöveg esetén fokozottabb olvasást eredményezhet. A beállítás a Braille Kijelző Beállítások párbeszédpanel Bekezdésenkénti olvasás jelölőnégyzetével szabályozható. (#1891)
+- Braille használatakor most már lehetőség van egy elem aktiválására. Ez az elemnél található kurzoráthelyező gomb segítségével megtehető. Ha a kurzor még nem tartózkodik az elemnél, a gomb kétszeri lenyomása szükséges. (#1893)
+- Alapvető webterületek támogatása az iTunes programban, pl. a Store. Egyéb, WebKit 1-et használó alkalmazások is működhetnek. (#734)
+- Az Adobe Digital Editions 1.8.1 vagy későbbi verzióiban folyamatos felolvasás esetén az NVDA automatikusan képes lapozni. (#1978)
+- Új braille fordítási tábla: Portugál, rövidítési fokozat 2. (#2014)
+- A keretek bemondása most már szabályozható a Dokumentum Formázás párbeszédpanelen. (#1900)
+- Az OpenBook használatakor az alvó mód már automatikusan engedélyezve van. (#1209)
+- A Poedit alkalmazásban a fordítók már fel tudják olvastatni a fordítói, vagy az automatikus megjegyzéseket. A bizonytalan (fuzzy) vagy le nem fordított üzenetek csillaggal vannak megjelölve, és a listában a pozíciójukhoz érve hangjelzés hallható (#1811)
+- A HumanWare Brailliant BI és B braille kijelzők támogatása. (#1990)
+- A Norvég Bokmål nyelv hozzáadása.
+
+== Változások ==
+- Az NVDA már A karakter, szó vagy sor felolvasásakor az adott nyelvnek megfelelően betűz, ha ilyen információ elérhető és az automatikus nyelvváltás lehetőség engedélyezve van.
+- Az eSpeak beszédszintetizátor 1.46.02-es verziójának használata.
+- Az NVDA már kiszűri a 30 karakternél nagyobb névvel rendelkező hivatkozásokat, vagy képhivatkozásokat. Ezek nevei általában nem tartalmaznak használható információt. (#1989)
+- Egyes braille információk le lettek rövidítve. (#1955, #2043)
+- Az áttekintőkurzor vagy a kurzor mozgatása esetén a braille görgetése már a kézi görgetéshez hasonlóan történik. Ez eredményesebb a szótördelések elkerülésekor, vagy bekezdésenkénti olvasáskor. (#1996)
+- A spanyol  grade 1 braille tábla frissítése.
+- A liblouis braille fordító frissítése a  2.4.0 verzióra.
+
+
+== Hibajavítások ==
+- A Windows 8 operációs rendszerben a fókusz már nem mozdul el a Windows Explorer keresés mezőjéről, mely lehetetlenné tette annak használatát.
+- Megnövelt hatékonyság Microsoft Word dokumentumok olvasása esetén ha a formázás automatikus bemondása engedélyezve van. Ez lehetővé teszi dokumentumok kényelmesebb átolvasását, és egyes felhasználók esetén általános hatékonyságnövelést eredményezhet.
+- A böngészőmód használható teljes képernyős Adobe Flash tartalmak hozzáféréséhez.
+- Az alacsony hangminőség hiba kijavítása Microsoft Speech API v5 hangok használatakor, ha a kimeneti hangeszköz nem a Microsoft Hangleképző. (#749)
+- Ismét lehetőség van a csendes üzemmód használatára, mely esetén a Beszédnéző, vagy Braille használható. (#1963)
+- Az objektumnavigációs parancsok a felhasználói útmutatóban szerepelteknek megfelelően tájékoztatnak, ha nem rendelkeznek szülő- vagy gyermekobjektummal.
+- Az NVDA nem angol nyelvű használatakor a Tab billentyű neve a nyelvnek megfelelően hangzik el.
+- Mozilla Gecko alkalmazásokban (pl. Firefox) az NVDA már nem vált át esetenként böngésző módba menük használatakor. (#2025)
+- A számológép alkalmazásban a Backspace billentyű használatakor az NVDA már  bemondja a törlés eredményét. (#2030)
+- Böngészőmódban az egér áthelyezése az aktuális elemhez parancs az elem közepéhez pozícionálja azt, a bal felső sarok helyett. Ez esetenként hatékonyabb működést eredményez. (#2029)
+- Az automatikus interaktív mó dhasználatakor az NVDA már automatikusan interaktív módba vált eszköztárra lépéskor. (#1339)
+- Az ablakcím parancs most már helyesen mondja be az Adobe Reader ablak címét.
+- Az Automatikus interaktív mód használatakor az NVDA már automatikusan interaktív módba vált a fókuszban lévő táblázatcella esetén, pl. ARIA táblázatok jelenlétekor. (#1763)
+- Az iTunes alkalmazásban egyes listák pozícióinformációi helyesen kerülnek felolvasásra.
+- Az Adobe Reader programban az NVDA már nem észlel néhány hivatkozásban csak olvasható szerkesztőmezőt.
+- Néhány szerkesztőmező címkéje már nem hangzik el egy párbeszédablak felolvasásakor. (#1960)
+- Az elemcsoportok leírása ismét elhangzik ha az objektumok leírásabeállítás  engedélyezve van.
+- A felkerekített méret már elhangzik a Windows Explorer meghajtó tulajdonságok párbeszédpanelen.
+- A tulajdonságlapok szövegeinek esetenkénti kétszeri elhangzása már ritkábban történik. (#218)
+- Hatékonyabb kurzorkövetés olyan szerkesztőmezők esetén, melyek közvetlenül a képernyőre írják szövegüket. Ez megnöveli a szerkesztést többek között a Microsoft Excel cellaszerkesztőben és az Eudora üzenetszerkesztőben. (#1658)
+- A Firefox 11 programban a szülő virtuális kijelzőhöz ugrás parancs (NVDA+control+space) megfelelően működik beágyazott elemekből való kilépéskor, pl. Flash tartalom esetén.
+- Az NVDA már helyesen indul újra (pl. nyelvváltoztatás esetén) ha nem ASCII karaktereket tartalmazó könyvtárban található. (#2079)
+- A Braille megjelenítés már helyesen figyelembe veszi az elemek gyorsbillentyű, pozíció információ és leírás beállításait.
+- A Mozilla alkalmazásokban váltás az interaktív és a böngészőmód között már nem eredményez lelassulást. (#2095)
+- A kurzor egy sor vagy bekezdés végén lévő szóközhöz helyezése már megfelelően működik Braille esetén. Ez előzőleg néhány szerkesztőmezőben a kurzor a szöveg elejéhez kerülését eredményezte. (#2096)
+
+
 = 2011.3 =
 
 A 2011.3 verzió főbb újdonságai: Automatikus nyelvváltás olyan dokumentumoknál, melyek rendelkeznek a megfelelő nyelvi információkkal, a 64 bites java futtatókörnyezetek támogatása, formázás felolvasása a Mozilla-alkalmazásokban interaktív módban, az alkalmazások összeomlásának, lefagyásának jobb kezelése, hibajavítások windows 8-cal történő használathoz
 
-=== Újdonságok ===
-
+== Újdonságok ==
 - Az NVDA valós időben képes megváltoztatni az Espeak beszédszintetizátor nyelvét és dialektusát, ha olyan web/pdf dokumentumokat olvasunk, amelyek tartalmazzák a megfelelő nyelvi információkat. Az automatikus nyelv- és dialektus váltás be- és kikapcsolható a beszédbeállítások párbeszédpanelen. (#845)
 - az NVDA már támogatja a Java Access Bridge 2.02 használatát, mely lehetővé teszi a 64 bites java futtatókörnyezetek használatát.
 - A program már képes felolvasni a címsorokat a navigátorkurzor használatakor a Mozilla Gecko böngészőmotort (a továbbiakban: Mozilla Gecko) használó alkalmazásokban, pl. a Firefoxban.
@@ -65,6 +127,7 @@ A 2011.3 verzió főbb újdonságai: Automatikus nyelvváltás olyan dokumentumo
 - Az NVDA most már képes átállítani a beszédszintetizátor nyelvét a szöveg bizonyos részeinek helyes felolvasásához.
 - Ehhez a drivereknek kezelniük kell a speech.LangChangeCommand eseményt, mely a SynthDriver.speak() függvénynek adódik át.
 - A SynthDriver objektumot öröklő objektumoknak rendelkezniük kell a VoiceInfo típusú nyelv argumentummal (vagy felül kell írnia a nyel attribútumot). Egyéb esetben az NVDA alapértelmezett felhasználói felület nyelve lesz használva.
+
 
 = 2011.2 =
 
