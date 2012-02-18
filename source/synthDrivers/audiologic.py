@@ -43,7 +43,9 @@ class SynthDriver(SynthDriver):
 		_audiologic.TtsStop()
 
 	def _getAvailableVoices(self):
-		return OrderedDict(("",VoiceInfo("", "Tts3",language="it")))
+		return OrderedDict((
+			("", VoiceInfo("", "Tts3", language="it")),
+		))
 
 	def _get_voice(self):
 		return ""
