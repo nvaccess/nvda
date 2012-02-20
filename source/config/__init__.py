@@ -272,7 +272,7 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins"):
+	for subdir in ("addons", "appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins"):
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
@@ -393,3 +393,7 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	dirs = [dir.encode("mbcs") for dir in getConfigDirs(subdir)]
 	dirs.extend(module.__path__ )
 	module.__path__ = dirs
+	# FIXME: this should not be coupled to the config module....
+	import addonHandler
+	for addon in addonHandler.runningAddons:
+		addon.addToPackagePath(module)
