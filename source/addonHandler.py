@@ -47,10 +47,18 @@ def terminate():
 def runHook(hookName):
 	""" Runs the specified hook on all active add.ons.
 	@param hookName: the hook name
-	2ype hookName: string
+	@type hookName: string
 	"""
+	rets = []
 	for addon in runningAddons:
-		addon.runHook(hookName)
+		try:
+		ret = addon.runHook(hookName)
+				rets.append((ret, addon))
+	except:
+		log.exception("Error running hook %s on plugin %s", hookName, addon.name)
+	return rets
+
+	return rets
 
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
@@ -171,7 +179,6 @@ class Addon(object):
 		except ImportError:
 			# in this case return None, any other error throw to be handled elsewhere
 			return None
-
 
 	def runHook(self, hookName, *args, **kwargs):
 		""" Runs the specified hook on this addon, if implemented."""
