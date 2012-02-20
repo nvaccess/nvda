@@ -10,7 +10,7 @@
 """
 
 import itertools
-import pickle
+import yaml
 import ctypes
 import os
 import sys
@@ -209,7 +209,7 @@ class AppModule(baseObject.ScriptableObject):
 		self.labelFName = "appModules\\%s_labels" %appName
 		try:
 			f = open(self.labelFName, 'r')
-			self.appLabels = pickle.load(f)
+			self.appLabels = yaml.load(f)
 			f.close()
 			log.info("loaded the following labels for %s: %s" %(appName, self.labels))
 		except IOError, e:
@@ -218,7 +218,7 @@ class AppModule(baseObject.ScriptableObject):
 		# Check if any user-defined labels exist for objects in this application.
 		try:
 			f = open(globalVars.appArgs.configPath+"\\" + self.labelFName, 'r')
-			self.appUserLabels = pickle.load(f)
+			self.appUserLabels = yaml.load(f)
 			f.close()
 			log.info("loaded the following user-defined labels for %s: %s" %(appName, self.appUserLabels))
 		except IOError, e:
@@ -226,8 +226,8 @@ class AppModule(baseObject.ScriptableObject):
 			log.info("No user-defined labels loaded from %s" % self.labelFName)
 
 	def saveLabels(self):
-		f = open(globalVars.appArgs.configPath+ "\\"+ self.labelFName , 'w')
-		pickle.dump(self.appUserLabels, f)
+		f = open(globalVars.appArgs.configPath+ "\\"+ self.labelFName, 'w')
+		yaml.dump(self.appUserLabels, f)
                 f.close()
 		log.info("Saved labels for %s" %self.appName)
 
