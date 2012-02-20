@@ -10,6 +10,7 @@
 """
 
 import itertools
+import pickle
 import ctypes
 import os
 import sys
@@ -204,6 +205,31 @@ class AppModule(baseObject.ScriptableObject):
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 
+		# Check if any labels exist for objects in this application.
+		labelFName = "\\appModules\\%s_labels" %appName
+		try:
+			f = open(labelFName, 'r')
+			self.appLabels = pickle.load(f)
+			f.close()
+			log.debug("loaded the following labels for %s: %s" %(appName, self.labels))
+		except IOError, e:
+			self.appLabels = {}
+			log.debug("No labels loaded for %s" % labelFName)
+		# Check if any user-defined labels exist for objects in this application.
+		try:
+			f = open(globalVars.appArgs.configPath+labelFName, 'r')
+			self.appUserLabels = pickle.load(f)
+			f.close()
+			log.info("loaded the following user-defined labels for %s: %s" %(appName, self.appUserLabels))
+		except IOError, e:
+			self.appUserLabels = {}
+			log.debug("No user-defined labels loaded for %s" % labelFName)
+
+	def saveLabels(self):
+		f = open(globalVars.appArgs.configPath+ "\\"+ self.appName+ "_labels", 'w')
+		pickle.dump(self.appUserLabels, f)
+                f.close()
+
 	def __repr__(self):
 		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
 
@@ -220,6 +246,21 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		winKernel.closeHandle(self.processHandle)
 		NVDAHelper.localLib.destroyConnection(self.helperLocalBindingHandle)
+
+	def event_NVDAObject_init(self,obj):
+		fg = api.getForegroundObject()
+		objPath = ".".join([str(x) for x in api.getPath(obj, fg)])
+		objPathWithExtraInfo = api.getPathWithExtraInfo(obj, fg)
+		# user-defined labels should come first, so that they have higher precedence.
+		try:
+			addr, label = self.appUserLabels[objPath]
+			if addr == objPathWithExtraInfo: obj.name = label
+		except KeyError:
+			try:
+				addr, label = self.appUserLabels[objPath]
+				if addr == objPathWithExtraInfo: obj.name = label
+			except KeyError:
+				pass
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		"""Choose NVDAObject overlay classes for a given NVDAObject.
