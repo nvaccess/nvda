@@ -26,10 +26,31 @@ runningAddons = []
 def initialize():
 	""" Initializes the addons subsystem. """
 	global runningAddons
-	try:
-		runningAddons = list(getAvailableAddons())
-	except:
-		log.exception("error initializing addons subsystem.")
+	availableAddons = getAvailableAddons()
+	for addon in availableAddons:
+		try:
+			addon.activate()
+		except:
+			log.exception("Error activating addon.")
+			continue
+	runningAddons.append(addon)
+
+def terminate():
+	""" Terminates the add-ons subsystem. """
+	global runningAddons
+	addons = list(runningAddons)
+	for addon in runningAddons:
+		addon.deactivate()
+	runningAddons = []
+
+
+def runHook(hookName):
+	""" Runs the specified hook on all active add.ons.
+	@param hookName: the hook name
+	2ype hookName: string
+	"""
+	for addon in runningAddons:
+		addon.runHook(hookName)
 
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
@@ -77,7 +98,7 @@ def installAddonBundle(bundle):
 
 
 class AddonError(Exception):
-	""" Represents an exception comming from the addon subsystem. """
+	""" Represents an exception coming from the addon subsystem. """
 	pass
 
 
@@ -91,9 +112,15 @@ class Addon(object):
 		@type path: string
 		"""
 		self.path = path
+		self._extendedPackages = set()
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path) as f:
 			self.manifest = AddonManifest(f)
+		self._hooksModule = self.loadModule('hooks')
+
+	@property
+	def name(self):
+		return self.manifest['name']
 
 	def addToPackagePath(self, package):
 		""" Adds this C{Addon} extensions to the specific package path if those exist.
@@ -105,13 +132,58 @@ class Addon(object):
 			# This addon does not have extension points for this package
 			return
 		# Python 2.x doesn't properly handle unicode import paths, so convert them before adding.
-		converted_path = extension_path.encode("mbcs")
+		converted_path = self._getPathForInclusionInPackage(package)
 		package.__path__.insert(0, converted_path)
+		self._extendedPackages.add(package)
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
+	def activate(self):
+		self.runHook('activate')
+
+	def deactivate(self):
+		""" Removes this add-on extensions from the system. """
+		self.runHook('deactivate')
+		log.debug("Deactivating plugin.")
+		for package in self._extendedPackages:
+			extension_path = self._getPathForInclusionInPackage(package)
+			package.__path__.remove(extension_path)
+
+	def _getPathForInclusionInPackage(self, package):
+		extension_path = os.path.join(self.path, package.__name__)
+		return extension_path.encode("mbcs")
+
+	def loadModule(self, name):
+		""" loads a python mudle from the addon directory
+		@param name: the module name
+		@type name: string
+		@returns the python module with C[name}
+		@rtype python module
+		"""
+		log.debug("Importing module %s from plugin %s", name, self.name)
+		importer = pkgutil.ImpImporter(self.path)
+		loader = importer.find_module(name)
+		if not loader:
+			return None
+		# Create a qualified full name to avoid modules with the same name on sys.modules.
+		fullname = "%s.%s" % (self.name, name)
+		try:
+			return loader.load_module(fullname)
+		except ImportError:
+			# in this case return None, any other error throw to be handled elsewhere
+			return None
+
+
+	def runHook(self, hookName, *args, **kwargs):
+		""" Runs the specified hook on this addon, if implemented."""
+		if not self._hooksModule:
+			return None
+		func = getattr(self._hooksModule, hookName, None)
+		log.debug("Running hook %s of addon %s", hookName, self.name)
+		if func:
+			return func(*args, **kwargs)
 
 class AddonBundle(object):
-	""" Represents the contents of an NVDA addon in a for suitable for distribution and.
+	""" Represents the contents of an NVDA addon in a for suitable for distribution.
 	The bundle is compressed using the zip file format. Manifest information
 	is available without the need for extraction."""
 	def __init__(self, bundle_filename):
