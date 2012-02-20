@@ -11,6 +11,8 @@ import wx
 import winUser
 import logHandler
 from synthDriverHandler import *
+import api
+import ui
 import config
 import languageHandler
 import speech
@@ -686,6 +688,37 @@ class ReviewCursorDialog(SettingsDialog):
 		config.conf["reviewCursor"]["followMouse"]=self.followMouseCheckBox.IsChecked()
 		config.conf["reviewCursor"]["simpleReviewMode"]=self.simpleReviewModeCheckBox.IsChecked()
 		super(ReviewCursorDialog, self).onOk(evt)
+
+class LabelObjectDialog(SettingsDialog):
+	# Translators: This is the label for the label object dialog.
+	title = _("Label Object")
+
+	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a textfield in the
+		# label object dialog.
+		labelObjectLabel=wx.StaticText(self,-1,label=_("New label for object?"))
+		settingsSizer.Add(labelObjectLabel)
+		self.labelObjectEdit=wx.TextCtrl(self,wx.NewId())
+		self.labelObjectEdit.SetValue(globalVars.labelObject.name)
+		settingsSizer.Add(self.labelObjectEdit,border=10,flag=wx.BOTTOM)
+
+	def postInit(self):
+		self.labelObjectEdit.SetFocus()
+
+	def onOk(self, evt):
+		fg = globalVars.labelForeground
+		obj = globalVars.labelObject
+		objPath = ".".join([str(x) for x in api.getPath(obj, fg)])
+		objPathWithExtraInfo = api.getPathWithExtraInfo(obj, fg)
+		newName = self.labelObjectEdit.Value
+		fg.appModule.appUserLabels[objPath] = (objPathWithExtraInfo, newName)
+		fg.appModule.saveLabels()
+		obj.name = newName
+		log.debug("Assigned new label '%s', to %s, %s" %(newName, fg.appModule.appName, objPath))
+
+		# Translators: This is when the user presses ok and nvda notifies them that their chosen label has been saved.
+		ui.message(_("New label saved."))
+		super(LabelObjectDialog, self).onOk(evt)
 
 class ObjectPresentationDialog(SettingsDialog):
 	# Translators: This is the label for the object presentation dialog.

@@ -971,6 +971,12 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Plugins reloaded"))
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 
+	def script_activateLabelObjectDialog(self, gesture):
+		globalVars.labelObject = api.getNavigatorObject()
+		globalVars.labelForeground = api.getForegroundObject()
+		wx.CallAfter(mainFrame.onLabelObjectCommand, None)
+	script_activateLabelObjectDialog.__doc__ = _("Shows the NVDA label object dialog, which will allow you to define an alternative label for the current navigator object.")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -997,6 +1003,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+f": "reportFormatting",
 
 		# Object navigation
+		"kb:NVDA+a": "activateLabelObjectDialog",
 		"kb:NVDA+numpad5": "navigatorObject_current",
 		"kb(laptop):NVDA+control+i": "navigatorObject_current",
 		"kb:NVDA+numpad8": "navigatorObject_parent",

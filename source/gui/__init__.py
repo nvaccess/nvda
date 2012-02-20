@@ -174,6 +174,9 @@ class MainFrame(wx.Frame):
 	def onVoiceCommand(self,evt):
 		self._popupSettingsDialog(VoiceSettingsDialog)
 
+	def onLabelObjectCommand(self,evt):
+		self._popupSettingsDialog(LabelObjectDialog)
+
 	def onBrailleCommand(self,evt):
 		self._popupSettingsDialog(BrailleSettingsDialog)
 
