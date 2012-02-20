@@ -261,7 +261,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getParagraphOffsets(self,offset):
 		try:
-			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+			if offset>self.obj.IAccessibleTextObject.nCharacters:
 				return offset,offset+1
 		except COMError:
 			pass
@@ -1369,15 +1369,34 @@ class NUIDialogClient(Dialog):
 
 class Groupbox(IAccessible):
 
+	def _getNextSkipWindows(self, obj):
+		res = obj.next
+		if res:
+			return res
+		res = obj.parent
+		if not res or res.role != controlTypes.ROLE_WINDOW:
+			return None
+		res = res.next
+		if not res or res.role != controlTypes.ROLE_WINDOW:
+			return None
+		return res.firstChild
+
 	def _get_description(self):
-		next=self.simpleNext
+		next=self._getNextSkipWindows(self)
 		if next and next.name==self.name and next.role==controlTypes.ROLE_GRAPHIC:
-			next=next.simpleNext
+			next=self._getNextSkipWindows(next)
 		if next and next.role==controlTypes.ROLE_STATICTEXT:
-			nextNext=next.simpleNext
+			nextNext=self._getNextSkipWindows(next)
 			if nextNext and nextNext.name!=next.name:
 				return next.name
 		return super(Groupbox,self).description
+
+	def _get_isPresentableFocusAncestor(self):
+		# Only fetch this the first time it is requested,
+		# as it is a bit slow due to the description property
+		# and the answer shouldn't change anyway.
+		self.isPresentableFocusAncestor = res = super(Groupbox, self).isPresentableFocusAncestor
+		return res
 
 class TrayClockWClass(IAccessible):
 	"""

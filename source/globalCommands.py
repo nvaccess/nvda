@@ -266,7 +266,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakObject(obj)
 		else:
 			speech.speakMessage(_("No object at flat review position"))
-	script_navigatorObject_moveToObjectAtFlatReviewPosition.__doc__=_("Moves to the object represented by the text at the position of the review cursor within flat review")
+	script_navigatorObject_moveToObjectAtFlatReviewPosition.__doc__=_("Moves navigator object to the object represented by the text at the position of the review cursor within flat review")
 
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()

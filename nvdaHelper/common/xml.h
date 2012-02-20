@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-inline void appendCharToXML(const wchar_t c, std::wstring& xml) {
+inline void appendCharToXML(const wchar_t c, std::wstring& xml, bool isAttribute=false) {
 	switch(c) {
 		case L'"':
 		xml+=L"&quot;";
@@ -26,9 +26,13 @@ inline void appendCharToXML(const wchar_t c, std::wstring& xml) {
 			xml+=c;
 		} else {
 			// Invalid XML character.
-			std::wostringstream s;
-			s<<L"<unich value=\""<<((unsigned short)c)<<L"\" />";
-			xml += s.str();
+			if (isAttribute)
+				xml += 0xfffd; // Unicode replacement character
+			else {
+				std::wostringstream s;
+				s<<L"<unich value=\""<<((unsigned short)c)<<L"\" />";
+				xml += s.str();
+			}
 		}
 	}
 }

@@ -17,13 +17,13 @@ Proporcionando un apoyo de voz sintética, NVDA permite a personas ciegas y defi
 
 Lo más reseñable incluye: 
 - Soporte para aplicaciones populares incluyendo navegadores web, clientes de correo, programas de chat en internet y suites de oficina
-- Sintetizador de voz integrado que soporta más de 20 idiomas
+- Sintetizador de voz integrado que soporta sobre 43 idiomas
 - anunciado de formato de texto donde esté disponible tal como nombre y tamaño de la fuente, estilo y errores de ortografía
 - Anunciado automático de texto bajo el ratón e indicación opcional audible  de la posición del ratón
 - Soporte para muchas líneas de braille efímero
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Traducido a muchos idiomas
+- Traducido a 36 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
@@ -32,7 +32,7 @@ Lo más reseñable incluye:
 
 ++ Internacionalización ++
 Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
-Actualmente NVDA ha sido traducido a cerca de 20 idiomas además del idioma inglés incluyendo: Afrikáans, Alemán, Árabe, Checo, Chino Mandarín, Croata, eslovaco, Español, Finlandés, Francés, Gallego, Húngaro, Italiano, Japonés, Polaco, Portugués, Portugués del Brasil, Ruso, Ucraniano, Vietnamita y Tailandés.
+Actualmente NVDA ha sido traducido a 36 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Árabe, Búlgaro, Checo, Chino Mandarín, Chino cantonés, Croata, Danés, eslovaco, Español, Finlandés, Francés, Gallego, Georgiano, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Japonés, Noruego, Polaco, Portugués, Portugués del Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Soporte de Síntesis de Voz ++
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
@@ -252,6 +252,9 @@ El objeto actualmente en revisión se llama navegador de objetos.
 Una vez que navegues a un objeto, puedes revisarlo utilizando las [órdenes de revisión de texto #ReviewingText].
 De forma predeterminada, el navegador de objetos se mueve junto con el foco  del Sistema, aunque este comportamiento puede activarse y desactivarse.
 
+Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y revisión de texto.
+Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
+
 Para navegar por objetos, utiliza las siguientes teclas:
 
 %kc:beginInclude
@@ -277,6 +280,9 @@ Por ejemplo, lo utilizarías para revisar el texto de un largo mensaje de inform
 Cuando se mueve el cursor de revisión, el cursor del Sistema no lo sigue, así puedes revisar texto sin perder la posición de edición.
 No obstante, de forma predeterminada, cuando el cursor del Sistema se mueve, el cursor de revisión lo sigue.
 Esto puede activarse y desactivarse.
+
+Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y revisión de texto.
+Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
 
 Las siguientes teclas de órdenes están disponibles para revisión de texto: 
 %kc:beginInclude
@@ -319,6 +325,9 @@ Si no has utilizado la navegación de objetos, normalmente este será el objeto 
 Por ejemplo, si el navegador de objetos fuese un botón, normalmente se te colocará en el texto del botón en revisión plana.
 Entonces puedes revisar el texto utilizando las [órdenes de revisión de texto #ReviewingText].
 También puedes navegar directamente al objeto que abarca la posición actual del cursor de revisión, permitiéndote utilizar [navegación de objetos #ObjectNavigation] desde allí.
+
+Ten en cuenta que el braille sigue al [foco #SystemFocus] y al [cursor del sistema #SystemCaret] de forma predeterminada, en lugar de al navegador de objetos y revisión de texto.
+Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto, necesitas [configurar que el braille siga #BrailleTether] a la revisión.
 
 Las siguientes dos órdenes se utilizan para cambiar para/desde la revisión plana:
 %kc:beginInclude
@@ -428,6 +437,28 @@ Se proporciona una orden de teclado para regresar a la página original que cont
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
 | Mover al contenido del modo de Navegación | NVDA+control+espacio | Mueve el foco fuera del actual objeto integrado y lo pone dentro del documento que lo contiene |
+%kc:endInclude
+ 
++ Órdenes de NVDA Específicas para Aplicación +
+NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer más fáciles ciertas tareas o para proporcionar acceso a funcionalidad que de otro modo no está accesible para los usuarios de lector de pantalla.
+
+++ foobar2000 ++
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Anunciar tiempo restante | control+shift+r | Anuncia el tiempo restante de la pista actualmente en reproducción, si hay alguna. |
+%kc:endInclude
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Anunciar mensaje reciente | NVDA+control+1-4 | Anuncia uno de los mensajes recientes, dependiendo del número pulsado; ej.: NVDA+control+2 lee el segundo mensaje más reciente. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Anunciar ventana de Comentarios | control+shift+c | Anuncia cualquier comentario en la ventana de comentarios.  |
+| Anunciar ventana de comentarios automáticos | control+shift+a | Anuncia cualquier comentario en la ventana de Comentarios automáticos.  |
 %kc:endInclude
 
 + Configurando NVDA +
@@ -599,7 +630,7 @@ Esta opción es un campo numérico que te permite cambiar la velocidad de parpad
 Esta opción es un campo numérico que controla durante cuánto tiempo se muestran los mensajes del sistema en la línea braille.
 
 %kc:setting
-==== El Braille sigue a ====
+==== El Braille sigue a ====[BrailleTether]
 Tecla: NVDA+control+t
 
 Esta opción te permite elegir si la línea braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión.
@@ -924,7 +955,7 @@ NVDA se inicia utilizando eSpeak de forma predeterminada.
 Como este sintetizador se compiló en NVDA, es una gran elección para cuando se ejecuta NVDA en  una memoria USB o en un CD en otros sistemas.
 
 Cada voz que viene con eSpeak habla un idioma diferente.
-Hay sobre 20 idiomas diferentes soportados por eSpeak.
+Hay sobre 43 idiomas diferentes soportados por eSpeak.
 
 También hay muchas variantes que pueden elegirse para alterar el sonido de la voz.
 

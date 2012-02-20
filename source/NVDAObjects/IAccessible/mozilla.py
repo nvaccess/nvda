@@ -164,6 +164,8 @@ class GeckoPluginWindowRoot(WindowRoot):
 						return obj
 					else:
 						log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
+				else:
+					log.debugWarning("NAVRELATION_EMBEDS returned an invalid object")
 			else:
 				log.debugWarning("NAVRELATION_EMBEDS failed")
 		return parent

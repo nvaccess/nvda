@@ -17,13 +17,13 @@ NVDA:n avulla sokeat ja heikkonäköiset voivat käyttää Windows-käyttöjärj
 
 Tärkeimpiä ominaisuuksia ovat:
 - Tuki yleisille sovelluksille, internet-selaimet sekä sähköpostiasiakas-, internet-keskustelu- ja toimisto-ohjelmat mukaan lukien
-- Yli 20 kieltä tukeva sisäänrakennettu puhesyntetisaattori
+- Yli 43 kieltä tukeva sisäänrakennettu puhesyntetisaattori
 - Automaattinen tekstin muotoilutietojen, kuten fontin nimen ja koon, tyylin sekä kirjoitusvirheiden, lukeminen aina kun mahdollista
 - Automaattinen hiiren alla olevan tekstin lukeminen ja valinnainen hiiren sijainnin ilmaiseminen äänimerkeillä
 - Tuki useille pistenäytöille
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
-- Käännökset useille eri kielille
+- Käännökset 36 kielelle
 - Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
 - Mahdollisuus käyttää Windowsin kirjautumis- ja muissa suojatuissa ruuduissa
 - Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
@@ -32,7 +32,7 @@ Tärkeimpiä ominaisuuksia ovat:
 
 ++ Kansainvälistäminen ++
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on saatavilla englannin lisäksi seuraavilla 34 kielellä: afrikaans, albania, arabia, brasilianportugali, bulgaria, espanja, galisia, georgia, heprea, hindi, hollanti, islanti, italia, japani, kroatia, mandariini- ja perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on saatavilla englannin lisäksi seuraavilla 36 kielellä: afrikaans, albania, arabia, brasilianportugali, bulgaria, espanja, galego, georgia, heprea, hindi, hollanti, islanti, italia, japani, kroatia, mandariini- ja perinteinen kiina, norja, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -253,6 +253,9 @@ Nykyistä tarkasteltavaa objektia kutsutaan navigointiobjektiksi.
 Kun objektiin siirrytään, sitä voidaan tarkastella [tekstinlukukomennoilla #Tekstinlukeminen].
 Navigointiobjekti liikkuu oletusarvoisesti järjestelmäkohdistuksen mukana, mutta tämä asetus voidaan poistaa myös käytöstä.
 
+Huomaa, että pistenäyttö seuraa oletusarvoisesti [kohdistusta #Jarjestelmakohdistus] ja [kohdistinta #Jarjestelmakohdistin] objektinavigoinnin ja tekstinlukukohdan sijaan.
+Mikäli pistenäytön halutaan kuitenkin seuraavan viimeksi mainittuja, on se [määritettävä seuraamaan #Pistenayttoseuraa] tarkastelukohdistinta.
+
 Seuraavia näppäimiä käytetään objekteittain navigoimiseen:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
@@ -277,6 +280,9 @@ Tätä voidaan käyttää esimerkiksi valintaikkunassa olevan ilmoituksen lukemi
 Kun tarkastelukohdistinta siirretään, järjestelmäkohdistin ei seuraa mukana, joten tekstin lukeminen onnistuu muokkauskohtaa menettämättä.
 Kun järjestelmäkohdistin liikkuu, tarkastelukohdistin seuraa kuitenkin oletusarvoisesti mukana.
 Tätä asetusta voidaan myös muuttaa.
+
+Huomaa, että pistenäyttö seuraa oletusarvoisesti [kohdistusta #Jarjestelmakohdistus] ja [kohdistinta #Jarjestelmakohdistin] objektinavigoinnin ja tekstinlukukohdan sijaan.
+Mikäli pistenäytön halutaan kuitenkin seuraavan viimeksi mainittuja, on se [määritettävä seuraamaan #Pistenayttoseuraa] tarkastelukohdistinta.
 
 Seuraavat tekstinlukukomennot ovat käytettävissä:
 %kc:beginInclude
@@ -318,7 +324,10 @@ Kun kokonaistarkastelu otetaan käyttöön, NVDA siirtyy nykyisen [navigointiobj
 Se on yleensä objekti, jossa [kohdistus #Jarjestelmakohdistus] on.
 Esimerkiksi jos navigointiobjekti on painike, NVDA siirtyy kokonaistarkastelussa kyseisen painikkeen tekstin kohdalle.
 Tätä tekstiä voidaan tarkastella [tekstinlukukomennoilla #Tekstinlukeminen].
-Tarkastelukohdistimen nykyisen sijainnin sisältävään objektiin voidaan siirtyä myös suoraan, mikä mahdollistaa sieltä [objektinavigoinnin #Objektinavigointi] käytön.
+Tarkastelukohdistimen nykyisen sijainnin sisältävään objektiin voidaan siirtyä myös suoraan, mikä mahdollistaa [objektinavigoinnin #Objektinavigointi] käytön sen sijainnista lähtien.
+
+Huomaa, että pistenäyttö seuraa oletusarvoisesti [kohdistusta #Jarjestelmakohdistus] ja [kohdistinta #Jarjestelmakohdistin] objektinavigoinnin ja tekstinlukukohdan sijaan.
+Mikäli pistenäytön halutaan kuitenkin seuraavan viimeksi mainittuja, on se [määritettävä seuraamaan #Pistenayttoseuraa] tarkastelukohdistinta.
 
 Kahta seuraavaa komentoa käytetään kokonaistarkasteluun tai siitä pois siirtymiseen:
 %kc:beginInclude
@@ -428,6 +437,28 @@ Seuraavalla näppäinkomennolla voidaan palata alkuperäiseen upotetun objektin 
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
 | Siirrä upotetun objektin sisältävään selaustiladokumenttiin | NVDA+Ctrl+välilyönti | Siirtää kohdistuksen pois nykyisestä upotetusta objektista dokumenttiin, jossa se on. |
+%kc:endInclude
+
++ Sovelluskohtaiset komennot +
+NVDA:ssa on joillekin sovelluksille omia lisäkomentoja tiettyjen tehtävien helpottamiseksi tai mahdollistamaan pääsyn sellaisiin toimintoihin, joiden käyttäminen ei ole ruudunlukijan käyttäjille muilla tavoin mahdollista.
+
+++ foobar2000 ++
+%kc:beginInclude
+|| Nimi | Näppäinkomento | Kuvaus |
+| Lue jäljellä oleva aika | Ctrl+Shift+r | Lukee nykyisen kappaleen jäljellä olevan ajan. |
+%kc:endInclude
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Nimi | Näppäinkomento | Kuvaus |
+| Lue uusin viesti | NVDA+Ctrl+1-4 | Lukee jonkin uusimmista, painettua numeroa vastaavista viesteistä, esim. NVDA+Ctrl+2 lukee toiseksi uusimman. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Nimi | Näppäinkomento | Kuvaus |
+| Lue kommentti-ikkuna | Ctrl+Shift+c | Lukee kaikki kommentti-ikkunassa olevat kommentit. |
+| Lue automaattisten kommenttien ikkuna | Ctrl+Shift+a | Lukee kaikki automaattisten kommenttien ikkunassa olevat kommentit. |
 %kc:endInclude
 
 + NVDA:n asetusten määrittäminen +
@@ -599,7 +630,7 @@ Tällä asetuksella voidaan muuttaa kohdistimen vilkkumisnopeutta millisekuntein
 Tämä asetus säätää sitä, kuinka kauan järjestelmän ilmoitukset näytetään pistenäytöllä.
 
 %kc:setting
-==== Pistenäyttö seuraa ====
+==== Pistenäyttö seuraa ====[Pistenayttoseuraa]
 Pikanäppäin: NVDA+Ctrl+t
 
 Tällä asetuksella voidaan valita, seuraako pistenäyttö järjestelmän kohdistusta vai navigointiobjektia/tarkastelukohdistinta.
@@ -924,7 +955,7 @@ NVDA käyttää ESpeakia oletusarvoisesti.
 Tämä syntetisaattori on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta tai CD:ltä.
 
 Jokainen eSpeakin mukana tuleva puheääni puhuu eri kieltä.
-Tuettuja kieliä on yli 20.
+Tuettuja kieliä on yli 43.
 
 Valittavissa on myös useita muunnelmia, jotka saavat puheäänen kuulostamaan erilaiselta.
 

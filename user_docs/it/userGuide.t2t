@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 8 novembre 2011, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 13 febbraio 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Comandi da tastiera Guida Rapida
@@ -17,14 +17,14 @@ NVDA permette alle persone non vedenti di accedere ed interagire con il sistema 
 
 Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Supporto alle applicazioni più comuni come browsers web, posta elettronica, wordprocessor e software per chattare.
-- sintesi vocale incorporata capace di parlare più di 20 lingue
+- sintesi vocale incorporata capace di parlare più di 43 lingue
 - Capacità di funzionare interamente da una chiavetta USB o altri dispositivi portatili senza bisogno di installazione
 - Installazione guidata semplice ed intuitiva tramite sintesi vocale
 - Supporto al prompt dei comandi di Windows e alle applicazioni lanciate da console
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille
-- Tradotto in moltissime lingue
+- Tradotto in 36 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
 - Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
@@ -32,7 +32,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-NVDA è stato tradotto in 34 lingue ossia Afrikaans, Albanese, Arabo, portoghese-brasiliano, Bulgaro, croato, Ceco, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, Spagnolo, Svedese, cinese tradizionale, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
+NVDA è stato tradotto in 36 lingue ossia Afrikaans, Albanese, Arabo, portoghese-brasiliano, Bulgaro, croato, Ceco, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -252,9 +252,10 @@ Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'
 L'oggetto che attualmente viene esplorato è chiamato navigatore ad oggetti.
 Una volta che viene raggiunto un oggetto, è possibile esplorarlo utilizzando i [comandi di revisione #ReviewingText].
 Da impostazioni predefinite, il navigatore ad oggetti si sposta in concomitanza con il focus di sistema, tuttavia questo comportamento può essere modificato, attivando o disattivando la relativa opzione.
+Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
+Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
 
 Per navigare ad oggetti, utilizzare i tasti seguenti:
-
 %kc:beginInclude
 || Nome | layout Desktop | layout Laptop | Descrizione |
 | Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+control+i | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti |
@@ -278,6 +279,8 @@ Ad esempio, può venir buono nel leggere il contenuto di lunghi testi in una fin
 Quando si sposta il cursore di controllo, il cursore di sistema non lo segue, cosicché sarà possibile esplorare il testo senza perdere la propria posizione.
 Comunque, da impostazioni predefinite, quando il cursore di sistema si sposta, il cursore di controllo lo segue. 
 Tale impostazione può essere modificata attivandola o disattivandola.
+Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
+Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
 
 Sono disponibili i seguenti tasti caldi per esplorare il testo:
 %kc:beginInclude
@@ -318,6 +321,8 @@ Quando si attiva la navigazione in linea, ci si troverà  alla posizione del [na
 Se non si ha mai utilizzato la navigazione ad oggetti, la posizione coincide solitamente con quella ove si trova il [focus #SystemFocus].
 Per esempio, se l'oggetto è costituito da un bottone, si verrà posizionati all'interno del testo del bottone stesso, nella navigazione in linea.
 Da qui sarà possibile esplorare il testo utilizzando i [comandi di revisione #ReviewingText].
+Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
+Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
 
 I seguenti due comandi vengono utilizzati per attivare o meno la navigazione in linea:
 %kc:beginInclude
@@ -418,6 +423,29 @@ Le pagine web possono essere strutturate con diverse tecnologie al proprio inter
 || Nome | Tasto | Descrizione |
 | Ritornare alla modalità navigazione | NVDA+control+spazio | Sposta il focus dall'oggetto incorporato alla modalità navigazione |
 %kc:endInclude
+
++ Comandi specifici di NVDA per le applicazioni +
+NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli utenti nello svolgimento di operazioni che, altrimenti, risulterebbero molto complesse e poco accessibili.
+
+++ foobar	2000 ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Annuncia tempo rimanente | control+shift+r | Annuncia il tempo restante della traccia attualmente in esecuzione, se ve n'è una. |
+%kc:endInclude
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Annuncia messaggi recenti | NVDA+control+1-4 | Annuncia uno degli ultimi messaggi, a seconda del numero premuto; ad esempio NVDA+control+2 legge il secondo messaggio più recente. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Annuncia finestra commenti | control+shift+c | Annuncia qualsiasi commento all'interno della finestra commenti. |
+| Annuncia finestra commenti automatici | control+shift+a | Annuncia ogni commento presente nella finestra commenti automatici. |
+%kc:endInclude
+
 
 + Configurare NVDA +
 
@@ -563,7 +591,7 @@ Si tratta di un campo numerico che permette di modificare la velocità di lampeg
 Si tratta di un campo numerico che controlla per quanto tempo i messaggi di sistema saranno mostrati sul Display Braille.
 
 %kc:setting
-==== Il display braille segue ====
+==== Il display braille segue ====[BrailleTether]
 Tasto: NVDA+control+t
 
 Questa impostazione permette di decidere se il display braille seguirà il focus di sistema oppure il navigatore ad oggetti (cursore di controllo).
@@ -848,7 +876,7 @@ Questa sezione contiene informazioni sui sintetizzatori vocali supportati da NVD
 La sintesi vocale [eSpeak http://espeak.sourceforge.net/]  è incorporata direttamente in NVDA, per cui non è necessario alcun driver o componente per farla funzionare. Da impostazioni predefinite NVDA si avvia utilizzando Espeak. Poiché questa sintesi è incorporata in NVDA, risulta molto comoda per utilizzare il prodotto da una chiavetta USB o da un cd in altri sistemi.
 
 Ciascuna voce presente in Espeak parla una lingua diversa.
-Sono oltre 20 le lingue supportate da questa sintesi vocale.
+Sono oltre 43 le lingue supportate da questa sintesi vocale.
 
 Vi sono anche numerose varianti che possono essere usate per modificare il timbro della voce.
 

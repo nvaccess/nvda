@@ -224,7 +224,7 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 		text+=i->first;
 		text+=L"=\"";
 		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();++j) {
-			appendCharToXML(*j,text);
+			appendCharToXML(*j,text,true);
 		}
 		text+=L"\" ";
 	}

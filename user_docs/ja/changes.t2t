@@ -27,15 +27,17 @@
 - OpenBookを使用する際、自動的にスリープモードを有効化するようにしました。 (#1209)
 - Poeditにおいて、翻訳者によって追加されたコメント及び自動的に展開されたコメントをを読むことができます。み翻訳や翻訳があいまいなメッセージはアスタリスクでマークされ、そこに移動するとビープ音が聞こえます。 (#1811)
 - HumanWare社製のBrailliant BI及びBシリーズのディスプレーをサポートしました。 (#1990)
+- 新しい言語: ブークモールノルウェー語に対応しました。
 
 
 == 変更点 ==
-- eSpeak音声エンジンを1.46.02に更新しました。
 - 現在文字の説明や現在の単語や行のスペル読みにおいて、自動言語切り換えが有効で、適切な言語情報が提供されている場合、適切な言語が使用できるようになりました。
-- 画像及びリンクURLから推測されたとても長い名前（30文字以上）を無効なものとして除外するようになりました。 (#1989)
-- いくつかの点字で表示される情報が短縮されました。 (#1955, #2043)
+- eSpeak音声エンジンを1.46.02に更新しました。
+- 画像及びリンクURLから推測されたとても長い名前（30文字以上）はほとんどの場合ゴミであることから、それを無効なものとして切り捨てるようになりました。 (#1989)
+- 一部の点字で表示される情報が短縮されました。 (#1955, #2043)
 - キャレットまたはレビューカーソルが移動する時、点字も手動でスクロールさせたのと同じようにスクロールするようになりました。これにより、点字を段落単位で読むように設定している時に、より正確に単語を分断することなくめるようになりました。 (#1996)
 - 最新のスペイン語1級点字変換テーブルに更新しました。
+- liblouis braille translatorを2.4.0に更新しました。
 
 
 == バグ修正 ==
@@ -48,16 +50,23 @@
 - NVDAを英語以外の言語で使用しているとき、Tabキーの名称がその言語で正しく通知されるようになりました。
 - Mozilla Gecko (例えばFirefox) において、ドキュメント内のメニューを移動中に断続的にブラウズモードに切り替わらないようになりました。 (#2025)
 - 計算機内でバックスペースキーを押した場合、何も読み上げないのでなく、更新された結果を読み上げるようになりました。 (#2030)
-- ブラウズモード内のマウスポインターを現在のナビゲーターオブジェクトに移動コマンドが、いくつかの状況でより正確にレビューカーソルを移動するために、オブジェクトの左上に移動する代わりに、中心に移動するようになりました。 (#2029)
+- ブラウズモード内のマウスポインターを現在のナビゲーターオブジェクトに移動コマンドが、一部の状況でより正確にレビューカーソルを移動するために、オブジェクトの左上に移動する代わりに、中心に移動するようになりました。 (#2029)
 - ブラウズモードのフォーカスの変化を追跡する自動フォーカスモードが有効でツールバーにフォーカスした場合、フォーカスモードに変更されるようになりました。 (#1339)
 - Adobe Reader上で、タイトルの通知コマンドが正しく動作するように改善しました。
 - フォーカスの変化を追跡する自動フォーカスモードが有効な場合、ARIAグリッドのようなフォーカスのあるテーブル上でフォーカスモードが正しく利用できるようになりました。 (#1763)
 - iTunesにおいて、特定のリストの位置情報が正しく通知されるようになりました。
-- Adobe Readerにおいて、いくつかのリンクが読み取り専用テキストを含んでいるように取り扱われないようになりました。
+- Adobe Readerにおいて、一部のリンクが読み取り専用テキストを含んでいるように取り扱われないようになりました。
 - 編集可能なテキストフィールドのラベルを、ダイアログを通知する際に誤って含まないようにしました。 (#1960)
 - オブジェクトの説明の通知が有効な場合、グループの説明がまた通知されるようになりました。
 - Windowsエクスプローラーのドライブのプロパティーダイアログにおいて、人が読めるサイズのテキストを含むようになりました。
-- いくつかの場合において、プロパティーページのテキストが2度通知される問題を抑制しました。 (#218)
+- 一部のプロパティーページのテキストが2度通知される問題を抑制しました。 (#218)
+- スクリーンにテキストが書かれたテキストフィールド内のキャレットによる追跡が向上しました。特に、Microsoft ExcelのセルエディターやEudoraのメッセージエディターでの編集が向上しています。 (#1658)
+- Firefox 11において、(NVDA+Ctrl+スペースで動作する) それを含んでいる仮想バッファーに移動するコマンドで、埋め込みオブジェクトから抜けられるようになりました。
+- ディレクトリー名にASCII文字以外が含まれている場合であっても、 (例えば言語設定を変更した後に) 正しく再起動できるようになりました。 (#2079)
+- 点字表示において、オブジェクトショートカットキーの通知、位置情報及び説明が、設定どおりに正しく動作するようになりました。
+- Mozillaのアプリケーションにおいて、点字が有効な場合でもブラウズモードとフォーカスモードの切り替えが遅くならないようになりました。 (#2095)
+- 点字ディスプレー上のタッチカーソルで行末/段落末のスペースに移動させた時、一部の編集可能テキストでテキストの先頭に移動しないようになりました。 (#2096)
+
 
 
 %== 開発者向けの変更 ==
@@ -67,8 +76,8 @@
 % - This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
 %- TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
 %- Several control and output constants have been renamed or moved. (#228)
- %- speech.REASON_* constants have been moved to controlTypes.
- %- In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
+%- speech.REASON_* constants have been moved to controlTypes.
+%- In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
 
 
 = 2011.3 =
@@ -116,7 +125,7 @@
 - ブラウズモードにおいて、コンボボックスを閉じたり開いたりするための、Alt+上矢印及びAlt+下矢印の挙動が改善しました。 (#1630)
 - 以前は確実にフリーズを引き起こした、応答なしのアプリケーションのような状況など、より多くの状況から復旧できるようになりました。 (#1408)
 - (Firefoxほか) Mozilla Geckoのブラウズモードにおけるドキュメントで、要素がdisplay:tableとしてスタイル指定されているという非常に特別な状況でテキストのレンダリングに失敗する問題を解消しました。 (#1373)
-- ラベルのあるコントロール内部にフォーカスが移動した際に、ラベルを読み上げないようになりました。Firefox (Gecko) とInternet Explorer (MSHTML) におけるいくつかのフォームフィールドでラベルの二重読み上げを解消しました。 (#1650)
+- ラベルのあるコントロール内部にフォーカスが移動した際に、ラベルを読み上げないようになりました。Firefox (Gecko) とInternet Explorer (MSHTML) における一部のフォームフィールドでラベルの二重読み上げを解消しました。 (#1650)
 - Microsoft Excelで、Ctrl+Vで貼り付けをおこなったあとにセルを読めない問題を解消しました。 (#1781)
 - Adobe Readerにおいて、フォーカスモードで別ページのコントロールに移動した際、文書に関する外部情報を読み上げないようになりました。 (#1659)
 - (Firefoxなど) Mozilla Geckoアプリケーションのブラウズモードにおいて、トグルボタンが正しく検出され、通知されるようになりました。 (#1757)
@@ -150,18 +159,17 @@
 - Unicodeによる点字のパターンが正しく点字ディスプレーに表示できるようになりました。 (#1505)
 - Internet Explorer及びその他のMSHTMLコントローラーにおいて、フォーカスが (fieldsetで囲まれた) コントロールのグループ内に移動したときに、グループの名称 (legend)  を読み上げるようになりました。 (#535)
 - Internet Explorer及びその他のMSHTMLコントローラーにおいて、aria-labelledBy及びaria-describedByプロパティーに対応しました。
- - Internet Explorer及びその他のMSHTMLコントローラーにおいて、ARIA list、gridcell、slider及びprogressbar controlのサポートが強化されました。
+- Internet Explorer及びその他のMSHTMLコントローラーにおいて、ARIA list、gridcell、slider及びprogressbar controlのサポートが強化されました。
  - 利用者自身が句読点及びその他の記号の発音と読み上げレベルを変更できるようになりました。
- 
-- In Microsoft Excel, the name of the active sheet is now reported when switching sheets with control+pageUp or control+pageDown. (#760)
-- When navigating a table in Microsoft Word with the tab key NVDA will now announce the current cell as you move. (#159)
-- You can now configure whether table cell coordinates are reported from the Document Formatting preferences dialog. (#719)
-- NVDA can now detect formatting and color for text written to the screen.
-- In the Outlook Express/Windows Mail/Windows Live Mail message list, NVDA will now announce the fact that a message is unread and also if it's expanded or collapsed in the case of conversation threads. (#868)
-- eSpeak now has a rate boost setting which triples the speaking rate.
-- Support for the  calendar control found in the Date and Time Information dialog accessed from the  Windows 7 clock. (#1637)
-- Additional key bindings have been added for the MDV Lilli braille display. (#241)
-- New languages: Bulgarian, Albanian.
+- Microsoft Excelにおいて、Ctrl+PageUpまたはCtrl+PageDownを使ってシート間を移動した場合、現在アクティブなシートの名称を通知するようになりました。 (#760)
+- Microsoft Word内のテーブルをTabキーを使って移動している時、移動した先のセルを読み上げるようになりました。 (#159)
+- テーブルセルの座行を通知するかどうかを、書式設定ダイアログで設定できるようになりました。 (#719)
+- 画面上に書かれたテキストの書式と色を認識できるようになりました。
+- Outlook Express、Windows Mail、Windows Live Mailのメッセージ一覧において、メッセージが未読であるかどうか及び、会話スレッドが閉じているか、開いているかを通知するようになりました。 (#868)
+- eSpeakに高速読み上げ設定が追加され、3倍の速度で読み上げられるようになりました。
+- Windows 7の時計からアクセスできる、カレンダーの日付及び時刻情報ダイアログのコントロールをサポートしました。 (#1637)
+- MDV Lilli点字ディスプレー用の追加のキー割り当てを追加しました。 (#241)
+- 新しい言語: ブルガリア語、アルバニア語を追加しました。
 
 
 == 変更点 ==

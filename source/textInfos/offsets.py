@@ -413,6 +413,10 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		count=0
 		lowLimit=0
 		highLimit=self._getStoryLength()
+		if unit==textInfos.UNIT_CHARACTER:
+			# #2096: There is often an uncounted character at the end of the text
+			# where the caret is placed to append text.
+			highLimit+=1
 		while count!=direction and (lastOffset is None or (direction>0 and offset>lastOffset) or (direction<0 and offset<lastOffset)) and (offset<highLimit or direction<0) and (offset>lowLimit or direction>0):
 			lastOffset=offset
 			if direction<0 and offset>lowLimit:

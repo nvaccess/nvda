@@ -17,7 +17,7 @@ En restituant l'information par synthèse vocale ou en Braille, NVDA permet aux 
 
 Ses points forts sont :
 - La prise en charge d'applications grand-public telles que des navigateurs Web, clients e-mail, programmes de tchat sur Internet et suites bureautiques
-- Un synthétiseur intégré prenant en charge plus de 20 langues
+- Un synthétiseur intégré prenant en charge plus de 43 langues
 - l'annonce, quand c'est possible, d'informations de formatage du texte telles que le nom et la taille de la police, le style et les fautes d'orthographe
 - L'annonce automatique du texte sous la souris et, en option, l'indication sonore de la position de la souris
 - La prise en charge de nombreux afficheurs braille
@@ -32,7 +32,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies. 
-A ce jour, NVDA a été traduit en 34 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, le Bulgare, le Chinois Traditionnel, le Croate, le Danois, l'Espagnol, le Finnois, le Français, le Galicien, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Mandarin Taïwanais, le Néerlandais, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Suédois, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
+A ce jour, NVDA a été traduit en 36 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, le Bulgare, le Chinois Traditionnel, le Croate, le Danois, l'Espagnol, le Finnois, le Français, le Galicien, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Mandarin Taïwanais, le Néerlandais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
 
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -252,6 +252,9 @@ L'objet en cours de revue s'appelle l'objet navigateur.
 Quand vous atteignez un objet, vous pouvez l'examiner en utilisant les [commandes de revue de texte #ReviewingText].
 Par défaut, l'objet navigateur suit le focus système, mais ce comportement peut être désactivé.
 
+Note : Par défaut, le Braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
+Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la review.
+
 Pour naviguer par objet, utilisez les touches suivantes :
 
 %kc:beginInclude
@@ -277,6 +280,9 @@ Par exemple, cela peut servir à consulter le texte d'un long message dans un di
 Quand vous déplacez le curseur de revue, le curseur système ne bouge pas, ainsi vous pouvez explorer un texte sans perdre votre position d'édition actuelle.
 Cependant, par défaut,  quand le curseur système bouge, le curseur de revue le suit. 
 Ceci peut être désactivé.
+
+Note : Par défaut, le Braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
+Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la review.
 
 Vous disposez des commandes suivantes pour explorer du texte :
 %kc:beginInclude
@@ -319,6 +325,9 @@ Si vous n'avez pas utilisé la navigation par objet, ce sera généralement la p
 Par exemple, si l'objet navigateur était un bouton, vous serez généralement positionné sur le texte du bouton en revue à plat.
 Vous pouvez alors explorer le texte en utilisant les [commandes de revue de texte #ReviewingText].
 Vous pouvez aussi naviguer directement à l'objet situé à la position du curseur de revue, ce qui vous permet de passer en [navigation par objet #ObjectNavigation] depuis ce point.
+
+Note : Par défaut, le Braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
+Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la review.
 
 les deux commandes suivantes sont utilisées pour la revue à plat :
 %kc:beginInclude

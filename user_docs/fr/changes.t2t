@@ -27,14 +27,17 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - Le mode veille est automatiquement activé quand on utilise Openbook. (#1209)
 - Sous Poedit, les traducteurs peuvent maintenant lire les commentaires ajoutés par les traducteurs ou extraits automatiquement. Les messages non traduits ou confus sont marqués par une étoile et on entend un bip quand on passe dessus. (#1811)
 - Support des terminaux braille HumanWare Brailliant Bi & B. (#1990)
+- Nouvelle langue: Norvégienn Bokmål.
 
 
 == Changements ==
 - Les commandes permettant de décrire le caractère courant ou d'épeler le mot ou la ligne en cours épellent maintenant dans la langue appropriée au texte si le changement automatique de langue est activé et si les informations relatives à la langue sont disponibles.
 - Mise à jour du synthétiseur eSpeak à la version 1.46.02.
-- NVDA filtre maintenant les noms très longs (plus de 30 caractères) devinés dans les graphiques et les liens URLs car ils nuisent souvent à la lecture. (#1989)
+- NVDA tronque maintenant les noms très longs (plus de 30 caractères) devinés dans les graphiques et les liens URLs car ils nuisent souvent à la lecture. (#1989)
 - Certaines informations affichées en Braille ont été abrégées. (#1955)
 - Quand le curseur de revue ou le curseur système se déplacent, le braille défile maintenant de la même manière que par le défilement manuel. Ceci est plus cohérent quand le Braille est configuré pour une lecture par paragraphe ou pour éviter la coupure de mots. (#1996)
+- Mise à jour de la table Espagnole Grade 1.
+- Mise à jour du convertisseur braille Liblouis à la version 2.4.0.
 
 
 == Corrections de Bogues ==
@@ -57,6 +60,12 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - La description des groupages est de nouveau annoncée si l'annonce de la description des objets est activée.
 - la taile en format lisible est maintenant incluse dans le texte du dialogue de propriété des disques de l'explorateur Windows.
 - La double annonce du texte des pages de propriété a été supprimée dans certains cas. (#218)
+- Amélioration du suvi du curseur dans les zones d'édition s'appuyant sur du texte écrit à l'écran. En particulier, cela améliore l'utilisation de l'éditeur de cellules dans Microsoft Excel et dans l'éditeur de messages d'Eudora. (#1658)
+- Sous Firefox 11, la commande NVDA+Control+Espace (aller à l'objet virtuel contenant) fonctionne maintenant comme prévu pour quitter un objet embarqué tel qu'un objet Flash.
+- NVDA se relance maintenant correctement après un changement de configuration quand il est installé dans un répertoire dont le nom comporte des caractères non Ascii. (#2079)
+- Le Braille respecte correctement les réglages pour l'affichage des touches de raccourci des objets, de l'information de rang et des descriptions.
+- Dans les applications Mozilla, le passage entre le mode formulaire et le mode navigation n'est plus ralenti quand le Braille est activé.
+- Amener le curseur sur l'espace situé à la fin d'un paragraphe en utilisant les routines curseur Braille ne  ramène plus au début du texte. (#2096)
 
 
 == Changements pour les Développeurs ==

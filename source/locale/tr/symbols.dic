@@ -1,4 +1,9 @@
-﻿complexSymbols:
+﻿#locale/tr/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
@@ -104,12 +109,17 @@ _	alt çizgi	most
 ¨	diaeresis	most
 ���	soldan sağa işareti	char
 ���	sağdan sola işareti	char
+■	siyah boşluk	some
 ➔	Sağ ok	some
 ¡	ters ünlem	most
 ¦	kırık çizgi	most
 «	çift kancalı parantezaç	most
 ¸	cedila	most
 »	çift kancalı parantez kapa	most
+µ	mikro	some
+¹	süperskript 1	some
+²	süperskript 2	some
+³	süperskript 3	some
 ¿	ters soru	most
 ‣	üçgen madde imi	most
 §	paragraf	most
@@ -128,6 +138,11 @@ _	alt çizgi	most
 ™	marka	some
 ®	kayıtlı	some
 ©	kopyahakkı	some
+→	sağ ok	some
+
+✓	onay	some
+✔	onay	some
+
 ¥	yen	some
 √	ve	some
 ∞	sekiz	some

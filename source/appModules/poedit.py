@@ -80,6 +80,8 @@ class AppModule(appModuleHandler.AppModule):
 			# Translators: this message is reported when NVDA is unable to find 
 			# the 'automatic comments' window in poedit.
 			ui.message(_("Could not find automatic comments window."))
+	# Translators: The description of an NVDA command for Poedit.
+	script_reportAutoCommentsWindow.__doc__ = _("Reports any comments in the automatic comments window")
 
 	def script_reportCommentsWindow(self,gesture):
 		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 1, 0])
@@ -99,6 +101,8 @@ class AppModule(appModuleHandler.AppModule):
 			# Translators: this message is reported when NVDA is unable to find
 			# the 'comments' window in poedit.
 			ui.message(_("Could not find comment window."))
+	# Translators: The description of an NVDA command for Poedit.
+	script_reportAutoCommentsWindow.__doc__ = _("Reports any comments in the comments window")
 
 	__gestures = {
 		"kb:control+shift+c": "reportCommentsWindow",

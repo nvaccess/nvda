@@ -460,7 +460,14 @@ class NVDAObjectRegion(Region):
 
 	def update(self):
 		obj = self.obj
-		text = getBrailleTextForProperties(name=obj.name, role=obj.role, value=obj.value if not NVDAObjectHasUsefulText(obj) else None , states=obj.states, description=obj.description, keyboardShortcut=obj.keyboardShortcut, positionInfo=obj.positionInfo)
+		presConfig = config.conf["presentation"]
+		text = getBrailleTextForProperties(name=obj.name, role=obj.role,
+			value=obj.value if not NVDAObjectHasUsefulText(obj) else None ,
+			states=obj.states,
+			description=obj.description if presConfig["reportObjectDescriptions"] else None,
+			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
+			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
+		)
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
 
@@ -706,6 +713,7 @@ class TextInfoRegion(Region):
 		self._addTextWithFields(chunk, formatConfig)
 		# Strip line ending characters, but add a space in case the cursor is at the end of the reading unit.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
+		self._rawToContentPos.append(self._currentContentPos)
 		del self.rawTextTypeforms[len(self.rawText) - 1:]
 		self.rawTextTypeforms.append(louis.plain_text)
 
@@ -970,12 +978,18 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self.brailleCells = []
 		self.cursorPos = None
 		start = 0
+		if log.isEnabledFor(log.IO):
+			logRegions = []
 		for region in self.visibleRegions:
+			if log.isEnabledFor(log.IO):
+				logRegions.append(region.rawText)
 			cells = region.brailleCells
 			self.brailleCells.extend(cells)
 			if region.brailleCursorPos is not None:
 				self.cursorPos = start + region.brailleCursorPos
 			start += len(cells)
+		if log.isEnabledFor(log.IO):
+			log.io("Braille regions text: %r" % logRegions)
 
 	def updateDisplay(self):
 		if self is self.handler.buffer:
@@ -1103,6 +1117,23 @@ def getFocusRegions(obj, review=False):
 		region2.update()
 		yield region2
 
+def formatCellsForLog(cells):
+	"""Formats a sequence of braille cells so that it is suitable for logging.
+	The output contains the dot numbers for each cell, with each cell separated by a space.
+	A C{-} indicates an empty cell.
+	@param cells: The cells to format.
+	@type cells: sequence of int
+	@return: The formatted cells.
+	@rtype: str
+	"""
+	# optimisation: This gets called a lot, so needs to be as efficient as possible.
+	# List comprehensions without function calls are faster than loops.
+	# For str.join, list comprehensions are faster than generator comprehensions.
+	return " ".join([
+		"".join([str(dot + 1) for dot in xrange(8) if cell & (1 << dot)])
+		if cell else "-"
+		for cell in cells])
+
 class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_FOCUS = "focus"
 	TETHER_REVIEW = "review"
@@ -1172,7 +1203,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
 			config.conf["braille"]["display"] = name
-			log.info("Loaded braille display driver %s" % name)
+			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
 			return True
 		except:
 			log.error("Error initializing display driver", exc_info=True)
@@ -1204,6 +1235,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def update(self):
 		cells = self.buffer.windowBrailleCells
+		if log.isEnabledFor(log.IO):
+			log.io("Braille window dots: %s" % formatCellsForLog(cells))
 		# cells might not be the full length of the display.
 		# Therefore, pad it with spaces to fill the display.
 		self._cells = cells + [0] * (self.displaySize - len(cells))

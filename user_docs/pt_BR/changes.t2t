@@ -4,8 +4,10 @@
 %!includeconf: ../changes.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
  
+ Traduzido por Marlin Rodrigues da Silva
+ 
 = 2012.1 =
- Os destaques desta versão inclúem recursos para uma leitura mais fluente do braille; indicação da formatação de documentos em braille; acesso a muito mais informações de formatação e melhora na performance no Microsoft Word; e suporte para a loja do iTune.
+ Os destaques desta versão inclúem recursos para uma leitura mais fluente do braille; indicação da formatação de documentos em braille; acesso a muito mais informações de formatação e melhora na performance no Microsoft Word; e suporte para a loja do iTunes.
 
 == Novas Características ==
 - O NVDA agora pode anunciar o número de tabs e espaços inseridos na linha atual. Isso pode ser abilitado selecionando a opção Anunciar Identação das Linhas no Diálogo de Formatação de Documentos. (#373)
@@ -28,6 +30,7 @@
 - O modo dormir agora é abilitado automaticamente ao usar o OpenBook. (#1209)
 - No Poedit, os tradutores agora podem ler comentários adicionados e automaticamente extraídos. Mensagens não traduzidas ou excluídas são marcadas com um asterisco e um beep é ouvido ao navegar por elas. (#1811)
 - Suporte para as linhas braille HumanWare Brailliant BI e B series. (#1990)
+- Novo idioma: Noroeguês.
 
 
 == Alterações ==
@@ -37,6 +40,7 @@
 - Algumas informações que são exibidas em braille foram abreviadas. (#1955, #2043)
 - Quando o cursor do sistema ou o cursor de exploração é movido, o braille agora é deslocado da mesma forma que quando se lhe desloca manualmente. Isso o torna mais apropriado quando o braille está configurado para ser lido por parágrafos e/ou evitar a quebra de palavras. (#1996)
 - Atualização para a nova tabela de tradução braille do espanhol grau 1.
+- Atualizado o transcritor braille liblouis para a versão 2.4.0.
 
 
 == Correção de Falhas ==
@@ -56,18 +60,29 @@
 - No iTunes, a informação da posição em determinadas listas agora é anunciada corretamente.
 - No Adobe Reader, alguns links já não são tratados como se contivessem campos de edição de texto somente leitura.
 - As etiquetas de alguns campos de edição de texto já não são incluidas incorretamente ao anunciar o texto de um diálogo. (#1960)
+- A descrição de grupos é novamente anunciada se o anúncio de descrições dos objetos estiver abilitado.
+- Os tamanhos disponíveis agora são inclusos no diálogo de propriedades das unidades no windows explorer.
+- O anúncio duplo de textos en páginas de propriedades foi suprimido en alguns casos. (#218)
+- Melhorada a percepção do cursor em campos de edição de texto onde o texto é escrito na própria tela. Em particular, isso melhora a edição no editor de células do Microsoft Excel e no editor de mensagens Eudora. (#1658)
+- No Firefox 11, o comando de mover para o buffer virtual que contém objetos embutidos (NVDA+control+espaço) agora funciona como lhe é designado para sair dos objetos embutidos tais como em conteúdo Flash.
+- O NVDA agora reinicia automaticamente de forma apropriada (isto é, depois de ser alterado o idioma configurado) quando localizado em uma pasta  cujo nome contém caracteres não ASCII. (#2079)
+- O braille respeita apropriadamente as configurações para o anúncio de objetos (teclas de atalho, informação da posição e descrições.
+- Em aplicativos da Mozilla, a alternância entre os modos de foco e navegação já não é lenta quando se tem o braille abilitado. (#2095)
+- O direcionamento do cursor para o espaço ao fim da linha/paragrafo através das teclas sensor com o cursor braille em alguns campos de edição de texto agora funciona corretamente em lugar de levar ao início do texto. (#2096)
 
 
 == Alterações Específicas para  Desenvolvedores ==
+- Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
 - Agora existe um console Python remoto para situações onde seja necessária uma depuração remota. Consulte o Guia do Desenvolvedor para mais detalhes.
 - The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
 - TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
  - Isto é usado pelo braille para ativar a posição usando a tecla sensor em linhas braille. Todavia, podem existir outras formas de entrada futuramente.
 - TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
- - Several control and output constants have been renamed or moved. (#228)
+ - Várias constantes de controle ou saída foram renomeadas ou movidas. (#228)
  - speech.REASON_* constants have been moved to controlTypes.
  - In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
-
+- A saída braille agora é registrada no log no grau entrada/saída. Primeiro, o texto não traduzido  de todas as regiões é registrado, seguido pelas células braille  da janela que está sendo exibida. (#2102)
+ 
 
 = 2011.3 =
 Os destaques desta versão incluem a mudança automática do idioma do sintetizador de voz ao ler documentos que forneçam a informação apropriada do idioma; suporte para Java 64 bit; anúncio da formatação de texto no modo de navegação para aplicativos da Mozilla; melhoras no controle de falhas e travamentos em aplicativos; resoluções iniciais para o Windows 8.
@@ -121,7 +136,7 @@ Os destaques desta versão incluem a mudança automática do idioma do sintetiza
 - O NVDA agora pode ler corretamente a Barra de Enderesso do Windows Explorer na pré-visualização de desenvolvimento do Windows 8.
 - O NVDA já não trava aplicativos tais como winver e wordpad na pré-visualização de desenvolvimento do Windows 8 devido a má tradução de hieróglifos.
 - No modo de navegação em aplicativos que usam Mozilla Gecko 10 e superior (isto é, Firefox 10), o cursor é posicionado com mais freqüência corretamente ao carregar uma página na qual exista uma âncora. (#360)
-- No modo de navegaçfão em aplicativos que usam Mozilla Gecko (Firefox, por exemplo), etiquetas para mapas de imagens agora são espostas.
+- No modo de navegação em aplicativos que usam Mozilla Gecko (Firefox, por exemplo), etiquetas para mapas de imagens agora são espostas.
 - Com a captura de mouse ativada, movendo-se o mouse por sobre certos campos de texto editáveis já não faz com que trave o aplicativo. (#672)
 - O NVDA agora  funciona corretamente em vários diálogos "sobre" em aplicativos distribuídos com o Windows XP, incluindo o diálogo "sobre" no Notepad e o diálogo "sobre" o Windows. (#1853, #1855)
 - Corrigida a revisão por palavra em controles de edição do Windows. (#1877)
@@ -129,6 +144,7 @@ Os destaques desta versão incluem a mudança automática do idioma do sintetiza
 
 
 == Alterações Específicas para Desenvolvedores ==
+- Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
 - O NVDA agora pode instruir aos sintetizadores de voz para alternar o idioma em  seções particulares da fala.
  - Para suportar essa função, os drivers precisam ter controle de speech.LangChangeCommand em seqüências passadas para SynthDriver.speak().
  - Os objetos para SynthDriver devem também fornecer a informação do idioma para OS OBJETOS DE VoiceInfo (ou substituir o atributo do idioma para retomar o idioma atual). Caso contrário, o idioma da interface do usuário do NVDA será usado.
@@ -220,7 +236,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 - Já não é possível ativar acidentalmente várias cópias do NVDA ao mesmo tempo. (#507)
 - Em sistemas lentos, o NVDA já não faz com que sua janela seja exibida inapropriadamente a todo instante enquanto é executado. (#726)
 - O NVDA já não trava no Windows xP quando é ativada uma aplicação WPF. (#1437)
-- Ler tudo e também ler tudo com o cursor de exploração agora podem funcionar em Controles de Texto UI automation que suportem todas as funcionalidades necessárias. Por exemplo, você agora pode usar a leitura contínua com o cursor de exploração em documentos do visualizador XPS.
+- A leitura contínua e também a leitura contínua com o cursor de exploração agora podem funcionar em Controles de Texto UI automation que suportem todas as funcionalidades necessárias. Por exemplo, você agora pode usar a leitura contínua com o cursor de exploração em documentos do visualizador XPS.
 - O NVDA já não classifica inapropriamente alguns itens de lista  no Diálogo aplicar regras de mensagens agora do Outlook Express / Windows Live Mail como sendo caixas de seleção. (#576)
 - As caixas de combinação já não são anunciadas como tendo um sub-menu.
 - O NVDA agora pode ler o conteúdo nos campos Para, CC e BCC no Microsoft Outlook. (#421)
@@ -249,6 +265,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 
 
 == Alterações específicas para Desenvolvedores ==
+- Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
 - A documentação para desenvolvedores agora pode ser gerada usando SCons. Consulte o arquivo readme.txt na  raíiz da distribuição do código para detalhes, incluindo dependências associadas.
 - Locales agora podem fornecer descrições para caracteres. Consulte a Seção sobre Descrições de Caracteres no Guia do Desenvolvedor para obter detalhes. (#55)
 - Locales agora podem fornecer informações sobre a pronúncia da pontuação e outros sinais específicos. Consulte a seção sobre Pronúncia de Pontuação no Guia do Desenvolvedor para obter detalhes. (#332)
@@ -342,7 +359,7 @@ Os destaques desta versão incluem o anúncio de cores para alguns controles; an
  
  
 == Alterações específicas para Desenvolvedores ==
-- Esta seção deixa-se sem traduzir de momento por ser de pouca utilidade ao usuário normal já que é demasiado técnico.
+- Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
 - SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
 - The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
 - All input from the user is now represented by an inputCore.InputGesture instance. (#601)
@@ -420,7 +437,7 @@ As características mais notáveis desta versão incluen uma grande simplificaç
 - Removida a caixa de seleção anunciar texto sob o mouse do Diálogo Opções de Mouse e substituida por uma caixa de seleção abilitar rastreamento do mouse, que melhora o sincronismo da alteração do script de seguimento do mouse (NVDA+m). 
 - atualizado o layout de teclado laptop de forma que inclui todos os comandos disponíveis no layout desktop e funciona corretamente em teclados não ingleses. (#798, #800)
 - melhoras significativas e atualizações à documentação do usuário, incluindo documentação dos comandos de teclado laptop e sincronização da Referência Rápida de de Teclas de Atalho com a Guía do usuário. (#455)
-- atualizado o transcritor braille liblouis para a  versão 2.1.0. Notavelmente, isto corrige alguns problemas relacionados com braille Chinês
+- atualizado o tradutor braille liblouis para a  versão 2.1.0. Notavelmente, isto corrige alguns problemas relacionados com braille Chinês
 -
 
 == Correção de Falhas ==
@@ -432,7 +449,7 @@ As características mais notáveis desta versão incluen uma grande simplificaç
 - no Internet Explorer e outros controles MSHTML, a função ARIA agora é escolhido sobre outro tipo de informação para dar uma experiência de ARIA muito mais correta e intuitiva.
 - Resolvido um raro bug no Internet Explorer quando se navega por marcas ou iFrames.
 - em documentos do Microsoft Word, as linhas da direita para a esquerda (como no texto árabe) poden novamente ser lidas. (#627)
-- Forte redução do atraso quando grandes quantidades de texto eram exibidas num console de comandos do Windows em sistemas de 64 bits. (#622)
+- Significativa redução do atraso que ocorria quando grandes quantidades de texto eram exibidas num console de comandos do Windows em sistemas de 64 bits. (#622)
 - em aplicações do Microsoft Office, o NVDA já não trava quando se pressiona falar primeiro plano (NVDA+b) ou quando se navega alguns objetos em barras de ferramentas. (#616)
 - Corrigida a fala incorreta dos números que contém um 0 depois de un separador; ex.: 1.023. (#593)
 - Adobe Acrobat Pro e Reader 9 já não travam quando se fecha um arquivo ou ao executar outras certas tarefas. (#613)
@@ -516,7 +533,6 @@ Certos controles de vista em árvore em aplicações de 64 bit (como o conteúdo
 - :Resolvido um potencial desperdício maior de memória no menu e nos buffers virtuais. (#590, #591)
 - Trabalho sobre um desagradável problema em alguns sintetizadores SAPI 4 que causavam erros e travamentos frequentes no NVDA. (#597)
 -
-
 
 
 = 2009.1 =

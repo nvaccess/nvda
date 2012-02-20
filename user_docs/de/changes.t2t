@@ -26,16 +26,19 @@
 - neue Braille-Übersetzungstabelle: Portugiesische Kurzschrift. (#2014)
 - In den Einstellungen für Dokumentformatierungen kann nun eingestellt werden, ob Rahmen in Dokumenten angesagt werden sollen. (#1900)
 - Bei der Verwendung von Openbook wird automatisch der Schlafmodus aktiviert. (#1209)
-**- In Poedit können Übersetzer nun vom Übersetzer selbst erstellte Kommentare sowie automatisch eingefügte Kommentare lesen. Automatisch übersetzte oder noch nicht übersetzte Meldungen werden mit einem Stern markiert. Zudem wird ein Signalton ausgegeben, wenn Sie darauf navigieren. (#1811)
-**- Unterstützung für die HumanWare Brailliant Serien BI und B Braillezeilen. (#1990)
+- In Poedit können Übersetzer nun vom Übersetzer selbst erstellte Kommentare sowie automatisch eingefügte Kommentare lesen. Automatisch übersetzte oder noch nicht übersetzte Meldungen werden mit einem Stern markiert. Zudem wird ein Signalton ausgegeben, wenn Sie darauf navigieren. (#1811)
+- Unterstützung für die HumanWare Brailliant Serien BI und B Braillezeilen. (#1990)
+**- Neue Sprache: Norwegian Bokmål.
 
 
 == Änderungen ==
 - Die Befehle zum Beschreiben des aktuellen Zeichens Bzw. zum Buchstabieren der aktuellen Zeile und des aktuellen Wortes berücksichtigen die im Dokument hinterlegte Sprache, falls der automatische sprachenwechsel aktiviert ist.
 - Sprachausgabe eSpeak auf 1.46.02 aktualisiert.
-- Wenn bei der Darstellung von Links und Grafiken der Name aus der Adresse ermittelt werden muss, werden Namen ausgefiltert, die länger als 30 zeichen sind. Derart lange Namen enthalten meist nutzlose Informationen. (#1989)
+- Wenn bei der Darstellung von Links und Grafiken der Name aus der Adresse ermittelt werden muss, werden Namen abgekürzt, die länger als 30 zeichen sind. Derart lange Namen enthalten meist nutzlose Informationen. (#1989)
 - einige neue verkürzte Klassennamen in Braille hinzugefügt (#1955, #2043)
 **- Wenn der Systemcursor oder der nvda-Cursor bewegt wird, wird die Braillezeile so mitbewegt, wie wenn man die Braillezeile manuell weiterbewegen würde. Dies erleichtert das lesen, wenn die Einstellungen Absatzweise lesen und/oder Umbrechen von Wörtern verhindern aktiviert ist. (#1996)
+- Braille-Übersetzungstabelle für spanische Vollschrift aktualisiert.
+- liblouis braille-Übersetzer auf 2.4.0 aktualisiert.
 
 
 == Fehlerkorrekturen ==
@@ -53,6 +56,13 @@
 - der Befehl zum Ausgeben der Titelleiste funktioniert im Acrobat Reader wieder.
 **- Wenn die Option Bei Änderungen des Fokuses automatisch den Fokusmodus einschalten aktiviert ist, wird der Fokus-Modus korrekt für fokusierte Tabellenzeilen z.B. in ARIA Gittern verwendet. (#1763)
 - In Adobe Reader werden einige Links nicht mehr fälschlicherweise als Nur-Lesen-Eingabefelder erkannt.
+- Beim lesen von dialogfeldern werden nun keine Beschriftungen für Eingabefelder mehr einbezogen (#1960)
+- Wenn die Ansage von Objektbeschreibungen aktiviert ist, werden nun auch Beschreibungen von Gruppenfeldern ausgelesen.
+- in den laufwerkseigenschaften im Explorer wird nun auch die gerundete laufwerksgröße korrekt ausgelesen.
+- die doppelte Ansage von Texten auf Registerkarten wird in einigen Fällen vermieden. (#218)
+**- Improved tracking of the caret in editable text fields which rely on text written to the screen. In particular, this improves editing in the Microsoft Excel cell editor and the Eudora message editor. (#1658)
+**- In Firefox 11, the move to containing virtual buffer command (NVDA+control+space) now works as it should to escape embedded objects such as Flash content.
+
 
 
 == Änderungen für Entwickler ==
@@ -60,10 +70,10 @@
 - Aus Gründen der besseren lesbarkeit wird beim Zurückverfolgen von Fehlern in den protokollen der Basispfad aus Dateireferenzen gestrichen. (#1880)
 - TextInfo-Objekte haben nun eine Methode namens Activate(), die das Aktivieren der von textinfo zurückgegebenen Position erlaubt.
  - Dies erlaubt das Aktivieren unter Verwendung der Routingtasten einer Braillezeile. Hierfür könnte es jedoch in Zukunft andere Methoden geben.
-- TreeInterceptors und NVDAObjects, welche nur eine Seite beinhalten, können automatischen Seitenwechsel während alles lesen unterstützen, wenn sie textInfos.DocumentWithPageTurns verwenden.
+- TreeInterceptors und NVDAObjects, welche nur eine Seite beinhalten, können automatischen Seitenwechsel während alles lesen unterstützen, wenn sie textInfos.DocumentWithPageTurns verwenden. (#1978)
 - Einige Konstanten für Steuerelemente und ausgaben wurden umbenannt Bzw. verschoben. (#228)
  - speech.REASON_*-Konstanten wurden in die Steuerelemente verschoben.
- - Bei den Steuerelementen wurden speechRoleLabels und speechStateLabe
+ - Bei den Steuerelementen wurden speechRoleLabels und speechStateLabel in roleLabels  bzw. stateLabels,  umbenannt.
 
 
 = 2011.3 =
@@ -139,7 +149,7 @@ Die wichtigsten Neuerungen in dieser Version beinhalten große Verbesserungen im
 - In Anwendungen wie Mozilla Thunderbird, die ihre Ausgaben direkt auf den Bildschirm schreiben, wird nun im Anzeigebereich mehr Text angezeigt.
 - Sie können nun zwischen mehreren Ausführlichkeitsstufen für Satzzeichen und Sonderzeichen wählen. (#332)
 - Wenn ein Satzzeichen oder Symbol öfter als viermal auftaucht, wird die Anzahl der Zeichen angegeben, anstatt die Zeichen zu wiederholen. (#43)
-- Neue Braille-übersetzungstabellen: Norwegisches 8-Punkt-Braille, Ethiopische Vollschrift, Slovenische Vollschrift, Serbische Vollschrift. (#1456)
+- Neue Braille-Übersetzungstabellen: Norwegisches 8-Punkt-Braille, Ethiopische Vollschrift, Slovenische Vollschrift, Serbische Vollschrift. (#1456)
 - Bei der Verwendung des Befehls "Alles lesen" macht die Sprachausgabe keine unnatürlichen Pausen mehr. (#149)
 - NVDA sagt nun an, wenn ettwas sortiert wurde (gemäß der "aria-sort-Richtlinie) in Internetbrowsern. (#1500)
 - Braillezeichen im Unicode-Format werden jetzt auf der Braillezeile richtig angezeigt. (#1505)
@@ -164,7 +174,7 @@ Die wichtigsten Neuerungen in dieser Version beinhalten große Verbesserungen im
 - eSpeak auf 1.45.03 aktualisiert. (#1465)
 - Layout-Tabellen werden im Mozilla Gecko-Anwendungen nicht mehr angesagt, während man sich im Fokus-Modus befindet und den Fokus bewegt, bzw. außerhalb eines Dokuments.
 - in Internet-explorer und anderen mshtml-Dokumenten funktioniert der Browder-modus nun auch innerhalb von Aria-Anwendungen. (#1452)
-- Liblouis Braille-Übersetzung auf 2.3.0 aktualisiert.
+- Liblouis Braille-Übersetzer auf 2.3.0 aktualisiert.
 - Wenn sie bei aktiviertem Browser-Modus mit Hilfe der Schnellnavigation zu einem Steuerelement wechseln, wird dessen Beschreibung ausgegeben, falls vorhanden.
 - Ansage der Fortschrittsbalken im Lesemodus.
 - alle Elemente, die in Internet Explorer oder anderen mshtml-Dokumenten mit dem Aria-Attribut presentation gekennzeichnet sind, werden nun beim Navigieren im vereinfachten Modus oder im Fokusmodus ausgefiltert.
@@ -269,7 +279,7 @@ Dieses Release behebt wichtige Fehler und Sicherheitsprobleme, welche in NVDA 20
 
 == Neue Funktionen ==
 Zu den wichtigsten Neuerungen gehören das Anzeigen von Farben,  sowie die automatische Anzeige von neu erscheinendem Text in  mIRC, PuTTY, Tera Term und SecureCRT;
-Unterstützung globaler Erweiterungen; die korrekte Anzeige von Aufzählungen und Numerierungen in Microsoft Word; zusätzliche Tastenzuweisungen für Braillezeilen, einschl. Tasten zum Bewegen zur nächsten/vorigen Zeile; sowie Unterstützung von Braillezeilen von Baum, HumanWare und APH.
+Unterstützung globaler Erweiterungen; die korrekte Anzeige von Aufzählungen und Numerierungen in Microsoft Word; zusätzliche Tastenzuweisungen für Braillezeilen, einschließlich Tasten zum Bewegen zur nächsten/vorigen Zeile; sowie Unterstützung von Braillezeilen von Baum, HumanWare und APH.
 
 - Nun kann in virtuellen Ansichten seitenweise (Umschalt+Seite nach oben/Seite nach unten) oder absatzweise (Umschalt+STRG+Pfeil nach oben/Pfeil nach unten) markiert werden. (#639)
 - NVDA zeigt nun neu erscheinenden Text in Terminalfenstern korrekt an. Dies betrifft u. a. mIRC, PuTTY, Tera Term und SecureCRT. (#936)
@@ -349,13 +359,14 @@ Verwenden der Methode "ScriptableObject.bindGesture()" gehören zur Instanz der 
 - Die Klasse "synthDriverHandler.VoiceInfo" akzeptiert nun einen optionalen Parameter namens "language", der die Sprache der Stimme angibt.
 - Die "SynthDriver"-Objekte stellen nun ein zusätzliches Attribut language zur Verfügung, das die Sprache der aktuellen Stimme angibt.
 - Die Basisimplementierung verwendet die Sprache, die im "VoiceInfo"-Objekt bei availablevoices angegeben ist. Dies trifft für alle Synthesizer zu, die eine Sprache pro Stimme bereitstellen.
-- Treiber für Braillezeilen wurden so erweitert, dass Tasten, Rädchen und andere Steuerelemente an NVDA-Skripte zugewiesen werden können:
+- Braillezeilentreiber wurden so erweitert, dass Tasten, Rädchen und andere Steuerelemente an NVDA-Skripte zugewiesen werden können:
  - Treiber können eine globale Eingabemethodenzuweisung bereitstellen, um Zuweisungen für Skripte an beliebiger Stelle inNVDA hinzuzufügen.
  - Die Treiber können auch ihre eigenen Skripte bereitstellen, um Zeilenspezifische Funktionen auszuführen.
  - Sehen Sie sich "braille.BrailleDisplayDriver" für weitere Informationen und vorhandene Treiber von Braillezeilen für Beispiele an.
 - Die Eigenschaft "selfvoicing" der Klassen für Anwendungsmodule wurde in "sleepmode" umbenannt.
 - Um die Namenskonventionen in Anwendungsmodulen und im Tree-interceptor einheitlich zu halten, wurden die Ereignisse "event_appLoseFocus" und "event_appGainFocus" in "event_appModule_loseFocus" bzw. "event_appModule_gainFocus" umbenannt.
-- Alle Treiber von Braillezeilen sollten nun "braille.BrailleDisplayDriver" anstelle von  "braille.BrailleDisplayDriverWithCursor" verwenden.
+- Alle Treiber von 
+zeilen sollten nun "braille.BrailleDisplayDriver" anstelle von  "braille.BrailleDisplayDriverWithCursor" verwenden.
  - Der Cursor wird nun außerhalb des Treibers verwaltet.
  - In bereits vorhandenen Treibern muss nur noch die Klassendefinition entsprechend angepasst und die Methode "_display" in "display" umbenannt werden.
 
@@ -378,7 +389,7 @@ Unterstützung von IBM Lotus Symphony-Dokumenten; Ansage der Reihen- und Spalten
 - Unterstützung für den Code-Editor in Visual Studio 2005 und 2008, erfordert mindestens Visual Studio Standard, funktioniert nicht mit Visual Studio express (#457)
 - Unterstützung für IBM Lotus Symphony-Dokumente.
 - frühe, experimentelle Unterstützung von Google Crome. Bitte bedenken Sie, dass Google Cromes Unterstützung für Bildschirmleser noch in der Entwicklungsphase steckt. Auch NVDA-seitig ist noch Arbeit nötig, um Google Crome zu unterstützen. Sie benötigen die neueste Entwicklerversion von Google chrome. 
-- Den Status der Tasten Capslock (Dauergroßschreibtaste), Nummernblock und Scroll Lock werden beim Betätigen nun in Braille angezeigt. (#620)
+- Der Status der Tasten Capslock (Dauergroßschreibtaste), Nummernblock und Scroll Lock werden beim Betätigen nun in Braille angezeigt. (#620)
 - Hilfesprechblasen werden beim Erscheinen nun in Braille angezeigt. (#652)
 - Der Treiber für die Braillezeile MDV Lilli wurde hinzugefügt. (#241)
 - Beim Auswählen ganzer Zeilen bzw. Spalten in Microsoft Excel mit Umschalt+Leertaste und STRG+Leertaste wird nun die neue Auswahl wiedergegeben. (#759)
@@ -475,7 +486,7 @@ Diese Version enthält überwiegend Fehlerbehebungen und Verbesserungen
 - Blitzmeldungen verschwinden nun von der Braillezeile, wenn Sie eine Taste drücken, die eine Änderung des Fokuses zur Folge hat. Bisher blieben die Meldungen grundsätzlich für die konfigurierte Zeitspanne angezeigt.
 - Die Kopplung der Braillezeile (NVDA+STRG+T) kann nun auch in den Braille-einstellung eingestellt werden. Diese Einstellung wird nun auch in der benutzerspezifischen Konfiguration gespeichert.
 - Sprachausgabe eSpeak auf Version 1.43 aktualisiert.
-- Den Braille-Übersetzer von Liblouis auf Version 1.8.0 aktualisiert.
+- Den Braille-Übersetzer Liblouis auf Version 1.8.0 aktualisiert.
 - In Virtuellen Ansichten wurde die wort- und zeichenweise Navigation enorm verbessert. Zuvor hatte sie sich stark von der zeilenweisen Navigation unterschieden. (#490)
 - Die Taste STRG hält nun die Sprache an, so wie alle anderen Tasten auch, anstatt sie nur zu unterbrechen. Um die Sprache zu unterbrechen, drücken sie Umschalttaste.
 - Bei Änderungen des Fokuses wird die Anzahl von  Spalten und Zeilen nicht mehr angezeigt, da diese Informationen nicht sinnvoll sind.
@@ -514,16 +525,16 @@ Diese Version enthält überwiegend Fehlerbehebungen und Verbesserungen
 
 
 = 2009.1 =
-die wichtigsten Neuerungen dieser version sind u.a. die Unterstützung von 64-bit-Versionen von Windows; verbesserte Unterstützung von Internet Explorer und Adobe Reader-Dokumenten; Unterstützung von windows 7; das Auslesen von windows-Anmeldung und Benutzrkontensteuerung; sowie die Unterstützung von Java- und Flash-Anwendungen. There have also been einige grundlegende Verbesserungen und Problembehebungen hinsichtlich der Stabilität wurden ebenfalls implementiert.
+die wichtigsten Neuerungen dieser version sind u.a. die Unterstützung von 64-bit-Versionen von Windows; verbesserte Unterstützung von Internet Explorer und Adobe Reader-Dokumenten; Unterstützung von windows 7; das Auslesen von windows-Anmeldung und Benutzerkontensteuerung; sowie die Unterstützung von Java- und Flash-Anwendungen. Einige grundlegende Verbesserungen und Problembehebungen hinsichtlich der Stabilität wurden ebenfalls implementiert.
 
 == Neuerungen ==
 - offizielle Unterstützung von 64-Bit-Versionen von Windows (#309)
 - Unterstützung für den neuen Newfon-Sprachsynthesizer hinzugefügt. Bedenken sie, dass dies eine spezielle Version von newfon erfordert (#206)
 - Fokus- und Browsermodus werden nun durch Klänge anstelle gesprochener meldungen angekündigt. Dies ist standardmäßig aktiviert. Die Funktion kann jedoch im Dialog "Browser-Modus" konfiguriert werden. (#244)
 - NVDA unterbricht nun nicht mehr die Sprache, wenn Sie die Tasten zur lautstärkeregelung drücken. Dies erlaubt Ihnen, die lautstärke einzustellen und das eigentliche Ergebnis zu hören. (#287)
-- Die Unterstützung für Internet Explorer und Adobe reader-Dokumente wurde komplett erneuert. Diese Unterstützung wurde mit der Unterstützung für Mozilla Gecko vereinheitlicht. Auf diese weise werden Leistungsmerkmale wie die schnelle Verarbeitung des Dokuments, Schnellnavigation, die Linkliste, das Markieren von Text, automatischer Fokusmodus und Braille-untestützung in solchen Dokumenten verfügbar.
-- verbesserte Unterstützung für das Steuerelement zur Datumsauswahl im Dialog Datum/Uhreit unter Windows Vista.
-- verbesserte Unterstützug für das moderne Startmenü von Windows xp und Windows Vista. Speziell im Untermenü "alle Programme2 wird nun ach die Baumebene mi angegeben.
+- Die Unterstützung für Internet Explorer und Adobe reader-Dokumente wurde komplett erneuert. Diese Unterstützung wurde mit der Unterstützung für Mozilla Gecko vereinheitlicht. Auf diese weise werden Leistungsmerkmale wie die schnelle Verarbeitung des Dokuments, Schnellnavigation, die Linkliste, das Markieren von Text, automatischer Fokusmodus und Braille-Unterstützung in solchen Dokumenten verfügbar.
+- verbesserte Unterstützung für das Steuerelement zur Datumsauswahl im Dialog Datum/Uhrzeit unter Windows Vista.
+- verbesserte Unterstützung für das moderne Startmenü von Windows xp und Windows Vista. Speziell im Untermenü "alle Programme2 wird nun ach die Baumebene mi angegeben.
 - Die Menge an Text, die beim Bewegen der Maus angegeben werden soll, kann in den Mauseinstellungen konfiguriert werden. Hier kann zwischen Zeichen, Wort, Zeile oder Absatz ausgewählt werden.
 - In Microsoft Word werden Rechtschreibfehler korrekt erkannt.
 - Unterstützung der Rechtschreibprüfung in Microsoft Word 2007. In früheren Versionen von Microsoft Word wird sie ebenfalls teilweise unterstützt.
@@ -531,10 +542,10 @@ die wichtigsten Neuerungen dieser version sind u.a. die Unterstützung von 64-bi
 - Wenn sie sich im Windows Vista auf einem sicheren Desktop befinden (wie z.B. die Benutzerkontensteuerung oder wenn Sie strg+alt+entf drücken), wird nvda dies nun melden.
 - in Dos-Boxen kann nvda nun den Text unter dem Mauszeiger ansagen.
 - Unterstützung von UI automation in windows 7
-- NVDA kann nun so konfiguriert werden, dass er nach der Anmeldung automatisch startet. Die entsprechende Option befindet sich im Dialog "allgemeine Einstellungen".
+- NVDA kann nun so konfiguriert werden, dass es nach der Anmeldung automatisch startet. Die entsprechende Option befindet sich im Dialog "allgemeine Einstellungen".
 - Nvda kann nun auch sichere Desktops auslesen (Anmeldebildschirm, Benutzerkontensteuerung usw). Die Optionen zum Aktivieren von NVDA für die Anmeldung sind im Dialog "allgemeine Einstellungen" zu finden. (#97)
 - Treiber für Optelec ALVA BC6 Braillezeilen hinzugefügt.
-- When browsing web documents, you can now press n and shift+n to skip forward and backward past blocks of links, respectively.
+- Auf Internetseiten kann nun mit n und Umschalt+n vor bzw. hinter einen Block aus Links gesprungen werden.
 - In Dokumenten kann nun mit d und umschalt+d vorwärts Bzw. rückwärts zwischen Aria-Sprungmarken navigiert werden. (#192)
 - Die Linkliste wurde in eine Elementliste geändert. Hiermit können Links, sprungmarken und Überschriften aufgelistet werden. Überschriften und Sprungmarken werden hierarchisch aufgelistet. (#363)
 - der neue dialog "Elementliste" enthält ein Eingabefeld "Filtern nach", mit dem Elemente ausgefiltert werden können, die einen angegebenen Text enthalten. (#173)

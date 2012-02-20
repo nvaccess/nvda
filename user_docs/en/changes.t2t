@@ -63,6 +63,9 @@ Highlights of this release include features for more fluent reading of braille; 
 - Improved tracking of the caret in editable text fields which rely on text written to the screen. In particular, this improves editing in the Microsoft Excel cell editor and the Eudora message editor. (#1658)
 - In Firefox 11, the move to containing virtual buffer command (NVDA+control+space) now works as it should to escape embedded objects such as Flash content.
 - NVDA now restarts itself correctly (e.g. after changing the configured language) when it is located in a directory which contains non-ASCII characters. (#2079)
+- Braille correctly respects the settings for reporting of object shortcut keys, position information and descriptions.
+- In Mozilla applications, switching between browse and focus modes is no longer slow with braille enabled. (#2095)
+- Routing the cursor to the space at the end of the line/paragraph using braille cursor routing keys in some editable text fields now works correctly instead of routing to the start of the text. (#2096)
 
 
 == Changes for Developers ==
@@ -74,6 +77,7 @@ Highlights of this release include features for more fluent reading of braille; 
 - Several control and output constants have been renamed or moved. (#228)
  - speech.REASON_* constants have been moved to controlTypes.
  - In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
+- Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
 
 
 = 2011.3 =
