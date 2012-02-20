@@ -349,3 +349,72 @@ def getCaretObject():
 	if ti and ti.isReady and not ti.passThrough:
 		return ti
 	return obj
+
+def getPath(obj, ancestor):
+	"""Gets the path of the object with respect to its ancestor.
+the ancestor is typically the forground object.
+@param obj: The object we are trying to find the path to.
+@type obj: NVDAObjects.NVDAObject
+@param ancestor: The ancestor of obj which is acting as the start of the path.
+@type ancestor: NVDAObjects.NVDAObject
+@returns: A list of integers, which are the coordinates relative to the ansestor.
+@rtype: L{list}
+"""
+	path = []
+	cancel = 0
+	if obj == ancestor or not obj: return []
+	p = obj
+	while p != ancestor and p.parent:
+		counter = 0
+		while p.previous:
+			p = p.previous
+			counter += 1
+			cancel += 1
+			# Looks like we have an infinite ancestry, so get out
+			if cancel == 50: return [-1]
+		path.append(counter)
+		p = p.parent
+	path.reverse()
+	return path
+
+def fetchObject(ancestor, path):
+	"""Fetch the child object  described by path.
+@param ancestor: The ancestor of obj which is acting as the start of the path.
+@type ancestor: NVDAObjects.NVDAObject
+@returns: requested object if found, or None
+@rtype: L{NVDAObjects.NVDAObject} or None
+"""
+	path.reverse()
+	p = ancestor
+	while len(path) and p.firstChild:
+		p = p.firstChild
+		steps = path.pop()
+		i=0
+		while i<steps and p.next: 
+			p = p.next
+			i += 1
+		# the path requests us to look for further siblings, but none found.
+		if i<steps: return None
+	# the path requests us to look for further children, but none found.
+	if len(path): return None
+	return p
+
+def getPathWithExtraInfo(obj, ancestor):
+	"""Gets the path with additional information of the object with respect to its ancestor.
+The ancestor is typically the forground object.
+@param obj: The object we are trying to find the path to.
+@type obj: NVDAObjects.NVDAObject
+@param ancestor: The ancestor of obj which is acting as the start of the path.
+@type ancestor: NVDAObjects.NVDAObject
+@returns: A list of touples, which are the coordinates relative to the ansestor. Each touble is of the form: (addrOnThisLevel, windowControlID, windowClassName)
+@rtype: L{list}
+"""
+
+	pathWithExtraInfo = []
+	p = obj
+	while p not in [None, ancestor]:
+		addr =   getPath(p, p.parent)
+		pathWithExtraInfo.append((addr, p.windowControlID, p.windowClassName))
+		p = p.parent
+	pathWithExtraInfo.reverse()
+	return pathWithExtraInfo
