@@ -699,7 +699,7 @@ class LabelObjectDialog(SettingsDialog):
 		labelObjectLabel=wx.StaticText(self,-1,label=_("New label for object?"))
 		settingsSizer.Add(labelObjectLabel)
 		self.labelObjectEdit=wx.TextCtrl(self,wx.NewId())
-		self.labelObjectEdit.SetValue(globalVars.labelObject.name)
+		self.labelObjectEdit.SetValue(globalVars.labelObject.name or "")
 		settingsSizer.Add(self.labelObjectEdit,border=10,flag=wx.BOTTOM)
 
 	def postInit(self):
@@ -714,7 +714,7 @@ class LabelObjectDialog(SettingsDialog):
 		fg.appModule.appUserLabels[objPath] = (objPathWithExtraInfo, newName)
 		fg.appModule.saveLabels()
 		obj.name = newName
-		log.debug("Assigned new label '%s', to %s, %s" %(newName, fg.appModule.appName, objPath))
+		log.info("Assigned new label '%s', to %s, %s, extraInfo %s" %(newName, fg.appModule.appName, objPath, objPathWithExtraInfo))
 
 		# Translators: This is when the user presses ok and nvda notifies them that their chosen label has been saved.
 		ui.message(_("New label saved."))

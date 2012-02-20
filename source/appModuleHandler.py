@@ -206,29 +206,30 @@ class AppModule(baseObject.ScriptableObject):
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
 
 		# Check if any labels exist for objects in this application.
-		labelFName = "\\appModules\\%s_labels" %appName
+		self.labelFName = "appModules\\%s_labels" %appName
 		try:
-			f = open(labelFName, 'r')
+			f = open(self.labelFName, 'r')
 			self.appLabels = pickle.load(f)
 			f.close()
-			log.debug("loaded the following labels for %s: %s" %(appName, self.labels))
+			log.info("loaded the following labels for %s: %s" %(appName, self.labels))
 		except IOError, e:
 			self.appLabels = {}
-			log.debug("No labels loaded for %s" % labelFName)
+			log.info("No labels loaded from %s" % self.labelFName)
 		# Check if any user-defined labels exist for objects in this application.
 		try:
-			f = open(globalVars.appArgs.configPath+labelFName, 'r')
+			f = open(globalVars.appArgs.configPath+"\\" + self.labelFName, 'r')
 			self.appUserLabels = pickle.load(f)
 			f.close()
 			log.info("loaded the following user-defined labels for %s: %s" %(appName, self.appUserLabels))
 		except IOError, e:
 			self.appUserLabels = {}
-			log.debug("No user-defined labels loaded for %s" % labelFName)
+			log.info("No user-defined labels loaded from %s" % self.labelFName)
 
 	def saveLabels(self):
-		f = open(globalVars.appArgs.configPath+ "\\"+ self.appName+ "_labels", 'w')
+		f = open(globalVars.appArgs.configPath+ "\\"+ self.labelFName , 'w')
 		pickle.dump(self.appUserLabels, f)
                 f.close()
+		log.info("Saved labels for %s" %self.appName)
 
 	def __repr__(self):
 		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
