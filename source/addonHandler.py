@@ -106,7 +106,8 @@ def getAvailableAddons():
 
 
 def installAddonBundle(bundle):
-	pass
+	userAddonsPath = os.path.join(globalVars.appArgs.configPath, "addons")
+	bundle.extract(userAddonsPath)
 
 
 class AddonError(Exception):
@@ -196,28 +197,28 @@ class AddonBundle(object):
 	""" Represents the contents of an NVDA addon in a for suitable for distribution.
 	The bundle is compressed using the zip file format. Manifest information
 	is available without the need for extraction."""
-	def __init__(self, bundle_filename):
+	def __init__(self, bundlePath):
 		""" Constructs a C{AddonBundle} from a filename.
-		@param bundle_filename: the bundle's file path on the file system.
+		@param bundlePath: The path for the bundle file.
 		"""
-		self._filename = bundle_filename
+		self._path = bundlePath
 		# Read manifest:
-		with zipfile.ZipFile(bundle_filename, 'r') as z:
+		with zipfile.ZipFile(self._path, 'r') as z:
 			self._manifest = AddonManifest(z.open(MANIFEST_FILENAME))
 
-	def extract(addons_path, override=False):
+	def extract(self, addonsPath, override=False):
 		""" Extracts the bundle content to the specified path.
 		A directory with the addon's name will be created under C{addons_path}.
 		@param addons_path: Path where to extract contents.
-		@type addons_path: string
+		@type addonsPath: string
 		@param override: specifies if the contents of the addon-directory are or not overriden
 		@type override: boolean
 		"""
 		name = self._manifest['name']
-		path = os.path.join(addons_path, name)
+		path = os.path.join(addonsPath, name)
 		if not override and os.path.isdir(path):
 			raise AddonError, "Addon already installed."
-		with zipfile.ZipFile(self._filename, 'r') as z:
+		with zipfile.ZipFile(self._path, 'r') as z:
 			z.extractall(path)
 
 	@property
@@ -227,8 +228,8 @@ class AddonBundle(object):
 		"""
 		return self._manifest
 
-def _report_manifest_errors(manifest):
-	log.warning("Error loading manifest:\n%s", manifest.errors)
+	def __repr__(self):
+		return "<AddonBundle at %s>" % self._path
 
 def createAddonBundleFromPath(path, destDir=None):
 	""" Creates a bundle from a directory that contains a a addon manifest file."""
@@ -256,7 +257,11 @@ def createAddonBundleFromPath(path, destDir=None):
 				pathInBundle = os.path.join(relativePath, filename)
 				absPath = os.path.join(dir, filename)
 				z.write(absPath, pathInBundle)
+	return AddonBundle(bundleDestination)
 
+
+def _report_manifest_errors(manifest):
+	log.warning("Error loading manifest:\n%s", manifest.errors)
 
 class AddonManifest(ConfigObj):
 	""" Add-on manifest file. It contains metadata about an NVDA add-on package. """
