@@ -33,7 +33,7 @@ def initialize():
 		except:
 			log.exception("Error activating addon.")
 			continue
-	runningAddons.append(addon)
+		runningAddons.append(addon)
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
@@ -52,10 +52,11 @@ def runHook(hookName):
 	rets = []
 	for addon in runningAddons:
 		try:
-		ret = addon.runHook(hookName)
+			ret = addon.runHook(hookName)
+			if ret is not None:
 				rets.append((ret, addon))
-	except:
-		log.exception("Error running hook %s on plugin %s", hookName, addon.name)
+		except:
+			log.exception("Error running hook %s on plugin %s", hookName, addon.name)
 	return rets
 
 	return rets
