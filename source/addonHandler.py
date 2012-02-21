@@ -19,6 +19,10 @@ import config
 import globalVars
 from logHandler import log
 
+
+MANIFEST_FILENAME = "manifest.ini"
+BUNDLE_EXTENSION = "nvdaadon"
+
 #: Currently loaded add-ons.
 #: @type runningAddons: string
 runningAddons = []
@@ -44,7 +48,7 @@ def terminate():
 	runningAddons = []
 
 
-def runHook(hookName):
+def runHook(hookName, *args, **kwargs):
 	""" Runs the specified hook on all active add.ons.
 	@param hookName: the hook name
 	@type hookName: string
@@ -52,14 +56,13 @@ def runHook(hookName):
 	rets = []
 	for addon in runningAddons:
 		try:
-			ret = addon.runHook(hookName)
+			ret = addon.runHook(hookName, *args, **kwargs)
 			if ret is not None:
 				rets.append((ret, addon))
 		except:
 			log.exception("Error running hook %s on plugin %s", hookName, addon.name)
 	return rets
 
-	return rets
 
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
@@ -111,8 +114,6 @@ class AddonError(Exception):
 	pass
 
 
-MANIFEST_FILENAME = "manifest.ini"
-
 class Addon(object):
 	""" Represents an Addon available on the file system."""
 	def __init__(self, path):
@@ -147,6 +148,7 @@ class Addon(object):
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
 	def activate(self):
+		""" Activates this addon, running the activate hook if exists. """
 		self.runHook('activate')
 
 	def deactivate(self):
@@ -186,8 +188,8 @@ class Addon(object):
 		if not self._hooksModule:
 			return None
 		func = getattr(self._hooksModule, hookName, None)
-		log.debug("Running hook %s of addon %s", hookName, self.name)
 		if func:
+			log.debug("Running hook %s of addon %s", hookName, self.name)
 			return func(*args, **kwargs)
 
 class AddonBundle(object):
@@ -196,7 +198,7 @@ class AddonBundle(object):
 	is available without the need for extraction."""
 	def __init__(self, bundle_filename):
 		""" Constructs a C{AddonBundle} from a filename.
-		@param: bundle_filename the bundle's file path on the file system.
+		@param bundle_filename: the bundle's file path on the file system.
 		"""
 		self._filename = bundle_filename
 		# Read manifest:
@@ -228,32 +230,39 @@ class AddonBundle(object):
 def _report_manifest_errors(manifest):
 	log.warning("Error loading manifest:\n%s", manifest.errors)
 
-def create_addon_bundle_from_manifest(manifest_path, dest_dir='.'):
-	""" Creates the bundle in zip format from a manifest and specified data.
-"""
-	basedir = os.path.dirname(os.path.abspath(manifest_path))
+def createAddonBundleFromPath(path, destDir=None):
+	""" Creates a bundle from a directory that contains a a addon manifest file."""
+	basedir = os.path.abspath(path)
+	# If  caller did not provide a destination directory name
+	# Put the bundle at the same level of the addon's top directory,
+	# That is, basedir/..
+	if destDir is None:
+		destDir = os.path.dirname(basedir)
+	manifest_path = os.path.join(basedir, MANIFEST_FILENAME)
+	if not os.path.isfile(manifest_path):
+		raise AddonError, "Can't find %s manifest file." % manifest_path
 	with open(manifest_path) as f:
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
 		_report_manifest_errors(manifest)
-		return False
-	bundle_name = "%s-%s.nda-adon" % (manifest['name'], manifest['version'])
-	with zipfile.PyZipFile(bundle_name, 'w') as z:
-		# write manifest
-		z.write(manifest_path, MANIFEST_FILENAME)
-		# Write python files. Compiling if necessary.
-		z.writepy(basedir)
-		# simple includes
-		includes = itertools.chain(*[glob.glob(path) for path in manifest['data']['include']])
-		for path in includes:
-			z.write(os.path.join(basedir, path), path)
+		raise AddonError, "Manifest file as errors."
+	bundleFilename = "%s-%s.%s" % (manifest['name'], manifest['version'], BUNDLE_EXTENSION)
+	bundleDestination = os.path.join(destDir, bundleFilename)
+	with zipfile.ZipFile(bundleDestination, 'w') as z:
+		# FIXME: the include/exclude feature may or may not be useful. Also python files can be pre-compiled.
+		for dir, dirnames, filenames in os.walk(basedir):
+			relativePath = os.path.relpath(dir, basedir)
+			for filename in filenames:
+				pathInBundle = os.path.join(relativePath, filename)
+				absPath = os.path.join(dir, filename)
+				z.write(absPath, pathInBundle)
 
 
 class AddonManifest(ConfigObj):
 	""" Add-on manifest file. It contains metadata about an NVDA add-on package. """
 	configspec = ConfigObj(StringIO(
 	"""
-# NVDA Ad-don Manifest configuration specification
+# NVDA Ad-on Manifest configuration specification
 # Add-on name
 name = string()
 # Quick description of the add-on to show to users.
@@ -276,15 +285,6 @@ categories = list(default=list())
 minVersion = string(default=None)
 # Maximum compatible version.
 maxVersion = string(default=None)
-
-# Extra data to bundle with the add-on.
-# Python files and packages are bundled by default.
-# Must be relative to the base directory where are this manifest.
-[data]
-# Extra files to include. Can use glob expressions.
-include = list(default=list())
-# Directories to include recursively.
-include_recursive = list(default=list())
 """))
 
 	def __init__(self, input):
