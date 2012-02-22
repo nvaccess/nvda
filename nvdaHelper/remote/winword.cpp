@@ -408,7 +408,7 @@ inline void generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream
 		if(_com_dispatch_raw_propget(pDispatchNote,wdDISPID_FOOTNOTE_INDEX,VT_I4,&index)!=S_OK) {
 			continue;
 		}
-		XMLStream<<L"<control role=\""<<(footnote?L"footnote":L"endnote")<<L"\" value=\""<<index<<L"\" />";
+		XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(footnote?L"footnote":L"endnote")<<L"\" value=\""<<index<<L"\" />";
 	}
 }
 
