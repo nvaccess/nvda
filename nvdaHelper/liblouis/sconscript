@@ -60,5 +60,5 @@ louisPython = env.Substfile(outDir.File("__init__.py"), louisRootDir.File("pytho
 
 env.Install(outDir.Dir("tables"),
 	[f for f in env.Glob("%s/tables/*" % louisRootDir)
-		if f.name not in ("Makefile", "Makefile.am", "README", "maketablelist.sh")
+		if f.name not in ("Makefile", "Makefile.am", "Makefile.in", "README", "maketablelist.sh")
 	])
