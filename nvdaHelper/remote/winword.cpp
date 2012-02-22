@@ -387,40 +387,26 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	} 
 }
 
-int getEndnoteIndex(IDispatch* pDispatchRange) {
+inline void generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream& XMLStream, bool footnote) {
 	IDispatchPtr pDispatchNotes=NULL;
 	IDispatchPtr pDispatchNote=NULL;
 	int count=0;
 	int index=0;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_ENDNOTES,VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
-		return 0;
+	if(_com_dispatch_raw_propget(pDispatchRange,(footnote?wdDISPID_RANGE_FOOTNOTES:wdDISPID_RANGE_ENDNOTES),VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
+		return;
 	}
-	if(_com_dispatch_raw_propget(pDispatchNotes,wdDISPID_ENDNOTES_COUNT,VT_I4,&count)!=S_OK||count==0) {
-		return 0;
+	if(_com_dispatch_raw_propget(pDispatchNotes,wdDISPID_FOOTNOTES_COUNT,VT_I4,&count)!=S_OK||count<=0) {
+		return;
 	}
-	if(_com_dispatch_raw_method(pDispatchNotes,wdDISPID_ENDNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",1)!=S_OK||!pDispatchNote) {
-		return 0;
+	for(int i=1;i<=count;++i) {
+		if(_com_dispatch_raw_method(pDispatchNotes,wdDISPID_FOOTNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",i)!=S_OK||!pDispatchNote) {
+			continue;
+		}
+		if(_com_dispatch_raw_propget(pDispatchNote,wdDISPID_FOOTNOTE_INDEX,VT_I4,&index)!=S_OK) {
+			continue;
+		}
+		XMLStream<<L"<control role=\""<<(footnote?L"footnote":L"endnote")<<L"\" value=\""<<index<<L"\" />";
 	}
-	_com_dispatch_raw_propget(pDispatchNote,wdDISPID_ENDNOTE_INDEX,VT_I4,&index);
-	return index;
-}
-
-int getFootnoteIndex(IDispatch* pDispatchRange) {
-	IDispatchPtr pDispatchNotes=NULL;
-	IDispatchPtr pDispatchNote=NULL;
-	int count=0;
-	int index=0;
-	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_FOOTNOTES,VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
-		return 0;
-	}
-	if(_com_dispatch_raw_propget(pDispatchNotes,wdDISPID_FOOTNOTES_COUNT,VT_I4,&count)!=S_OK||count==0) {
-		return 0;
-	}
-	if(_com_dispatch_raw_method(pDispatchNotes,wdDISPID_FOOTNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",1)!=S_OK||!pDispatchNote) {
-		return 0;
-	}
-	_com_dispatch_raw_propget(pDispatchNote,wdDISPID_FOOTNOTE_INDEX,VT_I4,&index);
-	return index;
 }
 
 UINT wm_winword_getTextInRange=0;
@@ -499,14 +485,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
 		}
 		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
-		if(text&&text[0]==L'\02') {
-			int index=getFootnoteIndex(pDispatchRange);
-			if(index>0) {
-				XMLStream<<L"<control role=\"footnote\"><text "<<initialFormatAttribsStream.str()<<L">"<<index<<L"</text></control>";
-			} else if((index=getEndnoteIndex(pDispatchRange))>0) { 
-				XMLStream<<L"<control role=\"endnote\"><text "<<initialFormatAttribsStream.str()<<L">"<<index<<L"</text></control>";
-			}
-		}
+		bool hasNoteChars=false;
 		XMLStream<<L"<text ";
 		XMLStream<<initialFormatAttribsStream.str();
 		generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
@@ -518,6 +497,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		if(text) {
 			wstring tempText;
 			for(int i=0;text[i]!=L'\0';++i) {
+				if(text[i]==L'\x0002') {
+					hasNoteChars=true;
+				}
 				appendCharToXML(text[i],tempText);
 			}
 			XMLStream<<tempText;
@@ -525,6 +507,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			text=NULL;
 		}
 		XMLStream<<L"</text>";
+		if(hasNoteChars) {
+			generateFootnoteEndnoteXML(pDispatchRange,XMLStream,true);
+			generateFootnoteEndnoteXML(pDispatchRange,XMLStream,false);
+		}
 		if((formatConfig&formatConfig_reportComments)&&getCommentCount(pDispatchRange)>0) {
 			XMLStream<<L"<text comment=\"1\" "<<initialFormatAttribsStream.str()<<L"> </text>";
 		}
