@@ -502,6 +502,7 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 
 	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	states = field.get("states", set())
+	value=field.get('value',None)
 
 	if presCat == field.PRESCAT_LAYOUT:
 		# The only item we report for these fields is clickable, if present.
@@ -524,7 +525,7 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 		return getBrailleTextForProperties(**props)
 
 	elif reportStart:
-		props = {"role": role, "states": states}
+		props = {"role": role, "states": states,"value":value}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:
