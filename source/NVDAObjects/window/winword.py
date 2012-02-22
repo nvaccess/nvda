@@ -323,6 +323,15 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	def __init__(self,*args,**kwargs):
 		super(WordDocument,self).__init__(*args,**kwargs)
 
+	def event_caret(self):
+		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
+		self._lastSelectionPos=curSelectionPos
+		if lastSelectionPos:
+			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
+				return
+		super(WordDocument,self).event_caret()
+
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
