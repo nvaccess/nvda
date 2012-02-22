@@ -344,6 +344,9 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 			}
 		}
 	}
+	if((formatConfig&formatConfig_reportComments)&&getCommentCount(pDispatchRange)>0) {
+		formatAttribsStream<<L"comment=\"1\" ";
+	}
 	if(formatConfig&formatConfig_fontFlags) {
 		IDispatchPtr pDispatchFont=NULL;
 		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_FONT,VT_DISPATCH,&pDispatchFont)==S_OK&&pDispatchFont) {
@@ -510,9 +513,6 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 		if(hasNoteChars) {
 			generateFootnoteEndnoteXML(pDispatchRange,XMLStream,true);
 			generateFootnoteEndnoteXML(pDispatchRange,XMLStream,false);
-		}
-		if((formatConfig&formatConfig_reportComments)&&getCommentCount(pDispatchRange)>0) {
-			XMLStream<<L"<text comment=\"1\" "<<initialFormatAttribsStream.str()<<L"> </text>";
 		}
 		_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseEnd);
 		chunkStartOffset=chunkEndOffset;
