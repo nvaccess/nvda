@@ -326,6 +326,11 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
 
+	def _get_states(self):
+		states=super(WordDocument,self).states
+		states.add(controlTypes.STATE_MULTILINE)
+		return states
+
 	def _get_WinwordVersion(self):
 		if not hasattr(self,'_WinwordVersion'):
 			self._WinwordVersion=float(self.WinwordWindowObject.application.version)
