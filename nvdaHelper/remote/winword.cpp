@@ -502,6 +502,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			for(int i=0;text[i]!=L'\0';++i) {
 				if(text[i]==L'\x0002') {
 					hasNoteChars=true;
+					continue;
 				}
 				appendCharToXML(text[i],tempText);
 			}
