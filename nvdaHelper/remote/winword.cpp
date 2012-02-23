@@ -91,6 +91,7 @@ using namespace std;
 
 #define wdCommentsStory 4
 
+#define wdCharacter 1
 #define wdWord 2
 #define wdLine 5
 #define wdCharacterFormatting 13
@@ -390,26 +391,25 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	} 
 }
 
-inline void generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream& XMLStream, bool footnote) {
+inline bool generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream& XMLStream, bool footnote) {
 	IDispatchPtr pDispatchNotes=NULL;
 	IDispatchPtr pDispatchNote=NULL;
 	int count=0;
 	int index=0;
 	if(_com_dispatch_raw_propget(pDispatchRange,(footnote?wdDISPID_RANGE_FOOTNOTES:wdDISPID_RANGE_ENDNOTES),VT_DISPATCH,&pDispatchNotes)!=S_OK||!pDispatchNotes) {
-		return;
+		return false;
 	}
 	if(_com_dispatch_raw_propget(pDispatchNotes,wdDISPID_FOOTNOTES_COUNT,VT_I4,&count)!=S_OK||count<=0) {
-		return;
+		return false;
 	}
-	for(int i=1;i<=count;++i) {
-		if(_com_dispatch_raw_method(pDispatchNotes,wdDISPID_FOOTNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",i)!=S_OK||!pDispatchNote) {
-			continue;
-		}
-		if(_com_dispatch_raw_propget(pDispatchNote,wdDISPID_FOOTNOTE_INDEX,VT_I4,&index)!=S_OK) {
-			continue;
-		}
-		XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(footnote?L"footnote":L"endnote")<<L"\" value=\""<<index<<L"\" />";
+	if(_com_dispatch_raw_method(pDispatchNotes,wdDISPID_FOOTNOTES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchNote,L"\x0003",1)!=S_OK||!pDispatchNote) {
+		return false;
 	}
+	if(_com_dispatch_raw_propget(pDispatchNote,wdDISPID_FOOTNOTE_INDEX,VT_I4,&index)!=S_OK) {
+		return false;
+	}
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(footnote?L"footnote":L"endnote")<<L"\" value=\""<<index<<L"\">";
+	return true;
 }
 
 UINT wm_winword_getTextInRange=0;
@@ -478,42 +478,57 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
 			chunkEndOffset=args->endOffset;
 		}
-		if(firstLoop) {
-			if(initialFormatConfig&formatConfig_reportTables) {
-				neededClosingControlTagCount+=generateTableXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
-			}
-			if(initialFormatConfig&formatConfig_reportHeadings) {
-				neededClosingControlTagCount+=generateHeadingXML(pDispatchRange,XMLStream);
-			}
-			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
-		}
 		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
-		bool hasNoteChars=false;
-		XMLStream<<L"<text ";
-		XMLStream<<initialFormatAttribsStream.str();
-		generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
-		XMLStream<<L">";
-		if(firstLoop) {
-			formatConfig&=(~formatConfig_reportLists);
-			firstLoop=false;
-		}
 		if(text) {
-			wstring tempText;
+			//Force a new chunk before and after control+b (note characters)
+			int noteCharOffset=-1;
 			for(int i=0;text[i]!=L'\0';++i) {
 				if(text[i]==L'\x0002') {
-					hasNoteChars=true;
-					continue;
+					noteCharOffset=i;
+					if(i==0) text[i]=L' ';
+					break;
 				}
+			}
+			bool isNoteChar=(noteCharOffset==0);
+			if(noteCharOffset==0) noteCharOffset=1;
+			if(noteCharOffset>0) {
+				text[noteCharOffset]=L'\0';
+				_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
+				if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacter,noteCharOffset)!=S_OK||unitsMoved<=0) {
+					break;
+				}
+				_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
+			}
+			if(firstLoop) {
+				if(initialFormatConfig&formatConfig_reportTables) {
+					neededClosingControlTagCount+=generateTableXML(pDispatchRange,args->startOffset,args->endOffset,XMLStream);
+				}
+				if(initialFormatConfig&formatConfig_reportHeadings) {
+					neededClosingControlTagCount+=generateHeadingXML(pDispatchRange,XMLStream);
+				}
+				generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,initialFormatConfig,initialFormatAttribsStream);
+			}
+			if(isNoteChar) {
+				isNoteChar=generateFootnoteEndnoteXML(pDispatchRange,XMLStream,true);
+				if(!isNoteChar) isNoteChar=generateFootnoteEndnoteXML(pDispatchRange,XMLStream,false);
+			}
+			XMLStream<<L"<text ";
+			XMLStream<<initialFormatAttribsStream.str();
+			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
+			XMLStream<<L">";
+			if(firstLoop) {
+				formatConfig&=(~formatConfig_reportLists);
+				firstLoop=false;
+			}
+			wstring tempText;
+			for(int i=0;text[i]!=L'\0';++i) {
 				appendCharToXML(text[i],tempText);
 			}
 			XMLStream<<tempText;
 			SysFreeString(text);
 			text=NULL;
-		}
-		XMLStream<<L"</text>";
-		if(hasNoteChars) {
-			generateFootnoteEndnoteXML(pDispatchRange,XMLStream,true);
-			generateFootnoteEndnoteXML(pDispatchRange,XMLStream,false);
+			XMLStream<<L"</text>";
+			if(isNoteChar) XMLStream<<L"</control>";
 		}
 		_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseEnd);
 		chunkStartOffset=chunkEndOffset;
