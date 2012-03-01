@@ -19,7 +19,12 @@ import gui
 from logHandler import log
 import config
 
+#: The URL to use for update checks.
 CHECK_URL = "http://www.nvda-project.org/updateCheck"
+#: The time to wait between checks.
+CHECK_INTERVAL = 86400 # 1 day
+#: The time to wait before retrying a failed check.
+RETRY_INTERVAL = 600 # 10 min
 
 # FIXME
 state = {
@@ -100,13 +105,26 @@ class UpdateChecker(object):
 
 class AutoUpdateChecker(UpdateChecker):
 	"""Automatically check for an updated version of NVDA.
+	To use, create a single instance and maintain a reference to it.
+	Checks will then be performed automatically.
 	"""
 	AUTO = True
 
+	def __init__(self):
+		self._checkTimer = wx.PyTimer(self.check)
+		# Set the initial check based on the last check time.
+		secs = CHECK_INTERVAL - int(min(time.time() - state["lastCheck"], CHECK_INTERVAL))
+		self._checkTimer.Start(secs * 1000, True)
+
+	def setNextCheck(self, isRetry=False):
+		self._checkTimer.Stop()
+		self._checkTimer.Start((RETRY_INTERVAL if isRetry else CHECK_INTERVAL) * 1000, True)
+
 	def _error(self):
-		pass
+		self.setNextCheck(isRetry=True)
 
 	def _result(self, info):
+		self.setNextCheck()
 		if not info:
 			return
 		if info["version"] == state["dontRemindVersion"]:
