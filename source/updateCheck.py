@@ -190,8 +190,8 @@ class UpdateResultDialog(wx.Dialog):
 
 def initialize():
 	global autoChecker
-	# TODO: Make configurable.
-	autoChecker = AutoUpdateChecker()
+	if config.conf["update"]["autoCheck"]:
+		autoChecker = AutoUpdateChecker()
 
 def terminate():
 	global autoChecker
