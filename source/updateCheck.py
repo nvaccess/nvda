@@ -10,6 +10,7 @@
 import sys
 import os
 import threading
+import time
 import urllib
 import wx
 import versionInfo
@@ -59,45 +60,35 @@ def checkForUpdate(auto=False):
 		return None
 	return info
 
-class CheckForUpdateUi(object):
+class UpdateChecker(object):
 	"""Check for an updated version of NVDA, presenting appropriate user interface.
-	Checks are performed in the background.
+	The check is performed in the background.
+	This class is for manual update checks.
+	To use, call L{check} on an instance.
 	"""
+	AUTO = False
 
-	def __init__(self, auto=False):
-		"""Constructor.
-		@param auto: Whether this is an automatic check for updates.
-		@type auto: bool
+	def check(self):
+		"""Check for an update.
 		"""
-		self.auto = auto
 		t = threading.Thread(target=self._bg)
 		t.daemon = True
 		t.start()
 
 	def _bg(self):
 		try:
-			info = checkForUpdate(self.auto)
+			info = checkForUpdate(self.AUTO)
 		except:
-			if self.auto:
-				log.debugWarning("Error checking for update", exc_info=True)
-			else:
-				log.error("Error checking for update", exc_info=True)
-				wx.CallAfter(self._error)
+			log.debugWarning("Error checking for update", exc_info=True)
+			self._error()
 			return
-		if not info:
-			# No update.
-			if  not self.auto:
-				wx.CallAfter(self._result, None)
-			return
-		version = info["version"]
-		if self.auto and state["dontRemindVersion"] == version:
-			# The user has already been automatically notified about this version.
-			return
-		state["dontRemindVersion"] = version
-		wx.CallAfter(self._result, info)
+		self._result(info)
+		if info:
+			state["dontRemindVersion"] = info["version"]
+		state["lastCheck"] = time.time()
 
 	def _error(self):
-		gui.messageBox(
+		wx.CallAfter(gui.messageBox,
 			# Translators: A message indicating that an error occurred while checking for an update to NVDA.
 			_("Error checking for update."),
 			# Translators: The title of an error message dialog.
@@ -105,7 +96,22 @@ class CheckForUpdateUi(object):
 			wx.OK | wx.ICON_ERROR)
 
 	def _result(self, info):
-		UpdateResultDialog(gui.mainFrame, info, self.auto)
+		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
+
+class AutoUpdateChecker(UpdateChecker):
+	"""Automatically check for an updated version of NVDA.
+	"""
+	AUTO = True
+
+	def _error(self):
+		pass
+
+	def _result(self, info):
+		if not info:
+			return
+		if info["version"] == state["dontRemindVersion"]:
+			return
+		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
 class UpdateResultDialog(wx.Dialog):
 
