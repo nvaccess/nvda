@@ -32,6 +32,10 @@ state = {
 	"dontRemindVersion": None,
 }
 
+#: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
+#: C{None} if it is disabled.
+autoChecker = None
+
 def checkForUpdate(auto=False):
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
@@ -91,6 +95,8 @@ class UpdateChecker(object):
 		if info:
 			state["dontRemindVersion"] = info["version"]
 		state["lastCheck"] = time.time()
+		if autoChecker:
+			autoChecker.setNextCheck()
 
 	def _error(self):
 		wx.CallAfter(gui.messageBox,
@@ -124,7 +130,6 @@ class AutoUpdateChecker(UpdateChecker):
 		self.setNextCheck(isRetry=True)
 
 	def _result(self, info):
-		self.setNextCheck()
 		if not info:
 			return
 		if info["version"] == state["dontRemindVersion"]:
@@ -182,3 +187,12 @@ class UpdateResultDialog(wx.Dialog):
 	def onLaterButton(self, evt):
 		state["dontRemindVersion"] = None
 		self.Close()
+
+def initialize():
+	global autoChecker
+	# TODO: Make configurable.
+	autoChecker = AutoUpdateChecker()
+
+def terminate():
+	global autoChecker
+	autoChecker = None
