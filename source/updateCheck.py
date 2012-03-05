@@ -5,7 +5,12 @@
 #Copyright (C) 2012 NV Access Limited
 
 """Update checking functionality.
+@note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
+
+import versionInfo
+if not versionInfo.updateVersionType:
+	raise RuntimeError("No update version type, update checking not supported")
 
 import sys
 import os
@@ -13,7 +18,6 @@ import threading
 import time
 import urllib
 import wx
-import versionInfo
 import languageHandler
 import gui
 from logHandler import log
