@@ -298,12 +298,23 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	pump.Start(1)
 	log.debug("Initializing watchdog")
 	watchdog.initialize()
+	try:
+		import updateCheck
+	except RuntimeError:
+		updateCheck=None
+		log.debug("Update checking not supported")
+	else:
+		log.debug("initializing updateCheck")
+		updateCheck.initialize()
 	log.info("NVDA initialized")
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
 
 	log.info("Exiting")
+	if updateCheck:
+		log.debug("Terminating updateCheck")
+		updateCheck.terminate()
 	log.debug("Terminating watchdog")
 	watchdog.terminate()
 	log.debug("Terminating GUI")
