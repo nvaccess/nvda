@@ -49,7 +49,7 @@ def checkForUpdate(auto=False):
 	params = {
 		"autoCheck": auto,
 		"version": versionInfo.version,
-		"versionType": "stable",
+		"versionType": versionInfo.updateVersionType,
 		"osVersion": "{v.major}.{v.minor}.{v.build} {v.service_pack}".format(v=winVer),
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 		"language": languageHandler.getLanguage(),
