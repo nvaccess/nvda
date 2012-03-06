@@ -8,6 +8,7 @@
 """High-level functions to speak information.
 """ 
 
+import itertools
 import colors
 import globalVars
 from logHandler import log
@@ -637,7 +638,7 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 		speechSequence.append(LangChangeCommand(language))
 		lastLanguage=language
 
-	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and len([x for x in textWithFields if isinstance(x,basestring)])==1:
+	if unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD) and len(textWithFields)>0 and len(textWithFields[0])==1 and all((isinstance(x,textInfos.FieldCommand) and x.command=="controlEnd") for x in itertools.islice(textWithFields,1,None) ): 
 		if any(isinstance(x,basestring) for x in speechSequence):
 			speak(speechSequence)
 		speakSpelling(textWithFields[0],locale=language if autoLanguageSwitching else None)
@@ -851,6 +852,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	role=attrs.get('role',controlTypes.ROLE_UNKNOWN)
 	states=attrs.get('states',set())
 	keyboardShortcut=attrs.get('keyboardShortcut', "")
+	value=attrs.get('value',"")
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportDescription',False):
 		description=attrs.get('description',"")
 	else:
@@ -866,6 +868,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	stateText=getSpeechTextForProperties(reason=reason,states=states,_role=role)
 	keyboardShortcutText=getSpeechTextForProperties(reason=reason,keyboardShortcut=keyboardShortcut) if config.conf["presentation"]["reportKeyboardShortcuts"] else ""
 	nameText=getSpeechTextForProperties(reason=reason,name=name)
+	valueText=getSpeechTextForProperties(reason=reason,value=value)
 	descriptionText=(getSpeechTextForProperties(reason=reason,description=description)
 		if config.conf["presentation"]["reportObjectDescriptions"] else "")
 	levelText=getSpeechTextForProperties(reason=reason,positionInfo_level=level)
@@ -921,7 +924,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		(speakEntry and ((speakContentFirst and fieldType in ("end_relative","end_inControlFieldStack")) or (not speakContentFirst and fieldType in ("start_addedToControlFieldStack","start_relative"))))
 		or (speakWithinForLine and not speakContentFirst and not extraDetail and fieldType=="start_inControlFieldStack")
 	):
-		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),descriptionText,levelText,keyboardShortcutText if x])
+		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText if x])
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
 		return _("out of %s")%roleText
 

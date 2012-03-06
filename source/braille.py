@@ -29,6 +29,9 @@ TABLES = (
 	("ar-ar-g1.utb", _("Arabic grade 1")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("ar-fa.utb", _("Farsi grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("bg.ctb", _("Bulgarian 8 dot computer braille")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -74,6 +77,9 @@ TABLES = (
 	("en-us-g2.ctb", _("English (U.S.) grade 2")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("Es-Es-G0.utb", _("Spanish 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("es-g1.ctb", _("Spanish grade 1")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -111,6 +117,9 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("hu1.ctb", _("Hungarian 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("is.ctb", _("Icelandic 8 dot computer braille")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("it-it-g1.utb2", _("Italian grade 1")),
@@ -162,6 +171,9 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("sr-g1.ctb", _("Serbian grade 1")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ta-ta-g1.ctb", _("Tamil grade 1")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("tr.ctb", _("Turkish grade 1")),
@@ -496,6 +508,7 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 
 	role = field.get("role", controlTypes.ROLE_UNKNOWN)
 	states = field.get("states", set())
+	value=field.get('value',None)
 
 	if presCat == field.PRESCAT_LAYOUT:
 		# The only item we report for these fields is clickable, if present.
@@ -518,7 +531,7 @@ def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 		return getBrailleTextForProperties(**props)
 
 	elif reportStart:
-		props = {"role": role, "states": states}
+		props = {"role": role, "states": states,"value":value}
 		if config.conf["presentation"]["reportKeyboardShortcuts"]:
 			kbShortcut = field.get("keyboardShortcut")
 			if kbShortcut:

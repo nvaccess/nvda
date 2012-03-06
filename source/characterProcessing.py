@@ -22,17 +22,19 @@ class LocaleDataMap(object):
 		self._localeDataFactory=localeDataFactory
 		self._dataMap={}
 
-	def fetchLocaleData(self,locale):
+	def fetchLocaleData(self,locale,fallback=True):
 		"""
 		Fetches a data object for the given locale. 
 		This may mean that the data object is first created and stored if it does not yet exist in the map.
-		The locale is also simplified (country is dropped) if the full locale can not be used to create a data object.
+		The locale is also simplified (country is dropped) if the fallback argument is True and the full locale can not be used to create a data object.
 		@param locale: the locale of the data object requested
 		@type locale: string
+		@param fallback: if true and there is no data for the locale, then the country (if it exists) is stripped and just the language is tried.
+		@type fallback: boolean
 		@return: the data object for the given locale
 		"""
 		localeList=[locale]
-		if '_' in locale:
+		if fallback and '_' in locale:
 			localeList.append(locale.split('_')[0])
 		for l in localeList:
 			data=self._dataMap.get(l)
@@ -363,7 +365,7 @@ class SpeechSymbolProcessor(object):
 
 		# We need to merge symbol data from several sources.
 		sources = self.sources = []
-		builtin, user = self.localeSymbols.fetchLocaleData(locale)
+		builtin, user = self.localeSymbols.fetchLocaleData(locale,fallback=False)
 		self.userSymbols = user
 		sources.append(user)
 		sources.append(builtin)

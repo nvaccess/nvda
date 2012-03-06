@@ -3,6 +3,9 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.2 =
+
+
 = 2012.1 =
 Highlights of this release include features for more fluent reading of braille; indication of document formatting in braille; access to much more formatting information and improved performance in Microsoft Word; and support for the iTunes Store.
 
@@ -22,7 +25,7 @@ Highlights of this release include features for more fluent reading of braille; 
 - In browse mode, you can activate the object under the cursor using a braille display. This is done by pressing the cursor routing key where the cursor is located (which means pressing it twice if the cursor is not already there). (#1893)
 - Basic support for web areas in iTunes such as the Store. Other applications using WebKit 1 may also be supported. (#734)
 - In books in Adobe Digital Editions 1.8.1 and later, pages are now turned automatically when using say all. (#1978)
-- New braille translation table: Portuguese grade 2. (#2014)
+- New braille translation tables: Portuguese grade 2, Icelandic 8 dot computer braille, Tamil grade 1, Spanish 8 dot computer braille, Farsi grade 1. (#2014)
 - You can now configure whether frames in documents are reported from the Document Formatting preferences dialog. (#1900)
 - Sleep mode is automatically enabled when using OpenBook. (#1209)
 - In Poedit, translators can now read translator added and automatically extracted comments. Messages that are untranslated or fuzzy are marked with a star and a beep is heard when you navigate onto them. (#1811)
@@ -37,7 +40,7 @@ Highlights of this release include features for more fluent reading of braille; 
 - Some information displayed in braille has been abbreviated. (#1955, #2043)
 - When the caret or review cursor moves, braille is now scrolled in the same way as when it is manually scrolled. This makes it more appropriate when braille is configured to read by paragraphs and/or avoid splitting words. (#1996)
 - Updated to new Spanish grade 1 braille translation table.
-- Updated liblouis braille translator to 2.4.0.
+- Updated liblouis braille translator to 2.4.1.
 
 
 == Bug Fixes ==
@@ -66,6 +69,11 @@ Highlights of this release include features for more fluent reading of braille; 
 - Braille correctly respects the settings for reporting of object shortcut keys, position information and descriptions.
 - In Mozilla applications, switching between browse and focus modes is no longer slow with braille enabled. (#2095)
 - Routing the cursor to the space at the end of the line/paragraph using braille cursor routing keys in some editable text fields now works correctly instead of routing to the start of the text. (#2096)
+- NVDA again works correctly with the Audiologic Tts3 synthesizer. (#2109)
+- Microsoft Word documents are correctly treated as multi-line. This causes braille to behave more appropriately when a document is focused.
+- In Microsoft Internet Explorer, errors no longer occur when focusing on certain rare controls. (#2121)
+- Changing the pronunciation of punctuation/symbols by the user will now take effect straight away, rather than requiring NVDA to be restarted or auto language switching to be disabled.
+- When using eSpeak, speech no longer goes silent in some cases in the Save As dialog of the NVDA Log Viewer. (#2145)
 
 
 == Changes for Developers ==
@@ -78,6 +86,7 @@ Highlights of this release include features for more fluent reading of braille; 
  - speech.REASON_* constants have been moved to controlTypes.
  - In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
 - Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
+- subclasses of the sapi5 synthDriver can now override _getVoiceTokens and extend __init__ to support custom voice tokens such as with sapi.spObjectTokenCategory to get tokens from a custom registry location.
 
 
 = 2011.3 =

@@ -35,21 +35,23 @@ negative number	mínus	none	norep	# záporné číslo
 !	výkričník	all
 "	úvodzovky	most
 \#	krížik	most
-$	dolár	some
-£	libra	some
-€	euro	some
+$	dolár	all	norep
+£	libra	all	norep
+€	euro	all	norep
+¢	centov	all	norep
+¥	jen	all	norep
 %	percento	some
 &	and	some
-'	apostrof	some
+'	apostrof	all
 (	zátvorka	most
 )	zatvoriť	most
-*	hviezda	some
-+	plus	some
+*	hviezda	most
++	plus	most
 ,	čiarka	all	always
 -	pomlčka	most
-.	bodka	all
+.	bodka	some
 /	lomeno	some
-:	dvojbodka	most
+:	dvojbodka	most	norep
 ;	bodkočiarka	most
 <	menší	most
 >	väčší	most
@@ -74,55 +76,57 @@ _	podčiarknutie	most
 	odrážka	some
 “	horné úvodzovky	most
 ”	dolné úvodzovky	most
+‘	ľavá úvodzovka	most
+’	pravá úvodzovka	most
 –	dlhá pomlčka	most
 —	dlhšia pomlčka	most
 ●	krúžok	most
 ¨	prehláska	most
 ‎	znak z ľava do prava 	char
 ‏	znak z prava do ľava	char
+■	čierny štvorček	some
+➔	pravá šípka	some
+§	paragraf	all
+°	stupňov	some
+«	dvojitá lomená zátvorka	most
+»	dvojitá lomená zatvoriť	most
+µ	mikro	some
+¹	na prvú	some
+²	na druhú	some
+³	na tretiu	some
+®	registered	some
+™	trademark	some
+©	copiright	some
+±	plus mínus	most
+×	krát	most
+÷	deleno	most
+→	pravá šípka	some
+✓	začiarkavacie políčko	some
+✔	začiarkavacie políčko	some
 ¡	obrátený výkričník	most
 ¦	prerušená čiara	most
 ª	horný index a	most
-«	dvojitá lomená zátvorka	most
 ­	mäkká pomlčka	most
-²	na druhú	most
-³	na tretiu	most
 ´	dĺžeň	most
 ·	bodka v prostriedku	most
 ¸	cedila	most
-¹	na prvú	most
-»	dvojitá lomená zatvoriť	most
 ¿	obrátený otáznik	most
-‘	ľavá úvodzovka	most
-’	pravá úvodzovka	most
 ‡	dvojitý kríž	most
 ‣	odrážka trojuholník	most
 ‰	promile	most
-§	paragraf	most
-÷	deleno	some
-×	krát	some
-°	stupňov	some
-¢	centov	some
-¤	značka meny	some
-−	mínus	some
-±	plus mínus	some
+−	mínus	most
 ¼	štvrtina	some
-½	polovica	some
-¾	tri štvrtiny	some
-¬	logické not	some
-æ	aé	some
-þ	pomlčka nad	some
-™	trademark	some
-®	registered	some
-©	copiright	some
-¥	jen	some
-₨	rupia	some
-⅓	tretina	some
-⅔	dve tretiny	some
-√	odmocnina	some
-∞	nekonečno	some
+½	polovica	most
+¾	tri štvrtiny	most
+⅓	tretina	most
+⅔	dve tretiny	most
+√	odmocnina	most
+∞	nekonečno	most
 ≠	nerovná sa	most
-ß	ostré s	some
+¬	logické not	most
+æ	aé	char
+þ	pomlčka nad	some
+₨	rupia	all	norep
+¤	značka meny	all	norep
+ß	ostré s	char
 ə	šwa	most
-■	čierny štvorček	some
-

@@ -462,7 +462,9 @@ class MSHTML(IAccessible):
 				except (COMError,NameError):
 					pass
 		title=self.HTMLAttributes['title']
-		if title:
+		# #2121: MSHTML sometimes returns a node for the title attribute.
+		# This doesn't make any sense, so ignore it.
+		if title and isinstance(title,basestring):
 			return title
 		if self.IAccessibleRole==oleacc.ROLE_SYSTEM_TABLE:
 			summary=self.HTMLAttributes['summary']

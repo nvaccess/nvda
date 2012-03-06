@@ -150,7 +150,8 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 #And also build the developer guide -- which must be moved at some point
 htmlFile=env.txt2tags('developerGuide.t2t')
 env.SideEffect('_txt2tags',htmlFile)
-env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
+devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
+env.Alias("developerGuide",devGuide)
 
 env.Depends(sourceDir,userDocsDir)
 
@@ -258,6 +259,8 @@ env.Alias("client", clientArchive)
 
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
 env.Alias('changes',changesFile)
+userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
+env.Alias('userGuide',userGuideFile)
 
 def makePot(target, source, env):
 	# Generate the pot.
