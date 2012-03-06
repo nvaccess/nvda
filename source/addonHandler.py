@@ -9,6 +9,7 @@ import itertools
 import os
 import os.path
 import pkgutil
+import shutil
 from StringIO import StringIO
 import zipfile
 
@@ -33,9 +34,9 @@ def initialize():
 	availableAddons = getAvailableAddons()
 	for addon in availableAddons:
 		try:
-			addon.activate()
+			addon.load()
 		except:
-			log.exception("Error activating addon.")
+			log.exception("Error loading addon.")
 			continue
 		runningAddons.append(addon)
 
@@ -44,12 +45,12 @@ def terminate():
 	global runningAddons
 	addons = list(runningAddons)
 	for addon in runningAddons:
-		addon.deactivate()
+		addon.unload()
 	runningAddons = []
 
 
 def runHook(hookName, *args, **kwargs):
-	""" Runs the specified hook on all active add.ons.
+	""" Runs the specified hook loaded addons.
 	@param hookName: the hook name
 	@type hookName: string
 	"""
@@ -124,6 +125,7 @@ class Addon(object):
 		"""
 		self.path = path
 		self._extendedPackages = set()
+		self._isLoaded = True
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path) as f:
 			self.manifest = AddonManifest(f)
@@ -148,17 +150,25 @@ class Addon(object):
 		self._extendedPackages.add(package)
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
-	def activate(self):
-		""" Activates this addon, running the activate hook if exists. """
-		self.runHook('activate')
+	@property
+	def isLoaded(self):
+		return self._isLoaded
 
-	def deactivate(self):
-		""" Removes this add-on extensions from the system. """
-		self.runHook('deactivate')
-		log.debug("Deactivating plugin.")
+	def load(self):
+		""" Activates this addon, running the activate hook if exists. """
+		self.runHook('load')
+		self._isLoaded = True
+
+	def unload(self):
+		""" Removes this add-on extensions from the running NVDA. 
+		For most addons other measures should be taken: reloading of plugins, etc. """
+		self.runHook('deunload')
+		log.debug("Deactivating addon.")
 		for package in self._extendedPackages:
 			extension_path = self._getPathForInclusionInPackage(package)
 			package.__path__.remove(extension_path)
+		self._extendedPackages = None
+		self._isLoaded = False
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
@@ -192,6 +202,15 @@ class Addon(object):
 		if func:
 			log.debug("Running hook %s of addon %s", hookName, self.name)
 			return func(*args, **kwargs)
+
+	def removeContents(self, ignoreErrors=True):
+		""" This method removes the contents of the addon from the system.
+		Any calls to the majority of the addon methods will throw an error.
+		IOErrors will be thrown unless ignoreErrors is True."""
+		if self.isActive:
+			raise RuntimeError, "This addon is still active."
+		shutil.rmtree(self.path, ignore_errors=ignoreErrors)
+
 
 class AddonBundle(object):
 	""" Represents the contents of an NVDA addon in a for suitable for distribution.
