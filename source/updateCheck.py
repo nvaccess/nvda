@@ -16,12 +16,14 @@ import sys
 import os
 import threading
 import time
+import cPickle
 import urllib
 import wx
 import languageHandler
 import gui
 from logHandler import log
 import config
+import globalVars
 
 #: The URL to use for update checks.
 CHECK_URL = "http://www.nvda-project.org/updateCheck"
@@ -30,12 +32,10 @@ CHECK_INTERVAL = 86400 # 1 day
 #: The time to wait before retrying a failed check.
 RETRY_INTERVAL = 600 # 10 min
 
-# FIXME
-state = {
-	"lastCheck": 0,
-	"dontRemindVersion": None,
-}
-
+#: Persistent state information.
+#: @type: dict
+state = None
+_stateFileName = None
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
 autoChecker = None
@@ -99,6 +99,7 @@ class UpdateChecker(object):
 		if info:
 			state["dontRemindVersion"] = info["version"]
 		state["lastCheck"] = time.time()
+		saveState()
 		if autoChecker:
 			autoChecker.setNextCheck()
 
@@ -190,13 +191,31 @@ class UpdateResultDialog(wx.Dialog):
 
 	def onLaterButton(self, evt):
 		state["dontRemindVersion"] = None
+		saveState()
 		self.Close()
 
+def saveState():
+	try:
+		cPickle.dump(state, file(_stateFilename, "wb"))
+	except:
+		log.debugWarning("Error saving state", exc_info=True)
+
 def initialize():
-	global autoChecker
+	global state, _stateFilename, autoChecker
+	_stateFilename = os.path.join(globalVars.appArgs.configPath, "updateCheckState.pickle")
+	try:
+		state = cPickle.load(file(_stateFilename, "r"))
+	except:
+		# Defaults.
+		state = {
+			"lastCheck": 0,
+			"dontRemindVersion": None,
+		}
+
 	if config.conf["update"]["autoCheck"]:
 		autoChecker = AutoUpdateChecker()
 
 def terminate():
-	global autoChecker
+	global state, autoChecker
+	state = None
 	autoChecker = None
