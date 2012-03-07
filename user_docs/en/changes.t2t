@@ -3,6 +3,9 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.2 =
+
+
 = 2012.1 =
 Highlights of this release include features for more fluent reading of braille; indication of document formatting in braille; access to much more formatting information and improved performance in Microsoft Word; and support for the iTunes Store.
 
@@ -70,6 +73,7 @@ Highlights of this release include features for more fluent reading of braille; 
 - Microsoft Word documents are correctly treated as multi-line. This causes braille to behave more appropriately when a document is focused.
 - In Microsoft Internet Explorer, errors no longer occur when focusing on certain rare controls. (#2121)
 - Changing the pronunciation of punctuation/symbols by the user will now take effect straight away, rather than requiring NVDA to be restarted or auto language switching to be disabled.
+- When using eSpeak, speech no longer goes silent in some cases in the Save As dialog of the NVDA Log Viewer. (#2145)
 
 
 == Changes for Developers ==
