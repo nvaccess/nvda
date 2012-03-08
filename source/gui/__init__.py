@@ -23,6 +23,10 @@ import logViewer
 import speechViewer
 import winUser
 import api
+try:
+	import updateCheck
+except RuntimeError:
+	updateCheck = None
 
 ### Constants
 NVDA_PATH = os.getcwdu()
@@ -201,6 +205,9 @@ class MainFrame(wx.Frame):
 	def onAboutCommand(self,evt):
 		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
+	def onCheckForUpdateCommand(self, evt):
+		updateCheck.UpdateChecker().check()
+		
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
 
@@ -300,6 +307,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 		menu_help.AppendSeparator()
 		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
+		if updateCheck and not globalVars.appArgs.secure:
+			# Translators: The label of a menu item to manually check for an updated version of NVDA.
+			item = menu_help.Append(wx.ID_ANY, _("Check for &update..."))
+			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
