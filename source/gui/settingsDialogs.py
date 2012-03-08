@@ -173,6 +173,7 @@ class GeneralSettingsDialog(SettingsDialog):
 			self.copySettingsButton.Disable()
 		settingsSizer.Add(self.copySettingsButton)
 		if updateCheck:
+			# Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
 			item=self.autoCheckForUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &updates to NVDA"))
 			item.Value=config.conf["update"]["autoCheck"]
 			if globalVars.appArgs.secure:
