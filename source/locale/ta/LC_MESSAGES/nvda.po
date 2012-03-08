@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-02-13 07:25+0000\n"
-"PO-Revision-Date: 2012-02-13 16:28+0530\n"
+"POT-Creation-Date: 2012-03-01 05:30+0000\n"
+"PO-Revision-Date: 2012-03-01 21:46+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgid " and currently loaded module is %s"
 msgstr "தற்பொழுது ஏற்றப்பட்டிருக்கும் என்விடிஏ நிரல் செயலியின் பெயர் %s"
 
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#: speech.py:438
+#: speech.py:439
 #, python-format
 msgid "%d characters"
 msgstr "%d எழுத்துகள்"
@@ -56,7 +56,7 @@ msgstr "%s சுட்டி"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:533
+#: braille.py:546
 #, python-format
 msgid "%s end"
 msgstr "%s முடிவு"
@@ -72,8 +72,8 @@ msgstr "%s உருப்படிகள்"
 msgid "%s landmark"
 msgstr "%s நிலக்குறி"
 
-#: braille.py:424
-#: speech.py:797
+#: braille.py:436
+#: speech.py:798
 #, python-format
 msgid "%s of %s"
 msgstr "%s, மொத்தம் %s"
@@ -267,38 +267,38 @@ msgid "&Warn before exiting NVDA"
 msgstr "&என்விடிஏவை விட்டு வெளியேறும்பொழுது எச்சரி"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-#: braille.py:249
+#: braille.py:261
 msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-#: braille.py:231
+#: braille.py:243
 msgid "(-)"
 msgstr "(-)"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-#: braille.py:229
+#: braille.py:241
 msgid "(x)"
 msgstr "(x)"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-#: braille.py:241
+#: braille.py:253
 msgid "+"
 msgstr "+"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-#: braille.py:239
+#: braille.py:251
 msgid "-"
 msgstr "-"
 
 #. Translators: Displayed in braille for an object which is a
 #. separator.
-#: braille.py:221
+#: braille.py:233
 msgid "-----"
 msgstr "-----"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
-#: braille.py:237
+#: braille.py:249
 msgid "..."
 msgstr "..."
 
@@ -478,7 +478,7 @@ msgstr "உலாவும் நிலை"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:32
+#: braille.py:35
 msgid "Bulgarian 8 dot computer braille"
 msgstr "பல்கேரிய 8 புள்ளி கனிப்பொறி பிரெயில்"
 
@@ -525,13 +525,13 @@ msgstr "உலாவும் நிலைக்கான தனிப்பட�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:176
+#: braille.py:188
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "சீனம் (ஹாங்காங், காண்டோனீஸ்)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:179
+#: braille.py:191
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "சீனம் (தைவான், மாண்டரீன்)"
 
@@ -620,7 +620,7 @@ msgstr "அமைவடிவத்தை சேமிக்க முடிய�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:110
+#: braille.py:116
 msgid "Croatian 8 dot computer braille"
 msgstr "க்ரொயேஷிய 8 புள்ளி கனிப்பொறி பிரெயில்"
 
@@ -643,13 +643,13 @@ msgstr "எந்த குறியெழுத்துகளைப் பட�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:41
+#: braille.py:44
 msgid "Czech grade 1"
 msgstr "செக் நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:44
+#: braille.py:47
 msgid "Danish grade 1"
 msgstr "டேனிஷ் நிலை 1"
 
@@ -698,13 +698,13 @@ msgstr "நன்கொடையளியுங்கள்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:122
+#: braille.py:131
 msgid "Dutch (Belgium) grade 1"
 msgstr "டச் (பெல்ஜியம்) நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:125
+#: braille.py:134
 msgid "Dutch (netherlands) grade 1"
 msgstr "டச் (நெதர்லாந்து) நிலை 1"
 
@@ -717,7 +717,7 @@ msgstr "வெளி&யேறு"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "சுட்டியினிடத்திலிருக்கும் சொல்லுக்கு கணினி பிரெயிலைக் காண்பி"
 
-#: NVDAObjects/window/winword.py:388
+#: NVDAObjects/window/winword.py:402
 msgid "Edge of table"
 msgstr "அட்டவணையின் விளிம்பு"
 
@@ -747,37 +747,37 @@ msgstr "இறுதிக் குறிப்புகள்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:59
+#: braille.py:62
 msgid "English (U.K.) grade 1"
 msgstr "ஆங்கிலம் (இங்கிலாந்து) நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:62
+#: braille.py:65
 msgid "English (U.K.) grade 2"
 msgstr "ஆங்கிலம் (இங்கிலாந்து) நிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:65
+#: braille.py:68
 msgid "English (U.S.) 6 dot computer braille"
 msgstr "ஆங்கிலம் (ஐக்கிய அமெரிக்கா) 6 புள்ளி கனிப்பொறி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:68
+#: braille.py:71
 msgid "English (U.S.) 8 dot computer braille"
 msgstr "ஆங்கிலம் (ஐக்கிய அமெரிக்கா) 8 புள்ளி கனிப்பொறி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:71
+#: braille.py:74
 msgid "English (U.S.) grade 1"
 msgstr "ஆங்கிலம் (ஐக்கிய அமெரிக்கா) நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:74
+#: braille.py:77
 msgid "English (U.S.) grade 2"
 msgstr "ஆங்கிலம் (ஐக்கிய அமெரிக்கா) நிலை 2"
 
@@ -824,7 +824,7 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:101
+#: braille.py:107
 msgid "Ethiopic grade 1"
 msgstr "எத்தியோப்பிய நிலை 1"
 
@@ -841,6 +841,12 @@ msgstr "இரட்டைப் படை பக்கங்களின் ம
 msgid "Exit NVDA"
 msgstr "என்விடிஏவை விட்டு வெளியேறு"
 
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:32
+msgid "Farsi grade 1"
+msgstr "ஃபார்சி நிலை 1"
+
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:14
 msgid "Fast forward"
@@ -856,7 +862,7 @@ msgstr "கண்டுபிடித்தலில் பிழை"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:80
+#: braille.py:86
 msgid "Finnish 8 dot computer braille"
 msgstr "ஃபின்னிஷ் 8 புள்ளி கனிப்பொறி பிரெயில்"
 
@@ -906,31 +912,31 @@ msgstr "ஃப்ரீடம் சைண்டிஃபிக் ஃபோக�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:83
+#: braille.py:89
 msgid "French (Canada) grade 1"
 msgstr "பிரெஞ்சு (கனடா) நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:86
+#: braille.py:92
 msgid "French (Canada) grade 2"
 msgstr "பிரெஞ்சு (கனடா) நிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:89
+#: braille.py:95
 msgid "French (unified) 6 dot computer braille"
 msgstr "பிரெஞ்சு (ஒருங்கிணைந்த) 6 புள்ளி கனிப்பொறி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:92
+#: braille.py:98
 msgid "French (unified) 8 dot computer braille"
 msgstr "பிரெஞ்சு (ஒருங்கிணைந்த) 8 புள்ளி கனிப்பொறி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:95
+#: braille.py:101
 msgid "French (unified) Grade 2"
 msgstr "பிரெஞ்சு (ஒருங்கிணைந்த) நிலை 2"
 
@@ -951,31 +957,31 @@ msgstr "பொது அமைப்புகள்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:47
+#: braille.py:50
 msgid "German 8 dot computer braille"
 msgstr "ஜெர்மானிய 8 புள்ளி கனிப்பொறி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:50
+#: braille.py:53
 msgid "German grade 0"
 msgstr "ஜெர்மானிய நிலை 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:53
+#: braille.py:56
 msgid "German grade 1"
 msgstr "ஜெர்மானிய நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:56
+#: braille.py:59
 msgid "German grade 2"
 msgstr "ஜெர்மானிய நிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:98
+#: braille.py:104
 msgid "Greek (Greece) grade 1"
 msgstr "கிரேக்கம் (கிரீஸ்) நிலை 1"
 
@@ -992,13 +998,13 @@ msgstr "ஹேண்டி டெக் பிரெயில் காட்ச
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:104
+#: braille.py:110
 msgid "Hebrew 8 dot computer braille"
 msgstr "ஹீப்ரு 8 புள்ளி கனிப்பொறி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:107
+#: braille.py:113
 msgid "Hindi grade 1"
 msgstr "ஹிந்தி நிலை 1"
 
@@ -1009,7 +1015,7 @@ msgstr "ஹ்யூமேன் வேர் பிரெயிலண்ட் 
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:113
+#: braille.py:119
 msgid "Hungarian 8 dot computer braille"
 msgstr "ஹங்கேரிய 8 புள்ளி கனிப்பொறி பிரெயில்"
 
@@ -1025,6 +1031,12 @@ msgstr "இணைய முகவரி"
 msgid "ITALIC"
 msgstr "வலப்பக்க சாய்வு"
 
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:122
+msgid "Icelandic 8 dot computer braille"
+msgstr "ஐஸ்லாந்திய 8 புள்ளி கனிப்பொறி பிரெயில்"
+
 #: globalCommands.py:136
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
 msgstr "ஒருமுறை அழுத்தினால் தற்போதைய நேரத்தையும், இருமுறை அழுத்தினால் இன்றையத் தேதியையும் அறிவிக்கும்"
@@ -1039,7 +1051,7 @@ msgstr "போதாத சிறப்புரிமைகள்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:116
+#: braille.py:125
 msgid "Italian grade 1"
 msgstr "இத்தாலிய நிலை 1"
 
@@ -1084,7 +1096,7 @@ msgstr "மொழிப் பிழை"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:119
+#: braille.py:128
 msgid "Latvian grade 1"
 msgstr "லாத்விய நிலை 1"
 
@@ -1360,31 +1372,31 @@ msgstr "NonVisual Desktop Access"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:128
+#: braille.py:137
 msgid "Norwegian 8 dot computer braille"
 msgstr "நார்வே 8 புள்ளி கனிப்பொறி பிரெயில்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:131
+#: braille.py:140
 msgid "Norwegian grade 0"
 msgstr "நார்வே நிலை 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:134
+#: braille.py:143
 msgid "Norwegian grade 1"
 msgstr "நார்வே நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:137
+#: braille.py:146
 msgid "Norwegian grade 2"
 msgstr "நார்வே நிலை 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:140
+#: braille.py:149
 msgid "Norwegian grade 3"
 msgstr "நார்வே நிலை 3"
 
@@ -1392,8 +1404,8 @@ msgstr "நார்வே நிலை 3"
 msgid "Not in a table cell"
 msgstr "அட்டவணை சிறுகட்டத்தில் இல்லை"
 
-#: NVDAObjects/window/winword.py:377
-#: NVDAObjects/window/winword.py:394
+#: NVDAObjects/window/winword.py:391
+#: NVDAObjects/window/winword.py:408
 msgid "Not in table"
 msgstr "அட்டவணையில் இல்லை"
 
@@ -1451,19 +1463,19 @@ msgstr "நீட்சிகள் மறுஏற்றம் செய்ய�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:143
+#: braille.py:152
 msgid "Polish grade 1"
 msgstr "போலாந்து நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:146
+#: braille.py:155
 msgid "Portuguese grade 1"
 msgstr "போர்ச்சுகீசிய நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:149
+#: braille.py:158
 msgid "Portuguese grade 2"
 msgstr "போர்ச்சுகீசிய நிலை 2"
 
@@ -1811,7 +1823,7 @@ msgstr "பிரெயில் சிறுகட்டத்திற்க�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:152
+#: braille.py:161
 msgid "Russian grade 1"
 msgstr "ருஷிய நிலை 1"
 
@@ -1844,7 +1856,7 @@ msgstr "பாதுகாப்பான மேசைத்தளம்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:164
+#: braille.py:173
 msgid "Serbian grade 1"
 msgstr "செர்பிய நிலை 1"
 
@@ -1918,19 +1930,25 @@ msgstr "தூங்கு நிலை: இயக்கு"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:158
+#: braille.py:167
 msgid "Slovak"
 msgstr "ஸ்லோவாக்"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:161
+#: braille.py:170
 msgid "Slovene grade 1"
 msgstr "ஸ்லோவீன் நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:77
+#: braille.py:80
+msgid "Spanish 8 dot computer braille"
+msgstr "ஸ்பானிய 8 புள்ளி கனிப்பொறி பிரெயில்"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:83
 msgid "Spanish grade 1"
 msgstr "ஸ்பானிய நிலை 1"
 
@@ -2005,7 +2023,7 @@ msgstr "என்விடிஏ பயனர் அமைப்புகள் 
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:155
+#: braille.py:164
 msgid "Swedish grade 1"
 msgstr "சுவீடிஷ் நிலை 1"
 
@@ -2027,7 +2045,13 @@ msgstr "ஒலிப்பான்"
 msgid "Synthesizer Error"
 msgstr "ஒலிப்பான் பிழை"
 
-#: NVDAObjects/IAccessible/__init__.py:1482
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:176
+msgid "Tamil grade 1"
+msgstr "தமிழ் நிலை 1"
+
+#: NVDAObjects/IAccessible/__init__.py:1494
 msgid "Taskbar"
 msgstr "பணிப்பட்டை"
 
@@ -2139,7 +2163,7 @@ msgstr "மொழிபெயர்ப்பு"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:167
+#: braille.py:179
 msgid "Turkish grade 1"
 msgstr "துருக்கிய நிலை 1"
 
@@ -2165,13 +2189,13 @@ msgstr "வகை:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:170
+#: braille.py:182
 msgid "Unified English Braille Code grade 1"
 msgstr "ஒருங்கிணைந்த ஆங்கில பிரெயில் குறி நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:173
+#: braille.py:185
 msgid "Unified English Braille Code grade 2"
 msgstr "ஒருங்கிணைந்த ஆங்கில பிரெயில் குறி நிலை 2"
 
@@ -2274,13 +2298,13 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:35
+#: braille.py:38
 msgid "Welsh grade 1"
 msgstr "வெல்ஷ் நிலை 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:38
+#: braille.py:41
 msgid "Welsh grade 2"
 msgstr "வெல்ஷ் நிலை 2"
 
@@ -2317,23 +2341,23 @@ msgstr "ஆவணத்திலுள்ள தற்போதைய பொர�
 msgid "alert"
 msgstr "எச்சரி"
 
-#: speech.py:1034
+#: speech.py:1037
 msgid "align center"
 msgstr "நடு ஒழுங்கு"
 
-#: speech.py:1040
+#: speech.py:1043
 msgid "align default"
 msgstr "இயல்பான ஒழுங்கு"
 
-#: speech.py:1038
+#: speech.py:1041
 msgid "align justify"
 msgstr "இருபுற ஒழுங்கு"
 
-#: speech.py:1032
+#: speech.py:1035
 msgid "align left"
 msgstr "இடது ஒழுங்கு"
 
-#: speech.py:1036
+#: speech.py:1039
 msgid "align right"
 msgstr "வலது ஒழுங்கு"
 
@@ -2341,7 +2365,7 @@ msgstr "வலது ஒழுங்கு"
 msgid "alignment"
 msgstr "ஒழுங்கமைப்பு"
 
-#: characterProcessing.py:128
+#: characterProcessing.py:130
 msgid "all"
 msgstr "அனைத்தும்"
 
@@ -2392,7 +2416,7 @@ msgstr "பின் நகர்வு"
 msgid "banner"
 msgstr "பதாகை"
 
-#: speech.py:1024
+#: speech.py:1027
 msgid "baseline"
 msgstr "அடித்தளக் கோடு"
 
@@ -2415,9 +2439,9 @@ msgstr "கருப்பு"
 
 #. Translators: This is spoken when nvda moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
-#: speech.py:163
-#: speech.py:328
-#: speech.py:738
+#: speech.py:164
+#: speech.py:329
+#: speech.py:739
 msgid "blank"
 msgstr "வெற்றிடம்"
 
@@ -2430,7 +2454,7 @@ msgid "blue"
 msgstr "நீலம்"
 
 #: controlTypes.py:313
-#: speech.py:998
+#: speech.py:1001
 msgid "bold"
 msgstr "அடர்த்தி"
 
@@ -2470,7 +2494,7 @@ msgstr "உலாவி நிறுத்தம்"
 
 #. Translators: Displayed in braille for an object which is a
 #. button.
-#: braille.py:197
+#: braille.py:209
 msgid "btn"
 msgstr "பொதன்"
 
@@ -2484,7 +2508,7 @@ msgstr "பொத்தான்"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:441
+#: braille.py:453
 #, python-format
 msgid "c%s"
 msgstr "செ %s"
@@ -2498,7 +2522,7 @@ msgid "canvas"
 msgstr "வரைத்துணி"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
-#: speech.py:195
+#: speech.py:196
 #, python-format
 msgid "cap %s"
 msgstr "cap %s"
@@ -2526,7 +2550,7 @@ msgstr "சொல்லில் தோன்றும் முதல் எழ
 
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
-#: braille.py:206
+#: braille.py:218
 msgid "cbo"
 msgstr "சேபெ"
 
@@ -2534,7 +2558,7 @@ msgstr "சேபெ"
 msgid "cell"
 msgstr "சிறுகட்டம்"
 
-#: characterProcessing.py:129
+#: characterProcessing.py:131
 #: controlTypes.py:280
 #: textInfos/__init__.py:196
 msgid "character"
@@ -2562,7 +2586,7 @@ msgstr "தேர்வானது"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
-#: braille.py:200
+#: braille.py:212
 msgid "chk"
 msgstr "தேபெ"
 
@@ -2571,7 +2595,7 @@ msgid "clickable"
 msgstr "சொடுக்கப்படக் கூடியது"
 
 #. Translators: Displayed in braille when an object is clickable.
-#: braille.py:245
+#: braille.py:257
 msgid "clk"
 msgstr "சொடு"
 
@@ -2591,8 +2615,8 @@ msgstr "நிறத் தேர்ந்தெடுப்பான்"
 msgid "column"
 msgstr "செங்குத்து வரிசை"
 
-#: speech.py:826
-#: speech.py:1093
+#: speech.py:827
+#: speech.py:1096
 #, python-format
 msgid "column %s"
 msgstr "செங்குத்து வரிசை %s"
@@ -2671,7 +2695,7 @@ msgstr "இயல்பான செயல் தோல்வியடைந்�
 msgid "default color"
 msgstr "இயல்பான நிறம்"
 
-#: speech.py:959
+#: speech.py:962
 msgid "default style"
 msgstr "இயல்பான பாங்கு"
 
@@ -2719,7 +2743,7 @@ msgstr "காட்சியளிப்பு உருளை"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
-#: braille.py:212
+#: braille.py:224
 msgid "dlg"
 msgstr "உரடல்"
 
@@ -2728,7 +2752,7 @@ msgid "document"
 msgstr "ஆவணம்"
 
 #. "not drop target" doesn't make any sense, so use a custom message.
-#: speech.py:787
+#: speech.py:788
 msgid "done dragging"
 msgstr "இழுக்கப்படுவது முடிந்தது"
 
@@ -2762,7 +2786,7 @@ msgid "drop target"
 msgstr "இலக்கில் விடு"
 
 #: virtualBuffers/__init__.py:1250
-#: NVDAObjects/window/winword.py:407
+#: NVDAObjects/window/winword.py:421
 msgid "edge of table"
 msgstr "அட்டவணையின் விளிம்பு"
 
@@ -2780,7 +2804,7 @@ msgstr "தொகுக்கப்படக் கூடியது"
 
 #. Translators: Displayed in braille for an object which is an
 #. editable text field.
-#: braille.py:185
+#: braille.py:197
 msgid "edt"
 msgstr "தொகு"
 
@@ -2928,7 +2952,7 @@ msgstr "கண்ணாடிப் பலகை"
 
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
-#: braille.py:224
+#: braille.py:236
 msgid "gra"
 msgstr "படவிள"
 
@@ -2954,7 +2978,7 @@ msgstr "குழுவாக்கம்"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:390
+#: braille.py:402
 #, python-format
 msgid "h%s"
 msgstr "த%s"
@@ -2967,7 +2991,7 @@ msgstr "பாதித் தேர்வானது"
 msgid "has auto complete"
 msgstr "தானே முடித்துக் கொள்ளக்கூடியது"
 
-#: speech.py:1052
+#: speech.py:1055
 msgid "has comment"
 msgstr "கருத்து உள்ளது"
 
@@ -3080,7 +3104,7 @@ msgstr "தென்படவில்லை"
 msgid "invoke"
 msgstr "அழை"
 
-#: speech.py:1003
+#: speech.py:1006
 msgid "italic"
 msgstr "வலப்பக்க சாய்வு"
 
@@ -3146,11 +3170,11 @@ msgstr "இடது மாற்றழுத்தி"
 msgid "left windows"
 msgstr "இடது சாளரம்"
 
-#: speech.py:803
-#: speech.py:806
+#: speech.py:804
+#: speech.py:807
 #, python-format
 msgid "level %s"
-msgstr "நிலை %s"
+msgstr "மட்டம் %s"
 
 #: colors.py:90
 msgid "light grey"
@@ -3167,7 +3191,7 @@ msgstr "எழுமிச்ச நிறம்"
 msgid "line"
 msgstr "வரி"
 
-#: speech.py:992
+#: speech.py:995
 #, python-format
 msgid "line %s"
 msgstr "வரி %s"
@@ -3178,7 +3202,7 @@ msgid "line scroll"
 msgstr "வரி உருள்"
 
 #: controlTypes.py:206
-#: speech.py:1046
+#: speech.py:1049
 msgid "link"
 msgstr "தொடுப்பு"
 
@@ -3196,7 +3220,7 @@ msgstr "வரிசைப் பட்டியல் உருப்படி"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
-#: braille.py:209
+#: braille.py:221
 msgid "lnk"
 msgstr "தொடு"
 
@@ -3206,13 +3230,13 @@ msgstr "தற்போதைய மாற்றங்களை நீக்க�
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
-#: braille.py:188
+#: braille.py:200
 msgid "lst"
 msgstr "வபடில்"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:428
+#: braille.py:440
 #, python-format
 msgid "lv %s"
 msgstr "நி %s"
@@ -3254,13 +3278,13 @@ msgstr "பட்டியல் உருப்படி"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
-#: braille.py:194
+#: braille.py:206
 msgid "mnu"
 msgstr "படில்"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
-#: braille.py:191
+#: braille.py:203
 msgid "mnubar"
 msgstr "கிடநீபடில்"
 
@@ -3268,7 +3292,7 @@ msgstr "கிடநீபடில்"
 msgid "modal"
 msgstr "முகட்டு"
 
-#: characterProcessing.py:127
+#: characterProcessing.py:129
 msgid "most"
 msgstr "பல"
 
@@ -3519,7 +3543,7 @@ msgstr "கடற்படை நீலம்"
 msgid "next track"
 msgstr "அடுத்தத் தடம்"
 
-#: speech.py:998
+#: speech.py:1001
 msgid "no bold"
 msgstr "அடர்த்தியில்லை"
 
@@ -3533,11 +3557,11 @@ msgid "no focus"
 msgstr "குவிமையம் இல்லை"
 
 #. Translators: This is spoken when the given line has no indentation.
-#: speech.py:354
+#: speech.py:355
 msgid "no indent"
 msgstr "வரித் துவக்க ஒழுங்கு இல்லை"
 
-#: speech.py:1003
+#: speech.py:1006
 msgid "no italic"
 msgstr "வலப்பக்க சாய்வு இல்லை"
 
@@ -3768,7 +3792,7 @@ msgstr "முன்னேற்றப்பட்டைப் புதுப�
 msgid "no selection"
 msgstr "தெரிவு ஏதுமில்லை"
 
-#: speech.py:1008
+#: speech.py:1011
 msgid "no strikethrough"
 msgstr "ஊடாகக் கோடிடப்படவில்லை"
 
@@ -3780,18 +3804,18 @@ msgstr "கனிப்பொறி மின்கலம் இல்லை"
 msgid "no title"
 msgstr "தலைப்பு ஏதுமில்லை"
 
-#: characterProcessing.py:125
+#: characterProcessing.py:127
 #: synthDrivers/_espeak.py:309
 msgid "none"
 msgstr "ஏதுமில்லை"
 
-#: braille.py:411
-#: speech.py:789
+#: braille.py:423
+#: speech.py:790
 #, python-format
 msgid "not %s"
 msgstr "%s இல்லை"
 
-#: speech.py:1013
+#: speech.py:1016
 msgid "not underlined"
 msgstr "அடிக்கோடு இடப்படவில்லை"
 
@@ -3933,7 +3957,7 @@ msgstr "இயக்கு"
 #. The {backgroundColor} text will be replaced by the background color.
 #. For example, if the text is white on a black background,
 #. the output of this message in English would be "on black".
-#: speech.py:987
+#: speech.py:990
 msgid "on {backgroundColor}"
 msgstr "இயக்கம் {backgroundColor}"
 
@@ -3947,17 +3971,17 @@ msgstr "விருப்பத்தேர்வுப் பலகை"
 msgid "orange"
 msgstr "செம்மஞ்சள்"
 
-#: speech.py:926
-#: speech.py:1046
+#: speech.py:929
+#: speech.py:1049
 #, python-format
 msgid "out of %s"
 msgstr "%s வெளியே"
 
-#: speech.py:1061
+#: speech.py:1064
 msgid "out of spelling error"
 msgstr "எழுத்துப் பிழைக்கு வெளியே"
 
-#: speech.py:1079
+#: speech.py:1082
 msgid "out of table"
 msgstr "அட்டவணைக்கு வெளியே"
 
@@ -3965,7 +3989,7 @@ msgstr "அட்டவணைக்கு வெளியே"
 msgid "page"
 msgstr "பக்கம்"
 
-#: speech.py:950
+#: speech.py:953
 #, python-format
 msgid "page %s"
 msgstr "பக்கம் %s"
@@ -4040,7 +4064,7 @@ msgstr "செவ்வூதா"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:433
+#: braille.py:445
 #, python-format
 msgid "r%s"
 msgstr "கி %s"
@@ -4055,7 +4079,7 @@ msgstr "வானொலிப் பட்டியல் உருப்பட�
 
 #. Translators: Displayed in braille for an object which is a
 #. radio button.
-#: braille.py:203
+#: braille.py:215
 msgid "rbtn"
 msgstr "வாபொதன்"
 
@@ -4164,7 +4188,7 @@ msgid "right windows"
 msgstr "வலது சாளரம்"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-#: braille.py:243
+#: braille.py:255
 msgid "ro"
 msgstr "பம"
 
@@ -4176,8 +4200,8 @@ msgstr "மூலப் பலகை"
 msgid "row"
 msgstr "கிடைவரிசை"
 
-#: speech.py:819
-#: speech.py:1097
+#: speech.py:820
+#: speech.py:1100
 #, python-format
 msgid "row %s"
 msgstr "கிடைவரிசை %s"
@@ -4218,7 +4242,7 @@ msgid "section"
 msgstr "உட்பிரிவு"
 
 #. Translators: Displayed in braille when an object is selected.
-#: braille.py:233
+#: braille.py:245
 msgid "sel"
 msgstr "தெரி"
 
@@ -4233,21 +4257,21 @@ msgstr "தெரிவானது"
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401
 #: globalCommands.py:127
-#: speech.py:305
-#: speech.py:497
-#: speech.py:512
+#: speech.py:306
+#: speech.py:498
+#: speech.py:513
 #: virtualBuffers/__init__.py:695
 #, python-format
 msgid "selected %s"
 msgstr "தெரிவு செய்யப்பட்டது %s"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-#: speech.py:491
+#: speech.py:492
 #, python-format
 msgid "selecting %s"
 msgstr "தெரிவாகிறது %s"
 
-#: speech.py:506
+#: speech.py:507
 msgid "selection removed"
 msgstr "தெரிவு நீக்கப்பட்டது"
 
@@ -4281,7 +4305,7 @@ msgstr "தொடுப்புகளின் தொகுதியைத் �
 msgid "slider"
 msgstr "வழுக்கி"
 
-#: characterProcessing.py:126
+#: characterProcessing.py:128
 msgid "some"
 msgstr "சில"
 
@@ -4331,7 +4355,7 @@ msgstr "தற்போதைய முன்னணிப் பொருளை�
 msgid "speech mode %s"
 msgstr "பேச்சு நிலை %s"
 
-#: speech.py:1059
+#: speech.py:1062
 msgid "spelling error"
 msgstr "எழுத்துப் பிழை"
 
@@ -4356,7 +4380,7 @@ msgstr "நிலைமைப் பட்டை"
 msgid "stop"
 msgstr "நிறுத்து"
 
-#: speech.py:1008
+#: speech.py:1011
 msgid "strikethrough"
 msgstr "ஊடாகக் கோடிடப்பட்டது"
 
@@ -4364,7 +4388,7 @@ msgstr "ஊடாகக் கோடிடப்பட்டது"
 msgid "style"
 msgstr "பாங்கு"
 
-#: speech.py:957
+#: speech.py:960
 #, python-format
 msgid "style %s"
 msgstr "பாங்கு %s"
@@ -4380,17 +4404,17 @@ msgid "subject: %s"
 msgstr "பொருளடக்கம்: %s"
 
 #. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-#: braille.py:235
+#: braille.py:247
 msgid "submnu"
 msgstr "உபடில்"
 
 #: controlTypes.py:319
-#: speech.py:1022
+#: speech.py:1025
 msgid "subscript"
 msgstr "கீழெழுத்து"
 
 #: controlTypes.py:318
-#: speech.py:1020
+#: speech.py:1023
 msgid "superscript"
 msgstr "மேலெழுத்து"
 
@@ -4425,7 +4449,7 @@ msgstr "அட்டவணை அடியுரை"
 msgid "table header"
 msgstr "அட்டவணை மேலுரை"
 
-#: speech.py:1088
+#: speech.py:1091
 #, python-format
 msgid "table with %s columns and %s rows"
 msgstr "%s செங்குத்து வரிசையும், %s கிடைவரிசையும் கொண்ட அட்டவணை"
@@ -4436,7 +4460,7 @@ msgstr "பேசு"
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
-#: braille.py:218
+#: braille.py:230
 msgid "tb"
 msgstr "அட்"
 
@@ -4512,7 +4536,7 @@ msgstr "கிளைப்பிரிவு தோற்ற உருப்ப�
 
 #. Translators: Displayed in braille for an object which is a
 #. tree view.
-#: braille.py:215
+#: braille.py:227
 msgid "tv"
 msgstr "கிபிதோ"
 
@@ -4524,7 +4548,7 @@ msgstr "கிடையாது"
 msgid "underline"
 msgstr "அடிக்கோடு"
 
-#: speech.py:1013
+#: speech.py:1016
 msgid "underlined"
 msgstr "அடிக்கோடிடப்பட்டது"
 
@@ -4547,7 +4571,7 @@ msgid "unread"
 msgstr "படிக்காதது"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-#: speech.py:504
+#: speech.py:505
 #, python-format
 msgid "unselecting %s"
 msgstr "தெரிவு நீக்கப்படுகிறது %s"
@@ -4571,7 +4595,7 @@ msgid "visited"
 msgstr "பார்த்த"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:396
+#: braille.py:408
 msgid "vlnk"
 msgstr "பாதொடு"
 
@@ -4602,23 +4626,23 @@ msgstr "சாளரம்"
 msgid "windows"
 msgstr "சாளரங்கள்"
 
-#: speech.py:833
+#: speech.py:834
 #, python-format
 msgid "with %s columns"
 msgstr "%s செங்குத்து வரிசைகளைக் கொண்டது"
 
 #. List.
-#: speech.py:900
+#: speech.py:903
 #, python-format
 msgid "with %s items"
 msgstr "%s உருப்படிகளைக் கொண்டது"
 
-#: speech.py:835
+#: speech.py:836
 #, python-format
 msgid "with %s rows"
 msgstr "%s கிடைவரிசைகளைக் கொண்டது"
 
-#: speech.py:831
+#: speech.py:832
 #, python-format
 msgid "with %s rows and %s columns"
 msgstr "%s கிடைவரிசைகளையும், %s செங்குத்து வரிசைகளையும் கொண்டது"
