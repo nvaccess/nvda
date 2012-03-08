@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2011.2\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-02-13 07:25+0000\n"
-"PO-Revision-Date: 2012-01-24 14:06+0100\n"
+"POT-Creation-Date: 2012-03-01 05:30+0000\n"
+"PO-Revision-Date: 2012-03-01 16:13+0100\n"
 "Last-Translator: Bernd Dorer <bernd_dorer@yahoo.de>\n"
 "Language-Team: René Linke <rene.linke@blindzeln.de>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgid " and currently loaded module is %s"
 msgstr " und momentan ist das Anwendungsmodul %s geladen."
 
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#: speech.py:438
+#: speech.py:439
 #, python-format
 msgid "%d characters"
 msgstr "%d Zeichen"
@@ -40,7 +40,8 @@ msgid "%d hours and %d minutes remaining"
 msgstr "%d Stunden und %d Minuten verbleiben"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:822 NVDAObjects/behaviors.py:54
+#: globalCommands.py:822
+#: NVDAObjects/behaviors.py:54
 #, python-format
 msgid "%d percent"
 msgstr "%d Prozent"
@@ -51,7 +52,8 @@ msgstr "%d Prozent"
 msgid "%s %s through %s %s"
 msgstr "%s %s bis %s %s"
 
-#: globalCommands.py:300 globalCommands.py:742
+#: globalCommands.py:300
+#: globalCommands.py:742
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s in die Zwischenablage kopiert."
@@ -63,7 +65,7 @@ msgstr "Mauszeiger %s"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:533
+#: braille.py:546
 #, python-format
 msgid "%s end"
 msgstr "%s Ende"
@@ -73,12 +75,14 @@ msgstr "%s Ende"
 msgid "%s items"
 msgstr "%s Einträge"
 
-#: virtualBuffers/__init__.py:220 virtualBuffers/__init__.py:228
+#: virtualBuffers/__init__.py:220
+#: virtualBuffers/__init__.py:228
 #, python-format
 msgid "%s landmark"
 msgstr "Sprungmarke %s"
 
-#: braille.py:424 speech.py:797
+#: braille.py:436
+#: speech.py:798
 #, python-format
 msgid "%s of %s"
 msgstr "%s von %s"
@@ -220,7 +224,8 @@ msgstr "&Geschwindigkeit"
 msgid "&Remove"
 msgstr "&Entfernen"
 
-#: gui/settingsDialogs.py:991 gui/settingsDialogs.py:1240
+#: gui/settingsDialogs.py:991
+#: gui/settingsDialogs.py:1240
 msgid "&Replacement"
 msgstr "&Ersetzen durch"
 
@@ -271,70 +276,56 @@ msgid "&Warn before exiting NVDA"
 msgstr "Beim Beenden best&ätigen"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-#: braille.py:249
+#: braille.py:261
 msgid "( )"
 msgstr "[ ]"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-#: braille.py:231
+#: braille.py:243
 msgid "(-)"
 msgstr "[-]"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-#: braille.py:229
+#: braille.py:241
 msgid "(x)"
 msgstr "[X]"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-#: braille.py:241
+#: braille.py:253
 msgid "+"
 msgstr "+"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-#: braille.py:239
+#: braille.py:251
 msgid "-"
 msgstr "-"
 
 #. Translators: Displayed in braille for an object which is a
 #. separator.
-#: braille.py:221
+#: braille.py:233
 msgid "-----"
 msgstr "-----"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
-#: braille.py:237
+#: braille.py:249
 msgid "..."
 msgstr "..."
 
 #: gui/__init__.py:259
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr ""
-"Dialog zum Auswählen eines Standardwörterbuchs, indem Einträge zur Liste "
-"hinzugefügt werden."
+msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
+msgstr "Dialog zum Auswählen eines Standardwörterbuchs, indem Einträge zur Liste hinzugefügt werden."
 
 #: gui/__init__.py:263
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
-msgstr ""
-"Dialog zum Auswählen eines temporären Wörterbuchs, indem Einträge zur Liste "
-"hinzugefügt werden."
+msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
+msgstr "Dialog zum Auswählen eines temporären Wörterbuchs, indem Einträge zur Liste hinzugefügt werden."
 
 #: gui/__init__.py:261
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
-msgstr ""
-"Dialog zum Auswählen eines Stimmenwörterbuchs, indem Einträge zur Liste "
-"hinzugefügt werden."
+msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
+msgstr "Dialog zum Auswählen eines Stimmenwörterbuchs, indem Einträge zur Liste hinzugefügt werden."
 
 #: versionInfo.py:39
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr ""
-"NonVisual Desktop Access (NVDA) ist ein freier Screen Reader für Microsoft "
-"Windows."
+msgstr "NonVisual Desktop Access (NVDA) ist ein freier Screen Reader für Microsoft Windows."
 
 #: globalCommands.py:823
 msgid "AC power on"
@@ -345,7 +336,8 @@ msgstr "Netzbetrieb"
 msgid "ALVA BC640/680 series"
 msgstr "ALVA Serie BC640/680"
 
-#: gui/__init__.py:202 gui/__init__.py:301
+#: gui/__init__.py:202
+#: gui/__init__.py:301
 msgid "About NVDA"
 msgstr "NVDA-Info"
 
@@ -355,9 +347,7 @@ msgstr "&Über..."
 
 #: globalCommands.py:893
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr ""
-"Aktiviert die NVDA-Python-Konsole, die hauptsächlich für Entwickler nützlich "
-"ist."
+msgstr "Aktiviert die NVDA-Python-Konsole, die hauptsächlich für Entwickler nützlich ist."
 
 #. Translators: This is the label for the add dictionary entry dialog.
 #: gui/settingsDialogs.py:1067
@@ -368,17 +358,11 @@ msgstr "Wörterbucheintrag hinzufügen"
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:855
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr ""
-"Änderungen der &Formatierungen hinter dem Cursor ansagen (Stimme kann "
-"dadurch langsamer reagieren)"
+msgstr "Änderungen der &Formatierungen hinter dem Cursor ansagen (Stimme kann dadurch langsamer reagieren)"
 
 #: globalCommands.py:128
-msgid ""
-"Announces the current selection in edit controls and documents. If there is "
-"no selection it says so."
-msgstr ""
-"Spricht den markierten Text in Eingabefeldern und Dokumenten. Wurde nichts "
-"markiert, wird dies angesagt."
+msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
+msgstr "Spricht den markierten Text in Eingabefeldern und Dokumenten. Wurde nichts markiert, wird dies angesagt."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:36
@@ -428,8 +412,7 @@ msgstr "Automatisch Dialekt wechseln (wenn unterstützt)"
 #. browse mode settings dialog.
 #: gui/settingsDialogs.py:815
 msgid "Automatic focus mode for caret movement"
-msgstr ""
-"Bei Bewegungen des System-Cursors automatisch den Fokusmodus einschalten"
+msgstr "Bei Bewegungen des System-Cursors automatisch den Fokusmodus einschalten"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -473,9 +456,7 @@ msgstr "Nur Signaltöne"
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:570
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr ""
-"signaltöne beim Eingeben von Kleinbuchstaben abspielen, wenn die "
-"Dauergroßschreibung aktiviert ist"
+msgstr "signaltöne beim Eingeben von Kleinbuchstaben abspielen, wenn die Dauergroßschreibung aktiviert ist"
 
 #: gui/settingsDialogs.py:1117
 msgid "Braille &display:"
@@ -506,7 +487,7 @@ msgstr "Lesemodus"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:32
+#: braille.py:35
 msgid "Bulgarian 8 dot computer braille"
 msgstr "Bulgarisches 8-Punkt-Computerbraille"
 
@@ -517,9 +498,7 @@ msgstr "Kopie:"
 
 #: gui/__init__.py:129
 msgid "Cannot save configuration - NVDA in secure mode"
-msgstr ""
-"Konfiguration konnte nicht gespeichert werden - NVDA befindet sich im "
-"sicheren Modus."
+msgstr "Konfiguration konnte nicht gespeichert werden - NVDA befindet sich im sicheren Modus."
 
 #: gui/settingsDialogs.py:424
 msgid "Capital pitch change percentage"
@@ -555,33 +534,27 @@ msgstr "Einstellungen für die virtuellen Ansichten ändern."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:176
+#: braille.py:188
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Chinesische Brailleschrift (Hong-Kong, Cantonesisch)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:179
+#: braille.py:191
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chinesische Brailleschrift (Taiwan, Mandarin)"
 
 #: gui/__init__.py:241
 msgid "Choose the voice, rate, pitch and volume to use"
-msgstr ""
-"Wählen Sie Stimme, Geschwindigkeit, Tonhöhe und Lautstärke, die verwendet "
-"werden sollen."
+msgstr "Wählen Sie Stimme, Geschwindigkeit, Tonhöhe und Lautstärke, die verwendet werden sollen."
 
 #: globalCommands.py:85
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr ""
-"Simuliert einen einzelnen Klick mit der linken Maustaste an der aktuellen "
-"Mausposition."
+msgstr "Simuliert einen einzelnen Klick mit der linken Maustaste an der aktuellen Mausposition."
 
 #: globalCommands.py:91
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr ""
-"Simuliert einen einzelnen Klick mit der rechten Maustaste an der aktuellen "
-"Mausposition."
+msgstr "Simuliert einen einzelnen Klick mit der rechten Maustaste an der aktuellen Mausposition."
 
 #: gui/settingsDialogs.py:1024
 msgid "Comment"
@@ -614,12 +587,8 @@ msgid "Configure how and when the review cursor moves"
 msgstr "Konfigurieren der Cursor-Anzeige wie und wann der sich bewegt."
 
 #: gui/__init__.py:245
-msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
-msgstr ""
-"Konfigurieren Sie das Tastaturschema, die Ansage von Zeichen und Wörtern "
-"sowie die Ansage von Funktionstasten."
+msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
+msgstr "Konfigurieren Sie das Tastaturschema, die Ansage von Zeichen und Wörtern sowie die Ansage von Funktionstasten."
 
 #: gui/__init__.py:296
 msgid "Contributors"
@@ -633,8 +602,7 @@ msgstr "Copyright (C) {years} NVDA-Team"
 #. the 'automatic comments' window in poedit.
 #: appModules/poedit.py:82
 msgid "Could not find automatic comments window."
-msgstr ""
-"Das Fenster mit den automatischen Kommentaren konnte nicht gefunden werden."
+msgstr "Das Fenster mit den automatischen Kommentaren konnte nicht gefunden werden."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
@@ -657,13 +625,11 @@ msgstr "Die Sprachausgabe %s konnte nicht geladen werden."
 
 #: gui/__init__.py:135
 msgid "Could not save configuration - probably read only file system"
-msgstr ""
-"Die Konfiguration konnte nicht gespeichert werden. Möglicherweise verwenden "
-"Sie ein schreibgeschütztes Dateisystem."
+msgstr "Die Konfiguration konnte nicht gespeichert werden. Möglicherweise verwenden Sie ein schreibgeschütztes Dateisystem."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:110
+#: braille.py:116
 msgid "Croatian 8 dot computer braille"
 msgstr "Kroatisches 8-Punkt-Computerbraille"
 
@@ -677,32 +643,22 @@ msgid "Cursor blink rate (ms)"
 msgstr "Cursorblinkfrequenz (in Millisekunden)"
 
 #: gui/settingsDialogs.py:179
-msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
-msgstr ""
-"Benutzerdefinierte Plugins wurden im Verzeichnis Ihrer persönlichen "
-"Einstellungen gefunden. Diese in das Systemprofil zu kopieren könnte ein "
-"sicherheitsrisiko darstellen. Möchten Sie Ihre Einstellungen trotzdem "
-"kopieren?"
+msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
+msgstr "Benutzerdefinierte Plugins wurden im Verzeichnis Ihrer persönlichen Einstellungen gefunden. Diese in das Systemprofil zu kopieren könnte ein sicherheitsrisiko darstellen. Möchten Sie Ihre Einstellungen trotzdem kopieren?"
 
 #: globalCommands.py:214
-msgid ""
-"Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr ""
-"Wechselt zwischen den unterschiedlichen Ausführlichkeitsstufen, mit denen "
-"festgelegt wird, welche  Sonderzeichen ausgesprochen werden sollen."
+msgid "Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr "Wechselt zwischen den unterschiedlichen Ausführlichkeitsstufen, mit denen festgelegt wird, welche  Sonderzeichen ausgesprochen werden sollen."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:41
+#: braille.py:44
 msgid "Czech grade 1"
 msgstr "Tschechische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:44
+#: braille.py:47
 msgid "Danish grade 1"
 msgstr "Dänische Vollschrift"
 
@@ -713,9 +669,7 @@ msgstr "Datum:"
 
 #: globalCommands.py:154
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr ""
-"Verringert den Wert der aktuell gewählten Einstellung im Sprachausgaben-"
-"Einstellungsring."
+msgstr "Verringert den Wert der aktuell gewählten Einstellung im Sprachausgaben-Einstellungsring."
 
 #: gui/__init__.py:148
 msgid "Default dictionary"
@@ -753,17 +707,18 @@ msgstr "Spenden"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:122
+#: braille.py:131
 msgid "Dutch (Belgium) grade 1"
 msgstr "Niederländische Vollschrift (Belgien)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:125
+#: braille.py:134
 msgid "Dutch (netherlands) grade 1"
 msgstr "Niederländische Vollschrift (Niederlande)"
 
-#: gui/__init__.py:315 gui/logViewer.py:34
+#: gui/__init__.py:315
+#: gui/logViewer.py:34
 msgid "E&xit"
 msgstr "&Beenden"
 
@@ -771,7 +726,7 @@ msgstr "&Beenden"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "Aktuelles &Wort in Computerbraille ausschreiben"
 
-#: NVDAObjects/window/winword.py:388
+#: NVDAObjects/window/winword.py:402
 msgid "Edge of table"
 msgstr "Tabellenrand"
 
@@ -801,41 +756,43 @@ msgstr "Endnoten"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:59
+#: braille.py:62
 msgid "English (U.K.) grade 1"
 msgstr "Britische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:62
+#: braille.py:65
 msgid "English (U.K.) grade 2"
 msgstr "Britische Kurzschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:65
+#: braille.py:68
 msgid "English (U.S.) 6 dot computer braille"
 msgstr "Amerikanisches 6-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:68
+#: braille.py:71
 msgid "English (U.S.) 8 dot computer braille"
 msgstr "Amerikanisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:71
+#: braille.py:74
 msgid "English (U.S.) grade 1"
 msgstr "Amerikanische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:74
+#: braille.py:77
 msgid "English (U.S.) grade 2"
 msgstr "Amerikanische Kurzschrift"
 
-#: gui/__init__.py:135 gui/__init__.py:144 gui/logViewer.py:74
+#: gui/__init__.py:135
+#: gui/__init__.py:144
+#: gui/logViewer.py:74
 #: gui/settingsDialogs.py:185
 msgid "Error"
 msgstr "Fehler"
@@ -876,7 +833,7 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:101
+#: braille.py:107
 msgid "Ethiopic grade 1"
 msgstr "Äthopische Vollschrift"
 
@@ -888,9 +845,16 @@ msgstr "Fußzeilen von Seiten mit geraden Seitenzahlen"
 msgid "Even pages header"
 msgstr "Kopfzeilen von Seiten mit geraden Seitenzahlen"
 
-#: gui/__init__.py:161 gui/__init__.py:315
+#: gui/__init__.py:161
+#: gui/__init__.py:315
 msgid "Exit NVDA"
 msgstr "NVDA beenden"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:32
+msgid "Farsi grade 1"
+msgstr "serbische Vollschrift"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:14
@@ -907,7 +871,7 @@ msgstr "Fehler beim Suchen."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:80
+#: braille.py:86
 msgid "Finnish 8 dot computer braille"
 msgstr "Finnisches 8-Punkt-Computerbraille"
 
@@ -942,14 +906,8 @@ msgid "Footnotes"
 msgstr "Fußnoten"
 
 #: gui/settingsDialogs.py:213
-msgid ""
-"For the new language to take effect, the configuration must be saved and "
-"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
-"manually save and exit at a later time."
-msgstr ""
-"Damit die neuen Spracheinstellungen wirksam werden, muss die Konfiguration "
-"gespeichert und NVDA neu gestartet werden. Wählen Sie OK, um NVDA jetzt neu "
-"zu starten oder Abbrechen, um NVDA später manuell neu zu starten."
+msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
+msgstr "Damit die neuen Spracheinstellungen wirksam werden, muss die Konfiguration gespeichert und NVDA neu gestartet werden. Wählen Sie OK, um NVDA jetzt neu zu starten oder Abbrechen, um NVDA später manuell neu zu starten."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:34
@@ -963,36 +921,37 @@ msgstr "FreedomScientific Focus / PAC Mate Serien"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:83
+#: braille.py:89
 msgid "French (Canada) grade 1"
 msgstr "Französische Vollschrift (Kanada)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:86
+#: braille.py:92
 msgid "French (Canada) grade 2"
 msgstr "Französische Kurzschrift (Kanada)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:89
+#: braille.py:95
 msgid "French (unified) 6 dot computer braille"
 msgstr "Französisches 6-Punkt-Computerbraille (vereinheitlicht)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:92
+#: braille.py:98
 msgid "French (unified) 8 dot computer braille"
 msgstr "Französisches 8-Punkt-Computerbraille (vereinheitlicht)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:95
+#: braille.py:101
 msgid "French (unified) Grade 2"
 msgstr "Französische Kurzschrift (vereinheitlichte)"
 
 #. Translators: This is presented in outlook or live mail, email sender
-#: appModules/msimn.py:30 appModules/msimn.py:46
+#: appModules/msimn.py:30
+#: appModules/msimn.py:46
 msgid "From:"
 msgstr "Von:"
 
@@ -1007,31 +966,31 @@ msgstr "Allgemeine Einstellungen"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:47
+#: braille.py:50
 msgid "German 8 dot computer braille"
 msgstr "Deutsches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:50
+#: braille.py:53
 msgid "German grade 0"
 msgstr "Deutsche Basisschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:53
+#: braille.py:56
 msgid "German grade 1"
 msgstr "Deutsche Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:56
+#: braille.py:59
 msgid "German grade 2"
 msgstr "Deutsche Kurzschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:98
+#: braille.py:104
 msgid "Greek (Greece) grade 1"
 msgstr "Griechische Vollschrift"
 
@@ -1048,13 +1007,13 @@ msgstr "Handy Tech Braillezeilen"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:104
+#: braille.py:110
 msgid "Hebrew 8 dot computer braille"
 msgstr "Hebräisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:107
+#: braille.py:113
 msgid "Hindi grade 1"
 msgstr "Hindische Vollschrift"
 
@@ -1065,7 +1024,7 @@ msgstr "HumanWare Brailliant Serie BI/B"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:113
+#: braille.py:119
 msgid "Hungarian 8 dot computer braille"
 msgstr "Ungarisches 8-Punkt-Computerbraille"
 
@@ -1081,19 +1040,19 @@ msgstr "IP-Adresse"
 msgid "ITALIC"
 msgstr "kursiv"
 
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:122
+msgid "Icelandic 8 dot computer braille"
+msgstr "isländisches 8-Punkt-Computerbraille"
+
 #: globalCommands.py:136
-msgid ""
-"If pressed once, reports the current time. If pressed twice, reports the "
-"current date"
-msgstr ""
-"Bei ein Mal drücken der Tastenkombination wird die aktuelle Uhrzeit und bei "
-"zwei Mal drücken das aktuelle Datum angesagt."
+msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
+msgstr "Bei ein Mal drücken der Tastenkombination wird die aktuelle Uhrzeit und bei zwei Mal drücken das aktuelle Datum angesagt."
 
 #: globalCommands.py:145
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr ""
-"Erhöht den Wert der aktuell gewählten Einstellung im Sprachausgaben-"
-"Einstellungsring."
+msgstr "Erhöht den Wert der aktuell gewählten Einstellung im Sprachausgaben-Einstellungsring."
 
 #: gui/settingsDialogs.py:210
 msgid "Insufficient Privileges"
@@ -1101,7 +1060,7 @@ msgstr "Unzureichende Berechtigungen"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:116
+#: braille.py:125
 msgid "Italian grade 1"
 msgstr "Italienische Vollschrift"
 
@@ -1146,7 +1105,7 @@ msgstr "Fehler beim Ändern der Sprache!"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:119
+#: braille.py:128
 msgid "Latvian grade 1"
 msgstr "Lettische Vollschrift"
 
@@ -1187,12 +1146,8 @@ msgid "Log level"
 msgstr "Protokolltyp"
 
 #: globalCommands.py:760
-msgid ""
-"Logs information about the current navigator object which is useful to "
-"developers and activates the log viewer so the information can be examined."
-msgstr ""
-"Protokolliert die Informationen zum aktuellen Navigator-Objekt und zeigt "
-"diese im der Protokollansicht an (für die Entwickler nützlich!)."
+msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
+msgstr "Protokolliert die Informationen zum aktuellen Navigator-Objekt und zeigt diese im der Protokollansicht an (für die Entwickler nützlich!)."
 
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers/lilli.py:44
@@ -1200,9 +1155,7 @@ msgid "MDV Lilli"
 msgstr "MDV Lilli"
 
 #: globalCommands.py:922
-msgid ""
-"Marks the current position of the review cursor as the start of text to be "
-"copied"
+msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "Setzt eine Startmarke an die aktuelle Cursor-Position."
 
 #: gui/settingsDialogs.py:1156
@@ -1224,12 +1177,8 @@ msgstr "Ziehe Navigator zur Maus."
 
 #: globalCommands.py:269
 #, fuzzy
-msgid ""
-"Moves navigator object to the object represented by the text at the position "
-"of the review cursor within flat review"
-msgstr ""
-"Verschiebt das Objekt der Cursor-Position durch den Text an dem angezeigten "
-"Cursor."
+msgid "Moves navigator object to the object represented by the text at the position of the review cursor within flat review"
+msgstr "Setzt das Navigator-Objekt an die Stelle des Anzeige-Cursors im Flächenmodus."
 
 #: globalCommands.py:964
 msgid "Moves the braille display to the next line"
@@ -1241,14 +1190,11 @@ msgstr "Zieht die Brailleausgabe in die vorherige Zeile."
 
 #: globalCommands.py:616
 msgid "Moves the focus to the next closest document that contains the focus"
-msgstr ""
-"Bewegt den Fokus zum nächstgelegenem Dokument, welches fokussiert werden "
-"kann."
+msgstr "Bewegt den Fokus zum nächstgelegenem Dokument, welches fokussiert werden kann."
 
 #: globalCommands.py:235
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr ""
-"Zieht den Mauszeiger zu dem Objekt, auf dem sich der Navigator befindet."
+msgstr "Zieht den Mauszeiger zu dem Objekt, auf dem sich der Navigator befindet."
 
 #: globalCommands.py:408
 msgid "Moves the navigator object to the first object inside it"
@@ -1267,93 +1213,48 @@ msgid "Moves the navigator object to the previous object"
 msgstr "Zieht das Navigatorobjekt zum vorherigen Objekt."
 
 #: globalCommands.py:476
-msgid ""
-"Moves the review cursor to the bottom line of the current navigator object "
-"and speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zur letzten Zeile im aktuellen Navigator-Objekt "
-"und liest diesen vor."
+msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zur letzten Zeile im aktuellen Navigator-Objekt und liest diesen vor."
 
 #: globalCommands.py:520
-msgid ""
-"Moves the review cursor to the first character of the line where it is "
-"situated in the current navigator object and speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zum Zeilenanfang im aktuellen Navigator-Objekt "
-"und spricht das erste Zeichen."
+msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zum Zeilenanfang im aktuellen Navigator-Objekt und spricht das erste Zeichen."
 
 #: globalCommands.py:584
-msgid ""
-"Moves the review cursor to the last character of the line where it is "
-"situated in the current navigator object and speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zum Zeilenende im aktuellen Navigator-Objekt "
-"und liest das letzte Zeichen vor."
+msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zum Zeilenende im aktuellen Navigator-Objekt und liest das letzte Zeichen vor."
 
 #: globalCommands.py:573
-msgid ""
-"Moves the review cursor to the next character of the current navigator "
-"object and speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zum nächsten Zeichen im aktuellen Navigator-"
-"Objekt und spricht es."
+msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zum nächsten Zeichen im aktuellen Navigator-Objekt und spricht es."
 
 #: globalCommands.py:468
-msgid ""
-"Moves the review cursor to the next line of the current navigator object and "
-"speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zur nächsten Zeile im aktuellen Navigator-"
-"Objekt und liest diesen vor."
+msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zur nächsten Zeile im aktuellen Navigator-Objekt und liest diesen vor."
 
 #: globalCommands.py:510
-msgid ""
-"Moves the review cursor to the next word of the current navigator object and "
-"speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zum nächsten Wort im aktuellen Navigator-Objekt "
-"und liest dieses vor."
+msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zum nächsten Wort im aktuellen Navigator-Objekt und liest dieses vor."
 
 #: globalCommands.py:538
-msgid ""
-"Moves the review cursor to the previous character of the current navigator "
-"object and speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zum vorherigen Zeichen im aktuellen Navigator-"
-"Objekt und liest es vor."
+msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zum vorherigen Zeichen im aktuellen Navigator-Objekt und liest es vor."
 
 #: globalCommands.py:446
-msgid ""
-"Moves the review cursor to the previous line of the current navigator object "
-"and speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zur vorherigen Zeile im aktuellen Navigator-"
-"Objekt und liest diesen vor."
+msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zur vorherigen Zeile im aktuellen Navigator-Objekt und liest diesen vor."
 
 #: globalCommands.py:488
-msgid ""
-"Moves the review cursor to the previous word of the current navigator object "
-"and speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zum vorherigen Wort im aktuellen Navigator-"
-"Objekt und liest dieses vor."
+msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zum vorherigen Wort im aktuellen Navigator-Objekt und liest dieses vor."
 
 #: globalCommands.py:434
-msgid ""
-"Moves the review cursor to the top line of the current navigator object and "
-"speaks it"
-msgstr ""
-"Zieht den angezeigten Cursor zur ersten Zeile im aktuellen Navigator-Objekt "
-"und liest diesen vor."
+msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
+msgstr "Zieht den angezeigten Cursor zur ersten Zeile im aktuellen Navigator-Objekt und liest diesen vor."
 
 #: globalCommands.py:256
-msgid ""
-"Moves to flat review for the screen (or document if currently inside one) "
-"and positions the review cursor at the location of the current object"
-msgstr ""
-"Schaltet den Anzeigebereich für diesen Bildschirm (oder wenn es sich in "
-"einem Dokument befindet) um und positioniert den angezeigten Cursor im "
-"Bereich des aktuellen Objekts."
+msgid "Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
+msgstr "Schaltet den Anzeigebereich für diesen Bildschirm (oder wenn es sich in einem Dokument befindet) um und positioniert den angezeigten Cursor im Bereich des aktuellen Objekts."
 
 #: globalCommands.py:163
 msgid "Moves to the next available setting in the synth settings ring"
@@ -1361,8 +1262,7 @@ msgstr "Wechselt zur nächsten Einstellung im Sprachausgaben-Einstellungsring."
 
 #: globalCommands.py:172
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr ""
-"Wechselt zur vorherigen Einstellung im Sprachausgaben-Einstellungsring."
+msgstr "Wechselt zur vorherigen Einstellung im Sprachausgaben-Einstellungsring."
 
 #: gui/logViewer.py:17
 msgid "NVDA Log Viewer"
@@ -1449,7 +1349,9 @@ msgstr "kein untergeordnetes Objekt"
 msgid "No previous"
 msgstr "Kein vorheriges Objekt."
 
-#: globalCommands.py:141 globalCommands.py:150 globalCommands.py:159
+#: globalCommands.py:141
+#: globalCommands.py:150
+#: globalCommands.py:159
 #: globalCommands.py:168
 msgid "No settings"
 msgstr "Keine Einstellungen."
@@ -1480,31 +1382,31 @@ msgstr "NonVisual Desktop Access"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:128
+#: braille.py:137
 msgid "Norwegian 8 dot computer braille"
 msgstr "Norwegisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:131
+#: braille.py:140
 msgid "Norwegian grade 0"
 msgstr "Norwegische Basisschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:134
+#: braille.py:143
 msgid "Norwegian grade 1"
 msgstr "Norwegische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:137
+#: braille.py:146
 msgid "Norwegian grade 2"
 msgstr "Norwegische Kurzschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:140
+#: braille.py:149
 msgid "Norwegian grade 3"
 msgstr "Norwegische Kurzschrift (reformiert)"
 
@@ -1512,7 +1414,8 @@ msgstr "Norwegische Kurzschrift (reformiert)"
 msgid "Not in a table cell"
 msgstr "Nicht in einer Zelle der Tabelle."
 
-#: NVDAObjects/window/winword.py:377 NVDAObjects/window/winword.py:394
+#: NVDAObjects/window/winword.py:391
+#: NVDAObjects/window/winword.py:408
 msgid "Not in table"
 msgstr "Nicht in einer Tabelle."
 
@@ -1523,14 +1426,8 @@ msgstr "Objektdarstellung"
 
 #: globalCommands.py:321
 #, python-format
-msgid ""
-"Object edges positioned %.1f per cent from left edge of screen, %.1f per "
-"cent from top edge of screen, width is %.1f per cent of screen, height is "
-"%.1f per cent of screen"
-msgstr ""
-"Die Eckpositionen des Objekts sind %.1f Prozent vom linken, %.1f Prozent vom "
-"oberen, %.1f Prozent vom rechten und %.1f Prozent vom unteren Bildschirmrand "
-"entfernt."
+msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
+msgstr "Die Eckpositionen des Objekts sind %.1f Prozent vom linken, %.1f Prozent vom oberen, %.1f Prozent vom rechten und %.1f Prozent vom unteren Bildschirmrand entfernt."
 
 #: gui/__init__.py:411
 msgid "Options"
@@ -1558,12 +1455,8 @@ msgid "Pattern"
 msgstr "Muster"
 
 #: globalCommands.py:426
-msgid ""
-"Performs the default action on the current navigator object (example: "
-"presses it if it is a button)."
-msgstr ""
-"Führt die Standardaktion mit dem aktuellen Objekt aus (z. B. aktiviert einen "
-"Schalter)."
+msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
+msgstr "Führt die Standardaktion mit dem aktuellen Objekt aus (z. B. aktiviert einen Schalter)."
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:16
@@ -1580,19 +1473,19 @@ msgstr "Plugins neu geladen"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:143
+#: braille.py:152
 msgid "Polish grade 1"
 msgstr "Polnische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:146
+#: braille.py:155
 msgid "Portuguese grade 1"
 msgstr "Portugiesische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:149
+#: braille.py:158
 msgid "Portuguese grade 2"
 msgstr "Portugiesische Kurzschrift"
 
@@ -1601,12 +1494,8 @@ msgid "Presents a list of links, headings or landmarks"
 msgstr "Zeigt Links, Überschriften oder Sprungmarken in einer Liste an"
 
 #: globalCommands.py:352
-msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
-msgstr ""
-"Einmal gedrückt, wird der Fokus auf das Navigator-Objekt gesetzt. Zweimal "
-"drücken wird der System-Cursor zur Position des Anzeige-Cursors gesetzt."
+msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
+msgstr "Einmal gedrückt, wird der Fokus auf das Navigator-Objekt gesetzt. Zweimal drücken wird der System-Cursor zur Position des Anzeige-Cursors gesetzt."
 
 #: NVDAObjects/window/winword.py:89
 msgid "Primary footer"
@@ -1683,14 +1572,11 @@ msgid "Reload plugins"
 msgstr "Plugins &neu laden"
 
 #: globalCommands.py:972
-msgid ""
-"Reloads app modules and global plugins without restarting NVDA, which can be "
-"Useful for developers"
-msgstr ""
-"Lädt die Anwendungsmodule und die globalen Plugins neu ohne NVDA neu zu "
-"starten (hilfreich für die Entwickler)."
+msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
+msgstr "Lädt die Anwendungsmodule und die globalen Plugins neu ohne NVDA neu zu starten (hilfreich für die Entwickler)."
 
-#: gui/settingsDialogs.py:1026 gui/settingsDialogs.py:1228
+#: gui/settingsDialogs.py:1026
+#: gui/settingsDialogs.py:1228
 msgid "Replacement"
 msgstr "Ersetzen durch"
 
@@ -1871,99 +1757,57 @@ msgstr "Spalten- und R&eihenüberschriften von Tabellen ansagen"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules/poedit.py:84
-#, fuzzy
 msgid "Reports any comments in the automatic comments window"
-msgstr ""
-"Das Fenster mit den automatischen Kommentaren konnte nicht gefunden werden."
+msgstr "Gibt alle automatischen Kommentare aus."
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules/poedit.py:105
-#, fuzzy
 msgid "Reports any comments in the comments window"
-msgstr "Das Kommentar-Fenster konnte nicht gefunden werden."
+msgstr "Gibt alle Kommentare des Kommentar-Fensters aus."
 
 #: globalCommands.py:679
-msgid ""
-"Reports formatting info for the current review cursor position within a "
-"document"
-msgstr ""
-"Formatierungsinformationen zur aktuellen Cursor-Position im Dokument ansagen"
+msgid "Reports formatting info for the current review cursor position within a document"
+msgstr "Formatierungsinformationen zur aktuellen Cursor-Position im Dokument ansagen"
 
 #: globalCommands.py:555
-msgid ""
-"Reports the character of the current navigator object where the review "
-"cursor is situated. Pressing twice reports a description or example of that "
-"character. Pressing three times reports the numeric value of the character "
-"in decimal and hexadecimal"
-msgstr ""
-"Liest das aktuelle Zeichen unter dem Cursor im Navigatorobjekt vor. Bei "
-"zweimaligem Drücken wird das zeichen phonetisch buchstabiert und ein "
-"Beispiel wird angesagt. Bei dreimaligem Drücken wird das Zeichen als "
-"Dezimal- und als Hexadezimalwert gesprochen."
+msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
+msgstr "Liest das aktuelle Zeichen unter dem Cursor im Navigatorobjekt vor. Bei zweimaligem Drücken wird das zeichen phonetisch buchstabiert und ein Beispiel wird angesagt. Bei dreimaligem Drücken wird das Zeichen als Dezimal- und als Hexadezimalwert gesprochen."
 
 #: globalCommands.py:79
-msgid ""
-"Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr ""
-"Liest die aktuelle Zeile unter dem System-Cursor vor. Wird diese Taste zwei "
-"Mal gedrückt, wird sie buchstabiert."
+msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
+msgstr "Liest die aktuelle Zeile unter dem System-Cursor vor. Wird diese Taste zwei Mal gedrückt, wird sie buchstabiert."
 
 #: globalCommands.py:303
-msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
-msgstr ""
-"Liest die Informationen zum aktuellen Objekt vor oder wenn die "
-"Tastenkombination drei Mal gedrückt wird, werden die Informationen in die "
-"Zwischenablage kopiert."
+msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
+msgstr "Liest die Informationen zum aktuellen Objekt vor oder wenn die Tastenkombination drei Mal gedrückt wird, werden die Informationen in die Zwischenablage kopiert."
 
 #: globalCommands.py:322
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Sagt die Höhe, Breite und die aktuelle Objektposition an."
 
 #: globalCommands.py:456
-msgid ""
-"Reports the line of the current navigator object where the review cursor is "
-"situated. If this key is pressed twice, the current line will be spelled. "
-"Pressing three times will spell the line using character descriptions."
-msgstr ""
-"Liest die aktuelle Zeile des Navigator-Objekts vor, auf der der Cursor "
-"steht. Bei zweimaligem Drücken wir die Zeile buchstabiert."
+msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
+msgstr "Liest die aktuelle Zeile des Navigator-Objekts vor, auf der der Cursor steht. Bei zweimaligem Drücken wir die Zeile buchstabiert."
 
 #: appModules/foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr ""
-"Sagt die Restdauer des aktuell wiedergegebenen Musiktitels an, fals einer "
-"abgespielt wird."
+msgstr "Sagt die Restdauer des aktuell wiedergegebenen Musiktitels an, fals einer abgespielt wird."
 
 #: globalCommands.py:917
 msgid "Reports the text on the Windows clipboard"
 msgstr "Liest den Inhalt der Zwischenablage vor."
 
 #: globalCommands.py:743
-msgid ""
-"Reports the title of the current application or foreground window. If "
-"pressed twice, spells the title. If pressed thrice, copies the title to the "
-"clipboard"
-msgstr ""
-"Liest die Titelleiste der aktuellen Anwendung vor. Wird die "
-"Tastenkombination zwei Mal gedrückt, wird diese buchstabiert. Bei "
-"dreimaligen Drücken wird der Text in die Zwischenablage kopiert."
+msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
+msgstr "Liest die Titelleiste der aktuellen Anwendung vor. Wird die Tastenkombination zwei Mal gedrückt, wird diese buchstabiert. Bei dreimaligen Drücken wird der Text in die Zwischenablage kopiert."
 
 #: gui/__init__.py:305
 msgid "Reset all settings to saved state"
 msgstr "Alle Einstellungen auf die gespeicherten Werte zurücksetzen."
 
 #: globalCommands.py:940
-msgid ""
-"Retrieves the text from the previously set start marker up to and including "
-"the current position of the review cursor and copies it to the clipboard"
-msgstr ""
-"Gibt den Text von der zuvor gesetzten Startmarke bis einschließlich der "
-"aktuellen Position des NVDA-Cursors zurück und kopiert ihn in die "
-"Zwischenablage."
+msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
+msgstr "Gibt den Text von der zuvor gesetzten Startmarke bis einschließlich der aktuellen Position des NVDA-Cursors zurück und kopiert ihn in die Zwischenablage."
 
 #: gui/__init__.py:249
 msgid "Review &cursor..."
@@ -1988,13 +1832,11 @@ msgstr "rücklauf"
 
 #: globalCommands.py:954
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr ""
-"Zieht den Cursor zum Objekt hin bzw. aktiviert dieses, welches sich unter "
-"dem Braillemodul befindet."
+msgstr "Zieht den Cursor zum Objekt hin bzw. aktiviert dieses, welches sich unter dem Braillemodul befindet."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:152
+#: braille.py:161
 msgid "Russian grade 1"
 msgstr "Russische Vollschrift"
 
@@ -2026,22 +1868,16 @@ msgstr "Geschützter Desktop"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:164
+#: braille.py:173
 msgid "Serbian grade 1"
 msgstr "Serbische Vollschrift"
 
 #: globalCommands.py:333
-msgid ""
-"Sets the navigator object to the current focus, and the review cursor to the "
-"position of the caret inside it, if possible."
-msgstr ""
-"Setzt das Navigator-Objekt zum aktuellen Fokus und dem angezeigten Cursor "
-"zum System-Cursor, sofern möglich."
+msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
+msgstr "Setzt das Navigator-Objekt zum aktuellen Fokus und dem angezeigten Cursor zum System-Cursor, sofern möglich."
 
 #: globalCommands.py:242
-msgid ""
-"Sets the navigator object to the current object under the mouse pointer and "
-"speaks it"
+msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
 msgstr "Zieht den Navigator zum Objekt unter dem Mauszeiger und liest ihn vor."
 
 #: brailleDisplayDrivers/handyTech.py:86
@@ -2106,19 +1942,25 @@ msgstr "Schlafmodus ein"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:158
+#: braille.py:167
 msgid "Slovak"
 msgstr "Slowakische Brailleschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:161
+#: braille.py:170
 msgid "Slovene grade 1"
 msgstr "Slowenische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:77
+#: braille.py:80
+msgid "Spanish 8 dot computer braille"
+msgstr "spanisches 8-Punkt-Computerbraille"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:83
 msgid "Spanish grade 1"
 msgstr "Spanische Vollschrift"
 
@@ -2149,22 +1991,12 @@ msgid "Speak typed &words"
 msgstr "geschriebene &Wörter Sprechen"
 
 #: globalCommands.py:843
-msgid ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
-msgstr ""
-"Sagt den Namen der aktiven Anwendung zusammen mit dem Namen des aktiven "
-"Anwendungsmoduls an."
+msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
+msgstr "Sagt den Namen der aktiven Anwendung zusammen mit dem Namen des aktiven Anwendungsmoduls an."
 
 #: globalCommands.py:498
-msgid ""
-"Speaks the word of the current navigator object where the review cursor is "
-"situated. Pressing twice spells the word. Pressing three times spells the "
-"word using character descriptions"
-msgstr ""
-"Liest das aktuelle Wort im Navigatorobjekt vor. Bei zweimaligem Drücken wird "
-"das Wort buchstabiert. Bei dreimaligem Drücken wird das Wort phoneticch "
-"buchstabiert."
+msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
+msgstr "Liest das aktuelle Wort im Navigatorobjekt vor. Bei zweimaligem Drücken wird das Wort buchstabiert. Bei dreimaligem Drücken wird das Wort phoneticch buchstabiert."
 
 #: gui/__init__.py:265
 msgid "Speech &dictionaries"
@@ -2203,7 +2035,7 @@ msgstr "Benutzerdefinierte Einstellungen erfolgreich kopiert."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:155
+#: braille.py:164
 msgid "Swedish grade 1"
 msgstr "Schwedische Vollschrift"
 
@@ -2225,7 +2057,13 @@ msgstr "Sprachausgabe"
 msgid "Synthesizer Error"
 msgstr "Fehlerhafte Sprachausgabe"
 
-#: NVDAObjects/IAccessible/__init__.py:1482
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:176
+msgid "Tamil grade 1"
+msgstr "tamilische  Vollschrift"
+
+#: NVDAObjects/IAccessible/__init__.py:1494
 msgid "Taskbar"
 msgstr "Taskleiste"
 
@@ -2245,17 +2083,12 @@ msgstr "Textrahmen"
 
 #: globalCommands.py:916
 #, python-format
-msgid ""
-"The clipboard contains a large portion of text. It is %s characters long"
+msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Die Zwischenablage enthält viel Text (%s Zeichen)."
 
 #: globalCommands.py:833
-msgid ""
-"The next key that is pressed will not be handled at all by NVDA, it will be "
-"passed directly through to Windows."
-msgstr ""
-"Die Nächste Taste, die Sie drücken, wird nicht von NVDA behandelt, sondern "
-"an Windows durchgereicht."
+msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
+msgstr "Die Nächste Taste, die Sie drücken, wird nicht von NVDA behandelt, sondern an Windows durchgereicht."
 
 #: globalCommands.py:930
 msgid "The start marker must reside within the same object"
@@ -2276,79 +2109,47 @@ msgstr "An:"
 
 #: globalCommands.py:903
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr ""
-"Koppelt die Braillezeile wahlweise an den Fokus oder an den Anzeige-Cursor."
+msgstr "Koppelt die Braillezeile wahlweise an den Fokus oder an den Anzeige-Cursor."
 
 #: globalCommands.py:62
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "Schaltet den Schlafmodus für die aktuelle Anwendung ein und aus."
 
 #: globalCommands.py:777
-msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting "
-"progress bar updates"
-msgstr ""
-"Umschalten zwischen Signaltönen, Sprachausgabe, Signaltöne und Ansage und "
-"stumm für die Ansage der Aktualisierung der Fortschrittsbalken. "
+msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
+msgstr "Umschalten zwischen Signaltönen, Sprachausgabe, Signaltöne und Ansage und stumm für die Ansage der Aktualisierung der Fortschrittsbalken. "
 
 #: globalCommands.py:628
-msgid ""
-"Toggles between browse mode and focus mode. When in focus mode, keys will "
-"pass straight through to the application, allowing you to interact directly "
-"with a control. When in browse mode, you can navigate the document with the "
-"cursor, quick navigation keys, etc."
-msgstr ""
-"Schaltet zwischen Fokus- und Lesemodus um. Im Fokusmodus werden alle "
-"betätigten Tasten direkt an die Anwendung weitergereicht. Im Lesemodus "
-"können Sie mit Hilfe der Schnellnavigationstasten durch Dokumente oder "
-"Webseiten navigieren."
+msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
+msgstr "Schaltet zwischen Fokus- und Lesemodus um. Im Fokusmodus werden alle betätigten Tasten direkt an die Anwendung weitergereicht. Im Lesemodus können Sie mit Hilfe der Schnellnavigationstasten durch Dokumente oder Webseiten navigieren."
 
 #: globalCommands.py:599
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it "
-"its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr ""
-"Schaltet den Sprachmodus zwischen \"Signaltöne\", \"Sprache\" und \"Aus\" um."
+msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr "Schaltet den Sprachmodus zwischen \"Signaltöne\", \"Sprache\" und \"Aus\" um."
 
 #: virtualBuffers/__init__.py:790
-msgid ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-msgstr ""
-"Schaltet das Berücksichtigen der Bildschirmaufteilung beim Aufbereiten der "
-"Dokumente ein oder aus."
+msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
+msgstr "Schaltet das Berücksichtigen der Bildschirmaufteilung beim Aufbereiten der Dokumente ein oder aus."
 
 #: globalCommands.py:807
-msgid ""
-"Toggles on and off the movement of the navigator object due to focus changes"
+msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Schaltet die Kopplung des Navigators an den Fokus an oder aus."
 
 #: globalCommands.py:797
-msgid ""
-"Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr ""
-"Schaltet die Kopplung des NVDA-Cursors an den Systemcursor an oder aus."
+msgid "Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr "Schaltet die Kopplung des NVDA-Cursors an den Systemcursor an oder aus."
 
 #: globalCommands.py:787
-msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new "
-"text in dos console windows"
-msgstr ""
-"Schaltet die Ansage dynamischer Änderungen des Inhaltes an oder aus. Ein "
-"Beispiel dafür ist neuer Text in DOS-Eingabefenstern."
+msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
+msgstr "Schaltet die Ansage dynamischer Änderungen des Inhaltes an oder aus. Ein Beispiel dafür ist neuer Text in DOS-Eingabefenstern."
 
 #: globalCommands.py:182
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Schaltet die Ansage eingegebener Zeichen ein oder aus."
 
 #: globalCommands.py:202
-msgid ""
-"Toggles on and off the speaking of typed keys, that are not specifically "
-"characters"
-msgstr ""
-"Schaltet die Ansage der Tasten ein oder aus (die keine besonderen Zeichen "
-"sind)."
+msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+msgstr "Schaltet die Ansage der Tasten ein oder aus (die keine besonderen Zeichen sind)."
 
 #: globalCommands.py:192
 msgid "Toggles on and off the speaking of typed words"
@@ -2374,17 +2175,13 @@ msgstr "Übersetzung:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:167
+#: braille.py:179
 msgid "Turkish grade 1"
 msgstr "Türkische Vollschrift"
 
 #: globalCommands.py:47
-msgid ""
-"Turns input help on or off. When on, any input such as pressing a key on the "
-"keyboard will tell you what script is associated with that input, if any."
-msgstr ""
-"Schaltet die Eingabehilfe ein oder aus. Wenn eingeschaltet, wird die "
-"Funktion der gedrückten Tastenkombination angesagt."
+msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
+msgstr "Schaltet die Eingabehilfe ein oder aus. Wenn eingeschaltet, wird die Funktion der gedrückten Tastenkombination angesagt."
 
 #: pythonConsole.py:40
 msgid "Type exit() to exit the console"
@@ -2404,13 +2201,13 @@ msgstr "Typ:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:170
+#: braille.py:182
 msgid "Unified English Braille Code grade 1"
 msgstr "Englische Vollschrift (vereinheitlicht)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:173
+#: braille.py:185
 msgid "Unified English Braille Code grade 2"
 msgstr "Englische Kurzschrift (vereinheitlicht)"
 
@@ -2428,24 +2225,18 @@ msgstr "&Buchstabierfunktion verwenden, falls verfügbar"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/__init__.py:412 gui/settingsDialogs.py:545
+#: gui/__init__.py:412
+#: gui/settingsDialogs.py:545
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "&Dauergroßschreibtaste als NVDA-Taste verwenden"
 
 #: gui/settingsDialogs.py:161
-msgid ""
-"Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr ""
-"NVDA für die Windows-Anmeldung verwenden (Administratorrechte sind "
-"erforderlich!)"
+msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr "NVDA für die Windows-Anmeldung verwenden (Administratorrechte sind erforderlich!)"
 
 #: gui/settingsDialogs.py:166
-msgid ""
-"Use currently saved settings on the logon and other secure screens (requires "
-"administrator privileges)"
-msgstr ""
-"Aktuell gespeicherte Einstellungen im Anmeldebildschirm und bei "
-"Sicherheitsmeldungen verwenden (erfordert Administrationsberechtigungen!)"
+msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
+msgstr "Aktuell gespeicherte Einstellungen im Anmeldebildschirm und bei Sicherheitsmeldungen verwenden (erfordert Administrationsberechtigungen!)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -2504,14 +2295,11 @@ msgstr "Willkommen bei NVDA!"
 #: gui/__init__.py:398
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key "
-"while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the "
-"NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA "
-"functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
 msgstr ""
 "Willkommen bei NVDA!\n"
 "Für das Ausführen der meisten Befehle in NVDA\n"
@@ -2529,13 +2317,13 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:35
+#: braille.py:38
 msgid "Welsh grade 1"
 msgstr "Waliesische Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:38
+#: braille.py:41
 msgid "Welsh grade 2"
 msgstr "Waliesische Kurzschrift"
 
@@ -2550,13 +2338,10 @@ msgstr "Die aktuelle Konfiguration wird in NVDA.ini gespeichert..."
 #: gui/__init__.py:451
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-"edit your config file at a later stage to make corrections. More details "
-"about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
 msgstr ""
 "Ihre Konfigurationsdatei ist fehlerhaft.\n"
-"Klicken Sie auf 'OK', um den Fehler zu beheben oder auf 'Abbrechen', um die "
-"Konfigurationsdatei zu einem späteren Zeitpunkt manuell zu korrigieren.\n"
+"Klicken Sie auf 'OK', um den Fehler zu beheben oder auf 'Abbrechen', um die Konfigurationsdatei zu einem späteren Zeitpunkt manuell zu korrigieren.\n"
 "Weitere Details über die Fehler stehen in der Protokolldatei.\n"
 
 #: core.py:84
@@ -2571,27 +2356,28 @@ msgstr ""
 msgid "activates the current object in the document"
 msgstr "Aktiviert das aktuelle Objekt im Dokument."
 
-#: controlTypes.py:299 controlTypes.py:323
+#: controlTypes.py:299
+#: controlTypes.py:323
 msgid "alert"
 msgstr "Benachrichtigung"
 
-#: speech.py:1034
+#: speech.py:1037
 msgid "align center"
 msgstr "zentriert"
 
-#: speech.py:1040
+#: speech.py:1043
 msgid "align default"
 msgstr "Standardausrichtung"
 
-#: speech.py:1038
+#: speech.py:1041
 msgid "align justify"
 msgstr "Blocksatz"
 
-#: speech.py:1032
+#: speech.py:1035
 msgid "align left"
 msgstr "linksbündig"
 
-#: speech.py:1036
+#: speech.py:1039
 msgid "align right"
 msgstr "rechtsbündig"
 
@@ -2599,7 +2385,7 @@ msgstr "rechtsbündig"
 msgid "alignment"
 msgstr "Ausrichtung"
 
-#: characterProcessing.py:128
+#: characterProcessing.py:130
 msgid "all"
 msgstr "Alle"
 
@@ -2650,7 +2436,7 @@ msgstr "Rücktaste"
 msgid "banner"
 msgstr "Logo"
 
-#: speech.py:1024
+#: speech.py:1027
 msgid "baseline"
 msgstr "Grundlinie"
 
@@ -2673,7 +2459,9 @@ msgstr "schwarz"
 
 #. Translators: This is spoken when nvda moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
-#: speech.py:163 speech.py:328 speech.py:738
+#: speech.py:164
+#: speech.py:329
+#: speech.py:739
 msgid "blank"
 msgstr "Leer"
 
@@ -2685,7 +2473,8 @@ msgstr "Zitatblock"
 msgid "blue"
 msgstr "blau"
 
-#: controlTypes.py:313 speech.py:998
+#: controlTypes.py:313
+#: speech.py:1001
 msgid "bold"
 msgstr "fett"
 
@@ -2693,7 +2482,9 @@ msgstr "fett"
 msgid "border"
 msgstr "Rahmen"
 
-#: globalCommands.py:466 globalCommands.py:474 globalCommands.py:508
+#: globalCommands.py:466
+#: globalCommands.py:474
+#: globalCommands.py:508
 msgid "bottom"
 msgstr "unten"
 
@@ -2723,7 +2514,7 @@ msgstr "Browser angehalten"
 
 #. Translators: Displayed in braille for an object which is a
 #. button.
-#: braille.py:197
+#: braille.py:209
 msgid "btn"
 msgstr "sltr"
 
@@ -2737,7 +2528,7 @@ msgstr "Schalter"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:441
+#: braille.py:453
 #, python-format
 msgid "c%s"
 msgstr "s%s"
@@ -2751,7 +2542,7 @@ msgid "canvas"
 msgstr "Bildbereich"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
-#: speech.py:195
+#: speech.py:196
 #, python-format
 msgid "cap %s"
 msgstr "groß %s"
@@ -2779,7 +2570,7 @@ msgstr "Schreibweise ignorieren"
 
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
-#: braille.py:206
+#: braille.py:218
 msgid "cbo"
 msgstr "akl"
 
@@ -2787,7 +2578,9 @@ msgstr "akl"
 msgid "cell"
 msgstr "Zelle"
 
-#: characterProcessing.py:129 controlTypes.py:280 textInfos/__init__.py:196
+#: characterProcessing.py:131
+#: controlTypes.py:280
+#: textInfos/__init__.py:196
 msgid "character"
 msgstr "Zeichen"
 
@@ -2813,7 +2606,7 @@ msgstr "aktiviert"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
-#: braille.py:200
+#: braille.py:212
 msgid "chk"
 msgstr "KF"
 
@@ -2822,7 +2615,7 @@ msgid "clickable"
 msgstr "anklickbar"
 
 #. Translators: Displayed in braille when an object is clickable.
-#: braille.py:245
+#: braille.py:257
 msgid "clk"
 msgstr "klk"
 
@@ -2842,7 +2635,8 @@ msgstr "Farbauswahl"
 msgid "column"
 msgstr "Spalte"
 
-#: speech.py:826 speech.py:1093
+#: speech.py:827
+#: speech.py:1096
 #, python-format
 msgid "column %s"
 msgstr "Spalte %s"
@@ -2916,11 +2710,12 @@ msgstr "Warnungen"
 msgid "default action failed"
 msgstr "Standardaktion fehlgeschlagen."
 
-#: NVDAObjects/window/edit.py:260 NVDAObjects/window/edit.py:261
+#: NVDAObjects/window/edit.py:260
+#: NVDAObjects/window/edit.py:261
 msgid "default color"
 msgstr "Standardfarbe"
 
-#: speech.py:959
+#: speech.py:962
 msgid "default style"
 msgstr "Standardformatierung"
 
@@ -2968,7 +2763,7 @@ msgstr "Bildschirmweises Scrollen"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
-#: braille.py:212
+#: braille.py:224
 msgid "dlg"
 msgstr "dlg"
 
@@ -2977,7 +2772,7 @@ msgid "document"
 msgstr "Dokument"
 
 #. "not drop target" doesn't make any sense, so use a custom message.
-#: speech.py:787
+#: speech.py:788
 msgid "done dragging"
 msgstr "Aktion ausgeführt."
 
@@ -3010,7 +2805,8 @@ msgstr "Ausklappliste"
 msgid "drop target"
 msgstr "losgelassen"
 
-#: virtualBuffers/__init__.py:1250 NVDAObjects/window/winword.py:407
+#: virtualBuffers/__init__.py:1250
+#: NVDAObjects/window/winword.py:421
 msgid "edge of table"
 msgstr "Tabellenrand"
 
@@ -3028,7 +2824,7 @@ msgstr "bearbeitbar"
 
 #. Translators: Displayed in braille for an object which is an
 #. editable text field.
-#: braille.py:185
+#: braille.py:197
 msgid "edt"
 msgstr "ef"
 
@@ -3037,7 +2833,8 @@ msgstr "ef"
 msgid "email"
 msgstr "E-Mail"
 
-#: controlTypes.py:251 NVDAObjects/window/edit.py:612
+#: controlTypes.py:251
+#: NVDAObjects/window/edit.py:612
 msgid "embedded object"
 msgstr "Eingebettetes Objekt"
 
@@ -3094,22 +2891,15 @@ msgid "find a text string from the current cursor position"
 msgstr "Sucht die Zeichenkette ab der aktuellen Cursorposition."
 
 #: cursorManager.py:111
-msgid ""
-"find the next occurrence of the previously entered text string from the "
-"current cursor's position"
-msgstr ""
-"Sucht das nächste Vorkommen der zuvor eingegebenen Zeichenkette ab der "
-"aktuellen Cursorposition."
+msgid "find the next occurrence of the previously entered text string from the current cursor's position"
+msgstr "Sucht das nächste Vorkommen der zuvor eingegebenen Zeichenkette ab der aktuellen Cursorposition."
 
 #: cursorManager.py:118
-msgid ""
-"find the previous occurrence of the previously entered text string from the "
-"current cursor's position"
-msgstr ""
-"Sucht das vorherige Vorkommen der zuvor eingegebenen Zeichenkette ab der "
-"aktuellen Cursorposition."
+msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
+msgstr "Sucht das vorherige Vorkommen der zuvor eingegebenen Zeichenkette ab der aktuellen Cursorposition."
 
-#: globalCommands.py:901 gui/settingsDialogs.py:1165
+#: globalCommands.py:901
+#: gui/settingsDialogs.py:1165
 msgid "focus"
 msgstr "Fokus"
 
@@ -3182,7 +2972,7 @@ msgstr "Transparentes Feld"
 
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
-#: braille.py:224
+#: braille.py:236
 msgid "gra"
 msgstr "grf"
 
@@ -3208,7 +2998,7 @@ msgstr "Gruppen"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:390
+#: braille.py:402
 #, python-format
 msgid "h%s"
 msgstr "ü%s"
@@ -3221,7 +3011,7 @@ msgstr "teilweise aktiviert"
 msgid "has auto complete"
 msgstr "mit AutoVervollständigung"
 
-#: speech.py:1052
+#: speech.py:1055
 msgid "has comment"
 msgstr "hat Kommentar"
 
@@ -3336,7 +3126,7 @@ msgstr "unsichtbar"
 msgid "invoke"
 msgstr "bezugnehmend"
 
-#: speech.py:1003
+#: speech.py:1006
 msgid "italic"
 msgstr "kursiv"
 
@@ -3357,7 +3147,9 @@ msgstr "Schichtfeld"
 msgid "layout %s"
 msgstr "Tastaturschema %s"
 
-#: globalCommands.py:518 globalCommands.py:530 appModules/totalcmd.py:35
+#: globalCommands.py:518
+#: globalCommands.py:530
+#: appModules/totalcmd.py:35
 msgid "left"
 msgstr "links"
 
@@ -3403,7 +3195,8 @@ msgstr "Linke Umschalt-Taste"
 msgid "left windows"
 msgstr "Linke Windows-Taste"
 
-#: speech.py:803 speech.py:806
+#: speech.py:804
+#: speech.py:807
 #, python-format
 msgid "level %s"
 msgstr "Ebene %s"
@@ -3418,11 +3211,12 @@ msgstr "hellgrau"
 msgid "lime"
 msgstr "Hellgrün"
 
-#: controlTypes.py:310 textInfos/__init__.py:198
+#: controlTypes.py:310
+#: textInfos/__init__.py:198
 msgid "line"
 msgstr "Zeile"
 
-#: speech.py:992
+#: speech.py:995
 #, python-format
 msgid "line %s"
 msgstr "Zeile %s"
@@ -3432,7 +3226,8 @@ msgstr "Zeile %s"
 msgid "line scroll"
 msgstr "Zeilenweises Scrollen"
 
-#: controlTypes.py:206 speech.py:1046
+#: controlTypes.py:206
+#: speech.py:1049
 msgid "link"
 msgstr "Link"
 
@@ -3450,25 +3245,23 @@ msgstr "Listeneintrag"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
-#: braille.py:209
+#: braille.py:221
 msgid "lnk"
 msgstr "lnk"
 
 #: globalCommands.py:883
 msgid "loads the saved NVDA configuration, overriding current changes"
-msgstr ""
-"Lädt die gespeicherte Konfiguration und überschreibt die bereits "
-"vorgenommenen Änderungen."
+msgstr "Lädt die gespeicherte Konfiguration und überschreibt die bereits vorgenommenen Änderungen."
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
-#: braille.py:188
+#: braille.py:200
 msgid "lst"
 msgstr "lst"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:428
+#: braille.py:440
 #, python-format
 msgid "lv %s"
 msgstr "%s"
@@ -3491,7 +3284,8 @@ msgstr "Männlich 2"
 msgid "media player"
 msgstr "Medienwiedergabe"
 
-#: controlTypes.py:199 controlTypes.py:306
+#: controlTypes.py:199
+#: controlTypes.py:306
 msgid "menu"
 msgstr "Menü"
 
@@ -3509,13 +3303,13 @@ msgstr "Menüeintrag"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
-#: braille.py:194
+#: braille.py:206
 msgid "mnu"
 msgstr "Mnü"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
-#: braille.py:191
+#: braille.py:203
 msgid "mnubar"
 msgstr "MnüLst"
 
@@ -3523,7 +3317,7 @@ msgstr "MnüLst"
 msgid "modal"
 msgstr "modal"
 
-#: characterProcessing.py:127
+#: characterProcessing.py:129
 msgid "most"
 msgstr "meiste"
 
@@ -3774,7 +3568,7 @@ msgstr "Marineblau"
 msgid "next track"
 msgstr "Nächster Titel"
 
-#: speech.py:998
+#: speech.py:1001
 msgid "no bold"
 msgstr "nicht fett"
 
@@ -3782,16 +3576,17 @@ msgstr "nicht fett"
 msgid "no caret"
 msgstr "Kein System-Cursor."
 
-#: globalCommands.py:338 globalCommands.py:689
+#: globalCommands.py:338
+#: globalCommands.py:689
 msgid "no focus"
 msgstr "Fokus verloren."
 
 #. Translators: This is spoken when the given line has no indentation.
-#: speech.py:354
+#: speech.py:355
 msgid "no indent"
 msgstr "keine Einrückung"
 
-#: speech.py:1003
+#: speech.py:1006
 msgid "no italic"
 msgstr "nicht kursiv"
 
@@ -3803,8 +3598,12 @@ msgstr "Kein weiterer Text nach dem Abschnitt der Links."
 msgid "no more text before a block of links"
 msgstr "Kein weiterer Text vor dem Abschnitt der Links."
 
-#: globalCommands.py:274 globalCommands.py:308 globalCommands.py:357
-#: globalCommands.py:371 globalCommands.py:385 globalCommands.py:399
+#: globalCommands.py:274
+#: globalCommands.py:308
+#: globalCommands.py:357
+#: globalCommands.py:371
+#: globalCommands.py:385
+#: globalCommands.py:399
 #: globalCommands.py:413
 msgid "no navigator object"
 msgstr "Kein Navigator-Objekt."
@@ -4013,11 +3812,12 @@ msgstr "Keine vorherigen besuchten Links."
 msgid "no progress bar updates"
 msgstr "Keine Aktualisierung des Fortschrittsbalkens."
 
-#: cursorManager.py:245 globalCommands.py:125
+#: cursorManager.py:245
+#: globalCommands.py:125
 msgid "no selection"
 msgstr "Keine Auswahl."
 
-#: speech.py:1008
+#: speech.py:1011
 msgid "no strikethrough"
 msgstr "nicht durchgestrichen"
 
@@ -4029,16 +3829,18 @@ msgstr "Kein System-Akkumulator."
 msgid "no title"
 msgstr "Kein Titel."
 
-#: characterProcessing.py:125 synthDrivers/_espeak.py:309
+#: characterProcessing.py:127
+#: synthDrivers/_espeak.py:309
 msgid "none"
 msgstr "Keine"
 
-#: braille.py:411 speech.py:789
+#: braille.py:423
+#: speech.py:790
 #, python-format
 msgid "not %s"
 msgstr "nicht %s"
 
-#: speech.py:1013
+#: speech.py:1016
 msgid "not underlined"
 msgstr "nicht unterstrichen"
 
@@ -4130,12 +3932,22 @@ msgstr "Nummernblock Plus"
 msgid "object has no location"
 msgstr "Objekt besitzt keine Standortinformationen."
 
-#: globalCommands.py:44 globalCommands.py:176 globalCommands.py:186
-#: globalCommands.py:196 globalCommands.py:591 globalCommands.py:720
-#: globalCommands.py:781 globalCommands.py:791 globalCommands.py:801
-#: keyboardHandler.py:300 synthSettingsRing.py:74 appModules/winamp.py:79
-#: appModules/winamp.py:89 gui/settingsDialogs.py:694
-#: gui/settingsDialogs.py:1029 virtualBuffers/__init__.py:788
+#: globalCommands.py:44
+#: globalCommands.py:176
+#: globalCommands.py:186
+#: globalCommands.py:196
+#: globalCommands.py:591
+#: globalCommands.py:720
+#: globalCommands.py:781
+#: globalCommands.py:791
+#: globalCommands.py:801
+#: keyboardHandler.py:300
+#: synthSettingsRing.py:74
+#: appModules/winamp.py:79
+#: appModules/winamp.py:89
+#: gui/settingsDialogs.py:694
+#: gui/settingsDialogs.py:1029
+#: virtualBuffers/__init__.py:788
 msgid "off"
 msgstr "Aus"
 
@@ -4149,11 +3961,20 @@ msgstr "Nicht sichtbar"
 msgid "olive"
 msgstr "olivgrün"
 
-#: globalCommands.py:44 globalCommands.py:179 globalCommands.py:189
-#: globalCommands.py:199 globalCommands.py:723 globalCommands.py:784
-#: globalCommands.py:794 globalCommands.py:804 keyboardHandler.py:300
-#: synthSettingsRing.py:74 appModules/winamp.py:77 appModules/winamp.py:87
-#: gui/settingsDialogs.py:1029 virtualBuffers/__init__.py:788
+#: globalCommands.py:44
+#: globalCommands.py:179
+#: globalCommands.py:189
+#: globalCommands.py:199
+#: globalCommands.py:723
+#: globalCommands.py:784
+#: globalCommands.py:794
+#: globalCommands.py:804
+#: keyboardHandler.py:300
+#: synthSettingsRing.py:74
+#: appModules/winamp.py:77
+#: appModules/winamp.py:87
+#: gui/settingsDialogs.py:1029
+#: virtualBuffers/__init__.py:788
 msgid "on"
 msgstr "Ein"
 
@@ -4161,7 +3982,7 @@ msgstr "Ein"
 #. The {backgroundColor} text will be replaced by the background color.
 #. For example, if the text is white on a black background,
 #. the output of this message in English would be "on black".
-#: speech.py:987
+#: speech.py:990
 msgid "on {backgroundColor}"
 msgstr "auf {backgroundColor}"
 
@@ -4175,16 +3996,17 @@ msgstr "Optionsfeld"
 msgid "orange"
 msgstr "Orange"
 
-#: speech.py:926 speech.py:1046
+#: speech.py:929
+#: speech.py:1049
 #, python-format
 msgid "out of %s"
 msgstr "%s Ende"
 
-#: speech.py:1061
+#: speech.py:1064
 msgid "out of spelling error"
 msgstr "Außerhalb des Rechtschreibfehlers."
 
-#: speech.py:1079
+#: speech.py:1082
 msgid "out of table"
 msgstr "Außerhalb der Tabelle."
 
@@ -4192,7 +4014,7 @@ msgstr "Außerhalb der Tabelle."
 msgid "page"
 msgstr "Seite"
 
-#: speech.py:950
+#: speech.py:953
 #, python-format
 msgid "page %s"
 msgstr "Seite %s"
@@ -4215,7 +4037,8 @@ msgstr "Feld"
 msgid "panel"
 msgstr "Steuerung"
 
-#: controlTypes.py:234 textInfos/__init__.py:199
+#: controlTypes.py:234
+#: textInfos/__init__.py:199
 msgid "paragraph"
 msgstr "Absatz"
 
@@ -4266,7 +4089,7 @@ msgstr "Lila"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:433
+#: braille.py:445
 #, python-format
 msgid "r%s"
 msgstr "r%s"
@@ -4281,7 +4104,7 @@ msgstr "aktivierbarer Menüeintrag, Mehrfachauswahl nicht möglich"
 
 #. Translators: Displayed in braille for an object which is a
 #. radio button.
-#: braille.py:203
+#: braille.py:215
 msgid "rbtn"
 msgstr "AS"
 
@@ -4290,20 +4113,12 @@ msgid "read only"
 msgstr "schreibgeschützt"
 
 #: globalCommands.py:640
-msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
-"cursor as it goes"
-msgstr ""
-"Liest vom der angezeigten Cursor-Position ab bis zum Textende (zieht dabei "
-"den angezeigten Cursor mit)."
+msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
+msgstr "Liest vom der angezeigten Cursor-Position ab bis zum Textende (zieht dabei den angezeigten Cursor mit)."
 
 #: globalCommands.py:644
-msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
-"it goes"
-msgstr ""
-"Liest von der Position des System-Cursor ab bis zum Textende (zieht dabei "
-"den angezeigten Cursor mit)."
+msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
+msgstr "Liest von der Position des System-Cursor ab bis zum Textende (zieht dabei den angezeigten Cursor mit)."
 
 #: globalCommands.py:716
 msgid "reads the current application status bar and moves the navigator to it"
@@ -4333,9 +4148,7 @@ msgstr "dynamische Änderungen des Inhaltes ansagen"
 
 #: globalCommands.py:828
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr ""
-"Sagt den Ladestand des Akkus und die verbleibende Zeit an, wenn das Netzteil "
-"nicht angeschlossen ist."
+msgstr "Sagt den Ladestand des Akkus und die verbleibende Zeit an, wenn das Netzteil nicht angeschlossen ist."
 
 #: globalCommands.py:690
 msgid "reports the object with focus"
@@ -4345,7 +4158,8 @@ msgstr "Spricht das fokussierte Objekt."
 msgid "required"
 msgstr "erforderlich"
 
-#: globalCommands.py:898 gui/settingsDialogs.py:1165
+#: globalCommands.py:898
+#: gui/settingsDialogs.py:1165
 msgid "review"
 msgstr "Anzeige"
 
@@ -4353,7 +4167,9 @@ msgstr "Anzeige"
 msgid "rich edit"
 msgstr "Erweitertes Eingabefeld"
 
-#: globalCommands.py:565 globalCommands.py:582 appModules/totalcmd.py:37
+#: globalCommands.py:565
+#: globalCommands.py:582
+#: appModules/totalcmd.py:37
 msgid "right"
 msgstr "rechts"
 
@@ -4399,7 +4215,7 @@ msgid "right windows"
 msgstr "Rechte Windows-Taste"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-#: braille.py:243
+#: braille.py:255
 msgid "ro"
 msgstr "sef"
 
@@ -4411,7 +4227,8 @@ msgstr "Hauptfeld"
 msgid "row"
 msgstr "Zeile"
 
-#: speech.py:819 speech.py:1097
+#: speech.py:820
+#: speech.py:1100
 #, python-format
 msgid "row %s"
 msgstr "Reihe %s"
@@ -4452,7 +4269,7 @@ msgid "section"
 msgstr "Abschnitt"
 
 #. Translators: Displayed in braille when an object is selected.
-#: braille.py:233
+#: braille.py:245
 msgid "sel"
 msgstr "mrk"
 
@@ -4465,19 +4282,23 @@ msgid "selected"
 msgstr "ausgewählt"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#: compoundDocuments.py:401 globalCommands.py:127 speech.py:305 speech.py:497
-#: speech.py:512 virtualBuffers/__init__.py:695
+#: compoundDocuments.py:401
+#: globalCommands.py:127
+#: speech.py:306
+#: speech.py:498
+#: speech.py:513
+#: virtualBuffers/__init__.py:695
 #, python-format
 msgid "selected %s"
 msgstr "%s markiert"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-#: speech.py:491
+#: speech.py:492
 #, python-format
 msgid "selecting %s"
 msgstr "%s markiert"
 
-#: speech.py:506
+#: speech.py:507
 msgid "selection removed"
 msgstr "Auswahl entfernt."
 
@@ -4511,7 +4332,7 @@ msgstr "Überspringt den nächsten Block von Links."
 msgid "slider"
 msgstr "Schieberegler"
 
-#: characterProcessing.py:126
+#: characterProcessing.py:128
 msgid "some"
 msgstr "Einige"
 
@@ -4561,7 +4382,7 @@ msgstr "Spricht das aktuell im Vordergrund stehende Objekt."
 msgid "speech mode %s"
 msgstr "Sprachmodus %s"
 
-#: speech.py:1059
+#: speech.py:1062
 msgid "spelling error"
 msgstr "Rechtschreibfehler"
 
@@ -4586,7 +4407,7 @@ msgstr "Statuszeile"
 msgid "stop"
 msgstr "Stopp"
 
-#: speech.py:1008
+#: speech.py:1011
 msgid "strikethrough"
 msgstr "durchgestrichen"
 
@@ -4594,7 +4415,7 @@ msgstr "durchgestrichen"
 msgid "style"
 msgstr "Formatierung"
 
-#: speech.py:957
+#: speech.py:960
 #, python-format
 msgid "style %s"
 msgstr "Formatierung %s"
@@ -4603,21 +4424,24 @@ msgstr "Formatierung %s"
 msgid "subMenu"
 msgstr "Untermenü"
 
-#: appModules/outlook.py:23 appModules/outlook.py:36
+#: appModules/outlook.py:23
+#: appModules/outlook.py:36
 #, python-format
 msgid "subject: %s"
 msgstr "Betreff: %s"
 
 #. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-#: braille.py:235
+#: braille.py:247
 msgid "submnu"
 msgstr "#>"
 
-#: controlTypes.py:319 speech.py:1022
+#: controlTypes.py:319
+#: speech.py:1025
 msgid "subscript"
 msgstr "tiefgestellt"
 
-#: controlTypes.py:318 speech.py:1020
+#: controlTypes.py:318
+#: speech.py:1023
 msgid "superscript"
 msgstr "hochgestellt"
 
@@ -4627,7 +4451,8 @@ msgid "symbol level %s"
 msgstr "symbolebene %s"
 
 #. Translators: This is the name of a key on the keyboard.
-#: controlTypes.py:209 keyLabels.py:137
+#: controlTypes.py:209
+#: keyLabels.py:137
 msgid "tab"
 msgstr "Tab"
 
@@ -4651,7 +4476,7 @@ msgstr "Tabellenende"
 msgid "table header"
 msgstr "Tabellenanfang"
 
-#: speech.py:1088
+#: speech.py:1091
 #, python-format
 msgid "table with %s columns and %s rows"
 msgstr "Tabelle mit %s Spalten und %s Reihen."
@@ -4662,7 +4487,7 @@ msgstr "Sprache"
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
-#: braille.py:218
+#: braille.py:230
 msgid "tb"
 msgstr "rk"
 
@@ -4718,7 +4543,9 @@ msgstr "Symbolleiste"
 msgid "tool tip"
 msgstr "Mini-Hilfe"
 
-#: globalCommands.py:432 globalCommands.py:444 globalCommands.py:486
+#: globalCommands.py:432
+#: globalCommands.py:444
+#: globalCommands.py:486
 msgid "top"
 msgstr "oben"
 
@@ -4736,7 +4563,7 @@ msgstr "Eintrag"
 
 #. Translators: Displayed in braille for an object which is a
 #. tree view.
-#: braille.py:215
+#: braille.py:227
 msgid "tv"
 msgstr "ba"
 
@@ -4748,7 +4575,7 @@ msgstr "Nicht verfügbar"
 msgid "underline"
 msgstr "Unterstrich"
 
-#: speech.py:1013
+#: speech.py:1016
 msgid "underlined"
 msgstr "unterstrichen"
 
@@ -4765,12 +4592,13 @@ msgid "unknown layout"
 msgstr "Unbekanntes Tastaturschema"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
-#: appModules/msimn.py:109 appModules/outlook.py:28
+#: appModules/msimn.py:109
+#: appModules/outlook.py:28
 msgid "unread"
 msgstr "Ungelesen"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-#: speech.py:504
+#: speech.py:505
 #, python-format
 msgid "unselecting %s"
 msgstr "%s entmarkiert"
@@ -4794,7 +4622,7 @@ msgid "visited"
 msgstr "besucht"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:396
+#: braille.py:408
 msgid "vlnk"
 msgstr "bl"
 
@@ -4831,23 +4659,23 @@ msgstr "Fenster"
 msgid "windows"
 msgstr "Windows"
 
-#: speech.py:833
+#: speech.py:834
 #, python-format
 msgid "with %s columns"
 msgstr "mit %s spalten."
 
 #. List.
-#: speech.py:900
+#: speech.py:903
 #, python-format
 msgid "with %s items"
 msgstr "mit %s Einträgen"
 
-#: speech.py:835
+#: speech.py:836
 #, python-format
 msgid "with %s rows"
 msgstr "mit %s Zeilen."
 
-#: speech.py:831
+#: speech.py:832
 #, python-format
 msgid "with %s rows and %s columns"
 msgstr "mit %s Zeilen und %s spalten"
@@ -4867,41 +4695,22 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are "
-"free to share or change this software in any way you like as long as it is "
-"accompanied by the license and you make all source code available to anyone "
-"who wants it. This applies to both original and modified copies of this "
-"software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to "
-"helping and promoting free and open source solutions for blind and vision "
-"impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider "
-"donating to NV Access. You can do this by selecting Donate from the NVDA "
-"menu."
+"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
 msgstr ""
 "{longName} ({name})\n"
 "Version: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} ist unter der GNU General Public License (Version 2.0) lizensiert "
-"worden. Dabei sind Sie berechtigt, diese Software nach belieben "
-"weiterzugeben und zu ändern, solange Sie diese Software zusammen mit einer "
-"Kopie dieser Lizenz und den Quellcode an jeden weitergeben. Dies bezieht "
-"sich sowohl auf das Original sowie auf die von Ihnen modifizierte Kopie und "
-"sämtliche Software, die Code-Fragmente von NVDA enthalten. - Für weitere "
-"Informationen können Sie die beiliegende englischsprachige Lizenz lesen.\n"
+"{name} ist unter der GNU General Public License (Version 2.0) lizensiert worden. Dabei sind Sie berechtigt, diese Software nach belieben weiterzugeben und zu ändern, solange Sie diese Software zusammen mit einer Kopie dieser Lizenz und den Quellcode an jeden weitergeben. Dies bezieht sich sowohl auf das Original sowie auf die von Ihnen modifizierte Kopie und sämtliche Software, die Code-Fragmente von NVDA enthalten. - Für weitere Informationen können Sie die beiliegende englischsprachige Lizenz lesen.\n"
 "Für weitere Informationen zur Lizenz schauen Sie bitte im Hilfemenü nach.\n"
-"Oder auch online hier zu finden: http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html (Englisch)\n"
+"Oder auch online hier zu finden: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html (Englisch)\n"
 "\n"
-"{name} wird entwickelt von NV Access, eine Non-Pofit-Organisation engagiert "
-"und fördert freie und OpenSource-Lösungen für blinde und sehbehinderte "
-"Menschen.\n"
-"Wenn Sie NVDA nützlich finden und an Verbesserungen beitragen möchten, "
-"spenden Sie bitte an NV Access. Dies können Sie im NVDA-Menü mit dem Eintrag "
-"\"Spenden\" tun."
+"{name} wird entwickelt von NV Access, eine Non-Pofit-Organisation engagiert und fördert freie und OpenSource-Lösungen für blinde und sehbehinderte Menschen.\n"
+"Wenn Sie NVDA nützlich finden und an Verbesserungen beitragen möchten, spenden Sie bitte an NV Access. Dies können Sie im NVDA-Menü mit dem Eintrag \"Spenden\" tun."
+
