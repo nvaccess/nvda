@@ -172,8 +172,8 @@ Menü geldiğinde, menü öğeleri arasında yön tuşlarınızla dolaşabilir v
 | Konuşma kipini açıp kapama | NVDA+s | Basıldıkça, konuşma kipini konuşma, bipler ve kapalı olarak değiştirir. |
 | Klavye yardım kipini açıp kapama | NVDA+1 | Kip açıkken, bir tuşa basıldığında, önce tuşlar bildirilir ve sonra bu komut NVDA ile ilişkiliyse, komutun tanımı belirtilir |
 | NVDA'dan çıkış | NVDA+q | NVDA'yı kapatır |
-| Sonraki komutun NVDA işlevini yoksay | NVDA+f2 | NVDA'ya basılacak klavye komutunun normalde bir NVDA komutu olsabile, bu komutu yoksayarak geçerli uygulamanın tuşa atadığı işlevin yapılmasını söyler |
-| Uygulamaya özel uyku kipini açıp kapama | NVDA+shift+s | Uyku kipinde geçerli uygulamada Tüm NVDA komutları, konuşma ve braille geribildirimleri devre dışı kalır. Bu, kendi konuşması veya ekran okuma özelliği olan uygulamalarda çok yararlıdır. Kendi konuşma kipini devre dışı bırakmak için bu tuşlara tekrar basın. |
+| Sonraki komutun NVDA işlevini yoksay | NVDA+f2 | NVDA'ya basılacak klavye komutunun normalde bir NVDA komutu olsa bile, bu komutu yoksayarak geçerli uygulamanın tuşa atadığı işlevin yapılmasını söyler |
+| Uygulamaya özel uyku kipini açıp kapama | NVDA+shift+s | Uyku kipinde geçerli uygulamada Tüm NVDA komutları, konuşma ve braille geribildirimleri devre dışı kalır. Bu, kendi konuşması veya ekran okuma özelliği olan uygulamalarda çok yararlıdır. Uyku kipini kapamak için bu tuşlara tekrar basın. |
 %kc:endInclude
 
 ++ Sistem Bilgisini Raporlama ++
@@ -195,7 +195,7 @@ Bu  bir metin parçası, düğme, onay kutusu ya da yazılabilir metin alanı ol
 Sistem odağı, sadece "odak" olarak da anılır, klavyede basılacak tuşlardan etkilenecek olan [nesnedir #Objects].
 Örneğin bir yazılabilir metin alanına giriş yapıyorsanız bu yazı alanı sistem odağında demektir.
 
-NVDA ile windows içinde dolaşmanın en yaygın ve kolay yolu, Tab ve şift tab ile kontroller arasında ileri geri gidiş, Alt ile bir uygulamanın menü çubuğuna ulaşım ve yön tuşları kullanılarak menü öğeleri arasında dolaşım, veya alt+tab ile pencereler arasında dolaşım gibi temel windows komutlarını kullanmaktır. Bu, sistem odağını hareket ettirir; Örneğin, Bazı nesneler klavyede yazılan tuşlara göre hareket eder.
+NVDA ile windows içinde dolaşmanın en yaygın ve kolay yolu, Tab ve şift tab ile kontroller arasında ileri geri gidiş, Alt ile bir uygulamanın menü çubuğuna ulaşım ve yön tuşları kullanılarak menü öğeleri arasında dolaşım, veya alt+tab ile pencereler arasında dolaşım gibi temel windows komutlarını kullanmaktır. Bu, sistem odağını hareket ettirir; Örneğin, Bazı nesneler klavyede basılan tuşlara göre hareket eder.
 Siz yukarıda bahsedilen tuşlara bastıkça, NVDA Üzerine gelinen nesnenin adı, Türü, değeri, durumu, tanımı, klavye kısayolu ve pozisyonuyla ilgili bilgileri belirtecektir.
 
 Sistem odağıyla dolaşırken, bazı yararlı tuş kombinasyonları bulunmaktadır:
@@ -220,7 +220,7 @@ Sistem imleciyle ilişkili olarak NVDA aşağıdaki tuş komutlarını sağlamak
 | Tümünü Oku | NVDA+Aşağı yön tuşu | Sistem imlecinin bulunduğu yerden okumaya başlar, ve metnin gittiği yere kadar okumaya devam eder |
 | Bulunulan satırı okuma | NVDA+yukarı yön tuşu | Sistem imlecinin o an üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. |
 | Seçili metnin okunması | NVDA+Şift+Yukarı yön tuşu | o an seçili olan metni okur |
-| Metin biçimlendirmesinin bildirimi | NVDA+f | Sistem imlecinin üzerinde bulunduğu metnin biçimlendirmesini belirtir |
+| Metin biçimlendirmesinin bildirimi | NVDA+f | Sistem imlecinin üzerinde bulunduğu metnin biçim  bilgisini okur |
 
 Tablolarda aşağıdaki tuşlar da kullanılabilir:
 || Ad | Kısayol tuşu | Tarif |
@@ -715,7 +715,7 @@ Tercihler menüsü içinde "İnceleme İmleci Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
 
 %kc:setting
-==== Klavye Odağını Takip et ====
+==== Sistem Odağını Takip et ====
 | Masaüstü Kısayol tuşu | NVDA+7 |
 | Dizüstü Kısayol tuşu | NVDA+kontrol+7 |
 
@@ -731,7 +731,7 @@ Etkinleştirildiğinde, sistem düzenleme imleci hareket ettikçe, inceleme imle
 Etkinleştirildiğinde, fare hareket ettikçe inceleme imleci de onu izleyecektir.
 
 ==== Basit İnceleme Kipi ====
-Etkinleştirildiğinde, kullanılmayan nesneleri yoksaymak için, NVDA dolaşılabilecek nesne hiyerarşisini süzecektir.
+Etkinleştirildiğinde, kullanılmayan nesneleri yoksaymak için, NVDA dolaşılabilecek nesne hiyerarşisini filtreleyecektirr.
 
 +++ Nesne Sunumu Ayarları (NVDA+control+o) +++
 Tercihler menüsü içinde "Nesne Sunumu Ayarları..." altında bulunur.
@@ -948,6 +948,7 @@ Bu öğe bir kez etkinleştirildiğinde, uygulama modüllerini ve genel pluginle
 
 + Desteklenen Konuşma Sentezleyicileri +[SupportedSpeechSynths]
 Bu bölümde NVDA tarafından desteklenen sentezleyici bilgileri yer almaktadır.
+NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın alabilmeniz ya da indirebilmeniz için çok daha geniş bir listeyi, bu sayfada bulabilirsiniz [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak ++
  [eSpeak http://espeak.sourceforge.net/] sentezleyicisi Doğrudan NVDA içinde gömülüdür ve başka bir sürücü ya da bileşenin yüklenmesini gerektirmez.
@@ -971,13 +972,17 @@ SAPI 5, yazılım konuşma sentezleyicileri için bir Microsoft standardıdır.
 Büyük olasılıkla sisteminizin önceden kurulu bir SAPI 5 sesiyle gelmesine karşın, Birçok SAPI 5 sentezleyicisi şirketlerden satın alınabilir veya ücretsiz olarak çeşitli web sayfalarından indirilebilir.
 Bu sentezleyicileri NVDA ile kullanırken, [Ses Ayarları iletişim kutusundan #VoiceSettings] veya [Hızlı Sentezleyici Değiştir #SynthSettingsRing]) bölümünden erişilebilen) mevcut sesler içinde, sisteminizde bulunan tüm SAPI 5 motorlarının sesleri yer alacaktır.
 
-++ Microsoft Konuşma Platformu ++
+++ Microsoft Konuşma Platformu (Microsoft Speech Platform) ++
 Microsoft Konuşma Platformu normalde sunucu tabanlı konuşma uygulamaları geliştirilmesinde kullanılan bir çok dili destekleyen sesler sağlamaktadır.
 Bu sesler NVDA tarafından da kullanılabilmektedir.
 
 Bu sesleri kullanabilmek için iki bileşeni indirip kurmanız gerekmektedir:
-- Microsoft Speech Platform - Server Runtime (Version 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
-- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+- Microsoft Speech Platform - Server Runtime (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Server Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+- Bu sayfa, konuşma tanıma ve konuşma sentezlemeyle ilgili birçok dosyayı içermektedir.
+ İstediğiniz dil ve seslerle ilgili konuşma sentezleme (TTS) verilerini içeren dosyaları seçin.
+ Örneğin, MSSpeech_TTS_en-US_ZiraPro.msi adlı dosya, ABD İngilizcesi konuşan bir sestir.
+ -
 -
 
 ++ Audiologic Tts3 ++

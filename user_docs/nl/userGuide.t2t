@@ -250,7 +250,10 @@ Iets dergelijks geldt als u in een werkbalk terecht komt; u blijft binnen de wer
 
 Het object dat op dit moment bekeken wordt in objectnavigatie wordt het navigator object genoemd.
 U kunt de tekst in het navigator object bekijken met de [commando's voor tekstnavigatie (review cursor) #ReviewingText].
-Standaard wordt in NVDA de object navigator (het verkennerobject) tegelijk met de systeemfocus verplaatst, maar deze koppeling kan aan- en uitgezet worden.
+Standaard wordt in NVDA de object navigator tegelijk met de systeemfocus verplaatst, maar deze koppeling kan aan- en uitgezet worden.
+
+Braille volgt normaalgesproken de [focus #SystemFocus] en [systeemcursor #SystemCaret] en niet de objectnavigatie en de review cursor.
+Als de braille uitvoer de objectnavigatie en tekst review moet volgen, [configureert u braille om de review cursor te volgen #BrailleTether].
 
 Voor objectnavigatie zijn de volgende toetscombinaties beschikbaar:
 
@@ -277,6 +280,9 @@ U kunt dit bijvoorbeeld gebruiken voor het lezen van een lang, informatief beric
 Bij het verplaatsen van de leescursor (review cursor) volgt de tekstcursor niet maar deze blijft op de huidige invoegpositie staan, zodat u tekst kun bekijken zonder de systeemcursor te verplaatsen.
 Standaard wordt de leescursor echter gelijktijdig verplaatst wanneer de tekstcursor verplaatst wordt. 
 Deze koppeling kan in- en uitgeschakeld worden.
+
+Braille volgt normaalgesproken de [focus #SystemFocus] en [systeemcursor #SystemCaret] en niet de objectnavigatie en de review cursor.
+Als de braille uitvoer de objectnavigatie en tekst review moet volgen, [configureert u braille om de review cursor te volgen #BrailleTether].
 
 Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 %kc:beginInclude
@@ -319,6 +325,9 @@ Als u objectnavigatie nog niet gebruikt hebt, zal dit meestal het object met [fo
 Als het navigator object bijvoorbeeld een knop is, zal flat review de tekst van deze knop aangeven.
 U kunt vervolgens de tekst lezen met de [commando's voor tekstnavigatie #ReviewingText].
 U kunt ook direct naar het object op de huidige positie van de reviewcursor navigeren, zo kunt u [objectnavigatie #ObjectNavigation] vanaf daar gebruiken.
+
+Braille volgt normaalgesproken de [focus #SystemFocus] en [systeemcursor #SystemCaret] en niet de objectnavigatie en de review cursor.
+Als de braille uitvoer de objectnavigatie en tekst review moet volgen, [configureert u braille om de review cursor te volgen #BrailleTether].
 
 U kunt de volgende twee commando’s gebruiken om van en naar “flat review” te schakelen:
 %kc:beginInclude
@@ -428,6 +437,28 @@ Er is een toetscombinatie beschikbaar om weer terug te gaan naar de oorspronkeli
 %kc:beginInclude
 || Naam| Toets| Beschrijving |
 | Terug naar inhoud van document | NVDA+control+spatiebalk | Verplaatst de focus van het huidige ingevoegde object naar de document waarin het zich bevindt |
+%kc:endInclude
+
++ Applicatie-specifieke NVDA commando's +
+NVDA beschikt over een aantal applicatie-specifieke commando's om het gebruik van deze applicaties te vergemakkelijken, of om toegang te geven tot functionaliteit die anders niet bruikbaar zou zijn voor screenreader gebruikers.
+
+++ Foobar2000 ++
+%kc:beginInclude
+|| Naam | Toets | Omschrijving |
+| Resterende tijd melden | control+shift+r | Meldt de resterende tijd van het huidige nummer, indien van toepassing. |
+%kc:endInclude
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Naam | Toets | Omschrijving |
+| Recent bericht melden | NVDA+control+1-4 | Meldt een recent bericht, afhankelijk van de gebruikte sneltoets. NVDA+control+2 meldt bijvoorbeeld het op één na nieuwste bericht. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Naam | Toets | Omschrijving |
+| Commentaarvenster melden | control+shift+c | Meldt commentaar in het commentaarvenster. |
+| Automatisch commentaarvenster melden | control+shift+a | Meldt commentaar in het automatische commentaarvenster. |
 %kc:endInclude
 
 + NVDA configureren +
@@ -573,7 +604,7 @@ Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dial
 | De huidige synthesizerinstelling aflopend bijstellen | NVDA+control+PijlOmlaag | NVDA+control+PijlOmlaag |Stelt momenteel gebruikte spraakinstelling naar beneden bij. Verlaagt bij voorbeld snelheid en volume, selecteert vorige stem |
 %kc:endInclude
 
-+++ Brailleinstellingen +++
++++ Braille-instellingen +++
 Onder “Opties” in het NVDA-menu gaat u naar “Braille” om het dialoogvenster voor de brailleinstellingen te openen.
 
 ==== Brailleleesregel ====
@@ -587,8 +618,7 @@ Meer informatie over ondersteunde brailleleesregels vindt u onder [Supported Bra
 
 ==== Talentabel====
 De volgende optie die u in dit dialoogvenster tegen komt is het uitklapvenster voor de verschillende brailletabellen.
-U treft tabellen aan voor een aantal talen.
-Met de pijltjestoetsen kunt u de gewenste tabel in de lijst selecteren. 
+U treft tabellen aan voor een aantal talen. Met de pijltjestoetsen kunt u de gewenste tabel in de lijst selecteren. 
 
 ==== woord onder cursor uitbreiden naar computerbraille====
 Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven in onverkort computerbraille.
@@ -600,10 +630,17 @@ In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor
 In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang systeemberichten in het uitleesvenster worden weergegeven.
 
 %kc:setting
-==== Braille volgkeuze ====
+==== Braille volgkeuze ====[BrailleTether]
 Toets: NVDA+control+t
 
 Hiermee kunt u bepalen of de leesregel de systeemfocus dan wel de navigatorobject- / reviewcursor moet volgen
+
+==== Lezen per paragraaf ====
+Als deze optie is ingeschakeld, zal braille per paragraaf in plaats van per regel worden weergegeven.
+Ook de vorige/volgende regel commando's zullen van paragraaf naar paragraaf springen.
+Dit betekent dat u de brailleleesregel niet hoeft te scrollen aan het eind van een regel als er nog meer tekst op de leesregel past.
+Dit maakt het mogelijk om grote hoeveelheden tekst vloeiender te lezen.
+Deze optie is standaard uitgeschakeld.
 
 +++ Instellingen toetsenbord (NVDA+control+k) +++
 Dit dialoogvenster vindt u in het NVDA-menu onder “Opties” waar u vervolgens “Toetsenbord” selecteert.
@@ -615,11 +652,11 @@ Dit is een uitklapvenster waarin u het type toetsenbordlayout kiest dat u wilt g
 ==== CapsLock als NVDA-toets gebruiken====
 Als het selectievakje wordt aangekruist, is CapsLock als NVDA-toets ingesteld. 
 
-==== Numerieke Insert-toets als NVDA-toets gebruiken====
-Door het selectievakje aan te kruisen wordt de Insert-toets op het numerieke toetsenbord als NVDA-toets ingesteld.
-
 ==== Uitgebreide Insertt-toets als NVDA-toets gebruiken====
 Door dit selectievakje aan te kruisen wordt de uitgebreide Insert- (INS-) toets als NVDA-toets gebruikt. De uitgebreide INS-toets zit meestal boven de pijltjestoetsen bij de Home en End-toetsen 
+
+==== Numerieke Insert-toets als NVDA-toets gebruiken====
+Door het selectievakje aan te kruisen wordt de Insert-toets op het numerieke toetsenbord als NVDA-toets ingesteld.
 
 %kc:setting
 ==== Getypte karakters uitspreken====
@@ -632,6 +669,11 @@ Door het selectievakje aan te kruisen worden alle karakters die u op het toetsen
 Toets: NVDA+3
 
 Door dit selectievakje aan te kruisen wordt elk woord dat u getypt hebt uitgesproken.
+
+==== Piep bij het typen van kleine letters terwijl capslock is ingeschakeld ====
+Als deze optie is ingeschakeld, zal NVDA piepen bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
+Meestal is het niet de bedoeling om letters in combinatie met de shift toets te typen als capslock is ingeschakeld, u heeft capslock dan wellicht perongelijk aangezet.
+Daarom kan het handig zijn om hierover gewaarschuwd te worden.
 
 %kc:setting
 ==== Commandotoetsen uitspreken====
@@ -694,7 +736,7 @@ Als het selectievakje aangevinkt is, zorgt NVDA ervoor dat ontoegankelijke objec
 Om instellingen aan te passen gaat u in het NVDA-menu onder Opties naar Objectweergave.
 In het dialoogvenster treft u de volgende keuzemogelijkheden aan:
 
-==== Flashberichten (tooltips)weergevens ====
+==== Flashberichten (tooltips)weergeven ====
 Als het selectievakje aangevinkt is, zal NVDA eventuele tooltips laten horen wanneer deze op het scherm verschijnen.
 Bij veel Window sschermen en besturingselementen verschijn een kort berichtje of tooltip wanneer deze zich onder de muisaanwijzer bevinden of soms wanneer deze gefocuseerd worden.
 
@@ -709,6 +751,11 @@ Zo zal bij voorbeeld bij het onderdeel Bestand op de menubalk ook gemeld worden 
 ==== Informatie over objectpositie weergeven ====
 Als het selectievakje aangevinkt is, hebt u 4 keuzemogelijkheden (zie hieronder) om informatie te krijgen over de positie van het object dat u focuseert of dat u benadert via objectnavigatie.
 
+==== Objectpositie raden indien niet beschikbaar ====
+Als het melden van objectposities in ingeschakeld, kan deze optie ervoor zorgen dat de positie van sommige objecten bij benadering wordt bepaald. Dit kan nodig zijn als de positie-informatie niet verkregen kan worden.
+
+Als deze optie is ingeschakeld, zal positie-informatie voor meer objecten (zoals menu's en werkbalken) beschikbaar zijn, deze informatie kan echter niet geheel correct zijn.
+
 ==== Beschrijving van object weergeven ====
 Vink dit selectievakje niet aan als u, behalve de naam van het object, geen extra informatie hoeft te horen. 
 
@@ -721,8 +768,7 @@ Via het uitklapvenster kunt u kiezen hoe u wilt worden geïnformeerd over de voo
 
 U kunt kiezen uit
 - uit: veranderingen in voortschrijdingsbalken worden niet gemeld.
-- uitspreken: u hoort het percentage dat aangeeft hoe ver het proces is gevorderd.
-Elke verandering wordt gemeld.
+- uitspreken: u hoort het percentage dat aangeeft hoe ver het proces is gevorderd. Elke verandering wordt gemeld.
 - Pieptoon: Bij elke verandering in de voortschrijdingsbalk zal NVDA een pieptoon laten horen. Hoe hoger hoe verder de balk gevuld raakt.
 - Pieptonen + uitspreken: U hoort zowel pieptonen  als gesproken info over de voortgang van het proces.
 -
@@ -730,6 +776,12 @@ Elke verandering wordt gemeld.
 ==== Achtergrondvoortschrijdingsbalken weergeven====
 Als dit selectievakje is aangekruist blijft NVDA veranderingen in een voortschrijdingsbalk weergeven, ook als deze niet langer op de voorgrond aanwezig is.
 Als u een venster met een voortschrijdingsbalk minimaliseert of naar een ander venster overschakelt, zal NVDA de veranderingen in de voortschrijdingsbalk toch bijhouden terwijl u met iets anders bezig bent. 
+
+%kc:setting
+==== Dynamische inhoudsveranderingen melden ====
+Toets: NVDA+5
+
+Schakelt het automatisch melden van nieuwe inhoud aan of uit voor bepaalde besturingselementen zoals terminalvensters of chatgeschiedenis.
 
 +++ Instellingen bladermodus(NVDA+control+b) +++
 Voor het dialoogvenster Bladermodus gaat u naar Opties in het NVDA-menu en selecteert u Bladermodus.

@@ -23,7 +23,7 @@ Lo subrayable de esta versión incluye características para una lectura más fl
 - En modo navegación, puedes activar el objeto bajo el cursor utilizando una línea braille. Esto se hace pulsando la tecla de guiado de cursor donde se localice el cursor (lo cual significa pulsarlo dos veces si el cursor no está todavía allí). (#1893)
 - Soporte básico para áreas web en iTunes tal como en la Store. Otras aplicaciones que utilicen WebKit 1 también podrían soportarse. (#734)
 - En libros en Adobe Digital Editions 1.8.1 y posteriores, ahora las páginas se pasan automáticamente cuando se utiliza leer todo.  (#1978)
-- Nueva tabla de transcripción braille: Portugués grado 2. (#2014)
+- Nuevas tablas de transcripción braille: Portugués grado 2, braille islandés computerizado de 8 puntos, tamil grado 1, Braille español computerizado de 8 puntos, persa grado 1. (#2014)
 - Ahora puedes configurar si se anuncian los marcos en documentos desde el diálogo de preferencias de Formato de Documentos. (#1900)
 - El modo durmiente se activa automáticamente cuando se utiliza OpenBook. (#1209)
 - En Poedit, los traductores ahora pueden leer los comentarios añadidos y extraídos automáticamente para el traductor. Los mensajes que estén sin traducir o provisionales se marcan con un asterisco y se escucha un pitido cuando se navegue sobre ellos (#1811).
@@ -38,7 +38,7 @@ Lo subrayable de esta versión incluye características para una lectura más fl
 - Se ha abreviado alguna información mostrada en braille. (#1955, #2043)
 - Cuando los cursores de sistema o de revisión se mueven, ahora el braille se desplaza de igual modo como si se desplazase manualmente. Esto lo hace más apropiado cuando el braille se configuró para leer por párrafos y/o para evitar partición de palabras. (#1996)
 - Actualizado a una nueva tabla de transcripción braille Española de grado 1. 
-- Actualizado el transcriptor braille liblouis a 2.4.0.
+- Actualizado el transcriptor braille liblouis a 2.4.1.
 
 
 == Corrección de Fallos ==
@@ -67,18 +67,24 @@ Lo subrayable de esta versión incluye características para una lectura más fl
 - El Braille respeta correctamente las opciones para el anunciado de teclas de atajo de los objetos, información de posición y descripciones.
 - En aplicaciones Mozilla, el cambio entre modos navegación y foco ya no se enlentece con el braille activado. (#2095)
 - Guiar el cursor al espacio en el final de la línea/párrafo utilizando los sensores del cursor braille en algunos campos de texto editable ahora funciona correctamente en lugar de llevar al comienzo del texto. (#2096)
+- NVDA funciona de nuevo correctamente con el sintetizador Audiologic Tts3. (#2109)
+- Los documentos de Microsoft Word se tratan correctamente como multi-línea. Esto causa que el braille se comporte de manera más adecuada cuando un documento se enfoque.
+- En Microsoft Internet Explorer, ya no ocurren errores cuando se enfoca sobre ciertos controles raros. (#2121)
+- Cambiar la puntuación y símbolos por el usuario ahora tendrá efecto inmediato, en lugar de requerir un reinicio de NVDA, o que se desactive el cambio automático de idioma.
+- Cuando se utiliza eSpeak, la voz ya no queda en silencio en algunos casos en el diálogo Guardar Como... del Visualizador de Log de NVDA. (#2145)
 
 
 == Cambios para desarrolladores ==
 - Ahora hay una Consola Python remota para situaciones donde la depuración remota es útil. Mira la Developer Guide para detalles.
-- La ruta base del código de NVDA is now stripped from tracebacks in the log to improve readability. (#1880)
-- TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
-- This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
+- La ruta base del código de NVDA ahora se stripped from tracebacks en el log para mejorar legibilidad. (#1880)
+- Los Objetos TextInfo ahora tienen un método activate() para activar la posición representada por el TextInfo.
+- Esto se utiliza por el braille para activar la posición utilizando teclas de guiado del cursor en una línea braille. No obstante, there may be other callers in future.
 - TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
 - Several control and output constants have been renamed or moved. (#228)
 - speech.REASON_* constants have been moved to controlTypes.
 - In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
-
+- Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
+- subclasses of the sapi5 synthDriver can now override _getVoiceTokens and extend __init__ to support custom voice tokens such as with sapi.spObjectTokenCategory to get tokens from a custom registry location.
 
 
 = 2011.3 =

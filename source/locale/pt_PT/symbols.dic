@@ -1,7 +1,7 @@
 ﻿#locale/pt_PT/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
 #URL: http://www.nvda-project.org/
-#Copyright (c) 2010-2011 Diogo Costa and Elton Lopes
+#Copyright (c) 2011-2012 Diogo Costa and Elton Lopes
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -27,7 +27,7 @@ symbols:
 ? sentence ending	interrogação	all	always
 ; phrase ending	ponto e vírgula	most	always
 : phrase ending	dois pontos	most	always
-decimal point	ponto	none	always
+decimal point		none	always
 in-word '	apóstrofo	all	norep
 negative number	menos	none	norep
 
@@ -35,7 +35,7 @@ negative number	menos	none	norep
 \0	em branco	char	# vazio
 \t	tab
 \n	quebra de linha	char
-\f	quebra de página	none
+\f	quebra de página	char
 \r	retorno	char
  	espaço	char
  	espaço	char	# no-break space
@@ -43,19 +43,19 @@ negative number	menos	none	norep
 # Standard punctuation/symbols
 !	exclamação	all
 "	aspas	most
-\#	cardinal	most
+\#	cardinal	some
 $	dólar	all	norep
 £	libra	all	norep
 €	euro	all	norep
 ¢	Centavos	all	norep
 ¥	Yen	all	norep
 %	porcento	some
-&	e comercial	some
+&	and	some
 '	apóstrofo	all
 (	abrir parêntesis	most
 )	fechar parêntesis	most
-*	asterisco	most
-+	mais	most
+*	asterisco	some
++	mais	some
 ,	vírgula	all	always
 -	hífen	most
 .	ponto	all
@@ -64,12 +64,12 @@ $	dólar	all	norep
 ;	ponto e vírgula	most
 <	menor que	most
 >	maior que	most
-=	igual	most
+=	igual	some
 ?	interrogação	all
 @	arroba	some
 [	abrir parêntesis rectos	most
 ]	fechar parêntesis rectos	most
-\\	barra invertida	most
+\\	barra invertida	some
 ^	circunflexo	most
 _	sublinhado	most
 `	grave	most
@@ -79,10 +79,10 @@ _	sublinhado	most
 ~	til	most
 
 # Other characters
-•	ponto	some	# bullet
+•	bullet	some	# bullet
 …	ponto ponto ponto	all	always
 ...	ponto ponto ponto	all	always
-	ponto	some	# bullet
+	bullet	some	# bullet
 “	abrir aspas	most
 ”	fechar aspas	most
 ‘	apóstrofo esquerdo	most
@@ -109,3 +109,44 @@ _	sublinhado	most
 ±	Mais ou Menos	most
 ×	vezes	most
 ÷	dividir por	most
+→	seta para a direita	some
+✓	marca de verificação	some
+✔	marca de verificação	some
+
+# Fixes for some synthesizers
+a	há	char	norep
+A	HÁ	char	norep
+à	há grave	char	norep
+À	HÁ GRAVE	char	norep
+á	há agudo	char	norep
+Á	HÁ AGUDO	char	norep
+ã	há til	char	norep
+Ã	HÁ TIL	char	norep
+â	há circunflexo	char	norep
+Â	HÁ CIRCUNFLEXO	char	norep
+e	hé	char	norep
+E	HÉ	char	norep
+è	hé grave	char	norep
+È	HÉ grave	char	norep
+é	hé agudo	char	norep
+É	HÉ AGUDO	char	norep
+ê	hé circunflexo	char	norep
+ê	HÉ CIRCUNFLEXO	char	norep
+f	éfe	char	norep
+F	ÉFE	char	norep
+g	guê	char	norep
+G	GUÊ	char	norep
+í	hí agudo	char	norep
+Í	HÍ AGUDO	char	norep
+k	capa	char	norep
+K	CAPA	char	norep
+o	hó	char	norep
+O	HÓ	char	norep
+ó	hó agudo	char	norep
+Ó	HÓ AGUDO	char	norep
+õ	hó til	char	norep
+Õ	HÓ TIL	char	norep
+ô	hó circunflexo	char	norep
+Ô	HÓ CIRCUNFLEXO	char	norep
+ú	hu agudo	char	norep
+Ú	HU AGUDO	char	norep
