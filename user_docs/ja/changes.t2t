@@ -22,9 +22,10 @@
 - ブラウズモード使用中に、カーソル位置のオブジェクトを点字ディスプレイから有効化できるようになりました。カーソルがオブジェクト上にある時にタッチカーソルを押してください (カーソルがまだそこにない場合は2度押してください）。 (#1893)
 - iTunes Storeなどで使用されている、iTunesのWeb領域のサポートを開始しました。WebKit 1を使用している他のアプリケーションもサポートできるかもしれません。 (#734)
 - Adobe Digital Editions 1.8.1以降において、すべて読み上げを使用中の場合、自動的にページをめくれるようになりました。 (#1978)
-- 新しい点字の変換テーブル: ポルトガル語2級を追加しました。 (#2014)
+- 新しい点字の変換テーブル、ポルトガル語2級、アイスランド語8点コンピューター点字及びタミル語1級を追加しました。
+ (#2014)
 - ドキュメント内のフレームを通知するかどうかを書式設定ダイアログから変更できるようになりました。 (#1900)
-- OpenBookを使用する際、自動的にスリープモードを有効化するようにしました。 (#1209)
+- OpenBookを使用する際、自動的にスリープモードを有効化するようにしました。 (#1209)	
 - Poeditにおいて、翻訳者によって追加されたコメント及び自動的に展開されたコメントをを読むことができます。み翻訳や翻訳があいまいなメッセージはアスタリスクでマークされ、そこに移動するとビープ音が聞こえます。 (#1811)
 - HumanWare社製のBrailliant BI及びBシリーズのディスプレーをサポートしました。 (#1990)
 - 新しい言語: ブークモールノルウェー語に対応しました。
@@ -37,7 +38,7 @@
 - 一部の点字で表示される情報が短縮されました。 (#1955, #2043)
 - キャレットまたはレビューカーソルが移動する時、点字も手動でスクロールさせたのと同じようにスクロールするようになりました。これにより、点字を段落単位で読むように設定している時に、より正確に単語を分断することなくめるようになりました。 (#1996)
 - 最新のスペイン語1級点字変換テーブルに更新しました。
-- liblouis braille translatorを2.4.0に更新しました。
+- liblouis braille translatorを2.4.1に更新しました。
 
 
 == バグ修正 ==
@@ -66,8 +67,9 @@
 - 点字表示において、オブジェクトショートカットキーの通知、位置情報及び説明が、設定どおりに正しく動作するようになりました。
 - Mozillaのアプリケーションにおいて、点字が有効な場合でもブラウズモードとフォーカスモードの切り替えが遅くならないようになりました。 (#2095)
 - 点字ディスプレー上のタッチカーソルで行末/段落末のスペースに移動させた時、一部の編集可能テキストでテキストの先頭に移動しないようになりました。 (#2096)
-
-
+- 再度Audiologic Tts3シンセサイザーが正常に動作するようになりました。 (#2109)
+- Microsoft Wordd文書が複数行として扱われるようになりました。これにより、文書にフォーカスがある際の点字表示がより適切に動作するようになりました。
+- Microsoft Internet Explorerにおいて、いくつかのレアなコントロールにフォーカスした時にエラーが発生しなくなりました。(#2121)
 
 %== 開発者向けの変更 ==
 %- There is now a remote Python console for situations where remote debugging is useful. See the Developer Guide for details.
@@ -78,6 +80,7 @@
 %- Several control and output constants have been renamed or moved. (#228)
 %- speech.REASON_* constants have been moved to controlTypes.
 %- In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
+%- Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
 
 
 = 2011.3 =

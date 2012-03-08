@@ -253,7 +253,7 @@ NVDAには、以下のシステムキャレットに関するコマンドがあ�
 デフォルトでは、ナビゲーターオブジェクトはシステムフォーカスとともに移動しますが、この動作のOnとOffを切り替えることができます。
 
 点字は、デフォルトではオブジェクトナビゲーションやレビューではなく、[フォーカス #SystemFocus]や [キャレット #SystemCaret]に追従します。
-かわりにオブジェクトナビゲーションやテキストレビューを行いたい場合は、[[点字表示の切り替え #BrailleTether]をレビューに設定してください。
+かわりにオブジェクトナビゲーションやテキストレビューを行いたい場合は、[点字表示の切り替え #BrailleTether]をレビューに設定してください。
 
 オブジェクト間の移動には次のキーを使用してください。
 
@@ -458,7 +458,7 @@ NVDAには、特定のアプリケーションの特定のタスクを簡単に�
 %kc:beginInclude
 || 名称 | キー | 説明 |
 | コメントウインドーの通知 | Ctrl+Shift+C | コメントウインドウ内のすべてのコメントを通知します。 |
-| 自動コメントウインドーの通知 | Ctrl+Shift+A |自動コメントウインドーのすべてのコメントを通知します。 |
+| 自動コメントウインドーの通知 | Ctrl+Shift+A | 自動コメントウインドーのすべてのコメントを通知します。 |
 %kc:endInclude
 
 + NVDAの設定 +
@@ -948,6 +948,7 @@ NVDAメニュー内のツールにあるPythonコンソールは開発用のツ�
 
 + サポートされている音声エンジン +[SupportedSpeechSynths]
 この章では、NVDAでサポートされている音声エンジンについて述べます。
+NVDAで利用可能な無料及び有料の音声エンジンの購入及びダウンロード方法の詳細については、 [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices]を参照してください。
 
 ++ eSpeak ++
 音声エンジン[eSpeak http://espeak.sourceforge.net/]はNVDAに内蔵されているので、追加のドライバーやコンポーネントをインストールする必要はありません。
@@ -976,8 +977,12 @@ Microsoft Speech Platformでは、通常はサーバーベースの読み上げ�
 これらの音声はNVDAでも使用できます。
 
 これらの音声を使用するには、ふたつのコンポーネントをインストールしてください。
-- Microsoft Speech Platform - Server Runtime (Version 10.2) , x86: http://www.microsoft.com/download/en/details.aspx?id=10208
-- Microsoft Speech Platform - Server Runtime Languages (Version 10.2) : http://www.microsoft.com/download/en/details.aspx?id=21924
+- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - このページには、多くの音声認識及び音声合成のためのファイルが含まれています。
+目的の言語/音声のデータを含んでいるファイルを選択してください。
+例えば、MSSpeech_TTS_en-US_ZiraPro.msiというファイルはアメリカ英語の音声です。
+ -
 -
 
 ++ Audiologic Tts3 ++
