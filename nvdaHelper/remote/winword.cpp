@@ -478,6 +478,11 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
 			chunkEndOffset=args->endOffset;
 		}
+		//When using IME, the last moveEnd succeeds but the end does not really move
+		if(chunkEndOffset<=chunkStartOffset) {
+			LOG_DEBUGWARNING(L"moveEnd successfull but range did not expand! chunkStartOffset "<<chunkStartOffset<<L", chunkEndOffset "<<chunkEndOffset);
+			break;
+		}
 		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
 		if(text) {
 			//Force a new chunk before and after control+b (note characters)
