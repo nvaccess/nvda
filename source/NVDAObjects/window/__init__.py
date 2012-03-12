@@ -432,6 +432,7 @@ windowClassMap={
 	"TExRichEdit":"RichEdit20",
 	"RichTextWndClass":"RichEdit20",
 	"TSRichEdit":"RichEdit20",
+	"TRxRichEdit":"RichEdit20",
 	"ScintillaWindowImpl":"Scintilla",
 	"RICHEDIT60W_WLXPRIVATE":"RICHEDIT50W",
 }
