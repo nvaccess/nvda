@@ -46,7 +46,14 @@ class UIATextInfo(textInfos.TextInfo):
 				fontSizeValue=UIAHandler.handler.reservedNotSupportedValue
 			if fontSizeValue!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['font-size']="%g pt"%float(fontSizeValue)
-		return formatField
+		if formatConfig["reportStyle"]:
+			try:
+				styleValue=range.GetAttributeValue(UIAHandler.UIA_StyleNameAttributeId)
+			except COMError:
+				styleValue=UIAHandler.handler.reservedNotSupportedValue
+			if styleValue!=UIAHandler.handler.reservedNotSupportedValue:
+				formatField["style"]=styleValue
+		return textInfos.FieldCommand("formatChange",formatField)
 
 	def __init__(self,obj,position):
 		super(UIATextInfo,self).__init__(obj,position)
@@ -81,15 +88,88 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return self.copy()
 
+	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+		role = obj.role
+		if ignoreEditableText and role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT):
+			# This is basically just a text node.
+			return None
+		field = textInfos.ControlField()
+		field["role"] = obj.role
+		states = obj.states
+		# The user doesn't care about certain states, as they are obvious.
+		states.discard(controlTypes.STATE_EDITABLE)
+		states.discard(controlTypes.STATE_MULTILINE)
+		states.discard(controlTypes.STATE_FOCUSED)
+		field["states"] = states
+		field["name"] = obj.name
+		#field["_childcount"] = obj.childCount
+		field["level"] = obj.positionInfo.get("level")
+		if role == controlTypes.ROLE_TABLE:
+			field["table-id"] = 1 # FIXME
+			field["table-rowcount"] = obj.rowCount
+			field["table-columncount"] = obj.columnCount
+		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
+			field["table-id"] = 1 # FIXME
+			field["table-rownumber"] = obj.rowNumber
+			field["table-columnnumber"] = obj.columnNumber
+		return field
+
+	def _getTextWithFieldsForRange(self,obj,rangeObj,formatConfig):
+		if obj.role==controlTypes.ROLE_GRAPHIC:
+			yield obj.name
+			return
+		tempRange=rangeObj.clone()
+		children=rangeObj.getChildren()
+		for index in xrange(children.length):
+			child=children.getElement(index)
+			childRange=self.obj.UIATextPattern.rangeFromChild(child)
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<0:
+				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0:
+				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
+			text=tempRange.getText(-1)
+			if text:
+				yield self._getFormatFieldAtRange(tempRange,formatConfig)
+				yield text
+			childObj=UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
+			field=self._getControlFieldForObject(childObj) if childObj else None
+			if field:
+				yield textInfos.FieldCommand("controlStart",field)
+			for x in self._getTextWithFieldsForRange(childObj,childRange,formatConfig):
+				yield x
+			if field:
+				yield textInfos.FieldCommand("controlEnd",None)
+			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
+		tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+		text=tempRange.getText(-1)
+		if text:
+			yield self._getFormatFieldAtRange(tempRange,formatConfig)
+			yield text
+
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		rangeObj=self._rangeObj.Clone()
-		rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
-		rangeObj.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
-		formatField=self._getFormatFieldAtRange(rangeObj,formatConfig)
-		field=textInfos.FieldCommand("formatChange",formatField)
-		return [field,self.text]
+		fields=[]
+		e=self._rangeObj.getEnclosingElement().buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		obj=UIA(UIAElement=e)
+		fields=[]
+		while obj: # and obj!=self.obj:
+			field=self._getControlFieldForObject(obj)
+			if field:
+				field=textInfos.FieldCommand("controlStart",field)
+				print field
+				fields.append(field)
+			obj=obj.parent
+		fields.reverse()
+		ancestorCount=len(fields)
+		print "relative"
+		for field in self._getTextWithFieldsForRange(self.obj,self._rangeObj,formatConfig):
+			print "field: %r"%field
+			fields.append(field)
+		for x in xrange(ancestorCount):
+			fields.append(textInfos.FieldCommand("controlEnd",None))
+		return fields
 
 	def _get_text(self):
 		return self._rangeObj.GetText(-1)
