@@ -952,6 +952,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		if pageNumber and pageNumber!=oldPageNumber:
 			text=_("page %s")%pageNumber
 			textList.append(text)
+	if  formatConfig["reportHeadings"]:
+		headingLevel=attrs.get("heading-level")
+		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None
+		if headingLevel and headingLevel!=oldHeadingLevel:
+			text=_("heading level %d")%headingLevel
+			textList.append(text)
 	if  formatConfig["reportStyle"]:
 		style=attrs.get("style")
 		oldStyle=attrsCache.get("style") if attrsCache is not None else None
