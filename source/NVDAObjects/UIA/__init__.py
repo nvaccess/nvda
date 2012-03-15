@@ -46,13 +46,13 @@ class UIATextInfo(textInfos.TextInfo):
 				fontSizeValue=UIAHandler.handler.reservedNotSupportedValue
 			if fontSizeValue!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['font-size']="%g pt"%float(fontSizeValue)
-		if formatConfig["reportStyle"]:
+		if formatConfig["reportHeadings"]:
 			try:
-				styleValue=range.GetAttributeValue(UIAHandler.UIA_StyleNameAttributeId)
+				styleIDValue=range.GetAttributeValue(UIAHandler.UIA_StyleIdAttributeId)
 			except COMError:
-				styleValue=UIAHandler.handler.reservedNotSupportedValue
-			if styleValue!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField["style"]=styleValue
+				styleIDValue=UIAHandler.handler.reservedNotSupportedValue
+			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
+				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
 		return textInfos.FieldCommand("formatChange",formatField)
 
 	def __init__(self,obj,position):
