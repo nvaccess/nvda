@@ -88,11 +88,8 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return self.copy()
 
-	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+	def _getControlFieldForObject(self, obj):
 		role = obj.role
-		if ignoreEditableText and role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT):
-			# This is basically just a text node.
-			return None
 		field = textInfos.ControlField()
 		field["role"] = obj.role
 		states = obj.states
