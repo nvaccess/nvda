@@ -85,6 +85,13 @@ class UIATextInfo(textInfos.TextInfo):
 		if self.__class__ is not other.__class__: return False
 		return bool(self._rangeObj.compare(other._rangeObj))
 
+	def _get_NVDAObjectAtStart(self):
+		tempRange=self._rangeObj.clone()
+		tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		e=tempRange.getEnclosingElement()
+		obj=UIA(UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
+		return obj if obj else self.obj
+
 	def _get_bookmark(self):
 		return self.copy()
 
