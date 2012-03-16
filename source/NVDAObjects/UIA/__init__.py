@@ -269,6 +269,12 @@ class UIA(Window):
 
 		if self.UIAIsWindowElement:
 			super(UIA,self).findOverlayClasses(clsList)
+			if self.UIATextPattern:
+				#Since there is a UIA text pattern, there is no need to use the win32 edit support at all
+				import NVDAObjects.window.edit
+				for x in list(clsList):
+					if issubclass(x,NVDAObjects.window.edit.Edit):
+						clsList.remove(x)
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
