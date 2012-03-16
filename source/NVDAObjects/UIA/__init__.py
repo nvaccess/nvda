@@ -77,6 +77,8 @@ class UIATextInfo(textInfos.TextInfo):
 			self.collapse(True)
 		elif position==textInfos.POSITION_ALL:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
+		elif isinstance(position,UIA):
+			self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
 		else:
 			raise ValueError("Unknown position %s"%position)
 
