@@ -345,23 +345,22 @@ class UIA(Window):
 		except:
 			return False
 
+	def _getUIAPattern(self,ID,interface):
+		punk=self.UIAElement.GetCurrentPattern(ID)
+		if punk:
+			return punk.QueryInterface(interface)
+
 	def _get_UIAInvokePattern(self):
-		if not hasattr(self,'_UIAInvokePattern'):
-			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_InvokePatternId)
-			if punk:
-				self._UIAInvokePattern=punk.QueryInterface(UIAHandler.IUIAutomationInvokePattern)
-			else:
-				self._UIAInvokePattern=None
-		return self._UIAInvokePattern
+		self.UIAInvokePattern=self._getUIAPattern(UIAHandler.UIA_InvokePatternId,UIAHandler.IUIAutomationInvokePattern)
+		return self.UIAInvokePattern
 
 	def _get_UIATextPattern(self):
-		if not hasattr(self,'_UIATextPattern'):
-			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_TextPatternId)
-			if punk:
-				self._UIATextPattern=punk.QueryInterface(UIAHandler.IUIAutomationTextPattern)
-			else:
-				self._UIATextPattern=None
-		return self._UIATextPattern
+		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern)
+		return self.UIATextPattern
+
+	def _get_UIALegacyIAccessiblePattern(self):
+		self.UIALegacyIAccessiblePattern=self._getUIAPattern(UIAHandler.UIA_LegacyIAccessiblePatternId,UIAHandler.IUIAutomationLegacyIAccessiblePattern)
+		return self.UIALegacyIAccessiblePattern
 
 	def _get_TextInfo(self):
 		if self.UIATextPattern: return UIATextInfo
