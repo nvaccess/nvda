@@ -88,7 +88,7 @@ UIAPropertyIdsToNVDAEventNames={
 UIAEventIdsToNVDAEventNames={
 	#UIA_Text_TextChangedEventId:"textChanged",
 	UIA_SelectionItem_ElementSelectedEventId:"stateChange",
-	#UIA_MenuOpenedEventId:"gainFocus",
+	UIA_MenuOpenedEventId:"gainFocus",
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
