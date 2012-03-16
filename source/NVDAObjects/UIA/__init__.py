@@ -357,6 +357,14 @@ class UIA(Window):
 				self._UIATextPattern=None
 		return self._UIATextPattern
 
+	def _get_TextInfo(self):
+		if self.UIATextPattern: return UIATextInfo
+		textInfo=super(UIA,self).TextInfo
+		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.ROLE_WINDOW:
+			import displayModel
+			return displayModel.DisplayModelTextInfo
+		return textInfo
+
 	def setFocus(self):
 		self.UIAElement.setFocus()
 
