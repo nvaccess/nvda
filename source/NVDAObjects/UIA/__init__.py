@@ -18,7 +18,7 @@ import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -262,6 +262,9 @@ class UIA(Window):
 				pass
 		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
+		if self.UIAIsWindowElement and UIAClassName=="#32770":
+			clsList.append(Dialog)
+
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
@@ -321,13 +324,6 @@ class UIA(Window):
 		if not windowHandle:
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
-
-		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
-			self.TextInfo=UIATextInfo
-			self.value=""
-		elif self.role==controlTypes.ROLE_WINDOW and self.UIAIsWindowElement:
-			import displayModel
-			self.TextInfo=displayModel.DisplayModelTextInfo
 
 		# UIARuntimeId is set by __new__.
 		if self.UIARuntimeId:
@@ -686,3 +682,6 @@ class ListItem(UIA):
 				# This item has been selected, so notify the combo box that its value has changed.
 				parent.event_valueChange()
 		super(ListItem, self).event_stateChange()
+
+class Dialog(Dialog):
+	role=controlTypes.ROLE_DIALOG
