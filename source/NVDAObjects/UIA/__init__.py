@@ -115,6 +115,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return field
 
 	def _getTextWithFieldsForRange(self,obj,rangeObj,formatConfig):
+		#Graphics usually have no actual text, so render the name instead
 		if obj.role==controlTypes.ROLE_GRAPHIC:
 			yield obj.name
 			return
@@ -122,6 +123,10 @@ class UIATextInfo(textInfos.TextInfo):
 		children=rangeObj.getChildren()
 		for index in xrange(children.length):
 			child=children.getElement(index)
+			childObj=UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
+			#Sometimes a child range can contain the same children as its parent (causing an infinite loop)
+			if childObj==obj:
+				continue
 			childRange=self.obj.UIATextPattern.rangeFromChild(child)
 			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<0:
 				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
@@ -132,7 +137,6 @@ class UIATextInfo(textInfos.TextInfo):
 			if text:
 				yield self._getFormatFieldAtRange(tempRange,formatConfig)
 				yield text
-			childObj=UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
 			field=self._getControlFieldForObject(childObj) if childObj else None
 			if field:
 				yield textInfos.FieldCommand("controlStart",field)
@@ -154,21 +158,16 @@ class UIATextInfo(textInfos.TextInfo):
 		e=self._rangeObj.getEnclosingElement().buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		obj=UIA(UIAElement=e)
 		fields=[]
-		while obj: # and obj!=self.obj:
+		while obj and obj!=self.obj:
 			field=self._getControlFieldForObject(obj)
 			if field:
 				field=textInfos.FieldCommand("controlStart",field)
-				print field
 				fields.append(field)
 			obj=obj.parent
 		fields.reverse()
 		ancestorCount=len(fields)
-		print "relative"
-		for field in self._getTextWithFieldsForRange(self.obj,self._rangeObj,formatConfig):
-			print "field: %r"%field
-			fields.append(field)
-		for x in xrange(ancestorCount):
-			fields.append(textInfos.FieldCommand("controlEnd",None))
+		fields.extend(self._getTextWithFieldsForRange(self.obj,self._rangeObj,formatConfig))
+		fields.extend(textInfos.FieldCommand("controlEnd",None) for x in xrange(ancestorCount))
 		return fields
 
 	def _get_text(self):
