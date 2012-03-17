@@ -85,6 +85,7 @@ BLUETOOTH_NAMES = (
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "baum"
+	# Translators: Names of braille displays.
 	description = _("Baum/HumanWare/APH braille displays")
 
 	@classmethod

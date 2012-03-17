@@ -186,6 +186,7 @@ class ExcelCell(ExcelBase):
 		return self.excelCellObject.Text
 
 	def _get_description(self):
+		# Translators: This is presented in Excel when the current cell contains a formula.
 		return _("has formula") if self.excelCellObject.HasFormula else ""
 
 	def _get_parent(self):
@@ -225,6 +226,7 @@ class ExcelSelection(ExcelBase):
 	def _get_name(self):
 		firstCell=self.excelRangeObject.Item(1)
 		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
+		# Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 		return _("%s %s through %s %s")%(self.getCellAddress(firstCell),firstCell.Text,self.getCellAddress(lastCell),lastCell.Text)
 
 	def _get_parent(self):

@@ -199,9 +199,6 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		winUser.user32.ClientToScreen(self.obj.windowHandle, byref(tempPoint))
 		caretRect.right=min(objRect.right,tempPoint.x)
 		caretRect.bottom=min(objRect.bottom,tempPoint.y)
-		import speech
-		#speech.speakMessage("caret %s, %s, %s, %s"%(caretRect.left,caretRect.top,caretRect.right,caretRect.bottom))
-		#caretRect.top+=1
 		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
 			#Real text with a character baseline
 			#The caret must be  anywhere before the horizontal center of the character and the bottom of the caret must touch or go through the character baseline
@@ -218,7 +215,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		rects=self._textAndRects[1]
 		if offset>=len(rects):
 			raise RuntimeError("offset %d out of range")
-		left,top,right,bottom=rects[offset]
+		left,top,right,bottom,baseline=rects[offset]
 		x=left #+(right-left)/2
 		y=top+(bottom-top)/2
 		oldX,oldY=winUser.getCursorPos()

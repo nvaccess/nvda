@@ -59,7 +59,6 @@ class AcrobatNode(IAccessible):
 			try:
 				self.accID = serv.QueryService(SID_AccID, IAccID).get_accID()
 			except COMError:
-				log.debugWarning("Failed to get ID from IAccID", exc_info=True)
 				self.accID = None
 
 		# Get the IPDDomNode.
@@ -67,7 +66,6 @@ class AcrobatNode(IAccessible):
 			self.pdDomNode = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(self.IAccessibleChildID)
 		except COMError:
 			self.pdDomNode = None
-			log.debugWarning("Error getting IPDDomNode")
 
 		if self.pdDomNode:
 			# If this node has IPDDomElement, query to that.
@@ -163,30 +161,52 @@ class EditableTextNode(EditableText, AcrobatNode):
 
 class AcrobatSDIWindowClient(IAccessible):
 
-	def __init__(self, **kwargs):
-		super(AcrobatSDIWindowClient, self).__init__(**kwargs)
-		if not self.name and self.parent:
-			# There are two client objects, one with a name and one without.
-			# The unnamed object (probably manufactured by Acrobat) has broken next and previous relationships.
-			# The unnamed object's parent is the named object, but when descending into the named object, the unnamed object is skipped.
-			# Given the brokenness of the unnamed object, just skip it completely and use the parent when it is encountered.
-			self.IAccessibleObject = self.IAccessibleObject.accParent
+	def initOverlayClass(self):
+		if self.name or not self.parent:
+			return
+		# HACK: There are three client objects, one with a name and two without.
+		# The unnamed objects (probably manufactured by Acrobat) have broken next and previous relationships.
+		# The unnamed objects' parent/grandparent is the named object, but when descending into the named object, the unnamed objects are skipped.
+		# Given the brokenness of the unnamed objects, just skip them completely and use the parent/grandparent when they are encountered.
+		try:
+			acc = self.IAccessibleObject.accParent
+			if not acc.accName(0):
+				acc = acc.accParent
+		except COMError:
+			return
+		self.IAccessibleObject = acc
+		self.invalidateCache()
+
+class BadFocusStates(AcrobatNode):
+	"""An object which reports focus states when it shouldn't.
+	"""
+
+	def _get_states(self):
+		states = super(BadFocusStates, self).states
+		states.difference_update({controlTypes.STATE_FOCUSABLE, controlTypes.STATE_FOCUSED})
+		return states
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Acrobat objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
 	role = obj.role
-	if obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT:
-		# Root node.
-		if role in (controlTypes.ROLE_DOCUMENT,controlTypes.ROLE_PAGE):
-			clsList.append(Document)
-		elif role == controlTypes.ROLE_EDITABLETEXT:
+	states = obj.states
+	if role == controlTypes.ROLE_DOCUMENT or (role == controlTypes.ROLE_PAGE and controlTypes.STATE_READONLY in states):
+		clsList.append(Document)
+	elif obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT:
+		# Other root node.
+		if role == controlTypes.ROLE_EDITABLETEXT:
 			clsList.append(RootTextNode)
 		else:
 			clsList.append(RootNode)
 
-	elif role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_FOCUSABLE in obj.states:
-		clsList.append(EditableTextNode)
+	elif role == controlTypes.ROLE_EDITABLETEXT:
+		if {controlTypes.STATE_READONLY, controlTypes.STATE_FOCUSABLE, controlTypes.STATE_LINKED} <= states:
+			# HACK: Acrobat sets focus states on text nodes beneath links,
+			# making them appear as read only editable text fields.
+			clsList.append(BadFocusStates)
+		elif controlTypes.STATE_FOCUSABLE in states:
+			clsList.append(EditableTextNode)
 
 	clsList.append(AcrobatNode)

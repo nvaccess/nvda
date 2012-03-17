@@ -88,8 +88,12 @@ RGBToNames={
 	RGB(0x00,0x00,0x00):_('black'),
 	RGB(0x00,0x80,0x00):_('green'),
 	RGB(0xc0,0xc0,0xc0):_('light grey'),
+	# Translators: The color lime.
+	# For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
 	RGB(0x00,0xff,0x00):_('lime'),
 	RGB(0x80,0x80,0x80):_('grey'),
+	# Translators: the color olive.
+	# For more info see: http://en.wikipedia.org/wiki/Olive_%28color%29#Olive
 	RGB(0x80,0x80,0x00):_('olive'),
 	RGB(0xff,0xff,0xff):_('white'),
 	RGB(0xff,0xff,0x00):_('yellow'),
@@ -98,10 +102,19 @@ RGBToNames={
 	RGB(0xff,0x00,0x00):_('red'),
 	RGB(0x00,0x00,0xff):_('blue'),
 	RGB(0x80,0x00,0x80):_('purple'),
+	# Translators: The color teal, which is a mix of green and blue, mostly green.
+	# For more info see http://en.wikipedia.org/wiki/Teal
 	RGB(0x00,0x80,0x80):_('teal'),
+	# Translators: The color fuchsia is a mix of blue and red.
+	# For more info see: http://en.wikipedia.org/wiki/Magenta
 	RGB(0xff,0x00,0xff):_('fuchsia'),
+	# Translators: The aqua color is an equal amount of blue and green.
+	# For more info see: http://en.wikipedia.org/wiki/Aqua_%28color%29
 	RGB(0x00,0xff,0xff):_('aqua'),
+
 	#Extra CSS 2.1 color
+
+	# Translators: This is the color orange.
 	RGB(0xff,0xa5,0x00):_('orange'),
 }
 

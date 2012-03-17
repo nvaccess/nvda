@@ -22,7 +22,7 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
 		role=obj.role
-		if windowClassName in ('iTunesSources','iTunesTrackList') and role in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM):
+		if windowClassName in ('iTunesList','iTunesSources','iTunesTrackList') and role in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM):
 			clsList.insert(0, ITunesItem)
 		elif windowClassName=="iTunesWebViewControl" and role==controlTypes.ROLE_DOCUMENT:
 			clsList.insert(0,WebKitWrapper)

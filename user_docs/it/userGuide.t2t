@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 8 novembre 2011, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 17 febbraio 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Comandi da tastiera Guida Rapida
@@ -17,14 +17,14 @@ NVDA permette alle persone non vedenti di accedere ed interagire con il sistema 
 
 Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Supporto alle applicazioni più comuni come browsers web, posta elettronica, wordprocessor e software per chattare.
-- sintesi vocale incorporata capace di parlare più di 20 lingue
+- sintesi vocale incorporata capace di parlare più di 43 lingue
 - Capacità di funzionare interamente da una chiavetta USB o altri dispositivi portatili senza bisogno di installazione
 - Installazione guidata semplice ed intuitiva tramite sintesi vocale
 - Supporto al prompt dei comandi di Windows e alle applicazioni lanciate da console
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille
-- Tradotto in moltissime lingue
+- Tradotto in 36 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
 - Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
@@ -32,7 +32,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-NVDA è stato tradotto in 34 lingue ossia Afrikaans, Albanese, Arabo, portoghese-brasiliano, Bulgaro, croato, Ceco, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, Spagnolo, Svedese, cinese tradizionale, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
+NVDA è stato tradotto in 36 lingue ossia Afrikaans, Albanese, Arabo, portoghese-brasiliano, Bulgaro, croato, Ceco, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -231,26 +231,31 @@ Se ci si trova all'interno di una tabella, sono disponibili i seguenti comandi:
 %kc:endInclude
 
 ++ Navigazione ad oggetti ++
-Talvolta, è possibile che si desideri esaminare l'applicazione corrente o il sistema operativo senza però spostare il [focus #SystemFocus].
+Il più delle volte, l'utente interagisce con l'applicazione utilizzando comandi che spostano direttamente il [focus #SystemFocus] e il [cursore #SystemCaret].
+Vi sono però alcune circostanze nelle quali può essere utile esaminare l'applicazione corrente o il sistema operativo senza però spostare il focus o il cursore.
 Inoltre potrebbe essere necessario lavorare con [oggetti #Objects] che non possono essere normalmente raggiunti utilizzando la tastiera.
 In questi casi, si può utilizzare la navigazione ad oggetti.
 
-Essa permette di ottenere informazioni e spostarsi tra singoli oggetti.
+Essa permette di ottenere informazioni e spostarsi tra singoli [oggetti #Objects].
+
 Quando ci si sposta su un oggetto, NVDA lo annuncerà similmente a come avviene con il focus di sistema.
 Se invece si desidera esplorare il testo così come appare sullo schermo, è possibile utilizzare la [navigazione in linea #FlatReview].
 
 Onde evitare di doversi muovere indietro ed avanti tra ogni singolo oggetto del sistema, gli oggetti sono raggruppati in maniera gerarchica.
 Questo significa che alcuni oggetti contengono altri oggetti e che bisogna spostarvisi all'interno  per ottenerne le informazioni.
 Per esempio, come sappiamo un elenco contiene vari elementi, per cui bisognerà spostarsi all'interno dell'elenco per ottenere accesso ai suoi elementi.
-Se si è raggiunto un elemento di un elenco, ci si può spostare all'oggetto che lo contiene per ritornare all'elenco.
+Se ci si è portati ad un elemento di un elenco, i comandi per andare all'oggetto successivo o precedente  faranno in modo che ci si sposti all'elemento successivo o precedente dell'elenco.
+Lo spostarsi su  un oggetto che contiene un elemento di un elenco riporterà all'elenco stesso.
+Sarà quindi necessario spostarsi tra l'elenco per raggiungere altri oggetti.
 Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'interno di essa per accedere ai controlli della stessa.
 
 L'oggetto che attualmente viene esplorato è chiamato navigatore ad oggetti.
 Una volta che viene raggiunto un oggetto, è possibile esplorarlo utilizzando i [comandi di revisione #ReviewingText].
 Da impostazioni predefinite, il navigatore ad oggetti si sposta in concomitanza con il focus di sistema, tuttavia questo comportamento può essere modificato, attivando o disattivando la relativa opzione.
+Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
+Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
 
 Per navigare ad oggetti, utilizzare i tasti seguenti:
-
 %kc:beginInclude
 || Nome | layout Desktop | layout Laptop | Descrizione |
 | Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+control+i | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti |
@@ -269,10 +274,13 @@ Nota, Per utilizzare il tastierino numerico, il tasto NumLock deve essere impost
 ++ Controllare il testo ++
 NVDA permette di leggere il contenuto dell' [oggetto corrente #ObjectNavigation] inclusa la [navigazione in linea #FlatReview]) carattere per carattere, parola per parola o riga per riga.
 Questo risulta utile principalmente nel prompt dei comandi di Windows o in tutte quelle situazioni dove il  [cursore di sistema #SystemCaret] non esiste o ha funzioni limitate.
+Ad esempio, può venir buono nel leggere il contenuto di lunghi testi in una finestra di dialogo.
 
 Quando si sposta il cursore di controllo, il cursore di sistema non lo segue, cosicché sarà possibile esplorare il testo senza perdere la propria posizione.
 Comunque, da impostazioni predefinite, quando il cursore di sistema si sposta, il cursore di controllo lo segue. 
 Tale impostazione può essere modificata attivandola o disattivandola.
+Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
+Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
 
 Sono disponibili i seguenti tasti caldi per esplorare il testo:
 %kc:beginInclude
@@ -313,6 +321,8 @@ Quando si attiva la navigazione in linea, ci si troverà  alla posizione del [na
 Se non si ha mai utilizzato la navigazione ad oggetti, la posizione coincide solitamente con quella ove si trova il [focus #SystemFocus].
 Per esempio, se l'oggetto è costituito da un bottone, si verrà posizionati all'interno del testo del bottone stesso, nella navigazione in linea.
 Da qui sarà possibile esplorare il testo utilizzando i [comandi di revisione #ReviewingText].
+Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
+Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
 
 I seguenti due comandi vengono utilizzati per attivare o meno la navigazione in linea:
 %kc:beginInclude
@@ -352,6 +362,7 @@ Tutte le combinazioni di tasti di NVDA dedicate al [cursore di sistema #SystemCa
 Verranno annunciate  anche le informazioni inerenti il tipo di controllo su cui ci si trova, ad esempio link, intestazioni, etc.
 
 Talvolta, risulterà necessario anche interagire direttamente con i controlli presenti in questi documenti.
+Ad esempio, si può aver bisogno di questo nei campi editazione o negli elenchi in modo che sia possibile digitare i caratteri ed utilizzare i tasti cursore per lavorare con i controlli.
 Questo viene effettuato attivando la modalità focus, dove tutti i tasti verranno passati direttamente ai controlli.
 Se ci si trova nella modalità navigazione e si preme tab o si fa click su un controllo, NVDA attiverà automaticamente la modalità Focus se tale controllo lo richiede.
 Da notare che la pressione del tasto invio o spazio in questo tipo di controlli attiverà comunque la modalità focus.
@@ -412,6 +423,29 @@ Le pagine web possono essere strutturate con diverse tecnologie al proprio inter
 || Nome | Tasto | Descrizione |
 | Ritornare alla modalità navigazione | NVDA+control+spazio | Sposta il focus dall'oggetto incorporato alla modalità navigazione |
 %kc:endInclude
+
++ Comandi specifici di NVDA per le applicazioni +
+NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli utenti nello svolgimento di operazioni che, altrimenti, risulterebbero molto complesse e poco accessibili.
+
+++ foobar	2000 ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Annuncia tempo rimanente | control+shift+r | Annuncia il tempo restante della traccia attualmente in esecuzione, se ve n'è una. |
+%kc:endInclude
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Annuncia messaggi recenti | NVDA+control+1-4 | Annuncia uno degli ultimi messaggi, a seconda del numero premuto; ad esempio NVDA+control+2 legge il secondo messaggio più recente. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Annuncia finestra commenti | control+shift+c | Annuncia qualsiasi commento all'interno della finestra commenti. |
+| Annuncia finestra commenti automatici | control+shift+a | Annuncia ogni commento presente nella finestra commenti automatici. |
+%kc:endInclude
+
 
 + Configurare NVDA +
 
@@ -557,7 +591,7 @@ Si tratta di un campo numerico che permette di modificare la velocità di lampeg
 Si tratta di un campo numerico che controlla per quanto tempo i messaggi di sistema saranno mostrati sul Display Braille.
 
 %kc:setting
-==== Il display braille segue ====
+==== Il display braille segue ====[BrailleTether]
 Tasto: NVDA+control+t
 
 Questa impostazione permette di decidere se il display braille seguirà il focus di sistema oppure il navigatore ad oggetti (cursore di controllo).
@@ -569,7 +603,7 @@ Questo significa che non sarà necessario utilizzare lo scrolling ogni volta qua
 La lettura dovrebbe risultare più fluente in presenza di grosse porzioni di testo.
 L'opzione risulta disabilitata da impostazioni predefinite.
 
-+++ Impostazioni tastiera (NVDA+control+k) +++
++++ Impostazioni Tastiera (NVDA+control+k) +++
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce "impostazioni tastiera...". Contiene le seguenti opzioni:
 
 ==== Layout tastiera ====
@@ -632,7 +666,7 @@ Attivando questa casella di controllo si farà in modo che NVDA emetta dei segna
 ==== La luminosità controlla il volume delle coordinate audio ====
 Se la casella di controllo "coordinate audio quando il mouse si sposta" è attiva, allora, attivando quest'opzione, il volume dei beeps delle coordinate audio è controllato dal livello di luminosità dello schermo, riferito alla posizione attuale del mouse. Dal momento che ci possono essere problemi di prestazioni con Windows Vista, questa caratteristica viene disattivata nelle impostazioni predefinite.
 
-+++ Impostazioni cursore di controllo +++
++++ Impostazioni Cursore di Controllo +++
 Situata sul menu preferenze alla voce cursore di controllo..., questa finestra di dialogo contiene le seguenti opzioni:
 
 %kc:setting
@@ -743,22 +777,22 @@ la maggior parte delle caselle di controllo in questa finestra di dialogo servon
 - nome carattere
 - dimensione carattere
 - attributi carattere
-- stile
+- Allineamento testo
 - Colori
-- allineamento del testo
 - stile del testo
+- Errori ortografici
+- Numeri di pagina
+- Numeri di riga
+- Rientro righe
 - tabelle
 - intestazioni riga/colonna delle tabelle
 - Coordinate delle celle delle tabelle
-- numeri di pagina
-- numeri di riga
-- errori di ortografia
-- Rientri riga
 - collegamenti
 - intestazioni
 - elenchi
 - Blocchi tra virgolette
 - Sezioni
+- Frame
 -
    
 ==== Leggi i cambiamenti di formattazione dopo il cursore ====
@@ -842,7 +876,7 @@ Questa sezione contiene informazioni sui sintetizzatori vocali supportati da NVD
 La sintesi vocale [eSpeak http://espeak.sourceforge.net/]  è incorporata direttamente in NVDA, per cui non è necessario alcun driver o componente per farla funzionare. Da impostazioni predefinite NVDA si avvia utilizzando Espeak. Poiché questa sintesi è incorporata in NVDA, risulta molto comoda per utilizzare il prodotto da una chiavetta USB o da un cd in altri sistemi.
 
 Ciascuna voce presente in Espeak parla una lingua diversa.
-Sono oltre 20 le lingue supportate da questa sintesi vocale.
+Sono oltre 43 le lingue supportate da questa sintesi vocale.
 
 Vi sono anche numerose varianti che possono essere usate per modificare il timbro della voce.
 
@@ -864,9 +898,14 @@ La piattaforma Microsoft Speech fornisce supporto per diverse lingue, e generalm
 Queste voci possono essere utilizzate anche con NVDA.
 
 Per usare queste voci, è necessaria l'installazione di due componenti:
-- Microsoft Speech Platform - Server Runtime (Version 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
-- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
-
+- Microsoft Speech Platform - Runtime (Versione 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Versione 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Questa pagina contiene diversi file sia per il riconoscimento vocale sia per la sintesi vocale stessa.
+ Selezionare i file che si desiderano, a seconda del TTS e della lingua che si vuole utilizzare.
+  Ad esempio, il file MSSpeech_TTS_en-US_ZiraPro.msi è una voce inglese Stati Uniti.
+ -
+-
+ 
 
 ++ Audiologic Tts3 ++
 Si tratta di una sintesi vocale commerciale espressamente rivolta al mercato italiano. Per farla funzionare bisogna possedere una regolare licenza installata sul proprio pc.
@@ -1016,6 +1055,52 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Dire tutto | B6 |
 %kc:endInclude
 
+++ hedo MobilLine USB ++
+La Barra Braille hedo MobilLine USB prodotta dalla hedo Reha-Technik http://www.hedo.de/] è pienamente supportata.
+E' prima necessario installare i driver USB forniti dal produttore.
+
+Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri Display Braille indietro | K1 |
+| Scorri Display Braille avanti | K3 |
+| Sposta Display Braille alla riga precedente | B2 |
+| Sposta Display Braille alla riga successiva | B5 |
+| Route to braille cell | routing |
+| Commuta inseguimento Braille | K2 |
+| Dire tutto | B6 |
+%kc:endInclude
+ 
+++ HumanWare Brailliant BI/B Series ++
+Le Barre Braille Brailliant Serie BI e B prodotte dalla [HumanWare http://www.humanware.com/], comprese BI 32, BI 40 e B 80, sono supportate quando connesse tramite USB o Bluetooth.
+In caso di connessione tramite USB, è necessario prima installare i driver sviluppati dal produttore.
+
+Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri Display Braille indietro | Sinistra |
+| Scorri Display Braille avanti | Destra |
+| Sposta Display Braille alla riga precedente | Su |
+| Sposta Display Braille alla riga successiva | Giù |
+| Route to braille cell | routing |
+| Commuta inseguimento Braille | su+giù |
+| Tasto Freccia su | spazio+punto1 |
+| Tasto Freccia giù | spazio+Punto4 |
+| Tasto Freccia Sinistra | spazio+punto3 |
+| Tasto Freccia Destra | spazio+punto6 |
+| NVDA Menu | c1+c3+c4+c5 (command n) |
+| shift+Tasto tab | spazio+punto1+punto3 |
+| Tasto tab | spazio+punto4+punto6 |
+| Tasto alt | spazio+punto1+punto3+punto4 (spazio+m) |
+| Tasto esc | spazio+punto1+punto5 (spazio+e) |
+| Tasto Invio | punto8 |
+| Tasto windows+d (Riduci a icona tutte le applicazioni) | c1+c4+c5 (command d) |
+| Tasto windows | spazio+punto3+punto4 |
+| Tasto alt+tab | spazio+punto2+punto3+punto4+punto5 (spazio+t) |
+| Dire Tutto | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
 
 ++ altri drivers non ufficiali ++
 Sul sito della comunità italiana di NVDA sono presenti, alla voce download, drivers che non sono inclusi nello screen reader per ragioni tecniche e che verranno inseriti in seguito. Al momento possono essere scaricati drivers per la barra braille MB408l prodotta dalla MDV (Istituto Cavazza), per il Braillesense e SyncBraille prodotti dalla Hims, e per  i display Papenmeier, funzionanti però questi ultimi soltanto con la vecchia versione 2010.2, in quanto nessun utente si è dimostrato interessato per questi driver, e nessuno ci ha mai aiutato con i test. 

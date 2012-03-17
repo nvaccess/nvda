@@ -13,7 +13,7 @@ General dependencies:
 	* comtypes, version 0.6.2 or later: http://www.sourceforge.net/projects/comtypes/
 	* wxPython 2.8 unicode (for Python 2.7), version 2.8.11.0 or later: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.7), build 214 or later: http://www.sourceforge.net/projects/pywin32/ 
-	* eSpeak, version 1.46.01 or later:
+	* eSpeak, version 1.46.02 or later:
 		* Official web site: http://espeak.sourceforge.net/
 		* Download the espeak source archive. Note that it must be an official source archive from the espeak website containing already compiled phoneme data, not straight from svn. 
 		* Extract it in to include/espeak so that include/espeak/src, include/espeak/dictsource, include/espeak/platforms and include/espeak/espeak-data all exist.
@@ -22,8 +22,9 @@ General dependencies:
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
-	* liblouis, version 2.3.0 or later:
-		* Official web site: http://code.google.com/p/liblouis/
+	* liblouis, version 2.4.1 or later:
+		* Official web site: http://www.liblouis.org/
+		* Download page: http://www.abilitiessoft.com/downloads.html
 		* Download the liblouis source archive.
 		* Extract the contents of the top level directory in the archive into include\liblouis.
 	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/
@@ -89,6 +90,11 @@ To build an installer:
 To generate developer documentation:
 	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
 
+To generate a gettext translation template:
+	* xgettext from GNU gettext:
+		* A Windows build is available at http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/
+		* Copy xgettext.exe into the tools directory.
+
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
@@ -134,6 +140,9 @@ The developer docs will be placed in the devDocs folder in the output directory.
 To generate an archive of debug symbols for the various dll/exe binaries, type:
 scons symbolsArchive
 The archive will be placed in the output directory.
+
+To generate a gettext translation template (for translators), type:
+scons pot
 
 Optionally, the build can  be customised by providing variables on the command line:
 	* version: The version of this build.

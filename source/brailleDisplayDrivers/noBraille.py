@@ -10,6 +10,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""A dummy braille display driver used to disable braille in NVDA.
 	"""
 	name = "noBraille"
+	# Translators: Is used to indicate that braille support will be disabled.
 	description = _("No braille")
 
 	@classmethod

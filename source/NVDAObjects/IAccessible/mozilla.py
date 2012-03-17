@@ -10,7 +10,7 @@ import winUser
 from comtypes import IServiceProvider, COMError
 import eventHandler
 import controlTypes
-from . import IAccessible, Dialog
+from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
 
 class Mozilla(IAccessible):
@@ -145,20 +145,31 @@ def _getGeckoVersion(obj):
 	appMod._geckoVersion = ver
 	return ver
 
-class GeckoPluginWindowRoot(IAccessible):
+class GeckoPluginWindowRoot(WindowRoot):
+	parentUsesSuperOnWindowRootIAccessible = False
 
 	def _get_parent(self):
 		parent=super(GeckoPluginWindowRoot,self).parent
+		if parent.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT:
+			# Skip the window wrapping the plugin window,
+			# which doesn't expose a Gecko accessible in Gecko >= 11.
+			parent=parent.parent.parent
 		ver=_getGeckoVersion(parent)
 		if ver and not ver.startswith('1.'):
 			res=IAccessibleHandler.accNavigate(parent.IAccessibleObject,0,IAccessibleHandler.NAVRELATION_EMBEDS)
 			if res:
 				obj=IAccessible(IAccessibleObject=res[0],IAccessibleChildID=res[1])
-				if obj and controlTypes.STATE_OFFSCREEN not in obj.states:
-					return obj
+				if obj:
+					if controlTypes.STATE_OFFSCREEN not in obj.states:
+						return obj
+					else:
+						log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
+				else:
+					log.debugWarning("NAVRELATION_EMBEDS returned an invalid object")
+			else:
+				log.debugWarning("NAVRELATION_EMBEDS failed")
 		return parent
 
- 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.

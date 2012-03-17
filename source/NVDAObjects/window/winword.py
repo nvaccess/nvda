@@ -323,8 +323,22 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	def __init__(self,*args,**kwargs):
 		super(WordDocument,self).__init__(*args,**kwargs)
 
+	def event_caret(self):
+		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
+		self._lastSelectionPos=curSelectionPos
+		if lastSelectionPos:
+			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
+				return
+		super(WordDocument,self).event_caret()
+
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
+
+	def _get_states(self):
+		states=super(WordDocument,self).states
+		states.add(controlTypes.STATE_MULTILINE)
+		return states
 
 	def _get_WinwordVersion(self):
 		if not hasattr(self,'_WinwordVersion'):
@@ -339,19 +353,19 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 				log.debugWarning("Could not get MS Word object model",exc_info=True)
 				return None
 			self._WinwordWindowObject=comtypes.client.dynamic.Dispatch(pDispatch)
- 		return self._WinwordWindowObject
+		return self._WinwordWindowObject
 
 	def _get_WinwordDocumentObject(self):
 		if not getattr(self,'_WinwordDocumentObject',None): 
 			windowObject=self.WinwordWindowObject
 			if not windowObject: return None
 			self._WinwordDocumentObject=windowObject.document
- 		return self._WinwordDocumentObject
+		return self._WinwordDocumentObject
 
 	def _get_WinwordApplicationObject(self):
 		if not getattr(self,'_WinwordApplicationObject',None): 
 			self._WinwordApplicationObject=self.WinwordWindowObject.application
- 		return self._WinwordApplicationObject
+		return self._WinwordApplicationObject
 
 	def _get_WinwordSelectionObject(self):
 		if not getattr(self,'_WinwordSelectionObject',None):

@@ -3,7 +3,16 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.2 =
+
+== Bug Fixes ==
+- With auto language switching enabled, Content such as alt text for graphics and labels for other certain controls in Mozilla Gecko (e.g. Firefox) are now reported in the correct language if marked up appropriately.
+- SayAll in BibleSeeker (and other TRxRichEdit controls) no longer stops in the middle of a passage.
+- Lists found in the Windows 8 Explorer file properties (permitions tab) and in Windows 8 Windows Update now read correctly.
+
+
 = 2012.1 =
+Highlights of this release include features for more fluent reading of braille; indication of document formatting in braille; access to much more formatting information and improved performance in Microsoft Word; and support for the iTunes Store.
 
 == New Features ==
 - NVDA can announce the number of leading tabs and spaces of the current line in the order that they are entered. This can be enabled by selecting report line indentation in the document formatting dialogue. (#373)
@@ -21,28 +30,55 @@
 - In browse mode, you can activate the object under the cursor using a braille display. This is done by pressing the cursor routing key where the cursor is located (which means pressing it twice if the cursor is not already there). (#1893)
 - Basic support for web areas in iTunes such as the Store. Other applications using WebKit 1 may also be supported. (#734)
 - In books in Adobe Digital Editions 1.8.1 and later, pages are now turned automatically when using say all. (#1978)
-- New braille translation table: Portuguese grade 2. (#2014)
+- New braille translation tables: Portuguese grade 2, Icelandic 8 dot computer braille, Tamil grade 1, Spanish 8 dot computer braille, Farsi grade 1. (#2014)
 - You can now configure whether frames in documents are reported from the Document Formatting preferences dialog. (#1900)
+- Sleep mode is automatically enabled when using OpenBook. (#1209)
+- In Poedit, translators can now read translator added and automatically extracted comments. Messages that are untranslated or fuzzy are marked with a star and a beep is heard when you navigate onto them. (#1811)
+- Support for the HumanWare Brailliant BI and B series displays. (#1990)
+- New languages: Norwegian Bokmål, Traditional Chinese (Hong Kong).
 
 
 == Changes ==
-- Commands to describe the current character or to spell the current word or line now  will spell in the appropriate language according to the text, if auto language switching is turned on and the appropriate language information is available.
-- NVDA will now filter out extremely long (30 characters or greater) names guessed from graphic and link URLs as they are most likely garbage that gets in the way of reading. (#1989)
-- Some information displayed in braille has been abbreviated. (#1955)
+- Commands to describe the current character or to spell the current word or line now will spell in the appropriate language according to the text, if auto language switching is turned on and the appropriate language information is available.
+- Updated eSpeak speech synthesizer to 1.46.02.
+- NVDA will now truncate extremely long (30 characters or greater) names guessed from graphic and link URLs as they are most likely garbage that gets in the way of reading. (#1989)
+- Some information displayed in braille has been abbreviated. (#1955, #2043)
+- When the caret or review cursor moves, braille is now scrolled in the same way as when it is manually scrolled. This makes it more appropriate when braille is configured to read by paragraphs and/or avoid splitting words. (#1996)
+- Updated to new Spanish grade 1 braille translation table.
+- Updated liblouis braille translator to 2.4.1.
 
 
 == Bug Fixes ==
-- In Windows 8, focus is no longer incorrectly moved away from the Windows Explorer search field, which was  not allowing NVDA to   interact with it.
-- Major performance  improvements when reading and navigating Microsoft word documents while automatic reporting of formatting is enabled, thus now making it quite comfortable to proof read formatting etc. Performance may be also improved over all for some users.
+- In Windows 8, focus is no longer incorrectly moved away from the Windows Explorer search field, which was not allowing NVDA to interact with it.
+- Major performance improvements when reading and navigating Microsoft Word documents while automatic reporting of formatting is enabled, thus now making it quite comfortable to proof read formatting etc. Performance may be also improved over all for some users.
 - Browse mode is now used for full screen Adobe Flash content.
 - Fixed poor audio quality in some cases when using Microsoft Speech API version 5 voices with the audio output device set to something other than the default (Microsoft Sound Mapper). (#749)
-- Again allow NVDA to be used with the "no speech" synthesizer, relying purely   on braille or the speech viewer. (#1963)
+- Again allow NVDA to be used with the "no speech" synthesizer, relying purely on braille or the speech viewer. (#1963)
 - Object navigation commands no longer report "No children" and "No parents", but instead report messages consistent with the documentation.
 - When NVDA is configured to use a language other than English, the name of the tab key is now reported in the correct language.
 - In Mozilla Gecko (e.g. Firefox), NVDA no longer intermittently switches to browse mode while navigating menus in documents. (#2025)
 - In Calculator, the backspace key now reports the updated result instead of reporting nothing. (#2030)
 - In browse mode, the move mouse to current navigator object command now routes to the center of the object at the review cursor instead of the top left, making it more accurate it some cases. (#2029)
 - In browse mode with automatic focus mode for focus changes enabled, focusing on a toolbar will now switch to focus mode. (#1339)
+- The report title command works correctly again in Adobe Reader.
+- With automatic focus mode for focus changes enabled, focus mode is now correctly used for focused table cells; e.g. in ARIA grids. (#1763)
+- In iTunes, position information in certain lists is now reported correctly.
+- In Adobe Reader, some links are no longer treated as containing read-only editable text fields.
+- The labels of some editable text fields are no longer incorrectly included when reporting the text of a dialog. (#1960)
+- The description of groupings is once again reported if reporting of object descriptions is enabled.
+- The human readable sizes are now included in the text of the Windows Explorer drive properties dialog.
+- Double reporting of property page text has been suppressed in some cases. (#218)
+- Improved tracking of the caret in editable text fields which rely on text written to the screen. In particular, this improves editing in the Microsoft Excel cell editor and the Eudora message editor. (#1658)
+- In Firefox 11, the move to containing virtual buffer command (NVDA+control+space) now works as it should to escape embedded objects such as Flash content.
+- NVDA now restarts itself correctly (e.g. after changing the configured language) when it is located in a directory which contains non-ASCII characters. (#2079)
+- Braille correctly respects the settings for reporting of object shortcut keys, position information and descriptions.
+- In Mozilla applications, switching between browse and focus modes is no longer slow with braille enabled. (#2095)
+- Routing the cursor to the space at the end of the line/paragraph using braille cursor routing keys in some editable text fields now works correctly instead of routing to the start of the text. (#2096)
+- NVDA again works correctly with the Audiologic Tts3 synthesizer. (#2109)
+- Microsoft Word documents are correctly treated as multi-line. This causes braille to behave more appropriately when a document is focused.
+- In Microsoft Internet Explorer, errors no longer occur when focusing on certain rare controls. (#2121)
+- Changing the pronunciation of punctuation/symbols by the user will now take effect straight away, rather than requiring NVDA to be restarted or auto language switching to be disabled.
+- When using eSpeak, speech no longer goes silent in some cases in the Save As dialog of the NVDA Log Viewer. (#2145)
 
 
 == Changes for Developers ==
@@ -54,6 +90,8 @@
 - Several control and output constants have been renamed or moved. (#228)
  - speech.REASON_* constants have been moved to controlTypes.
  - In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
+- Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
+- subclasses of the sapi5 synthDriver can now override _getVoiceTokens and extend __init__ to support custom voice tokens such as with sapi.spObjectTokenCategory to get tokens from a custom registry location.
 
 
 = 2011.3 =
@@ -125,7 +163,7 @@ Highlights of this release include automatic speech language switching when read
 Highlights of this release include major improvements concerning punctuation and symbols, including configurable levels, custom labelling and character descriptions; no pauses at the end of lines during say all; improved support for ARIA in Internet Explorer; better support for XFA/LiveCycle PDF documents in Adobe Reader; access to text written to the screen in more applications; and access to formatting and color information for text written to the screen.
 
 == New Features ==
-- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictagraphic languages such as traditional Chinese, one or more example phraises using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions. (#55)
+- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictographic languages such as traditional Chinese, one or more example phrases using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions. (#55)
 - More text can be seen in flat review for applications such as Mozilla Thunderbird that write their text directly to the display as glyphs.
 - It is now possible to choose from several levels of punctuation and symbol announcement. (#332)
 - When punctuation or other symbols are repeated more than four times, the number of repetitions is now announced instead of speaking the repeated symbols. (#43)

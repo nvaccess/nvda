@@ -52,8 +52,8 @@ try:
 except WindowsError:
 	makensis = "makensis"
 
-# Get the path to pygettext.
-pygettext = os.path.join(sys.exec_prefix, "Tools", "i18n", "pygettext.py")
+# Get the path to xgettext.
+XGETTEXT = os.path.abspath(os.path.join("tools", "xgettext.exe"))
 
 # Get the path to epydoc.
 EPYDOC = os.path.join(sys.exec_prefix, "scripts", "epydoc.py")
@@ -150,7 +150,8 @@ for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
 #And also build the developer guide -- which must be moved at some point
 htmlFile=env.txt2tags('developerGuide.t2t')
 env.SideEffect('_txt2tags',htmlFile)
-env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
+devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
+env.Alias("developerGuide",devGuide)
 
 env.Depends(sourceDir,userDocsDir)
 
@@ -247,13 +248,21 @@ env.Alias("client", clientArchive)
 
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
 env.Alias('changes',changesFile)
+userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
+env.Alias('userGuide',userGuideFile)
 
 def makePot(target, source, env):
 	# Generate the pot.
 	if env.Execute([["cd", sourceDir, "&&",
-			sys.executable, pygettext,
-			"-o", target[0].abspath, "*.py", r"*\*.py", r"*\*\*.py"]]) != 0:
-		raise RuntimeError("pygettext failed")
+			XGETTEXT,
+			"-o", target[0].abspath,
+			"--package-name", versionInfo.name, "--package-version", version,
+			"--foreign-user",
+			"--add-comments=Translators:",
+			"--keyword=pgettext:1c,2",
+		] + [os.path.relpath(str(f), str(sourceDir)) for f in source]
+	]) != 0:
+		raise RuntimeError("xgettext failed")
 
 	# Tweak the headers.
 	potFn = str(target[0])
@@ -261,16 +270,12 @@ def makePot(target, source, env):
 	with file(potFn, "rt") as inp, file(tmpFn, "wt") as out:
 		for lineNum, line in enumerate(inp):
 			if lineNum == 1:
-				line = line.replace("YEAR ORGANIZATION", "2006-2010 NVDA Contributors")
+				line = "# %s\n" % versionInfo.copyright
 			elif lineNum == 2:
 				# Delete line.
 				continue
-			elif lineNum == 6:
-				line = line.replace("PACKAGE VERSION", version)
-			elif lineNum == 12:
+			elif lineNum == 15:
 				line = line.replace("CHARSET", "UTF-8")
-			elif lineNum == 13:
-				line = line.replace("ENCODING", "8bit")
 			out.write(line)
 	os.remove(potFn)
 	os.rename(tmpFn, potFn)
@@ -306,5 +311,5 @@ symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path,'*.pdb')))
 symbolsArchive = env.SzArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
 env.Alias("symbolsArchive", symbolsArchive)
 
-env.Default(dist)
+env.Default(portableDist)
 

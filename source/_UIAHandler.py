@@ -30,6 +30,7 @@ badUIAWindowClassNames=[
 	"RichEdit",
 	"RichEdit20",
 	"RICHEDIT50W",
+	"SysListView32",
 ]
 
 UIAControlTypesToNVDARoles={

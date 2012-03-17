@@ -104,7 +104,8 @@ class SettingsDialog(wx.Dialog):
 		self.Destroy()
 
 class GeneralSettingsDialog(SettingsDialog):
-	title = _("General settings")
+	# Translators: This is the label for the general settings dialog.
+	title = _("General Settings")
 	LOG_LEVELS = (
 		(log.INFO, _("info")),
 		(log.DEBUGWARNING, _("debug warning")),
@@ -112,7 +113,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		(log.DEBUG, _("debug"))
 	)
 
- 	def makeSettings(self, settingsSizer):
+	def makeSettings(self, settingsSizer):
 		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
 		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take affect):"))
 		languageSizer.Add(languageLabel)
@@ -217,10 +218,13 @@ class GeneralSettingsDialog(SettingsDialog):
 		super(GeneralSettingsDialog, self).onOk(evt)
 
 class SynthesizerDialog(SettingsDialog):
+	# Translators: This is the label for the synthesizer dialog.
 	title = _("Synthesizer")
 
 	def makeSettings(self, settingsSizer):
 		synthListSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is a label for the select
+		# synthesizer combobox in the synthesizer dialog.
 		synthListLabel=wx.StaticText(self,-1,label=_("&Synthesizer:"))
 		synthListID=wx.NewId()
 		driverList=getSynthList()
@@ -236,6 +240,10 @@ class SynthesizerDialog(SettingsDialog):
 		synthListSizer.Add(self.synthList)
 		settingsSizer.Add(synthListSizer,border=10,flag=wx.BOTTOM)
 		deviceListSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for the select output
+		# device combo in the synthesizer dialog. Examples of
+		# of an output device are default soundcard, usb
+		# headphones, etc.
 		deviceListLabel=wx.StaticText(self,-1,label=_("Output &device:"))
 		deviceListID=wx.NewId()
 		deviceNames=nvwave.getOutputDeviceNames()
@@ -256,6 +264,9 @@ class SynthesizerDialog(SettingsDialog):
 		config.conf["speech"]["outputDevice"]=self.deviceList.GetStringSelection()
 		newSynth=self.synthNames[self.synthList.GetSelection()]
 		if not setSynth(newSynth):
+			# Translators: This message is presented when
+			# NVDA is unable to load the selected
+			# synthesizer.
 			gui.messageBox(_("Could not load the %s synthesizer.")%newSynth,_("Synthesizer Error"),wx.OK|wx.ICON_WARNING,self)
 			return 
 		super(SynthesizerDialog, self).onOk(evt)
@@ -321,7 +332,8 @@ class VoiceSettingsSlider(wx.Slider):
 		self.SetValue(newValue)
 
 class VoiceSettingsDialog(SettingsDialog):
-	title = _("Voice settings")
+	# Translators: This is the label for the voice settings dialog.
+	title = _("Voice Settings")
 
 	@classmethod
 	def _setSliderStepSizes(cls, slider, setting):
@@ -389,13 +401,19 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.lastControl=None
 		#Create controls for Synth Settings
 		self.updateVoiceSettings()
+		# Translators: This is the label for a checkbox in the
+		# voice settings dialog.
 		self.autoLanguageSwitchingCheckbox=wx.CheckBox(self,wx.NewId(),label=_("Automatic language switching (when supported)"))
 		self.autoLanguageSwitchingCheckbox.SetValue(config.conf["speech"]["autoLanguageSwitching"])
 		settingsSizer.Add(self.autoLanguageSwitchingCheckbox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# voice settings dialog.
 		self.autoDialectSwitchingCheckbox=wx.CheckBox(self,wx.NewId(),label=_("Automatic dialect switching (when supported)"))
 		self.autoDialectSwitchingCheckbox.SetValue(config.conf["speech"]["autoDialectSwitching"])
 		settingsSizer.Add(self.autoDialectSwitchingCheckbox,border=10,flag=wx.BOTTOM)
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for a combobox in the
+		# voice settings dialog.
 		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Punctuation/symbol &level:")))
 		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS])
@@ -408,12 +426,18 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.capPitchChangeEdit=wx.TextCtrl(self,wx.NewId())
 		self.capPitchChangeEdit.SetValue(str(config.conf["speech"][getSynth().name]["capPitchChange"]))
 		settingsSizer.Add(self.capPitchChangeEdit,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# voice settings dialog.
 		self.sayCapForCapsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Say &cap before capitals"))
 		self.sayCapForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["sayCapForCapitals"])
 		settingsSizer.Add(self.sayCapForCapsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# voice settings dialog.
 		self.beepForCapsCheckBox = wx.CheckBox(self, wx.NewId(), label = _("&Beep for capitals"))
 		self.beepForCapsCheckBox.SetValue(config.conf["speech"][getSynth().name]["beepForCapitals"])
 		settingsSizer.Add(self.beepForCapsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# voice settings dialog.
 		self.useSpellingFunctionalityCheckBox = wx.CheckBox(self, wx.NewId(), label = _("Use &spelling functionality if supported"))
 		self.useSpellingFunctionalityCheckBox.SetValue(config.conf["speech"][getSynth().name]["useSpellingFunctionality"])
 		settingsSizer.Add(self.useSpellingFunctionalityCheckBox,border=10,flag=wx.BOTTOM)
@@ -495,15 +519,19 @@ class VoiceSettingsDialog(SettingsDialog):
 		super(VoiceSettingsDialog, self).onOk(evt)
 
 class KeyboardSettingsDialog(SettingsDialog):
+	# Translators: This is the label for the keyboard settings dialog.
 	title = _("Keyboard Settings")
 
 	def makeSettings(self, settingsSizer):
 		kbdSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for a combobox in the
+		# keyboard settings dialog.
 		kbdLabel=wx.StaticText(self,-1,label=_("&Keyboard layout:"))
 		kbdSizer.Add(kbdLabel)
 		kbdListID=wx.NewId()
 		layouts=keyboardHandler.KeyboardInputGesture.LAYOUTS
 		self.kbdNames=sorted(layouts)
+		# Translators: This is the name of a combobox in the keyboard settings dialog.
 		self.kbdList=wx.Choice(self,kbdListID,name=_("Keyboard layout"),choices=[layouts[layout] for layout in self.kbdNames])
 		try:
 			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
@@ -512,24 +540,38 @@ class KeyboardSettingsDialog(SettingsDialog):
 			log.debugWarning("Could not set Keyboard layout list to current layout",exc_info=True) 
 		kbdSizer.Add(self.kbdList)
 		settingsSizer.Add(kbdSizer,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.capsAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use CapsLock as an NVDA modifier key"))
 		self.capsAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useCapsLockAsNVDAModifierKey"])
 		settingsSizer.Add(self.capsAsNVDAModifierCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.numpadInsertAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use numpad Insert as an NVDA modifier key"))
 		self.numpadInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useNumpadInsertAsNVDAModifierKey"])
 		settingsSizer.Add(self.numpadInsertAsNVDAModifierCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.extendedInsertAsNVDAModifierCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use extended Insert as an NVDA modifier key"))
 		self.extendedInsertAsNVDAModifierCheckBox.SetValue(config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"])
 		settingsSizer.Add(self.extendedInsertAsNVDAModifierCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.charsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak typed &characters"))
 		self.charsCheckBox.SetValue(config.conf["keyboard"]["speakTypedCharacters"])
 		settingsSizer.Add(self.charsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.wordsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak typed &words"))
 		self.wordsCheckBox.SetValue(config.conf["keyboard"]["speakTypedWords"])
 		settingsSizer.Add(self.wordsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.beepLowercaseCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Beep if typing lowercase letters when caps lock is on"))
 		self.beepLowercaseCheckBox.SetValue(config.conf["keyboard"]["beepForLowercaseWithCapslock"])
 		settingsSizer.Add(self.beepLowercaseCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.commandKeysCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speak command &keys"))
 		self.commandKeysCheckBox.SetValue(config.conf["keyboard"]["speakCommandKeys"])
 		settingsSizer.Add(self.commandKeysCheckBox,border=10,flag=wx.BOTTOM)
@@ -550,20 +592,28 @@ class KeyboardSettingsDialog(SettingsDialog):
 		super(KeyboardSettingsDialog, self).onOk(evt)
 
 class MouseSettingsDialog(SettingsDialog):
-	title = _("Mouse settings")
+	# Translators: This is the label for the mouse settings dialog.
+	title = _("Mouse Settings")
 
- 	def makeSettings(self, settingsSizer):
+	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a checkbox in the
+		# mouse settings dialog.
 		self.shapeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report mouse &shape changes"))
 		self.shapeCheckBox.SetValue(config.conf["mouse"]["reportMouseShapeChanges"])
 		settingsSizer.Add(self.shapeCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# mouse settings dialog.
 		self.mouseTrackingCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Enable mouse &tracking"))
 		self.mouseTrackingCheckBox.SetValue(config.conf["mouse"]["enableMouseTracking"])
 		settingsSizer.Add(self.mouseTrackingCheckBox,border=10,flag=wx.BOTTOM)
 		textUnitSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for a combobox in the
+		# mouse settings dialog.
 		textUnitLabel=wx.StaticText(self,-1,label=_("Text &unit resolution:"))
 		textUnitSizer.Add(textUnitLabel)
 		import textInfos
 		self.textUnits=[textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD,textInfos.UNIT_LINE,textInfos.UNIT_PARAGRAPH]
+		# Translators: This is the name of a combobox in the mouse settings dialog.
 		self.textUnitComboBox=wx.Choice(self,wx.ID_ANY,name=_("text reporting unit"),choices=[textInfos.unitLabels[x] for x in self.textUnits])
 		try:
 			index=self.textUnits.index(config.conf["mouse"]["mouseTextUnit"])
@@ -572,12 +622,18 @@ class MouseSettingsDialog(SettingsDialog):
 		self.textUnitComboBox.SetSelection(index)
 		textUnitSizer.Add(self.textUnitComboBox)
 		settingsSizer.Add(textUnitSizer,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# mouse settings dialog.
 		self.reportObjectRoleCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &role when mouse enters object"))
 		self.reportObjectRoleCheckBox.SetValue(config.conf["mouse"]["reportObjectRoleOnMouseEnter"])
 		settingsSizer.Add(self.reportObjectRoleCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# mouse settings dialog.
 		self.audioCheckBox=wx.CheckBox(self,wx.NewId(),label=_("play audio coordinates when mouse moves"))
 		self.audioCheckBox.SetValue(config.conf["mouse"]["audioCoordinatesOnMouseMove"])
 		settingsSizer.Add(self.audioCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# mouse settings dialog.
 		self.audioDetectBrightnessCheckBox=wx.CheckBox(self,wx.NewId(),label=_("brightness controls audio coordinates volume"))
 		self.audioDetectBrightnessCheckBox.SetValue(config.conf["mouse"]["audioCoordinates_detectBrightness"])
 		settingsSizer.Add(self.audioDetectBrightnessCheckBox,border=10,flag=wx.BOTTOM)
@@ -596,18 +652,27 @@ class MouseSettingsDialog(SettingsDialog):
 		super(MouseSettingsDialog, self).onOk(evt)
 
 class ReviewCursorDialog(SettingsDialog):
-	title = _("Review cursor settings")
+	# Translators: This is the label for the review cursor settings dialog.
+	title = _("Review Cursor Settings")
 
 	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a checkbox in the
+		# review cursor settings dialog.
 		self.followFocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow &keyboard focus"))
 		self.followFocusCheckBox.SetValue(config.conf["reviewCursor"]["followFocus"])
 		settingsSizer.Add(self.followFocusCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# review cursor settings dialog.
 		self.followCaretCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow System &Caret"))
 		self.followCaretCheckBox.SetValue(config.conf["reviewCursor"]["followCaret"])
 		settingsSizer.Add(self.followCaretCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# review cursor settings dialog.
 		self.followMouseCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow &mouse cursor"))
 		self.followMouseCheckBox.SetValue(config.conf["reviewCursor"]["followMouse"])
 		settingsSizer.Add(self.followMouseCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# review cursor settings dialog.
 		self.simpleReviewModeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Simple review mode"))
 		self.simpleReviewModeCheckBox.SetValue(config.conf["reviewCursor"]["simpleReviewMode"])
 		settingsSizer.Add(self.simpleReviewModeCheckBox,border=10,flag=wx.BOTTOM)
@@ -623,7 +688,8 @@ class ReviewCursorDialog(SettingsDialog):
 		super(ReviewCursorDialog, self).onOk(evt)
 
 class ObjectPresentationDialog(SettingsDialog):
-	title = _("Object presentation")
+	# Translators: This is the label for the object presentation dialog.
+	title = _("Object Presentation")
 	progressLabels = (
 		("off", _("off")),
 		("speak", _("Speak")),
@@ -632,28 +698,44 @@ class ObjectPresentationDialog(SettingsDialog):
 	)
 
 	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings dialog.
 		self.tooltipCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &tooltips"))
 		self.tooltipCheckBox.SetValue(config.conf["presentation"]["reportTooltips"])
 		settingsSizer.Add(self.tooltipCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings dialog.
 		self.balloonCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &help balloons"))
 		self.balloonCheckBox.SetValue(config.conf["presentation"]["reportHelpBalloons"])
 		settingsSizer.Add(self.balloonCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings dialog.
 		self.shortcutCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report object shortcut &keys"))
 		self.shortcutCheckBox.SetValue(config.conf["presentation"]["reportKeyboardShortcuts"])
 		settingsSizer.Add(self.shortcutCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings dialog.
 		self.positionInfoCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report object &position information"))
 		self.positionInfoCheckBox.SetValue(config.conf["presentation"]["reportObjectPositionInformation"])
 		settingsSizer.Add(self.positionInfoCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings dialog.
 		self.guessPositionInfoCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Guess object &position information when unavailable"))
 		self.guessPositionInfoCheckBox.SetValue(config.conf["presentation"]["guessObjectPositionInformationWhenUnavailable"])
 		settingsSizer.Add(self.guessPositionInfoCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings dialog.
 		self.descriptionCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report object &descriptions"))
 		self.descriptionCheckBox.SetValue(config.conf["presentation"]["reportObjectDescriptions"])
 		settingsSizer.Add(self.descriptionCheckBox,border=10,flag=wx.BOTTOM)
 		progressSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: This is the label for a combobox in the
+		# object presentation settings dialog.
 		progressLabel=wx.StaticText(self,-1,label=_("Progress &bar output:"))
 		progressSizer.Add(progressLabel)
 		progressListID=wx.NewId()
+		# Translators: This is the name of a combobox in the
+		# object presentation settings dialog.
 		self.progressList=wx.Choice(self,progressListID,name=_("Progress bar output"),choices=[name for setting, name in self.progressLabels])
 		for index, (setting, name) in enumerate(self.progressLabels):
 			if setting == config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]:
@@ -663,9 +745,13 @@ class ObjectPresentationDialog(SettingsDialog):
 			log.debugWarning("Could not set progress list to current report progress bar updates setting")
 		progressSizer.Add(self.progressList)
 		settingsSizer.Add(progressSizer,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings dialog.
 		self.reportBackgroundProgressBarsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report background progress bars"))
 		self.reportBackgroundProgressBarsCheckBox.SetValue(config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"])
 		settingsSizer.Add(self.reportBackgroundProgressBarsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# object presentation settings dialog.
 		self.dynamicContentCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report dynamic &content changes"))
 		self.dynamicContentCheckBox.SetValue(config.conf["presentation"]["reportDynamicContentChanges"])
 		settingsSizer.Add(self.dynamicContentCheckBox,border=10,flag=wx.BOTTOM)
@@ -686,35 +772,51 @@ class ObjectPresentationDialog(SettingsDialog):
 		super(ObjectPresentationDialog, self).onOk(evt)
 
 class BrowseModeDialog(SettingsDialog):
-	title = _("Browse mode")
+	# Translators: This is the label for the browse mode settings dialog.
+	title = _("Browse Mode")
 
 	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a textfield in the
+		# browse mode settings dialog.
 		maxLengthLabel=wx.StaticText(self,-1,label=_("&Maximum number of characters on one line"))
 		settingsSizer.Add(maxLengthLabel)
 		self.maxLengthEdit=wx.TextCtrl(self,wx.NewId())
 		self.maxLengthEdit.SetValue(str(config.conf["virtualBuffers"]["maxLineLength"]))
 		settingsSizer.Add(self.maxLengthEdit,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a textfield in the
+		# browse mode settings dialog.
 		pageLinesLabel=wx.StaticText(self,-1,label=_("&Number of lines per page"))
 		settingsSizer.Add(pageLinesLabel)
 		self.pageLinesEdit=wx.TextCtrl(self,wx.NewId())
 		self.pageLinesEdit.SetValue(str(config.conf["virtualBuffers"]["linesPerPage"]))
 		settingsSizer.Add(self.pageLinesEdit,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings dialog.
 		self.useScreenLayoutCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Use &screen layout (when supported)"))
 		self.useScreenLayoutCheckBox.SetValue(config.conf["virtualBuffers"]["useScreenLayout"])
 		settingsSizer.Add(self.useScreenLayoutCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings dialog.
 		self.autoSayAllCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Automatic &Say All on page load"))
 		self.autoSayAllCheckBox.SetValue(config.conf["virtualBuffers"]["autoSayAllOnPageLoad"])
 		settingsSizer.Add(self.autoSayAllCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings dialog.
 		self.layoutTablesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ayout tables"))
 		self.layoutTablesCheckBox.SetValue(config.conf["documentFormatting"]["includeLayoutTables"])
 		settingsSizer.Add(self.layoutTablesCheckBox,border=10,flag=wx.BOTTOM)
-
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings dialog.
 		self.autoPassThroughOnFocusChangeCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for focus changes"))
 		self.autoPassThroughOnFocusChangeCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnFocusChange"])
 		settingsSizer.Add(self.autoPassThroughOnFocusChangeCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings dialog.
 		self.autoPassThroughOnCaretMoveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Automatic focus mode for caret movement"))
 		self.autoPassThroughOnCaretMoveCheckBox.SetValue(config.conf["virtualBuffers"]["autoPassThroughOnCaretMove"])
 		settingsSizer.Add(self.autoPassThroughOnCaretMoveCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# browse mode settings dialog.
 		self.passThroughAudioIndicationCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Audio indication of focus and browse modes"))
 		self.passThroughAudioIndicationCheckBox.SetValue(config.conf["virtualBuffers"]["passThroughAudioIndication"])
 		settingsSizer.Add(self.passThroughAudioIndicationCheckBox,border=10,flag=wx.BOTTOM)
@@ -744,36 +846,57 @@ class BrowseModeDialog(SettingsDialog):
 		super(BrowseModeDialog, self).onOk(evt)
 
 class DocumentFormattingDialog(SettingsDialog):
-	title = _("Document formatting")
+	# Translators: This is the label for the document formatting dialog.
+	title = _("Document Formatting")
 
 	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.detectFormatAfterCursorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Announce formatting changes after the cursor (can cause a lag)"))
 		self.detectFormatAfterCursorCheckBox.SetValue(config.conf["documentFormatting"]["detectFormatAfterCursor"])
 		settingsSizer.Add(self.detectFormatAfterCursorCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.fontNameCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report font &name"))
 		self.fontNameCheckBox.SetValue(config.conf["documentFormatting"]["reportFontName"])
 		settingsSizer.Add(self.fontNameCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.fontSizeCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report font &size"))
 		self.fontSizeCheckBox.SetValue(config.conf["documentFormatting"]["reportFontSize"])
 		settingsSizer.Add(self.fontSizeCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.fontAttrsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report font attri&butes"))
 		self.fontAttrsCheckBox.SetValue(config.conf["documentFormatting"]["reportFontAttributes"])
 		settingsSizer.Add(self.fontAttrsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.alignmentCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &alignment"))
 		self.alignmentCheckBox.SetValue(config.conf["documentFormatting"]["reportAlignment"])
 		settingsSizer.Add(self.alignmentCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.colorCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &colors"))
 		self.colorCheckBox.SetValue(config.conf["documentFormatting"]["reportColor"])
 		settingsSizer.Add(self.colorCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.styleCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report st&yle"))
 		self.styleCheckBox.SetValue(config.conf["documentFormatting"]["reportStyle"])
 		settingsSizer.Add(self.styleCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.spellingErrorsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report spelling errors"))
 		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
 		settingsSizer.Add(self.spellingErrorsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.pageCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &pages"))
 		self.pageCheckBox.SetValue(config.conf["documentFormatting"]["reportPage"])
 		settingsSizer.Add(self.pageCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.lineNumberCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &line numbers"))
 		self.lineNumberCheckBox.SetValue(config.conf["documentFormatting"]["reportLineNumber"])
 		settingsSizer.Add(self.lineNumberCheckBox,border=10,flag=wx.BOTTOM)
@@ -783,30 +906,48 @@ class DocumentFormattingDialog(SettingsDialog):
 		self.lineIndentationCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ine indentation"))
 		self.lineIndentationCheckBox.SetValue(config.conf["documentFormatting"]["reportLineIndentation"])
 		settingsSizer.Add(self.lineIndentationCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.tablesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &tables"))
 		self.tablesCheckBox.SetValue(config.conf["documentFormatting"]["reportTables"])
 		settingsSizer.Add(self.tablesCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.tableHeadersCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table row/column h&eaders"))
 		self.tableHeadersCheckBox.SetValue(config.conf["documentFormatting"]["reportTableHeaders"])
 		settingsSizer.Add(self.tableHeadersCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.tableCellCoordsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report table cell c&oordinates"))
 		self.tableCellCoordsCheckBox.SetValue(config.conf["documentFormatting"]["reportTableCellCoords"])
 		settingsSizer.Add(self.tableCellCoordsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.linksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &links"))
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
 		settingsSizer.Add(self.linksCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.headingsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report &headings"))
 		self.headingsCheckBox.SetValue(config.conf["documentFormatting"]["reportHeadings"])
 		settingsSizer.Add(self.headingsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.listsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report l&ists"))
 		self.listsCheckBox.SetValue(config.conf["documentFormatting"]["reportLists"])
 		settingsSizer.Add(self.listsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.blockQuotesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report block &quotes"))
 		self.blockQuotesCheckBox.SetValue(config.conf["documentFormatting"]["reportBlockQuotes"])
 		settingsSizer.Add(self.blockQuotesCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		self.landmarksCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report lan&dmarks"))
 		self.landmarksCheckBox.SetValue(config.conf["documentFormatting"]["reportLandmarks"])
 		settingsSizer.Add(self.landmarksCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings dialog.
 		item=self.framesCheckBox=wx.CheckBox(self,label=_("Report fra&mes"))
 		item.Value=config.conf["documentFormatting"]["reportFrames"]
 		settingsSizer.Add(item,border=10,flag=wx.BOTTOM)
@@ -839,7 +980,8 @@ class DocumentFormattingDialog(SettingsDialog):
 
 class DictionaryEntryDialog(wx.Dialog):
 
-	def __init__(self,parent,title=_("Edit dictionary entry")):
+	# Translators: This is the label for the edit dictionary entry dialog.
+	def __init__(self, parent, title=_("Edit Dictionary Entry")):
 		super(DictionaryEntryDialog,self).__init__(parent,title=title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
@@ -921,6 +1063,7 @@ class DictionaryDialog(SettingsDialog):
 		super(DictionaryDialog, self).onOk(evt)
 
 	def OnAddClick(self,evt):
+		# Translators: This is the label for the add dictionary entry dialog.
 		entryDialog=DictionaryEntryDialog(self,title=_("Add Dictionary Entry"))
 		if entryDialog.ShowModal()==wx.ID_OK:
 			self.tempSpeechDict.append(speechDictHandler.SpeechDictEntry(entryDialog.patternTextCtrl.GetValue(),entryDialog.replacementTextCtrl.GetValue(),entryDialog.commentTextCtrl.GetValue(),bool(entryDialog.caseSensitiveCheckBox.GetValue()),bool(entryDialog.regexpCheckBox.GetValue())))
@@ -966,6 +1109,7 @@ class DictionaryDialog(SettingsDialog):
 		self.dictList.SetFocus()
 
 class BrailleSettingsDialog(SettingsDialog):
+	# Translators: This is the label for the braille settings dialog.
 	title = _("Braille Settings")
 
 	def makeSettings(self, settingsSizer):
@@ -1066,6 +1210,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		super(BrailleSettingsDialog,  self).onOk(evt)
 
 class SpeechSymbolsDialog(SettingsDialog):
+	# Translators: This is the label for the symbol pronunciation dialog.
 	title = _("Symbol Pronunciation")
 
 	def makeSettings(self, settingsSizer):

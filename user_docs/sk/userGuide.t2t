@@ -16,13 +16,13 @@ Vývoj NVDA zastrešuje organizácia [NV Access http://www.nvaccess.org/], za po
 NVDA umožňuje nevidiacim a zrakovo postihnutým prístup a interakciu s operačným systémom Windows a množstvom ďalších voliteľných aplikácií.
 Najvýznamnejšie prednosti programu:
 - Podpora pre populárne aplikácie vrátane internetových prehliadačov, emailových klientov, programov slúžiacich na okamžitú komunikáciu a kancelárskych balíkov
-- Vstavaný hlasový výstup, ktorý podporuje viac než 20 jazykov
+- Vstavaný hlasový výstup, ktorý podporuje viac než 43 jazykov
 - Oznamovanie informácií o formátovaní ako napríklad názov a veľkosť písma, štýl textu a pravopisné chyby
 - Automatické oznamovanie textu pod kurzorom myši a voliteľné akustické oznamovanie pozície kurzora myši
 - Podpora množstva braillovských zobrazovačov
 - Možnosť spustenia programu z USB kľúča, alebo iného prenosného zariadenia, bez nutnosti inštalácie
 - Ozvučený inštalátor
-- Preložený do mnohých jazykov
+- Preložený do 36 jazykov
 - Podpora pre moderné operačné systémy Windows, 32 aj 64 bitové verzie
 - Možnosť spúšťania na prihlasovacej obrazovke a iných zabezpečených obrazovkách Windows
 - Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation len vo Windows 7 a novších)
@@ -31,7 +31,7 @@ Najvýznamnejšie prednosti programu:
 
 ++ Medzinárodná podpora ++
 Je dôležité, aby ľudia na celom svete hovoriaci akýmkoľvek jazykom, mali kdekoľvek prístup k špeciálnym technológiám.
-NVDA bol dodnes preložený do mnohých jazykov. sú to Napr. Afrikánčina, Albánčina, Arabčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gruzínčina, Hebrejčina, Hindčina, Holandčina, Chorvátčina, Islandčina, Japončina, Maďarčina, Nemčina, Poľština, Portugalčina, Rumunčina, Ruština, Slovenčina, Srbčina, Španielčina, Švédčina, Taliančina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
+NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 36 jazykov: Afrikánčina, Albánčina, Arabčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Japončina, Maďarčina, Nemčina, Nórčina, Poľština, Portugalčina, Rumunčina, Ruština, Slovenčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
 
 ++ Podpora hlasového výstupu ++
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítania textov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
@@ -248,6 +248,9 @@ Po zameraní objektu je možné [prezerať text objektu #ReviewingText].
 
 Ak presuniete fokus na iný objekt, zmení sa aj objekt ktorý prezeráte. Ak ale chcete prezerať taký objekt, na ktorý nie je fokus zameraný, aby vám fokus neuskočil od predošlého objektu, môžete sledovanie fokusu vypnúť.
 
+Pozor: Text na brailovom riadku sleduje predvolene [systémový fokus #SystemFocus] a [systémový kurzor #SystemCaret].
+Ak by Ste radšej chceli aby sa text zobrazovaný na brailovom riadku prispôsoboval objektovej navigácii a prehliadaciemu kurzoru, môžete nastaviť [zviazanie braillovského kurzoru #BrailleTether].
+
 Pre pohyb po objektoch použite nasledujúce klávesové skratky:
 %kc:beginInclude
 || Názov | Klávesová skratka pre desktop | Klávesová skratka pre laptop | Popis |
@@ -271,6 +274,9 @@ Týmto spôsobom si napríklad môžete po častiach prečítať dlhšiu informa
 Počas posúvania prehliadacím kurzorom sa systémový kurzor nepohybuje, čo znamená, že môžete čítať text bez toho, že by Ste stratili aktuálne upravovanú pozíciu.
 Narozdiel pri pohybe systémovým kurzorom sa prehliadací kurzor automaticky prispôsobuje pozícii systémového kurzora.
 Túto vlastnosť je možné prepínať.
+
+Pozor: Text na brailovom riadku sleduje predvolene [systémový fokus #SystemFocus] a [systémový kurzor #SystemCaret].
+Ak by Ste radšej chceli aby sa text zobrazovaný na brailovom riadku prispôsoboval objektovej navigácii a prehliadaciemu kurzoru, môžete nastaviť [zviazanie braillovského kurzoru #BrailleTether].
 
 Na navigáciu v texte je možné použiť nasledovné klávesové príkazy:
 %kc:beginInclude
@@ -313,6 +319,9 @@ Ak Ste zatiaľ nepoužili objektovú navigáciu, bude to pravdepodobne obsah prv
 Napríklad ak navigačným objektom je tlačidlo, prehliadací kurzor plošného prehliadania bude umiestnený v texte tlačidla.
 Okolitý text potom môžete čítať [príkazmi určenými na prezeranie textu #ReviewingText].
 Tak tiež môžete z pozície v texte prejsť do objektovej navigácie. Objekt, ktorého text si prezeráte sa v takomto prípade stane navigačným objektom.
+
+Pozor: Text na brailovom riadku sleduje predvolene [systémový fokus #SystemFocus] a [systémový kurzor #SystemCaret].
+Ak by Ste radšej chceli aby sa text zobrazovaný na brailovom riadku prispôsoboval objektovej navigácii a prehliadaciemu kurzoru, môžete nastaviť [zviazanie braillovského kurzoru #BrailleTether].
 
 Dva nasledujúce príkazy sa používajú na zapínanie a vypínanie plošného prehliadania:
 %kc:beginInclude
@@ -421,6 +430,28 @@ Je možné použiť klávesovú skratku na prechod späť do dokumentu v ktorom 
 %kc:beginInclude
 || Názov | Klávesová skratka | Popis |
 | Prejsť do nadradeného dokumentu | NVDA+control+medzera | Premiestni fokus z aktuálneho vnoreného objektu do nadradeného dokumentu ktorý tento objekt obsahuje |
+%kc:endInclude
+
++ Príkazy NVDA špecifické pre aplikácie +
+NVDA pre niektoré aplikácie implementuje svoje vlastné príkazy, čím buď umožňuje ľahšie vykonávať niektoré úlohy, alebo sprístupňuje časti aplikácií, ktoré nie sú inak prístupné používateľom odkázaným na odčítač obrazovky.
+
+++ foobar2000 ++
+%kc:beginInclude
+|| Názov | Klávesová skratka | Popis |
+| Oznámiť zostávajúci čas | control+shift+r | V prípade, že je práve prehrávaná skladba, oznámi zostávajúci čas. |
+%kc:endInclude
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Názov | Klávesová skratka | Popis |
+| Oznámiť poslednú správu | NVDA+control+1-4 | Oznámi jednu z posledných správ. napr. NVDA+control+2 oznámi predposlednú správu. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Názov | Klávesová skratka | Popis |
+| Oznámiť okno komentáre | control+shift+c | Oznamuje komentáre z okna komentár. |
+| Oznámiť okno automatické komentáre | control+shift+a | Oznamuje komentáre z okna automatický komentár. |
 %kc:endInclude
 
 + Konfigurácia NVDA +
@@ -590,7 +621,7 @@ Jedná sa o numerickú hodnotu, ktorá určuje frekvenciu blikania kurzora brail
 Táto numerická hodnota určuje ako dlho majú na riadku byť zobrazované systémové správy..
 
 %kc:setting
-==== Braillovský kurzor zviazaný s ====
+==== Braillovský kurzor zviazaný s ====[BrailleTether]
 Klávesová skratka: NVDA+control+t
 
 Táto voľba umožňuje nastaviť či bude braillovský kurzor sledovať systémový kurzor, alebo či bude braillovský kurzor sledovať prehliadací kurzor navigačného objektu.
@@ -793,24 +824,25 @@ Väčšina začiarkavacých políčok slúži na nastavenie typu formátovania, 
 Napríklad ak zaškrtnete oznamovanie písma, NVDA oznámi keď systémový kurzor bude ukazovať na iný typ písma.
 
 Takto môžete nastaviť:
-- názov písma
-- veľkosť písma
-- vlastnosti písma
+- Názov písma
+- Veľkosť písma
+- Vlastnosti písma
 - Zarovnanie textu
-- farby
-- štýl textu
-- pravopisné chyby
-- číslovanie strán
-- číslovanie riadkov
-- odsadenie textu
-- tabuľky
-- hlavičky riadku a stĺpca tabuľky
-- súradnice buniek tabuľky
-- odkazy
-- nadpisy
-- zoznamy
-- citácie.
-- oblasti stránky
+- Farby
+- Štýl textu
+- Pravopisné chyby
+- Číslovanie strán
+- Číslovanie riadkov
+- Odsadenie textu
+- Tabuľky
+- Hlavičky riadku a stĺpca tabuľky
+- Súradnice buniek tabuľky
+- Odkazy
+- Nadpisy
+- Zoznamy
+- Citácie.
+- Oblasti stránky
+- Rámce
 -
 
 ==== Oznamovať zmeny formátovania pri pohybe kurzorom ====
@@ -903,9 +935,9 @@ Viac informácií je dostupných v príručke pre vývojárov, ktorú nájdete n
 
 ++ Načítať pluginy ++
 Po aktivovaní tejto položky NVDA znovu načíta pluginy a aplikačné moduly bez nutnosti reštartu. Môže byť užitočné pre vývojárov..
-
 + Podporované hlasové výstupy +[SupportedSpeechSynths]
 Táto časť obsahuje informácie o hlasových výstupoch podporovaných NVDA..
+Zoznam niektorých konkrétnych hlasových výstupov, ktoré je možné používať s NVDA je na stránke [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices] (anglicky).
 
 ++ eSpeak ++
 Hlasový výstup [eSpeak http://espeak.sourceforge.net/] je priamo zabudovaný do NVDA a nie je závislý na iných špeciálnych ovládačoch alebo iných komponentoch, ktoré by bolo potrebné doinštalovať.
@@ -913,7 +945,7 @@ NVDA sa predvolene spúšťa s hlasovým výstupom eSpeak.
 Tento hlas by mal pracovať na každom systéme, kde beží NVDA, čo znamená, že NVDA môžete spúšťať na ľubovoľnom počítači dokonca aj z USB kľúčenky alebo CD.
 
 Každý hlas hlasového výstupu eSpeak hovorí iným jazykom.
-eSpeak pozostáva z viacej než 20 hlasov pre rôzne jazyky.
+eSpeak pozostáva z viacej než 43 hlasov pre rôzne jazyky.
 
 Existuje tiež množstvo variantov, ktorými je možné zmeniť vlastnosti zvuku aktuálneho hlasu.
 
@@ -935,8 +967,12 @@ Platforma Microsoft Speech poskytuje TTS služby pre rôzne jazyky.
 Tieto hlasy je možné použiť aj s NVDA.
 
 Aby Ste mohli používať tieto hlasy, je potrebné nainštalovať dva komponenty:
-- Microsoft Speech Platform - Server Runtime (Verzia 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
-- Microsoft Speech Platform - Server Runtime Languages (Verzia 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+- Microsoft Speech Platform - Server Runtime (Verzia 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Server Runtime Languages (Verzia 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Na tejto stránke nájdete množstvo hlasov určených na rozpoznávanie hlasu aj na prevod textu na reč.
+ Vyberte súbor, ktorý obsahuje dáta pre vami požadovaný jazyk / hlas.
+ Napríklad súbor MSSpeech_TTS_en-US_ZiraPro.msi obsahuje dáta pre americký hlas.
+ -
 
 
 ++ Audiologic Tts3 ++
@@ -1098,7 +1134,37 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | Plynulé čítanie | B6 |
 %kc:endInclude
 
- ++ BRLTTY ++
+++ HumanWare Brailliant BI/B ++
+Riadky Brailliant BI and B od [HumanWare http://www.humanware.com/], zahŕňajú BI 32, BI 40 a B 80, sú podporované pripojené cez USB alebo bluetooth.
+Ak máte riadok pripojený cez USB, je potrebné nainštalovať ovládač dodaný od výrobcu.
+
+Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
+Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov..
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| posunúť riadok späť | left |
+| posunúť riadok vpred | right |
+| predchádzajúci riadok | up |
+| nasledujúci riadok | down |
+| Prejsť na znak v brailly | smerové tlačidlá |
+| Prepnúť nastavenie braillovský kurzor zviazaný s | up+down |
+| šípka hore | medzera+bod1 |
+| šípka dolu | medzera+bod4 |
+| ľavá šípka | medzera+bod3 |
+| pravá šípka | medzera+bod6 |
+| Ponuka NVDA | c1+c3+c4+c5 (command n) |
+| shift+tab | medzera+bod1+bod3 |
+| tab | medzera+bod4+bod6 |
+| alt | medzera+bod1+bod3+bod4 (medzera+m) |
+| escape | medzera+bod1+bod5 (medzera+e) |
+| enter | bod8 |
+| windows+d (minimalizovať všetky aplikácie) | c1+c4+c5 (command d) |
+| kláves windows | medzera+bod3+bod4 |
+| alt+tab | medzera+bod2+bod3+bod4+bod5 (medzera+t) |
+| Čítať všetko | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
+++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] je osobitný program, prostredníctvom ktorého je možné použiť množstvo ďalších braillovských zobrazovačov.
 Na používanie ovládača braillovských riadkov BRLTTY je potrebné nainštalovať [BRLTTY pre Windows http://brl.thefreecat.org/brltty/].
 Mali by ste si stiahnúť najnovšiu inštalačnú verziu, ktorá bude pomenovaná napríklad brltty-win-4.2-2.exe.

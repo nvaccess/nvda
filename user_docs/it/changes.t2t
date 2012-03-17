@@ -4,6 +4,8 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.1 =
+Le principali novità di questa versione si concentrano su una lettura del braille molto più fluida; la formattazione dei documenti è indicata anche in braille; accesso a molte più informazioni di formattazione e una migliore gestione di Microsoft Word; inoltre, accesso semplificato e intuitivo all'Itunes Store. 
+
 == Novità ==
 - NVDA è in grado di annunciare il numero di spazi e di rientri nella riga attuale, nell'ordine in cui sono stati inseriti. Questo può essere attivato selezionando l'opzione annuncia rientri riga nella finestra di dialogo formattazione documento. (#373)
 - NVDA è in grado di rilevare la pressione dei tasti proveniente da tastiere alternative che lavorano in emulazione come tastiere a schermo o programmi di riconoscimento vocale.
@@ -15,17 +17,27 @@
 - In braille, i puntini 7 e 8 indicano la selezione del testo. (#889)
 - Vengono riportate in braille informazioni sui controlli contenuti nei documenti, come link, intestazioni e pulsanti. (#202)
 - Supporto per  i display Braille hedo ProfiLine e MobilLine USB. (#1863, #1897)
-- Quando possibile, NVDA cerca di non spezzare più le parole in braille. (#1890)
 - NVDA ora cerca di evitare di spezzare le parole in braille di default. Questo può venir disattivato nelle impostazioni braille. (#1890, #1946)
 - E' ora possibile usufruire in braille della lettura per paragrafi, oltre che per righe, che dovrebbe offrire una consultazione più comoda in grandi porzioni di testo. Tale opzione è selezionabile dalle impostazioni Braille, voce lettura per paragrafi. (#1891)
 - In modalità navigazione, è possibile attivare un oggetto direttamente utilizzando una barra braille. Sarà sufficiente fare doppio click con il cursor routing corrispondente, oppure, nel caso il cursore sia già alla posizione desiderata, basterà un click solo. (#1893)
 - Introdotto un supporto di base nelle aree web di Itunes, come lo store. Possono essere supportate anche altre applicazioni che utilizzino WebKit 1. (#734)
 - Nei libri in Adobe Digital Edition 1.8.1 e versioni successive, le pagine verranno girate automaticamente anche utilizzando l'opzione dire tutto. (#1978)
-
+- Nuove tabelle di traduzione Braille: Portoghese Grado 2, Islandese 8 punti Braille Computer, Tamil Grado 1, Spagnolo 8 punti Braille Computer, Farsi Grado 1. (#2014)
+- E' ora possibile configurare dalla finestra Formato documento se i frame debbano essere annunciati o meno, tramite l'opzione Leggi Frame. (#1900)
+- Viene attivata automaticamente la modalità riposo per il programma Openbook. (#1209)
+- In Poedit, ora i traduttori sono in grado di leggere automaticamente i commenti estratti e i commenti aggiunti nelle traduzioni. I messaggi che risultano non ancora tradotti o che sono incerti sono marcati con un asterisco e viene prodotto un beep quando li si raggiunge. (#1811)
+- Supporto per i Display Braille Serie HumanWare Brailliant BI e B (#1990)
+- Nuova Lingua: Norvegese Bokmål.
 
 
 == Cambiamenti ==
 - Il comando che consente di ottenere una descrizione del carattere attuale o di ascoltare lo spelling della parola o della riga ora funzionerà esattamente con la lingua del testo, se l'opzione cambio lingua automatica risulta attiva e sono disponibili le informazioni appropriate per la lingua.
+- Aggiornata Espeak alla versione 1.46.02.
+- NVDA non visualizzerà nomi più lunghi di 30 caratteri quando essi vengono presi da grafici o link degli URL, in quanto generalmente si tratta di informazioni di poco conto che disturbano la lettura. (#1989)
+- Molte informazioni in braille sono state abbreviate. (#1955, #2043)
+- Quando il cursore, oppure il cursore di controllo, viene spostato, il Braille lo seguirà correttamente come se avvenisse uno scorrimento manuale. Il risultato è una lettura più fluida quando l'opzione "lettura per paragrafi", o "evita di spezzare le parole", è attiva. (#1996)
+- Aggiornamento alla nuova tabella Braille Spagnola Grado1
+- Aggiornamento a libblouis braille translator 2.4.1.
 
 
 == Bug corretti ==
@@ -36,6 +48,30 @@
 - NVDA ora funziona nuovamente con i display braille, anche se la sintesi vocale è impostata su Nessun Sintetizzatore. (#1963)
 - I comandi per la navigazione ad oggetti non annunceranno più  nessun oggetto genitore/figlio, ma utilizzeranno gli stessi termini della documentazione.
 - Quando NVDA viene configurato nell'utilizzare una lingua diversa dall'inglese, il nome del tasto tab viene annunciato nella lingua corretta.
+- Nelle applicazioni Mozilla Gecko (ad esempio Firefox), NVDA non attiverà più in maniera intermittente la modalità navigazione quando si esplorano i menu nei documenti. (#2025)
+- Nella calcolatrice, la pressione del tasto Backspace ora annuncia il risultato aggiornato, piuttosto che non dire nulla. (#2030)
+- Nella modalità navigazione,  il comando "sposta il puntatore del mouse sull'oggetto attuale del navigatore) ora porterà il mouse al centro dell'oggetto sul quale è situato il cursore di controllo, invece che in alto a sinistra, il che rende questa operazione più accurata in alcune circostanze. (#2029)
+- In modalità navigazione, se l'opzione Modalita' focus automatica per i cambiamenti del focus è attiva, il portarsi in una barra degli strumenti farà attivare la modalità focus. (#1339)
+- Il comando Leggi titolo ora funziona di nuovo correttamente in Adobe Reader.
+- Quando l'opzione "modalità del focus automatica per i cambiamenti del focus" è attiva, viene utilizzata correttamente la modalità focus nelle tabelle e naturalmente nelle celle (esempio griglie). (#1763)
+- In Itunes, la posizione in alcune visualizzazioni ad elenco è ora riportata correttamente.
+- In Adobe Reader,  alcuni link non sono più trattati come campi editazione di sola lettura.
+- Le etichette di alcuni campi editazione non vengono più incluse in maniera non corretta quando viene annunciato il testo di una finestra di dialogo. (#1960)
+- Viene annunciata nuovamente la descrizione dei raggruppamenti, se l'opzione annuncia descrizione degli oggetti è attiva.
+- La finestra di dialogo inerente le proprietà di un'unità disco in risorse del computer  viene gestita in maniera migliore indipendentemente dalla dimensione dei caratteri.
+- E' stato sistemato un problema che causava la doppia lettura del testo nelle finestre proprietà. (#218)
+- Migliorato l'inseguimento del cursore nei campi di testo editabili che si basano sul testo scritto a schermo. In particolare, si possono notare grossi benefici nella modifica del contenuto delle celle in Microsoft Excel e nella gestione della composizione messaggi in Eudora. (#1658)
+- In Firefox11, il comando control+NVDA+spazio ora si comporta in maniera corretta, ad esempio nell'uscire da oggetti Flash.
+- NVDA ora si riavvia correttamente, ad esempio quando viene modificata la lingua, e la configurazione viene salvata in una cartella con caratteri non ascii.  (#2079)
+- Il Braille ora rispetta correttamente le impostazioni che influenzano la rappresentazione dei tasti caldi  degli oggetti, informazioni sulla loro posizione e descrizione.
+- Nelle applicazioni Mozilla, cambiare dalla modalità navigazione alla modalità focus ora funziona correttamente anche con il braille attivo. (#2095)
+- Se si utilizza un tasto cursor routing per spostare il cursore all'ultimo carattere di una riga o di un paragrafo, e questo carattere è uno spazio bianco, NVDA eseguirà l'operazione correttamente invece di portare il cursore all'inizio del testo. (#2096)
+- NVDA funziona di nuovo correttamente con la sintesi vocale Audiologic. (#2109)
+- Vengono elaborati correttamente i documenti in Microsoft Word come multilinea, di modo che lo scorrimento con un display braille sia fluido e senza intoppi.
+- In Microsoft Internet Explorer, non vengono più generati errori in caso il focus venga dato su alcuni controlli abbastanza rari. (#2121)
+- La modifica della pronuncia di simboli e punteggiatura effettuata da un utente avrà effetto immediato, piuttosto che dopo un riavvio di NVDA o dover impostare l'opzione rilevamento lingue su disattivo.
+- Quando si utilizza Espeak, la sintesi vocale non smette più di parlare in alcune circostanze nella finestra salva con nome del visualizzatore log di NVDA. (#2145)
+
 
 
 == Cambiamenti per sviluppatori ==
@@ -43,6 +79,12 @@
 - Il percorso di base del codice di NVDA viene catturato dal traceback nei log, per migliorarne la lettura. (#1880)
 - Gli oggetti TextInfo  ora possiedono il metodo activate() per attivare la posizione rappresentata da Textinfo.
 - Questo viene usato dai display braille per attivare la posizione con i cursor routing, ma vi saranno altre chiamate in futuro.
+- Gli elementi TreeInterceptors e NVDAObjects che espongono solo una pagina di testo alla volta ora supportano l'azione di girare pagina in modalità dire tutto, grazie all'uso di textInfos.DocumentWithPageTurns. (#1978)
+- Sono stati rinominati o spostati diversi controlli o costanti output. (#228)
+ - Le costanti speech.REASON_* sono state spostate su controlTypes.
+  - In controlTypes, speechRoleLabels e speechStateLabels sono stati rinominati in roleLabels e stateLabels.
+- Implementato nelle funzioni di log anche l'output del braille. (#2102)
+- Le sottoclassi di Sapi5 Synthdrivers possono sovrascrivere _getVoiceTokens  e estendere __init__ per supportare token di voce personalizzati come  con sapi.spObjectTokenCategory per ottenere token da una locazione di registro personalizzata.
 
 = 2011.3 =
 == Novità ==
@@ -83,7 +125,7 @@
 - Un testo con un controllo di testo non viene più visualizzato due volte in braille, ad esempio muovendosi indietro dall'inizio di un documento in wordpad.
 - Nella modalità navigazione in Internet Explorer, la pressione del tasto invio in un pulsante file upload ora mostrerà correttamente la finestra di dialogo di selezione file, invece di attivare la modalità focus. (#1720)
 - I cambiamenti di contenuti dinamici come nelle finestre Dos non vengono più riportati se la modalità riposo per quell'applicazione è attiva. (#1662)
-Nella modalità navigazione, il comportamento dei comandi alt+freccia su e alt+freccia giù per comprimere o espandere una casella combinata è stato migliorato. (#1630)
+- Nella modalità navigazione, il comportamento dei comandi alt+freccia su e alt+freccia giù per comprimere o espandere una casella combinata è stato migliorato. (#1630)
 - NVDA riesce ad essere più reattivo e a non bloccarsi in alcune situazioni dove applicazioni esterne non rispondono più (#1408)
 - Nei documenti Mozilla Gecko (ad esempio Firefox), in modalità navigazione,  NVDA non interpreterà più male il testo in alcune situazioni specifiche dove un elemento utilizzava lo stile display:table. #(1373)
 - NVDA non annuncerà più i controlli di un etichetta quando il focus si sposta all'interno di essi. Inoltre le etichette per alcuni campi nei forum non verranno più annunciate due volte in Firefox (Gecko) e Internet Explorer (MSHTML). (#1650)
@@ -98,6 +140,7 @@ Nella modalità navigazione, il comportamento dei comandi alt+freccia su e alt+f
 - NVDA ora funzionerà in maniera nettamente migliore nelle finestre  di dialogo di alcune applicazioni distribuite con Windows Xp, come ad esempio la finestra informazioni in Notepad e la finestra informazioni in Windows. (#1853, #1855)
 - Risolti gli errori della funzione "spostarsi parola per parola" nei controlli editazione di Windows. (#1877)
 - Lo spostamento al di fuori di un campo editazione di testo servendosi della freccia sinistra, superiore o pagina su, mentre ci si trova in modalità focus, ora attiverà la modalità navigazione, se la funzione modalità focus automatica per i movimenti del cursore è attiva. (#1733)
+
 
 
 = 2011.2 =
@@ -541,7 +584,7 @@ Le maggiori novità di questa release riguardano la capacità di funzionare anch
 - NVDA non abilita più automaticamente la modalità focus nei campi editazione di testo che aggiornano il proprio valore quando cambia il focus; ad esempio http://tigerdirect.com/. (#220)
 - NVDA cercherà di recuperare alcune situazioni nelle quali in precedenza si bloccava per lunghi periodi. Sono necessari circa 10 secondi allo screen reader per riavviarsi.
 - Quando la lingua di NVDA è impostata su "User Default", viene usata la lingua scelta dall'utente nelle impostazioni lingua di Windows, piuttosto che altre opzioni. (#353)
-- NVDA ora riconosce l'esistenza di controlli in AIM 7.
+- NVDA ora riconosce l'esistenza di controlli in AIM7.
 - Il comando passa tasto attraverso non presenta più problemi se un tasto viene tenuto premuto. In precedenza NVDA si rifiutava di accettare comandi quando questo capitava.  (#413)
 - La barra delle applicazioni non viene più ignorata quando viene evidenziata, che accade spesso quando si esce da un programma. In precedenza, NVDA si comportava come se il focus non fosse cambiato affatto.
 - Quando si legge del testo in applicazioni che fanno uso di Java Access Bridge (incluso OpenOffice.org), NVDA ora funziona correttamente quando l'opzione dire i numeri di riga è abilitata.

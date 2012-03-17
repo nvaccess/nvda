@@ -114,6 +114,7 @@ class AppModule(appModuleHandler.AppModule):
 		if len(self.lastMessages)>num-1:
 			ui.message(self.lastMessages[num-1])
 		else:
+			# Translators: This is presented to inform the user that no instant message has been received.
 			ui.message(_("No message yet"))
 	script_readMessage.__doc__=_("Displays one of the recent messages")
 

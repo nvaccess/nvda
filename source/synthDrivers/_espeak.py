@@ -1,6 +1,7 @@
+# -*- coding: UTF-8 -*-
 #synthDrivers/_espeak.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2007-2012 NV Access Limited, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -213,7 +214,7 @@ def getVoiceList():
 	voiceList=[]
 	for voice in voices:
 		if not voice: break
- 		voiceList.append(voice.contents)
+		voiceList.append(voice.contents)
 	return voiceList
 
 def getCurrentVoice():
@@ -280,7 +281,8 @@ def initialize():
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
 	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)
-	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,"synthDrivers",0)
+	sampleRate=espeakDLL.espeak_Initialize(AUDIO_OUTPUT_SYNCHRONOUS,300,
+		os.path.abspath("synthDrivers"),0)
 	if sampleRate<0:
 		raise OSError("espeak_Initialize %d"%sampleRate)
 	player = nvwave.WavePlayer(channels=1, samplesPerSec=sampleRate, bitsPerSample=16, outputDevice=config.conf["speech"]["outputDevice"])

@@ -1,8 +1,9 @@
-﻿Guia do Usuário do NVDA NVDA_VERSION
+﻿Guía do Usuário do NVDA NVDA_VERSION
 
 Traduzido por Marlin Rodrigues da Silva
 
 %!includeconf: ../userGuide.t2tconf
+%!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 %kc:title: REFERÊNCIA RÁPIDA DE TECLAS DE ATALHO DO NVDA
 = Índice =[toc]
 %%toc
@@ -17,13 +18,13 @@ O NonVisual Desktop Access permite às pessoas cegas ou com deficiência visual 
 
 Suas características mais notáveis são: 
 - Suporte para aplicações populares incluindo navegadores web, clientes de e-mail, programas de conversação pela internet e suítes de escritório;
-- Sintetizador de voz integrado que suporta mais de 20 idiomas;
+- Sintetizador de voz integrado que suporta 43 idiomas;
 - Anúncio da formatação do texto onde esteja disponível tal como nome e tamanho da fonte, estilo e erros ortográficos;
 - Anúncio automático do texto sob o mouse e indicação opcional em áudio de sua posição;
 - Suporte para diversas linhas braille;
 - Capacidade para  ser executado diretamente através de dispositivos USB e outros dispositivos portáteis sem necessitar de instalação;
 - Instalação com voz e fácil de usar;
-- Tradução para vários idiomas;
+- Tradução para 36 idiomas;
 - Suporte para as modernas versões do sistema operacional Windows  incluindo variantes de 32 e 64 bit;
 - Possibilidade de uso na  tela de logon do Windows   e outras telas de segurança;
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superior) ;
@@ -31,7 +32,7 @@ Suas características mais notáveis são:
 -
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 34 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tcheco, Turco, Ucraniano e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 36 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -125,7 +126,7 @@ A caixa de diálogo contém também duas caixas de seleção. A primeira permite
 ++ Sobre os Comandos De Teclado Do NVDA ++
 
 +++ A Tecla Modificadora do NVDA +++
-Maior parte dos comandos de teclado próprios   deste leitor de telas consiste normalmente no pressionamento de sua tecla modificadora em conjunto com uma ou mais teclas.
+ A maior parte dos comandos de teclado próprios   deste leitor de telas consiste normalmente no pressionamento de sua tecla modificadora em conjunto com uma ou mais teclas.
 Uma exceção a isso são os comandos de revisão de texto que utilizam somente o bloco numérico.
 
 O NVDA pode ser configurado para que o Insert do bloco numérico, Insert extendida ou a tecla Caps Lock possam ser utilizados como suas teclas modificadoras. 
@@ -245,6 +246,9 @@ Uma vez que tenha navegado para um objeto, pode revisá-lo com os comandos de [r
 
 Por padrão, a navegação de objetos acompanha o foco do sistema, embora esse comportamento possa ser ativado e desativado. 
 
+Note que o braille não acompanha a navegação de objetos e a revisão de texto por padrão, mas sim o [foco #SystemFocus] e o [cursor do sistema #SystemCaret].
+ Caso queira que em lugar disso, o braille acompanhe a navegação de objetos e a revisão de texto, você deve [configurar o braille para ser vinculado a #BrailleTether] exploração.
+
 Para navegar pelos objetos utilize as seguintes teclas de atalho: 
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
@@ -267,6 +271,9 @@ O NVDA permite-lhe ler o conteúdo do atual [objeto de navegação #ObjectNaviga
 Quando o cursor de exploração é movido, o cursor do Sistema não o acompanha, assim pode analisar o texto sem perder a posição de edição.
 No entanto, por padrão, quando se move o cursor do Sistema, o cursor de exploração o acompanha.
 Esta opção pode ser ativada ou desativada.
+
+Note que o braille não acompanha a navegação de objetos e a revisão de texto por padrão, mas sim o [foco #SystemFocus] e o [cursor do sistema #SystemCaret].
+ Caso queira que em lugar disso, o braille acompanhe a navegação de objetos e a revisão de texto, você deve [configurar o braille para ser vinculado a #BrailleTether] exploração.
 
 As seguintes teclas de atalho estão disponíveis para a revisão de texto: 
 %kc:beginInclude
@@ -304,11 +311,14 @@ Documentos complexos oferecem-lhe a possibilidade de revisar seu conteúdo por c
  Dá-se a isso o nome de revisão plana.
 É algo semelhante à revisão de tela ou à funcionalidade de cursor do mouse existente  em muitos outros leitores de telas.
 
-Quando alterna para a revisão plana, você é posicionado na localização do atual [objeto de navegação #ObjectNavegation].
+Ao ativar a revisão plana, você é posicionado na localização do atual [objeto de navegação #ObjectNavegation].
 Se não estava usando a navegação de objetos, então esse será o objeto que tem o [foco #SystemFocus].
 Por exemplo, se o objeto de navegação for um botão, você normalmente será posicionado sobre o texto do botão dentro da revisão plana.
 Você poderá, então, rever o texto com os comandos de [revisão de texto #ReviewingText].
 Poderá também navegar diretamente para o objeto que abrange a posição atual do cursor de revisão, permitindo que a partir daí use a [navegação de objetos #ObjectNavigation.
+
+Note que o braille não acompanha a navegação de objetos e a revisão de texto por padrão, mas sim o [foco #SystemFocus] e o [cursor do sistema #SystemCaret].
+ Caso queira que em lugar disso, o braille acompanhe a navegação de objetos e a revisão de texto, você deve [configurar o braille para ser vinculado a #BrailleTether] exploração.
 
 Os seguintes dois comandos são utilizados para alternar para e a partir da revisão plana:
 
@@ -421,6 +431,29 @@ Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir como
 | Mover para o Documento que contém o objeto embutido | NVDA+control+espaço | Move o foco para fora do objeto embutido atual e retorna ao Documento que o contém |
 %kc:endInclude
 
++ Comandos do NVDA PARA Aplicações Específicas +
+O NVDA fornece seus próprios comandos adicionais para alguns aplicativos com vistas a executar mais facilmente determinadas tarefas ou para proporcionar acesso a funcionalidades que de outra forma não são acessíveis aos usuários de leitores de telas.
+
+++ foobar2000 ++
+
+%kc:beginInclude
+|| Nome | Tecla | Descrição |
+| Anunciar o tempo restante | control+shift+r | Anuncia o tempo restante para a faixa atualmente em execução, caso haja alguma. |
+%kc:endInclude
+
+++ Miranda IM ++
+%kc:beginInclude
+| Nome | Tecla | Descrição |
+| Anunciar mensagem recente  | NVDA+control+1 | Anuncia uma das mensagens mais recentes, dependendo do número pressionado; isto é, NVDA+control+2 lê a segunda mensagem mais recente. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Nome | Tecla | Descrição |
+| Anunciar Janela de Comentários  | control+shift+c | Anuncia qualquer comentário na janela de comentários. |
+| Anunciar Janela de comentários automáticos | control+shift+a | Anuncia qualquer comentário na janela de comentários automáticos. |
+%kc:endInclude
+
 + Configurando o NVDA +
 
 ++ Preferências ++
@@ -440,7 +473,7 @@ Existem diversos idiomas, porém a opção padrão é "User Default, Windows".
 Esta definição informa ao software para utilizar o idioma que o Windows tem definido. 
 
 Atente por favor que o NVDA precisa ser reiniciado quando alterar o idioma.
-Este leitor de tela questionará se pretende reiniciar para que faça a alteração.
+Este leitor de telas questionará se pretende reiniciar para que a alteração seja feita.
 Pressione OK e o NVDA irá reiniciar. 
 
 ==== Salvar Configuração ao Sair ====
@@ -497,7 +530,7 @@ Pode utilizar as setas para ouvir os diversos itens.
 As setas Acima e Esquerda sobem pela lista, enquanto as Setas Abaixo e Direita descem pela lista.
 
 ==== Variante ====
-Se usa o eSpeak que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar a Variante do sintetizador com a qual deve falar.
+Caso esteja usando o eSpeak que acompanha o NVDA, esta é uma caixa de combinação que lhe permite selecionar a Variante do sintetizador com a qual deve falar.
 As variantes do eSpeak assemelham-se às vozes, mas proporcionam atributos ligeiramente diferentes da voz principal.
 Algumas variantes são semelhantes a homens, mulheres e outras são similares a sapos.
 
@@ -595,7 +628,7 @@ Esta opção é um campo numérico que lhe permite alterar a velocidade de inter
 Esta opção é um campo numérico que controla durante quanto tempo são apresentadas as mensagens do sistema na linha Braille.
 
 %kc:setting
-==== Braille Vinculado a ====
+==== Braille Vinculado a ====[BrailleTether]
 Tecla: NVDA+control+t
 
 Esta opção permite-lhe escolher se a linha Braille seguirá o cursor do sistema, ou se segue o navegador de objetos / cursor de exploração.
@@ -814,9 +847,10 @@ Pode configurar o anúncio de:
 - Listas
 - Blocos de citação
 - Marcas de Seção
+- Frames
 -
 
-==== Anunciar Mudanças de Formato Após Cursor ====
+==== Anunciar Mudanças de Formato Após o Cursor ====
 Se ativada, esta opção faz com que o NVDA tente detectar todas as alterações de formatação na linha conforme a anuncia, mesmo que isto possa diminuir seu desempenho.
 
 Por padrão, o NVDA irá detectar a formatação na posição do cursor do sistema/cursor de exploração e em alguns casos poderá detectar a formatação do resto da linha, desde que não diminua o seu desempenho.
@@ -924,7 +958,7 @@ O eSpeak é iniciado com o NVDA por padrão.
 Por ter sido compilado para o NVDA, ele é uma boa escolha para quando se executa o NVDA num dispositivo USB ou CD em outros sistemas.
 
 Cada voz que vem com o eSpeak fala um idioma diferente.
-Existem cerca de 20 idiomas suportados por ele.
+Existem cerca de 43 idiomas suportados por ele.
 
 Existem também muitas variantes que podem ser escolhidas para alterar o som da voz.
 
@@ -933,7 +967,7 @@ SAPI 4 é um standard antigo da Microsoft para os softwares sintetizadores de vo
 Muitos sintetizadores de voz que trabalham com este standard podem ser comprados ou baixados em várias empresas ou sites da Web.
 Quando este sintetizador é utilizado com o NVDA, as vozes disponíveis (que podem ser encontradas no [Diálogo de Opções de Voz #VoiceSettings] ou desde o [Anel de Configurações de Voz #SynthSettingsRing]) contêm todas as vozes dos motores SAPI 4 que se encontram instaladas em seu sistema.
 
-Se possui sintetizadores SAPI 4 instalados mas o sintetizador não aparece na lista do NVDA, instale por favor o runtime binaries do SAPI 4.0, disponível em http://ativex.microsoft.com/ativex/controls/sapi/spchapi.exe.
+Se possui sintetizadores SAPI 4 instalados mas o sintetizador não aparece na lista do NVDA, instale por favor o runtime binaries do SAPI 4.0, que se encontra disponível no enderesso http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 O SAPI 5 é um standard da Microsoft para os softwares sintetizadores de voz.
@@ -945,8 +979,11 @@ A Plataforma de Fala da Microsoft disponibiliza vozes para muitos idiomas que s�
 Essas vozes também podem ser usadas com o NVDA.
 
 Para usá-las, você necessitará instalar dois componentes:
-- Microsoft Speech Platform - Server Runtime (Versão 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
-- Microsoft Speech Platform - Server Runtime Languages (Versão 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Essa página inclui vários arquivos tanto para reconhecimento de fala como texto para fala.
+ Escolha os arquivos que contém os dados de texto para fala para os idiomas/vozes desejados.
+ Por exemplo, o arquivo MSSpeech_TTS_pt-BR_Heloisa.msi é a voz disponível para Português do Brasil.
 -
 
 ++ Audiologic Tts3 ++
@@ -1103,6 +1140,7 @@ Será antes necessário  instalar os drivers para USB fornecidos pelo fabricante
 
 A segui estão as teclas de comando para esta linha braille com o NVDA.
 Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
+
 %kc:beginInclude
 || Nome | Tecla |
 | Mover Linha Braille para Trás | K1 |
@@ -1131,17 +1169,48 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 | Leitura Contína | B6 |
 %kc:endInclude
 
+++ HumanWare Brailliant BI/B Series ++
+As linhas braille Brailliant BI e B series, disponíveis em [HumanWare http://www.humanware.com/], incluindo as linhas BI 32, BI 40 e B 80, são suportadas quando conectadas via USB ou bluetooth.
+Para conectar via USB, você antes precisa instalar os drivers USB fornecidos pelo fabricante.
+
+A segui estão as teclas de comando para esta linha braille com o NVDA.
+Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
+ 
+%kc:beginInclude
+|| Nome | Tecla |
+| Deslocar linha braille para trás | esquerda |
+| Deslocar linha braille para a frente | direita |
+| Mover linha braille para a linha anterior | cima |
+| Mover linha braille para a linha seguinte | baixo |
+| Guiar para a cela braille | sensor |
+| Alternar braille vinculado a | cima+baixo |
+| Tecla seta acima | espaço+ponto1 |
+| Tecla seta abaixo | espaço+ponto4 |
+| Tecla seta a esquerda | espaço+ponto3 |
+| Tecla seta a direita | espaço+ponto6 |
+| Menu do NVDA | c1+c3+c4+c5 (comando n) |
+| Tecla shift+tab | espaço+ponto1+ponto3 |
+| Tecla tab | espaço+ponto4+ponto6 |
+| Tecla alt | espaço+ponto1+ponto3+ponto4 (espaço+m) |
+| Tecla escape | espaço+ponto1+ponto5 (espaço+e) |
+| Tecla enter | ponto8 |
+| Tecla windows+d (minimizar todos os applicativos) | c1+c4+c5 (comando d) |
+| Tecla windows | espaço+ponto3+ponto4 |
+| Tecla alt+tab | espaço+ponto2+ponto3+ponto4+ponto5 (espaço+t) |
+| Leitura Contínua | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
-Para utilizá-lo, terá que instalar o BRLTTY para o Windows.
-Deverá baixá-lo  e instalar o último pacote de instalação, que se denominará, por exemplo, brltty-win-4.2-2.exe.
+Para utilizá-lo, será necessário instalar o BRLTTY para o Windows.
+Você deverá baixá-lo  e instalar o último pacote de instalação, que se denominará, por exemplo, brltty-win-4.2-2.exe.
 Quando configurar a linha e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se utiliza uma linha USB e já tem os drivers do fabricante instalados.
 
 A seguir encontram-se os comandos BRLTTY para o NVDA.
 Por favor consulte as [tabelas de documentação de teclas para o BRLTTY http://mielke.cc/brltty/doc/drivers/] para obter informações sobre como estão mapeados os comandos do BRLTTY para controlar cada linha braille.
  
 %kc:beginInclude
-|| Nome | Comando BRLTTY |
+| Nome | Comando BRLTTY |
 | Mover linha braille para trás | fwinlt (caminha uma janela à esquerda) |
 | Mover  linha braille para a frente | fwinrt (Caminha uma janela à direita) |
 | Mover linha braille para a linha anterior | lnup (sobe uma linha) |

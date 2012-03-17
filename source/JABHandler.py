@@ -229,7 +229,7 @@ class JABContext(object):
 
 	def __init__(self,hwnd=None,vmID=None,accContext=None):
 		if hwnd and not vmID:
- 			vmID=c_int()
+			vmID=c_int()
 			accContext=JOBJECT64()
 			bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
 			vmID=vmID.value
