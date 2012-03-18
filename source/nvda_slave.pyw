@@ -25,6 +25,9 @@ def main():
 		elif action=="updateInstall":
 			import installer
 			installer.update()
+		elif action=="unregisterInstall":
+			import installer
+			installer.unregisterInstallation()
 		elif action=="launchNVDA":
 			import subprocess
 			import shellapi

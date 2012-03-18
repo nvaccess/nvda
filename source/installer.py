@@ -227,7 +227,7 @@ def install(installDir,startMenuFolder,shouldInstallService=True,shouldCreateDes
 	registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldCreateDesktopShortcut,shouldRunAtLogon)
 
 def update():
-	install(getInstallPath(),getStartMenuFolder(),shouldInstallService=config.isServiceInstalled())
+	install(getInstallPath(),getStartMenuFolder(),shouldInstallService=config.isServiceInstalled(),forUpdate=True)
 
 autorunTemplate="""[AutoRun]
 open={exe}
