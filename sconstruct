@@ -240,8 +240,20 @@ if certFile:
 	env.AddPostAction(launcher, [signExec])
 env.Alias("launcher", launcher)
 
+uninstFile=File("dist/uninstall.exe")
+uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
+	[[makensis, "/V2",
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"',
+	"/DUNINSTEXE=%s"%uninstFile.abspath,
+	"/XOutFile ${TARGET.abspath}",
+	"$SOURCE"]])
+uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
+if certFile:
+	env.AddPostAction(uninstaller, [signExec])
+
+env.Alias("launcher", launcher)
 env.Alias("portable", launcher)
-env.Alias("installer", launcher)
+
 
 clientArchive = env.SzArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeToSourceDir=True)
 env.Alias("client", clientArchive)
@@ -311,5 +323,5 @@ symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path,'*.pdb')))
 symbolsArchive = env.SzArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
 env.Alias("symbolsArchive", symbolsArchive)
 
-env.Default(portableDist)
+env.Default(dist)
 
