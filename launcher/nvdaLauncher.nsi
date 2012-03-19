@@ -8,7 +8,7 @@ RequestExecutionLevel user
 
 ReserveFile "${NSISDIR}\Plugins\system.dll"
 ReserveFile "${NSISDIR}\Plugins\banner.dll"
-ReserveFile "waves\nvda_logo.wav"
+ReserveFile "..\installer\waves\nvda_logo.wav"
 
 Name "NVDA"
 VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
@@ -37,7 +37,7 @@ Banner::show /nounload
 BringToFront
 
 ;Play NVDA logo sound
-File "waves\nvda_logo.wav"
+File "..\installer\waves\nvda_logo.wav"
 Push "$PLUGINSDIR\app\nvda_logo.wav"
 Call PlaySound
 file /R "${NVDADistDir}\"
