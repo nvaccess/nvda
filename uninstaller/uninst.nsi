@@ -91,7 +91,6 @@ FunctionEnd
 
 Section "Uninstall"
 SetAutoClose true
-MessageBox MB_OK "install dir is $INSTDIR"
-;execWait "$INSTDIR\nvda_slave.exe unregisterInstall"
-;Rmdir /REBOOTOK /r "$INSTDIR"
+execWait "$INSTDIR\nvda_slave.exe unregisterInstall"
+Rmdir /REBOOTOK /r "$INSTDIR"
 SectionEnd
