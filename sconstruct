@@ -225,7 +225,19 @@ if certTimestampServer:
 	signExec.extend(("/t", certTimestampServer))
 signExec.append("$TARGET")
 
+uninstFile=File("dist/uninstall.exe")
+uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
+	[[makensis, "/V2",
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"',
+	"/DUNINSTEXE=%s"%uninstFile.abspath,
+	"/XOutFile ${TARGET.abspath}",
+	"$SOURCE"]])
+uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
+if certFile:
+	env.AddPostAction(uninstaller, [signExec])
+
 dist = env.NVDADist("dist", sourceDir, uiAccess=bool(certFile))
+env.Depends(dist,uninstaller)
 # Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
 env.Clean(dist, dist)
 # Clean the intermediate build directory.
@@ -239,17 +251,6 @@ launcher = env.Command(outputDir.File("%s_launcher.exe" % outFilePrefix), ["laun
 if certFile:
 	env.AddPostAction(launcher, [signExec])
 env.Alias("launcher", launcher)
-
-uninstFile=File("dist/uninstall.exe")
-uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
-	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"',
-	"/DUNINSTEXE=%s"%uninstFile.abspath,
-	"/XOutFile ${TARGET.abspath}",
-	"$SOURCE"]])
-uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
-if certFile:
-	env.AddPostAction(uninstaller, [signExec])
 
 env.Alias("launcher", launcher)
 env.Alias("portable", launcher)
