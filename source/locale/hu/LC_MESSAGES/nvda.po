@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2012-03-01 05:30+0000\n"
-"PO-Revision-Date: 2012-02-15 11:57+0100\n"
+"PO-Revision-Date: 2012-03-14 12:44+0100\n"
 "Last-Translator: Erion <None>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,8 @@ msgid "%d hours and %d minutes remaining"
 msgstr "%d óra és %d perc van hátra"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:822 NVDAObjects/behaviors.py:54
+#: globalCommands.py:822
+#: NVDAObjects/behaviors.py:54
 #, python-format
 msgid "%d percent"
 msgstr "%d százalék"
@@ -41,7 +42,8 @@ msgstr "%d százalék"
 msgid "%s %s through %s %s"
 msgstr "%s %s keresztül %s %s"
 
-#: globalCommands.py:300 globalCommands.py:742
+#: globalCommands.py:300
+#: globalCommands.py:742
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s. A vágólapra másolva."
@@ -63,12 +65,15 @@ msgstr "%s vége"
 msgid "%s items"
 msgstr "%s elem"
 
-#: virtualBuffers/__init__.py:220 virtualBuffers/__init__.py:228
+#: virtualBuffers/__init__.py:220
+#: virtualBuffers/__init__.py:228
 #, python-format
 msgid "%s landmark"
 msgstr "%s jelzőpont"
 
-#: braille.py:436 speech.py:798
+#: braille.py:430
+#: speech.py:798
+#: braille.py:436
 #, python-format
 msgid "%s of %s"
 msgstr "%s per %s"
@@ -210,7 +215,8 @@ msgstr "&Tempó"
 msgid "&Remove"
 msgstr "&eltávolítás"
 
-#: gui/settingsDialogs.py:991 gui/settingsDialogs.py:1240
+#: gui/settingsDialogs.py:991
+#: gui/settingsDialogs.py:1240
 msgid "&Replacement"
 msgstr "&behelyettesített kifejezés"
 
@@ -297,28 +303,20 @@ msgid "..."
 msgstr "..."
 
 #: gui/__init__.py:259
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
+msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "Az alapértelmezett kivételszótár beállítására szolgáló párbeszédablak"
 
 #: gui/__init__.py:263
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
+msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "Az ideiglenes kivételszótár beállítására szolgáló párbeszédablak."
 
 #: gui/__init__.py:261
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
+msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "A hangkarakter kivételszótár beállítására szolgáló párbeszédablak."
 
 #: versionInfo.py:39
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr ""
-"Egy ingyenes, nyílt forráskódú képernyőolvasó a Microsoft Windows operációs "
-"rendszerhez"
+msgstr "Egy ingyenes, nyílt forráskódú képernyőolvasó a Microsoft Windows operációs rendszerhez"
 
 #: globalCommands.py:823
 msgid "AC power on"
@@ -329,7 +327,8 @@ msgstr "Hálózatról üzemel"
 msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 sorozat"
 
-#: gui/__init__.py:202 gui/__init__.py:301
+#: gui/__init__.py:202
+#: gui/__init__.py:301
 msgid "About NVDA"
 msgstr "az NVDA névjegye"
 
@@ -350,17 +349,11 @@ msgstr "Szótárbejegyzés hozzáadása"
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:855
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr ""
-"A kurzor pozíciójánál lévő formázások változásának jelzése (a beszéd késését "
-"okozhatja)"
+msgstr "A kurzor pozíciójánál lévő formázások változásának jelzése (a beszéd késését okozhatja)"
 
 #: globalCommands.py:128
-msgid ""
-"Announces the current selection in edit controls and documents. If there is "
-"no selection it says so."
-msgstr ""
-"Bemondja az aktuális kijelölést egy szerkesztőmezőben vagy dokumentumban. "
-"Azt is bemondja, ha semmi sincs kijelölve"
+msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
+msgstr "Bemondja az aktuális kijelölést egy szerkesztőmezőben vagy dokumentumban. Azt is bemondja, ha semmi sincs kijelölve"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:36
@@ -508,8 +501,7 @@ msgstr "&kis- és nagybetűk megkülönböztetése"
 
 #: gui/__init__.py:247
 msgid "Change reporting of mouse shape and object under mouse"
-msgstr ""
-"az egérmutató alakjának és a mutatónál lévő elem bemondásának beállítása"
+msgstr "az egérmutató alakjának és a mutatónál lévő elem bemondásának beállítása"
 
 #: gui/__init__.py:251
 msgid "Change reporting of objects"
@@ -545,8 +537,7 @@ msgstr "Kínai (Taiwan, Mandarin)"
 
 #: gui/__init__.py:241
 msgid "Choose the voice, rate, pitch and volume to use"
-msgstr ""
-"a hangkarakter, a beszédsebesség, a hangmagasság és a hangerő beállítása"
+msgstr "a hangkarakter, a beszédsebesség, a hangmagasság és a hangerő beállítása"
 
 #: globalCommands.py:85
 msgid "Clicks the left mouse button once at the current mouse position"
@@ -587,12 +578,8 @@ msgid "Configure how and when the review cursor moves"
 msgstr "Az áttekintő kurzor mozgásának konfigurálása"
 
 #: gui/__init__.py:245
-msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
-msgstr ""
-"A billentyűzetkiosztás illetve karakterek, szavak és parancsbillentyűk "
-"bemondásának beállítása"
+msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
+msgstr "A billentyűzetkiosztás illetve karakterek, szavak és parancsbillentyűk bemondásának beállítása"
 
 #: gui/__init__.py:296
 msgid "Contributors"
@@ -629,8 +616,7 @@ msgstr "Nem lehet betölteni a(z) %s beszédszintetizátort."
 
 #: gui/__init__.py:135
 msgid "Could not save configuration - probably read only file system"
-msgstr ""
-"Hiba történt a beállítások elmentésekor - lehetséges, hogy a fájl írásvédett."
+msgstr "Hiba történt a beállítások elmentésekor - lehetséges, hogy a fájl írásvédett."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -648,21 +634,12 @@ msgid "Cursor blink rate (ms)"
 msgstr "A kurzor villogási sebessége (ms)"
 
 #: gui/settingsDialogs.py:179
-msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
-msgstr ""
-"Egyéni beépülők találhatóak a beállítások mappában. Ezek másolása a "
-"rendszerprofil mappába bisztonsági kockázatot jelenthet. Bisztosan szeretné "
-"másolni beállításait?"
+msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
+msgstr "Egyéni beépülők találhatóak a beállítások mappában. Ezek másolása a rendszerprofil mappába bisztonsági kockázatot jelenthet. Bisztosan szeretné másolni beállításait?"
 
 #: globalCommands.py:214
-msgid ""
-"Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr ""
-"Váltogat az írásjelek között, melyek meghatározzák, melyek kerülnek "
-"bemondásra"
+msgid "Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr "Váltogat az írásjelek között, melyek meghatározzák, melyek kerülnek bemondásra"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -731,7 +708,8 @@ msgstr "Holland (Belga), rövidítési fokozat 1"
 msgid "Dutch (netherlands) grade 1"
 msgstr "Holland, rövidítési fokozat 1"
 
-#: gui/__init__.py:315 gui/logViewer.py:34
+#: gui/__init__.py:315
+#: gui/logViewer.py:34
 msgid "E&xit"
 msgstr "&kilépés"
 
@@ -803,7 +781,9 @@ msgstr "Angol (Egyesült Államokbeli), rövidítési fokozat 1"
 msgid "English (U.S.) grade 2"
 msgstr "Angol (Egyesült Államokbeli), rövidítési fokozat 2"
 
-#: gui/__init__.py:135 gui/__init__.py:144 gui/logViewer.py:74
+#: gui/__init__.py:135
+#: gui/__init__.py:144
+#: gui/logViewer.py:74
 #: gui/settingsDialogs.py:185
 msgid "Error"
 msgstr "hiba"
@@ -856,16 +836,16 @@ msgstr "Páros oldal lábléc"
 msgid "Even pages header"
 msgstr "Páros oldal fejléc"
 
-#: gui/__init__.py:161 gui/__init__.py:315
+#: gui/__init__.py:161
+#: gui/__init__.py:315
 msgid "Exit NVDA"
 msgstr "kilépés az NVDA-ból"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:32
-#, fuzzy
 msgid "Farsi grade 1"
-msgstr "Arab, rövidítési fokozat 1"
+msgstr "Perzsa, rövidítési fokozat 1"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:14
@@ -917,15 +897,8 @@ msgid "Footnotes"
 msgstr "lábjegyzet"
 
 #: gui/settingsDialogs.py:213
-msgid ""
-"For the new language to take effect, the configuration must be saved and "
-"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
-"manually save and exit at a later time."
-msgstr ""
-"A nyelvi beállítások megváltoztatásához mentenie kell a beállításokat, és "
-"újra kell indítania az NVDA programot. Nyomja meg az Enter billentyűt a "
-"beállítások elmentéséhez és az NVDA újraindításához. Ha később szeretné "
-"újraindítani a programot, válassza a mégse gombot."
+msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
+msgstr "A nyelvi beállítások megváltoztatásához mentenie kell a beállításokat, és újra kell indítania az NVDA programot. Nyomja meg az Enter billentyűt a beállítások elmentéséhez és az NVDA újraindításához. Ha később szeretné újraindítani a programot, válassza a mégse gombot."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:34
@@ -968,7 +941,8 @@ msgid "French (unified) Grade 2"
 msgstr "Francia (egységesített), rövidítési fokozat 2"
 
 #. Translators: This is presented in outlook or live mail, email sender
-#: appModules/msimn.py:30 appModules/msimn.py:46
+#: appModules/msimn.py:30
+#: appModules/msimn.py:46
 msgid "From:"
 msgstr "Feladó:"
 
@@ -1060,17 +1034,12 @@ msgstr "Dőlt"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:122
-#, fuzzy
 msgid "Icelandic 8 dot computer braille"
-msgstr "Német 8 pontos számítógépes braille"
+msgstr "Izlandi 8 pontos számítógépes braille"
 
 #: globalCommands.py:136
-msgid ""
-"If pressed once, reports the current time. If pressed twice, reports the "
-"current date"
-msgstr ""
-"Egyszeri lenyomásra a pontos időt, kétszer gyorsan lenyomva a dátumot mondja "
-"be."
+msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
+msgstr "Egyszeri lenyomásra a pontos időt, kétszer gyorsan lenyomva a dátumot mondja be."
 
 #: globalCommands.py:145
 msgid "Increases the currently active setting in the synth settings ring"
@@ -1168,13 +1137,8 @@ msgid "Log level"
 msgstr "naplózási szint"
 
 #: globalCommands.py:760
-msgid ""
-"Logs information about the current navigator object which is useful to "
-"developers and activates the log viewer so the information can be examined."
-msgstr ""
-"Bemond néhány, leginkább fejlesztőknek hasznos adatot a navigátor kurzornál "
-"lévő vezérlőelemről. Kétszer gyorsan leütve az elem azonosítóját, osztályát "
-"és belső szövegét a vágólapra másolja"
+msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
+msgstr "Bemond néhány, leginkább fejlesztőknek hasznos adatot a navigátor kurzornál lévő vezérlőelemről. Kétszer gyorsan leütve az elem azonosítóját, osztályát és belső szövegét a vágólapra másolja"
 
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers/lilli.py:44
@@ -1182,11 +1146,8 @@ msgid "MDV Lilli"
 msgstr "MDV Lilli kijelző"
 
 #: globalCommands.py:922
-msgid ""
-"Marks the current position of the review cursor as the start of text to be "
-"copied"
-msgstr ""
-"Megjelöli az áttekintő kurzor aktuális helyét, ami a másolandó szöveg eleje"
+msgid "Marks the current position of the review cursor as the start of text to be copied"
+msgstr "Megjelöli az áttekintő kurzor aktuális helyét, ami a másolandó szöveg eleje"
 
 #: gui/settingsDialogs.py:1156
 msgid "Message timeout (sec)"
@@ -1206,12 +1167,8 @@ msgid "Move navigator object to mouse"
 msgstr "a navigátor kurzor áthelyezése az egérmutatónál lévő elemhez"
 
 #: globalCommands.py:269
-msgid ""
-"Moves navigator object to the object represented by the text at the position "
-"of the review cursor within flat review"
-msgstr ""
-"A navigátor kurzort a síkáttekintő mód szövegénél található objektumhoz "
-"helyezi."
+msgid "Moves navigator object to the object represented by the text at the position of the review cursor within flat review"
+msgstr "A navigátor kurzort a síkáttekintő mód szövegénél található objektumhoz helyezi."
 
 #: globalCommands.py:964
 msgid "Moves the braille display to the next line"
@@ -1246,88 +1203,48 @@ msgid "Moves the navigator object to the previous object"
 msgstr "A navigátor kurzort az előző elemhez helyezi"
 
 #: globalCommands.py:476
-msgid ""
-"Moves the review cursor to the bottom line of the current navigator object "
-"and speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem utolsó sorához helyezi"
+msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem utolsó sorához helyezi"
 
 #: globalCommands.py:520
-msgid ""
-"Moves the review cursor to the first character of the line where it is "
-"situated in the current navigator object and speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem aktuális sorának "
-"elejére helyezi"
+msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem aktuális sorának elejére helyezi"
 
 #: globalCommands.py:584
-msgid ""
-"Moves the review cursor to the last character of the line where it is "
-"situated in the current navigator object and speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem jelenlegi sorának "
-"végére helyezi"
+msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem jelenlegi sorának végére helyezi"
 
 #: globalCommands.py:573
-msgid ""
-"Moves the review cursor to the next character of the current navigator "
-"object and speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem következő karakteréhez "
-"helyezi."
+msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem következő karakteréhez helyezi."
 
 #: globalCommands.py:468
-msgid ""
-"Moves the review cursor to the next line of the current navigator object and "
-"speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem következő sorához "
-"helyezi"
+msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem következő sorához helyezi"
 
 #: globalCommands.py:510
-msgid ""
-"Moves the review cursor to the next word of the current navigator object and "
-"speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem következő szavához "
-"helyezi"
+msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem következő szavához helyezi"
 
 #: globalCommands.py:538
-msgid ""
-"Moves the review cursor to the previous character of the current navigator "
-"object and speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem előző karakteréhez "
-"helyezi"
+msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem előző karakteréhez helyezi"
 
 #: globalCommands.py:446
-msgid ""
-"Moves the review cursor to the previous line of the current navigator object "
-"and speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem előző sorához helyezi"
+msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem előző sorához helyezi"
 
 #: globalCommands.py:488
-msgid ""
-"Moves the review cursor to the previous word of the current navigator object "
-"and speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem előző szavához helyezi"
+msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem előző szavához helyezi"
 
 #: globalCommands.py:434
-msgid ""
-"Moves the review cursor to the top line of the current navigator object and "
-"speaks it"
-msgstr ""
-"Az áttekintő kurzort a navigátor kurzornál lévő elem első sorához helyezi"
+msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
+msgstr "Az áttekintő kurzort a navigátor kurzornál lévő elem első sorához helyezi"
 
 #: globalCommands.py:256
-msgid ""
-"Moves to flat review for the screen (or document if currently inside one) "
-"and positions the review cursor at the location of the current object"
-msgstr ""
-"Sík áttekintő módra vált, ha elérhető, és az áttekintő kurzort az aktuális "
-"elem pozíciójához helyezi"
+msgid "Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
+msgstr "Sík áttekintő módra vált, ha elérhető, és az áttekintő kurzort az aktuális elem pozíciójához helyezi"
 
 #: globalCommands.py:163
 msgid "Moves to the next available setting in the synth settings ring"
@@ -1422,7 +1339,9 @@ msgstr "Nem tartalmaz elemeket"
 msgid "No previous"
 msgstr "Nincs előző elem."
 
-#: globalCommands.py:141 globalCommands.py:150 globalCommands.py:159
+#: globalCommands.py:141
+#: globalCommands.py:150
+#: globalCommands.py:159
 #: globalCommands.py:168
 msgid "No settings"
 msgstr "Nincsenek beállítások"
@@ -1485,7 +1404,8 @@ msgstr "Norvég, rövidítési fokozat 3"
 msgid "Not in a table cell"
 msgstr "csak táblázatban használható"
 
-#: NVDAObjects/window/winword.py:391 NVDAObjects/window/winword.py:408
+#: NVDAObjects/window/winword.py:391
+#: NVDAObjects/window/winword.py:408
 msgid "Not in table"
 msgstr "csak táblázatban használható"
 
@@ -1496,14 +1416,8 @@ msgstr "Objektumok megjelenítése"
 
 #: globalCommands.py:321
 #, python-format
-msgid ""
-"Object edges positioned %.1f per cent from left edge of screen, %.1f per "
-"cent from top edge of screen, width is %.1f per cent of screen, height is "
-"%.1f per cent of screen"
-msgstr ""
-"Az objektum pozíciója: %.1f százalék a képernyő bal, %.1f a képernyő felső "
-"szélétől, a szélessége %.1f százaléka, a magassága %.1f százaléka a "
-"képernyőnek"
+msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
+msgstr "Az objektum pozíciója: %.1f százalék a képernyő bal, %.1f a képernyő felső szélétől, a szélessége %.1f százaléka, a magassága %.1f százaléka a képernyőnek"
 
 #: gui/__init__.py:411
 msgid "Options"
@@ -1531,12 +1445,8 @@ msgid "Pattern"
 msgstr "Tényleges kifejezés"
 
 #: globalCommands.py:426
-msgid ""
-"Performs the default action on the current navigator object (example: "
-"presses it if it is a button)."
-msgstr ""
-"Végrehajtja az alapértelmezett műveletet a navigátor kurzornál lévő elemen. "
-"Pl. megnyomja a gombot."
+msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
+msgstr "Végrehajtja az alapértelmezett műveletet a navigátor kurzornál lévő elemen. Pl. megnyomja a gombot."
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:16
@@ -1574,12 +1484,8 @@ msgid "Presents a list of links, headings or landmarks"
 msgstr "Megjeleníti a címsorok, jelzőpontok vagy hivatkozások listáját"
 
 #: globalCommands.py:352
-msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
-msgstr ""
-"Egyszeri megnyomásra a fókusz a navigátorkurzorhoz kerül, kétszeri megnyomás "
-"esetén a rendszerkurzor az áttekintőkurzorhoz lép."
+msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
+msgstr "Egyszeri megnyomásra a fókusz a navigátorkurzorhoz kerül, kétszeri megnyomás esetén a rendszerkurzor az áttekintőkurzorhoz lép."
 
 #: NVDAObjects/window/winword.py:89
 msgid "Primary footer"
@@ -1656,14 +1562,11 @@ msgid "Reload plugins"
 msgstr "A bővítmények újratöltése"
 
 #: globalCommands.py:972
-msgid ""
-"Reloads app modules and global plugins without restarting NVDA, which can be "
-"Useful for developers"
-msgstr ""
-"Újratölti a NVDA szkripteket és bővítményeket az NVDA újraindítása nélkül, "
-"mely hasznos lehet fejlesztőknek"
+msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
+msgstr "Újratölti a NVDA szkripteket és bővítményeket az NVDA újraindítása nélkül, mely hasznos lehet fejlesztőknek"
 
-#: gui/settingsDialogs.py:1026 gui/settingsDialogs.py:1228
+#: gui/settingsDialogs.py:1026
+#: gui/settingsDialogs.py:1228
 msgid "Replacement"
 msgstr "Behelyettesített kifejezés"
 
@@ -1853,56 +1756,28 @@ msgid "Reports any comments in the comments window"
 msgstr "Felolvassa a megjegyzés ablak tartalmát."
 
 #: globalCommands.py:679
-msgid ""
-"Reports formatting info for the current review cursor position within a "
-"document"
-msgstr ""
-"Bemondja az áttekintő kurzor pozíciójánál található formázási paramétereket."
+msgid "Reports formatting info for the current review cursor position within a document"
+msgstr "Bemondja az áttekintő kurzor pozíciójánál található formázási paramétereket."
 
 #: globalCommands.py:555
-msgid ""
-"Reports the character of the current navigator object where the review "
-"cursor is situated. Pressing twice reports a description or example of that "
-"character. Pressing three times reports the numeric value of the character "
-"in decimal and hexadecimal"
-msgstr ""
-"Bemondja az áttekintő kurzornál lévő karaktert. Kétszeri gyors lenyomásra a "
-"karakter leírása, vagy magyarázata hallható, háromszori leütésre pedig a "
-"karakter ascii és hexadecimális értékei hangzanak el"
+msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
+msgstr "Bemondja az áttekintő kurzornál lévő karaktert. Kétszeri gyors lenyomásra a karakter leírása, vagy magyarázata hallható, háromszori leütésre pedig a karakter ascii és hexadecimális értékei hangzanak el"
 
 #: globalCommands.py:79
-msgid ""
-"Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr ""
-"A kurzor alatti aktuális sort olvassa fel. Kétszer gyorsan megnyomva betűzi "
-"a sort"
+msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
+msgstr "A kurzor alatti aktuális sort olvassa fel. Kétszer gyorsan megnyomva betűzi a sort"
 
 #: globalCommands.py:303
-msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
-msgstr ""
-"Felolvassa a navigátor kurzornál lévő elemet. Kétszer gyorsan megnyomva "
-"betűzi, háromszor gyorsan megnyomva pedig az elem nevét és értékét a "
-"vágólapra másolja"
+msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
+msgstr "Felolvassa a navigátor kurzornál lévő elemet. Kétszer gyorsan megnyomva betűzi, háromszor gyorsan megnyomva pedig az elem nevét és értékét a vágólapra másolja"
 
 #: globalCommands.py:322
 msgid "Reports the hight, width and position of the current navigator object"
-msgstr ""
-"Bemondja a navigátor kurzornál lévő elem magasságát, szélességét és "
-"pozícíóját"
+msgstr "Bemondja a navigátor kurzornál lévő elem magasságát, szélességét és pozícíóját"
 
 #: globalCommands.py:456
-msgid ""
-"Reports the line of the current navigator object where the review cursor is "
-"situated. If this key is pressed twice, the current line will be spelled. "
-"Pressing three times will spell the line using character descriptions."
-msgstr ""
-"Bemondja az áttekintőkurzor aktuális sorát. Kétszeri megnyomásra a sor "
-"betűzésre, háromszori megnyomásra pedig a karakterleírásnak megfelelően "
-"bemondásra kerül."
+msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
+msgstr "Bemondja az áttekintőkurzor aktuális sorát. Kétszeri megnyomásra a sor betűzésre, háromszori megnyomásra pedig a karakterleírásnak megfelelően bemondásra kerül."
 
 #: appModules/foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -1913,26 +1788,16 @@ msgid "Reports the text on the Windows clipboard"
 msgstr "A vágólapon lévő szöveg bemondása"
 
 #: globalCommands.py:743
-msgid ""
-"Reports the title of the current application or foreground window. If "
-"pressed twice, spells the title. If pressed thrice, copies the title to the "
-"clipboard"
-msgstr ""
-"Bemondja az aktív alkalmazás, vagy az előtérben lévő ablak címét. Kétszer "
-"gyorsan leütve betűzi, háromszor gyorsan lenyomva pedig a vágólapra másolja "
-"a címet."
+msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard"
+msgstr "Bemondja az aktív alkalmazás, vagy az előtérben lévő ablak címét. Kétszer gyorsan leütve betűzi, háromszor gyorsan lenyomva pedig a vágólapra másolja a címet."
 
 #: gui/__init__.py:305
 msgid "Reset all settings to saved state"
 msgstr "A beállítások visszaállítása az elmentett beállításoknak megfelelően"
 
 #: globalCommands.py:940
-msgid ""
-"Retrieves the text from the previously set start marker up to and including "
-"the current position of the review cursor and copies it to the clipboard"
-msgstr ""
-"Az előzőleg beállított kijelölési kezdőponttól a kurzor aktuális pozíciójáig "
-"terjedő szöveget a vágólapra másolja."
+msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
+msgstr "Az előzőleg beállított kijelölési kezdőponttól a kurzor aktuális pozíciójáig terjedő szöveget a vágólapra másolja."
 
 #: gui/__init__.py:249
 msgid "Review &cursor..."
@@ -1995,17 +1860,11 @@ msgid "Serbian grade 1"
 msgstr "Szerb, rövidítési fokozat 1"
 
 #: globalCommands.py:333
-msgid ""
-"Sets the navigator object to the current focus, and the review cursor to the "
-"position of the caret inside it, if possible."
-msgstr ""
-"A navigátor kurzort az aktuális fókuszhoz, az áttekintő kurzort, ha "
-"lehetséges, pedig a kurzor aktuális pozíciójához helyezi"
+msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
+msgstr "A navigátor kurzort az aktuális fókuszhoz, az áttekintő kurzort, ha lehetséges, pedig a kurzor aktuális pozíciójához helyezi"
 
 #: globalCommands.py:242
-msgid ""
-"Sets the navigator object to the current object under the mouse pointer and "
-"speaks it"
+msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
 msgstr "A navigátor kurzort az egérmutatónál lévő elemhez helyezi"
 
 #: brailleDisplayDrivers/handyTech.py:86
@@ -2042,8 +1901,7 @@ msgstr "Megnyitja az NVDA egér beállítások párbeszédablakát."
 
 #: globalCommands.py:867
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr ""
-"Megnyitja az NVDA objektumok megjelenítési beállításai párbeszédablakát."
+msgstr "Megnyitja az NVDA objektumok megjelenítési beállításai párbeszédablakát."
 
 #: globalCommands.py:851
 msgid "Shows the NVDA synthesizer dialog"
@@ -2084,9 +1942,8 @@ msgstr "Szlovén, rövidítési fokozat 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:80
-#, fuzzy
 msgid "Spanish 8 dot computer braille"
-msgstr "Finn 8 pontos számítógépes braille"
+msgstr "Spanyol 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2121,20 +1978,12 @@ msgid "Speak typed &words"
 msgstr "&szavak bemondása gépeléskor"
 
 #: globalCommands.py:843
-msgid ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
+msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "Bemondja az aktív alkalmazás és a betöltött szkript nevét."
 
 #: globalCommands.py:498
-msgid ""
-"Speaks the word of the current navigator object where the review cursor is "
-"situated. Pressing twice spells the word. Pressing three times spells the "
-"word using character descriptions"
-msgstr ""
-"Bemondja az áttekintőkurzor aktuális szavát. Kétszeri megnyomásra a szó "
-"betűzésre, háromszori megnyomásra pedig a karakterleírásnak megfelelően "
-"bemondásra kerül."
+msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
+msgstr "Bemondja az áttekintőkurzor aktuális szavát. Kétszeri megnyomásra a szó betűzésre, háromszori megnyomásra pedig a karakterleírásnak megfelelően bemondásra kerül."
 
 #: gui/__init__.py:265
 msgid "Speech &dictionaries"
@@ -2198,9 +2047,8 @@ msgstr "Beszédszintetizátor hiba"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:176
-#, fuzzy
 msgid "Tamil grade 1"
-msgstr "Arab, rövidítési fokozat 1"
+msgstr "Tamil, rövidítési fogokzat 1"
 
 #: NVDAObjects/IAccessible/__init__.py:1494
 msgid "Taskbar"
@@ -2222,17 +2070,12 @@ msgstr "szövegkeret"
 
 #: globalCommands.py:916
 #, python-format
-msgid ""
-"The clipboard contains a large portion of text. It is %s characters long"
+msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "A vágólap nagymennyiségű szöveget tartalmaz, amely %s karakterből áll."
 
 #: globalCommands.py:833
-msgid ""
-"The next key that is pressed will not be handled at all by NVDA, it will be "
-"passed directly through to Windows."
-msgstr ""
-"A következő billentyűparancsot az NVDA figyelmen kívül hagyja és átadja a "
-"parancsot az aktív alkalmazásnak."
+msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
+msgstr "A következő billentyűparancsot az NVDA figyelmen kívül hagyja és átadja a parancsot az aktív alkalmazásnak."
 
 #: globalCommands.py:930
 msgid "The start marker must reside within the same object"
@@ -2253,83 +2096,49 @@ msgstr "Címzett:"
 
 #: globalCommands.py:903
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr ""
-"Váltás az áttekintő kurzor és a kurzor követése között egy braille kijelző "
-"használatakor"
+msgstr "Váltás az áttekintő kurzor és a kurzor követése között egy braille kijelző használatakor"
 
 #: globalCommands.py:62
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "Be- és kikapcsolja az alvó módot a jelenlegi alkalmazásban"
 
 #: globalCommands.py:777
-msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting "
-"progress bar updates"
+msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "Be- és kikapcsolja a folyamatjelzők változásainak hangjelzését"
 
 #: globalCommands.py:628
-msgid ""
-"Toggles between browse mode and focus mode. When in focus mode, keys will "
-"pass straight through to the application, allowing you to interact directly "
-"with a control. When in browse mode, you can navigate the document with the "
-"cursor, quick navigation keys, etc."
-msgstr ""
-"Váltás az interaktív és a böngésző mód között. Az interaktív módban a "
-"leütött billentyűket az aktív alkalmazás fogadja, lehetővé téve egy "
-"vezérlőelem közvetlen használatát. Böngésző módban a leütött billentyűket az "
-"NVDA kezeli, lehetővé téve az oldalon való navigálást, és a gyorsbillentyűk "
-"használatát."
+msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
+msgstr "Váltás az interaktív és a böngésző mód között. Az interaktív módban a leütött billentyűket az aktív alkalmazás fogadja, lehetővé téve egy vezérlőelem közvetlen használatát. Böngésző módban a leütött billentyűket az NVDA kezeli, lehetővé téve az oldalon való navigálást, és a gyorsbillentyűk használatát."
 
 #: globalCommands.py:599
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it "
-"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Váltogat a különböző beszédmódok között. Ha ki van kapcsolva, az NVDA nem "
-"beszél.\n"
+"Váltogat a különböző beszédmódok között. Ha ki van kapcsolva, az NVDA nem beszél.\n"
 " Hangjelzés állapotban az NVDA csipogással jelzi az információt. \n"
 "Beszéd állapotban az NVDA a megszokott módon működik."
 
 #: virtualBuffers/__init__.py:790
-msgid ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-msgstr ""
-"Be- és kikapcsol ha a képernyőelrendezés nem módosul a dokumentum "
-"feldolgozása közben"
+msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
+msgstr "Be- és kikapcsol ha a képernyőelrendezés nem módosul a dokumentum feldolgozása közben"
 
 #: globalCommands.py:807
-msgid ""
-"Toggles on and off the movement of the navigator object due to focus changes"
-msgstr ""
-"Be és kikapcsolja az aktív elem követését a navigátor kurzorral. Bekapcsolt "
-"állapotban a kurzor mozgása esetén a navigátorkurzor az aktív elemhez kerül"
+msgid "Toggles on and off the movement of the navigator object due to focus changes"
+msgstr "Be és kikapcsolja az aktív elem követését a navigátor kurzorral. Bekapcsolt állapotban a kurzor mozgása esetén a navigátorkurzor az aktív elemhez kerül"
 
 #: globalCommands.py:797
-msgid ""
-"Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr ""
-"Be és kikapcsolja a kurzor követését az áttekintő kurzorral. Bekapcsolt "
-"állapotban a kurzor mozgása esetén az áttekintőkurzor a kurzor pozíciójához "
-"kerül."
+msgid "Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr "Be és kikapcsolja a kurzor követését az áttekintő kurzorral. Bekapcsolt állapotban a kurzor mozgása esetén az áttekintőkurzor a kurzor pozíciójához kerül."
 
 #: globalCommands.py:787
-msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new "
-"text in dos console windows"
-msgstr ""
-"Ki- és bekapcsolja a frissülő tartalom jelzését. Ez például DOS ablakokban "
-"lehet hasznos."
+msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
+msgstr "Ki- és bekapcsolja a frissülő tartalom jelzését. Ez például DOS ablakokban lehet hasznos."
 
 #: globalCommands.py:182
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Ki- vagy bekapcsolja a beírt karakterek bemondását"
 
 #: globalCommands.py:202
-msgid ""
-"Toggles on and off the speaking of typed keys, that are not specifically "
-"characters"
+msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
 msgstr "Be- és kikapcsolja a beírt, speciális parancsbillentyűk bemondását"
 
 #: globalCommands.py:192
@@ -2361,13 +2170,8 @@ msgid "Turkish grade 1"
 msgstr "Török, rövidítési fokozat 1"
 
 #: globalCommands.py:47
-msgid ""
-"Turns input help on or off. When on, any input such as pressing a key on the "
-"keyboard will tell you what script is associated with that input, if any."
-msgstr ""
-"Ki- vagy bekapcsolja a bevitelsúgót. Bekapcsolt állapotban megtudhatja, hogy "
-"milyen szkript van hozzárendelve egy adott beviteli eszköz (pl. "
-"billentyűzet) gombjaihoz."
+msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
+msgstr "Ki- vagy bekapcsolja a bevitelsúgót. Bekapcsolt állapotban megtudhatja, hogy milyen szkript van hozzárendelve egy adott beviteli eszköz (pl. billentyűzet) gombjaihoz."
 
 #: pythonConsole.py:40
 msgid "Type exit() to exit the console"
@@ -2375,8 +2179,7 @@ msgstr "Írja be az exit () parancsot a konzol bezárásához."
 
 #: pythonConsole.py:24
 msgid "Type help(object) to get help about object."
-msgstr ""
-"Írja be a help (objektum) parancsot hogy segítséget kapjon az objektumról."
+msgstr "Írja be a help (objektum) parancsot hogy segítséget kapjon az objektumról."
 
 #: cursorManager.py:81
 msgid "Type the text you wish to find"
@@ -2412,24 +2215,18 @@ msgstr "&betűzés használata, ha támogatott"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/__init__.py:412 gui/settingsDialogs.py:545
+#: gui/__init__.py:412
+#: gui/settingsDialogs.py:545
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "A CapsLock billentyű használata NVDA gombként"
 
 #: gui/settingsDialogs.py:161
-msgid ""
-"Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr ""
-"Az NVDA elindítása a Windows bejelentkező képernyő használatakor "
-"(rendszergazdai jog szükséges)"
+msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr "Az NVDA elindítása a Windows bejelentkező képernyő használatakor (rendszergazdai jog szükséges)"
 
 #: gui/settingsDialogs.py:166
-msgid ""
-"Use currently saved settings on the logon and other secure screens (requires "
-"administrator privileges)"
-msgstr ""
-"Az aktuális beállítások használata a bejelentkező és egyéb biztonsági "
-"képernyőkön (rendszergazdai jog szükséges)"
+msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
+msgstr "Az aktuális beállítások használata a bejelentkező és egyéb biztonsági képernyőkön (rendszergazdai jog szükséges)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -2488,24 +2285,18 @@ msgstr "Üdvözli az NVDA"
 #: gui/__init__.py:398
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key "
-"while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the "
-"NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA "
-"functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
 msgstr ""
 "Üdvözli az NVDA!\n"
-"A legtöbb NVDA parancs használatához tartsa lenyomva az NVDA gombot, üsse le "
-"hozzá a billentyűparancsot, majd engedje fel mind a kettőt.\n"
-"Alap esetben a numerikus, valamint a normál  insert billentyűk használhatóak "
-"NVDA gombként.\n"
+"A legtöbb NVDA parancs használatához tartsa lenyomva az NVDA gombot, üsse le hozzá a billentyűparancsot, majd engedje fel mind a kettőt.\n"
+"Alap esetben a numerikus, valamint a normál  insert billentyűk használhatóak NVDA gombként.\n"
 "Az NVDA gomb a CapsLock billentyűre is beállítható.\n"
 "Nyomja meg az NVDA+n billentyűparancsot az NVDA menüjének aktiválásához.\n"
-"Itt megváltoztathatja a beállításokat, megtekintheti a súgót és további "
-"lehetőségeket érhet el.\n"
+"Itt megváltoztathatja a beállításokat, megtekintheti a súgót és további lehetőségeket érhet el.\n"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2530,14 +2321,10 @@ msgstr "A beállítások elmentése az nvda.ini fájlba"
 #: gui/__init__.py:451
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-"edit your config file at a later stage to make corrections. More details "
-"about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
 msgstr ""
 "A beállításfájl hibákat tartalmaz.\n"
-" Nyomja meg az 'OK' gombot a javításhoz, vagy a 'Mégse'-t a fájl későbbi "
-"kézi szerkesztéséhez. A hibákról részletes információ található a "
-"naplófájlban.\n"
+" Nyomja meg az 'OK' gombot a javításhoz, vagy a 'Mégse'-t a fájl későbbi kézi szerkesztéséhez. A hibákról részletes információ található a naplófájlban.\n"
 
 #: core.py:84
 msgid ""
@@ -2551,7 +2338,8 @@ msgstr ""
 msgid "activates the current object in the document"
 msgstr "Aktiválja az aktuális elemet a dokumentumban."
 
-#: controlTypes.py:299 controlTypes.py:323
+#: controlTypes.py:299
+#: controlTypes.py:323
 msgid "alert"
 msgstr "figyelmeztetés"
 
@@ -2653,7 +2441,9 @@ msgstr "Fekete"
 
 #. Translators: This is spoken when nvda moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
-#: speech.py:164 speech.py:329 speech.py:739
+#: speech.py:164
+#: speech.py:329
+#: speech.py:739
 msgid "blank"
 msgstr "üres"
 
@@ -2665,7 +2455,8 @@ msgstr "idézetblokk"
 msgid "blue"
 msgstr "Kék"
 
-#: controlTypes.py:313 speech.py:1001
+#: controlTypes.py:313
+#: speech.py:1001
 msgid "bold"
 msgstr "félkövér"
 
@@ -2673,7 +2464,9 @@ msgstr "félkövér"
 msgid "border"
 msgstr "szegély"
 
-#: globalCommands.py:466 globalCommands.py:474 globalCommands.py:508
+#: globalCommands.py:466
+#: globalCommands.py:474
+#: globalCommands.py:508
 msgid "bottom"
 msgstr "vége"
 
@@ -2767,7 +2560,10 @@ msgstr "kombinált listamező"
 msgid "cell"
 msgstr "cella"
 
-#: characterProcessing.py:131 controlTypes.py:280 textInfos/__init__.py:196
+#: characterProcessing.py:129
+#: controlTypes.py:280
+#: textInfos/__init__.py:196
+#: characterProcessing.py:131
 msgid "character"
 msgstr "karakter"
 
@@ -2822,7 +2618,8 @@ msgstr "szín kiválasztó"
 msgid "column"
 msgstr "oszlop"
 
-#: speech.py:827 speech.py:1096
+#: speech.py:827
+#: speech.py:1096
 #, python-format
 msgid "column %s"
 msgstr "Oszlop %s."
@@ -2896,7 +2693,8 @@ msgstr "Nyomkövetési figyelmesztetés"
 msgid "default action failed"
 msgstr "Az alapértelmezett művelet nem sikerült"
 
-#: NVDAObjects/window/edit.py:260 NVDAObjects/window/edit.py:261
+#: NVDAObjects/window/edit.py:260
+#: NVDAObjects/window/edit.py:261
 msgid "default color"
 msgstr "alapértelmezett Szín"
 
@@ -2990,7 +2788,8 @@ msgstr "lenyíló lista"
 msgid "drop target"
 msgstr "A célobjektum eleresztése"
 
-#: virtualBuffers/__init__.py:1250 NVDAObjects/window/winword.py:421
+#: virtualBuffers/__init__.py:1250
+#: NVDAObjects/window/winword.py:421
 msgid "edge of table"
 msgstr "a táblázat széle"
 
@@ -3017,7 +2816,8 @@ msgstr "szerkesztőmező"
 msgid "email"
 msgstr "email"
 
-#: controlTypes.py:251 NVDAObjects/window/edit.py:612
+#: controlTypes.py:251
+#: NVDAObjects/window/edit.py:612
 msgid "embedded object"
 msgstr "beágyazott objektum"
 
@@ -3074,22 +2874,15 @@ msgid "find a text string from the current cursor position"
 msgstr "Szöveg keresése a kurzor pozíciójától"
 
 #: cursorManager.py:111
-msgid ""
-"find the next occurrence of the previously entered text string from the "
-"current cursor's position"
-msgstr ""
-"Az előzőleg beírt szöveg következő előfordulásának keresése a kurzor "
-"jelenlegi pozíciójától."
+msgid "find the next occurrence of the previously entered text string from the current cursor's position"
+msgstr "Az előzőleg beírt szöveg következő előfordulásának keresése a kurzor jelenlegi pozíciójától."
 
 #: cursorManager.py:118
-msgid ""
-"find the previous occurrence of the previously entered text string from the "
-"current cursor's position"
-msgstr ""
-"Az előzőleg beírt szöveg előző előfordulásának keresése a kurzor jelenlegi "
-"pozíciójától."
+msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
+msgstr "Az előzőleg beírt szöveg előző előfordulásának keresése a kurzor jelenlegi pozíciójától."
 
-#: globalCommands.py:901 gui/settingsDialogs.py:1165
+#: globalCommands.py:901
+#: gui/settingsDialogs.py:1165
 msgid "focus"
 msgstr "Kurzor"
 
@@ -3335,7 +3128,9 @@ msgstr "réteges terület"
 msgid "layout %s"
 msgstr "%s kiosztás"
 
-#: globalCommands.py:518 globalCommands.py:530 appModules/totalcmd.py:35
+#: globalCommands.py:518
+#: globalCommands.py:530
+#: appModules/totalcmd.py:35
 msgid "left"
 msgstr "bal"
 
@@ -3378,7 +3173,8 @@ msgstr "bal shift"
 msgid "left windows"
 msgstr "bal start gomb"
 
-#: speech.py:804 speech.py:807
+#: speech.py:804
+#: speech.py:807
 #, python-format
 msgid "level %s"
 msgstr "%s. szint"
@@ -3393,7 +3189,8 @@ msgstr "Világoszöld"
 msgid "lime"
 msgstr "Citromsárga"
 
-#: controlTypes.py:310 textInfos/__init__.py:198
+#: controlTypes.py:310
+#: textInfos/__init__.py:198
 msgid "line"
 msgstr "aláhúzás"
 
@@ -3407,7 +3204,8 @@ msgstr "%s. sor"
 msgid "line scroll"
 msgstr "Sorgörgetés"
 
-#: controlTypes.py:206 speech.py:1049
+#: controlTypes.py:206
+#: speech.py:1049
 msgid "link"
 msgstr "hivatkozás"
 
@@ -3431,8 +3229,7 @@ msgstr "hvs"
 
 #: globalCommands.py:883
 msgid "loads the saved NVDA configuration, overriding current changes"
-msgstr ""
-"Betölti az elmentett beállításokat, a jelenlegibeállítások felülírásával."
+msgstr "Betölti az elmentett beállításokat, a jelenlegibeállítások felülírásával."
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
@@ -3465,7 +3262,8 @@ msgstr "Férfi hang 2"
 msgid "media player"
 msgstr "media lejátszó"
 
-#: controlTypes.py:199 controlTypes.py:306
+#: controlTypes.py:199
+#: controlTypes.py:306
 msgid "menu"
 msgstr "menü"
 
@@ -3756,7 +3554,8 @@ msgstr "nem félkövér"
 msgid "no caret"
 msgstr "A kurzor nem található"
 
-#: globalCommands.py:338 globalCommands.py:689
+#: globalCommands.py:338
+#: globalCommands.py:689
 msgid "no focus"
 msgstr "nincs aktív elem"
 
@@ -3777,8 +3576,12 @@ msgstr "Nincs több szöveg a hivatkozásblokk után"
 msgid "no more text before a block of links"
 msgstr "Nincs több szöveg a hivatkozásblokk előtt"
 
-#: globalCommands.py:274 globalCommands.py:308 globalCommands.py:357
-#: globalCommands.py:371 globalCommands.py:385 globalCommands.py:399
+#: globalCommands.py:274
+#: globalCommands.py:308
+#: globalCommands.py:357
+#: globalCommands.py:371
+#: globalCommands.py:385
+#: globalCommands.py:399
 #: globalCommands.py:413
 msgid "no navigator object"
 msgstr "Nincs elem a navigátor kurzornál"
@@ -3987,7 +3790,8 @@ msgstr "nincs előző, meglátogatott hivatkozás"
 msgid "no progress bar updates"
 msgstr "Nincs folyamatjelző változás"
 
-#: cursorManager.py:245 globalCommands.py:125
+#: cursorManager.py:245
+#: globalCommands.py:125
 msgid "no selection"
 msgstr "nincs kijelölés"
 
@@ -4003,11 +3807,15 @@ msgstr "Nincs akkumulátor."
 msgid "no title"
 msgstr "Nincs cím"
 
-#: characterProcessing.py:127 synthDrivers/_espeak.py:309
+#: characterProcessing.py:125
+#: synthDrivers/_espeak.py:309
+#: characterProcessing.py:127
 msgid "none"
 msgstr "nincs"
 
-#: braille.py:423 speech.py:790
+#: braille.py:417
+#: speech.py:790
+#: braille.py:423
 #, python-format
 msgid "not %s"
 msgstr "nincs %s"
@@ -4104,12 +3912,22 @@ msgstr "Numerikus plusz"
 msgid "object has no location"
 msgstr "az elem helye nem található"
 
-#: globalCommands.py:44 globalCommands.py:176 globalCommands.py:186
-#: globalCommands.py:196 globalCommands.py:591 globalCommands.py:720
-#: globalCommands.py:781 globalCommands.py:791 globalCommands.py:801
-#: keyboardHandler.py:300 synthSettingsRing.py:74 appModules/winamp.py:79
-#: appModules/winamp.py:89 gui/settingsDialogs.py:694
-#: gui/settingsDialogs.py:1029 virtualBuffers/__init__.py:788
+#: globalCommands.py:44
+#: globalCommands.py:176
+#: globalCommands.py:186
+#: globalCommands.py:196
+#: globalCommands.py:591
+#: globalCommands.py:720
+#: globalCommands.py:781
+#: globalCommands.py:791
+#: globalCommands.py:801
+#: keyboardHandler.py:300
+#: synthSettingsRing.py:74
+#: appModules/winamp.py:79
+#: appModules/winamp.py:89
+#: gui/settingsDialogs.py:694
+#: gui/settingsDialogs.py:1029
+#: virtualBuffers/__init__.py:788
 msgid "off"
 msgstr "kikapcsolva"
 
@@ -4123,11 +3941,20 @@ msgstr "A képernyőn kívül"
 msgid "olive"
 msgstr "Sárgászöld"
 
-#: globalCommands.py:44 globalCommands.py:179 globalCommands.py:189
-#: globalCommands.py:199 globalCommands.py:723 globalCommands.py:784
-#: globalCommands.py:794 globalCommands.py:804 keyboardHandler.py:300
-#: synthSettingsRing.py:74 appModules/winamp.py:77 appModules/winamp.py:87
-#: gui/settingsDialogs.py:1029 virtualBuffers/__init__.py:788
+#: globalCommands.py:44
+#: globalCommands.py:179
+#: globalCommands.py:189
+#: globalCommands.py:199
+#: globalCommands.py:723
+#: globalCommands.py:784
+#: globalCommands.py:794
+#: globalCommands.py:804
+#: keyboardHandler.py:300
+#: synthSettingsRing.py:74
+#: appModules/winamp.py:77
+#: appModules/winamp.py:87
+#: gui/settingsDialogs.py:1029
+#: virtualBuffers/__init__.py:788
 msgid "on"
 msgstr "bekapcsolva"
 
@@ -4149,7 +3976,8 @@ msgstr "beállítások"
 msgid "orange"
 msgstr "Narancssárga"
 
-#: speech.py:929 speech.py:1049
+#: speech.py:929
+#: speech.py:1049
 #, python-format
 msgid "out of %s"
 msgstr "%s vége"
@@ -4189,7 +4017,8 @@ msgstr "terület"
 msgid "panel"
 msgstr "panel"
 
-#: controlTypes.py:234 textInfos/__init__.py:199
+#: controlTypes.py:234
+#: textInfos/__init__.py:199
 msgid "paragraph"
 msgstr "bekezdés"
 
@@ -4264,24 +4093,16 @@ msgid "read only"
 msgstr "csak olvasható"
 
 #: globalCommands.py:640
-msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
-"cursor as it goes"
-msgstr ""
-"Az áttekintő kurzor pozíciójától a szöveg végéig olvas, az áttekintőkurzor "
-"mozgatásával."
+msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
+msgstr "Az áttekintő kurzor pozíciójától a szöveg végéig olvas, az áttekintőkurzor mozgatásával."
 
 #: globalCommands.py:644
-msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
-"it goes"
-msgstr ""
-"A kurzor jelenlegi pozíciójától a szöveg végéig olvas, a kurzor mozgatásával"
+msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
+msgstr "A kurzor jelenlegi pozíciójától a szöveg végéig olvas, a kurzor mozgatásával"
 
 #: globalCommands.py:716
 msgid "reads the current application status bar and moves the navigator to it"
-msgstr ""
-"Bemondja az aktív alkalmazás állapotsorát, a navigátor kurzor áthelyezésével."
+msgstr "Bemondja az aktív alkalmazás állapotsorát, a navigátor kurzor áthelyezésével."
 
 #: appModules/outlook.py:24
 #, python-format
@@ -4307,9 +4128,7 @@ msgstr "Frissülő tartalom jelzése"
 
 #: globalCommands.py:828
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr ""
-"Akkumulátor használatakor bemondja az akkumulátor töltöttségi szintjét, és a "
-"hátralévő időt."
+msgstr "Akkumulátor használatakor bemondja az akkumulátor töltöttségi szintjét, és a hátralévő időt."
 
 #: globalCommands.py:690
 msgid "reports the object with focus"
@@ -4319,7 +4138,8 @@ msgstr "Bemondja az aktív elem nevét."
 msgid "required"
 msgstr "szükséges"
 
-#: globalCommands.py:898 gui/settingsDialogs.py:1165
+#: globalCommands.py:898
+#: gui/settingsDialogs.py:1165
 msgid "review"
 msgstr "Áttekintő kurzor"
 
@@ -4327,7 +4147,9 @@ msgstr "Áttekintő kurzor"
 msgid "rich edit"
 msgstr "szerkesztőmező"
 
-#: globalCommands.py:565 globalCommands.py:582 appModules/totalcmd.py:37
+#: globalCommands.py:565
+#: globalCommands.py:582
+#: appModules/totalcmd.py:37
 msgid "right"
 msgstr "jobb"
 
@@ -4383,7 +4205,8 @@ msgstr "gyökér terület"
 msgid "row"
 msgstr "sor"
 
-#: speech.py:820 speech.py:1100
+#: speech.py:820
+#: speech.py:1100
 #, python-format
 msgid "row %s"
 msgstr "sor %s."
@@ -4437,8 +4260,12 @@ msgid "selected"
 msgstr "kijelölve"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#: compoundDocuments.py:401 globalCommands.py:127 speech.py:306 speech.py:498
-#: speech.py:513 virtualBuffers/__init__.py:695
+#: compoundDocuments.py:401
+#: globalCommands.py:127
+#: speech.py:306
+#: speech.py:498
+#: speech.py:513
+#: virtualBuffers/__init__.py:695
 #, python-format
 msgid "selected %s"
 msgstr "%s Kijelölve"
@@ -4575,7 +4402,8 @@ msgstr "%s stílus"
 msgid "subMenu"
 msgstr "almenü"
 
-#: appModules/outlook.py:23 appModules/outlook.py:36
+#: appModules/outlook.py:23
+#: appModules/outlook.py:36
 #, python-format
 msgid "subject: %s"
 msgstr "tárgy: %s"
@@ -4585,11 +4413,13 @@ msgstr "tárgy: %s"
 msgid "submnu"
 msgstr "almenü"
 
-#: controlTypes.py:319 speech.py:1025
+#: controlTypes.py:319
+#: speech.py:1025
 msgid "subscript"
 msgstr "alsó index"
 
-#: controlTypes.py:318 speech.py:1023
+#: controlTypes.py:318
+#: speech.py:1023
 msgid "superscript"
 msgstr "felső index"
 
@@ -4599,7 +4429,8 @@ msgid "symbol level %s"
 msgstr "Írásjelszint: %s"
 
 #. Translators: This is the name of a key on the keyboard.
-#: controlTypes.py:209 keyLabels.py:137
+#: controlTypes.py:209
+#: keyLabels.py:137
 msgid "tab"
 msgstr "tab"
 
@@ -4690,7 +4521,9 @@ msgstr "eszköztár"
 msgid "tool tip"
 msgstr "eszköztipp"
 
-#: globalCommands.py:432 globalCommands.py:444 globalCommands.py:486
+#: globalCommands.py:432
+#: globalCommands.py:444
+#: globalCommands.py:486
 msgid "top"
 msgstr "eleje"
 
@@ -4737,7 +4570,8 @@ msgid "unknown layout"
 msgstr "ismeretlen Kiosztás"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
-#: appModules/msimn.py:109 appModules/outlook.py:28
+#: appModules/msimn.py:109
+#: appModules/outlook.py:28
 msgid "unread"
 msgstr "Olvasatlan"
 
@@ -4833,46 +4667,25 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are "
-"free to share or change this software in any way you like as long as it is "
-"accompanied by the license and you make all source code available to anyone "
-"who wants it. This applies to both original and modified copies of this "
-"software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to "
-"helping and promoting free and open source solutions for blind and vision "
-"impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider "
-"donating to NV Access. You can do this by selecting Donate from the NVDA "
-"menu."
+"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
 msgstr ""
 "{longName} ({name})\n"
 "Verzió: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"Az {name}-t a magyar NVDA honosítócsapat honosította. Ha valamilyen "
-"nyelvtani hibát észlel vagy egyéb javaslata van, akkor látogassa meg a "
-"http://www.nvda.hu weboldalt, ahol kapcsolatba léphet a honosítócsapattal.\n"
-"Ugyancsak ezen az oldalon talál újabb nyelvcsomagokat, valamint az {name}-"
-"val kapcsolatos hasznos információkat. \n"
+"Az {name}-t a magyar NVDA honosítócsapat honosította. Ha valamilyen nyelvtani hibát észlel vagy egyéb javaslata van, akkor látogassa meg a http://www.nvda.hu weboldalt, ahol kapcsolatba léphet a honosítócsapattal.\n"
+"Ugyancsak ezen az oldalon talál újabb nyelvcsomagokat, valamint az {name}-val kapcsolatos hasznos információkat. \n"
 "\n"
-"Az {name} a GNU általános Nyilvános Licensz (2-es verzió) alatt áll. A "
-"szoftver szabadon közzétehető vagy módosítható a licensz és a forráskód "
-"bárki számára elérhetővé tételével. Ez az eredeti és módosított szoftverre, "
-"valamint bármilyen a szoftver forráskódjából származó kódrészletre "
-"vonatkozik.\n"
-"Ha többet szeretne megtudni, elolvashatja a Licensz szerződést a súgó "
-"menüben.\n"
-"Ezt a http://www.gnu.org/licenses/old-licenses/gpl-2.0.html oldalon is "
-"megteheti.\n"
+"Az {name} a GNU általános Nyilvános Licensz (2-es verzió) alatt áll. A szoftver szabadon közzétehető vagy módosítható a licensz és a forráskód bárki számára elérhetővé tételével. Ez az eredeti és módosított szoftverre, valamint bármilyen a szoftver forráskódjából származó kódrészletre vonatkozik.\n"
+"Ha többet szeretne megtudni, elolvashatja a Licensz szerződést a súgó menüben.\n"
+"Ezt a http://www.gnu.org/licenses/old-licenses/gpl-2.0.html oldalon is megteheti.\n"
 "\n"
-"Az {name}-t az NV Access fejleszti, amely egy non-profit alapítvány. Céljuk "
-"az ingyenes és nyílt forráskódú szoftverek terjesztése és segítése "
-"látássérült és gyengénlátó felhasználók részére.\n"
-"Ha hasznosnak ítéli a programot és szeretné, hogy továbbra is elérhető "
-"legyen, adományozhat az NV Access-nek. Ezt a NVDA menü adományozás "
-"menüpontjával érheti el."
+"Az {name}-t az NV Access fejleszti, amely egy non-profit alapítvány. Céljuk az ingyenes és nyílt forráskódú szoftverek terjesztése és segítése látássérült és gyengénlátó felhasználók részére.\n"
+"Ha hasznosnak ítéli a programot és szeretné, hogy továbbra is elérhető legyen, adományozhat az NV Access-nek. Ezt a NVDA menü adományozás menüpontjával érheti el."
+
