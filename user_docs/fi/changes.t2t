@@ -293,7 +293,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teksti
 
 == Korjatut ohjelmavirheet ==
 - Kun puhesanastoon lisätään uusi merkintä, valintaikkunan nimi on nyt "Lisää sanastomerkintä" aiemman "Muokkaa sanastomerkintää" -nimen sijasta. (#924)
-- Puhesanastovalintaikkunoiden sanastomerkintälistan Sääntölauseke- ja Sama kirjainkoko-sarakkeiden sisältö  näytetään nyt NVDA:ssa määritetyllä kielellä sen sijaan, että ne näytettäisiin aina englanniksi.
+- Puhesanastovalintaikkunoiden sanastomerkintälistan Säännöllinen lauseke - ja Sama kirjainkoko-sarakkeiden sisältö  näytetään nyt NVDA:ssa määritetyllä kielellä sen sijaan, että ne näytettäisiin aina englanniksi.
 - Sijaintitiedot luetaan nyt AIM-pikaviestimen puunäkymissä.
 - Ääniasetukset-valintaikkunan liukusäätimissä ylänuoli/page up/home suurentavat nyt asetusta ja alanuoli/page down/end pienentävät. Aiemmin tapahtui juuri päinvastoin, mikä ei ollut loogista ja oli lisäksi ristiriidassa syntetisaattorin asetusrenkaan kanssa. (#221)
 - Näennäispuskureissa ei enää näytetä ylimääräisiä tyhjiä rivejä, kun ruutuasettelu on poistettu käytöstä.
@@ -405,7 +405,7 @@ Tämän version merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkertais
 - Kun taulukossa liikkumiseen tarkoitettuja komentoja käytetään Microsoft Wordissa muualla kuin taulukossa, "ei taulukossa" -ilmoituksen jälkeen ei enää sanota "taulukon reuna". (#921)
 - Kun Microsoft Wordissa ollaan taulukon reunassa, eivätkä taulukossa liikkumiseen tarkoitetut komennot voi siirtää mihinkään, "taulukon reuna" -ilmoitus sanotaan nyt NVDA:ssa määritetyllä kielellä sen sijaan, että se sanottaisiin aina englanniksi. (#921)
 - Viestisääntöluetteloiden valintaruutujen tilat luetaan nyt Outlook Expressissä, Windows Mailissa ja Windows Live Mailissa. (#576)
-- Viestisääntöjen kuvaukset voidaan nyt lukea Windows Live Mail 2010:ssä.
+- Viestisääntöjen kuvausten lukeminen on nyt mahdollista Windows Live Mail 2010:ssä.
 
 
 == 2010.1 ==
@@ -641,7 +641,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Tuki IAccessible2-rajapintaa käyttäville sovelluksille, kuten Firefoxille käytettäessä NVDA:ta siirrettävältä medialta.
 - Korjattu näennäispuskurin linkkilistan kaatumisongelma Gecko-sovelluksissa. (#48)
 - NVDA:n ei pitäisi enää kaataa Mozilla Gecko -sovelluksia, kuten Firefoxia ja Thunderbirdiä, jos NVDA on käynnissä suuremmilla oikeuksilla kuin kyseessä oleva sovellus.
-- Puhesanastot (aiemmin käyttäjän sanastot) voivat nyt olla joko kirjainkoon huomioivia tai sellaisia, joissa kirjainkoolla ei ole väliä, ja korvattavat merkkijonot voivat olla valinnaisesti sääntölausekkeita. (#39)
+- Puhesanastot (aiemmin käyttäjän sanastot) voivat nyt olla joko kirjainkoon huomioivia tai sellaisia, joissa kirjainkoolla ei ole väliä, ja korvattavat merkkijonot voivat olla valinnaisesti säännöllisiä lausekkeita. (#39)
 - Ruutuasettelun käyttäminen näennäispuskureissa voidaan nyt määrittää asetusvalintaikkunasta.
 - Ilman href-viittausta olevia anchor-tageja ei enää ilmoiteta linkkeinä Gecko-näennäispuskureissa. (#47)
 - NVDA:n Etsi-komento muistaa nyt viimeisimmän haun kaikkien sovellusten välillä. (#53)
