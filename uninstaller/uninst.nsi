@@ -17,7 +17,7 @@ ReserveFile "UAC.dll"
 Name "${appName}"
 VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
 VIAddVersionKey "ProductName" "${appName}"
-VIAddVersionKey "LegalCopyright" "Copyright 2006 - 2011 NVDA Contributors"
+VIAddVersionKey "LegalCopyright" "${COPYRIGHT}"
 VIAddVersionKey "FileDescription" "${appName} installer"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 

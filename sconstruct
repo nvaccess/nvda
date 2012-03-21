@@ -75,6 +75,7 @@ keyCommandsLangBlacklist=set([])
 
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
+vars.Add("copyright", "The copyright string of this build", versionInfo.copyright)
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
 vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
 vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
@@ -228,7 +229,7 @@ signExec.append("$TARGET")
 uninstFile=File("dist/uninstall.exe")
 uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
 	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"',
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
 	"/DUNINSTEXE=%s"%uninstFile.abspath,
 	"/XOutFile ${TARGET.abspath}",
 	"$SOURCE"]])
@@ -245,7 +246,7 @@ env.Clean([dist], buildDir)
 
 launcher = env.Command(outputDir.File("%s_launcher.exe" % outFilePrefix), ["launcher/nvdaLauncher.nsi", dist],
 	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"',
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
 	"/DNVDADistDir=${SOURCES[1].abspath}", "/XOutFile ${TARGET.abspath}",
 	"$SOURCE"]])
 if certFile:

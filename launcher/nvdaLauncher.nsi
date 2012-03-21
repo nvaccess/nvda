@@ -14,7 +14,7 @@ ReserveFile "..\installer\waves\nvda_logo.wav"
 Name "NVDA"
 VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
 VIAddVersionKey "ProductName" "NVDA"
-VIAddVersionKey "LegalCopyright" "Copyright 2006 - 2011 NVDA Contributors"
+VIAddVersionKey "LegalCopyright" "${COPYRIGHT}"
 VIAddVersionKey "FileDescription" "NVDA launcher file"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 
