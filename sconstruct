@@ -75,7 +75,6 @@ keyCommandsLangBlacklist=set([])
 
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
-vars.Add("copyright", "The copyright string of this build", versionInfo.copyright)
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
 vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
 vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
@@ -96,6 +95,7 @@ if len(unknown)>0:
 	print "Unknown commandline variables: %s"%unknown
 	Exit(1)
 
+env["copyright"]=versionInfo.copyright
 version = env["version"]
 release = env["release"]
 publisher = env["publisher"]
