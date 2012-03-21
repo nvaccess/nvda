@@ -21,7 +21,7 @@ def main():
 			nvda_service.nvdaLauncher()
 		elif action=="install":
 			import installer
-			installer.install(args[0],args[1],bool(int(args[2])),bool(int(args[3])),bool(int(args[4])))
+			installer.install(bool(int(args[0])),bool(int(args[1])))
 		elif action=="updateInstall":
 			import installer
 			installer.update()

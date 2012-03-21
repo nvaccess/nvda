@@ -1,4 +1,5 @@
 from ctypes import *
+from ctypes import *
 from ctypes.wintypes import *
 import _winreg
 import threading
@@ -152,7 +153,7 @@ uninstallerRegInfo={
 	"URLInfoAbout":versionInfo.url,
 }
 
-def registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldCreateDesktopShortcut,startOnLogonScreen):
+def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,startOnLogonScreen):
 	import _winreg
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\NVDA",0,_winreg.KEY_WRITE) as k:
 		for name,value in uninstallerRegInfo.iteritems(): 
@@ -163,10 +164,9 @@ def registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldC
 		_winreg.SetValueEx(k,"startMenuFolder",None,_winreg.REG_SZ,startMenuFolder)
 		if startOnLogonScreen is not None:
 			_winreg.SetValueEx(k,"startOnLogonScreen",None,_winreg.REG_DWORD,int(startOnLogonScreen))
-	if shouldInstallService:
-		import nvda_service
-		nvda_service.installService(installDir)
-		nvda_service.startService()
+	import nvda_service
+	nvda_service.installService(installDir)
+	nvda_service.startService()
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
 	if shouldCreateDesktopShortcut:
@@ -198,7 +198,9 @@ def unregisterInstallation(forUpdate=False):
 	startMenuFolder=getStartMenuFolder()
 	if startMenuFolder:
 		programsPath=wsh.SpecialFolders("AllUsersPrograms")
-		shutil.rmtree(os.path.join(programsPath,startMenuFolder))
+		startMenuPath=os.path.join(programsPath,startMenuFolder)
+		if os.path.isdir(startMenuPath):
+			shutil.rmtree(startMenuPath)
 	if not forUpdate:
 		try:
 			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda",0,0)
@@ -207,9 +209,9 @@ def unregisterInstallation(forUpdate=False):
 		except WindowsError:
 			pass
 
-def install(installDir,startMenuFolder,shouldInstallService=True,shouldCreateDesktopShortcut=True,shouldRunAtLogon=None,forUpdate=False):
-	if forUpdate:
-		unregisterInstallation(forUpdate)
+def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=None):
+	installDir=defaultInstallPath
+	startMenuFolder=defaultStartMenuFolder
 	#Remove all the main executables always
 	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
 		f=os.path.join(installDir,f)
@@ -224,10 +226,37 @@ def install(installDir,startMenuFolder,shouldInstallService=True,shouldCreateDes
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
-	registerInstallation(installDir,startMenuFolder,shouldInstallService,shouldCreateDesktopShortcut,shouldRunAtLogon)
+	registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,shouldRunAtLogon)
+
+def removeOldLoggedFiles(installPath):
+	datPath=os.path.join(installPath,"uninstall.dat")
+	lines=[]
+	if os.path.isfile(datPath):
+		with open(datPath,"r") as datFile:
+			datFile.readline()
+			lines=datFile.readlines()
+			lines.append(os.path.join(installPath,'uninstall.dat'))
+			lines.append(os.path.join(installPath,'uninstall.exe'))
+			lines.sort(reverse=True)
+	for line in lines:
+		filePath=line.rstrip('\n')
+		try:
+			if os.path.isfile(filePath):
+				os.remove(filePath)
+			elif os.path.isdir(filePath):
+				os.rmdir(filePath)
+		except WindowsError:
+			log.debugWarning("Failed to remove %s, removing on reboot"%filePath)
+			tempPath=tempfile.mktemp(dir=installPath)
+			os.rename(filePath,tempPath)
+			if windll.kernel32.MoveFileExA("\\\\?\\"+tempPath,None,4)==0:
+				raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
 
 def update():
-	install(getInstallPath(),getStartMenuFolder(),shouldInstallService=config.isServiceInstalled(),forUpdate=True)
+	prevInstallPath=getInstallPath()
+	unregisterInstallation(forUpdate=True)
+	removeOldLoggedFiles(prevInstallPath)
+	install()
 
 autorunTemplate="""[AutoRun]
 open={exe}

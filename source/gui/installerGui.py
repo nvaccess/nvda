@@ -1,9 +1,12 @@
 import os
 import ctypes
+import subprocess
+import shellapi
 import wx
 import config
 import versionInfo
 import installer
+from logHandler import log
 import gui
 
 class InstallerDialog(wx.Dialog):
@@ -11,43 +14,16 @@ class InstallerDialog(wx.Dialog):
 	def __init__(self, parent):
 		super(InstallerDialog, self).__init__(parent, title=_("Install NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-
+		dialogCaption=wx.StaticText(self,label=_("If you wish to install NVDA to your hard drive, please review the following options and then press the Install button to continue.")) 
+		mainSizer.Add(dialogCaption)
+		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Installation options")), wx.HORIZONTAL)
 		ctrl = self.startOnLogonCheckbox = wx.CheckBox(self, label=_("Use NVDA on the Windows &logon screen"))
 		ctrl.Value = config.getStartOnLogonScreen()
-		mainSizer.Add(ctrl)
-		ctrl = self.advancedCheckbox = wx.CheckBox(self, label=_("Show &advanced options"))
-		ctrl.Bind(wx.EVT_CHECKBOX, self.onAdvanced)
-		ctrl.SetValue(False)
-		mainSizer.Add(ctrl)
-
-		advancedSizer = self.advancedSizer = wx.BoxSizer(wx.VERTICAL)
-
-		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Install &to folder:")), wx.HORIZONTAL)
-		# FIXME: Don't use os.getenv to get the path to Program Files.
-		ctrl = self.programFolderEdit = wx.TextCtrl(self, value=installer.getInstallPath())
-		sizer.Add(ctrl)
-		ctrl = wx.Button(self, label=_("Browse..."))
-		ctrl.Bind(wx.EVT_BUTTON, self.onBrowseForProgramFolder)
-		sizer.Add(ctrl)
-		advancedSizer.Add(sizer)
-
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		sizer.Add(wx.StaticText(self, label=_("&Start Menu folder:")))
-		ctrl = self.startMenuFolderEdit = wx.TextCtrl(self, value=installer.getStartMenuFolder())
-		sizer.Add(ctrl)
-		advancedSizer.Add(sizer)
-
-		sizer = wx.BoxSizer(wx.VERTICAL)
+		optionsSizer.Add(ctrl)
 		ctrl = self.createDesktopShortcutCheckbox = wx.CheckBox(self, label=_("Create &desktop icon and shortcut key (control+alt+n)"))
 		ctrl.Value = True
-		sizer.Add(ctrl)
-		ctrl = self.installServiceCheckbox = wx.CheckBox(self, label=_("Install NVDA ser&vice (Windows logon/secure screen support)"))
-		ctrl.Value = True
-		sizer.Add(ctrl)
-		advancedSizer.Add(sizer)
-
-		mainSizer.Add(advancedSizer)
-		mainSizer.Hide(advancedSizer, recursive=True)
+		optionsSizer.Add(ctrl)
+		mainSizer.Add(optionsSizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		ctrl = wx.Button(self, label=_("&Install"), id=wx.ID_OK)
@@ -60,27 +36,25 @@ class InstallerDialog(wx.Dialog):
 
 		self.Sizer = mainSizer
 
-	def onAdvanced(self, evt):
-		self.mainSizer.Show(self.advancedSizer, show=evt.IsChecked(), recursive=True)
-		self.mainSizer.Layout()
-
-	def onBrowseForProgramFolder(self, evt):
-		with wx.DirDialog(self, _("Select Installation Folder"), defaultPath=self.programFolderEdit.Value) as d:
-			if d.ShowModal() == wx.ID_OK:
-				self.programFolderEdit.Value = d.Path
-
 	def onInstall(self, evt):
-		if not installer.validateStartMenuFolder(self.startMenuFolderEdit.Value):
-			gui.messageBox(_("Start menu folder already exists, please choose another name."), _("Invalid start menu folder"), wx.OK|wx.ICON_WARNING)
-			return
-		if not installer.validateInstallPath(self.programFolderEdit.Value):
-			gui.messageBox(_("NVDA cannot be installed to %s, please choose another location.")%self.programFolderEdit.value, _("Invalid program folder"), wx.OK|wx.ICON_WARNING)
-			return
 		self.Hide()
 		self.progressDialog = IndeterminateProgressDialog(self, _("Installing NVDA"), _("Please wait while NVDA is being installed."))
-		config.execElevated(config.SLAVE_FILENAME,["install",self.programFolderEdit.Value,self.startMenuFolderEdit.Value,str(int(self.installServiceCheckbox.Value)),str(int(self.createDesktopShortcutCheckbox.Value)),str(int(self.startOnLogonCheckbox.Value))],wait=True)
+		try:
+			res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(self.createDesktopShortcutCheckbox.Value)),str(int(self.startOnLogonCheckbox.Value))],wait=True)
+		except Exception as e:
+			res=e
+			log.error("Failed to execute installer",exc_info=True)
 		self.progressDialog.done()
 		self.Destroy()
+		if res!=0:
+			log.error("Installation failed: %s"%res)
+			gui.messageBox(_("The installation of NVDA failed. Please check the log viewer for more information."),_("Error"))
+			return
+		gui.messageBox(_("Successfully installed NVDA. Please press OK to start the newly installed copy."),_("Success"))
+		shellapi.ShellExecute(None, None,
+		os.path.join(installer.defaultInstallPath,'nvda_uiAccess.exe').decode("mbcs"),
+		subprocess.list2cmdline(["-r"]).decode("mbcs"),
+		None, 0)
 
 	def onCancel(self, evt):
 		self.Destroy()
@@ -90,7 +64,8 @@ class UpdaterDialog(wx.Dialog):
 	def __init__(self, parent):
 		super(UpdaterDialog, self).__init__(parent, title=_("Update NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-
+		dialogCaption=wx.StaticText(self,label=_("This will update your previously installed copy of NVDA to the currently running version (%s). Please press the Update button to continue.")%versionInfo.version)
+		mainSizer.Add(dialogCaption)
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		ctrl = wx.Button(self, label=_("&Update"), id=wx.ID_OK)
 		ctrl.Bind(wx.EVT_BUTTON, self.onUpdate)
@@ -105,9 +80,22 @@ class UpdaterDialog(wx.Dialog):
 	def onUpdate(self, evt):
 		self.Hide()
 		self.progressDialog = IndeterminateProgressDialog(self, _("Updating NVDA installation"), _("Please wait while NVDA is being updated."))
-		config.execElevated(config.SLAVE_FILENAME,["updateInstall"],wait=True)
+		try:
+			res=config.execElevated(config.SLAVE_FILENAME,["updateInstall"],wait=True)
+		except Exception as e:
+			res=e
+			log.error("Failed to execute updater",exc_info=True)
 		self.progressDialog.done()
 		self.Destroy()
+		if res!=0:
+			log.error("Update failed: %s"%res)
+			gui.messageBox(_("NVDA update failed. Please check the log viewer for more information."),_("Error"))
+			return
+		gui.messageBox(_("Successfully updated NVDA. Please press OK to start the updated copy."),_("Success"))
+		shellapi.ShellExecute(None, None,
+		os.path.join(installer.defaultInstallPath,'nvda_uiAccess.exe').decode("mbcs"),
+		subprocess.list2cmdline(["-r"]).decode("mbcs"),
+		None, 0)
 
 	def onCancel(self, evt):
 		self.Destroy()
