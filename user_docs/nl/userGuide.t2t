@@ -694,7 +694,7 @@ In Windows verandert de vorm van de muisaanwijzer om aan te geven waar de comput
 | Desktoptoets | NVDA+m |
 | Laptoptoets | NVDA+shift+m |
 
-Door het selectievakje aan te kruisen wordt de tekst gelezen die zich onder de muisaanwijzer bevindt bij verplaatsing van de muis over het scherm. U kunt dus naar iets zoeken door de muis zelf te verplaatsen in plaats van zoeken met objectnavigatie
+Door het selectievakje aan te kruisen wordt de tekst gelezen die zich onder de muisaanwijzer bevindt bij verplaatsing van de muis over het scherm. U kunt dus naar iets zoeken door de muis zelf te verplaatsen in plaats van zoeken met objectnavigatie.
 
 ==== Resolutie van teksteenheid====
 Als u ervoor gekozen hebt om de tekst onder de muis te laten uitspreken, kunt u hier instellen hoeveel tekst moet worden uitgesproken.
@@ -702,6 +702,7 @@ U hebt de keuze uit karakter, woord, regel en alinea.
 
 ==== Rol weergeven wanneer muisaanwijzer zich binnen een object bevind ====
 Als dit selectievakje is aangekruist, zal NVDA de rol (type) van het object weergeven bij verplaatsing van de muis binnen het object.
+
 ==== Geluidscoördinatie gebruiken bij verplaatsen muis====
 Als het selectievakje is aangekruist laat NVDA pieptonen horen bij het verplaatsen van de muis. Met behulp van deze signalen kan de gebruiker bepalen waar de muis zich op het scherm bevindt.
 
@@ -738,7 +739,7 @@ In het dialoogvenster treft u de volgende keuzemogelijkheden aan:
 
 ==== Flashberichten (tooltips)weergeven ====
 Als het selectievakje aangevinkt is, zal NVDA eventuele tooltips laten horen wanneer deze op het scherm verschijnen.
-Bij veel Window sschermen en besturingselementen verschijn een kort berichtje of tooltip wanneer deze zich onder de muisaanwijzer bevinden of soms wanneer deze gefocuseerd worden.
+Bij veel Windows schermen en besturingselementen verschijn een kort berichtje of tooltip wanneer deze zich onder de muisaanwijzer bevinden of soms wanneer deze gefocuseerd worden.
 
 ==== Hulpballonnen weergeven ===
 Als het selectievakje aangevinkt is, zal NVDA eventuele hulpballonnen laten horen wanneer deze op het scherm verschijnen.
@@ -749,7 +750,7 @@ Als het selectievakje is aangevinkt, zal NVDA bij de aankondiging van een bepaal
 Zo zal bij voorbeeld bij het onderdeel Bestand op de menubalk ook gemeld worden dat hiervoor de sneltoetscombinatie Alt + b. beschikbaar is.
 
 ==== Informatie over objectpositie weergeven ====
-Als het selectievakje aangevinkt is, hebt u 4 keuzemogelijkheden (zie hieronder) om informatie te krijgen over de positie van het object dat u focuseert of dat u benadert via objectnavigatie.
+Als het selectievakje aangevinkt is, wordt de objectpositie gemeld zodra het object focus krijgt, of zich in de objectnavigatie bevind. Bijvoorbeeld 1 van 4.
 
 ==== Objectpositie raden indien niet beschikbaar ====
 Als het melden van objectposities in ingeschakeld, kan deze optie ervoor zorgen dat de positie van sommige objecten bij benadering wordt bepaald. Dit kan nodig zijn als de positie-informatie niet verkregen kan worden.
@@ -792,7 +793,7 @@ De volgende keuzemogelijkheden zijn beschikbaar:
 In het invoerveld kunt u het aantal karakters per regel instellen dat  een document in bladermodus mag bevatten.
 
 ==== Maximaal aantal regels per pagina ====
-Hoewel er in bladermodus eigenlijk geen echte paginaindeling bestaat, kunt u hier het aantal regels invoeren dat opschuift als u Page Up (pagina omhoog) of Page Down (pagina omlaag) indrukt terwijl u zich in een document in bladsermodus bevindt.
+Hoewel er in bladermodus eigenlijk geen echte paginaindeling bestaat, kunt u hier het aantal regels invoeren dat opschuift als u Page Up (pagina omhoog) of Page Down (pagina omlaag) indrukt terwijl u zich in een document in bladermodus bevindt.
 
 %kc:setting
 ==== Schermlayout gebruiken====
@@ -801,15 +802,15 @@ Toets: NVDA+v
 Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. Als het selectievakje is aangekruist blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
 
 ==== Automatisch lezen zodra een pagina geladen is ====
-Deze optie bepaalt of een pagina die geladne is in bladermodus automatisch wordt gelezen.
+Deze optie bepaalt of een pagina die geladen is in bladermodus automatisch wordt gelezen.
+Deze optie is standaard ingeschakeld.
 
 ==== Layouttabellen weergeven====
-Als het selectievakje niet is aangekruist zal NVDA alleen dan tabelinformatie geven wanneer dat van belang is. Als het selectievakje is aangevinkt, zal NVDA ook tabellen melden die louter optisch van aard zijn. 
+Als het selectievakje niet is aangekruist zal NVDA alleen dan tabelinformatie geven wanneer dat van belang is.
+Als het selectievakje is aangevinkt, zal NVDA ook tabellen melden die louter optisch van aard zijn. 
 
 ==== Het melden van velden zoals links en koppen instellen====
-In eerdere versies van NVDA kon u in het dialoogvenster Bladermodus instellen of u de vermelding van de verschillende veldtypes wilde horen die u tegenkwam bij het lezen van webpagina’s.
-Links, headings (koppen), tabellen en lijsten zijn hiervan voorbeelden. Er zijn nieuwe instelmogelijkheden die u vindt  in het [dialoogvenster Documentopmaak #DocumentFormattingSettings].
-De geboden opties hebben niet langer alleen betrekking op bladermodus maar op alle documenten waarin veldtypes voorkomen die u wilt laten uitspreken.
+Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings] om de velden in te stellen die worden uitgesproken bij het navigeren, zoals links, koppen en trabellen.
 
 ==== Automatische focusmodus bij focuswijzigingen====
 Hiermee wordt de focusmodus automatisch geactiveerd bij focusveranderingen.
@@ -822,7 +823,6 @@ Als u bij voorbeeld met de pijltjestoetsen door een webpagina bladert en u in ee
 ==== Audiomarkering voor focus- en surfmodus====
 Als het selectievakje is aangekruist, hoort u een bepaald geluid als gewisseld wordt tussen de focus- en bladermodus in een document. Dit komt dan in de plaats van een uitgesproken wijziging van de focus. 
 
-
 +++ Documentopmaakinstellingen(NVDA+control+d) +++[DocumentFormattingSettings]
 U vindt het dialoogvenster Documentopmaak in het NVDA-menu onder Opties. 
 
@@ -830,23 +830,25 @@ U kunt de meeste aankruisvakjes gebruiken om te bepalen welke informatie over de
 Als u bij voorbeeld Lettertype vermelden aankruist, wordt de naam hiervan gemeld telkens wanneer u bij een ander lettertype terecht komt.
 
 U kunt de vermelding laten horen van:
-- lettertype
-- lettergrootte
-- lettertype-eigenschappen
-- tekstuitlijning
-- kleuren
-- tekststijl
-- spelfouten
-- paginanummers
-- regelnummers
-- tabellen
-- rij/kolomkoppen van tabellen
-- tabel celcoördinaten
-- links
-- headings (koppen)
-- lijsten
-- blokcitaten
+- Lettertype
+- Lettergrootte
+- Lettertype-eigenschappen
+- Tekstuitlijning
+- Kleuren
+- Tekststijl
+- Spelfouten
+- Paginanummers
+- Regelnummers
+- Regelinspringen
+- Tabellen
+- Rij/kolomkoppen van tabellen
+- Tabel celcoördinaten
+- Links
+- Koppen
+- Lijsten
+- Blokcitaten
 - Landmarks
+- Kaders
 -
 
 ==== Wijzigingen in documentopmaak achter de cursor weergeven (kan vertraging veroorzaken)====
@@ -858,7 +860,8 @@ Vink dit selectievakje aan bij het corrigeren van documenten in toepassingen zoa
 
 +++ Uitspraakwoordenboeken +++
 Via het menu-item Uitspraakwoordenboeken dat te vinden is onder Opties kunt u aangeven hoe NVDA bepaalde woorden of woordgroepen moet uitspreken.
-Op dit moment zijn er 3 soorten woordenboeken beschikbaar, te weten, 
+Op dit moment zijn er 3 soorten woordenboeken beschikbaar,
+te weten, 
 - Standaard woordenboek: de regels hierin hebben betrekking op alles wat in NVDA wordt uitgesproken.
 - Stemafhankelijk woordenboek: de regels hierin hebben betrekking op de in gebruik zijnde synthesizer stem.
 - Tijdelijk woordenboek: de regels hierin hebben betrekking op alles wat er door NVDA wordt uitgesproken, maar dan alleen voor de huidige sessie. De gemaakte regels gaan verloren wanneer NVDA opnieuw wordt gestart.
@@ -868,7 +871,8 @@ In de dialoogvensters van de verschillende woorddenboeken vindt u een lijst met 
 Tevens zijn er de knoppen Toevoegen, Bewerken en Verwijderen.
 
 Om een regel aan een woordenboek toe te voegen gebruikt u de knop Toevoegen. U vult de velden van het dialoogvenster in dat verschijnt en klikt op OK.
-Nu zult u de niewe regel zien in het regeloverzicht. Zodra u klaar bent met toevoegen of bewerken, klikt u op OK om het dialoogvenster te sluiten. Dit zorgt ervoor dat de wijzigingen worden opgeslagen.   
+Nu zult u de niewe regel zien in het regeloverzicht.
+Zodra u klaar bent met toevoegen of bewerken, klikt u op OK om het dialoogvenster te sluiten. Dit zorgt ervoor dat de wijzigingen worden opgeslagen.   
 
 Met de regels voor de NVDA uitspraakwoordenboeken kunt u een bepaalde karakterreeks vervangen door een andere.
 Stel dat u NVDA , telkens als het woord “luid” voorkomt, het woord “hard” wilt laten zeggen.
@@ -882,17 +886,17 @@ Een regular expression is een reeks waarin speciale tekens worden gebruikt om aa
 In deze handleiding wordt niet verder ingegaan op “regular expressions”, maar op het internet zijn allerlei tutorials te vinden die meer informatie geven.  
 
 +++ Uitspraak van interpunctie/symbolen +++[SymbolPronunciation]
-
 In dit dialoogvenster kan de manier waarop interpunctie en symbolen worden gemeld worden aangepast, alsmede het interpunctieniveau waarop deze worden uitgesproken.
 
 Selecteer een symbool uit de symbolenlijst om het aan te passen.
-Het vervangen door veld stelt je in staat om de uitspraak van het symbool aan te passen.
+Het vervangen door veld stelt u in staat om de uitspraak van het symbool aan te passen.
 Het niveau veld bepaalt het minimumniveau waarop dit symbool wordt uitgesproken.
 
 Als u klaar bent kunnen de wijzigingen met de OK knop worden opgeslagen, of door middel van de Annuleren knop worden teruggedraaid.
 
-++ De configuratie opslaan en opnieuw ladenn ++
+++ De configuratie opslaan en opnieuw laden ++
 Als wijzigingen worden aangebracht in de instellingen van NVDA worden deze niet automatisch opgeslagen. Als u NVDA afsluit en later weer opstart zal NVDA de oorspronkelijke instellingen gebruiken en zijn eventueel aangebrachte wijzigingen verloren gegaan.
+Automatisch opslaan van de configuratie kunt u inschakelen in het dialoogvenster voor algemene instellingen.
 Om gewijzigde instellingen te bewaren gaat u in het NVDA-menu naar Configuratie opslaan.
 
 Als NVDA op een gegevensdrager met het kenmerk alleen-lezen staat, bij voorbeeld, een cd, kunnen configuratieinstellingen niet worden opgeslagen. In dergelijke gevallen krijgt u hiervan een melding. 
@@ -939,11 +943,6 @@ Zie voor meer informatie de handleiding voor ontwikkelaars, dit document is besc
 
 ++ Plugins herladen ++
 Zodra deze optie wordt geactiveerd, zullen alle app modules en globale plugins opnieuw worden geladen. Dit is handig voor ontwikkelaars.
-
-+ Verdere informatie+
-Voor nadere informatie over NVDA of voor hulp kunt u terecht op de website NVDA_URL.
-Hier kunt u aanvullende documentatie vinden, technische ondersteuning krijgen, maar ook ervaringen en kennis uitwisselen met andere gebruikers en ontwikkelaars.
-U vindt er ook informatie over de nieuwste ontwikkelingen en verbeteringen van het programma.
 
 + Ondersteunde spraaksynthesizers +[SupportedSpeechSynths]
 In deze rubriek vindt u informatie over spraaksynthesizers die door NVDA worden ondersteund.
@@ -1019,3 +1018,8 @@ Sluit de leesregel aan en pas de configuratie van NVDA aan voor het gebruik van 
 Om er gebruik van te maken moet u [BRLTTY for Windows http://brl.thefreecat.org/brltty/] installeren.
 U moet de nieuwste versie van het programma (bij voorbeeld, met als naam brltty-win-4.2-2.exe) downloaden en installeren.
 Wanneer u de leesregel configureert en de te gebruiken poort instelt, moet u ervoor zorgen de instructies nauwkeurig op te volgen, vooral bij gebruik van een USB-leesregel waarvoor de drivers van de fabrikant reeds zijn geïnstalleerd.
+
++ Verdere informatie+
+Voor nadere informatie over NVDA of voor hulp kunt u terecht op de website NVDA_URL.
+Hier kunt u aanvullende documentatie vinden, technische ondersteuning krijgen, maar ook ervaringen en kennis uitwisselen met andere gebruikers en ontwikkelaars.
+U vindt er ook informatie over de nieuwste ontwikkelingen en verbeteringen van het programma.
