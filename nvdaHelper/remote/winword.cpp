@@ -478,6 +478,11 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,args->endOffset);
 			chunkEndOffset=args->endOffset;
 		}
+		//When using IME, the last moveEnd succeeds but the end does not really move
+		if(chunkEndOffset<=chunkStartOffset) {
+			LOG_DEBUGWARNING(L"moveEnd successfull but range did not expand! chunkStartOffset "<<chunkStartOffset<<L", chunkEndOffset "<<chunkEndOffset);
+			break;
+		}
 		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_TEXT,VT_BSTR,&text);
 		if(text) {
 			//Force a new chunk before and after control+b (note characters)
@@ -551,9 +556,9 @@ LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam)
 }
 
 error_status_t nvdaInProcUtils_winword_expandToLine(handle_t bindingHandle, const long windowHandle, const int offset, int* lineStart, int* lineEnd) {
-	winword_expandToLine_args args={offset,3,4};
+	winword_expandToLine_args args={offset,offset,offset+1};
 	DWORD_PTR wmRes=0;
-	SendMessageTimeout((HWND)windowHandle,wm_winword_expandToLine,(WPARAM)&args,0,SMTO_ABORTIFHUNG,2000,&wmRes);
+	SendMessage((HWND)windowHandle,wm_winword_expandToLine,(WPARAM)&args,0);
 	*lineStart=args.lineStart;
 	*lineEnd=args.lineEnd;
 	return RPC_S_OK;
@@ -561,8 +566,7 @@ error_status_t nvdaInProcUtils_winword_expandToLine(handle_t bindingHandle, cons
 
 error_status_t nvdaInProcUtils_winword_getTextInRange(handle_t bindingHandle, const long windowHandle, const int startOffset, const int endOffset, const long formatConfig, BSTR* text) { 
 	winword_getTextInRange_args args={startOffset,endOffset,formatConfig,NULL};
-	DWORD_PTR wmRes=0;
-	SendMessageTimeout((HWND)windowHandle,wm_winword_getTextInRange,(WPARAM)&args,0,SMTO_ABORTIFHUNG,2000,&wmRes);
+	SendMessage((HWND)windowHandle,wm_winword_getTextInRange,(WPARAM)&args,0);
 	*text=args.text;
 	return RPC_S_OK;
 }

@@ -252,6 +252,9 @@ O objecto que está a ser revisto actualmente denomina-se objecto de navegação
 Uma vez que tenha navegado para um objecto, pode revê-lo com os comandos de [revisão de texto #ReviewingText].
 Por predefinição, a navegação de objectos acompanha o cursor do sistema, embora este comportamento possa ser activado e desactivado.
 
+Atente que por defeito o Braille segue o [foco #SystemFocus] e o [cursor de edição #SystemCaret] em vez da navegação por objectos e da revisão de texto.
+Se pretender que o Braille siga a navegação por objectos e a revisão de texto, terá que [configurar o Braille para fixar o #BrailleTether] cursor de revisão.
+
 Para navegar pelos objectos utilize as seguintes teclas de atalho:
 
 %kc:beginInclude
@@ -269,7 +272,7 @@ Para navegar pelos objectos utilize as seguintes teclas de atalho:
 
 Nota: As teclas do bloco numérico requerem que o numlock esteja desactivado para que possam trabalhar adequadamente.
 
-++ Rever Texto no Objecto Actual ++
+++ Rever Texto ++[ReviewingText]
 O NVDA permite-lhe ler o conteúdo do [objecto de navegação #ObjectNavigation] actual (incluindo a [revisão plana #FlatReview]) por caracteres, palavras ou linhas.
 Isto é muito útil na consola do DOS do Windows e noutros locais onde não há um [ponto de inserção do sistema #SystemCaret].
 Por exemplo, pode usá-la para rever o texto de uma mensagem de uma informação longa num diálogo.
@@ -277,6 +280,9 @@ Por exemplo, pode usá-la para rever o texto de uma mensagem de uma informação
 Quando está a mover o cursor de revisão, o ponto de inserção do sistema não o acompanha, assim pode analisar o texto sem perder a posição de edição.
 No entanto, por predefinição, quando se move o ponto de inserção do Sistema, o cursor de revisão acompanha-o.
 Esta opção pode ser activada e desactivada.
+
+Atente que por defeito o Braille segue o [foco #SystemFocus] e o [cursor de edição #SystemCaret], em vez da navegação por objectos e da revisão de texto.
+Se ptetender que o Braille siga a navegação por objectos e a revisão de texto, terá que [configurar o Braille para fixar para o #BrailleTether] cursor de revisão.
 
 As teclas de atalho seguintes estão disponíveis para a revisão de texto:
 %kc:beginInclude
@@ -320,6 +326,9 @@ Por exemplo, se o objecto de navegação era um botão, será posicionado normal
 Pode então rever o texto se utilizar os [comandos de revisão de texto #ReviewingText].
 Também pode navegar directamente para o objecto que contém a posição actual do cursor de revisão, permitindo que use lá a [navegação de objectos #ObjectNavigation].
 
+Atente que por defeito o Braille segue o [foco #SystemFocus] e o [cursor de edição #SystemCaret], em vez da navegação por objectos e da revisão de texto.
+Se ptetender que o Braille siga a navegação por objectos e a revisão de texto, terá que [configurar o Braille para fixar para o #BrailleTether] cursor de revisão.
+
 Os seguintes dois comandos são utilizados para trocar entre para e a partir da revisão plana:
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
@@ -352,10 +361,12 @@ Apesar de um rato físico ou de um touchpad terem de ser utilizados para navegar
 | Navegar para o objecto sob o rato | NVDA+Asterisco do bloco numérico | NVDA+Shift+F10 | Define o objecto de navegação para o o objecto que se localiza na posição do rato |
 %kc:endInclude
 
-+ Buffers Virtuais +
-Os documentos complexos só de leitura, tais como páginas Web, são representados no NVDA num Buffer Virtual.
++ Modo de Navegação +
+Os documentos complexos só de leitura, tais como páginas Web, são apresentados no NVDA através da utilização do modo de navegação.
+Isto inclui os documentos no Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader e Adobe Flash.
 
-Um Buffer Virtual é uma representação plana de conteúdo tal como de uma página Web, onde se pode movimentar com as setas.
+No modo de navegação o conteúdo do documento está disponível numa representação plana que pode ser navegado com as teclas de cursor como se se tratasse de um documento de texto normal.
+Todas as teclas de comando do NVDA referentes ao [ponto de inserção #SystemCaret] trabalharão neste modo; ex: leitura contínua, informar formatação, comandos de navegação em tabelas, etc.
 A informação de que o texto é ou não um link, título etc é anunciada conforme se movimenta pelo mesmo.
 
 Quando está num Buffer Virtual, existem dois modos de interacção.
