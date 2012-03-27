@@ -9,24 +9,53 @@ import installer
 from logHandler import log
 import gui
 
+def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
+	progressDialog = IndeterminateProgressDialog(None, _("Updating NVDA") if isUpdate else _("Installing NVDA"), _("Please wait while your previous installation of NVDA is being updated.") if isUpdate else _("Please wait while NVDA is being installed"))
+	try:
+		res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(createDesktopShortcut)),str(int(startOnLogon))],wait=True)
+	except Exception as e:
+		res=e
+		log.error("Failed to execute installer",exc_info=True)
+	progressDialog.done()
+	del progressDialog
+	if res!=0:
+		log.error("Installation failed: %s"%res)
+		gui.messageBox(_("The installation of NVDA failed. Please check the log viewer for more information."),_("Error"))
+		return
+	if not silent:
+		msg=_("Successfully installed NVDA. ") if not isUpdate else _("Successfully updated your installation of NVDA. ")
+		gui.messageBox(msg+_("Please press OK to start the installed copy."),_("Success"))
+	shellapi.ShellExecute(None, None,
+	os.path.join(installer.defaultInstallPath,'nvda_uiAccess.exe').decode("mbcs"),
+	subprocess.list2cmdline(["-r"]).decode("mbcs"),
+	None, 0)
+
+def doSilentInstall():
+	prevInstall=installer.isPreviousInstall()
+	doInstall(installer.isDesktopShortcutInstalled() if prevInstall else True,config.getStartOnLogonScreen() if prevInstall else True,prevInstall,True)
+
 class InstallerDialog(wx.Dialog):
 
 	def __init__(self, parent):
+		self.isUpdate=installer.isPreviousInstall()
 		super(InstallerDialog, self).__init__(parent, title=_("Install NVDA"))
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-		dialogCaption=wx.StaticText(self,label=_("If you wish to install NVDA to your hard drive, please review the following options and then press the Install button to continue.")) 
+		msg=_("To install NVDA to your hard drive, please press the Continue button.")
+		if self.isUpdate:
+			msg+=" "+_("A previous copy of NVDA has been found on your system. This copy will be updated.") 
+		dialogCaption=wx.StaticText(self,label=msg) 
 		mainSizer.Add(dialogCaption)
 		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Installation options")), wx.HORIZONTAL)
 		ctrl = self.startOnLogonCheckbox = wx.CheckBox(self, label=_("Use NVDA on the Windows &logon screen"))
 		ctrl.Value = config.getStartOnLogonScreen()
 		optionsSizer.Add(ctrl)
 		ctrl = self.createDesktopShortcutCheckbox = wx.CheckBox(self, label=_("Create &desktop icon and shortcut key (control+alt+n)"))
-		ctrl.Value = True
+		ctrl.Value = installer.isDesktopShortcutInstalled()
 		optionsSizer.Add(ctrl)
 		mainSizer.Add(optionsSizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		ctrl = wx.Button(self, label=_("&Install"), id=wx.ID_OK)
+		ctrl = wx.Button(self, label=_("C&ontinue"), id=wx.ID_OK)
 		ctrl.Bind(wx.EVT_BUTTON, self.onInstall)
 		sizer.Add(ctrl)
 		sizer.Add(wx.Button(self, id=wx.ID_CANCEL))
@@ -38,64 +67,7 @@ class InstallerDialog(wx.Dialog):
 
 	def onInstall(self, evt):
 		self.Hide()
-		self.progressDialog = IndeterminateProgressDialog(self, _("Installing NVDA"), _("Please wait while NVDA is being installed."))
-		try:
-			res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(self.createDesktopShortcutCheckbox.Value)),str(int(self.startOnLogonCheckbox.Value))],wait=True)
-		except Exception as e:
-			res=e
-			log.error("Failed to execute installer",exc_info=True)
-		self.progressDialog.done()
-		self.Destroy()
-		if res!=0:
-			log.error("Installation failed: %s"%res)
-			gui.messageBox(_("The installation of NVDA failed. Please check the log viewer for more information."),_("Error"))
-			return
-		gui.messageBox(_("Successfully installed NVDA. Please press OK to start the newly installed copy."),_("Success"))
-		shellapi.ShellExecute(None, None,
-		os.path.join(installer.defaultInstallPath,'nvda_uiAccess.exe').decode("mbcs"),
-		subprocess.list2cmdline(["-r"]).decode("mbcs"),
-		None, 0)
-
-	def onCancel(self, evt):
-		self.Destroy()
-
-class UpdaterDialog(wx.Dialog):
-
-	def __init__(self, parent):
-		super(UpdaterDialog, self).__init__(parent, title=_("Update NVDA"))
-		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-		dialogCaption=wx.StaticText(self,label=_("This will update your previously installed copy of NVDA to the currently running version (%s). Please press the Update button to continue.")%versionInfo.version)
-		mainSizer.Add(dialogCaption)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		ctrl = wx.Button(self, label=_("&Update"), id=wx.ID_OK)
-		ctrl.Bind(wx.EVT_BUTTON, self.onUpdate)
-		sizer.Add(ctrl)
-		sizer.Add(wx.Button(self, id=wx.ID_CANCEL))
-		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
-		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
-		mainSizer.Add(sizer)
-
-		self.Sizer = mainSizer
-
-	def onUpdate(self, evt):
-		self.Hide()
-		self.progressDialog = IndeterminateProgressDialog(self, _("Updating NVDA installation"), _("Please wait while NVDA is being updated."))
-		try:
-			res=config.execElevated(config.SLAVE_FILENAME,["updateInstall"],wait=True)
-		except Exception as e:
-			res=e
-			log.error("Failed to execute updater",exc_info=True)
-		self.progressDialog.done()
-		self.Destroy()
-		if res!=0:
-			log.error("Update failed: %s"%res)
-			gui.messageBox(_("NVDA update failed. Please check the log viewer for more information."),_("Error"))
-			return
-		gui.messageBox(_("Successfully updated NVDA. Please press OK to start the updated copy."),_("Success"))
-		shellapi.ShellExecute(None, None,
-		os.path.join(installer.defaultInstallPath,'nvda_uiAccess.exe').decode("mbcs"),
-		subprocess.list2cmdline(["-r"]).decode("mbcs"),
-		None, 0)
+		doInstall(self.createDesktopShortcutCheckbox.Value,self.startOnLogonCheckbox.Value,self.isUpdate)
 
 	def onCancel(self, evt):
 		self.Destroy()

@@ -61,20 +61,6 @@ def getInstallPath(noDefault=False):
 def isPreviousInstall():
 	return bool(getInstallPath(True))
 
-def validateStartMenuFolder(startMenuFolder):
-	if startMenuFolder==getStartMenuFolder():
-		return True
-	wsh=_getWSH()
-	specialPath=wsh.SpecialFolders("AllUsersPrograms")
-	oldStartMenuFolder=getStartMenuFolder(True)
-	startMenuPath=os.path.join(specialPath,startMenuFolder)
-	return (oldStartMenuFolder and os.stat(startMenuPath)==os.stat(os.path.join(specialPath,oldStartMenuFolder))) or (not os.path.isfile(startMenuPath) and not os.path.isdir(startMenuPath))
-
-def validateInstallPath(installPath):
-	if installPath==defaultInstallPath:
-		return True
-	return False
-
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
 	lang = languageHandler.getLanguage()
@@ -178,6 +164,12 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	createShortcut(os.path.join(startMenuFolder,_("Documentation"),_("Key Command quick reference")+".lnk"),targetPath=getDocFilePath("keycommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
 	createShortcut(os.path.join(startMenuFolder,_("Documentation"),_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
 
+def isDesktopShortcutInstalled():
+	wsh=_getWSH()
+	specialPath=wsh.SpecialFolders("allUsersDesktop")
+	shortcutPath=os.path.join(specialPath,"nvda.lnk")
+	return os.path.isfile(shortcutPath)
+
 def unregisterInstallation(forUpdate=False):
 	import nvda_service
 	try:
@@ -189,8 +181,8 @@ def unregisterInstallation(forUpdate=False):
 	except:
 		pass
 	wsh=_getWSH()
-	if not forUpdate:
-		desktopPath=wsh.SpecialFolders("AllUsersDesktop")
+	desktopPath=wsh.SpecialFolders("AllUsersDesktop")
+	if os.path.isfile(desktopPath):
 		try:
 			os.remove(os.path.join(desktopPath,"nvda.lnk"))
 		except WindowsError:
@@ -201,15 +193,18 @@ def unregisterInstallation(forUpdate=False):
 		startMenuPath=os.path.join(programsPath,startMenuFolder)
 		if os.path.isdir(startMenuPath):
 			shutil.rmtree(startMenuPath)
-	if not forUpdate:
-		try:
-			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda",0,0)
-			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,0)
-			_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda",0,0)
-		except WindowsError:
-			pass
+	try:
+		_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda",0,0)
+		_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,0)
+		_winreg.DeleteKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda",0,0)
+	except WindowsError:
+		pass
 
-def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=None):
+def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
+	prevInstallPath=getInstallPath(noDefault=True)
+	unregisterInstallation()
+	if prevInstallPath:
+		removeOldLoggedFiles(prevInstallPath)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
 	#Remove all the main executables always
@@ -251,12 +246,6 @@ def removeOldLoggedFiles(installPath):
 			os.rename(filePath,tempPath)
 			if windll.kernel32.MoveFileExA("\\\\?\\"+tempPath,None,4)==0:
 				raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
-
-def update():
-	prevInstallPath=getInstallPath()
-	unregisterInstallation(forUpdate=True)
-	removeOldLoggedFiles(prevInstallPath)
-	install()
 
 autorunTemplate="""[AutoRun]
 open={exe}

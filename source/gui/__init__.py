@@ -237,12 +237,9 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from gui.installerGui import InstallerDialog, UpdaterDialog
+		from gui.installerGui import InstallerDialog
 		import installer
-		if installer.isPreviousInstall():
-			UpdaterDialog(self).Show()
-		else:
-			InstallerDialog(self).Show()
+		InstallerDialog(self).Show()
 		self.postPopup()
 
 class SysTrayIcon(wx.TaskBarIcon):

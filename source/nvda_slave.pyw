@@ -22,9 +22,6 @@ def main():
 		elif action=="install":
 			import installer
 			installer.install(bool(int(args[0])),bool(int(args[1])))
-		elif action=="updateInstall":
-			import installer
-			installer.update()
 		elif action=="unregisterInstall":
 			import installer
 			installer.unregisterInstallation()
