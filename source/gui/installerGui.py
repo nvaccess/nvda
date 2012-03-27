@@ -26,7 +26,7 @@ def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
 		msg=_("Successfully installed NVDA. ") if not isUpdate else _("Successfully updated your installation of NVDA. ")
 		gui.messageBox(msg+_("Please press OK to start the installed copy."),_("Success"))
 	shellapi.ShellExecute(None, None,
-	os.path.join(installer.defaultInstallPath,'nvda_uiAccess.exe').decode("mbcs"),
+	os.path.join(installer.defaultInstallPath,'nvda.exe').decode("mbcs"),
 	subprocess.list2cmdline(["-r"]).decode("mbcs"),
 	None, 0)
 
