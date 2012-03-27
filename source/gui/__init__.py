@@ -309,7 +309,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
 		if updateCheck and not globalVars.appArgs.secure:
 			# Translators: The label of a menu item to manually check for an updated version of NVDA.
-			item = menu_help.Append(wx.ID_ANY, _("Check for &update..."))
+			item = menu_help.Append(wx.ID_ANY, _("Check for update..."))
 			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 		self.menu.AppendSeparator()
