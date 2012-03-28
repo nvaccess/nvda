@@ -10,7 +10,7 @@ from logHandler import log
 import gui
 
 def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
-	progressDialog = IndeterminateProgressDialog(None, _("Updating NVDA") if isUpdate else _("Installing NVDA"), _("Please wait while your previous installation of NVDA is being updated.") if isUpdate else _("Please wait while NVDA is being installed"))
+	progressDialog = IndeterminateProgressDialog(gui.mainFrame, _("Updating NVDA") if isUpdate else _("Installing NVDA"), _("Please wait while your previous installation of NVDA is being updated.") if isUpdate else _("Please wait while NVDA is being installed"))
 	try:
 		res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(createDesktopShortcut)),str(int(startOnLogon))],wait=True)
 	except Exception as e:
