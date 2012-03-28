@@ -229,8 +229,9 @@ class MainFrame(wx.Frame):
 		if isInMessageBox:
 			return
 		self.prePopup()
-		from gui.installerGui import createPortableCopy
-		createPortableCopy()
+		import gui.installerGui
+		d=gui.installerGui.PortableCreaterDialog(gui.mainFrame)
+		d.Show()
 		self.postPopup()
 
 	def onInstallCommand(self, evt):

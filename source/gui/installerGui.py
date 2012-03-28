@@ -85,20 +85,60 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.timer.Stop()
 		self.Destroy()
 
-def createPortableCopy():
-		with wx.DirDialog(gui.mainFrame,_("Choose where you wish to place the portable copy of NVDA")) as d:
-			if d.ShowModal()!=wx.ID_OK:
-				return
-			path=d.Path
-		copyUserConfig=gui.messageBox(_("Would you like to include your current NVDA settings in the portable copy?"), _("Copy User Configuration"), wx.YES_NO|wx.ICON_QUESTION) == wx.YES
-		createAutorun=(ctypes.windll.kernel32.GetDriveTypeW(os.path.splitdrive(path)[0]+u'\\')==2 and gui.messageBox(_("Would you like to create an autorun file for your removable drive to allow NVDA to start automatically?"), _("Removable Drive Detected"), wx.YES_NO|wx.ICON_QUESTION) == wx.YES)
+class PortableCreaterDialog(wx.Dialog):
 
-		d = IndeterminateProgressDialog(gui.mainFrame, _("Creating Portable Copy"), _("Please wait while a portable copy of NVDA is created."))
-		try:
-			installer.CreatePortableCopy(path,copyUserConfig=copyUserConfig,createAutorun=createAutorun)
-		except OSError:
-			d.done()
-			gui.messageBox(_("Failed to create portable copy"),_("Error"))
-			return
+	def __init__(self, parent):
+		super(PortableCreaterDialog, self).__init__(parent, title=_("Create Portable NVDA"))
+		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
+		dialogCaption=wx.StaticText(self,label=_("To create a portable copy of NVDA, please select the path and other options and then press Continue")) 
+		mainSizer.Add(dialogCaption)
+		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Portable options")), wx.HORIZONTAL)
+		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Portable directory:")), wx.HORIZONTAL)
+		ctrl = self.portableDirectoryEdit = wx.TextCtrl(self, value='e:\\')
+		sizer.Add(ctrl)
+		ctrl = wx.Button(self, label=_("Browse..."))
+		ctrl.Bind(wx.EVT_BUTTON, self.onBrowseForPortableDirectory)
+		sizer.Add(ctrl)
+		optionsSizer.Add(sizer)
+		ctrl = self.createAutorunCheckbox = wx.CheckBox(self, label=_("Create an &Autorun file"))
+		ctrl.Value = False
+		optionsSizer.Add(ctrl)
+		ctrl = self.copyUserConfigCheckbox = wx.CheckBox(self, label=_("Copy current &user configuration"))
+		ctrl.Value = False
+		optionsSizer.Add(ctrl)
+		mainSizer.Add(optionsSizer)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		ctrl = wx.Button(self, label=_("C&ontinue"), id=wx.ID_OK)
+		ctrl.Bind(wx.EVT_BUTTON, self.onCreatePortable)
+		sizer.Add(ctrl)
+		sizer.Add(wx.Button(self, id=wx.ID_CANCEL))
+		# If we bind this using button.Bind, it fails to trigger when the dialog is closed.
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		mainSizer.Add(sizer)
+
+		self.Sizer = mainSizer
+
+	def onBrowseForPortableDirectory(self, evt):
+		with wx.DirDialog(self, _("Select portable  directory"), defaultPath=self.portableDirectoryEdit.Value) as d:
+			if d.ShowModal() == wx.ID_OK:
+				self.portableDirectoryEdit.Value = d.Path
+
+	def onCreatePortable(self, evt):
+		self.Hide()
+		doCreatePortable(self.portableDirectoryEdit.Value,self.createAutorunCheckbox.Value,self.copyUserConfigCheckbox.Value)
+
+	def onCancel(self, evt):
+		self.Destroy()
+
+def doCreatePortable(portableDirectory,createAutorun=False,copyUserConfig=False):
+	d = IndeterminateProgressDialog(gui.mainFrame, _("Creating Portable Copy"), _("Please wait while a portable copy of NVDA is created."))
+	try:
+		installer.CreatePortableCopy(portableDirectory,copyUserConfig=copyUserConfig,createAutorun=createAutorun)
+	except:
+		log.error("Failed to create portable copy",exc_info=True)
 		d.done()
-		gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%path,_("Success"))
+		gui.messageBox(_("Failed to create portable copy"),_("Error"))
+		return
+	d.done()
+	gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,_("Success"))

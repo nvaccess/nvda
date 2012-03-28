@@ -8,6 +8,7 @@ import os
 import tempfile
 import shutil
 import shellapi
+import globalVars
 import languageHandler
 import config
 import versionInfo
