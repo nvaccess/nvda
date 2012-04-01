@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 13 febbraio 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 17 febbraio 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Comandi da tastiera Guida Rapida
@@ -871,6 +871,8 @@ Questa voce, una volta attivata, ricarica tutti i plugin e i moduli specifici pe
 
 + Sintesi vocali supportate +[SupportedSpeechSynths]
 Questa sezione contiene informazioni sui sintetizzatori vocali supportati da NVDA.
+Per una panoramica esaustiva dei sintetizzatori compatibili, sia gratuiti che a pagamento, si veda la pagina in inglese all'indirizzo [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+
 
 ++ Espeak ++
 La sintesi vocale [eSpeak http://espeak.sourceforge.net/]  è incorporata direttamente in NVDA, per cui non è necessario alcun driver o componente per farla funzionare. Da impostazioni predefinite NVDA si avvia utilizzando Espeak. Poiché questa sintesi è incorporata in NVDA, risulta molto comoda per utilizzare il prodotto da una chiavetta USB o da un cd in altri sistemi.
@@ -898,9 +900,14 @@ La piattaforma Microsoft Speech fornisce supporto per diverse lingue, e generalm
 Queste voci possono essere utilizzate anche con NVDA.
 
 Per usare queste voci, è necessaria l'installazione di due componenti:
-- Microsoft Speech Platform - Server Runtime (Version 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
-- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
-
+- Microsoft Speech Platform - Runtime (Versione 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Versione 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Questa pagina contiene diversi file sia per il riconoscimento vocale sia per la sintesi vocale stessa.
+ Selezionare i file che si desiderano, a seconda del TTS e della lingua che si vuole utilizzare.
+  Ad esempio, il file MSSpeech_TTS_en-US_ZiraPro.msi è una voce inglese Stati Uniti.
+ -
+-
+ 
 
 ++ Audiologic Tts3 ++
 Si tratta di una sintesi vocale commerciale espressamente rivolta al mercato italiano. Per farla funzionare bisogna possedere una regolare licenza installata sul proprio pc.

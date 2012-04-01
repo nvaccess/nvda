@@ -481,6 +481,24 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 			parentNode->addAttribute(L"description",description);
 		SysFreeString(description);
 	}
+	wstring locale;
+	IA2Locale ia2Locale={0};
+	if(pacc->get_locale(&ia2Locale)==S_OK) {
+		if(ia2Locale.language) {
+			locale.append(ia2Locale.language);
+			SysFreeString(ia2Locale.language);
+		}
+		if(ia2Locale.country) {
+			if(!locale.empty()) {
+				locale.append(L"-");
+				locale.append(ia2Locale.country);
+			}
+			SysFreeString(ia2Locale.country);
+		}
+		if(ia2Locale.variant) {
+			SysFreeString(ia2Locale.variant);
+		}
+	}
 	// Handle table cell information.
 	IAccessibleTableCell* paccTableCell = NULL;
 	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
@@ -539,8 +557,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 			else
 				fillTableCounts<IAccessibleTable>(parentNode, pacc, paccTable);
 			// Add the table summary if one is present and the table is visible.
-			if (name && width > 0 && height > 0 && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
+			if (name && width > 0 && height > 0 && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name))) {
+				if(!locale.empty()) tempNode->addAttribute(L"language",locale);
 				previousNode = tempNode;
+			}
 		}
 	}
 	IAccessibleText* paccText=NULL;
@@ -716,6 +736,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 		} else if (role==ROLE_SYSTEM_GRAPHIC&&childCount>0&&name) {
 			// This is an image map with a name, so render the name.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
+			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 		}
 		if(IA2Text!=NULL) {
 			LOG_DEBUG(L"Freeing IA2Text");
@@ -769,14 +790,17 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 					if(name!=NULL) {
 						LOG_DEBUG(L"adding name to buffer");
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
+						if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 					} else if((role==ROLE_SYSTEM_LINK)&&(value!=NULL)) {
 						wchar_t* newValue=_wcsdup(getNameForURL(value).c_str());
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,newValue);
 						free(newValue);
 					} else if(value!=NULL) {
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,value);
+						if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 					} else if(width>0||height>0) {
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+						if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 					}
 				} else if(role==ROLE_SYSTEM_GRAPHIC) {
 					LOG_DEBUG(L"For graphics we use the name as the text");
@@ -787,6 +811,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 					if(name!=NULL&&(SysStringLen(name)>0||isClickable)) {
 						LOG_DEBUG(L"adding name to buffer");
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
+						if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 					} else if((value!=NULL)&&(!IGNORE_NONINTERACTIVE_UNLABELED_GRAPHICS||(!isClickable&&inLink))) {
 						wchar_t* newValue=_wcsdup(getNameForURL(value).c_str());
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,newValue);
@@ -800,8 +825,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 					if(value!=NULL) {
 						LOG_DEBUG(L"adding value to buffer");
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,value);
+						if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 					} else if(role!=ROLE_SYSTEM_CELL&&role!=IA2_ROLE_SECTION&&(width>0&&height>0)) {
 						previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+						if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 					}
 				}
 			}
@@ -809,6 +836,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 		if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_ROWHEADER || role == ROLE_SYSTEM_COLUMNHEADER||role==IA2_ROLE_UNKNOWN) && parentNode->getLength() == 0) {
 			// Always render a space for empty table cells and unknowns.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 			parentNode->setIsBlock(false);
 		}
 	}

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA 2012.1\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-02-13 07:25+0000\n"
-"PO-Revision-Date: 2012-02-13 14:43+0100\n"
+"POT-Creation-Date: 2012-03-01 05:30+0000\n"
+"PO-Revision-Date: 2012-03-01 15:13+0100\n"
 "Last-Translator: Juan C. buño <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español de NVDA <Quetzatl@eresmas.net>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgid " and currently loaded module is %s"
 msgstr " y el módulo actualmente cargado es %s"
 
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#: speech.py:438
+#: speech.py:439
 #, python-format
 msgid "%d characters"
 msgstr "%d carácteres"
@@ -57,7 +57,7 @@ msgstr "%s cursor"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:533
+#: braille.py:546
 #, python-format
 msgid "%s end"
 msgstr "%s fin"
@@ -73,8 +73,8 @@ msgstr "%s elementos"
 msgid "%s landmark"
 msgstr "%s zona"
 
-#: braille.py:424
-#: speech.py:797
+#: braille.py:436
+#: speech.py:798
 #, python-format
 msgid "%s of %s"
 msgstr "%s de %s"
@@ -268,38 +268,38 @@ msgid "&Warn before exiting NVDA"
 msgstr "&Avisar antes de salir de NVDA"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-#: braille.py:249
+#: braille.py:261
 msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-#: braille.py:231
+#: braille.py:243
 msgid "(-)"
 msgstr "(-)"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-#: braille.py:229
+#: braille.py:241
 msgid "(x)"
 msgstr "(x)"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-#: braille.py:241
+#: braille.py:253
 msgid "+"
 msgstr "+"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-#: braille.py:239
+#: braille.py:251
 msgid "-"
 msgstr "-"
 
 #. Translators: Displayed in braille for an object which is a
 #. separator.
-#: braille.py:221
+#: braille.py:233
 msgid "-----"
 msgstr "-----"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
-#: braille.py:237
+#: braille.py:249
 msgid "..."
 msgstr "..."
 
@@ -479,7 +479,7 @@ msgstr "Modo Navegación"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:32
+#: braille.py:35
 msgid "Bulgarian 8 dot computer braille"
 msgstr "Búlgaro Braille computerizado de 8 puntos"
 
@@ -526,13 +526,13 @@ msgstr "modificar configuraciones del modo virtual"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:176
+#: braille.py:188
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Chino (Hong Kong, Cantonés)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:179
+#: braille.py:191
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chino (Taiwan, Mandarín)"
 
@@ -621,7 +621,7 @@ msgstr "No se pudo guardar la configuración; provablemente el sistema de archiv
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:110
+#: braille.py:116
 msgid "Croatian 8 dot computer braille"
 msgstr "Croata braille computerizado de 8 puntos"
 
@@ -644,13 +644,13 @@ msgstr "Verbalización cíclica de niveles de símbolos que determina qué símb
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:41
+#: braille.py:44
 msgid "Czech grade 1"
 msgstr "Checo grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:44
+#: braille.py:47
 msgid "Danish grade 1"
 msgstr "Danés grado 1"
 
@@ -699,13 +699,13 @@ msgstr "Donar"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:122
+#: braille.py:131
 msgid "Dutch (Belgium) grade 1"
 msgstr "Holandés (Bélgica) grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:125
+#: braille.py:134
 msgid "Dutch (netherlands) grade 1"
 msgstr "Holandés (Holanda) grado 1"
 
@@ -718,7 +718,7 @@ msgstr "&Salir"
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Expandir a braille de ordenador para la palabra en el cursor"
 
-#: NVDAObjects/window/winword.py:388
+#: NVDAObjects/window/winword.py:402
 msgid "Edge of table"
 msgstr "Borde de la tabla"
 
@@ -748,37 +748,37 @@ msgstr "Notas finales"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:59
+#: braille.py:62
 msgid "English (U.K.) grade 1"
 msgstr "Inglés (U.K.) grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:62
+#: braille.py:65
 msgid "English (U.K.) grade 2"
 msgstr "Inglés (U.K.) grado 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:65
+#: braille.py:68
 msgid "English (U.S.) 6 dot computer braille"
 msgstr "Braille de Ordenador de 6 puntos Inglés (U.S.)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:68
+#: braille.py:71
 msgid "English (U.S.) 8 dot computer braille"
 msgstr "Braille de Ordenador de 8 puntos Inglés (U.S.)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:71
+#: braille.py:74
 msgid "English (U.S.) grade 1"
 msgstr "Inglés (U.S.) grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:74
+#: braille.py:77
 msgid "English (U.S.) grade 2"
 msgstr "Inglés (U.S.) grado 2"
 
@@ -825,7 +825,7 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:101
+#: braille.py:107
 msgid "Ethiopic grade 1"
 msgstr "Etíope grado 1"
 
@@ -842,6 +842,12 @@ msgstr "Incluir encabezados de página"
 msgid "Exit NVDA"
 msgstr "salir del NVDA"
 
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:32
+msgid "Farsi grade 1"
+msgstr "Persa grado 1"
+
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:14
 msgid "Fast forward"
@@ -857,7 +863,7 @@ msgstr "Fallo en la búsqueda"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:80
+#: braille.py:86
 msgid "Finnish 8 dot computer braille"
 msgstr "Braille computerizado croata de 8 puntos"
 
@@ -907,31 +913,31 @@ msgstr "Series Freedom Scientific Focus/PAC Mate"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:83
+#: braille.py:89
 msgid "French (Canada) grade 1"
 msgstr "Francés (Canadá) grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:86
+#: braille.py:92
 msgid "French (Canada) grade 2"
 msgstr "Francés (Canadá) grado 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:89
+#: braille.py:95
 msgid "French (unified) 6 dot computer braille"
 msgstr "Braille de ordenador de 6 puntos francés (unificado)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:92
+#: braille.py:98
 msgid "French (unified) 8 dot computer braille"
 msgstr "Braille de ordenador de 8 puntos francés (unificado)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:95
+#: braille.py:101
 msgid "French (unified) Grade 2"
 msgstr "Grado 2 Francés (unificado)"
 
@@ -952,31 +958,31 @@ msgstr "Opciones Generales"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:47
+#: braille.py:50
 msgid "German 8 dot computer braille"
 msgstr "Braille Alemán computerizado de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:50
+#: braille.py:53
 msgid "German grade 0"
 msgstr "Alemán grado 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:53
+#: braille.py:56
 msgid "German grade 1"
 msgstr "Alemán grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:56
+#: braille.py:59
 msgid "German grade 2"
 msgstr "Alemán grado 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:98
+#: braille.py:104
 msgid "Greek (Greece) grade 1"
 msgstr "Griego (Grecia) grado 1"
 
@@ -993,13 +999,13 @@ msgstr "Líneas braille Handy Tech"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:104
+#: braille.py:110
 msgid "Hebrew 8 dot computer braille"
 msgstr "Braille computerizado Hebreo de ocho puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:107
+#: braille.py:113
 msgid "Hindi grade 1"
 msgstr "Hindi grado 1"
 
@@ -1010,7 +1016,7 @@ msgstr "series de las HumanWare Brailliant BI/B"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:113
+#: braille.py:119
 msgid "Hungarian 8 dot computer braille"
 msgstr "Braille computerizado húngaro de ocho puntos"
 
@@ -1026,6 +1032,12 @@ msgstr "Dirección IP"
 msgid "ITALIC"
 msgstr "cursiva"
 
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:122
+msgid "Icelandic 8 dot computer braille"
+msgstr "Braille computerizado islandés de 8 puntos"
+
 #: globalCommands.py:136
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
 msgstr "Si se pulsó una vez, anuncia la hora actual. Si se pulsó dos veces, anuncia la fecha actual"
@@ -1040,7 +1052,7 @@ msgstr "Privilegios Insuficientes"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:116
+#: braille.py:125
 msgid "Italian grade 1"
 msgstr "Italiano grado 1"
 
@@ -1085,7 +1097,7 @@ msgstr "Error en el Idioma"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:119
+#: braille.py:128
 msgid "Latvian grade 1"
 msgstr "Letón grado 1"
 
@@ -1361,31 +1373,31 @@ msgstr "NonVisual Desktop Access"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:128
+#: braille.py:137
 msgid "Norwegian 8 dot computer braille"
 msgstr "Braille computerizado noruego de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:131
+#: braille.py:140
 msgid "Norwegian grade 0"
 msgstr "Noruego grado 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:134
+#: braille.py:143
 msgid "Norwegian grade 1"
 msgstr "Noruego grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:137
+#: braille.py:146
 msgid "Norwegian grade 2"
 msgstr "Noruego grado 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:140
+#: braille.py:149
 msgid "Norwegian grade 3"
 msgstr "Noruego grado 3"
 
@@ -1393,8 +1405,8 @@ msgstr "Noruego grado 3"
 msgid "Not in a table cell"
 msgstr "No estás en una celda de tabla"
 
-#: NVDAObjects/window/winword.py:377
-#: NVDAObjects/window/winword.py:394
+#: NVDAObjects/window/winword.py:391
+#: NVDAObjects/window/winword.py:408
 msgid "Not in table"
 msgstr "No estás en una tabla"
 
@@ -1452,19 +1464,19 @@ msgstr "Plugins recargados"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:143
+#: braille.py:152
 msgid "Polish grade 1"
 msgstr "Polaco grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:146
+#: braille.py:155
 msgid "Portuguese grade 1"
 msgstr "Portugués grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:149
+#: braille.py:158
 msgid "Portuguese grade 2"
 msgstr "Portugués grado 2"
 
@@ -1812,7 +1824,7 @@ msgstr "Lleva el cursor o activa el objeto bajo la celda braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:152
+#: braille.py:161
 msgid "Russian grade 1"
 msgstr "Ruso grado 1"
 
@@ -1844,7 +1856,7 @@ msgstr "Escritorio Seguro"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:164
+#: braille.py:173
 msgid "Serbian grade 1"
 msgstr "Serbio grado 1"
 
@@ -1918,19 +1930,25 @@ msgstr "Modo durmiente activado"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:158
+#: braille.py:167
 msgid "Slovak"
 msgstr "Eslovaco"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:161
+#: braille.py:170
 msgid "Slovene grade 1"
 msgstr "Esloveno grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:77
+#: braille.py:80
+msgid "Spanish 8 dot computer braille"
+msgstr "Braille español computerizado de 8 puntos"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:83
 msgid "Spanish grade 1"
 msgstr "Español grado 1"
 
@@ -2005,7 +2023,7 @@ msgstr "Opciones de usuario de NVDA copiadas satisfactoriamente"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:155
+#: braille.py:164
 msgid "Swedish grade 1"
 msgstr "Sueco grado 1"
 
@@ -2027,7 +2045,13 @@ msgstr "Sintetizador"
 msgid "Synthesizer Error"
 msgstr "Error de Sintetizador"
 
-#: NVDAObjects/IAccessible/__init__.py:1482
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:176
+msgid "Tamil grade 1"
+msgstr "Tamil grado 1"
+
+#: NVDAObjects/IAccessible/__init__.py:1494
 msgid "Taskbar"
 msgstr "Barra de tareas"
 
@@ -2139,7 +2163,7 @@ msgstr "Traducción:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:167
+#: braille.py:179
 msgid "Turkish grade 1"
 msgstr "Turco grado 1"
 
@@ -2165,13 +2189,13 @@ msgstr "Tipo:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:170
+#: braille.py:182
 msgid "Unified English Braille Code grade 1"
 msgstr "Código Braille Grado 1 Inglés Unificado"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:173
+#: braille.py:185
 msgid "Unified English Braille Code grade 2"
 msgstr "Código Braille Grado 2 Inglés Unificado"
 
@@ -2274,13 +2298,13 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:35
+#: braille.py:38
 msgid "Welsh grade 1"
 msgstr "Galés grado 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:38
+#: braille.py:41
 msgid "Welsh grade 2"
 msgstr "Galés grado 2"
 
@@ -2317,23 +2341,23 @@ msgstr "activa el objeto actual en el documento"
 msgid "alert"
 msgstr "alerta"
 
-#: speech.py:1034
+#: speech.py:1037
 msgid "align center"
 msgstr "alineación al centro"
 
-#: speech.py:1040
+#: speech.py:1043
 msgid "align default"
 msgstr "alineación predeterminada"
 
-#: speech.py:1038
+#: speech.py:1041
 msgid "align justify"
 msgstr "alineación justificar"
 
-#: speech.py:1032
+#: speech.py:1035
 msgid "align left"
 msgstr "alineación a la izquierda"
 
-#: speech.py:1036
+#: speech.py:1039
 msgid "align right"
 msgstr "alineación a la derecha"
 
@@ -2341,7 +2365,7 @@ msgstr "alineación a la derecha"
 msgid "alignment"
 msgstr "alineación"
 
-#: characterProcessing.py:128
+#: characterProcessing.py:130
 msgid "all"
 msgstr "toda"
 
@@ -2392,7 +2416,7 @@ msgstr "retroceso"
 msgid "banner"
 msgstr "banner"
 
-#: speech.py:1024
+#: speech.py:1027
 msgid "baseline"
 msgstr "línea de base"
 
@@ -2415,9 +2439,9 @@ msgstr "Negro"
 
 #. Translators: This is spoken when nvda moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
-#: speech.py:163
-#: speech.py:328
-#: speech.py:738
+#: speech.py:164
+#: speech.py:329
+#: speech.py:739
 msgid "blank"
 msgstr "en blanco"
 
@@ -2430,7 +2454,7 @@ msgid "blue"
 msgstr "Azul"
 
 #: controlTypes.py:313
-#: speech.py:998
+#: speech.py:1001
 msgid "bold"
 msgstr "negrita"
 
@@ -2470,7 +2494,7 @@ msgstr "detener el navegador"
 
 #. Translators: Displayed in braille for an object which is a
 #. button.
-#: braille.py:197
+#: braille.py:209
 msgid "btn"
 msgstr "bt"
 
@@ -2484,7 +2508,7 @@ msgstr "botón"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:441
+#: braille.py:453
 #, python-format
 msgid "c%s"
 msgstr "c%s"
@@ -2498,7 +2522,7 @@ msgid "canvas"
 msgstr "lienzo"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
-#: speech.py:195
+#: speech.py:196
 #, python-format
 msgid "cap %s"
 msgstr "mayus %s"
@@ -2526,7 +2550,7 @@ msgstr "caso"
 
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
-#: braille.py:206
+#: braille.py:218
 msgid "cbo"
 msgstr "cco"
 
@@ -2534,7 +2558,7 @@ msgstr "cco"
 msgid "cell"
 msgstr "celda"
 
-#: characterProcessing.py:129
+#: characterProcessing.py:131
 #: controlTypes.py:280
 #: textInfos/__init__.py:196
 msgid "character"
@@ -2562,7 +2586,7 @@ msgstr "marcado"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
-#: braille.py:200
+#: braille.py:212
 msgid "chk"
 msgstr "cv"
 
@@ -2571,7 +2595,7 @@ msgid "clickable"
 msgstr "Cliqueable"
 
 #. Translators: Displayed in braille when an object is clickable.
-#: braille.py:245
+#: braille.py:257
 msgid "clk"
 msgstr "clc"
 
@@ -2591,8 +2615,8 @@ msgstr "selector de colores"
 msgid "column"
 msgstr "columna"
 
-#: speech.py:826
-#: speech.py:1093
+#: speech.py:827
+#: speech.py:1096
 #, python-format
 msgid "column %s"
 msgstr "columna %s"
@@ -2671,7 +2695,7 @@ msgstr "la acción predeterminada falló"
 msgid "default color"
 msgstr "color predeterminado"
 
-#: speech.py:959
+#: speech.py:962
 msgid "default style"
 msgstr "estilo predeterminado"
 
@@ -2719,7 +2743,7 @@ msgstr "desplazar línea braille"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
-#: braille.py:212
+#: braille.py:224
 msgid "dlg"
 msgstr "dlg"
 
@@ -2728,7 +2752,7 @@ msgid "document"
 msgstr "documento"
 
 #. "not drop target" doesn't make any sense, so use a custom message.
-#: speech.py:787
+#: speech.py:788
 msgid "done dragging"
 msgstr "arrastrado hecho"
 
@@ -2762,7 +2786,7 @@ msgid "drop target"
 msgstr "soltar en destino"
 
 #: virtualBuffers/__init__.py:1250
-#: NVDAObjects/window/winword.py:407
+#: NVDAObjects/window/winword.py:421
 msgid "edge of table"
 msgstr "borde de la tabla"
 
@@ -2780,7 +2804,7 @@ msgstr "editable"
 
 #. Translators: Displayed in braille for an object which is an
 #. editable text field.
-#: braille.py:185
+#: braille.py:197
 msgid "edt"
 msgstr "ce"
 
@@ -2928,7 +2952,7 @@ msgstr "panel transparente"
 
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
-#: braille.py:224
+#: braille.py:236
 msgid "gra"
 msgstr "grf"
 
@@ -2954,7 +2978,7 @@ msgstr "grupo"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:390
+#: braille.py:402
 #, python-format
 msgid "h%s"
 msgstr "n%s"
@@ -2967,7 +2991,7 @@ msgstr "semi marcado"
 msgid "has auto complete"
 msgstr "tiene auto completado"
 
-#: speech.py:1052
+#: speech.py:1055
 msgid "has comment"
 msgstr "Tiene comentario"
 
@@ -3080,7 +3104,7 @@ msgstr "invisible"
 msgid "invoke"
 msgstr "invocar"
 
-#: speech.py:1003
+#: speech.py:1006
 msgid "italic"
 msgstr "cursiva"
 
@@ -3146,8 +3170,8 @@ msgstr "shift izquierda"
 msgid "left windows"
 msgstr "windows izquierda"
 
-#: speech.py:803
-#: speech.py:806
+#: speech.py:804
+#: speech.py:807
 #, python-format
 msgid "level %s"
 msgstr "nivel %s"
@@ -3167,7 +3191,7 @@ msgstr "Verde lima"
 msgid "line"
 msgstr "subrayado"
 
-#: speech.py:992
+#: speech.py:995
 #, python-format
 msgid "line %s"
 msgstr "línea %s"
@@ -3178,7 +3202,7 @@ msgid "line scroll"
 msgstr "desplazar línea"
 
 #: controlTypes.py:206
-#: speech.py:1046
+#: speech.py:1049
 msgid "link"
 msgstr "enlace"
 
@@ -3196,7 +3220,7 @@ msgstr "elemento de lista"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
-#: braille.py:209
+#: braille.py:221
 msgid "lnk"
 msgstr "enl"
 
@@ -3206,13 +3230,13 @@ msgstr "carga la configuración de NVDA, sobreescribiendo los cambios actuales"
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
-#: braille.py:188
+#: braille.py:200
 msgid "lst"
 msgstr "lst"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:428
+#: braille.py:440
 #, python-format
 msgid "lv %s"
 msgstr "nv %s"
@@ -3254,13 +3278,13 @@ msgstr "elemento de menú"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
-#: braille.py:194
+#: braille.py:206
 msgid "mnu"
 msgstr "mn"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
-#: braille.py:191
+#: braille.py:203
 msgid "mnubar"
 msgstr "bmn"
 
@@ -3268,7 +3292,7 @@ msgstr "bmn"
 msgid "modal"
 msgstr "modal"
 
-#: characterProcessing.py:127
+#: characterProcessing.py:129
 msgid "most"
 msgstr "la mayoría"
 
@@ -3519,7 +3543,7 @@ msgstr "Azul Marino"
 msgid "next track"
 msgstr "pista siguiente"
 
-#: speech.py:998
+#: speech.py:1001
 msgid "no bold"
 msgstr "no hay negritas"
 
@@ -3533,11 +3557,11 @@ msgid "no focus"
 msgstr "sin foco"
 
 #. Translators: This is spoken when the given line has no indentation.
-#: speech.py:354
+#: speech.py:355
 msgid "no indent"
 msgstr "no hay sangría"
 
-#: speech.py:1003
+#: speech.py:1006
 msgid "no italic"
 msgstr "no hay cursivas"
 
@@ -3768,7 +3792,7 @@ msgstr "no hay actualizaciones de la barra de progreso"
 msgid "no selection"
 msgstr "Sin selección"
 
-#: speech.py:1008
+#: speech.py:1011
 msgid "no strikethrough"
 msgstr "no hay tachado"
 
@@ -3780,18 +3804,18 @@ msgstr "no hay batería del sistema"
 msgid "no title"
 msgstr "sin título"
 
-#: characterProcessing.py:125
+#: characterProcessing.py:127
 #: synthDrivers/_espeak.py:309
 msgid "none"
 msgstr "ninguna"
 
-#: braille.py:411
-#: speech.py:789
+#: braille.py:423
+#: speech.py:790
 #, python-format
 msgid "not %s"
 msgstr "no %s"
 
-#: speech.py:1013
+#: speech.py:1016
 msgid "not underlined"
 msgstr "no hay subrayado"
 
@@ -3933,7 +3957,7 @@ msgstr "activado"
 #. The {backgroundColor} text will be replaced by the background color.
 #. For example, if the text is white on a black background,
 #. the output of this message in English would be "on black".
-#: speech.py:987
+#: speech.py:990
 msgid "on {backgroundColor}"
 msgstr "sobre {backgroundColor}"
 
@@ -3947,17 +3971,17 @@ msgstr "panel de opciones"
 msgid "orange"
 msgstr "Naranja"
 
-#: speech.py:926
-#: speech.py:1046
+#: speech.py:929
+#: speech.py:1049
 #, python-format
 msgid "out of %s"
 msgstr "fuera de %s"
 
-#: speech.py:1061
+#: speech.py:1064
 msgid "out of spelling error"
 msgstr "fuera de error de ortografía"
 
-#: speech.py:1079
+#: speech.py:1082
 msgid "out of table"
 msgstr "fuera de tabla"
 
@@ -3965,7 +3989,7 @@ msgstr "fuera de tabla"
 msgid "page"
 msgstr "página"
 
-#: speech.py:950
+#: speech.py:953
 #, python-format
 msgid "page %s"
 msgstr "página %s"
@@ -4040,7 +4064,7 @@ msgstr "púrpura"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:433
+#: braille.py:445
 #, python-format
 msgid "r%s"
 msgstr "f%s"
@@ -4055,7 +4079,7 @@ msgstr "opción de elemento de menú"
 
 #. Translators: Displayed in braille for an object which is a
 #. radio button.
-#: braille.py:203
+#: braille.py:215
 msgid "rbtn"
 msgstr "bto"
 
@@ -4164,7 +4188,7 @@ msgid "right windows"
 msgstr "windows derecha"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-#: braille.py:243
+#: braille.py:255
 msgid "ro"
 msgstr "fl"
 
@@ -4176,8 +4200,8 @@ msgstr "panel raíz"
 msgid "row"
 msgstr "fila"
 
-#: speech.py:819
-#: speech.py:1097
+#: speech.py:820
+#: speech.py:1100
 #, python-format
 msgid "row %s"
 msgstr "fila %s"
@@ -4218,7 +4242,7 @@ msgid "section"
 msgstr "sección"
 
 #. Translators: Displayed in braille when an object is selected.
-#: braille.py:233
+#: braille.py:245
 msgid "sel"
 msgstr "sel"
 
@@ -4233,21 +4257,21 @@ msgstr "seleccionado"
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401
 #: globalCommands.py:127
-#: speech.py:305
-#: speech.py:497
-#: speech.py:512
+#: speech.py:306
+#: speech.py:498
+#: speech.py:513
 #: virtualBuffers/__init__.py:695
 #, python-format
 msgid "selected %s"
 msgstr "seleccionado %s"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-#: speech.py:491
+#: speech.py:492
 #, python-format
 msgid "selecting %s"
 msgstr "seleccionando %s"
 
-#: speech.py:506
+#: speech.py:507
 msgid "selection removed"
 msgstr "selección eliminada"
 
@@ -4281,7 +4305,7 @@ msgstr "salta adelante pasando un bloque de enlaces"
 msgid "slider"
 msgstr "deslizador"
 
-#: characterProcessing.py:126
+#: characterProcessing.py:128
 msgid "some"
 msgstr "alguna"
 
@@ -4331,7 +4355,7 @@ msgstr "Verbaliza el objeto actual en primer plano"
 msgid "speech mode %s"
 msgstr "modo de voz %s"
 
-#: speech.py:1059
+#: speech.py:1062
 msgid "spelling error"
 msgstr "error de ortografía"
 
@@ -4356,7 +4380,7 @@ msgstr "barra de estado"
 msgid "stop"
 msgstr "detener"
 
-#: speech.py:1008
+#: speech.py:1011
 msgid "strikethrough"
 msgstr "tachado"
 
@@ -4364,7 +4388,7 @@ msgstr "tachado"
 msgid "style"
 msgstr "estilo"
 
-#: speech.py:957
+#: speech.py:960
 #, python-format
 msgid "style %s"
 msgstr "estilo %s"
@@ -4380,17 +4404,17 @@ msgid "subject: %s"
 msgstr "asunto: %s"
 
 #. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-#: braille.py:235
+#: braille.py:247
 msgid "submnu"
 msgstr "smn"
 
 #: controlTypes.py:319
-#: speech.py:1022
+#: speech.py:1025
 msgid "subscript"
 msgstr "subíndice"
 
 #: controlTypes.py:318
-#: speech.py:1020
+#: speech.py:1023
 msgid "superscript"
 msgstr "superíndice"
 
@@ -4425,7 +4449,7 @@ msgstr "pie de tabla"
 msgid "table header"
 msgstr "encabezado de tabla"
 
-#: speech.py:1088
+#: speech.py:1091
 #, python-format
 msgid "table with %s columns and %s rows"
 msgstr "tabla con %s columnas y %s filas"
@@ -4436,7 +4460,7 @@ msgstr "hablar"
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
-#: braille.py:218
+#: braille.py:230
 msgid "tb"
 msgstr "pes"
 
@@ -4512,7 +4536,7 @@ msgstr "elemento de árbol"
 
 #. Translators: Displayed in braille for an object which is a
 #. tree view.
-#: braille.py:215
+#: braille.py:227
 msgid "tv"
 msgstr "árb"
 
@@ -4524,7 +4548,7 @@ msgstr "no disponible"
 msgid "underline"
 msgstr "subrayado"
 
-#: speech.py:1013
+#: speech.py:1016
 msgid "underlined"
 msgstr "subrayado"
 
@@ -4547,7 +4571,7 @@ msgid "unread"
 msgstr "no leído"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-#: speech.py:504
+#: speech.py:505
 #, python-format
 msgid "unselecting %s"
 msgstr "Deseleccionando %s"
@@ -4571,7 +4595,7 @@ msgid "visited"
 msgstr "visitado"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:396
+#: braille.py:408
 msgid "vlnk"
 msgstr "enlv"
 
@@ -4602,23 +4626,23 @@ msgstr "Ventana"
 msgid "windows"
 msgstr "windows"
 
-#: speech.py:833
+#: speech.py:834
 #, python-format
 msgid "with %s columns"
 msgstr "con %s columnas"
 
 #. List.
-#: speech.py:900
+#: speech.py:903
 #, python-format
 msgid "with %s items"
 msgstr " con %s elementos"
 
-#: speech.py:835
+#: speech.py:836
 #, python-format
 msgid "with %s rows"
 msgstr "con %s filas"
 
-#: speech.py:831
+#: speech.py:832
 #, python-format
 msgid "with %s rows and %s columns"
 msgstr "con %s filas y %s columnas"

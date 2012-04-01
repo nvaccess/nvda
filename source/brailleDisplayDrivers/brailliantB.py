@@ -70,7 +70,7 @@ def _getPorts():
 			btName = portInfo["bluetoothName"]
 		except KeyError:
 			continue
-		if btName.startswith("Brailliant B"):
+		if btName.startswith("Brailliant B") or btName == "Brailliant 80":
 			yield "bluetooth", portInfo["port"]
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
