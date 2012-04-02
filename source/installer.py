@@ -23,7 +23,9 @@ def _getWSH():
 	return _wsh
 
 defaultStartMenuFolder=versionInfo.name
-defaultInstallPath=os.path.join(unicode(os.getenv("ProgramFiles")), versionInfo.name)
+with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\Microsoft\Windows\CurrentVersion") as k: 
+	programFilesPath=_winreg.QueryValueEx(k, "ProgramFilesDir")[0] 
+defaultInstallPath=os.path.join(programFilesPath, versionInfo.name)
 
 def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,workingDirectory=None,hotkey=None,prependSpecialFolder=None):
 	wsh=_getWSH()
@@ -157,8 +159,8 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	NVDAExe=os.path.join(installDir,u"nvda.exe")
 	slaveExe=os.path.join(installDir,u"nvda_slave.exe")
 	if shouldCreateDesktopShortcut:
-		createShortcut(u"nvda.lnk",targetPath=slaveExe,arguments="launchNVDA -r",iconLocation=NVDAExe+",0",hotkey="CTRL+ALT+N",workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
-	createShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),targetPath=NVDAExe,iconLocation=NVDAExe+",0",workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey="CTRL+ALT+N",workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
+	createShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),targetPath=NVDAExe,workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
 	createShortcut(os.path.join(startMenuFolder,_("NVDA Website")+".lnk"),targetPath=versionInfo.url,prependSpecialFolder="AllUsersPrograms")
 	createShortcut(os.path.join(startMenuFolder,_("Uninstall NVDA")+".lnk"),targetPath=os.path.join(installDir,"uninstall.exe"),workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
 	createShortcut(os.path.join(startMenuFolder,_("Explore NVDA user configuration directory")+".lnk"),targetPath=slaveExe,arguments="exploreUserconfigPath",workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
@@ -182,10 +184,10 @@ def unregisterInstallation(forUpdate=False):
 	except:
 		pass
 	wsh=_getWSH()
-	desktopPath=wsh.SpecialFolders("AllUsersDesktop")
+	desktopPath=os.path.join(wsh.SpecialFolders("AllUsersDesktop"),"NVDA.lnk")
 	if os.path.isfile(desktopPath):
 		try:
-			os.remove(os.path.join(desktopPath,"nvda.lnk"))
+			os.remove(desktopPath)
 		except WindowsError:
 			pass
 	startMenuFolder=getStartMenuFolder()
