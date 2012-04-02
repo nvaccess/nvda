@@ -178,6 +178,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			onOff=_("on")
 			config.conf["keyboard"]["speakTypedCharacters"]=True
+		# Translators: The message announced when toggling the speak typed characters keyboard setting.
 		ui.message(_("speak typed characters")+" "+onOff)
 	script_toggleSpeakTypedCharacters.__doc__=_("Toggles on and off the speaking of typed characters")
 
@@ -590,8 +591,10 @@ class GlobalCommands(ScriptableObject):
 		if newMode==speech.speechMode_off:
 			name=_("off")
 		elif newMode==speech.speechMode_beeps:
+			# Translators: A speech mode which will cause NVDA to beep instead of speaking.
 			name=_("beeps")
 		elif newMode==speech.speechMode_talk:
+			# Translators: The normal speech mode; i.e. NVDA will talk as normal.
 			name=_("talk")
 		speech.cancelSpeech()
 		ui.message(_("speech mode %s")%name)
