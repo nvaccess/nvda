@@ -11,8 +11,8 @@ XPStyle on
 InstProgressFlags Smooth
 RequestExecutionLevel user
 
-ReserveFile "UAC.dll"
-!addplugindir "."
+!addplugindir "..\installer"
+ReserveFile "..\installer\UAC.dll"
 
 Name "${appName}"
 VIProductVersion "0.0.0.0" ;Needs to be here so other version info shows up
