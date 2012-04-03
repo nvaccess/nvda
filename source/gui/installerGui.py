@@ -135,10 +135,10 @@ def doCreatePortable(portableDirectory,createAutorun=False,copyUserConfig=False)
 	d = IndeterminateProgressDialog(gui.mainFrame, _("Creating Portable Copy"), _("Please wait while a portable copy of NVDA is created."))
 	try:
 		installer.CreatePortableCopy(portableDirectory,copyUserConfig=copyUserConfig,createAutorun=createAutorun)
-	except:
+	except Exception as e:
 		log.error("Failed to create portable copy",exc_info=True)
 		d.done()
-		gui.messageBox(_("Failed to create portable copy"),_("Error"))
+		gui.messageBox(_("Failed to create portable copy: %s")%e,_("Error"))
 		return
 	d.done()
 	gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,_("Success"))
