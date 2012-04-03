@@ -66,6 +66,8 @@ parser.add_option('-c','--config-path',dest='configPath',default=config.getUserD
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 parser.add_option('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
 parser.add_option('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
+parser.add_option('--install',action="store_true",dest='install',default=False,help="Silently installs NVDA")
+parser.add_option('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
 
 def terminateRunningNVDA(window):
@@ -163,3 +165,4 @@ finally:
 	ctypes.windll.kernel32.CloseHandle(mutex)
 
 log.info("NVDA exit")
+sys.exit(globalVars.exitCode)

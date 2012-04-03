@@ -76,11 +76,7 @@ To use the Baum braille display driver:
 
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
-
-To build a portable archive:
 	* 7-Zip: http://www.7-zip.org/
-
-To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
 	* NSIS UAC plug-in, version 0.0.11d:
 		* Official web site: http://nsis.sourceforge.net/UAC_plug-in
@@ -125,13 +121,9 @@ To make a non-archived binary build (equivalent to an extracted portable archive
 scons dist
 The build will be created in the dist directory.
 
-To create a portable archive, type:
-scons portable
+To create a launcher  archive (one executable allowing for installation or portable dist generation), type:
+scons launcher
 The archive will be placed in the output directory.
-
-To build an installer, type:
-scons installer
-The installer will be placed in the output directory.
 
 To generate developer documentation, type:
 scons devDocs
@@ -154,5 +146,5 @@ Optionally, the build can  be customised by providing variables on the command l
 	* outputDir: The directory where the final built archives and such will be placed.
 	* targetArchitectures: The target architectures that NVDA should support. Possible values are all, x86 and x86_64. This should generally be left as the default.
 
-For example, to build an installer with a specific version, you might type:
-scons installer version=test1
+For example, to build a launcher  with a specific version, you might type:
+scons launcher version=test1

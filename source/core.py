@@ -87,6 +87,11 @@ def doStartupDialogs():
 
 def restart():
 	"""Restarts NVDA by starting a new copy with -r."""
+	if globalVars.appArgs.launcher:
+		import wx
+		globalVars.exitCode=2
+		wx.GetApp().ExitMainLoop()
+		return
 	import subprocess
 	import shellapi
 	shellapi.ShellExecute(None, None,
@@ -266,12 +271,20 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import globalPluginHandler
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
-	if not globalVars.appArgs.minimal:
+	if globalVars.appArgs.install:
+		import wx
+		import gui.installerGui
+		wx.CallAfter(gui.installerGui.doSilentInstall)
+	elif not globalVars.appArgs.minimal:
 		try:
 			braille.handler.message(_("NVDA started"))
 		except:
 			log.error("", exc_info=True)
-		wx.CallAfter(doStartupDialogs)
+		if globalVars.appArgs.launcher:
+			gui.LauncherDialog.run()
+			# LauncherDialog will call doStartupDialogs() afterwards if required.
+		else:
+			wx.CallAfter(doStartupDialogs)
 	import queueHandler
 	# Queue the handling of initial focus,
 	# as API handlers might need to be pumped to get the first focus event.
