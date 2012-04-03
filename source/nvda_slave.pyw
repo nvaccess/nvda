@@ -19,6 +19,12 @@ def main():
 		if action == "service_NVDALauncher":
 			import nvda_service
 			nvda_service.nvdaLauncher()
+		elif action=="install":
+			import installer
+			installer.install(bool(int(args[0])),bool(int(args[1])))
+		elif action=="unregisterInstall":
+			import installer
+			installer.unregisterInstallation()
 		elif action=="launchNVDA":
 			import subprocess
 			import shellapi
@@ -59,7 +65,13 @@ def main():
 			raise ValueError("No such action")
 
 	except Exception, e:
-		sys.exit(e)
+		logHandler.log.error("slave error",exc_info=True)
+		sys.exit(1)
 
 if __name__ == "__main__":
+	import logHandler
+	logHandler.initialize(True)
+	logHandler.log.setLevel(0)
+	import languageHandler
+	languageHandler.setLanguage("Windows")
 	main()

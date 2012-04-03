@@ -96,6 +96,7 @@ if len(unknown)>0:
 	print "Unknown commandline variables: %s"%unknown
 	Exit(1)
 
+env["copyright"]=versionInfo.copyright
 version = env["version"]
 release = env["release"]
 publisher = env["publisher"]
@@ -192,7 +193,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 	if certFile:
-		for prog in "nvda", "nvda_slave", "nvda_service":
+		for prog in "nvda_noUIAccess", "nvda_uiAccess", "nvda_slave", "nvda_service":
 			action.append(signExec[:-1] + [os.path.join(target[0].path, "%s.exe" % prog)])
 
 	for ext in "", "c", "o":
@@ -228,34 +229,36 @@ if certTimestampServer:
 	signExec.extend(("/t", certTimestampServer))
 signExec.append("$TARGET")
 
-portableDist = env.NVDADist("dist", sourceDir, uiAccess=False)
-if certFile:
-	# If uiAccess is to be enabled, it must only be enabled on the installer.
-	# Therefore, a separate distribution is needed.
-	installerDist = env.NVDADist("dist_installer", sourceDir, uiAccess=True)
-else:
-	installerDist = portableDist
-# portableDist and installerDist don't get rebuilt even if sourceDir changes, so force them to always be built.
-#env.AlwaysBuild(portableDist, installerDist)
-# Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
-env.Clean(portableDist, portableDist)
-env.Clean(installerDist, installerDist)
-# Clean the intermediate build directory.
-env.Clean([portableDist, installerDist], buildDir)
-
-portableArchive = env.SzArchive(outputDir.File("%s_portable.exe" % outFilePrefix), portableDist, relativeToSourceDir=True)
-if certFile:
-	env.AddPostAction(portableArchive, [signExec])
-env.Alias("portable", portableArchive)
-
-installer = env.Command(outputDir.File("%s_installer.exe" % outFilePrefix), ["installer/nvda.nsi", installerDist],
+uninstFile=File("dist/uninstall.exe")
+uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
 	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"',
-	"/DNVDASourceDir=${SOURCES[1].abspath}", "/XOutFile ${TARGET.abspath}",
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
+	"/DUNINSTEXE=%s"%uninstFile.abspath,
+	"/XOutFile ${TARGET.abspath}",
+	"$SOURCE"]])
+uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
+if certFile:
+	env.AddPostAction(uninstaller, [signExec])
+
+dist = env.NVDADist("dist", sourceDir, uiAccess=bool(certFile))
+env.Depends(dist,uninstaller)
+# Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
+env.Clean(dist, dist)
+# Clean the intermediate build directory.
+env.Clean([dist], buildDir)
+
+launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvdaLauncher.nsi", dist],
+	[[makensis, "/V2",
+	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
+	"/DNVDADistDir=${SOURCES[1].abspath}", "/XOutFile ${TARGET.abspath}",
 	"$SOURCE"]])
 if certFile:
-	env.AddPostAction(installer, [signExec])
-env.Alias("installer", installer)
+	env.AddPostAction(launcher, [signExec])
+env.Alias("launcher", launcher)
+
+env.Alias("launcher", launcher)
+env.Alias("portable", launcher)
+
 
 clientArchive = env.SzArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeToSourceDir=True)
 env.Alias("client", clientArchive)
@@ -325,4 +328,5 @@ symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path,'*.pdb')))
 symbolsArchive = env.SzArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
 env.Alias("symbolsArchive", symbolsArchive)
 
-env.Default(portableDist)
+env.Default(dist)
+

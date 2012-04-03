@@ -62,49 +62,42 @@ For further details, you can [view the full licence. http://www.gnu.org/licenses
 - About 50 MB of storage space.
 -
 
-+ Getting NVDA +
++ Getting and Setting Up NVDA +
 If you have not yet got a copy of NVDA, you can download it from [www.nvda-project.org NVDA_URL].
 
 Go to the download section and you will find a link to download the latest version of NVDA.
 
-There are currently two ways NVDA is packaged.
-One is an Installer which will talk you through installing NVDA so that you can then run it at any time from the Start Menu.
-The other is a self-extracting archive file that contains a fully portable version of NVDA, which you can run from anywhere, including a USB thumb drive or CD.
+Running the file you have just downloaded will start a temporary copy of NVDA, and also ask you if you want to install NVDA, create a portable copy, or just continue using the temporary copy.
 
-In order to access the Windows logon screen, User Account Control (UAC) screen or other secure Windows screens, as well as applications running as administrator in Windows Vista and later, you must install NVDA on your system using the installer.
-These screens cannot be accessed using a portable copy of NVDA.
+If you plan to  always use NVDA on this computer, you will want to choose to install NVDA.
+Installing NVDA will allow for such things as  having it automatically start after logon, it will be able to read the Windows Logon and Windows security screens (something that the portable and temporary copies cannot do), and it will be accessible from the Start Menu and from a desktop shortcut.
+The installed copy is also able to create a portable copy itself at any time.
 
-+ Installing NVDA +
+If you want to take NVDA with you on a USB thum drive or other portable media, then you  should choose to create a portable copy.
+The portable copy also has the ability to install itself on any computer at a later time.
+  
+Using the temporary copy of NVDA is also an option, certainly for demonstration purposes, though  starting NVDA in this way each time can become very time consuming.
 
-++ The NVDA Installer ++
-If you already have the NVDA installer, simply press enter or double click on the file and the installer will start.
+++ Installing NVDA ++
+If installing NVDA directly from the NVDA download package, press the Install NVDA button.
+If you have already closed this dialog, or are wanting to install from a portable copy, please choose the Install NVDA menu item found under Tools in the NVDA menu.
 
-As the installer loads, you will hear the NVDA installation music.
-Once loaded, a temporary copy of NVDA will allow you to follow the prompts of the installer and install NVDA.
-Note that if you were running another copy of NVDA at the time you started the installer, the installer will close your previous copy and start its own.
-This is necessary so that the installer can properly update any changed files.
-At this point, if you have another copy of NVDA already installed, the NVDA installer will uninstall it for you, and then it will commence to install NVDA.
+The installation dialog that appears will confirm whether you wish to install NVDA, and will also tell you whether  this installation will be updating a previous install.
+Pressing the Continue button will start Installing NVDA for you, though there are a couple of options in this dialog, such as whether or not you want to create a desktop shortcut, or whether you want NVDA to start on the Windows logon screen.
+ Once the installation has completed, a message will appear telling you that it was successful.
+ Pressing OK at this point will restart the newly installed copy of NVDA.
+ 
+++ Creating a Portable Copy ++
+If creating a portable copy directly from the NVDA download  package, simply press the Create Portable Copy button.
+If you have already closed this dialog or you are running an installed copy of NVDA, choose the Create Portable copy menu item found under Tools in the NVDA menu.
 
-Once you have successfully completed the installation, the installer will alert you that the install of NVDA has finished.
-If reinstalling NVDA, It may ask you to reboot the system at this point.
-It is very important that you reboot the system as failing to do so will have undesirable consequences.
-If it did not ask you to reboot, pressing Finnish will close the installer and start the newly installed version of NVDA.
+The Dialog that appears allows you to choose where the portable copy should be created.
+This can be a directory on your hard drive, or a location on a USB thum drive or other portable media.
 
-++ NVDA portable ++
-If you have the portable version of NVDA, then all you have to do is to press enter or double click on the file, and follow the prompts.
-It will ask you where on your system you wish to place the files.
-
-+++ NVDA Portable on a USB key +++
-It is possible to place NVDA on a USB thumb drive so that you can use it on other computer systems.
-
-When the Portable version asks where you wish to unpack it, type in the drive of your USB thumb drive, plus an optional subdirectory where you wish to place NVDA.
-
-If for example your USB thumb drive is at E:\, you might wish to type in E:\nvda, which will place NVDA in the NVDA subdirectory on your USB thumb drive.
-
-Note that although this now means you can carry around NVDA and its settings with you anywhere, simply plugging in the USB thumb drive will not automatically start NVDA; You will have to start NVDA manually from either Windows Explorer or the Run Dialog.
-
-For information about automatically starting NVDA from a USB thumb drive, please see this article:
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+You also have the option of creating an autorun file in the root of the drive (useful when creating a portable copy on a USB thum drive), and Copy user configuration which will include the settings and plugins from the current copy of NVDA, in the portable copy.
+Pressing Continue will create the portable copy.
+Once creation is complete a message will appear telling you it was successfull.
+Press OK to dismiss this dialog.
 
 + Getting started with NVDA +
 
