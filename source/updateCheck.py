@@ -298,7 +298,6 @@ class DonateRequestDialog(wx.Dialog):
 		"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
 		"Thank you for your support."
 	)
-	DONATE_URL = "http://www.nvaccess.org/wiki/Donate"
 
 	def __init__(self, parent, continueFunc):
 		# Translators: The title of the dialog requesting donations from users.
@@ -311,7 +310,7 @@ class DonateRequestDialog(wx.Dialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of the button to donate.
 		item = wx.Button(self, label=_("&Donate"))
-		item.Bind(wx.EVT_BUTTON, lambda evt: os.startfile(self.DONATE_URL))
+		item.Bind(wx.EVT_BUTTON, lambda evt: os.startfile(gui.DONATE_URL))
 		sizer.Add(item)
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
 		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
