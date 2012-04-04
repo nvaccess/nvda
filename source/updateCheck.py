@@ -278,6 +278,8 @@ class UpdateDownloader(object):
 		gui.messageBox(_("Update downloaded. It will now be installed."),
 			# Translators: The title of the dialog displayed when the update is about to be installed.
 			_("Install Update"))
+		state["removeFile"] = self.destPath
+		saveState()
 		shellapi.ShellExecute(None, None,
 			self.destPath.decode("mbcs"),
 			u"--install -m",
@@ -300,6 +302,13 @@ def initialize():
 			"lastCheck": 0,
 			"dontRemindVersion": None,
 		}
+
+	# If we just updated, remove the updater file.
+	try:
+		os.remove(state.pop("removeFile"))
+		saveState()
+	except (KeyError, OSError):
+		pass
 
 	if config.conf["update"]["autoCheck"]:
 		autoChecker = AutoUpdateChecker()
