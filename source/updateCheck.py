@@ -18,12 +18,14 @@ import threading
 import time
 import cPickle
 import urllib
+import tempfile
 import wx
 import languageHandler
 import gui
 from logHandler import log
 import config
 import globalVars
+import shellapi
 
 #: The URL to use for update checks.
 CHECK_URL = "http://www.nvda-project.org/updateCheck"
@@ -31,6 +33,8 @@ CHECK_URL = "http://www.nvda-project.org/updateCheck"
 CHECK_INTERVAL = 86400 # 1 day
 #: The time to wait before retrying a failed check.
 RETRY_INTERVAL = 600 # 10 min
+#: The download block size in bytes.
+DOWNLOAD_BLOCK_SIZE = 8 * 1024 # 8 kb
 
 #: Persistent state information.
 #: @type: dict
@@ -159,9 +163,15 @@ class UpdateResultDialog(wx.Dialog):
 		mainSizer.Add(wx.StaticText(self, label=message))
 
 		if updateInfo:
-			# Translators: The label of a button to download an NVDA update.
-			item = wx.Button(self, label=_("&Download update"))
-			item.Bind(wx.EVT_BUTTON, self.onDownloadButton)
+			if config.isInstalledCopy():
+				# Translators: The label of a button to download and install an NVDA update.
+				item = wx.Button(self, label=_("Download and &install update"))
+				item.Bind(wx.EVT_BUTTON, self.onDownloadAndInstallButton)
+			else:
+				# Translators: The label of a button to download an NVDA update.
+				item = wx.Button(self, label=_("&Download update"))
+				item.Bind(wx.EVT_BUTTON, self.onDownloadButton)
+
 			mainSizer.Add(item)
 
 			if auto:
@@ -182,17 +192,96 @@ class UpdateResultDialog(wx.Dialog):
 		self.Show()
 
 	def onDownloadButton(self, evt):
-		if config.isInstalledCopy():
-			url = self.updateInfo["installerUrl"]
-		else:
-			url = self.updateInfo["portableUrl"]
-		os.startfile(url)
 		self.Close()
+		os.startfile(self.updateInfo["launcherUrl"])
+
+	def onDownloadAndInstallButton(self, evt):
+		self.Close()
+		UpdateDownloader((self.updateInfo["launcherUrl"],)).start()
 
 	def onLaterButton(self, evt):
 		state["dontRemindVersion"] = None
 		saveState()
 		self.Close()
+
+class UpdateDownloader(object):
+	"""Download and start installation of an updated version of NVDA, presenting appropriate user interface.
+	To use, call L{start} on an instance.
+	"""
+
+	def __init__(self, urls):
+		"""Constructor.
+		@param urls: URLs to try for the update file.
+		@type urls: list of str
+		"""
+		self.urls = urls
+		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
+
+	def start(self):
+		"""Start the download.
+		"""
+		# Translators: The title of the dialog displayed while downloading an NVDA update.
+		self._progressDialog = wx.ProgressDialog(_("Downloading Update"),
+			# Translators: The progress message indicating that a connection is being established.
+			_("Connecting"),
+			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME, parent=gui.mainFrame)
+		self._progressDialog.Raise()
+		t = threading.Thread(target=self._bg)
+		t.daemon = True
+		t.start()
+
+	def _bg(self):
+		for url in self.urls:
+			try:
+				self._download(url)
+			except:
+				log.debugWarning("Error downloading %s" % url, exc_info=True)
+			else:
+				break
+		else:
+			# None of the URLs succeeded.
+			wx.CallAfter(self._error)
+			return
+		wx.CallAfter(self._downloadSuccess)
+
+	def _download(self, url):
+		remote = urllib.urlopen(url)
+		if remote.code != 200:
+			raise RuntimeError("Download failed with code %d" % remote.code)
+		size = int(remote.headers["content-length"])
+		local = file(self.destPath, "wb")
+		wx.CallAfter(self._downloadReport, 0, size)
+		read = 0
+		while True:
+			block = remote.read(DOWNLOAD_BLOCK_SIZE)
+			if not block:
+				break
+			read += len(block)
+			local.write(block)
+			wx.CallAfter(self._downloadReport, read, size)
+		if read < size:
+			raise RuntimeError("Content too short")
+		wx.CallAfter(self._downloadReport, read, size)
+
+	def _downloadReport(self, read, size):
+		percent = int(float(read) / size * 100)
+		# Translators: The progress message indicating that a download is in progress.
+		self._progressDialog.Update(percent, _("Downloading"))
+
+	def _error(self):
+		self._progressDialog.Destroy()
+
+	def _downloadSuccess(self):
+		self._progressDialog.Destroy()
+		# Translators: The message presented when the update has been successfully downloaded
+		# and is about to be installed.
+		gui.messageBox(_("Update downloaded. It will now be installed."),
+			# Translators: The title of the dialog displayed when the update is about to be installed.
+			_("Install Update"))
+		shellapi.ShellExecute(None, None,
+			self.destPath.decode("mbcs"),
+			u"--install -m",
+			None, 0)
 
 def saveState():
 	try:
