@@ -61,6 +61,7 @@ def checkForUpdate(auto=False):
 		"osVersion": "{v.major}.{v.minor}.{v.build} {v.service_pack}".format(v=winVer),
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 		"language": languageHandler.getLanguage(),
+		"installed": config.isInstalledCopy(),
 	}
 	res = urllib.urlopen("%s?%s" % (CHECK_URL, urllib.urlencode(params)))
 	if res.code != 200:
