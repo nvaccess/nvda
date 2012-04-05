@@ -353,7 +353,7 @@ def initialize():
 	except (KeyError, OSError):
 		pass
 
-	if config.conf["update"]["autoCheck"]:
+	if config.conf["update"]["autoCheck"] and not globalVars.appArgs.launcher:
 		autoChecker = AutoUpdateChecker()
 
 def terminate():
