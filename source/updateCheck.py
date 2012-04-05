@@ -151,10 +151,11 @@ class UpdateResultDialog(wx.Dialog):
 		# Translators: The title of the dialog informing the user about an NVDA update.
 		super(UpdateResultDialog, self).__init__(parent, title=_("NVDA Update"))
 		self.updateInfo = updateInfo
-		self.isInstalled = config.isInstalledCopy()
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
 		if updateInfo:
+			self.isInstalled = config.isInstalledCopy()
+			self.urls = updateInfo["launcherUrl"].split(" ")
 			# Translators: A message indicating that an updated version of NVDA is available.
 			# {version} will be replaced with the version; e.g. 2011.3.
 			message = _("NVDA version {version} is available.").format(**updateInfo)
@@ -198,9 +199,9 @@ class UpdateResultDialog(wx.Dialog):
 
 	def _download(self):
 		if self.isInstalled:
-			UpdateDownloader((self.updateInfo["launcherUrl"],)).start()
+			UpdateDownloader(self.urls).start()
 		else:
-			os.startfile(self.updateInfo["launcherUrl"])
+			os.startfile(self.urls[0])
 		self.Destroy()
 
 	def onLaterButton(self, evt):
