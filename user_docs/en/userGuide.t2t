@@ -67,36 +67,38 @@ If you have not yet got a copy of NVDA, you can download it from [www.nvda-proje
 
 Go to the download section and you will find a link to download the latest version of NVDA.
 
-Running the file you have just downloaded will start a temporary copy of NVDA, and also ask you if you want to install NVDA, create a portable copy, or just continue using the temporary copy.
+Running the file you have just downloaded will start a temporary copy of NVDA.
+You will then be asked if you want to install NVDA, create a portable copy or just continue using the temporary copy.
 
 If you plan to  always use NVDA on this computer, you will want to choose to install NVDA.
-Installing NVDA will allow for such things as  having it automatically start after logon, it will be able to read the Windows Logon and Windows security screens (something that the portable and temporary copies cannot do), and it will be accessible from the Start Menu and from a desktop shortcut.
+Installing NVDA will allow for additional functionality such as automatic starting after logon, the ability to read the Windows Logon and Windows security screens (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
 The installed copy is also able to create a portable copy itself at any time.
 
 If you want to take NVDA with you on a USB thum drive or other portable media, then you  should choose to create a portable copy.
 The portable copy also has the ability to install itself on any computer at a later time.
-  
-Using the temporary copy of NVDA is also an option, certainly for demonstration purposes, though  starting NVDA in this way each time can become very time consuming.
+
+Using the temporary copy of NVDA is also an option (e.g. for demonstration purposes), though  starting NVDA in this way each time can become very time consuming.
 
 ++ Installing NVDA ++
 If installing NVDA directly from the NVDA download package, press the Install NVDA button.
-If you have already closed this dialog, or are wanting to install from a portable copy, please choose the Install NVDA menu item found under Tools in the NVDA menu.
+If you have already closed this dialog or are wanting to install from a portable copy, please choose the Install NVDA menu item found under Tools in the NVDA menu.
 
-The installation dialog that appears will confirm whether you wish to install NVDA, and will also tell you whether  this installation will be updating a previous install.
-Pressing the Continue button will start Installing NVDA for you, though there are a couple of options in this dialog, such as whether or not you want to create a desktop shortcut, or whether you want NVDA to start on the Windows logon screen.
- Once the installation has completed, a message will appear telling you that it was successful.
- Pressing OK at this point will restart the newly installed copy of NVDA.
- 
+The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether  this installation will be updating a previous install.
+Pressing the Continue button will start installing NVDA.
+There are also a few options in this dialog, including whether you want to create a desktop shortcut or whether you want NVDA to start on the Windows logon screen.
+Once the installation has completed, a message will appear telling you that it was successful.
+Pressing OK at this point will restart the newly installed copy of NVDA.
+
 ++ Creating a Portable Copy ++
 If creating a portable copy directly from the NVDA download  package, simply press the Create Portable Copy button.
 If you have already closed this dialog or you are running an installed copy of NVDA, choose the Create Portable copy menu item found under Tools in the NVDA menu.
 
 The Dialog that appears allows you to choose where the portable copy should be created.
-This can be a directory on your hard drive, or a location on a USB thum drive or other portable media.
+This can be a directory on your hard drive or a location on a USB thum drive or other portable media.
 
-You also have the option of creating an autorun file in the root of the drive (useful when creating a portable copy on a USB thum drive), and Copy user configuration which will include the settings and plugins from the current copy of NVDA, in the portable copy.
+You also have the option of creating an autorun file in the root of the drive (useful when creating a portable copy on a USB thum drive), as well as the choice to Copy user configuration, which will include the settings and plugins from the current copy of NVDA.
 Pressing Continue will create the portable copy.
-Once creation is complete a message will appear telling you it was successfull.
+Once creation is complete, a message will appear telling you it was successfull.
 Press OK to dismiss this dialog.
 
 + Getting started with NVDA +
@@ -500,6 +502,10 @@ This option is only available for installed copies of NVDA.
 Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it when running on the logon, User Account Control (UAC) and other secure Windows screens.
 To make sure that all your settings are transfered, make sure to firstly save your configuration with control+NVDA+c or save configuration in the NVDA menu.
 This option is only available for installed copies of NVDA.
+
+==== Automatically check for updates to NVDA ====
+If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update is available.
+You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
 
 +++ Synthesizer Selection (NVDA+control+s) +++
 The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu, allows you to select which Synthesizer NVDA should use to speak with.

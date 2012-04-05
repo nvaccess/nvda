@@ -25,6 +25,10 @@ import braille
 import core
 import keyboardHandler
 import characterProcessing
+try:
+	import updateCheck
+except RuntimeError:
+	updateCheck = None
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -168,6 +172,13 @@ class GeneralSettingsDialog(SettingsDialog):
 		if globalVars.appArgs.secure or not config.isServiceInstalled():
 			self.copySettingsButton.Disable()
 		settingsSizer.Add(self.copySettingsButton)
+		if updateCheck:
+			# Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
+			item=self.autoCheckForUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &updates to NVDA"))
+			item.Value=config.conf["update"]["autoCheck"]
+			if globalVars.appArgs.secure:
+				item.Disable()
+			settingsSizer.Add(item)
 
 	def postInit(self):
 		self.languageList.SetFocus()
@@ -208,6 +219,10 @@ class GeneralSettingsDialog(SettingsDialog):
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
 			except (WindowsError, RuntimeError):
 				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
+		if updateCheck:
+			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
+			updateCheck.terminate()
+			updateCheck.initialize()
 		if self.oldLanguage!=newLanguage:
 			if gui.messageBox(
 				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),

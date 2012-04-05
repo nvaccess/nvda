@@ -23,10 +23,15 @@ import logViewer
 import speechViewer
 import winUser
 import api
+try:
+	import updateCheck
+except RuntimeError:
+	updateCheck = None
 
 ### Constants
 NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
+DONATE_URL = "http://www.nvaccess.org/wiki/Donate"
 
 ### Globals
 mainFrame = None
@@ -201,6 +206,9 @@ class MainFrame(wx.Frame):
 	def onAboutCommand(self,evt):
 		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
+	def onCheckForUpdateCommand(self, evt):
+		updateCheck.UpdateChecker().check()
+		
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
 
@@ -324,6 +332,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 		menu_help.AppendSeparator()
 		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
+		if updateCheck and not globalVars.appArgs.secure:
+			# Translators: The label of a menu item to manually check for an updated version of NVDA.
+			item = menu_help.Append(wx.ID_ANY, _("Check for update..."))
+			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
@@ -334,7 +346,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			self.menu.AppendSeparator()
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvaccess.org/wiki/Donate"), item)
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
