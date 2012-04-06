@@ -8,6 +8,9 @@
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
 
+import globalVars
+if globalVars.appArgs.secure:
+	raise RuntimeError("updates disabled in secure mode")
 import versionInfo
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
