@@ -27,7 +27,6 @@ import languageHandler
 import gui
 from logHandler import log
 import config
-import globalVars
 import shellapi
 
 #: The URL to use for update checks.
