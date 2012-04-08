@@ -25,7 +25,7 @@ MANIFEST_FILENAME = "manifest.ini"
 BUNDLE_EXTENSION = "nvdaadon"
 
 #: Currently loaded add-ons.
-#: @type runningAddons: string
+#: @type runningAddons: list
 runningAddons = []
 
 def initialize():
