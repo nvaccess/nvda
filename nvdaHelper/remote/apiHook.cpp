@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <minHook/newMinHook.h>
 #include "nvdaControllerInternal.h"
 #include "log.h"
+#include "dllmain.h"
 #include "apiHook.h"
 
 using namespace std;
@@ -32,6 +33,9 @@ functionSet_t g_hookedFunctions;
 bool apiHook_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
 	int res;
+	wstring dllPath=dllDirectory;
+	dllPath+=L"\\minhook.dll";
+	LoadLibrary(dllPath.c_str());
 	if ((res=MH_Initialize())!=MH_OK) {
 		LOG_ERROR("MH_CreateHook failed with " << res);
 		return false;
