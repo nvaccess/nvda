@@ -23,10 +23,15 @@ import logViewer
 import speechViewer
 import winUser
 import api
+try:
+	import updateCheck
+except RuntimeError:
+	updateCheck = None
 
 ### Constants
 NVDA_PATH = os.getcwdu()
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
+DONATE_URL = "http://www.nvaccess.org/wiki/Donate"
 
 ### Globals
 mainFrame = None
@@ -201,6 +206,9 @@ class MainFrame(wx.Frame):
 	def onAboutCommand(self,evt):
 		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
+	def onCheckForUpdateCommand(self, evt):
+		updateCheck.UpdateChecker().check()
+		
 	def onViewLogCommand(self, evt):
 		logViewer.activate()
 
@@ -224,6 +232,24 @@ class MainFrame(wx.Frame):
 		appModuleHandler.reloadAppModules()
 		globalPluginHandler.reloadGlobalPlugins()
 		NVDAObject.clearDynamicClassCache()
+
+	def onCreatePortableCopyCommand(self,evt):
+		if isInMessageBox:
+			return
+		self.prePopup()
+		import gui.installerGui
+		d=gui.installerGui.PortableCreaterDialog(gui.mainFrame)
+		d.Show()
+		self.postPopup()
+
+	def onInstallCommand(self, evt):
+		if isInMessageBox:
+			return
+		self.prePopup()
+		from gui.installerGui import InstallerDialog
+		import installer
+		InstallerDialog(self).Show()
+		self.postPopup()
 
 class SysTrayIcon(wx.TaskBarIcon):
 
@@ -277,6 +303,12 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
+		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
+			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
+			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
+			if not config.isInstalledCopy():
+				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
+				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
 		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
 		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
@@ -300,6 +332,10 @@ class SysTrayIcon(wx.TaskBarIcon):
 		menu_help.AppendSeparator()
 		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
+		if updateCheck and not globalVars.appArgs.secure:
+			# Translators: The label of a menu item to manually check for an updated version of NVDA.
+			item = menu_help.Append(wx.ID_ANY, _("Check for update..."))
+			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
@@ -310,7 +346,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			self.menu.AppendSeparator()
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvaccess.org/wiki/Donate"), item)
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
@@ -476,4 +512,73 @@ Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit y
 		d = cls(mainFrame)
 		d.ShowModal()
 		d.Destroy()
+		mainFrame.postPopup()
+
+class LauncherDialog(wx.Dialog):
+	"""The dialog that is displayed when NVDA is started from the launcher.
+	This displays the license and allows the user to install or create a portable copy of NVDA.
+	"""
+
+	def __init__(self, parent):
+		super(LauncherDialog, self).__init__(parent, title=versionInfo.name)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("License Agreement")), wx.VERTICAL)
+		ctrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
+		import codecs
+		ctrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
+		sizer.Add(ctrl)
+		ctrl = self.licenseAgreeCheckbox = wx.CheckBox(self, label=_("I &agree"))
+		ctrl.Value = False
+		sizer.Add(ctrl)
+		ctrl.Bind(wx.EVT_CHECKBOX, self.onLicenseAgree)
+		mainSizer.Add(sizer)
+
+		sizer = wx.GridSizer(rows=2, cols=2)
+		self.actionButtons = []
+		ctrl = wx.Button(self, label=_("&Install NVDA on this computer"))
+		sizer.Add(ctrl)
+		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, mainFrame.onInstallCommand))
+		self.actionButtons.append(ctrl)
+		ctrl = wx.Button(self, label=_("Create &portable copy"))
+		sizer.Add(ctrl)
+		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, mainFrame.onCreatePortableCopyCommand))
+		self.actionButtons.append(ctrl)
+		ctrl = wx.Button(self, label=_("&Continue running"))
+		sizer.Add(ctrl)
+		ctrl.Bind(wx.EVT_BUTTON, self.onContinueRunning)
+		self.actionButtons.append(ctrl)
+		sizer.Add(wx.Button(self, label=_("E&xit"), id=wx.ID_CANCEL))
+		# If we bind this on the button, it fails to trigger when the dialog is closed.
+		self.Bind(wx.EVT_BUTTON, self.onExit, id=wx.ID_CANCEL)
+		mainSizer.Add(sizer)
+		for ctrl in self.actionButtons:
+			ctrl.Disable()
+
+		self.Sizer = mainSizer
+		mainSizer.Fit(self)
+
+	def onLicenseAgree(self, evt):
+		for ctrl in self.actionButtons:
+			ctrl.Enable(evt.IsChecked())
+
+	def onAction(self, evt, func):
+		self.Destroy()
+		func(evt)
+
+	def onContinueRunning(self, evt):
+		self.Destroy()
+		core.doStartupDialogs()
+
+	def onExit(self, evt):
+		wx.GetApp().ExitMainLoop()
+
+	@classmethod
+	def run(cls):
+		"""Prepare and display an instance of this dialog.
+		This does not require the dialog to be instantiated.
+		"""
+		mainFrame.prePopup()
+		d = cls(mainFrame)
+		d.Show()
 		mainFrame.postPopup()

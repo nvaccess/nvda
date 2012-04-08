@@ -40,3 +40,25 @@ def ShellExecute(hwnd, operation, file, parameters, directory, showCmd):
 def ShellExecuteEx(execInfo):
 	if not shell32.ShellExecuteExW(byref(execInfo)):
 		raise WinError()
+
+FILEOP_FLAGS=WORD
+
+FO_MOVE=1
+FO_COPY=2
+FO_DELETE=3
+FO_RENAME=4
+
+FOF_NOCONFIRMMKDIR=0x200
+
+class SHFILEOPSTRUCT(Structure):
+	_fields_=[
+		('hwnd',HWND),
+		('wFunc',c_uint),
+		('pFrom',c_wchar_p),
+		('pTo',c_wchar_p),
+		('fFlags',FILEOP_FLAGS),
+		('fAnyOperationsAborted',BOOL),
+		('hNameMapping',c_void_p),
+		('lpszProgressTitle',c_wchar_p),
+	]
+

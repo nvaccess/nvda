@@ -388,6 +388,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		formatConfig['reportTables']=True
 		commandList=info.getTextWithFields(formatConfig)
 		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.ROLE_TABLE or commandList[2].field.get('role',None)!=controlTypes.ROLE_TABLECELL:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# when the cursor is not withnin a table.
 			ui.message(_("Not in table"))
 			return False
 		rowCount=commandList[1].field.get('table-rowcount',1)
@@ -399,6 +401,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		else:
 			columnNumber+=1 if forward else -1
 		if rowNumber<1 or rowNumber>rowCount or columnNumber<1 or columnNumber>columnCount:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# but the cursor can't be moved in that direction because it is at the edge of the table.
 			ui.message(_("Edge of table"))
 			return False
 		try:
@@ -418,7 +422,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 				else:
 					rowNumber-=1
 		if not cell:
-			ui.message(_("edge of table"))
+			ui.message(_("Edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=cell.range)
 		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET)

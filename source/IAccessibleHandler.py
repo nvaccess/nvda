@@ -891,7 +891,7 @@ def getIAccIdentity(pacc,childID):
 def findGroupboxObject(obj):
 	prevWindow=winUser.getPreviousWindow(obj.windowHandle)
 	while prevWindow:
-		if winUser.getClassName(prevWindow)=="Button" and winUser.getWindowStyle(prevWindow)&winUser.BS_GROUPBOX:
+		if winUser.getClassName(prevWindow)=="Button" and winUser.getWindowStyle(prevWindow)&winUser.BS_GROUPBOX and winUser.isWindowVisible(prevWindow):
 			groupObj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(prevWindow,winUser.OBJID_CLIENT,0)
 			try:
 				(left,top,width,height)=obj.location
