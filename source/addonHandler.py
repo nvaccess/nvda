@@ -96,7 +96,7 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", a.manifest['name'])
 				yield a
 			except:
-				log.exception("Error loading Addon from path: %s", p)
+				log.error("Error loading Addon from path: %s", adon_path, exc_info=True)
 
 def getAvailableAddons():
 	""" Gets all available addons on the system.
@@ -155,7 +155,7 @@ class Addon(object):
 		return self._isLoaded
 
 	def load(self):
-		""" Activates this addon, running the activate hook if exists. """
+		""" Activates this addon, running the load hook if exists. """
 		self.runHook('load')
 		self._isLoaded = True
 
@@ -236,7 +236,7 @@ class AddonBundle(object):
 		name = self._manifest['name']
 		path = os.path.join(addonsPath, name)
 		if not override and os.path.isdir(path):
-			raise AddonError, "Addon already installed."
+			raise AddonError("Addon already installed.")
 		with zipfile.ZipFile(self._path, 'r') as z:
 			z.extractall(path)
 
@@ -260,7 +260,7 @@ def createAddonBundleFromPath(path, destDir=None):
 		destDir = os.path.dirname(basedir)
 	manifest_path = os.path.join(basedir, MANIFEST_FILENAME)
 	if not os.path.isfile(manifest_path):
-		raise AddonError, "Can't find %s manifest file." % manifest_path
+		raise AddonError("Can't find %s manifest file." % manifest_path)
 	with open(manifest_path) as f:
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
@@ -301,26 +301,16 @@ version = string()
 url= string(default=None)
 # Categories where this add-on belongs to.
 categories = list(default=list())
-
-# Compatibility with NVDA releases
-# Only considering stable versions.
-[compatibility]
-# Minimum version compatible with this add-on.
-minVersion = string(default=None)
-# Maximum compatible version.
-maxVersion = string(default=None)
 """))
 
 	def __init__(self, input):
-		""" Constructs an C{AddonManfiest} instance from manifest string data
+		""" Constructs an C{AddonManifest} instance from manifest string data
 		@param input: data to read the manifest informatinon
 		@type input: a fie-like object.
 		"""
-		
 		super(AddonManifest, self).__init__(input, configspec=self.configspec)
 		self._errors = []
 		val = Validator()
-		self._errors = None
 		result = self.validate(val, copy=True, preserve_errors=True)
 		if result != True:
 			self._errors = result
