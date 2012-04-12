@@ -8,6 +8,7 @@ import versionInfo
 import installer
 from logHandler import log
 import gui
+import tones
 
 def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
 	progressDialog = IndeterminateProgressDialog(gui.mainFrame, _("Updating NVDA") if isUpdate else _("Installing NVDA"), _("Please wait while your previous installation of NVDA is being updated.") if isUpdate else _("Please wait while NVDA is being installed"))
@@ -81,8 +82,15 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.timer.Start(1000)
 		self.Raise()
 
+	def Pulse(self):
+		super(IndeterminateProgressDialog, self).Pulse()
+		if self.IsActive():
+			tones.beep(440, 40)
+
 	def done(self):
 		self.timer.Stop()
+		if self.IsActive():
+			tones.beep(1760, 40)
 		self.Destroy()
 
 class PortableCreaterDialog(wx.Dialog):
