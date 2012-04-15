@@ -4,30 +4,73 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.1 =
+Prednosti tejto verzii zahŕňajú pohodlnejšie čítanie brailu; indikáciu formátovania v braily; prístup k väčšiemu množstvu formátovacích možností a celkové zrýchlenie práce v programe Microsoft Word; a podporu pre obchod Itunes store.
 
 == Nové vlastnosti ==
 - NVDA dokáže oznamovať počet medzier a tabulátorov na začiatku riadku v poradí, ako boli vložené. Zapnúť je to možné zaškrtnutím Oznamovať odsadenie v dialógu Nastavenia čítania textu. (#373)
 - NVDA dokáže spracovať stlačenia klávesov generované ako výsledok emulácie klávesov, je teda použiteľný z rôznymi aplikáciami určenými na alternatívne ovládanie ako napr. klávesnica na obrazovke alebo rozpoznávanie reči.
 - NVDA dokáže detekovať farby v okne príkazového riadku.
 - Tučné písmo, kurzíva a podčiarknuté písmo sú oznamované v brailly symbolmi podľa použitej prekladovej tabuľky. (#538)
+- V dokumentoch programu Microsoft word je oznamovaných viac informácií:
+ - Informácie o formátovaní ako číselné odkazy na koncové poznámky a poznámky pod čiarov, úrovne nadpisov, existenciu komentárov, úroveň vnorenia tabuľky, odkazy, a farbu textu;
+ - Oznamovanie vstupu do rôznych častí dokumentu ako napríklad text komentára, texty koncových poznámok a poznámok pod čiarov, a časti hlavička a päta dokumentu.
 - Vybratý text je oznamovaný v brailly použitím bodov 7 a 8. (#889)
 - V brailly sú oznamované typi ovládacích prvkov v dokumentoch ako napr. odkazy, tlačidlá a nadpisy. (#202)
 - Podpora pre braillovské riadky hedo ProfiLine a MobilLine USB. (#1863, #1897)
 - V brailly sa NVDA vyhýba deleniu slov na konci riadku vždy, keď je to možné. (#1890)
 - Je možné si v brailly nechať zobrazovať text po odsekoch namiesto doterajšieho zobrazenia po riadkoch. Pomôže to pri plynulom čítaní dlhších textov. Zapnúť je to možné zaškrtnutím voľby čítať po odsekoch v dialógu Nastavenia braillu. (#1891)
 - Pri čítaní dokumentu v režime prehliadania je možné pomocou braillovského riadku aktivovať prvok na pozícii kurzora. Toto je možné stlačením smerovej klávesy na mieste, kde sa nachádza kurzor. Ak si želáte aktivovaťprvok na mieste, kde nie je kurzor, je potrebné smerové tlačidlo stlačiť dva krát. (#1893)
+- Základná podpora pre webový obsah v iTunes ako napr. obchod. Čiastočne môžu byť podporované aj ostatné aplikácie využívajúce WebKit 1. (#734)
+- Pri plynulom čítaní kníh v programe Adobe Digital Editions 1.8.1 a novších, sú stránky  otáčané automaticky.. (#1978)
+- Nové prekladové tabuľky do braillu: Portugalčina skratkopis, islandský počítačový 8 bodový brail, tamilčina plnopis, španielsky počítačový 8 bodový brail, farsi plnopis. (#2014)
+- V dialógu nastavenia čítania textu je možné nastaviť oznamovanie rámcov. (#1900)
+- Pri používaní aplikácii OpenBook je automaticky zapnutý režim spánku. (#1209)
+- V programe Poedit, môžu prekladatelia čítať automatické komentáre a komentáre pridané ručne. Nepreložené alebo fuzzy reťazce sú označené hviezdičkou a pri navigácii cez ne sa ozve pípanie. (#1811)
+- Podpora pre braillovské riadky HumanWare Brailliant BI and B. (#1990)
+- Lokalizácia nórčina Bokmål.
 
 
 == Zmeny ==
 - Príkazy určené na hláskovanie alebo fonetické hláskovanie aktuálneho znaku, slova, riadku použijú správny jazyk hlasového výstupu ak je zapnuté automatické prepínanie jazyka a dostupné dostatočné množstvo informácii o jazyku čítaného textu.
+- Aktualizovaný hlasový výstup eSpeak na verziu1.46.02.
+- NVDA automaticky odfiltruje extrémne dlhé popisky (30 alebo viac znakov) získané z webových adries odkazov a obrázkov pretože sú tieto s najväčšou pravdepodobnosťou nadbitočné a zdržujú čítanie. (#1989)
+- Niektoré informácie sú v brailly zobrazované v skrátenej podobe. (#1955, #2043)
+- Pri zmene systémového alebo prehliadacieho kurzora sa braillovský riadok posúva rovnako, ako keby bol posunutý manuálne. Toto je vhodné ak je nastavené zobrazovanie po odsekoch a/alebo potlačené delenie slov. (#1996)
+- Aktualizovaná prekladová tabuľka pre španielsky plnopis.
+- Aktualizovaný prekladač do braillu liblouis na verziu 2.4.1.
 
 
 == Opravy ==
 - Vo Windows 8 nie je fokus automaticky nesprávne premiestnený preč z editačného poľa hľadať v programe Windows prieskumník, čo zamedzovalo akúkoľvek interakciu s týmto prvkom.
+- Výrazné zlepšenie výkonnosti pri  čítaní a navigácii v dokumentoch programu Microsoft word so zapnutým oznamovaním informácií o formátovaní. Pre niektorých používateľov je zrýchlenie evidentné počas celej práce s Microsoft word.
 - Obsah Adobe flash zobrazený na celú obrazovku je sprístupnený v režime prehliadania.
 - Opravená znížená kvalita hlasového výstupu pri použití niektorých hlasov Microsoft Speech API 5 s iným výstupným zariadením ako je mapovač zvuku. (#749)
 - Znova opravený problém so spúšťaním NVDA bez syntézy reči, len s brailovým výstupom alebo zobrazovačom reči. (#1963)
 - Terminológia pre príkazy objektovej navigácii je zjednotená z terminmínmi použitými v používateľskej príručke.
+- Ak je používateľské rozhranie NVDA zobrazené v inom než anglickom jazyku, vo správnom jazyku sa zobrazuje aj názov klávesu tab.
+- V aplikáciách Mozilla Gecko napr. Firefox), NVDA viac neprepína do režimu prehliadania počas navigácii v menu vrámci dokumentu. (#2025)
+- V programe kalkulačka windows po stlačení klávesu backspace NVDA oznamuje aktuálny výsledok namiesto textu nič. (#2030)
+- V režime prehliadania sa pri presúvaní myši na navigačný objekt myš presunie do stredu objektu namiesto na ľavý horný okraj, čo je ďaleko presnejšie v mnohých prípadoch. (#2029)
+- Ak je pri navigácii v režime prehliadania zapnuté Automaticky aktivovať režim fokusu pri zmene fokusu, režim fokusu sa správne zapne ak fokus získa panel nástrojov. (#1339)
+- Príkaz na získanie titulku okna opäť správne funguje v programeAdobe Reader.
+- Ak je pri navigácii v režime prehliadania zapnuté Automaticky aktivovať režim fokusu pri zmene fokusu, režim fokusu sa správne zapne ak fokus získajú bunky tabuľky napr. mriežky vytvorené pomocou aria. (#1763)
+- V programe Itunes je v niektorých zoznamoch správne oznamovaná informácia o pozícii.
+- V programe Adobe reader niektoré odkazy nesprávne neobsahujú viac editačné pole len na čítanie.
+- Názvy niektorých editačných polí nie sú nesprávne oznamované ako súčasť textu dialógu. (#1960)
+- Popisky zoskupenísú znovu správne oznamované ak je zapnuté oznamovanie popisov.
+- V texte dialógu vlastnosti jednotky programu prieskumník sú správne oznamované formátované veľkosti.
+- Viac násobné oznamovanie textu strán vlastností bolo potlačené v niektorých prípadoch. (#218)
+- Vylepšená detekcia kurzora v editačných poliach, ktoré sú sprístupnené na základe analýzi textu vypísaného na obrazovku. Toto je viditeľné napr. pri editácii buniek v programe Microsoft excell alebo pri písaní správ v emailovom klientovi Eudora. (#1658)
+- V programe Firefox 11 je správne v režime prehliadania možné použiť príkaz NVDA+Ctrl+medzerník na prechod do nadradeného dokumentu.
+- NVDA sa správne reštartuje v situácii, kde jazykové súbory pre novonastavený jazyk sa nachádzajú v priečinku, ktorého názov obsahuje špeciálne znaky. (#2079)
+- V braily sú rešpektované nastavenia o oznamovaní informácií o pozícii, skratkových klávesách a popisoch.
+- Pri použití s braillovským riadkom nie je prepínanie medzi režimom prehliadania a režimom fokusu pomalé v aplikáciách Mozilla. (#2095)
+- Presun kurzora na medzeru na konci riadku / odseku pomocou braillovského riadku správne funguje v mnohých editačných poliach. (#2096)
+- NVDA opäť správne funguje s hlasovým výstupom Audiologic Tts3. (#2109)
+- Dokumenty programu Microsoft word sú správne oznamované ako viacriadkové, čo znamená, že v brailly sa správne oznamuje aktuálne vybratý riadok pri získaní fokusu.
+- V programe internet explorer sa nevyskitujú občasné chyby pri zameraní niektorých prvkov. (#2121)
+- Premenovanie názvov symbolov a iných špeciálnych znakov sa prejaví ihneď, nevyžaduje si reštart alebo prepnutie nastavenia automatické prepínanie jazyka.
+- Pri použití NVDA s hlasovým výstupom eSpeak sa v dialógu uložiť ako v zobrazovači logu úplne nestíši hlas. (#2145)
 
 
 

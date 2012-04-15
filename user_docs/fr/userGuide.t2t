@@ -439,6 +439,28 @@ Une touche de commande permet de retourner à la page contenant l'objet embarqu�
 | Aller au document contenant l'objet | NVDA+control+espace | Retire le focus à l'objet embarqué en cours et le rend au document contenant l'objet |
 %kc:endInclude
 
++ Commandes NVDA Spécifiques à Certaines Applictions +
+NVDA fournit ses propres commandes additionnelles dans quelques applications pour rendre certaines tâches plus faciles ou pour donner accès à certaines fonctions qui ne seraient pas accessibles autrement.
+
+++ foobar2000 ++
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Annonce du temps restant | control+maj+r | Annonce le temps restant pour le morceau en cours. |
+%kc:endInclude
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Annonce de message récent | NVDA+control+1-4 | Annonce un des messages réceents selon le chiffre pressé; ex : NVDA+control+2 lit le second message le plus récent. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Annonce de la fenêtre de commentaires | control+maj+c | Annonce tout commentaire dans la fenêtre de commentaires. |
+| Annonce de la fenêtre de commentaires automatiques | control+maj+a | Annonce tout commentaire dans la fenêtre de commentaires automatiques. |
+%kc:endInclude
+
 + Configurer NVDA +
 
 ++ Préférences ++
@@ -926,6 +948,7 @@ Cet élément, quand on l'active, recharge les modules d'applications et les gre
 
 + Synthétiseurs de parole pris en charge +[SupportedSpeechSynths]
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
+Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger puor utilisation avec NVDA, veuillez consulter la page [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak ++
 Le synthétiseur [eSpeak http://espeak.sourceforge.net/] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
@@ -954,8 +977,12 @@ La plateforme Microsoft Speech fournit des voix pour beaucoup de langues, normal
 Ces voix peuvent également être utilisées avec NVDA.
 
 Pour utiliser ces voix, vous devrez installer deux composants :
-- Microsoft Speech Platform - Server Runtime (Version 10.2), x86: http://www.microsoft.com/download/en/details.aspx?id=10208
-- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Cette page contient beaucoup de fichiers tant pour la reconnaissance de parole que pour la synthèse vocale.
+ Choisissez les fichiers contenant la synthèse vocale pour la langue désirée.
+ Par exemple, le fichier MSSpeech_TTS_fr-FR_Hortense.msi est une voix francophone française.
+ -
 -
 
 ++ AudioLogic Tts3 ++

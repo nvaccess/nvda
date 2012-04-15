@@ -1241,12 +1241,16 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		try:
 			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
 		except LookupError:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# when the cursor is not withnin a table.
 			ui.message(_("Not in a table cell"))
 			return
 
 		try:
 			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
 		except LookupError:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# but the cursor can't be moved in that direction because it is at the edge of the table.
 			ui.message(_("edge of table"))
 			# Retrieve the cell on which we started.
 			info = next(self._iterTableCells(tableID, row=origRow, column=origCol))

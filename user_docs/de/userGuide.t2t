@@ -184,15 +184,31 @@ In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste
 | Text der Zwischenablage ansagen | NVDA+C | Sagt den Text an, der sich in der Zwischenablage befindet und wenn kein Text gefunden wurde. Diese Information wird auch in Braille als Blitzmeldung angezeigt. |
 %kc:endInclude
 
-+ Die Navigationsmöglichkeiten +
++ Mit NVDA navigieren +
+NVda stellt zahlreiche Werkzeuge zum Erkunden von und Navigieren in Anwendungen bereit, darunter den Navigator und den Flächenmodus.
 
 ++ Objekte ++[Objects]
-Jede Anwendung wowie das Betriebssystem selbst bestehen aus vielen Objekten.
-Ein Objekt ist ein einzelner Eintrag wie beispielsweise eine Textpassage, ein Schalter, ein Kontrollfeld, Regler, Listen oder Eingabefelder.
+Jede Anwendung sowie das Betriebssystem selbst besteht aus vielen Objekten.
+Ein Objekt ist ein einzelner Eintrag wie bspw. eine Textpassage, ein Schalter, ein Kontrollfeld, ein Regler, eine Liste oder ein Eingabefeld.
 
 ++ Mit dem Systemfokus navigieren ++[SystemFocus]
 Der Systemfokus, auch bekannt als Fokus, ist dasjenige [Objekt #Objects], das die Tastendrücke von der Tastatur entgegennimmt.
 Ein Beispiel: Wenn Sie einen Text in einem Eingabefeld eingeben, wird dieses fokussiert.
+
+Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standar-Tastenkombinationen, mit denen der Systemfokus verschoben wird. Beispiele für solche Standard-Tastenkombinationen sind:
+- tab und Umschalt-tab zum Wechseln zwischen Elementen in einem Dialogfeld
+- alt Bzw. F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur navigation innerhalb eines Menüs
+- alt+tab zum Wechseln zwischen laufenden Anwendungen
+-
+
+Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, das den Fokus erhalten hat. Hierzu zählen
+- Name
+- Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht)
+- Typ (Schalter, Kontrollkästchen, Eingabefeld etc)
+- Wert (z.B. der aktuelle Inhalt eines Eingabefeldes)
+- Positionsangabe (z.B. «1 von 5» in einer Liste  oder «1 von 1 Ebene 0» in einer Baumansicht)
+- den Status des objekts (z.B. aktiviert, hervorgehoben, ausgewählt etc).
+-
 
 Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 %kc:beginInclude
@@ -206,9 +222,8 @@ Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 ++ Mit dem System-Cursor navigieren ++[SystemCaret]
 Wenn ein [Objekt #Objects] den [Fokus #SystemFocus] hat, welches das Bearbeiten von Text erlaubt, können Sie sich mit Hilfe des System-Cursors durch dessen Inhalt bewegen. Der System-Cursor wird in diesem Zusammenhang oft auch als Einfügemarke bezeichnet.
 
-Sie können in einem Solchen Fall auch Bild Auf, Bild Ab, Pos1 und Ende verwenden, um sich durch den Text zu bewegen. 
+Sie können in diesem Fall die Pfeiltasten, Bild Auf, Bild Ab, Pos1, Ende, etc. verwenden, um sich durch den Text zu bewegen.
 Sie können den Text auch bearbeiten, falls das Steuerelement eine Bearbeitung zuläst.
-
 NVDA wird hierbei jedes Zeichen, jedes Wort oder auch jede Zeile ansagen, wenn Sie sich durch das Eingabefeld bewegen, Text markieren oder die Markierung aufheben.
 
 Folgende Tastenkombinationen stehen in Relation zum System-Cursor zur Verfügung:
@@ -218,6 +233,7 @@ Folgende Tastenkombinationen stehen in Relation zum System-Cursor zur Verfügung
 | Aktuelle Zeile vorlesen | NVDA+Pfeiltaste nach oben | Liest die aktuelle Zeile, in der sich der System-Cursor befindet, vor. Bei zweimal Drücken wird die Zeile buchstabiert. |
 | Aktuelle Textauswahl vorlesen | NVDA+Umschalt+Pfeil nach oben | Liest den aktuell markierten Text vor. |
 
+
 Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügung:
 || Name | Tastenkombination | Beschreibung |
 | Zur vorherigen Spalte springen | Steuerung+Alt+Pfeiltaste nach links | Zieht den System-Cursor zur vorherigen Spalte (bleibt in der gleichen Zeile). |
@@ -226,32 +242,31 @@ Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügu
 | Zur nächsten Zeile springen | Steuerung+Alt+Pfeiltaste nach unten | Zieht den System-Cursor zur nächsten Zeile (bleibt in der gleichen Spalte). |
 %kc:endInclude
 
-++ Die Objekt-Navigation ++
-Manchmal möchten Sie sich den Inhalt des Anwendungsfensters anschauen, ohne den [fokus #SystemFocus] bewegen zu müssen.
+++ Objekt-Navigation ++
+Üblicherweise arbeiten Sie mit Programmen, indem Sie mittels Tastenkürzeln den [Fokus #SystemFocus] bzw. den Systemcursor #SystemCaret] bewegen.
+Manchmal möchten Sie jedoch mit den Objekten einer Anwendung oder des Betriebssystems umgehen, ohne den Fokus oder den Systemcursor zu bewegen.
 Oder sie wollen mit [Objekten #Objects] umgehen, die nicht mit den Standard-Tastenkombinationen erreichbar sind (etwa, weil sie nicht in der Tab-Reihenfolge stehen).
 In solchen Fällen können Sie die objektorientierte Navigation verwenden.
 
-Die Objektnavigation erlaubt das Bewegen zwischen Objekten und das Abrufen von Informationen über ein Objekt. 
+Die Objektnavigation erlaubt das Bewegen zwischen Objekten und das Abrufen von Informationen über ein einzelnes [objekt #Objects].
 Wenn Sie sich zu einem objekt bewegen, wird NVDA Ihnen dies auf eine ähnliche Weise mitteilen, als hätten Sie den Systemfokus bewegt.
 Um inhalte so anzuzeigen, wie sie auf dem Bildschirm erscheinen, verwenden Sie stattdessen den  [Flächenmodus #FlatReview].
 
-Wenn Sie das Betriebssystem oder eine Anwendung etwas genauer erkunden möchten, ohne den Fokus zu benutzen, können Sie die Objektnavigation von NVDA verwenden. Dies ermöglicht Ihnen, sich in einer baumähnlichen Struktur zwischen den Objekten zu bewegen, die gruppiert in einer Hierarchie dargestellt werden.
+Die Objekte sind innerhalb des Betriebssystems und der Anwendungen hierarchisch organisiert.
+Dies bedeutet, dass sie in manche Objekte "absteigen" müssen, um deren Inhalt zu sehen.
+Eine Liste enthält beispielswiese Objekte, die die einzelnen Einträge darstellen; Sie müssen also in die Liste "absteigen", um die Einträge zu sehen.
+Wenn Sie sich auf einem Listeneintrag befinden, können Sie sich zum nächsten/vorherigen Objekt auf der selben Ebene bewegen, um die anderen Einträge zu sehen.
+Um von einem Listeneintrag wieder zur Liste zurückzukehren, müssen Sie wieder eine Ebene "aufsteigen".
 
-Beginnend mit der obersten Ebene, dem Desktop, werden unterhalb in der Baumstruktur die separaten Anwendungen aufgelistet.
+Nun können Sie sich über die Liste hinaus bewegen, um andere Objekte zu sehen.
+so ähnlich enthält eine Symbolleiste ebenfalls Steuerelemente und Sie müssen in die Symbolleiste "absteigen", um die einzelnen Elemente zu sehen.
 
-Die Anwendungsfenster können ebenfalls Unterfenster enthalten.
+Das Objekt, das momentan angezeigt wird, wird als Navigatorobjekt bezeichnet.
+Wenn Sie sich zu einem Objekt bewegt haben, können Sie es sich mit den [Befehlen zum Betrachten von Text #ReviewingText] anschauen.
+Standardmäßig folgt der Navigator dem Systemfokus, diese Kopplung kann jedoch ein- und ausgeschaltet werden.
 
-Die Baumstruktur kann bei einigen Anwendungen sehr umfangreich sein. Auf Grund der logischen Anordnung der Objekte, werden Sie die benötigten Informationen dennoch schnell finden können.
-
-Dieses repräsentiert weniger die Anordnung der Objekte auf dem Bildschirm als vielmehr die logische Anordnung innerhalb des Programms. Es bedarf anfangs einiger Einarbeitszeit. Nach einer gewissen Zeit werden Sie sich in den Objekthierarchien gut zurechtfinden.
-
-Standardmäßig folgt beim Bewegen des Systemfokus der Objektnavigator.
-
-Hinweis: Um die Ausgaben des Navigators in Braille zu erhalten, muss die Braillezeile an die "Anzeige", das heißt, an den Navigator gekoppelt werden. Dies geschieht entweder in den Braille-Einstellungen oder durch Drücken der Tastenkombination NVDA+STRG+T.
-
-Das Objekt, welches im Moment angezeigt wird, wird als Navigatorobjekt bezeichnet.
-Wenn Sie in den Flächenmodus umschalten, können Sie sich den Inhalt unter Verwendung der  [Befehle zum Anzeigen von Text #ReviewingText] anzeigen lassen.
-Standardmäßig bewegt sich der Navigator zwar mit dem System-cursor mit, diese Kopplung kann jedoch auch abgeschaltet werden.
+Bedenken Sie, dass die Braillezeile standardmäßig dem [Fokus #SystemFocus] und dem  [Systemdursor #SystemCaret] folgt, nicht jedoch dem Navigator oder dem nvda-Cursor.
+Wenn Sie dieses Verhalten ände4n möchten, müssen Sie die [Kopplung der Braillezeile konfigurieren #BrailleTether].
 
 Mit den folgenden Tastenkombinationen navigieren Sie zwischen den Objekten:
 %kc:beginInclude
@@ -263,7 +278,7 @@ Mit den folgenden Tastenkombinationen navigieren Sie zwischen den Objekten:
 | Zum ersten untergeordneten Objekt navigieren | NVDA+Nummerntaste 2 | NVDA+Umschalt+Komma | Navigiert zum ersten untergeordneten Objekt ausgehend vom aktuellen Navigator-Objekt. |
 | Zum Fokus-Objekt navigieren | NVDA+Nummerntaste Minus | NVDA+Backspace | Navigiert zum aktuell fokussierten Objekt und zieht Anzeige-Cursor mit. Bei der Position des System-Cursors ist es sichtbar. |
 | Aktuelles Navigator-Objekt aktivieren | NVDA+Nummerntaste Eingabetaste | NVDA+Eingabetaste | Aktiviert das aktuelle Navigator-Objekt (ähnlich eines Mausklicks oder die Leertaste drücken, wenn es fokussiert ist). |
-u System-Cursor zum aktuellen Navigator-Objekt oder die Einfügemarke zum nvda-cursor ziehen | NVDA+Umschalt+Nummerntaste Minus | NVDA+Umschalt+Rücktaste | Wird diese Tastenkombination einmal gedrückt, wird der System-Cursor zum aktuellen Navigator-Objektgezogen. Wird sie zweimal gedrückt, so wird die Einfügemarke zum nvda-Cursor gezogen. |
+| System-Cursor zum aktuellen Navigator-Objekt oder die Einfügemarke zum nvda-cursor ziehen | NVDA+Umschalt+Nummerntaste Minus | NVDA+Umschalt+Rücktaste | Wird diese Tastenkombination einmal gedrückt, wird der System-Cursor zum aktuellen Navigator-Objektgezogen. Wird sie zweimal gedrückt, so wird die Einfügemarke zum nvda-Cursor gezogen. |
 | Dimensionen des Navigator-Objektes ansagen | NVDA+Nummerntaste Entfernen | NVDA+Entferntaste | Sagt die aktuellen Größen (Dimensionen) des aktuellen Navigator-Objektes vom Bildschirm in Prozentwerten an (inkl. Abstand vom linken und oberen Bildschirmrand sowie die Breite und Höhe). |
 %kc:endInclude
 
@@ -272,12 +287,14 @@ Hinweis: Um die Tasten auf dem Nummernblock zu benutzen, muss dieser deaktiviert
 ++ Befehle zum Betrachten von Text ++[ReviewingText]
 NVDA erlaubt Ihnen, den Inhalt des aktuellen  [navigatorobjekts #ObjectNavigation] (einschließlich [Flächenmodus #FlatReview]) zeichen-, wort- oder zeilenweise anzuzeigen.
 Dies ist zum Beispiel in Windows-Konsolenfenstern (der Eingabeaufforderung; CMD.exe) oder in anderen Anwendungen sinnvoll, in denen der  [System-Cursor #SystemCaret] nicht oder nur eingeschränkt verfügbar ist.
+Ein weiterer Anwendungsfall ist das Lesen von langen Meldungen in Dialogfeldern.
 
 Wenn Sie den NVDA-Cursor bewegen, bewegt sich der System-Cursor nicht mit, sodass beispielsweise die aktuelle Cursor-Position bei der Bearbeitung des Textes nicht verloren geht.
 Wenn Sie jedoch den System-Cursor bewegen, wird er vom NVDA-Cursor verfolgt.
 Diese Kopplung kann ein- und ausgeschaltet werden.
 
-Hinweis: Um beim Navigieren innerhalb von Objekten die Ausgaben auch in Braille zu erhalten, muss die Braillezeile an den Navigator gekoppelt sein.
+Bedenken Sie, dass Braillezeile standardmäßig den  [Fokus #SystemFocus] und den  [Systemcursor #SystemCaret] verfolgt, nicht jedoch den Navigator oder den nvda-Cursor.
+Um dies zu ändern, müssen Sie die  [Kopplung der Braillezeile konfigurieren #BrailleTether].
 
 Die folgenden Tastenkombinationen zur Textanzeige sind verfügbar:
 %kc:beginInclude
@@ -310,7 +327,10 @@ Das Layout ist wie folgt aufgebaut:
 | Vorheriges Zeichen | Aktuelles Zeichen | Nächstes Zeichen |
 
 ++ Der Flächenmodus ++[FlatReview]
-Genau so, wie Sie mit NVDA den Inhalt eines einzelnen [Objektes #Objects] anzeigen können, erlaubt NVDA auch die Anzeige des gesamten Dokumentfensters oder des gesamten Bildschirminhaltes, so wie er auch auf dem physischen Bildschirm zu sehen ist. Dies wird als Flächenmodus bezeichnet.
+Während sie sich normalerweise nur den Inhalt einzelner [Objekte #Objects] betrachten können, erlauben manche Objekte jedoch das Betrachten des gesamten Inhalte (also einschließlich aller untergeordneten Objekte).
+Bei komplexen Dokumenten ist es so beispielsweise möglich, deren gesamten Inhalt zu erfassen. Anwendungsfenster können so asgelesen werden, wie die darin enthaltenen Elemente visuell angeordnet sind.
+Dies wird als Flächenmodus bezeichnet.
+
 Dies funktioniert ähnlich eines Bildschirmbetrachters bzw. einer Maus-Emulation vieler kommerzieller Screenreader.
 
 Wenn Sie in den Flächenmodus wechseln, wird der Cursor an die Position des aktuellen [Navigatorobjekts #ObjectNavigation] gesetzt.
@@ -318,6 +338,8 @@ Wenn Sie die Objektnavigation bis dahin noch nicht verwendet haben, ist dies üb
 Wenn das aktuelle Navigatorobjekt beispielsweise ein Schalter ist, wird der NVDA-Cursor auf die Beschriftung des Schalters gesetzt.
 Jetzt können Sie den Inhalt mit den [Befehlen zum Betrachten von Text #ReviewingText] anzeigen lassen.
 Umgekehrt können Sie von einer beliebigen Position im Flächenmodus aus den Navigator auf das zugrundeliegende Objekt setzen und von dort aus die  [Objektnavigation #ObjectNavigation] verwenden.
+
+uM die Anzeigen des Flächenmodus auch in Braille zu erhalten, müssen Sie die [Kopplung der Braillezeile konfigurieren #BrailleTether].
 
 Die folgenden zwei Tastenkombinationen werden zum Umschalten für den Flächenmodus verwendet:
 %kc:beginInclude
@@ -327,14 +349,14 @@ Die folgenden zwei Tastenkombinationen werden zum Umschalten für den Flächenmo
 %kc:endInclude
 
 ++ Mit der Maus navigieren ++
-Standardmäßig wird NVDA den Text unter der Maus vorlesen, sobald Sie die maus bewegen.
+Wenn Sie den Mauszeiger über ein objekt hinwegbewegen, wird NVDA Informationen über dieses Objekt ausgeben.
 Sofern möglich, wird NVDA den umgebenden Textabsatz lesen, auch wenn sich einige Objekte nur zeilenweise auslesen lassen.
 
 NVDA kann auch so konfiguriert werden, dass der [Objekttyp #Objects] angesagt wird, das sich unter dem Mauszeiger befindet (wie z. B. Liste, Schalter usw.).
 Dies könnte für vollblinde Benutzer sinnvoll sein, denen das bloße Vorlesen des Textes unter der Maus nicht genügt.
 
-Um dem Anwender einen Eindruck davon zu vermitteln, wo sich die Maus (bezogen auf die obere linke Ecke des Bildschirms) befindet, kann NVDA die Mausposition in Form von Signaltönen angeben.
-Je näher sich der Mauszeiger am oberen Bildschirmrand befindet, desto höher wird der Signalton.
+Mit Hilfe von Signaltönen, die die aktuelle Position des Mauszeigers anzeigen, kann NVDA ihnen zeigen, wo sich die Maus - relativ zur linken oberen Bildschirmecke - befindet.
+Je näher sich der Mauszeiger am oberen Bildschirmrand befindet, desto höher ist der Signalton.
 Richtig ausgerichtete Stereolautsprecher oder Kopfhörer vorausgesetzt, wird der Signalton um so mehr links oder rechts abgespielt, je weiter links bzw. rechts sich der Mauszeiger bewegt.
 
 Diese zusätzlichen Mausfunktionen sind in NVDA standardmäßig deaktiviert.
@@ -388,7 +410,14 @@ Im Lese-Modus wird der Inhalt von Dokumenten in einer strukturierten Dokument-ä
 
 Informationen darüber, ob der Text beispielsweise ein Link, eine Überschrift, o. ä. ist, wird Ihnen beim Navigieren unmittelbar mitgeteilt.
 
-Manchmal müssen sie in diesen Dokumenten mit Steuerelementen interagieren. Um mit diesen Elementen zu arbeiten, aktivieren Sie den Fokusmodus, in welchem Alle Tasten an das Element weitergegeben werden. Wenn Sie sich im Lesemodus befinden, wird NVDA standardmäßig automatisch den Fokusmodus aktivieren, sobald Sie mit Tab auf ein Element springen, bzw. darauf klicken, welches den Fokusmodus benötigt. Dem entsprechend wechselt NVDA automatisch in den Lesemodus, wenn sie auf ein Element klicken bzw. mit Tab darauf springen, welches den Fokusmodus nicht benötigt. Wenn ein Element den Fokusmodus benötigt, können sie auch die Leertaste bzw. Eingabe drücken, um den Fokusmodus zu aktivieren. Mit der Escape-Taste wechseln sie wieder zurück in den Lesemodus. Zusätzlich können Sie auch den Fokusmodus erzwingen. In diesem Fall bleibt der Fokusmodus so lange aktiv, bis Sie wieder zum Lesemodus zurückwechseln.
+Manchmal müssen sie in diesen Dokumenten mit Steuerelementen interagieren.
+Dies ist zum Beispiel der Fall, wenn Sie Text in ein Eingabefeld schreiben wollen oder wenn Sie mit Hilfe der Pfeiltasten eine Liste oder ein Flash-Objekt bedienen wollen.
+Um mit diesen Elementen zu arbeiten, aktivieren Sie den Fokusmodus, in welchem Alle Tasten an das Element weitergegeben werden.
+Wenn Sie sich im Lesemodus befinden, wird NVDA standardmäßig automatisch den Fokusmodus aktivieren, sobald Sie mit Tab auf ein Element springen, bzw. darauf klicken, welches den Fokusmodus benötigt.
+Dem entsprechend wechselt NVDA automatisch in den Lesemodus, wenn sie auf ein Element klicken bzw. mit Tab darauf springen, welches den Fokusmodus nicht benötigt.
+Wenn ein Element den Fokusmodus benötigt, können sie auch die Leertaste bzw. Eingabetaste drücken, um den Fokusmodus zu aktivieren.
+Mit der Escape-Taste wechseln sie wieder zurück in den Lesemodus.
+Zusätzlich können Sie auch den Fokusmodus erzwingen. In diesem Fall bleibt der Fokusmodus so lange aktiv, bis Sie wieder zum Lesemodus zurückwechseln.
 
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
@@ -399,6 +428,7 @@ Manchmal müssen sie in diesen Dokumenten mit Steuerelementen interagieren. Um m
 | Vorwärts suchen | NVDA+F3 | Sucht die nächste Zeichenkette des gesuchten Textes im aktuellen Dokument, welche zuvor eingegeben wurde. |
 | Rückwärts suchen | NVDA+Umschalt+F3 | Sucht die vorherige Zeichenkette des gesuchten Textes im aktuellen Dokument, die zuvor eingegeben wurde. |
 %kc:endInclude
+
 
 ++ Die Schnellnavigationstasten ++
 Um im Lesemodus eine schnellere Navigation zu ermöglichen, stellt NVDA die so genannten Schnellnavigationstasten für das Ansteuern bestimmter Seitenelemente zur Verfügung.
@@ -447,6 +477,36 @@ Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukeh
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
 | Zum Inhalt des Lesemodus zurückkehren | NVDA+STRG+Leertaste | Verlässt den Fokus des eingebetteten Objekts und kehrt in den Lesemodus zurück. |
+%kc:endInclude
+
+
++ Anwendungsspezifische Befehle für NVDA +
+Für manche Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit - etwa um bestimmte Aufgaben zu vereinfachen oder um Informationen zugänglich zu machen, die normalerweise für Anwender von Bildschirmleseprogramm unerreichbar wären. 
+
+++ foobar2000 ++
+%kc:beginInclude
+|| Name | Tastenkombination | Beschreibung |
+| verbleibende Zeit ausgeben | strg+umschalt+r | Falls grade ein Titel abgespielt wird, wird die verbleibende Zeit ausgegeben. |
+%kc:endInclude
+
+Technischer Hinweis: NVDA sucht sich die verbleibende Zeit aus der Statuszeile heraus Bzw. berechnet diese auf Grundlage der dort vorgefundenen Angaben über die Verstrichene Zeit und die Gesamtlänge des Titels. deshalb ist es wichtig, dass sie das Anzeigeformat der Statuszeile möglichst nicht verändern, damit die Tastenkombination funktionsfähig bleibt. Streng genommen müssen die folgenden Bedingungen erfüllt sein, damit strg+umschalt+r ordnungsgemäß funktioniert:
+- die einzelnen Elemente müssen in Gruppen unterteilt werden, wobei die Angaben über die verstrichene Zeit und die Gesamtlänge in der fünften Gruppe stehen müssen.
+- Die Zeitangaben müssen durch einen Schrägstrich getrennt sein.
+- Die Zeitangaben müssen in der Reihenfolge "verstrichene zeit / Gesamtlänge" aufgeführt sein.
+Das folgende Anzeigeformat ist in Foobar 1.1.10 die Standardeinstellung und  funktioniert ordnungsgemäß mit nvda:
+%codec% | %bitrate% kbps | %samplerate% Hz | %channels% | %playback_time%[ / %length%]
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Name | Tastenkombination | Beschreibung |
+| letzte Nachricht ausgeben | NVDA+strg+1-4 | Gibt die zur Nummer passende Nachricht aus; nvda+strg+2 gibt beispielsweise die zweitletzte Nachricht aus |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Name | Tastenkombination | Beschreibung |
+| Kommentare ausgeben | Steuerung+Umschalt+c | Gibt alle Kommentare aus. |
+| Automatische Kommentare ausgeben | Steuerung+Umschalt+a | Gibt alle automatischen Kommentare aus. |
 %kc:endInclude
 
 
@@ -625,7 +685,7 @@ Diese Option ist ein numerisches Feld, in dem sich die Cursor-Blinkfrequenz in M
 Dieses numerische Eingabefeld legt fest, wie lange Meldungen von NVDA auf der Braillezeile angezeigt werden sollen. Wenn eine Blitzmeldung erscheint, kann diese durch Drücken einer Routingtaste geschlossen werden. Durch Drücken einer Navigationstaste kann die anzeigedauer einer Blitzmeldung verlängert werden.
 
 %kc:setting
-==== Braillezeile gekoppelt an ====
+==== Braillezeile gekoppelt an ====[BrailleTether]
 Tastenkombination: NVDA+STRG+T
 
 Diese Option legt fest, ob die Braillezeile dem System-Cursor oder dem Navigatorobjekt / nvda-Cursor folgen soll.
@@ -885,7 +945,7 @@ Ebenso ist es möglich, Ausspracheregeln als "Reguläre Ausdrücke" (Regular Exp
 Weiterführende Beispiele und Erklärungen hierzu finden Sie im [Kapitel über reguläre ausdrücke in der Dokumentation zu python 2.7 (in englisch) http://docs.python.org/library/re.html]
 
 
-+++ Der Dialog "Satzzeichen- und Sonderzeichenaussprache" +++
++++ Der Dialog "Aussprache von Symbolen und Satzzeichen- " +++
 In diesem Dialog können Sie die Aussprache von Satzzeichen bzw. Sonderzeichen verändern. Um die aussprache eines Sonderzeichens zu verändern, wählen Sie es in der Liste aus.
 Der Dialog besteht aus den folgenden Elementen:
 
@@ -957,13 +1017,15 @@ Dieser Eintrag, einmal aktiviert, läd alle Anwendungsmodule sowie globale Plugi
 
 + Unterstützte Sprachausgaben +[SupportedSpeechSynths]
 Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Sprachausgaben.
+eine ausführlichere Liste freier und kommerzieller Sprachausgaben, die zusammen mit NVDA verwendet werden können, finden Sie unter  [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak ++
 Die in NVDA fest integrierte [eSpeak http://espeak.sourceforge.net/]-Sprachausgabe erfordert keine speziellen Treiber oder an extra installierten Komponenten. Beim Starten von NVDA wird sie als Standard verwendet. Das hat den enormen Vorteil, dass NVDA auf einen Betriebssystemen via einem USB-Stick oder von einer CD-ROM ohne weiteres betrieben werden kann.
 
-Jede Stimme, die mit eSpeak ausgeliefert wird, spricht eine andere Sprache. Somit werden rund 43 unterschiedliche Sprachen unterstützt.
+Jede Stimme, die mit eSpeak ausgeliefert wird, spricht eine andere Sprache.
+Somit werden rund 43 unterschiedliche Sprachen unterstützt.
 
-Es gibt auch eine Vielzahl von Varianten, wo der ausgewählte Klang der Stimme geändert werden kann.
+Es gibt auch eine Vielzahl von Varianten, womit der Klang der Stimme geändert werden kann.
 
 ++ Microsoft Speech API Version 4 (SAPI 4.0) ++
 Die SAPI 4 ist ein älterer Microsoft-Standard für Softwaresprachausgaben.
@@ -980,20 +1042,29 @@ die auf Ihrem System gefunden werden können.
 
 ++ Microsoft Speech Platform ++
 Die "Microsoft Speech Platform" stellt Stimmen für viele Sprachen zur Verfügung, welche normalerweise in der Entwicklung für serverbasierte Sprachanwendungen zum Einsatz kommen. Diese Stimmen können auch in  NVDA eingebunden werden.
+Diese Stimmen können auch mit NVDA verwendet werden.
 
 Um diese Stimmen verwenden zu können, müssen Sie folgende 2 Komponenten installieren:
-- Microsoft Speech Platform - Server Runtime (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=10208
-- Microsoft Speech Platform - Server Runtime Languages (Version 10.2): http://www.microsoft.com/download/en/details.aspx?id=21924
+- Microsoft Speech Platform - Server Runtime (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Server Runtime Languages (Version 11), x86: http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Diese Webseite enthält viele Dateien für Sprachein- und Ausgabe.
+ Suchen Sie sich die tts-Dateien passend zu der von Ihnen gewünschten Sprache heraus.
+ Beispiel: Die Datei MSSpeech_TTS_en-US_ZiraPro.msi ist eine amerikanisch-Englische Stimme.
+ -
 -
 
 ++ AudioLogic TTS 3 ++
 Dies ist eine kommerzielle Sprachausgabe speziell für die italienische Sprache.
-Um sie in NVDA nutzen zu können, müssen Sie die entsprechenden Treiber auf Ihrem System installiert haben.
+Um sie in NVDA nutzen zu können, müssen sie die Sprachausgabe auf Ihrem System installiert haben.
 Für weitere Informationenbesuchen Sie bitte die AudioLogic-Website unter http://www.audiologic.it/.
 
+Diese Sprachausgabe unterstützt die [Buchstabierfunktionalität #VoiceSpellingFunctionality] nicht.
+
 ++ NewFon ++
-NewFon ist eine kommerziellfreie Sprachausgabe von Sergey Shishmintzev, das die russische und ukrainische Sprache unterstützt.
+NewFon ist eine freie kommerzielle Sprachausgabe von Sergey Shishmintzev, welche die russische und ukrainische Sprache unterstützt.
 Zum Download der Sprachausgabe, besuchen Sie den Downloadbereich der Website der russischen NVDA-Community unter http://ru.nvda-community.org/?page_id=10.
+
+Diese Sprachausgabe unterstützt die [Buchstabierfunktionalität #VoiceSpellingFunctionality] nicht.
 
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.
@@ -1021,7 +1092,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 ++ Optelec ALVA BC640 / BC680 ++
 Beide Braillezeilen - die BC640 und die BC680 - von [Optelec http://www.optelec.com/] werden via USB und BlueTooth unterstützt.
 Sie benötigen keine installierten Treiber, um diese Zeile verwenden zu können.
-Anschließen lediglich und in NVDA konfigurieren.
+Sie müssen die Zeile lediglich anschließen und in NVDA konfigurieren.
 
 Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
@@ -1075,7 +1146,22 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 ++ MDV Lilli ++
 Die Lilli-Braillezeile von der italienischen Firma [MDV http://www.mdvbologna.it/] wird unterstützt.
 Sie benötigen keine installierten Treiber, um diese Zeile verwenden zu können.
-Lediglich anschließen und sie in NVDA konfigurieren.
+Sie müssen lediglich die Braillezeile anschließen und in NVDA konfigurieren.
+
+Folgende Tastenzuweisungen sind in nvda bei dieser Zeile verfügbar:
+Bitte lesen sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
+%kc:beginInclude
+|| Name | Taste |
+| Braillezeile zurückscrollen | LF |
+| Braillezeile vorwärts scrollen | RG |
+| Braillezeile zur vorigen Zeile bewegen | UP |
+| Braillezeile zur nächsten Zeile bewegen | DN |
+| Cursor zum Braille-Modul ziehen | route |
+| Umschalt+Tabulatortaste | SLF |
+| Tabulatortaste | SRG |
+| Alt+Tabulatortaste | SDN |
+| Alt+Umschalt+Tabulatortaste | SUP |
+%kc:endInclude
 
 ++ Braillezeilen von Baum/HumanWare/APH ++
 einige  [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] und [APH http://www.aph.org/]-Braillezeilen werden unterstützt, sofern sie per usb oder Bluetooth mit dem Rechner verbunden werden.
@@ -1108,8 +1194,8 @@ für Braillezeilen, die einen Joystick besitzen:
 | Eingabetaste | auswahl |
 %kc:endInclude
 
-++ Hedo ProfiLine USB ++
-Die ProfiLine usb der Firma [hedo Reha-Technik  http://www.hedo.de/] werden unterstützt.
+++ Hedo Profiline usb ++
+Die Profiline usb der Firma [hedo Reha-Technik  http://www.hedo.de/] werden unterstützt.
 Zuerst müssen Sie den usb-Treiber des Herstellers installieren.
 
 Die folgenden Tastenkonbinationen für diese Braillezeile sind in NVDA verfügbar:
@@ -1216,6 +1302,7 @@ Um die Skriptnamen, Anwendungsmodule, Klassen und Eingabemethoden zu ermitteln, 
 + Öffnen Sie den Protokollbetrachter über den Befehl Extras -> Protokollbetrachter im Kontextmenü des NVDA-Symbols.
 + Untersuchen Sie die Protokolleinträge.
 Einer von denen sollte Informationen über die soeben verwendete Eingabemethode sowie das Anwendungsmodul, die Klasse und das Skript enthalten, sofern das Skript bereits zugewiesen wurde.
++
 
 Das folgende Beispiel zeigt, wie Sie die Tastenkombination NVDA+Umschalt+T an das Skript binden können, dass das Datum und die Uhrzeit anzeigt:
 
@@ -1246,7 +1333,7 @@ Anmerkung: Die Original-Tastenkombination NVDA+F12 zum Anzeigen der Uhrzeit und 
 ```
 
 Obwohl Sie ein Script prinzipiell an jede beliebige Tastenkombination zuweisen können, könnte es mit Tastenkombinationen in Verbindung mit der Alt-Taste vereinzelnd zu Probleme kommen, da NVDA die Umschalt-Tasten wie Alt, Umschalt, STRG oder dem Modifikator (NVDA-Taste) an das Betriebssystem weiterreicht, selbst wenn bereits ein Script zugewiesen wurde.
-Wenn Sie eine solche Tastenkombination drücken, könnte es vorkommen, dass sowohl die Menüleiste der Anwendung aktiviert wie auch das Script ausgeführt wird. In solchen Fällen ist es anzuraten, nur Umschalttasten wie Umschalt, STRG oder den NVDA-Taste zu verwenden.
+Wenn Sie eine solche Tastenkombination drücken, könnte es vorkommen, dass sowohl die Menüleiste der Anwendung aktiviert wie auch das Script ausgeführt wird. In solchen Fällen ist es anzuraten, nur Umschalttasten wie Umschalt, STRG oder die NVDA-Taste zu verwenden.
 
 
 ++ Erweiterte Anpassung der Aussprache von Satz- und Sonderzeichen ++

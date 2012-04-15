@@ -1,4 +1,4 @@
-Quoi de Neuf dans NVDA
+fQuoi de Neuf dans NVDA
 
 
 %!includeconf: ../changes.t2tconf
@@ -22,7 +22,7 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - En mode navigation, on peut activer l'objet sous le curseur à partir du terminal braille. Ca se fait en pressant la touche de routage curseur correspondant à la position du curseur. Si le curseur n'est pas encore à la position souhaitée, il faut presser deux fois la touche. (#1893)
 - Support de base des zones web telles que le magasin dans Itune. 
 - Dans les livres sous Adobe Digital Editions 1.8.1 et au-delà, les pages sont maintenant tournées automatiquement en mode dire tout.
-- Nouvelle table de conversion braille : Portugais grade 2. (#2014)
+- Nouvelle table de conversion braille : Portugais grade 2, Islandais informatique 8 points, Tamoul grade 1, Espagnol informatique 8 points, Farsi grade 1. (#2014)
 - L'annonce des cadres dans les documents peut maintenant être configurée dans le dialogue de mise en forme des documents. (#1900)
 - Le mode veille est automatiquement activé quand on utilise Openbook. (#1209)
 - Sous Poedit, les traducteurs peuvent maintenant lire les commentaires ajoutés par les traducteurs ou extraits automatiquement. Les messages non traduits ou confus sont marqués par une étoile et on entend un bip quand on passe dessus. (#1811)
@@ -38,7 +38,7 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - Quand le curseur de revue ou le curseur système se déplacent, le braille défile maintenant de la même manière que par le défilement manuel. Ceci est plus cohérent quand le Braille est configuré pour une lecture par paragraphe ou pour éviter la coupure de mots. (#1996)
 - Mise à jour de la table Espagnole Grade 1.
 - Mise à jour du convertisseur braille Liblouis à la version 2.4.0.
-
+- Mise à jour du convertisseur braille Liblouis à la version 2.4.1.
 
 == Corrections de Bogues ==
 - Sous Windows 8, le focus n'est plus retiré intempestivement de la zone de recherche de l'explorateur ce qui empêchait NVDA d'interagir avec elle.
@@ -66,7 +66,15 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - Le Braille respecte correctement les réglages pour l'affichage des touches de raccourci des objets, de l'information de rang et des descriptions.
 - Dans les applications Mozilla, le passage entre le mode formulaire et le mode navigation n'est plus ralenti quand le Braille est activé.
 - Amener le curseur sur l'espace situé à la fin d'un paragraphe en utilisant les routines curseur Braille ne  ramène plus au début du texte. (#2096)
-
+- NVDA fonctionne de nouveau correctement avec le synthétiseur Audiologic Tts3. (#2109)
+- Les documents Microsoft Word sont correctement traités comme multilignes. Cela permet un comportement plus approprié du Braille quand le document est en focus.
+- Sous Microsoft Internet Explorer, il n'y a plus d'erreur quand le focus se trouve sur certains contrôles rares (#2121)
+- NVDA fonctionne maintenant correctement dans plusieurs dialogues "à propos" dans les applications distribuées avec Windows XP, parmi lesquelles le dialogues "à propos" du bloc-notes. (#1855) et celui de Windows.  
+- Correction de la revue par mots dans les champs d'édition de Windows. (#1877)
+- quitter un champ d'édition avec flèche-haut, flèche-gauche ou page-précédente quand on est en mode formulaire passe maintenant automatiquement en mode navigation quand le fode formulaire automatiquement au déplacement du curseur est activé. (#1733)
+- L changement de nom d'une ponctuation ou d'un symbole prendra effet instantannément sans nécessiter un redémarrage de NVDA.
+ 
+ 
 
 == Changements pour les Développeurs ==
 - Il y a maintenant une console Python à distance pour les situations ou le débogage à distance est utile. Consultez le guide de développement pour les détails.
@@ -74,7 +82,11 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - Les objets Textinfo ont maintenant une méthode activate() pour activer la position représentée par le Textinfo.
  - Ceci est utilisé par le Braille pour activer la position en utilisant les curseur routines sur les afficheurs braille. Cependant, il pourrait y avoir d'autres utilisations dans le futur.
 - TreeInterceptors et NVDAObjects qui n'exposent qu'une page de texte à la fois peuvent prendre en compte le défilement automatique des pages en mode "dire tout" en utilisant le mix-in textInfos.DocumentWithPageTurns. (#1978)
-
+- Plusieurs contrôles et valeurs de constantes ont été renommés ou déplacés= (#228)
+- Les constantes speech.REASON_* ont été déplacées dans controlTypes.
+  - Dans controlTypes, speechRoleLabels et speechStateLabels ont été renommées respectivementen roleLabels and stateLabels.
+- L'affichage Braille est maintenant journalisé au niveau entrée/sortie. D'abord, le texte non converti de otutes les régions est journalisé suivi par les cellules braille de la fenêtre en cours d'affichage. (#2102)
+ 
 
 = 2011.3 =
 Les apports majeurs de cette version incluent le changement automatique de langue pendant la lecture de documents contenant les informations de langue appropriées; le support des environnements Java 64 bits; l'annonce des informations de formatage du texte en mode navigation dans les applications Mozilla; une meilleure prise en compte des plantages ou blocage d'applications; et les premières adaptations pour Windows 8.
@@ -142,7 +154,6 @@ Cela supprime la double annonce de l'étiquette pour certains champs de formulai
 - En mode navigation dans les applications utilisant Mozilla Gecko 10 ou au-delà (comme Firefox 10), le curseur se positionne plus souvent correctement quand on charge une page avec une ancre cible. (#360)
 - En mode navigation dans les applications Mozilla Gecko (ex : Firefox), les étiquettes des images sont maintenant présentées.
 - Avec le suivi de la souris activé, le passage de la souris sur certains champs d'édition n'entraîne plsu le plantage de l'application.
-- NVDA fonctionne maintenant correctement dans certains dialogues "à propos" d'applications distribuées avec Windows XP telles que le dialogue "à propos" du bloc-notes ou le dialogue "à propos" de Windows. (#1853) (#1855)
 
 
 == Changements pour les Développeurs ==

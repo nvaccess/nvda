@@ -3,6 +3,8 @@
 
 import globalVars
 import _winreg
+import ctypes
+import ctypes.wintypes
 from copy import deepcopy
 import os
 import sys
@@ -164,6 +166,8 @@ confspec = ConfigObj(StringIO(
 	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
 
+[update]
+	autoCheck = boolean(default=true)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
@@ -308,20 +312,28 @@ def isServiceInstalled():
 	except (WindowsError, OSError):
 		return False
 
-def execElevated(path, params=None, wait=False):
+def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import subprocess
 	import shellapi
 	import winKernel
 	import winUser
 	if params is not None:
 		params = subprocess.list2cmdline(params)
-	sei = shellapi.SHELLEXECUTEINFO(lpVerb=u"runas", lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
+	sei = shellapi.SHELLEXECUTEINFO(lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
+	#IsUserAnAdmin is apparently deprecated so may not work above Windows 8
+	if not handleAlreadyElevated or not ctypes.windll.shell32.IsUserAnAdmin():
+		sei.lpVerb=u"runas"
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
 	shellapi.ShellExecuteEx(sei)
 	if wait:
 		try:
-			winKernel.waitForSingleObject(sei.hProcess, winKernel.INFINITE)
+			h=ctypes.wintypes.HANDLE(sei.hProcess)
+			msg=ctypes.wintypes.MSG()
+			while ctypes.windll.user32.MsgWaitForMultipleObjects(1,ctypes.byref(h),False,-1,255)==1:
+				while ctypes.windll.user32.PeekMessageW(ctypes.byref(msg),None,0,0,1):
+					ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
+					ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
 			return winKernel.GetExitCodeProcess(sei.hProcess)
 		finally:
 			winKernel.closeHandle(sei.hProcess)

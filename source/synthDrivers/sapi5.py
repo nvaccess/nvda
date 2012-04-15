@@ -40,16 +40,20 @@ class SynthDriver(SynthDriver):
 		except:
 			return False
 
-	def __init__(self):
+	def __init__(self,_defaultVoiceToken=None):
+		"""
+		@param _defaultVoiceToken: an optional sapi voice token which should be used as the default voice (only useful for subclasses)
+		@type _defaultVoiceToken: ISpeechObjectToken
+		"""
 		self._pitch=50
-		self._initTts()
+		self._initTts(_defaultVoiceToken)
 
 	def terminate(self):
 		del self.tts
 
 	def _getAvailableVoices(self):
 		voices=OrderedDict()
-		v=self.tts.GetVoices()
+		v=self._getVoiceTokens()
 		for i in range(len(v)):
 			try:
 				ID=v[i].Id
@@ -62,6 +66,10 @@ class SynthDriver(SynthDriver):
 				log.warning("Could not get the voice info. Skipping...")
 			voices[ID]=VoiceInfo(ID,name,language)
 		return voices
+
+	def _getVoiceTokens(self):
+		"""Provides a collection of sapi5 voice tokens. Can be overridden by subclasses if tokens should be looked for in some other registry location."""
+		return self.tts.getVoices()
 
 	def _get_rate(self):
 		return (self.tts.rate*5)+50
@@ -105,7 +113,7 @@ class SynthDriver(SynthDriver):
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 
 	def _set_voice(self,value):
-		for voice in self.tts.GetVoices():
+		for voice in self._getVoiceTokens():
 			if value==voice.Id:
 				break
 		else:

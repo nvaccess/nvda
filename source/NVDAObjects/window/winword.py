@@ -323,8 +323,22 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 	def __init__(self,*args,**kwargs):
 		super(WordDocument,self).__init__(*args,**kwargs)
 
+	def event_caret(self):
+		curSelectionPos=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		lastSelectionPos=getattr(self,'_lastSelectionPos',None)
+		self._lastSelectionPos=curSelectionPos
+		if lastSelectionPos:
+			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
+				return
+		super(WordDocument,self).event_caret()
+
 	def _get_role(self):
 		return controlTypes.ROLE_EDITABLETEXT
+
+	def _get_states(self):
+		states=super(WordDocument,self).states
+		states.add(controlTypes.STATE_MULTILINE)
+		return states
 
 	def _get_WinwordVersion(self):
 		if not hasattr(self,'_WinwordVersion'):
@@ -374,6 +388,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		formatConfig['reportTables']=True
 		commandList=info.getTextWithFields(formatConfig)
 		if len(commandList)<3 or commandList[1].field.get('role',None)!=controlTypes.ROLE_TABLE or commandList[2].field.get('role',None)!=controlTypes.ROLE_TABLECELL:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# when the cursor is not withnin a table.
 			ui.message(_("Not in table"))
 			return False
 		rowCount=commandList[1].field.get('table-rowcount',1)
@@ -385,6 +401,8 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		else:
 			columnNumber+=1 if forward else -1
 		if rowNumber<1 or rowNumber>rowCount or columnNumber<1 or columnNumber>columnCount:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# but the cursor can't be moved in that direction because it is at the edge of the table.
 			ui.message(_("Edge of table"))
 			return False
 		try:
@@ -404,7 +422,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 				else:
 					rowNumber-=1
 		if not cell:
-			ui.message(_("edge of table"))
+			ui.message(_("Edge of table"))
 			return False
 		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=cell.range)
 		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET)
