@@ -52,9 +52,9 @@ def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
 			# Translators: The title of a dialolg presented to indicate a successful operation.
 			_("Success"))
 	shellapi.ShellExecute(None, None,
-	os.path.join(installer.defaultInstallPath,'nvda.exe').decode("mbcs"),
-	subprocess.list2cmdline(["-r"]).decode("mbcs"),
-	None, 0)
+		os.path.join(installer.defaultInstallPath,'nvda.exe').decode("mbcs"),
+		subprocess.list2cmdline(["-r"]).decode("mbcs"),
+		None, 0)
 
 def doSilentInstall():
 	prevInstall=installer.isPreviousInstall()
@@ -186,10 +186,10 @@ class PortableCreaterDialog(wx.Dialog):
 
 def doCreatePortable(portableDirectory,createAutorun=False,copyUserConfig=False):
 	d = IndeterminateProgressDialog(gui.mainFrame,
-	# Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
-	_("Creating Portable Copy"),
-	# Translators: The message displayed while a portable copy of NVDA is bieng created.
-	_("Please wait while a portable copy of NVDA is created."))
+		# Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+		_("Creating Portable Copy"),
+		# Translators: The message displayed while a portable copy of NVDA is bieng created.
+		_("Please wait while a portable copy of NVDA is created."))
 	try:
 		installer.CreatePortableCopy(portableDirectory,copyUserConfig=copyUserConfig,createAutorun=createAutorun)
 	except Exception as e:
@@ -204,4 +204,4 @@ def doCreatePortable(portableDirectory,createAutorun=False,copyUserConfig=False)
 	# Translators: The message displayed when a portable copy of NVDA has been successfully created.
 	# %s will be replaced with the destination directory.
 	gui.messageBox(_("Successfully created a portable copy of NVDA at %s")%portableDirectory,
-			_("Success"))
+		_("Success"))
