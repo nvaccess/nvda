@@ -63,6 +63,7 @@ class InstallerDialog(wx.Dialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		ctrl = wx.Button(self, label=_("C&ontinue"), id=wx.ID_OK)
+		ctrl.SetDefault()
 		ctrl.Bind(wx.EVT_BUTTON, self.onInstall)
 		sizer.Add(ctrl)
 		sizer.Add(wx.Button(self, id=wx.ID_CANCEL))
@@ -124,6 +125,7 @@ class PortableCreaterDialog(wx.Dialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		ctrl = wx.Button(self, label=_("C&ontinue"), id=wx.ID_OK)
+		ctrl.SetDefault()
 		ctrl.Bind(wx.EVT_BUTTON, self.onCreatePortable)
 		sizer.Add(ctrl)
 		sizer.Add(wx.Button(self, id=wx.ID_CANCEL))
