@@ -76,10 +76,10 @@ class InstallerDialog(wx.Dialog):
 	def onInstall(self, evt):
 		self.Hide()
 		doInstall(self.createDesktopShortcutCheckbox.Value,self.startOnLogonCheckbox.Value,self.isUpdate)
+		self.Destroy()
 
 	def onCancel(self, evt):
 		self.Destroy()
-
 
 class IndeterminateProgressDialog(wx.ProgressDialog):
 
@@ -143,6 +143,7 @@ class PortableCreaterDialog(wx.Dialog):
 	def onCreatePortable(self, evt):
 		self.Hide()
 		doCreatePortable(self.portableDirectoryEdit.Value,self.createAutorunCheckbox.Value,self.copyUserConfigCheckbox.Value)
+		self.Destroy()
 
 	def onCancel(self, evt):
 		self.Destroy()
