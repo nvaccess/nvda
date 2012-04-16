@@ -1,3 +1,9 @@
+#installer.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2011-2012 NV Access Limited
+
 from ctypes import *
 from ctypes import *
 from ctypes.wintypes import *
