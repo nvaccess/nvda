@@ -80,7 +80,7 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 		return -1;
 	import appModuleHandler
 	mod=appModuleHandler.getAppModuleFromProcessID(pid)
-	bindingHandle=c_void_p()
+	bindingHandle=c_long()
 	bindingHandle.value=localLib.createRemoteBindingHandle(uuidString)
 	if not bindingHandle: 
 		log.error("Could not bind to inproc rpc server for pid %d"%pid)
