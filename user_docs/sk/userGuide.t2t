@@ -66,44 +66,35 @@ Ak ešte nemáte kópiu NVDA, môžete si ju stiahnuť z web stránky: [www.nvda
 
 Vstúpte do sekcie download, kde nájdete priamy odkaz na stiahnutie najnovšej verzie.
 
-NVDA tu nájdete v dvoch balíčkoch.
-Inštalátor vás hlasom prevedie inštaláciou programu, budete ho môcť spustiť kedykoľvek z ponuky štart.
-Samorozbaľovací archív obsahuje plne prenositeľnú verziu, ktorú môžete spustiť odkiaľkoľvek, buď z kľúčenky USB, alebo z CD.
-
-Pristupovať k prihlasovacej obrazovke, obrazovkám systému UAC, iným zabezpečeným obrazovkám a aplikáciám spustených ako administrátor v systéme Windows Vista a novších je možné len po nainštalovaní NVDA. 
-Tieto obrazovky nie sú prístupné so spustenou prenositeľnou verziou NVDA.
-
 + Inštalácia NVDA +
+otvorte súbor, ktorý ste stiahli. Spustí sa dočasná kópia NVDA. V dialógu si môžete vybrať, či chcete NVDA nainštalovať, vytvoriť prenositeľnú verziu alebo chcete pokračovať v používaní dočasnej kópie.
 
-++ Inštalátor ++
-Ak už máte stiahnutý inštalátor NVDA, jednoducho stlačte enter, alebo kliknite na aktuálny súbor a spustíte inštaláciu.
+Ak chcete NVDA používať na tomto počítači, pravdepodobne ho budete chcieť nainštalovať.
+Pristupovať k prihlasovacej obrazovke, obrazovkám systému UAC, iným zabezpečeným obrazovkám a aplikáciám spustených ako administrátor v systéme Windows Vista a novších je možné len po nainštalovaní NVDA. pri inštalácii NVDA sa takisto vytvoria odkazy v ponuke štart a na pracovnej ploche.
+z nainštalovanej verzie môžete kedykoľvek vytvoriť prenositeľnú verziu.
 
-Počas spúšťania inštalátora budete počuť zvukový signál.
-Po jeho spustení vás samotnou inštaláciou prevedie automaticky spustená dočasná kópia programu NVDA aj v prípade, že Ste v čase spúšťania inštalácie mali spustený program NVDA.
-Jej spustenie je nevyhnutné, aby inštalátor mohol korektne aktualizovať súbory, ktoré sa od poslednej inštalácie NVDA zmenili.
-Pred kopírovaním súborov vás inštalátor NVDA vyzve na odinštalovanie predchádzajúcej verzii NVDA a následne spustí inštaláciu.
+Ak chcete NVDA používať z USB kľúča alebo z iného média (pamäťová karta, CD a podobne), v úvodnom dialógu vyberte možnosť vytvoriť prenositeľnú verziu.
+prenositeľnú verziu môžete kedykoľvek neskôr nainštalovať do počítača, takže budete môcť využívať výhody inštalačnej verzie.
 
-Po úspešnej inštalácii vás inštalátor na túto skutočnosť upozorní.
-Pokiaľ sa jedná o reinštaláciu alebo aktualizáciu NVDA podľa potreby ponúkne reštart systému.
-Odporúča sa reštart systému skutočne vykonať, pretože jeho zamietnutie môže mať vážne dôsledky.
-V prípade, že inštalátor neponúkne reštart, po potvrdení tlačidla Dokončiť sa spustí práve nainštalovaná kópia programu NVDA.
+V úvodnom dialógu môžete tiež vybrať možnosť spustiť dočasnú kópiu (napríklad ak NVDA niekomu ukazujete). Spúšťanie NVDA takýmto spôsobom pri bežnom používaní je však zdĺhavé.
 
-++ Prenositeľná verzia NVDA ++
-Ak ste si stiahli prenositeľnú verziu NVDA, jediné čo musíte urobiť je kliknúť na stiahnutý súbor alebo ho spustiť stlačením klávesu enter.
-Samorozbaľovací archív si vyžiada priečinok vo vašom systéme, kde bude prenositeľná verzia umiestnená.
+++ Inštalácia NVDA ++
+Ak ste si stiahli NVDA a chcete ho nainštalovať, aktivujte tlačidlo Nainštalovať NVDA na úvodnej obrazovke. Ak ste úvodnú obrazovku zatvorili alebo chcete NVDA inštalovať z prenositeľnej verzie, aktivujte položku Nainštalovať NVDA z menu nástroje v ponuke NVDA.
 
-+++ Prenositeľná verzia NVDA na USB kľúči +++
-Prenositeľnú verziu NVDA je možné umiestniť na prenositeľný disk alebo USB kľúč tak, aby bol použiteľný aj na rôznych počítačoch.
+Po spustení inštalácie sa vás program opýta, či skutočne chcete NVDA inštalovať a takisto vás upozorní v prípade, že sa rozhodnete aktualizovať už nainštalovanú verziu NVDA.
+Inštaláciu spustíte aktivovaním tlačidla Pokračovať.
+V tomto dialógu môžete tiež rozhodnúť, či chcete vytvoriť odkaz na pracovnej ploche a či sa má NVDA automaticky spúšťať po štarte systému.
+Po úspešnom nainštalovaní sa zobrazí okno so správou, ktoré môžete zatvoriť stlačením tlačidla OK.
+Po zatvorení okna sa NVDA reštartuje.
 
-Keď sa samorozbaľovací archív s prenositeľnou verziou opýta na miesto, kde si želáte rozbaliť NVDA, vpíšte písmeno vášho USB kľúča nasledované optimálnou cestou, kde nahráte NVDA.
-
-Ak je napr. váš USB kľúč pod písmenom E, môžete napísať e:\nvda a samorozbaľovací archív sa rozbalí do priečinka nvda na vašom kľúči.
-
-Napriek tomu, že na USB kľúči si môžete prenášať NVDA aj s vašimi nastaveniami, len jednoduché zapojenie USB kľúča nepostačí na to, aby sa NVDA automaticky spustil. 
-NVDA musíte spustiť napr. z dialógu Spustiť... alebo pomocou prieskumníka Windows.
-
-Viacej informácií o konfigurácii automatického spustenia NVDA z kľúča USB sa môžete dočítať v nasledujúcom článku (anglicky): 
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+++ Vytvorenie prenositeľnej verzie ++
+	Ak vytvárate prenositeľnú verziu priamo so súboru so stránky NVDA, aktivujte tlačidlo Vytvoriť prenositeľnú verziu.
+Ak ste zatvorili úvodnú obrazovku, alebo máte spustenú inštalačnú verziu NVDA, v hlavnom menu NVDA v podmenu nástroje aktivujte položku Vytvoriť prenositeľnú verziu.
+V nasledujúcom dialógu môžete vybrať priečinok, v ktorom sa uloží prenositeľná verzia NVDA. Môže to byť priečinok na vašom pevnom disku, USB kľúči, pamäťovej karte alebo inom prenosnom médiu.
+Takisto môžete vytvoriť súbor autorun.inf, ktorý zabezpečí automatické spúšťanie NVDA z USB kľúča alebo CD. V tomto dialógu máte tiež možnosť zahrnúť vaše nastavenia a pluginy do prenositeľnej verzie.
+Vytvorenie prenositeľnej verzie potvrdíte stlačením tlačidla Pokračovať.
+po úspešnom skopírovaní súborov sa zobrazí správa, ktorá vás informuje o úspešnosti operácie.
+Dialóg zatvorte aktivovaním tlačidla OK.
 
 + Začíname pracovať s NVDA +
 
@@ -499,6 +490,10 @@ Táto voľba je dostupná len po nainštalovaní NVDA a nemôže byť použitá 
 Po stlačení tohoto tlačidla NVDA skopíruje aktuálne nastavenia do systémového priečinka, aby mohli byť tieto nastavenia použité v prípade, ak je NVDA spustený na prihlasovacej obrazovke alebo iných zabezpečených obrazovkách.
 Ak sa chcete uistiť, že budú správne prekopírované všetky nastavenia, môžete uložiť nastavenia stlačením Control+NVDA+c, alebo použitím voľby z ponuky NVDA.
 Táto voľba je dostupná len po nainštalovaní NVDA a nemôže byť použitá pri spustenej prenositeľnej verzii.
+
+==== Automaticky kontrolovať aktualizácie ====
+Ak je začiarknuté, NVDA bude automaticky kontrolovať dostupnosť novej verzie a ak novú verziu nájde, upozorní vás na to.
+Aktualizácie môžete skontrolovať ručne aktivovaním položky skontrolovať aktualizácie v menu pomocník v ponuke NVDA.
 
 +++ Výber hlasového výstupu (NVDA+control+s) +++
 Položka hlasový výstup sa nachádza v možnostiach programu a umožňuje vybrať, ktorý hlasový výstup bude NVDA používať.
