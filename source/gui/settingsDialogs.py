@@ -706,9 +706,21 @@ class ObjectPresentationDialog(SettingsDialog):
 	# Translators: This is the label for the object presentation dialog.
 	title = _("Object Presentation")
 	progressLabels = (
+		# Translators: An option for progress bar output in the Object Presentation dialog
+		# which disables reporting of progress bars.
+		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("off", _("off")),
+		# Translators: An option for progress bar output in the Object Presentation dialog
+		# which reports progress bar updates by speaking.
+		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("speak", _("Speak")),
+		# Translators: An option for progress bar output in the Object Presentation dialog
+		# which reports progress bar updates by beeping.
+		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("beep", _("Beep")),
+		# Translators: An option for progress bar output in the Object Presentation dialog
+		# which reports progress bar updates by both speaking and beeping.
+		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("both", _("Speak and beep")),
 	)
 
