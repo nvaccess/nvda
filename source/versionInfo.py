@@ -32,8 +32,9 @@ name="NVDA"
 longName=_("NonVisual Desktop Access")
 version="2012.2dev"
 publisher="unknown"
+updateVersionType=None
 try:
-	from _buildVersion import version, publisher
+	from _buildVersion import version, publisher, updateVersionType
 except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")

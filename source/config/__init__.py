@@ -166,6 +166,8 @@ confspec = ConfigObj(StringIO(
 	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
 
+[update]
+	autoCheck = boolean(default=true)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"

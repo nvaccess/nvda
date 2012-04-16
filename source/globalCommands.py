@@ -743,7 +743,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			if api.copyToClip(title):
 				ui.message(_("%s copied to clipboard")%title)
-	script_title.__doc__=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed thrice, copies the title to the clipboard")
+	script_title.__doc__=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard")
 
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
