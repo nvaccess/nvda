@@ -6,7 +6,6 @@
 
 import os
 import ctypes
-import subprocess
 import shellapi
 import wx
 import config
@@ -53,8 +52,8 @@ def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
 			# Translators: The title of a dialolg presented to indicate a successful operation.
 			_("Success"))
 	shellapi.ShellExecute(None, None,
-		os.path.join(installer.defaultInstallPath,'nvda.exe').decode("mbcs"),
-		subprocess.list2cmdline(["-r"]).decode("mbcs"),
+		os.path.join(installer.defaultInstallPath,'nvda.exe'),
+		u"-r",
 		None, 0)
 
 def doSilentInstall():
