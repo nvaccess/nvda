@@ -165,7 +165,7 @@ Quando o menu se abrir, pode usar as setas direccionais para navegar pelo mesmo 
 
 ++ Comandos Básicos ++
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
+|| Nome | Tecla de Atalho | Descrição |
 | Parar a voz | Ctrl | Pára instantaneamente a voz |
 | Pausar a voz | Shift | Pausa instantaneamente a voz. Se pressionar novamente continuará a falar desde onde parou (se a pausa for suportada pelo sintetizador actual) |
 | Menu do NVDA | NVDA+N | Abre o Menu do NVDA que lhe permite aceder às preferências, ferramentas, ajuda, etc. |
@@ -178,7 +178,7 @@ Quando o menu se abrir, pode usar as setas direccionais para navegar pelo mesmo 
 
 ++ Anunciar Informação do Sistema ++
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
+|| Nome | Tecla de Atalho | Descrição |
 | Informar data/hora | NVDA+f12 | Ao pressionar uma vez informa a hora actual, se premir duas vezes informa a data |
 | Informar o estado da bateria | NVDA+shift+b | Informa o estado da bateria Ex: quando a fonte de alimentação está em utilização ou a percentagem actual da bateria. |
 | Informar o texto na área de transferência | NVDA+c | Informa o texto que se encontra na área de transferência caso exista. |
@@ -200,7 +200,7 @@ Quando fizer isto, o NVDA transmitirá a informação sobre o objecto com o foco
 
 Existem alguns comandos de teclado úteis quando se move com o cursor do sistema:
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
+|| Nome | Tecla de Atalho | Descrição |
 | Informar o foco actual | NVDA+Tab | Anuncia o objecto actual ou o controlo que tem o cursor do sistema. Ao premir duas vezes soletrará a informação |
 | Informar o título | NVDA+T | Anuncia o título da janela actualmente em execução. Ao premir duas vezes soletrará a informação. Se pressionar três vezes copiará o conteúdo para a área de transferência |
 | Ler a janela activa | NVDA+B | Lê todos os controlos na janela actual em execução (muito útil para diálogos) |
@@ -216,14 +216,14 @@ O NVDA anunciará quando se mover por Carácter, palavra, linha e também inform
 
 Este leitor de ecrã fornece os seguintes comandos relativamente ao ponto de inserção do sistema:
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
-| Ler tudo | NVDA+Seta Abaixo | Inicia a leitura a partir da posição actual do ponto de inserção do sistema, movendo-o pelo texto |
+|| Nome | Tecla de Atalho | Descrição |
+| Leitura Contínua | NVDA+Seta Abaixo | Inicia a leitura a partir da posição actual do ponto de inserção do sistema, movendo-o pelo texto |
 | Ler a linha actual | NVDA+Seta Acima | Lê a linha onde o ponto de inserção do sistema está posicionado actualmente. Ao pressionar duas vezes soletra a linha |
 | Ler a selecção de texto actual | NVDA+Shift+Seta Acima | Lê qualquer texto seleccionado actualmente |
 
 
 Quando estiver numa tabela, as seguintes teclas de atalho também estarão disponíveis:
-|| Nome | Tecla | Descrição |
+|| Nome | Tecla de Atalho | Descrição |
 | Mover para a coluna anterior | Ctrl+Alt+Seta Esquerda | Move o ponto de inserção do sistema para a coluna anterior (permanecendo na mesma linha) |
 | Mover para a coluna seguinte | Ctrl+Alt+Seta Direita | Move o ponto de inserção do sistema para a próxima coluna (permanecendo na mesma linha) |
 | Mover para a linha anterior | Ctrl+Alt+Seta Acima | Move o ponto de inserção do sistema para a linha anterior (permanecendo na mesma coluna) |
@@ -258,7 +258,7 @@ Se pretender que o Braille siga a navegação por objectos e a revisão de texto
 Para navegar pelos objectos utilize as seguintes teclas de atalho:
 
 %kc:beginInclude
-|| Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
+|| Nome | Tecla de Atalho de Desktop | Tecla de Atalho de Laptop | Descrição |
 | Anunciar o objecto actual | NVDA+5 do bloco numérico | NVDA+Ctrl+i | Anuncia o objecto de navegação actual. Se pressionar duas vezes, soletra o objecto e se premir três vezes copia o nome e valor para a área de transferência |
 | Mover para o objecto ascendente | NVDA+8 do teclado numérico | NVDA+Shift+I | Move para o objecto que contém o objecto de navegação actual |
 | Mover para o objecto anterior | NVDA+4 do bloco numérico | NVDA+Ctrl+J | Move para o objecto anterior ao objecto de navegação actual |
@@ -286,7 +286,7 @@ Se ptetender que o Braille siga a navegação por objectos e a revisão de texto
 
 As teclas de atalho seguintes estão disponíveis para a revisão de texto:
 %kc:beginInclude
-|| Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
+|| Nome | Tecla de Atalho de Desktop | Tecla de Atalho de Laptop | Descrição |
 | mover para a primeira linha em revisão | Shift+7 do bloco numérico | NVDA+7 | Move o cursor de revisão para a primeira linha do texto |
 | Mover para a linha anterior em revisão | 7 do bloco numérico | NVDA+U | Move o cursor de revisão para a linha anterior do texto |
 | Informar a linha actual em revisão | 8 do bloco numérico | NVDA+I | Anuncia a linha actual do texto onde está posicionado o cursor de revisão. Ao pressionar duas vezes soletra a linha. Se premir três vezes soletra-a utilizando a descrição de caracteres |
@@ -331,7 +331,7 @@ Se ptetender que o Braille siga a navegação por objectos e a revisão de texto
 
 Os seguintes dois comandos são utilizados para trocar entre para e a partir da revisão plana:
 %kc:beginInclude
-|| Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
+|| Nome | Tecla de Atalho de Desktop | Tecla de Atalho de Laptop | Descrição |
 | Alterar para a revisão plana | NVDA+7 do bloco numérico | NVDA+PageUp | Move para a revisão plana, colocando-o na posição do objecto de navegação, permitindo que reveja o ecrã (ou num documento se estiver actualmente em algum) com os comandos de revisão de texto |
 | Mover para o objecto a partir da revisão plana | NVDA+1 do bloco numérico | NVDA+PageDown | Navega para o objecto representado pelo texto na posição actual do cursor de revisão na revisão plana |
 %kc:endInclude
@@ -352,7 +352,7 @@ Se pretender tirar partido das mesmas, pode configurá-las a partir do diálogo 
 
 Apesar de um rato físico ou de um touchpad terem de ser utilizados para navegar com o rato, o NVDA tem alguns comandos fundamentais relacionados com este periférico:
 %kc:beginInclude
-|| Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
+|| Nome | Tecla de Atalho de Desktop | Tecla de Atalho de Laptop | Descrição |
 | Clicar com o botão esquerdo do rato | Barra do bloco numérico | NVDA+Seta Esquerda | Clica uma vez com o botão esquerdo do rato. O habitual dúplo clique pode ser realizado se pressionar este comando duas vezes rapidamente |
 | Bloquear o botão esquerdo do rato | Shift+Barra do bloco numérico | NVDA+Shift+Seta Esquerda | Bloqueia o botão esquerdo do rato pressionado. Prima novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão esquerdo do rato pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando que movimente o rato |
 | Clicar com o botão direito do rato | Asterisco do bloco numérico | NVDA+Seta Direita | Clica uma vez com o botão direito do rato |
@@ -369,27 +369,25 @@ No modo de navegação o conteúdo do documento está disponível numa represent
 Todas as teclas de comando do NVDA referentes ao [ponto de inserção #SystemCaret] trabalharão neste modo; ex: leitura contínua, informar formatação, comandos de navegação em tabelas, etc.
 A informação de que o texto é ou não um link, título etc é anunciada conforme se movimenta pelo mesmo.
 
-Quando está num Buffer Virtual, existem dois modos de interacção.
-O modo de navegação é onde se pode mover por todo o texto utilizando um cursor virtual um pouco parecido com o cursor do sistema.
-De facto, todas as teclas de atalho do cursor de sistema do NVDA funcionam neste modo (Ex: leitura contínua, informar formatação, todos os comandos de navegação para tabelas, etc).
-Já o modo de foco é onde pode interagir directamente com um controlo (campo de edição, caixa de combinação, botões de opção) utilizando adequadamente as teclas que usaria normalmente.
+Altumas vezes necessitará de interagir directamente com os controlos nestes documentos.
+Por exemplo, terá que fazer isto para campos de texto editável e para listas de forma que possa introduzir caracteres e usar as teclas de cursor para trabalhar com o controlo.
+You do this by switching to focus mode, where almost all keys are passed to the control.
 Quando estiver no modo de navegação, o NVDA passará automaticamente para o modo de foco se andar com o Tab ou clicar num controlo em particular que exija isto.
-Atente que ao premir Enter ou Espaço nos controlos que exijam isto, também passará automaticamente para o modo de foco. 
-Se tem o NVDA configurado para alterar automaticamente para o modo de foco porque pressionou Tab ou se clicou num objecto que não precisa do modo de foco (tal como um link ou uma parte de um texto) alterará para o modo de navegação.
-Ao pressionar Escape, o NVDA também voltará para o modo de navegação se estiver configurado para alternar para o modo de foco automaticamente.
-Pode alternar manualmente entre os modos de foco e navegação.
-Quando se altera para o modo de foco manualmente, o NVDA bloquea nesse modo específico e já não alterna automaticamente, a menos que altere manualmente para o modo de navegação.
+Ao circular com o Tab ou se clicar num controlo que não necessite do modo de foco voltará para o modo de navegação.
+Também pode pressionar Enter ou Espaço para passar para o modo de foco em controlos que requiram isto.
+Ao premir Escape voltará para o modo de navegação.
+Em alternativa pode forçar manualmente o modo de foco e o mesmo continuará desta forma até que o desactive.
+
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
-| Alternar entre os modos do Buffer Virtual | NVDA+Espaço | Alterna entre o modo de foco e o modo de navegação |
-| Sair do modo de foco | Escape | Volta para o modo de navegação se o modo de foco foi activado previamente e automaticamente |
-| Actualizar o Buffer Virtual | NVDA+F5 | Recarrega o Buffer Virtual actual (muito útil se determinado conteúdo está em falta na página) |
+|| Nome | Tecla de Atalho | Descrição |
+| Alternar entre os modos de Foco e de Navegação | NVDA+Espaço | Alterna entre o modo de foco e o modo de navegação |
+| Sair do modo de foco | Escape | Volta para o modo de navegação se o modo de foco foi activado manualmente ou automaticamente |
+| Actualizar o Documento no Modo de Navegação | NVDA+F5 | Recarrega o conteúdo do documento actual (muito útil se determinado conteúdo está em falta no documento) |
 | Procurar | NVDA+Ctrl+F | Abre uma janela onde pode introduzir algum texto a ser procurado no documento actual |
 | Procurar seguinte | NVDA+F3 | Procura a próxima ocorrência de texto que já procurou no documento |
-| Procurar anterior | NVDA+Shift+F3 | Procura a ocorrência de texto anterior que já procurou no documento |Procura a ocorrência de texto anterior que já procurou no documento |
+| Procurar anterior | NVDA+Shift+F3 | Procura a ocorrência de texto anterior que já procurou no documento |
 %kc:endInclude
 
-Actualmente o NVDA utiliza os Buffers Virtuais para ler documentos no Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader e Adobe Flash.
 
 ++ Navegação por Carácter ++
 Quando estiver no modo de navegação, o NVDA também fornece teclas de apenas um carácter que permitem saltar para determinados campos no Buffer Virtual, sendo esta uma navegação rápida.
@@ -421,30 +419,52 @@ As teclas seguintes só por si saltam para o próximo elemento disponível, adic
 %kc:endInclude
 
 ++ A Lista de Elementos ++
-A lista de elementos fornece o acesso para uma lista de links, títulos ou marcadores de ARIA na página.
+A lista de elementos fornece o acesso para uma lista de links, títulos ou marcadores de ARIA no documento.
 Os botões de opção permitem-lhe alterar entre estes três tipos de informação.
 Um campo de edição também se encontra disponível na caixa de diálogo que permite filtrar a lista para o ajudar a procurar um item específico na página.
 Depois de ter escolhido um item, pode utilizar os botões fornecidos no diálogo para mover para ou activar esse item.
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
-| Lista de elementos do Buffer Virtual | NVDA+F7 | Chama a lista de elementos que contém links, títulos e marcadores do Buffer Virtual actual |
+|| Nome | Tecla de Atalho | Descrição |
+| Lista de elementos do Modo de Navegação | NVDA+F7 | Chama a lista de elementos que contém links, títulos e marcadores no documento actual |
 %kc:endInclude
 
 ++ Objectos Embutidos ++
 As páginas podem incluir conteúdo avançado através de tecnologias tais como o Flash da Adobe e o JAVA da Sun. 
-Quando estas são encontradas no Buffer Virtual, o NVDA anuncia "objecto embutido".
+Quando estas são encontradas no modo de navegação, o NVDA anuncia "objecto embutido".
 Pode pressionar Enter sobre esses objectos para interagir com os mesmos.
 Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir como com qualquer outra aplicação.
 É fornecida uma tecla de atalho para voltar à página original que contém o objecto embutido:
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
-| Mover para o Buffer Virtual que contém objectos embutidos | NVDA+Ctrl+Espaço | Move o foco para fora do objecto embotido actual e entra no Buffer Virtual que o contém |
+|| Nome | Tecla de Atalho | Descrição |
+| Mover para o Modo de Navegação que contém objectos embutidos | NVDA+Ctrl+Espaço | Move o foco para fora do objecto embotido actual e entra no Buffer Virtual que o contém |
+%kc:endInclude
+
++ Teclas de Atalho Específicas do NVDA para Aplicações +
+O NVDA fornece teclas de atalho adicionais para algumas aplicações que realizam determinadas tarefas ou que dão acesso à funcionalidades que não são acessíveis por norma aos utilizadores de leitores de ecrã.
+
+++ foobar2000 ++
+%kc:beginInclude
+|| Nome | Tecla de Atalho | Descrição |
+| Informar Tempo Restante | control+shift+r | Informa o tempo restante da faixa actual em reprodução, caso exista. |
+%kc:endInclude
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Nome | Tecla de Atalho | Descrição |
+| Informar Mensagem Recente | NVDA+control+1-4 | Informa uma das mensagens recentes, dependendo do número pressionado; ex: NVDA+control+2 lê a segunda mensagem mais recente. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Nome | Tecla de Atalho | Descrição |
+| Informar Janela de Comentários | control+shift+c | Informa quaisquer comentários na janela de comentários. |
+| Informar Janela de Comentários Automáticos | control+shift+a | Informa quaisquer comentários na janela de comentários automáticos. |
 %kc:endInclude
 
 + Configurar O NVDA +
 
 ++ Preferências ++
-%kc:settingsSection: || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
+%kc:settingsSection: || Nome | Tecla de Atalho de Desktop | Tecla de Atalho de Laptop | Descrição |
 A maioria das definições do NVDA podem ser alteradas através da utilização de caixas de diálogo acedidas através do sub-menu Preferências do Menu do NVDA.
 Em todas as caixas de diálogo de definições do NVDA, pressione o botão OK para efectuar as alterações
 Para cancelar as alterações, pressione o botão Cancelar ou a tecla Escape.
@@ -455,7 +475,8 @@ A caixa de diálogo das definições gerais encontra-se no menu Preferências.
 A mesma contém as seguintes opções:
 
 ==== Idioma ====
-Uma caixa de combinação que lhe permite seleccionar o idioma da interface do utilizador e mensagens deste programa. Existem diversos idiomas, contudo, a opção predefinida é "User Default, Windows".
+Uma caixa de combinação que lhe permite seleccionar o idioma da interface do utilizador e mensagens deste programa.
+Existem diversos idiomas, contudo, a opção predefinida é "User Default, Windows".
 Esta definição informa ao software para utilizar o idioma que o Windows tem definido.
 
 Atente por favor que o NVDA precisa ser reiniciado quando alterar o idioma.
@@ -463,23 +484,23 @@ Este leitor de ecrã questionará se pretende reiniciar para que faça a altera�
 Pressione OK e o NVDA irá reiniciar.
 
 ==== Guardar A Configuração ao Sair ====
-Uma caixa de verificação que quando está marcada informa ao leitor de ecrã para guardar automaticamente a configuração actual quando sair do NVDA.
+Esta opção é uma caixa de verificação que quando está marcada informa ao leitor de ecrã para guardar automaticamente a configuração actual quando sair do NVDA.
 
 ==== Alertar antes de sair do NVDA ====
-Uma caixa de verificação que lhe permite escolher se pretende ou não que apareça um diálogo quando fechar o programa com a questão ou não se deseja sair.
+Esta opção é uma caixa de verificação que lhe permite escolher se pretende ou não que apareça um diálogo quando fechar o programa com a questão ou não se deseja sair.
 Quando marcada, o diálogo aparecerá quando tentar fechar o NVDA a perguntar ou não se pretende sair.
 
 ==== Nível de registo ====
-Uma caixa de combinação que lhe permite seleccionar a quantidade de informação que o NVDA coloca no registo quando está em execução.
+Esta é uma caixa de combinação que lhe permite seleccionar a quantidade de informação que o NVDA coloca no registo quando está em execução.
 Por norma, os utilizadores não necessitam de alterar isto já que não é muito amigável.
-Contudo, se pretender adicionar informação ao relatório de erros, etc., é boa ideia ajustá-la para um nível mais elevado.
+Contudo, se pretender adicionar informação ao relatório de erros, etc., então esta é uma opção muito útil.
 
 ==== Iniciar o NVDA automaticamente depois de iniciar cessão no Windows ====
 Se esta opção estiver marcada, o NVDA arrancará automaticamente assim que inciar sessão no Windows.
 Esta opção só estará disponível para as cópias instaladas do NVDA.
 
 ==== Utilizar o NVDA no ecrã de início de sessão do Windows (Requer privilégios de administrador) ====
-Caso inicie cessão no Windows através do nome de utilizador e palavra-pass, ao marcar esta opção permitirá que o NVDA arranque automaticamente no ecrã de início de sessão quando este sistema operativo for executado.
+Caso inicie cessão no Windows através do nome de utilizador e password, ao marcar esta opção permitirá que o NVDA arranque automaticamente no ecrã de início de sessão quando este sistema operativo for executado.
 Esta opção só estará disponível para as cópias instaladas do NVDA.
 
 ==== Utilizar definições actualmente guardadas no ecrã de início de sessão e noutros de segurança ====
@@ -524,7 +545,7 @@ Esta opção permite-lhe alterar a velocidade da voz.
 Contém uma barra de controlo que lhe possibilita andar a partir do 0 até ao 100, (sendo 0 a velocidade mais lenta e 100 a mais rápida).
 
 ==== Entoação ====
-Esta opção permite-lhe alterar a entoação da voz.
+Esta opção permite-lhe alterar a entoação da voz actual.
 Contém uma barra de controlo que lhe possibilita andar a partir do 0 até ao 100, (sendo o 0 a entoação mais grave e 100 a mais aguda).
 
 ==== Volume ====
@@ -532,6 +553,15 @@ Esta opção é uma barra de controlo que lhe permite andar a partir do 0 até a
 
 ==== Inflexão ====
 Uma barra de controlo que lhe permite escolher a inflexão (mais alta e mais baixa da entoação) que o sintetizador irá utilizar para falar. (Até ao momento somente o eSpeak fornece esta função por defeito).
+
+==== Alterar o Idioma Automaticamente ====
+Esta caixa de verificação prmite-lhe alternar whether or not NVDA should switch speech synthesizer languages on the fly, if language markup is available in the text being read.
+Esta opção está activada por defeito.
+Até ao momento apenas o eSpeak suporta a alteração automática de idioma.
+
+==== Alterar o Dialecto Automaticamente ====
+If automatic language switching is turned on, this checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes. E.g. If reading in an English U.S. voice but a document states some text is in English U.K. then if this feature is enabled the synthesizer will switch accents.
+Esta opção está desactivada por defeito.
 
 %kc:setting
 ==== Falar toda a Pontuação ====
@@ -553,7 +583,7 @@ Tal como a caixa de verificação 'anunciar maiúscula antes de letras maiúscul
 +++ Anel de Definições de Voz +++[SynthSettingsRing]
 Se pretender alterar rapidamente as definições de voz sem ir ao diálogo das mesmas, existem alguns comandos deste leitor de ecrã que lhe permitem mover-se através das definições de voz mais comuns, a partir de qualquer local desde que esteja a executar o NVDA:
 %kc:beginInclude
-|| Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
+|| Nome | Tecla de Atalho de Desktop | Tecla de Atalho de Laptop | Descrição |
 | Mover para a próxima definição de voz | NVDA+Ctrl+Seta Direita | NVDA+Ctrl+Seta Direita | Move para a seguinte definição de voz disponível depois da actual, circulando para a primeira definição de voz novamente depois da última |
 | Mover para a definição de voz anterior | NVDA+Ctrl+Seta Esquerda | NVDA+Ctrl+Seta Esquerda | Move para a anterior definição de voz disponível depois da actual, circulando para a primeira definição de voz novamente depois da última |
 | Aumentar a definição de voz actual | NVDA+Ctrl+Seta Acima | NVDA+Ctrl+Seta Acima | aumenta a definição de voz actual onde estiver. Ex: aumenta a velocidade, escolhe a voz seguinte, aumenta o volume |
