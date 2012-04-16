@@ -38,7 +38,8 @@ def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
 		# Translators: The message displayed when an error occurs during installation of NVDA.
 		gui.messageBox(_("The installation of NVDA failed. Please check the Log Viewer for more information."),
 			# Translators: The title of a dialog presented when an error occurs.
-			_("Error"))
+			_("Error"),
+			wx.OK | wx.ICON_ERROR)
 		return
 	if not silent:
 		msg = (
@@ -181,14 +182,16 @@ class PortableCreaterDialog(wx.Dialog):
 			# Translators: The message displayed when the user has not specified a destination directory
 			# in the Create Portable NVDA dialog.
 			gui.messageBox(_("Please specify a directory in which to create the portable copy."),
-				_("Error"))
+				_("Error"),
+				wx.OK | wx.ICON_ERROR)
 			return
 		drv=os.path.splitdrive(self.portableDirectoryEdit.Value)[0]
 		if drv and not os.path.isdir(drv):
 			# Translators: The message displayed when the user specifies an invalid destination drive
 			# in the Create Portable NVDA dialog.
 			gui.messageBox(_("Invalid drive %s")%drv,
-				_("Error"))
+				_("Error"),
+				wx.OK | wx.ICON_ERROR)
 			return
 		self.Hide()
 		doCreatePortable(self.portableDirectoryEdit.Value,self.createAutorunCheckbox.Value,self.copyUserConfigCheckbox.Value)
@@ -211,7 +214,8 @@ def doCreatePortable(portableDirectory,createAutorun=False,copyUserConfig=False)
 		# Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 		# %s will be replaced with the specific error message.
 		gui.messageBox(_("Failed to create portable copy: %s")%e,
-			_("Error"))
+			_("Error"),
+			wx.OK | wx.ICON_ERROR)
 		return
 	d.done()
 	# Translators: The message displayed when a portable copy of NVDA has been successfully created.
