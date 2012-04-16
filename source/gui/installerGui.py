@@ -124,6 +124,7 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.timer.Stop()
 		if self.IsActive():
 			tones.beep(1760, 40)
+		self.Hide()
 		self.Destroy()
 
 class PortableCreaterDialog(wx.Dialog):
