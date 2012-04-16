@@ -15,12 +15,15 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <cstdio>
 #include <sstream>
 #include <rpc.h>
+#include <sddl.h>
 #include "nvdaController.h"
 #include "nvdaControllerInternal.h"
 #include <common/winIPCUtils.h>
 #include "rpcSrv.h"
 
 using namespace std;
+
+typedef RPC_STATUS(RPC_ENTRY *RpcServerRegisterIf3_functype)(RPC_IF_HANDLE,UUID __RPC_FAR*,RPC_MGR_EPV __RPC_FAR*,unsigned int,unsigned int,unsigned int,RPC_IF_CALLBACK_FN __RPC_FAR*,void __RPC_FAR*);
 
 RPC_IF_HANDLE availableInterfaces[]={
 	nvdaController_NvdaController_v1_0_s_ifspec,
@@ -40,22 +43,41 @@ void __RPC_USER midl_user_free(void* p) {
 
 RPC_STATUS startServer() {
 	RPC_STATUS status;
-	//Set the protocol
 	wchar_t desktopSpecificNamespace[64];
 	generateDesktopSpecificNamespace(desktopSpecificNamespace,ARRAYSIZE(desktopSpecificNamespace));
-	wstringstream endpointStringStream;
-	endpointStringStream<<L"NvdaCtlr."<<desktopSpecificNamespace;
-	status=RpcServerUseProtseqEp((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_WSTR)(endpointStringStream.str().c_str()),NULL);
+	wstring endpointString=L"NvdaCtlr.";
+	endpointString+=desktopSpecificNamespace;
+	//On Windows 8 the new rpcServerRegisterIf3 must be used along with a security descriptor allowing appContainer access
+	HANDLE rpcrt4Handle=GetModuleHandle(L"rpcrt4.dll");
+	RpcServerRegisterIf3_functype RpcServerRegisterIf3=(RpcServerRegisterIf3_functype)GetProcAddress((HMODULE)rpcrt4Handle,"RpcServerRegisterIf3");
+	PSECURITY_DESCRIPTOR psd=NULL;
+	ULONG size;
+	if(RpcServerRegisterIf3) {
+		if(!ConvertStringSecurityDescriptorToSecurityDescriptor(L"D:(A;;GA;;;AU)(A;;GA;;;AC)",SDDL_REVISION_1,&psd,&size)) {
+			return GetLastError();
+		}
+		if(!psd) return -1;
+	}
+	status=RpcServerUseProtseqEp((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_WSTR)(endpointString.c_str()),psd);
 	//We can ignore the error where the endpoint is already set
 	if(status!=RPC_S_OK&&status!=RPC_S_DUPLICATE_ENDPOINT) {
 		return status;
 	}
 	//Register the interfaces
-	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
-		if((status=RpcServerRegisterIf(availableInterfaces[i],NULL,NULL))!=RPC_S_OK) {
-			return status;
+	if(RpcServerRegisterIf3) { //Windows 8
+		for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
+			if((status=RpcServerRegisterIf3(availableInterfaces[i],NULL,NULL,RPC_IF_ALLOW_CALLBACKS_WITH_NO_AUTH,RPC_C_LISTEN_MAX_CALLS_DEFAULT,0,NULL,psd))!=RPC_S_OK) {
+				return status;
+			}
+		}
+	} else { // Pre Windows 8
+		for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
+			if((status=RpcServerRegisterIf(availableInterfaces[i],NULL,NULL))!=RPC_S_OK) {
+				return status;
+			}
 		}
 	}
+	LocalFree(psd);
 	//Start listening
 	if((status=RpcServerListen(1,RPC_C_LISTEN_MAX_CALLS_DEFAULT,TRUE))!=RPC_S_OK) {
 		return status;

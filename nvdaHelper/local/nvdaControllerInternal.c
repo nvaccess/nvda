@@ -14,9 +14,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include "nvdaControllerInternal.h"
 
-error_status_t __stdcall nvdaControllerInternal_getNVDAProcessID(long* pProcessID) {
-	*pProcessID=GetCurrentProcessId();
-	return RPC_S_OK;
+error_status_t(__stdcall *_nvdaControllerInternal_requestRegistration)(const wchar_t*);
+error_status_t __stdcall nvdaControllerInternal_requestRegistration(const wchar_t* uuidString) {
+	return _nvdaControllerInternal_requestRegistration(uuidString);
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_inputLangChangeNotify)(const long, const unsigned long, const wchar_t*);

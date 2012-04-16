@@ -1,9 +1,11 @@
 import os
+import sys
 import _winreg
 import msvcrt
 import winKernel
 
 from ctypes import *
+from ctypes.wintypes import *
 from comtypes import BSTR
 import winUser
 import eventHandler
@@ -67,6 +69,31 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	except:
 		log.debugWarning("Could not find reg value 'Layout Text' for reg key %s"%layoutString)
 		return None
+
+@WINFUNCTYPE(c_long,c_wchar_p)
+def nvdaControllerInternal_requestRegistration(uuidString):
+	pid=c_long()
+	windll.rpcrt4.I_RpcBindingInqLocalClientPID(None,byref(pid))
+	pid=pid.value
+	if not pid:
+		log.error("Could not get process ID for RPC call")
+		return -1;
+	import appModuleHandler
+	mod=appModuleHandler.getAppModuleFromProcessID(pid)
+	bindingHandle=c_void_p()
+	bindingHandle.value=localLib.createRemoteBindingHandle(uuidString)
+	if not bindingHandle: 
+		log.error("Could not bind to inproc rpc server for pid %d"%pid)
+		return -1
+	registrationHandle=c_long()
+	res=localLib.nvdaInProcUtils_registerNVDAProcess(bindingHandle,byref(registrationHandle))
+	if res!=0 or not registrationHandle:
+		log.error("Could not register NVDA with inproc rpc server for pid %d, res %d, registrationHandle %s"%(pid,res,registrationHandle))
+		windll.rpcrt4.RpcBindingFree(byref(bindingHandle))
+		return -1
+	mod.helperLocalBindingHandle=bindingHandle
+	mod._inprocRegistrationHandle=registrationHandle
+	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
 def nvdaControllerInternal_displayModelTextChangeNotify(hwnd, left, top, right, bottom):
@@ -167,6 +194,7 @@ def initialize():
 		("nvdaController_speakText",nvdaController_speakText),
 		("nvdaController_cancelSpeech",nvdaController_cancelSpeech),
 		("nvdaController_brailleMessage",nvdaController_brailleMessage),
+		("nvdaControllerInternal_requestRegistration",nvdaControllerInternal_requestRegistration),
 		("nvdaControllerInternal_inputLangChangeNotify",nvdaControllerInternal_inputLangChangeNotify),
 		("nvdaControllerInternal_typedCharacterNotify",nvdaControllerInternal_typedCharacterNotify),
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
@@ -174,8 +202,9 @@ def initialize():
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)
-		except AttributeError:
-			log.error("nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"%name)
+		except AttributeError as e:
+			log.error("nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"%name,exc_info=True)
+			raise e
 	localLib.nvdaHelperLocal_initialize()
 	generateBeep=localLib.generateBeep
 	generateBeep.argtypes=[c_char_p,c_float,c_uint,c_ubyte,c_ubyte]

@@ -15,6 +15,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <cstdio>
 #include <sstream>
 #include <algorithm>
+#include <rpc.h>
+#include <sddl.h>
 #include "nvdaHelperLocal.h"
 #include "dllImportTableHooks.h"
 #include "rpcsrv.h"
@@ -22,20 +24,43 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 DllImportTableHooks* oleaccHooks = NULL;
 DllImportTableHooks* uiaCoreHooks = NULL;
 
-handle_t createConnection(int processID) {
+typedef struct _RPC_SECURITY_QOS_V5_W {
+  unsigned long Version;
+  unsigned long Capabilities;
+  unsigned long IdentityTracking;
+  unsigned long ImpersonationType;
+  unsigned long AdditionalSecurityInfoType;
+  union 
+      {
+      RPC_HTTP_TRANSPORT_CREDENTIALS_W *HttpCredentials;
+      } u;
+  void *Sid;
+  unsigned int EffectiveOnly;
+  void *ServerSecurityDescriptor;
+} RPC_SECURITY_QOS_V5_W, *PRPC_SECURITY_QOS_V5_W;
+
+handle_t createRemoteBindingHandle(wchar_t* uuidString) {
 	RPC_STATUS rpcStatus;
-	std::wostringstream addr;
-	addr<<L"ncalrpc:[nvdaHelperRemote_"<<processID<<L"]";
+	RPC_WSTR stringBinding;
+	if((rpcStatus=RpcStringBindingCompose((RPC_WSTR)uuidString,(RPC_WSTR)L"ncalrpc",NULL,NULL,NULL,&stringBinding))!=RPC_S_OK) {
+		fprintf(stderr,"RpcStringBindingCompose failed, rpc code 0X%X\n",rpcStatus);
+		return NULL;
+	}
 	handle_t bindingHandle;
-	if((rpcStatus=RpcBindingFromStringBinding((RPC_WSTR)(addr.str().c_str()),&bindingHandle))!=RPC_S_OK) {
+	if((rpcStatus=RpcBindingFromStringBinding(stringBinding,&bindingHandle))!=RPC_S_OK) {
 		fprintf(stderr,"Error creating binding handle from string binding, rpc code 0X%X\n",rpcStatus);
 		return NULL;
 	} 
+	PSECURITY_DESCRIPTOR psd=NULL;
+	ULONG size;
+	if(!ConvertStringSecurityDescriptorToSecurityDescriptor(L"D:(A;;GA;;;AU)(A;;GA;;;AC)",SDDL_REVISION_1,&psd,&size)) {
+		return NULL;
+	}
+	RPC_SECURITY_QOS_V5_W securityQos={5,0,0,0,0,NULL,NULL,0,psd};
+	if(RpcBindingSetAuthInfoEx(bindingHandle,NULL,RPC_C_AUTHN_LEVEL_DEFAULT,RPC_C_AUTHN_DEFAULT,NULL,0,(RPC_SECURITY_QOS*)&securityQos)!=RPC_S_OK) {
+		return NULL;
+	}
 	return bindingHandle;
-}
-
-void destroyConnection(handle_t bindingHandle) {
-	RpcBindingFree(&bindingHandle);
 }
 
 bool shouldCancelSendMessage;
