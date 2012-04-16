@@ -178,15 +178,17 @@ class PortableCreaterDialog(wx.Dialog):
 
 	def onCreatePortable(self, evt):
 		if not self.portableDirectoryEdit.Value:
-			gui.messageBox(_("Please provide a directory to place the portable copy."),
-			# Translators: The title of a dialog presented when an error occurs.
-			_("Error"))
+			# Translators: The message displayed when the user has not specified a destination directory
+			# in the Create Portable NVDA dialog.
+			gui.messageBox(_("Please specify a directory in which to create the portable copy."),
+				_("Error"))
 			return
 		drv=os.path.splitdrive(self.portableDirectoryEdit.Value)[0]
 		if drv and not os.path.isdir(drv):
+			# Translators: The message displayed when the user specifies an invalid destination drive
+			# in the Create Portable NVDA dialog.
 			gui.messageBox(_("Invalid drive %s")%drv,
-			# Translators: The title of a dialog presented when an error occurs.
-			_("Error"))
+				_("Error"))
 			return
 		self.Hide()
 		doCreatePortable(self.portableDirectoryEdit.Value,self.createAutorunCheckbox.Value,self.copyUserConfigCheckbox.Value)
