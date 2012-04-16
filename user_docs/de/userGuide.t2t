@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION Benutzerhandbuch
+NVDA NVDA_VERSION Benutzerhandbuch
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -32,7 +32,7 @@ Die wichtigsten Highlights sind:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 36 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch,, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles Chinesisch, taiwanesisches Mandarin, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 36 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch,, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung mit der Sprachausgabe ++
 Abgesehen von der Bereitstellung der Schnittstelle für Meldungen in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser über eine Sprachausgabe für dessen Sprache verfügt.
@@ -62,50 +62,45 @@ Für weitere Informationen können Sie entweder die [englischsprachige http://ww
 - Mindestens 50 Megabyte Festplattenspeicher.
 -
 
-+ NVDA beziehen +
-Wenn Sie noch keine Kopie von NVDA  besitzen, können Sie diese von [www.nvda-project.org NVDA_URL] herunterladen.
++ NVDA beziehen und einrichten +
+Falls noch nicht geschehen, können Sie NVDA von  [www.nvda-project.org NVDA_URL] herunterladen.
+Wenn Sie die soeben heruntergeladene Datei ausführen, wird eine temporäre Kopie von NVDA ausgepackt und gestartet. Außerdem werden Sie gefragt, ob Sie NVDA installieren, eine portable Version erstellen oder einfach die ausführung der temporären Kopie fortsetzen wollen.
 
-Im Downloadbereich finden Sie einen Link um die neueste Version von NVDA herunterzuladen. 
+Falls Sie vorhaben, NVDA auf diesem Computer dauerhaft einzusetzen, werden Sie es vermutlich installieren wollen.
+Eine solche fest installierte Version von NVDA hat gegenüber einer portablen Version folgende Vorteile:
+- automatischer Start nach der Anmeldung
+- Auslesen von Sicheren Desktops wie z.B Dialogfelder der Benutzerkontensteuerung, Windows-Anmeldung etc.
+- Start über eine Desktop-Verknüpfung mit der Tastenkombination strg+Umschalt+n
+- Start aus dem Startmenü heraus
 
-Aktuell stehen zwei Paketvarianten zum Download:
-Eines davon ist ein Installationsprogramm, welches   bereits während der Installation spricht, so dass Sie NVDA jederzeit aus dem Startmenü heraus ausführen können.
-Das andere ist eine selbstentpackende Archiv-Datei, die eine portable Version von NVDA enthält, welche Sie von einem beliebigem Medium einschließlich USB-Stick, CD ausführen können.
+Mit Hilfe einer installierten Kopie können sie auch jederzeit eine portable Version erstellen.
 
-Wenn Sie den Zugriff im Windows-Anmeldedialog, in der eingeschalteten Benutzerkontensteuerung oder weiteren Zugriff bei laufenden Anwendungen wünschen, die unter administrativen Berechtigungen ausgeführt werden, müssen Sie NVDA mittels des Installationsprogrammes installieren.
-Diese Dialogfelder können NICHT mit einer portablen Kopie von NVDA ausgelesen werden.
+Falls Sie NVDA auf einem usb-Stick oder einem anderen transportablen Medium mitnehmen möchten, können Sie eine portable Version erstellen.
+Die portable Kopie kann jederzeit auf einem Computer fest installiert werden.
+  
+Die Ausführung der temporären Kopie kann z.B. für demonstrationszwecke sinnvoll sein, der start einer solchen Version ist allerdings sehr zeitintensiv.
 
-+ NVDA installieren +
+++ NVDA installieren ++
+Wenn Sie NVDA direkt von einer heruntergeladenen Datei aus installieren wollen, drücken Sie einfach den Schalter "installieren", sobald der Eingangsdialog erscheint.
+Falls Sie den eingangsdialog bereits geschlossen haben oder NVDA von einer portablen Version aus installieren wollen, wählen Sie den Menüpunkt "nvda installieren" aus dem Menü Extras.
 
-++ Das Installationsprogramm ++
-Wenn Sie bereits das Installationsprogramm von NVDA heruntergeladen haben, drücken Sie zum Starten des Installationsvorgangs entweder einfach die Eingabetaste oder doppelklicken Sie auf die Datei.
+Nach dem start der Installation werden Sie darüber informiert, ob eine frühere Version von NVDA aktualisiert wird.
+Wenn Sie "weiter" drücken, wird die Installation gestartet, es gibt allerdings noch weitere Option wie z.B. der Start nach Bzw. vor der Anmeldung, das Anlegen einer Desktop-Verknüpfung u.v.m.
+Nach Abschluss der Installation erscheint eine Meldung, die sie über den erfolgreichen Abschluss der Installation informiert.
+Wenn Sie hier "ok" wählen, wird die soeben installierte Kopie von NVDA neu gestartet.
+ 
+++ erstellen einer portablen Kopie ++
+Wenn Sie aus einer heruntergeladenen Kopie von NVDA eine portable Version erstellen wollen, drücken Sie einfach den Schalter "portable Version erstellen".
+Wenn Sie den Eingangsdialog bereits geschlossen haben oder grade eine fest installierte Version von NVDA ausführen, können Sie über den menüpunkt extras/portable Version erstellen"  eine portable Kopie anlegen.
 
-Sobald das Installationsprogramm gestartet ist, hören Sie zu Beginn eine kurze Melodie.
-Eine temporäre Kopie von NVDA wird gestartet, welche Ihnen den weiteren Fortgang ermöglicht und NVDA auf Ihrem System installiert.
-Bitte beachten Sie: Sollten Sie zum Zeitpunkt der Installation eine Kopie von NVDA verwenden, beendet das Installationsprogramm diese Kopie für Sie und startet dessen Eigene.
-Dies ist notwendig, um wichtige Dateien aktualisieren zu können.
-Wenn Sie bereits eine Kopie von NVDA installiert haben, deinstalliert das Installationsprogramm diese für Sie und setzt dann die Installation fort.
+In dem erscheinenden dialog können Sie das Verzeichnis angeben, in dem die portable Kopie erstellt werden soll.
+Dies kann ein Ordner auf einer Festplatte, einem Usb-Stick oder einem anderen transportablen Medium sein.
 
-Wenn die Installation erfolgreich abgeschlossen ist, benachrichtigt Sie das Installationsprogramm darüber, dass die Installation fertiggestellt wurde.
-Bei einer erneuten Installation werden Sie möglicherweise gefragt, ob das System im Anschluss neu gestartet werden soll.
-Dies ist sehr empfehlenswert, um unerwünschte Fehlermeldungen zu vermeiden.
-Wenn die Frage nach dem Neustart nicht erscheint, betätigen Sie einfach den Schalter "Fertig stellen", um den Installationsvorgang abzuschließen und die eben installierte Version von NVDA zu starten.
-
-++ Portables NVDA ++
-Wenn Sie die portable Version von NVDA heruntergeladen haben, brauchen Sie nur die Datei entweder mit der Eingabetaste oder mit einem Doppelklick starten und den Anweisungen am Bildschirm zu folgen.
-Sie werden nach dem Ordner gefragt, in welchen Sie die Dateien entpackt haben möchten.
-
-+++ NVDA Portable auf einem USB-Stick +++
-Es ist möglich, NVDA auf einen USB-Stick zu kopieren, sodass Sie NVDA auf anderen Computern verwenden können.
-
-Wenn Sie von der portablen Version gefragt werden, wohin NVDA kopiert werden soll, Geben Sie den Laufwerksbuchstaben sowie einen optionalen Unterordner. an, in welchen NVDA entpackt werden soll.
-
-Wenn sich z. B. ihr USB-Stick auf E: befindet, möchten Sie vielleicht "e:\nvda" (ohne Anführungszeichen eingeben. Somit wird NVDA in den Unterordner NVDA auf Ihrem USB-Stick entpackt.
-
-Bitte beachten Sie, dass Sie NVDA mit dessen Einstellungen somit überall bei sich führen können, jedoch startet NVDA nicht automatisch, wenn Sie den USB-Stick mit einem Computer verbinden.  Vielmehr muss es mit dem Windows Explorer oder vom "Ausführen"-Dialog aus manuell gestartet werden.
-
-Für Informationen zum automatischen Starten von NVDA von einem U3-Stick lesen Sie den folgenden englischsprachigen Artikel:
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
-
+Zum Einen haben Sie hier außerdem die Möglichkeit, eine autostart-Datei im Stammverzeichnis des Laufwerks anzulegen. Zum Anderen können Sie entscheiden, ob die Benutzerspezifischen Konfigurationsdateien und Plug-ins der aktuell laufenden nvda-Instanz in die portable Version übernommen werden sollen.
+Wenn Sie "weiter" drücken, wird die portable Version erstellt.
+Nach Abschluss des Vorgangs erscheint eine Meldung, die sie über die Erfolgreiche Erstellung der portablen Version informiert.
+Drücken Sie "ok" um den dialog zu schließen.
+ 
 + Erste Schritte mit NVDA +
 
 ++ NVDA starten ++
@@ -313,7 +308,7 @@ Die folgenden Tastenkombinationen zur Textanzeige sind verfügbar:
 | Zum nächsten Zeichen in der Anzeige springen | Num 3 | NVDA+Punkt | Zieht den Anzeige-Cursor zum nächsten Zeichen der aktuellen Zeile im Text. |
 | Zum Zeilenende in der Anzeige springen | Umschalt+Nummerntaste 3 | NVDA+Umschalt+O | Zieht den Anzeige-Cursor zum Zeilenende im Text. |
 | Alles in der Anzeige ansagen | Num Plus | NVDA+Umschalt+Pfeiltaste nach unten | Liest von der aktuellen Cursor-Position den Text in der Anzeige vor. |
-| Textformatierung ansagen | NVDA+F | Sagt die Formatierungen unter dem nvda-Cursor an. Diese info wird auch in Braille als Blitzmeldung angezeigt.|
+| Textformatierung ansagen | NVDA+F | NVDA+f | Sagt die Formatierungen unter dem nvda-Cursor an. Diese info wird auch in Braille als Blitzmeldung angezeigt.|
 | Ab nvda-Cursor kopieren | NVDA+F9 | NVDA+F9 | Startet von der aktuellen Cursor-Position den Kopiervorgang. Der Text wird nicht von NVDA kopiert, wenn Sie nicht festlegen, bis wohin  kopiert werden soll. |
 | Bis nvda-Cursor kopieren | NVDA+F10 | NVDA+F10 | Kopiert von der Position die vorhin (mit "ab nvda-Cursor kopieren" festgelegt wurde) bis zur akttuellen Position des nvda-Cursors. Nach dem Betätigen der Tastenkombination, wird der Text in die Zwischenablage kopiert. |
 %kc:endInclude
@@ -489,12 +484,14 @@ Für manche Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit - et
 | verbleibende Zeit ausgeben | strg+umschalt+r | Falls grade ein Titel abgespielt wird, wird die verbleibende Zeit ausgegeben. |
 %kc:endInclude
 
-Technischer Hinweis: NVDA sucht sich die verbleibende Zeit aus der Statuszeile heraus Bzw. berechnet diese auf Grundlage der dort vorgefundenen Angaben über die Verstrichene Zeit und die Gesamtlänge des Titels. deshalb ist es wichtig, dass sie das Anzeigeformat der Statuszeile möglichst nicht verändern, damit die Tastenkombination funktionsfähig bleibt. Streng genommen müssen die folgenden Bedingungen erfüllt sein, damit strg+umschalt+r ordnungsgemäß funktioniert:
-- die einzelnen Elemente müssen in Gruppen unterteilt werden, wobei die Angaben über die verstrichene Zeit und die Gesamtlänge in der fünften Gruppe stehen müssen.
+Technischer Hinweis: NVDA gewinnt die angaben über die verbleibende Zeit aus der Statuszeile. Falls die Tastenkombination nicht funktionieren sollte, kontrollieren Sie in den Foobar-Einstellungen in der Kategorie "display/unser interface" im Eingabefeld "Status bar", ob die verstrichene Zeit sowie die Gesamtlänge des aktuell abgespielten Titels in der statuszeile angezeigt werden. Streng genommen müssen die folgenden Bedingungen erfüllt sein, damit die Tastenkombination strg+Umschalt+R funbktioniert:
+- die einzelnen Elemente der Statuszeile müssen in Gruppen unterteilt werden, wobei die Gruppen durch einen senkrechten Strich getrennt werden müssen.
+- Die Angaben über die verstrichene Zeit und die Gesamtlänge müssen in der fünften Gruppe stehen.
 - Die Zeitangaben müssen durch einen Schrägstrich getrennt sein.
 - Die Zeitangaben müssen in der Reihenfolge "verstrichene zeit / Gesamtlänge" aufgeführt sein.
 Das folgende Anzeigeformat ist in Foobar 1.1.10 die Standardeinstellung und  funktioniert ordnungsgemäß mit nvda:
 %codec% | %bitrate% kbps | %samplerate% Hz | %channels% | %playback_time%[ / %length%]
+Weitere Informationen über die möglichen Daten, die in der Statuszeile angezeigt werden können, erhalten Sie in den foobar-Einstellungen über den Link "syntax help".
 
 ++ Miranda IM ++
 %kc:beginInclude
