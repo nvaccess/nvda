@@ -30,6 +30,7 @@ Suas características mais notáveis são:
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superior) ;
 - Suporte para o Prompt de comando do Windows e aplicações de console.
 -
+
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
 Além do inglês, o NVDA está traduzido para 36 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
@@ -61,48 +62,42 @@ Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/o
 - Cerca de 50 MB de espaço livre.
 -
 
-+ Obttendo o NVDA +
++ Obttendo e Instalando o NVDA +
 Se não tem uma cópia do NVDA, pode baixá-la em [www.nvda-project.org NVDA_URL].
 
 Entre na seção download e encontrará o link para baixar a última versão deste leitor de telas. 
-Atualmente, o NVDA é distribuído em duas formas.
-A primeira é um Instalador que falará durante sua instalação podendo ser executado em qualquer altura a partir do Menu Iniciar.
-A outra é um arquivo comprimido e auto-extraível que contém a versão completa e portátil deste programa, que pode executar a partir de qualquer lugar, incluindo-se os dispositivos USB ou CD.
-Para acessar as telas de logon do Windows, Conta de Controle do Utilizador (UAC) e outras telas de segurança do Windows, bem como aplicações executadas como administrador no Windows Vista e superiores, terá que instalar o NVDA em seu sistema utilizando o instalador.
-Essas telas não podem ser acessadas através da utilização de uma cópia do NVDA portátil.
 
-+ Instalando o NVDA +
+Ao executar o arquivo baixado, será iniciada uma cópia temporária do NVDA, e também lhe será perguntado se deseja instalá-lo, criar uma cópia portátil ou apenas continuar usando a cópia temporária.
 
-++ O Instalador do NVDA ++
+Caso pretenda usar constantemente o NVDA neste computador, irá então escolher instalá-lo. 
+O NVDA Instalado lhe permitirá ter recursos adicionais, tais como iniciá-lo automaticamente após o logon, a capacidade de ler a tela de Logon e outras telas seguras do Windows (o que não pode ser feito através de cópias portáteis e/ou temporárias) e a criação de atalhos no menu iniciar e na área de trabalho.
+As cópias instaladas também permitem elas próprias criar uma cópia portátil a qualquer momento.
 
-Se já tem o instalador do NVDA, pressione simplesmente Enter ou um duplo clique esquerdo no arquivo e o mesmo iniciará.
+Se você deseja levar o NVDA com você em um dispositivo USB ou em outros dispositivos de mídia portáteis, então deverá escolher criar uma cópia portátil.
+As cópias portáteis também oferecem elas próprias a capacidade de ser instaladas em qualquer computador em um momento posterior.
 
-Enquanto a instalação estiver sendo carregada, ouvirá a música de instalação do programa.
-Após estar carregada, uma cópia temporária deste leitor de telas permitirá que prossiga pelas janelas do instalador e  o instale.
- Note que se estiver executando outra cópia no momento em que o instalador for iniciado, o NVDA a incerrará e iniciará a execução de sua própria cópia.
-Isso é necessário para que o instalador possa atualizar adequadamente qualquer arquivo modificado. 
+O Uso das cópias temporárias do  NVDA é também uma opção (isto é, para propósitos de demonstração), todavia iniciá-lo a cada vez dessa forma pode trazer um grande gasto de tempo.
 
-Neste ponto, se já tem outra cópia do NVDA instalada, o instalador desinstalará a mesma automaticamente e procederá ao início da instalação desta.
-Uma vez que tenha completado corretamente a instalação, o instalador alertará que a mesma foi concluída.
-Caso  esteja reinstalando o NVDA, nesta altura será questionado se pretende reiniciar o sistema.
-É muito importante que o reinicie para que não haja conseqüências desagradáveis
- Caso o NVDA não questione se pretende reiniciar, pressione "Terminar" e ele encerrará o instalador e iniciará sua nova versão instalada. 
+++ Instalando o NVDA ++
+Caso esteja instalando o NVDA diretamente do pacote baixado, pressione o botão Instalar o NVDA.
+Se você já fechou esse diálogo ou está pretendendo instalar por meio de uma cópia portátil, por favor selecione o item de menu Instalar o NVDA que se encontra no submenu Ferramentas de seu menu.
 
-++ NVDA Portátil ++
-Caso tenha a versão do arquivo comprimido do NVDA, então tudo o que precisa fazer é pressionar Enter ou um duplo clique no arquivo e seguir as instruções do diálogo.
-Ser-lhe-á perguntado onde pretende colocar os arquivos em seu sistema. 
+ O diálogo de instalação que aparece irá confirmar se você quer instalar o NVDA e também lhe dirá se essa instalação estará atualizando uma anterior.
+Ao pressionar o botão Continuar, será iniciada a instalação do NVDA.
+ Existem também algumas poucas opções nesse diálogo, incluindo se você deseja criar um atalho na área de trabalho ou se pretende que o NVDA seja iniciado na tela de logon do Windows.
+Uma vez que a instalação se complete, uma mensagem aparecerá informando-lhe que obteve sucesso.
+ Pressionando-se OK nesse ponto irá reiniciar a nova cópia instalada do NVDA.
 
-+++ NVDA Portátil em um Dispositivo USB +++
-É possível colocar o NVDA em uma unidade de memória USB, o que lhe permite utilizá-lo em outros computadores.
+++ Criando uma Cópia Portátil ++
+Caso esteja criando uma cópia portátil diretamente do pacote baixado, pressione o botão criar uma cópia portátil.
+Se você já fechou esse diálogo ou está executando uma cópia portátil do NVDA, por favor selecione o item de menu criar uma cópia portátil que se encontra no submenu Ferramentas de seu menu.
 
-Quando a versãon Portátil perguntar onde deseja descompactá-la, digite a unidade de sua memória USB, mais uma subpasta opcional onde pretende colocar o NVDA.
-Si por exemplo sua unidade de memória USB está em E:\, você deve escrever E:\nvda, Colocando assim o NVDA na subpasta NVDA em sua unidade de memória USB.
-
-Atente que mesmo podendo agora levar consigo o NVDA e suas opções a qualquer lugar, ele não será iniciado automaticamente simplesmente inserindo a unidade de memória USB.
-Terá que iniciá-lo manualmente desde o Windows Explorer ou desde o diálogo Executar.
-
-Para informações sobre o início automático do NVDA desde uma unidade de memória USB, por favor veja este artigo em inglês:
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+ O diálogo que aparece permite-lhe escolher onde a cópia portátil será criada.
+  Este pode ser uma pasta em seu disco rígido ou um local num dispositivo USB ou outros dispositivos de mídia portáteis.
+ Há também a opção de criar um arquivo de autorun na raiz do drive (útil quando se está criando uma cópia portátil em um dispositivo USB), bem como a opção de Copiar as personalizações do usuário, o que incluirá configurações e plugins oriundos da copia atual do NVDA. 
+Ao pressionar o botão Continuar, será iniciada a criação da cópia portátil.
+ Uma vez que o processo esteja concluído, uma mensagem aparecerá informando-lhe que obteve sucesso.
+ Pressione OK para encerrar esse diálogo.
 
 + Começando com o NVDA +
 
@@ -293,8 +288,8 @@ As seguintes teclas de atalho estão disponíveis para a revisão de texto:
 | Mover para o fim da linha em revisão | shift+3 do teclado numérico | NVDA+shift+o | Move o cursor de exploração para o último caractere da linha atual do texto e o anuncia |
 | Ler tudo com revisão | Mais do teclado numérico | NVDA+shift+seta abaixo | Lê a partir da posição atual do cursor de exploração, movendo-o até ao fim do texto |
 | Copiar a partir do cursor de exploração | NVDA+f9 | NVDA+f9 | Inicia a cópia do texto a partir da posição atual do cursor de exploração. A cópia atual não será efetuada até que informe ao NVDA onde pretende copiar |
-| Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows  |
-| Informar formatação de texto | NVDA+f | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente |
+| Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows |
+| Informar formatação de texto | NVDA+f | NVDA+f | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam desempenhar suas funções adequadamente. 
@@ -501,6 +496,10 @@ Esta opção só estará disponível para as cópias instaladas do NVDA.
 Ao pressionar este botão, copiará as configurações atualmente salvas do usuário do NVDA para a pasta  das configurações de sistema deste leitor de telas, de modo que o NVDA irá usá-las quando estiver na tela de logon, Conta de Controle de usuário (UAC) e outras telas de segurança do Windows.
 Para certificar-se de que todas as suas opções serão transferidas, verifique em primeiro lugar se salvou suas configurações com NVDA+Ctrl+C ou através do item respectivo do Menu do NVDA.
 Esta opção só estará disponível para as cópias instaladas do NVDA. 
+
++++ Procurar por Atualizações para o NVDA Automaticamente +++
+Se abilitado, o NVDA irá procurar automaticamente por verssões atualizadas e lhe informará quando uma atualização estiver disponível.
+Você também pode procurar por atualizações manualmente selecionando o item correspondente no submenu ajuda do menu do NVDA.
 
 +++ Seleção de Sintetizador (NVDA+Ctrl+S) +++
 O diálogo do Sintetizador, pode ser encontrado no item "Sintetizador..." no menu Preferências e permite-lhe selecionar qual sintetizador o NVDA usará para falar.
