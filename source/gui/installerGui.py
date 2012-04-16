@@ -136,12 +136,11 @@ class PortableCreaterDialog(wx.Dialog):
 		# Translators: An informational message displayed in the Create Portable NVDA dialog.
 		dialogCaption=wx.StaticText(self,label=_("To create a portable copy of NVDA, please select the path and other options and then press Continue")) 
 		mainSizer.Add(dialogCaption)
-		# Translators: The label of the grouping containing options in the Create Portable NVDA dialog.
-		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Portable options")), wx.HORIZONTAL)
+		optionsSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a grouping containing controls to select the destination directory
 		# in the Create Portable NVDA dialog.
 		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Portable directory:")), wx.HORIZONTAL)
-		ctrl = self.portableDirectoryEdit = wx.TextCtrl(self, value='e:\\')
+		ctrl = self.portableDirectoryEdit = wx.TextCtrl(self)
 		sizer.Add(ctrl)
 		# Translators: The label of a button to browse for a directory.
 		ctrl = wx.Button(self, label=_("Browse..."))
@@ -173,11 +172,22 @@ class PortableCreaterDialog(wx.Dialog):
 	def onBrowseForPortableDirectory(self, evt):
 		# Translators: The title of the dialog presented when browsing for the
 		# destination directory when creating a portable copy of NVDA.
-		with wx.DirDialog(self, _("Select portable  directory"), defaultPath=self.portableDirectoryEdit.Value) as d:
+		with wx.DirDialog(self, _("Select portable  directory"), defaultPath=self.portableDirectoryEdit.Value or "c:\\") as d:
 			if d.ShowModal() == wx.ID_OK:
 				self.portableDirectoryEdit.Value = d.Path
 
 	def onCreatePortable(self, evt):
+		if not self.portableDirectoryEdit.Value:
+			gui.messageBox(_("Please provide a directory to place the portable copy."),
+			# Translators: The title of a dialog presented when an error occurs.
+			_("Error"))
+			return
+		drv=os.path.splitdrive(self.portableDirectoryEdit.Value)[0]
+		if drv and not os.path.isdir(drv):
+			gui.messageBox(_("Invalid drive %s")%drv,
+			# Translators: The title of a dialog presented when an error occurs.
+			_("Error"))
+			return
 		self.Hide()
 		doCreatePortable(self.portableDirectoryEdit.Value,self.createAutorunCheckbox.Value,self.copyUserConfigCheckbox.Value)
 		self.Destroy()
