@@ -2,6 +2,26 @@
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2012.2 =
+
+== Novas Características ==
+- NVDA agora pode procurar automáticamente, descargar e instalar actualizacións. (#73)
+
+
+== Cambios ==
+- NVDA agora distribúese nun paquete. En lugar de unha versión portable e unha instalable, agora só hai un ficheiro que cando se execute, iniciará unha copia temporal do NVDA, e permitirache instalar, ou xerar unha distribución portable.  
+- NVDA agora sempre se instala en Program Files en todos os sistemas. Ó actualizar unha instalación tamén se moverá automáticamente se anteriormente non se instalóu ahí.
+
+== Corrección de Fallos ==
+- Co Cambio automático de lingua activado, o Contido tal coma o texto alternativo para gráficos e etiquetas para certos outros controis en Mozilla Gecko (ex.: Firefox) agora anúncianse na lingua correcta se se marcou apropriadamente.
+- Ler todo en BibleSeeker (e outros controis TRxRichEdit) xa non se detén no medio dunha pasaxe.
+- As listas que se atopan nas propiedades de ficheiro en Windows 8 Explorer (pestana permisos) e en Windows 8 Windows Update agora lense correctamente.
+- Correxidos posibles colgues en MS Word que poderían ocorrer cando lle levou máis de 2 segundos extraer texto  dende un documento (líñas extremadamente longas ou táboas de contido). (#2191)
+ 
+== Cambios para Desarrolladores ==
+- Due to the replacement of the previous NSIS installer for NVDA with a built-in installer in Python, it is no longer necessary for translaters to maintain a langstrings.txt file for the installer. All localization strings are now managed by gettext po files.
+
  
 = 2012.1 =
 O subliñable desta versión inclúe características para unha lectura máis fluída en braille; indicación de formato de documento en braille; acceso a moita máis información de formato e mellora do rendemento en Microsoft Word; e soporte para a Store de iTunes.

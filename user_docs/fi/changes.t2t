@@ -3,6 +3,23 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.2 =
+
+== Uudet ominaisuudet ==
+- NVDA voi nyt tarkistaa, ladata ja asentaa päivitykset automaattisesti. (#73)
+
+== Muutokset ==
+- NVDA:ta jaetaan nyt yhtenä pakettina. Erillisen massamuistiversion ja asennusohjelman sijaan on vain yksi tiedosto, joka käynnistää suoritettaessa NVDA:n väliaikaisen kopion ja mahdollistaa asentamisen tai massamuistijakelun luomisen. (#1715)
+- NVDA asennetaan nyt aina kaikissa järjestelmissä Program Files -hakemistoon. Myös aiempi asennus siirretään päivitettäessä sinne automaattisesti, mikäli se on asennettu jonnekin muualle.
+
+
+== Korjatut ohjelmavirheet ==
+- Kun automaattinen kielen vaihtaminen on käytössä, sellainen sisältö kuin kuvien alt-teksti ja tiettyjen muiden säädinten nimet Mozilla Gecko -sovelluksissa (esim. Firefoxissa) luetaan nyt asianmukaisella kielellä, mikäli se on merkitty oikein.
+- Lue kaikki -toiminto ei enää keskeydy kappaleen keskellä BibleSeeker-sovelluksessa eikä muissa TRxRichEdit-säätimissä.
+- Resurssienhallinnan tiedoston ominaisuudet -valintaikkunan Oikeudet-välilehdellä ja Windows Updatessa olevat listat luetaan nyt oikein Windows 8:ssa.
+- Korjattu mahdollisia jumiutumisia MS Wordissa, jotka aiheutuvat siitä, kun asiakirjan tekstin (hyvin pitkien rivien tai sisällysluettelon) noutamiseen kuluu kauemmin kuin kaksi sekuntia. (#2191)
+
+
 = 2012.1 =
 Tämän version tärkeimpiä uusia ominaisuuksia ovat pistenäytön sujuvampi lukeminen, asiakirjan muotoilutietojen ilmaiseminen pistenäytöllä, entistä useampien muotoilutietojen lukeminen ja paranneltu suorituskykyMicrosoft Wordissa sekä tuki iTunes Storelle.
 

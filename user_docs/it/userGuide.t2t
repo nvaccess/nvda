@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 17 febbraio 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 3 aprile 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Comandi da tastiera Guida Rapida
@@ -65,47 +65,39 @@ Per maggiori informazioni è possibile [Leggere l'intera licenza. http://www.gnu
 + Ottenere NVDA +
 Se non si possiede ancora una copia di NVDA, è possibile scaricarla dal sito originale all'indirizzo [http://www.nvda-project.org NVDA_URL].
 
-Accedere alla sezione download e si troveràà l'apposito link per scaricarlo. In alternativa è anche possibile prelevare il software dal [sito della comunità italiana: http://www.nvda.it]
+Accedere alla sezione download e si troverà l'apposito link per scaricarlo. In alternativa è anche possibile prelevare il software dal [sito della comunità italiana: http://www.nvda.it]
 
-Vi sono due diverse distribuzioni dello screen reader
-Una è costituita da un file eseguibile che contiene un installer, che guiderà l'utente tramite la sintesi vocale passo passo per tutto il processo d'installazione, cosicché poi si potrà lanciare NVDA direttamente dal menu avvio.
-L'altra invece è chiamata "portable" e permette di eseguire il software su qualsiasi computer si voglia, basta lanciare il file autoestraente e seguire le istruzioni riportate a schermo: questa versione è adatta ad essere salvata anche su una chiavetta USB o su un cd.
+Una volta che si esegue il file appena scaricato, verrà lanciata una copia temporanea di NVDA, e verrà richiesto se installare NVDA sul disco fisso, se creare una versione portable, oppure continuare ad utilizzare la copia in esecuzione dello screen reader.
 
-Ricordiamo che per gestire le finestre di Login di Windows, i messaggi del Controllo Utente (UAC) o altre schermate di sicurezza, nonché le applicazioni eseguite come Amministratore nei sistemi Windows vista e successivi, bisogna necessariamente utilizzare la versione Installer di NVDA.
-Questa tipologia di finestre non risulta accessibile utilizzando la versione Portable di NVDA.
+Se si desidera utilizzare spesso NVDA su questo computer, è consigliabile scegliere di installare NVDA nel sistema.
+L'installazione comporta alcuni vantaggi, come la possibilità di avviarsi automaticamente dopo il login, la lettura delle finestre di Logon e le schermate generate dal controllo utente per la sicurezza (UAC), ed inoltre verrà creata  un'icona sul desktop e una voce sul menu avvio, tutte caratteristiche non presenti nella versione portable.
+Si ricorda che una volta installato NVDA, sarà sempre possibile creare una copia portable in qualsiasi momento.
 
-+ Installare NVDA +
- 
-++ L'installer di NVDA ++
-Se si dispone dell'installer di NVDA, premere semplicemente invio sul file o fare doppio click col mouse e l'installazione inizierà.
- 
-Non appena il programma di installazione sarà stato caricato in memoria, verrà emesso il suono di benvenuto di NVDA. 
-A questo punto, ne verrà lanciata una copia temporanea per permettere all'utente di portare a termine l'installazione seguendo le semplici istruzioni. 
-Da notare che se si stava utilizzando già NVDA al momento dell'installazione, apparirà un messaggio a schermo dove l'utente verrà informato che la copia precedente di NVDA verrà chiusa automaticamente. Basterà premere invio per confermare l'operazione. 
-Questo risulta necessario affinché l'installer possa aggiornare tutti i file in maniera corretta. 
-A questo punto, se si disponeva già di una copia di NVDA, questa verrà automaticamente disinstallata, a meno che l'utente non disattivi la relativa casella di controllo, ed inizierà l'installazione della nuova versione.
+Se invece si desidera utilizzare NVDA in una chiavetta USB o su altri tipi di supporti rimovibili, allora è necessario selezionare di creare una copia portable.
+Questa versione portable potrà, in futuro, essere installata in un computer in qualsiasi momento.
 
-Alla fine dell'installazione, il programma notificherà che la procedura è terminata.
-Nel caso si stia reinstallando NVDA, è possibile che il software richieda il riavvio del computer.
- Risulta molto importante effettuare questa operazione, in modo da non dover incorrere in conseguenze indesiderate. 
-Se invece non si riceve alcun messaggio in tal senso, premere semplicemente il pulsante fine e la nuova copia di NVDA funzionerà correttamente.
+Infine, c'è la possibilità di avvalersi  della copia temporanea di NVDA appena lanciata, questa può essere una buona idea soprattutto  per dimostrazioni o rapidi test, tuttavia non è certo un'opzione da prendere in considerazione per l'utente che usa NVDA quotidianamente, in quanto i tempi di avvio risultano più lunghi.
+
+++ Installazione di NVDA ++
+Se si installa NVDA direttamente dal pacchetto principale, sarà sufficiente premere il pulsante Installa NVDA.
+Se invece lo si vuole installare da una copia portable, basterà andare al menu strumenti e selezionare la voce Installa NVDA.
+
+La finestra di dialogo che apparirà richiede una conferma del fatto che si vuole installare NVDA, ed inoltre permette di aggiornare un'eventuale versione dello screen reader già presente sul computer.
+La pressione del pulsante "Continua" darà inizio al processo di installazione, si tenga presente che vi sono altre due opzioni in questa finestra, una permette di creare o meno un'icona sul desktop, l'altra invece serve a stabilire se NVDA debba avviarsi automaticamente nelle schermate di login.
+Una volta completata l'installazione, apparirà un messaggio di conferma.
+Premere a questo punto il pulsante OK per far avviare la versione di NVDA appena installata.
+
+++ Creazione di una copia portable ++
+Se si desidera creare una copia portable dal pacchetto principale, premere il pulsante "Crea copia portable".
+Se invece si vuole creare una copia portable da una versione già installata di NVDA, sarà sufficiente andare al menu strumenti e selezionare la voce "Crea copia Portable".
+
+La finestra di dialogo che apparirà richiede la selezione della cartella nella quale inserire la versione portable.
+Può trattarsi di una cartella presente nel disco fisso, oppure dell'unità di una penna USB o di un altro dispositivo rimovibile.
+Vi sono altre due opzioni, una casella di controllo permette la creazione o meno del file autorun.inf, utile per chiavette USB o CD, l'altra invece permette di copiare la configurazione della versione attualmente installata, in modo che la versione portable risulti quanto più simile possibile, conservando le impostazioni utente e i plugin.
+La pressione del pulsante "Continua" darà inizio al processo di creazione della versione portable.
+Una volta terminata l'operazione, apparirà un messaggio di conferma.
+Premere a questo punto il pulsante OK per chiudere questa finestra.
   
-++ NVDA versione portable ++
-Se si dispone della versione portable di NVDA, tutto ciò che è necessario fare è lanciare il file autoestraente e seguire le istruzioni riportate a schermo. 
-Ciò consiste semplicemente nello scegliere la cartella dove verranno estratti i file.
-
-+++NVDA Portable in una chiavetta USB+++
-E' possibile copiare NVDA in una chiavetta USB in modo da poterlo poi utilizzare in qualsiasi computer.
-
-Quando la versione portable richiede il percorso ove estrarre il programma, digitare la lettera dell'unità della propria chiavetta, seguita opzionalmente dal nome di una sottocartella nella quale si desidera copiare NVDA.
-
-Se ad esempio la lettera della propria chiavetta corrisponde ad e:\, possiamo digitare e:\nvda, ed in questo modo NVDA verrà estratto in e:\nvda nella propria chiavetta USB.
-
-Si noti che sebbene sia possibile quindi utilizzare NVDA in qualsiasi computer, questo non significa che lo screen reader si avvierà non appena sarà inserita la chiavetta sul pc. 
-
-Per informazioni su come avviare NVDA in automatico da una chiavetta, fare riferimento al seguente articolo in inglese:
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive oppure consultare la sezione Faq Domande e risposte nel sito della comunità italiana http://www.nvda.it.
-
 + Iniziare con NVDA +
 
 ++ Avviare NVDA ++

@@ -3,6 +3,27 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.2 =
+
+== Novinky ==
+- NVDA odteraz dokáže skontrolovať, stiahnuť a nainštalovať aktualizácie. (#73)
+
+
+== Zmeny ==
+- NVDA je odteraz distribuované v jednom balíku. Inštalačný súbor a súbor prenositeľnej verzie bol nahradený jedným súborom. Po jeho spustení je možné NVDA nainštalovať, alebo vytvoriť prenositeľnú verziu.
+- NVDA sa vždy nainštaluje do priečinka Program Files vo všetkých systémoch. Ak je NVDA nainštalované v inom adresári, počas novej inštalácie sa automaticky súbory presunú do nového priečinka.
+
+
+== opravy ==
+- pri zapnutej automatickej zmene jazyka NVDA správne určí jazyk v alternatívnych popisoch obrázkov a popisoch prvkov v Mozilla Gecko (napríklad Firefox) ak sú označené správne.
+- Pri plynulom čítaní v programe BibleSeeker (a iných TRxRichEdit prvkoch) neskončí čítanie uprostred textu.
+- NVDA nezamrzne v programe MS Word v prípade, ak výber textu trvá dlhšie, ako dve sekundy (týka sa dlhých riadkov alebo obsahov). (#2191)
+
+
+== Zmeny pre vývojárov ==
+- Keďže NSIS inštalátor bol nahradený vstavaným Python inštalátorom, prekladatelia viac nepotrebujú súbor langstrings.txt s reťazcami na preklad inštalácie. Všetky reťazce sú v po súboroch.
+
+
 = 2012.1 =
 Prednosti tejto verzii zahŕňajú pohodlnejšie čítanie brailu; indikáciu formátovania v braily; prístup k väčšiemu množstvu formátovacích možností a celkové zrýchlenie práce v programe Microsoft Word; a podporu pre obchod Itunes store.
 

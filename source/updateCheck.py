@@ -277,7 +277,9 @@ class UpdateDownloader(object):
 		self._progressDialog.Update(percent, _("Downloading"))
 
 	def _error(self):
+		self._progressDialog.Hide()
 		self._progressDialog.Destroy()
+		self._progressDialog = None
 		gui.messageBox(
 			# Translators: A message indicating that an error occurred while downloading an update to NVDA.
 			_("Error downloading update."),
@@ -285,7 +287,9 @@ class UpdateDownloader(object):
 			wx.OK | wx.ICON_ERROR)
 
 	def _downloadSuccess(self):
+		self._progressDialog.Hide()
 		self._progressDialog.Destroy()
+		self._progressDialog = None
 		# Translators: The message presented when the update has been successfully downloaded
 		# and is about to be installed.
 		gui.messageBox(_("Update downloaded. It will now be installed."),
