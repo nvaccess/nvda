@@ -232,6 +232,9 @@ roleLabels={
 	ROLE_HEADING5:_("heading 5"),
 	ROLE_HEADING6:_("heading 6"),
 	ROLE_PARAGRAPH:_("paragraph"),
+	# Translators: Presented for a section in a document which is a block quotation;
+	# i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+	# See http://en.wikipedia.org/wiki/Block_quotation
 	ROLE_BLOCKQUOTE:_("block quote"),
 	ROLE_TABLEHEADER:_("table header"),
 	ROLE_TABLEBODY:_("table body"),
