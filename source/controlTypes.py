@@ -365,6 +365,13 @@ stateLabels={
 	STATE_SORTED_DESCENDING:_("sorted descending"),
 }
 
+negativeStateLabels={
+	# Translators: This is presented when the focus moves onto an object but it has not been selected.
+	STATE_SELECTED:_("not selected"),
+	# Translators: This is presented when a checkbox is not checked.
+	STATE_CHECKED:_("not checked"),
+}
+
 silentRolesOnFocus={
 	ROLE_PANE,
 	ROLE_ROOTPANE,
