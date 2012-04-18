@@ -788,7 +788,11 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 			# "not drop target" doesn't make any sense, so use a custom message.
 			textList.append(_("done dragging"))
 			negativeStates.discard(controlTypes.STATE_DROPTARGET)
-		textList.extend([_("not %s")%controlTypes.stateLabels[x] for x in negativeStates])
+		# Translators: Indicates that a particular state on an object is negated.
+		# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+		# but this still might be used in some other cases.
+		# %s will be replaced with the negated state.
+		textList.extend([controlTypes.negativeStateLabels.get(x, _("not %s")%controlTypes.stateLabels[x]) for x in negativeStates])
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:

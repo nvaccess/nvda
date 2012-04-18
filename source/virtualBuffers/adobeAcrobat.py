@@ -80,7 +80,7 @@ class AdobeAcrobat(VirtualBuffer):
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
 			attrs = {"acrobat::stdname": ["H%s" % nodeType[7:]]}
 		elif nodeType == "heading":
-			attrs = {"acrobat::stdname": ["H1", "H2", "H3", "H4", "H5", "H6"]}
+			attrs = {"acrobat::stdname": ["H", "H1", "H2", "H3", "H4", "H5", "H6"]}
 		elif nodeType == "formField":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_PUSHBUTTON, oleacc.ROLE_SYSTEM_RADIOBUTTON, oleacc.ROLE_SYSTEM_CHECKBUTTON, oleacc.ROLE_SYSTEM_COMBOBOX, oleacc.ROLE_SYSTEM_LIST, oleacc.ROLE_SYSTEM_OUTLINE, oleacc.ROLE_SYSTEM_TEXT], "IAccessible::state_%s" % oleacc.STATE_SYSTEM_READONLY: [None]}
 		elif nodeType == "list":
