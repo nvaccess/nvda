@@ -78,10 +78,9 @@ To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
 	* 7-Zip: http://www.7-zip.org/
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
-	* NSIS UAC plug-in, version 0.0.11d:
-		* Official web site: http://nsis.sourceforge.net/UAC_plug-in
-		* NVDA does not work with recent versions. Direct link to 0.0.11d: http://stashbox.org/560965/UAC%20v0.0.11d.zip
-		* Copy the ANSI build of UAC.dll (found in release\a in the archive) into the installer directory.
+	* NSIS UAC plug-in, version 0.2.4:
+		* Web site: http://nsis.sourceforge.net/UAC_plug-in
+		* Copy both ansi\uac.dll and uac.nsh into the uninstaller directory.
 
 To generate developer documentation:
 	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
