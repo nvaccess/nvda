@@ -16,6 +16,7 @@ import locale
 import controlTypes
 import api
 import watchdog
+import braille
 
 # message used to sent many messages to winamp's main window. 
 # most all of the IPC_* messages involve sending the message in the form of:
@@ -119,6 +120,7 @@ class winampPlaylistEditor(winampMainWindow):
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+			braille.handler.handleGainFocus(self)
 
 	def event_nameChange(self):
 		return super(winampMainWindow,self).event_nameChange()
