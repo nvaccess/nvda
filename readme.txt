@@ -67,7 +67,7 @@ To use the MDV Lilli braille display driver:
 		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
 
 To use the Handy Tech braille display driver:
-	* Handy Tech Braille SDK, version 1.3.0.2 or later: https://www.handytech.de/en/normal/service/downloads/ht-software/brailledriver/
+	* Handy Tech Braille SDK, version 1.3.0.2 or later: https://www.handytech.de/downloads.php?kategorie=135&sub=145&lang=en
 		* Copy these files from the SDK's prog directory into NVDA's source\brailleDisplayDrivers\handyTech directory: HtBrailleDriverServer.dll, HtBrailleDriverServer.tlb, sbsupport.dll, dealers.dat
 	* If you want to be able to use this driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
