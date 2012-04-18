@@ -32,7 +32,7 @@ Major highlights include:
 
 ++ Internationalization ++
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 36 languages including: Afrikaans, Albanian, Arabic, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Italian, Japanese, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Spanish, Swedish, Tamil, Thai, Traditional Chinese, Taiwanese Mandarin, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 36 languages including: Afrikaans, Albanian, Arabic, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Italian, Japanese, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -442,6 +442,8 @@ NVDA provides its own extra commands for some applications to make certain tasks
 || Name | Key | Description |
 | Report remaining time | control+shift+r | Reports the remaining time of the currently playing track, if any. |
 %kc:endInclude
+
+Note: The report remaining time shortcut works only with the default formatting string for foobar's status line.
 
 ++ Miranda IM ++
 %kc:beginInclude

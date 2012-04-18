@@ -250,12 +250,14 @@ def isInstalledCopy():
 	except WindowsError:
 		return False
 
-def getUserDefaultConfigPath():
-	if isInstalledCopy():
-		try:
-			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
-		except WindowsError:
-			pass
+
+def getUserDefaultConfigPath(useInstalledPathIfExists=False):
+	try:
+		installedUserConfigPath=os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
+	except WindowsError:
+		installedUserConfigPath=None
+	if installedUserConfigPath and (isInstalledCopy() or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
+		return installedUserConfigPath
 	return u'.\\userConfig\\'
 
 def getSystemConfigPath():

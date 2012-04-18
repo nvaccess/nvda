@@ -480,6 +480,13 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	def _get_cellCoordsText(self):
+		"""
+		An alternative text representation of cell coordinates e.g. "a1". Will override presentation of rowNumber and columnNumber.
+		Only implement if the representation is really different.
+		"""
+		raise NotImplementedError
+
 	def _get_rowCount(self):
 		"""Retreaves the number of rows this object contains if its a table.
 		@rtype: int
@@ -491,8 +498,6 @@ class NVDAObject(baseObject.ScriptableObject):
 		@rtype: int
 		"""
 		raise NotImplementedError
-
-	tableCellCoordsInName=False #:True if the object's name contains the cell coordinates, such as 'A1'. Speech and Braille can choose to in this case not present the actual row and column information as the name is already enough.
 
 	def _get_table(self):
 		"""Retreaves the object that represents the table that this object is contained in, if this object is a table cell.

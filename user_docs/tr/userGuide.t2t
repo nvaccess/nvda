@@ -32,7 +32,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Uluslararasılaşma ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 36 dile de çevrilmiştir. Afrikaca, Almanca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Fince, Fransızca, Galiçyaca, Geleneksel Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İtalyanca, İzlanda dili, Japonca, Lehçe, Macarca, Norveççe, Portekizce, Rumence, Rusca, Sırpça, Slovakca, Tamil dili, Tayca, Tayvan Mandarin, Türkçe, Ukraynaca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 36 dile de çevrilmiştir. Afrikaca, Almanca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İtalyanca, İzlanda dili, Japonca, Lehçe, Macarca, Norveççe, Portekizce, Rumence, Rusca, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
@@ -62,49 +62,44 @@ Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. http://www.gnu.or
 - Yaklaşık 50 MB depolama alanı.
 -
 
-+ NVDA programını tedarik etme +
++ NVDA programının Tedariki ve Kurulumu +
 Bir NVDA kopyanız yoksa, aşağıdaki bağlantıdan programı indirebilirsiniz. [www.nvda-project.org NVDA_URL].
 
 Buradan Download bölümüne giderek programın en son sürümünün indirme bağlantısına ulaşabilirsiniz.
 
-Şu an NVDA 2 biçimde paketlenmiştir.
-Birincisi bir yükleyicidir ve programı başlat menüsünden istediğiniz an çalıştırabilmeniz için konuşma desteğiyle sisteme kurulum yapmanızı sağlar.
-Diğeri kendi kendine çıkarılabilen bir arşiv dosyasıdır (self extracting archive) ve NVDA programının istediğiniz an USB veya CD'den çalıştırılabilmesini sağlayan tam taşınabilir sürümünü içerir.
+İndirdiğiniz dosyayı çalıştırdığınızda, NVDA'nın geçici bir kopyası açılacaktır.
+Daha sonra, sizden NVDA kurulumunu yapmak, taşınabilir bir kopya oluşturmak ve geçici kopyayı kullanmaya devam etmek arasında seçim yapmanız istenecektir.
 
-Windows logon Ekranı, Kullanıcı Hesabı Kontrolü ekranı (UAC), ve diğer güvenlik ekranları ile Windows Vista ve sonrası ile birlikte yönetici olarak çalışan uygulamalara erişebilmek için, programı sisteminize yükleyiciyi kullanarak kurmanız gerekmektedir.
-Bu ekranlara NVDA programının taşınabilir kopyasıyla erişilemez.
+NVDA'yı bu bilgisayarda devamlı olarak kullanmayı planlıyorsanız, NVDA'yı kurma seçeneğini tercih edebilirsiniz.
+NVDA'yı kurmanız,  Windows açıldıktan  sonra NVDA'yı otomatik olarak başlatabilmenizi, Windows giriş ekranlarında ya da güvenli kipte karşılaştığınız iletişim kutularını NVDA'yla okuyabilmenizi, (ki bunu taşınabilir kopya ile yapamazsınız), NVDA'ya başlat menüsü ya da masaüstünden ulaşabilmenizi sağlayacaktır.
+Ek olarak, kurulmuş NVDA kopyasını daha sonra taşınabilir kopya oluşturmak için de kullanabilirsiniz.
 
-+ NVDA Programını Kurma +
+NVDA'yı USB bellek ya da benzer taşınabilir ortamlara kopyalamak istiyorsanız, taşınabilir kopya oluştur seçeneğini tercih etmelisiniz.
+Taşınabilir kopyayı, daha sonra başka bir bilgisayara NVDA'yı kurmak için de kullanabilirsiniz.
+  
+NVDA'nın geçici kopyasını kullanmaya devam etmek de bir seçenek olabilir, özellikle test ve demonstrasyon amacıyla, tabii her seferinde NVDA'nın bu şekilde başlatılması lüzumundan fazla zaman alacaktır.
 
-++ NVDA yükleyicisi ++
-Bir NVDA kurulum dosyanız varsa, yalnızca giriş tuşuna basın veya dosya üzerinde çift sol tıklayarak kurulumu başlatın.
+++ NVDA'yı Kurma ++
+NVDA'yı doğrudan indirdiğiniz dosya üzerinden kuruyorsanız, NVDA'yı kur düğmesine basın.
+Bu iletişim kutusunu kapattıysanız ya da kurulumu taşınabilir kopya üzerinden yapmak istiyorsanız, lütfen NVDA Araçlar menüsü altında bulunan NVDA'yı Kur menü öğesini bulup çalıştırın.
 
-Kurulum programı yüklenmeye başladığında NVDA kurulum müziğini duyacaksınız.
-Daha sonra, NVDA'nın geçici kopyası Kurulumun yönergelerini takip ederek programı kurmanızı sağlayacaktır.
-Kurulum sırasında NVDA'nın başka bir kopyası çalışıyorsa, bir mesaj, çalışan NVDA kopyasının kapanacağı konusunda sizi uyaracaktır.
-Bu mesaj üzerinde girişe bastığınızda, elinizdeki NVDA kopyası kapanarak geçici NVDA kopyası çalışmaya başlayacaktır. Bu, kurulumun değişen dosyaları doğru biçimde güncelleyebilmesi için gereklidir.
-Bu aşamada, NVDA'nın başka bir kopyası sisteminizde kuruluysa, NVDA yükleyicisi öncelikle bu kopyayı bilgisayarınızdan kaldıracak ve daha sonra Yeni NVDA'yı kurmaya başlayacaktır.
+Karşınıza çıkan kurulum iletişim kutusu, sizi yeni bir kurulum yapılacağı ya da mevcut kurulumun güncelleneceği konusunda bilgilendirecek ve onayınızı isteyecektir.
+Devam düğmesine basarak kurulumu başlatabilirsiniz.
+Bu iletişim kutusunda, NVDA'nın Windows giriş ekranınd otomatik olarak başlamasıyla ve masaüstünde NVDA için bir kısayol oluşturulmasıyla ilgili onay kutularını da bulacaksınız.
+ Kurulum bittiğinde, sürecin başarıyla tamamlandığını belirten bir mesajla karşılaşacaksınız.
+ Bu noktada Tamam'a basmanız NVDA'nın kurulmuş olan kopyasını başlatacaktır.
+ 
+++ Taşınabilir Bir Kopya Oluşturma ++
+Doğrudan indirdiğiniz dosyayı çalıştırarak NVDA taşınabilir kopyasını oluşturmak istiyorsanız, Taşınabilir Kopya Oluştur düğmesine basmanız yeterli.
+Bu iletişim kutusunu kapattıysanız ya da bilgisayarınızda NVDA kurulu durumdaysa, lütfen NVDA Araçlar menüsü altında bulunan Taşınabilir Kopya Oluştur menü öğesini bulup çalıştırın.
 
-Kurulumu başarıyla tamamladığınızda, yükleyici, NVDA kurulumunu sonlandırdığınıza ilişkin sizi uyaracaktır.
-NVDA'yı yeniden yüklüyorsanız, bu aşamada yükleyici sisteminizi yeniden başlatmanızı isteyebilir.
-Unutmayın ki, sisteminizi yeniden başlatamamanız istenmeyen sonuçlara neden olabilir.
-Yeniden başlatmanız istenmezse, Son düğmesine basmak, yükleyiciyi kapatacak ve yeni NVDA programını başlatacaktır.
+Karşınıza çıkacak iletişim kutusu, taşınabilir kopyanın oluşturulacağı yeri belirlemenize olanak tanır.
+Bu, yerel diskinizde bulunan bir klasör ya da USB bellek benzeri taşınabilir ortamda bulunan bir konum olabilir.
 
-++ Taşınabilir NVDA ++
-Elinizde NVDA'nın taşınabilir sürümü varsa, tek yapmanız gereken dosya üzerinde girişe basmak veya üzerine çift tıklayarak yönergeleri takip etmektir.
-Program size dosyaları sisteminizde nereye koyacağınızı soracaktır.
-
-+++ USB Belleğinde Taşınabilir NVDA +++
-NVDA'yı bir USB belleğe koymak ve böylece başka bilgisayar sistemlerinde de kullanmak mümkündür.
-
-Taşınabilir sürüm, dosyaların nereye çıkarılacağını sorduğunda, USB belleğinizin sürücüsünü, artı isteğe bağlı olarak NVDA'nın koyulmasını istediğiniz bir alt dizin belirtin.
-
-Örneğin, USB belleğiniz E:\ sürücüsündeyse, E:\nvda yazarak NVDA'nın USB belleğinizdeki nvda alt dizinine koyulmasını isteyebilirsiniz.
-
-böylelikle, NVDA ve tüm ayarlarınızı yanınızda taşıyabilmenize karşın, yalnızca USB belleğinizi takmanın, NVDA'nın otomatik olarak başlamasını sağlamayacağını, NVDA'yı Windows Gezgini veya çalıştır bölümünden el ile başlatmanız gerektiğini lütfen not edin.
-
-NVDA'yı USB bellekten otomatik başlatabilmekle ilgili olarak lütfen aşağıdaki bağlantıdaki makaleye bakın:
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+Bu iletişim kutusunda, NVDA kopyasının bulunduğu  ortamda otomatik başlatma (Autorun) dosyası oluşturmanızı (USB belleklerde taşınabilir kopya oluştururken faydalı olabilir), ve mevcut NVDA kopyasıyla kullandığınız konfigürasyon ve plug-inleri yeni taşınabilir kopya için de geçerli kılmanızı sağlayacak kontroller de bulunmaktadır.
+Devam düğmesine basmanız taşınabilir kopyayı oluşturacaktır.
+Oluşturma işlemi bittiğinde, sürecin başarıyla  tamamlandığını bildiren bir mesajla karşılaşırsınız.
+Bu iletişim kutusunu kapatmak için Tamam'a basabilirsiniz.
 
 + NVDA'ya Başlarken +
 
@@ -303,7 +298,7 @@ Metni incelerken, aşağıdaki tuş komutları kullanılabilir:
 | İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+AşağıYönTuşu | İnceleme imlecinde bulunduğunuz noktadan başlayarak metnin gittiği yere kadar okur |
 | İnceleme imlecinin bulunduğu yerden kopyalamayı başlatma | NVDA+f9 | NVDA+f9 | inceleme imlecinde bulunduğunuz pozisyondan itibaren metni kopyalamaya başlar. NVDA'ya metnin nereye kadar kopyalanacağını belirtmeden asıl kopyalama gerçekleşmez |
 | İnceleme imlecinin bulunduğu yere kadar kopyalama | NVDA+f10 | NVDA+f10 | inceleme imlecinde kopyalamanın başladığı yer olarak ayarlanan noktadan, inceleme imlecinin şu an bulunduğu noktaya kadar olan metni kopyalar. Bu tuşa basıldıktan sonra metin panoya kopyalanır |
-| Metin biçimini söyle | NVDA+f | İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir |
+| Metin biçimini söyle | NVDA+f | NVDA+f | İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir |
 %kc:endInclude
 
 Not: Numara pedindeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
@@ -445,8 +440,10 @@ NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu k
 ++ foobar2000 ++
 %kc:beginInclude
 || Ad | Kısayol Tuşu | Tarif |
-| Kalan zamanı oku | kontrol+shift+r | Mevcutsa, çalmakta olan parçanın bitmesi için kalan süreyi okur. |
+| Kalan süreyi oku | kontrol+shift+r | Mevcutsa, çalmakta olan parçanın bitmesi için kalan süreyi okur. |
 %kc:endInclude
+
+Not: Kalan süreyi oku kısayol tuşu, yalnızca Foobar2000 durum çubuğu varsayılan görünümünde geçerlidir.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -507,6 +504,10 @@ Bu seçenek, yalnızca sisteme yüklenmiş olan NVDA kopyalarında mevcuttur.
 Bu düğmeye basmak Şu anki NVDA ayarlarınızı NVDA system configuration dizinine kopyalar ve böylece oturum açma, kullanıcı hesapları kontrolü (uac) ve diğer güvenli ekranlarda NVDA bu ayarları kullanır.
 Tüm ayarlarınızın transfer edildiğinden emin olmak için, önce control+NVDA+c tuşlarına basarak NVDA ayarlarınızı kaydettiğinizden emin olun veya NVDA menüsünden ayarlarınızı kaydedin.
 Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
+
+==== NVDA Güncellemelerini Otomatik Olarak Kontrol Et ====
+Bu etkinleştirildiyse, NVDA güncel versiyon olup olmadığını otomatik olarak kontrol edecek ve güncelleme bulunduğunda sizi bilgilendirecektir.
+Ek olarak, NVDA Yardım menüsü altında bulunan, güncelleme olup olmadığına bak seçeneğini kullanarak istediğiniz zaman güncelleme kontrolü yapabilirsiniz.
 
 +++ Sentezleyici Seçimi (NVDA+control+s) +++
 Tercihler menüsü içindeki "sentezleyici..." altında bulunan sentezleyici iletişim kutusu, NVDA'nın hangi sentezleyiciyle konuşacağını seçmenizi sağlar.
@@ -852,7 +853,7 @@ Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür 
 -
 
 ==== imleç sonrasındaki biçim değişikliklerini bildir ====
-Bu seçenek NVDA'ya konuştuğu satırda herhangi bir biçim değişikliği varsa bildirmesini söyler. Ancak bu, nvda performansını yavaşlatabilir.
+Bu seçenek NVDA'ya konuştuğu satırda herhangi bir biçim değişikliği varsa bildirmesini söyler. Ancak bu, performansı yavaşlatabilir.
 
 Varsayılan olarak NVDA sistem düzenleme imleci veya inceleme imlecinin bulunduğu konumdaki biçim değişikliklerini bildirecektir, ve bazı durumlarda yalnızca performansı yavaşlatmayacaksa satırın geri kalanındaki değişiklikleri belirtebilir.
  

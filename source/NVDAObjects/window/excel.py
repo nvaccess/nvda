@@ -7,6 +7,7 @@
 from comtypes import COMError
 import comtypes.automation
 import wx
+import re
 import oleacc
 import textInfos
 import colors
@@ -19,6 +20,9 @@ from .. import NVDAObjectTextInfo
 import scriptHandler
 
 xlA1 = 1
+xlRC = 2
+
+re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 
 class ExcelBase(Window):
 	"""A base that all Excel NVDAObjects inherit from, which contains some useful methods."""
@@ -32,8 +36,8 @@ class ExcelBase(Window):
 		return comtypes.client.dynamic.Dispatch(pDispatch)
 
 	@staticmethod
-	def getCellAddress(cell, external=False):
-		return cell.Address(False, False, xlA1, external)
+	def getCellAddress(cell, external=False,format=xlA1):
+		return cell.Address(False, False, format, external)
 
 	def fireFocusOnSelection(self):
 		selection=self.excelWindowObject.Selection
@@ -179,8 +183,20 @@ class ExcelCell(ExcelBase):
 			return False
 		return thisAddr==otherAddr
 
-	def _get_name(self):
-		return self.getCellAddress(self.excelCellObject)
+	name=None
+
+	def _get_cellCoordsText(self):
+		return self.getCellAddress(self.excelCellObject) 
+
+	def _get__rowAndColumnNumber(self):
+		rc=self.excelCellObject.address(False,False,xlRC,False)
+		return [int(x)+1 if x else 1 for x in re_RC.match(rc).groups()]
+
+	def _get_rowNumber(self):
+		return self._rowAndColumnNumber[0]
+
+	def _get_columnNumber(self):
+		return self._rowAndColumnNumber[1]
 
 	def _get_value(self):
 		return self.excelCellObject.Text

@@ -53,43 +53,30 @@ NVDA 2006-2011 wszelkie prawa zastrzeżone.NVDA jest objęty przez GNU General P
 - Około 50 MB wolnego miejsca na dysku. 
 -
 
-+ Pobieranie NVDA +
++ Pobieranie i instalacja NVDA +
 Program NVDA można pobrać ze strony internetowej znajdującej sie pod adresem: www.nvda-project.org.
 Przejdź na stronie do sekcji "Download" gdzie znajduje się link do najnowszej wersji programu. Możesz udać się także na polską stronę społeczności nvda pod adresem
 www.nvda.pl
 
-Obecnie dostępne są do pobrania dwie wersje NVDA. Jedna umożliwia instalację programu w systemie, dzięki czemu może on w każdej chwili zostać uruchomiony z Menu Start. lub skrótem klawiszowym Kontrol+Alt+N. 
-Druga przenośna wersja programu, dostępna jest w postaci archiwum zip, nie wymaga instalacji i może zostać uruchomiona z pamięci USB lub płyty CD.owszej wersji NVDA.
+Uruchomienie pobranego pliku zpowoduje start tymczasowej kopii programu. Na tym etapie możesz zdecydować czy chcesz zainstalować program na dysku, utworzyć jego kopię przenośną i umieścić ją np na pamięci flash czy kontynuować użycie wersji tymczasowej.
 
-Aby uzyskać dostęp do ekranu logowania Windows, User Account Control (UAC), lub innych zabezpieczonych ekranów Windows, a także aplikacji wymagających uprawnień administratora w systemie Windows Vista, lub nowszych. 
-NVDA należy zainstalować w systemie za pomocą instalatora. Ekrany te nie są dostępne z przenośnych pakietów NVDA. 
+Jeśli na aktualnym komputerze planujesz zawsze używać NVDA, prawdopodobnie najleprzym wyjściem będzie instalacja programu w systemie.
+Zainstalowana wersja programu umożliwia dostęp do funkcjonalności nie obecnych w kopii tymczasowej jak start wraz z systemem, dostęp do UAC i ekranów logowania. Po instalacji na twoim pulpicie i w menu start zostaną także utworzone skróty umożliwiające szybkie uruchomienie screenreadera.
+Przy pomocy zainstalowanej wersji będziesz mógł/mogła również utworzyć przenośną kopię programu w dowolnym momencie. Taką kopię będziesz mógł/a umieścić na pamięci zewnętrznej typu pendrive, a także zainstalować ją na dowolnym innym komputerze.
+Kontynuowanie użycia wersji tymczasowej może być użyteczne do przedstawienia innej osobie możliwości programu. Uruchamianie pliku instalacyjnego za każdym razem może zabierać mnustwo czasu.
 
-+ Instalacja NVDA +
+++ Instalacja NVDA ++
+Jeśli chcesz zainstalować NVDA bezpośrednio po uruchomieniu pobranego pakietu, naciśnij poprostu przycisk "zainstaluj nvda". Jeśli okno pakietu zostało zamknięte, albo uruchamiasz NVDA z wersji przenośnej, kliknij odpowiednie polecenie w menu narzędzia w menu programu.
 
-++ Instalator NVDA ++
-Podczas ładowania instalatora usłyszysz dźwięk. Po załadowaniu uruchomiona zostanie tymczasowa kopia NVDA, która za pomocą komunikatów głosowych przeprowadzi cię przez proces instalacji. 
-Jeśli podczas instalacji inna kopia programu NVDA była uruchomiona, instalator zamknie ją, informując o tym za pomocą komunikatu. 
-Zamknięcie poprzedniej kopii programu jest konieczne w celu poprawnego zainstalowania nowej wersji NVDA. 
-Na tym etapie instalator usunie poprzednio zainstalowaną kopie programu i rozpocznie instalowanie nowej.
+Okno dialogowe, które się pojawi, wyświetli pytanie o to czy napewno chcesz zainstalować program. Naciśnięcie przycisku "kontynuuj" spowoduje uruchomienie procedury instalacji. Na tym etapie jest do wyboru kilka opcji, w rodzaju utwórz skrót w menu start i na pulpicie, a także czy NVDA ma uruchamiać się na ekranach logowania windows.
+Po pomyślnej instalacji wyświetlony zostanie odpowiedni komunikat. Po wciśnięciu przycisku ok, nastąpi restart programu.
 
-Po zakończeniu procesu instalator powiadomi cię iż program NVDA został poprawnie zainstalowany, i może poprosić o zrestartowanie komputera. 
+++ Tworzenie kopii przenośnej ++
+Jeśli chcesz utworzyć kopię przenośną programu bezpośrednio z pobranego pakietu, naciśnij przycisk "utwórz kopię przenośną". Jeśli okno pakietu zostało zamknięte lub kożystasz z już zainstalowanej wersji, wybierz polecenie utwórz kopię przenośną w menu narzędzia w ustawieniach NVDA.
+Pojawi się okno, pozwalające wybrać katalog w którym wersja przenośna ma zostać umieszczona. Może to być dowolna lokalizacja na dysku twardym, lub na dysku zewnętrznym, pamięci przenośnej itd. Na tym etapie możesz także wybrać, czy ma zostać ztworzony plik autorun. Jest to użyteczne gdy chcemy, by po włożeniu np. pamięci usb program automagicznie zaczynał mówić. W tym wypadku wszystko zależy jednak od administratora systemu i ta funkcja nie zawsze może zadziałać. W kopii przenośnej mogą zostać dołączone wtyczki użytkownika, jego konfiguracja itd.
+Wciśnięcie przycisku 
+"kontynuuj" utworzy wersję przenośną w podanej lokalizacji.
 
-Jeśli system nie zostanie zrestartowany, program może nie działać poprawnie.
-Jeśli instalator nie poprosi o restart systemu, kliknięcie przycisku zakończ zamknie go, i uruchomi nowo zainstalowaną wersję programu.
-
-++ Przenośna Wersja NVDA ++
-Jeśli pobrana została przenośna wersja NVDA, wszystko co należy zrobić, to nacisnąć klawisz Enter lub kliknąć dwukrotnie na plik, i postępować zgodnie z instrukcjami.
-Jest to archiwum samo rozpakowujące, należy tylko wskazać dowolne miejsce na dysku twardym lub przenośnej pamięci USB (pendrive) bądź innym nośniku (na przykład płycie CD).
-
-+++ NVDA na pamięci przenośnej +++
-Możliwe jest umieszczenie nvda na pamięci przenośnej typu flash, tak by używać go na innych komputerach, nie posiadających zainstalowanego programu udźwiękawiającego.
-
-Gdy dekompresor wersji przenośnej zapyta o ścieżkę do wypakowania plików, wskaż literę twojego pendrive'a lub innej przenośnej pamięci, i opcjonalnie katalog, w którym zostaną umieszczone pliki niezbędne do uruchomienia nvda.
-Zatem gdy przykładowo litera twojego pendrive to e:, wpisz e:\nvda, co sprawi, że na twoim pendrivie zostanie utworzony katalog nvda, a w nim pliki programu.
-
-Uwaga:
-Te kroki nie sprawią, że będziesz mógł przenosić nvda wraz z jego ustawieniami i program zadziała automagicznie na każdej maszynie, zaraz po podłączeniu pendrive'a do portu usb. Musisz to zrobić ręcznie. Jeśli chcesz uzyskać pomoc w kwestii automatycznego uruchamiania programu zaraz po podłączeniu pamięci do portu usb, przeczytaj odpowiedni artykół na angielskiej stronie projektu
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
 
 + Pierwsze Kroki w NVDA +
 

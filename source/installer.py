@@ -1,3 +1,9 @@
+#installer.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2011-2012 NV Access Limited
+
 from ctypes import *
 from ctypes import *
 from ctypes.wintypes import *
@@ -148,7 +154,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 		for name,value in uninstallerRegInfo.iteritems(): 
 			_winreg.SetValueEx(k,name,None,_winreg.REG_SZ,value.format(installDir=installDir))
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,_winreg.KEY_WRITE) as k:
-		_winreg.SetValueEx(k,"@",None,_winreg.REG_SZ,installDir)
+		_winreg.SetValueEx(k,"",None,_winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
 	with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda",0,_winreg.KEY_WRITE) as k:
 		_winreg.SetValueEx(k,"startMenuFolder",None,_winreg.REG_SZ,startMenuFolder)
 		if startOnLogonScreen is not None:

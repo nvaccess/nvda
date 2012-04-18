@@ -154,6 +154,11 @@ def main():
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
 	log.debug("Core starting")
+	import config
+	if not globalVars.appArgs.configPath:
+		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
+	#Initialize the config path (make sure it exists)
+	config.initConfigPath()
 	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
 	log.debug("loading config")
 	import config

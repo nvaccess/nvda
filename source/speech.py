@@ -269,7 +269,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -290,8 +290,8 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 		allowProperties["rowCount"]=False
 		allowProperties["columnCount"]=False
 		if (not config.conf["documentFormatting"]["reportTables"]
-				or not config.conf["documentFormatting"]["reportTableCellCoords"]
-				or obj.tableCellCoordsInName):
+				or not config.conf["documentFormatting"]["reportTableCellCoords"]):
+			allowProperties['cellCoordsText']=False
 			allowProperties["rowNumber"]=False
 			allowProperties["columnNumber"]=False
 	if isEditable:
@@ -765,10 +765,11 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		speakRole=False
 		role=controlTypes.ROLE_UNKNOWN
 	value=propertyValues.get('value') if role not in controlTypes.silentValuesForRoles else None
+	cellCoordsText=propertyValues.get('cellCoordsText')
 	rowNumber=propertyValues.get('rowNumber')
 	columnNumber=propertyValues.get('columnNumber')
 	includeTableCellCoords=propertyValues.get('includeTableCellCoords',True)
-	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus):
+	if speakRole and (reason not in (controlTypes.REASON_SAYALL,controlTypes.REASON_CARET,controlTypes.REASON_FOCUS) or not (name or value or cellCoordsText or rowNumber or columnNumber) or role not in controlTypes.silentRolesOnFocus):
 		textList.append(controlTypes.roleLabels[role])
 	if value:
 		textList.append(value)
@@ -787,7 +788,11 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 			# "not drop target" doesn't make any sense, so use a custom message.
 			textList.append(_("done dragging"))
 			negativeStates.discard(controlTypes.STATE_DROPTARGET)
-		textList.extend([_("not %s")%controlTypes.stateLabels[x] for x in negativeStates])
+		# Translators: Indicates that a particular state on an object is negated.
+		# Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+		# but this still might be used in some other cases.
+		# %s will be replaced with the negated state.
+		textList.extend([controlTypes.negativeStateLabels.get(x, _("not %s")%controlTypes.stateLabels[x]) for x in negativeStates])
 	if 'description' in propertyValues:
 		textList.append(propertyValues['description'])
 	if 'keyboardShortcut' in propertyValues:
@@ -805,7 +810,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 				oldTreeLevel=level
 			else:
 				textList.append(_('level %s')%propertyValues['positionInfo_level'])
-	if rowNumber or columnNumber:
+	if cellCoordsText or rowNumber or columnNumber:
 		tableID = propertyValues.get("_tableID")
 		# Always treat the table as different if there is no tableID.
 		sameTable = (tableID and tableID == oldTableID)
@@ -816,16 +821,18 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 			rowHeaderText = propertyValues.get("rowHeaderText")
 			if rowHeaderText:
 				textList.append(rowHeaderText)
-			if includeTableCellCoords: 
+			if includeTableCellCoords and not cellCoordsText: 
 				textList.append(_("row %s")%rowNumber)
 			oldRowNumber = rowNumber
 		if columnNumber and (not sameTable or columnNumber != oldColumnNumber):
 			columnHeaderText = propertyValues.get("columnHeaderText")
 			if columnHeaderText:
 				textList.append(columnHeaderText)
-			if includeTableCellCoords:
+			if includeTableCellCoords and not cellCoordsText:
 				textList.append(_("column %s")%columnNumber)
 			oldColumnNumber = columnNumber
+	if includeTableCellCoords and cellCoordsText:
+		textList.append(cellCoordsText)
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:

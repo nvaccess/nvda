@@ -3,6 +3,25 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.2 =
+
+== Novità ==
+- NVDA è in grado di controllare e scaricare nuove versioni e aggiornamenti dello screen reader. (#73)
+
+
+== Cambiamenti ==
+- NVDA viene ora distribuito in un unico pacchetto. Invece di avere due pacchetti diversi formati da un installer e una portable, ora è a disposizione un file unico che, una volta eseguito, farà avviare una copia temporanea di NVDA, permettendo o l'installazione di NVDA, oppure la generazione di una distribuzione portable. (#1715)
+- NVDA viene installato ora nella cartella programmi su tutti i sistemi operativi. L'aggiornamento da una versione precedente causerà lo spostamento dei file in tale cartella.
+
+
+== Bug Corretti ==
+- Con l'opzione "cambia la lingua automaticamente" attiva, il testo ricavato da grafici o etichette nelle applicazioni Mozilla Gecko (come Firefox) viene ora letto nella lingua appropriata.
+- Il comando  dire tutto non si ferma più nel mezzo di un testo nel programma Bibleseeker e nei controlli editazioni di tipo  TRxRichEdit.
+- Vengono letti correttamente gli elenchi situati in Windows8 Explorer, scheda permessi della finestra proprietà, e anche quelli nella finestra Windows Update.
+- NVDA non rallenta più nei documenti Word in presenza di righe molto lunghe, o di sommari complessi, e in tutte le circostanze in cui necessitano più di due secondi per ottenere informazioni dal documento. (#2191)
+
+
+
 = 2012.1 =
 Le principali novità di questa versione si concentrano su una lettura del braille molto più fluida; la formattazione dei documenti è indicata anche in braille; accesso a molte più informazioni di formattazione e una migliore gestione di Microsoft Word; inoltre, accesso semplificato e intuitivo all'Itunes Store. 
 
