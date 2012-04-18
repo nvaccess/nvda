@@ -33,9 +33,40 @@ bool calculateWordOffsets(wchar_t* text, int textLength, int offset, int* startO
 			break;
 		}
 	}
+	// #1656: fWordStop doesn't seem to stop on whitespace where punctuation follows the whitespace.
+	bool skipWhitespace=true;
+	for(int i=offset;i>=*startOffset;--i) {
+		if(iswspace(text[i])) {
+			if(skipWhitespace) {
+				// If we start in a block of whitespace, the word must start before this,
+				// as whitespace is included at the end of a word.
+				// Therefore, skip the whitespace and keep searching.
+				continue;
+			}
+			// This is whitespace. The word starts after it.
+			*startOffset=i+1;
+			break;
+		} else
+			skipWhitespace=false;
+	}
 	*endOffset=textLength;
 	for(int i=offset+1;i<textLength;++i) {
 		if(logAttrArray[i].fWordStop) {
+			*endOffset=i;
+			break;
+		}
+	}
+	// #1656: fWordStop doesn't seem to stop on whitespace where punctuation follows the whitespace.
+	for(int i=offset;i<*endOffset;++i) {
+		if(iswspace(text[i])) {
+			// This begins a block of whitespace. The word ends after it.
+			// Find the end of the whitespace.
+			for(;i<*endOffset;++i) {
+				if(!iswspace(text[i]))
+					break;
+			}
+			// We're now positioned on the first non-whitespace character,
+			// so the word ends here.
 			*endOffset=i;
 			break;
 		}

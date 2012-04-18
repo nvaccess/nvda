@@ -19,6 +19,7 @@
 - SayAll in BibleSeeker (and other TRxRichEdit controls) no longer stops in the middle of a passage.
 - Lists found in the Windows 8 Explorer file properties (permitions tab) and in Windows 8 Windows Update now read correctly.
 - Fixed possible freezes in MS Word which would result when it took more than 2 seconds to fetch text from a document (extremely long lines or tables of contents). (#2191)
+- Detection of word breaks now works correctly where whitespace is followed by certain punctuation. (#1656)
 
 
 == Changes for Developers ==
