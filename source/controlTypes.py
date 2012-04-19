@@ -369,7 +369,7 @@ stateLabels={
 }
 
 negativeStateLabels={
-	# Translators: This is presented when the focus moves onto an object but it has not been selected.
+	# Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 	STATE_SELECTED:_("not selected"),
 	# Translators: This is presented when a checkbox is not checked.
 	STATE_CHECKED:_("not checked"),
