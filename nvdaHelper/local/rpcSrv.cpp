@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaController.h"
 #include "nvdaControllerInternal.h"
 #include <common/winIPCUtils.h>
+#include <common/log.h>
 #include "rpcSrv.h"
 
 using namespace std;
@@ -53,26 +54,29 @@ RPC_STATUS startServer() {
 	PSECURITY_DESCRIPTOR psd=NULL;
 	ULONG size;
 	if(RpcServerRegisterIf3) {
-		if(!ConvertStringSecurityDescriptorToSecurityDescriptor(L"D:(A;;GA;;;wd)(A;;GA;;;AC)",SDDL_REVISION_1,&psd,&size)) {
-			return GetLastError();
+		if(!ConvertStringSecurityDescriptorToSecurityDescriptor(L"D:(A;;GA;;;wd)(A;;GA;;;AC)",SDDL_REVISION_1,&psd,&size)||!psd) {
+			LOG_ERROR(L"ConvertStringSecurityDescriptorToSecurityDescriptor failed, GetLastError is "<<GetLastError();
+			return -1;
 		}
-		if(!psd) return -1;
 	}
 	status=RpcServerUseProtseqEp((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,(RPC_WSTR)(endpointString.c_str()),psd);
 	//We can ignore the error where the endpoint is already set
 	if(status!=RPC_S_OK&&status!=RPC_S_DUPLICATE_ENDPOINT) {
+		LOG_ERROR(L"RpcUseProtSeqEp failed with status "<<status);
 		return status;
 	}
 	//Register the interfaces
 	if(RpcServerRegisterIf3) { //Windows 8
 		for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
 			if((status=RpcServerRegisterIf3(availableInterfaces[i],NULL,NULL,RPC_IF_ALLOW_CALLBACKS_WITH_NO_AUTH,RPC_C_LISTEN_MAX_CALLS_DEFAULT,0,NULL,psd))!=RPC_S_OK) {
+				LOG_ERROR(L"RpcServerRegisterIf3 failed to register interface at index "<<i<<L", status "<<status);
 				return status;
 			}
 		}
 	} else { // Pre Windows 8
 		for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
 			if((status=RpcServerRegisterIf(availableInterfaces[i],NULL,NULL))!=RPC_S_OK) {
+				LOG_ERROR(L"RpcServerRegisterIf failed to register interface at index "<<i<<L", status "<<status);
 				return status;
 			}
 		}
@@ -80,6 +84,7 @@ RPC_STATUS startServer() {
 	LocalFree(psd);
 	//Start listening
 	if((status=RpcServerListen(1,RPC_C_LISTEN_MAX_CALLS_DEFAULT,TRUE))!=RPC_S_OK) {
+		LOG_ERROR(L"RpcServerListen failed with status "<<status);
 		return status;
 	}
 	CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)RpcMgmtWaitServerListen,NULL,0,NULL);
@@ -90,6 +95,7 @@ RPC_STATUS stopServer() {
 	RPC_STATUS status;
 	for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
 		if((status=RpcServerUnregisterIf(availableInterfaces[i],NULL,1))!=RPC_S_OK) {
+			LOG_ERROR(L"RpcServerUnregisterIf failed to unregister interface at index "<<i<<L", status "<<status);
 			return status;
 		}
 	}
