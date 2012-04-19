@@ -55,7 +55,7 @@ RPC_STATUS startServer() {
 	ULONG size;
 	if(RpcServerRegisterIf3) {
 		if(!ConvertStringSecurityDescriptorToSecurityDescriptor(L"D:(A;;GA;;;wd)(A;;GA;;;AC)",SDDL_REVISION_1,&psd,&size)||!psd) {
-			LOG_ERROR(L"ConvertStringSecurityDescriptorToSecurityDescriptor failed, GetLastError is "<<GetLastError();
+			LOG_ERROR(L"ConvertStringSecurityDescriptorToSecurityDescriptor failed, GetLastError is "<<GetLastError());
 			return -1;
 		}
 	}
