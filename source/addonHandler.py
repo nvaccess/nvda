@@ -1,16 +1,15 @@
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2012 Rui Batista <ruiandrebatista@gmail.com>
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import glob
 import itertools
-import os
 import os.path
 import pkgutil
 import shutil
-from StringIO import StringIO
+from cStringIO import StringIO
 import zipfile
 
 from configobj import ConfigObj, ConfigObjError
@@ -22,14 +21,14 @@ from logHandler import log
 
 
 MANIFEST_FILENAME = "manifest.ini"
-BUNDLE_EXTENSION = "nvdaadon"
+BUNDLE_EXTENSION = "nvda-adon"
 
 #: Currently loaded add-ons.
 #: @type runningAddons: list
 runningAddons = []
 
 def initialize():
-	""" Initializes the addons subsystem. """
+	""" Initializes the add-ons subsystem. """
 	global runningAddons
 	availableAddons = getAvailableAddons()
 	for addon in availableAddons:
@@ -50,18 +49,24 @@ def terminate():
 
 
 def runHook(hookName, *args, **kwargs):
-	""" Runs the specified hook loaded addons.
+	""" Runs the specified hook on the loaded addons.
+	
+	Check the documentation for the specific hook to know what arguments to pass.
 	@param hookName: the hook name
 	@type hookName: string
+	@param args: positional arguments to the hook
+	@param kwargs, keyword arguments to the hook function.
+	@return list of C[(addon, ret)} tupples with the values returned by the add-ons that implement the hook.
 	"""
 	rets = []
 	for addon in runningAddons:
 		try:
-			ret = addon.runHook(hookName, *args, **kwargs)
-			if ret is not None:
-				rets.append((ret, addon))
+			hook = addon.getHookFunction(hookName)
+			if calable(hook):
+				ret = hook(*args, **kwargs)
+				rets.append((addon, ret))
 		except:
-			log.exception("Error running hook %s on plugin %s", hookName, addon.name)
+			log.exception("Error running hook %s on plugin %s", hookName, addon.name, exc_info=True)
 	return rets
 
 
@@ -71,9 +76,6 @@ def _getDefaultAddonPaths():
 	@rtype list(string)
 	"""
 	addon_paths = []
-	source_addons = os.path.join(os.getcwd(), "addons")
-	if os.path.isdir(source_addons):
-		dirs.append(source_addons)
 	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
 	if os.path.isdir(user_addons):
 		addon_paths.append(user_addons)
@@ -113,19 +115,18 @@ def installAddonBundle(bundle):
 
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
-	pass
 
 
 class Addon(object):
-	""" Represents an Addon available on the file system."""
+	""" Represents an Add-on available on the file system."""
 	def __init__(self, path):
-		""" Constructs an C[Addon} from.
+		""" Constructs an L[Addon} from.
 		@param path: the base directory for the addon data.
 		@type path: string
 		"""
 		self.path = path
 		self._extendedPackages = set()
-		self._isLoaded = True
+		self._isLoaded = False
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path) as f:
 			self.manifest = AddonManifest(f)
@@ -136,7 +137,7 @@ class Addon(object):
 		return self.manifest['name']
 
 	def addToPackagePath(self, package):
-		""" Adds this C{Addon} extensions to the specific package path if those exist.
+		""" Adds this L{Addon} extensions to the specific package path if those exist.
 		@param package: the python module representing the package.
 		@type package: python module.
 		"""
@@ -155,14 +156,14 @@ class Addon(object):
 		return self._isLoaded
 
 	def load(self):
-		""" Activates this addon, running the load hook if exists. """
+		""" Loads this L{Addon}, running the load hook if exists. """
 		self.runHook('load')
 		self._isLoaded = True
 
 	def unload(self):
 		""" Removes this add-on extensions from the running NVDA. 
 		For most addons other measures should be taken: reloading of plugins, etc. """
-		self.runHook('deunload')
+		self.runHook('unload')
 		log.debug("Deactivating addon.")
 		for package in self._extendedPackages:
 			extension_path = self._getPathForInclusionInPackage(package)
@@ -187,20 +188,33 @@ class Addon(object):
 		if not loader:
 			return None
 		# Create a qualified full name to avoid modules with the same name on sys.modules.
-		fullname = "%s.%s" % (self.name, name)
+		fullname = "addons.%s.%s" % (self.name, name)
 		try:
 			return loader.load_module(fullname)
 		except ImportError:
 			# in this case return None, any other error throw to be handled elsewhere
 			return None
 
-	def runHook(self, hookName, *args, **kwargs):
-		""" Runs the specified hook on this addon, if implemented."""
+	def getHookFunction(self, hookName):
+		""" returns the hook function object for this L{Addon} if available.
+		@param hookName the name of the hook.
+		@type hookName: string
+		@return a calable from the L{Addon} hooks module.
+		@rtype calalbe.
+		"""
 		if not self._hooksModule:
 			return None
-		func = getattr(self._hooksModule, hookName, None)
+		return getattr(self._hooksModule, hookName, None)
+
+	def runHook(self, hookName, *args, **kwargs):
+		""" Runs the specified hook on this addon, if implemented.
+		If access to the hook calable is desired see L{getHookFunction}.
+		
+		@param hookName: the hook name
+		@return the hooks return value, or none if it is not implemented.
+		"""
+		func = self.getHookFunction(hookName)
 		if func:
-			log.debug("Running hook %s of addon %s", hookName, self.name)
 			return func(*args, **kwargs)
 
 	def removeContents(self, ignoreErrors=True):
@@ -208,7 +222,7 @@ class Addon(object):
 		Any calls to the majority of the addon methods will throw an error.
 		IOErrors will be thrown unless ignoreErrors is True."""
 		if self.isActive:
-			raise RuntimeError, "This addon is still active."
+			raise RuntimeError("This addon is still active.")
 		shutil.rmtree(self.path, ignore_errors=ignoreErrors)
 
 
@@ -217,7 +231,7 @@ class AddonBundle(object):
 	The bundle is compressed using the zip file format. Manifest information
 	is available without the need for extraction."""
 	def __init__(self, bundlePath):
-		""" Constructs a C{AddonBundle} from a filename.
+		""" Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
 		"""
 		self._path = bundlePath
@@ -231,7 +245,8 @@ class AddonBundle(object):
 		@param addons_path: Path where to extract contents.
 		@type addonsPath: string
 		@param override: specifies if the contents of the addon-directory are or not overriden
-		@type override: boolean
+		@type override: boolean.
+		@raise AddonError: If the add-on is already installed and override is False.
 		"""
 		name = self._manifest['name']
 		path = os.path.join(addonsPath, name)
@@ -304,7 +319,7 @@ categories = list(default=list())
 """))
 
 	def __init__(self, input):
-		""" Constructs an C{AddonManifest} instance from manifest string data
+		""" Constructs an L{AddonManifest} instance from manifest string data
 		@param input: data to read the manifest informatinon
 		@type input: a fie-like object.
 		"""
