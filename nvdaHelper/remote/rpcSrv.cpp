@@ -47,7 +47,7 @@ RPC_BINDING_VECTOR* bindingVector;
 UUID nvdaInprocUuid;
 
 RPC_STATUS rpcSrv_initialize() {
-	nvdaUnregisteredEvent=CreateEvent(NULL,TRUE,false,NULL);
+	nvdaUnregisteredEvent=CreateEvent(NULL,TRUE,true,NULL);
 	RPC_STATUS status;
 	//Set the protocol
 	status=RpcServerUseProtseq((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,NULL);
