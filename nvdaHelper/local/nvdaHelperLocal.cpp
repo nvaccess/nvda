@@ -53,7 +53,7 @@ handle_t createRemoteBindingHandle(wchar_t* uuidString) {
 	} 
 	PSECURITY_DESCRIPTOR psd=NULL;
 	ULONG size;
-	if(!ConvertStringSecurityDescriptorToSecurityDescriptor(L"D:(A;;GA;;;AU)(A;;GA;;;AC)",SDDL_REVISION_1,&psd,&size)) {
+	if(!ConvertStringSecurityDescriptorToSecurityDescriptor(L"D:(A;;GA;;;wd)(A;;GA;;;AC)",SDDL_REVISION_1,&psd,&size)) {
 		return NULL;
 	}
 	RPC_SECURITY_QOS_V5_W securityQos={5,0,0,0,0,NULL,NULL,0,psd};

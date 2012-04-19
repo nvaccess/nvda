@@ -53,7 +53,7 @@ RPC_STATUS startServer() {
 	PSECURITY_DESCRIPTOR psd=NULL;
 	ULONG size;
 	if(RpcServerRegisterIf3) {
-		if(!ConvertStringSecurityDescriptorToSecurityDescriptor(L"D:(A;;GA;;;AU)(A;;GA;;;AC)",SDDL_REVISION_1,&psd,&size)) {
+		if(!ConvertStringSecurityDescriptorToSecurityDescriptor(L"D:(A;;GA;;;wd)(A;;GA;;;AC)",SDDL_REVISION_1,&psd,&size)) {
 			return GetLastError();
 		}
 		if(!psd) return -1;
