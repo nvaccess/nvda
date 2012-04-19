@@ -105,8 +105,11 @@ def nvdaControllerInternal_displayModelTextChangeNotify(hwnd, left, top, right, 
 def nvdaControllerInternal_logMessage(level,pid,message):
 	if not log.isEnabledFor(level):
 		return 0
-	from appModuleHandler import getAppNameFromProcessID
-	codepath="RPC process %s (%s)"%(pid,getAppNameFromProcessID(pid,includeExt=True))
+	if pid:
+		from appModuleHandler import getAppNameFromProcessID
+		codepath="RPC process %s (%s)"%(pid,getAppNameFromProcessID(pid,includeExt=True))
+	else:
+		codepath="NVDAHelperLocal"
 	log._log(level,message,[],codepath=codepath)
 	return 0
 

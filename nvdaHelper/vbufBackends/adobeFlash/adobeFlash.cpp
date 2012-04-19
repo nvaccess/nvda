@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <map>
 #include <windows.h>
 #include <oleacc.h>
-#include <remote/log.h>
+#include <common/log.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include "adobeFlash.h"

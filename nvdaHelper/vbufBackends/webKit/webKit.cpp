@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <oleacc.h>
 #include <remote/nvdaHelperRemote.h>
-#include <remote/log.h>
+#include <common/log.h>
 #include <vbufBase/backend.h>
 #include "webKit.h"
 

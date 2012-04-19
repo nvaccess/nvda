@@ -23,7 +23,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "typedCharacter.h"
 #include "IA2Support.h"
 #include "ia2LiveRegions.h"
-#include "log.h"
+#include <common/log.h>
 #include "gdiHooks.h"
 #include "nvdaHelperRemote.h"
 #include "inProcess.h"

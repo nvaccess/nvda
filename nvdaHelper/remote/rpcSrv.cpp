@@ -17,7 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <rpc.h>
 #include <sddl.h>
 #include "nvdaControllerInternal.h"
-#include "log.h"
+#include <common/log.h>
 #include "vbufRemote.h"
 #include "displayModelRemote.h"
 #include "NvdaInProcUtils.h"

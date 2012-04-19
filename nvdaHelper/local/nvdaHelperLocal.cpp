@@ -17,6 +17,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <algorithm>
 #include <rpc.h>
 #include <sddl.h>
+#include <common/log.h>
+#include "nvdaControllerInternal.h"
 #include "nvdaHelperLocal.h"
 #include "dllImportTableHooks.h"
 #include "rpcsrv.h"
@@ -137,4 +139,8 @@ void nvdaHelperLocal_terminate() {
 		oleaccHooks = NULL;
 	}
 	stopServer();
+}
+
+void logMessage(int level, const wchar_t* msg) {
+	nvdaControllerInternal_logMessage(level,0,msg);
 }

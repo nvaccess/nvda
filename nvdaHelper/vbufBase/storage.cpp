@@ -20,7 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <set>
 #include <sstream>
 #include <common/xml.h>
-#include <remote/log.h>
+#include <common/log.h>
 #include "utils.h"
 #include "storage.h"
 

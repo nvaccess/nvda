@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <oleidl.h>
 #include <mshtml.h>
-#include <remote/log.h>
+#include <common/log.h>
 #include "mshtml.h"
 #include "node.h"
 
