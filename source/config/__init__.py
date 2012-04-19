@@ -409,5 +409,5 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	module.__path__ = dirs
 	# FIXME: this should not be coupled to the config module....
 	import addonHandler
-	for addon in addonHandler.runningAddons:
+	for addon in addonHandler.getRunningAddons():
 		addon.addToPackagePath(module)

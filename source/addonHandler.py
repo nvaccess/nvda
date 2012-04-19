@@ -23,13 +23,18 @@ from logHandler import log
 MANIFEST_FILENAME = "manifest.ini"
 BUNDLE_EXTENSION = "nvda-adon"
 
-#: Currently loaded add-ons.
-#: @type runningAddons: list
-runningAddons = []
+#: Currently loaded add-ons. keyed by path
+#: @type runningAddons: dict
+_runningAddons = {}
+
+def getRunningAddons():
+	""" Returns currently loaded addons.
+	"""
+	return _runningAddons.itervalues()
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
-	global runningAddons
+	global _runningAddons
 	availableAddons = getAvailableAddons()
 	for addon in availableAddons:
 		try:
@@ -37,15 +42,15 @@ def initialize():
 		except:
 			log.exception("Error loading addon.")
 			continue
-		runningAddons.append(addon)
+		_runningAddons[addon.path] = addon
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
-	global runningAddons
-	addons = list(runningAddons)
-	for addon in runningAddons:
+	global _runningAddons
+	addons = getRunningAddons()
+	for addon in addons:
 		addon.unload()
-	runningAddons = []
+	_runningAddons = {}
 
 
 def runHook(hookName, *args, **kwargs):
@@ -59,7 +64,7 @@ def runHook(hookName, *args, **kwargs):
 	@return list of C[(addon, ret)} tupples with the values returned by the add-ons that implement the hook.
 	"""
 	rets = []
-	for addon in runningAddons:
+	for addon in getRunningAddons():
 		try:
 			hook = addon.getHookFunction(hookName)
 			if calable(hook):
