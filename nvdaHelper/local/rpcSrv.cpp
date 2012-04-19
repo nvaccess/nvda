@@ -68,26 +68,20 @@ RPC_STATUS startServer() {
 	//Register the interfaces
 	if(RpcServerRegisterIf3) { //Windows 8
 		for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
-			if((status=RpcServerRegisterIf3(availableInterfaces[i],NULL,NULL,RPC_IF_ALLOW_CALLBACKS_WITH_NO_AUTH,RPC_C_LISTEN_MAX_CALLS_DEFAULT,0,NULL,psd))!=RPC_S_OK) {
+			if((status=RpcServerRegisterIf3(availableInterfaces[i],NULL,NULL,RPC_IF_AUTOLISTEN|RPC_IF_ALLOW_CALLBACKS_WITH_NO_AUTH,RPC_C_LISTEN_MAX_CALLS_DEFAULT,0,NULL,psd))!=RPC_S_OK) {
 				LOG_ERROR(L"RpcServerRegisterIf3 failed to register interface at index "<<i<<L", status "<<status);
 				return status;
 			}
 		}
 	} else { // Pre Windows 8
 		for(int i=0;i<ARRAYSIZE(availableInterfaces);i++) {
-			if((status=RpcServerRegisterIf(availableInterfaces[i],NULL,NULL))!=RPC_S_OK) {
+			if((status=RpcServerRegisterIfEx(availableInterfaces[i],NULL,NULL,RPC_IF_AUTOLISTEN,RPC_C_LISTEN_MAX_CALLS_DEFAULT,NULL))!=RPC_S_OK) {
 				LOG_ERROR(L"RpcServerRegisterIf failed to register interface at index "<<i<<L", status "<<status);
 				return status;
 			}
 		}
 	}
 	LocalFree(psd);
-	//Start listening
-	if((status=RpcServerListen(1,RPC_C_LISTEN_MAX_CALLS_DEFAULT,TRUE))!=RPC_S_OK) {
-		LOG_ERROR(L"RpcServerListen failed with status "<<status);
-		return status;
-	}
-	CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)RpcMgmtWaitServerListen,NULL,0,NULL);
 	return status;
 }
 
@@ -99,5 +93,5 @@ RPC_STATUS stopServer() {
 			return status;
 		}
 	}
-	return RpcMgmtStopServerListening(NULL); 
+	return status;
 }
