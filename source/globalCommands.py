@@ -272,6 +272,8 @@ class GlobalCommands(ScriptableObject):
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
 		if not isinstance(curObject,NVDAObject):
+			# Translators: Reported when the user tries to perform a command related to the navigator object
+			# but there is no current navigator object.
 			speech.speakMessage(_("no navigator object"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()>=1:
