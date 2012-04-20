@@ -19,7 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <oleacc.h>
 #include <common/xml.h>
-#include "log.h"
+#include <common/log.h>
 #include "nvdaHelperRemote.h"
 #include "nvdaInProcUtils.h"
 #include "nvdaInProcUtils.h"

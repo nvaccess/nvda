@@ -99,8 +99,10 @@ remoteLib=env.SharedLibrary(
 		nvdaInProcUtilsRPCServerSource,
 		"nvdaHelperRemote.def",
 	],
+	LINKFLAGS="${LINKFLAGS} /delayload:minhook.dll /delay:unload /delay:nobind",
 	LIBS=[
 		minHookLib[1 if 'symbols' not in env['nvdaHelperDebugFlags'] else 2],
+		"delayimp.lib",
 		"user32",
 		"gdi32",
 		"ole32",

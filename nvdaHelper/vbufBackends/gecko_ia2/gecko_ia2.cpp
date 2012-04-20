@@ -20,7 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <common/ia2utils.h>
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
-#include <remote/log.h>
+#include <common/log.h>
 #include <vbufBase/utils.h>
 #include "gecko_ia2.h"
 

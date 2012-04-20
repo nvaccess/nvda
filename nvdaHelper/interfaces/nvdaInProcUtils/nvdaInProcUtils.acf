@@ -12,7 +12,10 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+[strict_context_handle]
 interface NvdaInProcUtils {
+	[fault_status,comm_status] registerNVDAProcess();
+	[fault_status,comm_status] unregisterNVDAProcess();
 	[fault_status,comm_status] winword_expandToLine();
 	[fault_status,comm_status] winword_getTextInRange();
 }
