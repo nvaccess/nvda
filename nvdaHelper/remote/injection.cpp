@@ -153,11 +153,6 @@ if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32
 	apiHook_terminate();
 	//Terminate all in-process subsystems.
 	inProcess_terminate();
-	//Unregister winEvents for this process
-	if(inprocWinEventHookID) { 
-		UnhookWinEvent(inprocWinEventHookID);
-		inprocWinEventHookID=0;
-	}
 	//Unregister any windows hooks registered so far
 	killRunningWindowsHooks();
 	//Release and close the thread mutex
@@ -316,9 +311,6 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		#ifndef NDEBUG
 		Beep(1760,75);
 		#endif
-	//cleanup some RPC binding handles
-	RpcBindingFree(&nvdaControllerBindingHandle);
-	RpcBindingFree(&nvdaControllerInternalBindingHandle);
 		if(lpReserved) { // process is terminating
 			isProcessExiting=true;
 			//If the inproc manager thread was killed off due to process termination then at least unregister hooks
@@ -330,9 +322,17 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 				apiHook_terminate();
 				//Unregister any current windows hooks
 				killRunningWindowsHooks();
+				//Unregister winEvents for this process
+				if(inprocWinEventHookID) { 
+					UnhookWinEvent(inprocWinEventHookID);
+					inprocWinEventHookID=0;
+				}
 			}
 		} else { //The dll is being unloaded from this process
 			TlsFree(tlsIndex_inThreadInjectionID);
+			//cleanup some RPC binding handles
+			RpcBindingFree(&nvdaControllerBindingHandle);
+			RpcBindingFree(&nvdaControllerInternalBindingHandle);
 		}
 	}
 	return TRUE;

@@ -90,6 +90,8 @@ bool apiHook_terminate() {
 	Sleep(250);
 	res=MH_Uninitialize();
 	nhAssert(res==MH_OK);
+	//If the process is exiting do not free any dlls as the OS should do this itself correctly
+	if(isProcessExiting) return true;
 	for(moduleSet_t::iterator i=g_hookedModules.begin();i!=g_hookedModules.end();++i) {
 		FreeLibrary(*i);
 	}
