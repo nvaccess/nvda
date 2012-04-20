@@ -36,7 +36,7 @@ CHECK_INTERVAL = 86400 # 1 day
 #: The time to wait before retrying a failed check.
 RETRY_INTERVAL = 600 # 10 min
 #: The download block size in bytes.
-DOWNLOAD_BLOCK_SIZE = 8 * 1024 # 8 kb
+DOWNLOAD_BLOCK_SIZE = 8192 # 8 kb
 
 #: Persistent state information.
 #: @type: dict

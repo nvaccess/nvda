@@ -35,11 +35,7 @@ cpp_quote("*/")
 ]
 interface NvdaControllerInternal {
 
-/**
- * Gets the process ID of NVDA.
- * @param pProcessID memory where the  retreaved process ID can be placed.
- */
-	error_status_t __stdcall getNVDAProcessID([out] long* pProcessID); 
+	error_status_t __stdcall requestRegistration([in,string] const wchar_t* uuidString);
 
 /**
  * Notifies NVDA that the keyboard layout has changed for this thread. 

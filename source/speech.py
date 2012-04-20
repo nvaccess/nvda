@@ -957,6 +957,8 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		pageNumber=attrs.get("page-number")
 		oldPageNumber=attrsCache.get("page-number") if attrsCache is not None else None
 		if pageNumber and pageNumber!=oldPageNumber:
+			# Translators: Indicates the page number in a document.
+			# %s will be replaced with the page number.
 			text=_("page %s")%pageNumber
 			textList.append(text)
 	if  formatConfig["reportStyle"]:
@@ -964,8 +966,13 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldStyle=attrsCache.get("style") if attrsCache is not None else None
 		if style!=oldStyle:
 			if style:
+				# Translators: Indicates the style of text.
+				# A style is a collection of formatting settings and depends on the application.
+				# %s will be replaced with the name of the style.
 				text=_("style %s")%style
 			else:
+				# Translators: Indicates that text has reverted to the default style.
+				# A style is a collection of formatting settings and depends on the application.
 				text=_("default style")
 			textList.append(text)
 	if  formatConfig["reportFontName"]:
@@ -999,38 +1006,58 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
 		if lineNumber is not None and lineNumber!=oldLineNumber:
+			# Translators: Indicates the line number of the text.
+			# %s will be replaced with the line number.
 			text=_("line %s")%lineNumber
 			textList.append(text)
 	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")
 		oldBold=attrsCache.get("bold") if attrsCache is not None else None
 		if (bold or oldBold is not None) and bold!=oldBold:
-			text=_("bold") if bold else _("no bold")
+			# Translators: Reported when text is bolded.
+			text=(_("bold") if bold
+				# Translators: Reported when text is not bolded.
+				else _("no bold"))
 			textList.append(text)
 		italic=attrs.get("italic")
 		oldItalic=attrsCache.get("italic") if attrsCache is not None else None
 		if (italic or oldItalic is not None) and italic!=oldItalic:
-			text=_("italic") if italic else _("no italic")
+			# Translators: Reported when text is italicized.
+			text=(_("italic") if italic
+				# Translators: Reported when text is not italicized.
+				else _("no italic"))
 			textList.append(text)
 		strikethrough=attrs.get("strikethrough")
 		oldStrikethrough=attrsCache.get("strikethrough") if attrsCache is not None else None
 		if (strikethrough or oldStrikethrough is not None) and strikethrough!=oldStrikethrough:
-			text=_("strikethrough") if strikethrough else _("no strikethrough")
+			# Translators: Reported when text is formatted with strikethrough.
+			# See http://en.wikipedia.org/wiki/Strikethrough
+			text=(_("strikethrough") if strikethrough
+				# Translators: Reported when text is formatted without strikethrough.
+				# See http://en.wikipedia.org/wiki/Strikethrough
+				else _("no strikethrough"))
 			textList.append(text)
 		underline=attrs.get("underline")
 		oldUnderline=attrsCache.get("underline") if attrsCache is not None else None
 		if (underline or oldUnderline is not None) and underline!=oldUnderline:
-			text=_("underlined") if underline else _("not underlined")
+			# Translators: Reported when text is underlined.
+			text=(_("underlined") if underline
+				# Translators: Reported when text is not underlined.
+				else _("not underlined"))
 			textList.append(text)
 		textPosition=attrs.get("text-position")
 		oldTextPosition=attrsCache.get("text-position") if attrsCache is not None else None
 		if (textPosition or oldTextPosition is not None) and textPosition!=oldTextPosition:
 			textPosition=textPosition.lower() if textPosition else textPosition
 			if textPosition=="super":
+				# Translators: Reported for superscript text.
 				text=_("superscript")
 			elif textPosition=="sub":
+				# Translators: Reported for subscript text.
 				text=_("subscript")
 			else:
+				# Translators: Reported for text which is at the baseline position;
+				# i.e. not superscript or subscript.
 				text=_("baseline")
 			textList.append(text)
 	if formatConfig["reportAlignment"]:
@@ -1039,14 +1066,20 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		if (textAlign or oldTextAlign is not None) and textAlign!=oldTextAlign:
 			textAlign=textAlign.lower() if textAlign else textAlign
 			if textAlign=="left":
+				# Translators: Reported when text is left-aligned.
 				text=_("align left")
 			elif textAlign=="center":
+				# Translators: Reported when text is centered.
 				text=_("align center")
 			elif textAlign=="right":
+				# Translators: Reported when text is right-aligned.
 				text=_("align right")
 			elif textAlign=="justify":
+				# Translators: Reported when text is justified.
+				# See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 				text=_("align justify")
 			else:
+				# Translators: Reported when text has reverted to default alignment.
 				text=_("align default")
 			textList.append(text)
 	if  formatConfig["reportLinks"]:
@@ -1059,6 +1092,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		comment=attrs.get("comment")
 		oldComment=attrsCache.get("comment") if attrsCache is not None else None
 		if comment and comment!=oldComment:
+			# Translators: Reported when text contains a comment.
 			text=_("has comment")
 			textList.append(text)
 	if formatConfig["reportSpellingErrors"]:
@@ -1066,8 +1100,10 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		oldInvalidSpelling=attrsCache.get("invalid-spelling") if attrsCache is not None else None
 		if (invalidSpelling or oldInvalidSpelling is not None) and invalidSpelling!=oldInvalidSpelling:
 			if invalidSpelling:
+				# Translators: Reported when text contains a spelling error.
 				text=_("spelling error")
 			elif extraDetail:
+				# Translators: Reported when moving out of text containing a spelling error.
 				text=_("out of spelling error")
 			else:
 				text=""

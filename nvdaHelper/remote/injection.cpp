@@ -18,7 +18,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <shlwapi.h>
-#include "log.h"
+#include <sddl.h>
+#include <common/log.h>
 #include "ia2Support.h"
 #include "apiHook.h"
 #include "nvdaController.h"
@@ -28,6 +29,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "dllmain.h"
 #include "nvdaHelperRemote.h"
 #include "inProcess.h"
+#include "rpcSrv.h"
 
 using namespace std;
 
@@ -101,79 +103,63 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	HINSTANCE tempHandle=NULL;
 	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,(LPCTSTR)dllHandle,&tempHandle)) {
 		LOG_ERROR(L"GetModuleHandleEx failed, GetLastError returned "<<GetLastError());
+		ReleaseMutex(threadMutex);
 		return 0;
 	}
 	nhAssert(dllHandle==tempHandle);
-	//Try to open handles to both the injectionDone event and NVDA's process handle
-		HANDLE waitHandles[2]={0};
-	long nvdaProcessID=0;
-	nvdaControllerInternal_getNVDAProcessID(&nvdaProcessID);
-	if(nvdaProcessID>0) {
-		waitHandles[0]=OpenProcess(SYNCHRONIZE,FALSE,nvdaProcessID);
-		wstringstream s;
-		s<<L"nvdaHelperRemote_injectionDoneEvent_"<<desktopSpecificNamespace;
-		waitHandles[1]=OpenEvent(SYNCHRONIZE,FALSE,s.str().c_str());
+	//Register for all winEvents in this process.
+	inprocWinEventHookID=SetWinEventHook(EVENT_MIN,EVENT_MAX,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
+	if(inprocWinEventHookID==0) {
+		LOG_ERROR(L"SetWinEventHook failed");
 	}
-	//As long as we have successfully retreaved handles for NVDA's process and the event, then go on and initialize, wait and terminate.
-	if(waitHandles[0]&&waitHandles[1]) {
-		//Register for all winEvents in this process.
-		inprocWinEventHookID=SetWinEventHook(EVENT_MIN,EVENT_MAX,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
-		if(inprocWinEventHookID==0) {
-			LOG_ERROR(L"SetWinEventHook failed");
+	//Initialize API hooking
+	apiHook_initialize();
+//Fore secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
+if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32.dll",OpenClipboard,fake_OpenClipboard);
+	//Initialize in-process subsystems
+	inProcess_initialize();
+	//Enable all registered API hooks
+	apiHook_enableHooks();
+	//Initialize our rpc server interfaces and request registration with NVDA
+	rpcSrv_initialize();
+	//Notify injection_winEventCallback (who started our thread) that we're past initialization
+	SetEvent((HANDLE)data);
+	//Wait until nvda unregisters
+	#ifndef NDEBUG
+	Beep(660,75);
+	#endif
+	// Even though we only registered for in-context winEvents, we may still receive some out-of-context events; e.g. console events.
+	// Therefore, we must have a message loop.
+	// Otherwise, any out-of-context events will cause major lag which increases over time.
+	do {
+		// Consume and handle all pending messages.
+		MSG msg;
+		while(PeekMessage(&msg,NULL,0,0,PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
 		}
-		//Initialize API hooking
-		apiHook_initialize();
-	//Fore secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
-	if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32.dll",OpenClipboard,fake_OpenClipboard);
-		//Initialize in-process subsystems
-		inProcess_initialize();
-		//Enable all registered API hooks
-		apiHook_enableHooks();
-		//Notify injection_winEventCallback (who started our thread) that we're past initialization
-		SetEvent((HANDLE)data);
-		//Wait till either the injection done event is set, or NVDA's process dies
-		#ifndef NDEBUG
-		Beep(660,75);
-		#endif
-		// Even though we only registered for in-context winEvents, we may still receive some out-of-context events; e.g. console events.
-		// Therefore, we must have a message loop.
-		// Otherwise, any out-of-context events will cause major lag which increases over time.
-		do {
-			// Consume and handle all pending messages.
-			MSG msg;
-			while(PeekMessage(&msg,NULL,0,0,PM_REMOVE)) {
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		} while(MsgWaitForMultipleObjects(2,waitHandles,FALSE,INFINITE,QS_ALLINPUT)==WAIT_OBJECT_0+2);
-		nhAssert(inprocMgrThreadHandle);
-		inprocThreadsLock.acquire();
-		CloseHandle(inprocMgrThreadHandle);
-		inprocMgrThreadHandle=NULL;
-		inprocThreadsLock.release();
-		#ifndef NDEBUG
-		Beep(1320,75);
-		#endif
-		//Unregister and terminate API hooks
-		apiHook_terminate();
-		//Terminate all in-process subsystems.
-		inProcess_terminate();
-		//Unregister winEvents for this process
-		if(inprocWinEventHookID) { 
-			UnhookWinEvent(inprocWinEventHookID);
-			inprocWinEventHookID=0;
-		}
-		//Unregister any windows hooks registered so far
-		killRunningWindowsHooks();
-	} else {
-		nhAssert(inprocMgrThreadHandle);
-		inprocThreadsLock.acquire();
-		CloseHandle(inprocMgrThreadHandle);
-		inprocMgrThreadHandle=NULL;
-		inprocThreadsLock.release();
+	} while(MsgWaitForMultipleObjects(1,&nvdaUnregisteredEvent,FALSE,INFINITE,QS_ALLINPUT)==WAIT_OBJECT_0+1);
+	nhAssert(inprocMgrThreadHandle);
+	inprocThreadsLock.acquire();
+	CloseHandle(inprocMgrThreadHandle);
+	inprocMgrThreadHandle=NULL;
+	inprocThreadsLock.release();
+	#ifndef NDEBUG
+	Beep(1320,75);
+	#endif
+	//Terminate our RPC server interfaces
+	rpcSrv_terminate();
+	//Unregister and terminate API hooks
+	apiHook_terminate();
+	//Terminate all in-process subsystems.
+	inProcess_terminate();
+	//Unregister winEvents for this process
+	if(inprocWinEventHookID) { 
+		UnhookWinEvent(inprocWinEventHookID);
+		inprocWinEventHookID=0;
 	}
-	if(waitHandles[0]) CloseHandle(waitHandles[0]);
-	if(waitHandles[1]) CloseHandle(waitHandles[1]);
+	//Unregister any windows hooks registered so far
+	killRunningWindowsHooks();
 	//Release and close the thread mutex
 	ReleaseMutex(threadMutex);
 	CloseHandle(threadMutex);
@@ -269,7 +255,6 @@ DWORD WINAPI outprocMgrThreadFunc(LPVOID data) {
 HANDLE outprocMgrThreadHandle=NULL;
 DWORD outprocMgrThreadID=0;
 BOOL outprocInitialized=FALSE;
-HANDLE injectionDoneEvent=NULL;
 
 /**
  * Initializes the out-of-process code for NVDAHelper 
@@ -286,14 +271,6 @@ BOOL injection_initialize(int secureMode) {
 		MessageBox(NULL,L"Error initializing IA2 support",L"nvdaHelperRemote (injection_initialize)",0);
 		return FALSE;
 	}
-	nhAssert(!injectionDoneEvent);
-	{
-		wstringstream s;
-		s<<L"nvdaHelperRemote_injectionDoneEvent_"<<desktopSpecificNamespace;
-		injectionDoneEvent=CreateEvent(NULL,TRUE,FALSE,s.str().c_str());
-	}
-	nhAssert(injectionDoneEvent);
-	ResetEvent(injectionDoneEvent);
 	outprocMgrThreadHandle=CreateThread(NULL,0,outprocMgrThreadFunc,NULL,0,&outprocMgrThreadID);
 	outprocInitialized=TRUE;
 	return TRUE;
@@ -310,10 +287,6 @@ BOOL injection_terminate() {
 	}
 	outprocMgrThreadHandle=NULL;
 	outprocMgrThreadID=0;
-	nhAssert(injectionDoneEvent);
-	SetEvent(injectionDoneEvent);
-	CloseHandle(injectionDoneEvent);
-	injectionDoneEvent=NULL;
 	outprocInitialized=FALSE;
 	return TRUE;
 }
@@ -332,10 +305,13 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		PathRemoveFileSpec(dllDirectory);
 		generateDesktopSpecificNamespace(desktopSpecificNamespace,ARRAYSIZE(desktopSpecificNamespace));
 		//Initialize some needed RPC binding handles.
-		wstringstream s;
-		s<<L"ncalrpc:[NvdaCtlr."<<desktopSpecificNamespace<<L"]";
-		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerBindingHandle);
-		RpcBindingFromStringBinding((RPC_WSTR)(s.str().c_str()),&nvdaControllerInternalBindingHandle);
+		wstring endpoint=L"NvdaCtlr.";
+		endpoint+=desktopSpecificNamespace;
+		RPC_WSTR stringBinding;
+		RpcStringBindingCompose(NULL,(RPC_WSTR)L"ncalrpc",NULL,(RPC_WSTR)(endpoint.c_str()),NULL,&stringBinding);
+		RpcBindingFromStringBinding(stringBinding,&nvdaControllerBindingHandle);
+		RpcBindingFromStringBinding(stringBinding,&nvdaControllerInternalBindingHandle);
+		RpcStringFree(&stringBinding);
 	} else if(reason==DLL_PROCESS_DETACH) {
 		#ifndef NDEBUG
 		Beep(1760,75);

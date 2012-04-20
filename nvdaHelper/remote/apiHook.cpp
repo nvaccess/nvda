@@ -16,9 +16,11 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <set>
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
+#include <delayimp.h>
 #include <minHook/newMinHook.h>
 #include "nvdaControllerInternal.h"
-#include "log.h"
+#include <common/log.h>
+#include "dllmain.h"
 #include "apiHook.h"
 
 using namespace std;
@@ -28,10 +30,17 @@ typedef set<void*> functionSet_t;
 
 moduleSet_t g_hookedModules;
 functionSet_t g_hookedFunctions;
+HMODULE minhookLibHandle=NULL;
  
 bool apiHook_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
 	int res;
+	wstring dllPath=dllDirectory;
+	dllPath+=L"\\minhook.dll";
+	if((minhookLibHandle=LoadLibrary(dllPath.c_str()))==NULL) {
+		LOG_ERROR(L"LoadLibrary failed to load "<<dllPath);
+		return false;
+	}
 	if ((res=MH_Initialize())!=MH_OK) {
 		LOG_ERROR("MH_CreateHook failed with " << res);
 		return false;
@@ -85,5 +94,9 @@ bool apiHook_terminate() {
 		FreeLibrary(*i);
 	}
 	g_hookedModules.clear();
+	if(minhookLibHandle) FreeLibrary(minhookLibHandle);
+	if(!__FUnloadDelayLoadedDLL2("minHook.DLL")) {
+		LOG_ERROR(L"__FUnloadDelayLoadedDLL2 failed to unload minhook.dll");
+	}
 	return TRUE;
 }

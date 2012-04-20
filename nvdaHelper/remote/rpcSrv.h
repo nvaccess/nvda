@@ -15,7 +15,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef RPCSRV_H
 #define RPCSRV_H
 
-void rpcSrv_inProcess_initialize();
-void rpcSrv_inProcess_terminate();
+extern HANDLE nvdaUnregisteredEvent;
+
+RPC_STATUS rpcSrv_initialize();
+void rpcSrv_terminate();
 
 #endif

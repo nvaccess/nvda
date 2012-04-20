@@ -1,12 +1,13 @@
 EXPORTS
-	createConnection
-	destroyConnection
+	createRemoteBindingHandle
 	cancellableSendMessageTimeout
 	cancelSendMessage
 	_notifySendMessageCancelled
 	nvdaHelperLocal_initialize
 	nvdaHelperLocal_terminate
 	generateBeep
+	nvdaInProcUtils_registerNVDAProcess
+	nvdaInProcUtils_unregisterNVDAProcess
 	nvdaInProcUtils_winword_expandToLine
 	nvdaInProcUtils_winword_getTextInRange
 	VBuf_createBuffer
@@ -25,6 +26,7 @@ EXPORTS
 	VBuf_locateControlFieldNodeAtOffset
 	VBuf_locateTextFieldNodeAtOffset
 	VBuf_setSelectionOffsets
+	_nvdaControllerInternal_requestRegistration
 	_nvdaControllerInternal_displayModelTextChangeNotify
 	_nvdaControllerInternal_inputLangChangeNotify
 	_nvdaControllerInternal_logMessage

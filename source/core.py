@@ -182,6 +182,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
 	log.debug("Creating wx application instance")
+	import appModuleHandler
+	log.debug("Initializing appModule Handler")
+	appModuleHandler.initialize()
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
@@ -238,9 +241,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		locale.Init(lang,wxLang)
 	except:
 		pass
-	import appModuleHandler
-	log.debug("Initializing appModule Handler")
-	appModuleHandler.initialize()
 	import api
 	import winUser
 	import NVDAObjects.window

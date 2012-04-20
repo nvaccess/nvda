@@ -196,13 +196,14 @@ class AppModule(baseObject.ScriptableObject):
 		#: The ID of the process this appModule is for.
 		#: @type: int
 		self.processID=processID
-		self.helperLocalBindingHandle=NVDAHelper.localLib.createConnection(processID)
 		if appName is None:
 			appName=getAppNameFromProcessID(processID)
 		#: The application name.
 		#: @type: str
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
+		self.helperLocalBindingHandle=None
+		self._inprocRegistrationHandle=None
 
 	def __repr__(self):
 		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
@@ -219,7 +220,10 @@ class AppModule(baseObject.ScriptableObject):
 		Subclasses should call the superclass method first.
 		"""
 		winKernel.closeHandle(self.processHandle)
-		NVDAHelper.localLib.destroyConnection(self.helperLocalBindingHandle)
+		if self._inprocRegistrationHandle:
+			ctypes.windll.rpcrt4.RpcSsDestroyClientContext(ctypes.byref(self._inprocRegistrationHandle))
+		if self.helperLocalBindingHandle:
+			ctypes.windll.rpcrt4.RpcBindingFree(ctypes.byref(self.helperLocalBindingHandle))
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		"""Choose NVDAObject overlay classes for a given NVDAObject.

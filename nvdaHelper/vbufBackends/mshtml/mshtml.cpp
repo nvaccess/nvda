@@ -23,7 +23,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #include <vbufBase/backend.h>
 #include <vbufBase/utils.h>
-#include <remote/log.h>
+#include <common/log.h>
 #include "node.h"
 #include "mshtml.h"
 

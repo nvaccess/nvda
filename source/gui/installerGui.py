@@ -74,8 +74,7 @@ class InstallerDialog(wx.Dialog):
 			msg+=" "+_("A previous copy of NVDA has been found on your system. This copy will be updated.") 
 		dialogCaption=wx.StaticText(self,label=msg) 
 		mainSizer.Add(dialogCaption)
-		# Translators: The label of the grouping containing options in the Install NVDA dialog.
-		optionsSizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Installation options")), wx.HORIZONTAL)
+		optionsSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		ctrl = self.startOnLogonCheckbox = wx.CheckBox(self, label=_("Use NVDA on the Windows &logon screen"))
 		ctrl.Value = config.getStartOnLogonScreen()
@@ -98,6 +97,7 @@ class InstallerDialog(wx.Dialog):
 		mainSizer.Add(sizer)
 
 		self.Sizer = mainSizer
+		mainSizer.Fit(self)
 
 	def onInstall(self, evt):
 		self.Hide()
@@ -136,7 +136,7 @@ class PortableCreaterDialog(wx.Dialog):
 		# Translators: An informational message displayed in the Create Portable NVDA dialog.
 		dialogCaption=wx.StaticText(self,label=_("To create a portable copy of NVDA, please select the path and other options and then press Continue")) 
 		mainSizer.Add(dialogCaption)
-		optionsSizer = wx.BoxSizer(wx.HORIZONTAL)
+		optionsSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label of a grouping containing controls to select the destination directory
 		# in the Create Portable NVDA dialog.
 		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Portable directory:")), wx.HORIZONTAL)
@@ -168,6 +168,7 @@ class PortableCreaterDialog(wx.Dialog):
 		mainSizer.Add(sizer)
 
 		self.Sizer = mainSizer
+		mainSizer.Fit(self)
 
 	def onBrowseForPortableDirectory(self, evt):
 		# Translators: The title of the dialog presented when browsing for the
