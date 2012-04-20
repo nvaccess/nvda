@@ -4,7 +4,9 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import gettext
 import glob
+import inspect
 import itertools
 import os.path
 import pkgutil
@@ -17,6 +19,7 @@ from validate import Validator
 
 import config
 import globalVars
+import languageHandler
 from logHandler import log
 
 
@@ -24,25 +27,26 @@ MANIFEST_FILENAME = "manifest.ini"
 BUNDLE_EXTENSION = "nvda-adon"
 
 #: Currently loaded add-ons. keyed by path
-#: @type runningAddons: dict
-_runningAddons = {}
+#: @type runningAddons: list
+_runningAddons = None
 
 def getRunningAddons():
 	""" Returns currently loaded addons.
 	"""
-	return _runningAddons.itervalues()
+	return iter(_runningAddons)
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
 	global _runningAddons
-	availableAddons = getAvailableAddons()
-	for addon in availableAddons:
+	_runningAddons = []
+	for addon in getAvailableAddons():
 		try:
 			addon.load()
 		except:
 			log.exception("Error loading addon.")
 			continue
-		_runningAddons[addon.path] = addon
+		_runningAddons.append(addon)
+		log.debug("Loadded addon from %s", addon.path) 
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
@@ -50,7 +54,7 @@ def terminate():
 	addons = getRunningAddons()
 	for addon in addons:
 		addon.unload()
-	_runningAddons = {}
+	_runningAddons = None
 
 
 def runHook(hookName, *args, **kwargs):
@@ -77,11 +81,11 @@ def runHook(hookName, *args, **kwargs):
 
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
-	Paths are constructed from source dir location and user configuration directory.
+	For now, only <userConfig\addons is supported.
 	@rtype list(string)
 	"""
 	addon_paths = []
-	user_addons = os.path.join(globalVars.appArgs.configPath, "addons")
+	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
 	if os.path.isdir(user_addons):
 		addon_paths.append(user_addons)
 	return addon_paths
@@ -105,13 +109,18 @@ def _getAvailableAddonsFromPath(path):
 			except:
 				log.error("Error loading Addon from path: %s", adon_path, exc_info=True)
 
-def getAvailableAddons():
+_availableAddons = None
+def getAvailableAddons(refresh=False):
 	""" Gets all available addons on the system.
 	@rtype generator of Addon instances.
 	"""
-	generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
-	return itertools.chain(*generators)
-
+	global _availableAddons
+	if _availableAddons is None or refresh:
+		_availableAddons = {}
+		generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
+		for addon in itertools.chain(*generators):
+			_availableAddons[addon.path] = addon
+	return _availableAddons.itervalues()
 
 def installAddonBundle(bundle):
 	userAddonsPath = os.path.join(globalVars.appArgs.configPath, "addons")
@@ -129,7 +138,7 @@ class Addon(object):
 		@param path: the base directory for the addon data.
 		@type path: string
 		"""
-		self.path = path
+		self.path = os.path.abspath(path)
 		self._extendedPackages = set()
 		self._isLoaded = False
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
@@ -200,6 +209,17 @@ class Addon(object):
 			# in this case return None, any other error throw to be handled elsewhere
 			return None
 
+	def getTranslationsInstance(self, domain='nvda'):
+		""" Gets the gettext translation instance for this addon.
+		<addon-path<\locale will be used to find .mo files, if exists.
+		If a translation file is not found the default fallback null translation is returned.
+		@param domain: the tranlation domain to retrieve. The 'nvda' default should be used in most cases.
+		@returns: the gettext translation class.
+		"""
+		localedir = os.path.join(self.path, "locale")
+		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.curLang], fallback=True)
+
+
 	def getHookFunction(self, hookName):
 		""" returns the hook function object for this L{Addon} if available.
 		@param hookName the name of the hook.
@@ -226,9 +246,48 @@ class Addon(object):
 		""" This method removes the contents of the addon from the system.
 		Any calls to the majority of the addon methods will throw an error.
 		IOErrors will be thrown unless ignoreErrors is True."""
-		if self.isActive:
+		if self.isLoaded:
 			raise RuntimeError("This addon is still active.")
 		shutil.rmtree(self.path, ignore_errors=ignoreErrors)
+
+
+def getCodeAddon(obj=None, frameDist=1):
+	""" Returns the L{Addon} where C{obj} is defined. If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".
+	@param obj: python object or None for default behaviour.
+	@param frameDist: howmany frames is the caller code. Only change this for functions in this module.
+	@return: L{Addon} instance or None if no code does not belong to a add-on package.
+	@rtype: C{Addon}
+	 """
+	global _availableAddons
+	if obj is None:
+		fileName = inspect.stack()[frameDist][1]
+	else:
+		fileName  = inspect.getfile(obj)
+	dir= unicode(os.path.abspath(os.path.dirname(fileName)))
+	# if fileName is not a subdir of one of the addon paths
+	# It does not belong to an addon.
+	for p in _getDefaultAddonPaths():
+		if dir.startswith(p):
+			break
+	else:
+		raise AddonError("Code does not belong to an addon package.")
+	curdir = dir
+	while curdir not in _getDefaultAddonPaths():
+		if curdir in _availableAddons.keys():
+			return _availableAddons[curdir]
+	# Not found!
+	raise AddonError("Code does not belong to an addon")
+
+def initTranslation():
+	addon = getCodeAddon(frameDist=2)
+	translations = addon.getTranslationsInstance()
+	# Point _ to the translation object in the globals namespace of the caller frame
+	# FIXME: shall we retrieve the caller module object explicitly?
+	try:
+		callerFrame = inspect.currentframe().f_back
+		callerFrame.f_globals['_'] = translations.ugettext
+	finally:
+		del callerFrame # Avoid reference problems with frames (per python docs)
 
 
 class AddonBundle(object):
@@ -338,3 +397,4 @@ categories = list(default=list())
 	@property
 	def errors(self):
 		return self._errors
+
