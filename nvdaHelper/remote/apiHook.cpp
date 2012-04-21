@@ -31,8 +31,25 @@ typedef set<void*> functionSet_t;
 moduleSet_t g_hookedModules;
 functionSet_t g_hookedFunctions;
 HMODULE minhookLibHandle=NULL;
- 
-bool apiHook_initialize() {
+bool error_setNHFP=false;
+
+#define defMHFP(funcName) funcName##_funcType funcName##_fp=NULL
+
+#define setMHFP(funcName) {\
+	funcName##_fp=(funcName##_funcType)GetProcAddress(minhookLibHandle,#funcName);\
+	if(!funcName##_fp) {\
+		error_setNHFP=true;\
+		LOG_ERROR(L"Error setting minHook function pointer "<<L#funcName);\
+	}\
+}
+
+defMHFP(MH_Initialize);
+defMHFP(MH_Uninitialize);
+defMHFP(MH_CreateHook);
+defMHFP(MH_EnableAllHooks);
+defMHFP(MH_DisableAllHooks);
+
+ bool apiHook_initialize() {
 	LOG_DEBUG("calling MH_Initialize");
 	int res;
 	wstring dllPath=dllDirectory;
@@ -41,14 +58,32 @@ bool apiHook_initialize() {
 		LOG_ERROR(L"LoadLibrary failed to load "<<dllPath);
 		return false;
 	}
-	if ((res=MH_Initialize())!=MH_OK) {
+	error_setNHFP=false;
+	setMHFP(MH_Initialize);
+	setMHFP(MH_Uninitialize);
+	setMHFP(MH_CreateHook);
+	setMHFP(MH_EnableAllHooks);
+	setMHFP(MH_DisableAllHooks);
+	if(error_setNHFP) {
+		LOG_ERROR(L"Error setting minHook function pointers");
+		FreeLibrary(minhookLibHandle);
+		minhookLibHandle=NULL;
+		return false;
+	}
+	if ((res=MH_Initialize_fp())!=MH_OK) {
 		LOG_ERROR("MH_CreateHook failed with " << res);
+		FreeLibrary(minhookLibHandle);
+		minhookLibHandle=NULL;
 		return false;
 	} 
 	else return true;
 }
 
 void* apiHook_hookFunction(const char* moduleName, const char* functionName, void* newHookProc) {
+	if(!minhookLibHandle) {
+		LOG_ERROR(L"apiHooks not initialized");
+		return NULL;
+	}
 	HMODULE moduleHandle=LoadLibraryA(moduleName);
 	if(!moduleHandle) {
 		LOG_ERROR("module " << moduleName << " not loaded");
@@ -63,7 +98,7 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 	LOG_DEBUG("requesting to hook function " << functionName << " at address 0X" << std::hex << realFunc << " in module " << moduleName << " at address 0X" << moduleHandle << " with  new function at address 0X" << newHookProc);
 	void* origFunc;
 	int res;
-	if((res=MH_CreateHook(realFunc,newHookProc,&origFunc))!=MH_OK) {
+	if((res=MH_CreateHook_fp(realFunc,newHookProc,&origFunc))!=MH_OK) {
 		LOG_ERROR("MH_CreateHook failed with " << res);
 		FreeLibrary(moduleHandle);
 		return NULL;
@@ -76,29 +111,35 @@ void* apiHook_hookFunction(const char* moduleName, const char* functionName, voi
 
 bool apiHook_enableHooks() {
 	int res;
-	res=MH_EnableAllHooks();
+	if(!minhookLibHandle) {
+		LOG_ERROR(L"apiHooks not initialized");
+		return false;
+	}
+	res=MH_EnableAllHooks_fp();
 	nhAssert(res==MH_OK);
 	return TRUE;
 }
 
 bool apiHook_terminate() {
 	int res;
-	res=MH_DisableAllHooks();
+	//If the process is exiting then minHook will have already removed all hooks and unloaded
+	if(isProcessExiting) return true;
+	if(!minhookLibHandle) {
+		LOG_ERROR(L"apiHooks not initialized");
+		return false;
+	}
+	res=MH_DisableAllHooks_fp();
 	nhAssert(res==MH_OK);
 	g_hookedFunctions.clear();
 	//Give enough time for all hook functions to complete.
 	Sleep(250);
-	res=MH_Uninitialize();
+	res=MH_Uninitialize_fp();
 	nhAssert(res==MH_OK);
-	//If the process is exiting do not free any dlls as the OS should do this itself correctly
-	if(isProcessExiting) return true;
 	for(moduleSet_t::iterator i=g_hookedModules.begin();i!=g_hookedModules.end();++i) {
 		FreeLibrary(*i);
 	}
 	g_hookedModules.clear();
-	if(minhookLibHandle) FreeLibrary(minhookLibHandle);
-	if(!__FUnloadDelayLoadedDLL2("minHook.DLL")) {
-		LOG_ERROR(L"__FUnloadDelayLoadedDLL2 failed to unload minhook.dll");
-	}
+	FreeLibrary(minhookLibHandle);
+	minhookLibHandle=NULL;
 	return TRUE;
 }
