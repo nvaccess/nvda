@@ -17,7 +17,17 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <libMinHook/minHook.h>
 
+//Some new batch calls
 MH_STATUS MH_EnableAllHooks();
 MH_STATUS MH_DisableAllHooks();
+
+//function pointer typedefs for all minHook functions for use with getProcAddress
+typedef MH_STATUS(WINAPI *MH_Initialize_funcType)();
+typedef MH_STATUS(WINAPI *MH_Uninitialize_funcType)();
+typedef MH_STATUS(WINAPI *MH_CreateHook_funcType)(void*,void*,void**);
+typedef MH_STATUS(WINAPI *MH_EnableHook_funcType)(void*);
+typedef MH_STATUS(WINAPI *MH_DisableHook_funcType)(void*);
+typedef MH_STATUS(*MH_EnableAllHooks_funcType)();
+typedef MH_STATUS(*MH_DisableAllHooks_funcType)();
 
 #endif

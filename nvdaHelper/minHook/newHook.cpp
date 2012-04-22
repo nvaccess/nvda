@@ -12,6 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
+#include <windows.h>
 #include "hook.cpp"
 
 using namespace MinHook;
@@ -61,3 +62,15 @@ MH_STATUS MH_DisableAllHooks() {
 	return _doAllHooks(false);
 }
 
+BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
+	//Process exiting, we must clean up any pending hooks
+	if(reason==DLL_PROCESS_DETACH&&lpReserved) {
+		if(gIsInitialized) {
+			MH_DisableAllHooks();
+			//Give enough time for all hook functions to complete.
+			Sleep(250);
+			MH_Uninitialize();
+		}
+	}
+	return 1;
+}
