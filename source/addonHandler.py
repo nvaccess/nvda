@@ -33,28 +33,23 @@ _runningAddons = []
 def getRunningAddons():
 	""" Returns currently loaded addons.
 	"""
-	return iter(_runningAddons)
+	return itertools.ifilter(lambda a : a.isLoaded, getAvailableAddons())
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
-	global _runningAddons
-	_runningAddons = []
 	for addon in getAvailableAddons():
 		try:
 			addon.load()
 		except:
 			log.exception("Error loading addon.")
 			continue
-		_runningAddons.append(addon)
 		log.debug("Loadded addon from %s", addon.path) 
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
-	global _runningAddons
 	addons = getRunningAddons()
 	for addon in addons:
 		addon.unload()
-	_runningAddons = []
 
 
 def runHook(hookName, *args, **kwargs):
