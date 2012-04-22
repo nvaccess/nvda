@@ -28,7 +28,7 @@ BUNDLE_EXTENSION = "nvda-adon"
 
 #: Currently loaded add-ons. keyed by path
 #: @type runningAddons: list
-_runningAddons = None
+_runningAddons = []
 
 def getRunningAddons():
 	""" Returns currently loaded addons.
@@ -54,7 +54,7 @@ def terminate():
 	addons = getRunningAddons()
 	for addon in addons:
 		addon.unload()
-	_runningAddons = None
+	_runningAddons = []
 
 
 def runHook(hookName, *args, **kwargs):
