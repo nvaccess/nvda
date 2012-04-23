@@ -98,7 +98,9 @@ def update(processID):
 	@param processID: the ID of the process.
 	@type processID: int
 	"""
-	for deadMod in [mod for mod in runningTable.itervalues() if not mod.isAlive]:
+	#Other threads can create appModules so runningTable must be copied when iterated
+	for deadMod in runningTable.values():
+		if deadMod.isAlive: continue
 		log.debug("application %s closed"%deadMod.appName)
 		del runningTable[deadMod.processID]
 		if deadMod in set(o.appModule for o in api.getFocusAncestors()+[api.getFocusObject()] if o and o.appModule):
