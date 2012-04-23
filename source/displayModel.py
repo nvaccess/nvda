@@ -10,6 +10,7 @@ import NVDAHelper
 import textInfos
 from textInfos.offsets import OffsetsTextInfo
 import watchdog
+from logHandler import log
 
 _getWindowTextInRect=None
 _requestTextChangeNotificationsForWindow=None
@@ -68,7 +69,11 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		except TypeError:
 			# No location; nothing we can do.
 			return u"", []
-		return getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace,useXML)
+		bindingHandle=self.obj.appModule.helperLocalBindingHandle
+		if not bindingHandle:
+			log.debugWarning("AppModule does not have a binding handle")
+			return u"",[]
+		return getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace,useXML)
 
 	def _getStoryText(self):
 		return self._textAndRects[0]
