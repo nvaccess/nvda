@@ -78,8 +78,6 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 	if not pid:
 		log.error("Could not get process ID for RPC call")
 		return -1;
-	import appModuleHandler
-	mod=appModuleHandler.getAppModuleFromProcessID(pid)
 	bindingHandle=c_long()
 	bindingHandle.value=localLib.createRemoteBindingHandle(uuidString)
 	if not bindingHandle: 
@@ -91,8 +89,8 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 		log.error("Could not register NVDA with inproc rpc server for pid %d, res %d, registrationHandle %s"%(pid,res,registrationHandle))
 		windll.rpcrt4.RpcBindingFree(byref(bindingHandle))
 		return -1
-	mod.helperLocalBindingHandle=bindingHandle
-	mod._inprocRegistrationHandle=registrationHandle
+	import appModuleHandler
+	queueHandler.queueFunction(queueHandler.eventQueue,appModuleHandler.update,pid,helperLocalBindingHandle=bindingHandle,inprocRegistrationHandle=registrationHandle)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_long,c_long,c_long,c_long)
