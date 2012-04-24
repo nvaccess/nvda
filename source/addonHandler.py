@@ -102,7 +102,7 @@ def _getAvailableAddonsFromPath(path):
 				log.debug("Found add-on %s", a.manifest['name'])
 				yield a
 			except:
-				log.error("Error loading Addon from path: %s", adon_path, exc_info=True)
+				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
 
 _availableAddons = None
 def getAvailableAddons(refresh=False):
@@ -138,7 +138,12 @@ class Addon(object):
 		self._isLoaded = False
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path) as f:
-			self.manifest = AddonManifest(f)
+			translatedInput = None
+			p = os.path.join(self.path, _translatedManifestPath())
+			if os.path.exists(p):
+				log.debug("Using manifest translation from %s", p)
+				translatedInput = open(p, 'r')
+			self.manifest = AddonManifest(f, translatedInput)
 		self._hooksModule = self.loadModule('hooks')
 
 	@property
@@ -185,7 +190,7 @@ class Addon(object):
 		return extension_path.encode("mbcs")
 
 	def loadModule(self, name):
-		""" loads a python mudle from the addon directory
+		""" loads a python module from the addon directory
 		@param name: the module name
 		@type name: string
 		@returns the python module with C[name}
@@ -284,6 +289,11 @@ def initTranslation():
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
+def _translatedManifestPath(lang=None):
+	if lang is None:
+		lang = languageHandler.curLang # can't rely on default keyword arguments here.
+	return r"locale\%s\%s" % (lang,  MANIFEST_FILENAME)
+
 
 class AddonBundle(object):
 	""" Represents the contents of an NVDA addon in a for suitable for distribution.
@@ -296,7 +306,11 @@ class AddonBundle(object):
 		self._path = bundlePath
 		# Read manifest:
 		with zipfile.ZipFile(self._path, 'r') as z:
-			self._manifest = AddonManifest(z.open(MANIFEST_FILENAME))
+			try:
+				translatedInput = z.open(_translatedManifestPath(), 'R')
+			except IOError:
+				translatedInput = None
+			self._manifest = AddonManifest(z.open(MANIFEST_FILENAME), translatedInput=translatedInput)
 
 	def extract(self, addonsPath, override=False):
 		""" Extracts the bundle content to the specified path.
@@ -317,7 +331,7 @@ class AddonBundle(object):
 	@property
 	def manifest(self):
 		""" Gets the manifest for the represented Addon.
-		@rtype AddonManifest
+		@rtype: AddonManifest
 		"""
 		return self._manifest
 
@@ -339,7 +353,7 @@ def createAddonBundleFromPath(path, destDir=None):
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
 		_report_manifest_errors(manifest)
-		raise AddonError, "Manifest file as errors."
+		raise AddonError("Manifest file as errors.")
 	bundleFilename = "%s-%s.%s" % (manifest['name'], manifest['version'], BUNDLE_EXTENSION)
 	bundleDestination = os.path.join(destDir, bundleFilename)
 	with zipfile.ZipFile(bundleDestination, 'w') as z:
@@ -377,10 +391,23 @@ url= string(default=None)
 categories = list(default=list())
 """))
 
-	def __init__(self, input):
+	translatedConfigspec = ConfigObj(StringIO(
+	"""
+# NVDA localized Ad-on Manifest configuration specification
+# This configspec contains the data that can be translated on a manifest.
+# 
+# Quick description of the add-on to show to users.
+description = string()
+# Long description with further information and instructions
+long_description = string(default=None)
+"""))
+
+	def __init__(self, input, translatedInput=None):
 		""" Constructs an L{AddonManifest} instance from manifest string data
 		@param input: data to read the manifest informatinon
 		@type input: a fie-like object.
+		@param translatedInput: translated manifest input
+		@type translatedInput: file-like object
 		"""
 		super(AddonManifest, self).__init__(input, configspec=self.configspec)
 		self._errors = []
@@ -388,8 +415,28 @@ categories = list(default=list())
 		result = self.validate(val, copy=True, preserve_errors=True)
 		if result != True:
 			self._errors = result
+		self._translatedConfig = None
+		if translatedInput is not None:
+			self._translatedConfig = ConfigObj(translatedInput, configspec=self.translatedConfigspec)
 
 	@property
 	def errors(self):
 		return self._errors
 
+	def _(self, *keys):
+		""" Returns a translated value for a key if exists."""
+		c = self if self._translatedConfig is None else self._translatedConfig
+		try:
+			val = c
+			for key in keys:
+				val = val[key]
+			return val
+		except KeyError:
+			# if we were using the translated config try on untranslated:
+			if c != self:
+				val = self
+				for key in keys:
+					val = val[key]
+				return val
+			else:
+				raise # Already tried untranslated
