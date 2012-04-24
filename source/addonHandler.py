@@ -37,7 +37,7 @@ def getRunningAddons():
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
-	for addon in getAvailableAddons():
+	for addon in getAvailableAddons(refresh=True):
 		try:
 			addon.load()
 		except:
