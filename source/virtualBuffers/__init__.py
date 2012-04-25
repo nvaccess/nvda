@@ -1364,14 +1364,15 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		info.expand(textInfos.UNIT_CHARACTER)
 		container=self.getEnclosingContainerRange(info)
 		if not container:
-			# Translaters: No containing element (list, table etc) to move to start or end of 
+			# Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.) 
+			# But there is no container. 
 			ui.message(_("Not in a container"))
 			return
 		container.collapse()
 		self._set_selection(container, reason=self.REASON_QUICKNAV)
 		container.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
-	# Translaters: description for the moveToStartOfContainer script for virtual buffers
+	# Translators: Description for the Move to start of container command in browse mode. 
 	script_moveToStartOfContainer.__doc__=_("Moves to the start of the container element, such as a list or table")
 
 	def script_movePastEndOfContainer(self,gesture):
@@ -1379,14 +1380,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		info.expand(textInfos.UNIT_CHARACTER)
 		container=self.getEnclosingContainerRange(info)
 		if not container:
-			# Translaters: No containing element (list, table etc) to move to start or end of 
 			ui.message(_("Not in a container"))
 			return
 		container.collapse(end=True)
 		self._set_selection(container, reason=self.REASON_QUICKNAV)
 		container.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
-	# Translaters: description for the movePastEndOfContainer script for virtual buffers
+	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
 
 	__gestures = {
