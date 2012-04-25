@@ -26,10 +26,6 @@ from logHandler import log
 MANIFEST_FILENAME = "manifest.ini"
 BUNDLE_EXTENSION = "nvda-adon"
 
-#: Currently loaded add-ons. keyed by path
-#: @type runningAddons: list
-_runningAddons = []
-
 def getRunningAddons():
 	""" Returns currently loaded addons.
 	"""
@@ -77,7 +73,7 @@ def runHook(hookName, *args, **kwargs):
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
 	For now, only <userConfig\addons is supported.
-	@rtype list(string)
+	@rtype: list(string)
 	"""
 	addon_paths = []
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
@@ -217,8 +213,7 @@ class Addon(object):
 		@returns: the gettext translation class.
 		"""
 		localedir = os.path.join(self.path, "locale")
-		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.curLang], fallback=True)
-
+		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
 
 	def getHookFunction(self, hookName):
 		""" returns the hook function object for this L{Addon} if available.
@@ -291,7 +286,7 @@ def initTranslation():
 
 def _translatedManifestPath(lang=None):
 	if lang is None:
-		lang = languageHandler.curLang # can't rely on default keyword arguments here.
+		lang = languageHandler.getLanguage() # can't rely on default keyword arguments here.
 	return r"locale\%s\%s" % (lang,  MANIFEST_FILENAME)
 
 
