@@ -139,10 +139,12 @@ class Addon(object):
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
 		with open(manifest_path) as f:
 			translatedInput = None
-			p = os.path.join(self.path, _translatedManifestPath())
-			if os.path.exists(p):
-				log.debug("Using manifest translation from %s", p)
-				translatedInput = open(p, 'r')
+			for translatedPath in _translatedManifestPaths():
+				p = os.path.join(self.path, translatedPath)
+				if os.path.exists(p):
+					log.debug("Using manifest translation from %s", p)
+					translatedInput = open(p, 'r')
+					break
 			self.manifest = AddonManifest(f, translatedInput)
 		self._hooksModule = self.loadModule('hooks')
 
@@ -289,11 +291,15 @@ def initTranslation():
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
-def _translatedManifestPath(lang=None):
+def _translatedManifestPaths(lang=None):
 	if lang is None:
 		lang = languageHandler.curLang # can't rely on default keyword arguments here.
-	return r"locale\%s\%s" % (lang,  MANIFEST_FILENAME)
-
+	langs=[lang]
+	if '_' in lang:
+		langs.append(lang.split('_')[0])
+		if lang!='en' and not lang.startswith('en_'):
+			langs.append('en')
+	return [r"locale\%s\%s" % (lang,  MANIFEST_FILENAME) for lang in langs]
 
 class AddonBundle(object):
 	""" Represents the contents of an NVDA addon in a for suitable for distribution.
@@ -305,11 +311,14 @@ class AddonBundle(object):
 		"""
 		self._path = bundlePath
 		# Read manifest:
+		translatedInput=None
 		with zipfile.ZipFile(self._path, 'r') as z:
-			try:
-				translatedInput = z.open(_translatedManifestPath(), 'R')
-			except IOError:
-				translatedInput = None
+			for translationPath in _translatedManifestPaths(): 
+				try:
+					translatedInput = z.open(translationPath, 'r')
+					break
+				except KeyError:
+					pass
 			self._manifest = AddonManifest(z.open(MANIFEST_FILENAME), translatedInput=translatedInput)
 
 	def extract(self, addonsPath, override=False):
