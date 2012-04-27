@@ -16,7 +16,7 @@ import gui
 import tones
 
 def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
-	progressDialog = IndeterminateProgressDialog(gui.mainFrame,
+	progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
 		_("Updating NVDA") if isUpdate
 		# Translators: The title of the dialog presented while NVDA is being installed.
@@ -107,26 +107,6 @@ class InstallerDialog(wx.Dialog):
 	def onCancel(self, evt):
 		self.Destroy()
 
-class IndeterminateProgressDialog(wx.ProgressDialog):
-
-	def __init__(self, parent, title, message):
-		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
-		self.timer = wx.PyTimer(self.Pulse)
-		self.timer.Start(1000)
-		self.Raise()
-
-	def Pulse(self):
-		super(IndeterminateProgressDialog, self).Pulse()
-		if self.IsActive():
-			tones.beep(440, 40)
-
-	def done(self):
-		self.timer.Stop()
-		if self.IsActive():
-			tones.beep(1760, 40)
-		self.Hide()
-		self.Destroy()
-
 class PortableCreaterDialog(wx.Dialog):
 
 	def __init__(self, parent):
@@ -201,7 +181,7 @@ class PortableCreaterDialog(wx.Dialog):
 		self.Destroy()
 
 def doCreatePortable(portableDirectory,createAutorun=False,copyUserConfig=False):
-	d = IndeterminateProgressDialog(gui.mainFrame,
+	d = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 		_("Creating Portable Copy"),
 		# Translators: The message displayed while a portable copy of NVDA is bieng created.

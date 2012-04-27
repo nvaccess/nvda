@@ -11,6 +11,7 @@ import threading
 import ctypes
 import wx
 import globalVars
+import tones
 import ui
 from logHandler import log
 import config
@@ -611,3 +612,23 @@ class ExecAndPump(threading.Thread):
 			self.func(*self.args,**self.kwargs)
 		except Exception as e:
 			self.threadExc=e
+
+class IndeterminateProgressDialog(wx.ProgressDialog):
+
+	def __init__(self, parent, title, message):
+		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
+		self.timer = wx.PyTimer(self.Pulse)
+		self.timer.Start(1000)
+		self.Raise()
+
+	def Pulse(self):
+		super(IndeterminateProgressDialog, self).Pulse()
+		if self.IsActive():
+			tones.beep(440, 40)
+
+	def done(self):
+		self.timer.Stop()
+		if self.IsActive():
+			tones.beep(1760, 40)
+		self.Hide()
+		self.Destroy()
