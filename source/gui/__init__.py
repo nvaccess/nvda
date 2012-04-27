@@ -229,6 +229,15 @@ class MainFrame(wx.Frame):
 			pythonConsole.initialize()
 		pythonConsole.activate()
 
+	def onAddonsManagerCommand(self,evt):
+		if isInMessageBox:
+			return
+		self.prePopup()
+		from addonGui import AddonsDialog
+		d=AddonsDialog(gui.mainFrame)
+		d.Show()
+		self.postPopup()
+
 	def onReloadPluginsCommand(self, evt):
 		import appModuleHandler, globalPluginHandler
 		from NVDAObjects import NVDAObject
@@ -306,6 +315,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
+			item = menu_tools.Append(wx.ID_ANY, _("Addons Manager"))
+			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
 		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
 			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
