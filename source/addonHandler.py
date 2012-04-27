@@ -24,7 +24,7 @@ from logHandler import log
 
 
 MANIFEST_FILENAME = "manifest.ini"
-BUNDLE_EXTENSION = "nvda-adon"
+BUNDLE_EXTENSION = "nvda-addon"
 
 #: Currently loaded add-ons. keyed by path
 #: @type runningAddons: list

@@ -44,7 +44,10 @@ class AddonsDialog(wx.Dialog):
 
 	def OnAddClick(self,evt):
 		# Translators: The message displayed in the dialog that allows you to choose an addon bundle for installation.
-		fd=wx.FileDialog(self,message=_("Choose Addon bundle file"),wildcard="NVDA Addon Bundle (*.nvda-addon)|*.nvda-addon",defaultDir="c:",style=wx.FD_OPEN)
+		fd=wx.FileDialog(self,message=_("Choose Addon bundle file"),
+		# Translators: the label for the nvda adon file type in the Choose addon dialog.
+		wildcard=(_("NVDA Addon Bundle (*.{ext})")+"|*.{ext}").format(ext=addonHandler.BUNDLE_EXTENSION),
+		defaultDir="c:",style=wx.FD_OPEN)
 		if fd.ShowModal()!=wx.ID_OK:
 			return
 		addonPath=fd.GetPath()
