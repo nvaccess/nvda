@@ -435,13 +435,13 @@ long_description = string(default=None)
 			val = c
 			for key in keys:
 				val = val[key]
-			return val
+			return unicode(val, self._translatedConfig.encoding or "utf-8")
 		except KeyError:
 			# if we were using the translated config try on untranslated:
 			if c != self:
 				val = self
 				for key in keys:
 					val = val[key]
-				return val
+				return unicode(val)
 			else:
 				raise # Already tried untranslated
