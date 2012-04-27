@@ -255,6 +255,8 @@ roleLabels={
 	ROLE_ENDNOTE:_("end note"),
 	ROLE_FOOTER:_("footer"),
 	ROLE_FOOTNOTE:_("foot note"),
+	# Translators: Reported for an object which is a glass pane; i.e.
+	# a pane that is guaranteed to be on top of all panes beneath it.
 	ROLE_GLASSPANE:_("glass pane"),
 	ROLE_HEADER:_("header"),
 	ROLE_IMAGEMAP:_("image map"),
@@ -266,6 +268,8 @@ roleLabels={
 	ROLE_LAYEREDPANE:_("layered pane"),
 	ROLE_REDUNDANTOBJECT:_("redundant object"),
 	ROLE_ROOTPANE:_("root pane"),
+	# Translators: May be reported for an editable text object in a toolbar.
+	# This is deprecated and is not often (if ever) used.
 	ROLE_EDITBAR:_("edit bar"),
 	ROLE_TERMINAL:_("terminal"),
 	ROLE_RICHEDIT:_("rich edit"),
@@ -274,7 +278,13 @@ roleLabels={
 	ROLE_SECTION:_("section"),
 	ROLE_SHAPE:_("shape"),
 	ROLE_SPLITPANE:_("split pane"),
+	# Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+	# which represents the portion of the entire data that the user can see.
+	# As the user manipulates the scroll bars, the contents of the view port can change.
 	ROLE_VIEWPORT:_("view port"),
+	# Translators: Reported for an object that forms part of a menu system
+	# but which can be undocked from or torn off the menu system
+	# to exist as a separate window.
 	ROLE_TEAROFFMENU:_("tear off menu"),
 	ROLE_TEXTFRAME:_("text frame"),
 	ROLE_TOGGLEBUTTON:_("toggle button"),
@@ -348,6 +358,8 @@ stateLabels={
 	STATE_HASPOPUP:_("subMenu"),
 	STATE_PROTECTED:_("protected"),
 	STATE_REQUIRED:_("required"),
+	# Translators: Reported when an object no longer exists in the user interface;
+	# i.e. it is dead and is no longer usable.
 	STATE_DEFUNCT:_("defunct"),
 	STATE_INVALID_ENTRY:_("invalid entry"),
 	STATE_MODAL:_("modal"),
