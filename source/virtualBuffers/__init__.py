@@ -1341,6 +1341,54 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		# We do this check because we don't want to remember caret positions for email messages, etc.
 		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
 
+	def getEnclosingContainerRange(self,range):
+		controlFields=[]
+		for cmd in range.getTextWithFields():
+			if not isinstance(cmd,textInfos.FieldCommand) or cmd.command!="controlStart":
+				break
+			controlFields.append(cmd.field)
+		containerField=None
+		while controlFields:
+			field=controlFields.pop()
+			if field.getPresentationCategory(controlFields,config.conf['documentFormatting'])==field.PRESCAT_CONTAINER:
+				containerField=field
+				break
+		if not containerField: return None
+		docHandle=int(containerField['controlIdentifier_docHandle'])
+		ID=int(containerField['controlIdentifier_ID'])
+		offsets=range._getOffsetsFromFieldIdentifier(docHandle,ID)
+		return self.makeTextInfo(textInfos.offsets.Offsets(*offsets))
+
+	def script_moveToStartOfContainer(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		container=self.getEnclosingContainerRange(info)
+		if not container:
+			# Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.) 
+			# But there is no container. 
+			ui.message(_("Not in a container"))
+			return
+		container.collapse()
+		self._set_selection(container, reason=self.REASON_QUICKNAV)
+		container.expand(textInfos.UNIT_LINE)
+		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+	# Translators: Description for the Move to start of container command in browse mode. 
+	script_moveToStartOfContainer.__doc__=_("Moves to the start of the container element, such as a list or table")
+
+	def script_movePastEndOfContainer(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		container=self.getEnclosingContainerRange(info)
+		if not container:
+			ui.message(_("Not in a container"))
+			return
+		container.collapse(end=True)
+		self._set_selection(container, reason=self.REASON_QUICKNAV)
+		container.expand(textInfos.UNIT_LINE)
+		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+	# Translators: Description for the Move past end of container command in browse mode. 
+	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
+
 	__gestures = {
 		"kb:enter": "activatePosition",
 		"kb:space": "activatePosition",
@@ -1356,6 +1404,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
+		"kb:shift+,": "moveToStartOfContainer",
+		"kb:shift+.": "movePastEndOfContainer",
 	}
 
 # Add quick navigation scripts.

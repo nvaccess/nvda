@@ -7,8 +7,11 @@
 import time
 import os
 import sys
+import threading
+import ctypes
 import wx
 import globalVars
+import tones
 import ui
 from logHandler import log
 import config
@@ -226,6 +229,15 @@ class MainFrame(wx.Frame):
 			pythonConsole.initialize()
 		pythonConsole.activate()
 
+	def onAddonsManagerCommand(self,evt):
+		if isInMessageBox:
+			return
+		self.prePopup()
+		from addonGui import AddonsDialog
+		d=AddonsDialog(gui.mainFrame)
+		d.Show()
+		self.postPopup()
+
 	def onReloadPluginsCommand(self, evt):
 		import appModuleHandler, globalPluginHandler
 		from NVDAObjects import NVDAObject
@@ -303,6 +315,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
+			item = menu_tools.Append(wx.ID_ANY, _("Addons Manager"))
+			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
 		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
 			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
@@ -582,3 +596,50 @@ class LauncherDialog(wx.Dialog):
 		d = cls(mainFrame)
 		d.Show()
 		mainFrame.postPopup()
+
+class ExecAndPump(threading.Thread):
+	"""Executes the given function with given args and kwargs in a background thread while blocking and pumping in the current thread."""
+
+	def __init__(self,func,*args,**kwargs):
+		self.func=func
+		self.args=args
+		self.kwargs=kwargs
+		super(ExecAndPump,self).__init__()
+		self.threadExc=None
+		self.start()
+		time.sleep(0.1)
+		threadHandle=ctypes.c_int()
+		threadHandle.value=ctypes.windll.kernel32.OpenThread(0x100000,False,self.ident)
+		msg=ctypes.wintypes.MSG()
+		while ctypes.windll.user32.MsgWaitForMultipleObjects(1,ctypes.byref(threadHandle),False,-1,255)==1:
+			while ctypes.windll.user32.PeekMessageW(ctypes.byref(msg),None,0,0,1):
+				ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
+				ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
+		if self.threadExc:
+			raise self.threadExc
+
+	def run(self):
+		try:
+			self.func(*self.args,**self.kwargs)
+		except Exception as e:
+			self.threadExc=e
+
+class IndeterminateProgressDialog(wx.ProgressDialog):
+
+	def __init__(self, parent, title, message):
+		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
+		self.timer = wx.PyTimer(self.Pulse)
+		self.timer.Start(1000)
+		self.Raise()
+
+	def Pulse(self):
+		super(IndeterminateProgressDialog, self).Pulse()
+		if self.IsActive():
+			tones.beep(440, 40)
+
+	def done(self):
+		self.timer.Stop()
+		if self.IsActive():
+			tones.beep(1760, 40)
+		self.Hide()
+		self.Destroy()
