@@ -7,6 +7,8 @@
 import time
 import os
 import sys
+import threading
+import ctypes
 import wx
 import globalVars
 import ui
@@ -582,3 +584,30 @@ class LauncherDialog(wx.Dialog):
 		d = cls(mainFrame)
 		d.Show()
 		mainFrame.postPopup()
+
+class ExecAndPump(threading.Thread):
+	"""Executes the given function with given args and kwargs in a background thread while blocking and pumping in the current thread."""
+
+	def __init__(self,func,*args,**kwargs):
+		self.func=func
+		self.args=args
+		self.kwargs=kwargs
+		super(ExecAndPump,self).__init__()
+		self.threadExc=None
+		self.start()
+		time.sleep(0.1)
+		threadHandle=ctypes.c_int()
+		threadHandle.value=ctypes.windll.kernel32.OpenThread(0x100000,False,self.ident)
+		msg=ctypes.wintypes.MSG()
+		while ctypes.windll.user32.MsgWaitForMultipleObjects(1,ctypes.byref(threadHandle),False,-1,255)==1:
+			while ctypes.windll.user32.PeekMessageW(ctypes.byref(msg),None,0,0,1):
+				ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
+				ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
+		if self.threadExc:
+			raise self.threadExc
+
+	def run(self):
+		try:
+			self.func(*self.args,**self.kwargs)
+		except Exception as e:
+			self.threadExc=e
