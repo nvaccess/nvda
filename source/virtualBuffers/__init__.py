@@ -1357,6 +1357,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
 
 	def getEnclosingContainerRange(self,range):
+		formatConfig=config.conf['documentFormatting'].copy()
+		formatConfig.update({"reportBlockQuotes":True,"reportTables":True,"reportLists":True,"reportFrames":True})
 		controlFields=[]
 		for cmd in range.getTextWithFields():
 			if not isinstance(cmd,textInfos.FieldCommand) or cmd.command!="controlStart":
@@ -1365,7 +1367,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		containerField=None
 		while controlFields:
 			field=controlFields.pop()
-			if field.getPresentationCategory(controlFields,config.conf['documentFormatting'])==field.PRESCAT_CONTAINER:
+			if field.getPresentationCategory(controlFields,formatConfig)==field.PRESCAT_CONTAINER:
 				containerField=field
 				break
 		if not containerField: return None
