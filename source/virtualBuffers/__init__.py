@@ -276,7 +276,7 @@ class ElementsListDialog(wx.Dialog):
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.treeRoot = self.tree.AddRoot("root")
-		mainSizer.Add(self.tree,proportion=7)
+		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of an editable text field to filter the elements
