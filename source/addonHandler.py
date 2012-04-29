@@ -28,10 +28,6 @@ MANIFEST_FILENAME = "manifest.ini"
 BUNDLE_EXTENSION = "nvda-addon"
 ADDON_REMOVED_EXTENSION="removed"
 
-#: Currently loaded add-ons. keyed by path
-#: @type runningAddons: list
-_runningAddons = []
-
 def getRunningAddons():
 	""" Returns currently loaded addons.
 	"""
@@ -90,7 +86,7 @@ def runHook(hookName, *args, **kwargs):
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
 	For now, only <userConfig\addons is supported.
-	@rtype list(string)
+	@rtype: list(string)
 	"""
 	addon_paths = []
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
@@ -233,8 +229,7 @@ class Addon(object):
 		@returns: the gettext translation class.
 		"""
 		localedir = os.path.join(self.path, "locale")
-		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.curLang], fallback=True)
-
+		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
 
 	def getHookFunction(self, hookName):
 		""" returns the hook function object for this L{Addon} if available.
@@ -312,13 +307,14 @@ def initTranslation():
 
 def _translatedManifestPaths(lang=None):
 	if lang is None:
-		lang = languageHandler.curLang # can't rely on default keyword arguments here.
+		lang = languageHandler.getLanguage() # can't rely on default keyword arguments here.
 	langs=[lang]
 	if '_' in lang:
 		langs.append(lang.split('_')[0])
 		if lang!='en' and not lang.startswith('en_'):
 			langs.append('en')
 	return [r"locale\%s\%s" % (lang,  MANIFEST_FILENAME) for lang in langs]
+
 
 class AddonBundle(object):
 	""" Represents the contents of an NVDA addon in a for suitable for distribution.
@@ -458,13 +454,13 @@ long_description = string(default=None)
 			val = c
 			for key in keys:
 				val = val[key]
-			return val
+			return unicode(val, self._translatedConfig.encoding or "utf-8")
 		except KeyError:
 			# if we were using the translated config try on untranslated:
 			if c != self:
 				val = self
 				for key in keys:
 					val = val[key]
-				return val
+				return unicode(val)
 			else:
 				raise # Already tried untranslated
