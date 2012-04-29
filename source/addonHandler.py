@@ -6,6 +6,7 @@
 
 import gettext
 import glob
+import tempfile
 import inspect
 import itertools
 import os.path
@@ -25,6 +26,7 @@ from logHandler import log
 
 MANIFEST_FILENAME = "manifest.ini"
 BUNDLE_EXTENSION = "nvda-addon"
+ADDON_REMOVED_EXTENSION="removed"
 
 #: Currently loaded add-ons. keyed by path
 #: @type runningAddons: list
@@ -35,8 +37,19 @@ def getRunningAddons():
 	"""
 	return itertools.ifilter(lambda a : a.isLoaded, getAvailableAddons())
 
+def cleanRemovedAddons():
+	"""Removes any addons that could not be removed on the last run of NVDA"""
+	for path in _getDefaultAddonPaths():
+		for name in os.listdir(path):
+			if name.endswith(".%s"%ADDON_REMOVED_EXTENSION):
+				try:
+					shutil.rmtree(os.path.join(path,name))
+				except (IOError,WindowsError):
+					log.debugWarning("Failed to clean up removed addon dir %s"%name)
+
 def initialize():
 	""" Initializes the add-ons subsystem. """
+	cleanRemovedAddons()
 	for addon in getAvailableAddons(refresh=True):
 		try:
 			addon.load()
@@ -94,6 +107,7 @@ def _getAvailableAddonsFromPath(path):
 	"""
 	log.debug("Listing add-ons from %s", path)
 	for p in os.listdir(path):
+		if p.endswith(".%s"%ADDON_REMOVED_EXTENSION): continue
 		addon_path = os.path.join(path, p)
 		if os.path.isdir(addon_path) and addon_path not in ('.', '..'):
 			log.debug("Loading add-on from %s", addon_path)
@@ -244,14 +258,19 @@ class Addon(object):
 		if func:
 			return func(*args, **kwargs)
 
-	def removeContents(self, ignoreErrors=True):
+	def removeContents(self):
 		""" This method removes the contents of the addon from the system.
 		Any calls to the majority of the addon methods will throw an error.
-		IOErrors will be thrown unless ignoreErrors is True."""
+		This method will do its best to remove files, but on failier it will rename the directory and remove on next NVDA run.
+		"""
 		if self.isLoaded:
 			raise RuntimeError("This addon is still active.")
-		shutil.rmtree(self.path, ignore_errors=ignoreErrors)
-
+		shutil.rmtree(self.path,ignore_errors=True)
+		if os.path.exists(self.path):
+			log.debugWarning("Unable to remove some files, removing on next run of NVDA",exc_info=True)
+			basePath=os.path.dirname(self.path)
+			tempName=tempfile.mktemp(suffix=".%s"%ADDON_REMOVED_EXTENSION,dir=basePath)
+			os.rename(self.path,tempName)
 
 def getCodeAddon(obj=None, frameDist=1):
 	""" Returns the L{Addon} where C{obj} is defined. If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".
