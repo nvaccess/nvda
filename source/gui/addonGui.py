@@ -21,22 +21,24 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.InsertColumn(1,_("Package"),width=150)
 		self.addonsList.InsertColumn(2,_("Version"),width=50)
 		self.addonsList.InsertColumn(3,_("Author"),width=300)
-		self.refreshAddonsList()
+		self.addonsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
 		entriesSizer.Add(self.addonsList,proportion=8)
 		settingsSizer.Add(entriesSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		aboutButtonID=wx.NewId()
-		aboutButton=wx.Button(self,aboutButtonID,_("&About Addon..."),wx.DefaultPosition)
+		self.aboutButton=wx.Button(self,aboutButtonID,_("&About Addon..."),wx.DefaultPosition)
+		self.aboutButton.Disable()
 		self.Bind(wx.EVT_BUTTON,self.onAbout,id=aboutButtonID)
-		entryButtonsSizer.Add(aboutButton)
+		entryButtonsSizer.Add(self.aboutButton)
 		addButtonID=wx.NewId()
-		addButton=wx.Button(self,addButtonID,_("&Add..."),wx.DefaultPosition)
+		self.addButton=wx.Button(self,addButtonID,_("&Add..."),wx.DefaultPosition)
 		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
-		entryButtonsSizer.Add(addButton)
+		entryButtonsSizer.Add(self.addButton)
 		removeButtonID=wx.NewId()
-		removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
+		self.removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
+		self.removeButton.Disable()
 		self.Bind(wx.EVT_BUTTON,self.OnRemoveClick,id=removeButtonID)
-		entryButtonsSizer.Add(removeButton)
+		entryButtonsSizer.Add(self.removeButton)
 		settingsSizer.Add(entryButtonsSizer)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: The label of a button to continue with the operation.
@@ -45,6 +47,7 @@ class AddonsDialog(wx.Dialog):
 		mainSizer.Add(closeButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.CENTER)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+		self.refreshAddonsList()
 		self.addonsList.SetFocus()
 
 	def OnAddClick(self,evt):
@@ -131,6 +134,20 @@ class AddonsDialog(wx.Dialog):
 		for addon in addonHandler.getAvailableAddons(refresh=True):
 			self.addonsList.Append((self.getAddonStatus(addon), addon.manifest['summary'],addon.manifest['version'], addon.manifest['author']))
 			self.curAddons.append(addon)
+		# select the given active addon or the first addon if not given
+		if len(self.curAddons)>0:
+			activeIndex=0
+			self.addonsList.Select(activeIndex,on=1)
+			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
+		else:
+			self.aboutButton.Disable()
+			self.removeButton.Disable()
+
+	def onListItemSelected(self, evt):
+		index=evt.GetIndex()
+		addon=self.curAddons[index] if index>=0 else None
+		self.aboutButton.Enable(addon is not None and not addon.isPendingRemove)
+		self.removeButton.Enable(addon is not None and not addon.isPendingRemove)
 
 	def onClose(self,evt):
 		self.Destroy()
