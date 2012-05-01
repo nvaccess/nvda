@@ -470,16 +470,6 @@ url= string(default=None)
 
 """))
 
-	translatedConfigspec = ConfigObj(StringIO(
-	"""
-# NVDA localized Ad-on Manifest configuration specification
-# This configspec contains the data that can be translated on a manifest.
-# 
-# short summary (label)  for the addon shown to users
-summary = string()
-# Long description with further information and instructions
-description = string(default=none)
-"""))
 
 	def __init__(self, input, translatedInput=None):
 		""" Constructs an L{AddonManifest} instance from manifest string data
@@ -496,11 +486,12 @@ description = string(default=none)
 			self._errors = result
 		self._translatedConfig = None
 		if translatedInput is not None:
-			self._translatedConfig = ConfigObj(translatedInput, configspec=self.translatedConfigspec)
+			self._translatedConfig = ConfigObj(translatedInput)
 			for k in ('summary','description'):
 				val=self._translatedConfig.get(k)
 				if val:
-					self[k]=val
+					# Convert to unicode. Try utf-8 if configobj did not detect the encoding.
+					self[k]=val.decode(self._translatedConfig.encoding or "utf-8")
 
 	@property
 	def errors(self):
