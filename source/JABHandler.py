@@ -310,7 +310,7 @@ class JABContext(object):
 		start=startIndex.value
 		end=endIndex.value
 		log.debug("line bounds: start %s, end %s"%(start,end))
-		if end<start:
+		if end<start or start<0:
 			# Invalid or empty line.
 			return (0,-1)
 		ok=False
