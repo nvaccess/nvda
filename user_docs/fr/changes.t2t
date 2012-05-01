@@ -1,7 +1,35 @@
-fQuoi de Neuf dans NVDA
+Quoi de Neuf dans NVDA
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2012.2 =
+
+== Nouvelles Fonctionnalités ==
+- NVDA peut maintenant rechercher, télécharger et installer automatiquement les mises à jour. (#73)
+- Beaucoup plus de fonctionnalités de NVDA sont maintenant utilisables dans les applications en style Metro sous Windows 8 lorsqu'on utilise une copie installée de NVDA, incluant la prononciation des caractères saisis, et le mode navigation pour les documents web (incluant le support pour la version metro de Internet Explorer 10). Les copies portables de NVDA ne peuvent accéder aux applications Metro (#1801)
+- En mode navigation (Internet Explorer, Firefox etc.) il est maintenant possible de sauter au début et de passer la fin de certains éléments contenants (incluant les listes et les tableaux) avec shift+, et shift+. respectivement. (#123)
+
+
+== Changements ==
+- NVDA est maintenant distribué en un seul package. Plutôt qu'une version portable et une version installée, il n'y a maintenant qu'un fichier qui lorsqu'il démarre, va démarrer une copie temporaire de NVDA qui vous permettra d'installer ou de créer une copie portable. (#1715)
+- NVDA est maintenant toujours installé dans Program Files sur tous les systèmes. Mettre à jours une installation la déplacera automatiquement si elle n'y était pas installée.
+
+
+== Corrections de Bogues ==
+- Avec le changement automatique de la langue activé, le Contenu tel que le texte alternatif pour les graphiques et les étiquettes pour certains champs dans Mozilla Gecko (P.ex. Firefox) sont maintenant prononcé dans la langue correcte si marquée de manière appropriée.
+- DireTout dans BibleSeeker (et autre contrôles TRxRichEdit) ne s'arrête plus au milieu d'un passage.
+- Les listes que l'on trouve dans les propriétés de fichiers de l'explorateur de Windows 8 (onglet permissions) et dans Windows Update sous Windows 8 sont maintenant lues correctement.
+- Correction de blocages possibles dans MS Word qui causaient un délai de plus de deux secondes pour récupérer le texte d'un document (lignes extrêmement longues ou table des matières). (#2191)
+- La détection de séparation de mots fonctionne maintenant correctement quand l'espace est suivi de certaines ponctuations (#1656)
+- En mode Navigation dans Adobe Reader, il est maintenant possible de naviguer dans les différents niveaux d'en-têtes en utilisant les touches de navigation rapide et la liste (#2181)
+- Dans Winamp, le braille est maintenant correctement mis à jour quand on change d'élément dans l'éditeur de playliste (#1912)
+- L'arborescence dans la liste des éléments (disponibles pour les documents en mode navigation) est maintenant correctement dimentionné pour afficher le texte de tous les éléments. (#2276)
+
+
+== Changements pour les développeurs ==
+- En raison du remplacement de l'installateur NSIS pour NVDA par un installateur en Python, il n'est plus nécessaire pour les traducteurs de maintenir un fichier langstrings.txt pour l'installateur. Toutes ces chaînes traduites sont maintenant gérées par les fichiers po gettext
+
 
 = 2012.1 =
 Les apports majeurs de cette version incluent des fonctionnalités pour une lecture plus fluide du Braille; des indications de mise en forme des documents en Braille; l'accès à beaucoup plus d'informations de mise en forme ainsi qu'une amélioration de performances sous Microsoft Word et le support du magasin Itune. 
@@ -13,7 +41,7 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - Les caractères gras, italiques et soulignés sont maintenant signalés en braille en utilisant les signes définis dans la table braille en cours. (#538)
 - Dans les documents Microsoft Word, beaucoup plus d'informations sont maintenant annoncées, parmi lesquelles :
  - Les informations en ligne comme les numéros de notes en bas de page et de notes en fin de document, niveaux de titres, l'existence de commentaires, les niveaux d'imbrication des tables, les liens, la couleur du texte;
- - annonce, quand on entre dans les paragraphes tels que l'historique des commentaires, l'historique des notes de bas de page et des notes de fin de document et l'historique des des en-têtes et pieds de page; 
+ - annonce, quand on entre dans les paragraphes tels que l'historique des commentaires, l'historique des notes de bas de page et des notes de fin de document et l'historique des en-têtes et pieds de page; 
 - Le braille indique maintenant le texte sélectionné en utilisant les points 7 et 8. (#889)
 - Dans les documents, les contrôles tels que lien, bouton titre sont maintenant affichées en Braille. (#202)
 - Prise en compte des terminaux braille USB hedo ProfiLine et MobilLine. (#1863, #1897)
@@ -27,7 +55,7 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - Le mode veille est automatiquement activé quand on utilise Openbook. (#1209)
 - Sous Poedit, les traducteurs peuvent maintenant lire les commentaires ajoutés par les traducteurs ou extraits automatiquement. Les messages non traduits ou confus sont marqués par une étoile et on entend un bip quand on passe dessus. (#1811)
 - Support des terminaux braille HumanWare Brailliant Bi & B. (#1990)
-- Nouvelle langue: Norvégienn Bokmål.
+- Nouvelle langue: Norvégienne Bokmål.
 
 
 == Changements ==
@@ -58,9 +86,9 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - Sous Adobe Reader, certains liens ne sont plus traités comme des zones d'édition non modifiables.
 - l'étiquette de certaines zones d'édition n'est plus incluse de manière incorrecte à l'annonce du texte d'un dialogue. (#1960)
 - La description des groupages est de nouveau annoncée si l'annonce de la description des objets est activée.
-- la taile en format lisible est maintenant incluse dans le texte du dialogue de propriété des disques de l'explorateur Windows.
+- la taille en format lisible est maintenant incluse dans le texte du dialogue de propriété des disques de l'explorateur Windows.
 - La double annonce du texte des pages de propriété a été supprimée dans certains cas. (#218)
-- Amélioration du suvi du curseur dans les zones d'édition s'appuyant sur du texte écrit à l'écran. En particulier, cela améliore l'utilisation de l'éditeur de cellules dans Microsoft Excel et dans l'éditeur de messages d'Eudora. (#1658)
+- Amélioration du suivi du curseur dans les zones d'édition s'appuyant sur du texte écrit à l'écran. En particulier, cela améliore l'utilisation de l'éditeur de cellules dans Microsoft Excel et dans l'éditeur de messages d'Eudora. (#1658)
 - Sous Firefox 11, la commande NVDA+Control+Espace (aller à l'objet virtuel contenant) fonctionne maintenant comme prévu pour quitter un objet embarqué tel qu'un objet Flash.
 - NVDA se relance maintenant correctement après un changement de configuration quand il est installé dans un répertoire dont le nom comporte des caractères non Ascii. (#2079)
 - Le Braille respecte correctement les réglages pour l'affichage des touches de raccourci des objets, de l'information de rang et des descriptions.
@@ -71,8 +99,9 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - Sous Microsoft Internet Explorer, il n'y a plus d'erreur quand le focus se trouve sur certains contrôles rares (#2121)
 - NVDA fonctionne maintenant correctement dans plusieurs dialogues "à propos" dans les applications distribuées avec Windows XP, parmi lesquelles le dialogues "à propos" du bloc-notes. (#1855) et celui de Windows.  
 - Correction de la revue par mots dans les champs d'édition de Windows. (#1877)
-- quitter un champ d'édition avec flèche-haut, flèche-gauche ou page-précédente quand on est en mode formulaire passe maintenant automatiquement en mode navigation quand le fode formulaire automatiquement au déplacement du curseur est activé. (#1733)
-- L changement de nom d'une ponctuation ou d'un symbole prendra effet instantannément sans nécessiter un redémarrage de NVDA.
+- quitter un champ d'édition avec flèche-haut, flèche-gauche ou page-précédente quand on est en mode formulaire passe maintenant automatiquement en mode navigation quand le mode formulaire automatiquement au déplacement du curseur est activé. (#1733)
+- Le changement de nom d'une ponctuation ou d'un symbole prendra effet instantanément sans nécessiter un redémarrage de NVDA.
+- Lorsque l'on utilise eSpeak, La parole ne se met plus en mode silence dans certains cas dans le dialogue Enregistrer Sous de la visionneuse du journal. (#2145) 
  
  
 
@@ -84,8 +113,8 @@ Les apports majeurs de cette version incluent des fonctionnalités pour une lect
 - TreeInterceptors et NVDAObjects qui n'exposent qu'une page de texte à la fois peuvent prendre en compte le défilement automatique des pages en mode "dire tout" en utilisant le mix-in textInfos.DocumentWithPageTurns. (#1978)
 - Plusieurs contrôles et valeurs de constantes ont été renommés ou déplacés= (#228)
 - Les constantes speech.REASON_* ont été déplacées dans controlTypes.
-  - Dans controlTypes, speechRoleLabels et speechStateLabels ont été renommées respectivementen roleLabels and stateLabels.
-- L'affichage Braille est maintenant journalisé au niveau entrée/sortie. D'abord, le texte non converti de otutes les régions est journalisé suivi par les cellules braille de la fenêtre en cours d'affichage. (#2102)
+  - Dans controlTypes, speechRoleLabels et speechStateLabels ont été renommées respectivement en roleLabels et stateLabels.
+- L'affichage Braille est maintenant journalisé au niveau entrée/sortie. D'abord, le texte non converti de toutes les régions est journalisé suivi par les cellules braille de la fenêtre en cours d'affichage. (#2102)
  
 
 = 2011.3 =
@@ -98,7 +127,7 @@ Le changement automatique de langue ou de dialecte peut être activé ou désact
 dans le dialogue Paramètres Vocaux. (#845)
 - Java Access Bridge 2.0.2 est maintenant supporté ce qui inclut les environnements Java Runtime 64 bits.
 - Sous Mozilla Gecko (ex : Firefox) Les niveaux de titre sont maintenant annoncés quand on utilise la navigation par objet.
-- Le formatage du text peut maintenant être annoncé quand on utilise le mode navigation sous Mozilla Gecko (ex : Firefox et ThunderBird). (#394)
+- Le formatage du texte peut maintenant être annoncé quand on utilise le mode navigation sous Mozilla Gecko (ex : Firefox et ThunderBird). (#394)
 - Les textes soulignés et/ou biffés peuvent maintenant être détectés et annoncés dans les contrôles de texte IAccessible2 standards tels qu'on en trouve dans les applications Mozilla.
 - En mode navigation sous Adobe Reader,
 le nombre de ligne et de colonnes d'un tableau est maintenant annoncé.
@@ -107,7 +136,7 @@ le nombre de ligne et de colonnes d'un tableau est maintenant annoncé.
 - Le pourcentage de changement de hauteur de voix quand une lettre majuscule est prononcée est maintenant configurable dans le dialogue Paramètres vocaux.
 Cela remplace l'ancienne case à cocher "Augmenter la hauteur de la voix pour signaler les majuscules".
 Pour désactiver cette fonction, mettez le pourcentage à 0. (#255)
-- L'annonce de la couleur du texte et de l'arrière-plan est maintenant inclus dans l'annonce du formatage du texte des cellulessous Mcrosoft Excel. (#1655)
+- L'annonce de la couleur du texte et de l'arrière-plan est maintenant inclus dans l'annonce du formatage du texte des cellules sous Microsoft Excel. (#1655)
 - Dans les applications utilisant Java Access Bridge, la commande d'activation de l'objet de navigation courant fonctionne maintenant pour les contrôles qui le nécessitent. (#1744)
 
 
@@ -123,7 +152,7 @@ pour filtrer les contrôles inutiles et est maintenant beaucoup plus facile à i
 - Mise à jour du synthétiseur eSpeak à la version 1.45.46.
 
 
-== Corrrections de bogues ==
+== Corrections de bogues ==
 - NVDA ne montre plus les puces ou les numérotations dans les listes sous Internet Explorer et autres contrôles MSHTML
 quand l'auteur a spécifié que celles-ci ne doivent pas être montrées (ex : style de liste "none"). (#1671)
 - Le redémarrage de NVDA après blocage (ex : en pressant control+alt+n) n'arrête plus la copie en cours sans en démarrer une nouvelle.
@@ -967,6 +996,7 @@ Les points forts principaux de cette version comprennent le support des édition
 - NVDA demande si la configuration doit être sauvegardée et s'il doit redémarrer lors du changement de langue sous la boîte de dialogue Langue de l'interface utilisateur. NVDA doit être relancé pour que les changements prennent effet.
 - Lorsqu'une synthèse dvocale choisi par l'utilisateur ne peut pas être chargé par le moyen de la boîte de dialogue Synthétiseur, NVDA affiche une alerte à cet effet.
 - Lors du chargement d'un synthétiseur de voix pour la première fois, NVDA permet que ce dernier choisisse les paramètres appropriés de sa voix, son débit et sa tonalité, au lieu de le forcer à utiliser des paramètres par défaut que le lecteur d'écran juge adéquats. Ceci résout un problème où Eloquence et IBM Viavoice Outloud Sapi 4 tendaient à pparler vraiment trop rapidement de prime abord.
+
 
 
 
