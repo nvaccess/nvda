@@ -7,7 +7,8 @@
 
 == Novas Características ==
 - NVDA agora pode procurar automáticamente, descargar e instalar actualizacións. (#73)
-
+- Agora funcionan Moitas máis características comúns do NVDA no estilo de aplicacións de Windows 8 Metro cando se utiliza unha versión instalada do NVDA, incluíndo a fala de carácteres ó se escreber e modo navegación para documentos web (inclúese soporte para a versión metro do Internet Explorer 10). As copias portables do NVDA non poden acceder ó estilo de aplicacións metro. (#1801) 
+- En documentos en modo Navegación (Internet Explorer, Firefox etc) agora podes saltar ó comezo, ou pasar ó remate, de certos elementos contedores (incluíndo listas e táboas) con "shift+," e "shift+." respectivamente. (#123) 
 
 == Cambios ==
 - NVDA agora distribúese nun paquete. En lugar de unha versión portable e unha instalable, agora só hai un ficheiro que cando se execute, iniciará unha copia temporal do NVDA, e permitirache instalar, ou xerar unha distribución portable.  
@@ -18,8 +19,12 @@
 - Ler todo en BibleSeeker (e outros controis TRxRichEdit) xa non se detén no medio dunha pasaxe.
 - As listas que se atopan nas propiedades de ficheiro en Windows 8 Explorer (pestana permisos) e en Windows 8 Windows Update agora lense correctamente.
 - Correxidos posibles colgues en MS Word que poderían ocorrer cando lle levou máis de 2 segundos extraer texto  dende un documento (líñas extremadamente longas ou táboas de contido). (#2191)
- 
-== Cambios para Desarrolladores ==
+- A detección de partición de palabras agora funciona correctamente onde un espazo en branco sexa seguido por certa puntuación. (#1656) 
+- No modo navegación en Adobe Reader, agora é posible navegar por cabeceiras fora dun nivel utilizando navegación rápida e a Lista de Elementos. (#2181)
+- No Winamp, o braille agora actualízase correctamente cando te moves a un elemento diferente no Editor de listas de reproducción. (#1912)
+- A árbore nos Elementos de Lista (dispoñible para documentos en modo navegación) agora dimensiónase apropiadamente para amosar o texto de cada elemento. (#2276)
+
+== Cambios para Desenroladores ==
 - Due to the replacement of the previous NSIS installer for NVDA with a built-in installer in Python, it is no longer necessary for translaters to maintain a langstrings.txt file for the installer. All localization strings are now managed by gettext po files.
 
  
