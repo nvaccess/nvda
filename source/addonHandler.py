@@ -7,6 +7,7 @@
 import gettext
 import glob
 import tempfile
+import cPickle
 import inspect
 import itertools
 import os.path
@@ -25,28 +26,68 @@ from logHandler import log
 
 
 MANIFEST_FILENAME = "manifest.ini"
+stateFilename="state.pickle"
 BUNDLE_EXTENSION = "nvda-addon"
-ADDON_REMOVED_EXTENSION="removed"
+ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
+
+state={}
+
+def loadState():
+	global state
+	statePath=os.path.join(globalVars.appArgs.configPath,"addons",stateFilename)
+	try:
+		state = cPickle.load(file(statePath, "r"))
+	except:
+		# Defaults.
+		state = {
+			"pendingRemovesSet":set(),
+			"pendingInstallsSet":set(),
+		}
+
+def saveState():
+	statePath=os.path.join(globalVars.appArgs.configPath,"addons",stateFilename)
+	try:
+		cPickle.dump(state, file(statePath, "wb"))
+	except:
+		log.debugWarning("Error saving state", exc_info=True)
 
 def getRunningAddons():
 	""" Returns currently loaded addons.
 	"""
 	return itertools.ifilter(lambda a : a.isLoaded, getAvailableAddons())
 
-def cleanRemovedAddons():
+def completePendingRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
-	for path in _getDefaultAddonPaths():
-		for name in os.listdir(path):
-			if name.endswith(".%s"%ADDON_REMOVED_EXTENSION):
-				try:
-					shutil.rmtree(os.path.join(path,name))
-				except (IOError,WindowsError):
-					log.debugWarning("Failed to clean up removed addon dir %s"%name)
+	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
+	pendingRemovesSet=state['pendingRemovesSet']
+	for addonName in pendingRemovesSet:
+		addonPath=os.path.join(user_addons,addonName)
+		if os.path.isdir(addonPath):
+			shutil.rmtree(addonPath,ignore_errors=True)
+			if os.path.exists(addonPath):
+				log.error("Could not remove addon at %s"%addonPath)
+	pendingRemovesSet.clear()
+
+def completePendingInstalls():
+	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
+	pendingInstallsSet=state['pendingInstallsSet']
+	for addonName in pendingInstallsSet:
+		newPath=os.path.join(user_addons,addonName)
+		oldPath=newPath+ADDON_PENDINGINSTALL_SUFFIX
+		try:
+			os.rename(oldPath,newPath)
+		except:
+			log.error("Failed to complete addon installation for %s"%addonName,exc_info=True)
+	pendingInstallsSet.clear()
 
 def initialize():
 	""" Initializes the add-ons subsystem. """
-	cleanRemovedAddons()
+	loadState()
+	completePendingRemoves()
+	completePendingInstalls()
+	saveState()
 	for addon in getAvailableAddons(refresh=True):
+		if addon.path.endswith(ADDON_PENDINGINSTALL_SUFFIX): continue
 		try:
 			addon.load()
 		except:
@@ -103,7 +144,6 @@ def _getAvailableAddonsFromPath(path):
 	"""
 	log.debug("Listing add-ons from %s", path)
 	for p in os.listdir(path):
-		if p.endswith(".%s"%ADDON_REMOVED_EXTENSION): continue
 		addon_path = os.path.join(path, p)
 		if os.path.isdir(addon_path) and addon_path not in ('.', '..'):
 			log.debug("Loading add-on from %s", addon_path)
@@ -128,9 +168,11 @@ def getAvailableAddons(refresh=False):
 	return _availableAddons.itervalues()
 
 def installAddonBundle(bundle):
-	userAddonsPath = os.path.join(globalVars.appArgs.configPath, "addons")
-	bundle.extract(userAddonsPath)
-
+	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart.""" 
+	addonPath = os.path.join(globalVars.appArgs.configPath, "addons",bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
+	bundle.extract(addonPath)
+	state['pendingInstallsSet'].add(bundle.manifest['name'])
+	saveState()
 
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
@@ -157,6 +199,27 @@ class Addon(object):
 					break
 			self.manifest = AddonManifest(f, translatedInput)
 		self._hooksModule = self.loadModule('hooks')
+
+	@property
+	def isPendingInstall(self):
+		"""True if this addon has not yet been fully installed."""
+		return self.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
+
+	@property
+	def isPendingRemove(self):
+		"""True if this addon is marked for removal."""
+		return self.name in state['pendingRemovesSet']
+
+	def requestRemove(self):
+		"""Markes this addon for removal on NVDA restart."""
+		if self.isPendingInstall:
+			state['pendingInstallsSet'].discard(self.name)
+			shutil.rmtree(self.path,ignore_errors=True)
+			if os.path.exists(self.path):
+				log.error("Failed to remove pending install addon at %s"%self.path)
+		else: #Normal removal
+			state['pendingRemovesSet'].add(self.name)
+		saveState()
 
 	@property
 	def name(self):
@@ -336,21 +399,14 @@ class AddonBundle(object):
 					pass
 			self._manifest = AddonManifest(z.open(MANIFEST_FILENAME), translatedInput=translatedInput)
 
-	def extract(self, addonsPath, override=False):
+	def extract(self, addonPath):
 		""" Extracts the bundle content to the specified path.
-		A directory with the addon's name will be created under C{addons_path}.
-		@param addons_path: Path where to extract contents.
-		@type addonsPath: string
-		@param override: specifies if the contents of the addon-directory are or not overriden
-		@type override: boolean.
-		@raise AddonError: If the add-on is already installed and override is False.
+		The addon will be extracted to L{addonPath}
+		@param addonPath: Path where to extract contents.
+		@type addonPath: string
 		"""
-		name = self._manifest['name']
-		path = os.path.join(addonsPath, name)
-		if not override and os.path.isdir(path):
-			raise AddonError("Addon already installed.")
 		with zipfile.ZipFile(self._path, 'r') as z:
-			z.extractall(path)
+			z.extractall(addonPath)
 
 	@property
 	def manifest(self):

@@ -16,10 +16,11 @@ class AddonsDialog(wx.Dialog):
 		# Translators: the label for the installed addons list in the addons manager.
 		entriesLabel=wx.StaticText(self,-1,label=_("&Installed Addons"))
 		entriesSizer.Add(entriesLabel)
-		self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(500,350))
-		self.addonsList.InsertColumn(0,_("Package"),width=150)
-		self.addonsList.InsertColumn(1,_("Version"),width=50)
-		self.addonsList.InsertColumn(2,_("Description"),width=300)
+		self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		self.addonsList.InsertColumn(0,_("Status"),width=50)
+		self.addonsList.InsertColumn(1,_("Package"),width=150)
+		self.addonsList.InsertColumn(2,_("Version"),width=50)
+		self.addonsList.InsertColumn(3,_("Description"),width=300)
 		self.refreshAddonsList()
 		entriesSizer.Add(self.addonsList,proportion=8)
 		settingsSizer.Add(entriesSizer)
@@ -68,7 +69,7 @@ class AddonsDialog(wx.Dialog):
 			wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
 			return
 		bundleName=bundle.manifest['name']
-		if any(bundleName==addon.manifest['name'] for addon in self.curAddons):
+		if any(bundleName==addon.manifest['name'] for addon in self.curAddons if not addon.isPendingRemove):
 			# Translators: The message displayed when an an addon already seems to be installed. 
 			gui.messageBox(_("This addon seems to already be installed. Please remove the existing addon and try again."),
 				# Translators: The title of a dialog presented when an error occurs.
@@ -104,28 +105,27 @@ class AddonsDialog(wx.Dialog):
 		if index<0: return
 		if gui.messageBox(_("Are you sure you wish to remove the selected addon from NVDA?"), _("Remove Addon"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
 		addon=self.curAddons[index]
-		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-		# Translators: The title of the dialog presented while an Addon is being removed.
-		_("Removing Addon"),
-		# Translators: The message displayed while an addon is being removed.
-		_("Please wait while the addon is being removed."))
-		try:
-			if addon.isLoaded:
-				addon.unload()
-			gui.ExecAndPump(addon.removeContents)
-			self.needsRestart=True
-		except:
-			log.error("Failed to remove addon",exc_info=True)
+		addon.requestRemove()
+		self.needsRestart=True
 		self.refreshAddonsList()
-		progressDialog.done()
-		del progressDialog
 		self.addonsList.SetFocus()
+
+	def getAddonStatus(self,addon):
+		if addon.isPendingInstall:
+			# Translators: The status shown for a newly installed addon before NVDA is restarted.
+			return _("new")
+		elif addon.isPendingRemove:
+			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
+			return _("removed")
+		else:
+			# Translators: The status shown for an addon when its currently running in NVDA.
+			return _("running")
 
 	def refreshAddonsList(self):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
 		for addon in addonHandler.getAvailableAddons(refresh=True):
-			self.addonsList.Append((addon.manifest['description'],addon.manifest['version'],addon.manifest['long_description']))
+			self.addonsList.Append((self.getAddonStatus(addon), addon.manifest['description'],addon.manifest['version'], addon.manifest['long_description']))
 			self.curAddons.append(addon)
 
 	def onClose(self,evt):
