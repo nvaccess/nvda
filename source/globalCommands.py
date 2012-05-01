@@ -211,6 +211,9 @@ class GlobalCommands(ScriptableObject):
 			level = characterProcessing.SYMLVL_NONE
 		name = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS[level]
 		config.conf["speech"]["symbolLevel"] = level
+		# Translators: Reported when the user cycles through speech symbol levels
+		# which determine what symbols are spoken.
+		# %s will be replaced with the symbol level; e.g. none, some, most and all.
 		ui.message(_("symbol level %s") % name)
 	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
 

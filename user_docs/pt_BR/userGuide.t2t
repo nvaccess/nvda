@@ -69,7 +69,7 @@ Entre na seção download e encontrará o link para baixar a última versão des
 
 Ao executar o arquivo baixado, será iniciada uma cópia temporária do NVDA, e também lhe será perguntado se deseja instalá-lo, criar uma cópia portátil ou apenas continuar usando a cópia temporária.
 
-Caso pretenda usar constantemente o NVDA neste computador, irá então escolher instalá-lo. 
+Caso pretenda usar constantemente o NVDA neste computador, irá então escolher instalá-lo.
 O NVDA Instalado lhe permitirá ter recursos adicionais, tais como iniciá-lo automaticamente após o logon, a capacidade de ler a tela de Logon e outras telas seguras do Windows (o que não pode ser feito através de cópias portáteis e/ou temporárias) e a criação de atalhos no menu iniciar e na área de trabalho.
 As cópias instaladas também permitem elas próprias criar uma cópia portátil a qualquer momento.
 
@@ -403,6 +403,10 @@ As teclas seguintes só por si saltam para o próximo elemento disponível, adic
 - o: objeto embutido
 - 1 a 6: cabeçalhos de nível 1 a 6 respectivamente
 -
+Para mover-se ao início ou final de elementos que contém outros, tais como listas e tabelas:
+| Nome | Tecla | Descrição |
+| Mover para o início do elemento | shift+, | Move para o início do elemento que contém outros (lista, tabela etc) onde o cursor esteja posicionado |
+| Mover para o final do elemento | shift+. | Move para o final do elemento que contém outros (lista, tabela etc) onde esteja situado o cursor |
 %kc:endInclude
 
 ++ A Lista de Elementos ++
@@ -497,7 +501,7 @@ Ao pressionar este botão, copiará as configurações atualmente salvas do usu�
 Para certificar-se de que todas as suas opções serão transferidas, verifique em primeiro lugar se salvou suas configurações com NVDA+Ctrl+C ou através do item respectivo do Menu do NVDA.
 Esta opção só estará disponível para as cópias instaladas do NVDA. 
 
-+++ Procurar por Atualizações para o NVDA Automaticamente +++
++++ Procurar Atualizações do NVDA Automaticamente +++
 Se abilitado, o NVDA irá procurar automaticamente por verssões atualizadas e lhe informará quando uma atualização estiver disponível.
 Você também pode procurar por atualizações manualmente selecionando o item correspondente no submenu ajuda do menu do NVDA.
 

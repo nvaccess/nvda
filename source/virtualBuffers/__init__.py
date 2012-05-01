@@ -248,17 +248,26 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("link", _("Lin&ks")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("heading", _("&Headings")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("landmark", _("Lan&dmarks")),
 	)
 	Element = collections.namedtuple("Element", ("textInfo", "text", "parent"))
 
 	def __init__(self, vbuf):
 		self.vbuf = vbuf
+		# Translators: The title of the browse mode Elements List dialog.
 		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
+		# Translators: The label of a group of radio buttons to select the type of element
+		# in the browse mode Elements List dialog.
 		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
 		mainSizer.Add(child,proportion=1)
@@ -267,9 +276,11 @@ class ElementsListDialog(wx.Dialog):
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.treeRoot = self.tree.AddRoot("root")
-		mainSizer.Add(self.tree,proportion=7)
+		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of an editable text field to filter the elements
+		# in the browse mode Elements List dialog.
 		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
 		sizer.Add(label)
 		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
@@ -278,9 +289,13 @@ class ElementsListDialog(wx.Dialog):
 		mainSizer.Add(sizer,proportion=1)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a button to activate an element
+		# in the browse mode Elements List dialog.
 		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
 		self.activateButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(True))
 		sizer.Add(self.activateButton)
+		# Translators: The label of a button to move to an element
+		# in the browse mode Elements List dialog.
 		self.moveButton = wx.Button(self, wx.ID_ANY, _("&Move to"))
 		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
 		sizer.Add(self.moveButton)
@@ -1342,6 +1357,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
 
 	def getEnclosingContainerRange(self,range):
+		formatConfig=config.conf['documentFormatting'].copy()
+		formatConfig.update({"reportBlockQuotes":True,"reportTables":True,"reportLists":True,"reportFrames":True})
 		controlFields=[]
 		for cmd in range.getTextWithFields():
 			if not isinstance(cmd,textInfos.FieldCommand) or cmd.command!="controlStart":
@@ -1350,7 +1367,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		containerField=None
 		while controlFields:
 			field=controlFields.pop()
-			if field.getPresentationCategory(controlFields,config.conf['documentFormatting'])==field.PRESCAT_CONTAINER:
+			if field.getPresentationCategory(controlFields,formatConfig)==field.PRESCAT_CONTAINER:
 				containerField=field
 				break
 		if not containerField: return None

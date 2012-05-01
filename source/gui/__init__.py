@@ -539,7 +539,6 @@ class LauncherDialog(wx.Dialog):
 
 		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("License Agreement")), wx.VERTICAL)
 		ctrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
-		import codecs
 		ctrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
 		sizer.Add(ctrl)
 		ctrl = self.licenseAgreeCheckbox = wx.CheckBox(self, label=_("I &agree"))

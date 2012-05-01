@@ -32,7 +32,7 @@ O máis sinalable inclúe:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 36 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Árabe, Búlgaro, Checo, Chinese Mandarín, Chinese cantonés, Croata, Danés, eslovaco, Español, Finlandés, Francés, Galego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 36 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Árabe, Búlgaro, Checo, Chinese Mandarín Chinese cantonés, Croata, Danés, eslovaco, Español, Finlandés, Francés, Galego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ó usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -411,6 +411,10 @@ A seguintes teclas elas soas saltan ó seguinte campo, ca tecla shift saltan ó 
 - o: obxecto empotrado
 - 1 a 6: cabeceiras do 1 ó 6 respectivamente
 -
+Para moverte ó comezo ou final de elementos contedores como listas e tablas:
+|| Nome | Tecla | Descripción |
+| Mover ó comezo dun contedor | shift+, | Móvese ó comezo do contedor (lista, táboa etc) onde estea situado o cursor |
+| Mover ó final do contedor | shift+. | Móvese ó final do contedor (lista, táboa etc) onde estea situado o cursor |
 %kc:endInclude
 
 ++ A Lista de Elementos ++
@@ -442,6 +446,8 @@ NVDA proporciona as súas proprias ordes extra para algunhas aplicacións para f
 || Nome | Tecla | Descripción |
 | Anunciar tempo restante | control+shift+r | Anuncia o tempo restante da pista actualmente en reproducción, se hai algunha. |
 %kc:endInclude
+
+Nota: El atajo de teclado de anunciado del tiempo restante sólo funciona con la cadena de formato predeterminada para la línea de estado de foobar.
 
 ++ Miranda IM ++
 %kc:beginInclude

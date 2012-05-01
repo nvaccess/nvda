@@ -228,6 +228,10 @@ class UpdateDownloader(object):
 	def start(self):
 		"""Start the download.
 		"""
+		self._shouldCancel = False
+		# Use a timer because timers aren't re-entrant.
+		self._guiExecTimer = wx.PyTimer(self._guiExecNotify)
+		gui.mainFrame.prePopup()
 		# Translators: The title of the dialog displayed while downloading an NVDA update.
 		self._progressDialog = wx.ProgressDialog(_("Downloading Update"),
 			# Translators: The progress message indicating that a connection is being established.
@@ -237,6 +241,15 @@ class UpdateDownloader(object):
 		t = threading.Thread(target=self._bg)
 		t.daemon = True
 		t.start()
+
+	def _guiExec(self, func, *args):
+		self._guiExecFunc = func
+		self._guiExecArgs = args
+		if not self._guiExecTimer.IsRunning():
+			self._guiExecTimer.Start(50)
+
+	def _guiExecNotify(self):
+		self._guiExecFunc(*self._guiExecArgs)
 
 	def _bg(self):
 		for url in self.urls:
@@ -248,9 +261,15 @@ class UpdateDownloader(object):
 				break
 		else:
 			# None of the URLs succeeded.
-			wx.CallAfter(self._error)
+			self._guiExec(self._error)
 			return
-		wx.CallAfter(self._downloadSuccess)
+		if self._shouldCancel:
+			try:
+				os.remove(self.destPath)
+			except OSError:
+				pass
+			return
+		self._guiExec(self._downloadSuccess)
 
 	def _download(self, url):
 		remote = urllib.urlopen(url)
@@ -258,28 +277,45 @@ class UpdateDownloader(object):
 			raise RuntimeError("Download failed with code %d" % remote.code)
 		size = int(remote.headers["content-length"])
 		local = file(self.destPath, "wb")
-		wx.CallAfter(self._downloadReport, 0, size)
+		self._guiExec(self._downloadReport, 0, size)
 		read = 0
 		while True:
+			if self._shouldCancel:
+				return
 			block = remote.read(DOWNLOAD_BLOCK_SIZE)
 			if not block:
 				break
 			read += len(block)
+			if self._shouldCancel:
+				return
 			local.write(block)
-			wx.CallAfter(self._downloadReport, read, size)
+			self._guiExec(self._downloadReport, read, size)
 		if read < size:
 			raise RuntimeError("Content too short")
-		wx.CallAfter(self._downloadReport, read, size)
+		self._guiExec(self._downloadReport, read, size)
 
 	def _downloadReport(self, read, size):
+		if self._shouldCancel:
+			return
 		percent = int(float(read) / size * 100)
 		# Translators: The progress message indicating that a download is in progress.
-		self._progressDialog.Update(percent, _("Downloading"))
+		cont, skip = self._progressDialog.Update(percent, _("Downloading"))
+		if not cont:
+			self._shouldCancel = True
+			self._stopped()
 
-	def _error(self):
+	def _stopped(self):
+		self._guiExecTimer = None
+		self._guiExecFunc = None
+		self._guiExecArgs = None
 		self._progressDialog.Hide()
 		self._progressDialog.Destroy()
 		self._progressDialog = None
+		# Not sure why, but this doesn't work if we call it directly here.
+		wx.CallLater(50, gui.mainFrame.postPopup)
+
+	def _error(self):
+		self._stopped()
 		gui.messageBox(
 			# Translators: A message indicating that an error occurred while downloading an update to NVDA.
 			_("Error downloading update."),
@@ -287,9 +323,7 @@ class UpdateDownloader(object):
 			wx.OK | wx.ICON_ERROR)
 
 	def _downloadSuccess(self):
-		self._progressDialog.Hide()
-		self._progressDialog.Destroy()
-		self._progressDialog = None
+		self._stopped()
 		# Translators: The message presented when the update has been successfully downloaded
 		# and is about to be installed.
 		gui.messageBox(_("Update downloaded. It will now be installed."),

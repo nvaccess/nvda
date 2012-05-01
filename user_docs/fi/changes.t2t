@@ -7,6 +7,9 @@
 
 == Uudet ominaisuudet ==
 - NVDA voi nyt tarkistaa, ladata ja asentaa päivitykset automaattisesti. (#73)
+- Entistä useammat NVDA:n ominaisuudet, kuten kirjoitettujen merkkien lukeminen ja selaustila web-sivuilla, toimivat nyt Windows 8:n Metro-sovelluksissa (mukaan lukien Internet Explorer 10:n Metro-version tuki). Näiden sovellusten käyttäminen ei ole mahdollista NVDA:n massamuistiversioilla. (#1801) 
+- Selaustiladokumenteissa (Internet Explorerissa, Firefoxissa jne) voidaan nyt siirtyä tiettyjen säilöelementtien alkuun tai loppuun (mukaan lukien listat ja taulukot) näppäinkomennoilla Shift+, (pilkku) ja Shift+. (piste). (#123)
+
 
 == Muutokset ==
 - NVDA:ta jaetaan nyt yhtenä pakettina. Erillisen massamuistiversion ja asennusohjelman sijaan on vain yksi tiedosto, joka käynnistää suoritettaessa NVDA:n väliaikaisen kopion ja mahdollistaa asentamisen tai massamuistijakelun luomisen. (#1715)
@@ -18,6 +21,10 @@
 - Lue kaikki -toiminto ei enää keskeydy kappaleen keskellä BibleSeeker-sovelluksessa eikä muissa TRxRichEdit-säätimissä.
 - Resurssienhallinnan tiedoston ominaisuudet -valintaikkunan Oikeudet-välilehdellä ja Windows Updatessa olevat listat luetaan nyt oikein Windows 8:ssa.
 - Korjattu mahdollisia jumiutumisia MS Wordissa, jotka aiheutuvat siitä, kun asiakirjan tekstin (hyvin pitkien rivien tai sisällysluettelon) noutamiseen kuluu kauemmin kuin kaksi sekuntia. (#2191)
+- Sanavälit tunnistetaan nyt oikein, kun tyhjätilamerkin jälkeen on tiettyjä välimerkkejä. (#1656)
+- Adobe Readerissa on nyt mahdollista siirtyä selaustilassa ilman tasoja oleviin otsikoihin pikanavigointinäppäimiä ja elementtilistaa käyttäen. (#2181)
+- Pistenäyttöä päivitetään nyt Winampissa asianmukaisesti, kun soittolistaeditorissa siirrytään eri kohteeseen. (#1912)
+- Elementtilistan puunäkymän kokoa muutetaan nyt oikein, jotta jokaisen elementin teksti näytetään kokonaan. (#2276)
 
 
 = 2012.1 =
@@ -168,7 +175,7 @@ Tämän version tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät välim
 - Aktiivisen Excel-taulukon nimi ilmoitetaan nyt vaihdettaessa sitä Ctrl+Page up- tai Ctrl+Page down -näppäimillä. (#760)
 - NVDA kertoo nyt Microsoft Wordissa nykyisen solun liikuttaessa taulukossa sarkain-näppäimellä. (#159)
 - Asiakirjojen muotoiluasetukset-valintaikkunasta on nyt mahdollista määrittää, ilmoitetaanko taulukon solujen koordinaatit. (#719)
-- NVDA havaitsee nyt ruudulla olevan tekstin muotoilun ja värin .
+- NVDA havaitsee nyt ruudulla olevan tekstin muotoilun ja värin.
 - NVDA kertoo nyt lukemattomat viestit Outlook Expressin, Windows Mailin ja Windows Live Mailin viestilistassa ja ilmoittaa myös, onko viestiketju suljettu tai avattu. (#868)
 - eSpeakissa on nyt nopeuden tehostusasetus,  joka kolminkertaistaa puhenopeuden.
 - Tuki Windows 7:n kellon päivämäärä ja aika -valintaikkunan kalenterisäätimelle. (#1637)

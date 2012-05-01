@@ -1,4 +1,4 @@
-NVDA NVDA_VERSION Benutzerhandbuch
+﻿NVDA NVDA_VERSION Benutzerhandbuch
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -32,7 +32,7 @@ Die wichtigsten Highlights sind:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 36 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch,, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 36 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung mit der Sprachausgabe ++
 Abgesehen von der Bereitstellung der Schnittstelle für Meldungen in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser über eine Sprachausgabe für dessen Sprache verfügt.
@@ -64,15 +64,14 @@ Für weitere Informationen können Sie entweder die [englischsprachige http://ww
 
 + NVDA beziehen und einrichten +
 Falls noch nicht geschehen, können Sie NVDA von  [www.nvda-project.org NVDA_URL] herunterladen.
-Wenn Sie die soeben heruntergeladene Datei ausführen, wird eine temporäre Kopie von NVDA ausgepackt und gestartet. Außerdem werden Sie gefragt, ob Sie NVDA installieren, eine portable Version erstellen oder einfach die ausführung der temporären Kopie fortsetzen wollen.
+
+Im Download-Bereich finden Sie einen Link, um die neueste Version herunterzuladen.
+
+Wenn Sie die soeben heruntergeladene Datei ausführen, wird eine temporäre Kopie von NVDA ausgepackt und gestartet.
+Außerdem werden Sie gefragt, ob Sie NVDA installieren, eine portable Version erstellen oder einfach die ausführung der temporären Kopie fortsetzen wollen.
 
 Falls Sie vorhaben, NVDA auf diesem Computer dauerhaft einzusetzen, werden Sie es vermutlich installieren wollen.
-Eine solche fest installierte Version von NVDA hat gegenüber einer portablen Version folgende Vorteile:
-- automatischer Start nach der Anmeldung
-- Auslesen von Sicheren Desktops wie z.B Dialogfelder der Benutzerkontensteuerung, Windows-Anmeldung etc.
-- Start über eine Desktop-Verknüpfung mit der Tastenkombination strg+Umschalt+n
-- Start aus dem Startmenü heraus
-
+Eine solche fest installierte Version von NVDA hat gegenüber einer portablen Version Vorteile wie der automatische Start nach der Anmeldung, die Erstellung von Verknüpgungen auf dem Desktop und im Startmenü, die Fähigkeit den Windows-Anmeldung und Windows Sicherheitsdialoge auszulesen. Dies ist mit einer portablen oder temporären Version nicht möglich.
 Mit Hilfe einer installierten Kopie können sie auch jederzeit eine portable Version erstellen.
 
 Falls Sie NVDA auf einem usb-Stick oder einem anderen transportablen Medium mitnehmen möchten, können Sie eine portable Version erstellen.
@@ -84,19 +83,20 @@ Die Ausführung der temporären Kopie kann z.B. für demonstrationszwecke sinnvo
 Wenn Sie NVDA direkt von einer heruntergeladenen Datei aus installieren wollen, drücken Sie einfach den Schalter "installieren", sobald der Eingangsdialog erscheint.
 Falls Sie den eingangsdialog bereits geschlossen haben oder NVDA von einer portablen Version aus installieren wollen, wählen Sie den Menüpunkt "nvda installieren" aus dem Menü Extras.
 
-Nach dem start der Installation werden Sie darüber informiert, ob eine frühere Version von NVDA aktualisiert wird.
-Wenn Sie "weiter" drücken, wird die Installation gestartet, es gibt allerdings noch weitere Option wie z.B. der Start nach Bzw. vor der Anmeldung, das Anlegen einer Desktop-Verknüpfung u.v.m.
-Nach Abschluss der Installation erscheint eine Meldung, die sie über den erfolgreichen Abschluss der Installation informiert.
+Der Installationsdialog, welcher erscheint, fragt noch mal ab, ob Sie NVDA installieren wollen und informiert Sie darüber, ob eine frühere Version von NVDA aktualisiert wird.
+Wenn Sie den Schalter "weiter" drücken, wird die Installation gestartet.
+Es gibt allerdings noch weitere Option wie z.B. der Start nach Bzw. vor der Anmeldung, das Anlegen einer Desktop-Verknüpfung u.v.m.
+Nach dem Abschluss der Installation erscheint eine Meldung, die sie über den erfolgreichen Abschluss der Installation informiert.
 Wenn Sie hier "ok" wählen, wird die soeben installierte Kopie von NVDA neu gestartet.
  
 ++ erstellen einer portablen Kopie ++
 Wenn Sie aus einer heruntergeladenen Kopie von NVDA eine portable Version erstellen wollen, drücken Sie einfach den Schalter "portable Version erstellen".
-Wenn Sie den Eingangsdialog bereits geschlossen haben oder grade eine fest installierte Version von NVDA ausführen, können Sie über den menüpunkt extras/portable Version erstellen"  eine portable Kopie anlegen.
+Wenn Sie den Eingangsdialog bereits geschlossen haben oder grade eine fest installierte Version von NVDA ausführen, können Sie über den menüpunkt "portable Version erstellen" aus dem Menü Extras eine portable Kopie anlegen.
 
 In dem erscheinenden dialog können Sie das Verzeichnis angeben, in dem die portable Kopie erstellt werden soll.
 Dies kann ein Ordner auf einer Festplatte, einem Usb-Stick oder einem anderen transportablen Medium sein.
 
-Zum Einen haben Sie hier außerdem die Möglichkeit, eine autostart-Datei im Stammverzeichnis des Laufwerks anzulegen. Zum Anderen können Sie entscheiden, ob die Benutzerspezifischen Konfigurationsdateien und Plug-ins der aktuell laufenden nvda-Instanz in die portable Version übernommen werden sollen.
+Zum Einen haben Sie hier außerdem die Möglichkeit, eine autostart-Datei im Stammverzeichnis des Laufwerks anzulegen. Zum Anderen können Sie entscheiden, ob die Benutzerspezifischen Konfigurationsdateien und Plugins der aktuell laufenden nvda-Instanz in die portable Version übernommen werden sollen.
 Wenn Sie "weiter" drücken, wird die portable Version erstellt.
 Nach Abschluss des Vorgangs erscheint eine Meldung, die sie über die Erfolgreiche Erstellung der portablen Version informiert.
 Drücken Sie "ok" um den dialog zu schließen.
@@ -452,6 +452,10 @@ Folgende Befehle springen ohne Umschalttaste gedrückt zum nächsten Element; zu
 - O: Eingebettetes Objekt
 - 1 bis 6: Entsprechende Überschriftsebene 1 bis 6
 -
+Verwenden Sie folgende Tastenkombinationen, um zum Beginn Bzw. zum Ende eines Containerobjekts (Listen Tabellen o.ä.) zu springen:
+|| Name | Tastenkombination | Beschreibung |
+| zum Beginn eines Containerobjekts springen | Umschalt+, | Bewegt den Systemcursor zum Beginn des Containerobjekts (Listen, Tabellen etc) |
+| Hinter das Containerobjekt springen | Umschalt+. | bewegt den Systemcursor hinter das Containerobjekt (Listen, Tabellen etc) |
 %kc:endInclude
 
 ++ Die Liste der Elemente ++
@@ -484,14 +488,7 @@ Für manche Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit - et
 | verbleibende Zeit ausgeben | strg+umschalt+r | Falls grade ein Titel abgespielt wird, wird die verbleibende Zeit ausgegeben. |
 %kc:endInclude
 
-Technischer Hinweis: NVDA gewinnt die angaben über die verbleibende Zeit aus der Statuszeile. Falls die Tastenkombination nicht funktionieren sollte, kontrollieren Sie in den Foobar-Einstellungen in der Kategorie "display/unser interface" im Eingabefeld "Status bar", ob die verstrichene Zeit sowie die Gesamtlänge des aktuell abgespielten Titels in der statuszeile angezeigt werden. Streng genommen müssen die folgenden Bedingungen erfüllt sein, damit die Tastenkombination strg+Umschalt+R funbktioniert:
-- die einzelnen Elemente der Statuszeile müssen in Gruppen unterteilt werden, wobei die Gruppen durch einen senkrechten Strich getrennt werden müssen.
-- Die Angaben über die verstrichene Zeit und die Gesamtlänge müssen in der fünften Gruppe stehen.
-- Die Zeitangaben müssen durch einen Schrägstrich getrennt sein.
-- Die Zeitangaben müssen in der Reihenfolge "verstrichene zeit / Gesamtlänge" aufgeführt sein.
-Das folgende Anzeigeformat ist in Foobar 1.1.10 die Standardeinstellung und  funktioniert ordnungsgemäß mit nvda:
-%codec% | %bitrate% kbps | %samplerate% Hz | %channels% | %playback_time%[ / %length%]
-Weitere Informationen über die möglichen Daten, die in der Statuszeile angezeigt werden können, erhalten Sie in den foobar-Einstellungen über den Link "syntax help".
+Hinweis: Der Befehl "verbleibende Zeit ausgeben" funktioniert nur, wenn die Standard-Einstellungen für die Statuszeile gewählt sind.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -506,6 +503,17 @@ Weitere Informationen über die möglichen Daten, die in der Statuszeile angezei
 | Automatische Kommentare ausgeben | Steuerung+Umschalt+a | Gibt alle automatischen Kommentare aus. |
 %kc:endInclude
 
++ bekannte Probleme +
+In diesem Abschnitt werden einige bekannte Probleme beschrieben, die beim Umgang mit NVDA und bestimmten Programmen auftauchen können. Außerdem wird beschrieben, wie die Probleme durch Ändern der Einstellung der Programme Bzw. durch Ändern der NVDA-Einstellungen umgangen oder gelöst werden können.
+
+++ Adobe Reader X ++
+- Problem: Beim Lesen von Pdf-Dokumenten mit Adobe Reader X kann es in der Werkseinstellung zu Problemen kommen, weil NVDA das Dokument nicht im Lesemodus anzeigt, sondern nur ein Grafikobjekt darstellt. 
+- Ursache: Ursache dieses Problems ist eine Schutzfunktion, die in Adobe Reader X standardmäßig aktiviert ist und NVDA daran hindert, das Pdf-Dokument im Lesemodus aufzubereiten. 
+- Lösung: deaktivieren Sie in den Einstellungen von Adobe Reader X (bearbeiten / Voreinstellungen) in der Kategorie "allgemein" die Option "Geschützten Modus beim Start aktivieren". Es erscheint eine Nachfrage, die Sie darüber informiert, dass die Einstellung erst beim Neustart von Adobe Reader x wirksam wird. Bestätigen Sie diese Nachfrage mit "ja" und starten Sie Adobe Reader X anschließend neu. Jetzt sollte NVDA die im Adobe Reader X angezeigten Pdf-Dokumente im Lesemodus aufbereiten können.
+
+++ Firefox ++
+- Problem: Wenn Sie versuchen, mit Firefox (beobachtet ab Version 7) eine Webseite zu öffnen und Firefox beendet sich, noch ehe die Seite geladen ist, könnte dies an der Funktion "Automatisch alles lesen nach Aufruf einer Internetseite" liegen. 
+- Lösung: deaktivieren Sie in den Einstellungen des lesemodus (nvda+strg+b) das entsprechende Kontrollfeld. Nun wird Firefox nicht mehr abstürzen.
 
 + NVDA konfigurieren +
 
@@ -521,7 +529,6 @@ Die Allgemeinen Einstellungen finden Sie im NVDA-Menü unter "Einstellungen".
 Es enthält die folgenden Optionen:
 
 ==== Sprache ====
-
 In dieser Liste können Sie die Sprache festlegen, in der die Meldungen von NVDA ausgegeben werden soll. Standardmäßig ist die Option "Benutzerstandard, Windows" ausgewählt. NVDA enthält eine Vielzahl integrierter Sprachen.
 
 Bitte beachten Sie: Ein Neustart des Programms zum Übernehmen der Sprache ist erforderlich. Um den Vorgang fortzusetzen, klicken Sie einfach auf die Schaltfläche "OK".
@@ -542,19 +549,22 @@ Wenn Sie dieses Kontrollfeld aktiviert haben, wird NVDA gleich nach der Anmeldun
 Hinweise:
 - Diese Option ist nur in der installierten Version verfügbar!
 - Wenn Sie NVDA zusammen mit BRLTTY einsetzen, kann es unter Umständen vorkommen, dass die Braillezeile nicht von NVDA gefunden wird (auf der Zeile ist "No attachable console" zu lesen). Dies ist auf Probleme mit der Startreihenfolge zurückzuführen. Das Problem tritt immer dann auf, wenn NVDA *vor* BRLTTY gestartet wird und beim Ansteuern der Braillezeile "ins Leere greift". Diese Situation kann durch einen Neustart von NVDA gelöst werden, wenn der Rechner vollständig hochgefahren ist. Dies funktioniert allerdings nur dann zuverlässig, wenn die Konfiguration nach dem Einstellen von BRLTTY als Braillezeile einmal gespeichert wurde und die Option "Einstellungen beim beenden Speichern" *NICHT* aktiviert ist.
-
+-
 
 ==== NVDA für die Windows-Anmeldung verwenden (Administratorrechte sind erforderlich) ====
 Wenn Sie sich bei Windows mit Ihrem Benutzernamen und Ihrem Passwort anmelden, bewirkt dieses Kontrollfeld, dass NVDA automatisch bereits im Anmeldebildschirm gestartet wird.
 
 Hinweis: Diese Option ist nur in der installierten Version verfügbar!
 
-
 ==== Aktuell gespeicherte Einstellungen im Anmeldebildschirm und bei Sicherheitsmeldungen verwenden (erfordert Administrationsberechtigungen!) ====
 Wenn Sie diesen Schalter betätigen, wird Ihre benutzerdefinierte Konfiguration in das Verzeichnis der Systemkonfiguration von NVDA kopiert, die dann genutzt werden, wenn Sie sich zum Beispiel im Anmeldebildschirm von Windows befinden oder eine Sicherheitsmeldung von der Benutzerkontensteuerung angezeigt wird.
 Speichern Sie vorsichtshalber noch einmal zur Sicherheit Ihre Konfiguration,  um sicherzustellen, dass auch tatsächlich all Ihre Einstellungen übernommen wurden. Sie können dies im NVDA-Menü oder mit der Tastenkombination NVDA+STRG+C tun.
 
 Hinweis: Diese Option ist nur in der installierten Version verfügbar!
+
+==== Automatisch nach Aktualisierungen suchen ====
+Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualsierte Version verfügbar ist.
+Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe-Menü wählen.
 
 
 +++ Auswahl der Sprachausgaben (NVDA+STRG+S) +++
@@ -1011,6 +1021,29 @@ Für weitere Informationen lesen Sie bitte den [Abschnitt der Entwicklung auf de
 
 ++ Plugins erneut laden ++
 Dieser Eintrag, einmal aktiviert, läd alle Anwendungsmodule sowie globale Plugins neu ohne, dass NVDA extra neu gestartet wird.
+
+++ portable Version erstellen ++
+Mit dieser Funktion können sie aus einer fest installierten Version von NVDA eine portable Version erstellen. Wenn Sie diesen Befehl aufrufen, erscheint ein Dialog mit folgenden Optionen:
+
+=== Verzeichnis für portable Version ===
+Hier können sie angeben, wohin die portable Version kopiert werden soll. Sie können den Ordnernamen entweder direkt eingeben oder über den Schalter "durchsuchen" einen Ordner auswählen.
+
+=== Datei für Autostart erstellen ===
+Mit diesem  Kontrollkästchen legen sie fest, ob im Stammordner des Laufwerks, auf dem die portable Version erstellt wird, eine Datei autorun.inf angelegt werden soll. Mit Hilfe einer solchen Datei wird es Ihnen möglich sein, NVDA automatisch beim anschließen des tragbaren Mediums zu starten.
+
+=== Kopiere derzeitige Einstellungen des Benutzers ===
+Mit diesem Kontrollkästchen legen sie fest, ob die brnutzerspezifischen Einstellungen in die portable Version übernommen werden sollen.
+
+++ NVDA installieren ++
+Diese Funktion erlaubt es, eine portable Version von NVDA fest auf einem Rechner zu installieren. Wenn Sie diesen Befehl aufrufen, wird ein Dialog mit folgenden Optionen angezeigt:
+
+=== NVDA für die Windows-Anmeldung verwenden ===
+Mit diesem Kontrollkästchen legen Sie fest, ob NVDA als Denst installiert und während der Windows-anmeldung gestartet werden soll. Diese Einstellung kann nachträglich in den allgemeinen Einstellungen geändert werden. 
+
+=== Desktop-Verknüpfung erstellen (mit der Tastenkombination strg+alt+n) ===
+Wenn Sie NVDA zukünftig über die Tastenkonbination strg+alt+n starten möchten, dann aktivieren Sie diese Option.
+
+
 
 + Unterstützte Sprachausgaben +[SupportedSpeechSynths]
 Dieser Bereich beinhaltet Informationen über die in NVDA unterstützten Sprachausgaben.

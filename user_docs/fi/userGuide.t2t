@@ -241,8 +241,8 @@ Tämä tarkoittaa, että jotkin objektit sisältävät muita objekteja, ja että
 Lista esimerkiksi sisältää listakohteita, joten niihin pääsemiseksi on siirryttävä listan sisään.
 Jos on siirrytty listan kohteeseen, seuraavaan ja edelliseen objektiin siirtyminen siirtää saman listan muihin kohteisiin.
 Listakohteen säilöobjektiin siirtyminen siirtää takaisin listan kohdalle.
-Tämän jälkeen voidaan siirtyä siitä pois, mikäli halutaan päästä muihin objekteihin.
-Samoin työkalupalkkikin sisältää säätimiä, joten on siirryttävä kyseisen työkalupalkin sisään sen sisältämiin säätimiin pääsemiseksi.
+Tämän jälkeen siitä voidaan siirtyä pois, mikäli halutaan päästä muihin objekteihin.
+Myös työkalupalkki sisältää säätimiä, joten niihin pääsemiseksi on siirryttävä kyseisen työkalupalkin sisään.
 
 Nykyistä tarkasteltavaa objektia kutsutaan navigointiobjektiksi.
 Kun objektiin siirrytään, sitä voidaan tarkastella [tekstinlukukomennoilla #Tekstinlukeminen].
@@ -411,6 +411,10 @@ Sellaisinaan nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa 
 - o: upotettu objekti
 - numerot 1 - 6: otsikot tasoilla 1 - 6
 -
+Säilöelementtien, kuten listojen ja taulukoiden, alkuun tai loppuun siirtymiseksi:
+|| Nimi | Näppäinkomento | Kuvaus |
+| Siirrä säilöelementin alkuun | Shift+, | Siirtää sen säilöelementin alkuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
+| Siirrä säilöelementin loppuun | Shift+. | Siirtää sen säilöelementin loppuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
 %kc:endInclude
 
 ++ Elementtilista ++
@@ -1225,7 +1229,7 @@ Kukin avainsana, None mukaan lukien, voi olla samassa lohkossa vain kerran.
 Pilkkuun päättyvät komentotunnisteet on laitettava lainaus- (") tai heittomerkkien (') sisään.
 -
 
- Komentotunnisteet koostuvat kaksikirjaimisesta laitekoodista (näppäimistöllä kb ja pistenäytöllä br), suluissa olevasta alilaitteesta tai   näppäimistöasettelusta, kaksoispisteestä ja yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
+ Komentotunnisteet koostuvat kaksikirjaimisesta laitekoodista (näppäimistöllä kb ja pistenäytöllä br), suluissa olevasta alilaitteesta tai   näppäimistöasettelusta, kaksoispisteestä sekä yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
 Näppäimistön syötekomennoissa suluissa oleva osa on näppäimistöasettelu, joka on valinnainen.
 Jos tätä ei määritetä, syötekomentoa käytetään kaikissa näppäimistöasetteluissa.
 Pistenäytön syötekomennoissa suluissa oleva osa määrittää halutun pistenäytön, joka on pakollinen.

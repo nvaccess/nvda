@@ -7,6 +7,10 @@
 
 == Novità ==
 - NVDA è in grado di controllare e scaricare nuove versioni e aggiornamenti dello screen reader. (#73)
+- Molte funzionalità comuni di NVDA nelle applicazioni che usano l'interfaccia Metro di Windows8 ora si comportano correttamente, quando viene utilizzata una versione installer di NVDA, compreso l'annuncio dei caratteri digitati, e la modalità navigazione per i documenti web (incluso il supporto per la versione Metro di Internet Explorer 10). Le copie portabili di NVDA non possono accedere alle app in stile Metro. (#1801)
+- Nei documenti in modalità navigazione (Internet Explorer, Firefox, etc) è ora possibile saltare all'inizio o alla fine degli  elementi contenuti in elenchi o tabelle, con i tasti "Shift+;" e "Shift+:".
+
+ 
 
 
 == Cambiamenti ==
@@ -19,6 +23,10 @@
 - Il comando  dire tutto non si ferma più nel mezzo di un testo nel programma Bibleseeker e nei controlli editazioni di tipo  TRxRichEdit.
 - Vengono letti correttamente gli elenchi situati in Windows8 Explorer, scheda permessi della finestra proprietà, e anche quelli nella finestra Windows Update.
 - NVDA non rallenta più nei documenti Word in presenza di righe molto lunghe, o di sommari complessi, e in tutte le circostanze in cui necessitano più di due secondi per ottenere informazioni dal documento. (#2191)
+- Il rilevamento della fine di una parola ora funziona correttamente anche in presenza di spazi bianchi seguiti da certi simboli di punteggiatura. (#1656)
+- In Adobe Reader, quando si utilizza la modalità navigazione, ora è possibile navigare per intestazioni senza un livello utilizzando i tasti di navigazione veloce e l'elenco elementi. (#2181)
+- In Winamp, il braille viene aggiornato correttamente quando ci si sposta in un elemento diverso nell'editor playlist. (#1912)
+
 
 
 

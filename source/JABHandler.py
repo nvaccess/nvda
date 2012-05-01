@@ -295,7 +295,7 @@ class JABContext(object):
 	def getAccessibleTextRange(self,start,end):
 		length=((end+1)-start)
 		if length<=0:
-			return "\n"
+			return u""
 		text=create_unicode_buffer(length+1)
 		bridgeDll.getAccessibleTextRange(self.vmID,self.accContext,start,end,text,length)
 		return text.value
@@ -310,7 +310,7 @@ class JABContext(object):
 		start=startIndex.value
 		end=endIndex.value
 		log.debug("line bounds: start %s, end %s"%(start,end))
-		if end<start:
+		if end<start or start<0:
 			# Invalid or empty line.
 			return (0,-1)
 		ok=False
