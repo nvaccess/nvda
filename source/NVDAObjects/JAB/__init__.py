@@ -132,7 +132,8 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		(start,end)=self.obj.jabContext.getAccessibleTextLineBounds(offset)
 		#Java gives end as the last character, not one past the last character
 		end=end+1
-		return [start,end]
+		# JAB can return -1.
+		return (max(start,0),end)
 
 	def _getParagraphOffsets(self,offset):
 		return self._getLineOffsets(offset)
