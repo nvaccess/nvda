@@ -455,20 +455,19 @@ class AddonManifest(ConfigObj):
 	configspec = ConfigObj(StringIO(
 	"""
 # NVDA Ad-on Manifest configuration specification
-# Add-on name
+# Add-on unique name
 name = string()
-# Quick description of the add-on to show to users.
-description = string()
+# short  summary (label) of the add-on to show to users.
+summary = string()
 # Long description with further information and instructions
-long_description = string(default=None)
+description = string(default=None)
 # Name of the author or entity that created the add-on
 author = string()
 # Version of the add-on. Should preferably in some standard format such as x.y.z
 version = string()
 # URL for more information about the add-on. New versions and such.
 url= string(default=None)
-# Categories where this add-on belongs to.
-categories = list(default=list())
+
 """))
 
 	translatedConfigspec = ConfigObj(StringIO(
@@ -476,10 +475,10 @@ categories = list(default=list())
 # NVDA localized Ad-on Manifest configuration specification
 # This configspec contains the data that can be translated on a manifest.
 # 
-# Quick description of the add-on to show to users.
-description = string()
+# short summary (label)  for the addon shown to users
+summary = string()
 # Long description with further information and instructions
-long_description = string(default=None)
+description = string(default=none)
 """))
 
 	def __init__(self, input, translatedInput=None):
@@ -498,25 +497,11 @@ long_description = string(default=None)
 		self._translatedConfig = None
 		if translatedInput is not None:
 			self._translatedConfig = ConfigObj(translatedInput, configspec=self.translatedConfigspec)
+			for k in ('summary','description'):
+				val=self._translatedConfig.get(k)
+				if val:
+					self[k]=val
 
 	@property
 	def errors(self):
 		return self._errors
-
-	def _(self, *keys):
-		""" Returns a translated value for a key if exists."""
-		c = self if self._translatedConfig is None else self._translatedConfig
-		try:
-			val = c
-			for key in keys:
-				val = val[key]
-			return unicode(val, self._translatedConfig.encoding or "utf-8")
-		except KeyError:
-			# if we were using the translated config try on untranslated:
-			if c != self:
-				val = self
-				for key in keys:
-					val = val[key]
-				return unicode(val)
-			else:
-				raise # Already tried untranslated

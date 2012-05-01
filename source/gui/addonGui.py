@@ -20,11 +20,15 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.InsertColumn(0,_("Status"),width=50)
 		self.addonsList.InsertColumn(1,_("Package"),width=150)
 		self.addonsList.InsertColumn(2,_("Version"),width=50)
-		self.addonsList.InsertColumn(3,_("Description"),width=300)
+		self.addonsList.InsertColumn(3,_("Author"),width=300)
 		self.refreshAddonsList()
 		entriesSizer.Add(self.addonsList,proportion=8)
 		settingsSizer.Add(entriesSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
+		aboutButtonID=wx.NewId()
+		aboutButton=wx.Button(self,aboutButtonID,_("&About Addon..."),wx.DefaultPosition)
+		self.Bind(wx.EVT_BUTTON,self.onAbout,id=aboutButtonID)
+		entryButtonsSizer.Add(aboutButton)
 		addButtonID=wx.NewId()
 		addButton=wx.Button(self,addButtonID,_("&Add..."),wx.DefaultPosition)
 		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
@@ -63,7 +67,7 @@ class AddonsDialog(wx.Dialog):
 				wx.OK | wx.ICON_ERROR)
 			return
 		# Translators: A message asking the user if they really wish to install an addon.
-		if gui.messageBox(_("Are you sure you want to install this addon? Only install addons from trusted sources.\nAddon: {description}\nAuthor: {author}").format(**bundle.manifest),
+		if gui.messageBox(_("Are you sure you want to install this addon? Only install addons from trusted sources.\nAddon: {summary} {version}\nAuthor: {author}").format(**bundle.manifest),
 			# Translators: Title for message asking if the user really wishes to install an Addon.
 			_("Addon Installation"),
 			wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
@@ -125,7 +129,7 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
 		for addon in addonHandler.getAvailableAddons(refresh=True):
-			self.addonsList.Append((self.getAddonStatus(addon), addon.manifest['description'],addon.manifest['version'], addon.manifest['long_description']))
+			self.addonsList.Append((self.getAddonStatus(addon), addon.manifest['summary'],addon.manifest['version'], addon.manifest['author']))
 			self.curAddons.append(addon)
 
 	def onClose(self,evt):
@@ -137,3 +141,18 @@ class AddonsDialog(wx.Dialog):
 			_("Restart NVDA"),
 			wx.YES|wx.NO|wx.ICON_WARNING)==wx.YES:
 				core.restart()
+
+	def onAbout(self,evt):
+		index=self.addonsList.GetFirstSelected()
+		if index<0: return
+		manifest=self.curAddons[index].manifest
+		# Translators: message shown in the Addon Information dialog. 
+		message=_("""{summary} ({name})
+Version: {version}
+Author: {author}
+URL: {url}
+Description: {description}
+""").format(**manifest)
+		# Translators: title for the Addon Information dialog
+		title=_("Add-on Information")
+		gui.messageBox(message, title, wx.OK)
