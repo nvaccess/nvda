@@ -73,6 +73,11 @@ using namespace std;
 #define wdDISPID_ENDNOTES_ITEM 0
 #define wdDISPID_ENDNOTES_COUNT 2
 #define wdDISPID_ENDNOTE_INDEX 6
+#define wdDISPID_RANGE_INLINESHAPES 319
+#define wdDISPID_INLINESHAPES_COUNT 1
+#define wdDISPID_INLINESHAPES_ITEM 0 
+#define wdDISPID_INLINESHAPE_TYPE 6
+#define wdDISPID_INLINESHAPE_ALTERNATIVETEXT 131
 #define wdDISPID_RANGE_HYPERLINKS 156
 #define wdDISPID_HYPERLINKS_COUNT 1
 #define wdDISPID_RANGE_COMMENTS 56
@@ -391,6 +396,48 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	} 
 }
 
+inline int getInlineShapesCount(IDispatch* pDispatchRange) {
+	IDispatchPtr pDispatchShapes=NULL;
+	int count=0;
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_INLINESHAPES,VT_DISPATCH,&pDispatchShapes)!=S_OK||!pDispatchShapes) {
+		return 0;
+	}
+	if(_com_dispatch_raw_propget(pDispatchShapes,wdDISPID_INLINESHAPES_COUNT,VT_I4,&count)!=S_OK||count<=0) {
+		return 0;
+	} 
+	return count;
+}
+
+/**
+ * Generates an opening tag for the first inline shape  in this range if one exists.
+  * If the function is successful, the total number of inline shapes for this range is returned allowing the caller to then perhaps move the range forward a character and try again.
+   */
+inline int generateInlineShapeXML(IDispatch* pDispatchRange, wostringstream& XMLStream) {
+	IDispatchPtr pDispatchShapes=NULL;
+	IDispatchPtr pDispatchShape=NULL;
+	int count=0;
+	int shapeType=0;
+	BSTR altText=NULL;
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_INLINESHAPES,VT_DISPATCH,&pDispatchShapes)!=S_OK||!pDispatchShapes) {
+		return 0;
+	}
+	if(_com_dispatch_raw_propget(pDispatchShapes,wdDISPID_INLINESHAPES_COUNT,VT_I4,&count)!=S_OK||count<=0) {
+		return 0;
+	}
+	if(_com_dispatch_raw_method(pDispatchShapes,wdDISPID_INLINESHAPES_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchShape,L"\x0003",1)!=S_OK||!pDispatchShape) {
+		return 0;
+	}
+	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_TYPE,VT_I4,&shapeType)!=S_OK) {
+		return 0;
+	}
+	if(_com_dispatch_raw_propget(pDispatchShape,wdDISPID_INLINESHAPE_ALTERNATIVETEXT,VT_BSTR,&altText)!=S_OK) {
+		return 0;
+	}
+	XMLStream<<L"<control _startOfNode=\"1\" role=\""<<(shapeType==3?L"graphic":L"object")<<L"\" value=\""<<(altText?altText:L"")<<L"\">";
+	if(altText) SysFreeString(altText);
+	return count;
+}
+
 inline bool generateFootnoteEndnoteXML(IDispatch* pDispatchRange, wostringstream& XMLStream, bool footnote) {
 	IDispatchPtr pDispatchNotes=NULL;
 	IDispatchPtr pDispatchNote=NULL;
@@ -459,6 +506,8 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	if((formatConfig&formatConfig_reportComments)&&(storyType==wdCommentsStory||getCommentCount(pDispatchRange)==0)) {
 		formatConfig&=~formatConfig_reportComments;
 	}
+	//Check for any inline shapes in the entire range to work out whether its worth checking for them by word
+	bool hasInlineShapes=(getInlineShapesCount(pDispatchRange)>0);
 	_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
 	int chunkStartOffset=args->startOffset;
 	int chunkEndOffset=chunkStartOffset;
@@ -517,6 +566,16 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 				isNoteChar=generateFootnoteEndnoteXML(pDispatchRange,XMLStream,true);
 				if(!isNoteChar) isNoteChar=generateFootnoteEndnoteXML(pDispatchRange,XMLStream,false);
 			}
+			//If there are inline shapes somewhere, try getting and generating info for the first one hear.
+			//We also get the over all count of shapes for this word so we know whether we need to check for more within this word
+			int inlineShapesCount=hasInlineShapes?generateInlineShapeXML(pDispatchRange,XMLStream):0;
+			if(inlineShapesCount>1) {
+				_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseStart);
+				if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_MOVEEND,DISPATCH_METHOD,VT_I4,&unitsMoved,L"\x0003\x0003",wdCharacter,1)!=S_OK||unitsMoved<=0) {
+					break;
+				}
+				_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
+			}
 			XMLStream<<L"<text ";
 			XMLStream<<initialFormatAttribsStream.str();
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
@@ -526,7 +585,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 				firstLoop=false;
 			}
 			wstring tempText;
-			for(int i=0;text[i]!=L'\0';++i) {
+			if(inlineShapesCount>0) {
+				tempText+=L" ";
+			} else for(int i=0;text[i]!=L'\0';++i) {
 				appendCharToXML(text[i],tempText);
 			}
 			XMLStream<<tempText;
@@ -534,6 +595,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			text=NULL;
 			XMLStream<<L"</text>";
 			if(isNoteChar) XMLStream<<L"</control>";
+			if(inlineShapesCount>0) XMLStream<<L"</control>";
 		}
 		_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_COLLAPSE,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdCollapseEnd);
 		chunkStartOffset=chunkEndOffset;
