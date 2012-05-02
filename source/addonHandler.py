@@ -478,7 +478,7 @@ url= string(default=None)
 		@param translatedInput: translated manifest input
 		@type translatedInput: file-like object
 		"""
-		super(AddonManifest, self).__init__(input, configspec=self.configspec)
+		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
 		self._errors = []
 		val = Validator()
 		result = self.validate(val, copy=True, preserve_errors=True)
@@ -486,12 +486,11 @@ url= string(default=None)
 			self._errors = result
 		self._translatedConfig = None
 		if translatedInput is not None:
-			self._translatedConfig = ConfigObj(translatedInput)
+			self._translatedConfig = ConfigObj(translatedInput, encoding='utf-8', default_encoding='utf-8')
 			for k in ('summary','description'):
 				val=self._translatedConfig.get(k)
 				if val:
-					# Convert to unicode. Try utf-8 if configobj did not detect the encoding.
-					self[k]=val.decode(self._translatedConfig.encoding or "utf-8")
+					self[k]=val
 
 	@property
 	def errors(self):
