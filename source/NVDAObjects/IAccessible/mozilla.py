@@ -104,7 +104,10 @@ class Document(Mozilla):
 			return super(Document,self).treeInterceptorClass
 		if controlTypes.STATE_READONLY in states:
 			import virtualBuffers.gecko_ia2
-			return virtualBuffers.gecko_ia2.Gecko_ia2
+			if ver and ver.major < 14:
+				return virtualBuffers.gecko_ia2.Gecko_ia2Pre14
+			else:
+				return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass
 
 class ListItem(Mozilla):

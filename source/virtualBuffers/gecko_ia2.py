@@ -155,6 +155,9 @@ class Gecko_ia2(VirtualBuffer):
 			else:
 				log.debugWarning("no location for field")
 
+	def _searchableTagValues(self, values):
+		return values
+
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType.startswith('heading') and nodeType[7:].isdigit():
 			attrs={"IAccessible::role":[IAccessibleHandler.IA2_ROLE_HEADING],"IAccessible2::attribute_level":[nodeType[7:]]}
@@ -193,13 +196,13 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="graphic":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType=="blockQuote":
-			attrs={"IAccessible2::attribute_tag":["BLOCKQUOTE"]}
+			attrs={"IAccessible2::attribute_tag":self._searchableTagValues(["blockquote"])}
 		elif nodeType=="focusable":
 			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
 		elif nodeType=="landmark":
 			attrs={"IAccessible2::attribute_xml-roles":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
 		elif nodeType=="embeddedObject":
-			attrs={"IAccessible2::attribute_tag":["EMBED","OBJECT","APPLET"]}
+			attrs={"IAccessible2::attribute_tag":self._searchableTagValues(["embed","object","applet"])}
 		else:
 			return None
 		return attrs
@@ -255,3 +258,9 @@ class Gecko_ia2(VirtualBuffer):
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj
+
+class Gecko_ia2Pre14(Gecko_ia2):
+
+	def _searchableTagValues(self, values):
+		# #2287: In Gecko < 14, tag values are upper case.
+		return [val.upper() for val in values]
