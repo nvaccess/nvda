@@ -236,7 +236,8 @@ class UpdateDownloader(object):
 		self._progressDialog = wx.ProgressDialog(_("Downloading Update"),
 			# Translators: The progress message indicating that a connection is being established.
 			_("Connecting"),
-			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME, parent=gui.mainFrame)
+			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
+			parent=gui.mainFrame)
 		self._progressDialog.Raise()
 		t = threading.Thread(target=self._bg)
 		t.daemon = True
@@ -246,7 +247,7 @@ class UpdateDownloader(object):
 		self._guiExecFunc = func
 		self._guiExecArgs = args
 		if not self._guiExecTimer.IsRunning():
-			self._guiExecTimer.Start(50)
+			self._guiExecTimer.Start(50, True)
 
 	def _guiExecNotify(self):
 		self._guiExecFunc(*self._guiExecArgs)
