@@ -236,6 +236,8 @@ class UpdateDownloader(object):
 		self._progressDialog = wx.ProgressDialog(_("Downloading Update"),
 			# Translators: The progress message indicating that a connection is being established.
 			_("Connecting"),
+			# PD_AUTO_HIDE is required because ProgressDialog.Update blocks at 100%
+			# and waits for the user to press the Close button.
 			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
 			parent=gui.mainFrame)
 		self._progressDialog.Raise()
