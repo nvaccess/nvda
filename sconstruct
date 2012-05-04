@@ -256,10 +256,6 @@ if certFile:
 	env.AddPostAction(launcher, [signExec])
 env.Alias("launcher", launcher)
 
-env.Alias("launcher", launcher)
-env.Alias("portable", launcher)
-
-
 clientArchive = env.SzArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeToSourceDir=True)
 env.Alias("client", clientArchive)
 
