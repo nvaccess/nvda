@@ -64,15 +64,16 @@ page instfiles
 section "install"
 SetAutoClose true
 initPluginsDir
-CreateDirectory "$PLUGINSDIR\app"
-setOutPath "$PLUGINSDIR\app"
 Banner::show /nounload
 BringToFront
 
+setOutPath "$PLUGINSDIR"
 ;Play NVDA logo sound
 File "..\installer\waves\nvda_logo.wav"
-Push "$PLUGINSDIR\app\nvda_logo.wav"
+Push "$PLUGINSDIR\nvda_logo.wav"
 Call PlaySound
+CreateDirectory "$PLUGINSDIR\app"
+setOutPath "$PLUGINSDIR\app"
 file /R "${NVDADistDir}\"
 ${GetParameters} $0
 Banner::destroy
