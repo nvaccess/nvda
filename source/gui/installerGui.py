@@ -72,16 +72,19 @@ class InstallerDialog(wx.Dialog):
 		if self.isUpdate:
 			# Translators: An informational message in the Install NVDA dialog.
 			msg+=" "+_("A previous copy of NVDA has been found on your system. This copy will be updated.") 
+			if os.stat(installer.defaultInstallPath)!=os.stat(installer.getInstallPath(True)):
+				# Translators: a message in the installer telling the user NVDA is now located in a different place.
+				msg+=" "+_("The installation path for NVDA has changed. it will now  be installed in {path}").format(path=installer.defaultInstallPath)
 		dialogCaption=wx.StaticText(self,label=msg) 
 		mainSizer.Add(dialogCaption)
 		optionsSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		ctrl = self.startOnLogonCheckbox = wx.CheckBox(self, label=_("Use NVDA on the Windows &logon screen"))
-		ctrl.Value = config.getStartOnLogonScreen()
+		ctrl.Value = config.getStartOnLogonScreen() if self.isUpdate else True
 		optionsSizer.Add(ctrl)
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		ctrl = self.createDesktopShortcutCheckbox = wx.CheckBox(self, label=_("Create &desktop icon and shortcut key (control+alt+n)"))
-		ctrl.Value = installer.isDesktopShortcutInstalled()
+		ctrl.Value = installer.isDesktopShortcutInstalled() if self.isUpdate else True
 		optionsSizer.Add(ctrl)
 		mainSizer.Add(optionsSizer)
 
