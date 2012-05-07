@@ -185,7 +185,7 @@ class Addon(object):
 	@property
 	def isPendingRemove(self):
 		"""True if this addon is marked for removal."""
-		return self.name in state['pendingRemovesSet']
+		return not self.isPendingInstall and self.name in state['pendingRemovesSet']
 
 	def requestRemove(self):
 		"""Markes this addon for removal on NVDA restart."""
