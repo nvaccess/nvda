@@ -30,6 +30,7 @@ MANIFEST_FILENAME = "manifest.ini"
 stateFilename="state.pickle"
 BUNDLE_EXTENSION = "nvda-addon"
 ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
+DELETEDIR_SUFFIX=".delete"
 
 state={}
 
@@ -57,7 +58,7 @@ def getRunningAddons():
 	"""
 	return (addon for addon in getAvailableAddons() if addon.isRunning)
 
-def completePendingRemoves():
+def completePendingAddonRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
 	pendingRemovesSet=state['pendingRemovesSet']
@@ -66,11 +67,9 @@ def completePendingRemoves():
 		if os.path.isdir(addonPath):
 			addon=Addon(addonPath)
 			addon.completeRemove()
-			if os.path.exists(addonPath):
-				log.error("Could not remove addon at %s"%addonPath)
 	pendingRemovesSet.clear()
 
-def completePendingInstalls():
+def completePendingAddonInstalls():
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
 	pendingInstallsSet=state['pendingInstallsSet']
 	for addonName in pendingInstallsSet:
@@ -82,11 +81,21 @@ def completePendingInstalls():
 			log.error("Failed to complete addon installation for %s"%addonName,exc_info=True)
 	pendingInstallsSet.clear()
 
+def removeFailedDeletions():
+	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
+	for p in os.listdir(user_addons):
+		if p.endswith(DELETEDIR_SUFFIX):
+			path=os.path.join(user_addons,p)
+			shutil.rmtree(path,ignore_errors=True)
+			if os.path.exists(path):
+				log.error("Failed to delete path %s, try removing manually"%path)
+
 def initialize():
 	""" Initializes the add-ons subsystem. """
 	loadState()
-	completePendingRemoves()
-	completePendingInstalls()
+	removeFailedDeletions()
+	completePendingAddonRemoves()
+	completePendingAddonInstalls()
 	saveState()
 	getAvailableAddons(refresh=True)
 
@@ -114,6 +123,7 @@ def _getAvailableAddonsFromPath(path):
 	"""
 	log.debug("Listing add-ons from %s", path)
 	for p in os.listdir(path):
+		if p.endswith(DELETEDIR_SUFFIX): continue
 		addon_path = os.path.join(path, p)
 		if os.path.isdir(addon_path) and addon_path not in ('.', '..'):
 			log.debug("Loading add-on from %s", addon_path)
@@ -145,7 +155,7 @@ def installAddonBundle(bundle):
 		addon.runInstallTask("onInstall")
 	except:
 		log.error("task 'onInstall' on addon '%s' failed"%addon.name,exc_info=True)
-		shutil.rmtree(addon.path)
+		addon.completeRemove(runUninstallTask=False)
 		raise AddonError("Installation failed")
 	state['pendingInstallsSet'].add(bundle.manifest['name'])
 	saveState()
@@ -198,12 +208,17 @@ class Addon(object):
 			state['pendingRemovesSet'].add(self.name)
 		saveState()
 
-	def completeRemove(self):
-		try:
-			self.runInstallTask("onUninstall")
-		except:
-			log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
+	def completeRemove(self,runUninstallTask=True):
+		if runUninstallTask:
+			try:
+				self.runInstallTask("onUninstall")
+			except:
+				log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
 		shutil.rmtree(self.path,ignore_errors=True)
+		if os.path.exists(self.path):
+			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
+			tempPath=tempfile.mktemp(suffix=DELETEDIR_SUFFIX,dir=os.path.dirname(self.path))
+			os.rename(self.path,tempPath)
 
 	@property
 	def name(self):
