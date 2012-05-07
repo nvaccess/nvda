@@ -312,6 +312,7 @@ def getCodeAddon(obj=None, frameDist=1):
 	while curdir not in _getDefaultAddonPaths():
 		if curdir in _availableAddons.keys():
 			return _availableAddons[curdir]
+		curdir = os.path.abspath(os.path.join(curdir, ".."))
 	# Not found!
 	raise AddonError("Code does not belong to an addon")
 
