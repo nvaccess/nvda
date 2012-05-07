@@ -10,6 +10,7 @@ import tempfile
 import cPickle
 import inspect
 import itertools
+import collections
 import os.path
 import pkgutil
 import shutil
@@ -54,7 +55,7 @@ def saveState():
 def getRunningAddons():
 	""" Returns currently loaded addons.
 	"""
-	return itertools.ifilter(lambda a : a.isLoaded, getAvailableAddons())
+	return (addon for addon in getAvailableAddons() if addon.isRunning)
 
 def completePendingRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
@@ -63,7 +64,8 @@ def completePendingRemoves():
 	for addonName in pendingRemovesSet:
 		addonPath=os.path.join(user_addons,addonName)
 		if os.path.isdir(addonPath):
-			shutil.rmtree(addonPath,ignore_errors=True)
+			addon=Addon(addonPath)
+			addon.completeRemove()
 			if os.path.exists(addonPath):
 				log.error("Could not remove addon at %s"%addonPath)
 	pendingRemovesSet.clear()
@@ -86,43 +88,11 @@ def initialize():
 	completePendingRemoves()
 	completePendingInstalls()
 	saveState()
-	for addon in getAvailableAddons(refresh=True):
-		if addon.path.endswith(ADDON_PENDINGINSTALL_SUFFIX): continue
-		try:
-			addon.load()
-		except:
-			log.exception("Error loading addon.")
-			continue
-		log.debug("Loadded addon from %s", addon.path) 
+	getAvailableAddons(refresh=True)
 
 def terminate():
 	""" Terminates the add-ons subsystem. """
-	addons = getRunningAddons()
-	for addon in addons:
-		addon.unload()
-
-
-def runHook(hookName, *args, **kwargs):
-	""" Runs the specified hook on the loaded addons.
-	
-	Check the documentation for the specific hook to know what arguments to pass.
-	@param hookName: the hook name
-	@type hookName: string
-	@param args: positional arguments to the hook
-	@param kwargs, keyword arguments to the hook function.
-	@return list of C[(addon, ret)} tupples with the values returned by the add-ons that implement the hook.
-	"""
-	rets = []
-	for addon in getRunningAddons():
-		try:
-			hook = addon.getHookFunction(hookName)
-			if calable(hook):
-				ret = hook(*args, **kwargs)
-				rets.append((addon, ret))
-		except:
-			log.exception("Error running hook %s on plugin %s", hookName, addon.name, exc_info=True)
-	return rets
-
+	pass
 
 def _getDefaultAddonPaths():
 	""" Returns paths where addons can be found.
@@ -154,14 +124,13 @@ def _getAvailableAddonsFromPath(path):
 			except:
 				log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
 
-_availableAddons = None
+_availableAddons = collections.OrderedDict()
 def getAvailableAddons(refresh=False):
 	""" Gets all available addons on the system.
 	@rtype generator of Addon instances.
 	"""
-	global _availableAddons
-	if _availableAddons is None or refresh:
-		_availableAddons = {}
+	if refresh:
+		_availableAddons.clear()
 		generators = [_getAvailableAddonsFromPath(path) for path in _getDefaultAddonPaths()]
 		for addon in itertools.chain(*generators):
 			_availableAddons[addon.path] = addon
@@ -171,8 +140,17 @@ def installAddonBundle(bundle):
 	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory, marking the addon as needing install completion on NVDA restart.""" 
 	addonPath = os.path.join(globalVars.appArgs.configPath, "addons",bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
 	bundle.extract(addonPath)
+	addon=Addon(addonPath)
+	try:
+		addon.runInstallTask("onInstall")
+	except:
+		log.error("task 'onInstall' on addon '%s' failed"%addon.name,exc_info=True)
+		shutil.rmtree(addon.path)
+		raise AddonError("Installation failed")
 	state['pendingInstallsSet'].add(bundle.manifest['name'])
 	saveState()
+	_availableAddons[addonPath]=addon
+	return addon
 
 class AddonError(Exception):
 	""" Represents an exception coming from the addon subsystem. """
@@ -198,7 +176,6 @@ class Addon(object):
 					translatedInput = open(p, 'r')
 					break
 			self.manifest = AddonManifest(f, translatedInput)
-		self._hooksModule = self.loadModule('hooks')
 
 	@property
 	def isPendingInstall(self):
@@ -213,13 +190,20 @@ class Addon(object):
 	def requestRemove(self):
 		"""Markes this addon for removal on NVDA restart."""
 		if self.isPendingInstall:
+			self.completeRemove()
 			state['pendingInstallsSet'].discard(self.name)
-			shutil.rmtree(self.path,ignore_errors=True)
-			if os.path.exists(self.path):
-				log.error("Failed to remove pending install addon at %s"%self.path)
-		else: #Normal removal
+			#Force availableAddons to be updated
+			getAvailableAddons(refresh=True)
+		else:
 			state['pendingRemovesSet'].add(self.name)
 		saveState()
+
+	def completeRemove(self):
+		try:
+			self.runInstallTask("onUninstall")
+		except:
+			log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
+		shutil.rmtree(self.path,ignore_errors=True)
 
 	@property
 	def name(self):
@@ -241,24 +225,8 @@ class Addon(object):
 		log.debug("Addon %s added to %s package path", self.manifest['name'], package.__name__)
 
 	@property
-	def isLoaded(self):
-		return self._isLoaded
-
-	def load(self):
-		""" Loads this L{Addon}, running the load hook if exists. """
-		self.runHook('load')
-		self._isLoaded = True
-
-	def unload(self):
-		""" Removes this add-on extensions from the running NVDA. 
-		For most addons other measures should be taken: reloading of plugins, etc. """
-		self.runHook('unload')
-		log.debug("Deactivating addon.")
-		for package in self._extendedPackages:
-			extension_path = self._getPathForInclusionInPackage(package)
-			package.__path__.remove(extension_path)
-		self._extendedPackages = None
-		self._isLoaded = False
+	def isRunning(self):
+		return not self.isPendingInstall
 
 	def _getPathForInclusionInPackage(self, package):
 		extension_path = os.path.join(self.path, package.__name__)
@@ -294,41 +262,16 @@ class Addon(object):
 		localedir = os.path.join(self.path, "locale")
 		return gettext.translation(domain, localedir=localedir, languages=[languageHandler.getLanguage()], fallback=True)
 
-	def getHookFunction(self, hookName):
-		""" returns the hook function object for this L{Addon} if available.
-		@param hookName the name of the hook.
-		@type hookName: string
-		@return a calable from the L{Addon} hooks module.
-		@rtype calalbe.
+	def runInstallTask(self,taskName,*args,**kwargs):
 		"""
-		if not self._hooksModule:
-			return None
-		return getattr(self._hooksModule, hookName, None)
-
-	def runHook(self, hookName, *args, **kwargs):
-		""" Runs the specified hook on this addon, if implemented.
-		If access to the hook calable is desired see L{getHookFunction}.
-		
-		@param hookName: the hook name
-		@return the hooks return value, or none if it is not implemented.
+		Executes the function having the given taskName with the given args and kwargs in the addon's installTasks module if it exists.
 		"""
-		func = self.getHookFunction(hookName)
-		if func:
-			return func(*args, **kwargs)
-
-	def removeContents(self):
-		""" This method removes the contents of the addon from the system.
-		Any calls to the majority of the addon methods will throw an error.
-		This method will do its best to remove files, but on failier it will rename the directory and remove on next NVDA run.
-		"""
-		if self.isLoaded:
-			raise RuntimeError("This addon is still active.")
-		shutil.rmtree(self.path,ignore_errors=True)
-		if os.path.exists(self.path):
-			log.debugWarning("Unable to remove some files, removing on next run of NVDA",exc_info=True)
-			basePath=os.path.dirname(self.path)
-			tempName=tempfile.mktemp(suffix=".%s"%ADDON_REMOVED_EXTENSION,dir=basePath)
-			os.rename(self.path,tempName)
+		if not hasattr(self,'_installTasksModule'):
+			self._installTasksModule=self.loadModule('installTasks')
+		if self._installTasksModule:
+			func=getattr(self._installTasksModule,taskName,None)
+			if func:
+				func(*args,**kwargs)
 
 def getCodeAddon(obj=None, frameDist=1):
 	""" Returns the L{Addon} where C{obj} is defined. If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".

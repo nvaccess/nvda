@@ -41,7 +41,7 @@ class AddonsDialog(wx.Dialog):
 		entryButtonsSizer.Add(self.removeButton)
 		settingsSizer.Add(entryButtonsSizer)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		# Translators: The label of a button to continue with the operation.
+		# Translators: The label of a button to close the Addons dialog.
 		closeButton = wx.Button(self, label=_("C&lose"), id=wx.ID_OK)
 		closeButton.Bind(wx.EVT_BUTTON, self.onClose)
 		mainSizer.Add(closeButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.CENTER)
@@ -103,7 +103,7 @@ class AddonsDialog(wx.Dialog):
 				wx.OK | wx.ICON_ERROR)
 			return
 		else:
-			self.refreshAddonsList()
+			self.refreshAddonsList(activeIndex=-1)
 			progressDialog.done()
 			del progressDialog
 
@@ -114,29 +114,33 @@ class AddonsDialog(wx.Dialog):
 		addon=self.curAddons[index]
 		addon.requestRemove()
 		self.needsRestart=True
-		self.refreshAddonsList()
+		self.refreshAddonsList(activeIndex=index)
 		self.addonsList.SetFocus()
 
 	def getAddonStatus(self,addon):
 		if addon.isPendingInstall:
 			# Translators: The status shown for a newly installed addon before NVDA is restarted.
-			return _("new")
+			return _("install")
 		elif addon.isPendingRemove:
 			# Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
-			return _("removed")
+			return _("remove")
 		else:
 			# Translators: The status shown for an addon when its currently running in NVDA.
 			return _("running")
 
-	def refreshAddonsList(self):
+	def refreshAddonsList(self,activeIndex=0):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
-		for addon in addonHandler.getAvailableAddons(refresh=True):
+		for addon in addonHandler.getAvailableAddons():
 			self.addonsList.Append((self.getAddonStatus(addon), addon.manifest['summary'],addon.manifest['version'], addon.manifest['author']))
 			self.curAddons.append(addon)
 		# select the given active addon or the first addon if not given
-		if len(self.curAddons)>0:
-			activeIndex=0
+		curAddonsLen=len(self.curAddons)
+		if curAddonsLen>0:
+			if activeIndex==-1:
+				activeIndex=curAddonsLen-1
+			elif activeIndex<0 or activeIndex>=curAddonsLen:
+				activeIndex=0
 			self.addonsList.Select(activeIndex,on=1)
 			self.addonsList.SetItemState(activeIndex,wx.LIST_STATE_FOCUSED,wx.LIST_STATE_FOCUSED)
 		else:

@@ -181,15 +181,14 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Windows version %r" % (sys.getwindowsversion(),))
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
-	log.debug("Creating wx application instance")
+	log.debug("Initializing addons system.")
+	addonHandler.initialize()
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
-	log.debug("Initializing addons system.")
-	addonHandler.initialize()
 	import speechDictHandler
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
