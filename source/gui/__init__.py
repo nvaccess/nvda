@@ -315,7 +315,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
-			item = menu_tools.Append(wx.ID_ANY, _("Add-ons Manager"))
+			# Translators: The label of a menu item to open the Add-ons Manager.
+			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons"))
 			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
 		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
 			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
