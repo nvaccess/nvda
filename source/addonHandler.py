@@ -27,7 +27,7 @@ from logHandler import log
 
 
 MANIFEST_FILENAME = "manifest.ini"
-stateFilename="state.pickle"
+stateFilename="addonsState.pickle"
 BUNDLE_EXTENSION = "nvda-addon"
 ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
 DELETEDIR_SUFFIX=".delete"
@@ -36,7 +36,7 @@ state={}
 
 def loadState():
 	global state
-	statePath=os.path.join(globalVars.appArgs.configPath,"addons",stateFilename)
+	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
 		state = cPickle.load(file(statePath, "r"))
 	except:
@@ -47,7 +47,7 @@ def loadState():
 		}
 
 def saveState():
-	statePath=os.path.join(globalVars.appArgs.configPath,"addons",stateFilename)
+	statePath=os.path.join(globalVars.appArgs.configPath,stateFilename)
 	try:
 		cPickle.dump(state, file(statePath, "wb"))
 	except:

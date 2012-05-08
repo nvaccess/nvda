@@ -184,7 +184,7 @@ class GeneralSettingsDialog(SettingsDialog):
 		self.languageList.SetFocus()
 
 	def onCopySettings(self,evt):
-		for packageType in ('appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
+		for packageType in ('addons','appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
 			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
 				if gui.messageBox(
 					_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
