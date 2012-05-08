@@ -55,6 +55,7 @@ import time
 import logHandler
 import globalVars
 from logHandler import log
+import addonHandler
 
 # Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
 # This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
@@ -111,6 +112,8 @@ def resetConfiguration():
 	braille.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
+	log.debug("terminating addonHandler")
+	addonHandler.terminate()
 	log.debug("Reloading config")
 	config.load()
 	logHandler.setLogLevelFromConfig()
@@ -118,6 +121,8 @@ def resetConfiguration():
 	lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
+	# Addons
+	addonHandler.initialize()
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -176,7 +181,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Windows version %r" % (sys.getwindowsversion(),))
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
-	log.debug("Creating wx application instance")
+	log.debug("Initializing addons system.")
+	addonHandler.initialize()
 	import appModuleHandler
 	log.debug("Initializing appModule Handler")
 	appModuleHandler.initialize()
@@ -405,6 +411,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.terminate()
 	except:
 		log.error("Error terminating speech",exc_info=True)
+	try:
+		addonHandler.terminate()
+	except:
+		log.error("Error terminating addonHandler",exc_info=True)
 	if not globalVars.appArgs.minimal:
 		try:
 			nvwave.playWaveFile("waves\\exit.wav",async=False)
