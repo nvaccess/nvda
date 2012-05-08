@@ -192,7 +192,19 @@ class GeneralSettingsDialog(SettingsDialog):
 				)==wx.NO:
 					return
 				break
-		if not config.setSystemConfigToCurrentConfig():
+		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
+		# Translators: The title of the dialog presented while settings are being copied 
+		_("Copying Settings"),
+		# Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc) 
+		_("Please wait while settings are copied to the system configuration."))
+		try:
+			res=config.setSystemConfigToCurrentConfig()
+		except:
+			log.debugWarning("Error when copying settings to system config",exc_info=True)
+			res=False
+		progressDialog.done()
+		del progressDialog
+		if not res:
 			gui.messageBox(_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR,self)
 		else:
 			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
