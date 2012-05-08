@@ -8,6 +8,7 @@ import time
 import os
 import sys
 import threading
+import codecs
 import ctypes
 import wx
 import globalVars
