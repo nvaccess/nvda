@@ -9,6 +9,7 @@ import ctypes
 import shellapi
 import wx
 import config
+import globalVars
 import versionInfo
 import installer
 from logHandler import log
@@ -137,6 +138,8 @@ class PortableCreaterDialog(wx.Dialog):
 		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 		ctrl = self.copyUserConfigCheckbox = wx.CheckBox(self, label=_("Copy current &user configuration"))
 		ctrl.Value = False
+		if globalVars.appArgs.launcher:
+			ctrl.Disable()
 		optionsSizer.Add(ctrl)
 		mainSizer.Add(optionsSizer)
 
