@@ -8,13 +8,13 @@ class AddonsDialog(wx.Dialog):
 
 	def __init__(self,parent):
 		# Translators: The title of the Addons Dialog
-		super(AddonsDialog,self).__init__(parent,title=_("Addons Manager"))
+		super(AddonsDialog,self).__init__(parent,title=_("Add-ons Manager"))
 		self.needsRestart=False
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
 		# Translators: the label for the installed addons list in the addons manager.
-		entriesLabel=wx.StaticText(self,-1,label=_("&Installed Addons"))
+		entriesLabel=wx.StaticText(self,-1,label=_("&Installed Add-ons"))
 		entriesSizer.Add(entriesLabel)
 		self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
 		self.addonsList.InsertColumn(0,_("Status"),width=50)
@@ -26,7 +26,7 @@ class AddonsDialog(wx.Dialog):
 		settingsSizer.Add(entriesSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		aboutButtonID=wx.NewId()
-		self.aboutButton=wx.Button(self,aboutButtonID,_("&About Addon..."),wx.DefaultPosition)
+		self.aboutButton=wx.Button(self,aboutButtonID,_("&About Add-on..."),wx.DefaultPosition)
 		self.aboutButton.Disable()
 		self.Bind(wx.EVT_BUTTON,self.onAbout,id=aboutButtonID)
 		entryButtonsSizer.Add(self.aboutButton)
@@ -52,7 +52,7 @@ class AddonsDialog(wx.Dialog):
 
 	def OnAddClick(self,evt):
 		# Translators: The message displayed in the dialog that allows you to choose an addon bundle for installation.
-		fd=wx.FileDialog(self,message=_("Choose Addon bundle file"),
+		fd=wx.FileDialog(self,message=_("Choose Add-on bundle file"),
 		# Translators: the label for the nvda adon file type in the Choose addon dialog.
 		wildcard=(_("NVDA Addon Bundle (*.{ext})")+"|*.{ext}").format(ext=addonHandler.BUNDLE_EXTENSION),
 		defaultDir="c:",style=wx.FD_OPEN)
@@ -64,30 +64,30 @@ class AddonsDialog(wx.Dialog):
 		except:
 			log.error("Error opening addon bundle from %s"%addonPath,exc_info=True)
 			# Translators: The message displayed when an error occurs when opening an addon bundle for adding. 
-			gui.messageBox(_("Failed to open addon bundle file at %s - missing file or invalid file format")%addonPath,
+			gui.messageBox(_("Failed to open add-on bundle file at %s - missing file or invalid file format")%addonPath,
 				# Translators: The title of a dialog presented when an error occurs.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR)
 			return
 		# Translators: A message asking the user if they really wish to install an addon.
-		if gui.messageBox(_("Are you sure you want to install this addon? Only install addons from trusted sources.\nAddon: {summary} {version}\nAuthor: {author}").format(**bundle.manifest),
+		if gui.messageBox(_("Are you sure you want to install this add-on? Only install add-ons from trusted sources.\nAddon: {summary} {version}\nAuthor: {author}").format(**bundle.manifest),
 			# Translators: Title for message asking if the user really wishes to install an Addon.
-			_("Addon Installation"),
+			_("Add-on Installation"),
 			wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
 			return
 		bundleName=bundle.manifest['name']
 		if any(bundleName==addon.manifest['name'] for addon in self.curAddons if not addon.isPendingRemove):
 			# Translators: The message displayed when an an addon already seems to be installed. 
-			gui.messageBox(_("This addon seems to already be installed. Please remove the existing addon and try again."),
+			gui.messageBox(_("This add-on seems to already be installed. Please remove the existing add-on and try again."),
 				# Translators: The title of a dialog presented when an error occurs.
 				_("Error"),
 				wx.OK | wx.ICON_WARNING)
 			return
 		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while an Addon is being installed.
-		_("Installing Addon"),
+		_("Installing Add-on"),
 		# Translators: The message displayed while an addon is being installed.
-		_("Please wait while the addon is being installed."))
+		_("Please wait while the add-on is being installed."))
 		try:
 			gui.ExecAndPump(addonHandler.installAddonBundle,bundle)
 			self.needsRestart=True
@@ -97,7 +97,7 @@ class AddonsDialog(wx.Dialog):
 			progressDialog.done()
 			del progressDialog
 			# Translators: The message displayed when an error occurs when installing an addon bundle.
-			gui.messageBox(_("Failed to install addon  from %s")%addonPath,
+			gui.messageBox(_("Failed to install add-on  from %s")%addonPath,
 				# Translators: The title of a dialog presented when an error occurs.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR)
@@ -110,7 +110,7 @@ class AddonsDialog(wx.Dialog):
 	def OnRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
 		if index<0: return
-		if gui.messageBox(_("Are you sure you wish to remove the selected addon from NVDA?"), _("Remove Addon"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
+		if gui.messageBox(_("Are you sure you wish to remove the selected add-on from NVDA?"), _("Remove Add-on"), wx.YES_NO|wx.ICON_WARNING) != wx.YES: return
 		addon=self.curAddons[index]
 		addon.requestRemove()
 		self.needsRestart=True
@@ -157,7 +157,7 @@ class AddonsDialog(wx.Dialog):
 		self.Destroy()
 		if self.needsRestart:
 			# Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed. 
-			if gui.messageBox(_("Addons have been added or removed. You must restart NVDA for these changes to take affect. Would you like to restart now?"),
+			if gui.messageBox(_("Add-ons have been added or removed. You must restart NVDA for these changes to take affect. Would you like to restart now?"),
 			# Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed. 
 			_("Restart NVDA"),
 			wx.YES|wx.NO|wx.ICON_WARNING)==wx.YES:
