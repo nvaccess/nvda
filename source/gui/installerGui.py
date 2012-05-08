@@ -16,7 +16,7 @@ from logHandler import log
 import gui
 import tones
 
-def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
+def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent=False):
 	progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
 		_("Updating NVDA") if isUpdate
@@ -28,6 +28,10 @@ def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
 		else _("Please wait while NVDA is being installed"))
 	try:
 		res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(createDesktopShortcut)),str(int(startOnLogon))],wait=True,handleAlreadyElevated=True)
+		if copyPortableConfig:
+			installedUserConfigPath=config.getInstalledUserConfigPath()
+			if installedUserConfigPath:
+				gui.ExecAndPump(installer.copyUserConfig,installedUserConfigPath)
 	except Exception as e:
 		res=e
 		log.error("Failed to execute installer",exc_info=True)
@@ -59,7 +63,7 @@ def doInstall(createDesktopShortcut,startOnLogon,isUpdate,silent=False):
 
 def doSilentInstall():
 	prevInstall=installer.isPreviousInstall()
-	doInstall(installer.isDesktopShortcutInstalled() if prevInstall else True,config.getStartOnLogonScreen() if prevInstall else True,prevInstall,True)
+	doInstall(installer.isDesktopShortcutInstalled() if prevInstall else True,config.getStartOnLogonScreen() if prevInstall else True,False,prevInstall,True)
 
 class InstallerDialog(wx.Dialog):
 
@@ -87,6 +91,12 @@ class InstallerDialog(wx.Dialog):
 		ctrl = self.createDesktopShortcutCheckbox = wx.CheckBox(self, label=_("Create &desktop icon and shortcut key (control+alt+n)"))
 		ctrl.Value = installer.isDesktopShortcutInstalled() if self.isUpdate else True
 		optionsSizer.Add(ctrl)
+		# Translators: The label of a checkbox option in the Install NVDA dialog.
+		ctrl = self.copyPortableConfigCheckbox = wx.CheckBox(self, label=_("Copy &portable configuration to current user account"))
+		ctrl.Value = False
+		if globalVars.appArgs.launcher:
+			ctrl.Disable()
+		optionsSizer.Add(ctrl)
 		mainSizer.Add(optionsSizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -105,7 +115,7 @@ class InstallerDialog(wx.Dialog):
 
 	def onInstall(self, evt):
 		self.Hide()
-		doInstall(self.createDesktopShortcutCheckbox.Value,self.startOnLogonCheckbox.Value,self.isUpdate)
+		doInstall(self.createDesktopShortcutCheckbox.Value,self.startOnLogonCheckbox.Value,self.copyPortableConfigCheckbox.Value,self.isUpdate)
 		self.Destroy()
 
 	def onCancel(self, evt):
