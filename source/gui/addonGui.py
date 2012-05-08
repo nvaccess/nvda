@@ -51,10 +51,10 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.SetFocus()
 
 	def OnAddClick(self,evt):
-		# Translators: The message displayed in the dialog that allows you to choose an addon bundle for installation.
-		fd=wx.FileDialog(self,message=_("Choose Add-on bundle file"),
-		# Translators: the label for the nvda adon file type in the Choose addon dialog.
-		wildcard=(_("NVDA Addon Bundle (*.{ext})")+"|*.{ext}").format(ext=addonHandler.BUNDLE_EXTENSION),
+		# Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
+		fd=wx.FileDialog(self,message=_("Choose Add-on Package File"),
+		# Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+		wildcard=(_("NVDA Add-on Package (*.{ext})")+"|*.{ext}").format(ext=addonHandler.BUNDLE_EXTENSION),
 		defaultDir="c:",style=wx.FD_OPEN)
 		if fd.ShowModal()!=wx.ID_OK:
 			return
@@ -63,8 +63,8 @@ class AddonsDialog(wx.Dialog):
 			bundle=addonHandler.AddonBundle(addonPath)
 		except:
 			log.error("Error opening addon bundle from %s"%addonPath,exc_info=True)
-			# Translators: The message displayed when an error occurs when opening an addon bundle for adding. 
-			gui.messageBox(_("Failed to open add-on bundle file at %s - missing file or invalid file format")%addonPath,
+			# Translators: The message displayed when an error occurs when opening an add-on package for adding. 
+			gui.messageBox(_("Failed to open add-on package file at %s - missing file or invalid file format")%addonPath,
 				# Translators: The title of a dialog presented when an error occurs.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR)
@@ -96,7 +96,7 @@ class AddonsDialog(wx.Dialog):
 			self.refreshAddonsList()
 			progressDialog.done()
 			del progressDialog
-			# Translators: The message displayed when an error occurs when installing an addon bundle.
+			# Translators: The message displayed when an error occurs when installing an add-on package.
 			gui.messageBox(_("Failed to install add-on  from %s")%addonPath,
 				# Translators: The title of a dialog presented when an error occurs.
 				_("Error"),
