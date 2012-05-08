@@ -26,7 +26,7 @@ class AddonsDialog(wx.Dialog):
 		settingsSizer.Add(entriesSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		aboutButtonID=wx.NewId()
-		self.aboutButton=wx.Button(self,aboutButtonID,_("&About Add-on..."),wx.DefaultPosition)
+		self.aboutButton=wx.Button(self,aboutButtonID,_("&About add-on..."),wx.DefaultPosition)
 		self.aboutButton.Disable()
 		self.Bind(wx.EVT_BUTTON,self.onAbout,id=aboutButtonID)
 		entryButtonsSizer.Add(self.aboutButton)
