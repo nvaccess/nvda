@@ -184,6 +184,7 @@ class UpdateResultDialog(wx.Dialog):
 				item = wx.Button(self, label=_("Remind me &later"))
 				item.Bind(wx.EVT_BUTTON, self.onLaterButton)
 				mainSizer.Add(item)
+				item.SetFocus()
 
 		# Translators: The label of a button to close a dialog.
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
