@@ -157,7 +157,7 @@ class AddonsDialog(wx.Dialog):
 		self.Destroy()
 		if self.needsRestart:
 			# Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed. 
-			if gui.messageBox(_("Add-ons have been added or removed. You must restart NVDA for these changes to take affect. Would you like to restart now?"),
+			if gui.messageBox(_("Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
 			# Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed. 
 			_("Restart NVDA"),
 			wx.YES|wx.NO|wx.ICON_WARNING)==wx.YES:
