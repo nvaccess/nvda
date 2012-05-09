@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.2 =
+Highlights of this release include an in-built installer and  portable  creation feature, an auto updater, easy management of new NVDA add-ons, announcement of graphics in Microsoft Word, support for Windows 8 Metro style apps, and several important bug fixes. 
 
 == New Features ==
 - NVDA can now automatically check for, download and install updates. (#73)
@@ -15,6 +16,7 @@
 
 
 == Changes ==
+- Announcement of cell coordinates in Microsoft Excel is now after the content rather than before, and now is only included   if the report tables and report table cell coordinates settings are on in the Document formatting settings dialog. 
 - NVDA is now distributed in one package. Rather than separate portable and installer versions, there is now just one file that, when run, will start a temporary copy of NVDA and will allow you to install or generate a portable distribution. (#1715)
 - NVDA is now always installed in to Program Files on all systems. Updating a previous install will also automatically move it if it was not previously installed there.
 
