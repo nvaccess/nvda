@@ -93,6 +93,7 @@ class UpdateChecker(object):
 		"""
 		t = threading.Thread(target=self._bg)
 		t.daemon = True
+		self._started()
 		t.start()
 
 	def _bg(self):
@@ -110,7 +111,16 @@ class UpdateChecker(object):
 		if autoChecker:
 			autoChecker.setNextCheck()
 
+	def _started(self):
+		self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
+			# Translators: The title of the dialog displayed while manually checking for an NVDA update.
+			_("Checking for Update"),
+			# Translators: The progress message displayed while manually checking for an NVDA update.
+			_("Checking for update"))
+
 	def _error(self):
+		wx.CallAfter(self._progressDialog.done)
+		self._progressDialog = None
 		wx.CallAfter(gui.messageBox,
 			# Translators: A message indicating that an error occurred while checking for an update to NVDA.
 			_("Error checking for update."),
@@ -119,6 +129,8 @@ class UpdateChecker(object):
 			wx.OK | wx.ICON_ERROR)
 
 	def _result(self, info):
+		wx.CallAfter(self._progressDialog.done)
+		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
 
 class AutoUpdateChecker(UpdateChecker):
@@ -137,6 +149,9 @@ class AutoUpdateChecker(UpdateChecker):
 	def setNextCheck(self, isRetry=False):
 		self._checkTimer.Stop()
 		self._checkTimer.Start((RETRY_INTERVAL if isRetry else CHECK_INTERVAL) * 1000, True)
+
+	def _started(self):
+		log.info("Performing automatic update check")
 
 	def _error(self):
 		self.setNextCheck(isRetry=True)
