@@ -5,7 +5,6 @@
 #Copyright (C) 2011-2012 NV Access Limited
 
 from ctypes import *
-from ctypes import *
 from ctypes.wintypes import *
 import _winreg
 import threading
@@ -38,7 +37,6 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 	if prependSpecialFolder:
 		specialPath=wsh.SpecialFolders(prependSpecialFolder)
 		path=os.path.join(specialPath,path)
-	log.info("Creating shortcut at %s"%path)
 	if not os.path.isdir(os.path.dirname(path)):
 		os.makedirs(os.path.dirname(path))
 	short=wsh.CreateShortcut(path)
@@ -98,9 +96,7 @@ def copyProgramFiles(destPath):
 	for curSourceDir,subDirs,files in os.walk(sourcePath):
 		if detectUserConfig:
 			detectUserConfig=False
-			if os.path.split(curSourceDir)[1].lower()=="userconfig":
-				del subDirs[:]
-				continue
+			subDirs[:]=[x for x in subDirs if os.path.basename(x).lower() not in ('userconfig','systemconfig')]
 		curDestDir=os.path.join(destPath,os.path.relpath(curSourceDir,sourcePath))
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
@@ -113,7 +109,10 @@ def copyProgramFiles(destPath):
 			if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
 				log.debugWarning("Unable to copy %s, trying rename and delete on reboot"%sourceFilePath)
 				tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
-				os.rename(destFilePath,tempPath)
+				try:
+					os.rename(destFilePath,tempPath)
+				except (WindowsError,OSError):
+					raise RetriableFailier("Failed to rename %s after failed remove"%destFilePath) 
 				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
 					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
 				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
@@ -131,7 +130,10 @@ def copyUserConfig(destPath):
 			if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
 				log.debugWarning("Unable to copy %s, trying rename and delete on reboot"%sourceFilePath)
 				tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
-				os.rename(destFilePath,tempPath)
+				try:
+					os.rename(destFilePath,tempPath)
+				except (WindowsError,OSError):
+					raise RetriableFailier("Failed to rename %s after failed remove"%destFilePath)
 				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
 					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
 				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
@@ -209,18 +211,35 @@ def unregisterInstallation(forUpdate=False):
 	except WindowsError:
 		pass
 
+class RetriableFailier(Exception):
+	pass
+
+MB_RETRYCANCEL=0x5
+MB_SYSTEMMODAL=0x1000
+IDRETRY=4
+IDCANCEL=3
+def tryRemoveFile(path,numRetries=6,retryInterval=0.5):
+	for count in xrange(numRetries):
+		try:
+			os.remove(path)
+			return
+		except OSError:
+			pass
+		time.sleep(retryInterval)
+	raise RetriableFailier("File %s could not be removed"%path)
+
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	prevInstallPath=getInstallPath(noDefault=True)
 	unregisterInstallation()
-	if prevInstallPath:
-		removeOldLoggedFiles(prevInstallPath)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
 	#Remove all the main executables always
 	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
 		f=os.path.join(installDir,f)
 		if os.path.isfile(f):
-			os.remove(f)
+			tryRemoveFile(f)
+	if prevInstallPath:
+		removeOldLoggedFiles(prevInstallPath)
 	copyProgramFiles(installDir)
 	for f in ("nvda_UIAccess.exe","nvda_noUIAccess.exe"):
 		f=os.path.join(installDir,f)
@@ -239,9 +258,9 @@ def removeOldLoggedFiles(installPath):
 		with open(datPath,"r") as datFile:
 			datFile.readline()
 			lines=datFile.readlines()
-			lines.append(os.path.join(installPath,'uninstall.dat'))
 			lines.append(os.path.join(installPath,'uninstall.exe'))
 			lines.sort(reverse=True)
+			lines.append(os.path.join(installPath,'uninstall.dat'))
 	for line in lines:
 		filePath=line.rstrip('\n')
 		try:
@@ -252,7 +271,10 @@ def removeOldLoggedFiles(installPath):
 		except WindowsError:
 			log.debugWarning("Failed to remove %s, removing on reboot"%filePath)
 			tempPath=tempfile.mktemp(dir=installPath)
-			os.rename(filePath,tempPath)
+			try:
+				os.rename(filePath,tempPath)
+			except (WindowsError,IOError):
+				raise RetriableFailier("Failed to rename file %s after failed remove"%filePath)
 			if windll.kernel32.MoveFileExA("\\\\?\\"+tempPath,None,4)==0:
 				raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
 
@@ -262,44 +284,21 @@ action={name} {version}
 icon={icon}
 """
 
-class CreatePortableCopy(threading.Thread):
-
-	def __init__(self,destPath,copyUserConfig=True,createAutorun=False):
-		super(CreatePortableCopy,self).__init__()
-		self.destPath=destPath
-		self.copyUserConfig=copyUserConfig
-		self.createAutorun=createAutorun
-		self.threadExc=None
-		self.start()
-		time.sleep(0.1)
-		threadHandle=c_int()
-		threadHandle.value=windll.kernel32.OpenThread(0x100000,False,self.ident)
-		msg=MSG()
-		while windll.user32.MsgWaitForMultipleObjects(1,byref(threadHandle),False,-1,255)==1:
-			while windll.user32.PeekMessageW(byref(msg),None,0,0,1):
-				windll.user32.TranslateMessage(byref(msg))
-				windll.user32.DispatchMessageW(byref(msg))
-		if self.threadExc:
-			raise self.threadExc
-
-	def run(self,*args,**kwargs):
-		try:
-			destPath=os.path.abspath(self.destPath)
-			#Remove all the main executables always
-			for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
-				f=os.path.join(destPath,f)
-				if os.path.isfile(f):
-					os.remove(f)
-			copyProgramFiles(destPath)
-			if windll.kernel32.CopyFileW(u"\\\\?\\"+os.path.join(destPath,"nvda_noUIAccess.exe"),u"\\\\?\\"+os.path.join(destPath,"nvda.exe"),False)==0:
-				raise OSError("Error copying %s to nvda.exe"%f)
-			if self.copyUserConfig:
-				copyUserConfig(os.path.join(destPath,'userConfig'))
-			if self.createAutorun:
-				drive,relDestPath=os.path.splitdrive(destPath)
-				autorunPath=os.path.join(drive,"autorun.inf")
-				autorunString=autorunTemplate.format(exe=os.path.join(relDestPath,'nvda.exe'),name=versionInfo.name,version=versionInfo.version,icon=os.path.join(relDestPath,'images/nvda.ico'))
-				with open(autorunPath,"wt") as autorunFile:
-					autorunFile.write(autorunString)
-		except Exception as e:
-			self.threadExc=e
+def createPortableCopy(destPath,shouldCopyUserConfig=True,shouldCreateAutorun=False):
+	destPath=os.path.abspath(destPath)
+	#Remove all the main executables always
+	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
+		f=os.path.join(destPath,f)
+		if os.path.isfile(f):
+			tryRemoveFile(f)
+	copyProgramFiles(destPath)
+	if windll.kernel32.CopyFileW(u"\\\\?\\"+os.path.join(destPath,"nvda_noUIAccess.exe"),u"\\\\?\\"+os.path.join(destPath,"nvda.exe"),False)==0:
+		raise OSError("Error copying %s to nvda.exe"%f)
+	if shouldCopyUserConfig:
+		copyUserConfig(os.path.join(destPath,'userConfig'))
+	if shouldCreateAutorun:
+		drive,relDestPath=os.path.splitdrive(destPath)
+		autorunPath=os.path.join(drive,"autorun.inf")
+		autorunString=autorunTemplate.format(exe=os.path.join(relDestPath,'nvda.exe'),name=versionInfo.name,version=versionInfo.version,icon=os.path.join(relDestPath,'images/nvda.ico'))
+		with open(autorunPath,"wt") as autorunFile:
+			autorunFile.write(autorunString)

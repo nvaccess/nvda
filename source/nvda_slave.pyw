@@ -4,6 +4,7 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 
 import sys
 import os
+import logHandler
 if hasattr(sys, "frozen"):
 	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
 	sys.stderr = sys.stdout
@@ -21,7 +22,11 @@ def main():
 			nvda_service.nvdaLauncher()
 		elif action=="install":
 			import installer
-			installer.install(bool(int(args[0])),bool(int(args[1])))
+			try:
+				installer.install(bool(int(args[0])),bool(int(args[1])))
+			except installer.RetriableFailier:
+				logHandler.log.error("Installation failed, try again",exc_info=True)
+				sys.exit(2)
 		elif action=="unregisterInstall":
 			import installer
 			installer.unregisterInstallation()
@@ -69,7 +74,6 @@ def main():
 		sys.exit(1)
 
 if __name__ == "__main__":
-	import logHandler
 	logHandler.initialize(True)
 	logHandler.log.setLevel(0)
 	import languageHandler

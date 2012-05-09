@@ -7,6 +7,7 @@
 import os
 import ctypes
 import shellapi
+import winUser
 import wx
 import config
 import globalVars
@@ -28,6 +29,7 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		else _("Please wait while NVDA is being installed"))
 	try:
 		res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(createDesktopShortcut)),str(int(startOnLogon))],wait=True,handleAlreadyElevated=True)
+		if res==2: raise installer.RetriableFailier
 		if copyPortableConfig:
 			installedUserConfigPath=config.getInstalledUserConfigPath()
 			if installedUserConfigPath:
@@ -37,6 +39,13 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		log.error("Failed to execute installer",exc_info=True)
 	progressDialog.done()
 	del progressDialog
+	if isinstance(res,installer.RetriableFailier):
+		# Translators: a message dialog asking to retry or cancel when NVDA install fails
+		message=_("The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again.")
+		# Translators: the title of a retry cancel dialog when NVDA installation fails
+		title=_("File in Use")
+		if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
+			return doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,silent)
 	if res!=0:
 		log.error("Installation failed: %s"%res)
 		# Translators: The message displayed when an error occurs during installation of NVDA.
@@ -203,10 +212,17 @@ def doCreatePortable(portableDirectory,createAutorun=False,copyUserConfig=False)
 		# Translators: The message displayed while a portable copy of NVDA is bieng created.
 		_("Please wait while a portable copy of NVDA is created."))
 	try:
-		installer.CreatePortableCopy(portableDirectory,copyUserConfig=copyUserConfig,createAutorun=createAutorun)
+		gui.ExecAndPump(installer.createPortableCopy,portableDirectory,copyUserConfig,createAutorun)
 	except Exception as e:
 		log.error("Failed to create portable copy",exc_info=True)
 		d.done()
+		if isinstance(e,installer.RetriableFailier):
+			# Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
+			message=_("NVDA is unable to remove or overwrite a file.")
+			# Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
+			title=_("File in Use")
+			if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
+				return doCreatePortable(portableDirectory,createAutorun,copyUserConfig)
 		# Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 		# %s will be replaced with the specific error message.
 		gui.messageBox(_("Failed to create portable copy: %s")%e,

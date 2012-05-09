@@ -474,6 +474,11 @@ def FindWindow(className, windowName):
 		raise WinError()
 	return res
 
+MB_RETRYCANCEL=5
+MB_SYSTEMMODAL=0x1000
+IDRETRY=4
+IDCANCEL=3
+
 def MessageBox(hwnd, text, caption, type):
 	res = user32.MessageBoxW(hwnd, text, caption, type)
 	if res == 0:
