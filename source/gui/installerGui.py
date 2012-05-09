@@ -110,7 +110,7 @@ class InstallerDialog(wx.Dialog):
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a button to continue with the operation.
-		ctrl = wx.Button(self, label=_("C&ontinue"), id=wx.ID_OK)
+		ctrl = wx.Button(self, label=_("&Continue"), id=wx.ID_OK)
 		ctrl.SetDefault()
 		ctrl.Bind(wx.EVT_BUTTON, self.onInstall)
 		sizer.Add(ctrl)
@@ -142,7 +142,7 @@ class PortableCreaterDialog(wx.Dialog):
 		optionsSizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label of a grouping containing controls to select the destination directory
 		# in the Create Portable NVDA dialog.
-		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Portable directory:")), wx.HORIZONTAL)
+		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("Portable &directory:")), wx.HORIZONTAL)
 		ctrl = self.portableDirectoryEdit = wx.TextCtrl(self)
 		sizer.Add(ctrl)
 		# Translators: The label of a button to browse for a directory.
@@ -163,7 +163,7 @@ class PortableCreaterDialog(wx.Dialog):
 		mainSizer.Add(optionsSizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		ctrl = wx.Button(self, label=_("C&ontinue"), id=wx.ID_OK)
+		ctrl = wx.Button(self, label=_("&Continue"), id=wx.ID_OK)
 		ctrl.SetDefault()
 		ctrl.Bind(wx.EVT_BUTTON, self.onCreatePortable)
 		sizer.Add(ctrl)
