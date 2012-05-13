@@ -34,6 +34,7 @@ Highlights of this release include an in-built installer and  portable  creation
 - In applications using the java Access Bridge, editable text fields no longer report strange characters in certain circumstances. (#1892)
 - In applications using the Java Access Bridge, when at the end of an editable text field, the current line is now reported correctly. (#1892)
 - In browse mode in applications using Mozilla Gecko 14 and later (e.g. Firefox 14), quick navigation now works for block quotes and embedded objects. (#2287)
+- in Internet Explorer 9 NVDA no longer reads unwanted content when focus moves inside a  div that is focusable or is marked with an ARIA landmark. 
 
 
 == Changes for Developers ==
