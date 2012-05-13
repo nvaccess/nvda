@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.2 =
+Highlights of this release include an in-built installer and  portable  creation feature, automatic updates, easy management of new NVDA add-ons, announcement of graphics in Microsoft Word, support for Windows 8 Metro style apps, and several important bug fixes. 
 
 == New Features ==
 - NVDA can now automatically check for, download and install updates. (#73)
@@ -11,9 +12,11 @@
 - Many more common NVDA features now work in Windows 8 Metro style apps when using an installed release  of NVDA, including speaking of typed characters, and browse mode for web documents (includes support for metro version of Internet Explorer 10). Portable copies of NVDA cannot access metro style apps. (#1801) 
 - In browse mode documents (Internet Explorer, Firefox, etc.), you can now  jump to the start and past the end of certain containing elements (such as lists and tables) with shift+, and shift+. respectively. (#123)
 - New language: Greek.
+- Graphics and alt text are now reported in Microsoft Word Documents. (#2282, #1541)
 
 
 == Changes ==
+- Announcement of cell coordinates in Microsoft Excel is now after the content rather than before, and is now only included   if the report tables and report table cell coordinates settings are enabled in the Document formatting settings dialog. (#320)
 - NVDA is now distributed in one package. Rather than separate portable and installer versions, there is now just one file that, when run, will start a temporary copy of NVDA and will allow you to install or generate a portable distribution. (#1715)
 - NVDA is now always installed in to Program Files on all systems. Updating a previous install will also automatically move it if it was not previously installed there.
 
@@ -30,6 +33,7 @@
 - In applications using the Java Access Bridge, editable text fields are now presented correctly in braille. (#2284)
 - In applications using the java Access Bridge, editable text fields no longer report strange characters in certain circumstances. (#1892)
 - In applications using the Java Access Bridge, when at the end of an editable text field, the current line is now reported correctly. (#1892)
+- In browse mode in applications using Mozilla Gecko 14 and later (e.g. Firefox 14), quick navigation now works for block quotes and embedded objects. (#2287)
 
 
 == Changes for Developers ==

@@ -1,3 +1,9 @@
+#gui/addonGui.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2012 NV Access Limited
+
 import wx
 import core
 import gui
@@ -25,26 +31,25 @@ class AddonsDialog(wx.Dialog):
 		entriesSizer.Add(self.addonsList,proportion=8)
 		settingsSizer.Add(entriesSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
-		aboutButtonID=wx.NewId()
-		self.aboutButton=wx.Button(self,aboutButtonID,_("&About add-on..."),wx.DefaultPosition)
+		self.aboutButton=wx.Button(self,label=_("&About add-on..."))
 		self.aboutButton.Disable()
-		self.Bind(wx.EVT_BUTTON,self.onAbout,id=aboutButtonID)
+		self.aboutButton.Bind(wx.EVT_BUTTON,self.onAbout)
 		entryButtonsSizer.Add(self.aboutButton)
-		addButtonID=wx.NewId()
-		self.addButton=wx.Button(self,addButtonID,_("&Add..."),wx.DefaultPosition)
-		self.Bind(wx.EVT_BUTTON,self.OnAddClick,id=addButtonID)
+		self.addButton=wx.Button(self,label=_("&Add..."))
+		self.addButton.Bind(wx.EVT_BUTTON,self.OnAddClick)
 		entryButtonsSizer.Add(self.addButton)
-		removeButtonID=wx.NewId()
-		self.removeButton=wx.Button(self,removeButtonID,_("&Remove"),wx.DefaultPosition)
+		self.removeButton=wx.Button(self,label=_("&Remove"))
 		self.removeButton.Disable()
-		self.Bind(wx.EVT_BUTTON,self.OnRemoveClick,id=removeButtonID)
+		self.removeButton.Bind(wx.EVT_BUTTON,self.OnRemoveClick)
 		entryButtonsSizer.Add(self.removeButton)
 		settingsSizer.Add(entryButtonsSizer)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: The label of a button to close the Addons dialog.
-		closeButton = wx.Button(self, label=_("C&lose"), id=wx.ID_OK)
-		closeButton.Bind(wx.EVT_BUTTON, self.onClose)
+		closeButton = wx.Button(self, label=_("&Close"), id=wx.ID_CLOSE)
+		closeButton.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
 		mainSizer.Add(closeButton,border=20,flag=wx.LEFT|wx.RIGHT|wx.BOTTOM|wx.CENTER)
+		self.Bind(wx.EVT_CLOSE, self.onClose)
+		self.EscapeId = wx.ID_CLOSE
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.refreshAddonsList()
@@ -157,7 +162,7 @@ class AddonsDialog(wx.Dialog):
 		self.Destroy()
 		if self.needsRestart:
 			# Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed. 
-			if gui.messageBox(_("Add-ons have been added or removed. You must restart NVDA for these changes to take affect. Would you like to restart now?"),
+			if gui.messageBox(_("Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"),
 			# Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed. 
 			_("Restart NVDA"),
 			wx.YES|wx.NO|wx.ICON_WARNING)==wx.YES:

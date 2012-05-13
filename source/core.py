@@ -181,6 +181,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Windows version %r" % (sys.getwindowsversion(),))
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
+	# Set a reasonable timeout for any socket connections NVDA makes.
+	import socket
+	socket.setdefaulttimeout(10)
 	log.debug("Initializing addons system.")
 	addonHandler.initialize()
 	import appModuleHandler

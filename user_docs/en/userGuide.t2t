@@ -85,9 +85,22 @@ If you have already closed this dialog or are wanting to install from a portable
 
 The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether  this installation will be updating a previous install.
 Pressing the Continue button will start installing NVDA.
-There are also a few options in this dialog, including whether you want to create a desktop shortcut or whether you want NVDA to start on the Windows logon screen.
+There are also a few options in this dialog which are explained below.
 Once the installation has completed, a message will appear telling you that it was successful.
 Pressing OK at this point will restart the newly installed copy of NVDA.
+
++++ Start at Windows Logon +++
+This option allows you to choose whether or not NVDA should automatically start while on the Windows Logon screen, before you have entered a password.
+This also includes UAC control and other secure screens.
+
++++ Create Desktop Shortcut (ctrl+alt+n) +++
+This option allows you to choose whether or not NVDA should create a shortcut on the desktop to start NVDA. 
+This shortcut if created will also be assigned a  shortcut key of control+alt+n allowing you to start NVDA at any time with this key stroke.
+
++++ Copy Portable Configuration to Current User Account +++
+This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA. 
+This will not  copy the configuration for   any other users  of this system nor to the system configuration for use at Windows Logon and other secure screens.
+This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
 
 ++ Creating a Portable Copy ++
 If creating a portable copy directly from the NVDA download  package, simply press the Create Portable Copy button.
@@ -95,12 +108,19 @@ If you have already closed this dialog or you are running an installed copy of N
 
 The Dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thum drive or other portable media.
-
-You also have the option of creating an autorun file in the root of the drive (useful when creating a portable copy on a USB thum drive), as well as the choice to Copy user configuration, which will include the settings and plugins from the current copy of NVDA.
+There are also other several options explained below.
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successfull.
 Press OK to dismiss this dialog.
 
++++ Create AutoRun File +++
+This option allows you to choose whether NVDA should place a special autorun file in the root of the drive where the portable copy is being created, so that NVDA may autostart when the drive is connected.
+Note that autostarting from a USB thumb drive is not supported on all Windows Operating Systems.
+
++++ Copy User Configuration +++
+This option allows you to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
+ This option is only available when creating a portable copy from an installed copy, not when creating from the downloaded Launcher package.
+ 
 + Getting started with NVDA +
 
 ++ Launching NVDA ++

@@ -203,6 +203,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			role=controlTypes.ROLE_FOOTNOTE
 		elif role=="endnote":
 			role=controlTypes.ROLE_ENDNOTE
+		elif role=="graphic":
+			role=controlTypes.ROLE_GRAPHIC
+		elif role=="object":
+			role=controlTypes.ROLE_EMBEDDEDOBJECT
 		else:
 			role=controlTypes.ROLE_UNKNOWN
 		field['role']=role

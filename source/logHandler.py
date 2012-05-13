@@ -184,7 +184,10 @@ class RemoteHandler(logging.Handler):
 	def emit(self, record):
 		msg = self.format(record)
 		if self._remoteLib:
-			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
+			try:
+				self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
+			except WindowsError:
+				pass
 
 class FileHandler(logging.StreamHandler):
 

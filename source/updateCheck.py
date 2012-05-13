@@ -93,6 +93,7 @@ class UpdateChecker(object):
 		"""
 		t = threading.Thread(target=self._bg)
 		t.daemon = True
+		self._started()
 		t.start()
 
 	def _bg(self):
@@ -110,7 +111,16 @@ class UpdateChecker(object):
 		if autoChecker:
 			autoChecker.setNextCheck()
 
+	def _started(self):
+		self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
+			# Translators: The title of the dialog displayed while manually checking for an NVDA update.
+			_("Checking for Update"),
+			# Translators: The progress message displayed while manually checking for an NVDA update.
+			_("Checking for update"))
+
 	def _error(self):
+		wx.CallAfter(self._progressDialog.done)
+		self._progressDialog = None
 		wx.CallAfter(gui.messageBox,
 			# Translators: A message indicating that an error occurred while checking for an update to NVDA.
 			_("Error checking for update."),
@@ -119,6 +129,8 @@ class UpdateChecker(object):
 			wx.OK | wx.ICON_ERROR)
 
 	def _result(self, info):
+		wx.CallAfter(self._progressDialog.done)
+		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
 
 class AutoUpdateChecker(UpdateChecker):
@@ -137,6 +149,9 @@ class AutoUpdateChecker(UpdateChecker):
 	def setNextCheck(self, isRetry=False):
 		self._checkTimer.Stop()
 		self._checkTimer.Start((RETRY_INTERVAL if isRetry else CHECK_INTERVAL) * 1000, True)
+
+	def _started(self):
+		log.info("Performing automatic update check")
 
 	def _error(self):
 		self.setNextCheck(isRetry=True)
@@ -184,6 +199,7 @@ class UpdateResultDialog(wx.Dialog):
 				item = wx.Button(self, label=_("Remind me &later"))
 				item.Bind(wx.EVT_BUTTON, self.onLaterButton)
 				mainSizer.Add(item)
+				item.SetFocus()
 
 		# Translators: The label of a button to close a dialog.
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
@@ -236,7 +252,10 @@ class UpdateDownloader(object):
 		self._progressDialog = wx.ProgressDialog(_("Downloading Update"),
 			# Translators: The progress message indicating that a connection is being established.
 			_("Connecting"),
-			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME, parent=gui.mainFrame)
+			# PD_AUTO_HIDE is required because ProgressDialog.Update blocks at 100%
+			# and waits for the user to press the Close button.
+			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
+			parent=gui.mainFrame)
 		self._progressDialog.Raise()
 		t = threading.Thread(target=self._bg)
 		t.daemon = True
@@ -246,7 +265,7 @@ class UpdateDownloader(object):
 		self._guiExecFunc = func
 		self._guiExecArgs = args
 		if not self._guiExecTimer.IsRunning():
-			self._guiExecTimer.Start(50)
+			self._guiExecTimer.Start(50, True)
 
 	def _guiExecNotify(self):
 		self._guiExecFunc(*self._guiExecArgs)

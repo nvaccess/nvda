@@ -1,6 +1,6 @@
 #addonHandler.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012 Rui Batista <ruiandrebatista@gmail.com>
+#Copyright (C) 2012 Rui Batista, NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
