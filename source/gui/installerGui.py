@@ -86,7 +86,7 @@ class InstallerDialog(wx.Dialog):
 		if self.isUpdate:
 			# Translators: An informational message in the Install NVDA dialog.
 			msg+=" "+_("A previous copy of NVDA has been found on your system. This copy will be updated.") 
-			if os.stat(installer.defaultInstallPath)!=os.stat(installer.getInstallPath(True)):
+			if not os.path.isdir(installer.defaultInstallPath):
 				# Translators: a message in the installer telling the user NVDA is now located in a different place.
 				msg+=" "+_("The installation path for NVDA has changed. it will now  be installed in {path}").format(path=installer.defaultInstallPath)
 		dialogCaption=wx.StaticText(self,label=msg) 
