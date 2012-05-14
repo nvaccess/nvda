@@ -395,7 +395,7 @@ def createAddonBundleFromPath(path, destDir=None):
 		raise AddonError("Manifest file as errors.")
 	bundleFilename = "%s-%s.%s" % (manifest['name'], manifest['version'], BUNDLE_EXTENSION)
 	bundleDestination = os.path.join(destDir, bundleFilename)
-	with zipfile.ZipFile(bundleDestination, 'w') as z:
+	with zipfile.ZipFile(bundleDestination, 'w', zipfile.ZIP_DEFLATED) as z:
 		# FIXME: the include/exclude feature may or may not be useful. Also python files can be pre-compiled.
 		for dir, dirnames, filenames in os.walk(basedir):
 			relativePath = os.path.relpath(dir, basedir)
@@ -438,7 +438,7 @@ url= string(default=None)
 		@type translatedInput: file-like object
 		"""
 		super(AddonManifest, self).__init__(input, configspec=self.configspec, encoding='utf-8', default_encoding='utf-8')
-		self._errors = []
+		self._errors = None
 		val = Validator()
 		result = self.validate(val, copy=True, preserve_errors=True)
 		if result != True:
