@@ -20,7 +20,7 @@ class AddonsDialog(wx.Dialog):
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
 		# Translators: the label for the installed addons list in the addons manager.
-		entriesLabel=wx.StaticText(self,-1,label=_("&Installed Add-ons"))
+		entriesLabel=wx.StaticText(self,-1,label=_("Installed Add-ons"))
 		entriesSizer.Add(entriesLabel)
 		self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
 		self.addonsList.InsertColumn(0,_("Status"),width=50)
@@ -35,7 +35,7 @@ class AddonsDialog(wx.Dialog):
 		self.aboutButton.Disable()
 		self.aboutButton.Bind(wx.EVT_BUTTON,self.onAbout)
 		entryButtonsSizer.Add(self.aboutButton)
-		self.addButton=wx.Button(self,label=_("&Add..."))
+		self.addButton=wx.Button(self,label=_("&Install..."))
 		self.addButton.Bind(wx.EVT_BUTTON,self.OnAddClick)
 		entryButtonsSizer.Add(self.addButton)
 		self.removeButton=wx.Button(self,label=_("&Remove"))

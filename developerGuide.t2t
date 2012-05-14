@@ -602,7 +602,7 @@ All other fields will be ignored.
 +++ Locale-specific Messages +++
 Each language directory can also contain gettext information, which is the system used to translate the rest of NVDA's user interface and reported messages.
 As with the rest of NVDA, an nvda.mo compiled gettext database file should be placed in the LC_MESSAGES directory within this directory.
-to allow plugins in your add-on to access gettext message information via calls to _(), you must initialize  translations at the top of each Python module by calling addonHandler.initTranslations().
+to allow plugins in your add-on to access gettext message information via calls to _(), you must initialize  translations at the top of each Python module by calling addonHandler.initTranslation().
 For more information about gettext and NVDA translation in general, please read
 http://www.nvda-project.org/wiki/TranslatingNVDA
 

@@ -434,7 +434,7 @@ The following keys by themselves jump to the next available element, while addin
 To move to the beginning or end of containing elements such as lists and tables:
 || Name | Key | Description |
 | Move to start of container | shift+, | Moves to the start of the container (list, table etc) where the caret is positiond |
-| Move past end of container | shift+. | Moves past the end of the container (list, table etc) where the caret is positiond |
+| Move past end of container | , | Moves past the end of the container (list, table etc) where the caret is positiond |
 %kc:endInclude
 
 ++ The Elements List ++
@@ -971,7 +971,7 @@ These packages are provided by the community and contain custom code that may ad
 The Add-ons Manager contains a list that displays all the add-ons currently installed in your NVDA user configuration. 
 A package name, version and author are shown for each add-on, though further information such as a description and URL can be viewed by selecting the add-on and pressing the About add-on button.
 
-To install an Add-on, press the Add button.
+To install an Add-on, press the Install button.
 This will allow you to browse for an add-on package (.nvda-addon file) somewhere on your computer or on a network.
 Once you press Open, NVDA will ask if you really wish to install the add-on.
 As the functionality of add-ons is unrestricted inside NVDA, which in theory could include accessing your personal data or even the entire system if NVDA is an installed copy, it is very important to only install add-ons from sources you trust.
@@ -985,6 +985,10 @@ Until you do, a status of "remove" will be shown for that add-on in the list.
 
 The manager also has a Close button to close the dialog.
 If you have installed or removed add-ons, NVDA will first ask you if you wish to restart so that your changes can take effect.
+
+In the past it has been possible to extend NVDA's functionality by copying individual plugins and drivers in to your NVDA user Configuration directory.
+Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
+It is best to remove these files from your configuration and install  the appropriate add-on if one is available.
 
 ++ Python Console ++
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.

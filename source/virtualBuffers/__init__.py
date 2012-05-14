@@ -1429,7 +1429,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
 		"kb:shift+,": "moveToStartOfContainer",
-		"kb:shift+.": "movePastEndOfContainer",
+		"kb:,": "movePastEndOfContainer",
 	}
 
 # Add quick navigation scripts.

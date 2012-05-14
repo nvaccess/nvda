@@ -300,7 +300,7 @@ def getCodeAddon(obj=None, frameDist=1):
 		fileName = inspect.stack()[frameDist][1]
 	else:
 		fileName  = inspect.getfile(obj)
-	dir= unicode(os.path.abspath(os.path.dirname(fileName)))
+	dir= unicode(os.path.abspath(os.path.dirname(fileName)), "mbcs")
 	# if fileName is not a subdir of one of the addon paths
 	# It does not belong to an addon.
 	for p in _getDefaultAddonPaths():
