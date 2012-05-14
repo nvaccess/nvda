@@ -66,7 +66,10 @@ def getInstallPath(noDefault=False):
 		return defaultInstallPath if not noDefault else None
 
 def isPreviousInstall():
-	return bool(getInstallPath(True))
+	path=getInstallPath(True)
+	if path and os.path.isdir(path):
+		return True
+	return False
 
 def getDocFilePath(fileName,installDir):
 	rootPath=os.path.join(installDir,'documentation')
@@ -181,7 +184,7 @@ def isDesktopShortcutInstalled():
 	shortcutPath=os.path.join(specialPath,"nvda.lnk")
 	return os.path.isfile(shortcutPath)
 
-def unregisterInstallation(forUpdate=False):
+def unregisterInstallation():
 	import nvda_service
 	try:
 		nvda_service.stopService()
@@ -206,7 +209,13 @@ def unregisterInstallation(forUpdate=False):
 			shutil.rmtree(startMenuPath)
 	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda")
+	except WindowsError:
+		pass
+	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe")
+	except WindowsError:
+		pass
+	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda")
 	except WindowsError:
 		pass
