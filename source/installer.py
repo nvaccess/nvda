@@ -287,13 +287,7 @@ def removeOldLoggedFiles(installPath):
 			if windll.kernel32.MoveFileExA("\\\\?\\"+tempPath,None,4)==0:
 				raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
 
-autorunTemplate="""[AutoRun]
-open={exe}
-action={name} {version}
-icon={icon}
-"""
-
-def createPortableCopy(destPath,shouldCopyUserConfig=True,shouldCreateAutorun=False):
+def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	destPath=os.path.abspath(destPath)
 	#Remove all the main executables always
 	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
@@ -305,9 +299,3 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True,shouldCreateAutorun=Fa
 		raise OSError("Error copying %s to nvda.exe"%f)
 	if shouldCopyUserConfig:
 		copyUserConfig(os.path.join(destPath,'userConfig'))
-	if shouldCreateAutorun:
-		drive,relDestPath=os.path.splitdrive(destPath)
-		autorunPath=os.path.join(drive,"autorun.inf")
-		autorunString=autorunTemplate.format(exe=os.path.join(relDestPath,'nvda.exe'),name=versionInfo.name,version=versionInfo.version,icon=os.path.join(relDestPath,'images/nvda.ico'))
-		with open(autorunPath,"wt") as autorunFile:
-			autorunFile.write(autorunString)

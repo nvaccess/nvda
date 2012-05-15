@@ -74,8 +74,10 @@ If you plan to  always use NVDA on this computer, you will want to choose to ins
 Installing NVDA will allow for additional functionality such as automatic starting after logon, the ability to read the Windows Logon and Windows security screens (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
 The installed copy is also able to create a portable copy itself at any time.
 
-If you want to take NVDA with you on a USB thum drive or other portable media, then you  should choose to create a portable copy.
+If you want to take NVDA with you on a USB thum drive or other writable  media, then you  should choose to create a portable copy.
 The portable copy also has the ability to install itself on any computer at a later time.
+However, if you wish to copy NVDA onto read-only media such as a CD, you should just copy the download package.
+Running the portable version directly from read-only media is not supported at this time.
 
 Using the temporary copy of NVDA is also an option (e.g. for demonstration purposes), though  starting NVDA in this way each time can become very time consuming.
 
@@ -108,19 +110,12 @@ If you have already closed this dialog or you are running an installed copy of N
 
 The Dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thum drive or other portable media.
-There are also other several options explained below.
+There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
+ This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successfull.
 Press OK to dismiss this dialog.
 
-+++ Create AutoRun File +++
-This option allows you to choose whether NVDA should place a special autorun file in the root of the drive where the portable copy is being created, so that NVDA may autostart when the drive is connected.
-Note that autostarting from a USB thumb drive is not supported on all Windows Operating Systems.
-
-+++ Copy User Configuration +++
-This option allows you to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
- This option is only available when creating a portable copy from an installed copy, not when creating from the downloaded Launcher package.
- 
 + Getting started with NVDA +
 
 ++ Launching NVDA ++
@@ -925,8 +920,6 @@ By default NVDA does not automatically save your settings, so if you exit NVDA, 
 Note, however, that this option can be changed under the general options in the preferences menu.
 To save the settings, choose the Save configuration item in the NVDA menu.
 
-If NVDA is on a read-only file system, such as a CD, it will not be able to save your settings, and it will tell you so.
-
 If you ever make a mistake with your settings and need to revert back to the saved settings, choose the "revert to saved configuration" item in the NVDA menu.
 
 The following NVDA key commands are also useful:
@@ -1004,7 +997,7 @@ For an even more extensive list of  free and commercial synthesizers that you ca
 ++ eSpeak ++
 The [eSpeak http://espeak.sourceforge.net/] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
 NVDA starts using eSpeak by default.
-As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive or CD on other systems.
+As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak speaks a different language.
 There are over 43 different languages supported by eSpeak.

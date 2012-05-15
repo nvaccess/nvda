@@ -151,10 +151,6 @@ class PortableCreaterDialog(wx.Dialog):
 		sizer.Add(ctrl)
 		optionsSizer.Add(sizer)
 		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-		ctrl = self.createAutorunCheckbox = wx.CheckBox(self, label=_("Create an &Autorun file"))
-		ctrl.Value = False
-		optionsSizer.Add(ctrl)
-		# Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 		ctrl = self.copyUserConfigCheckbox = wx.CheckBox(self, label=_("Copy current &user configuration"))
 		ctrl.Value = False
 		if globalVars.appArgs.launcher:
@@ -199,20 +195,20 @@ class PortableCreaterDialog(wx.Dialog):
 				wx.OK | wx.ICON_ERROR)
 			return
 		self.Hide()
-		doCreatePortable(self.portableDirectoryEdit.Value,self.createAutorunCheckbox.Value,self.copyUserConfigCheckbox.Value)
+		doCreatePortable(self.portableDirectoryEdit.Value,self.copyUserConfigCheckbox.Value)
 		self.Destroy()
 
 	def onCancel(self, evt):
 		self.Destroy()
 
-def doCreatePortable(portableDirectory,createAutorun=False,copyUserConfig=False):
+def doCreatePortable(portableDirectory,copyUserConfig=False):
 	d = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 		_("Creating Portable Copy"),
 		# Translators: The message displayed while a portable copy of NVDA is bieng created.
 		_("Please wait while a portable copy of NVDA is created."))
 	try:
-		gui.ExecAndPump(installer.createPortableCopy,portableDirectory,copyUserConfig,createAutorun)
+		gui.ExecAndPump(installer.createPortableCopy,portableDirectory,copyUserConfig)
 	except Exception as e:
 		log.error("Failed to create portable copy",exc_info=True)
 		d.done()
@@ -222,7 +218,7 @@ def doCreatePortable(portableDirectory,createAutorun=False,copyUserConfig=False)
 			# Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
 			title=_("File in Use")
 			if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
-				return doCreatePortable(portableDirectory,createAutorun,copyUserConfig)
+				return doCreatePortable(portableDirectory,copyUserConfig)
 		# Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 		# %s will be replaced with the specific error message.
 		gui.messageBox(_("Failed to create portable copy: %s")%e,
