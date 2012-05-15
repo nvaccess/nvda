@@ -23,7 +23,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki useille pistenäytöille
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
-- Käännökset 36 kielelle
+- Käännökset 37 kielelle
 - Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
 - Mahdollisuus käyttää Windowsin kirjautumis- ja muissa suojatuissa ruuduissa
 - Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
@@ -32,7 +32,7 @@ Tärkeimpiä ominaisuuksia ovat:
 
 ++ Kansainvälistäminen ++
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on saatavilla englannin lisäksi seuraavilla 36 kielellä: afrikaans, albania, arabia, brasilianportugali, bulgaria, espanja, galego, georgia, heprea, hindi, hollanti, islanti, italia, japani, kroatia, mandariinikiina, norja, perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on saatavilla englannin lisäksi seuraavilla 37 kielellä: afrikaans, albania, arabia, brasilianportugali, bulgaria, espanja, galego, georgia, heprea, hindi, hollanti, islanti, italia, japani, kreikka, kroatia, mandariinikiina, norja, perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -45,7 +45,7 @@ Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesynt
 NVDA voi tulostaa tietonsa pistekirjoituksella niille käyttäjille, joilla on pistenäyttö.
 Katso [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaletta saadaksesi tietoja tuetuista pistenäytöistä.
 
-NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepistekirjoitusta, tavallista sekä joissakin kielissä tietokonemerkistöä.
+NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepistekirjoitusta, tavallista sekä monissa kielissä tietokonemerkistöä.
 
 ++ Lisenssi ja tekijänoikeustiedot ++
 NVDA on copyright NVDA_COPYRIGHT_YEARS NVDA:n tekijät.
@@ -85,9 +85,22 @@ Jos tämä valintaikkuna on jo suljettu tai halutaan asentaa massamuistiversiost
 
 Näkyviin tulevassa valintaikkunassa pyydetään vahvistus NVDA:n asentamiselle ja kerrotaan myös, päivittääkö se aiemman version.
 Asennus käynnistyy painamalla Jatka-painiketta.
-Tässä valintaikkunassa on myös mahdollista valita, luodaanko kuvake työpöydälle tai halutaanko NVDA:n käynnistyvän Windowsin kirjautumisruudussa.
+Tässä valintaikkunassa on myös muutama asetus, jotka on selitetty alla.
 Kun asennus on suoritettu, näkyviin tulee ilmoitus sen onnistumisesta.
 Asennettu NVDA käynnistetään painamalla OK.
+
++++ Käynnistä Windowsiin kirjauduttaessa +++
+Tällä asetuksella voidaan valita, käynnistyykö NVDA automaattisesti Windowsin kirjautumisruudussa ennen kuin salasana on annettu.
+Asetus vaikuttaa myös käyttäjätilien valvontaan ja muihin suojattuihin ruutuihin.
+
++++ Luo pikakuvake työpöydälle (Ctrl+Alt+n) +++
+Tällä asetuksella valitaan, luodaanko työpöydälle pikakuvake, josta NVDA voidaan käynnistää.
+Mikäli kuvake luodaan, siihen liitetään myös pikanäppäin Ctrl+Alt+n, jolla NVDA voidaan milloin tahansa käynnistää.
+
++++ Kopioi massamuistiversion asetukset nykyiseen käyttäjätiliin +++
+Tällä asetuksella voidaaan valita, kopioidaanko käynnissä olevan NVDA:n asetukset asennettuun versioon nykyiselle kirjautuneelle käyttäjälle. 
+Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin kirjautumis- tai muissa suojatuissa ruuduissa käytettäväksi.
+Tämä asetus on käytettävissä vain massamuistiversiosta asennettaessa, ei suoraan ladatusta käynnistyspaketista.
  
 ++ Massamuistiversion luominen ++
 Mikäli massamuistiversio luodaan suoraan ladatusta paketista, painetaan vain Luo massamuistiversio -painiketta.
@@ -95,11 +108,18 @@ Jos tämä valintaikkuna on jo suljettu tai käytetään NVDA:n asennettua versi
 
 Näkyviin tulevassa valintaikkunassa voidaan valita sijainti, jonne massamuistiversio luodaan.
 Se voi olla kiintolevyllä oleva hakemisto tai sijainti USB-muistitikulla tai muulla siirrettävällä tietovälineellä.
-
-Käytettävissä on myös vaihtoehto automaattisen käynnistyksen tiedoston luomiseen aseman juurihakemistoon (hyödyllinen USB-muistitikuille) ja Kopioi käyttäjän asetukset, joka sisällyttää nykyisen NVDA-version asetukset ja liitännäiset massamuistiversioon.
-Luonti aloitetaan painamalla Jatka.
+Tässä valintaikkunassa on lisäksi muutama muu asetus, jotka on selitetty alla.
+Massamuistiversion luonti aloitetaan painamalla Jatka.
 Kun se on valmis, näkyviin tulee ilmoitus luonnin onnistumisesta.
-Tämä valintaikkuna suljetaan Painamalla OK.
+Valintaikkuna suljetaan Painamalla OK.
+
++++ Luo automaattisen käynnistyksen tiedosto +++
+Tällä asetuksella voidaan valita, sijoitetaanko sen aseman juureen, johon massamuistiversio luodaan, erityinen automaattisen käynnistyksen tiedosto, jotta NVDA voi käynnistyä automaattisesti kyseistä asemaa liitettäessä.
+Huomaa, että automaattista USB-muistitikulta käynnistämistä ei tueta kaikissa Windowsin versioissa.
+
++++ Kopioi käyttäjän nykyiset asetukset +++
+Tällä asetuksella voidaan valita, kopioidaanko kirjautuneen käyttäjän nykyiset asetukset juuri luodussa massamuistiversiossa käytettäviksi.
+Tämä asetus on käytettävissä vain luotaessa massamuistiversiota asennetusta kopiosta, ei ladatusta käynnistyspaketista.
 
 + Alkuun pääseminen +
 
@@ -943,6 +963,28 @@ Toiminto poistetaan käytöstä poistamalla vaihtoehdon valinta.
 
 Kun Näytä puhe -toiminto on käytössä, sen ikkuna päivittyy ajoittain näyttääkseen uusimman puhutun tekstin.
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää  tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
+
+++ Lisäosien hallinta ++
+Lisäosien hallinnalla, johon päästään NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voidaan asentaa ja poistaa NVDA:n lisäosia.
+Lisäosat, joita toimittaa NVDA-yhteisö, saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
+
+Lisäosien hallinnassa on lista, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
+Jokaisesta lisäosasta näytetään paketin nimi, versio ja tekijä, ja lisätietoja kuten kuvaus ja URL-osoite voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
+
+Lisäosa asennetaan painamalla Lisää-painiketta.
+Tässä voidaan etsiä tietokoneelta tai verkosta haluttua lisäosapakettia (.nvda-addon-tiedostoa).
+Kun painetaan Avaa-painiketta, NVDA kysyy, halutaanko lisäosa varmasti asentaa.
+Koska lisäosien toiminnallisuus on NVDA:n sisällä rajoittamatonta, mikä saattaisi teoriassa tarkoittaa pääsyä henkilökohtaisiin tietoihin tai jopa koko järjestelmään, mikäli käytetään NVDA:n asennettua versiota, on erittäin tärkeää, että lisäosia asennetaan vain luotetuista lähteistä.
+NVDA on käynnistettävä uudelleen lisäosan asentamisen jälkeen, jotta se voidaan ottaa käyttöön.
+Uudelleenkäynnistykseen saakka listassa näkyy lisäosan tilana "asenna".
+
+Lisäosa poistetaan valitsemalla se listasta ja painamalla Poista-painiketta.
+NVDA kysyy, halutaanko se varmasti poistaa.
+NVDA on, samoin kuin asennettaessa, käynnistettävä uudelleen, jotta lisäosa voidaan poistaa kokonaan.
+Uudelleenkäynnistykseen saakka listassa näkyy lisäosan tilana "poista".
+
+Valintaikkunassa on myös Sulje-painike, josta lisäosien hallinta voidaan sulkea.
+Jos lisäosia on asennettu tai poistettu, NVDA kysyy, halutaanko se käynnistää uudelleen, jotta muutokset tulevat voimaan.
 
 ++ Python-konsoli ++
 NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alavalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
