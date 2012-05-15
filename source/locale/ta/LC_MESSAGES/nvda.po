@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-04-26 05:30+0100\n"
-"PO-Revision-Date: 2012-04-28 14:40+0530\n"
+"POT-Creation-Date: 2012-05-10 16:51+0100\n"
+"PO-Revision-Date: 2012-05-14 20:16+0530\n"
 "Last-Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "Language-Team: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Original Translator: DINAKAR T.D. <td.dinkar@gmail.com>\n"
 "X-Poedit-Country: India\n"
 
-#: globalCommands.py:846
+#: globalCommands.py:849
 #, python-format
 msgid " and currently loaded module is %s"
 msgstr "தற்பொழுது ஏற்றப்பட்டிருக்கும் என்விடிஏ நிரல் செயலியின் பெயர் %s"
@@ -25,13 +25,13 @@ msgid "%d characters"
 msgstr "%d எழுத்துகள்"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#: globalCommands.py:831
+#: globalCommands.py:834
 #, python-format
 msgid "%d hours and %d minutes remaining"
 msgstr "%d மணியும், %d நிமிடங்களும் எஞ்சியுள்ளன"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:827
+#: globalCommands.py:830
 #: NVDAObjects/behaviors.py:54
 #, python-format
 msgid "%d percent"
@@ -43,8 +43,8 @@ msgstr "%d விழுக்காடு"
 msgid "%s %s through %s %s"
 msgstr "%s %s முதல் %s %s வரை"
 
-#: globalCommands.py:303
-#: globalCommands.py:747
+#: globalCommands.py:306
+#: globalCommands.py:750
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s பிடிப்புப்பலகைக்கு நகலெடுக்கப்பட்டது"
@@ -66,8 +66,8 @@ msgstr "%s முடிவு"
 msgid "%s items"
 msgstr "%s உருப்படிகள்"
 
-#: virtualBuffers/__init__.py:220
-#: virtualBuffers/__init__.py:228
+#: virtualBuffers/__init__.py:227
+#: virtualBuffers/__init__.py:235
 #, python-format
 msgid "%s landmark"
 msgstr "%s நிலக்குறி"
@@ -83,17 +83,27 @@ msgstr "%s, மொத்தம் %s"
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, %s இயல்பாக்கப்படுகிறது"
 
+#: gui/addonGui.py:34
+msgid "&About add-on..."
+msgstr "கூட்டு அங்கம் குறித்து..."
+
 #: synthDrivers/newfon.py:179
 msgid "&Acceleration"
 msgstr "&முடுக்கம்"
 
-#: virtualBuffers/__init__.py:281
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:301
 msgid "&Activate"
 msgstr "&இயங்கச் செய்"
 
-#: gui/settingsDialogs.py:1064
+#: gui/settingsDialogs.py:1076
 msgid "&Add"
 msgstr "ஏற்று"
+
+#: gui/addonGui.py:38
+msgid "&Add..."
+msgstr "ஏற்று..."
 
 #: gui/settingsDialogs.py:160
 msgid "&Automatically start NVDA after I log on to Windows"
@@ -101,69 +111,81 @@ msgstr "நான் சாளரத்தில் புகுபதிவு 
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:451
+#: gui/settingsDialogs.py:463
 msgid "&Beep for capitals"
 msgstr "ஆங்கில முகப்பெழுத்துகளுக்கு &சிற்றொலியை எழுப்பு"
 
-#: gui/__init__.py:279
+#: gui/__init__.py:292
 msgid "&Browse mode..."
 msgstr "&உலாவும் நிலை..."
 
 #. Translators: The label of a button to close a dialog.
-#: updateCheck.py:189
+#. Translators: The label of a button to close the Addons dialog.
+#: updateCheck.py:205
+#: gui/addonGui.py:48
 msgid "&Close"
 msgstr "மூடு"
 
-#: gui/settingsDialogs.py:1021
+#: gui/settingsDialogs.py:1033
 msgid "&Comment"
 msgstr "கருத்து"
 
-#: gui/__init__.py:547
+#. Translators: The label of a button to continue with the operation.
+#: gui/installerGui.py:113
+#: gui/installerGui.py:166
+msgid "&Continue"
+msgstr "தொடர்க"
+
+#: gui/__init__.py:562
 msgid "&Continue running"
 msgstr "ஓட்டத்தை தொடர்க"
 
-#: gui/__init__.py:285
+#: gui/__init__.py:298
 msgid "&Default dictionary..."
 msgstr "&இயல்பான அகராதி..."
 
-#: gui/settingsDialogs.py:1048
+#: gui/settingsDialogs.py:1060
 msgid "&Dictionary entries"
 msgstr "அகராதியின் உள்ளீடுகள்"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
-#: updateCheck.py:326
+#: updateCheck.py:379
 msgid "&Donate"
 msgstr "நன்கொடையளியுங்கள்"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:346
+#: updateCheck.py:399
 msgid "&Done"
 msgstr "அளித்தாகிவிட்டது"
 
 #. Translators: The label of a button to download an NVDA update.
-#: updateCheck.py:176
+#: updateCheck.py:191
 msgid "&Download update"
 msgstr "புதுப்பித்தலை தரவிறக்கு"
 
-#: gui/settingsDialogs.py:1067
+#: gui/settingsDialogs.py:1079
 msgid "&Edit"
 msgstr "தொகு"
 
-#: virtualBuffers/__init__.py:273
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:291
 msgid "&Filter by:"
 msgstr "இதைக் கொண்டு வடிகட்டு:"
 
-#: gui/__init__.py:263
+#: gui/__init__.py:276
 msgid "&General settings..."
 msgstr "பொது அமைப்புகள்..."
 
-#: virtualBuffers/__init__.py:252
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:263
 msgid "&Headings"
 msgstr "&தலைப்புகள்"
 
-#: gui/__init__.py:339
+#: gui/__init__.py:355
 msgid "&Help"
 msgstr "&உதவி"
 
@@ -171,21 +193,26 @@ msgstr "&உதவி"
 msgid "&Inflection"
 msgstr "&குரல் ஏற்ற இறக்கம்"
 
-#: gui/__init__.py:539
+#: gui/__init__.py:554
 msgid "&Install NVDA on this computer"
 msgstr "இக்கணினியில் என்விடிஏவை நிறுவுக"
 
-#: gui/__init__.py:310
+#: gui/__init__.py:326
 msgid "&Install NVDA..."
 msgstr "என்விடிஏவை நிறுவுக..."
 
+#. Translators: the label for the installed addons list in the addons manager.
+#: gui/addonGui.py:23
+msgid "&Installed Add-ons"
+msgstr "நிறுவப்பட்டுள்ள கூட்டு அங்கங்கள்"
+
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:544
+#: gui/settingsDialogs.py:556
 msgid "&Keyboard layout:"
 msgstr "&விசைப்பலகை வரைவு:"
 
-#: gui/__init__.py:271
+#: gui/__init__.py:284
 msgid "&Keyboard settings..."
 msgstr "விசைப்பலகை அமைப்புகள்..."
 
@@ -197,41 +224,43 @@ msgstr "&மொழி"
 msgid "&Language (requires restart to fully take affect):"
 msgstr "&மொழி (முழுமையாக செயற்பட என்விடிஏவை மீண்டும் இயக்க வேண்டும்):"
 
-#: gui/settingsDialogs.py:1273
+#: gui/settingsDialogs.py:1285
 msgid "&Level"
 msgstr "&நிலை"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:808
+#: gui/settingsDialogs.py:820
 msgid "&Maximum number of characters on one line"
 msgstr "ஒரு வரியில் இருக்கக்கூடிய எழுத்துகளின் &உச்ச அளவு"
 
-#: gui/__init__.py:273
+#: gui/__init__.py:286
 msgid "&Mouse settings..."
 msgstr "&சொடுக்கி அமைப்புகள்..."
 
-#: virtualBuffers/__init__.py:284
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:306
 msgid "&Move to"
 msgstr "&இங்கு நகர்"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:331
+#: updateCheck.py:384
 msgid "&Not now"
 msgstr "இப்பொழுது இல்லை"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:815
+#: gui/settingsDialogs.py:827
 msgid "&Number of lines per page"
 msgstr "ஒரு பக்கத்தில் இருக்கக்கூடிய வரிகளின் &எண்ணிக்கை"
 
-#: gui/__init__.py:277
+#: gui/__init__.py:290
 msgid "&Object presentation..."
 msgstr "&பொருட்காட்சிப்படுத்துதல்..."
 
-#: gui/settingsDialogs.py:1015
+#: gui/settingsDialogs.py:1027
 msgid "&Pattern"
 msgstr "அசல் உரை"
 
@@ -239,11 +268,11 @@ msgstr "அசல் உரை"
 msgid "&Pitch"
 msgstr "&சுருதி"
 
-#: gui/__init__.py:295
+#: gui/__init__.py:308
 msgid "&Preferences"
 msgstr "முன்னுரிமை விருப்பங்கள்"
 
-#: gui/__init__.py:293
+#: gui/__init__.py:306
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "&நிறுத்தற்குறிகள்/குறியெழுத்துகளின் உச்சரிப்பு..."
 
@@ -251,20 +280,21 @@ msgstr "&நிறுத்தற்குறிகள்/குறியெழ�
 msgid "&Rate"
 msgstr "விகிதம்"
 
-#: gui/settingsDialogs.py:1070
+#: gui/addonGui.py:41
+#: gui/settingsDialogs.py:1082
 msgid "&Remove"
 msgstr "நீக்கு"
 
-#: gui/settingsDialogs.py:1018
-#: gui/settingsDialogs.py:1267
+#: gui/settingsDialogs.py:1030
+#: gui/settingsDialogs.py:1279
 msgid "&Replacement"
 msgstr "பதிலமர்வு"
 
-#: gui/__init__.py:341
+#: gui/__init__.py:357
 msgid "&Revert to saved configuration"
 msgstr "&சேமிக்கப்பட்டுள்ள அமைவடிவத்திற்கு திரும்பிச் செல்"
 
-#: gui/__init__.py:344
+#: gui/__init__.py:360
 msgid "&Save configuration"
 msgstr "&அமைவடிவத்தை சேமி"
 
@@ -272,21 +302,21 @@ msgstr "&அமைவடிவத்தை சேமி"
 msgid "&Save configuration on exit"
 msgstr "வெளியேறும்பொழுது அமைவடிவத்தை சேமி"
 
-#: gui/settingsDialogs.py:1252
+#: gui/settingsDialogs.py:1264
 msgid "&Symbols"
 msgstr "குறியெழுத்துகள்"
 
-#: gui/__init__.py:265
+#: gui/__init__.py:278
 msgid "&Synthesizer..."
 msgstr "&ஒலிப்பான்..."
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
-#: gui/settingsDialogs.py:243
+#: gui/settingsDialogs.py:255
 msgid "&Synthesizer:"
 msgstr "&ஒலிப்பான்:"
 
-#: gui/__init__.py:289
+#: gui/__init__.py:302
 msgid "&Temporary dictionary..."
 msgstr "&தற்காலிக அகராதி..."
 
@@ -294,11 +324,11 @@ msgstr "&தற்காலிக அகராதி..."
 msgid "&Voice"
 msgstr "&குரல்"
 
-#: gui/__init__.py:287
+#: gui/__init__.py:300
 msgid "&Voice dictionary..."
 msgstr "&குரல் அகராதி..."
 
-#: gui/__init__.py:267
+#: gui/__init__.py:280
 msgid "&Voice settings..."
 msgstr "&குரல் அமைப்புகள்..."
 
@@ -342,15 +372,15 @@ msgstr "-----"
 msgid "..."
 msgstr "..."
 
-#: gui/__init__.py:285
+#: gui/__init__.py:298
 msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "பட்டியலில் அகராதிகளை சேர்த்து, இயல்பான அகராதியை அமைக்கும் உரையாடல்..."
 
-#: gui/__init__.py:289
+#: gui/__init__.py:302
 msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "தொகு பெட்டியில்  அகராதிகளை சேர்த்து, தற்காலிக அகராதியை அமைக்கும் உரையாடல்..."
 
-#: gui/__init__.py:287
+#: gui/__init__.py:300
 msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "பட்டியலில் அகராதிகளை சேர்த்து, குரல்களின் தனிப்பட்ட அகராதியை அமைக்கும் உரையாடல்..."
 
@@ -359,11 +389,11 @@ msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "மைக்ரோசாஃப்ட் விண்டோசிற்கான இலவச திறமூல திரை வாசிப்பான்"
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui/installerGui.py:74
+#: gui/installerGui.py:88
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
 msgstr "என்விடிஏவின் முந்தைய பிரதி ஒன்று தங்களின் கணினியில் காணப்படுகிறது. இந்தப் பிரதி புதுப்பிக்கப்படும்."
 
-#: globalCommands.py:828
+#: globalCommands.py:831
 msgid "AC power on"
 msgstr "மாறுதிசை மின்னோட்டம் இயக்கத்திலுள்ளது"
 
@@ -372,27 +402,47 @@ msgstr "மாறுதிசை மின்னோட்டம் இயக்�
 msgid "ALVA BC640/680 series"
 msgstr "ஆல்வா BC640/680 தொடர்"
 
-#: gui/__init__.py:207
-#: gui/__init__.py:337
+#: gui/__init__.py:211
+#: gui/__init__.py:353
 msgid "About NVDA"
 msgstr "என்விடிஏ குறித்து"
 
-#: gui/__init__.py:337
+#: gui/__init__.py:353
 msgid "About..."
 msgstr "குறித்து..."
 
-#: globalCommands.py:898
+#: globalCommands.py:901
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "என்விடிஏ உருவாக்குவதில் பயன்படும் பைத்தன் கட்டுப்பாட்டு மையத்தை இயக்குகிறது"
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui/settingsDialogs.py:1094
+#: gui/settingsDialogs.py:1106
 msgid "Add Dictionary Entry"
 msgstr "அகராதி உள்ளீட்டினை ஏற்று"
 
+#. Translators: title for the Addon Information dialog
+#: gui/addonGui.py:183
+msgid "Add-on Information"
+msgstr "கூட்டு அங்கத் தகவல்"
+
+#. Translators: Title for message asking if the user really wishes to install an Addon.
+#: gui/addonGui.py:80
+msgid "Add-on Installation"
+msgstr "கூட்டு அங்கம் நிறுவுதல்"
+
+#. Translators: The title of the Addons Dialog
+#: gui/addonGui.py:17
+msgid "Add-ons Manager"
+msgstr "கூட்டு அங்கங்கள் மேலாளர்"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#: gui/addonGui.py:165
+msgid "Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"
+msgstr "கூட்டு அங்கங்கள் நிறுவுதல் அல்லது நீக்கம் செய்யப்பட்டுள்ளன. இம்மாற்றங்கள் செயலிற்கு கொண்டு வர என்விடிஏவை மறுதுவக்கம் செய்ய வேண்டும். இப்பொழுதே மறுதுவக்கம் செய்ய விரும்புகிறீர்களா?"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:882
+#: gui/settingsDialogs.py:894
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "சுட்டிக்கு பிறகு ஏற்படும் வடிவமைப்பு மாற்றங்களை அறிவி (இது தேக்கத்தை ஏற்படுத்தலாம்)"
 
@@ -411,9 +461,24 @@ msgstr "மறுமொழி பெறுநர்:"
 msgid "Arabic grade 1"
 msgstr "அரேபிய நிலை 1"
 
-#: gui/__init__.py:166
+#. Translators: A message asking the user if they really wish to install an addon.
+#: gui/addonGui.py:78
+msgid ""
+"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Addon: {summary} {version}\n"
+"Author: {author}"
+msgstr ""
+"இந்தக் கூட்டு அங்கத்தைத் தாங்கள் கட்டாயம் நிறுவ வேண்டுமா? நம்பத் தகுந்த வட்டாரங்களிலிருந்துப் பெறப்படும் கூட்டு அங்கங்களை மட்டுமே நிறுவுங்கள்.\n"
+"கூட்டு அங்கம்: {summary} {version}\n"
+"படைப்பாளர்: {author}"
+
+#: gui/__init__.py:170
 msgid "Are you sure you want to quit NVDA?"
 msgstr "என்விடிஏவை விட்டு தாங்கள் கட்டாயம் வெளியேற வேண்டுமா?"
+
+#: gui/addonGui.py:118
+msgid "Are you sure you wish to remove the selected add-on from NVDA?"
+msgstr "தெரிவு செய்யப்பட்டுள்ள கூட்டு அங்கத்தைத் என்விடிஏவிலிருந்து தாங்கள் கட்டாயம் நீக்க வேண்டுமா?"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 #: appModules/msimn.py:20
@@ -422,13 +487,17 @@ msgstr "இணைப்புகள்"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:847
+#: gui/settingsDialogs.py:859
 msgid "Audio indication of focus and browse modes"
 msgstr "குவிமைய நிலை, உலாவும் நிலைக்கான ஒலிச் சைகை"
 
+#: gui/addonGui.py:29
+msgid "Author"
+msgstr "படைப்பாளர்"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:827
+#: gui/settingsDialogs.py:839
 msgid "Automatic &Say All on page load"
 msgstr "பக்கம் ஏற்றப்படும்பொழுது எல்லாவற்றையும் தானாக படி"
 
@@ -440,38 +509,38 @@ msgstr "தான்தோன்றி கருத்து"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:426
+#: gui/settingsDialogs.py:438
 msgid "Automatic dialect switching (when supported)"
 msgstr "ஆதரவு இருக்கும்பொழுது ஒரு வட்டார மொழிக்கு தானாக மாறு"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:842
+#: gui/settingsDialogs.py:854
 msgid "Automatic focus mode for caret movement"
 msgstr "கணினிச் சுட்டி நகரும்பொழுது, குவிமைய்ய நிலையை தானாக இயக்கு"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:837
+#: gui/settingsDialogs.py:849
 msgid "Automatic focus mode for focus changes"
 msgstr "குவிமையம் மாறும்பொழுது, குவிமைய நிலையை தானாக இயக்கு"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:421
+#: gui/settingsDialogs.py:433
 msgid "Automatic language switching (when supported)"
 msgstr "ஆதரவு இருக்கும்பொழுது ஒரு மொழிக்கு தானாக மாறு"
 
 #. Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
 #: gui/settingsDialogs.py:177
 msgid "Automatically check for &updates to NVDA"
-msgstr "புதுப்பித்தல்களுக்குத் தானாக துழாவு"
+msgstr "புதுப்பித்தல்களுக்குத் தானாகத் துழாவு"
 
-#: gui/settingsDialogs.py:1208
+#: gui/settingsDialogs.py:1220
 msgid "Avoid splitting &words when possible"
 msgstr "இயலும் இடங்களில் சொற்களின் பிரிவைத் தவிர்"
 
-#: gui/__init__.py:269
+#: gui/__init__.py:282
 msgid "B&raille settings..."
 msgstr "&பிரெயில் அமைப்புகள்..."
 
@@ -492,45 +561,45 @@ msgstr "Baum/HumanWare/APH பிரெயில் காட்சியளி�
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui/settingsDialogs.py:720
+#: gui/settingsDialogs.py:732
 msgid "Beep"
 msgstr "சிற்றொலிகளை எழுப்பு"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:585
+#: gui/settingsDialogs.py:597
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "முகப்பெழுத்து பூட்டப்பட்டிருக்கும்பொழுது கீழ்தட்டு விசையை அழுத்தினால் சிற்றொலியை எழுப்பு"
 
-#: gui/settingsDialogs.py:1144
+#: gui/settingsDialogs.py:1156
 msgid "Braille &display:"
 msgstr "பிரெயில் காட்சியளிப்பு:"
 
-#: gui/settingsDialogs.py:1218
+#: gui/settingsDialogs.py:1230
 msgid "Braille Display Error"
 msgstr "பிரெயில் காட்சியளிப்பில் பிழை"
 
 #. Translators: This is the label for the braille settings dialog.
-#: gui/settingsDialogs.py:1140
+#: gui/settingsDialogs.py:1152
 msgid "Braille Settings"
 msgstr "பிரெயில் அமைப்புகள்"
 
-#: globalCommands.py:907
+#: globalCommands.py:910
 #, python-format
 msgid "Braille tethered to %s"
 msgstr "பிரெயில் இதனுடன் கட்டப்பட்டுள்ளது: %s"
 
-#: gui/settingsDialogs.py:1191
+#: gui/settingsDialogs.py:1203
 msgid "Braille tethered to:"
 msgstr "பிரெயில் இதனுடன் கட்டப்பட்டுள்ளது"
 
 #. Translators: This is the label for the browse mode settings dialog.
-#: gui/settingsDialogs.py:803
+#: gui/settingsDialogs.py:815
 msgid "Browse Mode"
 msgstr "உலாவும் நிலை"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui/installerGui.py:146
+#: gui/installerGui.py:149
 msgid "Browse..."
 msgstr "உலாவித் தேடு..."
 
@@ -540,57 +609,61 @@ msgstr "உலாவித் தேடு..."
 msgid "Bulgarian 8 dot computer braille"
 msgstr "பல்கேரிய 8 புள்ளி கனிப்பொறி பிரெயில்"
 
-#. Translators: The label of a button to continue with the operation.
-#: gui/installerGui.py:90
-#: gui/installerGui.py:161
-msgid "C&ontinue"
-msgstr "தொடர்க"
-
 #. Translators: This is presented in outlook or live mail, email carbon copy
 #: appModules/msimn.py:26
 msgid "CC:"
 msgstr "நகல் பெறுநர்:"
 
-#: gui/__init__.py:134
+#: gui/__init__.py:138
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr "என்விடிஏ பாதுகாக்கப்பட்ட நிலையிலுள்ளது. ஆகவே, அமைவடிவத்தை சேமிக்க இயலாது"
 
-#: gui/settingsDialogs.py:439
+#: gui/settingsDialogs.py:451
 msgid "Capital pitch change percentage"
 msgstr "ஆங்கில முகப்பெழுத்து சுருதி மாற்று விழுக்காடு"
 
-#: gui/settingsDialogs.py:1024
+#: gui/settingsDialogs.py:1036
 msgid "Case &sensitive"
 msgstr "முகப்பெழுத்து/சிற்றெழுத்துகளுக்கிடையான மாற்றங்களை உணரக்கூடியது"
 
-#: gui/__init__.py:273
+#: gui/__init__.py:286
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "சொடுக்கிக் குறிமுள்ளின் உருவ மாற்றத்தையும், சொடுக்கியின் கீழிருக்கும் பொருளையும் அறிவிக்கும்"
 
-#: gui/__init__.py:277
+#: gui/__init__.py:290
 msgid "Change reporting of objects"
 msgstr "பொருட்களின் அறிவித்தலை மாற்று"
 
-#: gui/__init__.py:281
+#: gui/__init__.py:294
 msgid "Change settings of document properties"
 msgstr "ஆவண பண்புகளின் அமைப்புகளை மாற்று"
 
-#: gui/settingsDialogs.py:1265
+#: gui/settingsDialogs.py:1277
 msgid "Change symbol"
 msgstr "குறியெழுத்தை மாற்று"
 
-#: gui/__init__.py:265
+#: gui/__init__.py:278
 msgid "Change the synthesizer to be used"
 msgstr "பயன்படுத்தப்பட வேண்டிய ஒலிப்பானை மாற்று"
 
-#: gui/__init__.py:279
+#: gui/__init__.py:292
 msgid "Change virtual buffers specific settings"
 msgstr "உலாவும் நிலைக்கான தனிப்பட்ட அமைப்புகளை மாற்று"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
-#: gui/__init__.py:335
+#: gui/__init__.py:351
 msgid "Check for update..."
 msgstr "புதுப்பித்தலுக்குத் துழாவு..."
+
+#. Translators: The title of the dialog displayed while manually checking for an NVDA update.
+#: updateCheck.py:117
+msgid "Checking for Update"
+msgstr "புதுப்பித்தலுக்குத் துழாவு"
+
+#. Translators: The progress message displayed while manually checking for an NVDA update.
+#: updateCheck.py:119
+msgid "Checking for update"
+msgstr "புதுப்பித்தலுக்குத் துழாவப்படுகிறது"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -604,7 +677,12 @@ msgstr "சீனம் (ஹாங்காங், காண்டோனீஸ�
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "சீனம் (தைவான், மாண்டரீன்)"
 
-#: gui/__init__.py:267
+#. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
+#: gui/addonGui.py:60
+msgid "Choose Add-on Package File"
+msgstr "கூட்டு அங்கம் தொகுப்புக் கோப்பினைத் தெரிவு செய்க"
+
+#: gui/__init__.py:280
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "பயன்படுத்தப்பட வேண்டிய குரல், விகிதம், சுருதி, ஒலியளவு ஆகியவைகளைத் தேர்ந்தெடு"
 
@@ -616,7 +694,7 @@ msgstr "சொடுக்கியின் இடது பொத்தான�
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "சொடுக்கியின் வலது பொத்தான் தற்போதைய நிலையில் ஒருமுறை சொடுக்கப்படும்"
 
-#: gui/settingsDialogs.py:1051
+#: gui/settingsDialogs.py:1063
 msgid "Comment"
 msgstr "கருத்து"
 
@@ -630,39 +708,49 @@ msgstr "கருத்துகள்"
 msgid "Comments:"
 msgstr "கருத்துகள்"
 
-#: gui/__init__.py:492
+#: gui/__init__.py:508
 msgid "Configuration File Error"
 msgstr "அமைவடிவக் கோப்புப் பிழை"
 
-#: gui/__init__.py:130
+#: gui/__init__.py:134
 msgid "Configuration applied"
 msgstr "அமைவடிவம் இடப்பட்டது"
 
-#: gui/__init__.py:138
+#: gui/__init__.py:142
 msgid "Configuration saved"
 msgstr "அமைவடிவம் சேமிக்கப்பட்டது"
 
-#: gui/__init__.py:275
+#: gui/__init__.py:288
 msgid "Configure how and when the review cursor moves"
 msgstr "மறுபரிசீலனைச் சுட்டி எப்படி, எப்பொழுது நகர வேண்டுமென்று அமைவடிவமாக்கு"
 
-#: gui/__init__.py:271
+#: gui/__init__.py:284
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "விசைப்பலகையை அமைவடிவமாக்கு அல்லது  தட்டச்சு செய்த எழுத்துகளையோ, சொற்களையோ கட்டுப்பாடு விசைகளையோ பேசு"
 
 #. Translators: The progress message indicating that a connection is being established.
-#: updateCheck.py:234
+#: updateCheck.py:254
 msgid "Connecting"
 msgstr "இணைக்கப்படுகிறது"
 
-#: gui/__init__.py:328
+#: gui/__init__.py:344
 msgid "Contributors"
 msgstr "பங்களிப்பாளர்கள்"
 
+#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#: gui/installerGui.py:104
+msgid "Copy &portable configuration to current user account"
+msgstr "பெயர்த்தகு அமைவடிவத்தை தற்போதைய பயனர் கணக்கிற்கு நகலெடு"
+
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui/installerGui.py:155
+#: gui/installerGui.py:158
 msgid "Copy current &user configuration"
 msgstr "தற்போதைய பயனர் அமைவடிவத்தை நகலெடு"
+
+#. Translators: The title of the dialog presented while settings are being copied
+#: gui/settingsDialogs.py:197
+msgid "Copying Settings"
+msgstr "அமைப்புகள் நகலெடுக்கப்படுகிறது"
 
 #: versionInfo.py:43
 msgid "Copyright (C) {years} NVDA Contributors"
@@ -680,7 +768,7 @@ msgstr "தான்தோன்றி கருத்துச் சாளர�
 msgid "Could not find comment window."
 msgstr "கருத்துச் சாளரம் காணப்படவில்லை"
 
-#: gui/settingsDialogs.py:1218
+#: gui/settingsDialogs.py:1230
 #, python-format
 msgid "Could not load the %s display."
 msgstr "%s காட்சியளிப்பை ஏற்ற முடியவில்லை."
@@ -688,40 +776,40 @@ msgstr "%s காட்சியளிப்பை ஏற்ற முடிய�
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
-#: gui/settingsDialogs.py:285
+#: gui/settingsDialogs.py:297
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "%s ஒலிப்பானை ஏற்ற முடியவில்லை."
 
-#: gui/__init__.py:140
+#: gui/__init__.py:144
 msgid "Could not save configuration - probably read only file system"
 msgstr "அமைவடிவத்தை சேமிக்க முடியவில்லை. ஒருவேளை படிப்பதற்கான கோப்பாக மட்டும் இருக்கலாம்"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui/installerGui.py:83
+#: gui/installerGui.py:100
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "மேசைத்தள குறிஉருவத்தையும், கண்ட்ரோல்+என்விடிஏ+n குறுக்கு விசையையும் உருவாக்குக"
 
-#: gui/__init__.py:543
+#: gui/__init__.py:558
 msgid "Create &portable copy"
 msgstr "பெயர்த்தகு பிரதியை உருவாக்குக"
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui/installerGui.py:134
+#: gui/installerGui.py:137
 msgid "Create Portable NVDA"
 msgstr "பெயர்த்தகு என்விடிஏவை உருவாக்குக"
 
-#: gui/__init__.py:307
+#: gui/__init__.py:323
 msgid "Create Portable copy..."
 msgstr "பெயர்த்தகு பிரதியை உருவாக்குக..."
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui/installerGui.py:151
+#: gui/installerGui.py:154
 msgid "Create an &Autorun file"
 msgstr "தானியங்கி கோப்பினை உருவாக்குக"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
-#: gui/installerGui.py:206
+#: gui/installerGui.py:211
 msgid "Creating Portable Copy"
 msgstr "பெயர்த்தகு பிரதி உருவாக்கப்படுகிறது"
 
@@ -731,20 +819,20 @@ msgstr "பெயர்த்தகு பிரதி உருவாக்க�
 msgid "Croatian 8 dot computer braille"
 msgstr "க்ரொயேஷிய 8 புள்ளி கனிப்பொறி பிரெயில்"
 
-#: globalCommands.py:843
+#: globalCommands.py:846
 #, python-format
 msgid "Currently running application is %s"
 msgstr "தற்பொழுது செயற்பட்டுக்கொண்டிருக்கும் செயலியின் பெயர் %s."
 
-#: gui/settingsDialogs.py:1175
+#: gui/settingsDialogs.py:1187
 msgid "Cursor blink rate (ms)"
 msgstr "சுட்டி இமைக்கும் விகிதம் (MS)"
 
 #: gui/settingsDialogs.py:190
 msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
-msgstr "பயனர் அமைப்புகளில் தங்களின் தனிப்பட்ட நீட்சிகள் காணப்படுகின்றன. இதை கணினியின் அமைப்பிற்குள் நகலெடுப்பது பாதுகாப்பற்றதாகும். இருந்தாலும் தங்களின் அமைப்புகளை கணினிக்குள் நகலெடுக்க வேண்டுமா?"
+msgstr "பயனர் அமைப்புகளில் தங்களின் தனிப்பட்ட உட்பொருத்திகள் காணப்படுகின்றன. இதை கணினியின் அமைப்பிற்குள் நகலெடுப்பது பாதுகாப்பற்றதாகும். இருந்தாலும் தங்களின் அமைப்புகளை கணினிக்குள் நகலெடுக்க வேண்டுமா?"
 
-#: globalCommands.py:215
+#: globalCommands.py:218
 msgid "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr "எந்த குறியெழுத்துகளைப் படிக்க வேண்டுமென்று நிர்ணயிக்கும் குறியெழுத்துகளின் நிலைகளின் ஊடாகச் சுழலும்"
 
@@ -769,7 +857,7 @@ msgstr "தேதி:"
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், தற்போதைய அமைப்பைக் குறைக்கிறது"
 
-#: gui/__init__.py:153
+#: gui/__init__.py:157
 msgid "Default dictionary"
 msgstr "இயல்பான அகராதி"
 
@@ -790,36 +878,36 @@ msgstr "அண்மைய தகவல்களில் ஒன்றினை 
 msgid "Distribution:"
 msgstr "விநியோகம்"
 
-#: gui/__init__.py:281
+#: gui/__init__.py:294
 msgid "Document &formatting..."
 msgstr "ஆவண வடிவமைப்பு..."
 
 #. Translators: This is the label for the document formatting dialog.
-#: gui/settingsDialogs.py:877
+#: gui/settingsDialogs.py:889
 msgid "Document Formatting"
 msgstr "ஆவண வடிவமைப்பு"
 
-#: installer.py:173
-#: installer.py:174
+#: installer.py:175
+#: installer.py:176
 msgid "Documentation"
 msgstr "ஆவணமாக்கல்"
 
-#: gui/__init__.py:348
+#: gui/__init__.py:364
 msgid "Donate"
 msgstr "நன்கொடையளியுங்கள்"
 
 #. Translators: The label of a button to download and install an NVDA update.
-#: updateCheck.py:173
+#: updateCheck.py:188
 msgid "Download and &install update"
 msgstr "புதுப்பித்தலை தரவிறக்கி நிறுவு"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:277
+#: updateCheck.py:321
 msgid "Downloading"
 msgstr "தரவிறக்கமாகிறது"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
-#: updateCheck.py:232
+#: updateCheck.py:252
 msgid "Downloading Update"
 msgstr "புதுப்பித்தல் தரவிறக்கமாகிறது"
 
@@ -835,29 +923,30 @@ msgstr "டச் (பெல்ஜியம்) நிலை 1"
 msgid "Dutch (netherlands) grade 1"
 msgstr "டச் (நெதர்லாந்து) நிலை 1"
 
-#: gui/__init__.py:351
-#: gui/__init__.py:551
+#: gui/__init__.py:367
+#: gui/__init__.py:566
 #: gui/logViewer.py:34
 msgid "E&xit"
 msgstr "வெளி&யேறு"
 
-#: gui/settingsDialogs.py:1170
+#: gui/settingsDialogs.py:1182
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "சுட்டியினிடத்திலிருக்கும் சொல்லுக்கு கணினி பிரெயிலைக் காண்பி"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects/window/winword.py:406
-#: NVDAObjects/window/winword.py:425
+#: NVDAObjects/window/winword.py:410
+#: NVDAObjects/window/winword.py:429
 msgid "Edge of table"
 msgstr "அட்டவணையின் விளிம்பு"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
-#: gui/settingsDialogs.py:1011
+#: gui/settingsDialogs.py:1023
 msgid "Edit Dictionary Entry"
 msgstr "அகராதி உள்ளீட்டினைத் தொகு"
 
-#: virtualBuffers/__init__.py:259
+#. Translators: The title of the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:273
 msgid "Elements List"
 msgstr "அங்கங்களின் பட்டியல்"
 
@@ -868,7 +957,7 @@ msgstr "விசைப்பலகையில் %s என்று தட்�
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:621
+#: gui/settingsDialogs.py:633
 msgid "Enable mouse &tracking"
 msgstr "சொடுக்கியின் &பின்தொடருதலை இயங்கச்செய்"
 
@@ -914,34 +1003,37 @@ msgstr "ஆங்கிலம் (ஐக்கிய அமெரிக்கா
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:118
-#: updateCheck.py:286
-#: gui/__init__.py:140
-#: gui/__init__.py:149
-#: gui/installerGui.py:40
-#: gui/installerGui.py:185
-#: gui/installerGui.py:193
-#: gui/installerGui.py:217
+#: updateCheck.py:128
+#: updateCheck.py:341
+#: gui/addonGui.py:74
+#: gui/addonGui.py:88
+#: gui/addonGui.py:107
+#: gui/__init__.py:144
+#: gui/__init__.py:153
+#: gui/installerGui.py:54
+#: gui/installerGui.py:190
+#: gui/installerGui.py:198
+#: gui/installerGui.py:229
 #: gui/logViewer.py:74
-#: gui/settingsDialogs.py:196
+#: gui/settingsDialogs.py:208
 msgid "Error"
 msgstr "பிழை"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
-#: updateCheck.py:116
+#: updateCheck.py:126
 msgid "Error checking for update."
 msgstr "புதுப்பித்தலுக்குத் துழாவுவதில் பிழை."
 
-#: gui/settingsDialogs.py:196
+#: gui/settingsDialogs.py:208
 msgid "Error copying NVDA user settings"
 msgstr "பயனர் அமைப்புகளை நகலெடுப்பதில் பிழை"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:285
+#: updateCheck.py:340
 msgid "Error downloading update."
 msgstr "புதுப்பித்தலை தரவிறக்குவதில் பிழை."
 
-#: gui/settingsDialogs.py:207
+#: gui/settingsDialogs.py:219
 #, python-format
 msgid "Error in %s language file"
 msgstr "%s மொழிக் கோப்பில் பிழை"
@@ -985,21 +1077,33 @@ msgstr "இரட்டைப் படை பக்கங்களின் அ
 msgid "Even pages header"
 msgstr "இரட்டைப் படை பக்கங்களின் மேலுரை"
 
-#: gui/__init__.py:166
-#: gui/__init__.py:351
+#: gui/__init__.py:170
+#: gui/__init__.py:367
 msgid "Exit NVDA"
 msgstr "என்விடிஏவை விட்டு வெளியேறு"
 
-#: installer.py:172
+#: installer.py:174
 msgid "Explore NVDA user configuration directory"
 msgstr "என்விடிஏ பயனர் தகவல் திரட்டினை ஆய்வு செய்க"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
-#: gui/installerGui.py:216
+#: gui/installerGui.py:228
 #, python-format
 msgid "Failed to create portable copy: %s"
 msgstr "பெயர்த்தகு என்விடிஏ உருவாக்குவதில் தோல்வி: %s"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#: gui/addonGui.py:105
+#, python-format
+msgid "Failed to install add-on  from %s"
+msgstr "%s தொகுப்பில் இருக்கும் கூட்டு அங்கத்தின் நிறுவுதல் தோல்வியடைந்தது"
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#: gui/addonGui.py:72
+#, python-format
+msgid "Failed to open add-on package file at %s - missing file or invalid file format"
+msgstr "%s கூட்டு அங்கம் தொகுப்பினை திறப்பதில் தோல்வி - இல்லாத கோப்பு அல்லது ஏற்க முடியாத வடிவமைப்பு"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1011,6 +1115,13 @@ msgstr "ஃபார்சி நிலை 1"
 #: appModules/sndrec32.py:14
 msgid "Fast forward"
 msgstr "விரைவாக முன்நகர்த்து"
+
+#. Translators: the title of a retry cancel dialog when NVDA installation fails
+#. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
+#: gui/installerGui.py:46
+#: gui/installerGui.py:223
+msgid "File in Use"
+msgstr "கோப்பு பயன்பாட்டில் உள்ளது"
 
 #: cursorManager.py:81
 msgid "Find"
@@ -1036,19 +1147,19 @@ msgstr "முதல் பக்க மேலுரை"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:676
+#: gui/settingsDialogs.py:688
 msgid "Follow &keyboard focus"
 msgstr "&விசைப்பலகையின் குவிமையத்தை பின்தொடர்"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:686
+#: gui/settingsDialogs.py:698
 msgid "Follow &mouse cursor"
 msgstr "&சொடுக்கியின் குறிமுள்ளை பின்தொடர்"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:681
+#: gui/settingsDialogs.py:693
 msgid "Follow System &Caret"
 msgstr "கணினிச் &சுட்டியை பின்தொடர்"
 
@@ -1056,7 +1167,7 @@ msgstr "கணினிச் &சுட்டியை பின்தொடர
 msgid "Footnotes"
 msgstr "அடிக்குறிப்புகள்"
 
-#: gui/settingsDialogs.py:228
+#: gui/settingsDialogs.py:240
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "புது மொழியை செயலிற்குக் கொண்டுவர, அமைவடிவத்தை சேமித்துவிட்டு என்விடிஏவை மீண்டும் இயக்க வேண்டும். அமைவடிவத்தை சேமித்து என்விடிஏவை மீண்டுமியக்க 'சரி' பொத்தானை அழுத்தவும்.  மற்றொரு  நேரம் தாங்களாகவே அமைவடிவத்தை சேமித்து என்விடிஏவை விட்டு வெளியேற 'ரத்து' பொத்தானை அழுத்தவும்."
 
@@ -1111,7 +1222,7 @@ msgstr "அனுப்புநர்:"
 msgid "General Settings"
 msgstr "பொது அமைப்புகள்"
 
-#: gui/__init__.py:263
+#: gui/__init__.py:276
 msgid "General settings"
 msgstr "பொது அமைப்புகள்"
 
@@ -1147,7 +1258,7 @@ msgstr "கிரேக்கம் (கிரீஸ்) நிலை 1"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:750
+#: gui/settingsDialogs.py:762
 msgid "Guess object &position information when unavailable"
 msgstr "பொருள் &நிலையின் தகவல் இல்லாதப்பொழுது அதை ஊகி"
 
@@ -1179,19 +1290,19 @@ msgstr "ஹ்யூமேன் வேர் பிரெயிலண்ட் 
 msgid "Hungarian 8 dot computer braille"
 msgstr "ஹங்கேரிய 8 புள்ளி கனிப்பொறி பிரெயில்"
 
-#: gui/__init__.py:531
+#: gui/__init__.py:546
 msgid "I &agree"
 msgstr "ஏற்றுக் கொள்கிறேன்"
 
-#: controlTypes.py:303
+#: controlTypes.py:313
 msgid "IFrame"
 msgstr "சட்டகம்"
 
-#: controlTypes.py:300
+#: controlTypes.py:310
 msgid "IP address"
 msgstr "இணைய முகவரி"
 
-#: controlTypes.py:317
+#: controlTypes.py:327
 msgid "ITALIC"
 msgstr "வலப்பக்க சாய்வு"
 
@@ -1210,27 +1321,32 @@ msgid "Increases the currently active setting in the synth settings ring"
 msgstr "ஒலிப்பான் அமைப்புகள் வலையத்தில், தற்போதைய அமைப்பைக் கூட்டுகிறது"
 
 #. Translators: The title of the Install NVDA dialog.
-#: gui/installerGui.py:68
+#: gui/installerGui.py:82
 msgid "Install NVDA"
 msgstr "என்விடிஏவை நிறுவுக"
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
-#: updateCheck.py:297
+#: updateCheck.py:350
 msgid "Install Update"
 msgstr "புதுப்பித்தலை நிறுவு"
 
+#. Translators: The title of the dialog presented while an Addon is being installed.
+#: gui/addonGui.py:93
+msgid "Installing Add-on"
+msgstr "கூட்டு அங்கம் நிறுவப்படுகிறது"
+
 #. Translators: The title of the dialog presented while NVDA is being installed.
-#: gui/installerGui.py:23
+#: gui/installerGui.py:25
 msgid "Installing NVDA"
 msgstr "என்விடிஏ நிறுவப்படுகிறது"
 
-#: gui/settingsDialogs.py:221
+#: gui/settingsDialogs.py:233
 msgid "Insufficient Privileges"
 msgstr "போதாத சிறப்புரிமைகள்"
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
-#: gui/installerGui.py:192
+#: gui/installerGui.py:197
 #, python-format
 msgid "Invalid drive %s"
 msgstr "ஏற்க முடியாத சேமிப்பிடம்: %s"
@@ -1241,26 +1357,23 @@ msgstr "ஏற்க முடியாத சேமிப்பிடம்: %s
 msgid "Italian grade 1"
 msgstr "இத்தாலிய நிலை 1"
 
-#: installer.py:173
-msgid "Key Command quick reference"
-msgstr "விசைக் கட்டளை விரைவுதவி"
-
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:42
 msgid "Key words:"
 msgstr "திறவுச்சொற்கள்:"
 
+#: installer.py:175
+#: gui/__init__.py:336
+msgid "Keyboard Commands Quick Reference"
+msgstr "விசைப்பலகை கட்டளைகளுக்கான விரைவுதவி"
+
 #. Translators: This is the label for the keyboard settings dialog.
-#: gui/settingsDialogs.py:538
+#: gui/settingsDialogs.py:550
 msgid "Keyboard Settings"
 msgstr "விசைப்பலகை அமைப்புகள்"
 
-#: gui/__init__.py:320
-msgid "Keyboard command quick reference"
-msgstr "விசைப்பலகை கட்டளைகளுக்கான விரைவுக் குறிப்புதவி"
-
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
-#: gui/settingsDialogs.py:550
+#: gui/settingsDialogs.py:562
 msgid "Keyboard layout"
 msgstr "விசைப்பலகை வரைவு"
 
@@ -1268,7 +1381,9 @@ msgstr "விசைப்பலகை வரைவு"
 msgid "L&ogging level:"
 msgstr "செயற்குறிப்பேட்டுப் பதிவு நிலை"
 
-#: virtualBuffers/__init__.py:253
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:266
 msgid "Lan&dmarks"
 msgstr "&நிலக்குறிகள்"
 
@@ -1276,11 +1391,11 @@ msgstr "&நிலக்குறிகள்"
 msgid "Language"
 msgstr "மொழி"
 
-#: gui/settingsDialogs.py:229
+#: gui/settingsDialogs.py:241
 msgid "Language Configuration Change"
 msgstr "மொழி அமைவடிவ மாற்றம்"
 
-#: gui/settingsDialogs.py:207
+#: gui/settingsDialogs.py:219
 msgid "Language Error"
 msgstr "மொழிப் பிழை"
 
@@ -1290,27 +1405,29 @@ msgstr "மொழிப் பிழை"
 msgid "Latvian grade 1"
 msgstr "லாத்விய நிலை 1"
 
-#: gui/settingsDialogs.py:1256
+#: gui/settingsDialogs.py:1268
 msgid "Level"
 msgstr "நிலை"
 
-#: gui/__init__.py:326
+#: gui/__init__.py:342
 msgid "License"
 msgstr "உரிமம்"
 
-#: gui/__init__.py:526
+#: gui/__init__.py:542
 msgid "License Agreement"
 msgstr "உரிம ஒப்பந்தம்"
 
-#: virtualBuffers/__init__.py:251
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:260
 msgid "Lin&ks"
 msgstr "தொடுப்புகள்"
 
-#: core.py:194
+#: core.py:203
 msgid "Loading NVDA. Please wait..."
 msgstr "என்விடிஏ ஏற்றப்படுகிறது. கருணைக்கூர்ந்து காத்திருக்கவும்..."
 
-#: virtualBuffers/__init__.py:601
+#: virtualBuffers/__init__.py:623
 msgid "Loading document..."
 msgstr "ஆவணம் ஏற்றப்படுகிறது..."
 
@@ -1330,7 +1447,7 @@ msgstr "செயற்குறிப்பேடு"
 msgid "Log level"
 msgstr "செயற்குறிப்பேட்டுப் பதிவு நிலை"
 
-#: globalCommands.py:765
+#: globalCommands.py:768
 msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
 msgstr "தற்போதைய வழிகாட்டி பொருளின் தகவலை செயற்குறிப்பேட்டில் பதிவு செய்யும். இது என்விடிஏ உருவாக்குநர்களுக்குப் பயன்படும். மேலும், பதிவாகியுள்ள தகவலை ஆராய செயற்குறிப்பேட்டுத் தோற்றத்தை முடிக்கிவிடும்"
 
@@ -1339,109 +1456,114 @@ msgstr "தற்போதைய வழிகாட்டி பொருளி�
 msgid "MDV Lilli"
 msgstr "எம்டிவி லில்லி"
 
-#: globalCommands.py:927
+#. Translators: The label of a menu item to open the Add-ons Manager.
+#: gui/__init__.py:320
+msgid "Manage &add-ons"
+msgstr "கூட்டு அங்கங்களின் மேலாண்மை"
+
+#: globalCommands.py:930
 msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "பிடிப்புப்பலகையில் நகலெடுக்க, மறுபரிசீலனைச் சுட்டியின் தற்போதைய நிலையை துவக்கமாக குறித்துக்கொள்கிறது"
 
-#: gui/settingsDialogs.py:1183
+#: gui/settingsDialogs.py:1195
 msgid "Message timeout (sec)"
 msgstr "தகவல் காலாவதியாகும் நேரம் (வினாடிகளில்)"
 
 #. Translators: This is the label for the mouse settings dialog.
-#: gui/settingsDialogs.py:611
+#: gui/settingsDialogs.py:623
 msgid "Mouse Settings"
 msgstr "சொடுக்கி அமைப்புகள்"
 
-#: globalCommands.py:730
+#: globalCommands.py:733
 msgid "Mouse tracking"
 msgstr "சொடுக்கியைப் பின்தொடர்"
 
-#: globalCommands.py:239
+#: globalCommands.py:242
 msgid "Move navigator object to mouse"
 msgstr "வழிகாட்டி பொருளை சொடுக்கிற்கு நகர்த்து"
 
-#: globalCommands.py:270
+#: globalCommands.py:273
 msgid "Moves navigator object to the object represented by the text at the position of the review cursor within flat review"
 msgstr "தட்டை மறுபரிசீலனை நிலையில், மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் பொருளுக்கு பிரதிநிதியாக விளங்கும் உரைக்கு வழிகாட்டிப் பொருளை நகர்த்தும்"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: virtualBuffers/__init__.py:1390
+#: virtualBuffers/__init__.py:1414
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "வரிசைப் பட்டியல், அட்டவணை போன்ற கொள்களத்தின் முடிவிற்கு அப்பால் செல்லும்"
 
-#: globalCommands.py:969
+#: globalCommands.py:972
 msgid "Moves the braille display to the next line"
 msgstr "பிரெயில் காட்சியளிப்பை அடுத்த வரிக்கு நகர்த்தும்"
 
-#: globalCommands.py:964
+#: globalCommands.py:967
 msgid "Moves the braille display to the previous line"
 msgstr "பிரெயில் காட்சியளிப்பை முந்தைய வரிக்கு நகர்த்தும்"
 
-#: globalCommands.py:621
+#: globalCommands.py:624
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "குவிமையத்தைக் கொண்டிருக்கும் அடுத்து அருகாமையில் இருக்கும் ஆவணத்திற்கு நகர்த்தும்"
 
-#: globalCommands.py:236
+#: globalCommands.py:239
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "சொடுக்கியின் குறிமுள்ளை தற்போதைய வழிகாட்டி பொருளுக்கு நகர்த்தும்"
 
-#: globalCommands.py:411
+#: globalCommands.py:414
 msgid "Moves the navigator object to the first object inside it"
 msgstr "தனக்குள் இருக்கும் முதற்பொருளுக்கு வழிகாட்டி பொருளை நகர்த்தும்"
 
-#: globalCommands.py:383
+#: globalCommands.py:386
 msgid "Moves the navigator object to the next object"
 msgstr "வழிகாட்டி பொருளை அடுத்த பொருளுக்கு நகர்த்தும்"
 
-#: globalCommands.py:369
+#: globalCommands.py:372
 msgid "Moves the navigator object to the object containing it"
 msgstr "வழிகாட்டி பொருளை, அப்பொருளைக் கொண்டிருக்கும் பொருறுக்கு நகர்த்தும்"
 
-#: globalCommands.py:397
+#: globalCommands.py:400
 msgid "Moves the navigator object to the previous object"
 msgstr "வழிகாட்டி பொருளை முந்தைய பொருளுக்கு நகர்த்தும்"
 
-#: globalCommands.py:479
+#: globalCommands.py:482
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டி பொருளின் கீழ் வரிக்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:523
+#: globalCommands.py:526
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை, அது இருக்கும்  வழிகாட்டி பொருள் வரியின் முதல் எழுத்திற்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:587
+#: globalCommands.py:590
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை, அது இருக்கும்  வழிகாட்டி பொருள் வரியின் கடைசி எழுத்திற்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:576
+#: globalCommands.py:579
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டி பொருளின் அடுத்த எழுத்திற்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:471
+#: globalCommands.py:474
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டி பொருளின் அடுத்த வரிக்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:513
+#: globalCommands.py:516
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டி பொருளின் அடுத்த சொல்லிற்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:541
+#: globalCommands.py:544
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டி பொருளின் முந்தைய எழுத்திற்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:449
+#: globalCommands.py:452
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டி பொருளின் முந்தைய வரிக்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:491
+#: globalCommands.py:494
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டி பொருளின் முந்தைய சொல்லிற்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:437
+#: globalCommands.py:440
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
 msgstr "மறுபரிசீலனைச் சுட்டியை தற்போதைய வழிகாட்டி பொருளின் மேல் வரிக்கு நகர்த்தி, அதை படிக்கும்"
 
-#: globalCommands.py:257
+#: globalCommands.py:260
 msgid "Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
 msgstr "திரை, அல்லது அத்திரைக்குள் இருக்கும் ஆவணத்தைப் படிக்க தட்டை மறுபரிசீலனைக்கு மாறும். மறுபரிசீலனைச் சுட்டியை தற்போதைய பொருளுக்கு நகர்த்தும்"
 
@@ -1454,9 +1576,14 @@ msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "ஒலிப்பான் அமைப்புகள் வலையத்திலிருக்கும் முந்தைய அமைப்பிற்கு செல்லும்"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: virtualBuffers/__init__.py:1376
+#: virtualBuffers/__init__.py:1400
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "வரிசைப் பட்டியல், அட்டவணை போன்ற கொள்களத்தின் துவக்கத்திற்குச் செல்லும்"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#: gui/addonGui.py:62
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "என்விடிஏ கூட்டு அங்கத் தொகுதி (*.{ext})"
 
 #: gui/logViewer.py:17
 msgid "NVDA Log Viewer"
@@ -1471,23 +1598,29 @@ msgid "NVDA Speech Viewer"
 msgstr "என்விடிஏ பேச்சுத் தோற்றம்"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
-#: updateCheck.py:155
+#: updateCheck.py:170
 msgid "NVDA Update"
 msgstr "என்விடிஏ புதுப்பித்தல்"
 
-#: installer.py:170
-msgid "NVDA Website"
-msgstr "என்விடிஏ வளைத்தளம்"
+#. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
+#: gui/installerGui.py:221
+msgid "NVDA is unable to remove or overwrite a file."
+msgstr "கோப்பினை நீக்கவோ, அழித்தெழுதவோ என்விடிஏவினால் இயலவில்லை."
 
-#: core.py:285
+#: core.py:294
 msgid "NVDA started"
 msgstr "என்விடிஏ துவங்கிவிட்டது"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#: updateCheck.py:164
+#: updateCheck.py:179
 msgid "NVDA version {version} is available."
 msgstr "என்விடிஏ பதிப்பு {version} உள்ளது."
+
+#: installer.py:172
+#: gui/__init__.py:340
+msgid "NVDA web site"
+msgstr "என்விடிஏ வளைத்தளம்"
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 #: appModules/msimn.py:24
@@ -1513,27 +1646,27 @@ msgstr "பிரெயில் ஏதுமில்லை"
 msgid "No comment."
 msgstr "கருத்து ஏதுமில்லை"
 
-#: globalCommands.py:368
+#: globalCommands.py:371
 msgid "No containing object"
 msgstr "உள்ளடக்கம் கொண்ட பொருள் ஏதுமில்லை"
 
-#: globalCommands.py:421
+#: globalCommands.py:424
 msgid "No default action"
 msgstr "இயல்பான செயல் ஏதுமில்லை"
 
-#: globalCommands.py:256
+#: globalCommands.py:259
 msgid "No flat review for this object"
 msgstr "இப்பொருளுக்கு தட்டை மறுபரிசீலனை வசதியில்லை"
 
-#: globalCommands.py:680
+#: globalCommands.py:683
 msgid "No formatting information"
 msgstr "வடிவமைப்புத் தகவல் ஏதுமில்லை"
 
-#: globalCommands.py:314
+#: globalCommands.py:317
 msgid "No location information for navigator object"
 msgstr "வழிகாட்டி பொருளுக்கு எந்த இருப்பிடத் தகவலுமில்லை"
 
-#: globalCommands.py:318
+#: globalCommands.py:321
 msgid "No location information for screen"
 msgstr "திரைக்கு எந்த இருப்பிடத் தகவலுமில்லை"
 
@@ -1542,19 +1675,19 @@ msgstr "திரைக்கு எந்த இருப்பிடத் த
 msgid "No message yet"
 msgstr "இதுவரை தகவல் ஏதுமில்லை"
 
-#: globalCommands.py:382
+#: globalCommands.py:385
 msgid "No next"
 msgstr "அடுத்தது ஏதுமில்லை"
 
-#: globalCommands.py:269
+#: globalCommands.py:272
 msgid "No object at flat review position"
 msgstr "தட்டை மறுபரிசீலனை நிலையில் எந்தப் பொருளுமில்லை"
 
-#: globalCommands.py:410
+#: globalCommands.py:413
 msgid "No objects inside"
 msgstr "உள்ளே பொருட்கள் ஏதுமில்லை"
 
-#: globalCommands.py:396
+#: globalCommands.py:399
 msgid "No previous"
 msgstr "முந்தையது ஏதுமில்லை"
 
@@ -1569,15 +1702,15 @@ msgstr "அமைப்புகள் ஏதுமில்லை"
 msgid "No speech"
 msgstr "பேச்சில்லை"
 
-#: globalCommands.py:931
+#: globalCommands.py:934
 msgid "No start marker set"
 msgstr "துவக்கக் குறி ஏதும் வரையருக்கப்படவில்லை"
 
-#: globalCommands.py:715
+#: globalCommands.py:718
 msgid "No status line found"
 msgstr "நிலைமைப்பட்டை காணப்படவில்லை"
 
-#: globalCommands.py:942
+#: globalCommands.py:945
 msgid "No text to copy"
 msgstr "நகலெடுக்க உரை ஏதுமில்லை"
 
@@ -1586,7 +1719,7 @@ msgid "No track playing"
 msgstr "எந்த தடமும் ஓடவில்லை"
 
 #. Translators: A message indicating that no update to NVDA is available.
-#: updateCheck.py:167
+#: updateCheck.py:182
 msgid "No update available."
 msgstr "புதுப்பித்தல் ஏதுமில்லை."
 
@@ -1626,35 +1759,35 @@ msgstr "நார்வே நிலை 3"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers/__init__.py:1369
-#: virtualBuffers/__init__.py:1383
+#: virtualBuffers/__init__.py:1393
+#: virtualBuffers/__init__.py:1407
 msgid "Not in a container"
 msgstr "கொள்களத்தில் இல்லை"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: virtualBuffers/__init__.py:1246
+#: virtualBuffers/__init__.py:1268
 msgid "Not in a table cell"
 msgstr "அட்டவணை சிறுகட்டத்தில் இல்லை"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects/window/winword.py:393
-#: NVDAObjects/window/winword.py:412
+#: NVDAObjects/window/winword.py:397
+#: NVDAObjects/window/winword.py:416
 msgid "Not in table"
 msgstr "அட்டவணையில் இல்லை"
 
 #. Translators: This is the label for the object presentation dialog.
-#: gui/settingsDialogs.py:707
+#: gui/settingsDialogs.py:719
 msgid "Object Presentation"
 msgstr "பொருள் காட்சிப்படுத்துதல்"
 
-#: globalCommands.py:324
+#: globalCommands.py:327
 #, python-format
 msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
 msgstr "பொருள் விளிம்பின் நிலை: திரையின் இடது விளிம்பிலிருந்து %.1f விழுக்காடு, திரையின் மேல் விளிம்பிலிருந்து %.1f விழுக்காடு, அகலம் திரையின் அகலத்தில் %.1f விழுக்காடு, உயரம் திரையின் உயரத்தில் %.1f விழுக்காடு"
 
-#: gui/__init__.py:447
+#: gui/__init__.py:463
 msgid "Options"
 msgstr "விருப்பத்தேர்வுகள்"
 
@@ -1667,19 +1800,23 @@ msgstr "நிறுவனம்:"
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
-#: gui/settingsDialogs.py:262
+#: gui/settingsDialogs.py:274
 msgid "Output &device:"
 msgstr "&வெளியீடுக் கருவி:"
 
-#: globalCommands.py:837
+#: gui/addonGui.py:27
+msgid "Package"
+msgstr "தொகுப்பு"
+
+#: globalCommands.py:840
 msgid "Pass next key through"
 msgstr "அடுத்த விசையை நேரடியாக அனுப்பு"
 
-#: gui/settingsDialogs.py:1052
+#: gui/settingsDialogs.py:1064
 msgid "Pattern"
 msgstr "அசல் உரை"
 
-#: globalCommands.py:429
+#: globalCommands.py:432
 msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
 msgstr "வழிகாட்டி பொருளின் மீது இயல்பான செயலை நடத்தும். எடுத்துக்காட்டாக, அது ஒரு பொத்தானாக இருந்தால், அதை அழுத்தும்"
 
@@ -1689,44 +1826,54 @@ msgid "Play"
 msgstr "ஓட்டு"
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:317
+#: updateCheck.py:370
 msgid "Please Donate"
 msgstr "கருணைக்கூர்ந்து நன்கொடையளியுங்கள்"
 
-#: gui/__init__.py:149
+#: gui/__init__.py:153
 msgid "Please close the other NVDA settings dialog first"
 msgstr "ஏற்கனவே இயக்கத்திலுள்ள மற்றொரு என்விடிஏ அமைப்புகள் உரையாடலை கருணைக்கூர்ந்து முதலில் மூடுங்கள்"
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
-#: gui/installerGui.py:51
+#: gui/installerGui.py:65
 msgid "Please press OK to start the installed copy."
-msgstr "நிறுவப்பட்ட பிரதியை இயக்க 'சரி' பொத்தானை அழுத்தவும்."
+msgstr "தற்பொழுது நிறுவப்பட்டுள்ள பிரதியை இயக்க 'சரி' பொத்தானை அழுத்தவும்."
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui/installerGui.py:184
+#: gui/installerGui.py:189
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "பெயர்த்தகு பிரதியை உருவாக்க வேண்டிய சேமிப்பிடத்தை குறிப்பிடவும்."
 
 #. Translators: The message displayed while NVDA is being installed.
-#: gui/installerGui.py:27
+#: gui/installerGui.py:29
 msgid "Please wait while NVDA is being installed"
 msgstr "என்விடிஏ நிறுவப்படுகிறது, கருணைக்கூர்ந்து காத்திருக்கவும்"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
-#: gui/installerGui.py:208
+#: gui/installerGui.py:213
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "என்விடிஏவின் பெயர்த்தகு பிரதி உருவாக்கப்படுகிறது, கருணைக்கூர்ந்து காத்திருக்கவும்"
 
+#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#: gui/settingsDialogs.py:199
+msgid "Please wait while settings are copied to the system configuration."
+msgstr "கணினி அமைவடிவத்தில் அமைப்புகள் நகலெடுக்கப் படுகின்றன, கருணைக்கூர்ந்துக் காத்திருக்கவும். "
+
+#. Translators: The message displayed while an addon is being installed.
+#: gui/addonGui.py:95
+msgid "Please wait while the add-on is being installed."
+msgstr "கூட்டு அங்கம் நிறுவப்படுகிறது, கருணைக்கூர்ந்து காத்திருக்கவும்"
+
 #. Translators: The message displayed while NVDA is being updated.
-#: gui/installerGui.py:25
+#: gui/installerGui.py:27
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr "தங்களின் முந்தைய என்விடிஏ பிரதி புதுப்பிக்கப்படுகிறது, கருணைக்கூர்ந்து காத்திருக்கவும்."
 
-#: globalCommands.py:976
+#: globalCommands.py:979
 msgid "Plugins reloaded"
-msgstr "நீட்சிகள் மறுஏற்றம் செய்யப்பட்டது"
+msgstr "உட்பொருத்திகள் மறுஏற்றம் செய்யப்பட்டது"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1736,9 +1883,9 @@ msgstr "போலாந்து நிலை 1"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui/installerGui.py:142
-msgid "Portable directory:"
-msgstr "பெயர்த்தகு தகவல் திரட்டு:"
+#: gui/installerGui.py:145
+msgid "Portable &directory:"
+msgstr "பெயர்த்தகு சேமிப்பிடம்:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1752,11 +1899,11 @@ msgstr "போர்ச்சுகீசிய நிலை 1"
 msgid "Portuguese grade 2"
 msgstr "போர்ச்சுகீசிய நிலை 2"
 
-#: virtualBuffers/__init__.py:873
+#: virtualBuffers/__init__.py:895
 msgid "Presents a list of links, headings or landmarks"
 msgstr "தொடுப்புகள், தலைப்புகள், அல்லது நிலக்குறிகளின் பட்டியலைக் காண்பிக்கிறது"
 
-#: globalCommands.py:355
+#: globalCommands.py:358
 msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
 msgstr "ஒருமுறை அழுத்தினால் விசைப்பலகையின் குவிமையத்தை வழிகாட்டி பொருளுடன் பொருத்தும், இருமுறை அழுத்தினால் கணினியின் சுட்டியை மறுபரிசீலனைச் சுட்டியுடன் பொருத்தும்"
 
@@ -1770,27 +1917,27 @@ msgstr "முதன்மையான மேலுரை"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:761
+#: gui/settingsDialogs.py:773
 msgid "Progress &bar output:"
 msgstr "முன்னேற்றப் பட்டை வெளியீடு:"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:766
+#: gui/settingsDialogs.py:778
 msgid "Progress bar output"
 msgstr "முன்னேற்றப் பட்டை வெளியீடு"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:432
+#: gui/settingsDialogs.py:444
 msgid "Punctuation/symbol &level:"
 msgstr "&நிறுத்தற்குறிகள்/குறியெழுத்துகள் நிலை:"
 
-#: gui/__init__.py:304
+#: gui/__init__.py:317
 msgid "Python console"
 msgstr "பைத்தன் கட்டுப்பாட்டு மையம்"
 
-#: globalCommands.py:637
+#: globalCommands.py:640
 msgid "Quits NVDA!"
 msgstr "என்விடிஏவை விட்டு வெளியேறும்!"
 
@@ -1800,7 +1947,7 @@ msgstr "என்விடிஏவை விட்டு வெளியேற�
 msgid "Rate boos&t"
 msgstr "&விகிதத்தை மேலேற்று"
 
-#: gui/settingsDialogs.py:1204
+#: gui/settingsDialogs.py:1216
 msgid "Read by &paragraph"
 msgstr "பத்தியாகப் படி"
 
@@ -1814,212 +1961,216 @@ msgid "Refresh\tF5"
 msgstr "புத்தாக்கம்\tF5"
 
 #. If this buffer has already had focus once while loaded, this is a refresh.
-#: virtualBuffers/__init__.py:596
+#: virtualBuffers/__init__.py:618
 msgid "Refreshed"
 msgstr "புத்தாக்கு"
 
-#: virtualBuffers/__init__.py:784
+#: virtualBuffers/__init__.py:806
 msgid "Refreshes the document content"
 msgstr "ஆவண உள்ளடக்கத்தை புத்தாக்கம் செய்கிறது"
 
-#: gui/settingsDialogs.py:1055
+#: gui/settingsDialogs.py:1067
 msgid "Regexp"
 msgstr "வழக்கமான வெளிப்பாடு"
 
-#: gui/settingsDialogs.py:1026
+#: gui/settingsDialogs.py:1038
 msgid "Regular &expression"
 msgstr "வழக்கமான வெளிப்பாடு"
 
-#: gui/__init__.py:312
+#: gui/__init__.py:328
 msgid "Reload plugins"
-msgstr "நீட்சிகளை மறுஏற்றம் செய்"
+msgstr "உட்பொருத்திகளை மறுஏற்றம் செய்"
 
-#: globalCommands.py:977
+#: globalCommands.py:980
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
-msgstr "என்விடிஏவை மறுஇயக்கம் செய்யாமல், செயலி நிரற்கூறுகளையும், முழு நீட்சிகளையும் மறுஏற்றம் செய்கிறது. இது என்விடிஏ உருவாக்குநர்களுக்கு பயனுள்ளதாக இருக்கும்"
+msgstr "என்விடிஏவை மறுஇயக்கம் செய்யாமல், செயலி நிரற்கூறுகளையும், முழு உட்பொருத்திகளையும் மறுஏற்றம் செய்கிறது. இது என்விடிஏ உருவாக்குநர்களுக்கு பயனுள்ளதாக இருக்கும்"
 
 #. Translators: The label of a button to remind the user later about performing some action.
-#: updateCheck.py:184
+#: updateCheck.py:199
 msgid "Remind me &later"
 msgstr "பிறகு நினைவூட்டு"
 
-#: gui/settingsDialogs.py:1053
-#: gui/settingsDialogs.py:1255
+#: gui/addonGui.py:118
+msgid "Remove Add-on"
+msgstr "கூட்டு அங்கத்தை நீக்கு"
+
+#: gui/settingsDialogs.py:1065
+#: gui/settingsDialogs.py:1267
 msgid "Replacement"
 msgstr "பதிலமர்வு"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:902
+#: gui/settingsDialogs.py:914
 msgid "Report &alignment"
 msgstr "&ஒழுங்கமைப்பை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:907
+#: gui/settingsDialogs.py:919
 msgid "Report &colors"
 msgstr "&நிரங்களை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:958
+#: gui/settingsDialogs.py:970
 msgid "Report &headings"
 msgstr "தலைப்புகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:735
+#: gui/settingsDialogs.py:747
 msgid "Report &help balloons"
 msgstr "உதவிக் குமிழிகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:927
+#: gui/settingsDialogs.py:939
 msgid "Report &line numbers"
 msgstr "வரி எண்களை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:953
+#: gui/settingsDialogs.py:965
 msgid "Report &links"
 msgstr "தொடுப்புகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:922
+#: gui/settingsDialogs.py:934
 msgid "Report &pages"
 msgstr "&பக்கங்களை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:642
+#: gui/settingsDialogs.py:654
 msgid "Report &role when mouse enters object"
 msgstr "சொடுக்கி ஒரு பொருளின் ஊடாக நுழையும்பொழுது அப்பொருளின் வகையை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:938
+#: gui/settingsDialogs.py:950
 msgid "Report &tables"
 msgstr "அட்டவணைகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:730
+#: gui/settingsDialogs.py:742
 msgid "Report &tooltips"
 msgstr "&கருவித் துணுக்குதவிகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:777
+#: gui/settingsDialogs.py:789
 msgid "Report background progress bars"
 msgstr "பின்னணி முன்னேற்றப்பட்டைகளின் இயக்கத்தை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:968
+#: gui/settingsDialogs.py:980
 msgid "Report block &quotes"
 msgstr "உரைத் தொகுதிகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:782
+#: gui/settingsDialogs.py:794
 msgid "Report dynamic &content changes"
 msgstr "ஆற்றல்மிகு &உள்ளடக்க மாற்றங்களை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:887
+#: gui/settingsDialogs.py:899
 msgid "Report font &name"
 msgstr "&எழுத்துரு பெயரை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:892
+#: gui/settingsDialogs.py:904
 msgid "Report font &size"
 msgstr "எழுத்துரு &அளவை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:897
+#: gui/settingsDialogs.py:909
 msgid "Report font attri&butes"
 msgstr "எழுத்துரு பண்புகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:978
+#: gui/settingsDialogs.py:990
 msgid "Report fra&mes"
 msgstr "சட்டகங்களை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:832
+#: gui/settingsDialogs.py:844
 msgid "Report l&ayout tables"
 msgstr "வரைவு அட்டவணைகளை அறிவி"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
-#: gui/settingsDialogs.py:933
+#: gui/settingsDialogs.py:945
 msgid "Report l&ine indentation"
 msgstr "வரித் துவக்க ஒழுங்கினை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:963
+#: gui/settingsDialogs.py:975
 msgid "Report l&ists"
 msgstr "வரிசைப் பட்டியல்களை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:973
+#: gui/settingsDialogs.py:985
 msgid "Report lan&dmarks"
 msgstr "நிலக்குறிகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:616
+#: gui/settingsDialogs.py:628
 msgid "Report mouse &shape changes"
 msgstr "சொடுக்கியின் &உருவ மாற்றங்களை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:755
+#: gui/settingsDialogs.py:767
 msgid "Report object &descriptions"
 msgstr "பொறுள் &விளக்கங்களை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:745
+#: gui/settingsDialogs.py:757
 msgid "Report object &position information"
 msgstr "பொருள் &நிலையின் தகவலை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:740
+#: gui/settingsDialogs.py:752
 msgid "Report object shortcut &keys"
 msgstr "பொருளின் குறுக்கு &விசைகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:917
+#: gui/settingsDialogs.py:929
 msgid "Report spelling errors"
 msgstr "எழுத்துப் பிழைகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:912
+#: gui/settingsDialogs.py:924
 msgid "Report st&yle"
 msgstr "பாங்கினை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:948
+#: gui/settingsDialogs.py:960
 msgid "Report table cell c&oordinates"
 msgstr "சிறுகட்டத்தின் இசைவுகளை அறிவி"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:943
+#: gui/settingsDialogs.py:955
 msgid "Report table row/column h&eaders"
 msgstr "அட்டவணையின் கிடைவரிசை/செங்குத்து வரிசைகளின் தலைப்பை அறிவி"
 
@@ -2033,11 +2184,11 @@ msgstr "தான்தோன்றி கருத்துச் சாளர�
 msgid "Reports any comments in the comments window"
 msgstr "கருத்துச் சாளரத்தில் கருத்து ஏதேனும் இருந்தால், அதை அறிவிக்கும்"
 
-#: globalCommands.py:684
+#: globalCommands.py:687
 msgid "Reports formatting info for the current review cursor position within a document"
 msgstr "ஒரு ஆவணத்தில் மறுபரிசீலனைச் சுட்டியின் நிலையிலுள்ள வடிவமைப்பின் தகவலை அறிவிக்கும்"
 
-#: globalCommands.py:558
+#: globalCommands.py:561
 msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
 msgstr "மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் வழிகாட்டி பொருளின் எழுத்தை அறிவிக்கும். இருமுறை அழுத்தினால், அவ்வெழுத்திற்கான எழுத்து விளக்கத்தை அறிவிக்கும். மும்முறை அழுத்தினால், அவ்வெழுத்திற்கான எண் மதிப்பை அறிவிக்கும்"
 
@@ -2045,15 +2196,15 @@ msgstr "மறுபரிசீலனைச் சுட்டியின் �
 msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
 msgstr "சுட்டியின் கீழுள்ள வரியை படிக்கும். இவ்விசையை இருமுறை அழுத்தினால், வரியை ஒற்றை எழுத்துகளாக படிக்கும்"
 
-#: globalCommands.py:306
+#: globalCommands.py:309
 msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
 msgstr "வழிகாட்டிப் தற்போதைய பொருளை அறிவிக்கும். இருமுறை அழுத்தினால் தகவலை ஒற்றை எழுத்துகளாக படிக்கும், மும்முறை அழுத்தினால், அப்பொருளின் பெயரையும், மதிப்பையும் பிடிப்புப் பலகைக்கு நகலேடுக்கும்"
 
-#: globalCommands.py:325
+#: globalCommands.py:328
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "வழிகாட்டி பொருளின் உயரம், அகலம், நிலை ஆகியவைகளை அறிவிக்கும்"
 
-#: globalCommands.py:459
+#: globalCommands.py:462
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
 msgstr "மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் வழிகாட்டி பொருளைப் படிக்கும். இருமுறை அழுத்தினால், அவ்வரியை ஒற்றை எழுத்துகளாக படிக்கும். மும்முறை அழுத்தினால், அவ்வரியை எழுத்து விளக்கங்களைக் கொண்டுப் படிக்கும்"
 
@@ -2061,32 +2212,37 @@ msgstr "மறுபரிசீலனைச் சுட்டியின் �
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "ஓடிக் கொண்டிருக்கும் தடத்தின் நேரத்தில் மீதமிருந்தால், அதை அறிவிக்கும்"
 
-#: globalCommands.py:922
+#: globalCommands.py:925
 msgid "Reports the text on the Windows clipboard"
 msgstr "சாளரத்தின் பிடிப்புப்பலகையிலுள்ள உரையை அறிவிக்கும்"
 
-#: globalCommands.py:748
+#: globalCommands.py:751
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
 msgstr "தற்போதைய செயலியின் தலைப்பையோ, முன்னணியிலிருக்கும் சாளரத்தின் தலைப்பையோப் படிக்கும். இருமுறை அழுத்தினால், தலைப்பை ஒற்றை எழுத்துகளாகப் படிக்கும். மும்முறை அழுத்தினால், தலைப்பை பிடிப்புப்பலகைக்கு நகலெடுக்கும்"
 
-#: gui/__init__.py:341
+#: gui/__init__.py:357
 msgid "Reset all settings to saved state"
 msgstr "எல்லா அமைப்புகளையும் சேமிக்கப்பட்ட நிலைக்கு மாற்றியமை"
 
-#: globalCommands.py:945
+#. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
+#: gui/addonGui.py:167
+msgid "Restart NVDA"
+msgstr "என்விடிஏவை மறுதுவக்கு"
+
+#: globalCommands.py:948
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "முந்தைய துவக்கக் குறியிலிருந்து தற்போதைய மறுபரிசீலனைச் சுட்டியின் நிலைவரை பிடிப்புப்பலகைக்கு நகலெடுக்கும்"
 
-#: gui/__init__.py:275
+#: gui/__init__.py:288
 msgid "Review &cursor..."
 msgstr "&மறுபரிசீலனைச் சுட்டி..."
 
 #. Translators: This is the label for the review cursor settings dialog.
-#: gui/settingsDialogs.py:671
+#: gui/settingsDialogs.py:683
 msgid "Review Cursor Settings"
 msgstr "மறுபரிசீலனைச் சுட்டி அமைப்புகள்"
 
-#: globalCommands.py:940
+#: globalCommands.py:943
 msgid "Review selection copied to clipboard"
 msgstr "மறுபரிசீலனைத் தெரிவு பிடிப்புப்பலகைக்கு நகலெடுக்கப்பட்டது"
 
@@ -2095,7 +2251,7 @@ msgstr "மறுபரிசீலனைத் தெரிவு பிடி�
 msgid "Rewind"
 msgstr "பின்நகர்த்து"
 
-#: globalCommands.py:959
+#: globalCommands.py:962
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "பிரெயில் சிறுகட்டத்திற்குளிருக்கும் பொருளிடம் சுட்டியை நகர்த்தும், அல்லது அப்பொருளை இயக்கும்"
 
@@ -2109,21 +2265,21 @@ msgstr "ருஷிய நிலை 1"
 msgid "Save As"
 msgstr "இதுவாக சேமி"
 
-#: globalCommands.py:884
+#: globalCommands.py:887
 msgid "Saves the current NVDA configuration"
 msgstr "தற்போதைய என்விடிஏ அமைவடிவத்தை சேமிக்கிறது"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:446
+#: gui/settingsDialogs.py:458
 msgid "Say &cap before capitals"
 msgstr "ஆங்கில முகப்பெழுத்துகளுக்கு முன், %Cap என்று சொல்"
 
-#: globalCommands.py:949
+#: globalCommands.py:952
 msgid "Scrolls the braille display back"
 msgstr "பிரெயில் காட்சியளிப்பைப் பின்னுருட்டும்"
 
-#: globalCommands.py:954
+#: globalCommands.py:957
 msgid "Scrolls the braille display forward"
 msgstr "பிரெயில் காட்சியளிப்பை முன்னுருட்டும்"
 
@@ -2134,7 +2290,7 @@ msgstr "பாதுகாப்பான மேசைத்தளம்"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui/installerGui.py:176
+#: gui/installerGui.py:181
 msgid "Select portable  directory"
 msgstr "பெயர்த்தகு தகவல் திரட்டினை தெரிவு செய்யவும்"
 
@@ -2144,61 +2300,61 @@ msgstr "பெயர்த்தகு தகவல் திரட்டின�
 msgid "Serbian grade 1"
 msgstr "செர்பிய நிலை 1"
 
-#: globalCommands.py:336
+#: globalCommands.py:339
 msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
 msgstr "வழிகாட்டி பொருளை தற்போதைய குவிமையத்திற்குள் நகர்த்தி, முடிந்தால், மறுபரிசீலனைச் சுட்டியை கணினியின் சுட்டியிருக்கும் இடத்திற்கு நகர்த்தும்"
 
-#: globalCommands.py:243
+#: globalCommands.py:246
 msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
-msgstr "வழிகாட்டி பொருளை தற்போதைய சொடுக்கியின் குறிமுள்ளின் கீழிருக்கும் பொருளுடன் பொருத்தி, பிறகு அதை படிக்கும்"
+msgstr "வழிகாட்டி பொருளை தற்போதைய சொடுக்கியின் குறிமுள்ளின் கீழிருக்கும் பொருளுடன் உட்பொருத்தி, பிறகு அதை படிக்கும்"
 
 #: brailleDisplayDrivers/handyTech.py:86
 msgid "Show the Handy Tech driver configuration window."
 msgstr "Handy Tech இயக்கி அமைவடிவ சாளரத்தைக் காண்பி"
 
-#: gui/__init__.py:451
+#: gui/__init__.py:467
 msgid "Show this dialog when NVDA starts"
 msgstr "என்விடிஏ துவக்கப்படும்பொழுது இந்த உரையாடலைக் காட்டு"
 
-#: globalCommands.py:876
+#: globalCommands.py:879
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr "என்விடிஏ உலாவும் நிலை அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:880
+#: globalCommands.py:883
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "என்விடிஏ ஆவண வடிவமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:852
+#: globalCommands.py:855
 msgid "Shows the NVDA general settings dialog"
 msgstr "என்விடிஏ பொது அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:864
+#: globalCommands.py:867
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "என்விடிஏ விசைப்பலகை அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:641
+#: globalCommands.py:644
 msgid "Shows the NVDA menu"
 msgstr "என்விடிஏ பட்டியலைக் காட்டும்"
 
-#: globalCommands.py:868
+#: globalCommands.py:871
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "என்விடிஏ சொடுக்கி அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:872
+#: globalCommands.py:875
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "என்விடிஏ பொருள் காட்சியளிப்பு அமைப்புகள் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:856
+#: globalCommands.py:859
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "என்விடிஏ ஒலிப்பான் உரையாடலைக் காட்டும்"
 
-#: globalCommands.py:860
+#: globalCommands.py:863
 msgid "Shows the NVDA voice settings dialog"
 msgstr "என்விடிஏ குரல் அமைப்புகள் உரையாடலைக் காட்டும்"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:691
+#: gui/settingsDialogs.py:703
 msgid "Simple review mode"
 msgstr "சாதாரண மறுபரிசீலனை நிலை"
 
@@ -2239,48 +2395,48 @@ msgstr "ஸ்பானிய நிலை 1"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui/settingsDialogs.py:716
+#: gui/settingsDialogs.py:728
 msgid "Speak"
 msgstr "பேசு"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui/settingsDialogs.py:724
+#: gui/settingsDialogs.py:736
 msgid "Speak and beep"
 msgstr "பேசு, சிற்றொலிகளை எழுப்பு"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:590
+#: gui/settingsDialogs.py:602
 msgid "Speak command &keys"
 msgstr "கட்டளை &விசைகளைப் பேசு"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:575
+#: gui/settingsDialogs.py:587
 msgid "Speak typed &characters"
 msgstr "தட்டச்சு செய்த &எழுத்துகளைப் பேசு"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:580
+#: gui/settingsDialogs.py:592
 msgid "Speak typed &words"
 msgstr "தட்டச்சு செய்த &சொற்களைப் பேசு"
 
-#: globalCommands.py:848
+#: globalCommands.py:851
 msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
 msgstr "தற்பொழுது இயக்கத்திலுள்ள செயலியின் கோப்பின் பெயரையும், அதற்கிணையாக ஏற்றப்பட்டுள்ள என்விடிஏ நிரல் செயலியின் பெயரையும் பேசும்"
 
-#: globalCommands.py:501
+#: globalCommands.py:504
 msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
 msgstr "மறுபரிசீலனைச் சுட்டியின் இடத்திலிருக்கும் வழிகாட்டி பொருளின் சொல்லைப் படிக்கும். இருமுறை அழுத்தினால், அச்சொல்லை ஒற்றை எழுத்துகளாகப் படிக்கும். மும்முறை அழுத்தினால், அச்சொல்லை எழுத்து விளக்கங்களாகப் படிக்கும்"
 
-#: gui/__init__.py:291
+#: gui/__init__.py:304
 msgid "Speech &dictionaries"
 msgstr "பேச்சு அகராதிகள்"
 
-#: gui/__init__.py:301
+#: gui/__init__.py:314
 msgid "Speech viewer"
 msgstr "பேச்சுத் தோற்றம்"
 
@@ -2289,9 +2445,13 @@ msgstr "பேச்சுத் தோற்றம்"
 msgid "Start"
 msgstr "துவக்கு"
 
-#: globalCommands.py:926
+#: globalCommands.py:929
 msgid "Start marked"
 msgstr "துவக்கம் குறிக்கப்பட்டது"
+
+#: gui/addonGui.py:26
+msgid "Status"
+msgstr "நிலைமை"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:18
@@ -2304,32 +2464,32 @@ msgid "Subject:"
 msgstr "பொருளடக்கம்:"
 
 #. Translators: The title of a dialolg presented to indicate a successful operation.
-#: gui/installerGui.py:53
-#: gui/installerGui.py:224
-#: gui/settingsDialogs.py:198
+#: gui/installerGui.py:67
+#: gui/installerGui.py:236
+#: gui/settingsDialogs.py:210
 msgid "Success"
 msgstr "வெற்றி!"
 
-#: gui/settingsDialogs.py:198
+#: gui/settingsDialogs.py:210
 msgid "Successfully copied NVDA user settings"
 msgstr "என்விடிஏ பயனர் அமைப்புகள் வெற்றிகரமாக நகலெடுக்கப்பட்டது"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
-#: gui/installerGui.py:223
+#: gui/installerGui.py:235
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
 msgstr "என்விடிஏவின் பெயர்த்தகு பிரதி இவ்விடத்தில் வெற்றிகரமாக உருவாக்கப்பட்டுள்ளது: %s"
 
 #. Translators: The message displayed when NVDA has been successfully installed.
-#: gui/installerGui.py:46
+#: gui/installerGui.py:60
 msgid "Successfully installed NVDA. "
 msgstr "என்விடிஏ வெற்றிகரமாக நிறுவப்பட்டது."
 
 #. Translators: The message displayed when NVDA has been successfully updated.
-#: gui/installerGui.py:48
+#: gui/installerGui.py:62
 msgid "Successfully updated your installation of NVDA. "
-msgstr "நிறுவப்பட்டுள்ள தங்களின் என்விடிஏ வெற்றிகரமாக புதுப்பிக்கப்பட்டது."
+msgstr "ஏற்கனவே நிறுவப்பட்டிருந்த தங்களின் என்விடிஏ வெற்றிகரமாக புதுப்பிக்கப்பட்டது."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2337,21 +2497,21 @@ msgstr "நிறுவப்பட்டுள்ள தங்களின் �
 msgid "Swedish grade 1"
 msgstr "சுவீடிஷ் நிலை 1"
 
-#: gui/settingsDialogs.py:1254
+#: gui/settingsDialogs.py:1266
 msgid "Symbol"
 msgstr "குறியெழுத்து"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui/settingsDialogs.py:1241
+#: gui/settingsDialogs.py:1253
 msgid "Symbol Pronunciation"
 msgstr "குறியெழுத்து உச்சரிப்பு"
 
 #. Translators: This is the label for the synthesizer dialog.
-#: gui/settingsDialogs.py:237
+#: gui/settingsDialogs.py:249
 msgid "Synthesizer"
 msgstr "ஒலிப்பான்"
 
-#: gui/settingsDialogs.py:285
+#: gui/settingsDialogs.py:297
 msgid "Synthesizer Error"
 msgstr "ஒலிப்பான் பிழை"
 
@@ -2365,13 +2525,13 @@ msgstr "தமிழ் நிலை 1"
 msgid "Taskbar"
 msgstr "பணிப்பட்டை"
 
-#: gui/__init__.py:159
+#: gui/__init__.py:163
 msgid "Temporary dictionary"
 msgstr "தற்காலிக அகராதி"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:627
+#: gui/settingsDialogs.py:639
 msgid "Text &unit resolution:"
 msgstr "உரைத் தொகுதியின் பிரிதிறன்"
 
@@ -2379,39 +2539,54 @@ msgstr "உரைத் தொகுதியின் பிரிதிறன�
 msgid "Text frame"
 msgstr "உரைச் சட்டகம்"
 
-#: globalCommands.py:921
+#: globalCommands.py:924
 #, python-format
 msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "பிடிப்புப்பலகையில் பெருமளவு உரையுள்ளது. அது %s எழுத்துகள் நீளமுடையது"
 
+#. Translators: a message dialog asking to retry or cancel when NVDA install fails
+#: gui/installerGui.py:44
+msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
+msgstr "கோப்பினை நீக்கவோ, அழித்தெழுதவோ நிறுவுதலினால் இயலவில்லை. பிறிதொரு பயனர் கணக்கில் என்விடிஏவின் பிரதி ஒன்று இயக்கப்பட்டுக் கொண்டிருக்கலாம். என்விடிஏவின் எல்லா பிரதிகளும் மூடப்பட்டிருப்பதை உறுதி செய்துக் கொண்டு, நிறுவுதலை மீண்டும் முயற்சியுங்கள்."
+
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-#: gui/installerGui.py:38
+#: gui/installerGui.py:52
 msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
 msgstr "என்விடிஏ நிறுவுதல் தோல்வியடைந்தது. கூடுதல் தகவல்களுக்கு செயற்குறிப்பேட்டுத் தோற்றத்தைக் காணவும்."
 
-#: globalCommands.py:838
+#. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#: gui/installerGui.py:91
+msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
+msgstr "என்விடிஏவின் நிறுவு வழித்தடம் மாறியுள்ளது. என்விடிஏ இனி இங்கே நிறுவப்படும்: {path}"
+
+#: globalCommands.py:841
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "அடுத்ததாக அழுத்தப்படும் விசையை என்விடிஏ கையாளாமல், நேரடியாக செயலிக்கு அனுப்பி வைத்துவிடும்"
 
-#: globalCommands.py:935
+#: globalCommands.py:938
 msgid "The start marker must reside within the same object"
 msgstr "துவக்கக் குறி, அதே பொருளின் உள்ளாக இருக்க வேண்டும்"
 
-#: globalCommands.py:916
+#: globalCommands.py:919
 msgid "There is no text on the clipboard"
 msgstr "பிடிப்புப்பலகையில் எந்த உரையும் இல்லை"
 
-#: gui/settingsDialogs.py:221
+#. Translators: The message displayed when an an addon already seems to be installed.
+#: gui/addonGui.py:86
+msgid "This add-on seems to already be installed. Please remove the existing add-on and try again."
+msgstr "இந்தக் கூட்டு அங்கம் ஏற்கனவே நிறுவப்பட்டிருப்பதாகத் தோன்றுகிறது. நிறுவப்பட்டிருக்கும் கூட்டு அங்கத்தை நீக்கிவிட்டு மீண்டும் முயற்சியுங்கள்."
+
+#: gui/settingsDialogs.py:233
 msgid "This change requires administrator privileges."
 msgstr "இந்த மாற்றத்திற்கு நிர்வாகியின் சிறப்புரிமைகள் தேவைப்படுகிறது"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui/installerGui.py:137
+#: gui/installerGui.py:140
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "என்விடிஏவின் பெயர்த்தகு பிரதியை உருவாக்க, வழிதடத்தையும், பிற விருப்பத் தேர்வுகளையும் தெரிவு செய்த பின்னர், 'தொடர்க' பொத்தானை அழுத்தவும்."
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui/installerGui.py:71
+#: gui/installerGui.py:85
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr "என்விடிஏவை தங்களின் வன்தட்டில் நிறுவ, 'தொடர்க' பொத்தானை அழுத்தவும்."
 
@@ -2420,7 +2595,7 @@ msgstr "என்விடிஏவை தங்களின் வன்தட�
 msgid "To:"
 msgstr "பெறுநர்:"
 
-#: globalCommands.py:908
+#: globalCommands.py:911
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "பிரெயில் கட்டப்படுவதை குவிமைய நிலைக்கும், மறுபரிசீலனை நிலைக்கும் இடையே மாற்றுகிறது"
 
@@ -2428,31 +2603,31 @@ msgstr "பிரெயில் கட்டப்படுவதை குவ�
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "இயக்கத்திலுள்ள செயலிக்கு தூங்கு நிலையை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#: globalCommands.py:782
+#: globalCommands.py:785
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
 msgstr "முன்னேற்றப்பட்டைப் புதுப்பித்தல்களை அறிவிக்கும் பேசு, சிற்றொலிகளை எழுப்பு, பேசவும் சிற்றொலிகளை எழுப்பவும் செய், நிறுத்து ஆகிய நான்கு நிலைகளுக்கு ஊடாகச் சுழலும்"
 
-#: globalCommands.py:633
+#: globalCommands.py:636
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "குவிமைய நிலை, உலாவும் நிலை ஆகிய இரு நிலைகளுக்கு இடையே சுழலும். குவிமைய நிலையில், அழுத்தப்படும் விசைகள் நேரடியாக செயலிற்கு அனுப்பப்படும். உலாவும் நிலையில், ஒரு HTML அல்லது PDF ஆவணத்தை சுட்டியை நகர்த்திப் படிக்கலாம், விரைவு விசைகளையும் பயன்படுத்தலாம்"
 
-#: globalCommands.py:604
+#: globalCommands.py:607
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr "பேசு, சிற்றொலி, நிறுத்து ஆகிய மூன்று பேச்சு நிலைகளுக்கிடையே சுழலும். பேசு என்றால், இயல்பாகப் பேசும். சிற்றொலி என்றால், பேசுவதற்குப் மாற்றாக சிற்றொலியை எழுப்பும். நிறுத்து என்றால், பேசவோ, சிற்றொலியை எழுப்பவோ செய்யாது"
 
-#: virtualBuffers/__init__.py:790
+#: virtualBuffers/__init__.py:812
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
 msgstr "ஆவணத்தின் உள்ளடக்கங்களை வழங்கும்பொழுது, திரை வரைவு பாதுகாக்கப்பட்டிருந்தால், அதை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#: globalCommands.py:812
+#: globalCommands.py:815
 msgid "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "குவிமையத்தில் ஏற்படும் மாற்றங்களினால் வழிகாட்டி பொருளின் நகர்வை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#: globalCommands.py:802
+#: globalCommands.py:805
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "கணினிச் சுட்டி நகர்வதால் மறுபரிசீலனைச் சுட்டியும் நகர்வதை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#: globalCommands.py:792
+#: globalCommands.py:795
 msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
 msgstr "ஆற்றல்மிகு உள்ளடக்க மாற்றங்களை இயக்கவோ, நிறுத்தவோ செய்யும். டாஸ் சாளரத்தில் தோன்றும் புது உரைகளை எடுத்துக்காட்டாகச் சொல்லலாம்"
 
@@ -2468,15 +2643,15 @@ msgstr "குறிப்பான எழுத்துகளாக இல்�
 msgid "Toggles on and off the speaking of typed words"
 msgstr "தட்டச்சு செய்த சொற்களைப் படிக்கும் வசதியை இயக்கவோ, நிறுத்தவோ செய்கிறது"
 
-#: globalCommands.py:731
+#: globalCommands.py:734
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "சொடுக்கி நகரும்பொழுது, தகவலை அறிவிக்கும் நிலையை மாற்றும்"
 
-#: gui/__init__.py:314
+#: gui/__init__.py:330
 msgid "Tools"
 msgstr "கருவிகள்"
 
-#: gui/settingsDialogs.py:1158
+#: gui/settingsDialogs.py:1170
 msgid "Translation &table:"
 msgstr "மொழிப்பெயர்ப்பு அட்டவணை"
 
@@ -2508,7 +2683,9 @@ msgstr "பொருளுக்கான உதவியைப்பெற help
 msgid "Type the text you wish to find"
 msgstr "தாங்கள் கண்டுபிடிக்க விரும்பும் உரையைத் தட்டச்சு செய்யவும்"
 
-#: virtualBuffers/__init__.py:262
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:278
 msgid "Type:"
 msgstr "வகை:"
 
@@ -2524,42 +2701,42 @@ msgstr "ஒருங்கிணைந்த ஆங்கில பிரெய�
 msgid "Unified English Braille Code grade 2"
 msgstr "ஒருங்கிணைந்த ஆங்கில பிரெயில் குறி நிலை 2"
 
-#: installer.py:171
+#: installer.py:173
 msgid "Uninstall NVDA"
 msgstr "என்விடிஏவை நிறுவு நீக்கம் செய்க"
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
-#: updateCheck.py:295
+#: updateCheck.py:348
 msgid "Update downloaded. It will now be installed."
 msgstr "புதுப்பித்தல் தரவிறக்கமாகிவிட்டது. இப்பொழுது அது நிறுவப்படும்."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
-#: gui/installerGui.py:21
+#: gui/installerGui.py:23
 msgid "Updating NVDA"
 msgstr "என்விடிஏ புதுப்பிக்கப்படுகிறது"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:822
+#: gui/settingsDialogs.py:834
 msgid "Use &screen layout (when supported)"
 msgstr "ஆதரவு இருந்தால் திரை வரைவை பயன்படுத்து"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:456
+#: gui/settingsDialogs.py:468
 msgid "Use &spelling functionality if supported"
 msgstr "ஒற்றை எழுத்துகளாக படிக்கும் வசதியிருந்தால், அதை பயன்படுத்து"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/__init__.py:448
-#: gui/settingsDialogs.py:560
+#: gui/__init__.py:464
+#: gui/settingsDialogs.py:572
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "முகப்பெழுத்து பூட்டு விசையை என்விடிஏ மாற்று விசையாக பயன்படுத்து"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui/installerGui.py:79
+#: gui/installerGui.py:96
 msgid "Use NVDA on the Windows &logon screen"
 msgstr "சாளர புகுபதிவு திரையில் என்விடிஏவை பயன்படுத்து "
 
@@ -2573,22 +2750,19 @@ msgstr "சாளர புகுபதிவு, பிற பாதுகா�
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:570
+#: gui/settingsDialogs.py:582
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "முதன்மையான செருகு விசையை என்விடிஏ மாற்று விசையாகப் பயன்படுத்து"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:565
+#: gui/settingsDialogs.py:577
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "எண் திட்டு செருகு விசையை என்விடிஏ மாற்று விசையாகப் பயன்படுத்து"
 
-#: installer.py:174
+#: installer.py:176
+#: gui/__init__.py:334
 msgid "User Guide"
-msgstr "பயனர் வழிகாட்டி"
-
-#: gui/__init__.py:318
-msgid "User guide"
 msgstr "பயனர் வழிகாட்டி"
 
 #: synthDriverHandler.py:205
@@ -2599,16 +2773,20 @@ msgstr "குரல் மாற்றுரு"
 msgid "V&olume"
 msgstr "ஒலியளவு"
 
-#: gui/__init__.py:299
+#: gui/addonGui.py:28
+msgid "Version"
+msgstr "பதிப்பு"
+
+#: gui/__init__.py:312
 msgid "View log"
 msgstr "செயற்குறிப்பேட்டுத் தோற்றம்"
 
 #. Translators: This is the label for the voice settings dialog.
-#: gui/settingsDialogs.py:351
+#: gui/settingsDialogs.py:363
 msgid "Voice Settings"
 msgstr "குரல் அமைப்புகள்"
 
-#: gui/__init__.py:156
+#: gui/__init__.py:160
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "குரல் அகராதி (%s)"
@@ -2617,7 +2795,7 @@ msgstr "குரல் அகராதி (%s)"
 msgid "Warning"
 msgstr "எச்சரிக்கை"
 
-#: updateCheck.py:308
+#: updateCheck.py:361
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
@@ -2631,19 +2809,15 @@ msgstr ""
 "எல்லா நன்கொடைகளையும், லாப நோக்கில்லாமல் என்விடிஏவை உருவாக்கி வரும் என்வி அக்ஸஸ் நிறுவனம் பெற்றுக் கொள்கிறது.\n"
 "தங்களின் ஆதரவிற்கு நன்றி."
 
-#: gui/__init__.py:330
+#: gui/__init__.py:346
 msgid "We&lcome dialog"
 msgstr "வரவேற்பு உரையாடல்"
 
-#: gui/__init__.py:324
-msgid "Web site"
-msgstr "வளைத்தளம்"
-
-#: gui/__init__.py:443
+#: gui/__init__.py:459
 msgid "Welcome to NVDA"
 msgstr "என்விடிஏ தங்களை வரவேற்கிறது"
 
-#: gui/__init__.py:434
+#: gui/__init__.py:450
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
@@ -2671,15 +2845,15 @@ msgstr "வெல்ஷ் நிலை 1"
 msgid "Welsh grade 2"
 msgstr "வெல்ஷ் நிலை 2"
 
-#: gui/__init__.py:322
+#: gui/__init__.py:338
 msgid "What's &new"
 msgstr "&புதிதாக என்ன?"
 
-#: gui/__init__.py:344
+#: gui/__init__.py:360
 msgid "Write the current configuration to nvda.ini"
 msgstr "தற்போதைய அமைவடிவத்தை nvda.ini கோப்பில் எழுது"
 
-#: gui/__init__.py:487
+#: gui/__init__.py:503
 msgid ""
 "Your configuration file contains errors. \n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
@@ -2687,7 +2861,7 @@ msgstr ""
 "தங்களின் அமைவடிவ கோப்பில் பிழைகள் உள்ளன. \n"
 "இப்பிழைகளை சரிசெய்ய 'சரி' பொத்தானை அழுத்தவும், அல்லது மற்றொரு நேரம் அமைவடிவ கோப்பினை தாங்களாகவே திருத்தம் செய்ய 'ரத்து' பொத்தானை அழுத்தவும். இப்பிழைகள் குறித்த கூடுதல் தகவல்களை செயற்குறிப்பேட்டு பதிவினில் காணலாம்.\n"
 
-#: core.py:84
+#: core.py:85
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
@@ -2695,12 +2869,12 @@ msgstr ""
 "விசைக் கட்டளைகளைக் கொண்ட தங்களின் gestures map கோப்பில் பிழைகள் உள்ளன.\n"
 "கூடுதல் தகவல்களுக்கு செயற்குறிப்பேட்டுக் கோப்பினை பார்க்கவும்."
 
-#: virtualBuffers/__init__.py:776
+#: virtualBuffers/__init__.py:798
 msgid "activates the current object in the document"
 msgstr "ஆவணத்திலுள்ள தற்போதைய பொருளை இயங்கச் செய்கிறது"
 
-#: controlTypes.py:302
-#: controlTypes.py:326
+#: controlTypes.py:312
+#: controlTypes.py:336
 msgid "alert"
 msgstr "கவனிக்க!"
 
@@ -2730,7 +2904,7 @@ msgstr "இடது ஒழுங்கு"
 msgid "align right"
 msgstr "வலது ஒழுங்கு"
 
-#: controlTypes.py:325
+#: controlTypes.py:335
 msgid "alignment"
 msgstr "ஒழுங்கமைப்பு"
 
@@ -2771,7 +2945,7 @@ msgstr "இணைப்பு"
 msgid "back"
 msgstr "பின்"
 
-#: controlTypes.py:320
+#: controlTypes.py:330
 msgid "background color"
 msgstr "பின்னணி நிறம்"
 
@@ -2791,16 +2965,16 @@ msgstr "பதாகை"
 msgid "baseline"
 msgstr "அடித்தளக் கோடு"
 
-#: globalCommands.py:780
+#: globalCommands.py:783
 msgid "beep and speak progress bar updates"
 msgstr "முன்னேற்றப்பட்டைப் புதுப்பித்தல்களுக்கு பேசு, சிற்றொலிகளை எழுப்பு"
 
-#: globalCommands.py:777
+#: globalCommands.py:780
 msgid "beep for progress bar updates"
 msgstr "முன்னேற்றப்பட்டை புதுப்பித்தல்களுக்கு சிற்றொலிகளை எழுப்பு"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-#: globalCommands.py:597
+#: globalCommands.py:600
 msgid "beeps"
 msgstr "சிற்றொலிகள்"
 
@@ -2829,18 +3003,18 @@ msgid "blue"
 msgstr "நீலம்"
 
 #. Translators: Reported when text is bolded.
-#: controlTypes.py:316
+#: controlTypes.py:326
 #: speech.py:1018
 msgid "bold"
 msgstr "அடர்த்தி"
 
-#: controlTypes.py:281
+#: controlTypes.py:291
 msgid "border"
 msgstr "எல்லை"
 
-#: globalCommands.py:469
-#: globalCommands.py:477
-#: globalCommands.py:511
+#: globalCommands.py:472
+#: globalCommands.py:480
+#: globalCommands.py:514
 msgid "bottom"
 msgstr "கீழ்"
 
@@ -2855,11 +3029,11 @@ msgstr "முறிவு"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:652
+#: gui/settingsDialogs.py:664
 msgid "brightness controls audio coordinates volume"
 msgstr "ஒலி இசைவுகலின் ஒலியளவை ஒளிர்வு கட்டுப்படுத்துகிறது"
 
-#: virtualBuffers/__init__.py:1477
+#: virtualBuffers/__init__.py:1501
 msgid "browse mode"
 msgstr "உலாவும் நிலை"
 
@@ -2874,7 +3048,7 @@ msgstr "உலாவி நிறுத்தம்"
 msgid "btn"
 msgstr "பொதன்"
 
-#: controlTypes.py:338
+#: controlTypes.py:348
 msgid "busy"
 msgstr "மும்முரம்"
 
@@ -2889,7 +3063,7 @@ msgstr "பொத்தான்"
 msgid "c%s"
 msgstr "செ %s"
 
-#: controlTypes.py:331
+#: controlTypes.py:341
 msgid "calendar"
 msgstr "நாட்காட்டி"
 
@@ -2912,15 +3086,15 @@ msgstr "முகப்பெழுத்து பூட்டு"
 msgid "caption"
 msgstr "கவர் தலைப்பு"
 
-#: controlTypes.py:282
+#: controlTypes.py:292
 msgid "caret"
 msgstr "சுட்டுக்குறி"
 
-#: globalCommands.py:801
+#: globalCommands.py:804
 msgid "caret moves review cursor"
 msgstr "மறுபரிசீலனைச் சுட்டியைக் கணினிச் சுட்டி நகர்த்துகிறது"
 
-#: gui/settingsDialogs.py:1054
+#: gui/settingsDialogs.py:1066
 msgid "case"
 msgstr "சொல்லில் தோன்றும் முதல் எழுத்தின் வகை"
 
@@ -2935,12 +3109,12 @@ msgid "cell"
 msgstr "சிறுகட்டம்"
 
 #: characterProcessing.py:131
-#: controlTypes.py:283
+#: controlTypes.py:293
 #: textInfos/__init__.py:196
 msgid "character"
 msgstr "எழுத்து"
 
-#: controlTypes.py:284
+#: controlTypes.py:294
 msgid "chart"
 msgstr "விளக்க அட்டவணை"
 
@@ -2952,11 +3126,11 @@ msgstr "தேர்வுப் பெட்டி"
 msgid "check menu item"
 msgstr "தேர்வுப் பட்டியல் உருப்படி"
 
-#: controlTypes.py:362
+#: controlTypes.py:374
 msgid "checkable"
 msgstr "தேர்வு செய்யப்படக் கூடியது"
 
-#: controlTypes.py:340
+#: controlTypes.py:350
 msgid "checked"
 msgstr "தேர்வானது"
 
@@ -2966,7 +3140,7 @@ msgstr "தேர்வானது"
 msgid "chk"
 msgstr "தேபெ"
 
-#: controlTypes.py:360
+#: controlTypes.py:372
 msgid "clickable"
 msgstr "சொடுக்கப்படக் கூடியது"
 
@@ -2979,11 +3153,11 @@ msgstr "சொடு"
 msgid "clock"
 msgstr "கடிகாரம்"
 
-#: controlTypes.py:344
+#: controlTypes.py:354
 msgid "collapsed"
 msgstr "குறுக்கப்பட்டது"
 
-#: controlTypes.py:306
+#: controlTypes.py:316
 msgid "color chooser"
 msgstr "நிறத் தேர்ந்தெடுப்பான்"
 
@@ -3024,7 +3198,7 @@ msgstr "பிடிப்புப்பலகைக்கு நகலெட�
 msgid "ctrl"
 msgstr "கட்டுப்பாடு"
 
-#: controlTypes.py:285
+#: controlTypes.py:295
 msgid "cursor"
 msgstr "சுட்டி"
 
@@ -3042,11 +3216,11 @@ msgstr "தனிப்பயன் செயலி 2"
 msgid "dark red"
 msgstr "கருஞ்சிவப்பு"
 
-#: controlTypes.py:327
+#: controlTypes.py:337
 msgid "data grid"
 msgstr "தரவு வலை"
 
-#: controlTypes.py:328
+#: controlTypes.py:338
 msgid "data item"
 msgstr "தரவு உருப்படி"
 
@@ -3062,7 +3236,7 @@ msgstr "பிழைநீக்கம்"
 msgid "debug warning"
 msgstr "பிழைநீக்க எச்சரிக்கை"
 
-#: globalCommands.py:426
+#: globalCommands.py:429
 msgid "default action failed"
 msgstr "இயல்பான செயல் தோல்வியடைந்தது"
 
@@ -3077,7 +3251,9 @@ msgstr "இயல்பான நிறம்"
 msgid "default style"
 msgstr "இயல்பான பாங்கு"
 
-#: controlTypes.py:351
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+#: controlTypes.py:363
 msgid "defunct"
 msgstr "செயலற்றுப்போனது"
 
@@ -3090,19 +3266,19 @@ msgstr "அழி"
 msgid "desktop"
 msgstr "மேசைக்கணினி"
 
-#: controlTypes.py:301
+#: controlTypes.py:311
 msgid "desktop icon"
 msgstr "மேசைத்தள குறிஉருவம்"
 
-#: controlTypes.py:304
+#: controlTypes.py:314
 msgid "desktop pane"
 msgstr "மேசைத்தள பலகை"
 
-#: controlTypes.py:286
+#: controlTypes.py:296
 msgid "diagram"
 msgstr "கனித வரைப்படம்"
 
-#: controlTypes.py:287
+#: controlTypes.py:297
 msgid "dial"
 msgstr "சுழற்று"
 
@@ -3139,11 +3315,11 @@ msgstr "இழுக்கப்படுவது முடிந்தது"
 msgid "down arrow"
 msgstr "கீழம்பு"
 
-#: controlTypes.py:363
+#: controlTypes.py:375
 msgid "draggable"
 msgstr "இழுக்கப்படக் கூடியது"
 
-#: controlTypes.py:364
+#: controlTypes.py:376
 msgid "dragging"
 msgstr "இழுக்கப்படுகிறது"
 
@@ -3151,21 +3327,21 @@ msgstr "இழுக்கப்படுகிறது"
 msgid "drop down button"
 msgstr "கீழ்விடு பொத்தான்"
 
-#: controlTypes.py:291
+#: controlTypes.py:301
 msgid "drop down button grid"
 msgstr "கீழ்விடு பொத்தான் வலை"
 
-#: controlTypes.py:288
+#: controlTypes.py:298
 msgid "drop list"
 msgstr "விடுபட்டியல்"
 
-#: controlTypes.py:365
+#: controlTypes.py:377
 msgid "drop target"
 msgstr "இலக்கில் விடு"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: virtualBuffers/__init__.py:1254
+#: virtualBuffers/__init__.py:1276
 msgid "edge of table"
 msgstr "அட்டவணையின் விளிம்பு"
 
@@ -3173,11 +3349,13 @@ msgstr "அட்டவணையின் விளிம்பு"
 msgid "edit"
 msgstr "தொகு"
 
-#: controlTypes.py:269
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+#: controlTypes.py:273
 msgid "edit bar"
 msgstr "தொகுப்பட்டை"
 
-#: controlTypes.py:361
+#: controlTypes.py:373
 msgid "editable"
 msgstr "தொகுக்கப்படக் கூடியது"
 
@@ -3211,7 +3389,7 @@ msgstr "இறுதிக் குறிப்பு"
 msgid "enter"
 msgstr "உள்ளிடு"
 
-#: controlTypes.py:292
+#: controlTypes.py:302
 msgid "equation"
 msgstr "சமன்பாடு"
 
@@ -3220,7 +3398,7 @@ msgstr "சமன்பாடு"
 msgid "escape"
 msgstr "விடுபடு"
 
-#: controlTypes.py:343
+#: controlTypes.py:353
 msgid "expanded"
 msgstr "விரிவாக்கப்பட்டது"
 
@@ -3237,11 +3415,11 @@ msgstr "பெண் 1"
 msgid "female 2"
 msgstr "பெண் 2"
 
-#: controlTypes.py:307
+#: controlTypes.py:317
 msgid "file chooser"
 msgstr "கோப்புத் தேர்ந்தெடுப்பான்"
 
-#: controlTypes.py:308
+#: controlTypes.py:318
 msgid "filler"
 msgstr "நிரப்பி"
 
@@ -3257,36 +3435,36 @@ msgstr "ஏற்கனவே உள்ளிடு செய்யப்பட�
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
 msgstr "ஏற்கனவே உள்ளிடு செய்யப்பட்ட உரையின் முந்தைய தோற்றம், தற்போதைய சுட்டியின் நிலையிலிருந்து எங்கேவென்று கண்டுபிடி"
 
-#: globalCommands.py:906
-#: gui/settingsDialogs.py:1192
+#: globalCommands.py:909
+#: gui/settingsDialogs.py:1204
 msgid "focus"
 msgstr "குவிமையம்"
 
-#: virtualBuffers/__init__.py:1477
+#: virtualBuffers/__init__.py:1501
 msgid "focus mode"
 msgstr "குவிமைய நிலை"
 
-#: globalCommands.py:811
+#: globalCommands.py:814
 msgid "focus moves navigator object"
 msgstr "குவிமையம் கணினிச் சுட்டியை நகர்த்துகிறது"
 
-#: controlTypes.py:359
+#: controlTypes.py:371
 msgid "focusable"
 msgstr "குவிமையத்திற்குள் அடங்கக்கூடியது"
 
-#: controlTypes.py:336
+#: controlTypes.py:346
 msgid "focused"
 msgstr "குவிமையத்திலுள்ளது"
 
-#: controlTypes.py:312
+#: controlTypes.py:322
 msgid "font chooser"
 msgstr "எழுத்துரு தேர்ந்தெடுப்பான்"
 
-#: controlTypes.py:314
+#: controlTypes.py:324
 msgid "font name"
 msgstr "எழுத்துருப் பெயர்"
 
-#: controlTypes.py:315
+#: controlTypes.py:325
 msgid "font size"
 msgstr "எழுத்துரு அளவு"
 
@@ -3298,7 +3476,7 @@ msgstr "அடிக்குறிப்பு"
 msgid "footer"
 msgstr "அடியுரை"
 
-#: controlTypes.py:319
+#: controlTypes.py:329
 msgid "foreground color"
 msgstr "முன்னணி நிறம்"
 
@@ -3321,11 +3499,13 @@ msgstr "சட்டகம்"
 msgid "fuchsia"
 msgstr "மஜந்தா"
 
-#: core.py:86
+#: core.py:87
 msgid "gesture map File Error"
 msgstr "gesture வரைப்பட கோப்புப் பிழை"
 
-#: controlTypes.py:258
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+#: controlTypes.py:260
 msgid "glass pane"
 msgstr "கண்ணாடிப் பலகை"
 
@@ -3347,7 +3527,7 @@ msgstr "பச்சை"
 msgid "grey"
 msgstr "சாம்பல் நிறம்"
 
-#: controlTypes.py:293
+#: controlTypes.py:303
 msgid "grip"
 msgstr "இறுக்கம்"
 
@@ -3362,11 +3542,11 @@ msgstr "குழுவாக்கம்"
 msgid "h%s"
 msgstr "த%s"
 
-#: controlTypes.py:341
+#: controlTypes.py:351
 msgid "half checked"
 msgstr "பாதித் தேர்வானது"
 
-#: controlTypes.py:354
+#: controlTypes.py:366
 msgid "has auto complete"
 msgstr "தானாக நிறைவாகும்"
 
@@ -3380,11 +3560,11 @@ msgstr "கருத்துள்ளது"
 msgid "has formula"
 msgstr "சூத்திரமுள்ளது"
 
-#: controlTypes.py:259
+#: controlTypes.py:261
 msgid "header"
 msgstr "மேலுரை"
 
-#: controlTypes.py:329
+#: controlTypes.py:339
 msgid "header item"
 msgstr "மேலுரை உருப்படி"
 
@@ -3430,7 +3610,7 @@ msgstr "தொடக்கம்"
 msgid "home page"
 msgstr "முதல் பக்கம்"
 
-#: controlTypes.py:294
+#: controlTypes.py:304
 msgid "hot key field"
 msgstr "சுடுவிசைக் களம்"
 
@@ -3438,19 +3618,19 @@ msgstr "சுடுவிசைக் களம்"
 msgid "icon"
 msgstr "குறிஉருவம்"
 
-#: controlTypes.py:356
+#: controlTypes.py:368
 msgid "iconified"
 msgstr "குறிஉருவமாக்கப்பட்டது"
 
-#: controlTypes.py:260
+#: controlTypes.py:262
 msgid "image map"
 msgstr "உருவ வரைப்படம்"
 
-#: controlTypes.py:324
+#: controlTypes.py:334
 msgid "indent"
 msgstr "வரித் துவக்க ஒழுங்கு"
 
-#: controlTypes.py:295
+#: controlTypes.py:305
 msgid "indicator"
 msgstr "நிலைக்காட்டி"
 
@@ -3464,7 +3644,7 @@ msgstr "தகவல்"
 msgid "input help %s"
 msgstr "விசை உள்ளிடு உதவி %s"
 
-#: controlTypes.py:261
+#: controlTypes.py:263
 msgid "input window"
 msgstr "உள்ளிடுச் சாளரம்"
 
@@ -3472,11 +3652,16 @@ msgstr "உள்ளிடுச் சாளரம்"
 msgid "input/output"
 msgstr "உள்ளிடு/வெளியிடு"
 
-#: controlTypes.py:352
+#. Translators: The status shown for a newly installed addon before NVDA is restarted.
+#: gui/addonGui.py:128
+msgid "install"
+msgstr "நிறுவு"
+
+#: controlTypes.py:364
 msgid "invalid entry"
 msgstr "ஏற்கமுடியாத உள்ளிடு"
 
-#: controlTypes.py:345
+#: controlTypes.py:355
 msgid "invisible"
 msgstr "தென்படாதது"
 
@@ -3489,7 +3674,7 @@ msgstr "அழை"
 msgid "italic"
 msgstr "வலப்பக்க சாய்வு"
 
-#: controlTypes.py:262
+#: controlTypes.py:264
 msgid "label"
 msgstr "அடையாளச் சீட்டு"
 
@@ -3497,7 +3682,7 @@ msgstr "அடையாளச் சீட்டு"
 msgid "laptop"
 msgstr "மடிக்கணினி"
 
-#: controlTypes.py:266
+#: controlTypes.py:268
 msgid "layered pane"
 msgstr "அடுக்குப் பலகை"
 
@@ -3506,8 +3691,8 @@ msgstr "அடுக்குப் பலகை"
 msgid "layout %s"
 msgstr "வரைவு %s"
 
-#: globalCommands.py:521
-#: globalCommands.py:533
+#: globalCommands.py:524
+#: globalCommands.py:536
 #: appModules/totalcmd.py:35
 msgid "left"
 msgstr "இடது"
@@ -3567,7 +3752,7 @@ msgstr "மெல்லிய சாம்பல் நிறம்"
 msgid "lime"
 msgstr "எழுமிச்ச நிறம்"
 
-#: controlTypes.py:313
+#: controlTypes.py:323
 #: textInfos/__init__.py:198
 msgid "line"
 msgstr "வரி"
@@ -3589,7 +3774,7 @@ msgstr "வரி உருள்"
 msgid "link"
 msgstr "தொடுப்பு"
 
-#: controlTypes.py:347
+#: controlTypes.py:357
 msgid "linked"
 msgstr "தொடர்புடையது"
 
@@ -3607,7 +3792,7 @@ msgstr "வரிசைப் பட்டியல் உருப்படி"
 msgid "lnk"
 msgstr "தொடு"
 
-#: globalCommands.py:888
+#: globalCommands.py:891
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr "தற்போதைய மாற்றங்களை நீக்கிவிட்டு, சேமித்து வைத்திருக்கும் என்விடிஏ அமைவடிவத்தை ஏற்றுகிறது"
 
@@ -3643,7 +3828,7 @@ msgid "media player"
 msgstr "ஊடக இயக்கி"
 
 #: controlTypes.py:199
-#: controlTypes.py:309
+#: controlTypes.py:319
 msgid "menu"
 msgstr "பட்டியல்"
 
@@ -3651,7 +3836,7 @@ msgstr "பட்டியல்"
 msgid "menu bar"
 msgstr "கிடைநீள பட்டியல்"
 
-#: controlTypes.py:290
+#: controlTypes.py:300
 msgid "menu button"
 msgstr "பட்டியல் பொத்தான்"
 
@@ -3671,7 +3856,7 @@ msgstr "படில்"
 msgid "mnubar"
 msgstr "கிடநீபடில்"
 
-#: controlTypes.py:353
+#: controlTypes.py:365
 msgid "modal"
 msgstr "முகட்டு"
 
@@ -3679,231 +3864,231 @@ msgstr "முகட்டு"
 msgid "most"
 msgstr "பல"
 
-#: globalCommands.py:343
+#: globalCommands.py:346
 msgid "move focus"
 msgstr "குவிமையத்தை நகர்த்து"
 
-#: globalCommands.py:334
+#: globalCommands.py:337
 msgid "move to focus"
 msgstr "குவிமையத்திற்கு நகர்த்து"
 
-#: virtualBuffers/__init__.py:1457
+#: virtualBuffers/__init__.py:1481
 msgid "moves to the next block quote"
 msgstr "அடுத்த உரைத் தொகுதிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1441
+#: virtualBuffers/__init__.py:1465
 msgid "moves to the next button"
 msgstr "அடுத்த பொத்தானுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1453
+#: virtualBuffers/__init__.py:1477
 msgid "moves to the next check box"
 msgstr "அடுத்த தேர்வுப் பெட்டிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1451
+#: virtualBuffers/__init__.py:1475
 msgid "moves to the next combo box"
 msgstr "அடுத்த சேர்க்கைப் பெட்டிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1443
+#: virtualBuffers/__init__.py:1467
 msgid "moves to the next edit field"
 msgstr "அடுத்த தொகு களத்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1463
+#: virtualBuffers/__init__.py:1487
 msgid "moves to the next embedded object"
 msgstr "அடுத்தப் பதிந்துள்ள பொருளுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1435
+#: virtualBuffers/__init__.py:1459
 msgid "moves to the next form field"
 msgstr "அடுத்த படிவக் களத்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1445
+#: virtualBuffers/__init__.py:1469
 msgid "moves to the next frame"
 msgstr "அடுத்த சட்டகத்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1455
+#: virtualBuffers/__init__.py:1479
 msgid "moves to the next graphic"
 msgstr "அடுத்த பட விளக்கத்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1413
+#: virtualBuffers/__init__.py:1437
 msgid "moves to the next heading"
 msgstr "அடுத்த தலைப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1415
+#: virtualBuffers/__init__.py:1439
 msgid "moves to the next heading at level 1"
 msgstr "அடுத்த தலைப்பு நிலை ஒன்றிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1417
+#: virtualBuffers/__init__.py:1441
 msgid "moves to the next heading at level 2"
 msgstr "அடுத்த தலைப்பு நிலை இரண்டிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1419
+#: virtualBuffers/__init__.py:1443
 msgid "moves to the next heading at level 3"
 msgstr "அடுத்த தலைப்பு நிலை மூன்றிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1421
+#: virtualBuffers/__init__.py:1445
 msgid "moves to the next heading at level 4"
 msgstr "அடுத்த தலைப்பு நிலை நான்கிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1423
+#: virtualBuffers/__init__.py:1447
 msgid "moves to the next heading at level 5"
 msgstr "அடுத்த தலைப்பு நிலை ஐந்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1425
+#: virtualBuffers/__init__.py:1449
 msgid "moves to the next heading at level 6"
 msgstr "அடுத்த தலைப்பு நிலை ஆறிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1461
+#: virtualBuffers/__init__.py:1485
 msgid "moves to the next landmark"
 msgstr "அடுத்த நிலக்குறிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1429
+#: virtualBuffers/__init__.py:1453
 msgid "moves to the next link"
 msgstr "அடுத்த தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1437
+#: virtualBuffers/__init__.py:1461
 msgid "moves to the next list"
 msgstr "அடுத்த வரிசைப் பட்டியலுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1439
+#: virtualBuffers/__init__.py:1463
 msgid "moves to the next list item"
 msgstr "அடுத்த வரிசைப் பட்டியல் உருப்படிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1449
+#: virtualBuffers/__init__.py:1473
 msgid "moves to the next radio button"
 msgstr "அடுத்த வானொலிப் பொத்தானுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1447
+#: virtualBuffers/__init__.py:1471
 msgid "moves to the next separator"
 msgstr "அடுத்த பிரிப்பானுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1427
+#: virtualBuffers/__init__.py:1451
 msgid "moves to the next table"
 msgstr "அடுத்த அட்டவணைக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1272
+#: virtualBuffers/__init__.py:1294
 msgid "moves to the next table column"
 msgstr "அடுத்த அட்டவணை செங்குத்து வரிசைக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1264
+#: virtualBuffers/__init__.py:1286
 msgid "moves to the next table row"
 msgstr "அடுத்த அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1433
+#: virtualBuffers/__init__.py:1457
 msgid "moves to the next unvisited link"
 msgstr "அடுத்த பார்க்காதத் தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1431
+#: virtualBuffers/__init__.py:1455
 msgid "moves to the next visited link"
 msgstr "அடுத்த பார்த்த தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1458
+#: virtualBuffers/__init__.py:1482
 msgid "moves to the previous block quote"
 msgstr "முந்தைய உரைத் தொகுதிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1442
+#: virtualBuffers/__init__.py:1466
 msgid "moves to the previous button"
 msgstr "முந்தைய பொத்தானுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1454
+#: virtualBuffers/__init__.py:1478
 msgid "moves to the previous check box"
 msgstr "முந்தைய தேர்வுப் பெட்டிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1452
+#: virtualBuffers/__init__.py:1476
 msgid "moves to the previous combo box"
 msgstr "முந்தைய சேர்க்கைப் பெட்டிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1444
+#: virtualBuffers/__init__.py:1468
 msgid "moves to the previous edit field"
 msgstr "முந்தைய தொகு களத்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1464
+#: virtualBuffers/__init__.py:1488
 msgid "moves to the previous embedded object"
 msgstr "முந்தையப் பதிந்துள்ள பொருளுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1436
+#: virtualBuffers/__init__.py:1460
 msgid "moves to the previous form field"
 msgstr "முந்தைய படிவக் களத்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1446
+#: virtualBuffers/__init__.py:1470
 msgid "moves to the previous frame"
 msgstr "முந்தைய சட்டகத்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1456
+#: virtualBuffers/__init__.py:1480
 msgid "moves to the previous graphic"
 msgstr "முந்தைய பட விளக்கத்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1414
+#: virtualBuffers/__init__.py:1438
 msgid "moves to the previous heading"
 msgstr "முந்தைய தலைப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1416
+#: virtualBuffers/__init__.py:1440
 msgid "moves to the previous heading at level 1"
 msgstr "முந்தைய தலைப்பு நிலை ஒன்றிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1418
+#: virtualBuffers/__init__.py:1442
 msgid "moves to the previous heading at level 2"
 msgstr "முந்தைய தலைப்பு நிலை இரண்டிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1420
+#: virtualBuffers/__init__.py:1444
 msgid "moves to the previous heading at level 3"
 msgstr "முந்தைய தலைப்பு நிலை மூன்றிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1422
+#: virtualBuffers/__init__.py:1446
 msgid "moves to the previous heading at level 4"
 msgstr "முந்தைய  தலைப்பு நிலை நான்கிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1424
+#: virtualBuffers/__init__.py:1448
 msgid "moves to the previous heading at level 5"
 msgstr "முந்தைய தலைப்பு நிலை ஐந்திற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1426
+#: virtualBuffers/__init__.py:1450
 msgid "moves to the previous heading at level 6"
 msgstr "முந்தைய தலைப்பு நிலை ஆறிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1462
+#: virtualBuffers/__init__.py:1486
 msgid "moves to the previous landmark"
 msgstr "முந்தைய நிலக்குறிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1430
+#: virtualBuffers/__init__.py:1454
 msgid "moves to the previous link"
 msgstr "முந்தைய தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1438
+#: virtualBuffers/__init__.py:1462
 msgid "moves to the previous list"
 msgstr "முந்தைய வரிசைப் பட்டியலுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1440
+#: virtualBuffers/__init__.py:1464
 msgid "moves to the previous list item"
 msgstr "முந்தைய வரிசைப் பட்டியல் உருப்படிக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1450
+#: virtualBuffers/__init__.py:1474
 msgid "moves to the previous radio button"
 msgstr "முந்தைய வானொலிப் பொத்தானுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1448
+#: virtualBuffers/__init__.py:1472
 msgid "moves to the previous separator"
 msgstr "முந்தைய பிரிப்பானுக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1428
+#: virtualBuffers/__init__.py:1452
 msgid "moves to the previous table"
 msgstr "முந்தைய அட்டவணைக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1276
+#: virtualBuffers/__init__.py:1298
 msgid "moves to the previous table column"
 msgstr "முந்தைய அட்டவணை செங்குத்து வரிசைக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1268
+#: virtualBuffers/__init__.py:1290
 msgid "moves to the previous table row"
 msgstr "முந்தைய அட்டவணைக் கிடைவரிசைக்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1434
+#: virtualBuffers/__init__.py:1458
 msgid "moves to the previous unvisited link"
 msgstr "முந்தைய பார்க்காதத் தொடுப்பிற்கு நகர்கிறது"
 
-#: virtualBuffers/__init__.py:1432
+#: virtualBuffers/__init__.py:1456
 msgid "moves to the previous visited link"
 msgstr "முந்தைய பார்த்த தொடுப்பிற்கு நகர்கிறது"
 
-#: controlTypes.py:355
+#: controlTypes.py:367
 msgid "multi line"
 msgstr "பல வரிகள்"
 
@@ -3931,12 +4116,12 @@ msgstr "அடுத்தத் தடம்"
 msgid "no bold"
 msgstr "அடர்த்தியில்லை"
 
-#: globalCommands.py:350
+#: globalCommands.py:353
 msgid "no caret"
 msgstr "சுட்டி இல்லை"
 
-#: globalCommands.py:341
-#: globalCommands.py:694
+#: globalCommands.py:344
+#: globalCommands.py:697
 msgid "no focus"
 msgstr "குவிமையம் இல்லை"
 
@@ -3950,227 +4135,227 @@ msgstr "வரித் துவக்க ஒழுங்கு இல்லை
 msgid "no italic"
 msgstr "வலப்பக்க சாய்வு இல்லை"
 
-#: virtualBuffers/__init__.py:1459
+#: virtualBuffers/__init__.py:1483
 msgid "no more text after a block of links"
 msgstr "தொடுப்புகளின் தொகுதிக்குப் பிறகு உரை ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1460
+#: virtualBuffers/__init__.py:1484
 msgid "no more text before a block of links"
 msgstr "தொடுப்புகளின் தொகுதிக்கு முன் உரை ஏதுமில்லை"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-#: globalCommands.py:277
-#: globalCommands.py:311
-#: globalCommands.py:360
-#: globalCommands.py:374
-#: globalCommands.py:388
-#: globalCommands.py:402
-#: globalCommands.py:416
+#: globalCommands.py:280
+#: globalCommands.py:314
+#: globalCommands.py:363
+#: globalCommands.py:377
+#: globalCommands.py:391
+#: globalCommands.py:405
+#: globalCommands.py:419
 msgid "no navigator object"
 msgstr "வழிகாட்டி பொருள் இல்லை"
 
-#: virtualBuffers/__init__.py:1457
+#: virtualBuffers/__init__.py:1481
 msgid "no next block quote"
 msgstr "அடுத்த உரைத் தொகுதி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1441
+#: virtualBuffers/__init__.py:1465
 msgid "no next button"
 msgstr "அடுத்த பொத்தான் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1453
+#: virtualBuffers/__init__.py:1477
 msgid "no next check box"
 msgstr "அடுத்த தேர்வுப் பெட்டி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1451
+#: virtualBuffers/__init__.py:1475
 msgid "no next combo box"
 msgstr "அடுத்த சேர்க்கைப் பெட்டி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1443
+#: virtualBuffers/__init__.py:1467
 msgid "no next edit field"
 msgstr "அடுத்த தொகு களம் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1463
+#: virtualBuffers/__init__.py:1487
 msgid "no next embedded object"
 msgstr "அடுத்தப் பதிந்துள்ள பொருள் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1435
+#: virtualBuffers/__init__.py:1459
 msgid "no next form field"
 msgstr "அடுத்த படிவக் களம் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1445
+#: virtualBuffers/__init__.py:1469
 msgid "no next frame"
 msgstr "அடுத்த சட்டகம் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1455
+#: virtualBuffers/__init__.py:1479
 msgid "no next graphic"
 msgstr "அடுத்த ப்பட விளக்கம் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1413
+#: virtualBuffers/__init__.py:1437
 msgid "no next heading"
 msgstr "அடுத்த தலைப்பு ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1415
+#: virtualBuffers/__init__.py:1439
 msgid "no next heading at level 1"
 msgstr "அடுத்த தலைப்பு நிலை 1 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1417
+#: virtualBuffers/__init__.py:1441
 msgid "no next heading at level 2"
 msgstr "அடுத்த தலைப்பு நிலை 2 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1419
+#: virtualBuffers/__init__.py:1443
 msgid "no next heading at level 3"
 msgstr "அடுத்த தலைப்பு நிலை 3 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1421
+#: virtualBuffers/__init__.py:1445
 msgid "no next heading at level 4"
 msgstr "அடுத்த தலைப்பு நிலை 4 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1423
+#: virtualBuffers/__init__.py:1447
 msgid "no next heading at level 5"
 msgstr "அடுத்த தலைப்பு நிலை 5 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1425
+#: virtualBuffers/__init__.py:1449
 msgid "no next heading at level 6"
 msgstr "அடுத்த தலைப்பு நிலை 6 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1461
+#: virtualBuffers/__init__.py:1485
 msgid "no next landmark"
 msgstr "அடுத்த நிலக்குறி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1429
+#: virtualBuffers/__init__.py:1453
 msgid "no next link"
 msgstr "அடுத்த தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1437
+#: virtualBuffers/__init__.py:1461
 msgid "no next list"
 msgstr "அடுத்த வரிசைப் பட்டியல் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1439
+#: virtualBuffers/__init__.py:1463
 msgid "no next list item"
 msgstr "அடுத்த வரிசைப் பட்டியல் உருப்படி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1449
+#: virtualBuffers/__init__.py:1473
 msgid "no next radio button"
 msgstr "அடுத்த வானொலிப் பொத்தான் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1447
+#: virtualBuffers/__init__.py:1471
 msgid "no next separator"
 msgstr "அடுத்த பிரிப்பான் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1427
+#: virtualBuffers/__init__.py:1451
 msgid "no next table"
 msgstr "அடுத்த அட்டவணை ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1433
+#: virtualBuffers/__init__.py:1457
 msgid "no next unvisited link"
 msgstr "அடுத்த பார்க்காதத் தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1431
+#: virtualBuffers/__init__.py:1455
 msgid "no next visited link"
 msgstr "அடுத்த பார்த்த தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1458
+#: virtualBuffers/__init__.py:1482
 msgid "no previous block quote"
 msgstr "முந்தைய உரைத் தொகுதி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1442
+#: virtualBuffers/__init__.py:1466
 msgid "no previous button"
 msgstr "முந்தைய பொத்தான் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1454
+#: virtualBuffers/__init__.py:1478
 msgid "no previous check box"
 msgstr "முந்தைய தேர்வுப் பெட்டி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1452
+#: virtualBuffers/__init__.py:1476
 msgid "no previous combo box"
 msgstr "முந்தைய சேர்க்கைப் பெட்டி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1444
+#: virtualBuffers/__init__.py:1468
 msgid "no previous edit field"
 msgstr "முந்தைய தொகு களம் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1464
+#: virtualBuffers/__init__.py:1488
 msgid "no previous embedded object"
 msgstr "முந்தையப் பதிந்துள்ள பொருள் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1436
+#: virtualBuffers/__init__.py:1460
 msgid "no previous form field"
 msgstr "முந்தைய படிவக் களம் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1446
+#: virtualBuffers/__init__.py:1470
 msgid "no previous frame"
 msgstr "முந்தைய சட்டகம் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1456
+#: virtualBuffers/__init__.py:1480
 msgid "no previous graphic"
 msgstr "முந்தைய ப்பட விளக்கம் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1414
+#: virtualBuffers/__init__.py:1438
 msgid "no previous heading"
 msgstr "முந்தைய தலைப்பு ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1416
+#: virtualBuffers/__init__.py:1440
 msgid "no previous heading at level 1"
 msgstr "முந்தைய தலைப்பு நிலை 1 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1418
+#: virtualBuffers/__init__.py:1442
 msgid "no previous heading at level 2"
 msgstr "முந்தைய தலைப்பு நிலை 2 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1420
+#: virtualBuffers/__init__.py:1444
 msgid "no previous heading at level 3"
 msgstr "முந்தைய தலைப்பு நிலை 3 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1422
+#: virtualBuffers/__init__.py:1446
 msgid "no previous heading at level 4"
 msgstr "முந்தைய தலைப்பு நிலை 4 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1424
+#: virtualBuffers/__init__.py:1448
 msgid "no previous heading at level 5"
 msgstr "முந்தைய தலைப்பு நிலை 5 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1426
+#: virtualBuffers/__init__.py:1450
 msgid "no previous heading at level 6"
 msgstr "முந்தைய தலைப்பு நிலை 6 ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1462
+#: virtualBuffers/__init__.py:1486
 msgid "no previous landmark"
 msgstr "முந்தைய நிலக்குறி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1430
+#: virtualBuffers/__init__.py:1454
 msgid "no previous link"
 msgstr "முந்தைய தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1438
+#: virtualBuffers/__init__.py:1462
 msgid "no previous list"
 msgstr "முந்தைய வரிசைப் பட்டியல் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1440
+#: virtualBuffers/__init__.py:1464
 msgid "no previous list item"
 msgstr "முந்தைய வரிசைப் பட்டியல் உருப்படி ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1450
+#: virtualBuffers/__init__.py:1474
 msgid "no previous radio button"
 msgstr "முந்தைய வானொலிப் பொத்தான் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1448
+#: virtualBuffers/__init__.py:1472
 msgid "no previous separator"
 msgstr "முந்தைய பிரிப்பான் ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1428
+#: virtualBuffers/__init__.py:1452
 msgid "no previous table"
 msgstr "முந்தைய அட்டவணை ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1434
+#: virtualBuffers/__init__.py:1458
 msgid "no previous unvisited link"
 msgstr "முந்தைய பார்க்காதத் தொடுப்பு ஏதுமில்லை"
 
-#: virtualBuffers/__init__.py:1432
+#: virtualBuffers/__init__.py:1456
 msgid "no previous visited link"
 msgstr "முந்தைய பார்த்த தொடுப்பு ஏதுமில்லை"
 
-#: globalCommands.py:771
+#: globalCommands.py:774
 msgid "no progress bar updates"
 msgstr "முன்னேற்றப்பட்டைப் புதுப்பித்தல்களை அறிவிக்காது"
 
@@ -4185,11 +4370,11 @@ msgstr "தெரிவு ஏதுமில்லை"
 msgid "no strikethrough"
 msgstr "ஊடாகக் கோடிடப்படவில்லை"
 
-#: globalCommands.py:824
+#: globalCommands.py:827
 msgid "no system battery"
 msgstr "கனிப்பொறி மின்கலம் இல்லை"
 
-#: globalCommands.py:739
+#: globalCommands.py:742
 msgid "no title"
 msgstr "தலைப்பு ஏதுமில்லை"
 
@@ -4209,12 +4394,12 @@ msgid "not %s"
 msgstr "%s இல்லை"
 
 #. Translators: This is presented when a checkbox is not checked.
-#: controlTypes.py:375
+#: controlTypes.py:387
 msgid "not checked"
 msgstr "தேர்வாகாதது"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-#: controlTypes.py:373
+#: controlTypes.py:385
 msgid "not selected"
 msgstr "தெரிவாகாதது"
 
@@ -4223,7 +4408,7 @@ msgstr "தெரிவாகாதது"
 msgid "not underlined"
 msgstr "அடிக்கோடிடப்படாதது"
 
-#: controlTypes.py:263
+#: controlTypes.py:265
 msgid "note"
 msgstr "குறிப்பு"
 
@@ -4307,7 +4492,7 @@ msgstr "எண் திட்டு பெருக்கல்"
 msgid "numpad plus"
 msgstr "எண் திட்டு கூட்டல்"
 
-#: globalCommands.py:230
+#: globalCommands.py:233
 msgid "object has no location"
 msgstr "பொருளுக்கு இருப்பிடமில்லை"
 
@@ -4318,22 +4503,22 @@ msgstr "பொருளுக்கு இருப்பிடமில்ல�
 #: globalCommands.py:176
 #: globalCommands.py:187
 #: globalCommands.py:197
-#: globalCommands.py:594
-#: globalCommands.py:725
-#: globalCommands.py:786
-#: globalCommands.py:796
-#: globalCommands.py:806
+#: globalCommands.py:597
+#: globalCommands.py:728
+#: globalCommands.py:789
+#: globalCommands.py:799
+#: globalCommands.py:809
 #: keyboardHandler.py:300
 #: synthSettingsRing.py:74
 #: appModules/winamp.py:80
 #: appModules/winamp.py:90
-#: gui/settingsDialogs.py:712
-#: gui/settingsDialogs.py:1056
-#: virtualBuffers/__init__.py:788
+#: gui/settingsDialogs.py:724
+#: gui/settingsDialogs.py:1068
+#: virtualBuffers/__init__.py:810
 msgid "off"
 msgstr "நிறுத்து"
 
-#: controlTypes.py:357
+#: controlTypes.py:369
 msgid "off screen"
 msgstr "திரைக்கு விலகி"
 
@@ -4347,16 +4532,16 @@ msgstr "ஆலிவ் பச்சை"
 #: globalCommands.py:179
 #: globalCommands.py:190
 #: globalCommands.py:200
-#: globalCommands.py:728
-#: globalCommands.py:789
-#: globalCommands.py:799
-#: globalCommands.py:809
+#: globalCommands.py:731
+#: globalCommands.py:792
+#: globalCommands.py:802
+#: globalCommands.py:812
 #: keyboardHandler.py:300
 #: synthSettingsRing.py:74
 #: appModules/winamp.py:78
 #: appModules/winamp.py:88
-#: gui/settingsDialogs.py:1056
-#: virtualBuffers/__init__.py:788
+#: gui/settingsDialogs.py:1068
+#: virtualBuffers/__init__.py:810
 msgid "on"
 msgstr "இயக்கு"
 
@@ -4368,7 +4553,7 @@ msgstr "இயக்கு"
 msgid "on {backgroundColor}"
 msgstr "இயக்கம் {backgroundColor}"
 
-#: controlTypes.py:305
+#: controlTypes.py:315
 msgid "option pane"
 msgstr "விருப்பத்தேர்வுப் பலகை"
 
@@ -4393,7 +4578,7 @@ msgstr "எழுத்துப் பிழைக்கு வெளியே"
 msgid "out of table"
 msgstr "அட்டவணைக்கு வெளியே"
 
-#: controlTypes.py:264
+#: controlTypes.py:266
 msgid "page"
 msgstr "பக்கம்"
 
@@ -4418,7 +4603,7 @@ msgstr "பக்கம் மேல்"
 msgid "pane"
 msgstr "பலகை"
 
-#: controlTypes.py:310
+#: controlTypes.py:320
 msgid "panel"
 msgstr "பொருத்துப் பலகை"
 
@@ -4427,13 +4612,13 @@ msgstr "பொருத்துப் பலகை"
 msgid "paragraph"
 msgstr "பத்தி"
 
-#: controlTypes.py:311
+#: controlTypes.py:321
 msgid "password edit"
 msgstr "கடவுச்சொல் தொகு"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:647
+#: gui/settingsDialogs.py:659
 msgid "play audio coordinates when mouse moves"
 msgstr "சொடுக்கி நகரும்பொழுது ஒலி இசைவுகளை இயக்கு"
 
@@ -4442,7 +4627,7 @@ msgstr "சொடுக்கி நகரும்பொழுது ஒலி 
 msgid "play pause"
 msgstr "ஓட்டு/தற்காலிகமாக நிறுத்து"
 
-#: controlTypes.py:339
+#: controlTypes.py:349
 msgid "pressed"
 msgstr "அழுத்தப்பட்டது"
 
@@ -4464,7 +4649,7 @@ msgstr "முன்னேற்றப் பட்டை"
 msgid "property page"
 msgstr "பண்புப் பக்கம்"
 
-#: controlTypes.py:349
+#: controlTypes.py:359
 msgid "protected"
 msgstr "பாதுகாக்கப்பட்டது"
 
@@ -4483,7 +4668,7 @@ msgstr "கி %s"
 msgid "radio button"
 msgstr "வானொலிப் பொத்தான்"
 
-#: controlTypes.py:265
+#: controlTypes.py:267
 msgid "radio menu item"
 msgstr "வானொலிப் பட்டியல் உருப்படி"
 
@@ -4493,19 +4678,19 @@ msgstr "வானொலிப் பட்டியல் உருப்பட�
 msgid "rbtn"
 msgstr "வாபொதன்"
 
-#: controlTypes.py:342
+#: controlTypes.py:352
 msgid "read only"
 msgstr "படிக்க மட்டும்"
 
-#: globalCommands.py:645
+#: globalCommands.py:648
 msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
 msgstr "தற்பொழுது மறுபரிசீலனைச் சுட்டி இருக்குமிடத்திலிருந்து ஆவணத்தின் இறுதி வரைப் படிக்கும். அப்படி படிக்கும்பொழுது, மறுபரிசீலனைச் சுட்டியும் உடன் நகரும்"
 
-#: globalCommands.py:649
+#: globalCommands.py:652
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
 msgstr "தற்பொழுது கணினிச் சுட்டி இருக்குமிடத்திலிருந்து உரையின் இறுதி வரைப் படிக்கும். அப்படிப் படிக்கும்பொழுது, கணினிச் சுட்டியும் நகரும்"
 
-#: globalCommands.py:721
+#: globalCommands.py:724
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "தற்போதைய செயலியின் நிலைமைப்பட்டையைப் படித்து, வழிகாட்டியை அவிடத்திற்கு நகர்த்தும்"
 
@@ -4518,7 +4703,7 @@ msgstr "பெற்றுக் கொண்டது: %s"
 msgid "red"
 msgstr "சிவப்பு"
 
-#: controlTypes.py:267
+#: controlTypes.py:269
 msgid "redundant object"
 msgstr "தேவையற்ற பொருள்"
 
@@ -4527,33 +4712,38 @@ msgstr "தேவையற்ற பொருள்"
 msgid "refresh"
 msgstr "புத்தாக்கு"
 
-#: globalCommands.py:791
+#. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
+#: gui/addonGui.py:131
+msgid "remove"
+msgstr "நீக்கு"
+
+#: globalCommands.py:794
 msgid "report dynamic content changes"
 msgstr "ஆற்றல்மிகு உள்ளடக்க மாற்றங்களை அறிவி"
 
-#: globalCommands.py:833
+#: globalCommands.py:836
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "மாறுதிசை மின்னோட்டம் பொருத்தப்படாதபொழுது, மின்கலத்தின் நிலைமையையும், மீதமிருக்கும் நேரத்தையும் அறிவிக்கும்"
 
-#: globalCommands.py:695
+#: globalCommands.py:698
 msgid "reports the object with focus"
 msgstr "குவிமையத்தைக் கொண்ட பொருளை அறிவிக்கும்"
 
-#: controlTypes.py:350
+#: controlTypes.py:360
 msgid "required"
 msgstr "தேவைப்படுகிறது"
 
-#: globalCommands.py:903
-#: gui/settingsDialogs.py:1192
+#: globalCommands.py:906
+#: gui/settingsDialogs.py:1204
 msgid "review"
 msgstr "மறுபரிசீலனை"
 
-#: controlTypes.py:271
+#: controlTypes.py:275
 msgid "rich edit"
 msgstr "செரிவூட்டப்பட்ட தொகுத்தல்"
 
-#: globalCommands.py:568
-#: globalCommands.py:585
+#: globalCommands.py:571
+#: globalCommands.py:588
 #: appModules/totalcmd.py:37
 msgid "right"
 msgstr "வலது"
@@ -4602,7 +4792,7 @@ msgstr "வலது சாளரம்"
 msgid "ro"
 msgstr "பம"
 
-#: controlTypes.py:268
+#: controlTypes.py:270
 msgid "root pane"
 msgstr "மூலப் பலகை"
 
@@ -4620,9 +4810,14 @@ msgstr "கிடைவரிசை %s"
 msgid "row header"
 msgstr "கிடைவரிசையின் மேலுரை"
 
-#: controlTypes.py:272
+#: controlTypes.py:276
 msgid "ruler"
 msgstr "அளவுகோல்"
+
+#. Translators: The status shown for an addon when its currently running in NVDA.
+#: gui/addonGui.py:134
+msgid "running"
+msgstr "ஓடிக் கொண்டிருக்கிறது"
 
 #: controlTypes.py:213
 msgid "scroll bar"
@@ -4633,7 +4828,7 @@ msgstr "உருள் பட்டை"
 msgid "scroll lock"
 msgstr "உருள் பூட்டு"
 
-#: controlTypes.py:273
+#: controlTypes.py:277
 msgid "scroll pane"
 msgstr "உருள் பலகை"
 
@@ -4647,7 +4842,7 @@ msgstr "தேடு"
 msgid "search page"
 msgstr "தேடல் பக்கம்"
 
-#: controlTypes.py:274
+#: controlTypes.py:278
 msgid "section"
 msgstr "உட்பிரிவு"
 
@@ -4656,11 +4851,11 @@ msgstr "உட்பிரிவு"
 msgid "sel"
 msgstr "தெரி"
 
-#: controlTypes.py:358
+#: controlTypes.py:370
 msgid "selectable"
 msgstr "தெரிவு செய்யப்படக்கூடியது"
 
-#: controlTypes.py:337
+#: controlTypes.py:347
 msgid "selected"
 msgstr "தெரிவானது"
 
@@ -4670,7 +4865,7 @@ msgstr "தெரிவானது"
 #: speech.py:306
 #: speech.py:498
 #: speech.py:513
-#: virtualBuffers/__init__.py:695
+#: virtualBuffers/__init__.py:717
 #, python-format
 msgid "selected %s"
 msgstr "தெரிவு செய்யப்பட்டது %s"
@@ -4694,7 +4889,7 @@ msgstr "அனுப்பப்பட்டது: %s"
 msgid "separator"
 msgstr "பிரிப்பான்"
 
-#: controlTypes.py:275
+#: controlTypes.py:279
 msgid "shape"
 msgstr "வடிவம்"
 
@@ -4703,11 +4898,11 @@ msgstr "வடிவம்"
 msgid "shift"
 msgstr "மாற்றழுத்தி"
 
-#: virtualBuffers/__init__.py:1460
+#: virtualBuffers/__init__.py:1484
 msgid "skips backward past a block of links"
 msgstr "தொடுப்புகளின் தொகுதியைப் தாண்டிப் பின்செல்கிறது"
 
-#: virtualBuffers/__init__.py:1459
+#: virtualBuffers/__init__.py:1483
 msgid "skips forward past a block of links"
 msgstr "தொடுப்புகளின் தொகுதியைத் தாண்டி முன்செல்கிறது"
 
@@ -4719,19 +4914,19 @@ msgstr "வழுக்கி"
 msgid "some"
 msgstr "சில"
 
-#: controlTypes.py:366
+#: controlTypes.py:378
 msgid "sorted"
 msgstr "வகைப்படுத்தப்பட்டது"
 
-#: controlTypes.py:367
+#: controlTypes.py:379
 msgid "sorted ascending"
 msgstr "ஏறுமுகமாக வகைப்படுத்தப்பட்டது"
 
-#: controlTypes.py:368
+#: controlTypes.py:380
 msgid "sorted descending"
 msgstr "இறங்குமுகமாக வகைப்படுத்தப்பட்டது"
 
-#: controlTypes.py:297
+#: controlTypes.py:307
 msgid "sound"
 msgstr "ஒலி"
 
@@ -4744,7 +4939,7 @@ msgstr "இடைவெளி"
 msgid "speak command keys"
 msgstr "கட்டளை விசைகள் அறிவிப்பை"
 
-#: globalCommands.py:774
+#: globalCommands.py:777
 msgid "speak progress bar updates"
 msgstr "முன்னேற்றப்பட்டைப் புதுப்பித்தல்களைப் பேசு"
 
@@ -4757,11 +4952,11 @@ msgstr "தட்டச்சு செய்த எழுத்துகளி�
 msgid "speak typed words"
 msgstr "தட்டச்சு செய்த சொற்களின் படித்தலை"
 
-#: globalCommands.py:754
+#: globalCommands.py:757
 msgid "speaks the current foreground object"
 msgstr "தற்போதைய முன்னணிப் பொருளைப் பேசும்"
 
-#: globalCommands.py:602
+#: globalCommands.py:605
 #, python-format
 msgid "speech mode %s"
 msgstr "பேச்சு நிலை %s"
@@ -4771,15 +4966,15 @@ msgstr "பேச்சு நிலை %s"
 msgid "spelling error"
 msgstr "எழுத்துப் பிழை"
 
-#: controlTypes.py:296
+#: controlTypes.py:306
 msgid "spin button"
 msgstr "சுழற்பொத்தான்"
 
-#: controlTypes.py:289
+#: controlTypes.py:299
 msgid "split button"
 msgstr "பிளவுப் பொத்தான்"
 
-#: controlTypes.py:276
+#: controlTypes.py:280
 msgid "split pane"
 msgstr "பிளவுப் பலகை"
 
@@ -4798,7 +4993,7 @@ msgstr "நிறுத்து"
 msgid "strikethrough"
 msgstr "ஊடாகக் கோடிடப்பட்டது"
 
-#: controlTypes.py:323
+#: controlTypes.py:333
 msgid "style"
 msgstr "பாங்கு"
 
@@ -4810,7 +5005,7 @@ msgstr "பாங்கு"
 msgid "style %s"
 msgstr "பாங்கு %s"
 
-#: controlTypes.py:348
+#: controlTypes.py:358
 msgid "subMenu"
 msgstr "உட்பட்டியல்"
 
@@ -4826,18 +5021,21 @@ msgid "submnu"
 msgstr "உபடில்"
 
 #. Translators: Reported for subscript text.
-#: controlTypes.py:322
+#: controlTypes.py:332
 #: speech.py:1057
 msgid "subscript"
 msgstr "கீழெழுத்து"
 
 #. Translators: Reported for superscript text.
-#: controlTypes.py:321
+#: controlTypes.py:331
 #: speech.py:1054
 msgid "superscript"
 msgstr "மேலெழுத்து"
 
-#: globalCommands.py:214
+#. Translators: Reported when the user cycles through speech symbol levels
+#. which determine what symbols are spoken.
+#. %s will be replaced with the symbol level; e.g. none, some, most and all.
+#: globalCommands.py:217
 #, python-format
 msgid "symbol level %s"
 msgstr "குறியெழுத்துகளின் நிலை %s"
@@ -4874,7 +5072,7 @@ msgid "table with %s columns and %s rows"
 msgstr "%s செங்குத்து வரிசையும், %s கிடைவரிசையும் கொண்ட அட்டவணை"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-#: globalCommands.py:600
+#: globalCommands.py:603
 msgid "talk"
 msgstr "பேசு"
 
@@ -4890,11 +5088,14 @@ msgstr "அட்"
 msgid "teal"
 msgstr "கரும்பச்சை நீலம்"
 
-#: controlTypes.py:278
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+#: controlTypes.py:288
 msgid "tear off menu"
 msgstr "கிழி பட்டியல்"
 
-#: controlTypes.py:270
+#: controlTypes.py:274
 msgid "terminal"
 msgstr "முனையம்"
 
@@ -4907,16 +5108,16 @@ msgstr "உரை"
 msgid "text \"%s\" not found"
 msgstr "உரை \"%s\" காணப்படவில்லை"
 
-#: controlTypes.py:279
+#: controlTypes.py:289
 msgid "text frame"
 msgstr "உரைச் சட்டகம்"
 
 #. Translators: This is the name of a combobox in the mouse settings dialog.
-#: gui/settingsDialogs.py:632
+#: gui/settingsDialogs.py:644
 msgid "text reporting unit"
 msgstr "உரையை அறிவிக்கும் தொகுதி"
 
-#: controlTypes.py:330
+#: controlTypes.py:340
 msgid "thumb control"
 msgstr "பெருவிரல் கட்டுப்பாடு"
 
@@ -4924,7 +5125,7 @@ msgstr "பெருவிரல் கட்டுப்பாடு"
 msgid "title bar"
 msgstr "தலைப்புப் பட்டை"
 
-#: controlTypes.py:280
+#: controlTypes.py:290
 msgid "toggle button"
 msgstr "நிலைமாற்றி பொத்தான்"
 
@@ -4936,9 +5137,9 @@ msgstr "கருவிப்பட்டை"
 msgid "tool tip"
 msgstr "கருவித் துணுக்குதவி"
 
-#: globalCommands.py:435
-#: globalCommands.py:447
-#: globalCommands.py:489
+#: globalCommands.py:438
+#: globalCommands.py:450
+#: globalCommands.py:492
 msgid "top"
 msgstr "மேல்"
 
@@ -4946,7 +5147,7 @@ msgstr "மேல்"
 msgid "tree view"
 msgstr "கிளைப்பிரிவு தோற்றம்"
 
-#: controlTypes.py:299
+#: controlTypes.py:309
 msgid "tree view button"
 msgstr "கிளைப்பிரிவுத் தோற்ற பொத்தான்"
 
@@ -4960,11 +5161,11 @@ msgstr "கிளைப்பிரிவு தோற்ற உருப்ப�
 msgid "tv"
 msgstr "கிபிதோ"
 
-#: controlTypes.py:335
+#: controlTypes.py:345
 msgid "unavailable"
 msgstr "கிடையாது"
 
-#: controlTypes.py:318
+#: controlTypes.py:328
 msgid "underline"
 msgstr "அடிக்கோடு"
 
@@ -5002,16 +5203,19 @@ msgstr "தெரிவு நீக்கப்படுகிறது %s"
 msgid "up arrow"
 msgstr "மேலம்பு"
 
-#: virtualBuffers/__init__.py:789
+#: virtualBuffers/__init__.py:811
 #, python-format
 msgid "use screen layout %s"
 msgstr "திரை வரைவு பயன்பாடு %s"
 
-#: controlTypes.py:277
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+#: controlTypes.py:284
 msgid "view port"
 msgstr "பகுதித் தோற்றம்"
 
-#: controlTypes.py:346
+#: controlTypes.py:356
 msgid "visited"
 msgstr "பார்த்த"
 
@@ -5034,7 +5238,7 @@ msgstr "ஒலியளவைக் கூட்டு"
 msgid "white"
 msgstr "வெள்ளை"
 
-#: controlTypes.py:298
+#: controlTypes.py:308
 msgid "white space"
 msgstr "வெள்ளை இடைவெளி"
 
@@ -5102,26 +5306,26 @@ msgstr ""
 "{name} இம்மென்பொருளை உருவாக்கியது NV Access நிறுவனம். இந்நிறுவனம், இலாப நோக்கில்லாமல் பார்வையற்றவர்களுக்கும், பார்வைக் குறைப்பாடுள்ளவர்களுக்கும் இலவச திறமூல தீர்வுகளால் உதவி, அவர்களை மேம்படுத்த தன்னை ஈடுபடுத்திக் கொண்டுள்ளது.\n"
 "என்விடிஏ பயனுள்ளதாக இருந்து, அது மேலும் மேம்பட வேண்டுமென்று தாங்கள் விரும்பினால், என்விடிஏவிற்கு நன்கொடை அளிப்பதைப் பற்றி சிந்தியுங்கள். இதற்கு, என்விடிஏ பட்டியலிலுள்ள 'நன்கொடையளியுங்கள்' உருப்படியைத் தேர்ந்தெடுக்கவும்."
 
-#~ msgid "Installation options"
-#~ msgstr "நிறுவுதலுக்கான விருப்பத் தேர்வுகள்"
+#. Translators: message shown in the Addon Information dialog.
+#: gui/addonGui.py:176
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Author: {author}\n"
+"URL: {url}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"பதிப்பு: {version}\n"
+"படைப்பாளர்: {author}\n"
+"இணைய முகவரி: {url}\n"
+"விளக்கம்: {description}\n"
 
-#~ msgid "Portable options"
-#~ msgstr "பெயர்த்தகு விருப்பத் தேர்வுகள்"
+#~ msgid "Key Command quick reference"
+#~ msgstr "விசைக் கட்டளை விரைவுதவி"
 
-#~ msgid "Welcome to NVDA!\n"
-#~ msgstr "என்விடிஏ தங்களை வரவேற்கிறது! \n"
+#~ msgid "User guide"
+#~ msgstr "பயனர் வழிகாட்டி"
 
-#~ msgid "Your gesture map file contains errors.\n"
-#~ msgstr "தங்களின் gesture வரைப்பட கோப்பில் பிழைகள் உள்ளன.\n"
-
-#~ msgid "No parents"
-#~ msgstr "பெற்றோர்கள் ஏதுமில்லை"
-
-#~ msgid "No children"
-#~ msgstr "குழந்தைகள் ஏதுமில்லை"
-
-#~ msgid "selection"
-#~ msgstr "தெரிவு"
-
-#~ msgid "Raise pitch for capitals"
-#~ msgstr "ஆங்கில முகப்பெழுத்துகளுக்கு சுருதியை ஏற்று"
+#~ msgid "Web site"
+#~ msgstr "வளைத்தளம்"

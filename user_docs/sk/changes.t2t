@@ -4,24 +4,43 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.2 =
+Prednosti tejto verzie zahŕňajú: vstavaný inštalátor a možnosť vytvorenia prenositeľnej verzie, automatické aktualizácie, jednoduchú správu doplnkov, čítanie grafických prvkov v programe Microsoft word, podporu pre metro aplikácie Windows 8, a množstvo dôležitých opráv.
 
-== Novinky ==
+
+== Nové vlastnosti =
 - NVDA odteraz dokáže skontrolovať, stiahnuť a nainštalovať aktualizácie. (#73)
+- Správa ovládačov, aplikačných modulov a pluginov pre NVDA bola zjednodušená pridaním správcu doplnkov do ponuky nástroje. Tento nástroj umožňuje automatickú inštaláciu a odstránenie doplnkov pre NVDA - súborov s príponov *.nvda-addon. (#213)
+- V prípade, že používate nainštalovanú verziu je množstvo obvyklých vlastností NVDA teraz funkčných aj v prostredí metro systému Windows 8. Toto zahŕňa napr. oznamovanie napísaných znakov a podporu pre web dokumenty (vrátane podpory metro verzie programu Internet explorer 10). (#1801)
+- Pomocou klávesových príkazov shift+, a shift+. je možné v  dokumentoch sprístupnených v režime prehliadania prejsť na začiatok a za koniec niektorých objektov napr. zoznamov a tabuliek, ktoré zoskupujú prvky rovnakého typu. (#123)
+- Lokalizácia do gréčtiny.
+- Grafické prvky a ich textové popisky sú oznamované v programe Microsoft word. (#2282, #1541)
 
 
 == Zmeny ==
-- NVDA je odteraz distribuované v jednom balíku. Inštalačný súbor a súbor prenositeľnej verzie bol nahradený jedným súborom. Po jeho spustení je možné NVDA nainštalovať, alebo vytvoriť prenositeľnú verziu.
-- NVDA sa vždy nainštaluje do priečinka Program Files vo všetkých systémoch. Ak je NVDA nainštalované v inom adresári, počas novej inštalácie sa automaticky súbory presunú do nového priečinka.
+- Oznamovanie súradníc buniek v programe Microsoft excel je za obsahom namiesto doterajšieho oznamovania pred obsahom. Súradnice sú oznamované len v prípade, že v dialógu nastavenia čítania textu sú zaškrtnuté políčka oznamovať tabuľky a oznamovať súradnice buniek tabuľky. (#320)
+- NVDA je odteraz distribuovaný v jednom balíku. Inštalačný súbor a súbor prenositeľnej verzie bol nahradený jedným súborom. Po jeho spustení je možné NVDA nainštalovať, alebo vytvoriť prenositeľnú verziu.
+- NVDA sa vždy nainštaluje do priečinka Program Files vo všetkých systémoch. Ak je NVDA nainštalovaný v inom adresári, počas novej inštalácie sa automaticky súbory presunú do nového priečinka.
 
 
 == opravy ==
 - pri zapnutej automatickej zmene jazyka NVDA správne určí jazyk v alternatívnych popisoch obrázkov a popisoch prvkov v Mozilla Gecko (napríklad Firefox) ak sú označené správne.
 - Pri plynulom čítaní v programe BibleSeeker (a iných TRxRichEdit prvkoch) neskončí čítanie uprostred textu.
+- Sprístupnené sú zoznamy v dialógu vlastnosti súboru, na karte oprávnenia v systéme Windows 8 a tiež zoznamy v programe Windows update systému Windows 8.
 - NVDA nezamrzne v programe MS Word v prípade, ak výber textu trvá dlhšie, ako dve sekundy (týka sa dlhých riadkov alebo obsahov). (#2191)
+- Detekcia začiatku a konca slova správne funguje aj v prípadoch, keď za znakmi ako medzera, tabulátor a koniec riadku nasledujú niektoré interpunkčné znaky. (#1656)
+- V programe Adobe reader je v režime prehliadania pomocou príkazov rýchlej navigácie aj v zozname prvkov možné prejsť na nadpisy bez uvedenej úrovne. (#2181)
+- V programe Winamp je správne aktualizovaný braillovský riadok počas navigácii v okne playlist editor. (#1912)
+- Stromové zobrazenie v dialógu zoznam prvkov dostupného z režimu prehliadania má správnu veľkosť, aby bolo možné vidieť texty všetkých zobrazených prvkov. (#2276)
+- V aplikáciách sprístupnených pomocou Java access bridge je v brailly správne zobrazovaný obsah editačných polí. (#2284)
+- V aplikáciách sprístupnených pomocou Java access bridge nie sú v obsahu editačných polí náhodne oznamované nezmyselné znaky. (#1892)
+- V aplikáciách sprístupnených pomocou Java access bridge je možné prečítať obsah aktuálneho riadku aj ak sa kurzor nachádza na konci textu. (#1892)
+- V režime prehliadania v programe Firefox 14 a novších funguje správne navigácia po citáciách a vnorených objektoch. (#2287)
+- V programe internet explorer 9 NVDA nečíta náhodný obsah pri vstupe do odseku, ktorý môže nadobudnúť systémový fokus alebo je označený ako oblasť stránky pomocou ARIA.
 
 
 == Zmeny pre vývojárov ==
 - Keďže NSIS inštalátor bol nahradený vstavaným Python inštalátorom, prekladatelia viac nepotrebujú súbor langstrings.txt s reťazcami na preklad inštalácie. Všetky reťazce sú v po súboroch.
+
 
 
 = 2012.1 =
@@ -81,7 +100,7 @@ Prednosti tejto verzii zahŕňajú pohodlnejšie čítanie brailu; indikáciu fo
 - Popisky zoskupenísú znovu správne oznamované ak je zapnuté oznamovanie popisov.
 - V texte dialógu vlastnosti jednotky programu prieskumník sú správne oznamované formátované veľkosti.
 - Viac násobné oznamovanie textu strán vlastností bolo potlačené v niektorých prípadoch. (#218)
-- Vylepšená detekcia kurzora v editačných poliach, ktoré sú sprístupnené na základe analýzi textu vypísaného na obrazovku. Toto je viditeľné napr. pri editácii buniek v programe Microsoft excell alebo pri písaní správ v emailovom klientovi Eudora. (#1658)
+- Vylepšená detekcia kurzora v editačných poliach, ktoré sú sprístupnené na základe analýzi textu vypísaného na obrazovku. Toto je viditeľné napr. pri editácii buniek v programe Microsoft excel alebo pri písaní správ v emailovom klientovi Eudora. (#1658)
 - V programe Firefox 11 je správne v režime prehliadania možné použiť príkaz NVDA+Ctrl+medzerník na prechod do nadradeného dokumentu.
 - NVDA sa správne reštartuje v situácii, kde jazykové súbory pre novonastavený jazyk sa nachádzajú v priečinku, ktorého názov obsahuje špeciálne znaky. (#2079)
 - V braily sú rešpektované nastavenia o oznamovaní informácií o pozícii, skratkových klávesách a popisoch.

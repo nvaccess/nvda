@@ -4,14 +4,19 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2012.2 =
+Les apports majeurs de cette version incluent un installateur et créateur de version portable intégré, des mises à jours automatiques, une gestion facile des nouveaux greffons NVDA, l'annonce des graphique dans Microsoft Word, le support des application Metro Windows 8, et des corrections de bogues importants.
 
 == Nouvelles Fonctionnalités ==
 - NVDA peut maintenant rechercher, télécharger et installer automatiquement les mises à jour. (#73)
-- Beaucoup plus de fonctionnalités de NVDA sont maintenant utilisables dans les applications en style Metro sous Windows 8 lorsqu'on utilise une copie installée de NVDA, incluant la prononciation des caractères saisis, et le mode navigation pour les documents web (incluant le support pour la version metro de Internet Explorer 10). Les copies portables de NVDA ne peuvent accéder aux applications Metro (#1801)
+- La gestion des plugins personnalisés et des drivers pour NVDA a été facilité par l'ajout d'un gestionnaire de greffons (accessible depuis le menu Outils du menu NVDA) vous permettant d'installer ou de désinstaller des paquets de greffons (fichiers .nvda-addon). (#213)
+- Beaucoup plus de fonctionnalités de NVDA sont maintenant utilisables dans les applications en style Metro sous Windows 8 lorsqu'on utilise une copie installée de NVDA, incluant la prononciation des caractères saisis, et le mode navigation pour les documents web (incluant le support pour la version metro de Internet Explorer 10). Les copies portables de NVDA ne peuvent accéder aux applications Metro. (#1801) 
 - En mode navigation (Internet Explorer, Firefox etc.) il est maintenant possible de sauter au début et de passer la fin de certains éléments contenants (incluant les listes et les tableaux) avec shift+, et shift+. respectivement. (#123)
+- Nouvelle langue : grecque.
+- Les graphiques et le texte alternatif sont maintenant lus dans les documents Microsoft Word. (#2282, #1541)
 
 
 == Changements ==
+- L'annonce des coordonnées des cellules dans Microsoft Excel est maintenant après le contenu plutôt qu'avant, et est maintenant seulement incluse si les options Annoncer les tableaux et Annoncer les coordonnées des cellules dans un tableau sont activées dans les options de mise en forme des documents.
 - NVDA est maintenant distribué en un seul package. Plutôt qu'une version portable et une version installée, il n'y a maintenant qu'un fichier qui lorsqu'il démarre, va démarrer une copie temporaire de NVDA qui vous permettra d'installer ou de créer une copie portable. (#1715)
 - NVDA est maintenant toujours installé dans Program Files sur tous les systèmes. Mettre à jours une installation la déplacera automatiquement si elle n'y était pas installée.
 
@@ -21,14 +26,19 @@ Quoi de Neuf dans NVDA
 - DireTout dans BibleSeeker (et autre contrôles TRxRichEdit) ne s'arrête plus au milieu d'un passage.
 - Les listes que l'on trouve dans les propriétés de fichiers de l'explorateur de Windows 8 (onglet permissions) et dans Windows Update sous Windows 8 sont maintenant lues correctement.
 - Correction de blocages possibles dans MS Word qui causaient un délai de plus de deux secondes pour récupérer le texte d'un document (lignes extrêmement longues ou table des matières). (#2191)
-- La détection de séparation de mots fonctionne maintenant correctement quand l'espace est suivi de certaines ponctuations (#1656)
-- En mode Navigation dans Adobe Reader, il est maintenant possible de naviguer dans les différents niveaux d'en-têtes en utilisant les touches de navigation rapide et la liste (#2181)
-- Dans Winamp, le braille est maintenant correctement mis à jour quand on change d'élément dans l'éditeur de playliste (#1912)
+- La détection de séparation de mots fonctionne maintenant correctement quand l'espace est suivi de certaines ponctuations. (#1656)
+- En mode Navigation dans Adobe Reader, il est maintenant possible de naviguer dans les différents niveaux d'en-têtes en utilisant les touches de navigation rapide et la liste. (#2181)
+- Dans Winamp, le braille est maintenant correctement mis à jour quand on change d'élément dans l'éditeur de playliste. (#1912)
 - L'arborescence dans la liste des éléments (disponibles pour les documents en mode navigation) est maintenant correctement dimentionné pour afficher le texte de tous les éléments. (#2276)
+- Dans les applications utilisant Java Access Bridge, les champs de texte éditables sont maintenant correctement présentés en braille. (#2284)
+- Dans les applications utilisant java Access Bridge, les champs de textes éditables ne rapporte plus de caractères étranges dans certaines circonstences. (#1892)
+- Dans les  applications utilisant Java Access Bridge, à la fin d'un champ de texte éditable, la ligne courrante est maintenant lue correctement. (#1892)
+- En mode Navigation dans les applications utilisant Mozilla Gecko 14 et supérieur (e.g. Firefox 14), la navigation rapide fonctionne maintenant dans les bloques de citation et les objets inclus. (#2287)
+- Dans Internet Explorer 9, NVDA ne lit plus de contenu non désiré quand le focus bouge dans un div focusable ou marqué par un repaire ARIA.
 
 
 == Changements pour les développeurs ==
-- En raison du remplacement de l'installateur NSIS pour NVDA par un installateur en Python, il n'est plus nécessaire pour les traducteurs de maintenir un fichier langstrings.txt pour l'installateur. Toutes ces chaînes traduites sont maintenant gérées par les fichiers po gettext
+- En raison du remplacement de l'installateur NSIS pour NVDA par un installateur en Python, il n'est plus nécessaire pour les traducteurs de maintenir un fichier langstrings.txt pour l'installateur. Toutes ces chaînes traduites sont maintenant gérées par les fichiers po gettext.
 
 
 = 2012.1 =

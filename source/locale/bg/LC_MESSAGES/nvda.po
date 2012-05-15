@@ -17,16 +17,16 @@ msgstr ""
 msgid "Secure Desktop"
 msgstr "Екран за сигурност"
 
-#: NVDAHelper.py:112
+#: NVDAHelper.py:140
 msgid "unknown layout"
 msgstr "Непознато подреждане"
 
-#: NVDAHelper.py:113
+#: NVDAHelper.py:141
 #, python-format
 msgid "layout %s"
 msgstr "Подреждане %s"
 
-#: appModuleHandler.py:137
+#: appModuleHandler.py:143
 #, python-format
 msgid "Error in appModule %s"
 msgstr "Грешка в модула %s на приложението"
@@ -539,51 +539,59 @@ msgstr "()"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:402
+#: braille.py:403
+#, python-format
 msgid "h%s"
 msgstr "заглавие %s"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:408
+#: braille.py:409
 msgid "vlnk"
 msgstr "пос. линк"
 
-#: braille.py:423 speech.py:790
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#: braille.py:424 speech.py:795
 #, python-format
 msgid "not %s"
 msgstr "Не %s"
 
-#: braille.py:436 speech.py:798
+#: braille.py:437 speech.py:803
 #, python-format
 msgid "%s of %s"
 msgstr "%s от %s"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:440
+#: braille.py:441
 #, python-format
 msgid "lv %s"
 msgstr "ниво %s"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:445
+#: braille.py:446
+#, python-format
 msgid "r%s"
 msgstr "ред%s"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:453
+#: braille.py:454
+#, python-format
 msgid "c%s"
 msgstr "колона%s"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:546
+#: braille.py:549
+#, python-format
 msgid "%s end"
 msgstr "%s край"
 
-#: characterProcessing.py:127 synthDrivers\_espeak.py:309
+#: characterProcessing.py:127 synthDrivers\_espeak.py:311
 msgid "none"
 msgstr "изключена"
 
@@ -599,7 +607,7 @@ msgstr "повечето"
 msgid "all"
 msgstr "всички"
 
-#: characterProcessing.py:131 controlTypes.py:280 textInfos\__init__.py:196
+#: characterProcessing.py:131 controlTypes.py:293 textInfos\__init__.py:196
 msgid "character"
 msgstr "знак"
 
@@ -688,7 +696,7 @@ msgstr "оранжев"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401 globalCommands.py:127 speech.py:306 speech.py:498
-#: speech.py:513 virtualBuffers\__init__.py:695
+#: speech.py:513 virtualBuffers\__init__.py:717
 #, python-format
 msgid "selected %s"
 msgstr "Маркиран %s"
@@ -741,7 +749,7 @@ msgstr "лента с менюта"
 msgid "menu item"
 msgstr "елемент на меню"
 
-#: controlTypes.py:199 controlTypes.py:306
+#: controlTypes.py:199 controlTypes.py:319
 msgid "menu"
 msgstr "меню"
 
@@ -769,7 +777,7 @@ msgstr "помощен балон"
 msgid "tool tip"
 msgstr "подсказка"
 
-#: controlTypes.py:206 speech.py:1049
+#: controlTypes.py:206 speech.py:1089
 msgid "link"
 msgstr "линк"
 
@@ -886,507 +894,535 @@ msgstr "заглавие шесто ниво"
 msgid "paragraph"
 msgstr "параграф"
 
-#: controlTypes.py:235
+#. Translators: Presented for a section in a document which is a block quotation;
+#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+#. See http://en.wikipedia.org/wiki/Block_quotation
+#: controlTypes.py:238
 msgid "block quote"
 msgstr "цитат"
 
-#: controlTypes.py:236
+#: controlTypes.py:239
 msgid "table header"
 msgstr "увод на таблица"
 
-#: controlTypes.py:237
+#: controlTypes.py:240
 msgid "table body"
 msgstr "тяло на таблица"
 
-#: controlTypes.py:238
+#: controlTypes.py:241
 msgid "table footer"
 msgstr "заключение на таблица"
 
-#: controlTypes.py:239
+#: controlTypes.py:242
 msgid "document"
 msgstr "документ"
 
-#: controlTypes.py:240
+#: controlTypes.py:243
 msgid "animation"
 msgstr "анимация"
 
-#: controlTypes.py:241
+#: controlTypes.py:244
 msgid "application"
 msgstr "приложение"
 
-#: controlTypes.py:242
+#: controlTypes.py:245
 msgid "box"
 msgstr "кутия"
 
-#: controlTypes.py:243
+#: controlTypes.py:246
 msgid "grouping"
 msgstr "групиране"
 
-#: controlTypes.py:244
+#: controlTypes.py:247
 msgid "property page"
 msgstr "страница на свойствата"
 
-#: controlTypes.py:245
+#: controlTypes.py:248
 msgid "canvas"
 msgstr "табло"
 
-#: controlTypes.py:246
+#: controlTypes.py:249
 msgid "caption"
 msgstr "надпис"
 
-#: controlTypes.py:247
+#: controlTypes.py:250
 msgid "check menu item"
 msgstr "отбележи елемента от менюто"
 
-#: controlTypes.py:248
+#: controlTypes.py:251
 msgid "date edit"
 msgstr "промяна на дата"
 
-#: controlTypes.py:249
+#: controlTypes.py:252
 msgid "icon"
 msgstr "икона"
 
-#: controlTypes.py:250
+#: controlTypes.py:253
 msgid "directory pane"
 msgstr "поле на директория"
 
-#: controlTypes.py:251 NVDAObjects\window\edit.py:612
+#: controlTypes.py:254 NVDAObjects\window\edit.py:612
 msgid "embedded object"
 msgstr "вграден обект"
 
-#: controlTypes.py:252
+#: controlTypes.py:255
 msgid "end note"
 msgstr "бележка в края"
 
-#: controlTypes.py:253
+#: controlTypes.py:256
 msgid "footer"
 msgstr "заключение"
 
-#: controlTypes.py:254
+#: controlTypes.py:257
 msgid "foot note"
 msgstr "бележка под линия"
 
-#: controlTypes.py:255
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+#: controlTypes.py:260
 msgid "glass pane"
 msgstr "прозрачно поле"
 
-#: controlTypes.py:256
+#: controlTypes.py:261
 msgid "header"
 msgstr "увод"
 
-#: controlTypes.py:257
+#: controlTypes.py:262
 msgid "image map"
 msgstr "зонирано изображение"
 
-#: controlTypes.py:258
+#: controlTypes.py:263
 msgid "input window"
 msgstr "прозорец за въвеждане"
 
-#: controlTypes.py:259
+#: controlTypes.py:264
 msgid "label"
 msgstr "етикет"
 
-#: controlTypes.py:260
+#: controlTypes.py:265
 msgid "note"
 msgstr "бележка"
 
-#: controlTypes.py:261
+#: controlTypes.py:266
 msgid "page"
 msgstr "страница"
 
-#: controlTypes.py:262
+#: controlTypes.py:267
 msgid "radio menu item"
 msgstr "изборен елемент от меню"
 
-#: controlTypes.py:263
+#: controlTypes.py:268
 msgid "layered pane"
 msgstr "наслоено поле"
 
-#: controlTypes.py:264
+#: controlTypes.py:269
 msgid "redundant object"
 msgstr "претрупан обект"
 
-#: controlTypes.py:265
+#: controlTypes.py:270
 msgid "root pane"
 msgstr "кореново поле"
 
-#: controlTypes.py:266
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+#: controlTypes.py:273
 msgid "edit bar"
 msgstr "зона за въвеждане"
 
-#: controlTypes.py:267
+#: controlTypes.py:274
 msgid "terminal"
 msgstr "терминал"
 
-#: controlTypes.py:268
+#: controlTypes.py:275
 msgid "rich edit"
 msgstr "форматируемо въвеждане"
 
-#: controlTypes.py:269
+#: controlTypes.py:276
 msgid "ruler"
 msgstr "скала"
 
-#: controlTypes.py:270
+#: controlTypes.py:277
 msgid "scroll pane"
 msgstr "поле за придвижване"
 
-#: controlTypes.py:271
+#: controlTypes.py:278
 msgid "section"
 msgstr "секция"
 
-#: controlTypes.py:272
+#: controlTypes.py:279
 msgid "shape"
 msgstr "форма"
 
-#: controlTypes.py:273
+#: controlTypes.py:280
 msgid "split pane"
 msgstr "разделено поле"
 
-#: controlTypes.py:274
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+#: controlTypes.py:284
 msgid "view port"
 msgstr "преглед на канал"
 
-#: controlTypes.py:275
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+#: controlTypes.py:288
 msgid "tear off menu"
 msgstr "разкъсване на меню"
 
-#: controlTypes.py:276
+#: controlTypes.py:289
 msgid "text frame"
 msgstr "текстова рамка"
 
-#: controlTypes.py:277
+#: controlTypes.py:290
 msgid "toggle button"
 msgstr "превключващ бутон"
 
-#: controlTypes.py:278
+#: controlTypes.py:291
 msgid "border"
 msgstr "граница"
 
-#: controlTypes.py:279
+#: controlTypes.py:292
 msgid "caret"
 msgstr "каретка"
 
-#: controlTypes.py:281
+#: controlTypes.py:294
 msgid "chart"
 msgstr "графика"
 
-#: controlTypes.py:282
+#: controlTypes.py:295
 msgid "cursor"
 msgstr "курсор"
 
-#: controlTypes.py:283
+#: controlTypes.py:296
 msgid "diagram"
 msgstr "диаграма"
 
-#: controlTypes.py:284
+#: controlTypes.py:297
 msgid "dial"
 msgstr "набирам"
 
-#: controlTypes.py:285
+#: controlTypes.py:298
 msgid "drop list"
 msgstr "падащ списък"
 
-#: controlTypes.py:286
+#: controlTypes.py:299
 msgid "split button"
 msgstr "разделителен бутон"
 
-#: controlTypes.py:287
+#: controlTypes.py:300
 msgid "menu button"
 msgstr "бутон на меню"
 
-#: controlTypes.py:288
+#: controlTypes.py:301
 msgid "drop down button grid"
 msgstr "решетка на падащ бутон"
 
-#: controlTypes.py:289
+#: controlTypes.py:302
 msgid "equation"
 msgstr "изравняване"
 
-#: controlTypes.py:290
+#: controlTypes.py:303
 msgid "grip"
 msgstr "манипулатор"
 
-#: controlTypes.py:291
+#: controlTypes.py:304
 msgid "hot key field"
 msgstr "поле за горещ клавиш"
 
-#: controlTypes.py:292
+#: controlTypes.py:305
 msgid "indicator"
 msgstr "индикатор"
 
-#: controlTypes.py:293
+#: controlTypes.py:306
 msgid "spin button"
 msgstr "въртелив бутон"
 
-#: controlTypes.py:294
+#: controlTypes.py:307
 msgid "sound"
 msgstr "звук"
 
-#: controlTypes.py:295
+#: controlTypes.py:308
 msgid "white space"
 msgstr "празно място"
 
-#: controlTypes.py:296
+#: controlTypes.py:309
 msgid "tree view button"
 msgstr "бутон от дървовиден изглед"
 
-#: controlTypes.py:297
+#: controlTypes.py:310
 msgid "IP address"
 msgstr "IP адрес"
 
-#: controlTypes.py:298
+#: controlTypes.py:311
 msgid "desktop icon"
 msgstr "икона на работния плот"
 
-#: controlTypes.py:299 controlTypes.py:323
+#: controlTypes.py:312 controlTypes.py:336
 msgid "alert"
 msgstr "предупреждение"
 
-#: controlTypes.py:300
+#: controlTypes.py:313
 msgid "IFrame"
 msgstr "вътрешна рамка"
 
-#: controlTypes.py:301
+#: controlTypes.py:314
 msgid "desktop pane"
 msgstr "работно поле"
 
-#: controlTypes.py:302
+#: controlTypes.py:315
 msgid "option pane"
 msgstr "поле с опции"
 
-#: controlTypes.py:303
+#: controlTypes.py:316
 msgid "color chooser"
 msgstr "избор на цвят"
 
-#: controlTypes.py:304
+#: controlTypes.py:317
 msgid "file chooser"
 msgstr "избор на файл"
 
-#: controlTypes.py:305
+#: controlTypes.py:318
 msgid "filler"
 msgstr "пълнеж"
 
-#: controlTypes.py:307
+#: controlTypes.py:320
 msgid "panel"
 msgstr "панел"
 
-#: controlTypes.py:308
+#: controlTypes.py:321
 msgid "password edit"
 msgstr "въвеждане на парола"
 
-#: controlTypes.py:309
+#: controlTypes.py:322
 msgid "font chooser"
 msgstr "избор на шрифт"
 
-#: controlTypes.py:310 textInfos\__init__.py:198
+#: controlTypes.py:323 textInfos\__init__.py:198
 msgid "line"
 msgstr "ред"
 
-#: controlTypes.py:311
+#: controlTypes.py:324
 msgid "font name"
 msgstr "име на шрифт"
 
-#: controlTypes.py:312
+#: controlTypes.py:325
 msgid "font size"
 msgstr "размер на шрифт"
 
-#: controlTypes.py:313 speech.py:1001
+#. Translators: Reported when text is bolded.
+#: controlTypes.py:326 speech.py:1018
 msgid "bold"
 msgstr "удебелен"
 
-#: controlTypes.py:314
+#: controlTypes.py:327
 msgid "ITALIC"
 msgstr "наклонен"
 
-#: controlTypes.py:315
+#: controlTypes.py:328
 msgid "underline"
 msgstr "подчертан"
 
-#: controlTypes.py:316
+#: controlTypes.py:329
 msgid "foreground color"
 msgstr "цвят на предния план"
 
-#: controlTypes.py:317
+#: controlTypes.py:330
 msgid "background color"
 msgstr "цвят на фона"
 
-#: controlTypes.py:318 speech.py:1023
+#. Translators: Reported for superscript text.
+#: controlTypes.py:331 speech.py:1054
 msgid "superscript"
 msgstr "повдигнат"
 
-#: controlTypes.py:319 speech.py:1025
+#. Translators: Reported for subscript text.
+#: controlTypes.py:332 speech.py:1057
 msgid "subscript"
 msgstr "снишен"
 
-#: controlTypes.py:320
+#: controlTypes.py:333
 msgid "style"
 msgstr "стил"
 
-#: controlTypes.py:321
+#: controlTypes.py:334
 msgid "indent"
 msgstr "отстъп"
 
-#: controlTypes.py:322
+#: controlTypes.py:335
 msgid "alignment"
 msgstr "подравняване"
 
-#: controlTypes.py:324
+#: controlTypes.py:337
 msgid "data grid"
 msgstr "решетка с данни"
 
-#: controlTypes.py:325
+#: controlTypes.py:338
 msgid "data item"
 msgstr "елемент от данни"
 
-#: controlTypes.py:326
+#: controlTypes.py:339
 msgid "header item"
 msgstr "заглавен елемент"
 
-#: controlTypes.py:327
+#: controlTypes.py:340
 msgid "thumb control"
 msgstr "миниатюризиран контрол"
 
-#: controlTypes.py:328
+#: controlTypes.py:341
 msgid "calendar"
 msgstr "календар"
 
-#: controlTypes.py:332
+#: controlTypes.py:345
 msgid "unavailable"
 msgstr "недостъпен"
 
-#: controlTypes.py:333
+#: controlTypes.py:346
 msgid "focused"
 msgstr "на фокус"
 
-#: controlTypes.py:334
+#: controlTypes.py:347
 msgid "selected"
 msgstr "маркиран"
 
-#: controlTypes.py:335
+#: controlTypes.py:348
 msgid "busy"
 msgstr "зает"
 
-#: controlTypes.py:336
+#: controlTypes.py:349
 msgid "pressed"
 msgstr "натиснат"
 
-#: controlTypes.py:337
+#: controlTypes.py:350
 msgid "checked"
 msgstr "отметнат"
 
-#: controlTypes.py:338
+#: controlTypes.py:351
 msgid "half checked"
 msgstr "наполовина отметнат"
 
-#: controlTypes.py:339
+#: controlTypes.py:352
 msgid "read only"
 msgstr "само за четене"
 
-#: controlTypes.py:340
+#: controlTypes.py:353
 msgid "expanded"
 msgstr "разтворен"
 
-#: controlTypes.py:341
+#: controlTypes.py:354
 msgid "collapsed"
 msgstr "събран"
 
-#: controlTypes.py:342
+#: controlTypes.py:355
 msgid "invisible"
 msgstr "невидим"
 
-#: controlTypes.py:343
+#: controlTypes.py:356
 msgid "visited"
 msgstr "посетен"
 
-#: controlTypes.py:344
+#: controlTypes.py:357
 msgid "linked"
 msgstr "свързан"
 
-#: controlTypes.py:345
+#: controlTypes.py:358
 msgid "subMenu"
 msgstr "подменю"
 
-#: controlTypes.py:346
+#: controlTypes.py:359
 msgid "protected"
 msgstr "защитен"
 
-#: controlTypes.py:347
+#: controlTypes.py:360
 msgid "required"
 msgstr "необходим"
 
-#: controlTypes.py:348
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+#: controlTypes.py:363
 msgid "defunct"
 msgstr "неактивен"
 
-#: controlTypes.py:349
+#: controlTypes.py:364
 msgid "invalid entry"
 msgstr "невалиден запис"
 
-#: controlTypes.py:350
+#: controlTypes.py:365
 msgid "modal"
 msgstr "модел"
 
-#: controlTypes.py:351
+#: controlTypes.py:366
 msgid "has auto complete"
 msgstr "има възможност за допълване"
 
-#: controlTypes.py:352
+#: controlTypes.py:367
 msgid "multi line"
 msgstr "многоредов"
 
-#: controlTypes.py:353
+#: controlTypes.py:368
 msgid "iconified"
 msgstr "иконифициран"
 
-#: controlTypes.py:354
+#: controlTypes.py:369
 msgid "off screen"
 msgstr "извън екрана"
 
-#: controlTypes.py:355
+#: controlTypes.py:370
 msgid "selectable"
 msgstr "има възможност за маркиране"
 
-#: controlTypes.py:356
+#: controlTypes.py:371
 msgid "focusable"
 msgstr "има възможност за фокус"
 
-#: controlTypes.py:357
+#: controlTypes.py:372
 msgid "clickable"
 msgstr "има възможност за натискане"
 
-#: controlTypes.py:358
+#: controlTypes.py:373
 msgid "editable"
 msgstr "има възможност за промяна"
 
-#: controlTypes.py:359
+#: controlTypes.py:374
 msgid "checkable"
 msgstr "има възможност за отбелязване"
 
-#: controlTypes.py:360
+#: controlTypes.py:375
 msgid "draggable"
 msgstr "има възможност за влачене"
 
-#: controlTypes.py:361
+#: controlTypes.py:376
 msgid "dragging"
 msgstr "влачене"
 
-#: controlTypes.py:362
+#: controlTypes.py:377
 msgid "drop target"
 msgstr "пускане на целта"
 
-#: controlTypes.py:363
+#: controlTypes.py:378
 msgid "sorted"
 msgstr "сортиран"
 
-#: controlTypes.py:364
+#: controlTypes.py:379
 msgid "sorted ascending"
 msgstr "възходящо сортиран"
 
-#: controlTypes.py:365
+#: controlTypes.py:380
 msgid "sorted descending"
 msgstr "низходящо сортиран"
 
-#: core.py:84
+#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+#: controlTypes.py:385
+msgid "not selected"
+msgstr "не маркиран"
+
+#. Translators: This is presented when a checkbox is not checked.
+#: controlTypes.py:387
+msgid "not checked"
+msgstr "не отметнат"
+
+#: core.py:85
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
@@ -1396,16 +1432,16 @@ msgstr ""
 "Повече информация за грешките може да "
 "видите в лога."
 
-#: core.py:86
+#: core.py:87
 msgid "gesture map File Error"
 msgstr ""
 "Грешка във файла на картата на жестовете"
 
-#: core.py:181
+#: core.py:203
 msgid "Loading NVDA. Please wait..."
 msgstr "Зареждане на NVDA. Моля, изчакайте ..."
 
-#: core.py:271
+#: core.py:294
 msgid "NVDA started"
 msgstr "NVDA е стартиран"
 
@@ -1456,20 +1492,23 @@ msgstr "няма нищо маркирано"
 msgid "copied to clipboard"
 msgstr "копирано в клипборда"
 
-#: globalCommands.py:44 globalCommands.py:179 globalCommands.py:189
-#: globalCommands.py:199 globalCommands.py:723 globalCommands.py:784
-#: globalCommands.py:794 globalCommands.py:804 keyboardHandler.py:300
-#: synthSettingsRing.py:74 appModules\winamp.py:77 appModules\winamp.py:87
-#: gui\settingsDialogs.py:1029 virtualBuffers\__init__.py:788
+#: globalCommands.py:44 globalCommands.py:179 globalCommands.py:190
+#: globalCommands.py:200 globalCommands.py:731 globalCommands.py:792
+#: globalCommands.py:802 globalCommands.py:812 keyboardHandler.py:300
+#: synthSettingsRing.py:74 appModules\winamp.py:78 appModules\winamp.py:88
+#: gui\settingsDialogs.py:1068 virtualBuffers\__init__.py:810
 msgid "on"
 msgstr "включен"
 
-#: globalCommands.py:44 globalCommands.py:176 globalCommands.py:186
-#: globalCommands.py:196 globalCommands.py:591 globalCommands.py:720
-#: globalCommands.py:781 globalCommands.py:791 globalCommands.py:801
-#: keyboardHandler.py:300 synthSettingsRing.py:74 appModules\winamp.py:79
-#: appModules\winamp.py:89 gui\settingsDialogs.py:694
-#: gui\settingsDialogs.py:1029 virtualBuffers\__init__.py:788
+#. Translators: An option for progress bar output in the Object Presentation dialog
+#. which disables reporting of progress bars.
+#. See Progress bar output in the Object Presentation Settings section of the User Guide.
+#: globalCommands.py:44 globalCommands.py:176 globalCommands.py:187
+#: globalCommands.py:197 globalCommands.py:597 globalCommands.py:728
+#: globalCommands.py:789 globalCommands.py:799 globalCommands.py:809
+#: keyboardHandler.py:300 synthSettingsRing.py:74 appModules\winamp.py:80
+#: appModules\winamp.py:90 gui\settingsDialogs.py:724
+#: gui\settingsDialogs.py:1068 virtualBuffers\__init__.py:810
 msgid "off"
 msgstr "изключен"
 
@@ -1614,31 +1653,32 @@ msgstr ""
 "настройка от пръстена от настройки за "
 "синтезатора"
 
-#: globalCommands.py:181
+#. Translators: The message announced when toggling the speak typed characters keyboard setting.
+#: globalCommands.py:182
 msgid "speak typed characters"
 msgstr "Изговаряй натиснатите знаци"
 
-#: globalCommands.py:182
+#: globalCommands.py:183
 msgid "Toggles on and off the speaking of typed characters"
 msgstr ""
 "Включва или изключва произнасянето на "
 "натиснатите знаци"
 
-#: globalCommands.py:191
+#: globalCommands.py:192
 msgid "speak typed words"
 msgstr "Изговаряй написаните думи"
 
-#: globalCommands.py:192
+#: globalCommands.py:193
 msgid "Toggles on and off the speaking of typed words"
 msgstr ""
 "Включва или изключва изговарянето на "
 "написаните думи"
 
-#: globalCommands.py:201
+#: globalCommands.py:202
 msgid "speak command keys"
 msgstr "Изговаряй командните клавиши"
 
-#: globalCommands.py:202
+#: globalCommands.py:203
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
@@ -1646,35 +1686,38 @@ msgstr ""
 "Включва или изключва произнасянето на "
 "клавиши, които не са специфични знаци"
 
-#: globalCommands.py:213
+#. Translators: Reported when the user cycles through speech symbol levels
+#. which determine what symbols are spoken.
+#. %s will be replaced with the symbol level; e.g. none, some, most and all.
+#: globalCommands.py:217
 #, python-format
 msgid "symbol level %s"
 msgstr "Ниво на символите %s"
 
-#: globalCommands.py:214
+#: globalCommands.py:218
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
 "превключва между символните нива, които "
 "определят кои знаци да се изговарят"
 
-#: globalCommands.py:229
+#: globalCommands.py:233
 msgid "object has no location"
 msgstr "Обектът няма местоположение"
 
-#: globalCommands.py:235
+#: globalCommands.py:239
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr ""
 "Премества курсора на мишката до текущия "
 "навигационен обект"
 
-#: globalCommands.py:238
+#: globalCommands.py:242
 msgid "Move navigator object to mouse"
 msgstr ""
 "Премества навигационния обект до курсора "
 "на мишката"
 
-#: globalCommands.py:242
+#: globalCommands.py:246
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
@@ -1683,11 +1726,11 @@ msgstr ""
 "елемента под курсора на мишката и го "
 "прочита"
 
-#: globalCommands.py:255
+#: globalCommands.py:259
 msgid "No flat review for this object"
 msgstr "Няма равнинен преглед за този обект"
 
-#: globalCommands.py:256
+#: globalCommands.py:260
 msgid ""
 "Moves to flat review for the screen (or document if currently inside one) "
 "and positions the review cursor at the location of the current object"
@@ -1697,13 +1740,13 @@ msgstr ""
 "позиционира курсора за преглед върху "
 "текущия обект"
 
-#: globalCommands.py:268
+#: globalCommands.py:272
 msgid "No object at flat review position"
 msgstr ""
 "Няма обект на позицията на равнинния "
 "преглед"
 
-#: globalCommands.py:269
+#: globalCommands.py:273
 msgid ""
 "Moves navigator object to the object represented by the text at the position "
 "of the review cursor within flat review"
@@ -1712,18 +1755,20 @@ msgstr ""
 "от текста, върху който е позициониран "
 "курсорът за преглед при равнинния преглед"
 
-#: globalCommands.py:274 globalCommands.py:308 globalCommands.py:357
-#: globalCommands.py:371 globalCommands.py:385 globalCommands.py:399
-#: globalCommands.py:413
+#. Translators: Reported when the user tries to perform a command related to the navigator object
+#. but there is no current navigator object.
+#: globalCommands.py:280 globalCommands.py:314 globalCommands.py:363
+#: globalCommands.py:377 globalCommands.py:391 globalCommands.py:405
+#: globalCommands.py:419
 msgid "no navigator object"
 msgstr "Няма навигационен обект"
 
-#: globalCommands.py:300 globalCommands.py:742
+#: globalCommands.py:306 globalCommands.py:750
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s е копиран в клипборда"
 
-#: globalCommands.py:303
+#: globalCommands.py:309
 msgid ""
 "Reports the current navigator object. Pressing twice spells this information,"
 "and pressing three times Copies name and value of this  object to the "
@@ -1733,17 +1778,17 @@ msgstr ""
 "двукратно натискане го спелува. При "
 "трикратно натискане го копира в клипборда"
 
-#: globalCommands.py:311
+#: globalCommands.py:317
 msgid "No location information for navigator object"
 msgstr ""
 "Няма позиционна информация за "
 "навигационния обект"
 
-#: globalCommands.py:315
+#: globalCommands.py:321
 msgid "No location information for screen"
 msgstr "Няма позиционна информация за екрана"
 
-#: globalCommands.py:321
+#: globalCommands.py:327
 #, python-format
 msgid ""
 "Object edges positioned %.1f per cent from left edge of screen, %.1f per "
@@ -1756,17 +1801,17 @@ msgstr ""
 " му е %.1f процента от екрана, височината му "
 "е %.1f процента от екрана"
 
-#: globalCommands.py:322
+#: globalCommands.py:328
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr ""
 "Докладва ширината, височината, и "
 "позицията на екрана на текущия обект"
 
-#: globalCommands.py:331
+#: globalCommands.py:337
 msgid "move to focus"
 msgstr "Премества курсора до фокуса"
 
-#: globalCommands.py:333
+#: globalCommands.py:339
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
@@ -1776,19 +1821,19 @@ msgstr ""
 "каретката вътре в обекта, ако това е "
 "възможно"
 
-#: globalCommands.py:338 globalCommands.py:689
+#: globalCommands.py:344 globalCommands.py:697
 msgid "no focus"
 msgstr "Няма фокус"
 
-#: globalCommands.py:340
+#: globalCommands.py:346
 msgid "move focus"
 msgstr "Премества фокуса"
 
-#: globalCommands.py:347
+#: globalCommands.py:353
 msgid "no caret"
 msgstr "Няма каретка"
 
-#: globalCommands.py:352
+#: globalCommands.py:358
 msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
@@ -1797,55 +1842,55 @@ msgstr ""
 "Натиснато два пъти, премества каретката д"
 "о текущата позиция на курсора за преглед "
 
-#: globalCommands.py:365
+#: globalCommands.py:371
 msgid "No containing object"
 msgstr "Няма съдържащ обект"
 
-#: globalCommands.py:366
+#: globalCommands.py:372
 msgid "Moves the navigator object to the object containing it"
 msgstr ""
 "Премества навигационния обект до "
 "съдържащия го обект "
 
-#: globalCommands.py:379
+#: globalCommands.py:385
 msgid "No next"
 msgstr "Няма следващ"
 
-#: globalCommands.py:380
+#: globalCommands.py:386
 msgid "Moves the navigator object to the next object"
 msgstr ""
 "Премества навигационния обект до "
 "следващия обект "
 
-#: globalCommands.py:393
+#: globalCommands.py:399
 msgid "No previous"
 msgstr "Няма предишен"
 
-#: globalCommands.py:394
+#: globalCommands.py:400
 msgid "Moves the navigator object to the previous object"
 msgstr ""
 "Премества навигационния обект до "
 "предишния обект "
 
-#: globalCommands.py:407
+#: globalCommands.py:413
 msgid "No objects inside"
 msgstr "Не съдържа обекти"
 
-#: globalCommands.py:408
+#: globalCommands.py:414
 msgid "Moves the navigator object to the first object inside it"
 msgstr ""
 "Премества навигационния обект до първия "
 "обект, който той съдържа "
 
-#: globalCommands.py:418
+#: globalCommands.py:424
 msgid "No default action"
 msgstr "Няма действие по подразбиране"
 
-#: globalCommands.py:423
+#: globalCommands.py:429
 msgid "default action failed"
 msgstr "Действието по подразбиране се провали"
 
-#: globalCommands.py:426
+#: globalCommands.py:432
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
@@ -1854,11 +1899,11 @@ msgstr ""
 "текущия обект. Например, ако това е бутон, "
 "го натиска."
 
-#: globalCommands.py:432 globalCommands.py:444 globalCommands.py:486
+#: globalCommands.py:438 globalCommands.py:450 globalCommands.py:492
 msgid "top"
 msgstr "горен край"
 
-#: globalCommands.py:434
+#: globalCommands.py:440
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
@@ -1867,7 +1912,7 @@ msgstr ""
 "горния ред на текущия навигационен обект "
 "и го изговаря"
 
-#: globalCommands.py:446
+#: globalCommands.py:452
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
@@ -1876,7 +1921,7 @@ msgstr ""
 " ред на текущия навигационен обект и го "
 "изговаря"
 
-#: globalCommands.py:456
+#: globalCommands.py:462
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled. "
@@ -1888,11 +1933,11 @@ msgstr ""
 "го спелува, като използва описанията на "
 "буквите."
 
-#: globalCommands.py:466 globalCommands.py:474 globalCommands.py:508
+#: globalCommands.py:472 globalCommands.py:480 globalCommands.py:514
 msgid "bottom"
 msgstr "долен край"
 
-#: globalCommands.py:468
+#: globalCommands.py:474
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
@@ -1901,7 +1946,7 @@ msgstr ""
 " ред на текущия навигационен обект и го "
 "изговаря"
 
-#: globalCommands.py:476
+#: globalCommands.py:482
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
@@ -1910,7 +1955,7 @@ msgstr ""
 " ред на текущия навигационен обект и го "
 "изговаря"
 
-#: globalCommands.py:488
+#: globalCommands.py:494
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
@@ -1919,7 +1964,7 @@ msgstr ""
 "предишната дума на текущия навигационен "
 "обект и я изговаря"
 
-#: globalCommands.py:498
+#: globalCommands.py:504
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. Pressing twice spells the word. Pressing three times spells the "
@@ -1932,7 +1977,7 @@ msgstr ""
 "натискане я спелува, използвайки "
 "описанията на буквите."
 
-#: globalCommands.py:510
+#: globalCommands.py:516
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
@@ -1941,11 +1986,11 @@ msgstr ""
 "следващата дума на текущия навигационен "
 "обект и я изговаря"
 
-#: globalCommands.py:518 globalCommands.py:530 appModules\totalcmd.py:35
+#: globalCommands.py:524 globalCommands.py:536 appModules\totalcmd.py:35
 msgid "left"
 msgstr "ляв"
 
-#: globalCommands.py:520
+#: globalCommands.py:526
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -1953,7 +1998,7 @@ msgstr ""
 "Премества курсора за преглед до първия "
 "знак от текущия ред и го изговаря"
 
-#: globalCommands.py:538
+#: globalCommands.py:544
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
@@ -1962,7 +2007,7 @@ msgstr ""
 " знак на текущия ред в текущия навигаци"
 "онен обект и го изговаря."
 
-#: globalCommands.py:555
+#: globalCommands.py:561
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated. Pressing twice reports a description or example of that "
@@ -1977,11 +2022,11 @@ msgstr ""
 "цифровата стойност на този знак в десетич"
 "ен и шестнадесетичен вид."
 
-#: globalCommands.py:565 globalCommands.py:582 appModules\totalcmd.py:37
+#: globalCommands.py:571 globalCommands.py:588 appModules\totalcmd.py:37
 msgid "right"
 msgstr "десен"
 
-#: globalCommands.py:573
+#: globalCommands.py:579
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
@@ -1990,7 +2035,7 @@ msgstr ""
 " знак на текущия ред в текущия навигаци"
 "онен обект и го изговаря."
 
-#: globalCommands.py:584
+#: globalCommands.py:590
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -1999,20 +2044,22 @@ msgstr ""
 " знак на текущия ред в текущия навигаци"
 "онен обект и го изговаря."
 
-#: globalCommands.py:593
+#. Translators: A speech mode which will cause NVDA to beep instead of speaking.
+#: globalCommands.py:600
 msgid "beeps"
 msgstr "бибипкане"
 
-#: globalCommands.py:595
+#. Translators: The normal speech mode; i.e. NVDA will talk as normal.
+#: globalCommands.py:603
 msgid "talk"
 msgstr "Говор"
 
-#: globalCommands.py:597
+#: globalCommands.py:605
 #, python-format
 msgid "speech mode %s"
 msgstr "Режим на говор %s"
 
-#: globalCommands.py:599
+#: globalCommands.py:607
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -2024,13 +2071,13 @@ msgstr ""
 "е издава звук всеки път, когато трябва да "
 "говори. Ако е на говор, ще говори нормално."
 
-#: globalCommands.py:616
+#: globalCommands.py:624
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr ""
 "Премества фокуса до следващия най-близък "
 "документ, който съдържа фокусът."
 
-#: globalCommands.py:628
+#: globalCommands.py:636
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -2045,15 +2092,15 @@ msgstr ""
 "клавишите се използват за навигация и "
 "преглед на съдържанието."
 
-#: globalCommands.py:632
+#: globalCommands.py:640
 msgid "Quits NVDA!"
 msgstr "Изход от NVDA!"
 
-#: globalCommands.py:636
+#: globalCommands.py:644
 msgid "Shows the NVDA menu"
 msgstr "Показва менюто на NVDA"
 
-#: globalCommands.py:640
+#: globalCommands.py:648
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
@@ -2062,7 +2109,7 @@ msgstr ""
 "същото време мести и самия курсор за "
 "преглед."
 
-#: globalCommands.py:644
+#: globalCommands.py:652
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
@@ -2070,11 +2117,11 @@ msgstr ""
 "Чете от каретката до края, като в същото вр"
 "еме премества и самата каретка."
 
-#: globalCommands.py:675
+#: globalCommands.py:683
 msgid "No formatting information"
 msgstr "Няма информация за форматирането."
 
-#: globalCommands.py:679
+#: globalCommands.py:687
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document"
@@ -2083,50 +2130,50 @@ msgstr ""
 "текущата позиция на курсора за преглед в "
 "документа."
 
-#: globalCommands.py:690
+#: globalCommands.py:698
 msgid "reports the object with focus"
 msgstr "Докладва обекта на фокус."
 
-#: globalCommands.py:710
+#: globalCommands.py:718
 msgid "No status line found"
 msgstr "Лентата на състоянието не е намерена!"
 
-#: globalCommands.py:716
+#: globalCommands.py:724
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
 "Прочита лентата на състоянието и "
 "премества навигатора до нея."
 
-#: globalCommands.py:725
+#: globalCommands.py:733
 msgid "Mouse tracking"
 msgstr "Следене на мишката"
 
-#: globalCommands.py:726
+#: globalCommands.py:734
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr ""
 "Включва или изключва докладването на "
 "информация при движение на мишката"
 
-#: globalCommands.py:734
+#: globalCommands.py:742
 msgid "no title"
 msgstr "Няма заглавие"
 
-#: globalCommands.py:743
+#: globalCommands.py:751
 msgid ""
 "Reports the title of the current application or foreground window. If "
-"pressed twice, spells the title. If pressed thrice, copies the title to the "
-"clipboard"
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
 msgstr ""
 "Докладва заглавието на текущото "
 "приложение или прозорец. При двукратно "
 "натискане го спелува. При трикратно "
 "натискане го копира в клипборда."
 
-#: globalCommands.py:749
+#: globalCommands.py:757
 msgid "speaks the current foreground object"
 msgstr "Изговаря текущия обект на преден план."
 
-#: globalCommands.py:760
+#: globalCommands.py:768
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -2135,30 +2182,30 @@ msgstr ""
 "обект, която е полезна за разработчици, и "
 "отваря прозореца за преглед на логове."
 
-#: globalCommands.py:766
+#: globalCommands.py:774
 msgid "no progress bar updates"
 msgstr ""
 "Няма обновления на лентата на напредъка."
 
-#: globalCommands.py:769
+#: globalCommands.py:777
 msgid "speak progress bar updates"
 msgstr ""
 "Изговаряй обновленията на лентата на "
 "напредъка."
 
-#: globalCommands.py:772
+#: globalCommands.py:780
 msgid "beep for progress bar updates"
 msgstr ""
 "Бибипкай за обновления на лентата на "
 "напредъка."
 
-#: globalCommands.py:775
+#: globalCommands.py:783
 msgid "beep and speak progress bar updates"
 msgstr ""
 "Бибипкай и изговаряй обновленията на "
 "лентата на напредъка"
 
-#: globalCommands.py:777
+#: globalCommands.py:785
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
@@ -2168,13 +2215,13 @@ msgstr ""
 "режимите на съобщаване на обновленията за"
 " лентата на напредъка."
 
-#: globalCommands.py:786
+#: globalCommands.py:794
 msgid "report dynamic content changes"
 msgstr ""
 "Докладвай динамично обновяващото се "
 "съдържание"
 
-#: globalCommands.py:787
+#: globalCommands.py:795
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -2183,23 +2230,23 @@ msgstr ""
 "динамично обновяващо се съдържание, като "
 "например, нов текст в командния промпт"
 
-#: globalCommands.py:796
+#: globalCommands.py:804
 msgid "caret moves review cursor"
 msgstr "Каретката мести курсора за преглед"
 
-#: globalCommands.py:797
+#: globalCommands.py:805
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Включва или изключва местенето на курсора"
 " за  преглед заедно с каретката"
 
-#: globalCommands.py:806
+#: globalCommands.py:814
 msgid "focus moves navigator object"
 msgstr ""
 "Фокусът премества навигационния обект"
 
-#: globalCommands.py:807
+#: globalCommands.py:815
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
@@ -2207,38 +2254,38 @@ msgstr ""
 "навигационния обект в резултат на промяна"
 " на фокуса."
 
-#: globalCommands.py:819
+#: globalCommands.py:827
 msgid "no system battery"
 msgstr "Няма системна батерия"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:822 NVDAObjects\behaviors.py:54
+#: globalCommands.py:830 NVDAObjects\behaviors.py:54
 #, python-format
 msgid "%d percent"
 msgstr "%d процента"
 
-#: globalCommands.py:823
+#: globalCommands.py:831
 msgid "AC power on"
 msgstr "Външното захранване е включено"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#: globalCommands.py:826
+#: globalCommands.py:834
 #, python-format
 msgid "%d hours and %d minutes remaining"
 msgstr "Остават %d часа и %d минути"
 
-#: globalCommands.py:828
+#: globalCommands.py:836
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Докладва състоянието на батерията и "
 "оставащото време до изчерпването й, ако "
 "не е включено външно захранване."
 
-#: globalCommands.py:832
+#: globalCommands.py:840
 msgid "Pass next key through"
 msgstr "Препредай следващия клавиш"
 
-#: globalCommands.py:833
+#: globalCommands.py:841
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -2247,17 +2294,17 @@ msgstr ""
 "комбинация директно на Windows или  активнот"
 "о приложение"
 
-#: globalCommands.py:838
+#: globalCommands.py:846
 #, python-format
 msgid "Currently running application is %s"
 msgstr "Текущо зареденото приложение е %s"
 
-#: globalCommands.py:841
+#: globalCommands.py:849
 #, python-format
 msgid " and currently loaded module is %s"
 msgstr " и текущо зареденият модул е %s"
 
-#: globalCommands.py:843
+#: globalCommands.py:851
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
@@ -2266,92 +2313,92 @@ msgstr ""
 "приложение заедно с името на текущо "
 "заредения модул"
 
-#: globalCommands.py:847
+#: globalCommands.py:855
 msgid "Shows the NVDA general settings dialog"
 msgstr ""
 "Показва прозореца с основните настройки "
 "на NVDA"
 
-#: globalCommands.py:851
+#: globalCommands.py:859
 msgid "Shows the NVDA synthesizer dialog"
 msgstr ""
 "Показва прозореца за избор на синтезатор"
 
-#: globalCommands.py:855
+#: globalCommands.py:863
 msgid "Shows the NVDA voice settings dialog"
 msgstr ""
 "Показва прозореца за избор и настройка на "
 "гласа"
 
-#: globalCommands.py:859
+#: globalCommands.py:867
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr ""
 "Показва прозореца за настройка на "
 "клавиатурата"
 
-#: globalCommands.py:863
+#: globalCommands.py:871
 msgid "Shows the NVDA mouse settings dialog"
 msgstr ""
 "Показва прозореца за настройка на мишката"
 
-#: globalCommands.py:867
+#: globalCommands.py:875
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr ""
 "Показва прозореца за настройка на "
 "представянето на обектите"
 
-#: globalCommands.py:871
+#: globalCommands.py:879
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr ""
 "Показва диалога с настройки на режима на "
 "разглеждане в NVDA"
 
-#: globalCommands.py:875
+#: globalCommands.py:883
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr ""
 "Показва прозореца за настройка на "
 "форматирането на документите"
 
-#: globalCommands.py:879
+#: globalCommands.py:887
 msgid "Saves the current NVDA configuration"
 msgstr "Запазва текущата конфигурация на NVDA"
 
-#: globalCommands.py:883
+#: globalCommands.py:891
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr ""
 "Зарежда последно запазените настройки, "
 "презаписвайки текущите промени"
 
-#: globalCommands.py:893
+#: globalCommands.py:901
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr ""
 "Активира конзолата на python на NVDA, главно "
 "използвана за разработка"
 
-#: globalCommands.py:898 gui\settingsDialogs.py:1165
+#: globalCommands.py:906 gui\settingsDialogs.py:1204
 msgid "review"
 msgstr "преглед"
 
-#: globalCommands.py:901 gui\settingsDialogs.py:1165
+#: globalCommands.py:909 gui\settingsDialogs.py:1204
 msgid "focus"
 msgstr "фокус"
 
-#: globalCommands.py:902
+#: globalCommands.py:910
 #, python-format
 msgid "Braille tethered to %s"
 msgstr "Брайлът е обвързан с %s"
 
-#: globalCommands.py:903
+#: globalCommands.py:911
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Превключва обвързването на брайловия "
 "дисплей между фокуса и курсора за преглед."
 
-#: globalCommands.py:911
+#: globalCommands.py:919
 msgid "There is no text on the clipboard"
 msgstr "Няма текст в клипборда"
 
-#: globalCommands.py:916
+#: globalCommands.py:924
 #, python-format
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
@@ -2359,16 +2406,16 @@ msgstr ""
 "Клипборда съдържа голямо количество "
 "текст. Дължината му е %s символа."
 
-#: globalCommands.py:917
+#: globalCommands.py:925
 msgid "Reports the text on the Windows clipboard"
 msgstr ""
 "Докладва текста, намиращ се в клипборда"
 
-#: globalCommands.py:921
+#: globalCommands.py:929
 msgid "Start marked"
 msgstr "Началото е маркирано"
 
-#: globalCommands.py:922
+#: globalCommands.py:930
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
@@ -2377,26 +2424,26 @@ msgstr ""
 "като начало на текст, който да бъде копира"
 "н."
 
-#: globalCommands.py:926
+#: globalCommands.py:934
 msgid "No start marker set"
 msgstr "Няма зададен маркер за начало"
 
-#: globalCommands.py:930
+#: globalCommands.py:938
 msgid "The start marker must reside within the same object"
 msgstr ""
 "Маркерът за начало трябва да е в същия "
 "обект."
 
-#: globalCommands.py:935
+#: globalCommands.py:943
 msgid "Review selection copied to clipboard"
 msgstr ""
 "Маркираният текст е копиран в клипборда."
 
-#: globalCommands.py:937
+#: globalCommands.py:945
 msgid "No text to copy"
 msgstr "Няма текст който да бъде копиран."
 
-#: globalCommands.py:940
+#: globalCommands.py:948
 msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
@@ -2405,37 +2452,37 @@ msgstr ""
 "текущата позиция на курсора за преглед "
 "включително и го копира в клипборда."
 
-#: globalCommands.py:944
+#: globalCommands.py:952
 msgid "Scrolls the braille display back"
 msgstr "Превърта брайловия дисплей назад."
 
-#: globalCommands.py:949
+#: globalCommands.py:957
 msgid "Scrolls the braille display forward"
 msgstr "Превърта брайловия дисплей напред."
 
-#: globalCommands.py:954
+#: globalCommands.py:962
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
 "Премества курсора или активира обекта под"
 " тази брайлова клетка."
 
-#: globalCommands.py:959
+#: globalCommands.py:967
 msgid "Moves the braille display to the previous line"
 msgstr ""
 "Премества брайловия дисплей на предишния "
 "ред."
 
-#: globalCommands.py:964
+#: globalCommands.py:972
 msgid "Moves the braille display to the next line"
 msgstr ""
 "Премества брайловия дисплей на следващия "
 "ред."
 
-#: globalCommands.py:971
+#: globalCommands.py:979
 msgid "Plugins reloaded"
 msgstr "Добавките са презаредени."
 
-#: globalCommands.py:972
+#: globalCommands.py:980
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
@@ -2444,6 +2491,32 @@ msgstr ""
 "глобалните добавки без да се рестартира "
 "NVDA, което може да е полезно за "
 "разработчиците."
+
+#: installer.py:175 gui\__init__.py:340
+msgid "NVDA web site"
+msgstr "Уеб страница"
+
+#: installer.py:176
+msgid "Uninstall NVDA"
+msgstr "Деинсталиране на NVDA"
+
+#: installer.py:177
+msgid "Explore NVDA user configuration directory"
+msgstr ""
+"Изследвай папката с потребителските "
+"настройки"
+
+#: installer.py:178 installer.py:179
+msgid "Documentation"
+msgstr "Документация"
+
+#: installer.py:178 gui\__init__.py:336
+msgid "Keyboard Commands Quick Reference"
+msgstr "Кратък преглед на клавишните команди"
+
+#: installer.py:179 gui\__init__.py:334
+msgid "User Guide"
+msgstr "Ръководство на потребителя"
 
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:9
@@ -2837,61 +2910,68 @@ msgstr "Отмаркиране на %s"
 msgid "selection removed"
 msgstr "Селекцията е премахната"
 
-#: speech.py:788
+#: speech.py:789
 msgid "done dragging"
 msgstr "Влаченето е завършено"
 
-#: speech.py:804 speech.py:807
+#: speech.py:809 speech.py:812
 #, python-format
 msgid "level %s"
 msgstr "ниво %s"
 
-#: speech.py:820 speech.py:1100
+#: speech.py:825 speech.py:1143
 #, python-format
 msgid "row %s"
 msgstr "ред %s"
 
-#: speech.py:827 speech.py:1096
+#: speech.py:832 speech.py:1139
 #, python-format
 msgid "column %s"
 msgstr "колона %s"
 
-#: speech.py:832
+#: speech.py:839
 #, python-format
 msgid "with %s rows and %s columns"
 msgstr " с %s реда и %s колони"
 
-#: speech.py:834
+#: speech.py:841
 #, python-format
 msgid "with %s columns"
 msgstr " с %s колони"
 
-#: speech.py:836
+#: speech.py:843
 #, python-format
 msgid "with %s rows"
 msgstr " с %s реда"
 
-#: speech.py:903
+#: speech.py:910
 #, python-format
 msgid "with %s items"
 msgstr " с %s елемента"
 
-#: speech.py:929 speech.py:1049
+#: speech.py:936 speech.py:1089
 #, python-format
 msgid "out of %s"
 msgstr "извън %s"
 
-#: speech.py:953
+#. Translators: Indicates the page number in a document.
+#. %s will be replaced with the page number.
+#: speech.py:962
 #, python-format
 msgid "page %s"
 msgstr "страница %s"
 
-#: speech.py:960
+#. Translators: Indicates the style of text.
+#. A style is a collection of formatting settings and depends on the application.
+#. %s will be replaced with the name of the style.
+#: speech.py:972
 #, python-format
 msgid "style %s"
 msgstr "Стил %s"
 
-#: speech.py:962
+#. Translators: Indicates that text has reverted to the default style.
+#. A style is a collection of formatting settings and depends on the application.
+#: speech.py:976
 msgid "default style"
 msgstr "Стил по подразбиране"
 
@@ -2899,84 +2979,106 @@ msgstr "Стил по подразбиране"
 #. The {backgroundColor} text will be replaced by the background color.
 #. For example, if the text is white on a black background,
 #. the output of this message in English would be "on black".
-#: speech.py:990
+#: speech.py:1004
 msgid "on {backgroundColor}"
 msgstr "на {backgroundColor}"
 
-#: speech.py:995
+#. Translators: Indicates the line number of the text.
+#. %s will be replaced with the line number.
+#: speech.py:1011
 #, python-format
 msgid "line %s"
 msgstr "Ред %s"
 
-#: speech.py:1001
+#. Translators: Reported when text is not bolded.
+#: speech.py:1020
 msgid "no bold"
 msgstr "не удебелен"
 
-#: speech.py:1006
+#. Translators: Reported when text is italicized.
+#: speech.py:1026
 msgid "italic"
 msgstr "наклонен"
 
-#: speech.py:1006
+#. Translators: Reported when text is not italicized.
+#: speech.py:1028
 msgid "no italic"
 msgstr "не наклонен"
 
-#: speech.py:1011
+#. Translators: Reported when text is formatted with strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+#: speech.py:1035
 msgid "strikethrough"
 msgstr "задраскан"
 
-#: speech.py:1011
+#. Translators: Reported when text is formatted without strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+#: speech.py:1038
 msgid "no strikethrough"
 msgstr "не задраскан"
 
-#: speech.py:1016
+#. Translators: Reported when text is underlined.
+#: speech.py:1044
 msgid "underlined"
 msgstr "подчертан"
 
-#: speech.py:1016
+#. Translators: Reported when text is not underlined.
+#: speech.py:1046
 msgid "not underlined"
 msgstr "не подчертан"
 
-#: speech.py:1027
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+#: speech.py:1061
 msgid "baseline"
 msgstr "основна линия"
 
-#: speech.py:1035
+#. Translators: Reported when text is left-aligned.
+#: speech.py:1070
 msgid "align left"
 msgstr "подравнен в ляво"
 
-#: speech.py:1037
+#. Translators: Reported when text is centered.
+#: speech.py:1073
 msgid "align center"
 msgstr "центрирано подравнен"
 
-#: speech.py:1039
+#. Translators: Reported when text is right-aligned.
+#: speech.py:1076
 msgid "align right"
 msgstr "подравнен в дясно"
 
-#: speech.py:1041
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#: speech.py:1080
 msgid "align justify"
 msgstr "подравнен двустранно"
 
-#: speech.py:1043
+#. Translators: Reported when text has reverted to default alignment.
+#: speech.py:1083
 msgid "align default"
 msgstr "подравнен по подразбиране"
 
-#: speech.py:1055
+#. Translators: Reported when text contains a comment.
+#: speech.py:1096
 msgid "has comment"
 msgstr "Има Коментар"
 
-#: speech.py:1062
+#. Translators: Reported when text contains a spelling error.
+#: speech.py:1104
 msgid "spelling error"
 msgstr "грешно изписан"
 
-#: speech.py:1064
+#. Translators: Reported when moving out of text containing a spelling error.
+#: speech.py:1107
 msgid "out of spelling error"
 msgstr "край на грешното изписване"
 
-#: speech.py:1082
+#: speech.py:1125
 msgid "out of table"
 msgstr "извън таблица"
 
-#: speech.py:1091
+#: speech.py:1134
 #, python-format
 msgid "table with %s columns and %s rows"
 msgstr "Таблица с %s колони и %s редове"
@@ -3013,21 +3115,165 @@ msgstr "Висо&чина на гласа"
 msgid "&Inflection"
 msgstr "&Модулация"
 
+#. Translators: The title of the dialog displayed while manually checking for an NVDA update.
+#: updateCheck.py:117
+msgid "Checking for Update"
+msgstr "Проверка за обновления"
+
+#. Translators: The progress message displayed while manually checking for an NVDA update.
+#: updateCheck.py:119
+msgid "Checking for update"
+msgstr "Проверка за обновления"
+
+#. Translators: A message indicating that an error occurred while checking for an update to NVDA.
+#: updateCheck.py:126
+msgid "Error checking for update."
+msgstr "Грешка при проверката за обновления"
+
+#. Translators: The title of an error message dialog.
+#. Translators: The title of a dialog presented when an error occurs.
+#: updateCheck.py:128 updateCheck.py:341 gui\__init__.py:144
+#: gui\__init__.py:153 gui\addonGui.py:74 gui\addonGui.py:88
+#: gui\addonGui.py:107 gui\installerGui.py:54 gui\installerGui.py:190
+#: gui\installerGui.py:198 gui\installerGui.py:229 gui\logViewer.py:74
+#: gui\settingsDialogs.py:208
+msgid "Error"
+msgstr "Грешка"
+
+#. Translators: The title of the dialog informing the user about an NVDA update.
+#: updateCheck.py:170
+msgid "NVDA Update"
+msgstr "Обновяване на NVDA"
+
+#. Translators: A message indicating that an updated version of NVDA is available.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#: updateCheck.py:179
+msgid "NVDA version {version} is available."
+msgstr "Налична е версия {version}на NVDA."
+
+#. Translators: A message indicating that no update to NVDA is available.
+#: updateCheck.py:182
+msgid "No update available."
+msgstr "Няма налични обновления."
+
+#. Translators: The label of a button to download and install an NVDA update.
+#: updateCheck.py:188
+msgid "Download and &install update"
+msgstr ""
+"Сваляне и &инсталиране на обновлението"
+
+#. Translators: The label of a button to download an NVDA update.
+#: updateCheck.py:191
+msgid "&Download update"
+msgstr "&Сваляне на обновлението"
+
+#. Translators: The label of a button to remind the user later about performing some action.
+#: updateCheck.py:199
+msgid "Remind me &later"
+msgstr "&Напомняне по-късно"
+
+#. Translators: The label of a button to close a dialog.
+#. Translators: The label of a button to close the Addons dialog.
+#: updateCheck.py:205 gui\addonGui.py:48
+msgid "&Close"
+msgstr "&Затваряне"
+
+#. Translators: The title of the dialog displayed while downloading an NVDA update.
+#: updateCheck.py:252
+msgid "Downloading Update"
+msgstr "Сваляне на обновлението"
+
+#. Translators: The progress message indicating that a connection is being established.
+#: updateCheck.py:254
+msgid "Connecting"
+msgstr "Свързване"
+
+#. Translators: The progress message indicating that a download is in progress.
+#: updateCheck.py:321
+msgid "Downloading"
+msgstr "Сваляне"
+
+#. Translators: A message indicating that an error occurred while downloading an update to NVDA.
+#: updateCheck.py:340
+msgid "Error downloading update."
+msgstr "Грешка при сваляне на обновлението."
+
+#. Translators: The message presented when the update has been successfully downloaded
+#. and is about to be installed.
+#: updateCheck.py:348
+msgid "Update downloaded. It will now be installed."
+msgstr ""
+"Обновлението беше свалено. Сега ще бъде "
+"инсталирано."
+
+#. Translators: The title of the dialog displayed when the update is about to be installed.
+#: updateCheck.py:350
+msgid "Install Update"
+msgstr "Инсталиране на обновление"
+
+#: updateCheck.py:361
+msgid ""
+"We need your help in order to continue to improve NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
+"Thank you for your support."
+msgstr ""
+"Нуждаем се от вашата помощ за да продължи"
+"м да разработваме NVDA.\n"
+"Този проект разчита основно на дарения и "
+"субсидии. Когато правите дарение, вие "
+"спомагате за непрекъснатата разработка "
+"на този софтуер.\n"
+"Ако дори 10 лева се даряват за всяко "
+"изтегляне, ние ще можем да "
+"покриваметекущите разходи по проекта.\n"
+"Всички дарения се получават от NV Access, "
+"благотворителната организация, която "
+"разработва NVDA.\n"
+"Благодарим ви за вашата подкрепа."
+
+#. Translators: The title of the dialog requesting donations from users.
+#: updateCheck.py:370
+msgid "Please Donate"
+msgstr "Моля, направете дарение"
+
+#. Translators: The label of the button to donate
+#. in the "Please Donate" dialog.
+#: updateCheck.py:379
+msgid "&Donate"
+msgstr "Направи &дарение"
+
+#. Translators: The label of the button to decline donation
+#. in the "Please Donate" dialog.
+#: updateCheck.py:384
+msgid "&Not now"
+msgstr "&Не сега"
+
+#. Translators: The label of a button to indicate that the user is finished donating
+#. in the "Please Donate" dialog.
+#: updateCheck.py:399
+msgid "&Done"
+msgstr "&Готово"
+
 #: versionInfo.py:32
 msgid "NonVisual Desktop Access"
 msgstr "НеВизуален настолен достъп"
 
-#: versionInfo.py:39
+#: versionInfo.py:40
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr ""
 "Безплатен и с отворен код екранен четец за"
 " Microsoft Windows"
 
-#: versionInfo.py:42
+#: versionInfo.py:43
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} сътрудници на NVDA"
 
-#: versionInfo.py:44
+#: versionInfo.py:45
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -3208,12 +3454,16 @@ msgstr "Няма автоматични коментари"
 #. the 'automatic comments' window in poedit.
 #: appModules\poedit.py:82
 msgid "Could not find automatic comments window."
-msgstr "Прозорецът за автоматични коментари не може да бъде намерен"
+msgstr ""
+"Прозорецът за автоматични коментари не "
+"може да бъде намерен"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:84
 msgid "Reports any comments in the automatic comments window"
-msgstr "Докладва всички коментари от прозореца за автоматични коментари"
+msgstr ""
+"Докладва всички коментари от прозореца за"
+" автоматични коментари"
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
@@ -3226,12 +3476,16 @@ msgstr "Няма коментар."
 #. the 'comments' window in poedit.
 #: appModules\poedit.py:103
 msgid "Could not find comment window."
-msgstr "Прозорецът за коментари не може да бъде намерен."
+msgstr ""
+"Прозорецът за коментари не може да бъде "
+"намерен."
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:105
 msgid "Reports any comments in the comments window"
-msgstr "Докладва всички коментари в прозореца за коментари"
+msgstr ""
+"Докладва всички коментари в прозореца за "
+"коментари"
 
 #. Translators: Automatic comments is the name of the poedit
 #. window that displays comments extracted from code.
@@ -3327,23 +3581,23 @@ msgstr "MDV Lilli"
 msgid "No braille"
 msgstr "Няма брайл"
 
-#: config\__init__.py:21
+#: config\__init__.py:23
 msgid "Badly formed configuration file"
 msgstr "Лошо попълнен конфигурационен файл"
 
-#: config\__init__.py:36
+#: config\__init__.py:38
 #, python-format
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, подразбиращ се до  %s"
 
-#: config\__init__.py:189
+#: config\__init__.py:193
 #, python-format
 msgid "Error parsing configuration file: %s"
 msgstr ""
 "Грешка при обработката на "
 "конфигурационния файл: %s"
 
-#: config\__init__.py:196
+#: config\__init__.py:200
 #, python-format
 msgid ""
 "Errors in configuration file '%s':\n"
@@ -3352,100 +3606,95 @@ msgstr ""
 "Грешка в конфигурационния файл '%s':\n"
 "%s"
 
-#: gui\__init__.py:125
+#: gui\__init__.py:134
 msgid "Configuration applied"
 msgstr "Настройките са приложени"
 
-#: gui\__init__.py:129
+#: gui\__init__.py:138
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr ""
 "Настройките не могат да бъдат запазени - "
 "NVDA е в режим за сигурност."
 
-#: gui\__init__.py:133
+#: gui\__init__.py:142
 msgid "Configuration saved"
 msgstr "Настройките са запазени"
 
-#: gui\__init__.py:135
+#: gui\__init__.py:144
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Не мога да запазя настройките - вероятно "
 "заради режим само за четене на файловата "
 "система."
 
-#: gui\__init__.py:135 gui\__init__.py:144 gui\logViewer.py:74
-#: gui\settingsDialogs.py:185
-msgid "Error"
-msgstr "Грешка"
-
-#: gui\__init__.py:144
+#: gui\__init__.py:153
 msgid "Please close the other NVDA settings dialog first"
 msgstr ""
 "Моля, първо затворете останалите прозорци"
 " за настройка на NVDA."
 
-#: gui\__init__.py:148
+#: gui\__init__.py:157
 msgid "Default dictionary"
 msgstr "Речник по подразбиране"
 
-#: gui\__init__.py:151
+#: gui\__init__.py:160
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "Гласов речник (%s)"
 
-#: gui\__init__.py:154
+#: gui\__init__.py:163
 msgid "Temporary dictionary"
 msgstr "Временен речник"
 
-#: gui\__init__.py:161
+#: gui\__init__.py:170
 msgid "Are you sure you want to quit NVDA?"
 msgstr ""
 "Сигурни ли сте, че искате да излезете от "
 "NVDA?"
 
-#: gui\__init__.py:161 gui\__init__.py:315
+#: gui\__init__.py:170 gui\__init__.py:367
 msgid "Exit NVDA"
 msgstr "&Изход от NVDA"
 
-#: gui\__init__.py:202 gui\__init__.py:301
+#: gui\__init__.py:211 gui\__init__.py:353
 msgid "About NVDA"
 msgstr "&За NVDA"
 
-#: gui\__init__.py:237
+#: gui\__init__.py:276
 msgid "&General settings..."
 msgstr "&Основни настройки..."
 
-#: gui\__init__.py:237
+#: gui\__init__.py:276
 msgid "General settings"
 msgstr "Основни настройки"
 
-#: gui\__init__.py:239
+#: gui\__init__.py:278
 msgid "&Synthesizer..."
 msgstr "&Синтезатор..."
 
-#: gui\__init__.py:239
+#: gui\__init__.py:278
 msgid "Change the synthesizer to be used"
 msgstr "Промяна на използвания синтезатор"
 
-#: gui\__init__.py:241
+#: gui\__init__.py:280
 msgid "&Voice settings..."
 msgstr "&Гласови настройки..."
 
-#: gui\__init__.py:241
+#: gui\__init__.py:280
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr ""
 "Изберете глас, скорост, височина и сила на "
 "звука"
 
-#: gui\__init__.py:243
+#: gui\__init__.py:282
 msgid "B&raille settings..."
 msgstr "&Брайлови настройки..."
 
-#: gui\__init__.py:245
+#: gui\__init__.py:284
 msgid "&Keyboard settings..."
 msgstr "Настройки на &клавиатурата..."
 
-#: gui\__init__.py:245
+#: gui\__init__.py:284
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -3454,60 +3703,60 @@ msgstr ""
 "изговарянето на набираните знаци, думи "
 "или клавишни комбинации. "
 
-#: gui\__init__.py:247
+#: gui\__init__.py:286
 msgid "&Mouse settings..."
 msgstr "Настройки на &мишката..."
 
-#: gui\__init__.py:247
+#: gui\__init__.py:286
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr ""
 "Променя докладването на промените на "
 "курсора на мишката, както и обектите под "
 "него."
 
-#: gui\__init__.py:249
+#: gui\__init__.py:288
 msgid "Review &cursor..."
 msgstr "Курсор за &преглед..."
 
-#: gui\__init__.py:249
+#: gui\__init__.py:288
 msgid "Configure how and when the review cursor moves"
 msgstr ""
 "Настройва как и кога да се мести курсорът "
 "за преглед."
 
-#: gui\__init__.py:251
+#: gui\__init__.py:290
 msgid "&Object presentation..."
 msgstr "Представяне на &обектите..."
 
-#: gui\__init__.py:251
+#: gui\__init__.py:290
 msgid "Change reporting of objects"
 msgstr "Променя докладването на обектите"
 
-#: gui\__init__.py:253
+#: gui\__init__.py:292
 msgid "&Browse mode..."
 msgstr "Режим на &разглеждане..."
 
-#: gui\__init__.py:253
+#: gui\__init__.py:292
 msgid "Change virtual buffers specific settings"
 msgstr ""
 "Променя настройки, специфични за режима "
 "на разглеждане"
 
-#: gui\__init__.py:255
+#: gui\__init__.py:294
 msgid "Document &formatting..."
 msgstr "Форматиране на &документите..."
 
-#: gui\__init__.py:255
+#: gui\__init__.py:294
 msgid "Change settings of document properties"
 msgstr ""
 "Промяна на настройките на свойствата на "
 "документите"
 
-#: gui\__init__.py:259
+#: gui\__init__.py:298
 msgid "&Default dictionary..."
 msgstr "&Речник по подразбиране..."
 
-#: gui\__init__.py:259
+#: gui\__init__.py:298
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
@@ -3515,11 +3764,11 @@ msgstr ""
 "Прозорец, в който се задава речникът по "
 "подразбиране чрез добавяне на думи в него."
 
-#: gui\__init__.py:261
+#: gui\__init__.py:300
 msgid "&Voice dictionary..."
 msgstr "&Гласов речник..."
 
-#: gui\__init__.py:261
+#: gui\__init__.py:300
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -3528,11 +3777,11 @@ msgstr ""
 "специфичен речник, като се добавят думи в "
 "него. "
 
-#: gui\__init__.py:263
+#: gui\__init__.py:302
 msgid "&Temporary dictionary..."
 msgstr "&Временен речник..."
 
-#: gui\__init__.py:263
+#: gui\__init__.py:302
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -3540,102 +3789,108 @@ msgstr ""
 "Прозорец, в който се задава временен речни"
 "к, като се добавят думи в него."
 
-#: gui\__init__.py:265
+#: gui\__init__.py:304
 msgid "Speech &dictionaries"
 msgstr "Речници"
 
-#: gui\__init__.py:267
+#: gui\__init__.py:306
 msgid "&Punctuation/symbol pronunciation..."
 msgstr ""
 "&Пунктуация/Произнасяне на символите..."
 
-#: gui\__init__.py:269
+#: gui\__init__.py:308
 msgid "&Preferences"
 msgstr "&Настройки"
 
-#: gui\__init__.py:273
+#: gui\__init__.py:312
 msgid "View log"
 msgstr "Виж &лога"
 
-#: gui\__init__.py:275
+#: gui\__init__.py:314
 msgid "Speech viewer"
 msgstr "Преглед на речта"
 
-#: gui\__init__.py:278
+#: gui\__init__.py:317
 msgid "Python console"
 msgstr "&Конзола на python"
 
-#: gui\__init__.py:280
+#. Translators: The label of a menu item to open the Add-ons Manager.
+#: gui\__init__.py:320
+msgid "Manage &add-ons"
+msgstr "Мениджър на &добавките"
+
+#: gui\__init__.py:323
+msgid "Create Portable copy..."
+msgstr "Създаване на преносимо копие..."
+
+#: gui\__init__.py:326
+msgid "&Install NVDA..."
+msgstr "&Инсталиране на NVDA..."
+
+#: gui\__init__.py:328
 msgid "Reload plugins"
 msgstr "Презареди добавките"
 
-#: gui\__init__.py:282
+#: gui\__init__.py:330
 msgid "Tools"
 msgstr "&Инструменти"
 
-#: gui\__init__.py:286
-msgid "User guide"
-msgstr "Ръководство на потребителя"
-
-#: gui\__init__.py:288
-msgid "Keyboard command quick reference"
-msgstr "Кратък преглед на клавишните команди"
-
-#: gui\__init__.py:290
+#: gui\__init__.py:338
 msgid "What's &new"
 msgstr "Какво ново"
 
-#: gui\__init__.py:292
-msgid "Web site"
-msgstr "Уеб страница"
-
-#: gui\__init__.py:294
+#: gui\__init__.py:342
 msgid "License"
 msgstr "Лиценз"
 
-#: gui\__init__.py:296
+#: gui\__init__.py:344
 msgid "Contributors"
 msgstr "Сътрудници"
 
-#: gui\__init__.py:298
+#: gui\__init__.py:346
 msgid "We&lcome dialog"
 msgstr "Начален диалог"
 
-#: gui\__init__.py:301
+#. Translators: The label of a menu item to manually check for an updated version of NVDA.
+#: gui\__init__.py:351
+msgid "Check for update..."
+msgstr "Проверка за обновления..."
+
+#: gui\__init__.py:353
 msgid "About..."
 msgstr "За програмата..."
 
-#: gui\__init__.py:303
+#: gui\__init__.py:355
 msgid "&Help"
 msgstr "&Помощ"
 
-#: gui\__init__.py:305
+#: gui\__init__.py:357
 msgid "&Revert to saved configuration"
 msgstr "&Възстанови запазените настройки"
 
-#: gui\__init__.py:305
+#: gui\__init__.py:357
 msgid "Reset all settings to saved state"
 msgstr "Връща последно запазените настройки"
 
-#: gui\__init__.py:308
+#: gui\__init__.py:360
 msgid "&Save configuration"
 msgstr "&Запази настройките"
 
-#: gui\__init__.py:308
+#: gui\__init__.py:360
 msgid "Write the current configuration to nvda.ini"
 msgstr ""
 "Запазва текущите настройки за бъдещо "
 "ползване"
 
-#: gui\__init__.py:312
+#: gui\__init__.py:364
 msgid "Donate"
 msgstr "Направи &дарение"
 
-#: gui\__init__.py:315 gui\logViewer.py:34
+#: gui\__init__.py:367 gui\__init__.py:566 gui\logViewer.py:34
 msgid "E&xit"
 msgstr "Из&ход"
 
-#: gui\__init__.py:398
+#: gui\__init__.py:450
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -3664,26 +3919,26 @@ msgstr ""
 ", както и да използвате други функции на "
 "NVDA.\n"
 
-#: gui\__init__.py:407
+#: gui\__init__.py:459
 msgid "Welcome to NVDA"
 msgstr "Добре дошли в NVDA"
 
-#: gui\__init__.py:411
+#: gui\__init__.py:463
 msgid "Options"
 msgstr "Опции"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\__init__.py:412 gui\settingsDialogs.py:545
+#: gui\__init__.py:464 gui\settingsDialogs.py:572
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Използвай CapsLock като NVDA клавиш"
 
-#: gui\__init__.py:415
+#: gui\__init__.py:467
 msgid "Show this dialog when NVDA starts"
 msgstr ""
 "Показвай този диалог при стартиране на NVDA"
 
-#: gui\__init__.py:451
+#: gui\__init__.py:503
 msgid ""
 "Your configuration file contains errors. \n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
@@ -3698,9 +3953,426 @@ msgstr ""
 "конфигурационния файл. Повече детайли за "
 "тези грешки може да намерите в лог файла.\n"
 
-#: gui\__init__.py:456
+#: gui\__init__.py:508
 msgid "Configuration File Error"
 msgstr "Грешка в конфигурационния файл"
+
+#: gui\__init__.py:542
+msgid "License Agreement"
+msgstr "Лицензно споразумение"
+
+#: gui\__init__.py:546
+msgid "I &agree"
+msgstr "&Съгласявам се"
+
+#: gui\__init__.py:554
+msgid "&Install NVDA on this computer"
+msgstr "&Инсталиране на NVDA на този компютър"
+
+#: gui\__init__.py:558
+msgid "Create &portable copy"
+msgstr "Създаване на &преносимо копие"
+
+#: gui\__init__.py:562
+msgid "&Continue running"
+msgstr "Продължаване на &работата"
+
+#. Translators: The title of the Addons Dialog
+#: gui\addonGui.py:17
+msgid "Add-ons Manager"
+msgstr "Мениджър на добавките"
+
+#. Translators: the label for the installed addons list in the addons manager.
+#: gui\addonGui.py:23
+msgid "Installed Add-ons"
+msgstr "&Инсталирани добавки"
+
+#: gui\addonGui.py:26
+msgid "Status"
+msgstr "Състояние"
+
+#: gui\addonGui.py:27
+msgid "Package"
+msgstr "Пакет"
+
+#: gui\addonGui.py:28
+msgid "Version"
+msgstr "Версия"
+
+#: gui\addonGui.py:29
+msgid "Author"
+msgstr "Автор"
+
+#: gui\addonGui.py:34
+msgid "&About add-on..."
+msgstr "За добавката..."
+
+#: gui\addonGui.py:38
+msgid "&Install..."
+msgstr "&Инсталиране..."
+
+#: gui\addonGui.py:41 gui\settingsDialogs.py:1082
+msgid "&Remove"
+msgstr "&Изтрий"
+
+#. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
+#: gui\addonGui.py:60
+msgid "Choose Add-on Package File"
+msgstr "Избор на пакет с добавка"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#: gui\addonGui.py:62
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "NVDA пакет с добавка (*.{ext})"
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#: gui\addonGui.py:72
+#, python-format
+msgid ""
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
+msgstr ""
+"Опита за отваряне на пакет с добавка се "
+"провали на %s - липсващ файл или невалиден "
+"файлов формат"
+
+#. Translators: A message asking the user if they really wish to install an addon.
+#: gui\addonGui.py:78
+msgid ""
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
+"Addon: {summary} {version}\n"
+"Author: {author}"
+msgstr ""
+"Сигурни ли сте, че искате да инсталирате "
+"тази добавка?Инсталирайте добавки само от"
+" доверени източници.\n"
+"Добавка: {summary} {version}\n"
+"Автор: {author}"
+
+#. Translators: Title for message asking if the user really wishes to install an Addon.
+#: gui\addonGui.py:80
+msgid "Add-on Installation"
+msgstr "Инсталиране на добавка"
+
+#. Translators: The message displayed when an an addon already seems to be installed.
+#: gui\addonGui.py:86
+msgid ""
+"This add-on seems to already be installed. Please remove the existing add-on "
+"and try again."
+msgstr ""
+"Тази добавка изглежда вече е била "
+"инсталирана. Моля премахнете "
+"съществуващата добавка със същото име и "
+"опитайте отново."
+
+#. Translators: The title of the dialog presented while an Addon is being installed.
+#: gui\addonGui.py:93
+msgid "Installing Add-on"
+msgstr "Инсталиране на добавка"
+
+#. Translators: The message displayed while an addon is being installed.
+#: gui\addonGui.py:95
+msgid "Please wait while the add-on is being installed."
+msgstr ""
+"Моля, изчакайте докато добавката бъде "
+"инсталирана."
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#: gui\addonGui.py:105
+#, python-format
+msgid "Failed to install add-on  from %s"
+msgstr ""
+"Инсталирането на добавка от %s се провали"
+
+#: gui\addonGui.py:118
+msgid "Are you sure you wish to remove the selected add-on from NVDA?"
+msgstr ""
+"Сигурни ли сте, че искате да премахнете "
+"тази добавка от NVDA?"
+
+#: gui\addonGui.py:118
+msgid "Remove Add-on"
+msgstr "Премахване на добавката"
+
+#. Translators: The status shown for a newly installed addon before NVDA is restarted.
+#: gui\addonGui.py:128
+msgid "install"
+msgstr "Инсталиране"
+
+#. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
+#: gui\addonGui.py:131
+msgid "remove"
+msgstr "Премахване"
+
+#. Translators: The status shown for an addon when its currently running in NVDA.
+#: gui\addonGui.py:134
+msgid "running"
+msgstr "активна"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#: gui\addonGui.py:165
+msgid ""
+"Add-ons have been added or removed. You must restart NVDA for these changes "
+"to take effect. Would you like to restart now?"
+msgstr ""
+"Добавки са били инсталирани или премах"
+"нати. За да имат тези действия ефект "
+"трябва да рестартирате NVDA. Искате ли да "
+"рестартирате NVDA сега?"
+
+#. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
+#: gui\addonGui.py:167
+msgid "Restart NVDA"
+msgstr "Рестартиране на NVDA"
+
+#. Translators: message shown in the Addon Information dialog.
+#: gui\addonGui.py:176
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Author: {author}\n"
+"URL: {url}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Версия: {version}\n"
+"Автор: {author}\n"
+"Уеб адрес: {url}\n"
+"Описание: {description}\n"
+
+#. Translators: title for the Addon Information dialog
+#: gui\addonGui.py:183
+msgid "Add-on Information"
+msgstr "Информация за добавката"
+
+#. Translators: The title of the dialog presented while NVDA is being updated.
+#: gui\installerGui.py:23
+msgid "Updating NVDA"
+msgstr "Обновяване на NVDA"
+
+#. Translators: The title of the dialog presented while NVDA is being installed.
+#: gui\installerGui.py:25
+msgid "Installing NVDA"
+msgstr "Инсталиране на NVDA"
+
+#. Translators: The message displayed while NVDA is being updated.
+#: gui\installerGui.py:27
+msgid "Please wait while your previous installation of NVDA is being updated."
+msgstr ""
+"Моля, изчакайте докато вашата предишна "
+"версия на NVDA се обновява."
+
+#. Translators: The message displayed while NVDA is being installed.
+#: gui\installerGui.py:29
+msgid "Please wait while NVDA is being installed"
+msgstr "Моля, изчакайте докато NVDA се инсталира"
+
+#. Translators: a message dialog asking to retry or cancel when NVDA install fails
+#: gui\installerGui.py:44
+msgid ""
+"The installation is unable to remove or overwrite a file. Another copy of "
+"NVDA may be running on another logged-on user account. Please make sure all "
+"installed copies of NVDA are shut down and try the installation again."
+msgstr ""
+"Инсталатора не може да премахне или "
+"презапише определен файл. Друго копие на "
+"NVDA може да е активно под друг вписан "
+"потребител. Моля, уверете се, че всички "
+"копия на NVDA са затворени и опитайте "
+"инсталацията отново."
+
+#. Translators: the title of a retry cancel dialog when NVDA installation fails
+#. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
+#: gui\installerGui.py:46 gui\installerGui.py:223
+msgid "File in Use"
+msgstr "Файла се използва"
+
+#. Translators: The message displayed when an error occurs during installation of NVDA.
+#: gui\installerGui.py:52
+msgid ""
+"The installation of NVDA failed. Please check the Log Viewer for more "
+"information."
+msgstr ""
+"Инсталацията се провали. За повече "
+"информация, моля вижте лога на NVDA"
+
+#. Translators: The message displayed when NVDA has been successfully installed.
+#: gui\installerGui.py:60
+msgid "Successfully installed NVDA. "
+msgstr "Успешно инсталиране на NVDA."
+
+#. Translators: The message displayed when NVDA has been successfully updated.
+#: gui\installerGui.py:62
+msgid "Successfully updated your installation of NVDA. "
+msgstr ""
+"Успешно обновяване на вашата инсталация "
+"на NVDA."
+
+#. Translators: The message displayed to the user after NVDA is installed
+#. and the installed copy is about to be started.
+#: gui\installerGui.py:65
+msgid "Please press OK to start the installed copy."
+msgstr ""
+"Моля натиснете OK за да стартирате "
+"инсталираното копие."
+
+#. Translators: The title of a dialolg presented to indicate a successful operation.
+#: gui\installerGui.py:67 gui\installerGui.py:236 gui\settingsDialogs.py:210
+msgid "Success"
+msgstr "Операцията беше успешна"
+
+#. Translators: The title of the Install NVDA dialog.
+#: gui\installerGui.py:82
+msgid "Install NVDA"
+msgstr "Инсталиране на NVDA"
+
+#. Translators: An informational message in the Install NVDA dialog.
+#: gui\installerGui.py:85
+msgid "To install NVDA to your hard drive, please press the Continue button."
+msgstr ""
+"За да инсталирате NVDA на вашия твърд диск, "
+"моля натиснете бутона продължи."
+
+#. Translators: An informational message in the Install NVDA dialog.
+#: gui\installerGui.py:88
+msgid ""
+"A previous copy of NVDA has been found on your system. This copy will be "
+"updated."
+msgstr ""
+"Предишно копие на NVDA е открито на вашата "
+"система. Това копие ще бъде обновено."
+
+#. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#: gui\installerGui.py:91
+msgid ""
+"The installation path for NVDA has changed. it will now  be installed in "
+"{path}"
+msgstr ""
+"Пътя до инсталацията на NVDA сега е пр"
+"оменен. Вече ще бъде инсталиран в {path}"
+
+#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#: gui\installerGui.py:96
+msgid "Use NVDA on the Windows &logon screen"
+msgstr ""
+"Използвай NVDA в екрана за вписване в &Windows"
+
+#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#: gui\installerGui.py:100
+msgid "Create &desktop icon and shortcut key (control+alt+n)"
+msgstr ""
+"Създай икона на работния плот и бърз "
+"клавиш (Control+Alt+N)"
+
+#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#: gui\installerGui.py:104
+msgid "Copy &portable configuration to current user account"
+msgstr ""
+"Копирай преносимите &настройки в текущия "
+"потребителски акаунт"
+
+#. Translators: The label of a button to continue with the operation.
+#: gui\installerGui.py:113 gui\installerGui.py:166
+msgid "&Continue"
+msgstr "Продължи"
+
+#. Translators: The title of the Create Portable NVDA dialog.
+#: gui\installerGui.py:137
+msgid "Create Portable NVDA"
+msgstr "Създаване на преносим NVDA"
+
+#. Translators: An informational message displayed in the Create Portable NVDA dialog.
+#: gui\installerGui.py:140
+msgid ""
+"To create a portable copy of NVDA, please select the path and other options "
+"and then press Continue"
+msgstr ""
+"За да създадете преносимо копие на NVDA, "
+"моля изберете пътя до желаната папка и "
+"другите настройки и натиснете бутона "
+"продължи."
+
+#. Translators: The label of a grouping containing controls to select the destination directory
+#. in the Create Portable NVDA dialog.
+#: gui\installerGui.py:145
+msgid "Portable &directory:"
+msgstr "Преносима &папка:"
+
+#. Translators: The label of a button to browse for a directory.
+#: gui\installerGui.py:149
+msgid "Browse..."
+msgstr "Избор..."
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+#: gui\installerGui.py:154
+msgid "Create an &Autorun file"
+msgstr ""
+"Създаване на файл за &автоматично "
+"стартиране"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+#: gui\installerGui.py:158
+msgid "Copy current &user configuration"
+msgstr ""
+"Копиране на текущите потребителски "
+"&настройки"
+
+#. Translators: The title of the dialog presented when browsing for the
+#. destination directory when creating a portable copy of NVDA.
+#: gui\installerGui.py:181
+msgid "Select portable  directory"
+msgstr "Избор на преносима папка"
+
+#. Translators: The message displayed when the user has not specified a destination directory
+#. in the Create Portable NVDA dialog.
+#: gui\installerGui.py:189
+msgid "Please specify a directory in which to create the portable copy."
+msgstr ""
+"Моля посочете папка в която да бъде създад"
+"ено преносимото копие."
+
+#. Translators: The message displayed when the user specifies an invalid destination drive
+#. in the Create Portable NVDA dialog.
+#: gui\installerGui.py:197
+msgid "Invalid drive %s"
+msgstr "Невалидно устройство %s"
+
+#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#: gui\installerGui.py:211
+msgid "Creating Portable Copy"
+msgstr "Създаване на преносимо копие"
+
+#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#: gui\installerGui.py:213
+msgid "Please wait while a portable copy of NVDA is created."
+msgstr ""
+"Моля изчакайте докато преносимото копие "
+"на NVDA бъде създадено."
+
+#. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
+#: gui\installerGui.py:221
+msgid "NVDA is unable to remove or overwrite a file."
+msgstr ""
+"NVDA не може да премахне или презапише файл."
+
+#. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
+#. %s will be replaced with the specific error message.
+#: gui\installerGui.py:228
+#, python-format
+msgid "Failed to create portable copy: %s"
+msgstr ""
+"Създаването на преносимо копие се провали"
+": %s"
+
+#. Translators: The message displayed when a portable copy of NVDA has been successfully created.
+#. %s will be replaced with the destination directory.
+#: gui\installerGui.py:235
+#, python-format
+msgid "Successfully created a portable copy of NVDA at %s"
+msgstr ""
+"Успешно беше създадено преносимо копие на"
+" NVDA в %s"
 
 #: gui\logViewer.py:17
 msgid "NVDA Log Viewer"
@@ -3724,72 +4396,72 @@ msgid "Error saving log: %s"
 msgstr "Грешка при съхраняването на лога: %s"
 
 #. Translators: This is the label for the general settings dialog.
-#: gui\settingsDialogs.py:108
+#: gui\settingsDialogs.py:112
 msgid "General Settings"
 msgstr "Основни настройки"
 
-#: gui\settingsDialogs.py:110
+#: gui\settingsDialogs.py:114
 msgid "info"
 msgstr "Информация"
 
-#: gui\settingsDialogs.py:111
+#: gui\settingsDialogs.py:115
 msgid "debug warning"
 msgstr ""
 "Предупреждение при отстраняване на "
 "грешки"
 
-#: gui\settingsDialogs.py:112
+#: gui\settingsDialogs.py:116
 msgid "input/output"
 msgstr "Входно/изходен"
 
-#: gui\settingsDialogs.py:113
+#: gui\settingsDialogs.py:117
 msgid "debug"
 msgstr "Отстраняване на грешки"
 
-#: gui\settingsDialogs.py:118
+#: gui\settingsDialogs.py:122
 msgid "&Language (requires restart to fully take affect):"
 msgstr ""
 "&Език (изисква рестартиране, за да има "
 "ефект):"
 
-#: gui\settingsDialogs.py:122
+#: gui\settingsDialogs.py:126
 msgid "Language"
 msgstr "Език"
 
-#: gui\settingsDialogs.py:134
+#: gui\settingsDialogs.py:138
 msgid "&Save configuration on exit"
 msgstr ""
 "&Запазвай настройките при изход от "
 "програмата"
 
-#: gui\settingsDialogs.py:139
+#: gui\settingsDialogs.py:143
 msgid "&Warn before exiting NVDA"
 msgstr ""
 "Извеждай &предупреждение преди изход от "
 "програмата"
 
-#: gui\settingsDialogs.py:143
+#: gui\settingsDialogs.py:147
 msgid "L&ogging level:"
 msgstr "Ниво на &логване:"
 
-#: gui\settingsDialogs.py:146
+#: gui\settingsDialogs.py:150
 msgid "Log level"
 msgstr "Ниво на лога"
 
-#: gui\settingsDialogs.py:156
+#: gui\settingsDialogs.py:160
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr ""
 "&Автоматично стартирай NVDA при вписване в "
 "Windows"
 
-#: gui\settingsDialogs.py:161
+#: gui\settingsDialogs.py:165
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
 "Използвай NVDA в екрана за вписване в Windows "
 "(изисква административни права)"
 
-#: gui\settingsDialogs.py:166
+#: gui\settingsDialogs.py:170
 msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
@@ -3799,7 +4471,13 @@ msgstr ""
 "защитени екрани (изисква административни "
 "права)"
 
-#: gui\settingsDialogs.py:179
+#. Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
+#: gui\settingsDialogs.py:177
+msgid "Automatically check for &updates to NVDA"
+msgstr ""
+"Автоматична проверка за &обновления на NVDA"
+
+#: gui\settingsDialogs.py:190
 msgid ""
 "Custom plugins were detected in your user settings directory. Copying these "
 "to the system profile could be a security risk. Do you still wish to copy "
@@ -3811,44 +4489,52 @@ msgstr ""
 "бъде заплаха за сигурността. Все още ли "
 "искате да копирате вашите настройки?"
 
-#: gui\settingsDialogs.py:180
+#: gui\settingsDialogs.py:191
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: gui\settingsDialogs.py:185
+#. Translators: The title of the dialog presented while settings are being copied
+#: gui\settingsDialogs.py:197
+msgid "Copying Settings"
+msgstr "Копиране на настройките"
+
+#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#: gui\settingsDialogs.py:199
+msgid "Please wait while settings are copied to the system configuration."
+msgstr ""
+"Моля изчакайте докато настройките бъдат "
+"копирани в системната папка"
+
+#: gui\settingsDialogs.py:208
 msgid "Error copying NVDA user settings"
 msgstr ""
 "Грешка при копирането на настройките на "
 "NVDA"
 
-#: gui\settingsDialogs.py:187
+#: gui\settingsDialogs.py:210
 msgid "Successfully copied NVDA user settings"
 msgstr "Успешно копиране на настройките на NVDA"
 
-#: gui\settingsDialogs.py:187
-msgid "Success"
-msgstr "Операцията беше успешна"
-
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:219
 #, python-format
 msgid "Error in %s language file"
 msgstr "Грешка в езиковия файл за %s"
 
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:219
 msgid "Language Error"
 msgstr "Грешка в езика"
 
-#: gui\settingsDialogs.py:210
+#: gui\settingsDialogs.py:233
 msgid "This change requires administrator privileges."
 msgstr ""
 "Тази промяна изисква административни "
 "права."
 
-#: gui\settingsDialogs.py:210
+#: gui\settingsDialogs.py:233
 msgid "Insufficient Privileges"
 msgstr "Недостатъчни права"
 
-#: gui\settingsDialogs.py:213
+#: gui\settingsDialogs.py:240
 msgid ""
 "For the new language to take effect, the configuration must be saved and "
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
@@ -3860,18 +4546,18 @@ msgstr ""
 "натиснете Enter.  Ако планирате да направите "
 "това ръчно по-късно, натиснете Cancel."
 
-#: gui\settingsDialogs.py:214
+#: gui\settingsDialogs.py:241
 msgid "Language Configuration Change"
 msgstr "Промяна на настройките на езика"
 
 #. Translators: This is the label for the synthesizer dialog.
-#: gui\settingsDialogs.py:222
+#: gui\settingsDialogs.py:249
 msgid "Synthesizer"
 msgstr "Синтезатор"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
-#: gui\settingsDialogs.py:228
+#: gui\settingsDialogs.py:255
 msgid "&Synthesizer:"
 msgstr "&Синтезатор:"
 
@@ -3879,31 +4565,31 @@ msgstr "&Синтезатор:"
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
-#: gui\settingsDialogs.py:247
+#: gui\settingsDialogs.py:274
 msgid "Output &device:"
 msgstr "&Изходно устройство:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
-#: gui\settingsDialogs.py:270
+#: gui\settingsDialogs.py:297
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr ""
 "Синтезаторът %s не може да бъде зареден."
 
-#: gui\settingsDialogs.py:270
+#: gui\settingsDialogs.py:297
 msgid "Synthesizer Error"
 msgstr "Грешка в синтезатора"
 
 #. Translators: This is the label for the voice settings dialog.
-#: gui\settingsDialogs.py:336
+#: gui\settingsDialogs.py:363
 msgid "Voice Settings"
 msgstr "Гласови настройки"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:406
+#: gui\settingsDialogs.py:433
 msgid "Automatic language switching (when supported)"
 msgstr ""
 "Автоматична промяна на &езика (когато това"
@@ -3911,7 +4597,7 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:411
+#: gui\settingsDialogs.py:438
 msgid "Automatic dialect switching (when supported)"
 msgstr ""
 "Автоматична промяна на &диалекта (когато "
@@ -3919,11 +4605,11 @@ msgstr ""
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:417
+#: gui\settingsDialogs.py:444
 msgid "Punctuation/symbol &level:"
 msgstr "Пунктуация/Ниво на символите:"
 
-#: gui\settingsDialogs.py:424
+#: gui\settingsDialogs.py:451
 msgid "Capital pitch change percentage"
 msgstr ""
 "Увеличаване на височината за главни букви"
@@ -3931,43 +4617,43 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:431
+#: gui\settingsDialogs.py:458
 msgid "Say &cap before capitals"
 msgstr "Казвай &cap пред главни букви"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:436
+#: gui\settingsDialogs.py:463
 msgid "&Beep for capitals"
 msgstr "Издавай звук пред главни букви"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:441
+#: gui\settingsDialogs.py:468
 msgid "Use &spelling functionality if supported"
 msgstr ""
 "Използвай възможността за спелуване, ако "
 "е възможно"
 
 #. Translators: This is the label for the keyboard settings dialog.
-#: gui\settingsDialogs.py:523
+#: gui\settingsDialogs.py:550
 msgid "Keyboard Settings"
 msgstr "Настройки на клавиатурата"
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:529
+#: gui\settingsDialogs.py:556
 msgid "&Keyboard layout:"
 msgstr "&Клавиатурна подредба:"
 
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
-#: gui\settingsDialogs.py:535
+#: gui\settingsDialogs.py:562
 msgid "Keyboard layout"
 msgstr "Клавиатурна подредба"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:550
+#: gui\settingsDialogs.py:577
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr ""
 "Използвай INSERT от цифровата клавиатура кат"
@@ -3975,26 +4661,26 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:555
+#: gui\settingsDialogs.py:582
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr ""
 "Използвай разширения INSERT като NVDA клавиш"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:560
+#: gui\settingsDialogs.py:587
 msgid "Speak typed &characters"
 msgstr "Изговаряй натиснатите букви или знаци"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:565
+#: gui\settingsDialogs.py:592
 msgid "Speak typed &words"
 msgstr "Изговаряй целите думи след изписване"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:570
+#: gui\settingsDialogs.py:597
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
 "Издавай звук при въвеждане на малки букви "
@@ -4002,43 +4688,43 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:575
+#: gui\settingsDialogs.py:602
 msgid "Speak command &keys"
 msgstr "Изговаряй командните клавиши"
 
 #. Translators: This is the label for the mouse settings dialog.
-#: gui\settingsDialogs.py:596
+#: gui\settingsDialogs.py:623
 msgid "Mouse Settings"
 msgstr "Настройки на мишката"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:601
+#: gui\settingsDialogs.py:628
 msgid "Report mouse &shape changes"
 msgstr "Докладвай промените на &курсора"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:606
+#: gui\settingsDialogs.py:633
 msgid "Enable mouse &tracking"
 msgstr "Включи проследяването на мишката"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:612
+#: gui\settingsDialogs.py:639
 msgid "Text &unit resolution:"
 msgstr ""
 "Разделителна способност на текста и "
 "елементите:"
 
 #. Translators: This is the name of a combobox in the mouse settings dialog.
-#: gui\settingsDialogs.py:617
+#: gui\settingsDialogs.py:644
 msgid "text reporting unit"
 msgstr "Единица за докладване на текст"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:627
+#: gui\settingsDialogs.py:654
 msgid "Report &role when mouse enters object"
 msgstr ""
 "Докладвай типа, когато мишката навлезе в "
@@ -4046,7 +4732,7 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:659
 msgid "play audio coordinates when mouse moves"
 msgstr ""
 "Просвирвай звуково координатите на "
@@ -4054,85 +4740,94 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:637
+#: gui\settingsDialogs.py:664
 msgid "brightness controls audio coordinates volume"
 msgstr ""
 "Силата на звука на аудио координатите на "
 "мишката зависи от яркостта на екрана"
 
 #. Translators: This is the label for the review cursor settings dialog.
-#: gui\settingsDialogs.py:656
+#: gui\settingsDialogs.py:683
 msgid "Review Cursor Settings"
 msgstr "Настройки на курсора за преглед"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:661
+#: gui\settingsDialogs.py:688
 msgid "Follow &keyboard focus"
 msgstr "Следвай системния &фокус"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:666
+#: gui\settingsDialogs.py:693
 msgid "Follow System &Caret"
 msgstr "Следвай &каретката"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:671
+#: gui\settingsDialogs.py:698
 msgid "Follow &mouse cursor"
 msgstr "Следвай &мишката"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:676
+#: gui\settingsDialogs.py:703
 msgid "Simple review mode"
 msgstr "Прост режим на преглед"
 
 #. Translators: This is the label for the object presentation dialog.
-#: gui\settingsDialogs.py:692
+#: gui\settingsDialogs.py:719
 msgid "Object Presentation"
 msgstr "Представяне на обектите"
 
-#: gui\settingsDialogs.py:695
+#. Translators: An option for progress bar output in the Object Presentation dialog
+#. which reports progress bar updates by speaking.
+#. See Progress bar output in the Object Presentation Settings section of the User Guide.
+#: gui\settingsDialogs.py:728
 msgid "Speak"
 msgstr "Говор"
 
-#: gui\settingsDialogs.py:696
+#. Translators: An option for progress bar output in the Object Presentation dialog
+#. which reports progress bar updates by beeping.
+#. See Progress bar output in the Object Presentation Settings section of the User Guide.
+#: gui\settingsDialogs.py:732
 msgid "Beep"
 msgstr "Бибипкане"
 
-#: gui\settingsDialogs.py:697
+#. Translators: An option for progress bar output in the Object Presentation dialog
+#. which reports progress bar updates by both speaking and beeping.
+#. See Progress bar output in the Object Presentation Settings section of the User Guide.
+#: gui\settingsDialogs.py:736
 msgid "Speak and beep"
 msgstr "Говор и бибипкане"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:703
+#: gui\settingsDialogs.py:742
 msgid "Report &tooltips"
 msgstr "Докладвай подсказките"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:708
+#: gui\settingsDialogs.py:747
 msgid "Report &help balloons"
 msgstr "Докладвай помощните балони"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:713
+#: gui\settingsDialogs.py:752
 msgid "Report object shortcut &keys"
 msgstr "Докладвай бързите клавиши за обекта"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:718
+#: gui\settingsDialogs.py:757
 msgid "Report object &position information"
 msgstr "Докладвай &местоположението на обекта"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:723
+#: gui\settingsDialogs.py:762
 msgid "Guess object &position information when unavailable"
 msgstr ""
 "Отгатвай &информацията за "
@@ -4141,25 +4836,25 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:728
+#: gui\settingsDialogs.py:767
 msgid "Report object &descriptions"
 msgstr "Докладвай &описанията на обектите"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:734
+#: gui\settingsDialogs.py:773
 msgid "Progress &bar output:"
 msgstr "Докладване на &лентата на напредъка:"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:739
+#: gui\settingsDialogs.py:778
 msgid "Progress bar output"
 msgstr "Докладване на лентата на напредъка"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:750
+#: gui\settingsDialogs.py:789
 msgid "Report background progress bars"
 msgstr ""
 "Докладвай лентите на напредъка, дори да "
@@ -4167,33 +4862,33 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:755
+#: gui\settingsDialogs.py:794
 msgid "Report dynamic &content changes"
 msgstr ""
 "Докладвай динамично променящото се "
 "съдържание"
 
 #. Translators: This is the label for the browse mode settings dialog.
-#: gui\settingsDialogs.py:776
+#: gui\settingsDialogs.py:815
 msgid "Browse Mode"
 msgstr "Режим на разглеждане"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:781
+#: gui\settingsDialogs.py:820
 msgid "&Maximum number of characters on one line"
 msgstr ""
 "&Максимален брой на букви и знаци на ред"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:788
+#: gui\settingsDialogs.py:827
 msgid "&Number of lines per page"
 msgstr "Брой на &редове на страница"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:795
+#: gui\settingsDialogs.py:834
 msgid "Use &screen layout (when supported)"
 msgstr ""
 "Използвай подредбата на &екрана (когато "
@@ -4201,7 +4896,7 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:800
+#: gui\settingsDialogs.py:839
 msgid "Automatic &Say All on page load"
 msgstr ""
 "Автоматично &прочитане на всичко при "
@@ -4209,7 +4904,7 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:805
+#: gui\settingsDialogs.py:844
 msgid "Report l&ayout tables"
 msgstr ""
 "Докладвай таблиците, които са част от "
@@ -4217,7 +4912,7 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:810
+#: gui\settingsDialogs.py:849
 msgid "Automatic focus mode for focus changes"
 msgstr ""
 "Автоматичен режим на фокус при промяна въ"
@@ -4225,7 +4920,7 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:815
+#: gui\settingsDialogs.py:854
 msgid "Automatic focus mode for caret movement"
 msgstr ""
 "Автоматичен режим на фокус при премества"
@@ -4233,20 +4928,20 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:820
+#: gui\settingsDialogs.py:859
 msgid "Audio indication of focus and browse modes"
 msgstr ""
 "Звукови индикации за преминаване между "
 "режим на фокус и на разглеждане"
 
 #. Translators: This is the label for the document formatting dialog.
-#: gui\settingsDialogs.py:850
+#: gui\settingsDialogs.py:889
 msgid "Document Formatting"
 msgstr "Форматиране на документите"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:855
+#: gui\settingsDialogs.py:894
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "Докладвай промените във форматирането "
@@ -4254,74 +4949,74 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:860
+#: gui\settingsDialogs.py:899
 msgid "Report font &name"
 msgstr "Докладвай &името на шрифта"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:865
+#: gui\settingsDialogs.py:904
 msgid "Report font &size"
 msgstr "Докладвай &размера на шрифта"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:870
+#: gui\settingsDialogs.py:909
 msgid "Report font attri&butes"
 msgstr "Докладвай &атрибутите на шрифта"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:875
+#: gui\settingsDialogs.py:914
 msgid "Report &alignment"
 msgstr "Докладвай подравняването"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:880
+#: gui\settingsDialogs.py:919
 msgid "Report &colors"
 msgstr "Докладвай цветовете"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:885
+#: gui\settingsDialogs.py:924
 msgid "Report st&yle"
 msgstr "Докладвай стила"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:890
+#: gui\settingsDialogs.py:929
 msgid "Report spelling errors"
 msgstr "Докладвай грешно изписани думи"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:895
+#: gui\settingsDialogs.py:934
 msgid "Report &pages"
 msgstr "Докладвай &страниците"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:900
+#: gui\settingsDialogs.py:939
 msgid "Report &line numbers"
 msgstr "Докладвай &номерата на редовете"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
-#: gui\settingsDialogs.py:906
+#: gui\settingsDialogs.py:945
 msgid "Report l&ine indentation"
 msgstr "Докладвай &отстъпа на редовете"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:911
+#: gui\settingsDialogs.py:950
 msgid "Report &tables"
 msgstr "Докладвай &таблиците"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:916
+#: gui\settingsDialogs.py:955
 msgid "Report table row/column h&eaders"
 msgstr ""
 "Докладвай заглавията на редовете и "
@@ -4329,7 +5024,7 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:921
+#: gui\settingsDialogs.py:960
 msgid "Report table cell c&oordinates"
 msgstr ""
 "Докладвай к&оординатите на клетките в "
@@ -4337,179 +5032,177 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:926
+#: gui\settingsDialogs.py:965
 msgid "Report &links"
 msgstr "Докладвай линковете"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:931
+#: gui\settingsDialogs.py:970
 msgid "Report &headings"
 msgstr "Докладвай заглавията"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:936
+#: gui\settingsDialogs.py:975
 msgid "Report l&ists"
 msgstr "Докладвай списъците"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:941
+#: gui\settingsDialogs.py:980
 msgid "Report block &quotes"
 msgstr "Докладвай &цитатите"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:946
+#: gui\settingsDialogs.py:985
 msgid "Report lan&dmarks"
 msgstr "Докладвай маркерите"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:951
+#: gui\settingsDialogs.py:990
 msgid "Report fra&mes"
 msgstr "Докладвай &фреймовете"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
-#: gui\settingsDialogs.py:984
+#: gui\settingsDialogs.py:1023
 msgid "Edit Dictionary Entry"
 msgstr "Редактирай запис в речника"
 
-#: gui\settingsDialogs.py:988
+#: gui\settingsDialogs.py:1027
 msgid "&Pattern"
 msgstr "&Образец"
 
-#: gui\settingsDialogs.py:991 gui\settingsDialogs.py:1240
+#: gui\settingsDialogs.py:1030 gui\settingsDialogs.py:1279
 msgid "&Replacement"
 msgstr "&Заместител"
 
-#: gui\settingsDialogs.py:994
+#: gui\settingsDialogs.py:1033
 msgid "&Comment"
 msgstr "&Коментар"
 
-#: gui\settingsDialogs.py:997
+#: gui\settingsDialogs.py:1036
 msgid "Case &sensitive"
 msgstr "Чувствителен на главни и малки букви"
 
-#: gui\settingsDialogs.py:999
+#: gui\settingsDialogs.py:1038
 msgid "Regular &expression"
 msgstr "Регулярен &израз"
 
-#: gui\settingsDialogs.py:1021
+#: gui\settingsDialogs.py:1060
 msgid "&Dictionary entries"
 msgstr "Записи в речника"
 
-#: gui\settingsDialogs.py:1024
+#: gui\settingsDialogs.py:1063
 msgid "Comment"
 msgstr "Коментар"
 
-#: gui\settingsDialogs.py:1025
+#: gui\settingsDialogs.py:1064
 msgid "Pattern"
 msgstr "Образец"
 
-#: gui\settingsDialogs.py:1026 gui\settingsDialogs.py:1228
+#: gui\settingsDialogs.py:1065 gui\settingsDialogs.py:1267
 msgid "Replacement"
 msgstr "Заместител"
 
-#: gui\settingsDialogs.py:1027
+#: gui\settingsDialogs.py:1066
 msgid "case"
 msgstr "Чувствителност"
 
-#: gui\settingsDialogs.py:1028
+#: gui\settingsDialogs.py:1067
 msgid "Regexp"
 msgstr "Регулярен израз"
 
-#: gui\settingsDialogs.py:1037
+#: gui\settingsDialogs.py:1076
 msgid "&Add"
 msgstr "&Добави"
 
-#: gui\settingsDialogs.py:1040
+#: gui\settingsDialogs.py:1079
 msgid "&Edit"
 msgstr "&Промени"
 
-#: gui\settingsDialogs.py:1043
-msgid "&Remove"
-msgstr "&Изтрий"
-
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui\settingsDialogs.py:1067
+#: gui\settingsDialogs.py:1106
 msgid "Add Dictionary Entry"
 msgstr "Добави запис в речника"
 
 #. Translators: This is the label for the braille settings dialog.
-#: gui\settingsDialogs.py:1113
+#: gui\settingsDialogs.py:1152
 msgid "Braille Settings"
 msgstr "Настройки на брайла"
 
-#: gui\settingsDialogs.py:1117
+#: gui\settingsDialogs.py:1156
 msgid "Braille &display:"
 msgstr "Брайлов &дисплей"
 
-#: gui\settingsDialogs.py:1131
+#: gui\settingsDialogs.py:1170
 msgid "Translation &table:"
 msgstr "Таблица на превода:"
 
-#: gui\settingsDialogs.py:1143
+#: gui\settingsDialogs.py:1182
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr ""
 "Разшири до компютърен брайл за думата под "
 "курсора"
 
-#: gui\settingsDialogs.py:1148
+#: gui\settingsDialogs.py:1187
 msgid "Cursor blink rate (ms)"
 msgstr ""
 "Честота на мигане на курсора (милисекунди)"
 
-#: gui\settingsDialogs.py:1156
+#: gui\settingsDialogs.py:1195
 msgid "Message timeout (sec)"
 msgstr ""
 "Изчакване на съобщенията преди да се "
 "прекъснат (секунди)"
 
-#: gui\settingsDialogs.py:1164
+#: gui\settingsDialogs.py:1203
 msgid "Braille tethered to:"
 msgstr "Брайла е обвързан с:"
 
-#: gui\settingsDialogs.py:1177
+#: gui\settingsDialogs.py:1216
 msgid "Read by &paragraph"
 msgstr "Четене по &параграфи"
 
-#: gui\settingsDialogs.py:1181
+#: gui\settingsDialogs.py:1220
 msgid "Avoid splitting &words when possible"
-msgstr "Избягвай разделянето на думи, когато това е възможно"
+msgstr ""
+"Избягвай разделянето на думи, когато това "
+"е възможно"
 
-#: gui\settingsDialogs.py:1191
+#: gui\settingsDialogs.py:1230
 #, python-format
 msgid "Could not load the %s display."
 msgstr "Дисплеят %s не може да бъде зареден."
 
-#: gui\settingsDialogs.py:1191
+#: gui\settingsDialogs.py:1230
 msgid "Braille Display Error"
 msgstr "Грешка на брайловия дисплей"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui\settingsDialogs.py:1214
+#: gui\settingsDialogs.py:1253
 msgid "Symbol Pronunciation"
 msgstr "Произнасяне на символите"
 
-#: gui\settingsDialogs.py:1225
+#: gui\settingsDialogs.py:1264
 msgid "&Symbols"
 msgstr "&Символи"
 
-#: gui\settingsDialogs.py:1227
+#: gui\settingsDialogs.py:1266
 msgid "Symbol"
 msgstr "Символ"
 
-#: gui\settingsDialogs.py:1229
+#: gui\settingsDialogs.py:1268
 msgid "Level"
 msgstr "Ниво"
 
-#: gui\settingsDialogs.py:1238
+#: gui\settingsDialogs.py:1277
 msgid "Change symbol"
 msgstr "Промени символа"
 
-#: gui\settingsDialogs.py:1246
+#: gui\settingsDialogs.py:1285
 msgid "&Level"
 msgstr "&Ниво"
 
@@ -4547,65 +5240,80 @@ msgstr "Без реч"
 msgid "word"
 msgstr "дума"
 
-#: virtualBuffers\__init__.py:220 virtualBuffers\__init__.py:228
+#: virtualBuffers\__init__.py:227 virtualBuffers\__init__.py:235
 #, python-format
 msgid "%s landmark"
 msgstr "%s маркер"
 
-#: virtualBuffers\__init__.py:251
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers\__init__.py:260
 msgid "Lin&ks"
 msgstr "&Линкове"
 
-#: virtualBuffers\__init__.py:252
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers\__init__.py:263
 msgid "&Headings"
 msgstr "&Заглавия"
 
-#: virtualBuffers\__init__.py:253
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers\__init__.py:266
 msgid "Lan&dmarks"
 msgstr "&Маркери"
 
-#: virtualBuffers\__init__.py:259
+#. Translators: The title of the browse mode Elements List dialog.
+#: virtualBuffers\__init__.py:273
 msgid "Elements List"
 msgstr "Списък с елементи"
 
-#: virtualBuffers\__init__.py:262
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers\__init__.py:278
 msgid "Type:"
 msgstr "Вид:"
 
-#: virtualBuffers\__init__.py:273
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+#: virtualBuffers\__init__.py:291
 msgid "&Filter by:"
 msgstr "&Филтрирай по:"
 
-#: virtualBuffers\__init__.py:281
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers\__init__.py:301
 msgid "&Activate"
 msgstr "&Активирай"
 
-#: virtualBuffers\__init__.py:284
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers\__init__.py:306
 msgid "&Move to"
 msgstr "&Премести до"
 
-#: virtualBuffers\__init__.py:596
+#: virtualBuffers\__init__.py:618
 msgid "Refreshed"
 msgstr "обновен"
 
-#: virtualBuffers\__init__.py:601
+#: virtualBuffers\__init__.py:623
 msgid "Loading document..."
 msgstr "Зареждане на документа ..."
 
-#: virtualBuffers\__init__.py:776
+#: virtualBuffers\__init__.py:798
 msgid "activates the current object in the document"
 msgstr "Активира текущия обект в документа"
 
-#: virtualBuffers\__init__.py:784
+#: virtualBuffers\__init__.py:806
 msgid "Refreshes the document content"
 msgstr "Обновява съдържанието на документа"
 
-#: virtualBuffers\__init__.py:789
+#: virtualBuffers\__init__.py:811
 #, python-format
 msgid "use screen layout %s"
 msgstr "Използвай екранния изглед %s"
 
-#: virtualBuffers\__init__.py:790
+#: virtualBuffers\__init__.py:812
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
@@ -4614,534 +5322,559 @@ msgstr ""
 "подредба се взема предвид при "
 "обработването на документа"
 
-#: virtualBuffers\__init__.py:873
+#: virtualBuffers\__init__.py:895
 msgid "Presents a list of links, headings or landmarks"
 msgstr ""
 "Представя списък от линкове, заглавия или "
 "маркери"
 
-#: virtualBuffers\__init__.py:1244
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+#: virtualBuffers\__init__.py:1268
 msgid "Not in a table cell"
 msgstr "Извън клетка на таблица"
 
-#: virtualBuffers\__init__.py:1250 NVDAObjects\window\winword.py:421
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+#: virtualBuffers\__init__.py:1276
 msgid "edge of table"
 msgstr "край на таблицата"
 
-#: virtualBuffers\__init__.py:1260
+#: virtualBuffers\__init__.py:1286
 msgid "moves to the next table row"
 msgstr ""
 "Премества курсора до следващия ред от "
 "таблица"
 
-#: virtualBuffers\__init__.py:1264
+#: virtualBuffers\__init__.py:1290
 msgid "moves to the previous table row"
 msgstr ""
 "Премества курсора до предишния ред от "
 "таблица"
 
-#: virtualBuffers\__init__.py:1268
+#: virtualBuffers\__init__.py:1294
 msgid "moves to the next table column"
 msgstr ""
 "Премества курсора до следващата колона от"
 " таблица"
 
-#: virtualBuffers\__init__.py:1272
+#: virtualBuffers\__init__.py:1298
 msgid "moves to the previous table column"
 msgstr ""
 "Премества курсора до предишната колона от"
 " таблица"
 
-#: virtualBuffers\__init__.py:1359
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+#: virtualBuffers\__init__.py:1393 virtualBuffers\__init__.py:1407
+msgid "Not in a container"
+msgstr "извън съдържащ обект"
+
+#. Translators: Description for the Move to start of container command in browse mode.
+#: virtualBuffers\__init__.py:1400
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr ""
+"Придвижва курсора до началото на "
+"съдържащия обект, например Списък или "
+"таблица"
+
+#. Translators: Description for the Move past end of container command in browse mode.
+#: virtualBuffers\__init__.py:1414
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr ""
+"Придвижва курсора след съдържащия обект, "
+"например списък или таблица"
+
+#: virtualBuffers\__init__.py:1437
 msgid "moves to the next heading"
 msgstr ""
 "Премества курсора до следващото заглавие"
 
-#: virtualBuffers\__init__.py:1359
+#: virtualBuffers\__init__.py:1437
 msgid "no next heading"
 msgstr "Няма следващо заглавие"
 
-#: virtualBuffers\__init__.py:1360
+#: virtualBuffers\__init__.py:1438
 msgid "moves to the previous heading"
 msgstr ""
 "Премества курсора до предишното заглавие"
 
-#: virtualBuffers\__init__.py:1360
+#: virtualBuffers\__init__.py:1438
 msgid "no previous heading"
 msgstr "Няма предишно заглавие"
 
-#: virtualBuffers\__init__.py:1361
+#: virtualBuffers\__init__.py:1439
 msgid "moves to the next heading at level 1"
 msgstr ""
 "Премества курсора до следващото заглавие "
 "от първо ниво"
 
-#: virtualBuffers\__init__.py:1361
+#: virtualBuffers\__init__.py:1439
 msgid "no next heading at level 1"
 msgstr "Няма следващо заглавие от първо ниво"
 
-#: virtualBuffers\__init__.py:1362
+#: virtualBuffers\__init__.py:1440
 msgid "moves to the previous heading at level 1"
 msgstr ""
 "Премества курсора до предишното заглавие "
 "от първо ниво"
 
-#: virtualBuffers\__init__.py:1362
+#: virtualBuffers\__init__.py:1440
 msgid "no previous heading at level 1"
 msgstr "Няма предишно заглавие от първо ниво"
 
-#: virtualBuffers\__init__.py:1363
+#: virtualBuffers\__init__.py:1441
 msgid "moves to the next heading at level 2"
 msgstr ""
 "Премества курсора до следващото заглавие "
 "от второ ниво"
 
-#: virtualBuffers\__init__.py:1363
+#: virtualBuffers\__init__.py:1441
 msgid "no next heading at level 2"
 msgstr "Няма следващо заглавие от второ ниво"
 
-#: virtualBuffers\__init__.py:1364
+#: virtualBuffers\__init__.py:1442
 msgid "moves to the previous heading at level 2"
 msgstr ""
 "Премества курсора до предишното заглавие "
 "от второ ниво"
 
-#: virtualBuffers\__init__.py:1364
+#: virtualBuffers\__init__.py:1442
 msgid "no previous heading at level 2"
 msgstr "Няма предишно заглавие от второ ниво"
 
-#: virtualBuffers\__init__.py:1365
+#: virtualBuffers\__init__.py:1443
 msgid "moves to the next heading at level 3"
 msgstr ""
 "премества курсора до следващото заглавие "
 "от трето ниво"
 
-#: virtualBuffers\__init__.py:1365
+#: virtualBuffers\__init__.py:1443
 msgid "no next heading at level 3"
 msgstr "Няма следващо заглавие от трето ниво"
 
-#: virtualBuffers\__init__.py:1366
+#: virtualBuffers\__init__.py:1444
 msgid "moves to the previous heading at level 3"
 msgstr ""
 "премества курсора до предишното заглавие "
 "от трето ниво"
 
-#: virtualBuffers\__init__.py:1366
+#: virtualBuffers\__init__.py:1444
 msgid "no previous heading at level 3"
 msgstr "Няма предишно заглавие от трето ниво"
 
-#: virtualBuffers\__init__.py:1367
+#: virtualBuffers\__init__.py:1445
 msgid "moves to the next heading at level 4"
 msgstr ""
 "премества курсора до следващото заглавие "
 "от четвърто ниво"
 
-#: virtualBuffers\__init__.py:1367
+#: virtualBuffers\__init__.py:1445
 msgid "no next heading at level 4"
 msgstr ""
 "Няма следващо заглавие от четвърто ниво"
 
-#: virtualBuffers\__init__.py:1368
+#: virtualBuffers\__init__.py:1446
 msgid "moves to the previous heading at level 4"
 msgstr ""
 "премества курсора до предишното заглавие "
 "от четвърто ниво"
 
-#: virtualBuffers\__init__.py:1368
+#: virtualBuffers\__init__.py:1446
 msgid "no previous heading at level 4"
 msgstr ""
 "Няма предишно заглавие от четвърто ниво"
 
-#: virtualBuffers\__init__.py:1369
+#: virtualBuffers\__init__.py:1447
 msgid "moves to the next heading at level 5"
 msgstr ""
 "премества курсора до следващото заглавие "
 "от пето ниво"
 
-#: virtualBuffers\__init__.py:1369
+#: virtualBuffers\__init__.py:1447
 msgid "no next heading at level 5"
 msgstr "Няма следващо заглавие от пето ниво"
 
-#: virtualBuffers\__init__.py:1370
+#: virtualBuffers\__init__.py:1448
 msgid "moves to the previous heading at level 5"
 msgstr ""
 "премества курсора до предишното заглавие "
 "от пето ниво"
 
-#: virtualBuffers\__init__.py:1370
+#: virtualBuffers\__init__.py:1448
 msgid "no previous heading at level 5"
 msgstr "Няма предишно заглавие от пето ниво"
 
-#: virtualBuffers\__init__.py:1371
+#: virtualBuffers\__init__.py:1449
 msgid "moves to the next heading at level 6"
 msgstr ""
 "премества курсора до следващото заглавие "
 "от шесто ниво"
 
-#: virtualBuffers\__init__.py:1371
+#: virtualBuffers\__init__.py:1449
 msgid "no next heading at level 6"
 msgstr "Няма следващо заглавие от шесто ниво"
 
-#: virtualBuffers\__init__.py:1372
+#: virtualBuffers\__init__.py:1450
 msgid "moves to the previous heading at level 6"
 msgstr ""
 "премества курсора до предишното заглавие "
 "от шесто ниво"
 
-#: virtualBuffers\__init__.py:1372
+#: virtualBuffers\__init__.py:1450
 msgid "no previous heading at level 6"
 msgstr "Няма предишно заглавие от шесто ниво"
 
-#: virtualBuffers\__init__.py:1373
+#: virtualBuffers\__init__.py:1451
 msgid "moves to the next table"
 msgstr ""
 "Премества курсора до следващата таблица"
 
-#: virtualBuffers\__init__.py:1373
+#: virtualBuffers\__init__.py:1451
 msgid "no next table"
 msgstr "Няма следваща таблица"
 
-#: virtualBuffers\__init__.py:1374
+#: virtualBuffers\__init__.py:1452
 msgid "moves to the previous table"
 msgstr ""
 "Премества курсора до предишната таблица"
 
-#: virtualBuffers\__init__.py:1374
+#: virtualBuffers\__init__.py:1452
 msgid "no previous table"
 msgstr "Няма предишна таблица"
 
-#: virtualBuffers\__init__.py:1375
+#: virtualBuffers\__init__.py:1453
 msgid "moves to the next link"
 msgstr "Премества курсора до следващия линк"
 
-#: virtualBuffers\__init__.py:1375
+#: virtualBuffers\__init__.py:1453
 msgid "no next link"
 msgstr "Няма следващ линк"
 
-#: virtualBuffers\__init__.py:1376
+#: virtualBuffers\__init__.py:1454
 msgid "moves to the previous link"
 msgstr "Премества курсора до предишния линк"
 
-#: virtualBuffers\__init__.py:1376
+#: virtualBuffers\__init__.py:1454
 msgid "no previous link"
 msgstr "Няма предишен линк"
 
-#: virtualBuffers\__init__.py:1377
+#: virtualBuffers\__init__.py:1455
 msgid "moves to the next visited link"
 msgstr ""
 "Премества курсора до следващия посетен "
 "линк"
 
-#: virtualBuffers\__init__.py:1377
+#: virtualBuffers\__init__.py:1455
 msgid "no next visited link"
 msgstr "Няма следващ посетен линк"
 
-#: virtualBuffers\__init__.py:1378
+#: virtualBuffers\__init__.py:1456
 msgid "moves to the previous visited link"
 msgstr ""
 "Премества курсора до предишния посетен "
 "линк"
 
-#: virtualBuffers\__init__.py:1378
+#: virtualBuffers\__init__.py:1456
 msgid "no previous visited link"
 msgstr "Няма предишен посетен линк"
 
-#: virtualBuffers\__init__.py:1379
+#: virtualBuffers\__init__.py:1457
 msgid "moves to the next unvisited link"
 msgstr ""
 "Премества курсора до следващия непосетен "
 "линк"
 
-#: virtualBuffers\__init__.py:1379
+#: virtualBuffers\__init__.py:1457
 msgid "no next unvisited link"
 msgstr "Няма следващ непосетен линк"
 
-#: virtualBuffers\__init__.py:1380
+#: virtualBuffers\__init__.py:1458
 msgid "moves to the previous unvisited link"
 msgstr ""
 "Премества курсора до предишния непосетен "
 "линк"
 
-#: virtualBuffers\__init__.py:1380
+#: virtualBuffers\__init__.py:1458
 msgid "no previous unvisited link"
 msgstr "Няма предишен непосетен линк"
 
-#: virtualBuffers\__init__.py:1381
+#: virtualBuffers\__init__.py:1459
 msgid "moves to the next form field"
 msgstr ""
 "Премества курсора до следващо поле от "
 "форма"
 
-#: virtualBuffers\__init__.py:1381
+#: virtualBuffers\__init__.py:1459
 msgid "no next form field"
 msgstr "Няма следващо поле от форма"
 
-#: virtualBuffers\__init__.py:1382
+#: virtualBuffers\__init__.py:1460
 msgid "moves to the previous form field"
 msgstr ""
 "Премества курсора до предишно поле от "
 "форма"
 
-#: virtualBuffers\__init__.py:1382
+#: virtualBuffers\__init__.py:1460
 msgid "no previous form field"
 msgstr "Няма предишно поле от форма"
 
-#: virtualBuffers\__init__.py:1383
+#: virtualBuffers\__init__.py:1461
 msgid "moves to the next list"
 msgstr "Премества курсора до следващ списък"
 
-#: virtualBuffers\__init__.py:1383
+#: virtualBuffers\__init__.py:1461
 msgid "no next list"
 msgstr "Няма следващ списък"
 
-#: virtualBuffers\__init__.py:1384
+#: virtualBuffers\__init__.py:1462
 msgid "moves to the previous list"
 msgstr "Премества курсора до предишен списък"
 
-#: virtualBuffers\__init__.py:1384
+#: virtualBuffers\__init__.py:1462
 msgid "no previous list"
 msgstr "Няма предишен списък"
 
-#: virtualBuffers\__init__.py:1385
+#: virtualBuffers\__init__.py:1463
 msgid "moves to the next list item"
 msgstr ""
 "Премества курсора до следващ елемент от "
 "списък"
 
-#: virtualBuffers\__init__.py:1385
+#: virtualBuffers\__init__.py:1463
 msgid "no next list item"
 msgstr "Няма следващ елемент от списък"
 
-#: virtualBuffers\__init__.py:1386
+#: virtualBuffers\__init__.py:1464
 msgid "moves to the previous list item"
 msgstr ""
 "Премества курсора до предишен елемент от "
 "списък"
 
-#: virtualBuffers\__init__.py:1386
+#: virtualBuffers\__init__.py:1464
 msgid "no previous list item"
 msgstr "Няма предишен елемент от списък"
 
-#: virtualBuffers\__init__.py:1387
+#: virtualBuffers\__init__.py:1465
 msgid "moves to the next button"
 msgstr "Премества курсора до следващ бутон"
 
-#: virtualBuffers\__init__.py:1387
+#: virtualBuffers\__init__.py:1465
 msgid "no next button"
 msgstr "Няма следващ бутон"
 
-#: virtualBuffers\__init__.py:1388
+#: virtualBuffers\__init__.py:1466
 msgid "moves to the previous button"
 msgstr "Премества курсора до предишен бутон"
 
-#: virtualBuffers\__init__.py:1388
+#: virtualBuffers\__init__.py:1466
 msgid "no previous button"
 msgstr "Няма предишен бутон"
 
-#: virtualBuffers\__init__.py:1389
+#: virtualBuffers\__init__.py:1467
 msgid "moves to the next edit field"
 msgstr ""
 "Премества курсора до следващо поле за "
 "писане"
 
-#: virtualBuffers\__init__.py:1389
+#: virtualBuffers\__init__.py:1467
 msgid "no next edit field"
 msgstr "Няма следващо поле за писане"
 
-#: virtualBuffers\__init__.py:1390
+#: virtualBuffers\__init__.py:1468
 msgid "moves to the previous edit field"
 msgstr ""
 "Премества курсора до предишно поле за "
 "писане"
 
-#: virtualBuffers\__init__.py:1390
+#: virtualBuffers\__init__.py:1468
 msgid "no previous edit field"
 msgstr "Няма предишно поле за писане"
 
-#: virtualBuffers\__init__.py:1391
+#: virtualBuffers\__init__.py:1469
 msgid "moves to the next frame"
 msgstr "Премества курсора до следващ фрейм"
 
-#: virtualBuffers\__init__.py:1391
+#: virtualBuffers\__init__.py:1469
 msgid "no next frame"
 msgstr "Няма следващ фрейм"
 
-#: virtualBuffers\__init__.py:1392
+#: virtualBuffers\__init__.py:1470
 msgid "moves to the previous frame"
 msgstr "Премества курсора до предишен фрейм"
 
-#: virtualBuffers\__init__.py:1392
+#: virtualBuffers\__init__.py:1470
 msgid "no previous frame"
 msgstr "Няма предишен фрейм"
 
-#: virtualBuffers\__init__.py:1393
+#: virtualBuffers\__init__.py:1471
 msgid "moves to the next separator"
 msgstr ""
 "Премества курсора до следващ разделител"
 
-#: virtualBuffers\__init__.py:1393
+#: virtualBuffers\__init__.py:1471
 msgid "no next separator"
 msgstr "Няма следващ разделител"
 
-#: virtualBuffers\__init__.py:1394
+#: virtualBuffers\__init__.py:1472
 msgid "moves to the previous separator"
 msgstr ""
 "Премества курсора до предишен разделител"
 
-#: virtualBuffers\__init__.py:1394
+#: virtualBuffers\__init__.py:1472
 msgid "no previous separator"
 msgstr "Няма предишен разделител"
 
-#: virtualBuffers\__init__.py:1395
+#: virtualBuffers\__init__.py:1473
 msgid "moves to the next radio button"
 msgstr ""
 "Премества курсора до следващ радио бутон"
 
-#: virtualBuffers\__init__.py:1395
+#: virtualBuffers\__init__.py:1473
 msgid "no next radio button"
 msgstr "Няма следващ радио бутон"
 
-#: virtualBuffers\__init__.py:1396
+#: virtualBuffers\__init__.py:1474
 msgid "moves to the previous radio button"
 msgstr ""
 "Премества курсора до предишен радио бутон"
 
-#: virtualBuffers\__init__.py:1396
+#: virtualBuffers\__init__.py:1474
 msgid "no previous radio button"
 msgstr "Няма предишен радио бутон"
 
-#: virtualBuffers\__init__.py:1397
+#: virtualBuffers\__init__.py:1475
 msgid "moves to the next combo box"
 msgstr ""
 "Премества курсора до следващ падащ списък"
 
-#: virtualBuffers\__init__.py:1397
+#: virtualBuffers\__init__.py:1475
 msgid "no next combo box"
 msgstr "Няма следващ падащ списък"
 
-#: virtualBuffers\__init__.py:1398
+#: virtualBuffers\__init__.py:1476
 msgid "moves to the previous combo box"
 msgstr ""
 "Премества курсора до предишен падащ "
 "списък"
 
-#: virtualBuffers\__init__.py:1398
+#: virtualBuffers\__init__.py:1476
 msgid "no previous combo box"
 msgstr "Няма предишен падащ списък"
 
-#: virtualBuffers\__init__.py:1399
+#: virtualBuffers\__init__.py:1477
 msgid "moves to the next check box"
 msgstr ""
 "Премества курсора до следващо поле за "
 "отметка"
 
-#: virtualBuffers\__init__.py:1399
+#: virtualBuffers\__init__.py:1477
 msgid "no next check box"
 msgstr "Няма следващо поле за отметка"
 
-#: virtualBuffers\__init__.py:1400
+#: virtualBuffers\__init__.py:1478
 msgid "moves to the previous check box"
 msgstr ""
 "Премества курсора до предишно поле за "
 "отметка"
 
-#: virtualBuffers\__init__.py:1400
+#: virtualBuffers\__init__.py:1478
 msgid "no previous check box"
 msgstr "Няма предишно поле за отметка"
 
-#: virtualBuffers\__init__.py:1401
+#: virtualBuffers\__init__.py:1479
 msgid "moves to the next graphic"
 msgstr ""
 "Премества курсора до следващо "
 "изображение"
 
-#: virtualBuffers\__init__.py:1401
+#: virtualBuffers\__init__.py:1479
 msgid "no next graphic"
 msgstr "Няма следващо изображение"
 
-#: virtualBuffers\__init__.py:1402
+#: virtualBuffers\__init__.py:1480
 msgid "moves to the previous graphic"
 msgstr ""
 "Премества курсора до предишно "
 "изображение"
 
-#: virtualBuffers\__init__.py:1402
+#: virtualBuffers\__init__.py:1480
 msgid "no previous graphic"
 msgstr "Няма предишно изображение"
 
-#: virtualBuffers\__init__.py:1403
+#: virtualBuffers\__init__.py:1481
 msgid "moves to the next block quote"
 msgstr "Премества курсора до следващ цитат"
 
-#: virtualBuffers\__init__.py:1403
+#: virtualBuffers\__init__.py:1481
 msgid "no next block quote"
 msgstr "Няма следващ цитат"
 
-#: virtualBuffers\__init__.py:1404
+#: virtualBuffers\__init__.py:1482
 msgid "moves to the previous block quote"
 msgstr "Премества курсора до предишен цитат"
 
-#: virtualBuffers\__init__.py:1404
+#: virtualBuffers\__init__.py:1482
 msgid "no previous block quote"
 msgstr "Няма предишен цитат"
 
-#: virtualBuffers\__init__.py:1405
+#: virtualBuffers\__init__.py:1483
 msgid "skips forward past a block of links"
 msgstr "Пропуска следващия блок от линкове"
 
-#: virtualBuffers\__init__.py:1405
+#: virtualBuffers\__init__.py:1483
 msgid "no more text after a block of links"
 msgstr "Няма повече текст след блок от линкове"
 
-#: virtualBuffers\__init__.py:1406
+#: virtualBuffers\__init__.py:1484
 msgid "skips backward past a block of links"
 msgstr "Пропуска предишен блок от линкове"
 
-#: virtualBuffers\__init__.py:1406
+#: virtualBuffers\__init__.py:1484
 msgid "no more text before a block of links"
 msgstr "Няма повече текст пред блок от линкове"
 
-#: virtualBuffers\__init__.py:1407
+#: virtualBuffers\__init__.py:1485
 msgid "moves to the next landmark"
 msgstr "Премества курсора до следващ маркер"
 
-#: virtualBuffers\__init__.py:1407
+#: virtualBuffers\__init__.py:1485
 msgid "no next landmark"
 msgstr "Няма следващ маркер"
 
-#: virtualBuffers\__init__.py:1408
+#: virtualBuffers\__init__.py:1486
 msgid "moves to the previous landmark"
 msgstr "Премества курсора до предишен маркер"
 
-#: virtualBuffers\__init__.py:1408
+#: virtualBuffers\__init__.py:1486
 msgid "no previous landmark"
 msgstr "Няма предишен маркер"
 
-#: virtualBuffers\__init__.py:1409
+#: virtualBuffers\__init__.py:1487
 msgid "moves to the next embedded object"
 msgstr ""
 "Премества курсора до следващия вграден "
 "обект"
 
-#: virtualBuffers\__init__.py:1409
+#: virtualBuffers\__init__.py:1487
 msgid "no next embedded object"
 msgstr "Няма следващ вграден обект"
 
-#: virtualBuffers\__init__.py:1410
+#: virtualBuffers\__init__.py:1488
 msgid "moves to the previous embedded object"
 msgstr ""
 "Премества курсора до предишния вграден "
 "обект"
 
-#: virtualBuffers\__init__.py:1410
+#: virtualBuffers\__init__.py:1488
 msgid "no previous embedded object"
 msgstr "Няма предишен вграден обект"
 
-#: virtualBuffers\__init__.py:1423
+#: virtualBuffers\__init__.py:1501
 msgid "focus mode"
 msgstr "Режим на фокус"
 
-#: virtualBuffers\__init__.py:1423
+#: virtualBuffers\__init__.py:1501
 msgid "browse mode"
 msgstr "Режим на разглеждане"
 
@@ -5158,7 +5891,7 @@ msgstr "%s елемента"
 msgid "invoke"
 msgstr "Обръщане към"
 
-#: NVDAObjects\window\__init__.py:369
+#: NVDAObjects\window\__init__.py:373
 msgid "Desktop"
 msgstr "Работен плот"
 
@@ -5167,12 +5900,12 @@ msgid "default color"
 msgstr "цвят по подразбиране"
 
 #. Translators: This is presented in Excel when the current cell contains a formula.
-#: NVDAObjects\window\excel.py:190
+#: NVDAObjects\window\excel.py:206
 msgid "has formula"
 msgstr "съдържа формула"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#: NVDAObjects\window\excel.py:230
+#: NVDAObjects\window\excel.py:246
 #, python-format
 msgid "%s %s through %s %s"
 msgstr "%s %s до %s %s"
@@ -5217,11 +5950,14 @@ msgstr "Основен горен колонтитул"
 msgid "Text frame"
 msgstr "текстова рамка"
 
-#: NVDAObjects\window\winword.py:391 NVDAObjects\window\winword.py:408
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+#: NVDAObjects\window\winword.py:397 NVDAObjects\window\winword.py:416
 msgid "Not in table"
 msgstr "извън таблица"
 
-#: NVDAObjects\window\winword.py:402
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+#: NVDAObjects\window\winword.py:410 NVDAObjects\window\winword.py:429
 msgid "Edge of table"
 msgstr "край на таблицата"
-

@@ -4,13 +4,18 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.2 =
+Schwerpunkte dieser Version sind u.a. eine eingebaute Installationsroutine sowie eine Funktion zum einfachen Erstellen portabler Versionen, eine automatische Aktualisierung, die einfache Verwaltung neuer Erweiterungen für NVDA, die Erkennung von Grafiken in Microsoft Word, Die unterstützung von Windows-8-Metro-Anwendungen, sowie einige wichtige Fehlerkorrekturen.
 
 == Neue Funktionen ==
 - NVDA kann nun nach Aktualisierungen suchen, diese herunterladen und installieren. (#73)
+- Der Umgang mit eigenen Treibern und Plug-ins wurde durch die Einführung eines Erweiterungs-Managers stark vereinfacht. Der Erweiterungs-Manager erlaubt das einfache Installieren und deinstallieren von Erweiterungen (Dateien mit der Erweiterung .nvda-addon). Sie finden ihn im Menü Extras im nvda-Manü. (#213)
 - Viele gebräuchliche Funktionen seitens NVDA funktionieren nun in den Metro-Anwendungen von Windows 8, in sofern sie eine installierte Version von NVDA nutzen. Dies schließt das Sprechen von eingegebenen Zeichen sowie den Lese-Modus in der Metro-Version Internetexplorer 10 ein. Portable Kopien können nicht auf Metro-Anwendungen zugreifen. (#1801) 
 - Im Lesemodus können Sie nun mit den Tastenkombinationen Umschalt+, und umschalt+. an den Anfang eines Containerobjekts bzw. hinter ein Containerobjekt springen. dies betrifft beispielsweise Listen und Tabellen. (#123)
+- neue Sprache: griechisch
+- in Microsoft-Word-Dokumenten werden nun Grafiken und deren Alternativtexte korrekt erkannt. (#2282, #1541)
 
 == Änderungen ==
+- Die Angabe von Zellkoordinaten in Microsoft Excel erfolgt nun *nach* dem Auslesen des Zellinhalts und erfolgt nur noch, wenn die Optionen "Tabellen ansagen" und "Zellkoordinaten in Tabellen ansagen"  in den Einstellungen zur Dokumentformatierung aktiviert sind. (#320)
 - NVDA wird nunmehr in einer einzigen Datei vertrieben. Wenn sie die heruntergeladene Datei ausführen, wird eine temporäre Kopie von NVDA ausgepackt und gestartet und sie werden gefragt, ob sie nvda installieren oder eine portable Version erstellen wollen. (#1715)
 - NVDA wird nun immer im Ordner Programme installiert. Wenn eine frühere Version von NVDA in einem anderen ordner installiert wurde, wird nvda im Zuge der Aktualisierung nach "programme" verschoben.
 
@@ -24,7 +29,11 @@
 - In Adobe Reader x funktioniert nun die Navigation zu Überschriften unabhängig von der Ebene sowie die Auswahl einer Überschrift über die Elementliste. (#2181)
 - Wenn Sie sich in Winamp zwischen den Einträgen im Wiedergabelisten-Editor bewegen, funktioniert nun die Braille-Ausgabe korrekt. (#1912)
 - Die Baumansicht in der Elementliste im Lesemodus wird nun in der richtigen Größe angezeigt, um alle Elemente korrekt darzustellen. (#2276)
-
+- In Anwendungen, die die Java Access Bridge verwenden, werden ausgegraute textfelder nun korrekt in Braille angezeigt. (#2284)
+- in Anwendungen, die die Java Access Bridge verwenden, erscheinen bei der Anzeige von Textfeldern nun keine seltsamen Zeichen mehr. (#1892)
+- in Anwendungen, die die Java Access Bridge verwenden, wird die aktuelle Zeile nun korrekt angezeigt, wenn Sie sich am Ende eines Textfeldes befinden. (#1892)
+- In Anwendungen, die Gecko 14 oder neuer verwenden (wie z.B. Firefox 14) funktioniert nun die Schnellnavigation für Zitate und eigebettete Objekte korrekt.  (#2287)
+- Wenn sich im Internet Explorer 9 der Fokus innerhalb eines HTML-Abschnittes ("div") bewegt, der entweder hervorhebbar ist oder mit einer Aria-Sprungmarke gekennzeichnet wurde, wird kein überflüssiger Inhalt mehr ausgegeben.
 == Änderungen für Entwickler ==
 - Da nsis durch eine nvda-Interne Installationsroutine ersetzt wurde, werden die meldungen für die Installationsroutine nun nicht mehr in einer Datei namens langstrings.txt gespeichert. Vielmehr werden diese nun in der Sprachdatei von NVDA integriert.
 

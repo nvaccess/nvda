@@ -176,9 +176,12 @@ class AddonsDialog(wx.Dialog):
 		message=_("""{summary} ({name})
 Version: {version}
 Author: {author}
-URL: {url}
 Description: {description}
 """).format(**manifest)
+		url=manifest.get('url')
+		if url: 
+			# Translators: the url part of the About Add-on information
+			message+=_("URL: {url}").format(url=url)
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
 		gui.messageBox(message, title, wx.OK)

@@ -12,6 +12,8 @@
 - O NVDA agora pode procurar, baixar e instalar atualizações automaticamente. (#73)
 - Muito mais recursos comuns do NVDA agora funcionam em aplicativos do estilo Windows 8 Metro quando se usa uma versão oficial instalada, incluindo-se o anúncio de caracteres digitados, e modo de navegação para documentos da web (inclui suporte para a versão metro do Internet Explorer 10). Cópias Portáteis do NVDA não possuem a capacidade para acessar aplicativos de estilo metro. (#1801)
 - Em documentos do modo de navegação (Internet Explorer, Firefox etc) você agora pode saltar para o início e para após o final de certos elementos que contém outros (incluindo listas e tabelas) com shift+, e shift+. respectivamente. (#123)
+- Novo idioma: grego.
+- Gráficos e textos de descrição de imagens agora são anunciados em Documentos do Microsoft Word. (#2282, #1541)
 
 
 == Alterações ==
@@ -20,7 +22,7 @@
 
 
 == Correção de Falhas ==
-- Quando a alternância automática de idioma encontra-se ativada, conteúdos como textos de gráficos e etiquetas para alguns outros controles em Mozilla Gecko (isto é, Firefox) agora são anunciados no idioma correto caso esteja marcado apropriadamente.
+- Quando a alternância automática de idioma encontra-se ativada, conteúdos como textos de descrição de gráficos e etiquetas para alguns outros controles em Mozilla Gecko (isto é, Firefox) agora são anunciados no idioma correto caso esteja indicado apropriadamente.
 - A leitura contínua no BibleSeeker (e outros controles TRxRichEdit) já não é interrompida no meio de uma passagem.
 - Listas localizadas no Windows 8, tanto nas propriedades de arquivos do Windows explorer (guia permissões) como no Windows Update agora são lidas corretamente.
 - Eliminados possíveis travamentos no Microsoft Word que poderiam acontecer quando ele levava mais que 2 segundos para extrair textos de um documento (linhas extremamente longas ou índices). (#2191)
@@ -28,6 +30,9 @@
 - No modo de navegação, no Adobe Reader, agora é possível navegar para cabeçalhos sem nível usando navegação rápida e a  Lista de Elementos. (#2181)
 - No Winamp, o braille agora é atualizado corretamente ao mover para um item diferente no editor de listas de reprodução. (#1912)
 - A árvore encontrada na Lista de Elementos (disponível para documentos do modo de navegação) agora é calculada corretamente para exibir o texto de cada elemento. (#2276)
+- Em aplicativos que usam Java Access Bridge, os campos de edição de texto agora são apresentados corretamente em braille. (#2284)
+- Em aplicativos que usam java Access Bridge, os campos de edição de texto já não anunciam caracteres estranhos em determinadas circumstâncias. (#1892)
+- Em aplicativos que usam Java Access Bridge, estando no fim de um campo de edição de texto, a linha atual agora é anunciada corretamente. (#1892)
 
 
 == Alterações Específicas para Desenvolvedores ==
