@@ -23,7 +23,7 @@ Die wichtigsten Highlights sind:
 - Unterstützung für zahlreiche Braillezeilen.
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung der Sprachausgaben.
-- Übersetzt in 36 Sprachen.
+- Übersetzt in 37 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
@@ -32,7 +32,7 @@ Die wichtigsten Highlights sind:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 36 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 37 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung mit der Sprachausgabe ++
 Abgesehen von der Bereitstellung der Schnittstelle für Meldungen in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser über eine Sprachausgabe für dessen Sprache verfügt.
@@ -45,7 +45,7 @@ Informationen über weitere Sprachausgaben, die NVDA unterstützt, können Sie i
 Für Anwender, die eine eigene Braillezeile besitzen, kann NVDA die Informationen in Braille-Schrift ausgeben.
 Für weitere Informationen schauen Sie bitte im Bereich "[Unterstützte Braillezeilen #SupportedBrailleDisplays]" nach.
 
-NVDA unterstützt Braille-Übersetzungsmodi für viele Sprachen; für einige sprachen sind Übersetzungstabellen für Kurz- und Vollschrift ebenfalls verfügbar.
+NVDA enthält Braille-Übersetzungstabellen für Computerbraille sowie für Voll- und Kurzschrift für viele Sprachen.
 
 ++ Lizenzbestimmungen und Copyright ++
 Copyright NVDA_COPYRIGHT_YEARS NVDA-Mitwirkende.
@@ -85,22 +85,42 @@ Falls Sie den eingangsdialog bereits geschlossen haben oder NVDA von einer porta
 
 Der Installationsdialog, welcher erscheint, fragt noch mal ab, ob Sie NVDA installieren wollen und informiert Sie darüber, ob eine frühere Version von NVDA aktualisiert wird.
 Wenn Sie den Schalter "weiter" drücken, wird die Installation gestartet.
-Es gibt allerdings noch weitere Option wie z.B. der Start nach Bzw. vor der Anmeldung, das Anlegen einer Desktop-Verknüpfung u.v.m.
+Es gibt allerdings noch weitere Option. Diese werden weiter unten beschrieben.
 Nach dem Abschluss der Installation erscheint eine Meldung, die sie über den erfolgreichen Abschluss der Installation informiert.
 Wenn Sie hier "ok" wählen, wird die soeben installierte Kopie von NVDA neu gestartet.
  
++++ NVDA bei der Windows-Anmeldung starten +++
+Mit dieser Option können Sie entscheiden, ob NVDA beim Erscheinen des Windows-anmeldebildschirms gestartet werden soll.
+die betrifft auch die Benutzerkontensteuerung und andere sichere Desktops.
+
++++ Desktop-Verknüpfung erstellen (strg+alt+n) +++
+Mit dieser Option entscheiden Sie, ob NVDA einen Desktop-Verknüpfung für seinen Start anlegen soll.
+Diese Verknüpfung bekommt außerdem die Tastenkombination strg+alt+n zugeteilt, sodass Sie durch Drücken dieser Tastenkombination NVDA jederzeit starten können.
+
++++ portable Konfiguration in das aktuelle Benutzerkonto kopieren +++
+Hiermit legen Sie fest, ob NVDA die Konfiguration der momentan laufenden NVDA-Instanz in das Konfigurationsverzeichnis des aktuell angemeldeten Benutzers kopieren soll.
+Die Konfigurationsverzeichnisse anderer angelegter Benutzer oder die systemweite Konfiguration bleiben davon jedoch unberührt.
+Diese Option ist nur verfügbar, wenn NVDA aus einer portablen Version heraus installiert wird - nicht jedoch beim Ausführen einer heruntergeladenen Kopie.
+
 ++ erstellen einer portablen Kopie ++
 Wenn Sie aus einer heruntergeladenen Kopie von NVDA eine portable Version erstellen wollen, drücken Sie einfach den Schalter "portable Version erstellen".
 Wenn Sie den Eingangsdialog bereits geschlossen haben oder grade eine fest installierte Version von NVDA ausführen, können Sie über den menüpunkt "portable Version erstellen" aus dem Menü Extras eine portable Kopie anlegen.
 
 In dem erscheinenden dialog können Sie das Verzeichnis angeben, in dem die portable Kopie erstellt werden soll.
 Dies kann ein Ordner auf einer Festplatte, einem Usb-Stick oder einem anderen transportablen Medium sein.
-
-Zum Einen haben Sie hier außerdem die Möglichkeit, eine autostart-Datei im Stammverzeichnis des Laufwerks anzulegen. Zum Anderen können Sie entscheiden, ob die Benutzerspezifischen Konfigurationsdateien und Plugins der aktuell laufenden nvda-Instanz in die portable Version übernommen werden sollen.
+Es gibt außerdem noch weitere Optionen, die weiter unten erläutert werden.
 Wenn Sie "weiter" drücken, wird die portable Version erstellt.
 Nach Abschluss des Vorgangs erscheint eine Meldung, die sie über die Erfolgreiche Erstellung der portablen Version informiert.
 Drücken Sie "ok" um den dialog zu schließen.
- 
+
++++ Autostart-Datei erstellen +++
+Wenn Sie dese Option aktivieren, wird eine spezielle Autostart-Datei im Stammverzeichnis des Laufwerks angelegt, auf dem die portable Kopie erstellt wird. Dies erlaubt Ihnen, NVDA automatisch auszuführen, sobald das Laufwerk angeschlossen wird.
+Bedenken Sie, dass der automatische Start von Programmen von USB-Laufwerken nicht von allen windows-Betriebsystemen unterstützt wird.
+
++++ Benutzerkonfiguration kopieren +++
+Wenn Sie diese Option aktivieren, kopiert NVDA die Konfiguration des aktuell angemeldeten Benutzers in die neu erstellte portable NVDA-Version.
+Diese Option steht nur zur Verfügung, wenn Sie NVDA aus einer installierten Version heraus erstellen. Sie ist nicht verfügbar, wenn Sie NVDA direkt aus dem heruntergeladenen paket heraus ausführen.
+
 + Erste Schritte mit NVDA +
 
 ++ NVDA starten ++
@@ -514,6 +534,15 @@ In diesem Abschnitt werden einige bekannte Probleme beschrieben, die beim Umgang
 ++ Firefox ++
 - Problem: Wenn Sie versuchen, mit Firefox (beobachtet ab Version 7) eine Webseite zu öffnen und Firefox beendet sich, noch ehe die Seite geladen ist, könnte dies an der Funktion "Automatisch alles lesen nach Aufruf einer Internetseite" liegen. 
 - Lösung: deaktivieren Sie in den Einstellungen des lesemodus (nvda+strg+b) das entsprechende Kontrollfeld. Nun wird Firefox nicht mehr abstürzen.
+
+++ Verwendung von Anti-viren-Programmen und Internet-Sicherheitspaketen bei der Installation oder Aktualisierung von NVDA ++
+- Problem: Wenn Anti-Viren-Programme oder Internet-Sicherheitspakete ausgeführt werden, kann die Installation oder die Aktualisierung von NVDA nicht erfolgreich abgeschlossen werden.
+- Ursache: Seit Revision r5058 wird die Installation von NVDA nicht mehr von nsis, sondern von NVDA selbst durchgeführt. dies bedeutet rein technisch, dass die temporäre Kopie von NVDA, die während der installation ausgeführt wird, eine Kopie ihrer Selbst am Zielort ablegt und diese (im Falle einer Installation) als Dienst registriert, wenn sie sich dafür entschieden haben, nVDA während der Windows-Anmeldung auszuführen. Dieses Verhalten wird von vielen Sicherheitssoftwarepaketen und Anti-viren-Programmen als verdächtig eingestuft und die Sicherheitspakete ergreifen Gegenmaßnahmen. 
+- Details: Bisher wurden Probleme mit den folgenden Produkten beobachtet:
+  - Kaspersky Internet Security 2012: Beim Erstellen einer Portablen Kopie stuft KIS das Verhalten der Installationsroutine als verdächtig ein, wenn NVDA versucht, eine Kopie seiner Selbst am Zielort auf dem tragbaren Medium abzulegen. Wenn KIS so konfiguriert ist, dass es die Gegenmaßnahme automatisch ergreifen darf, wird die Kopie von NVDA, von der aus die Installation ausgeführt wurde, gelöscht und die Kopie am Zielort gar nicht angelegt. dies hat zur Folge, dass Sie am Ende NVDA nicht einmal mehr über die Tastenkombination strg+alt+n starten können. 
+  - Viper Internet Security: Beim Aktualisieren von NVDA behindert Viper die Installationsroutine von NVDA beim Installieren der neuen Version, wodurch der Installationsvorgang ungewöhnlich lange dauert.
+  - Avira Internet Security: Beim erstellen einer portablen Kopie behinder Avira die Installationsroutine von NVDA, wodurch diese mit einer Fehlermeldung abbricht.
+- Lösung: Halten Sie die Schutzfunktion ihres Anti-Viren-Programms oder Internet-sicherheitspakets kurzfristig an, während sie NVDA installieren, aktualisieren oder eine portable Version erstellen oder deaktivieren Sie das Sicherheitspaket vollständig.
 
 + NVDA konfigurieren +
 
@@ -1014,6 +1043,27 @@ Den Sprachbetrachter können Sie im NVDA-Menü unter "Extras einschalten und auc
 
 Während der Sprachbetrachter eingeschaltet ist, aktualisiert sich sogleich der Text beim Sprechen.
 Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Aktualisierung der gesprochenen Textdarstellungen, so dass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
+
+++ Der Erweiterungs-Manager ++
+Der Erweiterungs-Manager, den Sie über das Untermenü Extras im NVDA-Menü erreichen, erlaubt Ihnen, Erweiterungspakete für NVDA zu installieren und zu deinstallieren. 
+Diese Pakete werden von der NVDA-Nutzergemeinde bereitgestellt und können zusätzlichen Code enthalten, um NVDA-Funktionen zu verändern oder neue hinzuzufügen. Es ist auf diese Weise sogar möglich, neue Braillezeilen- oder Sprachausgabentreiber hinzuzufügen.
+
+Der Erweiterungs-manager enthält eine Liste aller Erweiterungen, die bereits in Ihrer benutzerspezifischen Konfiguration installiert sind.
+Für jede Erweiterung wird Ihnen der Name, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine Url als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und drücken Sie anschließend die Schaltfläche "über...".
+
+Um eine Erweiterung zu installieren, drücken Sie den Schalter "hinzufügen".
+Jetzt können Sie auf Ihrem Rechner oder im Netzwerk nach der gewünschten Erweiterung (einer Datei mit der Endung .nvda-addon) suchen.
+Wenn Sie dann den Schalter Öffnen drückewn, werden Sie gefragt, ob Sie die Erweiterung wirklich installieren möchten.
+Da Erweiterungen den NVDA uneingeschränkt nutzen können, bedeutet dies theoretisch, dass die Erweiterungen auf Ihre persönlichen Daten (oder im Falle einer fest installierten Version) auf das gesamte System zugreifen können. Installieren Sie deshalb nur Erweiterungen aus vertrauenswürdigen Quellen.
+Ist die Erweiterung dann installiert, muss NVDA neu gestartet werden, damit die Erweiterung ausgeführt wird.
+Solange sie den Neustart von NVDA nicht durchführen, wird Ihnen im Erweiterungs-Manager in der Spalte Status der Zustand "installieren" angezeigt.
+
+Um eine Erweiterung zu entfernen, wählen Sie sie aus und drücken Sie anschließend den Schalter "entfernen".
+nVDA wird Sie fragen, ob Sie dies wirklich wollen.
+Genau wie beim Installieren von Erweiterungen muss der NVDA auch hier neu gestartet werden, damit die Erweiterung tatsächlich entfernt wird.
+Solange Sie den Neustart von NVDA nicht durchführen, wird im Erweiterungs-Manager in der Spalte "Status" der Zustand "entfernen" angezeigt.
+
+Der erweiterungs-Manager enthält außerdem noch den Schalter "schließen", um den Dialog zu schließen. Wenn Sie diesen Schalter zu einem Zeitpunkt drücken, da noch Erweiterungen installiert oder entfernt werden müssen, werden Sie gefragt, ob NVDA neu gestartet werden soll, damit die Änderungen wirksam werden.
 
 ++ Die Python-Konsole ++
 Die in NVDA integrierte Python-Konsole ist im NVDA-Menü unter "Extras" zu finden. Sie ist ein nützliches Entwicklungswerkzeug zum Debuggen, zum allgemeinen Überprüfen der internen Komponente in NVDA sowie zur Überprüfung der Hierarchie der Zugänglichkeit einer Anwendung.
