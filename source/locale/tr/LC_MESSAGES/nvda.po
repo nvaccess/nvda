@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA main-5134\n"
+"Project-Id-Version: NVDA main-5190\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-28 19:04+1000\n"
-"PO-Revision-Date: 2012-04-30 10:00+0200\n"
+"POT-Creation-Date: 2012-05-14 19:05+1000\n"
+"PO-Revision-Date: 2012-05-14 17:06+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -396,7 +396,7 @@ msgstr "Çince (Taiwan, Mandarin)"
 #. editable text field.
 #: braille.py:197
 msgid "edt"
-msgstr "Yaa"
+msgstr "Yza"
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
@@ -408,7 +408,7 @@ msgstr "lst"
 #. menu bar.
 #: braille.py:203
 msgid "mnubar"
-msgstr "MÇ"
+msgstr "MÇB"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
@@ -694,7 +694,7 @@ msgstr "Turuncu"
 #: speech.py:306
 #: speech.py:498
 #: speech.py:513
-#: virtualBuffers\__init__.py:710
+#: virtualBuffers\__init__.py:717
 #, python-format
 msgid "selected %s"
 msgstr "%s seçildi"
@@ -849,7 +849,7 @@ msgstr "Satır Başlığı"
 
 #: controlTypes.py:223
 msgid "drop down button"
-msgstr "Menü düğmesi"
+msgstr "Açılabilir menü düğmesi"
 
 #: controlTypes.py:224
 msgid "clock"
@@ -1148,7 +1148,7 @@ msgstr "ses"
 
 #: controlTypes.py:308
 msgid "white space"
-msgstr "boşluk"
+msgstr "beyaz boşluk"
 
 #: controlTypes.py:309
 msgid "tree view button"
@@ -1340,7 +1340,7 @@ msgstr "alt menü"
 
 #: controlTypes.py:359
 msgid "protected"
-msgstr "korunmuş"
+msgstr "güvenli"
 
 #: controlTypes.py:360
 msgid "required"
@@ -1430,7 +1430,7 @@ msgstr "seçili değil"
 msgid "not checked"
 msgstr "işaretli değil"
 
-#: core.py:84
+#: core.py:85
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
@@ -1438,15 +1438,15 @@ msgstr ""
 "gesture map dosyanızda hatalar var.\n"
 "Hatalar hakkında daha fazla ayrıntı log dosyasında bulunabilir."
 
-#: core.py:86
+#: core.py:87
 msgid "gesture map File Error"
 msgstr "gesture map dosyasında hata"
 
-#: core.py:194
+#: core.py:203
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA açılıyor, lütfen bekleyin..."
 
-#: core.py:285
+#: core.py:294
 msgid "NVDA started"
 msgstr "NVDA başlatıldı"
 
@@ -1500,8 +1500,8 @@ msgstr "panoya kopyalandı"
 #: synthSettingsRing.py:74
 #: appModules\winamp.py:78
 #: appModules\winamp.py:88
-#: gui\settingsDialogs.py:1056
-#: virtualBuffers\__init__.py:803
+#: gui\settingsDialogs.py:1068
+#: virtualBuffers\__init__.py:810
 msgid "on"
 msgstr "Açık"
 
@@ -1521,9 +1521,9 @@ msgstr "Açık"
 #: synthSettingsRing.py:74
 #: appModules\winamp.py:80
 #: appModules\winamp.py:90
-#: gui\settingsDialogs.py:712
-#: gui\settingsDialogs.py:1056
-#: virtualBuffers\__init__.py:803
+#: gui\settingsDialogs.py:724
+#: gui\settingsDialogs.py:1068
+#: virtualBuffers\__init__.py:810
 msgid "off"
 msgstr "Kapalı"
 
@@ -2106,12 +2106,12 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Python konsolu etkinleştirir. öncelikle geliştiriciler için faydalı"
 
 #: globalCommands.py:906
-#: gui\settingsDialogs.py:1192
+#: gui\settingsDialogs.py:1204
 msgid "review"
 msgstr "inceleme imleci"
 
 #: globalCommands.py:909
-#: gui\settingsDialogs.py:1192
+#: gui\settingsDialogs.py:1204
 msgid "focus"
 msgstr "Sistem odağı"
 
@@ -2193,28 +2193,31 @@ msgstr "Plug-in'ler tekrar yüklendi"
 msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
 msgstr "uygulama modüllerini ve global pluginleri  NVDA'yı yeniden başlatmadan yükler,. geliştiriciler için faydalı olabilir"
 
-#: installer.py:170
-msgid "NVDA Website"
-msgstr "NVDA Web Sitesi"
+#: installer.py:175
+#: gui\__init__.py:340
+msgid "NVDA web site"
+msgstr "NVDA web sitesi"
 
-#: installer.py:171
+#: installer.py:176
 msgid "Uninstall NVDA"
 msgstr "NVDA'yı Kaldır"
 
-#: installer.py:172
+#: installer.py:177
 msgid "Explore NVDA user configuration directory"
 msgstr "NVDA kullanıcı konfigürasyon  dizinine gözat"
 
-#: installer.py:173
-#: installer.py:174
+#: installer.py:178
+#: installer.py:179
 msgid "Documentation"
 msgstr "Dokümantasyon"
 
-#: installer.py:173
-msgid "Key Command quick reference"
-msgstr "Klavye komutları çabuk rehber"
+#: installer.py:178
+#: gui\__init__.py:336
+msgid "Keyboard Commands Quick Reference"
+msgstr "Klavye Komutları Çabuk Rehber"
 
-#: installer.py:174
+#: installer.py:179
+#: gui\__init__.py:334
 msgid "User Guide"
 msgstr "Kullanıcı Rehberi"
 
@@ -2818,94 +2821,109 @@ msgstr "&Ses Perdesi"
 msgid "&Inflection"
 msgstr "&Tonlama"
 
+#. Translators: The title of the dialog displayed while manually checking for an NVDA update.
+#: updateCheck.py:117
+msgid "Checking for Update"
+msgstr "Güncel Versiyon Denetleniyor"
+
+#. Translators: The progress message displayed while manually checking for an NVDA update.
+#: updateCheck.py:119
+msgid "Checking for update"
+msgstr "Güncel Versiyon denetleniyor"
+
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
-#: updateCheck.py:116
+#: updateCheck.py:126
 msgid "Error checking for update."
 msgstr "Güncelleme kontrolünde hata."
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:118
-#: updateCheck.py:322
-#: gui\__init__.py:141
-#: gui\__init__.py:150
-#: gui\installerGui.py:40
-#: gui\installerGui.py:185
-#: gui\installerGui.py:193
-#: gui\installerGui.py:217
+#: updateCheck.py:128
+#: updateCheck.py:341
+#: gui\__init__.py:144
+#: gui\__init__.py:153
+#: gui\addonGui.py:74
+#: gui\addonGui.py:88
+#: gui\addonGui.py:107
+#: gui\installerGui.py:54
+#: gui\installerGui.py:190
+#: gui\installerGui.py:198
+#: gui\installerGui.py:229
 #: gui\logViewer.py:74
-#: gui\settingsDialogs.py:196
+#: gui\settingsDialogs.py:208
 msgid "Error"
 msgstr "Hata"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
-#: updateCheck.py:155
+#: updateCheck.py:170
 msgid "NVDA Update"
 msgstr "NVDA Güncellemesi"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#: updateCheck.py:164
+#: updateCheck.py:179
 msgid "NVDA version {version} is available."
 msgstr "NVDA versiyonu {version} mevcut."
 
 #. Translators: A message indicating that no update to NVDA is available.
-#: updateCheck.py:167
+#: updateCheck.py:182
 msgid "No update available."
 msgstr "Güncelleme mevcut değil"
 
 #. Translators: The label of a button to download and install an NVDA update.
-#: updateCheck.py:173
+#: updateCheck.py:188
 msgid "Download and &install update"
 msgstr "Güncellemeyi ind&ir ve kur"
 
 #. Translators: The label of a button to download an NVDA update.
-#: updateCheck.py:176
+#: updateCheck.py:191
 msgid "&Download update"
 msgstr "Güncellemeyi in&dir"
 
 #. Translators: The label of a button to remind the user later about performing some action.
-#: updateCheck.py:184
+#: updateCheck.py:199
 msgid "Remind me &later"
 msgstr "Daha sonra hatır&lat"
 
 #. Translators: The label of a button to close a dialog.
-#: updateCheck.py:189
+#. Translators: The label of a button to close the Addons dialog.
+#: updateCheck.py:205
+#: gui\addonGui.py:48
 msgid "&Close"
 msgstr "&Kapat"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
-#: updateCheck.py:236
+#: updateCheck.py:252
 msgid "Downloading Update"
 msgstr "Günceleme indiriliyor"
 
 #. Translators: The progress message indicating that a connection is being established.
-#: updateCheck.py:238
+#: updateCheck.py:254
 msgid "Connecting"
 msgstr "Bağlanılıyor"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:302
+#: updateCheck.py:321
 msgid "Downloading"
 msgstr "İndiriliyor"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:321
+#: updateCheck.py:340
 msgid "Error downloading update."
 msgstr "Güncelleme indirilirken hata oluştu."
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
-#: updateCheck.py:329
+#: updateCheck.py:348
 msgid "Update downloaded. It will now be installed."
 msgstr "Güncelleme indirildi. Şimdi kurulumu yapılacak."
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
-#: updateCheck.py:331
+#: updateCheck.py:350
 msgid "Install Update"
 msgstr "Güncellemeyi Kur"
 
-#: updateCheck.py:342
+#: updateCheck.py:361
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
@@ -2920,25 +2938,25 @@ msgstr ""
 "Desteğiniz için teşekkürler."
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:351
+#: updateCheck.py:370
 msgid "Please Donate"
 msgstr "Lütfen Bağışta bulunun"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
-#: updateCheck.py:360
+#: updateCheck.py:379
 msgid "&Donate"
 msgstr "Ba&ğışta bulun"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:365
+#: updateCheck.py:384
 msgid "&Not now"
 msgstr "&Şimdi değil"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:380
+#: updateCheck.py:399
 msgid "&Done"
 msgstr "Tamamlan&dı"
 
@@ -3248,261 +3266,254 @@ msgstr ""
 "'%s' konfigürasyon dosyasında hatalar var:\n"
 "%s"
 
-#: gui\__init__.py:131
+#: gui\__init__.py:134
 msgid "Configuration applied"
 msgstr "Kaydedilmiş konfigürasyona geri dönüldü"
 
-#: gui\__init__.py:135
+#: gui\__init__.py:138
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr "Güvenli modda NVDA konfigürasyonu kaydedilemez"
 
-#: gui\__init__.py:139
+#: gui\__init__.py:142
 msgid "Configuration saved"
 msgstr "Konfigürasyon kaydedildi"
 
-#: gui\__init__.py:141
+#: gui\__init__.py:144
 msgid "Could not save configuration - probably read only file system"
 msgstr "Konfigürasyon kaydedilemiyor. Muhtemelen salt okunur dosya sistemi"
 
-#: gui\__init__.py:150
+#: gui\__init__.py:153
 msgid "Please close the other NVDA settings dialog first"
 msgstr "Lütfen önce diğer NVDA ayar iletişim kutusunu kapatın"
 
-#: gui\__init__.py:154
+#: gui\__init__.py:157
 msgid "Default dictionary"
 msgstr "Varsayılan sözlük"
 
-#: gui\__init__.py:157
+#: gui\__init__.py:160
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "Ses sözlüğü (%s)"
 
-#: gui\__init__.py:160
+#: gui\__init__.py:163
 msgid "Temporary dictionary"
 msgstr "Geçici sözlük"
 
-#: gui\__init__.py:167
+#: gui\__init__.py:170
 msgid "Are you sure you want to quit NVDA?"
 msgstr "NVDA'dan çıkmak istediğinize eminmisiniz?"
 
-#: gui\__init__.py:167
-#: gui\__init__.py:352
+#: gui\__init__.py:170
+#: gui\__init__.py:367
 msgid "Exit NVDA"
 msgstr "NVDA'dan çık"
 
-#: gui\__init__.py:208
-#: gui\__init__.py:338
+#: gui\__init__.py:211
+#: gui\__init__.py:353
 msgid "About NVDA"
 msgstr "NVDA hakkında"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:276
 msgid "&General settings..."
 msgstr "&Genel ayarlar"
 
-#: gui\__init__.py:264
+#: gui\__init__.py:276
 msgid "General settings"
 msgstr "Genel ayarlar"
 
-#: gui\__init__.py:266
+#: gui\__init__.py:278
 msgid "&Synthesizer..."
 msgstr "&Sentezleyici..."
 
-#: gui\__init__.py:266
+#: gui\__init__.py:278
 msgid "Change the synthesizer to be used"
 msgstr "Kullanılacak sentezleyiciyi değiştir"
 
-#: gui\__init__.py:268
+#: gui\__init__.py:280
 msgid "&Voice settings..."
 msgstr "S&es ayarları..."
 
-#: gui\__init__.py:268
+#: gui\__init__.py:280
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "Kullanmak istediğiniz sesi, hızını, tonunu ve ses seviyesini belirleyin"
 
-#: gui\__init__.py:270
+#: gui\__init__.py:282
 msgid "B&raille settings..."
 msgstr "B&raille ayarları..."
 
-#: gui\__init__.py:272
+#: gui\__init__.py:284
 msgid "&Keyboard settings..."
 msgstr "&Klavye ayarları..."
 
-#: gui\__init__.py:272
+#: gui\__init__.py:284
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "klavye düzeni, yazılan karakterler, sözcükler ya da komut tuşlarıyla ilgili ayarlamaları yap"
 
-#: gui\__init__.py:274
+#: gui\__init__.py:286
 msgid "&Mouse settings..."
 msgstr "&Fare ayarları..."
 
-#: gui\__init__.py:274
+#: gui\__init__.py:286
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Fare imleci ve şekil değişimleri ile ilgili bildirimleri değiştir"
 
-#: gui\__init__.py:276
+#: gui\__init__.py:288
 msgid "Review &cursor..."
 msgstr "İn&celeme imleci..."
 
-#: gui\__init__.py:276
+#: gui\__init__.py:288
 msgid "Configure how and when the review cursor moves"
 msgstr "İnceleme imlecinin nasıl ve ne zaman hareket edeceğini belirle"
 
-#: gui\__init__.py:278
+#: gui\__init__.py:290
 msgid "&Object presentation..."
 msgstr "Nesne S&unumu..."
 
-#: gui\__init__.py:278
+#: gui\__init__.py:290
 msgid "Change reporting of objects"
 msgstr "Nesne bildirimlerini değiştir"
 
-#: gui\__init__.py:280
+#: gui\__init__.py:292
 msgid "&Browse mode..."
 msgstr "&Tarama kipi"
 
-#: gui\__init__.py:280
+#: gui\__init__.py:292
 msgid "Change virtual buffers specific settings"
 msgstr "Sanal tamponlarla ilgili ayarları değiştir"
 
-#: gui\__init__.py:282
+#: gui\__init__.py:294
 msgid "Document &formatting..."
-msgstr "&belge formatları..."
+msgstr "&Belge formatları..."
 
-#: gui\__init__.py:282
+#: gui\__init__.py:294
 msgid "Change settings of document properties"
 msgstr "Belge özellikleriyle ilgili  ayarları değiştir"
 
-#: gui\__init__.py:286
+#: gui\__init__.py:298
 msgid "&Default dictionary..."
 msgstr "&Varsayılan sözlük..."
 
-#: gui\__init__.py:286
+#: gui\__init__.py:298
 msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "NVDA'yla birlikte kullanılan tüm sesleri etkileyecek, Varsayılan sözlüğü düzenleyebileceğiniz iletişim kutusu"
 
-#: gui\__init__.py:288
+#: gui\__init__.py:300
 msgid "&Voice dictionary..."
 msgstr "Ses sö&zlüğü"
 
-#: gui\__init__.py:288
+#: gui\__init__.py:300
 msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "Yalnızca kullanmakta olduğunuz konuşmacıyı etkileyecek sözlük girişi yapabileceğiniz İletişim kutusu "
 
-#: gui\__init__.py:290
+#: gui\__init__.py:302
 msgid "&Temporary dictionary..."
 msgstr "Ge&çici sözlük..."
 
-#: gui\__init__.py:290
+#: gui\__init__.py:302
 msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "Geçici sözlük oluşturabileceğiniz iletişim kutusu"
 
-#: gui\__init__.py:292
+#: gui\__init__.py:304
 msgid "Speech &dictionaries"
 msgstr "K&onuşma sözlüğü"
 
-#: gui\__init__.py:294
+#: gui\__init__.py:306
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "Noktalama/imla Söz&lüğü"
 
-#: gui\__init__.py:296
+#: gui\__init__.py:308
 msgid "&Preferences"
 msgstr "&Tercihler"
 
-#: gui\__init__.py:300
+#: gui\__init__.py:312
 msgid "View log"
 msgstr "Log dosyasını göster"
 
-#: gui\__init__.py:302
+#: gui\__init__.py:314
 msgid "Speech viewer"
 msgstr "Konuşma görüntüleyici"
 
-#: gui\__init__.py:305
+#: gui\__init__.py:317
 msgid "Python console"
 msgstr "Python konsolu"
 
-#: gui\__init__.py:308
+#. Translators: The label of a menu item to open the Add-ons Manager.
+#: gui\__init__.py:320
+msgid "Manage &add-ons"
+msgstr "&Eklentileri yönet"
+
+#: gui\__init__.py:323
 msgid "Create Portable copy..."
 msgstr "Taşınabilir kopya oluştur"
 
-#: gui\__init__.py:311
+#: gui\__init__.py:326
 msgid "&Install NVDA..."
 msgstr "NVDA'y&ı Kur"
 
-#: gui\__init__.py:313
+#: gui\__init__.py:328
 msgid "Reload plugins"
 msgstr "Pluginleri yeniden yükle"
 
-#: gui\__init__.py:315
+#: gui\__init__.py:330
 msgid "Tools"
 msgstr "A&raçlar"
 
-#: gui\__init__.py:319
-msgid "User guide"
-msgstr "Kullanıcı kılavuzu"
-
-#: gui\__init__.py:321
-msgid "Keyboard command quick reference"
-msgstr "Klavye komutları çabuk rehber"
-
-#: gui\__init__.py:323
+#: gui\__init__.py:338
 msgid "What's &new"
-msgstr "ne &yeni"
+msgstr "Ne &yeni"
 
-#: gui\__init__.py:325
-msgid "Web site"
-msgstr "web sitesi"
-
-#: gui\__init__.py:327
+#: gui\__init__.py:342
 msgid "License"
-msgstr "lisans"
+msgstr "Lisans"
 
-#: gui\__init__.py:329
+#: gui\__init__.py:344
 msgid "Contributors"
-msgstr "katkıda bulunanlar"
+msgstr "Katkıda bulunanlar"
 
-#: gui\__init__.py:331
+#: gui\__init__.py:346
 msgid "We&lcome dialog"
-msgstr "&hoşgeldiniz iletişim kutusu"
+msgstr "&Hoşgeldiniz iletişim kutusu"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
-#: gui\__init__.py:336
+#: gui\__init__.py:351
 msgid "Check for update..."
 msgstr "Güncelleme kontrolü..."
 
-#: gui\__init__.py:338
+#: gui\__init__.py:353
 msgid "About..."
 msgstr "Hakkında..."
 
-#: gui\__init__.py:340
+#: gui\__init__.py:355
 msgid "&Help"
 msgstr "Y&ardım"
 
-#: gui\__init__.py:342
+#: gui\__init__.py:357
 msgid "&Revert to saved configuration"
 msgstr "Kaydedilmiş kon&figürasyona dön"
 
-#: gui\__init__.py:342
+#: gui\__init__.py:357
 msgid "Reset all settings to saved state"
 msgstr "Kaydedilmiş konfigürasyona geri dön"
 
-#: gui\__init__.py:345
+#: gui\__init__.py:360
 msgid "&Save configuration"
 msgstr "Konfi&gürasyonu kaydet"
 
-#: gui\__init__.py:345
+#: gui\__init__.py:360
 msgid "Write the current configuration to nvda.ini"
 msgstr "Mevcut konfigürasyonu NVDA.ini'ye yaz"
 
-#: gui\__init__.py:349
+#: gui\__init__.py:364
 msgid "Donate"
 msgstr "Bağışta bulun"
 
-#: gui\__init__.py:352
-#: gui\__init__.py:551
+#: gui\__init__.py:367
+#: gui\__init__.py:566
 #: gui\logViewer.py:34
 msgid "E&xit"
-msgstr "&çıkış"
+msgstr "&Çıkış"
 
-#: gui\__init__.py:435
+#: gui\__init__.py:450
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
@@ -3518,206 +3529,378 @@ msgstr ""
 "NVDA menüsü için her zaman NVDA+n tuş kombinasyonunu kullanabilirsiniz.\n"
 "Bu menüde NVDA  ile ilgili ayarları değiştirebilir, yardım alabilir ve diğer NVDA işlevlerine ulaşabilirsiniz.\n"
 
-#: gui\__init__.py:444
+#: gui\__init__.py:459
 msgid "Welcome to NVDA"
 msgstr "NVDA'ya Hoşgeldiniz"
 
-#: gui\__init__.py:448
+#: gui\__init__.py:463
 msgid "Options"
-msgstr "seçenekler"
+msgstr "Seçenekler"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\__init__.py:449
-#: gui\settingsDialogs.py:560
+#: gui\__init__.py:464
+#: gui\settingsDialogs.py:572
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "büyük harf kilidini NVDA tuşu olarak kullan"
+msgstr "Büyük harf kilidini NVDA tuşu olarak kullan"
 
-#: gui\__init__.py:452
+#: gui\__init__.py:467
 msgid "Show this dialog when NVDA starts"
 msgstr "NVDA açıldığında, bu iletişim kutusunu göster"
 
-#: gui\__init__.py:488
+#: gui\__init__.py:503
 msgid ""
 "Your configuration file contains errors. \n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
 msgstr ""
 "Konfigürasyon dosyanızda hatalar var. \n"
-"Bu hataları düzeltmek için 'Tamam', konfig dosyanızı daha sonra elle düzenleyerek hataları düzeltmek istiyorsanız 'İptal' tuşuna basın. Hatalar hakkında daha fazla ayrıntı log dosyasında bulunabilir.\n"
+"Hataları düzeltmek için 'Tamam', konfig dosyanızı daha sonra elle düzenleyerek hataları düzeltmek istiyorsanız 'İptal' tuşuna basın. Hatalar hakkında daha fazla ayrıntı log dosyasında bulunabilir.\n"
 
-#: gui\__init__.py:493
+#: gui\__init__.py:508
 msgid "Configuration File Error"
 msgstr "Konfigürasyon dosyasında hata"
 
-#: gui\__init__.py:527
+#: gui\__init__.py:542
 msgid "License Agreement"
 msgstr "Lisans Sözleşmesi"
 
-#: gui\__init__.py:531
+#: gui\__init__.py:546
 msgid "I &agree"
 msgstr "On&aylıyorum"
 
-#: gui\__init__.py:539
+#: gui\__init__.py:554
 msgid "&Install NVDA on this computer"
 msgstr "NVDA'y&ı bu bilgisayara kur"
 
-#: gui\__init__.py:543
+#: gui\__init__.py:558
 msgid "Create &portable copy"
 msgstr "Taşınabilir ko&pya oluştur"
 
-#: gui\__init__.py:547
+#: gui\__init__.py:562
 msgid "&Continue running"
 msgstr "Geçi&ci Kopyayla Devam Et"
 
+#. Translators: The title of the Addons Dialog
+#: gui\addonGui.py:17
+msgid "Add-ons Manager"
+msgstr "Eklenti Yöneticisi"
+
+#. Translators: the label for the installed addons list in the addons manager.
+#: gui\addonGui.py:23
+msgid "Installed Add-ons"
+msgstr "Kurulu Eklentiler"
+
+#: gui\addonGui.py:26
+msgid "Status"
+msgstr "Durum"
+
+#: gui\addonGui.py:27
+msgid "Package"
+msgstr "Paket"
+
+#: gui\addonGui.py:28
+msgid "Version"
+msgstr "Versiyon"
+
+#: gui\addonGui.py:29
+msgid "Author"
+msgstr "Yazar"
+
+#: gui\addonGui.py:34
+msgid "&About add-on..."
+msgstr "Eklenti &hakkında..."
+
+#: gui\addonGui.py:38
+msgid "&Install..."
+msgstr "&Eklenti Kur"
+
+#: gui\addonGui.py:41
+#: gui\settingsDialogs.py:1082
+msgid "&Remove"
+msgstr "Kaldı&r"
+
+#. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
+#: gui\addonGui.py:60
+msgid "Choose Add-on Package File"
+msgstr "Eklenti Paketi Dosyasını Seçin"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#: gui\addonGui.py:62
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "NVDA Eklenti Paketi (*.{ext})"
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#: gui\addonGui.py:72
+#, python-format
+msgid "Failed to open add-on package file at %s - missing file or invalid file format"
+msgstr "%s konumundaki eklenti paketi dosyası açılamadı - eksik dosya ya da bozuk dosya formatı"
+
+#. Translators: A message asking the user if they really wish to install an addon.
+#: gui\addonGui.py:78
+msgid ""
+"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Addon: {summary} {version}\n"
+"Author: {author}"
+msgstr ""
+"Bu eklentiyi kurmak istediğinize emin misiniz? Yalnızca  güvenilir kaynaklardan temin ettiğiniz eklentileri kurmanızı öneririz.\n"
+"Eklenti: {summary} {version}\n"
+"Yazar: {author}"
+
+#. Translators: Title for message asking if the user really wishes to install an Addon.
+#: gui\addonGui.py:80
+msgid "Add-on Installation"
+msgstr "Eklenti Kurulumu"
+
+#. Translators: The message displayed when an an addon already seems to be installed.
+#: gui\addonGui.py:86
+msgid "This add-on seems to already be installed. Please remove the existing add-on and try again."
+msgstr "Bu eklenti zaten kurulmuş görünüyor. Lütfen mevcut eklentiyi silip tekrar deneyin."
+
+#. Translators: The title of the dialog presented while an Addon is being installed.
+#: gui\addonGui.py:93
+msgid "Installing Add-on"
+msgstr "Eklenti kuruluyor"
+
+#. Translators: The message displayed while an addon is being installed.
+#: gui\addonGui.py:95
+msgid "Please wait while the add-on is being installed."
+msgstr "Eklenti kurulurken lütfen bekleyin"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#: gui\addonGui.py:105
+#, python-format
+msgid "Failed to install add-on  from %s"
+msgstr "%s konumundaki eklenti kurulamadı"
+
+#: gui\addonGui.py:118
+msgid "Are you sure you wish to remove the selected add-on from NVDA?"
+msgstr "Seçili eklentiyi NVDA'dan kaldırmak istediğinize emin misiniz?"
+
+#: gui\addonGui.py:118
+msgid "Remove Add-on"
+msgstr "Eklentiyi Kaldır"
+
+#. Translators: The status shown for a newly installed addon before NVDA is restarted.
+#: gui\addonGui.py:128
+msgid "install"
+msgstr "kur"
+
+#. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
+#: gui\addonGui.py:131
+msgid "remove"
+msgstr "kaldır"
+
+#. Translators: The status shown for an addon when its currently running in NVDA.
+#: gui\addonGui.py:134
+msgid "running"
+msgstr "çalışıyor"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#: gui\addonGui.py:165
+msgid "Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"
+msgstr "Yeni eklenen ya da kaldırılan eklentiler var. Değişikliklerin etkili olması için NVDA'yı yeniden başlatmalısınız. Şimdi yeniden başlatılsın mı?"
+
+#. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
+#: gui\addonGui.py:167
+msgid "Restart NVDA"
+msgstr "NVDA'yı yeniden başlat"
+
+#. Translators: message shown in the Addon Information dialog.
+#: gui\addonGui.py:176
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Author: {author}\n"
+"URL: {url}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Versiyon: {version}\n"
+"Yazar: {author}\n"
+"Web sitesi: {url}\n"
+"Açıklama: {description}\n"
+
+#. Translators: title for the Addon Information dialog
+#: gui\addonGui.py:183
+msgid "Add-on Information"
+msgstr "Eklenti Bilgisi"
+
 #. Translators: The title of the dialog presented while NVDA is being updated.
-#: gui\installerGui.py:21
+#: gui\installerGui.py:23
 msgid "Updating NVDA"
 msgstr "NVDA güncelleniyor"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
-#: gui\installerGui.py:23
+#: gui\installerGui.py:25
 msgid "Installing NVDA"
 msgstr "NVDA kuruluyor"
 
 #. Translators: The message displayed while NVDA is being updated.
-#: gui\installerGui.py:25
+#: gui\installerGui.py:27
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr "NVDA'nın önceki kurulumu güncellenirken lütfen bekleyin."
 
 #. Translators: The message displayed while NVDA is being installed.
-#: gui\installerGui.py:27
+#: gui\installerGui.py:29
 msgid "Please wait while NVDA is being installed"
 msgstr "NVDA kurulurken lütfen bekleyin"
 
+#. Translators: a message dialog asking to retry or cancel when NVDA install fails
+#: gui\installerGui.py:44
+msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
+msgstr "Kurulum bir dosyayı silemedi veya değiştiremedi. Başka bir kullanıcı hesabı tarafından açılmış olan başka bir NVDA kopyası hala çalışıyor olabilir. Lütfen kurulu tüm NVDA kopyalarının kapatıldığından emin olun ve tekrar kurmayı deneyin."
+
+#. Translators: the title of a retry cancel dialog when NVDA installation fails
+#. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
+#: gui\installerGui.py:46
+#: gui\installerGui.py:223
+msgid "File in Use"
+msgstr "Dosya Kullanılıyor"
+
 #. Translators: The message displayed when an error occurs during installation of NVDA.
-#: gui\installerGui.py:38
+#: gui\installerGui.py:52
 msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
 msgstr "NVDA kurulumu başarısız. Daha fazla bilgi için lütfen Log görüntüleyiciyi inceleyin."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
-#: gui\installerGui.py:46
+#: gui\installerGui.py:60
 msgid "Successfully installed NVDA. "
 msgstr "NVDA'nın kurulumu başarıyla tamamlandı."
 
 #. Translators: The message displayed when NVDA has been successfully updated.
-#: gui\installerGui.py:48
+#: gui\installerGui.py:62
 msgid "Successfully updated your installation of NVDA. "
 msgstr "NVDA kurulumunuz başarıyla güncellendi."
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
-#: gui\installerGui.py:51
+#: gui\installerGui.py:65
 msgid "Please press OK to start the installed copy."
 msgstr "Kurulmuş olan NVDA kopyasını açmak için Lütfen Tamam'a basın."
 
 #. Translators: The title of a dialolg presented to indicate a successful operation.
-#: gui\installerGui.py:53
-#: gui\installerGui.py:224
-#: gui\settingsDialogs.py:198
+#: gui\installerGui.py:67
+#: gui\installerGui.py:236
+#: gui\settingsDialogs.py:210
 msgid "Success"
 msgstr "başarılı"
 
 #. Translators: The title of the Install NVDA dialog.
-#: gui\installerGui.py:68
+#: gui\installerGui.py:82
 msgid "Install NVDA"
 msgstr "NVDA'yı kur"
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:71
+#: gui\installerGui.py:85
 msgid "To install NVDA to your hard drive, please press the Continue button."
 msgstr "NVDA'yı yerel diskinize kurmak için, Devam düğmesine basın."
 
 #. Translators: An informational message in the Install NVDA dialog.
-#: gui\installerGui.py:74
+#: gui\installerGui.py:88
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
 msgstr "Sisteminizde NVDA'nın önceki sürümlerinden birinin kurulu olduğu algılandı. Bu kopya güncellenecek."
 
+#. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#: gui\installerGui.py:91
+msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
+msgstr "NVDA kurulum klasörü değiştirildi. Şimdi {path} konumuna kurulacak."
+
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:79
+#: gui\installerGui.py:96
 msgid "Use NVDA on the Windows &logon screen"
 msgstr "Windows giriş ekranında NVDA'yı ku&llan"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:83
+#: gui\installerGui.py:100
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Masaüstü ikonu ve &kısayol tuşu oluştur (control+alt+n)"
 
+#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#: gui\installerGui.py:104
+msgid "Copy &portable configuration to current user account"
+msgstr "Taşınabilir ko&pya konfigürasyonunu mevcut kullanıcı hesabına kopyala"
+
 #. Translators: The label of a button to continue with the operation.
-#: gui\installerGui.py:90
-#: gui\installerGui.py:161
-msgid "C&ontinue"
+#: gui\installerGui.py:113
+#: gui\installerGui.py:166
+msgid "&Continue"
 msgstr "De&vam"
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:134
+#: gui\installerGui.py:137
 msgid "Create Portable NVDA"
 msgstr "Taşınabilir NVDA kopyası oluştur"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:137
+#: gui\installerGui.py:140
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "NVDA'nın taşınabilir bir kopyasını oluşturmak için, yeri ve diğer seçenekleri belirledikten sonra Devam düğmesine basın"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:142
-msgid "Portable directory:"
-msgstr "Taşınabilir kopya dizini:"
+#: gui\installerGui.py:145
+msgid "Portable &directory:"
+msgstr "Taşınabilir kopya &dizini:"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:146
+#: gui\installerGui.py:149
 msgid "Browse..."
 msgstr "Gözat..."
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:151
+#: gui\installerGui.py:154
 msgid "Create an &Autorun file"
 msgstr "Otom&atik başlatma /autorun( dosyası oluştur"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:155
+#: gui\installerGui.py:158
 msgid "Copy current &user configuration"
 msgstr "Mevcut k&ullanıcı konfigürasyonunu kopyala"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:176
+#: gui\installerGui.py:181
 msgid "Select portable  directory"
 msgstr "Taşınabilir kopya için dizin seçin"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:184
+#: gui\installerGui.py:189
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Lütfen taşınabilir kopyanın oluşturulacağı dizini belirleyin."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:192
+#: gui\installerGui.py:197
 #, python-format
 msgid "Invalid drive %s"
 msgstr "%s geçerli bir sürücü değil"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
-#: gui\installerGui.py:206
+#: gui\installerGui.py:211
 msgid "Creating Portable Copy"
 msgstr "Taşınabilir Kopya Oluşturuluyor"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
-#: gui\installerGui.py:208
+#: gui\installerGui.py:213
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "NVDA taşınabilir kopyası oluşturulurken lütfen bekleyin."
 
+#. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
+#: gui\installerGui.py:221
+msgid "NVDA is unable to remove or overwrite a file."
+msgstr "NVDA bir dosyayı silemedi ya da değiştiremedi."
+
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
-#: gui\installerGui.py:216
+#: gui\installerGui.py:228
 #, python-format
 msgid "Failed to create portable copy: %s"
 msgstr "Taşınabilir kopya oluşturma işlemi başarısız: %s"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
-#: gui\installerGui.py:223
+#: gui\installerGui.py:235
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
 msgstr "%s konumunda, NVDA taşınabilir kopyası başarıyla oluşturuldu"
@@ -3813,47 +3996,57 @@ msgstr "Kullanıcı konfigürasyon dizininde özel plug-inler algılandı. Bunla
 msgid "Warning"
 msgstr "Uyarı"
 
-#: gui\settingsDialogs.py:196
+#. Translators: The title of the dialog presented while settings are being copied
+#: gui\settingsDialogs.py:197
+msgid "Copying Settings"
+msgstr "Ayarlar Kopyalanıyor"
+
+#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#: gui\settingsDialogs.py:199
+msgid "Please wait while settings are copied to the system configuration."
+msgstr "Ayarlar sistem konfigürasyon dizinine kopyalanırken lütfen bekleyin."
+
+#: gui\settingsDialogs.py:208
 msgid "Error copying NVDA user settings"
 msgstr "NVDA kullanıcı ayarlarının kopyalanmasında hata"
 
-#: gui\settingsDialogs.py:198
+#: gui\settingsDialogs.py:210
 msgid "Successfully copied NVDA user settings"
 msgstr "NVDA kullanıcı ayarları başarıyla kopyalandı"
 
-#: gui\settingsDialogs.py:207
+#: gui\settingsDialogs.py:219
 #, python-format
 msgid "Error in %s language file"
 msgstr "%s Dil dosyasın'da hata var"
 
-#: gui\settingsDialogs.py:207
+#: gui\settingsDialogs.py:219
 msgid "Language Error"
 msgstr "Dil seçme hatası"
 
-#: gui\settingsDialogs.py:221
+#: gui\settingsDialogs.py:233
 msgid "This change requires administrator privileges."
 msgstr "Bu değişiklik yönetici yetkisi gerektirir"
 
-#: gui\settingsDialogs.py:221
+#: gui\settingsDialogs.py:233
 msgid "Insufficient Privileges"
 msgstr "Yetersiz yetki"
 
-#: gui\settingsDialogs.py:228
+#: gui\settingsDialogs.py:240
 msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
 msgstr "Dil değişikliğinin etkili olması için yeni konfigürasyonun kaydedilmesi ve NVDA'nın yeniden başlatılması gerekiyor. Şimdi kaydedip yeniden başlatmak için entır tuşuna basın. Bu işlemleri daha sonra yapmak için çıkış tuşuna basın."
 
-#: gui\settingsDialogs.py:229
+#: gui\settingsDialogs.py:241
 msgid "Language Configuration Change"
 msgstr "Dil konfigürasyon değişikliği"
 
 #. Translators: This is the label for the synthesizer dialog.
-#: gui\settingsDialogs.py:237
+#: gui\settingsDialogs.py:249
 msgid "Synthesizer"
 msgstr "Sentezleyici"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
-#: gui\settingsDialogs.py:243
+#: gui\settingsDialogs.py:255
 msgid "&Synthesizer:"
 msgstr "&Sentezleyici"
 
@@ -3861,595 +4054,591 @@ msgstr "&Sentezleyici"
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
-#: gui\settingsDialogs.py:262
+#: gui\settingsDialogs.py:274
 msgid "Output &device:"
 msgstr "&Çıkış cihazı"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
-#: gui\settingsDialogs.py:285
+#: gui\settingsDialogs.py:297
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "%s Sentezleyicisi yüklenemiyor"
 
-#: gui\settingsDialogs.py:285
+#: gui\settingsDialogs.py:297
 msgid "Synthesizer Error"
 msgstr "Sentezleyici hatası"
 
 #. Translators: This is the label for the voice settings dialog.
-#: gui\settingsDialogs.py:351
+#: gui\settingsDialogs.py:363
 msgid "Voice Settings"
 msgstr "Ses Ayarları"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:421
+#: gui\settingsDialogs.py:433
 msgid "Automatic language switching (when supported)"
 msgstr "Destekleniyorsa, konuşma dilini otomatik olarak değiştir"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:426
+#: gui\settingsDialogs.py:438
 msgid "Automatic dialect switching (when supported)"
 msgstr "Destekleniyorsa, konuşma lehçesini otomatik olarak değiştir"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:432
+#: gui\settingsDialogs.py:444
 msgid "Punctuation/symbol &level:"
 msgstr "İmla Ses&lendirme Düzeyi"
 
-#: gui\settingsDialogs.py:439
+#: gui\settingsDialogs.py:451
 msgid "Capital pitch change percentage"
 msgstr "Büyük harflerde ses perdesi değişim yüzdesi"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:446
+#: gui\settingsDialogs.py:458
 msgid "Say &cap before capitals"
 msgstr "B&üyük harflerden önce büyük de"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:451
+#: gui\settingsDialogs.py:463
 msgid "&Beep for capitals"
 msgstr "Büyük harflerde b&ip sesi çıkar"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:456
+#: gui\settingsDialogs.py:468
 msgid "Use &spelling functionality if supported"
 msgstr "De&stekleniyorsa kodlama işlevini kullan"
 
 #. Translators: This is the label for the keyboard settings dialog.
-#: gui\settingsDialogs.py:538
+#: gui\settingsDialogs.py:550
 msgid "Keyboard Settings"
 msgstr "Klavye ayarları"
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:544
+#: gui\settingsDialogs.py:556
 msgid "&Keyboard layout:"
 msgstr "&Klavye düzeni"
 
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
-#: gui\settingsDialogs.py:550
+#: gui\settingsDialogs.py:562
 msgid "Keyboard layout"
 msgstr "Klavye düzeni"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:565
+#: gui\settingsDialogs.py:577
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "numaratördeki insert tuşunu NVDA tuşu olarak kullan"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:570
+#: gui\settingsDialogs.py:582
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "Normal insert tuşunu NVDA tuşu olarak kullan"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:575
+#: gui\settingsDialogs.py:587
 msgid "Speak typed &characters"
 msgstr "yazarken &karakterleri seslendir"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:580
+#: gui\settingsDialogs.py:592
 msgid "Speak typed &words"
 msgstr "yazarken s&özcükleri seslendir"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:585
+#: gui\settingsDialogs.py:597
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Büyük harf kilidi açık olduğu halde şift tuşu kullanılıyorsa bip sesi çıkar"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:590
+#: gui\settingsDialogs.py:602
 msgid "Speak command &keys"
 msgstr "K&omut tuşlarını seslendir"
 
 #. Translators: This is the label for the mouse settings dialog.
-#: gui\settingsDialogs.py:611
+#: gui\settingsDialogs.py:623
 msgid "Mouse Settings"
 msgstr "Fare Ayarları"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:616
+#: gui\settingsDialogs.py:628
 msgid "Report mouse &shape changes"
 msgstr "&Fare şekil değişikliklerini bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:621
+#: gui\settingsDialogs.py:633
 msgid "Enable mouse &tracking"
 msgstr "Fare izlemeyi e&tkinleştir"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:627
+#: gui\settingsDialogs.py:639
 msgid "Text &unit resolution:"
 msgstr "Metin &birim çözünürlüğü:"
 
 #. Translators: This is the name of a combobox in the mouse settings dialog.
-#: gui\settingsDialogs.py:632
+#: gui\settingsDialogs.py:644
 msgid "text reporting unit"
 msgstr "Metin bildirim birimi"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:642
+#: gui\settingsDialogs.py:654
 msgid "Report &role when mouse enters object"
 msgstr "Fare altındaki &nesne tiplerini seslendir"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:647
+#: gui\settingsDialogs.py:659
 msgid "play audio coordinates when mouse moves"
 msgstr "Fare hareketlerinde koordinatları ses çalarak bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:652
+#: gui\settingsDialogs.py:664
 msgid "brightness controls audio coordinates volume"
 msgstr "Seçili bölgelerde dolaşırken fare koordinat sesini yükselt"
 
 #. Translators: This is the label for the review cursor settings dialog.
-#: gui\settingsDialogs.py:671
+#: gui\settingsDialogs.py:683
 msgid "Review Cursor Settings"
 msgstr "İnceleme İmleci Ayarları"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:676
+#: gui\settingsDialogs.py:688
 msgid "Follow &keyboard focus"
 msgstr "&Klavye odağını takip et"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:681
+#: gui\settingsDialogs.py:693
 msgid "Follow System &Caret"
 msgstr "Sistem düzenleme imle&cini takip et"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:686
+#: gui\settingsDialogs.py:698
 msgid "Follow &mouse cursor"
 msgstr "Fare i&mlecini takip et"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:691
+#: gui\settingsDialogs.py:703
 msgid "Simple review mode"
 msgstr "Basit İnceleme kipi"
 
 #. Translators: This is the label for the object presentation dialog.
-#: gui\settingsDialogs.py:707
+#: gui\settingsDialogs.py:719
 msgid "Object Presentation"
 msgstr "Nesne Sunumu"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:716
+#: gui\settingsDialogs.py:728
 msgid "Speak"
 msgstr "konuş"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:720
+#: gui\settingsDialogs.py:732
 msgid "Beep"
 msgstr "bip sesi çıkar"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:724
+#: gui\settingsDialogs.py:736
 msgid "Speak and beep"
 msgstr "Konuş ve bip sesi çıkar"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:730
+#: gui\settingsDialogs.py:742
 msgid "Report &tooltips"
 msgstr "ip&uçlarını bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:735
+#: gui\settingsDialogs.py:747
 msgid "Report &help balloons"
 msgstr "&Yardım Balonlarını bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:740
+#: gui\settingsDialogs.py:752
 msgid "Report object shortcut &keys"
 msgstr "Nesne ile ilgili K&ısayol tuşlarını bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:745
+#: gui\settingsDialogs.py:757
 msgid "Report object &position information"
 msgstr "Nesne &konum bilgisini bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:750
+#: gui\settingsDialogs.py:762
 msgid "Guess object &position information when unavailable"
 msgstr "Mevcut değilse nesne &konum bilgisini tahmin et"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:755
+#: gui\settingsDialogs.py:767
 msgid "Report object &descriptions"
 msgstr "Nesne &tariflerini bildir"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:761
+#: gui\settingsDialogs.py:773
 msgid "Progress &bar output:"
 msgstr "Aşama Çub&uğu bildirimi"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:766
+#: gui\settingsDialogs.py:778
 msgid "Progress bar output"
 msgstr "Aşama Çubuğu bildirimi"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:777
+#: gui\settingsDialogs.py:789
 msgid "Report background progress bars"
 msgstr "Geri plandaki aşama çubuğu güncellemelerini bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:782
+#: gui\settingsDialogs.py:794
 msgid "Report dynamic &content changes"
 msgstr "dinamik içerik &değişikliklerini bildir"
 
 #. Translators: This is the label for the browse mode settings dialog.
-#: gui\settingsDialogs.py:803
+#: gui\settingsDialogs.py:815
 msgid "Browse Mode"
 msgstr "Tarama Kipi"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:808
+#: gui\settingsDialogs.py:820
 msgid "&Maximum number of characters on one line"
 msgstr "&Satır başına Maksimum karakter sayısı "
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:815
+#: gui\settingsDialogs.py:827
 msgid "&Number of lines per page"
 msgstr "&Sayfa başına satır sayısı "
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:822
+#: gui\settingsDialogs.py:834
 msgid "Use &screen layout (when supported)"
 msgstr "(Destekleniyorsa) &ekran düzenini kullan"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:827
+#: gui\settingsDialogs.py:839
 msgid "Automatic &Say All on page load"
 msgstr "Sayfa yüklendiğinde otomatik olarak hep&sini okumaya başla"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:832
+#: gui\settingsDialogs.py:844
 msgid "Report l&ayout tables"
 msgstr "Düzenleme tabl&olarını bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:837
+#: gui\settingsDialogs.py:849
 msgid "Automatic focus mode for focus changes"
 msgstr "Odak değiştiğinde otomatik olarak odak kipine geç"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:842
+#: gui\settingsDialogs.py:854
 msgid "Automatic focus mode for caret movement"
 msgstr "Sistem düzenleme imleci hareket ettiğinde otomatik  olarak Odak kipine geç."
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:847
+#: gui\settingsDialogs.py:859
 msgid "Audio indication of focus and browse modes"
 msgstr "Odak kipi ile tarama kipi arasındaki geçişi ses çalarak bildir"
 
 #. Translators: This is the label for the document formatting dialog.
-#: gui\settingsDialogs.py:877
+#: gui\settingsDialogs.py:889
 msgid "Document Formatting"
 msgstr "Belge Formatları"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:882
+#: gui\settingsDialogs.py:894
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "İmleçten sonraki yazı biçimi değişikliklerini bildir (NVDA'yı yavaşlatabilir)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:887
+#: gui\settingsDialogs.py:899
 msgid "Report font &name"
 msgstr "Yazı tipi adı&nı bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:892
+#: gui\settingsDialogs.py:904
 msgid "Report font &size"
 msgstr "Yazı tipi büyüklüğünü bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:897
+#: gui\settingsDialogs.py:909
 msgid "Report font attri&butes"
 msgstr "Yazı &tipi özelliklerini bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:902
+#: gui\settingsDialogs.py:914
 msgid "Report &alignment"
 msgstr "&Hizayı bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:907
+#: gui\settingsDialogs.py:919
 msgid "Report &colors"
 msgstr "Renk&leri bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:912
+#: gui\settingsDialogs.py:924
 msgid "Report st&yle"
 msgstr "stilleri bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:917
+#: gui\settingsDialogs.py:929
 msgid "Report spelling errors"
 msgstr "&Yazım hatalarını bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:922
+#: gui\settingsDialogs.py:934
 msgid "Report &pages"
 msgstr "&Sayfa değişikliklerini bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:927
+#: gui\settingsDialogs.py:939
 msgid "Report &line numbers"
 msgstr "Satır nu&maralarını bildir"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
-#: gui\settingsDialogs.py:933
+#: gui\settingsDialogs.py:945
 msgid "Report l&ine indentation"
 msgstr "Satır gi&rintilerini bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:938
+#: gui\settingsDialogs.py:950
 msgid "Report &tables"
 msgstr "Tabl&oları bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:943
+#: gui\settingsDialogs.py:955
 msgid "Report table row/column h&eaders"
 msgstr "Tablo satır v&e sütun başlıklarını bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:948
+#: gui\settingsDialogs.py:960
 msgid "Report table cell c&oordinates"
 msgstr "Tablo hücre k&oordinatlarını bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:953
+#: gui\settingsDialogs.py:965
 msgid "Report &links"
 msgstr "&Bağlantıları bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:958
+#: gui\settingsDialogs.py:970
 msgid "Report &headings"
 msgstr "B&aşlıkları bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:963
+#: gui\settingsDialogs.py:975
 msgid "Report l&ists"
 msgstr "&Listeleri bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:968
+#: gui\settingsDialogs.py:980
 msgid "Report block &quotes"
 msgstr "Alın&tıları bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:973
+#: gui\settingsDialogs.py:985
 msgid "Report lan&dmarks"
 msgstr "Sınır İ&mlerini bildir"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:978
+#: gui\settingsDialogs.py:990
 msgid "Report fra&mes"
 msgstr "Çer&çeveleri Bildir"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
-#: gui\settingsDialogs.py:1011
+#: gui\settingsDialogs.py:1023
 msgid "Edit Dictionary Entry"
 msgstr "Sözlük Kaydını düzenle"
 
-#: gui\settingsDialogs.py:1015
+#: gui\settingsDialogs.py:1027
 msgid "&Pattern"
 msgstr "İ&fade"
 
-#: gui\settingsDialogs.py:1018
-#: gui\settingsDialogs.py:1267
+#: gui\settingsDialogs.py:1030
+#: gui\settingsDialogs.py:1279
 msgid "&Replacement"
 msgstr "&Olarak değiştir"
 
-#: gui\settingsDialogs.py:1021
+#: gui\settingsDialogs.py:1033
 msgid "&Comment"
 msgstr "&Yorum"
 
-#: gui\settingsDialogs.py:1024
+#: gui\settingsDialogs.py:1036
 msgid "Case &sensitive"
 msgstr "Büyük-küçük harf  &duyarlı"
 
-#: gui\settingsDialogs.py:1026
+#: gui\settingsDialogs.py:1038
 msgid "Regular &expression"
 msgstr "Düzenli &ifade"
 
-#: gui\settingsDialogs.py:1048
+#: gui\settingsDialogs.py:1060
 msgid "&Dictionary entries"
 msgstr "&Sözlük kayıtları"
 
-#: gui\settingsDialogs.py:1051
+#: gui\settingsDialogs.py:1063
 msgid "Comment"
 msgstr "yorum"
 
-#: gui\settingsDialogs.py:1052
+#: gui\settingsDialogs.py:1064
 msgid "Pattern"
 msgstr "İfade"
 
-#: gui\settingsDialogs.py:1053
-#: gui\settingsDialogs.py:1255
+#: gui\settingsDialogs.py:1065
+#: gui\settingsDialogs.py:1267
 msgid "Replacement"
 msgstr "olarak değiştir"
 
-#: gui\settingsDialogs.py:1054
+#: gui\settingsDialogs.py:1066
 msgid "case"
 msgstr "Büyük/küçük harf duyarlılığı"
 
-#: gui\settingsDialogs.py:1055
+#: gui\settingsDialogs.py:1067
 msgid "Regexp"
 msgstr "Düzenli ifade"
 
-#: gui\settingsDialogs.py:1064
+#: gui\settingsDialogs.py:1076
 msgid "&Add"
 msgstr "&Ekle"
 
-#: gui\settingsDialogs.py:1067
+#: gui\settingsDialogs.py:1079
 msgid "&Edit"
 msgstr "&Düzenle"
 
-#: gui\settingsDialogs.py:1070
-msgid "&Remove"
-msgstr "Kaldı&r"
-
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui\settingsDialogs.py:1094
+#: gui\settingsDialogs.py:1106
 msgid "Add Dictionary Entry"
 msgstr "Sözlük girişi ekle"
 
 #. Translators: This is the label for the braille settings dialog.
-#: gui\settingsDialogs.py:1140
+#: gui\settingsDialogs.py:1152
 msgid "Braille Settings"
 msgstr "Braille ayarları"
 
-#: gui\settingsDialogs.py:1144
+#: gui\settingsDialogs.py:1156
 msgid "Braille &display:"
 msgstr "Braille &ekran:"
 
-#: gui\settingsDialogs.py:1158
+#: gui\settingsDialogs.py:1170
 msgid "Translation &table:"
 msgstr "çeviri &tablosu"
 
-#: gui\settingsDialogs.py:1170
+#: gui\settingsDialogs.py:1182
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "İmle&ç altındaki sözcüğü bilgisayar braillle olarak genişlet"
 
-#: gui\settingsDialogs.py:1175
+#: gui\settingsDialogs.py:1187
 msgid "Cursor blink rate (ms)"
 msgstr "Imleç titreşimi (MS)"
 
-#: gui\settingsDialogs.py:1183
+#: gui\settingsDialogs.py:1195
 msgid "Message timeout (sec)"
 msgstr "Mesaj zaman aşımı (san)"
 
-#: gui\settingsDialogs.py:1191
+#: gui\settingsDialogs.py:1203
 msgid "Braille tethered to:"
 msgstr "Braille konumunun bağlı olduğu imleç"
 
-#: gui\settingsDialogs.py:1204
+#: gui\settingsDialogs.py:1216
 msgid "Read by &paragraph"
 msgstr "&paragraph bazında oku"
 
-#: gui\settingsDialogs.py:1208
+#: gui\settingsDialogs.py:1220
 msgid "Avoid splitting &words when possible"
 msgstr "Mümkün olduğunda &sözcükleri bölmemeye çalış"
 
-#: gui\settingsDialogs.py:1218
+#: gui\settingsDialogs.py:1230
 #, python-format
 msgid "Could not load the %s display."
 msgstr "%s adlı ekran yüklenemiyor"
 
-#: gui\settingsDialogs.py:1218
+#: gui\settingsDialogs.py:1230
 msgid "Braille Display Error"
 msgstr "Braille Ekran hatası"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui\settingsDialogs.py:1241
+#: gui\settingsDialogs.py:1253
 msgid "Symbol Pronunciation"
 msgstr "Noktalama/imla sözlüğü"
 
-#: gui\settingsDialogs.py:1252
+#: gui\settingsDialogs.py:1264
 msgid "&Symbols"
 msgstr "İ&şaretler"
 
-#: gui\settingsDialogs.py:1254
+#: gui\settingsDialogs.py:1266
 msgid "Symbol"
 msgstr "İşaret"
 
-#: gui\settingsDialogs.py:1256
+#: gui\settingsDialogs.py:1268
 msgid "Level"
 msgstr "Düzey"
 
-#: gui\settingsDialogs.py:1265
+#: gui\settingsDialogs.py:1277
 msgid "Change symbol"
 msgstr "okunuşunu değiştir"
 
-#: gui\settingsDialogs.py:1273
+#: gui\settingsDialogs.py:1285
 msgid "&Level"
 msgstr "&Düzey"
 
@@ -4487,554 +4676,554 @@ msgstr "Sessiz"
 msgid "word"
 msgstr "Sözcük"
 
-#: virtualBuffers\__init__.py:220
-#: virtualBuffers\__init__.py:228
+#: virtualBuffers\__init__.py:227
+#: virtualBuffers\__init__.py:235
 #, python-format
 msgid "%s landmark"
 msgstr "%s sınır imi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:253
+#: virtualBuffers\__init__.py:260
 msgid "Lin&ks"
 msgstr "Bağ&lantılar"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:256
+#: virtualBuffers\__init__.py:263
 msgid "&Headings"
 msgstr "&Başlıklar"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:259
+#: virtualBuffers\__init__.py:266
 msgid "Lan&dmarks"
 msgstr "Sını&r imleri"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:266
+#: virtualBuffers\__init__.py:273
 msgid "Elements List"
 msgstr "öge listesi"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:271
+#: virtualBuffers\__init__.py:278
 msgid "Type:"
 msgstr "Tür"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:284
+#: virtualBuffers\__init__.py:291
 msgid "&Filter by:"
 msgstr "&Filtreleme kriteri"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:294
+#: virtualBuffers\__init__.py:301
 msgid "&Activate"
 msgstr "&Etkinleştir"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:299
+#: virtualBuffers\__init__.py:306
 msgid "&Move to"
 msgstr "&Taşı"
 
-#: virtualBuffers\__init__.py:611
+#: virtualBuffers\__init__.py:618
 msgid "Refreshed"
 msgstr "Güncellendi"
 
-#: virtualBuffers\__init__.py:616
+#: virtualBuffers\__init__.py:623
 msgid "Loading document..."
 msgstr "Belge yükleniyor..."
 
-#: virtualBuffers\__init__.py:791
+#: virtualBuffers\__init__.py:798
 msgid "activates the current object in the document"
 msgstr "Belge içindeki mevcut nesneyi etkinleştirir"
 
-#: virtualBuffers\__init__.py:799
+#: virtualBuffers\__init__.py:806
 msgid "Refreshes the document content"
 msgstr "Belge içeriğini günceller."
 
-#: virtualBuffers\__init__.py:804
+#: virtualBuffers\__init__.py:811
 #, python-format
 msgid "use screen layout %s"
 msgstr "Ekran düzenini kullan %s"
 
-#: virtualBuffers\__init__.py:805
+#: virtualBuffers\__init__.py:812
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
 msgstr "Mevcut sayfanın ekranda göründüğü gibi sergilenmesiyle ilgili ayarı açıp kapatır"
 
-#: virtualBuffers\__init__.py:888
+#: virtualBuffers\__init__.py:895
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Bağlantı, başlık ya da sınır imi listesini gösterir"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: virtualBuffers\__init__.py:1261
+#: virtualBuffers\__init__.py:1268
 msgid "Not in a table cell"
 msgstr "Bir tablo hücresinde değil."
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: virtualBuffers\__init__.py:1269
+#: virtualBuffers\__init__.py:1276
 msgid "edge of table"
 msgstr "tablo sınırı"
 
-#: virtualBuffers\__init__.py:1279
+#: virtualBuffers\__init__.py:1286
 msgid "moves to the next table row"
 msgstr "Bir sonraki tablo satırına gider"
 
-#: virtualBuffers\__init__.py:1283
+#: virtualBuffers\__init__.py:1290
 msgid "moves to the previous table row"
 msgstr "Bir önceki tablo satırına gider"
 
-#: virtualBuffers\__init__.py:1287
+#: virtualBuffers\__init__.py:1294
 msgid "moves to the next table column"
 msgstr "Bir sonraki tablo sütununa gider"
 
-#: virtualBuffers\__init__.py:1291
+#: virtualBuffers\__init__.py:1298
 msgid "moves to the previous table column"
 msgstr "Bir önceki tablo sütununa gider"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers\__init__.py:1386
-#: virtualBuffers\__init__.py:1400
+#: virtualBuffers\__init__.py:1393
+#: virtualBuffers\__init__.py:1407
 msgid "Not in a container"
 msgstr "bir öge bloğunun içinde değilsiniz"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: virtualBuffers\__init__.py:1393
+#: virtualBuffers\__init__.py:1400
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "Tablo ya da liste vb öge bloklarının başına gider"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: virtualBuffers\__init__.py:1407
+#: virtualBuffers\__init__.py:1414
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Tablo ya da liste vb öge bloklarının sonuna gider"
 
-#: virtualBuffers\__init__.py:1430
+#: virtualBuffers\__init__.py:1437
 msgid "moves to the next heading"
 msgstr "Bir sonraki başlığa gider"
 
-#: virtualBuffers\__init__.py:1430
+#: virtualBuffers\__init__.py:1437
 msgid "no next heading"
 msgstr "İleride başlık yok"
 
-#: virtualBuffers\__init__.py:1431
+#: virtualBuffers\__init__.py:1438
 msgid "moves to the previous heading"
 msgstr "Önceki başlığa gider"
 
-#: virtualBuffers\__init__.py:1431
+#: virtualBuffers\__init__.py:1438
 msgid "no previous heading"
 msgstr "Geride başlık yok"
 
-#: virtualBuffers\__init__.py:1432
+#: virtualBuffers\__init__.py:1439
 msgid "moves to the next heading at level 1"
 msgstr "Bir sonraki birinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1432
+#: virtualBuffers\__init__.py:1439
 msgid "no next heading at level 1"
 msgstr "İleride birinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1433
+#: virtualBuffers\__init__.py:1440
 msgid "moves to the previous heading at level 1"
 msgstr "Bir önceki birinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1433
+#: virtualBuffers\__init__.py:1440
 msgid "no previous heading at level 1"
 msgstr "Geride birinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1434
+#: virtualBuffers\__init__.py:1441
 msgid "moves to the next heading at level 2"
 msgstr "Bir sonraki ikinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1434
+#: virtualBuffers\__init__.py:1441
 msgid "no next heading at level 2"
 msgstr "İleride ikinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1435
+#: virtualBuffers\__init__.py:1442
 msgid "moves to the previous heading at level 2"
 msgstr "Bir önceki ikinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1435
+#: virtualBuffers\__init__.py:1442
 msgid "no previous heading at level 2"
 msgstr "Geride ikinci seviyede Başlık yok"
 
-#: virtualBuffers\__init__.py:1436
+#: virtualBuffers\__init__.py:1443
 msgid "moves to the next heading at level 3"
 msgstr "Bir sonraki üçüncü seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1436
+#: virtualBuffers\__init__.py:1443
 msgid "no next heading at level 3"
 msgstr "İleride üçüncü seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1437
+#: virtualBuffers\__init__.py:1444
 msgid "moves to the previous heading at level 3"
 msgstr "Bir önceki üçüncü seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1437
+#: virtualBuffers\__init__.py:1444
 msgid "no previous heading at level 3"
 msgstr "Geride üçüncü seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1438
+#: virtualBuffers\__init__.py:1445
 msgid "moves to the next heading at level 4"
 msgstr "Bir sonraki dördüncü seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1438
+#: virtualBuffers\__init__.py:1445
 msgid "no next heading at level 4"
 msgstr "İleride dördüncü seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1439
+#: virtualBuffers\__init__.py:1446
 msgid "moves to the previous heading at level 4"
 msgstr "Bir önceki dördüncü seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1439
+#: virtualBuffers\__init__.py:1446
 msgid "no previous heading at level 4"
 msgstr "Geride dördüncü seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1440
+#: virtualBuffers\__init__.py:1447
 msgid "moves to the next heading at level 5"
 msgstr "Bir sonraki beşinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1440
+#: virtualBuffers\__init__.py:1447
 msgid "no next heading at level 5"
 msgstr "İleride beşinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1441
+#: virtualBuffers\__init__.py:1448
 msgid "moves to the previous heading at level 5"
 msgstr "Bir önceki beşinci seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1441
+#: virtualBuffers\__init__.py:1448
 msgid "no previous heading at level 5"
 msgstr "Geride beşinci seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1442
+#: virtualBuffers\__init__.py:1449
 msgid "moves to the next heading at level 6"
 msgstr "Bir sonraki altıncı seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1442
+#: virtualBuffers\__init__.py:1449
 msgid "no next heading at level 6"
 msgstr "İleride altıncı seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1443
+#: virtualBuffers\__init__.py:1450
 msgid "moves to the previous heading at level 6"
 msgstr "Bir önceki altıncı seviyedeki başlığa gider"
 
-#: virtualBuffers\__init__.py:1443
+#: virtualBuffers\__init__.py:1450
 msgid "no previous heading at level 6"
 msgstr "Geride altıncı seviyede başlık yok"
 
-#: virtualBuffers\__init__.py:1444
+#: virtualBuffers\__init__.py:1451
 msgid "moves to the next table"
 msgstr "Bir sonraki tabloya gider"
 
-#: virtualBuffers\__init__.py:1444
+#: virtualBuffers\__init__.py:1451
 msgid "no next table"
 msgstr "İleride Tablo yok"
 
-#: virtualBuffers\__init__.py:1445
+#: virtualBuffers\__init__.py:1452
 msgid "moves to the previous table"
 msgstr "Bir önceki tabloya gider"
 
-#: virtualBuffers\__init__.py:1445
+#: virtualBuffers\__init__.py:1452
 msgid "no previous table"
 msgstr "Geride Tablo yok"
 
-#: virtualBuffers\__init__.py:1446
+#: virtualBuffers\__init__.py:1453
 msgid "moves to the next link"
 msgstr "Bir sonraki bağlantıya gider"
 
-#: virtualBuffers\__init__.py:1446
+#: virtualBuffers\__init__.py:1453
 msgid "no next link"
 msgstr "İleride bağlantı yok"
 
-#: virtualBuffers\__init__.py:1447
+#: virtualBuffers\__init__.py:1454
 msgid "moves to the previous link"
 msgstr "Bir önceki bağlantıya gider"
 
-#: virtualBuffers\__init__.py:1447
+#: virtualBuffers\__init__.py:1454
 msgid "no previous link"
 msgstr "Geride bağlantı yok"
 
-#: virtualBuffers\__init__.py:1448
+#: virtualBuffers\__init__.py:1455
 msgid "moves to the next visited link"
 msgstr "Bir sonraki ziyaret edilmiş bağlantıya gider"
 
-#: virtualBuffers\__init__.py:1448
+#: virtualBuffers\__init__.py:1455
 msgid "no next visited link"
 msgstr "İleride ziyaret edilmiş bağlantı yok"
 
-#: virtualBuffers\__init__.py:1449
+#: virtualBuffers\__init__.py:1456
 msgid "moves to the previous visited link"
 msgstr "Bir önceki ziyaret edilmiş bağlantıya gider"
 
-#: virtualBuffers\__init__.py:1449
+#: virtualBuffers\__init__.py:1456
 msgid "no previous visited link"
 msgstr "Geride ziyaret edilmiş bağlantı yok"
 
-#: virtualBuffers\__init__.py:1450
+#: virtualBuffers\__init__.py:1457
 msgid "moves to the next unvisited link"
 msgstr "Bir sonraki ziyaret edilmmemiş bağlantıya gider"
 
-#: virtualBuffers\__init__.py:1450
+#: virtualBuffers\__init__.py:1457
 msgid "no next unvisited link"
 msgstr "İleride ziyaret edilmemiş bağlantı yok"
 
-#: virtualBuffers\__init__.py:1451
+#: virtualBuffers\__init__.py:1458
 msgid "moves to the previous unvisited link"
 msgstr "Bir önceki ziyaret edilmmemiş bağlantıya gider"
 
-#: virtualBuffers\__init__.py:1451
+#: virtualBuffers\__init__.py:1458
 msgid "no previous unvisited link"
 msgstr "Geride ziyaret edilmemiş bağlantı yok"
 
-#: virtualBuffers\__init__.py:1452
+#: virtualBuffers\__init__.py:1459
 msgid "moves to the next form field"
 msgstr "Bir sonraki form alanına gider"
 
-#: virtualBuffers\__init__.py:1452
+#: virtualBuffers\__init__.py:1459
 msgid "no next form field"
 msgstr "İleride form alanı yok"
 
-#: virtualBuffers\__init__.py:1453
+#: virtualBuffers\__init__.py:1460
 msgid "moves to the previous form field"
 msgstr "Bir önceki form alanına gider"
 
-#: virtualBuffers\__init__.py:1453
+#: virtualBuffers\__init__.py:1460
 msgid "no previous form field"
 msgstr "Geride form alanı yok"
 
-#: virtualBuffers\__init__.py:1454
+#: virtualBuffers\__init__.py:1461
 msgid "moves to the next list"
 msgstr "Bir sonraki listeye gider"
 
-#: virtualBuffers\__init__.py:1454
+#: virtualBuffers\__init__.py:1461
 msgid "no next list"
 msgstr "İleride liste yok"
 
-#: virtualBuffers\__init__.py:1455
+#: virtualBuffers\__init__.py:1462
 msgid "moves to the previous list"
 msgstr "Bir önceki listeye gider"
 
-#: virtualBuffers\__init__.py:1455
+#: virtualBuffers\__init__.py:1462
 msgid "no previous list"
 msgstr "Geride liste yok"
 
-#: virtualBuffers\__init__.py:1456
+#: virtualBuffers\__init__.py:1463
 msgid "moves to the next list item"
 msgstr "Bir sonraki liste ögesine gider"
 
-#: virtualBuffers\__init__.py:1456
+#: virtualBuffers\__init__.py:1463
 msgid "no next list item"
 msgstr "İleride liste ögesi yok"
 
-#: virtualBuffers\__init__.py:1457
+#: virtualBuffers\__init__.py:1464
 msgid "moves to the previous list item"
 msgstr "Bir önceki liste ögesine gider"
 
-#: virtualBuffers\__init__.py:1457
+#: virtualBuffers\__init__.py:1464
 msgid "no previous list item"
 msgstr "Geride liste ögesi yok"
 
-#: virtualBuffers\__init__.py:1458
+#: virtualBuffers\__init__.py:1465
 msgid "moves to the next button"
 msgstr "Bir sonraki düğmeye gider"
 
-#: virtualBuffers\__init__.py:1458
+#: virtualBuffers\__init__.py:1465
 msgid "no next button"
 msgstr "İleride düğme yok"
 
-#: virtualBuffers\__init__.py:1459
+#: virtualBuffers\__init__.py:1466
 msgid "moves to the previous button"
 msgstr "Bir önceki düğmeye gider"
 
-#: virtualBuffers\__init__.py:1459
+#: virtualBuffers\__init__.py:1466
 msgid "no previous button"
 msgstr "Geride düğme yok"
 
-#: virtualBuffers\__init__.py:1460
+#: virtualBuffers\__init__.py:1467
 msgid "moves to the next edit field"
 msgstr "Bir sonraki yazı alanına gider"
 
-#: virtualBuffers\__init__.py:1460
+#: virtualBuffers\__init__.py:1467
 msgid "no next edit field"
 msgstr "İleride yazı alanı yok"
 
-#: virtualBuffers\__init__.py:1461
+#: virtualBuffers\__init__.py:1468
 msgid "moves to the previous edit field"
 msgstr "Bir önceki yazı alanına gider"
 
-#: virtualBuffers\__init__.py:1461
+#: virtualBuffers\__init__.py:1468
 msgid "no previous edit field"
 msgstr "Geride yazı alanı yok"
 
-#: virtualBuffers\__init__.py:1462
+#: virtualBuffers\__init__.py:1469
 msgid "moves to the next frame"
 msgstr "Bir sonraki çerçeveye gider"
 
-#: virtualBuffers\__init__.py:1462
+#: virtualBuffers\__init__.py:1469
 msgid "no next frame"
 msgstr "İleride çerçeve yok"
 
-#: virtualBuffers\__init__.py:1463
+#: virtualBuffers\__init__.py:1470
 msgid "moves to the previous frame"
 msgstr "Bir önceki çerçeveye gider"
 
-#: virtualBuffers\__init__.py:1463
+#: virtualBuffers\__init__.py:1470
 msgid "no previous frame"
 msgstr "Geride çerçeve yok"
 
-#: virtualBuffers\__init__.py:1464
+#: virtualBuffers\__init__.py:1471
 msgid "moves to the next separator"
 msgstr "Bir sonraki Ayraça gider"
 
-#: virtualBuffers\__init__.py:1464
+#: virtualBuffers\__init__.py:1471
 msgid "no next separator"
 msgstr "İleride ayraç yok"
 
-#: virtualBuffers\__init__.py:1465
+#: virtualBuffers\__init__.py:1472
 msgid "moves to the previous separator"
 msgstr "Bir önceki Ayraça gider"
 
-#: virtualBuffers\__init__.py:1465
+#: virtualBuffers\__init__.py:1472
 msgid "no previous separator"
 msgstr "Geride ayraç yok"
 
-#: virtualBuffers\__init__.py:1466
+#: virtualBuffers\__init__.py:1473
 msgid "moves to the next radio button"
 msgstr "Bir sonraki seçim düğmesine gider"
 
-#: virtualBuffers\__init__.py:1466
+#: virtualBuffers\__init__.py:1473
 msgid "no next radio button"
 msgstr "İleride seçim düğmesi yok"
 
-#: virtualBuffers\__init__.py:1467
+#: virtualBuffers\__init__.py:1474
 msgid "moves to the previous radio button"
 msgstr "Bir önceki seçim düğmesine gider"
 
-#: virtualBuffers\__init__.py:1467
+#: virtualBuffers\__init__.py:1474
 msgid "no previous radio button"
 msgstr "Geride seçim düğmesi yok"
 
-#: virtualBuffers\__init__.py:1468
+#: virtualBuffers\__init__.py:1475
 msgid "moves to the next combo box"
 msgstr "Bir sonraki seçim kutusuna gider"
 
-#: virtualBuffers\__init__.py:1468
+#: virtualBuffers\__init__.py:1475
 msgid "no next combo box"
 msgstr "İleride seçim kutusu yok"
 
-#: virtualBuffers\__init__.py:1469
+#: virtualBuffers\__init__.py:1476
 msgid "moves to the previous combo box"
 msgstr "Bir önceki seçim kutusuna gider"
 
-#: virtualBuffers\__init__.py:1469
+#: virtualBuffers\__init__.py:1476
 msgid "no previous combo box"
 msgstr "Geride seçim kutusu yok"
 
-#: virtualBuffers\__init__.py:1470
+#: virtualBuffers\__init__.py:1477
 msgid "moves to the next check box"
 msgstr "Bir sonraki onay kutusuna gider"
 
-#: virtualBuffers\__init__.py:1470
+#: virtualBuffers\__init__.py:1477
 msgid "no next check box"
 msgstr "İleride onaykutusu yok"
 
-#: virtualBuffers\__init__.py:1471
+#: virtualBuffers\__init__.py:1478
 msgid "moves to the previous check box"
 msgstr "Bir önceki onay kutusuna gider"
 
-#: virtualBuffers\__init__.py:1471
+#: virtualBuffers\__init__.py:1478
 msgid "no previous check box"
 msgstr "Geride onaykutusu yok"
 
-#: virtualBuffers\__init__.py:1472
+#: virtualBuffers\__init__.py:1479
 msgid "moves to the next graphic"
 msgstr "Bir sonraki grafike gider"
 
-#: virtualBuffers\__init__.py:1472
+#: virtualBuffers\__init__.py:1479
 msgid "no next graphic"
 msgstr "İleride grafik yok"
 
-#: virtualBuffers\__init__.py:1473
+#: virtualBuffers\__init__.py:1480
 msgid "moves to the previous graphic"
 msgstr "Bir önceki grafike gider"
 
-#: virtualBuffers\__init__.py:1473
+#: virtualBuffers\__init__.py:1480
 msgid "no previous graphic"
 msgstr "Geride grafik yok"
 
-#: virtualBuffers\__init__.py:1474
+#: virtualBuffers\__init__.py:1481
 msgid "moves to the next block quote"
 msgstr "Bir sonraki alıntıya gider"
 
-#: virtualBuffers\__init__.py:1474
+#: virtualBuffers\__init__.py:1481
 msgid "no next block quote"
 msgstr "İleride alıntı yok"
 
-#: virtualBuffers\__init__.py:1475
+#: virtualBuffers\__init__.py:1482
 msgid "moves to the previous block quote"
 msgstr "Bir önceki alıntıya gider"
 
-#: virtualBuffers\__init__.py:1475
+#: virtualBuffers\__init__.py:1482
 msgid "no previous block quote"
 msgstr "Geride alıntı yok"
 
-#: virtualBuffers\__init__.py:1476
+#: virtualBuffers\__init__.py:1483
 msgid "skips forward past a block of links"
 msgstr "Bir grup bağlantı sonrasındaki metin üzerine gider"
 
-#: virtualBuffers\__init__.py:1476
+#: virtualBuffers\__init__.py:1483
 msgid "no more text after a block of links"
 msgstr "Bir grup bağlantı sonrasında metin bulunamadı"
 
-#: virtualBuffers\__init__.py:1477
+#: virtualBuffers\__init__.py:1484
 msgid "skips backward past a block of links"
 msgstr "Bir grup bağlantı öncesindeki metin üzerine gider"
 
-#: virtualBuffers\__init__.py:1477
+#: virtualBuffers\__init__.py:1484
 msgid "no more text before a block of links"
 msgstr "Bir grup bağlantı öncesinde metin bulunamadı"
 
-#: virtualBuffers\__init__.py:1478
+#: virtualBuffers\__init__.py:1485
 msgid "moves to the next landmark"
 msgstr "Bir sonraki sınır imine gider"
 
-#: virtualBuffers\__init__.py:1478
+#: virtualBuffers\__init__.py:1485
 msgid "no next landmark"
 msgstr "İleride sınır imi yok"
 
-#: virtualBuffers\__init__.py:1479
+#: virtualBuffers\__init__.py:1486
 msgid "moves to the previous landmark"
 msgstr "Bir önceki sınır imine gider"
 
-#: virtualBuffers\__init__.py:1479
+#: virtualBuffers\__init__.py:1486
 msgid "no previous landmark"
 msgstr "Geride sınır imi yok"
 
-#: virtualBuffers\__init__.py:1480
+#: virtualBuffers\__init__.py:1487
 msgid "moves to the next embedded object"
 msgstr "Bir sonraki gömülü nesneye gider"
 
-#: virtualBuffers\__init__.py:1480
+#: virtualBuffers\__init__.py:1487
 msgid "no next embedded object"
 msgstr "İleride gömülü nesne yok"
 
-#: virtualBuffers\__init__.py:1481
+#: virtualBuffers\__init__.py:1488
 msgid "moves to the previous embedded object"
 msgstr "Bir önceki gömülü nesneye gider"
 
-#: virtualBuffers\__init__.py:1481
+#: virtualBuffers\__init__.py:1488
 msgid "no previous embedded object"
 msgstr "Geride gömülü nesne yok"
 
-#: virtualBuffers\__init__.py:1494
+#: virtualBuffers\__init__.py:1501
 msgid "focus mode"
 msgstr "Odak kipi"
 
-#: virtualBuffers\__init__.py:1494
+#: virtualBuffers\__init__.py:1501
 msgid "browse mode"
 msgstr "Tarama kipi"
 
@@ -5113,20 +5302,20 @@ msgstr "metin çerçevesi"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:393
-#: NVDAObjects\window\winword.py:412
+#: NVDAObjects\window\winword.py:397
+#: NVDAObjects\window\winword.py:416
 msgid "Not in table"
 msgstr "Bir tabloda değil"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects\window\winword.py:406
-#: NVDAObjects\window\winword.py:425
+#: NVDAObjects\window\winword.py:410
+#: NVDAObjects\window\winword.py:429
 msgid "Edge of table"
 msgstr "tablo sınırı"
 
-#~ msgid "Installation options"
-#~ msgstr "Kurulum seçenekleri"
+#~ msgid "&Add..."
+#~ msgstr "&Ekle..."
 
-#~ msgid "Portable options"
-#~ msgstr "Taşınabilir kopya ile ilgili seçenekler"
+#~ msgid "C&lose"
+#~ msgstr "&Kapat"
