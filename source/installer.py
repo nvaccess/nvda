@@ -254,7 +254,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 		f=os.path.join(installDir,f)
 		if os.path.isfile(f):
 			if windll.kernel32.CopyFileW(u"\\\\?\\"+f,u"\\\\?\\"+os.path.join(installDir,"nvda.exe"),False)==0:
-				raise OSError("Error copying %s to nvda.exe"%f)
+				raise RetriableFailier("Error copying %s to nvda.exe, error %d"%(f,GetLastError()))
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
