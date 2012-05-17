@@ -119,7 +119,7 @@ def copyProgramFiles(destPath):
 				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
 					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
 				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
-					raise OSError("Still unable to copy file %s"%sourceFilePath)
+					raise RetriableFailure("Still unable to copy file %s"%sourceFilePath)
 
 def copyUserConfig(destPath):
 	sourcePath=os.path.abspath(globalVars.appArgs.configPath)
@@ -242,8 +242,13 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	unregisterInstallation()
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
-	#Remove all the main executables always
-	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
+	# Remove all the main executables always.
+	# We do this for two reasons:
+	# 1. If this fails, it means another copy of NVDA is running elsewhere,
+	# so we shouldn't proceed.
+	# 2. The appropriate executable for nvda.exe will be determined by
+	# which executables exist after copying program files.
+	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe","nvda_service.exe","nvda_slave.exe"):
 		f=os.path.join(installDir,f)
 		if os.path.isfile(f):
 			tryRemoveFile(f)
@@ -254,7 +259,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 		f=os.path.join(installDir,f)
 		if os.path.isfile(f):
 			if windll.kernel32.CopyFileW(u"\\\\?\\"+f,u"\\\\?\\"+os.path.join(installDir,"nvda.exe"),False)==0:
-				raise OSError("Error copying %s to nvda.exe"%f)
+				raise RetriableFailier("Error copying %s to nvda.exe, error %d"%(f,GetLastError()))
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
