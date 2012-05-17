@@ -119,7 +119,7 @@ def copyProgramFiles(destPath):
 				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
 					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
 				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
-					raise OSError("Still unable to copy file %s"%sourceFilePath)
+					raise RetriableFailure("Still unable to copy file %s"%sourceFilePath)
 
 def copyUserConfig(destPath):
 	sourcePath=os.path.abspath(globalVars.appArgs.configPath)
