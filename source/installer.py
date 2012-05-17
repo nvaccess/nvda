@@ -242,8 +242,13 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	unregisterInstallation()
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
-	#Remove all the main executables always
-	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe"):
+	# Remove all the main executables always.
+	# We do this for two reasons:
+	# 1. If this fails, it means another copy of NVDA is running elsewhere,
+	# so we shouldn't proceed.
+	# 2. The appropriate executable for nvda.exe will be determined by
+	# which executables exist after copying program files.
+	for f in ("nvda.exe","nvda_noUIAccess.exe","nvda_UIAccess.exe","nvda_service.exe","nvda_slave.exe"):
 		f=os.path.join(installDir,f)
 		if os.path.isfile(f):
 			tryRemoveFile(f)
