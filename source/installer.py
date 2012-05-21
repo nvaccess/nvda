@@ -115,7 +115,7 @@ def copyProgramFiles(destPath):
 				try:
 					os.rename(destFilePath,tempPath)
 				except (WindowsError,OSError):
-					raise RetriableFailier("Failed to rename %s after failed remove"%destFilePath) 
+					raise RetriableFailure("Failed to rename %s after failed remove"%destFilePath) 
 				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
 					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
 				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
@@ -136,7 +136,7 @@ def copyUserConfig(destPath):
 				try:
 					os.rename(destFilePath,tempPath)
 				except (WindowsError,OSError):
-					raise RetriableFailier("Failed to rename %s after failed remove"%destFilePath)
+					raise RetriableFailure("Failed to rename %s after failed remove"%destFilePath)
 				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
 					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
 				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
@@ -220,22 +220,36 @@ def unregisterInstallation():
 	except WindowsError:
 		pass
 
-class RetriableFailier(Exception):
+class RetriableFailure(Exception):
 	pass
 
-MB_RETRYCANCEL=0x5
-MB_SYSTEMMODAL=0x1000
-IDRETRY=4
-IDCANCEL=3
-def tryRemoveFile(path,numRetries=6,retryInterval=0.5):
+def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
+	dirPath=os.path.dirname(path)
+	tempPath=tempfile.mktemp(dir=dirPath)
+	try:
+		os.rename(path,tempPath)
+	except (WindowsError,IOError):
+		raise RetriableFailure("Failed to rename file %s before  remove"%path)
 	for count in xrange(numRetries):
 		try:
-			os.remove(path)
+			if os.path.isdir(tempPath):
+				os.rmdir(tempPath)
+			else:
+				os.remove(tempPath)
 			return
 		except OSError:
 			pass
 		time.sleep(retryInterval)
-	raise RetriableFailier("File %s could not be removed"%path)
+	if rebootOK:
+		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
+		if windll.kernel32.MoveFileExA("\\\\?\\"+tempPath,None,4)==0:
+			raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
+		return
+	try:
+		os.rename(tempPath,path)
+	except:
+		log.error("Unable to rename back to %s before retriable failier"%path)
+	raise RetriableFailure("File %s could not be removed"%path)
 
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	prevInstallPath=getInstallPath(noDefault=True)
@@ -259,7 +273,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 		f=os.path.join(installDir,f)
 		if os.path.isfile(f):
 			if windll.kernel32.CopyFileW(u"\\\\?\\"+f,u"\\\\?\\"+os.path.join(installDir,"nvda.exe"),False)==0:
-				raise RetriableFailier("Error copying %s to nvda.exe, error %d"%(f,GetLastError()))
+				raise RetriableFailure("Error copying %s to nvda.exe, error %d"%(f,GetLastError()))
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
@@ -277,20 +291,8 @@ def removeOldLoggedFiles(installPath):
 			lines.append(os.path.join(installPath,'uninstall.dat'))
 	for line in lines:
 		filePath=line.rstrip('\n')
-		try:
-			if os.path.isfile(filePath):
-				os.remove(filePath)
-			elif os.path.isdir(filePath):
-				os.rmdir(filePath)
-		except WindowsError:
-			log.debugWarning("Failed to remove %s, removing on reboot"%filePath)
-			tempPath=tempfile.mktemp(dir=installPath)
-			try:
-				os.rename(filePath,tempPath)
-			except (WindowsError,IOError):
-				raise RetriableFailier("Failed to rename file %s after failed remove"%filePath)
-			if windll.kernel32.MoveFileExA("\\\\?\\"+tempPath,None,4)==0:
-				raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
+		if os.path.exists(filePath):
+			tryRemoveFile(filePath,rebootOK=True)
 
 def createPortableCopy(destPath,shouldCopyUserConfig=True):
 	destPath=os.path.abspath(destPath)
