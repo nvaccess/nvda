@@ -29,7 +29,7 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		else _("Please wait while NVDA is being installed"))
 	try:
 		res=config.execElevated(config.SLAVE_FILENAME,["install",str(int(createDesktopShortcut)),str(int(startOnLogon))],wait=True,handleAlreadyElevated=True)
-		if res==2: raise installer.RetriableFailier
+		if res==2: raise installer.RetriableFailure
 		if copyPortableConfig:
 			installedUserConfigPath=config.getInstalledUserConfigPath()
 			if installedUserConfigPath:
@@ -39,7 +39,7 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		log.error("Failed to execute installer",exc_info=True)
 	progressDialog.done()
 	del progressDialog
-	if isinstance(res,installer.RetriableFailier):
+	if isinstance(res,installer.RetriableFailure):
 		# Translators: a message dialog asking to retry or cancel when NVDA install fails
 		message=_("The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again.")
 		# Translators: the title of a retry cancel dialog when NVDA installation fails
@@ -212,7 +212,7 @@ def doCreatePortable(portableDirectory,copyUserConfig=False):
 	except Exception as e:
 		log.error("Failed to create portable copy",exc_info=True)
 		d.done()
-		if isinstance(e,installer.RetriableFailier):
+		if isinstance(e,installer.RetriableFailure):
 			# Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 			message=_("NVDA is unable to remove or overwrite a file.")
 			# Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails

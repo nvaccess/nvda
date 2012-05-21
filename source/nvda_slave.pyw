@@ -24,7 +24,7 @@ def main():
 			import installer
 			try:
 				installer.install(bool(int(args[0])),bool(int(args[1])))
-			except installer.RetriableFailier:
+			except installer.RetriableFailure:
 				logHandler.log.error("Installation failed, try again",exc_info=True)
 				sys.exit(2)
 		elif action=="unregisterInstall":
