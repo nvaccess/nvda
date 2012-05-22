@@ -979,6 +979,27 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Plugins reloaded"))
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 
+	def script_touch_explore(self,gesture):
+		mouseHandler.curMousePos=(gesture.x,gesture.y)
+		mouseHandler.mouseMoved=True
+	script_touch_explore.__doc__=_("Reports the object and content directly under your finger")
+
+	def script_touch_hoverUp(self,gesture):
+		#Specifically for touch typing with onscreen keyboard keys
+		obj=api.getNavigatorObject()
+		if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
+			obj.doAction(0)
+
+	def script_touch_activate(self,gesture):
+		obj=api.getNavigatorObject()
+		while obj:
+			try:
+				obj.doAction(0)
+				break
+			except NotImplementedError:
+				obj=obj.parent
+	script_touch_activate.__doc__=_("Activates the object under your finger")
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1009,12 +1030,16 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+control+i": "navigatorObject_current",
 		"kb:NVDA+numpad8": "navigatorObject_parent",
 		"kb(laptop):NVDA+shift+i": "navigatorObject_parent",
+		"ts:flickup":"navigatorObject_parent",
 		"kb:NVDA+numpad4": "navigatorObject_previous",
 		"kb(laptop):NVDA+control+j": "navigatorObject_previous",
+		"ts:flickleft":"navigatorObject_previous",
 		"kb:NVDA+numpad6": "navigatorObject_next",
 		"kb(laptop):NVDA+control+l": "navigatorObject_next",
+		"ts:flickright":"navigatorObject_next",
 		"kb:NVDA+numpad2": "navigatorObject_firstChild",
 		"kb(laptop):NVDA+shift+,": "navigatorObject_firstChild",
+		"ts:flickdown":"navigatorObject_firstChild",
 		"kb:NVDA+numpadMinus": "navigatorObject_toFocus",
 		"kb(laptop):NVDA+backspace": "navigatorObject_toFocus",
 		"kb:NVDA+numpadEnter": "navigatorObject_doDefaultAction",
@@ -1023,6 +1048,11 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+shift+backspace": "navigatorObject_moveFocus",
 		"kb:NVDA+numpadDelete": "navigatorObject_currentDimensions",
 		"kb(laptop):NVDA+delete": "navigatorObject_currentDimensions",
+
+		#Touch-specific commands
+		"ts:tap":"touch_explore",
+		"ts:hover":"touch_explore",
+		"ts:double_tap":"touch_activate",
 
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
