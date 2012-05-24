@@ -13,7 +13,7 @@ import inputCore
 import mouseHandler
 import NVDAObjects.UIA
 from logHandler import log
-import gestureFactory
+import touchTracker
 
 HWND_MESSAGE=-3
 
@@ -82,7 +82,36 @@ ANRUS_TOUCH_MODIFICATION_ACTIVE=2
 
 touchWindow=None
 touchThread=None
- 
+
+class TouchInputGesture(inputCore.InputGesture):
+
+	counterNames=["single","double","tripple","quodruple"]
+
+	def _get_speechEffectWhenExecuted(self):
+		if self.tracker.action in (touchTracker.action_hover,touchTracker.action_hoverUp): return None
+		return super(TouchInputGesture,self).speechEffectWhenExecuted
+
+	def __init__(self,tracker):
+		super(TouchInputGesture,self).__init__()
+		self.tracker=tracker
+
+	def _get_logIdentifier(self):
+		ID="ts:"
+		if self.tracker.numHeldFingers>0:
+			ID+="%dfinger_hold+"%self.tracker.numHeldFingers
+		if self.tracker.numFingers>1:
+			ID+="%dfinger_"%self.tracker.numFingers
+		if self.tracker.actionCount>1:
+			ID+="%s_"%self.counterNames[min(self.tracker.actionCount,4)-1]
+		ID+=self.tracker.action
+		return ID
+
+	def _get_identifiers(self):
+		return [self.logIdentifier.lower()]
+
+	def _get_displayName(self):
+		return " ".join(self.logIdentifier.split('_'))
+
 class TouchHandler(object):
 
 	def __init__(self):
@@ -94,7 +123,7 @@ class TouchHandler(object):
 		windll.user32.RegisterPointerInputTarget(self._touchWindow,PT_TOUCH)
 		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,ANRUS_TOUCH_MODIFICATION_ACTIVE)
 		tones.beep(1760,40)
-		self.gestureFactory=gestureFactory.TouchGestureFactory()
+		self.trackerManager=touchTracker.TrackerManager()
 		self.gesturePump=self.gesturePumpFunc()
 		queueHandler.registerGeneratorObject(self.gesturePump)
 
@@ -106,9 +135,9 @@ class TouchHandler(object):
 			y=winUser.HIWORD(lParam)
 			ID=winUser.LOWORD(wParam)
 			if touching:
-				self.gestureFactory.update(ID,x,y,False)
+				self.trackerManager.update(ID,x,y,False)
 			elif not flags&POINTER_MESSAGE_FLAG_FIRSTBUTTON:
-				self.gestureFactory.update(ID,x,y,True)
+				self.trackerManager.update(ID,x,y,True)
 			return 0
 		return windll.user32.DefWindowProcW(hwnd,msg,wParam,lParam)
 
@@ -122,7 +151,8 @@ class TouchHandler(object):
 
 	def gesturePumpFunc(self):
 		while True:
-			for gesture in self.gestureFactory.emitGestures():
+			for tracker in self.trackerManager.emitTrackers():
+				gesture=TouchInputGesture(tracker)
 				try:
 					inputCore.manager.executeGesture(gesture)
 				except inputCore.NoInputGestureAction:
