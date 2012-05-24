@@ -107,6 +107,7 @@ class TrackerManager(object):
 			return
 		#We already know about this finger
 		#Update its position and completion status
+		#But also find out its action before and after the update to decide what to do with it
 		oldAction=tracker.action
 		tracker.update(x,y,complete)
 		newAction=tracker.action
@@ -116,11 +117,20 @@ class TrackerManager(object):
 			#A completed hover should be a hoverUp
 			if newAction==action_hover:
 				newAction=action_hoverUp
+		#if the action changed and its not unknown, then we will be queuing it
 		if newAction!=oldAction and newAction!=action_unknown:
-			if newAction==action_hover: newAction=action_hoverDown
+			if newAction==action_hover:
+				#New hovers must be queued as hover down
+				newAction=action_hoverDown
+			#for most  gestures the start coordinates are what we want to emit with trackers 
+			#But hovers should always use their current coordinates
 			x,y=(tracker.x,tracker.y) if newAction in hoverActions else (tracker.startX,tracker.startY)
+			#We keep a count of held fingers as a modification  for gesutres.
+			#We must decrement the count before queuing a hover up, but incrementing for hoverDown happens after queuing.
+			#Otherwize hoverDowns and hoverUps would accidently get their own heldFinger modifiers.
 			if oldAction==action_hover and newAction==action_hoverUp:
 				self.numHeldFingers-=1
+			#Queue the tracker for processing or emition
 			self.addMultiTouchTracker(MultiTouchTracker(newAction,x,y,tracker.startTime,time.time(),1,1,self.numHeldFingers))
 			if newAction==action_hoverDown:
 				self.numHeldFingers+=1
@@ -132,6 +142,7 @@ class TrackerManager(object):
 		for index in xrange(len(self.multiTouchTrackers)):
 			index=-1-index
 			delayedTracker=self.multiTouchTrackers[index]
+			#We never want to merge actions if the held fingers modifier has changed at all\
 			if tracker.numHeldFingers==delayedTracker.numHeldFingers:
 				if tracker.action==delayedTracker.action and delayedTracker.startTime<=tracker.startTime<delayedTracker.endTime and delayedTracker.actionCount==tracker.actionCount==1:
 					#The old and new tracker are the same kind of action, they are not themselves plural actions, and their start and end times overlap
@@ -161,22 +172,27 @@ class TrackerManager(object):
 	def emitTrackers(self):
 		"""
 		Yields queued trackers that have existed in the queue for long enough to not be connected with other trackers.
+		A part from a timeout, trackers are also not emitted if there are other fingers touching that still have an unknown action. 
 		If there are no queued trackers to yield but there is a hover tracker, a hover action is yielded instead.
 		"""
 		t=time.time()
 		hasUnknownTrackers=False
 		lastHoverTracker=None
+		#Check to see if there are any unknown trackers, and also find the most recent hover tracker if any.
 		for tracker in self.singleTouchTrackersByID.itervalues():
 			if tracker.action==action_hover:
 				lastHoverTracker=tracker
 			if tracker.action==action_unknown:
 				hasUnknownTrackers=True
 		foundTrackers=False
+		#Only emit trackers if there are not unknown actions
 		if not hasUnknownTrackers:
 			for tracker in list(self.multiTouchTrackers):
+				#A tracker can be emitted if its timeout has been reached
 				if (tracker.startTime+multitouchTimeout)<=t:
 					self.multiTouchTrackers.remove(tracker)
 					foundTrackers=True
 					yield tracker
+		#If no tracker could be emitted, at least emit the most recent  hover tracker if there is one
 		if not foundTrackers and lastHoverTracker:
 			yield MultiTouchTracker(lastHoverTracker.action,lastHoverTracker.x,lastHoverTracker.y,lastHoverTracker.startTime,t,1,1,self.numHeldFingers-1)
