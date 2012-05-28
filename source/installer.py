@@ -242,8 +242,8 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		time.sleep(retryInterval)
 	if rebootOK:
 		log.debugWarning("Failed to delete file %s, marking for delete on reboot"%tempPath)
-		if windll.kernel32.MoveFileExA("\\\\?\\"+tempPath,None,4)==0:
-			raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
+		MoveFileEx=windll.kernel32.MoveFileExW if isinstance(tempPath,unicode) else windll.kernel32.MoveFileExA
+		MoveFileEx("\\\\?\\"+tempPath,None,4)
 		return
 	try:
 		os.rename(tempPath,path)
