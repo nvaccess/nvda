@@ -109,17 +109,7 @@ def copyProgramFiles(destPath):
 				continue
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
-			if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
-				log.debugWarning("Unable to copy %s, trying rename and delete on reboot"%sourceFilePath)
-				tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
-				try:
-					os.rename(destFilePath,tempPath)
-				except (WindowsError,OSError):
-					raise RetriableFailure("Failed to rename %s after failed remove"%destFilePath) 
-				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
-					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
-				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
-					raise RetriableFailure("Still unable to copy file %s"%sourceFilePath)
+			tryCopyFile(sourceFilePath,destFilePath)
 
 def copyUserConfig(destPath):
 	sourcePath=os.path.abspath(globalVars.appArgs.configPath)
@@ -130,17 +120,7 @@ def copyUserConfig(destPath):
 		for f in files:
 			sourceFilePath=os.path.join(curSourceDir,f)
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
-			if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
-				log.debugWarning("Unable to copy %s, trying rename and delete on reboot"%sourceFilePath)
-				tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
-				try:
-					os.rename(destFilePath,tempPath)
-				except (WindowsError,OSError):
-					raise RetriableFailure("Failed to rename %s after failed remove"%destFilePath)
-				if windll.kernel32.MoveFileExW(u"\\\\?\\"+tempPath,None,4)==0:
-					raise OSError("Unable to mark file %s for delete on reboot"%tempPath)
-				if windll.kernel32.CopyFileW(u"\\\\?\\"+sourceFilePath,u"\\\\?\\"+destFilePath,False)==0:
-					raise OSError("Still unable to copy file %s"%sourceFilePath)
+			tryCopyFile(sourceFilePath,destFilePath)
 
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
@@ -251,6 +231,27 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 		log.error("Unable to rename back to %s before retriable failier"%path)
 	raise RetriableFailure("File %s could not be removed"%path)
 
+def tryCopyFile(sourceFilePath,destFilePath):
+	if not sourceFilePath.startswith('\\\\'):
+		sourceFilePath=u"\\\\?\\"+sourceFilePath
+	if not destFilePath.startswith('\\\\'):
+		destFilePath=u"\\\\?\\"+destFilePath
+	if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
+		errorCode=GetLastError()
+		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
+		if not os.path.exists(destFilePath):
+			raise OSError("error %d copying %s"%(errorCode,sourceFilePath))
+		tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
+		try:
+			os.rename(destFilePath,tempPath)
+		except (WindowsError,OSError):
+			log.error("Failed to rename %s after failed overwrite"%destFilePath,exc_info=True)
+			raise RetriableFailure("Failed to rename %s after failed overwrite"%destFilePath) 
+		windll.kernel32.MoveFileExW(tempPath,None,4)
+		if windll.kernel32.CopyFileW(sourceFilePath,destFilePath,False)==0:
+			errorCode=GetLastError()
+			raise OSError("Unable to copy file %s to %s, error %d"%(sourceFilePath,destFilePath,errorCode))
+
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	prevInstallPath=getInstallPath(noDefault=True)
 	unregisterInstallation()
@@ -272,8 +273,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	for f in ("nvda_UIAccess.exe","nvda_noUIAccess.exe"):
 		f=os.path.join(installDir,f)
 		if os.path.isfile(f):
-			if windll.kernel32.CopyFileW(u"\\\\?\\"+f,u"\\\\?\\"+os.path.join(installDir,"nvda.exe"),False)==0:
-				raise RetriableFailure("Error copying %s to nvda.exe, error %d"%(f,GetLastError()))
+			tryCopyFile(f,os.path.join(installDir,"nvda.exe"))
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
@@ -302,7 +302,6 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True):
 		if os.path.isfile(f):
 			tryRemoveFile(f)
 	copyProgramFiles(destPath)
-	if windll.kernel32.CopyFileW(u"\\\\?\\"+os.path.join(destPath,"nvda_noUIAccess.exe"),u"\\\\?\\"+os.path.join(destPath,"nvda.exe"),False)==0:
-		raise OSError("Error copying %s to nvda.exe"%f)
+	tryCopyFile(os.path.join(destPath,"nvda_noUIAccess.exe"),os.path.join(destPath,"nvda.exe"))
 	if shouldCopyUserConfig:
 		copyUserConfig(os.path.join(destPath,'userConfig'))
