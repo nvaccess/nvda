@@ -306,6 +306,15 @@ def initialize(shouldDoRemoteLogging=False):
 		else:
 			if not globalVars.appArgs.logFileName:
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
+			# Keep a backup of the previous log file so we can access it even if NVDA crashes or restarts.
+			oldLogFileName = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda-old.log")
+			try:
+				# We must remove the old log file first as os.rename does replace it.
+				if os.path.exists(oldLogFileName):
+					os.unlink(oldLogFileName)
+				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
+			except (IOError, WindowsError):
+				pass # Probably log does not exist, don't care.
 			# Our FileHandler always outputs in UTF-8.
 			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
 	else:
