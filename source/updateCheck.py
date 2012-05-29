@@ -298,10 +298,13 @@ class UpdateDownloader(object):
 		local = file(self.destPath, "wb")
 		self._guiExec(self._downloadReport, 0, size)
 		read = 0
+		chunk=DOWNLOAD_BLOCK_SIZE
 		while True:
 			if self._shouldCancel:
 				return
-			block = remote.read(DOWNLOAD_BLOCK_SIZE)
+			if size -read <chunk:
+				chunk =size -read
+			block = remote.read(chunk)
 			if not block:
 				break
 			read += len(block)

@@ -624,6 +624,7 @@ class ExecAndPump(threading.Thread):
 			self.func(*self.args,**self.kwargs)
 		except Exception as e:
 			self.threadExc=e
+			log.debugWarning("task had errors",exc_info=True)
 
 class IndeterminateProgressDialog(wx.ProgressDialog):
 
