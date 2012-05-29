@@ -8,6 +8,8 @@ import logHandler
 if hasattr(sys, "frozen"):
 	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
 	sys.stderr = sys.stdout
+	#Many functions expect  the current directory to be where slave is located (#2391) 
+	os.chdir(sys.prefix)
 
 def main():
 	try:
