@@ -17,6 +17,7 @@ ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
 RPC_S_SERVER_UNAVAILABLE = 1722
 RPC_S_CALL_FAILED_DNE = 1727
+EPT_S_NOT_REGISTERED = 1753
 E_ACCESSDENIED = -2147024891
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 RPC_E_CALL_REJECTED = -2147418111
@@ -161,7 +162,7 @@ class Logger(logging.Logger):
 
 		exc = exc_info[1]
 		if (
-			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, RPC_E_CALL_CANCELED))
+			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, EPT_S_NOT_REGISTERED, RPC_E_CALL_CANCELED))
 			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED, RPC_E_DISCONNECTED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
 			or isinstance(exc, watchdog.CallCancelled)
 		):
@@ -305,6 +306,15 @@ def initialize(shouldDoRemoteLogging=False):
 		else:
 			if not globalVars.appArgs.logFileName:
 				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
+			# Keep a backup of the previous log file so we can access it even if NVDA crashes or restarts.
+			oldLogFileName = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda-old.log")
+			try:
+				# We must remove the old log file first as os.rename does replace it.
+				if os.path.exists(oldLogFileName):
+					os.unlink(oldLogFileName)
+				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
+			except (IOError, WindowsError):
+				pass # Probably log does not exist, don't care.
 			# Our FileHandler always outputs in UTF-8.
 			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
 	else:
