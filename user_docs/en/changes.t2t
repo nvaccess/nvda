@@ -9,6 +9,10 @@
 - In Blio, the content of books can now be read in braille. (#2139)
 
 
+== Changes for Developers ==
+- Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
+
+
 = 2012.2 =
 Highlights of this release include an in-built installer and  portable  creation feature, automatic updates, easy management of new NVDA add-ons, announcement of graphics in Microsoft Word, support for Windows 8 Metro style apps, and several important bug fixes. 
 
