@@ -119,7 +119,7 @@ class GeneralSettingsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
-		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take affect):"))
+		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take effect):"))
 		languageSizer.Add(languageLabel)
 		languageListID=wx.NewId()
 		self.languageNames=languageHandler.getAvailableLanguages()
