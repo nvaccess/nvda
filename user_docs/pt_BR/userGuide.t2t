@@ -33,7 +33,7 @@ Suas características mais notáveis são:
 
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 36 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 37 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -75,6 +75,8 @@ As cópias instaladas também permitem elas próprias criar uma cópia portátil
 
 Se você deseja levar o NVDA com você em um dispositivo USB ou em outros dispositivos de mídia portáteis, então deverá escolher criar uma cópia portátil.
 As cópias portáteis também oferecem elas próprias a capacidade de ser instaladas em qualquer computador em um momento posterior.
+Todavia, se pretende copiar o NVDA para dentro de dispositivos de mídia somente leitura, como cds, você deve apenas copiar o pacote baixado.
+A execução de cópias portáteis diretamente de dispositivos somente leitura não é suportada até o momento.
 
 O Uso das cópias temporárias do  NVDA é também uma opção (isto é, para propósitos de demonstração), todavia iniciá-lo a cada vez dessa forma pode trazer um grande gasto de tempo.
 
@@ -84,9 +86,23 @@ Se você já fechou esse diálogo ou está pretendendo instalar por meio de uma 
 
  O diálogo de instalação que aparece irá confirmar se você quer instalar o NVDA e também lhe dirá se essa instalação estará atualizando uma anterior.
 Ao pressionar o botão Continuar, será iniciada a instalação do NVDA.
- Existem também algumas poucas opções nesse diálogo, incluindo se você deseja criar um atalho na área de trabalho ou se pretende que o NVDA seja iniciado na tela de logon do Windows.
+ Existem também algumas poucas opções nesse diálogo que serão explicadas logo abaixo.
+
 Uma vez que a instalação se complete, uma mensagem aparecerá informando-lhe que obteve sucesso.
  Pressionando-se OK nesse ponto irá reiniciar a nova cópia instalada do NVDA.
+
++++ Iniciar no Logon do Windows +++
+Essa opção lhe permite escolher se o NVDA deverá ou não iniciar automaticamente com a tela de Logon do Windows, antes de você inserir sua senha.
+Isso também inclui controle de contas e outras telas seguras.
+
++++ Criar Atalho na Área de Trabalho (ctrl+alt+n) +++
+Essa opção permite-lhe escolher se o NVDA deve ou não criar um atalho na área de trabalho para iniciá-lo.
+O atalho, se criado, também será assinado com a tecla de atalho control+alt+n, possibilitando que você ative o NVDA  a qualquer momento com esse comando.
+
++++ Copiar Configuração da Cópia Portátil para a Conta de Usuário Atual +++
+Essa opção lhe permite escolher se o NVDA deve ou não copiar as configurações do usuário oriúndas da versão atualmente em execução para as configurações do usuário atualmente logado no Windows, no caso das cópias instaladas do NVDA. 
+Isso não copiará a configuração para qualquer outro usuário desse computador, nem para as configurações de sistema, para uso no Logon do Windows  e outras telas seguras.
+Essa opção está disponível apenas quando se instala a partir de uma cópia portátil, não sendo possível ao instalar diretamente do pacote executável baixado.
 
 ++ Criando uma Cópia Portátil ++
 Caso esteja criando uma cópia portátil diretamente do pacote baixado, pressione o botão criar uma cópia portátil.
@@ -94,8 +110,10 @@ Se você já fechou esse diálogo ou está executando uma cópia portátil do NV
 
  O diálogo que aparece permite-lhe escolher onde a cópia portátil será criada.
   Este pode ser uma pasta em seu disco rígido ou um local num dispositivo USB ou outros dispositivos de mídia portáteis.
- Há também a opção de criar um arquivo de autorun na raiz do drive (útil quando se está criando uma cópia portátil em um dispositivo USB), bem como a opção de Copiar as personalizações do usuário, o que incluirá configurações e plugins oriundos da copia atual do NVDA. 
-Ao pressionar o botão Continuar, será iniciada a criação da cópia portátil.
+Existe também uma opção que lhe permite escolher se o NVDA deve copiar as configgurações do usuário atualmente logado para serem usadas com a nova versão portátil.
+Essa opção só está disponível quando se cria cópias portáteis a partir de versões instaladas, não sendo possível ao criar diretamente do pacote baixado.
+ 
+ Ao pressionar o botão Continuar, será iniciada a criação da cópia portátil.
  Uma vez que o processo esteja concluído, uma mensagem aparecerá informando-lhe que obteve sucesso.
  Pressione OK para encerrar esse diálogo.
 
@@ -943,6 +961,33 @@ Ao desmarcar este item você o desativa.
 
 Enquanto o exibidor de fala estiver ativado, o mesmo atualizar-se-á constantemente para apresentar-lhe o texto mais recente que está sendo falado.
 Contudo, se clicar ou se o cursor ficar no visualizador, o NVDA parará temporariamente a atualização do texto, de modo que possa selecionar facilmente ou copiar o conteúdo existente. 
+
+++ Gerenciador de Complementos ++
+O gerenciador de complementos, que pode ser acessado selecionando Gerir Complementos no submenu ferramentas no menu do NVDA, permite-lhe instalar e desinstalar pacotes contendo complementos para o NVDA.
+Esses pacotes são fornecidos pela comunidade e contém códigos com personalizações que podem acrescentar  ou modificar recursos do NVDA ou mesmo fornecer suporte para linhas Braille ou sintetizadores de voz extras.
+
+O gerenciador de complementos possui uma lista que mostra todos os complementos atualmente instalados em suas configurações do usuário do NVDA.
+O nome do pacote, bem como a versão e author são exibidos para cada complemento, embora informações adicionais tais como uma descrição e URL podem ser visualizadas, selecionando-o e pressionando o botão Sobre o Complemento.
+
+Para instalar um complemento, pressione o botão Instalar.
+Isso lhe permitirá procurar por um pacote de complemento (arquivo .nvda-addon) em algum lugar de seu computador ou em uma rede.
+Uma vez pressionado Abrir, o NVDA perguntar-lhe-á se você realmente deseja instalar esse complemento.
+Como a funcionalidade dos complementos é irrestrita dentro do NVDA, o que em teoria pode incluir  o acesso a seus dados pessoais ou mesmo a todo o sistema caso o NVDA seja uma cópia instalada, é muito importante que você só instale complementos oriúndos de códigos de sua confiança.
+
+Após a instalação do complemento, o NVDA necessitará ser riniciado para que este inicie sua execução.
+Até que você faça isso, o status de "instalado"será mostrado para aquele complemento na lista.
+
+Para remover um complemento, selecione-o na lista e em seguida pressione  o botão Remover.
+O NVDA irá perguntar se você realmente deseja removê-lo.
+Assim como ao instalar, o NVDA precisa ser reiniciado para que o complemento seja completamente removido.
+Até que você faça isso, o status de "removido" será mostrado para aquele complemento na lista.
+
+O gerenciador também possui um botão "Fechar" para encerrar o diálogo.
+Caso tenha instalado ou removido algum complemento, o NVDA primeiro indagará se você deseja reiniciar, de forma que suas alterações possam fazer efeito. 
+
+No passado foi possível extender as funcionalidades do NVDA copiando plugins e drivers individuais para sua pasta de Configurações do usuário do NVDA.
+Embora nessa versão do NVDA continue sendo possível carregá-los, eles não serão mostrados no gerenciador de complementos. 
+Recomenda-se remover esses arquivos de suas configurações do usuário e instalar o complemento apropriado caso algum esteja disponível.
 
 ++ Console Python ++
 o Console Python do NVDA encontra-se dentro das Ferramentas de seu menu.
