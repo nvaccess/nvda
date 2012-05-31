@@ -714,7 +714,8 @@ the NVDAObject for IAccessible
 				raise NotImplementedError
 		elif index==0:
 			try:
-				self.IAccessibleObject.accDoDefaultAction(self.IAccessibleChildID)
+				if self.IAccessibleObject.accDoDefaultAction(self.IAccessibleChildID)!=0:
+					raise NotImplementedError
 				return
 			except COMError:
 				raise NotImplementedError
