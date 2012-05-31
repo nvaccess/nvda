@@ -75,7 +75,9 @@ Se prantexas utilizar sempre NVDA neste computador, escollerás instalar NVDA.
 A copia instalable tamén é capaz de crear unha copia portable por si mesma en calquera momento.
 
 Se queres ter ó NVDA contigo nun lapis USB ou outro medio portátil, entón deberías escoller criar unha copia portable.
-A copia portable tamén ten a capacidade de instalarse en calquera computador nunha ocasión posterior.
+A copia portable tamén ten a capacidade de instalarse en calquera computador con posterioridade.
+Nembargantes, se desexas copiar ó NVDA nun medio de só lectura coma un CD, só deberías copiar o paquete descargado.
+Executar a versión portable directamente dende medios de só lectura non está soportado polo de agora.
   
 Utilizar a copia temporal do NVDA é tamén unha opción ex.: con propósitos de demostración, posto que iniciar NVDA de este xeito cada vez pode chegar a ser moi incómodo.
 
@@ -435,7 +437,7 @@ A seguintes teclas elas soas saltan ó seguinte campo, ca tecla shift saltan ó 
 Para moverte ó comezo ou final de elementos contedores como listas e tablas:
 || Nome | Tecla | Descripción |
 | Mover ó comezo dun contedor | shift+, | Móvese ó comezo do contedor (lista, táboa etc) onde estea situado o cursor |
-| Mover ó final do contedor | shift+. | Móvese ó final do contedor (lista, táboa etc) onde estea situado o cursor |
+| Mover ó final do contedor | , | Móvese ó final do contedor (lista, táboa etc) onde estea situado o cursor |
 %kc:endInclude
 
 ++ A Lista de Elementos ++
@@ -906,7 +908,7 @@ No diálogo de engadir regra, o modo máis sinxelo de facer esto é teclear a pa
 poderías tamén querer teclear unha descripción da regra no campo Comentario (algo como: cambiar paxaro por ra).
 
 Os diccionarios da fala de NVDA asimesmo son moito máis poderosos que un sinxelo reemplazo de palabras. 
-O diálogo de Engadir regras tamén contén Unha Casiña de verificación que di se queres que si ou que non a regra sexa sensible ás maiúsculas (significando que NVDA debería ter en conta se os caracteres están en maiúsculas ou en minúsculas. 
+O diálogo de Engadir regras tamén contén Unha Casiña de verificación que di se queres ou non que a regra sexa sensible ás maiúsculas (significando que NVDA debería ter en conta se os caracteres están en maiúsculas ou en minúsculas. 
 NVDA ignora os casos de xeito predeterminado). 
 Outra casiña de verificación permíteche establecer se o teu patrón é unha "Expresión Regular". 
 Unha expresión regular é un patrón que contén símbolos especiais que che permiten emparellar máis de un caracter ó mesmo tempo, ou emparellar so números, ou so letras, segundo uns poucos exemplos. 
@@ -972,7 +974,7 @@ Estos paquetes son proporcionados pola comunidade e conteñen código persoaliza
 O Administrador de Complementos contén unha lista que amosa todos os complementos instalados actualmente na túa configuración do usuario do NVDA. 
 Amósase un nome de paquete, versión e autor para cada complemento, aíndaque se pode ver máis información coma unha descripción e unha URL seleccionando o complemento e premendo o botón Acerca do complemento.
 
-Para instalar un Complemento, preme o botón Engadir.
+Para instalar un Complemento, preme o botón Instalar.
 Esto permitirache examinar un paquete de complemento  (ficheiro .nvda-addon) no teu ordenador ou nunha red.
 Unha vez que premas Abrir, NVDA preguntarache  se realmente desexas instalar o complemento.
 Debido a que a funcionalidade dos complementos non ten restriccións dentro do NVDA, o que en teoría podería incluir o acceso ós teus datos persoais ou incluso a todo o sistema se NVDA é unha copia instalada, é moi importante que instales só complementos dende fontes fiables.
@@ -986,6 +988,11 @@ Ata que o fagas, un estado de "eliminar" amosarase para ese complemento na lista
 
 O administrador tamén ten un botón Pechar para pechar o diálogo.
 Se instalaches ou eliminaches complementos, NVDA primeiro preguntarache se desexas reiniciar para que os cambios podan levarse a cabo.
+
++++ Unha nota acerca dos Plugins Persoais vellos +++
+No pasado foi posible extender a funcionalidade do NVDA copiando plugins e controladores individuais no teu directorio de configuración do usuario do NVDA.
+Aíndaque esta versión do NVDA aínda poderá cargalos, Non se amosarán no Administrador de Complementos.
+É mellor eliminar estos ficheiros da túa configuración e instalar o complemento apropriado se hai un dispoñible.
 
 ++ Consola de Python ++
 A consola de Python do NVDA, atopada baixo Ferramentas no menú NVDA, é unha ferramenta de desenrolo que é útil para depuración, inspección xeral do interior  do NVDA ou inspeción da xerarquía de accesibilidade de unha aplicación.

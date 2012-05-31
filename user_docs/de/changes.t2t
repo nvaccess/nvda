@@ -8,9 +8,9 @@ Schwerpunkte dieser Version sind u.a. eine eingebaute Installationsroutine sowie
 
 == Neue Funktionen ==
 - NVDA kann nun nach Aktualisierungen suchen, diese herunterladen und installieren. (#73)
-- Der Umgang mit eigenen Treibern und Plug-ins wurde durch die Einführung eines Erweiterungs-Managers stark vereinfacht. Der Erweiterungs-Manager erlaubt das einfache Installieren und deinstallieren von Erweiterungen (Dateien mit der Erweiterung .nvda-addon). Sie finden ihn im Menü Extras im nvda-Manü. (#213)
+- Der Umgang mit eigenen Treibern und Plug-ins wurde durch die Einführung eines Erweiterungs-Managers stark vereinfacht. Der Erweiterungs-Manager erlaubt das einfache Installieren und deinstallieren von Erweiterungen (Dateien mit der Erweiterung .nvda-addon). Sie finden ihn im Menü Extras im nvda-Menü. Ältere im Benutzer-Konfigurationsverzeichnis abgelegte Plug-ins und Treiber werden im Erweiterungs-Manager jedoch nicht angezeigt. (#213)
 - Viele gebräuchliche Funktionen seitens NVDA funktionieren nun in den Metro-Anwendungen von Windows 8, in sofern sie eine installierte Version von NVDA nutzen. Dies schließt das Sprechen von eingegebenen Zeichen sowie den Lese-Modus in der Metro-Version Internetexplorer 10 ein. Portable Kopien können nicht auf Metro-Anwendungen zugreifen. (#1801) 
-- Im Lesemodus können Sie nun mit den Tastenkombinationen Umschalt+, und umschalt+. an den Anfang eines Containerobjekts bzw. hinter ein Containerobjekt springen. dies betrifft beispielsweise Listen und Tabellen. (#123)
+- Im Lesemodus (Internet Explorer, Firefox, etc.) können Sie nun mit den Tastenkombinationen umschalt+, und , an den Anfang eines Containerobjekts bzw. hinter ein Containerobjekt springen. dies betrifft beispielsweise Listen und Tabellen. (#123)
 - neue Sprache: griechisch
 - in Microsoft-Word-Dokumenten werden nun Grafiken und deren Alternativtexte korrekt erkannt. (#2282, #1541)
 
@@ -34,6 +34,9 @@ Schwerpunkte dieser Version sind u.a. eine eingebaute Installationsroutine sowie
 - in Anwendungen, die die Java Access Bridge verwenden, wird die aktuelle Zeile nun korrekt angezeigt, wenn Sie sich am Ende eines Textfeldes befinden. (#1892)
 - In Anwendungen, die Gecko 14 oder neuer verwenden (wie z.B. Firefox 14) funktioniert nun die Schnellnavigation für Zitate und eigebettete Objekte korrekt.  (#2287)
 - Wenn sich im Internet Explorer 9 der Fokus innerhalb eines HTML-Abschnittes ("div") bewegt, der entweder hervorhebbar ist oder mit einer Aria-Sprungmarke gekennzeichnet wurde, wird kein überflüssiger Inhalt mehr ausgegeben.
+- Das Symbol für NVDA, welches auf dem Desktop sowie im Startmenü angezeigt wird, wird nun in 64-bit-Versionen von Windows richtig dargestellt.
+
+
 == Änderungen für Entwickler ==
 - Da nsis durch eine nvda-Interne Installationsroutine ersetzt wurde, werden die meldungen für die Installationsroutine nun nicht mehr in einer Datei namens langstrings.txt gespeichert. Vielmehr werden diese nun in der Sprachdatei von NVDA integriert.
 

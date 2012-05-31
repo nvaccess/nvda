@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA main:4913\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-05-10 16:51+0100\n"
-"PO-Revision-Date: 2012-05-12 13:34+0200\n"
+"POT-Creation-Date: 2012-05-17 05:30+0100\n"
+"PO-Revision-Date: 2012-05-17 13:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -100,10 +100,6 @@ msgstr "تن&شيط"
 msgid "&Add"
 msgstr "إ&ضافة"
 
-#: gui/addonGui.py:38
-msgid "&Add..."
-msgstr "إ&ضافة..."
-
 #: gui/settingsDialogs.py:160
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "التشغيل التل&قائي بعد الدخول لويندوز"
@@ -131,7 +127,7 @@ msgstr "&ملحوظة"
 
 #. Translators: The label of a button to continue with the operation.
 #: gui/installerGui.py:113
-#: gui/installerGui.py:166
+#: gui/installerGui.py:162
 msgid "&Continue"
 msgstr "اس&تمرار"
 
@@ -200,10 +196,9 @@ msgstr "تث&بيت NVDA على هذا الحاسوب"
 msgid "&Install NVDA..."
 msgstr "&تثبيت NVDA..."
 
-#. Translators: the label for the installed addons list in the addons manager.
-#: gui/addonGui.py:23
-msgid "&Installed Add-ons"
-msgstr "الإضافات البرمجية ال&مثبتة"
+#: gui/addonGui.py:38
+msgid "&Install..."
+msgstr "&تثبيت..."
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
@@ -420,7 +415,7 @@ msgid "Add Dictionary Entry"
 msgstr "إضافة مدخل للمعجم"
 
 #. Translators: title for the Addon Information dialog
-#: gui/addonGui.py:183
+#: gui/addonGui.py:186
 msgid "Add-on Information"
 msgstr "معلومات حول الإضافة البرمجية"
 
@@ -742,7 +737,7 @@ msgid "Copy &portable configuration to current user account"
 msgstr "نسخ إعدادات ال&نسخة المحمولة لحساب المستخدم الحالي"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui/installerGui.py:158
+#: gui/installerGui.py:154
 msgid "Copy current &user configuration"
 msgstr "نسخ اإ&عدادات المستخدم الحالية"
 
@@ -802,13 +797,8 @@ msgstr "عمل نسخة محمولة من NVDA"
 msgid "Create Portable copy..."
 msgstr "إنشاء نسخة محمولة..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui/installerGui.py:154
-msgid "Create an &Autorun file"
-msgstr "إنشاء ملف &autorun"
-
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
-#: gui/installerGui.py:211
+#: gui/installerGui.py:207
 msgid "Creating Portable Copy"
 msgstr "جاري إنشاء النسخة المحمولة"
 
@@ -886,8 +876,8 @@ msgstr "&تنسيق المستندات..."
 msgid "Document Formatting"
 msgstr "تنسيق المستند"
 
-#: installer.py:175
-#: installer.py:176
+#: installer.py:178
+#: installer.py:179
 msgid "Documentation"
 msgstr "ملفات المساعدة"
 
@@ -1004,15 +994,15 @@ msgstr "إنجليزي أمريكي بدون اختصارات"
 #. Translators: The title of a dialog presented when an error occurs.
 #: updateCheck.py:128
 #: updateCheck.py:341
+#: gui/__init__.py:144
+#: gui/__init__.py:153
 #: gui/addonGui.py:74
 #: gui/addonGui.py:88
 #: gui/addonGui.py:107
-#: gui/__init__.py:144
-#: gui/__init__.py:153
 #: gui/installerGui.py:54
-#: gui/installerGui.py:190
-#: gui/installerGui.py:198
-#: gui/installerGui.py:229
+#: gui/installerGui.py:186
+#: gui/installerGui.py:194
+#: gui/installerGui.py:225
 #: gui/logViewer.py:74
 #: gui/settingsDialogs.py:208
 msgid "Error"
@@ -1081,13 +1071,13 @@ msgstr "حتى رؤوس الصفحات"
 msgid "Exit NVDA"
 msgstr "الخروج من البرنامج"
 
-#: installer.py:174
+#: installer.py:177
 msgid "Explore NVDA user configuration directory"
 msgstr "استكشاف مجلد إعدادات المستخدم"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
-#: gui/installerGui.py:228
+#: gui/installerGui.py:224
 #, python-format
 msgid "Failed to create portable copy: %s"
 msgstr "فشل في إنشاء النسخة المحمولة: %s"
@@ -1118,7 +1108,7 @@ msgstr "تقديم"
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
 #: gui/installerGui.py:46
-#: gui/installerGui.py:223
+#: gui/installerGui.py:219
 msgid "File in Use"
 msgstr "الملف قيد الاستخدام"
 
@@ -1329,6 +1319,11 @@ msgstr "تثبيت NVDA"
 msgid "Install Update"
 msgstr "تثبيت التحديثات"
 
+#. Translators: the label for the installed addons list in the addons manager.
+#: gui/addonGui.py:23
+msgid "Installed Add-ons"
+msgstr "الإضافات البرمجية المثبتة"
+
 #. Translators: The title of the dialog presented while an Addon is being installed.
 #: gui/addonGui.py:93
 msgid "Installing Add-on"
@@ -1345,7 +1340,7 @@ msgstr "صلاحيات غير كافية"
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
-#: gui/installerGui.py:197
+#: gui/installerGui.py:193
 #, python-format
 msgid "Invalid drive %s"
 msgstr "مجلد غير مناسب %s"
@@ -1361,7 +1356,7 @@ msgstr "إيطالي بدون اختصارات"
 msgid "Key words:"
 msgstr "الكلمات المفتاحية:"
 
-#: installer.py:175
+#: installer.py:178
 #: gui/__init__.py:336
 msgid "Keyboard Commands Quick Reference"
 msgstr "المرجع السريع لاختصارات لوحة المفاتيح"
@@ -1602,7 +1597,7 @@ msgid "NVDA Update"
 msgstr "تحديث nvda"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui/installerGui.py:221
+#: gui/installerGui.py:217
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "تعذر حذف أو استبدال ملف."
 
@@ -1616,7 +1611,7 @@ msgstr "بدء تشغيل NVDA"
 msgid "NVDA version {version} is available."
 msgstr "إصدار NVDA {version} متاح."
 
-#: installer.py:172
+#: installer.py:175
 #: gui/__init__.py:340
 msgid "NVDA web site"
 msgstr "موقع NVDA"
@@ -1841,7 +1836,7 @@ msgstr "رجاء اضغط موافق للبدأ في تشغيل النسخة ا�
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui/installerGui.py:189
+#: gui/installerGui.py:185
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "رجاء قم بتحديد مجلد لإنشاء النسخة المحمولة به"
 
@@ -1851,7 +1846,7 @@ msgid "Please wait while NVDA is being installed"
 msgstr "يرجى الانتظار حتى تثبيت NVDA."
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
-#: gui/installerGui.py:213
+#: gui/installerGui.py:209
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "يرجى الانتظار حتى الانتهاء من إنشاء النسخة المحمولة."
 
@@ -2288,7 +2283,7 @@ msgstr "سطح مكتب آمن"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui/installerGui.py:181
+#: gui/installerGui.py:177
 msgid "Select portable  directory"
 msgstr "اختر المجلد الذي تود به إنشاء النسخة المحمولة"
 
@@ -2463,7 +2458,7 @@ msgstr "الموضوع:"
 
 #. Translators: The title of a dialolg presented to indicate a successful operation.
 #: gui/installerGui.py:67
-#: gui/installerGui.py:236
+#: gui/installerGui.py:232
 #: gui/settingsDialogs.py:210
 msgid "Success"
 msgstr "نجاح"
@@ -2474,7 +2469,7 @@ msgstr "تم نسخ إعدادات مستخدم البرنامج بنجاح"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
-#: gui/installerGui.py:235
+#: gui/installerGui.py:231
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
 msgstr "تم إنشاء نسخة محمولة من NVDA بنجاح داخل المجلد %s"
@@ -2687,6 +2682,11 @@ msgstr "أدخل النص الذي تريد البحث عنه"
 msgid "Type:"
 msgstr "اكتب:"
 
+#. Translators: the url part of the About Add-on information
+#: gui/addonGui.py:184
+msgid "URL: {url}"
+msgstr "رابط التحميل: {url}"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:182
@@ -2699,7 +2699,7 @@ msgstr "الشفرة الإنجليزية الموحدة للبرايل بدون
 msgid "Unified English Braille Code grade 2"
 msgstr "الشفرة الإنجليزية الموحدة للبرايل باختصارات"
 
-#: installer.py:173
+#: installer.py:176
 msgid "Uninstall NVDA"
 msgstr "إزالة NVDA"
 
@@ -2758,7 +2758,7 @@ msgstr "استخدام مفتاح الإدراج الممتد كمفتاح مص�
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "استخدام مفتاح الإدراج في لوحة الأرقام كمفتاح مصاحب للبرنامج"
 
-#: installer.py:176
+#: installer.py:179
 #: gui/__init__.py:334
 msgid "User Guide"
 msgstr "دليل الاستخدام"
@@ -5311,14 +5311,18 @@ msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
 "Author: {author}\n"
-"URL: {url}\n"
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
 "رقم الإصدار: {version}\n"
 "المبرمج: {author}\n"
-"الرابط: {url}\n"
-"الوظيفة: {description}\n"
+"الوصف الوظيفي: {description}\n"
+
+#~ msgid "&Add..."
+#~ msgstr "إ&ضافة..."
+
+#~ msgid "Create an &Autorun file"
+#~ msgstr "إنشاء ملف &autorun"
 
 #~ msgid "Key Command quick reference"
 #~ msgstr "المرجع السريع لاختصارات لوحة المفاتيح"

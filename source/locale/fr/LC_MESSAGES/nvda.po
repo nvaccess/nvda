@@ -3,8 +3,9 @@
 #
 msgid ""
 msgstr ""
+"Project-Id-Version: NVDA bzr 2012.2:5236\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-05-10 16:51+0100\n"
+"POT-Creation-Date: 2012-05-30 18:13+0100\n"
 "PO-Revision-Date: 2012-05-10 20:00+0200\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
@@ -100,10 +101,6 @@ msgstr "A&ctiver"
 msgid "&Add"
 msgstr "&Ajouter"
 
-#: gui/addonGui.py:38
-msgid "&Add..."
-msgstr "&Ajouter"
-
 #: gui/settingsDialogs.py:160
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Démarrer NVDA automatiquement après ma connexion à Windows"
@@ -129,7 +126,7 @@ msgid "&Comment"
 msgstr "&Commentaire"
 
 #. Translators: The label of a button to continue with the operation.
-#: gui/installerGui.py:113 gui/installerGui.py:166
+#: gui/installerGui.py:113 gui/installerGui.py:162
 msgid "&Continue"
 msgstr "&Continuer"
 
@@ -147,13 +144,13 @@ msgstr "Entrées du &dictionnaire"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
-#: updateCheck.py:379
+#: updateCheck.py:382
 msgid "&Donate"
 msgstr "&Faire un don"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:399
+#: updateCheck.py:402
 msgid "&Done"
 msgstr "&Terminé"
 
@@ -198,10 +195,9 @@ msgstr "&Installer NVDA sur cet ordinateur"
 msgid "&Install NVDA..."
 msgstr "&Installer NVDA..."
 
-#. Translators: the label for the installed addons list in the addons manager.
-#: gui/addonGui.py:23
-msgid "&Installed Add-ons"
-msgstr "&Greffons installés"
+#: gui/addonGui.py:38
+msgid "&Install..."
+msgstr "&Installer..."
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
@@ -243,7 +239,7 @@ msgstr "A&ller à"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:384
+#: updateCheck.py:387
 msgid "&Not now"
 msgstr "&Pas maintenant"
 
@@ -432,7 +428,7 @@ msgid "Add Dictionary Entry"
 msgstr "Ajouter une entrée au dictionnaire"
 
 #. Translators: title for the Addon Information dialog
-#: gui/addonGui.py:183
+#: gui/addonGui.py:186
 msgid "Add-on Information"
 msgstr "Information sur le greffon"
 
@@ -451,9 +447,9 @@ msgstr "Gestionnaire de greffons"
 msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
-msgstr "Des greffons ont été installés ou désinstallés. "
-"Vous devez redémarrer NVDA pour que ces changements prennent effet. "
-"Voulez-vous redémarrer maintenant ?"
+msgstr ""
+"Des greffons ont été installés ou désinstallés. Vous devez redémarrer NVDA "
+"pour que ces changements prennent effet. Voulez-vous redémarrer maintenant ?"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -489,8 +485,9 @@ msgid ""
 "trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
-msgstr "Êtes-vous sûr de vouloir installer ce greffon ? "
-"N'installez que des greffons provenant de sources sûres.\n"
+msgstr ""
+"Êtes-vous sûr de vouloir installer ce greffon ? N'installez que des greffons "
+"provenant de sources sûres.\n"
 "Greffon : {summary} {version}\n"
 "Auteur : {author}"
 
@@ -768,10 +765,11 @@ msgstr "Contributeurs"
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:104
 msgid "Copy &portable configuration to current user account"
-msgstr "Copier la configuration &portable dans le compte de l'utilisateur en cours"
+msgstr ""
+"Copier la configuration &portable dans le compte de l'utilisateur en cours"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui/installerGui.py:158
+#: gui/installerGui.py:154
 msgid "Copy current &user configuration"
 msgstr "Copier la configuration &utilisateur courante"
 
@@ -833,13 +831,8 @@ msgstr "Créer NVDA portable"
 msgid "Create Portable copy..."
 msgstr "Créer une copie portable..."
 
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui/installerGui.py:154
-msgid "Create an &Autorun file"
-msgstr "Créer un fichier &Autorun"
-
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
-#: gui/installerGui.py:211
+#: gui/installerGui.py:207
 msgid "Creating Portable Copy"
 msgstr "Création d'une copie portable en cours"
 
@@ -926,7 +919,7 @@ msgstr "Mise en &forme des documents..."
 msgid "Document Formatting"
 msgstr "Mise en Forme des Documents"
 
-#: installer.py:175 installer.py:176
+#: installer.py:158 installer.py:159
 msgid "Documentation"
 msgstr "Documentation"
 
@@ -940,7 +933,7 @@ msgid "Download and &install update"
 msgstr "Télécharger et &installer la mise à jour"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:321
+#: updateCheck.py:324
 msgid "Downloading"
 msgstr "T&l&chargement en cours"
 
@@ -1038,10 +1031,10 @@ msgstr "Anglais américain: grade 2"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:128 updateCheck.py:341 gui/addonGui.py:74 gui/addonGui.py:88
+#: updateCheck.py:128 updateCheck.py:344 gui/addonGui.py:74 gui/addonGui.py:88
 #: gui/addonGui.py:107 gui/__init__.py:144 gui/__init__.py:153
-#: gui/installerGui.py:54 gui/installerGui.py:190 gui/installerGui.py:198
-#: gui/installerGui.py:229 gui/logViewer.py:74 gui/settingsDialogs.py:208
+#: gui/installerGui.py:54 gui/installerGui.py:186 gui/installerGui.py:194
+#: gui/installerGui.py:225 gui/logViewer.py:74 gui/settingsDialogs.py:208
 msgid "Error"
 msgstr "Erreur"
 
@@ -1055,7 +1048,7 @@ msgid "Error copying NVDA user settings"
 msgstr "Erreur de copie des paramètres utilisateur NVDA"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:340
+#: updateCheck.py:343
 msgid "Error downloading update."
 msgstr "Erreur durant le Ttléchargement de la mise à jour."
 
@@ -1107,13 +1100,13 @@ msgstr "En-tête de pages paires"
 msgid "Exit NVDA"
 msgstr "quitter NVDA"
 
-#: installer.py:174
+#: installer.py:157
 msgid "Explore NVDA user configuration directory"
 msgstr "Explorer le répertoire de configuration utilisateur de NVDA"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
-#: gui/installerGui.py:228
+#: gui/installerGui.py:224
 #, python-format
 msgid "Failed to create portable copy: %s"
 msgstr "Échec de la création de la copie portable : %s"
@@ -1131,8 +1124,8 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"Échec à l'ouverture du fichier du greffon à %s : "
-"fichier manquant ou format de fichier incorrect"
+"Échec à l'ouverture du fichier du greffon à %s : fichier manquant ou format "
+"de fichier incorrect"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1147,7 +1140,7 @@ msgstr "Avance rapide"
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui/installerGui.py:46 gui/installerGui.py:223
+#: gui/installerGui.py:46 gui/installerGui.py:219
 msgid "File in Use"
 msgstr "Fichier en cours d'utilisation"
 
@@ -1366,9 +1359,14 @@ msgid "Install NVDA"
 msgstr "Installer NVDA"
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
-#: updateCheck.py:350
+#: updateCheck.py:353
 msgid "Install Update"
 msgstr "Installer la mise à jour"
+
+#. Translators: the label for the installed addons list in the addons manager.
+#: gui/addonGui.py:23
+msgid "Installed Add-ons"
+msgstr "Greffons installés"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 #: gui/addonGui.py:93
@@ -1386,7 +1384,7 @@ msgstr "Privilèges insuffisants"
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
-#: gui/installerGui.py:197
+#: gui/installerGui.py:193
 #, python-format
 msgid "Invalid drive %s"
 msgstr "Unité %s invalide"
@@ -1402,7 +1400,7 @@ msgstr "Italien grade 1"
 msgid "Key words:"
 msgstr "Mots clés :"
 
-#: installer.py:175 gui/__init__.py:336
+#: installer.py:158 gui/__init__.py:336
 msgid "Keyboard Commands Quick Reference"
 msgstr "Référence rapide des touches de commande"
 
@@ -1699,7 +1697,7 @@ msgid "NVDA Update"
 msgstr "Mise à jour de NVDA"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui/installerGui.py:221
+#: gui/installerGui.py:217
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ne peut pas supprimer ou remplacer un fichier."
 
@@ -1713,7 +1711,7 @@ msgstr "NVDA démarré"
 msgid "NVDA version {version} is available."
 msgstr "NVDA version {version} est disponible"
 
-#: installer.py:172 gui/__init__.py:340
+#: installer.py:155 gui/__init__.py:340
 msgid "NVDA web site"
 msgstr "Site Web de NVDA"
 
@@ -1927,7 +1925,7 @@ msgid "Play"
 msgstr "Lire"
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:370
+#: updateCheck.py:373
 msgid "Please Donate"
 msgstr "Faites un don s'il vous plaît"
 
@@ -1943,7 +1941,7 @@ msgstr "Veuillez presser OK pour démarrer la copie installée."
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui/installerGui.py:189
+#: gui/installerGui.py:185
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Veuillez indiquer le répertoire où créer la copie portable."
 
@@ -1953,14 +1951,16 @@ msgid "Please wait while NVDA is being installed"
 msgstr "Veuillez patienter durant l'installation de NVDA"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
-#: gui/installerGui.py:213
+#: gui/installerGui.py:209
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Veuillez patienter durant la création d'une copie portable de NVDA."
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 #: gui/settingsDialogs.py:199
 msgid "Please wait while settings are copied to the system configuration."
-msgstr "Veuillez patienter pendant que les paramètres sont copiés dans la configuration du système."
+msgstr ""
+"Veuillez patienter pendant que les paramètres sont copiés dans la "
+"configuration du système."
 
 #. Translators: The message displayed while an addon is being installed.
 #: gui/addonGui.py:95
@@ -2437,7 +2437,7 @@ msgstr "bureau sécurisé"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui/installerGui.py:181
+#: gui/installerGui.py:177
 msgid "Select portable  directory"
 msgstr "Choisissez le répertoire portable"
 
@@ -2630,7 +2630,7 @@ msgid "Subject:"
 msgstr "Objet :"
 
 #. Translators: The title of a dialolg presented to indicate a successful operation.
-#: gui/installerGui.py:67 gui/installerGui.py:236 gui/settingsDialogs.py:210
+#: gui/installerGui.py:67 gui/installerGui.py:232 gui/settingsDialogs.py:210
 msgid "Success"
 msgstr "Succès"
 
@@ -2640,7 +2640,7 @@ msgstr "Paramètres utilisateur de NVDA copiés avec succès"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
-#: gui/installerGui.py:235
+#: gui/installerGui.py:231
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
 msgstr "Une copie portable de NVDA créée avec succès dans %s"
@@ -2715,10 +2715,11 @@ msgid ""
 "The installation is unable to remove or overwrite a file. Another copy of "
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
-msgstr "L'installation ne peut pas supprimer ou remplacer un fichier. "
-"NVDA est peut-être en cours d'exécution sur le compte d'un autre utilisateur connecté. "
-"Assurez-vous que toutes les copies installées de NVDA sont arrêtées "
-"puis retentez l'installation."
+msgstr ""
+"L'installation ne peut pas supprimer ou remplacer un fichier. NVDA est peut-"
+"être en cours d'exécution sur le compte d'un autre utilisateur connecté. "
+"Assurez-vous que toutes les copies installées de NVDA sont arrêtées puis "
+"retentez l'installation."
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui/installerGui.py:52
@@ -2734,9 +2735,9 @@ msgstr ""
 msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
-msgstr "Le chemin d'installation de NVDA a changé. "
-"Il sera maintenant installé dans : "
-"{path}"
+msgstr ""
+"Le chemin d'installation de NVDA a changé. Il sera maintenant installé "
+"dans : {path}"
 
 #: globalCommands.py:841
 msgid ""
@@ -2759,8 +2760,9 @@ msgstr "il n'y a pas de texte dans le presse-papier"
 msgid ""
 "This add-on seems to already be installed. Please remove the existing add-on "
 "and try again."
-msgstr "Ce greffon semble être déjà installé. "
-"Veuillez désinstaller la copie existente et réessayer."
+msgstr ""
+"Ce greffon semble être déjà installé. Veuillez désinstaller la copie "
+"existente et réessayer."
 
 #: gui/settingsDialogs.py:233
 msgid "This change requires administrator privileges."
@@ -2917,6 +2919,11 @@ msgstr "Entrez le texte à rechercher"
 msgid "Type:"
 msgstr "Type :"
 
+#. Translators: the url part of the About Add-on information
+#: gui/addonGui.py:184
+msgid "URL: {url}"
+msgstr "URL : {url}"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:182
@@ -2929,13 +2936,13 @@ msgstr "Braille anglais unifié grade 1"
 msgid "Unified English Braille Code grade 2"
 msgstr "Braille anglais unifié grade 2"
 
-#: installer.py:173
+#: installer.py:156
 msgid "Uninstall NVDA"
 msgstr "Désinstaller NVDA"
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
-#: updateCheck.py:348
+#: updateCheck.py:351
 msgid "Update downloaded. It will now be installed."
 msgstr "La mise à jour est téléchargée, elle va maintenant être installée."
 
@@ -2994,7 +3001,7 @@ msgstr "Utiliser insert du clavier étendu comme touche NVDA"
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Utiliser insert du pavé numérique comme touche NVDA"
 
-#: installer.py:176 gui/__init__.py:334
+#: installer.py:159 gui/__init__.py:334
 msgid "User Guide"
 msgstr "Guide de l'utilisateur"
 
@@ -3028,7 +3035,7 @@ msgstr "Dictionnaire de la voix %s"
 msgid "Warning"
 msgstr "Avertissement"
 
-#: updateCheck.py:361
+#: updateCheck.py:364
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are "
@@ -5539,11 +5546,9 @@ msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
 "Author: {author}\n"
-"URL: {url}\n"
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
 "Version : {version}\n"
 "Auteur : {author}\n"
-"URL : {url}\n"
 "Description : {description}\n"

@@ -7,9 +7,11 @@
  Traduzido por Marlin Rodrigues da Silva
  
 = 2012.2 =
+Os destaques dessa versão incluem um instalador integrado com o recurso de criação de cópia portátil, atualização automática, facilitação do gerenciamento dos novos complementos para o NVDA, anúncio de gráficos no Microsoft Word, suporte para aplicativos de estilo Metro no Windows 8, e várias correções de bugs importantes.
 
 == Novas Características ==
 - O NVDA agora pode procurar, baixar e instalar atualizações automaticamente. (#73)
+- Acrescentar funcionalidades ao NVDA tornou-se mais fácil com a adição de um gerenciador de complementos (localizado no submenu ferramentas do menu do NVDA) que lhe permite instalar e desinstalar os novos pacotes de complementos para o NVDA (arquivos .nvda-addon) que contém plugins e drivers. Note que o gerenciador de complementos não mostra os antigos plugins e drivers personalizados copiados manualmente para sua pasta de configurações. (#213) 
 - Muito mais recursos comuns do NVDA agora funcionam em aplicativos do estilo Windows 8 Metro quando se usa uma versão oficial instalada, incluindo-se o anúncio de caracteres digitados, e modo de navegação para documentos da web (inclui suporte para a versão metro do Internet Explorer 10). Cópias Portáteis do NVDA não possuem a capacidade para acessar aplicativos de estilo metro. (#1801)
 - Em documentos do modo de navegação (Internet Explorer, Firefox etc) você agora pode saltar para o início e para após o final de certos elementos que contém outros (incluindo listas e tabelas) com shift+, e shift+. respectivamente. (#123)
 - Novo idioma: grego.
@@ -17,6 +19,7 @@
 
 
 == Alterações ==
+- O anúncio das coordenadas de células no Microsoft Excel agora acontece depois do conteúdo em lugar de ser feito antes, e agora só é incluido se as opções Anunciar Tabelas e Anunciar Coordenadas de Células em Tabelas estiverem abilitadas no Diálogo de Formatação de Documentos. (#320)
 - O NVDA agora é distribuído em um único pacote. Ao invés de separar versões portáteis e instaláveis, agora existe um único arquivo que quando executado iniciará uma cópia temporária do NVDA e lhe permitirá instalá-lo ou gerar uma distribuição portátil. (#1715)
 - O NVDA agora é sempre instalado na pasta Arquivos de Programas em todos os sistemas. Ao atualizar uma instalação anterior irá também movê-lo se ele anteriormente não estava instalado neste local.
 
@@ -33,6 +36,9 @@
 - Em aplicativos que usam Java Access Bridge, os campos de edição de texto agora são apresentados corretamente em braille. (#2284)
 - Em aplicativos que usam java Access Bridge, os campos de edição de texto já não anunciam caracteres estranhos em determinadas circumstâncias. (#1892)
 - Em aplicativos que usam Java Access Bridge, estando no fim de um campo de edição de texto, a linha atual agora é anunciada corretamente. (#1892)
+- No modo de navegação em aplicativos que usam Mozilla Gecko 14 e posteriores (como Firefox 14), a navegação rápida agora funciona para blocos de citação  e objetos embutidos. (#2287) 
+- No Internet Explorer 9, o NVDA já não lê conteúdo indesejado quando o foco é movido para dentro de certas marcas ou elementos enfocáveis (especificamente, um elemento div que é enfocável ou possui uma função ARIA de marca).
+- O ícone do NVDA para os atalhos da área de trabalho e do menu iniciar agora é mostrado corretamente em edições de 64 bit  do Windows. (#354)
 
 
 == Alterações Específicas para Desenvolvedores ==

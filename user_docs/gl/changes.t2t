@@ -8,9 +8,9 @@ O subliñable desta versión inclúe unha característica que integra o instalad
 
 == Novas Características ==
 - NVDA agora pode procurar automáticamente, descargar e instalar actualizacións. (#73)
-- Fíxose máis doada a administración de plugins  e controladores persoalizados para NVDA ca adición dun Administrador de Complementos (que se atopa baixo Ferramentas no menú NVDA) permitíndoche instalar e desinstalar ficheiros de paquetes de complementos de NVDA (.nvda-addon). (#213)
+- Fíxose máis doada a extensión da funcionalidade do NVDA ca adición dun Administrador de Complementos (que se atopa baixo Ferramentas no menú NVDA) permitíndoche instalar e desinstalar paquetes de complementos do NVDA (ficheiros .nvda-addon) que conteñan plugins e controladores. Ten en conta que o Administrador de Complementos non debería amosar os antigos plugins persoais e controladores copiados manualmente no teu directorio de configuración. (#213)
 - Agora funcionan Moitas máis características comúns do NVDA no estilo de aplicacións de Windows 8 Metro cando se utiliza unha versión instalada do NVDA, incluíndo a fala de carácteres ó se escreber e modo navegación para documentos web (inclúese soporte para a versión metro do Internet Explorer 10). As copias portables do NVDA non poden acceder ó estilo de aplicacións metro. (#1801) 
-- En documentos en modo Navegación (Internet Explorer, Firefox etc) agora podes saltar ó comezo, ou pasar ó remate, de certos elementos contedores (incluíndo listas e táboas) con "shift+," e "shift+." respectivamente. (#123) 
+- En documentos en modo Navegación (Internet Explorer, Firefox etc) agora podes saltar ó comezo, ou pasar ó remate, de certos elementos contedores (incluíndo listas e táboas) con shift+, e , respectivamente. (#123) 
 - Nova lingua: Grego.
 - Agora anúncianse os gráficos e textos alternativos nos documentos de Microsoft Word. (#2282, #1541)
 
@@ -32,7 +32,8 @@ O subliñable desta versión inclúe unha característica que integra o instalad
 - Nas aplicacións que utilicen Java Access Bridge, os campos de texto editable xa non informan de caracteres extranos en certas circumstancias. (#1892)
 - Nas aplicacións que utilicen Java Access Bridge, cando se estea ó final dun campo de texto editable, a liña actual  agora anúnciase correctamente. (#1892)
 - No modo navegación en aplicacións que utilicen Mozilla Gecko 14 e posterior (ex.: Firefox 14), agora a navegación rápida funciona en bloques de citas e obxectos integrados. (#2287)
-- No Internet Explorer 9 NVDA xa non le contido non desexado cando o foco se move dentro dun div que é enfocable ou que se marca cunha zoa ARIA. 
+- No Internet Explorer 9 NVDA xa non le contido indeseado cando o foco se move dentro de certas zoas ou elementos enfocables (específicamente un elemento div que é enfocable ou que ten un rol de zoa ARIA). 
+- As iconas para os atallos para o NVDA no Escritorio e no Menú de Inicio agora se amosan correctamente en edicións de 64 bit de Windows. (#354)
 
 
 == Cambios para Desenroladores ==
