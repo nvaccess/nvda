@@ -106,6 +106,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			ancestorCount += 1
 			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX):
 				break
+		raise LookupError
 
 	def __init__(self,obj,position):
 		self.obj=obj
