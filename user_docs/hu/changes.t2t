@@ -3,6 +3,39 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.2 =
+Ennek a kiadásnak a főbb újdonságai a következők: egységes telepítőkészlet és hordozható változat, automatikus frissítő, az új NVDA-bővítmények könnyű kezelése, ábrák bemondása a Microsoft Wordben, a windows 8 metro stílusú alkalmazások támogatása, valamint több fontos hibajavítás.
+
+== Újdonságok ==
+- Az NVDA mostantól képes az új frissítések letöltésére, és feltelepítésére. (#73)
+- Egyszerűbbé vált a különböző külső illesztőprogramok és bővítmények kezelése az NVDA bővítmény kezelőjével (amely az eszközök menüben található). Ennek segítségével feltelepítheti és eltávolíthatja az NVDA programhoz készült bővítményeket (.nvda-addon). (#213)
+- A legtöbb közismert NVDA-funkció már windows 8 metro stílusú alkalmazásokban is működik, de csak az NVDA telepített változata esetén, ideértve a begépelt karakterek visszamondását, web dokumentumok esetén a böngészőmódot, valamint az internet explorer 10 metro felületének támogatását is. Az NVDA hordozható változatban nem fér hozzá a metro stílusú alkalmazásokhoz. (#1801) 
+- A böngésző módú dokumentumokban (internet explorer, firefox stb.) az információkat tartalmazó elemek (listák, táblázatok) elejére és végére lehet ugrani a shift+, és shift+. billentyűkombinációkkal.  (#123)
+- A görög nyelvet hozzáadták a programhoz.
+- Az ábrákat és az ábrafeliratokat (alt text) az NVDA már felolvassa a Microsoft Word dokumentumokban. (#2282, #1541)
+
+
+== Változások ==
+- A Microsoft Excelben az NVDA most már először a cella tartalmát olvassa és csak utána a cella koordinátáit, ha a táblázatok és a cellakoordináták felolvasása be van kapcsolva a dokumentum-formázási párbeszédpanelen.
+- Az NVDA mostantól kizárólag egy telepítőcsomagként fog megjelenni. A program elindításakor egy átmeneti példányindul el, ekkor lehetőség van a program feltelepítésére, vagy a hordozható verzió elkészítésére is. (#1715)
+- Az NVDA mostantól minden esetben a Program files mappába települ. Azon verzióknál ahol ez még nem így történt, automatikusan áthelyezi magát.
+
+
+== Hibajavítások ==
+- Ha az automatikus nyelvváltás be van kapcsolva, az NVDA most már a helyes nyelven olvassa fel az ábrák feliratait, a címkéket és bizonyos más vezérlőelemeket a mozilla geckót használó alkalmazásokban (pl. Firefoxban), feltéve, hogy ezeket helyesen jelölték meg.
+- Már nem áll meg a folyamatos felolvasás a BibleSeekerben vagy más ún. trx-szerkesztőmezőkben egy szakasz közepén.
+- A Windows 8 intézőben a fájltulajdonságok lap engedélyek lapfülén és a Windows 8 frissítőjében (windows update) az NVDA helyesen olvassa fel a megjelenő információkat.
+- Ki lett javítva az a hiba, hogy a Microsoft Wordben az NVDA néha lefagyott, ha egy dokumentumból nagyon hosszú sorokat vagy tartalomjegyzéket emeltünk át. (#2191)
+- Kijavították a szóhatárok hibás érzékelését, amikor nem törő szóközt tartalmaz a dokumentum bizonyos írásjelek után. 
+- Az adobe readerben böngészőmódban már bármely szintű címsorra rá lehet ugorni navigációs gyorsbillentyűkkel és az elemlistával. (#2181)
+- A winampban a braille kijelző most már megfelelően frissül, ha a lejátszólista-szerkesztőben új elemet jelölünk ki. (#1912)
+- Az elemek listája fanézete (böngésző módú dokumentumok esetén) most már megfelelő méretre van beállítva ahhoz, hogy kiférjen az egyes elemek szövege (#2276)
+- A java access bridge-et használó alkalmazásokban a szerkesztőmezőket a program jól jelzi a braille kijelzőn. (#2284)
+- A Java access bridge-et használó alkalmazásokban a szerkesztőmezők már nem tartalmaznak furcsa karaktereket bizonyos előfordulásokban. (#1892)
+- Ha egy szerkesztőmező végéhez új tartalmat adunk hozzá a Java access bridge-et használó alkalmazásokban, a program helyesen jeleníti meg az adott sort. (#1892)
+- Az olyan böngésző módú alkalmazásokban, amelyek mozilla gecko 14-es vagy újabb böngészőmotort használnak (pl. 14-es Firefox) a gyors navigáció már használható idézetblokkok és beágyazott objektumok esetén is. (#2287)
+
+
 = 2012.1 =
 Ezen kiadás főbb újdonságai közé tartoznak a braille hatékonyabb olvasását segítő lehetőségek, a dokumentum formázásának hatékonyabb szöveges és braille hozzáférése, megnövelt Microsoft Word támogatás, valamint az iTunes Store támogatása.
 
