@@ -8,9 +8,9 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat sisäänrakennettu asennus
 
 == Uudet ominaisuudet ==
 - NVDA voi nyt tarkistaa, ladata ja asentaa päivitykset automaattisesti. (#73)
-- Omien liitännäisten ja ajureiden hallinta on tehty helpommaksi lisäosien hallinnalla (löytyy NVDA-valikosta Työkalut-valikon alta), joka mahdollistaa lisäosapakettien (.nvda-addon-tiedostojen) asentamisen ja poistamisen. (#213)
+- NVDA:n toiminnallisuuden laajentaminen on tehty helpommaksi lisäosien hallinnalla (löytyy NVDA-valikosta Työkalut-valikon alta), joka mahdollistaa liitännäisiä ja ajureita sisältävien lisäosapakettien (.nvda-addon-tiedostojen) asentamisen ja poistamisen. Huomaa, että manuaalisesti asetushakemistoon kopioidut vanhemmat liitännäiset ja ajurit eivät näy lisäosien hallinnassa. (#213)
 - Entistä useammat NVDA:n ominaisuudet, kuten kirjoitettujen merkkien lukeminen ja selaustila web-sivuilla, toimivat nyt Windows 8:n Metro-sovelluksissa (mukaan lukien Internet Explorer 10:n Metro-version tuki). Näiden sovellusten käyttäminen ei ole mahdollista NVDA:n massamuistiversioilla. (#1801) 
-- Selaustiladokumenteissa (Internet Explorerissa, Firefoxissa jne) voidaan nyt siirtyä tiettyjen säilöelementtien alkuun tai loppuun (mukaan lukien listat ja taulukot) näppäinkomennoilla Shift+, (pilkku) ja Shift+. (piste). (#123)
+- Selaustiladokumenteissa (Internet Explorerissa, Firefoxissa jne) voidaan nyt siirtyä tiettyjen säilöelementtien alkuun tai loppuun (mukaan lukien listat ja taulukot) näppäimillä Shift+, (pilkku) ja , (pilkku). (#123)
 - Uusi kieli: kreikka.
 - Kuvat ja alt-tekstit luetaan nyt Microsoft Word -asiakirjoissa. (#2282, #1541)
 
@@ -29,12 +29,13 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat sisäänrakennettu asennus
 - Sanavälit tunnistetaan nyt oikein, kun tyhjätilamerkin jälkeen on tiettyjä välimerkkejä. (#1656)
 - Adobe Readerissa on nyt mahdollista siirtyä selaustilassa ilman tasoja oleviin otsikoihin pikanavigointinäppäimiä ja elementtilistaa käyttäen. (#2181)
 - Pistenäyttöä päivitetään nyt Winampissa asianmukaisesti, kun soittolistaeditorissa siirrytään eri kohteeseen. (#1912)
-- Elementtilistan puunäkymän kokoa muutetaan nyt oikein, jotta jokaisen elementin teksti näytetään kokonaan. (#2276)
+- Elementtilistan puunäkymän kokoa muutetaan nyt oikein, jotta jokaisen elementin teksti näkyy kokonaan. (#2276)
 - Muokattavat tekstikentät näytetään nyt oikein pistenäytöllä Java Access Bridgeä käyttävissä sovelluksissa. (#2284)
 - Muokattavissa tekstikentissä ei enää tietyissä tilanteissa lueta outoja merkkejä Java Access Bridgeä käyttävissä sovelluksissa. (#1892)
 - Nykyinen rivi luetaan nyt oikein oltaessa muokattavan tekstikentän lopussa Java Access Bridgeä käyttävissä sovelluksissa. (#1892)
 - Pikanavigointi toimii nyt kappaleenvaihdollisille sisennyksille ja upotetuille objekteille selaustilassa Mozilla Gecko 14:ää ja uudempaa käyttävissä sovelluksissa (esim. Firefox 14:ssä). (#2287)
-- NVDA ei enää lue häiritsevää sisältöä siirryttäessä kohdistettavaan tai ARIA-maamerkillä merkittyyn div-elementtiin Internet Explorer 9:ssä. 
+- NVDA ei enää lue häiritsevää sisältöä Internet Explorer 9:ssä kohdistuksen siirtyessä tiettyjen maamerkkien tai kohdistettavien elementtien sisään (erityisesti kohdistettavaan tai ARIA-maamerkkiroolin sisältävään div-elementtiin).
+- NVDA:n kuvake näytetään nyt oikein työpöydän ja Käynnistä-valikon pikakuvakkeissa 64-bittisissä Windows-versioissa. (#354)
 
 
 = 2012.1 =
@@ -715,7 +716,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Välilyöntinäppäin ei enää avaa Linkkilistan linkkejä. Sitä voidaan nyt käyttää kuten muitakin merkkejä, jotta voidaan siirtyä jonkin tietyn linkin kohdalle kirjoittamalla osa sen nimestä.
 - Hiiren navigointiobjektiin siirtävä komento (NVDA+numeroryhmän /) siirtää nyt hiiren navigointiobjektin keskelle vasemman yläreunan sijasta.
 - Lisätty komennot hiiren vasemman ja oikean painikkeen napsautukselle (numeroryhmän / ja numeroryhmän *)
-- Windowsin järjestelmätarjottimen käyttöä paranneltu. Kohdistuksen ei enää pitäisi hypätä takaisin johonkin tiettyyn kohtaan. (#10)
+- Windowsin ilmoitusalueen käyttöä paranneltu. Kohdistuksen ei enää pitäisi hypätä takaisin johonkin tiettyyn kohtaan. (#10)
 - Suorituskykyä paranneltu sekä estetty NVDA:ta lukemasta Ylimääräistä tekstiä pidettäessä nuolinäppäintä alhaalla ja tultaessa tekstin loppuun muokkauskentässä.
 - Poistettu mahdollisuus, joka pakottaa odottamaan sen aikaa kun tiettyjä ilmoituksia luetaan. Tämä korjaa joitakin kaatumisia ja jumiutumisia erinäisillä puhesyntetisaattoreilla. (#117)
 - Lisätty tuki italiankieliselle Audiologic TTS 3 -puhesyntetisaattorille. (#105)
@@ -724,10 +725,10 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Korjattu mahdollisia kaatumisia yritettäessä tallentaa NVDA:n asetuksia muissa kuin englannninkielisissä Windows-versioissa. (#114)
 - Lisätty Tervetuloa-valintaikkuna. Tämä valintaikkuna on suunniteltu antamaan olennaisia tietoja uusille NVDA:n käyttäjille ja mahdollistamaan CapsLockin määrittämisen NVDA-näppäimeksi. Valintaikkuna näytetään oletusarvoisesti NVDA:n käynnistyessä, kunnes se poistetaan käytöstä.
 - Korjattu Adobe Reader -versioiden 8 ja 9 alkeellinen tuki, jotta PDF-asiakirjojen lukeminen on mahdollista.
-- Korjattu joitakin ongelmia, joita saattoi esiintyä pidettäessä näppäimiä alhaalla ennen kuin NVDA on kunnolla käynnistynyt.
+- Korjattu joitakin ongelmia, joita saattoi esiintyä pidettäessä näppäimiä alhaalla ennen kuin NVDA oli kunnolla käynnistynyt.
 - Jos NVDA on määritetty tallentamaan asetuksensa suljettaessa, varmistetaan, että ne tallennetaan oikein windowsia sammutettaessa tai ulos kirjauduttaessa.
 - Asennusohjelman alkuun lisätty NVDA-tunnusääni.
-- NVDA:n pitäisi asennusohjelman käynnistämänä ja muutenkin sulkeutuessaan siivota kuvakkeensa asianmukaisesti järjestelmätarjottimelta.
+- NVDA:n pitäisi asennusohjelman käynnistämänä ja muutenkin sulkeutuessaan siivota kuvakkeensa asianmukaisesti ilmoitusalueelta.
 - NVDA:n valintaikkunoiden standardisäädinten nimien (kuten OK ja Peruuta-painikkeet) pitäisi nyt näkyä samalla kielellä, jota NVDA on asetettu käyttämään.
 - Sovelluksen oletuskuvakkeen sijaan NVDA:n Käynnistä-valikon ja työpöydän pikakuvakkeessa käytetään nyt NVDA:n omaa ohjelmakuvaketta.
 - Solut luetaan Microsoft Excelissä sarkain- ja Shift+sarkain-näppäimillä liikuttaessa. (#146)
