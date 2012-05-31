@@ -414,23 +414,34 @@ class GlobalCommands(ScriptableObject):
 			speech.speakMessage(_("No objects inside"))
 	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
 
-	def script_navigatorObject_doDefaultAction(self,gesture):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
+	def script_review_activate(self,gesture):
+		# Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+		actionName=_("activate")
+		pos=api.getReviewPosition()
 		try:
-			action=curObject.getActionName()
-		except NotImplementedError:
-			ui.message(_("No default action"))
+			pos.activate()
+			ui.message(actionName)
 			return
-		try:
-			curObject.doAction()
 		except NotImplementedError:
-			ui.message(_("default action failed"))
-			return
-		ui.message("%s"%action)
-	script_navigatorObject_doDefaultAction.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
+			pass
+		obj=api.getNavigatorObject()
+		while obj:
+			try:
+				obj.doAction()
+				try:
+					realActionName=obj.getActionName()
+				except NotImplementedError:
+					pass
+				if realActionName:
+					actionName=realActionName
+				ui.message(actionName)
+				return
+			except NotImplementedError:
+				pass
+			obj=obj.parent
+		# Translators: the message reported when there is no action to perform on the review position or navigator object.
+		ui.message(_("No action"))
+	script_review_activate.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 
 	def script_review_top(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
@@ -994,10 +1005,6 @@ class GlobalCommands(ScriptableObject):
 		if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
 			obj.doAction(0)
 
-	def script_touch_activate(self,gesture):
-		touchHandler.handler.screenExplorer.activate()
-	script_touch_activate.__doc__=_("Activates the object under your finger")
-
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1040,8 +1047,9 @@ class GlobalCommands(ScriptableObject):
 		"ts:flickdown":"navigatorObject_firstChild",
 		"kb:NVDA+numpadMinus": "navigatorObject_toFocus",
 		"kb(laptop):NVDA+backspace": "navigatorObject_toFocus",
-		"kb:NVDA+numpadEnter": "navigatorObject_doDefaultAction",
-		"kb(laptop):NVDA+enter": "navigatorObject_doDefaultAction",
+		"kb:NVDA+numpadEnter": "review_activate",
+		"kb(laptop):NVDA+enter": "review_activate",
+		"ts:double_tap": "review_activate",
 		"kb:NVDA+shift+numpadMinus": "navigatorObject_moveFocus",
 		"kb(laptop):NVDA+shift+backspace": "navigatorObject_moveFocus",
 		"kb:NVDA+numpadDelete": "navigatorObject_currentDimensions",
@@ -1051,7 +1059,6 @@ class GlobalCommands(ScriptableObject):
 		"ts:tap":"touch_newExplore",
 		"ts:hoverDown":"touch_newExplore",
 		"ts:hover":"touch_explore",
-		"ts:double_tap":"touch_activate",
 		"ts:2finger_double_tap":"showGui",
 
 		# Review cursor
