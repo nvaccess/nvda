@@ -10,7 +10,7 @@ import ui
 import tones
 import queueHandler
 import inputCore
-import mouseHandler
+import screenExplorer
 import NVDAObjects.UIA
 from logHandler import log
 import touchTracker
@@ -124,6 +124,8 @@ class TouchHandler(object):
 		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,ANRUS_TOUCH_MODIFICATION_ACTIVE)
 		tones.beep(1760,40)
 		self.trackerManager=touchTracker.TrackerManager()
+		self.screenExplorer=screenExplorer.ScreenExplorer()
+		self.screenExplorer.updateReview=True
 		self.gesturePump=self.gesturePumpFunc()
 		queueHandler.registerGeneratorObject(self.gesturePump)
 

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+﻿# -*- coding: UTF-8 -*-
 #globalCommands.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -7,6 +7,7 @@
 
 import time
 import tones
+import touchHandler
 import keyboardHandler
 import mouseHandler
 import eventHandler
@@ -979,10 +980,13 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Plugins reloaded"))
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 
+	def script_touch_newExplore(self,gesture):
+		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y,new=True)
+	script_touch_newExplore.__doc__=_("Reports the object and content directly under your finger")
+
 	def script_touch_explore(self,gesture):
-		mouseHandler.curMousePos=(gesture.x,gesture.y)
-		mouseHandler.mouseMoved=True
-	script_touch_explore.__doc__=_("Reports the object and content directly under your finger")
+		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y)
+	script_touch_explore.__doc__=_("Reports the new object or content under your finger if different to where your finger was last")
 
 	def script_touch_hoverUp(self,gesture):
 		#Specifically for touch typing with onscreen keyboard keys
@@ -991,13 +995,7 @@ class GlobalCommands(ScriptableObject):
 			obj.doAction(0)
 
 	def script_touch_activate(self,gesture):
-		obj=api.getNavigatorObject()
-		while obj:
-			try:
-				obj.doAction(0)
-				break
-			except NotImplementedError:
-				obj=obj.parent
+		touchHandler.handler.screenExplorer.activate()
 	script_touch_activate.__doc__=_("Activates the object under your finger")
 
 	__gestures = {
@@ -1050,9 +1048,11 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+delete": "navigatorObject_currentDimensions",
 
 		#Touch-specific commands
-		"ts:tap":"touch_explore",
+		"ts:tap":"touch_newExplore",
+		"ts:hoverDown":"touch_newExplore",
 		"ts:hover":"touch_explore",
 		"ts:double_tap":"touch_activate",
+		"ts:2finger_double_tap":"showGui",
 
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
@@ -1083,6 +1083,7 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+shift+o": "review_endOfLine",
 		"kb:numpadPlus": "review_sayAll",
 		"kb(laptop):NVDA+shift+downArrow": "review_sayAll",
+		"ts:2finger_flickDown":"review_sayAll",
 		"kb:NVDA+f9": "review_markStartForCopy",
 		"kb:NVDA+f10": "review_copy",
 
