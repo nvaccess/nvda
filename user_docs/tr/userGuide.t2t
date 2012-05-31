@@ -76,6 +76,8 @@ Ek olarak, kurulmuş NVDA kopyasını daha sonra taşınabilir kopya oluşturmak
 
 NVDA'yı USB bellek ya da benzer taşınabilir ortamlara kopyalamak istiyorsanız, taşınabilir kopya oluştur seçeneğini tercih etmelisiniz.
 Taşınabilir kopyayı, daha sonra başka bir bilgisayara NVDA'yı kurmak için de kullanabilirsiniz.
+Ancak, NVDA'yı CD gibi salt okunur bir medyaya kopyalamak istiyorsanız, yalnızca indirdiğiniz NVDA paketini kopyalamalısınız.
+NVDA taşınabilir sürümünün salt okunur bir medya üzerinden çalıştırılması şimdilik desteklenmemektedir.
   
 NVDA'nın geçici kopyasını kullanmaya devam etmek de bir seçenek olabilir, özellikle test ve demonstrasyon amacıyla, tabii her seferinde NVDA'nın bu şekilde başlatılması lüzumundan fazla zaman alacaktır.
 
@@ -108,19 +110,12 @@ Bu iletişim kutusunu kapattıysanız ya da bilgisayarınızda NVDA kurulu durum
 
 Karşınıza çıkacak iletişim kutusu, taşınabilir kopyanın oluşturulacağı yeri belirlemenize olanak tanır.
 Bu, yerel diskinizde bulunan bir klasör ya da USB bellek benzeri taşınabilir ortamda bulunan bir konum olabilir.
-Burada, aşağıda açıklanan başka seçenekler de bulunmaktadır.
+Burada, aktif kullanıcının NVDA konfigürasyonunu, yeni oluşturulacak taşınabilir kopya için de geçerli kılmanızı sağlayacak bir seçenek de bulunmaktadır.
+ Seçenek yalnızca, taşınabilir kopya oluşturma işlemini kurulu bir NVDA üzerinden yapıyorsanız geçerlidir, ana kurulum paketi üzerinden yapılan oluşturma işlemlerinde görüntülenmez.
 Devam düğmesine basmanız taşınabilir kopyayı oluşturacaktır.
 Oluşturma işlemi bittiğinde, sürecin başarıyla  tamamlandığını bildiren bir mesajla karşılaşırsınız.
 Bu iletişim kutusunu kapatmak için Tamam'a basabilirsiniz.
 
-+++ Otomatik Başlat (AutoRun) Dosyası Oluştur +++
-Bu seçenek, sürücüyü bilgisayarınıza bağladığınızda NVDA'nın otomatik olarak başlaması için, taşınabilir kopya oluşturduğunuz sürücünün kök dizininde özel bir otomatik başlama (autorun) dosyası oluşturmanıza olanak tanır.
-Ancak her Windows işletim sisteminin USB belleklerde otomatik başlatma özelliğini desteklemediğini not edin.
-
-+++ Kullanıcı Konfigarasyonunu Kopyala +++
-Bu seçenek, aktif kullanıcının NVDA konfigürasyonunu, yeni oluşturulacak taşınabilir kopya için de geçerli kılmanızı sağlar.
- Seçenek yalnızca, taşınabilir kopya oluşturma işlemini kurulu bir NVDA üzerinden yapıyorsanız geçerlidir, ana kurulum paketi üzerinden yapılan oluşturma işlemlerinde görüntülenmez.
- 
 + NVDA'ya Başlarken +
 
 ++ NVDA'yı açma ++
@@ -434,7 +429,7 @@ Aşağıdaki tuşlara kendi başlarına basıldığında bir sonraki ögeye gidi
 Tablolar, listeler vb öge bloklarının başına ve sonuna gitmek için:
 || Ad | Kısayol tuşu | Tarif |
 | Öge bloğunun başına git | shift+, | İçinde bulunulan öge bloğunun başına gider (liste, tablo vb) |
-| Öge bloğunun sonuna git | shift+. | İçinde bulunulan öge bloğunun sonuna gider (liste, tablo vb) |
+| Öge bloğunun sonuna git | , | İçinde bulunulan öge bloğunun sonuna gider (liste, tablo vb) |
 %kc:endInclude
 
 ++ Öge Listesi ++
@@ -925,8 +920,6 @@ Varsayılan olarak NVDA ayarlarınızı kaydetmez. yani NVDA'yı kapatıp yenide
 Ancak, bu seçenek tercihler menüsündeki genel ayarlar altından değiştirilebilir.
 Ayarları kaydetmek için NVDA menüsündeki Konfigürasyonu kaydet ögesini seçin.
 
-NVDA CD gibi salt okunur bir dosya sistemindeyse ,, ayarlarınızı kaydedemeyecektir ve bunu size bildirecektir.
-
 Ayarlarınızda bir yanlışlık yaptığınızı düşünüyor ve eski ayarlarınıza geri dönmek istiyorsanız, NVDA menüsündeki "Kaydedilmiş Konfigürasyona Geri Dön" ögesini seçin.
 
 Ayrıca aşağıdaki NVDA tuş komutları da yararlıdır:
@@ -971,7 +964,7 @@ BU paketler camia tarafından sağlanırlar ve NVDA'nın özelliklerini gelişti
 Eklenti yöneticisi, mevcut kullanıcı konfigürasyon dizininde kurulu olan tüm eklentileri listeler. 
 Her bir eklenti için, Paket adı, versiyon ve yazar bilgisi gösterilir, Eklenti Hakkında düğmesine basılarak seçili eklentiye dair daha fazla bilgi alınabilir.
 
-Bir eklenti kurmak için Ekle düğmesini kullanın.
+Bir eklenti kurmak için Eklenti Kur düğmesini kullanın.
 Bu, bilgisayarınızda ya da bağlı olduğunuz ağda kayıtlı olan bir NVDA eklenti paketini (.nvda-addon dosyası) bulmanız için bir iletişim kutusunu açacaktır.
 Eklenti paketini bulup Aç dediğinizde, NVDA bu eklentiyi kurmak istediğinize emin olup olmadığınızı sorar.
 NVDA eklentilerinin işlevleri sınırlanmadığı için, sistemde kurulu olan NVDA kopyasıyla birlikte çalışan eklentilerin, en azından teoride kişisel bilgilerinize ya da tüm sisteminize ulaşması mümkün olduğundan, yalnızca güvendiğiniz kaynaklardan edindiğiniz eklentileri kurmanız çok önemlidir.
@@ -986,6 +979,10 @@ Bu yapılana kadar, eklenti durumu Kaldır olarak gösterilecektir.
 Yönetici, iletişim kutusunu kapatmak için kullanacağınız Kapat düğmesini de içerir.
 Bir eklenti kurduysanız ya da kaldırdıysanız, NVDA değişikliklerin etkili olması için yeniden başlatmak isteyip istemediğinizi soracaktır.
 
+Önceki sürümlerde NVDA'nın işlevlerini zenginleştiren çeşitli plug-in ya da sürücüleri NVDA konfigürasyon dizininde ilgili klasörlere kopyalayarak kullanmak  mümkündü.
+NVDA 2012.2 versiyonu için de bu tür plug-in ve sürücüleri kullanabilmenize rağmen, manuel olarak kopyaladığınız bu plug-inler NVDA Eklenti Yöneticisi tarafından görüntülenmez.
+En iyisi, bulabilirseniz bu tür plug-inlerin yeni sisteme uygun olarak hazırlanmış hallerini kurup eski versiyonlarını konfigürasyon dizininden silmenizdir.
+ 
 ++ Python Konsolu ++
 NVDA menüsündeki araçlar altında bulunan Pithon konsolu, ayıklama, NVDA iç yapısının saptanması ve bir uygulamanın erişilebilirlik hiyerarşisinin saptanması gibi noktalar için yararlı olan bir geliştirme aracıdır.
 Daha fazla bilgi için lütfen [NVDA web sayfasındaki Python Konsolu makalesine bakın NVDA_URLwiki/PythonConsole].
@@ -1000,7 +997,7 @@ NVDA ile kullanılabilecek ticari ve ücretsiz konuşma sentezleyicileri satın 
 ++ eSpeak ++
  [eSpeak http://espeak.sourceforge.net/] sentezleyicisi Doğrudan NVDA içinde gömülüdür ve başka bir sürücü ya da bileşenin yüklenmesini gerektirmez.
 NVDA varsayılan olarak ESpeak sentezleyicisini kullanarak başlar.
-Bu sentezleyici NVDA içine gömülü olduğundan, NVDA'yı cd ve USB bellekle başka sistemlerde çalıştırmak için harika bir seçenektir.
+Bu sentezleyici NVDA içine gömülü olduğundan, NVDA'yı USB bellek vb medyalar üzerinden başka sistemlerde çalıştırmak için harika bir seçenektir.
 
 ESpeak ile gelen her ses farklı bir dilde konuşmaktadır.
 ESpeak tarafından desteklenen 43'den fazla dil bulunmaktadır.
