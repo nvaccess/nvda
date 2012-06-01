@@ -186,7 +186,7 @@ def unregisterInstallation():
 		programsPath=wsh.SpecialFolders("AllUsersPrograms")
 		startMenuPath=os.path.join(programsPath,startMenuFolder)
 		if os.path.isdir(startMenuPath):
-			shutil.rmtree(startMenuPath)
+			shutil.rmtree(startMenuPath,ignore_errors=True)
 	try:
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\nvda")
 	except WindowsError:
