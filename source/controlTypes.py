@@ -298,6 +298,7 @@ roleLabels={
 	ROLE_DROPLIST:_("drop list"),
 	ROLE_SPLITBUTTON:_("split button"),
 	ROLE_MENUBUTTON:_("menu button"),
+	# Translators: Reported for a button which expands a grid when it is pressed.
 	ROLE_DROPDOWNBUTTONGRID:_("drop down button grid"),
 	ROLE_EQUATION:_("equation"),
 	ROLE_GRIP:_("grip"),
@@ -374,6 +375,8 @@ stateLabels={
 	STATE_CHECKABLE:_("checkable"),
 	STATE_DRAGGABLE:_("draggable"),
 	STATE_DRAGGING:_("dragging"),
+	# Translators: Reported where an object which is being dragged can be dropped.
+	# This is only reported for objects which support accessible drag and drop.
 	STATE_DROPTARGET:_("drop target"),
 	STATE_SORTED:_("sorted"),
 	STATE_SORTED_ASCENDING:_("sorted ascending"),
