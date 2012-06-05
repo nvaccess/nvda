@@ -685,7 +685,7 @@ class ReviewCursorDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings dialog.
-		self.followFocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow &keyboard focus"))
+		self.followFocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow system &focus"))
 		self.followFocusCheckBox.SetValue(config.conf["reviewCursor"]["followFocus"])
 		settingsSizer.Add(self.followFocusCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
