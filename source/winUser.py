@@ -510,6 +510,7 @@ class STICKYKEYS(Structure):
 	def __init__(self, **kwargs):
 		super(STICKYKEYS, self).__init__(cbSize=sizeof(self), **kwargs)
 SKF_STICKYKEYSON = 0x00000001
+SKF_AUDIBLEFEEDBACK = 0x00000040
 SKF_TRISTATE = 0x00000080
 SKF_TWOKEYSOFF = 0x00000100
 

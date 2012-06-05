@@ -103,15 +103,18 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				if keyCode == stickyNVDAModifier:
 					if stickyKeysFlags & winUser.SKF_TRISTATE and not stickyNVDAModifierLocked:
 						stickyNVDAModifierLocked = True
-						tones.beep(1984, 60)
+						if stickyKeysFlags & winUser.SKF_AUDIBLEFEEDBACK:
+							tones.beep(1984, 60)
 					else:
 						stickyNVDAModifier = None
 						stickyNVDAModifierLocked = False
-						tones.beep(496, 60)
+						if stickyKeysFlags & winUser.SKF_AUDIBLEFEEDBACK:
+							tones.beep(496, 60)
 						return False
 				else:
 					stickyNVDAModifier = keyCode
-					tones.beep(1984, 60)
+					if stickyKeysFlags & winUser.SKF_AUDIBLEFEEDBACK:
+						tones.beep(1984, 60)
 		else:
 			# Another key was pressed after the last NVDA modifier key, so it should not be passed through on the next press.
 			lastNVDAModifier = None
