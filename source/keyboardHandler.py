@@ -90,6 +90,12 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 
 		keyCounter += 1
 		stickyKeysFlags = winUser.getSystemStickyKeys().dwFlags
+		if stickyNVDAModifier and not stickyKeysFlags & winUser.SKF_STICKYKEYSON:
+			# Sticky keys has been disabled,
+			# so clear the sticky NVDA modifier.
+			currentModifiers.discard(stickyNVDAModifier)
+			stickyNVDAModifier = None
+			stickyNVDAModifierLocked = False
 		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
 		if not (stickyKeysFlags & winUser.SKF_STICKYKEYSON) and (bypassNVDAModifier or (keyCode == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5)):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.
