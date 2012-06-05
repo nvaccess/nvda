@@ -116,6 +116,10 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 						return False
 				else:
 					# The NVDA modifier is being latched.
+					if stickyNVDAModifier:
+						# Clear the previous sticky NVDA modifier.
+						currentModifiers.discard(stickyNVDAModifier)
+						stickyNVDAModifierLocked = False
 					stickyNVDAModifier = keyCode
 					if stickyKeysFlags & winUser.SKF_AUDIBLEFEEDBACK:
 						tones.beep(1984, 60)
