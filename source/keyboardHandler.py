@@ -137,6 +137,10 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				# Ignore key repeats for the pause speech key to avoid speech stuttering as it continually pauses and resumes.
 				return True
 			currentModifiers.add(keyCode)
+		elif stickyNVDAModifier and not stickyNVDAModifierLocked:
+			# A non-modifier was pressed, so unlatch the NVDA modifier.
+			currentModifiers.discard(stickyNVDAModifier)
+			stickyNVDAModifier = None
 
 		try:
 			inputCore.manager.executeGesture(gesture)
@@ -147,10 +151,6 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				# Never pass the NVDA modifier key to the OS.
 				trappedKeys.add(keyCode)
 				return False
-		finally:
-			if stickyNVDAModifier and not stickyNVDAModifierLocked and not gesture.isModifier:
-				currentModifiers.discard(stickyNVDAModifier)
-				stickyNVDAModifier = None
 	except:
 		log.error("internal_keyDownEvent", exc_info=True)
 	return True
