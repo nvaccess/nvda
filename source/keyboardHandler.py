@@ -50,6 +50,8 @@ currentModifiers = set()
 keyCounter = 0
 #: The current sticky NVDa modifier key.
 stickyNVDAModifier = None
+#: Whether the sticky NVDA modifier is locked.
+stickyNVDAModifierLocked = False
 
 def passNextKeyThrough():
 	global passKeyThroughCount
@@ -70,7 +72,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
 	try:
-		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier
+		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
 		#Injected keys should be ignored
 		if ignoreInjected and injected:
 			return True
@@ -99,8 +101,14 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			lastNVDAModifier = keyCode
 			if stickyKeysFlags & winUser.SKF_STICKYKEYSON:
 				if keyCode == stickyNVDAModifier:
-					stickyNVDAModifier = None
-					tones.beep(496, 60)
+					if stickyKeysFlags & winUser.SKF_TRISTATE and not stickyNVDAModifierLocked:
+						stickyNVDAModifierLocked = True
+						tones.beep(1984, 60)
+					else:
+						stickyNVDAModifier = None
+						stickyNVDAModifierLocked = False
+						tones.beep(496, 60)
+						return False
 				else:
 					stickyNVDAModifier = keyCode
 					tones.beep(1984, 60)
@@ -123,7 +131,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				trappedKeys.add(keyCode)
 				return False
 		finally:
-			if stickyNVDAModifier and not gesture.isModifier:
+			if stickyNVDAModifier and not stickyNVDAModifierLocked and not gesture.isModifier:
 				currentModifiers.discard(stickyNVDAModifier)
 				stickyNVDAModifier = None
 	except:
