@@ -12,8 +12,6 @@ action_hoverDown="hoverDown"
 action_hover="hover"
 action_hoverUp="hoverUp"
 action_unknown="unknown"
-# actions that are treeted as one plural action when the same one is performed multiple times in quick succession (e.g. double tap)
-pluralActions=(action_tap,action_flickLeft,action_flickRight,action_flickUp,action_flickDown)
 hoverActions=(action_hoverDown,action_hover,action_hoverUp)
 #timeout for detection of flicks and plural trackers 
 multitouchTimeout=0.3
@@ -188,8 +186,8 @@ class TrackerManager(object):
 		#Only emit trackers if there are not unknown actions
 		if not hasUnknownTrackers:
 			for tracker in list(self.multiTouchTrackers):
-				#A tracker can be emitted if its timeout has been reached
-				if (tracker.startTime+multitouchTimeout)<=t:
+				#All trackers can be emitted with no delay except for tap which must wait for the timeout (to detect plural taps)
+				if tracker.action!=action_tap or (tracker.startTime+multitouchTimeout)<=t:
 					self.multiTouchTrackers.remove(tracker)
 					foundTrackers=True
 					yield tracker
