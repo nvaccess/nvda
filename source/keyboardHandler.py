@@ -73,7 +73,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
-		#Injected keys should be ignored
+		# Injected keys should be ignored in some cases.
 		if ignoreInjected and injected:
 			return True
 
