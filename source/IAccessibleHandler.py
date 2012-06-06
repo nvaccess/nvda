@@ -4,22 +4,32 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from __future__ import with_statement
+import heapq
+import itertools
+import struct
+import weakref
+from ctypes import *
+from comtypes import IUnknown, IServiceProvider
+import comtypes.client
+import comtypes.client.lazybind
 import oleacc
+import UIAHandler
+from comInterfaces.Accessibility import *
+from comInterfaces.IAccessible2Lib import *
+from logHandler import log
+import JABHandler
+import eventHandler
+import winUser
+import api
+import NVDAObjects.IAccessible
+import NVDAObjects.window
+import appModuleHandler
+import mouseHandler
+import controlTypes
+import keyboardHandler
 
 MAX_WINEVENTS=500
 MAX_WINEVENTS_PER_THREAD=10
-
-#Constants
-#OLE constants
-REGCLS_SINGLEUSE = 0       # class object only generates one instance
-REGCLS_MULTIPLEUSE = 1     # same class object genereates multiple inst.
-REGCLS_MULTI_SEPARATE = 2  # multiple use, but separate control over each
-REGCLS_SUSPENDED      = 4  # register it as suspended, will be activated
-REGCLS_SURROGATE      = 8  # must be used when a surrogate process
-
-CLSCTX_INPROC_SERVER=1
-CLSCTX_LOCAL_SERVER=4
 
 #Special Mozilla gecko MSAA constant additions
 NAVRELATION_LABEL_FOR=0x1002
@@ -30,40 +40,6 @@ NAVRELATION_EMBEDS=0x1009
 # IAccessible2 relations (not included in the typelib)
 IA2_RELATION_FLOWS_FROM = "flowsFrom"
 IA2_RELATION_FLOWS_TO = "flowsTo"
-
-import UIAHandler
-import heapq
-import itertools
-import time
-import struct
-import weakref
-from ctypes import *
-from ctypes.wintypes import *
-from comtypes.automation import *
-from comtypes.server import *
-from comtypes import GUID, IServiceProvider
-import comtypes.client
-import comtypes.client.lazybind
-import Queue
-from comInterfaces.Accessibility import *
-from comInterfaces.IAccessible2Lib import *
-import tones
-import globalVars
-from logHandler import log
-import JABHandler
-import eventHandler
-import winKernel
-import winUser
-import speech
-import api
-import queueHandler
-import NVDAObjects.IAccessible
-import NVDAObjects.window
-import appModuleHandler
-import config
-import mouseHandler
-import controlTypes
-import keyboardHandler
 
 MENU_EVENTIDS=(winUser.EVENT_SYSTEM_MENUSTART,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPSTART,winUser.EVENT_SYSTEM_MENUPOPUPEND)
 
@@ -698,9 +674,6 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 
 def processDesktopSwitchWinEvent(window,objectID,childID):
 	hDesk=ctypes.windll.user32.OpenInputDesktop(0, False, 0)
-	#name = ctypes.create_string_buffer(256)
-	#res=ctypes.windll.user32.GetUserObjectInformationA(desktop, 2, ctypes.byref(name), ctypes.sizeof(name), None)
-	#speech.speakMessage(name.value)
 	if hDesk!=0:
 		ctypes.windll.user32.CloseDesktop(hDesk)
 		import wx
