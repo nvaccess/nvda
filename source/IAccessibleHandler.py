@@ -63,6 +63,7 @@ import appModuleHandler
 import config
 import mouseHandler
 import controlTypes
+import keyboardHandler
 
 MENU_EVENTIDS=(winUser.EVENT_SYSTEM_MENUSTART,winUser.EVENT_SYSTEM_MENUEND,winUser.EVENT_SYSTEM_MENUPOPUPSTART,winUser.EVENT_SYSTEM_MENUPOPUPEND)
 
@@ -705,6 +706,10 @@ def processDesktopSwitchWinEvent(window,objectID,childID):
 		import wx
 		wx.CallLater(200, _correctFocus)
 	else:
+		# Switching to a secure desktop.
+		# We don't receive key up events for any keys down before switching to a secure desktop,
+		# so clear our recorded modifiers.
+		keyboardHandler.currentModifiers.clear()
 		obj=SecureDesktopNVDAObject(windowHandle=window)
 		eventHandler.executeEvent("gainFocus",obj)
 
