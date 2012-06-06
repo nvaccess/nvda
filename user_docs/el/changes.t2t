@@ -1,0 +1,26 @@
+﻿What's New in NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2012.2 =
+
+== New Features ==
+- NVDA can now automatically check for, download and install updates. (#73)
+
+
+== Changes ==
+- NVDA is now distributed in one package. Rather than separate portable and installer versions, there is now just one file that, when run, will start a temporary copy of NVDA and will allow you to install or generate a portable distribution. (#1715)
+- NVDA is now always installed in to Program Files on all systems. Updating a previous install will also automatically move it if it was not previously installed there.
+
+
+== Bug Fixes ==
+- With auto language switching enabled, Content such as alt text for graphics and labels for other certain controls in Mozilla Gecko (e.g. Firefox) are now reported in the correct language if marked up appropriately.
+- SayAll in BibleSeeker (and other TRxRichEdit controls) no longer stops in the middle of a passage.
+- Lists found in the Windows 8 Explorer file properties (permitions tab) and in Windows 8 Windows Update now read correctly.
+- Fixed possible freezes in MS Word which would result when it took more than 2 seconds to fetch text from a document (extremely long lines or tables of contents). (#2191)
+
+
+== Changes for Developers ==
+- Due to the replacement of the previous NSIS installer for NVDA with a built-in installer in Python, it is no longer necessary for translaters to maintain a langstrings.txt file for the installer. All localization strings are now managed by gettext po files.
+

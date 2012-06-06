@@ -1,4 +1,4 @@
-#IAccessiblehandler.py
+#IAccessibleHandler.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -510,7 +510,6 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 	#We can't handle MSAA create events. (Destroys are handled elsewhere.)
 	if eventID == winUser.EVENT_OBJECT_CREATE:
 		return None
-	#Handle the special MSAA caret object's locationChange and show events as 'caret' events for the focus object
 	NVDAEventName=winEventIDsToNVDAEventNames.get(eventID,None)
 	if not NVDAEventName:
 		return None

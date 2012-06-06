@@ -3,10 +3,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: NVDA bzr 2012.2:5236\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-05-10 16:51+0100\n"
-"PO-Revision-Date: 2012-05-14 21:10+0200\n"
+"POT-Creation-Date: 2012-05-30 18:13+0100\n"
+"PO-Revision-Date: 2012-05-25 17:35+0200\n"
 "Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "MIME-Version: 1.0\n"
@@ -32,8 +32,7 @@ msgid "%d hours and %d minutes remaining"
 msgstr "%d tuntia ja %d minuuttia jäljellä"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:830
-#: NVDAObjects/behaviors.py:54
+#: globalCommands.py:830 NVDAObjects/behaviors.py:54
 #, python-format
 msgid "%d percent"
 msgstr "%d prosenttia"
@@ -44,8 +43,7 @@ msgstr "%d prosenttia"
 msgid "%s %s through %s %s"
 msgstr "%s %s kautta %s %s"
 
-#: globalCommands.py:306
-#: globalCommands.py:750
+#: globalCommands.py:306 globalCommands.py:750
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s kopioitu leikepöydälle"
@@ -67,14 +65,12 @@ msgstr "%s lop"
 msgid "%s items"
 msgstr "%s kohdetta"
 
-#: virtualBuffers/__init__.py:227
-#: virtualBuffers/__init__.py:235
+#: virtualBuffers/__init__.py:227 virtualBuffers/__init__.py:235
 #, python-format
 msgid "%s landmark"
 msgstr "%s maamerkki"
 
-#: braille.py:437
-#: speech.py:803
+#: braille.py:437 speech.py:803
 #, python-format
 msgid "%s of %s"
 msgstr "%s / %s"
@@ -102,10 +98,6 @@ msgstr "&Avaa"
 msgid "&Add"
 msgstr "&Lisää"
 
-#: gui/addonGui.py:38
-msgid "&Add..."
-msgstr "&Lisää..."
-
 #: gui/settingsDialogs.py:160
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "Käynnistä NVDA &automaattisesti kirjauduttuani Windowsiin"
@@ -122,8 +114,7 @@ msgstr "S&elaustila..."
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
-#: updateCheck.py:205
-#: gui/addonGui.py:48
+#: updateCheck.py:205 gui/addonGui.py:48
 msgid "&Close"
 msgstr "&Sulje"
 
@@ -132,8 +123,7 @@ msgid "&Comment"
 msgstr "&Kommentti"
 
 #. Translators: The label of a button to continue with the operation.
-#: gui/installerGui.py:113
-#: gui/installerGui.py:166
+#: gui/installerGui.py:113 gui/installerGui.py:162
 msgid "&Continue"
 msgstr "&Jatka"
 
@@ -151,13 +141,13 @@ msgstr "&Sanastomerkinnät"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
-#: updateCheck.py:379
+#: updateCheck.py:382
 msgid "&Donate"
 msgstr "&Lahjoita"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:399
+#: updateCheck.py:402
 msgid "&Done"
 msgstr "&Valmis"
 
@@ -202,10 +192,9 @@ msgstr "&Asenna NVDA tälle tietokoneelle"
 msgid "&Install NVDA..."
 msgstr "&Asenna NVDA..."
 
-#. Translators: the label for the installed addons list in the addons manager.
-#: gui/addonGui.py:23
-msgid "&Installed Add-ons"
-msgstr "&Asennetut lisäosat"
+#: gui/addonGui.py:38
+msgid "&Install..."
+msgstr "&Asenna..."
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
@@ -247,7 +236,7 @@ msgstr "&Siirry"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:384
+#: updateCheck.py:387
 msgid "&Not now"
 msgstr "&Ei nyt"
 
@@ -281,13 +270,11 @@ msgstr "Välimerkkien ja symbolien lausuminen..."
 msgid "&Rate"
 msgstr "&Nopeus:"
 
-#: gui/addonGui.py:41
-#: gui/settingsDialogs.py:1082
+#: gui/addonGui.py:41 gui/settingsDialogs.py:1082
 msgid "&Remove"
 msgstr "&Poista"
 
-#: gui/settingsDialogs.py:1030
-#: gui/settingsDialogs.py:1279
+#: gui/settingsDialogs.py:1030 gui/settingsDialogs.py:1279
 msgid "&Replacement"
 msgstr "K&orvaava"
 
@@ -374,16 +361,25 @@ msgid "..."
 msgstr "..."
 
 #: gui/__init__.py:298
-msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
+msgid ""
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr "Valintaikkuna, jossa voidaan lisätä sanastomerkintöjä oletussanastoon"
 
 #: gui/__init__.py:302
-msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr "Valintaikkuna, jossa voidaan lisätä sanastomerkintöjä tilapäissanastoon"
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"Valintaikkuna, jossa voidaan lisätä sanastomerkintöjä tilapäissanastoon"
 
 #: gui/__init__.py:300
-msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
-msgstr "Valintaikkuna, jossa voidaan lisätä sanastomerkintöjä puheäänikohtaiseen sanastoon"
+msgid ""
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Valintaikkuna, jossa voidaan lisätä sanastomerkintöjä puheäänikohtaiseen "
+"sanastoon"
 
 #: versionInfo.py:40
 msgid "A free and open source screen reader for Microsoft Windows"
@@ -391,7 +387,9 @@ msgstr "Ilmainen, avoimen lähdekoodin ruudunlukuohjelma Microsoft Windowsille"
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui/installerGui.py:88
-msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
+msgid ""
+"A previous copy of NVDA has been found on your system. This copy will be "
+"updated."
 msgstr "Järjestelmästä löytyi aiempi NVDA:n versio. Se päivitetään."
 
 #: globalCommands.py:831
@@ -403,8 +401,7 @@ msgstr "verkkovirta käytössä"
 msgid "ALVA BC640/680 series"
 msgstr "Alva BC640/680"
 
-#: gui/__init__.py:211
-#: gui/__init__.py:353
+#: gui/__init__.py:211 gui/__init__.py:353
 msgid "About NVDA"
 msgstr "Tietoja NVDA:sta"
 
@@ -422,7 +419,7 @@ msgid "Add Dictionary Entry"
 msgstr "Lisää sanastomerkintä"
 
 #. Translators: title for the Addon Information dialog
-#: gui/addonGui.py:183
+#: gui/addonGui.py:186
 msgid "Add-on Information"
 msgstr "Lisäosan tiedot"
 
@@ -438,18 +435,27 @@ msgstr "Lisäosien hallinta"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
 #: gui/addonGui.py:165
-msgid "Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"
-msgstr "Lisäosia on lisätty tai poistettu. NVDA on käynnistettävä uudelleen, jotta muutokset tulevat voimaan. Haluatko käynnistää uudelleen nyt?"
+msgid ""
+"Add-ons have been added or removed. You must restart NVDA for these changes "
+"to take effect. Would you like to restart now?"
+msgstr ""
+"Lisäosia on asennettu tai poistettu. NVDA on käynnistettävä uudelleen, jotta "
+"muutokset tulevat voimaan. Haluatko käynnistää uudelleen nyt?"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:894
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Lue kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
+msgstr ""
+"Lue kohdistimen jälkeiset muotoilumuutokset (voi aiheuttaa hidastumista)"
 
 #: globalCommands.py:128
-msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
-msgstr "Kertoo nykyisen valinnan muokkaussäätimissä ja asiakirjoissa. Jos valintaa ei ole, siitä ilmoitetaan."
+msgid ""
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
+msgstr ""
+"Kertoo nykyisen valinnan muokkaussäätimissä ja asiakirjoissa. Jos valintaa "
+"ei ole, siitä ilmoitetaan."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:36
@@ -465,11 +471,13 @@ msgstr "Arabia, taso 1"
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui/addonGui.py:78
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"Haluatko varmasti asentaa tämän lisäosan? Asenna lisäosia vain luotetuista lähteistä.\n"
+"Haluatko varmasti asentaa tämän lisäosan? Asenna lisäosia vain luotetuista "
+"lähteistä.\n"
 "Lisäosa: {summary} {version}\n"
 "Tekijä: {author}"
 
@@ -570,7 +578,8 @@ msgstr "Anna äänimerkki"
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:597
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä"
+msgstr ""
+"Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä"
 
 #: gui/settingsDialogs.py:1156
 msgid "Braille &display:"
@@ -629,7 +638,9 @@ msgstr "Sama &kirjainkoko"
 
 #: gui/__init__.py:286
 msgid "Change reporting of mouse shape and object under mouse"
-msgstr "Määritä hiirikohdistimen muutosten ja hiiren alla olevan objektin lukuasetukset"
+msgstr ""
+"Määritä hiirikohdistimen muutosten ja hiiren alla olevan objektin "
+"lukuasetukset"
 
 #: gui/__init__.py:290
 msgid "Change reporting of objects"
@@ -689,11 +700,13 @@ msgstr "Valitse käytettävä puheääni, nopeus, korkeus ja voimakkuus"
 
 #: globalCommands.py:85
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Napsauttaa kerran hiiren vasenta painiketta hiiren nykyisessä sijainnissa"
+msgstr ""
+"Napsauttaa kerran hiiren vasenta painiketta hiiren nykyisessä sijainnissa"
 
 #: globalCommands.py:91
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "Napsauttaa kerran hiiren oikeaa painiketta hiiren nykyisessä sijainnissa"
+msgstr ""
+"Napsauttaa kerran hiiren oikeaa painiketta hiiren nykyisessä sijainnissa"
 
 #: gui/settingsDialogs.py:1063
 msgid "Comment"
@@ -726,8 +739,12 @@ msgid "Configure how and when the review cursor moves"
 msgstr "Määritä, miten ja milloin tarkastelukohdistin liikkuu"
 
 #: gui/__init__.py:284
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "Määritä näppäimistöasettelu ja kirjoitettujen merkkien, sanojen tai komentonäppäinten lukeminen"
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
+msgstr ""
+"Määritä näppäimistöasettelu ja kirjoitettujen merkkien, sanojen tai "
+"komentonäppäinten lukeminen"
 
 #. Translators: The progress message indicating that a connection is being established.
 #: updateCheck.py:254
@@ -744,7 +761,7 @@ msgid "Copy &portable configuration to current user account"
 msgstr "Kopioi &massamuistiversion asetukset nykyiseen käyttäjätiliin"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui/installerGui.py:158
+#: gui/installerGui.py:154
 msgid "Copy current &user configuration"
 msgstr "Kopioi &käyttäjän nykyiset asetukset"
 
@@ -784,7 +801,9 @@ msgstr "Syntetisaattoria %s ei voitu ladata."
 
 #: gui/__init__.py:144
 msgid "Could not save configuration - probably read only file system"
-msgstr "Asetuksia ei voitu tallentaa, tiedostojärjestelmä luultavasti vain luku -tyyppiä"
+msgstr ""
+"Asetuksia ei voitu tallentaa, tiedostojärjestelmä luultavasti vain luku -"
+"tyyppiä"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:100
@@ -802,15 +821,10 @@ msgstr "Luo NVDA:n massamuistiversio"
 
 #: gui/__init__.py:323
 msgid "Create Portable copy..."
-msgstr "Luo massamuistiversio..."
-
-#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui/installerGui.py:154
-msgid "Create an &Autorun file"
-msgstr "Luo &automaattisen käynnistyksen tiedosto"
+msgstr "Luo &massamuistiversio..."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
-#: gui/installerGui.py:211
+#: gui/installerGui.py:207
 msgid "Creating Portable Copy"
 msgstr "Luodaan massamuistiversiota"
 
@@ -830,11 +844,18 @@ msgid "Cursor blink rate (ms)"
 msgstr "&Kohdistimen vilkkumisnopeus (ms):"
 
 #: gui/settingsDialogs.py:190
-msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
-msgstr "Asetushakemistossa havaittiin liitännäisiä. Niiden kopioiminen järjestelmäprofiiliin saattaa olla tietoturvariski. Haluatko silti kopioida asetukset?"
+msgid ""
+"Custom plugins were detected in your user settings directory. Copying these "
+"to the system profile could be a security risk. Do you still wish to copy "
+"your settings?"
+msgstr ""
+"Asetushakemistossa havaittiin liitännäisiä. Niiden kopioiminen "
+"järjestelmäprofiiliin saattaa olla tietoturvariski. Haluatko silti kopioida "
+"asetukset?"
 
 #: globalCommands.py:218
-msgid "Cycles through speech symbol levels which determine what symbols are spoken"
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr "Vaihtaa symbolitasoa, joka määrittää, mitkä symbolit puhutaan"
 
 #. Translators: The name of a braille table displayed in the
@@ -888,8 +909,7 @@ msgstr "&Asiakirjojen muotoilu..."
 msgid "Document Formatting"
 msgstr "Asiakirjojen muotoilu"
 
-#: installer.py:175
-#: installer.py:176
+#: installer.py:158 installer.py:159
 msgid "Documentation"
 msgstr "Ohjeet"
 
@@ -903,7 +923,7 @@ msgid "Download and &install update"
 msgstr "Lataa ja &asenna päivitys"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:321
+#: updateCheck.py:324
 msgid "Downloading"
 msgstr "Ladataan"
 
@@ -924,9 +944,7 @@ msgstr "Hollanti (Belgia), taso 1"
 msgid "Dutch (netherlands) grade 1"
 msgstr "Hollanti (Alankomaat), taso 1"
 
-#: gui/__init__.py:367
-#: gui/__init__.py:566
-#: gui/logViewer.py:34
+#: gui/__init__.py:367 gui/__init__.py:566 gui/logViewer.py:34
 msgid "E&xit"
 msgstr "&Sulje"
 
@@ -936,8 +954,7 @@ msgstr "&Laajenna kohdistimen kohdalla oleva sana"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects/window/winword.py:410
-#: NVDAObjects/window/winword.py:429
+#: NVDAObjects/window/winword.py:410 NVDAObjects/window/winword.py:429
 msgid "Edge of table"
 msgstr "Taulukon reuna"
 
@@ -1004,19 +1021,10 @@ msgstr "Englanti (Yhdysvallat), taso 2"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:128
-#: updateCheck.py:341
-#: gui/addonGui.py:74
-#: gui/addonGui.py:88
-#: gui/addonGui.py:107
-#: gui/__init__.py:144
-#: gui/__init__.py:153
-#: gui/installerGui.py:54
-#: gui/installerGui.py:190
-#: gui/installerGui.py:198
-#: gui/installerGui.py:229
-#: gui/logViewer.py:74
-#: gui/settingsDialogs.py:208
+#: updateCheck.py:128 updateCheck.py:344 gui/addonGui.py:74 gui/addonGui.py:88
+#: gui/addonGui.py:107 gui/__init__.py:144 gui/__init__.py:153
+#: gui/installerGui.py:54 gui/installerGui.py:186 gui/installerGui.py:194
+#: gui/installerGui.py:225 gui/logViewer.py:74 gui/settingsDialogs.py:208
 msgid "Error"
 msgstr "Virhe"
 
@@ -1030,7 +1038,7 @@ msgid "Error copying NVDA user settings"
 msgstr "Virhe kopioitaessa asetuksia"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:340
+#: updateCheck.py:343
 msgid "Error downloading update."
 msgstr "Virhe ladattaessa päivitystä."
 
@@ -1078,18 +1086,17 @@ msgstr "Parillisten sivujen alatunniste"
 msgid "Even pages header"
 msgstr "Parillisten sivujen ylätunniste"
 
-#: gui/__init__.py:170
-#: gui/__init__.py:367
+#: gui/__init__.py:170 gui/__init__.py:367
 msgid "Exit NVDA"
 msgstr "Sulje NVDA"
 
-#: installer.py:174
+#: installer.py:157
 msgid "Explore NVDA user configuration directory"
 msgstr "Selaa käyttäjän asetushakemistoa"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
-#: gui/installerGui.py:228
+#: gui/installerGui.py:224
 #, python-format
 msgid "Failed to create portable copy: %s"
 msgstr "Massamuistiversion luonti epäonnistui: %s"
@@ -1103,8 +1110,12 @@ msgstr "Lisäosan asennus epäonnistui kohteesta %s"
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #: gui/addonGui.py:72
 #, python-format
-msgid "Failed to open add-on package file at %s - missing file or invalid file format"
-msgstr "Lisäosapaketin avaaminen epäonnistui kohteesta %s - puuttuva tiedosto tai virheellinen tiedostomuoto"
+msgid ""
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
+msgstr ""
+"Lisäosapaketin avaaminen epäonnistui kohteesta %s - puuttuva tiedosto tai "
+"virheellinen tiedostomuoto"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1119,8 +1130,7 @@ msgstr "Kelaa eteenpäin"
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui/installerGui.py:46
-#: gui/installerGui.py:223
+#: gui/installerGui.py:46 gui/installerGui.py:219
 msgid "File in Use"
 msgstr "Tiedosto käytössä"
 
@@ -1169,8 +1179,14 @@ msgid "Footnotes"
 msgstr "Alaviitteet"
 
 #: gui/settingsDialogs.py:240
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "Uusi kieli otetaan käyttöön tallentamalla asetukset ja käynnistämällä NVDA uudelleen. Tallenna ja käynnistä uudelleen painamalla Enter, tai tallenna ja käynnistä uudelleen myöhemmin painamalla Peruuta."
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"Uusi kieli otetaan käyttöön tallentamalla asetukset ja käynnistämällä NVDA "
+"uudelleen. Tallenna ja käynnistä uudelleen painamalla Enter, tai tallenna ja "
+"käynnistä uudelleen myöhemmin painamalla Peruuta."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:34
@@ -1213,8 +1229,7 @@ msgid "French (unified) Grade 2"
 msgstr "Ranska (yhdenmukaistettu), taso 2"
 
 #. Translators: This is presented in outlook or live mail, email sender
-#: appModules/msimn.py:30
-#: appModules/msimn.py:46
+#: appModules/msimn.py:30 appModules/msimn.py:46
 msgid "From:"
 msgstr "Lähettäjä:"
 
@@ -1314,7 +1329,9 @@ msgid "Icelandic 8 dot computer braille"
 msgstr "Islanti, 8 pisteen tietokonemerkistö"
 
 #: globalCommands.py:136
-msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
+msgid ""
+"If pressed once, reports the current time. If pressed twice, reports the "
+"current date"
 msgstr "Lukee kerran painettaessa kellonajan, kahdesti painettaessa päiväyksen"
 
 #: globalCommands.py:145
@@ -1327,9 +1344,14 @@ msgid "Install NVDA"
 msgstr "Asenna NVDA"
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
-#: updateCheck.py:350
+#: updateCheck.py:353
 msgid "Install Update"
 msgstr "Asenna päivitys"
+
+#. Translators: the label for the installed addons list in the addons manager.
+#: gui/addonGui.py:23
+msgid "Installed Add-ons"
+msgstr "Asennetut lisäosat"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 #: gui/addonGui.py:93
@@ -1347,7 +1369,7 @@ msgstr "Oikeudet eivät riitä"
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
-#: gui/installerGui.py:197
+#: gui/installerGui.py:193
 #, python-format
 msgid "Invalid drive %s"
 msgstr "Virheellinen asemakirjain %s"
@@ -1363,8 +1385,7 @@ msgstr "Italia, taso 1"
 msgid "Key words:"
 msgstr "Avainsanat:"
 
-#: installer.py:175
-#: gui/__init__.py:336
+#: installer.py:158 gui/__init__.py:336
 msgid "Keyboard Commands Quick Reference"
 msgstr "Näppäinkomentojen pikaopas"
 
@@ -1449,8 +1470,13 @@ msgid "Log level"
 msgstr "Lokitaso"
 
 #: globalCommands.py:768
-msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
-msgstr "Kirjaa lokiin kehittäjille hyödyllistä tietoa nykyisestä navigointiobjektista ja avaa Näytä loki -toiminnon, jossa näitä tietoja voidaan tutkia."
+msgid ""
+"Logs information about the current navigator object which is useful to "
+"developers and activates the log viewer so the information can be examined."
+msgstr ""
+"Kirjaa lokiin kehittäjille hyödyllistä tietoa nykyisestä "
+"navigointiobjektista ja avaa Näytä loki -toiminnon, jossa näitä tietoja "
+"voidaan tutkia."
 
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers/lilli.py:44
@@ -1460,11 +1486,15 @@ msgstr "MDV Lilli"
 #. Translators: The label of a menu item to open the Add-ons Manager.
 #: gui/__init__.py:320
 msgid "Manage &add-ons"
-msgstr "Lisäosien &hallinta"
+msgstr "&Lisäosien hallinta"
 
 #: globalCommands.py:930
-msgid "Marks the current position of the review cursor as the start of text to be copied"
-msgstr "Merkitsee tarkastelukohdistimen nykyisen sijainnin kopioitavan tekstin alkukohdaksi"
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr ""
+"Merkitsee tarkastelukohdistimen nykyisen sijainnin kopioitavan tekstin "
+"alkukohdaksi"
 
 #: gui/settingsDialogs.py:1195
 msgid "Message timeout (sec)"
@@ -1484,8 +1514,12 @@ msgid "Move navigator object to mouse"
 msgstr "Siirrä navigointiobjekti hiiren kohdalle"
 
 #: globalCommands.py:273
-msgid "Moves navigator object to the object represented by the text at the position of the review cursor within flat review"
-msgstr "Siirtää navigointiobjektin siihen objektiin, jossa tarkastelukohdistimen kohdalla oleva teksti on kokonaistarkastelussa"
+msgid ""
+"Moves navigator object to the object represented by the text at the position "
+"of the review cursor within flat review"
+msgstr ""
+"Siirtää navigointiobjektin siihen objektiin, jossa tarkastelukohdistimen "
+"kohdalla oleva teksti on kokonaistarkastelussa"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 #: virtualBuffers/__init__.py:1414
@@ -1525,56 +1559,104 @@ msgid "Moves the navigator object to the previous object"
 msgstr "Siirtää navigointiobjektin edelliseen objektiin"
 
 #: globalCommands.py:482
-msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin alimmalle riville ja lukee sen"
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin alimmalle riville "
+"ja lukee sen"
 
 #: globalCommands.py:526
-msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen sen kohdalla olevan rivin ensimmäiseen merkkiin nykyisessä navigointiobjektissa ja lukee sen"
+msgid ""
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen sen kohdalla olevan rivin ensimmäiseen "
+"merkkiin nykyisessä navigointiobjektissa ja lukee sen"
 
 #: globalCommands.py:590
-msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen sen kohdalla olevan rivin viimeiseen merkkiin nykyisessä navigointiobjektissa ja lukee sen"
+msgid ""
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen sen kohdalla olevan rivin viimeiseen merkkiin "
+"nykyisessä navigointiobjektissa ja lukee sen"
 
 #: globalCommands.py:579
-msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavan sanan kohdalle ja lukee sen"
+msgid ""
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavan sanan "
+"kohdalle ja lukee sen"
 
 #: globalCommands.py:474
-msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavalle riville ja lukee sen"
+msgid ""
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavalle "
+"riville ja lukee sen"
 
 #: globalCommands.py:516
-msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavan sanan kohdalle ja lukee sen"
+msgid ""
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin seuraavan sanan "
+"kohdalle ja lukee sen"
 
 #: globalCommands.py:544
-msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edellisen merkin kohdalle ja lukee sen"
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edellisen merkin "
+"kohdalle ja lukee sen"
 
 #: globalCommands.py:452
-msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edelliselle riville ja lukee sen"
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edelliselle "
+"riville ja lukee sen"
 
 #: globalCommands.py:494
-msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edellisen sanan kohdalle ja lukee sen"
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin edellisen sanan "
+"kohdalle ja lukee sen"
 
 #: globalCommands.py:440
-msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "Siirtää tarkastelukohdistimen nykyisen navigointiobjektin ylimmälle riville ja lukee sen"
+msgid ""
+"Moves the review cursor to the top line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Siirtää tarkastelukohdistimen nykyisen navigointiobjektin ylimmälle riville "
+"ja lukee sen"
 
 #: globalCommands.py:260
-msgid "Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
-msgstr "Siirtyy ruudun tai asiakirjan kokonaistarkasteluun mikäli mahdollista, ja sijoittaa tarkastelukohdistimen nykyiseen objektiin."
+msgid ""
+"Moves to flat review for the screen (or document if currently inside one) "
+"and positions the review cursor at the location of the current object"
+msgstr ""
+"Siirtyy ruudun tai asiakirjan kokonaistarkasteluun mikäli mahdollista, ja "
+"sijoittaa tarkastelukohdistimen nykyiseen objektiin."
 
 #: globalCommands.py:163
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr "Siirtää seuraavaan käytettävissä olevaan asetukseen syntetisaattorin asetusrenkaassa"
+msgstr ""
+"Siirtää seuraavaan käytettävissä olevaan asetukseen syntetisaattorin "
+"asetusrenkaassa"
 
 #: globalCommands.py:172
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr "Siirtää edelliseen käytettävissä olevaan asetukseen syntetisaattorin asetusrenkaassa"
+msgstr ""
+"Siirtää edelliseen käytettävissä olevaan asetukseen syntetisaattorin "
+"asetusrenkaassa"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 #: virtualBuffers/__init__.py:1400
@@ -1604,7 +1686,7 @@ msgid "NVDA Update"
 msgstr "NVDA:n päivitys"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui/installerGui.py:221
+#: gui/installerGui.py:217
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ei voi poistaa tai korvata tiedostoa."
 
@@ -1616,10 +1698,9 @@ msgstr "NVDA käynnissä"
 #. {version} will be replaced with the version; e.g. 2011.3.
 #: updateCheck.py:179
 msgid "NVDA version {version} is available."
-msgstr "NVDA-versio {version} on saatavilla."
+msgstr "Versio {version} on saatavilla."
 
-#: installer.py:172
-#: gui/__init__.py:340
+#: installer.py:155 gui/__init__.py:340
 msgid "NVDA web site"
 msgstr "NVDA:n web-sivusto"
 
@@ -1692,9 +1773,7 @@ msgstr "Ei objekteja sisällä"
 msgid "No previous"
 msgstr "Ei edellistä"
 
-#: globalCommands.py:141
-#: globalCommands.py:150
-#: globalCommands.py:159
+#: globalCommands.py:141 globalCommands.py:150 globalCommands.py:159
 #: globalCommands.py:168
 msgid "No settings"
 msgstr "Ei asetuksia käytettävissä"
@@ -1760,8 +1839,7 @@ msgstr "Norja, taso 3"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers/__init__.py:1393
-#: virtualBuffers/__init__.py:1407
+#: virtualBuffers/__init__.py:1393 virtualBuffers/__init__.py:1407
 msgid "Not in a container"
 msgstr "Ei säilöelementissä"
 
@@ -1773,8 +1851,7 @@ msgstr "Ei taulukon solussa"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects/window/winword.py:397
-#: NVDAObjects/window/winword.py:416
+#: NVDAObjects/window/winword.py:397 NVDAObjects/window/winword.py:416
 msgid "Not in table"
 msgstr "Ei taulukossa"
 
@@ -1785,8 +1862,14 @@ msgstr "Objektien lukeminen"
 
 #: globalCommands.py:327
 #, python-format
-msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
-msgstr "Objektin reunojen sijainnit: %.1f prosenttia ruudun vasemmasta reunasta, %.1f prosenttia ruudun yläreunasta, leveys %.1f prosenttia ruudun leveydestä, korkeus %.1f prosenttia ruudun korkeudesta"
+msgid ""
+"Object edges positioned %.1f per cent from left edge of screen, %.1f per "
+"cent from top edge of screen, width is %.1f per cent of screen, height is "
+"%.1f per cent of screen"
+msgstr ""
+"Objektin reunojen sijainnit: %.1f prosenttia ruudun vasemmasta reunasta, "
+"%.1f prosenttia ruudun yläreunasta, leveys %.1f prosenttia ruudun "
+"leveydestä, korkeus %.1f prosenttia ruudun korkeudesta"
 
 #: gui/__init__.py:463
 msgid "Options"
@@ -1818,8 +1901,12 @@ msgid "Pattern"
 msgstr "Korvattava"
 
 #: globalCommands.py:432
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "Suorittaa oletustoiminnon nykyiselle navigointiobjektille (painaa esimerkiksi painiketta)"
+msgid ""
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
+msgstr ""
+"Suorittaa oletustoiminnon nykyiselle navigointiobjektille (painaa "
+"esimerkiksi painiketta)"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:16
@@ -1827,7 +1914,7 @@ msgid "Play"
 msgstr "Toista"
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:370
+#: updateCheck.py:373
 msgid "Please Donate"
 msgstr "Ole hyvä ja lahjoita"
 
@@ -1843,7 +1930,7 @@ msgstr "Käynnistä asennettu versio painamalla OK."
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui/installerGui.py:189
+#: gui/installerGui.py:185
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Määritä hakemisto, johon massamuistiversio luodaan."
 
@@ -1853,7 +1940,7 @@ msgid "Please wait while NVDA is being installed"
 msgstr "Odota, kun NVDA:ta asennetaan."
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
-#: gui/installerGui.py:213
+#: gui/installerGui.py:209
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Odota, kun NVDA:n massamuistiversiota luodaan."
 
@@ -1905,8 +1992,12 @@ msgid "Presents a list of links, headings or landmarks"
 msgstr "Näyttää listan linkeistä, otsikoista ja maamerkeistä"
 
 #: globalCommands.py:358
-msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
-msgstr "Siirtää kerran painettaessa kohdistuksen navigointiobjektiin, kahdesti painettaessa siirtää järjestelmäkohdistimen tarkastelukohdistimen kohdalle"
+msgid ""
+"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"Siirtää kerran painettaessa kohdistuksen navigointiobjektiin, kahdesti "
+"painettaessa siirtää järjestelmäkohdistimen tarkastelukohdistimen kohdalle"
 
 #: NVDAObjects/window/winword.py:89
 msgid "Primary footer"
@@ -1936,7 +2027,7 @@ msgstr "Välimerkki- ja symboli&taso:"
 
 #: gui/__init__.py:317
 msgid "Python console"
-msgstr "Python-konsoli"
+msgstr "&Python-konsoli"
 
 #: globalCommands.py:640
 msgid "Quits NVDA!"
@@ -1980,11 +2071,15 @@ msgstr "Säännöllinen l&auseke"
 
 #: gui/__init__.py:328
 msgid "Reload plugins"
-msgstr "Lataa liitännäiset uudelleen"
+msgstr "Lataa l&iitännäiset uudelleen"
 
 #: globalCommands.py:980
-msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
-msgstr "Lataa uudelleen sovellusmoduulit ja yleisliitännäiset ilman NVDA:n uudelleenkäynnistystä, mikä voi olla hyödyllistä kehittäjille"
+msgid ""
+"Reloads app modules and global plugins without restarting NVDA, which can be "
+"Useful for developers"
+msgstr ""
+"Lataa uudelleen sovellusmoduulit ja yleisliitännäiset ilman NVDA:n "
+"uudelleenkäynnistystä, mikä voi olla hyödyllistä kehittäjille"
 
 #. Translators: The label of a button to remind the user later about performing some action.
 #: updateCheck.py:199
@@ -1995,8 +2090,7 @@ msgstr "Muistuta &myöhemmin"
 msgid "Remove Add-on"
 msgstr "Poista lisäosa"
 
-#: gui/settingsDialogs.py:1065
-#: gui/settingsDialogs.py:1267
+#: gui/settingsDialogs.py:1065 gui/settingsDialogs.py:1267
 msgid "Replacement"
 msgstr "Korvaava"
 
@@ -2186,28 +2280,54 @@ msgid "Reports any comments in the comments window"
 msgstr "Lukee kaikki kommentti-ikkunassa olevat kommentit."
 
 #: globalCommands.py:687
-msgid "Reports formatting info for the current review cursor position within a document"
-msgstr "Lukee asiakirjan muotoilutiedot tarkastelukohdistimen nykyisestä sijainnista"
+msgid ""
+"Reports formatting info for the current review cursor position within a "
+"document"
+msgstr ""
+"Lukee asiakirjan muotoilutiedot tarkastelukohdistimen nykyisestä sijainnista"
 
 #: globalCommands.py:561
-msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "Lukee merkin, jonka kohdalla tarkastelukohdistin on nykyisessä navigointiobjektissa. Kahdesti painettaessa luetaan kuvaus tai esimerkki kyseisestä merkistä. Kolmesti painettaessa luetaan merkin numeerinen arvo desimaaleina ja heksadesimaaleina."
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated. Pressing twice reports a description or example of that "
+"character. Pressing three times reports the numeric value of the character "
+"in decimal and hexadecimal"
+msgstr ""
+"Lukee merkin, jonka kohdalla tarkastelukohdistin on nykyisessä "
+"navigointiobjektissa. Kahdesti painettaessa luetaan kuvaus tai esimerkki "
+"kyseisestä merkistä. Kolmesti painettaessa luetaan merkin numeerinen arvo "
+"desimaaleina ja heksadesimaaleina."
 
 #: globalCommands.py:79
-msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
-msgstr "Lukee sovelluskohdistimen alla olevan rivin. Tämän komennon kahdesti painaminen tavaa sen."
+msgid ""
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
+msgstr ""
+"Lukee sovelluskohdistimen alla olevan rivin. Tämän komennon kahdesti "
+"painaminen tavaa sen."
 
 #: globalCommands.py:309
-msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
-msgstr "Ilmoittaa nykyisen navigointiobjektin. Kahdesti painettaessa se tavataan ja kolmesti painettaessaobjektin nimi ja arvo kopioidaan leikepöydälle"
+msgid ""
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
+msgstr ""
+"Ilmoittaa nykyisen navigointiobjektin. Kahdesti painettaessa se tavataan ja "
+"kolmesti painettaessaobjektin nimi ja arvo kopioidaan leikepöydälle"
 
 #: globalCommands.py:328
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Ilmoittaa nykyisen navigointiobjektin korkeuden, leveyden ja sijainnin"
 
 #: globalCommands.py:462
-msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr "Lukee nykyisen navigointiobjektin rivin, jolla tarkastelukohdistin on. Jos tätä komentoa painetaan kahdesti, rivi tavataan. Kolmesti painettaessa se tavataan merkkikuvauksia käyttäen."
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the current line will be spelled. "
+"Pressing three times will spell the line using character descriptions."
+msgstr ""
+"Lukee nykyisen navigointiobjektin rivin, jolla tarkastelukohdistin on. Jos "
+"tätä komentoa painetaan kahdesti, rivi tavataan. Kolmesti painettaessa se "
+"tavataan merkkikuvauksia käyttäen."
 
 #: appModules/foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -2218,8 +2338,14 @@ msgid "Reports the text on the Windows clipboard"
 msgstr "Lukee leikepöydällä olevan tekstin"
 
 #: globalCommands.py:751
-msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
-msgstr "Lukee nykyisen sovelluksen taietualalla olevan ikkunan nimen. Kahdesti painettaessa nimi tavataan, kolmasti painettaessa se kopioidaan leikepöydälle."
+msgid ""
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
+msgstr ""
+"Lukee nykyisen sovelluksen taietualalla olevan ikkunan nimen. Kahdesti "
+"painettaessa nimi tavataan, kolmasti painettaessa se kopioidaan "
+"leikepöydälle."
 
 #: gui/__init__.py:357
 msgid "Reset all settings to saved state"
@@ -2231,8 +2357,12 @@ msgid "Restart NVDA"
 msgstr "Käynnistä NVDA uudelleen"
 
 #: globalCommands.py:948
-msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
-msgstr "Hakee aiemmin asetetun tekstilohkon alkumerkin ja tarkastelukohdistimen nykyisen sijainnin välisen tekstin ja kopioi sen leikepöydälle"
+msgid ""
+"Retrieves the text from the previously set start marker up to and including "
+"the current position of the review cursor and copies it to the clipboard"
+msgstr ""
+"Hakee aiemmin asetetun tekstilohkon alkumerkin ja tarkastelukohdistimen "
+"nykyisen sijainnin välisen tekstin ja kopioi sen leikepöydälle"
 
 #: gui/__init__.py:288
 msgid "Review &cursor..."
@@ -2254,7 +2384,9 @@ msgstr "Kelaa taaksepäin"
 
 #: globalCommands.py:962
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr "Siirtää kohdistimen tämän pistesolun alla olevan objektin kohdalle tai avaa sen"
+msgstr ""
+"Siirtää kohdistimen tämän pistesolun alla olevan objektin kohdalle tai avaa "
+"sen"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2290,7 +2422,7 @@ msgstr "Suojattu työpöytä"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui/installerGui.py:181
+#: gui/installerGui.py:177
 msgid "Select portable  directory"
 msgstr "Valitse massamuistiversion hakemisto"
 
@@ -2301,11 +2433,17 @@ msgid "Serbian grade 1"
 msgstr "Serbia, taso 1"
 
 #: globalCommands.py:339
-msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr "Siirtää navigointiobjektin nykyiseen kohdistukseen ja tarkastelukohdistimensiinä olevan kohdistimen kohdalle, mikäli mahdollista."
+msgid ""
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr ""
+"Siirtää navigointiobjektin nykyiseen kohdistukseen ja "
+"tarkastelukohdistimensiinä olevan kohdistimen kohdalle, mikäli mahdollista."
 
 #: globalCommands.py:246
-msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
+msgid ""
+"Sets the navigator object to the current object under the mouse pointer and "
+"speaks it"
 msgstr "Siirtää navigointiobjektin hiiren alla olevaan objektiin ja lukee sen"
 
 #: brailleDisplayDrivers/handyTech.py:86
@@ -2318,11 +2456,14 @@ msgstr "Näytä tämä valintaikkuna NVDA:n käynnistyessä"
 
 #: globalCommands.py:879
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n selaustilan asetuksia"
+msgstr ""
+"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n selaustilan asetuksia"
 
 #: globalCommands.py:883
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n asiakirjojen muotoiluasetuksia"
+msgstr ""
+"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n asiakirjojen "
+"muotoiluasetuksia"
 
 #: globalCommands.py:855
 msgid "Shows the NVDA general settings dialog"
@@ -2342,15 +2483,20 @@ msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n hiiriasetuksia"
 
 #: globalCommands.py:875
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n objektien lukuasetuksia"
+msgstr ""
+"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n objektien lukuasetuksia"
 
 #: globalCommands.py:859
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n käyttämää puhesyntetisaattoria"
+msgstr ""
+"Avaa valintaikkunan, jossa voidaan muuttaa NVDA:n käyttämää "
+"puhesyntetisaattoria"
 
 #: globalCommands.py:863
 msgid "Shows the NVDA voice settings dialog"
-msgstr "Avaa valintaikkunan, jossa voidaan muuttaa käytettävän syntetisaattorin puheääniasetuksia"
+msgstr ""
+"Avaa valintaikkunan, jossa voidaan muuttaa käytettävän syntetisaattorin "
+"puheääniasetuksia"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -2425,12 +2571,20 @@ msgid "Speak typed &words"
 msgstr "Lue kirjoitetut &sanat"
 
 #: globalCommands.py:851
-msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
 msgstr "Lukee aktiivisen sovelluksen tiedostonimen ja ladatun sovellusmoduulin"
 
 #: globalCommands.py:504
-msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
-msgstr "Lukee nykyisen navigointiobjektin sanan, jonka kohdalla tarkastelukohdistin on. Jos tätä komentoa painetaan kahdesti, sana tavataan. Kolmesti painettaessa se tavataan merkkikuvauksia käyttäen."
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated. Pressing twice spells the word. Pressing three times spells the "
+"word using character descriptions"
+msgstr ""
+"Lukee nykyisen navigointiobjektin sanan, jonka kohdalla tarkastelukohdistin "
+"on. Jos tätä komentoa painetaan kahdesti, sana tavataan. Kolmesti "
+"painettaessa se tavataan merkkikuvauksia käyttäen."
 
 #: gui/__init__.py:304
 msgid "Speech &dictionaries"
@@ -2438,7 +2592,7 @@ msgstr "P&uhesanastot"
 
 #: gui/__init__.py:314
 msgid "Speech viewer"
-msgstr "Näytä puhe"
+msgstr "Näytä pu&he"
 
 #. Override the name, as Windows names this the "Application" menu contrary to all documentation.
 #: appModules/explorer.py:40
@@ -2464,9 +2618,7 @@ msgid "Subject:"
 msgstr "Aihe:"
 
 #. Translators: The title of a dialolg presented to indicate a successful operation.
-#: gui/installerGui.py:67
-#: gui/installerGui.py:236
-#: gui/settingsDialogs.py:210
+#: gui/installerGui.py:67 gui/installerGui.py:232 gui/settingsDialogs.py:210
 msgid "Success"
 msgstr "Onnistui"
 
@@ -2476,7 +2628,7 @@ msgstr "Asetukset kopioitu onnistuneesti"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
-#: gui/installerGui.py:235
+#: gui/installerGui.py:231
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
 msgstr "NVDA:n massamuistiversio luotu onnistuneesti hakemistoon %s."
@@ -2541,27 +2693,42 @@ msgstr "Tekstikehys"
 
 #: globalCommands.py:924
 #, python-format
-msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Leikepöydällä on paljon tekstiä. Pituus %s merkkiä"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 #: gui/installerGui.py:44
-msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
-msgstr "Asennus ei voi poistaa tai korvata tiedostoa. Toinen NVDA:n versio saattaa olla käynnissä toisella kirjautuneella käyttäjällä. Varmista, että kaikki asennetut NVDA:n versiot on suljettu ja yritä asennusta uudelleen."
+msgid ""
+"The installation is unable to remove or overwrite a file. Another copy of "
+"NVDA may be running on another logged-on user account. Please make sure all "
+"installed copies of NVDA are shut down and try the installation again."
+msgstr ""
+"Asennus ei voi poistaa tai korvata tiedostoa. Toinen NVDA:n versio saattaa "
+"olla käynnissä toisella kirjautuneella käyttäjällä. Varmista, että kaikki "
+"asennetut NVDA:n versiot on suljettu ja yritä asennusta uudelleen."
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui/installerGui.py:52
-msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
+msgid ""
+"The installation of NVDA failed. Please check the Log Viewer for more "
+"information."
 msgstr "NVDA:n asennus epäonnistui. Katso lisätietoja lokista."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #: gui/installerGui.py:91
-msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
+msgid ""
+"The installation path for NVDA has changed. it will now  be installed in "
+"{path}"
 msgstr "NVDA:n asennushakemisto on muuttunut. Uusi hakemisto on {path}."
 
 #: globalCommands.py:841
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "NVDA ei käsittele lainkaan seuraavaksi painettua näppäintä, vaan se välitetään suoraan Windowsille."
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"NVDA ei käsittele lainkaan seuraavaksi painettua näppäintä, vaan se "
+"välitetään suoraan Windowsille."
 
 #: globalCommands.py:938
 msgid "The start marker must reside within the same object"
@@ -2573,8 +2740,11 @@ msgstr "Leikepöydällä ei ole tekstiä"
 
 #. Translators: The message displayed when an an addon already seems to be installed.
 #: gui/addonGui.py:86
-msgid "This add-on seems to already be installed. Please remove the existing add-on and try again."
-msgstr "Tämä lisäosa on jo asennettu. Poista nykyinen lisäosa ja yritä uudelleen."
+msgid ""
+"This add-on seems to already be installed. Please remove the existing add-on "
+"and try again."
+msgstr ""
+"Tämä lisäosa on jo asennettu. Poista nykyinen lisäosa ja yritä uudelleen."
 
 #: gui/settingsDialogs.py:233
 msgid "This change requires administrator privileges."
@@ -2582,8 +2752,12 @@ msgstr "Tämä muutos edellyttää järjestelmänvalvojan oikeuksia."
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui/installerGui.py:140
-msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
-msgstr "Luo NVDA:n massamuistiversio valitsemalla hakemistopolku sekä muut asetukset ja paina sitten Jatka."
+msgid ""
+"To create a portable copy of NVDA, please select the path and other options "
+"and then press Continue"
+msgstr ""
+"Luo NVDA:n massamuistiversio valitsemalla hakemistopolku ja paina sitten "
+"Jatka."
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui/installerGui.py:85
@@ -2597,47 +2771,86 @@ msgstr "Vastaanottaja:"
 
 #: globalCommands.py:911
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "Muuttaa asetusta, joka saa pistenäytön seuraamaan joko kohdistusta tai tarkastelukohdistinta"
+msgstr ""
+"Muuttaa asetusta, joka saa pistenäytön seuraamaan joko kohdistusta tai "
+"tarkastelukohdistinta"
 
 #: globalCommands.py:62
 msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "Ottaa käyttöön lepotilan tai poistaa sen käytöstä aktiivisessa sovelluksessa"
+msgstr ""
+"Ottaa käyttöön lepotilan tai poistaa sen käytöstä aktiivisessa sovelluksessa"
 
 #: globalCommands.py:785
-msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "Vaihtaa edistymispalkkien päivityksistä ilmoittamisen asetukseksi äänimerkit, puhe, äänimerkit ja puhe tai pois käytöstä"
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Vaihtaa edistymispalkkien päivityksistä ilmoittamisen asetukseksi "
+"äänimerkit, puhe, äänimerkit ja puhe tai pois käytöstä"
 
 #: globalCommands.py:636
-msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Vaihtaa selaus- ja vuorovaikutustilojen välillä. Vuorovaikutustilassa näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa dokumentissa voidaan liikkua kohdistimella, pikanavigointinäppäimillä jne."
+msgid ""
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
+msgstr ""
+"Vaihtaa selaus- ja vuorovaikutustilojen välillä. Vuorovaikutustilassa "
+"näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä "
+"mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa "
+"dokumentissa voidaan liikkua kohdistimella, pikanavigointinäppäimillä jne."
 
 #: globalCommands.py:607
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "Vaihtaa kolmen eri puhetilan välillä, jotka ovat puhe, äänimerkit ja pois. Kun puhetila on pois, NVDA ei puhu mitään. Jos äänimerkit, NVDA antaa äänimerkin, kun sen pitäisi puhua jotakin. Jos puhe, NVDA puhuu normaalisti."
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"Vaihtaa kolmen eri puhetilan välillä, jotka ovat puhe, äänimerkit ja pois. "
+"Kun puhetila on pois, NVDA ei puhu mitään. Jos äänimerkit, NVDA antaa "
+"äänimerkin, kun sen pitäisi puhua jotakin. Jos puhe, NVDA puhuu normaalisti."
 
 #: virtualBuffers/__init__.py:812
-msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
-msgstr "Ottaa käyttöön ja poistaa käytöstä asetuksen, joka määrittää, säilytetäänkö ruudun ulkoasu dokumentin sisältöä ladattaessa."
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+msgstr ""
+"Ottaa käyttöön ja poistaa käytöstä asetuksen, joka määrittää, säilytetäänkö "
+"ruudun ulkoasu dokumentin sisältöä ladattaessa."
 
 #: globalCommands.py:815
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Ottaa käyttöön ja poistaa käytöstä navigointiobjektin siirtämisen kohdistusmuutosten mukaan"
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr ""
+"Ottaa käyttöön ja poistaa käytöstä navigointiobjektin siirtämisen "
+"kohdistusmuutosten mukaan"
 
 #: globalCommands.py:805
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Ottaa käyttöön ja poistaa käytöstä tarkastelukohdistimen siirtämisen järjestelmäkohdistimen mukaan."
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr ""
+"Ottaa käyttöön ja poistaa käytöstä tarkastelukohdistimen siirtämisen "
+"järjestelmäkohdistimen mukaan."
 
 #: globalCommands.py:795
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "Ottaa käyttöön ja poistaa käytöstä dynaamisen sisällön lukemisen, kuten uuden tekstin DOS-ikkunoissa"
+msgid ""
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr ""
+"Ottaa käyttöön ja poistaa käytöstä dynaamisen sisällön lukemisen, kuten "
+"uuden tekstin DOS-ikkunoissa"
 
 #: globalCommands.py:183
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen merkkien lukemisen"
 
 #: globalCommands.py:203
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
-msgstr "Ottaa käyttöön ja poistaa käytöstä sellaisten näppäinten puhumisen, jotka eivät ole kirjaimia, numeroita eivätkä muita merkkejä"
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
+msgstr ""
+"Ottaa käyttöön ja poistaa käytöstä sellaisten näppäinten puhumisen, jotka "
+"eivät ole kirjaimia, numeroita eivätkä muita merkkejä"
 
 #: globalCommands.py:193
 msgid "Toggles on and off the speaking of typed words"
@@ -2645,7 +2858,8 @@ msgstr "Ottaa käyttöön ja poistaa käytöstä kirjoitettujen sanojen lukemise
 
 #: globalCommands.py:734
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "Ottaa käyttöön tai poistaa käytöstä tietojen lukemisen hiiren liikkuessa"
+msgstr ""
+"Ottaa käyttöön tai poistaa käytöstä tietojen lukemisen hiiren liikkuessa"
 
 #: gui/__init__.py:330
 msgid "Tools"
@@ -2668,8 +2882,13 @@ msgid "Turkish grade 1"
 msgstr "Turkki, taso 1"
 
 #: globalCommands.py:47
-msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Ottaa syöteohjeen käyttöön tai poistaa sen käytöstä. Kun tämä tila on käytössä, mikä tahansa syöte, esimerkiksi näppäimistön näppäinten painaminen, kertoo kyseiseen syötteeseen mahdollisesti liitetyn skriptin."
+msgid ""
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
+msgstr ""
+"Ottaa syöteohjeen käyttöön tai poistaa sen käytöstä. Kun tämä tila on "
+"käytössä, mikä tahansa syöte, esimerkiksi näppäimistön näppäinten "
+"painaminen, kertoo kyseiseen syötteeseen mahdollisesti liitetyn skriptin."
 
 #: pythonConsole.py:40
 msgid "Type exit() to exit the console"
@@ -2689,6 +2908,11 @@ msgstr "Kirjoita etsittävä teksti"
 msgid "Type:"
 msgstr "Tyyppi:"
 
+#. Translators: the url part of the About Add-on information
+#: gui/addonGui.py:184
+msgid "URL: {url}"
+msgstr "URL-osoite: {url}"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:182
@@ -2701,13 +2925,13 @@ msgstr "Englanti (yhdenmukaistettu), taso 1"
 msgid "Unified English Braille Code grade 2"
 msgstr "Englanti (yhdenmukaistettu), taso 2"
 
-#: installer.py:173
+#: installer.py:156
 msgid "Uninstall NVDA"
 msgstr "Poista NVDA"
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
-#: updateCheck.py:348
+#: updateCheck.py:351
 msgid "Update downloaded. It will now be installed."
 msgstr "Päivitys ladattu. Seuraavaksi se asennetaan."
 
@@ -2730,8 +2954,7 @@ msgstr "Käytä tava&ustoimintoa, mikäli mahdollista"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/__init__.py:464
-#: gui/settingsDialogs.py:572
+#: gui/__init__.py:464 gui/settingsDialogs.py:572
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Käytä Caps Lockia  NVDA-näppäimenä"
 
@@ -2741,12 +2964,19 @@ msgid "Use NVDA on the Windows &logon screen"
 msgstr "Käytä NVDA:ta Windowsin &kirjautumisruudussa"
 
 #: gui/settingsDialogs.py:165
-msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "Käytä NVDA:ta &Windowsin kirjautumisruudussa (edellyttää järjestelmänvalvojan oikeuksia)"
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr ""
+"Käytä NVDA:ta &Windowsin kirjautumisruudussa (edellyttää "
+"järjestelmänvalvojan oikeuksia)"
 
 #: gui/settingsDialogs.py:170
-msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
-msgstr "Käytä &nykyisiä tallennettuja asetuksia kirjautumis- ja muissa suojatuissa ruuduissa (edellyttää järjestelmänvalvojan oikeuksia)"
+msgid ""
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
+msgstr ""
+"Käytä &nykyisiä tallennettuja asetuksia kirjautumis- ja muissa suojatuissa "
+"ruuduissa (edellyttää järjestelmänvalvojan oikeuksia)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -2760,8 +2990,7 @@ msgstr "Käytä laajennettua Insert-näppäintä NVDA-näppäimenä"
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Käytä numeroryhmän Insert-näppäintä NVDA-näppäimenä"
 
-#: installer.py:176
-#: gui/__init__.py:334
+#: installer.py:159 gui/__init__.py:334
 msgid "User Guide"
 msgstr "Käyttöopas"
 
@@ -2779,7 +3008,7 @@ msgstr "Versio"
 
 #: gui/__init__.py:312
 msgid "View log"
-msgstr "Näytä loki"
+msgstr "Näytä l&oki"
 
 #. Translators: This is the label for the voice settings dialog.
 #: gui/settingsDialogs.py:363
@@ -2795,18 +3024,24 @@ msgstr "Puheäänikohtainen sanasto (%s)"
 msgid "Warning"
 msgstr "Varoitus"
 
-#: updateCheck.py:361
+#: updateCheck.py:364
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "Tarvitsemme apuasi voidaksemme jatkaa NVDA:n parantelua.\n"
-"Tämä hanke perustuu etupäässä lahjoituksiin ja avustuksiin. Lahjoittamalla autat rahoittamaan kokopäiväistä kehitystä.\n"
-"Jos kutakin latausta kohti lahjoitettaisiin edes 10 dollaria, kykenisimme kattamaan kaikki hankkeen kustannukset.\n"
-"Lahjoitukset ottaa vastaan NV Access, NVDA:ta kehittävä voittoa tavoittelematon järjestö.\n"
+"Tämä hanke perustuu etupäässä lahjoituksiin ja avustuksiin. Lahjoittamalla "
+"autat rahoittamaan kokopäiväistä kehitystä.\n"
+"Jos kutakin latausta kohti lahjoitettaisiin edes 10 dollaria, kykenisimme "
+"kattamaan kaikki hankkeen kustannukset.\n"
+"Lahjoitukset ottaa vastaan NV Access, NVDA:ta kehittävä voittoa "
+"tavoittelematon järjestö.\n"
 "Kiitos tuestasi."
 
 #: gui/__init__.py:346
@@ -2820,18 +3055,24 @@ msgstr "Tervetuloa käyttämään NVDA:ta"
 #: gui/__init__.py:450
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
 msgstr ""
 "Tervetuloa käyttämään NVDA:ta!\n"
-"Useimmat NVDA:n hallintaan tarkoitetuista komennoista edellyttävät NVDA-näppäimen painamista samaan aikaan muiden näppäinten kanssa.\n"
-"Oletusarvoisesti sekä normaalia että numeroryhmän Insert-näppäintä voidaan käyttää NVDA-näppäimenä.\n"
+"Useimmat NVDA:n hallintaan tarkoitetuista komennoista edellyttävät NVDA-"
+"näppäimen painamista samaan aikaan muiden näppäinten kanssa.\n"
+"Oletusarvoisesti sekä normaalia että numeroryhmän Insert-näppäintä voidaan "
+"käyttää NVDA-näppäimenä.\n"
 "NVDA voidaan myös määrittää käyttämään CapsLockia NVDA-näppäimenä.\n"
 "Paina NVDA+N avataksesi NVDA-valikon milloin tahansa.\n"
-"Tästä valikosta voidaan määrittää NVDA:n asetuksia, lukea ohjeita ja käyttää muita toimintoja.\n"
+"Tästä valikosta voidaan määrittää NVDA:n asetuksia, lukea ohjeita ja käyttää "
+"muita toimintoja.\n"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2856,10 +3097,13 @@ msgstr "Tallenna nykyiset asetukset nvda.ini-tiedostoon"
 #: gui/__init__.py:503
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
 msgstr ""
 "Asetustiedostossa on virheitä. \n"
-"Paina OK korjataksesi virheet, tai paina Peruuta, jos haluat tehdä korjaukset myöhemmin. Lisätietoja virheistä löytyy lokitiedostosta.\n"
+"Paina OK korjataksesi virheet, tai paina Peruuta, jos haluat tehdä "
+"korjaukset myöhemmin. Lisätietoja virheistä löytyy lokitiedostosta.\n"
 
 #: core.py:85
 msgid ""
@@ -2873,8 +3117,7 @@ msgstr ""
 msgid "activates the current object in the document"
 msgstr "Aktivoi dokumentissa kohdalla olevan objektin"
 
-#: controlTypes.py:312
-#: controlTypes.py:336
+#: controlTypes.py:312 controlTypes.py:336
 msgid "alert"
 msgstr "ilmoitus"
 
@@ -2985,9 +3228,7 @@ msgstr "musta"
 
 #. Translators: This is spoken when nvda moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
-#: speech.py:164
-#: speech.py:329
-#: speech.py:739
+#: speech.py:164 speech.py:329 speech.py:739
 msgid "blank"
 msgstr "tyhjä"
 
@@ -3003,8 +3244,7 @@ msgid "blue"
 msgstr "sininen"
 
 #. Translators: Reported when text is bolded.
-#: controlTypes.py:326
-#: speech.py:1018
+#: controlTypes.py:326 speech.py:1018
 msgid "bold"
 msgstr "lihavointi"
 
@@ -3012,9 +3252,7 @@ msgstr "lihavointi"
 msgid "border"
 msgstr "reuna"
 
-#: globalCommands.py:472
-#: globalCommands.py:480
-#: globalCommands.py:514
+#: globalCommands.py:472 globalCommands.py:480 globalCommands.py:514
 msgid "bottom"
 msgstr "alareuna"
 
@@ -3108,9 +3346,7 @@ msgstr "yhd"
 msgid "cell"
 msgstr "solu"
 
-#: characterProcessing.py:131
-#: controlTypes.py:293
-#: textInfos/__init__.py:196
+#: characterProcessing.py:131 controlTypes.py:293 textInfos/__init__.py:196
 msgid "character"
 msgstr "merkki"
 
@@ -3165,8 +3401,7 @@ msgstr "värinvalitsin"
 msgid "column"
 msgstr "sarake"
 
-#: speech.py:832
-#: speech.py:1139
+#: speech.py:832 speech.py:1139
 #, python-format
 msgid "column %s"
 msgstr "sarake %s"
@@ -3240,8 +3475,7 @@ msgstr "virheenkorjaus ja varoitukset"
 msgid "default action failed"
 msgstr "Oletustoiminto epäonnistui"
 
-#: NVDAObjects/window/edit.py:260
-#: NVDAObjects/window/edit.py:261
+#: NVDAObjects/window/edit.py:260 NVDAObjects/window/edit.py:261
 msgid "default color"
 msgstr "oletusväri"
 
@@ -3370,8 +3604,7 @@ msgstr "muo"
 msgid "email"
 msgstr "sähköposti"
 
-#: controlTypes.py:254
-#: NVDAObjects/window/edit.py:612
+#: controlTypes.py:254 NVDAObjects/window/edit.py:612
 msgid "embedded object"
 msgstr "upotettu objekti"
 
@@ -3428,15 +3661,22 @@ msgid "find a text string from the current cursor position"
 msgstr "etsi tekstiä kohdistimen nykyisestä paikasta lähtien"
 
 #: cursorManager.py:111
-msgid "find the next occurrence of the previously entered text string from the current cursor's position"
-msgstr "etsi aiemmin annetun merkkijonon seuraava esiintymä kohdistimen nykyisestä paikasta lähtien"
+msgid ""
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"etsi aiemmin annetun merkkijonon seuraava esiintymä kohdistimen nykyisestä "
+"paikasta lähtien"
 
 #: cursorManager.py:118
-msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
-msgstr "Etsi aiemmin annetun tekstin edellinen esiintymä kohdistimen nykyisestä paikasta lähtien"
+msgid ""
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"Etsi aiemmin annetun tekstin edellinen esiintymä kohdistimen nykyisestä "
+"paikasta lähtien"
 
-#: globalCommands.py:909
-#: gui/settingsDialogs.py:1204
+#: globalCommands.py:909 gui/settingsDialogs.py:1204
 msgid "focus"
 msgstr "kohdistusta"
 
@@ -3691,9 +3931,7 @@ msgstr "kerrospaneeli"
 msgid "layout %s"
 msgstr "näppäimistöasettelu %s"
 
-#: globalCommands.py:524
-#: globalCommands.py:536
-#: appModules/totalcmd.py:35
+#: globalCommands.py:524 globalCommands.py:536 appModules/totalcmd.py:35
 msgid "left"
 msgstr "vasen"
 
@@ -3736,8 +3974,7 @@ msgstr "vasen vaihto"
 msgid "left windows"
 msgstr "vasen windows"
 
-#: speech.py:809
-#: speech.py:812
+#: speech.py:809 speech.py:812
 #, python-format
 msgid "level %s"
 msgstr "taso %s"
@@ -3752,8 +3989,7 @@ msgstr "vaaleanharmaa"
 msgid "lime"
 msgstr "limetinvihreä"
 
-#: controlTypes.py:323
-#: textInfos/__init__.py:198
+#: controlTypes.py:323 textInfos/__init__.py:198
 msgid "line"
 msgstr "rivi"
 
@@ -3769,8 +4005,7 @@ msgstr "rivi %s"
 msgid "line scroll"
 msgstr "rivin vieritys"
 
-#: controlTypes.py:206
-#: speech.py:1089
+#: controlTypes.py:206 speech.py:1089
 msgid "link"
 msgstr "linkki"
 
@@ -3827,8 +4062,7 @@ msgstr "mies 2"
 msgid "media player"
 msgstr "mediasoitin"
 
-#: controlTypes.py:199
-#: controlTypes.py:319
+#: controlTypes.py:199 controlTypes.py:319
 msgid "menu"
 msgstr "valikko"
 
@@ -4120,8 +4354,7 @@ msgstr "ei lihavointia"
 msgid "no caret"
 msgstr "ei kohdistinta"
 
-#: globalCommands.py:344
-#: globalCommands.py:697
+#: globalCommands.py:344 globalCommands.py:697
 msgid "no focus"
 msgstr "ei kohdistusta"
 
@@ -4145,12 +4378,8 @@ msgstr "Ei enempää  linkkilohkoa edeltävää tekstiä"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-#: globalCommands.py:280
-#: globalCommands.py:314
-#: globalCommands.py:363
-#: globalCommands.py:377
-#: globalCommands.py:391
-#: globalCommands.py:405
+#: globalCommands.py:280 globalCommands.py:314 globalCommands.py:363
+#: globalCommands.py:377 globalCommands.py:391 globalCommands.py:405
 #: globalCommands.py:419
 msgid "no navigator object"
 msgstr "ei navigointiobjektia"
@@ -4359,8 +4588,7 @@ msgstr "ei edellisiä avattuja linkkejä"
 msgid "no progress bar updates"
 msgstr "ei edistymispalkkien päivityksiä"
 
-#: cursorManager.py:245
-#: globalCommands.py:125
+#: cursorManager.py:245 globalCommands.py:125
 msgid "no selection"
 msgstr "ei valintaa"
 
@@ -4378,8 +4606,7 @@ msgstr "järjestelmässä ei akkua"
 msgid "no title"
 msgstr "ei nimeä"
 
-#: characterProcessing.py:127
-#: synthDrivers/_espeak.py:311
+#: characterProcessing.py:127 synthDrivers/_espeak.py:311
 msgid "none"
 msgstr "ei mitään"
 
@@ -4387,8 +4614,7 @@ msgstr "ei mitään"
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 #. but this still might be used in some other cases.
 #. %s will be replaced with the negated state.
-#: braille.py:424
-#: speech.py:795
+#: braille.py:424 speech.py:795
 #, python-format
 msgid "not %s"
 msgstr "ei %s"
@@ -4499,22 +4725,12 @@ msgstr "objektilla ei ole sijaintia"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: globalCommands.py:44
-#: globalCommands.py:176
-#: globalCommands.py:187
-#: globalCommands.py:197
-#: globalCommands.py:597
-#: globalCommands.py:728
-#: globalCommands.py:789
-#: globalCommands.py:799
-#: globalCommands.py:809
-#: keyboardHandler.py:300
-#: synthSettingsRing.py:74
-#: appModules/winamp.py:80
-#: appModules/winamp.py:90
-#: gui/settingsDialogs.py:724
-#: gui/settingsDialogs.py:1068
-#: virtualBuffers/__init__.py:810
+#: globalCommands.py:44 globalCommands.py:176 globalCommands.py:187
+#: globalCommands.py:197 globalCommands.py:597 globalCommands.py:728
+#: globalCommands.py:789 globalCommands.py:799 globalCommands.py:809
+#: keyboardHandler.py:300 synthSettingsRing.py:74 appModules/winamp.py:80
+#: appModules/winamp.py:90 gui/settingsDialogs.py:724
+#: gui/settingsDialogs.py:1068 virtualBuffers/__init__.py:810
 msgid "off"
 msgstr "pois"
 
@@ -4528,20 +4744,11 @@ msgstr "ruudun ulkopuolinen"
 msgid "olive"
 msgstr "oliivi"
 
-#: globalCommands.py:44
-#: globalCommands.py:179
-#: globalCommands.py:190
-#: globalCommands.py:200
-#: globalCommands.py:731
-#: globalCommands.py:792
-#: globalCommands.py:802
-#: globalCommands.py:812
-#: keyboardHandler.py:300
-#: synthSettingsRing.py:74
-#: appModules/winamp.py:78
-#: appModules/winamp.py:88
-#: gui/settingsDialogs.py:1068
-#: virtualBuffers/__init__.py:810
+#: globalCommands.py:44 globalCommands.py:179 globalCommands.py:190
+#: globalCommands.py:200 globalCommands.py:731 globalCommands.py:792
+#: globalCommands.py:802 globalCommands.py:812 keyboardHandler.py:300
+#: synthSettingsRing.py:74 appModules/winamp.py:78 appModules/winamp.py:88
+#: gui/settingsDialogs.py:1068 virtualBuffers/__init__.py:810
 msgid "on"
 msgstr "päällä"
 
@@ -4563,8 +4770,7 @@ msgstr "valintapaneeli"
 msgid "orange"
 msgstr "oranssi"
 
-#: speech.py:936
-#: speech.py:1089
+#: speech.py:936 speech.py:1089
 #, python-format
 msgid "out of %s"
 msgstr "%s loppuu"
@@ -4607,8 +4813,7 @@ msgstr "ruutu"
 msgid "panel"
 msgstr "paneeli"
 
-#: controlTypes.py:234
-#: textInfos/__init__.py:199
+#: controlTypes.py:234 textInfos/__init__.py:199
 msgid "paragraph"
 msgstr "kappale"
 
@@ -4683,16 +4888,26 @@ msgid "read only"
 msgstr "ei muokattavissa"
 
 #: globalCommands.py:648
-msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta lähtien siirtäen samalla sitä"
+msgid ""
+"reads from the review cursor  up to end of current text, moving the review "
+"cursor as it goes"
+msgstr ""
+"Lukee nykyisen tekstin loppuun saakka tarkastelukohdistimesta lähtien "
+"siirtäen samalla sitä"
 
 #: globalCommands.py:652
-msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr "Lukee nykyisen tekstin loppuun saakka järjestelmäkohdistimesta lähtien siirtäen samalla sitä"
+msgid ""
+"reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
+msgstr ""
+"Lukee nykyisen tekstin loppuun saakka järjestelmäkohdistimesta lähtien "
+"siirtäen samalla sitä"
 
 #: globalCommands.py:724
 msgid "reads the current application status bar and moves the navigator to it"
-msgstr "Lukee nykyisen sovelluksen tilarivin ja siirtää navigointiobjektin sen kohdalle"
+msgstr ""
+"Lukee nykyisen sovelluksen tilarivin ja siirtää navigointiobjektin sen "
+"kohdalle"
 
 #: appModules/outlook.py:24
 #, python-format
@@ -4723,7 +4938,8 @@ msgstr "lue dynaamisen sisällön muutokset"
 
 #: globalCommands.py:836
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä"
+msgstr ""
+"Ilmoittaa akun tilan ja jäljellä olevan ajan, jos verkkovirta ei ole käytössä"
 
 #: globalCommands.py:698
 msgid "reports the object with focus"
@@ -4733,8 +4949,7 @@ msgstr "ilmoittaa objektin, jossa kohdistus on"
 msgid "required"
 msgstr "pakollinen"
 
-#: globalCommands.py:906
-#: gui/settingsDialogs.py:1204
+#: globalCommands.py:906 gui/settingsDialogs.py:1204
 msgid "review"
 msgstr "tarkastelukohdistinta"
 
@@ -4742,9 +4957,7 @@ msgstr "tarkastelukohdistinta"
 msgid "rich edit"
 msgstr "muokattava"
 
-#: globalCommands.py:571
-#: globalCommands.py:588
-#: appModules/totalcmd.py:37
+#: globalCommands.py:571 globalCommands.py:588 appModules/totalcmd.py:37
 msgid "right"
 msgstr "oikea"
 
@@ -4800,8 +5013,7 @@ msgstr "juuripaneeli"
 msgid "row"
 msgstr "rivi"
 
-#: speech.py:825
-#: speech.py:1143
+#: speech.py:825 speech.py:1143
 #, python-format
 msgid "row %s"
 msgstr "rivi %s"
@@ -4860,12 +5072,8 @@ msgid "selected"
 msgstr "valittu"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#: compoundDocuments.py:401
-#: globalCommands.py:127
-#: speech.py:306
-#: speech.py:498
-#: speech.py:513
-#: virtualBuffers/__init__.py:717
+#: compoundDocuments.py:401 globalCommands.py:127 speech.py:306 speech.py:498
+#: speech.py:513 virtualBuffers/__init__.py:717
 #, python-format
 msgid "selected %s"
 msgstr "valittu %s"
@@ -5009,8 +5217,7 @@ msgstr "tyyli %s"
 msgid "subMenu"
 msgstr "alavalikko"
 
-#: appModules/outlook.py:23
-#: appModules/outlook.py:36
+#: appModules/outlook.py:23 appModules/outlook.py:36
 #, python-format
 msgid "subject: %s"
 msgstr "aihe: %s"
@@ -5021,14 +5228,12 @@ msgid "submnu"
 msgstr "alavko"
 
 #. Translators: Reported for subscript text.
-#: controlTypes.py:332
-#: speech.py:1057
+#: controlTypes.py:332 speech.py:1057
 msgid "subscript"
 msgstr "alaindeksi"
 
 #. Translators: Reported for superscript text.
-#: controlTypes.py:331
-#: speech.py:1054
+#: controlTypes.py:331 speech.py:1054
 msgid "superscript"
 msgstr "yläindeksi"
 
@@ -5041,8 +5246,7 @@ msgid "symbol level %s"
 msgstr "symbolitaso %s"
 
 #. Translators: This is the name of a key on the keyboard.
-#: controlTypes.py:209
-#: keyLabels.py:137
+#: controlTypes.py:209 keyLabels.py:137
 msgid "tab"
 msgstr "sarkain"
 
@@ -5137,9 +5341,7 @@ msgstr "työkalupalkki"
 msgid "tool tip"
 msgstr "työkaluvihje"
 
-#: globalCommands.py:438
-#: globalCommands.py:450
-#: globalCommands.py:492
+#: globalCommands.py:438 globalCommands.py:450 globalCommands.py:492
 msgid "top"
 msgstr "yläreuna"
 
@@ -5187,8 +5389,7 @@ msgid "unknown layout"
 msgstr "tuntematon näppäimistöasettelu"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
-#: appModules/msimn.py:109
-#: appModules/outlook.py:28
+#: appModules/msimn.py:109 appModules/outlook.py:28
 msgid "unread"
 msgstr "lukematon"
 
@@ -5287,24 +5488,42 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"{name} is developed by NV Access, a non-profit organisation committed to "
+"helping and promoting free and open source solutions for blind and vision "
+"impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider "
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "{longName} ({name})\n"
 "Versio: {version}\n"
 "URL-osoite: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} on suojattu GNU General Public License (versio 2) -lisenssillä. Voit vapaasti levittää tai muuttaa tätä ohjelmistoa miten tahansa, kunhan toimitat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita, kuten myös kaikkia johdannaisia.\n"
+"{name} on suojattu GNU General Public License (versio 2) -lisenssillä. Voit "
+"vapaasti levittää tai muuttaa tätä ohjelmistoa miten tahansa, kunhan "
+"toimitat lisenssiä sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä "
+"koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita, kuten myös "
+"kaikkia johdannaisia.\n"
 "Voit tarkastella lisenssiä Ohje-valikosta saadaksesi lisätietoja.\n"
-"Lisenssi on luettavissa myös verkossa osoitteessa http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"Lisenssi on luettavissa myös verkossa osoitteessa http://www.gnu.org/"
+"licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name}:ta kehittää NV Access, voittoa tavoittelematon järjestö, joka on sitoutunut auttamaan ja edistämään vapaan ja avoimen lähdekoodin ratkaisuja sokeille ja heikkonäköisille henkilöille.\n"
-"Jos pidät NVDA:ta hyödyllisenä ja haluat sen kehittyvän edelleen, harkitse lahjoittamista NV Accessille. Voit tehdä tämän valitsemalla NVDA-valikosta Lahjoita."
+"{name}:ta kehittää NV Access, voittoa tavoittelematon järjestö, joka on "
+"sitoutunut auttamaan ja edistämään vapaan ja avoimen lähdekoodin ratkaisuja "
+"sokeille ja heikkonäköisille henkilöille.\n"
+"Jos pidät NVDA:ta hyödyllisenä ja haluat sen kehittyvän edelleen, harkitse "
+"lahjoittamista NV Accessille. Voit tehdä tämän valitsemalla NVDA-valikosta "
+"Lahjoita."
 
 #. Translators: message shown in the Addon Information dialog.
 #: gui/addonGui.py:176
@@ -5312,14 +5531,18 @@ msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
 "Author: {author}\n"
-"URL: {url}\n"
 "Description: {description}\n"
 msgstr ""
 "{summary} ({name})\n"
 "Versio: {version}\n"
 "Tekijä: {author}\n"
-"URL-osoite: {url}\n"
 "Kuvaus: {description}\n"
+
+#~ msgid "&Add..."
+#~ msgstr "&Lisää..."
+
+#~ msgid "Create an &Autorun file"
+#~ msgstr "Luo &automaattisen käynnistyksen tiedosto"
 
 #~ msgid "Key Command quick reference"
 #~ msgstr "Näppäinkomentojen pikaopas"

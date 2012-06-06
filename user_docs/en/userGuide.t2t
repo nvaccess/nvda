@@ -422,18 +422,18 @@ The following keys by themselves jump to the next available element, while addin
 - s: separator
 - m: frame
 - g: graphic
-- d: ARIA landmark
+- d: landmark
 - o: embedded object
 - 1 to 6: headings at levels 1 to 6 respectively
 -
 To move to the beginning or end of containing elements such as lists and tables:
 || Name | Key | Description |
-| Move to start of container | shift+, | Moves to the start of the container (list, table etc) where the caret is positiond |
-| Move past end of container | , | Moves past the end of the container (list, table etc) where the caret is positiond |
+| Move to start of container | shift+comma | Moves to the start of the container (list, table, etc.) where the caret is positioned |
+| Move past end of container | comma | Moves past the end of the container (list, table, etc.) where the caret is positioned |
 %kc:endInclude
 
 ++ The Elements List ++
-The elements list provides access to a list of either links, headings or ARIA landmarks in the document.
+The elements list provides access to a list of either links, headings or landmarks in the document.
 Radio buttons allow you to switch between these three types of information.
 An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page.
 Once you have chosen an item, you can use the provided buttons in the dialog to move to or activate that item.
@@ -751,7 +751,7 @@ When enabled, the review cursor will automatically be moved to the position of t
 When enabled, the review cursor will follow the mouse as it moves.
 
 ==== Simple Review mode ====
-When enabled, NVDA will filter the hierarchy of objects that can be navigated, to exclude any unusable objects.
+When enabled, NVDA will filter the hierarchy of objects that can be navigated to exclude objects that aren't of interest to the user; e.g. invisible objects and objects used only for layout purposes.
 
 +++ Object Presentation Settings (NVDA+control+o) +++
 Found in the Preferences menu under "Object Presentation...".

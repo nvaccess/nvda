@@ -20,6 +20,7 @@ import config
 import api
 import winInputHook
 import inputCore
+import tones
 
 ignoreInjected=False
 
@@ -47,6 +48,10 @@ currentModifiers = set()
 #: Note that this may be removed in future, so reliance on it should generally be avoided.
 #: @type: int
 keyCounter = 0
+#: The current sticky NVDa modifier key.
+stickyNVDAModifier = None
+#: Whether the sticky NVDA modifier is locked.
+stickyNVDAModifierLocked = False
 
 def passNextKeyThrough():
 	global passKeyThroughCount
@@ -67,8 +72,8 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 	"""Event called by winInputHook when it receives a keyDown.
 	"""
 	try:
-		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter
-		#Injected keys should be ignored
+		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked
+		# Injected keys should be ignored in some cases.
 		if ignoreInjected and injected:
 			return True
 
@@ -84,8 +89,15 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			return True
 
 		keyCounter += 1
+		stickyKeysFlags = winUser.getSystemStickyKeys().dwFlags
+		if stickyNVDAModifier and not stickyKeysFlags & winUser.SKF_STICKYKEYSON:
+			# Sticky keys has been disabled,
+			# so clear the sticky NVDA modifier.
+			currentModifiers.discard(stickyNVDAModifier)
+			stickyNVDAModifier = None
+			stickyNVDAModifierLocked = False
 		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
-		if bypassNVDAModifier or (keyCode == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5):
+		if not (stickyKeysFlags & winUser.SKF_STICKYKEYSON) and (bypassNVDAModifier or (keyCode == lastNVDAModifier and lastNVDAModifierReleaseTime and time.time() - lastNVDAModifierReleaseTime < 0.5)):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.
 			# There may be key repeats, so ensure we do this until they stop.
 			bypassNVDAModifier = True
@@ -93,6 +105,30 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		lastNVDAModifierReleaseTime = None
 		if gesture.isNVDAModifierKey:
 			lastNVDAModifier = keyCode
+			if stickyKeysFlags & winUser.SKF_STICKYKEYSON:
+				if keyCode == stickyNVDAModifier:
+					if stickyKeysFlags & winUser.SKF_TRISTATE and not stickyNVDAModifierLocked:
+						# The NVDA modifier is being locked.
+						stickyNVDAModifierLocked = True
+						if stickyKeysFlags & winUser.SKF_AUDIBLEFEEDBACK:
+							tones.beep(1984, 60)
+						return False
+					else:
+						# The NVDA modifier is being unlatched/unlocked.
+						stickyNVDAModifier = None
+						stickyNVDAModifierLocked = False
+						if stickyKeysFlags & winUser.SKF_AUDIBLEFEEDBACK:
+							tones.beep(496, 60)
+						return False
+				else:
+					# The NVDA modifier is being latched.
+					if stickyNVDAModifier:
+						# Clear the previous sticky NVDA modifier.
+						currentModifiers.discard(stickyNVDAModifier)
+						stickyNVDAModifierLocked = False
+					stickyNVDAModifier = keyCode
+					if stickyKeysFlags & winUser.SKF_AUDIBLEFEEDBACK:
+						tones.beep(1984, 60)
 		else:
 			# Another key was pressed after the last NVDA modifier key, so it should not be passed through on the next press.
 			lastNVDAModifier = None
@@ -101,6 +137,10 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				# Ignore key repeats for the pause speech key to avoid speech stuttering as it continually pauses and resumes.
 				return True
 			currentModifiers.add(keyCode)
+		elif stickyNVDAModifier and not stickyNVDAModifierLocked:
+			# A non-modifier was pressed, so unlatch the NVDA modifier.
+			currentModifiers.discard(stickyNVDAModifier)
+			stickyNVDAModifier = None
 
 		try:
 			inputCore.manager.executeGesture(gesture)
@@ -141,7 +181,8 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 		# If we were bypassing the NVDA modifier, stop doing so now, as there will be no more repeats.
 		bypassNVDAModifier = False
 
-		currentModifiers.discard(keyCode)
+		if keyCode != stickyNVDAModifier:
+			currentModifiers.discard(keyCode)
 
 		if keyCode in trappedKeys:
 			trappedKeys.remove(keyCode)

@@ -23,6 +23,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <AcrobatAccess.h>
 #include "adobeAcrobat.h"
 
+const int TEXTFLAG_UNDERLINE = 0x1;
+const int TEXTFLAG_STRIKETHROUGH = 0x2;
+
 using namespace std;
 
 IAccessible* IAccessibleFromIdentifier(int docHandle, int ID) {
@@ -102,7 +105,7 @@ inline void processText(BSTR inText, wstring& outText) {
 VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	IPDDomNode* domNode,
-	bool fallBackToName, wstring& lang
+	bool fallBackToName, wstring& lang, int flags
 ) {
 	HRESULT res;
 	VBufStorage_fieldNode_t* tempNode;
@@ -143,7 +146,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 				continue;
 			}
 			// Recursive call: render text for this child and its descendants.
-			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName, lang))
+			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName, lang, flags))
 				previousNode = tempNode;
 			domChild->Release();
 		}
@@ -193,6 +196,10 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 					if ((fontFlags&PDDOM_FONTATTR_BOLD)==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
 				}
 				previousNode->addAttribute(L"language", lang);
+				if (flags & TEXTFLAG_UNDERLINE)
+					previousNode->addAttribute(L"underline", L"1");
+				else if (flags & TEXTFLAG_STRIKETHROUGH)
+					previousNode->addAttribute(L"strikethrough", L"1");
 			}
 			SysFreeString(text);
 		} else {
@@ -316,6 +323,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	}
 
 	BSTR stdName = NULL;
+	int textFlags = 0;
 	if (domElement) {
 		// Get stdName.
 		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
@@ -335,6 +343,16 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		if (domElement->GetAttribute(L"Lang", NULL, &srcLang) == S_OK && srcLang) {
 			parentNode->language = srcLang;
 			SysFreeString(srcLang);
+		}
+
+		// Determine whether the text has underline or strikethrough.
+		BSTR decType = NULL;
+		if (domElement->GetAttribute(L"TextDecorationType", L"Layout", &decType) == S_OK && decType) {
+			if (wcscmp(decType, L"Underline") == 0)
+				textFlags |= TEXTFLAG_UNDERLINE;
+			else if (wcscmp(decType, L"LineThrough") == 0)
+				textFlags |= TEXTFLAG_STRIKETHROUGH;
+			SysFreeString(decType);
 		}
 	}
 
@@ -464,7 +482,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
 				tempNode->addAttribute(L"language", parentNode->language);
 		} else
-			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent, parentNode->language);
+			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent, parentNode->language, textFlags);
 		if (tempNode) {
 			// There was text.
 			previousNode = tempNode;

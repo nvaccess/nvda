@@ -786,6 +786,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 		negativeStates=controlTypes.processNegativeStates(role, realStates, reason, negativeStates)
 		if controlTypes.STATE_DROPTARGET in negativeStates:
 			# "not drop target" doesn't make any sense, so use a custom message.
+			# Translators: Reported when drag and drop is finished.
+			# This is only reported for objects which support accessible drag and drop.
 			textList.append(_("done dragging"))
 			negativeStates.discard(controlTypes.STATE_DROPTARGET)
 		# Translators: Indicates that a particular state on an object is negated.

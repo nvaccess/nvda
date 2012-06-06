@@ -1,0 +1,116 @@
+﻿#locale/en/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+# Σύλλογος Τεχνολογικής Ανάπτυξης Τυφλών (ΣΤΑΤ), 2012.
+# Translated by Gerasimos Xydas (e-rhetor) on behalf of the Hellenic Technology for the Blind Development Association (STAT)
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	τελεία	all	always
+! sentence ending	θαυμαστικό	all	always
+? sentence ending	αγγλικό ερωτηματικό	all	always
+; phrase ending	ερωτηματικό	most	always
+: phrase ending	άνω κάτω τελεία	most	always
+decimal point		none	always
+in-word '	απόστροφος	all	norep
+negative number	μείον	none	norep
+
+# Whitespace
+\0	κενό	char	# null
+\t	στηλοθέτης
+\n	αλλαγή γραμμής	char
+\f	αλλαγή σελίδας	none
+\r	χαρακτήρας επαναφοράς	char
+ 	διάστημα	char
+ 	διάστημα	char	# no-break space
+
+# Standard punctuation/symbols
+!	θαυμαστικό	all
+"	εισαγωγικά	most
+\#	δίεση	most
+$	δολλάριο	all	norep
+£	λίρα	all	norep
+€	ευρώ	all	norep
+¢	σέντς	all	norep
+¥	γιέν	all	norep
+%	τοις εκατό	some
+&	και	some
+'	απόστροφος	all
+(	αριστερή παρένθεση	most
+)	δεξιά παρένθεση	most
+*	αστερίσκος	most
++	συν	most
+,	κόμμα	all	always
+-	παύλα	most
+.	τελεία	some
+/	κάθετος	some
+:	άνω κάτω τελεία	most	norep
+;	ερωτηματικό	most
+<	μικρότερο	most
+>	μεγαλύτερο	most
+=	ίσον	most
+?	αγγλικό ερωτηματικό	all
+@	παπάκι	some
+[	αριστερή αγκύλη	most
+]	δεξιά αγκύλη	most
+\\	ανάποδη κάθετος	most
+^	δύναμη	most
+_	κάτω παύλα	most
+`	βαρεία	most
+{	αριστερό άγκιστρο	most
+}	δεξί άγκιστρο	most
+|	μπάρα	most
+~	περισπωμένη	most
+
+# Other characters
+•	μπούλετ	some
+…	τρεις τελείες	all	always
+...	τρεις τελείες	all	always
+	μπούλετ	some
+“	αριστερό εισαγωγικό	most
+”	δεξί εισαγωγικό	most
+‘	αριστερή απόστροφος	most
+’	δεξιά απόστροφος	most
+–	στενή παύλα	most
+—	φαρδυά παύλα	most
+●	κύκλος	most
+¨	διαλυτικά	most
+‎	σημάδι αριστερά προς δεξιά	char
+‏	σημάδι δεξιά προς αριστερά	char
+■	μαύρο τετράγωνο	some
+➔	δεξί βέλος	some
+§	παράγραφος	all
+°	βαθμοί	some
+«	αριστερά εισαγωγικά
+»	δεξιά εισαγωγικά
+µ	μίκρο	some
+¹	δύναμη του 1	some
+²	δύναμη του 2	some
+³	δύναμη του 3	some
+®	καταχωρημένο	some
+™	σήμα κατατεθέν	some
+©	πνευματική ιδιοκτησία	some
+±	συν πλην	most
+×	επί	most
+÷	διά	most
+→	δεξί βέλος	some
+✓	τσεκ	some
+✔	τσεκ	some

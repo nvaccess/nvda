@@ -8,9 +8,9 @@ Les apports majeurs de cette version incluent un installateur et créateur de ve
 
 == Nouvelles Fonctionnalités ==
 - NVDA peut maintenant rechercher, télécharger et installer automatiquement les mises à jour. (#73)
-- La gestion des plugins personnalisés et des drivers pour NVDA a été facilité par l'ajout d'un gestionnaire de greffons (accessible depuis le menu Outils du menu NVDA) vous permettant d'installer ou de désinstaller des paquets de greffons (fichiers .nvda-addon). (#213)
+- Étendre les fonctionnalités de NVDA a été facilité par l'ajout d'un gestionnaire de greffons (accessible depuis le menu Outils du menu NVDA) vous permettant d'installer ou de désinstaller des paquets de greffons (fichiers .nvda-addon) contenant des plugins et des drivers. Notez bien que le gestionnaire de greffons n'affiche pas les anciens plugins ou pilotes copiés manuellement dans votre répertoire de configuration. (#213)
 - Beaucoup plus de fonctionnalités de NVDA sont maintenant utilisables dans les applications en style Metro sous Windows 8 lorsqu'on utilise une copie installée de NVDA, incluant la prononciation des caractères saisis, et le mode navigation pour les documents web (incluant le support pour la version metro de Internet Explorer 10). Les copies portables de NVDA ne peuvent accéder aux applications Metro. (#1801) 
-- En mode navigation (Internet Explorer, Firefox etc.) il est maintenant possible de sauter au début et de passer la fin de certains éléments contenants (incluant les listes et les tableaux) avec shift+, et shift+. respectivement. (#123)
+- En mode navigation (Internet Explorer, Firefox etc.) il est maintenant possible de sauter au début et de passer la fin de certains éléments contenants (incluant les listes et les tableaux) avec shift+, et , respectivement. (#123)
 - Nouvelle langue : grecque.
 - Les graphiques et le texte alternatif sont maintenant lus dans les documents Microsoft Word. (#2282, #1541)
 
@@ -34,7 +34,8 @@ Les apports majeurs de cette version incluent un installateur et créateur de ve
 - Dans les applications utilisant java Access Bridge, les champs de textes éditables ne rapporte plus de caractères étranges dans certaines circonstences. (#1892)
 - Dans les  applications utilisant Java Access Bridge, à la fin d'un champ de texte éditable, la ligne courrante est maintenant lue correctement. (#1892)
 - En mode Navigation dans les applications utilisant Mozilla Gecko 14 et supérieur (e.g. Firefox 14), la navigation rapide fonctionne maintenant dans les bloques de citation et les objets inclus. (#2287)
-- Dans Internet Explorer 9, NVDA ne lit plus de contenu non désiré quand le focus bouge dans un div focusable ou marqué par un repaire ARIA.
+- Dans Internet Explorer 9, NVDA ne lit plus de contenu non désiré quand le focus est dans certains repaires ou éléments activables (plus précisément, un élément div pouvant avoir le focus ou ayant un rôle de repaire ARIA).
+- L'icône de NVDA pour les raccourcis du bureau et du menu démarrer est correctement affichée dans les éditions 64 bit de Windows. (#354)
 
 
 == Changements pour les développeurs ==

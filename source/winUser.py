@@ -69,6 +69,7 @@ GUI_INMOVESIZE=0x00000002
 GUI_INMENUMODE=0x00000004
 GUI_SYSTEMMENUMODE=0x00000008
 GUI_POPUPMENUMODE=0x00000010
+SPI_GETSTICKYKEYS=0x003A
 SPI_GETSCREENREADER=70
 SPI_SETSCREENREADER=71
 SPIF_UPDATEINIFILE=1
@@ -500,3 +501,20 @@ def ScreenToClient(hwnd, x, y):
 	point = POINT(x, y)
 	user32.ScreenToClient(hwnd, byref(point))
 	return point.x, point.y
+
+class STICKYKEYS(Structure):
+	_fields_ = (
+		("cbSize", DWORD),
+		("dwFlags", DWORD),
+	)
+	def __init__(self, **kwargs):
+		super(STICKYKEYS, self).__init__(cbSize=sizeof(self), **kwargs)
+SKF_STICKYKEYSON = 0x00000001
+SKF_AUDIBLEFEEDBACK = 0x00000040
+SKF_TRISTATE = 0x00000080
+SKF_TWOKEYSOFF = 0x00000100
+
+def getSystemStickyKeys():
+	sk = STICKYKEYS()
+	user32.SystemParametersInfoW(SPI_GETSTICKYKEYS, 0, byref(sk), 0)
+	return sk
