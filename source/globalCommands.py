@@ -1108,15 +1108,17 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+shift+o": "review_endOfLine",
 		"kb:numpadPlus": "review_sayAll",
 		"kb(laptop):NVDA+shift+downArrow": "review_sayAll",
-		"ts:2finger_flickDown":"review_sayAll",
+		"ts(text):3finger_flickDown":"review_sayAll",
 		"kb:NVDA+f9": "review_markStartForCopy",
 		"kb:NVDA+f10": "review_copy",
 
 		# Flat review
 		"kb:NVDA+numpad7": "navigatorObject_moveToFlatReviewAtObjectPosition",
 		"kb(laptop):NVDA+pageUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
+		"ts(object):2finger_flickUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
 		"kb:NVDA+numpad1": "navigatorObject_moveToObjectAtFlatReviewPosition",
 		"kb(laptop):NVDA+pageDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
+		"ts(object):2finger_flickDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
 
 		# Mouse
 		"kb:numpadDivide": "leftMouseClick",
