@@ -14,7 +14,7 @@ action_hoverUp="hoverUp"
 action_unknown="unknown"
 hoverActions=(action_hoverDown,action_hover,action_hoverUp)
 #timeout for detection of flicks and plural trackers 
-multitouchTimeout=0.3
+multitouchTimeout=0.25
 #The distance a finger must travel to be treeted as a flick
 minFlickDistance=50
 #How far a finger is allowed to drift purpandicular to a flick direction to make the flick impossible
