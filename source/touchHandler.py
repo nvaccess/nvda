@@ -15,6 +15,8 @@ import NVDAObjects.UIA
 from logHandler import log
 import touchTracker
 
+availableTouchModes=['text','quickNav','object']
+
 HWND_MESSAGE=-3
 
 WM_QUIT=18
@@ -91,12 +93,13 @@ class TouchInputGesture(inputCore.InputGesture):
 		if self.tracker.action in (touchTracker.action_hover,touchTracker.action_hoverUp): return None
 		return super(TouchInputGesture,self).speechEffectWhenExecuted
 
-	def __init__(self,tracker):
+	def __init__(self,tracker,mode):
 		super(TouchInputGesture,self).__init__()
 		self.tracker=tracker
+		self.mode=mode
 
-	def _get_logIdentifier(self):
-		ID="ts:"
+	def _get__rawIdentifiers(self):
+		ID=""
 		if self.tracker.numHeldFingers>0:
 			ID+="%dfinger_hold+"%self.tracker.numHeldFingers
 		if self.tracker.numFingers>1:
@@ -104,17 +107,24 @@ class TouchInputGesture(inputCore.InputGesture):
 		if self.tracker.actionCount>1:
 			ID+="%s_"%self.counterNames[min(self.tracker.actionCount,4)-1]
 		ID+=self.tracker.action
-		return ID
+		IDs=[]
+		IDs.append("TS(%s):%s"%(self.mode,ID))
+		IDs.append("ts:%s"%ID)
+		return IDs
+
+	def _get_logIdentifier(self):
+		return self._rawIdentifiers[0]
 
 	def _get_identifiers(self):
-		return [self.logIdentifier.lower()]
+		return [x.lower() for x in self._rawIdentifiers] 
 
 	def _get_displayName(self):
-		return " ".join(self.logIdentifier.split('_'))
+		return " ".join(self._rawIdentifiers[1][3:].split('_'))
 
 class TouchHandler(object):
 
 	def __init__(self):
+		self._curTouchMode='object'
 		self._appInstance=windll.kernel32.GetModuleHandleW(None)
 		self._cInputTouchWindowProc=winUser.WNDPROC(self.inputTouchWndProc)
 		self._wc=winUser.WNDCLASSEXW(cbSize=sizeof(winUser.WNDCLASSEXW),lpfnWndProc=self._cInputTouchWindowProc,hInstance=self._appInstance,lpszClassName="inputTouchWindowClass")
@@ -151,10 +161,15 @@ class TouchHandler(object):
 		windll.user32.UnregisterClassW(self._wca,self._appInstance)
 		tones.beep(880,50)
 
+	def setMode(self,mode):
+		if mode not in availableTouchModes:
+			raise ValueError("Unknown mode %s"%mode)
+		self._curTouchMode=mode
+
 	def gesturePumpFunc(self):
 		while True:
 			for tracker in self.trackerManager.emitTrackers():
-				gesture=TouchInputGesture(tracker)
+				gesture=TouchInputGesture(tracker,self._curTouchMode)
 				try:
 					inputCore.manager.executeGesture(gesture)
 				except inputCore.NoInputGestureAction:
