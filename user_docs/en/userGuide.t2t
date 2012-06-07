@@ -1233,14 +1233,11 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
-++ Hims Displays ++
-NVDA supports several displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
-For Braillesense and Braille Edge family, please select "HIMS Braille Sense/Braille EDGE braille displays".
-For SyncBraille, please select the "Syncbraille" item from the Display Braille menu.
+++ HIMS Braille Sense/Braille EDGE Series ++
+NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+If connecting via USB, you will need to install the USB drivers from HIMS on your system.
 
-For USB displays, you will need to install the USB drivers from Hims on your system.
-
-Following are the key assignments for this display with NVDA.
+Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
@@ -1250,14 +1247,14 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move braille display to next line | right side scroll up |
 | Route to braille cell | routing |
 | shift+tab key | dot1+dot2+space |
-| alt key | Dot1+Dot3+Dot4+Space |
-| escape key | Dot1+Dot5+Space |
-| tab key | Dot4+Dot5+Space |
-| enter key | Dot8 |
+| alt key | dot1+dot3+dot4+Space |
+| escape key | dot1+dot5+Space |
+| tab key | dot4+dot5+Space |
+| enter key | dot8 |
 | backspace key | dot7 |
-| upArrow key | Dot1+Space |
-| downArrow key | Dot4+Space |
-| capsLock | Dot1+Dot3+Dot6+space |
+| upArrow key | dot1+Space |
+| downArrow key | dot4+Space |
+| capsLock | dot1+dot3+dot6+space |
 | shift+alt+tab key | advance2+advance3+advance1 |
 | alt+tab key | advance2+advance3 |
 | end key | dot4+dot6+space |
@@ -1271,7 +1268,7 @@ Please see the display's documentation for descriptions of where these keys can 
 | alt+leftArrow key | dot2+dot7 |
 | rightArrow key | dot6+space |
 | control+shift+rightArrow key | dot5+dot8+space+advance1 |
-| control+rightArrow key | dot5+space
+| control+rightArrow key | dot5+space |
 | shift+alt+rightArrow key | dot5+dot7+advance1 |
 | alt+rightArrow key | dot5+dot7 |
 | pageUp key | dot1+dot2+dot6+space |
@@ -1296,12 +1293,9 @@ Please see the display's documentation for descriptions of where these keys can 
 | windows+d key | dot1+dot4+dot5+advance1 |
 %kc:endInclude
 
-+++ Hims Sync Braille Display +++
-NVDA supports the SyncBraille Display Braille from [Hims http://www.hims-inc.com/] when connected via USB.
-For Braillesense and Braille Edge family, please select "HIMS Braille Sense/Braille EDGE braille displays".
-For SyncBraille, please select the "Syncbraille" item from the Display Braille menu.
-
-For USB displays, you will need to install the USB drivers from Hims on your system.
+++ HIMS SyncBraille ++
+NVDA supports the SyncBraille Display from [HIMS http://www.hims-inc.com/].
+You will need to install the USB drivers from HIMS on your system.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
