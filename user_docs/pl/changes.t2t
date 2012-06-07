@@ -4,9 +4,17 @@
 %!includeconf: ../changes.t2tconf
 
 =2012.2=
+Najważniejsze zmiany w tym wydaniu obejmują wbudowany instalator, możliwość tworzenia przenośnych kopii programu z poziomu menu, możliwość łatwego zarządzania dodatkami rozbudowującymi funkcjonalność programu, wsparcie dla grafiki w edytorze MS Word, wsparcie dla aplikacji metro w wsystemie MS Windows 8 i kilka innych poprawek.
+
 
 ==nowe funkcje==
 - NVDA potrafi automagicznie uaktualniać się do nowszej wersji (#73)
+- Rozbudowa funkcjonalności screenreadera została ułatwiona przez wsparcie zewnętrznych dodatków, którymi można zarządzać z menu narzędzia. Dodatki są to zarówno wtyczki, jak i nowe sterowniki monitorów brajlowskich. Manager dodatków nie pokazuje jednak wtyczek, które zostały zainstalowane wg starszej metody tzn przez skopiowanie plików wtyczek do katalogu konfiguracji użytkownika. (#213)
+- Zainstalowana wersja NVDA jest bardziej funkcjonalna pod kontrolą Win 8. Dotyczy to wypowiadania wprowadzanych znaków i wsparcia dla metro'wej wersji Internet Explorer. Wersje przenośne nie wspierają aplikacji metro. (#1801)
+- W dokumentach wymagających aktywacji trybu przeglądania (ie, Firefox, itd) możliwe jest przechodzenie do końca i początku elementu zawierającego typu lista, tabela za pomocą klawiszy przecinka i odpowiednio shift+ przecinek. (#123)
+- Wsparcie dla języka greckiego.
+-  Grafika i tekst alternatywny są zgłaszane w dokumentach MS word (#2282, #1541)
+
 
 ==Zmiany==
 - NVDA jest teraz rozpowszechniany wyłącznie w jednym pakiecie instalacyjnym, po uruchomieniu którego użytkownik może samodzielnie utworzyć wersję przenośną bądź zainstalować screenreader. (#1715)
