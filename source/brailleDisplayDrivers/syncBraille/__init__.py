@@ -1,5 +1,5 @@
-#brailleDisplayDrivers/syncbraille.py
-#nvda -A part of NonVisual Desktop Access (NVDA)
+#brailleDisplayDrivers/syncBraille/__init__.py
+#A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2010-2012 Gianluca Casalino <gianluca@spazioausili.net>
@@ -20,7 +20,7 @@ HIMS_CURSORROUTING = 0x00
 SYNCBRAILLE_KEYS = {
 	4096: 'left_side_scroll_up',
 	8192: 'right_side_scroll_up',
- 	16384: 'right_side_scroll_down',
+	16384: 'right_side_scroll_down',
 	32768: 'left_side_scroll_down',
 }
 
@@ -81,13 +81,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._messageWindow = windll.user32.CreateWindowExW(0,self._messageWindowClassAtom,u"nvdaHIMSBrlWndCls window",0,0,0,0,0,None,None,appInstance,None)
 		if himsSyncBrailleLib.OpenSyncBrl(self._messageWindow,nvdaHIMSBrlWm) == 1: return 
 		raise RuntimeError("No display found")
- 
+
 	def terminate(self):
 		super(BrailleDisplayDriver, self).terminate()
 		himsSyncBrailleLib.CloseSyncBrl()
 		windll.user32.DestroyWindow(self._messageWindow)
-		windll.user32.UnregisterClassW(self.
-_messageWindowClassAtom,appInstance)
+		windll.user32.UnregisterClassW(self._messageWindowClassAtom,appInstance)
 
 	def _get_numCells(self):
 		return himsSyncBrailleLib.GetCellCount()

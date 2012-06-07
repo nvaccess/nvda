@@ -1,5 +1,5 @@
-#brailleDisplayDrivers/hims.py
-#nvda -A part of NonVisual Desktop Access (NVDA)
+#brailleDisplayDrivers/hims/__init__.py
+#A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2010-2012 Gianluca Casalino <gianluca@spazioausili.net>
@@ -16,11 +16,11 @@ HIMS_KEYPRESSED = 0x01
 HIMS_KEYRELEASED = 0x02
 HIMS_CURSORROUTING = 0x00
 HIMS_CODE_DEVICES = {
-		1: 'Braille Sense (2 scrools mode)',
-		2: 'Braille Sense QWERTY',
-		3: 'Braille EDGE',
-		4: 'Braille Sense (4 scrolls mode)',
-}		
+	1: 'Braille Sense (2 scrools mode)',
+	2: 'Braille Sense QWERTY',
+	3: 'Braille EDGE',
+	4: 'Braille Sense (4 scrolls mode)',
+}
 HIMS_BLUETOOTH_NAMES = (
 	"BrailleSense",
 	"BrailleEDGE",
@@ -40,7 +40,7 @@ HIMS_KEYS = {
 	0x100: 'space',
 	0x40000: {'Braille EDGE': 'right_side_scroll_down', 'BrailleSense': 'right_side_scroll_up'},
 	0x10000: 'left_side_scroll_up',
- 	0x20000: {'Braille EDGE': 'right_side_scroll_up', 'BrailleSense': 'left_side_scroll_down'},
+	0x20000: {'Braille EDGE': 'right_side_scroll_up', 'BrailleSense': 'left_side_scroll_down'},
 	0x80000: {'Braille EDGE': 'left_side_scroll_down', 'BrailleSense': 'right_side_scroll_down'},
 	0x200: 'advance 1',
 	0x400: 'advance 2',
@@ -106,7 +106,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	""" HIMS Braille Sense/Braille EDGE braille displays.
 	"""
 	name = "hims"
-	description = _("HIMS Braille Sense/Braille EDGE braille displays")
+	description = _("HIMS Braille Sense/Braille EDGE series")
 
 	@classmethod
 	def check(cls):
@@ -117,8 +117,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super(BrailleDisplayDriver, self).__init__()
 		self._messageWindowClassAtom = windll.user32.RegisterClassExW(byref(nvdaHIMSBrlWndCls))
 		self._messageWindow = windll.user32.CreateWindowExW(0,self._messageWindowClassAtom,u"nvdaHIMSBrlWndCls window",0,0,0,0,0,None,None,appInstance,None)
-		code = himsLib.Open("USB",self._messageWindow,nvdaHIMSBrlWm) 
-		if  code == 0: 
+		code = himsLib.Open("USB",self._messageWindow,nvdaHIMSBrlWm)
+		if  code == 0:
 			for portInfo in sorted(hwPortUtils.listComPorts(onlyAvailable=True), key=lambda item: "bluetoothName" in item):
 				port = portInfo["port"].lower()
 				btName = portInfo.get("bluetoothName")
@@ -135,8 +135,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		super(BrailleDisplayDriver, self).terminate()
 		himsLib.Close()
 		windll.user32.DestroyWindow(self._messageWindow)
-		windll.user32.UnregisterClassW(self.
-_messageWindowClassAtom,appInstance)
+		windll.user32.UnregisterClassW(self._messageWindowClassAtom,appInstance)
 
 	def _get_numCells(self):
 		return himsLib.GetBSCellCount()
@@ -197,9 +196,7 @@ _messageWindowClassAtom,appInstance)
 			"braille_nextLine": ("br(hims):right_side_scroll_up",),
 			"braille_scrollBack": ("br(hims):left_side_scroll_down",),
 			"braille_scrollForward": ("br(hims):right_side_scroll_down",),
-
 		}
-
 	})
 
 class InputGesture(braille.BrailleDisplayGesture):
