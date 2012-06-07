@@ -80,7 +80,7 @@ To use the HIMS Braille Sense/Braille EDGE braille display driver:
 
 To use the HIMS SyncBraille braille display driver:
 	* SyncBraille.dll, version 1.0.0.1: http://www.nvda-project.org/3rdParty/SyncBraille.dll
-		* Copy SyncBraille.dll into the source\brailleDisplayDrivers\hims directory.
+		* Copy SyncBraille.dll into the source\brailleDisplayDrivers\syncBraille directory.
 
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
