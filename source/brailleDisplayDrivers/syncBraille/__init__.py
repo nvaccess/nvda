@@ -18,10 +18,10 @@ HIMS_CURSORROUTING = 0x00
 #MAP OF KEYS
 
 SYNCBRAILLE_KEYS = {
-	4096: 'left_side_scroll_up',
-	8192: 'right_side_scroll_up',
-	16384: 'right_side_scroll_down',
-	32768: 'left_side_scroll_down',
+	4096: 'leftSideScrollUp',
+	8192: 'rightSideScrollUp',
+	16384: 'rightSideScrollDown',
+	32768: 'leftSideScrollDown',
 }
 
 pressedKeys = set()
@@ -98,10 +98,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
 			"braille_routeTo": ("br(syncbraille):routing",),
-			"braille_scrollBack": ("br(syncbraille):left_side_scroll_down",),
-			"braille_scrollForward": ("br(syncbraille):right_side_scroll_down",),
+			"brailleScrollBack": ("br(syncbraille):leftSideScrollDown",),
+			"brailleScrollForward": ("br(syncbraille):rightSideScrollDown",),
 		}
-
 	})
 
 class InputGesture(braille.BrailleDisplayGesture):
