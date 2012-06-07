@@ -1233,6 +1233,79 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
+++ HIMS Braille Sense/Braille EDGE Series ++
+NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+If connecting via USB, you will need to install the USB drivers from HIMS on your system.
+
+Following are the key assignments for these displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Move braille display to previous line | left side scroll up |
+| Move braille display to next line | right side scroll up |
+| Route to braille cell | routing |
+| shift+tab key | dot1+dot2+space |
+| alt key | dot1+dot3+dot4+Space |
+| escape key | dot1+dot5+Space |
+| tab key | dot4+dot5+Space |
+| enter key | dot8 |
+| backspace key | dot7 |
+| upArrow key | dot1+Space |
+| downArrow key | dot4+Space |
+| capsLock | dot1+dot3+dot6+space |
+| shift+alt+tab key | advance2+advance3+advance1 |
+| alt+tab key | advance2+advance3 |
+| end key | dot4+dot6+space |
+| Control+end key | dot4+dot5+dot6+space |
+| home key | dot1+dot3+space |
+| control+home key | dot1+dot2+dot3+space |
+| leftArrow key | dot3+space |
+| control+shift+leftArrow key | dot2+dot8+space+advance1 |
+| control+leftArrow key | dot2+space
+| shift+alt+leftArrow key | dot2+dot7+advance1 |
+| alt+leftArrow key | dot2+dot7 |
+| rightArrow key | dot6+space |
+| control+shift+rightArrow key | dot5+dot8+space+advance1 |
+| control+rightArrow key | dot5+space |
+| shift+alt+rightArrow key | dot5+dot7+advance1 |
+| alt+rightArrow key | dot5+dot7 |
+| pageUp key | dot1+dot2+dot6+space |
+| control+pageUp key | dot1+dot2+dot6+dot8+space |
+| control+shift+upArrow key | dot2+dot3+dot8+space+advance1 |
+| control+upArrow key | dot2+dot3+space |
+| shift+alt+upArrow key | dot2+dot3+dot7+advance1 |
+| alt+upArrow key | dot2+dot3+dot7 |
+| shift+upArrow key | left side scroll down + space |
+| pageDown key | dot3+dot4+dot5+space |
+| control+pagedown key | dot3+dot4+dot5+dot8+space |
+| control+shift+downArrow key | dot5+dot6+dot8+space+advance1 |
+| control+downArrow key | dot5+dot6+space |
+| shift+alt+downArrow key | dot5+dot6+dot7+advance1 |
+| alt+downArrow key | dot5+dot6+dot7 |
+| shift+downArrow key | right side scroll down + space |
+| delete key | dot1+dot3+dot5+space |
+| f1 key | dot1+dot2+dot5+space |
+| f3 key | dot1+dot2+dot4+dot8 |
+| f4 key | dot7+advance3 |
+| windows+b key | dot1+dot2+advance1 |
+| windows+d key | dot1+dot4+dot5+advance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA supports the SyncBraille Display from [HIMS http://www.hims-inc.com/].
+You will need to install the USB drivers from HIMS on your system.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
