@@ -9,6 +9,7 @@ import itertools
 import struct
 import weakref
 from ctypes import *
+from ctypes.wintypes import HANDLE
 from comtypes import IUnknown, IServiceProvider
 import comtypes.client
 import comtypes.client.lazybind
@@ -863,7 +864,6 @@ def getIAccIdentity(pacc,childID):
 		return d
 	finally:
 		windll.ole32.CoTaskMemFree(stringPtr)
- 
 
 def findGroupboxObject(obj):
 	prevWindow=winUser.getPreviousWindow(obj.windowHandle)
@@ -1001,8 +1001,7 @@ def isMarshalledIAccessible(IAccessibleObject):
 	if not isinstance(IAccessibleObject,IAccessible):
 		raise TypeError("object should be of type IAccessible, not %s"%IAccessibleObject)
 	buf=create_unicode_buffer(1024)
-	from comtypes import _compointer_base
-	addr=POINTER(c_void_p).from_address(super(_compointer_base,IAccessibleObject).value).contents.value
+	addr=POINTER(c_void_p).from_address(super(comtypes._compointer_base,IAccessibleObject).value).contents.value
 	handle=HANDLE()
 	windll.kernel32.GetModuleHandleExW(6,addr,byref(handle))
 	windll.kernel32.GetModuleFileNameW(handle,buf,1024)
