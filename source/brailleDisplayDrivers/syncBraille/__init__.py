@@ -68,7 +68,7 @@ nvdaHIMSBrlWndCls.lpszClassName = u"nvdaHIMSBrlWndCls"
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	""" HIMS SyncBraille braille display.
 	"""
-	name = "syncbraille"
+	name = "syncBraille"
 	description = _("HIMS SyncBraille")
 
 	@classmethod
@@ -97,9 +97,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
-			"braille_routeTo": ("br(syncbraille):routing",),
-			"brailleScrollBack": ("br(syncbraille):leftSideScrollDown",),
-			"brailleScrollForward": ("br(syncbraille):rightSideScrollDown",),
+			"braille_routeTo": ("br(syncBraille):routing",),
+			"brailleScrollBack": ("br(syncBraille):leftSideScrollDown",),
+			"brailleScrollForward": ("br(syncBraille):rightSideScrollDown",),
 		}
 	})
 
