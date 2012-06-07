@@ -123,14 +123,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				port = portInfo["port"].lower()
 				btName = portInfo.get("bluetoothName")
 				if btName and any(btName.startswith(prefix) for prefix in HIMS_BLUETOOTH_NAMES):
-					if int(port.split("com")[1]) > 8: port = "\\\\.\\"+port
+					try:
+						if int(port.split("com")[1]) > 8:
+							port = "\\\\.\\"+port
+					except (IndexError, ValueError):
+						pass
 					code = himsLib.Open(str(port),self._messageWindow,nvdaHIMSBrlWm)
 		if code >= 1:
 			deviceFound = HIMS_CODE_DEVICES[code]
 			log.info(_("%s device found")%deviceFound)
 			return
 		raise RuntimeError("No display found")
- 
+
 	def terminate(self):
 		super(BrailleDisplayDriver, self).terminate()
 		himsLib.Close()
