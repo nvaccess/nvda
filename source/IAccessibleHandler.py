@@ -673,9 +673,9 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 		return controlTypes.ROLE_PANE
 
 def processDesktopSwitchWinEvent(window,objectID,childID):
-	hDesk=ctypes.windll.user32.OpenInputDesktop(0, False, 0)
+	hDesk=windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk!=0:
-		ctypes.windll.user32.CloseDesktop(hDesk)
+		windll.user32.CloseDesktop(hDesk)
 		import wx
 		wx.CallLater(200, _correctFocus)
 	else:
