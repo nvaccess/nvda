@@ -65,7 +65,7 @@ _ignoreKeyPresses = False
 deviceFound = None
 
 try:
-	himsLib = cdll.LoadLibrary("brailleDisplayDrivers\\HanSoneConnect.dll")
+	himsLib = cdll.LoadLibrary("brailleDisplayDrivers\\hims\\HanSoneConnect.dll")
 except:
 	himsLib = None
 

@@ -28,7 +28,7 @@ pressedKeys = set()
 _ignoreKeyPresses = False
 
 try:
-	himsSyncBrailleLib = cdll.LoadLibrary("brailleDisplayDrivers\\SyncBraille.dll")
+	himsSyncBrailleLib = cdll.LoadLibrary("brailleDisplayDrivers\\syncBraille\\SyncBraille.dll")
 except:
 	himsSyncBrailleLib = None
 
