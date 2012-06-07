@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2012 Gianluca Casalino <gianluca@spazioausili.net>
+#Copyright (C) 2010-2012 Gianluca Casalino, NV Access Limited
 
 from logHandler import log
 from ctypes import *
