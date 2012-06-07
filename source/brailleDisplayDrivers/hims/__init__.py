@@ -16,7 +16,7 @@ HIMS_KEYPRESSED = 0x01
 HIMS_KEYRELEASED = 0x02
 HIMS_CURSORROUTING = 0x00
 HIMS_CODE_DEVICES = {
-	1: 'Braille Sense (2 scrools mode)',
+	1: 'Braille Sense (2 scrolls mode)',
 	2: 'Braille Sense QWERTY',
 	3: 'Braille EDGE',
 	4: 'Braille Sense (4 scrolls mode)',
