@@ -202,7 +202,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 class InputGesture(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 	def __init__(self, keys):
-		global HIMS_KEYS
 		super(InputGesture, self).__init__()
 		if isinstance(keys,int):  
 			self.routingIndex = keys
@@ -212,11 +211,13 @@ class InputGesture(braille.BrailleDisplayGesture):
 		names = set()
 		for value in self.keyCodes: 
 			try:
-				if type(HIMS_KEYS[value]) == dict: 
-					name = (HIMS_KEYS[value][deviceFound] if deviceFound in HIMS_KEYS[value].keys() else HIMS_KEYS[value]['BrailleSense'])
-				else:
-					name = HIMS_KEYS[value]
+				name = HIMS_KEYS[value]
+				if isinstance(name, dict):
+					try:
+						name = name[deviceFound]
+					except KeyError:
+						name = name['BrailleSense']
 				names.add(name)
-			except:
+			except KeyError:
 				pass
 		self.id = "+".join(names)
