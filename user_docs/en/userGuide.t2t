@@ -394,8 +394,8 @@ In addition, you can manually force focus mode, after which it will remain in ef
 | Exit focus mode | escape | switches back to browse mode if focus mode was previously switched to automatically |
 | Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document) |
 | Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
-| Find next | NVDA+f3 | Finds the next occurence of the text in the document that you previously searched for |
-| Find previous | NVDA+shift+f3 | Finds the previous occurence of the text in the document you previously searched for |
+| Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
+| Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
 %kc:endInclude
 
 
@@ -789,7 +789,7 @@ This option controls how NVDA reports progress bar updates to you.
 
 It has the following options:
 - Off: Progress bars will not be reported as they change.
-- Speak: This option tells NVDA to speak the progress bar in percentages. Each time the progress bar changes, nvda will speak the new value.
+- Speak: This option tells NVDA to speak the progress bar in percentages. Each time the progress bar changes, NVDA will speak the new value.
 - Beep: This tells NVDA to beep each time the progress bar changes. The higher the beep, the closer the progress bar is to completion.
 - Beep and speak: This option tells NVDA to both beep and speak when a progress bar updates.
 -
@@ -1364,7 +1364,7 @@ Towards the bottom, you would see:
 
 ```
 INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
 ```
 
 From this, you can see that the script name is dateTime and the module.class is globalCommands.GlobalCommands.
