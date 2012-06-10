@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2011.2\n"
+"Project-Id-Version: NVDA bzr 2012.2:5236\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-05-17 05:30+0100\n"
+"POT-Creation-Date: 2012-05-30 18:13+0100\n"
 "PO-Revision-Date: 2012-05-29 02:41+0100\n"
 "Last-Translator: Radek Žalud <radek.zalud@seznam.cz>\n"
 "Language-Team: CS <http://cz.nvda-community.org/>\n"
@@ -35,8 +35,7 @@ msgid "%d hours and %d minutes remaining"
 msgstr "zbývá %d hodin a %d minut"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:830
-#: NVDAObjects/behaviors.py:54
+#: globalCommands.py:830 NVDAObjects/behaviors.py:54
 #, python-format
 msgid "%d percent"
 msgstr "%d procent"
@@ -47,8 +46,7 @@ msgstr "%d procent"
 msgid "%s %s through %s %s"
 msgstr "%s %s až %s %s"
 
-#: globalCommands.py:306
-#: globalCommands.py:750
+#: globalCommands.py:306 globalCommands.py:750
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s zkopírováno do schránky"
@@ -70,14 +68,12 @@ msgstr "end"
 msgid "%s items"
 msgstr "%s položek"
 
-#: virtualBuffers/__init__.py:227
-#: virtualBuffers/__init__.py:235
+#: virtualBuffers/__init__.py:227 virtualBuffers/__init__.py:235
 #, python-format
 msgid "%s landmark"
 msgstr "%s oblast stránky"
 
-#: braille.py:437
-#: speech.py:803
+#: braille.py:437 speech.py:803
 #, python-format
 msgid "%s of %s"
 msgstr "%s z %s"
@@ -121,8 +117,7 @@ msgstr "&Režim prohlížení..."
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
-#: updateCheck.py:205
-#: gui/addonGui.py:48
+#: updateCheck.py:205 gui/addonGui.py:48
 msgid "&Close"
 msgstr "&Zavřít"
 
@@ -131,8 +126,7 @@ msgid "&Comment"
 msgstr "&Komentář"
 
 #. Translators: The label of a button to continue with the operation.
-#: gui/installerGui.py:113
-#: gui/installerGui.py:162
+#: gui/installerGui.py:113 gui/installerGui.py:162
 msgid "&Continue"
 msgstr "&Pokračovat"
 
@@ -150,13 +144,13 @@ msgstr "Položky slovníku"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
-#: updateCheck.py:379
+#: updateCheck.py:382
 msgid "&Donate"
 msgstr "Přispět"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:399
+#: updateCheck.py:402
 msgid "&Done"
 msgstr "&Hotovo"
 
@@ -245,7 +239,7 @@ msgstr "&Přejít na"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:384
+#: updateCheck.py:387
 msgid "&Not now"
 msgstr "&Nyní ne"
 
@@ -279,13 +273,11 @@ msgstr "Výslovnost &interpunkčních znaků..."
 msgid "&Rate"
 msgstr "&Tempo:"
 
-#: gui/addonGui.py:41
-#: gui/settingsDialogs.py:1082
+#: gui/addonGui.py:41 gui/settingsDialogs.py:1082
 msgid "&Remove"
 msgstr "&Odstranit"
 
-#: gui/settingsDialogs.py:1030
-#: gui/settingsDialogs.py:1279
+#: gui/settingsDialogs.py:1030 gui/settingsDialogs.py:1279
 msgid "&Replacement"
 msgstr "&Nahradit"
 
@@ -375,16 +367,28 @@ msgid "..."
 msgstr ""
 
 #: gui/__init__.py:298
-msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
-msgstr "Dialog, ve kterém je možné nastavit výchozí slovník přidáváním položek do seznamu."
+msgid ""
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
+msgstr ""
+"Dialog, ve kterém je možné nastavit výchozí slovník přidáváním položek do "
+"seznamu."
 
 #: gui/__init__.py:302
-msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr "Dialog, ve kterém je možné nastavit dočasný slovník přidáváním položek do seznamu"
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"Dialog, ve kterém je možné nastavit dočasný slovník přidáváním položek do "
+"seznamu"
 
 #: gui/__init__.py:300
-msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
-msgstr "Dialog, ve kterém je možné nastavit slovník pro aktuální hlas přidáváním položek do seznamu"
+msgid ""
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Dialog, ve kterém je možné nastavit slovník pro aktuální hlas přidáváním "
+"položek do seznamu"
 
 #: versionInfo.py:40
 msgid "A free and open source screen reader for Microsoft Windows"
@@ -392,8 +396,12 @@ msgstr "Otevřený a volně šiřitelný odečítač obrazovky pro Microsoft Win
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui/installerGui.py:88
-msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
-msgstr "Ve Vašem systému byla nalezena předchozí verze NVDA. Tato kopie bude nyní aktualizována."
+msgid ""
+"A previous copy of NVDA has been found on your system. This copy will be "
+"updated."
+msgstr ""
+"Ve Vašem systému byla nalezena předchozí verze NVDA. Tato kopie bude nyní "
+"aktualizována."
 
 #: globalCommands.py:831
 msgid "AC power on"
@@ -404,8 +412,7 @@ msgstr "Napájení zapnuto"
 msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 series"
 
-#: gui/__init__.py:211
-#: gui/__init__.py:353
+#: gui/__init__.py:211 gui/__init__.py:353
 msgid "About NVDA"
 msgstr "O programu NVDA"
 
@@ -439,8 +446,12 @@ msgstr "Správce doplňků"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
 #: gui/addonGui.py:165
-msgid "Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"
-msgstr "Právě byly přidány nebo odebrány doplňky. Aby se projevily změny, je nutné restartovat NVDA. Restartovat nyní?"
+msgid ""
+"Add-ons have been added or removed. You must restart NVDA for these changes "
+"to take effect. Would you like to restart now?"
+msgstr ""
+"Právě byly přidány nebo odebrány doplňky. Aby se projevily změny, je nutné "
+"restartovat NVDA. Restartovat nyní?"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -449,8 +460,12 @@ msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "Při pohybu kurzoru oznamovat změny &formátování"
 
 #: globalCommands.py:128
-msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
-msgstr "V editačních polích a dokumentech přečte označený text. Pokud žádný text označen není, NVDA to ohlásí."
+msgid ""
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
+msgstr ""
+"V editačních polích a dokumentech přečte označený text. Pokud žádný text "
+"označen není, NVDA to ohlásí."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:36
@@ -466,11 +481,13 @@ msgstr "arabský plnopis"
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui/addonGui.py:78
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"Opravdu chcete nainstalovat tento doplněk? Instalujte pouze doplňky z důvěryhodného zdroje.\n"
+"Opravdu chcete nainstalovat tento doplněk? Instalujte pouze doplňky z "
+"důvěryhodného zdroje.\n"
 "Doplněk: {summary} {version}\n"
 "Autor: {author}"
 
@@ -728,8 +745,11 @@ msgid "Configure how and when the review cursor moves"
 msgstr "Nastavuje chování čtecího kurzoru"
 
 #: gui/__init__.py:284
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "Nastavuje rozložení klávesnice, čtení znaků, slov nebo klávesových příkazů"
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
+msgstr ""
+"Nastavuje rozložení klávesnice, čtení znaků, slov nebo klávesových příkazů"
 
 #. Translators: The progress message indicating that a connection is being established.
 #: updateCheck.py:254
@@ -743,7 +763,8 @@ msgstr "Tým NVDA"
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:104
 msgid "Copy &portable configuration to current user account"
-msgstr "&Zkopírovat nastavení přenosné verze  do účtu právě přihlášeného uživatele"
+msgstr ""
+"&Zkopírovat nastavení přenosné verze  do účtu právě přihlášeného uživatele"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 #: gui/installerGui.py:154
@@ -791,7 +812,9 @@ msgstr "Nelze uložit Nastavení - pravděpodobně souborový systém jen pro č
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:100
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "Vytvořit &zástupce na pracovní ploše a nastavit klávesovou zkratku (Ctrl+Alt+N)"
+msgstr ""
+"Vytvořit &zástupce na pracovní ploše a nastavit klávesovou zkratku (Ctrl+Alt"
+"+N)"
 
 #: gui/__init__.py:558
 msgid "Create &portable copy"
@@ -827,11 +850,18 @@ msgid "Cursor blink rate (ms)"
 msgstr "&Rychlost blikání kurzoru v milisekundách"
 
 #: gui/settingsDialogs.py:190
-msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
-msgstr "Ve Vaší složce s nastavením NVDA byly nalezeny uživatelské zásuvné moduly. Jejich překopírováním do systémového profilu se můžete vystavit bezpečnostnímu riziku. Opravdu chcete Vaše nastavení zkopírovat?"
+msgid ""
+"Custom plugins were detected in your user settings directory. Copying these "
+"to the system profile could be a security risk. Do you still wish to copy "
+"your settings?"
+msgstr ""
+"Ve Vaší složce s nastavením NVDA byly nalezeny uživatelské zásuvné moduly. "
+"Jejich překopírováním do systémového profilu se můžete vystavit "
+"bezpečnostnímu riziku. Opravdu chcete Vaše nastavení zkopírovat?"
 
 #: globalCommands.py:218
-msgid "Cycles through speech symbol levels which determine what symbols are spoken"
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr "Přepíná mezi několika úrovněmi vyslovování interpunkce."
 
 #. Translators: The name of a braille table displayed in the
@@ -853,7 +883,9 @@ msgstr "Datum:"
 
 #: globalCommands.py:154
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "Snižuje hodnotu aktuálně zvoleného parametru v kruhu nastavení hlasového výstupu"
+msgstr ""
+"Snižuje hodnotu aktuálně zvoleného parametru v kruhu nastavení hlasového "
+"výstupu"
 
 #: gui/__init__.py:157
 msgid "Default dictionary"
@@ -885,8 +917,7 @@ msgstr "Ohlašování &formátování dokumentu"
 msgid "Document Formatting"
 msgstr "Ohlašování formátování dokumentu"
 
-#: installer.py:178
-#: installer.py:179
+#: installer.py:158 installer.py:159
 msgid "Documentation"
 msgstr "Dokumentace"
 
@@ -900,7 +931,7 @@ msgid "Download and &install update"
 msgstr "Stáhnout a &nainstalovat aktualizaci"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:321
+#: updateCheck.py:324
 msgid "Downloading"
 msgstr "Stahování"
 
@@ -921,9 +952,7 @@ msgstr "Holandskobelgický plnopis"
 msgid "Dutch (netherlands) grade 1"
 msgstr "Holandský plnopis"
 
-#: gui/__init__.py:367
-#: gui/__init__.py:566
-#: gui/logViewer.py:34
+#: gui/__init__.py:367 gui/__init__.py:566 gui/logViewer.py:34
 msgid "E&xit"
 msgstr "&Konec"
 
@@ -933,8 +962,7 @@ msgstr "&Slovo, na kterém je kurzor, zobrazit počítačovým braillovým písm
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects/window/winword.py:410
-#: NVDAObjects/window/winword.py:429
+#: NVDAObjects/window/winword.py:410 NVDAObjects/window/winword.py:429
 msgid "Edge of table"
 msgstr "Okraj tabulky"
 
@@ -1001,19 +1029,10 @@ msgstr "amer. angličtina - zkratkopis"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:128
-#: updateCheck.py:341
-#: gui/__init__.py:144
-#: gui/__init__.py:153
-#: gui/addonGui.py:74
-#: gui/addonGui.py:88
-#: gui/addonGui.py:107
-#: gui/installerGui.py:54
-#: gui/installerGui.py:186
-#: gui/installerGui.py:194
-#: gui/installerGui.py:225
-#: gui/logViewer.py:74
-#: gui/settingsDialogs.py:208
+#: updateCheck.py:128 updateCheck.py:344 gui/addonGui.py:74 gui/addonGui.py:88
+#: gui/addonGui.py:107 gui/__init__.py:144 gui/__init__.py:153
+#: gui/installerGui.py:54 gui/installerGui.py:186 gui/installerGui.py:194
+#: gui/installerGui.py:225 gui/logViewer.py:74 gui/settingsDialogs.py:208
 msgid "Error"
 msgstr "chyba"
 
@@ -1027,7 +1046,7 @@ msgid "Error copying NVDA user settings"
 msgstr "Chyba při kopírování uživatelského nastavení NVDA"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:340
+#: updateCheck.py:343
 msgid "Error downloading update."
 msgstr "Při stahování Aktualizace došlo k chybě."
 
@@ -1077,12 +1096,11 @@ msgstr "zápatí tabulky"
 msgid "Even pages header"
 msgstr "záhlaví tabulky"
 
-#: gui/__init__.py:170
-#: gui/__init__.py:367
+#: gui/__init__.py:170 gui/__init__.py:367
 msgid "Exit NVDA"
 msgstr "Ukončit NVDA"
 
-#: installer.py:177
+#: installer.py:157
 msgid "Explore NVDA user configuration directory"
 msgstr "Otevřít složku s uživatelským nastavením NVDA"
 
@@ -1102,8 +1120,12 @@ msgstr "Instalace doplňku z umístění %s se nezdařila"
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #: gui/addonGui.py:72
 #, python-format
-msgid "Failed to open add-on package file at %s - missing file or invalid file format"
-msgstr "otevření balíčku s doplňkem z umístění %s se nezdařilo - chybějící nebo neplatný formát souboru"
+msgid ""
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
+msgstr ""
+"otevření balíčku s doplňkem z umístění %s se nezdařilo - chybějící nebo "
+"neplatný formát souboru"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1119,8 +1141,7 @@ msgstr "rychlý posun vpřed"
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui/installerGui.py:46
-#: gui/installerGui.py:219
+#: gui/installerGui.py:46 gui/installerGui.py:219
 msgid "File in Use"
 msgstr "soubor je již používán"
 
@@ -1171,8 +1192,14 @@ msgid "Footnotes"
 msgstr "poznámky pod čarou"
 
 #: gui/settingsDialogs.py:240
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "Aby se projevilo nové nastavení jazyka, je třeba uložit nastavení a restartovat NVDA. Stiskněte Enter pro uložení a restart nebo Storno pro ruční uložení a ukončení v pozdějším čase"
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"Aby se projevilo nové nastavení jazyka, je třeba uložit nastavení a "
+"restartovat NVDA. Stiskněte Enter pro uložení a restart nebo Storno pro "
+"ruční uložení a ukončení v pozdějším čase"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:34
@@ -1215,8 +1242,7 @@ msgid "French (unified) Grade 2"
 msgstr "francouzský zkratkopis"
 
 #. Translators: This is presented in outlook or live mail, email sender
-#: appModules/msimn.py:30
-#: appModules/msimn.py:46
+#: appModules/msimn.py:30 appModules/msimn.py:46
 msgid "From:"
 msgstr "Od:"
 
@@ -1316,12 +1342,18 @@ msgid "Icelandic 8 dot computer braille"
 msgstr "Islandské - 8-bodové počítačové písmo"
 
 #: globalCommands.py:136
-msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "Stiskne-li se jednou, oznámí aktuální čas. Stiskne-li se dvakrát za sebou, oznámí aktuální datum."
+msgid ""
+"If pressed once, reports the current time. If pressed twice, reports the "
+"current date"
+msgstr ""
+"Stiskne-li se jednou, oznámí aktuální čas. Stiskne-li se dvakrát za sebou, "
+"oznámí aktuální datum."
 
 #: globalCommands.py:145
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "Zvyšuje hodnotu aktuálně zvoleného parametru v kruhu nastavení hlasového výstupu"
+msgstr ""
+"Zvyšuje hodnotu aktuálně zvoleného parametru v kruhu nastavení hlasového "
+"výstupu"
 
 #. Translators: The title of the Install NVDA dialog.
 #: gui/installerGui.py:82
@@ -1329,7 +1361,7 @@ msgid "Install NVDA"
 msgstr "Nainstalovat NVDA"
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
-#: updateCheck.py:350
+#: updateCheck.py:353
 msgid "Install Update"
 msgstr "Nainstalovat Aktualizaci"
 
@@ -1370,8 +1402,7 @@ msgstr "Italský plnopis"
 msgid "Key words:"
 msgstr "Klíčová slova"
 
-#: installer.py:178
-#: gui/__init__.py:336
+#: installer.py:158 gui/__init__.py:336
 msgid "Keyboard Commands Quick Reference"
 msgstr "Seznam klávesových zkratek"
 
@@ -1456,8 +1487,12 @@ msgid "Log level"
 msgstr "Úroveň logování"
 
 #: globalCommands.py:768
-msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
-msgstr "Zaznamená informace o objektu pod čtecím kurzorem, které mohou být užitečné pro vývojáře, a zobrazí je v Prohlížeči logu."
+msgid ""
+"Logs information about the current navigator object which is useful to "
+"developers and activates the log viewer so the information can be examined."
+msgstr ""
+"Zaznamená informace o objektu pod čtecím kurzorem, které mohou být užitečné "
+"pro vývojáře, a zobrazí je v Prohlížeči logu."
 
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers/lilli.py:44
@@ -1470,8 +1505,12 @@ msgid "Manage &add-ons"
 msgstr "Spravovat doplňky"
 
 #: globalCommands.py:930
-msgid "Marks the current position of the review cursor as the start of text to be copied"
-msgstr "Označí aktuální pozici čtecího kurzoru jako začátek textu prozkopírování do schránky"
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr ""
+"Označí aktuální pozici čtecího kurzoru jako začátek textu prozkopírování do "
+"schránky"
 
 #: gui/settingsDialogs.py:1195
 msgid "Message timeout (sec)"
@@ -1492,8 +1531,12 @@ msgstr "Přesunuji prohlížený objekt k myši"
 
 #: globalCommands.py:273
 #, fuzzy
-msgid "Moves navigator object to the object represented by the text at the position of the review cursor within flat review"
-msgstr "Přesune se na objekt reprezentovaný textem, v němž se při plošném prohlížení nachází čtecí kurzor"
+msgid ""
+"Moves navigator object to the object represented by the text at the position "
+"of the review cursor within flat review"
+msgstr ""
+"Přesune se na objekt reprezentovaný textem, v němž se při plošném prohlížení "
+"nachází čtecí kurzor"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 #: virtualBuffers/__init__.py:1414
@@ -1534,48 +1577,89 @@ msgid "Moves the navigator object to the previous object"
 msgstr "Přejde na předchozí objekt"
 
 #: globalCommands.py:482
-msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na spodní řádek právě prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Přesune čtecí kurzor na spodní řádek právě prohlíženého objektu a přečte ho"
 
 #: globalCommands.py:526
-msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na první znak aktuálního řádku v rámci prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Přesune čtecí kurzor na první znak aktuálního řádku v rámci prohlíženého "
+"objektu a přečte ho"
 
 #: globalCommands.py:590
-msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na poslední znak aktuálního řádku v rámci prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Přesune čtecí kurzor na poslední znak aktuálního řádku v rámci prohlíženého "
+"objektu a přečte ho"
 
 #: globalCommands.py:579
-msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na následující znak právě prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Přesune čtecí kurzor na následující znak právě prohlíženého objektu a přečte "
+"ho"
 
 #: globalCommands.py:474
-msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na následující řádek právě prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Přesune čtecí kurzor na následující řádek právě prohlíženého objektu a "
+"přečte ho"
 
 #: globalCommands.py:516
-msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na následující slovo právě prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
+msgstr ""
+"Přesune čtecí kurzor na následující slovo právě prohlíženého objektu a "
+"přečte ho"
 
 #: globalCommands.py:544
-msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na předchozí znak právě prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Přesune čtecí kurzor na předchozí znak právě prohlíženého objektu a přečte ho"
 
 #: globalCommands.py:452
-msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na předchozí řádek právě prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Přesune čtecí kurzor na předchozí řádek právě prohlíženého objektu a přečte "
+"ho"
 
 #: globalCommands.py:494
-msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na předchozí slovo právě prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
+msgstr ""
+"Přesune čtecí kurzor na předchozí slovo právě prohlíženého objektu a přečte "
+"ho"
 
 #: globalCommands.py:440
-msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "Přesune čtecí kurzor na horní řádek právě prohlíženého objektu a přečte ho"
+msgid ""
+"Moves the review cursor to the top line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Přesune čtecí kurzor na horní řádek právě prohlíženého objektu a přečte ho"
 
 #: globalCommands.py:260
-msgid "Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
-msgstr "Přepíná do plošného prohlížení pro aktuální obrazovku či dokument a nastaví čtecí kurzor na pozici právě prohlíženého objektu."
+msgid ""
+"Moves to flat review for the screen (or document if currently inside one) "
+"and positions the review cursor at the location of the current object"
+msgstr ""
+"Přepíná do plošného prohlížení pro aktuální obrazovku či dokument a nastaví "
+"čtecí kurzor na pozici právě prohlíženého objektu."
 
 #: globalCommands.py:163
 msgid "Moves to the next available setting in the synth settings ring"
@@ -1627,8 +1711,7 @@ msgstr "NVDA spuštěn"
 msgid "NVDA version {version} is available."
 msgstr "K dispozici je nová verze {version}."
 
-#: installer.py:175
-#: gui/__init__.py:340
+#: installer.py:155 gui/__init__.py:340
 msgid "NVDA web site"
 msgstr "Webová stránka programu NVDA"
 
@@ -1693,7 +1776,9 @@ msgstr "nenalezen"
 
 #: globalCommands.py:272
 msgid "No object at flat review position"
-msgstr "Nelze najít objekt, v jehož textu se při plošném prohlížení nachází čtecí kurzor"
+msgstr ""
+"Nelze najít objekt, v jehož textu se při plošném prohlížení nachází čtecí "
+"kurzor"
 
 #: globalCommands.py:413
 msgid "No objects inside"
@@ -1703,9 +1788,7 @@ msgstr ""
 msgid "No previous"
 msgstr "nenalezen"
 
-#: globalCommands.py:141
-#: globalCommands.py:150
-#: globalCommands.py:159
+#: globalCommands.py:141 globalCommands.py:150 globalCommands.py:159
 #: globalCommands.py:168
 msgid "No settings"
 msgstr "Žádná nastavení"
@@ -1771,8 +1854,7 @@ msgstr "Norský stupeň 3"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers/__init__.py:1393
-#: virtualBuffers/__init__.py:1407
+#: virtualBuffers/__init__.py:1393 virtualBuffers/__init__.py:1407
 #, fuzzy
 msgid "Not in a container"
 msgstr "Mimo tabulku"
@@ -1785,8 +1867,7 @@ msgstr "Mimo buňky v tabulce"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects/window/winword.py:397
-#: NVDAObjects/window/winword.py:416
+#: NVDAObjects/window/winword.py:397 NVDAObjects/window/winword.py:416
 msgid "Not in table"
 msgstr "Mimo tabulku"
 
@@ -1797,8 +1878,13 @@ msgstr "Prezentace objektů"
 
 #: globalCommands.py:327
 #, python-format
-msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
-msgstr "Umístění okrajů objektu %.1f procent z leva do prava, %.1f procent od shora dolů, %.1f procent z prava do leva, %.1f procent se zdola nahoru"
+msgid ""
+"Object edges positioned %.1f per cent from left edge of screen, %.1f per "
+"cent from top edge of screen, width is %.1f per cent of screen, height is "
+"%.1f per cent of screen"
+msgstr ""
+"Umístění okrajů objektu %.1f procent z leva do prava, %.1f procent od shora "
+"dolů, %.1f procent z prava do leva, %.1f procent se zdola nahoru"
 
 #: gui/__init__.py:463
 msgid "Options"
@@ -1830,8 +1916,12 @@ msgid "Pattern"
 msgstr "Vzor"
 
 #: globalCommands.py:432
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "Provede výchozí akci na prohlíženém objektu (např. jedná-li se o tlačítko pak jej stiskne."
+msgid ""
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
+msgstr ""
+"Provede výchozí akci na prohlíženém objektu (např. jedná-li se o tlačítko "
+"pak jej stiskne."
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:16
@@ -1839,7 +1929,7 @@ msgid "Play"
 msgstr "přehrát"
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:370
+#: updateCheck.py:373
 msgid "Please Donate"
 msgstr "Prosím přispějte"
 
@@ -1872,7 +1962,9 @@ msgstr "Prosím vyčkejte na vytvoření přenosné kopie NVDA."
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 #: gui/settingsDialogs.py:199
 msgid "Please wait while settings are copied to the system configuration."
-msgstr "Prosím vyčkejte na dokončení kopírování vašeho nastavení během přihlašovací obrazovky."
+msgstr ""
+"Prosím vyčkejte na dokončení kopírování vašeho nastavení během přihlašovací "
+"obrazovky."
 
 #. Translators: The message displayed while an addon is being installed.
 #: gui/addonGui.py:95
@@ -1917,8 +2009,12 @@ msgid "Presents a list of links, headings or landmarks"
 msgstr "Zobrazí seznam odkazů, nadpisů, nebo oblastí stránky."
 
 #: globalCommands.py:358
-msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
-msgstr "Nnastaví fokus na prohlížený objekt. Dvojitý stisk přesune textový kurzor na pozici čtecího kurzoru."
+msgid ""
+"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"Nnastaví fokus na prohlížený objekt. Dvojitý stisk přesune textový kurzor na "
+"pozici čtecího kurzoru."
 
 #: NVDAObjects/window/winword.py:89
 #, fuzzy
@@ -1996,8 +2092,12 @@ msgid "Reload plugins"
 msgstr "Znovu načíst zásuvné &moduly"
 
 #: globalCommands.py:980
-msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
-msgstr "Znovu načte aplikační a zásuvné moduly bez nutnosti restartovat NVDA. To Může být užitečné pro vývojáře."
+msgid ""
+"Reloads app modules and global plugins without restarting NVDA, which can be "
+"Useful for developers"
+msgstr ""
+"Znovu načte aplikační a zásuvné moduly bez nutnosti restartovat NVDA. To "
+"Může být užitečné pro vývojáře."
 
 #. Translators: The label of a button to remind the user later about performing some action.
 #: updateCheck.py:199
@@ -2008,8 +2108,7 @@ msgstr "Připomenout &později"
 msgid "Remove Add-on"
 msgstr "Odstranit doplněk"
 
-#: gui/settingsDialogs.py:1065
-#: gui/settingsDialogs.py:1267
+#: gui/settingsDialogs.py:1065 gui/settingsDialogs.py:1267
 msgid "Replacement"
 msgstr "Nahradit"
 
@@ -2199,28 +2298,54 @@ msgid "Reports any comments in the comments window"
 msgstr ""
 
 #: globalCommands.py:687
-msgid "Reports formatting info for the current review cursor position within a document"
-msgstr "V dokumentu ohlašuje informace o formátování na aktuální pozici čtecího kurzoru"
+msgid ""
+"Reports formatting info for the current review cursor position within a "
+"document"
+msgstr ""
+"V dokumentu ohlašuje informace o formátování na aktuální pozici čtecího "
+"kurzoru"
 
 #: globalCommands.py:561
-msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "Přečte znak, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. Stiskne-li se dvakrát za sebou, bude znak ohlášen pomocí hláskovací tabulky a trojitý stisk ohlásí jeho ascii a hexadecimální hodnotu."
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated. Pressing twice reports a description or example of that "
+"character. Pressing three times reports the numeric value of the character "
+"in decimal and hexadecimal"
+msgstr ""
+"Přečte znak, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. "
+"Stiskne-li se dvakrát za sebou, bude znak ohlášen pomocí hláskovací tabulky "
+"a trojitý stisk ohlásí jeho ascii a hexadecimální hodnotu."
 
 #: globalCommands.py:79
-msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
-msgstr "Přečte aktuální řádek, na kterém se nachází textový kurzor. Stiskne-li se dvakrát za sebou, řádek bude vyhláskován"
+msgid ""
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
+msgstr ""
+"Přečte aktuální řádek, na kterém se nachází textový kurzor. Stiskne-li se "
+"dvakrát za sebou, řádek bude vyhláskován"
 
 #: globalCommands.py:309
-msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
-msgstr "Ohlásí aktuální prohlížený objekt.Stiskne-li se dvakrát rychle po sobě, objekt bude vyhláskován a trojitý stisk ho zkopíruje do schránky."
+msgid ""
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
+msgstr ""
+"Ohlásí aktuální prohlížený objekt.Stiskne-li se dvakrát rychle po sobě, "
+"objekt bude vyhláskován a trojitý stisk ho zkopíruje do schránky."
 
 #: globalCommands.py:328
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Ohlásí šířku, výšku a pozici prohlíženého objektu"
 
 #: globalCommands.py:462
-msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr "Přečte řádek, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. Stiskne-li se dvakrát za sebou, řádek bude vyhláskován a trojitý stisk ho vyhláskuje pomocí hláskovací tabulky."
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the current line will be spelled. "
+"Pressing three times will spell the line using character descriptions."
+msgstr ""
+"Přečte řádek, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. "
+"Stiskne-li se dvakrát za sebou, řádek bude vyhláskován a trojitý stisk ho "
+"vyhláskuje pomocí hláskovací tabulky."
 
 #: appModules/foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
@@ -2231,8 +2356,13 @@ msgid "Reports the text on the Windows clipboard"
 msgstr "Přečte text ve schránce"
 
 #: globalCommands.py:751
-msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
-msgstr "Přečte titulek aktuálního aplikačního okna, nebo okna v popředí. Po dvojitém stisku bude titulek vyhláskován a po trojitém bude skopírován do schránky"
+msgid ""
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
+msgstr ""
+"Přečte titulek aktuálního aplikačního okna, nebo okna v popředí. Po dvojitém "
+"stisku bude titulek vyhláskován a po trojitém bude skopírován do schránky"
 
 #: gui/__init__.py:357
 msgid "Reset all settings to saved state"
@@ -2244,8 +2374,12 @@ msgid "Restart NVDA"
 msgstr "Restart NVDA"
 
 #: globalCommands.py:948
-msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
-msgstr "Získá text od prve nastavené počáteční značky do aktuální pozice čtecího kurzoru a zkopíruje ho do schránky"
+msgid ""
+"Retrieves the text from the previously set start marker up to and including "
+"the current position of the review cursor and copies it to the clipboard"
+msgstr ""
+"Získá text od prve nastavené počáteční značky do aktuální pozice čtecího "
+"kurzoru a zkopíruje ho do schránky"
 
 #: gui/__init__.py:288
 msgid "Review &cursor..."
@@ -2314,11 +2448,17 @@ msgid "Serbian grade 1"
 msgstr "srbský plnopis"
 
 #: globalCommands.py:339
-msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr "Prohlíženým objektem se stane zaměřený objekt a čtecí kurzor bude nastaven na pozici systémového kurzoru, je-li to možné."
+msgid ""
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr ""
+"Prohlíženým objektem se stane zaměřený objekt a čtecí kurzor bude nastaven "
+"na pozici systémového kurzoru, je-li to možné."
 
 #: globalCommands.py:246
-msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
+msgid ""
+"Sets the navigator object to the current object under the mouse pointer and "
+"speaks it"
 msgstr "Prohlíženým objektem se stane objekt pod kurzorem myši a bude ohlášen."
 
 #: brailleDisplayDrivers/handyTech.py:86
@@ -2438,12 +2578,22 @@ msgid "Speak typed &words"
 msgstr "Hlásit psaná &slova"
 
 #: globalCommands.py:851
-msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
-msgstr "Přečte a vyhláskuje název souboru právě spuštěné aplikace spolu s názvem aktivního aplikačního modulu NVDA."
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr ""
+"Přečte a vyhláskuje název souboru právě spuštěné aplikace spolu s názvem "
+"aktivního aplikačního modulu NVDA."
 
 #: globalCommands.py:504
-msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
-msgstr "Přečte slovo, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. Stiskne-li se dvakrát za sebou, slovo bude vyhláskováno a trojitý stisk ho vyhláskuje pomocí hláskovací tabulky."
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated. Pressing twice spells the word. Pressing three times spells the "
+"word using character descriptions"
+msgstr ""
+"Přečte slovo, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. "
+"Stiskne-li se dvakrát za sebou, slovo bude vyhláskováno a trojitý stisk ho "
+"vyhláskuje pomocí hláskovací tabulky."
 
 #: gui/__init__.py:304
 msgid "Speech &dictionaries"
@@ -2477,9 +2627,7 @@ msgid "Subject:"
 msgstr "Předmět:"
 
 #. Translators: The title of a dialolg presented to indicate a successful operation.
-#: gui/installerGui.py:67
-#: gui/installerGui.py:232
-#: gui/settingsDialogs.py:210
+#: gui/installerGui.py:67 gui/installerGui.py:232 gui/settingsDialogs.py:210
 msgid "Success"
 msgstr "Hotovo"
 
@@ -2554,27 +2702,41 @@ msgstr "Textový rámeček"
 
 #: globalCommands.py:924
 #, python-format
-msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Schránka obsahuje velké množství textu v počtu %s znaků."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 #: gui/installerGui.py:44
-msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
+msgid ""
+"The installation is unable to remove or overwrite a file. Another copy of "
+"NVDA may be running on another logged-on user account. Please make sure all "
+"installed copies of NVDA are shut down and try the installation again."
 msgstr ""
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui/installerGui.py:52
-msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
-msgstr "Instalace NVDA nebyla úspěšná. Pro více informací prosím zkontrolujte log soubor."
+msgid ""
+"The installation of NVDA failed. Please check the Log Viewer for more "
+"information."
+msgstr ""
+"Instalace NVDA nebyla úspěšná. Pro více informací prosím zkontrolujte log "
+"soubor."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #: gui/installerGui.py:91
-msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
+msgid ""
+"The installation path for NVDA has changed. it will now  be installed in "
+"{path}"
 msgstr ""
 
 #: globalCommands.py:841
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "Další stisknutá klávesa nebude interpretována programem NVDA, ale bude předána ke zpracování ve Windows"
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"Další stisknutá klávesa nebude interpretována programem NVDA, ale bude "
+"předána ke zpracování ve Windows"
 
 #: globalCommands.py:938
 msgid "The start marker must reside within the same object"
@@ -2586,7 +2748,9 @@ msgstr "Žádný text ve schránce"
 
 #. Translators: The message displayed when an an addon already seems to be installed.
 #: gui/addonGui.py:86
-msgid "This add-on seems to already be installed. Please remove the existing add-on and try again."
+msgid ""
+"This add-on seems to already be installed. Please remove the existing add-on "
+"and try again."
 msgstr ""
 
 #: gui/settingsDialogs.py:233
@@ -2595,13 +2759,18 @@ msgstr "Tato změna vyžaduje administrátorská oprávnění."
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui/installerGui.py:140
-msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
-msgstr "Prosím zvolte umístění a další možnosti pro vytvoření přenosné kopie NVDA a potom stiskněte tlačítko pokračovat"
+msgid ""
+"To create a portable copy of NVDA, please select the path and other options "
+"and then press Continue"
+msgstr ""
+"Prosím zvolte umístění a další možnosti pro vytvoření přenosné kopie NVDA a "
+"potom stiskněte tlačítko pokračovat"
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui/installerGui.py:85
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr "Pro instalaci NVDA na Váš harddisk prosím stiskněte tlačítko Pokračovat."
+msgstr ""
+"Pro instalaci NVDA na Váš harddisk prosím stiskněte tlačítko Pokračovat."
 
 #. Translators: This is presented in outlook or live mail when creating a new email 'to:' or 'recipient:'
 #: appModules/msimn.py:22
@@ -2610,46 +2779,76 @@ msgstr "Komu:"
 
 #: globalCommands.py:911
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "Přepíná propojení braillského kurzoru mezi pozicí systémového fokusu nebo čtecího kurzoru"
+msgstr ""
+"Přepíná propojení braillského kurzoru mezi pozicí systémového fokusu nebo "
+"čtecího kurzoru"
 
 #: globalCommands.py:62
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "Zapíná a vypíná režim spánku pro aktivní aplikaci"
 
 #: globalCommands.py:785
-msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "Přepíná režim ohlašování indikátoru průběhu mezi pípat, ohlašovat, pípat a ohlašovat, nebo vypnout"
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Přepíná režim ohlašování indikátoru průběhu mezi pípat, ohlašovat, pípat a "
+"ohlašovat, nebo vypnout"
 
 #: globalCommands.py:636
-msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Přepíná mezi režimem prohlížení a formulářovým režimem. Ve formulářovém režimu můžete přímo obsluhovat formulářové prvky na webových stránkách a dokumentech, zatímco v režimu prohlížení můžete procházet dokument kurzorovými šipkami a klávesovými zkratkami pro různé typy prvků"
+msgid ""
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
+msgstr ""
+"Přepíná mezi režimem prohlížení a formulářovým režimem. Ve formulářovém "
+"režimu můžete přímo obsluhovat formulářové prvky na webových stránkách a "
+"dokumentech, zatímco v režimu prohlížení můžete procházet dokument "
+"kurzorovými šipkami a klávesovými zkratkami pro různé typy prvků"
 
 #: globalCommands.py:607
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "Přepíná režimy řeči mezi vypnuto, pípání a mluvení. Při vypnuté řeči je NVDA zticha, při pípání jsou hlášení nahrazena pípnutím a mluvení zajišťuje normální hlasovou odezvu"
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"Přepíná režimy řeči mezi vypnuto, pípání a mluvení. Při vypnuté řeči je NVDA "
+"zticha, při pípání jsou hlášení nahrazena pípnutím a mluvení zajišťuje "
+"normální hlasovou odezvu"
 
 #: virtualBuffers/__init__.py:812
-msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
 msgstr "Zapíná a vypíná zachování vzhledu jako na obrazovce"
 
 #: globalCommands.py:815
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Zapíná a vypíná změnu prohlíženého objektu při změně fokusu"
 
 #: globalCommands.py:805
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "Zapíná a vypíná pohyb čtecího kurzoru spolu s textovým kurzorem"
 
 #: globalCommands.py:795
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "Zapíná a vypíná hlášení dynamických změn obsahu, například v oknech příkazového řádku"
+msgid ""
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr ""
+"Zapíná a vypíná hlášení dynamických změn obsahu, například v oknech "
+"příkazového řádku"
 
 #: globalCommands.py:183
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Zapíná a vypíná hlášení psaných znaků"
 
 #: globalCommands.py:203
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
 msgstr "Zapíná a vypíná ohlašování kláves, které nevkládají znaky"
 
 #: globalCommands.py:193
@@ -2681,8 +2880,12 @@ msgid "Turkish grade 1"
 msgstr "Turecký plnopis"
 
 #: globalCommands.py:47
-msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Zapíná a vypíná výukový režim. Je-li zapnut, NVDA ohlásí název a popis skriptu přiřazeného k dané klávese, je-li nějaký k dispozici."
+msgid ""
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
+msgstr ""
+"Zapíná a vypíná výukový režim. Je-li zapnut, NVDA ohlásí název a popis "
+"skriptu přiřazeného k dané klávese, je-li nějaký k dispozici."
 
 #: pythonConsole.py:40
 msgid "Type exit() to exit the console"
@@ -2719,13 +2922,13 @@ msgstr "Jednotný anglický plnopis"
 msgid "Unified English Braille Code grade 2"
 msgstr "jednotný anglický skratkopis"
 
-#: installer.py:176
+#: installer.py:156
 msgid "Uninstall NVDA"
 msgstr "Odinstalovat NVDA"
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
-#: updateCheck.py:348
+#: updateCheck.py:351
 msgid "Update downloaded. It will now be installed."
 msgstr "Stahování aktualizace bylo dokončeno. Nyní bude zahájena instalace."
 
@@ -2748,8 +2951,7 @@ msgstr "Hláskování řídí hlasový výstup je-li podporováno"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/__init__.py:464
-#: gui/settingsDialogs.py:572
+#: gui/__init__.py:464 gui/settingsDialogs.py:572
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Použít CapsLock jako NVDA klávesu"
 
@@ -2759,12 +2961,19 @@ msgid "Use NVDA on the Windows &logon screen"
 msgstr "Spouštět nvda při zobrazení přihlašovací obrazovky"
 
 #: gui/settingsDialogs.py:165
-msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "Spouštět nvda při zobrazení přihlašovací obrazovky (vyžaduje administrátorská oprávnění)"
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr ""
+"Spouštět nvda při zobrazení přihlašovací obrazovky (vyžaduje "
+"administrátorská oprávnění)"
 
 #: gui/settingsDialogs.py:170
-msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
-msgstr "Použít aktuální nastavení NVDA pro přihlašovací a další zabezpečené obrazovky (vyžaduje administrátorská oprávnění)"
+msgid ""
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
+msgstr ""
+"Použít aktuální nastavení NVDA pro přihlašovací a další zabezpečené "
+"obrazovky (vyžaduje administrátorská oprávnění)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -2778,8 +2987,7 @@ msgstr "Použít &Insert jako NVDA klávesu"
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Použít &numerický Insert jako NVDA klávesu"
 
-#: installer.py:179
-#: gui/__init__.py:334
+#: installer.py:159 gui/__init__.py:334
 msgid "User Guide"
 msgstr "Uživatelská příručka"
 
@@ -2813,18 +3021,26 @@ msgstr "Slovník pro aktuální hlas (%s)"
 msgid "Warning"
 msgstr "Upozornění"
 
-#: updateCheck.py:361
+#: updateCheck.py:364
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "Potřebujeme vaši pomoc pro další rozvoj a vylepšování programu NVDA.\n"
-"Tento projekt stojí primárně na příspěvcích a darech. Tím, že se rozhodnete přispět, pomůžete financovat rozvoj NVDA tak, aby se mohly vývojáři tomuto programu věnovat opravdu naplno, tedy na úrovni celého pracovního úvazku.\n"
-"I kdybychom za každé stažení NVDA získali příspěvek ve výši pouhých 200 korun, mohli bychom tak pokrýt veškeré budoucí náklady nutné pro další vývoj tohoto programu.\n"
-"Všechny příspěvky jsou přijímány neziskovou organizací NV Access, která na rozvoji NVDA pracuje.\n"
+"Tento projekt stojí primárně na příspěvcích a darech. Tím, že se rozhodnete "
+"přispět, pomůžete financovat rozvoj NVDA tak, aby se mohly vývojáři tomuto "
+"programu věnovat opravdu naplno, tedy na úrovni celého pracovního úvazku.\n"
+"I kdybychom za každé stažení NVDA získali příspěvek ve výši pouhých 200 "
+"korun, mohli bychom tak pokrýt veškeré budoucí náklady nutné pro další vývoj "
+"tohoto programu.\n"
+"Všechny příspěvky jsou přijímány neziskovou organizací NV Access, která na "
+"rozvoji NVDA pracuje.\n"
 "Děkujeme za vaši podporu."
 
 #: gui/__init__.py:346
@@ -2838,19 +3054,25 @@ msgstr "Vítejte  v programu NVDA"
 #: gui/__init__.py:450
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
 msgstr ""
 "Vítejte v programu NVDA!\n"
-"Většina příkazů, které lze použít pro ovládání programu NVDA je tvořena soustiskem tzv. klávesy NVDA spolu s dalšími klávesami.\n"
+"Většina příkazů, které lze použít pro ovládání programu NVDA je tvořena "
+"soustiskem tzv. klávesy NVDA spolu s dalšími klávesami.\n"
 "Jako klávesa NVDA je standardně přednastavena klávesa Insert.\n"
-"Můžete použít buď hlavní Insert, nebo Insert na numerickém bloku klávesnice.\n"
+"Můžete použít buď hlavní Insert, nebo Insert na numerickém bloku "
+"klávesnice.\n"
 "Jako klávesu NVDA lze místo Insertu též nastavit klávesu CapsLock.\n"
 "Pro vyvolání nabídky programu NVDA stiskněte kdykoli klávesu NVDA+n.\n"
-"V tomto menu najdete položky pro nastavení, nápovědu a další funkce programu NVDA.\n"
+"V tomto menu najdete položky pro nastavení, nápovědu a další funkce programu "
+"NVDA.\n"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2875,10 +3097,14 @@ msgstr "Zapíše současné nastavení do souboru nvda.ini"
 #: gui/__init__.py:503
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
 msgstr ""
 "V konfiguračním souboru se vyskytla chyba. \n"
-"Stiskněte OK pro její opravu, nebo cancel pro pozdější ruční opravu konfiguračního souboru. Více podrobností o chybě naleznete v prohlížeči logu.\n"
+"Stiskněte OK pro její opravu, nebo cancel pro pozdější ruční opravu "
+"konfiguračního souboru. Více podrobností o chybě naleznete v prohlížeči "
+"logu.\n"
 
 #: core.py:85
 msgid ""
@@ -2892,8 +3118,7 @@ msgstr ""
 msgid "activates the current object in the document"
 msgstr "Aktivovat aktuální objekt v dokumentu"
 
-#: controlTypes.py:312
-#: controlTypes.py:336
+#: controlTypes.py:312 controlTypes.py:336
 msgid "alert"
 msgstr "upozornění"
 
@@ -3004,9 +3229,7 @@ msgstr "černá"
 
 #. Translators: This is spoken when nvda moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
-#: speech.py:164
-#: speech.py:329
-#: speech.py:739
+#: speech.py:164 speech.py:329 speech.py:739
 msgid "blank"
 msgstr "prázdný"
 
@@ -3022,8 +3245,7 @@ msgid "blue"
 msgstr "modrá"
 
 #. Translators: Reported when text is bolded.
-#: controlTypes.py:326
-#: speech.py:1018
+#: controlTypes.py:326 speech.py:1018
 msgid "bold"
 msgstr "tučné"
 
@@ -3031,9 +3253,7 @@ msgstr "tučné"
 msgid "border"
 msgstr "okraj"
 
-#: globalCommands.py:472
-#: globalCommands.py:480
-#: globalCommands.py:514
+#: globalCommands.py:472 globalCommands.py:480 globalCommands.py:514
 msgid "bottom"
 msgstr "spodek"
 
@@ -3130,9 +3350,7 @@ msgstr "Rozbalovací políčko"
 msgid "cell"
 msgstr "buňka"
 
-#: characterProcessing.py:131
-#: controlTypes.py:293
-#: textInfos/__init__.py:196
+#: characterProcessing.py:131 controlTypes.py:293 textInfos/__init__.py:196
 msgid "character"
 msgstr "znak"
 
@@ -3189,8 +3407,7 @@ msgstr "výběr barvy"
 msgid "column"
 msgstr "sloupec"
 
-#: speech.py:832
-#: speech.py:1139
+#: speech.py:832 speech.py:1139
 #, python-format
 msgid "column %s"
 msgstr "Sloupec %s"
@@ -3265,8 +3482,7 @@ msgstr "Upozornění"
 msgid "default action failed"
 msgstr "Výchozí akce se nezdařila"
 
-#: NVDAObjects/window/edit.py:260
-#: NVDAObjects/window/edit.py:261
+#: NVDAObjects/window/edit.py:260 NVDAObjects/window/edit.py:261
 msgid "default color"
 msgstr "Výchozí barva"
 
@@ -3398,8 +3614,7 @@ msgstr "Editační pole"
 msgid "email"
 msgstr "email"
 
-#: controlTypes.py:254
-#: NVDAObjects/window/edit.py:612
+#: controlTypes.py:254 NVDAObjects/window/edit.py:612
 msgid "embedded object"
 msgstr "vnořený objekt"
 
@@ -3456,15 +3671,18 @@ msgid "find a text string from the current cursor position"
 msgstr "Vyhledat zadaný text od aktuální pozice kurzoru"
 
 #: cursorManager.py:111
-msgid "find the next occurrence of the previously entered text string from the current cursor's position"
+msgid ""
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
 msgstr "Najít další výskyt hledaného textu od aktuální pozice kurzoru"
 
 #: cursorManager.py:118
-msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
+msgid ""
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
 msgstr "Najít předchozí výskyt hledaného textu od aktuální pozice kurzoru"
 
-#: globalCommands.py:909
-#: gui/settingsDialogs.py:1204
+#: globalCommands.py:909 gui/settingsDialogs.py:1204
 msgid "focus"
 msgstr "systémovým fokusem"
 
@@ -3722,9 +3940,7 @@ msgstr "Vícevrstvý panel"
 msgid "layout %s"
 msgstr "rozložení %s"
 
-#: globalCommands.py:524
-#: globalCommands.py:536
-#: appModules/totalcmd.py:35
+#: globalCommands.py:524 globalCommands.py:536 appModules/totalcmd.py:35
 msgid "left"
 msgstr "vlevo"
 
@@ -3767,8 +3983,7 @@ msgstr "levý shift"
 msgid "left windows"
 msgstr "windows vlevo"
 
-#: speech.py:809
-#: speech.py:812
+#: speech.py:809 speech.py:812
 #, python-format
 msgid "level %s"
 msgstr "úroveň %s"
@@ -3783,8 +3998,7 @@ msgstr "světle šedá"
 msgid "lime"
 msgstr "světle zelená"
 
-#: controlTypes.py:323
-#: textInfos/__init__.py:198
+#: controlTypes.py:323 textInfos/__init__.py:198
 msgid "line"
 msgstr "řádek"
 
@@ -3800,8 +4014,7 @@ msgstr "řádek %s"
 msgid "line scroll"
 msgstr "posunout řádek"
 
-#: controlTypes.py:206
-#: speech.py:1089
+#: controlTypes.py:206 speech.py:1089
 msgid "link"
 msgstr "odkaz"
 
@@ -3860,8 +4073,7 @@ msgstr "Mužský hlas 2"
 msgid "media player"
 msgstr "přehrávač médií"
 
-#: controlTypes.py:199
-#: controlTypes.py:319
+#: controlTypes.py:199 controlTypes.py:319
 msgid "menu"
 msgstr "nabídka"
 
@@ -4156,8 +4368,7 @@ msgstr "není tučné"
 msgid "no caret"
 msgstr "žádný kurzor"
 
-#: globalCommands.py:344
-#: globalCommands.py:697
+#: globalCommands.py:344 globalCommands.py:697
 msgid "no focus"
 msgstr "bez zaměření"
 
@@ -4181,12 +4392,8 @@ msgstr "žádný předchozí text před skupinou odkazů"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-#: globalCommands.py:280
-#: globalCommands.py:314
-#: globalCommands.py:363
-#: globalCommands.py:377
-#: globalCommands.py:391
-#: globalCommands.py:405
+#: globalCommands.py:280 globalCommands.py:314 globalCommands.py:363
+#: globalCommands.py:377 globalCommands.py:391 globalCommands.py:405
 #: globalCommands.py:419
 msgid "no navigator object"
 msgstr "žádný prohlížený objekt"
@@ -4395,8 +4602,7 @@ msgstr "Žádný předchozí navštívený odkaz"
 msgid "no progress bar updates"
 msgstr "Neohlašovat aktualizaci indikátoru průběhu"
 
-#: cursorManager.py:245
-#: globalCommands.py:125
+#: cursorManager.py:245 globalCommands.py:125
 msgid "no selection"
 msgstr "žádný výběr"
 
@@ -4414,8 +4620,7 @@ msgstr "žádná baterie není k dispozici"
 msgid "no title"
 msgstr "bez názvu"
 
-#: characterProcessing.py:127
-#: synthDrivers/_espeak.py:311
+#: characterProcessing.py:127 synthDrivers/_espeak.py:311
 msgid "none"
 msgstr "Žádný"
 
@@ -4423,8 +4628,7 @@ msgstr "Žádný"
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 #. but this still might be used in some other cases.
 #. %s will be replaced with the negated state.
-#: braille.py:424
-#: speech.py:795
+#: braille.py:424 speech.py:795
 #, python-format
 msgid "not %s"
 msgstr "ne%s"
@@ -4535,22 +4739,12 @@ msgstr "objekt nemá informaci o pozici"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: globalCommands.py:44
-#: globalCommands.py:176
-#: globalCommands.py:187
-#: globalCommands.py:197
-#: globalCommands.py:597
-#: globalCommands.py:728
-#: globalCommands.py:789
-#: globalCommands.py:799
-#: globalCommands.py:809
-#: keyboardHandler.py:300
-#: synthSettingsRing.py:74
-#: appModules/winamp.py:80
-#: appModules/winamp.py:90
-#: gui/settingsDialogs.py:724
-#: gui/settingsDialogs.py:1068
-#: virtualBuffers/__init__.py:810
+#: globalCommands.py:44 globalCommands.py:176 globalCommands.py:187
+#: globalCommands.py:197 globalCommands.py:597 globalCommands.py:728
+#: globalCommands.py:789 globalCommands.py:799 globalCommands.py:809
+#: keyboardHandler.py:300 synthSettingsRing.py:74 appModules/winamp.py:80
+#: appModules/winamp.py:90 gui/settingsDialogs.py:724
+#: gui/settingsDialogs.py:1068 virtualBuffers/__init__.py:810
 msgid "off"
 msgstr "vypnuto"
 
@@ -4564,20 +4758,11 @@ msgstr "mimo obrazovku"
 msgid "olive"
 msgstr "olivová"
 
-#: globalCommands.py:44
-#: globalCommands.py:179
-#: globalCommands.py:190
-#: globalCommands.py:200
-#: globalCommands.py:731
-#: globalCommands.py:792
-#: globalCommands.py:802
-#: globalCommands.py:812
-#: keyboardHandler.py:300
-#: synthSettingsRing.py:74
-#: appModules/winamp.py:78
-#: appModules/winamp.py:88
-#: gui/settingsDialogs.py:1068
-#: virtualBuffers/__init__.py:810
+#: globalCommands.py:44 globalCommands.py:179 globalCommands.py:190
+#: globalCommands.py:200 globalCommands.py:731 globalCommands.py:792
+#: globalCommands.py:802 globalCommands.py:812 keyboardHandler.py:300
+#: synthSettingsRing.py:74 appModules/winamp.py:78 appModules/winamp.py:88
+#: gui/settingsDialogs.py:1068 virtualBuffers/__init__.py:810
 msgid "on"
 msgstr "zapnuto"
 
@@ -4599,8 +4784,7 @@ msgstr "panel možností"
 msgid "orange"
 msgstr "oranžová"
 
-#: speech.py:936
-#: speech.py:1089
+#: speech.py:936 speech.py:1089
 #, python-format
 msgid "out of %s"
 msgstr "vně %s"
@@ -4643,8 +4827,7 @@ msgstr "panel"
 msgid "panel"
 msgstr "panel"
 
-#: controlTypes.py:234
-#: textInfos/__init__.py:199
+#: controlTypes.py:234 textInfos/__init__.py:199
 msgid "paragraph"
 msgstr "odstavec"
 
@@ -4720,16 +4903,25 @@ msgid "read only"
 msgstr "jen pro čtení"
 
 #: globalCommands.py:648
-msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "Přečte text od pozice čtecího kurzoru do konce, přičemž se čtecí kurzor plynule posouvá po řádcích"
+msgid ""
+"reads from the review cursor  up to end of current text, moving the review "
+"cursor as it goes"
+msgstr ""
+"Přečte text od pozice čtecího kurzoru do konce, přičemž se čtecí kurzor "
+"plynule posouvá po řádcích"
 
 #: globalCommands.py:652
-msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr "Přečte text od polohy textového kurzoru do konce, přičemž se textový kurzor plynule posouvá po řádcích."
+msgid ""
+"reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
+msgstr ""
+"Přečte text od polohy textového kurzoru do konce, přičemž se textový kurzor "
+"plynule posouvá po řádcích."
 
 #: globalCommands.py:724
 msgid "reads the current application status bar and moves the navigator to it"
-msgstr "Přečte stavový řádek aktuální aplikace, jenž se stane prohlíženým objektem"
+msgstr ""
+"Přečte stavový řádek aktuální aplikace, jenž se stane prohlíženým objektem"
 
 #: appModules/outlook.py:24
 #, python-format
@@ -4760,7 +4952,8 @@ msgstr "hlásit dynamicky měněný obsah"
 
 #: globalCommands.py:836
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "Oznámí stav baterie a zbývající čas provozu, je-li odpojeno napájení ze sítě"
+msgstr ""
+"Oznámí stav baterie a zbývající čas provozu, je-li odpojeno napájení ze sítě"
 
 #: globalCommands.py:698
 msgid "reports the object with focus"
@@ -4770,8 +4963,7 @@ msgstr "ohlásí zaměřený objekt"
 msgid "required"
 msgstr "povinné"
 
-#: globalCommands.py:906
-#: gui/settingsDialogs.py:1204
+#: globalCommands.py:906 gui/settingsDialogs.py:1204
 msgid "review"
 msgstr "Čtecím kurzorem"
 
@@ -4779,9 +4971,7 @@ msgstr "Čtecím kurzorem"
 msgid "rich edit"
 msgstr "editační pole"
 
-#: globalCommands.py:571
-#: globalCommands.py:588
-#: appModules/totalcmd.py:37
+#: globalCommands.py:571 globalCommands.py:588 appModules/totalcmd.py:37
 msgid "right"
 msgstr "vpravo"
 
@@ -4838,8 +5028,7 @@ msgstr "okno vrchní úrovně"
 msgid "row"
 msgstr "řádek"
 
-#: speech.py:825
-#: speech.py:1143
+#: speech.py:825 speech.py:1143
 #, python-format
 msgid "row %s"
 msgstr "Řádek %s"
@@ -4898,12 +5087,8 @@ msgid "selected"
 msgstr "vybráno"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#: compoundDocuments.py:401
-#: globalCommands.py:127
-#: speech.py:306
-#: speech.py:498
-#: speech.py:513
-#: virtualBuffers/__init__.py:717
+#: compoundDocuments.py:401 globalCommands.py:127 speech.py:306 speech.py:498
+#: speech.py:513 virtualBuffers/__init__.py:717
 #, python-format
 msgid "selected %s"
 msgstr "vybráno %s"
@@ -5047,8 +5232,7 @@ msgstr "Styl %s"
 msgid "subMenu"
 msgstr "podnabídka"
 
-#: appModules/outlook.py:23
-#: appModules/outlook.py:36
+#: appModules/outlook.py:23 appModules/outlook.py:36
 #, python-format
 msgid "subject: %s"
 msgstr "Předmět: %s"
@@ -5060,14 +5244,12 @@ msgid "submnu"
 msgstr "podnabídka"
 
 #. Translators: Reported for subscript text.
-#: controlTypes.py:332
-#: speech.py:1057
+#: controlTypes.py:332 speech.py:1057
 msgid "subscript"
 msgstr "dolní index"
 
 #. Translators: Reported for superscript text.
-#: controlTypes.py:331
-#: speech.py:1054
+#: controlTypes.py:331 speech.py:1054
 msgid "superscript"
 msgstr "horní index"
 
@@ -5080,8 +5262,7 @@ msgid "symbol level %s"
 msgstr "interpunkce %s"
 
 #. Translators: This is the name of a key on the keyboard.
-#: controlTypes.py:209
-#: keyLabels.py:137
+#: controlTypes.py:209 keyLabels.py:137
 msgid "tab"
 msgstr "tab"
 
@@ -5178,9 +5359,7 @@ msgstr "panel nástrojů"
 msgid "tool tip"
 msgstr "kontextový popisek"
 
-#: globalCommands.py:438
-#: globalCommands.py:450
-#: globalCommands.py:492
+#: globalCommands.py:438 globalCommands.py:450 globalCommands.py:492
 msgid "top"
 msgstr "vršek"
 
@@ -5229,8 +5408,7 @@ msgid "unknown layout"
 msgstr "neznámé rozložení"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
-#: appModules/msimn.py:109
-#: appModules/outlook.py:28
+#: appModules/msimn.py:109 appModules/outlook.py:28
 msgid "unread"
 msgstr "nečteno"
 
@@ -5331,24 +5509,42 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"{name} is developed by NV Access, a non-profit organisation committed to "
+"helping and promoting free and open source solutions for blind and vision "
+"impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider "
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "{longName} ({name})\n"
 "Verze: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"Distribuce {name} NVDA je chráněn licencí GNU General Public License verze 2.0. Program můžete libovolně šířit a upravovat za předpokladu, že k němu přiložíte tuto licenci a zpřístupníte jeho zdrojový kód všem zájemcům. Toto se vztahuje jak na původní, tak upravené kopie tohoto programu a také na software užívající kód převzatý z tohoto programu.\n"
+"Distribuce {name} NVDA je chráněn licencí GNU General Public License verze "
+"2.0. Program můžete libovolně šířit a upravovat za předpokladu, že k němu "
+"přiložíte tuto licenci a zpřístupníte jeho zdrojový kód všem zájemcům. Toto "
+"se vztahuje jak na původní, tak upravené kopie tohoto programu a také na "
+"software užívající kód převzatý z tohoto programu.\n"
 "Více podrobností najdete v licenci v nabídce nápověda.\n"
-"Kompletní licence je dostupná i na stránce: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"Kompletní licence je dostupná i na stránce: http://www.gnu.org/licenses/old-"
+"licenses/gpl-2.0.html\n"
 "\n"
-"Vývoj {name} zastřešuje NV Access, nezisková organizace, jejímž cíľem je pomáhat při vývoji a propagaci otevřených a voľně šiřiteľných řešení užitečných pro nevidomé a zrakově postižené.\n"
-"Jestliže je NVDA užitečný i pro Vás a chcete aby vývoj stále pokračoval, zvažte prosím možnost příspěvku společnosti NV Access. Přispět můžete z hlavní nabídky NVDA."
+"Vývoj {name} zastřešuje NV Access, nezisková organizace, jejímž cíľem je "
+"pomáhat při vývoji a propagaci otevřených a voľně šiřiteľných řešení "
+"užitečných pro nevidomé a zrakově postižené.\n"
+"Jestliže je NVDA užitečný i pro Vás a chcete aby vývoj stále pokračoval, "
+"zvažte prosím možnost příspěvku společnosti NV Access. Přispět můžete z "
+"hlavní nabídky NVDA."
 
 #. Translators: message shown in the Addon Information dialog.
 #: gui/addonGui.py:176
