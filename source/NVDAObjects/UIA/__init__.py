@@ -157,6 +157,8 @@ class UIA(Window):
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
+		if UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
+			clsList.append(Toast)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
@@ -601,3 +603,9 @@ class ListItem(UIA):
 				# This item has been selected, so notify the combo box that its value has changed.
 				parent.event_valueChange()
 		super(ListItem, self).event_stateChange()
+
+class Toast(UIA):
+
+	def event_alert(self):
+		speech.speakObject(self)
+		api.setNavigatorObject(self)
