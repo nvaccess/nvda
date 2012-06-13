@@ -224,6 +224,26 @@ class AdobeAcrobatVBufStorage_controlFieldNode_t: public VBufStorage_controlFiel
 	friend class AdobeAcrobatVBufBackend_t;
 };
 
+/*
+ * Adjusts the current column number to skip past columns spanned by previous rows,
+ * decrementing row spans as they are encountered.
+ */
+inline void handleColsSpannedByPrevRows(TableInfo& tableInfo) {
+	for (; ; ++tableInfo.curColumnNumber) {
+		map<int, int>::iterator it = tableInfo.columnRowSpans.find(tableInfo.curColumnNumber);
+		if (it == tableInfo.columnRowSpans.end()) {
+			// This column is not spanned by a previous row.
+			return;
+		}
+		nhAssert(it->second != 0); // 0 row span should never occur.
+		// This row has been covered, so decrement the row span.
+		--it->second;
+		if (it->second == 0)
+			tableInfo.columnRowSpans.erase(it);
+	}
+	nhAssert(false); // Code should never reach this point.
+}
+
 AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 	AdobeAcrobatVBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	TableInfo* tableInfo
@@ -386,6 +406,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		tableInfo->curColumnNumber = 0;
 	} else if (role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
 		++tableInfo->curColumnNumber;
+		handleColsSpannedByPrevRows(*tableInfo);
 		wostringstream s;
 		s << tableInfo->tableID;
 		parentNode->addAttribute(L"table-id", s.str());
@@ -395,10 +416,20 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		s.str(L"");
 		s << tableInfo->curColumnNumber;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
-		if (domElement && domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
-			parentNode->addAttribute(L"table-columnsspanned", tempBstr);
-			tableInfo->curColumnNumber += max(_wtoi(tempBstr) - 1, 0);
-			SysFreeString(tempBstr);
+		if (domElement) {
+			if (domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
+				parentNode->addAttribute(L"table-columnsspanned", tempBstr);
+				tableInfo->curColumnNumber += max(_wtoi(tempBstr) - 1, 0);
+				SysFreeString(tempBstr);
+			}
+			if (domElement->GetAttribute(L"RowSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
+				parentNode->addAttribute(L"table-rowsspanned", tempBstr);
+				// Keep trakc of how many rows after this one are spanned by this cell.
+				int span = _wtoi(tempBstr) - 1;
+				if (span > 0)
+					tableInfo->columnRowSpans[tableInfo->curColumnNumber] = span;
+				SysFreeString(tempBstr);
+			}
 		}
 	}
 

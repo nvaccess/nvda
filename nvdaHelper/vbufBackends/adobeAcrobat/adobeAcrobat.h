@@ -15,12 +15,14 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef VIRTUALBUFFER_BACKENDS_ADOBEACROBAT_H
 #define VIRTUALBUFFER_BACKENDS_ADOBEACROBAT_H
 
+#include <map>
 #include <vbufBase/backend.h>
 
 typedef struct {
 	long tableID;
 	int curRowNumber;
 	int curColumnNumber;
+	std::map<int, int> columnRowSpans;
 } TableInfo;
 
 class AdobeAcrobatVBufStorage_controlFieldNode_t;
