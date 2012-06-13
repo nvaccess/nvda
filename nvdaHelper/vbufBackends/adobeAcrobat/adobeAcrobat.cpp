@@ -324,6 +324,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 
 	BSTR stdName = NULL;
 	int textFlags = 0;
+	BSTR tempBstr = NULL;
 	if (domElement) {
 		// Get stdName.
 		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
@@ -339,20 +340,18 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 
 		// Get language.
-		BSTR srcLang = NULL;
-		if (domElement->GetAttribute(L"Lang", NULL, &srcLang) == S_OK && srcLang) {
-			parentNode->language = srcLang;
-			SysFreeString(srcLang);
+		if (domElement->GetAttribute(L"Lang", NULL, &tempBstr) == S_OK && tempBstr) {
+			parentNode->language = tempBstr;
+			SysFreeString(tempBstr);
 		}
 
 		// Determine whether the text has underline or strikethrough.
-		BSTR decType = NULL;
-		if (domElement->GetAttribute(L"TextDecorationType", L"Layout", &decType) == S_OK && decType) {
-			if (wcscmp(decType, L"Underline") == 0)
+		if (domElement->GetAttribute(L"TextDecorationType", L"Layout", &tempBstr) == S_OK && tempBstr) {
+			if (wcscmp(tempBstr, L"Underline") == 0)
 				textFlags |= TEXTFLAG_UNDERLINE;
-			else if (wcscmp(decType, L"LineThrough") == 0)
+			else if (wcscmp(tempBstr, L"LineThrough") == 0)
 				textFlags |= TEXTFLAG_STRIKETHROUGH;
-			SysFreeString(decType);
+			SysFreeString(tempBstr);
 		}
 	}
 
@@ -396,6 +395,11 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		s.str(L"");
 		s << tableInfo->curColumnNumber;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
+		if (domElement && domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
+			parentNode->addAttribute(L"table-columnsspanned", tempBstr);
+			tableInfo->curColumnNumber += max(_wtoi(tempBstr) - 1, 0);
+			SysFreeString(tempBstr);
+		}
 	}
 
 	// Iterate through the children.
