@@ -417,6 +417,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		s << tableInfo->curColumnNumber;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
 		if (domElement) {
+			int startCol = tableInfo->curColumnNumber;
 			if (domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
 				parentNode->addAttribute(L"table-columnsspanned", tempBstr);
 				tableInfo->curColumnNumber += max(_wtoi(tempBstr) - 1, 0);
@@ -426,8 +427,11 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 				parentNode->addAttribute(L"table-rowsspanned", tempBstr);
 				// Keep trakc of how many rows after this one are spanned by this cell.
 				int span = _wtoi(tempBstr) - 1;
-				if (span > 0)
-					tableInfo->columnRowSpans[tableInfo->curColumnNumber] = span;
+				if (span > 0) {
+					// The row span needs to be recorded for each spanned column.
+					for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
+						tableInfo->columnRowSpans[col] = span;
+				}
 				SysFreeString(tempBstr);
 			}
 		}
