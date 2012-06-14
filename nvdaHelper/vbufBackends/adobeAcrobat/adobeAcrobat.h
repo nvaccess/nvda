@@ -16,6 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define VIRTUALBUFFER_BACKENDS_ADOBEACROBAT_H
 
 #include <map>
+#include <string>
 #include <vbufBase/backend.h>
 
 typedef struct {
@@ -23,6 +24,7 @@ typedef struct {
 	int curRowNumber;
 	int curColumnNumber;
 	std::map<int, int> columnRowSpans;
+	std::map<int, std::wstring> columnHeaders;
 } TableInfo;
 
 class AdobeAcrobatVBufStorage_controlFieldNode_t;
