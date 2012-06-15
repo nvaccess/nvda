@@ -441,11 +441,10 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 		if (role == ROLE_SYSTEM_COLUMNHEADER) {
 			// Record this as a column header for each spanned column.
-			for (int col = startCol; col <= tableInfo->curColumnNumber; ++col) {
-				s.str(L"");
-				s << docHandle << L"," << ID << L";";
+			s.str(L"");
+			s << docHandle << L"," << ID << L";";
+			for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
 				tableInfo->columnHeaders[col] += s.str();
-			}
 		}
 	}
 
