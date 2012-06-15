@@ -418,9 +418,14 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		s << startCol;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
 		// Add implicit column headers for this cell.
-		map<int, wstring>::const_iterator headersIt = tableInfo->columnHeaders.find(startCol);
-		if (headersIt != tableInfo->columnHeaders.end())
+		map<int, wstring>::const_iterator headersIt;
+		if ((headersIt = tableInfo->columnHeaders.find(startCol)) != tableInfo->columnHeaders.end())
 			parentNode->addAttribute(L"table-columnheadercells", headersIt->second);
+		// Add implicit row headers for this cell.
+		if ((headersIt = tableInfo->rowHeaders.find(tableInfo->curRowNumber)) != tableInfo->rowHeaders.end())
+			parentNode->addAttribute(L"table-rowheadercells", headersIt->second);
+		// The number of rows after this one spanned by this cell.
+		int endRow = tableInfo->curRowNumber;
 		if (domElement) {
 			if (domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
 				parentNode->addAttribute(L"table-columnsspanned", tempBstr);
@@ -445,6 +450,12 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			s << docHandle << L"," << ID << L";";
 			for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
 				tableInfo->columnHeaders[col] += s.str();
+		} else if (role == ROLE_SYSTEM_ROWHEADER) {
+			// Record this as a row header for each spanned row.
+			s.str(L"");
+			s << docHandle << L"," << ID << L";";
+			for (int row = tableInfo->curRowNumber; row <= endRow; ++row)
+				tableInfo->rowHeaders[row] += s.str();
 		}
 	}
 

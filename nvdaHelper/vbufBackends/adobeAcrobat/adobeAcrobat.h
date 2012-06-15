@@ -25,6 +25,7 @@ typedef struct {
 	int curColumnNumber;
 	std::map<int, int> columnRowSpans;
 	std::map<int, std::wstring> columnHeaders;
+	std::map<int, std::wstring> rowHeaders;
 } TableInfo;
 
 class AdobeAcrobatVBufStorage_controlFieldNode_t;
