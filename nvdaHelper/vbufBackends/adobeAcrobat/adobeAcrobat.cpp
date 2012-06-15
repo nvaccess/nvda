@@ -424,7 +424,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		// Add implicit row headers for this cell.
 		if ((headersIt = tableInfo->rowHeaders.find(tableInfo->curRowNumber)) != tableInfo->rowHeaders.end())
 			parentNode->addAttribute(L"table-rowheadercells", headersIt->second);
-		// The number of rows after this one spanned by this cell.
+		// The last row spanned by this cell.
+		// This will be updated below if there is a row span.
 		int endRow = tableInfo->curRowNumber;
 		if (domElement) {
 			if (domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
@@ -440,6 +441,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 					// The row span needs to be recorded for each spanned column.
 					for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
 						tableInfo->columnRowSpans[col] = span;
+					endRow += span;
 				}
 				SysFreeString(tempBstr);
 			}
