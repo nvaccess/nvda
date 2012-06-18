@@ -401,6 +401,11 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		wostringstream s;
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
+		if (domElement && domElement->GetAttribute(L"Summary", L"Table", &tempBstr) == S_OK && tempBstr) {
+			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, tempBstr))
+				previousNode = tempNode;
+			SysFreeString(tempBstr);
+		}
 	} else if (role == ROLE_SYSTEM_ROW) {
 		++tableInfo->curRowNumber;
 		tableInfo->curColumnNumber = 0;
