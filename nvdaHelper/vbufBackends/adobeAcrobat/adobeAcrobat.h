@@ -17,7 +17,15 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <map>
 #include <string>
+#include <list>
 #include <vbufBase/backend.h>
+
+class AdobeAcrobatVBufStorage_controlFieldNode_t;
+
+typedef struct {
+	int uniqueId;
+	bool isColumnHeader;
+} TableHeaderInfo;
 
 typedef struct {
 	long tableID;
@@ -26,9 +34,11 @@ typedef struct {
 	std::map<int, int> columnRowSpans;
 	std::map<int, std::wstring> columnHeaders;
 	std::map<int, std::wstring> rowHeaders;
+	// Maps node id strings to TableHeaderInfo.
+	std::map<std::wstring, TableHeaderInfo> headersInfo;
+	// Lists nodes with explicit headers along with their Headers attribute string.
+	std::list<std::pair<AdobeAcrobatVBufStorage_controlFieldNode_t*, std::wstring>> nodesWithExplicitHeaders;
 } TableInfo;
-
-class AdobeAcrobatVBufStorage_controlFieldNode_t;
 
 class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 	private:
