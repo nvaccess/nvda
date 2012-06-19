@@ -31,8 +31,11 @@ typedef struct {
 	long tableID;
 	int curRowNumber;
 	int curColumnNumber;
+	// Maps column numbers to remaining row spans.
 	std::map<int, int> columnRowSpans;
+	// Maps column numbers to table-columnheadercells attribute values.
 	std::map<int, std::wstring> columnHeaders;
+	// Maps row numbers to table-rowheadercells attribute values.
 	std::map<int, std::wstring> rowHeaders;
 	// Maps node id strings to TableHeaderInfo.
 	std::map<std::wstring, TableHeaderInfo> headersInfo;
