@@ -98,11 +98,6 @@ class OrderedWinEventLimiter(object):
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
 				return
-		elif eventID==winUser.EVENT_OBJECT_DESTROY:
-			k=(winUser.EVENT_OBJECT_CREATE,window,objectID,childID,threadID)
-			if k in self._genericEventCache:
-				del self._genericEventCache[k]
-				return
 		elif eventID in MENU_EVENTIDS:
 			self._lastMenuEvent=(next(self._eventCounter),eventID,window,objectID,childID,threadID)
 			return
@@ -454,6 +449,7 @@ winUser.EVENT_SYSTEM_SCROLLINGSTART:"scrollingStart",
 winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 winUser.EVENT_OBJECT_FOCUS:"gainFocus",
 winUser.EVENT_OBJECT_SHOW:"show",
+winUser.EVENT_OBJECT_HIDE:"hide",
 winUser.EVENT_OBJECT_DESTROY:"destroy",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
 winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
@@ -485,9 +481,6 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 	@returns: the NVDA event name and the NVDAObject the event is for
 	@rtype: tuple of string and L{NVDAObjects.IAccessible.IAccessible}
 	"""
-	#We can't handle MSAA create events. (Destroys are handled elsewhere.)
-	if eventID == winUser.EVENT_OBJECT_CREATE:
-		return None
 	NVDAEventName=winEventIDsToNVDAEventNames.get(eventID,None)
 	if not NVDAEventName:
 		return None
@@ -524,6 +517,9 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			return
 		#Ignore all locationChange events except ones for the caret
 		if eventID==winUser.EVENT_OBJECT_LOCATIONCHANGE and objectID!=winUser.OBJID_CARET:
+			return
+		if eventID==winUser.EVENT_OBJECT_DESTROY:
+			processDestroyWinEvent(window,objectID,childID)
 			return
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
@@ -688,7 +684,7 @@ def processDesktopSwitchWinEvent(window,objectID,childID):
 		eventHandler.executeEvent("gainFocus",obj)
 
 def _correctFocus():
-	eventHandler.executeEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+	eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
 
 def processForegroundWinEvent(window,objectID,childID):
 	"""checks to see if the foreground win event is not the same as the existing focus or any of its parents, 
@@ -730,7 +726,7 @@ def processForegroundWinEvent(window,objectID,childID):
 def processShowWinEvent(window,objectID,childID):
 	className=winUser.getClassName(window)
 	#For now we only support 'show' event for tooltips as otherwize we get flooded
-	if className=="tooltips_class32" and objectID==winUser.OBJID_CLIENT:
+	if className in ("tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
 		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
 		if NVDAEvent:
 			eventHandler.queueEvent(*NVDAEvent)
@@ -743,6 +739,9 @@ def processDestroyWinEvent(window,objectID,childID):
 		del liveNVDAObjectTable[(window,objectID,childID)]
 	except KeyError:
 		pass
+	focus=api.getFocusObject()
+	if objectID==0 and childID==0 and isinstance(focus,NVDAObjects.window.Window) and window==focus.windowHandle:
+		_correctFocus()
 
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	"""Process a menuStart win event.
@@ -818,8 +817,6 @@ def pumpAll():
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_DESKTOPSWITCH:
 				processDesktopSwitchWinEvent(*winEvent[1:])
-			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
-				processDestroyWinEvent(*winEvent[1:])
 			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW:
 				processShowWinEvent(*winEvent[1:])
 			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):
