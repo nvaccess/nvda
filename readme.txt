@@ -106,7 +106,7 @@ If trying to debug nvdaHelper, You can control various  debugging options  with 
 The special keywords none and all can also be used in place of the individual flags.
 
 An example follows that enables symbols and disables optimizations:
-scons source nvdaHelperDebugflags=symbols,noOptimize
+scons source nvdaHelperDebugFlags=symbols,noOptimize
 
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.
