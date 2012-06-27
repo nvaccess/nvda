@@ -65,4 +65,9 @@ interface NvdaControllerInternal {
  */
 	error_status_t __stdcall logMessage([in] const long level, [in] const long processID, [in,string] const wchar_t* message);
 
+/**
+ * Notifies NVDA of updates to the current input composition (including the full content, the selection offsets and the newly added text if any).
+ */
+	error_status_t __stdcall inputCompositionUpdate([in,string] const wchar_t* compositionString, [in] const int selectionStart, [in] const int selectionEnd, [in,string] const wchar_t* newText);
+
 };

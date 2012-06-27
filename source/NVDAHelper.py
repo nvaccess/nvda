@@ -3,6 +3,7 @@ import sys
 import _winreg
 import msvcrt
 import winKernel
+import config
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -111,13 +112,21 @@ def nvdaControllerInternal_logMessage(level,pid,message):
 	log._log(level,message,[],codepath=codepath)
 	return 0
 
+@WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_wchar_p)
+def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText):
+	import tones; tones.beep(440,40)
+	if (config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]) and newText and not newText.isspace():
+		import speech
+		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	global lastInputLangChangeTime
 	import queueHandler
 	import ui
 	curTime=time.time()
-	if (curTime-lastInputLangChangeTime)<0.2:
+	if (curTime-lastInputLangChangeTime)<0: #.2:
 		return 0
 	lastInputLangChangeTime=curTime
 	#layoutString can sometimes be None, yet a registry entry still exists for a string representation of hkl
@@ -125,19 +134,22 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 		layoutString=hex(hkl)[2:].rstrip('L').upper().rjust(8,'0')
 		log.debugWarning("layoutString was None, generated new one from hkl as %s"%layoutString)
 	layoutName=_lookupKeyboardLayoutNameWithHexString(layoutString)
-	if not layoutName and hkl<0xd0000000:
+	if not layoutName and hkl and hkl<0xd0000000:
 		#Try using the high word of hkl as the lang ID for a default layout for that language
 		simpleLayoutString=layoutString[0:4].rjust(8,'0')
 		log.debugWarning("trying simple version: %s"%simpleLayoutString)
 		layoutName=_lookupKeyboardLayoutNameWithHexString(simpleLayoutString)
-	if not layoutName:
+	if not layoutName and hkl:
 		#Try using the low word of hkl as the lang ID for a default layout for that language
 		simpleLayoutString=layoutString[4:].rjust(8,'0')
 		log.debugWarning("trying simple version: %s"%simpleLayoutString)
 		layoutName=_lookupKeyboardLayoutNameWithHexString(simpleLayoutString)
 	if not layoutName:
-		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
-		layoutName=_("unknown layout")
+		if layoutString:
+			layoutName=layoutString
+		else:
+			log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
+			layoutName=_("unknown layout")
 	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("layout %s")%layoutName)
 	return 0
 
@@ -200,6 +212,7 @@ def initialize():
 		("nvdaControllerInternal_typedCharacterNotify",nvdaControllerInternal_typedCharacterNotify),
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
+		("nvdaControllerInternal_inputCompositionUpdate",nvdaControllerInternal_inputCompositionUpdate),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)

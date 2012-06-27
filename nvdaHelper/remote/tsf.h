@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2010-2012 World Light Information Limited and Hong Kong Blind Union.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -12,18 +12,11 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#ifndef INPUTLANGCHANGE_H
-#define INPUTLANGCHANGE_H
+#ifndef TSF_H
+#define TSF_H
 
-#include <windows.h>
-#include <wchar.h>
-
-//Event IDs
-#define EVENT_INPUTLANGCHANGE 0x1001
-
-extern LPARAM lastInputLangChange;
-
-void inputLangChange_inProcess_initialize();
-void inputLangChange_inProcess_terminate();
+void TSF_inProcess_initialize();
+void TSF_inProcess_terminate();
+void TSF_thread_detached();
 
 #endif
