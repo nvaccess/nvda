@@ -10,7 +10,11 @@ from . import IAccessible
 
 def reportSelectedCandidate(candidateObject,allowDuplicate=False):
 	if not eventHandler.isPendingEvents("gainFocus") and (allowDuplicate or candidateObject!=api.getFocusObject()):
-		candidateObject.container.container=api.getDesktopObject().objectWithFocus()
+		if not isinstance(api.getFocusObject(),BaseCandidateItem):
+			candidateObject.container.container=api.getFocusObject()
+			eventHandler.queueEvent("foreground",candidateObject.container)
+		else:
+			candidateObject.container.container=api.getFocusObject().container.container
 		eventHandler.queueEvent("gainFocus",candidateObject)
 
 class BaseCandidateItem(IAccessible):

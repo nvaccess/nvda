@@ -186,7 +186,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		@return: The text contained in the requested range.
 		@rtype: unicode
 		"""
-		raise NotImplementedError
+		text=self._getStoryText()
+		return text[start:end] if text else u""
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		"""Retrieve the formatting information for a given offset and the offsets spanned by that field.

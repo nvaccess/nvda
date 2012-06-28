@@ -69,6 +69,7 @@ private:
 	DWORD         mThreadMgrCookie;
 	DWORD         mLangProfCookie;
 	DWORD         mTextEditCookie;
+	bool inComposition;
 
 	void UpdateTextEditSink(ITfDocumentMgr* docMgr);
 	void RemoveTextEditSink();
@@ -118,7 +119,8 @@ TsfSink::TsfSink() {
 	mpTextEditSrc    = NULL;
 	mThreadMgrCookie = TF_INVALID_COOKIE;
 	mLangProfCookie  = TF_INVALID_COOKIE;
-mTextEditCookie  = TF_INVALID_COOKIE;
+	mTextEditCookie  = TF_INVALID_COOKIE;
+	inComposition=false;
 }
 
 TsfSink::~TsfSink() {
@@ -362,7 +364,13 @@ STDMETHODIMP TsfSink::OnEndEdit(
 	// TSF input processor performing composition
 	//ITfRange* pRange=CombineCompRange(pCtx,cookie);
 	WCHAR* comp_str = HandleCompositionView(pCtx, cookie);
-	if(comp_str) {
+	if(!comp_str) {
+		if(inComposition) {
+			inComposition=false;
+			nvdaControllerInternal_inputCompositionUpdate(L"",0,0,L"");
+		}
+	} else {
+		inComposition=true;
 		WCHAR* edit_str = HandleEditRecord(cookie, pEditRec);
 		nvdaControllerInternal_inputCompositionUpdate(comp_str,0,0,(edit_str?edit_str:L""));
 		if (edit_str) free(edit_str);

@@ -740,8 +740,12 @@ def processDestroyWinEvent(window,objectID,childID):
 	except KeyError:
 		pass
 	focus=api.getFocusObject()
-	if objectID==0 and childID==0 and isinstance(focus,NVDAObjects.window.Window) and window==focus.windowHandle:
-		_correctFocus()
+	if objectID==0 and childID==0 and not eventHandler.isPendingEvents("gainFocus"):
+		obj=focus
+		while isinstance(obj,NVDAObjects.window.Window) and obj.windowHandle==window:
+			obj=obj.parent
+		if obj and obj is not focus:
+			eventHandler.queueEvent("gainFocus",obj)
 
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	"""Process a menuStart win event.
