@@ -28,11 +28,18 @@ class BaseCandidateItem(IAccessible):
 		return super(BaseCandidateItem,self).keyboardShortcut
 
 	def _get_description(self):
-		symbol=self.name
-		try:
-			descriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol)
-		except TypeError:
-			descriptions=None
+		symbols=self.name
+		descriptions=[]
+		for symbol in symbols:
+			try:
+				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol)
+			except TypeError:
+				symbolDescriptions=None
+			if symbolDescriptions:
+				if len(symbols)>1:
+					descriptions.append(_("{symbol} as in {description}").format(symbol=symbol,description=symbolDescriptions[0]))
+				else:
+					descriptions.extend(symbolDescriptions)
 		if descriptions:
 			return ", ".join(descriptions)
 
