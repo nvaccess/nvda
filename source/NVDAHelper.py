@@ -112,26 +112,30 @@ def nvdaControllerInternal_logMessage(level,pid,message):
 	log._log(level,message,[],codepath=codepath)
 	return 0
 
-def handleInputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText):
-	if (config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]) and newText and not newText.isspace():
-		import speech
-		speech.speakText(newText)
+def handleInputCompositionEnd():
+	focus=api.getFocusObject()
+	eventHandler.executeEvent("gainFocus",focus.parent)
+
+def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,newText):
+	from NVDAObjects.inputComposition import InputComposition
+	focus=api.getFocusObject()
+	if not isinstance(focus,InputComposition):
+		parent=api.getDesktopObject().objectWithFocus()
+		newFocus=InputComposition(parent=parent)
+		newFocus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
+		eventHandler.executeEvent("gainFocus",newFocus)
+
+@WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_wchar_p)
+def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText):
 	from NVDAObjects.inputComposition import InputComposition
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
 		if compositionString:
-			focus.compositionUpdate(compositionString,selectionStart,selectionEnd)
+			focus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
 		else:
-			eventHandler.executeEvent("gainFocus",focus.parent)
+			queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd)
 	else:
-		parent=api.getDesktopObject().objectWithFocus()
-		newFocus=InputComposition(parent=parent,compositionString=compositionString,compositionSelectionOffsets=(selectionStart,selectionEnd))
-		eventHandler.executeEvent("gainFocus",newFocus)
-
-
-@WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_wchar_p)
-def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText):
-	queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionUpdate,compositionString,selectionStart,selectionEnd,newText)
+		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,newText)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
