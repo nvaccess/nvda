@@ -6,6 +6,7 @@
 SetCompressor /SOLID LZMA
 SilentInstall silent
 RequestExecutionLevel user
+CRCCheck on
 
 ReserveFile "${NSISDIR}\Plugins\system.dll"
 ReserveFile "${NSISDIR}\Plugins\banner.dll"
