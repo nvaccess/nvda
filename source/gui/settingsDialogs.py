@@ -10,6 +10,7 @@ import copy
 import wx
 import winUser
 import logHandler
+import installer
 from synthDriverHandler import *
 import config
 import languageHandler
@@ -197,11 +198,25 @@ class GeneralSettingsDialog(SettingsDialog):
 		_("Copying Settings"),
 		# Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc) 
 		_("Please wait while settings are copied to the system configuration."))
-		try:
-			res=config.setSystemConfigToCurrentConfig()
-		except:
-			log.debugWarning("Error when copying settings to system config",exc_info=True)
-			res=False
+		while True:
+			try:
+				gui.ExecAndPump(config.setSystemConfigToCurrentConfig)
+				res=True
+				break
+			except installer.RetriableFailure:
+				log.debugWarning("Error when copying settings to system config",exc_info=True)
+				# Translators: a message dialog asking to retry or cancel when copying settings  fails
+				message=_("Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to.")
+				# Translators: the title of a retry cancel dialog when copying settings  fails
+				title=_("Error Copying")
+				if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
+					continue
+				res=False
+				break
+			except:
+				log.debugWarning("Error when copying settings to system config",exc_info=True)
+				res=False
+				break
 		progressDialog.done()
 		del progressDialog
 		if not res:
