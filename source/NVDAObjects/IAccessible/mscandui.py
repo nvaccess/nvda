@@ -19,7 +19,13 @@ def reportSelectedCandidate(candidateObject,allowDuplicate=False):
 
 class BaseCandidateItem(IAccessible):
 
-	role=controlTypes.ROLE_GRAPHIC
+	role=controlTypes.ROLE_LISTITEM
+
+	def _get_parent(self):
+		parent=super(BaseCandidateItem,self).parent
+		parent.name=_("Candidate")
+		parent.description=None
+		return parent
 
 	def _get_keyboardShortcut(self):
 		return ""
@@ -32,11 +38,11 @@ class BaseCandidateItem(IAccessible):
 		descriptions=[]
 		for symbol in symbols:
 			try:
-				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol)
+				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol)[:1]
 			except TypeError:
-				symbolDescriptions=None
+				symbolDescriptions=[]
 			if symbolDescriptions:
-				if len(symbols)>1:
+				if len(symbols)>1 or len(symbolDescriptions)==1: 
 					descriptions.append(_("{symbol} as in {description}").format(symbol=symbol,description=symbolDescriptions[0]))
 				else:
 					descriptions.extend(symbolDescriptions)
@@ -45,15 +51,8 @@ class BaseCandidateItem(IAccessible):
 
 class MSCandUI_candidateListItem(BaseCandidateItem):
 
-	def _get_states(self):
-		states=super(MSCandUI_candidateListItem,self).states
-		if controlTypes.STATE_SELECTED in states:
-			states.discard(controlTypes.STATE_SELECTED)
-			states.add(controlTypes.STATE_FOCUSED)
-		return states
-
 	def event_stateChange(self):
-		if controlTypes.STATE_FOCUSED in self.states:
+		if controlTypes.STATE_SELECTED in self.states:
 			reportSelectedCandidate(self)
 
 class MSCandUI21_candidateMenuItem(BaseCandidateItem):
@@ -115,7 +114,7 @@ class MSCandUI21(IAccessible):
 		if role==controlTypes.ROLE_LIST:
 			api.setNavigatorObject(candidateList)
 			item=candidateList.firstChild
-			while item and controlTypes.STATE_FOCUSED not in item.states:
+			while item and controlTypes.STATE_SELECTED not in item.states:
 				item=item.next
 			if item:
 				reportSelectedCandidate(item)
