@@ -146,8 +146,8 @@ class TrackerManager(object):
 					#The old and new tracker are the same kind of action, they are not themselves plural actions, and their start and end times overlap
 					#Therefore they should be treeted as one multiFingered action
 					delayedTracker.numFingers+=tracker.numFingers
-				elif tracker.action==delayedTracker.action and delayedTracker.numFingers==tracker.numFingers:
-					#The new and old action are the same type of action and have the same number of fingers, but they do not overlap in time
+				elif tracker.action==action_tap==delayedTracker.action and delayedTracker.numFingers==tracker.numFingers:
+					#The new and old action are  both tap and have the same number of fingers, but they do not overlap in time
 					#Therefore they should be treeted as 1 plural action (e.g. double tap)
 					delayedTracker.actionCount+=tracker.actionCount
 				elif tracker.action==action_hoverDown and delayedTracker.action==action_tap and tracker.numFingers==delayedTracker.numFingers:
