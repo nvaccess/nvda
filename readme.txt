@@ -74,6 +74,14 @@ To use the Handy Tech braille display driver:
 To use the Baum braille display driver:
 	* pyserial (for Python 2.x), version 2.5 or later: http://pypi.python.org/pypi/pyserial
 
+To use the HIMS Braille Sense/Braille EDGE braille display driver:
+	* HanSoneConnect.dll, version 2.0.0.1: http://www.nvda-project.org/3rdParty/HanSoneConnect.dll
+		* Copy HanSoneConnect.dll into the source\brailleDisplayDrivers\hims directory.
+
+To use the HIMS SyncBraille braille display driver:
+	* SyncBraille.dll, version 1.0.0.1: http://www.nvda-project.org/3rdParty/SyncBraille.dll
+		* Copy SyncBraille.dll into the source\brailleDisplayDrivers\syncBraille directory.
+
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
 	* 7-Zip: http://www.7-zip.org/
@@ -106,7 +114,7 @@ If trying to debug nvdaHelper, You can control various  debugging options  with 
 The special keywords none and all can also be used in place of the individual flags.
 
 An example follows that enables symbols and disables optimizations:
-scons source nvdaHelperDebugflags=symbols,noOptimize
+scons source nvdaHelperDebugFlags=symbols,noOptimize
 
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.

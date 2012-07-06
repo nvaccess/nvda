@@ -213,7 +213,7 @@ def tryRemoveFile(path,numRetries=6,retryInterval=0.5,rebootOK=False):
 	for count in xrange(numRetries):
 		try:
 			if os.path.isdir(tempPath):
-				os.rmdir(tempPath)
+				shutil.rmtree(tempPath)
 			else:
 				os.remove(tempPath)
 			return
@@ -240,7 +240,7 @@ def tryCopyFile(sourceFilePath,destFilePath):
 		errorCode=GetLastError()
 		log.debugWarning("Unable to copy %s, error %d"%(sourceFilePath,errorCode))
 		if not os.path.exists(destFilePath):
-			raise OSError("error %d copying %s"%(errorCode,sourceFilePath))
+			raise OSError("error %d copying %s to %s"%(errorCode,sourceFilePath,destFilePath))
 		tempPath=tempfile.mktemp(dir=os.path.dirname(destFilePath))
 		try:
 			os.rename(destFilePath,tempPath)

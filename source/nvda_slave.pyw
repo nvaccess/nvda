@@ -12,6 +12,7 @@ if hasattr(sys, "frozen"):
 	os.chdir(sys.prefix)
 
 def main():
+	import installer
 	try:
 		action = sys.argv[1]
 	except IndexError:
@@ -23,12 +24,7 @@ def main():
 			import nvda_service
 			nvda_service.nvdaLauncher()
 		elif action=="install":
-			import installer
-			try:
-				installer.install(bool(int(args[0])),bool(int(args[1])))
-			except installer.RetriableFailure:
-				logHandler.log.error("Installation failed, try again",exc_info=True)
-				sys.exit(2)
+			installer.install(bool(int(args[0])),bool(int(args[1])))
 		elif action=="unregisterInstall":
 			import installer
 			installer.unregisterInstallation()
@@ -71,6 +67,9 @@ def main():
 		else:
 			raise ValueError("No such action")
 
+	except installer.RetriableFailure:
+		logHandler.log.error("Task failed, try again",exc_info=True)
+		sys.exit(2)
 	except Exception, e:
 		logHandler.log.error("slave error",exc_info=True)
 		sys.exit(1)

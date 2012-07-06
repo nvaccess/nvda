@@ -224,6 +224,60 @@ class AdobeAcrobatVBufStorage_controlFieldNode_t: public VBufStorage_controlFiel
 	friend class AdobeAcrobatVBufBackend_t;
 };
 
+/*
+ * Adjusts the current column number to skip past columns spanned by previous rows,
+ * decrementing row spans as they are encountered.
+ */
+inline void handleColsSpannedByPrevRows(TableInfo& tableInfo) {
+	for (; ; ++tableInfo.curColumnNumber) {
+		map<int, int>::iterator it = tableInfo.columnRowSpans.find(tableInfo.curColumnNumber);
+		if (it == tableInfo.columnRowSpans.end()) {
+			// This column is not spanned by a previous row.
+			return;
+		}
+		nhAssert(it->second != 0); // 0 row span should never occur.
+		// This row has been covered, so decrement the row span.
+		--it->second;
+		if (it->second == 0)
+			tableInfo.columnRowSpans.erase(it);
+	}
+	nhAssert(false); // Code should never reach this point.
+}
+
+/*
+ * Adds table header info for a single cell which explicitly defines headers
+ * using the Headers attribute.
+ */
+inline void fillExplicitTableHeadersForCell(AdobeAcrobatVBufStorage_controlFieldNode_t& cell, int docHandle, wstring& headersAttr, TableInfo& tableInfo) {
+	wostringstream colHeaders, rowHeaders;
+
+	// The Headers attribute string is in the form "[[id id ... ]]"
+	// Loop through all the ids.
+	// Ignore the "[[" prefix and the " ]]" suffix.
+	size_t lastPos = headersAttr.length() - 3;
+	size_t startPos = 2;
+	while (startPos < lastPos) {
+		// Search for a space, which indicates the end of this id.
+		size_t endPos = headersAttr.find(L' ', startPos);
+		if (endPos == wstring::npos)
+			break;
+		// headersAttr[startPos:endPos] is the id of a single header.
+		// Find the info for the header associated with this id string.
+		map<wstring, TableHeaderInfo>::const_iterator it = tableInfo.headersInfo.find(headersAttr.substr(startPos, endPos - startPos));
+		startPos = endPos + 1;
+		if (it == tableInfo.headersInfo.end())
+			continue;
+
+		(it->second.isColumnHeader ? colHeaders : rowHeaders)
+			<< docHandle << L"," << it->second.uniqueId << L";";
+	}
+
+	if (colHeaders.tellp() > 0)
+		cell.addAttribute(L"table-columnheadercells", colHeaders.str());
+	if (rowHeaders.tellp() > 0)
+		cell.addAttribute(L"table-rowheadercells", rowHeaders.str());
+}
+
 AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 	AdobeAcrobatVBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	TableInfo* tableInfo
@@ -324,6 +378,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 
 	BSTR stdName = NULL;
 	int textFlags = 0;
+	BSTR tempBstr = NULL;
 	if (domElement) {
 		// Get stdName.
 		if ((res = domElement->GetStdName(&stdName)) != S_OK) {
@@ -339,20 +394,18 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 
 		// Get language.
-		BSTR srcLang = NULL;
-		if (domElement->GetAttribute(L"Lang", NULL, &srcLang) == S_OK && srcLang) {
-			parentNode->language = srcLang;
-			SysFreeString(srcLang);
+		if (domElement->GetAttribute(L"Lang", NULL, &tempBstr) == S_OK && tempBstr) {
+			parentNode->language = tempBstr;
+			SysFreeString(tempBstr);
 		}
 
 		// Determine whether the text has underline or strikethrough.
-		BSTR decType = NULL;
-		if (domElement->GetAttribute(L"TextDecorationType", L"Layout", &decType) == S_OK && decType) {
-			if (wcscmp(decType, L"Underline") == 0)
+		if (domElement->GetAttribute(L"TextDecorationType", L"Layout", &tempBstr) == S_OK && tempBstr) {
+			if (wcscmp(tempBstr, L"Underline") == 0)
 				textFlags |= TEXTFLAG_UNDERLINE;
-			else if (wcscmp(decType, L"LineThrough") == 0)
+			else if (wcscmp(tempBstr, L"LineThrough") == 0)
 				textFlags |= TEXTFLAG_STRIKETHROUGH;
-			SysFreeString(decType);
+			SysFreeString(tempBstr);
 		}
 	}
 
@@ -382,11 +435,17 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		wostringstream s;
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
+		if (domElement && domElement->GetAttribute(L"Summary", L"Table", &tempBstr) == S_OK && tempBstr) {
+			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, tempBstr))
+				previousNode = tempNode;
+			SysFreeString(tempBstr);
+		}
 	} else if (role == ROLE_SYSTEM_ROW) {
 		++tableInfo->curRowNumber;
 		tableInfo->curColumnNumber = 0;
-	} else if (role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER) {
+	} else if (role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
 		++tableInfo->curColumnNumber;
+		handleColsSpannedByPrevRows(*tableInfo);
 		wostringstream s;
 		s << tableInfo->tableID;
 		parentNode->addAttribute(L"table-id", s.str());
@@ -394,8 +453,70 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		s << tableInfo->curRowNumber;
 		parentNode->addAttribute(L"table-rownumber", s.str());
 		s.str(L"");
-		s << tableInfo->curColumnNumber;
+		int startCol = tableInfo->curColumnNumber;
+		s << startCol;
 		parentNode->addAttribute(L"table-columnnumber", s.str());
+		if (domElement && domElement->GetAttribute(L"Headers", L"Table", &tempBstr) == S_OK && tempBstr) {
+			// This node has explicitly defined headers.
+			// Some of the referenced nodes might not be rendered yet,
+			// so handle these later.
+			// Note that IPDDomNode::GetFromID() doesn't work, but even if it did,
+			// retrieving header info this way would probably be a bit slow.
+			tableInfo->nodesWithExplicitHeaders.push_back(make_pair(parentNode, tempBstr));
+			SysFreeString(tempBstr);
+		} else {
+			map<int, wstring>::const_iterator headersIt;
+			// Add implicit column headers for this cell.
+			if ((headersIt = tableInfo->columnHeaders.find(startCol)) != tableInfo->columnHeaders.end())
+				parentNode->addAttribute(L"table-columnheadercells", headersIt->second);
+			// Add implicit row headers for this cell.
+			if ((headersIt = tableInfo->rowHeaders.find(tableInfo->curRowNumber)) != tableInfo->rowHeaders.end())
+				parentNode->addAttribute(L"table-rowheadercells", headersIt->second);
+		}
+		// The last row spanned by this cell.
+		// This will be updated below if there is a row span.
+		int endRow = tableInfo->curRowNumber;
+		if (domElement) {
+			if (domElement->GetAttribute(L"ColSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
+				parentNode->addAttribute(L"table-columnsspanned", tempBstr);
+				tableInfo->curColumnNumber += max(_wtoi(tempBstr) - 1, 0);
+				SysFreeString(tempBstr);
+			}
+			if (domElement->GetAttribute(L"RowSpan", L"Table", &tempBstr) == S_OK && tempBstr) {
+				parentNode->addAttribute(L"table-rowsspanned", tempBstr);
+				// Keep trakc of how many rows after this one are spanned by this cell.
+				int span = _wtoi(tempBstr) - 1;
+				if (span > 0) {
+					// The row span needs to be recorded for each spanned column.
+					for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
+						tableInfo->columnRowSpans[col] = span;
+					endRow += span;
+				}
+				SysFreeString(tempBstr);
+			}
+		}
+		if (role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
+			if (role == ROLE_SYSTEM_COLUMNHEADER) {
+				// Record this as a column header for each spanned column.
+				s.str(L"");
+				s << docHandle << L"," << ID << L";";
+				for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
+					tableInfo->columnHeaders[col] += s.str();
+			} else {
+				// Record this as a row header for each spanned row.
+				s.str(L"");
+				s << docHandle << L"," << ID << L";";
+				for (int row = tableInfo->curRowNumber; row <= endRow; ++row)
+					tableInfo->rowHeaders[row] += s.str();
+			}
+			if (domElement && domElement->GetID(&tempBstr) == S_OK && tempBstr) {
+				// Record the id string and associated header info for use when handling explicitly defined headers.
+				TableHeaderInfo& headerInfo = tableInfo->headersInfo[tempBstr];
+				headerInfo.uniqueId = ID;
+				headerInfo.isColumnHeader = role == ROLE_SYSTEM_COLUMNHEADER;
+				SysFreeString(tempBstr);
+			}
+		}
 	}
 
 	// Iterate through the children.
@@ -500,12 +621,14 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	}
 
 	// Finalise tables.
-	if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER) && parentNode->getLength() == 0) {
+	if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) && parentNode->getLength() == 0) {
 		// Always render a space for empty table cells.
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		parentNode->setIsBlock(false);
 	} else if (role == ROLE_SYSTEM_TABLE) {
 		nhAssert(tableInfo);
+		for (list<pair<AdobeAcrobatVBufStorage_controlFieldNode_t*, wstring>>::iterator it = tableInfo->nodesWithExplicitHeaders.begin(); it != tableInfo->nodesWithExplicitHeaders.end(); ++it)
+			fillExplicitTableHeadersForCell(*it->first, docHandle, it->second, *tableInfo);
 		wostringstream s;
 		s << tableInfo->curRowNumber;
 		parentNode->addAttribute(L"table-rowcount", s.str());

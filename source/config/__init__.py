@@ -360,18 +360,31 @@ def _setStartOnLogonScreen(enable):
 
 def setSystemConfigToCurrentConfig():
 	fromPath=os.path.abspath(globalVars.appArgs.configPath)
-	try:
+	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
-		return True
-	except (OSError,WindowsError):
-		return execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)==0
+	else:
+		res=execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)
+		if res==2:
+			raise installer.RetriableFailure
+		elif res!=0:
+			raise RuntimeError("Slave failure")
 
 def _setSystemConfig(fromPath):
+	import installer
 	toPath=os.path.join(sys.prefix,'systemConfig')
-	import shutil
 	if os.path.isdir(toPath):
-		shutil.rmtree(toPath)
-	shutil.copytree(fromPath,toPath)
+		installer.tryRemoveFile(toPath)
+	for curSourceDir,subDirs,files in os.walk(fromPath):
+		if curSourceDir==fromPath:
+			curDestDir=toPath
+		else:
+			curDestDir=os.path.join(toPath,os.path.relpath(curSourceDir,fromPath))
+		if not os.path.isdir(curDestDir):
+			os.makedirs(curDestDir)
+		for f in files:
+			sourceFilePath=os.path.join(curSourceDir,f)
+			destFilePath=os.path.join(curDestDir,f)
+			installer.tryCopyFile(sourceFilePath,destFilePath)
 
 def setStartOnLogonScreen(enable):
 	if getStartOnLogonScreen() == enable:

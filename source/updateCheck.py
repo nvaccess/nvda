@@ -271,18 +271,21 @@ class UpdateDownloader(object):
 		self._guiExecFunc(*self._guiExecArgs)
 
 	def _bg(self):
+		success=False
 		for url in self.urls:
 			try:
 				self._download(url)
 			except:
 				log.debugWarning("Error downloading %s" % url, exc_info=True)
-			else:
+			else: #Successfully downloaded or canceled
+				if not self._shouldCancel:
+					success=True
 				break
 		else:
 			# None of the URLs succeeded.
 			self._guiExec(self._error)
 			return
-		if self._shouldCancel:
+		if not success:
 			try:
 				os.remove(self.destPath)
 			except OSError:
@@ -294,6 +297,10 @@ class UpdateDownloader(object):
 		remote = urllib.urlopen(url)
 		if remote.code != 200:
 			raise RuntimeError("Download failed with code %d" % remote.code)
+		# #2352: Some security scanners such as Eset NOD32 HTTP Scanner
+		# cause huge read delays while downloading.
+		# Therefore, set a higher timeout.
+		remote.fp._sock.settimeout(120)
 		size = int(remote.headers["content-length"])
 		local = file(self.destPath, "wb")
 		self._guiExec(self._downloadReport, 0, size)

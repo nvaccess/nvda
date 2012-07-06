@@ -15,15 +15,33 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef VIRTUALBUFFER_BACKENDS_ADOBEACROBAT_H
 #define VIRTUALBUFFER_BACKENDS_ADOBEACROBAT_H
 
+#include <map>
+#include <string>
+#include <list>
 #include <vbufBase/backend.h>
+
+class AdobeAcrobatVBufStorage_controlFieldNode_t;
+
+typedef struct {
+	int uniqueId;
+	bool isColumnHeader;
+} TableHeaderInfo;
 
 typedef struct {
 	long tableID;
 	int curRowNumber;
 	int curColumnNumber;
+	// Maps column numbers to remaining row spans.
+	std::map<int, int> columnRowSpans;
+	// Maps column numbers to table-columnheadercells attribute values.
+	std::map<int, std::wstring> columnHeaders;
+	// Maps row numbers to table-rowheadercells attribute values.
+	std::map<int, std::wstring> rowHeaders;
+	// Maps node id strings to TableHeaderInfo.
+	std::map<std::wstring, TableHeaderInfo> headersInfo;
+	// Lists nodes with explicit headers along with their Headers attribute string.
+	std::list<std::pair<AdobeAcrobatVBufStorage_controlFieldNode_t*, std::wstring>> nodesWithExplicitHeaders;
 } TableInfo;
-
-class AdobeAcrobatVBufStorage_controlFieldNode_t;
 
 class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 	private:

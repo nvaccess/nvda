@@ -497,11 +497,6 @@ class NVDAObjectRegion(Region):
 		except NotImplementedError:
 			pass
 
-class ReviewNVDAObjectRegion(NVDAObjectRegion):
-
-	def routeTo(self, braillePos):
-		pass
-
 def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	if reportStart:
@@ -1131,7 +1126,7 @@ def getFocusRegions(obj, review=False):
 		region2 = None
 	if isinstance(obj, TreeInterceptor):
 		obj = obj.rootNVDAObject
-	region = (ReviewNVDAObjectRegion if review else NVDAObjectRegion)(obj, appendText=" " if region2 else "")
+	region = NVDAObjectRegion(obj, appendText=" " if region2 else "")
 	region.update()
 	yield region
 	if region2:
