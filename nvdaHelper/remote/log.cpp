@@ -14,7 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <crtdbg.h>
 #include "nvdaControllerInternal.h"
-#include "log.h"
+#include <common/log.h>
 
 void logMessage(int level, const wchar_t* msg) {
 	if(level>LOGLEVEL_DEBUG) nvdaControllerInternal_logMessage(level,GetCurrentProcessId(),msg);

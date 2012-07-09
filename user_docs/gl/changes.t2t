@@ -2,6 +2,43 @@
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2012.2 =
+O subliñable desta versión inclúe unha característica que integra o instalador e a creación do portable, un auto actualizador, administración sinxela dos novos complementos do NVDA, anunciado de gráficos en Microsoft Word, soporte para o estilo de aplicacións de Windows 8 Metro, e varias correccións de fallos importantes. 
+
+== Novas Características ==
+- NVDA agora pode procurar automáticamente, descargar e instalar actualizacións. (#73)
+- Fíxose máis doada a extensión da funcionalidade do NVDA ca adición dun Administrador de Complementos (que se atopa baixo Ferramentas no menú NVDA) permitíndoche instalar e desinstalar paquetes de complementos do NVDA (ficheiros .nvda-addon) que conteñan plugins e controladores. Ten en conta que o Administrador de Complementos non debería amosar os antigos plugins persoais e controladores copiados manualmente no teu directorio de configuración. (#213)
+- Agora funcionan Moitas máis características comúns do NVDA no estilo de aplicacións de Windows 8 Metro cando se utiliza unha versión instalada do NVDA, incluíndo a fala de carácteres ó se escreber e modo navegación para documentos web (inclúese soporte para a versión metro do Internet Explorer 10). As copias portables do NVDA non poden acceder ó estilo de aplicacións metro. (#1801) 
+- En documentos en modo Navegación (Internet Explorer, Firefox etc) agora podes saltar ó comezo, ou pasar ó remate, de certos elementos contedores (incluíndo listas e táboas) con shift+, e , respectivamente. (#123) 
+- Nova lingua: Grego.
+- Agora anúncianse os gráficos e textos alternativos nos documentos de Microsoft Word. (#2282, #1541)
+
+== Cambios ==
+- O anunciado de coordeadas de celda en Microsoft Excel agora faise despóis do contido en lugar de antes, e agora só se inclúe se as opcións de anunciado de táboas e de anunciado de coordeadas da celda da táboa están activadas nas opcións do diálogo Formato de Documento. (#320)
+- NVDA agora distribúese nun paquete. En lugar dunha versión portable e unha instalable, agora só hai un ficheiro que cando se execute, iniciará unha copia temporal do NVDA, e permitirache instalar, ou xerar unha distribución portable.  
+- NVDA agora sempre se instala en Program Files en todos os sistemas. Ó actualizar unha instalación tamén se moverá automáticamente se anteriormente non se instalóu ahí.
+
+== Corrección de Fallos ==
+- Co Cambio automático de lingua activado, o Contido tal coma o texto alternativo para gráficos e etiquetas para certos outros controis en Mozilla Gecko (ex.: Firefox) agora anúncianse na lingua correcta se se marcou apropriadamente.
+- Ler todo en BibleSeeker (e outros controis TRxRichEdit) xa non se detén no medio dunha pasaxe.
+- As listas que se atopan nas propiedades de ficheiro en Windows 8 Explorer (pestana permisos) e en Windows 8 Windows Update agora lense correctamente.
+- Correxidos posibles colgues en MS Word que poderían ocorrer cando lle levou máis de 2 segundos extraer texto  dende un documento (líñas extremadamente longas ou táboas de contido). (#2191)
+- A detección de partición de palabras agora funciona correctamente onde un espazo en branco sexa seguido por certa puntuación. (#1656) 
+- No modo navegación en Adobe Reader, agora é posible navegar por cabeceiras fora dun nivel utilizando navegación rápida e a Lista de Elementos. (#2181)
+- No Winamp, o braille agora actualízase correctamente cando te moves a un elemento diferente no Editor de listas de reproducción. (#1912)
+- A árbore nos Elementos de Lista (dispoñible para documentos en modo navegación) agora dimensiónase apropiadamente para amosar o texto de cada elemento. (#2276)
+- Nas aplicacións que utilicen Java Access Bridge, os campos de texto editable agora amósanse correctamente en braille. (#2284)
+- Nas aplicacións que utilicen Java Access Bridge, os campos de texto editable xa non informan de caracteres extranos en certas circumstancias. (#1892)
+- Nas aplicacións que utilicen Java Access Bridge, cando se estea ó final dun campo de texto editable, a liña actual  agora anúnciase correctamente. (#1892)
+- No modo navegación en aplicacións que utilicen Mozilla Gecko 14 e posterior (ex.: Firefox 14), agora a navegación rápida funciona en bloques de citas e obxectos integrados. (#2287)
+- No Internet Explorer 9 NVDA xa non le contido indeseado cando o foco se move dentro de certas zoas ou elementos enfocables (específicamente un elemento div que é enfocable ou que ten un rol de zoa ARIA). 
+- As iconas para os atallos para o NVDA no Escritorio e no Menú de Inicio agora se amosan correctamente en edicións de 64 bit de Windows. (#354)
+
+
+== Cambios para Desenroladores ==
+- Due to the replacement of the previous NSIS installer for NVDA with a built-in installer in Python, it is no longer necessary for translaters to maintain a langstrings.txt file for the installer. All localization strings are now managed by gettext po files.
+
  
 = 2012.1 =
 O subliñable desta versión inclúe características para unha lectura máis fluída en braille; indicación de formato de documento en braille; acceso a moita máis información de formato e mellora do rendemento en Microsoft Word; e soporte para a Store de iTunes.

@@ -189,7 +189,11 @@ An NVDAObject for a window
 			log.debugWarning("No location, returning no text")
 			return ""
 		import displayModel
-		text,rects=displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle,self.windowHandle,left,top,left+width,top+height,8,32)
+		bindingHandle=self.appModule.helperLocalBindingHandle
+		if not bindingHandle:
+			log.debugWarning("appModule has no binding handle")
+			return ""
+		text,rects=displayModel.getWindowTextInRect(bindingHandle,self.windowHandle,left,top,left+width,top+height,8,32)
 		return text or ""
 
 	def redraw(self):

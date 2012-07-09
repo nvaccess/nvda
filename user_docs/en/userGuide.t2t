@@ -23,7 +23,7 @@ Major highlights include:
 - Support for many refreshable braille displays
 - Ability to run entirely from a USB stick or other portable media without the need for installation
 - Easy to use talking installer
-- Translated into 36 languages
+- Translated into 39 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
@@ -32,7 +32,7 @@ Major highlights include:
 
 ++ Internationalization ++
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 36 languages including: Afrikaans, Albanian, Arabic, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Italian, Japanese, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Spanish, Swedish, Tamil, Thai, Traditional Chinese, Taiwanese Mandarin, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 39 languages including: Afrikaans, Albanian, Arabic, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -45,7 +45,7 @@ Information about other speech synthesizers that NVDA supports can be found in t
 For users that own a refreshable braille display, NVDA can output its information in Braille.
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
 
-NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes for some languages.
+NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes for many languages.
 
 ++ Licence and Copyright ++
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
@@ -62,49 +62,59 @@ For further details, you can [view the full licence. http://www.gnu.org/licenses
 - About 50 MB of storage space.
 -
 
-+ Getting NVDA +
++ Getting and Setting Up NVDA +
 If you have not yet got a copy of NVDA, you can download it from [www.nvda-project.org NVDA_URL].
 
 Go to the download section and you will find a link to download the latest version of NVDA.
 
-There are currently two ways NVDA is packaged.
-One is an Installer which will talk you through installing NVDA so that you can then run it at any time from the Start Menu.
-The other is a self-extracting archive file that contains a fully portable version of NVDA, which you can run from anywhere, including a USB thumb drive or CD.
+Running the file you have just downloaded will start a temporary copy of NVDA.
+You will then be asked if you want to install NVDA, create a portable copy or just continue using the temporary copy.
 
-In order to access the Windows logon screen, User Account Control (UAC) screen or other secure Windows screens, as well as applications running as administrator in Windows Vista and later, you must install NVDA on your system using the installer.
-These screens cannot be accessed using a portable copy of NVDA.
+If you plan to  always use NVDA on this computer, you will want to choose to install NVDA.
+Installing NVDA will allow for additional functionality such as automatic starting after logon, the ability to read the Windows Logon and Windows security screens (which cannot be done with portable and temporary copies) and creation of Start Menu and desktop shortcuts.
+The installed copy is also able to create a portable copy itself at any time.
 
-+ Installing NVDA +
+If you want to take NVDA with you on a USB thum drive or other writable  media, then you  should choose to create a portable copy.
+The portable copy also has the ability to install itself on any computer at a later time.
+However, if you wish to copy NVDA onto read-only media such as a CD, you should just copy the download package.
+Running the portable version directly from read-only media is not supported at this time.
 
-++ The NVDA Installer ++
-If you already have the NVDA installer, simply press enter or double click on the file and the installer will start.
+Using the temporary copy of NVDA is also an option (e.g. for demonstration purposes), though  starting NVDA in this way each time can become very time consuming.
 
-As the installer loads, you will hear the NVDA installation music.
-Once loaded, a temporary copy of NVDA will allow you to follow the prompts of the installer and install NVDA.
-Note that if you were running another copy of NVDA at the time you started the installer, the installer will close your previous copy and start its own.
-This is necessary so that the installer can properly update any changed files.
-At this point, if you have another copy of NVDA already installed, the NVDA installer will uninstall it for you, and then it will commence to install NVDA.
+++ Installing NVDA ++
+If installing NVDA directly from the NVDA download package, press the Install NVDA button.
+If you have already closed this dialog or are wanting to install from a portable copy, please choose the Install NVDA menu item found under Tools in the NVDA menu.
 
-Once you have successfully completed the installation, the installer will alert you that the install of NVDA has finished.
-If reinstalling NVDA, It may ask you to reboot the system at this point.
-It is very important that you reboot the system as failing to do so will have undesirable consequences.
-If it did not ask you to reboot, pressing Finnish will close the installer and start the newly installed version of NVDA.
+The installation dialog that appears will confirm whether you wish to install NVDA and will also tell you whether  this installation will be updating a previous install.
+Pressing the Continue button will start installing NVDA.
+There are also a few options in this dialog which are explained below.
+Once the installation has completed, a message will appear telling you that it was successful.
+Pressing OK at this point will restart the newly installed copy of NVDA.
 
-++ NVDA portable ++
-If you have the portable version of NVDA, then all you have to do is to press enter or double click on the file, and follow the prompts.
-It will ask you where on your system you wish to place the files.
++++ Start at Windows Logon +++
+This option allows you to choose whether or not NVDA should automatically start while on the Windows Logon screen, before you have entered a password.
+This also includes UAC control and other secure screens.
 
-+++ NVDA Portable on a USB key +++
-It is possible to place NVDA on a USB thumb drive so that you can use it on other computer systems.
++++ Create Desktop Shortcut (ctrl+alt+n) +++
+This option allows you to choose whether or not NVDA should create a shortcut on the desktop to start NVDA. 
+This shortcut if created will also be assigned a  shortcut key of control+alt+n allowing you to start NVDA at any time with this key stroke.
 
-When the Portable version asks where you wish to unpack it, type in the drive of your USB thumb drive, plus an optional subdirectory where you wish to place NVDA.
++++ Copy Portable Configuration to Current User Account +++
+This option allows you to choose whether or not NVDA should copy the user configuration from the currently running NVDA into the configuration for the currently logged on  user, for the installed copy of NVDA. 
+This will not  copy the configuration for   any other users  of this system nor to the system configuration for use at Windows Logon and other secure screens.
+This option is only available when installing from a portable copy, not when installing directly from the downloaded Launcher package.
 
-If for example your USB thumb drive is at E:\, you might wish to type in E:\nvda, which will place NVDA in the NVDA subdirectory on your USB thumb drive.
+++ Creating a Portable Copy ++
+If creating a portable copy directly from the NVDA download  package, simply press the Create Portable Copy button.
+If you have already closed this dialog or you are running an installed copy of NVDA, choose the Create Portable copy menu item found under Tools in the NVDA menu.
 
-Note that although this now means you can carry around NVDA and its settings with you anywhere, simply plugging in the USB thumb drive will not automatically start NVDA; You will have to start NVDA manually from either Windows Explorer or the Run Dialog.
-
-For information about automatically starting NVDA from a USB thumb drive, please see this article:
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+The Dialog that appears allows you to choose where the portable copy should be created.
+This can be a directory on your hard drive or a location on a USB thum drive or other portable media.
+There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
+ This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
+Pressing Continue will create the portable copy.
+Once creation is complete, a message will appear telling you it was successfull.
+Press OK to dismiss this dialog.
 
 + Getting started with NVDA +
 
@@ -160,7 +170,7 @@ The NVDA menu allows you to control NVDA's settings, access help, save/revert yo
 
 To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n.
 You can also get to the NVDA menu via the windows system tray.
-Either right-click on the nvda icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
+Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
 When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
 
 ++ Basic key commands ++
@@ -202,7 +212,7 @@ There are some key commands that are useful when moving with the System focus:
 %kc:beginInclude
 || Name | key | Description |
 | Report current focus | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
-| Report title | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing thrice will copy it to the clipboard |
+| Report title | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
 | Read active window | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
 | Report Status Bar | NVDA+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location |
 %kc:endInclude
@@ -303,7 +313,7 @@ The following key commands are available for reviewing text:
 | Say all with review | numpadPlus | NVDA+shift+downArrow | Reads from the current position of the review cursor, moving it as it goes |
 | Copy from review cursor | NVDA+f9 | NVDA+f9 | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
 | Copy to review cursor | NVDA+f10 | NVDA+f10 | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
-| Report text formatting | NVDA+f | Reports the formatting of the text where the review cursor is currently situated |
+| Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the review cursor is currently situated |
 %kc:endInclude
 
 Note: numpad keys require numlock key to be turned off to work properly.
@@ -384,8 +394,8 @@ In addition, you can manually force focus mode, after which it will remain in ef
 | Exit focus mode | escape | switches back to browse mode if focus mode was previously switched to automatically |
 | Refresh browse mode document | NVDA+f5 | Reloads the current document content (useful if certain content seems to be missing from the document) |
 | Find | NVDA+control+f | Pops up a dialog in which you can type some text to find in the current document |
-| Find next | NVDA+f3 | Finds the next occurence of the text in the document that you previously searched for |
-| Find previous | NVDA+shift+f3 | Finds the previous occurence of the text in the document you previously searched for |
+| Find next | NVDA+f3 | Finds the next occurrence of the text in the document that you previously searched for |
+| Find previous | NVDA+shift+f3 | Finds the previous occurrence of the text in the document you previously searched for |
 %kc:endInclude
 
 
@@ -412,14 +422,18 @@ The following keys by themselves jump to the next available element, while addin
 - s: separator
 - m: frame
 - g: graphic
-- d: ARIA landmark
+- d: landmark
 - o: embedded object
 - 1 to 6: headings at levels 1 to 6 respectively
 -
+To move to the beginning or end of containing elements such as lists and tables:
+|| Name | Key | Description |
+| Move to start of container | shift+comma | Moves to the start of the container (list, table, etc.) where the caret is positioned |
+| Move past end of container | comma | Moves past the end of the container (list, table, etc.) where the caret is positioned |
 %kc:endInclude
 
 ++ The Elements List ++
-The elements list provides access to a list of either links, headings or ARIA landmarks in the document.
+The elements list provides access to a list of either links, headings or landmarks in the document.
 Radio buttons allow you to switch between these three types of information.
 An edit field is also provided in the dialog which allows you to filter the list to help you search for a particular item on the page.
 Once you have chosen an item, you can use the provided buttons in the dialog to move to or activate that item.
@@ -447,6 +461,8 @@ NVDA provides its own extra commands for some applications to make certain tasks
 || Name | Key | Description |
 | Report remaining time | control+shift+r | Reports the remaining time of the currently playing track, if any. |
 %kc:endInclude
+
+Note: The report remaining time shortcut works only with the default formatting string for foobar's status line.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -507,6 +523,10 @@ This option is only available for installed copies of NVDA.
 Pressing this button copies your currently saved NVDA user configuration to NVDA's system configuration directory, so that NVDA will use it when running on the logon, User Account Control (UAC) and other secure Windows screens.
 To make sure that all your settings are transfered, make sure to firstly save your configuration with control+NVDA+c or save configuration in the NVDA menu.
 This option is only available for installed copies of NVDA.
+
+==== Automatically check for updates to NVDA ====
+If this is enabled, NVDA will automatically check for updated versions of NVDA and inform you when an update is available.
+You can also manually check for updates by selecting Check for updates under Help in the NVDA menu.
 
 +++ Synthesizer Selection (NVDA+control+s) +++
 The Synthesizer dialog, which is found under "Synthesizer..." in the Preferences menu, allows you to select which Synthesizer NVDA should use to speak with.
@@ -731,7 +751,7 @@ When enabled, the review cursor will automatically be moved to the position of t
 When enabled, the review cursor will follow the mouse as it moves.
 
 ==== Simple Review mode ====
-When enabled, NVDA will filter the hierarchy of objects that can be navigated, to exclude any unusable objects.
+When enabled, NVDA will filter the hierarchy of objects that can be navigated to exclude objects that aren't of interest to the user; e.g. invisible objects and objects used only for layout purposes.
 
 +++ Object Presentation Settings (NVDA+control+o) +++
 Found in the Preferences menu under "Object Presentation...".
@@ -753,7 +773,7 @@ For example the File menu on a menu bar may have a shortcut key of alt+f.
 This option lets you choose whether you wish to have an object's position (e.g. 1 of 4) reported when moving to the object with the focus or object navigation.
 
 ==== Guess Object Position Information when unavailable ====
-If reporting of object position information is turned on, this option allows NVDA to guess object position information when it is otherwize unavailable for a particular control.
+If reporting of object position information is turned on, this option allows NVDA to guess object position information when it is otherwise unavailable for a particular control.
 
 When on, NVDA will report position information for more controls such as menus and toolbars, however this information may be slightly inaccurate.
 
@@ -765,18 +785,18 @@ Uncheck this checkbox if you don't wish to have the description reported along w
 | Desktop key | NVDA+u |
 | Laptop key | NVDA+control+f2 |
 
-This option controls how nvda reports progress bar updates to you.
+This option controls how NVDA reports progress bar updates to you.
 
 It has the following options:
 - Off: Progress bars will not be reported as they change.
-- Speak: This option tells nvda to speak the progress bar in percentages. Each time the progress bar changes, nvda will speak the new value.
-- Beep: This tells nvda to beep each time the progress bar changes. The higher the beep, the closer the progress bar is to completion.
-- Beep and speak: This option tells nvda to both beep and speak when a progress bar updates.
+- Speak: This option tells NVDA to speak the progress bar in percentages. Each time the progress bar changes, NVDA will speak the new value.
+- Beep: This tells NVDA to beep each time the progress bar changes. The higher the beep, the closer the progress bar is to completion.
+- Beep and speak: This option tells NVDA to both beep and speak when a progress bar updates.
 -
 
 ==== Report background progress bars ====
-This is an option that, when checked, tells nvda to keep reporting a progress bar, even if it is not physically in the foreground.
-If you minimize or switch away from a window that contains a progress bar, nvda will keep track of it, allowing you to do other things while nvda tracks the progress bar.
+This is an option that, when checked, tells NVDA to keep reporting a progress bar, even if it is not physically in the foreground.
+If you minimize or switch away from a window that contains a progress bar, NVDA will keep track of it, allowing you to do other things while NVDA tracks the progress bar.
 
 %kc:setting
 ==== Report dynamic content changes ====
@@ -882,7 +902,7 @@ You may also want to type a description of the rule in the Comment field (someth
 NVDA's speech dictionaries however are much more powerful than simple word replacement.
 The Add rule dialog also contains a checkbox to say whether or not you want the rule to be case sensitive (meaning that NVDA should care whether the characters are uppercase or lowercase.
 NVDA ignores case by default).
-Another chekbox allows you to state whether your pattern is a "Regular expression".
+Another checkbox allows you to state whether your pattern is a "Regular expression".
 A regular expression is a pattern containing special symbols that allow you to match on more than one character at a time, or match on just numbers, or just letters, as a few examples.
 Regular expressions are not covered in this user guide, but there are many tutorials on the web which can provide you with more information.
 
@@ -899,8 +919,6 @@ When you are finished, press the OK button to save your changes or the Cancel bu
 By default NVDA does not automatically save your settings, so if you exit NVDA, and then restart it, the settings will go back to the original values.
 Note, however, that this option can be changed under the general options in the preferences menu.
 To save the settings, choose the Save configuration item in the NVDA menu.
-
-If NVDA is on a read-only file system, such as a CD, it will not be able to save your settings, and it will tell you so.
 
 If you ever make a mistake with your settings and need to revert back to the saved settings, choose the "revert to saved configuration" item in the NVDA menu.
 
@@ -939,6 +957,32 @@ Uncheck the menu item to disable it.
 While the speech viewer is enabled, it constantly updates to show you the most current text being spoken.
 However, if you click or focus inside the viewer, NVDA will temporarily stop updating the text, so that you are able to easily select or copy the existing content.
 
+++ Add-ons Manager ++
+The Add-ons Manager, accessed by selecting Manage add-ons under Tools in the NVDA menu, allows you to install and uninstall add-on packages for NVDA.
+These packages are provided by the community and contain custom code that may add or change features in NVDA or even provide support for extra Braille displays or speech synthesizers.
+
+The Add-ons Manager contains a list that displays all the add-ons currently installed in your NVDA user configuration. 
+A package name, version and author are shown for each add-on, though further information such as a description and URL can be viewed by selecting the add-on and pressing the About add-on button.
+
+To install an Add-on, press the Install button.
+This will allow you to browse for an add-on package (.nvda-addon file) somewhere on your computer or on a network.
+Once you press Open, NVDA will ask if you really wish to install the add-on.
+As the functionality of add-ons is unrestricted inside NVDA, which in theory could include accessing your personal data or even the entire system if NVDA is an installed copy, it is very important to only install add-ons from sources you trust.
+Once the add-on is installed, NVDA must be restarted for the add-on to start running. 
+Until you do, a status of "install" will show for that add-on in the list.
+
+To remove an add-on, select the add-on from the list and press the Remove button.
+NVDA will ask if you really wish to do this.
+As with installing, NVDA must be restarted for the add-on to be fully  removed.
+Until you do, a status of "remove" will be shown for that add-on in the list.
+
+The manager also has a Close button to close the dialog.
+If you have installed or removed add-ons, NVDA will first ask you if you wish to restart so that your changes can take effect.
+
+In the past it has been possible to extend NVDA's functionality by copying individual plugins and drivers in to your NVDA user Configuration directory.
+Although this version of NVDA  may still   load them, they will not be shown in the Add-on Manager.
+It is best to remove these files from your configuration and install  the appropriate add-on if one is available.
+
 ++ Python Console ++
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see the Developer Guide available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
@@ -953,7 +997,7 @@ For an even more extensive list of  free and commercial synthesizers that you ca
 ++ eSpeak ++
 The [eSpeak http://espeak.sourceforge.net/] synthesizer is built directly into NVDA and does not require any other special drivers or components to be installed.
 NVDA starts using eSpeak by default.
-As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive or CD on other systems.
+As this synthesizer is built into NVDA, this is a great choice for when running NVDA off a USB thumb drive on other systems.
 
 Each voice that comes with eSpeak speaks a different language.
 There are over 43 different languages supported by eSpeak.
@@ -1189,6 +1233,79 @@ Please see the display's documentation for descriptions of where these keys can 
 | Say all | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
+++ HIMS Braille Sense/Braille EDGE Series ++
+NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+If connecting via USB, you will need to install the USB drivers from HIMS on your system.
+
+Following are the key assignments for these displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Move braille display to previous line | left side scroll up |
+| Move braille display to next line | right side scroll up |
+| Route to braille cell | routing |
+| shift+tab key | dot1+dot2+space |
+| alt key | dot1+dot3+dot4+Space |
+| escape key | dot1+dot5+Space |
+| tab key | dot4+dot5+Space |
+| enter key | dot8 |
+| backspace key | dot7 |
+| upArrow key | dot1+Space |
+| downArrow key | dot4+Space |
+| capsLock | dot1+dot3+dot6+space |
+| shift+alt+tab key | advance2+advance3+advance1 |
+| alt+tab key | advance2+advance3 |
+| end key | dot4+dot6+space |
+| Control+end key | dot4+dot5+dot6+space |
+| home key | dot1+dot3+space |
+| control+home key | dot1+dot2+dot3+space |
+| leftArrow key | dot3+space |
+| control+shift+leftArrow key | dot2+dot8+space+advance1 |
+| control+leftArrow key | dot2+space |
+| shift+alt+leftArrow key | dot2+dot7+advance1 |
+| alt+leftArrow key | dot2+dot7 |
+| rightArrow key | dot6+space |
+| control+shift+rightArrow key | dot5+dot8+space+advance1 |
+| control+rightArrow key | dot5+space |
+| shift+alt+rightArrow key | dot5+dot7+advance1 |
+| alt+rightArrow key | dot5+dot7 |
+| pageUp key | dot1+dot2+dot6+space |
+| control+pageUp key | dot1+dot2+dot6+dot8+space |
+| control+shift+upArrow key | dot2+dot3+dot8+space+advance1 |
+| control+upArrow key | dot2+dot3+space |
+| shift+alt+upArrow key | dot2+dot3+dot7+advance1 |
+| alt+upArrow key | dot2+dot3+dot7 |
+| shift+upArrow key | left side scroll down + space |
+| pageDown key | dot3+dot4+dot5+space |
+| control+pagedown key | dot3+dot4+dot5+dot8+space |
+| control+shift+downArrow key | dot5+dot6+dot8+space+advance1 |
+| control+downArrow key | dot5+dot6+space |
+| shift+alt+downArrow key | dot5+dot6+dot7+advance1 |
+| alt+downArrow key | dot5+dot6+dot7 |
+| shift+downArrow key | right side scroll down + space |
+| delete key | dot1+dot3+dot5+space |
+| f1 key | dot1+dot2+dot5+space |
+| f3 key | dot1+dot2+dot4+dot8 |
+| f4 key | dot7+advance3 |
+| windows+b key | dot1+dot2+advance1 |
+| windows+d key | dot1+dot4+dot5+advance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA supports the SyncBraille Display from [HIMS http://www.hims-inc.com/].
+You will need to install the USB drivers from HIMS on your system.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
@@ -1224,7 +1341,7 @@ Each entry key can only be listed once per section, including None.
 Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
 -
 
-Gesture identifiers consist of a two leter device code (kb for keyboard and br for braille display), a sub-device or layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
+Gesture identifiers consist of a two letter device code (kb for keyboard and br for braille display), a sub-device or layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
 For keyboard gestures, the part in brackets is the keyboard layout and is optional.
 If not specified, the gesture will apply to all keyboard layouts.
 For braille display gestures, the part in brackets identifies the specific braille display and is mandatory.
@@ -1247,7 +1364,7 @@ Towards the bottom, you would see:
 
 ```
 INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
 ```
 
 From this, you can see that the script name is dateTime and the module.class is globalCommands.GlobalCommands.

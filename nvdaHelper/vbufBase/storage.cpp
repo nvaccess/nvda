@@ -20,7 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <set>
 #include <sstream>
 #include <common/xml.h>
-#include <remote/log.h>
+#include <common/log.h>
 #include "utils.h"
 #include "storage.h"
 
@@ -631,8 +631,8 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 		VBufStorage_buffer_t* buffer=i->second;
 		if(buffer==this) {
 			LOG_DEBUGWARNING(L"Cannot replace a subtree on a buffer with the same buffer. Skipping");
-		failedBuffers=true;
-			i=m.erase(i);
+			failedBuffers=true;
+			m.erase(i++);
 			continue;
 		}
 		parent=node->parent;
@@ -642,7 +642,7 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 			failedBuffers=true;
 			buffer->clearBuffer();
 			delete buffer;
-			i=m.erase(i);
+			m.erase(i++);
 			continue;
 		}
 		if(!this->insertNode(parent,previous,buffer->rootNode)) {
@@ -650,7 +650,7 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 			failedBuffers=true;
 			buffer->clearBuffer();
 			delete buffer;
-			i=m.erase(i);
+			m.erase(i++);
 			continue;
 		}
 		buffer->nodes.erase(buffer->rootNode);

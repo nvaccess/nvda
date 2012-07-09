@@ -266,7 +266,12 @@ DOT8 = 128
 
 def NVDAObjectHasUsefulText(obj):
 	import displayModel
-	return issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo) or obj.role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states
+	role = obj.role
+	states = obj.states
+	return (issubclass(obj.TextInfo,displayModel.DisplayModelTextInfo)
+		or role in (controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_TERMINAL)
+		or controlTypes.STATE_EDITABLE in states
+		or (role == controlTypes.ROLE_DOCUMENT and controlTypes.STATE_READONLY not in obj.states))
 
 def _getDisplayDriver(name):
 	return __import__("brailleDisplayDrivers.%s" % name, globals(), locals(), ("brailleDisplayDrivers",)).BrailleDisplayDriver
@@ -392,6 +397,7 @@ def getBrailleTextForProperties(**propertyValues):
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
 	level = positionInfo.get("level") if positionInfo else None
+	cellCoordsText=propertyValues.get('cellCoordsText')
 	rowNumber = propertyValues.get("rowNumber")
 	columnNumber = propertyValues.get("columnNumber")
 	includeTableCellCoords = propertyValues.get("includeTableCellCoords", True)
@@ -406,7 +412,7 @@ def getBrailleTextForProperties(**propertyValues):
 			states.discard(controlTypes.STATE_VISITED)
 			# Translators: Displayed in braille for a link which has been visited.
 			roleText = _("vlnk")
-		elif (name or rowNumber or columnNumber) and role in controlTypes.silentRolesOnFocus:
+		elif (name or cellCoordsText or rowNumber or columnNumber) and role in controlTypes.silentRolesOnFocus:
 			roleText = None
 		else:
 			roleText = roleLabels.get(role, controlTypes.roleLabels[role])
@@ -420,7 +426,7 @@ def getBrailleTextForProperties(**propertyValues):
 		positiveStates = controlTypes.processPositiveStates(role, states, controlTypes.REASON_FOCUS, states)
 		textList.extend(positiveStateLabels.get(state, controlTypes.stateLabels[state]) for state in positiveStates)
 		negativeStates = controlTypes.processNegativeStates(role, states, controlTypes.REASON_FOCUS, None)
-		textList.extend(negativeStateLabels.get(state, _("not %s") % controlTypes.stateLabels[state]) for state in negativeStates)
+		textList.extend(negativeStateLabels.get(state, controlTypes.negativeStateLabels.get(state, _("not %s") % controlTypes.stateLabels[state])) for state in negativeStates)
 	if roleText:
 		textList.append(roleText)
 	description = propertyValues.get("description")
@@ -439,7 +445,7 @@ def getBrailleTextForProperties(**propertyValues):
 			# %s is replaced with the level.
 			textList.append(_('lv %s')%positionInfo['level'])
 	if rowNumber:
-		if includeTableCellCoords: 
+		if includeTableCellCoords and not cellCoordsText: 
 			# Translators: Displayed in braille for a table cell row number.
 			# %s is replaced with the row number.
 			textList.append(_("r%s") % rowNumber)
@@ -447,10 +453,12 @@ def getBrailleTextForProperties(**propertyValues):
 		columnHeaderText = propertyValues.get("columnHeaderText")
 		if columnHeaderText:
 			textList.append(columnHeaderText)
-		if includeTableCellCoords:
+		if includeTableCellCoords and not cellCoordsText:
 			# Translators: Displayed in braille for a table cell column number.
 			# %s is replaced with the column number.
 			textList.append(_("c%s") % columnNumber)
+	if includeTableCellCoords and  cellCoordsText:
+		textList.append(cellCoordsText)
 	return " ".join([x for x in textList if x])
 
 class NVDAObjectRegion(Region):
@@ -488,11 +496,6 @@ class NVDAObjectRegion(Region):
 			self.obj.doAction()
 		except NotImplementedError:
 			pass
-
-class ReviewNVDAObjectRegion(NVDAObjectRegion):
-
-	def routeTo(self, braillePos):
-		pass
 
 def getControlFieldBraille(field, ancestors, reportStart, formatConfig):
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
@@ -1123,7 +1126,7 @@ def getFocusRegions(obj, review=False):
 		region2 = None
 	if isinstance(obj, TreeInterceptor):
 		obj = obj.rootNVDAObject
-	region = (ReviewNVDAObjectRegion if review else NVDAObjectRegion)(obj, appendText=" " if region2 else "")
+	region = NVDAObjectRegion(obj, appendText=" " if region2 else "")
 	region.update()
 	yield region
 	if region2:

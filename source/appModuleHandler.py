@@ -93,10 +93,12 @@ def getAppModuleFromProcessID(processID):
 		runningTable[processID]=mod
 	return mod
 
-def update(processID):
+def update(processID,helperLocalBindingHandle=None,inprocRegistrationHandle=None):
 	"""Removes any appModules from the cache whose process has died, and also tries to load a new appModule for the given process ID if need be.
 	@param processID: the ID of the process.
 	@type processID: int
+	@param helperLocalBindingHandle: an optional RPC binding handle pointing to the RPC server for this process
+	@param inprocRegistrationHandle: an optional rpc context handle representing successful registration with the rpc server for this process
 	"""
 	for deadMod in [mod for mod in runningTable.itervalues() if not mod.isAlive]:
 		log.debug("application %s closed"%deadMod.appName)
@@ -109,7 +111,11 @@ def update(processID):
 		except:
 			log.exception("Error terminating app module %r" % deadMod)
 	# This creates a new app module if necessary.
-	getAppModuleFromProcessID(processID)
+	mod=getAppModuleFromProcessID(processID)
+	if helperLocalBindingHandle:
+		mod.helperLocalBindingHandle=helperLocalBindingHandle
+	if inprocRegistrationHandle:
+		mod._inprocRegistrationHandle=inprocRegistrationHandle
 
 def doesAppModuleExist(name):
 	return any(importer.find_module("appModules.%s" % name) for importer in _importers)
@@ -196,13 +202,14 @@ class AppModule(baseObject.ScriptableObject):
 		#: The ID of the process this appModule is for.
 		#: @type: int
 		self.processID=processID
-		self.helperLocalBindingHandle=NVDAHelper.localLib.createConnection(processID)
 		if appName is None:
 			appName=getAppNameFromProcessID(processID)
 		#: The application name.
 		#: @type: str
 		self.appName=appName
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
+		self.helperLocalBindingHandle=None
+		self._inprocRegistrationHandle=None
 
 	def __repr__(self):
 		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
@@ -219,7 +226,10 @@ class AppModule(baseObject.ScriptableObject):
 		Subclasses should call the superclass method first.
 		"""
 		winKernel.closeHandle(self.processHandle)
-		NVDAHelper.localLib.destroyConnection(self.helperLocalBindingHandle)
+		if self._inprocRegistrationHandle:
+			ctypes.windll.rpcrt4.RpcSsDestroyClientContext(ctypes.byref(self._inprocRegistrationHandle))
+		if self.helperLocalBindingHandle:
+			ctypes.windll.rpcrt4.RpcBindingFree(ctypes.byref(self.helperLocalBindingHandle))
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		"""Choose NVDAObject overlay classes for a given NVDAObject.

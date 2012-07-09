@@ -5,6 +5,7 @@
 #See the file COPYING for more details.
 
 import os
+import copy
 import gettext
 gettext.install("nvda", unicode=True)
 from distutils.core import setup
@@ -82,21 +83,23 @@ class py2exe(build_exe.py2exe):
 	def copy_w9xpopen(self, modules, dlls):
 		pass
 
+	def run(self):
+		dist = self.distribution
+		if self.enable_uiAccess:
+			# Add a target for nvda_uiAccess, using nvda_noUIAccess as a base.
+			target = copy.deepcopy(dist.windows[0])
+			target["dest_base"] = "nvda_uiAccess"
+			target["uac_info"] = (target["uac_info"][0], True)
+			dist.windows.insert(1, target)
+
+		build_exe.py2exe.run(self)
+
 	def build_manifest(self, target, template):
-		if target is self.distribution.windows[0]:
-			# This is the main executable.
-			isMainExec = True
-			if self.enable_uiAccess:
-				target.uac_info = (target.uac_info[0], True)
-		else:
-			isMainExec = False
-
 		mfest, rid = build_exe.py2exe.build_manifest(self, target, template)
-
-		if isMainExec:
+		if getattr(target, "script", None) == "nvda.pyw":
+			# This is one of the main application executables.
 			mfest = mfest[:mfest.rindex("</assembly>")]
 			mfest += MAIN_MANIFEST_EXTRA + "</assembly>"
-
 		return mfest, rid
 
 def getLocaleDataFiles():
@@ -135,6 +138,7 @@ setup(
 	windows=[
 		{
 			"script":"nvda.pyw",
+			"dest_base":"nvda_noUIAccess",
 			"uac_info": ("asInvoker", False),
 			"icon_resources":[(1,"images/nvda.ico")],
 			"version":"0.0.0.0",
@@ -143,6 +147,7 @@ setup(
 			"copyright":copyright,
 			"company_name":publisher,
 		},
+		# The nvda_uiAccess target will be added at runtime if required.
 		{
 			"script": "nvda_slave.pyw",
 			"icon_resources": [(1,"images/nvda.ico")],

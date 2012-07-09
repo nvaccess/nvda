@@ -3,6 +3,44 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.2 =
+Le principali novità in questa versione riguardano la creazione di versioni portable e installer direttamente da un unico pacchetto, una funzione di aggiornamento automatico, una gestione semplificata dei componenti aggiuntivi, l'annuncio dei grafici in Microsoft Word, il supporto per le applicazioni in stile Metro in Windows8 e la risoluzione di importanti bug.
+
+== Novità ==
+- NVDA è in grado di controllare e scaricare nuove versioni e aggiornamenti dello screen reader. (#73)
+- Le funzioni di NVDA possono essere aumentate tramite la gestione di plugin personalizzati e driver, grazie al gestore di componenti aggiuntivi (situato alla voce strumenti del menu di NVDA) che permette l'installazione e disinstallazione dei pacchetti aventi come estensione nvda-addon. Si noti che il Gestore di componenti aggiuntivi non è in grado di rilevare componenti installati in precedenza dall'utente. (#213)
+- Molte funzionalità comuni di NVDA nelle applicazioni che usano l'interfaccia Metro di Windows8 ora si comportano correttamente, quando viene utilizzata una versione installer di NVDA, compreso l'annuncio dei caratteri digitati, e la modalità navigazione per i documenti web (incluso il supporto per la versione Metro di Internet Explorer 10). Le copie portabili di NVDA non possono accedere alle app in stile Metro. (#1801)
+- Nei documenti in modalità navigazione (Internet Explorer, Firefox, etc) è ora possibile saltare all'inizio o alla fine di elenchi, frame o tabelle, con i tasti "Shift+;" e ",". (#123)
+- Nuova lingua: Greco.
+- In Microsoft Word, vengono ora visualizzati i grafici e il testo alternativo. (#2282, #1541)
+ 
+
+== Cambiamenti ==
+- L'annuncio delle coordinate delle celle in Microsoft Excel avviene dopo il contenuto e non prima, e risulta attivo soltanto se le opzioni "leggi le tabelle" e "leggi le coordinate di una cella in una tabella, situate sulla finestra di dialogo formattazione documento, sono attive. (#320)
+- NVDA viene ora distribuito in un unico pacchetto. Invece di avere due pacchetti diversi formati da un installer e una portable, ora è a disposizione un file unico che, una volta eseguito, farà avviare una copia temporanea di NVDA, permettendo o l'installazione di NVDA, oppure la generazione di una distribuzione portable. (#1715)
+- NVDA viene installato ora nella cartella programmi su tutti i sistemi operativi. L'aggiornamento da una versione precedente causerà lo spostamento dei file in tale cartella.
+
+
+== Bug Corretti ==
+- Con l'opzione "cambia la lingua automaticamente" attiva, il testo ricavato da grafici o etichette nelle applicazioni Mozilla Gecko (come Firefox) viene ora letto nella lingua appropriata.
+- Il comando  dire tutto non si ferma più nel mezzo di un testo nel programma Bibleseeker e nei controlli editazioni di tipo  TRxRichEdit.
+- Vengono letti correttamente gli elenchi situati in Windows8 Explorer, scheda permessi della finestra proprietà, e anche quelli nella finestra Windows Update.
+- NVDA non rallenta più nei documenti Word in presenza di righe molto lunghe, o di sommari complessi, e in tutte le circostanze in cui necessitano più di due secondi per ottenere informazioni dal documento. (#2191)
+- Il rilevamento della fine di una parola ora funziona correttamente anche in presenza di spazi bianchi seguiti da certi simboli di punteggiatura. (#1656)
+- In Adobe Reader, quando si utilizza la modalità navigazione, ora è possibile navigare per intestazioni senza un livello utilizzando i tasti di navigazione veloce e l'elenco elementi. (#2181)
+- In Winamp, il braille viene aggiornato correttamente quando ci si sposta in un elemento diverso nell'editor playlist. (#1912)
+- L'albero nell'elenco elementi (disponibile nei documenti in modalità navigazione) è ora ridimensionato per visualizzare il testo di ciascun elemento. (#2276)
+- Nelle applicazioni che fanno uso di Java Access bridge, i campi editazione ora vengono mostrati correttamente in Braille. (#2284)
+- Nelle applicazioni che fanno uso di Java Access bridge, i campi editazione non vengono più visualizzati con caratteri strani in alcune circostanze. (#1892)
+- In modalità navigazione nelle applicazioni che utilizzano Mozilla Gecko 14 e successivi (ad esempio Firefox 14), i tasti di navigazione veloce funzionano nei blocchi tra virgolette e negli oggetti. (#2287)
+- In Internet Explorer 9, NVDA non legge più contenuti non desiderati quando il focus si sposta all'interno di un elemento div che risulta evidenziabile o che è marcato con una sezione ARIA.
+- L'icona di NVDA nel desktop e i collegamenti nel menu di avvio nei sistemi a 64 bit sono visualizzati ora correttamente. (#354)
+
+
+== Cambiamenti per sviluppatori ==
+- A causa della sostituzione del precedente NSIS Installer per NVDA con uno integrato in Python, non è più necessario per i traduttori lavorare sul file langstrings.txt per l'installer. Tutte le stringhe vengono ora gestite dai file gettext po.
+
+
 = 2012.1 =
 Le principali novità di questa versione si concentrano su una lettura del braille molto più fluida; la formattazione dei documenti è indicata anche in braille; accesso a molte più informazioni di formattazione e una migliore gestione di Microsoft Word; inoltre, accesso semplificato e intuitivo all'Itunes Store. 
 
@@ -85,6 +123,7 @@ Le principali novità di questa versione si concentrano su una lettura del brail
   - In controlTypes, speechRoleLabels e speechStateLabels sono stati rinominati in roleLabels e stateLabels.
 - Implementato nelle funzioni di log anche l'output del braille. (#2102)
 - Le sottoclassi di Sapi5 Synthdrivers possono sovrascrivere _getVoiceTokens  e estendere __init__ per supportare token di voce personalizzati come  con sapi.spObjectTokenCategory per ottenere token da una locazione di registro personalizzata.
+
 
 = 2011.3 =
 == Novità ==

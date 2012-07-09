@@ -42,13 +42,17 @@ class JAB_OOTable(JAB):
 class JAB_OOTableCell(JAB):
 
 	role=controlTypes.ROLE_TABLECELL
-	tableCellCoordsInName=True
 
 	def _get_name(self):
 		name=super(JAB_OOTableCell,self).name
 		if name and name.startswith('Cell') and name[-2].isdigit():
-			name=name[5:-1]
+			return None
 		return name
+
+	def _get_cellCoordsText(self):
+		name=super(JAB_OOTableCell,self).name
+		if name and name.startswith('Cell') and name[-2].isdigit():
+			return name[5:-1]
 
 	def _get_value(self):
 		value=super(JAB_OOTableCell,self).value
@@ -203,7 +207,10 @@ class SymphonyTableCell(IAccessible):
 
 	TextInfo=SymphonyTextInfo
 
-	tableCellCoordsInName=True
+	def _get_cellCoordsText(self):
+		return super(SymphonyTableCell,self).name
+
+	name=None
 
 	def _get_states(self):
 		states=super(SymphonyTableCell,self).states

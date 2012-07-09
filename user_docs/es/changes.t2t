@@ -3,12 +3,51 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.2 =
+Lo reseñable de esta versión incluye una característica que integra el instalador y la creación del portable, un auto actualizador, administración fácil de los nuevos complementos de NVDA, anunciado de gráficos en Microsoft Word, soporte para el estilo de aplicaciones de Windows 8 Metro, y varias correcciones de fallos importantes. 
+
+== Nuevas Características ==
+- NVDA ahora puede buscar automáticamente, descargar e instalar actualizaciones. (#73)
+- Se ha hecho más sencilla la extensión de la funcionalidad de NVDA con la adición de un Administrador de Complementos (que se encuentra bajo Herramientas en el menú NVDA) permitiéndote instalar y desinstalar paquetes de complementos de NVDA (ficheros .nvda-addon) que contengan plugins y controladores. Ten en cuenta que el Administrador de Complementos no debería mostrar los antiguos plugins personales y controladores copiados manualmente en tu directorio de configuración. (#213)
+- Ahora funcionan Muchas más características comunes de NVDA en el estilo de aplicaciones de Windows 8 Metro cuando se utiliza una versión instalada de NVDA, incluyendo la verbalización de carácteres al escribir y modo navegación para documentos web (se incluye soporte para la versión metro de Internet Explorer 10). Las copias portables de NVDA no pueden acceder al estilo de aplicaciones metro. (#1801) 
+- En documentos en modo Navegación (Internet Explorer, Firefox etc) ahora puedes saltar al comienzo, o pasar al final, de ciertos elementos contenedores (incluyendo listas y tablas) con shift+, y , respectivamente. (#123) 
+- Nuevo idioma: Griego.
+- Ahora se anuncian los gráficos y textos alternativos en documentos de Microsoft Word. (#2282, #1541)
+
+
+== Cambios ==
+- El anunciado de coordenadas de celda en Microsoft Excel ahora se hace después del contenido en lugar de antes, y ahora sólo se incluye si las opciones de anunciado de tablas y de anunciado de coordenadas de la celda de la tabla están activadas en las opciones del diálogo Formato de Documento. (#320)
+- NVDA ahora se distribuye en un paquete. En lugar de una versión portable y una instalable, ahora sólo hay un fichero que cuando se ejecute, iniciará una copia temporal de NVDA, y te permitirá instalar, o generar una distribución portable. (#1715)
+- NVDA ahora siempre se instala en Program Files en todos los sistemas. Al actualizar una instalación también se la moverá automáticamente si anteriormente no se instaló ahí.
+
+
+== Corrección de Fallos ==
+- Con el Cambio automático de idioma activado, el Contenido tal como el texto alternativo para gráficos y etiquetas para ciertos otros controles en Mozilla Gecko (ej.: Firefox) ahora se anuncian en el idioma correcto si se marcó apropiadamente.
+- Leer todo en BibleSeeker (y otros controles TRxRichEdit) ya no se detiene en el medio de un pasaje.
+- Las listas que se encuentran en las propiedades de fichero en Windows 8 Explorer (pestaña permisos) y en Windows 8 Windows Update ahora se leen correctamente.
+- Corregidos posibles cuelgues en MS Word que podrían ocurrir cuando le tomó más de dos segundos extraer texto  desde un documento (líneas extremadamente largas o tablas de contenido). (#2191)
+- La detección de partición de palabras ahora funciona correctamente donde un espacio en blanco sea seguido por cierta puntuación. (#1656)
+- En modo navegación en Adobe Reader, ahora es posible navegar por encabezados fuera de un nivel utilizando navegación rápida y la Lista de Elementos. (#2181)
+- En Winamp, el braille ahora se actualiza correctamente cuando te mueves a un elemento diferente en el Editor de listas de reproducción. (#1912)
+- El árbol en los Elementos de Lista (disponible para documentos en modo navegación) ahora se dimensiona apropiadamente para mostrar el texto de cada elemento. (#2276)
+- En aplicaciones que utilicen Java Access Bridge, los campos de texto editable ahora se presentan correctamente en braille. (#2284)
+- En aplicaciones que utilicen Java Access Bridge, los campos de texto editable ya no informan de caracteres extraños en ciertas circumstancias. (#1892)
+- En aplicaciones que utilicen Java Access Bridge, cuando se esté al final de un campo de texto editable, la línea actual  ahora se anuncia correctamente. (#1892)
+- En modo navegación en aplicaciones que utilicen Mozilla Gecko 14 y posterior (ej.: Firefox 14), ahora la navegación rápida funciona en bloques de citas y objetos integrados. (#2287)
+- En Internet Explorer 9 NVDA ya no lee contenido indeseado cuando el foco se mueve dentro de ciertas zonas o elementos enfocables (específicamente un elemento div que es enfocable o que tiene un rol de zona ARIA). 
+- Los iconos para los atajos para NVDA en el Escritorio y en el Menú de Inicio ahora se muestran correctamente en ediciones de 64 bit de Windows. (#354)
+
+
+== Cambios para Desarrolladores ==
+- Due to the replacement of the previous NSIS installer for NVDA with a built-in installer in Python, it is no longer necessary for translaters to maintain a langstrings.txt file for the installer. All localization strings are now managed by gettext po files.
+
+
 = 2012.1 =
 Lo subrayable de esta versión incluye características para una lectura más fluída en braille; indicación de formato de documento en braille; acceso a mucha más información de formato y mejora del rendimiento en Microsoft Word; y soporte para la Store de iTunes.
 
 
 == Nuevas Características ==
-- NVDA puede anunciar el número de las pestañas o espacios al inicio en la línea actual en el orden en que se introdujeron. Esto puede activarse seleccionando anunciar sangrado de línea en el diálogo Formateado de documento. (#373)
+- NVDA puede anunciar el número de los tabuladores o espacios al inicio en la línea actual en el orden en que se introdujeron. Esto puede activarse seleccionando anunciar sangrado de línea en el diálogo Formateado de documento. (#373)
 - NVDA ahora puede detectar la pulsación de teclas generadas desde la emulación de entrada de teclado tal como en programas de teclado en pantalla o de reconocimiento de voz.
 - NVDA ahora puede detectar colores en ventanas órdenes de consola.
 - Las negritas, cursivas y subrayados ahora se indican en braille utilizando signos apropiados a la tabla de transcripción configurada. (#538)

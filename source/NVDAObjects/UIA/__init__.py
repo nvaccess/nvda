@@ -242,6 +242,12 @@ class UIA(Window):
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
+		if UIAClassName=="GridTileElement":
+			clsList.append(GridTileElement)
+		elif UIAClassName=="GridListTileElement":
+			clsList.append(GridListTileElement)
+		if UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
+			clsList.append(Toast)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
 		if UIAClassName=="ControlPanelLink":
@@ -698,3 +704,27 @@ class ListItem(UIA):
 
 class Dialog(Dialog):
 	role=controlTypes.ROLE_DIALOG
+
+class Toast(UIA):
+
+	def event_alert(self):
+		speech.speakObject(self)
+		api.setNavigatorObject(self)
+
+class GridTileElement(UIA):
+
+	role=controlTypes.ROLE_TABLECELL
+
+	def _get_description(self):
+		name=self.name
+		descriptionStrings=[]
+		for child in self.children:
+			description=child.basicText
+			if not description or description==name: continue
+			descriptionStrings.append(description)
+		return " ".join(descriptionStrings)
+		return description
+
+class GridListTileElement(UIA):
+	role=controlTypes.ROLE_TABLECELL
+	description=None

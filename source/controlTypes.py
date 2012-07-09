@@ -232,6 +232,9 @@ roleLabels={
 	ROLE_HEADING5:_("heading 5"),
 	ROLE_HEADING6:_("heading 6"),
 	ROLE_PARAGRAPH:_("paragraph"),
+	# Translators: Presented for a section in a document which is a block quotation;
+	# i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+	# See http://en.wikipedia.org/wiki/Block_quotation
 	ROLE_BLOCKQUOTE:_("block quote"),
 	ROLE_TABLEHEADER:_("table header"),
 	ROLE_TABLEBODY:_("table body"),
@@ -252,6 +255,8 @@ roleLabels={
 	ROLE_ENDNOTE:_("end note"),
 	ROLE_FOOTER:_("footer"),
 	ROLE_FOOTNOTE:_("foot note"),
+	# Translators: Reported for an object which is a glass pane; i.e.
+	# a pane that is guaranteed to be on top of all panes beneath it.
 	ROLE_GLASSPANE:_("glass pane"),
 	ROLE_HEADER:_("header"),
 	ROLE_IMAGEMAP:_("image map"),
@@ -263,6 +268,8 @@ roleLabels={
 	ROLE_LAYEREDPANE:_("layered pane"),
 	ROLE_REDUNDANTOBJECT:_("redundant object"),
 	ROLE_ROOTPANE:_("root pane"),
+	# Translators: May be reported for an editable text object in a toolbar.
+	# This is deprecated and is not often (if ever) used.
 	ROLE_EDITBAR:_("edit bar"),
 	ROLE_TERMINAL:_("terminal"),
 	ROLE_RICHEDIT:_("rich edit"),
@@ -271,7 +278,13 @@ roleLabels={
 	ROLE_SECTION:_("section"),
 	ROLE_SHAPE:_("shape"),
 	ROLE_SPLITPANE:_("split pane"),
+	# Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+	# which represents the portion of the entire data that the user can see.
+	# As the user manipulates the scroll bars, the contents of the view port can change.
 	ROLE_VIEWPORT:_("view port"),
+	# Translators: Reported for an object that forms part of a menu system
+	# but which can be undocked from or torn off the menu system
+	# to exist as a separate window.
 	ROLE_TEAROFFMENU:_("tear off menu"),
 	ROLE_TEXTFRAME:_("text frame"),
 	ROLE_TOGGLEBUTTON:_("toggle button"),
@@ -285,6 +298,7 @@ roleLabels={
 	ROLE_DROPLIST:_("drop list"),
 	ROLE_SPLITBUTTON:_("split button"),
 	ROLE_MENUBUTTON:_("menu button"),
+	# Translators: Reported for a button which expands a grid when it is pressed.
 	ROLE_DROPDOWNBUTTONGRID:_("drop down button grid"),
 	ROLE_EQUATION:_("equation"),
 	ROLE_GRIP:_("grip"),
@@ -345,6 +359,8 @@ stateLabels={
 	STATE_HASPOPUP:_("subMenu"),
 	STATE_PROTECTED:_("protected"),
 	STATE_REQUIRED:_("required"),
+	# Translators: Reported when an object no longer exists in the user interface;
+	# i.e. it is dead and is no longer usable.
 	STATE_DEFUNCT:_("defunct"),
 	STATE_INVALID_ENTRY:_("invalid entry"),
 	STATE_MODAL:_("modal"),
@@ -359,10 +375,19 @@ stateLabels={
 	STATE_CHECKABLE:_("checkable"),
 	STATE_DRAGGABLE:_("draggable"),
 	STATE_DRAGGING:_("dragging"),
+	# Translators: Reported where an object which is being dragged can be dropped.
+	# This is only reported for objects which support accessible drag and drop.
 	STATE_DROPTARGET:_("drop target"),
 	STATE_SORTED:_("sorted"),
 	STATE_SORTED_ASCENDING:_("sorted ascending"),
 	STATE_SORTED_DESCENDING:_("sorted descending"),
+}
+
+negativeStateLabels={
+	# Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+	STATE_SELECTED:_("not selected"),
+	# Translators: This is presented when a checkbox is not checked.
+	STATE_CHECKED:_("not checked"),
 }
 
 silentRolesOnFocus={

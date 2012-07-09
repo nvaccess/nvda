@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: NVDA bzr 2012.2:5236\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-03-01 05:30+0000\n"
-"PO-Revision-Date: 2012-02-15 11:57+0100\n"
-"Last-Translator: Erion <None>\n"
+"POT-Creation-Date: 2012-05-30 18:13+0100\n"
+"PO-Revision-Date: 2012-05-18 12:17+0100\n"
+"Last-Translator: Áron Ócsvári <oaron1@gmail.com>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -12,7 +12,7 @@ msgstr ""
 "X-Poedit-Language: Hungarian\n"
 "X-Poedit-Country: HUNGARY\n"
 
-#: globalCommands.py:841
+#: globalCommands.py:849
 #, python-format
 msgid " and currently loaded module is %s"
 msgstr "A jelenleg betöltött szkript neve: %s"
@@ -24,24 +24,24 @@ msgid "%d characters"
 msgstr "%d karakter"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#: globalCommands.py:826
+#: globalCommands.py:834
 #, python-format
 msgid "%d hours and %d minutes remaining"
 msgstr "%d óra és %d perc van hátra"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:822 NVDAObjects/behaviors.py:54
+#: globalCommands.py:830 NVDAObjects/behaviors.py:54
 #, python-format
 msgid "%d percent"
 msgstr "%d százalék"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#: NVDAObjects/window/excel.py:230
+#: NVDAObjects/window/excel.py:246
 #, python-format
 msgid "%s %s through %s %s"
 msgstr "%s %s keresztül %s %s"
 
-#: globalCommands.py:300 globalCommands.py:742
+#: globalCommands.py:306 globalCommands.py:750
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s. A vágólapra másolva."
@@ -53,7 +53,7 @@ msgstr "%s kurzor"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:546
+#: braille.py:549
 #, python-format
 msgid "%s end"
 msgstr "%s vége"
@@ -63,76 +63,118 @@ msgstr "%s vége"
 msgid "%s items"
 msgstr "%s elem"
 
-#: virtualBuffers/__init__.py:220 virtualBuffers/__init__.py:228
+#: virtualBuffers/__init__.py:227 virtualBuffers/__init__.py:235
 #, python-format
 msgid "%s landmark"
 msgstr "%s jelzőpont"
 
-#: braille.py:436 speech.py:798
+#: braille.py:437 speech.py:803
 #, python-format
 msgid "%s of %s"
 msgstr "%s per %s"
 
-#: config/__init__.py:36
+#: config/__init__.py:38
 #, python-format
 msgid "%s: %s, defaulting to %s"
 msgstr "%s: %s, az alapértelmezett %s"
+
+#: gui/addonGui.py:34
+msgid "&About add-on..."
+msgstr "&Bővítmény névjegye..."
 
 #: synthDrivers/newfon.py:179
 msgid "&Acceleration"
 msgstr "&Gyorsítás"
 
-#: virtualBuffers/__init__.py:281
+#. Translators: The label of a button to activate an element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:301
 msgid "&Activate"
 msgstr "&aktiválás"
 
-#: gui/settingsDialogs.py:1037
+#: gui/settingsDialogs.py:1076
 msgid "&Add"
 msgstr "&hozzáadás"
 
-#: gui/settingsDialogs.py:156
+#: gui/settingsDialogs.py:160
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Az NVDA automatikus elindítása a Windows bejelentkezése után"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:436
+#: gui/settingsDialogs.py:463
 msgid "&Beep for capitals"
 msgstr "nagybetűk jelzése &hangjelzéssel"
 
-#: gui/__init__.py:253
+#: gui/__init__.py:292
 msgid "&Browse mode..."
 msgstr "böngésző mód"
 
-#: gui/settingsDialogs.py:994
+#. Translators: The label of a button to close a dialog.
+#. Translators: The label of a button to close the Addons dialog.
+#: updateCheck.py:205 gui/addonGui.py:48
+msgid "&Close"
+msgstr "&Bezárás"
+
+#: gui/settingsDialogs.py:1033
 msgid "&Comment"
 msgstr "&megjegyzés"
 
-#: gui/__init__.py:259
+#. Translators: The label of a button to continue with the operation.
+#: gui/installerGui.py:113 gui/installerGui.py:162
+msgid "&Continue"
+msgstr "&Folytatás"
+
+#: gui/__init__.py:562
+msgid "&Continue running"
+msgstr "&Futtatás telepítés nélkül"
+
+#: gui/__init__.py:298
 msgid "&Default dictionary..."
 msgstr "&alapértelmezett kivételszótár"
 
-#: gui/settingsDialogs.py:1021
+#: gui/settingsDialogs.py:1060
 msgid "&Dictionary entries"
 msgstr "&kivételszótár Bejegyzések"
 
-#: gui/settingsDialogs.py:1040
+#. Translators: The label of the button to donate
+#. in the "Please Donate" dialog.
+#: updateCheck.py:382
+msgid "&Donate"
+msgstr "&Adományozás"
+
+#. Translators: The label of a button to indicate that the user is finished donating
+#. in the "Please Donate" dialog.
+#: updateCheck.py:402
+msgid "&Done"
+msgstr "&kész"
+
+#. Translators: The label of a button to download an NVDA update.
+#: updateCheck.py:191
+msgid "&Download update"
+msgstr "&Frissítésletöltése"
+
+#: gui/settingsDialogs.py:1079
 msgid "&Edit"
 msgstr "&szerkesztés"
 
-#: virtualBuffers/__init__.py:273
+#. Translators: The label of an editable text field to filter the elements
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:291
 msgid "&Filter by:"
 msgstr "&Szűrés:"
 
-#: gui/__init__.py:237
+#: gui/__init__.py:276
 msgid "&General settings..."
 msgstr "&általános beállítások..."
 
-#: virtualBuffers/__init__.py:252
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:263
 msgid "&Headings"
 msgstr "&címsorok"
 
-#: gui/__init__.py:303
+#: gui/__init__.py:355
 msgid "&Help"
 msgstr "&súgó"
 
@@ -140,13 +182,25 @@ msgstr "&súgó"
 msgid "&Inflection"
 msgstr "&intonáció"
 
+#: gui/__init__.py:554
+msgid "&Install NVDA on this computer"
+msgstr "Az NVDA &telepítése erre a számítógépre"
+
+#: gui/__init__.py:326
+msgid "&Install NVDA..."
+msgstr "&Az NVDA telepítése..."
+
+#: gui/addonGui.py:38
+msgid "&Install..."
+msgstr "&Hozzáadás"
+
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:529
+#: gui/settingsDialogs.py:556
 msgid "&Keyboard layout:"
 msgstr "&Billentyűzetkiosztás"
 
-#: gui/__init__.py:245
+#: gui/__init__.py:284
 msgid "&Keyboard settings..."
 msgstr "b&illentyűzet beállítások..."
 
@@ -154,39 +208,47 @@ msgstr "b&illentyűzet beállítások..."
 msgid "&Language"
 msgstr "&nyelv"
 
-#: gui/settingsDialogs.py:118
+#: gui/settingsDialogs.py:122
 msgid "&Language (requires restart to fully take affect):"
 msgstr "&nyelv (az NVDA újraindítása szükséges a megváltoztatáshoz)"
 
-#: gui/settingsDialogs.py:1246
+#: gui/settingsDialogs.py:1285
 msgid "&Level"
 msgstr "Szint"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:781
+#: gui/settingsDialogs.py:820
 msgid "&Maximum number of characters on one line"
 msgstr "Az egy sorban lévő &karakterek maximális száma"
 
-#: gui/__init__.py:247
+#: gui/__init__.py:286
 msgid "&Mouse settings..."
 msgstr "&egér..."
 
-#: virtualBuffers/__init__.py:284
+#. Translators: The label of a button to move to an element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:306
 msgid "&Move to"
 msgstr "&Ugrás"
 
+#. Translators: The label of the button to decline donation
+#. in the "Please Donate" dialog.
+#: updateCheck.py:387
+msgid "&Not now"
+msgstr "&Most nem"
+
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:788
+#: gui/settingsDialogs.py:827
 msgid "&Number of lines per page"
 msgstr "Az egy oldalon lévő &sorok száma"
 
-#: gui/__init__.py:251
+#: gui/__init__.py:290
 msgid "&Object presentation..."
 msgstr "&objektumok megjelenítése..."
 
-#: gui/settingsDialogs.py:988
+#: gui/settingsDialogs.py:1027
 msgid "&Pattern"
 msgstr "&Tényleges kifejezés"
 
@@ -194,11 +256,11 @@ msgstr "&Tényleges kifejezés"
 msgid "&Pitch"
 msgstr "&Magasság"
 
-#: gui/__init__.py:269
+#: gui/__init__.py:308
 msgid "&Preferences"
 msgstr "&beállítások"
 
-#: gui/__init__.py:267
+#: gui/__init__.py:306
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "&Írásjel kiejtés"
 
@@ -206,41 +268,41 @@ msgstr "&Írásjel kiejtés"
 msgid "&Rate"
 msgstr "&Tempó"
 
-#: gui/settingsDialogs.py:1043
+#: gui/addonGui.py:41 gui/settingsDialogs.py:1082
 msgid "&Remove"
 msgstr "&eltávolítás"
 
-#: gui/settingsDialogs.py:991 gui/settingsDialogs.py:1240
+#: gui/settingsDialogs.py:1030 gui/settingsDialogs.py:1279
 msgid "&Replacement"
 msgstr "&behelyettesített kifejezés"
 
-#: gui/__init__.py:305
+#: gui/__init__.py:357
 msgid "&Revert to saved configuration"
 msgstr "Az elmentett beállítások &visszaállítása"
 
-#: gui/__init__.py:308
+#: gui/__init__.py:360
 msgid "&Save configuration"
 msgstr "A beállítások el&mentése"
 
-#: gui/settingsDialogs.py:134
+#: gui/settingsDialogs.py:138
 msgid "&Save configuration on exit"
 msgstr "A beállítások automatikus el&mentése kilépéskor"
 
-#: gui/settingsDialogs.py:1225
+#: gui/settingsDialogs.py:1264
 msgid "&Symbols"
 msgstr "&Írásjelek"
 
-#: gui/__init__.py:239
+#: gui/__init__.py:278
 msgid "&Synthesizer..."
 msgstr "beszéd&szintetizátor..."
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
-#: gui/settingsDialogs.py:228
+#: gui/settingsDialogs.py:255
 msgid "&Synthesizer:"
 msgstr "Beszéd&szintetizátor"
 
-#: gui/__init__.py:263
+#: gui/__init__.py:302
 msgid "&Temporary dictionary..."
 msgstr "&ideiglenes kivételszótár..."
 
@@ -248,15 +310,15 @@ msgstr "&ideiglenes kivételszótár..."
 msgid "&Voice"
 msgstr "hang&karakter"
 
-#: gui/__init__.py:261
+#: gui/__init__.py:300
 msgid "&Voice dictionary..."
 msgstr "&hangkarakter kivételszótár"
 
-#: gui/__init__.py:241
+#: gui/__init__.py:280
 msgid "&Voice settings..."
 msgstr "&beszéd..."
 
-#: gui/settingsDialogs.py:139
+#: gui/settingsDialogs.py:143
 msgid "&Warn before exiting NVDA"
 msgstr "&Figyelmeztető üzenet megjelenítése kilépés előtt"
 
@@ -296,31 +358,39 @@ msgstr "-----"
 msgid "..."
 msgstr "..."
 
-#: gui/__init__.py:259
+#: gui/__init__.py:298
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
 msgstr "Az alapértelmezett kivételszótár beállítására szolgáló párbeszédablak"
 
-#: gui/__init__.py:263
+#: gui/__init__.py:302
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
 msgstr "Az ideiglenes kivételszótár beállítására szolgáló párbeszédablak."
 
-#: gui/__init__.py:261
+#: gui/__init__.py:300
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
 msgstr "A hangkarakter kivételszótár beállítására szolgáló párbeszédablak."
 
-#: versionInfo.py:39
+#: versionInfo.py:40
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr ""
 "Egy ingyenes, nyílt forráskódú képernyőolvasó a Microsoft Windows operációs "
 "rendszerhez"
 
-#: globalCommands.py:823
+#. Translators: An informational message in the Install NVDA dialog.
+#: gui/installerGui.py:88
+msgid ""
+"A previous copy of NVDA has been found on your system. This copy will be "
+"updated."
+msgstr ""
+"Az NVDA egyik előző verziója található a számítógépen, mely frissítve lesz."
+
+#: globalCommands.py:831
 msgid "AC power on"
 msgstr "Hálózatról üzemel"
 
@@ -329,26 +399,51 @@ msgstr "Hálózatról üzemel"
 msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 sorozat"
 
-#: gui/__init__.py:202 gui/__init__.py:301
+#: gui/__init__.py:211 gui/__init__.py:353
 msgid "About NVDA"
 msgstr "az NVDA névjegye"
 
-#: gui/__init__.py:301
+#: gui/__init__.py:353
 msgid "About..."
 msgstr "Névjegy..."
 
-#: globalCommands.py:893
+#: globalCommands.py:901
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Megnyitja az NVDA Python konzolt, amely főként fejlesztőknek hasznos."
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui/settingsDialogs.py:1067
+#: gui/settingsDialogs.py:1106
 msgid "Add Dictionary Entry"
 msgstr "Szótárbejegyzés hozzáadása"
 
+#. Translators: title for the Addon Information dialog
+#: gui/addonGui.py:186
+msgid "Add-on Information"
+msgstr "Bővítmény információ"
+
+#. Translators: Title for message asking if the user really wishes to install an Addon.
+#: gui/addonGui.py:80
+msgid "Add-on Installation"
+msgstr "Bővítmény telepítő"
+
+#. Translators: The title of the Addons Dialog
+#: gui/addonGui.py:17
+msgid "Add-ons Manager"
+msgstr "Bővítmény kezelő"
+
+#. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
+#: gui/addonGui.py:165
+msgid ""
+"Add-ons have been added or removed. You must restart NVDA for these changes "
+"to take effect. Would you like to restart now?"
+msgstr ""
+"Egy vagy több Bővítmény hozzáadása/eltávolítása befejeződött. A módosítások "
+"életbe léptetéséhez újra kell indítani az NVDA programot. Szeretné ezt most "
+"megtenni?"
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:855
+#: gui/settingsDialogs.py:894
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
 "A kurzor pozíciójánál lévő formázások változásának jelzése (a beszéd késését "
@@ -373,24 +468,46 @@ msgstr "válasz:"
 msgid "Arabic grade 1"
 msgstr "Arab, rövidítési fokozat 1"
 
-#: gui/__init__.py:161
+#. Translators: A message asking the user if they really wish to install an addon.
+#: gui/addonGui.py:78
+msgid ""
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
+"Addon: {summary} {version}\n"
+"Author: {author}"
+msgstr ""
+"Biztos hogy telepíteni szeretné ezt a bővítményt? Csak megbízható forrásból "
+"származó bővítményt telepítsen!\n"
+"Bővítmény: {summary} {version}\n"
+"Készítő: {author}"
+
+#: gui/__init__.py:170
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Biztosan ki szeretne lépni az NVDA programból?"
+
+#: gui/addonGui.py:118
+msgid "Are you sure you wish to remove the selected add-on from NVDA?"
+msgstr ""
+"Biztosan törölni szeretné a kiválasztott bővítményt az NVDA programból?"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 #: appModules/msimn.py:20
 msgid "Attachments"
-msgstr "Mellékletek"
+msgstr "Melléklet"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:820
+#: gui/settingsDialogs.py:859
 msgid "Audio indication of focus and browse modes"
 msgstr "Az interaktív és a böngészőmód jelzése hangjelzéssel"
 
+#: gui/addonGui.py:29
+msgid "Author"
+msgstr "Készítő"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:800
+#: gui/settingsDialogs.py:839
 msgid "Automatic &Say All on page load"
 msgstr "Automatikus &folyamatos felolvasás az oldal betöltésekor"
 
@@ -402,33 +519,38 @@ msgstr "Automatikus megjegyzések"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:411
+#: gui/settingsDialogs.py:438
 msgid "Automatic dialect switching (when supported)"
 msgstr "Automatikus dialektusváltás (ha támogatott)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:815
+#: gui/settingsDialogs.py:854
 msgid "Automatic focus mode for caret movement"
 msgstr "Automatikus interaktív mód a kurzor mozgásakor"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:810
+#: gui/settingsDialogs.py:849
 msgid "Automatic focus mode for focus changes"
 msgstr "Automatikus interaktív mód az aktív vezérlőelem megváltozásakor."
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:406
+#: gui/settingsDialogs.py:433
 msgid "Automatic language switching (when supported)"
 msgstr "Automatikus nyelvváltás (ha támogatott)"
 
-#: gui/settingsDialogs.py:1181
+#. Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
+#: gui/settingsDialogs.py:177
+msgid "Automatically check for &updates to NVDA"
+msgstr "NVDA &Frissítések automatikus ellenőrzése"
+
+#: gui/settingsDialogs.py:1220
 msgid "Avoid splitting &words when possible"
 msgstr "Szavak elválasztásának elkerülése, ahol lehetséges"
 
-#: gui/__init__.py:243
+#: gui/__init__.py:282
 msgid "B&raille settings..."
 msgstr "B&raille kijelző beállítások"
 
@@ -437,7 +559,7 @@ msgstr "B&raille kijelző beállítások"
 msgid "BCC:"
 msgstr "Titkos másolat:"
 
-#: config/__init__.py:21
+#: config/__init__.py:23
 msgid "Badly formed configuration file"
 msgstr "hibás beállításfájl"
 
@@ -446,42 +568,50 @@ msgstr "hibás beállításfájl"
 msgid "Baum/HumanWare/APH braille displays"
 msgstr "Baum/HumanWare/APH braille kijelzők"
 
-#: gui/settingsDialogs.py:696
+#. Translators: An option for progress bar output in the Object Presentation dialog
+#. which reports progress bar updates by beeping.
+#. See Progress bar output in the Object Presentation Settings section of the User Guide.
+#: gui/settingsDialogs.py:732
 msgid "Beep"
 msgstr "hangjelzés"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:570
+#: gui/settingsDialogs.py:597
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Hangjelzés kisbetűk gépelésekor a capslock bekapcsolt állapotában"
 
-#: gui/settingsDialogs.py:1117
+#: gui/settingsDialogs.py:1156
 msgid "Braille &display:"
 msgstr "braille & kijelző"
 
-#: gui/settingsDialogs.py:1191
+#: gui/settingsDialogs.py:1230
 msgid "Braille Display Error"
 msgstr "Braille kijelző hiba"
 
 #. Translators: This is the label for the braille settings dialog.
-#: gui/settingsDialogs.py:1113
+#: gui/settingsDialogs.py:1152
 msgid "Braille Settings"
 msgstr "Braille beállítások"
 
-#: globalCommands.py:902
+#: globalCommands.py:910
 #, python-format
 msgid "Braille tethered to %s"
 msgstr "A braille kijelző a(z) %st követi"
 
-#: gui/settingsDialogs.py:1164
+#: gui/settingsDialogs.py:1203
 msgid "Braille tethered to:"
 msgstr "a braille követi:"
 
 #. Translators: This is the label for the browse mode settings dialog.
-#: gui/settingsDialogs.py:776
+#: gui/settingsDialogs.py:815
 msgid "Browse Mode"
 msgstr "böngésző mód"
+
+#. Translators: The label of a button to browse for a directory.
+#: gui/installerGui.py:149
+msgid "Browse..."
+msgstr "Tallózás..."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -494,42 +624,57 @@ msgstr "Bolgár 8 pontos számítógépes braille"
 msgid "CC:"
 msgstr "Másolat:"
 
-#: gui/__init__.py:129
+#: gui/__init__.py:138
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr "A beállítások elmentése nem lehetséges, az NVDA biztonsági módban van"
 
-#: gui/settingsDialogs.py:424
+#: gui/settingsDialogs.py:451
 msgid "Capital pitch change percentage"
 msgstr "Nagybetűk &hangmagassága százalékban"
 
-#: gui/settingsDialogs.py:997
+#: gui/settingsDialogs.py:1036
 msgid "Case &sensitive"
 msgstr "&kis- és nagybetűk megkülönböztetése"
 
-#: gui/__init__.py:247
+#: gui/__init__.py:286
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr ""
 "az egérmutató alakjának és a mutatónál lévő elem bemondásának beállítása"
 
-#: gui/__init__.py:251
+#: gui/__init__.py:290
 msgid "Change reporting of objects"
 msgstr "Az objektumok megjelenítésének beállítása"
 
-#: gui/__init__.py:255
+#: gui/__init__.py:294
 msgid "Change settings of document properties"
 msgstr "a dokumentumok formázási tulajdonságainak beállítása"
 
-#: gui/settingsDialogs.py:1238
+#: gui/settingsDialogs.py:1277
 msgid "Change symbol"
 msgstr "Írásjel megváltoztatása"
 
-#: gui/__init__.py:239
+#: gui/__init__.py:278
 msgid "Change the synthesizer to be used"
 msgstr "A használandó beszédszintetizátor kiválasztása"
 
-#: gui/__init__.py:253
+#: gui/__init__.py:292
 msgid "Change virtual buffers specific settings"
 msgstr "A virtuális kijelző beállítása"
+
+#. Translators: The label of a menu item to manually check for an updated version of NVDA.
+#: gui/__init__.py:351
+msgid "Check for update..."
+msgstr "Frissítés ellenőrzése"
+
+#. Translators: The title of the dialog displayed while manually checking for an NVDA update.
+#: updateCheck.py:117
+msgid "Checking for Update"
+msgstr "Frissítés ellenőrzése..."
+
+#. Translators: The progress message displayed while manually checking for an NVDA update.
+#: updateCheck.py:119
+msgid "Checking for update"
+msgstr "Frissítés ellenőrzése"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -543,7 +688,12 @@ msgstr "kínai (Hong Kong, Cantonese)"
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Kínai (Taiwan, Mandarin)"
 
-#: gui/__init__.py:241
+#. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
+#: gui/addonGui.py:60
+msgid "Choose Add-on Package File"
+msgstr "Válasszon ki egy bővítmény fájlt"
+
+#: gui/__init__.py:280
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr ""
 "a hangkarakter, a beszédsebesség, a hangmagasság és a hangerő beállítása"
@@ -556,7 +706,7 @@ msgstr "Egyszeri bal egérkattintást végez az egérmutatónál"
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "Egyszeri jobb egérkattintást végez az egérmutatónál"
 
-#: gui/settingsDialogs.py:1024
+#: gui/settingsDialogs.py:1063
 msgid "Comment"
 msgstr "Megjegyzés"
 
@@ -570,23 +720,23 @@ msgstr "Megjegyzés"
 msgid "Comments:"
 msgstr "Megjegyzések"
 
-#: gui/__init__.py:456
+#: gui/__init__.py:508
 msgid "Configuration File Error"
 msgstr "Beállításfájl hiba"
 
-#: gui/__init__.py:125
+#: gui/__init__.py:134
 msgid "Configuration applied"
 msgstr "A beállítások alkalmazva."
 
-#: gui/__init__.py:133
+#: gui/__init__.py:142
 msgid "Configuration saved"
 msgstr "A beállítások elmentve."
 
-#: gui/__init__.py:249
+#: gui/__init__.py:288
 msgid "Configure how and when the review cursor moves"
 msgstr "Az áttekintő kurzor mozgásának konfigurálása"
 
-#: gui/__init__.py:245
+#: gui/__init__.py:284
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -594,11 +744,31 @@ msgstr ""
 "A billentyűzetkiosztás illetve karakterek, szavak és parancsbillentyűk "
 "bemondásának beállítása"
 
-#: gui/__init__.py:296
+#. Translators: The progress message indicating that a connection is being established.
+#: updateCheck.py:254
+msgid "Connecting"
+msgstr "Csatlakozás"
+
+#: gui/__init__.py:344
 msgid "Contributors"
 msgstr "Közreműködők"
 
-#: versionInfo.py:42
+#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#: gui/installerGui.py:104
+msgid "Copy &portable configuration to current user account"
+msgstr "A &hordozható beállítások másolása a jelenlegi felhasználói fiókba"
+
+#. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
+#: gui/installerGui.py:154
+msgid "Copy current &user configuration"
+msgstr "A jelenlegi felhasználói beállítások másolása"
+
+#. Translators: The title of the dialog presented while settings are being copied
+#: gui/settingsDialogs.py:197
+msgid "Copying Settings"
+msgstr "beállítások átmásolása"
+
+#: versionInfo.py:43
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Copyright (C) {years} NVDA Közreműködők"
 
@@ -614,7 +784,7 @@ msgstr "Nem található az automatikus megjegyzés ablak."
 msgid "Could not find comment window."
 msgstr "Nem található a megjegyzés ablak."
 
-#: gui/settingsDialogs.py:1191
+#: gui/settingsDialogs.py:1230
 #, python-format
 msgid "Could not load the %s display."
 msgstr "Nem lehet betölteni a(z) %s braille kijelzőt."
@@ -622,15 +792,38 @@ msgstr "Nem lehet betölteni a(z) %s braille kijelzőt."
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
-#: gui/settingsDialogs.py:270
+#: gui/settingsDialogs.py:297
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "Nem lehet betölteni a(z) %s beszédszintetizátort."
 
-#: gui/__init__.py:135
+#: gui/__init__.py:144
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Hiba történt a beállítások elmentésekor - lehetséges, hogy a fájl írásvédett."
+
+#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#: gui/installerGui.py:100
+msgid "Create &desktop icon and shortcut key (control+alt+n)"
+msgstr "Asztali &ikon és billentyűparancs (control+alt+n) létrehozása"
+
+#: gui/__init__.py:558
+msgid "Create &portable copy"
+msgstr "&Hordozható verzió készítése"
+
+#. Translators: The title of the Create Portable NVDA dialog.
+#: gui/installerGui.py:137
+msgid "Create Portable NVDA"
+msgstr "Hordozható NVDA készítése"
+
+#: gui/__init__.py:323
+msgid "Create Portable copy..."
+msgstr "Hordozható verzió készítése..."
+
+#. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
+#: gui/installerGui.py:207
+msgid "Creating Portable Copy"
+msgstr "Hordozható verzió elkészítése"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -638,16 +831,16 @@ msgstr ""
 msgid "Croatian 8 dot computer braille"
 msgstr "Horvát 8 pontos számítógépes braille"
 
-#: globalCommands.py:838
+#: globalCommands.py:846
 #, python-format
 msgid "Currently running application is %s"
 msgstr "A jelenleg aktív alkalmazás neve: %s"
 
-#: gui/settingsDialogs.py:1148
+#: gui/settingsDialogs.py:1187
 msgid "Cursor blink rate (ms)"
 msgstr "A kurzor villogási sebessége (ms)"
 
-#: gui/settingsDialogs.py:179
+#: gui/settingsDialogs.py:190
 msgid ""
 "Custom plugins were detected in your user settings directory. Copying these "
 "to the system profile could be a security risk. Do you still wish to copy "
@@ -657,7 +850,7 @@ msgstr ""
 "rendszerprofil mappába bisztonsági kockázatot jelenthet. Bisztosan szeretné "
 "másolni beállításait?"
 
-#: globalCommands.py:214
+#: globalCommands.py:218
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
@@ -685,11 +878,11 @@ msgstr "Dátum:"
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "Csökkenti a kiválasztott szintetizátorbeállítást"
 
-#: gui/__init__.py:148
+#: gui/__init__.py:157
 msgid "Default dictionary"
 msgstr "alapértelmezett kivételszótár"
 
-#: NVDAObjects/window/__init__.py:369
+#: NVDAObjects/window/__init__.py:373
 msgid "Desktop"
 msgstr "Asztal"
 
@@ -706,18 +899,37 @@ msgstr "felolvassa az adott üzenetet"
 msgid "Distribution:"
 msgstr "Terjesztés:"
 
-#: gui/__init__.py:255
+#: gui/__init__.py:294
 msgid "Document &formatting..."
 msgstr "&dokumentum formázás..."
 
 #. Translators: This is the label for the document formatting dialog.
-#: gui/settingsDialogs.py:850
+#: gui/settingsDialogs.py:889
 msgid "Document Formatting"
 msgstr "Dokumentum formázás"
 
-#: gui/__init__.py:312
+#: installer.py:158 installer.py:159
+msgid "Documentation"
+msgstr "Felhasználói útmutató"
+
+#: gui/__init__.py:364
 msgid "Donate"
 msgstr "Adományozás"
+
+#. Translators: The label of a button to download and install an NVDA update.
+#: updateCheck.py:188
+msgid "Download and &install update"
+msgstr "Frissítések letöltése &telepítése"
+
+#. Translators: The progress message indicating that a download is in progress.
+#: updateCheck.py:324
+msgid "Downloading"
+msgstr "Letöltés"
+
+#. Translators: The title of the dialog displayed while downloading an NVDA update.
+#: updateCheck.py:252
+msgid "Downloading Update"
+msgstr "Frissítés letöltése"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -731,24 +943,27 @@ msgstr "Holland (Belga), rövidítési fokozat 1"
 msgid "Dutch (netherlands) grade 1"
 msgstr "Holland, rövidítési fokozat 1"
 
-#: gui/__init__.py:315 gui/logViewer.py:34
+#: gui/__init__.py:367 gui/__init__.py:566 gui/logViewer.py:34
 msgid "E&xit"
 msgstr "&kilépés"
 
-#: gui/settingsDialogs.py:1143
+#: gui/settingsDialogs.py:1182
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "a kurzornál lévő szó átalakítása &számítógépes braille kóddá"
 
-#: NVDAObjects/window/winword.py:402
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+#: NVDAObjects/window/winword.py:410 NVDAObjects/window/winword.py:429
 msgid "Edge of table"
 msgstr "a táblázat széle"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
-#: gui/settingsDialogs.py:984
+#: gui/settingsDialogs.py:1023
 msgid "Edit Dictionary Entry"
 msgstr "A kivételszótár bejegyzés szerkesztése"
 
-#: virtualBuffers/__init__.py:259
+#. Translators: The title of the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:273
 msgid "Elements List"
 msgstr "Elemlista"
 
@@ -759,7 +974,7 @@ msgstr "A(z) %s billentyű lenyomásának emulálása a billentyűzeten"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:606
+#: gui/settingsDialogs.py:633
 msgid "Enable mouse &tracking"
 msgstr "Az egér &követése"
 
@@ -803,27 +1018,41 @@ msgstr "Angol (Egyesült Államokbeli), rövidítési fokozat 1"
 msgid "English (U.S.) grade 2"
 msgstr "Angol (Egyesült Államokbeli), rövidítési fokozat 2"
 
-#: gui/__init__.py:135 gui/__init__.py:144 gui/logViewer.py:74
-#: gui/settingsDialogs.py:185
+#. Translators: The title of an error message dialog.
+#. Translators: The title of a dialog presented when an error occurs.
+#: updateCheck.py:128 updateCheck.py:344 gui/addonGui.py:74 gui/addonGui.py:88
+#: gui/addonGui.py:107 gui/__init__.py:144 gui/__init__.py:153
+#: gui/installerGui.py:54 gui/installerGui.py:186 gui/installerGui.py:194
+#: gui/installerGui.py:225 gui/logViewer.py:74 gui/settingsDialogs.py:208
 msgid "Error"
 msgstr "hiba"
 
-#: gui/settingsDialogs.py:185
+#. Translators: A message indicating that an error occurred while checking for an update to NVDA.
+#: updateCheck.py:126
+msgid "Error checking for update."
+msgstr "Hiba történt a frissítés keresésekor"
+
+#: gui/settingsDialogs.py:208
 msgid "Error copying NVDA user settings"
 msgstr "hiba történt a felhasználói beállítások másolása közben"
 
-#: gui/settingsDialogs.py:196
+#. Translators: A message indicating that an error occurred while downloading an update to NVDA.
+#: updateCheck.py:343
+msgid "Error downloading update."
+msgstr "Hiba történt a frissítés letöltésekor"
+
+#: gui/settingsDialogs.py:219
 #, python-format
 msgid "Error in %s language file"
 msgstr "Hiba a(z) %s nyelvi fájlban."
 
 #. We can't present a message which isn't unicode, so use appName, not modName.
-#: appModuleHandler.py:137
+#: appModuleHandler.py:143
 #, python-format
 msgid "Error in appModule %s"
 msgstr "Hiba történt a(z) %s alkalmazás szkriptjében"
 
-#: config/__init__.py:189
+#: config/__init__.py:193
 #, python-format
 msgid "Error parsing configuration file: %s"
 msgstr "Hiba történt a(z) %s beállításfájl beolvasásakor"
@@ -833,7 +1062,7 @@ msgstr "Hiba történt a(z) %s beállításfájl beolvasásakor"
 msgid "Error saving log: %s"
 msgstr "Hiba történt a(z) %s napló mentésekor"
 
-#: config/__init__.py:196
+#: config/__init__.py:200
 #, python-format
 msgid ""
 "Errors in configuration file '%s':\n"
@@ -856,21 +1085,53 @@ msgstr "Páros oldal lábléc"
 msgid "Even pages header"
 msgstr "Páros oldal fejléc"
 
-#: gui/__init__.py:161 gui/__init__.py:315
+#: gui/__init__.py:170 gui/__init__.py:367
 msgid "Exit NVDA"
 msgstr "kilépés az NVDA-ból"
+
+#: installer.py:157
+msgid "Explore NVDA user configuration directory"
+msgstr "Az NVDA felhasználói beállítások könyvtár böngészése"
+
+#. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
+#. %s will be replaced with the specific error message.
+#: gui/installerGui.py:224
+#, python-format
+msgid "Failed to create portable copy: %s"
+msgstr "Nem sikerült elkészíteni a hordozható verziót: %s"
+
+#. Translators: The message displayed when an error occurs when installing an add-on package.
+#: gui/addonGui.py:105
+#, python-format
+msgid "Failed to install add-on  from %s"
+msgstr "Sikertelen bővítmény telepítés innen: %s"
+
+#. Translators: The message displayed when an error occurs when opening an add-on package for adding.
+#: gui/addonGui.py:72
+#, python-format
+msgid ""
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
+msgstr ""
+"A %s helyen lévő bővítmény megnyitása sikertelen. Hiányzó fájl, vagy hibás "
+"fájlformátum."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:32
-#, fuzzy
 msgid "Farsi grade 1"
-msgstr "Arab, rövidítési fokozat 1"
+msgstr "Perzsa, rövidítési fokozat 1"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:14
 msgid "Fast forward"
 msgstr "előre"
+
+#. Translators: the title of a retry cancel dialog when NVDA installation fails
+#. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
+#: gui/installerGui.py:46 gui/installerGui.py:219
+msgid "File in Use"
+msgstr "A fájl használatban van"
 
 #: cursorManager.py:81
 msgid "Find"
@@ -896,19 +1157,19 @@ msgstr "Első oldal lábléc"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:661
+#: gui/settingsDialogs.py:688
 msgid "Follow &keyboard focus"
 msgstr "a &billentyűzet követése"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:671
+#: gui/settingsDialogs.py:698
 msgid "Follow &mouse cursor"
 msgstr "az &egérkurzor követése"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:666
+#: gui/settingsDialogs.py:693
 msgid "Follow System &Caret"
 msgstr "A &rendszerkurzor követése"
 
@@ -916,7 +1177,7 @@ msgstr "A &rendszerkurzor követése"
 msgid "Footnotes"
 msgstr "lábjegyzet"
 
-#: gui/settingsDialogs.py:213
+#: gui/settingsDialogs.py:240
 msgid ""
 "For the new language to take effect, the configuration must be saved and "
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
@@ -973,11 +1234,11 @@ msgid "From:"
 msgstr "Feladó:"
 
 #. Translators: This is the label for the general settings dialog.
-#: gui/settingsDialogs.py:108
+#: gui/settingsDialogs.py:112
 msgid "General Settings"
 msgstr "Általános beállítások"
 
-#: gui/__init__.py:237
+#: gui/__init__.py:276
 msgid "General settings"
 msgstr "Általános beállítások"
 
@@ -1013,7 +1274,7 @@ msgstr "Görög, rövidítési fokozat 1"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:723
+#: gui/settingsDialogs.py:762
 msgid "Guess object &position information when unavailable"
 msgstr "Az elemek &pozíciójának meghatározása, ha nem támogatott"
 
@@ -1045,24 +1306,27 @@ msgstr "HumanWare Brailliant BI/B sorozat"
 msgid "Hungarian 8 dot computer braille"
 msgstr "Magyar 8 pontos számítógépes braille"
 
-#: controlTypes.py:300
+#: gui/__init__.py:546
+msgid "I &agree"
+msgstr "&Elfogadom"
+
+#: controlTypes.py:313
 msgid "IFrame"
 msgstr "dinamikus keret"
 
-#: controlTypes.py:297
+#: controlTypes.py:310
 msgid "IP address"
 msgstr "IP cím"
 
-#: controlTypes.py:314
+#: controlTypes.py:327
 msgid "ITALIC"
 msgstr "Dőlt"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:122
-#, fuzzy
 msgid "Icelandic 8 dot computer braille"
-msgstr "Német 8 pontos számítógépes braille"
+msgstr "Izlandi 8 pontos számítógépes braille"
 
 #: globalCommands.py:136
 msgid ""
@@ -1076,9 +1340,41 @@ msgstr ""
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "Növeli a kiválasztott szintetizátorbeállítást"
 
-#: gui/settingsDialogs.py:210
+#. Translators: The title of the Install NVDA dialog.
+#: gui/installerGui.py:82
+msgid "Install NVDA"
+msgstr "Az NVDA telepítése"
+
+#. Translators: The title of the dialog displayed when the update is about to be installed.
+#: updateCheck.py:353
+msgid "Install Update"
+msgstr "A frissítés telepítése"
+
+#. Translators: the label for the installed addons list in the addons manager.
+#: gui/addonGui.py:23
+msgid "Installed Add-ons"
+msgstr "&Telepített bővítmények"
+
+#. Translators: The title of the dialog presented while an Addon is being installed.
+#: gui/addonGui.py:93
+msgid "Installing Add-on"
+msgstr "Bővítmény telepítése"
+
+#. Translators: The title of the dialog presented while NVDA is being installed.
+#: gui/installerGui.py:25
+msgid "Installing NVDA"
+msgstr "Az NVDA telepítése"
+
+#: gui/settingsDialogs.py:233
 msgid "Insufficient Privileges"
 msgstr "Nincs elegendő jog"
+
+#. Translators: The message displayed when the user specifies an invalid destination drive
+#. in the Create Portable NVDA dialog.
+#: gui/installerGui.py:193
+#, python-format
+msgid "Invalid drive %s"
+msgstr "%s érvénytelen meghajtó"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1091,37 +1387,39 @@ msgstr "Olasz, rövidítési fokozat 1"
 msgid "Key words:"
 msgstr "Kulcsszavak:"
 
+#: installer.py:158 gui/__init__.py:336
+msgid "Keyboard Commands Quick Reference"
+msgstr "Billentyűparancsok listája"
+
 #. Translators: This is the label for the keyboard settings dialog.
-#: gui/settingsDialogs.py:523
+#: gui/settingsDialogs.py:550
 msgid "Keyboard Settings"
 msgstr "Billentyűzet beállítások"
 
-#: gui/__init__.py:288
-msgid "Keyboard command quick reference"
-msgstr "billentyűparancsok listája"
-
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
-#: gui/settingsDialogs.py:535
+#: gui/settingsDialogs.py:562
 msgid "Keyboard layout"
 msgstr "Billentyűzetkiosztás"
 
-#: gui/settingsDialogs.py:143
+#: gui/settingsDialogs.py:147
 msgid "L&ogging level:"
 msgstr "&naplózási szint"
 
-#: virtualBuffers/__init__.py:253
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:266
 msgid "Lan&dmarks"
 msgstr "&Jelzőpontok"
 
-#: gui/settingsDialogs.py:122
+#: gui/settingsDialogs.py:126
 msgid "Language"
 msgstr "nyelv"
 
-#: gui/settingsDialogs.py:214
+#: gui/settingsDialogs.py:241
 msgid "Language Configuration Change"
 msgstr "A nyelvi beállítások megváltoztatása"
 
-#: gui/settingsDialogs.py:196
+#: gui/settingsDialogs.py:219
 msgid "Language Error"
 msgstr "a nyelvi fájl hibás"
 
@@ -1131,23 +1429,29 @@ msgstr "a nyelvi fájl hibás"
 msgid "Latvian grade 1"
 msgstr "Lett, rövidítési fokozat 1"
 
-#: gui/settingsDialogs.py:1229
+#: gui/settingsDialogs.py:1268
 msgid "Level"
 msgstr "Szint"
 
-#: gui/__init__.py:294
+#: gui/__init__.py:342
 msgid "License"
 msgstr "Licensz szerződés"
 
-#: virtualBuffers/__init__.py:251
+#: gui/__init__.py:542
+msgid "License Agreement"
+msgstr "Licensz Szerződés"
+
+#. Translators: The label of a radio button to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:260
 msgid "Lin&ks"
 msgstr "&Hivatkozások"
 
-#: core.py:181
+#: core.py:203
 msgid "Loading NVDA. Please wait..."
 msgstr "Az NVDA betöltése folyamatban, kérem várjon..."
 
-#: virtualBuffers/__init__.py:601
+#: virtualBuffers/__init__.py:623
 msgid "Loading document..."
 msgstr "dokumentum betöltése..."
 
@@ -1163,11 +1467,11 @@ msgstr "A jobb egérgomb zárolása, vagy feloldása"
 msgid "Log"
 msgstr "Napló"
 
-#: gui/settingsDialogs.py:146
+#: gui/settingsDialogs.py:150
 msgid "Log level"
 msgstr "naplózási szint"
 
-#: globalCommands.py:760
+#: globalCommands.py:768
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -1181,31 +1485,36 @@ msgstr ""
 msgid "MDV Lilli"
 msgstr "MDV Lilli kijelző"
 
-#: globalCommands.py:922
+#. Translators: The label of a menu item to open the Add-ons Manager.
+#: gui/__init__.py:320
+msgid "Manage &add-ons"
+msgstr "Bővítmények &kezelése"
+
+#: globalCommands.py:930
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
 msgstr ""
 "Megjelöli az áttekintő kurzor aktuális helyét, ami a másolandó szöveg eleje"
 
-#: gui/settingsDialogs.py:1156
+#: gui/settingsDialogs.py:1195
 msgid "Message timeout (sec)"
 msgstr "üzenet megjelenésének időtartama(másodperc)"
 
 #. Translators: This is the label for the mouse settings dialog.
-#: gui/settingsDialogs.py:596
+#: gui/settingsDialogs.py:623
 msgid "Mouse Settings"
 msgstr "Egér beállítások"
 
-#: globalCommands.py:725
+#: globalCommands.py:733
 msgid "Mouse tracking"
 msgstr "Az egérmutató követése"
 
-#: globalCommands.py:238
+#: globalCommands.py:242
 msgid "Move navigator object to mouse"
 msgstr "a navigátor kurzor áthelyezése az egérmutatónál lévő elemhez"
 
-#: globalCommands.py:269
+#: globalCommands.py:273
 msgid ""
 "Moves navigator object to the object represented by the text at the position "
 "of the review cursor within flat review"
@@ -1213,46 +1522,51 @@ msgstr ""
 "A navigátor kurzort a síkáttekintő mód szövegénél található objektumhoz "
 "helyezi."
 
-#: globalCommands.py:964
+#. Translators: Description for the Move past end of container command in browse mode.
+#: virtualBuffers/__init__.py:1414
+msgid "Moves past the end  of the container element, such as a list or table"
+msgstr "Egy elemblokk (pl. lista vagy táblázat) végéhez lép"
+
+#: globalCommands.py:972
 msgid "Moves the braille display to the next line"
 msgstr "A braille kijelzőt a következő sorhoz helyezi"
 
-#: globalCommands.py:959
+#: globalCommands.py:967
 msgid "Moves the braille display to the previous line"
 msgstr "A braille kijelzőt az előző sorhoz helyezi"
 
-#: globalCommands.py:616
+#: globalCommands.py:624
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "A fókuszt a kijebb lévő, fókuszt tartalmazó dokumentumhoz helyezi"
 
-#: globalCommands.py:235
+#: globalCommands.py:239
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "Az egérmutatót a navigátor kurzornál található elemhez helyezi"
 
-#: globalCommands.py:408
+#: globalCommands.py:414
 msgid "Moves the navigator object to the first object inside it"
 msgstr "A navigátor kurzort az aktív elemben található első elemhez helyezi"
 
-#: globalCommands.py:380
+#: globalCommands.py:386
 msgid "Moves the navigator object to the next object"
 msgstr "A navigátor kurzort a következő elemhez helyezi"
 
-#: globalCommands.py:366
+#: globalCommands.py:372
 msgid "Moves the navigator object to the object containing it"
 msgstr "A navigátor kurzort az aktív elemet tartalmazó elemhez helyezi"
 
-#: globalCommands.py:394
+#: globalCommands.py:400
 msgid "Moves the navigator object to the previous object"
 msgstr "A navigátor kurzort az előző elemhez helyezi"
 
-#: globalCommands.py:476
+#: globalCommands.py:482
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
 msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem utolsó sorához helyezi"
 
-#: globalCommands.py:520
+#: globalCommands.py:526
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -1260,7 +1574,7 @@ msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem aktuális sorának "
 "elejére helyezi"
 
-#: globalCommands.py:584
+#: globalCommands.py:590
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -1268,7 +1582,7 @@ msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem jelenlegi sorának "
 "végére helyezi"
 
-#: globalCommands.py:573
+#: globalCommands.py:579
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
@@ -1276,7 +1590,7 @@ msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem következő karakteréhez "
 "helyezi."
 
-#: globalCommands.py:468
+#: globalCommands.py:474
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
@@ -1284,7 +1598,7 @@ msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem következő sorához "
 "helyezi"
 
-#: globalCommands.py:510
+#: globalCommands.py:516
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
@@ -1292,7 +1606,7 @@ msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem következő szavához "
 "helyezi"
 
-#: globalCommands.py:538
+#: globalCommands.py:544
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
@@ -1300,28 +1614,28 @@ msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem előző karakteréhez "
 "helyezi"
 
-#: globalCommands.py:446
+#: globalCommands.py:452
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem előző sorához helyezi"
 
-#: globalCommands.py:488
+#: globalCommands.py:494
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
 msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem előző szavához helyezi"
 
-#: globalCommands.py:434
+#: globalCommands.py:440
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr ""
 "Az áttekintő kurzort a navigátor kurzornál lévő elem első sorához helyezi"
 
-#: globalCommands.py:256
+#: globalCommands.py:260
 msgid ""
 "Moves to flat review for the screen (or document if currently inside one) "
 "and positions the review cursor at the location of the current object"
@@ -1337,6 +1651,16 @@ msgstr "A következő elérhető szintetizátorbeállításra lép"
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "Az előző elérhető szintetizátorbeállításra lép"
 
+#. Translators: Description for the Move to start of container command in browse mode.
+#: virtualBuffers/__init__.py:1400
+msgid "Moves to the start of the container element, such as a list or table"
+msgstr "Egy elemblokk (pl. lista vagy táblázat) elejéhez lép"
+
+#. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
+#: gui/addonGui.py:62
+msgid "NVDA Add-on Package (*.{ext})"
+msgstr "NVDA bővítmény Csomag (*.{ext})"
+
 #: gui/logViewer.py:17
 msgid "NVDA Log Viewer"
 msgstr "Az NVDA napló megtekintése"
@@ -1349,9 +1673,29 @@ msgstr "NVDA Python Konzol"
 msgid "NVDA Speech Viewer"
 msgstr "NVDA beszédnéző"
 
-#: core.py:271
+#. Translators: The title of the dialog informing the user about an NVDA update.
+#: updateCheck.py:170
+msgid "NVDA Update"
+msgstr "NVDA frissítés"
+
+#. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
+#: gui/installerGui.py:217
+msgid "NVDA is unable to remove or overwrite a file."
+msgstr "Az NVDA nem tud áthelyezni vagy felülírni egy fájlt."
+
+#: core.py:294
 msgid "NVDA started"
 msgstr "Az NVDA elindult."
+
+#. Translators: A message indicating that an updated version of NVDA is available.
+#. {version} will be replaced with the version; e.g. 2011.3.
+#: updateCheck.py:179
+msgid "NVDA version {version} is available."
+msgstr "Az NVDA {version} verziója elérhető"
+
+#: installer.py:155 gui/__init__.py:340
+msgid "NVDA web site"
+msgstr "Honlap"
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 #: appModules/msimn.py:24
@@ -1377,27 +1721,27 @@ msgstr "Nincs braille kijelző"
 msgid "No comment."
 msgstr "Nincs megjegyzés."
 
-#: globalCommands.py:365
+#: globalCommands.py:371
 msgid "No containing object"
 msgstr "Nem tartalmaz objektumot"
 
-#: globalCommands.py:418
+#: globalCommands.py:424
 msgid "No default action"
 msgstr "Nincs alapértelmezett művelet"
 
-#: globalCommands.py:255
+#: globalCommands.py:259
 msgid "No flat review for this object"
 msgstr "Nincs sík áttekintési mód ehhez az objektumhoz"
 
-#: globalCommands.py:675
+#: globalCommands.py:683
 msgid "No formatting information"
 msgstr "Nincs formázási információ"
 
-#: globalCommands.py:311
+#: globalCommands.py:317
 msgid "No location information for navigator object"
 msgstr "nem lehet a navigátor kurzornál lévő elem helyét meghatározni"
 
-#: globalCommands.py:315
+#: globalCommands.py:321
 msgid "No location information for screen"
 msgstr "Ehhez a képernyőhöz nincs helyinformáció"
 
@@ -1406,19 +1750,19 @@ msgstr "Ehhez a képernyőhöz nincs helyinformáció"
 msgid "No message yet"
 msgstr "nincs ennyi üzenet"
 
-#: globalCommands.py:379
+#: globalCommands.py:385
 msgid "No next"
 msgstr "Nincs következő elem."
 
-#: globalCommands.py:268
+#: globalCommands.py:272
 msgid "No object at flat review position"
 msgstr "nem lehet a szöveg objektumához ugrani"
 
-#: globalCommands.py:407
+#: globalCommands.py:413
 msgid "No objects inside"
 msgstr "Nem tartalmaz elemeket"
 
-#: globalCommands.py:393
+#: globalCommands.py:399
 msgid "No previous"
 msgstr "Nincs előző elem."
 
@@ -1431,21 +1775,26 @@ msgstr "Nincsenek beállítások"
 msgid "No speech"
 msgstr "csendes üzemmód"
 
-#: globalCommands.py:926
+#: globalCommands.py:934
 msgid "No start marker set"
 msgstr "Nincs megadva kijelölési kezdőpont."
 
-#: globalCommands.py:710
+#: globalCommands.py:718
 msgid "No status line found"
 msgstr "Az állapotsor nem található."
 
-#: globalCommands.py:937
+#: globalCommands.py:945
 msgid "No text to copy"
 msgstr "Nincs másolható szöveg"
 
 #: appModules/foobar2000.py:44
 msgid "No track playing"
 msgstr "Nincs lejátszás alatt lévő szám"
+
+#. Translators: A message indicating that no update to NVDA is available.
+#: updateCheck.py:182
+msgid "No update available."
+msgstr "Nem érhető el frissítés"
 
 #: versionInfo.py:32
 msgid "NonVisual Desktop Access"
@@ -1481,20 +1830,30 @@ msgstr "Norvég, rövidítési fokozat 2"
 msgid "Norwegian grade 3"
 msgstr "Norvég, rövidítési fokozat 3"
 
-#: virtualBuffers/__init__.py:1244
+#. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
+#. But there is no container.
+#: virtualBuffers/__init__.py:1393 virtualBuffers/__init__.py:1407
+msgid "Not in a container"
+msgstr "Nem tartalmaz elemeket"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+#: virtualBuffers/__init__.py:1268
 msgid "Not in a table cell"
 msgstr "csak táblázatban használható"
 
-#: NVDAObjects/window/winword.py:391 NVDAObjects/window/winword.py:408
+#. Translators: The message reported when a user attempts to use a table movement command
+#. when the cursor is not withnin a table.
+#: NVDAObjects/window/winword.py:397 NVDAObjects/window/winword.py:416
 msgid "Not in table"
 msgstr "csak táblázatban használható"
 
 #. Translators: This is the label for the object presentation dialog.
-#: gui/settingsDialogs.py:692
+#: gui/settingsDialogs.py:719
 msgid "Object Presentation"
 msgstr "Objektumok megjelenítése"
 
-#: globalCommands.py:321
+#: globalCommands.py:327
 #, python-format
 msgid ""
 "Object edges positioned %.1f per cent from left edge of screen, %.1f per "
@@ -1505,7 +1864,7 @@ msgstr ""
 "szélétől, a szélessége %.1f százaléka, a magassága %.1f százaléka a "
 "képernyőnek"
 
-#: gui/__init__.py:411
+#: gui/__init__.py:463
 msgid "Options"
 msgstr "Beállítások"
 
@@ -1518,19 +1877,23 @@ msgstr "Szervezet:"
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
-#: gui/settingsDialogs.py:247
+#: gui/settingsDialogs.py:274
 msgid "Output &device:"
 msgstr "kimeneti &hangeszköz"
 
-#: globalCommands.py:832
+#: gui/addonGui.py:27
+msgid "Package"
+msgstr "Programcsomag"
+
+#: globalCommands.py:840
 msgid "Pass next key through"
 msgstr "billentyűparancs átadva"
 
-#: gui/settingsDialogs.py:1025
+#: gui/settingsDialogs.py:1064
 msgid "Pattern"
 msgstr "Tényleges kifejezés"
 
-#: globalCommands.py:426
+#: globalCommands.py:432
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
@@ -1543,11 +1906,55 @@ msgstr ""
 msgid "Play"
 msgstr "Lejátszás"
 
-#: gui/__init__.py:144
+#. Translators: The title of the dialog requesting donations from users.
+#: updateCheck.py:373
+msgid "Please Donate"
+msgstr "Adományozás"
+
+#: gui/__init__.py:153
 msgid "Please close the other NVDA settings dialog first"
 msgstr "Kérem először zárja be a megnyitott NVDA beállításablakot."
 
-#: globalCommands.py:971
+#. Translators: The message displayed to the user after NVDA is installed
+#. and the installed copy is about to be started.
+#: gui/installerGui.py:65
+msgid "Please press OK to start the installed copy."
+msgstr "Nyomja meg az OK gombot a telepített verzió elindításához."
+
+#. Translators: The message displayed when the user has not specified a destination directory
+#. in the Create Portable NVDA dialog.
+#: gui/installerGui.py:185
+msgid "Please specify a directory in which to create the portable copy."
+msgstr "Kérem adjon meg egy mappát, ahova a hordozható verziót elkészíthetem"
+
+#. Translators: The message displayed while NVDA is being installed.
+#: gui/installerGui.py:29
+msgid "Please wait while NVDA is being installed"
+msgstr "Kérem várjon amíg az NVDA telepítésre kerül"
+
+#. Translators: The message displayed while a portable copy of NVDA is bieng created.
+#: gui/installerGui.py:209
+msgid "Please wait while a portable copy of NVDA is created."
+msgstr "Kérem várjon amíg a hordozható verzió elkészül"
+
+#. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
+#: gui/settingsDialogs.py:199
+msgid "Please wait while settings are copied to the system configuration."
+msgstr ""
+"Kérem várjon amíg a beállítások másolásra  kerülnek a rendszer konfigurációs "
+"fájlába"
+
+#. Translators: The message displayed while an addon is being installed.
+#: gui/addonGui.py:95
+msgid "Please wait while the add-on is being installed."
+msgstr "Kérem várjon amíg a bővítmény feltelepül."
+
+#. Translators: The message displayed while NVDA is being updated.
+#: gui/installerGui.py:27
+msgid "Please wait while your previous installation of NVDA is being updated."
+msgstr "Kérem várjon amíg az NVDA előző verziója frissítésre kerül"
+
+#: globalCommands.py:979
 msgid "Plugins reloaded"
 msgstr "Bővítmények újratöltve."
 
@@ -1556,6 +1963,12 @@ msgstr "Bővítmények újratöltve."
 #: braille.py:152
 msgid "Polish grade 1"
 msgstr "Lengyel, rövidítési fokozat 1"
+
+#. Translators: The label of a grouping containing controls to select the destination directory
+#. in the Create Portable NVDA dialog.
+#: gui/installerGui.py:145
+msgid "Portable &directory:"
+msgstr "Hordozható &könyvtár"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1569,11 +1982,11 @@ msgstr "Portugál, rövidítési fokozat 1"
 msgid "Portuguese grade 2"
 msgstr "Portugál, rövidítési fokozat 2"
 
-#: virtualBuffers/__init__.py:873
+#: virtualBuffers/__init__.py:895
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Megjeleníti a címsorok, jelzőpontok vagy hivatkozások listáját"
 
-#: globalCommands.py:352
+#: globalCommands.py:358
 msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
@@ -1591,27 +2004,27 @@ msgstr "elsődleges fejléc"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:734
+#: gui/settingsDialogs.py:773
 msgid "Progress &bar output:"
 msgstr "&folyamatjelző"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:739
+#: gui/settingsDialogs.py:778
 msgid "Progress bar output"
 msgstr "folyamatjelző"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:417
+#: gui/settingsDialogs.py:444
 msgid "Punctuation/symbol &level:"
 msgstr "Írásjelszint"
 
-#: gui/__init__.py:278
+#: gui/__init__.py:317
 msgid "Python console"
 msgstr "Python konzol"
 
-#: globalCommands.py:632
+#: globalCommands.py:640
 msgid "Quits NVDA!"
 msgstr "kilép az NVDA programból"
 
@@ -1621,7 +2034,7 @@ msgstr "kilép az NVDA programból"
 msgid "Rate boos&t"
 msgstr "Sebesség &fokozás"
 
-#: gui/settingsDialogs.py:1177
+#: gui/settingsDialogs.py:1216
 msgid "Read by &paragraph"
 msgstr "bekezdéskénti olvasás"
 
@@ -1635,27 +2048,27 @@ msgid "Refresh\tF5"
 msgstr "Frissítés\tF5"
 
 #. If this buffer has already had focus once while loaded, this is a refresh.
-#: virtualBuffers/__init__.py:596
+#: virtualBuffers/__init__.py:618
 msgid "Refreshed"
 msgstr "frissítve"
 
-#: virtualBuffers/__init__.py:784
+#: virtualBuffers/__init__.py:806
 msgid "Refreshes the document content"
 msgstr "Frissíti a dokumentum tartalmát"
 
-#: gui/settingsDialogs.py:1028
+#: gui/settingsDialogs.py:1067
 msgid "Regexp"
 msgstr "Szabályozott kifejezés"
 
-#: gui/settingsDialogs.py:999
+#: gui/settingsDialogs.py:1038
 msgid "Regular &expression"
 msgstr "&szabályzott kifejezés"
 
-#: gui/__init__.py:280
+#: gui/__init__.py:328
 msgid "Reload plugins"
 msgstr "A bővítmények újratöltése"
 
-#: globalCommands.py:972
+#: globalCommands.py:980
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
@@ -1663,182 +2076,191 @@ msgstr ""
 "Újratölti a NVDA szkripteket és bővítményeket az NVDA újraindítása nélkül, "
 "mely hasznos lehet fejlesztőknek"
 
-#: gui/settingsDialogs.py:1026 gui/settingsDialogs.py:1228
+#. Translators: The label of a button to remind the user later about performing some action.
+#: updateCheck.py:199
+msgid "Remind me &later"
+msgstr "&Kérdezzen később"
+
+#: gui/addonGui.py:118
+msgid "Remove Add-on"
+msgstr "Bővítmény eltávolítása"
+
+#: gui/settingsDialogs.py:1065 gui/settingsDialogs.py:1267
 msgid "Replacement"
 msgstr "Behelyettesített kifejezés"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:875
+#: gui/settingsDialogs.py:914
 msgid "Report &alignment"
 msgstr "&igazítás bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:880
+#: gui/settingsDialogs.py:919
 msgid "Report &colors"
 msgstr "&Színek jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:931
+#: gui/settingsDialogs.py:970
 msgid "Report &headings"
 msgstr "&címsorok jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:708
+#: gui/settingsDialogs.py:747
 msgid "Report &help balloons"
 msgstr "&súgóbuborékok bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:900
+#: gui/settingsDialogs.py:939
 msgid "Report &line numbers"
 msgstr "&sorszámok bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:926
+#: gui/settingsDialogs.py:965
 msgid "Report &links"
 msgstr "&hivatkozások jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:895
+#: gui/settingsDialogs.py:934
 msgid "Report &pages"
 msgstr "&oldalszámok bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:627
+#: gui/settingsDialogs.py:654
 msgid "Report &role when mouse enters object"
 msgstr "a &vezérlőelem típusának bemondása az egérmutató mozgásakor"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:911
+#: gui/settingsDialogs.py:950
 msgid "Report &tables"
 msgstr "&táblázatok jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:703
+#: gui/settingsDialogs.py:742
 msgid "Report &tooltips"
 msgstr "&eszköztippek bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:750
+#: gui/settingsDialogs.py:789
 msgid "Report background progress bars"
 msgstr "A háttérben lévő folyamatjelzők változásának jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:941
+#: gui/settingsDialogs.py:980
 msgid "Report block &quotes"
 msgstr "&idézetblokkok jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:755
+#: gui/settingsDialogs.py:794
 msgid "Report dynamic &content changes"
 msgstr "Frissülő &tartalom jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:860
+#: gui/settingsDialogs.py:899
 msgid "Report font &name"
 msgstr "A betűtípus &nevének bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:865
+#: gui/settingsDialogs.py:904
 msgid "Report font &size"
 msgstr "betű &méret bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:870
+#: gui/settingsDialogs.py:909
 msgid "Report font attri&butes"
 msgstr "betűtípus &paraméterek bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:951
+#: gui/settingsDialogs.py:990
 msgid "Report fra&mes"
 msgstr "kere&tek bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:805
+#: gui/settingsDialogs.py:844
 msgid "Report l&ayout tables"
 msgstr "&Rétegződő táblázatok jelzése"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
-#: gui/settingsDialogs.py:906
+#: gui/settingsDialogs.py:945
 msgid "Report l&ine indentation"
 msgstr "Soriga&zítás bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:936
+#: gui/settingsDialogs.py:975
 msgid "Report l&ists"
 msgstr "&listák jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:946
+#: gui/settingsDialogs.py:985
 msgid "Report lan&dmarks"
 msgstr "&jelzőpontok jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:601
+#: gui/settingsDialogs.py:628
 msgid "Report mouse &shape changes"
 msgstr "Jelzés az egérmutató &alakjának megváltozásakor"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:728
+#: gui/settingsDialogs.py:767
 msgid "Report object &descriptions"
 msgstr "Az elem &leírásának bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:718
+#: gui/settingsDialogs.py:757
 msgid "Report object &position information"
 msgstr "Az elemek &pozíciójának bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:713
+#: gui/settingsDialogs.py:752
 msgid "Report object shortcut &keys"
 msgstr "Az elemhez tartozó &gyorsbillentyűk bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:890
+#: gui/settingsDialogs.py:929
 msgid "Report spelling errors"
 msgstr "Helyesírási hibák jelzése"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:885
+#: gui/settingsDialogs.py:924
 msgid "Report st&yle"
 msgstr "st&ílus bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:921
+#: gui/settingsDialogs.py:960
 msgid "Report table cell c&oordinates"
 msgstr "a táblázat sor/oszlop &koordinátáinak bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:916
+#: gui/settingsDialogs.py:955
 msgid "Report table row/column h&eaders"
 msgstr "a táblázat sor/oszlop &fejléceinek bemondása"
 
@@ -1852,14 +2274,14 @@ msgstr "Felolvassa az automatikus megjegyzés ablak tartalmát."
 msgid "Reports any comments in the comments window"
 msgstr "Felolvassa a megjegyzés ablak tartalmát."
 
-#: globalCommands.py:679
+#: globalCommands.py:687
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document"
 msgstr ""
 "Bemondja az áttekintő kurzor pozíciójánál található formázási paramétereket."
 
-#: globalCommands.py:555
+#: globalCommands.py:561
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated. Pressing twice reports a description or example of that "
@@ -1878,7 +2300,7 @@ msgstr ""
 "A kurzor alatti aktuális sort olvassa fel. Kétszer gyorsan megnyomva betűzi "
 "a sort"
 
-#: globalCommands.py:303
+#: globalCommands.py:309
 msgid ""
 "Reports the current navigator object. Pressing twice spells this information,"
 "and pressing three times Copies name and value of this  object to the "
@@ -1888,13 +2310,13 @@ msgstr ""
 "betűzi, háromszor gyorsan megnyomva pedig az elem nevét és értékét a "
 "vágólapra másolja"
 
-#: globalCommands.py:322
+#: globalCommands.py:328
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr ""
 "Bemondja a navigátor kurzornál lévő elem magasságát, szélességét és "
 "pozícíóját"
 
-#: globalCommands.py:456
+#: globalCommands.py:462
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled. "
@@ -1908,25 +2330,29 @@ msgstr ""
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Bemondja a lejátszás alatt lévő szám hátralévő idejét"
 
-#: globalCommands.py:917
+#: globalCommands.py:925
 msgid "Reports the text on the Windows clipboard"
 msgstr "A vágólapon lévő szöveg bemondása"
 
-#: globalCommands.py:743
+#: globalCommands.py:751
 msgid ""
 "Reports the title of the current application or foreground window. If "
-"pressed twice, spells the title. If pressed thrice, copies the title to the "
-"clipboard"
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
 msgstr ""
-"Bemondja az aktív alkalmazás, vagy az előtérben lévő ablak címét. Kétszer "
-"gyorsan leütve betűzi, háromszor gyorsan lenyomva pedig a vágólapra másolja "
-"a címet."
+"Felolvassa az aktív ablak címét. Kétszeri gyors megnyomásra betűzi, "
+"háromszori lenyomásra a vágólapra másolja."
 
-#: gui/__init__.py:305
+#: gui/__init__.py:357
 msgid "Reset all settings to saved state"
 msgstr "A beállítások visszaállítása az elmentett beállításoknak megfelelően"
 
-#: globalCommands.py:940
+#. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
+#: gui/addonGui.py:167
+msgid "Restart NVDA"
+msgstr "Az NVDA újraindítása"
+
+#: globalCommands.py:948
 msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
@@ -1934,16 +2360,16 @@ msgstr ""
 "Az előzőleg beállított kijelölési kezdőponttól a kurzor aktuális pozíciójáig "
 "terjedő szöveget a vágólapra másolja."
 
-#: gui/__init__.py:249
+#: gui/__init__.py:288
 msgid "Review &cursor..."
 msgstr "Á&ttekintő kurzor..."
 
 #. Translators: This is the label for the review cursor settings dialog.
-#: gui/settingsDialogs.py:656
+#: gui/settingsDialogs.py:683
 msgid "Review Cursor Settings"
 msgstr "Áttekintő kurzor beállítások"
 
-#: globalCommands.py:935
+#: globalCommands.py:943
 msgid "Review selection copied to clipboard"
 msgstr "A kijelölt szöveg a vágólapra másolva."
 
@@ -1952,7 +2378,7 @@ msgstr "A kijelölt szöveg a vágólapra másolva."
 msgid "Rewind"
 msgstr "Hátra"
 
-#: globalCommands.py:954
+#: globalCommands.py:962
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "A kurzort a braille cellához helyezi, vagy aktiválja annak objektumát"
 
@@ -1966,21 +2392,21 @@ msgstr "Orosz, rövidítési fokozat 1"
 msgid "Save As"
 msgstr "Mentés Másként"
 
-#: globalCommands.py:879
+#: globalCommands.py:887
 msgid "Saves the current NVDA configuration"
 msgstr "Elmenti a jelenlegi beállításokat."
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:431
+#: gui/settingsDialogs.py:458
 msgid "Say &cap before capitals"
 msgstr "nagybetűk &szóbeli jelzése"
 
-#: globalCommands.py:944
+#: globalCommands.py:952
 msgid "Scrolls the braille display back"
 msgstr "Visszafelé görgeti a braille kijelzőt"
 
-#: globalCommands.py:949
+#: globalCommands.py:957
 msgid "Scrolls the braille display forward"
 msgstr "Előre görgeti a braille kijelzőt"
 
@@ -1988,13 +2414,19 @@ msgstr "Előre görgeti a braille kijelzőt"
 msgid "Secure Desktop"
 msgstr "Biztonsági képernyő"
 
+#. Translators: The title of the dialog presented when browsing for the
+#. destination directory when creating a portable copy of NVDA.
+#: gui/installerGui.py:177
+msgid "Select portable  directory"
+msgstr "Válassza ki a Hordozható könyvtárat"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:173
 msgid "Serbian grade 1"
 msgstr "Szerb, rövidítési fokozat 1"
 
-#: globalCommands.py:333
+#: globalCommands.py:339
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
@@ -2002,7 +2434,7 @@ msgstr ""
 "A navigátor kurzort az aktuális fókuszhoz, az áttekintő kurzort, ha "
 "lehetséges, pedig a kurzor aktuális pozíciójához helyezi"
 
-#: globalCommands.py:242
+#: globalCommands.py:246
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
@@ -2012,50 +2444,50 @@ msgstr "A navigátor kurzort az egérmutatónál lévő elemhez helyezi"
 msgid "Show the Handy Tech driver configuration window."
 msgstr "A Handy Tech driver beállításablak megjelenítése"
 
-#: gui/__init__.py:415
+#: gui/__init__.py:467
 msgid "Show this dialog when NVDA starts"
 msgstr "Jelenjen meg ez a párbeszédpanel az Nvda minden indításakor"
 
-#: globalCommands.py:871
+#: globalCommands.py:879
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr "Megnyitja az NVDA böngészőmód beállításait"
 
-#: globalCommands.py:875
+#: globalCommands.py:883
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Megnyitja az NVDA dokumentumformázási beállítások párbeszédablakát."
 
-#: globalCommands.py:847
+#: globalCommands.py:855
 msgid "Shows the NVDA general settings dialog"
 msgstr "Megnyitja az NVDA általános beállítások párbeszédablakát."
 
-#: globalCommands.py:859
+#: globalCommands.py:867
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Megnyitja az NVDA billentyűzet beállítások párbeszédablakát."
 
-#: globalCommands.py:636
+#: globalCommands.py:644
 msgid "Shows the NVDA menu"
 msgstr "Megnyitja az NVDA menüjét."
 
-#: globalCommands.py:863
+#: globalCommands.py:871
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Megnyitja az NVDA egér beállítások párbeszédablakát."
 
-#: globalCommands.py:867
+#: globalCommands.py:875
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr ""
 "Megnyitja az NVDA objektumok megjelenítési beállításai párbeszédablakát."
 
-#: globalCommands.py:851
+#: globalCommands.py:859
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Megnyitja az NVDA beszédszintetizátor párbeszédablakát."
 
-#: globalCommands.py:855
+#: globalCommands.py:863
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Megnyitja az NVDA hangbeállítások párbeszédablakát."
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:676
+#: gui/settingsDialogs.py:703
 msgid "Simple review mode"
 msgstr "Egyszerű áttekintő mód"
 
@@ -2084,9 +2516,8 @@ msgstr "Szlovén, rövidítési fokozat 1"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:80
-#, fuzzy
 msgid "Spanish 8 dot computer braille"
-msgstr "Finn 8 pontos számítógépes braille"
+msgstr "Spanyol 8 pontos számítógépes braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2094,39 +2525,45 @@ msgstr "Finn 8 pontos számítógépes braille"
 msgid "Spanish grade 1"
 msgstr "Spanyol, rövidítési fokozat 1"
 
-#: gui/settingsDialogs.py:695
+#. Translators: An option for progress bar output in the Object Presentation dialog
+#. which reports progress bar updates by speaking.
+#. See Progress bar output in the Object Presentation Settings section of the User Guide.
+#: gui/settingsDialogs.py:728
 msgid "Speak"
 msgstr "Beszéd"
 
-#: gui/settingsDialogs.py:697
+#. Translators: An option for progress bar output in the Object Presentation dialog
+#. which reports progress bar updates by both speaking and beeping.
+#. See Progress bar output in the Object Presentation Settings section of the User Guide.
+#: gui/settingsDialogs.py:736
 msgid "Speak and beep"
 msgstr "Beszéd és hangjelzés"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:575
+#: gui/settingsDialogs.py:602
 msgid "Speak command &keys"
 msgstr "&parancsbillentyűk bemondása"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:560
+#: gui/settingsDialogs.py:587
 msgid "Speak typed &characters"
 msgstr "&Karakterek bemondása gépeléskor"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:565
+#: gui/settingsDialogs.py:592
 msgid "Speak typed &words"
 msgstr "&szavak bemondása gépeléskor"
 
-#: globalCommands.py:843
+#: globalCommands.py:851
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr "Bemondja az aktív alkalmazás és a betöltött szkript nevét."
 
-#: globalCommands.py:498
+#: globalCommands.py:504
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. Pressing twice spells the word. Pressing three times spells the "
@@ -2136,11 +2573,11 @@ msgstr ""
 "betűzésre, háromszori megnyomásra pedig a karakterleírásnak megfelelően "
 "bemondásra kerül."
 
-#: gui/__init__.py:265
+#: gui/__init__.py:304
 msgid "Speech &dictionaries"
 msgstr "&kivétel szótárak"
 
-#: gui/__init__.py:275
+#: gui/__init__.py:314
 msgid "Speech viewer"
 msgstr "Beszédnéző"
 
@@ -2149,9 +2586,13 @@ msgstr "Beszédnéző"
 msgid "Start"
 msgstr "Start"
 
-#: globalCommands.py:921
+#: globalCommands.py:929
 msgid "Start marked"
 msgstr "A kijelölési kezdőpont beállítva"
+
+#: gui/addonGui.py:26
+msgid "Status"
+msgstr "státusz"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:18
@@ -2163,13 +2604,31 @@ msgstr "Leállítás"
 msgid "Subject:"
 msgstr "Tárgy:"
 
-#: gui/settingsDialogs.py:187
+#. Translators: The title of a dialolg presented to indicate a successful operation.
+#: gui/installerGui.py:67 gui/installerGui.py:232 gui/settingsDialogs.py:210
 msgid "Success"
 msgstr "Sikeres"
 
-#: gui/settingsDialogs.py:187
+#: gui/settingsDialogs.py:210
 msgid "Successfully copied NVDA user settings"
 msgstr "Az NVDA beállítások sikeresen másolva."
+
+#. Translators: The message displayed when a portable copy of NVDA has been successfully created.
+#. %s will be replaced with the destination directory.
+#: gui/installerGui.py:231
+#, python-format
+msgid "Successfully created a portable copy of NVDA at %s"
+msgstr "A hordozható verzió sikeresen elkészült a(z) %s könyvtárban"
+
+#. Translators: The message displayed when NVDA has been successfully installed.
+#: gui/installerGui.py:60
+msgid "Successfully installed NVDA. "
+msgstr "Az NVDA sikeresen telepítve."
+
+#. Translators: The message displayed when NVDA has been successfully updated.
+#: gui/installerGui.py:62
+msgid "Successfully updated your installation of NVDA. "
+msgstr "Az NVDA frissítése sikeresen megtörtént. "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2177,42 +2636,41 @@ msgstr "Az NVDA beállítások sikeresen másolva."
 msgid "Swedish grade 1"
 msgstr "Svéd, rövidítési fokozat 1"
 
-#: gui/settingsDialogs.py:1227
+#: gui/settingsDialogs.py:1266
 msgid "Symbol"
 msgstr "Írásjel"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui/settingsDialogs.py:1214
+#: gui/settingsDialogs.py:1253
 msgid "Symbol Pronunciation"
 msgstr "Írásjel kiejtés"
 
 #. Translators: This is the label for the synthesizer dialog.
-#: gui/settingsDialogs.py:222
+#: gui/settingsDialogs.py:249
 msgid "Synthesizer"
 msgstr "Beszédszintetizátor"
 
-#: gui/settingsDialogs.py:270
+#: gui/settingsDialogs.py:297
 msgid "Synthesizer Error"
 msgstr "Beszédszintetizátor hiba"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:176
-#, fuzzy
 msgid "Tamil grade 1"
-msgstr "Arab, rövidítési fokozat 1"
+msgstr "Tamil, rövidítési fogokzat 1"
 
 #: NVDAObjects/IAccessible/__init__.py:1494
 msgid "Taskbar"
 msgstr "tálca"
 
-#: gui/__init__.py:154
+#: gui/__init__.py:163
 msgid "Temporary dictionary"
 msgstr "ideiglenes kivételszótár"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:612
+#: gui/settingsDialogs.py:639
 msgid "Text &unit resolution:"
 msgstr "Szövegfeldolgozási &egység"
 
@@ -2220,13 +2678,41 @@ msgstr "Szövegfeldolgozási &egység"
 msgid "Text frame"
 msgstr "szövegkeret"
 
-#: globalCommands.py:916
+#: globalCommands.py:924
 #, python-format
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "A vágólap nagymennyiségű szöveget tartalmaz, amely %s karakterből áll."
 
-#: globalCommands.py:833
+#. Translators: a message dialog asking to retry or cancel when NVDA install fails
+#: gui/installerGui.py:44
+msgid ""
+"The installation is unable to remove or overwrite a file. Another copy of "
+"NVDA may be running on another logged-on user account. Please make sure all "
+"installed copies of NVDA are shut down and try the installation again."
+msgstr ""
+"A telepítő nem képes felülírni egy fájlt. A hibát egy másik NVDA futása "
+"okozhatja"
+
+#. Translators: The message displayed when an error occurs during installation of NVDA.
+#: gui/installerGui.py:52
+msgid ""
+"The installation of NVDA failed. Please check the Log Viewer for more "
+"information."
+msgstr ""
+"Az NVDA telepítése nem sikerült. Kérem tekintse meg a hiba részleteit az "
+"NVDA naplónézőben."
+
+#. Translators: a message in the installer telling the user NVDA is now located in a different place.
+#: gui/installerGui.py:91
+msgid ""
+"The installation path for NVDA has changed. it will now  be installed in "
+"{path}"
+msgstr ""
+"Az NVDA alapértelmezett telepítési helye meg lett változtatva, így a "
+"küövetkező helyre fog települni: {path}"
+
+#: globalCommands.py:841
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -2234,24 +2720,47 @@ msgstr ""
 "A következő billentyűparancsot az NVDA figyelmen kívül hagyja és átadja a "
 "parancsot az aktív alkalmazásnak."
 
-#: globalCommands.py:930
+#: globalCommands.py:938
 msgid "The start marker must reside within the same object"
 msgstr "A kijelölési kezdőpont nem szerepelhet egy másik objektumban."
 
-#: globalCommands.py:911
+#: globalCommands.py:919
 msgid "There is no text on the clipboard"
 msgstr "Nincs szöveg a vágólapon."
 
-#: gui/settingsDialogs.py:210
+#. Translators: The message displayed when an an addon already seems to be installed.
+#: gui/addonGui.py:86
+msgid ""
+"This add-on seems to already be installed. Please remove the existing add-on "
+"and try again."
+msgstr ""
+"Ez a bővítmény már telepítve van. Távolítsa el, és próbálja meg újból a "
+"telepítést."
+
+#: gui/settingsDialogs.py:233
 msgid "This change requires administrator privileges."
 msgstr "Ehhez a változtatáshoz rendszergazdai jog szükséges."
+
+#. Translators: An informational message displayed in the Create Portable NVDA dialog.
+#: gui/installerGui.py:140
+msgid ""
+"To create a portable copy of NVDA, please select the path and other options "
+"and then press Continue"
+msgstr ""
+"A hordozható verzió elkészítéséhez adja meg a célkönyvtárat és egyébb "
+"beállításokat, majd nyomja meg a Folytatás gombot"
+
+#. Translators: An informational message in the Install NVDA dialog.
+#: gui/installerGui.py:85
+msgid "To install NVDA to your hard drive, please press the Continue button."
+msgstr "Az NVDA merevlemezre való telepítéséhez nyomja meg a folytatás gombot"
 
 #. Translators: This is presented in outlook or live mail when creating a new email 'to:' or 'recipient:'
 #: appModules/msimn.py:22
 msgid "To:"
 msgstr "Címzett:"
 
-#: globalCommands.py:903
+#: globalCommands.py:911
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
 "Váltás az áttekintő kurzor és a kurzor követése között egy braille kijelző "
@@ -2261,13 +2770,13 @@ msgstr ""
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "Be- és kikapcsolja az alvó módot a jelenlegi alkalmazásban"
 
-#: globalCommands.py:777
+#: globalCommands.py:785
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr "Be- és kikapcsolja a folyamatjelzők változásainak hangjelzését"
 
-#: globalCommands.py:628
+#: globalCommands.py:636
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -2280,7 +2789,7 @@ msgstr ""
 "NVDA kezeli, lehetővé téve az oldalon való navigálást, és a gyorsbillentyűk "
 "használatát."
 
-#: globalCommands.py:599
+#: globalCommands.py:607
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -2291,7 +2800,7 @@ msgstr ""
 " Hangjelzés állapotban az NVDA csipogással jelzi az információt. \n"
 "Beszéd állapotban az NVDA a megszokott módon működik."
 
-#: virtualBuffers/__init__.py:790
+#: virtualBuffers/__init__.py:812
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
@@ -2299,14 +2808,14 @@ msgstr ""
 "Be- és kikapcsol ha a képernyőelrendezés nem módosul a dokumentum "
 "feldolgozása közben"
 
-#: globalCommands.py:807
+#: globalCommands.py:815
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
 "Be és kikapcsolja az aktív elem követését a navigátor kurzorral. Bekapcsolt "
 "állapotban a kurzor mozgása esetén a navigátorkurzor az aktív elemhez kerül"
 
-#: globalCommands.py:797
+#: globalCommands.py:805
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
@@ -2314,7 +2823,7 @@ msgstr ""
 "állapotban a kurzor mozgása esetén az áttekintőkurzor a kurzor pozíciójához "
 "kerül."
 
-#: globalCommands.py:787
+#: globalCommands.py:795
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -2322,29 +2831,29 @@ msgstr ""
 "Ki- és bekapcsolja a frissülő tartalom jelzését. Ez például DOS ablakokban "
 "lehet hasznos."
 
-#: globalCommands.py:182
+#: globalCommands.py:183
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Ki- vagy bekapcsolja a beírt karakterek bemondását"
 
-#: globalCommands.py:202
+#: globalCommands.py:203
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr "Be- és kikapcsolja a beírt, speciális parancsbillentyűk bemondását"
 
-#: globalCommands.py:192
+#: globalCommands.py:193
 msgid "Toggles on and off the speaking of typed words"
 msgstr "Ki- vagy bekapcsolja a beírt szavak bemondását"
 
-#: globalCommands.py:726
+#: globalCommands.py:734
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Be- és kikapcsolja az elemek bemondását az egérmutató mozgása közben."
 
-#: gui/__init__.py:282
+#: gui/__init__.py:330
 msgid "Tools"
 msgstr "Eszközök"
 
-#: gui/settingsDialogs.py:1131
+#: gui/settingsDialogs.py:1170
 msgid "Translation &table:"
 msgstr "Fordítási &tábla"
 
@@ -2382,9 +2891,16 @@ msgstr ""
 msgid "Type the text you wish to find"
 msgstr "Írja be a keresendő szöveget."
 
-#: virtualBuffers/__init__.py:262
+#. Translators: The label of a group of radio buttons to select the type of element
+#. in the browse mode Elements List dialog.
+#: virtualBuffers/__init__.py:278
 msgid "Type:"
 msgstr "Típus:"
+
+#. Translators: the url part of the About Add-on information
+#: gui/addonGui.py:184
+msgid "URL: {url}"
+msgstr "Link: {url}"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2398,32 +2914,52 @@ msgstr "Egységes angol braille kód, rövidítési fokozat 1"
 msgid "Unified English Braille Code grade 2"
 msgstr "Egységes angol braille kód, rövidítési fokozat 2"
 
+#: installer.py:156
+msgid "Uninstall NVDA"
+msgstr "Az NVDA eltávolítása"
+
+#. Translators: The message presented when the update has been successfully downloaded
+#. and is about to be installed.
+#: updateCheck.py:351
+msgid "Update downloaded. It will now be installed."
+msgstr "A letöltés befejeződött, a telepítés elindítása."
+
+#. Translators: The title of the dialog presented while NVDA is being updated.
+#: gui/installerGui.py:23
+msgid "Updating NVDA"
+msgstr "Az NVDA frissítése"
+
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:795
+#: gui/settingsDialogs.py:834
 msgid "Use &screen layout (when supported)"
 msgstr "&képernyőelrendezés használata (ha támogatott)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui/settingsDialogs.py:441
+#: gui/settingsDialogs.py:468
 msgid "Use &spelling functionality if supported"
 msgstr "&betűzés használata, ha támogatott"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/__init__.py:412 gui/settingsDialogs.py:545
+#: gui/__init__.py:464 gui/settingsDialogs.py:572
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "A CapsLock billentyű használata NVDA gombként"
 
-#: gui/settingsDialogs.py:161
+#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#: gui/installerGui.py:96
+msgid "Use NVDA on the Windows &logon screen"
+msgstr "Az NVDA elindítása a Windows bejelentkező képernyő használatakor"
+
+#: gui/settingsDialogs.py:165
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
 "Az NVDA elindítása a Windows bejelentkező képernyő használatakor "
 "(rendszergazdai jog szükséges)"
 
-#: gui/settingsDialogs.py:166
+#: gui/settingsDialogs.py:170
 msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
@@ -2433,18 +2969,18 @@ msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:555
+#: gui/settingsDialogs.py:582
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "A normál Insert használata NVDA gombként"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:550
+#: gui/settingsDialogs.py:577
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "A numerikus insert használata NVDA gombként"
 
-#: gui/__init__.py:286
-msgid "User guide"
+#: installer.py:159 gui/__init__.py:334
+msgid "User Guide"
 msgstr "Felhasználói útmutató"
 
 #: synthDriverHandler.py:205
@@ -2455,37 +2991,57 @@ msgstr "vá&ltozat"
 msgid "V&olume"
 msgstr "&hangerő"
 
-#: gui/__init__.py:273
+#: gui/addonGui.py:28
+msgid "Version"
+msgstr "verzió"
+
+#: gui/__init__.py:312
 msgid "View log"
 msgstr "Naplónéző"
 
 #. Translators: This is the label for the voice settings dialog.
-#: gui/settingsDialogs.py:336
+#: gui/settingsDialogs.py:363
 msgid "Voice Settings"
 msgstr "Beszéd beállítások"
 
-#: gui/__init__.py:151
+#: gui/__init__.py:160
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "Hangkarakter kivételszótár (%s)"
 
-#: gui/settingsDialogs.py:180
+#: gui/settingsDialogs.py:191
 msgid "Warning"
 msgstr "Figyelmesztetés"
 
-#: gui/__init__.py:298
+#: updateCheck.py:364
+msgid ""
+"We need your help in order to continue to improve NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
+"Thank you for your support."
+msgstr ""
+"Az NVDA jobbá tételéhez az ön segítségére is szükségünk van.\n"
+"A project főként adományokra és támogatásokra épül. Ha ön is adományoz, az "
+"NVDA teljes idejű fejlesztését támogatja.\n"
+"Ha csak két ezer forint gyűlik össze minden letöltéskor, a project minden "
+"költsége fedezve van.\n"
+"Minden adományt az NV Access kap meg, mely az NVDA-t fejlesztő non-profit "
+"alapítvány.\n"
+"Köszönjük támogatását!"
+
+#: gui/__init__.py:346
 msgid "We&lcome dialog"
 msgstr "&üdvözlőképernyő"
 
-#: gui/__init__.py:292
-msgid "Web site"
-msgstr "Honlap"
-
-#: gui/__init__.py:407
+#: gui/__init__.py:459
 msgid "Welcome to NVDA"
 msgstr "Üdvözli az NVDA"
 
-#: gui/__init__.py:398
+#: gui/__init__.py:450
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -2519,15 +3075,15 @@ msgstr "Velszi, rövidítési fokozat 1"
 msgid "Welsh grade 2"
 msgstr "Velszi, rövidítési fokozat 2"
 
-#: gui/__init__.py:290
+#: gui/__init__.py:338
 msgid "What's &new"
 msgstr "&újdonságok"
 
-#: gui/__init__.py:308
+#: gui/__init__.py:360
 msgid "Write the current configuration to nvda.ini"
 msgstr "A beállítások elmentése az nvda.ini fájlba"
 
-#: gui/__init__.py:451
+#: gui/__init__.py:503
 msgid ""
 "Your configuration file contains errors. \n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
@@ -2539,7 +3095,7 @@ msgstr ""
 "kézi szerkesztéséhez. A hibákról részletes információ található a "
 "naplófájlban.\n"
 
-#: core.py:84
+#: core.py:85
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
@@ -2547,35 +3103,41 @@ msgstr ""
 "A NVDA parancsfájl hibát tartalmaz.\n"
 "A hibáról részletesen olvashat a naplófájlban."
 
-#: virtualBuffers/__init__.py:776
+#: virtualBuffers/__init__.py:798
 msgid "activates the current object in the document"
 msgstr "Aktiválja az aktuális elemet a dokumentumban."
 
-#: controlTypes.py:299 controlTypes.py:323
+#: controlTypes.py:312 controlTypes.py:336
 msgid "alert"
 msgstr "figyelmeztetés"
 
-#: speech.py:1037
+#. Translators: Reported when text is centered.
+#: speech.py:1073
 msgid "align center"
 msgstr "középre igazítás"
 
-#: speech.py:1043
+#. Translators: Reported when text has reverted to default alignment.
+#: speech.py:1083
 msgid "align default"
 msgstr "alapértelmezett igazítás"
 
-#: speech.py:1041
+#. Translators: Reported when text is justified.
+#. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
+#: speech.py:1080
 msgid "align justify"
 msgstr "sorkizárt igazítás"
 
-#: speech.py:1035
+#. Translators: Reported when text is left-aligned.
+#: speech.py:1070
 msgid "align left"
 msgstr "balra igazítás"
 
-#: speech.py:1039
+#. Translators: Reported when text is right-aligned.
+#: speech.py:1076
 msgid "align right"
 msgstr "jobbra igazítás"
 
-#: controlTypes.py:322
+#: controlTypes.py:335
 msgid "alignment"
 msgstr "igazítás"
 
@@ -2588,11 +3150,11 @@ msgstr "Mind"
 msgid "alt"
 msgstr "alt"
 
-#: controlTypes.py:240
+#: controlTypes.py:243
 msgid "animation"
 msgstr "animáció"
 
-#: controlTypes.py:241
+#: controlTypes.py:244
 msgid "application"
 msgstr "alkalmazás"
 
@@ -2616,7 +3178,7 @@ msgstr "Melléklet"
 msgid "back"
 msgstr "vissza"
 
-#: controlTypes.py:317
+#: controlTypes.py:330
 msgid "background color"
 msgstr "háttérszín"
 
@@ -2630,19 +3192,22 @@ msgstr "backspace"
 msgid "banner"
 msgstr "hírdetés"
 
-#: speech.py:1027
+#. Translators: Reported for text which is at the baseline position;
+#. i.e. not superscript or subscript.
+#: speech.py:1061
 msgid "baseline"
 msgstr "alap"
 
-#: globalCommands.py:775
+#: globalCommands.py:783
 msgid "beep and speak progress bar updates"
 msgstr "A folyamatjelzők változásának jelzése hangjelzéssel és beszéddel"
 
-#: globalCommands.py:772
+#: globalCommands.py:780
 msgid "beep for progress bar updates"
 msgstr "A folyamatjelzők változásának jelzése hangjelzéssel"
 
-#: globalCommands.py:593
+#. Translators: A speech mode which will cause NVDA to beep instead of speaking.
+#: globalCommands.py:600
 msgid "beeps"
 msgstr "hangjelzés"
 
@@ -2657,7 +3222,10 @@ msgstr "Fekete"
 msgid "blank"
 msgstr "üres"
 
-#: controlTypes.py:235
+#. Translators: Presented for a section in a document which is a block quotation;
+#. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
+#. See http://en.wikipedia.org/wiki/Block_quotation
+#: controlTypes.py:238
 msgid "block quote"
 msgstr "idézetblokk"
 
@@ -2665,19 +3233,20 @@ msgstr "idézetblokk"
 msgid "blue"
 msgstr "Kék"
 
-#: controlTypes.py:313 speech.py:1001
+#. Translators: Reported when text is bolded.
+#: controlTypes.py:326 speech.py:1018
 msgid "bold"
 msgstr "félkövér"
 
-#: controlTypes.py:278
+#: controlTypes.py:291
 msgid "border"
 msgstr "szegély"
 
-#: globalCommands.py:466 globalCommands.py:474 globalCommands.py:508
+#: globalCommands.py:472 globalCommands.py:480 globalCommands.py:514
 msgid "bottom"
 msgstr "vége"
 
-#: controlTypes.py:242
+#: controlTypes.py:245
 msgid "box"
 msgstr "négyzet"
 
@@ -2688,11 +3257,11 @@ msgstr "Megszakít"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:637
+#: gui/settingsDialogs.py:664
 msgid "brightness controls audio coordinates volume"
 msgstr "A fényerő változtatja az egérmutató hangjának hangerejét"
 
-#: virtualBuffers/__init__.py:1423
+#: virtualBuffers/__init__.py:1501
 msgid "browse mode"
 msgstr "böngésző mód"
 
@@ -2707,7 +3276,7 @@ msgstr "böngészés leállítás"
 msgid "btn"
 msgstr "gomb"
 
-#: controlTypes.py:335
+#: controlTypes.py:348
 msgid "busy"
 msgstr "betöltés"
 
@@ -2717,16 +3286,16 @@ msgstr "gomb"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:453
+#: braille.py:454
 #, python-format
 msgid "c%s"
 msgstr "o%s"
 
-#: controlTypes.py:328
+#: controlTypes.py:341
 msgid "calendar"
 msgstr "Naptár"
 
-#: controlTypes.py:245
+#: controlTypes.py:248
 msgid "canvas"
 msgstr "háttér"
 
@@ -2741,19 +3310,19 @@ msgstr "Nagy %s"
 msgid "caps lock"
 msgstr "Nagybetűzár"
 
-#: controlTypes.py:246
+#: controlTypes.py:249
 msgid "caption"
 msgstr "felirat"
 
-#: controlTypes.py:279
+#: controlTypes.py:292
 msgid "caret"
 msgstr "fölfelényíl"
 
-#: globalCommands.py:796
+#: globalCommands.py:804
 msgid "caret moves review cursor"
 msgstr "a kurzor követése az áttekintő kurzorral"
 
-#: gui/settingsDialogs.py:1027
+#: gui/settingsDialogs.py:1066
 msgid "case"
 msgstr "Kis- vagy nagybetű"
 
@@ -2767,11 +3336,11 @@ msgstr "kombinált listamező"
 msgid "cell"
 msgstr "cella"
 
-#: characterProcessing.py:131 controlTypes.py:280 textInfos/__init__.py:196
+#: characterProcessing.py:131 controlTypes.py:293 textInfos/__init__.py:196
 msgid "character"
 msgstr "karakter"
 
-#: controlTypes.py:281
+#: controlTypes.py:294
 msgid "chart"
 msgstr "grafikon"
 
@@ -2779,15 +3348,15 @@ msgstr "grafikon"
 msgid "check box"
 msgstr "jelölőnégyzet"
 
-#: controlTypes.py:247
+#: controlTypes.py:250
 msgid "check menu item"
 msgstr "bejelölhető menüelem"
 
-#: controlTypes.py:359
+#: controlTypes.py:374
 msgid "checkable"
 msgstr "bejelölhető"
 
-#: controlTypes.py:337
+#: controlTypes.py:350
 msgid "checked"
 msgstr "bejelölve"
 
@@ -2797,7 +3366,7 @@ msgstr "bejelölve"
 msgid "chk"
 msgstr "Jelölőnégyzet"
 
-#: controlTypes.py:357
+#: controlTypes.py:372
 msgid "clickable"
 msgstr "kattintható"
 
@@ -2810,11 +3379,11 @@ msgstr "clk"
 msgid "clock"
 msgstr "óra"
 
-#: controlTypes.py:341
+#: controlTypes.py:354
 msgid "collapsed"
 msgstr "Zárva"
 
-#: controlTypes.py:303
+#: controlTypes.py:316
 msgid "color chooser"
 msgstr "szín kiválasztó"
 
@@ -2822,7 +3391,7 @@ msgstr "szín kiválasztó"
 msgid "column"
 msgstr "oszlop"
 
-#: speech.py:827 speech.py:1096
+#: speech.py:832 speech.py:1139
 #, python-format
 msgid "column %s"
 msgstr "Oszlop %s."
@@ -2838,7 +3407,7 @@ msgstr "kombinált listamező"
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 #: aria.py:71
 msgid "complementary"
-msgstr "kiegészítő"
+msgstr "Bővítmény"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 #: aria.py:73
@@ -2854,7 +3423,7 @@ msgstr "A vágólapra másolva."
 msgid "ctrl"
 msgstr "ctrl"
 
-#: controlTypes.py:282
+#: controlTypes.py:295
 msgid "cursor"
 msgstr "kurzor"
 
@@ -2872,27 +3441,27 @@ msgstr "egyéni alkalmazás 2"
 msgid "dark red"
 msgstr "Sötétpiros"
 
-#: controlTypes.py:324
+#: controlTypes.py:337
 msgid "data grid"
 msgstr "Adattábla"
 
-#: controlTypes.py:325
+#: controlTypes.py:338
 msgid "data item"
 msgstr "Adatelem"
 
-#: controlTypes.py:248
+#: controlTypes.py:251
 msgid "date edit"
 msgstr "dátum szerkesztőmező"
 
-#: gui/settingsDialogs.py:113
+#: gui/settingsDialogs.py:117
 msgid "debug"
 msgstr "nyomkövetés"
 
-#: gui/settingsDialogs.py:111
+#: gui/settingsDialogs.py:115
 msgid "debug warning"
 msgstr "Nyomkövetési figyelmesztetés"
 
-#: globalCommands.py:423
+#: globalCommands.py:429
 msgid "default action failed"
 msgstr "Az alapértelmezett művelet nem sikerült"
 
@@ -2900,11 +3469,15 @@ msgstr "Az alapértelmezett művelet nem sikerült"
 msgid "default color"
 msgstr "alapértelmezett Szín"
 
-#: speech.py:962
+#. Translators: Indicates that text has reverted to the default style.
+#. A style is a collection of formatting settings and depends on the application.
+#: speech.py:976
 msgid "default style"
 msgstr "alapértelmezett stílus"
 
-#: controlTypes.py:348
+#. Translators: Reported when an object no longer exists in the user interface;
+#. i.e. it is dead and is no longer usable.
+#: controlTypes.py:363
 msgid "defunct"
 msgstr "nem működő"
 
@@ -2917,19 +3490,19 @@ msgstr "delete"
 msgid "desktop"
 msgstr "Asztal"
 
-#: controlTypes.py:298
+#: controlTypes.py:311
 msgid "desktop icon"
 msgstr "ikon az asztalon"
 
-#: controlTypes.py:301
+#: controlTypes.py:314
 msgid "desktop pane"
 msgstr "asztal"
 
-#: controlTypes.py:283
+#: controlTypes.py:296
 msgid "diagram"
 msgstr "diagram"
 
-#: controlTypes.py:284
+#: controlTypes.py:297
 msgid "dial"
 msgstr "gördítő"
 
@@ -2937,7 +3510,7 @@ msgstr "gördítő"
 msgid "dialog"
 msgstr "párbeszédpanel"
 
-#: controlTypes.py:250
+#: controlTypes.py:253
 msgid "directory pane"
 msgstr "könyvtár terület"
 
@@ -2952,12 +3525,12 @@ msgstr "Kijelző görgetés"
 msgid "dlg"
 msgstr "párbeszédpanel"
 
-#: controlTypes.py:239
+#: controlTypes.py:242
 msgid "document"
 msgstr "dokumentum"
 
 #. "not drop target" doesn't make any sense, so use a custom message.
-#: speech.py:788
+#: speech.py:789
 msgid "done dragging"
 msgstr "A mozgatás befejezve"
 
@@ -2966,11 +3539,11 @@ msgstr "A mozgatás befejezve"
 msgid "down arrow"
 msgstr "lenyíl"
 
-#: controlTypes.py:360
+#: controlTypes.py:375
 msgid "draggable"
 msgstr "mozgatható"
 
-#: controlTypes.py:361
+#: controlTypes.py:376
 msgid "dragging"
 msgstr "Mozgatás"
 
@@ -2978,19 +3551,21 @@ msgstr "Mozgatás"
 msgid "drop down button"
 msgstr "lenyíló gomb"
 
-#: controlTypes.py:288
+#: controlTypes.py:301
 msgid "drop down button grid"
 msgstr "lenyíló gombrács"
 
-#: controlTypes.py:285
+#: controlTypes.py:298
 msgid "drop list"
 msgstr "lenyíló lista"
 
-#: controlTypes.py:362
+#: controlTypes.py:377
 msgid "drop target"
 msgstr "A célobjektum eleresztése"
 
-#: virtualBuffers/__init__.py:1250 NVDAObjects/window/winword.py:421
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+#: virtualBuffers/__init__.py:1276
 msgid "edge of table"
 msgstr "a táblázat széle"
 
@@ -2998,11 +3573,13 @@ msgstr "a táblázat széle"
 msgid "edit"
 msgstr "szerkesztőmező"
 
-#: controlTypes.py:266
+#. Translators: May be reported for an editable text object in a toolbar.
+#. This is deprecated and is not often (if ever) used.
+#: controlTypes.py:273
 msgid "edit bar"
 msgstr "szerkesztősáv"
 
-#: controlTypes.py:358
+#: controlTypes.py:373
 msgid "editable"
 msgstr "szerkeszthető"
 
@@ -3017,7 +3594,7 @@ msgstr "szerkesztőmező"
 msgid "email"
 msgstr "email"
 
-#: controlTypes.py:251 NVDAObjects/window/edit.py:612
+#: controlTypes.py:254 NVDAObjects/window/edit.py:612
 msgid "embedded object"
 msgstr "beágyazott objektum"
 
@@ -3026,7 +3603,7 @@ msgstr "beágyazott objektum"
 msgid "end"
 msgstr "end"
 
-#: controlTypes.py:252
+#: controlTypes.py:255
 msgid "end note"
 msgstr "végjel"
 
@@ -3035,7 +3612,7 @@ msgstr "végjel"
 msgid "enter"
 msgstr "enter"
 
-#: controlTypes.py:289
+#: controlTypes.py:302
 msgid "equation"
 msgstr "egyenlet"
 
@@ -3044,7 +3621,7 @@ msgstr "egyenlet"
 msgid "escape"
 msgstr "escape"
 
-#: controlTypes.py:340
+#: controlTypes.py:353
 msgid "expanded"
 msgstr "Nyitva"
 
@@ -3061,11 +3638,11 @@ msgstr "Női hang  1"
 msgid "female 2"
 msgstr "Női hang  2"
 
-#: controlTypes.py:304
+#: controlTypes.py:317
 msgid "file chooser"
 msgstr "Fájl kiválasztó"
 
-#: controlTypes.py:305
+#: controlTypes.py:318
 msgid "filler"
 msgstr "kitöltő"
 
@@ -3089,47 +3666,47 @@ msgstr ""
 "Az előzőleg beírt szöveg előző előfordulásának keresése a kurzor jelenlegi "
 "pozíciójától."
 
-#: globalCommands.py:901 gui/settingsDialogs.py:1165
+#: globalCommands.py:909 gui/settingsDialogs.py:1204
 msgid "focus"
 msgstr "Kurzor"
 
-#: virtualBuffers/__init__.py:1423
+#: virtualBuffers/__init__.py:1501
 msgid "focus mode"
 msgstr "Interaktív mód"
 
-#: globalCommands.py:806
+#: globalCommands.py:814
 msgid "focus moves navigator object"
 msgstr "Az aktív elem követése a navigátor kurzorral"
 
-#: controlTypes.py:356
+#: controlTypes.py:371
 msgid "focusable"
 msgstr "aktiválható"
 
-#: controlTypes.py:333
+#: controlTypes.py:346
 msgid "focused"
 msgstr "aktív"
 
-#: controlTypes.py:309
+#: controlTypes.py:322
 msgid "font chooser"
 msgstr "betűtípus kiválasztó"
 
-#: controlTypes.py:311
+#: controlTypes.py:324
 msgid "font name"
 msgstr "név"
 
-#: controlTypes.py:312
+#: controlTypes.py:325
 msgid "font size"
 msgstr "méret"
 
-#: controlTypes.py:254
+#: controlTypes.py:257
 msgid "foot note"
 msgstr "lábjegyzet"
 
-#: controlTypes.py:253
+#: controlTypes.py:256
 msgid "footer"
 msgstr "lábléc"
 
-#: controlTypes.py:316
+#: controlTypes.py:329
 msgid "foreground color"
 msgstr "előtérszín"
 
@@ -3152,11 +3729,13 @@ msgstr "keret"
 msgid "fuchsia"
 msgstr "Bíborvörös"
 
-#: core.py:86
+#: core.py:87
 msgid "gesture map File Error"
 msgstr "NVDA parancsfájl hiba"
 
-#: controlTypes.py:255
+#. Translators: Reported for an object which is a glass pane; i.e.
+#. a pane that is guaranteed to be on top of all panes beneath it.
+#: controlTypes.py:260
 msgid "glass pane"
 msgstr "átlátszó terület"
 
@@ -3178,43 +3757,44 @@ msgstr "Zöld"
 msgid "grey"
 msgstr "Szürke"
 
-#: controlTypes.py:290
+#: controlTypes.py:303
 msgid "grip"
 msgstr "rács"
 
-#: controlTypes.py:243
+#: controlTypes.py:246
 msgid "grouping"
 msgstr "elemcsoport"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:402
+#: braille.py:403
 #, python-format
 msgid "h%s"
 msgstr "h%s"
 
-#: controlTypes.py:338
+#: controlTypes.py:351
 msgid "half checked"
 msgstr "félig bejelölve"
 
-#: controlTypes.py:351
+#: controlTypes.py:366
 msgid "has auto complete"
 msgstr "Automatikus kiegészítés"
 
-#: speech.py:1055
+#. Translators: Reported when text contains a comment.
+#: speech.py:1096
 msgid "has comment"
 msgstr "Megjegyzés"
 
 #. Translators: This is presented in Excel when the current cell contains a formula.
-#: NVDAObjects/window/excel.py:190
+#: NVDAObjects/window/excel.py:206
 msgid "has formula"
 msgstr "képletet tartalmaz"
 
-#: controlTypes.py:256
+#: controlTypes.py:261
 msgid "header"
 msgstr "fejléc"
 
-#: controlTypes.py:326
+#: controlTypes.py:339
 msgid "header item"
 msgstr "fejlécelem"
 
@@ -3260,31 +3840,31 @@ msgstr "home"
 msgid "home page"
 msgstr "kezdőoldal"
 
-#: controlTypes.py:291
+#: controlTypes.py:304
 msgid "hot key field"
 msgstr "gyorsgomb mező"
 
-#: controlTypes.py:249
+#: controlTypes.py:252
 msgid "icon"
 msgstr "ikon"
 
-#: controlTypes.py:353
+#: controlTypes.py:368
 msgid "iconified"
 msgstr "ikonnal ellátott"
 
-#: controlTypes.py:257
+#: controlTypes.py:262
 msgid "image map"
 msgstr "képtömb"
 
-#: controlTypes.py:321
+#: controlTypes.py:334
 msgid "indent"
 msgstr "behúzás"
 
-#: controlTypes.py:292
+#: controlTypes.py:305
 msgid "indicator"
 msgstr "jelző"
 
-#: gui/settingsDialogs.py:110
+#: gui/settingsDialogs.py:114
 msgid "info"
 msgstr "információ"
 
@@ -3294,19 +3874,24 @@ msgstr "információ"
 msgid "input help %s"
 msgstr "Bevitelsúgó %s"
 
-#: controlTypes.py:258
+#: controlTypes.py:263
 msgid "input window"
 msgstr "beviteli ablak"
 
-#: gui/settingsDialogs.py:112
+#: gui/settingsDialogs.py:116
 msgid "input/output"
 msgstr "Be- és kimenet"
 
-#: controlTypes.py:349
+#. Translators: The status shown for a newly installed addon before NVDA is restarted.
+#: gui/addonGui.py:128
+msgid "install"
+msgstr "Telepítés"
+
+#: controlTypes.py:364
 msgid "invalid entry"
 msgstr "érvénytelen bejegyzés"
 
-#: controlTypes.py:342
+#: controlTypes.py:355
 msgid "invisible"
 msgstr "láthatatlan"
 
@@ -3314,11 +3899,12 @@ msgstr "láthatatlan"
 msgid "invoke"
 msgstr "hívás"
 
-#: speech.py:1006
+#. Translators: Reported when text is italicized.
+#: speech.py:1026
 msgid "italic"
 msgstr "dőlt"
 
-#: controlTypes.py:259
+#: controlTypes.py:264
 msgid "label"
 msgstr "címke"
 
@@ -3326,16 +3912,16 @@ msgstr "címke"
 msgid "laptop"
 msgstr "Laptop"
 
-#: controlTypes.py:263
+#: controlTypes.py:268
 msgid "layered pane"
 msgstr "réteges terület"
 
-#: NVDAHelper.py:113
+#: NVDAHelper.py:141
 #, python-format
 msgid "layout %s"
 msgstr "%s kiosztás"
 
-#: globalCommands.py:518 globalCommands.py:530 appModules/totalcmd.py:35
+#: globalCommands.py:524 globalCommands.py:536 appModules/totalcmd.py:35
 msgid "left"
 msgstr "bal"
 
@@ -3378,7 +3964,7 @@ msgstr "bal shift"
 msgid "left windows"
 msgstr "bal start gomb"
 
-#: speech.py:804 speech.py:807
+#: speech.py:809 speech.py:812
 #, python-format
 msgid "level %s"
 msgstr "%s. szint"
@@ -3393,11 +3979,13 @@ msgstr "Világoszöld"
 msgid "lime"
 msgstr "Citromsárga"
 
-#: controlTypes.py:310 textInfos/__init__.py:198
+#: controlTypes.py:323 textInfos/__init__.py:198
 msgid "line"
 msgstr "aláhúzás"
 
-#: speech.py:995
+#. Translators: Indicates the line number of the text.
+#. %s will be replaced with the line number.
+#: speech.py:1011
 #, python-format
 msgid "line %s"
 msgstr "%s. sor"
@@ -3407,11 +3995,11 @@ msgstr "%s. sor"
 msgid "line scroll"
 msgstr "Sorgörgetés"
 
-#: controlTypes.py:206 speech.py:1049
+#: controlTypes.py:206 speech.py:1089
 msgid "link"
 msgstr "hivatkozás"
 
-#: controlTypes.py:344
+#: controlTypes.py:357
 msgid "linked"
 msgstr "hivatkozott"
 
@@ -3429,7 +4017,7 @@ msgstr "listaelem"
 msgid "lnk"
 msgstr "hvs"
 
-#: globalCommands.py:883
+#: globalCommands.py:891
 msgid "loads the saved NVDA configuration, overriding current changes"
 msgstr ""
 "Betölti az elmentett beállításokat, a jelenlegibeállítások felülírásával."
@@ -3442,7 +4030,7 @@ msgstr "lista"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:440
+#: braille.py:441
 #, python-format
 msgid "lv %s"
 msgstr "%s lv"
@@ -3465,7 +4053,7 @@ msgstr "Férfi hang 2"
 msgid "media player"
 msgstr "media lejátszó"
 
-#: controlTypes.py:199 controlTypes.py:306
+#: controlTypes.py:199 controlTypes.py:319
 msgid "menu"
 msgstr "menü"
 
@@ -3473,7 +4061,7 @@ msgstr "menü"
 msgid "menu bar"
 msgstr "menüsor"
 
-#: controlTypes.py:287
+#: controlTypes.py:300
 msgid "menu button"
 msgstr "menügomb"
 
@@ -3493,7 +4081,7 @@ msgstr "menü"
 msgid "mnubar"
 msgstr "menüsor"
 
-#: controlTypes.py:350
+#: controlTypes.py:365
 msgid "modal"
 msgstr "modális"
 
@@ -3501,231 +4089,231 @@ msgstr "modális"
 msgid "most"
 msgstr "Majdnem mind"
 
-#: globalCommands.py:340
+#: globalCommands.py:346
 msgid "move focus"
 msgstr "a kurzor áthelyezése"
 
-#: globalCommands.py:331
+#: globalCommands.py:337
 msgid "move to focus"
 msgstr "áthelyezés az aktív elemhez"
 
-#: virtualBuffers/__init__.py:1403
+#: virtualBuffers/__init__.py:1481
 msgid "moves to the next block quote"
 msgstr "A következő idézetblokkhoz lép."
 
-#: virtualBuffers/__init__.py:1387
+#: virtualBuffers/__init__.py:1465
 msgid "moves to the next button"
 msgstr "A következő gombhoz lép"
 
-#: virtualBuffers/__init__.py:1399
+#: virtualBuffers/__init__.py:1477
 msgid "moves to the next check box"
 msgstr "A következő jelölőnégyzethez lép."
 
-#: virtualBuffers/__init__.py:1397
+#: virtualBuffers/__init__.py:1475
 msgid "moves to the next combo box"
 msgstr "A következő kombinált listamezőhöz lép"
 
-#: virtualBuffers/__init__.py:1389
+#: virtualBuffers/__init__.py:1467
 msgid "moves to the next edit field"
 msgstr "A következő szerkesztőmezőhöz lép"
 
-#: virtualBuffers/__init__.py:1409
+#: virtualBuffers/__init__.py:1487
 msgid "moves to the next embedded object"
 msgstr "A következő beágyazott objektumhoz lép."
 
-#: virtualBuffers/__init__.py:1381
+#: virtualBuffers/__init__.py:1459
 msgid "moves to the next form field"
 msgstr "A következő űrlapmezőhöz lép"
 
-#: virtualBuffers/__init__.py:1391
+#: virtualBuffers/__init__.py:1469
 msgid "moves to the next frame"
 msgstr "A következő kerethez lép."
 
-#: virtualBuffers/__init__.py:1401
+#: virtualBuffers/__init__.py:1479
 msgid "moves to the next graphic"
 msgstr "A következő ábrához lép."
 
-#: virtualBuffers/__init__.py:1359
+#: virtualBuffers/__init__.py:1437
 msgid "moves to the next heading"
 msgstr "A következő címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1361
+#: virtualBuffers/__init__.py:1439
 msgid "moves to the next heading at level 1"
 msgstr "A következő, első szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1363
+#: virtualBuffers/__init__.py:1441
 msgid "moves to the next heading at level 2"
 msgstr "A következő második szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1365
+#: virtualBuffers/__init__.py:1443
 msgid "moves to the next heading at level 3"
 msgstr "A következő, harmadik szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1367
+#: virtualBuffers/__init__.py:1445
 msgid "moves to the next heading at level 4"
 msgstr "A következő, negyedik szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1369
+#: virtualBuffers/__init__.py:1447
 msgid "moves to the next heading at level 5"
 msgstr "A következő, ötödik szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1371
+#: virtualBuffers/__init__.py:1449
 msgid "moves to the next heading at level 6"
 msgstr "A következő, hatodik szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1407
+#: virtualBuffers/__init__.py:1485
 msgid "moves to the next landmark"
 msgstr "A következő jelzőponthoz lép"
 
-#: virtualBuffers/__init__.py:1375
+#: virtualBuffers/__init__.py:1453
 msgid "moves to the next link"
 msgstr "A következő hivatkozáshoz lép."
 
-#: virtualBuffers/__init__.py:1383
+#: virtualBuffers/__init__.py:1461
 msgid "moves to the next list"
 msgstr "a következő listához lép"
 
-#: virtualBuffers/__init__.py:1385
+#: virtualBuffers/__init__.py:1463
 msgid "moves to the next list item"
 msgstr "a következő listaelemhez lép"
 
-#: virtualBuffers/__init__.py:1395
+#: virtualBuffers/__init__.py:1473
 msgid "moves to the next radio button"
 msgstr "A következő választógombhoz lép."
 
-#: virtualBuffers/__init__.py:1393
+#: virtualBuffers/__init__.py:1471
 msgid "moves to the next separator"
 msgstr "A következő elválasztóhoz lép."
 
-#: virtualBuffers/__init__.py:1373
+#: virtualBuffers/__init__.py:1451
 msgid "moves to the next table"
 msgstr "A következő táblázathoz lép."
 
-#: virtualBuffers/__init__.py:1268
+#: virtualBuffers/__init__.py:1294
 msgid "moves to the next table column"
 msgstr "A táblázat következő oszlopához lép."
 
-#: virtualBuffers/__init__.py:1260
+#: virtualBuffers/__init__.py:1286
 msgid "moves to the next table row"
 msgstr "A táblázat következő sorához lép."
 
-#: virtualBuffers/__init__.py:1379
+#: virtualBuffers/__init__.py:1457
 msgid "moves to the next unvisited link"
 msgstr "A következő, nem meglátogatott hivatkozáshoz lép"
 
-#: virtualBuffers/__init__.py:1377
+#: virtualBuffers/__init__.py:1455
 msgid "moves to the next visited link"
 msgstr "A következő, meglátogatott hivatkozáshoz lép"
 
-#: virtualBuffers/__init__.py:1404
+#: virtualBuffers/__init__.py:1482
 msgid "moves to the previous block quote"
 msgstr "Az előző idézetblokkhoz lép."
 
-#: virtualBuffers/__init__.py:1388
+#: virtualBuffers/__init__.py:1466
 msgid "moves to the previous button"
 msgstr "Az előző gombhoz lép."
 
-#: virtualBuffers/__init__.py:1400
+#: virtualBuffers/__init__.py:1478
 msgid "moves to the previous check box"
 msgstr "Az előző jelölőnégyzethez lép."
 
-#: virtualBuffers/__init__.py:1398
+#: virtualBuffers/__init__.py:1476
 msgid "moves to the previous combo box"
 msgstr "Az előző kombinált listamezőhöz lép."
 
-#: virtualBuffers/__init__.py:1390
+#: virtualBuffers/__init__.py:1468
 msgid "moves to the previous edit field"
 msgstr "az előző szerkesztőmezőhöz lép."
 
-#: virtualBuffers/__init__.py:1410
+#: virtualBuffers/__init__.py:1488
 msgid "moves to the previous embedded object"
 msgstr "Az előző beágyazott objektumhoz lép."
 
-#: virtualBuffers/__init__.py:1382
+#: virtualBuffers/__init__.py:1460
 msgid "moves to the previous form field"
 msgstr "az előző űrlapmezőhöz lép"
 
-#: virtualBuffers/__init__.py:1392
+#: virtualBuffers/__init__.py:1470
 msgid "moves to the previous frame"
 msgstr "Az előző kerethez lép."
 
-#: virtualBuffers/__init__.py:1402
+#: virtualBuffers/__init__.py:1480
 msgid "moves to the previous graphic"
 msgstr "Az előző ábrához lép."
 
-#: virtualBuffers/__init__.py:1360
+#: virtualBuffers/__init__.py:1438
 msgid "moves to the previous heading"
 msgstr "Az előző címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1362
+#: virtualBuffers/__init__.py:1440
 msgid "moves to the previous heading at level 1"
 msgstr "Az előző, első szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1364
+#: virtualBuffers/__init__.py:1442
 msgid "moves to the previous heading at level 2"
 msgstr "Az előző, második szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1366
+#: virtualBuffers/__init__.py:1444
 msgid "moves to the previous heading at level 3"
 msgstr "Az előző, harmadik szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1368
+#: virtualBuffers/__init__.py:1446
 msgid "moves to the previous heading at level 4"
 msgstr "Az előző, negyedik szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1370
+#: virtualBuffers/__init__.py:1448
 msgid "moves to the previous heading at level 5"
 msgstr "Az előző, ötödik szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1372
+#: virtualBuffers/__init__.py:1450
 msgid "moves to the previous heading at level 6"
 msgstr "Az előző, hatodik szintű címsorhoz lép."
 
-#: virtualBuffers/__init__.py:1408
+#: virtualBuffers/__init__.py:1486
 msgid "moves to the previous landmark"
 msgstr "Az előző jelzőponthoz lép."
 
-#: virtualBuffers/__init__.py:1376
+#: virtualBuffers/__init__.py:1454
 msgid "moves to the previous link"
 msgstr "Az előző hivatkozáshoz lép."
 
-#: virtualBuffers/__init__.py:1384
+#: virtualBuffers/__init__.py:1462
 msgid "moves to the previous list"
 msgstr "az előző listához lép"
 
-#: virtualBuffers/__init__.py:1386
+#: virtualBuffers/__init__.py:1464
 msgid "moves to the previous list item"
 msgstr "az előző listaelemhez lép"
 
-#: virtualBuffers/__init__.py:1396
+#: virtualBuffers/__init__.py:1474
 msgid "moves to the previous radio button"
 msgstr "Az előző választógombhoz lép."
 
-#: virtualBuffers/__init__.py:1394
+#: virtualBuffers/__init__.py:1472
 msgid "moves to the previous separator"
 msgstr "Az előző elválasztóhoz lép."
 
-#: virtualBuffers/__init__.py:1374
+#: virtualBuffers/__init__.py:1452
 msgid "moves to the previous table"
 msgstr "Az előző táblázathoz lép."
 
-#: virtualBuffers/__init__.py:1272
+#: virtualBuffers/__init__.py:1298
 msgid "moves to the previous table column"
 msgstr "A táblázat előző oszlopához lép."
 
-#: virtualBuffers/__init__.py:1264
+#: virtualBuffers/__init__.py:1290
 msgid "moves to the previous table row"
 msgstr "A táblázat előző sorához lép."
 
-#: virtualBuffers/__init__.py:1380
+#: virtualBuffers/__init__.py:1458
 msgid "moves to the previous unvisited link"
 msgstr "Az előző, nem meglátogatott hivatkozáshoz lép"
 
-#: virtualBuffers/__init__.py:1378
+#: virtualBuffers/__init__.py:1456
 msgid "moves to the previous visited link"
 msgstr "Az előző, meglátogatott hivatkozáshoz lép"
 
-#: controlTypes.py:352
+#: controlTypes.py:367
 msgid "multi line"
 msgstr "többsoros"
 
@@ -3748,15 +4336,16 @@ msgstr "Tengerkék"
 msgid "next track"
 msgstr "következő szám"
 
-#: speech.py:1001
+#. Translators: Reported when text is not bolded.
+#: speech.py:1020
 msgid "no bold"
 msgstr "nem félkövér"
 
-#: globalCommands.py:347
+#: globalCommands.py:353
 msgid "no caret"
 msgstr "A kurzor nem található"
 
-#: globalCommands.py:338 globalCommands.py:689
+#: globalCommands.py:344 globalCommands.py:697
 msgid "no focus"
 msgstr "nincs aktív elem"
 
@@ -3765,225 +4354,228 @@ msgstr "nincs aktív elem"
 msgid "no indent"
 msgstr "Nincs igazítás"
 
-#: speech.py:1006
+#. Translators: Reported when text is not italicized.
+#: speech.py:1028
 msgid "no italic"
 msgstr "nem dőlt"
 
-#: virtualBuffers/__init__.py:1405
+#: virtualBuffers/__init__.py:1483
 msgid "no more text after a block of links"
 msgstr "Nincs több szöveg a hivatkozásblokk után"
 
-#: virtualBuffers/__init__.py:1406
+#: virtualBuffers/__init__.py:1484
 msgid "no more text before a block of links"
 msgstr "Nincs több szöveg a hivatkozásblokk előtt"
 
-#: globalCommands.py:274 globalCommands.py:308 globalCommands.py:357
-#: globalCommands.py:371 globalCommands.py:385 globalCommands.py:399
-#: globalCommands.py:413
+#. Translators: Reported when the user tries to perform a command related to the navigator object
+#. but there is no current navigator object.
+#: globalCommands.py:280 globalCommands.py:314 globalCommands.py:363
+#: globalCommands.py:377 globalCommands.py:391 globalCommands.py:405
+#: globalCommands.py:419
 msgid "no navigator object"
 msgstr "Nincs elem a navigátor kurzornál"
 
-#: virtualBuffers/__init__.py:1403
+#: virtualBuffers/__init__.py:1481
 msgid "no next block quote"
 msgstr "Nincs következő idézetblokk"
 
-#: virtualBuffers/__init__.py:1387
+#: virtualBuffers/__init__.py:1465
 msgid "no next button"
 msgstr "nincs következő gomb"
 
-#: virtualBuffers/__init__.py:1399
+#: virtualBuffers/__init__.py:1477
 msgid "no next check box"
 msgstr "Nincs következő jelölőnégyzet"
 
-#: virtualBuffers/__init__.py:1397
+#: virtualBuffers/__init__.py:1475
 msgid "no next combo box"
 msgstr "Nincs következő kombinált listamező"
 
-#: virtualBuffers/__init__.py:1389
+#: virtualBuffers/__init__.py:1467
 msgid "no next edit field"
 msgstr "nincs következő szerkesztőmező"
 
-#: virtualBuffers/__init__.py:1409
+#: virtualBuffers/__init__.py:1487
 msgid "no next embedded object"
 msgstr "Nincs következő beágyazott objektum"
 
-#: virtualBuffers/__init__.py:1381
+#: virtualBuffers/__init__.py:1459
 msgid "no next form field"
 msgstr "nincs következő űrlapmező"
 
-#: virtualBuffers/__init__.py:1391
+#: virtualBuffers/__init__.py:1469
 msgid "no next frame"
 msgstr "Nincs következő keret"
 
-#: virtualBuffers/__init__.py:1401
+#: virtualBuffers/__init__.py:1479
 msgid "no next graphic"
 msgstr "Nincs következő ábra"
 
-#: virtualBuffers/__init__.py:1359
+#: virtualBuffers/__init__.py:1437
 msgid "no next heading"
 msgstr "nincs következő címsor"
 
-#: virtualBuffers/__init__.py:1361
+#: virtualBuffers/__init__.py:1439
 msgid "no next heading at level 1"
 msgstr "Nincs következő, első szintű címsor"
 
-#: virtualBuffers/__init__.py:1363
+#: virtualBuffers/__init__.py:1441
 msgid "no next heading at level 2"
 msgstr "nincs következő, második szintű címsor"
 
-#: virtualBuffers/__init__.py:1365
+#: virtualBuffers/__init__.py:1443
 msgid "no next heading at level 3"
 msgstr "Nincs következő, harmadik szintű címsor."
 
-#: virtualBuffers/__init__.py:1367
+#: virtualBuffers/__init__.py:1445
 msgid "no next heading at level 4"
 msgstr "nincs következő, negyedik szintű címsor"
 
-#: virtualBuffers/__init__.py:1369
+#: virtualBuffers/__init__.py:1447
 msgid "no next heading at level 5"
 msgstr "Nincs következő, ötödik szintű címsor"
 
-#: virtualBuffers/__init__.py:1371
+#: virtualBuffers/__init__.py:1449
 msgid "no next heading at level 6"
 msgstr "Nincs következő, hatodik szintű címsor"
 
-#: virtualBuffers/__init__.py:1407
+#: virtualBuffers/__init__.py:1485
 msgid "no next landmark"
 msgstr "nincs következő jelzőpont"
 
-#: virtualBuffers/__init__.py:1375
+#: virtualBuffers/__init__.py:1453
 msgid "no next link"
 msgstr "nincs következő hivatkozás"
 
-#: virtualBuffers/__init__.py:1383
+#: virtualBuffers/__init__.py:1461
 msgid "no next list"
 msgstr "nincs következő lista"
 
-#: virtualBuffers/__init__.py:1385
+#: virtualBuffers/__init__.py:1463
 msgid "no next list item"
 msgstr "nincs következő listaelem"
 
-#: virtualBuffers/__init__.py:1395
+#: virtualBuffers/__init__.py:1473
 msgid "no next radio button"
 msgstr "nincs következő választógomb"
 
-#: virtualBuffers/__init__.py:1393
+#: virtualBuffers/__init__.py:1471
 msgid "no next separator"
 msgstr "nincs következő elválasztó"
 
-#: virtualBuffers/__init__.py:1373
+#: virtualBuffers/__init__.py:1451
 msgid "no next table"
 msgstr "Nincs következő táblázat"
 
-#: virtualBuffers/__init__.py:1379
+#: virtualBuffers/__init__.py:1457
 msgid "no next unvisited link"
 msgstr "nincs következő, nem meglátogatott hivatkozás"
 
-#: virtualBuffers/__init__.py:1377
+#: virtualBuffers/__init__.py:1455
 msgid "no next visited link"
 msgstr "nincs következő, meglátogatott hivatkozás"
 
-#: virtualBuffers/__init__.py:1404
+#: virtualBuffers/__init__.py:1482
 msgid "no previous block quote"
 msgstr "Nincs előző idézetblokk"
 
-#: virtualBuffers/__init__.py:1388
+#: virtualBuffers/__init__.py:1466
 msgid "no previous button"
 msgstr "nincs előző gomb"
 
-#: virtualBuffers/__init__.py:1400
+#: virtualBuffers/__init__.py:1478
 msgid "no previous check box"
 msgstr "nincs előző jelölőnégyzet"
 
-#: virtualBuffers/__init__.py:1398
+#: virtualBuffers/__init__.py:1476
 msgid "no previous combo box"
 msgstr "nincs előző kombinált listamező"
 
-#: virtualBuffers/__init__.py:1390
+#: virtualBuffers/__init__.py:1468
 msgid "no previous edit field"
 msgstr "nincs előző szerkesztőmező"
 
-#: virtualBuffers/__init__.py:1410
+#: virtualBuffers/__init__.py:1488
 msgid "no previous embedded object"
 msgstr "Nincs előző beágyazott objektum"
 
-#: virtualBuffers/__init__.py:1382
+#: virtualBuffers/__init__.py:1460
 msgid "no previous form field"
 msgstr "nincs előző űrlapmező"
 
-#: virtualBuffers/__init__.py:1392
+#: virtualBuffers/__init__.py:1470
 msgid "no previous frame"
 msgstr "Nincs előző keret"
 
-#: virtualBuffers/__init__.py:1402
+#: virtualBuffers/__init__.py:1480
 msgid "no previous graphic"
 msgstr "nincs előző ábra"
 
-#: virtualBuffers/__init__.py:1360
+#: virtualBuffers/__init__.py:1438
 msgid "no previous heading"
 msgstr "nincs előző címsor"
 
-#: virtualBuffers/__init__.py:1362
+#: virtualBuffers/__init__.py:1440
 msgid "no previous heading at level 1"
 msgstr "nincs előző, első szintű címsor"
 
-#: virtualBuffers/__init__.py:1364
+#: virtualBuffers/__init__.py:1442
 msgid "no previous heading at level 2"
 msgstr "Nincs előző, második szintű címsor"
 
-#: virtualBuffers/__init__.py:1366
+#: virtualBuffers/__init__.py:1444
 msgid "no previous heading at level 3"
 msgstr "Nincs előző, harmadik szintű címsor"
 
-#: virtualBuffers/__init__.py:1368
+#: virtualBuffers/__init__.py:1446
 msgid "no previous heading at level 4"
 msgstr "Nincs előző, negyedik szintű címsor"
 
-#: virtualBuffers/__init__.py:1370
+#: virtualBuffers/__init__.py:1448
 msgid "no previous heading at level 5"
 msgstr "Nincs előző, ötödik szintű címsor"
 
-#: virtualBuffers/__init__.py:1372
+#: virtualBuffers/__init__.py:1450
 msgid "no previous heading at level 6"
 msgstr "Nincs előző, hatodik szintű címsor"
 
-#: virtualBuffers/__init__.py:1408
+#: virtualBuffers/__init__.py:1486
 msgid "no previous landmark"
 msgstr "nincs előző jelzőpont"
 
-#: virtualBuffers/__init__.py:1376
+#: virtualBuffers/__init__.py:1454
 msgid "no previous link"
 msgstr "nincs előző hivatkozás"
 
-#: virtualBuffers/__init__.py:1384
+#: virtualBuffers/__init__.py:1462
 msgid "no previous list"
 msgstr "nincs előző lista"
 
-#: virtualBuffers/__init__.py:1386
+#: virtualBuffers/__init__.py:1464
 msgid "no previous list item"
 msgstr "nincs előző listaelem"
 
-#: virtualBuffers/__init__.py:1396
+#: virtualBuffers/__init__.py:1474
 msgid "no previous radio button"
 msgstr "nincs előző választógomb"
 
-#: virtualBuffers/__init__.py:1394
+#: virtualBuffers/__init__.py:1472
 msgid "no previous separator"
 msgstr "nincs előző elválasztó"
 
-#: virtualBuffers/__init__.py:1374
+#: virtualBuffers/__init__.py:1452
 msgid "no previous table"
 msgstr "nincs előző táblázat"
 
-#: virtualBuffers/__init__.py:1380
+#: virtualBuffers/__init__.py:1458
 msgid "no previous unvisited link"
 msgstr "nincs előző, nem meglátogatott hivatkozás"
 
-#: virtualBuffers/__init__.py:1378
+#: virtualBuffers/__init__.py:1456
 msgid "no previous visited link"
 msgstr "nincs előző, meglátogatott hivatkozás"
 
-#: globalCommands.py:766
+#: globalCommands.py:774
 msgid "no progress bar updates"
 msgstr "Nincs folyamatjelző változás"
 
@@ -3991,32 +4583,49 @@ msgstr "Nincs folyamatjelző változás"
 msgid "no selection"
 msgstr "nincs kijelölés"
 
-#: speech.py:1011
+#. Translators: Reported when text is formatted without strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+#: speech.py:1038
 msgid "no strikethrough"
 msgstr "nem sorkizárt"
 
-#: globalCommands.py:819
+#: globalCommands.py:827
 msgid "no system battery"
 msgstr "Nincs akkumulátor."
 
-#: globalCommands.py:734
+#: globalCommands.py:742
 msgid "no title"
 msgstr "Nincs cím"
 
-#: characterProcessing.py:127 synthDrivers/_espeak.py:309
+#: characterProcessing.py:127 synthDrivers/_espeak.py:311
 msgid "none"
 msgstr "nincs"
 
-#: braille.py:423 speech.py:790
+#. Translators: Indicates that a particular state on an object is negated.
+#. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
+#. but this still might be used in some other cases.
+#. %s will be replaced with the negated state.
+#: braille.py:424 speech.py:795
 #, python-format
 msgid "not %s"
 msgstr "nincs %s"
 
-#: speech.py:1016
+#. Translators: This is presented when a checkbox is not checked.
+#: controlTypes.py:387
+msgid "not checked"
+msgstr "Nincs bejelölve"
+
+#. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
+#: controlTypes.py:385
+msgid "not selected"
+msgstr "Nincs kijelölve"
+
+#. Translators: Reported when text is not underlined.
+#: speech.py:1046
 msgid "not underlined"
 msgstr "nincs aláhúzva"
 
-#: controlTypes.py:260
+#: controlTypes.py:265
 msgid "note"
 msgstr "megjegyzés"
 
@@ -4100,20 +4709,23 @@ msgstr "numerikus Csillag"
 msgid "numpad plus"
 msgstr "Numerikus plusz"
 
-#: globalCommands.py:229
+#: globalCommands.py:233
 msgid "object has no location"
 msgstr "az elem helye nem található"
 
-#: globalCommands.py:44 globalCommands.py:176 globalCommands.py:186
-#: globalCommands.py:196 globalCommands.py:591 globalCommands.py:720
-#: globalCommands.py:781 globalCommands.py:791 globalCommands.py:801
-#: keyboardHandler.py:300 synthSettingsRing.py:74 appModules/winamp.py:79
-#: appModules/winamp.py:89 gui/settingsDialogs.py:694
-#: gui/settingsDialogs.py:1029 virtualBuffers/__init__.py:788
+#. Translators: An option for progress bar output in the Object Presentation dialog
+#. which disables reporting of progress bars.
+#. See Progress bar output in the Object Presentation Settings section of the User Guide.
+#: globalCommands.py:44 globalCommands.py:176 globalCommands.py:187
+#: globalCommands.py:197 globalCommands.py:597 globalCommands.py:728
+#: globalCommands.py:789 globalCommands.py:799 globalCommands.py:809
+#: keyboardHandler.py:300 synthSettingsRing.py:74 appModules/winamp.py:80
+#: appModules/winamp.py:90 gui/settingsDialogs.py:724
+#: gui/settingsDialogs.py:1068 virtualBuffers/__init__.py:810
 msgid "off"
 msgstr "kikapcsolva"
 
-#: controlTypes.py:354
+#: controlTypes.py:369
 msgid "off screen"
 msgstr "A képernyőn kívül"
 
@@ -4123,11 +4735,11 @@ msgstr "A képernyőn kívül"
 msgid "olive"
 msgstr "Sárgászöld"
 
-#: globalCommands.py:44 globalCommands.py:179 globalCommands.py:189
-#: globalCommands.py:199 globalCommands.py:723 globalCommands.py:784
-#: globalCommands.py:794 globalCommands.py:804 keyboardHandler.py:300
-#: synthSettingsRing.py:74 appModules/winamp.py:77 appModules/winamp.py:87
-#: gui/settingsDialogs.py:1029 virtualBuffers/__init__.py:788
+#: globalCommands.py:44 globalCommands.py:179 globalCommands.py:190
+#: globalCommands.py:200 globalCommands.py:731 globalCommands.py:792
+#: globalCommands.py:802 globalCommands.py:812 keyboardHandler.py:300
+#: synthSettingsRing.py:74 appModules/winamp.py:78 appModules/winamp.py:88
+#: gui/settingsDialogs.py:1068 virtualBuffers/__init__.py:810
 msgid "on"
 msgstr "bekapcsolva"
 
@@ -4135,11 +4747,11 @@ msgstr "bekapcsolva"
 #. The {backgroundColor} text will be replaced by the background color.
 #. For example, if the text is white on a black background,
 #. the output of this message in English would be "on black".
-#: speech.py:990
+#: speech.py:1004
 msgid "on {backgroundColor}"
 msgstr "{backgroundColor} háttéren"
 
-#: controlTypes.py:302
+#: controlTypes.py:315
 msgid "option pane"
 msgstr "beállítások"
 
@@ -4149,24 +4761,27 @@ msgstr "beállítások"
 msgid "orange"
 msgstr "Narancssárga"
 
-#: speech.py:929 speech.py:1049
+#: speech.py:936 speech.py:1089
 #, python-format
 msgid "out of %s"
 msgstr "%s vége"
 
-#: speech.py:1064
+#. Translators: Reported when moving out of text containing a spelling error.
+#: speech.py:1107
 msgid "out of spelling error"
 msgstr "A hibás szón kívül"
 
-#: speech.py:1082
+#: speech.py:1125
 msgid "out of table"
 msgstr "a táblázat vége"
 
-#: controlTypes.py:261
+#: controlTypes.py:266
 msgid "page"
 msgstr "oldal"
 
-#: speech.py:953
+#. Translators: Indicates the page number in a document.
+#. %s will be replaced with the page number.
+#: speech.py:962
 #, python-format
 msgid "page %s"
 msgstr "%s. oldal"
@@ -4185,7 +4800,7 @@ msgstr "page up"
 msgid "pane"
 msgstr "terület"
 
-#: controlTypes.py:307
+#: controlTypes.py:320
 msgid "panel"
 msgstr "panel"
 
@@ -4193,13 +4808,13 @@ msgstr "panel"
 msgid "paragraph"
 msgstr "bekezdés"
 
-#: controlTypes.py:308
+#: controlTypes.py:321
 msgid "password edit"
 msgstr "jelszó szerkesztőmező"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:632
+#: gui/settingsDialogs.py:659
 msgid "play audio coordinates when mouse moves"
 msgstr "Az egérmutató mozgásának jelzése hangjelzéssel"
 
@@ -4208,7 +4823,7 @@ msgstr "Az egérmutató mozgásának jelzése hangjelzéssel"
 msgid "play pause"
 msgstr "lejátszás/szünet"
 
-#: controlTypes.py:336
+#: controlTypes.py:349
 msgid "pressed"
 msgstr "lenyomva"
 
@@ -4226,11 +4841,11 @@ msgstr "Print screen"
 msgid "progress bar"
 msgstr "folyamatjelző"
 
-#: controlTypes.py:244
+#: controlTypes.py:247
 msgid "property page"
 msgstr "tulajdonságlap"
 
-#: controlTypes.py:346
+#: controlTypes.py:359
 msgid "protected"
 msgstr "védett"
 
@@ -4240,7 +4855,7 @@ msgstr "Lila"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:445
+#: braille.py:446
 #, python-format
 msgid "r%s"
 msgstr "s%s"
@@ -4249,7 +4864,7 @@ msgstr "s%s"
 msgid "radio button"
 msgstr "választógomb"
 
-#: controlTypes.py:262
+#: controlTypes.py:267
 msgid "radio menu item"
 msgstr "választható menüelem"
 
@@ -4259,11 +4874,11 @@ msgstr "választható menüelem"
 msgid "rbtn"
 msgstr "választógomb"
 
-#: controlTypes.py:339
+#: controlTypes.py:352
 msgid "read only"
 msgstr "csak olvasható"
 
-#: globalCommands.py:640
+#: globalCommands.py:648
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
@@ -4271,14 +4886,14 @@ msgstr ""
 "Az áttekintő kurzor pozíciójától a szöveg végéig olvas, az áttekintőkurzor "
 "mozgatásával."
 
-#: globalCommands.py:644
+#: globalCommands.py:652
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
 "A kurzor jelenlegi pozíciójától a szöveg végéig olvas, a kurzor mozgatásával"
 
-#: globalCommands.py:716
+#: globalCommands.py:724
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
 "Bemondja az aktív alkalmazás állapotsorát, a navigátor kurzor áthelyezésével."
@@ -4292,7 +4907,7 @@ msgstr "Érkezett: %s"
 msgid "red"
 msgstr "Piros"
 
-#: controlTypes.py:264
+#: controlTypes.py:269
 msgid "redundant object"
 msgstr "ismétlődő elem"
 
@@ -4301,33 +4916,38 @@ msgstr "ismétlődő elem"
 msgid "refresh"
 msgstr "frissítés"
 
-#: globalCommands.py:786
+#. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
+#: gui/addonGui.py:131
+msgid "remove"
+msgstr "eltávolítás"
+
+#: globalCommands.py:794
 msgid "report dynamic content changes"
 msgstr "Frissülő tartalom jelzése"
 
-#: globalCommands.py:828
+#: globalCommands.py:836
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Akkumulátor használatakor bemondja az akkumulátor töltöttségi szintjét, és a "
 "hátralévő időt."
 
-#: globalCommands.py:690
+#: globalCommands.py:698
 msgid "reports the object with focus"
 msgstr "Bemondja az aktív elem nevét."
 
-#: controlTypes.py:347
+#: controlTypes.py:360
 msgid "required"
 msgstr "szükséges"
 
-#: globalCommands.py:898 gui/settingsDialogs.py:1165
+#: globalCommands.py:906 gui/settingsDialogs.py:1204
 msgid "review"
 msgstr "Áttekintő kurzor"
 
-#: controlTypes.py:268
+#: controlTypes.py:275
 msgid "rich edit"
 msgstr "szerkesztőmező"
 
-#: globalCommands.py:565 globalCommands.py:582 appModules/totalcmd.py:37
+#: globalCommands.py:571 globalCommands.py:588 appModules/totalcmd.py:37
 msgid "right"
 msgstr "jobb"
 
@@ -4375,7 +4995,7 @@ msgstr "jobb start gomb"
 msgid "ro"
 msgstr "ro"
 
-#: controlTypes.py:265
+#: controlTypes.py:270
 msgid "root pane"
 msgstr "gyökér terület"
 
@@ -4383,7 +5003,7 @@ msgstr "gyökér terület"
 msgid "row"
 msgstr "sor"
 
-#: speech.py:820 speech.py:1100
+#: speech.py:825 speech.py:1143
 #, python-format
 msgid "row %s"
 msgstr "sor %s."
@@ -4392,9 +5012,14 @@ msgstr "sor %s."
 msgid "row header"
 msgstr "sorfejléc"
 
-#: controlTypes.py:269
+#: controlTypes.py:276
 msgid "ruler"
 msgstr "vonalzó"
+
+#. Translators: The status shown for an addon when its currently running in NVDA.
+#: gui/addonGui.py:134
+msgid "running"
+msgstr "fut"
 
 #: controlTypes.py:213
 msgid "scroll bar"
@@ -4405,7 +5030,7 @@ msgstr "gördítősáv"
 msgid "scroll lock"
 msgstr "scroll lock"
 
-#: controlTypes.py:270
+#: controlTypes.py:277
 msgid "scroll pane"
 msgstr "gördítősáv"
 
@@ -4419,7 +5044,7 @@ msgstr "keresés"
 msgid "search page"
 msgstr "keresőoldal"
 
-#: controlTypes.py:271
+#: controlTypes.py:278
 msgid "section"
 msgstr "bekezdés"
 
@@ -4428,17 +5053,17 @@ msgstr "bekezdés"
 msgid "sel"
 msgstr "sel"
 
-#: controlTypes.py:355
+#: controlTypes.py:370
 msgid "selectable"
 msgstr "kijelölhető"
 
-#: controlTypes.py:334
+#: controlTypes.py:347
 msgid "selected"
 msgstr "kijelölve"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401 globalCommands.py:127 speech.py:306 speech.py:498
-#: speech.py:513 virtualBuffers/__init__.py:695
+#: speech.py:513 virtualBuffers/__init__.py:717
 #, python-format
 msgid "selected %s"
 msgstr "%s Kijelölve"
@@ -4462,7 +5087,7 @@ msgstr "Elküldve: %s"
 msgid "separator"
 msgstr "elválasztó"
 
-#: controlTypes.py:272
+#: controlTypes.py:279
 msgid "shape"
 msgstr "forma"
 
@@ -4471,11 +5096,11 @@ msgstr "forma"
 msgid "shift"
 msgstr "shift"
 
-#: virtualBuffers/__init__.py:1406
+#: virtualBuffers/__init__.py:1484
 msgid "skips backward past a block of links"
 msgstr "visszafelé Átugrik egy hivatkozásblokkot"
 
-#: virtualBuffers/__init__.py:1405
+#: virtualBuffers/__init__.py:1483
 msgid "skips forward past a block of links"
 msgstr "Átugrik egy hivatkozásblokkot"
 
@@ -4487,19 +5112,19 @@ msgstr "csúszka"
 msgid "some"
 msgstr "Néhány"
 
-#: controlTypes.py:363
+#: controlTypes.py:378
 msgid "sorted"
 msgstr "rendezve"
 
-#: controlTypes.py:364
+#: controlTypes.py:379
 msgid "sorted ascending"
 msgstr "Növekvő rendezés"
 
-#: controlTypes.py:365
+#: controlTypes.py:380
 msgid "sorted descending"
 msgstr "Csökkenő rendezés"
 
-#: controlTypes.py:294
+#: controlTypes.py:307
 msgid "sound"
 msgstr "hang"
 
@@ -4508,44 +5133,46 @@ msgstr "hang"
 msgid "space"
 msgstr "szóköz"
 
-#: globalCommands.py:201
+#: globalCommands.py:202
 msgid "speak command keys"
 msgstr "parancsbillentyűk bemondása"
 
-#: globalCommands.py:769
+#: globalCommands.py:777
 msgid "speak progress bar updates"
 msgstr "A folyamatjelzők változásának jelzése beszéddel"
 
-#: globalCommands.py:181
+#. Translators: The message announced when toggling the speak typed characters keyboard setting.
+#: globalCommands.py:182
 msgid "speak typed characters"
 msgstr "beírt karakterek bemondása gépeléskor"
 
-#: globalCommands.py:191
+#: globalCommands.py:192
 msgid "speak typed words"
 msgstr "beírt szavak bemondása gépeléskor"
 
-#: globalCommands.py:749
+#: globalCommands.py:757
 msgid "speaks the current foreground object"
 msgstr "Bemondja az előtérben lévő elem nevét."
 
-#: globalCommands.py:597
+#: globalCommands.py:605
 #, python-format
 msgid "speech mode %s"
 msgstr "beszédmód: %s"
 
-#: speech.py:1062
+#. Translators: Reported when text contains a spelling error.
+#: speech.py:1104
 msgid "spelling error"
 msgstr "Hibás szó"
 
-#: controlTypes.py:293
+#: controlTypes.py:306
 msgid "spin button"
 msgstr "léptethető gomb"
 
-#: controlTypes.py:286
+#: controlTypes.py:299
 msgid "split button"
 msgstr "osztott gomb"
 
-#: controlTypes.py:273
+#: controlTypes.py:280
 msgid "split pane"
 msgstr "osztott terület"
 
@@ -4558,20 +5185,25 @@ msgstr "állapotsor"
 msgid "stop"
 msgstr "leállítás"
 
-#: speech.py:1011
+#. Translators: Reported when text is formatted with strikethrough.
+#. See http://en.wikipedia.org/wiki/Strikethrough
+#: speech.py:1035
 msgid "strikethrough"
 msgstr "sorkizárt"
 
-#: controlTypes.py:320
+#: controlTypes.py:333
 msgid "style"
 msgstr "stílus"
 
-#: speech.py:960
+#. Translators: Indicates the style of text.
+#. A style is a collection of formatting settings and depends on the application.
+#. %s will be replaced with the name of the style.
+#: speech.py:972
 #, python-format
 msgid "style %s"
 msgstr "%s stílus"
 
-#: controlTypes.py:345
+#: controlTypes.py:358
 msgid "subMenu"
 msgstr "almenü"
 
@@ -4585,15 +5217,20 @@ msgstr "tárgy: %s"
 msgid "submnu"
 msgstr "almenü"
 
-#: controlTypes.py:319 speech.py:1025
+#. Translators: Reported for subscript text.
+#: controlTypes.py:332 speech.py:1057
 msgid "subscript"
 msgstr "alsó index"
 
-#: controlTypes.py:318 speech.py:1023
+#. Translators: Reported for superscript text.
+#: controlTypes.py:331 speech.py:1054
 msgid "superscript"
 msgstr "felső index"
 
-#: globalCommands.py:213
+#. Translators: Reported when the user cycles through speech symbol levels
+#. which determine what symbols are spoken.
+#. %s will be replaced with the symbol level; e.g. none, some, most and all.
+#: globalCommands.py:217
 #, python-format
 msgid "symbol level %s"
 msgstr "Írásjelszint: %s"
@@ -4611,24 +5248,25 @@ msgstr "fül"
 msgid "table"
 msgstr "táblázat"
 
-#: controlTypes.py:237
+#: controlTypes.py:240
 msgid "table body"
 msgstr "táblázattörzs"
 
-#: controlTypes.py:238
+#: controlTypes.py:241
 msgid "table footer"
 msgstr "táblázat lábléc"
 
-#: controlTypes.py:236
+#: controlTypes.py:239
 msgid "table header"
 msgstr "táblázat fejléc "
 
-#: speech.py:1091
+#: speech.py:1134
 #, python-format
 msgid "table with %s columns and %s rows"
 msgstr "%s oszlopból és %s sorból álló táblázat"
 
-#: globalCommands.py:595
+#. Translators: The normal speech mode; i.e. NVDA will talk as normal.
+#: globalCommands.py:603
 msgid "talk"
 msgstr "beszéd"
 
@@ -4644,11 +5282,14 @@ msgstr "tab"
 msgid "teal"
 msgstr "pávakék"
 
-#: controlTypes.py:275
+#. Translators: Reported for an object that forms part of a menu system
+#. but which can be undocked from or torn off the menu system
+#. to exist as a separate window.
+#: controlTypes.py:288
 msgid "tear off menu"
 msgstr "lebegő menü"
 
-#: controlTypes.py:267
+#: controlTypes.py:274
 msgid "terminal"
 msgstr "parancssor"
 
@@ -4661,16 +5302,16 @@ msgstr "szöveg"
 msgid "text \"%s\" not found"
 msgstr "a keresett szöveg \"%s\" nem található."
 
-#: controlTypes.py:276
+#: controlTypes.py:289
 msgid "text frame"
 msgstr "szövegkeret"
 
 #. Translators: This is the name of a combobox in the mouse settings dialog.
-#: gui/settingsDialogs.py:617
+#: gui/settingsDialogs.py:644
 msgid "text reporting unit"
 msgstr "Szövegbemondási egység"
 
-#: controlTypes.py:327
+#: controlTypes.py:340
 msgid "thumb control"
 msgstr "Lapvezérlő"
 
@@ -4678,7 +5319,7 @@ msgstr "Lapvezérlő"
 msgid "title bar"
 msgstr "címsor"
 
-#: controlTypes.py:277
+#: controlTypes.py:290
 msgid "toggle button"
 msgstr "többállapotú gomb"
 
@@ -4690,7 +5331,7 @@ msgstr "eszköztár"
 msgid "tool tip"
 msgstr "eszköztipp"
 
-#: globalCommands.py:432 globalCommands.py:444 globalCommands.py:486
+#: globalCommands.py:438 globalCommands.py:450 globalCommands.py:492
 msgid "top"
 msgstr "eleje"
 
@@ -4698,7 +5339,7 @@ msgstr "eleje"
 msgid "tree view"
 msgstr "fanézet"
 
-#: controlTypes.py:296
+#: controlTypes.py:309
 msgid "tree view button"
 msgstr "körvonalgomb"
 
@@ -4712,15 +5353,16 @@ msgstr "fanézetelem"
 msgid "tv"
 msgstr "fanézet"
 
-#: controlTypes.py:332
+#: controlTypes.py:345
 msgid "unavailable"
 msgstr "nem érhető el"
 
-#: controlTypes.py:315
+#: controlTypes.py:328
 msgid "underline"
 msgstr "aláhúzás"
 
-#: speech.py:1016
+#. Translators: Reported when text is underlined.
+#: speech.py:1044
 msgid "underlined"
 msgstr "aláhúzott"
 
@@ -4732,7 +5374,7 @@ msgstr "ismeretlen"
 msgid "unknown color"
 msgstr "ismeretlen szín"
 
-#: NVDAHelper.py:112
+#: NVDAHelper.py:140
 msgid "unknown layout"
 msgstr "ismeretlen Kiosztás"
 
@@ -4752,21 +5394,24 @@ msgstr "%s. Nincs kijelölve"
 msgid "up arrow"
 msgstr "Felnyíl"
 
-#: virtualBuffers/__init__.py:789
+#: virtualBuffers/__init__.py:811
 #, python-format
 msgid "use screen layout %s"
 msgstr "a képernyőelrendezés használata %s"
 
-#: controlTypes.py:274
+#. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
+#. which represents the portion of the entire data that the user can see.
+#. As the user manipulates the scroll bars, the contents of the view port can change.
+#: controlTypes.py:284
 msgid "view port"
 msgstr "nézet"
 
-#: controlTypes.py:343
+#: controlTypes.py:356
 msgid "visited"
 msgstr "meglátogatott"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:408
+#: braille.py:409
 msgid "vlnk"
 msgstr "mhvs"
 
@@ -4784,7 +5429,7 @@ msgstr "hangosítás"
 msgid "white"
 msgstr "Fehér"
 
-#: controlTypes.py:295
+#: controlTypes.py:308
 msgid "white space"
 msgstr "üres terület"
 
@@ -4797,23 +5442,23 @@ msgstr "ablak"
 msgid "windows"
 msgstr "Start gomb"
 
-#: speech.py:834
+#: speech.py:841
 #, python-format
 msgid "with %s columns"
 msgstr "%s oszloppal"
 
 #. List.
-#: speech.py:903
+#: speech.py:910
 #, python-format
 msgid "with %s items"
 msgstr "%s elemmel"
 
-#: speech.py:836
+#: speech.py:843
 #, python-format
 msgid "with %s rows"
 msgstr "%s sorral"
 
-#: speech.py:832
+#: speech.py:839
 #, python-format
 msgid "with %s rows and %s columns"
 msgstr "%s sorral és %s oszloppal"
@@ -4826,7 +5471,7 @@ msgstr "szó"
 msgid "yellow"
 msgstr "Sárga"
 
-#: versionInfo.py:44
+#: versionInfo.py:45
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -4876,3 +5521,34 @@ msgstr ""
 "Ha hasznosnak ítéli a programot és szeretné, hogy továbbra is elérhető "
 "legyen, adományozhat az NV Access-nek. Ezt a NVDA menü adományozás "
 "menüpontjával érheti el."
+
+#. Translators: message shown in the Addon Information dialog.
+#: gui/addonGui.py:176
+msgid ""
+"{summary} ({name})\n"
+"Version: {version}\n"
+"Author: {author}\n"
+"Description: {description}\n"
+msgstr ""
+"{summary} ({name})\n"
+"Verzió: {version}\n"
+"Készítő: {author}\n"
+"Leírás: {description}\n"
+
+#~ msgid "Create an &Autorun file"
+#~ msgstr "&Autorun fájl létrehozása"
+
+#~ msgid "&Add..."
+#~ msgstr "&Hozzáadás"
+
+#~ msgid "Key Command quick reference"
+#~ msgstr "billentyűparancsok listája"
+
+#~ msgid "User guide"
+#~ msgstr "Felhasználói útmutató"
+
+#~ msgid "Web site"
+#~ msgstr "Honlap"
+
+#~ msgid "Portable options"
+#~ msgstr "Hordozható beállítások"

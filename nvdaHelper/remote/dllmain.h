@@ -20,5 +20,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 extern HINSTANCE dllHandle;
 extern wchar_t dllDirectory[MAX_PATH];
+extern bool isProcessExiting;
 
 #endif

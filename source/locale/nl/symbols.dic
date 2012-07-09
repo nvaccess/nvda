@@ -1,88 +1,103 @@
 ﻿#locale/nl/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA contributors.
+#Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\,(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	punt
-! sentence ending	uitroepteken
-? sentence ending	vraagteken
-; phrase ending	puntcomma
-: phrase ending	dubbele punt
-decimal point	
-
-in-word '	apostrofe
+. sentence ending	punt	all	always
+! sentence ending	uitroepteken	all	always
+? sentence ending	vraagteken	all	always
+; phrase ending	puntcomma	most	always
+: phrase ending	dubbele punt	most	always
+decimal point		none	always
+in-word '	apostrofe	all	norep
+negative number	minus	none	norep
 
 # Whitespace
-\0	leeg
+\0	leeg	char	# null
 \t	tab
-\n	regeleinde
-\f	pagina-einde
-\r	nieuwe regel
- 	spatie
- 	spatie # no break space
+\n	nieuwe regel	char
+\f	pagina-einde	none
+\r	nieuwe regel	char
+ 	spatie	char
+ 	spatie	char	# no-break space
 
 # Standard punctuation/symbols
-!	uitroepteken
-"	aanhalingsteken
-\#	hekje
-$	dollar all norep
-£	pond all norep
-€	euro all norep
+!	uitroepteken	all
+"	aanhalingsteken	most
+\#	hekje	most
+$	dollar	all	norep
+£	pond	all	norep
+€	euro	all	norep
 ¢	cent	all	norep
-¥	Yen	all	norep
-%	procent some
-&	en some
-'	apostrofe all
-(	haakje openen
-)	haakje sluiten
-*	ster
-+	plus
-,	comma
--	streep
-.	punt
-/	slash
-:	dubbele punt
-;	puntcomma
-<	kleiner dan
->	groter dan
-=	geluijk aan
-?	vraagteken
-@	apestaartje
-[	rechte haak openen
-]	rechte haak sluiten
-\\	backslash
-^	dakje
-_	lijn
-`	accent grave
-{	accolade openen
-}	accolade sluiten
-|	pijp
-~	tilde
+¥	yen	all	norep
+%	procent	some
+&	en	some
+'	apostrofe	all
+(	haakje openen	most
+)	haakje sluiten	most
+*	ster	most
++	plus	most
+,	comma	all	always
+-	min	most
+.	punt	some
+/	slash	some
+:	dubbele punt	most	norep
+;	puntcomma	most
+<	kleiner dan	most
+>	groter dan	most
+=	gelijk aan	most
+?	vraagteken	all
+@	at	some
+[	rechte haak openen	most
+]	rechte haak sluiten	most
+\\	backslash	most
+^	dakje	most
+_	onderstreping	most
+`	accent grave	most
+{	accolade openen	most
+}	accolade sluiten	most
+|	pijp	most
+~	tilde	most
 
 # Other characters
-•	opsommingsteken
-…	punt punt punt
-	opsommingsteken
-“	dubbel aanhalingsteken openen
-”	dubbel aanhalingsteken sluiten
-‘	enkel aanhalingsteken openen
-’	enkel aanhalingsteken sluiten
-–	en streepje
-—	em streepje
-●	cirkel
-¨	diaeresis
-‎	links naar rechts teken
-‏	rechts naar links teken
+•	opsommingsteken	some
+…	punjt punt punt	all	always
+...	punt punt punt	all	always
+	opsimmingsteken	some
+“	aanhalingsteken openen	most
+”	aanhalingsteken sluiten	most
+‘	enkel aanhalingsteken openen	most
+’	enkel aanhalingsteken sluiten	most
+–	en streepje	most
+—	em streepje	most
+●	cirkel	most
+¨	diaeresis	most
+‎	links naar rechts markering	char
+‏	rechts naar links markering	char
 ■	zwart vierkant	some
 ➔	pijl naar rechts	some
-§	paragraaf	all
+§	sectie	all
 °	graden	some
-«	dubbel naar links wijzend haakje
-»	dubbel naar rechts wijzend haakje
+«	double left pointing angle bracket
+»	double right pointing angle bracket
 µ	micro	some
 ¹	superscript 1	some
 ²	superscript 2	some
@@ -92,7 +107,7 @@ _	lijn
 ©	Copyright	some
 ±	Plus of Minus	most
 ×	maal	most
-÷	gedeeld door	most
-→	pijl rechts	some
+÷	delen door	most
+→	pijl naar rechts	some
 ✓	vinkje	some
 ✔	vinkje	some

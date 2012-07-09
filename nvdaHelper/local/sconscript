@@ -86,6 +86,7 @@ localLib=env.SharedLibrary(
 		"textUtils.cpp",
 	],
 	LIBS=[
+		"advapi32.lib",
 		"user32",
 		"usp10",
 		"ole32",

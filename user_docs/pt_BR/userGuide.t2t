@@ -30,9 +30,10 @@ Suas características mais notáveis são:
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superior) ;
 - Suporte para o Prompt de comando do Windows e aplicações de console.
 -
+
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 36 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 37 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -61,48 +62,60 @@ Para mais detalhes, pode [ver a licença completa. http://www.gnu.org/licenses/o
 - Cerca de 50 MB de espaço livre.
 -
 
-+ Obttendo o NVDA +
++ Obttendo e Instalando o NVDA +
 Se não tem uma cópia do NVDA, pode baixá-la em [www.nvda-project.org NVDA_URL].
 
 Entre na seção download e encontrará o link para baixar a última versão deste leitor de telas. 
-Atualmente, o NVDA é distribuído em duas formas.
-A primeira é um Instalador que falará durante sua instalação podendo ser executado em qualquer altura a partir do Menu Iniciar.
-A outra é um arquivo comprimido e auto-extraível que contém a versão completa e portátil deste programa, que pode executar a partir de qualquer lugar, incluindo-se os dispositivos USB ou CD.
-Para acessar as telas de logon do Windows, Conta de Controle do Utilizador (UAC) e outras telas de segurança do Windows, bem como aplicações executadas como administrador no Windows Vista e superiores, terá que instalar o NVDA em seu sistema utilizando o instalador.
-Essas telas não podem ser acessadas através da utilização de uma cópia do NVDA portátil.
 
-+ Instalando o NVDA +
+Ao executar o arquivo baixado, será iniciada uma cópia temporária do NVDA, e também lhe será perguntado se deseja instalá-lo, criar uma cópia portátil ou apenas continuar usando a cópia temporária.
 
-++ O Instalador do NVDA ++
+Caso pretenda usar constantemente o NVDA neste computador, irá então escolher instalá-lo.
+O NVDA Instalado lhe permitirá ter recursos adicionais, tais como iniciá-lo automaticamente após o logon, a capacidade de ler a tela de Logon e outras telas seguras do Windows (o que não pode ser feito através de cópias portáteis e/ou temporárias) e a criação de atalhos no menu iniciar e na área de trabalho.
+As cópias instaladas também permitem elas próprias criar uma cópia portátil a qualquer momento.
 
-Se já tem o instalador do NVDA, pressione simplesmente Enter ou um duplo clique esquerdo no arquivo e o mesmo iniciará.
+Se você deseja levar o NVDA com você em um dispositivo USB ou em outros dispositivos de mídia portáteis, então deverá escolher criar uma cópia portátil.
+As cópias portáteis também oferecem elas próprias a capacidade de ser instaladas em qualquer computador em um momento posterior.
+Todavia, se pretende copiar o NVDA para dentro de dispositivos de mídia somente leitura, como cds, você deve apenas copiar o pacote baixado.
+A execução de cópias portáteis diretamente de dispositivos somente leitura não é suportada até o momento.
 
-Enquanto a instalação estiver sendo carregada, ouvirá a música de instalação do programa.
-Após estar carregada, uma cópia temporária deste leitor de telas permitirá que prossiga pelas janelas do instalador e  o instale.
- Note que se estiver executando outra cópia no momento em que o instalador for iniciado, o NVDA a incerrará e iniciará a execução de sua própria cópia.
-Isso é necessário para que o instalador possa atualizar adequadamente qualquer arquivo modificado. 
+O Uso das cópias temporárias do  NVDA é também uma opção (isto é, para propósitos de demonstração), todavia iniciá-lo a cada vez dessa forma pode trazer um grande gasto de tempo.
 
-Neste ponto, se já tem outra cópia do NVDA instalada, o instalador desinstalará a mesma automaticamente e procederá ao início da instalação desta.
-Uma vez que tenha completado corretamente a instalação, o instalador alertará que a mesma foi concluída.
-Caso  esteja reinstalando o NVDA, nesta altura será questionado se pretende reiniciar o sistema.
-É muito importante que o reinicie para que não haja conseqüências desagradáveis
- Caso o NVDA não questione se pretende reiniciar, pressione "Terminar" e ele encerrará o instalador e iniciará sua nova versão instalada. 
+++ Instalando o NVDA ++
+Caso esteja instalando o NVDA diretamente do pacote baixado, pressione o botão Instalar o NVDA.
+Se você já fechou esse diálogo ou está pretendendo instalar por meio de uma cópia portátil, por favor selecione o item de menu Instalar o NVDA que se encontra no submenu Ferramentas de seu menu.
 
-++ NVDA Portátil ++
-Caso tenha a versão do arquivo comprimido do NVDA, então tudo o que precisa fazer é pressionar Enter ou um duplo clique no arquivo e seguir as instruções do diálogo.
-Ser-lhe-á perguntado onde pretende colocar os arquivos em seu sistema. 
+ O diálogo de instalação que aparece irá confirmar se você quer instalar o NVDA e também lhe dirá se essa instalação estará atualizando uma anterior.
+Ao pressionar o botão Continuar, será iniciada a instalação do NVDA.
+ Existem também algumas poucas opções nesse diálogo que serão explicadas logo abaixo.
 
-+++ NVDA Portátil em um Dispositivo USB +++
-É possível colocar o NVDA em uma unidade de memória USB, o que lhe permite utilizá-lo em outros computadores.
+Uma vez que a instalação se complete, uma mensagem aparecerá informando-lhe que obteve sucesso.
+ Pressionando-se OK nesse ponto irá reiniciar a nova cópia instalada do NVDA.
 
-Quando a versãon Portátil perguntar onde deseja descompactá-la, digite a unidade de sua memória USB, mais uma subpasta opcional onde pretende colocar o NVDA.
-Si por exemplo sua unidade de memória USB está em E:\, você deve escrever E:\nvda, Colocando assim o NVDA na subpasta NVDA em sua unidade de memória USB.
++++ Iniciar no Logon do Windows +++
+Essa opção lhe permite escolher se o NVDA deverá ou não iniciar automaticamente com a tela de Logon do Windows, antes de você inserir sua senha.
+Isso também inclui controle de contas e outras telas seguras.
 
-Atente que mesmo podendo agora levar consigo o NVDA e suas opções a qualquer lugar, ele não será iniciado automaticamente simplesmente inserindo a unidade de memória USB.
-Terá que iniciá-lo manualmente desde o Windows Explorer ou desde o diálogo Executar.
++++ Criar Atalho na Área de Trabalho (ctrl+alt+n) +++
+Essa opção permite-lhe escolher se o NVDA deve ou não criar um atalho na área de trabalho para iniciá-lo.
+O atalho, se criado, também será assinado com a tecla de atalho control+alt+n, possibilitando que você ative o NVDA  a qualquer momento com esse comando.
 
-Para informações sobre o início automático do NVDA desde uma unidade de memória USB, por favor veja este artigo em inglês:
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
++++ Copiar Configuração da Cópia Portátil para a Conta de Usuário Atual +++
+Essa opção lhe permite escolher se o NVDA deve ou não copiar as configurações do usuário oriúndas da versão atualmente em execução para as configurações do usuário atualmente logado no Windows, no caso das cópias instaladas do NVDA. 
+Isso não copiará a configuração para qualquer outro usuário desse computador, nem para as configurações de sistema, para uso no Logon do Windows  e outras telas seguras.
+Essa opção está disponível apenas quando se instala a partir de uma cópia portátil, não sendo possível ao instalar diretamente do pacote executável baixado.
+
+++ Criando uma Cópia Portátil ++
+Caso esteja criando uma cópia portátil diretamente do pacote baixado, pressione o botão criar uma cópia portátil.
+Se você já fechou esse diálogo ou está executando uma cópia portátil do NVDA, por favor selecione o item de menu criar uma cópia portátil que se encontra no submenu Ferramentas de seu menu.
+
+ O diálogo que aparece permite-lhe escolher onde a cópia portátil será criada.
+  Este pode ser uma pasta em seu disco rígido ou um local num dispositivo USB ou outros dispositivos de mídia portáteis.
+Existe também uma opção que lhe permite escolher se o NVDA deve copiar as configgurações do usuário atualmente logado para serem usadas com a nova versão portátil.
+Essa opção só está disponível quando se cria cópias portáteis a partir de versões instaladas, não sendo possível ao criar diretamente do pacote baixado.
+ 
+ Ao pressionar o botão Continuar, será iniciada a criação da cópia portátil.
+ Uma vez que o processo esteja concluído, uma mensagem aparecerá informando-lhe que obteve sucesso.
+ Pressione OK para encerrar esse diálogo.
 
 + Começando com o NVDA +
 
@@ -278,23 +291,23 @@ Note que o braille não acompanha a navegação de objetos e a revisão de texto
 As seguintes teclas de atalho estão disponíveis para a revisão de texto: 
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-| Mover para a primeira linha em revisão | shift+7 do teclado numérico | NVDA+7 | Move o cursor de exploração para a primeira linha do texto |
-| Mover para a linha anterior em revisão | 7 do teclado numérico | NVDA+u | Move o cursor de exploração para a linha anterior do texto |
+| Mover para a primeira linha em revisão | shift+7 do teclado numérico | NVDA+7 | Move o cursor de exploração para a primeira linha do texto e a anuncia |
+| Mover para a linha anterior em revisão | 7 do teclado numérico | NVDA+u | Move o cursor de exploração para a linha anterior do texto e a anuncia |
  | Ler linha atual em revisão | 8 do teclado numérico | NVDA+i | Lê a linha atual do texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a linha. Pressionando-se três vezes, soletra-a usando descrições de caracteres. |
-| Mover para a próxima linha em revisão | 9 do teclado numérico | NVDA+o | Move o cursor de exploração para a próxima linha do texto |
-| Mover para a última linha em revisão | shift+9 do teclado numérico | NVDA+9 | Move o cursor de exploração para a última linha do texto |
-| Mover para a palavra anterior em revisão | 4 do teclado numérico | NVDA+j | Move o cursor de exploração para a palavra anterior no texto |
+| Mover para a próxima linha em revisão | 9 do teclado numérico | NVDA+o | Move o cursor de exploração para a próxima linha do texto e a anuncia |
+| Mover para a última linha em revisão | shift+9 do teclado numérico | NVDA+9 | Move o cursor de exploração para a última linha do texto e a anuncia |
+| Mover para a palavra anterior em revisão | 4 do teclado numérico | NVDA+j | Move o cursor de exploração para a palavra anterior no texto e a anuncia |
 | Ler palavra atual em revisão | 5 do teclado numérico | NVDA+k | Anuncia a palavra atual no texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a palavra. Três vezes, soletra usando descrições de caracteres. |
-| Mover para a próxima palavra em revisão | 6 do teclado numérico | NVDA+l | Move o cursor de exploração para a próxima palavra no texto |
-| mover para o início da linha em revisão | shift+1 do teclado numérico | NVDA+shift+u | Move o cursor de exploração para o início da linha atual no texto |
-| Mover para o caractere anterior em revisão | 1 do teclado numérico | NVDA+m | Move o cursor de exploração para o caractere anterior na linha atual no texto |
+| Mover para a próxima palavra em revisão | 6 do teclado numérico | NVDA+l | Move o cursor de exploração para a próxima palavra no texto e a anuncia |
+| mover para o início da linha em revisão | shift+1 do teclado numérico | NVDA+shift+u | Move o cursor de exploração para o primeiro caractere da linha atual no texto e o anuncia |
+| Mover para o caractere anterior em revisão | 1 do teclado numérico | NVDA+m | Move o cursor de exploração para o caractere anterior na linha atual no texto e o anuncia |
 | Ler o caractere atual em revisão | 2 do teclado numérico | NVDA+vírgula | Anuncia o caractere do objeto de navegação atual onde  se encontra o cursor de exploração. Ao pressionar duas vezes rapidamente, dá uma descrição descrição ou exemplo do caractere. Pressionado três vezes, anuncia o valor numérico decimal e hexadecimal do caractere. |
-| Mover para o próximo caractere em revisão | 3 do teclado numérico | NVDA+ponto | Move o cursor de exploração para o caractere seguinte na linha atual do texto |
-| Mover para o fim da linha em revisão | shift+3 do teclado numérico | NVDA+shift+o | Move o cursor de exploração para o caractere seguinte na linha atual do texto |
+| Mover para o próximo caractere em revisão | 3 do teclado numérico | NVDA+ponto | Move o cursor de exploração para o caractere seguinte na linha atual do texto e o anuncia |
+| Mover para o fim da linha em revisão | shift+3 do teclado numérico | NVDA+shift+o | Move o cursor de exploração para o último caractere da linha atual do texto e o anuncia |
 | Ler tudo com revisão | Mais do teclado numérico | NVDA+shift+seta abaixo | Lê a partir da posição atual do cursor de exploração, movendo-o até ao fim do texto |
 | Copiar a partir do cursor de exploração | NVDA+f9 | NVDA+f9 | Inicia a cópia do texto a partir da posição atual do cursor de exploração. A cópia atual não será efetuada até que informe ao NVDA onde pretende copiar |
-| Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows  |
-| Informar formatação de texto | NVDA+f | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente |
+| Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows |
+| Informar formatação de texto | NVDA+f | NVDA+f | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente |
 %kc:endInclude
 
 Nota: As teclas do bloco numérico requerem que o Num Lock esteja desativado para que possam desempenhar suas funções adequadamente. 
@@ -404,14 +417,18 @@ As teclas seguintes só por si saltam para o próximo elemento disponível, adic
 - s: separador
 - m: frame
 - g: gráfico
-- d: marca aria
+- d: marca
 - o: objeto embutido
 - 1 a 6: cabeçalhos de nível 1 a 6 respectivamente
 -
+Para mover-se ao início ou final de elementos que contém outros, tais como listas e tabelas:
+| Nome | Tecla | Descrição |
+| Mover para o início do elemento | shift+vírgula | Move para o início do elemento que contém outros (lista, tabela etc) onde o cursor esteja posicionado |
+| Mover para o final do elemento | vírgula | Move para o final do elemento que contém outros (lista, tabela etc) onde esteja situado o cursor |
 %kc:endInclude
 
 ++ A Lista de Elementos ++
-A lista de elementos fornece acesso a uma lista de links, cabeçalhos ou marcas aria no documento.
+A lista de elementos fornece acesso a uma lista de links, cabeçalhos ou marcas no documento.
 Os botões de opção permitem-lhe alterar entre estes três tipos de informação.
 Um campo de edição também se encontra disponível na caixa de diálogo que permite filtrar a lista para o ajudar a procurar um item específico na página.
 Depois de ter escolhido um item, pode utilizar os botões fornecidos no diálogo para mover para ou ativar esse item.
@@ -421,7 +438,7 @@ Depois de ter escolhido um item, pode utilizar os botões fornecidos no diálogo
 %kc:endInclude
 
 ++ Objetos Embutidos ++
-As páginas podem incluir conteúdo avançado através de tecnologias tais como o Flash da Adobe e o JAVA da Sun.
+As páginas podem incluir conteúdo avançado oriundos de tecnologias tais como o Flash da Adobe e o JAVA da Sun.
 Quando estas são encontradas no modo de navegação, o NVDA anuncia "objeto embutido".
 Pressione Enter sobre esses objetos para interagir com os mesmos.
 Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir como com qualquer outra aplicação.
@@ -501,6 +518,10 @@ Esta opção só estará disponível para as cópias instaladas do NVDA.
 Ao pressionar este botão, copiará as configurações atualmente salvas do usuário do NVDA para a pasta  das configurações de sistema deste leitor de telas, de modo que o NVDA irá usá-las quando estiver na tela de logon, Conta de Controle de usuário (UAC) e outras telas de segurança do Windows.
 Para certificar-se de que todas as suas opções serão transferidas, verifique em primeiro lugar se salvou suas configurações com NVDA+Ctrl+C ou através do item respectivo do Menu do NVDA.
 Esta opção só estará disponível para as cópias instaladas do NVDA. 
+
++++ Procurar Atualizações do NVDA Automaticamente +++
+Se abilitado, o NVDA irá procurar automaticamente por verssões atualizadas e lhe informará quando uma atualização estiver disponível.
+Você também pode procurar por atualizações manualmente selecionando o item correspondente no submenu ajuda do menu do NVDA.
 
 +++ Seleção de Sintetizador (NVDA+Ctrl+S) +++
 O diálogo do Sintetizador, pode ser encontrado no item "Sintetizador..." no menu Preferências e permite-lhe selecionar qual sintetizador o NVDA usará para falar.
@@ -941,6 +962,33 @@ Ao desmarcar este item você o desativa.
 Enquanto o exibidor de fala estiver ativado, o mesmo atualizar-se-á constantemente para apresentar-lhe o texto mais recente que está sendo falado.
 Contudo, se clicar ou se o cursor ficar no visualizador, o NVDA parará temporariamente a atualização do texto, de modo que possa selecionar facilmente ou copiar o conteúdo existente. 
 
+++ Gerenciador de Complementos ++
+O gerenciador de complementos, que pode ser acessado selecionando Gerir Complementos no submenu ferramentas no menu do NVDA, permite-lhe instalar e desinstalar pacotes contendo complementos para o NVDA.
+Esses pacotes são fornecidos pela comunidade e contém códigos com personalizações que podem acrescentar  ou modificar recursos do NVDA ou mesmo fornecer suporte para linhas Braille ou sintetizadores de voz extras.
+
+O gerenciador de complementos possui uma lista que mostra todos os complementos atualmente instalados em suas configurações do usuário do NVDA.
+O nome do pacote, bem como a versão e author são exibidos para cada complemento, embora informações adicionais tais como uma descrição e URL podem ser visualizadas, selecionando-o e pressionando o botão Sobre o Complemento.
+
+Para instalar um complemento, pressione o botão Instalar.
+Isso lhe permitirá procurar por um pacote de complemento (arquivo .nvda-addon) em algum lugar de seu computador ou em uma rede.
+Uma vez pressionado Abrir, o NVDA perguntar-lhe-á se você realmente deseja instalar esse complemento.
+Como a funcionalidade dos complementos é irrestrita dentro do NVDA, o que em teoria pode incluir  o acesso a seus dados pessoais ou mesmo a todo o sistema caso o NVDA seja uma cópia instalada, é muito importante que você só instale complementos oriúndos de códigos de sua confiança.
+
+Após a instalação do complemento, o NVDA necessitará ser riniciado para que este inicie sua execução.
+Até que você faça isso, o status de "instalado"será mostrado para aquele complemento na lista.
+
+Para remover um complemento, selecione-o na lista e em seguida pressione  o botão Remover.
+O NVDA irá perguntar se você realmente deseja removê-lo.
+Assim como ao instalar, o NVDA precisa ser reiniciado para que o complemento seja completamente removido.
+Até que você faça isso, o status de "removido" será mostrado para aquele complemento na lista.
+
+O gerenciador também possui um botão "Fechar" para encerrar o diálogo.
+Caso tenha instalado ou removido algum complemento, o NVDA primeiro indagará se você deseja reiniciar, de forma que suas alterações possam fazer efeito. 
+
+No passado foi possível extender as funcionalidades do NVDA copiando plugins e drivers individuais para sua pasta de Configurações do usuário do NVDA.
+Embora nessa versão do NVDA continue sendo possível carregá-los, eles não serão mostrados no gerenciador de complementos. 
+Recomenda-se remover esses arquivos de suas configurações do usuário e instalar o complemento apropriado caso algum esteja disponível.
+
 ++ Console Python ++
 o Console Python do NVDA encontra-se dentro das Ferramentas de seu menu.
 É uma ferramenta de programação muito útil para deporação, inspeção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.
@@ -950,7 +998,8 @@ Para mais informações, consulte por favor o [Guia do Desenvolvedor que encontr
 Esse item, quando ativado, recarrega app modules e global plugins sem reiniciar o NVDA, o que  pode ser muito útil para desenvolvedores.
 
 + Sintetizadores de Voz Suportados +[SupportedSpeechSynths]
-Esta seção contém informação sobre os sintetizadores de voz suportados pelo NVDA.
+Esta seção contém informação sobre os sintetizadores de voz suportados pelo NVDA. Se deseja uma lista mais extensa de sintetizadores gratuitos e comerciais que você pode baixar ou  comprar para usar com o NVDA, por favor consulte a página
+http://www.nvda-project.org/wiki/ExtraVoices.
 
 ++ eSpeak ++
 O sintetizador [eSpeak http://espeak.sourceforge.net/] é compilado diretamente para o NVDA e não necessita instalar nenhum outro driver ou componente especial.

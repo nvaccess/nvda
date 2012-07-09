@@ -1,6 +1,7 @@
 """Utilities and classes to manage logging in NVDA"""
 
 import os
+import ctypes
 import sys
 import warnings
 from encodings import utf_8
@@ -9,8 +10,6 @@ from logging import _levelNames as levelNames
 import inspect
 import winsound
 import traceback
-import re
-import nvwave
 from types import MethodType
 import globalVars
 
@@ -18,6 +17,7 @@ ERROR_INVALID_WINDOW_HANDLE = 1400
 ERROR_TIMEOUT = 1460
 RPC_S_SERVER_UNAVAILABLE = 1722
 RPC_S_CALL_FAILED_DNE = 1727
+EPT_S_NOT_REGISTERED = 1753
 E_ACCESSDENIED = -2147024891
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
 RPC_E_CALL_REJECTED = -2147418111
@@ -108,7 +108,7 @@ class Logger(logging.Logger):
 			codepath=getCodePath(f)
 		extra["codepath"] = codepath
 
-		if globalVars.appArgs.secure:
+		if not globalVars.appArgs or globalVars.appArgs.secure:
 			# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
 			activateLogViewer = False
 
@@ -162,7 +162,7 @@ class Logger(logging.Logger):
 
 		exc = exc_info[1]
 		if (
-			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, RPC_E_CALL_CANCELED))
+			(isinstance(exc, WindowsError) and exc.winerror in (ERROR_INVALID_WINDOW_HANDLE, ERROR_TIMEOUT, RPC_S_SERVER_UNAVAILABLE, RPC_S_CALL_FAILED_DNE, EPT_S_NOT_REGISTERED, RPC_E_CALL_CANCELED))
 			or (isinstance(exc, comtypes.COMError) and (exc.hresult in (E_ACCESSDENIED, EVENT_E_ALL_SUBSCRIBERS_FAILED, RPC_E_CALL_REJECTED, RPC_E_CALL_CANCELED, RPC_E_DISCONNECTED) or exc.hresult & 0xFFFF == RPC_S_SERVER_UNAVAILABLE))
 			or isinstance(exc, watchdog.CallCancelled)
 		):
@@ -173,6 +173,22 @@ class Logger(logging.Logger):
 		if not self.isEnabledFor(level):
 			return
 		self._log(level, msg, (), exc_info=exc_info, **kwargs)
+
+class RemoteHandler(logging.Handler):
+
+	def __init__(self):
+		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
+		h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
+		self._remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h) if h else None
+		logging.Handler.__init__(self)
+
+	def emit(self, record):
+		msg = self.format(record)
+		if self._remoteLib:
+			try:
+				self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, ctypes.windll.kernel32.GetCurrentProcessId(), msg)
+			except WindowsError:
+				pass
 
 class FileHandler(logging.StreamHandler):
 
@@ -199,6 +215,7 @@ class FileHandler(logging.StreamHandler):
 			except:
 				pass
 		elif record.levelno>=logging.ERROR and shouldPlayErrorSound:
+			import nvwave
 			try:
 				nvwave.playWaveFile("waves\\error.wav")
 			except:
@@ -269,25 +286,40 @@ def _excepthook(*exc_info):
 def _showwarning(message, category, filename, lineno, file=None, line=None):
 	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
 
-def initialize():
+def initialize(shouldDoRemoteLogging=False):
 	"""Initialize logging.
 	This must be called before any logging can occur.
 	@precondition: The command line arguments have been parsed into L{globalVars.appArgs}.
+	@var shouldDoRemoteLogging: True if all logging should go to the real NVDA via rpc (for slave)
+	@type shouldDoRemoteLogging: bool
 	"""
 	global log
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
-	if globalVars.appArgs.secure:
-		# Don't log in secure mode.
-		logHandler = logging.NullHandler()
-		# There's no point in logging anything at all, since it'll go nowhere.
-		log.setLevel(100)
+	if not shouldDoRemoteLogging:
+		logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
+		if globalVars.appArgs.secure:
+			# Don't log in secure mode.
+			logHandler = logging.NullHandler()
+			# There's no point in logging anything at all, since it'll go nowhere.
+			log.setLevel(100)
+		else:
+			if not globalVars.appArgs.logFileName:
+				globalVars.appArgs.logFileName = _getDefaultLogFilePath()
+			# Keep a backup of the previous log file so we can access it even if NVDA crashes or restarts.
+			oldLogFileName = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda-old.log")
+			try:
+				# We must remove the old log file first as os.rename does replace it.
+				if os.path.exists(oldLogFileName):
+					os.unlink(oldLogFileName)
+				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
+			except (IOError, WindowsError):
+				pass # Probably log does not exist, don't care.
+			# Our FileHandler always outputs in UTF-8.
+			logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
 	else:
-		if not globalVars.appArgs.logFileName:
-			globalVars.appArgs.logFileName = _getDefaultLogFilePath()
-		# Our FileHandler always outputs in UTF-8.
-		logHandler = FileHandler(globalVars.appArgs.logFileName, mode="wt")
-	logFormatter=Formatter("%(levelname)s - %(codepath)s (%(asctime)s):\n%(message)s", "%H:%M:%S")
+		logHandler = RemoteHandler()
+		logFormatter = Formatter("%(codepath)s:\n%(message)s")
 	logHandler.setFormatter(logFormatter)
 	log.addHandler(logHandler)
 	redirectStdout(log)

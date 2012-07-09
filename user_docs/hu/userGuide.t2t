@@ -4,8 +4,7 @@
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION billentyűparancsok listája
 
-A fordításban részt vettek:
-Németh Dávid, Osztolykán Róbert, Ócsvári Áron, Dr. Simon Gergely
+A fordításban részt vettek: Dr. Simon Gergely, Németh Dávid, Osztolykán Róbert, Ócsvári Áron
 
 = Tartalomjegyzék =[toc]
 %%toc
@@ -48,13 +47,13 @@ Néhány billentyűparancs a teljesség igénye nélkül:
 + Bevezetés +
 ++ Általános Jellemzők ++
 
-Az NVDA egy beszédszintetizátor, vagy braille kijelző segítségével hozzáférést biztosít a Windows operációs rendszerhez, valamint számos egyéb alkalmazáshoz vakok és gyengénlátók számára.
+Az NVDA vakok és gyengénlátók számára hozzáférést biztosít a Windows operációs rendszerhez, valamint számos egyéb alkalmazáshoz egy beszédszintetizátor, vagy braille kijelző segítségével.
 Az NVDA programot az [NV Access http://www.nvacces.org] fejleszti.
 
 Főbb jellemzői:
 - Népszerű alkalmazások támogatása (ide tartoznak a webböngészők, az e-mail kliensek, különböző internetes chat programok, és az irodai szoftverek)
 - Beépített beszédszintetizátor, ami több mint 20 nyelvet támogat
-- A szöveg formázásának bemondása ahol elérhető, úgy mint szöveg mérete és betűtípusa, stílus és helyesírási hibák
+- A szöveg formázásának - például szöveg mérete és betűtípusa, stílus és helyesírási hibák - bemondása ahol elérhető, 
 - Az egérmutatónál lévő szöveg automatikus bemondása és választható hangjelzés az egér pozíciójának megállapításához
 - A frissíthető braille kijelzők támogatása
 - Telepítés nélküli futtatás egy USB hordozható eszköz használatával
@@ -62,19 +61,19 @@ Főbb jellemzői:
 - A felület többnyelvű támogatása
 - A Windows 32 és 64 bites verzióinak támogatása
 - A Windows bejelentkező és biztonsági képernyőinek támogatása
-- Általános kisegítő lehetőséget biztosító felületek támogatása, úgy mint Microsoft Active Accessibility, Java Access Bridge, IAccessible2 és UI Automation
+- Általános kisegítő lehetőséget biztosító felületek támogatása, mint például Microsoft Active Accessibility, Java Access Bridge, IAccessible2 és UI Automation
 - A Windows Parancssor és konzolos alkalmazások támogatása
 -
 
 ++ Honosítás ++
 
-Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg több mint húsz nyelvre lett lefordítva, többek között: Brazil Portugál, Horvát, Cseh, Finn, Francia, Galíciai, Német, Magyar, Olasz, Japán, Portugál, Orosz, Szlovák, Spanyol, Hagyományos Kínai, Afrikai, Lengyel, Tájföldi, Ukrán és Vietnámi nyelvre, sőt még eszperantóra is.
+Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg 37 nyelvre lett lefordítva, többek között: Afrikai, Albán, Arab, Brazil Portugál, Bolgár, Horvát, Cseh, Dán, Holland, Finn, Francia, Galíciai, Görög, Grúz, Német, Héber, Indiai, Magyar, Olasz, Japán, Norvég, Lengyel, Portugál, Román, Orosz, Szerb, Szlovák, Spanyol, Svéd, Tamil, Hagyományos Kínai, Tájföldi, Ukrán és Vietnámi nyelvre, sőt még eszperantóra is.
 
 ++ Beszédszintetizátor Támogatás ++
 
 Az üzenetek és a felhasználói felület többnyelvűsége mellett az NVDA lehetőséget biztosít a tartalom megfelelő nyelvű felolvasásához, amennyiben a használni kívánt beszédszintetizátor képes az adott nyelven megszólalni.
 
-Az NVDA tartalmazza az [ESpeak http://espeak.sourceforge.net/], egy ingyenes, nyílt forráskódú és többnyelvű beszédszintetizátor programot. A többi az NVDA által támogatott beszédszintetizátorról a [Támogatott beszéd szintetizátorok #SupportedSpeechSynths] fejezetben olvashat.
+Az NVDA tartalmazza az [ESpeak http://espeak.sourceforge.net/], beszédszintetizátor programot, amely ingyenes, nyílt forráskódú és többnyelvű. Az NVDA által támogatott többi beszédszintetizátorról a [Támogatott beszéd szintetizátorok #SupportedSpeechSynths] fejezetben olvashat.
 
 ++ Braille támogatás ++
 
@@ -83,13 +82,13 @@ Az NVDA számos nyelv braille tábláját támogatja. A legtöbb esetben az 1-es
 
 ++ Licensz és Copyright ++
 
-Copyright (C) 2006-2011 [NVDA Közreműködők http://www.nvda-project.org/]
+Copyright (C) 2006-2012 [NVDA Közreműködők http://www.nvda-project.org/]
 
-Copyright (C) 2008-2011 [NVDA honosítási project http://www.nvda.hu]
+Copyright (C) 2008-2012 [NVDA honosítási project http://www.nvda.hu]
 
-Az NVDA a GNU Általános Nyilvános Licensz (2-es verzió) kitételeinek elfogadásával használható. A szoftver szabadon közzétehető vagy módosítható a licensz és a forráskód bárki számára elérhetővé tételével. Ez az eredeti és módosított szoftverre, valamint bármilyen a szoftver forráskódjából származó kódrészletre vonatkozik.
+Az NVDA a GNU Általános Nyilvános Licensz (2-es verzió) rendelkezéseinek elfogadásával használható. A szoftver szabadon közzétehető vagy módosítható a licensz és a forráskód bárki számára elérhetővé tételével. Ez az eredeti és módosított szoftverre, valamint bármilyen a szoftver forráskódjából származó kódrészletre vonatkozik.
 
-Ha többet szeretne megtudni, látogassa meg a következő (angol nyelvű) [honlapot http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+Ha erről többet szeretne megtudni, látogassa meg a következő (angol nyelvű) [honlapot http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 vagy nézze meg a szoftverhez mellékelt Copying.txt fájlt.
 
 + Rendszerkövetelmények +
@@ -104,29 +103,39 @@ vagy nézze meg a szoftverhez mellékelt Copying.txt fájlt.
 
 Ha még  nincs NVDA képernyőolvasója, az [NVDA hivatalos oldaláról (angol) http://www.nvda-project.org], vagy a [honosítócsapat weboldaláról http://www.nvda.hu] letöltheti azt a letöltés oldalon az NVDA legfrissebb verziójára mutató hivatkozásra kattintva.
 
-Az NVDA jelenleg két formátumban érhető el. Az egyik egy telepítő, mely telepítés közben beszédtámogatást nyújt. A másik egy önkibontó (.exe) fájl, az NVDA hordozható verzió, amelyet bárhonnan futtathat, akár thumb drive/pen drive-ről, vagy CD-ről is.
+A letöltött fájl elindításakor az NVDA egy átmeneti példánya töltődik be. Ekkor a program rákérdez a következő lépésre. Lehetősége van a program feltelepítésére a számítógépre, a hordozható verzió elkészítésére, vagy az átmeneti példány futtatására.
 
-Ahoz, hogy az NVDA beszédtámogatást nyújtson a Windows bejelentkező képernyőjén, a felhasználói fiókok felügyeletét vezérlő képernyőn (UAC), vagy egyéb biztonsági képernyőkön, előbb azt telepíteni kell a rendszerre. A hordozható verziók ezekhez a képernyőkhöz nem képesek hozzáférni.
+Ha fel szeretné telepíteni az NVDA programot, a "telepítés" gombot kell megnyomnia.
+Az NVDA telepítésével elérhetővé válik néhány extra funkció, úgy mint a program automatiku s elindulása a rendszer betöltésekor, vagy a Windows bejelentkező és biztonsági képernyők olvasása. Ezen felül a telepített verzió képes elkészíteni sajátmaga hordozható verzióját is.
 
-+ Az NVDA Telepítése +
-++ Az NVDA Telepítő ++
+Ha magával szeretnévinni egy hordozható eszközön az NVDA programot, válassza a "Hordozható verzió készítése" lehetőséget. A hordozható verzió fel tudja telepíteni saját magát az éppen futó számítógépre.
 
-Ha már rendelkezik az NVDA telepítőjével, keresse meg és jelölje ki, majd nyomja meg az enter billentyűt, vagy kattintson duplán a fájlon. Ekkor a telepítő elindul.
+Az NVDA átmeneti példányának használata főképp demonstrációs célokat szolgál, a gép újraindulásakor ez és az ekkor megadott összes beállítás elveszik.
 
-A telepítő betöltésekor az NVDA telepítési zenéje hallható. Betöltés után, az NVDA egy átmeneti példánya lehetővé teszi a telepítő utasításainak végrehajtását, ezzel az NVDA telepítését. Ha a telepítés elindítása előtt ön már futtatott egy NVDA verziót, a telepítő egy üzenetben tájékoztat a korábbi NVDA verzió bezárása előtt. Az enter billentyű megnyomása után a futó NVDA program bezárul. Ez azért szükséges, hogy a telepítő hibátlanul frissíteni tudja a szükséges fájlokat. A fájlok frissítése elött a telepítő eltávolítja a régebbi verziót a számítógépről, csak a felhasználói beállításokat hagyja meg.
+++Az NVDA telepítése ++
+AzNVDA telepítésének megkezdéséhez nyomja meg az "NVDA telepítése" gombot. Ha bezárta ezt az ablakot, vagy az NVDA hordozható verzióját használja, ugyanezt megteheti az NVDA menü -eszközök almenüjéből is.
 
-A szolgáltatások telepítésénél engedélyezheti az NVDA parancsikonjának elhelyezését az asztalon. Ekkor a programot a control+alt+n billentyűparanccsal el is indíthatja. Figyelem! Néhány programozási nyelvben sokat használják a } (végkapcsos) jelet, mely a magyar billentyűzeten ennek a billentyűparancsnak felel meg.
-Megjegyzés: Ha az asztali parancsikon létrehozása után az NVDA használat közben a megszokottól eltérően működik, a gyorsbillentyű lenyomásának hatására a program újraindul.
+A választható beállításokat alább részletezzük. Miután mindent beállított, a "Folytatás" gomb lenyomásával elindíthatja a program telepítését, vagy egy régebbi verzió frissítését.
+A telepítés sikeres befejezéséről egy párbeszédablakban ad a program tájékoztatást, ekkor egy entert nyomva a feltelepített NVDA el is indul.
 
-A telepítés befejezése után a telepítő elindítja az újonnan telepített NVDA programot az előző verzió beállításaival.
++++ Beszédtámogatás nyújtása a Windows bejelentkező képernyők használatakor +++
+A beállítás bekapcsolásával az NVDA képes lesz beszédtámogatást nyújtani a Windows bejelentkező képernyő használatakor (pl. jelszó bekérése). Ennek a funkciónak a segítségével olvastathatja fel a Windowsbiztonsági képernyőjét (UAC) is.
 
-++ Az NVDA Hordozható exe Fájl ++
++++ Parancsikon elhelyezése az asztalon és a ctrl+alt+n billentyűparancs hozzárendelése +++
+A jelölőnégyzet bejelöése után a program elhelyezi parancsikonját az asztalon, amit a ctrl+alt+n (vagy az altgr -jobb alt+n) billentyűparanccsal is aktiválhat.
+Figyelem! Néhány programozási nyelvben sokat használják a } (végkapcsos) jelet, mely a magyar billentyűzeten az NVDA  billentyűparancsának felel meg.
 
-Ha az NVDA hordozható exe fájlt töltötte le, használat előtt ki kell csomagolnia a merevlemezre, vagy bármilyen más háttértárolóra.
++++ A hordozható verzió beállításainak átmásolása +++
+Ez a funkció csak akkor érhető el, ha az NVDA telepítését a hordozható verzió futtatása közben indítja el. A beállítás bekapcsolásakor  a már előzőleg elvégzett beállításokat, bővítményeket átmásolja a telepítő az aktuális felhasználó mappájába.
 
-Indítsa el a .exe fájlt és kövesse a képernyőn megjelenő utasításokat a fájlnak egy tetszőleges mappába történő kicsomagolásához.
+++ Hordozható verzió készítése ++
+Ha hordozható verziót szeretne létrehozni, válassza a "Hordozható verzió készítése" menüpontot az NVDA telepítő elindításakor. Ha már bezárta ezt az ablakot, vagy az NVDA telepített verzióját használja, ezt megteheti az NVDA menü -eszközök almenüjében is.
+A hordozható verzió jelenleg nem futtatható írásvédett eszközökön (pl. cd-n), ilyen esetekben az NVDA telepítőcsomag használatát ajánljuk.
 
-Amennyiben szeretne az NVDA-hoz parancsikont készíteni, keresse meg az nvda.exe fájlt, majd Windows Xp esetén válassza a "küldés asztalra (parancsikon)" menüt a fájlhoz tartozó helyi menüből. Ezt követően a parancsikont tetszőlegesen átnevezheti, tulajdonságlapján, amelyet az alt-enterrel hívhat elő, billentyűparancsot is adhat a programnak, pl. a 0 meghatározásával a magyar NVDA az alt-controll-0 billentyűparanccsal is indítható.
+A felbukkanó párbeszédablakban kiválaszthatja az NVDA hordozható verziójának pontos helyét. Ez lehet egy hordozható eszköz főkönyvtára, de megadható egy könyvtár az ön gépének merevlemezén is.
+
+Lehetősége van a felhasználói beállítások átmásolására is, ekkor az összes beállítás (beleértve a használt bővítményekkel együtt) másolásra kerül. Ez csak abban az esetben érhető el, ha a hordozható verziót egy már feltelepített verzióból készíti el.
+A hordozható verzió elkészítéséhez nyomja meg a "folytatás" gombot. A telepítő egy párbeszédablakban fogja tájékoztatni a telepítés sikerességéről, amit az OK gomb megnyomásával zárhat be.
 
 + Az Első Lépések Az NVDA-val +
 ++ Az NVDA Elindítása ++
@@ -165,9 +174,9 @@ Ha ezt a funkciót az ön laptopja nem támogatja, akkor át kell állítania a 
 
 ++ Az NVDA Menüje ++
 
-Az NVDA menüje elérhetővé teszi az NVDA beállításait, ugyanitt megtekintheti a súgót, elmentheti és betöltheti a beállításokat, módosíthatja a kivétel szótárat, elolvashatja a  napló fájlt, valamint kiléphet az NVDA programból. 
+Az NVDA menüje elérhetővé teszi az NVDA beállításait, ugyanitt megtekintheti a súgót, elmentheti és betöltheti a beállításokat, módosíthatja a kivételszótárat, elolvashatja a  napló fájlt, valamint kiléphet az NVDA programból. 
 
-A Windows bármely területén, az NVDA futása közben az NVDA menü az NVDA+n billentyűparanccsal aktiválható. A menü aktiválása után használja a nyíl billentyűket a navigáláshoz, és az enter billentyűt egy menüelem aktiválásához. A beállítások almenü az NVDA beállításainak megváltoztatását teszi lehetővé. Az eszközök almenü egy pár hasznos alkalmazást tartalmaz, mint pl. az NVDA naplónézőjét és a NVDA Python konzolt fejlesztők részére. A súgó almenüben többek között megtekintheti a felhasználói útmutatót és a billentyűparancsok listáját. Szintén az NVDA menüből mentheti el, illetve töltheti be a beállításokat. Ugyancsak ebben a menüben léphet ki az NVDA programból.
+A Windows bármely területén, az NVDA futása közben az NVDA menü az NVDA+n billentyűparanccsal aktiválható. A menü aktiválása után használja a nyíl billentyűket a navigáláshoz, és az enter billentyűt egy menüelem aktiválásához. A beállítások almenü az NVDA beállításainak megváltoztatását teszi lehetővé. Az eszközök almenü egy pár hasznos alkalmazást tartalmaz, mint pl. az NVDA naplónézőjét, a bővítménykezelőt és az NVDA Python konzolt fejlesztők részére. A súgó almenüben többek között megtekintheti a felhasználói útmutatót és a billentyűparancsok listáját. Szintén az NVDA menüből mentheti el, illetve töltheti be a beállításokat. Ugyancsak ebben a menüben léphet ki az NVDA programból.
 
 Az NVDA menü a rendszertálcáról is elérhető. Kattintson a jobb egérgombbal az NVDA rendszertálcaikonjára, vagy a windowsgomb+b billentyűparanccsal ugorjon a rendszertálcára, majd a nyíl billentyűkkel keresse meg az NVDA ikonját és nyomja meg az alkalmazás billentyűt.
 
@@ -181,7 +190,7 @@ Az NVDA menü a rendszertálcáról is elérhető. Kattintson a jobb egérgombba
 | A beviteli súgó be-ki kapcsolása | NVDA+1 | Ha a billentyűzet súgó be van kapcsolva, és ha funkcióval van ellátva  bármely billentyű, akkor megnyomása esetén arról rövid tájékoztatást kaphat. |
 | Az NVDA bezárása | NVDA+q | Bezárja a programot|
 | Billentyűparancs átadása | NVDA+f2 | Az ezutáni billentyűparancsot az NVDA figyelmen kívül hagyja, és átadja az aktív alkalmazásnak. |
-| Az alvómód be és kikapcsolása| NVDA+shift+s | Az alvómód kikapcsolja az NVDA összes billentyűparancsát és beszéd/braille kimenetét egy adott alkalmazásban. A billentyűparancs újbóli lenyomására visszaállítja azt. Ez azokban az alkalmazásokban előnyös, amik rendelkeznek saját beszéddel, vagy képernyőolvasó tulajdonságokkal. |
+| Az alvómód be és kikapcsolása| NVDA+shift+s | Az alvómód kikapcsolja az NVDA összes billentyűparancsát és beszéd/braille kimenetét egy adott alkalmazásban. A billentyűparancs újbóli lenyomására visszaállítja azt. Ez azokban az alkalmazásokban előnyös, amelyek rendelkeznek saját beszéddel, vagy képernyőolvasó tulajdonságokkal. |
 %kc:endInclude
 
 ++ Rendszerinformációk bemondása ++
@@ -199,7 +208,7 @@ Az NVDA-val lehetősége van feltérképezni az operációs rendszert, mind az a
 ++ Az objektumokról ++[Objects]
 
 Minden alkalmazás, de maga az operációs rendszer is objektumokat tartalmaz. 
-Az objektum egy különálló elem, ami lehet  összefüggő szöveg, gomb, jelölőnégyzet, csúszka, lista vagy egy szerkesztő mező.
+Az objektum egy különálló elem, ami lehet  összefüggő szöveg, gomb, jelölőnégyzet, csúszka, lista vagy egy szerkesztőmező.
 
 ++ Navigáció a fókusszal ++[SystemFocus]
 
@@ -211,7 +220,7 @@ Az NVDA-val való leggyakoribb navigációs mód a Windows fókuszának változt
 - Az alttal hívhatja elő a menüsort és a menükben a nyilakkal közlekedhet
 - A futó alkalmazások között az alt-tabbal válthat
 -
-Ha ezek valamelyikét lenyomja az NVDA elmond néhány információt az adott objektumról, úgy mint annak  nevét, típusát és állapotát, értékét, leírását, billentyűparancsát és az esetleg még rendelkezésre álló további információkat. 
+Ha ezek valamelyikét lenyomja, az NVDA elmond néhány információt az adott objektumról, pl. annak  nevét, típusát és állapotát, értékét, leírását, billentyűparancsát és az esetleg még rendelkezésre álló további információkat. 
 
 Néhány hasznos billentyűparancs a fókusszal történő mozgás esetén:
 %kc:beginInclude
@@ -409,6 +418,10 @@ Egymagukban a következő, a shifttel együtt használva az előző területre u
 - O: beágyazott objektum
 - 1-től 6-ig: elsőtől hatodikig terjedő szintű címsorokra történő ugrás 
 -
+Első vagy utolsó elemre ugrás (listák vagy táblázatok esetében):
+|| Név | billentyűparancs | leírás |
+| Egy elemblokk első elemére ugrás | shift+, | Egy elemblokk (pl. lista vagy táblázat) elejére lép |
+| Egy elemblokk utolsó elemére ugrás | , | Egy elemblokk (pl. lista vagy táblázat) végéhez lép |
 %kc:endInclude
 
 Kiegészítő megjegyzés: a navigációs gyorsbillentyűket könnyebb megjegyezni, ha megjegyezzük azoknak a fogalmaknak az angol megfelelőjét, amire utalnak. Pl.: edit box: szerkesztőmező, radio button: választógomb.
@@ -438,6 +451,7 @@ Az NVDA néhány alkalmazásban saját billentyűparanccsal rendelkezik, melyek 
 || Név | Billentyűparancs | Leírás |
 | A hátralévő idő bemondása | control+shift+r | Bemondja a hátralévő időt az éppen lejátszandó fájlból. |
 %kc:endInclude
+Megjegyzés: A hátralévő idő bemondása csak akkor lehetséges, ha a Foobar alapértelmezett állapotsor formázási beállítása van használatban.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -478,13 +492,13 @@ Ez a beállítás egy jelölőnégyzet, amelyet ha bejelöl, akkor az NVDA bezá
 
 Ennek a jelölőnégyzetnek a bejelölése esetén az NVDA kilépéskor egy figyelmeztető párbeszédpanelt jelenít meg. A nem gombbal tovább használhatja az NVDA-t, az igen gomb hatására a program kilép. Ha ez a jelölőnégyzet nincs bejelölve, az NVDA+Q vagy a menüparancsok hatására az NVDA ereszkedő hangjelzést ad és kérdés nélkül bezárul.
 
-===== Naplózási színt =====
+===== Naplózási szint =====
 
 Ez egy kombinált listamező, ahol kiválaszthatja, hogy milyen szinten engedélyezze a futás közbeni naplózást. Általában a felhasználóknak nem szükséges ezt beállítani, de ha egy hibáról szóló állapotjelentést szeretne elküldeni a fejlesztőknek, netán az NVDA fejlesztője vagy tesztelője, akkor ezzel nagy mértékben segítheti a fejlesztési, tesztelési munkát.
   
 ===== Az NVDA automatikus elindítása a Windows bejelentkezése után =====
 
-Ez a beállítás csak az NVDA telepíthető verziójában érhető el. Ha bejelöli ezt a jelölőnégyzetet, az NVDA a Windows betöltése után magától elindul.
+Ez a beállítás csak az NVDA telepített verziójában érhető el. Ha bejelöli ezt a jelölőnégyzetet, az NVDA a Windows betöltése után magától elindul.
 
 ===== Az NVDA elindítása a Windows bejelentkező képernyő használatakor =====
 
@@ -493,7 +507,12 @@ A jelölőnégyzet bejelölése után az NVDA minden rendszer indításkor a bej
 ==== Az aktuális beállítások használata a bejelentkező és egyéb biztonsági képernyőkön ====
 
 A gomb megnyomásának hatására az aktuális beállításokat fogja használni az NVDA a bejelentkező és egyéb biztonsági képernyőkön (hangkarakter, beszédtempó, stb.). Győződjön meg arról, hogy elmentette-e az aktuális beállításokat (control+NVDA+c, vagy a beállítások elmentése az NVDA menüjében megtörtént-e), ugyanis a legutolsó mentett beállítások másolódnak át.
-Ez a beállítás csak a telepítős verziókban érhető el.
+Ez a beállítás csak a telepített verzióban érhető el.
+
+==== NVDA Frissítések automatikus ellenőrzése ====
+
+A beállítás bekapcsolásakor az NVDA bizonyos időközönként frissítéseketkeres az interneten. Ha talál, erről tájékoztatja a felhasználót, aki dönthet a frissítés feltelepítéséről, elhalasztásáról vagy elutasításáról. 
+Az ellenőrzést kézzel is elvégezheti az NVDA menü -súgó almenüjében a frissítés ellenőrzése menüparanccsal.
 
 +++ Beszédszintetizátor választás (NVDA+control+s+++
 
@@ -508,20 +527,20 @@ eSpeak, SAPI4, SAPI5, Audiologic, és csendes üzemmód.
 
 Az Espeak szintetizátor közvetlenül van beépítve az NVDA-ba, így nem függ semmilyen speciális drivertől, vagy a Sapi telepítésétől. Az NVDA indításkor az Espeak-et használja alapértelmezetten. Ennek a szintetizátornak minden olyan rendszeren működnie kell, amin az NVDA fut, így különböző rendszereken futtathatja, akár Pendrive-ról, vagy cd-ről is.
 
-A Sapi4 a Sapi szintetizátort tudja használni. Ezek a sapi4 alá integrált hangok, mint pl. az Elokvence hangok, valamint a többi sapi4 hang, amelyeket telepített a számítógépére.
+A Sapi4 a Sapi4 csatolófelületű szintetizátorokat tudja használni. Ezek a sapi4 alá integrált hangok, mint pl. az Elokvence hangok, valamint a többi sapi4 hang, amelyeket telepített a számítógépére.
 
 A Sapi5 szintetizátor a Microsoft hangokat használja, amelyek be vannak építve az ön rendszerébe. Windows XP esetén az alapértelmezett hang a Microsoft Sam, Windows Vista esetén pedig a Microsoft Anna. Természetesen feltelepíthet más sapi 5-ös szintetizátorokat is.
 
 A csendes üzemmódban (silence) az NVDA nem nyújt beszédtámogatást futás közben.
 Kérjük, vegye figyelembe, hogy a többi sapi 4 és sapi 5-ös hang csak a számítógépre való telepítés után jelenik meg a szintetizátor listában.
 
-A kimeneti hangeszköz kombinált listamezőben meghatározhatja, hogy a kiválasztott beszédszintetizátor melyik hangkártyán vagy hangeszközön szólaljon meg. Windows Xp esetén a Microsoft hangleképző az alapértelmezettként beállított eszközt használja, de a listában a telepített hangeszközök bármelyikét kiválaszthatja. Így pl. a gépbe épített hangkártyát, usb-s hangszórót vagy fejhallgatót, illetőleg minden olyan hangeszközt, amelyet a Windows felismer és kezel és képes legalább arra, hogy hangkimenetként viselkedjen.
+A kimeneti hangeszköz kombinált listamezőben meghatározhatja, hogy a kiválasztott beszédszintetizátor melyik hangkártyán vagy hangeszközön szólaljon meg. Windows Xp és windows 7 esetén a Microsoft hangleképző az alapértelmezettként beállított eszközt használja, de a listában a telepített hangeszközök bármelyikét kiválaszthatja. Így pl. a gépbe épített hangkártyát, usb-s hangszórót vagy fejhallgatót, illetőleg minden olyan hangeszközt, amelyet a Windows felismer és kezel és képes legalább arra, hogy hangkimenetként viselkedjen.
 
 Az NVDA képes arra is, hogy átváltson az idő közben csatlakoztatott hangeszközre. Ha pl. egy usb-s fejhallgatót használ alapértelmezett hangeszközként, de ezt csak menet közben csatlakoztatja, az NVDA képes átváltani rá, a fejhallgató kihúzásakor pedig képes visszaváltani egy másik használható hangeszközre.
 
 +++ Beszéd beállítások (NVDA+control+v) +++[VoiceSettings]
 
-A Beszéd beállításai, amely a beállítások menüben található, azokat a lehetőségeket tartalmazza, amelyekkel megváltoztathatja a beszéd hangját. Egy alternatív megoldás is létezik a beszéd paraméterei  gyors megváltoztatására, ehhez kérjük olvassa el a [beszédkör beállításai #SynthSettingsRing] szekciót.
+A Beszéd beállításai, amely a beállítások menüben található, azokat a lehetőségeket tartalmazza, amelyekkel megváltoztathatja a beszéd hangját. Egy alternatív megoldás is létezik a beszéd paraméterei  gyors megváltoztatására, ehhez kérjük olvassa el a [beszédkör beállításai #SynthSettingsRing] alcímet.
 
 A hangbeállítások párbeszédpanel a következő elemeket tartalmazza:
 
@@ -592,7 +611,7 @@ A braille kijelző kombinált listamezőben a kijelző típusát állíthatja be
 
 A Nincs Braille kijelző azt jelenti, hogy nem használ braille kijelzőt.
 
-További információért tekintse meg a [Támogatott braille kijelzők #SupportedBrailleDisplays] szekciót.
+További információért tekintse meg a [Támogatott braille kijelzők #SupportedBrailleDisplays] alcímet.
 ===== Fordítási tábla =====
 
 A következő beállítás a braille táblák listája. Itt a különböző nyelvű braille táblákat választhatja ki, a fel és a le nyilak segítségével.
@@ -742,7 +761,7 @@ Ezzel a beállítással kiválasztható, hogy az objektum pozicíója elhangozzo
 
 ===== Az elem pozíciójának meghatározása =====
 
-A jelölőnégyzet bejelölésekor az NVDA megpróbálja kitalálni azoknak az elemeknek pozícióját, amik alapértelmezettként nem hozzáférhetőek. Ez a funkció olykor pontatlanul működik. 
+A jelölőnégyzet bejelölésekor az NVDA megpróbálja kitalálni azoknak az elemeknek a pozícióját, amik alapértelmezettként nem hozzáférhetőek. Ez a funkció olykor pontatlanul működik. 
 
 ===== Elem leírásának felolvasása  =====
 
@@ -770,7 +789,7 @@ Ha ezt a jelölőnégyzetet bejelöli, és lerakja kis méretre az ablakot, az N
 ==== Frissülő tartalom bemondása ====
 Billentyűparancs: NVDA+5
 
-Ki és bekapcsolhatja a frissülő tartalom bemondását bizonyos objektumokban, úgy mint parancssor ablakok, vagy chat programok előzmény ablakjai.
+Ki és bekapcsolhatja a frissülő tartalom bemondását bizonyos objektumokban, pl. parancssor ablakok, vagy chat programok előzmény ablakai.
 +++ A böngésző mód beállításai (NVDA+Control+b) +++
 
 A Böngésző mód beállításai párbeszédpanel a beállítások almenü böngésző mód... almenüjében nyitható meg.
@@ -792,7 +811,7 @@ Ezzel a beállítással megadható, hogy a virtuális kijelzőben az elemek és 
 
 ===== rétegződő táblázatok jelzése =====
 
-Amikor ez a lehetőség le van tiltva, akkor az NVDA csak táblázatos adatokat jelez (ahol szükséges a táblázatos elrendezés). Ha a lehetőség engedéllyezve van, az NVDA ezek mellett azokat a táblázatokat is jelzi, amellyek csak látványi célt szolgálnak, (Pl egy weboldal navigációs menüje egy táblázatban).
+Amikor ez a lehetőség le van tiltva, akkor az NVDA csak táblázatos adatokat jelez, (ahol szükséges a táblázatos elrendezés). Ha a lehetőség engedéllyezve van, az NVDA ezek mellett azokat a táblázatokat is jelzi, amellyek csak a látvány célját szolgálják, (Pl egy weboldal navigációs menüje egy táblázatban).
 
 =====  Automatikus váltás interaktív módba a fókusz változásakor =====
 
@@ -830,7 +849,7 @@ Be lehet állítani a:
 bemondását.
 
 ==== A kurzor pozíciójánál lévő formázások változásának jelzése ====
-E jelölőnégyzet engedélyezésével az NVDA a sorok felolvasásakor bemondja a formázási változásokat (pl. eltérő betűméret, betűtípus, stb). Ez a NVDA lassabb működését eredményezheti.
+E jelölőnégyzet engedélyezésével az NVDA a sorok felolvasásakor bemondja a formázási változásokat (pl. eltérő betűméret, betűtípus, stb). Ez az NVDA lassabb működését eredményezheti.
 
 Alapértelmezettként az NVDA az aktuális karakter formázásait észleli (rendszer vagy áttekintő kurzor használatakor), esetenként az egész sorra kiterjedő formázást is, ha az nem vezet az NVDA működésének lelassulásához.
 Engedélyezze ezt a lehetőséget pl. Microsoft Word esetén, ahol fontos a formázás.
@@ -845,7 +864,7 @@ A beállítások menüben található kivételszótárak menü olyan lehetőség
 -
 Minden párbeszédablak tartalmaz egy szabálylistát, mely a szöveg feldolgozása közben hajtódik végre. Itt szintén elérhető a hozzáadás, szerkesztés és az eltávolítás gomb is.
 
-Új szabály hozzáadásához használja a hozzáadás gombot. Töltse ki a mezőket a felbukkanó párbeszédablakban, majd nyomja meg az OK gombot. A szabály megjelenik a szabályok listájában. A szótár mentéséhez nyomja meg az OK gombot ha végzett a szabályok hozzáadásával/szerkesztésével.
+Új szabály hozzáadásához használja a hozzáadás gombot. Töltse ki a mezőket a felbukkanó párbeszédablakban, majd nyomja meg az OK gombot. A szabály megjelenik a szabályok listájában. A szótár mentéséhez nyomja meg az OK gombot, ha végzett a szabályok hozzáadásával/szerkesztésével.
 
 A szabályok az NVDA kivételszótáraiban lehetővé teszik, hogy egy szövegrészt behelyettesítsen egy másik szövegrésszel. Egy egyszerű példa erre, ha az NVDA a madár szó helyett béka szót mond. A szabály hozzáadása párbeszédablakban a tényleges kifejezés mezőbe írja be: madár. A behelyettesített kifejezés mezőbe pedig a béka szó kerüljön. Megadhatja a szabály leírását a megjegyzés mezőben (pl.: a madár helyett békát mond).
 
@@ -888,6 +907,21 @@ E funkció engedélyezéséhez jelölje be a beszédnéző lehetőséget az eszk
 
 A beszédnéző használatakor a lebegő ablak tartalma folyamatosan frissül, attól függően, mit mond épp a beszédszintetizátor. Ha azonban az ablakon belülre kattint, az ablak tartalma nem frissül, lehetővé téve annak tartalmát áttekinteni vagy másolni.
 
+++ Bővítmények kezelése ++
+A bővítmény kezelőben (amelyet az NVDA menü -eszközök almenüjében érhet el) megnézheti a feltelepített bővítmények listáját, hozzáathat egy újat, vagy eltávolíthatja őket a programból.
+Ezeket az NVDA közössége készíti, amivel a program funkcióit igyekeznek kibővíteni. Lehet ez egy egyszerűbb script (időjárás jelentés lekérdező program), vagy egy új beszédszintetizátor támogatása is.
+
+A bővítmény kezelő egy listában jeleníti meg a már feltelepített bővítményeket. A csomag nevét és annak verzióját már a listából is megtudhatja, a kiegészítő hosszabb leírását a "bővítmény névjegye" gomb aktiválásával érheti el.
+
+Egy új bővítmény telepítéséhez nyomja meg a "hozzáadás" gombot. Ekkor egy fájlválasztó ablak jelenik meg, ahol kiválaszthatja a telepítendő bővítmény fájlját. Amikor ez megtörtént, a "bezárás" gomb aktiválásával tudja véglegesíteni a műveletet. A bővítmény betöltéséhez az NVDA újraindítása szükséges, ezt a bezárás után fel is ajánlja a program.
+
+Figyelem! Az ön és adatainak biztonsága érdekében csak olyan bővítményt telepítsen fel, ami megbízható forrásból származik!
+
+Egy bővítmény eltávolításához válassza ki azt a kurzor mozgató billentyűk segítségével, majd aktiválja az "eltávolítás" gombot. Ekkor az NVDA rákérdez még egyszer a bővítmény eltávolítása előtt. A művelet befejezéséhez a program újraindításaszükséges, addig a listában az "eltávolítás" jelenik meg a kiegészítő  státuszaként.
+
++++ Pár szó a régebbi bővítményekről +++
+Az NVDA kiegészítő fájl megjelenése előtt is lehetőség volt egyes kiegészítők hozzáadására az NVDA programhoz, amelyeket a felhasználó NVDA konfigurációs mappájába kellett bemásolni. Ezeket a bővítmény kezelő nem mutatja, bár a program betölti őket, de a zavartalan működés érdekében kérjük, távolítsa el a program mappájából, és ha létezik, telepítse fel a csomagok hivatalos változatát.
+
 ++ Python Konzol ++
 Az NVDA Python konzol, mely az NVDA eszközök menüjében található, egy fejlesztői eszköz mely hasznos az NVDA összetevőinek futás közbeni megvizsgálásakor, esetenként egy alkalmazás hozzáférhetőségi hierarchiájának megállapításakor.
 Részletes információért tekintse meg az angol nyelvű [Python Konzol cikket az NVDA weboldalán NVDA_URLwiki/PythonConsole].
@@ -898,7 +932,7 @@ A menüelem aktiválásával az NVDA az összes bővítményt újratölti, anél
 
 + Támogatott beszédszintetizátorok +[SupportedSpeechSynths]
 
-Ez a fejezet az NVDA által támogatott beszédszintetizátorokról nyújt bővebb tájékoztatást.
+Ez a fejezet az NVDA által támogatott beszédszintetizátorokról nyújt bővebb tájékoztatást. Friss információkért látogassa meg az NVDA [Ezzel foglalkozó weboldalát. http://www.nvda-project.org/wiki/ExtraVoices]
 
 ++ Espeak ++
 
@@ -906,18 +940,18 @@ Az [eSpeak http://espeak.sourceforge.net/] egy ingyenes beszédszintetizátor, a
 
 ++ Microsoft Speech API version 4 (SAPI 4) ++
 
-A SAPI4 a Windows egy régebbi szabványa a különböző beszédszintetizátorokhoz. Ha ön egy SAPI 4-es szintetizátort használ, akkor a hozzátartozó hangkaraktereket a [beszéd... #VoiceSettings] beállításainál, vagy a [szintetizátor körön #SynthSettingsRing] tudja módosítani, persze miután aktiválta a SAPI 4 szabványt a Beszédszintetizátor párbeszédablakon. Ha ön már feltelepített SAPI 4-es szintetizátorokat, de azok nem jelennek meg az NVDA listájában, kérjük telepítse fel a SAPI 4.0 runtime binaries kiegészítőt, amit innen letölthet: http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+A SAPI4 a Windows egy régebbi szabványa a különböző beszédszintetizátorokhoz. Ha ön egy SAPI 4-es szintetizátort használ, akkor a hozzátartozó hangkaraktereket a [beszéd... #VoiceSettings] beállításainál, vagy a [szintetizátor körön #SynthSettingsRing] tudja módosítani, miután aktiválta a SAPI 4 szabványt a Beszédszintetizátor párbeszédablakon. Ha ön már feltelepített SAPI 4-es szintetizátorokat, de azok nem jelennek meg az NVDA listájában, kérjük, telepítse fel a SAPI 4.0 runtime binaries kiegészítőt, amit innen letölthet: http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API version 5 (SAPI 5) ++
 
 A SAPI5 egy Windows szabvány a beszédszintetizátor programokhoz. Sok szintetizátor támogatja ezeket, néhány ingyenes, és számos fizetős található a piacon. Ezeknek többségét a gyártó honlapjáról letöltheti/megrendelheti.
-Ha ön egy SAPI 5-ös szintetizátort használ, akkor a hozzátartozó hangkaraktereket a [beszéd... #VoiceSettings] beállításainál, vagy a [szintetizátor körön #SynthSettingsRing] tudja módosítani, persze miután aktiválta a SAPI 5 szabványt a Beszédszintetizátor párbeszédablakon. 
+Ha ön egy SAPI 5-ös szintetizátort használ, akkor a hozzátartozó hangkaraktereket a [beszéd... #VoiceSettings] beállításainál, vagy a [szintetizátor körön #SynthSettingsRing] tudja módosítani, miután aktiválta a SAPI 5 szabványt a Beszédszintetizátor párbeszédablakon. 
 
 ++ Audiologic Tts3 ++
 Ez egy fizetős szintetizátor, ami kizárólag olasz nyelven érhető el. Az NVDA-val való használat előtt ezt telepítenie kell a számítógépére. Bővebb információért keresse fel az AudioLogic weboldalát: www.audiologic.it
 
 ++ Newfon ++
-A Newfon a Sergey Shishmintzev által készített ingyenes, de kereskedelmi beszédszintetizátor, ami az orosz és ukrán nyelveket támogatja. A szintetizátor letöltéséhez kérjük látogassa meg az NVDA orosz oldalát: http://ru.nvda-community.org/?page_id=10
+A Newfon Sergey Shishmintzev által készített ingyenes, de kereskedelmi beszédszintetizátor, ami az orosz és ukrán nyelveket támogatja. A szintetizátor letöltéséhez kérjük látogassa meg az NVDA orosz oldalát: http://ru.nvda-community.org/?page_id=10
 
 + Támogatott braille kijelzők +[SupportedBrailleDisplays]
 
@@ -968,7 +1002,7 @@ A kijelzőn használható parancsok (a billentyűk elhelyezkedéséről a kijelz
 ++ Handy Tech kijelzők ++
 
 Az NVDA az összes [Handy Tech http://www.handytech.de/] kijelzőt támogatja. 
-Ha ön egy usb-s kijelzőt használ fel kell telepítenie a Handy Tech usb driverét a rendszerére. Továbbá telepítenie kell a Handy Tech általános driverét, amit a következő címről tölthet le:
+Ha ön egy usb-s kijelzőt használ, fel kell telepítenie a Handy Tech usb driverét a rendszerére. Továbbá telepítenie kell a Handy Tech általános driverét, amit a következő címről tölthet le:
 ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 A kijelzőn használható parancsok (a billentyűk elhelyezkedéséről a kijelzőhöz mellékelt dokumentáció ad felvilágosítást):
 %kc:beginInclude

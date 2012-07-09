@@ -1,3 +1,10 @@
+# -*- coding: UTF-8 -*-
+#virtualBuffers/__init__.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2007-2012 NV Access Limited, Peter Vágner
+
 import time
 import threading
 import ctypes
@@ -99,6 +106,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			ancestorCount += 1
 			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX):
 				break
+		raise LookupError
 
 	def __init__(self,obj,position):
 		self.obj=obj
@@ -248,17 +256,26 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 class ElementsListDialog(wx.Dialog):
 	ELEMENT_TYPES = (
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("link", _("Lin&ks")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("heading", _("&Headings")),
+		# Translators: The label of a radio button to select the type of element
+		# in the browse mode Elements List dialog.
 		("landmark", _("Lan&dmarks")),
 	)
 	Element = collections.namedtuple("Element", ("textInfo", "text", "parent"))
 
 	def __init__(self, vbuf):
 		self.vbuf = vbuf
+		# Translators: The title of the browse mode Elements List dialog.
 		super(ElementsListDialog, self).__init__(gui.mainFrame, wx.ID_ANY, _("Elements List"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
+		# Translators: The label of a group of radio buttons to select the type of element
+		# in the browse mode Elements List dialog.
 		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
 		mainSizer.Add(child,proportion=1)
@@ -267,9 +284,11 @@ class ElementsListDialog(wx.Dialog):
 		self.tree.Bind(wx.EVT_SET_FOCUS, self.onTreeSetFocus)
 		self.tree.Bind(wx.EVT_CHAR, self.onTreeChar)
 		self.treeRoot = self.tree.AddRoot("root")
-		mainSizer.Add(self.tree,proportion=7)
+		mainSizer.Add(self.tree,proportion=7,flag=wx.EXPAND)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of an editable text field to filter the elements
+		# in the browse mode Elements List dialog.
 		label = wx.StaticText(self, wx.ID_ANY, _("&Filter by:"))
 		sizer.Add(label)
 		self.filterEdit = wx.TextCtrl(self, wx.ID_ANY)
@@ -278,9 +297,13 @@ class ElementsListDialog(wx.Dialog):
 		mainSizer.Add(sizer,proportion=1)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a button to activate an element
+		# in the browse mode Elements List dialog.
 		self.activateButton = wx.Button(self, wx.ID_ANY, _("&Activate"))
 		self.activateButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(True))
 		sizer.Add(self.activateButton)
+		# Translators: The label of a button to move to an element
+		# in the browse mode Elements List dialog.
 		self.moveButton = wx.Button(self, wx.ID_ANY, _("&Move to"))
 		self.moveButton.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(False))
 		sizer.Add(self.moveButton)
@@ -1241,12 +1264,16 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		try:
 			tableID, origRow, origCol, origRowSpan, origColSpan = self._getTableCellCoords(self.selection)
 		except LookupError:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# when the cursor is not withnin a table.
 			ui.message(_("Not in a table cell"))
 			return
 
 		try:
 			info = self._getNearestTableCell(tableID, self.selection, origRow, origCol, origRowSpan, origColSpan, movement, axis)
 		except LookupError:
+			# Translators: The message reported when a user attempts to use a table movement command
+			# but the cursor can't be moved in that direction because it is at the edge of the table.
 			ui.message(_("edge of table"))
 			# Retrieve the cell on which we started.
 			info = next(self._iterTableCells(tableID, row=origRow, column=origCol))
@@ -1337,6 +1364,56 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		# We do this check because we don't want to remember caret positions for email messages, etc.
 		return isinstance(docConstId, basestring) and docConstId.split("://", 1)[0] in ("http", "https", "ftp", "ftps", "file")
 
+	def getEnclosingContainerRange(self,range):
+		formatConfig=config.conf['documentFormatting'].copy()
+		formatConfig.update({"reportBlockQuotes":True,"reportTables":True,"reportLists":True,"reportFrames":True})
+		controlFields=[]
+		for cmd in range.getTextWithFields():
+			if not isinstance(cmd,textInfos.FieldCommand) or cmd.command!="controlStart":
+				break
+			controlFields.append(cmd.field)
+		containerField=None
+		while controlFields:
+			field=controlFields.pop()
+			if field.getPresentationCategory(controlFields,formatConfig)==field.PRESCAT_CONTAINER:
+				containerField=field
+				break
+		if not containerField: return None
+		docHandle=int(containerField['controlIdentifier_docHandle'])
+		ID=int(containerField['controlIdentifier_ID'])
+		offsets=range._getOffsetsFromFieldIdentifier(docHandle,ID)
+		return self.makeTextInfo(textInfos.offsets.Offsets(*offsets))
+
+	def script_moveToStartOfContainer(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		container=self.getEnclosingContainerRange(info)
+		if not container:
+			# Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.) 
+			# But there is no container. 
+			ui.message(_("Not in a container"))
+			return
+		container.collapse()
+		self._set_selection(container, reason=self.REASON_QUICKNAV)
+		container.expand(textInfos.UNIT_LINE)
+		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+	# Translators: Description for the Move to start of container command in browse mode. 
+	script_moveToStartOfContainer.__doc__=_("Moves to the start of the container element, such as a list or table")
+
+	def script_movePastEndOfContainer(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		container=self.getEnclosingContainerRange(info)
+		if not container:
+			ui.message(_("Not in a container"))
+			return
+		container.collapse(end=True)
+		self._set_selection(container, reason=self.REASON_QUICKNAV)
+		container.expand(textInfos.UNIT_LINE)
+		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
+	# Translators: Description for the Move past end of container command in browse mode. 
+	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
+
 	__gestures = {
 		"kb:enter": "activatePosition",
 		"kb:space": "activatePosition",
@@ -1352,6 +1429,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+rightArrow": "nextColumn",
 		"kb:control+alt+leftArrow": "previousColumn",
+		"kb:shift+,": "moveToStartOfContainer",
+		"kb:,": "movePastEndOfContainer",
 	}
 
 # Add quick navigation scripts.

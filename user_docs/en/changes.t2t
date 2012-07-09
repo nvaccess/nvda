@@ -3,12 +3,78 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.3 =
+
+== New Features ==
+- The presence of underline and strikethrough is now reported in Adobe Reader documents. (#2410)
+- When the Windows Sticky Keys function is enabled, the NVDA modifier key will now behave like other modifier keys. This allows you to use the NVDA modifier key without needing to hold it down while you press other keys. (#230)
+- Support for HIMS Braille Sense, Braille EDGE and SyncBraille braille displays. (#1266, #1267)
+- When Windows 8 Toast notifications appear, NVDA will announce them and move the navigator object there for further interaction. (#2143)
+- Support for VIP Mud. (#1728)
+- In Adobe Reader, if a table has a summary, it is now presented. (#2465)
+- In Adobe Reader, table row and column headers can now be reported. (#2193)
+- New languages: Korean, Nepali
+
+
+== Changes ==
+- In the NVDA Review Cursor preferences dialog, the Follow keyboard focus option has been renamed to Follow system focus for consistency with terminology used elsewhere in NVDA.
+- When braille is tethered to review and the cursor is on an object which is not a text object (e.g. an editable text field), cursor routing keys will now activate the object. (#2386)
+
+
+== Bug Fixes ==
+- In Blio, the content of books can now be read in braille. (#2139)
+- In Windows Vista and later, NVDA no longer incorrectly treats the Windows key as being held down when unlocking Windows after locking it by pressing Windows+l. (#1856)
+- In Adobe Reader, row headers are now correctly recognised as table cells; i.e. coordinates are reported and they can be accessed using table navigation commands. (#2444)
+- In Adobe Reader, table cells spanning more than one column and/or row are now handled correctly. (#2437, #2438, #2450)
+- When copying the user configuration to the system configuration (for use on Windows logon and other secure screens) NVDA will no longer freeze on XP while doing so. (#2485)
+- Tiles on the Windows 8 Start Screen are now presented better in speech and braille. The name is no longer repeated, unselected is no longer reported on all tiles, and live status information is presented  as the description of the tile (e.g. current temperature for the Weather tile).
+
+ 
+== Changes for Developers ==
+- Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
+
+
+= 2012.2.1 =
+This release addresses  several potential security issues (by upgrading Python to 2.7.3).
+
+  
 = 2012.2 =
+Highlights of this release include an in-built installer and  portable  creation feature, automatic updates, easy management of new NVDA add-ons, announcement of graphics in Microsoft Word, support for Windows 8 Metro style apps, and several important bug fixes. 
+
+== New Features ==
+- NVDA can now automatically check for, download and install updates. (#73)
+- Extending NVDA's functionality  has been made easier with the addition of an Add-ons Manager (found under Tools in the NVDA menu) allowing you to install and uninstall new NVDA add-on packages (.nvda-addon files) containing plugins and drivers. Note the Add-on manager does not show older custom plugins and drivers manually copied in to your configuration directory. (#213)
+- Many more common NVDA features now work in Windows 8 Metro style apps when using an installed release  of NVDA, including speaking of typed characters, and browse mode for web documents (includes support for metro version of Internet Explorer 10). Portable copies of NVDA cannot access metro style apps. (#1801) 
+- In browse mode documents (Internet Explorer, Firefox, etc.), you can now  jump to the start and past the end of certain containing elements (such as lists and tables) with shift+, and , respectively. (#123)
+- New language: Greek.
+- Graphics and alt text are now reported in Microsoft Word Documents. (#2282, #1541)
+
+
+== Changes ==
+- Announcement of cell coordinates in Microsoft Excel is now after the content rather than before, and is now only included   if the report tables and report table cell coordinates settings are enabled in the Document formatting settings dialog. (#320)
+- NVDA is now distributed in one package. Rather than separate portable and installer versions, there is now just one file that, when run, will start a temporary copy of NVDA and will allow you to install or generate a portable distribution. (#1715)
+- NVDA is now always installed in to Program Files on all systems. Updating a previous install will also automatically move it if it was not previously installed there.
+
 
 == Bug Fixes ==
 - With auto language switching enabled, Content such as alt text for graphics and labels for other certain controls in Mozilla Gecko (e.g. Firefox) are now reported in the correct language if marked up appropriately.
 - SayAll in BibleSeeker (and other TRxRichEdit controls) no longer stops in the middle of a passage.
 - Lists found in the Windows 8 Explorer file properties (permitions tab) and in Windows 8 Windows Update now read correctly.
+- Fixed possible freezes in MS Word which would result when it took more than 2 seconds to fetch text from a document (extremely long lines or tables of contents). (#2191)
+- Detection of word breaks now works correctly where whitespace is followed by certain punctuation. (#1656)
+- In browse mode in Adobe Reader, it is now possible to navigate to headings without a level using quick navigation and the Elements List. (#2181)
+- In Winamp, braille is now correctly updated when you move to a different item in the Playlist Editor. (#1912)
+- The tree in the Elements List (available for browse mode documents) is now properly sized to show  the text of each element. (#2276)
+- In applications using the Java Access Bridge, editable text fields are now presented correctly in braille. (#2284)
+- In applications using the java Access Bridge, editable text fields no longer report strange characters in certain circumstances. (#1892)
+- In applications using the Java Access Bridge, when at the end of an editable text field, the current line is now reported correctly. (#1892)
+- In browse mode in applications using Mozilla Gecko 14 and later (e.g. Firefox 14), quick navigation now works for block quotes and embedded objects. (#2287)
+- In Internet Explorer 9, NVDA no longer reads unwanted content when focus moves inside certain landmarks or focusable elements (specifically, a div element which is focusable or has an ARIA landmark role).
+- The NVDA icon for the NVDA Desktop and Start Menu shortcuts is now displayed correctly on 64 bit editions of Windows. (#354)
+
+
+== Changes for Developers ==
+- Due to the replacement of the previous NSIS installer for NVDA with a built-in installer in Python, it is no longer necessary for translaters to maintain a langstrings.txt file for the installer. All localization strings are now managed by gettext po files.
 
 
 = 2012.1 =

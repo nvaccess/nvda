@@ -4,11 +4,15 @@ Performs miscellaneous tasks which need to be performed in a separate process.
 
 import sys
 import os
+import logHandler
 if hasattr(sys, "frozen"):
 	# Error messages (which are only for debugging) should not cause the py2exe log message box to appear.
 	sys.stderr = sys.stdout
+	#Many functions expect  the current directory to be where slave is located (#2391) 
+	os.chdir(sys.prefix)
 
 def main():
+	import installer
 	try:
 		action = sys.argv[1]
 	except IndexError:
@@ -19,6 +23,11 @@ def main():
 		if action == "service_NVDALauncher":
 			import nvda_service
 			nvda_service.nvdaLauncher()
+		elif action=="install":
+			installer.install(bool(int(args[0])),bool(int(args[1])))
+		elif action=="unregisterInstall":
+			import installer
+			installer.unregisterInstallation()
 		elif action=="launchNVDA":
 			import subprocess
 			import shellapi
@@ -58,8 +67,16 @@ def main():
 		else:
 			raise ValueError("No such action")
 
+	except installer.RetriableFailure:
+		logHandler.log.error("Task failed, try again",exc_info=True)
+		sys.exit(2)
 	except Exception, e:
-		sys.exit(e)
+		logHandler.log.error("slave error",exc_info=True)
+		sys.exit(1)
 
 if __name__ == "__main__":
+	logHandler.initialize(True)
+	logHandler.log.setLevel(0)
+	import languageHandler
+	languageHandler.setLanguage("Windows")
 	main()

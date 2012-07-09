@@ -10,6 +10,7 @@ import copy
 import wx
 import winUser
 import logHandler
+import installer
 from synthDriverHandler import *
 import config
 import languageHandler
@@ -25,6 +26,10 @@ import braille
 import core
 import keyboardHandler
 import characterProcessing
+try:
+	import updateCheck
+except RuntimeError:
+	updateCheck = None
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -115,7 +120,7 @@ class GeneralSettingsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
-		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take affect):"))
+		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take effect):"))
 		languageSizer.Add(languageLabel)
 		languageListID=wx.NewId()
 		self.languageNames=languageHandler.getAvailableLanguages()
@@ -168,12 +173,19 @@ class GeneralSettingsDialog(SettingsDialog):
 		if globalVars.appArgs.secure or not config.isServiceInstalled():
 			self.copySettingsButton.Disable()
 		settingsSizer.Add(self.copySettingsButton)
+		if updateCheck:
+			# Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
+			item=self.autoCheckForUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &updates to NVDA"))
+			item.Value=config.conf["update"]["autoCheck"]
+			if globalVars.appArgs.secure:
+				item.Disable()
+			settingsSizer.Add(item)
 
 	def postInit(self):
 		self.languageList.SetFocus()
 
 	def onCopySettings(self,evt):
-		for packageType in ('appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
+		for packageType in ('addons','appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
 			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
 				if gui.messageBox(
 					_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
@@ -181,7 +193,33 @@ class GeneralSettingsDialog(SettingsDialog):
 				)==wx.NO:
 					return
 				break
-		if not config.setSystemConfigToCurrentConfig():
+		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
+		# Translators: The title of the dialog presented while settings are being copied 
+		_("Copying Settings"),
+		# Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc) 
+		_("Please wait while settings are copied to the system configuration."))
+		while True:
+			try:
+				gui.ExecAndPump(config.setSystemConfigToCurrentConfig)
+				res=True
+				break
+			except installer.RetriableFailure:
+				log.debugWarning("Error when copying settings to system config",exc_info=True)
+				# Translators: a message dialog asking to retry or cancel when copying settings  fails
+				message=_("Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to.")
+				# Translators: the title of a retry cancel dialog when copying settings  fails
+				title=_("Error Copying")
+				if winUser.MessageBox(None,message,title,winUser.MB_RETRYCANCEL)==winUser.IDRETRY:
+					continue
+				res=False
+				break
+			except:
+				log.debugWarning("Error when copying settings to system config",exc_info=True)
+				res=False
+				break
+		progressDialog.done()
+		del progressDialog
+		if not res:
 			gui.messageBox(_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR,self)
 		else:
 			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
@@ -208,6 +246,10 @@ class GeneralSettingsDialog(SettingsDialog):
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
 			except (WindowsError, RuntimeError):
 				gui.messageBox(_("This change requires administrator privileges."), _("Insufficient Privileges"), style=wx.OK | wx.ICON_ERROR, parent=self)
+		if updateCheck:
+			config.conf["update"]["autoCheck"]=self.autoCheckForUpdatesCheckBox.IsChecked()
+			updateCheck.terminate()
+			updateCheck.initialize()
 		if self.oldLanguage!=newLanguage:
 			if gui.messageBox(
 				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
@@ -658,7 +700,7 @@ class ReviewCursorDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the
 		# review cursor settings dialog.
-		self.followFocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow &keyboard focus"))
+		self.followFocusCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Follow system &focus"))
 		self.followFocusCheckBox.SetValue(config.conf["reviewCursor"]["followFocus"])
 		settingsSizer.Add(self.followFocusCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
@@ -691,9 +733,21 @@ class ObjectPresentationDialog(SettingsDialog):
 	# Translators: This is the label for the object presentation dialog.
 	title = _("Object Presentation")
 	progressLabels = (
+		# Translators: An option for progress bar output in the Object Presentation dialog
+		# which disables reporting of progress bars.
+		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("off", _("off")),
+		# Translators: An option for progress bar output in the Object Presentation dialog
+		# which reports progress bar updates by speaking.
+		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("speak", _("Speak")),
+		# Translators: An option for progress bar output in the Object Presentation dialog
+		# which reports progress bar updates by beeping.
+		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("beep", _("Beep")),
+		# Translators: An option for progress bar output in the Object Presentation dialog
+		# which reports progress bar updates by both speaking and beeping.
+		# See Progress bar output in the Object Presentation Settings section of the User Guide.
 		("both", _("Speak and beep")),
 	)
 

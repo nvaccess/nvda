@@ -1,4 +1,4 @@
-﻿NVDA NVDA_VERSION -käyttöopas
+﻿NVDA NVDA_VERSION - käyttöopas
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -23,7 +23,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki useille pistenäytöille
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
-- Käännökset 36 kielelle
+- Käännökset 37 kielelle
 - Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
 - Mahdollisuus käyttää Windowsin kirjautumis- ja muissa suojatuissa ruuduissa
 - Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
@@ -32,7 +32,7 @@ Tärkeimpiä ominaisuuksia ovat:
 
 ++ Kansainvälistäminen ++
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on saatavilla englannin lisäksi seuraavilla 36 kielellä: afrikaans, albania, arabia, brasilianportugali, bulgaria, espanja, galego, georgia, heprea, hindi, hollanti, islanti, italia, japani, kroatia, mandariini- ja perinteinen kiina, norja, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on saatavilla englannin lisäksi seuraavilla 37 kielellä: afrikaans, albania, arabia, brasilianportugali, bulgaria, espanja, galego, georgia, heprea, hindi, hollanti, islanti, italia, japani, kreikka, kroatia, mandariinikiina, norja, perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -45,7 +45,7 @@ Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesynt
 NVDA voi tulostaa tietonsa pistekirjoituksella niille käyttäjille, joilla on pistenäyttö.
 Katso [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaletta saadaksesi tietoja tuetuista pistenäytöistä.
 
-NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepistekirjoitusta, tavallista sekä joissakin kielissä tietokonemerkistöä.
+NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepistekirjoitusta, tavallista sekä monissa kielissä tietokonemerkistöä.
 
 ++ Lisenssi ja tekijänoikeustiedot ++
 NVDA on copyright NVDA_COPYRIGHT_YEARS NVDA:n tekijät.
@@ -62,49 +62,59 @@ Voit [tarkastella koko lisenssiä http://www.gnu.org/licenses/old-licenses/gpl-2
 - Noin 50 Mt levytilaa.
 -
 
-+ NVDA:n hankkiminen +
++ NVDA:n hankkiminen ja asentaminen +
 NVDA on ladattavissa osoitteesta [www.nvda-project.org NVDA_URL].
 
 Viimeisimmän version latauslinkki löytyy Download-osiosta.
 
-NVDA on saatavilla kahtena versiona.
-Ensimmäinen on puhuva asennusohjelma, jolla NVDA voidaan asentaa tietokoneelle.
-Toinen on itsepurkautuva pakattu tiedosto, joka sisältää täysin käyttövalmiin massamuistiversion, jota voidaan käyttää mistä tahansa, kuten USB-muistitikulta tai CD:ltä.
+Ladatun tiedoston suorittaminen käynnistää NVDA:n väliaikaisversion.
+Seuraavaksi kysytään, halutaanko se asentaa, luoda massamuistiversio tai jatkaa väliaikaisversion käyttämistä.
 
-Jotta Windowsin kirjautumisruudun, käyttäjätilien valvonnan kehotteiden ja muiden suojattujen ruutujen lukeminen tai Windows Vistassa ja uudemmissa järjestelmänvalvojan oikeuksin käynnissä olevien sovellusten käyttäminen olisi mahdollista, on NVDA asennettava tietokoneelle asennusohjelmaa käyttäen.
-Edellä mainittujen suojattujen ruutujen lukeminen tai sovellusten käyttäminen ei ole mahdollista NVDA:n massamuistiversiolla.
+Kannattaa valita asennusvaihtoehto, jos NVDA:ta aiotaan käyttää aina samalla tietokoneella.
+Asentaminen mahdollistaa sellaiset lisätoiminnot kuin automaattinen käynnistys Windowsiin kirjautumisen jälkeen, kirjautumis- ja suojattujen ruutujen lukeminen (massamuisti- ja väliaikaisversioilla tämä ei ole mahdollista) ja pikakuvakkeen luomisen Käynnistä-valikkoon ja työpöydälle.
+Asennetusta versiosta on mahdollista tehdä milloin tahansa myös massamuistiversio.
 
-+ NVDA:n asentaminen +
+Massamuistiversion luominen kannattaa valita, jos NVDA halutaan mukana kuljetettavaksi USB-muistitikulle tai muulle kirjoitettavalle tietovälineelle.
+Se voidaan myös asentaa myöhemmin mille tahansa tietokoneelle.
+Jos NVDA halutaan kopioida vain luettavissa olevalle tietovälineelle kuten CD:lle, tulee tällöin käyttää vain ladattua käynnistyspakettia.
+Massamuistiversion käyttämistä ei tueta suoraan vain luettavissa olevalta tietovälineeltä.
 
-++ Asennusohjelma ++
-NVDA voidaan asentaa joko painamalla Enteriä asennustiedoston kohdalla tai kaksoisnapsauttamalla sitä, jolloin asennusohjelma käynnistyy.
+Vaihtoehtona on myös NVDA:n väliaikaisversion käyttäminen (esim. esittelytarkoituksiin), vaikka joka kerta tällä tavalla käynnistäminen voikin olla hyvin aikaa vievää.
 
-Asennusohjelman käynnistyessä kuuluu NVDA:n tunnusmusiikki.
-Kun asennusohjelma on käynnistynyt, NVDA:n tilapäiskopion avulla voidaan seurata asennusohjelman kehotteita ja asentaa NVDA.
-HUOM: Jos asennusohjelman käynnistyksen aikana käytettiin toista NVDA:n kopiota, asennusohjelma sulkee sen ja käynnistää omansa.
-Tämä on tarpeen, jotta kaikki muuttuneet tiedostot voidaan päivittää.
-Mikäli toinen NVDA:n versio on jo asennettuna, asennusohjelma poistaa sen tässä vaiheessa, jonka jälkeen varsinainen asennus alkaa.
+++ Asentaminen ++
+Mikäli asennetaan suoraan ladatusta paketista, painetaan Asenna NVDA -painiketta.
+Jos tämä valintaikkuna on jo suljettu tai halutaan asentaa massamuistiversiosta, valitaan Asenna NVDA -vaihtoehto, joka löytyy NVDA-valikosta Työkalut-valikon alta.
 
-Asennusohjelma ilmoittaa, kun asennus on onnistuneesti suoritettu.
-Mikäli tehtiin NVDA:n uudelleenasennus, asennusohjelma saattaa kehottaa käynnistämään tietokoneen uudelleen.
-Uudelleenkäynnistäminen on erittäin tärkeää, koska muuten NVDA ei ehkä toimi oikein.
-Jos uudelleenkäynnistyskehotusta ei tullut, Valmis-painikkeen painaminen sulkee asennusohjelman ja käynnistää asennetun NVDA:n.
+Näkyviin tulevassa valintaikkunassa pyydetään vahvistus NVDA:n asentamiselle ja kerrotaan myös, päivitetäänkö aiempi versio.
+Asennus käynnistyy painamalla Jatka-painiketta.
+Tässä valintaikkunassa on myös muutama asetus, jotka on selitetty alla.
+Kun asennus on suoritettu, näkyviin tulee ilmoitus sen onnistumisesta.
+Asennettu NVDA käynnistetään painamalla OK.
 
-++ Massamuistiversio ++
-Riittää, että tiedoston kohdalla painetaan Enteriä tai kaksoisnapsautetaan sitä ja seurataan näyttöön tulevia kehotteita.
-Ohjelma kysyy, minne tiedostot puretaan.
++++ Käynnistä Windowsiin kirjauduttaessa +++
+Tällä asetuksella voidaan valita, käynnistyykö NVDA automaattisesti Windowsin kirjautumisruudussa ennen kuin salasana on annettu.
+Asetus vaikuttaa myös käyttäjätilien valvontaan ja muihin suojattuihin ruutuihin.
 
-+++ Käyttäminen USB-muistitikulta +++
-NVDA on mahdollista sijoittaa USB-muistitikulle, jotta sitä voidaan käyttää muissakin tietokoneissa.
++++ Luo pikakuvake työpöydälle (Ctrl+Alt+n) +++
+Tällä asetuksella valitaan, luodaanko työpöydälle pikakuvake, josta NVDA voidaan käynnistää.
+Mikäli kuvake luodaan, siihen liitetään myös pikanäppäin Ctrl+Alt+n, jolla NVDA voidaan milloin tahansa käynnistää.
 
-Kun massamuistiversio kysyy, minne se halutaan purkaa, kirjoita USB-muistitikkusi asemakirjain, jonka perään voidaan myös halutessa lisätä alihakemisto, jonne NVDA:n tiedostot sijoitetaan.
++++ Kopioi massamuistiversion asetukset nykyiseen käyttäjätiliin +++
+Tällä asetuksella voidaaan valita, kopioidaanko käynnissä olevan NVDA:n asetukset asennettuun versioon nykyiselle kirjautuneelle käyttäjälle. 
+Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin kirjautumis- tai muissa suojatuissa ruuduissa käytettäväksi.
+Tämä asetus on käytettävissä vain massamuistiversiosta asennettaessa, ei suoraan ladatusta käynnistyspaketista.
+ 
+++ Massamuistiversion luominen ++
+Mikäli massamuistiversio luodaan suoraan ladatusta paketista, painetaan vain Luo massamuistiversio -painiketta.
+Jos tämä valintaikkuna on jo suljettu tai käytetään NVDA:n asennettua versiota, valitaan Luo massamuistiversio -vaihtoehto, joka löytyy NVDA-valikosta Työkalut-valikon alta.
 
-Jos USB-muistitikun asemakirjain on esimerkiksi E:\, voidaan kirjoittaa E:\nvda, joka purkaa NVDA:n tiedostot MUISTITIKULLE NVDA-nimiseen alihakemistoon.
-
-HUOM: Vaikka tämä tarkoittaakin, että NVDA:ta ja sen asetuksia voidaan kuljettaa mukana missä tahansa, pelkkä muistitikun koneeseen kytkeminen ei käynnistä NVDA:ta automaattisesti, vaan se on käynnistettävä käsin joko Windowsin Resurssienhallinnasta tai Suorita-valintaikkunasta.
-
-Saadaksesi tietoja NVDA:n automaattisesta käynnistyksestä USB-muistitikulta, katso tätä artikkelia::
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+Näkyviin tulevassa valintaikkunassa voidaan valita sijainti, jonne massamuistiversio luodaan.
+Se voi olla kiintolevyllä oleva hakemisto tai sijainti USB-muistitikulla tai muulla siirrettävällä tietovälineellä.
+Tässä valintaikkunassa on myös asetus, jolla voidaan valita, kopioidaanko kirjautuneen käyttäjän asetukset massamuistiversiossa käytettäviksi.
+Asetus on käytettävissä vain luotaessa massamuistiversiota asennetusta kopiosta, ei ladatusta käynnistyspaketista.
+Massamuistiversion luonti aloitetaan painamalla Jatka.
+Kun se on valmis, näkyviin tulee ilmoitus luonnin onnistumisesta.
+Valintaikkuna suljetaan Painamalla OK.
 
 + Alkuun pääseminen +
 
@@ -126,7 +136,7 @@ Kun NVDA käynnistyy ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa 
 Valintaikkunassa on myös kaksi valintaruutua.
 Ensimmäisen avulla voidaan säätää, käyttääkö NVDA Capslockia NVDA-näppäimenä, ja toisella voidaan määrittää, halutaanko Tervetuloa-valintaikkunan tulevan näkyviin joka kerta NVDA:n käynnistyessä.
 
-++ Tietoja NVDA:n näppäinkomennoista ++
+++ Tietoja näppäinkomennoista ++
 
 +++ NVDA-näppäin +++ 
 Useimmat NVDA:n näppäinkomennot koostuvat yleensä tietyn NVDA-näppäimeksi kutsutun näppäimen painamisesta yhdessä yhden tai useamman muun näppäimen kanssa.
@@ -159,15 +169,15 @@ Jos käytettävässä kannettavassa ei voi tehdä tätä, tai Numlockin pois pä
 NVDA-valikosta voidaan säätää NVDA:n asetuksia, lukea ohjetta, tallentaa ja palauttaa asetukset, muokata puhesanastoja, käyttää lisätyökaluja sekä sulkea NVDA.
 
 NVDA-valikkoon päästään kaikkialta Windowsista NVDA:n ollessa käynnissä painamalla NVDA+n.
-Valikkoon pääsee myös Windowsin järjestelmätarjottimella olevasta NVDA:n kuvakkeesta.
-Sitä voidaan joko napsauttaa hiiren oikealla painikkeella tai siirtyä järjestelmätarjottimelle painamalla Windows+b, menemällä nuolinäppäimillä NVDA-kuvakkeen kohdalle ja painamalla sovellusvalikkonäppäintä, joka löytyy useimmista näppäimistöistä oikeanpuoleisen Control-näppäimen vasemmalta puolelta.
+Valikkoon pääsee myös Windowsin ilmoitusalueella olevasta NVDA:n kuvakkeesta.
+Sitä voidaan joko napsauttaa hiiren oikealla painikkeella tai siirtyä ilmoitusalueelle painamalla Windows+b, menemällä nuolinäppäimillä NVDA-kuvakkeen kohdalle ja painamalla sovellusvalikkonäppäintä, joka löytyy useimmista näppäimistöistä oikeanpuoleisen Control-näppäimen vasemmalta puolelta.
 Kun valikko tulee näkyviin, siinä voidaan liikkua nuolinäppäimillä ja valita haluttu kohta Enterillä.
 
 ++ Perusnäppäinkomennot ++
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
 | Keskeytä puhe | Ctrl | Keskeyttää puheen välittömästi. |
-| Tauota puhe | Shift | Tauottaa puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, johon jäätiin (mikäli sen hetkinen puhesyntetisaattori tukee puheen tauottamista). |
+| Pysäytä puhe | Shift | pysäyttää puheen välittömästi. Uudelleen painaminen jatkaa puhetta kohdasta, johon jäätiin (mikäli sen hetkinen puhesyntetisaattori tukee puheen pysäyttämistä). |
 | NVDA-valikko | NVDA+n | Avaa NVDA-valikon, josta on mahdollista säätää asetuksia, käyttää työkaluja ja lukea ohjetta jne. |
 | Vaihda puhetilaa | NVDA+s | Vaihtaa eri puhetilojen välillä, jotka ovat puhe, äänimerkit ja pois. |
 | Syöteohjetila | NVDA+1 | Tässä tilassa minkä tahansa näppäimen painaminen kertoo kyseisen näppäimen nimen ja kaikki siihen määritellyt NVDA-komennot. | 
@@ -242,12 +252,12 @@ Tekstiä voidaan myös tarkastella sellaisena kuin se näkyy ruudulla.
 Tähän käytetään objektinavigoinnin asemesta [kokonaistarkastelua #Kokonaistarkastelu].
 
 Objektit on ryhmitelty hierarkisesti sen sijaan, että niiden välillä liikuttaisiin edestakaisin.
-Tämä tarkoittaa, että jotkin objektit sisältävät muita objekteja, ja että on siirryttävä niiden sisään, jotta päästäisiin niiden sisältämiin objekteihin.
+Tämä tarkoittaa, että jotkin objektit sisältävät muita objekteja, ja että on siirryttävä niiden sisään, jotta päästäisiin edelleen niiden sisältämiin objekteihin.
 Lista esimerkiksi sisältää listakohteita, joten niihin pääsemiseksi on siirryttävä listan sisään.
 Jos on siirrytty listan kohteeseen, seuraavaan ja edelliseen objektiin siirtyminen siirtää saman listan muihin kohteisiin.
 Listakohteen säilöobjektiin siirtyminen siirtää takaisin listan kohdalle.
-Tämän jälkeen voidaan siirtyä siitä pois, mikäli halutaan päästä muihin objekteihin.
-Samoin työkalupalkkikin sisältää säätimiä, joten on siirryttävä kyseisen työkalupalkin sisään sen sisältämiin säätimiin pääsemiseksi.
+Tämän jälkeen siitä voidaan siirtyä pois, mikäli halutaan päästä muihin objekteihin.
+Myös työkalupalkki sisältää säätimiä, joten niihin pääsemiseksi on siirryttävä kyseisen työkalupalkin sisään.
 
 Nykyistä tarkasteltavaa objektia kutsutaan navigointiobjektiksi.
 Kun objektiin siirrytään, sitä voidaan tarkastella [tekstinlukukomennoilla #Tekstinlukeminen].
@@ -303,7 +313,7 @@ Seuraavat tekstinlukukomennot ovat käytettävissä:
 | Lue kaikki | Numeroryhmän plus | NVDA+Shift+alanuoli | Lukee tarkastelukohdistimen nykyisestä kohdasta lähtien siirtäen samalla sitä. |
 | Merkitse kopioitavan tekstin alkukohta | NVDA+f9 | NVDA+f9 | Aloittaa tekstin kopioimisen tarkastelukohdistimen nykyisestä kohdasta. Varsinaista kopiointia ei suoriteta ennen kuin NVDA:lle kerrotaan, mihin kopiointi lopetetaan. |
 | Merkitse kopioitavan tekstin loppukohta | NVDA+f10 | NVDA+f10 | Kopioi tekstin alkukohdan merkitsemiskomennolla asetetusta kohdasta lähtien tarkastelukohdistimen nykyiseen sijaintiin saakka. Kun tätä näppäinyhdistelmää painetaan, teksti kopioidaan leikepöydälle. |
-| Lue tekstin muotoilutiedot | NVDA+f | Lukee järjestelmäkohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. |
+| Lue tekstin muotoilutiedot | NVDA+f | NVDA+f | Lukee järjestelmäkohdistimen nykyisessä sijainnissa olevan tekstin muotoilutiedot. |
 %kc:endInclude
 
 Huomautus: Numlockin on oltava pois päältä, jotta numeroryhmän näppäimet toimisivat oikein.
@@ -416,6 +426,10 @@ Sellaisinaan nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa 
 - o: upotettu objekti
 - numerot 1 - 6: otsikot tasoilla 1 - 6
 -
+Säilöelementtien, kuten listojen ja taulukoiden, alkuun tai loppuun siirtymiseksi:
+|| Nimi | Näppäinkomento | Kuvaus |
+| Siirrä säilöelementin alkuun | Shift+, (pilkku) | Siirtää sen säilöelementin alkuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
+| Siirrä säilöelementin loppuun | , (pilkku) | Siirtää sen säilöelementin loppuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
 %kc:endInclude
 
 ++ Elementtilista ++
@@ -447,6 +461,8 @@ NVDA:ssa on joillekin sovelluksille omia lisäkomentoja tiettyjen tehtävien hel
 || Nimi | Näppäinkomento | Kuvaus |
 | Lue jäljellä oleva aika | Ctrl+Shift+r | Lukee nykyisen kappaleen jäljellä olevan ajan. |
 %kc:endInclude
+
+Huomautus: Lue jäljellä oleva aika -komento toimii vain foobar2000:n tilarivin muotoilun oletusmerkkijonolla.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -507,6 +523,10 @@ Asetus on käytettävissä vain NVDA:n asennetuissa versioissa.
 Tämän painikkeen painaminen kopioi nykyiset tallennetut asetukset NVDA:n järjestelmäasetusten hakemistoon, jotta niitä käytetään kirjautumis- ja käyttäjätilien valvonnan ja muissa suojatuissa ruuduissa.
 Asetusten siirtäminen voidaan varmistaa tallentamalla ne ensin painamalla Ctrl+NVDA+s tai valitsemalla NVDA-valikosta Tallenna asetukset.
 Tämä painike on käytettävissä vain NVDA:n asennetuissa versioissa.
+
+==== Automaattinen päivitysten tarkistaminen ====
+Jos tämä asetus on käytössä, NVDA etsii automaattisesti uusia versioita ja ilmoittaa, kun päivitys on saatavilla.
+Päivitysten manuaalinen tarkistaminen on myös mahdollista valitsemalla Tarkista päivitykset -vaihtoehto NVDA-valikosta Ohje-valikon alta.
 
 +++ Puhesyntetisaattorin valitseminen (NVDA+Ctrl+s) +++
 Syntetisaattori-valintaikkunassa, joka löytyy Asetukset-valikosta kohdasta "Syntetisaattori...", voidaan valita, mitä puhesyntetisaattoria NVDA käyttää.
@@ -571,7 +591,7 @@ Tästä voidaan valita sanoina luettavien välimerkkien ja muiden symboleiden m�
 Esimerkiksi kun tasoksi on valittu kaikki, kaikki symbolit luetaan sanoina.
 Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin, eikä pelkästään käytössä olevaan.
 
-==== Äänenkorkeuden muutos isoille kirjaimille ====
+==== Äänenkorkeuden muutos prosentteina isoille kirjaimille ====
 Tähän muokkauskenttään voidaan syöttää prosenttiluku, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
 Negatiivinen arvo laskee ja positiivinen nostaa äänenkorkeutta.
 Mikäli äänenkorkeuden ei haluta muuttuvan, on arvoksi asetettava 0.
@@ -765,13 +785,13 @@ Tätä valintaruutua ei kannata valita, jos ei haluta kuulla objektien kuvauksia
 | Näppäinkomento pöytäkoneissa | NVDA+u |
 | Näppäinkomento kannettavissa | NVDA+Ctrl+f2 |
 
-Tästä yhdistelmäruudusta voidaan säätää, miten NVDA ilmaisee edistymispalkkien päivittymisen.
+Tämä asetus määrittää, miten NVDA ilmaisee edistymispalkkien päivittymisen.
 
 Seuraavat vaihtoehdot ovat käytettävissä:
 - Pois: Edistymispalkkeja ei lueta.
 - Lue: Edistymispalkit luetaan prosentteina. Joka kerta kun edistymispalkki muuttuu, NVDA lukee sen uuden arvon.
 - Anna äänimerkki: NVDA antaa äänimerkin joka kerta edistymispalkin muuttuessa. Mitä korkeampi äänimerkki, sitä lähempänä loppua edistymispalkki on.
-- Lue ja anna äänimerkki: NVDA sekä lukee edistymispalkin arvon että antaa äänimerkin.
+- Anna äänimerkki ja lue: NVDA sekä antaa äänimerkin että lukee edistymispalkin arvon.
 -
 
 ==== Ilmaise taustalla olevat edistymispalkit ====
@@ -882,9 +902,9 @@ Kommentti-kenttään voidaan kirjoittaa säännön kuvaus (esim. muuttaa linnun 
 Puhesanastoja voidaan käyttää paljon muuhunkin kuin yksinkertaiseen sanojen korvaamiseen.
 Säännönlisäämisvalintaikkunassa on myös valintaruutu, jolla voidaan määrittää, halutaanko säännön ottavan kirjainkoon huomioon, eli ovatko isot ja pienet kirjaimet merkitseviä.
 NVDA ei oletusarvoisesti huomioi kirjainkokoa.
-Toisella tämän valintaikkunan valintaruudulla voidaan määrittää, onko korvattava merkkijono "sääntölauseke".
-Sääntölauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
-Sääntölausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
+Toisella tämän valintaikkunan valintaruudulla voidaan määrittää, onko korvattava merkkijono "säännöllinen lauseke".
+Säännöllinen lauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
+Säännöllisiä lausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
 
 +++ Välimerkkien ja symbolien lausuminen +++[Symbolienlausuminen]
 Tämän valintaikkunan avulla voidaan muuttaa välimerkkien ja muiden symbolien lausumistapaa sekä tasoa, jolla ne puhutaan.
@@ -899,8 +919,6 @@ Muutokset tallennetaan painamalla OK-painiketta tai kumotaan painamalla Peruuta.
 NVDA ei oletusarvoisesti tallenna asetuksia automaattisesti, joten jos se suljetaan ja käynnistetään uudelleen, asetukset muuttuvat takaisin alkuperäisiin arvoihinsa.
 Huomaa kuitenkin, että tämä asetus voidaan muuttaa Yleiset asetukset -valintaikkunassa, joka löytyy Asetukset-valikosta.
 Asetukset voidaan tallentaa valitsemalla NVDA-valikosta Tallenna asetukset -vaihtoehto.
-
-Jos NVDA:ta käytetään vain luku -tiedostojärjestelmästä, kuten CD:ltä, asetuksia ei voida tallentaa, jonka NVDA myös ilmoittaa.
 
 Mikäli asetuksia muutettaessa sattuu erehdys, tallennetut asetukset voidaan palauttaa valitsemalla NVDA-valikosta Palauta tallennetut asetukset.
 
@@ -939,6 +957,32 @@ Toiminto poistetaan käytöstä poistamalla vaihtoehdon valinta.
 Kun Näytä puhe -toiminto on käytössä, sen ikkuna päivittyy ajoittain näyttääkseen uusimman puhutun tekstin.
 Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, NVDA keskeyttää  tilapäisesti tekstin päivittämisen, jotta olemassa olevaa sisältöä voidaan helposti valita ja kopioida.
 
+++ Lisäosien hallinta ++
+Lisäosien hallinnalla, johon päästään NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voidaan asentaa ja poistaa NVDA:n lisäosia.
+Lisäosat, joita toimittaa NVDA-yhteisö, saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
+
+Lisäosien hallinnassa on lista, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
+Jokaisesta lisäosasta näytetään paketin nimi, versio ja tekijä, ja lisätietoja kuten kuvaus ja URL-osoite voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
+
+Lisäosa asennetaan painamalla Asenna-painiketta.
+Tässä voidaan etsiä tietokoneelta tai verkosta haluttua lisäosapakettia (.nvda-addon-tiedostoa).
+Kun painetaan Avaa-painiketta, NVDA kysyy, halutaanko lisäosa varmasti asentaa.
+Koska lisäosien toiminnallisuus on NVDA:n sisällä rajoittamatonta, mikä saattaisi teoriassa tarkoittaa pääsyä henkilökohtaisiin tietoihin tai jopa koko järjestelmään, mikäli käytetään NVDA:n asennettua versiota, on erittäin tärkeää, että lisäosia asennetaan vain luotetuista lähteistä.
+NVDA on käynnistettävä uudelleen lisäosan asentamisen jälkeen, jotta se voidaan ottaa käyttöön.
+Uudelleenkäynnistykseen saakka listassa näkyy lisäosan tilana "asenna".
+
+Lisäosa poistetaan valitsemalla se listasta ja painamalla Poista-painiketta.
+NVDA kysyy, halutaanko se varmasti poistaa.
+NVDA on, samoin kuin asennettaessa, käynnistettävä uudelleen, jotta lisäosa voidaan poistaa kokonaan.
+Uudelleenkäynnistykseen saakka listassa näkyy lisäosan tilana "poista".
+
+Valintaikkunassa on myös Sulje-painike, josta lisäosien hallinta voidaan sulkea.
+Jos lisäosia on asennettu tai poistettu, NVDA kysyy, halutaanko se käynnistää uudelleen, jotta muutokset tulevat voimaan.
+
+NVDA:n toiminnallisuutta on ollut aiemmin mahdollista laajentaa kopioimalla asetushakemistoon erillisiä liitännäisiä ja ajureita.
+Vaikka tämä NVDA:n versio saattaa edelleen ladata niitä, ne eivät näy lisäosien hallinnassa.
+Nämä tiedostot on parasta poistaa ja asentaa tilalle asianmukainen lisäosa, mikäli sellainen on saatavilla.
+
 ++ Python-konsoli ++
 NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alavalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
 Katso lisätietoja kehittäjien oppaasta [NVDA:n web-sivuston Development-osiosta NVDA_URLwiki/Development].
@@ -953,7 +997,7 @@ Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on ma
 ++ eSpeak ++
 [eSpeak http://espeak.sourceforge.net/]-puhesyntetisaattori on sisäänrakennettu NVDA:han, joten sen asentamiseksi ja käyttämiseksi ei tarvita muita erikoisajureita tai komponentteja.
 NVDA käyttää ESpeakia oletusarvoisesti.
-Tämä syntetisaattori on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta tai CD:ltä.
+Tämä syntetisaattori on hyvä valinta käytettäessä NVDA:ta USB-muistitikulta.
 
 Jokainen eSpeakin mukana tuleva puheääni puhuu eri kieltä.
 Tuettuja kieliä on yli 43.
@@ -1224,7 +1268,7 @@ Kukin avainsana, None mukaan lukien, voi olla samassa lohkossa vain kerran.
 Pilkkuun päättyvät komentotunnisteet on laitettava lainaus- (") tai heittomerkkien (') sisään.
 -
 
- Komentotunnisteet koostuvat kaksikirjaimisesta laitekoodista (näppäimistöllä kb ja pistenäytöllä br), suluissa olevasta alilaitteesta tai   näppäimistöasettelusta, kaksoispisteestä ja yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
+ Komentotunnisteet koostuvat kaksikirjaimisesta laitekoodista (näppäimistöllä kb ja pistenäytöllä br), suluissa olevasta alilaitteesta tai   näppäimistöasettelusta, kaksoispisteestä sekä yhdestä tai useammasta plus-merkillä erotetusta näppäimen nimestä.
 Näppäimistön syötekomennoissa suluissa oleva osa on näppäimistöasettelu, joka on valinnainen.
 Jos tätä ei määritetä, syötekomentoa käytetään kaikissa näppäimistöasetteluissa.
 Pistenäytön syötekomennoissa suluissa oleva osa määrittää halutun pistenäytön, joka on pakollinen.

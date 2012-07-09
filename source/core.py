@@ -55,6 +55,7 @@ import time
 import logHandler
 import globalVars
 from logHandler import log
+import addonHandler
 
 # Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
 # This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
@@ -87,6 +88,11 @@ def doStartupDialogs():
 
 def restart():
 	"""Restarts NVDA by starting a new copy with -r."""
+	if globalVars.appArgs.launcher:
+		import wx
+		globalVars.exitCode=2
+		wx.GetApp().ExitMainLoop()
+		return
 	import subprocess
 	import shellapi
 	shellapi.ShellExecute(None, None,
@@ -106,6 +112,8 @@ def resetConfiguration():
 	braille.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
+	log.debug("terminating addonHandler")
+	addonHandler.terminate()
 	log.debug("Reloading config")
 	config.load()
 	logHandler.setLogLevelFromConfig()
@@ -113,6 +121,8 @@ def resetConfiguration():
 	lang = config.conf["general"]["language"]
 	log.debug("setting language to %s"%lang)
 	languageHandler.setLanguage(lang)
+	# Addons
+	addonHandler.initialize()
 	#Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -144,6 +154,11 @@ def main():
 This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI. Then it initialises the wx application object and installs the core pump timer, which checks the queues and executes functions every 1 ms. Finally, it starts the wx main loop.
 """
 	log.debug("Core starting")
+	import config
+	if not globalVars.appArgs.configPath:
+		globalVars.appArgs.configPath=config.getUserDefaultConfigPath(useInstalledPathIfExists=globalVars.appArgs.launcher)
+	#Initialize the config path (make sure it exists)
+	config.initConfigPath()
 	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
 	log.debug("loading config")
 	import config
@@ -166,7 +181,14 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Using Windows version %r" % (sys.getwindowsversion(),))
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
-	log.debug("Creating wx application instance")
+	# Set a reasonable timeout for any socket connections NVDA makes.
+	import socket
+	socket.setdefaulttimeout(10)
+	log.debug("Initializing addons system.")
+	addonHandler.initialize()
+	import appModuleHandler
+	log.debug("Initializing appModule Handler")
+	appModuleHandler.initialize()
 	import NVDAHelper
 	log.debug("Initializing NVDAHelper")
 	NVDAHelper.initialize()
@@ -221,9 +243,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		locale.Init(lang,wxLang)
 	except:
 		pass
-	import appModuleHandler
-	log.debug("Initializing appModule Handler")
-	appModuleHandler.initialize()
 	import api
 	import winUser
 	import NVDAObjects.window
@@ -266,12 +285,20 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import globalPluginHandler
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
-	if not globalVars.appArgs.minimal:
+	if globalVars.appArgs.install:
+		import wx
+		import gui.installerGui
+		wx.CallAfter(gui.installerGui.doSilentInstall)
+	elif not globalVars.appArgs.minimal:
 		try:
 			braille.handler.message(_("NVDA started"))
 		except:
 			log.error("", exc_info=True)
-		wx.CallAfter(doStartupDialogs)
+		if globalVars.appArgs.launcher:
+			gui.LauncherDialog.run()
+			# LauncherDialog will call doStartupDialogs() afterwards if required.
+		else:
+			wx.CallAfter(doStartupDialogs)
 	import queueHandler
 	# Queue the handling of initial focus,
 	# as API handlers might need to be pumped to get the first focus event.
@@ -298,12 +325,23 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	pump.Start(1)
 	log.debug("Initializing watchdog")
 	watchdog.initialize()
+	try:
+		import updateCheck
+	except RuntimeError:
+		updateCheck=None
+		log.debug("Update checking not supported")
+	else:
+		log.debug("initializing updateCheck")
+		updateCheck.initialize()
 	log.info("NVDA initialized")
 
 	log.debug("entering wx application main loop")
 	app.MainLoop()
 
 	log.info("Exiting")
+	if updateCheck:
+		log.debug("Terminating updateCheck")
+		updateCheck.terminate()
 	log.debug("Terminating watchdog")
 	watchdog.terminate()
 	log.debug("Terminating GUI")
@@ -376,6 +414,10 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		speech.terminate()
 	except:
 		log.error("Error terminating speech",exc_info=True)
+	try:
+		addonHandler.terminate()
+	except:
+		log.error("Error terminating addonHandler",exc_info=True)
 	if not globalVars.appArgs.minimal:
 		try:
 			nvwave.playWaveFile("waves\\exit.wav",async=False)

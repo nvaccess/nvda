@@ -32,7 +32,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies. 
-A ce jour, NVDA a été traduit en 36 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, le Bulgare, le Chinois Traditionnel, le Croate, le Danois, l'Espagnol, le Finnois, le Français, le Galicien, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Mandarin Taïwanais, le Néerlandais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
+A ce jour, NVDA a été traduit en 37 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, le Bulgare, le Chinois Traditionnel et simplifié, le Croate, le Danois, l'Espagnol, le Finnois, le Français, le Galicien, le Grecque, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Néerlandais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
 
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -62,49 +62,59 @@ Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://ww
 - Environ 50 MO d'espace disque.
 -
 
-+ Se procurer NVDA +
++ Se procurer et installer NVDA +
 Si vous n'avez pas encore une copie de NVDA, vous pouvez la télécharger sur [nvda-project.org NVDA_URL].
 
 Rendez-vous à la section "Download" où vous trouverez un lien pour le téléchargement de la dernière version de NVDA.
 
-NVDA se présente actuellement sous deux formes. 
-L'une comporte un installateur  qui vous guidera vocalement  pour l'installation de sorte que vous pourrez ensuite lancer NVDA à volonté  par le menu Démarrer. 
-L'autre est une archive autoextractible qui contient une version complètement autonome de NVDA, qu'on peut lancer de n'importe où,  y compris d'une clé USB ou d'un CD.
+Démarrer le fichier télécharger exécutera une version temporaire de NVDA.
+Vous aurez en suite le choix entre installer NVDA, créer une version portable, ou juste continuer à utiliser la version temporaire.
 
-Pour accéder à l'écran de connexion à Windows, au contrôle d'accès utilisateur (UAC) ou d'autres écrans sécurisés ainsi qu'aux applications tournant en mode administrateur sous Vista ou Seven,, vous devez installer NVDA sur votre système en utilisant l'installateur.
-Ces écrans ne sont pas accessibles avec une version portable de NVDA.
+Si vous avez prévu de toujours utiliser NVDA sur cette ordinateur, choisissez installer NVDA.
+Installer NVDA permettra plus de choses comme  son lancement après l'identification, il pourra lire les écran d'identification et de sécurité (ce qu'une version portable ou la version temporaire ne peuvent faire), et il sera accessible depuis des raccourcis dans le menu démarrer ou sur le bureau.
+La version installée permet aussi de créer une version portable à tout moment.
 
-+ Installer NVDA +
+Si vous voulez prendre NVDA avec vous sur une clé USB ou un autre suypport accessible en écriture, vous devriez choisir de créer une version portable.
+La version portable peut aussi être installer sur n'importequel ordinateur à n'importequel moment.
+Cependant, si vous souhaitez copier NVDA sur un support en lecture seul comme un CD, vous devriez seulement copier le package téléchargé.
+Démarrer dirrectement la version portable depuis un support en lecture seule n'est pas supporté pour le moment.
+  
+Utiliser la version temporaire de NVDA est aussi une option, par exemple pour une démonstration, car démarrer NVDA dans ce mode à chaque fois peut prendre beaucoup de temps.
 
-++ L'installateur de NVDA ++
-Si vous avez déjà l'installateur NVDA, appuyez simplement sur entrée ou double-cliquez sur le fichier et l'installateur va démarrer.
+++ Installer NVDA ++
+Si vous installez directement par le package téléchargé, cliquez sur le bouton Installer NVDA sur cet ordinateur.
+Si vous avez déjà fermé cette boîte de dialogue, ou si vous vvoulez l'installer à partire d'une version portable, allez dans le menu NVDA, cliquer sur "Outils", et choisissez "installer NVDA".
 
-Pendant que l'installateur se charge, vous entendrez la musique d'installation de NVDA. 
-Une fois chargé, une copie temporaire de NVDA vous permettra de suivre les dialogues d'installation et installera NVDA. 
-Notez que si une autre copie de NVDA est active au moment de l'installation, celle-ci sera arrêtée.
-Cela est nécessaire pour que l'installateur puisse mettre à jour tous les fichiers modifiés. 
-Si une version précédente de NVDA est déjà présente sur votre système, celle-ci sera désinstallée puis le programme démarrera l'installation de la nouvelle version.
+La boîte de dialogue d'installation qui s'affichera vous demandera de confirmer l'installation, et vous signalera s'il s'agit de la mise à jour d'une installation existante.
+Cliquer sur le bouton Continuer installera NVDA.
+Deux options détaillées ci-dessous sont disponibles dans ce dialogue.
+Dès que l'installation est terminée, un message s'affichera vous signalant la fin de l'installation.
+Cliquer sur OK démarrera la version nouvellement installée.
 
-Quand vous aurez fini avec succès l'installation, l'installateur vous indiquera que l'installation est terminée. 
-S'il s'agit d'une réinstallation, il peut arriver qu'il vous demande de redémarrer le système. 
-Il est très important d'effectuer ce redémarrage pour ne pas risquer de conséquences indésirables. 
-Si l'installateur ne demande pas de redémarrage, un appui sur la touche Entrée arrêtera l'installateur et démarrera la nouvelle copie de NVDA.
++++ Utiliser NVDA sur l'écran de connexion à Windows +++
+Cette option vous permet de choisir si NVDA doit ou non démarrer automatiquement quand vous ête sur l'écran de connexion, avant que vous ayez saisi un mot de passe.
+Ceci inclu les contrôle UAC et les écran sécurisés.
 
-++ NVDA portable ++
-Si vous avez la version portable de NVDA, il vous suffit d'appuyer sur Entrée ou de doublecliquer sur le fichier. 
-Le programme vous demandera le répertoire où vous désirez placer les fichiers sur votre système.
++++ Créer une icône sur le bureau et le raccourci clavier (control+alt+n) +++
+Cette option vous permet de choisir si NVDA doit ou non créer un raccourci sur le bureau pour démarrer NVDA.
+Si créé, ce raccourci aura la touche de raccourci control+alt+n assigné pour démarrer NVDA de n'importe où.
 
-+++ NVDA Portable sur une clé USB +++
-Il est possible de mettre NVDA sur une clé USB de manière à pouvoir l'utiliser sur d'autres ordinateurs.
++++ Copier la configuration portable dans le compte de l'utilisateur en cours +++
+Cette option permet de choisir si NVDA doit ou non copier la configuration utilisateur depuis la copie de NVDA en cour d'exécution vers la configuration de l'utilisateur courant, pour la version installée de NVDA.
+Cela ne copiera  la configuration ni pour un autre utilisateur du système, ni pour la configuration du système dans le cas de l'utilisation dans l'identification windows ou les autres écrans sécurisés.
+Cette option n'est disponible que lorsque vous installez NVDA depuis une version portable, pas quand vous installez depuis le paquet téléchargé du lançeur.
 
-Quand la version portable demande où vous désirez la décompresser, entrez l'unité de votre clé USB plus, éventuellement, le nom d'un sous-répertoire où vous désirez placer NVDA.
+++ Créer une version portable ++
+Si vous voulez créer votre version depuis le package téléchargé, cliquez simplement sur le bouton Créer une version portable.
+Si vous avez déjà fermé cette boîte de dialogue ou si vous êtes dans une version installée, allez dans le menu NVDA, cliquer sur "Outils", et choisissez "Créer une version portable".
 
-Si, par exemple, votre clé USB est en E:\, vous pouvez entrer E:\nvda, ce qui placera NVDA dans le sous-répertoire nvda de votre clé USB.
-
-Notez que si cela vous permet de disposer partout de NVDA et de ses paramètres, le simple fait de brancher la clé USB ne démarrera pas automatiquement NVDA. Vous devrez lancer manuellement NVDA depuis l'explorateur Windows où le dialogue "Exécuter".
-
-Pour des information sur la manière de démarrer automatiquement NVDA sur une clé USB, veuillez consulter cet article :
-http://www.nvda-project.org/wiki/RunningAutomaticallyFromAUSBDrive
+La boîte de dialogue qui s'affiche vous permet de choisir où créer la version portable.
+Ce peut être un répertoire de votre disque dure, un chemin sur une clé USB ou un autre média portable.
+Vous pouvez choisir si oui ou non NVDA doit copier la configuration NVDA de l'utilisateur connecté pour l'utiliser avec la version portable nouvellement créée.
+Cette option n'est disponible que lorsque vous créez une version portable de NVDA depuis une version installée, pas quand vous créez une version portable depuis le paquet téléchargé du lançeur.
+Cliquer sur continuer créera la version portable.
+Dès que la création est terminée, un message s'affiche.
+Cliquez sur OK pour fermer cette boîte de dialogue.
 
 + Prendre en main  NVDA +
 
@@ -416,6 +426,10 @@ Les touches suivantes permettent d'aller à l'élément suivant, en les combinan
 - o : objet embarqué
 - 1 ... 6 : Titres 1 ... 6.
 -
+Pour se déplacer au début ou à la fin des éléments contenants comme les listes et tableaux :
+|| Nom | Touche | Description |
+| Aller au début du conteneur | maj+virgule | Se déplace au début du conteneur (liste, tableau etc.) ou le curseur est positionné |
+| Aller après la fin du conteneur | virgule | Se déplace après la fin du conteneur (liste, tableau etc.) où le curseur se trouve |
 %kc:endInclude
 
 ++ La Liste d'éléments ++
@@ -447,6 +461,8 @@ NVDA fournit ses propres commandes additionnelles dans quelques applications pou
 || Nom | Touche | Description |
 | Annonce du temps restant | control+maj+r | Annonce le temps restant pour le morceau en cours. |
 %kc:endInclude
+
+Note : Le raccourci Annonce du temps restant fonctionne seulement avec le format de chaîne par défaut pour la barre d'état de foobar.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -507,6 +523,10 @@ Cette option n'existe que dans les versions installées de NVDA.
 L'appui sur ce bouton copie votre configuration utilisateur actuellement sauvegardée dans le répertoire système de NVDA, ainsi, NVDA peut l'utiliser quand il s'exécute sur l'écran de connexion et les autres écrans sécurisés.
  Pour être sûr que tous vos paramètres sont transférés, sauvegardez d'abord vos paramètres avec la commande NVDA+control+c ou par Sauvegarder la configuration dans le menu NVDA.
 Cette option n'existe que dans les versions installées de NVDA.
+
+==== Vérifier automatiquement les mises à jours de NVDA ====
+Si activé, NVDA recherchera automatiquement la dernière version de NVDA et vous informera si une mise à jours est disponible.
+Vous pouvez également vérifier manuellement les mises à jours en sélectionnant recherche d'une Mise à Jours...  dans le menu Aide dans le menu de NVDA.
 
 +++ Choix du synthétiseur (NVDA+control+s) +++
 Le dialogue Synthétiseur, situé sous Synthétiseur dans le menu Préférences, Permet de choisir le synthétiseur de parole qui sera utilisé par NVDA.
@@ -900,8 +920,6 @@ Par défaut NVDA ne sauvegarde pas automatiquement vos paramètres, donc si vous
 Notez cependant que ce comportement peut être modifié dans le dialogue "Paramètres généraux" du menu "Préférences".
 Pour sauvegarder les paramètres, utilisez l'élément Sauvegarde de la configuration dans le menu NVDA.
 
-Si NVDA est sur un média non inscriptible tel qu'un CD il ne pourra pas sauvegarder vos paramètre et il vous le signalera.
-
 Si vous faites une erreur dans vos paramètres et avez besoin de revenir aux valeurs précédentes, utilisez l'élément Retour à la configuration sauvegardée dans le menu NVDA.
 
 Les touches de commande suivantes sont également utiles :
@@ -912,7 +930,7 @@ Les touches de commande suivantes sont également utiles :
 %kc:endInclude
 
 ++ Fichiers de configuration et profils utilisateur ++
-Les versions portables de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire nommé userConfig situé dans le répertoire NVDA.
+Les versions portables de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire nommé userConfig situé dans le répertoire de votre version portable de NVDA.
 
 Les versions installées de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire spécial de NVDA situé dans votre profil utilisateur Windows.
 Cela signifie que chaque utilisateur du système peut avoir ses propres paramètres NVDA.
@@ -939,6 +957,32 @@ Décochez l'élément de menu pour la désactiver.
 Pendant que la visionneuse de parole est active, elle se met constamment à jour vous permettant de voir les dernières paroles prononcées par NVDA. 
 Cependant, si vous cliquez ou mettez le focus sur la visionneuse,  NVDA arrêtera momentanément de mettre à jour le texte, vous pourrez ainsi sélectionner ou copier le contenu.
 
+++ Gestionnaire de greffons ++
+Le Gestionnaire de greffons, accessible en sélectionnant Gestion des greffons dans le menu Outils du menu NVDA, permet d'installer ou de désinstaller des paquets de greffon pour NVDA.
+Ces paquets sont fournis par la communauté et contiennent du code qui peut ajouter ou modifier des fonctionnalités dans NVDA ou proposer le support de plages brailles ou synthèses vocales suplémentaires.
+
+Le gestionnaire de greffons contient une liste affichant tous les greffons actuellement installés dans votre configuration utilisateur de NVDA.
+Un nom de paquet, la version et l'auteur sont affichés pour chaque greffon, et des informations suplémentaires telle qu'une description et une URL peuvent être affichées en sélectionnant le greffon et en activant le bouton À propos du greffon...
+
+Pour installer un greffon, cliquez sur le bouton Installer.
+Vous pourrez ainsi rechercher le paquet du greffon (fichier .nvda-addon) sur votre ordinateur ou votre réseau.
+Après avoir cliquer sur Ouvrir, NVDA vous demandera si vous êtes sûr de vouloir installer le greffon.
+Comme les fonctionalités des greffons ne sont pas restraintes dans NVDA, ce qui implique en théorie qu'ils peuvent accéder à vos données ou à tout votre système pour une version installée, il est important de n'installer que des greffons venant d'une source fiable.
+Dès que le greffon est installé, NVDA doit redémarrer pour que le greffon puisse s'activer.
+Ce greffon aura l'état installer dans la liste jusqu'à ce que vous relanciez NVDA.
+
+Pour supprimer un greffon, sélectionnez-le dans la liste et cliquez sur le bouton Supprimer.
+NVDA vous demandera de confirmer la désinstallation.
+Comme pour l'installation, NVDA doit être relancé pour que le greffon soit complettement supprimé.
+Son statu dans la liste sera supprimer.
+
+Le gestionnaire a également un bouton Fermer pour fermer la boîte de dialogue.
+Si vous avez installé ou supprimé des greffons, NVDA vous demandera d'abord si vous voulez le redémarrer pour que vos changements prennent effet.
+
+Jusqu'à maintenant, il était possible d'étendre les fonctionnalités de NVDA en copiant des plugins ou pilotes dans votre répertoire de configuration utilisateur.
+Même si cette version peut toujours les charger, ceux-ci ne seront pas affichés dans le gestionnaire de greffons.
+Il est recommendé de supprimer ces fichiers de votre répertoire de configuration et d'installer le greffon approprié s'il y en a un.
+
 ++ Console Python ++
 La console Python NVDA, située dans Outils du menu NVDA, est un outil de développement utile pour dépanner, inspecter le code ou inspecter la hiérarchie d'accessibilité d'une application.
  Pour plus d'informations, veuillez consulter le Guide du Développeur disponible dans [la section développement du site web de NVDA NVDA_URLwiki/Development].
@@ -948,12 +992,12 @@ Cet élément, quand on l'active, recharge les modules d'applications et les gre
 
 + Synthétiseurs de parole pris en charge +[SupportedSpeechSynths]
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
-Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger puor utilisation avec NVDA, veuillez consulter la page [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+Pour une liste encore plus importante de synthétiseurs gratuits ou du commerce que vous pouvez acheter et télécharger pour utilisation avec NVDA, veuillez consulter la page [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
 ++ eSpeak ++
 Le synthétiseur [eSpeak http://espeak.sourceforge.net/] est intégré dans NVDA et ne dépend d'aucun pilote ou programme additionnel pour être installé.
 Par défaut, NVDA démarre en utilisant eSpeak.
-Comme ce synthétiseur est intégré dans NVDA, il est le plus indiqué quand vous voulez exécuter NVDA depuis une clé USB ou un CD sur un autre système.
+Comme ce synthétiseur est intégré dans NVDA, il est le plus indiqué quand vous voulez exécuter NVDA depuis une clé USB sur un autre système.
 
 Chaque voix fournie avec eSpeak correspond à une langue différente.
 Espeak prend en charge plus de 20 langues.

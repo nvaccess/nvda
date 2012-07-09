@@ -62,10 +62,12 @@ parser.add_option('-r','--replace',action="store_true",dest='replace',default=Fa
 parser.add_option('-k','--check-running',action="store_true",dest='check_running',default=False,help="Report whether NVDA is running via the exit code; 0 if running, 1 if not running")
 parser.add_option('-f','--log-file',dest='logFileName',help="The file where log messages should be written to")
 parser.add_option('-l','--log-level',type="int",dest='logLevel',default=0,help="The lowest level of message logged (debug 10, info 20, warning 30, error 40, critical 50), default is warning") 
-parser.add_option('-c','--config-path',dest='configPath',default=config.getUserDefaultConfigPath(),help="The path where all settings for NVDA are stored")
+parser.add_option('-c','--config-path',dest='configPath',default=None,help="The path where all settings for NVDA are stored")
 parser.add_option('-m','--minimal',action="store_true",dest='minimal',default=False,help="No sounds, no interface, no start message etc")
 parser.add_option('-s','--secure',action="store_true",dest='secure',default=False,help="Secure mode (disable Python console)")
 parser.add_option('--no-sr-flag',action="store_false",dest='changeScreenReaderFlag',default=True,help="Don't change the global system screen reader flag")
+parser.add_option('--install',action="store_true",dest='install',default=False,help="Silently installs NVDA")
+parser.add_option('--launcher',action="store_true",dest='launcher',default=False,help="Started from the launcher")
 (globalVars.appArgs,extraArgs)=parser.parse_args()
 
 def terminateRunningNVDA(window):
@@ -127,9 +129,6 @@ if not mutex or ctypes.windll.kernel32.GetLastError()==ERROR_ALREADY_EXISTS:
 	if mutex: ctypes.windll.kernel32.CloseHandle(mutex)
 	sys.exit(1)
 
-#Initialize the config path (make sure it exists)
-config.initConfigPath()
-
 #os.environ['PYCHECKER']="--limit 10000 -q --changetypes"
 #import pychecker.checker
 #Initial logging and logging code
@@ -163,3 +162,4 @@ finally:
 	ctypes.windll.kernel32.CloseHandle(mutex)
 
 log.info("NVDA exit")
+sys.exit(globalVars.exitCode)

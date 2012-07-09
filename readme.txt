@@ -67,25 +67,28 @@ To use the MDV Lilli braille display driver:
 		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
 
 To use the Handy Tech braille display driver:
-	* Handy Tech Braille SDK, version 1.3.0.2 or later: https://www.handytech.de/en/normal/service/downloads/ht-software/brailledriver/
+	* Handy Tech Braille SDK, version 1.3.0.2 or later: https://www.handytech.de/downloads.php?kategorie=135&sub=145&lang=en
 		* Copy these files from the SDK's prog directory into NVDA's source\brailleDisplayDrivers\handyTech directory: HtBrailleDriverServer.dll, HtBrailleDriverServer.tlb, sbsupport.dll, dealers.dat
 	* If you want to be able to use this driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
 To use the Baum braille display driver:
 	* pyserial (for Python 2.x), version 2.5 or later: http://pypi.python.org/pypi/pyserial
 
+To use the HIMS Braille Sense/Braille EDGE braille display driver:
+	* HanSoneConnect.dll, version 2.0.0.1: http://www.nvda-project.org/3rdParty/HanSoneConnect.dll
+		* Copy HanSoneConnect.dll into the source\brailleDisplayDrivers\hims directory.
+
+To use the HIMS SyncBraille braille display driver:
+	* SyncBraille.dll, version 1.0.0.1: http://www.nvda-project.org/3rdParty/SyncBraille.dll
+		* Copy SyncBraille.dll into the source\brailleDisplayDrivers\syncBraille directory.
+
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
-
-To build a portable archive:
 	* 7-Zip: http://www.7-zip.org/
-
-To build an installer:
 	* Nulsoft Install System, version 2.42 or later: http://nsis.sourceforge.net/
-	* NSIS UAC plug-in, version 0.0.11d:
-		* Official web site: http://nsis.sourceforge.net/UAC_plug-in
-		* NVDA does not work with recent versions. Direct link to 0.0.11d: http://stashbox.org/560965/UAC%20v0.0.11d.zip
-		* Copy the ANSI build of UAC.dll (found in release\a in the archive) into the installer directory.
+	* NSIS UAC plug-in, version 0.2.4:
+		* Web site: http://nsis.sourceforge.net/UAC_plug-in
+		* Copy both ansi\uac.dll and uac.nsh into the uninstaller directory.
 
 To generate developer documentation:
 	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
@@ -111,7 +114,7 @@ If trying to debug nvdaHelper, You can control various  debugging options  with 
 The special keywords none and all can also be used in place of the individual flags.
 
 An example follows that enables symbols and disables optimizations:
-scons source nvdaHelperDebugflags=symbols,noOptimize
+scons source nvdaHelperDebugFlags=symbols,noOptimize
 
 == Running the Source Code ==
 To start NVDA from source code, run nvda.pyw located in the source directory.
@@ -125,13 +128,9 @@ To make a non-archived binary build (equivalent to an extracted portable archive
 scons dist
 The build will be created in the dist directory.
 
-To create a portable archive, type:
-scons portable
+To create a launcher  archive (one executable allowing for installation or portable dist generation), type:
+scons launcher
 The archive will be placed in the output directory.
-
-To build an installer, type:
-scons installer
-The installer will be placed in the output directory.
 
 To generate developer documentation, type:
 scons devDocs
@@ -154,5 +153,5 @@ Optionally, the build can  be customised by providing variables on the command l
 	* outputDir: The directory where the final built archives and such will be placed.
 	* targetArchitectures: The target architectures that NVDA should support. Possible values are all, x86 and x86_64. This should generally be left as the default.
 
-For example, to build an installer with a specific version, you might type:
-scons installer version=test1
+For example, to build a launcher  with a specific version, you might type:
+scons launcher version=test1

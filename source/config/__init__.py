@@ -3,6 +3,8 @@
 
 import globalVars
 import _winreg
+import ctypes
+import ctypes.wintypes
 from copy import deepcopy
 import os
 import sys
@@ -164,6 +166,8 @@ confspec = ConfigObj(StringIO(
 	minWindowsVersion = float(default=6.1)
 	enabled = boolean(default=true)
 
+[update]
+	autoCheck = boolean(default=true)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
@@ -246,12 +250,17 @@ def isInstalledCopy():
 	except WindowsError:
 		return False
 
-def getUserDefaultConfigPath():
-	if isInstalledCopy():
-		try:
-			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
-		except WindowsError:
-			pass
+
+def getInstalledUserConfigPath():
+	try:
+		return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_APPDATA), "nvda")
+	except WindowsError:
+		return None
+
+def getUserDefaultConfigPath(useInstalledPathIfExists=False):
+	installedUserConfigPath=getInstalledUserConfigPath()
+	if installedUserConfigPath and (isInstalledCopy() or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
+		return installedUserConfigPath
 	return u'.\\userConfig\\'
 
 def getSystemConfigPath():
@@ -272,7 +281,7 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins"):
+	for subdir in ("addons", "appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins"):
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
@@ -308,20 +317,28 @@ def isServiceInstalled():
 	except (WindowsError, OSError):
 		return False
 
-def execElevated(path, params=None, wait=False):
+def execElevated(path, params=None, wait=False,handleAlreadyElevated=False):
 	import subprocess
 	import shellapi
 	import winKernel
 	import winUser
 	if params is not None:
 		params = subprocess.list2cmdline(params)
-	sei = shellapi.SHELLEXECUTEINFO(lpVerb=u"runas", lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
+	sei = shellapi.SHELLEXECUTEINFO(lpFile=os.path.abspath(path), lpParameters=params, nShow=winUser.SW_HIDE)
+	#IsUserAnAdmin is apparently deprecated so may not work above Windows 8
+	if not handleAlreadyElevated or not ctypes.windll.shell32.IsUserAnAdmin():
+		sei.lpVerb=u"runas"
 	if wait:
 		sei.fMask = shellapi.SEE_MASK_NOCLOSEPROCESS
 	shellapi.ShellExecuteEx(sei)
 	if wait:
 		try:
-			winKernel.waitForSingleObject(sei.hProcess, winKernel.INFINITE)
+			h=ctypes.wintypes.HANDLE(sei.hProcess)
+			msg=ctypes.wintypes.MSG()
+			while ctypes.windll.user32.MsgWaitForMultipleObjects(1,ctypes.byref(h),False,-1,255)==1:
+				while ctypes.windll.user32.PeekMessageW(ctypes.byref(msg),None,0,0,1):
+					ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
+					ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
 			return winKernel.GetExitCodeProcess(sei.hProcess)
 		finally:
 			winKernel.closeHandle(sei.hProcess)
@@ -343,18 +360,31 @@ def _setStartOnLogonScreen(enable):
 
 def setSystemConfigToCurrentConfig():
 	fromPath=os.path.abspath(globalVars.appArgs.configPath)
-	try:
+	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
-		return True
-	except (OSError,WindowsError):
-		return execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)==0
+	else:
+		res=execElevated(SLAVE_FILENAME, (u"setNvdaSystemConfig", fromPath), wait=True)
+		if res==2:
+			raise installer.RetriableFailure
+		elif res!=0:
+			raise RuntimeError("Slave failure")
 
 def _setSystemConfig(fromPath):
+	import installer
 	toPath=os.path.join(sys.prefix,'systemConfig')
-	import shutil
 	if os.path.isdir(toPath):
-		shutil.rmtree(toPath)
-	shutil.copytree(fromPath,toPath)
+		installer.tryRemoveFile(toPath)
+	for curSourceDir,subDirs,files in os.walk(fromPath):
+		if curSourceDir==fromPath:
+			curDestDir=toPath
+		else:
+			curDestDir=os.path.join(toPath,os.path.relpath(curSourceDir,fromPath))
+		if not os.path.isdir(curDestDir):
+			os.makedirs(curDestDir)
+		for f in files:
+			sourceFilePath=os.path.join(curSourceDir,f)
+			destFilePath=os.path.join(curDestDir,f)
+			installer.tryCopyFile(sourceFilePath,destFilePath)
 
 def setStartOnLogonScreen(enable):
 	if getStartOnLogonScreen() == enable:
@@ -393,3 +423,7 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	dirs = [dir.encode("mbcs") for dir in getConfigDirs(subdir)]
 	dirs.extend(module.__path__ )
 	module.__path__ = dirs
+	# FIXME: this should not be coupled to the config module....
+	import addonHandler
+	for addon in addonHandler.getRunningAddons():
+		addon.addToPackagePath(module)
