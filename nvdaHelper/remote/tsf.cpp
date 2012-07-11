@@ -25,6 +25,17 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+bool fetchRangeExtent(ITfRange* pRange, long* start, ULONG* length) {
+	HRESULT res=S_OK;
+	if(!pRange) return false;
+	ITfRangeACP* pRangeACP=NULL;
+	res=pRange->QueryInterface(IID_ITfRangeACP,(void**)&pRangeACP);
+	if(res!=S_OK||!pRangeACP) return false;
+	res=pRangeACP->GetExtent(start,(long*)length);
+	pRangeACP->Release();
+	return true?(res==S_OK):false;
+}
+
 class TsfSink;
 typedef map<DWORD,TsfSink*> sinkMap_t;
 
@@ -121,6 +132,7 @@ TsfSink::TsfSink() {
 	mLangProfCookie  = TF_INVALID_COOKIE;
 	mTextEditCookie  = TF_INVALID_COOKIE;
 	inComposition=false;
+	int lastCompositionStartOffset=0;
 }
 
 TsfSink::~TsfSink() {
@@ -362,20 +374,35 @@ WCHAR* TsfSink::HandleEditRecord(TfEditCookie cookie, ITfEditRecord* pEditRec) {
 STDMETHODIMP TsfSink::OnEndEdit(
 		ITfContext* pCtx, TfEditCookie cookie, ITfEditRecord* pEditRec) {
 	// TSF input processor performing composition
-	//ITfRange* pRange=CombineCompRange(pCtx,cookie);
-	WCHAR* comp_str = HandleCompositionView(pCtx, cookie);
-	if(!comp_str) {
+	ITfRange* pRange=CombineCompRange(pCtx,cookie);
+	if(!pRange) {
 		if(inComposition) {
 			inComposition=false;
 			nvdaControllerInternal_inputCompositionUpdate(L"",0,0,L"");
 		}
-	} else {
-		inComposition=true;
-		WCHAR* edit_str = HandleEditRecord(cookie, pEditRec);
-		nvdaControllerInternal_inputCompositionUpdate(comp_str,0,0,(edit_str?edit_str:L""));
-		if (edit_str) free(edit_str);
-		free(comp_str);
+		return S_OK;
 	}
+	inComposition=true;
+	wchar_t buf[256];
+	ULONG len = ARRAYSIZE(buf) - 1;
+	pRange->GetText(cookie, 0, buf, len, &len);
+	buf[min(len,255)]=L'\0';
+	long compStart=0;
+	fetchRangeExtent(pRange,&compStart,&len);
+	long selStart=compStart;
+	long selEnd=compStart;
+	TF_SELECTION tfSelection={0};
+	if(pCtx->GetSelection(cookie,0,1,&tfSelection,&len)==S_OK&&tfSelection.range) {
+		if(fetchRangeExtent(tfSelection.range,&selStart,&len)) {
+			selEnd=selStart+len;
+		}
+		tfSelection.range->Release();
+	}
+	selStart=max(0,selStart-compStart);
+	selEnd=max(0,selEnd-compStart);
+	WCHAR* edit_str = HandleEditRecord(cookie, pEditRec);
+	nvdaControllerInternal_inputCompositionUpdate(buf,selStart,selEnd,(edit_str?edit_str:L""));
+	if (edit_str) free(edit_str);
 	return S_OK;
 }
 
