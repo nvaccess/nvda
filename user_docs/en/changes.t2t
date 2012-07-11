@@ -12,6 +12,8 @@
 - When Windows 8 Toast notifications appear, NVDA will announce them and move the navigator object there for further interaction. (#2143)
 - Support for VIP Mud. (#1728)
 - In Adobe Reader, if a table has a summary, it is now presented. (#2465)
+- In Adobe Reader, table row and column headers can now be reported. (#2193)
+- New languages: Korean, Nepali
 
 
 == Changes ==
@@ -24,8 +26,10 @@
 - In Windows Vista and later, NVDA no longer incorrectly treats the Windows key as being held down when unlocking Windows after locking it by pressing Windows+l. (#1856)
 - In Adobe Reader, row headers are now correctly recognised as table cells; i.e. coordinates are reported and they can be accessed using table navigation commands. (#2444)
 - In Adobe Reader, table cells spanning more than one column and/or row are now handled correctly. (#2437, #2438, #2450)
+- When copying the user configuration to the system configuration (for use on Windows logon and other secure screens) NVDA will no longer freeze on XP while doing so. (#2485)
+- Tiles on the Windows 8 Start Screen are now presented better in speech and braille. The name is no longer repeated, unselected is no longer reported on all tiles, and live status information is presented  as the description of the tile (e.g. current temperature for the Weather tile).
 
-
+ 
 == Changes for Developers ==
 - Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
 

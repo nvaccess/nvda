@@ -271,18 +271,21 @@ class UpdateDownloader(object):
 		self._guiExecFunc(*self._guiExecArgs)
 
 	def _bg(self):
+		success=False
 		for url in self.urls:
 			try:
 				self._download(url)
 			except:
 				log.debugWarning("Error downloading %s" % url, exc_info=True)
-			else:
+			else: #Successfully downloaded or canceled
+				if not self._shouldCancel:
+					success=True
 				break
 		else:
 			# None of the URLs succeeded.
 			self._guiExec(self._error)
 			return
-		if self._shouldCancel:
+		if not success:
 			try:
 				os.remove(self.destPath)
 			except OSError:

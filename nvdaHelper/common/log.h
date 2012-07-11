@@ -25,7 +25,7 @@ void logMessage(int level, const wchar_t* msg);
 
 int NVDALogCrtReportHook(int reportType, const wchar_t* msg, int* returnVal);
 
-#define loglevel_none 60
+#define LOGLEVEL_NONE 60
 #define LOGLEVEL_CRITICAL 50
 #define LOGLEVEL_ERROR 40
 #define LOGLEVEL_WARNING 30
