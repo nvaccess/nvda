@@ -36,16 +36,19 @@ class BaseCandidateItem(IAccessible):
 	def _get_description(self):
 		symbols=self.name
 		descriptions=[]
+		numSymbols=len(symbols)
 		for symbol in symbols:
 			try:
-				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol)[:1]
+				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol)[:1] or []
 			except TypeError:
 				symbolDescriptions=[]
-			if symbolDescriptions:
-				if len(symbols)>1 or len(symbolDescriptions)==1: 
-					descriptions.append(_("{symbol} as in {description}").format(symbol=symbol,description=symbolDescriptions[0]))
-				else:
-					descriptions.extend(symbolDescriptions)
+			numSymbolDescriptions=len(symbolDescriptions)
+			for desc in symbolDescriptions:
+				if desc and desc[0]=='(' and desc[-1]==')':
+					desc=desc[1:-1]
+				elif numSymbols>1 or len(symbolDescriptions)==1:
+					desc=_("{symbol} as in {description}").format(symbol=symbol,description=desc)
+				descriptions.append(desc)
 		if descriptions:
 			return ", ".join(descriptions)
 
