@@ -22,7 +22,7 @@ _remoteLoader64=None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
-lastInputLangChangeTime=0
+lastInputMethodName=None
 
 #utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
 def _setDllFuncPointer(dll,name,cfunc):
@@ -140,35 +140,40 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
-	global lastInputLangChangeTime
+	global lastInputMethodName
 	import queueHandler
 	import ui
-	curTime=time.time()
-	if (curTime-lastInputLangChangeTime)<0: #.2:
-		return 0
-	lastInputLangChangeTime=curTime
-	#layoutString can sometimes be None, yet a registry entry still exists for a string representation of hkl
-	if not layoutString:
-		layoutString=hex(hkl)[2:].rstrip('L').upper().rjust(8,'0')
-		log.debugWarning("layoutString was None, generated new one from hkl as %s"%layoutString)
-	layoutName=_lookupKeyboardLayoutNameWithHexString(layoutString)
-	if not layoutName and hkl and hkl<0xd0000000:
-		#Try using the high word of hkl as the lang ID for a default layout for that language
-		simpleLayoutString=layoutString[0:4].rjust(8,'0')
-		log.debugWarning("trying simple version: %s"%simpleLayoutString)
-		layoutName=_lookupKeyboardLayoutNameWithHexString(simpleLayoutString)
-	if not layoutName and hkl:
-		#Try using the low word of hkl as the lang ID for a default layout for that language
-		simpleLayoutString=layoutString[4:].rjust(8,'0')
-		log.debugWarning("trying simple version: %s"%simpleLayoutString)
-		layoutName=_lookupKeyboardLayoutNameWithHexString(simpleLayoutString)
-	if not layoutName:
-		if layoutString:
-			layoutName=layoutString
-		else:
-			log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
-			layoutName=_("unknown layout")
-	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("layout %s")%layoutName)
+	print "inputLangChange: layoutString %s"%layoutString
+	layoutStringCodes=[]
+	inputMethodName=None
+	#layoutString can either be a real input method name, a hex string for an input method name in the registry, or an empty string.
+	#If its a real input method name its used as is.
+	#If its a hex string or its empty, then the method name is looked up by trying:
+	#The full hex string, the hkl as a hex string, the low word of the hex string or hkl, the high word of the hex string or hkl.
+	if layoutString:
+		try:
+			int(layoutString,16)
+			layoutStringCodes.append(layoutString)
+		except ValueError:
+			print "already input method name"
+			inputMethodName=layoutString
+			pass
+	if not inputMethodName:
+		layoutStringCodes.insert(0,hex(hkl)[2:].rstrip('L').upper().rjust(8,'0'))
+		for stringCode in list(layoutStringCodes):
+			layoutStringCodes.append(stringCode[4:].rjust(8,'0'))
+			if stringCode[0]<'D':
+				layoutStringCodes.append(stringCode[0:4].rjust(8,'0'))
+		for stringCode in layoutStringCodes:
+			inputMethodName=_lookupKeyboardLayoutNameWithHexString(stringCode)
+			print "stringCode %s, input method name %s"%(stringCode,inputMethodName)
+			if inputMethodName: break
+	if not inputMethodName:
+		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
+		inputMethodName=_("unknown input method")
+	if inputMethodName!=lastInputMethodName:
+		lastInputMethodName=inputMethodName
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,inputMethodName)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_wchar)
