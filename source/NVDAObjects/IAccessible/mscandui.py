@@ -54,6 +54,11 @@ class BaseCandidateItem(IAccessible):
 
 class MSCandUI_candidateListItem(BaseCandidateItem):
 
+	def _get_states(self):
+		states=super(MSCandUI_candidateListItem,self).states
+		states.add(controlTypes.STATE_SELECTABLE)
+		return states
+
 	def event_stateChange(self):
 		if controlTypes.STATE_SELECTED in self.states:
 			reportSelectedCandidate(self)
