@@ -23,6 +23,7 @@ class BaseCandidateItem(IAccessible):
 
 	def _get_parent(self):
 		parent=super(BaseCandidateItem,self).parent
+		# Translators: The title of the input composition candidate list
 		parent.name=_("Candidate")
 		parent.description=None
 		return parent
@@ -47,6 +48,7 @@ class BaseCandidateItem(IAccessible):
 				if desc and desc[0]=='(' and desc[-1]==')':
 					desc=desc[1:-1]
 				elif numSymbols>1 or len(symbolDescriptions)==1:
+					# Translators: a human friendly message used as the description for an input composition candidate symbol using both the symbol and its character description. 
 					desc=_("{symbol} as in {description}").format(symbol=symbol,description=desc)
 				descriptions.append(desc)
 		if descriptions:
@@ -154,7 +156,8 @@ class MSCandUIWindow_candidateListItem(MSCandUI_candidateListItem):
 
 class MSCandUIWindow(IAccessible):
 
-	name=_("Candidates")
+	# Translators: the title of the input composition candidate list
+	name=_("Candidate")
 	role=controlTypes.ROLE_LIST
 
 	def _get_states(self):
