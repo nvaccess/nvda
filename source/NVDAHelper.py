@@ -114,16 +114,28 @@ def nvdaControllerInternal_logMessage(level,pid,message):
 
 def handleInputCompositionEnd():
 	focus=api.getFocusObject()
+	import speech
+	oldSpeechMode=speech.speechMode
+	speech.speechMode=speech.speechMode_off
 	eventHandler.executeEvent("gainFocus",focus.parent)
+	speech.speechMode=oldSpeechMode
+	# Translators: a message spoken when input composition has finished.
+	speech.speakMessage(_("Done"))
 
 def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,newText):
 	from NVDAObjects.inputComposition import InputComposition
 	focus=api.getFocusObject()
+	import speech
 	if not isinstance(focus,InputComposition):
 		parent=api.getDesktopObject().objectWithFocus()
 		newFocus=InputComposition(parent=parent)
-		newFocus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
 		eventHandler.executeEvent("gainFocus",newFocus)
+		speech.speechMode=oldSpeechMode
+		# Translators: a message spoken when input composition starts
+		speech.speakMessage(_("Compose"))
+		newFocus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
 
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_wchar_p)
 def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText):
