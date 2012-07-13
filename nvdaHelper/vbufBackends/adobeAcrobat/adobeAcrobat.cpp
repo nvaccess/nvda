@@ -591,8 +591,10 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			parentNode->addAttribute(L"name", name);
 			// Render the name before this node,
 			// as the label is often not a separate node and thus won't be rendered into the buffer.
-			tempNode = buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
-			tempNode->addAttribute(L"language", parentNode->language);
+			// We can't do this if this node is being updated,
+			// but in this case, the name has already been rendered before anyway.
+			if (oldParentNode && (tempNode = buffer->addTextFieldNode(oldParentNode, parentNode->getPrevious(), name)))
+				tempNode->addAttribute(L"language", parentNode->language);
 		}
 
 		// Hereafter, tempNode is the text node (if any).
