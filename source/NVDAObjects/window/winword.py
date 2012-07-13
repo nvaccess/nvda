@@ -142,7 +142,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			self._rangeObj=_rangeObj.Duplicate
 			return
 		if isinstance(position,textInfos.Point):
-			self._rangeObj=self.obj.WinwordDocumentObject.activeWindow.RangeFromPoint(position.x,position.y)
+			try:
+				self._rangeObj=self.obj.WinwordDocumentObject.activeWindow.RangeFromPoint(position.x,position.y)
+			except COMError:
+				raise NotImplementedError
 		elif position==textInfos.POSITION_SELECTION:
 			self._rangeObj=self.obj.WinwordSelectionObject.range
 		elif position==textInfos.POSITION_CARET:
