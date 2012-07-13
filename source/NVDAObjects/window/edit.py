@@ -307,8 +307,6 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryText(self):
-		if controlTypes.STATE_PROTECTED in self.obj.states:
-			return '*'*(self._getStoryLength()-1)
 		return self.obj.windowText
 
 	def _getStoryLength(self):
@@ -357,11 +355,14 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalBuf,0,winKernel.MEM_RELEASE)
 			if self.obj.isWindowUnicode or (res>1 and (buf[res]!=0 or buf[res+1]!=0)): 
-				return ctypes.cast(buf,ctypes.c_wchar_p).value
+				text=ctypes.cast(buf,ctypes.c_wchar_p).value
 			else:
-				return unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
+				text=unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
 		else:
-			return self._getStoryText()[start:end]
+			text=self._getStoryText()[start:end]
+		if text and controlTypes.STATE_PROTECTED in self.obj.states:
+			return u'*'*len(text)
+		return text
 
 	def _getWordOffsets(self,offset):
 		if self.obj.editAPIVersion>=2:
@@ -597,8 +598,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 	def _getTextAtRange(self,rangeObj):
 		embedRangeObj=None
 		bufText=rangeObj.text
-		if bufText is None:
-			bufText=""
+		if not bufText:
+			return u""
+		if controlTypes.STATE_PROTECTED in self.obj.states:
+			return u'*'*len(bufText)
 		newTextList=[]
 		start=rangeObj.start
 		for offset in range(len(bufText)):
