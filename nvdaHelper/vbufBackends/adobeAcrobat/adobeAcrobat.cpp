@@ -496,7 +496,13 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			}
 		}
 		if (role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
-			if (role == ROLE_SYSTEM_COLUMNHEADER) {
+			bool isColHeader;
+			if (domElement && domElement->GetAttribute(L"Scope", L"Table", &tempBstr) == S_OK && tempBstr) {
+				isColHeader = wcscmp(tempBstr, L"Column") == 0;
+				SysFreeString(tempBstr);
+			} else
+				isColHeader = role == ROLE_SYSTEM_COLUMNHEADER;
+			if (isColHeader) {
 				// Record this as a column header for each spanned column.
 				s.str(L"");
 				s << docHandle << L"," << ID << L";";
@@ -513,7 +519,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 				// Record the id string and associated header info for use when handling explicitly defined headers.
 				TableHeaderInfo& headerInfo = tableInfo->headersInfo[tempBstr];
 				headerInfo.uniqueId = ID;
-				headerInfo.isColumnHeader = role == ROLE_SYSTEM_COLUMNHEADER;
+				headerInfo.isColumnHeader = isColHeader;
 				SysFreeString(tempBstr);
 			}
 		}
