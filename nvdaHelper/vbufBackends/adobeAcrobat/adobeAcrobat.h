@@ -24,7 +24,7 @@ class AdobeAcrobatVBufStorage_controlFieldNode_t;
 
 typedef struct {
 	int uniqueId;
-	bool isColumnHeader;
+	int type;
 } TableHeaderInfo;
 
 typedef struct {

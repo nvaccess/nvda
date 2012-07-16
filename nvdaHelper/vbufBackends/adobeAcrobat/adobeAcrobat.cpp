@@ -25,6 +25,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 const int TEXTFLAG_UNDERLINE = 0x1;
 const int TEXTFLAG_STRIKETHROUGH = 0x2;
+const int TABLEHEADER_COLUMN = 0x1;
+const int TABLEHEADER_ROW = 0x2;
 
 using namespace std;
 
@@ -268,8 +270,10 @@ inline void fillExplicitTableHeadersForCell(AdobeAcrobatVBufStorage_controlField
 		if (it == tableInfo.headersInfo.end())
 			continue;
 
-		(it->second.isColumnHeader ? colHeaders : rowHeaders)
-			<< docHandle << L"," << it->second.uniqueId << L";";
+		if (it->second.type & TABLEHEADER_COLUMN)
+			colHeaders << docHandle << L"," << it->second.uniqueId << L";";
+		if (it->second.type & TABLEHEADER_ROW)
+			rowHeaders<< docHandle << L"," << it->second.uniqueId << L";";
 	}
 
 	if (colHeaders.tellp() > 0)
@@ -496,19 +500,26 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			}
 		}
 		if (role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
-			bool isColHeader;
+			int headerType = 0;
 			if (domElement && domElement->GetAttribute(L"Scope", L"Table", &tempBstr) == S_OK && tempBstr) {
-				isColHeader = wcscmp(tempBstr, L"Column") == 0;
+				if (wcscmp(tempBstr, L"Column") == 0)
+					headerType = TABLEHEADER_COLUMN;
+				else if (wcscmp(tempBstr, L"Row") == 0)
+					headerType = TABLEHEADER_ROW;
+				else if (wcscmp(tempBstr, L"Both") == 0)
+					headerType = TABLEHEADER_COLUMN | TABLEHEADER_ROW;
 				SysFreeString(tempBstr);
-			} else
-				isColHeader = role == ROLE_SYSTEM_COLUMNHEADER;
-			if (isColHeader) {
+			}
+			if (!headerType)
+				headerType = (role == ROLE_SYSTEM_COLUMNHEADER) ? TABLEHEADER_COLUMN : TABLEHEADER_ROW;
+			if (headerType & TABLEHEADER_COLUMN) {
 				// Record this as a column header for each spanned column.
 				s.str(L"");
 				s << docHandle << L"," << ID << L";";
 				for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
 					tableInfo->columnHeaders[col] += s.str();
-			} else {
+			}
+			if (headerType & TABLEHEADER_ROW) {
 				// Record this as a row header for each spanned row.
 				s.str(L"");
 				s << docHandle << L"," << ID << L";";
@@ -519,7 +530,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 				// Record the id string and associated header info for use when handling explicitly defined headers.
 				TableHeaderInfo& headerInfo = tableInfo->headersInfo[tempBstr];
 				headerInfo.uniqueId = ID;
-				headerInfo.isColumnHeader = isColHeader;
+				headerInfo.type = headerType;
 				SysFreeString(tempBstr);
 			}
 		}
