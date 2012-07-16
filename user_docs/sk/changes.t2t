@@ -1,7 +1,38 @@
-﻿Čo je nové v NVDA 
+Čo je nové v NVDA 
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2012.3 =
+
+== Nové vlastnosti ==
+ - NVDA dokáže oznámiť podčiarknutie a prečiarknutie v programe Adobe reader. (#2410)
+- Ak je zapnutá funkcia jedným prstom, kláves NVDA sa bude správať ako iné modifikačné klávesy (ctrl, alt, windows). Toto vám umožňuje používať kláves NVDA bez toho, aby ste ho museli držať súčasne s inými klávesmi. (#230)
+- Podpora brailovských riadkov Braille Sense, Braille EDGE a SyncBraille od spoločnosti HIMS. (#1266, #1267)
+- Podpora pre notifikačné oznamy tzv. toast notifications v systéme windows 8. Pri zobrazení takéhoto upozornenia NVDA prečíta obsah a nastaví na oznámenie navigačný objekt. (#2143)
+- Aplikačný modul pre program VIP Mud. (#1728)
+- Ak má tabuľka v dokumente programu Adobe reader súhrn, NVDA ho prečíta (#2465)
+- NVDA oznamuje čísla riadkov a hlavičky stĺpcov v programe Adobe Reader (#2193)
+- Nové Jazyky: Kórejčina a Nepálčina
+- NVDA dokáže čítať návrhy pri automatickom dokončovaní adries v programe Microsoft Oultlook
+
+== Zmeny ==
+- V dialógu Prehliadací kurzor a objektová navigácia upravená položka sledovať systémový fokus. Týka sa len anglickej lokalizácie NVDA, keďže boli rozdieli v popise prvku a používateľskej dokumentácii.
+- Ak je brailovský kurzor zviazaný s prehliadacím kurzorom a kurzor nie je na textovom objekte (napríklad editačnom poli), kláves route automaticky aktivuje objekt. (#2386)
+
+== opravy ==
+- Obsah elektronických kníh v aplikácii Blio je možné čítať aj pomocou brailovských riadkov. (#2139)
+- V systémoch Windows Vista a novších, po zamknutí počítača pomocou windows+l a opätovnom odomknutí, NVDA správne vyhodnocuje stav klávesu windows. (#1856)
+- V programe Adobe Reader sú hlavičky tabuliek správne rozpoznané ako bunky, znamená to, že sú správne oznamované ich súradnice a je možné k nim pristupovať štandardnými navigačnými príkazmi dostupnými počas navigácie v tabuľkách. (#2444)
+- V programe Adobe Reader sú správne spracované bunky tabuliek, ktoré zaberajú viac stĺpcov alebo riadkov tabuľky. (#2437, #2438, #2450)
+- Súbor s balíkom NVDA pred spustením skontroluje svoj kontrolný súčet. (#2475)
+- Ak zlyhá aktualizácia NVDA, stiahnutý súbor sa vymaže. (#2477)
+- V systéme Windows XP NVDA nezamrzne počas kopírovania aktuálnych nastavení do systémového priečinka. (#2485)
+- Dlaždice na štartovacej obrazovke v systéme Windows 8 sú lepšie oznamované hlasom, aj na brailovských riadkoch. NVDA neopakuje názvy, zbytočne neoznamuje "nevybraté" a číta aktuálny stav (napríklad aktuálnu teplotu pre aplikáciu Počasie.)
+
+== Zmeny pre vývojárov ==
+- Pri štarte NVDA sa log z predošlého spustenia ukladá do súboru nvda-old.log. Takto je možné po reštarte alebo zamrznutí NVDA zistiť chybu z predchádzajúceho logu. (#916)
+
 
 = 2012.2 =
 Prednosti tejto verzie zahŕňajú: vstavaný inštalátor a možnosť vytvorenia prenosnej verzie, automatické aktualizácie, jednoduchú správu doplnkov, čítanie grafických prvkov v programe Microsoft word, podporu pre metro aplikácie Windows 8, a množstvo dôležitých opráv.
