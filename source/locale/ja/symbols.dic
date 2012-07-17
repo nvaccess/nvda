@@ -2,6 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 1999-2002 Bilingual Emacspeak Project
 #Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2012 Takuya Nishimoto (nishimotz), Martin (mahoro-ba.net)
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -10,7 +11,6 @@ complexSymbols:
 行末の丸	(?<=[^\s。])\。(?=[\"'”’)\s]|$)
 行末の感嘆符	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
 行末の疑問符	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
-
 
 # Others
 decimal point	(?<=\d)\.(?=\d)
@@ -41,8 +41,19 @@ negative number	マイナス
 数字の間のゼンカクピリオド		none	always
 数字の間のゼンカクカンマ		none	always
 
+# Other characters
+•	ナカテン	most
+…	サンテン
+	ナカテン	most
+“	ヒダリニジューインヨーフ	most
+”	ミギニジューインヨーフ	most
+–	エンダッシュ
+—	エムダッシュ
+●	クロマル
+¨	ウムラウト	all
+
 # Whitespace
-\0	ブランク
+\0	ブランク	char
 \t	タブ
 \n	カイギョウ
 \f	カイページ
@@ -58,12 +69,12 @@ $	ドル	some
 ￡	ポンド	some
 €	ユーロ	some
 ￠	セント	some
-\	エンマーク	some
+\	エン	some
 %	パーセント	some
 &	アンド	some
 '	アポストロフィ	some
-(	カッコ	some
-)	トジカッコ	some
+(	カッコ	most
+)	トジカッコ	most
 *	アスタリスク	some
 +	プラス	some
 ,	カンマ	-	never
@@ -77,47 +88,46 @@ $	ドル	some
 =	イコール	some
 ?	クエスチョン	some
 @	アット	some
-[	ダイカッコ	some
-]	トジダイカッコ	some
-^	ベキジョー	some
+[	ダイカッコ	most
+]	トジダイカッコ	most
+^	ベキジョー	all
 _	アンダー	some
 `	アクサングラーブ	some
-{	チューカッコ	some
-}	トジチューカッコ	some
+{	チューカッコ	most
+}	トジチューカッコ	most
 |	タテセン	some
 ~	チルダ	some
 
 # Other characters
-•	バレット
+•	バレット	most
 …	サンテン
 ...	ドットドットドット
 	バレット
-“	ヒダリニジューインヨーフ
-”	ミギニジューインヨーフ
-‘	ヒダリインヨーフ
-’	ミギインヨーフ
+“	ヒダリニジューインヨーフ	most
+”	ミギニジューインヨーフ	most
+‘	ヒダリインヨーフ	most
+’	ミギインヨーフ	most
 –	エンダッシュ
 —	エムダッシュ
 ●	クロマル
-¨	ウムラウト
-‎	ヒダリカラミギマーク
-‏	ミギカラヒダリマーク
+‎	ヒダリカラミギマーク	some
+‏	ミギカラヒダリマーク	some
 ■	クロシカク
 ➔	ミギヤジルシ
 §	セクション
-°	ド
-≪	ヒジョーニチイサイキゴー
-≫	ヒジョーニオオキイキゴー
-μ	マイクロ
-¹	ウワツキイチ
-²	ウワツキニ
-³	ウワツキサン
+°	ド	all
+≪	ヒジョーニチイサイ
+≫	ヒジョーニオオキイ
+μ	マイクロ	all
+¹	ウワツキイチ	all
+²	ウワツキニ	all
+³	ウワツキサン	all
 ®	アール
 ™	ティーエム
 ©	シー
-±	プラスマイナス
-×	カケル
-÷	ワル
+±	プラスマイナス	all
+×	カケル	all
+÷	ワル	all
 →	ミギヤジルシ
 ✓	チェック
 ✔	チェック
@@ -125,19 +135,19 @@ _	アンダー	some
 # Japanese Double Bytes Symbols
 ｰ	チョーオン	char	always
 ｡	マル	some
-｢	カギヒラキ	some
-｣	カギトジ	some
-､	テン	some
-･	ナカテン	some
+｢	カギヒラキ	most
+｣	カギトジ	most
+､	テン	most
+･	ナカテン	most
 ﾞ	ダクテン	char	always
 ﾟ	ハンダクテン	char	always
 　	クウハク	char	always
 ー	チョーオン	char	always
-、	テン	some
+、	テン	most
 。	マル	some
 ，	カンマ	some
 ．	ピリオド	some
-・	ナカテン	some
+・	ナカテン	most
 ：	コロン	some
 ；	セミコロン	some
 ？	ギモンフ	some
@@ -146,19 +156,19 @@ _	アンダー	some
 ゜	ハンダクテン	char	always
 ´	アクサンティギュー	most
 ｀	アクサングラーブ	most
-¨	ウムラウト	most
-＾	ベキジョー	most
+¨	ウムラウト	all
+＾	ベキジョー	all
 ￣	オーバーライン	most
 ＿	アンダー	most
-ヽ	カタカナクリカエシ	most
-ヾ	カタカナダクテンクリカエシ	most
-ゝ	ヒラガナクリカエシ	most
-ゞ	ヒラガナダクテンクリカエシ	most
-〃	オナジク	most
-仝	ドージョー	most
-々	クリカエシキゴー	most
-〆	シメ	most
-〇	カンスージゼロ	most
+ヽ	カタカナクリカエシ	all	always
+ヾ	カタカナダクテンクリカエシ	all	always
+ゝ	ヒラガナクリカエシ	all	always
+ゞ	ヒラガナダクテンクリカエシ	all	always
+〃	オナジク	all
+仝	ドージョー	all
+々	クリカエシキゴー	all	always
+〆	シメ	all	always
+〇	カンスージゼロ	all
 ―	ダッシュ	some
 ‐	ハイフン	some
 ／	スラッシュ	some
@@ -168,57 +178,57 @@ _	アンダー	some
 ｜	タテセン	some
 …	サンテン	some
 ‥	ニテン	some
-‘	ヒダリインヨーフ	some
-’	ミギインヨーフ	some
-“	ヒダリニジューインヨーフ	some
-”	ミギニジューインヨーフ	some
-（	カッコヒラキ	some
-）	カッコトジ	some
-〔	キッコー	some
-〕	トジキッコー	some
-［	ダイカッコ	some
-］	トジダイカッコ	some
-｛	チューカッコ	some
-｝	トジチューカッコ	some
-〈	ヤマカッコ	some
-〉	トジヤマカッコ	some
-《	ニジューヤマカッコ	some
-》	トジニジューヤマカッコ	some
-「	カギヒラキ	some
-」	トジカギ	some
-『	ニジューカギ	some
-』	トジニジューカギ	some
-【	スミツキ	some
-】	トジスミツキ	some
-＋	プラス	some
-－	マイナス	some
-±	プラスマイナス	most
+‘	ヒダリインヨーフ	most
+’	ミギインヨーフ	most
+“	ヒダリニジューインヨーフ	most
+”	ミギニジューインヨーフ	most
+（	カッコヒラキ	most
+）	カッコトジ	most
+〔	キッコー	most
+〕	トジキッコー	most
+［	ダイカッコ	most
+］	トジダイカッコ	most
+｛	チューカッコ	most
+｝	トジチューカッコ	most
+〈	ヤマカッコ	most
+〉	トジヤマカッコ	most
+《	ニジューヤマカッコ	most
+》	トジニジューヤマカッコ	most
+「	カギヒラキ	most
+」	トジカギ	most
+『	ニジューカギ	most
+』	トジニジューカギ	most
+【	スミツキ	most
+】	トジスミツキ	most
+＋	プラス	all
+－	マイナス	all
+±	プラスマイナス	all
 ×	カケル	some
 ÷	ワル	some
 ＝	イコール	some
-≠	ノットイコール	most
+≠	ノットイコール	all
 ＜	ショーナリ	some
 ＞	ダイナリ	some
-≦	ショーナリイコール	most
-≧	ダイナリイコール	most
-∞	ムゲンダイ	most
-∴	ユエニ	most
-♂	ダンセイ	most
-♀	ジョセイ	most
-°	ド	most
-′	フン	most
-″	ビョー	most
-℃	ドシー	most
-￥	エンマーク	some
+≦	ショーナリイコール	all
+≧	ダイナリイコール	all
+∞	ムゲンダイ	all
+∴	ユエニ	all
+♂	ダンセイ	all
+♀	ジョセイ	all
+°	ド	all
+′	フン	all
+″	ビョー	all
+℃	ドシー	all
+￥	エンマーク	all
 ＄	ドル	some
-￠	セント	some
-￡	ポンド	some
-％	パーセント	some
+￠	セント	all
+￡	ポンド	all
+％	パーセント	all
 ＃	シャープ	some
-＆	アンパサンド	some
-＊	アスタリスク	some
-＠	アット	some
-§	セクション	most
+＆	アンパサンド	all
+＊	アスタリスク	all
+＠	アット	all
+§	セクション	all
 ☆	シロボシ	some
 ★	クロボシ	some
 ○	シロマル	some
@@ -239,158 +249,163 @@ _	アンダー	some
 ↑	ウエヤジルシ	some
 ↓	シタヤジルシ	some
 〓	クギリキゴー	some
-∈	ゾクスル	some
-∋	モトトシテフクム	some
-⊆	ブブンシューゴー	some
-⊇	ブブンオフクム	some
-⊂	シンフブンシューゴー	some
-⊃	シンブオフクム	some
-∪	ガッペイシューゴー	some
-∩	キョーツーシューゴー	some
-∧	ゴーセツキゴー	some
-∨	リセツキゴー	some
-￢	ヒテイキゴー	some
-⇒	ゴーイキゴー	some
-⇔	ドーチキゴー	some
-∀	フツーゲンテイシ	some
-∃	ソンザイゲンテイシ	some
-∠	カクキゴー	some
-⊥	スイチョク	some
-⌒	コキゴー	some
-∂	ラウンドディー	some
-∇	ナブラキゴー	some
-≡	ツネニヒトシイキゴー	some
-≒	ホトンドヒトシイ	some
-≪	ヒジョーニチイサイキゴー	some
-≫	ヒジョーニオーキイキゴー	some
-√	コンキゴー	most
-∽	ソージキゴー	most
-∝	ヒレイキゴー	most
-∵	ナゼナラバキゴー	most
-∫	セキブンキゴー	most
-∬	ニジューセキブンキゴー	most
-Å	オングストローム	most
+∈	ゾクスル	all
+∋	モトトシテフクム	all
+⊆	ブブンシューゴー	all
+⊇	ブブンオフクム	all
+⊂	シンフブンシューゴー	all
+⊃	シンブオフクム	all
+∧	ゴーセツ キゴー	all
+∨	リセツ キゴー	all
+￢	ヒテイ キゴー	all
+⇒	ゴーイ キゴー	some
+⇔	ドーチ キゴー	all
+∀	フツーゲンテイシ	all
+∃	ソンザイゲンテイシ	all
+⌒	コキゴー	all
+∂	ラウンドディー	all
+∇	ナブラ	all
+≪	ヒジョーニチイサイ	all
+≫	ヒジョーニオーキイ	all
+∽	ソージ	most
+∝	ヒレイ	most
+∫	セキブン	most
+∬	ニジューセキブン	most
+Å	オングストローム	all
 ‰	パーミル	most
+≒	キンジマタワトーゴー	all
+≡	ゴードー	all
+∫	セキブンキゴー	all
+∮	シューカイセキブン	all
+∑	シグマ	all
+√	ヘイホーコン	all
+⊥	スイチョク	all
+∠	カクド	all
+∟	チョッカク	all
+⊿	サンカクケイ	all
+∵	ナゼナラバ	all
+∩	キャップ	all
+∪	カップ	all
 ♯	シャープ	some
 ♭	フラット	some
 ♪	オンプ	some
 †	ダガー	most
 ‡	ダブルダガー	most
-¶	ダンラクキゴー	most
-Α	オオモジアルファ	most
-Β	オオモジベータ	most
-Γ	オオモジガンマ	most
-Δ	オオモジデルタ	most
-Ε	オオモジイプシロン	most
-Ζ	オオモジジェータ	most
-Η	オオモジイータ	most
-Θ	オオモジシータ	most
-Ι	オオモジイオータ	most
-Κ	オオモジカッパ	most
-Λ	オオモジラムダ	most
-Μ	オオモジミュー	most
-Ν	オオモジニュー	most
-Ξ	オオモジクシー	most
-Ο	オオモジオミクロン	most
-Π	オオモジパイ	most
-Ρ	オオモジロー	most
-Σ	オオモジシグマ	most
-Τ	オオモジタウ	most
-Υ	オオモジウプシロン	most
-Φ	オオモジフェー	most
-Χ	オオモジキー	most
-Ψ	オオモジプシー	most
-Ω	オオモジオメガ	most
-α	アルファ	most
-β	ベータ	most
-γ	ガンマ	most
-δ	デルタ	most
-ε	イプシロン	most
-ζ	ジェータ	most
-η	イータ	most
-θ	シータ	most
-ι	イオータ	most
-κ	カッパ	most
-λ	ラムダ	most
-μ	ミュー	most
-ν	ニュー	most
-ξ	クシー	most
-ο	オミクロン	most
-π	パイ	most
-ρ	ロー	most
-σ	シグマ	most
-τ	タウ	most
-υ	ウプシロン	most
-φ	フェー	most
-χ	キー	most
-ψ	プシー	most
-ω	オメガ	most
-А	オオモジアー	most
-Б	オオモジベー	most
-В	オオモジブエー	most
-Г	オオモジゲー	most
-Д	オオモジデー	most
-Е	オオモジイエー	most
-Ё	オオモジヨー	most
-Ж	オオモジジエー	most
-З	オオモジゼー	most
-И	オオモジイー	most
-Й	オオモジイークラトコエ	most
-К	オオモジカー	most
-Л	オオモジエル	most
-М	オオモジエム	most
-Н	オオモジエヌ	most
-О	オオモジオー	most
-П	オオモジペー	most
-Р	オオモジエル	most
-С	オオモジエス	most
-Т	オオモジテー	most
-У	オオモジウー	most
-Ф	オオモジエフ	most
-Х	オオモジハー	most
-Ц	オオモジツエー	most
-Ч	オオモジチェー	most
-Ш	オオモジシャー	most
-Щ	オオモジシシャー	most
-Ъ	オオモジトゥブョールドゥィズナーク	most
-Ы	オオモジウイー	most
-Ь	オオモジミャーフキーズナーク	most
-Э	オオモジエー	most
-Ю	オオモジユー	most
-Я	オオモジヤー	most
-а	アー	most
-б	ベー	most
-в	ブエー	most
-г	ゲー	most
-д	デー	most
-е	イエー	most
-ё	ヨー	most
-ж	ジエー	most
-з	ゼー	most
-и	イー	most
-й	イークラトコエ	most
-к	カー	most
-л	エリ	most
-м	エム	most
-н	エヌ	most
-о	オー	most
-п	ペー	most
-р	エル	most
-с	エス	most
-т	テー	most
-у	ウー	most
-ф	エフ	most
-х	ハー	most
-ц	ツェー	most
-ч	チェー	most
-ш	シャー	most
-щ	シシャー	most
-ъ	トゥブョールドゥィズナーク	most
-ы	ウイー	most
-ь	ミャーフキーズナーク	most
-э	エー	most
-ю	ユー	most
-я	ヤー	most
+¶	ダンラク キゴー	most
+Α	オオモジ アルファ	all
+Β	オオモジ ベータ	all
+Γ	オオモジ ガンマ	all
+Δ	オオモジ デルタ	all
+Ε	オオモジ イプシロン	all
+Ζ	オオモジ ジェータ	all
+Η	オオモジ イータ	all
+Θ	オオモジ シータ	all
+Ι	オオモジ イオータ	all
+Κ	オオモジ カッパ	all
+Λ	オオモジ ラムダ	all
+Μ	オオモジ ミュー	all
+Ν	オオモジ ニュー	all
+Ξ	オオモジ クシー	all
+Ο	オオモジ オミクロン	all
+Π	オオモジ パイ	all
+Ρ	オオモジ ロー	all
+Σ	オオモジ シグマ	all
+Τ	オオモジ タウ	all
+Υ	オオモジ ウプシロン	all
+Φ	オオモジ フェー	all
+Χ	オオモジ キー	all
+Ψ	オオモジ プシー	all
+Ω	オオモジ オメガ	all
+α	アルファ	all
+β	ベータ	all
+γ	ガンマ	all
+δ	デルタ	all
+ε	イプシロン	all
+ζ	ジェータ	all
+η	イータ	all
+θ	シータ	all
+ι	イオータ	all
+κ	カッパ	all
+λ	ラムダ	all
+μ	ミュー	all
+ν	ニュー	all
+ξ	クシー	all
+ο	オミクロン	all
+π	パイ	all
+ρ	ロー	all
+σ	シグマ	all
+τ	タウ	all
+υ	ウプシロン	all
+φ	フェー	all
+χ	キー	all
+ψ	プシー	all
+ω	オメガ	all
+А	オオモジ アー	all
+Б	オオモジ ベー	all
+В	オオモジ ブエー	all
+Г	オオモジ ゲー	all
+Д	オオモジ デー	all
+Е	オオモジ イエー	all
+Ё	オオモジ ヨー	all
+Ж	オオモジ ジエー	all
+З	オオモジ ゼー	all
+И	オオモジ イー	all
+Й	オオモジ イークラトコエ	all
+К	オオモジ カー	all
+Л	オオモジ エル	all
+М	オオモジ エム	all
+Н	オオモジ エヌ	all
+О	オオモジ オー	all
+П	オオモジ ペー	all
+Р	オオモジ エル	all
+С	オオモジ エス	all
+Т	オオモジ テー	all
+У	オオモジ ウー	all
+Ф	オオモジ エフ	all
+Х	オオモジ ハー	all
+Ц	オオモジ ツエー	all
+Ч	オオモジ チェー	all
+Ш	オオモジ シャー	all
+Щ	オオモジ シシャー	all
+Ъ	オオモジ トゥブョールドゥィズナーク	all
+Ы	オオモジ ウイー	all
+Ь	オオモジ ミャーフキーズナーク	all
+Э	オオモジ エー	all
+Ю	オオモジ ユー	all
+Я	オオモジ ヤー	all
+а	アー	all
+б	ベー	all
+в	ブエー	all
+г	ゲー	all
+д	デー	all
+е	イエー	all
+ё	ヨー	all
+ж	ジエー	all
+з	ゼー	all
+и	イー	all
+й	イークラトコエ	all
+к	カー	all
+л	エリ	all
+м	エム	all
+н	エヌ	all
+о	オー	all
+п	ペー	all
+р	エル	all
+с	エス	all
+т	テー	all
+у	ウー	all
+ф	エフ	all
+х	ハー	all
+ц	ツェー	all
+ч	チェー	all
+ш	シャー	all
+щ	シシャー	all
+ъ	トゥブョールドゥィズナーク	all
+ы	ウイー	all
+ь	ミャーフキーズナーク	all
+э	エー	all
+ю	ユー	all
+я	ヤー	all
 ─	ケイセン	most
 │	ケイセン	most
 ┌	ミギホソシタホソ	most
@@ -417,85 +432,71 @@ _	アンダー	some
 ┥	ヒダリフトタテホソ	most
 ┸	ヨコホソウエフト	most
 ╂	ヨコホソタテフト	most
-①	マルイチ	some
-②	マルニ	some
-③	マルサン	some
-④	マルヨン	some
-⑤	マルゴ	some
-⑥	マルロク	some
-⑦	マルナナ	some
-⑧	マルハチ	some
-⑨	マルキュー	some
-⑩	マルジュー	some
-⑪	マルジューイチ	some
-⑫	マルジューニ	some
-⑬	マルジューサン	some
-⑭	マルジューヨン	some
-⑮	マルジューゴ	some
-⑯	マルジューロク	some
-⑰	マルジューナナ	some
-⑱	マルジューハチ	some
-⑲	マルジューキュー	some
-⑳	マルニジュー	some
-Ⅰ	イチ	some
-Ⅱ	ニー	some
-Ⅲ	サン	some
-Ⅳ	ヨン	some
-Ⅴ	ゴ	some
-Ⅵ	ロク	some
-Ⅶ	ナナ	some
-Ⅷ	ハチ	some
-Ⅸ	キュー	some
-Ⅹ	ジュー	some
-㍉	ミリ	some
-㌔	キロ	some
-㌢	センチ	some
-㍍	メートル	some
-㌘	グラム	some
-㌧	トン	some
-㌃	アール	some
-㌶	ヘクタール	some
-㍑	リットル	some
-㍗	ワット	some
-㌍	カロリー	some
-㌦	ドル	some
-㌣	セント	some
-㌫	パーセント	some
-㍊	ミリバール	some
-㌻	ページ	some
-㎜	ミリメートル	some
-㎝	センチメートル	some
-㎞	キロメートル	some
-㎎	ミリグラム	some
-㎏	キログラム	some
-㏄	シーシー	some
-㎡	ヘイホーメートル	some
-㍻	ヘイセイ	some
-№	ナンバー	some
-㏍	カブシキガイシャ	some
-℡	デンワバンゴウ	some
-㊤	マルノナカニウエ	some
-㊥	マルノナカニチュウ	some
-㊦	マルノナカニシタ	some
-㊧	マルノナカニヒダリ	some
-㊨	マルノナカニミギ	some
-㈱	カブシキガイシャ	some
-㈲	ユウゲンガイシャ	some
-㈹	ダイヒョウ	some
-㍾	メイジ	some
-㍽	タイショー	some
-㍼	ショーワ	some
-≒	キンジマタワトーゴー	some
-≡	ゴードー	some
-∫	セキブンキゴー	most
-∮	シューカイセキブン	most
-∑	シグマ	most
-√	ヘイホーコン	most
-⊥	スイチョク	most
-∠	カクド	most
-∟	チョッカク	most
-⊿	サンカクケイ	most
-∵	ナゼナラバ	most
-∩	キャップ	most
-∪	カップ	most
-
+①	マルイチ	all
+②	マルニ	all
+③	マルサン	all
+④	マルヨン	all
+⑤	マルゴ	all
+⑥	マルロク	all
+⑦	マルナナ	all
+⑧	マルハチ	all
+⑨	マルキュー	all
+⑩	マルジュー	all
+⑪	マルジューイチ	all
+⑫	マルジューニ	all
+⑬	マルジューサン	all
+⑭	マルジューヨン	all
+⑮	マルジューゴ	all
+⑯	マルジューロク	all
+⑰	マルジューナナ	all
+⑱	マルジューハチ	all
+⑲	マルジューキュー	all
+⑳	マルニジュー	all
+Ⅰ	イチ	all
+Ⅱ	ニー	all
+Ⅲ	サン	all
+Ⅳ	ヨン	all
+Ⅴ	ゴ	all
+Ⅵ	ロク	all
+Ⅶ	ナナ	all
+Ⅷ	ハチ	all
+Ⅸ	キュー	all
+Ⅹ	ジュー	all
+㍉	ミリ	all
+㌔	キロ	all
+㌢	センチ	all
+㍍	メートル	all
+㌘	グラム	all
+㌧	トン	all
+㌃	アール	all
+㌶	ヘクタール	all
+㍑	リットル	all
+㍗	ワット	all
+㌍	カロリー	all
+㌦	ドル	all
+㌣	セント	all
+㌫	パーセント	all
+㍊	ミリバール	all
+㌻	ページ	all
+㎜	ミリメートル	all
+㎝	センチメートル	all
+㎞	キロメートル	all
+㎎	ミリグラム	all
+㎏	キログラム	all
+㏄	シーシー	all
+㎡	ヘイホーメートル	all
+㍻	ヘイセイ	all
+№	ナンバー	all
+㏍	カブシキガイシャ	all
+℡	デンワバンゴウ	all
+㊤	マルノナカニウエ	all
+㊥	マルノナカニチュウ	all
+㊦	マルノナカニシタ	all
+㊧	マルノナカニヒダリ	all
+㊨	マルノナカニミギ	all
+㈱	カブシキガイシャ	all
+㈲	ユウゲンガイシャ	all
+㈹	ダイヒョウ	all
+㍾	メイジ	all
+㍽	タイショー	all
+㍼	ショーワ	all
