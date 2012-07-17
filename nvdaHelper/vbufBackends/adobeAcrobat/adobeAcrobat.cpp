@@ -188,15 +188,14 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 			processText(text, procText);
 			previousNode = buffer->addTextFieldNode(parentNode, previousNode, procText);
 			if (previousNode) {
-				wostringstream s;
 				if (fontStatus == FontInfo_Valid) {
 					previousNode->addAttribute(L"font-name", fontName);
+					wostringstream s;
 					s.setf(ios::fixed);
 					s << setprecision(1) << fontSize << "pt";
 					previousNode->addAttribute(L"font-size", s.str());
 					if ((fontFlags&PDDOM_FONTATTR_ITALIC)==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");
 					if ((fontFlags&PDDOM_FONTATTR_BOLD)==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
-					s.str(L"");
 				}
 				previousNode->addAttribute(L"language", lang);
 				if (flags & TEXTFLAG_UNDERLINE)
