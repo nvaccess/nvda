@@ -132,8 +132,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_expandToLine(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,ctypes.byref(lineStart),ctypes.byref(lineEnd))
-		if res!=0:
-			raise ctypes.WinError(res)
+		if res!=0 or (lineStart.value==lineEnd.value==-1): 
+			log.debugWarning("winword_expandToLine failed")
+			self._rangeObj.expand(wdParagraph)
+			return
 		self._rangeObj.setRange(lineStart.value,lineEnd.value)
 
 	def __init__(self,obj,position,_rangeObj=None):
@@ -349,7 +351,7 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	def _get_WinwordVersion(self):
 		if not hasattr(self,'_WinwordVersion'):
-			self._WinwordVersion=float(self.WinwordWindowObject.application.version)
+			self._WinwordVersion=float(self.WinwordApplicationObject.version)
 		return self._WinwordVersion
 
 	def _get_WinwordWindowObject(self):
@@ -459,3 +461,4 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
+
