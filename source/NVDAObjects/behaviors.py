@@ -199,10 +199,11 @@ class LiveText(NVDAObject):
 		"""
 		if self._monitorThread:
 			return
-		self._monitorThread = threading.Thread(target=self._monitor)
+		thread = self._monitorThread = threading.Thread(target=self._monitor)
+		thread.daemon = True
 		self._keepMonitoring = True
 		self._event.clear()
-		self._monitorThread.start()
+		thread.start()
 
 	def stopMonitoring(self):
 		"""Stop monitoring previously started with L{startMonitoring}.
