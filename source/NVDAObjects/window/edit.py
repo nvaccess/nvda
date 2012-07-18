@@ -307,6 +307,8 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._setSelectionOffsets(offset,offset)
 
 	def _getStoryText(self):
+		if controlTypes.STATE_PROTECTED in self.obj.states:
+			return u'*'*(self._getStoryLength()-1)
 		return self.obj.windowText
 
 	def _getStoryLength(self):
@@ -360,8 +362,6 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				text=unicode(ctypes.cast(buf,ctypes.c_char_p).value, errors="replace", encoding=locale.getlocale()[1])
 		else:
 			text=self._getStoryText()[start:end]
-		if text and controlTypes.STATE_PROTECTED in self.obj.states:
-			return u'*'*len(text)
 		return text
 
 	def _getWordOffsets(self,offset):
