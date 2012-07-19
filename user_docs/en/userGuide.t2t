@@ -916,17 +916,18 @@ Using the Level field, you can adjust the lowest symbol level at which this symb
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
 ++ Saving and Reloading the configuration ++
-By default NVDA does not automatically save your settings, so if you exit NVDA, and then restart it, the settings will go back to the original values.
+By default NVDA will automatically save your settings on exit.
 Note, however, that this option can be changed under the general options in the preferences menu.
-To save the settings, choose the Save configuration item in the NVDA menu.
+To save the settings manually at any time, choose the Save configuration item in the NVDA menu.
 
 If you ever make a mistake with your settings and need to revert back to the saved settings, choose the "revert to saved configuration" item in the NVDA menu.
+You can also reset your settings to their original factory defaults by choosing Reset Configuration To Factory Defaults, which is also found in the NVDA menu.
 
 The following NVDA key commands are also useful:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
 | Save configuration | NVDA+control+c | NVDA+control+c | Saves your current configuration so that it is not lost when you exit NVDA |
-| Revert to saved configuration | NVDA+control+r | NVDA+control+r | Restores NVDA to the settings that existed when you last saved NVDA's configuration |
+| Revert  configuration | NVDA+control+r | NVDA+control+r | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults. |
 %kc:endInclude
 
 ++ Configuration files and user profiles ++

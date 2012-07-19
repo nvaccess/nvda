@@ -886,9 +886,13 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(mainFrame.onSaveConfigurationCommand, None)
 	script_saveConfiguration.__doc__ = _("Saves the current NVDA configuration")
 
-	def script_revertToSavedConfiguration(self,gesture):
-		mainFrame.onRevertToSavedConfigurationCommand(None)
-	script_revertToSavedConfiguration.__doc__ = _("loads the saved NVDA configuration, overriding current changes")
+	def script_revertConfiguration(self,gesture):
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		if scriptCount==0:
+			mainFrame.onRevertToSavedConfigurationCommand(None)
+		elif scriptCount==2:
+			mainFrame.onRevertToDefaultConfigurationCommand(None)
+	script_revertConfiguration.__doc__ = _("Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults.")
 
 	def script_activatePythonConsole(self,gesture):
 		if globalVars.appArgs.secure:
@@ -1092,7 +1096,7 @@ class GlobalCommands(ScriptableObject):
 
 		# Save/reload configuration
 		"kb:NVDA+control+c": "saveConfiguration",
-		"kb:NVDA+control+r": "revertToSavedConfiguration",
+		"kb:NVDA+control+r": "revertConfiguration",
 
 		# Settings
 		"kb:NVDA+2": "toggleSpeakTypedCharacters",
