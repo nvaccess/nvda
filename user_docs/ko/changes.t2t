@@ -1,0 +1,42 @@
+﻿NVDA 변경된 사항
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2012.3 =
+
+== New Features ==
+- The presence of underline and strikethrough is now reported in Adobe Reader documents. (#2410)
+- When the Windows Sticky Keys function is enabled, the NVDA modifier key will now behave like other modifier keys. This allows you to use the NVDA modifier key without needing to hold it down while you press other keys. (#230)
+- Support for HIMS Braille Sense, Braille EDGE and SyncBraille braille displays. (#1266, #1267)
+- When Windows 8 Toast notifications appear, NVDA will announce them and move the navigator object there for further interaction. (#2143)
+- Support for VIP Mud. (#1728)
+- In Adobe Reader, if a table has a summary, it is now presented. (#2465)
+- In Adobe Reader, table row and column headers can now be reported. (#2193)
+- New languages: Korean, Nepali
+
+
+== Changes ==
+- In the NVDA Review Cursor preferences dialog, the Follow keyboard focus option has been renamed to Follow system focus for consistency with terminology used elsewhere in NVDA.
+- When braille is tethered to review and the cursor is on an object which is not a text object (e.g. an editable text field), cursor routing keys will now activate the object. (#2386)
+
+
+== Bug Fixes ==
+- In Blio, the content of books can now be read in braille. (#2139)
+- In Windows Vista and later, NVDA no longer incorrectly treats the Windows key as being held down when unlocking Windows after locking it by pressing Windows+l. (#1856)
+- In Adobe Reader, row headers are now correctly recognised as table cells; i.e. coordinates are reported and they can be accessed using table navigation commands. (#2444)
+- In Adobe Reader, table cells spanning more than one column and/or row are now handled correctly. (#2437, #2438, #2450)
+- The NVDA distribution package now checks its integrity before executing. (#2475)
+- Temporary download files are now removed if downloading of an NVDA update fails. (#2477)
+- When copying the user configuration to the system configuration (for use on Windows logon and other secure screens) NVDA will no longer freeze on XP while doing so. (#2485)
+- Tiles on the Windows 8 Start Screen are now presented better in speech and braille. The name is no longer repeated, unselected is no longer reported on all tiles, and live status information is presented  as the description of the tile (e.g. current temperature for the Weather tile).
+
+
+== Changes for Developers ==
+- Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
+
+
+= Older releases =
+
+Please read the English changes file for older information.
+
