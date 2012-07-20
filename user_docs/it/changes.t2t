@@ -3,6 +3,38 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.3 =
+
+== Novità ==
+- In Adobe Reader vengono ora individuati elementi come sottolineato e barrato. (#2410)
+- Quando la funzione "tasti permanenti" in Windows è attiva, il tasto funzione di NVDA si comporterà come gli altri tasti funzione. Questo permette di poter usare il tasto funzione di NVDA senza doverlo tenere premuto mentre si premono altri tasti. (#230)
+- Supporto per i display Braille della Hims BrailleSense, Braille Edge e SyncBraille. (#1266, #1267)
+- Quando appare una notifica in Windows8, NVDA prima la annuncia, poi il navigatore ad oggetti viene posto su di essa in modo da migliorarne l'interazione. (#2143)
+- Supporto per Vip Mud. (#1728)
+- In Adobe Reader, se una tabella ha un riassunto, esso viene letto correttamente. 
+- In Adobe Reader, possono essere annunciate le intestazioni di righe e colonne. (#2193)
+
+
+== Cambiamenti ==
+- Nella finestra di dialogo preferenze/cursore di controllo, la voce "Segui il cursore della tastiera" è stata sostituita con "Segui il cursore di sistema", per adeguarsi alla terminologia attuale dello screen reader.
+- In Windows Vista e versioni successive, NVDA non considera più erroneamente il tasto Windows come premuto, quando si ritorna a Windows dopo averlo bloccato premendo la combinazione windows-l. (#1856)
+- Se il braille segue il cursore di controllo e il cursore si trova in un oggetto non testuale (ad esempio campo editazione), i tasti di cursor routing ora attiveranno l'oggetto. (#2386)
+
+
+== Bug corretti ==
+- Nel programma Blio, il contenuto dei libri ora può essere letto anche in braille. (#2139)
+- In Adobe Reader, le intestazioni delle righe ora sono correttamente viste come celle di tabella; ad esempio, le coordinate ora vengono annunciate e gli elementi possono essere raggiunti tramite i comandi di navigazione standard. (#2444)
+- in Adobe reader, le celle di una tabella che occupano più di una colonna o di una riga sono ora trattate correttamente. (#2437, #2438, #2450)
+
+
+== Cambiamenti per sviluppatori ==
+- Il file di log precedente ora viene copiato nel file nvda-old.log subito dopo l'inizializzazione di NVDA. Tenere presente che se NVDA dovesse riavviarsi o crashare, le informazioni di log per quella sessione sono ancora accessibili. (#916)
+
+
+= 2012.2.1 =
+Questa versione sistema pareccchi potenziali problemi di sicurezza, in seguito all'aggiornamento a Python 2.7.3.
+
+
 = 2012.2 =
 Le principali novità in questa versione riguardano la creazione di versioni portable e installer direttamente da un unico pacchetto, una funzione di aggiornamento automatico, una gestione semplificata dei componenti aggiuntivi, l'annuncio dei grafici in Microsoft Word, il supporto per le applicazioni in stile Metro in Windows8 e la risoluzione di importanti bug.
 

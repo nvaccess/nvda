@@ -4,7 +4,7 @@
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Referencia Rápida de Ordes do teclado
 
-= Tabla de Contido =[toc]
+= Índice =[toc]
 %%toc
 
 + Introducción +
@@ -23,7 +23,7 @@ O máis sinalable inclúe:
 - Soporte para moitas liñas de braille efímero
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 37 linguas
+- Traducido a 39 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -32,7 +32,7 @@ O máis sinalable inclúe:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 37 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Árabe, Búlgaro, Checo, Chinese Mandarín Chinese cantonés, Croata, Danés, eslovaco, Español, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 39 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Árabe, Búlgaro, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Español, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ó usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -430,18 +430,18 @@ A seguintes teclas elas soas saltan ó seguinte campo, ca tecla shift saltan ó 
 - s: separador
 - m: marco
 - g: gráfico
-- d: zoa ARIA
+- d: zoa
 - o: obxecto empotrado
 - 1 a 6: cabeceiras do 1 ó 6 respectivamente
 -
 Para moverte ó comezo ou final de elementos contedores como listas e tablas:
 || Nome | Tecla | Descripción |
-| Mover ó comezo dun contedor | shift+, | Móvese ó comezo do contedor (lista, táboa etc) onde estea situado o cursor |
-| Mover ó final do contedor | , | Móvese ó final do contedor (lista, táboa etc) onde estea situado o cursor |
+| Mover ó comezo dun contedor | shift+coma | Móvese ó comezo do contedor (lista, táboa etc) onde estea situado o cursor |
+| Mover ó final do contedor | coma | Móvese ó final do contedor (lista, táboa etc) onde estea situado o cursor |
 %kc:endInclude
 
 ++ A Lista de Elementos ++
-A lista de elementos proporciona acceso a unha lista ou de ligas, cabeceiras ou zoas de ARIA na páxina. 
+A lista de elementos proporciona acceso a unha lista de ligas, cabeceiras ou zoas na páxina. 
 Os botóns de opción permítenche cambiar entre estos tres tipos de información. 
 Proporciónase tamén un campo de edición no diálogo o que permíteche filtrar a lista para axudarte a buscar un elemento en particular na páxina. 
 Unha vez elixas un elemento, podes utilizar os botóns proporcionados no diálogo para moverte cara, ou activar, ese elemento.
@@ -759,7 +759,7 @@ Cando se activa, o cursor de revisión moverase automáticamente á posición do
 Cando se activa, o cursor de revisión seguirá ó rato segundo se mova.
 
 ==== Modo de Revisión Sinxelo ====
-Cando se activa, NVDA filtrará a xerarquía de obxectos que pode navegarse, para excluir calquer obxecto inutilizable.
+Cando se activa, NVDA filtrará a xerarquía de obxectos que pode navegarse, para excluir calquer obxecto que non sexa do interese para o usuario; ex.: obxectos invisibles e obxectos utilizados só con propósitos de deseño.
 
 +++ Opcións de Presentación de Obxectos (NVDA+control+o) +++
 Atópase no menú Preferencias baixo "Presentación de Obxectos..." 
@@ -1224,6 +1224,79 @@ Por favor mira a documentación da liña para descripcións de onde poden atopar
 | tecla windows | espazo+ponto3+ponto4 |
 | tecla alt+tab | espazo+ponto2+ponto3+ponto4+ponto5 (espazo+t) |
 | Ler todo | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
+++ Series da HIMS Braille Sense/Braille EDGE ++
+NVDA soporta as liñas Braille Sense e Braille EDGE de [Hims http://www.hims-inc.com/] cando se conectan a través do USB ou bluetooth. 
+Se se conectan a través do USB, necesitarás instalar os controladores USB de HIMS no sistema.
+
+Seguidamente van as asignacións de teclas para estas liñas co NVDA.
+Por favor mira a documentación das liñas para descripcións de onde poden atoparse estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar atrás liña braille | desplazador esquerdo abaixo |
+| Desprazar adiante liña braille | desprazador dereito abaixo |
+| Mover liña braille á liña anterior | desprazador esquerdo arriba |
+| Mover liña braille á liña seguinte | desprazador dereito arriba|
+| Ir á celda braille | sensores |
+| tecla shift+tab | ponto1+ponto2+Espazo |
+| tecla alt | ponto1+ponto3+ponto4+Espazo |
+| tecla escape | ponto1+ponto5+Espazo |
+| tecla tab | ponto4+ponto5+Espazo |
+| tecla intro | ponto8 |
+| tecla retroceso | ponto7 |
+| tecla flecha arriba | ponto1+Espazo |
+| Tecla flecha abaixo | ponto4+Espazo |
+| bloq maiúsculas | ponto1+ponto3+ponto6+Espazo |
+| tecla shift+alt+tab | avance2+avance3+avance1 |
+| tecla alt+tab | avance2+avance3 |
+| tecla fin | ponto4+ponto6+Espazo |
+| tecla Control+fin | ponto4+ponto5+ponto6+Espazo |
+| tecla inicio | ponto1+ponto3+Espazo |
+| tecla control+inicio | ponto1+ponto2+ponto+Espazo |
+| tecla flecha esquerda | ponto3+Espazo |
+| tecla control+shift+flecha esquerda | ponto2+ponto8+espazo+avance1 |
+| tecla control+flecha esquerda | ponto2+Espazo |
+| tecla shift+alt+flecha esquerda | ponto2+ponto7+avance1 |
+| tecla alt+flecha esquerda | ponto2+ponto7 |
+| tecla flecha dereita | ponto6+Espazo |
+| tecla control+shift+flecha dereita | ponto5+ponto6+Espazo+avance1 |
+| tecla control+flecha dereita | ponto5+espazo |
+| tecla shift+alt+flecha dereita | ponto5+ponto7+avance1 |
+| tecla alt+flecha dereita | ponto5+ponto7 |
+| tecla RePáx | ponto1+ponto2+ponto6+espazo |
+| tecla control+rePáx | ponto1+ponto2+ponto6+ponto8+espazo |
+| tecla control+shift+flecha arriba | ponto2+ponto3+ponto8+espazo+avance1 |
+| tecla control+flecha arriba | ponto2+ponto3+espazo |
+| tecla shift+alt+flecha arriba | ponto2+ponto3+ponto7+avance1 |
+| tecla alt+flecha arriba | ponto2+ponto3+ponto7 |
+| tecla shift+flecha arriba | desprazador esquerdo abaixo + espazo |
+| tecla avPáx | ponto3+ponto4+ponto5+espazo |
+| tecla control+avPáx | ponto3+ponto4+ponto5+ponto8+espazo |
+| tecla control+shift+flecha abaixo | ponto5+ponto6+ponto8+espazo+avance1 |
+| tecla control+flecha abaixo | ponto5+ponto6+espazo |
+| tecla shift+alt+flecha abaixo | ponto5+ponto6+ponto7+avance1 |
+| tecla alt+flecha abaixo | ponto5+ponto6+ponto7 |
+| tecla shift+flecha abaixo | desprazador dereito abaixo + espazo |
+| tecla suprimir | ponto1+ponto3+ponto5+espazo |
+| tecla f1 | ponto1+ponto2+ponto5+espazo |
+| tecla f3 | ponto1+ponto2+ponto4+ponto8 |
+| tecla f4 | ponto7+avance3 |
+| tecla windows+b | ponto1+ponto2+avance1 |
+| tecla windows+d | ponto1+ponto4+ponto5+avance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA soporta a liña SyncBraille de [HIMS http://www.hims-inc.com/].
+Necesitarás instalar os controladores USB de HIMS no sistema.
+
+Seguidamente van as asignacións de teclas para esta liña co NVDA.
+Por favor mira a documentación da liña para descripcións de onde se poden atopar estas teclas.
+%kc:beginInclude
+|| Nome | Tecla |
+| Desprazar liña braille cara atrás | desprazador abaixo da esquerda |
+| Desprazar liña braille cara adiante | desprazador abaixo da dereita |
+| Ir á celda braille | sensores |
 %kc:endInclude
 
 ++ BRLTTY ++

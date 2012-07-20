@@ -23,7 +23,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Birçok Braille refreshable ekranına destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
-- 37 dile çevrilmiş oluşu
+- 39 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
@@ -32,7 +32,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Uluslararasılaşma ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 37 dile de çevrilmiştir. Afrikaca, Almanca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İtalyanca, İzlanda dili, Japonca, Lehçe, Macarca, Norveççe, Portekizce, Rumence, Rusca, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 39 dile de çevrilmiştir. Afrikaca, Almanca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İtalyanca, İzlanda dili, Japonca, Korece, Lehçe, Macarca, Nepal dili, Norveççe, Portekizce, Rumence, Rusca, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
@@ -97,7 +97,7 @@ Bu, kullanıcı hesabı denetimi (UAC) ekranı ve diğer güvenli ekranlar için
 
 +++ Masaüstünde Kısayol Oluştur (ctrl+alt+n) +++
 Bu seçenek NVDA'nın başlatılması için bir masaüstü kısayolu oluşturmanızı sağlar. 
-Kısayol oluşturulduğu taktirde, NVDA'nın başlatılması için bir kısayol tuşu da control+alt+n atanır.
+Kısayol oluşturulduğu taktirde, NVDA'nın başlatılması için bir kısayol tuşu da kontrol+alt+n atanır.
 
 +++ Taşınabilir Konfigürasyonu Mevcut Kullanıcı Hesabına Kopyala +++
 Bu seçenek, çalışmakta olan NVDA için kullanılan konfigürasyonun kurulacak NVDA için de geçerli olmasını belirlemenize olanak tanır. 
@@ -269,10 +269,10 @@ Nesneler arasında dolaşmak için aşağıdaki tuşları kullanın:
 
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Tarif |
-| Geçerli nesnenin bildirimi | NVDA+numaratör5 | NVDA+control+i | Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
+| Geçerli nesnenin bildirimi | NVDA+numaratör5 | NVDA+kontrol+i | Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
 | Ana nesneye gitme | NVDA+numaratör8 | NVDA+shift+i | nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider |
-| önceki nesneye gitme | NVDA+numaratör4 | NVDA+control+j | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir önceki nesneye taşır |
-| bir sonraki nesneye gitme | NVDA+numaratör6 | control+NVDA+l | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
+| önceki nesneye gitme | NVDA+numaratör4 | NVDA+kontrol+j | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir önceki nesneye taşır |
+| bir sonraki nesneye gitme | NVDA+numaratör6 | kontrol+NVDA+l | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
 | İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+ö | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
 | Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya konumlandırır |
 | Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
@@ -393,7 +393,7 @@ Odak kipine manuel olarak  geçilebilmesine karşın, bu durumda, NVDA bu kipte 
 | Tarama ve odak kipleri arasında geçiş | NVDA+ara çubuğu | Odak ve tarama kipleri arasında geçiş yapar |
 | Odak kipinden çıkış | eskeyp | Odak kipine otomatik olarak geçildiyse, tarama kipine geri döner |
 | Tarama kipinde görüntülenen belgeyi güncelleme | NVDA+f5 | Geçerli belgeyi yeniden yükler. (İçeriğin bir kısmı eksik gibi görünüyorsa ya da ziyaret ettiğiniz sayfa sık aralıklarla güncelleniyorsa bu tuşları kullanmak yararlı olabilir.) |
-| Ara | NVDA+control+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar |
+| Ara | NVDA+kontrol+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar |
 | Sonrakini bul | NVDA+f3 | metni belgenin sonraki kısmında   arar |
 | Öncekini bul | NVDA+şift+f3 | metni belgenin önceki kısmında arar |
 %kc:endInclude
@@ -486,7 +486,7 @@ Tüm NVDA iletişim kutularında yaptığınız değişiklikleri onaylamak için
 herhangi bir değişikliği iptal etmek için, iptal tuşuna ya da eskeyp tuşuna basın.
 Bazı ayarlar kısayol tuşlarıyla da değiştirilebilmektedir. bu tuşlar ilgili olan aşağıdaki bölümlerinde listelenmiştir.
 
-+++ Genel Ayarlar (NVDA+control+g) +++
++++ Genel Ayarlar (NVDA+kontrol+g) +++
 Genel ayarlar iletişim kutusu tercihler menüsünde bulunmaktadır.
 içinde aşağıdaki seçenekler mevcuttur:
 
@@ -521,14 +521,14 @@ Bu seçenek, yalnızca sisteme yüklenmiş olan NVDA kopyalarında mevcuttur.
 
 ==== Windows Giriş ve Diğer Güvenli Ekranlarda Mevcut kaydedilmiş Ayarları Kullan ====
 Bu düğmeye basmak Şu anki NVDA ayarlarınızı NVDA system configuration dizinine kopyalar ve böylece oturum açma, kullanıcı hesapları kontrolü (uac) ve diğer güvenli ekranlarda NVDA bu ayarları kullanır.
-Tüm ayarlarınızın transfer edildiğinden emin olmak için, önce control+NVDA+c tuşlarına basarak NVDA ayarlarınızı kaydettiğinizden emin olun veya NVDA menüsünden ayarlarınızı kaydedin.
+Tüm ayarlarınızın transfer edildiğinden emin olmak için, önce kontrol+NVDA+c tuşlarına basarak NVDA ayarlarınızı kaydettiğinizden emin olun veya NVDA menüsünden ayarlarınızı kaydedin.
 Bu seçenek, yalnızca yüklenebilen NVDA kopyalarında mevcuttur.
 
 ==== NVDA Güncellemelerini Otomatik Olarak Kontrol Et ====
 Bu etkinleştirildiyse, NVDA güncel versiyon olup olmadığını otomatik olarak kontrol edecek ve güncelleme bulunduğunda sizi bilgilendirecektir.
 Ek olarak, NVDA Yardım menüsü altında bulunan, güncelleme olup olmadığına bak seçeneğini kullanarak istediğiniz zaman güncelleme kontrolü yapabilirsiniz.
 
-+++ Sentezleyici Seçimi (NVDA+control+s) +++
++++ Sentezleyici Seçimi (NVDA+kontrol+s) +++
 Tercihler menüsü içindeki "sentezleyici..." altında bulunan sentezleyici iletişim kutusu, NVDA'nın hangi sentezleyiciyle konuşacağını seçmenizi sağlar.
 İstediğiniz sentezleyiciyi seçtikten sonra, Tamam düğmesine basarsanız, NVDA seçilen sentezleyiciyi yükleyecektir.
 Sentezleyici yükleme sırasında bir hata oluşursa, NVDA sizi bir mesajla uyarıp önceki sentezleyiciyi kullanmaya devam edecektir.
@@ -544,7 +544,7 @@ BU, NVDA'yı yalnızca braille ekran ile kullanmak isteyenler ve belki de yalnı
 ==== Çıktı Aygıtı ====
 Bu seçenek, NVDA'nın seçilen sentezleyicinin üzerinden konuşacağı ses kartını seçmenizi sağlar.
 
-+++ Ses Ayarları (NVDA+control+v) +++[VoiceSettings]
++++ Ses Ayarları (NVDA+kontrol+v) +++[VoiceSettings]
 Tercihler menüsü içinde bulunan Ses Ayarları iletişim kutusu, konuşma sesini değiştirmenizi sağlayan seçenekler içerir.
 Konuşma parametrelerini istenen her yerden değiştirebileceğiniz daha hızlı bir alternatif için, lütfen [Hızlı Sentezleyici Ayarları #SynthSettingsRing] bölümüne bakın.
  
@@ -701,7 +701,7 @@ Kısayol tuşu: NVDA+4
 
 Etkinleştirildiğinde, NVDA bastığınız karakter olmayan (örnek, kontrol, Şift VS.) her tuşu söyleyecektir. Buna kontrolle birlikte basılan harflerden oluşan tuş kombinasyonları da dahildir.
 
-+++ Fare Ayarları (NVDA+control+m) +++[MouseSettings]
++++ Fare Ayarları (NVDA+kontrol+m) +++[MouseSettings]
 Fare ayarları iletişim kutusu tercihler menüsü içindeki "Fare Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
 
@@ -751,9 +751,9 @@ Etkinleştirildiğinde, sistem düzenleme imleci hareket ettikçe, inceleme imle
 Etkinleştirildiğinde, fare hareket ettikçe inceleme imleci de onu izleyecektir.
 
 ==== Basit İnceleme Kipi ====
-Etkinleştirildiğinde, kullanılmayan nesneleri yoksaymak için, NVDA dolaşılabilecek nesne hiyerarşisini filtreleyecektirr.
+Etkinleştirildiğinde, görünmez nesneler ve sadece düzenleme amacıyla kullanılan nesneler vb kullanıcıyı ilgilendirmeyecek  nesneleri yoksaymak için, NVDA dolaşılabilecek nesne hiyerarşisini filtreleyecektirr.
 
-+++ Nesne Sunumu Ayarları (NVDA+control+o) +++
++++ Nesne Sunumu Ayarları (NVDA+kontrol+o) +++
 Tercihler menüsü içinde "Nesne Sunumu Ayarları..." altında bulunur.
 içinde aşağıdaki seçenekler mevcuttur:
 
@@ -804,7 +804,7 @@ Kısayol tuşu: NVDA+5
 
 Terminal veya chat programlarının geçmiş alanları gibi belirli nesnelerdeki yeni içeriğin belirtilip belirtilmeyeceğini kontrol eder.
 
-+++ Tarama Kipi Ayarları (NVDA+control+b) +++
++++ Tarama Kipi Ayarları (NVDA+kontrol+b) +++
 Tarama Kipi  Ayarları iletişim kutusu tercihler menüsü içindeki "Tarama Kipi..." bölümünün altında bulunur.
 
 içinde aşağıdaki seçenekler mevcuttur:
@@ -843,7 +843,7 @@ Bu seçenek işaretliyse, yön tuşlarıyla dolaşırken NVDA'nın odak kipine g
 ==== Odak Kipiyle Tarama Kipi Arasındaki Geçişi Ses Çalarak bildir ====
 Bu seçenek etkinse, odak kipi ve tarama kipi arasında geçiş yaparken NVDA bunu konuşarak değil, özel bir ses çalarak bildirecektir.
 
-+++ Belge format Ayarları (NVDA+control+d) +++[DocumentFormattingSettings]
++++ Belge format Ayarları (NVDA+kontrol+d) +++[DocumentFormattingSettings]
 Bu iletişim kutusu tercihler menüsü içindeki "Belge Formatları..." altında bulunur.
 
 Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür biçimlendirmeleri otomatik olarak duymak istediğinizi ayarlamanızı sağlamak içindir.
@@ -1233,6 +1233,79 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Hepsini oku | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
+++ HIMS Braille Sense/Braille EDGE Series ++
+NVDA USB ya da bluetooth ile bağlandıklarında [Hims http://www.hims-inc.com/] tarafından üretilen Braille Sense ve Braille EDGE ekranlarını destekler. 
+USB üzerinden bağlıyorsanız, sisteminize HIMS tarafından dağıtılan USB sürücülerini kurmanız gerekir.
+
+Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
+Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
+%kc:beginInclude
+|| Ad | Kısayol tuşu |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Move braille display to previous line | left side scroll up |
+| Move braille display to next line | right side scroll up |
+| Route to braille cell | routing |
+| shift+tab key | dot1+dot2+space |
+| alt key | dot1+dot3+dot4+Space |
+| escape key | dot1+dot5+Space |
+| tab key | dot4+dot5+Space |
+| enter key | dot8 |
+| backspace key | dot7 |
+| upArrow key | dot1+Space |
+| downArrow key | dot4+Space |
+| capsLock | dot1+dot3+dot6+space |
+| shift+alt+tab key | advance2+advance3+advance1 |
+| alt+tab key | advance2+advance3 |
+| end key | dot4+dot6+space |
+| Control+end key | dot4+dot5+dot6+space |
+| home key | dot1+dot3+space |
+| control+home key | dot1+dot2+dot3+space |
+| leftArrow key | dot3+space |
+| control+shift+leftArrow key | dot2+dot8+space+advance1 |
+| control+leftArrow key | dot2+space |
+| shift+alt+leftArrow key | dot2+dot7+advance1 |
+| alt+leftArrow key | dot2+dot7 |
+| rightArrow key | dot6+space |
+| control+shift+rightArrow key | dot5+dot8+space+advance1 |
+| control+rightArrow key | dot5+space |
+| shift+alt+rightArrow key | dot5+dot7+advance1 |
+| alt+rightArrow key | dot5+dot7 |
+| pageUp key | dot1+dot2+dot6+space |
+| control+pageUp key | dot1+dot2+dot6+dot8+space |
+| control+shift+upArrow key | dot2+dot3+dot8+space+advance1 |
+| control+upArrow key | dot2+dot3+space |
+| shift+alt+upArrow key | dot2+dot3+dot7+advance1 |
+| alt+upArrow key | dot2+dot3+dot7 |
+| shift+upArrow key | left side scroll down + space |
+| pageDown key | dot3+dot4+dot5+space |
+| control+pagedown key | dot3+dot4+dot5+dot8+space |
+| control+shift+downArrow key | dot5+dot6+dot8+space+advance1 |
+| control+downArrow key | dot5+dot6+space |
+| shift+alt+downArrow key | dot5+dot6+dot7+advance1 |
+| alt+downArrow key | dot5+dot6+dot7 |
+| shift+downArrow key | right side scroll down + space |
+| delete key | dot1+dot3+dot5+space |
+| f1 key | dot1+dot2+dot5+space |
+| f3 key | dot1+dot2+dot4+dot8 |
+| f4 key | dot7+advance3 |
+| windows+b key | dot1+dot2+advance1 |
+| windows+d key | dot1+dot4+dot5+advance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA [Hims http://www.hims-inc.com/] tarafından üretilen SyncBraille ekranını destekler.
+Sisteminize HIMS tarafından dağıtılan USB sürücülerini kurmanız gerekir.
+
+Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
+Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
+%kc:beginInclude
+|| Ad | Kısayol tuşu |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] çok daha fazla farklı braille ekranı destekleyebilmek için kullanılan ayrı bir programdır.
 bunu kullanabilmek için,[BRLTTY for Windows http://brl.thefreecat.org/brltty/] programını yüklemeniz gerekecektir.
@@ -1291,7 +1364,7 @@ Sonlara doğru şunu göreceksiniz:
 
 ```
 INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
 ```
 
 Buradan, script adının dateTime olduğunu, Modül.sınıfın ise globalCommands.GlobalCommands olduğunu anlayabilirsiniz.

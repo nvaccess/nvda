@@ -3,12 +3,45 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.3 =
+
+== Nouvelles Fonctionnalités ==
+- La présence de soulignements et de superpositions est maintenant rapportée dans les documents Adobe Reader. (#2410)
+- Quand la fonction touche rémanentes de Windows est activée, la touche NVDA se comportera comme les autre touches de combinaisons. Cela vous permet de l'utiliser sans la maintenire enfoncée pendant que vous pressez d'autre touches. (#230)
+- Support pour les afficheurs braille HIMS Braille Sense, Braille EDGE et SyncBraille. (#1266, #1267)
+- Lorsque les notifications Toast Windows 8 apparaissent, NVDA les annonce et déplace le navigateur d'objet dessus pour plus d'interaction. (#2143)
+- Support de VIP Mud. (#1728)
+- Dans Adobe Reader, si un tableau a un résumé, il est maintenant présenté. (#2465)
+- Dans Adobe Reader, les entêtes de lignes et de collones des tableaux peuvent maintenant être annoncées. (#2193)
+
+
+== Changements ==
+- Dans la boîte de dialogue de préférences du curseur de revue de NVDA, l'option suivre le focus clavier a été renomée en Suivre le focus système pour être cohérant avec les terminologies utilisées ailleur dans NVDA.
+- Quand le braille suit la revue et que le curseur est dans un objet qui n'est pas un objet texte (P.EX. une zone d'édition), les touches routines activent maintenant l'objet. (#2386)
+
+
+== Corrections de Bogues ==
+- Dans Blio, le contenu des livres peut maintenant être lu en braille. (#2139)
+- Sous Windows Vista et supérieur, NVDA ne traite plus la touche Windows comme étant gardée appuyée lors du déverrouillage après l'avoir verrouillé en appuyant Windows+L. (#1856)
+- Dans Adobe Reader, les entêtes de colonnes sont maintenant bien reconnues comme des cellules ; P.Ex. les coordonnées sont annoncées et sont accessibles avec les touches de navigation pour les tableaux. (#2444)
+- Dans Adobe Reader, les cellules sur plusieurs colonnes sont correctement traitées. (#2437, #2438, #2450)
+- Lorsque l'on copie la configuration utilisateur dans la configuration système (pour l'utiliser  dans l'écran d'identification à Windows et les autres écrans sécurisés de Windows) NVDA ne se figeras plus sous XP pendant la procédure. (#2485)
+
+
+== Changements pour les développeurs ==
+- Le fichier journal précédant est maintenant renomé en nvda-old.log à l'initialisation de NVDA. Par conséquent, si NVDA plente ou est redémarré, les informations journalisées de cette session sont toujours accessibles pour inspection. (#916)
+
+
+= 2012.2.1 =
+Cette version comble des failles de sécuritée (en mettant à jour vers Python 2.7.3)
+
+
 = 2012.2 =
-Les apports majeurs de cette version incluent un installateur et créateur de version portable intégré, des mises à jours automatiques, une gestion facile des nouveaux greffons NVDA, l'annonce des graphique dans Microsoft Word, le support des application Metro Windows 8, et des corrections de bogues importants.
+Les apports majeurs de cette version incluent un installateur et créateur de version portable intégré, des mises à jours automatiques, une gestion facile des nouveaux modules complémentaires NVDA, l'annonce des graphique dans Microsoft Word, le support des application Metro Windows 8, et des corrections de bogues importants.
 
 == Nouvelles Fonctionnalités ==
 - NVDA peut maintenant rechercher, télécharger et installer automatiquement les mises à jour. (#73)
-- Étendre les fonctionnalités de NVDA a été facilité par l'ajout d'un gestionnaire de greffons (accessible depuis le menu Outils du menu NVDA) vous permettant d'installer ou de désinstaller des paquets de greffons (fichiers .nvda-addon) contenant des plugins et des drivers. Notez bien que le gestionnaire de greffons n'affiche pas les anciens plugins ou pilotes copiés manuellement dans votre répertoire de configuration. (#213)
+- Étendre les fonctionnalités de NVDA a été facilité par l'ajout d'un gestionnaire de Modules Complémentaires (accessible depuis le menu Outils du menu NVDA) vous permettant d'installer ou de désinstaller des paquets de Modules Complémentaires (fichiers .nvda-addon) contenant des plugins et des drivers. Notez bien que le gestionnaire de Modules Complémentaires n'affiche pas les anciens plugins ou pilotes copiés manuellement dans votre répertoire de configuration. (#213)
 - Beaucoup plus de fonctionnalités de NVDA sont maintenant utilisables dans les applications en style Metro sous Windows 8 lorsqu'on utilise une copie installée de NVDA, incluant la prononciation des caractères saisis, et le mode navigation pour les documents web (incluant le support pour la version metro de Internet Explorer 10). Les copies portables de NVDA ne peuvent accéder aux applications Metro. (#1801) 
 - En mode navigation (Internet Explorer, Firefox etc.) il est maintenant possible de sauter au début et de passer la fin de certains éléments contenants (incluant les listes et les tableaux) avec shift+, et , respectivement. (#123)
 - Nouvelle langue : grecque.

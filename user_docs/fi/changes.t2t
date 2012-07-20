@@ -3,6 +3,39 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.3 =
+
+== Uudet ominaisuudet ==
+- Alle- ja yliviivaus ilmoitetaan nyt Adobe Reader -asiakirjoissa. (#2410)
+- NVDA-näppäin toimii nyt kuin muutkin toimintonäppäimet Windowsin alasjäävien näppäinten ollessa käytössä. Tämä mahdollistaa NVDA-näppäimen käytön tarvitsematta pitää sitä alhaalla painettaessa samaan aikaan muita näppäimiä. (#230)
+- Tuki HIMS Braille Sense-, Braille EDGE- ja SyncBraille -pistenäytöille. (#1266, #1267)
+- Kun Toast-ilmoitukset tulevat näkyviin Windows 8:ssa, NVDA lukee ne ja siirtää navigointiobjektin niiden kohdalle lisävuorovaikutuksen mahdollistamiseksi. (#2143)
+- Tuki VIP Mudille. (#1728)
+- Jos taulukossa on yhteenveto, se luetaan nyt Adobe Readerissa. (#2465)
+- Taulukon rivien ja sarakkeiden ylätunnisteet luetaan nyt Adobe Readerissa. (#2193)
+- Uusia kieliä: korea ja nepali
+
+
+== Muutokset ==
+- Tarkastelukohdistimen asetukset -valintaikkunassa oleva Seuraa näppäimistökohdistusta -asetuksen uusi nimi on Seuraa järjestelmäkohdistusta, jotta se olisi yhdenmukainen muualla NVDA:ssa käytetyn terminologian kanssa.
+- Kun pistenäyttö on asetettu seuraamaan tarkastelukohdistinta ja kun kohdistin on sellaisessa objektissa, joka ei ole tekstiobjekti (esim. muokattava tekstikenttä), kosketuskohdistinnäppäimet aktivoivat kyseisen objektin. (#2386)
+
+
+== Korjatut ohjelmavirheet ==
+- Kirjojen sisältöä on nyt mahdollista lukea pistenäytöllä Blio-sovelluksessa. (#2139)
+- NVDA ei enää käsittele Windows-näppäintä virheellisesti alas painettuna, kun Windowsin lukitus avataan Windows+L-näppäinyhdistelmällä lukitsemisen jälkeen Windows Vistassa ja uudemmissa. (#1856)
+- Rivien ylätunnisteet tunnistetaan nyt asianmukaisesti taulukon soluiksi Adobe Readerissa, ts. koordinaatit luetaan ja niihin päästään taulukkonavigointikomennoilla. (#2444)
+- Useampaan sarakkeeseen ja/tai riviin jakaantuvat taulukon solut käsitellään nyt oikein Adobe Readerissa. (#2437, #2438, #2450)
+- NVDA:n jakelupaketti tarkistaa nyt eheytensä ennen suorittamista. (#2475)
+- Tilapäiset lataustiedostot poistetaan, jos NVDA-päivityksen lataaminen epäonnistuu. (#2477)
+- NVDA ei enää hyydy XP:ssä kopioitaessa käyttäjän asetuksia järjestelmäasetuksiksi (Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa käytettäväksi). (#2485)
+- Windows 8:n aloitusnäytön tiilet esitetään nyt paremmin sekä puheena että pistenäytöllä. Nimeä ei enää toisteta, ei valittu -ilmoitusta ei enää esiinny, ja muuttuvat tilatiedot luetaan tiilen kuvauksena (esim. nykyinen lämpötila Sää-tiilelle).
+
+
+= 2012.2.1 =
+Tämä versio ratkaisee useita mahdollisia tietoturvaongelmia (päivittämällä Python versioksi 2.7.3).
+
+
 = 2012.2 =
 Tämän version tärkeimpiä uusia ominaisuuksia ovat sisäänrakennettu asennusohjelma ja massamuistiversion luonti, automaattiset päivitykset, uusien lisäosien helppo hallinta, kuvien lukeminen Microsoft Wordissa, tuki Windows 8:n Metro-sovelluksille sekä useat tärkeät ohjelmavirheiden korjaukset. 
 

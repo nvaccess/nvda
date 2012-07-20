@@ -1,65 +1,65 @@
-NVDA NVDA_VERSION User Guide
+﻿NVDA NVDA_VERSION 사용설명서
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Keyboard Commands Quick Reference
+%kc:title: NVDA NVDA_VERSION 기능키 도움말
 
-= Table of Contents =[toc]
+= 차례 =[toc]
 %%toc
 
-+ Introduction +
-NonVisual Desktop Access (NVDA) is a free and open source screen reader for the Microsoft Windows operating system.
-Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
-NVDA is developed by [NV Access http://www.nvaccess.org/], with contributions from the community.
++ 머리말 +
+NVDA(NonVisual Desktop Access)는 마이크로소프트 윈도우즈용 무료/오픈소스 스크린 리더입니다.
+NVDA는 합성 음성과 점자를 통해 정보를 제공하기 때문에 시각장애인들이 정안인들보다 더 많은 비용 지출 없이도 윈도우즈가 동작하는 컴퓨터를 사용할 수 있게 합니다.
+NVDA는 커뮤니티의 후원을 받으며 [NV Access http://www.nvaccess.org/]에 의해 개발됩니다.
 
-++ General Features ++
-NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
+++ 일반적인 특징 ++
+시각장애인들은 NVDA를 통해 윈도우즈 운영체계 및 그 밖의 다양한 애플리케이션을 사용할 수 있습니다.
 
-Major highlights include:
-- Support for popular applications including web browsers, email clients, internet chat programs and office suites
-- Built-in speech synthesizer supporting over 43 languages
-- reporting of textual formatting where available such as font name and size, style and spelling errors
-- Automatic announcement of text under the mouse and optional audible indication of the mouse position
-- Support for many refreshable braille displays
-- Ability to run entirely from a USB stick or other portable media without the need for installation
-- Easy to use talking installer
-- Translated into 40 languages
-- Support for modern Windows Operating Systems including both 32 and 64 bit variants
-- Ability to run on Windows logon and other secure screens
-- Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
-- support for Windows Command Prompt and console applications
+주요 특징:
+- 웹 브라우져, 이메일 클라이언트, 인터넷 채팅 프로그램 및 오피스 관련 프로그램 등을 포함한 대중적인 애플리케이션을 지원
+- 43개국 언어 이상의 내장 음성엔진 지원
+- 가능한 경우 폰트 이름과 크기, 스타일, 맞춤법 오류와 같은 서식 정보를 알림
+- 마우스가 위치한 곳의 글자와 들을 수 있는 부가적인 지시를 자동으로 읽기
+- 다양한 점자 디스플레이 지원
+- 인스톨 없이 USB 스틱이나 다른 휴대용 미디어에서 NVDA를 완벽하게 실행 가능
+- 말하는 인스톨 프로그램을 사용하는 편이성
+- 40개국 언어로 번역
+- 32비트 및 64비트 모두 최신 윈도우즈 운영체계를 지원
+- 윈도우즈 로그온과 다른 보안 스크린에서 실행 가능
+- 일반적인 접근성 인터페이스 지원 예: Microsoft Active Accessibility, Java Access Bridge, IAccessible2, UI 오토메이션(UI 오토메이션은 윈도우즈7 이상에서만 지원)
+- 윈도우즈 명령 프롬프트와 콘솔 애플리케이션 지원
 -
 
-++ Internationalization ++
-It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 40 languages including: Afrikaans, Albanian, Amharic, Arabic, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+++ 국제화 ++
+중요한 것은 세계 어느 곳에 사는 사람이라도 사용하는 언어와 관계없이 기술에 대한 접근이 평등해야 하는 것입니다.
+NVDA는 현재 영어 외에 다음 언어들로 번역되어 출시되고 있습니다: 갈리시아어, 그리스어, 그루지아어, 네덜란드어, 네팔어, 노르웨이어, 덴마크어, 독일어, 러시아어, 루마니아어, 베트남어, 불가리아어, 세르비아어, 슬로바키아어, 스웨덴어, 스페인어, 아이슬란드어, 아라비아어, 알바니아어, 아프리카어, 에디오피아어, 우크라이나어, 이탈리아어, 일본어, 중국어 (간체 및 번체), 체코어, 크로아티아어, 타밀어, 태국어, 터키어, 폴란드어, 포루투갈어 (브라질), 포루투갈어 (포루투갈), 프랑스어, 필란드어, 한국어, 헝가리어, 헤브라이어, 힌디어 등 40가지 언어를 지원합니다.
 
-++ Speech Synthesizer Support ++
-Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
+++ 음성 엔진 지원 ++
+메세지와 인터페이스를 여러 가지 언어로 제공하는 것 이외에, NVDA는 유저들이 가지고 있는 음성 엔진에 따라서 컨텐츠를 어떠한 언어로도 읽을 수 있게 합니다.
 
-NVDA is bundled with [eSpeak http://espeak.sourceforge.net/], a free, open-source, multi-lingual speech synthesizer.
+NVDA는 무료/오픈소스 다국어 음성 엔진인 [eSpeak http://espeak.sourceforge.net/]를 내장하고 있습니다.
 
-Information about other speech synthesizers that NVDA supports can be found in the [Supported Speech Synthesizers #SupportedSpeechSynths] section.
+eSpeak 이외에 NVDA가 지원하는 다른 음성 엔진의 정보를 얻으려면 [지원하는 음성 엔진 #SupportedSpeechSynths] 섹션을 참고하세요.
 
-++ Braille support ++
-For users that own a refreshable braille display, NVDA can output its information in Braille.
-Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for information about the supported braille displays.
+++ 점자 디스플레이 지원 ++
+점자 디스플레이를 가지고 있다면 NVDA는 점자 디스플레이로 정보를 출력할 수 있습니다.
+지원하는 점자 디스플레이 정보는 [지원하는 점자 디스플레이 #SupportedBrailleDisplays] 섹션을 참조하세요.
 
-NVDA supports braille codes for many languages, including contracted, uncontracted and computer braille codes for many languages.
+NVDA는 약자 및 정자를 포함하는 점자 코드와 컴퓨터 점자 코드를 다양한 언어로 지원하고 있습니다.
 
-++ Licence and Copyright ++
+++ 라이센스와 저작권 ++
 NVDA is copyright NVDA_COPYRIGHT_YEARS NVDA contributors.
 
-NVDA is covered by the GNU General Public License (Version 2).
-You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it.
-This applies to both original and modified copies of this software, plus any derivative works.
-For further details, you can [view the full licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+NVDA는 GNU General Public License(Version 2)를 따릅니다.
+이 라이센스를 동반하고 모든 소스 코드를 원하는 사람에게 이용 가능하도록 허용한다면 누구든지 NVDA를 자유롭게 배포하거나 원하는 방식으로 프로그램을 변경할 수 있습니다.
+이 규정은 NVDA의 원본과 수정본 및 모든 파생물에 적용됩니다.
+더 상세한 정보는 [전체 라이센스를 참조하세요. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
-+ System Requirements +
-- Operating Systems: all 32-bit and 64-bit versions of Windows XP, Windows Vista and Windows 7 (including Server operating Systems).
-- Memory: 256 mb or more of RAM
-- Processor speed: 1.0 ghz or above
-- About 50 MB of storage space.
++ 시스템 요구사항 +
+- 운영체제: 윈도우 XP/비스타/7 32비트 또는 64비트 (윈도우 서버 운영체제도 지원)
+- 메모리 용량: 256 MB 이상
+- 프로세서 속도: 1.0 GHz 이상
+- 약 50 MB의 설치공간
 -
 
 + Getting and Setting Up NVDA +
@@ -173,25 +173,25 @@ You can also get to the NVDA menu via the windows system tray.
 Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
 When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
 
-++ Basic key commands ++
+++ 기본 단축키 ++
 %kc:beginInclude
-|| Name | Key | Description |
-| Stop speech | Control | Instantly stops speaking |
-| Pause Speech | Shift | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
-| NVDA Menu | NVDA+n | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
-| Toggle Speech Mode | NVDA+s | Toggles speech mode between speech, beeps and off. |
-| Toggle Keyboard Help Mode | NVDA+1 | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
-| Quit NVDA | NVDA+q | Exits NVDA |
-| Pass next key through | NVDA+f2 | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
-| Toggle application sleep mode on and off | NVDA+shift+s | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable self voicing mode. |
+| 이름 | 단축키 | 설명 |
+| 음성출력 정지 | 컨트롤 | 음성출력을 즉시 정지합니다. |
+| 음성출력 일시정지 | 쉬프트 | 음성출력을 일시정지 합니다. 다시한번 키를 누르면 남은 부분부터 출력합니다.(현재 음성엔진이 지원 해야합니다.) |
+| NVDA 매뉴 | NVDA+n | 당신이 설정 , 도구 및 도움말 매뉴에 엑세스할 수 있도록 NVDA 매뉴를 활성화 합니다. |
+| 음성출력 모드의 전환 | NVDA+s | 음성출력 모드를 말하기, 경고음 또는 오프 사이에서 전환합니다. |
+| 키보드 도움말 모드의 전환 | NVDA+1 | 이 모드에서 어느 키를 누르는것은, 누른 키를 알려줍니다. 만약 입력된 키가 nvda 명령어라면 누른 키에관한 설명을 알려줍니다. |
+| NVDA 종료 | NVDA+q | NVDA를 종료합니다. |
+| Pass next key through | NVDA+f2 | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command. |
+| 어플리케이션 슬립모드 온/오프 전환 | NVDA+shift+s | 슬립모드는 모든 NVDA 명령어와 음성출력/점자 디스플레이 출력을 현재 응용프로그램 창에서 비활성화 합니다. 이 기능은 음성출력이나 화면읽기 기능을 제공하는 프로그램에서 유용합니다. 이 키를 다시 누르면 셀프보이스가 비활성화 됩니다. |
 %kc:endInclude
 
-++ Reporting System Information ++
+++ 시스탬 정보 알림 ++
 %kc:beginInclude
-|| Name | key | Description |
-| Report date/time | NVDA+f12 | Pressing once reports the current time, pressing twice reports the date |
-| Report battery status | NVDA+shift+b | Reports the battery status i.e. whether AC power is in use or the current charge percentage. |
-| Report clipboard text | NVDA+c | Reports the Text in the clipboard if there is any. |
+| 이름 | 단축키 | 설명 |
+| 날자와 시각 확인 | NVDA+f12 | 한번 누르면 현재의 시각을 알려주고, 두번 누르면 현재의 날짜를 알려줍니다. |
+| 배터리 상태 확인 | NVDA+shift+b | 현재 배터리 상태를 알려줍니다. ac전원을 사용중이면 ac전원의 사용여부를, 배터리를 사용중이면 현재 충전 퍼센트를 알려줍니다. |
+| 클립보드의 텍스트 확인 | NVDA+c | 클립보드안의 내용을 확인합니다. |
 %kc:endInclude
 
 + Navigating with NVDA +
@@ -453,28 +453,28 @@ A key command is provided to return to the original page containing the embedded
 | Move to containing browse mode document | NVDA+control+space | Moves the focus out of the current embedded object and into the document that contains it |
 %kc:endInclude
 
-+ Application Specific NVDA Commands +
++ 응용프로그램별 특정 NVDA 기능키 +
 NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
 ++ foobar2000 ++
 %kc:beginInclude
-|| Name | Key | Description |
-| Report remaining time | control+shift+r | Reports the remaining time of the currently playing track, if any. |
+| 이름 | 키 | 설명 |
+| 남은 시간 알림 | control+shift+r | 연주 중인 트랙의 남은 시간을 알립니다. |
 %kc:endInclude
 
 Note: The report remaining time shortcut works only with the default formatting string for foobar's status line.
 
 ++ Miranda IM ++
 %kc:beginInclude
-|| Name | Key | Description |
-| Report recent message | NVDA+control+1-4 | Reports one of the recent messages, depending on the number pressed; e.g. NVDA+control+2 reads the second most recent message. |
+| 이름 | 키 | 설명 |
+| 최근 메시지 알림 | NVDA+control+1-4 | 숫자키 조합에 따라서 최근 메시지 중 하나를 읽습니다. 예) NVDA+control+2를 누르면 두 번째 최근 메시지를 읽습니다. || Report recent message | NVDA+control+1-4 | Reports one of the recent messages, depending on the number pressed; e.g. NVDA+control+2 reads the second most recent message. |
 %kc:endInclude
 
 ++ Poedit ++
 %kc:beginInclude
-|| Name | Key | Description |
-| Report Comments Window | control+shift+c | Reports any comments in the comments window. |
-| Report automatic comments window | control+shift+a | Reports any comments in the automatic comments window. |
+| 이름 | 키 | 설명 |
+| 주석창 읽기 | control+shift+c | 주석창에 있는 주석을 읽습니다. |
+| 자동 주석 읽기 | control+shift+a | 자동 주석창에 있는 주석을 읽습니다. |
 %kc:endInclude
 
 + Configuring NVDA +
@@ -617,11 +617,11 @@ If you are having problems with the pronunciation of individual characters, try 
 +++ Synth settings ring +++[SynthSettingsRing]
 If you wish to quickly change speech settings without going to the Voice settings dialog, there are some NVDA key commands that allow you to move through the most common speech settings from anywhere while running NVDA:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Move to next synth setting | NVDA+control+rightArrow | NVDA+control+rightArrow | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
-| Move to previous synth setting | NVDA+control+leftArrow | NVDA+control+leftArrow | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
-| Increment current synth setting | NVDA+control+upArrow | NVDA+control+upArrow | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
-| Decrement current synth setting | NVDA+control+downArrow | NVDA+control+downArrow | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
+| 이름 | 데스크캅 키 | 노트북 키 | 설명 |
+| 다음 음성 설정 항목으로 이동 | NVDA+control+rightArrow | NVDA+control+rightArrow | 현재 음성 설정 학목 다음에 있는 유효한 음성 설정 항목으로 이동합니다. 마지막 항목이면 맨 앞의 설정 항목으로 돌아 옵니다. |
+| 이전 음성 설정 항목으로 이동 | NVDA+control+leftArrow | NVDA+control+leftArrow | 현재 음성 설정 학목 이전에 있는 유효한 음성 설정 항목으로 이동합니다. 맨 처음 항목이면 마지막 설정 항목으로 이동합니다. |
+| 현재 선택된 음성 설정값 증가 | NVDA+control+upArrow | NVDA+control+upArrow | 선택된 현재 음성 설정의 값을 증가시킵니다. 예) 음성 속도 증가, 다음 음성 엔진 선택, 음성 크기 증가 |
+| 현재 선택된 음성 설정값 감소 | NVDA+control+downArrow | NVDA+control+downArrow | 선택된 현재 음성 설정의 값을 감소시킵니다. 예) 음성 속도 감소, 이전 음성 엔진 선택, 음성 크기 감소 |
 %kc:endInclude
 
 +++ Braille Settings +++
@@ -701,7 +701,7 @@ Key: NVDA+4
 
 When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.
 
-+++ Mouse Settings (NVDA+control+m) +++[MouseSettings]
++++ 마우스 설정 (NVDA+control+m) +++[MouseSettings]
 The Mouse Settings dialog is found in the Preferences Menu, under "Mouse settings...".
 It contains the following options:
 
@@ -710,11 +710,11 @@ A checkbox, that when checked means that NVDA will announce the shape of the mou
 The mouse pointer in Windows changes shape to convey certain information such as when something is editable, or when something is loading etc.
 
 %kc:setting
-==== Enable mouse tracking ====
+==== 마우스 추적 가능 ====
 | Desktop key | NVDA+m |
 | Laptop key | NVDA+shift+m |
 
-When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.
+이 옵션을 선택하면, 마우스의 움직임에 따라서 NVDA는 마우스 포인터가 위치한 텍스트를 읽습니다. 이 기능은 화면 속의 어떤 것을 찾을 때에 객체 탐색 방식 보다 물리적인 마우스 동작 방식을 더 유리하게 만듭니다.
 
 ==== Text unit resolution ====
 If NVDA is set to announce the text under the mouse as you move it, this option allows you to choose exactly how much text will be spoken.
@@ -730,22 +730,22 @@ Checking this checkbox makes NVDA play beeps as the mouse moves, so that the use
 If the "play audio coordinates when mouse moves" checkbox is checked, then checking this checkbox means that the volume of the audio coordinates beeps is controled by how bright the screen is under the mouse.
 This setting is unchecked by default.
 
-+++ Review Cursor Settings +++
++++ 리뷰 커서 설정 +++
 Found in the Preferences menu under "Review Cursor...".
 This dialog contains the following options:
 
 %kc:setting
-==== Follow System Focus ====
+==== 시스템 포커스 따르기 ====
 | Desktop key | NVDA+7 |
 | Laptop key | NVDA+control+7 |
 
-When enabled, The review cursor will always be placed in the same object as the current system focus as it changes.
+이 옵션을 선택하면, 시스템 포커스가 이동하더라도 리뷰 커서는 항상 현재 시스템 포커스와 동일한 객체에 위치하게 됩니다.
 
 %kc:setting
-==== Follow System Caret ====
+==== 시스템 캐럿 따르기 ====
 Key: NVDA+6
 
-When enabled, the review cursor will automatically be moved to the position of the System caret each time it moves.
+이 옵션을 선택하면, 시스템 캐럿이 이동하더라도 리뷰 커서는 시스템 캐럿의 위치로 자동적으로 이동합니다.
 
 ==== Follow mouse ====
 When enabled, the review cursor will follow the mouse as it moves.
@@ -753,7 +753,7 @@ When enabled, the review cursor will follow the mouse as it moves.
 ==== Simple Review mode ====
 When enabled, NVDA will filter the hierarchy of objects that can be navigated to exclude objects that aren't of interest to the user; e.g. invisible objects and objects used only for layout purposes.
 
-+++ Object Presentation Settings (NVDA+control+o) +++
++++ 객체 표시 설정 (NVDA+control+o) +++
 Found in the Preferences menu under "Object Presentation...".
 This dialog box contains the following options:
 
@@ -781,11 +781,11 @@ When on, NVDA will report position information for more controls such as menus a
 Uncheck this checkbox if you don't wish to have the description reported along with objects.
 
 %kc:setting
-==== Progress bar output ====
+==== 진행율 출력 ====
 | Desktop key | NVDA+u |
 | Laptop key | NVDA+control+f2 |
 
-This option controls how NVDA reports progress bar updates to you.
+이 옵션은 NVDA가 진행율 변경을 어떻게 알려 줄 것인지 그 방법을 제어합니다.
 
 It has the following options:
 - Off: Progress bars will not be reported as they change.
@@ -799,10 +799,10 @@ This is an option that, when checked, tells NVDA to keep reporting a progress ba
 If you minimize or switch away from a window that contains a progress bar, NVDA will keep track of it, allowing you to do other things while NVDA tracks the progress bar.
 
 %kc:setting
-==== Report dynamic content changes ====
+==== 동적 컨텐츠의 변경 알림 ====
 Key: NVDA+5
 
-Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
+터미널과 채팅 프로그램의 history 제어 등 특정 객체에서 새로운 컨텐츠 읽기 온/오프를 토글합니다.
 
 +++ Browse Mode Settings (NVDA+control+b) +++
 The Browse Mode settings dialog can be found in the Preferences menu, under "Browse mode...".
@@ -915,7 +915,7 @@ Using the Level field, you can adjust the lowest symbol level at which this symb
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
-++ Saving and Reloading the configuration ++
+++ 환경 설정 저장하기와 다시 불러 오기 ++
 By default NVDA will automatically save your settings on exit.
 Note, however, that this option can be changed under the general options in the preferences menu.
 To save the settings manually at any time, choose the Save configuration item in the NVDA menu.
@@ -925,8 +925,9 @@ You can also reset your settings to their original factory defaults by choosing 
 
 The following NVDA key commands are also useful:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Save configuration | NVDA+control+c | NVDA+control+c | Saves your current configuration so that it is not lost when you exit NVDA |
+| 이름 | 데스크탑 키 | 노트북 키 | 설명 |
+| 환경 설정 저장하기 | NVDA+control+c | NVDA+control+c | NVDA를 종료해도 환경 설정 값을 잃지 않도록 현재 환경 설정을 저장합니다. |
+| 기존환경 설정으로 되돌아가기 | NVDA+control+r | NVDA+control+r | 최근에 저장했던 NVDA 설정값으로 NVDA를 복원합니다. |
 | Revert  configuration | NVDA+control+r | NVDA+control+r | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults. |
 %kc:endInclude
 
@@ -1043,7 +1044,7 @@ To download this synthesizer, please visit the downloads section of the Russian 
 
 This synthesizer does not support [spelling functionality #VoiceSpellingFunctionality].
 
-+ Supported Braille Displays +[SupportedBrailleDisplays]
++ 지원되는 점자 디스플레이들 +[SupportedBrailleDisplays]
 This section contains information about the Braille displays supported by NVDA.
 
 ++ Freedom Scientific Focus/PAC Mate Series ++
