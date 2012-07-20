@@ -151,3 +151,31 @@ void nvdaHelperLocal_terminate() {
 void logMessage(int level, const wchar_t* msg) {
 	nvdaControllerInternal_logMessage(level,0,msg);
 }
+
+typedef struct {
+	wchar_t wantedClass[256];
+	BOOL checkVisible;
+	HWND foundWindow;
+	wchar_t tempClass[256];
+} _fwct_info;
+
+BOOL CALLBACK _fwct_enumThreadWindowsProc(HWND hwnd, LPARAM lParam) {
+	_fwct_info* info=(_fwct_info*)lParam;
+	if(!(info->checkVisible)||IsWindowVisible(hwnd)) {
+		GetClassName(hwnd,info->tempClass,ARRAYSIZE(info->tempClass));
+		if(wcscmp(info->tempClass,info->wantedClass)==0) {
+			info->foundWindow=hwnd;
+			return FALSE;
+		}
+	}
+	EnumChildWindows(hwnd,_fwct_enumThreadWindowsProc,lParam);
+	return !(info->foundWindow);
+}
+
+HWND findWindowWithClassInThread(long threadID, wchar_t* windowClassName,BOOL checkVisible) {
+	_fwct_info info={0};
+	info.checkVisible=checkVisible;
+	wcscpy(info.wantedClass,windowClassName);
+	EnumThreadWindows(threadID,_fwct_enumThreadWindowsProc,(LPARAM)&info);
+	return info.foundWindow;
+}

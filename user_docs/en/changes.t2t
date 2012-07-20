@@ -12,12 +12,18 @@
 - When Windows 8 Toast notifications appear, NVDA will announce them and move the navigator object there for further interaction. (#2143)
 - Support for VIP Mud. (#1728)
 - In Adobe Reader, if a table has a summary, it is now presented. (#2465)
-- In Adobe Reader, table row and column headers can now be reported. (#2193)
+- In Adobe Reader, table row and column headers can now be reported. (#2193, #2527, #2528)
+- New languages: Amheric, Korean, Nepali.
+- NVDA can now read auto complete suggestions when entering email addresses in Microsoft Outlook 2007. (#689)
+- New eSpeak voice varients: Gene, Gene2. (#2512)
+- In Adobe Reader, page numbers can now be reported. (#2534)
+- It is now possible to reset NVDA's configuration to factory defaults either by pressing NVDA+control+r three times quickly, or by choosing Reset to Factory Defaults from the NVDA menu.
 
 
 == Changes ==
 - In the NVDA Review Cursor preferences dialog, the Follow keyboard focus option has been renamed to Follow system focus for consistency with terminology used elsewhere in NVDA.
 - When braille is tethered to review and the cursor is on an object which is not a text object (e.g. an editable text field), cursor routing keys will now activate the object. (#2386)
+- The Save Settings On Exit option is now on by default for new configurations.
 
 
 == Bug Fixes ==
@@ -25,10 +31,15 @@
 - In Windows Vista and later, NVDA no longer incorrectly treats the Windows key as being held down when unlocking Windows after locking it by pressing Windows+l. (#1856)
 - In Adobe Reader, row headers are now correctly recognised as table cells; i.e. coordinates are reported and they can be accessed using table navigation commands. (#2444)
 - In Adobe Reader, table cells spanning more than one column and/or row are now handled correctly. (#2437, #2438, #2450)
+- The NVDA distribution package now checks its integrity before executing. (#2475)
+- Temporary download files are now removed if downloading of an NVDA update fails. (#2477)
 - When copying the user configuration to the system configuration (for use on Windows logon and other secure screens) NVDA will no longer freeze on XP while doing so. (#2485)
-- Tiles are now reported much less verbosely on the Windows 8 start screen. (unselected is no longer reported for each tile and the description is now suppressed)
+- Tiles on the Windows 8 Start Screen are now presented better in speech and braille. The name is no longer repeated, unselected is no longer reported on all tiles, and live status information is presented  as the description of the tile (e.g. current temperature for the Weather tile).
+- Passwords are no longer announced when reading password fields in Microsoft Outlook and other standard edit controls that are marked as protected. (#2021)
+- In Adobe Reader, changes to form fields are now correctly reflected in browse mode. (#2529)
+- Improvements to support for the Microsoft Word Spell Checker, including more accurate reading of the current spelling error, and the ability to support the spell checker when running an Installed copy of NVDA on Windows Vista or higher.
 
- 
+
 == Changes for Developers ==
 - Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
 
@@ -36,7 +47,7 @@
 = 2012.2.1 =
 This release addresses  several potential security issues (by upgrading Python to 2.7.3).
 
-  
+
 = 2012.2 =
 Highlights of this release include an in-built installer and  portable  creation feature, automatic updates, easy management of new NVDA add-ons, announcement of graphics in Microsoft Word, support for Windows 8 Metro style apps, and several important bug fixes. 
 

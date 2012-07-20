@@ -1626,4 +1626,6 @@ _staticMap={
 	("Shell DocObject View",oleacc.ROLE_SYSTEM_CLIENT):"ShellDocObjectView",
 	("listview",oleacc.ROLE_SYSTEM_CLIENT):"ListviewPane",
 	("NUIDialog",oleacc.ROLE_SYSTEM_CLIENT):"NUIDialogClient",
+	("_WwN",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
+	("_WwO",oleacc.ROLE_SYSTEM_TEXT):"winword.SpellCheckErrorField",
 }

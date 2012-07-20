@@ -133,6 +133,10 @@ class MainFrame(wx.Frame):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration)
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration applied"))
 
+	def onRevertToDefaultConfigurationCommand(self,evt):
+		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration,factoryDefaults=True)
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration restored to factory defaults"))
+
 	def onSaveConfigurationCommand(self,evt):
 		if globalVars.appArgs.secure:
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Cannot save configuration - NVDA in secure mode"))
@@ -357,6 +361,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
 		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
 		if not globalVars.appArgs.secure:
+			item = self.menu.Append(wx.ID_ANY, _("&Reset configuration to factory defaults"),_("Reset all settings to default state"))
+			self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
 			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
 		if not globalVars.appArgs.secure:

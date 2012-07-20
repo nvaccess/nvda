@@ -24,16 +24,16 @@ Suas características mais notáveis são:
 - Suporte para diversas linhas braille;
 - Capacidade para  ser executado diretamente através de dispositivos USB e outros dispositivos portáteis sem necessitar de instalação;
 - Instalação com voz e fácil de usar;
-- Tradução para 36 idiomas;
+- Tradução para 39 idiomas;
 - Suporte para as modernas versões do sistema operacional Windows  incluindo variantes de 32 e 64 bit;
 - Possibilidade de uso na  tela de logon do Windows   e outras telas de segurança;
-- Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superior) ;
+- Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superiores) ;
 - Suporte para o Prompt de comando do Windows e aplicações de console.
 -
 
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 37 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 39 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -270,9 +270,9 @@ Para navegar pelos objetos utilize as seguintes teclas de atalho:
 | Mover para o objeto anterior | NVDA+4 do teclado numérico | NVDA+control+j | Move para o objeto anterior ao objeto de navegação atual |
 | Mover para o objeto seguinte | NVDA+6 do teclado numérico | control+NVDA+l | Move para o objeto seguinte ao objeto de navegação atual |
 | Mover para o primeiro objeto filho | NVDA+2 do teclado numérico | NVDA+shift+vírgula | Move para o primeiro objeto contido no objeto de navegação atual |
-| Mover para o objeto em foco | NVDA+Menos do teclado numérico | NVDA+backspace | Move para o objeto que tem o foco do sistema atual, e também posiciona o cursor de exploração na posição do cursor do sistema, se o mesmo estiver visível |
+| Mover para o objeto em foco | NVDA+Menos do teclado numérico | NVDA+backespaço | Move para o objeto que tem o foco do sistema atual, e também posiciona o cursor de exploração na posição do cursor do sistema, se o mesmo estiver visível |
 | Ativar objeto de navegação atual | NVDA+Enter do teclado numérico | NVDA+enter | Ativa o objeto de navegação atual (o mesmo que clicar com o mouse ou pressionar a barra de espaços quando se tem o foco) |
-| Mover o foco ou o cursor do sistema para a posição atual da revisão | NVDA+shift+Menos do teclado numérico | NVDA+shift+backspace | Se pressionada uma vez, coloca o foco sobre o objeto de navegação atual. Duas vezes, coloca o cursor do sistema na posição do cursor de exploração |
+| Mover o foco ou o cursor do sistema para a posição atual da revisão | NVDA+shift+Menos do teclado numérico | NVDA+shift+backespaço | Se pressionada uma vez, coloca o foco sobre o objeto de navegação atual. Duas vezes, coloca o cursor do sistema na posição do cursor de exploração |
 | Anunciar dimensões do objeto de navegação atual | NVDA+Delete do teclado numérico | NVDA+delete | Anuncia as dimensões do objeto de navegação atual em relação à tela em percentagens (incluindo a distância da esquerda e do topo da tela, largura e altura do mesmo|
 %kc:endInclude
 
@@ -386,7 +386,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 
 %kc:beginInclude
 || Nome | Tecla | Descrição |
-| Alternar Modo de Foco e Navegação | NVDA+space | Alterna entre o modo de foco e o modo de navegação |
+| Alternar Modo de Foco e Navegação | NVDA+espaço | Alterna entre o modo de foco e o modo de navegação |
 | Sair do modo de foco | escape | Volta para o modo de navegação se o modo de foco foi anteriormente ativado automaticamente |
 | Atualizar Documento no Modo de Navegação | NVDA+f5 | Recarrega o conteúdo do documento atual (muito útil se lhe falta determinado conteúdo. ) |
 | Procurar | NVDA+control+f | Abre uma janela onde você pode digitar algum texto para procurar no documento atual |
@@ -1050,18 +1050,18 @@ http://ru.nvda-community.org/?page_id=10
 Esse sintetizador não suporta a [funcionalidade de soletragem melhorada #VoiceSpellingFunctionality].
 
 + Linhas Braille Suportadas +[SupportedBrailleDisplays]
-Esta seção contém informação sobre as linhas Braille suportadas pelo NVDA.
+Esta seção contém informação sobre as linhas Braille que o NVDA suporta.
 
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Todas as linhas Focus e PAC Mate da [Freedom Scientific http://www.freedomscientific.com/] são suportadasquando conectadas via USB ou bluetooth.
 Será necessário instalar os drivers para as linhas Braille da Freedom Scientific em seu sistema.
 Se ainda não tem os mesmos, pode obtê-los em http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Ainda que esta página menciona somente a linha Focus Blue 40, este driver suporta todos os terminais da Freedom Scientific. 
+Ainda que esta página mencione somente a linha Focus Blue 40, este driver suporta todos os terminais da Freedom Scientific. 
 
-Se seu sistema é 64 bit  e os drivers já foram instalados por outro leitor de telas, provavelmente você continuará necessitando instalar os drivers do link acima, pois os arquivos necessários para o NVDA provavelmente não foram instalados pelo outro other leitor de telas.
+Se seu sistema é de 64 bit  e os drivers já foram instalados por outro leitor de telas, provavelmente você continuará necessitando instalar os drivers do link acima, pois os arquivos necessários para o NVDA provavelmente não foram instalados pelo outro leitor de telas.
 
 A seguir estão as teclas de comando dessa linha para o NVDA.
-Por favor veja a documentação da mesma para descrições de onde essas teclas se encontram.
+Por favor consulte a documentação da mesma para descrições de onde essas teclas se encontram.
 
 %kc:beginInclude
 || Nome | Tecla |
@@ -1076,15 +1076,15 @@ Por favor veja a documentação da mesma para descrições de onde essas teclas 
 
 ++ Optelec ALVA BC640/680 ++
 Ambas as linhas ALVA BC640 e BC680 da [Optelec http://www.optelec.com/] são suportadas quando conectadas via USB ou bluetooth.
-Não é necessário instalar qualquer driver específico para utilizar estes terminais.
-Basta Conectar o terminal e configurar o NVDA para utilizá-lo.
+Não é necessário instalar qualquer driver específico para utilizá-las.
+Para tanto, basta Conectar o terminal e configurar o NVDA para a utilizar.
 
 A seguir estão as teclas de comando dessa linha para o NVDA.
 Por favor consulte a documentação da mesma para descrições de onde essas teclas se encontram.
 
 %kc:beginInclude
 || Nome | Tecla |
-| Mover a linha braille para trás | t1 |
+| Mover linha braille para trás | t1 |
 | Mover linha braille para a linha anterior | t2 |
 | Mover linha braille para a linha seguinte | t4 |
 | Mover a linha braille para a frente | t5 |
@@ -1105,15 +1105,15 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 %kc:endInclude
 
 ++ Linhas Handy Tech ++
-O NVDA suporta todos os terminais [Handy Tech http://www.handytech.de/] quando conectados via USB OU bluetooth.
-Para alguns terminais USB mais antigos, será necessário instalar os drivers USB da Handy Tech em seu sistema.
+O NVDA suporta todas as linhas [Handy Tech http://www.handytech.de/] quando conectadas via USB ou bluetooth.
+Para algumas linhas USB mais antigas, será necessário instalar os drivers USB da Handy Tech em seu sistema.
 
 A seguir estão as teclas de comando dessa linha para o NVDA.
  Por favor consulte a documentação da mesma para descrições de onde essas teclas se encontram.
 %kc:beginInclude
 || Nome | Tecla |
-| Mover a linha braille para trás | esquerda, para cima |
-| Mover a linha braille para a frente | Direita, para baixo |
+| Mover linha braille para trás | esquerda, para cima |
+| Mover linha braille para a frente | Direita, para baixo |
 | Mover linha braille para a linha anterior | b4 |
 | Mover linha braille para a linha seguinte | b5 |
 | Guiar para a cela braille | sensor |
@@ -1122,18 +1122,18 @@ A seguir estão as teclas de comando dessa linha para o NVDA.
 | tecla escape | b4+b6 |
 | tecla tab | enter |
 | tecla enter | esc+enter |
-| tecla seta acima | leftSpace |
-| tecla seta abaixo | rightSpace |
+| tecla seta acima | leftespaço |
+| tecla seta abaixo | rightespaço |
 | menu do NVDA | b2+b4+b5+b6 |
 | configuração da Handy Tech | b4+b8 |
 %kc:endInclude
 
 ++ MDV Lilli ++
 Todas as linhas braille lilli disponíveis em [MDV http://www.mdvbologna.it/] são suportadas.
-Não é necessário instalar qualquer driver específico para usar esses terminais.
-Basta conectar o terminal e configurar o NVDA para usá-lo.
+Não é necessário instalar qualquer driver específico para utilizá-las.
+Basta conectar a linha e configurar o NVDA para usá-la.
 
-A segui estão as teclas de comando para esta linha braille com o NVDA.
+A seguir estão as teclas de comando para esta linha braille com o NVDA.
 Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
 %kc:beginInclude
 || Nome | Tecla |
@@ -1141,7 +1141,7 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 | Mover Linha Braille para Trás | RG |
 | Mover Linha Braille para Linha Anterior | UP |
 | Mover Linha Braille para Linha Seguinte | DN |
-| Ir para a Cela Braille | Sensor |
+| Guiar para a Cela Braille | Sensor |
 | Tecla Shift+Tab | SLF |
 | Tecla Tab | SRG |
 | Tecla Alt+Tab | SDN |
@@ -1152,7 +1152,7 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 
 Várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] são suportadas quando conectadas via USB ou bluetooth.
 
-Estão incluidas:
+Estão entre estas:
 - Baum: SuperVario, PocketVario
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
@@ -1187,7 +1187,7 @@ Para linhas que tenham joystick:
 A linha USB hedo ProfiLine disponível em [hedo Reha-Technik  http://www.hedo.de/] é suportada.
 Será antes necessário  instalar os drivers para USB fornecidos pelo fabricante.
 
-A segui estão as teclas de comando para esta linha braille com o NVDA.
+A seguir estão as teclas de comando para esta linha braille com o NVDA.
 Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
 
 %kc:beginInclude
@@ -1196,16 +1196,16 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 | Mover Linha Braille para a Frente | K3 |
 | Mover Linha Braille para a Linha Anterior | B2 |
 | Mover Linha Braille para a Próxima Linha | B5 |
-| Guiar para a Célula Braille | sensor |
+| Guiar para a Cela Braille | sensor |
 | Alternar Vínculo do Braille | K2 |
-| Leitura Contína | B6 |
+| Leitura Contínua | B6 |
 %kc:endInclude
 
 ++ hedo MobilLine USB ++
 A linha USB hedo MobilLine disponível em [hedo Reha-Technik  http://www.hedo.de/] é suportada.
 Será antes necessário  instalar os drivers para USB fornecidos pelo fabricante.
 
-A segui estão as teclas de comando para esta linha braille com o NVDA.
+A seguir estão as teclas de comando para esta linha braille com o NVDA.
 Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
 %kc:beginInclude
 || Nome | Tecla |
@@ -1213,26 +1213,26 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 | Mover Linha Braille para a Frente | K3 |
 | Mover Linha Braille para a Linha Anterior | B2 |
 | Mover Linha Braille para a Próxima Linha | B5 |
-| Guiar para a Célula Braille | sensor |
+| Guiar para a Cela Braille | sensor |
 | Alternar Vínculo do Braille | K2 |
-| Leitura Contína | B6 |
+| Leitura Contínua | B6 |
 %kc:endInclude
 
 ++ HumanWare Brailliant BI/B Series ++
 As linhas braille Brailliant BI e B series, disponíveis em [HumanWare http://www.humanware.com/], incluindo as linhas BI 32, BI 40 e B 80, são suportadas quando conectadas via USB ou bluetooth.
 Para conectar via USB, você antes precisa instalar os drivers USB fornecidos pelo fabricante.
 
-A segui estão as teclas de comando para esta linha braille com o NVDA.
+A seguir estão as teclas de comando para esta linha braille com o NVDA.
 Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
  
 %kc:beginInclude
 || Nome | Tecla |
-| Deslocar linha braille para trás | esquerda |
-| Deslocar linha braille para a frente | direita |
+| Mover linha braille para trás | esquerda |
+| Mover linha braille para a frente | direita |
 | Mover linha braille para a linha anterior | cima |
 | Mover linha braille para a linha seguinte | baixo |
 | Guiar para a cela braille | sensor |
-| Alternar braille vinculado a | cima+baixo |
+| Alternar vínculo do braille | cima+baixo |
 | Tecla seta acima | espaço+ponto1 |
 | Tecla seta abaixo | espaço+ponto4 |
 | Tecla seta a esquerda | espaço+ponto3 |
@@ -1249,10 +1249,83 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 | Leitura Contínua | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
+++ HIMS Braille Sense/Braille EDGE Series ++
+O NVDA suporta as linhas Braille Sense e Braille EDGE disponíveis em [Hims http://www.hims-inc.com/] quando conectadas via USB ou bluetooth. 
+Caso esteja conectando via USB, você precisará instalar os drivers USB da HIMS em seu sistema.
+
+A seguir estão as teclas de comando para esta linha braille com o NVDA.
+Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
+%kc:beginInclude
+|| Nome | Tecla |
+| Mover linha braille para trás | deslocador esquerdo para baixo |
+| Mover linha braille para a frente | deslocador direito para baixo |
+| Mover linha braille para a linha anterior | deslocador esquerdo para cima |
+| Mover linha braille para a linha seguinte | deslocador direito para cima |
+| Guiar para a cela braille | sensor |
+| Tecla shift+tab | ponto1+ponto2+espaço |
+| Tecla alt | ponto1+ponto3+ponto4+espaço |
+| Tecla escape | ponto1+ponto5+espaço |
+| Tecla tab | ponto4+ponto5+espaço |
+| Tecla enter | ponto8 |
+| Tecla backspace | ponto7 |
+| Tecla seta acima | ponto1+espaço |
+| Tecla seta abaixo | ponto4+espaço |
+| capsLock | ponto1+ponto3+ponto6+espaço |
+| Tecla shift+alt+tab | advance2+advance3+advance1 |
+| Tecla alt+tab | advance2+advance3 |
+| Tecla end | ponto4+ponto6+espaço |
+| Tecla control+end | ponto4+ponto5+ponto6+espaço |
+| Tecla home | ponto1+ponto3+espaço |
+| Tecla control+home | ponto1+ponto2+ponto3+espaço |
+| Tecla seta a esquerda | ponto3+espaço |
+| Tecla control+shift+seta a esquerda | ponto2+ponto8+espaço+advance1 |
+| Tecla control+seta a esquerda | ponto2+espaço |
+| Tecla shift+alt+seta a esquerda | ponto2+ponto7+advance1 |
+| Tecla alt+seta a esquerda | ponto2+ponto7 |
+| Tecla seta a direita | ponto6+espaço |
+| Tecla control+shift+seta a direita | ponto5+ponto8+espaço+advance1 |
+| Tecla control+seta a direita | ponto5+espaço |
+| Tecla shift+alt+seta a direita | ponto5+ponto7+advance1 |
+| Tecla alt+seta a direita | ponto5+ponto7 |
+| Tecla pageUp | ponto1+ponto2+ponto6+espaço |
+| Tecla control+pageUp | ponto1+ponto2+ponto6+ponto8+espaço |
+| Tecla control+shift+seta acima | ponto2+ponto3+ponto8+espaço+advance1 |
+| Tecla control+seta acima | ponto2+ponto3+espaço |
+| Tecla shift+alt+seta acima | ponto2+ponto3+ponto7+advance1 |
+| Tecla alt+seta acima | ponto2+ponto3+ponto7 |
+| Tecla shift+seta acima | deslocador esquerdo para baixo+espaço |
+| Tecla pageDown | ponto3+ponto4+ponto5+espaço |
+| Tecla control+pageDown | ponto3+ponto4+ponto5+ponto8+espaço |
+| Tecla control+shift+seta abaixo | ponto5+ponto6+ponto8+espaço+advance1 |
+| Tecla control+seta abaixo | ponto5+ponto6+espaço |
+| Tecla shift+alt+seta abaixo | ponto5+ponto6+ponto7+advance1 |
+| Tecla alt+seta abaixo | ponto5+ponto6+ponto7 |
+| Tecla shift+seta abaixo | deslocador direito para baixo+espaço |
+| Tecla delete | ponto1+ponto3+ponto5+espaço |
+| Tecla f1 | ponto1+ponto2+ponto5+espaço |
+| Tecla f3 | ponto1+ponto2+ponto4+ponto8 |
+| Tecla f4 | ponto7+advance3 |
+| Tecla windows+b | ponto1+ponto2+advance1 |
+| Tecla windows+d | ponto1+ponto4+ponto5+advance1 |
+%kc:endInclude
+
+++ Linha HIMS SyncBraille ++
+O NVDA suporta a linha SyncBraille disponível em [HIMS http://www.hims-inc.com/].
+Você deverá instalar os drivers USB da HIMS em seu sistema.
+
+A seguir estão as teclas de comando para essa linha com o NVDA.
+Por favor consulte a documentação da linha para obter descrições de onde essas teclas se encontram.
+%kc:beginInclude
+|| Nome | Tecla |
+| Mover linha braille para trás | deslocador esquerdo para baixo |
+| Mover linha braille para a frente | deslocador direito para baixo|
+| Guiar para a cela braille | sensor |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] é um programa adicional que pode ser usado para suportar muito mais linhas Braille.
 Para utilizá-lo, será necessário instalar o BRLTTY para o Windows.
-Você deverá baixá-lo  e instalar o último pacote de instalação, que se denominará, por exemplo, brltty-win-4.2-2.exe.
+Você deverá baixar e instalar o último pacote de instalação, cuja denominação é algo como, brltty-win-4.2-2.exe.
 Quando configurar a linha e porta a utilizar, certifique-se de prestar muita atenção às instruções, especialmente se utiliza uma linha USB e já tem os drivers do fabricante instalados.
 
 A seguir encontram-se os comandos BRLTTY para o NVDA.

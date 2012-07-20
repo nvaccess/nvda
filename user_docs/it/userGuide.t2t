@@ -273,9 +273,9 @@ Per navigare ad oggetti, utilizzare i tasti seguenti:
 | Spostarsi all'oggetto precedente | NVDA+4 del tastierino numerico | NVDA+control+j | ci si Sposta all'oggetto precedente rispetto a quello attuale, sullo stesso livello |
 | Spostarsi all'oggetto successivo | NVDA+numpad6 | control+NVDA+l | ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello) |
 | Spostarsi al primo oggetto contenuto | NVDA+2 del tastierino numerico | NVDA+shift+virgola | Ci si sposta al primo oggetto contenuto nell'oggetto attuale |
-| Spostarsi all'oggetto focalizzato | NVDA+Meno del tastierino numerico | NVDA+Backspace | Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato |
+| Spostarsi all'oggetto focalizzato | NVDA+Meno del tastierino numerico | NVDA+Backspazio | Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato |
 | Attivare l'oggetto corrente | NVDA+Invio del tastierino numerico | NVDA+Invio | Attiva l'oggetto corrente (l'equivalente di cliccare col mouse o premere la barra spazio in presenza del focus) |
-| Spostare il focus di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+backspace | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
+| Spostare il focus di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+backspazio | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
 | Annuncia dimensioni dell'oggetto corrente | NVDA+Canc del tastierino numerico | NVDA+Canc | Annuncia le dimensioni dell'oggetto attuale sullo schermo in percentuali (incluse distanza dal bordo sinistro e superiore dello schermo, e la sua altezza e larghezza) |
 %kc:endInclude
 
@@ -422,14 +422,14 @@ I seguenti tasti premuti da soli portano al campo successivo, tenendo premuto Sh
 - s: separatore
 - m: frame
 - g: grafico
-- d: Sezione Aria
+- d: Sezione
 - o: oggetto incorporato
 - numeri da 1 a 6: intestazioni da 1 a 6
 -
 Per spostarsi all'inizio e alla fine degli elementi contenuti in elenchi e tabelle,:
 || Nome | Tasto | Descrizione |
-| Spostarsi all'inizio del contenitore | shift+, | Si sposta al primo elemento presente negli elenchi o nelle tabelle, e vi posiziona il cursore |
-| Spostarsi alla fine del contenitore | , | Si sposta all'ultimo elemento presente negli elenchi o nelle tabelle, e vi posiziona il cursore |
+| Spostarsi all'inizio del contenitore | punto e virgola | Si sposta al primo elemento presente negli elenchi o nelle tabelle, e vi posiziona il cursore |
+| Spostarsi alla fine del contenitore | virgola | Si sposta all'ultimo elemento presente negli elenchi o nelle tabelle, e vi posiziona il cursore |
 %kc:endInclude
 
 ++ Lista degli elementi ++
@@ -751,7 +751,7 @@ Quando questa casella di controllo è attiva, il cursore di controllo verrà aut
 Quando questa casella di controllo è attiva, il cursore di controllo seguirà il mouse man mano che si sposta.
 
 ==== Modalità semplice ====
-Quando questa casella di controllo è attiva, NVDA filtrerà la gerarchia di oggetti che possono essere raggiunti col navigatore ad oggetti, in modo da escludere oggetti non utilizzabili.
+Quando questa casella di controllo è attiva, NVDA filtrerà la gerarchia di oggetti che possono essere raggiunti col navigatore ad oggetti, in modo da escludere oggetti di poco interesse per l'utente; ad esempio, oggetti invisibili o che sono usati esclusivamente  per il layout.
 
 +++ Presentazione oggetti (NVDA+Control+o) +++
 Situata sul menu preferenze alla voce presentazione oggetti..., 
@@ -1112,8 +1112,8 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Tasto esc  | b4+b6 |
 | Tasto tab  | enter |
 | Tasto Invio | esc+enter |
-| FrecciaSu | leftSpace |
-| FrecciaGiù | rightSpace |
+| FrecciaSu | leftspazio |
+| FrecciaGiù | rightspazio |
 | Menu NVDA  | b2+b4+b5+b6 |
 | Configurazione Handy Tech  | b4+b8 |
 %kc:endInclude
@@ -1231,6 +1231,80 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Tasto windows | spazio+punto3+punto4 |
 | Tasto alt+tab | spazio+punto2+punto3+punto4+punto5 (spazio+t) |
 | Dire Tutto | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
+++ HIMS serie Braille Sense/Braille EDGE ++
+NVDA supporta i modelli Braille Sense e Braille EDGE prodotti dalla [Hims http://www.hims-inc.com/] quando connessi tramite USB o bluetooth.
+In caso di connessione tramite USB, è necessario prima installare i driver sviluppati dal produttore.
+
+Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+
+%kc:beginInclude
+|| Nome | tasto |
+| Scorri display braille indietro | Scorri giù lato sinistro |
+| Scorri display braille avanti | Scorri giù lato destro |
+| sposta display braille alla riga precedente | scorri su lato sinistro |
+| Sposta display braille riga successiva | scorri su lato destro |
+| Route to braille cell | routing |
+| Tasto shift+tab | punto1+punto2+spazio |
+| tasto alt | punto1+punto3+punto4+spazio |
+| tasto escape | punto1+punto5+spazio |
+| tasto tab| punto4+punto5+spazio |
+| tasto invio | punto8 |
+| tasto backspace | punto7 |
+| freccia su | punto1+spazio |
+| freccia giù | punto4+spazio |
+| capsLock | punto1+punto3+punto6+spazio |
+| shift+alt+tab | advance2+advance3+advance1 |
+| alt+tab | advance2+advance3 |
+| tasto fine | punto4+punto6+spazio |
+| Control+tasto fine | punto4+punto5+punto6+spazio |
+| tasto inizio | punto1+punto3+spazio |
+| control+home | punto1+punto2+punto3+spazio |
+| frecciaSinistra | punto3+spazio |
+| control+shift+freccia sinistra | punto2+punto3+spazio+advance1 |
+| control+freccia sinistra | punto2+spazio
+| shift+alt+freccia sinistra | punto2+punto7+advance1 |
+| alt+freccia sinistra | punto2+punto7 |
+| freccia destra | punto6+spazio |
+| control+shift+freccia destra | punto5+punto8+spazio+advance1 |
+| control+freccia destra | punto5+spazio |
+| shift+alt+freccia destra | punto5+punto7+advance1 |
+| alt+freccia destra | punto5+punto7 |
+| pagina su | punto1+punto2+punto6+spazio |
+| control+pagina su | punto1+punto2+punto6+punto8+spazio |
+| control+shift+freccia su | punto2+punto3+punto8+spazio+advance1 |
+| control+freccia su | punto2+punto3+spazio |
+| shift+alt+freccia su | punto2+punto3+punto7+advance1 |
+| alt+freccia su | punto2+punto3+punto7 |
+| shift+freccia su key | left side scroll down + spazio |
+| pagina giù | punto3+punto4+punto5+spazio |
+| control+pagina giù | punto3+punto4+punto5+punto8+spazio |
+| control+shift+freccia giù | punto5+punto6+punto8+spazio+advance1 |
+| control+freccia giù key | punto5+punto6+spazio |
+| shift+alt+freccia giù | punto5+punto6+punto7+advance1 |
+| alt+freccia giù | punto5+punto6+punto7 |
+| shift+freccia giù | scorri giù lato destro + spazio |
+| tasto Canc | punto1+punto3+punto5+spazio |
+| tasto f1 | punto1+punto2+punto5+spazio |
+| tasto f3 | punto1+punto2+punto4+punto8 |
+| f4 | punto7+advance3 |
+| windows+b | punto1+punto2+advance1 |
+| windows+d | punto1+punto4+punto5+advance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA supporta il modello Syncbraille prodotto dalla [Hims http://www.hims-inc.com/] quando connesso tramite USB.
+In caso di connessione tramite USB, è necessario prima installare i driver sviluppati dal produttore.
+
+Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
+Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri display braille indietro | Scorri giù lato sinistro |
+| Scorri display braille avanti | Scorri giù lato destro |
+| Route to braille cell | routing |
 %kc:endInclude
 
 ++ BRLTTY ++

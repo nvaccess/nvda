@@ -23,16 +23,16 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki useille pistenäytöille
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
-- Käännökset 37 kielelle
+- Käännökset 39 kielelle
 - Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
-- Mahdollisuus käyttää Windowsin kirjautumis- ja muissa suojatuissa ruuduissa
+- Mahdollisuus käyttää Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa
 - Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
 - Tuki Windowsin komentokehotteelle ja konsolisovelluksille
 -
 
 ++ Kansainvälistäminen ++
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on saatavilla englannin lisäksi seuraavilla 37 kielellä: afrikaans, albania, arabia, brasilianportugali, bulgaria, espanja, galego, georgia, heprea, hindi, hollanti, islanti, italia, japani, kreikka, kroatia, mandariinikiina, norja, perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on saatavilla englannin lisäksi seuraavilla 39 kielellä: afrikaans, albania, arabia, brasilianportugali, bulgaria, espanja, galego, georgia, heprea, hindi, hollanti, islanti, italia, japani, korea, kreikka, kroatia, mandariinikiina, nepali, norja, perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -71,7 +71,7 @@ Ladatun tiedoston suorittaminen käynnistää NVDA:n väliaikaisversion.
 Seuraavaksi kysytään, halutaanko se asentaa, luoda massamuistiversio tai jatkaa väliaikaisversion käyttämistä.
 
 Kannattaa valita asennusvaihtoehto, jos NVDA:ta aiotaan käyttää aina samalla tietokoneella.
-Asentaminen mahdollistaa sellaiset lisätoiminnot kuin automaattinen käynnistys Windowsiin kirjautumisen jälkeen, kirjautumis- ja suojattujen ruutujen lukeminen (massamuisti- ja väliaikaisversioilla tämä ei ole mahdollista) ja pikakuvakkeen luomisen Käynnistä-valikkoon ja työpöydälle.
+Asentaminen mahdollistaa sellaiset lisätoiminnot kuin automaattinen käynnistys Windowsiin kirjautumisen jälkeen, kirjautumisikkunan ja suojattujen ruutujen lukeminen (massamuisti- ja väliaikaisversioilla tämä ei ole mahdollista) ja pikakuvakkeen luomisen Käynnistä-valikkoon ja työpöydälle.
 Asennetusta versiosta on mahdollista tehdä milloin tahansa myös massamuistiversio.
 
 Massamuistiversion luominen kannattaa valita, jos NVDA halutaan mukana kuljetettavaksi USB-muistitikulle tai muulle kirjoitettavalle tietovälineelle.
@@ -101,7 +101,7 @@ Mikäli kuvake luodaan, siihen liitetään myös pikanäppäin Ctrl+Alt+n, jolla
 
 +++ Kopioi massamuistiversion asetukset nykyiseen käyttäjätiliin +++
 Tällä asetuksella voidaaan valita, kopioidaanko käynnissä olevan NVDA:n asetukset asennettuun versioon nykyiselle kirjautuneelle käyttäjälle. 
-Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin kirjautumis- tai muissa suojatuissa ruuduissa käytettäväksi.
+Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin kirjautumisikkunassa tai muissa suojatuissa ruuduissa käytettäväksi.
 Tämä asetus on käytettävissä vain massamuistiversiosta asennettaessa, ei suoraan ladatusta käynnistyspaketista.
  
 ++ Massamuistiversion luominen ++
@@ -422,18 +422,18 @@ Sellaisinaan nämä komennot siirtävät seuraavan, ja Shift-näppäimen kanssa 
 - s: erotin
 - m: kehys
 - g: kuva
-- d: ARIA-maamerkki
+- d: maamerkki
 - o: upotettu objekti
 - numerot 1 - 6: otsikot tasoilla 1 - 6
 -
-Säilöelementtien, kuten listojen ja taulukoiden, alkuun tai loppuun siirtymiseksi:
+Säilöelementtien, kuten listojen ja taulukoiden, alkuun tai loppuun siirtymiseen:
 || Nimi | Näppäinkomento | Kuvaus |
-| Siirrä säilöelementin alkuun | Shift+, (pilkku) | Siirtää sen säilöelementin alkuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
-| Siirrä säilöelementin loppuun | , (pilkku) | Siirtää sen säilöelementin loppuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
+| Siirrä säilöelementin alkuun | Shift+pilkku | Siirtää sen säilöelementin alkuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
+| Siirrä säilöelementin loppuun | pilkku | Siirtää sen säilöelementin loppuun, jonka kohdalla kohdistin on (lista, taulukko jne). |
 %kc:endInclude
 
 ++ Elementtilista ++
-Elementtilista mahdollistaa pääsyn dokumentissa oleviin linkkeihin, otsikoihin tai ARIA-maamerkkeihin.
+Elementtilista mahdollistaa pääsyn dokumentissa oleviin linkkeihin, otsikoihin tai maamerkkeihin.
 Valintapainikkeilla voidaan valita näiden kolmen näytettävän elementtityypin väliltä.
 Valintaikkunassa on myös muokkauskenttä, jonka avulla listaa voidaan suodattaa jonkin tietyn kohteen etsimiseksi dokumentista.
 Kun haluttu kohde on valittu, sen kohdalle voidaan siirtyä tai se voidaan avata käyttämällä valintaikkunassa olevia painikkeita.
@@ -519,8 +519,8 @@ Asetus on käytettävissä vain NVDA:n asennetuissa versioissa.
 Jos Windowsiin kirjaudutaan käyttäjänimellä ja salasanalla, tämä asetus saa NVDA:n käynnistymään automaattisesti kirjautumisruudussa aina Windowsin käynnistyessä.
 Asetus on käytettävissä vain NVDA:n asennetuissa versioissa.
 
-==== Käytä nykyisiä tallennettuja asetuksia kirjautumis- ja muissa suojatuissa ruuduissa ====
-Tämän painikkeen painaminen kopioi nykyiset tallennetut asetukset NVDA:n järjestelmäasetusten hakemistoon, jotta niitä käytetään kirjautumis- ja käyttäjätilien valvonnan ja muissa suojatuissa ruuduissa.
+==== Käytä nykyisiä tallennettuja asetuksia kirjautumisikkunassa ja muissa suojatuissa ruuduissa ====
+Tämän painikkeen painaminen kopioi nykyiset tallennetut asetukset NVDA:n järjestelmäasetusten hakemistoon, jotta niitä käytetään kirjautumisikkunassa ja käyttäjätilien valvonnan sekä muissa suojatuissa ruuduissa.
 Asetusten siirtäminen voidaan varmistaa tallentamalla ne ensin painamalla Ctrl+NVDA+s tai valitsemalla NVDA-valikosta Tallenna asetukset.
 Tämä painike on käytettävissä vain NVDA:n asennetuissa versioissa.
 
@@ -751,7 +751,7 @@ Kun tämä asetus on käytössä, tarkastelukohdistin siirretään automaattises
 Kun tämä asetus on käytössä, tarkastelukohdistin seuraa hiirtä sen liikkuessa.
 
 ==== Yksinkertainen objektinavigointi ====
-Kun tämä asetus on käytössä, NVDA suodattaa objektihierarkiasta pois sellaiset objektit, joihin ei voida siirtyä.
+Kun tämä asetus on käytössä, NVDA suodattaa objektihierarkiasta pois sellaiset objektit, joilla ei ole merkitystä käyttäjälle, esim. näkymättömät tai sellaiset, joita käytetään asettelutarkoituksiin.
 
 +++ Objektien lukuasetukset (NVDA+Ctrl+o) +++
 Tämä valintaikkuna löytyy Asetukset-valikosta kohdasta "Objektien lukeminen...".
@@ -936,16 +936,16 @@ Asennetut NVDA:n versiot tallentavat kaikki asetukset, käyttäjän omat sovellu
 Tämä tarkoittaa, että jokaisella järjestelmän käyttäjällä voi olla omat NVDA-asetuksensa.
 Asennetun NVDA:n asetushakemistoon päästään valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> Selaa käyttäjän asetushakemistoa.
 
-Kirjautumis- ja käyttäjätilien valvonnan ruuduissa käytettävät asetukset tallennetaan NVDA:n asennushakemistossa olevaan systemConfig-hakemistoon.
+Kirjautumisikkunassa ja käyttäjätilien valvonnan ruuduissa käytettävät asetukset tallennetaan NVDA:n asennushakemistossa olevaan systemConfig-hakemistoon.
 Näihin ei tulisi yleensä koskea.
 Muuttaaksesi sitä, miten NVDA on määritelty kirjautumis- ja käyttäjätilien valvonnan ruuduissa, muuta ensin asetukset haluamiksesi kun olet kirjautuneena Windowsiin, ja kopioi ne sitten kirjautumisruudussa käytettäväksi painamalla Yleiset asetukset -valintaikkunassa olevaa painiketta.
 
 + Lisätyökalut +
 
 ++ Näytä loki ++
-Näytä loki -toiminnolla, joka löytyy NVDA-valikon Työkalut-alavalikosta, voidaan tutkia kaikkia NVDA:n viime käynnistyksen jälkeen tulleita lokimerkintöjä.
+Näytä loki -toiminnolla, joka löytyy NVDA-valikon Työkalut-alavalikosta, voidaan tutkia kaikkia NVDA:n edellisen käynnistyksen jälkeen tulleita lokimerkintöjä.
 
-Loki voidaan myös tallentaa tiedostoon tai päivittää ikkunan sisältö, jotta uusimmat lokin avaamisen jälkeen tulleet merkinnät näytetään.
+Loki voidaan myös tallentaa tiedostoon tai ikkunan sisältö päivittää, jotta uusimmat lokin avaamisen jälkeen tulleet merkinnät näytetään.
 Nämä toiminnot ovat käytettävissä Näytä loki -sovelluksen Tiedosto-valikossa.
 
 ++ Näytä puhe ++
@@ -959,15 +959,15 @@ Jos ikkunaa kuitenkin napsautetaan hiirellä tai kohdistus siirretään siihen, 
 
 ++ Lisäosien hallinta ++
 Lisäosien hallinnalla, johon päästään NVDA-valikosta Työkalut-valikon alta kohdasta Lisäosien hallinta, voidaan asentaa ja poistaa NVDA:n lisäosia.
-Lisäosat, joita toimittaa NVDA-yhteisö, saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
+NVDA-yhteisön toimittamat lisäosat saattavat lisätä tai muuttaa ominaisuuksia tai jopa tarjota tuen uusille pistenäytöille tai puhesyntetisaattoreille.
 
 Lisäosien hallinnassa on lista, jossa näkyvät kaikki nykyisen käyttäjän asentamat lisäosat.
-Jokaisesta lisäosasta näytetään paketin nimi, versio ja tekijä, ja lisätietoja kuten kuvaus ja URL-osoite voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
+Jokaisesta lisäosasta näytetään paketin nimi, versio sekä tekijä, ja lisätietoja kuten kuvausta ja URL-osoitetta voidaan tarkastella valitsemalla haluttu lisäosa ja painamalla Tietoja lisäosasta -painiketta.
 
 Lisäosa asennetaan painamalla Asenna-painiketta.
-Tässä voidaan etsiä tietokoneelta tai verkosta haluttua lisäosapakettia (.nvda-addon-tiedostoa).
+Avautuvassa ikkunassa voidaan etsiä tietokoneelta tai verkosta haluttua lisäosapakettia (.nvda-addon-tiedostoa).
 Kun painetaan Avaa-painiketta, NVDA kysyy, halutaanko lisäosa varmasti asentaa.
-Koska lisäosien toiminnallisuus on NVDA:n sisällä rajoittamatonta, mikä saattaisi teoriassa tarkoittaa pääsyä henkilökohtaisiin tietoihin tai jopa koko järjestelmään, mikäli käytetään NVDA:n asennettua versiota, on erittäin tärkeää, että lisäosia asennetaan vain luotetuista lähteistä.
+Koska lisäosien toiminnallisuus on NVDA:n sisällä rajoittamatonta, mikä saattaisi teoriassa tarkoittaa pääsyä henkilökohtaisiin tietoihin tai asennettua versiota käytettäessä jopa koko järjestelmään, on erittäin tärkeää, että lisäosia asennetaan vain luotetuista lähteistä.
 NVDA on käynnistettävä uudelleen lisäosan asentamisen jälkeen, jotta se voidaan ottaa käyttöön.
 Uudelleenkäynnistykseen saakka listassa näkyy lisäosan tilana "asenna".
 
@@ -985,7 +985,7 @@ Nämä tiedostot on parasta poistaa ja asentaa tilalle asianmukainen lisäosa, m
 
 ++ Python-konsoli ++
 NVDA:n Python-konsoli, joka löytyy NVDA-valikon Työkalut-alavalikosta, on kehitystyökalu, joka on hyödyllinen virheiden etsinnässä, yleisessä NVDA:n sisäisen toiminnan tai sovelluksen esteettömyyshierarkian tutkimisessa.
-Katso lisätietoja kehittäjien oppaasta [NVDA:n web-sivuston Development-osiosta NVDA_URLwiki/Development].
+Katso lisätietoja kehittäjän oppaasta [NVDA:n web-sivuston Development-osiosta NVDA_URLwiki/Development].
 
 ++ Lataa liitännäiset uudelleen ++
 Tällä voidaan ladata uudelleen sovellusmoduulit ja yleisliitännäiset ilman NVDA:n uudelleenkäynnistystä, mistä voi olla hyötyä kehittäjille.
@@ -1067,7 +1067,7 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 
 ++ Optelec ALVA BC640/680 ++
 [Optelecin http://www.optelec.com/] ALVA BC640- ja BC680 -pistenäyttöjä tuetaan sekä USB-liitännällä että bluetooth-yhteydellä.
-Niiden käyttämiseksi ei tarvitse asentaa mitään ajureita.
+Niiden käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
@@ -1120,7 +1120,7 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 
 ++ MDV Lilli ++
 [MDV:n http://www.mdvbologna.it/] Lilli-pistenäyttöä tuetaan.
-Sen käyttämiseksi ei tarvitse asentaa mitään ajureita.
+Sen käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
 Seuraavassa on lueteltu tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
@@ -1147,7 +1147,7 @@ Näitä ovat:
 -
 Muutkin Baum:in valmistamat pistenäytöt voivat myös toimia, vaikkei tätä olekaan testattu.
 
-Jos käytetään USB-liitäntää, ensin täytyy asentaa  valmistajan toimittamat USB-ajurit.
+Mikäli käytetään USB-liitäntää, on ensin asennettava valmistajan toimittamat USB-ajurit.
 APH Refreshabraille -pistenäytössä USB-tila on asetettava sarjaportiksi.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
@@ -1205,7 +1205,7 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 
 ++ HumanWare Brailliant BI/B ++
 [HumanWaren http://www.humanware.com/] Brailliant BI- ja B -sarjan pistenäyttöjä, mukaan lukien BI 32, BI 40 ja B 80, tuetaan, kun ne kytketään tietokoneeseen USB-liitännällä tai bluetooth-yhteydellä.
-USB-liitäntää käytettäessä on ensin asennettava valmistajan ajurit .
+USB-liitäntää käytettäessä on ensin asennettava valmistajan ajurit.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
@@ -1231,6 +1231,79 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 | Windows-näppäin | välilyönti+piste3+piste4 |
 | Alt+sarkain-näppäinyhdistelmä | välilyönti+piste2+piste3+piste4+piste5 (välilyönti+t) |
 | Lue kaikki | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
+++ HIMS Braille Sense/Braille EDGE ++
+NVDA tukee [HIMS:in http://www.hims-inc.com/] Braille Sense- ja Braille EDGE -pistenäyttöjä USB-liitännällä tai Bluetoothilla kytkettyinä.
+Mikäli käytetään USB-liitäntää, on koneelle asennettava HIMS:in ajurit.
+
+Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | vasemmanpuoleinen vieritä alas |
+| Vieritä pistenäyttöä eteenpäin | oikeanpuoleinen vieritä alas |
+| Siirrä pistenäyttö edelliselle riville | vasemmanpuoleinen vieritä ylös |
+| Siirrä pistenäyttö seuraavalle riville | oikeanpuoleinen vieritä ylös |
+| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Shift+sarkain-näppäin | piste1+piste2+välilyönti |
+| Alt-näppäin | piste1+piste3+piste4+välilyönti |
+| Escape-näppäin | piste1+piste5+välilyönti |
+| Sarkain-näppäin | piste4+piste5+välilyönti |
+| Enter-näppäin | piste8 |
+| Askelpalautin-näppäin | piste7 |
+| ylänuolinäppäin | piste1+välilyönti |
+| alanuolinäppäin | piste4+välilyönti |
+| Capslock | piste1+piste3+piste6+välilyönti |
+| Shift+Alt+sarkain-näppäin | advance2+advance3+advance1 |
+| Alt+sarkain-näppäin | advance2+advance3 |
+| End-näppäin | piste4+piste6+välilyönti |
+| Ctrl+End-näppäin | piste4+piste5+piste6+välilyönti |
+| Home-näppäin | piste1+piste3+välilyönti |
+| Ctrl+Home-näppäin | piste1+piste2+piste3+välilyönti |
+| vasen nuolinäppäin | piste3+välilyönti |
+| Ctrl+Shift+vasen nuolinäppäin | piste2+piste8+välilyönti+advance1 |
+| Ctrl+vasen nuolinäppäin | piste2+välilyönti |
+| Shift+Alt+vasen nuolinäppäin | piste2+piste7+advance1 |
+| Alt+vasen nuolinäppäin | piste2+piste7 |
+| Oikea nuolinäppäin | piste6+välilyönti |
+| Ctrl+Shift+oikea nuolinäppäin | piste5+piste8+välilyönti+advance1 |
+| Ctrl+oikea nuolinäppäin | piste5+välilyönti |
+| Shift+Alt+oikea nuolinäppäin | piste5+piste7+advance1 |
+| Alt+oikea nuolinäppäin | piste5+piste7 |
+| Page up -näppäin | piste1+piste2+piste6+välilyönti |
+| Ctrl+Page up -näppäin | piste1+piste2+piste6+piste8+välilyönti |
+| Ctrl+Shift+ylänuolinäppäin | piste2+piste3+piste8+välilyönti+advance1 |
+| Ctrl+ylänuolinäppäin | piste2+piste3+välilyönti |
+| Shift+Alt+ylänuolinäppäin | piste2+piste3+piste7+advance1 |
+| Alt+ylänuolinäppäin | piste2+piste3+piste7 |
+| Shift+ylänuolinäppäin | vasemmanpuoleinen vieritä alas + välilyönti |
+| Page down -näppäin | piste3+piste4+piste5+välilyönti |
+| Ctrl+Page down -näppäin | piste3+piste4+piste5+piste8+välilyönti |
+| Ctrl+Shift+alanuolinäppäin | piste5+piste6+piste8+välilyönti+advance1 |
+| Ctrl+alanuolinäppäin | piste5+piste6+välilyönti |
+| Shift+Alt+alanuolinäppäin | piste5+piste6+piste7+advance1 |
+| Alt+alanuolinäppäin | piste5+piste6+piste7 |
+| Shift+alanuolinäppäin | oikeanpuoleinen vieritä alas + välilyönti |
+| Delete-näppäin | piste1+piste3+piste5+välilyönti |
+| F1-näppäin | piste1+piste2+piste5+välilyönti |
+| F3-näppäin | piste1+piste2+piste4+piste8 |
+| F4-näppäin | piste7+advance3 |
+| Windows+B-näppäinyhdistelmä | piste1+piste2+advance1 |
+| Windows+D-näppäinyhdistelmä | piste1+piste4+piste5+advance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA tukee [HIMS:in http://www.hims-inc.com/] SyncBraille -pistenäyttöä.
+Tietokoneelle on asennettava HIMS:in usb-AJURIT.
+
+Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
+Katso pistenäytön käyttöohjeesta kuvaukset näppäinten paikoista.
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | vasemmanpuoleinen vieritä alas |
+| Vieritä pistenäyttöä eteenpäin | oikeanpuoleinen vieritä alas |
+| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 %kc:endInclude
 
 ++ BRLTTY ++
@@ -1291,7 +1364,7 @@ Lokin loppupuolella näkyy seuraavaa:
 
 ```
 INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
+Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
 ```
 
 Tästä nähdään, että skriptin nimi on dateTime ja moduuli.luokka on globalCommands.GlobalCommands.

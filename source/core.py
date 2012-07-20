@@ -100,7 +100,7 @@ def restart():
 		subprocess.list2cmdline(sys.argv + ["-r"]).decode("mbcs"),
 		None, 0)
 
-def resetConfiguration():
+def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings.
 	"""
 	import config
@@ -115,7 +115,7 @@ def resetConfiguration():
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
-	config.load()
+	config.load(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
 	#Language
 	lang = config.conf["general"]["language"]

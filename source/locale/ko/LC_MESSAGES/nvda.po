@@ -1,338 +1,341 @@
-# ACESSO NÃO VISUAL AO AMBIENTE DE TRABALHO.
-# Copyright (C) 2006-2012 Colaboradores do NVDA
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR NVDA Contributers
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5256\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2012-07-16 05:30+0100\n"
-"PO-Revision-Date: 2012-07-14 17:54-0300\n"
-"Last-Translator: Cleverson Casarin Uliana <clever92000@yahoo.com.br>\n"
-"Language-Team: pt_BR <clever92000@yahoo.com.br>\n"
+"PO-Revision-Date: 2012-07-13 16:06-0800\n"
+"Last-Translator: Joseph Lee <joseph.lee22590@gmail.com>\n"
+"Language-Team: NVDA Korean users and translations forum <joseph."
+"lee22590@gmail.com, nvda-korean@freelists.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Portuguese\n"
-"X-Poedit-Country: BRAZIL\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: e:\\NVDA\n"
-"X-Poedit-SearchPath-0: source\n"
+"X-Poedit-Language: Korean\n"
+"X-Poedit-Country: UNITED STATES\n"
 
 #: globalCommands.py:849
 #, python-format
 msgid " and currently loaded module is %s"
-msgstr " e o módulo atualmente carregado é %s"
+msgstr " and currently loaded module is %s"
 
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
 #: speech.py:439
 #, python-format
 msgid "%d characters"
-msgstr "%d caracteres"
+msgstr "글자수: %d"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
 #: globalCommands.py:834
 #, python-format
 msgid "%d hours and %d minutes remaining"
-msgstr "%d horas e %d minutos restantes"
+msgstr "%d시간 %d분 남음"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #: globalCommands.py:830 NVDAObjects/behaviors.py:54
 #, python-format
 msgid "%d percent"
-msgstr "%d porcento"
+msgstr "%d 퍼센트"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 #: NVDAObjects/window/excel.py:246
 #, python-format
 msgid "%s %s through %s %s"
-msgstr "%s %s through %s %s"
+msgstr "%s %s 에서 %s %s"
 
 #: globalCommands.py:306 globalCommands.py:750
 #, python-format
 msgid "%s copied to clipboard"
-msgstr "%s copiado para área de transferência"
+msgstr "%s 클립보드에 복사됨"
 
 #: mouseHandler.py:136
 #, python-format
 msgid "%s cursor"
-msgstr "cursor %s"
+msgstr "%s 커서"
 
 #: brailleDisplayDrivers/hims/__init__.py:134
 #, python-format
 msgid "%s device found"
-msgstr "%s dispositivo encontrado"
+msgstr "%s 디스플레이 검색됨"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
 #: braille.py:549
 #, python-format
 msgid "%s end"
-msgstr "fim de %s"
+msgstr "%s 끝"
 
 #: NVDAObjects/IAccessible/sysTreeView32.py:202
 #, python-format
 msgid "%s items"
-msgstr "%s itens"
+msgstr "%s 항목"
 
 #: virtualBuffers/__init__.py:228 virtualBuffers/__init__.py:236
 #, python-format
 msgid "%s landmark"
-msgstr "marca %s"
+msgstr "%s 랜드마크"
 
+# The string identifier does not distinguish between total number of items versus the position of the current item. Used "/" between the strings e.g. 1/2 would mean 1 of 2. Frequently used in Braille Sense firmware.
 #: braille.py:442 speech.py:805
 #, python-format
 msgid "%s of %s"
-msgstr "%s de %s"
+msgstr "%s/%s"
 
 #: config/__init__.py:38
 #, python-format
 msgid "%s: %s, defaulting to %s"
-msgstr "%s: %s, vou assumir valor padrão %s"
+msgstr ""
 
 #: gui/addonGui.py:34
 msgid "&About add-on..."
-msgstr "&Sobre o complemento..."
+msgstr "추가 기능 정보 (&A)..."
 
 #: synthDrivers/newfon.py:179
 msgid "&Acceleration"
-msgstr "A&celeração"
+msgstr ""
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:302
 msgid "&Activate"
-msgstr "&Ativar"
+msgstr "바로가기 (&A)"
 
 #: gui/settingsDialogs.py:1091
 msgid "&Add"
-msgstr "&Adicionar"
+msgstr "추가 (&A)"
 
 #: gui/settingsDialogs.py:161
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "Iniciar o NVDA &automaticamente após o logon no Windows"
+msgstr "Windows 로그인 후 NVDA 자동 실행"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 #: gui/settingsDialogs.py:478
 msgid "&Beep for capitals"
-msgstr "&Bipar em maiúsculas"
+msgstr "경고음으로 대문자 알림 (&B)"
 
 #: gui/__init__.py:292
 msgid "&Browse mode..."
-msgstr "Modo d&e navegação..."
+msgstr "브라우저 모드 (&B)..."
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
 #: updateCheck.py:205 gui/addonGui.py:48
 msgid "&Close"
-msgstr "&Fechar"
+msgstr "닫기 (&C)"
 
 #: gui/settingsDialogs.py:1048
 msgid "&Comment"
-msgstr "&Comentário"
+msgstr "설명 (&C)"
 
 #. Translators: The label of a button to continue with the operation.
 #: gui/installerGui.py:113 gui/installerGui.py:162
 msgid "&Continue"
-msgstr "&Continuar"
+msgstr "계속 (&C)"
 
 #: gui/__init__.py:562
 msgid "&Continue running"
-msgstr "&Continuar usando"
+msgstr ""
 
 #: gui/__init__.py:298
 msgid "&Default dictionary..."
-msgstr "&Padrão..."
+msgstr "기본 발음 사전 (&D)..."
 
 #: gui/settingsDialogs.py:1075
 msgid "&Dictionary entries"
-msgstr "Entradas do &dicionário"
+msgstr "발음 사전 단어 목록 (&D)"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
 #: updateCheck.py:389
 msgid "&Donate"
-msgstr "&Doar"
+msgstr "후원(&D)"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
 #: updateCheck.py:409
 msgid "&Done"
-msgstr "&Pronto"
+msgstr "후원 마침 (&D)"
 
 #. Translators: The label of a button to download an NVDA update.
 #: updateCheck.py:191
 msgid "&Download update"
-msgstr "&Baixar atualização"
+msgstr "업데이트 받기 (&D)"
 
 #: gui/settingsDialogs.py:1094
 msgid "&Edit"
-msgstr "&Editar"
+msgstr "수정 (&E)"
 
+# Translation: "Find from elements list".
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:292
 msgid "&Filter by:"
-msgstr "&Filtrar por:"
+msgstr "특정 구성요소 이름 검색"
 
 #: gui/__init__.py:276
 msgid "&General settings..."
-msgstr "Opções &gerais..."
+msgstr "일반 설정 (&G)..."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:264
 msgid "&Headings"
-msgstr "Cabeçal&hos"
+msgstr "헤딩"
 
 #: gui/__init__.py:355
 msgid "&Help"
-msgstr "A&juda"
+msgstr "도움말 (&H)"
 
 #: synthDriverHandler.py:223
 msgid "&Inflection"
-msgstr "&Inflecção"
+msgstr "억양 (&I)"
 
 #: gui/__init__.py:554
 msgid "&Install NVDA on this computer"
-msgstr "&Instalar o NVDA neste computador"
+msgstr "컴퓨터에 NVDA 설치"
 
 #: gui/__init__.py:326
 msgid "&Install NVDA..."
-msgstr "&Instalar o NVDA..."
+msgstr "&NVDA 설치 (&I)..."
 
 #: gui/addonGui.py:38
 msgid "&Install..."
-msgstr "&Instalar..."
+msgstr "&설치..."
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:571
 msgid "&Keyboard layout:"
-msgstr "&leiaute de teclado:"
+msgstr "키보드 배열 (&K)"
 
 #: gui/__init__.py:284
 msgid "&Keyboard settings..."
-msgstr "Opções de &teclado..."
+msgstr "키보드 설정 (&K)..."
 
 #: synthDriverHandler.py:196
 msgid "&Language"
-msgstr "I&dioma"
+msgstr "언어 (&L)"
 
 #: gui/settingsDialogs.py:123
 msgid "&Language (requires restart to fully take effect):"
-msgstr "Idioma (só é a&lterado ao reiniciar):"
+msgstr "사용 언어 (언어 변경은 NVDA를 다시 실행하면 적용됩니다) (&L):"
 
 #: gui/settingsDialogs.py:1300
 msgid "&Level"
-msgstr "&Grau"
+msgstr ""
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
 #: gui/settingsDialogs.py:835
 msgid "&Maximum number of characters on one line"
-msgstr "Má&ximo de caracteres numa linha"
+msgstr "&줄 단 최대 글자 수"
 
 #: gui/__init__.py:286
 msgid "&Mouse settings..."
-msgstr "Opções de &mouse..."
+msgstr "마우스 설정 (&M)..."
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:307
 msgid "&Move to"
-msgstr "&Mover para"
+msgstr "커서 이동 (&M)"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
 #: updateCheck.py:394
 msgid "&Not now"
-msgstr "Agora &não"
+msgstr "지금은 아니요 (&N)"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
 #: gui/settingsDialogs.py:842
 msgid "&Number of lines per page"
-msgstr "&Linhas por página"
+msgstr "&페이지당 줄 수"
 
+# Object Presentation may mean a different thing in Korean. The above translation means "screen object output," as the dialog is concerned about announcing various objects such as tool tips and such.
 #: gui/__init__.py:290
 msgid "&Object presentation..."
-msgstr "Apresentação de &objetos..."
+msgstr "화면 객체 표시 설정 (&O)..."
 
 #: gui/settingsDialogs.py:1042
 msgid "&Pattern"
-msgstr "&Original"
+msgstr "기존값 (&P)"
 
 #: synthDriverHandler.py:218
 msgid "&Pitch"
-msgstr "&tom"
+msgstr "음성 높이 (&P)"
 
 #: gui/__init__.py:308
 msgid "&Preferences"
-msgstr "&Preferências"
+msgstr "설정 (&P)"
 
 #: gui/__init__.py:306
 msgid "&Punctuation/symbol pronunciation..."
-msgstr "&Pronúncia de pontuação e sinais..."
+msgstr "구두점/기호 발음 설정 (&P)..."
 
 #: synthDriverHandler.py:210
 msgid "&Rate"
-msgstr "v&elocidade"
+msgstr "음성 속도 (&R)"
 
 #: gui/addonGui.py:41 gui/settingsDialogs.py:1097
 msgid "&Remove"
-msgstr "&Remover"
+msgstr "삭제 (&R)"
 
 #: gui/settingsDialogs.py:1045 gui/settingsDialogs.py:1294
 msgid "&Replacement"
-msgstr "&Substituto"
+msgstr "변환값 (&R)"
 
 #: gui/__init__.py:357
 msgid "&Revert to saved configuration"
-msgstr "&Voltar à configuração salva"
+msgstr "저장된 환경으로 환원 (&R)"
 
 #: gui/__init__.py:360
 msgid "&Save configuration"
-msgstr "&Salvar configuração"
+msgstr "환경 저장 (&S)"
 
 #: gui/settingsDialogs.py:139
 msgid "&Save configuration on exit"
-msgstr "&Salvar configuração ao sair"
+msgstr "NVDA 종료시 환경 저장 (&S)"
 
 #: gui/settingsDialogs.py:1279
 msgid "&Symbols"
-msgstr "&Sinais"
+msgstr "기호 (&S)"
 
 #: gui/__init__.py:278
 msgid "&Synthesizer..."
-msgstr "&Sintetizador..."
+msgstr "음성 엔진 (&S)..."
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
 #: gui/settingsDialogs.py:270
 msgid "&Synthesizer:"
-msgstr "&Sintetizador:"
+msgstr "음성 엔진 (&S):"
 
 #: gui/__init__.py:302
 msgid "&Temporary dictionary..."
-msgstr "Temporário..."
+msgstr "임시 발음사전 (&T)..."
 
 #: synthDriverHandler.py:201
 msgid "&Voice"
-msgstr "&Voz"
+msgstr "보이스 (&V)"
 
 #: gui/__init__.py:300
 msgid "&Voice dictionary..."
-msgstr "&Voz..."
+msgstr "보이스 발음사전 (&V)..."
 
 #: gui/__init__.py:280
 msgid "&Voice settings..."
-msgstr "Opções de &voz..."
+msgstr "보이스 설정 (&V)..."
 
 #: gui/settingsDialogs.py:144
 msgid "&Warn before exiting NVDA"
-msgstr "aler&tar antes de encerrar o NVDA"
+msgstr "NVDA 종료전 경고 알림 (&W)"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
 #: braille.py:261
@@ -375,27 +378,22 @@ msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
 msgstr ""
-"Diálogo onde pode mexer no dicionário padrão adicionando entradas à lista"
 
 #: gui/__init__.py:302
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
 msgstr ""
-"Diálogo onde pode mexer no dicionário temporário adicionando entradas à "
-"caixa de edição"
 
 #: gui/__init__.py:300
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
 msgstr ""
-"Diálogo onde pode mexer no dicionário específico da voz adicionando entradas "
-"à lista"
 
 #: versionInfo.py:40
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr "Leitor de telas livre e aberto para o Microsoft Windows"
+msgstr ""
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui/installerGui.py:88
@@ -403,49 +401,48 @@ msgid ""
 "A previous copy of NVDA has been found on your system. This copy will be "
 "updated."
 msgstr ""
-"Foi encontrada no sistema uma instalação anterior do NVDA; essa instalação "
-"será atualizada."
+"시스템에 NVDA 이전 버전이 설치되어 있습니다. 설치한 버전을 업데이트합니다."
 
 #: globalCommands.py:831
 msgid "AC power on"
-msgstr "Energia AC ligada"
+msgstr "전원 켜짐"
 
 #. Translators: The name of a braille display.
 #: brailleDisplayDrivers/alvaBC6.py:45
 msgid "ALVA BC640/680 series"
-msgstr "ALVA BC640/680 series"
+msgstr "ALVA BC640/680"
 
 #: gui/__init__.py:211 gui/__init__.py:353
 msgid "About NVDA"
-msgstr "Sobre o NVDA"
+msgstr "NVDA 정보"
 
 #: gui/__init__.py:353
 msgid "About..."
-msgstr "Sobre..."
+msgstr "NVDA 정보 (&A)..."
 
 #: globalCommands.py:901
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Ativa o terminal Python do NVDA, útil sobretudo para desenvolvimento"
+msgstr "NVDA 개발에 유용한 NVDA 파이턴 개발 컨솔을 엽니다"
 
 #. Translators: This is the label for the add dictionary entry dialog.
 #: gui/settingsDialogs.py:1121
 msgid "Add Dictionary Entry"
-msgstr "Adicionar Entrada de Dicionário"
+msgstr "발음사전 항목 추가"
 
 #. Translators: title for the Addon Information dialog
 #: gui/addonGui.py:186
 msgid "Add-on Information"
-msgstr "Informações do complemento"
+msgstr "추가 기능 정보"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #: gui/addonGui.py:80
 msgid "Add-on Installation"
-msgstr "Instalação de complemento"
+msgstr "추가 기능 설치"
 
 #. Translators: The title of the Addons Dialog
 #: gui/addonGui.py:17
 msgid "Add-ons Manager"
-msgstr "Gestor de complementos"
+msgstr "추가 기능 관리자"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed. 
 #: gui/addonGui.py:165
@@ -453,33 +450,33 @@ msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
 msgstr ""
-"Foram adicionados ou removidos complementos. Você tem que reiniciar o NVDA "
-"para que as alterações tenham efeito. Quer reiniciar agora?"
+"추가 기능들이 설치되었거나 삭제되었습니다. 변경된 사항을 적용하려면 NVDA를 다"
+"시 시작해야 합니다. NVDA를 다시 시작하시겠습니까?"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:909
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Anunciar mudanças de formato após cursor (pode causar lentidão)"
+msgstr "커서 이동시 서식 변경 알림 (속도 저하 가능성 있음)"
 
 #: globalCommands.py:128
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
 msgstr ""
-"Anuncia o texto selecionado em campos de edição e documentos. Se não houver "
-"seleção alguma ele diz isso."
+"편집 컨트럴과 문서에서 현재 선택한 내용을 읽어 줍니다. 만약 선택한 내용이 없"
+"으면 그렇다고 알려 줍니다."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:36
 msgid "Answer to:"
-msgstr "Responder para:"
+msgstr "Answer to:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:29
 msgid "Arabic grade 1"
-msgstr "Árabe grau 1"
+msgstr "아랍어 1종"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui/addonGui.py:78
@@ -489,147 +486,147 @@ msgid ""
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"Tem certeza que quer instalar este complemento? Instale complementos somente "
-"de fontes confiáveis.\n"
-"Complemento: {summary} {version}\n"
-"Autor: {author}"
+"NVDA 추가 기능을 설치하시겠습니까? 사용자가 신뢰하는 추가 기능 설치를 권장합"
+"니다.\n"
+"추가 기능: {summary} {version}\n"
+"제공자: {author}"
 
 #: gui/__init__.py:170
 msgid "Are you sure you want to quit NVDA?"
-msgstr "Tem certeza que quer sair do NVDA?"
+msgstr "NVDA를 종료하시겠습니까?"
 
 #: gui/addonGui.py:118
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "Tem certeza que deseja remover do NVDA o complemento selecionado?"
+msgstr "NVDA 추가 기능을 삭제하시겠습니까?"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
 #: appModules/msimn.py:20
 msgid "Attachments"
-msgstr "anexos"
+msgstr "첨부 파일"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 #: gui/settingsDialogs.py:874
 msgid "Audio indication of focus and browse modes"
-msgstr "Indicação sonora de mudança entre modo de foco e de navegação"
+msgstr "포커스와 탐색 모드 변경시 경고음 재생"
 
 #: gui/addonGui.py:29
 msgid "Author"
-msgstr "Autor"
+msgstr "저자"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 #: gui/settingsDialogs.py:854
 msgid "Automatic &Say All on page load"
-msgstr "&Leitura contínua automática ao carregar a página"
+msgstr "페이지 열리면 자동으로 읽기 (&S)"
 
 #. Translators: Automatic comments is the name of the poedit 
 #. window that displays comments extracted from code.
 #: appModules/poedit.py:119
 msgid "Automatic comments:"
-msgstr "Comentários automáticos:"
+msgstr "자동 주석"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 #: gui/settingsDialogs.py:453
 msgid "Automatic dialect switching (when supported)"
-msgstr "Alternância Automática de dialeto quando suportado"
+msgstr "음성 엔진 지원시 자동으로 종속어 변경"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 #: gui/settingsDialogs.py:869
 msgid "Automatic focus mode for caret movement"
-msgstr "Modo de foco automático quando o cursor da aplicação muda"
+msgstr "케럿 움직일때 자동으로 포커스 모드로 전환"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 #: gui/settingsDialogs.py:864
 msgid "Automatic focus mode for focus changes"
-msgstr "Modo de foco automático quando o foco muda"
+msgstr "포커스 움직일때 자동으로 포커스 모드로 전환"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 #: gui/settingsDialogs.py:448
 msgid "Automatic language switching (when supported)"
-msgstr "Alternância automática de idioma quando suportado"
+msgstr "음성 엔진 지원시 언어 자동 변경"
 
 #. Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
 #: gui/settingsDialogs.py:178
 msgid "Automatically check for &updates to NVDA"
-msgstr "Procurar &atualizações do NVDA automaticamente"
+msgstr "NVDA 업데이트 자동 확인"
 
 #: gui/settingsDialogs.py:1235
 msgid "Avoid splitting &words when possible"
-msgstr "&Quando possível, não quebrar palavras"
+msgstr "가능하면 단어 끊지않고 출력"
 
 #: gui/__init__.py:282
 msgid "B&raille settings..."
-msgstr "Opções de &braile..."
+msgstr "점자 출력 설정 (&R)..."
 
 #. Translators: This is presented in outlook or live mail, email blind carbon copy
 #: appModules/msimn.py:44
 msgid "BCC:"
-msgstr "CCO:"
+msgstr "BCC:"
 
 #: config/__init__.py:23
 msgid "Badly formed configuration file"
-msgstr "Erro de sintaxe no arquivo de configuração"
+msgstr "환경 파일 손상됨"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers/baum.py:89
 msgid "Baum/HumanWare/APH braille displays"
-msgstr "Linhas braile Baum/HumanWare/APH"
+msgstr "Baum/HumanWare/APH 디스플레이"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: gui/settingsDialogs.py:747
 msgid "Beep"
-msgstr "Bipar"
+msgstr "경고음"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:612
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Apita se digitar letras minúsculas com caps lock ligado"
+msgstr "caps lock이 켜져 있을때 소문자 입력시 경고음 출력"
 
 #: gui/settingsDialogs.py:1171
 msgid "Braille &display:"
-msgstr "&Linha braile:"
+msgstr "점자 디스플레이"
 
 #: gui/settingsDialogs.py:1245
 msgid "Braille Display Error"
-msgstr "Erro na Linha Braile"
+msgstr "점자 출력 오류"
 
 #. Translators: This is the label for the braille settings dialog.
 #: gui/settingsDialogs.py:1167
 msgid "Braille Settings"
-msgstr "Opções de Braile"
+msgstr "점자 출력 설정"
 
 #: globalCommands.py:910
 #, python-format
 msgid "Braille tethered to %s"
-msgstr "Braile vinvulado a %s"
+msgstr "점자와 %s 커서 연계됨"
 
 #: gui/settingsDialogs.py:1218
 msgid "Braille tethered to:"
-msgstr "Braile vinculado a:"
+msgstr "점자 연계 커서"
 
 #. Translators: This is the label for the browse mode settings dialog.
 #: gui/settingsDialogs.py:830
 msgid "Browse Mode"
-msgstr "Modo de navegação"
+msgstr "브라우저 모드"
 
 #. Translators: The label of a button to browse for a directory.
 #: gui/installerGui.py:149
 msgid "Browse..."
-msgstr "Procurar..."
+msgstr "파일 탐색..."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:35
 msgid "Bulgarian 8 dot computer braille"
-msgstr "Búlgaro, computador braile de 8 pontos"
+msgstr "불가리아어 8종 컴퓨터 점자"
 
 #. Translators: This is presented in outlook or live mail, email carbon copy
 #: appModules/msimn.py:26
@@ -638,166 +635,164 @@ msgstr "CC:"
 
 #: gui/__init__.py:138
 msgid "Cannot save configuration - NVDA in secure mode"
-msgstr "Impossível salvar configuração; NVDA em modo seguro"
+msgstr "NVDA 보안모드로 인해 환경 파일을 저장할 수 없습니다"
 
 #: gui/settingsDialogs.py:466
 msgid "Capital pitch change percentage"
-msgstr "Percentagem para mudança de tom em maiúsculas"
+msgstr "대문자 음성 높이 퍼센트"
 
 #: gui/settingsDialogs.py:1051
 msgid "Case &sensitive"
-msgstr "distinguir &maiúsculas de minúsculas"
+msgstr "대소문자 구별 (&S)"
 
 #: gui/__init__.py:286
 msgid "Change reporting of mouse shape and object under mouse"
-msgstr "Altera o anúncio do formato do mouse e objeto sob este"
+msgstr "마우스 형태 읽기 및 마우스가 있는 객체 읽기를 설정합니다."
 
 #: gui/__init__.py:290
 msgid "Change reporting of objects"
-msgstr "Alterar leitura de objetos"
+msgstr "화면 객체 표시 출력을 설정합니다."
 
 #: gui/__init__.py:294
 msgid "Change settings of document properties"
-msgstr "alterar opções para propriedades de documentos"
+msgstr "문서 속성 출력을 설정합니다."
 
 #: gui/settingsDialogs.py:1292
 msgid "Change symbol"
-msgstr "Alterar sinal"
+msgstr ""
 
 #: gui/__init__.py:278
 msgid "Change the synthesizer to be used"
-msgstr "Alterar o sintetizador a usar"
+msgstr "사용하고자 하는 음성 엔진을 선택합니다."
 
 #: gui/__init__.py:292
 msgid "Change virtual buffers specific settings"
-msgstr "alterar opções específicas aos exibidores virtuais"
+msgstr "가상 버퍼 출력에 대한 세부사항을 설정합니다."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 #: gui/__init__.py:351
 msgid "Check for update..."
-msgstr "Procurar atualização..."
+msgstr "업데이트 확인 (&C)..."
 
 #. Translators: The title of the dialog displayed while manually checking for an NVDA update.
 #: updateCheck.py:117
 msgid "Checking for Update"
-msgstr "Procurando Atualização"
+msgstr "업데이트 확인중"
 
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 #: updateCheck.py:119
 msgid "Checking for update"
-msgstr "Procurando atualização"
+msgstr "업데이트 확인중"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:188
 msgid "Chinese (Hong Kong, Cantonese)"
-msgstr "Chinês de Hong Kong, Cantonês"
+msgstr "중국어 (홍콩, 광동어)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:191
 msgid "Chinese (Taiwan, Mandarin)"
-msgstr "Chinesa de Taiwan, Mandarin"
+msgstr "중국어 (타이완, 북경어)"
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 #: gui/addonGui.py:60
 msgid "Choose Add-on Package File"
-msgstr "Escolher arquivo de pacote de complemento"
+msgstr "추가 기능 설치 파일 검색"
 
 #: gui/__init__.py:280
 msgid "Choose the voice, rate, pitch and volume to use"
-msgstr "Escolher a voz, velocidade, tom e volume a usar"
+msgstr "사용하고자 하는 음성, 속도, 높이 및 크기를 설정할 수 있습니다."
 
 #: globalCommands.py:85
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Clica uma vez com o botão esquerdo do mause na posição atual"
+msgstr "현재 마우스 위치에서 왼쪽 마우스 버튼을 한번 클릭합니다"
 
 #: globalCommands.py:91
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "Clica uma vez com o botão direito do mause na posição atual"
+msgstr "현재 마우스 위치에서 오른쪽 마우스 버튼을 한번 클릭합니다"
 
 #: gui/settingsDialogs.py:1078
 msgid "Comment"
-msgstr "Comentário"
+msgstr "설명"
 
 #: NVDAObjects/window/winword.py:82
 msgid "Comments"
-msgstr "Commentários"
+msgstr "Comments"
 
 #. Translators: 'comments:' is the name of the poedit window 
 #. that displays comments entered by the translator.
 #: appModules/poedit.py:127
 msgid "Comments:"
-msgstr "Commentários:"
+msgstr "주석"
 
 #: gui/__init__.py:508
 msgid "Configuration File Error"
-msgstr "Erro no Arquivo de Configuração"
+msgstr "환경파일 오류"
 
 #: gui/__init__.py:134
 msgid "Configuration applied"
-msgstr "Configuração aplicada"
+msgstr "환경 적용됨"
 
 #: gui/__init__.py:142
 msgid "Configuration saved"
-msgstr "Configuração salva"
+msgstr "환경 저장됨"
 
 #: gui/__init__.py:288
 msgid "Configure how and when the review cursor moves"
-msgstr "Configura como e quando o cursor de exploração se move"
+msgstr "리뷰 커서 이동 방식 및 이동 시점을 설정합니다."
 
 #: gui/__init__.py:284
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
-msgstr ""
-"configurar leiaute do teclado, leitura de caracteres, palavras ou teclas de "
-"comando digitados"
+msgstr "키보드 배열, 입력 글자, 단어, 기능키  읽기를 설정합니다."
 
 #. Translators: The progress message indicating that a connection is being established.
 #: updateCheck.py:254
 msgid "Connecting"
-msgstr "Conectando"
+msgstr "연결중"
 
 #: gui/__init__.py:344
 msgid "Contributors"
-msgstr "Colaboradores:"
+msgstr ""
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:104
 msgid "Copy &portable configuration to current user account"
-msgstr "Copiar configuração &portátil para a conta de usuário atual"
+msgstr "휴대용 버전 환경을 현재 사용자 개정에 복사 (&P)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 #: gui/installerGui.py:154
 msgid "Copy current &user configuration"
-msgstr "Copiar opções atuais do &usuário"
+msgstr "현재 사용자 환경 복사 (&U)"
 
 #. Translators: The title of the dialog presented while settings are being copied 
 #: gui/settingsDialogs.py:198
 msgid "Copying Settings"
-msgstr "Copiando opções"
+msgstr "설정 복사중"
 
 #: versionInfo.py:43
 msgid "Copyright (C) {years} NVDA Contributors"
-msgstr "Copyright (C) {years} Colaboradores do NVDA"
+msgstr "저작권 (C) {years} NVDA Contributors"
 
 #. Translators: this message is reported when NVDA is unable to find 
 #. the 'automatic comments' window in poedit.
 #: appModules/poedit.py:82
 msgid "Could not find automatic comments window."
-msgstr "Não consegui achar a janela de comentários automáticos."
+msgstr "자동 주석 윈도우 찾을 수 없음"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 #: appModules/poedit.py:103
 msgid "Could not find comment window."
-msgstr "Não consegui achar a janela de comentários."
+msgstr "주석 윈도우 찾을 수 없음"
 
 #: gui/settingsDialogs.py:1245
 #, python-format
 msgid "Could not load the %s display."
-msgstr "Não consegui carregar a linha braile %s."
+msgstr "%s 디스플레이 활성화 실패."
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -805,51 +800,49 @@ msgstr "Não consegui carregar a linha braile %s."
 #: gui/settingsDialogs.py:312
 #, python-format
 msgid "Could not load the %s synthesizer."
-msgstr "Não foi possível carregar o sintetizador %s."
+msgstr "%s 신티사이저 활설화 실패."
 
 #: gui/__init__.py:144
 msgid "Could not save configuration - probably read only file system"
-msgstr ""
-"Não foi possível salvar a configuração; provavelmente o sistema de arquivos "
-"é somente leitura"
+msgstr "황경 파일 저장 실패 - 일기 전용 파일시스템일 수 있음"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:100
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "Criar ícone na área de trabalho e tecla de atalho (control+alt+n)"
+msgstr "바탕 화면에 바로가기 아이콘 및 CTRL+Alt+N 실행키 만들기 (&D)"
 
 #: gui/__init__.py:558
 msgid "Create &portable copy"
-msgstr "Criar cópia &portátil"
+msgstr "휴대용 버전 만들기 (&P)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui/installerGui.py:137
 msgid "Create Portable NVDA"
-msgstr "Criar NVDA Portátil"
+msgstr "NVDA 휴대용 버전 만들기"
 
 #: gui/__init__.py:323
 msgid "Create Portable copy..."
-msgstr "Criar cópia portátil..."
+msgstr "휴대용 버전 만들기 (&C)..."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 #: gui/installerGui.py:207
 msgid "Creating Portable Copy"
-msgstr "Criando Cópia Portátil"
+msgstr "gbeodyd qjwjs todtjdwnd"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:116
 msgid "Croatian 8 dot computer braille"
-msgstr "Croata, computador braile de 8 pontos"
+msgstr "크로아티아어 8점 컴퓨터 점자"
 
 #: globalCommands.py:846
 #, python-format
 msgid "Currently running application is %s"
-msgstr "Aplicação atualmente executando é %s."
+msgstr "%s 실행중"
 
 #: gui/settingsDialogs.py:1202
 msgid "Cursor blink rate (ms)"
-msgstr "Velocidade de intermitência do cursor (milésimos)"
+msgstr "커서 깜박이 (ms) 시간 (&C)"
 
 #: gui/settingsDialogs.py:191
 msgid ""
@@ -857,176 +850,175 @@ msgid ""
 "to the system profile could be a security risk. Do you still wish to copy "
 "your settings?"
 msgstr ""
-"Foram detectados plug-ins pessoais em seu diretório de usuário; pode ser um "
-"risco de segurança copiá-los para o perfil de sistema; quer copiar suas "
-"opções mesmo assim?"
+"Custom plugins were detected in your user settings directory. Copying these "
+"to the system profile could be a security risk. Do you still wish to copy "
+"your settings?"
 
 #: globalCommands.py:218
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
-"Circula entre os graus de pontuação que determinam quais sinais são falados"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:44
 msgid "Czech grade 1"
-msgstr "Tcheco grau 1"
+msgstr "체코어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:47
 msgid "Danish grade 1"
-msgstr "Dinamarquês grau 1"
+msgstr "뎀마크어 1종"
 
 #. Translators: This is presented in outlook or live mail, date of email
 #: appModules/msimn.py:32
 msgid "Date:"
-msgstr "data:"
+msgstr "날짜: "
 
 #: globalCommands.py:154
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "Diminui a opção atualmente ativa no círculo das opções"
+msgstr "음성엔진 설정에서 현재 활성화된 설정값을 감소시킵니다."
 
 #: gui/__init__.py:157
 msgid "Default dictionary"
-msgstr "Dicionáriio padrão"
+msgstr "기본 음성 발음사전 (&D)"
 
 #: NVDAObjects/window/__init__.py:373
 msgid "Desktop"
-msgstr "Área de trabalho"
+msgstr "바탕 화면"
 
 #: appModules/calc.py:30
 msgid "Display"
-msgstr "Mostrar"
+msgstr ""
 
 #: appModules/miranda32.py:119 appModules/vipmud.py:34
 msgid "Displays one of the recent messages"
-msgstr "Exibe uma mensagem entre as recentes"
+msgstr ""
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:40
 msgid "Distribution:"
-msgstr "Distribuição:"
+msgstr "Distribution:"
 
 #: gui/__init__.py:294
 msgid "Document &formatting..."
-msgstr "&Formatação de documentos..."
+msgstr "문서 서식 알림 (&F)..."
 
 #. Translators: This is the label for the document formatting dialog.
 #: gui/settingsDialogs.py:904
 msgid "Document Formatting"
-msgstr "Formatação de documentos"
+msgstr "문서 서식"
 
 #: installer.py:158 installer.py:159
 msgid "Documentation"
-msgstr "Documentação"
+msgstr ""
 
 #: gui/__init__.py:364
 msgid "Donate"
-msgstr "Doar"
+msgstr "후원 (&D)"
 
 #. Translators: The label of a button to download and install an NVDA update.
 #: updateCheck.py:188
 msgid "Download and &install update"
-msgstr "Baixar e &instalar atualização"
+msgstr "업데이트 전송 및 설치"
 
 #. Translators: The progress message indicating that a download is in progress.
 #: updateCheck.py:331
 msgid "Downloading"
-msgstr "Baixando"
+msgstr "다운로드중"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 #: updateCheck.py:252
 msgid "Downloading Update"
-msgstr "Baixando Atualização"
+msgstr "업데이트를 다운로드하고 있습니다."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:131
 msgid "Dutch (Belgium) grade 1"
-msgstr "Holandês (Bélgica) grau 1"
+msgstr "네델란드어 (벨기에) 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:134
 msgid "Dutch (netherlands) grade 1"
-msgstr "Holandês (Holanda) grau 1"
+msgstr "네델란드어 (네델란드) 1종"
 
 #: gui/__init__.py:367 gui/__init__.py:566 gui/logViewer.py:34
 msgid "E&xit"
-msgstr "s&air"
+msgstr "종료 (&X)"
 
 #: gui/settingsDialogs.py:1197
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "E&xpandir para braile de computador a palavra sob o cursor"
+msgstr "커서 위치의 점자 단어 풀이 (&X)"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
 #: NVDAObjects/window/winword.py:413 NVDAObjects/window/winword.py:432
 msgid "Edge of table"
-msgstr "Beira da tabela"
+msgstr "테이블 가장자리"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 #: gui/settingsDialogs.py:1038
 msgid "Edit Dictionary Entry"
-msgstr "Editar entrada"
+msgstr "발음사전 항목 변경"
 
 #. Translators: The title of the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:274
 msgid "Elements List"
-msgstr "Lista de Elementos"
+msgstr "구성요소 목록"
 
 #: scriptHandler.py:33
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
-msgstr "Emula o pressionar de %s no teclado do sistema"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 #: gui/settingsDialogs.py:648
 msgid "Enable mouse &tracking"
-msgstr "Habilitar ras&treamento do mouse"
+msgstr "마우스 위치 추적 사용 (&T)"
 
 #: NVDAObjects/window/winword.py:83
 msgid "Endnotes"
-msgstr "Notas finais"
+msgstr "Endnotes"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:62
 msgid "English (U.K.) grade 1"
-msgstr "Inglês (Reino Unido) grau 1"
+msgstr "영어 (영국) 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:65
 msgid "English (U.K.) grade 2"
-msgstr "Inglês (Reino Unido) grau 2"
+msgstr "영어 (영국) 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:68
 msgid "English (U.S.) 6 dot computer braille"
-msgstr "Inglês (Estados Unidos), computador braile de 6 pontos"
+msgstr "영어 (미국) 6점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:71
 msgid "English (U.S.) 8 dot computer braille"
-msgstr "Inglês (Estados Unidos), computador braile de 8 pontos"
+msgstr "영어 (미국) 8점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:74
 msgid "English (U.S.) grade 1"
-msgstr "Inglês (Estados Unidos) grau 1"
+msgstr "영어 (미국) 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:77
 msgid "English (U.S.) grade 2"
-msgstr "Inglês (Estados Unidos) grau 2"
+msgstr "영어 (미국) 2종"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
@@ -1035,47 +1027,47 @@ msgstr "Inglês (Estados Unidos) grau 2"
 #: gui/installerGui.py:54 gui/installerGui.py:186 gui/installerGui.py:194
 #: gui/installerGui.py:225 gui/logViewer.py:74 gui/settingsDialogs.py:223
 msgid "Error"
-msgstr "Erro"
+msgstr "오류"
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 #: gui/settingsDialogs.py:211
 msgid "Error Copying"
-msgstr "Erro a copiar"
+msgstr ""
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #: updateCheck.py:126
 msgid "Error checking for update."
-msgstr "Erro a procurar atualização."
+msgstr "업데이트 확인 실패"
 
 #: gui/settingsDialogs.py:223
 msgid "Error copying NVDA user settings"
-msgstr "Erro a copiar as configurações de usuário do NVDA"
+msgstr "사용자 설정 복사 오류"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 #: updateCheck.py:350
 msgid "Error downloading update."
-msgstr "Erro ao baixar atualização."
+msgstr "업데이트 다운로드가 실패하였습니다."
 
 #: gui/settingsDialogs.py:234
 #, python-format
 msgid "Error in %s language file"
-msgstr "Erro no arquivo de idioma %s"
+msgstr "%s 언어 파일에 문제 있음"
 
 #. We can't present a message which isn't unicode, so use appName, not modName.
 #: appModuleHandler.py:143
 #, python-format
 msgid "Error in appModule %s"
-msgstr "Erro no módulo de aplicação %s"
+msgstr "응용모듈 %s에서 오류 발생"
 
 #: config/__init__.py:193
 #, python-format
 msgid "Error parsing configuration file: %s"
-msgstr "Erro a analizar arquivo de configuração: %s"
+msgstr "%s 환경 파일 분석 오류"
 
 #: gui/logViewer.py:74
 #, python-format
 msgid "Error saving log: %s"
-msgstr "Erro a salvar log: %s"
+msgstr "%s 로그 파일 저장 실패"
 
 #: config/__init__.py:200
 #, python-format
@@ -1083,43 +1075,43 @@ msgid ""
 "Errors in configuration file '%s':\n"
 "%s"
 msgstr ""
-"Erro no arquivo '%s':\n"
+"환경 파일 '%s'에 문제가 있습니다:\n"
 "%s"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:107
 msgid "Ethiopic grade 1"
-msgstr "etíope grau 1"
+msgstr "에티오피아어 1종"
 
 #: NVDAObjects/window/winword.py:84
 msgid "Even pages footer"
-msgstr "Rodapé de páginas pares"
+msgstr ""
 
 #: NVDAObjects/window/winword.py:85
 msgid "Even pages header"
-msgstr "Cabeçalho de páginas pares"
+msgstr ""
 
 #: gui/__init__.py:170 gui/__init__.py:367
 msgid "Exit NVDA"
-msgstr "encerrar o NVDA"
+msgstr "NVDA 종료"
 
 #: installer.py:157
 msgid "Explore NVDA user configuration directory"
-msgstr "Explorar diretório de opções do usuário"
+msgstr "NVDA 사용자 환경파일 폴더 검색"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
 #: gui/installerGui.py:224
 #, python-format
 msgid "Failed to create portable copy: %s"
-msgstr "Falha ao criar cópia portátil: %s"
+msgstr "휴대용 NVDA 버전 생성 실패: %s"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #: gui/addonGui.py:105
 #, python-format
 msgid "Failed to install add-on  from %s"
-msgstr "Falha a instalar complemento de %s"
+msgstr "%s 에서 추가 기능 설치 실패"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding. 
 #: gui/addonGui.py:72
@@ -1128,69 +1120,69 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"Falha a abrir arquivo de pacote de complemento em %s: arquivo faltando ou "
-"formato de arquivo inválido"
+"%s: 추가 기능 설치 파일 열기 실패 - 파일이 존재하지 않거나 파일 형식이 잘못되"
+"었습니다"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:32
 msgid "Farsi grade 1"
-msgstr "Persa grau 1"
+msgstr "Farsi 1종"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:14
 msgid "Fast forward"
-msgstr "Avanço rápido"
+msgstr "빨리감기"
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
 #: gui/installerGui.py:46 gui/installerGui.py:219
 msgid "File in Use"
-msgstr "Arquivo em uso"
+msgstr "파일 사용중"
 
 #: cursorManager.py:81
 msgid "Find"
-msgstr "Procurar"
+msgstr "찾기"
 
 #: cursorManager.py:99
 msgid "Find Error"
-msgstr "Falha de procura"
+msgstr "찾기 오류"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:86
 msgid "Finnish 8 dot computer braille"
-msgstr "Finlandês, computador braile de 8 pontos"
+msgstr "핀란드어 8점 컴퓨터 점자"
 
 #: NVDAObjects/window/winword.py:86
 msgid "First page footer"
-msgstr "Rodapé de primeira página"
+msgstr ""
 
 #: NVDAObjects/window/winword.py:87
 msgid "First page header"
-msgstr "Cabeçalho de primeira página"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 #: gui/settingsDialogs.py:713
 msgid "Follow &mouse cursor"
-msgstr "Acompanhar cursor do &mouse"
+msgstr "마우스 커서 따라가기 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 #: gui/settingsDialogs.py:708
 msgid "Follow System &Caret"
-msgstr "Acompanhar &Cursor do sistema"
+msgstr "시스템 케럿 따라가기 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 #: gui/settingsDialogs.py:703
 msgid "Follow system &focus"
-msgstr "Acompanhar &cursor do sistema"
+msgstr "시스템 포커스 따라가기 (&F)"
 
 #: NVDAObjects/window/winword.py:88
 msgid "Footnotes"
-msgstr "Notas de rodapé"
+msgstr "Footnotes"
 
 #: gui/settingsDialogs.py:255
 msgid ""
@@ -1198,309 +1190,305 @@ msgid ""
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
 "manually save and exit at a later time."
 msgstr ""
-"Para que o novo idioma seja carregado, a configuração tem de ser salva e o "
-"NVDA reiniciado. Pressione Enter para salvar e reiniciar, ou cancelar para "
-"fazê-lo manualmente depois."
+"새 언어를 적용하기 위해서는 현재 환경을 저장하고 NVDA를 다시 시작해야 합니"
+"다. 엔터를 눌러 환경을 저장하고 NVDA를 다시 시작하시거나 취소하고 수동으로 다"
+"시 시작해 주세요."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:34
 msgid "Forward to:"
-msgstr "Encaminhar para:"
+msgstr "Forward to:"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers/freedomScientific.py:91
 msgid "Freedom Scientific Focus/PAC Mate series"
-msgstr "Freedom Scientific Focus/série PAC Mate"
+msgstr "Freedom Scientific Focus/PAC Mate"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:89
 msgid "French (Canada) grade 1"
-msgstr "Francês (Canadá) grau 1"
+msgstr "프랑스어 (캐나다) 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:92
 msgid "French (Canada) grade 2"
-msgstr "Francês (Canadá) grau 2"
+msgstr "프랑스어 (캐나다) 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:95
 msgid "French (unified) 6 dot computer braille"
-msgstr "Francês (unificado), computador braile de 6 pontos"
+msgstr "프랑스어 (통합) 6점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:98
 msgid "French (unified) 8 dot computer braille"
-msgstr "Francês (unificado), computador braile de 8 pontos"
+msgstr "프랑스어 (통합) 8점 컴퓨터 점자 "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:101
 msgid "French (unified) Grade 2"
-msgstr "Francês (unificado) grau 2"
+msgstr "프랑스어 (통합) 2종"
 
 #. Translators: This is presented in outlook or live mail, email sender
 #: appModules/msimn.py:30 appModules/msimn.py:46
 msgid "From:"
-msgstr "de:"
+msgstr "보낸이: "
 
 #. Translators: This is the label for the general settings dialog.
 #: gui/settingsDialogs.py:113
 msgid "General Settings"
-msgstr "Opções gerais"
+msgstr "일반 설정"
 
 #: gui/__init__.py:276
 msgid "General settings"
-msgstr "Opções gerais"
+msgstr "일반 설정"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:50
 msgid "German 8 dot computer braille"
-msgstr "Alemã, braile de computador, 8 pontos"
+msgstr "독일어 8점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:53
 msgid "German grade 0"
-msgstr "Alemão grau 0"
+msgstr "독일어 0종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:56
 msgid "German grade 1"
-msgstr "Alemão grau 1"
+msgstr "독일어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:59
 msgid "German grade 2"
-msgstr "Alemão grau 2"
+msgstr "독일어 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:104
 msgid "Greek (Greece) grade 1"
-msgstr "Grego (Grécia) grau 1"
+msgstr "그리스어 (그리스) 1종"
 
+# The translation literally means "predict/guess the object position when position is not known".
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:777
 msgid "Guess object &position information when unavailable"
-msgstr "Deduzir &posição do objeto quando não disponível"
+msgstr "객체 위치 없을때 위치 예상하기 &P)"
 
 #: brailleDisplayDrivers/hims/__init__.py:109
 msgid "HIMS Braille Sense/Braille EDGE series"
-msgstr "HIMS Braille Sense/Braille EDGE series"
+msgstr "HIMS 한소네"
 
 #: brailleDisplayDrivers/syncBraille/__init__.py:72
 msgid "HIMS SyncBraille"
-msgstr "HIMS SyncBraille"
+msgstr "HIMS 싱크브레일"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers/handyTech.py:49
 msgid "Handy Tech braille displays"
-msgstr "Linhas braile Handy Tech"
+msgstr "Handy Tech 점자 디스플레이"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:110
 msgid "Hebrew 8 dot computer braille"
-msgstr "Hebreu, computador braile de 8 pontos"
+msgstr "히브리어 8점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:113
 msgid "Hindi grade 1"
-msgstr "hindiano grau 1"
+msgstr "인도어 1종"
 
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers/brailliantB.py:79
 msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant BI/B series"
+msgstr "HumanWare Brailliant BI/B"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:119
 msgid "Hungarian 8 dot computer braille"
-msgstr "Húngaro, computador braile de 8 pontos"
+msgstr "헝가리어 8점 컴퓨터 점자"
 
 #: gui/__init__.py:546
 msgid "I &agree"
-msgstr "C&oncordo"
+msgstr "동의함"
 
 #: controlTypes.py:314
 msgid "IFrame"
-msgstr "freime interna"
+msgstr "가상프레임"
 
 #: controlTypes.py:311
 msgid "IP address"
-msgstr "endereço ipê"
+msgstr "IP 주소"
 
 #: controlTypes.py:328
 msgid "ITALIC"
-msgstr "ITÁLICO"
+msgstr "이텔릭"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:122
 msgid "Icelandic 8 dot computer braille"
-msgstr "Islandês, braile de computador, 8 pontos"
+msgstr "아이슬란드어 8점 컴퓨터 점자"
 
 #: globalCommands.py:136
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
-msgstr ""
-"Se pressionada uma vez, anuncia a hora atual. Se pressionada duas vezes, "
-"anuncia a data atual"
+msgstr "한번 누르면 현재 시각을, 두번 누르면 현재 날짜를 알려줍니다."
 
 #: globalCommands.py:145
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "Aumenta a opção atualmente ativa no círculo das opções"
+msgstr "음성엔진 설정에서 현재 활성화된 설정값을 증가시킵니다."
 
 #. Translators: The title of the Install NVDA dialog.
 #: gui/installerGui.py:82
 msgid "Install NVDA"
-msgstr "Instalar NVDA"
+msgstr "NVDA 설치"
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
 #: updateCheck.py:360
 msgid "Install Update"
-msgstr "Instalar Atualização"
+msgstr "업데이트 설치"
 
 #. Translators: the label for the installed addons list in the addons manager.
 #: gui/addonGui.py:23
 msgid "Installed Add-ons"
-msgstr "Complementos instalados"
+msgstr "설치된 추가 기능"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
 #: gui/addonGui.py:93
 msgid "Installing Add-on"
-msgstr "Instalando complemento"
+msgstr "추가 기능 설치중"
 
 #. Translators: The title of the dialog presented while NVDA is being installed.
 #: gui/installerGui.py:25
 msgid "Installing NVDA"
-msgstr "Instalando o NVDA"
+msgstr "NVDA 설치중"
 
 #: gui/settingsDialogs.py:248
 msgid "Insufficient Privileges"
-msgstr "Privilégios insuficientes"
+msgstr "사용자 권한 부족"
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
 #: gui/installerGui.py:193
 #, python-format
 msgid "Invalid drive %s"
-msgstr "Disco inválido, %s"
+msgstr "%s 드라이브 사용 불가"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:125
 msgid "Italian grade 1"
-msgstr "Italiano grau 1"
+msgstr "이탈리아어 1종"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:42
 msgid "Key words:"
-msgstr "Palavras chave:"
+msgstr "Key words:"
 
 #: installer.py:158 gui/__init__.py:336
 msgid "Keyboard Commands Quick Reference"
-msgstr "Referência rápida de teclas de atalho"
+msgstr "키보드 핫키 목록"
 
 #. Translators: This is the label for the keyboard settings dialog.
 #: gui/settingsDialogs.py:565
 msgid "Keyboard Settings"
-msgstr "Opções de teclado"
+msgstr "키보드 설정"
 
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
 #: gui/settingsDialogs.py:577
 msgid "Keyboard layout"
-msgstr "leiaute de teclado"
+msgstr "키보드 배열"
 
 #: gui/settingsDialogs.py:148
 msgid "L&ogging level:"
-msgstr "&Grau de informações no log:"
+msgstr "실행 로그 레벨 (&O)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:267
 msgid "Lan&dmarks"
-msgstr "&Marcas"
+msgstr "랜드마크"
 
 #: gui/settingsDialogs.py:127
 msgid "Language"
-msgstr "Idioma"
+msgstr "언어"
 
 #: gui/settingsDialogs.py:256
 msgid "Language Configuration Change"
-msgstr "Mudança na configuração de idioma"
+msgstr "언어 변경"
 
 #: gui/settingsDialogs.py:234
 msgid "Language Error"
-msgstr "Erro no idioma"
+msgstr "언어 오류"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:128
 msgid "Latvian grade 1"
-msgstr "letão grau 1"
+msgstr "라트비아어 1종"
 
 #: gui/settingsDialogs.py:1283
 msgid "Level"
-msgstr "Grau"
+msgstr "레벨"
 
 #: gui/__init__.py:342
 msgid "License"
-msgstr "licença"
+msgstr "사용 약관 (&L)"
 
 #: gui/__init__.py:542
 msgid "License Agreement"
-msgstr "Acordo de Licença"
+msgstr "사용 약관 동의서"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:261
 msgid "Lin&ks"
-msgstr "Lin&ques"
+msgstr "링크"
 
 #: core.py:203
 msgid "Loading NVDA. Please wait..."
-msgstr "Carregando o NVDA; por favor aguarde..."
+msgstr "NVDA 실행 준비중, 잠시만 기다려 주십시요"
 
 #: virtualBuffers/__init__.py:624
 msgid "Loading document..."
-msgstr "Carregando documento..."
+msgstr "문서 여는중..."
 
 #: globalCommands.py:102
 msgid "Locks or unlocks the left mouse button"
-msgstr "Pressiona ou solta o botão esquerdo do mause"
+msgstr "왼쪽 마우스버튼을 클릭상태로 유지하거나 해제합니다."
 
 #: globalCommands.py:113
 msgid "Locks or unlocks the right mouse button"
-msgstr "Pressiona ou solta o botão direito do mause"
+msgstr "오른쪽 마우스를 클릭상태로 유지하거나 해제합니다."
 
 #: gui/logViewer.py:36
 msgid "Log"
-msgstr "Log"
+msgstr ""
 
 #: gui/settingsDialogs.py:151
 msgid "Log level"
-msgstr "grau de log"
+msgstr ""
 
 #: globalCommands.py:768
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
-"Registra informações úteis para desenvolvedores sobre o objeto de navegação "
-"atual e ativa o visualizador de logs para que as mesmas possam ser "
-"examinadas."
 
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers/lilli.py:44
@@ -1510,378 +1498,365 @@ msgstr "MDV Lilli"
 #. Translators: The label of a menu item to open the Add-ons Manager.
 #: gui/__init__.py:320
 msgid "Manage &add-ons"
-msgstr "Gerir &complementos"
+msgstr "추가 기능 관리 (&A)"
 
 #: globalCommands.py:930
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
 msgstr ""
-"Marca a posição atual do cursor de exploração como o início do texto a ser "
-"copiado"
 
+# The translation literally reads, "message alert display time". Borrowed from Braille Sense user guide.
 #: gui/settingsDialogs.py:1210
 msgid "Message timeout (sec)"
-msgstr "Tempo limite de mensagem (segundos)"
+msgstr "알림 메시지 출력 시간 "
 
 #. Translators: This is the label for the mouse settings dialog.
 #: gui/settingsDialogs.py:638
 msgid "Mouse Settings"
-msgstr "Opções de mouse"
+msgstr "마우스 설정"
 
 #: globalCommands.py:733
 msgid "Mouse tracking"
-msgstr "Captura de mause"
+msgstr "마우스 위치 추적"
 
 #: globalCommands.py:242
 msgid "Move navigator object to mouse"
-msgstr "Mover objeto de navegação para mause"
+msgstr "화면 탐색 객체를 마우스로 이동"
 
 #: globalCommands.py:273
 msgid ""
 "Moves navigator object to the object represented by the text at the position "
 "of the review cursor within flat review"
 msgstr ""
-"Move o navegador de objetos para o objeto representado pelo texto na posição "
-"do cursor de exploração dentro da exploração plana"
+"고정 리뷰 속에 있는 리뷰커서의 위치에서 텍스트에 의해 표상된 객체로 이동합니"
+"다."
 
 #. Translators: Description for the Move past end of container command in browse mode. 
 #: virtualBuffers/__init__.py:1415
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
-"Move para depois do fim do elemento pai, por exemplo a lista ou a tabela"
 
 #: globalCommands.py:972
 msgid "Moves the braille display to the next line"
-msgstr "Move a linha braile para a próxima linha"
+msgstr "점자 디스플레이를 다음 줄로 이동합니다. "
 
 #: globalCommands.py:967
 msgid "Moves the braille display to the previous line"
-msgstr "Move a linha braile para a linha anterior"
+msgstr "점자 디스플레이를 이전 줄로 이동합니다."
 
 #: globalCommands.py:624
 msgid "Moves the focus to the next closest document that contains the focus"
-msgstr "Move o foco para o documento mais próximo que possua foco"
+msgstr "포커스를 가장 가까운 다음 문서로 이동합니다."
 
 #: globalCommands.py:239
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "Move o ponteiro do mause para o objeto atual de navegação"
+msgstr "마우스 포인터를 현제 환면 탐색 객체로 이동합니다."
 
 #: globalCommands.py:414
 msgid "Moves the navigator object to the first object inside it"
-msgstr "Coloca como objeto de navegação o primeiro filho do atual"
+msgstr "화면 탐색 객체의 첫 하위객체로 이동합니다."
 
 #: globalCommands.py:386
 msgid "Moves the navigator object to the next object"
-msgstr "Coloca como objeto de navegação o próximo"
+msgstr "화면 탐색 객체를 다음 객체로 이동합니다."
 
 #: globalCommands.py:372
 msgid "Moves the navigator object to the object containing it"
-msgstr "Coloca como objeto de navegação o pai do atual"
+msgstr "화면 탐색 객체의 상위 갯체로 이동합니다."
 
 #: globalCommands.py:400
 msgid "Moves the navigator object to the previous object"
-msgstr "Coloca como objeto de navegação o anterior"
+msgstr "화면 탐색 객체를 이전 객체로 이동합니다."
 
 #: globalCommands.py:482
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
-msgstr ""
-"Move o cursor de exploração para a última linha do objeto atual de navegação "
-"e o fala"
+msgstr "리뷰커서를 현재 화면 탐색 객체의 맨 아래줄로 옮기고 그 줄을 읽습니다."
 
 #: globalCommands.py:526
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"Move o cursor de exploração para o primeiro caractere da linha onde está "
-"cituado dentro do objeto atual de navegação, e o fala"
+"리뷰커서가 위치한 현재 화면 탐색 객체의 줄 맨 첫글자로 리뷰커서를 옮기고 그 "
+"글자를 읽습니다."
 
 #: globalCommands.py:590
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"Move o cursor de exploração para o último caractere da linha onde está "
-"cituado dentro do objeto atual de navegação, e o fala"
+"리뷰커서가 위치한 현재 화면 탐색 객체의 줄의 맨 마지막 글자로 리뷰커서를 옮기"
+"고 그 글자를 읽습니다."
 
 #: globalCommands.py:579
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr ""
-"Move o cursor de exploração para o próximo caractere do objeto atual de "
-"navegação e o fala"
+"리뷰커서를 현재 화면 탐색 객체의 다음 글자로 옮기고 그 글자를 읽습니다."
 
 #: globalCommands.py:474
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
-msgstr ""
-"Move o cursor de exploração para a próxima linha do objeto atual de "
-"navegação e o fala"
+msgstr "리뷰커서를 현재 화면 탐색 객체의 다음줄로 옮기고 그 줄을 읽습니다."
 
 #: globalCommands.py:516
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
 msgstr ""
-"Move o cursor de exploração para a próxima palavra do objeto atual de "
-"navegação e o fala"
+"리뷰커서를 현재 화면 탐색 객체의 다음 단어로 옮기고 그 단어를 읽습니다."
 
 #: globalCommands.py:544
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
 msgstr ""
-"Move o cursor de exploração para o caractere anterior do objeto atual de "
-"navegação e o fala"
+"리뷰커서를 현재 화면 탐색 객체의 이전 글자로 옮기고 그 글자를 읽습니다."
 
 #: globalCommands.py:452
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
-msgstr ""
-"Move o cursor de exploração para a linha anterior do objeto atual de "
-"navegação e o fala"
+msgstr "리뷰커서를 현재 화면 탐색 객체의 이전줄로 옮기고 그 줄을 읽습니다."
 
 #: globalCommands.py:494
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
 msgstr ""
-"Move o cursor de exploração para a palavra anterior do objeto atual de "
-"navegação e o fala"
+"리뷰커서를 현재 화면 탐색 객체의 이전 단어로 옮기고 그 단어를 읽습니다."
 
 #: globalCommands.py:440
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
-msgstr ""
-"Move o cursor de exploração para a primeira linha do objeto atual de "
-"navegação e o fala"
+msgstr "리뷰커서를 현재 화면 탐색 객체의 맨 윗줄로 옮기고 그 줄을 읽어 줍니다."
 
 #: globalCommands.py:260
 msgid ""
 "Moves to flat review for the screen (or document if currently inside one) "
 "and positions the review cursor at the location of the current object"
 msgstr ""
-"Move para a revisão plana da tela (ou documento se estiver num) e posiciona "
-"o cursor de exploração no local do objeto atual"
 
 #: globalCommands.py:163
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr ""
-"Vai para a próxima opção disponível no círculo das opções de sintetizador"
+msgstr "음성엔진 설정값들 중에서 다음 사용가능한 설정값으로 이동합니다."
 
 #: globalCommands.py:172
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr ""
-"Vai para a próxima opção disponível no círculo das opções de sintetizador"
+msgstr "음성엔진 설정값들 중에서 이전 사용가능한 설정값으로 이동합니다."
 
 #. Translators: Description for the Move to start of container command in browse mode. 
 #: virtualBuffers/__init__.py:1401
 msgid "Moves to the start of the container element, such as a list or table"
-msgstr "Move para o início do elemento pai, por exemplo a lista ou a tabela"
+msgstr ""
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
 #: gui/addonGui.py:62
 msgid "NVDA Add-on Package (*.{ext})"
-msgstr "Pacote de complemento do NVDA (*.{ext})"
+msgstr "NVDA 추가 기능 페키지 (*.{ext})"
 
 #: gui/logViewer.py:17
 msgid "NVDA Log Viewer"
-msgstr "Visualizador do log do NVDA"
+msgstr "NVDA 로그 뷰어"
 
 #: pythonConsole.py:148
 msgid "NVDA Python Console"
-msgstr "Console Python do NVDA"
+msgstr ""
 
 #: speechViewer.py:13
 msgid "NVDA Speech Viewer"
-msgstr "Exibidor da Fala do NVDA"
+msgstr "NVDA 음성 출력 뷰어"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
 #: updateCheck.py:170
 msgid "NVDA Update"
-msgstr "Atualização do NVDA"
+msgstr "NVDA 업데이트"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 #: gui/installerGui.py:217
 msgid "NVDA is unable to remove or overwrite a file."
-msgstr "O NVDA não consegue remover ou sobrescrever um arquivo."
+msgstr "파일을 삭제하거나 덥어 싀울 수 없습니다"
 
 #: core.py:294
 msgid "NVDA started"
-msgstr "NVDA ativado"
+msgstr "NVDS 시작"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
 #: updateCheck.py:179
 msgid "NVDA version {version} is available."
-msgstr "Disponível versão {version} do NVDA."
+msgstr "NVDA {version} 버전이 준비되어 있습니다."
 
 #: installer.py:155 gui/__init__.py:340
 msgid "NVDA web site"
-msgstr "Página do NVDA na Internet"
+msgstr "NVDA 웹사이트"
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 #: appModules/msimn.py:24
 msgid "Newsgroup:"
-msgstr "Grupo de Notícias:"
+msgstr "자동 설명 없음"
 
 #. Translators: this message is reported when there are no 
 #. comments to be presented to the user in the automatic 
 #. comments window in poedit.
 #: appModules/poedit.py:78
 msgid "No automatic comments."
-msgstr "Sem comentários automáticos."
+msgstr "자동 주석 없음"
 
 #. Translators: Is used to indicate that braille support will be disabled.
 #: brailleDisplayDrivers/noBraille.py:14
 msgid "No braille"
-msgstr "sem braile"
+msgstr "점자 출력 끔"
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
 #. comments window in poedit.
 #: appModules/poedit.py:99
 msgid "No comment."
-msgstr "Sem comentário."
+msgstr "주석 없음"
 
+# In this case, no container means no higher level objects.
 #: globalCommands.py:371
 msgid "No containing object"
-msgstr "Sem objeto pai"
+msgstr "상위 객체 없음"
 
 #: globalCommands.py:424
 msgid "No default action"
-msgstr "Sem ação padrão"
+msgstr "기본 동작 없음"
 
 #: globalCommands.py:259
 msgid "No flat review for this object"
-msgstr "Sem revisão plana para este objeto"
+msgstr "이 객체에 대한 고정 리뷰가 없음"
 
 #: globalCommands.py:683
 msgid "No formatting information"
-msgstr "sem informações de formatação"
+msgstr "서식 정보 없음"
 
 #: globalCommands.py:317
 msgid "No location information for navigator object"
-msgstr "sem informações de local para o objeto de navegação"
+msgstr "화면 탐색 객체에 대한 위치 정보 없음"
 
 #: globalCommands.py:321
 msgid "No location information for screen"
-msgstr "sem informações de local para tela"
+msgstr "화면에 대한 위치정보 없음"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 #: appModules/miranda32.py:118 appModules/vipmud.py:33
 msgid "No message yet"
-msgstr "Nenhuma mensagem ainda"
+msgstr ""
 
+# Translation reads, "cannot find next screen object".
 #: globalCommands.py:385
 msgid "No next"
-msgstr "último"
+msgstr "다음 화면 객체 없음"
 
 #: globalCommands.py:272
 msgid "No object at flat review position"
-msgstr "Sem objeto na posição atual da exploração plana"
+msgstr "고정 리뷰 위치에 객체 없음"
 
+# It literally means no child or lower level object that the current object possesses.
 #: globalCommands.py:413
 msgid "No objects inside"
-msgstr "Sem objetos filhos"
+msgstr "하위 객체 없음"
 
+# Reads, "no previous screen object."
 #: globalCommands.py:399
 msgid "No previous"
-msgstr "primeiro"
+msgstr "이전 화면 객체 없음"
 
 #: globalCommands.py:141 globalCommands.py:150 globalCommands.py:159
 #: globalCommands.py:168
 msgid "No settings"
-msgstr "Sem configurações"
+msgstr "설정값 없음"
 
 #: synthDrivers/silence.py:13
 msgid "No speech"
-msgstr "sem fala"
+msgstr "음성 출력 끔"
 
 #: globalCommands.py:934
 msgid "No start marker set"
-msgstr "Sem marca de início"
+msgstr ""
 
 #: globalCommands.py:718
 msgid "No status line found"
-msgstr "Linha de status não achada"
+msgstr "표시줄을 찾을 수 없음"
 
 #: globalCommands.py:945
 msgid "No text to copy"
-msgstr "Sem texto a copiar"
+msgstr "복사할 문장 없음"
 
 #: appModules/foobar2000.py:44
 msgid "No track playing"
-msgstr "Nada tocando"
+msgstr "재생되는 트랙 없음"
 
+# Literally means, "no new update is availible."
 #. Translators: A message indicating that no update to NVDA is available.
 #: updateCheck.py:182
 msgid "No update available."
-msgstr "Nenhuma atualização disponível."
+msgstr "새로운 업데이트가 없습니다."
 
 #: versionInfo.py:32
 msgid "NonVisual Desktop Access"
-msgstr "acesso não visual ao ambiente de trabalho"
+msgstr "NonVisual Desktop Access"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:137
 msgid "Norwegian 8 dot computer braille"
-msgstr "Braile de computador norueguês, 8 pontos"
+msgstr "노르웨이어 8점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:140
 msgid "Norwegian grade 0"
-msgstr "Norueguês grau 0"
+msgstr "노르웨이어 0종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:143
 msgid "Norwegian grade 1"
-msgstr "Norueguês grau 1"
+msgstr "노르웨이어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:146
 msgid "Norwegian grade 2"
-msgstr "Norueguês grau 2"
+msgstr "노르웨이어 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:149
 msgid "Norwegian grade 3"
-msgstr "Norueguês grau 3"
+msgstr "노르웨이어 3종"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.) 
 #. But there is no container. 
 #: virtualBuffers/__init__.py:1394 virtualBuffers/__init__.py:1408
 msgid "Not in a container"
-msgstr "Não está num elemento que contenha outros"
+msgstr ""
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 #: virtualBuffers/__init__.py:1269
 msgid "Not in a table cell"
-msgstr "não está numa célula de tabela"
+msgstr ""
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
 #: NVDAObjects/window/winword.py:400 NVDAObjects/window/winword.py:419
 msgid "Not in table"
-msgstr "Não está em tabela"
+msgstr "테이블 아님"
 
 #. Translators: This is the label for the object presentation dialog.
 #: gui/settingsDialogs.py:734
 msgid "Object Presentation"
-msgstr "Apresentação de objetos"
+msgstr "화면 객체 표시 설정"
 
 #: globalCommands.py:327
 #, python-format
@@ -1890,18 +1865,15 @@ msgid ""
 "cent from top edge of screen, width is %.1f per cent of screen, height is "
 "%.1f per cent of screen"
 msgstr ""
-"Objeto posicionado a %.1f da margem esquerda da tela e %.1f porcento do "
-"topo; a largura corresponde a %.1f porcento da tela e a altura a %.1f "
-"porcento"
 
 #: gui/__init__.py:463
 msgid "Options"
-msgstr "Opções"
+msgstr "옵션"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:38
 msgid "Organisation:"
-msgstr "Organização"
+msgstr "Organisation:"
 
 #. Translators: This is the label for the select output
 #. device combo in the synthesizer dialog. Examples of
@@ -1909,409 +1881,402 @@ msgstr "Organização"
 #. headphones, etc.
 #: gui/settingsDialogs.py:289
 msgid "Output &device:"
-msgstr "&Dispositivo de saída:"
+msgstr "음성 출력 장치 (&D)"
 
 #: gui/addonGui.py:27
 msgid "Package"
-msgstr "Pacote"
+msgstr "페키지"
 
 #: globalCommands.py:840
 msgid "Pass next key through"
-msgstr "passar a próxima tecla"
+msgstr "기능키 무시"
 
 #: gui/settingsDialogs.py:1079
 msgid "Pattern"
-msgstr "Original"
+msgstr "기존값"
 
 #: globalCommands.py:432
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"Executa a ação padrão do objeto atual de navegação. Por exemplo: pressiona "
-"se for um botão."
+"현재화면 탐색 객체의 기본 동작을 수행합니다. (예: 만약 객체가 단추라면 그것"
+"을 누르게 됩니다.)"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:16
 msgid "Play"
-msgstr "Tocar"
+msgstr "재생"
 
 #. Translators: The title of the dialog requesting donations from users.
 #: updateCheck.py:380
 msgid "Please Donate"
-msgstr "Favor doar"
+msgstr "후원해 주세요"
 
 #: gui/__init__.py:153
 msgid "Please close the other NVDA settings dialog first"
-msgstr "Por favor feche primeiro a outra janela de opções do NVDA"
+msgstr "다른 NVDA 설정 대화상자를 닫아주세요"
 
 #. Translators: The message displayed to the user after NVDA is installed
 #. and the installed copy is about to be started.
 #: gui/installerGui.py:65
 msgid "Please press OK to start the installed copy."
-msgstr "Por favor pressione OK para iniciar a cópia instalada."
+msgstr "설치된 카피를 시작하려면 Ok를 누르세요."
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
 #: gui/installerGui.py:185
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "Por favor especifique o diretório onde criar a cópia portátil."
+msgstr "휴대용 버전을 저장할 폴더 경로를 선택하십시요"
 
 #. Translators: The message displayed while NVDA is being installed.
 #: gui/installerGui.py:29
 msgid "Please wait while NVDA is being installed"
-msgstr "Por favor aguarde enquanto se instala o NVDA"
+msgstr "NVDA를 설치하고 있습니다. 잠시만 기다려 주십시요."
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 #: gui/installerGui.py:209
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "Por favor aguarde enquanto é criada uma cópia portátil do NVDA."
+msgstr "NVDA 휴대용 버전을 생성하고 있습니다. 잠시만 기다려 주십시요."
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc) 
 #: gui/settingsDialogs.py:200
 msgid "Please wait while settings are copied to the system configuration."
-msgstr ""
-"Por favor aguarde enquanto se copiam as opções para a configuração do "
-"sistema."
+msgstr "사용자 설정을 시스템 환경에 복사하고 있습니다. 잠시만 기다려 주십시요."
 
 #. Translators: The message displayed while an addon is being installed.
 #: gui/addonGui.py:95
 msgid "Please wait while the add-on is being installed."
-msgstr "Por favor aguarde enquanto se instala o complemento."
+msgstr "추가 기능을 설치하고 있습니다. 잠시만 기다려 주십시요."
 
 #. Translators: The message displayed while NVDA is being updated.
 #: gui/installerGui.py:27
 msgid "Please wait while your previous installation of NVDA is being updated."
-msgstr "Por favor aguarde enquanto se atualiza a instalação anterior do NVDA."
+msgstr "NVDA를 업데이트하고 있습니다. 잠시만 기다려 주십시요."
 
 #: globalCommands.py:979
 msgid "Plugins reloaded"
-msgstr "Plug-ins recarregados"
+msgstr "Plugins reloaded"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:152
 msgid "Polish grade 1"
-msgstr "Polonês grau 1"
+msgstr "폴란드어 1종"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
 #: gui/installerGui.py:145
 msgid "Portable &directory:"
-msgstr "&Diretório portátil:"
+msgstr "휴대용 버전 설치 폴더 (&D)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:155
 msgid "Portuguese grade 1"
-msgstr "Português grau 1"
+msgstr "포르투갈어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:158
 msgid "Portuguese grade 2"
-msgstr "Português grau 2"
+msgstr "포르투갈어 2종"
 
 #: virtualBuffers/__init__.py:896
 msgid "Presents a list of links, headings or landmarks"
-msgstr "Exibe uma lista de linques, cabeçalhos ou marcas"
+msgstr "링크, 헤딩과 랜드마크 목록을 보여줍니다."
 
 #: globalCommands.py:358
 msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"Pressionada uma vez, coloca o foco do teclado no objeto de navegação; "
-"pressionada duas vezes, coloca o cursor do sistema na posição do cursor de "
-"exploração"
+"한번 누르면 키보드 포커스를 네비게이터 객체로 이동하고, 두번 누르면 시스템 캐"
+"럿을 리뷰 커서의 위치로 이동합니다."
 
 #: NVDAObjects/window/winword.py:89
 msgid "Primary footer"
-msgstr "Rodapé principal"
+msgstr ""
 
 #: NVDAObjects/window/winword.py:90
 msgid "Primary header"
-msgstr "Cabeçalho principal"
+msgstr ""
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:788
 msgid "Progress &bar output:"
-msgstr "&Barras de progresso:"
+msgstr "진행률 표시"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:793
 msgid "Progress bar output"
-msgstr "Comportamento em barras de progresso"
+msgstr "징행률 표시"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog.
 #: gui/settingsDialogs.py:459
 msgid "Punctuation/symbol &level:"
-msgstr "Grau de sinais de &pontuação:"
+msgstr "구두점/기호 출력 레벨 (&L)"
 
 #: gui/__init__.py:317
 msgid "Python console"
-msgstr "Console Python"
+msgstr "Python console"
 
 #: globalCommands.py:640
 msgid "Quits NVDA!"
-msgstr "Sai do NVDA"
+msgstr "NVDA를 종료합니다!"
 
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
 #: synthDrivers/espeak.py:26
 msgid "Rate boos&t"
-msgstr "Aumen&to especial de velocidade"
+msgstr ""
 
 #: gui/settingsDialogs.py:1231
 msgid "Read by &paragraph"
-msgstr "Ler por &parágrafo"
+msgstr "문단 단위로 점자 출력"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:20
 msgid "Record"
-msgstr "Gravar"
+msgstr "녹음"
 
 #: gui/logViewer.py:29
 msgid "Refresh\tF5"
-msgstr "Atualizar\tF5"
+msgstr ""
 
 #. If this buffer has already had focus once while loaded, this is a refresh.
 #: virtualBuffers/__init__.py:619
 msgid "Refreshed"
-msgstr "atualizado"
+msgstr "새로 고침"
 
 #: virtualBuffers/__init__.py:807
 msgid "Refreshes the document content"
-msgstr "Atualiza o conteúdo do documento"
+msgstr "문서 내용을 새로 고칩니다"
 
 #: gui/settingsDialogs.py:1082
 msgid "Regexp"
-msgstr "Expressão regular"
+msgstr "Regexp"
 
 #: gui/settingsDialogs.py:1053
 msgid "Regular &expression"
-msgstr "&Expressão regular"
+msgstr "정규 표현식"
 
 #: gui/__init__.py:328
 msgid "Reload plugins"
-msgstr "Recarregar plug-ins"
+msgstr ""
 
 #: globalCommands.py:980
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
-"Recarrega módulos de aplicação e plug-ins globais sem reiniciar o NVDA; pode "
-"ser útil a desenvolvedores"
 
 #. Translators: The label of a button to remind the user later about performing some action.
 #: updateCheck.py:199
 msgid "Remind me &later"
-msgstr "&Lembre-me depois"
+msgstr "나중에 알림"
 
 #: gui/addonGui.py:118
 msgid "Remove Add-on"
-msgstr "Remover complemento"
+msgstr "추가 기능 삭제"
 
 #: gui/settingsDialogs.py:1080 gui/settingsDialogs.py:1282
 msgid "Replacement"
-msgstr "Substituto"
+msgstr "변경값"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:929
 msgid "Report &alignment"
-msgstr "Anunciar &alinhamento"
+msgstr "문자 배치 알림 (&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:934
 msgid "Report &colors"
-msgstr "Anunciar &cores"
+msgstr "문자 색깔 알림 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:985
 msgid "Report &headings"
-msgstr "Anunciar &cabeçalhos"
+msgstr "헤딩 알림 (&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:762
 msgid "Report &help balloons"
-msgstr "Anunciar balões de aj&uda"
+msgstr "도움말 알림창 알림 (&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:954
 msgid "Report &line numbers"
-msgstr "Anunciar o número de cada &linha"
+msgstr "줄수 알림 (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:980
 msgid "Report &links"
-msgstr "Anunciar lin&ques"
+msgstr "링크 알릶 (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:949
 msgid "Report &pages"
-msgstr "Anunciar &páginas"
+msgstr "페이지 알림 (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 #: gui/settingsDialogs.py:669
 msgid "Report &role when mouse enters object"
-msgstr "Anunciar &tipo do objeto quando o mouse entra nele"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:965
 msgid "Report &tables"
-msgstr "Anunciar ta&belas"
+msgstr "테이블 알림 (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:757
 msgid "Report &tooltips"
-msgstr "Anunciar &dicas de ferramentas"
+msgstr "툴팁 알림 (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:804
 msgid "Report background progress bars"
-msgstr "Anunciar barras de progresso não visíveis"
+msgstr "배경에 있는 프로그레스바 알림"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:995
 msgid "Report block &quotes"
-msgstr "Anunciar blocos de cita&ção"
+msgstr "블럭퀕 알림 (&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:809
 msgid "Report dynamic &content changes"
-msgstr "Anunciar atualizações nos &conteúdos dinâmicos"
+msgstr "자동 변경 내용 알림 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:914
 msgid "Report font &name"
-msgstr "Anunciar nome d&a fonte"
+msgstr "글골 이름 알림 (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:919
 msgid "Report font &size"
-msgstr "Anunciar taman&ho da fonte"
+msgstr "글골 크기 알림 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:924
 msgid "Report font attri&butes"
-msgstr "Anunciar atri&butos da fonte"
+msgstr "글골 특성 알림 (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:1005
 msgid "Report fra&mes"
-msgstr "Anunciar frei&mes"
+msgstr "프레임 알림 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 #: gui/settingsDialogs.py:859
 msgid "Report l&ayout tables"
-msgstr "Anunciar tabelas de &leiaute"
+msgstr "구성 테이블 알림 (&L)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #. 
 #: gui/settingsDialogs.py:960
 msgid "Report l&ine indentation"
-msgstr "Anunciar indentação de l&inha"
+msgstr "줄 들여쓰기 알림 (&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:990
 msgid "Report l&ists"
-msgstr "Anunciar l&istas"
+msgstr "목록 알림 (&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:1000
 msgid "Report lan&dmarks"
-msgstr "Anunciar &marcas de seção"
+msgstr "랜드마크 알림 (&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 #: gui/settingsDialogs.py:643
 msgid "Report mouse &shape changes"
-msgstr "A&nunciar mudanças no formato do mouse"
+msgstr "마우스 모양 변경 알림 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:782
 msgid "Report object &descriptions"
-msgstr "anunciar &descrições dos objetos"
+msgstr "객체 설명 알림 (&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:772
 msgid "Report object &position information"
-msgstr "anunciar &Posição do objeto "
+msgstr "화면 객체 위치정보 알림 (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
 #: gui/settingsDialogs.py:767
 msgid "Report object shortcut &keys"
-msgstr "Anunciar te&clas de atalho dos objetos"
+msgstr "객체의 핫키 알림 (&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:944
 msgid "Report spelling errors"
-msgstr "Anunciar erros ortográficos"
+msgstr "철자 오류 알림"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:939
 msgid "Report st&yle"
-msgstr "Anunciar est&ilo"
+msgstr "글골 스타일 알림 (&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:975
 msgid "Report table cell c&oordinates"
-msgstr "Anunciar c&oordenadas de células em tabelas"
+msgstr "현재 테이블 셀의 좌표 알림 (&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:970
 msgid "Report table row/column h&eaders"
-msgstr "Anunciar os cab&eçalhos de linhas e colunas das tabelas"
+msgstr "테이블 행 및 열의 머릿말 알림 (&E)"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules/poedit.py:84
 msgid "Reports any comments in the automatic comments window"
-msgstr "Anuncia quaisquer comentários na janela de comentários automáticos."
+msgstr "자동 주석이 있을 경우 이를  읽어줍니다."
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules/poedit.py:105
 msgid "Reports any comments in the comments window"
-msgstr "Anuncia quaisquer comentários na janela de comentários."
+msgstr "만약 주석이 있을 경우 이를 읽어줍니다."
 
 #: globalCommands.py:687
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document"
-msgstr ""
-"Anuncia informações de formatação na posição atual do cursor de exploração "
-"num documento"
+msgstr "현재 리뷰 커서 위치의 서식 정보를 알려줍니다."
 
 #: globalCommands.py:561
 msgid ""
@@ -2320,18 +2285,17 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"Anuncia o caractere do objeto de navegação atual onde se encontra o cursor "
-"de exploração. Ao pressionar duas vezes, dá uma descrição ou um exemplo do "
-"caractere. Ao pressionar três vezes, anuncia o valor numérico decimal e "
-"hexadecimal do caractere"
+"리뷰커서가 위치한 현재 화면 탐색 객체의 글자를 읽습니다. 만약 이 키를 두번 누"
+"르면 그 글자의 ASCII값과 16진수의 값을 알 수 있습니다."
 
+# Translation reads, "pressing once will announce the current line under cursor; pressing twice will spell the text of the current line."
 #: globalCommands.py:79
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
 msgstr ""
-"Anuncia a linha sob o cursor da aplicação. Se pressionada duas vezes, "
-"soletra a linha atual"
+"한번 누르면 커서가 위치한 줄을 읽어주고, 두번 누르면 줄에 있는 문자열의 철자"
+"를 읽어줍니다."
 
 #: globalCommands.py:309
 msgid ""
@@ -2339,13 +2303,12 @@ msgid ""
 "and pressing three times Copies name and value of this  object to the "
 "clipboard"
 msgstr ""
-"Anuncia o objeto de navegação atual; pressionar duas vezes soletra a "
-"informação e três vezes copia o nome e o valor do objeto para a área de "
-"transferência"
+"현재 네비게이터 객체를 읽습니다. 두번 누르면 철자를 읽어 줍니다. 세번 누르면 "
+"객체의 이름과 값을 클립보드에 복사합니다."
 
 #: globalCommands.py:328
 msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Anuncia altura, largura e posição do objeto atual de navegação"
+msgstr "현재  화면 탑색 객체의 폭, 넓이, 위치를 읽어 줍니다."
 
 #: globalCommands.py:462
 msgid ""
@@ -2353,17 +2316,16 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"Anuncia a linha do objeto de navegação onde se encontra o cursor de "
-"exploração; se pressionada duas vezes, soletra a linha; Pressionada três "
-"vezes soletra a linha usando descrições de caracteres."
+"리뷰커서가 위치한 현재 화면 탐색 객체의 줄을 읽습니다. 이 키를 두번 누르면 "
+"이 줄을 한글자씩 읽게 됩니다. "
 
 #: appModules/foobar2000.py:50
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "Anuncia o tempo restante da faixa, caso haja alguma tocando"
+msgstr "만약 트랙이 재생되는 경우 현재 트랙의 남은 시간을 알려줍니다."
 
 #: globalCommands.py:925
 msgid "Reports the text on the Windows clipboard"
-msgstr "Anuncia o texto na área de transferência do Windows"
+msgstr "클립보드 내용을 알려줍니다"
 
 #: globalCommands.py:751
 msgid ""
@@ -2371,233 +2333,225 @@ msgid ""
 "pressed twice, spells the title. If pressed three times, copies the title to "
 "the clipboard"
 msgstr ""
-"Anuncia o título da aplicação atual ou janela em primeiro plano. Se "
-"pressionada duas vezes, soletra o título. Se pressionada três vezes, copia o "
-"título para a área de transferência"
+"한번 누르면 프로그램이나 활성화된 창의 제목을 알려주고, 두번 누르면 제목을 발"
+"음하고 세번 누르면 제목을 클립보드에 복사합니다"
 
 #: gui/__init__.py:357
 msgid "Reset all settings to saved state"
-msgstr "Restaurar configurações ao estado salvo"
+msgstr "이전 저장된 설정으로 환원합니다."
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed. 
 #: gui/addonGui.py:167
 msgid "Restart NVDA"
-msgstr "Reiniciar o NVDA"
+msgstr "NVDA 재시작"
 
 #: globalCommands.py:948
 msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
 msgstr ""
-"Pega o texto a partir da marca inicial já configurada até a posição atual do "
-"cursor de exploração (incluindo a mesma) e copia-o para a área de "
-"transferência"
 
 #: gui/__init__.py:288
 msgid "Review &cursor..."
-msgstr "&Cursor de exploração..."
+msgstr "리뷰 커서 (&C)..."
 
 #. Translators: This is the label for the review cursor settings dialog.
 #: gui/settingsDialogs.py:698
 msgid "Review Cursor Settings"
-msgstr "Opções do cursor de exploração"
+msgstr "리뷰 커서 설정"
 
 #: globalCommands.py:943
 msgid "Review selection copied to clipboard"
-msgstr "Seleção de exploração copiada para área de transferência"
+msgstr ""
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:12
 msgid "Rewind"
-msgstr "Voltar"
+msgstr "되감기"
 
 #: globalCommands.py:962
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr "Move o cursor para o objeto sob esta célula braile ou ativa o mesmo"
+msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:161
 msgid "Russian grade 1"
-msgstr "Russo, grau 1"
+msgstr "러시아어 1종"
 
 #: gui/logViewer.py:66
 msgid "Save As"
-msgstr "Salvar como"
+msgstr "다른 이름으로 저장"
 
 #: globalCommands.py:887
 msgid "Saves the current NVDA configuration"
-msgstr "Salva a configuração atual do NVDA"
+msgstr "현재 NVDA 황경을 저장합니다"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 #: gui/settingsDialogs.py:473
 msgid "Say &cap before capitals"
-msgstr "Dizer &cap antes de maiúsculas"
+msgstr "\"캑\"으로 대문자 알리기"
 
 #: globalCommands.py:952
 msgid "Scrolls the braille display back"
-msgstr "Rola a linha braile para trás"
+msgstr "점자 디스플레이를 뒤로 움직입니다."
 
 #: globalCommands.py:957
 msgid "Scrolls the braille display forward"
-msgstr "Rola a linha para frente"
+msgstr "점자 디스플레이를 앞으로 움직입니다."
 
 #: IAccessibleHandler.py:671
 msgid "Secure Desktop"
-msgstr "Área de trabalho segura"
+msgstr "보안 desktop"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 #: gui/installerGui.py:177
 msgid "Select portable  directory"
-msgstr "Escolha diretório portátil"
+msgstr "유재용 버전 설치 폴더를 선택하십시요"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:173
 msgid "Serbian grade 1"
-msgstr "sérvio grau 1"
+msgstr "세르비아어 1종"
 
 #: globalCommands.py:339
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Coloca como objeto de navegação aquele atualmente com foco e, se possível, "
-"coloca o cursor de exploração na posição do cursor real dentro desse objeto."
+"화면 탐색 객체를 현재 포커스로 이동하고, 가능하다면 리뷰커서를 그 속에 있는 "
+"캐럿의 위치로 이동합니다."
 
 #: globalCommands.py:246
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
-msgstr ""
-"Coloca como objeto de navegação aquele atualmente sob o ponteiro do mause e "
-"o fala"
+msgstr "화면 탐색 객체를 마우스 포인터에 있는 현재 객체로 옮기고 읽어 줍니다."
 
 #: brailleDisplayDrivers/handyTech.py:86
 msgid "Show the Handy Tech driver configuration window."
-msgstr "Mostra janela de configuração do controlador Handy Tech."
+msgstr ""
 
 #: gui/__init__.py:467
 msgid "Show this dialog when NVDA starts"
-msgstr "Mostrar esta janela ao iniciar o NVDA"
+msgstr "NVDA 실행때 이 창 띄우기"
 
 #: globalCommands.py:879
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr "Exibe a janela de opções de modo de navegação do NVDA"
+msgstr "NVDA 브라우저 모드 설정 대화상자를 보여줍니다."
 
 #: globalCommands.py:883
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr "Exibe a janela de opções para formatação de documentos no NVDA"
+msgstr "NVDA 문서 서식 설정 대화상자를 보여줍니다"
 
 #: globalCommands.py:855
 msgid "Shows the NVDA general settings dialog"
-msgstr "Exibe a janela de opções gerais do NVDA"
+msgstr "NVDA 일반 설정을 호보여줍니다"
 
 #: globalCommands.py:867
 msgid "Shows the NVDA keyboard settings dialog"
-msgstr "Exibe a janela de opções de teclado do NVDA"
+msgstr "NVDA 키보드 설정 대화상자를 보여줍니다"
 
 #: globalCommands.py:644
 msgid "Shows the NVDA menu"
-msgstr "Exibe o menu do NVDA"
+msgstr "NVDA 메뉴를 보여줍니다"
 
 #: globalCommands.py:871
 msgid "Shows the NVDA mouse settings dialog"
-msgstr "Exibe a janela de opções de mouse do NVDA"
+msgstr "NVDA 마우스 설정 대화상자를 보여줍니다"
 
 #: globalCommands.py:875
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Exibe a janela de opções para apresentação de objetos no NVDA"
+msgstr "NVDA 객체 표시 설정 대화상자를 보여줍니다."
 
 #: globalCommands.py:859
 msgid "Shows the NVDA synthesizer dialog"
-msgstr "Exibe a janela de sintetizadores para o NVDA"
+msgstr "NVDA 음성 엔진 대화상자를 보여줍니다"
 
 #: globalCommands.py:863
 msgid "Shows the NVDA voice settings dialog"
-msgstr "Exibe a janela de opções de voz do NVDA"
+msgstr "NVDA 보이스 설정 대화상자를 보여줍니다"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 #: gui/settingsDialogs.py:718
 msgid "Simple review mode"
-msgstr "Modo simples de exploração"
+msgstr ""
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:55
 msgid "Sleep mode off"
-msgstr "Modo dormir desligado"
+msgstr "NVDA 비활성화"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self vocing, such as klango or openbook.
 #: globalCommands.py:61
 msgid "Sleep mode on"
-msgstr "Modo dormir ligado"
+msgstr "NVDA 활성화"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:167
 msgid "Slovak"
-msgstr "Eslovaco"
+msgstr "슬로바키아어"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:170
 msgid "Slovene grade 1"
-msgstr "esloveno grau 1"
+msgstr "슬라브어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:80
 msgid "Spanish 8 dot computer braille"
-msgstr "Espanhol, computador braile de 8 pontos"
+msgstr "스페인어 8점 컴퓨터 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:83
 msgid "Spanish grade 1"
-msgstr "Espanhol grau 1"
+msgstr "스페인어 1종"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: gui/settingsDialogs.py:743
 msgid "Speak"
-msgstr "Falar"
+msgstr ""
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: gui/settingsDialogs.py:751
 msgid "Speak and beep"
-msgstr "Falar e bipar"
+msgstr ""
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:617
 msgid "Speak command &keys"
-msgstr "Falar tec&las de comando"
+msgstr "핫키 말하기"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:602
 msgid "Speak typed &characters"
-msgstr "Falar caracteres &digitados"
+msgstr "입력한 글자 말하기"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:607
 msgid "Speak typed &words"
-msgstr "Falar &palavras digitadas"
+msgstr "입력한 단어 말하기"
 
 #: globalCommands.py:851
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
-msgstr ""
-"Fala o nome do executável da aplicação atualmente rodando, bem como o nome "
-"do módulo de aplicação atualmente carregado"
+msgstr "현재 사용중인 프로그램 이름과 NVDA 환경파일 이름을 알려줍니다."
 
 #: globalCommands.py:504
 msgid ""
@@ -2605,121 +2559,119 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"Fala a palavra do objeto de navegação atual onde se encontra o cursor de "
-"exploração. Ao pressionar duas vezes, soletra a palavra. Ao pressionar três "
-"vezes, soletra usando descrições de caracteres"
+"리뷰커서가 위치한 현재 화면 탐색 객체의 단어를 읽습니다. 만약 이 키를 두번 누"
+"르면 한글자씩 읽어 줍니다."
 
 #: gui/__init__.py:304
 msgid "Speech &dictionaries"
-msgstr "&Dicionários de fala"
+msgstr "음성 발음사전 (&D)"
 
 #: gui/__init__.py:314
 msgid "Speech viewer"
-msgstr "Exibidor de fala"
+msgstr "음성 출력 뷰어 (&S)"
 
 #. Override the name, as Windows names this the "Application" menu contrary to all documentation.
 #: appModules/explorer.py:40
 msgid "Start"
-msgstr "Início"
+msgstr "시작"
 
 #: globalCommands.py:929
 msgid "Start marked"
-msgstr "Início marcado"
+msgstr ""
 
 #: gui/addonGui.py:26
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:18
 msgid "Stop"
-msgstr "Parar"
+msgstr "정지"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #: appModules/msimn.py:28
 msgid "Subject:"
-msgstr "assunto:"
+msgstr "제목:"
 
 #. Translators: The title of a dialolg presented to indicate a successful operation.
 #: gui/installerGui.py:67 gui/installerGui.py:232 gui/settingsDialogs.py:225
 msgid "Success"
-msgstr "Êxito"
+msgstr "성공"
 
 #: gui/settingsDialogs.py:225
 msgid "Successfully copied NVDA user settings"
-msgstr "Configurações do usuário copiadas com sucesso"
+msgstr "사용자 설정 복사 성공"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
 #: gui/installerGui.py:231
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "Criada com êxito uma cópia portátil do NVDA em %s"
+msgstr "%s 에 휴대용 NVDA 버전 복사를 완료하였습니다"
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 #: gui/installerGui.py:60
 msgid "Successfully installed NVDA. "
-msgstr "NVDA instalado com êxito. "
+msgstr "NVDA 설치를 완료하였습니다"
 
 #. Translators: The message displayed when NVDA has been successfully updated.
 #: gui/installerGui.py:62
 msgid "Successfully updated your installation of NVDA. "
-msgstr "Atualizada com êxito a instalação do NVDA."
+msgstr "사용자의 NVDA 업데이트를 완료하였습니다"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:164
 msgid "Swedish grade 1"
-msgstr "Sueco grau 1"
+msgstr "스웨덴어 1종"
 
 #: gui/settingsDialogs.py:1281
 msgid "Symbol"
-msgstr "Sinal"
+msgstr ""
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #: gui/settingsDialogs.py:1268
 msgid "Symbol Pronunciation"
-msgstr "Pronúncia do Sinal"
+msgstr "기호 발음 설정"
 
 #. Translators: This is the label for the synthesizer dialog.
 #: gui/settingsDialogs.py:264
 msgid "Synthesizer"
-msgstr "Sintetizador"
+msgstr "음성 엔진"
 
 #: gui/settingsDialogs.py:312
 msgid "Synthesizer Error"
-msgstr "Erro de sintetizador"
+msgstr "음성 엔진 오류"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:176
 msgid "Tamil grade 1"
-msgstr "Tâmil grau 1"
+msgstr "타밀어 1종"
 
 #: NVDAObjects/IAccessible/__init__.py:1494
 msgid "Taskbar"
-msgstr "Barra de tarefas"
+msgstr "작업 표시줄"
 
 #: gui/__init__.py:163
 msgid "Temporary dictionary"
-msgstr "Dicionário temporário"
+msgstr "임시 음성 발음사전"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
 #: gui/settingsDialogs.py:654
 msgid "Text &unit resolution:"
-msgstr "&Unidade de texto:"
+msgstr ""
 
 #: NVDAObjects/window/winword.py:91
 msgid "Text frame"
-msgstr "Freime de texto"
+msgstr ""
 
 #: globalCommands.py:924
 #, python-format
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
-msgstr ""
-"A área de transferência contém um texto muito grande, de %s caracteres."
+msgstr "클립보드에는 매우 긴 텍스트가 있습니다. %s 문자 길이입니다."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 #: gui/installerGui.py:44
@@ -2728,10 +2680,9 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"A instalação não consegue remover ou sobrescrever um arquivo. Uma cópia do "
-"NVDA pode estar rodando noutra conta de usuário logada. Por favor certifique-"
-"se que todas as cópias instaladas do NVDA estão desligadas e tente instalar "
-"de novo."
+"NVDA 설치 프로그램이 파일을 삭제할 수 없거나 덮어씌울 수 없습니다. 다른 카피"
+"의 NVDA가 다른 사용자 계정에 의해 실행 중일 수 있습니다. 모든 설치된 NVDA가 "
+"종료되었는지 확인하시고 설치를 재시도하세요."
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui/installerGui.py:52
@@ -2739,8 +2690,7 @@ msgid ""
 "The installation of NVDA failed. Please check the Log Viewer for more "
 "information."
 msgstr ""
-"A instalação do NVDA falhou. Por favor verifique o visualizador do log para "
-"mais informações."
+"NVDA 설치 실패하였습니다. 자세한 정보를 보려면 로그 뷰어를 참조하십시요"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #: gui/installerGui.py:91
@@ -2748,23 +2698,21 @@ msgid ""
 "The installation path for NVDA has changed. it will now  be installed in "
 "{path}"
 msgstr ""
-"O caminho de instalação do NVDA mudou. Ele agora será instalado em {path}"
+"NVDA 설치경로가 변경되었습니다. 새로운 경로 {path}에 NVDA를 설치합니다."
 
 #: globalCommands.py:841
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
-msgstr ""
-"A próxima tecla pressionada não será tratada pelo NVDA; será enviada "
-"diretamente ao Windows."
+msgstr "다음 입력키는 NVDA가 무시하고 응용 프로그램에 바료 입력됩니다"
 
 #: globalCommands.py:938
 msgid "The start marker must reside within the same object"
-msgstr "A marca de início tem que estar no mesmo objeto"
+msgstr ""
 
 #: globalCommands.py:919
 msgid "There is no text on the clipboard"
-msgstr "Não há texto na área de transferência"
+msgstr "클립보드내 내용 없음"
 
 #. Translators: The message displayed when an an addon already seems to be installed. 
 #: gui/addonGui.py:86
@@ -2772,12 +2720,12 @@ msgid ""
 "This add-on seems to already be installed. Please remove the existing add-on "
 "and try again."
 msgstr ""
-"Este complemento parece já estar instalado. Por favor remova o complemento "
-"existente e tente de novo"
+"선택된 추가 기능은 이미 설치되어 있을 수 있습니다다. 추가 기능을 삭제하고 다"
+"시 설치하시기 바랍니다."
 
 #: gui/settingsDialogs.py:248
 msgid "This change requires administrator privileges."
-msgstr "Esta alteração exige privilégios administrativos no sistema"
+msgstr "이 설정 변경은 관리자 권한이 있어야 가능합니다."
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui/installerGui.py:140
@@ -2785,35 +2733,35 @@ msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
 msgstr ""
-"Para criar uma cópia portátil do NVDA, por favor escolha o caminho e outras "
-"opções e pressione continuar"
+"휴대용 NVDA 버전을 만드시려면 경로와 다른 옵션을 선택한 후 계속 버튼을 눌러주"
+"십시요."
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui/installerGui.py:85
 msgid "To install NVDA to your hard drive, please press the Continue button."
-msgstr ""
-"Para instalar o NVDA no disco rígido, por favor pressione o botão continuar."
+msgstr "하드 드라이브에 NVDA를 설치하려면 계속 버튼을 눌러주십시요."
 
 #. Translators: This is presented in outlook or live mail when creating a new email 'to:' or 'recipient:'
 #: appModules/msimn.py:22
 msgid "To:"
-msgstr "para:"
+msgstr "받는이: "
 
 #: globalCommands.py:911
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "Alterna vinculação do braile entre a posição de foco e a de exploração"
+msgstr ""
 
+# Sleep mode has various meanings. Here, it'll mean "do not use the screen reader." Thus the translation reading, "toggles whether to use NVDA in current application or not."
 #: globalCommands.py:62
 msgid "Toggles  sleep mode on and off for  the active application."
-msgstr "Liga e desliga o modo dormir para a aplicação ativa."
+msgstr "현재 사용중인 프로그램에서 NVDA 사용여부를 전환합니다."
 
 #: globalCommands.py:785
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"Alterna entre bipes, fala, bipes e fala, e desativado, para anunciar "
-"atualizações em barras de progresso."
+"진행률을 음성으로, 경고음으로, 음성과 경고음으로 알려주거나 알려주지 않기를 "
+"토글합니다."
 
 #: globalCommands.py:636
 msgid ""
@@ -2822,10 +2770,9 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
-"Alterna entre o modo de navegação e o modo de foco. No modo de foco as "
-"teclas vão direto para a aplicação, o que lhe permite interagir com o "
-"controle diretamente. No modo de navegação você pode percorrer o documento "
-"usando setas, teclas rápidas de navegação, etc."
+"브라우저 모드와 포커스 모드를 전환합니다. 포커스 모드에서는 키보드를 사용하"
+"여 폼 필드 값을 조작하며, 브라우저 모드에서는 커서와 엘리멘트 핫키를 토해 문"
+"서를 읽을 수 있습니다."
 
 #: globalCommands.py:607
 msgid ""
@@ -2833,109 +2780,99 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Alterna entre os modos de fala desligado, bipes e fala. No modo desligado, o "
-"NVDA nada diz; no modo de bipes, ele bipa sempre quando deveria falar algo; "
-"no modo de fala, continua falando normalmente."
+"음성, 비프음, 끄기의 세가지 음성출력 모드를 토글합니다. 끄기(Off)로 설정하면 "
+"아무것도 읽지 않습니다. 비프음으로 설정하면 무엇인가 읽기로 설정된 경우에 단"
+"순히 비프음만 출력합니다. 음성(talk)으로 설정하면 정상적으로 읽어 줍니다."
 
 #: virtualBuffers/__init__.py:813
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
 msgstr ""
-"Determina se as informações devem ser mostradas no documento com a mesma "
-"disposição que aparecem na tela"
 
 #: globalCommands.py:815
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "Liga e desliga o movimento do objeto de navegação conforme o foco muda"
+msgstr "포커스의 변화로 인한  화면 탐색 객체의 이동 여부를 토글합니다. "
 
 #: globalCommands.py:805
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr ""
-"Liga e desliga o movimento do cursor de exploração conforme se move o cursor "
-"do sistema"
+msgstr "캐럿의 이동으로 인한 리뷰 커서의 이동 여부를 토글합니다. "
 
 #: globalCommands.py:795
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
-msgstr ""
-"Liga e desliga leitura de atualizações em conteúdo dinâmico, como por "
-"exemplo novos textos em janelas do prompts de comando"
+msgstr "바뀐 글자 읽기 여부를 토글합니다, 예: 도스창 읽기"
 
 #: globalCommands.py:183
 msgid "Toggles on and off the speaking of typed characters"
-msgstr "Liga e desliga leitura de caracteres digitados"
+msgstr "입력 글자 읽기와 읽지않기 중 전환합니다."
 
 #: globalCommands.py:203
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
-msgstr ""
-"Liga e desliga leitura de teclas digitadas que não sejam propriamente "
-"caracteres"
+msgstr "입력 글자가 아닌 명령어 읽기와 읽지않기 중 전환합니다."
 
 #: globalCommands.py:193
 msgid "Toggles on and off the speaking of typed words"
-msgstr "Liga e desliga leitura de palavras digitadas"
+msgstr "입력 단어 읽기와 읽지않기 중 전환합니다."
 
 #: globalCommands.py:734
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "Alterna o anúncio de informações conforme o mause é movido."
+msgstr "마우스 이동에 따라 정보 읽기 여부를 토글합니다."
 
 #: gui/__init__.py:330
 msgid "Tools"
-msgstr "Ferramentas"
+msgstr "도구 (&T)"
 
 #: gui/settingsDialogs.py:1185
 msgid "Translation &table:"
-msgstr "&Tabela de tradução:"
+msgstr "점자 출력 표기법 (&T)"
 
 #. Translators: this is the label for the edit area in poedit 
 #. that contains a translation.
 #: appModules/poedit.py:123
 msgid "Translation:"
-msgstr "Tradução:"
+msgstr "번역:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:179
 msgid "Turkish grade 1"
-msgstr "Turco grau 1"
+msgstr "터키어 1종"
 
+# The translation literally means, "Turns on keyboard help mode to find out actions associated with the entered keystroke. The word "script" may not be farmiliar with some audiences, so substituted "actions" for the word "scripts"."
 #: globalCommands.py:47
 msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
-msgstr ""
-"Liga ou desliga a ajuda de entrada; Se ligada, cada entrada como por exemplo "
-"pressionar uma tecla do teclado falará o script associado àquela entrada se "
-"houver algum."
+msgstr "키보드 학습을 실행하여 입력한 키의 기능을 확인합니다."
 
 #: pythonConsole.py:40
 msgid "Type exit() to exit the console"
-msgstr "Digite exit() para sair do console"
+msgstr ""
 
 #: pythonConsole.py:24
 msgid "Type help(object) to get help about object."
-msgstr "Digite help(objeto) para obter auxílio sobre o objeto."
+msgstr ""
 
 #: cursorManager.py:81
 msgid "Type the text you wish to find"
-msgstr "Digite o texto que quer encontrar"
+msgstr "찾고자 하는 내용을 입력하세요."
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:279
 msgid "Type:"
-msgstr "Tipo:"
+msgstr "구성요소"
 
 #. Translators: the url part of the About Add-on information
 #: gui/addonGui.py:184
 msgid "URL: {url}"
-msgstr "Página: {url}"
+msgstr "URL: {url}"
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 #: gui/settingsDialogs.py:209
@@ -2943,118 +2880,115 @@ msgid ""
 "Unable to copy a file. Perhaps it is currently being used by another process "
 "or you have run out of disc space on the drive you are copying to."
 msgstr ""
-"Não consegui copiar um arquivo. Talvez ele esteja sendo usado por outro "
-"processo ou não haja mais espaço no disco para o qual você está tentando "
-"copiar."
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:182
 msgid "Unified English Braille Code grade 1"
-msgstr "Código Braile Inglês Unificado grau 1"
+msgstr "영어 (통합) 점자 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:185
 msgid "Unified English Braille Code grade 2"
-msgstr "Código Braile Inglês Unificado grau 2"
+msgstr "영어 (통합) 점자 2종"
 
 #: installer.py:156
 msgid "Uninstall NVDA"
-msgstr "Desinstalar o NVDA"
+msgstr "NVDA 삭제"
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
 #: updateCheck.py:358
 msgid "Update downloaded. It will now be installed."
-msgstr "Atualização baixada; a mesma será instalada agora."
+msgstr "업데이트 다운로드 완료. 업데이트를 설치합니다."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 #: gui/installerGui.py:23
 msgid "Updating NVDA"
-msgstr "Atualizando NVDA"
+msgstr "NVDA 업데이트중"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 #: gui/settingsDialogs.py:849
 msgid "Use &screen layout (when supported)"
-msgstr "U&sar apresentação da tela (quando suportado)"
+msgstr "스크린 구성 지원되면 사용 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 #: gui/settingsDialogs.py:483
 msgid "Use &spelling functionality if supported"
-msgstr "Usar soletragem &melhorada quando suportado"
+msgstr "철자 발음 지원시 사용 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/__init__.py:464 gui/settingsDialogs.py:587
 msgid "Use CapsLock as an NVDA modifier key"
-msgstr "Usar CapsLock como uma tecla modificadora do NVDA"
+msgstr "CapsLock을 NVDA 기능키로 사용"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:96
 msgid "Use NVDA on the Windows &logon screen"
-msgstr "Usar o NVDA na tela de &logon do Windows"
+msgstr "Windows 로그인 창에서 NVDA 실행 (&L)"
 
 #: gui/settingsDialogs.py:166
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "Usar o NVDA no logon do Windows (requer privilégios administrativos)"
+msgstr "윈도우 로그인 창에서 NVDA 사용 (사용자가 시스템 관리자여야 합니다)"
 
 #: gui/settingsDialogs.py:171
 msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Usar as opções salvas atuais no logon e outras telas seguras (requer "
-"privilégios administrativos)"
+"현재 NVDA 환경 설정을 윈도우 로그인 창과 같은 보안 윈도우에서도 사용 (사용자"
+"가 시스템 관리자여야 합니다)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:597
 msgid "Use extended Insert as an NVDA modifier key"
-msgstr "Usar Insert estendida como uma tecla modificadora do NVDA"
+msgstr "확장 Insert를 NVDA 기능키로 사용"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:592
 msgid "Use numpad Insert as an NVDA modifier key"
-msgstr "Usar Insert do teclado numérico como uma tecla modificadora do NVDA"
+msgstr "numpad Insert를 NVDA 기능키로 사용"
 
 #: installer.py:159 gui/__init__.py:334
 msgid "User Guide"
-msgstr "Guia do Usuário"
+msgstr "사용 설명서"
 
 #: synthDriverHandler.py:205
 msgid "V&ariant"
-msgstr "V&ariante"
+msgstr "보이스 버전 (&A)"
 
 #: synthDriverHandler.py:214
 msgid "V&olume"
-msgstr "v&olume"
+msgstr "음성 크기 (&O)"
 
 #: gui/addonGui.py:28
 msgid "Version"
-msgstr "Versão"
+msgstr "버전"
 
 #: gui/__init__.py:312
 msgid "View log"
-msgstr "ver log"
+msgstr "로그 보기 (&V)"
 
 #. Translators: This is the label for the voice settings dialog.
 #: gui/settingsDialogs.py:378
 msgid "Voice Settings"
-msgstr "Opções de voz"
+msgstr "보이스 설정"
 
 #: gui/__init__.py:160
 #, python-format
 msgid "Voice dictionary (%s)"
-msgstr "Dicionário da voz (%s)"
+msgstr "(%s) 보이스 발음사전"
 
 #: gui/settingsDialogs.py:192
 msgid "Warning"
-msgstr "Alerta"
+msgstr "경고"
 
 #: updateCheck.py:371
 msgid "We need your help in order to continue to improve NVDA.\n"
@@ -3062,36 +2996,36 @@ msgstr ""
 
 #: gui/__init__.py:346
 msgid "We&lcome dialog"
-msgstr "&Bem-vindo"
+msgstr "NVDA 시작 대화상자 (&L)"
 
 #: gui/__init__.py:459
 msgid "Welcome to NVDA"
-msgstr "Bem-vindo ao NVDA"
+msgstr "NVDA에 오신것을 환영합니다!"
 
 #: gui/__init__.py:450
 #, fuzzy
 msgid "Welcome to NVDA!\n"
-msgstr "Bem-vindo ao NVDA"
+msgstr "NVDA에 오신것을 환영합니다!"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:38
 msgid "Welsh grade 1"
-msgstr "Galês grau 1"
+msgstr "웨일즈어 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:41
 msgid "Welsh grade 2"
-msgstr "Galês grau 2"
+msgstr "웨일즈어 2종"
 
 #: gui/__init__.py:338
 msgid "What's &new"
-msgstr "&Novidades"
+msgstr "변경된 사항 (&N)"
 
 #: gui/__init__.py:360
 msgid "Write the current configuration to nvda.ini"
-msgstr "Guardar a configuração atual no nvda.ini"
+msgstr ""
 
 #: gui/__init__.py:503
 #, fuzzy
@@ -3101,57 +3035,56 @@ msgid ""
 "edit your config file at a later stage to make corrections. More details "
 "about the errors can be found in the log file.\r\n"
 msgstr ""
-"O arquivo de configuração possui erros. \n"
-"Pressione 'OK' para corrigi-los ou 'Cancelar' se quiser editar manualmente o "
-"arquivo depois para fazer as correções. Detalhes adicionais sobre os erros "
-"encontram-se no arquivo de log.\n"
+"환경설정 파일에 오류가 있습니다. \n"
+"지금 \"OK\"를 눌러 자동으로 고치거나, \"Cancel\"을 눌러 수동으로 환경설정 파"
+"일을 편집하십시요. 더 자세한 내용은 로그 파일을 참조하세요.\n"
 
 #: core.py:85
 #, fuzzy
 msgid "Your gesture map file contains errors.\n"
-msgstr "erro no arquivo com mapa de gestos"
+msgstr "제스쳐 맵 파일 오류"
 
 #: virtualBuffers/__init__.py:799
 msgid "activates the current object in the document"
-msgstr "ativa o objeto atual do documento"
+msgstr ""
 
 #: controlTypes.py:313 controlTypes.py:337
 msgid "alert"
-msgstr "alerta"
+msgstr "경고"
 
 #. Translators: Reported when text is centered.
 #: speech.py:1075
 msgid "align center"
-msgstr "alinhamento centrado"
+msgstr "가운데로 정렬"
 
 #. Translators: Reported when text has reverted to default alignment.
 #: speech.py:1085
 msgid "align default"
-msgstr "alinhamento padrão"
+msgstr "기본 정렬"
 
 #. Translators: Reported when text is justified.
 #. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
 #: speech.py:1082
 msgid "align justify"
-msgstr "alinhamento justificado"
+msgstr "정렬하기"
 
 #. Translators: Reported when text is left-aligned.
 #: speech.py:1072
 msgid "align left"
-msgstr "alinhamento à esquerda"
+msgstr "왼쪽으로 정렬"
 
 #. Translators: Reported when text is right-aligned.
 #: speech.py:1078
 msgid "align right"
-msgstr "alinhamento à direita"
+msgstr "오른쪽으로 정렬"
 
 #: controlTypes.py:336
 msgid "alignment"
-msgstr "alinhamento"
+msgstr "alignment"
 
 #: characterProcessing.py:130
 msgid "all"
-msgstr "tudo"
+msgstr "모두"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:51
@@ -3160,123 +3093,123 @@ msgstr "alt"
 
 #: controlTypes.py:243
 msgid "animation"
-msgstr "animação"
+msgstr "에니메이션"
 
 #: controlTypes.py:244
 msgid "application"
-msgstr "aplicação"
+msgstr "응용프로그램"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:85
 msgid "applications"
-msgstr "aplicações"
+msgstr "메뉴"
 
 #. Translators: The aqua color is an equal amount of blue and green.
 #. For more info see: http://en.wikipedia.org/wiki/Aqua_%28color%29
 #: colors.py:113
 msgid "aqua"
-msgstr "aqua"
+msgstr "옥색"
 
 #: appModules/outlook.py:33
 msgid "attachment"
-msgstr "anexo"
+msgstr "첨부 파일"
 
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:9
 msgid "back"
-msgstr "para trás"
+msgstr "back"
 
 #: controlTypes.py:331
 msgid "background color"
-msgstr "cor de fundo"
+msgstr "배경 색상"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:45
 msgid "backspace"
-msgstr "béc speice"
+msgstr "backspace"
 
 #. Translators: Reported for the banner landmark, normally found on web pages.
 #: aria.py:69
 msgid "banner"
-msgstr "bâner"
+msgstr "베너"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
 #: speech.py:1063
 msgid "baseline"
-msgstr "linha base"
+msgstr ""
 
 #: globalCommands.py:783
 msgid "beep and speak progress bar updates"
-msgstr "bipar e falar em barras de progresso"
+msgstr "경고음과 음성 출력으로 진행률 알림"
 
 #: globalCommands.py:780
 msgid "beep for progress bar updates"
-msgstr "bipar em barras de progresso"
+msgstr "경고음으로 진행률 알림"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 #: globalCommands.py:600
 msgid "beeps"
-msgstr "bipes"
+msgstr "경고음"
 
 #. Standard 16 HTML 4 colors
 #: colors.py:88
 msgid "black"
-msgstr "preto"
+msgstr "검정"
 
 #. Translators: This is spoken when nvda moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 #: speech.py:164 speech.py:329 speech.py:739
 msgid "blank"
-msgstr "em branco"
+msgstr "빈줄"
 
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
 #: controlTypes.py:238
 msgid "block quote"
-msgstr "bloco de citação"
+msgstr "인용구역"
 
 #: colors.py:103
 msgid "blue"
-msgstr "azul"
+msgstr "파랑"
 
 #. Translators: Reported when text is bolded.
 #: controlTypes.py:327 speech.py:1020
 msgid "bold"
-msgstr "negrito"
+msgstr "bold"
 
 #: controlTypes.py:291
 msgid "border"
-msgstr "borda"
+msgstr "border"
 
 #: globalCommands.py:472 globalCommands.py:480 globalCommands.py:514
 msgid "bottom"
-msgstr "fim"
+msgstr "밑"
 
 #: controlTypes.py:245
 msgid "box"
-msgstr "caixa"
+msgstr "박스"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:135
 msgid "break"
-msgstr "quebra"
+msgstr "break"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 #: gui/settingsDialogs.py:679
 msgid "brightness controls audio coordinates volume"
-msgstr "brilho controla volume das coordenadas sonoras"
+msgstr ""
 
 #: virtualBuffers/__init__.py:1502
 msgid "browse mode"
-msgstr "modo de navegação"
+msgstr "브라우저 모드"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:15
 msgid "browser stop"
-msgstr "parar navegação"
+msgstr "browser stop"
 
 #. Translators: Displayed in braille for an object which is a
 #. button.
@@ -3286,11 +3219,11 @@ msgstr "btn"
 
 #: controlTypes.py:349
 msgid "busy"
-msgstr "ocupado"
+msgstr "busy"
 
 #: controlTypes.py:196
 msgid "button"
-msgstr "botão"
+msgstr "버튼"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
@@ -3301,38 +3234,38 @@ msgstr "c%s"
 
 #: controlTypes.py:342
 msgid "calendar"
-msgstr "calendário"
+msgstr "달력"
 
 #: controlTypes.py:248
 msgid "canvas"
-msgstr "vela"
+msgstr "canvas"
 
 #. Translators: cap will be spoken before the given letter when it is capitalized.
 #: speech.py:196
 #, python-format
 msgid "cap %s"
-msgstr "cap %s"
+msgstr "대문자 %s"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:47
 msgid "caps lock"
-msgstr "caps loc"
+msgstr "caps lock"
 
 #: controlTypes.py:249
 msgid "caption"
-msgstr "legenda"
+msgstr "캡션"
 
 #: controlTypes.py:292
 msgid "caret"
-msgstr "circunflexo"
+msgstr "케럿"
 
 #: globalCommands.py:804
 msgid "caret moves review cursor"
-msgstr "Cursor do sistema move o cursor de exploração"
+msgstr "캐럿 이동시 리뷰커서도 이동"
 
 #: gui/settingsDialogs.py:1081
 msgid "case"
-msgstr "caixa"
+msgstr ""
 
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
@@ -3342,31 +3275,31 @@ msgstr "cbo"
 
 #: controlTypes.py:216
 msgid "cell"
-msgstr "célula"
+msgstr "셀"
 
 #: characterProcessing.py:131 controlTypes.py:293 textInfos/__init__.py:196
 msgid "character"
-msgstr "caractere"
+msgstr "글자"
 
 #: controlTypes.py:294
 msgid "chart"
-msgstr "quadro"
+msgstr "차트"
 
 #: controlTypes.py:192
 msgid "check box"
-msgstr "caixa de seleção"
+msgstr "체크상자"
 
 #: controlTypes.py:250
 msgid "check menu item"
-msgstr "item de menu de seleção"
+msgstr "체크메뉴 항목"
 
 #: controlTypes.py:375
 msgid "checkable"
-msgstr "marcável"
+msgstr "체크가능"
 
 #: controlTypes.py:351
 msgid "checked"
-msgstr "marcado"
+msgstr "선택됨"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
@@ -3376,156 +3309,156 @@ msgstr "chk"
 
 #: controlTypes.py:373
 msgid "clickable"
-msgstr "clicável"
+msgstr "클릭가능"
 
 #. Translators: Displayed in braille when an object is clickable.
 #: braille.py:257
 msgid "clk"
-msgstr "rlg"
+msgstr "clk"
 
 #: controlTypes.py:224
 msgid "clock"
-msgstr "relógio"
+msgstr "시계"
 
 #: controlTypes.py:355
 msgid "collapsed"
-msgstr "recolhido"
+msgstr "축소됨"
 
 #: controlTypes.py:317
 msgid "color chooser"
-msgstr "seletor de cores"
+msgstr "색상 선택기"
 
 #: controlTypes.py:217
 msgid "column"
-msgstr "coluna"
+msgstr "행"
 
 #: speech.py:834 speech.py:1141
 #, python-format
 msgid "column %s"
-msgstr "coluna %s"
+msgstr "%s행"
 
 #: controlTypes.py:221
 msgid "column header"
-msgstr "cabeçalho da coluna"
+msgstr "행 머리말"
 
 #: controlTypes.py:200
 msgid "combo box"
-msgstr "caixa de combinação"
+msgstr "콤보박스"
 
 #. Translators: Reported for the complementary landmark, normally found on web pages.
 #: aria.py:71
 msgid "complementary"
-msgstr "complementar"
+msgstr "complementary"
 
 #. Translators: Reported for the contentinfo landmark, normally found on web pages.
 #: aria.py:73
 msgid "content info"
-msgstr "informação de conteúdo"
+msgstr "컨텐츠 정보"
 
 #: cursorManager.py:248
 msgid "copied to clipboard"
-msgstr "copiado para área de transferência"
+msgstr "클립보드에 복사됨"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:49
 msgid "ctrl"
-msgstr "control"
+msgstr "컨트롤"
 
 #: controlTypes.py:295
 msgid "cursor"
-msgstr "cursor"
+msgstr "커서"
 
 #. Translators: This is the name of the launch custom application 1 key found on multimedia keyboards to launch a user-defined application.
 #: keyLabels.py:41
 msgid "custom application 1"
-msgstr "aplicaçãon pessoal 1"
+msgstr "custom application 1"
 
 #. Translators: This is the name of the launch custom application 2 key found on multimedia keyboards to launch a user-defined application.
 #: keyLabels.py:43
 msgid "custom application 2"
-msgstr "aplicaçãon pessoal 2"
+msgstr "custom application 2"
 
 #: colors.py:100
 msgid "dark red"
-msgstr "vermelho escuro"
+msgstr "흐린 빨강"
 
 #: controlTypes.py:338
 msgid "data grid"
-msgstr "grade de dados"
+msgstr "data grid"
 
 #: controlTypes.py:339
 msgid "data item"
-msgstr "item de dados"
+msgstr "data item"
 
 #: controlTypes.py:251
 msgid "date edit"
-msgstr "edição de data"
+msgstr "날짜 입력"
 
 #: gui/settingsDialogs.py:118
 msgid "debug"
-msgstr "depuração"
+msgstr "디버그"
 
 #: gui/settingsDialogs.py:116
 msgid "debug warning"
-msgstr "alertas de depuração"
+msgstr "디버그 경고"
 
 #: globalCommands.py:429
 msgid "default action failed"
-msgstr "falha na ação padrão"
+msgstr "기본 동작 실패"
 
 #: NVDAObjects/window/edit.py:260 NVDAObjects/window/edit.py:261
 msgid "default color"
-msgstr "cor padrão"
+msgstr "기본 색상"
 
 #. Translators: Indicates that text has reverted to the default style.
 #. A style is a collection of formatting settings and depends on the application.
 #: speech.py:978
 msgid "default style"
-msgstr "estilo padrão"
+msgstr "default style"
 
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
 #: controlTypes.py:364
 msgid "defunct"
-msgstr "inutilizado"
+msgstr "defunct"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:73
 msgid "delete"
-msgstr "del"
+msgstr "딜리트"
 
 #: keyboardHandler.py:228
 msgid "desktop"
-msgstr "computador de mesa"
+msgstr "desktop"
 
 #: controlTypes.py:312
 msgid "desktop icon"
-msgstr "ícone da área de trabalho"
+msgstr "바탕화면 아이콘"
 
 #: controlTypes.py:315
 msgid "desktop pane"
-msgstr "painel da área de trabalho"
+msgstr "바탕화면"
 
 #: controlTypes.py:296
 msgid "diagram"
-msgstr "diagrama"
+msgstr "diagram"
 
 #: controlTypes.py:297
 msgid "dial"
-msgstr "rotor"
+msgstr "dial"
 
 #: controlTypes.py:191
 msgid "dialog"
-msgstr "diálogo"
+msgstr "대화상자"
 
 #: controlTypes.py:253
 msgid "directory pane"
-msgstr "painel de diretório"
+msgstr "directory pane"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 #: brailleDisplayDrivers/freedomScientific.py:99
 msgid "display scroll"
-msgstr "rolagem da linha"
+msgstr ""
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
@@ -3535,66 +3468,66 @@ msgstr "dlg"
 
 #: controlTypes.py:242
 msgid "document"
-msgstr "documento"
+msgstr "문서"
 
 #. "not drop target" doesn't make any sense, so use a custom message.
 #. Translators: Reported when drag and drop is finished.
 #. This is only reported for objects which support accessible drag and drop.
 #: speech.py:791
 msgid "done dragging"
-msgstr "sôlto"
+msgstr "드래그 마침"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:83
 msgid "down arrow"
-msgstr "baixo"
+msgstr "아래쪽 화살표"
 
 #: controlTypes.py:376
 msgid "draggable"
-msgstr "arrastável"
+msgstr "드래깅 가능"
 
 #: controlTypes.py:377
 msgid "dragging"
-msgstr "arrastando"
+msgstr "드래그 중"
 
 #: controlTypes.py:223
 msgid "drop down button"
-msgstr "botão de lista"
+msgstr "펼침 버튼"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 #: controlTypes.py:302
 msgid "drop down button grid"
-msgstr "grade de botões de lista"
+msgstr "drop down button grid"
 
 #: controlTypes.py:298
 msgid "drop list"
-msgstr "lista extendida"
+msgstr "drop list"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
 #. This is only reported for objects which support accessible drag and drop.
 #: controlTypes.py:380
 msgid "drop target"
-msgstr "local onde soltar"
+msgstr "drop target"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
 #: virtualBuffers/__init__.py:1277
 msgid "edge of table"
-msgstr "borda da tabela"
+msgstr "테이블 가장자리"
 
 #: controlTypes.py:195
 msgid "edit"
-msgstr "edição"
+msgstr "편집창"
 
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
 #: controlTypes.py:273
 msgid "edit bar"
-msgstr "barra de edição"
+msgstr "edit bar"
 
 #: controlTypes.py:374
 msgid "editable"
-msgstr "editável"
+msgstr "편집가능"
 
 #. Translators: Displayed in braille for an object which is an
 #. editable text field.
@@ -3605,178 +3538,174 @@ msgstr "edt"
 #. Translators: This is the name of the launch email key found on multimedia keyboards to open an email client.
 #: keyLabels.py:37
 msgid "email"
-msgstr "e-mail"
+msgstr "이메일"
 
 #: controlTypes.py:254 NVDAObjects/window/edit.py:615
 msgid "embedded object"
-msgstr "objeto embutido"
+msgstr "임베디드 객체"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:69
 msgid "end"
-msgstr "end"
+msgstr "엔트"
 
 #: controlTypes.py:255
 msgid "end note"
-msgstr "nota de adendo"
+msgstr "미주"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:57
 msgid "enter"
-msgstr "ênter"
+msgstr "엔터"
 
 #: controlTypes.py:303
 msgid "equation"
-msgstr "equação"
+msgstr "방정식"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:61
 msgid "escape"
-msgstr "squeipe"
+msgstr "escape"
 
 #: controlTypes.py:354
 msgid "expanded"
-msgstr "expandido"
+msgstr "확장됨"
 
 #. Translators: This is the name of the favorites key found on multimedia keyboards to open favorites in the web-browser.
 #: keyLabels.py:19
 msgid "favorites"
-msgstr "favoritos"
+msgstr "즐겨찾기"
 
 #: synthDrivers/newfon.py:190
 msgid "female 1"
-msgstr "feminina 1"
+msgstr "female 1"
 
 #: synthDrivers/newfon.py:190
 msgid "female 2"
-msgstr "feminina 2"
+msgstr "female 2"
 
 #: controlTypes.py:318
 msgid "file chooser"
-msgstr "seletor de arquivos"
+msgstr "파일 선택기"
 
 #: controlTypes.py:319
 msgid "filler"
-msgstr "preenchedor"
+msgstr "파일 선택기"
 
 #: cursorManager.py:104
 msgid "find a text string from the current cursor position"
-msgstr "procura uma cadeia textual a partir da posição atual do cursor"
+msgstr "찾고싶은 문자열를 현재 커서 위치부터 검색합니다."
 
 #: cursorManager.py:111
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr ""
-"procura a próxima ocorrência da cadeia textual digitada anteriormente, a "
-"partir da posição atual do cursor"
+msgstr "찾고싶은 문자열을 현재 커서부터 다음으로 이어서 찾습니다."
 
 #: cursorManager.py:118
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr ""
-"procura a ocorrência anterior da cadeia textual digitada anteriormente, a "
-"partir da posição atual do cursor"
+msgstr "찾고싶은 문자열을 현재커서부터 이전으로 이어서 찾습니다."
 
 #: globalCommands.py:909 gui/settingsDialogs.py:1219
 msgid "focus"
-msgstr "foco"
+msgstr "포커스"
 
 #: virtualBuffers/__init__.py:1502
 msgid "focus mode"
-msgstr "modo de foco"
+msgstr "포커스 모드"
 
 #: globalCommands.py:814
 msgid "focus moves navigator object"
-msgstr "foco move objeto de navegação"
+msgstr "포커스 이동시 화면 탐색 객체도 이동"
 
 #: controlTypes.py:372
 msgid "focusable"
-msgstr "focável"
+msgstr "포커스가능"
 
 #: controlTypes.py:347
 msgid "focused"
-msgstr "com foco"
+msgstr "포커스됨"
 
 #: controlTypes.py:323
 msgid "font chooser"
-msgstr "seletor de fonte"
+msgstr "폰트 선택기"
 
 #: controlTypes.py:325
 msgid "font name"
-msgstr "nome da fonte"
+msgstr "글골 이름"
 
 #: controlTypes.py:326
 msgid "font size"
-msgstr "tamanho da fonte"
+msgstr "글골 크기"
 
 #: controlTypes.py:257
 msgid "foot note"
-msgstr "nota de rodapé"
+msgstr "각주"
 
 #: controlTypes.py:256
 msgid "footer"
-msgstr "rodapé"
+msgstr "footer"
 
 #: controlTypes.py:330
 msgid "foreground color"
-msgstr "cor de tela"
+msgstr "전경 색상"
 
 #: controlTypes.py:226
 msgid "form"
-msgstr "formulário"
+msgstr "form"
 
 #. Translators: This is the name of the forward key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:11
 msgid "forward"
-msgstr "para frente"
+msgstr "forward"
 
 #: controlTypes.py:219
 msgid "frame"
-msgstr "freime"
+msgstr "프레임"
 
 #. Translators: The color fuchsia is a mix of blue and red.
 #. For more info see: http://en.wikipedia.org/wiki/Magenta
 #: colors.py:110
 msgid "fuchsia"
-msgstr "fúscia"
+msgstr "자홍색"
 
 #: core.py:87
 msgid "gesture map File Error"
-msgstr "erro no arquivo com mapa de gestos"
+msgstr "제스쳐 맵 파일 오류"
 
 #. Translators: Reported for an object which is a glass pane; i.e.
 #. a pane that is guaranteed to be on top of all panes beneath it.
 #: controlTypes.py:260
 msgid "glass pane"
-msgstr "painel transparente"
+msgstr "glass pane"
 
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
 #: braille.py:236
 msgid "gra"
-msgstr "grá"
+msgstr "gra"
 
 #: controlTypes.py:203
 msgid "graphic"
-msgstr "gráfico"
+msgstr "그래픽"
 
 #: colors.py:89
 msgid "green"
-msgstr "verde"
+msgstr "녹색"
 
 #: colors.py:94
 msgid "grey"
-msgstr "cinza"
+msgstr "회색"
 
 #: controlTypes.py:304
 msgid "grip"
-msgstr "gancho"
+msgstr "grip"
 
 #: controlTypes.py:246
 msgid "grouping"
-msgstr "grupo"
+msgstr "그루핑"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
@@ -3787,242 +3716,242 @@ msgstr "h%s"
 
 #: controlTypes.py:352
 msgid "half checked"
-msgstr "meio marcado"
+msgstr "반만 선택됨"
 
 #: controlTypes.py:367
 msgid "has auto complete"
-msgstr "possui autocompletar"
+msgstr "자동완성"
 
 #. Translators: Reported when text contains a comment.
 #: speech.py:1098
 msgid "has comment"
-msgstr "possui comentário"
+msgstr ""
 
 #. Translators: This is presented in Excel when the current cell contains a formula.
 #: NVDAObjects/window/excel.py:206
 msgid "has formula"
-msgstr "contém fórmula"
+msgstr "수식 있음"
 
 #: controlTypes.py:261
 msgid "header"
-msgstr "cabeçalho"
+msgstr "헤더"
 
 #: controlTypes.py:340
 msgid "header item"
-msgstr "item do cabeçalho"
+msgstr "header item"
 
 #: controlTypes.py:227
 msgid "heading"
-msgstr "cabeçalho"
+msgstr "헤딩"
 
 #: controlTypes.py:228
 msgid "heading 1"
-msgstr "cabeçalho 1"
+msgstr "헤딩 레벨 1"
 
 #: controlTypes.py:229
 msgid "heading 2"
-msgstr "cabeçalho 2"
+msgstr "헤딩 레벨 2"
 
 #: controlTypes.py:230
 msgid "heading 3"
-msgstr "cabeçalho 3"
+msgstr "헤딩 레벨 3"
 
 #: controlTypes.py:231
 msgid "heading 4"
-msgstr "cabeçalho 4"
+msgstr "헤딩 레벨 4"
 
 #: controlTypes.py:232
 msgid "heading 5"
-msgstr "cabeçalho 5"
+msgstr "헤딩 레벨 5"
 
 #: controlTypes.py:233
 msgid "heading 6"
-msgstr "cabeçalho 6"
+msgstr "헤딩 레벨 6"
 
 #: controlTypes.py:204
 msgid "help balloon"
-msgstr "balão de ajuda"
+msgstr "help balloon"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:71
 msgid "home"
-msgstr "roume"
+msgstr "홈"
 
 #. Translators: This is the name of the home key found on multimedia keyboards to goto the home page in the web-browser.
 #: keyLabels.py:21
 msgid "home page"
-msgstr "página inicial"
+msgstr "홈페이지"
 
 #: controlTypes.py:305
 msgid "hot key field"
-msgstr "campo de tecla de atalho"
+msgstr "핫키 입력"
 
 #: controlTypes.py:252
 msgid "icon"
-msgstr "ícone"
+msgstr "아이콘"
 
 #: controlTypes.py:369
 msgid "iconified"
-msgstr "iconificado"
+msgstr "최소화"
 
 #: controlTypes.py:262
 msgid "image map"
-msgstr "mapa com imagem"
+msgstr "이미지 메프"
 
 #: controlTypes.py:335
 msgid "indent"
-msgstr "endentação"
+msgstr "indent"
 
 #: controlTypes.py:306
 msgid "indicator"
-msgstr "indicador"
+msgstr "indicator"
 
 #: gui/settingsDialogs.py:115
 msgid "info"
-msgstr "informações"
+msgstr ""
 
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:46
 #, python-format
 msgid "input help %s"
-msgstr "ajuda de entrada %s"
+msgstr "키보드 학습 %s"
 
 #: controlTypes.py:263
 msgid "input window"
-msgstr "janela de entrada"
+msgstr "입력창"
 
 #: gui/settingsDialogs.py:117
 msgid "input/output"
-msgstr "entrada/saída"
+msgstr ""
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
 #: gui/addonGui.py:128
 msgid "install"
-msgstr "instalar"
+msgstr "설치"
 
 #: controlTypes.py:365
 msgid "invalid entry"
-msgstr "entrada inválida"
+msgstr "입력 오류"
 
 #: controlTypes.py:356
 msgid "invisible"
-msgstr "invisível"
+msgstr "보이지 않음"
 
 #: NVDAObjects/UIA/__init__.py:501
 msgid "invoke"
-msgstr "chamar"
+msgstr "적용"
 
 #. Translators: Reported when text is italicized.
 #: speech.py:1028
 msgid "italic"
-msgstr "itálico"
+msgstr ""
 
 #: controlTypes.py:264
 msgid "label"
-msgstr "rótulo"
+msgstr "label"
 
 #: keyboardHandler.py:229
 msgid "laptop"
-msgstr "computador portátil"
+msgstr "laptop"
 
 #: controlTypes.py:268
 msgid "layered pane"
-msgstr "painel em camadas"
+msgstr "layered pane"
 
 #: NVDAHelper.py:141
 #, python-format
 msgid "layout %s"
-msgstr "leiaute %s"
+msgstr "%s 레이아웃"
 
 #: globalCommands.py:524 globalCommands.py:536 appModules/totalcmd.py:35
 msgid "left"
-msgstr "esquerda"
+msgstr "왼쪽"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:129
 msgid "left alt"
-msgstr "alt esquerdo"
+msgstr "왼쪽 alt"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:77
 msgid "left arrow"
-msgstr "esquerda"
+msgstr "왼쪽 화살표"
 
 #: globalCommands.py:82
 msgid "left click"
-msgstr "clique esquerdo"
+msgstr "왼쪽 버튼 클릭"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:119
 msgid "left control"
-msgstr "control esquerdo"
+msgstr "왼쪽 control"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
 #: globalCommands.py:100
 msgid "left mouse button lock"
-msgstr "pressiona botão esquerdo do mause"
+msgstr "왼쪽 마우스 버튼 클릭 잠김"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 #: globalCommands.py:96
 msgid "left mouse button unlock"
-msgstr "solta botão esquerdo do mause"
+msgstr "왼쪽 마우스 버튼 클릭 잠금 해제"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:125
 msgid "left shift"
-msgstr "chift esquerdo"
+msgstr "왼쪽 shift"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:123
 msgid "left windows"
-msgstr "uíndous esquerdo"
+msgstr "왼쪽 windows"
 
 #: speech.py:811 speech.py:814
 #, python-format
 msgid "level %s"
-msgstr "nível %s"
+msgstr ""
 
 #: colors.py:90
 msgid "light grey"
-msgstr "cinza claro"
+msgstr "밝은 회색"
 
 #. Translators: The color lime.
 #. For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
 #: colors.py:93
 msgid "lime"
-msgstr "linha"
+msgstr "라임"
 
 #: controlTypes.py:324 textInfos/__init__.py:198
 msgid "line"
-msgstr "linha"
+msgstr "줄"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
 #: speech.py:1013
 #, python-format
 msgid "line %s"
-msgstr "linha %s"
+msgstr "줄 %s"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line..
 #: brailleDisplayDrivers/freedomScientific.py:101
 msgid "line scroll"
-msgstr "Rola linha"
+msgstr ""
 
 #: controlTypes.py:206 speech.py:1091
 msgid "link"
-msgstr "linque"
+msgstr "링크"
 
 #: controlTypes.py:358
 msgid "linked"
-msgstr "vinculado"
+msgstr "링크"
 
 #: controlTypes.py:201
 msgid "list"
-msgstr "lista"
+msgstr "목록"
 
 #: controlTypes.py:202
 msgid "list item"
-msgstr "item de lista"
+msgstr "목록항목"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
@@ -4032,8 +3961,7 @@ msgstr "lnk"
 
 #: globalCommands.py:891
 msgid "loads the saved NVDA configuration, overriding current changes"
-msgstr ""
-"Carrega as configurações salvas do NVDA, desfazendo eventuais mudanças atuais"
+msgstr "기존의 저장된 NVDA 환경설정을 불러 옵니다."
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
@@ -4046,41 +3974,41 @@ msgstr "lst"
 #: braille.py:446
 #, python-format
 msgid "lv %s"
-msgstr "nv %s"
+msgstr "lv %s"
 
 #. Translators: Reported for the main landmark, normally found on web pages.
 #: aria.py:75
 msgid "main"
-msgstr "principal"
+msgstr "main"
 
 #: synthDrivers/newfon.py:190
 msgid "male 1"
-msgstr "masculina 1"
+msgstr "male 1"
 
 #: synthDrivers/newfon.py:190
 msgid "male 2"
-msgstr "masculina 2"
+msgstr "male 2"
 
 #. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
 #: keyLabels.py:39
 msgid "media player"
-msgstr "tocador"
+msgstr "미디어 플레이어"
 
 #: controlTypes.py:199 controlTypes.py:320
 msgid "menu"
-msgstr "menu"
+msgstr "메뉴"
 
 #: controlTypes.py:197
 msgid "menu bar"
-msgstr "barra de menus"
+msgstr "메뉴바"
 
 #: controlTypes.py:300
 msgid "menu button"
-msgstr "botão de menu"
+msgstr "메뉴 버튼"
 
 #: controlTypes.py:198
 msgid "menu item"
-msgstr "item de menu"
+msgstr "메뉴 항목"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
@@ -4100,285 +4028,285 @@ msgstr "modal"
 
 #: characterProcessing.py:129
 msgid "most"
-msgstr "muito"
+msgstr ""
 
 #: globalCommands.py:346
 msgid "move focus"
-msgstr "move foco"
+msgstr "포커스 이동"
 
 #: globalCommands.py:337
 msgid "move to focus"
-msgstr "mover para o foco"
+msgstr "포커스로 이동"
 
 #: virtualBuffers/__init__.py:1482
 msgid "moves to the next block quote"
-msgstr "vai ao próximo bloco de citação"
+msgstr "다음 블럭퀕으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1466
 msgid "moves to the next button"
-msgstr "vai ao próximo botão"
+msgstr "다음 버튼으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1478
 msgid "moves to the next check box"
-msgstr "vai à próxima caixa de seleção"
+msgstr "다음 체크박스로 이동하빈다"
 
 #: virtualBuffers/__init__.py:1476
 msgid "moves to the next combo box"
-msgstr "vai à próxima caixa de combinação"
+msgstr "다음 콤보박스로 이동합니다"
 
 #: virtualBuffers/__init__.py:1468
 msgid "moves to the next edit field"
-msgstr "vai ao próximo campo de texto"
+msgstr "다음 입력창으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1488
 msgid "moves to the next embedded object"
-msgstr "vai ao próximo objeto embutido"
+msgstr "다음 임베디드 객체로 이동합니다."
 
 #: virtualBuffers/__init__.py:1460
 msgid "moves to the next form field"
-msgstr "vai ao próximo campo de formulário"
+msgstr "다음 폼 필드로 이동합니다."
 
 #: virtualBuffers/__init__.py:1470
 msgid "moves to the next frame"
-msgstr "vai à próxima freime"
+msgstr "다음 프레임으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1480
 msgid "moves to the next graphic"
-msgstr "vai ao próximo gráfico"
+msgstr "다음 그래픽으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1438
 msgid "moves to the next heading"
-msgstr "vai ao próximo cabeçalho"
+msgstr "다음 헤딩으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1440
 msgid "moves to the next heading at level 1"
-msgstr "vai ao próximo cabeçalho no nível 1"
+msgstr "다음 레벨 1 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1442
 msgid "moves to the next heading at level 2"
-msgstr "vai ao próximo cabeçalho no nível 2"
+msgstr "다음 레벨 2 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1444
 msgid "moves to the next heading at level 3"
-msgstr "vai ao próximo cabeçalho no nível 3"
+msgstr "다음 레벨 3 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1446
 msgid "moves to the next heading at level 4"
-msgstr "vai ao próximo cabeçalho no nível 4"
+msgstr "다음 레벨 4 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1448
 msgid "moves to the next heading at level 5"
-msgstr "vai ao próximo cabeçalho no nível 5"
+msgstr "다음 레벨 5 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1450
 msgid "moves to the next heading at level 6"
-msgstr "vai ao próximo cabeçalho no nível 6"
+msgstr "다음 레벨 6 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1486
 msgid "moves to the next landmark"
-msgstr "vai à próxima marca"
+msgstr "다음 랜드마크로 이동합니다"
 
 #: virtualBuffers/__init__.py:1454
 msgid "moves to the next link"
-msgstr "vai ao próximo linque"
+msgstr "다음 링크로 이동합니다"
 
 #: virtualBuffers/__init__.py:1462
 msgid "moves to the next list"
-msgstr "vai à próxima lista"
+msgstr "다음 목록으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1464
 msgid "moves to the next list item"
-msgstr "vai ao próximo item de lista"
+msgstr "다음 목록 항목으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1474
 msgid "moves to the next radio button"
-msgstr "vai ao próximo botão de opção"
+msgstr "다음 라디오 버튼으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1472
 msgid "moves to the next separator"
-msgstr "vai ao próximo separador"
+msgstr "다음 separator로 이동합니다."
 
 #: virtualBuffers/__init__.py:1452
 msgid "moves to the next table"
-msgstr "vai à próxima tabela"
+msgstr "다음 테이블로 이동합니다"
 
 #: virtualBuffers/__init__.py:1295
 msgid "moves to the next table column"
-msgstr "vai à próxima coluna da tabela"
+msgstr "다음 테이블 행으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1287
 msgid "moves to the next table row"
-msgstr "vai à próxima linha da tabela"
+msgstr "다음 테이블 열로 이동합니다"
 
 #: virtualBuffers/__init__.py:1458
 msgid "moves to the next unvisited link"
-msgstr "vai ao próximo linque não visitado"
+msgstr "다음 방문하지 않은 링크로 이동합니다"
 
 #: virtualBuffers/__init__.py:1456
 msgid "moves to the next visited link"
-msgstr "vai ao próximo linque visitado"
+msgstr "다음 방문한 링크로 이동합니다"
 
 #: virtualBuffers/__init__.py:1483
 msgid "moves to the previous block quote"
-msgstr "vai ao bloco de citação anterior"
+msgstr "이전 블럭퀕으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1467
 msgid "moves to the previous button"
-msgstr "volta ao botão anterior"
+msgstr "이전 버튼으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1479
 msgid "moves to the previous check box"
-msgstr "volta à caixa de seleção anterior"
+msgstr "이전 체크박스로 이동합니다"
 
 #: virtualBuffers/__init__.py:1477
 msgid "moves to the previous combo box"
-msgstr "volta à caixa de combinação anterior"
+msgstr "이전 콤보박스로 이동합니다"
 
 #: virtualBuffers/__init__.py:1469
 msgid "moves to the previous edit field"
-msgstr "volta ao campo de texto anterior"
+msgstr "이전 입력창으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1489
 msgid "moves to the previous embedded object"
-msgstr "vai ao objeto embutido anterior"
+msgstr "이전 임베디드 객체로 이동합니다."
 
 #: virtualBuffers/__init__.py:1461
 msgid "moves to the previous form field"
-msgstr "volta ao campo de formulário anterior"
+msgstr "이전 폼 필드로 이동합니다."
 
 #: virtualBuffers/__init__.py:1471
 msgid "moves to the previous frame"
-msgstr "vai para freime anterior"
+msgstr "이전 프레임으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1481
 msgid "moves to the previous graphic"
-msgstr "volta ao gráfico anterior"
+msgstr "이전 그래픽으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1439
 msgid "moves to the previous heading"
-msgstr "volta ao cabeçalho anterior"
+msgstr "이전 헤딩으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1441
 msgid "moves to the previous heading at level 1"
-msgstr "volta ao cabeçalho anterior no nível 1"
+msgstr "이전 레벨 1 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1443
 msgid "moves to the previous heading at level 2"
-msgstr "volta ao cabeçalho anterior no nível 2"
+msgstr "이전 레벨 2 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1445
 msgid "moves to the previous heading at level 3"
-msgstr "volta ao cabeçalho anterior no nível 3"
+msgstr "이전 레벨 3 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1447
 msgid "moves to the previous heading at level 4"
-msgstr "volta ao cabeçalho anterior no nível 4"
+msgstr "이전 레벨 4 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1449
 msgid "moves to the previous heading at level 5"
-msgstr "volta ao cabeçalho anterior no nível 5"
+msgstr "이전 레벨 5 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1451
 msgid "moves to the previous heading at level 6"
-msgstr "volta ao cabeçalho anterior no nível 6"
+msgstr "이전 레벨 6 헤딩으로 이동합니다."
 
 #: virtualBuffers/__init__.py:1487
 msgid "moves to the previous landmark"
-msgstr "volta à marca anterior"
+msgstr "이전 랜드마크로 이동합니다"
 
 #: virtualBuffers/__init__.py:1455
 msgid "moves to the previous link"
-msgstr "volta ao linque anterior"
+msgstr "이전 링크로 이동합니다"
 
 #: virtualBuffers/__init__.py:1463
 msgid "moves to the previous list"
-msgstr "volta para lista anterior"
+msgstr "이전 목록으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1465
 msgid "moves to the previous list item"
-msgstr "volta ao item de lista"
+msgstr "이전 목록 항목으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1475
 msgid "moves to the previous radio button"
-msgstr "volta ao botão de opção anterior"
+msgstr "이전 라디오 버튼으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1473
 msgid "moves to the previous separator"
-msgstr "volta ao separador anterior"
+msgstr "이전 separator로 이동합니다."
 
 #: virtualBuffers/__init__.py:1453
 msgid "moves to the previous table"
-msgstr "vai à próxima tabela"
+msgstr "이전 테이블로 이동합니다"
 
 #: virtualBuffers/__init__.py:1299
 msgid "moves to the previous table column"
-msgstr "vai à linha anterior da tabela"
+msgstr "이전 테이블 행으로 이동합니다"
 
 #: virtualBuffers/__init__.py:1291
 msgid "moves to the previous table row"
-msgstr "vai à linha anterior da tabela"
+msgstr "이전 테이블 열로 이동합니다"
 
 #: virtualBuffers/__init__.py:1459
 msgid "moves to the previous unvisited link"
-msgstr "volta ao linque não visitado anterior"
+msgstr "이전 방문하지 않은 링크로 이동합니다"
 
 #: virtualBuffers/__init__.py:1457
 msgid "moves to the previous visited link"
-msgstr "volta ao linque visitado anterior"
+msgstr "이전 방문한 링크로 이동합니다"
 
 #: controlTypes.py:368
 msgid "multi line"
-msgstr "multilinha"
+msgstr "여러줄 입력창"
 
 #. Translators: This is the name of the mute key found on multimedia keyboards to control playback volume.
 #: keyLabels.py:23
 msgid "mute"
-msgstr "mudo"
+msgstr "mute"
 
 #. Translators: Reported for the navigation landmark, normally found on web pages.
 #: aria.py:77
 msgid "navigation"
-msgstr "navegação"
+msgstr "navigation"
 
 #: colors.py:101
 msgid "navy blue"
-msgstr "azul marinho"
+msgstr "남색"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 #: keyLabels.py:29
 msgid "next track"
-msgstr "próxima faixa"
+msgstr "다음 트랙"
 
 #. Translators: Reported when text is not bolded.
 #: speech.py:1022
 msgid "no bold"
-msgstr "sem negrito"
+msgstr ""
 
 #: globalCommands.py:353
 msgid "no caret"
-msgstr "sem cursor"
+msgstr "캐럿 없음"
 
 #: globalCommands.py:344 globalCommands.py:697
 msgid "no focus"
-msgstr "sem foco"
+msgstr "포커스 없음"
 
 #. Translators: This is spoken when the given line has no indentation.
 #: speech.py:355
 msgid "no indent"
-msgstr "sem indentação"
+msgstr "들여쓰기 없음"
 
 #. Translators: Reported when text is not italicized.
 #: speech.py:1030
 msgid "no italic"
-msgstr "sem itálico"
+msgstr ""
 
 #: virtualBuffers/__init__.py:1484
 msgid "no more text after a block of links"
-msgstr "sem mais texto após o bloco de linques"
+msgstr ""
 
 #: virtualBuffers/__init__.py:1485
 msgid "no more text before a block of links"
-msgstr "sem mais texto antes do bloco de linques"
+msgstr ""
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -4386,233 +4314,234 @@ msgstr "sem mais texto antes do bloco de linques"
 #: globalCommands.py:377 globalCommands.py:391 globalCommands.py:405
 #: globalCommands.py:419
 msgid "no navigator object"
-msgstr "nenhum objeto navegação"
+msgstr "화면 탐색 객체 없음"
 
 #: virtualBuffers/__init__.py:1482
 msgid "no next block quote"
-msgstr "sem bloco de citação seguinte"
+msgstr "다음 블럭퀕 없음"
 
 #: virtualBuffers/__init__.py:1466
 msgid "no next button"
-msgstr "sem botão seguinte"
+msgstr "다음 버튼 없음"
 
 #: virtualBuffers/__init__.py:1478
 msgid "no next check box"
-msgstr "sem caixa de seleção seguinte"
+msgstr "다음 체크박스 없음"
 
 #: virtualBuffers/__init__.py:1476
 msgid "no next combo box"
-msgstr "sem caixa de combinação seguinte"
+msgstr "다음 콤보박스 없음"
 
 #: virtualBuffers/__init__.py:1468
 msgid "no next edit field"
-msgstr "sem campo de texto seguinte"
+msgstr "다음 입력창 없음"
 
 #: virtualBuffers/__init__.py:1488
 msgid "no next embedded object"
-msgstr "sem objeto embutido seguinte"
+msgstr "다음 임베디드 갯체 없음"
 
 #: virtualBuffers/__init__.py:1460
 msgid "no next form field"
-msgstr "sem campo de formulário seguinte"
+msgstr "다음 폼 필드 없음"
 
 #: virtualBuffers/__init__.py:1470
 msgid "no next frame"
-msgstr "sem freime seguinte"
+msgstr "다음 프레임 없음"
 
 #: virtualBuffers/__init__.py:1480
 msgid "no next graphic"
-msgstr "sem gráfico seguinte"
+msgstr "다음 그래픽 없음"
 
 #: virtualBuffers/__init__.py:1438
 msgid "no next heading"
-msgstr "sem cabeçalho seguinte"
+msgstr "다음 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1440
 msgid "no next heading at level 1"
-msgstr "sem cabeçalho seguinte no nível 1"
+msgstr "다음 레벨 1 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1442
 msgid "no next heading at level 2"
-msgstr "sem cabeçalho seguinte no nível 2"
+msgstr "다음 레벨 2 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1444
 msgid "no next heading at level 3"
-msgstr "sem cabeçalho seguinte no nível 3"
+msgstr "다음 레벨 3 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1446
 msgid "no next heading at level 4"
-msgstr "sem cabeçalho seguinte no nível 4"
+msgstr "다음 레벨 4 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1448
 msgid "no next heading at level 5"
-msgstr "sem cabeçalho seguinte no nível 5"
+msgstr "다음 레벨 5 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1450
 msgid "no next heading at level 6"
-msgstr "sem cabeçalho seguinte no nível 6"
+msgstr "다음 레벨 6 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1486
 msgid "no next landmark"
-msgstr "sem marca seguinte"
+msgstr "다음 랜드마크 없음"
 
 #: virtualBuffers/__init__.py:1454
 msgid "no next link"
-msgstr "sem linque seguinte"
+msgstr "다음 링크 없음"
 
 #: virtualBuffers/__init__.py:1462
 msgid "no next list"
-msgstr "sem lista seguinte"
+msgstr "다음 목록 없음"
 
 #: virtualBuffers/__init__.py:1464
 msgid "no next list item"
-msgstr "sem item de lista seguinte"
+msgstr "다음 목록 항목 없음"
 
 #: virtualBuffers/__init__.py:1474
 msgid "no next radio button"
-msgstr "sem botão de opção seguinte"
+msgstr "다음 라디오 버튼 없음"
 
 #: virtualBuffers/__init__.py:1472
 msgid "no next separator"
-msgstr "sem separador seguinte"
+msgstr "다음 separator 없음"
 
 #: virtualBuffers/__init__.py:1452
 msgid "no next table"
-msgstr "sem tabela seguinte"
+msgstr "다음 테이블 없음"
 
 #: virtualBuffers/__init__.py:1458
 msgid "no next unvisited link"
-msgstr "sem linque não visitado seguinte"
+msgstr "다음 방문하지 않은 링크 없음"
 
 #: virtualBuffers/__init__.py:1456
 msgid "no next visited link"
-msgstr "sem linque visitado seguinte"
+msgstr "다음 방문한 링크 없음"
 
 #: virtualBuffers/__init__.py:1483
 msgid "no previous block quote"
-msgstr "sem bloco de citação anterior"
+msgstr "이전 블럭퀕 없음"
 
 #: virtualBuffers/__init__.py:1467
 msgid "no previous button"
-msgstr "sem botão anterior"
+msgstr "이전 버튼 없음"
 
 #: virtualBuffers/__init__.py:1479
 msgid "no previous check box"
-msgstr "sem caixa de seleção anterior"
+msgstr "이전 체크박스 없음"
 
 #: virtualBuffers/__init__.py:1477
 msgid "no previous combo box"
-msgstr "sem caixa de combinação anterior"
+msgstr "이전 콤보박스 없음"
 
 #: virtualBuffers/__init__.py:1469
 msgid "no previous edit field"
-msgstr "sem texto de formulário anterior"
+msgstr "이전 입력창 없음"
 
 #: virtualBuffers/__init__.py:1489
 msgid "no previous embedded object"
-msgstr "sem objeto embutido anterior"
+msgstr "이전 임베디드 객체 없음"
 
 #: virtualBuffers/__init__.py:1461
 msgid "no previous form field"
-msgstr "sem campo de formulário anterior"
+msgstr "이전 폼 필드 없음"
 
 #: virtualBuffers/__init__.py:1471
 msgid "no previous frame"
-msgstr "sem freime anterior"
+msgstr "이전 프레임 없음"
 
 #: virtualBuffers/__init__.py:1481
 msgid "no previous graphic"
-msgstr "sem gráfico anterior"
+msgstr "이전 그래픽 없음"
 
 #: virtualBuffers/__init__.py:1439
 msgid "no previous heading"
-msgstr "sem cabeçalho anterior"
+msgstr "이전 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1441
 msgid "no previous heading at level 1"
-msgstr "sem cabeçalho anterior no nível 1"
+msgstr "이전 레벨 1 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1443
 msgid "no previous heading at level 2"
-msgstr "sem cabeçalho anterior no nível 2"
+msgstr "이전 레벨 2 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1445
 msgid "no previous heading at level 3"
-msgstr "sem cabeçalho anterior no nível 3"
+msgstr "이전 레벨 3 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1447
 msgid "no previous heading at level 4"
-msgstr "sem cabeçalho anterior no nível 4"
+msgstr "이전 레벨 4 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1449
 msgid "no previous heading at level 5"
-msgstr "sem cabeçalho anterior no nível 5"
+msgstr "이전 레벨 5 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1451
 msgid "no previous heading at level 6"
-msgstr "sem cabeçalho anterior no nível 6"
+msgstr "이전 레벨 6 헤딩 없음"
 
 #: virtualBuffers/__init__.py:1487
 msgid "no previous landmark"
-msgstr "sem marca anterior"
+msgstr "이전 랜드마크 없음"
 
 #: virtualBuffers/__init__.py:1455
 msgid "no previous link"
-msgstr "sem linque anterior"
+msgstr "이전 링크 없음"
 
 #: virtualBuffers/__init__.py:1463
 msgid "no previous list"
-msgstr "sem lista anterior"
+msgstr "이전 목록 없음"
 
 #: virtualBuffers/__init__.py:1465
 msgid "no previous list item"
-msgstr "sem item de lista anterior"
+msgstr "이전 목록 항목 없음"
 
 #: virtualBuffers/__init__.py:1475
 msgid "no previous radio button"
-msgstr "sem botão de opção anterior"
+msgstr "이전 라디오 버튼 없음"
 
 #: virtualBuffers/__init__.py:1473
 msgid "no previous separator"
-msgstr "sem separador anterior"
+msgstr "이전 separator 없음"
 
 #: virtualBuffers/__init__.py:1453
 msgid "no previous table"
-msgstr "sem tabela anterior"
+msgstr "이전 테이블 없음"
 
 #: virtualBuffers/__init__.py:1459
 msgid "no previous unvisited link"
-msgstr "sem linque não visitado anterior"
+msgstr "이전 방문하지 않은 링크 없음"
 
 #: virtualBuffers/__init__.py:1457
 msgid "no previous visited link"
-msgstr "sem linque visitado anterior"
+msgstr "이전 방문한 링크 없음"
 
 #: globalCommands.py:774
 msgid "no progress bar updates"
-msgstr "Sem atualizações em barras de progresso"
+msgstr "진행률 알리지 않기"
 
+# Literally means, "no contents selcted".
 #: cursorManager.py:245 globalCommands.py:125
 msgid "no selection"
-msgstr "sem seleção"
+msgstr "선택된 내용이 없습니다."
 
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 #: speech.py:1040
 msgid "no strikethrough"
-msgstr "sem cancela"
+msgstr ""
 
 #: globalCommands.py:827
 msgid "no system battery"
-msgstr "sem bateria de sistema"
+msgstr "배터리 없음"
 
 #: globalCommands.py:742
 msgid "no title"
-msgstr "sem título"
+msgstr "제목 없음"
 
 #: characterProcessing.py:127 synthDrivers/_espeak.py:311
 msgid "none"
-msgstr "nada"
+msgstr ""
 
 #. Translators: Indicates that a particular state on an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
@@ -4621,110 +4550,110 @@ msgstr "nada"
 #: braille.py:429 speech.py:797
 #, python-format
 msgid "not %s"
-msgstr "não %s"
+msgstr "%s 해제"
 
 #. Translators: This is presented when a checkbox is not checked.
 #: controlTypes.py:390
 msgid "not checked"
-msgstr "não marcado"
+msgstr "체크 해제"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes.py:388
 msgid "not selected"
-msgstr "não selecionado"
+msgstr "선택 해제"
 
 #. Translators: Reported when text is not underlined.
 #: speech.py:1048
 msgid "not underlined"
-msgstr "não sublinhado"
+msgstr ""
 
 #: controlTypes.py:265
 msgid "note"
-msgstr "nota"
+msgstr "note"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:87
 msgid "num lock"
-msgstr "num loc"
+msgstr "num lock"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:105
 msgid "numpad 1"
-msgstr "1 do teclado numérico"
+msgstr "numpad 1"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:99
 msgid "numpad 2"
-msgstr "2 do teclado numérico"
+msgstr "numpad 2"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:103
 msgid "numpad 3"
-msgstr "3 do teclado numérico"
+msgstr "numpad 3"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:93
 msgid "numpad 4"
-msgstr "4 do teclado numérico"
+msgstr "numpad 4"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:109
 msgid "numpad 5"
-msgstr "5 do teclado numérico"
+msgstr "numpad 5"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:95
 msgid "numpad 6"
-msgstr "6 do teclado numérico"
+msgstr "numpad 6"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:107
 msgid "numpad 7"
-msgstr "7 do teclado numérico"
+msgstr "numpad 7"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:97
 msgid "numpad 8"
-msgstr "8 do teclado numérico"
+msgstr "numpad 8"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:101
 msgid "numpad 9"
-msgstr "9 do teclado numérico"
+msgstr "numpad 9"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:75
 msgid "numpad delete"
-msgstr "del do teclado numérico"
+msgstr "numpad delete"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:111
 msgid "numpad divide"
-msgstr "barra do teclado numérico"
+msgstr "numpad divide"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:59
 msgid "numpad enter"
-msgstr "ênter do teclado numérico"
+msgstr "numpad enter"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:115
 msgid "numpad minus"
-msgstr "menos do teclado numérico"
+msgstr "numpad minus"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:113
 msgid "numpad multiply"
-msgstr "asterisco do teclado numérico"
+msgstr "numpad multiply"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:117
 msgid "numpad plus"
-msgstr "mais do teclado numérico"
+msgstr "numpad plus"
 
 #: globalCommands.py:233
 msgid "object has no location"
-msgstr "objeto sem local"
+msgstr "위치 없는 객체"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
@@ -4736,17 +4665,17 @@ msgstr "objeto sem local"
 #: appModules/winamp.py:90 gui/settingsDialogs.py:739
 #: gui/settingsDialogs.py:1083 virtualBuffers/__init__.py:811
 msgid "off"
-msgstr "desativado"
+msgstr "비활성화"
 
 #: controlTypes.py:370
 msgid "off screen"
-msgstr "fora da tela"
+msgstr "off screen"
 
 #. Translators: the color olive.
 #. For more info see: http://en.wikipedia.org/wiki/Olive_%28color%29#Olive
 #: colors.py:97
 msgid "olive"
-msgstr "oliva"
+msgstr "올리브"
 
 #: globalCommands.py:44 globalCommands.py:179 globalCommands.py:190
 #: globalCommands.py:200 globalCommands.py:731 globalCommands.py:792
@@ -4754,7 +4683,7 @@ msgstr "oliva"
 #: synthSettingsRing.py:74 appModules/winamp.py:78 appModules/winamp.py:88
 #: gui/settingsDialogs.py:1083 virtualBuffers/__init__.py:811
 msgid "on"
-msgstr "ativado"
+msgstr "활성화"
 
 #. Translators: This is used to indicate a background color after the text color.
 #. The {backgroundColor} text will be replaced by the background color.
@@ -4762,123 +4691,123 @@ msgstr "ativado"
 #. the output of this message in English would be "on black".
 #: speech.py:1006
 msgid "on {backgroundColor}"
-msgstr "Sobre {backgroundColor}"
+msgstr ""
 
 #: controlTypes.py:316
 msgid "option pane"
-msgstr "painel de opção"
+msgstr "option pane"
 
 #. Translators: This is the color orange.
 #: colors.py:118
 msgid "orange"
-msgstr "alaranjado"
+msgstr "주황색"
 
 #: speech.py:938 speech.py:1091
 #, python-format
 msgid "out of %s"
-msgstr "fora de %s"
+msgstr "%s 끝"
 
 #. Translators: Reported when moving out of text containing a spelling error.
 #: speech.py:1109
 msgid "out of spelling error"
-msgstr "fora do erro"
+msgstr "철자 오류 끝"
 
 #: speech.py:1127
 msgid "out of table"
-msgstr "fora da tabela"
+msgstr "테이블 끝"
 
 #: controlTypes.py:266
 msgid "page"
-msgstr "página"
+msgstr "페이지"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
 #: speech.py:964
 #, python-format
 msgid "page %s"
-msgstr "página %s"
+msgstr "페이지 %s"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:67
 msgid "page down"
-msgstr "peije dáun"
+msgstr "page down"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:65
 msgid "page up"
-msgstr "peige ap"
+msgstr "page up"
 
 #: controlTypes.py:190
 msgid "pane"
-msgstr "painel"
+msgstr "pane"
 
 #: controlTypes.py:321
 msgid "panel"
-msgstr "painel"
+msgstr "페널"
 
 #: controlTypes.py:234 textInfos/__init__.py:199
 msgid "paragraph"
-msgstr "parágrafo"
+msgstr "문단"
 
 #: controlTypes.py:322
 msgid "password edit"
-msgstr "edição de senha"
+msgstr "암호 입력"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
 #: gui/settingsDialogs.py:674
 msgid "play audio coordinates when mouse moves"
-msgstr "Tocar sons de coordenada quando o mouse é movido"
+msgstr ""
 
 #. Translators: This is the name of the play/pause key found on multimedia keyboards to play/pause the current playing track in the mediaplayer.
 #: keyLabels.py:35
 msgid "play pause"
-msgstr "toca e pausa"
+msgstr "play pause"
 
 #: controlTypes.py:350
 msgid "pressed"
-msgstr "pressionado"
+msgstr "선택됨"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 #: keyLabels.py:31
 msgid "previous track"
-msgstr "faixa anterior"
+msgstr "이전 트랙"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:89
 msgid "print screen"
-msgstr "print scrin"
+msgstr "print screen"
 
 #: controlTypes.py:212
 msgid "progress bar"
-msgstr "barra de progresso"
+msgstr "진행률 막대"
 
 #: controlTypes.py:247
 msgid "property page"
-msgstr "página de propriedades"
+msgstr "속성 페이지"
 
 #: controlTypes.py:360
 msgid "protected"
-msgstr "protegido"
+msgstr "보호됨"
 
 #: colors.py:104
 msgid "purple"
-msgstr "púrpura"
+msgstr "보라색"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
 #: braille.py:451
 #, python-format
 msgid "r%s"
-msgstr "l%s"
+msgstr "r%s"
 
 #: controlTypes.py:193
 msgid "radio button"
-msgstr "botão de opção"
+msgstr "라디오 버튼"
 
 #: controlTypes.py:267
 msgid "radio menu item"
-msgstr "item de menu de opção"
+msgstr "라디오 메뉴"
 
 #. Translators: Displayed in braille for an object which is a
 #. radio button.
@@ -4888,324 +4817,320 @@ msgstr "rbtn"
 
 #: controlTypes.py:353
 msgid "read only"
-msgstr "somente leitura"
+msgstr "읽기 전용"
 
 #: globalCommands.py:648
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
 msgstr ""
-"lê a partir do cursor de exploração até o fim do texto atual, movendo o "
-"cursor de exploração de modo que ele acompanhe a leitura"
 
 #: globalCommands.py:652
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr ""
-"lê a partir do cursor do sistema até o fim do texto, movendo o cursor de "
-"modo que ele acompanhe a leitura"
+"현재 케럿 위치부터 텍스트 끝까지 일거줍니다. 이때 케럿도 함께 움직입니다."
 
 #: globalCommands.py:724
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
-"lê a barra de status da aplicação atual e move o cursor de navegação para ela"
+"현재 응용프로그램의 상태 표시줄을 읽고 네비게이터를 그곳으로 이동합니다."
 
 #: appModules/outlook.py:27
 #, python-format
 msgid "received: %s"
-msgstr "recebido em: %s"
+msgstr "received: %s"
 
 #: colors.py:102
 msgid "red"
-msgstr "vermelho"
+msgstr "빨강"
 
 #: controlTypes.py:269
 msgid "redundant object"
-msgstr "objeto redundante"
+msgstr "redundant object"
 
 #. Translators: This is the name of the refresh key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:13
 msgid "refresh"
-msgstr "atualiza"
+msgstr "새로 고침"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
 #: gui/addonGui.py:131
 msgid "remove"
-msgstr "remover"
+msgstr "추가 기능 삭제"
 
 #: globalCommands.py:794
 msgid "report dynamic content changes"
-msgstr "anuncia atualizações nos conteúdos dinâmicos"
+msgstr "바뀐 글자 읽기"
 
 #: globalCommands.py:836
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr ""
-"Anuncia a carga da bateria e o tempo restante caso o AC não esteja plugado"
+msgstr "AC 전원을 사용하지 않을 때, 배터리 상태와 남은 시간을 알려줍니다."
 
 #: globalCommands.py:698
 msgid "reports the object with focus"
-msgstr "Anuncia objeto em foco"
+msgstr "포커스된 객체를 알려줍니다."
 
 #: controlTypes.py:361
 msgid "required"
-msgstr "exigido"
+msgstr "요청됨"
 
 #: globalCommands.py:906 gui/settingsDialogs.py:1219
 msgid "review"
-msgstr "explorar"
+msgstr "리뷰"
 
 #: controlTypes.py:275
 msgid "rich edit"
-msgstr "editável"
+msgstr "rich 편집창"
 
 #: globalCommands.py:571 globalCommands.py:588 appModules/totalcmd.py:37
 msgid "right"
-msgstr "direita"
+msgstr "오른쪽"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:131
 msgid "right alt"
-msgstr "alt direito"
+msgstr "오른쪽 alt"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:79
 msgid "right arrow"
-msgstr "direita"
+msgstr "오른쪽 화살표"
 
 #: globalCommands.py:88
 msgid "right click"
-msgstr "clique direito"
+msgstr "오른쪽 버튼 클릭"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:121
 msgid "right control"
-msgstr "control direito"
+msgstr "오른쪽 control"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 #: globalCommands.py:111
 msgid "right mouse button lock"
-msgstr "pressiona botão direito do mause"
+msgstr "오른쪽 마우스 버튼 클릭 잠김"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 #: globalCommands.py:107
 msgid "right mouse button unlock"
-msgstr "solta botão direito do mause"
+msgstr "오른쪽 마우스 버튼 클릭 잠금 해제"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:127
 msgid "right shift"
-msgstr "chift direito"
+msgstr "오른쪽 shift"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:133
 msgid "right windows"
-msgstr "uíndous direito"
+msgstr "오른쪽 windows"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
 #: braille.py:255
 msgid "ro"
-msgstr "sl"
+msgstr ""
 
 #: controlTypes.py:270
 msgid "root pane"
-msgstr "painel raiz"
+msgstr "root pane"
 
 #: controlTypes.py:218
 msgid "row"
-msgstr "linha"
+msgstr "열"
 
 #: speech.py:827 speech.py:1145
 #, python-format
 msgid "row %s"
-msgstr "linha %s"
+msgstr "%s열"
 
 #: controlTypes.py:222
 msgid "row header"
-msgstr "cabeçalho da linha"
+msgstr "줄머리말"
 
 #: controlTypes.py:276
 msgid "ruler"
-msgstr "régua"
+msgstr "ruler"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
 #: gui/addonGui.py:134
 msgid "running"
-msgstr "executando"
+msgstr "실행중"
 
 #: controlTypes.py:213
 msgid "scroll bar"
-msgstr "barra de rolagem"
+msgstr "스크롤바"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:91
 msgid "scroll lock"
-msgstr "scrôl loc"
+msgstr "scroll lock"
 
 #: controlTypes.py:277
 msgid "scroll pane"
-msgstr "painel de rolagem"
+msgstr "scroll pane"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
 #: aria.py:79
 msgid "search"
-msgstr "busca"
+msgstr "검색"
 
 #. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
 #: keyLabels.py:17
 msgid "search page"
-msgstr "página de busca"
+msgstr "search page"
 
 #: controlTypes.py:278
 msgid "section"
-msgstr "seção"
+msgstr "section"
 
 #. Translators: Displayed in braille when an object is selected.
 #: braille.py:245
 msgid "sel"
-msgstr "sel"
+msgstr ""
 
 #: controlTypes.py:371
 msgid "selectable"
-msgstr "selecionável"
+msgstr "선택가능"
 
 #: controlTypes.py:348
 msgid "selected"
-msgstr "selecionado"
+msgstr "선택됨"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401 globalCommands.py:127 speech.py:306 speech.py:498
 #: speech.py:513 virtualBuffers/__init__.py:718
 #, python-format
 msgid "selected %s"
-msgstr "%s selecionado"
+msgstr "%s 선택됨"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
 #: speech.py:492
 #, python-format
 msgid "selecting %s"
-msgstr "%s selecionando"
+msgstr "%s 선택"
 
 #: speech.py:507
 msgid "selection removed"
-msgstr "seleção removida"
+msgstr "선택 해제됨"
 
 #: appModules/outlook.py:40
 #, python-format
 msgid "sent: %s"
-msgstr "enviado em: %s"
+msgstr "sent: %s"
 
 #: controlTypes.py:225
 msgid "separator"
-msgstr "separador"
+msgstr "separator"
 
 #: controlTypes.py:279
 msgid "shape"
-msgstr "forma"
+msgstr "shape"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:53
 msgid "shift"
-msgstr "chift"
+msgstr "shift"
 
 #: virtualBuffers/__init__.py:1485
 msgid "skips backward past a block of links"
-msgstr "pula para trás do bloco de linques"
+msgstr ""
 
 #: virtualBuffers/__init__.py:1484
 msgid "skips forward past a block of links"
-msgstr "pula o bloco de linques"
+msgstr ""
 
 #: controlTypes.py:211
 msgid "slider"
-msgstr "deslizante"
+msgstr "slider"
 
 #: characterProcessing.py:128
 msgid "some"
-msgstr "pouco"
+msgstr ""
 
 #: controlTypes.py:381
 msgid "sorted"
-msgstr "ordenado"
+msgstr "정렬"
 
 #: controlTypes.py:382
 msgid "sorted ascending"
-msgstr "ordem crescente"
+msgstr "오름차순 정렬"
 
 #: controlTypes.py:383
 msgid "sorted descending"
-msgstr "ordem decrescente"
+msgstr "내림차순 정렬"
 
 #: controlTypes.py:308
 msgid "sound"
-msgstr "som"
+msgstr "sound"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:63
 msgid "space"
-msgstr "espaço"
+msgstr "스페이스"
 
 #: globalCommands.py:202
 msgid "speak command keys"
-msgstr "falar teclas de comando"
+msgstr "기능키 읽기"
 
 #: globalCommands.py:777
 msgid "speak progress bar updates"
-msgstr "anunciar barras de progresso"
+msgstr "진행률 업데이트 출력"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
 #: globalCommands.py:182
 msgid "speak typed characters"
-msgstr "falar caracteres digitados"
+msgstr "입력된 문자 읽기"
 
 #: globalCommands.py:192
 msgid "speak typed words"
-msgstr "falar palavras digitadas"
+msgstr "입력된 단어 읽기"
 
 #: globalCommands.py:757
 msgid "speaks the current foreground object"
-msgstr "fala o objeto atualmente em foco"
+msgstr "현재 포그라운드에 위치한 객체를 알려 줍니다."
 
 #: globalCommands.py:605
 #, python-format
 msgid "speech mode %s"
-msgstr "modo de fala é %s"
+msgstr "음성 출력 모드: %s"
 
 #. Translators: Reported when text contains a spelling error.
 #: speech.py:1106
 msgid "spelling error"
-msgstr "erro ortográfico"
+msgstr "맟춤법 오류"
 
 #: controlTypes.py:307
 msgid "spin button"
-msgstr "botão de rotação"
+msgstr "spin button"
 
 #: controlTypes.py:299
 msgid "split button"
-msgstr "botão de divisão"
+msgstr "split button"
 
 #: controlTypes.py:280
 msgid "split pane"
-msgstr "painel de divisão"
+msgstr "split pane"
 
 #: controlTypes.py:214
 msgid "status bar"
-msgstr "barra de status"
+msgstr "상태 표시줄"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards to stop the current playing track in the mediaplayer.
 #: keyLabels.py:33
 msgid "stop"
-msgstr "parar"
+msgstr "stop"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 #: speech.py:1037
 msgid "strikethrough"
-msgstr "cancela"
+msgstr ""
 
 #: controlTypes.py:334
 msgid "style"
-msgstr "estilo"
+msgstr "스타일"
 
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
@@ -5213,16 +5138,16 @@ msgstr "estilo"
 #: speech.py:974
 #, python-format
 msgid "style %s"
-msgstr "estilo %s"
+msgstr "%s 스타일"
 
 #: controlTypes.py:359
 msgid "subMenu"
-msgstr "submenu"
+msgstr "하위 메뉴"
 
 #: appModules/outlook.py:26 appModules/outlook.py:39
 #, python-format
 msgid "subject: %s"
-msgstr "assunto: %s"
+msgstr "제목: %s"
 
 #. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
 #: braille.py:247
@@ -5232,12 +5157,12 @@ msgstr "submnu"
 #. Translators: Reported for subscript text.
 #: controlTypes.py:333 speech.py:1059
 msgid "subscript"
-msgstr "subescrito"
+msgstr "subscript"
 
 #. Translators: Reported for superscript text.
 #: controlTypes.py:332 speech.py:1056
 msgid "superscript"
-msgstr "superescrito"
+msgstr "superscript"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -5245,246 +5170,245 @@ msgstr "superescrito"
 #: globalCommands.py:217
 #, python-format
 msgid "symbol level %s"
-msgstr "grau de sinais %s"
+msgstr "기호 발음 레벨 %s"
 
 #. Translators: This is the name of a key on the keyboard.
 #: controlTypes.py:209 keyLabels.py:137
 msgid "tab"
-msgstr "tab"
+msgstr "탭"
 
 #: controlTypes.py:210
 msgid "tab control"
-msgstr "guia"
+msgstr "tab control"
 
 #: controlTypes.py:215
 msgid "table"
-msgstr "tabela"
+msgstr "테이블"
 
 #: controlTypes.py:240
 msgid "table body"
-msgstr "corpo da tabela"
+msgstr "테이블 본문"
 
 #: controlTypes.py:241
 msgid "table footer"
-msgstr "rodapé da tabela"
+msgstr "테이블 바닥글"
 
 #: controlTypes.py:239
 msgid "table header"
-msgstr "cabeçalho da tabela"
+msgstr "테이블 머릿글"
 
 #: speech.py:1136
 #, python-format
 msgid "table with %s columns and %s rows"
-msgstr "tabela com %s colunas e %s linhas"
+msgstr "테이블: %s 행, %s 열"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 #: globalCommands.py:603
 msgid "talk"
-msgstr "fala"
+msgstr "음성 출력 활성화"
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
 #: braille.py:230
 msgid "tb"
-msgstr "tbl"
+msgstr "tb"
 
 #. Translators: The color teal, which is a mix of green and blue, mostly green.
 #. For more info see http://en.wikipedia.org/wiki/Teal
 #: colors.py:107
 msgid "teal"
-msgstr "cerceta"
+msgstr "틸"
 
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
 #. to exist as a separate window.
 #: controlTypes.py:288
 msgid "tear off menu"
-msgstr "menu de remoção"
+msgstr "tear off menu"
 
 #: controlTypes.py:274
 msgid "terminal"
-msgstr "terminal"
+msgstr "터미널"
 
 #: controlTypes.py:194
 msgid "text"
-msgstr "texto"
+msgstr "text"
 
 #: cursorManager.py:99
 #, python-format
 msgid "text \"%s\" not found"
-msgstr "texto \"%s\" não achado"
+msgstr "문자(열) \"%s\"을(를) 찾지 못했습니다."
 
 #: controlTypes.py:289
 msgid "text frame"
-msgstr "freime de texto"
+msgstr "텍스트 프레임"
 
 #. Translators: This is the name of a combobox in the mouse settings dialog.
 #: gui/settingsDialogs.py:659
 msgid "text reporting unit"
-msgstr "unidade mínima de texto a anunciar"
+msgstr ""
 
 #: controlTypes.py:341
 msgid "thumb control"
-msgstr "controle thumb"
+msgstr "thumb control"
 
 #: controlTypes.py:189
 msgid "title bar"
-msgstr "barra de título"
+msgstr "제목 표시줄"
 
 #: controlTypes.py:290
 msgid "toggle button"
-msgstr "botão de alternância"
+msgstr "토글 버튼"
 
 #: controlTypes.py:220
 msgid "tool bar"
-msgstr "barra de ferramentas"
+msgstr "툴바"
 
 #: controlTypes.py:205
 msgid "tool tip"
-msgstr "dica de ferramenta"
+msgstr "툴팁"
 
 #: globalCommands.py:438 globalCommands.py:450 globalCommands.py:492
 msgid "top"
-msgstr "início"
+msgstr "위"
 
 #: controlTypes.py:207
 msgid "tree view"
-msgstr "árvore"
+msgstr "트리뷰"
 
 #: controlTypes.py:310
 msgid "tree view button"
-msgstr "botão da árvore"
+msgstr "트리뷰 버튼"
 
 #: controlTypes.py:208
 msgid "tree view item"
-msgstr "item da árvore"
+msgstr "트리뷰 항목"
 
 #. Translators: Displayed in braille for an object which is a
 #. tree view.
 #: braille.py:227
 msgid "tv"
-msgstr "árv"
+msgstr "tv"
 
 #: controlTypes.py:346
 msgid "unavailable"
-msgstr "indisponível"
+msgstr "사용불가"
 
 #: controlTypes.py:329
 msgid "underline"
-msgstr "sublinhado"
+msgstr "underline"
 
 #. Translators: Reported when text is underlined.
 #: speech.py:1046
 msgid "underlined"
-msgstr "sublinhado"
+msgstr ""
 
 #: controlTypes.py:187
 msgid "unknown"
-msgstr "desconhecido"
+msgstr "알 수 없음"
 
 #: colors.py:75
 msgid "unknown color"
-msgstr "cor desconhecida"
+msgstr "알 수 없는 색상"
 
 #: NVDAHelper.py:140
 msgid "unknown layout"
-msgstr "leiaute desconhecido"
+msgstr "알 수 없는 레이아웃"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
 #: appModules/msimn.py:109 appModules/outlook.py:31
 msgid "unread"
-msgstr "não lida"
+msgstr "읽지 않음"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
 #: speech.py:505
 #, python-format
 msgid "unselecting %s"
-msgstr "%s desselecionando"
+msgstr "%s 선택 해제"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:81
 msgid "up arrow"
-msgstr "cima"
+msgstr "윗쪽 화살표"
 
 #: virtualBuffers/__init__.py:812
 #, python-format
 msgid "use screen layout %s"
-msgstr "Usar apresentação da tela %s"
+msgstr ""
 
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
 #. As the user manipulates the scroll bars, the contents of the view port can change.
 #: controlTypes.py:284
 msgid "view port"
-msgstr "porta de visualização"
+msgstr "view port"
 
 #: controlTypes.py:357
 msgid "visited"
-msgstr "visitado"
+msgstr "방문함"
 
 #. Translators: Displayed in braille for a link which has been visited.
 #: braille.py:414
 msgid "vlnk"
-msgstr "lnkv"
+msgstr "vlnk"
 
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 #: keyLabels.py:25
 msgid "volume down"
-msgstr "diminui volume"
+msgstr "볼륨 작게"
 
 #. Translators: This is the name of the volume up key found on multimedia keyboards to increase playback volume.
 #: keyLabels.py:27
 msgid "volume up"
-msgstr "aumenta volume"
+msgstr "볼륨 크게"
 
 #: colors.py:98
 msgid "white"
-msgstr "branco"
+msgstr "하얀색"
 
 #: controlTypes.py:309
 msgid "white space"
-msgstr "espaço em branco"
+msgstr "공백"
 
 #: controlTypes.py:188
 msgid "window"
-msgstr "janela"
+msgstr "윈도우"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:55
 msgid "windows"
-msgstr "uíndous"
+msgstr "windows"
 
 #: speech.py:843
 #, python-format
 msgid "with %s columns"
-msgstr "com %s colunas"
+msgstr ""
 
 #. List.
 #: speech.py:912
 #, python-format
 msgid "with %s items"
-msgstr "com %s itens"
+msgstr "항목수 %s개"
 
 #: speech.py:845
 #, python-format
 msgid "with %s rows"
-msgstr "com %s linhas"
+msgstr ""
 
 #: speech.py:841
 #, python-format
 msgid "with %s rows and %s columns"
-msgstr "com %s linhas e %s colunas"
+msgstr "%s 열, %s 행"
 
 #: textInfos/__init__.py:197
 msgid "word"
-msgstr "palavra"
+msgstr "단어"
 
 #: colors.py:99
 msgid "yellow"
-msgstr "amarelo"
+msgstr "노랑"
 
 #: versionInfo.py:45
-#, fuzzy
 msgid ""
 "{longName} ({name})\r\n"
 "Version: {version}\r\n"
@@ -5507,25 +5431,6 @@ msgid ""
 "donating to NV Access. You can do this by selecting Donate from the NVDA "
 "menu."
 msgstr ""
-"{longName} ({name})\n"
-"Versão: {version}\n"
-"Página: {url}\n"
-"{copyright}\n"
-"\n"
-"{name} encontra-se sob a licença pública GNU, versão 2. Pode distribuir e "
-"modificar o programa como quiser, contanto que a mesma licença vá com ele e "
-"v. ofereça o código fonte a quem o desejar. Isso se aplica ao programa "
-"original e a cópias modificadas dele, bem assim a quaisquer trabalhos "
-"derivados.\n"
-"Para mais detalhes, veja a licença no menu ajuda.\n"
-"Pode também vê-la neste endereço: http://www.magnux.org/doc/GPL-pt_BR.txt\n"
-"\n"
-"O {name} é desenvolvido pela NV Access, uma organização sem fins lucrativos "
-"comprometida em auxiliar e promover soluções gratuitas e abertas para "
-"pessoas cegas e de baixa visão.\n"
-"Caso o NVDA lhe seja útil e deseje que ele continue a melhorar, faça por "
-"gentileza uma doação à NV Access; encontra-se para tanto uma opção no menu "
-"do NVDA."
 
 #. Translators: message shown in the Addon Information dialog. 
 #: gui/addonGui.py:176
@@ -5537,28 +5442,16 @@ msgid ""
 "Description: {description}\r\n"
 msgstr ""
 "{summary} ({name})\n"
-"Versão: {version}\n"
-"Autor: {author}\n"
-"Descrição: {description}\n"
+"버전: {version}\n"
+"저자: {author}\n"
+"서령: {description}\n"
 
 #~ msgid ""
-#~ "We need your help in order to continue to improve NVDA.\n"
-#~ "This project relies primarily on donations and grants. By donating, you "
-#~ "are helping to fund full time development.\n"
-#~ "If even $10 is donated for every download, we will be able to cover all "
-#~ "of the ongoing costs of the project.\n"
-#~ "All donations are received by NV Access, the non-profit organisation "
-#~ "which develops NVDA.\n"
-#~ "Thank you for your support."
+#~ "Your gesture map file contains errors.\n"
+#~ "More details about the errors can be found in the log file."
 #~ msgstr ""
-#~ "Precisamos de seu auxílio a fim de continuar melhorando o NVDA.\n"
-#~ "Esse projeto se assenta sobretudo em doações e patrossínios. Ao doar, "
-#~ "ajudará a bancar o desenvolvimento em tempo integral.\n"
-#~ "Mesmo se forem doados dez reais a cada vez que alguém baixa o programa, "
-#~ "conseguiremos cobrir todos os custos do projeto.\n"
-#~ "Toda doação vai para a NV Access, a organização sem fins lucrativos que "
-#~ "desenvolve o NVDA.\n"
-#~ "Agradecemos o apoio."
+#~ "제스처 맵 파일에 에러가 있습니다.\n"
+#~ "자세한 내용은 로그 파일을 참조하세요."
 
 #~ msgid ""
 #~ "Welcome to NVDA!\n"
@@ -5571,40 +5464,10 @@ msgstr ""
 #~ "From this menu, you can configure NVDA, get help and access other NVDA "
 #~ "functions.\n"
 #~ msgstr ""
-#~ "Bem-vindo ao NVDA !\n"
-#~ "Grande parte dos comandos para controlar o NVDA requer que se pressione a "
-#~ "tecla NVDA e outra ao mesmo tempo.\n"
-#~ "Por padrão, tanto a tecla insert do teclado numérico como o insert "
-#~ "principal pode ser usado como tecla NVDA.\n"
-#~ "Você também pode configurar o NVDA para usar o CapsLock como tecla NVDA.\n"
-#~ "Pressione NVDA+n a qualquer momento para ativar o menu do NVDA.\n"
-#~ "A partir dele você pode configurar o programa, obter ajuda e acessar "
-#~ "outras funções.\n"
-
-#~ msgid ""
-#~ "Your gesture map file contains errors.\n"
-#~ "More details about the errors can be found in the log file."
-#~ msgstr ""
-#~ "Arquivo com mapa de gestos possui erros.\n"
-#~ "Detalhes sobre os erros encontram-se no arquivo de log."
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "A&companhar foco do teclado"
-
-#~ msgid "&Add..."
-#~ msgstr "&Adicionar..."
-
-#~ msgid "Create an &Autorun file"
-#~ msgstr "Criar arquivo de &auto-execussão"
-
-#~ msgid "Key Command quick reference"
-#~ msgstr "Referência rápida de teclas de atalho"
-
-#~ msgid "User guide"
-#~ msgstr "Guia do usuário"
-
-#~ msgid "Web site"
-#~ msgstr "página na Internet"
-
-#~ msgid "Portable options"
-#~ msgstr "Opções do portátil"
+#~ "NVDA에 오신 것을 환영합니다.\n"
+#~ "NVDA를 사용하려면 NVDA키와 다른 키를 같이 누르십시요.\n"
+#~ "기본적으로 numpad insert와 main insert가 NVDA키로 쓰일 수 있습니다.\n"
+#~ "또한 CapsLock키를 NVDA키로 사용하도록 설정할 수도 있습니다.\n"
+#~ "언제나 NVDA키와 n을 함께 누르면 NVDA메뉴를 활성화 시킬 수 있습니다.\n"
+#~ "이 메뉴를 통해서 NVDA 환경 설정, 도움말 호출 등 여러 기능들에 접근하실 수 "
+#~ "있습니다.\n"
