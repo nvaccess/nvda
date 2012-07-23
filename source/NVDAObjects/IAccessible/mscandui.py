@@ -3,6 +3,7 @@ import oleacc
 import eventHandler
 import controlTypes
 import characterProcessing
+import config
 import api
 import speech
 import winUser
@@ -122,13 +123,14 @@ class MSCandUI21(IAccessible):
 		if not candidateList: return
 		role=candidateList.role
 		if role==controlTypes.ROLE_LIST:
-			api.setNavigatorObject(candidateList)
 			item=candidateList.firstChild
 			while item and controlTypes.STATE_SELECTED not in item.states:
 				item=item.next
 			if item:
 				reportSelectedCandidate(item)
 				return
+			elif config.conf["reviewCursor"]["followFocus"]:
+				api.setNavigatorObject(candidateList)
 		elif role==controlTypes.ROLE_MENUBUTTON:
 			item=candidateList.firstChild.next.next
 			item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
