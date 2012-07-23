@@ -170,7 +170,7 @@ Le  menu NVDA vous permet de gérer les paramètres de NVDA, d'obtenir de l'aide
 
 Pour accéder au menu NVDA depuis n'importe où dans Windows pendant que NVDA est en fonction, appuyez sur NVDA+n.
 Vous pouvez également y accéder par la barre des tâches système.
-Faites un click droit sur l'icône de NVDA située dans la barre des tâches système, ou accédez à la barre des tâches système en pressant Windows+b,,pressez flècheBas jusqu'à atteindre l'icône NVDA puis pressez la touche Application généralement située à côté de la touche Control de droite.
+Faites un clic droit sur l'icône de NVDA située dans la barre des tâches système, ou accédez à la barre des tâches système en pressant Windows+b,,pressez flècheBas jusqu'à atteindre l'icône NVDA puis pressez la touche Application généralement située à côté de la touche Control de droite.
  Quand le menu apparaît, vous pouvez utiliser les flèches pour naviguer dans le menu, et la touche entrée pour activer un élément.
 
 ++ Les touches de commande de base ++
@@ -275,7 +275,7 @@ Pour naviguer par objet, utilisez les touches suivantes :
 | Aller à l'objet suivant | NVDA+pavnum6 | control+NVDA+l | Va à l'objet suivant de l'objet navigateur courant |
 | Aller au premier objet inclus | NVDA+pavnum2 | NVDA+maj+virgule | Va au premier objet inclus dans l'objet navigateur courant |
 | Aller à l'objet en focus | NVDA+pavnumMoins | NVDA+retourArrière | Va à l'objet ayant le focus système, et place le curseur de revue sur le curseur système s'il est présent |
-| Activer l'objet navigateur courant | NVDA+pavnumEntrer | NVDA+entrer | Active l'objet navigateur courant (similaire à un click de souris ou à presser la barre d'espace quand l'objet a le focus système) |
+| Activer l'objet navigateur courant | NVDA+pavnumEntrer | NVDA+entrer | Active l'objet navigateur courant (similaire à un clic de souris ou à presser la barre d'espace quand l'objet a le focus système) |
 | Amener le focus système à l'objet navigateur courant | NVDA+maj+pavnumMoins | NVDA+maj+retourArrière | Amène le focus système à l'objet navigateur courant si c'est possible |
 | Annoncer les dimensions de l'objet navigateur courant | NVDA+pavnumEffacement | NVDA+effacement | Annonce les dimensions de l'objet navigateur courant à l'écran (en incluant sa distance par rapport au haut et à la gauche de l'écran ainsi que sa hauteur et sa largeur |
 %kc:endInclude
@@ -363,9 +363,9 @@ Si vous voulez en tirer profit, vous pouvez les configurer par le dialogue Param
 Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, NVDA possède quelques commandes clavier liées à la souris :
 %kc:beginInclude
 || Nom | Touche Desktop | Touche Laptop | Description |
-| Click gauche | pavnumDiviser | NVDA+flècheGauche | simple click gauche. Le double click s'obtient par deux pressions rapides |
+| Clic gauche | pavnumDiviser | NVDA+flècheGauche | simple clic gauche. Le double clic s'obtient par deux pressions rapides |
 | Verrouillage du bouton gauche de la souris | maj+pavnumDiviser | NVDA+maj+flècheGauche | Verrouille le bouton gauche de la souris en position enfoncée. Une seconde pression déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
-| Click droit | pavnumMultiplier | NVDA+flècheDroite | Simple click droit |
+| Clic droit | pavnumMultiplier | NVDA+flècheDroite | Simple clic droit |
 | Verrouillage du bouton droit de la souris | maj+pavnumMultiplier | NVDA+maj+flècheDroite | Verrouille le bouton droit de la souris en position enfoncée, une seconde pression déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
 | Amener la souris à l'objet navigateur courant | NVDA+pavnumDiviser | NVDA+maj+f9 | Amène la souris à la position de l'objet navigateur courant puis au curseur de revue |
 | Aller à l'objet sous la souris | NVDA+pavnumMultiplier | NVDA+maj+f10 | Amène l'objet navigateur à l'objet situé à la position de la souris |
@@ -751,7 +751,7 @@ Quand l'option est activée, le curseur de revue suit les mouvements du curseur 
 Quand l'option est activée, le curseur de revue suit les mouvements de la souris.
 
 ==== Mode de revue simple ====
-Quand l'option est activée, NVDA filtre la hiérarchie des objets que l'on peut atteindre, excluant les objets inutilisables.
+Quand l'option est activée, NVDA filtre la hiérarchie des objets que l'on peut atteindre, excluant les objets sans intérêt pour l'utilisateur ; Ex : les objets invisibles et les objets utilisés seulement à des fins de présentation.
 
 +++ Paramètres de Présentation des Objets +++
 Cette boîte de dialogue se trouve dans le menu Préférences sous "Présentation des Objets...". 
@@ -957,31 +957,31 @@ Décochez l'élément de menu pour la désactiver.
 Pendant que la visionneuse de parole est active, elle se met constamment à jour vous permettant de voir les dernières paroles prononcées par NVDA. 
 Cependant, si vous cliquez ou mettez le focus sur la visionneuse,  NVDA arrêtera momentanément de mettre à jour le texte, vous pourrez ainsi sélectionner ou copier le contenu.
 
-++ Gestionnaire de greffons ++
-Le Gestionnaire de greffons, accessible en sélectionnant Gestion des greffons dans le menu Outils du menu NVDA, permet d'installer ou de désinstaller des paquets de greffon pour NVDA.
+++ Gestionnaire de Modules Complémentaires ++
+Le Gestionnaire de Modules Complémentaires, accessible en sélectionnant Gestion des Modules Complémentaires dans le menu Outils du menu NVDA, permet d'installer ou de désinstaller des paquets de Modules Complémentaires pour NVDA.
 Ces paquets sont fournis par la communauté et contiennent du code qui peut ajouter ou modifier des fonctionnalités dans NVDA ou proposer le support de plages brailles ou synthèses vocales suplémentaires.
 
-Le gestionnaire de greffons contient une liste affichant tous les greffons actuellement installés dans votre configuration utilisateur de NVDA.
-Un nom de paquet, la version et l'auteur sont affichés pour chaque greffon, et des informations suplémentaires telle qu'une description et une URL peuvent être affichées en sélectionnant le greffon et en activant le bouton À propos du greffon...
+Le gestionnaire de Modules Complémentaires contient une liste affichant tous les Modules Complémentaires actuellement installés dans votre configuration utilisateur de NVDA.
+Un nom de paquet, la version et l'auteur sont affichés pour chaque Module Complémentaire, et des informations suplémentaires telle qu'une description et une URL peuvent être affichées en sélectionnant le Module Complémentaire et en activant le bouton À propos du Module Complémentaire...
 
-Pour installer un greffon, cliquez sur le bouton Installer.
-Vous pourrez ainsi rechercher le paquet du greffon (fichier .nvda-addon) sur votre ordinateur ou votre réseau.
-Après avoir cliquer sur Ouvrir, NVDA vous demandera si vous êtes sûr de vouloir installer le greffon.
-Comme les fonctionalités des greffons ne sont pas restraintes dans NVDA, ce qui implique en théorie qu'ils peuvent accéder à vos données ou à tout votre système pour une version installée, il est important de n'installer que des greffons venant d'une source fiable.
-Dès que le greffon est installé, NVDA doit redémarrer pour que le greffon puisse s'activer.
-Ce greffon aura l'état installer dans la liste jusqu'à ce que vous relanciez NVDA.
+Pour ajouter un Module Complémentaire, cliquez sur le bouton Ajouter.
+Vous pourrez ainsi rechercher le paquet du Module Complémentaire (fichier .nvda-addon) sur votre ordinateur ou votre réseau.
+Après avoir cliquer sur Ouvrir, NVDA vous demandera si vous êtes sûr de vouloir installer le Module Complémentaire.
+Comme les fonctionalités des Modules Complémentaires ne sont pas restraintes dans NVDA, ce qui implique en théorie qu'ils peuvent accéder à vos données ou à tout votre système pour une version installée, il est important de n'installer que des Module Complémentaires venant d'une source fiable.
+Dès que le Module Complémentaire est installé, NVDA doit redémarrer pour que le Module Complémentaire puisse s'activer.
+Ce Module Complémentaire aura l'état installer dans la liste jusqu'à ce que vous relanciez NVDA.
 
-Pour supprimer un greffon, sélectionnez-le dans la liste et cliquez sur le bouton Supprimer.
+Pour supprimer un Module Complémentaire, sélectionnez-le dans la liste et cliquez sur le bouton Supprimer.
 NVDA vous demandera de confirmer la désinstallation.
-Comme pour l'installation, NVDA doit être relancé pour que le greffon soit complettement supprimé.
+Comme pour l'installation, NVDA doit être relancé pour que le Module Complémentaire soit complettement supprimé.
 Son statu dans la liste sera supprimer.
 
 Le gestionnaire a également un bouton Fermer pour fermer la boîte de dialogue.
-Si vous avez installé ou supprimé des greffons, NVDA vous demandera d'abord si vous voulez le redémarrer pour que vos changements prennent effet.
+Si vous avez installé ou supprimé des Modules Complémentaires, NVDA vous demandera d'abord si vous voulez le redémarrer pour que vos changements prennent effet.
 
 Jusqu'à maintenant, il était possible d'étendre les fonctionnalités de NVDA en copiant des plugins ou pilotes dans votre répertoire de configuration utilisateur.
-Même si cette version peut toujours les charger, ceux-ci ne seront pas affichés dans le gestionnaire de greffons.
-Il est recommendé de supprimer ces fichiers de votre répertoire de configuration et d'installer le greffon approprié s'il y en a un.
+Même si cette version peut toujours les charger, ceux-ci ne seront pas affichés dans le gestionnaire de Modules Complémentaires.
+Il est recommendé de supprimer ces fichiers de votre répertoire de configuration et d'installer le Module Complémentaire approprié s'il y en a un.
 
 ++ Console Python ++
 La console Python NVDA, située dans Outils du menu NVDA, est un outil de développement utile pour dépanner, inspecter le code ou inspecter la hiérarchie d'accessibilité d'une application.
@@ -1229,8 +1229,81 @@ Veuillez consulter la documentation du terminal pour savoir où se trouvent ces 
 | Touche entrer | point8 |
 | Touche windows+d (minimiser toutes les applications) | c1+c4+c5 (commande d) |
 | Touche windows | espace+point3+point4 |
-| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| alt+tab key | space+point2+point3+point4+point5 (space+t) |
 | Dire tout | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
+++ HIMS Braille Sense/Braille EDGE Series ++
+NVDA supporte les afficheurs braille Braille Sense et Braille EDGE de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou bluetooth. 
+Si connectée via USB, vous devrez installer le driver USB de HIMS dans votre système.
+
+Voici les assignations de touches pour ce terminal sous NVDA.
+Veuillez consulter la documentation du terminal pour savoir où se trouvent ces touches.
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement arrière de l'affichage braille | Défilement bas côté gauche |
+| Défilement avant de l'affichage braille | Défilement bas droite |
+| Amener l'affichage à la ligne précédente | Défilement haut côté gauche |
+| Amener l'affichage à la ligne suivante | Défilement haut côté droit |
+| Aller à la cellule braille | route (amener le curseur au caractère) |
+| maj+touche tab | point1+point2+espace |
+| touche alt | point1+point3+point4+Espace |
+| touche echapp | point1+point5+Espace |
+| touche tab | point4+point5+Espace |
+| entrée | point8 |
+| touche effacement | point7 |
+| touche flèche haute | point1+Espace |
+| touche flèche basse | point4+Espace |
+| verrouillage majuscule | point1+point3+point6+Espace |
+| touche maj+alt+tab | avance2+avance3+avance1 |
+| touche alt+tab | avance2+avance3 |
+| touche fin | point4+point6+Espace |
+| touche Control+fin | point4+point5+point6+Espace |
+| touche origine | point1+point3+Espace |
+| touche control+début | point1+point2+point3+espace |
+| touche flèche gauche | point3+espace |
+| control+maj+flèche gauche | point2+point8+espace+avance1 |
+| touche control+flèche gauche | point2+space |
+| touche maj+alt+flèche gauche | point2+point7+avance1 |
+| touche alt+flèche gauche | point2+point7 |
+| touche flèche droite | point6+espace |
+| touche control+maj+flèche droite | point5+point8+espace+avance1 |
+| touche control+flèche droite | point5+espace |
+| touche maj+alt+flèche droite | point5+point7+avance1 |
+| touche alt+flèche droite | point5+point7 |
+| touche page précédante | point1+point2+point6+espace |
+| touche control+page précédante | point1+point2+point6+point8+espace |
+| touche control+maj+flèche haute | point2+point3+point8+espace+avance1 |
+| touche control+flèche haute | point2+point3+espace |
+| touche maj+alt+flèche haute | point2+point3+point7+avance1 |
+| touche alt+flèche haute | point2+point3+point7 |
+| touche maj+flècheHaute | défile bas gauche + espace |
+| touche pageSuivante | point3+point4+point5+espace |
+| touche control+pageSuivante | point3+point4+point5+point8+espace |
+| touche control+maj+flècheBasse | point5+point6+point8+espace+avance1 |
+| touche control+flècheBasse | point5+point6+espace |
+| touche maj+alt+flècheBasse | point5+point6+point7+avance1 |
+| touche alt+flècheBasse | point5+point6+point7 |
+| touche maj+flècheBasse | défilement bas côté droit + espace |
+| touche suppr | point1+point3+point5+espace |
+| touche f1 | point1+point2+point5+espace |
+| touche f3 | point1+point2+point4+point8 |
+| touche f4 | point7+avance3 |
+| touche windows+b | point1+point2+avance1 |
+| touche windows+d | point1+point4+point5+avance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA supporte l'afficheur braille SyncBraille de [HIMS http://www.hims-inc.com/].
+Vous devrez installer les drivers USB de HIMS.
+
+Voici les assignations de touches pour ce terminal sous NVDA.
+Veuillez consulter la documentation du terminal pour savoir où se trouvent ces touches.
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement arrière de l'affichage braille | Défilement bas côté gauche |
+| Défilement avant de l'affichage braille | Défilement bas droite |
+| Aller à la cellule braille | route (amener le curseur au caractère) |
 %kc:endInclude
 
 ++ BRLTTY ++

@@ -3,6 +3,43 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.3 =
+
+== Novas Características ==
+- A presenza de subliñados e tachados agora anúnciase nos documentos de Adobe Reader. (#2410)
+- Cando a función Windows Sticky Keys está activada, a tecla modificadora de NVDA agora comportarase como as outras teclas modificadoras. Esto permíteche utilizar a tecla modificadora do NVDA sen a necesidade de manter premeda mentres premes outras teclas. (#230)
+- Soporte para as liñas braille HIMS Braille Sense, Braille EDGE y SyncBraille. (#1266, #1267)
+- Cando as Notificacións de Windows 8 aparezan, NVDA anunciaráas e moverá o navegador de obxectos alí para unha maior interacción. (#2143)
+- Soporte para o VIP Mud. (#1728)
+- No Adobe Reader, se unha táboa ten un resumo, agora preséntase. (#2465)
+- No Adobe Reader, as cabeceiras de fila e columna de táboa agora poden anunciarse. (#2193)
+- Novas linguas: Coreano, Nepalí
+
+
+== Cambios ==
+- No diálogo Preferencias do Cursor de Revisión de NVDA, a opción Seguer foco do teclado foi renomeada a Seguer ó foco do sistema para consistencia ca terminoloxía utilizada noutras partes no NVDA.
+- Cando o braille estea seguindo á revisión e o cursor estea sobre un obxecto que non sexa un obxecto de texto (ex.: un campo de texto editable), as teclas dos sensores do cursor agora activarán o obxecto. (#2386)
+
+
+== Corrección de Fallos ==
+- No Blio, o contido dos libros agora pode lerse en braille. (#2139)
+- No Windows Vista e posterior, NVDA xa non trata incorrectamente a tecla Windows como é ó mantela premeda cando se desbloquea Windows despóis de bloqueala premendo Windows+l. (#1856)
+- No Adobe Reader, as cabeceiras de fila agora recoñécense correctamente como celdas de táboa; é dicir, as coordinadas anúncianse e pódense acceder utilizando ordes de navegación de táboa. (#2444)
+- No Adobe Reader, as celdas de táboa que abranghen máis dunha columna e/ou fila agora manéxanse correctamente. (#2437)
+- O paquete de distribución de NVDA agora verifica a súa integridade antes de se executar. (#2475)
+- Os ficheiros descargados temporalmente agora elimínanse se se descarga un ficheiro de actualización do NVDA. (#2477)
+- Cando se copia a configuración do usuario á configuración do sistema (para utilizar na autentificación de Windows e outras pantallas seguras) NVDA xa non se colgará no XP mentres o estea a facer. (#2485)
+- As tellas na Pantalla de inicio de Windows 8 agora preséntanse mellor en voz e braille. O nome xa non se repite, xa non se anuncia non seleccioado en todos as tellas, e a información de estado en directo preséntase segundo a descripción da tella (ex.: temperatura actual para a tella do Tempo).
+
+
+== Cambios para Desenroladores ==
+- Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
+
+
+= 2012.2.1 =
+Esta versión aborda varios problemas de seguridade potenciais (mediante a actualización do Python á 2.7.3).
+
+  
 = 2012.2 =
 O subliñable desta versión inclúe unha característica que integra o instalador e a creación do portable, un auto actualizador, administración sinxela dos novos complementos do NVDA, anunciado de gráficos en Microsoft Word, soporte para o estilo de aplicacións de Windows 8 Metro, e varias correccións de fallos importantes. 
 

@@ -25,6 +25,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 const int TEXTFLAG_UNDERLINE = 0x1;
 const int TEXTFLAG_STRIKETHROUGH = 0x2;
+const int TABLEHEADER_COLUMN = 0x1;
+const int TABLEHEADER_ROW = 0x2;
 
 using namespace std;
 
@@ -105,7 +107,7 @@ inline void processText(BSTR inText, wstring& outText) {
 VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	IPDDomNode* domNode,
-	bool fallBackToName, wstring& lang, int flags
+	bool fallBackToName, wstring& lang, int flags, wstring* pageNum
 ) {
 	HRESULT res;
 	VBufStorage_fieldNode_t* tempNode;
@@ -146,7 +148,7 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 				continue;
 			}
 			// Recursive call: render text for this child and its descendants.
-			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName, lang, flags))
+			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName, lang, flags, pageNum))
 				previousNode = tempNode;
 			domChild->Release();
 		}
@@ -200,6 +202,8 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 					previousNode->addAttribute(L"underline", L"1");
 				else if (flags & TEXTFLAG_STRIKETHROUGH)
 					previousNode->addAttribute(L"strikethrough", L"1");
+				if (pageNum)
+					previousNode->addAttribute(L"page-number", *pageNum);
 			}
 			SysFreeString(text);
 		} else {
@@ -268,8 +272,10 @@ inline void fillExplicitTableHeadersForCell(AdobeAcrobatVBufStorage_controlField
 		if (it == tableInfo.headersInfo.end())
 			continue;
 
-		(it->second.isColumnHeader ? colHeaders : rowHeaders)
-			<< docHandle << L"," << it->second.uniqueId << L";";
+		if (it->second.type & TABLEHEADER_COLUMN)
+			colHeaders << docHandle << L"," << it->second.uniqueId << L";";
+		if (it->second.type & TABLEHEADER_ROW)
+			rowHeaders<< docHandle << L"," << it->second.uniqueId << L";";
 	}
 
 	if (colHeaders.tellp() > 0)
@@ -278,9 +284,27 @@ inline void fillExplicitTableHeadersForCell(AdobeAcrobatVBufStorage_controlField
 		cell.addAttribute(L"table-rowheadercells", rowHeaders.str());
 }
 
+inline wstring* getPageNum(IPDDomNode* domNode) {
+	// Get the page number.
+	IPDDomNodeExt* domNodeExt;
+	if (domNode->QueryInterface(IID_IPDDomNodeExt, (void**)&domNodeExt) != S_OK) 
+		return NULL;
+	long firstPage, lastPage;
+	// The page number is only useful if the first and last pages are the same.
+	if (domNodeExt->GetPageNum(&firstPage, &lastPage) != S_OK || firstPage != lastPage) {
+		domNodeExt->Release();
+		return NULL;
+	}
+	domNodeExt->Release();
+	wostringstream s;
+	// GetPageNum returns 0-based numbers, but we want 1-based.
+	s << firstPage + 1;
+	return new wstring(s.str());
+}
+
 AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 	AdobeAcrobatVBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-	TableInfo* tableInfo
+	TableInfo* tableInfo, wstring* pageNum
 ) {
 	int res;
 	LOG_DEBUG(L"Entered fillVBuf, with pacc at "<<pacc<<L", parentNode at "<<parentNode<<L", previousNode "<<previousNode);
@@ -426,6 +450,16 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	}
 	LOG_DEBUG(L"childCount is "<<childCount);
 
+	bool deletePageNum = false;
+	if (!pageNum && (pageNum = getPageNum(domNode)))
+		deletePageNum = true;
+
+	#define addAttrsToTextNode(node) { \
+		node->addAttribute(L"language", parentNode->language); \
+		if (pageNum) \
+			node->addAttribute(L"page-number", *pageNum); \
+		}
+
 	// Handle tables.
 	if (role == ROLE_SYSTEM_TABLE) {
 		tableInfo = new TableInfo;
@@ -436,8 +470,10 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		s << ID;
 		parentNode->addAttribute(L"table-id", s.str());
 		if (domElement && domElement->GetAttribute(L"Summary", L"Table", &tempBstr) == S_OK && tempBstr) {
-			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, tempBstr))
+			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, tempBstr)) {
+				addAttrsToTextNode(tempNode);
 				previousNode = tempNode;
+			}
 			SysFreeString(tempBstr);
 		}
 	} else if (role == ROLE_SYSTEM_ROW) {
@@ -496,13 +532,26 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			}
 		}
 		if (role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
-			if (role == ROLE_SYSTEM_COLUMNHEADER) {
+			int headerType = 0;
+			if (domElement && domElement->GetAttribute(L"Scope", L"Table", &tempBstr) == S_OK && tempBstr) {
+				if (wcscmp(tempBstr, L"Column") == 0)
+					headerType = TABLEHEADER_COLUMN;
+				else if (wcscmp(tempBstr, L"Row") == 0)
+					headerType = TABLEHEADER_ROW;
+				else if (wcscmp(tempBstr, L"Both") == 0)
+					headerType = TABLEHEADER_COLUMN | TABLEHEADER_ROW;
+				SysFreeString(tempBstr);
+			}
+			if (!headerType)
+				headerType = (role == ROLE_SYSTEM_COLUMNHEADER) ? TABLEHEADER_COLUMN : TABLEHEADER_ROW;
+			if (headerType & TABLEHEADER_COLUMN) {
 				// Record this as a column header for each spanned column.
 				s.str(L"");
 				s << docHandle << L"," << ID << L";";
 				for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
 					tableInfo->columnHeaders[col] += s.str();
-			} else {
+			}
+			if (headerType & TABLEHEADER_ROW) {
 				// Record this as a row header for each spanned row.
 				s.str(L"");
 				s << docHandle << L"," << ID << L";";
@@ -513,7 +562,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 				// Record the id string and associated header info for use when handling explicitly defined headers.
 				TableHeaderInfo& headerInfo = tableInfo->headersInfo[tempBstr];
 				headerInfo.uniqueId = ID;
-				headerInfo.isColumnHeader = role == ROLE_SYSTEM_COLUMNHEADER;
+				headerInfo.type = headerType;
 				SysFreeString(tempBstr);
 			}
 		}
@@ -551,7 +600,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 						WindowFromAccessibleObject(childPacc, &tempHwnd);
 					}
 					LOG_DEBUG(L"calling filVBuf with child object ");
-					if ((tempNode = this->fillVBuf(docHandle, childPacc, buffer, parentNode, previousNode, tableInfo))!=NULL) {
+					if ((tempNode = this->fillVBuf(docHandle, childPacc, buffer, parentNode, previousNode, tableInfo, pageNum))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						LOG_DEBUG(L"Error in calling fillVBuf");
@@ -591,8 +640,10 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			parentNode->addAttribute(L"name", name);
 			// Render the name before this node,
 			// as the label is often not a separate node and thus won't be rendered into the buffer.
-			tempNode = buffer->addTextFieldNode(parentNode->getParent(), parentNode->getPrevious(), name);
-			tempNode->addAttribute(L"language", parentNode->language);
+			// We can't do this if this node is being updated,
+			// but in this case, the name has already been rendered before anyway.
+			if (oldParentNode && (tempNode = buffer->addTextFieldNode(oldParentNode, parentNode->getPrevious(), name)))
+				addAttrsToTextNode(tempNode);
 		}
 
 		// Hereafter, tempNode is the text node (if any).
@@ -601,9 +652,9 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			// Acrobat renders "Checked"/"Unchecked" as the text for radio buttons/check boxes, which is not what we want.
 			// Render the name (if any) as the text for radio buttons and check boxes.
 			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
-				tempNode->addAttribute(L"language", parentNode->language);
+				addAttrsToTextNode(tempNode);
 		} else
-			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent, parentNode->language, textFlags);
+			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent, parentNode->language, textFlags, pageNum);
 		if (tempNode) {
 			// There was text.
 			previousNode = tempNode;
@@ -615,8 +666,10 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		if (!tempNode && states & STATE_SYSTEM_FOCUSABLE) {
 			// This node is focusable, but contains no text.
 			// Therefore, add it with a space so that the user can get to it.
-			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, L" "))
+			if (tempNode = buffer->addTextFieldNode(parentNode, previousNode, L" ")) {
+				addAttrsToTextNode(tempNode);
 				previousNode=tempNode;
+			}
 		}
 	}
 
@@ -624,6 +677,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) && parentNode->getLength() == 0) {
 		// Always render a space for empty table cells.
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
+		addAttrsToTextNode(previousNode);
 		parentNode->setIsBlock(false);
 	} else if (role == ROLE_SYSTEM_TABLE) {
 		nhAssert(tableInfo);
@@ -638,6 +692,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		delete tableInfo;
 	}
 
+	if (deletePageNum)
+		delete pageNum;
 	if (stdName)
 		SysFreeString(stdName);
 	if (domElement) {
@@ -650,6 +706,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	}
 	LOG_DEBUG(L"Releasing IServiceProvider");
 	servprov->Release();
+
+	#undef addAttrsToTextNode
 
 	LOG_DEBUG(L"Returning node at "<<parentNode);
 	return parentNode;
