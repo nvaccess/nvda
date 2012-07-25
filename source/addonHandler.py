@@ -24,6 +24,7 @@ import config
 import globalVars
 import languageHandler
 from logHandler import log
+import winKernel
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -346,7 +347,7 @@ class AddonBundle(object):
 		""" Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
 		"""
-		self._path = bundlePath
+		self._path = bundlePath if isinstance(bundlePath, unicode) else unicode(bundlePath, "mbcs")
 		# Read manifest:
 		translatedInput=None
 		with zipfile.ZipFile(self._path, 'r') as z:
@@ -364,8 +365,24 @@ class AddonBundle(object):
 		@param addonPath: Path where to extract contents.
 		@type addonPath: string
 		"""
+		log.debug("Extracting add-on %s to %s", self._manifest['name'], addonPath)
 		with zipfile.ZipFile(self._path, 'r') as z:
-			z.extractall(addonPath)
+			# As python's zipfile module doesn't handle unicode file names
+			# Manually extract the zipfile contencts with the proper decoded name.
+			# Use UTF-8 if the EFS flag is set, else use the local OEM code page.
+			# See discussion in #2505 for details.
+			for entry in z.infolist():
+				codec = "utf-8" if entry.flag_bits & 0x800 else str(winKernel.kernel32.GetOEMCP())
+				fsPath = os.path.join(addonPath, unicode(entry.filename, codec))
+				log.debug("Writing file %s", fsPath)
+				dir = os.path.dirname(fsPath)
+				try:
+					os.makedirs(dir)
+				except OSError:
+					pass
+				with z.open(entry) as src:
+					with open(fsPath, 'wb') as dest:
+						shutil.copyfileobj(src, dest)
 
 	@property
 	def manifest(self):
