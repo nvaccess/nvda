@@ -116,13 +116,14 @@ def handleInputCompositionEnd():
 	from NVDAObjects.inputComposition import InputComposition
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
+		result=focus.compositionString
 		import speech
 		oldSpeechMode=speech.speechMode
 		speech.speechMode=speech.speechMode_off
 		eventHandler.executeEvent("gainFocus",focus.parent)
 		speech.speechMode=oldSpeechMode
-		# Translators: a message spoken when input composition has finished.
-		speech.speakMessage(_("Done"))
+		if result:
+			speech.speakText(result)
 
 def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,newText):
 	from NVDAObjects.inputComposition import InputComposition
@@ -135,8 +136,6 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,ne
 		speech.speechMode=speech.speechMode_off
 		eventHandler.executeEvent("gainFocus",newFocus)
 		speech.speechMode=oldSpeechMode
-		# Translators: a message spoken when input composition starts
-		speech.speakMessage(_("Compose"))
 		newFocus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
 
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_wchar_p)
