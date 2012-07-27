@@ -116,7 +116,7 @@ def handleInputCompositionEnd():
 	from NVDAObjects.inputComposition import InputComposition
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
-		result=focus.compositionString
+		result=focus.compositionString.lstrip(u'\u3000 ')
 		import speech
 		oldSpeechMode=speech.speechMode
 		speech.speechMode=speech.speechMode_off
