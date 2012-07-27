@@ -407,7 +407,9 @@ STDMETHODIMP TsfSink::OnEndEdit(
 	if(!pRange) {
 		if(inComposition) {
 			inComposition=false;
-			nvdaControllerInternal_inputCompositionUpdate(L"",-1,-1,L"");
+			wchar_t* edit_str=HandleEditRecord(cookie, pEditRec);
+			nvdaControllerInternal_inputCompositionUpdate(L"",-1,-1,(edit_str?edit_str:L""));
+			if(edit_str) free(edit_str);
 			//Disable further typed character notifications produced by TSF
 			typedCharacter_window=NULL;
 		}
