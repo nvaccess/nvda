@@ -7,6 +7,28 @@ from NVDAObjects.window import Window
 from behaviors import EditableTextWithAutoSelectDetection 
 from textInfos.offsets import OffsetsTextInfo
 
+def calculateInsertedChars(oldComp,newComp):
+	oldLen=len(oldComp)
+	newLen=len(newComp)
+	minLen=min(oldLen,newLen)
+	print "oldLen %d, newLen %d, minLen %d"%(oldLen,newLen,minLen)
+	diffStart=0
+	diffEnd=newLen
+	for index in xrange(minLen):
+		print "checking start: index %d, new %c, old %c"%(index,newComp[index],oldComp[index])
+		if newComp[index]!=oldComp[index]:
+			break
+		diffStart=index+1
+	for index in xrange(minLen,0,-1):
+		backIndex=index-minLen-1
+		print "checking end: index %d, backIndex %d, new %c, old %c"%(index,backIndex,newComp[backIndex],oldComp[backIndex])
+		if newComp[backIndex]!=oldComp[backIndex]:
+			break
+		diffEnd=newLen+backIndex
+	diffEnd=max(diffEnd,diffStart+(newLen-oldLen))
+	print "diffStart %d, diffEnd %d"%(diffStart,diffEnd)
+	return newComp[diffStart:diffEnd]
+
 class InputCompositionTextInfo(OffsetsTextInfo):
 
 	def _getSelectionOffsets(self):
@@ -45,8 +67,10 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 		return clsList
 
 	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,newText):
-		if (config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]) and newText and not newText.isspace() and compositionString!=self.compositionString:
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText)
+		if (config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]):
+			newText=calculateInsertedChars(self.compositionString.strip(u'\u3000'),compositionString.strip(u'\u3000'))
+			if newText:
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText)
 		self.compositionString=compositionString
 		self.compositionSelectionOffsets=(selectionStart,selectionEnd)
 		eventHandler.queueEvent("valueChange",self)
