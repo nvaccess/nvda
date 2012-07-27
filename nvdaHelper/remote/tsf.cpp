@@ -408,6 +408,8 @@ STDMETHODIMP TsfSink::OnEndEdit(
 		if(inComposition) {
 			inComposition=false;
 			nvdaControllerInternal_inputCompositionUpdate(L"",-1,-1,L"");
+			//Disable further typed character notifications produced by TSF
+			typedCharacter_window=NULL;
 		}
 		return S_OK;
 	}
