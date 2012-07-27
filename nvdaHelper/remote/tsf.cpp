@@ -73,6 +73,9 @@ public:
 	// ITfActiveLanguageProfileNotifySink methods
 	STDMETHODIMP OnActivated(REFCLSID, REFGUID, BOOL);
 
+	//Is TSF actually being used for this thread?
+	bool isActive;
+
 private:
 	LONG          mRefCount;
 	ITfThreadMgr* mpThreadMgr;
@@ -133,6 +136,7 @@ TsfSink::TsfSink() {
 	mTextEditCookie  = TF_INVALID_COOKIE;
 	inComposition=false;
 	int lastCompositionStartOffset=0;
+	isActive=false;
 }
 
 TsfSink::~TsfSink() {
@@ -163,6 +167,28 @@ void TsfSink::Initialize() {
 	if (doc_mgr) {
 		UpdateTextEditSink(doc_mgr);
 		doc_mgr->Release();
+	}
+	//Check to see if there is an active TSF language profile and set isActive accordingly.
+	ITfInputProcessorProfiles* profiles = create_input_processor_profiles();
+	if(profiles) {
+		LANGID  lang = 0;
+		profiles->GetCurrentLanguage(&lang);
+		if(lang) {
+			IEnumTfLanguageProfiles* pEnumTfLanguageProfiles=NULL;
+			profiles->EnumLanguageProfiles(lang,&pEnumTfLanguageProfiles);
+			if(pEnumTfLanguageProfiles) {
+				TF_LANGUAGEPROFILE profile;
+				ULONG fetched=0;
+				while(pEnumTfLanguageProfiles->Next(1,&profile,&fetched)==S_OK&&fetched==1) {
+					if(profile.fActive&&IsEqualCLSID(profile.catid,GUID_TFCAT_TIP_KEYBOARD)) {
+						isActive=true;
+						break;
+					}
+				}
+				pEnumTfLanguageProfiles->Release();
+			}
+		}
+		profiles->Release();
 	}
 }
 
@@ -202,7 +228,10 @@ void TsfSink::UpdateTextEditSink(ITfDocumentMgr* docMgr) {
 		hr = mpTextEditSrc->AdviseSink(IID_ITfTextEditSink,
 			(ITfTextEditSink*)this, &mTextEditCookie);
 	}
-	if (hr != S_OK)  RemoveTextEditSink();
+	if (hr != S_OK) {
+		RemoveTextEditSink();
+		return;
+	}
 }
 
 void TsfSink::RemoveTextEditSink() {
@@ -410,6 +439,7 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 	const CLSID null_clsid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
 	if (!activated)  return S_OK;
 	if (IsEqualCLSID(rClsID, null_clsid)) {
+		isActive = false;
 		// When switching to non-TSF profile, resend last input language
 		wchar_t buf[KL_NAMELENGTH];
 		GetKeyboardLayoutName(buf);
@@ -417,6 +447,7 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 				static_cast<unsigned long>(lastInputLangChange), buf);
 		return S_OK;
 	}
+	isActive = true;
 	ITfInputProcessorProfiles* profiles = create_input_processor_profiles();
 	if (!profiles)  return S_OK;
 	HRESULT hr = S_OK;
@@ -458,6 +489,11 @@ static void CALLBACK TSF_winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 	TlsSetValue(gTsfIndex, sink);
 }
 
+TsfSink* fetchCurrentTsfSink() {
+	if (gTsfIndex == TLS_OUT_OF_INDEXES)  return NULL;
+	return (TsfSink*)TlsGetValue(gTsfIndex);
+}
+
 void TSF_inProcess_initialize() {
 	// Initialize TLS and use window hook to create TSF sink in each thread
 	gTsfIndex = TlsAlloc();
@@ -486,17 +522,20 @@ void TSF_inProcess_terminate() {
 }
 
 void TSF_thread_detached() {
-	if (gTsfIndex == TLS_OUT_OF_INDEXES)  return;
-	TsfSink* sink = (TsfSink*)TlsGetValue(gTsfIndex);
-	if (!sink)  return;
-
+	TsfSink* sink=fetchCurrentTsfSink();
 	// Remove TSF sink from the list
 	gTsfSinksLock.acquire();
 	gTsfSinks.erase(GetCurrentThreadId());
 	gTsfSinksLock.release();
 
 	// Destroy TSF sink belonging to this thread
+	TlsSetValue(gTsfIndex, NULL);
 	sink->CleanUp();
 	sink->Release();
-	TlsSetValue(gTsfIndex, NULL);
+}
+
+bool isTSFThread() {
+TsfSink* tsf=fetchCurrentTsfSink();
+	if(!tsf) return false; 
+	return tsf->isActive;
 }
