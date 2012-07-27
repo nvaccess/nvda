@@ -41,7 +41,7 @@ class BaseCandidateItem(IAccessible):
 		numSymbols=len(symbols)
 		for symbol in symbols:
 			try:
-				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol)[:1] or []
+				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
 			except TypeError:
 				symbolDescriptions=[]
 			numSymbolDescriptions=len(symbolDescriptions)
