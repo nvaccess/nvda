@@ -128,17 +128,24 @@ def handleInputCompositionEnd(result):
 			speech.speakText(result)
 
 def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,newText):
+	import speech
+	#End of composition already?
+	if selectionStart==-1:
+		result=newText.lstrip(u'\u3000 ')
+		if result:
+			speech.speakText(result)
+		return
 	from NVDAObjects.inputComposition import InputComposition
 	focus=api.getFocusObject()
-	import speech
 	if not isinstance(focus,InputComposition):
 		parent=api.getDesktopObject().objectWithFocus()
 		newFocus=InputComposition(parent=parent)
 		oldSpeechMode=speech.speechMode
 		speech.speechMode=speech.speechMode_off
 		eventHandler.executeEvent("gainFocus",newFocus)
+		focus=newFocus
 		speech.speechMode=oldSpeechMode
-		newFocus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
+	focus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
 
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_wchar_p)
 def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText):
