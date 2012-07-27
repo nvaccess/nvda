@@ -113,14 +113,16 @@ def nvdaControllerInternal_logMessage(level,pid,message):
 	return 0
 
 def handleInputCompositionEnd():
+	from NVDAObjects.inputComposition import InputComposition
 	focus=api.getFocusObject()
-	import speech
-	oldSpeechMode=speech.speechMode
-	speech.speechMode=speech.speechMode_off
-	eventHandler.executeEvent("gainFocus",focus.parent)
-	speech.speechMode=oldSpeechMode
-	# Translators: a message spoken when input composition has finished.
-	speech.speakMessage(_("Done"))
+	if isinstance(focus,InputComposition):
+		import speech
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
+		eventHandler.executeEvent("gainFocus",focus.parent)
+		speech.speechMode=oldSpeechMode
+		# Translators: a message spoken when input composition has finished.
+		speech.speakMessage(_("Done"))
 
 def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,newText):
 	from NVDAObjects.inputComposition import InputComposition
@@ -142,7 +144,7 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 	from NVDAObjects.inputComposition import InputComposition
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
-		if compositionString:
+		if selectionStart!=-1:
 			focus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
 		else:
 			queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd)

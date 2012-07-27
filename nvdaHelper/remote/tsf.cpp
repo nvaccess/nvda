@@ -407,7 +407,7 @@ STDMETHODIMP TsfSink::OnEndEdit(
 	if(!pRange) {
 		if(inComposition) {
 			inComposition=false;
-			nvdaControllerInternal_inputCompositionUpdate(L"",0,0,L"");
+			nvdaControllerInternal_inputCompositionUpdate(L"",-1,-1,L"");
 		}
 		return S_OK;
 	}
