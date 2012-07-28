@@ -44,3 +44,8 @@ error_status_t(__stdcall *_nvdaControllerInternal_inputCompositionUpdate)(const 
 error_status_t __stdcall nvdaControllerInternal_inputCompositionUpdate(const wchar_t* compositionString, const int selectionStart, const int selectionEnd, const wchar_t* newText) {
 	return _nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText);
 }
+
+error_status_t(__stdcall *_nvdaControllerInternal_inputCandidateListUpdate)(const wchar_t*, const long);
+error_status_t __stdcall nvdaControllerInternal_inputCandidateListUpdate(const wchar_t* candidates, const long selectionIndex) {
+	return _nvdaControllerInternal_inputCandidateListUpdate(candidates,selectionIndex);
+}

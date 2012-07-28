@@ -149,8 +149,12 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,ne
 
 @WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_wchar_p)
 def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText):
-	from NVDAObjects.inputComposition import InputComposition
+	from NVDAObjects.inputComposition import InputComposition, CandidateItem
 	focus=api.getFocusObject()
+	#IME keeps updating input composition while the candidate list is open
+	#Therefore ignore composition updates in this situation.
+	if isinstance(focus,CandidateItem):
+		return 0
 	if isinstance(focus,InputComposition):
 		if selectionStart!=-1:
 			focus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
@@ -158,6 +162,26 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 			queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,newText)
 	else:
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,newText)
+	return 0
+
+def handleInputCandidateListUpdate(candidatesString,selectionIndex):
+	candidateStrings=candidatesString.split('\n')
+	from NVDAObjects.inputComposition import CandidateList, CandidateItem
+	focus=api.getFocusObject()
+	if not (0<=selectionIndex<len(candidateStrings)):
+		if isinstance(focus,CandidateItem):
+			eventHandler.executeEvent("gainFocus",focus.parent.parent)
+		return
+	if isinstance(focus,CandidateItem):
+		parent=focus.parent
+	else:
+		parent=CandidateList(parent=focus)
+	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
+	eventHandler.executeEvent("gainFocus",item)
+
+@WINFUNCTYPE(c_long,c_wchar_p,c_long)
+def nvdaControllerInternal_inputCandidateListUpdate(candidatesString,selectionIndex):
+	queueHandler.queueFunction(queueHandler.eventQueue,handleInputCandidateListUpdate,candidatesString,selectionIndex)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
@@ -258,6 +282,7 @@ def initialize():
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
 		("nvdaControllerInternal_inputCompositionUpdate",nvdaControllerInternal_inputCompositionUpdate),
+		("nvdaControllerInternal_inputCandidateListUpdate",nvdaControllerInternal_inputCandidateListUpdate),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)

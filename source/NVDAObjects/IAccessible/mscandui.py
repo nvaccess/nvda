@@ -8,6 +8,7 @@ import api
 import speech
 import winUser
 from . import IAccessible
+from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
 
 def reportSelectedCandidate(candidateObject,allowDuplicate=False):
 	if not eventHandler.isPendingEvents("gainFocus") and (allowDuplicate or candidateObject!=api.getFocusObject()):
@@ -18,7 +19,7 @@ def reportSelectedCandidate(candidateObject,allowDuplicate=False):
 			candidateObject.container.container=api.getFocusObject().container.container
 		eventHandler.queueEvent("gainFocus",candidateObject)
 
-class BaseCandidateItem(IAccessible):
+class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 
 	role=controlTypes.ROLE_LISTITEM
 
@@ -34,26 +35,6 @@ class BaseCandidateItem(IAccessible):
 
 	def _get_value(self):
 		return super(BaseCandidateItem,self).keyboardShortcut
-
-	def _get_description(self):
-		symbols=self.name
-		descriptions=[]
-		numSymbols=len(symbols)
-		for symbol in symbols:
-			try:
-				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
-			except TypeError:
-				symbolDescriptions=[]
-			numSymbolDescriptions=len(symbolDescriptions)
-			for desc in symbolDescriptions:
-				if desc and desc[0]=='(' and desc[-1]==')':
-					desc=desc[1:-1]
-				elif numSymbols>1 or len(symbolDescriptions)==1:
-					# Translators: a human friendly message used as the description for an input composition candidate symbol using both the symbol and its character description. 
-					desc=_("{symbol} as in {description}").format(symbol=symbol,description=desc)
-				descriptions.append(desc)
-		if descriptions:
-			return ", ".join(descriptions)
 
 class MSCandUI_candidateListItem(BaseCandidateItem):
 

@@ -4,7 +4,7 @@ import controlTypes
 import speech
 import config
 from NVDAObjects.window import Window
-from behaviors import EditableTextWithAutoSelectDetection 
+from behaviors import EditableTextWithAutoSelectDetection, CandidateItem as CandidateItemBehavior 
 from textInfos.offsets import OffsetsTextInfo
 
 def calculateInsertedChars(oldComp,newComp):
@@ -75,3 +75,49 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 		self.compositionSelectionOffsets=(selectionStart,selectionEnd)
 		eventHandler.queueEvent("valueChange",self)
 		eventHandler.queueEvent("caret",self)
+
+	def reportFocus(self):
+		pass
+
+class CandidateList(Window):
+
+	name=_("Candidate")
+	role=controlTypes.ROLE_LIST
+	next=None
+	previous=None
+	firstChild=None
+	lastChild=None
+	states=set()
+
+	def __init__(self,parent=None):
+		self.parent=parent
+		super(CandidateList,self).__init__(windowHandle=parent.windowHandle)
+
+	def findOverlayClasses(self,clsList):
+		clsList.append(CandidateList)
+		return clsList
+
+class CandidateItem(CandidateItemBehavior,Window):
+
+	role=controlTypes.ROLE_LISTITEM
+	next=None
+	previous=None
+	firstChild=None
+	lastChild=None
+	states=set()
+
+	def __init__(self,parent=None,candidateStrings=[],candidateIndex=0):
+		self.parent=parent
+		self.candidateStrings=candidateStrings
+		self.candidateIndex=candidateIndex
+		super(CandidateItem,self).__init__(windowHandle=parent.windowHandle)
+
+	def findOverlayClasses(self,clsList):
+		clsList.append(CandidateItem)
+		return clsList
+
+	def _get_name(self):
+		return self.candidateStrings[self.candidateIndex]
+
+	def _get_value(self):
+		return unicode(self.candidateIndex+1)

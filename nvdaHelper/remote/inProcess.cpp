@@ -22,6 +22,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "inputLangChange.h"
 #include "typedCharacter.h"
 #include "tsf.h"
+#include "ime.h"
 #include "IA2Support.h"
 #include "ia2LiveRegions.h"
 #include <common/log.h>
@@ -44,12 +45,14 @@ void inProcess_initialize() {
 	typedCharacter_inProcess_initialize();
 	inputLangChange_inProcess_initialize();
 	TSF_inProcess_initialize();
+	IME_inProcess_initialize();
 	winword_inProcess_initialize();
 	gdiHooks_inProcess_initialize();
 }
 
 void inProcess_terminate() {
 	gdiHooks_inProcess_terminate();
+	IME_inProcess_terminate();
 	TSF_inProcess_terminate();
 	winword_inProcess_terminate();
 	inputLangChange_inProcess_terminate();
