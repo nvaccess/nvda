@@ -17,7 +17,7 @@
 - NVDA can now read auto complete suggestions when entering email addresses in Microsoft Outlook 2007. (#689)
 - New eSpeak voice variants: Gene, Gene2. (#2512)
 - In Adobe Reader, page numbers can now be reported. (#2534)
-- It is now possible to reset NVDA's configuration to factory defaults either by pressing NVDA+control+r three times quickly, or by choosing Reset to Factory Defaults from the NVDA menu.
+- It is now possible to reset NVDA's configuration to factory defaults either by pressing NVDA+control+r three times quickly or by choosing Reset to Factory Defaults from the NVDA menu. (#2086)
 
 
 == Changes ==
@@ -38,6 +38,8 @@
 - Passwords are no longer announced when reading password fields in Microsoft Outlook and other standard edit controls that are marked as protected. (#2021)
 - In Adobe Reader, changes to form fields are now correctly reflected in browse mode. (#2529)
 - Improvements to support for the Microsoft Word Spell Checker, including more accurate reading of the current spelling error, and the ability to support the spell checker when running an Installed copy of NVDA on Windows Vista or higher.
+- Add-ons which include files containing non-English characters can now be installed correctly in most cases. (#2505)
+- In Adobe Reader, the language of text is no longer lost when it is updated or scrolled to. (#2544)
 
 
 == Changes for Developers ==
