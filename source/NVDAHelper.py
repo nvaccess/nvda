@@ -174,9 +174,13 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 		return
 	if isinstance(focus,CandidateItem):
 		parent=focus.parent
+		wasCandidate=True
 	else:
 		parent=CandidateList(parent=focus)
+		wasCandidate=False
 	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
+	if wasCandidate and focus.windowHandle==item.windowHandle and focus.candidateIndex==item.candidateIndex and focus.name==item.name:
+		return
 	eventHandler.executeEvent("gainFocus",item)
 
 @WINFUNCTYPE(c_long,c_wchar_p,c_long)
