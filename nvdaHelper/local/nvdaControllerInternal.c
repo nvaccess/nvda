@@ -49,3 +49,8 @@ error_status_t(__stdcall *_nvdaControllerInternal_inputCandidateListUpdate)(cons
 error_status_t __stdcall nvdaControllerInternal_inputCandidateListUpdate(const wchar_t* candidates, const long selectionIndex) {
 	return _nvdaControllerInternal_inputCandidateListUpdate(candidates,selectionIndex);
 }
+
+error_status_t(__stdcall *_nvdaControllerInternal_inputConversionModeUpdate)(const long, const long);
+error_status_t __stdcall nvdaControllerInternal_inputConversionModeUpdate(const long oldFlags, const long newFlags) {
+	return _nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags);
+}

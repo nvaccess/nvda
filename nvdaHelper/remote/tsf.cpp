@@ -44,7 +44,7 @@ static sinkMap_t gTsfSinks;
 static LockableObject gTsfSinksLock;
 static PVOID gLastCompStr = NULL;
 
-class TsfSink : public ITfThreadMgrEventSink,public ITfActiveLanguageProfileNotifySink,public ITfTextEditSink {
+class TsfSink : public ITfThreadMgrEventSink,public ITfActiveLanguageProfileNotifySink,public ITfTextEditSink, public ITfCompartmentEventSink {
 public:
 	TsfSink();
 	~TsfSink();
@@ -73,6 +73,12 @@ public:
 	// ITfActiveLanguageProfileNotifySink methods
 	STDMETHODIMP OnActivated(REFCLSID, REFGUID, BOOL);
 
+	// ITfCompartmentEventSink
+	STDMETHODIMP OnChange(REFGUID);
+
+	//Other custom functions
+	void reportPossibleConversionModeChange();
+
 	//Is TSF actually being used for this thread?
 	bool isActive;
 
@@ -83,6 +89,9 @@ private:
 	DWORD         mThreadMgrCookie;
 	DWORD         mLangProfCookie;
 	DWORD         mTextEditCookie;
+	ITfCompartment* mpConversionCompartment;
+	DWORD mConversionCompartmentCookie;
+	long mLastConversionFlags;
 	bool inComposition;
 
 	void UpdateTextEditSink(ITfDocumentMgr* docMgr);
@@ -134,9 +143,12 @@ TsfSink::TsfSink() {
 	mThreadMgrCookie = TF_INVALID_COOKIE;
 	mLangProfCookie  = TF_INVALID_COOKIE;
 	mTextEditCookie  = TF_INVALID_COOKIE;
+	mConversionCompartmentCookie=TF_INVALID_COOKIE;
+	mpConversionCompartment=NULL;
 	inComposition=false;
 	int lastCompositionStartOffset=0;
 	isActive=false;
+	mLastConversionFlags=0;
 }
 
 TsfSink::~TsfSink() {
@@ -168,6 +180,25 @@ void TsfSink::Initialize() {
 		UpdateTextEditSink(doc_mgr);
 		doc_mgr->Release();
 	}
+	ITfCompartmentMgr* pCompartmentMgr=NULL;
+	hr=mpThreadMgr->QueryInterface(IID_ITfCompartmentMgr,(void**)&pCompartmentMgr);
+	if(hr==S_OK&&pCompartmentMgr) {
+		hr=pCompartmentMgr->GetCompartment(GUID_COMPARTMENT_KEYBOARD_INPUTMODE_CONVERSION,&mpConversionCompartment);
+		pCompartmentMgr->Release();
+	}
+	if(hr==S_OK&&mpConversionCompartment) {
+		VARIANT v;
+		mpConversionCompartment->GetValue(&v);
+		if(v.vt==VT_I4) {
+			mLastConversionFlags=v.lVal;
+		}
+		ITfSource* pCompartmentSrc=NULL;
+		hr=mpConversionCompartment->QueryInterface(IID_ITfSource,(void**)&pCompartmentSrc);
+		if(hr==S_OK&&pCompartmentSrc) {
+			hr=pCompartmentSrc->AdviseSink(IID_ITfCompartmentEventSink,(ITfCompartmentEventSink*)this,&mConversionCompartmentCookie);
+			pCompartmentSrc->Release();
+		}
+	}
 	//Check to see if there is an active TSF language profile and set isActive accordingly.
 	ITfInputProcessorProfiles* profiles = create_input_processor_profiles();
 	if(profiles) {
@@ -193,6 +224,16 @@ void TsfSink::Initialize() {
 }
 
 void TsfSink::CleanUp() {
+	HRESULT hr;
+	if(mpConversionCompartment&&mConversionCompartmentCookie!=TF_INVALID_COOKIE) {
+		ITfSource* pCompartmentSrc=NULL;
+		hr=mpConversionCompartment->QueryInterface(IID_ITfSource,(void**)&pCompartmentSrc);
+		if(hr==S_OK&&pCompartmentSrc) {
+			pCompartmentSrc->UnadviseSink(mConversionCompartmentCookie);
+			mConversionCompartmentCookie=TF_INVALID_COOKIE;
+			pCompartmentSrc->Release();
+		}
+	}
 	RemoveTextEditSink();
 	if (mpThreadMgr) {
 		ITfSource* src = NULL;
@@ -254,6 +295,8 @@ STDMETHODIMP TsfSink::QueryInterface(REFIID riid, LPVOID* ppvObj) {
 		*ppvObj = (ITfActiveLanguageProfileNotifySink*)this;
 	} else if (IsEqualIID(riid, IID_ITfTextEditSink)) {
 		*ppvObj = (ITfTextEditSink*)this;
+	} else if (IsEqualIID(riid, IID_ITfCompartmentEventSink)) {
+		*ppvObj = (ITfCompartmentEventSink*)this;
 	} else {
 		*ppvObj = NULL;
 		return E_NOINTERFACE;
@@ -400,6 +443,11 @@ WCHAR* TsfSink::HandleEditRecord(TfEditCookie cookie, ITfEditRecord* pEditRec) {
 	return NULL;
 }
 
+STDMETHODIMP TsfSink::OnChange(REFGUID guid) {
+	reportPossibleConversionModeChange();
+	return S_OK;
+}
+
 STDMETHODIMP TsfSink::OnEndEdit(
 		ITfContext* pCtx, TfEditCookie cookie, ITfEditRecord* pEditRec) {
 	// TSF input processor performing composition
@@ -467,7 +515,19 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 		}
 	}
 	profiles->Release();
+	reportPossibleConversionModeChange();
 	return S_OK;
+}
+
+void TsfSink::reportPossibleConversionModeChange() {
+	if(isActive&&mpConversionCompartment) {
+		VARIANT v;
+		HRESULT hr=mpConversionCompartment->GetValue(&v);
+		if(hr==S_OK&&v.vt==VT_I4) {
+			if(v.lVal!=mLastConversionFlags) nvdaControllerInternal_inputConversionModeUpdate(mLastConversionFlags,v.lVal);
+			mLastConversionFlags=v.lVal;
+		}
+	}
 }
 
 static void CALLBACK TSF_winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 

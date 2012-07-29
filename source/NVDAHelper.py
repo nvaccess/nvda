@@ -188,6 +188,27 @@ def nvdaControllerInternal_inputCandidateListUpdate(candidatesString,selectionIn
 	queueHandler.queueFunction(queueHandler.eventQueue,handleInputCandidateListUpdate,candidatesString,selectionIndex)
 	return 0
 
+inputConversionModeMessages={
+	1:(_("Native input"),_("Alpha numeric input")),
+	8:(_("Full shaped mode"),_("Half shaped mode")),
+}
+
+def handleInputConversionModeUpdate(oldFlags,newFlags):
+	import speech
+	for x in xrange(32):
+		x=2**x
+		msgs=inputConversionModeMessages.get(x)
+		if not msgs: continue
+		newOn=bool(newFlags&x)
+		oldOn=bool(oldFlags&x)
+		if newOn!=oldOn: 
+			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,msgs[0] if newOn else msgs[1])
+
+@WINFUNCTYPE(c_long,c_long,c_long)
+def nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags):
+	queueHandler.queueFunction(queueHandler.eventQueue,handleInputConversionModeUpdate,oldFlags,newFlags)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	global lastInputMethodName
@@ -287,6 +308,7 @@ def initialize():
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
 		("nvdaControllerInternal_inputCompositionUpdate",nvdaControllerInternal_inputCompositionUpdate),
 		("nvdaControllerInternal_inputCandidateListUpdate",nvdaControllerInternal_inputCandidateListUpdate),
+		("nvdaControllerInternal_inputConversionModeUpdate",nvdaControllerInternal_inputConversionModeUpdate),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)
