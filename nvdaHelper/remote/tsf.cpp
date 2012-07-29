@@ -489,7 +489,10 @@ STDMETHODIMP TsfSink::OnEndEdit(
 
 STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activated) {
 	const CLSID null_clsid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
-	if (!activated)  return S_OK;
+	if (!activated) {
+		isActive=false;
+		return S_OK;
+	}
 	if (IsEqualCLSID(rClsID, null_clsid)) {
 		isActive = false;
 		// When switching to non-TSF profile, resend last input language
