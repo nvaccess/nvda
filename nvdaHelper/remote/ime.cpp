@@ -44,8 +44,6 @@ typedef struct tagINPUTCONTEXT2 {
     DWORD           dwReserve[3];                   
 } INPUTCONTEXT2, *PINPUTCONTEXT2, NEAR *NPINPUTCONTEXT2, FAR *LPINPUTCONTEXT2;  
 
-bool IME_deprecated = false;
-
 static HMODULE gImm32Module = NULL;
 
 static LPINPUTCONTEXT2 (WINAPI* immLockIMC)(HIMC) = NULL;
