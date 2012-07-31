@@ -328,7 +328,7 @@ def initTranslation():
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
-def _translatedManifestPaths(lang=None):
+def _translatedManifestPaths(lang=None, forBundle=False):
 	if lang is None:
 		lang = languageHandler.getLanguage() # can't rely on default keyword arguments here.
 	langs=[lang]
@@ -336,7 +336,8 @@ def _translatedManifestPaths(lang=None):
 		langs.append(lang.split('_')[0])
 		if lang!='en' and not lang.startswith('en_'):
 			langs.append('en')
-	return [r"locale\%s\%s" % (lang,  MANIFEST_FILENAME) for lang in langs]
+	sep = "/" if forBundle else os.path.sep
+	return [sep.join(("locale", lang, MANIFEST_FILENAME)) for lang in langs]
 
 
 class AddonBundle(object):
@@ -351,7 +352,7 @@ class AddonBundle(object):
 		# Read manifest:
 		translatedInput=None
 		with zipfile.ZipFile(self._path, 'r') as z:
-			for translationPath in _translatedManifestPaths(): 
+			for translationPath in _translatedManifestPaths(forBundle=True):
 				try:
 					translatedInput = z.open(translationPath, 'r')
 					break
