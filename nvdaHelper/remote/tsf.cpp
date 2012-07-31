@@ -20,6 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaHelperRemote.h"
 #include "nvdaControllerInternal.h"
 #include "typedCharacter.h"
+#include "ime.h"
 #include "tsf.h"
 #include "inputLangChange.h"
 
@@ -44,13 +45,13 @@ static sinkMap_t gTsfSinks;
 static LockableObject gTsfSinksLock;
 static PVOID gLastCompStr = NULL;
 
-class TsfSink : public ITfThreadMgrEventSink,public ITfActiveLanguageProfileNotifySink,public ITfTextEditSink, public ITfCompartmentEventSink {
+class TsfSink : public ITfThreadMgrEventSink,public ITfActiveLanguageProfileNotifySink,public ITfTextEditSink {
 public:
 	TsfSink();
 	~TsfSink();
 
 	// Initializes object after creation
-	void Initialize();
+	bool Initialize();
 
 	// Cleans up object before destruction
 	void CleanUp();
@@ -73,14 +74,8 @@ public:
 	// ITfActiveLanguageProfileNotifySink methods
 	STDMETHODIMP OnActivated(REFCLSID, REFGUID, BOOL);
 
-	// ITfCompartmentEventSink
-	STDMETHODIMP OnChange(REFGUID);
-
-	//Other custom functions
-	void reportPossibleConversionModeChange();
-
 	//Is TSF actually being used for this thread?
-	bool isActive;
+	bool hasActiveProfile;
 
 private:
 	LONG          mRefCount;
@@ -89,9 +84,6 @@ private:
 	DWORD         mThreadMgrCookie;
 	DWORD         mLangProfCookie;
 	DWORD         mTextEditCookie;
-	ITfCompartment* mpConversionCompartment;
-	DWORD mConversionCompartmentCookie;
-	long mLastConversionFlags;
 	bool inComposition;
 
 	void UpdateTextEditSink(ITfDocumentMgr* docMgr);
@@ -143,18 +135,15 @@ TsfSink::TsfSink() {
 	mThreadMgrCookie = TF_INVALID_COOKIE;
 	mLangProfCookie  = TF_INVALID_COOKIE;
 	mTextEditCookie  = TF_INVALID_COOKIE;
-	mConversionCompartmentCookie=TF_INVALID_COOKIE;
-	mpConversionCompartment=NULL;
 	inComposition=false;
 	int lastCompositionStartOffset=0;
-	isActive=false;
-	mLastConversionFlags=0;
+	hasActiveProfile=false;
 }
 
 TsfSink::~TsfSink() {
 }
 
-void TsfSink::Initialize() {
+bool TsfSink::Initialize() {
 	mpThreadMgr = create_thread_manager();
 	HRESULT hr = mpThreadMgr ? S_OK : E_FAIL;
 	ITfSource* src = NULL;
@@ -173,33 +162,14 @@ void TsfSink::Initialize() {
 		src->Release();
 		src = NULL;
 	}
-	if (hr != S_OK)  return;
+	if (hr != S_OK)  return false;
 	ITfDocumentMgr* doc_mgr = NULL;
 	mpThreadMgr->GetFocus(&doc_mgr);
 	if (doc_mgr) {
 		UpdateTextEditSink(doc_mgr);
 		doc_mgr->Release();
 	}
-	ITfCompartmentMgr* pCompartmentMgr=NULL;
-	hr=mpThreadMgr->QueryInterface(IID_ITfCompartmentMgr,(void**)&pCompartmentMgr);
-	if(hr==S_OK&&pCompartmentMgr) {
-		hr=pCompartmentMgr->GetCompartment(GUID_COMPARTMENT_KEYBOARD_INPUTMODE_CONVERSION,&mpConversionCompartment);
-		pCompartmentMgr->Release();
-	}
-	if(hr==S_OK&&mpConversionCompartment) {
-		VARIANT v;
-		mpConversionCompartment->GetValue(&v);
-		if(v.vt==VT_I4) {
-			mLastConversionFlags=v.lVal;
-		}
-		ITfSource* pCompartmentSrc=NULL;
-		hr=mpConversionCompartment->QueryInterface(IID_ITfSource,(void**)&pCompartmentSrc);
-		if(hr==S_OK&&pCompartmentSrc) {
-			hr=pCompartmentSrc->AdviseSink(IID_ITfCompartmentEventSink,(ITfCompartmentEventSink*)this,&mConversionCompartmentCookie);
-			pCompartmentSrc->Release();
-		}
-	}
-	//Check to see if there is an active TSF language profile and set isActive accordingly.
+	//Check to see if there is an active TSF language profile and set hasActiveProfile accordingly.
 	ITfInputProcessorProfiles* profiles = create_input_processor_profiles();
 	if(profiles) {
 		LANGID  lang = 0;
@@ -212,7 +182,7 @@ void TsfSink::Initialize() {
 				ULONG fetched=0;
 				while(pEnumTfLanguageProfiles->Next(1,&profile,&fetched)==S_OK&&fetched==1) {
 					if(profile.fActive&&IsEqualCLSID(profile.catid,GUID_TFCAT_TIP_KEYBOARD)) {
-						isActive=true;
+						hasActiveProfile=true;
 						break;
 					}
 				}
@@ -221,19 +191,10 @@ void TsfSink::Initialize() {
 		}
 		profiles->Release();
 	}
+	return true;
 }
 
 void TsfSink::CleanUp() {
-	HRESULT hr;
-	if(mpConversionCompartment&&mConversionCompartmentCookie!=TF_INVALID_COOKIE) {
-		ITfSource* pCompartmentSrc=NULL;
-		hr=mpConversionCompartment->QueryInterface(IID_ITfSource,(void**)&pCompartmentSrc);
-		if(hr==S_OK&&pCompartmentSrc) {
-			pCompartmentSrc->UnadviseSink(mConversionCompartmentCookie);
-			mConversionCompartmentCookie=TF_INVALID_COOKIE;
-			pCompartmentSrc->Release();
-		}
-	}
 	RemoveTextEditSink();
 	if (mpThreadMgr) {
 		ITfSource* src = NULL;
@@ -295,8 +256,6 @@ STDMETHODIMP TsfSink::QueryInterface(REFIID riid, LPVOID* ppvObj) {
 		*ppvObj = (ITfActiveLanguageProfileNotifySink*)this;
 	} else if (IsEqualIID(riid, IID_ITfTextEditSink)) {
 		*ppvObj = (ITfTextEditSink*)this;
-	} else if (IsEqualIID(riid, IID_ITfCompartmentEventSink)) {
-		*ppvObj = (ITfCompartmentEventSink*)this;
 	} else {
 		*ppvObj = NULL;
 		return E_NOINTERFACE;
@@ -443,11 +402,6 @@ WCHAR* TsfSink::HandleEditRecord(TfEditCookie cookie, ITfEditRecord* pEditRec) {
 	return NULL;
 }
 
-STDMETHODIMP TsfSink::OnChange(REFGUID guid) {
-	reportPossibleConversionModeChange();
-	return S_OK;
-}
-
 STDMETHODIMP TsfSink::OnEndEdit(
 		ITfContext* pCtx, TfEditCookie cookie, ITfEditRecord* pEditRec) {
 	// TSF input processor performing composition
@@ -490,19 +444,22 @@ STDMETHODIMP TsfSink::OnEndEdit(
 STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activated) {
 	const CLSID null_clsid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
 	if (!activated) {
-		isActive=false;
+		hasActiveProfile=false;
 		return S_OK;
 	}
+	//Re-enable IME conversion mode update reporting as input lang change window message disabled it while completing the switch
+	disableIMEConversionModeUpdateReporting=false;
 	if (IsEqualCLSID(rClsID, null_clsid)) {
-		isActive = false;
+		hasActiveProfile = false;
 		// When switching to non-TSF profile, resend last input language
 		wchar_t buf[KL_NAMELENGTH];
 		GetKeyboardLayoutName(buf);
 		nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),
 				static_cast<unsigned long>(lastInputLangChange), buf);
+		handleIMEConversionModeUpdate(GetFocus(),true);
 		return S_OK;
 	}
-	isActive = true;
+	hasActiveProfile = true;
 	ITfInputProcessorProfiles* profiles = create_input_processor_profiles();
 	if (!profiles)  return S_OK;
 	HRESULT hr = S_OK;
@@ -518,19 +475,8 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 		}
 	}
 	profiles->Release();
-	reportPossibleConversionModeChange();
+	handleIMEConversionModeUpdate(GetFocus(),true);
 	return S_OK;
-}
-
-void TsfSink::reportPossibleConversionModeChange() {
-	if(isActive&&mpConversionCompartment) {
-		VARIANT v;
-		HRESULT hr=mpConversionCompartment->GetValue(&v);
-		if(hr==S_OK&&v.vt==VT_I4) {
-			if(v.lVal!=mLastConversionFlags) nvdaControllerInternal_inputConversionModeUpdate(mLastConversionFlags,v.lVal);
-			mLastConversionFlags=v.lVal;
-		}
-	}
 }
 
 static void CALLBACK TSF_winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 
@@ -549,7 +495,7 @@ static void CALLBACK TSF_winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 	if (TlsGetValue(gTsfIndex))  return;
 	TsfSink* sink = new TsfSink;
 	if (!sink)  return;
-	sink->Initialize();
+	if(!sink->Initialize()) return;
 	gTsfSinksLock.acquire();
 	gTsfSinks[GetCurrentThreadId()] = sink;
 	gTsfSinksLock.release();
@@ -601,8 +547,8 @@ void TSF_thread_detached() {
 	sink->Release();
 }
 
-bool isTSFThread() {
+bool isTSFThread(bool checkActiveProfile) {
 TsfSink* tsf=fetchCurrentTsfSink();
 	if(!tsf) return false; 
-	return tsf->isActive;
+	return checkActiveProfile?tsf->hasActiveProfile:true;
 }

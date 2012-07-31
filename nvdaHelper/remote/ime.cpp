@@ -45,11 +45,26 @@ typedef struct tagINPUTCONTEXT2 {
 } INPUTCONTEXT2, *PINPUTCONTEXT2, NEAR *NPINPUTCONTEXT2, FAR *LPINPUTCONTEXT2;  
 
 static HMODULE gImm32Module = NULL;
+static DWORD lastConversionModeFlags=0;
+bool disableIMEConversionModeUpdateReporting=false;
 
 static LPINPUTCONTEXT2 (WINAPI* immLockIMC)(HIMC) = NULL;
 static BOOL (WINAPI* immUnlockIMC)(HIMC) = NULL;
 static LPVOID (WINAPI* immLockIMCC)(HIMCC) = NULL;
 static BOOL (WINAPI* immUnlockIMCC)(HIMCC) = NULL;
+
+void handleIMEConversionModeUpdate(HWND hwnd, bool report) {
+	/* Obtain IME context */
+	HIMC imc = ImmGetContext(hwnd);
+	if (!imc)  return;
+	DWORD flags=0;
+	ImmGetConversionStatus(imc,&flags,NULL);
+	ImmReleaseContext(hwnd, imc);
+	if(report&&flags!=lastConversionModeFlags) {
+		nvdaControllerInternal_inputConversionModeUpdate(lastConversionModeFlags,flags);
+	}
+	lastConversionModeFlags=flags;
+}
 
 static bool handleCandidates(HWND hwnd) {
 	/* Obtain IME context */
@@ -162,37 +177,45 @@ bool hasValidIMEContext(HWND hwnd) {
 static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	// Ignore messages with invalid HIMC
-	if(isTSFThread()||!hasValidIMEContext(pcwp->hwnd)) return 0; 
+	if(!hasValidIMEContext(pcwp->hwnd)) return 0; 
 	switch (pcwp->message) {
 		case WM_IME_NOTIFY:
 			switch (pcwp->wParam) {
 				case IMN_OPENCANDIDATE:
 				case IMN_CHANGECANDIDATE:
-					handleCandidates(pcwp->hwnd);
+					if(!isTSFThread(true)) handleCandidates(pcwp->hwnd);
 					break;
 
 				case IMN_CLOSECANDIDATE:
-					nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
+					if(!isTSFThread(true)) nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
+					break;
+
+				case IMN_SETCONVERSIONMODE:
+					if(!disableIMEConversionModeUpdateReporting) handleIMEConversionModeUpdate(pcwp->hwnd,true);
 					break;
 			}
 
 		case WM_IME_COMPOSITION:
-			handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+			if(!isTSFThread(true)) handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
 			break;
 
 		case WM_IME_ENDCOMPOSITION:
-			handleEndComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
-			//Disable further typed character notifications produced by TSF
-			typedCharacter_window=NULL;
+			if(!isTSFThread(true)) {
+				handleEndComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+				//Disable further typed character notifications produced by TSF
+				typedCharacter_window=NULL;
+			}
 			break;
 
-		/*
 		case WM_ACTIVATE:
 		case WM_SETFOCUS:
-			if (pcwp->hwnd != GetFocus())  break;
-			handleCandidates(pcwp->hwnd);
+			handleIMEConversionModeUpdate(pcwp->hwnd,false);
+			if(!isTSFThread(true)) {
+				if (pcwp->hwnd != GetFocus())  break;
+				handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+				handleCandidates(pcwp->hwnd);
+			}
 			break;
-		*/
 		default:
 			break;
 	}
