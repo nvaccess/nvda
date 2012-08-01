@@ -427,7 +427,7 @@ STDMETHODIMP TsfSink::OnEndEdit(
 	long selStart=compStart;
 	long selEnd=compStart;
 	TF_SELECTION tfSelection={0};
-	if(pCtx->GetSelection(cookie,0,1,&tfSelection,&len)==S_OK&&tfSelection.range) {
+	if(pCtx->GetSelection(cookie,TF_DEFAULT_SELECTION,1,&tfSelection,&len)==S_OK&&tfSelection.range) {
 		if(fetchRangeExtent(tfSelection.range,&selStart,&len)) {
 			selEnd=selStart+len;
 		}
