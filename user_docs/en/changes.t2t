@@ -43,6 +43,7 @@
 - When installing an add-on, the confirmation dialog now correctly shows the localised name of the add-on if available. (#2422)
 - In applications using UI Automation (such as .net and Silverlight applications), the calculation of numeric values for controls such as sliders has been corrected. (#2417)
 - The configuration for reporting of progress bars is now honoured for the indeterminate progress bars displayed by NVDA when installing, creating a portable copy, etc. (#2574)
+- NVDA commands can no longer be executed from a braille display while a secure Windows screen (such as the Lock screen) is active. (#2449)
 
 
 == Changes for Developers ==
