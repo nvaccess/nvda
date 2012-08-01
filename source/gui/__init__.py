@@ -636,14 +636,26 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 
 	def __init__(self, parent, title, message):
 		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
+		self._speechCounter = -1
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
 		self.Raise()
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()
-		if self.IsActive():
+		# We want progress to be spoken on the first pulse and every 10 pulses thereafter.
+		# Therefore, cycle from 0 to 9 inclusive.
+		self._speechCounter = (self._speechCounter + 1) % 10
+		pbConf = config.conf["presentation"]["progressBarUpdates"]
+		if pbConf["progressBarOutputMode"] == "off":
+			return
+		if not pbConf["reportBackgroundProgressBars"] and not self.IsActive():
+			return
+		if pbConf["progressBarOutputMode"] in ("beep", "both"):
 			tones.beep(440, 40)
+		if pbConf["progressBarOutputMode"] in ("speak", "both") and self._speechCounter == 0:
+			# Translators: Announced periodically to indicate progress for an indeterminate progress bar.
+			speech.speakMessage(_("Please wait"))
 
 	def done(self):
 		self.timer.Stop()
