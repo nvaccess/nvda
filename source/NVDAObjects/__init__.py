@@ -925,4 +925,6 @@ This code is executed if a gain focus event is received by this object.
 		if self.appModule:
 			return self.appModule.sleepMode
 		return False
+	# Don't cache sleepMode, as it is derived from a property which might change
+	# and we want the changed value immediately.
 	_cache_sleepMode = False
