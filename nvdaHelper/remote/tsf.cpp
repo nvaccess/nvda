@@ -410,7 +410,7 @@ STDMETHODIMP TsfSink::OnEndEdit(
 		if(inComposition) {
 			inComposition=false;
 			wchar_t* edit_str=HandleEditRecord(cookie, pEditRec);
-			nvdaControllerInternal_inputCompositionUpdate(L"",-1,-1,(edit_str?edit_str:L""));
+			nvdaControllerInternal_inputCompositionUpdate((edit_str?edit_str:L""),-1,-1,0);
 			if(edit_str) free(edit_str);
 			//Disable further typed character notifications produced by TSF
 			typedCharacter_window=NULL;
@@ -435,9 +435,7 @@ STDMETHODIMP TsfSink::OnEndEdit(
 	}
 	selStart=max(0,selStart-compStart);
 	selEnd=max(0,selEnd-compStart);
-	WCHAR* edit_str = HandleEditRecord(cookie, pEditRec);
-	nvdaControllerInternal_inputCompositionUpdate(buf,selStart,selEnd,(edit_str?edit_str:L""));
-	if (edit_str) free(edit_str);
+	nvdaControllerInternal_inputCompositionUpdate(buf,selStart,selEnd,0);
 	return S_OK;
 }
 

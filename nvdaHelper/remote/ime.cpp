@@ -135,7 +135,7 @@ static bool handleComposition(HWND hwnd, WPARAM wParam, LPARAM lParam) {
 
 	/* Generate notification */
 	if(comp_str) {
-		nvdaControllerInternal_inputCompositionUpdate(comp_str,selectionStart,selectionStart,L"");
+		nvdaControllerInternal_inputCompositionUpdate(comp_str,selectionStart,selectionStart,0);
 		free(comp_str);
 		return true;
 	}
@@ -151,7 +151,7 @@ static bool handleEndComposition(HWND hwnd, WPARAM wParam, LPARAM lParam) {
 	ImmReleaseContext(hwnd, imc);
 
 	/* Generate notification */
-	nvdaControllerInternal_inputCompositionUpdate(L"",-1,-1,(comp_str?comp_str:L""));
+	nvdaControllerInternal_inputCompositionUpdate((comp_str?comp_str:L""),-1,-1,0);
 	if(comp_str) {
 		free(comp_str);
 		return true;

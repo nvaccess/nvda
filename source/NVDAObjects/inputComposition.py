@@ -32,16 +32,16 @@ def calculateInsertedChars(oldComp,newComp):
 class InputCompositionTextInfo(OffsetsTextInfo):
 
 	def _getSelectionOffsets(self):
-		return self.obj.compositionSelectionOffsets
+		return self.obj.readingSelectionOffsets if self.obj.isReading else self.obj.compositionSelectionOffsets
 
 	def _getCaretOffset(self):
 		return self._getSelectionOffsets()[0]
 
-	def _getStoryLength(self):
-		return len(self.obj.compositionString) if self.obj.compositionString else 0
-
 	def _getStoryText(self):
-		return self.obj.compositionString if self.obj.compositionString else u""
+		return self.obj.readingString if self.obj.isReading else self.obj.compositionString
+
+	def _getStoryLength(self):
+		return len(self._getStoryText())
 
 class InputComposition(EditableTextWithAutoSelectDetection,Window):
 
@@ -55,7 +55,10 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 	states=set()
 	location=None
 	compositionString=""
+	readingString=""
 	compositionSelectionOffsets=(0,0)
+	readingSelectionOffsets=(0,0)
+	isReading=False
 
 	def __init__(self,parent=None):
 		self.parent=parent
@@ -66,11 +69,22 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 		clsList.append(InputComposition)
 		return clsList
 
-	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,newText):
+	def reportNewText(self,oldString,newString):
 		if (config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]):
-			newText=calculateInsertedChars(self.compositionString.strip(u'\u3000'),compositionString.strip(u'\u3000'))
+			newText=calculateInsertedChars(oldString.strip(u'\u3000'),newString.strip(u'\u3000'))
 			if newText:
 				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText)
+
+	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,isReading):
+		self.reportNewText((self.readingString if isReading else self.compositionString),compositionString)
+		if isReading:
+			self.readingString=compositionString
+			self.readingSelectionOffsets=(selectionStart,selectionEnd)
+			self.isReading=True
+		else:
+			self.readingString=""
+			self.readingSelectionOffsets=(0,0)
+			self.isReading=False
 		self.compositionString=compositionString
 		self.compositionSelectionOffsets=(selectionStart,selectionEnd)
 		eventHandler.queueEvent("valueChange",self)

@@ -40,9 +40,9 @@ error_status_t __stdcall nvdaControllerInternal_displayModelTextChangeNotify(con
 	return _nvdaControllerInternal_displayModelTextChangeNotify(hwnd,left,top,right,bottom);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_inputCompositionUpdate)(const wchar_t*, const int, const int, const wchar_t*);
-error_status_t __stdcall nvdaControllerInternal_inputCompositionUpdate(const wchar_t* compositionString, const int selectionStart, const int selectionEnd, const wchar_t* newText) {
-	return _nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText);
+error_status_t(__stdcall *_nvdaControllerInternal_inputCompositionUpdate)(const wchar_t*, const int, const int, const int);
+error_status_t __stdcall nvdaControllerInternal_inputCompositionUpdate(const wchar_t* compositionString, const int selectionStart, const int selectionEnd, const int isReading) {
+	return _nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading);
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_inputCandidateListUpdate)(const wchar_t*, const long);

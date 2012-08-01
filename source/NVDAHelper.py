@@ -127,11 +127,11 @@ def handleInputCompositionEnd(result):
 		if result:
 			speech.speakText(result)
 
-def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,newText):
+def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,isReading):
 	import speech
 	#End of composition already?
 	if selectionStart==-1:
-		result=newText.lstrip(u'\u3000 ')
+		result=compositionString.lstrip(u'\u3000 ')
 		if result:
 			speech.speakText(result)
 		return
@@ -145,10 +145,10 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,ne
 		eventHandler.executeEvent("gainFocus",newFocus)
 		focus=newFocus
 		speech.speechMode=oldSpeechMode
-	focus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
+	focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
 
-@WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_wchar_p)
-def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,newText):
+@WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
+def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading):
 	from NVDAObjects.inputComposition import InputComposition, CandidateItem
 	focus=api.getFocusObject()
 	#IME keeps updating input composition while the candidate list is open
@@ -157,11 +157,11 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 		return 0
 	if isinstance(focus,InputComposition):
 		if selectionStart!=-1:
-			focus.compositionUpdate(compositionString,selectionStart,selectionEnd,newText)
+			focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
 		else:
-			queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,newText)
+			queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,compositionString)
 	else:
-		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,newText)
+		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0
 
 def handleInputCandidateListUpdate(candidatesString,selectionIndex):
