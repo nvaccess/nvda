@@ -916,3 +916,13 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("TextInfo: %s" % ret)
 		return info
+
+	def _get_sleepMode(self):
+		"""Whether NVDA should sleep for this object (e.g. it is self-voicing).
+		If C{True}, all  events and script requests for this object are silently dropped.
+		@rtype: bool
+		"""
+		if self.appModule:
+			return self.appModule.sleepMode
+		return False
+	_cache_sleepMode = False
