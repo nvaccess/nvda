@@ -349,11 +349,13 @@ class CandidateItem(NVDAObject):
 				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
 			except TypeError:
 				symbolDescriptions=[]
+			if numSymbols>1:
+				symbolDescriptions=symbolDescriptions[:1]
 			numSymbolDescriptions=len(symbolDescriptions)
 			for desc in symbolDescriptions:
 				if desc and desc[0]=='(' and desc[-1]==')':
 					desc=desc[1:-1]
-				elif numSymbols>1 or len(symbolDescriptions)==1:
+				elif numSymbolDescriptions==1:
 					# Translators: a human friendly message used as the description for an input composition candidate symbol using both the symbol and its character description. 
 					desc=_("{symbol} as in {description}").format(symbol=symbol,description=desc)
 				descriptions.append(desc)
