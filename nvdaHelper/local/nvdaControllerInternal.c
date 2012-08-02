@@ -54,3 +54,8 @@ error_status_t(__stdcall *_nvdaControllerInternal_inputConversionModeUpdate)(con
 error_status_t __stdcall nvdaControllerInternal_inputConversionModeUpdate(const long oldFlags, const long newFlags) {
 	return _nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags);
 }
+
+error_status_t(__stdcall *_nvdaControllerInternal_vbufChangeNotify)(const int, const int);
+error_status_t __stdcall nvdaControllerInternal_vbufChangeNotify(const int rootDocHandle, const int rootID) {
+	return _nvdaControllerInternal_vbufChangeNotify(rootDocHandle,rootID);
+}

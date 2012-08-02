@@ -127,7 +127,7 @@ def executeEvent(eventName,obj,**kwargs):
 	@param kwargs: Additional event parameters as keyword arguments.
 	"""
 	try:
-		sleepMode=obj.appModule.sleepMode if obj and obj.appModule else False
+		sleepMode=obj.sleepMode
 		if eventName=="gainFocus" and not doPreGainFocus(obj,sleepMode=sleepMode):
 			return
 		elif not sleepMode and eventName=="documentLoadComplete" and not doPreDocumentLoadComplete(obj):

@@ -74,4 +74,9 @@ interface NvdaControllerInternal {
 
 	error_status_t __stdcall inputConversionModeUpdate([in] const long oldFlags, [in] const long newFlags);
 
+/**
+ * Notifies NVDA that a virtual buffer has changed.
+ */
+	error_status_t __stdcall vbufChangeNotify([in] const int rootDocHandle, [in] const int rootID);
+
 };

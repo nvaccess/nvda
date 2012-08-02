@@ -669,6 +669,11 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 	def _get_role(self):
 		return controlTypes.ROLE_PANE
 
+	def event_gainFocus(self):
+		super(SecureDesktopNVDAObject, self).event_gainFocus()
+		# After handling the focus, NVDA should sleep while the secure desktop is active.
+		self.sleepMode = True
+
 def processDesktopSwitchWinEvent(window,objectID,childID):
 	hDesk=windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk!=0:

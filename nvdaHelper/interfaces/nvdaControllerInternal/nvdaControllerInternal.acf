@@ -21,4 +21,5 @@ interface NvdaControllerInternal {
 	[fault_status,comm_status] typedCharacterNotify();
 	[fault_status,comm_status] displayModelTextChangeNotify();
 	[fault_status,comm_status] logMessage();
+	[fault_status,comm_status] vbufChangeNotify();
 }
