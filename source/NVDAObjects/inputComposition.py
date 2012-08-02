@@ -77,18 +77,22 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 
 	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,isReading):
 		self.reportNewText((self.readingString if isReading else self.compositionString),compositionString)
+		hasChanged=False
 		if isReading:
 			self.readingString=compositionString
 			self.readingSelectionOffsets=(selectionStart,selectionEnd)
 			self.isReading=True
-		else:
+			hasChanged=True
+		elif compositionString!=self.compositionString or (selectionStart,selectionEnd)!=self.compositionSelectionOffsets:
 			self.readingString=""
 			self.readingSelectionOffsets=(0,0)
 			self.isReading=False
-		self.compositionString=compositionString
-		self.compositionSelectionOffsets=(selectionStart,selectionEnd)
-		eventHandler.queueEvent("valueChange",self)
-		eventHandler.queueEvent("caret",self)
+			self.compositionString=compositionString
+			self.compositionSelectionOffsets=(selectionStart,selectionEnd)
+			hasChanged=True
+		if hasChanged:
+			eventHandler.queueEvent("valueChange",self)
+			eventHandler.queueEvent("caret",self)
 
 	def reportFocus(self):
 		pass
