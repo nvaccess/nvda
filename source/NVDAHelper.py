@@ -148,6 +148,12 @@ def nvdaControllerInternal_typedCharacterNotify(threadID,ch):
 		eventHandler.queueEvent("typedCharacter",focus,ch=ch)
 	return 0
 
+@WINFUNCTYPE(c_long, c_int, c_int)
+def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
+	import virtualBuffers
+	virtualBuffers.VirtualBuffer.changeNotify(rootDocHandle, rootID)
+	return 0
+
 class RemoteLoader64(object):
 
 	def __init__(self):
@@ -200,6 +206,7 @@ def initialize():
 		("nvdaControllerInternal_typedCharacterNotify",nvdaControllerInternal_typedCharacterNotify),
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
+		("nvdaControllerInternal_vbufChangeNotify",nvdaControllerInternal_vbufChangeNotify),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)

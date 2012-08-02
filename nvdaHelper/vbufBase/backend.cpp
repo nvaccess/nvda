@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <remote/nvdaHelperRemote.h>
 #include <common/log.h>
+#include <remote/nvdaControllerInternal.h>
 #include "storage.h"
 #include "backend.h"
 
@@ -199,6 +200,7 @@ void VBufBackend_t::update() {
 			LOG_DEBUGWARNING(L"Error replacing one or more subtrees");
 		}
 		this->lock.release();
+		nvdaControllerInternal_vbufChangeNotify(this->rootDocHandle,this->rootID);
 	} else {
 		LOG_DEBUG(L"Initial render");
 		this->lock.acquire();
