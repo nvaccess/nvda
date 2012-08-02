@@ -17,8 +17,44 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaHelperRemote.h"
 #include "nvdaControllerInternal.h"
 #include "typedCharacter.h"
+#include <common/log.h>
 #include "tsf.h"
 #include "ime.h"
+
+#define GETLANG()		LOWORD(g_hklCurrent)
+#define GETPRIMLANG()	((WORD)PRIMARYLANGID(GETLANG()))
+#define GETSUBLANG()	SUBLANGID(GETLANG())
+
+#define LANG_CHS MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED)
+#define LANG_CHT MAKELANGID(LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL)
+
+#define MAKEIMEVERSION(major,minor) ( (DWORD)( ( (BYTE)( major ) << 24 ) | ( (BYTE)( minor ) << 16 ) ) )
+#define IMEID_VER(dwId)		( ( dwId ) & 0xffff0000 )
+#define IMEID_LANG(dwId)	( ( dwId ) & 0x0000ffff )
+
+#define _CHT_HKL_DAYI				( (HKL)0xE0060404 )	// DaYi
+#define _CHT_HKL_NEW_PHONETIC		( (HKL)0xE0080404 )	// New Phonetic
+#define _CHT_HKL_NEW_CHANG_JIE		( (HKL)0xE0090404 )	// New Chang Jie
+#define _CHT_HKL_NEW_QUICK			( (HKL)0xE00A0404 )	// New Quick
+#define _CHT_HKL_HK_CANTONESE		( (HKL)0xE00B0404 )	// Hong Kong Cantonese
+#define _CHT_IMEFILENAME	"TINTLGNT.IME"	// New Phonetic
+#define _CHT_IMEFILENAME2	"CINTLGNT.IME"	// New Chang Jie
+#define _CHT_IMEFILENAME3	"MSTCIPHA.IME"	// Phonetic 5.1
+#define IMEID_CHT_VER42 ( LANG_CHT | MAKEIMEVERSION( 4, 2 ) )	// New(Phonetic/ChanJie)IME98  : 4.2.x.x // Win98
+#define IMEID_CHT_VER43 ( LANG_CHT | MAKEIMEVERSION( 4, 3 ) )	// New(Phonetic/ChanJie)IME98a : 4.3.x.x // Win2k
+#define IMEID_CHT_VER44 ( LANG_CHT | MAKEIMEVERSION( 4, 4 ) )	// New ChanJie IME98b          : 4.4.x.x // WinXP
+#define IMEID_CHT_VER50 ( LANG_CHT | MAKEIMEVERSION( 5, 0 ) )	// New(Phonetic/ChanJie)IME5.0 : 5.0.x.x // WinME
+#define IMEID_CHT_VER51 ( LANG_CHT | MAKEIMEVERSION( 5, 1 ) )	// New(Phonetic/ChanJie)IME5.1 : 5.1.x.x // IME2002(w/OfficeXP)
+#define IMEID_CHT_VER52 ( LANG_CHT | MAKEIMEVERSION( 5, 2 ) )	// New(Phonetic/ChanJie)IME5.2 : 5.2.x.x // IME2002a(w/WinXP)
+#define IMEID_CHT_VER60 ( LANG_CHT | MAKEIMEVERSION( 6, 0 ) )	// New(Phonetic/ChanJie)IME6.0 : 6.0.x.x // New IME 6.0(web download)
+#define IMEID_CHT_VER_VISTA ( LANG_CHT | MAKEIMEVERSION( 7, 0 ) )	// All TSF TIP under Cicero UI-less mode: a hack to make GetImeId() return non-zero value
+
+#define _CHS_HKL		( (HKL)0xE00E0804 )	// MSPY
+#define _CHS_IMEFILENAME	"PINTLGNT.IME"	// MSPY1.5/2/3
+#define _CHS_IMEFILENAME2	"MSSCIPYA.IME"	// MSPY3 for OfficeXP
+#define IMEID_CHS_VER41	( LANG_CHS | MAKEIMEVERSION( 4, 1 ) )	// MSPY1.5	// SCIME97 or MSPY1.5 (w/Win98, Office97)
+#define IMEID_CHS_VER42	( LANG_CHS | MAKEIMEVERSION( 4, 2 ) )	// MSPY2	// Win2k/WinME
+#define IMEID_CHS_VER53	( LANG_CHS | MAKEIMEVERSION( 5, 3 ) )	// MSPY3	// WinXP
 
 // Definition from Win98DDK version of IMM.H
 typedef struct tagINPUTCONTEXT2 {
@@ -52,6 +88,134 @@ static LPINPUTCONTEXT2 (WINAPI* immLockIMC)(HIMC) = NULL;
 static BOOL (WINAPI* immUnlockIMC)(HIMC) = NULL;
 static LPVOID (WINAPI* immLockIMCC)(HIMCC) = NULL;
 static BOOL (WINAPI* immUnlockIMCC)(HIMCC) = NULL;
+
+
+DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
+	DWORD version=0;
+	switch ((DWORD)kbd_layout) {
+		case _CHT_HKL_NEW_PHONETIC:
+		case _CHT_HKL_NEW_CHANG_JIE:
+		case _CHT_HKL_NEW_QUICK:
+		case _CHT_HKL_HK_CANTONESE:
+		case _CHS_HKL:
+			break;
+		default:
+			// Do not know how to extract version number
+			return 0;
+	}
+	DWORD ver_handle;
+	DWORD buf_size = GetFileVersionInfoSizeW(filename, &ver_handle);
+	if (!buf_size)  return 0;
+	void* buf = malloc(buf_size);
+    if (!buf)  return 0;
+	if (GetFileVersionInfoW(filename, ver_handle, buf_size, buf)) {
+		void* data = NULL;
+		UINT  data_len;
+		if (VerQueryValueW(buf, L"\\", &data, &data_len)) {
+			VS_FIXEDFILEINFO FAR* info = (VS_FIXEDFILEINFO FAR*)data;
+			version = (info->dwFileVersionMS & 0x00ff0000) << 8
+					| (info->dwFileVersionMS & 0x000000ff) << 16
+					| (DWORD)kbd_layout & 0xffff;
+		}
+	}
+	free(buf);
+	return version;
+}
+
+typedef UINT (WINAPI* GetReadingString_funcType)(HIMC, UINT, LPWSTR, PINT, BOOL*, PUINT);
+
+void handleReadingStringUpdate(HWND hwnd) {
+	/* Obtain IME context */
+	HIMC imc = ImmGetContext(hwnd);
+	if (!imc)  return;
+	wchar_t* read_str=NULL;
+	HKL kbd_layout = GetKeyboardLayout(0);
+	LOG_INFO(L"kbd_layout: "<<kbd_layout);
+	WCHAR filename[MAX_PATH + 1];
+	DWORD version=0;
+	HMODULE IMEFile=NULL;
+	GetReadingString_funcType GetReadingString=NULL;
+	if(ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH)>0) {
+		LOG_INFO(L"fileName: "<<filename);
+		IMEFile=LoadLibrary(filename);
+		if(IMEFile) {
+			LOG_INFO(L"IMEFile: "<<IMEFile);
+			GetReadingString=(GetReadingString_funcType)GetProcAddress(IMEFile, "GetReadingString");
+		}
+		if(!GetReadingString) {
+			version=getIMEVersion(kbd_layout,filename);
+		}
+	}
+	if(GetReadingString) {
+		LOG_INFO(L"Got ReadingString");
+		// Use GetReadingString() API if available
+		UINT   len = 0;
+		INT    err = 0;
+		BOOL vert = FALSE;
+		UINT max_len = 0;
+		len = GetReadingString(imc, 0, NULL, &err, &vert, &max_len);
+		if (len) {
+			read_str = (WCHAR*)malloc(sizeof(WCHAR) * (len + 1));
+			read_str[len] = '\0';
+			GetReadingString(imc, len, read_str, &err, &vert, &max_len);
+		}
+	} else if(version) {
+		LOG_INFO(L"Using version "<<version);
+		// Read private data in IMCC
+		UINT   len = 0;
+		INT    err = 0;
+		LPINPUTCONTEXT2 ctx = immLockIMC(imc);
+		LPBYTE          priv = (LPBYTE)immLockIMCC(ctx->hPrivate);
+		LPBYTE          p = 0;
+		LPBYTE          str = NULL;
+		switch (version) {
+			case IMEID_CHT_VER42:
+			case IMEID_CHT_VER43:
+			case IMEID_CHT_VER44:
+				p = *(LPBYTE*)(priv + 24);
+				if (!p) break;
+				len = *(DWORD*)(p + 7*4 + 32*4);  //m_dwInputReadStrLen
+				err = *(DWORD*)(p + 8*4 + 32*4);  //m_dwErrorReadStrStart
+				str =          (p + 56);
+				break;
+
+			case IMEID_CHT_VER51:  // 5.1.x.x // IME2002(w/OfficeXP)
+			case IMEID_CHT_VER52:  // 5.2.x.x // (w/whistler)
+			case IMEID_CHS_VER53:  // 5.3.x.x // SCIME2k or MSPY3 (w/OfficeXP and Whistler)
+				p = *(LPBYTE*)(priv + 4);  // PCKeyCtrlManager
+				if (!p) break;
+				p = *(LPBYTE*)((LPBYTE)p + 1*4 + 5*4);  // = PCReading = &STypingInfo
+				if (!p) break;
+				len = *(DWORD*)(p + 1*4 + (16*2+2*4) + 5*4 + 16*2);        //m_dwDisplayStringLength;
+				err = *(DWORD*)(p + 1*4 + (16*2+2*4) + 5*4 + 16*2 + 1*4);  //m_dwDisplayErrorStart;
+				str =          (p + 1*4 + (16*2+2*4) + 5*4);
+				break;
+
+			case IMEID_CHS_VER42:  // 4.2.x.x // SCIME98 or MSPY2 (w/Office2k, Win2k, WinME, etc)
+				p = *(LPBYTE*)(priv + 1*4 + 1*4 + 6*4);  // = PCReading = &STypintInfo
+				if (!p) break;
+				len = *(DWORD*)(p + 1*4 + (16*2+2*4) + 5*4 + 16*2);        //m_dwDisplayStringLength;
+				err = *(DWORD*)(p + 1*4 + (16*2+2*4) + 5*4 + 16*2 + 1*4);  //m_dwDisplayErrorStart;
+				str =          (p + 1*4 + (16*2+2*4) + 5*4);               //m_tszDisplayString
+				break;
+		}
+		read_str = (WCHAR*)malloc(sizeof(WCHAR) * (len + 1));
+		read_str[len] = '\0';
+		memcpy(read_str, str, sizeof(WCHAR) * len);
+		immUnlockIMCC(ctx->hPrivate);
+		immUnlockIMC(imc);
+	}
+	if(IMEFile) FreeLibrary(IMEFile);
+	ImmReleaseContext(hwnd, imc);
+	if(read_str) {
+		long len=(long)wcslen(read_str);
+		if(len>1||(len==1&&read_str[0]!=L'\x3000')) {
+			long cursorPos=(long)wcslen(read_str);
+			nvdaControllerInternal_inputCompositionUpdate(read_str,cursorPos,cursorPos,1);
+		}
+		free(read_str);
+	}
+}
 
 void handleIMEConversionModeUpdate(HWND hwnd, bool report) {
 	/* Obtain IME context */
@@ -135,7 +299,10 @@ static bool handleComposition(HWND hwnd, WPARAM wParam, LPARAM lParam) {
 
 	/* Generate notification */
 	if(comp_str) {
-		nvdaControllerInternal_inputCompositionUpdate(comp_str,selectionStart,selectionStart,0);
+		long len=(long)wcslen(comp_str);
+		if(len>1||(len==1&&comp_str[0]!=L'\x3000')) {
+			nvdaControllerInternal_inputCompositionUpdate(comp_str,selectionStart,selectionStart,0);
+		}
 		free(comp_str);
 		return true;
 	}
@@ -196,7 +363,10 @@ static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lPar
 			}
 
 		case WM_IME_COMPOSITION:
-			if(!isTSFThread(true)) handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+			if(!isTSFThread(true)) {
+				handleReadingStringUpdate(pcwp->hwnd);
+				handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+			}
 			break;
 
 		case WM_IME_ENDCOMPOSITION:

@@ -45,7 +45,7 @@ static sinkMap_t gTsfSinks;
 static LockableObject gTsfSinksLock;
 static PVOID gLastCompStr = NULL;
 
-class TsfSink : public ITfThreadMgrEventSink,public ITfActiveLanguageProfileNotifySink,public ITfTextEditSink {
+class TsfSink : public ITfThreadMgrEventSink,public ITfActiveLanguageProfileNotifySink,public ITfTextEditSink, public ITfUIElementSink {
 public:
 	TsfSink();
 	~TsfSink();
@@ -74,6 +74,11 @@ public:
 	// ITfActiveLanguageProfileNotifySink methods
 	STDMETHODIMP OnActivated(REFCLSID, REFGUID, BOOL);
 
+	// ITfUIElementSink methods
+	STDMETHODIMP BeginUIElement(DWORD, BOOL*);
+	STDMETHODIMP UpdateUIElement(DWORD);
+	STDMETHODIMP EndUIElement(DWORD);
+
 	//Is TSF actually being used for this thread?
 	bool hasActiveProfile;
 
@@ -81,9 +86,12 @@ private:
 	LONG          mRefCount;
 	ITfThreadMgr* mpThreadMgr;
 	ITfSource*    mpTextEditSrc;
+	ITfUIElementMgr* mpUIElementMgr;
 	DWORD         mThreadMgrCookie;
 	DWORD         mLangProfCookie;
 	DWORD         mTextEditCookie;
+	DWORD         mUIElementCookie;
+	DWORD curReadingInformationUIElementId;
 	bool inComposition;
 
 	void UpdateTextEditSink(ITfDocumentMgr* docMgr);
@@ -132,9 +140,12 @@ TsfSink::TsfSink() {
 	mRefCount        = 1;
 	mpThreadMgr      = NULL;
 	mpTextEditSrc    = NULL;
+	mpUIElementMgr=NULL;
 	mThreadMgrCookie = TF_INVALID_COOKIE;
 	mLangProfCookie  = TF_INVALID_COOKIE;
 	mTextEditCookie  = TF_INVALID_COOKIE;
+	mUIElementCookie = TF_INVALID_COOKIE;
+	curReadingInformationUIElementId=-1;
 	inComposition=false;
 	int lastCompositionStartOffset=0;
 	hasActiveProfile=false;
@@ -158,6 +169,13 @@ bool TsfSink::Initialize() {
 		if (hr == S_OK) {
 			hr = src->AdviseSink(IID_ITfActiveLanguageProfileNotifySink,
 				(ITfActiveLanguageProfileNotifySink*)this, &mLangProfCookie);
+		}
+		if (hr == S_OK) {
+			hr = mpThreadMgr->QueryInterface(IID_ITfUIElementMgr,(void**)&mpUIElementMgr);
+		}
+		if (hr == S_OK) {
+			hr = src->AdviseSink(IID_ITfUIElementSink,
+			(ITfUIElementSink*)this, &mUIElementCookie);
 		}
 		src->Release();
 		src = NULL;
@@ -201,6 +219,10 @@ void TsfSink::CleanUp() {
 		mpThreadMgr->QueryInterface(IID_ITfSource, (void**)&src);
 		if (src)
 		{
+			if (mUIElementCookie != TF_INVALID_COOKIE) {
+				src->UnadviseSink(mUIElementCookie);
+				mUIElementCookie = TF_INVALID_COOKIE;
+			}
 			if (mThreadMgrCookie != TF_INVALID_COOKIE) {
 				src->UnadviseSink(mThreadMgrCookie);
 			}
@@ -208,6 +230,10 @@ void TsfSink::CleanUp() {
 				src->UnadviseSink(mLangProfCookie);
 			}
 			src->Release();
+		}
+		if(mpUIElementMgr) {
+			mpUIElementMgr->Release();
+			mpUIElementMgr=NULL;
 		}
 		mThreadMgrCookie = TF_INVALID_COOKIE;
 		mLangProfCookie  = TF_INVALID_COOKIE;
@@ -256,6 +282,8 @@ STDMETHODIMP TsfSink::QueryInterface(REFIID riid, LPVOID* ppvObj) {
 		*ppvObj = (ITfActiveLanguageProfileNotifySink*)this;
 	} else if (IsEqualIID(riid, IID_ITfTextEditSink)) {
 		*ppvObj = (ITfTextEditSink*)this;
+	} else if (IsEqualIID(riid, IID_ITfUIElementSink)) {
+		*ppvObj = (ITfUIElementSink*)this;
 	} else {
 		*ppvObj = NULL;
 		return E_NOINTERFACE;
@@ -400,6 +428,54 @@ WCHAR* TsfSink::HandleEditRecord(TfEditCookie cookie, ITfEditRecord* pEditRec) {
 	if (edit_len > 0)  return edit_str;
 	free(edit_str);
 	return NULL;
+}
+
+STDMETHODIMP TsfSink::BeginUIElement(DWORD elementId, BOOL* pShow) {
+	if(mpUIElementMgr) {
+		ITfUIElement* pUIElement=NULL;
+		mpUIElementMgr->GetUIElement(elementId,&pUIElement);
+		if(pUIElement) {
+			ITfReadingInformationUIElement* pReadingInformationUIElement=NULL;
+			pUIElement->QueryInterface(IID_ITfReadingInformationUIElement,(void**)&pReadingInformationUIElement);
+			pUIElement->Release();
+			if(pReadingInformationUIElement) {
+				curReadingInformationUIElementId=elementId;
+				pReadingInformationUIElement->Release();
+			}
+		}
+	}
+	*pShow=(curReadingInformationUIElementId!=-1)?false:true;
+	return S_OK;
+}
+
+STDMETHODIMP TsfSink::UpdateUIElement(DWORD elementId) {
+	if(elementId==curReadingInformationUIElementId&&mpUIElementMgr) {
+		ITfUIElement* pUIElement=NULL;
+		mpUIElementMgr->GetUIElement(elementId,&pUIElement);
+		if(pUIElement) {
+			ITfReadingInformationUIElement* pReadingInformationUIElement=NULL;
+			pUIElement->QueryInterface(IID_ITfReadingInformationUIElement,(void**)&pReadingInformationUIElement);
+			pUIElement->Release();
+			if(pReadingInformationUIElement) {
+				BSTR read_str=NULL;
+				pReadingInformationUIElement->GetString(&read_str);
+				if(read_str) {
+					long len=SysStringLen(read_str);
+					if(len>0) {
+						nvdaControllerInternal_inputCompositionUpdate(read_str,len,len,1);
+					}
+					SysFreeString(read_str);
+				}
+				pReadingInformationUIElement->Release();
+			}
+		}
+	}
+	return S_OK;
+}
+
+STDMETHODIMP TsfSink::EndUIElement(DWORD elementId) {
+	if(elementId==curReadingInformationUIElementId) curReadingInformationUIElementId=-1;
+	return S_OK;
 }
 
 STDMETHODIMP TsfSink::OnEndEdit(
