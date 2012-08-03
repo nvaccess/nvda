@@ -12,8 +12,12 @@
 - Cuando las Notificaciones de Windows 8 aparezcan, NVDA las anunciará y moverá el navegador de objetos allí para una mayor interacción. (#2143)
 - Soporte para VIP Mud. (#1728)
 - En Adobe Reader, si una tabla tiene un resumen, ahora se presenta. (#2465)
-- En Adobe Reader, los encabezados de fila y columna de tabla ahora pueden anunciarse. (#2193)
-- Nuevos idiomas: Coreano, Nepalí
+- En Adobe Reader, los encabezados de fila y columna de tabla ahora pueden anunciarse. (#2193 #2527 #2528)
+- Nuevos idiomas: Amárico, Coreano, Nepalí.
+- NVDA ahora puede leer sugerencias de autocompletado cuando se introduzcan direcciones de correo en Microsoft Outlook 2007. (#689)
+- Nuevas variantes de voz de eSpeak: Gene, Gene2. (#2512)
+- En Adobe Reader, ahora pueden anunciarse los números de página. (#2534)
+- Ahora es posible reiniciar la configuración de NVDA a los valores predeterminados de fábrica pulsando NVDA+control+r tres veces rápidamente o eligiendo Reiniciar a los Valores Predeterminados de Fábrica desde el menú NVDA (#2086).
 
 
 == Cambios ==
@@ -30,6 +34,16 @@
 - Los ficheros descargados temporalmente ahora se eliminan si se descarga un fichero de actualización de NVDA. (#2477)
 - Cuando se copia la configuración de usuario a la configuración del sistema (para utilizar en la autentificación de Windows y otras pantallas seguras) NVDA ya no se colgará en XP mientras lo esté haciendo. (#2485)
 - Los azulejos en la Pantalla de inicio de Windows 8 ahora se presentan mejor en voz y braille. El nombre ya no se repite, ya no se anuncia no seleccionado en todos los azulejos, y la información de estado en directo se presenta según la descripción del azulejo (ej.: temperatura actual para el azulejo del Tiempo).
+- Las contraseñas ya no se anuncian cuando se lean campos de contraseña en Microsoft Outlook y otros controles de edición estándar que estén marcados como protegidos. (#2021)
+- En Adobe Reader, los cambios para campos de formulario ahora se reflejan correctamente en modo navegación. (#2529)
+- Mejoras en el soporte para el corrector de ortografía de Microsoft Word, incluyendo la lectura más precisa del error ortográfico actual, y la capacidad de soportar el corrector de ortografía cuando se ejecute una copia instalada de NVDA en Windows Vista o superior.
+- Los complementos que incluyan ficheros conteniendo caracteres que no estén en Inglés ahora pueden instalarse correctamente en la mayoría de los casos. (#2505)
+- En Adobe Reader, el idioma del texto ya no se pierde cuando se actualiza o se desplaza. (#2544)
+- Cuando se instala un complemento, el diálogo de confirmación ahora muestra correctamente el nombre traducido del complemento si está disponible. (#2422)
+- En aplicaciones que utilizan UI Automation (tales como aplicaciones de .net y Silverlight), el cálculo de valores numéricos para controles tales como deslizadores se ha corregido. (#2417)
+- La configuración para el anunciado de barras de progreso ahora se reconoce para barras de progreso indeterminadas mostradas por NVDA cuando se está instalando, creando una copia portable, etc. (#2574)
+- Las órdenes de NVDA ya no pueden ejecutarse desde una línea braille mientras una pantalla segura de Windows (tal como la pantalla de desbloqueo) esté activa. (#2449)
+- En modo navegación, el braille ahora se actualiza si el texto que está siendo desplazado cambia. (#2074)
 
 
 == Cambios para Desarrolladores ==
