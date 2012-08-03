@@ -24,7 +24,7 @@ Suas características mais notáveis são:
 - Suporte para diversas linhas braille;
 - Capacidade para  ser executado diretamente através de dispositivos USB e outros dispositivos portáteis sem necessitar de instalação;
 - Instalação com voz e fácil de usar;
-- Tradução para 39 idiomas;
+- Tradução para 40 idiomas;
 - Suporte para as modernas versões do sistema operacional Windows  incluindo variantes de 32 e 64 bit;
 - Possibilidade de uso na  tela de logon do Windows   e outras telas de segurança;
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superiores) ;
@@ -33,7 +33,7 @@ Suas características mais notáveis são:
 
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 39 idiomas, estando inclusos: Africâner, Albanês, Alemão, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 40 idiomas, estando inclusos: Africâner, Albanês, Alemão, Amárico, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -918,20 +918,19 @@ Para mudar um sinal, selecione-o na lista de sinais.
 Após finalizar, pressione ok para salvar as alterações ou cancelar  caso queira descartá-las.
 
 ++ Salvando e Restaurando Configurações ++
-Este programa não salva automaticamente suas opções. Dessa forma, se sair do NVDA e reiniciá-lo, estas voltarão ao ponto anterior com os valores originais.
-Atente que pode alterar esta definição que se encontra por padrão no item "Opções gerais..." que está no menu Preferências.
-Para salvar opções escolha o item Salvar opções que se encontra no Menu do NVDA.
-
-Se o NVDA está num sistema só de leitura de arquivos, como um CD, não será possível salvar suas opções e ele o informará. 
+Por padrão, este programa salva automaticamente suas configurações ao ser encerrado.
+Note, porém, que esta opção pode ser alterada em Opções gerais que se encontra no menu Preferências.
+Para salvar opções a qualquer momento escolha o item Salvar opções que se encontra no Menu do NVDA.
 
 Se costuma cometer erros  em suas configurações e precisa retornar às opções salvas, pode sempre escolher o item "voltar à configuração salva" no menu deste software.
+ Você também pode retornar suas configurações aos padrões originais selecionando Retornar Configuração aos Padrões Originais, que também está no menu do NVDA.
 
 As seguintes teclas de atalho do NVDA também são úteis:
 
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-| Salvar Configuração | NVDA+control+c | NVDA+control+c | Salva sua configuração atual permanentemente de modo que não se perca quando sair do NVDA |
-| Voltar à Configuração Salva | NVDA+control+r | NVDA+control+r | Restaura as opções do NVDA para aquelas salvas pela última vez |
+| Salvar Configuração | NVDA+control+c | NVDA+control+c | Salva sua configuração atual, de modo que não se perca quando sair do NVDA |
+| Voltar à Configuração Salva | NVDA+control+r | NVDA+control+r | Pressionada uma vez retorna suas configurações para aquelas salvas da última vez. Pressionando-se 3 vezes irá retorná-las aos padrões originais. |
 %kc:endInclude
 
 ++ Arquivos de Configuração e Perfis do Utilizador ++
