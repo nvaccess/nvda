@@ -23,7 +23,7 @@ Die wichtigsten Highlights sind:
 - Unterstützung für zahlreiche Braillezeilen.
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung der Sprachausgaben.
-- Übersetzt in 37 Sprachen.
+- Übersetzt in 40 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
@@ -32,7 +32,7 @@ Die wichtigsten Highlights sind:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 39 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 40 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung mit der Sprachausgabe ++
 Abgesehen von der Bereitstellung der Schnittstelle für Meldungen in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser über eine Sprachausgabe für dessen Sprache verfügt.
@@ -71,7 +71,7 @@ Wenn Sie die soeben heruntergeladene Datei ausführen, wird eine temporäre Kopi
 Außerdem werden Sie gefragt, ob Sie NVDA installieren, eine portable Version erstellen oder einfach die ausführung der temporären Kopie fortsetzen wollen.
 
 Falls Sie vorhaben, NVDA auf diesem Computer dauerhaft einzusetzen, werden Sie es vermutlich installieren wollen.
-Eine solche fest installierte Version von NVDA hat gegenüber einer portablen Version Vorteile wie der automatische Start nach der Anmeldung, die Erstellung von Verknüpgungen auf dem Desktop und im Startmenü, die Fähigkeit den Windows-Anmeldung und Windows Sicherheitsdialoge auszulesen. Dies ist mit einer portablen oder temporären Version nicht möglich.
+Eine solche fest installierte Version von NVDA hat gegenüber einer portablen Version Vorteile wie der automatische Start nach der Anmeldung, die Erstellung von Verknüpfungen auf dem Desktop und im Startmenü, die Fähigkeit den Windows-Anmeldung und Windows Sicherheitsdialoge auszulesen. Dies ist mit einer portablen oder temporären Version nicht möglich.
 Mit Hilfe einer installierten Kopie können sie auch jederzeit eine portable Version erstellen.
 
 Falls Sie NVDA auf einem usb-Stick oder einem anderen beschreibbarem Medium mitnehmen möchten, können Sie eine portable Version erstellen.
@@ -85,7 +85,7 @@ Die Ausführung der temporären Kopie kann z.B. für demonstrationszwecke sinnvo
 Wenn Sie NVDA direkt von einer heruntergeladenen Datei aus installieren wollen, drücken Sie einfach den Schalter "installieren", sobald der Eingangsdialog erscheint.
 Falls Sie den eingangsdialog bereits geschlossen haben oder NVDA von einer portablen Version aus installieren wollen, wählen Sie den Menüpunkt "nvda installieren" aus dem Menü Extras.
 
-Der Installationsdialog, welcher erscheint, fragt noch mal ab, ob Sie NVDA installieren wollen und informiert Sie darüber, ob eine frühere Version von NVDA aktualisiert wird.
+Der Installationsdialog, welcher erscheint, fragt noch einmal ab, ob Sie NVDA installieren wollen und informiert Sie darüber, ob eine frühere Version von NVDA aktualisiert wird.
 Wenn Sie den Schalter "weiter" drücken, wird die Installation gestartet.
 Es gibt allerdings noch weitere Optionen. Diese werden weiter unten beschrieben.
 Nach dem Abschluss der Installation erscheint eine Meldung, die sie über den erfolgreichen Abschluss der Installation informiert.
@@ -93,7 +93,7 @@ Wenn Sie hier "ok" wählen, wird die soeben installierte Kopie von NVDA neu gest
  
 +++ NVDA bei der Windows-Anmeldung starten +++
 Mit dieser Option können Sie entscheiden, ob NVDA beim Erscheinen des Windows-anmeldebildschirms gestartet werden soll, bevor Sie ein Passwort eingegeben haben.
-die betrifft auch die Benutzerkontensteuerung und andere Sicherheitsbildschirme.
+dies betrifft auch die Benutzerkontensteuerung und andere Sicherheitsbildschirme.
 
 +++ Desktop-Verknüpfung erstellen (strg+alt+n) +++
 Mit dieser Option entscheiden Sie, ob NVDA eine Desktop-Verknüpfung für dessen Start anlegen soll.
@@ -233,7 +233,7 @@ Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 Wenn ein [Objekt #Objects] den [Fokus #SystemFocus] hat, welches das Bearbeiten von Text erlaubt, können Sie sich mit Hilfe des System-Cursors durch dessen Inhalt bewegen. Der System-Cursor wird in diesem Zusammenhang oft auch als Einfügemarke bezeichnet.
 
 Sie können in diesem Fall die Pfeiltasten, Bild Auf, Bild Ab, Pos1, Ende, etc. verwenden, um sich durch den Text zu bewegen.
-Sie können den Text auch bearbeiten, falls das Steuerelement eine Bearbeitung zuläst.
+Sie können den Text auch bearbeiten, falls das Steuerelement eine Bearbeitung zulässt.
 NVDA wird hierbei jedes Zeichen, jedes Wort oder auch jede Zeile ansagen, wenn Sie sich durch das Eingabefeld bewegen, Text markieren oder die Markierung aufheben.
 
 Folgende Tastenkombinationen stehen in Relation zum System-Cursor zur Verfügung:
@@ -264,7 +264,7 @@ Um inhalte so anzuzeigen, wie sie auf dem Bildschirm erscheinen, verwenden Sie s
 
 Die Objekte sind innerhalb des Betriebssystems und der Anwendungen hierarchisch organisiert.
 Dies bedeutet, dass sie in manche Objekte "absteigen" müssen, um deren Inhalt zu sehen.
-Eine Liste enthält beispielswiese Objekte, die die einzelnen Einträge darstellen; Sie müssen also in die Liste "absteigen", um die Einträge zu sehen.
+Eine Liste enthält beispielsweise Objekte, die die einzelnen Einträge darstellen; Sie müssen also in die Liste "absteigen", um die Einträge zu sehen.
 Wenn Sie sich auf einem Listeneintrag befinden, können Sie sich zum nächsten/vorherigen Objekt auf der selben Ebene bewegen, um die anderen Einträge zu sehen.
 Um von einem Listeneintrag wieder zur Liste zurückzukehren, müssen Sie wieder eine Ebene "aufsteigen".
 
@@ -275,8 +275,8 @@ Das Objekt, das momentan angezeigt wird, wird als Navigatorobjekt bezeichnet.
 Wenn Sie sich zu einem Objekt bewegt haben, können Sie es sich mit den [Befehlen zum Betrachten von Text #ReviewingText] anschauen.
 Standardmäßig folgt der Navigator dem Systemfokus, diese Kopplung kann jedoch ein- und ausgeschaltet werden.
 
-Bedenken Sie, dass die Braillezeile standardmäßig dem [Fokus #SystemFocus] und dem  [Systemdursor #SystemCaret] folgt, nicht jedoch dem Navigator oder dem nvda-Cursor.
-Wenn Sie dieses Verhalten ände4n möchten, müssen Sie die [Kopplung der Braillezeile konfigurieren #BrailleTether].
+Bedenken Sie, dass die Braillezeile standardmäßig dem [Fokus #SystemFocus] und dem  [Systemcursor #SystemCaret] folgt, nicht jedoch dem Navigator oder dem nvda-Cursor.
+Wenn Sie dieses Verhalten ändern möchten, müssen Sie die [Kopplung der Braillezeile konfigurieren #BrailleTether].
 
 Mit den folgenden Tastenkombinationen navigieren Sie zwischen den Objekten:
 %kc:beginInclude
@@ -303,7 +303,7 @@ Wenn Sie den NVDA-Cursor bewegen, bewegt sich der System-Cursor nicht mit, sodas
 Wenn Sie jedoch den System-Cursor bewegen, wird er vom NVDA-Cursor verfolgt.
 Diese Kopplung kann ein- und ausgeschaltet werden.
 
-Bedenken Sie, dass Braillezeile standardmäßig den  [Fokus #SystemFocus] und den  [Systemcursor #SystemCaret] verfolgt, nicht jedoch den Navigator oder den nvda-Cursor.
+Bedenken Sie, dass die Braillezeile standardmäßig den  [Fokus #SystemFocus] und den  [Systemcursor #SystemCaret] verfolgt, nicht jedoch den Navigator oder den nvda-Cursor.
 Um dies zu ändern, müssen Sie die  [Kopplung der Braillezeile konfigurieren #BrailleTether].
 
 Die folgenden Tastenkombinationen zur Textanzeige sind verfügbar:
@@ -337,8 +337,8 @@ Das Layout ist wie folgt aufgebaut:
 | Vorheriges Zeichen | Aktuelles Zeichen | Nächstes Zeichen |
 
 ++ Der Flächenmodus ++[FlatReview]
-Während sie sich normalerweise nur den Inhalt einzelner [Objekte #Objects] betrachten können, erlauben manche Objekte jedoch das Betrachten des gesamten Inhalte (also einschließlich aller untergeordneten Objekte).
-Bei komplexen Dokumenten ist es so beispielsweise möglich, deren gesamten Inhalt zu erfassen. Anwendungsfenster können so asgelesen werden, wie die darin enthaltenen Elemente visuell angeordnet sind.
+Während sie sich normalerweise nur den Inhalt einzelner [Objekte #Objects] betrachten können, erlauben manche Objekte jedoch das Betrachten des gesamten Inhaltes (also einschließlich aller untergeordneten Objekte).
+Bei komplexen Dokumenten ist es so beispielsweise möglich, deren gesamten Inhalt zu erfassen. Anwendungsfenster können so ausgelesen werden, wie die darin enthaltenen Elemente visuell angeordnet sind.
 Dies wird als Flächenmodus bezeichnet.
 
 Dies funktioniert ähnlich eines Bildschirmbetrachters bzw. einer Maus-Emulation vieler kommerzieller Screenreader.
@@ -354,7 +354,7 @@ uM die Anzeigen des Flächenmodus auch in Braille zu erhalten, müssen Sie die [
 Die folgenden zwei Tastenkombinationen werden zum Umschalten für den Flächenmodus verwendet:
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
-| In den Flächenmodus wechseln | NVDA+Nummerntaste 7 | NVDA+Bild nach oben | Wechselt in den Flächenmodus und positioniert Sie an die Stelle des aktuellen Navigator-Objektes. Von hier aus können Sie sich den Inhalt des bildschirms oder des angezeigten Dokuments mit Hilfe der Befehls zum Betrachten von Text ansehen. |
+| In den Flächenmodus wechseln | NVDA+Nummerntaste 7 | NVDA+Bild nach oben | Wechselt in den Flächenmodus und positioniert Sie an die Stelle des aktuellen Navigator-Objektes. Von hier aus können Sie sich den Inhalt des bildschirms oder des angezeigten Dokuments mit Hilfe der Befehle zum Betrachten von Text ansehen. |
 | an der aktuellen Position im Flächenmodus zur Objektnavigation wechseln | NVDA+Nummerntaste 1 | NVDA+Bild nach unten | bewegt den Navigator zu demjenigen Objekt, das sich an der aktuellen Position im Flächenmodus befindet. |
 %kc:endInclude
 
@@ -493,7 +493,6 @@ Es gibt eine Tastenkombination, um in die Originalansicht der Seite zurückzukeh
 | Zum Inhalt des Lesemodus zurückkehren | NVDA+STRG+Leertaste | Verlässt den Fokus des eingebetteten Objekts und kehrt in den Lesemodus zurück. |
 %kc:endInclude
 
-
 + Anwendungsspezifische Befehle für NVDA +
 Für manche Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit - etwa um bestimmte Aufgaben zu vereinfachen oder um Informationen zugänglich zu machen, die normalerweise für Anwender von Bildschirmleseprogramm unerreichbar wären. 
 
@@ -536,7 +535,7 @@ In diesem Abschnitt werden einige bekannte Probleme beschrieben, die beim Umgang
 - Details: Bisher wurden Probleme mit den folgenden Produkten beobachtet:
   - Kaspersky Internet Security 2012: Beim Erstellen einer Portablen Kopie stuft KIS das Verhalten der Installationsroutine als verdächtig ein, wenn NVDA versucht, eine Kopie seiner Selbst am Zielort auf dem tragbaren Medium abzulegen. Wenn KIS so konfiguriert ist, dass es die Gegenmaßnahme automatisch ergreifen darf, wird die Kopie von NVDA, von der aus die Installation ausgeführt wurde, gelöscht und die Kopie am Zielort gar nicht angelegt. dies hat zur Folge, dass Sie am Ende NVDA nicht einmal mehr über die Tastenkombination strg+alt+n starten können. 
   - Viper Internet Security: Beim Aktualisieren von NVDA behindert Viper die Installationsroutine von NVDA beim Installieren der neuen Version, wodurch der Installationsvorgang ungewöhnlich lange dauert.
-  - Avira Internet Security: Beim erstellen einer portablen Kopie behinder Avira die Installationsroutine von NVDA, wodurch diese mit einer Fehlermeldung abbricht.
+  - Avira Internet Security: Beim erstellen einer portablen Kopie behindert Avira die Installationsroutine von NVDA, wodurch diese mit einer Fehlermeldung abbricht.
 - Lösung: Halten Sie die Schutzfunktion ihres Anti-Viren-Programms oder Internet-sicherheitspakets kurzfristig an, während sie NVDA installieren, aktualisieren oder eine portable Version erstellen oder deaktivieren Sie das Sicherheitspaket vollständig.
 
 + NVDA konfigurieren +
@@ -587,7 +586,7 @@ Speichern Sie vorsichtshalber noch einmal zur Sicherheit Ihre Konfiguration,  um
 Hinweis: Diese Option ist nur in der installierten Version verfügbar!
 
 ==== Automatisch nach Aktualisierungen suchen ====
-Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualsierte Version verfügbar ist.
+Wenn diese Option aktiviert ist, sucht NVDA automatisch nach Aktualisierungen und informiert sie, wenn eine aktualisierte Version verfügbar ist.
 Sie können auch manuell auf Aktualisierungen prüfen, indem Sie "nach Aktualisierungen suchen " aus dem Hilfe-Menü wählen.
 
 
@@ -789,7 +788,7 @@ Wenn die vorherige Option bereits aktiviert ist, können Sie beim darüber Wande
 Wenn diese Option aktiviert ist, sagt NVDA den Typ an, sobald sich der Mauszeiger auf dem Objekt befindet,.
 
 ==== Audiokoordinaten bei Mausbewegungen wiedergeben ====
-Das Aktivieren dieser Option bewirkt, dass NVDA die Position des Mauszeigers durch Signaltöne an Ort und Stelle wiedergibt, so dass der Anwender die Mausposition auf dem Bildschirm akkustish mitverfolgen und selbst ermitteln kann.
+Das Aktivieren dieser Option bewirkt, dass NVDA die Position des Mauszeigers durch Signaltöne an Ort und Stelle wiedergibt, so dass der Anwender die Mausposition auf dem Bildschirm akustisch mitverfolgen und selbst ermitteln kann.
 
 ==== Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren ====
 Wenn die Option "Audiokoordinaten bei Mausbewegungen wiedergeben" und diese Option aktiviert sind, passt NVDA die Lautstärke der Signaltöne an die Helligkeit unter dem Mauszeiger an.
@@ -836,7 +835,7 @@ Wenn dieses Kontrollfeld aktiviert ist, liest NVDA die Hilfesprechblasen vor, so
 NVDA sagt zu den Einträgen eines Menüs oder Steuerelementen zusätzlich die Kurztaste, sofern die Ansage dieser Option auch aktiviert ist.
 Zum Beispiel kann das Datei-Menü in einer Menüleiste die Kurztaste "Alt+D" haben.
 
-==== Informationen zur Objekt&position ansagen ====
+==== Informationen zur Objektposition ansagen ====
 Diese Option legt fest, ob Sie die Objektposition (z. B. 1 von 4) angesagt bekommen möchten, wenn Sie mit dem Fokus oder der Objektnavigation darauf navigieren.
 
 ==== Informationen zur Objektposition bei Nichtverfügbarkeit ermitteln ====
@@ -993,19 +992,19 @@ Anmerkung: Das Dialogfeld erlaubt lediglich ein Bearbeiten der vorhandenen Sonde
 
 
 ++ Speichern und die Konfiguration neu laden ++
-Standardmäßig speichert NVDA die Einstellungen nicht automatisch. Sobald Sie ihn beenden und NVDA neu starten, sind jegliche Einstellungen wieder auf die Ursprungswerte zurückgesetzt.
+Standardmäßig speichert NVDA die Einstellungen automatisch. 
+Sie können dies jedoch im Einstellungsmenü in den allgemeinen Optionen ändern.
 
-Hinweis: Sie können dies im Einstellungsmenü in den allgemeinen Optionen ändern.
-
-Über "Konfiguration speichern" können Sie im NVDA-Menü die Konfiguration dauerhaft beibehalten.
+Über "Konfiguration speichern" können Sie im NVDA-Menü die Konfiguration  manuell speichern.
 
 Wenn Ihnen einmal einen Fehler bei der Konfiguration unterlaufen ist, können Sie über den Eintrag "Gespeicherte Konfiguration zurücksetzen" im NVDA-Menü sie wieder herstellen.
+Wenn Sie die Konfiguration auf die Werkseinstellungen zurücksetzen möchten, können Sie dies über dem Menüpunkt "Werkseinstellungen wiederherstellen" im NVDA-Menü erreichen.
 
 Die folgenden Tastenbefehle sind auch hilfreich:
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
 | Konfiguration speichern | NVDA+STRG+C | NVDA+STRG+C | Speichert Ihre Konfiguration, so dass sie nicht beim Beenden von NVDA verloren gehen. |
-| Gespeicherte Konfiguration zurücksetzen | NVDA+STRG+R | NVDA+STRG+R | Setzt auf die zuletzt gespeicherte Konfiguration zurück, die vor dem Starten von NVDA existierte. |
+| Konfiguration zurücksetzen | NVDA+STRG+R | NVDA+STRG+R | Setzt bei einmaligem Drücken die NVDA-Einstellungen auf den letzten gespeicherten Stand zurück, bei dreimaligem Drücken wird die Werkseinstellung wiederhergestellt. |
 %kc:endInclude
 
 ++ Die Konfigurationsdateien und Benutzerprofile ++
