@@ -676,7 +676,7 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 	def event_gainFocus(self):
 		super(SecureDesktopNVDAObject, self).event_gainFocus()
 		# After handling the focus, NVDA should sleep while the secure desktop is active.
-		self.sleepMode = True
+		self.sleepMode = self.SLEEP_FULL
 
 def processDesktopSwitchWinEvent(window,objectID,childID):
 	hDesk=windll.user32.OpenInputDesktop(0, False, 0)

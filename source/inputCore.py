@@ -281,7 +281,7 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		script = gesture.script
 		focus = api.getFocusObject()
-		if focus.sleepMode and not getattr(script, 'allowInSleepMode', False):
+		if focus.sleepMode is focus.SLEEP_FULL or (focus.sleepMode and not getattr(script, 'allowInSleepMode', False)):
 			raise NoInputGestureAction
 
 		speechEffect = gesture.speechEffectWhenExecuted

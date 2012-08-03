@@ -30,8 +30,9 @@ def _setDllFuncPointer(dll,name,cfunc):
 #Implementation of nvdaController methods
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_speakText(text):
-	if api.getFocusObject().sleepMode:
-		return 0
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
 	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
@@ -39,8 +40,9 @@ def nvdaController_speakText(text):
 
 @WINFUNCTYPE(c_long)
 def nvdaController_cancelSpeech():
-	if api.getFocusObject().sleepMode:
-		return 0
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
 	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
@@ -48,8 +50,9 @@ def nvdaController_cancelSpeech():
 
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_brailleMessage(text):
-	if api.getFocusObject().sleepMode:
-		return 0
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
 	import queueHandler
 	import braille
 	queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.message,text)
