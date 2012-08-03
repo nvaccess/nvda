@@ -47,7 +47,7 @@
 - In browse mode, braille is now updated if the text being displayed changes. (#2074)
 - If sleep mode is enabled, messages from applications speaking or displaying braille directly via NVDA are now ignored.
 - In Browse mode, it is no longer possible to  fall off the bottom of the document with the right arrow key when on the final character, or by jumping to the end of a container when that container is the last item in the document. (#2463)
- 
+
 
 == Changes for Developers ==
 - Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
