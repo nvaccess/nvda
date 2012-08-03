@@ -754,6 +754,9 @@ the NVDAObject for IAccessible
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
 		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.ROLE_UNKNOWN)
+	# #2569: Don't cache role,
+	# as it relies on other properties which might change when overlay classes are applied.
+	_cache_role = False
 
 	def _get_IAccessibleStates(self):
 		try:
