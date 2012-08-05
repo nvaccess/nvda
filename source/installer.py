@@ -39,11 +39,12 @@ def createShortcut(path,targetPath=None,arguments=None,iconLocation=None,working
 		path=os.path.join(specialPath,path)
 	if not os.path.isdir(os.path.dirname(path)):
 		os.makedirs(os.path.dirname(path))
+	shortcutExists=os.path.isfile(path)
 	short=wsh.CreateShortcut(path)
 	short.TargetPath=targetPath
 	if arguments:
 		short.arguments=arguments
-	if hotkey:
+	if not shortcutExists and hotkey:
 		short.Hotkey=hotkey
 	if iconLocation:
 		short.IconLocation=iconLocation
@@ -164,7 +165,7 @@ def isDesktopShortcutInstalled():
 	shortcutPath=os.path.join(specialPath,"nvda.lnk")
 	return os.path.isfile(shortcutPath)
 
-def unregisterInstallation():
+def unregisterInstallation(keepDesktopShortcut=False):
 	import nvda_service
 	try:
 		nvda_service.stopService()
@@ -176,7 +177,7 @@ def unregisterInstallation():
 		pass
 	wsh=_getWSH()
 	desktopPath=os.path.join(wsh.SpecialFolders("AllUsersDesktop"),"NVDA.lnk")
-	if os.path.isfile(desktopPath):
+	if not keepDesktopShortcut and os.path.isfile(desktopPath):
 		try:
 			os.remove(desktopPath)
 		except WindowsError:
@@ -254,7 +255,7 @@ def tryCopyFile(sourceFilePath,destFilePath):
 
 def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 	prevInstallPath=getInstallPath(noDefault=True)
-	unregisterInstallation()
+	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	installDir=defaultInstallPath
 	startMenuFolder=defaultStartMenuFolder
 	# Remove all the main executables always.
