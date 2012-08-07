@@ -1052,13 +1052,8 @@ the NVDAObject for IAccessible
 		if table:
 			return table
 		checkAncestors=False
-		if self.IAccessibleTableUsesTableCellIndexAttrib:
-			try:
-				attribs=self.IAccessibleObject.attributes
-			except COMError:
-				attribs=None
-			if attribs and 'table-cell-index:' in attribs:
-				checkAncestors=True
+		if self.IAccessibleTableUsesTableCellIndexAttrib and "table-cell-index" in self.IA2Attributes:
+			checkAncestors=True
 		obj=self.parent
 		while checkAncestors and obj and not hasattr(obj,'IAccessibleTableObject'):
 			parent=obj.parent=obj.parent
