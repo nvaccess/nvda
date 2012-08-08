@@ -543,7 +543,12 @@ class MSHTML(IAccessible):
 			states=super(MSHTML,self).states
 			if controlTypes.STATE_LINKED in states:
 				return controlTypes.ROLE_LINK
-		return super(MSHTML,self).role
+		role=super(MSHTML,self).role
+		#IE uses a MSAA role of ROLE_SYSTEM_TEXT with no readonly state for unsupported or future tags with an explicit ARIA role.
+		#If this is the case, force the role to staticText so this is not confused as a real edit field.
+		if role==controlTypes.ROLE_EDITABLETEXT and ariaRole and ariaRole!="textbox":
+			role=controlTypes.ROLE_STATICTEXT
+		return role
 
 	def _get_states(self):
 		if not self.HTMLNodeHasAncestorIAccessible:

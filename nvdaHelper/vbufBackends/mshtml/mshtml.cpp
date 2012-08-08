@@ -793,6 +793,15 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		getIAccessibleInfo(pacc,&IAName,&IARole,&IAValue,&IAStates,&IADescription,&IAKeyboardShortcut);
 	}
 
+	//IE incorrectly places ROLE_SYSTEM_TEXT and no readonly state on unsupported or future tags that have an explicit ARIA role
+	//If this is the case then set the IARole to staticText so we don't class it as editable text.
+	if(IARole==ROLE_SYSTEM_TEXT&&!(IAStates&STATE_SYSTEM_READONLY)) {
+		tempIter=attribsMap.find(L"HTMLAttrib::role");
+		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"textbox")!=0) {
+			IARole=ROLE_SYSTEM_STATICTEXT;
+		}
+	}
+
 	//IE sometimes sets the readonly state on editable nodes, this does not make sence
 	if(isEditable&&IAStates&STATE_SYSTEM_READONLY) {
 		IAStates-=STATE_SYSTEM_READONLY;
