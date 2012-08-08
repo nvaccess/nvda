@@ -1307,6 +1307,31 @@ Please see the display's documentation for descriptions of where these keys can 
 | Route to braille cell | routing |
 %kc:endInclude
 
+++ Seika Version 3, 4, 5 and Seika 80 ++
+
+The Braille Display Seika Versionen 3, 4 and 5 (40 cells) and Seika80 (80 cells) are  is supported.
+You can find more informations about this braille displays on [http://www.seika-braille.com]
+
+You must first install the USB drivers provided by the manufacturer.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+
+%kc:beginInclude
+||Name | Key |
+| Scroll braille display back | LEFT |
+| Scroll braille display forward | RIGHT |
+| Move braille display to previous line | B3 |
+| Move braille display to next line | B4 |
+| Toggle braille tethered to | B5 |
+| Say all | B6 |
+| tab | B1 |
+| shift tabulator | B2 |
+| alt tab | B1 + B2 |
+| NVDA GUI | LEFT + RIGHT |
+| Route to braille cell | routing |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
