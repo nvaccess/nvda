@@ -20,7 +20,7 @@ import textInfos
 from logHandler import log
 import controlTypes
 from . import IAccessible
-from ..behaviors import EditableTextWithoutAutoSelectDetection
+from ..behaviors import EditableTextWithoutAutoSelectDetection, Dialog
 from .. import InvalidNVDAObject
 from ..window import Window
 
@@ -365,6 +365,14 @@ class MSHTML(IAccessible):
 		if not self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
 			super(MSHTML,self).findOverlayClasses(clsList)
+			if self.IAccessibleRole == oleacc.ROLE_SYSTEM_DIALOG:
+				ariaRoles = self.HTMLAttributes["role"].split(" ")
+				if "dialog" in ariaRoles:
+					# #2390: Don't try to calculate text for ARIA dialogs.
+					try:
+						clsList.remove(Dialog)
+					except ValueError:
+						pass
 
 	def _get_treeInterceptorClass(self):
 		if self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
