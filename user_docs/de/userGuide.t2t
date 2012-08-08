@@ -1412,6 +1412,28 @@ Bitte sehen Sie in der Dokumentation zu Ihrer Braillezeile nach, wo die entsprec
 | Cursor zum Braillemodul ziehen | routing |
 %kc:endInclude
 
+++ Seika ++
+Die Braillezeilen der Seika Versionen 3, 4 und 5 mit je 40 Module und die
+Seika 80 mit 80 Module werden unterstützt. Information zu diesen Zeilen
+erhalten Sie auf [http://www.seika-braille.com]
+Zuerst müssen Sie den USB-Treiber des Herstellers von der mitgelieferten CD-ROM installieren.
+
+Die folgenden Tastenkonbinationen für diese Braillezeile sind in NVDA verfügbar:
+Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechenden Tasten zu finden sind.
+%kc:beginInclude
+|| Name | Tastenkombination |
+| Braillezeile zurückscrollen | links |
+| Braillezeile vorwärtsscrollen | rechts |
+| Braillezeile zur vorigen Zeile bewegen | b3 |
+| Braillezeile zur nächsten Zeile bewegen | b4 |
+| Kopplung der Braillezeile umschalten | b5 |
+| alles lesen | b6 |
+| tabulator | b1 |
+| umschalt tabulator | b2 |
+| alt tabulator | b1+b2 |
+| NVDA Menü | links+rechts |
+| Cursor zum Braillemodul bewegen | routing |
+%kc:endInclude
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit der Sie viele weitere Braillezeilen ansteuern können.
