@@ -99,21 +99,21 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# log.info("Seika K {c}".format(c=chars))
 		if keytyp == 1: # normal key
 			if chars[0] & 1: # LEFT
-				keys.add("LEFT")
+				keys.add("left")
 			if chars[0] & 4: # RIGHT
-				keys.add("RIGHT")
+				keys.add("right")
 			if chars[1] & 2: # B1 
-				keys.add("B1")
+				keys.add("b1")
 			if chars[1] & 8:
-				keys.add("B2")
+				keys.add("b2")
 			if chars[1] & 16:
-				keys.add("B3")
+				keys.add("b3")
 			if chars[0] & 16:
-				keys.add("B4")
+				keys.add("b4")
 			if chars[0] & 8:
-				keys.add("B5")
+				keys.add("b5")
 			if chars[0] & 2:
-				keys.add("B6")
+				keys.add("b6")
 			data= "+".join(keys)
 			try:
 				inputCore.manager.executeGesture(InputGestureKeys(data))
@@ -140,16 +140,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(seika):LEFT",),
-			"braille_scrollForward": ("br(seika):RIGHT",),
-			"braille_previousLine": ("br(seika):B3",),
-			"braille_nextLine": ("br(seika):B4",),
-			"braille_toggleTether": ("br(seika):B5",),
-			"sayAll": ("br(seika):B6",),
-			"kb:tab": ("br(seika):B1",),
-			"kb:shift+tab": ("br(seika):B2",),
-			"kb:alt+tab": ("br(seika):B1+B2",),
-			"showGui": ("br(seika):LEFT+RIGHT",),
+			"braille_scrollBack": ("br(seika):left",),
+			"braille_scrollForward": ("br(seika):right",),
+			"braille_previousLine": ("br(seika):b3",),
+			"braille_nextLine": ("br(seika):b4",),
+			"braille_toggleTether": ("br(seika):b5",),
+			"sayAll": ("br(seika):b6",),
+			"kb:tab": ("br(seika):b1",),
+			"kb:shift+tab": ("br(seika):b2",),
+			"kb:alt+tab": ("br(seika):b1+b2",),
+			"showGui": ("br(seika):left+right",),
 			"braille_routeTo": ("br(seika):routing",),
 		},
 	})
