@@ -23,8 +23,8 @@ class AddonsDialog(wx.Dialog):
 		entriesLabel=wx.StaticText(self,-1,label=_("Installed Add-ons"))
 		entriesSizer.Add(entriesLabel)
 		self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
-		self.addonsList.InsertColumn(0,_("Status"),width=50)
-		self.addonsList.InsertColumn(1,_("Package"),width=150)
+		self.addonsList.InsertColumn(0,_("Package"),width=150)
+		self.addonsList.InsertColumn(1,_("Status"),width=50)
 		self.addonsList.InsertColumn(2,_("Version"),width=50)
 		self.addonsList.InsertColumn(3,_("Author"),width=300)
 		self.addonsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
@@ -137,7 +137,7 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
 		for addon in addonHandler.getAvailableAddons():
-			self.addonsList.Append((self.getAddonStatus(addon), addon.manifest['summary'],addon.manifest['version'], addon.manifest['author']))
+			self.addonsList.Append((addon.manifest['summary'], self.getAddonStatus(addon), addon.manifest['version'], addon.manifest['author']))
 			self.curAddons.append(addon)
 		# select the given active addon or the first addon if not given
 		curAddonsLen=len(self.curAddons)
