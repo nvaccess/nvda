@@ -50,7 +50,7 @@ ariaRolesToNVDARoles={
 	"tab":controlTypes.ROLE_TAB,
 	"tablist":controlTypes.ROLE_TABCONTROL,
 	"tabpanel":controlTypes.ROLE_PROPERTYPAGE,
-	"textbox":controlTypes.ROLE_STATICTEXT,
+	"textbox":controlTypes.ROLE_EDITABLETEXT,
 	"toolbar":controlTypes.ROLE_TOOLBAR,
 	"tooltip":controlTypes.ROLE_TOOLTIP,
 	"tree":controlTypes.ROLE_TREEVIEW,
