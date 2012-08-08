@@ -26,6 +26,7 @@
 - The Save Settings On Exit option is now on by default for new configurations.
 - When updating a previously installed copy of NVDA, the desktop shortcut key is no longer forced back to control+alt+n if it was manually changed to something different by the user. (#2572)
 - The add-ons list in the Add-ons Manager now shows the package name before its status. (#2548)
+- If installing the same or another version of a currently installed add-on, NVDA will ask if you wish to remove the old add-on first, rather than just showing an error and aborting installation. (#2501)
 
 
 == Bug Fixes ==

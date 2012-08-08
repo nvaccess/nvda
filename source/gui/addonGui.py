@@ -81,13 +81,19 @@ class AddonsDialog(wx.Dialog):
 			wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
 			return
 		bundleName=bundle.manifest['name']
-		if any(bundleName==addon.manifest['name'] for addon in self.curAddons if not addon.isPendingRemove):
-			# Translators: The message displayed when an an addon already seems to be installed. 
-			gui.messageBox(_("This add-on seems to already be installed. Please remove the existing add-on and try again."),
-				# Translators: The title of a dialog presented when an error occurs.
-				_("Error"),
-				wx.OK | wx.ICON_WARNING)
-			return
+		prevAddon=None
+		for addon in self.curAddons:
+			if not addon.isPendingRemove and bundleName==addon.manifest['name']:
+				prevAddon=addon
+				break
+		if prevAddon:
+			# Translators: A message asking if the user wishes to replace a previously installed add-on with this one.
+			if gui.messageBox(_("The same or another version of this add-on is currently installed. Would you like to remove the previously installed add-on and install this one instead?"),
+				# Translators: A title for the dialog  asking if the user wishes to replace a previously installed add-on with this one.
+				_("Add-on Installation"),
+				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
+				return
+			prevAddon.requestRemove()
 		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while an Addon is being installed.
 		_("Installing Add-on"),
