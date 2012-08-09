@@ -312,13 +312,15 @@ IAccessible2StatesToNVDAStates={
 #A list to store handles received from setWinEventHook, for use with unHookWinEvent  
 winEventHookIDs=[]
 
-def normalizeIAccessible(pacc):
+def normalizeIAccessible(pacc,childID=0):
 	if not isinstance(pacc,IAccessible):
 		try:
 			pacc=pacc.QueryInterface(IAccessible)
 		except COMError:
 			raise RuntimeError("%s Not an IAccessible"%pacc)
-	if not isinstance(pacc,IAccessible2):
+	# #2558: IAccessible2 doesn't support simple children.
+	# Therefore, it doesn't make sense to use IA2 if the child ID is non-0.
+	if childID==0 and not isinstance(pacc,IAccessible2):
 		try:
 			s=pacc.QueryInterface(IServiceProvider)
 			pacc2=s.QueryService(IAccessible._iid_,IAccessible2)
@@ -337,14 +339,14 @@ def accessibleObjectFromEvent(window,objectID,childID):
 	except Exception as e:
 		log.debugWarning("oleacc.AccessibleObjectFromEvent with window %s, objectID %s and childID %s: %s"%(window,objectID,childID,e))
 		return None
-	return (normalizeIAccessible(pacc),childID)
+	return (normalizeIAccessible(pacc,childID),childID)
 
 def accessibleObjectFromPoint(x,y):
 	try:
 		pacc, child = oleacc.AccessibleObjectFromPoint(x, y)
 	except:
 		return None
-	return (normalizeIAccessible(pacc),child)
+	return (normalizeIAccessible(pacc,child),child)
 
 def windowFromAccessibleObject(ia):
 	try:
