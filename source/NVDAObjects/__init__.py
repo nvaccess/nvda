@@ -499,6 +499,18 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	def _get_rowHeaderText(self):
+		"""The text of the row headers for this cell.
+		@rtype: str
+		"""
+		raise NotImplementedError
+
+	def _get_columnHeaderText(self):
+		"""The text of the column headers for this cell.
+		@rtype: str
+		"""
+		raise NotImplementedError
+
 	def _get_table(self):
 		"""Retreaves the object that represents the table that this object is contained in, if this object is a table cell.
 		@rtype: L{NVDAObject}
