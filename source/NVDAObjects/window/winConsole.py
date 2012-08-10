@@ -8,7 +8,6 @@ import winConsoleHandler
 from . import Window
 from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection
 import api
-import speech
 
 class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	STABILIZE_DELAY = 0.03
@@ -51,6 +50,6 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 	def script_caret_backspaceCharacter(self, gesture):
 		super(WinConsole, self).script_caret_backspaceCharacter(gesture)
 		# #2586: We use console update events for typed characters,
-		# so speech doesn't get notified about the backspace key.
-		# Notify speech here so that speak typed words works as expected.
-		speech.speakTypedCharacters(u"\b")
+		# so the typedCharacter event is never fired for the backspace key.
+		# Call it here so that speak typed words works as expected.
+		self.event_typedCharacter(u"\b")
