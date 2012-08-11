@@ -802,7 +802,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:
-		textList.append(_("%s of %s")%(indexInGroup,similarItemsInGroup))
+		textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
 	if 'positionInfo_level' in propertyValues:
 		level=propertyValues.get('positionInfo_level',None)
 		role=propertyValues.get('role',None)
