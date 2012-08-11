@@ -1045,6 +1045,43 @@ the NVDAObject for IAccessible
 				log.debugWarning("IAccessibleTable::nColumns failed", exc_info=True)
 		raise NotImplementedError
 
+	def _get__IATableCell(self):
+		# Permanently cache the result.
+		try:
+			self._IATableCell = self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTableCell)
+		except COMError:
+			self._IATableCell = None
+		return self._IATableCell
+
+	def _tableHeaderTextHelper(self, axis):
+		cell = self._IATableCell
+		if not cell:
+			return ()
+		try:
+			headers, nHeaders = getattr(cell, axis + "HeaderCells")
+		except COMError:
+			return ()
+		if not headers:
+			return ()
+		try:
+			ret = []
+			# Each header must be fetched from the headers array once and only once,
+			# as it gets released when it gets garbage collected.
+			for i in xrange(nHeaders):
+				try:
+					ret.append(headers[i].QueryInterface(IAccessibleHandler.IAccessible2).accName(0))
+				except COMError:
+					continue
+			return "\n".join(ret)
+		finally:
+			ctypes.windll.ole32.CoTaskMemFree(headers)
+
+	def _get_rowHeaderText(self):
+		return self._tableHeaderTextHelper("row")
+
+	def _get_columnHeaderText(self):
+		return self._tableHeaderTextHelper("column")
+
 	def _get_table(self):
 		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			return None
