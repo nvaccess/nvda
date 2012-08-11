@@ -1056,13 +1056,13 @@ the NVDAObject for IAccessible
 	def _tableHeaderTextHelper(self, axis):
 		cell = self._IATableCell
 		if not cell:
-			return ()
+			return None
 		try:
 			headers, nHeaders = getattr(cell, axis + "HeaderCells")
 		except COMError:
-			return ()
+			return None
 		if not headers:
-			return ()
+			return None
 		try:
 			ret = []
 			# Each header must be fetched from the headers array once and only once,
