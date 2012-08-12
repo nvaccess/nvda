@@ -59,6 +59,8 @@ def dictToMultiValueAttribsString(d):
 
 class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 
+	allowMoveToOffsetPastEnd=False #: no need for end insertion point as vbuf is not editable. 
+
 	UNIT_CONTROLFIELD = "controlField"
 
 	def _getFieldIdentifierFromOffset(self, offset):
@@ -1413,6 +1415,10 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			ui.message(_("Not in a container"))
 			return
 		container.collapse(end=True)
+		if container._startOffset>=container._getStoryLength():
+			container.move(textInfos.UNIT_CHARACTER,-1)
+			# Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container. 
+			ui.message(_("bottom"))
 		self._set_selection(container, reason=self.REASON_QUICKNAV)
 		container.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)

@@ -32,7 +32,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies. 
-A ce jour, NVDA a été traduit en 37 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, le Bulgare, le Chinois Traditionnel et simplifié, le Croate, le Danois, l'Espagnol, le Finnois, le Français, le Galicien, le Grecque, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Néerlandais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
+A ce jour, NVDA a été traduit en 40 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, le Bulgare, le Chinois Traditionnel et simplifié, le Coréen, le Croate, le Danois, l'Espagnol, l'Éthiopien, le Finnois, le Français, le Galicien, le Grecque, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Néerlandais, le népalais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
 
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -916,17 +916,18 @@ En utilisant le champ Niveau, vous pouvez ajuster le niveau minimum auquel ce sy
 Quand vous avez fini, pressez le bouton Accepter pour sauvegarder vos modifications, ou le bouton Annuler pour les supprimer.
 
 ++ Sauvegarder et recharger la configuration ++
-Par défaut NVDA ne sauvegarde pas automatiquement vos paramètres, donc si vous quittez NVDA puis le redémarrez, les paramètres reprendront leur valeur originelle. Cependant, ce comportement peut être changé dans le dialogue Paramètres généraux du menu Préférences.
+Par défaut NVDA sauvegarde automatiquement vos paramètres.
 Notez cependant que ce comportement peut être modifié dans le dialogue "Paramètres généraux" du menu "Préférences".
-Pour sauvegarder les paramètres, utilisez l'élément Sauvegarde de la configuration dans le menu NVDA.
+Pour sauvegarder manuellement les paramètres à n'importequel moment, utilisez l'élément sauvegarder la configuration dans le menu NVDA.
 
 Si vous faites une erreur dans vos paramètres et avez besoin de revenir aux valeurs précédentes, utilisez l'élément Retour à la configuration sauvegardée dans le menu NVDA.
+Vous pouvez également réinitialiser votre configuration aux valeurs d'usine en utilisant l'élément Réinitialiser la configuration aux paramètres par défaut également disponible dans le menu de NVDA.
 
 Les touches de commande suivantes sont également utiles :
 %kc:beginInclude
 || Nom | Touche Desktop | Touche Laptop | Description |
 | Sauvegarder la configuration | NVDA+control+c | NVDA+control+c | Sauvegarde votre configuration pour qu'elle ne soit pas perdue en quittant NVDA |
-| Retourner à la configuration sauvegardée | NVDA+control+r | NVDA+control+r | Retour à la configuration qui existait lors de votre dernière sauvegarde |
+| Réinitialiser la configuration | NVDA+control+r | NVDA+control+r | Presser une fois pour réinitialiser à la configuration qui existait lors de votre dernière sauvegarde. Presser trois fois pour revenire à la configuration par défaut de NVDA. |
 %kc:endInclude
 
 ++ Fichiers de configuration et profils utilisateur ++

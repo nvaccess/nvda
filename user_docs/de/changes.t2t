@@ -13,13 +13,16 @@
 - Unterstützung für VIP Mud. (#1728)
 - Wenn in Adobe Reader einer Tabelle eine Zusammenfassung zugewiesen wurde, wird diese nun angezeigt. (#2465)
 - In Adobe Reader können nun Reihen und Spaltenüberschriften ausgegeben werden. (#2193, #2527)
-- neue Sprachen: nepalesisch, koreanisch
+- neue Sprachen: nepalesisch, koreanisch, Amharisch
 - Bei der Eingabe von E-Mail-Adressen in Outlook 2007 werden Vorschläge zur automatischen Vervollständigung korrekt ausgegeben. (#689)
 - neue Espeak-Varianten: Gene, Gene2. (#2512)
+- in Adobe Reader werden Seitenzahlen nun korrekt ausgegeben. (#2534)
+- Es ist nun möglich, die Werkseinstellungen von NVDA wiederherzustellen. Dies kann entweder durch dreimaliges Drücken von NVDA+strg+r oder durch Wäheln von "Werkseinstellungen wiederherstellen" im nvda-Menü geschehen. (#2086)
 
 == Änderungen ==
 - Im Dialog für die NVDA-Cursor-Einstellungen wurde die Einstellung "Tastaturfokus verfolgen" in "Systemfokus verfolgen" umbenannt, um mit anderen Teilen von NVDA zu harmonieren, in denen diese Namensgebung verwendet wird.
 - Wenn die Braillezeile an den Navigator gekoppelt ist und gerade ein objekt angezeigt wird, das kein Textobjekt ist (wie z. B. ein Eingabefeld), kann das objekt durch Drücken der Cursorroutingtasten aktiviert werden. (#2386)
+- Die Option "Einstellungen beim Beenden speichern" ist bei neuen Konfigurationen nun standardmäßig aktiviert.
 
 == Fehlerbehebungen ==
 - In Blio wird nun der Inhalt von Büchern in Braille angezeigt. (#2139)
@@ -32,7 +35,14 @@
 - Im windows 8-Startbildschirm werden die Kacheln nun weniger ausführlich dargestellt  (der Status "nicht ausgewählt" wird nicht mehr ausgegeben). Desweiteren wird die Beschreibung ausgegeben - sofern vorhanden.
 - in Microsoft Outlook und anderen eingabefeldern, die als geschützt gekennzeichnet sind, werden die Kennwörter nun nicht mehr im Klartext ausgegeben. (#2021)
 - Im Adobe Reader wirken sich Änderungen an formularfeldern nun auch im Lesemodus korrekt aus. (#2529)
-
+- Verbesserungen an der Unterstützung für die Rechtschreibprüfung in Microsoft Word. Dies betrifft z.B. eine bessere Ausgabe von Rechtschreibfehlern.
+- Erweiterungen, die dateinamen mit nicht-ASCII-codierten Zeichen enthalten, können jetzt ordnungsgemäß installiert werden. (#2505)
+- In Adobe Reader geht die Spracheinstellung nun nicht mehr verloren, wenn die Seite scrollt oder aktualisiert wird. (#2544)
+- Beim Installieren von Erweiterungen wird nun der korrekte (lokalisierte) Name angezeigt, sofern vorhanden.  (#2422)
+- In Anwendungen, die UI Automation verwenden (wie etwa .net- oder Silverlight-Anwendungen) wurde die Berechnung numerischer Eigenschaften (wie etwa die Positionen von Schiebereglern) korrigiert. (#2417)
+- Die Einstellungen für die Ausgabe von Frtschrittsbalken werden nun auch während der Installation von NVDA oder während der Erstellung einer portablen Kopie berücksichtigt. (#2574)
+- wenn ein sicherer Desktop (wie etwa ein Sperrbildschirm) angezeigt wird, können nun keine NVDA-Befehle mehr mit einer Braillezeile ausgeführt werden. (#2449)
+- Die Braille-Anzeige wird nun im Lesemodus korrekt aktualisiert, wenn sich der anzuzeigende Text geändert hat. (#2074)
 
 == Änderungen für Entwickler ==
 - Beim Start von NVDA wird nun das vorherige Protokoll nach nvda-old.log kopiert. Sollte NVDA also einmal abstürzen oder neu gestartet werden müssen, steht das Protokoll der vorigen NVDA-Sitzung zu Inspektionszwecken zur Verfügung. (#916)

@@ -31,6 +31,9 @@ def _setDllFuncPointer(dll,name,cfunc):
 #Implementation of nvdaController methods
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_speakText(text):
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
 	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
@@ -38,6 +41,9 @@ def nvdaController_speakText(text):
 
 @WINFUNCTYPE(c_long)
 def nvdaController_cancelSpeech():
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
 	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
@@ -45,6 +51,9 @@ def nvdaController_cancelSpeech():
 
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_brailleMessage(text):
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
 	import queueHandler
 	import braille
 	queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.message,text)
@@ -212,6 +221,8 @@ def nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags):
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	global lastInputMethodName
+	if api.getFocusObject().sleepMode:
+		return 0
 	import queueHandler
 	import ui
 	print "inputLangChange: layoutString %s"%layoutString

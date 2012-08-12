@@ -400,6 +400,8 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		else:
 			raise NotImplementedError
 
+	allowMoveToOffsetPastEnd=True #: move with unit_character can move 1 past story length to allow braille routing to end insertion point. (#2096)
+
 	def move(self,unit,direction,endPoint=None):
 		if direction==0:
 			return 0;
@@ -414,7 +416,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		count=0
 		lowLimit=0
 		highLimit=self._getStoryLength()
-		if unit==textInfos.UNIT_CHARACTER:
+		if self.allowMoveToOffsetPastEnd and unit==textInfos.UNIT_CHARACTER:
 			# #2096: There is often an uncounted character at the end of the text
 			# where the caret is placed to append text.
 			highLimit+=1

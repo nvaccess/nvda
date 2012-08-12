@@ -206,6 +206,15 @@ def findExtraOverlayClasses(obj, clsList):
 	if ver and ver.full.startswith("1.9"):
 		clsList.append(Gecko1_9)
 
+	if iaRole == oleacc.ROLE_SYSTEM_DIALOG:
+		xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
+		if "dialog" in xmlRoles:
+			# #2390: Don't try to calculate text for ARIA dialogs.
+			try:
+				clsList.remove(Dialog)
+			except ValueError:
+				pass
+
 	clsList.append(Mozilla)
 
 #: Maps IAccessible roles to NVDAObject overlay classes.

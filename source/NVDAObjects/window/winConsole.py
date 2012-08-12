@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2007-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>
+#Copyright (C) 2007-2012 NV Access Limited
 
 import winConsoleHandler
 from . import Window
@@ -46,3 +46,10 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 
 	def _getTextLines(self):
 		return winConsoleHandler.getConsoleVisibleLines()
+
+	def script_caret_backspaceCharacter(self, gesture):
+		super(WinConsole, self).script_caret_backspaceCharacter(gesture)
+		# #2586: We use console update events for typed characters,
+		# so the typedCharacter event is never fired for the backspace key.
+		# Call it here so that speak typed words works as expected.
+		self.event_typedCharacter(u"\b")

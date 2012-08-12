@@ -96,9 +96,14 @@ class InstallerDialog(wx.Dialog):
 		ctrl = self.startOnLogonCheckbox = wx.CheckBox(self, label=_("Use NVDA on the Windows &logon screen"))
 		ctrl.Value = config.getStartOnLogonScreen() if self.isUpdate else True
 		optionsSizer.Add(ctrl)
-		# Translators: The label of a checkbox option in the Install NVDA dialog.
-		ctrl = self.createDesktopShortcutCheckbox = wx.CheckBox(self, label=_("Create &desktop icon and shortcut key (control+alt+n)"))
-		ctrl.Value = installer.isDesktopShortcutInstalled() if self.isUpdate else True
+		shortcutIsPrevInstalled=installer.isDesktopShortcutInstalled()
+		if self.isUpdate and shortcutIsPrevInstalled:
+			# Translators: The label of a checkbox option in the Install NVDA dialog.
+			ctrl = self.createDesktopShortcutCheckbox = wx.CheckBox(self, label=_("&Keep existing desktop shortcut"))
+		else:
+			# Translators: The label of a checkbox option in the Install NVDA dialog.
+			ctrl = self.createDesktopShortcutCheckbox = wx.CheckBox(self, label=_("Create &desktop icon and shortcut key (control+alt+n)"))
+		ctrl.Value = shortcutIsPrevInstalled if self.isUpdate else True 
 		optionsSizer.Add(ctrl)
 		# Translators: The label of a checkbox option in the Install NVDA dialog.
 		ctrl = self.copyPortableConfigCheckbox = wx.CheckBox(self, label=_("Copy &portable configuration to current user account"))

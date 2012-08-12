@@ -540,6 +540,13 @@ Ein Paket ist einfach eine Datei im Zip-Format mit der Erweiterung .nvda-addon, 
 - Zusätzlichen Code, der bei der Installation bzw. der Deinstallation des Pakets ausgeführt werden soll.
 - Übersetzungen der in Ihren Plugins und Treibern verwendeten Meldungen für unterschiedliche Srachräume.
 
+++ Nicht-ASCII-Dateinamen in Zip-Archiven ++
+wenn Ihr Archiv Dateien enthält, in deren Namen Zeichen vorkommen, die nicht zum Ascii-Zeichensatz gehören, muss das Archiv so erstellt werden, dass die Dateinamen utf-8-codiert werden. 
+Dies ermöglicht ein Entpacken des Archivs unabhängig davon, für welche Sprache das Zielsystem ausgelegt ist.
+Unglücklicherweise unterstützen viele Archivierungsprogramme (einschließlch Windows-Explorer) diese Methode nicht.
+Generell mss die utf8-Codierung von Datinamen asdrücklich aktiviert werden, auch wenn das Archivierungsprogramm dies von hause aus unterstützt.
+In [http://www.7-zip.org/ 7-Zip] können Sie die utf-8-Codierung von Dateinamen beispielsweise durch Angabe des Parameters "cu=on" beim Erstellen des Archivs einschalten.
+
 ++ Manifest-Dateien ++
 Jedes Paket muss eine Manifest-Datei namens "manifest.ini" enthalten.
 Diese Datei enthält Zeilen der Form "Name = Wert", die grundlegende Informationen über ein Paket bereitstellen wie z. B. den Namen, den Autor oder eine kurze Beschreibung.

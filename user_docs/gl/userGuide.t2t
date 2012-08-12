@@ -23,7 +23,7 @@ O máis sinalable inclúe:
 - Soporte para moitas liñas de braille efímero
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 39 linguas
+- Traducido a 40 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -32,7 +32,7 @@ O máis sinalable inclúe:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 39 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Árabe, Búlgaro, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Español, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 40 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, Búlgaro, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Español, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ó usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -924,19 +924,20 @@ Utilizando o campo Nivel, podes axustar o nivel máis baixo do símbolo ó cal e
 Cando remates, preme o botón Aceptar para gardar os teus cambios ou o botón Cancelar para descartalos.
 
 ++ Gardando e Recargando a configuración ++
-De xeito predeterminado NVDA non garda automáticamente as túas opcións, así se saes do NVDA, e logo reinícialo, as opcións voltarán ós valores orixinais. 
+De xeito predeterminado NVDA gardará automáticamente as túas opcións ó saír.
 Ten en conta, non obstante, que esta opción predeterminada pode ser cambiada baixo as opcións xerais no menú preferencias. 
-Para gardar as opcións podes escoller o elemento Gardar Configuración no menú NVDA.
+Para gardar as opcións manualmente en calquera ocasión, escolle o elemento Gardar configuración no menú NVDA.
 
 Se NVDA está nun sistema de ficheiros de só lectura, tal como un CD, non será posible gardar as túas opcións, e diracho.
 
 Se te trucas cas túas opcións e necesitas voltar ás opcións gardadas, podes escoller o elemento "voltar á configuración gardada" no menú NVDA.
+Tamén podes reiniciar as túas opcións ós seus valores predeterminados de fábrica orixinais escollendo Reiniciar Configuración ós Valores Predeterminados de Fábrica, que tamén se atopa no menú NVDA.
 
 As seguintes teclas de ordes de NVDA tamén son útiles:
 %kc:beginInclude
 || Nome | Tecla Sobremesa | Tecla Portátil | Descripción |
 | Gardar configuración | NVDA+control+c | NVDA+control+c | Garda a túa configuración actual tal que non se perda cando saias do NVDA |
-| Voltar á configuración gardada | NVDA+control+r | NVDA+control+r | Restaura ó NVDA ás opcións que existían na última configuración gardada de NVDA |
+| Reverter configuración | NVDA+control+r | NVDA+control+r | Premendo unha vez reinicia a túa configuración a cando a gardaches por derradeira vez. Premendo tres veces reiniciaráa ós valores predeterminados de fábrica. |
 %kc:endInclude
 
 ++ Ficheiros de Configuración e Perfiles de Usuario ++

@@ -12,12 +12,18 @@ Quoi de Neuf dans NVDA
 - Lorsque les notifications Toast Windows 8 apparaissent, NVDA les annonce et déplace le navigateur d'objet dessus pour plus d'interaction. (#2143)
 - Support de VIP Mud. (#1728)
 - Dans Adobe Reader, si un tableau a un résumé, il est maintenant présenté. (#2465)
-- Dans Adobe Reader, les entêtes de lignes et de collones des tableaux peuvent maintenant être annoncées. (#2193)
+- Dans Adobe Reader, les entêtes de lignes et de collones des tableaux peuvent maintenant être annoncées. (#2193, #2527, #2528)
+- Nouveaux langages : Éthiopien, Coréen, Népalais.
+- NVDA peut maintenant lire les suggestions de l'autocomplétion lorsqu'on saisi des adresses e-mail dans Microsoft Outlook 2007. (#689)
+- Deux nouvelles variantes de voix Espeak : Gene, Gene2. (#2512)
+- Dans Adobe Reader, les numérots de pages peuvent maintenant être rapportés. (#2534)
+- Il est maintenant possible de réinitialiser la configuration de NVDA à celle par défaut en appuyant trois fois sur NVDA+Ctrl+r, ou en choisissant Réinitialiser la configuration aux paramètres par défaut dans le menu de NVDA. (#2086)
 
 
 == Changements ==
 - Dans la boîte de dialogue de préférences du curseur de revue de NVDA, l'option suivre le focus clavier a été renomée en Suivre le focus système pour être cohérant avec les terminologies utilisées ailleur dans NVDA.
 - Quand le braille suit la revue et que le curseur est dans un objet qui n'est pas un objet texte (P.EX. une zone d'édition), les touches routines activent maintenant l'objet. (#2386)
+- L'option Sauvegarder la configuration en quittant est activée par défaut pour les nouvelles configurations.
 
 
 == Corrections de Bogues ==
@@ -25,7 +31,20 @@ Quoi de Neuf dans NVDA
 - Sous Windows Vista et supérieur, NVDA ne traite plus la touche Windows comme étant gardée appuyée lors du déverrouillage après l'avoir verrouillé en appuyant Windows+L. (#1856)
 - Dans Adobe Reader, les entêtes de colonnes sont maintenant bien reconnues comme des cellules ; P.Ex. les coordonnées sont annoncées et sont accessibles avec les touches de navigation pour les tableaux. (#2444)
 - Dans Adobe Reader, les cellules sur plusieurs colonnes sont correctement traitées. (#2437, #2438, #2450)
+- Le package de NVDA distribué vérifie maintenant son intégrité avant de s'exécuter. (#2475)
+- Les fichiers temporaires de téléchargement sont maintenant supprimés si le téléchargement d'une mise à jour de NVDA échoue. (#2477)
 - Lorsque l'on copie la configuration utilisateur dans la configuration système (pour l'utiliser  dans l'écran d'identification à Windows et les autres écrans sécurisés de Windows) NVDA ne se figeras plus sous XP pendant la procédure. (#2485)
+- Les mosaïques dans l'écran de démarrage Windows 8 sont maintenant mieux présentées vocalement et en braille. Le nom n'est plus répété, non sélectionné n'est plus rapporté sur toutes les mosaïques, et l'information de statut en temps réel est présenté comme la description de la mosaïque (P.Ex. la température actuelle pour la météo).
+- Les mot de passes ne sont plus annoncés lorsqu'on lie un champ de mot de passe dans Microsoft Outlook et d'autres champs d'édition standards marqués comme protégés. (#2021)
+- Dans Adobe Reader, les changement dans les champs de formulaires sont correctement rendus en mode navigation. (#2529)
+- Amélioration du support pour le correcteur orthographique de Microsoft Word, incluant une lecture plus précise de l'erreur d'orthographe actuelle, et la possibilité de supporter le correcteur orthographique lorsqu'on exécute une version installée de NVDA sous Windows Vista ou supérieur.
+- Les modules complémentaires qui incluent des fichiers contenant des caractères non anglais peuvent être installés correctement dans la majorité des cas. (#2505)
+- Dans Adobe Reader, la langue du texte n'est plus perdue lorsqu'il est mis à jour ou qu'on le fait défilé. (#2544)
+- Lors de l'installation d'un module complémentaire, la boîte de dialogue de confirmation affiche le nom traduit du module complémentaire si disponible. (#2422)
+- Dans les applications utilisant UI Automation (comme les applications .net et Silverlight), le calcul de valeurs numériques pour des composants comme les sliders a été corrigé. (#2417)
+- La configuration du rapport des barres de progression est maintenant prise en compte pour les barres de progression non déterminables affichées par NVDA lors de l'installation, de la création d'une version portable etc. (#2574)
+- Les commandes de NVDA ne peuvent plus être exécutées depuis un afficheur Braille tant qu'un écran sécurisé de Windows (comme l'écran de verrouillage de l'ordinateur) est actif. (#2449)
+- En mode navigation, le braille est mis à jour si le texte affiché change. (#2074)
 
 
 == Changements pour les développeurs ==

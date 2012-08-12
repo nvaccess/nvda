@@ -1,4 +1,4 @@
-﻿?#locale/ko/symbols.dic
+﻿#locale/ko/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (c) 2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
@@ -37,7 +37,7 @@ negative number	마이너스	none	norep
 \f	page break	none
 \r	return	char
  	space	char
-?	space	char	# no-break space
+ 	space	char	# no-break space
 
 # Standard punctuation/symbols
 !	느낌표	all
@@ -58,7 +58,7 @@ $	달러	all	norep
 ,	콤마	all	always
 -	다시	most
 .	점	some
-/	/	some
+/	슬래시	some
 :	콜런	most	norep
 ;	세미콜런	most
 <	less	most
@@ -78,22 +78,22 @@ _	언더바	most
 ~	물결표	most
 
 # Other characters
-?	물음표	some
+•	bullet	some
 …	말줄임표	all	always
 ...	dot dot dot	all	always
-?	bullet	some
+	bullet	some
 “	큰따옴표 열기	most
 ”	큰따옴표 닫기	most
 ‘	작은따옴표 열기	most
 ’	작은따옴표 닫기	most
-?	en dash	most
-?	em dash	most
+–	en dash	most
+—	em dash	most
 ●	circle	most
 ¨	diaeresis	most
-?	left to right mark	char
-?	right to left mark	char
 ■	black square	some
-?	right arrow	some
+‎	left to right mark	char
+‏	right to left mark	char
+➔	right arrow	some
 §	section	all
 °	degrees	some
 ≪	double left pointing angle bracket
@@ -104,10 +104,10 @@ _	언더바	most
 ³	superscript 3	some
 ®	registered	some
 ™	Trademark	some
-ⓒ	Copyright	some
+©	Copyright	some
 ±	Plus or Minus	most
 ×	times	most
 ÷	divide by	most
 →	right arrow	some
-?	check	some
-?	check	some
+✓	check	some
+✔	check	some
