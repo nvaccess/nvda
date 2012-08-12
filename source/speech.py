@@ -224,7 +224,10 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	newPropertyValues={}
 	positionInfo=None
 	for name,value in allowedProperties.iteritems():
-		if name.startswith('positionInfo_') and value:
+		if name=="includeTableCellCoords":
+			# This is verbosity info.
+			newPropertyValues[name]=value
+		elif name.startswith('positionInfo_') and value:
 			if positionInfo is None:
 				positionInfo=obj.positionInfo
 		elif value:
@@ -269,7 +272,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -289,11 +292,19 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	if reason!=controlTypes.REASON_QUERY:
 		allowProperties["rowCount"]=False
 		allowProperties["columnCount"]=False
-		if (not config.conf["documentFormatting"]["reportTables"]
-				or not config.conf["documentFormatting"]["reportTableCellCoords"]):
-			allowProperties['cellCoordsText']=False
-			allowProperties["rowNumber"]=False
-			allowProperties["columnNumber"]=False
+	formatConf=config.conf["documentFormatting"]
+	if not formatConf["reportTableCellCoords"]:
+		allowProperties["cellCoordsText"]=False
+		# rowNumber and columnNumber might be needed even if we're not reporting coordinates.
+		allowProperties["includeTableCellCoords"]=False
+	if not formatConf["reportTableHeaders"]:
+		allowProperties["rowHeaderText"]=False
+		allowProperties["columnHeaderText"]=False
+	if (not formatConf["reportTables"]
+			or (not formatConf["reportTableCellCoords"] and not formatConf["reportTableHeaders"])):
+		# We definitely aren't reporting any table info at all.
+		allowProperties["rowNumber"]=False
+		allowProperties["columnNumber"]=False
 	if isEditable:
 		allowProperties['value']=False
 
