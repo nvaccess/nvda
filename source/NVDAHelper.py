@@ -126,6 +126,7 @@ def handleInputCompositionEnd(result):
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
 		import speech
+		import characterProcessing
 		oldSpeechMode=speech.speechMode
 		speech.speechMode=speech.speechMode_off
 		eventHandler.executeEvent("gainFocus",focus.parent)
@@ -134,7 +135,7 @@ def handleInputCompositionEnd(result):
 		if not result:
 			result=focus.compositionString.lstrip(u'\u3000 ')
 		if result:
-			speech.speakText(result)
+			speech.speakText(result,symbolLevel=characterProcessing.SYMLVL_ALL)
 
 def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,isReading):
 	import speech

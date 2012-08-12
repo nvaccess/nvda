@@ -1,6 +1,7 @@
 import eventHandler
 import queueHandler
 import controlTypes
+import characterProcessing
 import speech
 import config
 from NVDAObjects.window import Window
@@ -73,7 +74,7 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 		if (config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]):
 			newText=calculateInsertedChars(oldString.strip(u'\u3000'),newString.strip(u'\u3000'))
 			if newText:
-				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText)
+				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText,symbolLevel=characterProcessing.SYMLVL_ALL)
 
 	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,isReading):
 		self.reportNewText((self.readingString if isReading else self.compositionString),compositionString)
