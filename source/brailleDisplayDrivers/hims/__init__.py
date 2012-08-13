@@ -131,7 +131,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					code = himsLib.Open(str(port),self._messageWindow,nvdaHIMSBrlWm)
 		if code >= 1:
 			deviceFound = HIMS_CODE_DEVICES[code]
-			log.info(_("%s device found")%deviceFound)
+			log.info("%s device found"%deviceFound)
 			return
 		raise RuntimeError("No display found")
 
