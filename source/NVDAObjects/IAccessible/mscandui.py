@@ -33,8 +33,17 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 	def _get_keyboardShortcut(self):
 		return ""
 
-	def _get_value(self):
-		return super(BaseCandidateItem,self).keyboardShortcut
+	def _get_name(self):
+		number=int(super(BaseCandidateItem,self).keyboardShortcut)
+		word=super(BaseCandidateItem,self).name
+		# Translators: the formatted name of an input composition candidate item.
+		return u"{number}  {word}".format(number=number,word=word)
+
+	def _get_description(self):
+		return self.getSymbolDescriptions(super(BaseCandidateItem,self).name)
+
+	def _get_basicText(self):
+		return super(BaseCandidateItem,self).name
 
 class MSCandUI_candidateListItem(BaseCandidateItem):
 
@@ -44,6 +53,7 @@ class MSCandUI_candidateListItem(BaseCandidateItem):
 		return states
 
 	def event_stateChange(self):
+		import winsound; winsound.Beep(440,40)
 		if controlTypes.STATE_SELECTED in self.states:
 			reportSelectedCandidate(self)
 

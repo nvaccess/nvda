@@ -136,7 +136,13 @@ class CandidateItem(CandidateItemBehavior,Window):
 		return clsList
 
 	def _get_name(self):
+		number=self.candidateIndex+1
+		word=self.candidateStrings[self.candidateIndex]
+		# Translators: the formatted name of an input composition candidate item.
+		return u"{number}  {word}".format(number=number,word=word)
+
+	def _get_basicText(self):
 		return self.candidateStrings[self.candidateIndex]
 
-	def _get_value(self):
-		return unicode(self.candidateIndex+1)
+	def _get_description(self):
+		return self.getSymbolDescriptions(self.candidateStrings[self.candidateIndex])

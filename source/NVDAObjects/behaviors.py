@@ -340,8 +340,7 @@ class Terminal(LiveText, EditableText):
 
 class CandidateItem(NVDAObject):
 
-	def _get_description(self):
-		symbols=self.name
+	def getSymbolDescriptions(self,symbols):
 		descriptions=[]
 		numSymbols=len(symbols)
 		for symbol in symbols:
@@ -361,3 +360,6 @@ class CandidateItem(NVDAObject):
 				descriptions.append(desc)
 		if descriptions:
 			return ", ".join(descriptions)
+
+	def reportFocus(self):
+		speech.speakObjectProperties(self,name=True,description=True)
