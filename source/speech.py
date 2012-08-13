@@ -813,6 +813,9 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:
+		# Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+		# {number} is replaced with the number of the item in the group.
+		# {total} is replaced with the total number of items in the group.
 		textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
 	if 'positionInfo_level' in propertyValues:
 		level=propertyValues.get('positionInfo_level',None)
