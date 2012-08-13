@@ -362,4 +362,8 @@ class CandidateItem(NVDAObject):
 			return ", ".join(descriptions)
 
 	def reportFocus(self):
-		speech.speakObjectProperties(self,name=True,description=True)
+		text=self.name
+		desc=self.description
+		if desc:
+			text+=u", "+desc
+		speech.speakText(text)
