@@ -1008,16 +1008,23 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if  formatConfig["reportColor"]:
 		color=attrs.get("color")
 		oldColor=attrsCache.get("color") if attrsCache is not None else None
-		if color and color!=oldColor:
-			textList.append(color.name if isinstance(color,colors.RGB) else unicode(color))
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
-		if backgroundColor and backgroundColor!=oldBackgroundColor:
-			# Translators: This is used to indicate a background color after the text color.
-			# The {backgroundColor} text will be replaced by the background color.
-			# For example, if the text is white on a black background,
-			# the output of this message in English would be "on black".
-			textList.append(_("on {backgroundColor}").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+		if color and backgroundColor and color!=oldColor and backgroundColor!=oldBackgroundColor:
+			# Translators: Reported when both the text and background colors change.
+			# {color} will be replaced with the text color.
+			# {backgroundColor} will be replaced with the background color.
+			textList.append(_("{color} on {backgroundColor}").format(
+				color=color.name if isinstance(color,colors.RGB) else unicode(color),
+				backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+		elif color and color!=oldColor:
+			# Translators: Reported when the text color changes (but not the background color).
+			# {color} will be replaced with the text color.
+			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else unicode(color)))
+		elif backgroundColor and backgroundColor!=oldBackgroundColor:
+			# Translators: Reported when the background color changes (but not the text color).
+			# {backgroundColor} will be replaced with the background color.
+			textList.append(_("{backgroundColor} background").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None
