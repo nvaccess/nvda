@@ -350,11 +350,11 @@ static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lPar
 			switch (pcwp->wParam) {
 				case IMN_OPENCANDIDATE:
 				case IMN_CHANGECANDIDATE:
-					if(!isTSFThread(true)) handleCandidates(pcwp->hwnd);
+					handleCandidates(pcwp->hwnd);
 					break;
 
 				case IMN_CLOSECANDIDATE:
-					if(!isTSFThread(true)) nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
+					nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
 					break;
 
 				case IMN_SETCONVERSIONMODE:
