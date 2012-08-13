@@ -13,10 +13,10 @@ from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
 def reportSelectedCandidate(candidateObject,allowDuplicate=False):
 	if not eventHandler.isPendingEvents("gainFocus") and (allowDuplicate or candidateObject!=api.getFocusObject()):
 		if not isinstance(api.getFocusObject(),BaseCandidateItem):
-			candidateObject.container.container=api.getFocusObject()
-			eventHandler.queueEvent("foreground",candidateObject.container)
+			candidateObject.container=api.getFocusObject()
+			eventHandler.queueEvent("foreground",candidateObject)
 		else:
-			candidateObject.container.container=api.getFocusObject().container.container
+			candidateObject.container=api.getFocusObject().container
 		eventHandler.queueEvent("gainFocus",candidateObject)
 
 class BaseCandidateItem(CandidateItemBehavior,IAccessible):
@@ -53,7 +53,6 @@ class MSCandUI_candidateListItem(BaseCandidateItem):
 		return states
 
 	def event_stateChange(self):
-		import winsound; winsound.Beep(440,40)
 		if controlTypes.STATE_SELECTED in self.states:
 			reportSelectedCandidate(self)
 

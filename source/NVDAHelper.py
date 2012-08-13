@@ -180,15 +180,14 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 	focus=api.getFocusObject()
 	if not (0<=selectionIndex<len(candidateStrings)):
 		if isinstance(focus,CandidateItem):
-			eventHandler.executeEvent("gainFocus",focus.parent.parent)
+			eventHandler.executeEvent("gainFocus",focus.parent)
 		return
 	if isinstance(focus,CandidateItem):
 		parent=focus.parent
 		wasCandidate=True
 	else:
-		parent=CandidateList(parent=focus)
 		wasCandidate=False
-	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
+	item=CandidateItem(parent=focus,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
 	if wasCandidate and focus.windowHandle==item.windowHandle and focus.candidateIndex==item.candidateIndex and focus.name==item.name:
 		return
 	eventHandler.executeEvent("gainFocus",item)
