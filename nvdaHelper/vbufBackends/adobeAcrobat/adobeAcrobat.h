@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <string>
 #include <list>
 #include <vbufBase/backend.h>
+#include <AcrobatAccess.h>
 
 class AdobeAcrobatVBufStorage_controlFieldNode_t;
 
@@ -53,6 +54,8 @@ class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 	);
 
 	bool isXFA;
+
+	IPDDomDocPagination* docPagination;
 
 	protected:
 
