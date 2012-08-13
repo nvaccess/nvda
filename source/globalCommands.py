@@ -267,7 +267,7 @@ class GlobalCommands(ScriptableObject):
 			obj=None
 		if obj and obj!=pos.obj:
 			api.setNavigatorObject(obj)
-			speech.speakObject(obj)
+			speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
 		else:
 			speech.speakMessage(_("No object at flat review position"))
 	script_navigatorObject_moveToObjectAtFlatReviewPosition.__doc__=_("Moves navigator object to the object represented by the text at the position of the review cursor within flat review")
@@ -335,7 +335,7 @@ class GlobalCommands(ScriptableObject):
 			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(pos)
 		speech.speakMessage(_("move to focus"))
-		speech.speakObject(obj,reason=controlTypes.REASON_QUERY)
+		speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
 	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible.")
 
 	def script_navigatorObject_moveFocus(self,gesture):
@@ -366,7 +366,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simpleParent if simpleReviewMode else curObject.parent
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
+			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			speech.speakMessage(_("No containing object"))
 	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
@@ -380,7 +380,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simpleNext if simpleReviewMode else curObject.next
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
+			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			speech.speakMessage(_("No next"))
 	script_navigatorObject_next.__doc__=_("Moves the navigator object to the next object")
@@ -394,7 +394,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simplePrevious if simpleReviewMode else curObject.previous
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
+			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			speech.speakMessage(_("No previous"))
 	script_navigatorObject_previous.__doc__=_("Moves the navigator object to the previous object")
@@ -408,7 +408,7 @@ class GlobalCommands(ScriptableObject):
 		curObject=curObject.simpleFirstChild if simpleReviewMode else curObject.firstChild
 		if curObject is not None:
 			api.setNavigatorObject(curObject)
-			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
+			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
 			speech.speakMessage(_("No objects inside"))
 	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")

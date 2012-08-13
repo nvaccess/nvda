@@ -439,6 +439,9 @@ def getBrailleTextForProperties(**propertyValues):
 		indexInGroup = positionInfo.get("indexInGroup")
 		similarItemsInGroup = positionInfo.get("similarItemsInGroup")
 		if indexInGroup and similarItemsInGroup:
+			# Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+			# {number} is replaced with the number of the item in the group.
+			# {total} is replaced with the total number of items in the group.
 			textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
 		if level is not None:
 			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
