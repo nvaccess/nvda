@@ -119,8 +119,6 @@ class CandidateList(Window):
 class CandidateItem(CandidateItemBehavior,Window):
 
 	role=controlTypes.ROLE_LISTITEM
-	next=None
-	previous=None
 	firstChild=None
 	lastChild=None
 	states=set()
@@ -146,3 +144,11 @@ class CandidateItem(CandidateItemBehavior,Window):
 
 	def _get_description(self):
 		return self.getSymbolDescriptions(self.candidateStrings[self.candidateIndex])
+
+	def _get_next(self):
+		if self.candidateIndex<(len(self.candidateStrings)-1):
+			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex+1)
+
+	def _get_previous(self):
+		if self.candidateIndex>0:
+			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex-1)
