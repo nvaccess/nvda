@@ -283,7 +283,7 @@ inline void fillExplicitTableHeadersForCell(AdobeAcrobatVBufStorage_controlField
 		cell.addAttribute(L"table-rowheadercells", rowHeaders.str());
 }
 
-inline wstring* getPageNum(IPDDomNode* domNode) {
+wstring* AdobeAcrobatVBufBackend_t::getPageNum(IPDDomNode* domNode) {
 	// Get the page number.
 	IPDDomNodeExt* domNodeExt;
 	if (domNode->QueryInterface(IID_IPDDomNodeExt, (void**)&domNodeExt) != S_OK) 
@@ -295,6 +295,16 @@ inline wstring* getPageNum(IPDDomNode* domNode) {
 		return NULL;
 	}
 	domNodeExt->Release();
+
+	// Use the page label if possible.
+	BSTR label;
+	if (this->docPagination && this->docPagination->LabelForPageNum(firstPage, &label) == S_OK) {
+		wstring* ret = new wstring(label);
+		SysFreeString(label);
+		return ret;
+	}
+	
+	// If the label couldn't be retrieved, use the page number.
 	wostringstream s;
 	// GetPageNum returns 0-based numbers, but we want 1-based.
 	s << firstPage + 1;
@@ -457,7 +467,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	LOG_DEBUG(L"childCount is "<<childCount);
 
 	bool deletePageNum = false;
-	if (!pageNum && (pageNum = getPageNum(domNode)))
+	if (!pageNum && (pageNum = this->getPageNum(domNode)))
 		deletePageNum = true;
 
 	#define addAttrsToTextNode(node) { \

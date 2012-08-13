@@ -47,6 +47,8 @@ typedef struct {
 class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 	private:
 
+	std::wstring* getPageNum(IPDDomNode* domNode);
+
 	AdobeAcrobatVBufStorage_controlFieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 		AdobeAcrobatVBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 		AdobeAcrobatVBufStorage_controlFieldNode_t* oldNode,
