@@ -17,7 +17,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaHelperRemote.h"
 #include "nvdaControllerInternal.h"
 #include "typedCharacter.h"
-#include <common/log.h>
 #include "tsf.h"
 #include "ime.h"
 
@@ -130,16 +129,13 @@ void handleReadingStringUpdate(HWND hwnd) {
 	if (!imc)  return;
 	wchar_t* read_str=NULL;
 	HKL kbd_layout = GetKeyboardLayout(0);
-	LOG_INFO(L"kbd_layout: "<<kbd_layout);
 	WCHAR filename[MAX_PATH + 1];
 	DWORD version=0;
 	HMODULE IMEFile=NULL;
 	GetReadingString_funcType GetReadingString=NULL;
 	if(ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH)>0) {
-		LOG_INFO(L"fileName: "<<filename);
 		IMEFile=LoadLibrary(filename);
 		if(IMEFile) {
-			LOG_INFO(L"IMEFile: "<<IMEFile);
 			GetReadingString=(GetReadingString_funcType)GetProcAddress(IMEFile, "GetReadingString");
 		}
 		if(!GetReadingString) {
@@ -147,7 +143,6 @@ void handleReadingStringUpdate(HWND hwnd) {
 		}
 	}
 	if(GetReadingString) {
-		LOG_INFO(L"Got ReadingString");
 		// Use GetReadingString() API if available
 		UINT   len = 0;
 		INT    err = 0;
@@ -160,7 +155,6 @@ void handleReadingStringUpdate(HWND hwnd) {
 			GetReadingString(imc, len, read_str, &err, &vert, &max_len);
 		}
 	} else if(version) {
-		LOG_INFO(L"Using version "<<version);
 		// Read private data in IMCC
 		UINT   len = 0;
 		INT    err = 0;
