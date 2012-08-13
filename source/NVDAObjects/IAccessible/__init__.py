@@ -1100,6 +1100,12 @@ the NVDAObject for IAccessible
 		self._table=obj
 		return obj
 
+	def _get_tableID(self):
+		table = self.table
+		if not table:
+			return super(IAccessible, self).tableID
+		return (self.windowHandle, self.table.IA2UniqueID)
+
 	def _get_activeChild(self):
 		if self.IAccessibleChildID==0:
 			res=IAccessibleHandler.accFocus(self.IAccessibleObject)

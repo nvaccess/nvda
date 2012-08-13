@@ -264,6 +264,12 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
 	# The real states are needed also, as the states entry might be filtered.
 	newPropertyValues['_states']=obj.states
+	if "rowNumber" in newPropertyValues or "columnNumber" in newPropertyValues:
+		# We're reporting table cell info, so pass the table ID.
+		try:
+			newPropertyValues["_tableID"]=obj.tableID
+		except NotImplementedError:
+			pass
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:

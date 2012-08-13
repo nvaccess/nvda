@@ -517,6 +517,15 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	def _get_tableID(self):
+		"""The identifier of the table associated with this object if it is a table cell.
+		This identifier must distinguish this table from other tables.
+		If this is not implemented, table cell information will still be reported,
+		but row and column information will always be reported
+		even if the user moves to a cell in the same row/column.
+		"""
+		raise NotImplementedError
+		
 	def _get_recursiveDescendants(self):
 		"""Recursively traverse and return the descendants of this object.
 		This is a depth-first forward traversal.
