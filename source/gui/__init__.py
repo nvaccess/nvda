@@ -276,7 +276,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.SetIcon(icon, versionInfo.name)
 
 		self.menu=wx.Menu()
-		menu_preferences=wx.Menu()
+		menu_preferences=self.preferencesMenu=wx.Menu()
 		item = menu_preferences.Append(wx.ID_ANY,_("&General settings..."),_("General settings"))
 		self.Bind(wx.EVT_MENU, frame.onGeneralSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer..."),_("Change the synthesizer to be used"))
@@ -311,7 +311,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 			self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
-		menu_tools = wx.Menu()
+		menu_tools = self.toolsMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("View log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
@@ -333,7 +333,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
-		menu_help = wx.Menu()
+		menu_help = self.helpMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
 			item = menu_help.Append(wx.ID_ANY, _("User Guide"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
