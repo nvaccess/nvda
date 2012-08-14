@@ -34,7 +34,10 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 		return ""
 
 	def _get_name(self):
-		number=int(super(BaseCandidateItem,self).keyboardShortcut)
+		try:
+			number=int(super(BaseCandidateItem,self).keyboardShortcut)
+		except (TypeError,ValueError):
+			return super(BaseCandidateItem,self).name
 		word=super(BaseCandidateItem,self).name
 		# Translators: the formatted name of an input composition candidate item.
 		return u"{number}  {word}".format(number=number,word=word)
