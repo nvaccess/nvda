@@ -532,6 +532,37 @@ class LabelledEditField(Window):
 --- end ---
 ```
 
+++ Making Small Changes to an NVDA Object in App Modules ++
+Sometimes, you may wish to make only small changes to an NVDA Object in an application, such as overriding its name or role.
+In these cases, you don't need the full power of a custom NVDA Object class.
+To do this, you can use the NVDAObject_init event available only on App Modules.
+
+The event_NVDAObject_init method takes two arguments:
++ self: the AppModule instance.
++ obj: the NVDAObject being initialized.
++
+
+Inside this method, you can check whether this object is relevant and then override properties accordingly.
+
+++ Example 5: Labelling the Notepad Edit Field Using event_NVDAObject_init ++
+This app module for notepad makes NVDA report Notepad's main edit field as having a name of "content".
+That is, when it receives focus, NVDA will say "Content edit".
+
+The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of notepad.py.
+
+```
+--- start ---
+import appModuleHandler
+from NVDAObjects.window import Window
+
+class AppModule(appModuleHandler.AppModule):
+
+	def event_NVDAObject_init(self, obj):
+		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
+			obj.name = "Content"
+--- end ---
+```
+
 + Packaging  Code as  NVDA Add-ons +
 To make it easy for users to share and install plugins and drivers, they can be packaged in to a single NVDA add-on package which the user can then install into a copy of NVDA via the Add-ons Manager found under Tools in the NVDA menu.
 Add-on packages are only supported in NVDA 2012.2 and later.
