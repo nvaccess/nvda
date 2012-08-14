@@ -1024,7 +1024,9 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 				color=color.name if isinstance(color,colors.RGB) else unicode(color),
 				backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
 		elif color and color!=oldColor:
-			textList.append("{color}".format(color=color.name if isinstance(color,colors.RGB) else unicode(color)))
+			# Translators: Reported when the text color changes (but not the background color).
+			# {color} will be replaced with the text color.
+			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else unicode(color)))
 		elif backgroundColor and backgroundColor!=oldBackgroundColor:
 			# Translators: Reported when the background color changes (but not the text color).
 			# {backgroundColor} will be replaced with the background color.
