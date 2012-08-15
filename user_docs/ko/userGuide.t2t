@@ -462,7 +462,7 @@ NVDA는 몇몇 애플리케이션들이 특정 작업을 좀 더 쉽게 수행�
 | 남은 시간 알림 | control+shift+r | 연주 중인 트랙의 남은 시간을 알립니다. |
 %kc:endInclude
 
-주의: The report remaining time shortcut works only with the default formatting string for foobar's status line.
+주의: 남은 시간 알림 기능은 Foobar의 상태 표시줄이 기본 형식으로 설정되어 있을때만 유효합니다.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -1060,6 +1060,11 @@ Newfon은 Sergey Shishmintzev에 의해 개발되는 무료 상용 음성 엔진
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
 %kc:beginInclude
 || 이름 | 키 |
+| 점자 디스플레이 뒤로 스크롤 | 상단 Routing1 (첫번째 셀) |
+| 점자 디스플레이 앞으로 스크롤 | 상단 Routing20/40/80 (마지막 셀) |
+| 점자 디스플레이 뒤로 스크롤 | 왼쪽 AdvanceBar |
+| 점자 디스플레이 앞으로 스크롤 | 오른쪽 AdvanceBar |
+| 점자 따라가기 토글 | leftGDFButton+rightGDFButton |
 | 왼쪽 위즈윌 이동 단위 토글 | leftWizWheelPress |
 | 왼쪽 위즈윌로 뒤로 이동 | leftWizWheelUp |
 | 왼쪽 위즈윌로 앞으로 이동 | leftWizWheelDown |
@@ -1067,6 +1072,38 @@ Newfon은 Sergey Shishmintzev에 의해 개발되는 무료 상용 음성 엔진
 | 오른쪽 위즈윌로 뒤로 이동 | rightWizWheelUp |
 | 오른쪽 위즈윌로 앞으로 이동 | rightWizWheelDown |
 | 점자 셀로 이동 | routing |
+| backspace key | 7점 |
+| enter 키 | 8점 |
+| shift+tab 키 | 1점+2점+스페이스 |
+| tab key | 4점+5점+스페이스 |
+| 상 방향키 | 1점+스페이스 |
+| 하 방향키 | 4점+스페이스 |
+| control+좌 방향키 | 2점+스페이스 |
+| control+우 방향키 | 5점+스페이스 |
+| 좌 방향키 | 3점+스페이스 |
+| 우 방향키 | 6점+스페이스 |
+| home key | 1점+3점+스페이스 |
+| end key | 4점+6점+스페이스 |
+| control+home key | 1점+2점+3점+스페이스 |
+| Control+end key | 4점+5점+6점+스페이스 |
+| alt 키 | 1점+3점+4점+스페이스 |
+| alt+tab key | 2점+3점+4점+5점+스페이스 |
+| escape 키 | 1점+5점+스페이스 |
+| windows key | 2점+4점+5점+6점+스페이스 |
+| space key | 스페이스 |
+| windows+d key (모든 프로그램창 최소화) | 1점+2점+3점+4점+5점+6점+스페이스 |
+| 현재 줄 읽기 | 1점+4점+스페이스 |
+| NVDA 메뉴 | 1점+3점+4점+5점+스페이스 |
+
+로커키가 탑제된 신형 모델(focus 40, focus 80 및 focus blue)인 경우:
+|| 이름 | 키 |
+| 점자 디스플레이를 이전 줄로 이동 | 왼쪽 또는 오른쪽 로커키 위로 |
+| 점자 디스플레이를 다음 줄로 이동 | 왼쪽 또는 오른쪽 로커키 아래로 |
+
+Focus 80에만 해당:
+|| 이름 | 키 |
+| 점자 디스플레이 뒤로 스크롤 | 왼쪽 또는 오른쪽 범퍼키 위로 |
+| 점자 디스플레이 앞으로 스크롤 | 왼쪽 또는 오른쪽 범퍼키 아래로 |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1307,6 +1344,28 @@ NVDA에서는 [HIMS http://www.hims-inc.com/]에서 출시한 싱크브레일 �
 || 이름 | 키 |
 | 점자 디스플레이 뒤로 스크롤 | 좌측 스크롤 아래로 |
 | 점자 디스플레이 앞으로 스크롤 | 우측 스크롤 아래로 |
+| 점자 셀로 이동 | routing |
+%kc:endInclude
+
+++ Seika ++
+NVDA에서는 [Nippon Telesoft http://www.nippontelesoft.com/] 에서 출시한 세이카 3, 4, 5 (40 셀) 및 세이카80 (80 셀)  디스플레이를 지원합니다.
+이 디스플레이에 대한 자세한 정보는 http://www.seika-braille.com에서 확인할 수 있습니다.
+NVDA와 사용하기 전 회사에서 제공한 USB 드라이버를 설치하십시요.
+
+다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
+각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
+%kc:beginInclude
+|| 이름 | 키 |
+| 점자 디스플레이 뒤로 스크롤 | left |
+| 점자 디스플레이 앞으로 스크롤 | right |
+| 점자 디스플레이를 이전 줄로 이동 | b3 |
+| 점자 디스플레이를 다음 줄로 이동 | b4 |
+| 점자 따라가기 토글 | b5 |
+| 문서 끝까지 읽기 | b6 |
+| tab 키 | b1 |
+| shift+tab 키 | b2 |
+| alt+tab 키 | b1+b2 |
+| NVDA 메뉴 | left+right |
 | 점자 셀로 이동 | routing |
 %kc:endInclude
 
