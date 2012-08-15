@@ -40,6 +40,11 @@
 - Vylepšená podpora pre kontrolu pravopisu v programe Microsoft Word. Presnejšia detekcia slov s pravopisnými chybami a čítanie dialógu pravopis a gramatika ak je NVDA nainštalované v systéme Windows wista a novších.
 - Vo väčšine prípadov je možné inštalovať doplnky, ktoré obsahujú súbory so špeciálnymi národnými znakmi. (#2505)
 - V programe Adobe Reader si NVDA pamätá jazyk textu pri listovaní v dokumente alebo obnovení dokumentu. (#2544)
+- Ak inštalujete doplnok, v potvrdzovacom dialógu NVDA zobrazí názov vybratého doplnku v aktuálnom jazyku, ak je názov  preložený. (#2422)
+- V aplikáciách, ktoré využívajú UI Automation (.net a aplikácie Silverlight) sú správne oznamované číselné hodnoty prvkov, napríklad posuvníkov. (#2417)
+- Pri inštalácii, vytváraní prenosnej verzie a podobne sa použije aktuálne nastavenie pre oznamovanie aktualizácie priebehu. (#2574)zamknutí systému). (#2449)
+- príkazy NVDA sa nedajú používať z brailovského riadka, ak je zobrazená zabezpečená obrazovka (napríklad pri zamknutí systému). (#2449)
+- Ak sa zmení text v režime prehliadania, zmena sa správne zobrazí na brailovskom riadku. (#2074)
 
 
 == Zmeny pre vývojárov ==
@@ -257,7 +262,7 @@ Prednosti tejto verzie zahŕňajú množstvo vylepšení súvisiacich z vyslovov
 - Indikátory priebehu sú oznamované aj v režime prehliadania.
 - V programe internet explorer a ostatných oknách MSHTML nie sú prvky označené ARIA typom presentation oznamované ak je zapnutá jednoduchá objektová navigácia a tiež nie sú oznamované pri oznamovaní fokusu.
 - Názov virtuálny prehliadač sa nepoužíva ani v NVDA ani v dokumentácii. Namiesto toho hovoríme o dokumentoch v režime prehliadania	. (#1509)
-- Ak sa používateľ pokúsi skopírovať nastavenia do systémového profilu na použitie pri prihlasovacej obrazovke a v používateľskom profile NVDA sú detekované pluginy, ovládače hlasových výstupov alebo ovládače braillovských zobrazovačov, NVDA na upozorní, že to môže predstavovať bespečnostné riziko. (#1426)
+- Ak sa používateľ pokúsi skopírovať nastavenia do systémového profilu na použitie pri prihlasovacej obrazovke a v používateľskom profile NVDA sú detekované pluginy, ovládače hlasových výstupov alebo ovládače braillovských zobrazovačov, NVDA upozorní, že to môže predstavovať bespečnostné riziko. (#1426)
 - Služba NVDA nezastavuje a znovu spúšťa NVDA na používateľských vstupných plochách.
 - Vo Windows XP a Windows vista NVDA nepoužíva UI Automation aj keď je nainštalovaný ako súčasť platform update. UI Automation môže sprístupniť niektoré moderné aplikácie, ale v týchto starších systémoch pri jeho používaní dochádzalo k mrznutiu a ďalším problémom. (#1437)
 - V Gecko 2 aplikáciách napr. Firefox 4 a novších je možné čítať dokument v režime prehliadania postupne ešte pred tým, než je načítanie úplne ukončené.

@@ -1057,6 +1057,11 @@ Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
 || Ad | Kısayol tuşu |
+| Scroll braille display back | topRouting1 (first cell on display) |
+| Scroll braille display forward | topRouting20/40/80 (last cell on display) |
+| Scroll braille display back | leftAdvanceBar |
+| Scroll braille display forward | rightAdvanceBar |
+| Toggle braille tethered to | leftGDFButton+rightGDFButton |
 | sol tekerlek hareketini açıp kapama | Sol tekerleğe basma |
 | Sol tekerlek hareketini kullanarak geri gitme | Sol tekerlek yukarı |
 | Sol tekerlek hareketini kullanarak ileri gitme | Sol tekerlek aşağı |
@@ -1064,6 +1069,38 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | Sağ tekerlek hareketini kullanarak geri gitme | Sağ tekerlek yukarı |
 | Sağ tekerlek hareketini kullanarak ileri gitme | Sağ tekerlek aşağı |
 | imleci parmağın üzerinde bulunduğu Braille hücresine taşıma  | hücre üzerindeki braille iğnesi |
+| backspace key | dot7 |
+| enter key | dot8 |
+| shift+tab key | brailleSpaceBar+dot1+dot2 |
+| tab key | brailleSpaceBar+dot4+dot5 |
+| upArrow key | brailleSpaceBar+dot1 |
+| downArrow key | brailleSpaceBar+dot4 |
+| control+leftArrow key | brailleSpaceBar+dot2 |
+| control+rightArrow key | brailleSpaceBar+dot5 |
+| leftArrow | brailleSpaceBar+dot3 |
+| rightArrow key | brailleSpaceBar+dot6 |
+| home key | brailleSpaceBar+dot1+dot3 |
+| end key | brailleSpaceBar+dot4+dot6 |
+| control+home key | brailleSpaceBar+dot1+dot2+dot3 |
+| control+end key | brailleSpaceBar+dot4+dot5+dot6 |
+| alt key | brailleSpaceBar+dot1+dot3+dot4 |
+| alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| escape key | brailleSpaceBar+dot1+dot5 |
+| windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
+| space key | brailleSpaceBar |
+| windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Report Current Line | brailleSpaceBar+dot1+dot4 |
+| NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
+
+For newer Focus models that contain rocker bar keys (focus 40, focus 80 and focus blue):
+|| Name | Key |
+| Move braille display to previous line | leftRockerBarUp, rightRockerBarUp |
+| Move braille display to next line | leftRockerBarDown, rightRockerBarDown |
+
+For Focus 80 only:
+|| Name | Key |
+| Scroll braille display back | leftBumperBarUp, rightBumperBarUp |
+| Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1304,6 +1341,28 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 || Ad | Kısayol tuşu |
 | Scroll braille display back | left side scroll down |
 | Scroll braille display forward | right side scroll down |
+| Route to braille cell | routing |
+%kc:endInclude
+
+++ Seika Braille Displays ++
+[Nippon Telesoft http://www.nippontelesoft.com/] tarafından üretilen Seika Versiyon 3, 4 ve 5 (40 hücreli) ve Seika80 (80 hücreli) braille ekranlar desteklenmektedir.
+ http://www.seika-braille.com/ adresinde bu ekranlar hakkında daha fazla bilgi bulabilirsiniz.
+Önce üretici tarafından sağlanan USB sürücülerini kurmalısınız.
+
+Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
+Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
+%kc:beginInclude
+|| Ad | Kısayol tuşu |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | b3 |
+| Move braille display to next line | b4 |
+| Toggle braille tethered to | b5 |
+| Say all | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| NVDA Menu | left+right |
 | Route to braille cell | routing |
 %kc:endInclude
 

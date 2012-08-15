@@ -525,9 +525,11 @@ In diesem Abschnitt werden einige bekannte Probleme beschrieben, die beim Umgang
 - Ursache: Ursache dieses Problems ist eine Schutzfunktion, die in Adobe Reader X standardmäßig aktiviert ist und NVDA daran hindert, das Pdf-Dokument im Lesemodus aufzubereiten. 
 - Lösung: deaktivieren Sie in den Einstellungen von Adobe Reader X (bearbeiten / Voreinstellungen) in der Kategorie "allgemein" die Option "Geschützten Modus beim Start aktivieren". Es erscheint eine Nachfrage, die Sie darüber informiert, dass die Einstellung erst beim Neustart von Adobe Reader x wirksam wird. Bestätigen Sie diese Nachfrage mit "ja" und starten Sie Adobe Reader X anschließend neu. Jetzt sollte NVDA die im Adobe Reader X angezeigten Pdf-Dokumente im Lesemodus aufbereiten können.
 
+
 ++ Firefox ++
 - Problem: Wenn Sie versuchen, mit Firefox (beobachtet ab Version 7) eine Webseite zu öffnen und Firefox beendet sich, noch ehe die Seite geladen ist, könnte dies an der Funktion "Automatisch alles lesen nach Aufruf einer Internetseite" liegen. 
 - Lösung: deaktivieren Sie in den Einstellungen des lesemodus (nvda+strg+b) das entsprechende Kontrollfeld. Nun wird Firefox nicht mehr abstürzen.
+
 
 ++ Verwendung von Anti-viren-Programmen und Internet-Sicherheitspaketen bei der Installation oder Aktualisierung von NVDA ++
 - Problem: Wenn Anti-Viren-Programme oder Internet-Sicherheitspakete ausgeführt werden, kann die Installation oder die Aktualisierung von NVDA nicht erfolgreich abgeschlossen werden.
@@ -538,6 +540,7 @@ In diesem Abschnitt werden einige bekannte Probleme beschrieben, die beim Umgang
   - Avira Internet Security: Beim erstellen einer portablen Kopie behindert Avira die Installationsroutine von NVDA, wodurch diese mit einer Fehlermeldung abbricht.
 - Lösung: Halten Sie die Schutzfunktion ihres Anti-Viren-Programms oder Internet-sicherheitspakets kurzfristig an, während sie NVDA installieren, aktualisieren oder eine portable Version erstellen oder deaktivieren Sie das Sicherheitspaket vollständig.
 
+
 + NVDA konfigurieren +
 
 ++ Das Menü "Einstellungen" ++
@@ -547,24 +550,30 @@ In allen Einstellungsdialogen können Sie den "OK"-Schalter drücken, um die Ein
 Um Einstellungen zu verwerfen, drücken sie den "abbrechen"-Schalter oder die Taste Escape.
 Einige Einstellungen können auch durch Kurztasten geändert werden. Sie werden in der zugehörigen Region aufgelistet.
 
+
 +++ Allgemeine Einstellungen (NVDA+STRG+G) +++
 Die Allgemeinen Einstellungen finden Sie im NVDA-Menü unter "Einstellungen".
 Es enthält die folgenden Optionen:
+
 
 ==== Sprache ====
 In dieser Liste können Sie die Sprache festlegen, in der die Meldungen von NVDA ausgegeben werden soll. Standardmäßig ist die Option "Benutzerstandard, Windows" ausgewählt. NVDA enthält eine Vielzahl integrierter Sprachen.
 
 Bitte beachten Sie: Ein Neustart des Programms zum Übernehmen der Sprache ist erforderlich. Um den Vorgang fortzusetzen, klicken Sie einfach auf die Schaltfläche "OK".
 
+
 ==== Einstellungen beim Beenden speichern ====
 Diese Option ist ein Kontrollfeld,  wenn aktiviert, speichert NVDA jedes Mal beim Beenden automatisch die aktuelle Konfiguration.
+
 
 ==== Beim Beenden bestätigen ====
 Diese Option ist ein Kontrollfeld. Sie können damit festlegen, ob das  Beenden von NVDA bestätigt  werden muss oder nicht. Bei Aktivierung wird ein Fenster mit der Sicherheitsabfrage angezeigt.
 
+
 ==== Protokollierungsstufe ====
 Mit dieser Option legen Sie die Protokollvariante, die im laufenden Betrieb erstellt wird, fest.
 Normalerweise brauchen Sie hier nichts ändern. Lediglich zur gezielten Fehleranalyse kann es unter Umständen für die Entwickler hilfreich sein.
+
 
 ==== NVDA automatisch nach der Windows-Anmeldung starten ====
 Wenn Sie dieses Kontrollfeld aktiviert haben, wird NVDA gleich nach der Anmeldung in Windows automatisch gestartet.
@@ -574,10 +583,12 @@ Hinweise:
 - Wenn Sie NVDA zusammen mit BRLTTY einsetzen, kann es unter Umständen vorkommen, dass die Braillezeile nicht von NVDA gefunden wird (auf der Zeile ist "No attachable console" zu lesen). Dies ist auf Probleme mit der Startreihenfolge zurückzuführen. Das Problem tritt immer dann auf, wenn NVDA *vor* BRLTTY gestartet wird und beim Ansteuern der Braillezeile "ins Leere greift". Diese Situation kann durch einen Neustart von NVDA gelöst werden, wenn der Rechner vollständig hochgefahren ist. Dies funktioniert allerdings nur dann zuverlässig, wenn die Konfiguration nach dem Einstellen von BRLTTY als Braillezeile einmal gespeichert wurde und die Option "Einstellungen beim beenden Speichern" *NICHT* aktiviert ist.
 -
 
+
 ==== NVDA für die Windows-Anmeldung verwenden (Administratorrechte sind erforderlich) ====
 Wenn Sie sich bei Windows mit Ihrem Benutzernamen und Ihrem Passwort anmelden, bewirkt dieses Kontrollfeld, dass NVDA automatisch bereits im Anmeldebildschirm gestartet wird.
 
 Hinweis: Diese Option ist nur in der installierten Version verfügbar!
+
 
 ==== Aktuell gespeicherte Einstellungen im Anmeldebildschirm und bei Sicherheitsmeldungen verwenden (erfordert Administrationsberechtigungen!) ====
 Wenn Sie diesen Schalter betätigen, wird Ihre benutzerdefinierte Konfiguration in das Verzeichnis der Systemkonfiguration von NVDA kopiert, die dann genutzt werden, wenn Sie sich zum Beispiel im Anmeldebildschirm von Windows befinden oder eine Sicherheitsmeldung von der Benutzerkontensteuerung angezeigt wird.
@@ -1158,6 +1169,11 @@ Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:beginInclude
 || Name | Taste |
+| Braillezeile zurückscrollen | topRouting1 (erstes Braille-Modul) |
+| Braillezeile vorwärtsscrollen | topRouting20/40/80 (letztes Braillemodul) |
+| Braillezeile zurückscrollen | leftAdvanceBar |
+| Braillezeile vorwärtsscrollen | rightAdvanceBar |
+| Kopplung der Brailleanzeige umschalten | leftGDFButton+rightGDFButton |
 | Umschalten der Aktion am linken Rollrädchen | Linkes Rollrädchen drücken |
 | Rückwärtsscrollen des verwendeten linken Rollrädchens | Linkes Rollrädchen nach oben |
 | Vorwärtsscrollen des verwendeten linken Rollrädchens | Linkes Rollrädchen nach unten |
@@ -1165,7 +1181,40 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Rückwärtsscrollen des verwendeten rechten Rollrädchens | Rechtes Rollrädchen nach oben |
 | Vorwärtsscrollen des verwendeten rechten Rollrädchens | Rechtes Rollrädchen nach unten |
 | Zum aktuellen Modul auf der Braillezeile springen | Routing |
+| Rücktaste | Punkt7 |
+| Eingabetaste | Punkt8 |
+| umschalt+tab | Leertaste+Punkt1+Punkt2 |
+| Tab | Leertaste+Punkt4+Punkt5 |
+| Pfeil auf | Leertaste+Punkt1 |
+| Pfeil ab | Leertaste+Punkt4 |
+| strg+Pfeil links | Leertaste+Punkt2 |
+| strg+Pfeil rechts | Leertaste+Punkt5 |
+| Pfeil links | Leertaste+Punkt3 |
+| Pfeil rechts | Leertaste+Punkt6 |
+| Pos1 | Leertaste+Punkt1+Punkt3 |
+| Ende | Leertaste+Punkt4+Punkt6 |
+| strg+pos1 | Leertaste+Punkt1+Punkt2+Punkt3 |
+| strg+Ende | Leertaste+Punkt4+Punkt5+Punkt6 |
+| alt | Leertaste+Punkt1+Punkt3+Punkt4 |
+| alt+tab | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 |
+| esc | Leertaste+Punkt1+Punkt5 |
+| win | Leertaste+Punkt2+Punkt4+Punkt5+Punkt6 |
+| Leertaste | Leertaste |
+| win+d (alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
+| aktuelle Zeile ausgeben | Leertaste+Punkt1+Punkt4 |
+| NVDA-Menü anzeigen | Leertaste+Punkt1+Punkt3+Punkt4+Punkt5 |
+
+For newer Focus models that contain rocker bar keys (focus 40, focus 80 and focus blue):
+|| Name | Tastenkombination |
+| Braillezeile zur vorigen Zeile bewegen | leftRockerBarUp, rightRockerBarUp |
+| Braillezeile zur nächsten Zeile bewegen | leftRockerBarDown, rightRockerBarDown |
+
+For Focus 80 only:
+|| Name | Tastenkombination |
+| Braillezeile zurückscrollen | leftBumperBarUp, rightBumperBarUp |
+| Braillezeile weiterscrollen | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
+
 
 ++ Optelec ALVA BC640 / BC680 ++
 Beide Braillezeilen - die BC640 und die BC680 - von [Optelec http://www.optelec.com/] werden via USB und BlueTooth unterstützt.
@@ -1196,6 +1245,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Alt+Tabulatortaste | Sp2+Sp4 |
 %kc:endInclude
 
+
 ++ HandyTech-Braillezeilen ++
 Alle Braillezeilen der Firma [HandyTech GmbH http://www.handytech.de/] werden von NVDA via USB und BlueTooth unterstützt.
 Für einige USB-Zeilen werden die Treiber auf Ihrem System für den USB-Port von HandyTech benötigt.
@@ -1221,6 +1271,7 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | HandyTech-Konfiguration | B4+B8 |
 %kc:endInclude
 
+
 ++ MDV Lilli ++
 Die Lilli-Braillezeile von der italienischen Firma [MDV http://www.mdvbologna.it/] wird unterstützt.
 Sie benötigen keine installierten Treiber, um diese Zeile verwenden zu können.
@@ -1240,6 +1291,7 @@ Bitte lesen sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprec
 | Alt+Tabulatortaste | SDN |
 | Alt+Umschalt+Tabulatortaste | SUP |
 %kc:endInclude
+
 
 ++ Braillezeilen von Baum/HumanWare/APH ++
 einige  [Baum http://www.baum.de/], [HumanWare http://www.humanware.de/] und [APH http://www.aph.org/]-Braillezeilen werden unterstützt, sofern sie per usb oder Bluetooth mit dem Rechner verbunden werden.
@@ -1271,6 +1323,7 @@ für Braillezeilen, die einen Joystick besitzen:
 | Taste "Pfeil rechts" | rechts |
 | Eingabetaste | auswahl |
 %kc:endInclude
+
 
 ++ Hedo Profiline usb ++
 Die Profiline usb der Firma [hedo Reha-Technik  http://www.hedo.de/] werden unterstützt.
@@ -1399,6 +1452,7 @@ Bitte sehen Sie in der Dokumentation zur Braillezeile nach, wo sich die entsprec
 | windows+d | punkt1+punkt4+punkt5+F1 |
 %kc:endInclude
 
+
 ++ HIMS SyncBraille ++
 NVDA unterstützt das Braillezeilenmodell Braillesync von  [HIMS http://www.hims-inc.com/].
 Sie müssen den USB-treiber von HIMS installieren, damit diese Braillezeile funktioniert.
@@ -1411,6 +1465,7 @@ Bitte sehen Sie in der Dokumentation zu Ihrer Braillezeile nach, wo die entsprec
 | Braillezeile vorwärtsscrollen | scroll unten auf der rechten Seite |
 | Cursor zum Braillemodul ziehen | routing |
 %kc:endInclude
+
 
 ++ Seika ++
 Die Braillezeilen der Seika Versionen 3, 4 und 5 mit je 40 Module und die
@@ -1434,6 +1489,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | NVDA Menü | links+rechts |
 | Cursor zum Braillemodul bewegen | routing |
 %kc:endInclude
+
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit der Sie viele weitere Braillezeilen ansteuern können.

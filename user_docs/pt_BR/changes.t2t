@@ -10,20 +10,31 @@
 
 == Novas Características ==
 - A presença de sublinhado e taxado agora é anunciada em documentos do Adobe Reader. (#2410)
-- Quando a função pressionar uma tecla por vez estiver ativada no Windows, a tecla modificadora do NVDA agora se comportará como outras teclas modificadoras. Isto lhe permite usar a tecla modificadora do NVDA sem que precise mantê-la pressionada enquanto pressiona outras teclas. (#230)
+- Quando a função de teclas de aderência  estiver ativada no Windows, a tecla modificadora do NVDA agora se comportará como outras teclas modificadoras. Isto lhe permite usar a tecla modificadora do NVDA sem que precise mantê-la pressionada enquanto pressiona outras teclas. (#230)
 - Suporte para as linhas Braille Sense, Braille EDGE e SyncBraille da HIMS. (#1266, #1267)
 - Quando as notificações no Windows 8  aparecem, o NVDA as anuncia e move a navegação de objetos para o local, permitindo uma interação adicional. (#2143)
 - Suporte para o VIP Mud. (#1728)
 - No Adobe Reader, caso uma tabela possua um sumário, ele agora será apresentado. (#2465)
 - No Adobe Reader, os cabeçalhos de linhas e colunas das tabelas agora podem ser anunciados. (#2193)
-- Novos idiomas: Coreano, Nepalês.
+- Novos idiomas: amárico, coreano, nepalês.
 - O NVDA agora pode ler sugestões de auto-completar quando se digita endereços de email no Microsoft Outlook 2007. (#689)
 - Novas variantes para o eSpeak: Gene, Gene2. (#2512)
+- No Adobe Reader, o número das páginas agora pode ser anunciado. (#2534)
+- Agora é possível retornar as configurações do NVDA aos padrões originais pressionando NVDA+control+r três vezes rapidamente ou selecionando Retornar aos Padrões originais no menu do NVDA. (#2086)
+- Suporte para as linhas braille Seika Versões 3, 4 e 5 e Seika80 da Nippon Telesoft. (#2452)
+- Nas linhas braille PAC Mate e Focus da Freedom Scientific, o primeiro e o último botões de sensores de cima agora podem ser utilizados para deslocar para trás e para a frente. (#2556)
+- Muito mais recursos são agora suportados nas Linhas braille Focus da Freedom Scientific, tais como advance bars, rocker bars e certas combinações de pontos para ações comuns. (#2516)
+- Em aplicativos que usam IAccessible2 tais como os da Mozilla, os cabeçalhos de linhas e colunas das tabelas agora podem ser anunciados fora do modo de navegação. (#926)
 
 
 == Alterações ==
 - No Diálogo de Opções do   Cursor de Exploração do NVDA , a opção Acompanhar foco do teclado  foi renomeada para Acompanhar foco do sistema para tornar-se consistente com a terminologia comumente empregada no NVDA.
 - Quando o braille está vinculado à exploração e o cursor está em um objeto que não é um objeto de texto (isto é, um campo de edição de texto), as teclas sensores agora irão ativar o objeto. (#2386)
+- A opção Salvar Configuração ao Sair agora está ativada por padrão para novas configurações.
+- Ao atualizar uma cópia anteriormente instalada do NVDA, a tecla de atalho da área de trabalho já não é restaurada para control+alt+n caso tenha sido alterada manualmente para outra diferente pelo usuário. (#2572)
+- A lista do gestor de complementos agora mostra o nome do pacote antes de seu status. (#2548)
+- caso esteja instalando a mesma  ou outra versão de um complemento atualmente instalado, o NVDA irá perguntar se você deseja remover antes o antigo ao invés de simplesmente exibir uma mensagem de erro e abortar a instalação. (#2501)
+- Os comandos da navegação de objetos (exceto o comando anunciar o objeto atual) agora o anuncia com menos verbosidade. Você ainda pode obter informação extra usando o comando anunciar o objeto atual. (#2560)
 
 
 == Correção de Falhas ==
@@ -34,9 +45,22 @@
 - O NVDA agora verifica a integridade de seu pacote de distribuição antes de executar. (#2475)
 - Os arquivos temporários de download do NVDA agora são removidos caso haja uma falha ao baixar atualizações. (#2477)
 - Ao copiar as configurações do usuário para as configurações do sistema (permitindo seu uso no logon do Windows e outras telas seguras) o NVDA já não travará no XP durante esse processo. (#2485) 
-- Tiles are now reported much less verbosely on the Windows 8 start screen. (unselected is no longer reported for each tile and the description is now suppressed)
+- Tiles on the Windows 8 Start Screen are now presented better in speech and braille. The name is no longer repeated, unselected is no longer reported on all tiles, and live status information is presented as the description of the tile (e.g. current temperature for the Weather tile).
 - As senhas já não são anunciadas quando se lê campos de senhas no Microsoft Outlook e outros controles padrões de edição que são marcados como protegidos. (#2021)
 - No Adobe Reader, as alterações em campos de formulários agora são refletidas corretamente  no modo de navegação. (#2529)
+- Melhoras no suporte ao Verificador Ortográfico do Microsoft Word , incluindo uma leitura mais exata do erro ortográfico atual, e suporte à verificação ortográfica quando se executa uma cópia instalada do NVDA no Windows Vista ou superiores.
+- Complementos que contam com arquivos contendo caracteres não ingleses agora podem ser instalados corretamente em maior parte dos casos. (#2505)
+- No Adobe Reader, o idioma dos textos já não é perdido quando este é atualizado ou ao se deslocar por ele. (#2544)
+-Ao instalar um complemento, o diálogo de confirmação agora exibe corretamente o nome traduzido do mesmo caso disponível. (#2422)
+- Em aplicativos que usam UI Automation, (tais como .net and Silverlight), foi corrigido o cáuculo de valores numéricos para controles como barras deslisantes. (#2417)
+- A configuração para o anúncio de barras de progresso agora é responsável pelas barras de progresso indeterminadas que o NVDA mostra ao instalar, criar cópia portátil, etc. (#2574)
+- •NVDA commands can no longer be executed from a braille display while a secure Windows screen (such as the Lock screen) is active. (#2449)
+- NO modo de navegação, o braille agora é atualizado se o texto que está sendo mostrado for alterado. (#2074)
+When on a secure Windows screen such as the Lock screen, messages from applications speaking or displaying braille directly via NVDA are now ignored.•
+In Browse mode, it is no longer possible to fall off the bottom of the document with the right arrow key when on the final character, or by jumping to the end of a container when that container is the last item in the document. (#2463)
+Extraneous content is no longer incorrectly included when reporting the text of dialogs in web applications (specifically, ARIA dialogs with no aria-describedby attribute). (#2390)
+NVDA no longer incorrectly reports or locates certain edit fields in MSHTML documents (e.g. Internet Explorer), specifically where an explicit ARIA role has been used by the web page author. (#2435)
+The backspace key is now handled correctly when speaking typed words in Windows command consoles. (#2586)
 
 
 == Alterações Específicas para Desenvolvedores ==
@@ -44,7 +68,7 @@
 
 Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
 - O arquivo do log anterior agora é copiado para nvda-old.log a quando da inicialização do NVDA. Com efeito, caso ele trave ou seja reiniciado, as informações do log daquela sessão continuarão acessíveis para inspeção. (#916)
-
+- Fetching the role property in chooseNVDAObjectOverlayClasses no longer causes the role to be incorrect and thus not reported on focus for certain objects such as Windows command consoles and Scintilla controls. (#2569)
 
 = 2012.2.1 =
 Essa versão elimina vários potenciais problemas de segurança (ao atualizar o Python para a versão 2.7.3).
@@ -142,7 +166,7 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 - Em modo de navegação, quando se tem a opção "Modo de foco automático quando o foco muda" ativada, quando uma  barra de ferramentas recebe foco, o modo de foco agora é ativado. (#1339) 
 - No modo de navegação, o comando de mover o mouse para o objeto de navegação atual agora desloca-o para o centro do objeto sob o cursor de exploração, em lugar de ir para a parte esquerda do topo, tornando-o mais eficaz em alguns casos. (#2029)
 - O comando para anunciar título volta a funcionar apropriadamente no Adobe Reader.
-- Com a opção "Modo de foco automático quando o foco muda" ativada, o modo de foco agora é usado corretamente para células de tabelas enfocadas; isto é, em ARIA grids. (#1763)
+- Com a opção "Modo de foco automático quando o foco muda" ativada, o modo de foco agora é usado corretamente para células de tabelas que recebem foco; isto é, em ARIA grids. (#1763)
 - No iTunes, a informação da posição em determinadas listas agora é anunciada corretamente.
 - No Adobe Reader, alguns links já não são tratados como se contivessem campos de edição de texto somente leitura.
 - As etiquetas de alguns campos de edição de texto já não são incluidas incorretamente ao anunciar o texto de um diálogo. (#1960)
@@ -157,7 +181,7 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 - O direcionamento do cursor para o espaço ao fim da linha/paragrafo através das teclas sensor com o cursor braille em alguns campos de edição de texto agora funciona corretamente em lugar de levar ao início do texto. (#2096)
 - O NVDA volta a funcionar corretamente com o sintetizador Audiologic Tts3. (#2109)
 - Os documentos do Microsoft Word agora são corretamente tratados como multi-linha. Isso possibilita ao braille comportar-se apropriadamente quando um documento está sob o foco.
-- No Microsoft Internet Explorer, já não ocorrem erros quando são enfocados certos controles pouco comuns. (#2121)
+- No Microsoft Internet Explorer, já não ocorrem erros quando determinados controles pouco comuns recebem foco. (#2121)
 - As alterações da pronúncia de pontuação/sinais pelos usuários agora irão fazer efeito imediatamente, em lugar de necessitar que o NVDA seja reiniciado ou que a Alternância automática de idiomas seja desablitada.
 - Quando se usa o eSpeak, a voz já não silencia em alguns casos no diálogo gravar como do visualizador de log do NVDA. (#2145)
 

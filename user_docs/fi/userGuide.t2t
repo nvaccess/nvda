@@ -659,7 +659,7 @@ Tällä asetuksella voidaan valita, seuraako pistenäyttö järjestelmän kohdis
 Jos tämä asetus on käytössä, teksti näytetään pistenäytöllä kappaleittain.
 Seuraavalle ja edelliselle riville siirtävät komennot siirtävät myös kappale kerrallaan.
 Pistenäyttöä ei siis tarvitse vierittää jokaisen rivin lopussa, vaikka siihen mahtuisikin enemmän tekstiä.
-Tämä voi mahdollistaa suurten tekstimäärien sujuvamman lukemisen.
+Tämä mahdollistaa suurten tekstimäärien sujuvamman lukemisen.
 Asetus ei ole oletusarvoisesti käytössä.
                      
 +++ Näppäimistöasetukset (NVDA+Ctrl+K) +++                                                                                 
@@ -1054,9 +1054,14 @@ Ajuri tukee kaikkia Freedom Scientificin pistenäyttöjä, vaikka sivulla mainit
 Jos käytössä on 64-bittinen Windows ja ajurit on jo asennettu jonkin toisen ruudunlukuohjelman mukana, edellä mainitun linkin takaa löytyvät ajurit on silti asennettava, sillä muissa ei luultavasti ole NVDA:n tarvitsemia tiedostoja.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | ylin kosketuskohdistinnäppäin 1 (ensimmäinen pistesolu) |
+| Vieritä pistenäyttöä eteenpäin | ylin kosketuskohdistinnäppäin 20/40/80 (viimeinen pistesolu) |
+| Vieritä pistenäyttöä taaksepäin | vasen eteenpäin siirtävä näppäin |
+| Vieritä pistenäyttöä eteenpäin | oikea eteenpäin siirtävä näppäin |
+| Vaihda Pistenäyttö seuraa -asetusta | leftGDFButton+rightGDFButton |
 | Vaihda vasemman säätörullan toimintoa | vasemman säätörullan painallus |
 | Siirrä taaksepäin vasenta säätörullaa käyttäen | vasen säätörulla ylös |
 | Siirrä eteenpäin vasenta säätörullaa käyttäen | vasen säätörulla alas |
@@ -1064,6 +1069,38 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 | Siirrä taaksepäin oikeaa säätörullaa käyttäen | oikea säätörulla ylös |
 | Siirrä eteenpäin oikeaa säätörullaa käyttäen | oikea säätörulla alas |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Askelpalautin-näppäin | piste 7 |
+| Enter-näppäin key | piste 8 |
+| Shift+sarkain-näppäinyhdistelmä | välilyönti+piste 1+piste 2 |
+| Sarkain-näppäin | välilyönti+piste 4+piste 5 |
+| ylänuolinäppäin | välilyönti+piste 1 |
+| alanuolinäppäin | välilyönti+piste 4 |
+| Näppäinyhdistelmä Ctrl+vasen nuoli | välilyönti+piste 2 |
+| Näppäinyhdistelmä Ctrl+oikea nuoli | välilyönti+piste 5 |
+| vasen nuolinäppäin | välilyönti+piste 3 |
+| oikea nuolinäppäin | välilyönti+piste 6 |
+| Home-näppäin | välilyönti+piste 1+piste 3 |
+| End-näppäin | välilyönti+piste 4+piste 6 |
+| Ctrl+Home-näppäinyhdistelmä | välilyönti+piste 1+piste 2+piste 3 |
+| Ctrl+End-näppäinyhdistelmä | välilyönti+piste 4+piste 5+piste 6 |
+| Alt-näppäin | välilyönti+piste 1+piste 3+piste 4 |
+| Alt+sarkain-näppäinyhdistelmä | välilyönti+piste 2+piste 3+piste 4+piste 5 |
+| Esc-näppäin | välilyönti+piste 1+piste 5 |
+| Windows-näppäin | välilyönti+piste 2+piste 4+piste 5+piste 6 |
+| välilyöntinäppäin | välilyönti |
+| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | välilyönti+piste 1+piste 2+piste 3+piste 4+piste 5+piste 6 |
+| Lue nykyinen rivi | välilyönti+piste 1+piste 4 |
+| NVDA-valikko | välilyönti+piste 1+piste 3+piste 4+piste 5 |
+
+Uudemmat Focus-mallit, joissa on keinunäppäimiä (Focus 40, 80 ja Blue):
+|| Nimi | Näppäin |
+| Siirrä pistenäyttö edelliselle riville | vasen keinunäppäin alas, oikea keinunäppäin ylös |
+| Siirrä pistenäyttö seuraavalle riville | vasen keinunäppäin alas, oikea keinunäppäin alas |
+
+Vain Focus 80:
+|| Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | leftBumperBarUp, rightBumperBarUp |
+| Vieritä pistenäyttöä eteenpäin | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1072,7 +1109,7 @@ Niiden käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäin |
 | Vieritä pistenäyttöä taaksepäin | t1 |
@@ -1080,9 +1117,9 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö seuraavalle riville | t4 |
 | Vieritä pistenäyttöä eteenpäin | t5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäimet | sp1 |
+| Shift+sarkain-näppäinyhdistelmä | sp1 |
 | Alt-näppäin | sp2 |
-| Escape-näppäin | sp3 |
+| Esc-näppäin | sp3 |
 | Sarkain-näppäin | sp4 |
 | ylänuolinäppäin | spUp |
 | alanuolinäppäin | spDown |
@@ -1090,9 +1127,9 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 | oikea nuolinäppäin | spRight |
 | Enter-näppäin | spEnter |
 | NVDA-valikko | sp1+sp3 |
-| Windows+d-näppäimet (pienennä kaikki sovellukset) | sp1+sp4 |
+| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | sp1+sp4 |
 | Windows-näppäin | sp2+sp3 |
-| Alt+sarkain-näppäimet | sp2+sp4 |
+| Alt+sarkain-näppäinyhdistelmä | sp2+sp4 |
 %kc:endInclude
 
 ++ Handy Tech ++
@@ -1100,7 +1137,7 @@ NVDA tukee kaikkia [Handy Techin http://www.handytech.de/] pistenäyttöjä sek�
 Vanhempia USB-malleja varten tietokoneelle on asennettava Handy Techin USB-ajurit.
 
 Seuraavassa on lueteltu näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäin |
 | Vieritä pistenäyttöä taaksepäin | vasen, ylös |
@@ -1108,9 +1145,9 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö edelliselle riville | b4 |
 | Siirrä pistenäyttö seuraavalle riville | b5 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäimet | esc |
+| Shift+sarkain-näppäinyhdistelmä | esc |
 | Alt-näppäin | b2+b4+b5 |
-| Escape-näppäin | b4+b6 |
+| Esc-näppäin | b4+b6 |
 | sarkain-näppäin | enter |
 | Enter-näppäin | esc+enter |
 | ylänuolinäppäin | vasen väli |
@@ -1125,7 +1162,7 @@ Sen käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
 Seuraavassa on lueteltu tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäin |
 | Vieritä pistenäyttöä taaksepäin | LF |
@@ -1133,10 +1170,10 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö edelliselle riville | UP |
 | Siirrä pistenäyttö seuraavalle riville | DN |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäimet | SLF |
+| Shift+sarkain-näppäinyhdistelmä | SLF |
 | sarkain-näppäin | SRG |
-| Alt+sarkain-näppäimet | SDN |
-| Alt+Shift+sarkain-näppäimet | SUP |
+| Alt+sarkain-näppäinyhdistelmä | SDN |
+| Alt+Shift+sarkain-näppäinyhdistelmä | SUP |
 %kc:endInclude
 
 ++ Baum/Humanware/APH ++
@@ -1152,7 +1189,7 @@ Mikäli käytetään USB-liitäntää, on ensin asennettava valmistajan toimitta
 APH Refreshabraille -pistenäytössä USB-tila on asetettava sarjaportiksi.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäin |
 | Vieritä pistenäyttöä taaksepäin | d2 |
@@ -1161,7 +1198,7 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö seuraavalle riville | d3 |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 
-Pistenäytöissä, joissa on ohjaustappi:
+Malleissa, joissa on ohjaustappi:
 || Nimi | Näppäin |
 | ylänuolinäppäin | ylös |
 | alanuolinäppäin | alas |
@@ -1172,10 +1209,10 @@ Pistenäytöissä, joissa on ohjaustappi:
 
 ++ hedo ProfiLine USB ++
 [Hedo Reha-Technikin  http://www.hedo.de/] hedo ProfiLine USB -pistenäyttöä tuetaand.
-Sen käyttämiseksi on asennettava valmistajan tarjoamat USB-ajurit.
+Sen käyttämiseksi on asennettava valmistajan toimittamat USB-ajurit.
 
 Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäin |
 | Vieritä pistenäyttöä taaksepäin | K1 |
@@ -1189,10 +1226,10 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 
 ++ hedo MobilLine USB ++
 [Hedo Reha-Technikin http://www.hedo.de/] hedo MobilLine USB -pistenäyttöä tuetaan.
-Sen käyttämiseksi on asennettava valmistajan tarjoamat USB-ajurit.
+Sen käyttämiseksi on asennettava valmistajan toimittamat USB-ajurit.
 
 Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäinkomento |
 | Vieritä pistenäyttöä taaksepäin | K1 |
@@ -1209,7 +1246,7 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 USB-liitäntää käytettäessä on ensin asennettava valmistajan ajurit.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
-Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäin |
 | Vieritä pistenäyttöä taaksepäin | vasen |
@@ -1218,25 +1255,25 @@ Katso näytön käyttöoppaasta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö seuraavalle riville | alas |
 | Siirrä pistesoluun | Kosketuskohdistinnäppäimet |
 | Vaihda Pistenäyttö seuraa -asetusta | ylös+alas |
-| ylänuolinäppäin | välilyönti+piste1 |
-| alanuolinäppäin | välilyönti+piste4 |
-| vasen nuolinäppäin | välilyönti+piste3 |
-| oikea nuolinäppäin | välilyönti+piste6 |
+| ylänuolinäppäin | välilyönti+piste 1 |
+| alanuolinäppäin | välilyönti+piste 4 |
+| vasen nuolinäppäin | välilyönti+piste 3 |
+| oikea nuolinäppäin | välilyönti+piste 6 |
 | NVDA-valikko | c1+c3+c4+c5 (komento n) |
-| Shift+sarkain-näppäinyhdistelmä | välilyönti+piste1+piste3 |
-| sarkain-näppäin | välilyönti+piste4+piste6 |
-| Alt-näppäin | välilyönti+piste1+piste3+piste4 (välilyönti+m) |
-| Escape-näppäin | välilyönti+piste1+piste5 (välilyönti+e) |
-| Enter-näppäin | piste8 |
-| Windows+d-näppäinyhdistelmä (pienennä kaikki sovellukset) | c1+c4+c5 (komento d) |
-| Windows-näppäin | välilyönti+piste3+piste4 |
-| Alt+sarkain-näppäinyhdistelmä | välilyönti+piste2+piste3+piste4+piste5 (välilyönti+t) |
+| Shift+sarkain-näppäinyhdistelmä | välilyönti+piste 1+piste 3 |
+| sarkain-näppäin | välilyönti+piste 4+piste 6 |
+| Alt-näppäin | välilyönti+piste 1+piste 3+piste 4 (välilyönti+m) |
+| Esc-näppäin | välilyönti+piste 1+piste 5 (välilyönti+e) |
+| Enter-näppäin | piste 8 |
+| Windows+D-näppäinyhdistelmä (pienennä kaikki sovellukset) | c1+c4+c5 (komento d) |
+| Windows-näppäin | välilyönti+piste 3+piste 4 |
+| Alt+sarkain-näppäinyhdistelmä | välilyönti+piste 2+piste 3+piste 4+piste 5 (välilyönti+t) |
 | Lue kaikki | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE ++
 NVDA tukee [HIMS:in http://www.hims-inc.com/] Braille Sense- ja Braille EDGE -pistenäyttöjä USB-liitännällä tai Bluetoothilla kytkettyinä.
-Mikäli käytetään USB-liitäntää, on koneelle asennettava HIMS:in ajurit.
+Mikäli käytetään USB-liitäntää, on tietokoneelle asennettava HIMS:in ajurit.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1247,51 +1284,51 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 | Siirrä pistenäyttö edelliselle riville | vasemmanpuoleinen vieritä ylös |
 | Siirrä pistenäyttö seuraavalle riville | oikeanpuoleinen vieritä ylös |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
-| Shift+sarkain-näppäin | piste1+piste2+välilyönti |
-| Alt-näppäin | piste1+piste3+piste4+välilyönti |
-| Escape-näppäin | piste1+piste5+välilyönti |
-| Sarkain-näppäin | piste4+piste5+välilyönti |
-| Enter-näppäin | piste8 |
-| Askelpalautin-näppäin | piste7 |
-| ylänuolinäppäin | piste1+välilyönti |
-| alanuolinäppäin | piste4+välilyönti |
-| Capslock | piste1+piste3+piste6+välilyönti |
-| Shift+Alt+sarkain-näppäin | advance2+advance3+advance1 |
-| Alt+sarkain-näppäin | advance2+advance3 |
-| End-näppäin | piste4+piste6+välilyönti |
-| Ctrl+End-näppäin | piste4+piste5+piste6+välilyönti |
-| Home-näppäin | piste1+piste3+välilyönti |
-| Ctrl+Home-näppäin | piste1+piste2+piste3+välilyönti |
-| vasen nuolinäppäin | piste3+välilyönti |
-| Ctrl+Shift+vasen nuolinäppäin | piste2+piste8+välilyönti+advance1 |
-| Ctrl+vasen nuolinäppäin | piste2+välilyönti |
-| Shift+Alt+vasen nuolinäppäin | piste2+piste7+advance1 |
-| Alt+vasen nuolinäppäin | piste2+piste7 |
-| Oikea nuolinäppäin | piste6+välilyönti |
-| Ctrl+Shift+oikea nuolinäppäin | piste5+piste8+välilyönti+advance1 |
-| Ctrl+oikea nuolinäppäin | piste5+välilyönti |
-| Shift+Alt+oikea nuolinäppäin | piste5+piste7+advance1 |
-| Alt+oikea nuolinäppäin | piste5+piste7 |
-| Page up -näppäin | piste1+piste2+piste6+välilyönti |
-| Ctrl+Page up -näppäin | piste1+piste2+piste6+piste8+välilyönti |
-| Ctrl+Shift+ylänuolinäppäin | piste2+piste3+piste8+välilyönti+advance1 |
-| Ctrl+ylänuolinäppäin | piste2+piste3+välilyönti |
-| Shift+Alt+ylänuolinäppäin | piste2+piste3+piste7+advance1 |
-| Alt+ylänuolinäppäin | piste2+piste3+piste7 |
-| Shift+ylänuolinäppäin | vasemmanpuoleinen vieritä alas + välilyönti |
-| Page down -näppäin | piste3+piste4+piste5+välilyönti |
-| Ctrl+Page down -näppäin | piste3+piste4+piste5+piste8+välilyönti |
-| Ctrl+Shift+alanuolinäppäin | piste5+piste6+piste8+välilyönti+advance1 |
-| Ctrl+alanuolinäppäin | piste5+piste6+välilyönti |
-| Shift+Alt+alanuolinäppäin | piste5+piste6+piste7+advance1 |
-| Alt+alanuolinäppäin | piste5+piste6+piste7 |
-| Shift+alanuolinäppäin | oikeanpuoleinen vieritä alas + välilyönti |
-| Delete-näppäin | piste1+piste3+piste5+välilyönti |
-| F1-näppäin | piste1+piste2+piste5+välilyönti |
-| F3-näppäin | piste1+piste2+piste4+piste8 |
-| F4-näppäin | piste7+advance3 |
-| Windows+B-näppäinyhdistelmä | piste1+piste2+advance1 |
-| Windows+D-näppäinyhdistelmä | piste1+piste4+piste5+advance1 |
+| Shift+sarkain-näppäinyhdistelmä | piste 1+piste 2+välilyönti |
+| Alt-näppäin | piste 1+piste 3+piste 4+välilyönti |
+| Esc-näppäin | piste 1+piste 5+välilyönti |
+| Sarkain-näppäin | piste 4+piste 5+välilyönti |
+| Enter-näppäin | piste 8 |
+| Askelpalautin-näppäin | piste 7 |
+| ylänuolinäppäin | piste 1+välilyönti |
+| alanuolinäppäin | piste 4+välilyönti |
+| Capslock-näppäin | piste 1+piste 3+piste 6+välilyönti |
+| Shift+Alt+sarkain-näppäinyhdistelmä | advance2+advance3+advance1 |
+| Alt+sarkain-näppäinyhdistelmä | advance2+advance3 |
+| End-näppäin | piste 4+piste 6+välilyönti |
+| Ctrl+End-näppäinyhdistelmä | piste 4+piste 5+piste 6+välilyönti |
+| Home-näppäin | piste 1+piste 3+välilyönti |
+| Ctrl+Home-näppäinyhdistelmä | piste 1+piste 2+piste 3+välilyönti |
+| vasen nuolinäppäin | piste 3+välilyönti |
+| Näppäinyhdistelmä Ctrl+Shift+vasen nuoli | piste 2+piste 8+välilyönti+advance1 |
+| Näppäinyhdistelmä Ctrl+vasen nuoli | piste 2+välilyönti |
+| Näppäinyhdistelmä Shift+Alt+vasen nuoli | piste 2+piste 7+advance1 |
+| Näppäinyhdistelmä Alt+vasen nuoli | piste 2+piste 7 |
+| Oikea nuolinäppäin | piste 6+välilyönti |
+| Näppäinyhdistelmä Ctrl+Shift+oikea nuoli | piste 5+piste 8+välilyönti+advance1 |
+| Näppäinyhdistelmä Ctrl+oikea nuoli | piste 5+välilyönti |
+| Näppäinyhdistelmä Shift+Alt+oikea nuoli | piste 5+piste 7+advance1 |
+| Näppäinyhdistelmä Alt+oikea nuoli | piste 5+piste 7 |
+| Page up -näppäin | piste 1+piste 2+piste 6+välilyönti |
+| Ctrl+Page up -näppäinyhdistelmä | piste 1+piste 2+piste 6+piste 8+välilyönti |
+| Näppäinyhdistelmä Ctrl+Shift+ylänuoli | piste 2+piste 3+piste 8+välilyönti+advance1 |
+| Näppäinyhdistelmä Ctrl+ylänuoli | piste 2+piste 3+välilyönti |
+| Näppäinyhdistelmä Shift+Alt+ylänuoli | piste 2+piste 3+piste 7+advance1 |
+| Näppäinyhdistelmä Alt+ylänuoli | piste 2+piste 3+piste 7 |
+| Näppäinyhdistelmä Shift+ylänuoli | vasemmanpuoleinen vieritä alas + välilyönti |
+| Page down -näppäin | piste 3+piste 4+piste 5+välilyönti |
+| Ctrl+Page down -näppäinyhdistelmä | piste 3+piste 4+piste 5+piste 8+välilyönti |
+| Näppäinyhdistelmä Ctrl+Shift+alanuoli | piste 5+piste 6+piste 8+välilyönti+advance1 |
+| Näppäinyhdistelmä Ctrl+alanuoli | piste 5+piste 6+välilyönti |
+| Näppäinyhdistelmä Shift+Alt+alanuoli | piste 5+piste 6+piste 7+advance1 |
+| Näppäinyhdistelmä Alt+alanuoli | piste 5+piste 6+piste 7 |
+| Näppäinyhdistelmä Shift+alanuoli | oikeanpuoleinen vieritä alas + välilyönti |
+| Delete-näppäin | piste 1+piste 3+piste 5+välilyönti |
+| F1-näppäin | piste 1+piste 2+piste 5+välilyönti |
+| F3-näppäin | piste 1+piste 2+piste 4+piste 8 |
+| F4-näppäin | piste 7+advance3 |
+| Windows+B-näppäinyhdistelmä | piste 1+piste 2+advance1 |
+| Windows+D-näppäinyhdistelmä | piste 1+piste 4+piste 5+advance1 |
 %kc:endInclude
 
 ++ HIMS SyncBraille ++
@@ -1299,11 +1336,33 @@ NVDA tukee [HIMS:in http://www.hims-inc.com/] SyncBraille -pistenäyttöä.
 Tietokoneelle on asennettava HIMS:in usb-AJURIT.
 
 Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
-Katso pistenäytön käyttöohjeesta kuvaukset näppäinten paikoista.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
 || Nimi | Näppäin |
 | Vieritä pistenäyttöä taaksepäin | vasemmanpuoleinen vieritä alas |
 | Vieritä pistenäyttöä eteenpäin | oikeanpuoleinen vieritä alas |
+| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+%kc:endInclude
+
+++ Seika ++
+[Nippon Telesoftin http://www.nippontelesoft.com/] 40 merkin Seika-versioita 3, 4 ja 5 sekä 80 merkin Seika80-versiota tuetaan.
+Lisätietoja näistä pistenäytöistä löytyy osoitteesta http://www.seika-braille.com/.
+Tietokoneelle on asennettava valmistajan toimittamat USB-ajurit.
+
+Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
+Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | vasen |
+| Vieritä pistenäyttöä eteenpäin | oikea |
+| Siirrä pistenäyttö edelliselle riville | b3 |
+| Siirrä pistenäyttö seuraavalle riville | b4 |
+| Vaihda Pistenäyttö seuraa -asetusta | b5 |
+| Lue kaikki | b6 |
+| Sarkain-näppäin | b1 |
+| Shift+sarkain-näppäinyhdistelmä | b2 |
+| Alt+sarkain-näppäinyhdistelmä | b1+b2 |
+| NVDA-valikko | vasen+oikea |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 %kc:endInclude
 
@@ -1321,7 +1380,7 @@ Katso [BRLTTY:n näppäintaulukoiden ohjetta http://mielke.cc/brltty/doc/drivers
 | Vieritä pistenäyttöä eteenpäin | fwinrt (siirry yksi ikkuna oikealle) |
 | Siirrä pistenäyttö edelliselle riville | lnup (siirry yksi rivi ylöspäin) |
 | Siirrä pistenäyttö seuraavalle riville | lndn (siirry yksi rivi alaspäin) |
-| siirrä pistesoluun | kosketuskohdistinnäppäimet (tuo kohdistin merkin kohdalle) |
+| siirrä pistesoluun | kosketuskohdistinnäppäimet (siirrä kohdistin merkin kohdalle) |
 %kc:endInclude
 
 + Edistyneet aiheet +

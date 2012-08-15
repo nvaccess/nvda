@@ -1,12 +1,11 @@
-# Copyright (C) YEAR ORGANIZATION
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5279\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-01 20:26+0100\n"
-"PO-Revision-Date: 2012-08-01 20:27+0100\n"
+"POT-Creation-Date: 2012-08-13 08:15+0100\n"
+"PO-Revision-Date: 2012-08-13 08:18+0100\n"
 "Last-Translator: David Parduhn <xkill85@gmx.net>\n"
 "Language-Team: René Linke <rene.linke@blindzeln.de>\n"
 "Language: de_DE\n"
@@ -373,33 +372,32 @@ msgid "vlnk"
 msgstr "bl"
 
 #: d:\rechner\nvda_bzr\main/source/braille.py:429
-#: d:\rechner\nvda_bzr\main/source/speech.py:797
+#: d:\rechner\nvda_bzr\main/source/speech.py:808
 #, python-format
 msgid "not %s"
 msgstr "nicht %s"
 
-#: d:\rechner\nvda_bzr\main/source/braille.py:442
-#: d:\rechner\nvda_bzr\main/source/speech.py:805
-#, python-format
-msgid "%s of %s"
-msgstr "%s von %s"
+#: d:\rechner\nvda_bzr\main/source/braille.py:445
+#: d:\rechner\nvda_bzr\main/source/speech.py:819
+msgid "{number} of {total}"
+msgstr "{number} von {total}"
 
-#: d:\rechner\nvda_bzr\main/source/braille.py:446
+#: d:\rechner\nvda_bzr\main/source/braille.py:449
 #, python-format
 msgid "lv %s"
 msgstr "%s"
 
-#: d:\rechner\nvda_bzr\main/source/braille.py:451
+#: d:\rechner\nvda_bzr\main/source/braille.py:454
 #, python-format
 msgid "r%s"
 msgstr "r%s"
 
-#: d:\rechner\nvda_bzr\main/source/braille.py:459
+#: d:\rechner\nvda_bzr\main/source/braille.py:462
 #, python-format
 msgid "c%s"
 msgstr "s%s"
 
-#: d:\rechner\nvda_bzr\main/source/braille.py:549
+#: d:\rechner\nvda_bzr\main/source/braille.py:552
 #, python-format
 msgid "%s end"
 msgstr "%s Ende"
@@ -501,10 +499,10 @@ msgstr "Orange"
 
 #: d:\rechner\nvda_bzr\main/source/compoundDocuments.py:401
 #: d:\rechner\nvda_bzr\main/source/globalCommands.py:127
-#: d:\rechner\nvda_bzr\main/source/speech.py:306
-#: d:\rechner\nvda_bzr\main/source/speech.py:498
-#: d:\rechner\nvda_bzr\main/source/speech.py:513
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:718
+#: d:\rechner\nvda_bzr\main/source/speech.py:317
+#: d:\rechner\nvda_bzr\main/source/speech.py:509
+#: d:\rechner\nvda_bzr\main/source/speech.py:524
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:725
 #, python-format
 msgid "selected %s"
 msgstr "%s markiert"
@@ -590,7 +588,7 @@ msgid "tool tip"
 msgstr "Mini-Hilfe"
 
 #: d:\rechner\nvda_bzr\main/source/controlTypes.py:206
-#: d:\rechner\nvda_bzr\main/source/speech.py:1091
+#: d:\rechner\nvda_bzr\main/source/speech.py:1112
 msgid "link"
 msgstr "Link"
 
@@ -1018,7 +1016,7 @@ msgid "font size"
 msgstr "Schriftgröße"
 
 #: d:\rechner\nvda_bzr\main/source/controlTypes.py:327
-#: d:\rechner\nvda_bzr\main/source/speech.py:1020
+#: d:\rechner\nvda_bzr\main/source/speech.py:1041
 msgid "bold"
 msgstr "fett"
 
@@ -1039,12 +1037,12 @@ msgid "background color"
 msgstr "Hintergrundfarbe"
 
 #: d:\rechner\nvda_bzr\main/source/controlTypes.py:332
-#: d:\rechner\nvda_bzr\main/source/speech.py:1056
+#: d:\rechner\nvda_bzr\main/source/speech.py:1077
 msgid "superscript"
 msgstr "hochgestellt"
 
 #: d:\rechner\nvda_bzr\main/source/controlTypes.py:333
-#: d:\rechner\nvda_bzr\main/source/speech.py:1059
+#: d:\rechner\nvda_bzr\main/source/speech.py:1080
 msgid "subscript"
 msgstr "tiefgestellt"
 
@@ -1303,7 +1301,7 @@ msgstr "In die Zwischenablage kopiert."
 #: d:\rechner\nvda_bzr\main/source/appModules/winamp.py:78
 #: d:\rechner\nvda_bzr\main/source/appModules/winamp.py:88
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1083
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:811
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:818
 msgid "on"
 msgstr "Ein"
 
@@ -1322,7 +1320,7 @@ msgstr "Ein"
 #: d:\rechner\nvda_bzr\main/source/appModules/winamp.py:90
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:739
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1083
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:811
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:818
 msgid "off"
 msgstr "Aus"
 
@@ -1694,6 +1692,7 @@ msgstr ""
 #: d:\rechner\nvda_bzr\main/source/globalCommands.py:472
 #: d:\rechner\nvda_bzr\main/source/globalCommands.py:480
 #: d:\rechner\nvda_bzr\main/source/globalCommands.py:514
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1421
 msgid "bottom"
 msgstr "unten"
 
@@ -2179,34 +2178,34 @@ msgstr ""
 "Lädt die Anwendungsmodule und die globalen Plugins neu ohne NVDA neu zu "
 "starten (hilfreich für die Entwickler)."
 
-#: d:\rechner\nvda_bzr\main/source/IAccessibleHandler.py:671
+#: d:\rechner\nvda_bzr\main/source/IAccessibleHandler.py:673
 msgid "Secure Desktop"
 msgstr "Geschützter Desktop"
 
-#: d:\rechner\nvda_bzr\main/source/installer.py:155
+#: d:\rechner\nvda_bzr\main/source/installer.py:156
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:344
 msgid "NVDA web site"
 msgstr "Internetseite von NVDA"
 
-#: d:\rechner\nvda_bzr\main/source/installer.py:156
+#: d:\rechner\nvda_bzr\main/source/installer.py:157
 msgid "Uninstall NVDA"
 msgstr "NVDA deinstallieren"
 
-#: d:\rechner\nvda_bzr\main/source/installer.py:157
+#: d:\rechner\nvda_bzr\main/source/installer.py:158
 msgid "Explore NVDA user configuration directory"
 msgstr "Verzeichnis der Benutzereinstellungen durchsuchen..."
 
-#: d:\rechner\nvda_bzr\main/source/installer.py:158
 #: d:\rechner\nvda_bzr\main/source/installer.py:159
+#: d:\rechner\nvda_bzr\main/source/installer.py:160
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: d:\rechner\nvda_bzr\main/source/installer.py:158
+#: d:\rechner\nvda_bzr\main/source/installer.py:159
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:340
 msgid "Keyboard Commands Quick Reference"
 msgstr "KurzTasten- und Befehlsreferenz"
 
-#: d:\rechner\nvda_bzr\main/source/installer.py:159
+#: d:\rechner\nvda_bzr\main/source/installer.py:160
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:338
 msgid "User Guide"
 msgstr "Benutzerhandbuch"
@@ -2488,11 +2487,11 @@ msgstr "pause"
 msgid "%s cursor"
 msgstr "Mauszeiger %s"
 
-#: d:\rechner\nvda_bzr\main/source/NVDAHelper.py:140
+#: d:\rechner\nvda_bzr\main/source/NVDAHelper.py:151
 msgid "unknown layout"
 msgstr "Unbekanntes Tastaturschema"
 
-#: d:\rechner\nvda_bzr\main/source/NVDAHelper.py:141
+#: d:\rechner\nvda_bzr\main/source/NVDAHelper.py:152
 #, python-format
 msgid "layout %s"
 msgstr "Tastaturschema %s"
@@ -2517,8 +2516,8 @@ msgid "Emulates pressing %s on the system keyboard"
 msgstr "Emuliert das Drücken von %s auf der Systemtastatur."
 
 #: d:\rechner\nvda_bzr\main/source/speech.py:164
-#: d:\rechner\nvda_bzr\main/source/speech.py:329
-#: d:\rechner\nvda_bzr\main/source/speech.py:739
+#: d:\rechner\nvda_bzr\main/source/speech.py:340
+#: d:\rechner\nvda_bzr\main/source/speech.py:750
 msgid "blank"
 msgstr "Leer"
 
@@ -2527,169 +2526,177 @@ msgstr "Leer"
 msgid "cap %s"
 msgstr "groß %s"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:355
+#: d:\rechner\nvda_bzr\main/source/speech.py:366
 msgid "no indent"
 msgstr "keine Einrückung"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:439
+#: d:\rechner\nvda_bzr\main/source/speech.py:450
 #, python-format
 msgid "%d characters"
 msgstr "%d Zeichen"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:492
+#: d:\rechner\nvda_bzr\main/source/speech.py:503
 #, python-format
 msgid "selecting %s"
 msgstr "%s wird markiert"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:505
+#: d:\rechner\nvda_bzr\main/source/speech.py:516
 #, python-format
 msgid "unselecting %s"
 msgstr "%s entmarkiert"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:507
+#: d:\rechner\nvda_bzr\main/source/speech.py:518
 msgid "selection removed"
 msgstr "Auswahl entfernt."
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:791
+#: d:\rechner\nvda_bzr\main/source/speech.py:802
 msgid "done dragging"
 msgstr "Aktion ausgeführt."
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:811
-#: d:\rechner\nvda_bzr\main/source/speech.py:814
+#: d:\rechner\nvda_bzr\main/source/speech.py:825
+#: d:\rechner\nvda_bzr\main/source/speech.py:828
 #, python-format
 msgid "level %s"
 msgstr "Ebene %s"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:827
-#: d:\rechner\nvda_bzr\main/source/speech.py:1145
+#: d:\rechner\nvda_bzr\main/source/speech.py:841
+#: d:\rechner\nvda_bzr\main/source/speech.py:1166
 #, python-format
 msgid "row %s"
 msgstr "Reihe %s"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:834
-#: d:\rechner\nvda_bzr\main/source/speech.py:1141
+#: d:\rechner\nvda_bzr\main/source/speech.py:848
+#: d:\rechner\nvda_bzr\main/source/speech.py:1162
 #, python-format
 msgid "column %s"
 msgstr "Spalte %s"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:841
+#: d:\rechner\nvda_bzr\main/source/speech.py:855
 #, python-format
 msgid "with %s rows and %s columns"
 msgstr "mit %s Zeilen und %s spalten"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:843
+#: d:\rechner\nvda_bzr\main/source/speech.py:857
 #, python-format
 msgid "with %s columns"
 msgstr "mit %s spalten."
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:845
+#: d:\rechner\nvda_bzr\main/source/speech.py:859
 #, python-format
 msgid "with %s rows"
 msgstr "mit %s Zeilen."
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:912
+#: d:\rechner\nvda_bzr\main/source/speech.py:926
 #, python-format
 msgid "with %s items"
 msgstr "mit %s Einträgen"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:938
-#: d:\rechner\nvda_bzr\main/source/speech.py:1091
+#: d:\rechner\nvda_bzr\main/source/speech.py:952
+#: d:\rechner\nvda_bzr\main/source/speech.py:1112
 #, python-format
 msgid "out of %s"
 msgstr "%s Ende"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:964
+#: d:\rechner\nvda_bzr\main/source/speech.py:978
 #, python-format
 msgid "page %s"
 msgstr "Seite %s"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:974
+#: d:\rechner\nvda_bzr\main/source/speech.py:988
 #, python-format
 msgid "style %s"
 msgstr "Formatierung %s"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:978
+#: d:\rechner\nvda_bzr\main/source/speech.py:992
 msgid "default style"
 msgstr "Standardformatierung"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1006
-msgid "on {backgroundColor}"
-msgstr "auf {backgroundColor}"
+#: d:\rechner\nvda_bzr\main/source/speech.py:1017
+msgid "{color} on {backgroundColor}"
+msgstr "{color} auf {backgroundColor}"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1013
+#: d:\rechner\nvda_bzr\main/source/speech.py:1023
+msgid "{color}"
+msgstr "{color}"
+
+#: d:\rechner\nvda_bzr\main/source/speech.py:1027
+msgid "{backgroundColor} background"
+msgstr "Hintergrund {backgroundColor}"
+
+#: d:\rechner\nvda_bzr\main/source/speech.py:1034
 #, python-format
 msgid "line %s"
 msgstr "Zeile %s"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1022
+#: d:\rechner\nvda_bzr\main/source/speech.py:1043
 msgid "no bold"
 msgstr "nicht fett"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1028
+#: d:\rechner\nvda_bzr\main/source/speech.py:1049
 msgid "italic"
 msgstr "kursiv"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1030
+#: d:\rechner\nvda_bzr\main/source/speech.py:1051
 msgid "no italic"
 msgstr "nicht kursiv"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1037
+#: d:\rechner\nvda_bzr\main/source/speech.py:1058
 msgid "strikethrough"
 msgstr "durchgestrichen"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1040
+#: d:\rechner\nvda_bzr\main/source/speech.py:1061
 msgid "no strikethrough"
 msgstr "nicht durchgestrichen"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1046
+#: d:\rechner\nvda_bzr\main/source/speech.py:1067
 msgid "underlined"
 msgstr "unterstrichen"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1048
+#: d:\rechner\nvda_bzr\main/source/speech.py:1069
 msgid "not underlined"
 msgstr "nicht unterstrichen"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1063
+#: d:\rechner\nvda_bzr\main/source/speech.py:1084
 msgid "baseline"
 msgstr "Grundlinie"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1072
+#: d:\rechner\nvda_bzr\main/source/speech.py:1093
 msgid "align left"
 msgstr "linksbündig"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1075
+#: d:\rechner\nvda_bzr\main/source/speech.py:1096
 msgid "align center"
 msgstr "zentriert"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1078
+#: d:\rechner\nvda_bzr\main/source/speech.py:1099
 msgid "align right"
 msgstr "rechtsbündig"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1082
+#: d:\rechner\nvda_bzr\main/source/speech.py:1103
 msgid "align justify"
 msgstr "Blocksatz"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1085
+#: d:\rechner\nvda_bzr\main/source/speech.py:1106
 msgid "align default"
 msgstr "Standardausrichtung"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1098
+#: d:\rechner\nvda_bzr\main/source/speech.py:1119
 msgid "has comment"
 msgstr "hat Kommentar"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1106
+#: d:\rechner\nvda_bzr\main/source/speech.py:1127
 msgid "spelling error"
 msgstr "Rechtschreibfehler"
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1109
+#: d:\rechner\nvda_bzr\main/source/speech.py:1130
 msgid "out of spelling error"
 msgstr "Außerhalb des Rechtschreibfehlers."
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1127
+#: d:\rechner\nvda_bzr\main/source/speech.py:1148
 msgid "out of table"
 msgstr "Außerhalb der Tabelle."
 
-#: d:\rechner\nvda_bzr\main/source/speech.py:1136
+#: d:\rechner\nvda_bzr\main/source/speech.py:1157
 #, python-format
 msgid "table with %s columns and %s rows"
 msgstr "Tabelle mit %s Spalten und %s Reihen."
@@ -2741,12 +2748,11 @@ msgstr "Fehler beim Suchen nach Aktualisierungen"
 #: d:\rechner\nvda_bzr\main/source/updateCheck.py:128
 #: d:\rechner\nvda_bzr\main/source/updateCheck.py:351
 #: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:74
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:88
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:107
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:113
 #: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:54
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:186
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:194
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:225
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:191
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:199
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:230
 #: d:\rechner\nvda_bzr\main/source/gui/logViewer.py:74
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:223
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:148
@@ -3081,15 +3087,15 @@ msgstr "Baum / HumanWare / APH Braillezeilen"
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant Serie BI/B"
 
-#: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/freedomScientific.py:91
+#: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/freedomScientific.py:110
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "FreedomScientific Focus / PAC Mate Serien"
 
-#: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/freedomScientific.py:99
+#: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/freedomScientific.py:118
 msgid "display scroll"
 msgstr "Bildschirmweises Scrollen"
 
-#: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/freedomScientific.py:101
+#: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/freedomScientific.py:120
 msgid "line scroll"
 msgstr "Zeilenweises Scrollen"
 
@@ -3109,41 +3115,17 @@ msgstr "MDV Lilli"
 msgid "No braille"
 msgstr "Keine Braillezeile"
 
+#: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/seika.py:30
+msgid "Seika braille displays"
+msgstr "Seika-Braillezeilen"
+
 #: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/hims/__init__.py:109
 msgid "HIMS Braille Sense/Braille EDGE series"
 msgstr "HIMS Braille Sense/Braille EDGE Serien"
 
-#: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/hims/__init__.py:134
-#, python-format
-msgid "%s device found"
-msgstr "Gerät %s gefunden"
-
 #: d:\rechner\nvda_bzr\main/source/brailleDisplayDrivers/syncBraille/__init__.py:72
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#: d:\rechner\nvda_bzr\main/source/config/__init__.py:23
-msgid "Badly formed configuration file"
-msgstr "Fehlerhafte Konfigurationsdatei!"
-
-#: d:\rechner\nvda_bzr\main/source/config/__init__.py:38
-#, python-format
-msgid "%s: %s, defaulting to %s"
-msgstr "%s: %s, auf Standard zurücksetzen zu %s"
-
-#: d:\rechner\nvda_bzr\main/source/config/__init__.py:197
-#, python-format
-msgid "Error parsing configuration file: %s"
-msgstr "Fehler beim Überprüfen der Konfigurationsdatei: %s"
-
-#: d:\rechner\nvda_bzr\main/source/config/__init__.py:204
-#, python-format
-msgid ""
-"Errors in configuration file '%s':\n"
-"%s"
-msgstr ""
-"Fehler in Konfigurationsdatei '%s':\n"
-"%s"
 
 #: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:17
 msgid "Add-ons Manager"
@@ -3154,12 +3136,12 @@ msgid "Installed Add-ons"
 msgstr "Installierte Erweiterungen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:26
-msgid "Status"
-msgstr "Status"
-
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:27
 msgid "Package"
 msgstr "Paket"
+
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:27
+msgid "Status"
+msgstr "Status"
 
 #: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:28
 msgid "Version"
@@ -3212,51 +3194,52 @@ msgstr ""
 "Autor: {author}"
 
 #: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:80
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:93
 msgid "Add-on Installation"
 msgstr "Erweiterung installieren"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:86
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:91
 msgid ""
-"This add-on seems to already be installed. Please remove the existing add-on "
-"and try again."
+"The same or another version of this add-on is currently installed. Would you "
+"like to remove the previously installed add-on and install this one instead?"
 msgstr ""
-"Diese Erweiterung scheint bereits installiert zu sein. Entfernen Sie zuerst "
-"die installierte Erweiterung und versuchen Sie es erneut."
+"Diese Erweiterung ist bereits installiert. Möchten Sie die vorhandene "
+"Version entfernen?"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:93
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:99
 msgid "Installing Add-on"
 msgstr "die Erweiterung wird installiert"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:95
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:101
 msgid "Please wait while the add-on is being installed."
 msgstr "Bitte warten Sie einen Moment, bis die Erweiterung installiert wurde."
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:105
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:111
 #, python-format
 msgid "Failed to install add-on  from %s"
 msgstr "Fehler beim Installieren der Erweiterung %s."
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:118
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:124
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Möchten Sie die Erweiterung wirklich aus NVDA entfernen?"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:118
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:124
 msgid "Remove Add-on"
 msgstr "Erweiterung &entfernen"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:128
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:134
 msgid "install"
 msgstr "Installieren"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:131
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:137
 msgid "remove"
 msgstr "Entfernen"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:134
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:140
 msgid "running"
 msgstr "Wird ausgeführt"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:165
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:171
 msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
@@ -3265,11 +3248,11 @@ msgstr ""
 "anschließend NVDA neu starten, damit die Änderungen wirksam werden. Möchten "
 "Sie NVDA jetzt neu starten?"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:167
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:173
 msgid "Restart NVDA"
 msgstr "NVDA neu starten"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:176
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:182
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -3281,11 +3264,11 @@ msgstr ""
 "Autor: {author}\n"
 "Beschreibung: {description}\n"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:184
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:190
 msgid "URL: {url}"
 msgstr "Adresse: {url}"
 
-#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:186
+#: d:\rechner\nvda_bzr\main/source/gui/addonGui.py:192
 msgid "Add-on Information"
 msgstr "Informationen über die Erweiterung"
 
@@ -3318,7 +3301,7 @@ msgstr ""
 "noch eine weitere Instanz von NVDA ausgeführt."
 
 #: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:46
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:219
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:224
 msgid "File in Use"
 msgstr "Datei in Verwendung"
 
@@ -3343,7 +3326,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Klicken Sie bitte auf OK, um die installierte Kopie zu starten."
 
 #: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:67
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:232
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:237
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:225
 msgid "Success"
 msgstr "Fertig"
@@ -3378,26 +3361,30 @@ msgstr ""
 msgid "Use NVDA on the Windows &logon screen"
 msgstr "NVDA für die Windows-&Anmeldung verwenden"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:100
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:102
+msgid "&Keep existing desktop shortcut"
+msgstr "&existierende Desktop-Verknüpfung behalten"
+
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:105
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "Desktop-Verknüpfung erstellen (mit der Tastenkombination strg+alt+n)"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:104
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:109
 msgid "Copy &portable configuration to current user account"
 msgstr ""
 "Konfiguration aus der &portablen Version in das aktuelle Benutzerkonto "
 "kopieren"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:113
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:162
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:118
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:167
 msgid "&Continue"
 msgstr "&Fortsetzen"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:137
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:142
 msgid "Create Portable NVDA"
 msgstr "NVDA Portable erstellen"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:140
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:145
 msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
@@ -3405,53 +3392,53 @@ msgstr ""
 "Um eine portable Version von NVDA zu erstellen, geben Sie den Zielpfad und "
 "weitere Optionen an und betätigen Sie den Schalter \"Weiter\"."
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:145
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:150
 msgid "Portable &directory:"
 msgstr "portables &Verzeichnis:"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:149
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:154
 msgid "Browse..."
 msgstr "Du&rchsuchen..."
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:154
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:159
 msgid "Copy current &user configuration"
 msgstr "Kopiere derzeitige Einstellungen des Benutzers"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:177
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:182
 msgid "Select portable  directory"
 msgstr "Portables Verzeichnis auswählen"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:185
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:190
 msgid "Please specify a directory in which to create the portable copy."
 msgstr ""
 "Bitte geben Sie einen Ordner an, in dem die portable Kopie erstellt werden "
 "soll."
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:193
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:198
 #, python-format
 msgid "Invalid drive %s"
 msgstr "ungültiges Laufwerk %s"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:207
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:212
 msgid "Creating Portable Copy"
 msgstr "Portable Kopie wird erstellt"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:209
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:214
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr ""
 "Bitte haben Sie etwas Geduld, bis der Vorgang zur Erstellung der portablen "
 "Kopie fertig gestellt ist."
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:217
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:222
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA konnte eine Datei nicht entfernen bzw. ersetzen"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:224
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:229
 #, python-format
 msgid "Failed to create portable copy: %s"
 msgstr "Portable Kopie konnte nicht erstellt werden: %s"
 
-#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:231
+#: d:\rechner\nvda_bzr\main/source/gui/installerGui.py:236
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
 msgstr "Die portable Version wurde erfolgreich im Ordner %s erstellt."
@@ -3513,7 +3500,7 @@ msgstr "Sprache"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:139
 msgid "&Save configuration on exit"
-msgstr "Einstellungen beim Beenden &speichern"
+msgstr "Einstellungen beim &Beenden speichern"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:144
 msgid "&Warn before exiting NVDA"
@@ -3529,13 +3516,13 @@ msgstr "Protokolltyp"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:161
 msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "NVDA automatisch nach der Anmeldung starten"
+msgstr "NVDA automatisch &nach der Anmeldung starten"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:166
 msgid ""
 "Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr ""
-"NVDA für die Windows-Anmeldung verwenden (Administratorrechte sind "
+"NVDA für die &Windows-Anmeldung verwenden (Administratorrechte sind "
 "erforderlich!)"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:171
@@ -3543,7 +3530,7 @@ msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
 msgstr ""
-"Aktuell gespeicherte Einstellungen im Anmeldebildschirm und bei "
+"A&ktuell gespeicherte Einstellungen im Anmeldebildschirm und bei "
 "Sicherheitsmeldungen verwenden (erfordert Administrationsberechtigungen!)"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:178
@@ -3652,11 +3639,11 @@ msgstr "Stimmeneinstellungen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:448
 msgid "Automatic language switching (when supported)"
-msgstr "Automatisch Sprache wechseln (wenn unterstützt)"
+msgstr "Automatisch Sprache &wechseln (wenn unterstützt)"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:453
 msgid "Automatic dialect switching (when supported)"
-msgstr "Automatisch Dialekt wechseln (wenn unterstützt)"
+msgstr "Automatisch &Dialekt wechseln (wenn unterstützt)"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:459
 msgid "Punctuation/symbol &level:"
@@ -3664,15 +3651,15 @@ msgstr "Zeichen/Symbol&ebene:"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:466
 msgid "Capital pitch change percentage"
-msgstr "Stimme bei Großbuchstaben anheben (in %)"
+msgstr "Stimme bei Großbuchstaben &anheben (in %)"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:473
 msgid "Say &cap before capitals"
-msgstr "Vor Großbuchstaben \"&Groß\" ansagen"
+msgstr "Vor Großbu&chstaben \"&Groß\" sagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:478
 msgid "&Beep for capitals"
-msgstr "Signaltöne vor Groß&buchstaben"
+msgstr "Signal&töne vor Groß&buchstaben"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:483
 msgid "Use &spelling functionality if supported"
@@ -3714,7 +3701,7 @@ msgstr "geschriebene &Wörter Sprechen"
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:612
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
-"signaltöne beim Eingeben von Kleinbuchstaben abspielen, wenn die "
+"signaltöne beim Eingeben von &Kleinbuchstaben abspielen, wenn die "
 "Dauergroßschreibung aktiviert ist"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:617
@@ -3747,11 +3734,11 @@ msgstr "&Objekttyp unter dem Mauszeiger ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:674
 msgid "play audio coordinates when mouse moves"
-msgstr "Audiokoordinaten bei Mausbewegungen wiedergeben"
+msgstr "&Audiokoordinaten bei Mausbewegungen wiedergeben"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:679
 msgid "brightness controls audio coordinates volume"
-msgstr "Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren"
+msgstr "&Lautstärke der Audiokoordinaten durch Helligkeit kontrollieren"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:698
 msgid "Review Cursor Settings"
@@ -3771,7 +3758,7 @@ msgstr "&Mauszeiger verfolgen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:718
 msgid "Simple review mode"
-msgstr "Einfacher Darstellungsmodus"
+msgstr "&Einfacher Darstellungsmodus"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:734
 msgid "Object Presentation"
@@ -3807,7 +3794,7 @@ msgstr "Informationen zur Objekt&position ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:777
 msgid "Guess object &position information when unavailable"
-msgstr "Informationen zur Objekt&position bei Nichtverfügbarkeit ermitteln"
+msgstr "Informationen zur Objektposition bei &Nichtverfügbarkeit ermitteln"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:782
 msgid "Report object &descriptions"
@@ -3815,7 +3802,7 @@ msgstr "Objekt&beschreibungen ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:788
 msgid "Progress &bar output:"
-msgstr "Ausgabe des Fortschritts&balkens:"
+msgstr "Ausgabe des &Fortschrittsbalkens:"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:793
 msgid "Progress bar output"
@@ -3823,11 +3810,11 @@ msgstr "Ausgabe des Fortschrittsbalkens"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:804
 msgid "Report background progress bars"
-msgstr "Im Hintergrund befindliche Fortschrittsbalken ausgeben"
+msgstr "Im Hinter&grund befindliche Fortschrittsbalken ausgeben"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:809
 msgid "Report dynamic &content changes"
-msgstr "dynamische Änderungen des Inhaltes ansagen"
+msgstr "dynamische Änderungen des &Inhaltes ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:830
 msgid "Browse Mode"
@@ -3847,24 +3834,24 @@ msgstr "&Bildschirm-Layout verwenden (falls verfügbar)"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:854
 msgid "Automatic &Say All on page load"
-msgstr "Automatisch alles lesen nach Aufruf einer Internetseite"
+msgstr "&Automatisch alles lesen nach Aufruf einer Internetseite"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:859
 msgid "Report l&ayout tables"
-msgstr "Layouttabellen ansagen"
+msgstr "Layout&tabellen ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:864
 msgid "Automatic focus mode for focus changes"
-msgstr "Bei Änderungen des Fokuses automatisch den Fokusmodus einschalten"
+msgstr "Bei Änderungen des &Fokuses automatisch den Fokusmodus einschalten"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:869
 msgid "Automatic focus mode for caret movement"
 msgstr ""
-"Bei Bewegungen des System-Cursors automatisch den Fokusmodus einschalten"
+"Bei Bewegungen des System-&Cursors automatisch den Fokusmodus einschalten"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:874
 msgid "Audio indication of focus and browse modes"
-msgstr "Akkustische Ausgabe von Fokus- und Lesemodus"
+msgstr "Ak&ustische Ausgabe von Fokus- und Lesemodus"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:904
 msgid "Document Formatting"
@@ -3873,7 +3860,7 @@ msgstr "Dokumentformatierungen"
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:909
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
-"Änderungen der &Formatierungen hinter dem Cursor ansagen (Stimme kann "
+"&Änderungen der Formatierungen hinter dem Cursor ansagen (Stimme kann "
 "dadurch langsamer reagieren)"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:914
@@ -3890,7 +3877,7 @@ msgstr "Schrift&attribute ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:929
 msgid "Report &alignment"
-msgstr "&Ausrichtung ansagen"
+msgstr "Aus&richtung ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:934
 msgid "Report &colors"
@@ -3902,7 +3889,7 @@ msgstr "La&yout ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:944
 msgid "Report spelling errors"
-msgstr "&Rechtschreibfehler ansagen"
+msgstr "Re&chtschreibfehler ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:949
 msgid "Report &pages"
@@ -3922,7 +3909,7 @@ msgstr "&Tabellen ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:970
 msgid "Report table row/column h&eaders"
-msgstr "Spalten- und R&eihenüberschriften von Tabellen ansagen"
+msgstr "Spalten- und Reihenübersc&hriften von Tabellen ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:975
 msgid "Report table cell c&oordinates"
@@ -3942,11 +3929,11 @@ msgstr "&Listen ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:995
 msgid "Report block &quotes"
-msgstr "&Zitatblöcke ansagen"
+msgstr "Zitatbl&öcke ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1000
 msgid "Report lan&dmarks"
-msgstr "Sprun&gmarken ansagen"
+msgstr "S&prungmarken ansagen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1005
 msgid "Report fra&mes"
@@ -4032,23 +4019,23 @@ msgstr "Aktuelles &Wort in Computerbraille ausschreiben"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1202
 msgid "Cursor blink rate (ms)"
-msgstr "Cursorblinkfrequenz (in Millisekunden)"
+msgstr "&Cursorblinkfrequenz (in Millisekunden)"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1210
 msgid "Message timeout (sec)"
-msgstr "Anzeigedauer für Meldungen (in Sekunden)"
+msgstr "Anzeige&dauer für Meldungen (in Sekunden)"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1218
 msgid "Braille tethered to:"
-msgstr "Braillezeile gekoppelt an:"
+msgstr "Braillezeile ge&koppelt an:"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1231
 msgid "Read by &paragraph"
-msgstr "absatzweise lesen"
+msgstr "&absatzweise lesen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1235
 msgid "Avoid splitting &words when possible"
-msgstr "Umbrechen von Wörtern  vermeiden, wenn möglich"
+msgstr "&Umbrechen von Wörtern  vermeiden, wenn möglich"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1245
 #, python-format
@@ -4081,7 +4068,7 @@ msgstr "Symbol ändern"
 
 #: d:\rechner\nvda_bzr\main/source/gui/settingsDialogs.py:1300
 msgid "&Level"
-msgstr "&Stufe"
+msgstr "S&tufe"
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:134
 msgid "Configuration applied"
@@ -4278,7 +4265,7 @@ msgstr "&Sprachbetrachter"
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:321
 msgid "Python console"
-msgstr "Python-Konsole"
+msgstr "Python-&Konsole"
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:324
 msgid "Manage &add-ons"
@@ -4286,7 +4273,7 @@ msgstr "&Erweiterungen verwalten"
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:327
 msgid "Create Portable copy..."
-msgstr "&Portable Kopie erstellen..."
+msgstr "Portable &Version erstellen..."
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:330
 msgid "&Install NVDA..."
@@ -4318,11 +4305,11 @@ msgstr "&Willkommensdialog"
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:355
 msgid "Check for update..."
-msgstr "Nach Aktualisierungen suchen..."
+msgstr "Nach &Aktualisierungen suchen..."
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:357
 msgid "About..."
-msgstr "Über..."
+msgstr "&Über..."
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:359
 msgid "&Help"
@@ -4338,7 +4325,7 @@ msgstr "Alle Einstellungen auf die gespeicherten Werte zurücksetzen."
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:364
 msgid "&Reset configuration to factory defaults"
-msgstr "%Werkseinstellungen wiederherstellen"
+msgstr "&Werkseinstellungen wiederherstellen"
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:364
 msgid "Reset all settings to default state"
@@ -4354,7 +4341,7 @@ msgstr "Die aktuelle Konfiguration wird in NVDA.ini gespeichert..."
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:370
 msgid "Donate"
-msgstr "Spenden"
+msgstr "S&penden"
 
 #: d:\rechner\nvda_bzr\main/source/gui/__init__.py:456
 msgid ""
@@ -4439,13 +4426,13 @@ msgstr "bitte warten"
 msgid "%s items"
 msgstr "%s Einträge"
 
-#: d:\rechner\nvda_bzr\main/source/NVDAObjects/IAccessible/__init__.py:1494
+#: d:\rechner\nvda_bzr\main/source/NVDAObjects/IAccessible/__init__.py:1529
 msgid "Taskbar"
 msgstr "Taskleiste"
 
 #: d:\rechner\nvda_bzr\main/source/NVDAObjects/UIA/__init__.py:504
 msgid "invoke"
-msgstr "bezugnehmend"
+msgstr "aufrufen"
 
 #: d:\rechner\nvda_bzr\main/source/NVDAObjects/window/edit.py:260
 #: d:\rechner\nvda_bzr\main/source/NVDAObjects/window/edit.py:261
@@ -4547,66 +4534,66 @@ msgstr "Keine Sprache"
 msgid "word"
 msgstr "Wort"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:228
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:236
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:231
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:239
 #, python-format
 msgid "%s landmark"
 msgstr "Sprungmarke %s"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:261
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:264
 msgid "Lin&ks"
 msgstr "Lin&ks"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:264
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:267
 msgid "&Headings"
 msgstr "&Überschriften"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:267
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:270
 msgid "Lan&dmarks"
 msgstr "Sprung&marken"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:274
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:277
 msgid "Elements List"
 msgstr "Liste der Elemente"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:279
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:282
 msgid "Type:"
 msgstr "Typ:"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:292
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:295
 msgid "&Filter by:"
 msgstr "&Filter von:"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:302
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:305
 msgid "&Activate"
 msgstr "Link &aktivieren"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:307
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:310
 msgid "&Move to"
 msgstr "&Wecseln zu"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:619
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:626
 msgid "Refreshed"
 msgstr "aktualisiert"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:624
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:631
 msgid "Loading document..."
 msgstr "Dokument wird geladen..."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:799
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:806
 msgid "activates the current object in the document"
 msgstr "Aktiviert das aktuelle Objekt im Dokument."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:807
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:814
 msgid "Refreshes the document content"
 msgstr "Aktualisiert den Inhalt des Dokuments."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:812
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:819
 #, python-format
 msgid "use screen layout %s"
 msgstr "Bildschirm-Layout %s verwenden"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:813
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:820
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
@@ -4614,470 +4601,489 @@ msgstr ""
 "Schaltet das Berücksichtigen der Bildschirmaufteilung beim Aufbereiten der "
 "Dokumente ein oder aus."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:896
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:903
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Zeigt Links, Überschriften oder Sprungmarken in einer Liste an"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1269
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1276
 msgid "Not in a table cell"
 msgstr "Nicht in einer Tabellenzelle."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1277
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1284
 msgid "edge of table"
 msgstr "Tabellenrand"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1287
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1294
 msgid "moves to the next table row"
 msgstr "springt zur nächsten Tabellenzeile"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1291
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1298
 msgid "moves to the previous table row"
 msgstr "springt zur vorigen Tabellenzeile"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1295
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1302
 msgid "moves to the next table column"
 msgstr "springt zur nächsten Tabellenspalte"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1299
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1306
 msgid "moves to the previous table column"
 msgstr "springt zur vorigen Tabellenspalte"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1394
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1408
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1401
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1415
 msgid "Not in a container"
 msgstr "nicht in einem Container"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1401
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1408
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr ""
 "Bewegt den Systemcursor an den Beginn des Containerobjekts (Listen, "
 "Tabellen, etc.)."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1415
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1426
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "bewegt den Systemcursor hinter das Containerobjekt (Listen, Tabellen, etc.)"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1438
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1461
 msgid "moves to the next heading"
 msgstr "Springt zur nächsten Überschrift."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1438
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1461
 msgid "no next heading"
 msgstr "Keine weiteren Überschriften."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1439
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1462
 msgid "moves to the previous heading"
 msgstr "Springt zur vorherigen Überschrift."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1439
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1462
 msgid "no previous heading"
 msgstr "Keine vorherigen Überschriften."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1440
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1463
 msgid "moves to the next heading at level 1"
 msgstr "Springt zur nächsten Überschrift auf Ebene 1."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1440
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1463
 msgid "no next heading at level 1"
 msgstr "Keine weiteren Überschriften auf Ebene 1."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1441
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1464
 msgid "moves to the previous heading at level 1"
 msgstr "Springt zur vorherigen Überschrift auf Ebene 1."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1441
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1464
 msgid "no previous heading at level 1"
 msgstr "Keine vorherigen Überschriften auf Ebene 1."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1442
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1465
 msgid "moves to the next heading at level 2"
 msgstr "Springt zur nächsten Überschrift auf Ebene 2."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1442
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1465
 msgid "no next heading at level 2"
 msgstr "Keine weiteren Überschriften auf Ebene 2."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1443
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1466
 msgid "moves to the previous heading at level 2"
 msgstr "Springt zur vorherigen Überschrift auf Ebene 2."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1443
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1466
 msgid "no previous heading at level 2"
 msgstr "Keine vorherigen Überschriften auf Ebene 2."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1444
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1467
 msgid "moves to the next heading at level 3"
 msgstr "Springt zur nächsten Überschrift auf Ebene 3."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1444
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1467
 msgid "no next heading at level 3"
 msgstr "Keine weiteren Überschriften auf Ebene 3."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1445
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1468
 msgid "moves to the previous heading at level 3"
 msgstr "Springt zur vorherigen Überschrift auf Ebene 3."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1445
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1468
 msgid "no previous heading at level 3"
 msgstr "Keine vorherigen Überschriften auf Ebene 3."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1446
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1469
 msgid "moves to the next heading at level 4"
 msgstr "Springt zur nächsten Überschrift auf Ebene 4."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1446
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1469
 msgid "no next heading at level 4"
 msgstr "Keine weiteren Überschriften auf Ebene 4."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1447
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1470
 msgid "moves to the previous heading at level 4"
 msgstr "Springt zur vorherigen Überschrift auf Ebene 4."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1447
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1470
 msgid "no previous heading at level 4"
 msgstr "Keine vorherigen Überschriften auf Ebene 4."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1448
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1471
 msgid "moves to the next heading at level 5"
 msgstr "Springt zur nächsten Überschrift auf Ebene 5."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1448
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1471
 msgid "no next heading at level 5"
 msgstr "Keine weiteren Überschriften auf Ebene 5."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1449
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1472
 msgid "moves to the previous heading at level 5"
 msgstr "Springt zur vorherigen Überschrift auf Ebene 5."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1449
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1472
 msgid "no previous heading at level 5"
 msgstr "Keine vorherigen Überschriften auf Ebene 5."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1450
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1473
 msgid "moves to the next heading at level 6"
 msgstr "Springt zur nächsten Überschrift auf Ebene 6."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1450
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1473
 msgid "no next heading at level 6"
 msgstr "Keine weiteren Überschriften auf Ebene 6."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1451
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1474
 msgid "moves to the previous heading at level 6"
 msgstr "Springt zur vorherigen Überschrift auf Ebene 6."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1451
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1474
 msgid "no previous heading at level 6"
 msgstr "Keine vorherigen Überschriften auf Ebene 6."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1452
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1475
 msgid "moves to the next table"
 msgstr "Springt zur nächsten Tabelle."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1452
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1475
 msgid "no next table"
 msgstr "Keine weiteren Tabellen."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1453
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1476
 msgid "moves to the previous table"
 msgstr "Springt zur vorherigen Tabelle."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1453
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1476
 msgid "no previous table"
 msgstr "Keine vorherigen Tabellen."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1454
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1477
 msgid "moves to the next link"
 msgstr "Springt zum nächsten Link."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1454
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1477
 msgid "no next link"
 msgstr "Keine weiteren Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1455
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1478
 msgid "moves to the previous link"
 msgstr "Springt zum vorherigen Link."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1455
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1478
 msgid "no previous link"
 msgstr "Keine vorherigen Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1456
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1479
 msgid "moves to the next visited link"
 msgstr "Springt zum nächsten besuchten Link."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1456
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1479
 msgid "no next visited link"
 msgstr "Keine weiteren besuchten Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1457
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1480
 msgid "moves to the previous visited link"
 msgstr "Springt zum vorherigen besuchten Link."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1457
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1480
 msgid "no previous visited link"
 msgstr "Keine vorherigen besuchten Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1458
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1481
 msgid "moves to the next unvisited link"
 msgstr "Springt zum nächsten unbesuchten Link."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1458
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1481
 msgid "no next unvisited link"
 msgstr "Keine weiteren unbesuchten Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1459
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1482
 msgid "moves to the previous unvisited link"
 msgstr "Springt zum vorherigen unbesuchten Link."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1459
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1482
 msgid "no previous unvisited link"
 msgstr "Keine vorherigen unbesuchten Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1460
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1483
 msgid "moves to the next form field"
 msgstr "Springt zum nächsten Formularfeld."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1460
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1483
 msgid "no next form field"
 msgstr "Keine weiteren Formularfelder."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1461
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1484
 msgid "moves to the previous form field"
 msgstr "Springt zum vorherigen Formularfeld."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1461
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1484
 msgid "no previous form field"
 msgstr "Keine vorherigen Formularfelder."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1462
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1485
 msgid "moves to the next list"
 msgstr "Springt zur nächsten Liste."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1462
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1485
 msgid "no next list"
 msgstr "Keine weiteren Listen."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1463
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1486
 msgid "moves to the previous list"
 msgstr "Springt zur vorherigen Liste."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1463
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1486
 msgid "no previous list"
 msgstr "Keine vorherigen Listen."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1464
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1487
 msgid "moves to the next list item"
 msgstr "Springt zum nächsten Listeneintrag."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1464
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1487
 msgid "no next list item"
 msgstr "Keine weiteren Listeneinträge."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1465
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1488
 msgid "moves to the previous list item"
 msgstr "Springt zum vorherigen Listeneintrag."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1465
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1488
 msgid "no previous list item"
 msgstr "Keine vorherigen Listeneinträge."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1466
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1489
 msgid "moves to the next button"
 msgstr "Springt zum nächsten Schalter."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1466
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1489
 msgid "no next button"
 msgstr "Keine weiteren Schalter."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1467
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1490
 msgid "moves to the previous button"
 msgstr "Springt zum vorherigen Schalter."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1467
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1490
 msgid "no previous button"
 msgstr "Keine vorherigen Schalter."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1468
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1491
 msgid "moves to the next edit field"
 msgstr "Springt zum nächsten Eingabefeld."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1468
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1491
 msgid "no next edit field"
 msgstr "Keine weiteren Eingabefelder."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1469
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1492
 msgid "moves to the previous edit field"
 msgstr "Springt zum vorherigen Eingabefeld."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1469
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1492
 msgid "no previous edit field"
 msgstr "Keine vorherigen Eingabefelder."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1470
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1493
 msgid "moves to the next frame"
 msgstr "Springt zum nächsten Rahmen."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1470
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1493
 msgid "no next frame"
 msgstr "Keine weiteren Rahmen."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1471
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1494
 msgid "moves to the previous frame"
 msgstr "Springt zum vorherigen Rahmen."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1471
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1494
 msgid "no previous frame"
 msgstr "Keine vorherigen Rahmen."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1472
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1495
 msgid "moves to the next separator"
 msgstr "Springt zur nächsten Trennlinie."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1472
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1495
 msgid "no next separator"
 msgstr "Keine weiteren Trennlinien."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1473
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1496
 msgid "moves to the previous separator"
 msgstr "Springt zur vorherigen Trennlinie."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1473
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1496
 msgid "no previous separator"
 msgstr "Keine vorherigen Trennlinien."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1474
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1497
 msgid "moves to the next radio button"
 msgstr "Springt zum nächsten Auswahlschalter."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1474
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1497
 msgid "no next radio button"
 msgstr "Keine weiteren Auswahlschalter."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1475
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1498
 msgid "moves to the previous radio button"
 msgstr "Springt zum vorherigen Auswahlschalter."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1475
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1498
 msgid "no previous radio button"
 msgstr "Keine vorherigen Auswahlschalter."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1476
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1499
 msgid "moves to the next combo box"
 msgstr "Springt zum nächsten Kombinationsfeld."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1476
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1499
 msgid "no next combo box"
 msgstr "Keine weiteren Kombinationsfelder."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1477
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1500
 msgid "moves to the previous combo box"
 msgstr "Springt zum vorherigen Kombinationsfeld."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1477
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1500
 msgid "no previous combo box"
 msgstr "Keine vorherigen Kombinationsfelder."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1478
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1501
 msgid "moves to the next check box"
 msgstr "Springt zum nächsten Kontrollfeld."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1478
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1501
 msgid "no next check box"
 msgstr "Keine weiteren Kontrollfelder."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1479
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1502
 msgid "moves to the previous check box"
 msgstr "Springt zum vorherigen Kontrollfeld."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1479
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1502
 msgid "no previous check box"
 msgstr "Keine vorherigen Kontrollfelder."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1480
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1503
 msgid "moves to the next graphic"
 msgstr "Springt zur nächsten Grafik."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1480
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1503
 msgid "no next graphic"
 msgstr "Keine weiteren Grafiken."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1481
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1504
 msgid "moves to the previous graphic"
 msgstr "Springt zur vorherigen Grafik."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1481
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1504
 msgid "no previous graphic"
 msgstr "Keine vorherigen Grafiken."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1482
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1505
 msgid "moves to the next block quote"
 msgstr "Springt zum nächsten Zitatblock."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1482
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1505
 msgid "no next block quote"
 msgstr "Keine weiteren Zitatblöcke."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1483
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1506
 msgid "moves to the previous block quote"
 msgstr "Springt zum vorherigen Zitatblock."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1483
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1506
 msgid "no previous block quote"
 msgstr "Keine vorherigen Zitatblöcke."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1484
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1507
 msgid "skips forward past a block of links"
 msgstr "Überspringt den nächsten Block von Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1484
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1507
 msgid "no more text after a block of links"
 msgstr "Kein weiterer Text nach dem Abschnitt der Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1485
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1508
 msgid "skips backward past a block of links"
 msgstr "Überspringt den vorherigen Abschnitt von Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1485
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1508
 msgid "no more text before a block of links"
 msgstr "Kein weiterer Text vor dem Abschnitt der Links."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1486
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1509
 msgid "moves to the next landmark"
 msgstr "Springt zur nächsten Sprungmarke."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1486
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1509
 msgid "no next landmark"
 msgstr "Keine weiteren Sprungmarken."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1487
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1510
 msgid "moves to the previous landmark"
 msgstr "Springt zur vorherigen Sprungmarke."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1487
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1510
 msgid "no previous landmark"
 msgstr "Keine vorherigen Sprungmarken."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1488
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1511
 msgid "moves to the next embedded object"
 msgstr "Springt zum nächsten eingebetteten Objekt."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1488
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1511
 msgid "no next embedded object"
 msgstr "Keine weiteren eingebetteten Objekte."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1489
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1512
 msgid "moves to the previous embedded object"
 msgstr "Springt zum vorherigen eingebetteten Objekt."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1489
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1512
 msgid "no previous embedded object"
 msgstr "Keine vorherigen eingebetteten Objekte."
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1502
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1525
 msgid "focus mode"
 msgstr "Fokusmodus"
 
-#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1502
+#: d:\rechner\nvda_bzr\main/source/virtualBuffers/__init__.py:1525
 msgid "browse mode"
 msgstr "Lesemodus"
+
+#~ msgid "%s device found"
+#~ msgstr "Gerät %s gefunden"
+
+#~ msgid "Badly formed configuration file"
+#~ msgstr "Fehlerhafte Konfigurationsdatei!"
+
+#~ msgid "%s: %s, defaulting to %s"
+#~ msgstr "%s: %s, auf Standard zurücksetzen zu %s"
+
+#~ msgid "Error parsing configuration file: %s"
+#~ msgstr "Fehler beim Überprüfen der Konfigurationsdatei: %s"
+
+#~ msgid ""
+#~ "Errors in configuration file '%s':\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Fehler in Konfigurationsdatei '%s':\n"
+#~ "%s"

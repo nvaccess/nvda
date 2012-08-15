@@ -18,12 +18,20 @@ Quoi de Neuf dans NVDA
 - Deux nouvelles variantes de voix Espeak : Gene, Gene2. (#2512)
 - Dans Adobe Reader, les numérots de pages peuvent maintenant être rapportés. (#2534)
 - Il est maintenant possible de réinitialiser la configuration de NVDA à celle par défaut en appuyant trois fois sur NVDA+Ctrl+r, ou en choisissant Réinitialiser la configuration aux paramètres par défaut dans le menu de NVDA. (#2086)
+- Support des afficheurs braille Seika Version 3, 4 et 5 et Seika80 de Nippon Telesoft. (#2452)
+- les premiers et derniers curseurs routines des afficheurs braille Pacmate et Focus de Freedom Scientific peuvent maintenant être utilisés pour défiler vers l'avant ou vers l'arrière. (#2556)
+- Plus de possibilités sont supportées pour les afficheurs brailles Focus de Freedom Scientific comme les bares pour avancer, les bares de basculement et certaines combinaisons de points pour des actions communes. (#2516)
+- Dans les applications utilisant IAccessible2 comme les applications Mozilla, les entêtes de lignes et collones des tableaux peuvent être rapportées même en n'étant pas en mode navigation. (#926)
 
 
 == Changements ==
 - Dans la boîte de dialogue de préférences du curseur de revue de NVDA, l'option suivre le focus clavier a été renomée en Suivre le focus système pour être cohérant avec les terminologies utilisées ailleur dans NVDA.
 - Quand le braille suit la revue et que le curseur est dans un objet qui n'est pas un objet texte (P.EX. une zone d'édition), les touches routines activent maintenant l'objet. (#2386)
 - L'option Sauvegarder la configuration en quittant est activée par défaut pour les nouvelles configurations.
+- Lorsque l'on met à jours une copie installée de NVDA, le raccourci clavier du bureau n'est plus remis à control+alt+n s'il a été changé manuellement par l'utilisateur. (#2572)
+- La liste des modules complémentaires dans le gestionnaire de modules complémentaires affiche le nom du paquet avant son état. (#2548)
+- Lorsqu'on installe la même version ou une autre d'un module complémentaire actuellement installé, NVDA proposera d'abord de désinstaller la version actuelle plutôt qu'afficher un message d'erreur et abandonner. (#2501)
+- Les commandes de navigation par objets (excepté la commande rapporter l'objet courrant) rapporte maintenant moins d'informations. Vous pouvez toujours obtenire les autres informations en utilisant la commande Rapporter l'objet courrant. (#2560)
 
 
 == Corrections de Bogues ==
@@ -45,10 +53,16 @@ Quoi de Neuf dans NVDA
 - La configuration du rapport des barres de progression est maintenant prise en compte pour les barres de progression non déterminables affichées par NVDA lors de l'installation, de la création d'une version portable etc. (#2574)
 - Les commandes de NVDA ne peuvent plus être exécutées depuis un afficheur Braille tant qu'un écran sécurisé de Windows (comme l'écran de verrouillage de l'ordinateur) est actif. (#2449)
 - En mode navigation, le braille est mis à jour si le texte affiché change. (#2074)
+- Lorsque l'on est dans un écran sécurisé tel que la fenêtre d'ordinateur verrouillé, les messages des applications annonçant ou affichant du braille directement via NVDA sont maintenant ignorés.
+- En mode navigation, il est maintenant impossible de passer le bas du document avec la flèche droite en étant sur le dernier caractère, ou en sautant à la fin d'un conteneur quand celui-ci est le dernier élément du document. (#2463)
+- Les contenus extérieurs ne sont plus incorrectement inclus lors du rapport du texte des dialogues dans les applications web (spécifiquement, les dialogues ARIA sans attribut aria-describedby). (#2390)
+- NVDA ne rapporte ou ne situ plus incorrectement certains champs d'édition dans les documents MSHTML (Ex : Internet Explorer), spécifiquement où un rôle ARIA explicite a été défini par l'auteur de la page web. (#2435)
+- La touche retour arrière est maintenant correctement traitée lors de l'annonce des mots tapés dans les invites de commandes. (#2586)
 
 
 == Changements pour les développeurs ==
 - Le fichier journal précédant est maintenant renomé en nvda-old.log à l'initialisation de NVDA. Par conséquent, si NVDA plente ou est redémarré, les informations journalisées de cette session sont toujours accessibles pour inspection. (#916)
+- Accéder à la propriété role dans chooseNVDAObjectOverlayClasses ne la rend plus incorrecte et pas rapporté lors du focus pour certains objets tel que les fenêtres d'invites de commandes et les contrôles Scintilla. (#2569)
 
 
 = 2012.2.1 =
