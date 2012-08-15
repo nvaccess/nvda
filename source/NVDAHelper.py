@@ -122,72 +122,79 @@ def nvdaControllerInternal_logMessage(level,pid,message):
 	return 0
 
 def handleInputCompositionEnd(result):
+	import speech
+	import characterProcessing
 	from NVDAObjects.inputComposition import InputComposition
+	from NVDAObjects.behaviors import CandidateItem
 	focus=api.getFocusObject()
+	result=result.lstrip(u'\u3000 ')
+	curInputComposition=None
 	if isinstance(focus,InputComposition):
-		import speech
-		import characterProcessing
+		curInputComposition=focus
 		oldSpeechMode=speech.speechMode
 		speech.speechMode=speech.speechMode_off
 		eventHandler.executeEvent("gainFocus",focus.parent)
 		speech.speechMode=oldSpeechMode
-		result=result.lstrip(u'\u3000 ')
-		if not result:
-			result=focus.compositionString.lstrip(u'\u3000 ')
-		if result:
-			speech.speakText(result,symbolLevel=characterProcessing.SYMLVL_ALL)
+	elif isinstance(focus.parent,InputComposition):
+		#Candidate list is still up
+		curInputComposition=focus.parent
+		focus.parent=focus.parent.parent
+	if curInputComposition and not result:
+		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
+	if result:
+		speech.speakText(result,symbolLevel=characterProcessing.SYMLVL_ALL)
 
 def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,isReading):
 	import speech
-	#End of composition already?
-	if selectionStart==-1:
-		result=compositionString.lstrip(u'\u3000 ')
-		if result:
-			speech.speakText(result)
-		return
 	from NVDAObjects.inputComposition import InputComposition
-	focus=api.getFocusObject()
-	if not isinstance(focus,InputComposition):
-		parent=api.getDesktopObject().objectWithFocus()
-		newFocus=InputComposition(parent=parent)
-		oldSpeechMode=speech.speechMode
-		speech.speechMode=speech.speechMode_off
-		eventHandler.executeEvent("gainFocus",newFocus)
-		focus=newFocus
-		speech.speechMode=oldSpeechMode
-	focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
-
-@WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
-def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading):
-	from NVDAObjects.inputComposition import InputComposition, CandidateItem
+	from NVDAObjects.behaviors import CandidateItem
 	focus=api.getFocusObject()
 	#IME keeps updating input composition while the candidate list is open
 	#Therefore ignore composition updates in this situation.
 	if isinstance(focus,CandidateItem):
 		return 0
+	if not isinstance(focus,InputComposition):
+		parent=api.getDesktopObject().objectWithFocus()
+		curInputComposition=InputComposition(parent=parent)
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
+		eventHandler.executeEvent("gainFocus",curInputComposition)
+		focus=curInputComposition
+		speech.speechMode=oldSpeechMode
+	focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
+
+@WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
+def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading):
+	from NVDAObjects.inputComposition import InputComposition
+	if selectionStart==-1:
+		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,compositionString)
+		return 0
+	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
-		if selectionStart!=-1:
-			focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
-		else:
-			queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,compositionString)
+		focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
 	else:
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0
 
 def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 	candidateStrings=candidatesString.split('\n')
-	from NVDAObjects.inputComposition import CandidateList, CandidateItem
+	import speech
+	from NVDAObjects.inputComposition import InputComposition, CandidateList, CandidateItem
 	focus=api.getFocusObject()
 	if not (0<=selectionIndex<len(candidateStrings)):
 		if isinstance(focus,CandidateItem):
+			oldSpeechMode=speech.speechMode
+			speech.speechMode=speech.speechMode_off
 			eventHandler.executeEvent("gainFocus",focus.parent)
+			speech.speechMode=oldSpeechMode
 		return
 	if isinstance(focus,CandidateItem):
 		parent=focus.parent
 		wasCandidate=True
 	else:
+		parent=focus
 		wasCandidate=False
-	item=CandidateItem(parent=focus,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
+	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
 	if wasCandidate and focus.windowHandle==item.windowHandle and focus.candidateIndex==item.candidateIndex and focus.name==item.name:
 		return
 	eventHandler.executeEvent("gainFocus",item)

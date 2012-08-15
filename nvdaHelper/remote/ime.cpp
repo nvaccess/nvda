@@ -336,6 +336,7 @@ bool hasValidIMEContext(HWND hwnd) {
 }
 
 static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
+	static HWND curIMEWindow=NULL;
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	// Ignore messages with invalid HIMC
 	if(!hasValidIMEContext(pcwp->hwnd)) return 0; 
@@ -357,6 +358,7 @@ static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lPar
 			}
 
 		case WM_IME_COMPOSITION:
+			curIMEWindow=pcwp->hwnd;
 			if(!isTSFThread(true)) {
 				handleReadingStringUpdate(pcwp->hwnd);
 				handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
@@ -364,8 +366,9 @@ static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lPar
 			break;
 
 		case WM_IME_ENDCOMPOSITION:
-			if(!isTSFThread(true)) {
+			if(curIMEWindow==pcwp->hwnd&&!isTSFThread(true)) {
 				handleEndComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+				curIMEWindow=NULL;
 				//Disable further typed character notifications produced by TSF
 				typedCharacter_window=NULL;
 			}
