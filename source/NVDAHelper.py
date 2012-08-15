@@ -60,25 +60,18 @@ def nvdaController_brailleMessage(text):
 	return 0
 
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
-	try:
-		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString)
-	except WindowsError:
-		log.debugWarning("Could not find reg key %s"%layoutString)
-		return None
-	try:
-		s = _winreg.QueryValueEx(key, "Layout Display Name")[0]
-	except:
-		log.debugWarning("Could not find reg value 'Layout Display Name' for reg key %s"%layoutString)
-		s=None
-	if s:
-		buf=create_unicode_buffer(256)
-		windll.shlwapi.SHLoadIndirectString(s,buf,256,None)
-		return buf.value
-	try:
-		return _winreg.QueryValueEx(key, "Layout Text")[0]
-	except:
-		log.debugWarning("Could not find reg value 'Layout Text' for reg key %s"%layoutString)
-		return None
+	buf=create_unicode_buffer(1024)
+	bufSize=c_int(2048)
+	key=HKEY()
+	if windll.advapi32.RegOpenKeyExW(_winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,_winreg.KEY_QUERY_VALUE,byref(key))==0:
+		try:
+			if windll.advapi32.RegQueryValueExW(key,u"Layout Display Name",0,None,buf,byref(bufSize))==0:
+				windll.shlwapi.SHLoadIndirectString(buf.value,buf,1023,None)
+				return buf.value
+			if windll.advapi32.RegQueryValueExW(key,u"Layout Text",0,None,buf,byref(bufSize))==0:
+				return buf.value
+		finally:
+			windll.advapi32.RegCloseKey(key)
 
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaControllerInternal_requestRegistration(uuidString):
