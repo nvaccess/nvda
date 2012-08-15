@@ -1067,6 +1067,11 @@ Seguidamente van las asociaciones de teclas para esta línea con NVDA.
 Por favor mira la documentación de la línea para descriptciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | tecla |
+| Desplazar línea braille atrás | sensorSuperior1 (primera celda en la línea) |
+| Desplazar línea braille adelante | sensorSuperior20/40/80 (última celda en la línea) |
+| Desplazar línea braille atrás | barraDeAvance izquierda |
+| Desplazar línea braille adelante | barraDeAvance derecha |
+| Conmutar seguimiento de braille | leftGDFButton+rightGDFButton |
 | Conmutar acción de rueda izquierda | pulsar rueda izquierda |
 | Moverse hacia atrás utilizando acción de rueda izquierda | rueda izquierda hacia arriba |
 | Moverse hacia adelante utilizando acción de rueda izquierda | rueda izquierda hacia abajo |
@@ -1074,6 +1079,38 @@ Por favor mira la documentación de la línea para descriptciones de dónde pued
 | Moverse hacia atrás utilizando acción de rueda derecha | rueda derecha hacia arriba |
 | Moverse hacia adelante  utilizando acción de rueda derecha | rueda derecha hacia abajo |
 | Guiar hacia la celda braille | sensor |
+| tecla retroceso | punto7 |
+| tecla intro | punto8 |
+| tecla shift+tab | barra espaciadora braille+punto1+punto2 |
+| tecla tab | barra espaciadora braille+punto4+punto5 |
+| tecla flecha abajo | barra espaciadora braille+punto1 |
+| tecla flecha arriba | barra espaciadora braille+punto4 |
+| tecla control+flecha izquierda | barra espaciadora braille+punto2 |
+| tecla control+flecha derecha | barra espaciadora braille+punto5 |
+| tecla flecha izquierda | barra espaciadora braille+punto3 |
+| tecla flecha derecha | barra espaciadora braille+punto6 |
+| tecla inicio | barra espaciadora braille+punto1+punto3 |
+| tecla fin | barra espaciadora braille+punto4+punto6 |
+| tecla control+inicio | barra espaciadora braille+punto1+punto2+punto3 |
+| tecla control+fin | barra espaciadora braille+punto4+punto5+punto6 |
+| tecla alt | barra espaciadora braille+punto1+punto3+punto4 |
+| tecla alt+tab | barra espaciadora braille+punto2+punto3+punto4+punto5 |
+| tecla escape | barra espaciadora braille+punto1+punto5 |
+| tecla windows | barra espaciadora braille+punto2+punto4+punto5+punto6 |
+| tecla espacio | barra espaciadora braille |
+| tecla windows+d (minimizar todas las aplicaciones) | barra espaciadora braille+punto1+punto2+punto3+punto4+punto5+punto6 |
+| Anunciar Línea Actual | barra espaciadora braille+punto1+punto4 |
+| Menú NVDA | barra espaciadora braille+punto1+punto3+punto4+punto5 |
+
+Para los modelos más recientes de la Focus que contienen teclas de balancines (focus 40, focus 80 y focus blue):
+|| Nombre | Tecla |
+| Mover línea braille a la línea anterior | balancín izquierdo arriba, balancín derecho arriba |
+| Mover línea braille a la línea siguiente | balancín izquierdo abajo, balancín derecho abajo |
+
+Sólo para la Focus 80:
+|| Nombre | Tecla |
+| Desplazar línea braille atrás | barra frontal izquierda arriba, barra frontal derecha arriba |
+| Desplazar línea braille adelante | barra frontal izquierda abajo, barra frontal derecha abajo |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1297,6 +1334,28 @@ Por favor mira la documentación de la línea para descripciones de dónde se pu
 || Nombre | Tecla |
 | Desplazar línea braille hacia atrás | desplazador abajo de la izquierda |
 | Desplazar línea braille hacia adelante | desplazador abajo de la derecha |
+| Ir a la celda braille | sensores |
+%kc:endInclude
+
+++ Líneas Braille Seika ++
+Se soportan las líneas braille Seika Versión 3, 4 y 5 (40 celdas) y Seika80 (80 celdas) de [Nippon Telesoft http://www.nippontelesoft.com/].
+Puedes encontrar más información acerca de estas líneas en http://www.seika-braille.com/.
+Primero debes instalar los controladores USB proporcionados por el fabricante.
+
+Seguidamente van las asignaciones de teclas para esta línea con NVDA.
+Por favor mira la documentación de la línea para descripciones de dónde se encuentran estas teclas.
+%kc:beginInclude
+|| Nombre | tecla |
+| Desplazar línea braille atrás | izquierda |
+| Desplazar línea braille adelante | derecha |
+| Mover línea braille a la línea anterior | b3 |
+| Mover línea braille a la siguiente línea | b4 |
+| Conmutar seguimiento del braille  | b5 |
+| Leer todo | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| Menú NVDA | izquierda+derecha |
 | Ir a la celda braille | sensores |
 %kc:endInclude
 
