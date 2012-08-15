@@ -22,6 +22,10 @@ def reportSelectedCandidate(candidateObject,allowDuplicate=False):
 class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 
 	role=controlTypes.ROLE_LISTITEM
+	keyboardShortcut=""
+
+	def _get_candidateNumber(self):
+		return super(BaseCandidateItem,self).keyboardShortcut
 
 	def _get_parent(self):
 		parent=super(BaseCandidateItem,self).parent
@@ -30,12 +34,9 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 		parent.description=None
 		return parent
 
-	def _get_keyboardShortcut(self):
-		return ""
-
 	def _get_name(self):
 		try:
-			number=int(super(BaseCandidateItem,self).keyboardShortcut)
+			number=int(self.candidateNumber)
 		except (TypeError,ValueError):
 			return super(BaseCandidateItem,self).name
 		word=super(BaseCandidateItem,self).name
@@ -133,7 +134,7 @@ class MSCandUI21(IAccessible):
 
 class MSCandUIWindow_candidateListItem(MSCandUI_candidateListItem):
 
-	def _get_value(self):
+	def _get_candidateNumber(self):
 		index=self.IAccessibleChildID-2
 		if index>0:
 			return unicode(index)
