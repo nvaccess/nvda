@@ -21,6 +21,8 @@ from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
 import editableText
 from logHandler import log
+import api
+import ui
 
 class ProgressBar(NVDAObject):
 
@@ -336,3 +338,82 @@ class Terminal(LiveText, EditableText):
 
 	def event_loseFocus(self):
 		self.stopMonitoring()
+
+class RowWithFakeNavigation(NVDAObject):
+	_savedColumnNumber = None
+
+	def _moveToColumn(self, obj):
+		if not obj:
+			ui.message(_("edge of table"))
+			return
+		if obj is not self:
+			# Use the focused copy of the row as the parent for all cells to make comparison faster.
+			obj.parent = self
+		api.setNavigatorObject(obj)
+		speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
+
+	def _moveToColumnNumber(self, column):
+		child = column - 1
+		if child > self.childCount:
+			return
+		cell = self.children[child]
+		self._moveToColumn(cell)
+
+	def script_moveToColumn(self, gesture):
+		self._moveToColumnNumber(int(gesture.mainKeyName[-1]))
+
+	def script_moveToNextColumn(self, gesture):
+		cur = api.getNavigatorObject()
+		if cur == self:
+			new = self.firstChild
+		elif cur.parent != self:
+			new = self
+		else:
+			new = cur.next
+		self._moveToColumn(new)
+	script_moveToNextColumn.canPropagate = True
+
+	def script_moveToPreviousColumn(self, gesture):
+		cur = api.getNavigatorObject()
+		if cur == self:
+			new = None
+		elif cur.parent != self or cur.columnNumber == 1:
+			new = self
+		else:
+			new = cur.previous
+		self._moveToColumn(new)
+	script_moveToPreviousColumn.canPropagate = True
+
+	def reportFocus(self):
+		col = self._savedColumnNumber
+		if not col:
+			return super(RowWithFakeNavigation, self).reportFocus()
+		self.__class__._savedColumnNumber = None
+		self._moveToColumnNumber(col)
+
+	def _moveToRow(self, row):
+		if not row:
+			return self._moveToColumn(None)
+		nav = api.getNavigatorObject()
+		if nav != self and nav.parent == self:
+			self.__class__._savedColumnNumber = nav.columnNumber
+		row.setFocus()
+
+	def script_moveToNextRow(self, gesture):
+		self._moveToRow(self.next)
+	script_moveToNextRow.canPropagate = True
+
+	def script_moveToPreviousRow(self, gesture):
+		self._moveToRow(self.previous)
+	script_moveToPreviousRow.canPropagate = True
+
+	def initOverlayClass(self):
+		for n in xrange(1, 9):
+			self.bindGesture("kb:NVDA+control+%d" % n, "moveToColumn")
+
+	__gestures = {
+		"kb:control+alt+rightArrow": "moveToNextColumn",
+		"kb:control+alt+leftArrow": "moveToPreviousColumn",
+		"kb:control+alt+downArrow": "moveToNextRow",
+		"kb:control+alt+upArrow": "moveToPreviousRow",
+	}
