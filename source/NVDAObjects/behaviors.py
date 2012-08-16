@@ -417,3 +417,50 @@ class RowWithFakeNavigation(NVDAObject):
 		"kb:control+alt+downArrow": "moveToNextRow",
 		"kb:control+alt+upArrow": "moveToPreviousRow",
 	}
+
+class RowWithoutCellObjects(NVDAObject):
+
+	def _get_childCount(self):
+		return self.parent.columnCount
+
+	def _getColumnContent(self, column):
+		raise NotImplementedError
+
+	def _getColumnHeader(self, column):
+		raise NotImplementedError
+
+	def _makeCell(self, column):
+		if column == 0 or column > self.childCount:
+			return None
+		return _FakeTableCell(parent=self, column=column)
+
+	def _get_firstChild(self):
+		return self._makeCell(1)
+
+class _FakeTableCell(NVDAObject):
+
+	role = controlTypes.ROLE_TABLECELL
+
+	def __init__(self, parent=None, column=None):
+		super(_FakeTableCell, self).__init__()
+		self.parent = parent
+		self.columnNumber = column
+		try:
+			self.rowNumber = self.parent.positionInfo["indexInGroup"]
+		except KeyError:
+			pass
+		self.processID = parent.processID
+
+	def _get_next(self):
+		return self.parent._makeCell(self.columnNumber + 1)
+
+	def _get_previous(self):
+		return self.parent._makeCell(self.columnNumber - 1)
+
+	firstChild = None
+
+	def _get_name(self):
+		return self.parent._getColumnContent(self.columnNumber)
+
+	def _get_columnHeaderText(self):
+		return self.parent._getColumnHeader(self.columnNumber)
