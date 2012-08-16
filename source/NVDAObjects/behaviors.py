@@ -437,6 +437,9 @@ class RowWithoutCellObjects(NVDAObject):
 	def _get_firstChild(self):
 		return self._makeCell(1)
 
+	def _get_children(self):
+		return [self._makeCell(column) for column in xrange(1, self.childCount + 1)]
+
 class _FakeTableCell(NVDAObject):
 
 	role = controlTypes.ROLE_TABLECELL
@@ -450,6 +453,12 @@ class _FakeTableCell(NVDAObject):
 		except KeyError:
 			pass
 		self.processID = parent.processID
+		try:
+			# Some NVDA code depends on windowHandle and windowClassName, even for non-Window objects.
+			self.windowHandle = parent.windowHandle
+			self.windowClassName = parent.windowClassName
+		except AttributeError:
+			pass
 
 	def _get_next(self):
 		return self.parent._makeCell(self.columnNumber + 1)
@@ -464,3 +473,6 @@ class _FakeTableCell(NVDAObject):
 
 	def _get_columnHeaderText(self):
 		return self.parent._getColumnHeader(self.columnNumber)
+
+	def _get_tableID(self):
+		return id(self.parent)
