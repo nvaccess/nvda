@@ -1,10 +1,12 @@
 import time
 import oleacc
+import queueHandler
 import eventHandler
 import controlTypes
 import characterProcessing
 import config
 import api
+import ui
 import speech
 import winUser
 from . import IAccessible
@@ -13,10 +15,14 @@ from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
 def reportSelectedCandidate(candidateObject,allowDuplicate=False):
 	if not eventHandler.isPendingEvents("gainFocus") and (allowDuplicate or candidateObject!=api.getFocusObject()):
 		if not isinstance(api.getFocusObject(),BaseCandidateItem):
+			oldCandidateItemsText=None
 			candidateObject.container=api.getFocusObject()
 			eventHandler.queueEvent("foreground",candidateObject)
 		else:
+			oldCandidateItemsText=api.getFocusObject().visibleCandidateItemsText
 			candidateObject.container=api.getFocusObject().container
+		if candidateObject.visibleCandidateItemsText!=oldCandidateItemsText:
+			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,candidateObject.visibleCandidateItemsText)
 		eventHandler.queueEvent("gainFocus",candidateObject)
 
 class BaseCandidateItem(CandidateItemBehavior,IAccessible):

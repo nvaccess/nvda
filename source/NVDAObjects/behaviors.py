@@ -367,3 +367,17 @@ class CandidateItem(NVDAObject):
 		if desc:
 			text+=u", "+desc
 		speech.speakText(text)
+
+	def _get_visibleCandidateItemsText(self):
+		obj=self
+		textList=[]
+		while obj and isinstance(obj,CandidateItem) and controlTypes.STATE_INVISIBLE not in obj.states:
+			textList.append(obj.name)
+			obj=obj.previous
+		textList.reverse()
+		obj=self.next
+		while obj and isinstance(obj,CandidateItem) and controlTypes.STATE_INVISIBLE not in obj.states:
+			textList.append(obj.name)
+			obj=obj.next
+		self.visibleCandidateItemsText=", ".join(textList)
+		return self.visibleCandidateItemsText

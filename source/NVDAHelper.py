@@ -181,7 +181,9 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 			eventHandler.executeEvent("gainFocus",focus.parent)
 			speech.speechMode=oldSpeechMode
 		return
+	oldCandidateItemsText=None
 	if isinstance(focus,CandidateItem):
+		oldCandidateItemsText=focus.visibleCandidateItemsText
 		parent=focus.parent
 		wasCandidate=True
 	else:
@@ -190,6 +192,9 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
 	if wasCandidate and focus.windowHandle==item.windowHandle and focus.candidateIndex==item.candidateIndex and focus.name==item.name:
 		return
+	if item.visibleCandidateItemsText!=oldCandidateItemsText:
+		import ui
+		ui.message(item.visibleCandidateItemsText)
 	eventHandler.executeEvent("gainFocus",item)
 
 @WINFUNCTYPE(c_long,c_wchar_p,c_long)
