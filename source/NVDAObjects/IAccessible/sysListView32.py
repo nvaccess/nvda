@@ -16,8 +16,9 @@ import eventHandler
 import winKernel
 import winUser
 from . import IAccessible, List
-from ..window import Window 
+from ..window import Window
 import watchdog
+from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
 
 #Window messages
 LVM_FIRST=0x1000
@@ -107,7 +108,7 @@ class LVItemStruct(Structure):
 		('iSubItem',c_int),
 		('state',c_uint),
 		('stateMask',c_uint),
-		('text',LPWSTR),
+		('pszText',c_void_p),
 		('cchTextMax',c_int),
 		('iImage',c_int),
 		('lParam',LPARAM),
@@ -187,6 +188,29 @@ class List(List):
 					groupingObj=GroupingItem(windowHandle=self.windowHandle,parentNVDAObject=self,groupInfo=info)
 					return eventHandler.queueEvent("gainFocus",groupingObj)
 		return super(List,self).event_gainFocus()
+
+	def _get_rowCount(self):
+		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
+
+	def _get_columnCount(self):
+		headerHwnd= watchdog.cancellableSendMessage(self.windowHandle,LVM_GETHEADER,0,0)
+		count = watchdog.cancellableSendMessage(headerHwnd, HDM_GETITEMCOUNT, 0, 0)
+		if not count:
+			return 1
+		return count
+
+	def _get__columnOrderArray(self):
+		coa=(c_int *self.columnCount)()
+		processHandle=self.processHandle
+		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			winKernel.writeProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+			res = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETCOLUMNORDERARRAY, self.columnCount, internalCoa)
+			if res:
+				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
+		return coa
 
 class GroupingItem(Window):
 
@@ -281,3 +305,51 @@ class ListItem(IAccessible):
 	def event_stateChange(self):
 		if self.hasFocus:
 			super(ListItem,self).event_stateChange()
+
+class MultiColListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItem):
+
+	def _getColumnContentRaw(self, index):
+		buffer=None
+		processHandle=self.processHandle
+		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(LVItemStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			internalText=winKernel.virtualAllocEx(processHandle,None,CBEMAXSTRLEN*2,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			try:
+				item=LVItemStruct(iItem=self.IAccessibleChildID-1,mask=LVIF_TEXT|LVIF_COLUMNS,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
+				winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+				len = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEMTEXTW, (self.IAccessibleChildID-1), internalItem)
+				if len:
+					winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+					buffer=create_unicode_buffer(len)
+					winKernel.readProcessMemory(processHandle,item.pszText,buffer,sizeof(buffer),None)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalText,0,winKernel.MEM_RELEASE)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
+		return buffer.value if buffer else None
+
+	def _getColumnContent(self, column):
+		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
+
+	def _getColumnHeaderRaw(self,index):
+		buffer=None
+		processHandle=self.processHandle
+		internalColumn=winKernel.virtualAllocEx(processHandle,None,sizeof(LVCOLUMN),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			internalText=winKernel.virtualAllocEx(processHandle,None,CBEMAXSTRLEN*2,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			try:
+				column=LVCOLUMN(mask=LVCF_TEXT,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
+				winKernel.writeProcessMemory(processHandle,internalColumn,byref(column),sizeof(LVCOLUMN),None)
+				res = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETCOLUMNW, index, internalColumn)
+				if res:
+					winKernel.readProcessMemory(processHandle,internalColumn,byref(column),sizeof(LVCOLUMN),None)
+					buffer=create_unicode_buffer(column.cchTextMax)
+					winKernel.readProcessMemory(processHandle,column.pszText,buffer,sizeof(buffer),None)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalText,0,winKernel.MEM_RELEASE)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalColumn,0,winKernel.MEM_RELEASE)
+		return buffer.value if buffer else None
+
+	def _getColumnHeader(self, column):
+		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
