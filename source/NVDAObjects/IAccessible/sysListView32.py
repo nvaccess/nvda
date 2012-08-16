@@ -1,6 +1,7 @@
-#NVDAObjects/sysListView32.py
+# -*- coding: UTF-8 -*-
+#NVDAObjects/IAccessible/sysListView32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -26,6 +27,13 @@ LVM_GETGROUPINFOBYINDEX=LVM_FIRST+153
 LVM_GETITEMCOUNT=LVM_FIRST+4
 LVM_GETITEM=LVM_FIRST+75
 LVN_GETDISPINFO=0xFFFFFF4F
+LVM_GETITEMTEXTW=LVM_FIRST+115
+LVM_GETHEADER=LVM_FIRST+31
+LVM_GETCOLUMNORDERARRAY=LVM_FIRST+59
+LVM_GETCOLUMNW=LVM_FIRST+95
+LVM_GETSELECTEDCOUNT =(LVM_FIRST+50)
+LVNI_SELECTED =2
+LVM_GETNEXTITEM =(LVM_FIRST+12)
 
 #item mask flags
 LVIF_TEXT=0x01 
@@ -49,6 +57,20 @@ LVIS_SELECTED=0x02
 LVIS_STATEIMAGEMASK=0xF000
 
 LVS_OWNERDRAWFIXED=0x0400
+
+#column mask flags
+LVCF_FMT=1
+LVCF_WIDTH=2
+LVCF_TEXT=4
+LVCF_SUBITEM=8
+LVCF_IMAGE=16
+LVCF_ORDER=32
+
+CBEMAXSTRLEN=260
+
+# listview header window messages
+HDM_FIRST=0x1200
+HDM_GETITEMCOUNT=HDM_FIRST
 
 class LVGROUP(Structure):
 	_fields_=[
@@ -101,6 +123,21 @@ class NMLVDispInfoStruct(Structure):
 	_fields_=[
 		('hdr',winUser.NMHdrStruct),
 		('item',c_int),
+	]
+
+class LVCOLUMN(Structure):
+	_fields_=[
+		('mask',c_uint),
+		('fmt',c_int),
+		('cx',c_int),
+		('pszText',c_void_p),
+		('cchTextMax',c_int),
+		('iSubItem',c_int),
+		('iImage',c_int),
+		('iOrder',c_int),
+		('cxMin',c_int),
+		('cxDefault',c_int),
+		('cxIdeal',c_int),
 	]
 
 def getListGroupInfo(windowHandle,groupIndex):
