@@ -354,7 +354,7 @@ class RowWithFakeNavigation(NVDAObject):
 
 	def _moveToColumnNumber(self, column):
 		child = column - 1
-		if child > self.childCount:
+		if child >= self.childCount:
 			return
 		cell = self.children[child]
 		self._moveToColumn(cell)
