@@ -192,7 +192,7 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
 	if wasCandidate and focus.windowHandle==item.windowHandle and focus.candidateIndex==item.candidateIndex and focus.name==item.name:
 		return
-	if item.visibleCandidateItemsText!=oldCandidateItemsText:
+	if config.conf["inputComposition"]["autoReportAllCandidates"] and item.visibleCandidateItemsText!=oldCandidateItemsText:
 		import ui
 		ui.message(item.visibleCandidateItemsText)
 	eventHandler.executeEvent("gainFocus",item)

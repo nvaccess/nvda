@@ -168,6 +168,10 @@ confspec = ConfigObj(StringIO(
 
 [update]
 	autoCheck = boolean(default=true)
+
+[inputComposition]
+	autoReportAllCandidates = boolean(default=True)
+	reportReadingStringChanges = boolean(default=True)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"

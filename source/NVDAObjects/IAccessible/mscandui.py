@@ -21,7 +21,7 @@ def reportSelectedCandidate(candidateObject,allowDuplicate=False):
 		else:
 			oldCandidateItemsText=api.getFocusObject().visibleCandidateItemsText
 			candidateObject.container=api.getFocusObject().container
-		if candidateObject.visibleCandidateItemsText!=oldCandidateItemsText:
+		if config.conf["inputComposition"]["autoReportAllCandidates"] and candidateObject.visibleCandidateItemsText!=oldCandidateItemsText:
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,candidateObject.visibleCandidateItemsText)
 		eventHandler.queueEvent("gainFocus",candidateObject)
 

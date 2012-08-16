@@ -77,6 +77,8 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText,symbolLevel=characterProcessing.SYMLVL_ALL)
 
 	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,isReading):
+		if isReading and not config.conf["inputComposition"]["reportReadingStringChanges"]:
+			return
 		self.reportNewText((self.readingString if isReading else self.compositionString),compositionString)
 		hasChanged=False
 		if isReading:
