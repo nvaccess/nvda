@@ -13,6 +13,7 @@ import eventHandler
 import controlTypes
 from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
+from NVDAObjects.behaviors import RowWithFakeNavigation
 
 class Mozilla(IAccessible):
 
@@ -199,6 +200,8 @@ def findExtraOverlayClasses(obj, clsList):
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
 		clsList.append(cls)
+	if iaRole in (oleacc.ROLE_SYSTEM_LISTITEM, oleacc.ROLE_SYSTEM_OUTLINEITEM, oleacc.ROLE_SYSTEM_ROW):
+		clsList.append(RowWithFakeNavigation)
 	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
 		clsList.append(BrokenFocusedState)
 
