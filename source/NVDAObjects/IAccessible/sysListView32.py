@@ -273,8 +273,7 @@ class GroupingItem(Window):
 	def _get_name(self):
 		return self.groupInfo['header']
 
-	def _get_role(self):
-		return controlTypes.ROLE_GROUPING
+	role = controlTypes.ROLE_GROUPING
 
 	def _get_value(self):
 		return self.groupInfo['footer']
@@ -328,8 +327,7 @@ class ListItem(IAccessible):
 			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
 		return item.iImage
 
-	def _get_description(self):
-		return None
+	description = None
 
 	def _get_value(self):
 		value=super(ListItem,self)._get_description()
