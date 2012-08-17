@@ -57,6 +57,7 @@ LVIS_FOCUSED=0x01
 LVIS_SELECTED=0x02
 LVIS_STATEIMAGEMASK=0xF000
 
+LVS_REPORT=0x0001
 LVS_OWNERDRAWFIXED=0x0400
 
 #column mask flags
@@ -227,6 +228,8 @@ class List(List):
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
 
 	def _get_columnCount(self):
+		if not (self.windowStyle & LVS_REPORT):
+			return 0
 		headerHwnd= watchdog.cancellableSendMessage(self.windowHandle,LVM_GETHEADER,0,0)
 		count = watchdog.cancellableSendMessage(headerHwnd, HDM_GETITEMCOUNT, 0, 0)
 		if not count:
@@ -348,7 +351,7 @@ class ListItem(IAccessible):
 		if self.hasFocus:
 			super(ListItem,self).event_stateChange()
 
-class MultiColListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItem):
+class ListItemWithReportView(RowWithFakeNavigation, RowWithoutCellObjects, ListItem):
 
 	def _getColumnContentRaw(self, index):
 		buffer=None
@@ -397,6 +400,8 @@ class MultiColListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItem):
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
 
 	def _get_name(self):
+		if not (self.windowStyle & LVS_REPORT):
+			return super(ListItemWithReportView, self).name
 		textList = []
 		for col in xrange(1, self.childCount + 1):
 			text = self._getColumnContent(col)
