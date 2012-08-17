@@ -475,4 +475,4 @@ class _FakeTableCell(NVDAObject):
 		return self.parent._getColumnHeader(self.columnNumber)
 
 	def _get_tableID(self):
-		return id(self.parent)
+		return id(self.parent.parent)
