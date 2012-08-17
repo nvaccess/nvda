@@ -340,6 +340,10 @@ class Terminal(LiveText, EditableText):
 		self.stopMonitoring()
 
 class RowWithFakeNavigation(NVDAObject):
+	"""Provides table navigation commands for a row which doesn't support them natively.
+	The cells must be exposed as children and they must support the table cell properties.
+	"""
+
 	_savedColumnNumber = None
 
 	def _moveToColumn(self, obj):
@@ -361,6 +365,8 @@ class RowWithFakeNavigation(NVDAObject):
 
 	def script_moveToColumn(self, gesture):
 		self._moveToColumnNumber(int(gesture.mainKeyName[-1]))
+	# Translators: The description of an NVDA command.
+	script_moveToColumn.__doc__ = _("Moves the navigator object to the numbered column")
 
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
@@ -372,6 +378,8 @@ class RowWithFakeNavigation(NVDAObject):
 			new = cur.next
 		self._moveToColumn(new)
 	script_moveToNextColumn.canPropagate = True
+	# Translators: The description of an NVDA command.
+	script_moveToNextColumn.__doc__ = _("Moves the navigator object to the next column")
 
 	def script_moveToPreviousColumn(self, gesture):
 		cur = api.getNavigatorObject()
@@ -383,6 +391,8 @@ class RowWithFakeNavigation(NVDAObject):
 			new = cur.previous
 		self._moveToColumn(new)
 	script_moveToPreviousColumn.canPropagate = True
+	# Translators: The description of an NVDA command.
+	script_moveToPreviousColumn.__doc__ = _("Moves the navigator object to the previous column")
 
 	def reportFocus(self):
 		col = self._savedColumnNumber
@@ -402,10 +412,14 @@ class RowWithFakeNavigation(NVDAObject):
 	def script_moveToNextRow(self, gesture):
 		self._moveToRow(self.next)
 	script_moveToNextRow.canPropagate = True
+	# Translators: The description of an NVDA command.
+	script_moveToNextRow.__doc__ = _("Moves the navigator object and focus to the next row")
 
 	def script_moveToPreviousRow(self, gesture):
 		self._moveToRow(self.previous)
 	script_moveToPreviousRow.canPropagate = True
+	# Translators: The description of an NVDA command.
+	script_moveToPreviousRow.__doc__ = _("Moves the navigator object and focus to the previous row")
 
 	def initOverlayClass(self):
 		for n in xrange(1, 9):
@@ -419,14 +433,29 @@ class RowWithFakeNavigation(NVDAObject):
 	}
 
 class RowWithoutCellObjects(NVDAObject):
+	"""An abstract class which creates cell objects for table rows which don't natively expose them.
+	Subclasses must override L{_getColumnContent} and can optionally override L{_getColumnHeader}
+	to retrieve information about individual columns.
+	"""
 
 	def _get_childCount(self):
 		return self.parent.columnCount
 
 	def _getColumnContent(self, column):
+		"""Get the text content for a given column of this row.
+		Subclasses must override this method.
+		@param column: The index of the column, starting at 1.
+		@type column: int
+		@rtype: str
+		"""
 		raise NotImplementedError
 
 	def _getColumnHeader(self, column):
+		"""Get the header text for this column.
+		@param column: The index of the column, starting at 1.
+		@type column: int
+		@rtype: str
+		"""
 		raise NotImplementedError
 
 	def _makeCell(self, column):
@@ -454,7 +483,7 @@ class _FakeTableCell(NVDAObject):
 			pass
 		self.processID = parent.processID
 		try:
-			# Some NVDA code depends on windowHandle and windowClassName, even for non-Window objects.
+			# HACK: Some NVDA code depends on windowHandle and windowClassName, even for non-Window objects.
 			self.windowHandle = parent.windowHandle
 			self.windowClassName = parent.windowClassName
 		except AttributeError:
