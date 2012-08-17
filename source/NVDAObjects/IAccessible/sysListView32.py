@@ -101,7 +101,7 @@ class LVGROUP(Structure):
 		('cchSubsetTitle',c_uint),
 	]
 
-class LVItemStruct(Structure):
+class LVITEM(Structure):
 	_fields_=[
 		('mask',c_uint),
 		('iItem',c_int),
@@ -120,6 +120,25 @@ class LVItemStruct(Structure):
 		('iGroup',c_int),
 	]
 
+class LVITEM64(Structure):
+	_fields_=[
+		('mask',c_uint),
+		('iItem',c_int),
+		('iSubItem',c_int),
+		('state',c_uint),
+		('stateMask',c_uint),
+		('pszText',c_longlong),
+		('cchTextMax',c_int),
+		('iImage',c_int),
+		('lParam',c_longlong),
+		('iIndent',c_int),
+		('iGroupID',c_int),
+		('cColumns',c_uint),
+		('puColumns',c_uint),
+		('piColFmt',c_longlong),
+		('iGroup',c_int),
+	]
+
 class NMLVDispInfoStruct(Structure):
 	_fields_=[
 		('hdr',winUser.NMHdrStruct),
@@ -132,6 +151,21 @@ class LVCOLUMN(Structure):
 		('fmt',c_int),
 		('cx',c_int),
 		('pszText',c_void_p),
+		('cchTextMax',c_int),
+		('iSubItem',c_int),
+		('iImage',c_int),
+		('iOrder',c_int),
+		('cxMin',c_int),
+		('cxDefault',c_int),
+		('cxIdeal',c_int),
+	]
+
+class LVCOLUMN64(Structure):
+	_fields_=[
+		('mask',c_uint),
+		('fmt',c_int),
+		('cx',c_int),
+		('pszText',c_longlong),
 		('cchTextMax',c_int),
 		('iSubItem',c_int),
 		('iImage',c_int),
@@ -260,12 +294,20 @@ class GroupingItem(Window):
 
 class ListItem(IAccessible):
 
+	def initOverlayClass(self):
+		if self.appModule.is64BitProcess:
+			self.LVITEM = LVITEM64
+			self.LVCOLUMN = LVCOLUMN64
+		else:
+			self.LVITEM = LVITEM
+			self.LVCOLUMN = LVCOLUMN
+
 	def _get_lvAppImageID(self):
-		item=LVItemStruct(iItem=self.IAccessibleChildID-1,mask=LVIF_IMAGE)
+		item=self.LVITEM(iItem=self.IAccessibleChildID-1,mask=LVIF_IMAGE)
 		processHandle=self.processHandle
-		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(LVItemStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
-			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
 			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEM,0,internalItem)
 			dispInfo=NMLVDispInfoStruct()
 			dispInfo.item=internalItem
@@ -278,7 +320,7 @@ class ListItem(IAccessible):
 				watchdog.cancellableSendMessage(self.parent.parent.windowHandle,winUser.WM_NOTIFY,LVN_GETDISPINFO,internalDispInfo)
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalDispInfo,0,winKernel.MEM_RELEASE)
-			winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+			winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
 		return item.iImage
@@ -311,15 +353,15 @@ class MultiColListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItem):
 	def _getColumnContentRaw(self, index):
 		buffer=None
 		processHandle=self.processHandle
-		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(LVItemStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			internalText=winKernel.virtualAllocEx(processHandle,None,CBEMAXSTRLEN*2,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			try:
-				item=LVItemStruct(iItem=self.IAccessibleChildID-1,mask=LVIF_TEXT|LVIF_COLUMNS,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
-				winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+				item=self.LVITEM(iItem=self.IAccessibleChildID-1,mask=LVIF_TEXT|LVIF_COLUMNS,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
+				winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
 				len = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEMTEXTW, (self.IAccessibleChildID-1), internalItem)
 				if len:
-					winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
+					winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
 					buffer=create_unicode_buffer(len)
 					winKernel.readProcessMemory(processHandle,item.pszText,buffer,sizeof(buffer),None)
 			finally:
@@ -334,15 +376,15 @@ class MultiColListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItem):
 	def _getColumnHeaderRaw(self,index):
 		buffer=None
 		processHandle=self.processHandle
-		internalColumn=winKernel.virtualAllocEx(processHandle,None,sizeof(LVCOLUMN),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalColumn=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVCOLUMN),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			internalText=winKernel.virtualAllocEx(processHandle,None,CBEMAXSTRLEN*2,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			try:
-				column=LVCOLUMN(mask=LVCF_TEXT,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
-				winKernel.writeProcessMemory(processHandle,internalColumn,byref(column),sizeof(LVCOLUMN),None)
+				column=self.LVCOLUMN(mask=LVCF_TEXT,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
+				winKernel.writeProcessMemory(processHandle,internalColumn,byref(column),sizeof(self.LVCOLUMN),None)
 				res = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETCOLUMNW, index, internalColumn)
 				if res:
-					winKernel.readProcessMemory(processHandle,internalColumn,byref(column),sizeof(LVCOLUMN),None)
+					winKernel.readProcessMemory(processHandle,internalColumn,byref(column),sizeof(self.LVCOLUMN),None)
 					buffer=create_unicode_buffer(column.cchTextMax)
 					winKernel.readProcessMemory(processHandle,column.pszText,buffer,sizeof(buffer),None)
 			finally:
