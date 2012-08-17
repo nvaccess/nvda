@@ -353,3 +353,14 @@ class MultiColListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItem):
 
 	def _getColumnHeader(self, column):
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
+
+	def _get_name(self):
+		textList = []
+		for col in xrange(1, self.childCount + 1):
+			text = self._getColumnContent(col)
+			if not text:
+				continue
+			textList.append(text)
+		return "; ".join(textList)
+
+	value = None
