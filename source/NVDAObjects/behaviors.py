@@ -436,6 +436,7 @@ class RowWithoutCellObjects(NVDAObject):
 	"""An abstract class which creates cell objects for table rows which don't natively expose them.
 	Subclasses must override L{_getColumnContent} and can optionally override L{_getColumnHeader}
 	to retrieve information about individual columns.
+	The parent (table) must support the L{columnCount} property.
 	"""
 
 	def _get_childCount(self):
