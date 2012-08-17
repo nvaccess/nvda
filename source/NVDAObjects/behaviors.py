@@ -505,3 +505,6 @@ class _FakeTableCell(NVDAObject):
 
 	def _get_tableID(self):
 		return id(self.parent.parent)
+
+	def _get_states(self):
+		return self.parent.states
