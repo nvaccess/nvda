@@ -1072,9 +1072,12 @@ the NVDAObject for IAccessible
 			# as it gets released when it gets garbage collected.
 			for i in xrange(nHeaders):
 				try:
-					ret.append(headers[i].QueryInterface(IAccessibleHandler.IAccessible2).accName(0))
+					text = headers[i].QueryInterface(IAccessibleHandler.IAccessible2).accName(0)
 				except COMError:
 					continue
+				if not text:
+					continue
+				ret.append(text)
 			return "\n".join(ret)
 		finally:
 			ctypes.windll.ole32.CoTaskMemFree(headers)
