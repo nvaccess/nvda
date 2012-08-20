@@ -485,7 +485,8 @@ class NVDAObject(baseObject.ScriptableObject):
 		An alternative text representation of cell coordinates e.g. "a1". Will override presentation of rowNumber and columnNumber.
 		Only implement if the representation is really different.
 		"""
-		raise NotImplementedError
+		return None
+		
 
 	def _get_rowCount(self):
 		"""Retreaves the number of rows this object contains if its a table.

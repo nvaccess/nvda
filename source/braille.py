@@ -490,6 +490,7 @@ class NVDAObjectRegion(Region):
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
 			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
+			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,
 		)
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
