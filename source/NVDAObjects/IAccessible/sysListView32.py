@@ -86,20 +86,20 @@ class LVGROUP(Structure):
 		('stateMask',c_uint),
 		('state',c_uint),
 		('uAlign',c_uint),
-		('pszSubtitle',c_void_p),
-		('cchSubtitle',c_uint),
-		('pszTask',c_void_p),
-		('cchTask',c_uint),
-		('pszDescriptionTop',c_void_p),
-		('cchDescriptionTop',c_uint),
-		('pszDescriptionBottom',c_void_p),
-		('cchDescriptionBottom',c_uint),
-		('iTitleImage',c_int),
-		('iExtendedImage',c_int),
-		('iFirstItem',c_int),
-		('cItems',c_uint),
-		('pszSubsetTitle',c_void_p),
-		('cchSubsetTitle',c_uint),
+	]
+
+class LVGROUP64(Structure):
+	_fields_=[
+		('cbSize',c_uint),
+		('mask',c_uint),
+		('pszHeader',c_ulonglong),
+		('cchHeader',c_int),
+		('pszFooter',c_ulonglong),
+		('cchFooter',c_int),
+		('iGroupId',c_int),
+		('stateMask',c_uint),
+		('state',c_uint),
+		('uAlign',c_uint),
 	]
 
 class LVITEM(Structure):
@@ -128,15 +128,15 @@ class LVITEM64(Structure):
 		('iSubItem',c_int),
 		('state',c_uint),
 		('stateMask',c_uint),
-		('pszText',c_longlong),
+		('pszText',c_ulonglong),
 		('cchTextMax',c_int),
 		('iImage',c_int),
-		('lParam',c_longlong),
+		('lParam',c_ulonglong),
 		('iIndent',c_int),
 		('iGroupID',c_int),
 		('cColumns',c_uint),
 		('puColumns',c_uint),
-		('piColFmt',c_longlong),
+		('piColFmt',c_ulonglong),
 		('iGroup',c_int),
 	]
 
@@ -166,7 +166,7 @@ class LVCOLUMN64(Structure):
 		('mask',c_uint),
 		('fmt',c_int),
 		('cx',c_int),
-		('pszText',c_longlong),
+		('pszText',c_ulonglong),
 		('cchTextMax',c_int),
 		('iSubItem',c_int),
 		('iImage',c_int),
@@ -176,32 +176,31 @@ class LVCOLUMN64(Structure):
 		('cxIdeal',c_int),
 	]
 
-def getListGroupInfo(windowHandle,groupIndex):
-	processHandle=oleacc.GetProcessHandleFromHwnd(windowHandle)
-	if not processHandle:
-		return None
-	localInfo=LVGROUP()
-	localInfo.cbSize=sizeof(LVGROUP)
-	localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
-	localInfo.stateMask=0xffffffff
-	remoteInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(LVGROUP),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-	try:
-		winKernel.writeProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
-		messageRes=watchdog.cancellableSendMessage(windowHandle,LVM_GETGROUPINFOBYINDEX,groupIndex,remoteInfo)
-		winKernel.readProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
-	finally:
-		winKernel.virtualFreeEx(processHandle,remoteInfo,0,winKernel.MEM_RELEASE)
-	localHeader=create_unicode_buffer(localInfo.cchHeader)
-	winKernel.readProcessMemory(processHandle,localInfo.pszHeader,localHeader,localInfo.cchHeader*2,None)
-	localFooter=create_unicode_buffer(localInfo.cchFooter)
-	winKernel.readProcessMemory(processHandle,localInfo.pszFooter,localFooter,localInfo.cchFooter*2,None)
-	winKernel.closeHandle(processHandle)
-	if messageRes==1:
-		return dict(header=localHeader.value,footer=localFooter.value,groupID=localInfo.iGroupId,state=localInfo.state,uAlign=localInfo.uAlign,groupIndex=groupIndex)
-	else:
-		return None
-
 class List(List):
+
+	def getListGroupInfo(self,groupIndex):
+		processHandle=self.processHandle
+		if not processHandle:
+			return None
+		localInfo=LVGROUP64() if self.appModule.is64BitProcess else LVGROUP()
+		localInfo.cbSize=sizeof(localInfo)
+		localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
+		localInfo.stateMask=0xffffffff
+		remoteInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(localInfo),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			winKernel.writeProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(localInfo),None)
+			messageRes=watchdog.cancellableSendMessage(self.windowHandle,LVM_GETGROUPINFOBYINDEX,groupIndex,remoteInfo)
+			winKernel.readProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(localInfo),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,remoteInfo,0,winKernel.MEM_RELEASE)
+		localHeader=create_unicode_buffer(localInfo.cchHeader)
+		winKernel.readProcessMemory(processHandle,localInfo.pszHeader,localHeader,localInfo.cchHeader*2,None)
+		localFooter=create_unicode_buffer(localInfo.cchFooter)
+		winKernel.readProcessMemory(processHandle,localInfo.pszFooter,localFooter,localInfo.cchFooter*2,None)
+		if messageRes==1:
+			return dict(header=localHeader.value,footer=localFooter.value,groupID=localInfo.iGroupId,state=localInfo.state,uAlign=localInfo.uAlign,groupIndex=groupIndex)
+		else:
+			return None
 
 	def _get_name(self):
 		name=super(List,self)._get_name()
@@ -215,7 +214,7 @@ class List(List):
 		if self is api.getFocusObject():
 			groupIndex=watchdog.cancellableSendMessage(self.windowHandle,LVM_GETFOCUSEDGROUP,0,0)
 			if groupIndex>=0:
-				info=getListGroupInfo(self.windowHandle,groupIndex)
+				info=self.getListGroupInfo(groupIndex)
 				if info is not None:
 					ancestors=api.getFocusAncestors()
 					if api.getFocusDifferenceLevel()==len(ancestors)-1:
@@ -262,12 +261,14 @@ class GroupingItem(Window):
 	def _set_groupInfo(self,info):
 		self._groupInfoTime=time.time()
 		self._groupInfo=info
+		for gesture in ("kb:leftArrow", "kb:rightArrow"):
+			self.bindGesture(gesture, "collapseOrExpand")
 
 	def _get_groupInfo(self):
 		now=time.time()
 		if (now-self._groupInfoTime)>0.25:
 			self._groupInfoTime=now
-			self._groupInfo=getListGroupInfo(self.windowHandle,self._groupInfo['groupIndex'])
+			self._groupInfo=self.parent.getListGroupInfo(self._groupInfo['groupIndex'])
 		return self._groupInfo
 
 	def _get_name(self):
@@ -288,11 +289,7 @@ class GroupingItem(Window):
 
 	def script_collapseOrExpand(self,gesture):
 		gesture.send()
-		self.event_stateChange()
-
-	def initOverlayClass(self):
-		for gesture in ("kb:leftArrow", "kb:rightArrow"):
-			self.bindGesture(gesture, "collapseOrExpand")
+		eventHandler.queueEvent("stateChange",self)
 
 class ListItem(IAccessible):
 
