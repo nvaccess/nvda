@@ -200,8 +200,22 @@ def findExtraOverlayClasses(obj, clsList):
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
 		clsList.append(cls)
-	if iaRole in (oleacc.ROLE_SYSTEM_LISTITEM, oleacc.ROLE_SYSTEM_OUTLINEITEM, oleacc.ROLE_SYSTEM_ROW):
+
+	if iaRole == oleacc.ROLE_SYSTEM_ROW:
 		clsList.append(RowWithFakeNavigation)
+	elif iaRole == oleacc.ROLE_SYSTEM_LISTITEM and hasattr(obj.parent, "IAccessibleTableObject"):
+		clsList.append(RowWithFakeNavigation)
+	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
+		# Check if the tree view is a table.
+		parent = obj.parent
+		# Tree view items may be nested, so skip any tree view item ancestors.
+		while parent and parent.IAccessibleRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
+			newParent = parent.parent
+			parent.parent = newParent
+			parent = newParent
+		if hasattr(parent, "IAccessibleTableObject"):
+			clsList.append(RowWithFakeNavigation)
+
 	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
 		clsList.append(BrokenFocusedState)
 
