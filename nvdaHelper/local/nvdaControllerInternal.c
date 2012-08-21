@@ -38,3 +38,8 @@ error_status_t(__stdcall *_nvdaControllerInternal_displayModelTextChangeNotify)(
 error_status_t __stdcall nvdaControllerInternal_displayModelTextChangeNotify(const long hwnd, const long left, const long top, const long right, const long bottom) { 
 	return _nvdaControllerInternal_displayModelTextChangeNotify(hwnd,left,top,right,bottom);
 }
+
+error_status_t(__stdcall *_nvdaControllerInternal_vbufChangeNotify)(const int, const int);
+error_status_t __stdcall nvdaControllerInternal_vbufChangeNotify(const int rootDocHandle, const int rootID) {
+	return _nvdaControllerInternal_vbufChangeNotify(rootDocHandle,rootID);
+}

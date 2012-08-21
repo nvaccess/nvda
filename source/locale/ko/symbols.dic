@@ -1,0 +1,113 @@
+﻿#locale/ko/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=\d)
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	점	all	always
+! sentence ending	느낌표	all	always
+? sentence ending	물음표	all	always
+; phrase ending	세미콜론	most	always
+: phrase ending	콜런	most	always
+decimal point		none	always
+in-word '	tick	all	norep
+negative number	마이너스	none	norep
+
+# Whitespace
+\0	blank	char	# null
+\t	탭
+\n	line feed	char
+\f	page break	none
+\r	return	char
+ 	space	char
+ 	space	char	# no-break space
+
+# Standard punctuation/symbols
+!	느낌표	all
+"	따옴표	most
+\#	샵	most
+$	달러	all	norep
+￡	전각파운드	all	norep
+€	euro	all	norep
+￠	쎈트	all	norep
+￥	전각엔화표	all	norep
+%	percent	some
+&	and	some
+'	어퍼스트로피	all
+(	괄호열기	most
+)	괄호닫기	most
+*	star	most
++	plus	most
+,	콤마	all	always
+-	다시	most
+.	점	some
+/	슬래시	some
+:	콜런	most	norep
+;	세미콜런	most
+<	less	most
+>	greater	most
+=	등호	most
+?	물음표	all
+@	골뱅이	some
+[	대괄호열기	most
+]	대괄호닫기	most
+\\	백슬레시	most
+^	케럿	most
+_	언더바	most
+`	graav	most
+{	중괄호열기	most
+}	중괄호닫기	most
+|	bar	most
+~	물결표	most
+
+# Other characters
+•	bullet	some
+…	말줄임표	all	always
+...	dot dot dot	all	always
+	bullet	some
+“	큰따옴표 열기	most
+”	큰따옴표 닫기	most
+‘	작은따옴표 열기	most
+’	작은따옴표 닫기	most
+–	en dash	most
+—	em dash	most
+●	circle	most
+¨	diaeresis	most
+■	black square	some
+‎	left to right mark	char
+‏	right to left mark	char
+➔	right arrow	some
+§	section	all
+°	degrees	some
+≪	double left pointing angle bracket
+≫	double right pointing angle bracket
+μ	micro	some
+¹	superscript 1	some
+²	superscript 2	some
+³	superscript 3	some
+®	registered	some
+™	Trademark	some
+©	Copyright	some
+±	Plus or Minus	most
+×	times	most
+÷	divide by	most
+→	right arrow	some
+✓	check	some
+✔	check	some

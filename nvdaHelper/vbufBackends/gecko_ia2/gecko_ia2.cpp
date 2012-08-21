@@ -149,7 +149,7 @@ inline void fillTableHeaders(VBufStorage_controlFieldNode_t* node, IAccessibleTa
 	IAccessible2* headerCellPacc = NULL;
 	int headerCellDocHandle, headerCellID;
 
-	if ((paccTableCell->*getHeaderCells)(&headerCells, &nHeaderCells) == S_OK) {
+	if ((paccTableCell->*getHeaderCells)(&headerCells, &nHeaderCells) == S_OK && headerCells) {
 		LOG_DEBUG(L"Get header cells succeeded, adding header IDs");
 		for (int hci = 0; hci < nHeaderCells; hci++) {
 			if ((res = headerCells[hci]->QueryInterface(IID_IAccessible2, (void**)(&headerCellPacc))) != S_OK) {
@@ -174,6 +174,7 @@ inline void fillTableHeaders(VBufStorage_controlFieldNode_t* node, IAccessibleTa
 		}
 		if (!s.str().empty())
 			node->addAttribute(attribName, s.str());
+		CoTaskMemFree(headerCells);
 	}
 }
 

@@ -6,19 +6,25 @@
 = 2012.3 =
 
 == Nové vlastnosti ==
- - NVDA dokáže oznámiť podčiarknutie a prečiarknutie v programe Adobe reader. (#2410)
+ - NVDA dokáže oznámiť podčiarknutie a prečiarknutie v programe Adobe Reader. (#2410)
 - Ak je zapnutá funkcia jedným prstom, kláves NVDA sa bude správať ako iné modifikačné klávesy (ctrl, alt, windows). Toto vám umožňuje používať kláves NVDA bez toho, aby ste ho museli držať súčasne s inými klávesmi. (#230)
 - Podpora brailovských riadkov Braille Sense, Braille EDGE a SyncBraille od spoločnosti HIMS. (#1266, #1267)
-- Podpora pre notifikačné oznamy tzv. toast notifications v systéme windows 8. Pri zobrazení takéhoto upozornenia NVDA prečíta obsah a nastaví na oznámenie navigačný objekt. (#2143)
+- Podpora pre notifikačné oznamy tzv. toast notifications v systéme Windows 8. Pri zobrazení takéhoto upozornenia NVDA prečíta obsah a nastaví na oznámenie navigačný objekt. (#2143)
 - Aplikačný modul pre program VIP Mud. (#1728)
-- Ak má tabuľka v dokumente programu Adobe reader súhrn, NVDA ho prečíta (#2465)
-- NVDA oznamuje čísla riadkov a hlavičky stĺpcov v programe Adobe Reader (#2193)
-- Nové Jazyky: Kórejčina a Nepálčina
-- NVDA dokáže čítať návrhy pri automatickom dokončovaní adries v programe Microsoft Oultlook
+- Ak má tabuľka v dokumente programu Adobe Reader súhrn, NVDA ho prečíta. (#2465)
+- NVDA oznamuje čísla riadkov a hlavičky stĺpcov v programe Adobe Reader. (#2193, #2527, #2528)
+- Nové Jazyky: Amharčina, Kórejčina a Nepálčina.
+- NVDA dokáže čítať návrhy pri automatickom dokončovaní adries v programe Microsoft Outlook 2007. (#689)
+- Nové variantypre hlas eSpeak: Gene, Gene2. (#2512)
+- NVDA oznamuje čísla strán v programe Adobe Reader. (#2534)
+- Odteraz je možné vrátiť sa k pôvodným nastaveniam. Možnosť je dostupná z ponuky NVDA aktivovaním položky Obnoviť predvolené nastavenia, alebo stlačením skratky nvda+ctrl+r trikrát rýchlo za sebou. (#2086)
+
 
 == Zmeny ==
 - V dialógu Prehliadací kurzor a objektová navigácia upravená položka sledovať systémový fokus. Týka sa len anglickej lokalizácie NVDA, keďže boli rozdieli v popise prvku a používateľskej dokumentácii.
 - Ak je brailovský kurzor zviazaný s prehliadacím kurzorom a kurzor nie je na textovom objekte (napríklad editačnom poli), kláves route automaticky aktivuje objekt. (#2386)
+- Možnosť "Uložiť nastavenia pri ukončení" je predvolene začiarknutá.
+
 
 == opravy ==
 - Obsah elektronických kníh v aplikácii Blio je možné čítať aj pomocou brailovských riadkov. (#2139)
@@ -29,16 +35,30 @@
 - Ak zlyhá aktualizácia NVDA, stiahnutý súbor sa vymaže. (#2477)
 - V systéme Windows XP NVDA nezamrzne počas kopírovania aktuálnych nastavení do systémového priečinka. (#2485)
 - Dlaždice na štartovacej obrazovke v systéme Windows 8 sú lepšie oznamované hlasom, aj na brailovských riadkoch. NVDA neopakuje názvy, zbytočne neoznamuje "nevybraté" a číta aktuálny stav (napríklad aktuálnu teplotu pre aplikáciu Počasie.)
+- NVDA nečíta heslá v Microsoft Outlooku alebo v iných štandardných  chránených  editačných poliach. (#2021)
+- V Adobe Readeri sú správne oznamované zmeny vo formulároch pri čítaní v režime prehliadania. (#2529)
+- Vylepšená podpora pre kontrolu pravopisu v programe Microsoft Word. Presnejšia detekcia slov s pravopisnými chybami a čítanie dialógu pravopis a gramatika ak je NVDA nainštalované v systéme Windows wista a novších.
+- Vo väčšine prípadov je možné inštalovať doplnky, ktoré obsahujú súbory so špeciálnymi národnými znakmi. (#2505)
+- V programe Adobe Reader si NVDA pamätá jazyk textu pri listovaní v dokumente alebo obnovení dokumentu. (#2544)
+- Ak inštalujete doplnok, v potvrdzovacom dialógu NVDA zobrazí názov vybratého doplnku v aktuálnom jazyku, ak je názov  preložený. (#2422)
+- V aplikáciách, ktoré využívajú UI Automation (.net a aplikácie Silverlight) sú správne oznamované číselné hodnoty prvkov, napríklad posuvníkov. (#2417)
+- Pri inštalácii, vytváraní prenosnej verzie a podobne sa použije aktuálne nastavenie pre oznamovanie aktualizácie priebehu. (#2574)zamknutí systému). (#2449)
+- príkazy NVDA sa nedajú používať z brailovského riadka, ak je zobrazená zabezpečená obrazovka (napríklad pri zamknutí systému). (#2449)
+- Ak sa zmení text v režime prehliadania, zmena sa správne zobrazí na brailovskom riadku. (#2074)
+
 
 == Zmeny pre vývojárov ==
 - Pri štarte NVDA sa log z predošlého spustenia ukladá do súboru nvda-old.log. Takto je možné po reštarte alebo zamrznutí NVDA zistiť chybu z predchádzajúceho logu. (#916)
 
 
+= 2012.2.1 =
+Táto verzia rieši viacero potencionálnych bezpečnostných problémov. Prostredie python bolo aktualizované na verziu 2.7.3.
+
+
 = 2012.2 =
 Prednosti tejto verzie zahŕňajú: vstavaný inštalátor a možnosť vytvorenia prenosnej verzie, automatické aktualizácie, jednoduchú správu doplnkov, čítanie grafických prvkov v programe Microsoft word, podporu pre metro aplikácie Windows 8, a množstvo dôležitých opráv.
 
-
-== Nové vlastnosti =
+== Nové vlastnosti ==
 - NVDA odteraz dokáže skontrolovať, stiahnuť a nainštalovať aktualizácie. (#73)
 - Rozšíriť funkcionalitu NVDA je možné pomocou správcu doplnkov pridaného do ponuky nástroje. Tento nástroj umožňuje automatickú inštaláciu a odstránenie doplnkov pre NVDA - súborov s príponov *.nvda-addon. Tieto súbory môžu obsahovať pluginy a ovládače hlasových výstupov alebo hmatových displejov. V okne správca doplnkov nebudú zobrazené staršie aplikačné moduly, pluginy ani ovládače, ručne nakopírované do priečinka s používateľskými nastaveniami NVDA. Ručne skopírované súbory je vhodné nahradiť balíčkami .nvda-addon hneď, ako budú dostupné. (#213)
 - V prípade, že používate nainštalovanú verziu je množstvo obvyklých vlastností NVDA teraz funkčných aj v prostredí metro systému Windows 8. Toto zahŕňa napr. oznamovanie napísaných znakov a podporu pre web dokumenty (vrátane podpory metro verzie programu Internet explorer 10). (#1801)
@@ -69,9 +89,9 @@ Prednosti tejto verzie zahŕňajú: vstavaný inštalátor a možnosť vytvoreni
 - V programe internet explorer 9 NVDA nečíta náhodný obsah pri vstupe do odseku, ktorý môže nadobudnúť systémový fokus alebo je označený ako oblasť stránky pomocou ARIA.
 - Ikona NVDA na pracovnej ploche a v ponuke štart sa v 64bitových systémoch Windows zobrazuje správne. (#354)
 
-== Zmeny pre vývojárov ==
-- Keďže NSIS inštalátor bol nahradený vstavaným Python inštalátorom, prekladatelia viac nepotrebujú súbor langstrings.txt s reťazcami na preklad inštalácie. Všetky reťazce sú v po súboroch.
 
+== Zmeny pre Vývojárov ==
+- Keďže NSIS inštalátor bol nahradený vstavaným Python inštalátorom, prekladatelia viac nepotrebujú súbor langstrings.txt s reťazcami na preklad inštalácie. Všetky reťazce sú v po súboroch.
 
 
 = 2012.1 =
@@ -242,7 +262,7 @@ Prednosti tejto verzie zahŕňajú množstvo vylepšení súvisiacich z vyslovov
 - Indikátory priebehu sú oznamované aj v režime prehliadania.
 - V programe internet explorer a ostatných oknách MSHTML nie sú prvky označené ARIA typom presentation oznamované ak je zapnutá jednoduchá objektová navigácia a tiež nie sú oznamované pri oznamovaní fokusu.
 - Názov virtuálny prehliadač sa nepoužíva ani v NVDA ani v dokumentácii. Namiesto toho hovoríme o dokumentoch v režime prehliadania	. (#1509)
-- Ak sa používateľ pokúsi skopírovať nastavenia do systémového profilu na použitie pri prihlasovacej obrazovke a v používateľskom profile NVDA sú detekované pluginy, ovládače hlasových výstupov alebo ovládače braillovských zobrazovačov, NVDA na upozorní, že to môže predstavovať bespečnostné riziko. (#1426)
+- Ak sa používateľ pokúsi skopírovať nastavenia do systémového profilu na použitie pri prihlasovacej obrazovke a v používateľskom profile NVDA sú detekované pluginy, ovládače hlasových výstupov alebo ovládače braillovských zobrazovačov, NVDA upozorní, že to môže predstavovať bespečnostné riziko. (#1426)
 - Služba NVDA nezastavuje a znovu spúšťa NVDA na používateľských vstupných plochách.
 - Vo Windows XP a Windows vista NVDA nepoužíva UI Automation aj keď je nainštalovaný ako súčasť platform update. UI Automation môže sprístupniť niektoré moderné aplikácie, ale v týchto starších systémoch pri jeho používaní dochádzalo k mrznutiu a ďalším problémom. (#1437)
 - V Gecko 2 aplikáciách napr. Firefox 4 a novších je možné čítať dokument v režime prehliadania postupne ešte pred tým, než je načítanie úplne ukončené.
@@ -932,6 +952,6 @@ Najdôležitejšie novinky v tejto verzii sú podpora 64 bitových verzií Windo
 - skripty na znižovanie a zvyšovanie tempa hlasového výstupu nemôžu prejsť na hodnoty väčšie než 100 a menšie než 0.
 - Ak pri výbere jazyka v okne nastavenia používateľského rozhrania nastane chyba, používateľ je na to upozornený oknom so správou.
 - NVDA sa po zmene jazyka v okne nastavenia používateľského rozhrania opýta, či chcete vykonať reštart a uložiť konfiguráciu.
-- Pridané okno s chybovou správou ak nie je možné aktivovať hlasový výstup zvolený v okne nastavenia hlasového výstupu.
+- Pridané okno s chybovou správou ak nie je možné aktivovať hlasový výstup zvolený v okne nastavenia hlasového výstupu. 
 
 

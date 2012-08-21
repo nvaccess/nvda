@@ -65,4 +65,9 @@ interface NvdaControllerInternal {
  */
 	error_status_t __stdcall logMessage([in] const long level, [in] const long processID, [in,string] const wchar_t* message);
 
+/**
+ * Notifies NVDA that a virtual buffer has changed.
+ */
+	error_status_t __stdcall vbufChangeNotify([in] const int rootDocHandle, [in] const int rootID);
+	
 };

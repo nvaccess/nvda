@@ -12,6 +12,7 @@ import braille
 import inputCore
 from baseObject import ScriptableObject
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
+from logHandler import log
 
 #Try to load the fs braille dll
 try:
@@ -25,9 +26,14 @@ if fsbLib:
 	fbGetCellCount=getattr(fsbLib,'_fbGetCellCount@4')
 	fbWrite=getattr(fsbLib,'_fbWrite@16')
 	fbClose=getattr(fsbLib,'_fbClose@4')
+	fbConfigure=getattr(fsbLib, '_fbConfigure@8')
+	fbGetDisplayName=getattr(fsbLib, "_fbGetDisplayName@12")
+	fbGetFirmwareVersion=getattr(fsbLib,  "_fbGetFirmwareVersion@12")
+	fbBeep=getattr(fsbLib, "_fbBeep@4")
 
 FB_INPUT=1
 FB_DISCONNECT=2
+FB_EXT_KEY=3
 
 LRESULT=c_long
 HCURSOR=c_long
@@ -40,40 +46,53 @@ inputType_keys=3
 inputType_routing=4
 inputType_wizWheel=5
 
+keysPressed=0
+extendedKeysPressed=0
 @WNDPROC
 def nvdaFsBrlWndProc(hwnd,msg,wParam,lParam):
-	if msg==nvdaFsBrlWm and wParam==FB_INPUT:
-		inputType=lParam&0xff
-		if inputType==inputType_keys:
-			keyBits=lParam>>8
-			if keyBits:
-				gesture=KeyGesture(keyBits)
-				try:
-					inputCore.manager.executeGesture(gesture)
-				except inputCore.NoInputGestureAction:
-					pass
-		elif inputType==inputType_routing:
-			routingIndex=(lParam>>8)&0xff
-			isRoutingPressed=bool((lParam>>16)&0xff)
-			isTopRoutingRow=bool((lParam>>24)&0xff)
-			if isRoutingPressed:
-				gesture=RoutingGesture(routingIndex,isTopRoutingRow)
-				try:
-					inputCore.manager.executeGesture(gesture)
-				except inputCore.NoInputGestureAction:
-					pass
-		elif inputType==inputType_wizWheel:
-			numUnits=(lParam>>8)&0x7
-			isRight=bool((lParam>>12)&1)
-			isDown=bool((lParam>>11)&1)
-			#Right's up and down are rversed, but NVDA does not want this
-			if isRight: isDown=not isDown
-			for unit in xrange(numUnits):
-				gesture=WizWheelGesture(isDown,isRight)
-				try:
-					inputCore.manager.executeGesture(gesture)
-				except inputCore.NoInputGestureAction:
-					pass
+	global keysPressed, extendedKeysPressed
+	keysDown=0
+	extendedKeysDown=0
+	if msg==nvdaFsBrlWm and wParam in (FB_INPUT, FB_EXT_KEY):
+		if wParam==FB_INPUT:
+			inputType=lParam&0xff
+			if inputType==inputType_keys:
+				keyBits=lParam>>8
+				keysDown=keyBits
+				keysPressed |= keyBits
+			elif inputType==inputType_routing:
+				routingIndex=(lParam>>8)&0xff
+				isRoutingPressed=bool((lParam>>16)&0xff)
+				isTopRoutingRow=bool((lParam>>24)&0xff)
+				if isRoutingPressed:
+					gesture=RoutingGesture(routingIndex,isTopRoutingRow)
+					try:
+						inputCore.manager.executeGesture(gesture)
+					except inputCore.NoInputGestureAction:
+						pass
+			elif inputType==inputType_wizWheel:
+				numUnits=(lParam>>8)&0x7
+				isRight=bool((lParam>>12)&1)
+				isDown=bool((lParam>>11)&1)
+				#Right's up and down are rversed, but NVDA does not want this
+				if isRight: isDown=not isDown
+				for unit in xrange(numUnits):
+					gesture=WizWheelGesture(isDown,isRight)
+					try:
+						inputCore.manager.executeGesture(gesture)
+					except inputCore.NoInputGestureAction:
+						pass
+		elif wParam==FB_EXT_KEY:
+			keyBits=lParam>>4
+			extendedKeysDown=keyBits
+			extendedKeysPressed|=keyBits
+		if keysDown==0 and extendedKeysDown==0 and (keysPressed!=0 or extendedKeysPressed!=0):
+			gesture=KeyGesture(keysPressed,extendedKeysPressed)
+			keysPressed=extendedKeysPressed=0
+			try:
+				inputCore.manager.executeGesture(gesture)
+			except inputCore.NoInputGestureAction:
+				pass
 		return 0
 	else:
 		return windll.user32.DefWindowProcW(hwnd,msg,wParam,lParam)
@@ -102,8 +121,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	]
 
 	def __init__(self):
-		self.gestureMap=inputCore.GlobalGestureMap()
-		self.gestureMap.add("br(freedomScientific):routing","globalCommands","GlobalCommands","braille_routeTo")
 		self.leftWizWheelActionCycle=itertools.cycle(self.wizWheelActions)
 		action=self.leftWizWheelActionCycle.next()
 		self.gestureMap.add("br(freedomScientific):leftWizWheelUp",*action[1])
@@ -126,6 +143,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		if fbHandle==-1:
 			raise RuntimeError("No display found")
 		self.fbHandle=fbHandle
+		self._configureDisplay()
+		numCells=self.numCells
+		self.gestureMap.add("br(freedomScientific):topRouting1","globalCommands","GlobalCommands","braille_scrollBack")
+		self.gestureMap.add("br(freedomScientific):topRouting%d"%numCells,"globalCommands","GlobalCommands","braille_scrollForward")
 
 	def terminate(self):
 		super(BrailleDisplayDriver,self).terminate()
@@ -139,6 +160,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	def display(self,cells):
 		cells="".join([chr(x) for x in cells])
 		fbWrite(self.fbHandle,0,len(cells),cells)
+
+	def _configureDisplay(self):
+		# See what display we are connected to
+		displayName= firmwareVersion=""
+		buf = create_string_buffer(16)
+		if fbGetDisplayName(self.fbHandle, buf, 16):
+			displayName=buf.value
+		if fbGetFirmwareVersion(self.fbHandle, buf, 16):
+			firmwareVersion=buf.value
+		if displayName and firmwareVersion and displayName=="Focus" and ord(firmwareVersion[0])>=ord('3'):
+			# Focus 2 or later. Make sure extended keys support is enabled.
+			log.debug("Activating extended keys on freedom Scientific display. Display name: %s, firmware version: %s.", displayName, firmwareVersion)
+			fbConfigure(self.fbHandle, 0x02)
 
 	def script_toggleLeftWizWheelAction(self,gesture):
 		action=self.leftWizWheelActionCycle.next()
@@ -156,6 +190,39 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		"br(freedomScientific):leftWizWheelPress":"toggleLeftWizWheelAction",
 		"br(freedomScientific):rightWizWheelPress":"toggleRightWizWheelAction",
 	}
+
+	gestureMap=inputCore.GlobalGestureMap({
+		"globalCommands.GlobalCommands" : {
+			"braille_routeTo":("br(freedomScientific):routing",),
+			"braille_scrollBack" : ("br(freedomScientific):leftAdvanceBar", "br(freedomScientific]:leftBumperBarUp","br(freedomScientific):rightBumperBarUp",),
+			"braille_scrollForward" : ("br(freedomScientific):rightAdvanceBar","br(freedomScientific):leftBumperBarDown","br(freedomScientific):rightBumperBarDown",),
+			"braille_previousLine" : ("br(freedomScientific):leftRockerBarUp", "br(freedomScientific):rightRockerBarUp",),
+			"braille_nextLine" : ("br(freedomScientific):leftRockerBarDown", "br(freedomScientific):rightRockerBarDown",),
+			"kb:backspace" : ("br(freedomScientific):dot7",),
+			"kb:enter" : ("br(freedomScientific):dot8",),
+			"kb:shift+tab": ("br(freedomScientific):dot1+dot2+brailleSpaceBar",),
+			"kb:tab" : ("br(freedomScientific):dot4+dot5+brailleSpaceBar",),
+			"kb:upArrow" : ("br(freedomScientific):dot1+brailleSpaceBar",),
+			"kb:downArrow" : ("br(freedomScientific):dot4+brailleSpaceBar",),
+			"kb:leftArrow" : ("br(freedomScientific):dot3+brailleSpaceBar",),
+			"kb:rightArrow" : ("br(freedomScientific):dot6+brailleSpaceBar",),
+			"kb:control+leftArrow" : ("br(freedomScientific):dot2+brailleSpaceBar",),
+			"kb:control+rightArrow" : ("br(freedomScientific):dot5+brailleSpaceBar",),
+			"kb:home" : ("br(freedomScientific):dot1+dot3+brailleSpaceBar",),
+			"kb:control+home" : ("br(freedomScientific):dot1+dot2+dot3+brailleSpaceBar",),
+			"kb:end" : ("br(freedomScientific):dot4+dot6+brailleSpaceBar",),
+			"kb:control+end" : ("br(freedomScientific):dot4+dot5+dot6+brailleSpaceBar",),
+			"kb:alt" : ("br(freedomScientific):dot1+dot3+dot4+brailleSpaceBar",),
+			"kb:alt+tab" : ("br(freedomScientific):dot2+dot3+dot4+dot5+brailleSpaceBar",),
+			"kb:escape" : ("br(freedomScientific):dot1+dot5+brailleSpaceBar",),
+			"kb:windows" : ("br(freedomScientific):dot2+dot4+dot5+dot6+brailleSpaceBar",),
+			"kb:space" : ("br(freedomScientific):brailleSpaceBar",),
+			"kb:windows+d" : ("br(freedomScientific):dot1+dot2+dot3+dot4+dot5+dot6+brailleSpaceBar",),
+			"reportCurrentLine" : ("br(freedomScientific):dot1+dot4+brailleSpaceBar",),
+			"showGui" :("br(freedomScientific):dot1+dot3+dot4+dot5+brailleSpaceBar",),
+			"braille_toggleTether" : ("br(freedomScientific):leftGDFButton+rightGDFButton",),
+		}
+	})
 
 class InputGesture(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
@@ -176,10 +243,17 @@ class KeyGesture(InputGesture):
 		None,
 		'leftBumperBarUp','leftBumperBarDown','rightBumperBarUp','rightBumperBarDown',
 	]
+	extendedKeyLabels = [
+	# Rocker bar keys.
+	"leftRockerBarUp", "leftRockerBarDown", "rightRockerBarUp", "rightRockerBarDown",
+	]
 
-	def __init__(self,keyBits):
-		self.id="+".join(set(self.keyLabels[num] for num in xrange(24) if (keyBits>>num)&1))
+	def __init__(self,keyBits, extendedKeyBits):
 		super(KeyGesture,self).__init__()
+		keys=[self.keyLabels[num] for num in xrange(24) if (keyBits>>num)&1]
+		extendedKeys=[self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num)&1]
+		self.id="+".join(set(keys+extendedKeys))
+
 
 class RoutingGesture(InputGesture):
 

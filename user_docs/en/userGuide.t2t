@@ -32,7 +32,7 @@ Major highlights include:
 
 ++ Internationalization ++
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 40 languages including: Afrikaans, Albanian, Amheric, Arabic, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 40 languages including: Afrikaans, Albanian, Amharic, Arabic, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -1057,6 +1057,11 @@ Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
 || Name | Key |
+| Scroll braille display back | topRouting1 (first cell on display) |
+| Scroll braille display forward | topRouting20/40/80 (last cell on display) |
+| Scroll braille display back | leftAdvanceBar |
+| Scroll braille display forward | rightAdvanceBar |
+| Toggle braille tethered to | leftGDFButton+rightGDFButton |
 | Toggle left wiz wheel action | leftWizWheelPress |
 | Move back using left wiz wheel action | leftWizWheelUp |
 | Move forward using left wiz wheel action | leftWizWheelDown |
@@ -1064,6 +1069,38 @@ Please see the display's documentation for descriptions of where these keys can 
 | Move back using right wiz wheel action | rightWizWheelUp |
 | Move forward using right wiz wheel action | rightWizWheelDown |
 | Route to braille cell | routing |
+| backspace key | dot7 |
+| enter key | dot8 |
+| shift+tab key | brailleSpaceBar+dot1+dot2 |
+| tab key | brailleSpaceBar+dot4+dot5 |
+| upArrow key | brailleSpaceBar+dot1 |
+| downArrow key | brailleSpaceBar+dot4 |
+| control+leftArrow key | brailleSpaceBar+dot2 |
+| control+rightArrow key | brailleSpaceBar+dot5 |
+| leftArrow | brailleSpaceBar+dot3 |
+| rightArrow key | brailleSpaceBar+dot6 |
+| home key | brailleSpaceBar+dot1+dot3 |
+| end key | brailleSpaceBar+dot4+dot6 |
+| control+home key | brailleSpaceBar+dot1+dot2+dot3 |
+| control+end key | brailleSpaceBar+dot4+dot5+dot6 |
+| alt key | brailleSpaceBar+dot1+dot3+dot4 |
+| alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| escape key | brailleSpaceBar+dot1+dot5 |
+| windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
+| space key | brailleSpaceBar |
+| windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Report Current Line | brailleSpaceBar+dot1+dot4 |
+| NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
+
+For newer Focus models that contain rocker bar keys (focus 40, focus 80 and focus blue):
+|| Name | Key |
+| Move braille display to previous line | leftRockerBarUp, rightRockerBarUp |
+| Move braille display to next line | leftRockerBarDown, rightRockerBarDown |
+
+For Focus 80 only:
+|| Name | Key |
+| Scroll braille display back | leftBumperBarUp, rightBumperBarUp |
+| Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1304,6 +1341,28 @@ Please see the display's documentation for descriptions of where these keys can 
 || Name | Key |
 | Scroll braille display back | left side scroll down |
 | Scroll braille display forward | right side scroll down |
+| Route to braille cell | routing |
+%kc:endInclude
+
+++ Seika Braille Displays ++
+The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays from [Nippon Telesoft http://www.nippontelesoft.com/] are supported.
+You can find more information about these displays at http://www.seika-braille.com/.
+You must first install the USB drivers provided by the manufacturer.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | b3 |
+| Move braille display to next line | b4 |
+| Toggle braille tethered to | b5 |
+| Say all | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| NVDA Menu | left+right |
 | Route to braille cell | routing |
 %kc:endInclude
 

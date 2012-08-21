@@ -407,7 +407,7 @@ the NVDAObject for IAccessible
 		if windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from mozilla import GeckoPluginWindowRoot
 			clsList.append(GeckoPluginWindowRoot)
-		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen"):
+		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen", "GeckoFPSandboxChildWindow"):
 			# This is possibly a Flash object.
 			from . import adobeFlash
 			adobeFlash.findExtraOverlayClasses(self, clsList)
@@ -755,6 +755,9 @@ the NVDAObject for IAccessible
 			IARole=IARole.split(',')[0].lower()
 			log.debug("IARole: %s"%IARole)
 		return IAccessibleHandler.IAccessibleRolesToNVDARoles.get(IARole,controlTypes.ROLE_UNKNOWN)
+	# #2569: Don't cache role,
+	# as it relies on other properties which might change when overlay classes are applied.
+	_cache_role = False
 
 	def _get_IAccessibleStates(self):
 		try:
@@ -1043,6 +1046,46 @@ the NVDAObject for IAccessible
 				log.debugWarning("IAccessibleTable::nColumns failed", exc_info=True)
 		raise NotImplementedError
 
+	def _get__IATableCell(self):
+		# Permanently cache the result.
+		try:
+			self._IATableCell = self.IAccessibleObject.QueryInterface(IAccessibleHandler.IAccessibleTableCell)
+		except COMError:
+			self._IATableCell = None
+		return self._IATableCell
+
+	def _tableHeaderTextHelper(self, axis):
+		cell = self._IATableCell
+		if not cell:
+			return None
+		try:
+			headers, nHeaders = getattr(cell, axis + "HeaderCells")
+		except COMError:
+			return None
+		if not headers:
+			return None
+		try:
+			ret = []
+			# Each header must be fetched from the headers array once and only once,
+			# as it gets released when it gets garbage collected.
+			for i in xrange(nHeaders):
+				try:
+					text = headers[i].QueryInterface(IAccessibleHandler.IAccessible2).accName(0)
+				except COMError:
+					continue
+				if not text:
+					continue
+				ret.append(text)
+			return "\n".join(ret)
+		finally:
+			ctypes.windll.ole32.CoTaskMemFree(headers)
+
+	def _get_rowHeaderText(self):
+		return self._tableHeaderTextHelper("row")
+
+	def _get_columnHeaderText(self):
+		return self._tableHeaderTextHelper("column")
+
 	def _get_table(self):
 		if not isinstance(self.IAccessibleObject,IAccessibleHandler.IAccessible2):
 			return None
@@ -1050,13 +1093,8 @@ the NVDAObject for IAccessible
 		if table:
 			return table
 		checkAncestors=False
-		if self.IAccessibleTableUsesTableCellIndexAttrib:
-			try:
-				attribs=self.IAccessibleObject.attributes
-			except COMError:
-				attribs=None
-			if attribs and 'table-cell-index:' in attribs:
-				checkAncestors=True
+		if self.IAccessibleTableUsesTableCellIndexAttrib and "table-cell-index" in self.IA2Attributes:
+			checkAncestors=True
 		obj=self.parent
 		while checkAncestors and obj and not hasattr(obj,'IAccessibleTableObject'):
 			parent=obj.parent=obj.parent
@@ -1065,6 +1103,12 @@ the NVDAObject for IAccessible
 			return None
 		self._table=obj
 		return obj
+
+	def _get_tableID(self):
+		table = self.table
+		if not table:
+			return super(IAccessible, self).tableID
+		return (self.windowHandle, self.table.IA2UniqueID)
 
 	def _get_activeChild(self):
 		if self.IAccessibleChildID==0:

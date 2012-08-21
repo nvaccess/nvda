@@ -12,13 +12,26 @@
 - Kun Toast-ilmoitukset tulevat näkyviin Windows 8:ssa, NVDA lukee ne ja siirtää navigointiobjektin niiden kohdalle lisävuorovaikutuksen mahdollistamiseksi. (#2143)
 - Tuki VIP Mudille. (#1728)
 - Jos taulukossa on yhteenveto, se luetaan nyt Adobe Readerissa. (#2465)
-- Taulukon rivien ja sarakkeiden ylätunnisteet luetaan nyt Adobe Readerissa. (#2193)
-- Uusia kieliä: korea ja nepali
+- Taulukon rivien ja sarakkeiden ylätunnisteet luetaan nyt Adobe Readerissa. (#2193, #2527, #2528)
+- Uusia kieliä: amhari, korea ja nepali.
+- NVDA lukee nyt automaattisen täydennyksen ehdotukset Microsoft Outlook 2007:ssä sähköpostiosoitteita syötettäessä. (#689)
+- Uusia eSpeakin puheäänimuunnelmia: Gene, Gene2. (#2512)
+- Sivunumerot luetaan nyt Adobe Readerissa. (#2534)
+- NVDA:n oletusasetukset on nyt mahdollista palauttaa joko painamalla kolme kertaa nopeasti NVDA+Ctrl+R tai valitsemalla NVDA -valikosta Palauta oletusasetukset. (#2086)
+- Tuki Nippon Telesoftin Seika (versioille 3, 4 ja 5)- sekä Seika80-pistenäytöille. (#2452)
+- Freedom Scientificin PAC Mate- ja Focus-pistenäyttöjen ensimmäistä ja viimeistä ylintä kosketuskohdistinnäppäintä voidaan nyt käyttää taakse- ja eteenpäin vierittämiseen. (#2556)
+- Freedom Scientificin Focus--pistenäytöissä tuetaan entistä useampia ominaisuuksia, kuten eteenpäin siirtävät näppäimet, keinunäppäimet sekä tietyt pisteyhdistelmät yleisille toiminnoille. (#2516)
+- Taulukon rivien ja sarakkeiden ylätunnisteet on nyt mahdollista lukea selaustilan ulkopuolella IAccessible2-rajapintaa käyttävissä sovelluksissa, kuten Mozilla Firefoxissa. (#926)
 
 
 == Muutokset ==
 - Tarkastelukohdistimen asetukset -valintaikkunassa oleva Seuraa näppäimistökohdistusta -asetuksen uusi nimi on Seuraa järjestelmäkohdistusta, jotta se olisi yhdenmukainen muualla NVDA:ssa käytetyn terminologian kanssa.
 - Kun pistenäyttö on asetettu seuraamaan tarkastelukohdistinta ja kun kohdistin on sellaisessa objektissa, joka ei ole tekstiobjekti (esim. muokattava tekstikenttä), kosketuskohdistinnäppäimet aktivoivat kyseisen objektin. (#2386)
+- Tallenna asetukset suljettaessa -asetus on nyt oletusarvoisesti käytössä uusissa kokoonpanoissa.
+- Kun aiemmin asennettua NVDA:n versiota päivitetään, työpöydän pikakuvakkeen pikanäppäintä ei pakoteta enää takaisin Ctrl+Alt+N:ksi, mikäli käyttäjä on muuttanut sen joksikin muuksi. (#2572)
+- Lisäosien hallinnan Lisäosat-lista näyttää nyt paketin nimen ennen sen tilaa. (#2548)
+- Jos nykyisestä asennetusta lisäosasta asennetaan sama tai jokin toinen versio, NVDA kysyy, halutaanko entinen lisäosa ensin poistaa virheen näyttämisen ja asennuksen keskeyttämisen sijaan. (#2501)
+- Objektinavigointikomennot (kaikki paitsi Lue nykyinen objekti) ovat nyt vähemmän puheliaita. Lisätiedot saadaan edelleen Lue nykyinen objekti -komennolla. (#2560)
 
 
 == Korjatut ohjelmavirheet ==
@@ -29,7 +42,23 @@
 - NVDA:n jakelupaketti tarkistaa nyt eheytensä ennen suorittamista. (#2475)
 - Tilapäiset lataustiedostot poistetaan, jos NVDA-päivityksen lataaminen epäonnistuu. (#2477)
 - NVDA ei enää hyydy XP:ssä kopioitaessa käyttäjän asetuksia järjestelmäasetuksiksi (Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa käytettäväksi). (#2485)
-- Windows 8:n aloitusnäytön tiilet esitetään nyt paremmin sekä puheena että pistenäytöllä. Nimeä ei enää toisteta, ei valittu -ilmoitusta ei enää esiinny, ja muuttuvat tilatiedot luetaan tiilen kuvauksena (esim. nykyinen lämpötila Sää-tiilelle).
+- Windows 8:n aloitusnäytön ruudut esitetään nyt paremmin sekä puheena että pistenäytöllä. Nimeä ei enää toisteta, ei valittu -ilmoitusta ei enää esiinny, ja muuttuvat tilatiedot luetaan ruudun kuvauksena (esim. nykyinen lämpötila Sää-ruudulle).
+- Salasanoja ei enää puhuta luettaessa salasanakenttiä Microsoft Outlookissa ja muissa standardinmukaisissa muokkaussäätimissä, jotka on merkitty suojatuiksi. (#2021)
+- Lomakekenttien muutokset näytetään nyt oikein selaustilassa Adobe Readerissa. (#2529)
+- Parannuksia Microsoft Wordin kieliasun tarkistukseen, mukaan lukien kohdalla olevan kirjoitusvirheen tarkempi lukeminen sekä tuki kieliasun tarkistukselle käytettäessä NVDA:n asennettua versiota Windows Vistassa tai uudemmassa käyttöjärjestelmässä.
+- Sellaiset lisäosat, jotka sisältävät tiedostoja, joiden nimissä on muita kuin ASCII-merkkejä, voidaan nyt useimmissa tapauksissa asentaa oikein. (#2505)
+- Kun tekstiä päivitetään tai vieritetään, sen kieltä ei enää menetetä Adobe Readerissa. (#2544)
+- Vahvistusvalintaikkuna näyttää nyt lisäosaa asennettaessa oikein sen lokalisoidun nimen, mikäli sellainen on käytettävissä. (#2422)
+- Säädinten (esim. liukusäädinten) numeeristen arvojen laskeminen  on nyt korjattu UI Automation -rajapintaa käyttävissä sovelluksissa (esim. sellaisissa kuin .NET ja Silverlight). (#2417)
+- Edistymispalkkien lukuasetusta noudatetaan nyt määrittelemättömille edistymispalkeille, joita NVDA näyttää asennettaessa, massamuistiversiota luotaessa jne. (#2574)
+- NVDA-komentoja ei ole enää mahdollista suorittaa pistenäytöltä Windowsin suojatun ruudun (kuten lukitusruudun) ollessa aktiivisena. (#2449)
+- Pistenäyttöä päivitetään nyt selaustilassa, mikäli näytettävä teksti muuttuu. (#2074)
+- Suoraan NVDA:n kautta puhuvien tai pistenäytöllä tekstiä näyttävien sovellusten ilmoitukset ohitetaan, mikäli unitila on käytössä.
+- Suoraan NVDA:n kautta puhuvien tai pistenäytöllä tekstiä näyttävien sovellusten viestit ohitetaan oltaessa Windowsin suojatussa ruudussa, kuten lukitusnäytössä.
+- Selaustilassa ei ole enää mahdollista siirtyä pois dokumentin lopusta oikealla nuolinäppäimellä oltaessa viimeisen merkin kohdalla tai siirtymällä säilöelementin loppuun sen ollessa viimeinen kohde kyseisessä dokumentissa. (#2463)
+- Ylimääräistä sisältöä ei enää virheellisesti puhuta luettaessa valintaikkunoiden tekstiä verkkosovelluksissa (erityisesti ARIA-valintaikkunoissa, joissa ei ole aria-describedby-määrettä). (#2390)
+- NVDA ei enää virheellisesti lue tai paikanna tiettyjä muokkauskenttiä MSHTML-dokumenteissa (esim. Internet Explorerissa), mikäli verkkosivun tekijä on käyttänyt ARIA-roolia. (#2435)
+- Askelpalautin-näppäin käsitellään nyt oikein Windowsin komentokehotteessa kirjoitettuja sanoja luettaessa. (#2586)
 
 
 = 2012.2.1 =

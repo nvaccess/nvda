@@ -179,6 +179,9 @@ class GeckoPluginWindowRoot(WindowRoot):
 				log.debugWarning("NAVRELATION_EMBEDS failed")
 		return parent
 
+class TextLeaf(Mozilla):
+	role = controlTypes.ROLE_STATICTEXT
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -195,6 +198,19 @@ def findExtraOverlayClasses(obj, clsList):
 				cls = RootApplication
 		except COMError:
 			pass
+	elif iaRole == oleacc.ROLE_SYSTEM_TEXT:
+		# Check if this is a text leaf.
+		iaStates = obj.IAccessibleStates
+		# Text leaves are never focusable.
+		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
+		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
+			try:
+				ia2States = obj.IAccessibleObject.states
+			except COMError:
+				ia2States = 0
+			# This excludes a non-focusable @role="textbox".
+			if not (ia2States & IAccessibleHandler.IA2_STATE_EDITABLE):
+				cls = TextLeaf
 	if not cls:
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
@@ -205,6 +221,15 @@ def findExtraOverlayClasses(obj, clsList):
 	ver = getGeckoVersion(obj)
 	if ver and ver.full.startswith("1.9"):
 		clsList.append(Gecko1_9)
+
+	if iaRole == oleacc.ROLE_SYSTEM_DIALOG:
+		xmlRoles = obj.IA2Attributes.get("xml-roles", "").split(" ")
+		if "dialog" in xmlRoles:
+			# #2390: Don't try to calculate text for ARIA dialogs.
+			try:
+				clsList.remove(Dialog)
+			except ValueError:
+				pass
 
 	clsList.append(Mozilla)
 

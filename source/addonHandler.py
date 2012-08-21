@@ -24,6 +24,7 @@ import config
 import globalVars
 import languageHandler
 from logHandler import log
+import winKernel
 
 
 MANIFEST_FILENAME = "manifest.ini"
@@ -327,7 +328,7 @@ def initTranslation():
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
-def _translatedManifestPaths(lang=None):
+def _translatedManifestPaths(lang=None, forBundle=False):
 	if lang is None:
 		lang = languageHandler.getLanguage() # can't rely on default keyword arguments here.
 	langs=[lang]
@@ -335,7 +336,8 @@ def _translatedManifestPaths(lang=None):
 		langs.append(lang.split('_')[0])
 		if lang!='en' and not lang.startswith('en_'):
 			langs.append('en')
-	return [r"locale\%s\%s" % (lang,  MANIFEST_FILENAME) for lang in langs]
+	sep = "/" if forBundle else os.path.sep
+	return [sep.join(("locale", lang, MANIFEST_FILENAME)) for lang in langs]
 
 
 class AddonBundle(object):
@@ -346,11 +348,11 @@ class AddonBundle(object):
 		""" Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
 		"""
-		self._path = bundlePath
+		self._path = bundlePath if isinstance(bundlePath, unicode) else unicode(bundlePath, "mbcs")
 		# Read manifest:
 		translatedInput=None
 		with zipfile.ZipFile(self._path, 'r') as z:
-			for translationPath in _translatedManifestPaths(): 
+			for translationPath in _translatedManifestPaths(forBundle=True):
 				try:
 					translatedInput = z.open(translationPath, 'r')
 					break
@@ -365,7 +367,13 @@ class AddonBundle(object):
 		@type addonPath: string
 		"""
 		with zipfile.ZipFile(self._path, 'r') as z:
-			z.extractall(addonPath)
+			for info in z.infolist():
+				if isinstance(info.filename, str):
+					# #2505: Handle non-Unicode file names.
+					# Most archivers seem to use the local OEM code page, even though the spec says only cp437.
+					# HACK: Overriding info.filename is a bit ugly, but it avoids a lot of code duplication.
+					info.filename = info.filename.decode(str(winKernel.kernel32.GetOEMCP()))
+				z.extract(info, addonPath)
 
 	@property
 	def manifest(self):

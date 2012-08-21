@@ -30,6 +30,9 @@ def _setDllFuncPointer(dll,name,cfunc):
 #Implementation of nvdaController methods
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_speakText(text):
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
 	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,text)
@@ -37,6 +40,9 @@ def nvdaController_speakText(text):
 
 @WINFUNCTYPE(c_long)
 def nvdaController_cancelSpeech():
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
 	import queueHandler
 	import speech
 	queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
@@ -44,6 +50,9 @@ def nvdaController_cancelSpeech():
 
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaController_brailleMessage(text):
+	focus=api.getFocusObject()
+	if focus.sleepMode==focus.SLEEP_FULL:
+		return -1
 	import queueHandler
 	import braille
 	queueHandler.queueFunction(queueHandler.eventQueue,braille.handler.message,text)
@@ -113,6 +122,8 @@ def nvdaControllerInternal_logMessage(level,pid,message):
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
+	if api.getFocusObject().sleepMode:
+		return 0
 	global lastInputLangChangeTime
 	import queueHandler
 	import ui
@@ -146,6 +157,12 @@ def nvdaControllerInternal_typedCharacterNotify(threadID,ch):
 	focus=api.getFocusObject()
 	if focus.windowClassName!="ConsoleWindowClass":
 		eventHandler.queueEvent("typedCharacter",focus,ch=ch)
+	return 0
+
+@WINFUNCTYPE(c_long, c_int, c_int)
+def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
+	import virtualBuffers
+	virtualBuffers.VirtualBuffer.changeNotify(rootDocHandle, rootID)
 	return 0
 
 class RemoteLoader64(object):
@@ -200,6 +217,7 @@ def initialize():
 		("nvdaControllerInternal_typedCharacterNotify",nvdaControllerInternal_typedCharacterNotify),
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
+		("nvdaControllerInternal_vbufChangeNotify",nvdaControllerInternal_vbufChangeNotify),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)

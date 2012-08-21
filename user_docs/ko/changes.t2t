@@ -1,277 +1,270 @@
-﻿NVDA最新情報
+﻿NVDA 변경된 사항
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
 
-== 新機能 ==
-- Adobe Reader のドキュメントにおいて、アンダーラインや打ち消し線があることを通知するようになりました。 (#2410)
-- Windows の固定キー機能が有効なとき、NVDA 制御キーも他の補助キーと同じように動作するようになりました。これによってNVDA制御キーを押し続けないで他のキーを押せるようになりました。 (#230)
-- HIMS 製の点字ディスプレイ Braille Sense, Braille EDGE および SyncBraille に対応しました。 (#1266, #1267)
-- Windows 8 でトーストが表示されたときに、NVDAはこれを通知してナビゲーターオブジェクトを移動するようになりました。これによってその後の操作がしやすくなります。 (#2143)
-- VIP Mud アプリケーションに対応しました。 (#1728)
-- Adobe Readerにおいて、テーブルにサマリーがある場合に通知するようになりました。 (#2465)
-- Adobe Readerにおいて、テーブルの行見出しおよび列見出しを通知するようになりました。 (#2193, #2527, #2528)
-- 新しい言語: アムハラ語、韓国語、ネパール語に対応しました。
-- Microsoft Outlook 2007 のメールアドレス入力で、自動補完候補をNVDAが通知するようになりました。 (#689)
-- 新しい eSpeak の音声 Gene および Gene2 が追加されました。 (#2512)
-- Adobe Readerにおいて、ページ番号を通知するようになりました。 (#2534)
-- NVDA+コントロール+R をすばやく3回押すか、NVDA メニューの"設定をリセットして初期値に戻す"を選ぶことで、NVDA の設定を初期化できるようになりました。 (#2086)
+== New Features ==
+- The presence of underline and strikethrough is now reported in Adobe Reader documents. (#2410)
+- When the Windows Sticky Keys function is enabled, the NVDA modifier key will now behave like other modifier keys. This allows you to use the NVDA modifier key without needing to hold it down while you press other keys. (#230)
+- Support for HIMS Braille Sense, Braille EDGE and SyncBraille braille displays. (#1266, #1267)
+- When Windows 8 Toast notifications appear, NVDA will announce them and move the navigator object there for further interaction. (#2143)
+- Support for VIP Mud. (#1728)
+- In Adobe Reader, if a table has a summary, it is now presented. (#2465)
+- In Adobe Reader, table row and column headers can now be reported. (#2193, #2527, #2528)
+- New languages: Amharic, Korean, Nepali.
+- NVDA can now read auto complete suggestions when entering email addresses in Microsoft Outlook 2007. (#689)
+- New eSpeak voice variants: Gene, Gene2. (#2512)
+- In Adobe Reader, page numbers can now be reported. (#2534)
+- It is now possible to reset NVDA's configuration to factory defaults either by pressing NVDA+control+r three times quickly or by choosing Reset to Factory Defaults from the NVDA menu. (#2086)
 
 
-== 変更点 ==
-- NVDA レビューカーソルの設定ダイアログ「キーボードフォーカスを追跡」が「システムフォーカスを追跡」に変更されました。これはNVDAの他の箇所と用語を統一するためです。
-- 点字ディスプレイのタッチカーソルでレビュー位置を移動し、テキストではないオブジェクト(編集可能なテキストフィールド)にカーソルを移す場合に、タッチカーソルがオブジェクトをアクティブ化するようになりました。 (#2386)
-- 設定を新規作成するときのデフォルトで"終了時に設定を保存"オプションが有効になりました。
+== Changes ==
+- In the NVDA Review Cursor preferences dialog, the Follow keyboard focus option has been renamed to Follow system focus for consistency with terminology used elsewhere in NVDA.
+- When braille is tethered to review and the cursor is on an object which is not a text object (e.g. an editable text field), cursor routing keys will now activate the object. (#2386)
+- The Save Settings On Exit option is now on by default for new configurations.
 
 
-== バグ修正 ==
-- 電子書籍リーダー Blio で書籍の内容が点字で読めるようになりました。 (#2139)
-- Windows Vista 以降において、Windows+L で Windows をロックして、さらにロック解除をした後で、NVDA が Windows キーを押し続ける操作を適切に処理できない問題が修正されました。(#1856)
-- Adobe Readerにおいて、行見出しがテーブルのセルとして正しく認識されるようになりました。セル座標の通知が行われ、テーブルのナビゲーション操作で移動できます。 (#2444)
-- Adobe Readerにおいて、テーブルの複数の行および(または)列を結合したセルが正しく扱えるようになりました。 (#2437, #2438, #2450)
-- NVDAの配布パッケージは実行前に完全性の確認を行うようになりました。 (#2475)
-- NVDAの更新をダウンロードできなかった場合に一時ファイルを削除するようになりました。 (#2477)
-- ユーザー環境設定をシステム設定にコピーする機能(Windowsログオンなどセキュアスクリーンで使用します)で、NVDA が Windows XP をフリーズしないように改善しました。(#2485)
-- Windows 8 スタートスクリーンのタイルの音声および点字による説明を改善しました。 タイルの名前を繰り返さないようになり、「選択なし」の通知をやめました。また、ライブステータスの情報をタイルの説明として通知します。(例えば「天気」のタイルでは現在の気温を通知します)
-- Microsoft Outlook のパスワード入力と、その他の保護されたエディットコントロールにおいて、パスワードの通知を抑止するようになりました。 (#2021)
-- Adobe Readerにおいて、フォームのフィールドにおける変更が正しくブラウズモードに反映されるようになりました。 (#2529)
-- Microsoft Word スペルチェッカーのサポートを改善しました。現在のスペルエラーの通知を改善しました。Windows Vista 以降でインストール版のNVDAを使っている場合にスペルチェッカーをサポートします。
-- アドオンが非英語の文字のファイルを含んでいる場合もなるべくインストールが失敗しないように改善しました。 (#2505)
-- Adobe Readerにおいて、テキストの更新やスクロールが起きても言語情報が失われなくなりました。 (#2544)
-- アドオンをインストールするときに、国際化されたアドオンの名前が存在する場合に、確認ダイアログに表示されるようになりました。 (#2422)
-- ドットネットや Silverlight などの UI オートメーション対応アプリケーションにおいて、スライダーなど数値を扱うコントロールの処理が修正されました。 (#2417)
-- NVDAのインストールやポータブル版作成などで使われる、進捗の度合いが不確定なプログレスバーにおいて、プログレスバーの通知設定に応じた通知が行われるようになりました。 (#2574)
-- セキュアな Windows 画面(ロック画面など)がアクティブな状態で、点字ディスプレイからNVDAのコマンドを実行できないように修正しました。 (#2449)
-- ブラウズモードにおいて、表示されているテキストが更新されたときに点字ディスプレイを更新するようになりました。 (#2074)
-- スリープモードにおいて、アプリケーションが NVDA の音声出力や点字出力の機能を呼び出して行うメッセージ出力を抑止するようになりました。
-- ブラウズモードにおいて、ドキュメントの最後の文字で右矢印キーを押したとき、あるいは、ドキュメントの末尾がコンテナの最後の要素である状況でコンテナの末尾にジャンプしたとき、キャレットの位置が不適切になる問題を解決しました。 (#2463)
+== Bug Fixes ==
+- In Blio, the content of books can now be read in braille. (#2139)
+- In Windows Vista and later, NVDA no longer incorrectly treats the Windows key as being held down when unlocking Windows after locking it by pressing Windows+l. (#1856)
+- In Adobe Reader, row headers are now correctly recognised as table cells; i.e. coordinates are reported and they can be accessed using table navigation commands. (#2444)
+- In Adobe Reader, table cells spanning more than one column and/or row are now handled correctly. (#2437, #2438, #2450)
+- The NVDA distribution package now checks its integrity before executing. (#2475)
+- Temporary download files are now removed if downloading of an NVDA update fails. (#2477)
+- When copying the user configuration to the system configuration (for use on Windows logon and other secure screens) NVDA will no longer freeze on XP while doing so. (#2485)
+- Tiles on the Windows 8 Start Screen are now presented better in speech and braille. The name is no longer repeated, unselected is no longer reported on all tiles, and live status information is presented  as the description of the tile (e.g. current temperature for the Weather tile).
+- Passwords are no longer announced when reading password fields in Microsoft Outlook and other standard edit controls that are marked as protected. (#2021)
+- In Adobe Reader, changes to form fields are now correctly reflected in browse mode. (#2529)
+- Improvements to support for the Microsoft Word Spell Checker, including more accurate reading of the current spelling error, and the ability to support the spell checker when running an Installed copy of NVDA on Windows Vista or higher.
+- Add-ons which include files containing non-English characters can now be installed correctly in most cases. (#2505)
+- In Adobe Reader, the language of text is no longer lost when it is updated or scrolled to. (#2544)
 
 
-== 開発者向けの変更 ==
-- NVDAの初期化において過去のログファイルを nvda-old.log にコピーするようになりました。これによりNVDAが不正終了して再起動したときに、そのセッションのログを確認できるようになりました。 (#916)
-- chooseNVDAObjectOverlayClasses にて role プロパティを取得したときに、Windows コマンドコントロールや Scintilla コントロールなどの role が不適切な値になり、オブジェクトのフォーカス状態を通知できない問題を解決しました。 (#2569)
+== Changes for Developers ==
+- Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
 
 
 = 2012.2.1 =
-このリリースではセキュリティ脆弱性の修正が行われました(Python処理系がバージョン2.7.3に更新されました)。
+This release addresses  several potential security issues (by upgrading Python to 2.7.3).
 
 
 = 2012.2 =
-このリリースにおけるハイライトには、インストーラーとポータブル版作成機能の搭載、自動アップデート、アドオンを簡単に管理できる機能、Microsoft Word におけるグラフィックスの通知機能、Windows 8 メトロ形式アプリケーションのサポート、いくつかの重要なバグ修正を含んでいます。
+Highlights of this release include an in-built installer and  portable  creation feature, automatic updates, easy management of new NVDA add-ons, announcement of graphics in Microsoft Word, support for Windows 8 Metro style apps, and several important bug fixes. 
 
-== 新機能 ==
-- NVDAは更新版のダウンロードとインストールを自動的にチェックするようになりました。 (#73)
-- アドオンマネージャーによってNVDAの拡張が簡単になりました。この機能はNVDAメニューの「ツール」にあり、アドオンパッケージ(拡張子 .nvda-addon のファイル)でプラグインやドライバをインストールしたり削除したりできます。アドオンマネージャーでは設定フォルダにコピーされた従来の形式のプラグインやドライバは表示されません。 (#213)
-- インストールされたリリース版のNVDAにおいて、多くのNVDAの機能が Windows 8 メトロスタイルのアプリケーションで使えるようになりました。入力された文字の読み上げ、Webドキュメントのブラウズモード（メトロバージョンのInternet Explorer 10を含みます）などです。ポータブル環境のNVDAはメトロスタイルのアプリケーションを読み上げできません。 (#1801) 
-- ブラウズモードのドキュメント（Internet Explorerや Firefoxなど）で、要素コンテナ（リストや表など）の先頭および末尾に shift+, (シフト カンマ)と , (カンマ)によってジャンプできます。(#123)
-- 新しい言語: ギリシャ語
-- Microsoft Word の文書で、グラフィックスと代替テキストを通知します。 (#2282, #1541)
-
-
-== 変更点 ==
-- NVDAは１つのパッケージとして配布されるようになりました。ポータブル版とインストーラー版を分離せず、１つのファイルで、実行すると一時的なNVDAのコピーを作成し、インストールを行うことも、ポータブル版の実行ファイルを作成することもできます。 (#1715)
-- NVDA は全てのシステムにおいて必ず Program Files フォルダーにインストールされます。古いバージョンからのアップデートの場合にインストール場所が異なる場合は、自動的にインストール場所を移動します。
-- Microsoft Excel においてセル座標の通知が内容の前ではなく内容の後で行われるようになりました。また、セル座標の通知は「書式情報」の「テーブルセルの座標を通知」がオンの場合のみ行われるようになりました。(#320)
+== New Features ==
+- NVDA can now automatically check for, download and install updates. (#73)
+- Extending NVDA's functionality  has been made easier with the addition of an Add-ons Manager (found under Tools in the NVDA menu) allowing you to install and uninstall new NVDA add-on packages (.nvda-addon files) containing plugins and drivers. Note the Add-on manager does not show older custom plugins and drivers manually copied in to your configuration directory. (#213)
+- Many more common NVDA features now work in Windows 8 Metro style apps when using an installed release  of NVDA, including speaking of typed characters, and browse mode for web documents (includes support for metro version of Internet Explorer 10). Portable copies of NVDA cannot access metro style apps. (#1801) 
+- In browse mode documents (Internet Explorer, Firefox, etc.), you can now  jump to the start and past the end of certain containing elements (such as lists and tables) with shift+, and , respectively. (#123)
+- New language: Greek.
+- Graphics and alt text are now reported in Microsoft Word Documents. (#2282, #1541)
 
 
-== バグ修正 ==
-- 自動言語切り換えが有効で適切にマークアップされている場合、Mozilla Gecko (例えばFirefox等) の画像に対する代替テキストやいくつかのコントロールのラベルが正しい言語で通知されるようになりました。
-- BibleSeeker (及びその他のTRxRichEditコントロール) において、文章の真ん中で停止しないようになりました。
-- Windows 8のExplorerのファイルプロパティーのリスト (パーミッションタブ) 及びWindows 8のアップデートが正しく読まれるようになりました。
-- Microsoft Word において(極端に長い行や目次など)ドキュメントから文字情報を取り出すために2秒以上かかる場合にフリーズすることがある問題を解決しました。(#2191)
-- 空白に続いて特定の句読点がある場合に、単語の区切りの検出が正しく動作するようになりました。(#1656)
-- Adobe Readerのブラウズモードで、クイックナビゲーションと要素リストを使って、レベルのない見出しへのナビゲーションが可能になりました。(#2181)
-- Winampのプレイリストエディターにおいて他の要素に移動したときに点字が正しく更新されるようになりました。(#1912)
-- 要素リストのツリー(ブラウズモードのドキュメントで有効です)が各要素の文字を正しい大きさで表示するようになりました。(#2276)
-- Java Access Bridgeを使うアプリケーションにおいて、編集可能なテキストフィールドが点字で正しく表示されるようになりました。(#2284)
-- Java Access Bridgeを使うアプリケーションにおいて、編集可能なテキストフィールドが特定の状況で不適切な文字を読み上げる問題が解決しました。(#1892)
-- Java Access Bridgeを使うアプリケーションにおいて、編集可能なテキストフィールドの末尾で、現在の行が正しく通知されるようになりました。(#1892)
-- Mozilla Gecko 14 以降を使うアプリケーション(Firefox 14など)のブラウズモードで、ブロッククオートと埋め込みオブジェクトのクイックナビゲーションが動作するようになりました。 (#2287)
-- Internet Explorer 9 において特定のランドマークまたはフォーカス可能な要素の内側にフォーカスを移動するときに NVDA が不適切な内容を読み上げる問題を修正しました(具体的にはフォーカス可能またはARIA ランドマークのついた div 要素における現象です)。
-- NVDAのデスクトップおよびスタートメニューのアイコンが64ビット版のWindowsにおいて正しく表示されるようになりました。(#354)
+== Changes ==
+- Announcement of cell coordinates in Microsoft Excel is now after the content rather than before, and is now only included   if the report tables and report table cell coordinates settings are enabled in the Document formatting settings dialog. (#320)
+- NVDA is now distributed in one package. Rather than separate portable and installer versions, there is now just one file that, when run, will start a temporary copy of NVDA and will allow you to install or generate a portable distribution. (#1715)
+- NVDA is now always installed in to Program Files on all systems. Updating a previous install will also automatically move it if it was not previously installed there.
 
 
-== 開発者向けの変更 ==
-- NVDAのためのNSISによるインストーラーは、Pythonで実装された新しいインストーラーに置き替えられました。翻訳者はインストーラーのためにlangstrings.txtファイルを更新する必要はなくなりました。ローカライズのための文字列はすべてgettextのpoファイルとして管理されます。
+== Bug Fixes ==
+- With auto language switching enabled, Content such as alt text for graphics and labels for other certain controls in Mozilla Gecko (e.g. Firefox) are now reported in the correct language if marked up appropriately.
+- SayAll in BibleSeeker (and other TRxRichEdit controls) no longer stops in the middle of a passage.
+- Lists found in the Windows 8 Explorer file properties (permitions tab) and in Windows 8 Windows Update now read correctly.
+- Fixed possible freezes in MS Word which would result when it took more than 2 seconds to fetch text from a document (extremely long lines or tables of contents). (#2191)
+- Detection of word breaks now works correctly where whitespace is followed by certain punctuation. (#1656)
+- In browse mode in Adobe Reader, it is now possible to navigate to headings without a level using quick navigation and the Elements List. (#2181)
+- In Winamp, braille is now correctly updated when you move to a different item in the Playlist Editor. (#1912)
+- The tree in the Elements List (available for browse mode documents) is now properly sized to show  the text of each element. (#2276)
+- In applications using the Java Access Bridge, editable text fields are now presented correctly in braille. (#2284)
+- In applications using the java Access Bridge, editable text fields no longer report strange characters in certain circumstances. (#1892)
+- In applications using the Java Access Bridge, when at the end of an editable text field, the current line is now reported correctly. (#1892)
+- In browse mode in applications using Mozilla Gecko 14 and later (e.g. Firefox 14), quick navigation now works for block quotes and embedded objects. (#2287)
+- In Internet Explorer 9, NVDA no longer reads unwanted content when focus moves inside certain landmarks or focusable elements (specifically, a div element which is focusable or has an ARIA landmark role).
+- The NVDA icon for the NVDA Desktop and Start Menu shortcuts is now displayed correctly on 64 bit editions of Windows. (#354)
+
+
+== Changes for Developers ==
+- Due to the replacement of the previous NSIS installer for NVDA with a built-in installer in Python, it is no longer necessary for translaters to maintain a langstrings.txt file for the installer. All localization strings are now managed by gettext po files.
 
 
 = 2012.1 =
-このリリースにおけるハイライトには、より高速に点字を読むための機能、ドキュメントの書式の点字での確認、Microsoftワードでのより多くの書式情報へのアクセス及びパフォーマンスの向上、iTunesストアのサポートが含まれています。
+Highlights of this release include features for more fluent reading of braille; indication of document formatting in braille; access to much more formatting information and improved performance in Microsoft Word; and support for the iTunes Store.
 
-== 新機能 ==
-- 現在行の先頭にあるタブやスペースの数を入力されている順に通知できるようになりました。書式設定ダイアログ内の行インデントの通知で有効化できます。 (#373)
-- オンスクリーンキーボードや音声認識ソフトウェアのような、代替キー入力エミュレーションで生成された入力が認識できるようになりました。
-- コマンドコンソールの色が認識できるようになりました。
-- 太字、斜体及び下線が、現在設定されている点字の変換テーブルを使用して表現されるようになりました。 (#538)
-- Microsoft Word文書において、以下を含むより多くの情報が通知できるようになりました。
- - 脚注及び文末脚注の数、見出しレベル、コメントの有無、テーブルのネストレベル、リンク、テキスト色のようなインライン情報。
- - コメント、脚注及び文末脚注、ヘッダー及びフッターといった、文書のセクションに入る際の通知。
-- 点字の7と8の点を使って選択されたテキストが表現されるようになりました。 (#889)
-- 文書内のリンク、ボタン、見出しといったコントロール情報が点字で通知されるようになりました。 (#202)
-- hedo ProfiLine USB点字ディスプレイとMobilLine USB点字ディスプレイをサポートしました。 (#1863, #1897)
-- 可能な場合、点字表示で単語が切れないようにしました。この機能は点字設定ダイアログで無効にすることができます。 (#1890, #1946)
-- 点字が、行単位の代わりに段落単位に表示できるようになり、多くのテキストがより早く読めるようになりました。点字設定ダイアログ内の「段落ごとに読み上げ」で設定してください。 (#1891)
-- ブラウズモード使用中に、カーソル位置のオブジェクトを点字ディスプレイから有効化できるようになりました。カーソルがオブジェクト上にある時にタッチカーソルを押してください (カーソルがまだそこにない場合は2度押してください）。 (#1893)
-- iTunes Storeなどで使用されている、iTunesのWeb領域のサポートを開始しました。WebKit 1を使用している他のアプリケーションもサポートできるかもしれません。 (#734)
-- Adobe Digital Editions 1.8.1以降において、「すべて読み上げ」を使用中の場合、自動的にページをめくれるようになりました。 (#1978)
-- 新しい点字の変換テーブル、ポルトガル語2級、アイスランド語8点コンピューター点字、タミル語1級、スペイン語8点コンピューター点字及びペルシャ語1級を追加しました。 (#2014)
-- ドキュメント内のフレームを通知するかどうかを書式設定ダイアログから変更できるようになりました。 (#1900)
-- OpenBookを使用する際、自動的にスリープモードを有効化するようにしました。 (#1209)	
-- Poeditにおいて、翻訳者によって追加されたコメント及び自動的に展開されたコメントを読むことができます。未翻訳翻訳があいまいなメッセージはアスタリスクでマークされ、そこに移動するとビープ音が聞こえます。 (#1811)
-- HumanWare社製のBrailliant BI及びBシリーズのディスプレーをサポートしました。 (#1990)
-- 新しい言語: ブークモールノルウェー語に対応しました。
-
-
-== 変更点 ==
-- 自動言語切り換えが有効で適切な言語情報が提供されている場合、現在文字の説明や現在の単語や行のスペル読みで適切な言語が使用できるようになりました。
-- eSpeak音声エンジンを1.46.02に更新しました。
-- 画像及びリンクURLから推測されたとても長い名前（30文字以上）はほとんどの場合ゴミであることから、無効なものとして切り捨てるようになりました。 (#1989)
-- 一部の点字で表示される情報が短縮されました。 (#1955, #2043)
-- キャレットまたはレビューカーソルが移動する時、点字も手動でスクロールさせるのと同じようにスクロールするようになりました。これにより、点字を段落単位で読むように設定している時に、より正確に単語を分断することなくめるようになりました。 (#1996)
-- 最新のスペイン語1級点字変換テーブルに更新しました。
-- liblouis braille translatorを2.4.1に更新しました。
+== New Features ==
+- NVDA can announce the number of leading tabs and spaces of the current line in the order that they are entered. This can be enabled by selecting report line indentation in the document formatting dialogue. (#373)
+- NVDA can now detect key presses generated from alternative keyboard input emulation such as on-screen keyboards and speech recognition software.
+- NVDA can now detect colors in Windows command consoles.
+- Bold, italic and underline are now indicated in braille using signs appropriate to the configured translation table. (#538)
+- Much more information is now reported in Microsoft Word documents, including:
+ - Inline information such as footnote and endnote numbers, heading levels, the existance of comments, table nesting levels, links, and text color;
+ - Reporting when entering document sections such as the comments story, footnotes and endnotes stories, and header and footer stories.
+- Braille now indicates selected text using dots 7 and 8. (#889)
+- Braille now reports information about controls within documents such as links, buttons and headings. (#202)
+- Support for the hedo ProfiLine and MobilLine USB braille displays. (#1863, #1897)
+- NVDA now avoids splitting words in braille when possible by default. This can be disabled in the Braille Settings dialog. (#1890, #1946)
+- It is now possible to have braille displayed by paragraphs instead of lines, which may allow for more fluent reading of large amounts of text. This is configurable using the Read by paragraphs option in the Braille Settings dialog. (#1891)
+- In browse mode, you can activate the object under the cursor using a braille display. This is done by pressing the cursor routing key where the cursor is located (which means pressing it twice if the cursor is not already there). (#1893)
+- Basic support for web areas in iTunes such as the Store. Other applications using WebKit 1 may also be supported. (#734)
+- In books in Adobe Digital Editions 1.8.1 and later, pages are now turned automatically when using say all. (#1978)
+- New braille translation tables: Portuguese grade 2, Icelandic 8 dot computer braille, Tamil grade 1, Spanish 8 dot computer braille, Farsi grade 1. (#2014)
+- You can now configure whether frames in documents are reported from the Document Formatting preferences dialog. (#1900)
+- Sleep mode is automatically enabled when using OpenBook. (#1209)
+- In Poedit, translators can now read translator added and automatically extracted comments. Messages that are untranslated or fuzzy are marked with a star and a beep is heard when you navigate onto them. (#1811)
+- Support for the HumanWare Brailliant BI and B series displays. (#1990)
+- New languages: Norwegian Bokmål, Traditional Chinese (Hong Kong).
 
 
-== バグ修正 ==
-- Windows 8において、NVDAで操作ができなくならないように、フォーカスがエクスプローラーの検索フィールドから誤って外れてしまわないようにしました。
-- Microsoft Word文書において、書式情報の自動通知が有効な場合の読み上げや内部での移動のパフォーマンスが向上したので、校正がより快適に行えるようになりました。一部のユーザーには全体的なパフォーマンスも向上しています。
-- フルスクリーンのAdobe Flashコンテンツにおいて、ブラウズモードが使用できるようになりました。
-- Microsoft Speech APIバージョン 5の音声使用時、デフォルトの出力先  (Microsoft Sound Mapper) 以外が選択されていると音質が悪くなる問題を修正しました。 (#749)
-- 点字のみまたはスピーチビューワー使用時であっても、「音声なし」音声エンジンが使用できるようになりました。 (#1963)
-- オブジェクトナビゲーションコマンドでは、「子オブジェクトなし」または「親オブジェクトなし」という通知はなくなり、ドキュメントで一貫したメッセージを通知するようになりました。
-- NVDAを英語以外の言語で使用しているとき、Tabキーの名称がその言語で正しく通知されるようになりました。
-- Mozilla Gecko (例えばFirefox) において、ドキュメント内のメニューを移動中に、断続的にブラウズモードに切り替わらないようになりました。 (#2025)
-- 電卓でバックスペースキーを押した場合、何も読み上げないのでなく、更新された結果を読み上げるようになりました。 (#2030)
-- ブラウズモード内の「マウスポインターを現在のナビゲーターオブジェクトに移動」コマンドが、ある状況でより正確にレビューカーソルを移動するために、オブジェクトの左上に移動する代わりに、中心に移動するようになりました。 (#2029)
-- ブラウズモードのフォーカスの変化を追跡する自動フォーカスモードが有効でツールバーにフォーカスした場合、フォーカスモードに変更されるようになりました。 (#1339)
-- Adobe Reader上で、タイトルの通知コマンドが正しく動作するように改善しました。
-- 「フォーカスの変化を追跡する自動フォーカスモード」が有効な場合、ARIAグリッドのようなフォーカスのあるテーブル上でフォーカスモードが正しく利用できるようになりました。 (#1763)
-- iTunesにおいて、特定のリストの位置情報が正しく通知されるようになりました。
-- Adobe Readerにおいて、一部のリンクが読み取り専用テキストを含んでいるように取り扱われないようになりました。
-- 編集可能なテキストフィールドのラベルを、ダイアログを通知する際に誤って含まないようにしました。 (#1960)
-- オブジェクトの説明の通知が有効な場合、グループの説明がまた通知されるようになりました。
-- Windowsエクスプローラーのドライブのプロパティダイアログにおいて、人が読めるサイズのテキストを含むようになりました。
-- 一部のプロパティページのテキストが2度通知される問題を抑制しました。 (#218)
-- スクリーンにテキストが書かれたテキストフィールド内のキャレットによる追跡が向上しました。特に、Microsoft ExcelのセルエディターやEudoraのメッセージエディターでの編集が向上しています。 (#1658)
-- Firefox 11において、(NVDA+Ctrl+スペースで動作する) それを含んでいる仮想バッファーに移動するコマンドで、埋め込みオブジェクトから抜けられるようになりました。
-- ディレクトリー名にASCII文字以外が含まれていても、 (例えば言語設定を変更した後に) 正しく再起動できるようになりました。 (#2079)
-- 点字表示において、オブジェクトショートカットキーの通知、位置情報及び説明が、設定どおりに正しく動作するようになりました。
-- Mozillaのアプリケーションにおいて、点字が有効な場合でもブラウズモードとフォーカスモードの切り替えが遅くならないようになりました。 (#2095)
-- 点字ディスプレイ上のタッチカーソルで行末/段落末のスペースに移動させた時、一部の編集可能テキストでテキストの先頭に移動しないようになりました。 (#2096)
-- 再度Audiologic Tts3シンセサイザーが正常に動作するようになりました。 (#2109)
-- Microsoft Wordd文書が複数行として扱われるようになりました。これにより、文書にフォーカスがある際の点字表示がより適切に動作するようになりました。
-- Microsoft Internet Explorerにおいて、いくつかのレアなコントロールにフォーカスした時にエラーが発生しなくなりました。(#2121)
-- 句読点及び記号の発音のユーザーによる変更が、NVDAを再起動することなく、または自動言語変更を無効化することなくすぐに反映されるようになりました。
-- eSpeakを使用中で、NVDAログビューアーの名前をつけて保存のダイアログを開いた時に読み上げが停止しないようになりました。 (#2145)
+== Changes ==
+- Commands to describe the current character or to spell the current word or line now will spell in the appropriate language according to the text, if auto language switching is turned on and the appropriate language information is available.
+- Updated eSpeak speech synthesizer to 1.46.02.
+- NVDA will now truncate extremely long (30 characters or greater) names guessed from graphic and link URLs as they are most likely garbage that gets in the way of reading. (#1989)
+- Some information displayed in braille has been abbreviated. (#1955, #2043)
+- When the caret or review cursor moves, braille is now scrolled in the same way as when it is manually scrolled. This makes it more appropriate when braille is configured to read by paragraphs and/or avoid splitting words. (#1996)
+- Updated to new Spanish grade 1 braille translation table.
+- Updated liblouis braille translator to 2.4.1.
 
-%== 開発者向けの変更 ==
-%- There is now a remote Python console for situations where remote debugging is useful. See the Developer Guide for details.
-%- The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
-%- TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
-% - This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
-%- TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
-%- Several control and output constants have been renamed or moved. (#228)
-%- speech.REASON_* constants have been moved to controlTypes.
-%- In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
-%- Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
-%- subclasses of the sapi5 synthDriver can now override _getVoiceTokens and extend __init__ to support custom voice tokens such as with sapi.spObjectTokenCategory to get tokens from a custom registry location.
+
+== Bug Fixes ==
+- In Windows 8, focus is no longer incorrectly moved away from the Windows Explorer search field, which was not allowing NVDA to interact with it.
+- Major performance improvements when reading and navigating Microsoft Word documents while automatic reporting of formatting is enabled, thus now making it quite comfortable to proof read formatting etc. Performance may be also improved over all for some users.
+- Browse mode is now used for full screen Adobe Flash content.
+- Fixed poor audio quality in some cases when using Microsoft Speech API version 5 voices with the audio output device set to something other than the default (Microsoft Sound Mapper). (#749)
+- Again allow NVDA to be used with the "no speech" synthesizer, relying purely on braille or the speech viewer. (#1963)
+- Object navigation commands no longer report "No children" and "No parents", but instead report messages consistent with the documentation.
+- When NVDA is configured to use a language other than English, the name of the tab key is now reported in the correct language.
+- In Mozilla Gecko (e.g. Firefox), NVDA no longer intermittently switches to browse mode while navigating menus in documents. (#2025)
+- In Calculator, the backspace key now reports the updated result instead of reporting nothing. (#2030)
+- In browse mode, the move mouse to current navigator object command now routes to the center of the object at the review cursor instead of the top left, making it more accurate it some cases. (#2029)
+- In browse mode with automatic focus mode for focus changes enabled, focusing on a toolbar will now switch to focus mode. (#1339)
+- The report title command works correctly again in Adobe Reader.
+- With automatic focus mode for focus changes enabled, focus mode is now correctly used for focused table cells; e.g. in ARIA grids. (#1763)
+- In iTunes, position information in certain lists is now reported correctly.
+- In Adobe Reader, some links are no longer treated as containing read-only editable text fields.
+- The labels of some editable text fields are no longer incorrectly included when reporting the text of a dialog. (#1960)
+- The description of groupings is once again reported if reporting of object descriptions is enabled.
+- The human readable sizes are now included in the text of the Windows Explorer drive properties dialog.
+- Double reporting of property page text has been suppressed in some cases. (#218)
+- Improved tracking of the caret in editable text fields which rely on text written to the screen. In particular, this improves editing in the Microsoft Excel cell editor and the Eudora message editor. (#1658)
+- In Firefox 11, the move to containing virtual buffer command (NVDA+control+space) now works as it should to escape embedded objects such as Flash content.
+- NVDA now restarts itself correctly (e.g. after changing the configured language) when it is located in a directory which contains non-ASCII characters. (#2079)
+- Braille correctly respects the settings for reporting of object shortcut keys, position information and descriptions.
+- In Mozilla applications, switching between browse and focus modes is no longer slow with braille enabled. (#2095)
+- Routing the cursor to the space at the end of the line/paragraph using braille cursor routing keys in some editable text fields now works correctly instead of routing to the start of the text. (#2096)
+- NVDA again works correctly with the Audiologic Tts3 synthesizer. (#2109)
+- Microsoft Word documents are correctly treated as multi-line. This causes braille to behave more appropriately when a document is focused.
+- In Microsoft Internet Explorer, errors no longer occur when focusing on certain rare controls. (#2121)
+- Changing the pronunciation of punctuation/symbols by the user will now take effect straight away, rather than requiring NVDA to be restarted or auto language switching to be disabled.
+- When using eSpeak, speech no longer goes silent in some cases in the Save As dialog of the NVDA Log Viewer. (#2145)
+
+
+== Changes for Developers ==
+- There is now a remote Python console for situations where remote debugging is useful. See the Developer Guide for details.
+- The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
+- TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
+ - This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
+- TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
+- Several control and output constants have been renamed or moved. (#228)
+ - speech.REASON_* constants have been moved to controlTypes.
+ - In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
+- Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
+- subclasses of the sapi5 synthDriver can now override _getVoiceTokens and extend __init__ to support custom voice tokens such as with sapi.spObjectTokenCategory to get tokens from a custom registry location.
 
 
 = 2011.3 =
-このリリースにおけるハイライトには、適切な言語設定が行われているドキュメントを読み上げる際に自動的に言語を切り替える機能、64ビット版Java Runtime Environmentsのサポート、Mozillaアプリケーションのブラウズモードにおける書式情報の通知、アプリケーションのフリーズやクラッシュへのより良い対応及びWindows 8への初期対応が含まれています。
+Highlights of this release include automatic speech language switching when reading documents with appropriate language information; support for 64 bit Java Runtime Environments; reporting of text formatting in browse mode in Mozilla applications; better handling of application crashes and freezes; and initial fixes for Windows 8.
 
-== 新機能 ==
-- Web/PDFドキュメントを読み上げる際、言語設定情報が適切に指定されていれば、eSpeak音声エンジンの言語が自動的に変更されるようになりました。自動言語/方言切り替えは、音声設定ダイアログで行うことができます。 (#845)
-- 64ビットのJava Runtime Environmentを含む、Java Access Bridge 2.0.2をサポートしました。
-- Mozilla Gecko (例えばFirefox) において、オブジェクトナビゲーション使用時に見出しレベルが通知されるようになりました。
-- Mozilla Geckoのブラウズモード (例えばFirefox及びThunderbird) において、テキストの書式を通知できるようになりました。 (#394)
-- Mozillaのアプリケーションなどで使用されているような標準的なIAccessible2のテキストコントロールにおいて、アンダーライン付のテキスト及び/または打ち消し線付のテキストを認識して通知できるようになりました。
-- Adobe Readerのブラウズモードにおいて、テーブル行及び列の数が通知できるようになりました。
-- Microsoft Speech Platform synthesizerへのサポートを追加しました。 (#1735)
-- IBM Lotus Symphonyのキャレットにおいて、ページ番号及び行番号が通知できるようになりました。 (#1632)
-- 大文字を読み上げる時のピッチの変化率が、音声設定ダイアログから変更できるようになりました。これは、大文字のピッチを上げるチェックボックスに替わるものです (したがって、この機能を無効化するには変化率の値を0にしてください) 。 (#255)
-- テキスト及び背景色が、Microsoft Excelのセルの書式の通知に含まれるようになりました。 (#1655)
-- Java Access Bridgeを使用しているアプリケーションにおいて、適切なコントロールで現在のナビゲーターオブジェクトを有効化できるようになりました。 (#1744)
-- 新しい言語: タミル語。
-- Design Science MathPlayerの基本的なサポートを行いました。
-
-
-== 変更点 ==
-- NVDA自身がクラッシュしてしまった場合に自動的に再起動するようになりました。
-- 一部の情報が点字で短縮表示されるようになりました。 (#1288)
-- アクティブウィンドウの読み上げスクリプト (NVDA+B) が改良され、不要なコントロールを除外できるようになり、より簡単に読み上げを停止できるようになりました。 (#1499)
-- ブラウズモード使用時に、新たに読みこまれたドキュメントを自動的に読み上げる挙動がオプションとなり、ブラウズモード設定ダイアログから設定できるようになりました。 (#414)
-- (デスクトップキーレイアウトではNVDA+endで) でステータスバーを読もうとしているとき、もしステータスバーそのものが存在しない場合、NVDAは代わりに表示されているアクティブなアプリケーションの最下行を使用するようになりました。 (#649)
-- ブラウズモード内でテキストをすべて読み上げる機能を実行中に、テキストを次のテキストと一緒に長い文章としてまとめて読むのでなく、見出しやその他のブロック要素の末尾で音声を一時的に停止するようになりました。
-- ブラウズモード内でスペースまたはEnterキーを押すと、フォーカスモードに入る替わりにタブを有効化するようになりました。 (#1760)
-- eSpeak音声エンジンを1.45.46にアップデートしました。
+== New Features ==
+- NVDA can now change the eSpeak synthesizer language on the fly when reading certain web/pdf documents with appropriate language information. Automatic language/dialect switching can be toggled on and off from the Voice Settings dialog. (#845) 
+- Java Access Bridge 2.0.2 is now supported, which includes support for 64 bit Java Runtime Environments.
+- In Mozilla Gecko (e.g. Firefox) Heading levels are now announced  when using object navigation.
+- Text formatting can now be reported when using browse mode in Mozilla Gecko (e.g. Firefox and Thunderbird). (#394)
+- Text with underline and/or strikethrough can now be detected and reported in standard IAccessible2 text controls such as in Mozilla applications.
+- In browse mode in Adobe Reader, table row and column counts are now reported.
+- Added support for the Microsoft Speech Platform synthesizer. (#1735)
+- Page and line numbers are now reported for the caret in IBM Lotus Symphony. (#1632)
+- The percentage of how much the pitch changes when speaking a capital letter is now configurable from the voice settings dialog. However, this does replace the older raise pitch for capitals checkbox (therefore to turn off this feature set the percentage to 0). (#255)
+- Text and background color is now included in the reporting of formatting for cells in Microsoft Excel. (#1655)
+- In applications using the Java Access Bridge, the activate current navigator object command now works on controls where appropriate. (#1744)
+- New language: Tamil.
+- Basic support for Design Science MathPlayer.
 
 
-== バグ修正 ==
-- Internet Explorer及びその他のMSHTMLのコントロールにおいて、制作者が非表示にしようとしているリストのバレットや番号 (例えばリストのスタイルが"none"のような物) を読み上げないようになりました。 (#1671)
-- NVDAがフリーズしたために (例えばCtrl+Alt+Nを押して) 再起動するとき、新しいNVDAが起動するまでは先に起動していたNVDAを終了しないようにしました。
-- Windowsコンソールにおいて、バックスペースやカーソルキーを押した場合に奇妙な結果が出てしまういくつかのケースに対応しました。 (#1612)
-- WPFコンボボックス内の選択された項目 (及び、おそらくUIオートメーションによって出力されたコンボボックスの一部) でテキストの編集ができないものが正しく通知されるようになりました。
-- Adobe Readerのブラウズモードにおいて、次の行へ移動、及び前の行に移動するコマンドで、見出し行から次の行に移動、もしくはその逆が常に可能になりました。また、見出し行が0行目と通知されることがなくなりました。 (#1731)
-- Adobe Readerのブラウズモードにおいて、テーブル内の空白セルに移動することができる (したがって通過することもできる) ようになりました。
-- 意味のない位置情報 (例えば0の0 レベル0のような) を点字表示しないようになりました。
-- 点字でレビューを表示させた場合、コンテンツをフラットレビューで表示できるようになりました。 (#1711)
-- 例えばWordpadドキュメントの先頭から前にスクロールする時などに、テキスト制御文字が2度表示されるような問題を解消しました。
-- Internet Explorerのブラウズモードにおいて、ファイルアップロードのボタン上でEnterキーを押した際に、フォーカスモードに切り替わるのではなく、アップロードするファイルを選択するダイアログを表示するという正しい挙動になりました。 (#1720)
-- アプリケーションのスリープモードが有効な場合、DOSコンソールのような動的なコンテンツの変更が通知されなくなりました。 (#1630)
-- ブラウズモードにおいて、コンボボックスを閉じたり開いたりするための、Alt+上矢印及びAlt+下矢印の挙動が改善しました。 (#1630)
-- 以前は確実にフリーズを引き起こした、応答なしのアプリケーションのような状況など、より多くの状況から復旧できるようになりました。 (#1408)
-- (Firefoxほか) Mozilla Geckoのブラウズモードにおけるドキュメントで、要素がdisplay:tableとしてスタイル指定されているという非常に特別な状況でテキストのレンダリングに失敗する問題を解消しました。 (#1373)
-- ラベルのあるコントロール内部にフォーカスが移動した際に、ラベルを読み上げないようになりました。Firefox (Gecko) とInternet Explorer (MSHTML) における一部のフォームフィールドでラベルの二重読み上げを解消しました。 (#1650)
-- Microsoft Excelで、Ctrl+Vで貼り付けをおこなったあとにセルを読めない問題を解消しました。 (#1781)
-- Adobe Readerにおいて、フォーカスモードで別ページのコントロールに移動した際、文書に関する外部情報を読み上げないようになりました。 (#1659)
-- (Firefoxなど) Mozilla Geckoアプリケーションのブラウズモードにおいて、トグルボタンが正しく検出され、通知されるようになりました。 (#1757)
-- Windows 8デベロッパープレビュー版で、Windowsエクスプローラーのアドレスバーを正しく読めるようになりました。
-- Windows 8デベロッパープレビュー版で、グリフ変換の問題により、winverやワードパッドのようなアプリケーションがクラッシュしないようになりました。
-- (Firefox 10など) Mozilla Gecko 10以降を利用するアプリケーションのブラウズモードにおいて、ターゲットにアンカーを含むページを読み込んだ際に、カーソルがより正しい位置に配置されるようになりました。 (#360)
-- (Firefoxなど) Mozilla Geckoアプリケーションのブラウズモードにおいて、イメージマップのラベルがレンダリングされるようになりました。
-- マウス追跡有効時に、マウスを (Synapticsのポインティングデバイス設定やSpeechLabのSpeakTextのような) 特定の編集可能なテキストフィールドで動かしても、アプリケーションがクラッシュしないようになりました。 (#672)
-- Windows XPに付属するメモ帳のバージョン情報、Windowsのバージョン情報を含む、いくつかのアプリケーションのダイアログについて正しく動作するようになりました。 (#1853, #1855)
-- Windowsのエディットコントロールにおける単語によるレビューを直しました。 (#1877)
-- キャレットの移動を追跡する自動フォーカスモードが有効な時、フォーカスモードのエディットフィールドから左矢印、上矢印またはPageUpで正しくブラウズモードに抜けられるようになりました。 (#1733)
+== Changes ==
+- NVDA will now restart itself if it crashes.
+- Some information displayed in braille has been abbreviated. (#1288)
+- the Read active window script (NVDA+b) has been improved to filter out unuseful controls   and also is now much more easy to silence. (#1499)
+- Automatic say all when a browse mode document loads is now optional via a setting in the Browse Mode settings dialog. (#414)  
+- When trying to read the status bar (Desktop NVDA+end), If a real status bar object cannot be located, NVDA will instead resort to using the bottom line of text written to the display for the active application. (#649)
+- When reading with say all in browse mode documents, NVDA will now pause at the end of headings and other block-level elements, rather than speaking the text together with the next lot of text as one long sentence.
+- In browse mode, pressing enter or space on a tab now activates it instead of switching to focus mode. (#1760)
+- Updated eSpeak speech synthesizer to 1.45.47.
 
 
-% == 開発者向けの変更 ==
-% - NVDA can now instruct speech synthesizers to switch languages for particular sections of speech.
-% - To support this, drivers must handle speech.LangChangeCommand in sequences past to SynthDriver.speak().
-%  - SynthDriver objects should also provide the language argument to VoiceInfo objects (or override the language attribute to retrieve the current language). Otherwise, NVDA's user interface language will be used.
+== Bug Fixes ==
+- NVDA  no longer shows bullets or numbering for lists in Internet Explorer and other MSHTML controls when the author has indicated that these should not be shown (i.e. the list style is "none"). (#1671)
+- Restarting NVDA when it has frozen (e.g. by pressing control+alt+n) no longer exits the previous copy without starting a new one.
+- Pressing backspace or arrow keys in a Windows command console no longer causes strange results in some cases. (#1612)
+- The selected item in WPF combo boxes (and possibly some other combo boxes exposed using UI Automation) which do not allow text editing is now reported correctly.
+- In browse mode in Adobe Reader, it is now always possible to move to the next row from the header row and vice versa using the move to next row and move to previous row commands. Also, the header row is no longer reported as row 0. (#1731)
+- In browse mode in Adobe Reader, it is now possible to move to (and therefore past) empty cells in a table.
+- Pointless position information (e.g. 0 of 0 level 0) is no longer reported in braille.
+- When braille is tethered to review, it is now able to show  content in flat review. (#1711)
+- A text control's text is no longer presented twice on a braille display in some cases, e.g. scrolling back from the start of Wordpad documents.
+- In browse mode in Internet Explorer, pressing enter on a file upload button now correctly presents the dialog to choose a file to upload instead of switching to focus mode. (#1720)
+- Dynamic content changes such as in Dos consoles are no longer announced if  sleep mode for that application is currently on. (#1662)
+- In browse mode, the behaviour of alt+upArrow and alt+downArrow to collapse and expand combo boxes has been improved. (#1630)
+- NVDA now recovers from many more situations such as applications that stop responding which previously caused it to freeze completely. (#1408)
+- For Mozilla Gecko (Firefox etc) browse mode documents NVDA will no longer fail to render text in a very specific situation where an element is styled as display:table. (#1373)
+- NVDA will no longer announce label controls when focus moves inside of them. Stops double announcements of labels for some form fields in Firefox (Gecko) and Internet Explorer (MSHTML). (#1650)
+- NVDA no longer fails to read a cell in Microsoft Excel after pasting in to it with control+v. (#1781)
+- In Adobe Reader, extraneous information about the document is no longer announced when moving to a control on a different page in focus mode. (#1659)
+- In browse mode in Mozilla Gecko applications (e.g. Firefox), toggle buttons are now detected and reported correctly. (#1757)
+- NVDA can now   correctly read the Windows Explorer Address Bar in Windows 8 developer preview.
+- NVDA will no longer crash apps such as winver and wordpad in Windows 8 developer preview due to bad glyph translations.
+- In browse mode in applications using Mozilla Gecko 10 and later (e.g. Firefox 10), the cursor is more often positioned correctly when loading a page with a target anchor. (#360)
+- In browse mode in Mozilla Gecko applications (e.g. Firefox), labels for image maps are now rendered.
+- With mouse tracking enabled, moving the mouse over certain editable text fields (such as in Synaptics Pointing Device Settings and SpeechLab SpeakText) no longer causes the application to crash. (#672)
+- NVDA now functions correctly in several about dialogs in applications distributed with Windows XP, including the About dialog in Notepad and the About Windows dialog. (#1853, #1855)
+- Fixed reviewing by word in Windows Edit controls. (#1877)
+- Moving out of an editable text field with leftArrow, upArrow or pageUp while in focus mode now correctly switches to browse mode when automatic focus mode for caret movement is enabled. (#1733)
+
+
+== Changes for Developers ==
+- NVDA can now instruct speech synthesizers to switch languages for particular sections of speech.
+ - To support this, drivers must handle speech.LangChangeCommand in sequences past to SynthDriver.speak().
+ - SynthDriver objects should also provide the language argument to VoiceInfo objects (or override the language attribute to retrieve the current language). Otherwise, NVDA's user interface language will be used.
 
 
 = 2011.2 =
-このリリースにおけるハイライトには、変更可能な読み上げレベルや読み方のカスタマイズ、文字の説明読みを含む句読点及び記号読み上げの強化、すべて読み上げ中の行末の無音の抑制、Internet ExplorerにおけるARIA対応の強化、Adobe Reader内のXFA/LiveCycleのサポート強化、より多くのアプリケーションで書かれたテキストへのアクセス、画面上のテキストの書式情報へのアクセスが含まれています。
+Highlights of this release include major improvements concerning punctuation and symbols, including configurable levels, custom labelling and character descriptions; no pauses at the end of lines during say all; improved support for ARIA in Internet Explorer; better support for XFA/LiveCycle PDF documents in Adobe Reader; access to text written to the screen in more applications; and access to formatting and color information for text written to the screen.
 
-== 新機能 ==
-- 現在文字の確認コマンドをすばやく2度続けて押すことで、任意の文字の説明を聞くことができるようになりました。英語に関しては、この機能で標準的な英語アルファベットのフォネティック読みが行われます。表意文字である繁体字中国語のような言語では、指定された文字を利用する複数のフレーズの例が提供されます。また、現在単語の読み上げや現在行の読み上げコマンドを3度続けて押すと、単語や行が前述の説明を用いてスペル読みされます。
-- 例えばMozilla Thunderbirdで直接書きこまれたテキストのような、アプリケーションのフラットレビューにおいて、より多くのテキストが見えるようになりました。
-- いくつかのレベルから句読点や記号の通知方法を選択できるようになりました。 (#332)
-- 句読点や他の記号が4戸以上連続している場合、繰り返し同じ記号を読む代わりに記号の個数を通知するようになりました。 (#43)
-- 新しい点字の変換テーブル: ノルウェイご8点コンピューター点字、エチオピア語1級、スロベニア語1級、セルビア語1級を追加しました。 (#1456)
-- すべて読み上げを実行中に、各行末で音声が不自然に一時停止しないようになりました。 (#149)
-- (aria-sortプロパティーによって) Webブラウザー上で何かが並べ替えられた場合にそれを通知するようになりました。 (#1500)
-- Unicodeによる点字のパターンが正しく点字ディスプレイに表示できるようになりました。 (#1505)
-- Internet Explorer及びその他のMSHTMLコントローラーにおいて、フォーカスが (fieldsetで囲まれた) コントロールのグループ内に移動したときに、グループの名称 (legend)  を読み上げるようになりました。 (#535)
-- Internet Explorer及びその他のMSHTMLコントローラーにおいて、aria-labelledBy及びaria-describedByプロパティーに対応しました。
-- Internet Explorer及びその他のMSHTMLコントローラーにおいて、ARIA list、gridcell、slider及びprogressbar controlのサポートが強化されました。
- - 利用者自身が句読点及びその他の記号の発音と読み上げレベルを変更できるようになりました。
-- Microsoft Excelにおいて、Ctrl+PageUpまたはCtrl+PageDownを使ってシート間を移動した場合、現在アクティブなシートの名称を通知するようになりました。 (#760)
-- Microsoft Word内のテーブルをTabキーを使って移動している時、移動した先のセルを読み上げるようになりました。 (#159)
-- テーブルセルの座行を通知するかどうかを、書式設定ダイアログで設定できるようになりました。 (#719)
-- 画面上に書かれたテキストの書式と色を認識できるようになりました。
-- Outlook Express、Windows Mail、Windows Live Mailのメッセージ一覧において、メッセージが未読であるかどうか及び、会話スレッドが閉じているか、開いているかを通知するようになりました。 (#868)
-- eSpeakに高速読み上げ設定が追加され、3倍の速度で読み上げられるようになりました。
-- Windows 7の時計からアクセスできる、カレンダーの日付及び時刻情報ダイアログのコントロールをサポートしました。 (#1637)
-- MDV Lilli点字ディスプレイ用の追加のキー割り当てを追加しました。 (#241)
-- 新しい言語: ブルガリア語、アルバニア語を追加しました。
+== New Features ==
+- It is now possible to hear the description for any given character by pressing the review current character script twice in quick succession.  For English characters this is the standard English phonetic alphabet. For pictographic languages such as traditional Chinese, one or more example phrases using the given symbol are provided. Also pressing review current word or review current line three times will spell the word/line using the first of these descriptions. (#55)
+- More text can be seen in flat review for applications such as Mozilla Thunderbird that write their text directly to the display as glyphs.
+- It is now possible to choose from several levels of punctuation and symbol announcement. (#332)
+- When punctuation or other symbols are repeated more than four times, the number of repetitions is now announced instead of speaking the repeated symbols. (#43)
+- New braille translation tables: Norwegian 8 dot computer braille, Ethiopic grade 1, Slovene grade 1, Serbian grade 1. (#1456)
+- Speech no longer unnaturally pauses at the end of each line when using the say all command. (#149)
+- NVDA will now announce whether something is sorted (according to the aria-sort property) in web browsers. (#1500)
+- Unicode Braille Patterns are now displayed correctly on braille displays. (#1505)
+- In Internet Explorer and other MSHTML controls when focus moves inside a group of controls (surrounded by a fieldset), NVDA will now announce the name of the group (the legend). (#535)
+- In Internet Explorer and other MSHTML controls, the aria-labelledBy and aria-describedBy properties are now honoured.
+- in Internet Explorer and other MSHTML controls, support for ARIA list, gridcell, slider and progressbar controls has been improved.
+- Users can now change the pronunciation of punctuation and other symbols, as well as the symbol level at which they are spoken. (#271, #1516)
+- In Microsoft Excel, the name of the active sheet is now reported when switching sheets with control+pageUp or control+pageDown. (#760)
+- When navigating a table in Microsoft Word with the tab key NVDA will now announce the current cell as you move. (#159)
+- You can now configure whether table cell coordinates are reported from the Document Formatting preferences dialog. (#719)
+- NVDA can now detect formatting and color for text written to the screen.
+- In the Outlook Express/Windows Mail/Windows Live Mail message list, NVDA will now announce the fact that a message is unread and also if it's expanded or collapsed in the case of conversation threads. (#868)
+- eSpeak now has a rate boost setting which triples the speaking rate.
+- Support for the  calendar control found in the Date and Time Information dialog accessed from the  Windows 7 clock. (#1637)
+- Additional key bindings have been added for the MDV Lilli braille display. (#241)
+- New languages: Bulgarian, Albanian.
 
 
-== 変更点 ==
+== Changes ==
 - To move the caret to the review cursor, now press the move focus to navigator object script (desktop NVDA+shift+numpadMinus, laptop NVDA+shift+backspace) twice in quick succession. This frees up more keys on the keyboard. (#837)
 - To hear the  decimal and hexadecimal representation of the character under the review cursor, now press review current character three times rather than twice, as twice now speaks the character description.
 - Updated eSpeak speech synthesiser to 1.45.03. (#1465)
@@ -292,7 +285,7 @@
 - The reportCurrentFormatting script (NVDA+f) now reports the formatting at the position of the review cursor rather than the system caret / focus. As  by default the review cursor follows the caret, most people should not notice a difference. However this now enables the user to find out the formatting when moving the review cursor, such as in flat review.
 
  
-== バグ修正 ==
+== Bug Fixes ==
 - Collapsing combo boxes in browse mode documents when focus mode has been forced with NVDA+space no longer auto-switches back to browse mode. (#1386)
 - In Gecko (e.g. Firefox) and MSHTML (e.g. Internet Explorer) documents, NVDA now correctly renders certain text on the same line which was previously rendered on separate lines. (#1378)
 - When Braille is tethered to review and the navigator object is moved to a browse mode document, either manually or due to a focus change, braille will appropriately show the browse mode content. (#1406, #1407)
@@ -358,28 +351,28 @@
 - If NVDA is unable to start, failure to play the Windows critical stop sound no longer clobbers the critical error message in the log file.
 
 
-% == 開発者向けの変更 ==
-% - Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
-% - Locales can now provide descriptions for characters. See the Character Descriptions section of the Developer Guide for details. (#55)
-% - Locales can now provide information about the pronunciation of specific punctuation and other symbols. See the Symbol Pronunciation section of the Developer Guide for details. (#332)
-%- You can now build NVDAHelper with several debugging options using the nvdaHelperDebugFlags SCons variable. See readme.txt at the root of the source distribution for details. (#1390)
-%- Synth drivers are now passed a sequence of text and speech commands to speak, instead of just text and an index.
-% - This allows for embedded indexes, parameter changes, etc.
-% - Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().
-% - The old methods will be used if SynthDriver.speak() is not implemented, but they are deprecated and will be removed in a future release.
-%- gui.execute() has been removed. wx.CallAfter() should be used instead.
-%- gui.scriptUI has been removed.
-% - For message dialogs, use wx.CallAfter(gui.messageBox, ...).
-% - For all other dialogs, real wx dialogs should be used instead.
-% - A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.
-%- Synth drivers can now support boolean settings. See SynthDriverHandler.BooleanSynthSetting.
-%- SCons now accepts a certTimestampServer variable specifying the URL of a timestamping server to use to timestamp authenticode signatures. (#1644)
+== Changes for Developers ==
+- Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
+- Locales can now provide descriptions for characters. See the Character Descriptions section of the Developer Guide for details. (#55)
+- Locales can now provide information about the pronunciation of specific punctuation and other symbols. See the Symbol Pronunciation section of the Developer Guide for details. (#332)
+- You can now build NVDAHelper with several debugging options using the nvdaHelperDebugFlags SCons variable. See readme.txt at the root of the source distribution for details. (#1390)
+- Synth drivers are now passed a sequence of text and speech commands to speak, instead of just text and an index.
+ - This allows for embedded indexes, parameter changes, etc.
+ - Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().
+ - The old methods will be used if SynthDriver.speak() is not implemented, but they are deprecated and will be removed in a future release.
+- gui.execute() has been removed. wx.CallAfter() should be used instead.
+- gui.scriptUI has been removed.
+ - For message dialogs, use wx.CallAfter(gui.messageBox, ...).
+ - For all other dialogs, real wx dialogs should be used instead.
+ - A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.
+- Synth drivers can now support boolean settings. See SynthDriverHandler.BooleanSynthSetting.
+- SCons now accepts a certTimestampServer variable specifying the URL of a timestamping server to use to timestamp authenticode signatures. (#1644)
 
 
 = 2011.1.1 =
 This release fixes several security and other important issues found in NVDA 2011.1.
 
-== バグ修正 ==
+== Bug Fixes ==
 - The Donate item in the NVDA menu is now disabled when running on the logon, lock, UAC and other secure Windows screens, as this is a security risk. (#1419)
 - It is now impossible to copy or paste within NVDA's user interface while on secure desktops (lock screen, UAC screen and windows logon) as this is a security risk. (#1421)
 - In Firefox 4, the move to containing virtual buffer command (NVDA+control+space) now works as it should to escape embedded objects such as Flash content. (#1429)
@@ -392,7 +385,7 @@ This release fixes several security and other important issues found in NVDA 201
 = 2011.1 =
 Highlights of this release include automatic reporting of new text output in mIRC, PuTTY, Tera Term and SecureCRT; support for global plugins; announcement of bullets and numbering in Microsoft Word; additional key bindings for braille displays, including keys to move to the next and previous line; support for several Baum, HumanWare and APH braille displays; and reporting of colors for some controls, including IBM Lotus Symphony text controls.
 
-== 新機能 ==
+== New Features ==
 - Colors can now be reported for some controls. Automatic announcement can be configured in the Document Formatting preferences dialog. It can also be reported on demand using the report text formatting command (NVDA+f).
  - Initially, this is supported in standard IAccessible2 editable text controls (such as in Mozilla applications), RichEdit controls (such as in Wordpad) and IBM Lotus Symphony text controls.
 - In virtual buffers, you can now select by page (using shift+pageDown and shift+pageUp) and paragraph (using shift+control+downArrow and shift+control+upArrow). (#639)
@@ -412,7 +405,7 @@ Highlights of this release include automatic reporting of new text output in mIR
 - The Freedom Scientific Focus 40 Blue braille display can now be used when connected via bluetooth. (#1345)
 
 
-== 変更点 ==
+== Changes ==
 - Position information is no longer reported by default in some cases where it was usually incorrect; e.g. most menus, the Running Applications bar, the Notification Area, etc. However, this can be turned on again by an added option in the Object Presentation settings dialog.
 - Keyboard help has been renamed to input help to reflect that it handles input from sources other than the keyboard.
 - Input Help no longer reports a script's code location via speech and braille as it is cryptic and irrelevant to the user. However, it is now logged for developers and advanced users.
@@ -423,7 +416,7 @@ Highlights of this release include automatic reporting of new text output in mIR
 - The hotkey for the Review Cursor item in the NVDA Preferences menu has been changed from r to c to eliminate the conflict with the Braille Settings item.
 
 
-== バグ修正 ==
+== Bug Fixes ==
 - When adding a new speech dictionary entry, the title of the dialog is now "Add dictionary entry" instead of "Edit dictionary entry". (#924)
 - In speech dictionary dialogs, the content of the Regular expression and Case sensitive columns of the Dictionary entries list is now presented in the configured NVDA language instead of always in English.
 - In AIM, position information is now announced in tree views.
@@ -461,46 +454,46 @@ Highlights of this release include automatic reporting of new text output in mIR
 - Fixed the issue where some braille displays weren't cleared properly when NVDA was exited or the display was changed.
 - The initial focus is no longer sometimes spoken twice when NVDA starts. (#1359)
 
-% == 開発者向けの変更 ==
-% - SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
-% - The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
-% - All input from the user is now represented by an inputCore.InputGesture instance. (#601)
-%  - Each source of input subclasses the base InputGesture class.
-%  - Key presses on the system keyboard are encompassed by the keyboardHandler.KeyboardInputGesture class.
-%  - Presses of buttons, wheels and other controls on a braille display are encompassed by subclasses of the braille.BrailleDisplayGesture class. These subclasses are provided by each braille display driver.
-% - Input gestures are bound to ScriptableObjects using the ScriptableObject.bindGesture() method on an instance or an __gestures dict on the class which maps gesture identifiers to script names. See baseObject.ScriptableObject for details.
-% - App modules no longer have key map files. All input gesture bindings must be done in the app module itself.
-% - All scripts now take an InputGesture instance instead of a key press.
-%  - KeyboardInputGestures can be sent on to the OS using the send() method of the gesture.
-% - To send an arbitrary key press, you must now create a KeyboardInputGesture using KeyboardInputGesture.fromName() and then use its send() method.
-% - Locales may now provide an input gesture map file to add new bindings or override existing bindings for scripts anywhere in NVDA. (#810)
-%  - Locale gesture maps should be placed in locale\LANG\gestures.ini, where LANG is the language code.
-%  - See inputCore.GlobalGestureMap for details of the file format.
-% - The new LiveText and Terminal NVDAObject behaviors facilitate automatic reporting of new text. See those classes in NVDAObjects.behaviors for details. (#936)
-%  - The NVDAObjects.window.DisplayModelLiveText overlay class can be used for objects which must retrieve text written to the display.
-%  - See the mirc and putty app modules for usage examples.
-% - There is no longer an _default app module. App modules should instead subclass appModuleHandler.AppModule (the base AppModule class).
-% - Support for global plugins which can globally bind scripts, handle NVDAObject events and choose NVDAObject overlay classes. (#281) See globalPluginHandler.GlobalPlugin for details.
-% - On SynthDriver objects, the available* attributes for string settings (e.g. availableVoices and availableVariants)  are now OrderedDicts keyed by ID instead of lists.
-% - synthDriverHandler.VoiceInfo now takes an optional language argument which specifies the language of the voice.
-% - SynthDriver objects now provide a language attribute which specifies the language of the current voice.
-%  - The base implementation uses the language specified on the VoiceInfo objects in availableVoices. This is suitable for most synthesisers which support one language per voice.
-% - Braille display drivers have been enhanced to allow buttons, wheels and other controls to be bound to NVDA scripts:
-%  - Drivers can provide a global input gesture map to add bindings for scripts anywhere in NVDA.
-%  - They can also provide their own scripts to perform display specific functions.
-%  - See braille.BrailleDisplayDriver for details and existing braille display drivers for examples.
-% - The 'selfVoicing' property on AppModule classes has now been renamed to 'sleepMode'.
-% - The app module events event_appLoseFocus and event_appGainFocus have now been renamed to event_appModule_loseFocus and event_appModule_gainFocus, respectivly, in order to make the naming convention consistent with app modules and tree interceptors.
-% - All braille display drivers should now use braille.BrailleDisplayDriver instead of braille.BrailleDisplayDriverWithCursor.
-%  - The cursor is now managed outside of the driver.
-%  - Existing drivers need only change their class statement accordingly and rename their _display method to display.
 
+== Changes for Developers ==
+- SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
+- The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
+- All input from the user is now represented by an inputCore.InputGesture instance. (#601)
+ - Each source of input subclasses the base InputGesture class.
+ - Key presses on the system keyboard are encompassed by the keyboardHandler.KeyboardInputGesture class.
+ - Presses of buttons, wheels and other controls on a braille display are encompassed by subclasses of the braille.BrailleDisplayGesture class. These subclasses are provided by each braille display driver.
+- Input gestures are bound to ScriptableObjects using the ScriptableObject.bindGesture() method on an instance or an __gestures dict on the class which maps gesture identifiers to script names. See baseObject.ScriptableObject for details.
+- App modules no longer have key map files. All input gesture bindings must be done in the app module itself.
+- All scripts now take an InputGesture instance instead of a key press.
+ - KeyboardInputGestures can be sent on to the OS using the send() method of the gesture.
+- To send an arbitrary key press, you must now create a KeyboardInputGesture using KeyboardInputGesture.fromName() and then use its send() method.
+- Locales may now provide an input gesture map file to add new bindings or override existing bindings for scripts anywhere in NVDA. (#810)
+ - Locale gesture maps should be placed in locale\LANG\gestures.ini, where LANG is the language code.
+ - See inputCore.GlobalGestureMap for details of the file format.
+- The new LiveText and Terminal NVDAObject behaviors facilitate automatic reporting of new text. See those classes in NVDAObjects.behaviors for details. (#936)
+ - The NVDAObjects.window.DisplayModelLiveText overlay class can be used for objects which must retrieve text written to the display.
+ - See the mirc and putty app modules for usage examples.
+- There is no longer an _default app module. App modules should instead subclass appModuleHandler.AppModule (the base AppModule class).
+- Support for global plugins which can globally bind scripts, handle NVDAObject events and choose NVDAObject overlay classes. (#281) See globalPluginHandler.GlobalPlugin for details.
+- On SynthDriver objects, the available* attributes for string settings (e.g. availableVoices and availableVariants)  are now OrderedDicts keyed by ID instead of lists.
+- synthDriverHandler.VoiceInfo now takes an optional language argument which specifies the language of the voice.
+- SynthDriver objects now provide a language attribute which specifies the language of the current voice.
+ - The base implementation uses the language specified on the VoiceInfo objects in availableVoices. This is suitable for most synthesisers which support one language per voice.
+- Braille display drivers have been enhanced to allow buttons, wheels and other controls to be bound to NVDA scripts:
+ - Drivers can provide a global input gesture map to add bindings for scripts anywhere in NVDA.
+ - They can also provide their own scripts to perform display specific functions.
+ - See braille.BrailleDisplayDriver for details and existing braille display drivers for examples.
+- The 'selfVoicing' property on AppModule classes has now been renamed to 'sleepMode'.
+- The app module events event_appLoseFocus and event_appGainFocus have now been renamed to event_appModule_loseFocus and event_appModule_gainFocus, respectivly, in order to make the naming convention consistent with app modules and tree interceptors.
+- All braille display drivers should now use braille.BrailleDisplayDriver instead of braille.BrailleDisplayDriverWithCursor.
+ - The cursor is now managed outside of the driver.
+ - Existing drivers need only change their class statement accordingly and rename their _display method to display.
 
 
 = 2010.2 =
 Notable features of this release include greatly simplified object navigation; virtual buffers for Adobe Flash content; access to many previously inaccessible controls by retrieving text written to the screen; flat review of screen text; support for IBM Lotus Symphony documents; reporting of table row and column headers in Mozilla Firefox; and significantly improved user documentation.
 
-== 新機能 ==
+== New Features ==
 - Navigating through objects with the review cursor has been greatly simplified. The review cursor now excludes objects which aren't useful to the user; i.e. objects only used for layout purposes and unavailable objects.
 - In applications using the Java Access Bridge (including OpenOffice.org), formatting can now be reported in text controls. (#358, #463)
 - When moving the mouse over cells in Microsoft Excel, NVDA will appropriately announce them.
@@ -527,7 +520,7 @@ Notable features of this release include greatly simplified object navigation; v
 - Support for Microsoft Internet Explorer 9.
 
 
-== 変更点 ==
+== Changes ==
 - The sayAll by Navigator object (NVDA+numpadAdd), navigator object next in flow (NVDA+shift+numpad6) and navigator object previous in flow (NVDA+shift+numpad4) commands have been removed for the time being, due to bugginess and to free up the keys for other possible features.
 - In the NVDA Synthesizer dialog, only the display name of the synthesizer is now listed. Previously, it was prefixed by the driver's name, which is only relevant internally.
 - When in embedded applications or virtual buffers inside another virtualBuffer (e.g. Flash), you can now  press nvda+control+space to move out of the embedded application or virtual buffer to the containing document. Previously nvda+space  was used for this. Now nvda+space is specifically only for toggling brows/focus modes on virtualBuffers.
@@ -543,9 +536,9 @@ Notable features of this release include greatly simplified object navigation; v
 - Updated liblouis braille translator to 2.1.1. Notably, this fixes some issues related to Chinese braille as well as characters which are undefined in the translation table. (#484, #499)
 
 
-== バグ修正 ==
-- In μTorrent, the focused item in the torrents list no longer reports repeatedly or steals focus when a menu is open.
-- In μTorrent, the names of the files in the Torrent Contents list are now reported.
+== Bug Fixes ==
+- In µTorrent, the focused item in the torrents list no longer reports repeatedly or steals focus when a menu is open.
+- In µTorrent, the names of the files in the Torrent Contents list are now reported.
 - In Mozilla applications, focus is now correctly detected when it lands on an empty table or tree.
 - In Mozilla applications, "not checked" is now correctly reported for checkable controls such as checkable table cells. (#571)
 - In Mozilla applications, the text of correctly implemented ARIA dialogs is no longer ignored and will now be reported when the dialog appears. (#630)
@@ -578,7 +571,7 @@ Notable features of this release include greatly simplified object navigation; v
 = 2010.1 =
 This release focuses primarily on bug fixes and improvements to the user experience, including some significant stability fixes.
 
-== 新機能 ==
+== New Features ==
 - NVDA no longer fails to start on a system with no audio output devices. Obviously, a braille display or the Silence synthesiser in conjunction with the Speech Viewer will need to be used for output in this case. (#425)
 - A report landmarks checkbox has been added to the Document Formatting settings dialog which allows you to configure whether NVDA should announce landmarks in web documents. For compatibility with the previous release, the option is on by default.
 - If speak command keys is enabled, NVDA will now announce the names of multimedia keys (e.g. play, stop, home page, etc.) on many keyboards when they are pressed. (#472)
@@ -599,7 +592,7 @@ This release focuses primarily on bug fixes and improvements to the user experie
 - Input text fields are now supported in Adobe Flash content. (#461)
 
 
-== 変更点 ==
+== Changes ==
 - The extremely verbose keyboard help message in the Windows 7 Start menu is no longer reported.
 - The Display synth has now been replaced with a new Speech Viewer. To activate it, choose Speech Viewer from the Tools menu. The speech viewer can be used independently of what ever speech synthesizer you are using. (#44)
 - Messages on the braille display will automatically be dismissed if the user presses a key that results in a change such as the focus moving. Previously the message would always stay around for its configured time.
@@ -611,7 +604,7 @@ This release focuses primarily on bug fixes and improvements to the user experie
 - Table row and column counts are no longer announced when reporting focus changes, as this announcement is rather verbose and usually not useful.
 
 
-== バグ修正 ==
+== Bug Fixes ==
 - NVDA no longer fails to start if UI Automation support appears to be available but fails to initialise for some reason. (#483)
 - The entire contents of a table row is no longer sometimes reported when moving focus inside a cell  in Mozilla applications. (#482)
 - NVDA no longer lags for a long time when expanding tree view items that contain a very large amount of sub-items.
@@ -647,7 +640,7 @@ This release focuses primarily on bug fixes and improvements to the user experie
 = 2009.1 =
 Major highlights of this release include support for 64 bit editions of Windows; greatly improved support for Microsoft Internet Explorer and Adobe Reader documents; support for Windows 7; reading of the Windows logon, control+alt+delete and User Account Control (UAC) screens; and the ability to interact with Adobe Flash and Sun Java content on web pages. There have also been several significant stability fixes and improvements to the general user experience.
 
-== 新機能 ==
+== New Features ==
 - Official support for 64 bit editions of Windows! (#309)
 - Added a synthesizer driver for the Newfon synthesizer. Note that this requires a special version of Newfon. (#206)
 - In virtual buffers, focus mode and browse mode can now be reported using sounds instead of speech. This is enabled by default. It can be configured from the Virtual buffers dialog. (#244)
@@ -680,7 +673,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - NVDA can now fully access applications running as administrator in Windows Vista and later. You must install an official release of NVDA for this to work. This does not work for portable versions and snapshots. (#397)
 
 
-== 変更点 ==
+== Changes ==
 - NVDA no longer announces "NVDA started" when it starts.
 - The startup and exit sounds are now played using NVDA's configured audio output device instead of the Windows default audio output device. (#164)
 - Progress bar reporting has been improved. Most notably you can now configure NVDA to announce via both speech and beeps at the same time.
@@ -692,7 +685,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - The NVDA error sound is no longer played in release candidates and final releases. Note that errors are still logged.
 
 
-== バグ修正 ==
+== Bug Fixes ==
 - When NVDA is run from an 8.3 dos path, but it is installed in the related long path (e.g. progra~1 verses program files) NVDA will correctly  identify that it is an installed copy and properly load the user's settings.
 - speaking the title of the current foreground window with nvda+t now works correctly when in menus.
 - braille no longer shows useless information in its focus context such as unlabeled panes.
@@ -725,7 +718,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 
 = 0.6p3 =
 
-== 新機能 ==
+== New Features ==
 - As Microsoft Excel's formula bar is inaccessible to NVDA, provide an NVDA specific dialog box for editing when the user presses f2 on a cell.
 - Support for formatting in IAccessible2 text controls, including Mozilla applications.
 - Spelling errors can now be reported where possible. This is configurable from the Document Formatting preferences dialog.
@@ -751,7 +744,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - When announcing selected text for long selections (512 characters or more), NVDA now speaks the number of selected characters, rather than speaking the entire selection. (#249)
 
 
-== 変更点 ==
+== Changes ==
 - If the audio output device is set to use the Windows default device (Microsoft Sound Mapper), NVDA will now switch to the new default device for eSpeak and tones when the default device changes. For example, NVDA will switch to a USB audio device if it automatically becomes the default device when it is connected.
 - Improve performance of eSpeak with some Windows Vista audio drivers.
 - reporting of links, headings, tables, lists and block quotes can now be configured from the Document Formatting settings dialog. Previously to configure these settings for virtual buffers, the virtual buffer settings dialog would have been used. Now all documents share this configuration.
@@ -763,7 +756,7 @@ Major highlights of this release include support for 64 bit editions of Windows;
 - The level of a tree view item is now announced first if it has changed from the previously focused item for all tree views. Previously, this was only occurring for native Windows (SysTreeView32) tree views.
 
 
-== バグ修正 ==
+== Bug Fixes ==
 - The last chunk of audio is no longer cut off when using NVDA with eSpeak on a remote desktop server.
 - Fix problems with saving speech dictionaries for certain voices.
 - Eliminate the lag when moving by units other than character (word, line, etc.) towards the bottom of large plain text documents in Mozilla Gecko virtual buffers. (#155)

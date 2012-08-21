@@ -20,7 +20,7 @@ def validateConfig(configObj,validator,validationResult=None,keyList=None):
 	if validationResult is True:
 		return None #No errors
 	if validationResult is False:
-		return _("Badly formed configuration file")
+		return "Badly formed configuration file"
 	errorStrings=[]
 	for k,v in validationResult.iteritems():
 		if v is True:
@@ -35,7 +35,7 @@ def validateConfig(configObj,validator,validationResult=None,keyList=None):
 			configObj[k]=defaultValue
 			if k not in configObj.defaults:
 				configObj.defaults.append(k)
-			errorStrings.append(_("%s: %s, defaulting to %s")%(k,v,defaultValue))
+			errorStrings.append("%s: %s, defaulting to %s"%(k,v,defaultValue))
 	return errorStrings
 
 val = Validator()
@@ -194,14 +194,14 @@ def load(factoryDefaults=False):
 		except ConfigObjError as e:
 			conf = ConfigObj(None, configspec = confspec, indent_type = "\t", encoding="UTF-8")
 			conf.filename=configFileName
-			globalVars.configFileError=_("Error parsing configuration file: %s")%e
+			globalVars.configFileError="Error parsing configuration file: %s"%e
 	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 	conf.newlines = "\r\n"
 	errorList=validateConfig(conf,val)
 	if synthSpec is None: 
 		synthSpec=deepcopy(conf["speech"].configspec["__many__"])
 	if errorList:
-		globalVars.configFileError=_("Errors in configuration file '%s':\n%s")%(conf.filename,"\n".join(errorList))
+		globalVars.configFileError="Errors in configuration file '%s':\n%s"%(conf.filename,"\n".join(errorList))
 	if globalVars.configFileError:
 		log.warn(globalVars.configFileError)
 

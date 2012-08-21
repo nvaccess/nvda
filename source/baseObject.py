@@ -193,3 +193,7 @@ class ScriptableObject(AutoPropertyObject):
 				continue
 		else:
 			return None
+
+	#: A value for sleepMode which indicates that NVDA should fully sleep for this object;
+	#: i.e. braille and speech via NVDA controller client is disabled and the user cannot disable sleep mode.
+	SLEEP_FULL = "full"

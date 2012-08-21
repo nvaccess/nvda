@@ -10,6 +10,7 @@ import threading
 import ctypes
 import collections
 import itertools
+import weakref
 import wx
 import NVDAHelper
 import XMLFormatting
@@ -57,6 +58,8 @@ def dictToMultiValueAttribsString(d):
 	return "%s;"%";".join(mainList)
 
 class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
+
+	allowMoveToOffsetPastEnd=False #: no need for end insertion point as vbuf is not editable. 
 
 	UNIT_CONTROLFIELD = "controlField"
 
@@ -552,6 +555,9 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	TextInfo=VirtualBufferTextInfo
 	programmaticScrollMayFireEvent = False
 
+	#: Maps root identifiers (docHandle and ID) to buffers.
+	rootIdentifiers = weakref.WeakValueDictionary()
+
 	def __init__(self,rootNVDAObject,backendName=None):
 		super(VirtualBuffer,self).__init__(rootNVDAObject)
 		self.backendName=backendName
@@ -567,6 +573,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		if not hasattr(self.rootNVDAObject.appModule, "_vbufRememberedCaretPositions"):
 			self.rootNVDAObject.appModule._vbufRememberedCaretPositions = {}
 		self._lastCaretPosition = None
+		self.rootIdentifiers[self.rootDocHandle, self.rootID] = self
 
 	def prepare(self):
 		self.shouldPrepare=False
@@ -1408,11 +1415,27 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			ui.message(_("Not in a container"))
 			return
 		container.collapse(end=True)
+		if container._startOffset>=container._getStoryLength():
+			container.move(textInfos.UNIT_CHARACTER,-1)
+			# Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container. 
+			ui.message(_("bottom"))
 		self._set_selection(container, reason=self.REASON_QUICKNAV)
 		container.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(container, reason=controlTypes.REASON_FOCUS)
 	# Translators: Description for the Move past end of container command in browse mode. 
 	script_movePastEndOfContainer.__doc__=_("Moves past the end  of the container element, such as a list or table")
+
+	@classmethod
+	def changeNotify(cls, rootDocHandle, rootID):
+		try:
+			queueHandler.queueFunction(queueHandler.eventQueue, cls.rootIdentifiers[rootDocHandle, rootID]._handleUpdate)
+		except KeyError:
+			pass
+
+	def _handleUpdate(self):
+		"""Handle an update to this buffer.
+		"""
+		braille.handler.handleUpdate(self)
 
 	__gestures = {
 		"kb:enter": "activatePosition",

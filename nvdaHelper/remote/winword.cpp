@@ -612,7 +612,6 @@ LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam)
 		winword_expandToLine_helper(pcwp->hwnd,reinterpret_cast<winword_expandToLine_args*>(pcwp->wParam));
 	} else if(pcwp->message==wm_winword_getTextInRange) {
 		winword_getTextInRange_helper(pcwp->hwnd,reinterpret_cast<winword_getTextInRange_args*>(pcwp->wParam));
-		winword_expandToLine_helper(pcwp->hwnd,reinterpret_cast<winword_expandToLine_args*>(pcwp->wParam));
 	}
 	return 0;
 }

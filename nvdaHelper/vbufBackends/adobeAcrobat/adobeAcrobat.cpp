@@ -304,6 +304,7 @@ inline wstring* getPageNum(IPDDomNode* domNode) {
 
 AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 	AdobeAcrobatVBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+	AdobeAcrobatVBufStorage_controlFieldNode_t* oldNode,
 	TableInfo* tableInfo, wstring* pageNum
 ) {
 	int res;
@@ -434,8 +435,14 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	}
 
 	// If this node has no language, inherit it from its parent node.
-	if (oldParentNode && parentNode->language.empty())
-		parentNode->language = oldParentNode->language;
+	if (parentNode->language.empty()) {
+		if (oldParentNode)
+			parentNode->language = oldParentNode->language;
+		// If this node was updated, we're rendering into a temporary buffer,
+		// so try getting the parent from the old node.
+		else if (oldNode && oldNode->getParent())
+			parentNode->language = static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(oldNode->getParent())->language;
+	}
 
 	//Get the child count
 	int childCount=0;
@@ -600,7 +607,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 						WindowFromAccessibleObject(childPacc, &tempHwnd);
 					}
 					LOG_DEBUG(L"calling filVBuf with child object ");
-					if ((tempNode = this->fillVBuf(docHandle, childPacc, buffer, parentNode, previousNode, tableInfo, pageNum))!=NULL) {
+					if ((tempNode = this->fillVBuf(docHandle, childPacc, buffer, parentNode, previousNode, NULL, tableInfo, pageNum))!=NULL) {
 						previousNode=tempNode;
 					} else {
 						LOG_DEBUG(L"Error in calling fillVBuf");
@@ -786,7 +793,7 @@ void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHand
 		// This is the root node.
 		this->isXFA = checkIsXFA(pacc);
 	}
-	this->fillVBuf(docHandle,pacc,buffer,NULL,NULL);
+	this->fillVBuf(docHandle, pacc, buffer, NULL, NULL, static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(oldNode));
 	pacc->Release();
 	LOG_DEBUG(L"Rendering done");
 }

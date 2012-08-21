@@ -13,17 +13,29 @@
 - Unterstützung für VIP Mud. (#1728)
 - Wenn in Adobe Reader einer Tabelle eine Zusammenfassung zugewiesen wurde, wird diese nun angezeigt. (#2465)
 - In Adobe Reader können nun Reihen und Spaltenüberschriften ausgegeben werden. (#2193, #2527)
-- neue Sprachen: nepalesisch, koreanisch
+- neue Sprachen: nepalesisch, koreanisch, Amharisch
 - Bei der Eingabe von E-Mail-Adressen in Outlook 2007 werden Vorschläge zur automatischen Vervollständigung korrekt ausgegeben. (#689)
 - neue Espeak-Varianten: Gene, Gene2. (#2512)
+- in Adobe Reader werden Seitenzahlen nun korrekt ausgegeben. (#2534)
+- Es ist nun möglich, die Werkseinstellungen von NVDA wiederherzustellen. Dies kann entweder durch dreimaliges Drücken von NVDA+strg+r oder durch Wählen von "Werkseinstellungen wiederherstellen" im nvda-Menü geschehen. (#2086)
+- Unterstützung der Braillezeilen Seika Version 3, 4 and 5 and Seika80 von Nippon Telesoft. (#2452)
+- Bei Freedom Scientific Pac Mate und Focus-Braillezeilen können die Routingtasten über dem ersten Bzw. letzten Modul nun zum Rückwärts- Bzw. Vorwärtsscrollen verwendet werden (#2556)
+- ** Viele weitere Features der Braillezeilen Focus von Freedom Scientific erweiterte bars, rocker bars und bestimmte Punktkombinationen für allgemeine Funktionen werden unterstützt. (#2516)
+- In Anwendungen, die Accessible2 verwenden (wie z.B. Mozilla-anwendungen) werden nun Spalten- und Zeilenüberschriften auch außerhalb des Lesemodus angezeigt. (#926)
+
 
 == Änderungen ==
 - Im Dialog für die NVDA-Cursor-Einstellungen wurde die Einstellung "Tastaturfokus verfolgen" in "Systemfokus verfolgen" umbenannt, um mit anderen Teilen von NVDA zu harmonieren, in denen diese Namensgebung verwendet wird.
 - Wenn die Braillezeile an den Navigator gekoppelt ist und gerade ein objekt angezeigt wird, das kein Textobjekt ist (wie z. B. ein Eingabefeld), kann das objekt durch Drücken der Cursorroutingtasten aktiviert werden. (#2386)
+- Die Option "Einstellungen beim Beenden speichern" ist bei neuen Konfigurationen nun standardmäßig aktiviert.
+- Beim Aktualisieren von NVDA wird die Tastenkombination der Desktopverknüpfung nun nicht mehr auf strg+alt+n zurückgesetzt, wenn der Anwender diese manuell geändert haben sollte. (#2572)
+- Die Liste der Erweiterungen im Dialog "erweiterungen verwalten" zeigt nun den Namen der Erweiterung vor dessen Status an. (#2548)
+- Wenn sie die gleiche Version bzw. eine andere Version einer bereits installierten Erweiterung installieren, werden Sie nun gefragt, ob die alte Version zuehrst entfernt werden soll. Zuvor wurde einfach eine Fehlermeldung angezeigt und die Installation abgebrochen. (#2501)
+- Die Befehle zur objektweisen navigation (bis auf den Befehl zur ausgabe des aktuellen objekts) sind nun weniger ausführlich. Sie können aber dennoch weitere Informationen über ein objekt abrufen, indem Sie den Befehl zur Ausgabe des aktuellen Objekts verwenden. (#2560)
 
 == Fehlerbehebungen ==
 - In Blio wird nun der Inhalt von Büchern in Braille angezeigt. (#2139)
-- Wurde der Rechner in Windows Vista und neuer mit Win+L gesperrt und wieder entsperrt, so bleibt die Windows-Taste nun nicht mehr fälschlicherweise hängen. (#1856)
+- Wurde der Computer in Windows Vista und neuer mit Win+L gesperrt und wieder entsperrt, so bleibt die Windows-Taste nun nicht mehr fälschlicherweise hängen. (#1856)
 - In Adobe Reader werden Zeilenüberschriften nun richtig als Zellen in einer Tabelle erkannt, so dass z. B. die Zellkoordinaten angesagt werden und durch die Tabellennavigation angesteuert werden können. (#2444)
 - In Adobe Reader werden Zellen, die sich über mehr als eine Spalte und/oder Reihe erstrecken, richtig behandelt. (#2437, (#2438, #2450)
 - Vor der Ausführung des NVDA-Installationspakets wird nun dessen Integrität geprüft. (#2475)
@@ -32,10 +44,24 @@
 - Im windows 8-Startbildschirm werden die Kacheln nun weniger ausführlich dargestellt  (der Status "nicht ausgewählt" wird nicht mehr ausgegeben). Desweiteren wird die Beschreibung ausgegeben - sofern vorhanden.
 - in Microsoft Outlook und anderen eingabefeldern, die als geschützt gekennzeichnet sind, werden die Kennwörter nun nicht mehr im Klartext ausgegeben. (#2021)
 - Im Adobe Reader wirken sich Änderungen an formularfeldern nun auch im Lesemodus korrekt aus. (#2529)
+- Verbesserungen an der Unterstützung für die Rechtschreibprüfung in Microsoft Word. Dies betrifft z.B. eine bessere Ausgabe von Rechtschreibfehlern.
+- Erweiterungen, die dateinamen mit nicht-ASCII-codierten Zeichen enthalten, können jetzt ordnungsgemäß installiert werden. (#2505)
+- In Adobe Reader geht die Spracheinstellung nun nicht mehr verloren, wenn die Seite scrollt oder aktualisiert wird. (#2544)
+- Beim Installieren von Erweiterungen wird nun der korrekte (übersetzte) Name angezeigt, sofern vorhanden.  (#2422)
+- In Anwendungen, die UI-Automation verwenden (wie etwa .net- oder Silverlight-Anwendungen) wurde die Berechnung numerischer Eigenschaften (wie etwa die Positionen von Schiebereglern) korrigiert. (#2417)
+- Die Einstellungen für die Ausgabe von Fortschrittsbalken werden nun auch während der Installation von NVDA oder während der Erstellung einer portablen Kopie berücksichtigt. (#2574)
+- wenn ein sicherer Desktop (wie etwa ein Sperrbildschirm) angezeigt wird, können nun keine NVDA-Befehle mehr mit einer Braillezeile ausgeführt werden. (#2449)
+- Die Braille-Ausgabe wird nun im Lesemodus korrekt aktualisiert, wenn sich der anzuzeigende Text geändert hat. (#2074)
+- In Sicheren Desktops wie etwa in der Benutzerkontensteuerung  werden nun Meldungen ignoriert, die über den nvda-Controller gesprochen werden oder in Braille angezeigt werden.
+- Sie können im Lesemodus nun nicht mehr über das Ende des Dokumentes hinaus springen, wenn Sie  (z.B. am Ende eines Dokumentes Pfeil Rechts drücken, oder wenn sie sich aus einem Container herausbewegen wollen, der sich am Ende eines Dokumentes befindet. (#2463)
+- in Web-Anwendungen (speziell in solchen, die Aria-Dialoge ohne das Attribut aria-describedby verwenden) wird nun keine belanglose Information mehr angezeigt. (#2390)
+- Wenn der Autor einer Webseite ausdrücklich per Aria eine Fensterklasse angegeben hat, werden in mshtml-Dokumenten wie z.B. Internet Explorer keine Steerelemente mehr falsch positioniert Bzw. falsch ausgegeben. (#2435)
+- Wennin Konsolenanwendungen das Sprechen eingegebener Wörter aktiviert ist, wird nun die Rücktaste korrekt verarbeitet. (#2586)
 
 
 == Änderungen für Entwickler ==
 - Beim Start von NVDA wird nun das vorherige Protokoll nach nvda-old.log kopiert. Sollte NVDA also einmal abstürzen oder neu gestartet werden müssen, steht das Protokoll der vorigen NVDA-Sitzung zu Inspektionszwecken zur Verfügung. (#916)
+- Wenn Sie innerhalb einer Methode chooseNVDAObjectOverlayClasses den Objekttyp abrufen wollen, wird dieser nun nicht mehr falsch zurückgegeben, wenn Objekte wie Eingabeaufforderungen oder Scintilla-Steuerelemente den Fokus haben. (#2569)
 
 
 = 2012.2.1 =

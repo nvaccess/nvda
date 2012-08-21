@@ -32,7 +32,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies. 
-A ce jour, NVDA a été traduit en 37 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, le Bulgare, le Chinois Traditionnel et simplifié, le Croate, le Danois, l'Espagnol, le Finnois, le Français, le Galicien, le Grecque, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Néerlandais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
+A ce jour, NVDA a été traduit en 40 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, le Bulgare, le Chinois Traditionnel et simplifié, le Coréen, le Croate, le Danois, l'Espagnol, l'Éthiopien, le Finnois, le Français, le Galicien, le Grecque, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Néerlandais, le népalais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
 
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -263,7 +263,7 @@ Quand vous atteignez un objet, vous pouvez l'examiner en utilisant les [commande
 Par défaut, l'objet navigateur suit le focus système, mais ce comportement peut être désactivé.
 
 Note : Par défaut, le Braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
-Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la review.
+Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la revue.
 
 Pour naviguer par objet, utilisez les touches suivantes :
 
@@ -292,7 +292,7 @@ Cependant, par défaut,  quand le curseur système bouge, le curseur de revue le
 Ceci peut être désactivé.
 
 Note : Par défaut, le Braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
-Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la review.
+Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la revue.
 
 Vous disposez des commandes suivantes pour explorer du texte :
 %kc:beginInclude
@@ -337,7 +337,7 @@ Vous pouvez alors explorer le texte en utilisant les [commandes de revue de text
 Vous pouvez aussi naviguer directement à l'objet situé à la position du curseur de revue, ce qui vous permet de passer en [navigation par objet #ObjectNavigation] depuis ce point.
 
 Note : Par défaut, le Braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
-Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la review.
+Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la revue.
 
 les deux commandes suivantes sont utilisées pour la revue à plat :
 %kc:beginInclude
@@ -916,17 +916,18 @@ En utilisant le champ Niveau, vous pouvez ajuster le niveau minimum auquel ce sy
 Quand vous avez fini, pressez le bouton Accepter pour sauvegarder vos modifications, ou le bouton Annuler pour les supprimer.
 
 ++ Sauvegarder et recharger la configuration ++
-Par défaut NVDA ne sauvegarde pas automatiquement vos paramètres, donc si vous quittez NVDA puis le redémarrez, les paramètres reprendront leur valeur originelle. Cependant, ce comportement peut être changé dans le dialogue Paramètres généraux du menu Préférences.
+Par défaut NVDA sauvegarde automatiquement vos paramètres.
 Notez cependant que ce comportement peut être modifié dans le dialogue "Paramètres généraux" du menu "Préférences".
-Pour sauvegarder les paramètres, utilisez l'élément Sauvegarde de la configuration dans le menu NVDA.
+Pour sauvegarder manuellement les paramètres à n'importequel moment, utilisez l'élément sauvegarder la configuration dans le menu NVDA.
 
 Si vous faites une erreur dans vos paramètres et avez besoin de revenir aux valeurs précédentes, utilisez l'élément Retour à la configuration sauvegardée dans le menu NVDA.
+Vous pouvez également réinitialiser votre configuration aux valeurs d'usine en utilisant l'élément Réinitialiser la configuration aux paramètres par défaut également disponible dans le menu de NVDA.
 
 Les touches de commande suivantes sont également utiles :
 %kc:beginInclude
 || Nom | Touche Desktop | Touche Laptop | Description |
 | Sauvegarder la configuration | NVDA+control+c | NVDA+control+c | Sauvegarde votre configuration pour qu'elle ne soit pas perdue en quittant NVDA |
-| Retourner à la configuration sauvegardée | NVDA+control+r | NVDA+control+r | Retour à la configuration qui existait lors de votre dernière sauvegarde |
+| Réinitialiser la configuration | NVDA+control+r | NVDA+control+r | Presser une fois pour réinitialiser à la configuration qui existait lors de votre dernière sauvegarde. Presser trois fois pour revenire à la configuration par défaut de NVDA. |
 %kc:endInclude
 
 ++ Fichiers de configuration et profils utilisateur ++
@@ -1056,6 +1057,11 @@ Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ses touches.
 %kc:beginInclude
 || Nom | Touche |
+| Défilement arrière de l'affichage braille | topRouting1 (première cellule de l'afficheur) |
+| Défilement avant de l'affichage braille | topRouting20/40/80 (dernière cellule de l'afficheur) |
+| Défilement arrière de l'affichage braille | barAvancerDeGauche |
+| Défilement avant de l'affichage braille | barAvancerDeDroite |
+| Basculer le suivi du braille | boutonGDFGauche+boutonGDFDroite |
 | Choix de la fonction de la roulette magique gauche | Appui sur la roulette magique gauche |
 | Retour arrière en utilisant la roulette magique gauche | roulette magique gauche vers le haut |
 | Avancer en utilisant la roulette magique gauche | roulette magique gauche vers le bas |
@@ -1063,6 +1069,38 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ses t
 | Retour arrière en utilisant la roulette magique droite | roulette magique droite vers le haut |
 | Avancer en utilisant la roulette magique droite | roulette magique droite vers le bas |
 | Aller à la cellule braille | routing |
+| touche retour arrière | point7 |
+| touche entrée | point8 |
+| touche maj+tab | barreEspacebraille+point1+point2 |
+| touche tab | barreEspaceBraille+point4+point5 |
+| touche flècheHaute | barreEspaceBraille+point1 |
+| touche flècheBasse | barreEspaceBraille+point4 |
+| touche control+flècheGauche | barreEspaceBraille+point2 |
+| touche control+flècheDroite | barreEspaceBraille+point5 |
+| flècheGauche | barreEspaceBraille+point3 |
+| flècheDroite | barreEspaceBraille+point6 |
+| touche orrigine | barreEspaceBraille+point1+point3 |
+| touche fin | barreEspaceBraille+point4+point6 |
+| touche control+début | barreEspaceBraille+point1+point2+point3 |
+| touche control+fin | barreEspaceBraille+point4+point5+point6 |
+| touche alt | barreEspaceBraille+point1+point3+point4 |
+| touche alt+tab | barreEspaceBraille+point2+point3+point4+point5 |
+| touche echapp | barreEspaceBraille+point1+point5 |
+| touche windows | barreEspaceBraille+point2+point4+point5+point6 |
+| touche espace | barreEspaceBraille |
+| touche windows+d (minimiser toutes les applications) | barreEspaceBraille+point1+point2+point3+point4+point5+point6 |
+| Rapporter la ligne courrante | barreEspaceBraille+point1+point4 |
+| menu NVDA | barreEspaceBraille+point1+point3+point4+point5 |
+
+Pour les nouveaux modèles de Focus qui ont des touches de bascule (focus 40, focus 80 et focus blue):
+|| Nom | Touche |
+| Déplacer l'affichage braille vers la ligne précédente | barreBasculeGaucheeHaut, barreBasculeDroiteHaut |
+| Déplacer l'affichage braille vers la ligne suivante | barreBasculeGaucheBas, barreBasculeDroiteBas |
+
+Pour le Focus 80 seulement :
+|| Nom | Touche |
+| Défiler le braille vers l'arrière | barreBumperHaut, barreBumperHaut |
+| Défiler vers l'avant | barreBumperBas, barreBumperBas |
 %kc:endInclude
 
 ++ Les terminaux Optelec ALVA BC640/680 ++
@@ -1303,6 +1341,28 @@ Veuillez consulter la documentation du terminal pour savoir où se trouvent ces 
 || Nom | Touche |
 | Défilement arrière de l'affichage braille | Défilement bas côté gauche |
 | Défilement avant de l'affichage braille | Défilement bas droite |
+| Aller à la cellule braille | route (amener le curseur au caractère) |
+%kc:endInclude
+
+++ Seika Braille Displays ++
+Les afficheurs brailles Seika Version 3, 4 et 5 (40 cells) et Seika80 (80 cells) de [Nippon Telesoft http://www.nippontelesoft.com/] sont prises en charge.
+Vous pouvez trouver plus d'informations sur ces afficheurs sur le site http://www.seika-braille.com/.
+Vous devez d'abord installer les pilotes USB fourni par le fabriquant.
+
+Voici les assignations de touches pour ce terminal sous NVDA.
+Veuillez consulter la documentation du terminal pour savoir où se trouvent ces touches.
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement arrière de l'affichage braille | gauche |
+| Défilement avant de l'affichage braille | droite |
+| Déplacer l'afficheur braille à la ligne précédante | B3 |
+| Déplacer le braille à la ligne suivante | b4 |
+| Basculer le suivi braille | b5 |
+| Dire tout | b6 |
+| tab | b1 |
+| maj+tab | b2 |
+| alt+tab | b1+b2 |
+| Menu NVDA | gauche+droite |
 | Aller à la cellule braille | route (amener le curseur au caractère) |
 %kc:endInclude
 

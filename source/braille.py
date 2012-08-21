@@ -439,7 +439,10 @@ def getBrailleTextForProperties(**propertyValues):
 		indexInGroup = positionInfo.get("indexInGroup")
 		similarItemsInGroup = positionInfo.get("similarItemsInGroup")
 		if indexInGroup and similarItemsInGroup:
-			textList.append(_("%s of %s") % (indexInGroup, similarItemsInGroup))
+			# Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+			# {number} is replaced with the number of the item in the group.
+			# {total} is replaced with the total number of items in the group.
+			textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
 		if level is not None:
 			# Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 			# %s is replaced with the level.
@@ -487,6 +490,7 @@ class NVDAObjectRegion(Region):
 			description=obj.description if presConfig["reportObjectDescriptions"] else None,
 			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
 			positionInfo=obj.positionInfo if presConfig["reportObjectPositionInformation"] else None,
+			cellCoordsText=obj.cellCoordsText if config.conf["documentFormatting"]["reportTableCellCoords"] else None,
 		)
 		self.rawText = text + self.appendText
 		super(NVDAObjectRegion, self).update()
