@@ -9,7 +9,10 @@ import comtypes.client
 import winUser
 import appModuleHandler
 import eventHandler
+import api
 import controlTypes
+import speech
+import ui
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible.MSHTML import MSHTML
@@ -77,7 +80,10 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role=obj.role
 		windowClassName=obj.windowClassName
+		states=obj.states
 		controlID=obj.windowControlID
+		if role==controlTypes.ROLE_LISTITEM and windowClassName.startswith("REListBox"):
+			clsList.insert(0,AutoCompleteListItem)
 		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
 			clsList.insert(0, AddressBookEntry)
 			return
@@ -195,3 +201,12 @@ class AddressBookEntry(IAccessible):
 	def initOverlayClass(self):
 		for gesture in self.__moveByEntryGestures:
 			self.bindGesture(gesture, "moveByEntry")
+
+class AutoCompleteListItem(IAccessible):
+
+	def event_stateChange(self):
+		states=self.states
+		focus=api.getFocusObject()
+		if focus.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
+			speech.cancelSpeech()
+			ui.message(self.name)

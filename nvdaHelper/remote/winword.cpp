@@ -612,13 +612,12 @@ LRESULT CALLBACK winword_callWndProcHook(int code, WPARAM wParam, LPARAM lParam)
 		winword_expandToLine_helper(pcwp->hwnd,reinterpret_cast<winword_expandToLine_args*>(pcwp->wParam));
 	} else if(pcwp->message==wm_winword_getTextInRange) {
 		winword_getTextInRange_helper(pcwp->hwnd,reinterpret_cast<winword_getTextInRange_args*>(pcwp->wParam));
-		winword_expandToLine_helper(pcwp->hwnd,reinterpret_cast<winword_expandToLine_args*>(pcwp->wParam));
 	}
 	return 0;
 }
 
 error_status_t nvdaInProcUtils_winword_expandToLine(handle_t bindingHandle, const long windowHandle, const int offset, int* lineStart, int* lineEnd) {
-	winword_expandToLine_args args={offset,offset,offset+1};
+	winword_expandToLine_args args={offset,-1,-1};
 	DWORD_PTR wmRes=0;
 	SendMessage((HWND)windowHandle,wm_winword_expandToLine,(WPARAM)&args,0);
 	*lineStart=args.lineStart;

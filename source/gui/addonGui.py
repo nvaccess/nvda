@@ -23,8 +23,8 @@ class AddonsDialog(wx.Dialog):
 		entriesLabel=wx.StaticText(self,-1,label=_("Installed Add-ons"))
 		entriesSizer.Add(entriesLabel)
 		self.addonsList=wx.ListCtrl(self,-1,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
-		self.addonsList.InsertColumn(0,_("Status"),width=50)
-		self.addonsList.InsertColumn(1,_("Package"),width=150)
+		self.addonsList.InsertColumn(0,_("Package"),width=150)
+		self.addonsList.InsertColumn(1,_("Status"),width=50)
 		self.addonsList.InsertColumn(2,_("Version"),width=50)
 		self.addonsList.InsertColumn(3,_("Author"),width=300)
 		self.addonsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemSelected)
@@ -81,13 +81,19 @@ class AddonsDialog(wx.Dialog):
 			wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
 			return
 		bundleName=bundle.manifest['name']
-		if any(bundleName==addon.manifest['name'] for addon in self.curAddons if not addon.isPendingRemove):
-			# Translators: The message displayed when an an addon already seems to be installed. 
-			gui.messageBox(_("This add-on seems to already be installed. Please remove the existing add-on and try again."),
-				# Translators: The title of a dialog presented when an error occurs.
-				_("Error"),
-				wx.OK | wx.ICON_WARNING)
-			return
+		prevAddon=None
+		for addon in self.curAddons:
+			if not addon.isPendingRemove and bundleName==addon.manifest['name']:
+				prevAddon=addon
+				break
+		if prevAddon:
+			# Translators: A message asking if the user wishes to replace a previously installed add-on with this one.
+			if gui.messageBox(_("The same or another version of this add-on is currently installed. Would you like to remove the previously installed add-on and install this one instead?"),
+				# Translators: A title for the dialog  asking if the user wishes to replace a previously installed add-on with this one.
+				_("Add-on Installation"),
+				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
+				return
+			prevAddon.requestRemove()
 		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
 		# Translators: The title of the dialog presented while an Addon is being installed.
 		_("Installing Add-on"),
@@ -137,7 +143,7 @@ class AddonsDialog(wx.Dialog):
 		self.addonsList.DeleteAllItems()
 		self.curAddons=[]
 		for addon in addonHandler.getAvailableAddons():
-			self.addonsList.Append((self.getAddonStatus(addon), addon.manifest['summary'],addon.manifest['version'], addon.manifest['author']))
+			self.addonsList.Append((addon.manifest['summary'], self.getAddonStatus(addon), addon.manifest['version'], addon.manifest['author']))
 			self.curAddons.append(addon)
 		# select the given active addon or the first addon if not given
 		curAddonsLen=len(self.curAddons)

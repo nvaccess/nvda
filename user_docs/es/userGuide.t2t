@@ -4,7 +4,7 @@
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Referencia Rápida de Órdenes de teclado
 
-= Tabla de Contenido =[toc]
+= Índice =[toc]
 %%toc
 
 + Introducción +
@@ -23,7 +23,7 @@ Lo más reseñable incluye:
 - Soporte para muchas líneas de braille efímero
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
-- Traducido a 37 idiomas
+- Traducido a 40 idiomas
 - Soporte para Sistemas Operativos Windows modernos incluyendo variantes de 32 y 64 bit
 - Capacidad para ejecutarse en ventanas de autentificación de Windows  y otras pantallas seguras 
 - Soporte para interfaces comunes de accesibilidad tales como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
@@ -32,7 +32,7 @@ Lo más reseñable incluye:
 
 ++ Internacionalización ++
 Es importante que cualquier persona en el mundo, sin importar qué idioma hable, tenga igual acceso a la tecnología. 
-Actualmente NVDA ha sido traducido a 37 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Árabe, Búlgaro, Checo, Chino Mandarín y Chino cantonés, Croata, Danés, eslovaco, Español, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Japonés, Noruego, Polaco, Portugués, Portugués del Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
+Actualmente NVDA ha sido traducido a 40 idiomas además del idioma inglés incluyendo: Afrikáans, Albanés, Alemán, Amárico, Árabe, Búlgaro, Checo, Chino Mandarín y Chino cantonés, Coreano, Croata, Danés, eslovaco, Español, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Japonés, Nepalí, Noruego, Polaco, Portugués, Portugués del Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Soporte de Síntesis de Voz ++
 Además de proporcionar sus mensajes e interface en varios idiomas, NVDA también puede posibilitar al usuario para leer contenidos en cualquier idioma, tanto en cuanto tengan un sintetizador de voz que pueda verbalizar ese idioma en particular. 
@@ -311,7 +311,7 @@ Las siguientes teclas de órdenes están disponibles para revisión de texto:
 | Mover a la línea siguiente en revisión | 9 teclado numérico | NVDA+o | Mueve el cursor de revisión a la línea siguiente de texto |
 | Mover a la línea inferior en revisión | shift+9 teclado numérico | NVDA+9 | Mueve el cursor de revisión a la línea inferior de texto |
 | Mover a la palabra anterior en revisión | 4 teclado numérico | NVDA+j | Mueve el cursor de revisión a la palabra anterior en el texto |
-| Anunciar palabra actual en revisión | 5 teclado numérico | NVDA+k | Anuncia la palabra actual en el texto donde esté posicionado el cursor de revisión. Pulsando dos veces deletrea la palabra, pulsando tres veces deletrea la palabra utilizando descripciones de carácteres.  |
+| Anunciar palabra actual en revisión | 5 teclado numérico | NVDA+k | Anuncia la palabra actual en el texto donde esté posicionado el cursor de revisión. Pulsando dos veces deletrea la palabra, pulsando tres veces deletrea la palabra utilizando descripciones de carácteres. |
 | Mover a la siguiente palabra en revisión | 6 teclado numérico | NVDA+l | Mueve el cursor de revisión a la siguiente palabra en el texto |
 | mover al inicio de la línea en revisión | shift+1 teclado numérico | NVDA+shift+u | Mueve el cursor de revisión al comienzo de la línea actual en el texto |
 | Mover al carácter anterior en revisión | 1 teclado numérico | NVDA+m | Mueve el cursor de revisión al carácter anterior en la línea actual en el texto |
@@ -350,7 +350,7 @@ Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto,
 Las siguientes dos órdenes se utilizan para cambiar para/desde la revisión plana:
 %kc:beginInclude
 || Nombre | Tecla Escritorio | Tecla Portátil | Descripción |
-| Cambiar a revisión plana | NVDA+7 teclado numérico | NVDA+AvPág | Se mueve a revisión plana, colocándote en la posición del navegador de objetos actual,  permitiéndote revisar la pantalla (o documento si estás actualmente dentro de uno), con las órdenes de revisión de texto.
+| Cambiar a revisión plana | NVDA+7 teclado numérico | NVDA+AvPág | Se mueve a revisión plana, colocándote en la posición del navegador de objetos actual,  permitiéndote revisar la pantalla (o documento si estás actualmente dentro de uno), con las órdenes de revisión de texto. |
 | Mover a objeto desde revisión plana | NVDA+1 teclado numérico | NVDA+rePág | navega al objeto representado por el texto en la posición actual del cursor de revisión en revisión plana |
 %kc:endInclude
 
@@ -430,18 +430,18 @@ Las siguientes teclas por sí mismas saltan al siguiente campo, con la tecla shi
 - s: separador
 - m: marco
 - g: gráfico
-- d: zona ARIA
+- d: zona
 - o: objeto integrado
 - 1 a 6: encabezados de 1 a 6 respectivamente
 -
 Para moverte al comienzo o final de elementos contenedores tales como listas y tablas:
 || Nombre | Tecla | Descripción |
-| Mover al comienzo de un contenedor | shift+, | Se mueve al comienzo del contenedor (lista, tabla etc) donde esté situado el cursor |
-| Mover al final del contenedor | , | Se mueve al final del contenedor (lista, tabla etc) donde esté situado el cursor |
+| Mover al comienzo de un contenedor | shift+coma | Se mueve al comienzo del contenedor (lista, tabla etc) donde esté situado el cursor |
+| Mover al final del contenedor | coma | Se mueve al final del contenedor (lista, tabla etc) donde esté situado el cursor |
 %kc:endInclude
 
 ++ La Lista de Elementos ++
-La lista de elementos proporciona acceso a una lista o de enlaces, encabezados o zonas de ARIA en la página. 
+La lista de elementos proporciona acceso a una lista de enlaces, encabezados o zonas en la página. 
 Los botones de opción te permiten cambiar entre estos tres tipos de información. 
 Se Proporciona también un campo de edición en el diálogo el cual te permite filtrar la lista para ayudarte a buscar un elemento en particular en la página. 
 Una vez hayas elegido un elemento, puedes utilizar los botones proporcionados en el diálogo para moverte a, o activar, ese elemento.
@@ -470,7 +470,7 @@ NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer
 | Anunciar tiempo restante | control+shift+r | Anuncia el tiempo restante de la pista actualmente en reproducción, si hay alguna. |
 %kc:endInclude
 
-Nota: O atallo de teclado de anunciado do tempo restante só funciona ca cadea de formato predeterminada para a liña de estado de foobar.
+Nota: El atajo de teclado de anunciado del tiempo restante sólo funciona con la cadena de formato predeterminada para la línea de estado de foobar.
 
 ++ Miranda IM ++
 %kc:beginInclude
@@ -759,7 +759,7 @@ Cuando se activa, el cursor de revisión se moverá automáticamente a la posici
 Cuando se activa, el cursor de revisión seguirá al ratón según se mueva.
 
 ==== Modo de Revisión Simple ====
-Cuando se activa, NVDA filtrará la jerarquía de objetos que puede navegarse, para excluir cualquier objeto inutilizable.
+Cuando se activa, NVDA filtrará la jerarquía de objetos que puede navegarse, para excluir cualquier objeto que no sea del interés para el usuario; ej.: objetos invisibles y objetos utilizados sólo con propósitos de diseño.
 
 +++ Opciones de Presentación de Objetos (NVDA+control+o) +++
 Se encuentra en el menú Preferencias bajo "Presentación de Objetos..." 
@@ -924,19 +924,20 @@ Utilizando el campo Nivel, puedes ajustar el nivel más bajo del símbolo al cua
 Cuando termines, pulsa el botón Aceptar para guardar tus cambios o el botón Cancelar para descartarlos.
 
 ++ Guardando y Recargando la configuración ++
-De forma predeterminada NVDA no guarda automáticamente tus opciones, así si sales de NVDA, y luego lo reinicias, las opciones volverán a los valores originales. 
+De forma predeterminada NVDA guardará automáticamente tus opciones al salir.
 Ten en cuenta, no obstante, que esta opción predeterminada puede ser cambiada bajo las opciones generales en el menú preferencias. 
-Para guardar las opciones puedes elegir el elemento Guardar Configuración en el menú NVDA.
+Para guardar las opciones manualmente en cualquier ocasión, elige el elemento Guardar configuración en el menú NVDA.
 
 Si NVDA está en un sistema de ficheros de sólo lectura, tal como un CD, no será posible guardar tus opciones, y te lo dirá.
 
 Si te equivocas con tus opciones y necesitas volver a las opciones guardadas, puedes elegir el elemento "volver a la configuración guardada" en el menú NVDA.
+También puedes reiniciar tus opciones a sus valores predeterminados de fábrica originales eligiendo Reiniciar Configuración a los Valores Predeterminados de Fábrica, que también se encuentra en el menú NVDA.
 
 Las siguientes teclas de órdenes de NVDA también son útiles:
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portátil | Descripción |
 | Guardar configuración | NVDA+control+c | NVDA+control+c | Guarda tu configuración actual tal que no se pierda cuando salgas de NVDA |
-| Regresar a configuración guardada | NVDA+control+r | NVDA+control+r | Restaura a NVDA a las opciones que existían en la última configuración guardada de NVDA |
+| Revertir configuración | NVDA+control+r | NVDA+control+r | Pulsando una vez reinicia tu configuración a cuando la guardaste por última vez. Pulsando tres veces la reiniciará a los valores predeterminados de fábrica. |
 %kc:endInclude
 
 ++ Ficheros de Configuración y Perfiles de Usuario ++
@@ -1066,6 +1067,11 @@ Seguidamente van las asociaciones de teclas para esta línea con NVDA.
 Por favor mira la documentación de la línea para descriptciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | tecla |
+| Desplazar línea braille atrás | sensorSuperior1 (primera celda en la línea) |
+| Desplazar línea braille adelante | sensorSuperior20/40/80 (última celda en la línea) |
+| Desplazar línea braille atrás | barraDeAvance izquierda |
+| Desplazar línea braille adelante | barraDeAvance derecha |
+| Conmutar seguimiento de braille | leftGDFButton+rightGDFButton |
 | Conmutar acción de rueda izquierda | pulsar rueda izquierda |
 | Moverse hacia atrás utilizando acción de rueda izquierda | rueda izquierda hacia arriba |
 | Moverse hacia adelante utilizando acción de rueda izquierda | rueda izquierda hacia abajo |
@@ -1073,6 +1079,38 @@ Por favor mira la documentación de la línea para descriptciones de dónde pued
 | Moverse hacia atrás utilizando acción de rueda derecha | rueda derecha hacia arriba |
 | Moverse hacia adelante  utilizando acción de rueda derecha | rueda derecha hacia abajo |
 | Guiar hacia la celda braille | sensor |
+| tecla retroceso | punto7 |
+| tecla intro | punto8 |
+| tecla shift+tab | barra espaciadora braille+punto1+punto2 |
+| tecla tab | barra espaciadora braille+punto4+punto5 |
+| tecla flecha abajo | barra espaciadora braille+punto1 |
+| tecla flecha arriba | barra espaciadora braille+punto4 |
+| tecla control+flecha izquierda | barra espaciadora braille+punto2 |
+| tecla control+flecha derecha | barra espaciadora braille+punto5 |
+| tecla flecha izquierda | barra espaciadora braille+punto3 |
+| tecla flecha derecha | barra espaciadora braille+punto6 |
+| tecla inicio | barra espaciadora braille+punto1+punto3 |
+| tecla fin | barra espaciadora braille+punto4+punto6 |
+| tecla control+inicio | barra espaciadora braille+punto1+punto2+punto3 |
+| tecla control+fin | barra espaciadora braille+punto4+punto5+punto6 |
+| tecla alt | barra espaciadora braille+punto1+punto3+punto4 |
+| tecla alt+tab | barra espaciadora braille+punto2+punto3+punto4+punto5 |
+| tecla escape | barra espaciadora braille+punto1+punto5 |
+| tecla windows | barra espaciadora braille+punto2+punto4+punto5+punto6 |
+| tecla espacio | barra espaciadora braille |
+| tecla windows+d (minimizar todas las aplicaciones) | barra espaciadora braille+punto1+punto2+punto3+punto4+punto5+punto6 |
+| Anunciar Línea Actual | barra espaciadora braille+punto1+punto4 |
+| Menú NVDA | barra espaciadora braille+punto1+punto3+punto4+punto5 |
+
+Para los modelos más recientes de la Focus que contienen teclas de balancines (focus 40, focus 80 y focus blue):
+|| Nombre | Tecla |
+| Mover línea braille a la línea anterior | balancín izquierdo arriba, balancín derecho arriba |
+| Mover línea braille a la línea siguiente | balancín izquierdo abajo, balancín derecho abajo |
+
+Sólo para la Focus 80:
+|| Nombre | Tecla |
+| Desplazar línea braille atrás | barra frontal izquierda arriba, barra frontal derecha arriba |
+| Desplazar línea braille adelante | barra frontal izquierda abajo, barra frontal derecha abajo |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1224,6 +1262,101 @@ Por favor mira la documentación de la línea para descripciones de dónde puede
 | tecla windows | espacio+punto3+punto4 |
 | tecla alt+tab | espacio+punto2+punto3+punto4+punto5 (espacio+t) |
 | Leer todo | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
+++ Series de la HIMS Braille Sense/Braille EDGE ++
+NVDA soporta las líneas Braille Sense y Braille EDGE de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
+Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
+
+Seguidamente van las asignaciones de teclas para estas líneas con NVDA.
+Por favor mira la documentación de las líneas para descripciones de dónde pueden encontrarse estas teclas.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar atrás línea braille | desplazador izquierdo abajo |
+| Desplazar adelante línea braille | desplazador derecho abajo |
+| Mover línea braille a la línea anterior | desplazador izquierdo arriba |
+| Mover línea braille a la línea siguiente | desplazador derecho arriba|
+| Ir a la celda braille | sensores |
+| tecla shift+tab | punto1+punto2+Espacio |
+| tecla alt | punto1+punto3+punto4+Espacio |
+| tecla escape | punto1+punto5+Espacio |
+| tecla tab | punto4+punto5+Espacio |
+| tecla intro | punto8 |
+| tecla retroceso | punto7 |
+| tecla flecha arriba | punto1+Espacio |
+| Tecla flecha abajo | punto4+Espacio |
+| bloq mayúsculas | punto1+punto3+punto6+Espacio |
+| tecla shift+alt+tab | avance2+avance3+avance1 |
+| tecla alt+tab | avance2+avance3 |
+| tecla fin | punto4+punto6+Espacio |
+| tecla Control+fin | punto4+punto5+punto6+Espacio |
+| tecla inicio | punto1+punto3+Espacio |
+| tecla control+inicio | punto1+punto2+punto+Espacio |
+| tecla flecha izquierda | punto3+Espacio |
+| tecla control+shift+flecha izquierda | punto2+punto8+espacio+avance1 |
+| tecla control+flecha izquierda | punto2+Espacio |
+| tecla shift+alt+flecha izquierda | punto2+punto7+avance1 |
+| tecla alt+flecha izquierda | punto2+punto7 |
+| tecla flecha derecha | punto6+Espacio |
+| tecla control+shift+flecha derecha | punto5+punto+Espacio+avance1 |
+| tecla control+flecha derecha | punto5+espacio |
+| tecla shift+alt+flecha derecha | punto5+punto7+avance1 |
+| tecla alt+flecha derecha | punto5+punto7 |
+| tecla RePág | punto1+punto2+punto6+espacio |
+| tecla control+rePág | punto1+punto2+punto6+punto8+espacio |
+| tecla control+shift+flecha arriba | punto2+punto3+punto8+espacio+avance1 |
+| tecla control+flecha arriba | punto2+punto3+espacio |
+| tecla shift+alt+flecha arriba | punto2+punto3+punto7+avance1 |
+| tecla alt+flecha arriba | punto2+punto3+punto7 |
+| tecla shift+flecha arriba | desplazador izquierdo abajo + espacio |
+| tecla avPág | punto3+punto4+punto5+espacio |
+| tecla control+avPág | punto3+punto4+punto5+punto8+espacio |
+| tecla control+shift+flecha abajo | punto5+punto6+punto8+espacio+avance1 |
+| tecla control+flecha abajo | punto5+punto6+espacio |
+| tecla shift+alt+flecha abajo | punto5+punto6+punto7+avance1 |
+| tecla alt+flecha abajo | punto5+punto6+punto7 |
+| tecla shift+flecha abajo | desplazador derecho abajo + espacio |
+| tecla suprimir | punto1+punto3+punto5+espacio |
+| tecla f1 | punto1+punto2+punto5+espacio |
+| tecla f3 | punto1+punto2+punto4+punto8 |
+| tecla f4 | punto7+avance3 |
+| tecla windows+b | punto1+punto2+avance1 |
+| tecla windows+d | punto1+punto4+punto5+avance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA soporta la línea SyncBraille de [HIMS http://www.hims-inc.com/].
+Necesitarás instalar los controladores USB de HIMS en el sistema.
+
+Seguidamente van las asignaciones de teclas para esta línea con NVDA.
+Por favor mira la documentación de la línea para descripciones de dónde se pueden encontrar estas teclas.
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar línea braille hacia atrás | desplazador abajo de la izquierda |
+| Desplazar línea braille hacia adelante | desplazador abajo de la derecha |
+| Ir a la celda braille | sensores |
+%kc:endInclude
+
+++ Líneas Braille Seika ++
+Se soportan las líneas braille Seika Versión 3, 4 y 5 (40 celdas) y Seika80 (80 celdas) de [Nippon Telesoft http://www.nippontelesoft.com/].
+Puedes encontrar más información acerca de estas líneas en http://www.seika-braille.com/.
+Primero debes instalar los controladores USB proporcionados por el fabricante.
+
+Seguidamente van las asignaciones de teclas para esta línea con NVDA.
+Por favor mira la documentación de la línea para descripciones de dónde se encuentran estas teclas.
+%kc:beginInclude
+|| Nombre | tecla |
+| Desplazar línea braille atrás | izquierda |
+| Desplazar línea braille adelante | derecha |
+| Mover línea braille a la línea anterior | b3 |
+| Mover línea braille a la siguiente línea | b4 |
+| Conmutar seguimiento del braille  | b5 |
+| Leer todo | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| Menú NVDA | izquierda+derecha |
+| Ir a la celda braille | sensores |
 %kc:endInclude
 
 ++ BRLTTY ++

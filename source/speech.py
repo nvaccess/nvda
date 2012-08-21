@@ -224,7 +224,10 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	newPropertyValues={}
 	positionInfo=None
 	for name,value in allowedProperties.iteritems():
-		if name.startswith('positionInfo_') and value:
+		if name=="includeTableCellCoords":
+			# This is verbosity info.
+			newPropertyValues[name]=value
+		elif name.startswith('positionInfo_') and value:
 			if positionInfo is None:
 				positionInfo=obj.positionInfo
 		elif value:
@@ -261,6 +264,12 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 	newPropertyValues['_role']=newPropertyValues.get('role',obj.role)
 	# The real states are needed also, as the states entry might be filtered.
 	newPropertyValues['_states']=obj.states
+	if "rowNumber" in newPropertyValues or "columnNumber" in newPropertyValues:
+		# We're reporting table cell info, so pass the table ID.
+		try:
+			newPropertyValues["_tableID"]=obj.tableID
+		except NotImplementedError:
+			pass
 	#Get the speech text for the properties we want to speak, and then speak it
 	text=getSpeechTextForProperties(reason,**newPropertyValues)
 	if text:
@@ -269,7 +278,7 @@ def speakObjectProperties(obj,reason=controlTypes.REASON_QUERY,index=None,**allo
 def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	from NVDAObjects import NVDAObjectTextInfo
 	isEditable=(reason!=controlTypes.REASON_FOCUSENTERED and obj.TextInfo!=NVDAObjectTextInfo and (obj.role in (controlTypes.ROLE_EDITABLETEXT,controlTypes.ROLE_TERMINAL) or controlTypes.STATE_EDITABLE in obj.states))
-	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"columnCount":True,"rowCount":True}
+	allowProperties={'name':True,'role':True,'states':True,'value':True,'description':True,'keyboardShortcut':True,'positionInfo_level':True,'positionInfo_indexInGroup':True,'positionInfo_similarItemsInGroup':True,"cellCoordsText":True,"rowNumber":True,"columnNumber":True,"includeTableCellCoords":True,"columnCount":True,"rowCount":True,"rowHeaderText":True,"columnHeaderText":True}
 
 	if reason==controlTypes.REASON_FOCUSENTERED:
 		allowProperties["value"]=False
@@ -289,11 +298,19 @@ def speakObject(obj,reason=controlTypes.REASON_QUERY,index=None):
 	if reason!=controlTypes.REASON_QUERY:
 		allowProperties["rowCount"]=False
 		allowProperties["columnCount"]=False
-		if (not config.conf["documentFormatting"]["reportTables"]
-				or not config.conf["documentFormatting"]["reportTableCellCoords"]):
-			allowProperties['cellCoordsText']=False
-			allowProperties["rowNumber"]=False
-			allowProperties["columnNumber"]=False
+	formatConf=config.conf["documentFormatting"]
+	if not formatConf["reportTableCellCoords"]:
+		allowProperties["cellCoordsText"]=False
+		# rowNumber and columnNumber might be needed even if we're not reporting coordinates.
+		allowProperties["includeTableCellCoords"]=False
+	if not formatConf["reportTableHeaders"]:
+		allowProperties["rowHeaderText"]=False
+		allowProperties["columnHeaderText"]=False
+	if (not formatConf["reportTables"]
+			or (not formatConf["reportTableCellCoords"] and not formatConf["reportTableHeaders"])):
+		# We definitely aren't reporting any table info at all.
+		allowProperties["rowNumber"]=False
+		allowProperties["columnNumber"]=False
 	if isEditable:
 		allowProperties['value']=False
 
@@ -802,7 +819,10 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	indexInGroup=propertyValues.get('positionInfo_indexInGroup',0)
 	similarItemsInGroup=propertyValues.get('positionInfo_similarItemsInGroup',0)
 	if 0<indexInGroup<=similarItemsInGroup:
-		textList.append(_("%s of %s")%(indexInGroup,similarItemsInGroup))
+		# Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+		# {number} is replaced with the number of the item in the group.
+		# {total} is replaced with the total number of items in the group.
+		textList.append(_("{number} of {total}").format(number=indexInGroup, total=similarItemsInGroup))
 	if 'positionInfo_level' in propertyValues:
 		level=propertyValues.get('positionInfo_level',None)
 		role=propertyValues.get('role',None)
@@ -1000,16 +1020,23 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 	if  formatConfig["reportColor"]:
 		color=attrs.get("color")
 		oldColor=attrsCache.get("color") if attrsCache is not None else None
-		if color and color!=oldColor:
-			textList.append(color.name if isinstance(color,colors.RGB) else unicode(color))
 		backgroundColor=attrs.get("background-color")
 		oldBackgroundColor=attrsCache.get("background-color") if attrsCache is not None else None
-		if backgroundColor and backgroundColor!=oldBackgroundColor:
-			# Translators: This is used to indicate a background color after the text color.
-			# The {backgroundColor} text will be replaced by the background color.
-			# For example, if the text is white on a black background,
-			# the output of this message in English would be "on black".
-			textList.append(_("on {backgroundColor}").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+		if color and backgroundColor and color!=oldColor and backgroundColor!=oldBackgroundColor:
+			# Translators: Reported when both the text and background colors change.
+			# {color} will be replaced with the text color.
+			# {backgroundColor} will be replaced with the background color.
+			textList.append(_("{color} on {backgroundColor}").format(
+				color=color.name if isinstance(color,colors.RGB) else unicode(color),
+				backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
+		elif color and color!=oldColor:
+			# Translators: Reported when the text color changes (but not the background color).
+			# {color} will be replaced with the text color.
+			textList.append(_("{color}").format(color=color.name if isinstance(color,colors.RGB) else unicode(color)))
+		elif backgroundColor and backgroundColor!=oldBackgroundColor:
+			# Translators: Reported when the background color changes (but not the text color).
+			# {backgroundColor} will be replaced with the background color.
+			textList.append(_("{backgroundColor} background").format(backgroundColor=backgroundColor.name if isinstance(backgroundColor,colors.RGB) else unicode(backgroundColor)))
 	if  formatConfig["reportLineNumber"]:
 		lineNumber=attrs.get("line-number")
 		oldLineNumber=attrsCache.get("line-number") if attrsCache is not None else None

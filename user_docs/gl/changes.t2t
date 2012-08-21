@@ -1,8 +1,73 @@
-﻿Que hai de Novo no NVDA
+Que hai de Novo no NVDA
 
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.3 =
+
+== Novas Características ==
+- A presenza de subliñados e tachados agora anúnciase nos documentos de Adobe Reader. (#2410)
+- Cando a función Windows Sticky Keys está activada, a tecla modificadora de NVDA agora comportarase como as outras teclas modificadoras. Esto permíteche utilizar a tecla modificadora do NVDA sen a necesidade de manter premeda mentres premes outras teclas. (#230)
+- Soporte para as liñas braille HIMS Braille Sense, Braille EDGE y SyncBraille. (#1266, #1267)
+- Cando as Notificacións de Windows 8 aparezan, NVDA anunciaráas e moverá o navegador de obxectos alí para unha maior interacción. (#2143)
+- Soporte para o VIP Mud. (#1728)
+- No Adobe Reader, se unha táboa ten un resumo, agora preséntase. (#2465)
+- No Adobe Reader, as cabeceiras de fila e columna de táboa agora poden anunciarse. (#2193 #2527 #2528)
+- Novas linguas: Amárico, Coreano, Nepalí.
+- NVDA agora pode ler suxerencias de autocompletado cando se introduzan enderezos de correo no Microsoft Outlook 2007. (#689)
+- Novas variantes de voz de eSpeak: Gene, Gene2. (#2512)
+- No Adobe Reader, agora poden anunciarse os números de páxina. (#2534)
+- Agora é posible reiniciar a configuración do NVDA ós valores predeterminados de fábrica premendo NVDA+control+r tres veces rápidamente ou escollendo Reiniciar ós Valores Predeterminados de Fábrica dende o menú NVDA (#2086).
+- Soporte para as liñas braille Seika Versión 3, 4 e 5 e Seika80 de Nippon Telesoft. (#2452)
+- O primeiro e o último dos sensores superiores das liñas braille Freedom Scientific Pacmate e Focus agora pódense utilizar para desprazar cara atrás ou adiante. (#2556).
+- Sopórtanse moitas máis características nas liñas braille Freedom Scientific Focus como barras avanzadas, barras de balancíns e certas combinacións de pontos para accións comúns. (#2516)
+- En aplicacións que utilicen IAccessible2 como aplicacións de Mozilla, as cabeceiras de fila e columna de táboa agora poden anunciarse fora do modo Navegación. (#926)
+
+
+== Cambios ==
+- No diálogo Preferencias do Cursor de Revisión de NVDA, a opción Seguer foco do teclado foi renomeada a Seguer ó foco do sistema para consistencia ca terminoloxía utilizada noutras partes no NVDA.
+- Cando o braille estea seguindo á revisión e o cursor estea sobre un obxecto que non sexa un obxecto de texto (ex.: un campo de texto editable), as teclas dos sensores do cursor agora activarán o obxecto. (#2386)
+- Cando se actualiza unha copia do NVDA instalada anteriormente, a tecla de atallo do escritorio xa non se forza a control+alt+n se foi cambiada manualmente a algunha outra diferente polo usuario. (#2572)
+- A lista de complementos no Administrador de Complementos agora amosa o nome do paquete antes do seu estado. (#2548)
+- Ó instalar a mesma ou outra versión dun complemento instalado actualmente, NVDA preguntarache se desexas eliminar o complemento antigo primeiro, en lugares de amosar un erro e abortar a instalación. (#2501)
+- As ordes de navegación de obxectos (excepto a orde anunciar obxecto actual) agora anuncian con menos verbosidade. Aínda podes obter a información extra utilizando a orde de anunciar obxecto actual. (#2560)
+
+
+== Corrección de Fallos ==
+- No Blio, o contido dos libros agora pode lerse en braille. (#2139)
+- No Windows Vista e posterior, NVDA xa non trata incorrectamente a tecla Windows como é ó mantela premeda cando se desbloquea Windows despóis de bloqueala premendo Windows+l. (#1856)
+- No Adobe Reader, as cabeceiras de fila agora recoñécense correctamente como celdas de táboa; é dicir, as coordinadas anúncianse e pódense acceder utilizando ordes de navegación de táboa. (#2444)
+- No Adobe Reader, as celdas de táboa que abranghen máis dunha columna e/ou fila agora manéxanse correctamente. (#2437)
+- O paquete de distribución de NVDA agora verifica a súa integridade antes de se executar. (#2475)
+- Os ficheiros descargados temporalmente agora elimínanse se se descarga un ficheiro de actualización do NVDA. (#2477)
+- Cando se copia a configuración do usuario á configuración do sistema (para utilizar na autentificación de Windows e outras pantallas seguras) NVDA xa non se colgará no XP mentres o estea a facer. (#2485)
+- As tellas na Pantalla de inicio de Windows 8 agora preséntanse mellor en voz e braille. O nome xa non se repite, xa non se anuncia non seleccioado en todos as tellas, e a información de estado en directo preséntase segundo a descripción da tella (ex.: temperatura actual para a tella do Tempo).
+- Os  contrasinais xa non se anuncian cando se lean campos de contrasinal no Microsoft Outlook e outros controis de edición estándar que estean marcados como protexidos. (#2021)
+- No Adobe Reader, os cambios para campos de formulario agora reflíctense correctamente no modo navegación. (#2529)
+- Melloras no soporte para o corrector de ortografía de Microsoft Word, incluíndo a lectura máis precisa do erro ortográfico actual, e a capacidade de soportar o corrector de ortografía cando se execute unha copia instalada do NVDA en Windows Vista ou superior.
+- Os complementos que inclúan ficheiros contendo caracteres que non estean en Inglés agora poden instalarse correctamente na maioría dos casos. (#2505)
+- No Adobe Reader, a lingua do texto xa non se perde cando se actualiza ou se despraza. (#2544)
+- Cando se instala un complemento, o diálogo de confirmación agora amosa correctamente o nome traducido do complemento se está dispoñible. (#2422)
+- Nas aplicacións que utilizan UI Automation (como aplicacións de .net e Silverlight), o cálculo de valores numéricos para controis como deslizadores correxiuse. (#2417)
+- A configuración para o anunciado de barras de progreso agora recoñécese para barras de progreso indeterminadas amosadas por NVDA cando se está a instalar, a crear unha copia portable, etc. (#2574)
+- As ordes de NVDA xa non poden executarse dende unha liña braille mentres unha pantalla segura de Windows (como a pantalla de desbloqueo) estea activa. (#2449)
+- No modo navegación, o braille agora actualízase se o texto que se está a desplazar cambia. (#2074)
+- Cando se está en pantallas seguras de  Windows como a pantalla de desbloqueo as mensaxes das aplicacións que están a falar ou a amosar braille directamente a través do NVDA agora ignóranse.
+- No modo navegación, xa non é posible sobrepasar a parte inferior do documento ca tecla flecha dereitha cando se está no carácter final, ou saltando o fin dun contedor cando ese contedor é o derradeiro elemento do documento. (#2463)
+- Xa non se inclúe incorrectamente contido extrano cando se anuncia o texto de diálogos en aplicaciones web (específicamente, diálogos ARIA sen o atributo aria-describedby). (#2390)
+- NVDA xa non localiza ou anuncia incorrectamente certos campos de edición nos documentos MSHTML (ex.: Internet Explorer), específicamente onde se utilizara un rol ARIA explícito polo autor da páxina web. (#2435)
+- A tecla retroceso agora manéllase correctamente cando se falan palabras ó se escribir nas consolas de ordes de Windows. (#2586)
+
+
+== Cambios para Desenroladores ==
+- O ficheiro log anterior agora cópiase en nvda-old.log na inicialización do NVDA. Polo tanto, se NVDA se bloquea ou se reinicia, o rexistro de información  de esa sesión aínda é accesible para a súa inspección. (#916)
+- A obtención da propiedade de rol en chooseNVDAObjectOverlayClasses xa non causa que o rol sexa incorrecto e polo tanto non se anuncie en foco para certos obxectos como consolas de ordes de Windows e controis de Scintilla. (#2569)
+
+
+= 2012.2.1 =
+Esta versión aborda varios problemas de seguridade potenciais (mediante a actualización do Python á 2.7.3).
+
+  
 = 2012.2 =
 O subliñable desta versión inclúe unha característica que integra o instalador e a creación do portable, un auto actualizador, administración sinxela dos novos complementos do NVDA, anunciado de gráficos en Microsoft Word, soporte para o estilo de aplicacións de Windows 8 Metro, e varias correccións de fallos importantes. 
 
@@ -37,7 +102,7 @@ O subliñable desta versión inclúe unha característica que integra o instalad
 
 
 == Cambios para Desenroladores ==
-- Due to the replacement of the previous NSIS installer for NVDA with a built-in installer in Python, it is no longer necessary for translaters to maintain a langstrings.txt file for the installer. All localization strings are now managed by gettext po files.
+- Debido á substitución do instalador anterior NSIS para o NVDA por un compilado en Python, xa non é necesario para os traductores manter un ficheiro langstrings.txt para o instalador. Todas as cadeas de localización agora adminístranse con ficheiros po de gettext.
 
  
 = 2012.1 =
@@ -111,16 +176,16 @@ O subliñable desta versión inclúe características para unha lectura máis fl
 
 
 == Cambios para Desenrroladores ==
-- There is now a remote Python console for situations where remote debugging is useful. See the Developer Guide for details.
-- The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
-- TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
- - This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
-- TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
-- Several control and output constants have been renamed or moved. (#228)
-- speech.REASON_* constants have been moved to controlTypes.
-- In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
-- Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
-- subclasses of the sapi5 synthDriver can now override _getVoiceTokens and extend __init__ to support custom voice tokens such as with sapi.spObjectTokenCategory to get tokens from a custom registry location.
+- Agora hai unha Consola Python remota para situacións onde a depuración remota é útil. Mira a Developer Guide para detalles.
+- A ruta base do código de NVDA agora quitouse dos tracebacks no log para mellorar lexibilidade. (#1880)
+- Os obxectos TextInfo agora teñen un método activate() para activar a posición representada polo TextInfo.
+ - Esto utilízase polo braille para activar a posición utilizando teclas de guiado do cursor nunha liña braille. Nembargantes, podería haber outras chamadas no futuro.
+- Os treeInterceptors e os NVDAObjects que só expoñen unha páxina de texto á vez poden soportar o cambio automático de páxina durante ler todo utilizando o textInfos.DocumentWithPageTurns misturado. (#1978)
+- Movéronse ou cambiáronse os nomes de varios controis e constantes de saída. (#228)
+- As constantes speech.REASON_* movéronse a controlTypes.
+- Renomeáronse controlTypes, speechRoleLabels e speechStateLabels só a roleLabels and stateLabels, respectivamente.
+- Agora a saída braille rexístrase no nivel input/output. Primeiro, o texto sen transcribir de todas as rexións rexístrase, seguido polas celdas braille da ventá que se están a amosar. (#2102)
+- As subclasses do synthDriver sapi5  agora poden sobreescribirse _getVoiceTokens e extender __init__ para soportaren fichas de voces personalizadas como con sapi.spObjectTokenCategory para obter fichas dun rexistro personalizado.
 
 
 = 2011.3 =

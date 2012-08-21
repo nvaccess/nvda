@@ -485,7 +485,8 @@ class NVDAObject(baseObject.ScriptableObject):
 		An alternative text representation of cell coordinates e.g. "a1". Will override presentation of rowNumber and columnNumber.
 		Only implement if the representation is really different.
 		"""
-		raise NotImplementedError
+		return None
+		
 
 	def _get_rowCount(self):
 		"""Retreaves the number of rows this object contains if its a table.
@@ -499,12 +500,33 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	def _get_rowHeaderText(self):
+		"""The text of the row headers for this cell.
+		@rtype: str
+		"""
+		raise NotImplementedError
+
+	def _get_columnHeaderText(self):
+		"""The text of the column headers for this cell.
+		@rtype: str
+		"""
+		raise NotImplementedError
+
 	def _get_table(self):
 		"""Retreaves the object that represents the table that this object is contained in, if this object is a table cell.
 		@rtype: L{NVDAObject}
 		"""
 		raise NotImplementedError
 
+	def _get_tableID(self):
+		"""The identifier of the table associated with this object if it is a table cell.
+		This identifier must distinguish this table from other tables.
+		If this is not implemented, table cell information will still be reported,
+		but row and column information will always be reported
+		even if the user moves to a cell in the same row/column.
+		"""
+		raise NotImplementedError
+		
 	def _get_recursiveDescendants(self):
 		"""Recursively traverse and return the descendants of this object.
 		This is a depth-first forward traversal.
@@ -916,3 +938,15 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("TextInfo: %s" % ret)
 		return info
+
+	def _get_sleepMode(self):
+		"""Whether NVDA should sleep for this object (e.g. it is self-voicing).
+		If C{True}, all  events and script requests for this object are silently dropped.
+		@rtype: bool
+		"""
+		if self.appModule:
+			return self.appModule.sleepMode
+		return False
+	# Don't cache sleepMode, as it is derived from a property which might change
+	# and we want the changed value immediately.
+	_cache_sleepMode = False

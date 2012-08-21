@@ -577,8 +577,11 @@ class UIA(Window):
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			minVal=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueMinimumPropertyId,False)
 			maxVal=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueMaximumPropertyId,False)
-			val=((val-minVal)/maxVal)*100.0
-			return "%g"%val
+			if minVal==maxVal:
+				# There is no range.
+				return "0"
+			val=((val-minVal)/(maxVal-minVal))*100.0
+			return "%d"%round(val,4)
 		val=self.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_ValueValuePropertyId,True)
 		if val!=UIAHandler.handler.reservedNotSupportedValue:
 			return val

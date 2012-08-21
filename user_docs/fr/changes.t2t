@@ -3,12 +3,78 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.3 =
+
+== Nouvelles Fonctionnalités ==
+- La présence de soulignements et de superpositions est maintenant rapportée dans les documents Adobe Reader. (#2410)
+- Quand la fonction touche rémanentes de Windows est activée, la touche NVDA se comportera comme les autre touches de combinaisons. Cela vous permet de l'utiliser sans la maintenire enfoncée pendant que vous pressez d'autre touches. (#230)
+- Support pour les afficheurs braille HIMS Braille Sense, Braille EDGE et SyncBraille. (#1266, #1267)
+- Lorsque les notifications Toast Windows 8 apparaissent, NVDA les annonce et déplace le navigateur d'objet dessus pour plus d'interaction. (#2143)
+- Support de VIP Mud. (#1728)
+- Dans Adobe Reader, si un tableau a un résumé, il est maintenant présenté. (#2465)
+- Dans Adobe Reader, les entêtes de lignes et de collones des tableaux peuvent maintenant être annoncées. (#2193, #2527, #2528)
+- Nouveaux langages : Éthiopien, Coréen, Népalais.
+- NVDA peut maintenant lire les suggestions de l'autocomplétion lorsqu'on saisi des adresses e-mail dans Microsoft Outlook 2007. (#689)
+- Deux nouvelles variantes de voix Espeak : Gene, Gene2. (#2512)
+- Dans Adobe Reader, les numérots de pages peuvent maintenant être rapportés. (#2534)
+- Il est maintenant possible de réinitialiser la configuration de NVDA à celle par défaut en appuyant trois fois sur NVDA+Ctrl+r, ou en choisissant Réinitialiser la configuration aux paramètres par défaut dans le menu de NVDA. (#2086)
+- Support des afficheurs braille Seika Version 3, 4 et 5 et Seika80 de Nippon Telesoft. (#2452)
+- les premiers et derniers curseurs routines des afficheurs braille Pacmate et Focus de Freedom Scientific peuvent maintenant être utilisés pour défiler vers l'avant ou vers l'arrière. (#2556)
+- Plus de possibilités sont supportées pour les afficheurs brailles Focus de Freedom Scientific comme les bares pour avancer, les bares de basculement et certaines combinaisons de points pour des actions communes. (#2516)
+- Dans les applications utilisant IAccessible2 comme les applications Mozilla, les entêtes de lignes et collones des tableaux peuvent être rapportées même en n'étant pas en mode navigation. (#926)
+
+
+== Changements ==
+- Dans la boîte de dialogue de préférences du curseur de revue de NVDA, l'option suivre le focus clavier a été renomée en Suivre le focus système pour être cohérant avec les terminologies utilisées ailleur dans NVDA.
+- Quand le braille suit la revue et que le curseur est dans un objet qui n'est pas un objet texte (P.EX. une zone d'édition), les touches routines activent maintenant l'objet. (#2386)
+- L'option Sauvegarder la configuration en quittant est activée par défaut pour les nouvelles configurations.
+- Lorsque l'on met à jours une copie installée de NVDA, le raccourci clavier du bureau n'est plus remis à control+alt+n s'il a été changé manuellement par l'utilisateur. (#2572)
+- La liste des modules complémentaires dans le gestionnaire de modules complémentaires affiche le nom du paquet avant son état. (#2548)
+- Lorsqu'on installe la même version ou une autre d'un module complémentaire actuellement installé, NVDA proposera d'abord de désinstaller la version actuelle plutôt qu'afficher un message d'erreur et abandonner. (#2501)
+- Les commandes de navigation par objets (excepté la commande rapporter l'objet courrant) rapporte maintenant moins d'informations. Vous pouvez toujours obtenire les autres informations en utilisant la commande Rapporter l'objet courrant. (#2560)
+
+
+== Corrections de Bogues ==
+- Dans Blio, le contenu des livres peut maintenant être lu en braille. (#2139)
+- Sous Windows Vista et supérieur, NVDA ne traite plus la touche Windows comme étant gardée appuyée lors du déverrouillage après l'avoir verrouillé en appuyant Windows+L. (#1856)
+- Dans Adobe Reader, les entêtes de colonnes sont maintenant bien reconnues comme des cellules ; P.Ex. les coordonnées sont annoncées et sont accessibles avec les touches de navigation pour les tableaux. (#2444)
+- Dans Adobe Reader, les cellules sur plusieurs colonnes sont correctement traitées. (#2437, #2438, #2450)
+- Le package de NVDA distribué vérifie maintenant son intégrité avant de s'exécuter. (#2475)
+- Les fichiers temporaires de téléchargement sont maintenant supprimés si le téléchargement d'une mise à jour de NVDA échoue. (#2477)
+- Lorsque l'on copie la configuration utilisateur dans la configuration système (pour l'utiliser  dans l'écran d'identification à Windows et les autres écrans sécurisés de Windows) NVDA ne se figeras plus sous XP pendant la procédure. (#2485)
+- Les mosaïques dans l'écran de démarrage Windows 8 sont maintenant mieux présentées vocalement et en braille. Le nom n'est plus répété, non sélectionné n'est plus rapporté sur toutes les mosaïques, et l'information de statut en temps réel est présenté comme la description de la mosaïque (P.Ex. la température actuelle pour la météo).
+- Les mot de passes ne sont plus annoncés lorsqu'on lie un champ de mot de passe dans Microsoft Outlook et d'autres champs d'édition standards marqués comme protégés. (#2021)
+- Dans Adobe Reader, les changement dans les champs de formulaires sont correctement rendus en mode navigation. (#2529)
+- Amélioration du support pour le correcteur orthographique de Microsoft Word, incluant une lecture plus précise de l'erreur d'orthographe actuelle, et la possibilité de supporter le correcteur orthographique lorsqu'on exécute une version installée de NVDA sous Windows Vista ou supérieur.
+- Les modules complémentaires qui incluent des fichiers contenant des caractères non anglais peuvent être installés correctement dans la majorité des cas. (#2505)
+- Dans Adobe Reader, la langue du texte n'est plus perdue lorsqu'il est mis à jour ou qu'on le fait défilé. (#2544)
+- Lors de l'installation d'un module complémentaire, la boîte de dialogue de confirmation affiche le nom traduit du module complémentaire si disponible. (#2422)
+- Dans les applications utilisant UI Automation (comme les applications .net et Silverlight), le calcul de valeurs numériques pour des composants comme les sliders a été corrigé. (#2417)
+- La configuration du rapport des barres de progression est maintenant prise en compte pour les barres de progression non déterminables affichées par NVDA lors de l'installation, de la création d'une version portable etc. (#2574)
+- Les commandes de NVDA ne peuvent plus être exécutées depuis un afficheur Braille tant qu'un écran sécurisé de Windows (comme l'écran de verrouillage de l'ordinateur) est actif. (#2449)
+- En mode navigation, le braille est mis à jour si le texte affiché change. (#2074)
+- Lorsque l'on est dans un écran sécurisé tel que la fenêtre d'ordinateur verrouillé, les messages des applications annonçant ou affichant du braille directement via NVDA sont maintenant ignorés.
+- En mode navigation, il est maintenant impossible de passer le bas du document avec la flèche droite en étant sur le dernier caractère, ou en sautant à la fin d'un conteneur quand celui-ci est le dernier élément du document. (#2463)
+- Les contenus extérieurs ne sont plus incorrectement inclus lors du rapport du texte des dialogues dans les applications web (spécifiquement, les dialogues ARIA sans attribut aria-describedby). (#2390)
+- NVDA ne rapporte ou ne situ plus incorrectement certains champs d'édition dans les documents MSHTML (Ex : Internet Explorer), spécifiquement où un rôle ARIA explicite a été défini par l'auteur de la page web. (#2435)
+- La touche retour arrière est maintenant correctement traitée lors de l'annonce des mots tapés dans les invites de commandes. (#2586)
+
+
+== Changements pour les développeurs ==
+- Le fichier journal précédant est maintenant renomé en nvda-old.log à l'initialisation de NVDA. Par conséquent, si NVDA plente ou est redémarré, les informations journalisées de cette session sont toujours accessibles pour inspection. (#916)
+- Accéder à la propriété role dans chooseNVDAObjectOverlayClasses ne la rend plus incorrecte et pas rapporté lors du focus pour certains objets tel que les fenêtres d'invites de commandes et les contrôles Scintilla. (#2569)
+
+
+= 2012.2.1 =
+Cette version comble des failles de sécuritée (en mettant à jour vers Python 2.7.3)
+
+
 = 2012.2 =
-Les apports majeurs de cette version incluent un installateur et créateur de version portable intégré, des mises à jours automatiques, une gestion facile des nouveaux greffons NVDA, l'annonce des graphique dans Microsoft Word, le support des application Metro Windows 8, et des corrections de bogues importants.
+Les apports majeurs de cette version incluent un installateur et créateur de version portable intégré, des mises à jours automatiques, une gestion facile des nouveaux modules complémentaires NVDA, l'annonce des graphique dans Microsoft Word, le support des application Metro Windows 8, et des corrections de bogues importants.
 
 == Nouvelles Fonctionnalités ==
 - NVDA peut maintenant rechercher, télécharger et installer automatiquement les mises à jour. (#73)
-- Étendre les fonctionnalités de NVDA a été facilité par l'ajout d'un gestionnaire de greffons (accessible depuis le menu Outils du menu NVDA) vous permettant d'installer ou de désinstaller des paquets de greffons (fichiers .nvda-addon) contenant des plugins et des drivers. Notez bien que le gestionnaire de greffons n'affiche pas les anciens plugins ou pilotes copiés manuellement dans votre répertoire de configuration. (#213)
+- Étendre les fonctionnalités de NVDA a été facilité par l'ajout d'un gestionnaire de Modules Complémentaires (accessible depuis le menu Outils du menu NVDA) vous permettant d'installer ou de désinstaller des paquets de Modules Complémentaires (fichiers .nvda-addon) contenant des plugins et des drivers. Notez bien que le gestionnaire de Modules Complémentaires n'affiche pas les anciens plugins ou pilotes copiés manuellement dans votre répertoire de configuration. (#213)
 - Beaucoup plus de fonctionnalités de NVDA sont maintenant utilisables dans les applications en style Metro sous Windows 8 lorsqu'on utilise une copie installée de NVDA, incluant la prononciation des caractères saisis, et le mode navigation pour les documents web (incluant le support pour la version metro de Internet Explorer 10). Les copies portables de NVDA ne peuvent accéder aux applications Metro. (#1801) 
 - En mode navigation (Internet Explorer, Firefox etc.) il est maintenant possible de sauter au début et de passer la fin de certains éléments contenants (incluant les listes et les tableaux) avec shift+, et , respectivement. (#123)
 - Nouvelle langue : grecque.

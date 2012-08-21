@@ -12,9 +12,10 @@ complexSymbols:
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
 ! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
 ? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+; sentence ending	(?<=[^\s;])\;(?=[\"'”’)\s]|$)
 # Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+· phrase ending	(?<=[^\s·])·(?=\s|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -27,8 +28,9 @@ symbols:
 . sentence ending	τελεία	all	always
 ! sentence ending	θαυμαστικό	all	always
 ? sentence ending	αγγλικό ερωτηματικό	all	always
-; phrase ending	ερωτηματικό	most	always
+; sentence ending	ερωτηματικό	all	always
 : phrase ending	άνω κάτω τελεία	most	always
+· phrase ending	άνω τελεία	most	always
 decimal point		none	always
 in-word '	απόστροφος	all	norep
 negative number	μείον	none	norep
@@ -79,12 +81,13 @@ _	κάτω παύλα	most
 }	κλείσιμο αγκίστρου	most
 |	μπάρα	most
 ~	περισπωμένη	most
+·	άνω τελεία	all
 
 # Other characters
-•	μπούλετ	some
+•	κουκίδα	some
 …	τρεις τελείες	all	always
 ...	τρεις τελείες	all	always
-	μπούλετ	some
+	κουκίδα	some
 “	άνοιγμα αγγλικών εισαγωγικών	most
 ”	κλείσιμο αγγλικών εισαγωγικών	most
 ‘	αριστερή απόστροφος	most
