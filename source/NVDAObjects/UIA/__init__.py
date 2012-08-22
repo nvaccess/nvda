@@ -161,16 +161,20 @@ class UIATextInfo(textInfos.TextInfo):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
 		fields=[]
-		e=self._rangeObj.getEnclosingElement().buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-		obj=UIA(UIAElement=e)
+		try:
+			e=self._rangeObj.getEnclosingElement().buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		except COMError:
+			e=None
 		fields=[]
-		while obj and obj!=self.obj:
-			field=self._getControlFieldForObject(obj)
-			if field:
-				field=textInfos.FieldCommand("controlStart",field)
-				fields.append(field)
-			obj=obj.parent
-		fields.reverse()
+		if e:
+			obj=UIA(UIAElement=e)
+			while obj and obj!=self.obj:
+				field=self._getControlFieldForObject(obj)
+				if field:
+					field=textInfos.FieldCommand("controlStart",field)
+					fields.append(field)
+				obj=obj.parent
+			fields.reverse()
 		ancestorCount=len(fields)
 		fields.extend(self._getTextWithFieldsForRange(self.obj,self._rangeObj,formatConfig))
 		fields.extend(textInfos.FieldCommand("controlEnd",None) for x in xrange(ancestorCount))
