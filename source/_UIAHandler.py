@@ -16,6 +16,11 @@ from logHandler import log
 
 from comtypes.gen.UIAutomationClient import *
 
+#Some new win8 UIA constants that could be missing
+UIA_StyleIdAttributeId=40034
+StyleId_Heading1=70001
+StyleId_Heading9=70009
+
 re_MSAAProxyProviderDescription=re.compile(r'Microsoft: (Annotation|MSAA) Proxy \(unmanaged:uiautomationcore.dll\)',re.IGNORECASE)
 
 badUIAWindowClassNames=[
