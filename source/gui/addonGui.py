@@ -10,7 +10,27 @@ import gui
 from logHandler import log
 import addonHandler
 
+
 class AddonsDialog(wx.Dialog):
+	# FIXME: This is equivalent to the singletone implementation on SettingsDialog.
+	# However, this is not a settings dialog so shouldn't be considered a similar instance...
+	class MultipleInstanceError(RuntimeError): pass
+	_instance = None
+	def __new__(cls, *args, **kwargs):
+		if AddonsDialog._instance:
+			raise MultipleInstanceError("An instance of AddonsDialog is already open.")
+		AddonsDialog._instance = super(AddonsDialog, cls).__new__(cls, *args, **kwargs)
+		return AddonsDialog._instance
+
+	@classmethod
+	def getInstance(cls, parent):
+		""" Gets an instance of Addons dialog.
+		If the instance is already running return that, if not create
+		a new one with given parent.
+		"""
+		if AddonsDialog._instance:
+			return AddonsDialog._instance
+		return AddonsDialog(parent)
 
 	def __init__(self,parent):
 		# Translators: The title of the Addons Dialog
@@ -64,6 +84,9 @@ class AddonsDialog(wx.Dialog):
 		if fd.ShowModal()!=wx.ID_OK:
 			return
 		addonPath=fd.GetPath()
+		self.installAddon(addonPath)
+
+	def installAddon(self, addonPath, closeAfter=False):
 		try:
 			bundle=addonHandler.AddonBundle(addonPath)
 		except:
@@ -117,6 +140,8 @@ class AddonsDialog(wx.Dialog):
 			self.refreshAddonsList(activeIndex=-1)
 			progressDialog.done()
 			del progressDialog
+		if closeAfter:
+			self.onClose(None) # hack...
 
 	def OnRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
@@ -173,6 +198,7 @@ class AddonsDialog(wx.Dialog):
 			_("Restart NVDA"),
 			wx.YES|wx.NO|wx.ICON_WARNING)==wx.YES:
 				core.restart()
+		AddonsDialog._instance = None # Delete the reference to the dialog
 
 	def onAbout(self,evt):
 		index=self.addonsList.GetFirstSelected()
@@ -191,3 +217,9 @@ Description: {description}
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
 		gui.messageBox(message, title, wx.OK)
+
+	@classmethod
+	def handleRemoteAddonInstall(cls, addonPath):
+		closeAfter = not bool(AddonsDialog._instance)
+		instance = AddonsDialog.getInstance(gui.mainFrame)
+		instance.installAddon(addonPath, closeAfter=closeAfter)
