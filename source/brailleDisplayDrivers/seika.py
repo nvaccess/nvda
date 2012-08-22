@@ -53,7 +53,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._ser.write("\xFF\xFF\x1C")
 			self._ser.flush()
 			# Read out the input buffer
-			time.sleep(0.1)
 			versionS = self._ser.read(13)
 			log.debug("receive {p}".format(p=versionS))
 			if versionS.startswith("seika80"):
@@ -70,7 +69,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._ser.write("\xFF\xFF\x0A")
 			self._ser.flush()
 			# Read out the input buffer
-			time.sleep(0.1)
 			versionS = self._ser.read(12)
 			log.debug("receive {p}".format(p=versionS))
 			if versionS.startswith("\x00\x05\x28\x08\x76\x35\x2E\x30\x01\x01\x01\x01") or versionS.startswith("\x00\x05\x28\x08\x73\x65\x69\x6b\x61\x00"):
