@@ -476,6 +476,7 @@ def FindWindow(className, windowName):
 	return res
 
 MB_RETRYCANCEL=5
+MB_ICONERROR=0x10
 MB_SYSTEMMODAL=0x1000
 IDRETRY=4
 IDCANCEL=3
