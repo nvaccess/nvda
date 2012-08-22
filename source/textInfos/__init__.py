@@ -112,6 +112,9 @@ class FieldCommand(object):
 		self.command=command
 		self.field=field
 
+	def __repr__(self):
+		return "FieldCommand %s with %s"%(self.command,self.field)
+
 #Position constants
 POSITION_FIRST="first"
 POSITION_LAST="last"
