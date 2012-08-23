@@ -30,6 +30,8 @@ import winKernel
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
 BUNDLE_EXTENSION = "nvda-addon"
+BUNDLE_MIMETYPE = "application/x-nvda-addon"
+NVDA_ADDON_PROG_ID = "NVDA.Addon.1"
 ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
 DELETEDIR_SUFFIX=".delete"
 
