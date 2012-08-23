@@ -72,15 +72,15 @@ def main():
 			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 			import ctypes
 			h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
-			if not h:
+			remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
+			ret = remoteLib.nvdaControllerInternal_installAddonPackageFromPath(addonPath)
+			if ret != 0:
 				import winUser
 				winUser.MessageBox(0,
 				# Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-				_("""Can not install NVDA add-on from {path}.
-				You must be running NVDA to be able to install add-ons.""").format(path=addonPath),
+				_("Can not install NVDA add-on from {path}.\n"
+				"You must be running NVDA to be able to install add-ons.").format(path=addonPath),
 				0, MB_ICONERROR)
-			remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
-			remoteLib.nvdaControllerInternal_installAddonPackageFromPath(addonPath)
 		else:
 			raise ValueError("No such action")
 

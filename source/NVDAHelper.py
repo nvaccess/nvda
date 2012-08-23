@@ -3,7 +3,6 @@ import sys
 import _winreg
 import msvcrt
 import winKernel
-import wx
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -168,6 +167,7 @@ def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
 
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
+	import wx
 	from gui import addonGui
 	log.debug("Requesting installation of add-on from %s", addonPath)
 	wx.CallAfter(addonGui.AddonsDialog.handleRemoteAddonInstall, addonPath)
