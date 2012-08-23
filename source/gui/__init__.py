@@ -239,7 +239,7 @@ class MainFrame(wx.Frame):
 			return
 		self.prePopup()
 		from addonGui import AddonsDialog
-		d=AddonsDialog.getInstance(gui.mainFrame)
+		d=AddonsDialog(gui.mainFrame)
 		d.Show()
 		self.postPopup()
 
