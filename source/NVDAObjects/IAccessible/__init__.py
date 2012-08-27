@@ -52,18 +52,13 @@ def getNVDAObjectFromPoint(x,y):
 	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=child)
 	return obj
 
+FORMAT_OBJECT_ATTRIBS = frozenset({"text-align"})
 def normalizeIA2TextFormatField(formatField):
 	try:
 		textAlign=formatField.pop("text-align")
 	except KeyError:
 		textAlign=None
 	if textAlign:
-		if "right" in textAlign:
-			textAlign="right"
-		elif "center" in textAlign:
-			textAlign="center"
-		elif "justify" in textAlign:
-			textAlign="justify"
 		formatField["text-align"]=textAlign
 	try:
 		fontWeight=formatField.pop("font-weight")
@@ -212,6 +207,12 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 				pass
 		if attribsString:
 			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
+		objAttribs = self.obj.IA2Attributes
+		for attr in FORMAT_OBJECT_ATTRIBS:
+			try:
+				formatField[attr] = objAttribs[attr]
+			except KeyError:
+				pass
 		normalizeIA2TextFormatField(formatField)
 		return formatField,(startOffset,endOffset)
 

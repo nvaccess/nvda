@@ -661,6 +661,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 						// Add text attributes.
 						for(map<wstring,wstring>::const_iterator it=textAttribs.begin();it!=textAttribs.end();++it)
 							previousNode->addAttribute(it->first,it->second);
+						#define copyObjectAttribute(attr) if ((IA2AttribsMapIt = IA2AttribsMap.find(attr)) != IA2AttribsMap.end()) \
+							previousNode->addAttribute(attr, IA2AttribsMapIt->second);
+						copyObjectAttribute(L"text-align");
+						#undef copyObjectAttribute
 					}
 				}
 				if(i==IA2TextLength)
