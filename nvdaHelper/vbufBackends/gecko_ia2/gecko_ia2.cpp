@@ -437,7 +437,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	bool isVisible = width > 0 && height > 0;
 	bool renderChildren = true;
 	long childCount=0;
-	if(IA2TextIsUnneededSpace||role==ROLE_SYSTEM_COMBOBOX||(role==ROLE_SYSTEM_LIST&&!(states&STATE_SYSTEM_READONLY))||role==IA2_ROLE_EMBEDDED_OBJECT)
+	if (IA2TextIsUnneededSpace || role == ROLE_SYSTEM_COMBOBOX || (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) || role == IA2_ROLE_EMBEDDED_OBJECT)
 		renderChildren = false;
 	else {
 		if(pacc->get_accChildCount(&childCount)==S_OK) {
