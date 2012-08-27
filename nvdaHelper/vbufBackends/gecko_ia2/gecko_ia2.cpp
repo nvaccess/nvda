@@ -434,7 +434,11 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	} else
 		IA2TextIsUnneededSpace=false;
 
+	// Whether a node is visible.
+	// An invisible node should not be rendered, but will have a presence in the buffer.
 	bool isVisible = width > 0 && height > 0;
+	// Whether to render children, including text content.
+	// Note that we may still render the name, value, etc. even if we don't render children.
 	bool renderChildren = true;
 	long childCount=0;
 	if (IA2TextIsUnneededSpace || role == ROLE_SYSTEM_COMBOBOX || (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) || role == IA2_ROLE_EMBEDDED_OBJECT)
