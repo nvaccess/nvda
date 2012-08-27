@@ -436,21 +436,27 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 
 	// Whether a node is visible.
 	// An invisible node should not be rendered, but will have a presence in the buffer.
-	bool isVisible = width > 0 && height > 0;
+	bool isVisible = true;
 	// Whether to render children, including text content.
 	// Note that we may still render the name, value, etc. even if we don't render children.
 	bool renderChildren = true;
 	long childCount=0;
-	if (IA2TextIsUnneededSpace || role == ROLE_SYSTEM_COMBOBOX || (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) || role == IA2_ROLE_EMBEDDED_OBJECT)
-		renderChildren = false;
-	else {
-		if(pacc->get_accChildCount(&childCount)==S_OK) {
-			if (childCount > 0) {
-				// If a node has children, it's visible.
-				isVisible = true;
-			}
-		} else
-			childCount=0;
+	if ((IA2AttribsMapIt = IA2AttribsMap.find(L"hidden")) != IA2AttribsMap.end() && IA2AttribsMapIt->second == L"true") {
+		// aria-hidden
+		isVisible = false;
+	} else {
+		isVisible = width > 0 && height > 0;
+		if (IA2TextIsUnneededSpace || role == ROLE_SYSTEM_COMBOBOX || (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) || role == IA2_ROLE_EMBEDDED_OBJECT)
+			renderChildren = false;
+		else {
+			if(pacc->get_accChildCount(&childCount)==S_OK) {
+				if (childCount > 0) {
+					// If a node has children, it's visible.
+					isVisible = true;
+				}
+			} else
+				childCount=0;
+		}
 	}
 
 	// Handle table cell information.
