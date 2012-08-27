@@ -44,6 +44,8 @@ class Mozilla(IAccessible):
 		states = super(Mozilla, self).states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
 			states.add(controlTypes.STATE_CHECKABLE)
+		if self.IA2Attributes.get("hidden") == "true":
+			states.add(controlTypes.STATE_INVISIBLE)
 		return states
 
 	def _get_presentationType(self):
