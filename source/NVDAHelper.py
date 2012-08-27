@@ -226,7 +226,10 @@ def nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags):
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	global lastInputMethodName
-	if api.getFocusObject().sleepMode:
+	focus=api.getFocusObject()
+	#This callback can be called before NVDa is fully initialized
+	#So also handle focus object being None as well as checking for sleepMode
+	if not focus or focus.sleepMode:
 		return 0
 	import queueHandler
 	import ui
