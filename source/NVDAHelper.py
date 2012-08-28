@@ -208,20 +208,41 @@ inputConversionModeMessages={
 	8:(_("Full shaped mode"),_("Half shaped mode")),
 }
 
-def handleInputConversionModeUpdate(oldFlags,newFlags):
-	import speech
-	for x in xrange(32):
-		x=2**x
-		msgs=inputConversionModeMessages.get(x)
-		if not msgs: continue
-		newOn=bool(newFlags&x)
-		oldOn=bool(oldFlags&x)
-		if newOn!=oldOn: 
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,msgs[0] if newOn else msgs[1])
+JapaneseInputConversionModeMessages= {
+	 0: _("half alphanumeric"),
+	 3: _("half katakana"),
+	 8: _("alphanumeric"),
+	 9: _("hiragana"),
+	11: _("katakana"),
+	16: _("half alphanumeric"),
+	19: _("half katakana roman"),
+	24: _("alphanumeric"),
+	25: _("hiragana roman"),
+	27: _("katakana roman"),
+} 
 
-@WINFUNCTYPE(c_long,c_long,c_long)
-def nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags):
-	queueHandler.queueFunction(queueHandler.eventQueue,handleInputConversionModeUpdate,oldFlags,newFlags)
+def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
+	import speech
+	textList=[]
+	if newFlags!=oldFlags and lcid&0xff==0x11: #Japanese
+		msg=JapaneseInputConversionModeMessages.get(newFlags)
+		if msg:
+			textList.append(msg)
+	else:
+		for x in xrange(32):
+			x=2**x
+			msgs=inputConversionModeMessages.get(x)
+			if not msgs: continue
+			newOn=bool(newFlags&x)
+			oldOn=bool(oldFlags&x)
+			if newOn!=oldOn: 
+				textList.append(msgs[0] if newOn else msgs[1])
+	if len(textList)>0:
+		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage," ".join(textList))
+
+@WINFUNCTYPE(c_long,c_long,c_long,c_ulong)
+def nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags,lcid):
+	queueHandler.queueFunction(queueHandler.eventQueue,handleInputConversionModeUpdate,oldFlags,newFlags,lcid)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)

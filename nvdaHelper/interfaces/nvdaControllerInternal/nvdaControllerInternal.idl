@@ -72,7 +72,7 @@ interface NvdaControllerInternal {
 
 	error_status_t __stdcall inputCandidateListUpdate([in,string] const wchar_t* candidates, [in] const long selectionIndex);
 
-	error_status_t __stdcall inputConversionModeUpdate([in] const long oldFlags, [in] const long newFlags);
+	error_status_t __stdcall inputConversionModeUpdate([in] const long oldFlags, [in] const long newFlags,[in] const unsigned long lcid);
 
 /**
  * Notifies NVDA that a virtual buffer has changed.

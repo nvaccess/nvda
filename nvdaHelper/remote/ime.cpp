@@ -219,7 +219,7 @@ void handleIMEConversionModeUpdate(HWND hwnd, bool report) {
 	ImmGetConversionStatus(imc,&flags,NULL);
 	ImmReleaseContext(hwnd, imc);
 	if(report&&flags!=lastConversionModeFlags) {
-		nvdaControllerInternal_inputConversionModeUpdate(lastConversionModeFlags,flags);
+		nvdaControllerInternal_inputConversionModeUpdate(lastConversionModeFlags,flags,((unsigned long)GetKeyboardLayout(0))&0xffff);
 	}
 	lastConversionModeFlags=flags;
 }

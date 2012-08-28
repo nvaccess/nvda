@@ -50,9 +50,9 @@ error_status_t __stdcall nvdaControllerInternal_inputCandidateListUpdate(const w
 	return _nvdaControllerInternal_inputCandidateListUpdate(candidates,selectionIndex);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_inputConversionModeUpdate)(const long, const long);
-error_status_t __stdcall nvdaControllerInternal_inputConversionModeUpdate(const long oldFlags, const long newFlags) {
-	return _nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags);
+error_status_t(__stdcall *_nvdaControllerInternal_inputConversionModeUpdate)(const long, const long, const unsigned long);
+error_status_t __stdcall nvdaControllerInternal_inputConversionModeUpdate(const long oldFlags, const long newFlags, const unsigned long lcid) {
+	return _nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags,lcid);
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_vbufChangeNotify)(const int, const int);
