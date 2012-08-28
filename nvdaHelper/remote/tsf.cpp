@@ -548,7 +548,7 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 		BSTR desc = NULL;
 		profiles->GetLanguageProfileDescription(rClsID, lang, rProfGUID, &desc);
 		if (desc) {
-			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),0, desc);
+			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),static_cast<unsigned long>(lastInputLangChange), desc);
 			SysFreeString(desc);
 		}
 	}

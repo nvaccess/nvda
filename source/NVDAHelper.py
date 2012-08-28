@@ -22,6 +22,7 @@ _remoteLoader64=None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
+lastInputLanguageName=None
 lastInputMethodName=None
 
 #utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
@@ -225,7 +226,7 @@ def nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags):
 
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
-	global lastInputMethodName
+	global lastInputMethodName, lastInputLanguageName
 	focus=api.getFocusObject()
 	#This callback can be called before NVDa is fully initialized
 	#So also handle focus object being None as well as checking for sleepMode
@@ -233,7 +234,10 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 		return 0
 	import queueHandler
 	import ui
-	print "inputLangChange: layoutString %s"%layoutString
+	languageID=hkl&0xffff
+	buf=create_unicode_buffer(1024)
+	res=windll.kernel32.GetLocaleInfoW(languageID,2,buf,1024)
+	inputLanguageName=buf.value if res else _("unknown language")
 	layoutStringCodes=[]
 	inputMethodName=None
 	#layoutString can either be a real input method name, a hex string for an input method name in the registry, or an empty string.
@@ -261,6 +265,12 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	if not inputMethodName:
 		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
 		inputMethodName=_("unknown input method")
+	if ' - ' in inputMethodName:
+		inputMethodName="".join(inputMethodName.split(' - ')[1:])
+	if inputLanguageName!=lastInputLanguageName:
+		lastInputLanguageName=inputLanguageName
+		# Translators: the message announcing the language and keyboard layout when it changes
+		inputMethodName=_("{language} - {layout}").format(language=inputLanguageName,layout=inputMethodName)
 	if inputMethodName!=lastInputMethodName:
 		lastInputMethodName=inputMethodName
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,inputMethodName)
