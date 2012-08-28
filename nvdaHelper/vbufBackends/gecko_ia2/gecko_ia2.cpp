@@ -250,7 +250,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	}
 
 	//Make sure that we don't already know about this object -- protect from loops
-	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)!=NULL) {
+	if(buffer->getControlFieldNodeWithIdentifier(docHandle,ID)) {
 		LOG_DEBUG(L"a node with this docHandle and ID already exists, returning NULL");
 		return NULL;
 	}
@@ -277,7 +277,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 			roleString=varRole.bstrVal;
 	}
 	//Add role as an attrib
-	if(roleString!=NULL)
+	if(roleString)
 		s<<roleString;
 	else
 		s<<role;
@@ -522,9 +522,8 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	}
 
 	//If the name isn't being rendered as the content, then add the name as a field attribute.
-	if(role!=ROLE_SYSTEM_LINK&&role!=ROLE_SYSTEM_PUSHBUTTON&&role!=ROLE_SYSTEM_GRAPHIC&&name!=NULL) {
+	if(role!=ROLE_SYSTEM_LINK&&role!=ROLE_SYSTEM_PUSHBUTTON&&role!=ROLE_SYSTEM_GRAPHIC&&name)
 		parentNode->addAttribute(L"name",name);
-	}
 
 	if (isVisible) {
 		if (role==ROLE_SYSTEM_GRAPHIC&&childCount>0&&name) {
@@ -545,7 +544,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 					// (A chunk ends at the end of the text, at the end of an attributes run
 					// or at an embedded object char.)
 					// Add the chunk to the buffer.
-					if((tempNode=buffer->addTextFieldNode(parentNode,previousNode,wstring(IA2Text+chunkStart,i-chunkStart)))!=NULL) {
+					if(tempNode=buffer->addTextFieldNode(parentNode,previousNode,wstring(IA2Text+chunkStart,i-chunkStart))) {
 						previousNode=tempNode;
 						// Add text attributes.
 						for(map<wstring,wstring>::const_iterator it=textAttribs.begin();it!=textAttribs.end();++it)
@@ -603,7 +602,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 					}
 					if(childName) SysFreeString(childName);
 					if(childDefaction) SysFreeString(childDefaction);
-					if((tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL) {
+					if(tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID)) {
 						previousNode=tempNode;
 					} else {
 						LOG_DEBUG(L"Error in fillVBuf");
@@ -615,7 +614,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 		} else if (renderChildren && childCount > 0) {
 			// The object has no text, but we do want to render its children.
 			VARIANT* varChildren;
-			if((varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))==NULL) {
+			if(!(varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount))) {
 				LOG_DEBUG(L"Error allocating varChildren memory");
 				return NULL;
 			}
@@ -628,7 +627,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 					IAccessible2* childPacc=NULL;
 					varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
 					if(childPacc) {
-						if((tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))!=NULL)
+						if(tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))
 							previousNode=tempNode;
 						else
 							LOG_DEBUG(L"Error in calling fillVBuf");
@@ -646,7 +645,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 				if(name) {
 					previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 					if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-				} else if((role==ROLE_SYSTEM_LINK)&&(value!=NULL)) {
+				} else if(role==ROLE_SYSTEM_LINK&&value) {
 					// If a link has no name, derive it from the URL.
 					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
 				} else if(value) {
@@ -818,7 +817,7 @@ void CALLBACK GeckoVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHOOK ho
 			return;
 
 		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
-		if(node==NULL&&eventID==EVENT_OBJECT_STATECHANGE) {
+		if(!node&&eventID==EVENT_OBJECT_STATECHANGE) {
 			// This event is possibly due to a new document loading in a subframe.
 			// Gecko doesn't fire a reorder on the iframe (Mozilla bug 420845), so we need to use NODE_CHILD_OF in this case so that frames will reload.
 			LOG_DEBUG(L"State change on an unknown node in a subframe, try NODE_CHILD_OF");
