@@ -701,7 +701,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 		SysFreeString(value);
 	if(defaction)
 		SysFreeString(defaction);
-		if (IA2Text)
+	if (IA2Text)
 		SysFreeString(IA2Text);
 	if(paccText)
 		paccText->Release();
