@@ -290,17 +290,15 @@ static bool handleComposition(HWND hwnd, WPARAM wParam, LPARAM lParam) {
 	wchar_t* comp_str = getCompositionString(imc, GCS_COMPSTR);
 	long selectionStart=ImmGetCompositionString(imc,GCS_CURSORPOS,NULL,0)&0xffff;
 	ImmReleaseContext(hwnd, imc);
+	if(!comp_str) return false;
 
 	/* Generate notification */
-	if(comp_str) {
-		long len=(long)wcslen(comp_str);
-		if(len>1||(len==1&&comp_str[0]!=L'\x3000')) {
-			nvdaControllerInternal_inputCompositionUpdate(comp_str,selectionStart,selectionStart,0);
-		}
-		free(comp_str);
-		return true;
+	long len=(long)wcslen(comp_str);
+	if(len>1||(len==1&&comp_str[0]!=L'\x3000')) {
+		nvdaControllerInternal_inputCompositionUpdate(comp_str,selectionStart,selectionStart,0);
 	}
-	return false;
+	free(comp_str);
+	return true;
 }
 
 static bool handleEndComposition(HWND hwnd, WPARAM wParam, LPARAM lParam) {
@@ -358,10 +356,19 @@ static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lPar
 			}
 
 		case WM_IME_COMPOSITION:
-			curIMEWindow=pcwp->hwnd;
 			if(!isTSFThread(true)) {
 				handleReadingStringUpdate(pcwp->hwnd);
-				handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+				bool compFailed=false;
+				if(lParam&GCS_COMPSTR||lParam&GCS_CURSORPOS) {
+					compFailed=!handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+					if(!compFailed) curIMEWindow=pcwp->hwnd;
+				}
+				if(compFailed&&curIMEWindow==pcwp->hwnd) {
+					handleEndComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+					curIMEWindow=NULL;
+					//Disable further typed character notifications produced by TSF
+					typedCharacter_window=NULL;
+				}
 			}
 			break;
 
