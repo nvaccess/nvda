@@ -116,11 +116,13 @@ create_thread_manager() {
 	TF_GetThreadMgr_t get_func =
 		(TF_GetThreadMgr_t)GetProcAddress(dll, "TF_GetThreadMgr");
 	if (get_func)  get_func(&mgr);
+	/*
 	if (!mgr) {
 		TF_CreateThreadMgr_t create_func =
 			(TF_CreateThreadMgr_t)GetProcAddress(dll, "TF_CreateThreadMgr");
 		if (create_func)  create_func(&mgr);
 	}
+	*/
 	FreeLibrary(dll);
 	return mgr;
 }
@@ -159,7 +161,8 @@ TsfSink::~TsfSink() {
 
 bool TsfSink::Initialize() {
 	mpThreadMgr = create_thread_manager();
-	HRESULT hr = mpThreadMgr ? S_OK : E_FAIL;
+	if(!mpThreadMgr) return false;
+	HRESULT hr = S_OK;
 	ITfSource* src = NULL;
 	if (hr == S_OK) {
 		hr = mpThreadMgr->QueryInterface(IID_ITfSource, (void**)&src);
@@ -184,7 +187,6 @@ bool TsfSink::Initialize() {
 		src->Release();
 		src = NULL;
 	}
-	if (hr != S_OK)  return false;
 	ITfDocumentMgr* doc_mgr = NULL;
 	mpThreadMgr->GetFocus(&doc_mgr);
 	if (doc_mgr) {
@@ -573,7 +575,10 @@ static void CALLBACK TSF_winEventHook(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 	if (TlsGetValue(gTsfIndex))  return;
 	TsfSink* sink = new TsfSink;
 	if (!sink)  return;
-	if(!sink->Initialize()) return;
+	if(!sink->Initialize()) {
+		sink->Release();
+		return;
+	}
 	gTsfSinksLock.acquire();
 	gTsfSinks[GetCurrentThreadId()] = sink;
 	gTsfSinksLock.release();
