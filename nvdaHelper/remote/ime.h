@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2010-2012 World Light Information Limited and Hong Kong Blind Union.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -12,14 +12,12 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#ifndef TYPEDCHARACTER_H
-#define TYPEDCHARACTER_H
+#ifndef IME_H
+#define IME_H
 
-#include <wchar.h>
-
-extern HWND typedCharacter_window;
-
-void typedCharacter_inProcess_initialize();
-void typedCharacter_inProcess_terminate();
+void IME_inProcess_initialize();
+void IME_inProcess_terminate();
+extern bool disableIMEConversionModeUpdateReporting;
+void handleIMEConversionModeUpdate(HWND hwnd, bool report);
 
 #endif

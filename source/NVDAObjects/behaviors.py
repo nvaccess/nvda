@@ -16,6 +16,7 @@ import queueHandler
 import eventHandler
 import controlTypes
 import speech
+import characterProcessing
 import config
 from . import NVDAObject, NVDAObjectTextInfo
 import textInfos
@@ -336,3 +337,47 @@ class Terminal(LiveText, EditableText):
 
 	def event_loseFocus(self):
 		self.stopMonitoring()
+
+class CandidateItem(NVDAObject):
+
+	def getSymbolDescriptions(self,symbols):
+		descriptions=[]
+		numSymbols=len(symbols)
+		for symbol in symbols:
+			try:
+				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
+			except TypeError:
+				symbolDescriptions=[]
+			if numSymbols>1:
+				symbolDescriptions=symbolDescriptions[:1]
+			numSymbolDescriptions=len(symbolDescriptions)
+			for desc in symbolDescriptions:
+				if desc and desc[0]=='(' and desc[-1]==')':
+					desc=desc[1:-1]
+				elif numSymbolDescriptions==1:
+					# Translators: a human friendly message used as the description for an input composition candidate symbol using both the symbol and its character description. 
+					desc=_("{symbol} as in {description}").format(symbol=symbol,description=desc)
+				descriptions.append(desc)
+		if descriptions:
+			return ", ".join(descriptions)
+
+	def reportFocus(self):
+		text=self.name
+		desc=self.description
+		if desc:
+			text+=u", "+desc
+		speech.speakText(text)
+
+	def _get_visibleCandidateItemsText(self):
+		obj=self
+		textList=[]
+		while obj and isinstance(obj,CandidateItem) and controlTypes.STATE_INVISIBLE not in obj.states:
+			textList.append(obj.name)
+			obj=obj.previous
+		textList.reverse()
+		obj=self.next
+		while obj and isinstance(obj,CandidateItem) and controlTypes.STATE_INVISIBLE not in obj.states:
+			textList.append(obj.name)
+			obj=obj.next
+		self.visibleCandidateItemsText=", ".join(textList)
+		return self.visibleCandidateItemsText
