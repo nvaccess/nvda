@@ -623,17 +623,21 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 				childCount=0;
 			}
 			for(long i=0;i<childCount;++i) {
-				if(varChildren[i].vt==VT_DISPATCH) {
-					IAccessible2* childPacc=NULL;
-					varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
-					if(childPacc) {
-						if(tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))
-							previousNode=tempNode;
-						else
-							LOG_DEBUG(L"Error in calling fillVBuf");
-						childPacc->Release();
-					}
+				if (varChildren[i].vt != VT_DISPATCH) {
+					VariantClear(&(varChildren[i]));
+					continue;
 				}
+				IAccessible2* childPacc=NULL;
+				varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
+				if (!childPacc) {
+					VariantClear(&(varChildren[i]));
+					continue;
+				}
+				if(tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))
+					previousNode=tempNode;
+				else
+					LOG_DEBUG(L"Error in calling fillVBuf");
+				childPacc->Release();
 				VariantClear(&(varChildren[i]));
 			}
 			free(varChildren);
