@@ -804,6 +804,19 @@ Key: NVDA+5
 
 Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
 
++++ Input Composition Settings +++
+the Input Composition Settings dialog can be found under the Preferences menu. This dialog allows you to control how NVDA reports the input of Asian characters, such as with IME or Text Service input methods.
+
+==== Automatically report all available candidates ====
+This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
+Having this option on for pictagraphic input methods such as chinese New ChangJie or Boshiami is useful as you can automatically hear all symbols and their numbers and you can choose one right away.
+However for phonetic input methods such as chinese New Phonetic, it may be more useful to turn this option off as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
+
+==== Report changes to the reading string ====
+Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
+You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.
+This option is on by default.
+
 +++ Browse Mode Settings (NVDA+control+b) +++
 The Browse Mode settings dialog can be found in the Preferences menu, under "Browse mode...".
 
