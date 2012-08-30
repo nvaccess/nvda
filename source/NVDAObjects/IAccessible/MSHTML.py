@@ -602,6 +602,8 @@ class MSHTML(IAccessible):
 		ariaDropeffect=self.HTMLAttributes['aria-dropeffect']
 		if ariaDropeffect and ariaDropeffect!="none":
 			states.add(controlTypes.STATE_DROPTARGET)
+		if self.HTMLAttributes["aria-hidden"]=="true":
+			states.add(controlTypes.STATE_INVISIBLE)
 		if self.isContentEditable:
 			states.add(controlTypes.STATE_EDITABLE)
 			states.discard(controlTypes.STATE_READONLY)

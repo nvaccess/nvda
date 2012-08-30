@@ -479,6 +479,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"aria-invalid",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-multiline",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-label",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-hidden",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	pHTMLAttributeCollection2->Release();
 }
 
@@ -725,6 +726,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		pHTMLElement3->get_isContentEditable(&varEditable);
 		isEditable=(varEditable==VARIANT_TRUE);
 		if(isEditable) attribsMap[L"IHTMLElement::isContentEditable"]=L"1";
+	}
+
+	if((tempIter=attribsMap.find(L"HTMLAttrib::aria-hidden"))!=attribsMap.end()&&tempIter->second==L"true") {
+		// aria-hidden
+		invisible=true;
 	}
 
 	//input nodes of type hidden must be treeted as being invisible.

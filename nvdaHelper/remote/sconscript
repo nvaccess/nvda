@@ -81,6 +81,8 @@ remoteLib=env.SharedLibrary(
 		"apiHook.cpp",
 		"inputLangChange.cpp",
 		"typedCharacter.cpp",
+		"ime.cpp",
+		"tsf.cpp",
 		"ia2Support.cpp",
 		"ia2LiveRegions.cpp",
 		ia2utilsObj,
@@ -108,6 +110,9 @@ remoteLib=env.SharedLibrary(
 		"oleaut32",
 		"oleacc",
 		"usp10",
+		"imm32",
+		"advapi32",
+		"version",
 	],
 )
 
