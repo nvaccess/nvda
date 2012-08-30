@@ -20,7 +20,11 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 class GeckoVBufBackend_t: public VBufBackend_t {
 	private:
 
-	VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable=NULL, IAccessibleTable2* paccTable2=NULL, long tableID=0);
+	VBufStorage_fieldNode_t* fillVBuf(IAccessible2* pacc,
+		VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+		IAccessibleTable* paccTable=NULL, IAccessibleTable2* paccTable2=NULL, long tableID=0,
+		bool ignoreInteractiveUnlabelledGraphics=false
+	);
 
 	void versionSpecificInit(IAccessible2* pacc);
 
