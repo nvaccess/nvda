@@ -69,6 +69,7 @@
 - In browse mode in Mozilla applications, the items in certain list boxes (specifically, ARIA list boxes) are no longer incorrectly rendered.
 - In web browsers, NVDA now hides content which is marked as hidden from screen readers (specifically, using the aria-hidden attribute). (#2117)
 - Negative currency amounts (e.g. -$123) are now correctly spoken as negative, regardless of symbol level. (#2625)
+- During say all, NVDA will no longer incorrectly revert to the default language where a line does not end a sentence. (#2630)
 
 
 == Changes for Developers ==
