@@ -68,6 +68,7 @@
 - In Microsoft Word, NVDA no longer leaves you stuck on a paragraph with list formatting when trying to navigate out over a bullet or number with left arrow or control + left arrow. (#2402)
 - In browse mode in Mozilla applications, the items in certain list boxes (specifically, ARIA list boxes) are no longer incorrectly rendered.
 - In web browsers, NVDA now hides content which is marked as hidden from screen readers (specifically, using the aria-hidden attribute). (#2117)
+- Negative currency amounts (e.g. -$123) are now correctly spoken as negative, regardless of symbol level. (#2625)
 
 
 == Changes for Developers ==
