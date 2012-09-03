@@ -10,7 +10,7 @@ import struct
 import weakref
 from ctypes import *
 from ctypes.wintypes import HANDLE
-from comtypes import IUnknown, IServiceProvider
+from comtypes import IUnknown, IServiceProvider, COMError
 import comtypes.client
 import comtypes.client.lazybind
 import oleacc
