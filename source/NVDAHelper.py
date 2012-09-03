@@ -270,9 +270,7 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 			int(layoutString,16)
 			layoutStringCodes.append(layoutString)
 		except ValueError:
-			print "already input method name"
 			inputMethodName=layoutString
-			pass
 	if not inputMethodName:
 		layoutStringCodes.insert(0,hex(hkl)[2:].rstrip('L').upper().rjust(8,'0'))
 		for stringCode in list(layoutStringCodes):
@@ -281,7 +279,6 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 				layoutStringCodes.append(stringCode[0:4].rjust(8,'0'))
 		for stringCode in layoutStringCodes:
 			inputMethodName=_lookupKeyboardLayoutNameWithHexString(stringCode)
-			print "stringCode %s, input method name %s"%(stringCode,inputMethodName)
 			if inputMethodName: break
 	if not inputMethodName:
 		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
