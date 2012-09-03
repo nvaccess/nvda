@@ -35,7 +35,7 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 
 	def _get_parent(self):
 		parent=super(BaseCandidateItem,self).parent
-		# Translators: The title of the input composition candidate list
+		# Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document. 
 		parent.name=_("Candidate")
 		parent.description=None
 		return parent
@@ -158,7 +158,7 @@ class MSCandUIWindow_candidateListItem(MSCandUI_candidateListItem):
 
 class MSCandUIWindow(IAccessible):
 
-	# Translators: the title of the input composition candidate list
+	# Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 	name=_("Candidate")
 	role=controlTypes.ROLE_LIST
 
