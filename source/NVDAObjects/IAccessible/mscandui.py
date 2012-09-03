@@ -47,7 +47,7 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 			return super(BaseCandidateItem,self).name
 		word=super(BaseCandidateItem,self).name
 		# Translators: the formatted name of an input composition candidate item.
-		return u"{number}  {word}".format(number=number,word=word)
+		return _("{number}  {word}").format(number=number,word=word)
 
 	def _get_description(self):
 		return self.getSymbolDescriptions(super(BaseCandidateItem,self).name)

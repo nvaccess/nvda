@@ -141,7 +141,7 @@ class CandidateItem(CandidateItemBehavior,Window):
 		number=self.candidateIndex+1
 		word=self.candidateStrings[self.candidateIndex]
 		# Translators: the formatted name of an input composition candidate item.
-		return u"{number}  {word}".format(number=number,word=word)
+		return _("{number}  {word}").format(number=number,word=word)
 
 	def _get_basicText(self):
 		return self.candidateStrings[self.candidateIndex]
