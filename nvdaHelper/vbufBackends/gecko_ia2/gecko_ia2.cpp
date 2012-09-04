@@ -336,7 +336,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	//get IA2Attributes -- IAccessible2 attributes;
 	BSTR IA2Attributes;
 	map<wstring,wstring> IA2AttribsMap;
-		if(pacc->get_attributes(&IA2Attributes)==S_OK) {
+	if(pacc->get_attributes(&IA2Attributes)==S_OK) {
 		IA2AttribsToMap(IA2Attributes,IA2AttribsMap);
 		SysFreeString(IA2Attributes);
 		// Add each IA2 attribute as an attrib.

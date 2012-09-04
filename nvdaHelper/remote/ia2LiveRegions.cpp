@@ -182,7 +182,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	if(!allowText&&allowAdditions&&eventID==EVENT_OBJECT_SHOW) {
 		getTextFromIAccessible(textBuf,pacc2,false,true);
 	} else if(allowText&&(eventID==IA2_EVENT_TEXT_INSERTED||eventID==IA2_EVENT_TEXT_UPDATED)) {
- 		getTextFromIAccessible(textBuf,pacc2,true,allowAdditions);
+		getTextFromIAccessible(textBuf,pacc2,true,allowAdditions);
 	}
 	if(!textBuf.empty()) nvdaController_speakText(textBuf.c_str());
 }
