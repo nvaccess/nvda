@@ -434,7 +434,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	//Get the text from the IAccessibleText interface
 	BSTR IA2Text=NULL;
 	int IA2TextLength=0;
-	if(paccText&&paccText->get_text(0,-1,&IA2Text)==S_OK&&IA2Text)
+	if (paccText && paccText->get_text(0, IA2_TEXT_OFFSET_LENGTH, &IA2Text) == S_OK && IA2Text)
 		IA2TextLength=SysStringLen(IA2Text);
 	// Determine whether the text is extraneous whitespace.
 	bool IA2TextIsUnneededSpace=true;

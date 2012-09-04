@@ -57,7 +57,7 @@ void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 			startOffset=newSeg.start;
 		}
 	} else {
-		paccText->get_text(0,-1,&bstrText);
+		paccText->get_text(0,IA2_TEXT_OFFSET_LENGTH,&bstrText);
 	}
 	//If we got text, add it to  the string provided, however if there are embedded objects in the text, recurse in to these
 	if(bstrText) {
