@@ -405,7 +405,7 @@ class RowWithFakeNavigation(NVDAObject):
 		child = column - 1
 		if child >= self.childCount:
 			return
-		cell = self.children[child]
+		cell = self.getChild(child)
 		self._moveToColumn(cell)
 
 	def script_moveToNextColumn(self, gesture):
@@ -505,6 +505,9 @@ class RowWithoutCellObjects(NVDAObject):
 
 	def _get_children(self):
 		return [self._makeCell(column) for column in xrange(1, self.childCount + 1)]
+
+	def getChild(self, index):
+		return self._makeCell(index + 1)
 
 class _FakeTableCell(NVDAObject):
 
