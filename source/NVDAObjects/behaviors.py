@@ -408,11 +408,6 @@ class RowWithFakeNavigation(NVDAObject):
 		cell = self.children[child]
 		self._moveToColumn(cell)
 
-	def script_moveToColumn(self, gesture):
-		self._moveToColumnNumber(int(gesture.mainKeyName[-1]))
-	# Translators: The description of an NVDA command.
-	script_moveToColumn.__doc__ = _("Moves the navigator object to the numbered column")
-
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
@@ -465,10 +460,6 @@ class RowWithFakeNavigation(NVDAObject):
 	script_moveToPreviousRow.canPropagate = True
 	# Translators: The description of an NVDA command.
 	script_moveToPreviousRow.__doc__ = _("Moves the navigator object and focus to the previous row")
-
-	def initOverlayClass(self):
-		for n in xrange(1, 9):
-			self.bindGesture("kb:NVDA+control+%d" % n, "moveToColumn")
 
 	__gestures = {
 		"kb:control+alt+rightArrow": "moveToNextColumn",
