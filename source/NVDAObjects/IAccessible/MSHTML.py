@@ -359,7 +359,6 @@ class MSHTML(IAccessible):
 			except:
 				HTMLNode=None
 			if not HTMLNode:
-				import winsound; winsound.Beep(990,50)
 				log.debugWarning("Error getting HTMLNode with elementFromPoint")
 				return False
 			del kwargs['IAccessibleObject']
@@ -873,7 +872,6 @@ class RootClient(IAccessible):
 	description = None
 
 class MSAATextLeaf(IAccessible):
-	beTransparentToMouse=True
 	role=controlTypes.ROLE_STATICTEXT
 
 def findExtraIAccessibleOverlayClasses(obj, clsList):
