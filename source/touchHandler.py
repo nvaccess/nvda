@@ -15,7 +15,7 @@ import NVDAObjects.UIA
 from logHandler import log
 import touchTracker
 
-availableTouchModes=['text','quickNav','object']
+availableTouchModes=['text','object']
 
 HWND_MESSAGE=-3
 
