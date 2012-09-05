@@ -468,6 +468,17 @@ class NVDAObject(baseObject.ScriptableObject):
 			child=child.next
 		return children
 
+	def getChild(self, index):
+		"""Retrieve a child by index.
+		@note: Subclasses may override this if they have an efficient way to retrieve a single, arbitrary child.
+			The base implementation uses L{children}.
+		@param index: The 0-based index of the child to retrieve.
+		@type index: int
+		@return: The child.
+		@rtype: L{NVDAObject}
+		"""
+		return self.children[index]
+
 	def _get_rowNumber(self):
 		"""Retreaves the row number of this object if it is in a table.
 		@rtype: int

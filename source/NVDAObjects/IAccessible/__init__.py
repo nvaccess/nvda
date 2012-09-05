@@ -985,6 +985,19 @@ the NVDAObject for IAccessible
 		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
 		return children
 
+	def getChild(self, index):
+		if self.IAccessibleChildID != 0:
+			return None
+		child = IAccessibleHandler.accChild(self.IAccessibleObject, index + 1)
+		if not child:
+			if index < self.childCount:
+				return super(IAccessible, self).getChild(index)
+			return None
+		if child[0] == self.IAccessibleObject:
+			return IAccessible(windowHandle=self.windowHandle, IAccessibleObject=self.IAccessibleObject, IAccessibleChildID=child[1],
+				event_windowHandle=self.event_windowHandle, event_objectID=self.event_objectID, event_childID=child[1])
+		return self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0], IAccessibleChildID=child[1]))
+
 	def _get_IA2Attributes(self):
 		try:
 			attribs = self.IAccessibleObject.attributes
@@ -1627,7 +1640,7 @@ _staticMap={
 	("TRichViewEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
 	("TTntDrawGrid.UnicodeClass",oleacc.ROLE_SYSTEM_CLIENT):"List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LIST):"sysListView32.List",
-	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
+	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItemWithReportView",
 	("SysListView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysListView32.ListItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINE):"sysTreeView32.TreeView",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",

@@ -10,7 +10,7 @@
 """
 
 import itertools
-import ctypes
+import ctypes.wintypes
 import os
 import sys
 import pkgutil
@@ -207,7 +207,7 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE,False,processID)
+		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
 
@@ -241,3 +241,18 @@ class AppModule(baseObject.ScriptableObject):
 		@param clsList: The list of classes, which will be modified by this method if appropriate.
 		@type clsList: list of L{NVDAObjects.NVDAObject}
 		"""
+
+	def _get_is64BitProcess(self):
+		"""Whether the underlying process is a 64 bit process.
+		@rtype: bool
+		"""
+		if os.environ.get("PROCESSOR_ARCHITEW6432") != "AMD64":
+			# This is 32 bit Windows.
+			self.is64BitProcess = False
+			return False
+		res = ctypes.wintypes.BOOL()
+		if ctypes.windll.kernel32.IsWow64Process(self.processHandle, ctypes.byref(res)) == 0:
+			self.is64BitProcess = False
+			return False
+		self.is64BitProcess = not res
+		return self.is64BitProcess

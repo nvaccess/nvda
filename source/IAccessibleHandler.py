@@ -395,15 +395,13 @@ def accHitTest(ia,x,y):
 def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
-		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=normalizeIAccessible(res)
-			new_child=0
-		elif isinstance(res,int):
-			new_ia=ia
-			new_child=res
-		return (new_ia,new_child)
+		if not res:
+			return (ia,child)
+		elif isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+			return normalizeIAccessible(res),0
 	except:
-		return None
+		pass
+	return None
 
 def accParent(ia,child):
 	try:
