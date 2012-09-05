@@ -227,7 +227,7 @@ def findExtraOverlayClasses(obj, clsList):
 		# Check if the tree view is a table.
 		parent = obj.parent
 		# Tree view items may be nested, so skip any tree view item ancestors.
-		while parent and parent.IAccessibleRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
+		while parent and isinstance(parent, Mozilla) and parent.IAccessibleRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
 			newParent = parent.parent
 			parent.parent = newParent
 			parent = newParent
