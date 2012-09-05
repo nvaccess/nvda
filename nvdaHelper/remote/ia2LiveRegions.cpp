@@ -57,7 +57,7 @@ void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 			startOffset=newSeg.start;
 		}
 	} else {
-		paccText->get_text(0,-1,&bstrText);
+		paccText->get_text(0,IA2_TEXT_OFFSET_LENGTH,&bstrText);
 	}
 	//If we got text, add it to  the string provided, however if there are embedded objects in the text, recurse in to these
 	if(bstrText) {
@@ -182,7 +182,7 @@ void CALLBACK winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, l
 	if(!allowText&&allowAdditions&&eventID==EVENT_OBJECT_SHOW) {
 		getTextFromIAccessible(textBuf,pacc2,false,true);
 	} else if(allowText&&(eventID==IA2_EVENT_TEXT_INSERTED||eventID==IA2_EVENT_TEXT_UPDATED)) {
- 		getTextFromIAccessible(textBuf,pacc2,true,allowAdditions);
+		getTextFromIAccessible(textBuf,pacc2,true,allowAdditions);
 	}
 	if(!textBuf.empty()) nvdaController_speakText(textBuf.c_str());
 }

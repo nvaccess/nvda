@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 3 aprile 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 31 agosto 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Comandi da tastiera Guida Rapida
@@ -24,7 +24,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille
-- Tradotto in 39 lingue
+- Tradotto in 40 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
 - Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
@@ -32,7 +32,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-NVDA è stato tradotto in 37 lingue ossia Afrikaans, Albanese, Arabo, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
+Oltre all'inglese, NVDA è stato tradotto in 40 lingue ossia Afrikaans, Albanese, Amharic, Arabo, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -916,17 +916,18 @@ Utilizzando il campo "livello", è possibile stabilire il livello più basso dal
 Una volta terminate le modifiche, premere il pulsante OK per salvare i cambiamenti oppure il bottone Annulla per annullare l'operazione.
 
 ++ Salvare e caricare la configurazione ++
-NVDA non salva automaticamente le impostazioni correnti, quindi se si esce e rientra dal   programma le impostazioni torneranno al loro valore originale. 
+NVDA salva automaticamente le impostazioni correnti all'uscita.
 Si noti che comunque è possibile modificare questo comportamento tramite l'opzione presente nelle impostazioni generali del menu preferenze.
-Per salvare le impostazioni   scegliere la voce salva Configurazione dal menu di NVDA.
+Per salvare le impostazioni manualmente, scegliere la voce salva Configurazione dal menu di NVDA.
 
 Se si è fatto un errore nelle impostazioni e si desidera tornare indietro alle impostazioni salvate in precedenza, scegliere la voce "torna alla configurazione salvata dal menu NVDA.
+è anche possibile resettare le impostazioni ai valori predefiniti, scegliendo la voce "Ripristina la configurazione ai valori di fabbrica", presente sul menu principale di NVDA.
 
 I seguenti tasti rapidi risultano molto utili:
 %kc:beginInclude
 || Nome | Tasto Desktop | Tasto Laptop | Descrizione |
 | Salva Configurazione | NVDA+Control+c | NVDA+Control+c | Salva la configurazione attuale in modo che non verrà persa all'uscita da NVDA |
-| Torna alla configurazione salvata | NVDA+Control+r | NVDA+Control+r | Ripristina la configurazione di NVDA risalente all'ultima volta che essa è stata salvata |
+| Torna alla configurazione salvata | NVDA+Control+r | NVDA+Control+r | Ripristina la configurazione di NVDA risalente all'ultima volta che essa è stata salvata. Premere tre volte in rapida successione per ripristinare le impostazioni di configurazione predefinite |
 %kc:endInclude
 
 ++ File di configurazione e profili utente ++
@@ -1304,6 +1305,28 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 || Nome | Tasto |
 | Scorri display braille indietro | Scorri giù lato sinistro |
 | Scorri display braille avanti | Scorri giù lato destro |
+| Route to braille cell | routing |
+%kc:endInclude
+
+++ Display Braille Seika ++
+NVDA supporta i modelli Seika 3, 4 e 5 a 40 caratteri e Seika80 a 80 caratteri, prodotti dalla [Nippon Telesoft http://www.nippontelesoft.com/].
+Si possono ottenere maggiori informazioni su queste barre braille visitando la pagina http://www.seika-braille.com/.
+è prima necessario installare i driver USB forniti in dotazione.
+
+Di seguito, ecco l'elenco dell'assegnazione dei tasti per queste righe braille con NVDA.
+Consultare la documentazione della barra braille per informazioni sulla posizione dei tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri display braille indietro | sinistro |
+| Scorri display braille avanti | destro |
+| Sposta display braille alla riga precedente | b3 |
+| Sposta display braille alla riga successiva | b4 |
+| Commuta inseguimento braille | b5 |
+| Dire tutto | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| Menu NVDA | sinistro+destro |
 | Route to braille cell | routing |
 %kc:endInclude
 

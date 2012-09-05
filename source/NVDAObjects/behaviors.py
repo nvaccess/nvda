@@ -355,7 +355,7 @@ class CandidateItem(NVDAObject):
 				if desc and desc[0]=='(' and desc[-1]==')':
 					desc=desc[1:-1]
 				elif numSymbolDescriptions==1:
-					# Translators: a human friendly message used as the description for an input composition candidate symbol using both the symbol and its character description. 
+					# Translators: a human friendly message used as the description for an input composition candidate symbol when typing east-Asian characters,  using both the symbol and its character description.
 					desc=_("{symbol} as in {description}").format(symbol=symbol,description=desc)
 				descriptions.append(desc)
 		if descriptions:

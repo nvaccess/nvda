@@ -7,9 +7,9 @@
 
 == New Features ==
 - NVDA can now support Asian character input using IME and text service input methods in all applications, Including:
- - reporting and navigation of candidate lists
-  - Reporting and navigation of composition strings
-  - Reporting of reading strings.
+ - Reporting and navigation of candidate lists;
+ - Reporting and navigation of composition strings; and
+ - Reporting of reading strings.
 - The presence of underline and strikethrough is now reported in Adobe Reader documents. (#2410)
 - When the Windows Sticky Keys function is enabled, the NVDA modifier key will now behave like other modifier keys. This allows you to use the NVDA modifier key without needing to hold it down while you press other keys. (#230)
 - Support for HIMS Braille Sense, Braille EDGE and SyncBraille braille displays. (#1266, #1267)
@@ -68,6 +68,10 @@
 - In Microsoft Word, NVDA no longer leaves you stuck on a paragraph with list formatting when trying to navigate out over a bullet or number with left arrow or control + left arrow. (#2402)
 - In browse mode in Mozilla applications, the items in certain list boxes (specifically, ARIA list boxes) are no longer incorrectly rendered.
 - In web browsers, NVDA now hides content which is marked as hidden from screen readers (specifically, using the aria-hidden attribute). (#2117)
+- Negative currency amounts (e.g. -$123) are now correctly spoken as negative, regardless of symbol level. (#2625)
+- During say all, NVDA will no longer incorrectly revert to the default language where a line does not end a sentence. (#2630)
+- Font information is now correctly detected in Adobe Reader 10.1 and later. (#2175)
+- In Adobe Reader, if alternate text is provided, only that text will be rendered. Previously, extraneous text was sometimes included. (#2174)
 
 
 == Changes for Developers ==

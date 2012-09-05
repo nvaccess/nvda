@@ -47,6 +47,7 @@ class InputCompositionTextInfo(OffsetsTextInfo):
 class InputComposition(EditableTextWithAutoSelectDetection,Window):
 
 	TextInfo=InputCompositionTextInfo
+	# Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document. 
 	name=_("Composition")
 	role=controlTypes.ROLE_EDITABLETEXT
 	next=None
@@ -102,6 +103,7 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 
 class CandidateList(Window):
 
+	# Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 	name=_("Candidate")
 	role=controlTypes.ROLE_LIST
 	next=None
@@ -139,7 +141,7 @@ class CandidateItem(CandidateItemBehavior,Window):
 		number=self.candidateIndex+1
 		word=self.candidateStrings[self.candidateIndex]
 		# Translators: the formatted name of an input composition candidate item.
-		return u"{number}  {word}".format(number=number,word=word)
+		return _("{number}  {word}").format(number=number,word=word)
 
 	def _get_basicText(self):
 		return self.candidateStrings[self.candidateIndex]

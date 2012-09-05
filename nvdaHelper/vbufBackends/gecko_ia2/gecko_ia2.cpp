@@ -220,7 +220,11 @@ void GeckoVBufBackend_t::versionSpecificInit(IAccessible2* pacc) {
 	SysFreeString(toolkitVersion);
 }
 
-VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID) {
+VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
+	VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
+	IAccessibleTable* paccTable, IAccessibleTable2* paccTable2, long tableID,
+	bool ignoreInteractiveUnlabelledGraphics
+) {
 	nhAssert(buffer); //buffer can't be NULL
 	nhAssert(!parentNode||buffer->isNodeInBuffer(parentNode)); //parent node must be in buffer
 	nhAssert(!previousNode||buffer->isNodeInBuffer(previousNode)); //Previous node must be in buffer
@@ -332,7 +336,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	//get IA2Attributes -- IAccessible2 attributes;
 	BSTR IA2Attributes;
 	map<wstring,wstring> IA2AttribsMap;
-		if(pacc->get_attributes(&IA2Attributes)==S_OK) {
+	if(pacc->get_attributes(&IA2Attributes)==S_OK) {
 		IA2AttribsToMap(IA2Attributes,IA2AttribsMap);
 		SysFreeString(IA2Attributes);
 		// Add each IA2 attribute as an attrib.
@@ -419,7 +423,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	// Whether this node is interactive.
 	bool isInteractive = isEditable || inLink || isClickable || (states & STATE_SYSTEM_FOCUSABLE && role != ROLE_SYSTEM_DOCUMENT) || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT;
 	// Whether the name is the content of this node.
-	bool nameIsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME;
+	bool nameIsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME || role == IA2_ROLE_HEADING;
 
 	IAccessibleText* paccText=NULL;
 	IAccessibleHypertext* paccHypertext=NULL;
@@ -430,7 +434,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 	//Get the text from the IAccessibleText interface
 	BSTR IA2Text=NULL;
 	int IA2TextLength=0;
-	if(paccText&&paccText->get_text(0,-1,&IA2Text)==S_OK&&IA2Text)
+	if (paccText && paccText->get_text(0, IA2_TEXT_OFFSET_LENGTH, &IA2Text) == S_OK && IA2Text)
 		IA2TextLength=SysStringLen(IA2Text);
 	// Determine whether the text is extraneous whitespace.
 	bool IA2TextIsUnneededSpace=true;
@@ -543,6 +547,12 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 		}
 
+		if (isInteractive && !ignoreInteractiveUnlabelledGraphics) {
+			// Don't render interactive unlabelled graphic descendants if this node has a name,
+			// as author supplied names are preferred.
+			ignoreInteractiveUnlabelledGraphics = name != NULL;
+		}
+
 		if (renderChildren && IA2TextLength > 0) {
 			// Process IAccessibleText.
 			int chunkStart=0;
@@ -599,21 +609,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 						continue;
 					}
 					paccHyperlink->Release();
-					// Skip unneeded graphics in links.
-					long childRole;
-					BSTR childName=NULL;
-					BSTR childDefaction=NULL;
-					//role must be link, must have name, 
-					//childRole must be graphic, must have no or empty childName, childDefaction can't be click.
-					if(role==ROLE_SYSTEM_LINK&&name&&!isWhitespace(name)&&childPacc->role(&childRole)==S_OK&&childRole==ROLE_SYSTEM_GRAPHIC&&(childPacc->get_accName(varChild,&childName)!=S_OK||!childName||SysStringLen(childName)==0)&&(childPacc->get_accDefaultAction(varChild,&childDefaction)==S_OK||wcscmp(childDefaction?childDefaction:L"",L"click")!=0)) {
-						if(childName) SysFreeString(childName);
-						if(childDefaction) SysFreeString(childDefaction);
-						childPacc->Release();
-						continue;
-					}
-					if(childName) SysFreeString(childName);
-					if(childDefaction) SysFreeString(childDefaction);
-					if(tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID)) {
+					if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, ignoreInteractiveUnlabelledGraphics)) {
 						previousNode=tempNode;
 					} else {
 						LOG_DEBUG(L"Error in fillVBuf");
@@ -644,7 +640,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 					VariantClear(&(varChildren[i]));
 					continue;
 				}
-				if(tempNode=this->fillVBuf(childPacc,buffer,parentNode,previousNode,paccTable,paccTable2,tableID))
+				if (tempNode = this->fillVBuf(childPacc, buffer, parentNode, previousNode, paccTable, paccTable2, tableID, ignoreInteractiveUnlabelledGraphics))
 					previousNode=tempNode;
 				else
 					LOG_DEBUG(L"Error in calling fillVBuf");
@@ -656,40 +652,40 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc, VBufSt
 		} else {
 			// There were no children to render.
 			if(role==ROLE_SYSTEM_GRAPHIC) {
-				// Unneeded graphics in links are handled elsewhere, so if we see alt="" here, we should ignore alt and fall back.
-				// However, if we see alt="" for a clickable, use the alt and don't fall back.
-				if(name&&(SysStringLen(name)>0||isClickable)) {
+				if (name && name[0]) {
+					// The graphic has a label, so use it.
 					previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
 					if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-				} else if (value && !isClickable && inLink) {
-					// If the graphic is unlabelled and it's within a link,
-					// derive the label from the link URL.
-					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
-				} else if ((IA2AttribsMap.count(L"src") > 0) && (isClickable || inLink)) {
-					// If the graphic is unlabelled and it's clickable,
-					// derive the label from the graphic URL.
-					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(IA2AttribsMap[L"src"]));
+				} else if ((name && !name[0]) || ignoreInteractiveUnlabelledGraphics) {
+					// alt="" or we've determined that all unlabelled graphics should be ignored,
+					// so don't render the graphic at all.
+					isInteractive = false;
+				} else if (isInteractive) {
+					// The graphic is unlabelled, but we should try to derive a name for it.
+					if (inLink && value) {
+						// derive the label from the link URL.
+						previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
+					} else if ((IA2AttribsMapIt = IA2AttribsMap.find(L"src")) != IA2AttribsMap.end()) {
+						// Derive the label from the graphic URL.
+						previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(IA2AttribsMap[L"src"]));
+					}
 				}
-			} else if (nameIsContent) {
-				// Use the name as content.
-				if(name) {
-					previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
-					if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-				} else if(role==ROLE_SYSTEM_LINK&&value) {
-					// If a link has no name, derive it from the URL.
-					previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
-				}
-			} else if (value) {
+			} else if (!nameIsContent && value) {
 				previousNode=buffer->addTextFieldNode(parentNode,previousNode,value);
 				if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
 			}
 		}
 
-		if (renderChildren && name && nameIsContent && parentNode->getLength() == 0) {
-			// If children were to be rendered but produced no content and the name should be the content,
-			// render the name.
-			previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
-			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
+		if (nameIsContent && parentNode->getLength() == 0) {
+			// If there is no content and the name should be the content,
+			// render the name if there is one.
+			if(name) {
+				previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
+				if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
+			} else if(role==ROLE_SYSTEM_LINK&&value) {
+				// If a link has no name, derive it from the URL.
+				previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
+			}
 		}
 
 		if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_ROWHEADER || role == ROLE_SYSTEM_COLUMNHEADER||role==IA2_ROLE_UNKNOWN) && parentNode->getLength() == 0) {

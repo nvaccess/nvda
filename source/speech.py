@@ -1220,6 +1220,14 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 						speakWithoutPauses._pendingSpeechSequence=[]
 						finalSpeechSequence.extend(speechSequence[0:index])
 						finalSpeechSequence.append(before)
+						# Apply the last language change to the pending sequence.
+						# This will need to be done for any other speech change commands introduced in future.
+						for changeIndex in xrange(index-1,-1,-1):
+							change=speechSequence[changeIndex]
+							if not isinstance(change,LangChangeCommand):
+								continue
+							pendingSpeechSequence.append(change)
+							break
 						break
 				else:
 					pendingSpeechSequence.append(item)

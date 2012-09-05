@@ -212,6 +212,7 @@ void handleReadingStringUpdate(HWND hwnd) {
 }
 
 void handleIMEConversionModeUpdate(HWND hwnd, bool report) {
+	if(!ImmGetProperty(GetKeyboardLayout(0),IGP_CONVERSION)) return;
 	/* Obtain IME context */
 	HIMC imc = ImmGetContext(hwnd);
 	if (!imc)  return;

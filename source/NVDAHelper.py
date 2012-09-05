@@ -204,20 +204,39 @@ def nvdaControllerInternal_inputCandidateListUpdate(candidatesString,selectionIn
 	return 0
 
 inputConversionModeMessages={
-	1:(_("Native input"),_("Alpha numeric input")),
-	8:(_("Full shaped mode"),_("Half shaped mode")),
+	1:(
+		# Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters. 
+		_("Native input"),
+		# Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
+		_("Alpha numeric input")
+	),
+	8:(
+		# Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
+		_("Full shaped mode"),
+		# Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
+		_("Half shaped mode")
+	),
 }
 
 JapaneseInputConversionModeMessages= {
-	 0: _("half alphanumeric"),
-	 3: _("half katakana"),
-	 8: _("alphanumeric"),
-	 9: _("hiragana"),
+	# Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
+	0: _("half alphanumeric"),
+	# Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
+	3: _("half katakana"),
+	# Translators: For Japanese character input: alpha numeric (roman/english) mode.
+	8: _("alphanumeric"),
+	# Translators: For Japanese character input: Hiragana input mode.
+	9: _("hiragana"),
+	# Translators: For Japanese character input: Katacana input mode.
 	11: _("katakana"),
+	# Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 	16: _("half alphanumeric"),
 	19: _("half katakana roman"),
+	# Translators: For Japanese character input: alpha numeric (roman/english) mode.
 	24: _("alphanumeric"),
+	# Translators: For Japanese character input: Hiragana Roman input mode.
 	25: _("hiragana roman"),
+	# Translators: For Japanese character input: Katacana Roman input mode.
 	27: _("katakana roman"),
 } 
 
@@ -253,11 +272,15 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	#So also handle focus object being None as well as checking for sleepMode
 	if not focus or focus.sleepMode:
 		return 0
+	import NVDAObjects.window
+	if not isinstance(focus,NVDAObjects.window.Window) or threadID!=focus.windowThreadID:
+		return 0
 	import queueHandler
 	import ui
 	languageID=hkl&0xffff
 	buf=create_unicode_buffer(1024)
 	res=windll.kernel32.GetLocaleInfoW(languageID,2,buf,1024)
+	# Translators: the label for an unknown language when switching input methods.
 	inputLanguageName=buf.value if res else _("unknown language")
 	layoutStringCodes=[]
 	inputMethodName=None
@@ -270,9 +293,7 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 			int(layoutString,16)
 			layoutStringCodes.append(layoutString)
 		except ValueError:
-			print "already input method name"
 			inputMethodName=layoutString
-			pass
 	if not inputMethodName:
 		layoutStringCodes.insert(0,hex(hkl)[2:].rstrip('L').upper().rjust(8,'0'))
 		for stringCode in list(layoutStringCodes):
@@ -281,10 +302,10 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 				layoutStringCodes.append(stringCode[0:4].rjust(8,'0'))
 		for stringCode in layoutStringCodes:
 			inputMethodName=_lookupKeyboardLayoutNameWithHexString(stringCode)
-			print "stringCode %s, input method name %s"%(stringCode,inputMethodName)
 			if inputMethodName: break
 	if not inputMethodName:
 		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
+		# Translators: The label for an unknown input method when switching input methods. 
 		inputMethodName=_("unknown input method")
 	if ' - ' in inputMethodName:
 		inputMethodName="".join(inputMethodName.split(' - ')[1:])
