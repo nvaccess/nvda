@@ -45,6 +45,8 @@ class Mozilla(IAccessible):
 		states = super(Mozilla, self).states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
 			states.add(controlTypes.STATE_CHECKABLE)
+		if self.IA2Attributes.get("hidden") == "true":
+			states.add(controlTypes.STATE_INVISIBLE)
 		return states
 
 	def _get_presentationType(self):
@@ -180,6 +182,9 @@ class GeckoPluginWindowRoot(WindowRoot):
 				log.debugWarning("NAVRELATION_EMBEDS failed")
 		return parent
 
+class TextLeaf(Mozilla):
+	role = controlTypes.ROLE_STATICTEXT
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -196,6 +201,19 @@ def findExtraOverlayClasses(obj, clsList):
 				cls = RootApplication
 		except COMError:
 			pass
+	elif iaRole == oleacc.ROLE_SYSTEM_TEXT:
+		# Check if this is a text leaf.
+		iaStates = obj.IAccessibleStates
+		# Text leaves are never focusable.
+		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
+		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
+			try:
+				ia2States = obj.IAccessibleObject.states
+			except COMError:
+				ia2States = 0
+			# This excludes a non-focusable @role="textbox".
+			if not (ia2States & IAccessibleHandler.IA2_STATE_EDITABLE):
+				cls = TextLeaf
 	if not cls:
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:

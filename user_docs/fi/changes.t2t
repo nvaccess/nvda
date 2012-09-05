@@ -22,6 +22,8 @@
 - Freedom Scientificin PAC Mate- ja Focus-pistenäyttöjen ensimmäistä ja viimeistä ylintä kosketuskohdistinnäppäintä voidaan nyt käyttää taakse- ja eteenpäin vierittämiseen. (#2556)
 - Freedom Scientificin Focus--pistenäytöissä tuetaan entistä useampia ominaisuuksia, kuten eteenpäin siirtävät näppäimet, keinunäppäimet sekä tietyt pisteyhdistelmät yleisille toiminnoille. (#2516)
 - Taulukon rivien ja sarakkeiden ylätunnisteet on nyt mahdollista lukea selaustilan ulkopuolella IAccessible2-rajapintaa käyttävissä sovelluksissa, kuten Mozilla Firefoxissa. (#926)
+- Alustava tuki Microsoft Word 2013:n asiakirjasäätimelle. (#2543)
+- Tekstin tasauksen ilmoittaminen on nyt  mahdollista IAccessible2-rajapintaa käyttävissä sovelluksissa, kuten Mozilla Firefoxissa. (#2612)
 
 
 == Muutokset ==
@@ -59,6 +61,8 @@
 - Ylimääräistä sisältöä ei enää virheellisesti puhuta luettaessa valintaikkunoiden tekstiä verkkosovelluksissa (erityisesti ARIA-valintaikkunoissa, joissa ei ole aria-describedby-määrettä). (#2390)
 - NVDA ei enää virheellisesti lue tai paikanna tiettyjä muokkauskenttiä MSHTML-dokumenteissa (esim. Internet Explorerissa), mikäli verkkosivun tekijä on käyttänyt ARIA-roolia. (#2435)
 - Askelpalautin-näppäin käsitellään nyt oikein Windowsin komentokehotteessa kirjoitettuja sanoja luettaessa. (#2586)
+- Solujen koordinaatit näytetään taas pistenäytöllä Microsoft Excelissä.
+- NVDA ei jää enää Microsoft Wordissa jumiin luettelomuotoiluja sisältävään kappaleeseen yritettäessä liikkua vasemmalla nuolinäppäimellä tai Ctrl+vasen nuoli -yhdistelmällä luettelomerkin tai numeron päälle. (#2402)
 
 
 = 2012.2.1 =

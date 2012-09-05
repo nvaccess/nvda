@@ -52,18 +52,13 @@ def getNVDAObjectFromPoint(x,y):
 	obj=IAccessible(IAccessibleObject=pacc,IAccessibleChildID=child)
 	return obj
 
+FORMAT_OBJECT_ATTRIBS = frozenset({"text-align"})
 def normalizeIA2TextFormatField(formatField):
 	try:
 		textAlign=formatField.pop("text-align")
 	except KeyError:
 		textAlign=None
 	if textAlign:
-		if "right" in textAlign:
-			textAlign="right"
-		elif "center" in textAlign:
-			textAlign="center"
-		elif "justify" in textAlign:
-			textAlign="justify"
 		formatField["text-align"]=textAlign
 	try:
 		fontWeight=formatField.pop("font-weight")
@@ -212,6 +207,12 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 				pass
 		if attribsString:
 			formatField.update(IAccessibleHandler.splitIA2Attribs(attribsString))
+		objAttribs = self.obj.IA2Attributes
+		for attr in FORMAT_OBJECT_ATTRIBS:
+			try:
+				formatField[attr] = objAttribs[attr]
+			except KeyError:
+				pass
 		normalizeIA2TextFormatField(formatField)
 		return formatField,(startOffset,endOffset)
 
@@ -404,7 +405,10 @@ the NVDAObject for IAccessible
 				clsList.append(newCls)
 
 		# Some special cases.
-		if windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
+		if windowClassName.lower().startswith('mscandui'):
+			import mscandui
+			mscandui.findExtraOverlayClasses(self,clsList)
+		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from mozilla import GeckoPluginWindowRoot
 			clsList.append(GeckoPluginWindowRoot)
 		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen", "GeckoFPSandboxChildWindow"):
@@ -1647,7 +1651,6 @@ _staticMap={
 	("TPTShellList",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",oleacc.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
 	("AcrobatSDIWindow",oleacc.ROLE_SYSTEM_CLIENT):"adobeAcrobat.AcrobatSDIWindowClient",
-	("mscandui21.candidate",oleacc.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",oleacc.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
 	("hh_kwd_vlist",oleacc.ROLE_SYSTEM_LIST):"hh.KeywordList",
 	("Scintilla",oleacc.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",

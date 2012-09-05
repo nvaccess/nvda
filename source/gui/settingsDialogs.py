@@ -729,6 +729,30 @@ class ReviewCursorDialog(SettingsDialog):
 		config.conf["reviewCursor"]["simpleReviewMode"]=self.simpleReviewModeCheckBox.IsChecked()
 		super(ReviewCursorDialog, self).onOk(evt)
 
+class InputCompositionDialog(SettingsDialog):
+	# Translators: This is the label for the Input Composition settings dialog.
+	title = _("Input Composition Settings")
+
+	def makeSettings(self, settingsSizer):
+		# Translators: This is the label for a checkbox in the
+		# Input composition settings dialog.
+		self.autoReportAllCandidatesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Automatically report all available &candidates"))
+		self.autoReportAllCandidatesCheckBox.SetValue(config.conf["inputComposition"]["autoReportAllCandidates"])
+		settingsSizer.Add(self.autoReportAllCandidatesCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# Input composition settings dialog.
+		self.reportReadingStringChangesCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Report changes to the &reading string"))
+		self.reportReadingStringChangesCheckBox.SetValue(config.conf["inputComposition"]["reportReadingStringChanges"])
+		settingsSizer.Add(self.reportReadingStringChangesCheckBox,border=10,flag=wx.BOTTOM)
+
+	def postInit(self):
+		self.autoReportAllCandidatesCheckBox.SetFocus()
+
+	def onOk(self,evt):
+		config.conf["inputComposition"]["autoReportAllCandidates"]=self.autoReportAllCandidatesCheckBox.IsChecked()
+		config.conf["inputComposition"]["reportReadingStringChanges"]=self.reportReadingStringChangesCheckBox.IsChecked()
+		super(InputCompositionDialog, self).onOk(evt)
+
 class ObjectPresentationDialog(SettingsDialog):
 	# Translators: This is the label for the object presentation dialog.
 	title = _("Object Presentation")

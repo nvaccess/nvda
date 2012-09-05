@@ -199,6 +199,9 @@ class MainFrame(wx.Frame):
 	def onReviewCursorCommand(self,evt):
 		self._popupSettingsDialog(ReviewCursorDialog)
 
+	def onInputCompositionCommand(self,evt):
+		self._popupSettingsDialog(InputCompositionDialog)
+
 	def onObjectPresentationCommand(self,evt):
 		self._popupSettingsDialog(ObjectPresentationDialog)
 
@@ -291,6 +294,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Input composition settings..."),_("Configure how NVDA reports input composition and candidate selection for certain languages")) 
+		self.Bind(wx.EVT_MENU, frame.onInputCompositionCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Browse mode..."),_("Change virtual buffers specific settings")) 

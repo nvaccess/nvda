@@ -87,9 +87,9 @@ class AddonsDialog(wx.Dialog):
 				prevAddon=addon
 				break
 		if prevAddon:
-			# Translators: A message asking if the user wishes to replace a previously installed add-on with this one.
-			if gui.messageBox(_("The same or another version of this add-on is currently installed. Would you like to remove the previously installed add-on and install this one instead?"),
-				# Translators: A title for the dialog  asking if the user wishes to replace a previously installed add-on with this one.
+			# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+			if gui.messageBox(_("A version of this add-on is already installed. Would you like to update it?"),
+				# Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
 				_("Add-on Installation"),
 				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
 				return

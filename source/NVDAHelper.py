@@ -3,6 +3,7 @@ import sys
 import _winreg
 import msvcrt
 import winKernel
+import config
 
 from ctypes import *
 from ctypes.wintypes import *
@@ -21,7 +22,8 @@ _remoteLoader64=None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
-lastInputLangChangeTime=0
+lastInputLanguageName=None
+lastInputMethodName=None
 
 #utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
 def _setDllFuncPointer(dll,name,cfunc):
@@ -59,25 +61,18 @@ def nvdaController_brailleMessage(text):
 	return 0
 
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
-	try:
-		key = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString)
-	except WindowsError:
-		log.debugWarning("Could not find reg key %s"%layoutString)
-		return None
-	try:
-		s = _winreg.QueryValueEx(key, "Layout Display Name")[0]
-	except:
-		log.debugWarning("Could not find reg value 'Layout Display Name' for reg key %s"%layoutString)
-		s=None
-	if s:
-		buf=create_unicode_buffer(256)
-		windll.shlwapi.SHLoadIndirectString(s,buf,256,None)
-		return buf.value
-	try:
-		return _winreg.QueryValueEx(key, "Layout Text")[0]
-	except:
-		log.debugWarning("Could not find reg value 'Layout Text' for reg key %s"%layoutString)
-		return None
+	buf=create_unicode_buffer(1024)
+	bufSize=c_int(2048)
+	key=HKEY()
+	if windll.advapi32.RegOpenKeyExW(_winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,_winreg.KEY_QUERY_VALUE,byref(key))==0:
+		try:
+			if windll.advapi32.RegQueryValueExW(key,u"Layout Display Name",0,None,buf,byref(bufSize))==0:
+				windll.shlwapi.SHLoadIndirectString(buf.value,buf,1023,None)
+				return buf.value
+			if windll.advapi32.RegQueryValueExW(key,u"Layout Text",0,None,buf,byref(bufSize))==0:
+				return buf.value
+		finally:
+			windll.advapi32.RegCloseKey(key)
 
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaControllerInternal_requestRegistration(uuidString):
@@ -120,36 +115,204 @@ def nvdaControllerInternal_logMessage(level,pid,message):
 	log._log(level,message,[],codepath=codepath)
 	return 0
 
+def handleInputCompositionEnd(result):
+	import speech
+	import characterProcessing
+	from NVDAObjects.inputComposition import InputComposition
+	from NVDAObjects.behaviors import CandidateItem
+	focus=api.getFocusObject()
+	result=result.lstrip(u'\u3000 ')
+	curInputComposition=None
+	if isinstance(focus,InputComposition):
+		curInputComposition=focus
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
+		eventHandler.executeEvent("gainFocus",focus.parent)
+		speech.speechMode=oldSpeechMode
+	elif isinstance(focus.parent,InputComposition):
+		#Candidate list is still up
+		curInputComposition=focus.parent
+		focus.parent=focus.parent.parent
+	if curInputComposition and not result:
+		result=curInputComposition.compositionString.lstrip(u'\u3000 ')
+	if result:
+		speech.speakText(result,symbolLevel=characterProcessing.SYMLVL_ALL)
+
+def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,isReading):
+	import speech
+	from NVDAObjects.inputComposition import InputComposition
+	from NVDAObjects.behaviors import CandidateItem
+	focus=api.getFocusObject()
+	#IME keeps updating input composition while the candidate list is open
+	#Therefore ignore composition updates in this situation.
+	if isinstance(focus,CandidateItem):
+		return 0
+	if not isinstance(focus,InputComposition):
+		parent=api.getDesktopObject().objectWithFocus()
+		curInputComposition=InputComposition(parent=parent)
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
+		eventHandler.executeEvent("gainFocus",curInputComposition)
+		focus=curInputComposition
+		speech.speechMode=oldSpeechMode
+	focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
+
+@WINFUNCTYPE(c_long,c_wchar_p,c_int,c_int,c_int)
+def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading):
+	from NVDAObjects.inputComposition import InputComposition
+	if selectionStart==-1:
+		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionEnd,compositionString)
+		return 0
+	focus=api.getFocusObject()
+	if isinstance(focus,InputComposition):
+		focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
+	else:
+		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
+	return 0
+
+def handleInputCandidateListUpdate(candidatesString,selectionIndex):
+	candidateStrings=candidatesString.split('\n')
+	import speech
+	from NVDAObjects.inputComposition import InputComposition, CandidateList, CandidateItem
+	focus=api.getFocusObject()
+	if not (0<=selectionIndex<len(candidateStrings)):
+		if isinstance(focus,CandidateItem):
+			oldSpeechMode=speech.speechMode
+			speech.speechMode=speech.speechMode_off
+			eventHandler.executeEvent("gainFocus",focus.parent)
+			speech.speechMode=oldSpeechMode
+		return
+	oldCandidateItemsText=None
+	if isinstance(focus,CandidateItem):
+		oldCandidateItemsText=focus.visibleCandidateItemsText
+		parent=focus.parent
+		wasCandidate=True
+	else:
+		parent=focus
+		wasCandidate=False
+	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
+	if wasCandidate and focus.windowHandle==item.windowHandle and focus.candidateIndex==item.candidateIndex and focus.name==item.name:
+		return
+	if config.conf["inputComposition"]["autoReportAllCandidates"] and item.visibleCandidateItemsText!=oldCandidateItemsText:
+		import ui
+		ui.message(item.visibleCandidateItemsText)
+	eventHandler.executeEvent("gainFocus",item)
+
+@WINFUNCTYPE(c_long,c_wchar_p,c_long)
+def nvdaControllerInternal_inputCandidateListUpdate(candidatesString,selectionIndex):
+	queueHandler.queueFunction(queueHandler.eventQueue,handleInputCandidateListUpdate,candidatesString,selectionIndex)
+	return 0
+
+inputConversionModeMessages={
+	1:(
+		# Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters. 
+		_("Native input"),
+		# Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
+		_("Alpha numeric input")
+	),
+	8:(
+		# Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
+		_("Full shaped mode"),
+		# Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
+		_("Half shaped mode")
+	),
+}
+
+JapaneseInputConversionModeMessages= {
+	# Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
+	0: _("half alphanumeric"),
+	# Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
+	3: _("half katakana"),
+	# Translators: For Japanese character input: alpha numeric (roman/english) mode.
+	8: _("alphanumeric"),
+	# Translators: For Japanese character input: Hiragana input mode.
+	9: _("hiragana"),
+	# Translators: For Japanese character input: Katacana input mode.
+	11: _("katakana"),
+	# Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
+	16: _("half alphanumeric"),
+	19: _("half katakana roman"),
+	# Translators: For Japanese character input: alpha numeric (roman/english) mode.
+	24: _("alphanumeric"),
+	# Translators: For Japanese character input: Hiragana Roman input mode.
+	25: _("hiragana roman"),
+	# Translators: For Japanese character input: Katacana Roman input mode.
+	27: _("katakana roman"),
+} 
+
+def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
+	import speech
+	textList=[]
+	if newFlags!=oldFlags and lcid&0xff==0x11: #Japanese
+		msg=JapaneseInputConversionModeMessages.get(newFlags)
+		if msg:
+			textList.append(msg)
+	else:
+		for x in xrange(32):
+			x=2**x
+			msgs=inputConversionModeMessages.get(x)
+			if not msgs: continue
+			newOn=bool(newFlags&x)
+			oldOn=bool(oldFlags&x)
+			if newOn!=oldOn: 
+				textList.append(msgs[0] if newOn else msgs[1])
+	if len(textList)>0:
+		queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage," ".join(textList))
+
+@WINFUNCTYPE(c_long,c_long,c_long,c_ulong)
+def nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags,lcid):
+	queueHandler.queueFunction(queueHandler.eventQueue,handleInputConversionModeUpdate,oldFlags,newFlags,lcid)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
-	if api.getFocusObject().sleepMode:
+	global lastInputMethodName, lastInputLanguageName
+	focus=api.getFocusObject()
+	#This callback can be called before NVDa is fully initialized
+	#So also handle focus object being None as well as checking for sleepMode
+	if not focus or focus.sleepMode:
 		return 0
-	global lastInputLangChangeTime
 	import queueHandler
 	import ui
-	curTime=time.time()
-	if (curTime-lastInputLangChangeTime)<0.2:
-		return 0
-	lastInputLangChangeTime=curTime
-	#layoutString can sometimes be None, yet a registry entry still exists for a string representation of hkl
-	if not layoutString:
-		layoutString=hex(hkl)[2:].rstrip('L').upper().rjust(8,'0')
-		log.debugWarning("layoutString was None, generated new one from hkl as %s"%layoutString)
-	layoutName=_lookupKeyboardLayoutNameWithHexString(layoutString)
-	if not layoutName and hkl<0xd0000000:
-		#Try using the high word of hkl as the lang ID for a default layout for that language
-		simpleLayoutString=layoutString[0:4].rjust(8,'0')
-		log.debugWarning("trying simple version: %s"%simpleLayoutString)
-		layoutName=_lookupKeyboardLayoutNameWithHexString(simpleLayoutString)
-	if not layoutName:
-		#Try using the low word of hkl as the lang ID for a default layout for that language
-		simpleLayoutString=layoutString[4:].rjust(8,'0')
-		log.debugWarning("trying simple version: %s"%simpleLayoutString)
-		layoutName=_lookupKeyboardLayoutNameWithHexString(simpleLayoutString)
-	if not layoutName:
+	languageID=hkl&0xffff
+	buf=create_unicode_buffer(1024)
+	res=windll.kernel32.GetLocaleInfoW(languageID,2,buf,1024)
+	# Translators: the label for an unknown language when switching input methods.
+	inputLanguageName=buf.value if res else _("unknown language")
+	layoutStringCodes=[]
+	inputMethodName=None
+	#layoutString can either be a real input method name, a hex string for an input method name in the registry, or an empty string.
+	#If its a real input method name its used as is.
+	#If its a hex string or its empty, then the method name is looked up by trying:
+	#The full hex string, the hkl as a hex string, the low word of the hex string or hkl, the high word of the hex string or hkl.
+	if layoutString:
+		try:
+			int(layoutString,16)
+			layoutStringCodes.append(layoutString)
+		except ValueError:
+			inputMethodName=layoutString
+	if not inputMethodName:
+		layoutStringCodes.insert(0,hex(hkl)[2:].rstrip('L').upper().rjust(8,'0'))
+		for stringCode in list(layoutStringCodes):
+			layoutStringCodes.append(stringCode[4:].rjust(8,'0'))
+			if stringCode[0]<'D':
+				layoutStringCodes.append(stringCode[0:4].rjust(8,'0'))
+		for stringCode in layoutStringCodes:
+			inputMethodName=_lookupKeyboardLayoutNameWithHexString(stringCode)
+			if inputMethodName: break
+	if not inputMethodName:
 		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
-		layoutName=_("unknown layout")
-	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("layout %s")%layoutName)
+		# Translators: The label for an unknown input method when switching input methods. 
+		inputMethodName=_("unknown input method")
+	if ' - ' in inputMethodName:
+		inputMethodName="".join(inputMethodName.split(' - ')[1:])
+	if inputLanguageName!=lastInputLanguageName:
+		lastInputLanguageName=inputLanguageName
+		# Translators: the message announcing the language and keyboard layout when it changes
+		inputMethodName=_("{language} - {layout}").format(language=inputLanguageName,layout=inputMethodName)
+	if inputMethodName!=lastInputMethodName:
+		lastInputMethodName=inputMethodName
+		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,inputMethodName)
 	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_wchar)
@@ -217,6 +380,9 @@ def initialize():
 		("nvdaControllerInternal_typedCharacterNotify",nvdaControllerInternal_typedCharacterNotify),
 		("nvdaControllerInternal_displayModelTextChangeNotify",nvdaControllerInternal_displayModelTextChangeNotify),
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
+		("nvdaControllerInternal_inputCompositionUpdate",nvdaControllerInternal_inputCompositionUpdate),
+		("nvdaControllerInternal_inputCandidateListUpdate",nvdaControllerInternal_inputCandidateListUpdate),
+		("nvdaControllerInternal_inputConversionModeUpdate",nvdaControllerInternal_inputConversionModeUpdate),
 		("nvdaControllerInternal_vbufChangeNotify",nvdaControllerInternal_vbufChangeNotify),
 	]:
 		try:

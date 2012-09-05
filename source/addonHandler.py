@@ -372,7 +372,7 @@ class AddonBundle(object):
 					# #2505: Handle non-Unicode file names.
 					# Most archivers seem to use the local OEM code page, even though the spec says only cp437.
 					# HACK: Overriding info.filename is a bit ugly, but it avoids a lot of code duplication.
-					info.filename = info.filename.decode(str(winKernel.kernel32.GetOEMCP()))
+					info.filename = info.filename.decode("cp%d" % winKernel.kernel32.GetOEMCP())
 				z.extract(info, addonPath)
 
 	@property
