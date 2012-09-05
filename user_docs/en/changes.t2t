@@ -71,6 +71,7 @@
 - Negative currency amounts (e.g. -$123) are now correctly spoken as negative, regardless of symbol level. (#2625)
 - During say all, NVDA will no longer incorrectly revert to the default language where a line does not end a sentence. (#2630)
 - Font information is now correctly detected in Adobe Reader 10.1 and later. (#2175)
+- In Adobe Reader, if alternate text is provided, only that text will be rendered. Previously, extraneous text was sometimes included. (#2174)
 
 
 == Changes for Developers ==
