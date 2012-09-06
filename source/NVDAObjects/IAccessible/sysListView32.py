@@ -35,6 +35,8 @@ LVM_GETCOLUMNW=LVM_FIRST+95
 LVM_GETSELECTEDCOUNT =(LVM_FIRST+50)
 LVNI_SELECTED =2
 LVM_GETNEXTITEM =(LVM_FIRST+12)
+LVM_GETVIEW=LVM_FIRST+143
+LV_VIEW_DETAILS=0x0001
 
 #item mask flags
 LVIF_TEXT=0x01 
@@ -58,6 +60,7 @@ LVIS_SELECTED=0x02
 LVIS_STATEIMAGEMASK=0xF000
 
 LVS_REPORT=0x0001
+LVS_TYPEMASK=0x0003
 LVS_OWNERDRAWFIXED=0x0400
 
 #column mask flags
@@ -223,11 +226,14 @@ class List(List):
 					return eventHandler.queueEvent("gainFocus",groupingObj)
 		return super(List,self).event_gainFocus()
 
+	def _get_isReportView(self):
+		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0) == LV_VIEW_DETAILS
+
 	def _get_rowCount(self):
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
 
 	def _get_columnCount(self):
-		if not (self.windowStyle & LVS_REPORT):
+		if not self.isReportView:
 			return 0
 		headerHwnd= watchdog.cancellableSendMessage(self.windowHandle,LVM_GETHEADER,0,0)
 		count = watchdog.cancellableSendMessage(headerHwnd, HDM_GETITEMCOUNT, 0, 0)
@@ -395,7 +401,7 @@ class ListItemWithReportView(RowWithFakeNavigation, RowWithoutCellObjects, ListI
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
 
 	def _get_name(self):
-		if not (self.windowStyle & LVS_REPORT):
+		if not self.parent.isReportView:
 			return super(ListItemWithReportView, self).name
 		textList = []
 		for col in xrange(1, self.childCount + 1):
