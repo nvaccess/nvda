@@ -523,9 +523,10 @@ class _FakeTableCell(NVDAObject):
 			pass
 		self.processID = parent.processID
 		try:
-			# HACK: Some NVDA code depends on windowHandle and windowClassName, even for non-Window objects.
+			# HACK: Some NVDA code depends on window properties, even for non-Window objects.
 			self.windowHandle = parent.windowHandle
 			self.windowClassName = parent.windowClassName
+			self.windowControlID = parent.windowControlID
 		except AttributeError:
 			pass
 
