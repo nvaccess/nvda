@@ -7,7 +7,6 @@ import winUser
 import speech
 import api
 import ui
-import tones
 import queueHandler
 import inputCore
 import screenExplorer
@@ -131,7 +130,6 @@ class TouchHandler(object):
 		self._touchWindow=windll.user32.CreateWindowExW(0,self._wca,u"NVDA touch input",0,0,0,0,0,HWND_MESSAGE,None,self._appInstance,None)
 		windll.user32.RegisterPointerInputTarget(self._touchWindow,PT_TOUCH)
 		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,ANRUS_TOUCH_MODIFICATION_ACTIVE)
-		tones.beep(1760,40)
 		self.trackerManager=touchTracker.TrackerManager()
 		self.screenExplorer=screenExplorer.ScreenExplorer()
 		self.screenExplorer.updateReview=True
@@ -158,7 +156,6 @@ class TouchHandler(object):
 		windll.user32.UnregisterPointerInputTarget(self._touchWindow,PT_TOUCH)
 		windll.user32.DestroyWindow(self._touchWindow)
 		windll.user32.UnregisterClassW(self._wca,self._appInstance)
-		tones.beep(880,50)
 
 	def setMode(self,mode):
 		if mode not in availableTouchModes:
