@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+﻿# -*- coding: UTF-8 -*-
 #globalCommands.py
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
@@ -7,6 +7,7 @@
 
 import time
 import tones
+import touchHandler
 import keyboardHandler
 import mouseHandler
 import eventHandler
@@ -413,23 +414,34 @@ class GlobalCommands(ScriptableObject):
 			speech.speakMessage(_("No objects inside"))
 	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
 
-	def script_navigatorObject_doDefaultAction(self,gesture):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
+	def script_review_activate(self,gesture):
+		# Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+		actionName=_("activate")
+		pos=api.getReviewPosition()
 		try:
-			action=curObject.getActionName()
-		except NotImplementedError:
-			ui.message(_("No default action"))
+			pos.activate()
+			ui.message(actionName)
 			return
-		try:
-			curObject.doAction()
 		except NotImplementedError:
-			ui.message(_("default action failed"))
-			return
-		ui.message("%s"%action)
-	script_navigatorObject_doDefaultAction.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
+			pass
+		obj=api.getNavigatorObject()
+		while obj:
+			try:
+				obj.doAction()
+				try:
+					realActionName=obj.getActionName()
+				except NotImplementedError:
+					pass
+				if realActionName:
+					actionName=realActionName
+				ui.message(actionName)
+				return
+			except NotImplementedError:
+				pass
+			obj=obj.parent
+		# Translators: the message reported when there is no action to perform on the review position or navigator object.
+		ui.message(_("No action"))
+	script_review_activate.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 
 	def script_review_top(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
@@ -983,6 +995,30 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Plugins reloaded"))
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 
+	def script_touch_changeMode(self,gesture):
+		mode=touchHandler.handler._curTouchMode
+		index=touchHandler.availableTouchModes.index(mode)
+		index=(index+1)%len(touchHandler.availableTouchModes)
+		newMode=touchHandler.availableTouchModes[index]
+		touchHandler.handler._curTouchMode=newMode
+		ui.message(_("%s mode")%newMode)
+	script_touch_changeMode.__doc__=_("cycles between available touch modes")
+
+	def script_touch_newExplore(self,gesture):
+		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y,new=True)
+	script_touch_newExplore.__doc__=_("Reports the object and content directly under your finger")
+
+	def script_touch_explore(self,gesture):
+		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y)
+	script_touch_explore.__doc__=_("Reports the new object or content under your finger if different to where your finger was last")
+
+	def script_touch_hoverUp(self,gesture):
+		#Specifically for touch typing with onscreen keyboard keys
+		obj=api.getNavigatorObject()
+		import NVDAObjects.UIA
+		if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
+			obj.doAction()
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1013,58 +1049,80 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+control+i": "navigatorObject_current",
 		"kb:NVDA+numpad8": "navigatorObject_parent",
 		"kb(laptop):NVDA+shift+i": "navigatorObject_parent",
+		"ts(object):flickup":"navigatorObject_parent",
 		"kb:NVDA+numpad4": "navigatorObject_previous",
 		"kb(laptop):NVDA+control+j": "navigatorObject_previous",
+		"ts(object):flickleft":"navigatorObject_previous",
 		"kb:NVDA+numpad6": "navigatorObject_next",
 		"kb(laptop):NVDA+control+l": "navigatorObject_next",
+		"ts(object):flickright":"navigatorObject_next",
 		"kb:NVDA+numpad2": "navigatorObject_firstChild",
 		"kb(laptop):NVDA+shift+,": "navigatorObject_firstChild",
+		"ts(object):flickdown":"navigatorObject_firstChild",
 		"kb:NVDA+numpadMinus": "navigatorObject_toFocus",
 		"kb(laptop):NVDA+backspace": "navigatorObject_toFocus",
-		"kb:NVDA+numpadEnter": "navigatorObject_doDefaultAction",
-		"kb(laptop):NVDA+enter": "navigatorObject_doDefaultAction",
+		"kb:NVDA+numpadEnter": "review_activate",
+		"kb(laptop):NVDA+enter": "review_activate",
+		"ts:double_tap": "review_activate",
 		"kb:NVDA+shift+numpadMinus": "navigatorObject_moveFocus",
 		"kb(laptop):NVDA+shift+backspace": "navigatorObject_moveFocus",
 		"kb:NVDA+numpadDelete": "navigatorObject_currentDimensions",
 		"kb(laptop):NVDA+delete": "navigatorObject_currentDimensions",
 
+		#Touch-specific commands
+		"ts:tap":"touch_newExplore",
+		"ts:hoverDown":"touch_newExplore",
+		"ts:hover":"touch_explore",
+		"ts:3finger_tap":"touch_changeMode",
+		"ts:2finger_double_tap":"showGui",
+		"ts:hoverUp":"touch_hoverUp",
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
 		"kb(laptop):NVDA+7": "review_top",
 		"kb:numpad7": "review_previousLine",
+		"ts(text):flickUp":"review_previousLine",
 		"kb(laptop):NVDA+u": "review_previousLine",
 		"kb:numpad8": "review_currentLine",
 		"kb(laptop):NVDA+i": "review_currentLine",
 		"kb:numpad9": "review_nextLine",
 		"kb(laptop):NVDA+o": "review_nextLine",
+		"ts(text):flickDown":"review_nextLine",
 		"kb:shift+numpad9": "review_bottom",
 		"kb(laptop):NVDA+9": "review_bottom",
 		"kb:numpad4": "review_previousWord",
 		"kb(laptop):NVDA+j": "review_previousWord",
+		"ts(text):2finger_flickLeft":"review_previousWord",
 		"kb:numpad5": "review_currentWord",
 		"kb(laptop):NVDA+k": "review_currentWord",
+		"ts(text):hoverUp":"review_currentWord",
 		"kb:numpad6": "review_nextWord",
 		"kb(laptop):NVDA+l": "review_nextWord",
+		"ts(text):2finger_flickRight":"review_nextWord",
 		"kb:shift+numpad1": "review_startOfLine",
 		"kb(laptop):NVDA+shift+u": "review_startOfLine",
 		"kb:numpad1": "review_previousCharacter",
 		"kb(laptop):NVDA+m": "review_previousCharacter",
+		"ts(text):flickLeft":"review_previousCharacter",
 		"kb:numpad2": "review_currentCharacter",
 		"kb(laptop):NVDA+,": "review_currentCharacter",
 		"kb:numpad3": "review_nextCharacter",
 		"kb(laptop):NVDA+.": "review_nextCharacter",
+		"ts(text):flickRight":"review_nextCharacter",
 		"kb:shift+numpad3": "review_endOfLine",
 		"kb(laptop):NVDA+shift+o": "review_endOfLine",
 		"kb:numpadPlus": "review_sayAll",
 		"kb(laptop):NVDA+shift+downArrow": "review_sayAll",
+		"ts(text):3finger_flickDown":"review_sayAll",
 		"kb:NVDA+f9": "review_markStartForCopy",
 		"kb:NVDA+f10": "review_copy",
 
 		# Flat review
 		"kb:NVDA+numpad7": "navigatorObject_moveToFlatReviewAtObjectPosition",
 		"kb(laptop):NVDA+pageUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
+		"ts(object):2finger_flickUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
 		"kb:NVDA+numpad1": "navigatorObject_moveToObjectAtFlatReviewPosition",
 		"kb(laptop):NVDA+pageDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
+		"ts(object):2finger_flickDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
 
 		# Mouse
 		"kb:numpadDivide": "leftMouseClick",

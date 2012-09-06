@@ -112,6 +112,9 @@ class FieldCommand(object):
 		self.command=command
 		self.field=field
 
+	def __repr__(self):
+		return "FieldCommand %s with %s"%(self.command,self.field)
+
 #Position constants
 POSITION_FIRST="first"
 POSITION_LAST="last"
@@ -434,7 +437,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 		For example, this might activate the object at this position or click the point at this position.
 		@raise NotImplementedError: If not supported.
 		"""
-		raise NotImplementedError
+		if not self.obj.isInForeground:
+			raise NotImplementedError
+		import winUser
+		p=self.pointAtStart
+		oldX,oldY=winUser.getCursorPos()
+		winUser.setCursorPos(p.x,p.y)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		winUser.setCursorPos(oldX,oldY)
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):

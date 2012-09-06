@@ -311,9 +311,8 @@ the NVDAObject for IAccessible
 
 	@classmethod
 	def getPossibleAPIClasses(cls,kwargs,relation=None):
-		if not kwargs.get('IAccessibleChildID'):
-			from . import MSHTML
-			yield MSHTML.MSHTML
+		from . import MSHTML
+		yield MSHTML.MSHTML
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
@@ -718,7 +717,8 @@ the NVDAObject for IAccessible
 				raise NotImplementedError
 		elif index==0:
 			try:
-				self.IAccessibleObject.accDoDefaultAction(self.IAccessibleChildID)
+				if self.IAccessibleObject.accDoDefaultAction(self.IAccessibleChildID)!=0:
+					raise NotImplementedError
 				return
 			except COMError:
 				raise NotImplementedError

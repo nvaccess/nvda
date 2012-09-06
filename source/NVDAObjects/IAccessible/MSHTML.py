@@ -9,6 +9,8 @@ from comtypes import COMError
 import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
+import ctypes
+import ctypes.wintypes
 import contextlib
 import winUser
 import oleacc
@@ -329,6 +331,10 @@ class MSHTML(IAccessible):
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
 		IAccessibleObject=kwargs['IAccessibleObject']
+		#MSHTML should not be used for MSAA child elements.
+		#However, objectFromPoint can hit an MSAA child element but we still should try MSHTML's own elementFromPoint even in this case.
+		if kwargs.get('IAccessibleChildID') and not isinstance(relation,tuple):
+			return False
 		HTMLNode=None
 		try:
 			HTMLNode=HTMLNodeFromIAccessible(IAccessibleObject)
@@ -344,7 +350,19 @@ class MSHTML(IAccessible):
 				del kwargs['IAccessibleObject']
 			except:
 				log.exception("Error getting activeElement")
-
+		elif isinstance(relation,tuple):
+			body=HTMLNode.document.body
+			x=relation[0]-body.clientLeft
+			y=relation[1]-body.clientTop
+			try:
+				HTMLNode=HTMLNode.document.elementFromPoint(x,y)
+			except:
+				HTMLNode=None
+			if not HTMLNode:
+				log.debugWarning("Error getting HTMLNode with elementFromPoint")
+				return False
+			del kwargs['IAccessibleObject']
+			del kwargs['IAccessibleChildID']
 		kwargs['HTMLNode']=HTMLNode
 		return True
 
@@ -853,6 +871,9 @@ class RootClient(IAccessible):
 	# Get rid of "MSAAHTML Registered Handler".
 	description = None
 
+class MSAATextLeaf(IAccessible):
+	role=controlTypes.ROLE_STATICTEXT
+
 def findExtraIAccessibleOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class for MSHTML objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -864,6 +885,10 @@ def findExtraIAccessibleOverlayClasses(obj, clsList):
 		return
 
 	if windowClass != "Internet Explorer_Server":
+		return
+
+	if obj.IAccessibleChildID>0 and iaRole==oleacc.ROLE_SYSTEM_TEXT:
+		clsList.append(MSAATextLeaf)
 		return
 
 	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID > 0:
