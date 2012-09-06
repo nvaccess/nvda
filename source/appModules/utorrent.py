@@ -15,7 +15,7 @@ import displayModel
 from logHandler import log
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.IAccessible.sysListView32 import ListItemWithReportView
+from NVDAObjects.IAccessible.sysListView32 import ListItem
 
 class DuplicateFocusListView(IAccessible):
 	"""A list view which annoyingly fires focus events every second, even when a menu is open.
@@ -33,7 +33,7 @@ class DuplicateFocusListView(IAccessible):
 			return False
 		return super(DuplicateFocusListView, self).shouldAllowIAccessibleFocusEvent
 
-class TorrentContentsListItem(ListItemWithReportView):
+class TorrentContentsListItem(ListItem):
 	"""Items of the Torrent Contents list in the Add Torrent dialog.
 	The file names aren't exposed via APIs, though the other column (size) is.
 	"""

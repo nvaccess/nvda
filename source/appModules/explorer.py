@@ -20,7 +20,7 @@ class SearchBoxClient(IAccessible):
 
 
  #Class for menu items  for Windows Places and Frequently used Programs (in start menu)
-class SysListView32MenuItem(sysListView32.ListItem):
+class SysListView32MenuItem(sysListView32.ListItemWithoutReportView):
 
 	#When focus moves to these items, an extra focus is fired on the parent
 	#However NVDA redirects it to the real focus.

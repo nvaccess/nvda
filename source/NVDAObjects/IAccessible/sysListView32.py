@@ -297,7 +297,7 @@ class GroupingItem(Window):
 		gesture.send()
 		eventHandler.queueEvent("stateChange",self)
 
-class ListItem(IAccessible):
+class ListItemWithoutReportView(IAccessible):
 
 	def initOverlayClass(self):
 		if self.appModule.is64BitProcess:
@@ -333,7 +333,7 @@ class ListItem(IAccessible):
 	description = None
 
 	def _get_value(self):
-		value=super(ListItem,self)._get_description()
+		value=super(ListItemWithoutReportView,self)._get_description()
 		if (not value or value.isspace()) and self.windowStyle & LVS_OWNERDRAWFIXED:
 			value=self.displayText
 		if not value:
@@ -350,9 +350,9 @@ class ListItem(IAccessible):
 
 	def event_stateChange(self):
 		if self.hasFocus:
-			super(ListItem,self).event_stateChange()
+			super(ListItemWithoutReportView,self).event_stateChange()
 
-class ListItemWithReportView(RowWithFakeNavigation, RowWithoutCellObjects, ListItem):
+class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutReportView):
 
 	def _getColumnContentRaw(self, index):
 		buffer=None
@@ -402,7 +402,7 @@ class ListItemWithReportView(RowWithFakeNavigation, RowWithoutCellObjects, ListI
 
 	def _get_name(self):
 		if not self.parent.isReportView:
-			return super(ListItemWithReportView, self).name
+			return super(ListItem, self).name
 		textList = []
 		for col in xrange(1, self.childCount + 1):
 			text = self._getColumnContent(col)
