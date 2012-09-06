@@ -8,6 +8,7 @@ from comtypes import COMError, IServiceProvider, GUID
 import ctypes
 import os
 import re
+import itertools
 from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
@@ -1352,6 +1353,44 @@ the NVDAObject for IAccessible
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("IAccessible accState: %s" % ret)
+		if isinstance(iaObj, IAccessibleHandler.IAccessible2):
+			try:
+				ret = iaObj.windowHandle
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 windowHandle: %s" % ret)
+			try:
+				ret = iaObj.uniqueID
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 uniqueID: %s" % ret)
+			try:
+				ret = iaObj.role()
+				for name, const in itertools.chain(oleacc.__dict__.iteritems(), IAccessibleHandler.__dict__.iteritems()):
+					if not name.startswith("ROLE_") and not name.startswith("IA2_ROLE_"):
+						continue
+					if ret == const:
+						ret = name
+						break
+				else:
+					ret = repr(ret)
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 role: %s" % ret)
+			try:
+				temp = iaObj.states
+				ret = ", ".join(
+					name for name, const in IAccessibleHandler.__dict__.iteritems()
+					if name.startswith("IA2_STATE_") and temp & const
+				) + " (%d)" % temp
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 states: %s" % ret)
+			try:
+				ret = repr(iaObj.attributes)
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 attributes: %s" % ret)
 		return info
 
 class ContentGenericClient(IAccessible):
