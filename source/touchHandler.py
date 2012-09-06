@@ -11,7 +11,6 @@ import tones
 import queueHandler
 import inputCore
 import screenExplorer
-import NVDAObjects.UIA
 from logHandler import log
 import touchTracker
 
