@@ -19,6 +19,7 @@ from . import IAccessible, List
 from ..window import Window
 import watchdog
 from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
+import config
 
 #Window messages
 LVM_FIRST=0x1000
@@ -405,10 +406,17 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutRepo
 			return super(ListItem, self).name
 		textList = []
 		for col in xrange(1, self.childCount + 1):
-			text = self._getColumnContent(col)
-			if not text:
+			content = self._getColumnContent(col)
+			if not content:
 				continue
-			textList.append(text)
+			if config.conf["documentFormatting"]["reportTableHeaders"] and col != 1:
+				header = self._getColumnHeader(col)
+			else:
+				header = None
+			if header:
+				textList.append("%s: %s" % (header, content))
+			else:
+				textList.append(content)
 		return "; ".join(textList)
 
 	value = None
