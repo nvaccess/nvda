@@ -19,11 +19,6 @@ class Mozilla(IAccessible):
 
 	IAccessibleTableUsesTableCellIndexAttrib=True
 
-	def _get_beTransparentToMouse(self):
-		if not hasattr(self,'IAccessibleTextObject') and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
-			return True
-		return super(Mozilla,self).beTransparentToMouse
-
 	def _get_parent(self):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
 		res=IAccessibleHandler.accNavigate(self.IAccessibleObject,self.IAccessibleChildID,IAccessibleHandler.NAVRELATION_NODE_CHILD_OF)
@@ -184,6 +179,7 @@ class GeckoPluginWindowRoot(WindowRoot):
 
 class TextLeaf(Mozilla):
 	role = controlTypes.ROLE_STATICTEXT
+	beTransparentToMouse = True
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
