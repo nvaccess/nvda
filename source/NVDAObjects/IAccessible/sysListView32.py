@@ -38,6 +38,7 @@ LVNI_SELECTED =2
 LVM_GETNEXTITEM =(LVM_FIRST+12)
 LVM_GETVIEW=LVM_FIRST+143
 LV_VIEW_DETAILS=0x0001
+LV_VIEW_TILE=0x0004
 
 #item mask flags
 LVIF_TEXT=0x01 
@@ -227,14 +228,14 @@ class List(List):
 					return eventHandler.queueEvent("gainFocus",groupingObj)
 		return super(List,self).event_gainFocus()
 
-	def _get_isReportView(self):
-		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0) == LV_VIEW_DETAILS
+	def _get_isMultiColumn(self):
+		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0) in (LV_VIEW_DETAILS, LV_VIEW_TILE)
 
 	def _get_rowCount(self):
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
 
 	def _get_columnCount(self):
-		if not self.isReportView:
+		if not self.isMultiColumn:
 			return 0
 		headerHwnd= watchdog.cancellableSendMessage(self.windowHandle,LVM_GETHEADER,0,0)
 		count = watchdog.cancellableSendMessage(headerHwnd, HDM_GETITEMCOUNT, 0, 0)
@@ -298,7 +299,7 @@ class GroupingItem(Window):
 		gesture.send()
 		eventHandler.queueEvent("stateChange",self)
 
-class ListItemWithoutReportView(IAccessible):
+class ListItemWithoutColumnSupport(IAccessible):
 
 	def initOverlayClass(self):
 		if self.appModule.is64BitProcess:
@@ -334,7 +335,7 @@ class ListItemWithoutReportView(IAccessible):
 	description = None
 
 	def _get_value(self):
-		value=super(ListItemWithoutReportView,self)._get_description()
+		value=super(ListItemWithoutColumnSupport,self)._get_description()
 		if (not value or value.isspace()) and self.windowStyle & LVS_OWNERDRAWFIXED:
 			value=self.displayText
 		if not value:
@@ -351,9 +352,9 @@ class ListItemWithoutReportView(IAccessible):
 
 	def event_stateChange(self):
 		if self.hasFocus:
-			super(ListItemWithoutReportView,self).event_stateChange()
+			super(ListItemWithoutColumnSupport,self).event_stateChange()
 
-class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutReportView):
+class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
 
 	def _getColumnContentRaw(self, index):
 		buffer=None
@@ -402,7 +403,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutRepo
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
 
 	def _get_name(self):
-		if not self.parent.isReportView:
+		if not self.parent.isMultiColumn:
 			return super(ListItem, self).name
 		textList = []
 		for col in xrange(1, self.childCount + 1):
