@@ -1332,6 +1332,11 @@ the NVDAObject for IAccessible
 		info.append("IAccessibleChildID: %r" % childID)
 		info.append("IAccessible event parameters: windowHandle=%r, objectID=%r, childID=%r" % (self.event_windowHandle, self.event_objectID, self.event_childID))
 		try:
+			ret = repr(iaObj.accName(childID))
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accName: %s" % ret)
+		try:
 			ret = iaObj.accRole(childID)
 			for name, const in oleacc.__dict__.iteritems():
 				if not name.startswith("ROLE_"):
@@ -1353,6 +1358,20 @@ the NVDAObject for IAccessible
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("IAccessible accState: %s" % ret)
+		try:
+			ret = repr(iaObj.accDescription(childID))
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accDescription: %s" % ret)
+		try:
+			ret = iaObj.accValue(childID)
+			if isinstance(ret, basestring) and len(ret) > 100:
+				ret = "%r (truncated)" % ret[:100]
+			else:
+				ret = repr(ret)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accValue: %s" % ret)
 		if isinstance(iaObj, IAccessibleHandler.IAccessible2):
 			try:
 				ret = iaObj.windowHandle
