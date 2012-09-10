@@ -38,6 +38,7 @@ LVNI_SELECTED =2
 LVM_GETNEXTITEM =(LVM_FIRST+12)
 LVM_GETVIEW=LVM_FIRST+143
 LV_VIEW_DETAILS=0x0001
+LVM_GETSUBITEMRECT=LVM_FIRST+56
 LV_VIEW_TILE=0x0004
 
 #item mask flags
@@ -229,6 +230,8 @@ class List(List):
 		return super(List,self).event_gainFocus()
 
 	def _get_isMultiColumn(self):
+		if self.windowStyle & LVS_OWNERDRAWFIXED:
+			return False
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0) in (LV_VIEW_DETAILS, LV_VIEW_TILE)
 
 	def _get_rowCount(self):
@@ -404,6 +407,8 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _get_name(self):
 		if not self.parent.isMultiColumn:
+			if self.windowStyle & LVS_OWNERDRAWFIXED:
+				return self.displayText
 			return super(ListItem, self).name
 		textList = []
 		for col in xrange(1, self.childCount + 1):
