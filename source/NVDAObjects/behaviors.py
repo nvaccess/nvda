@@ -538,6 +538,9 @@ class _FakeTableCell(NVDAObject):
 
 	firstChild = None
 
+	def _get_location(self):
+		return self.parent._getColumnLocation(self.columnNumber)
+
 	def _get_name(self):
 		return self.parent._getColumnContent(self.columnNumber)
 

@@ -359,6 +359,25 @@ class ListItemWithoutColumnSupport(IAccessible):
 
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
 
+	def _getColumnLocationRaw(self,index):
+		processHandle=self.processHandle
+		localRect=RECT(left=2,top=index)
+		internalRect=winKernel.virtualAllocEx(processHandle,None,sizeof(localRect),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		if internalRect:
+			try:
+				winKernel.writeProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
+				watchdog.cancellableSendMessage(self.windowHandle,LVM_GETSUBITEMRECT, (self.IAccessibleChildID-1), internalRect)
+				winKernel.readProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
+				windll.user32.ClientToScreen(self.windowHandle,byref(localRect))
+				windll.user32.ClientToScreen(self.windowHandle,byref(localRect,8))
+				return (localRect.left,localRect.top,localRect.right-localRect.left,localRect.bottom-localRect.top)
+		return None
+
+	def _getColumnLocation(self,column):
+		return self._getColumnLocationRaw(column-1)
+
 	def _getColumnContentRaw(self, index):
 		buffer=None
 		processHandle=self.processHandle
