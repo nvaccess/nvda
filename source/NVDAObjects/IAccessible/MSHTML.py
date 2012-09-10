@@ -745,6 +745,17 @@ class MSHTML(IAccessible):
 				pass
 		super(MSHTML,self).doAction(index=index)
 
+	def _get_isFocusable(self):
+		nodeName = self.HTMLNodeName
+		attribs = self.HTMLAttributes
+		if nodeName in ("BUTTON", "INPUT", "ISINDEX", "SELECT", "TEXTAREA"):
+			return not attribs["disabled"]
+		if nodeName == "A":
+			return bool(attribs["href"])
+		if nodeName in ( "BODY", "OBJECT", "APPLET"):
+			return True
+		return self.HTMLNode.hasAttribute("tabindex")
+
 	def setFocus(self):
 		if self.HTMLNodeHasAncestorIAccessible:
 			try:
