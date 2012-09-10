@@ -776,6 +776,17 @@ class MSHTML(IAccessible):
 				return ""
 		return self._HTMLNodeName
 
+	def _get_devInfo(self):
+		info = super(MSHTML, self).devInfo
+		info.append("MSHTML node has ancestor IAccessible: %r" % self.HTMLNodeHasAncestorIAccessible)
+		htmlNode = self.HTMLNode
+		try:
+			ret = repr(htmlNode.nodeName)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("MSHTML nodeName: %s" % ret)
+		return info
+
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
 	"""
