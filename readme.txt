@@ -22,9 +22,9 @@ General dependencies:
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
-	* liblouis, version 2.4.1 or later:
+	* liblouis, version 2.5.0 or later:
 		* Official web site: http://www.liblouis.org/
-		* Download page: http://www.abilitiessoft.com/downloads.html
+		* Download page: http://code.google.com/p/liblouis/downloads/list
 		* Download the liblouis source archive.
 		* Extract the contents of the top level directory in the archive into include\liblouis.
 	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/

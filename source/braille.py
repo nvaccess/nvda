@@ -116,7 +116,10 @@ TABLES = (
 	("hr.ctb", _("Croatian 8 dot computer braille")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("hu1.ctb", _("Hungarian 8 dot computer braille")),
+	("hu-hu-comp8.ctb", _("Hungarian 8 dot computer braille")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("hu-hu-g1.ctb", _("Hungarian grade 1")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("is.ctb", _("Icelandic 8 dot computer braille")),
