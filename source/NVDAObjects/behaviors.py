@@ -480,7 +480,7 @@ class RowWithoutCellObjects(NVDAObject):
 
 	def _getColumnLocation(self,column):
 		"""Get the screen location for the given column.
-		Subclasses must override this method.
+		Subclasses may optionally  override this method.
 		@param column: The index of the column, starting at 1.
 		@type column: int
 		@rtype: tuple
@@ -548,7 +548,10 @@ class _FakeTableCell(NVDAObject):
 	firstChild = None
 
 	def _get_location(self):
-		return self.parent._getColumnLocation(self.columnNumber)
+		try:
+			return self.parent._getColumnLocation(self.columnNumber)
+		except NotImplementedError:
+			return None
 
 	def _get_name(self):
 		return self.parent._getColumnContent(self.columnNumber)
