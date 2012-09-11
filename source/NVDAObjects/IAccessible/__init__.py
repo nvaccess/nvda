@@ -1244,10 +1244,10 @@ the NVDAObject for IAccessible
 		return None
 
 	def event_valueChange(self):
-		if hasattr(self,'IAccessibleTextObject'):
-			self.hasContentChangedSinceLastSelection=True
+		if isinstance(self, EditableTextWithAutoSelectDetection):
+			self.hasContentChangedSinceLastSelection = True
 			return
-		return super(IAccessible,self).event_valueChange()
+		return super(IAccessible, self).event_valueChange()
 
 	def event_alert(self):
 		if self.role != controlTypes.ROLE_ALERT:

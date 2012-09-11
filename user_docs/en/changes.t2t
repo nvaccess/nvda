@@ -77,6 +77,7 @@
 - Font information is now correctly detected in Adobe Reader 10.1 and later. (#2175)
 - In Adobe Reader, if alternate text is provided, only that text will be rendered. Previously, extraneous text was sometimes included. (#2174)
 - Where a document contains an application, the content of the application is no longer included in browse mode. This prevents unexpectedly moving inside the application when navigating. You can interact with the application in the same way as for embedded objects. (#990)
+- In Mozilla applications, the value of spin buttons is now correctly reported when it changes. (#2653)
 
 
 == Changes for Developers ==
