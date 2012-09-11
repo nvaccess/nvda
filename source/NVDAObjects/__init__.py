@@ -659,6 +659,18 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		return None
 
+	def _get_isFocusable(self):
+		"""Whether this object is focusable.
+		@rtype: bool
+		"""
+		return controlTypes.STATE_FOCUSABLE in self.states
+
+	def _get_hasFocus(self):
+		"""Whether this object has focus.
+		@rtype: bool
+		"""
+		return controlTypes.STATE_FOCUSED in self.states
+
 	def setFocus(self):
 		"""
 Tries to force this object to take the focus.
@@ -909,6 +921,16 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("states: %s" % ret)
+		try:
+			ret = repr(self.isFocusable)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("isFocusable: %s" % ret)
+		try:
+			ret = repr(self.hasFocus)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("hasFocus: %s" % ret)
 		try:
 			ret = repr(self)
 		except Exception as e:

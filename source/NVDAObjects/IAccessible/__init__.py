@@ -32,7 +32,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 import queueHandler
-from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection
+from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -373,6 +373,13 @@ the NVDAObject for IAccessible
 
 		windowClassName=self.windowClassName
 		role=self.IAccessibleRole
+
+		if self.role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG) and not self.isFocusable:
+			# Make unfocusable applications focusable.
+			# This is particularly useful for ARIA applications.
+			# We use the NVDAObject role instead of IAccessible role here
+			# because of higher API classes; e.g. MSHTML.
+			clsList.insert(0, FocusableUnfocusableContainer)
 
 		if hasattr(self, "IAccessibleTextObject"):
 			if role==oleacc.ROLE_SYSTEM_TEXT:
