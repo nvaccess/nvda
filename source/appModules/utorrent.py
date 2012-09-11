@@ -44,17 +44,9 @@ class TorrentContentsListItem(ListItem):
 			return superContent
 		# We need to use the display model to retrieve the Name column.
 		try:
-			# We don't want to just use displayText because it also contains the size, which is exposed correctly in the value property.
-			# Therefore, use the left and right of the Name column as obtained from the column header.
-			nameHdrLoc = Window._get_firstChild(self).firstChild.firstChild.location
-			left = nameHdrLoc[0]
-			right = left + nameHdrLoc[2]
-			# Use the top and bottom of the list item.
-			selfLoc = self.location
-			top = selfLoc[1]
-			bottom = top + selfLoc[3]
+			left, top, width, height = self._getColumnLocation(column)
 			return displayModel.getWindowTextInRect(self.appModule.helperLocalBindingHandle, self.windowHandle,
-				left, top, right, bottom,
+				left, top, left + width, top + height,
 				displayModel.DisplayModelTextInfo.minHorizontalWhitespace, displayModel.DisplayModelTextInfo.minVerticalWhitespace)[0]
 		except:
 			log.debugWarning("Error retrieving name using display model", exc_info=True)
