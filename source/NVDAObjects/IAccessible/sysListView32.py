@@ -38,6 +38,7 @@ LVNI_SELECTED =2
 LVM_GETNEXTITEM =(LVM_FIRST+12)
 LVM_GETVIEW=LVM_FIRST+143
 LV_VIEW_DETAILS=0x0001
+LVM_GETSUBITEMRECT=LVM_FIRST+56
 LV_VIEW_TILE=0x0004
 
 #item mask flags
@@ -229,6 +230,8 @@ class List(List):
 		return super(List,self).event_gainFocus()
 
 	def _get_isMultiColumn(self):
+		if self.windowStyle & LVS_OWNERDRAWFIXED:
+			return False
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0) in (LV_VIEW_DETAILS, LV_VIEW_TILE)
 
 	def _get_rowCount(self):
@@ -356,6 +359,24 @@ class ListItemWithoutColumnSupport(IAccessible):
 
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
 
+	def _getColumnLocationRaw(self,index):
+		processHandle=self.processHandle
+		localRect=RECT(left=2,top=index)
+		internalRect=winKernel.virtualAllocEx(processHandle,None,sizeof(localRect),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			winKernel.writeProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
+			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETSUBITEMRECT, (self.IAccessibleChildID-1), internalRect)
+			winKernel.readProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
+			windll.user32.ClientToScreen(self.windowHandle,byref(localRect))
+			windll.user32.ClientToScreen(self.windowHandle,byref(localRect,8))
+			return (localRect.left,localRect.top,localRect.right-localRect.left,localRect.bottom-localRect.top)
+		return None
+
+	def _getColumnLocation(self,column):
+		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
+
 	def _getColumnContentRaw(self, index):
 		buffer=None
 		processHandle=self.processHandle
@@ -404,6 +425,8 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _get_name(self):
 		if not self.parent.isMultiColumn:
+			if self.windowStyle & LVS_OWNERDRAWFIXED:
+				return self.displayText
 			return super(ListItem, self).name
 		textList = []
 		for col in xrange(1, self.childCount + 1):

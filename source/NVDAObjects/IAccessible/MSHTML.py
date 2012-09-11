@@ -351,11 +351,11 @@ class MSHTML(IAccessible):
 			except:
 				log.exception("Error getting activeElement")
 		elif isinstance(relation,tuple):
-			body=HTMLNode.document.body
-			x=relation[0]-body.clientLeft
-			y=relation[1]-body.clientTop
+			windowHandle=kwargs.get('windowHandle')
+			p=ctypes.wintypes.POINT(x=relation[0],y=relation[1])
+			ctypes.windll.user32.ScreenToClient(windowHandle,ctypes.byref(p))
 			try:
-				HTMLNode=HTMLNode.document.elementFromPoint(x,y)
+				HTMLNode=HTMLNode.document.elementFromPoint(p.x,p.y)
 			except:
 				HTMLNode=None
 			if not HTMLNode:
@@ -430,6 +430,16 @@ class MSHTML(IAccessible):
 		#object and embed nodes give back an incorrect IAccessible via queryService, so we must treet it as an ancestor IAccessible
 		if self.HTMLNodeName in ("OBJECT","EMBED"):
 			self.HTMLNodeHasAncestorIAccessible=True
+
+	def _get_location(self):
+		if self.HTMLNodeName and not self.HTMLNodeName.startswith('#'):
+			r=self.HTMLNode.getBoundingClientRect()
+			width=r.right-r.left
+			height=r.bottom-r.top
+			p=ctypes.wintypes.POINT(x=r.left,y=r.top)
+			ctypes.windll.user32.ClientToScreen(self.windowHandle,ctypes.byref(p))
+			return (p.x,p.y,width,height)
+		return None
 
 	def _get_TextInfo(self):
 		if not hasattr(self,'_HTMLNodeSupportsTextRanges'):

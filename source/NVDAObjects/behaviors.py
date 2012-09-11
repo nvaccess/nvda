@@ -478,6 +478,15 @@ class RowWithoutCellObjects(NVDAObject):
 	def _get_childCount(self):
 		return self.parent.columnCount
 
+	def _getColumnLocation(self,column):
+		"""Get the screen location for the given column.
+		Subclasses may optionally  override this method.
+		@param column: The index of the column, starting at 1.
+		@type column: int
+		@rtype: tuple
+		"""
+		raise NotImplementedError
+
 	def _getColumnContent(self, column):
 		"""Get the text content for a given column of this row.
 		Subclasses must override this method.
@@ -537,6 +546,12 @@ class _FakeTableCell(NVDAObject):
 		return self.parent._makeCell(self.columnNumber - 1)
 
 	firstChild = None
+
+	def _get_location(self):
+		try:
+			return self.parent._getColumnLocation(self.columnNumber)
+		except NotImplementedError:
+			return None
 
 	def _get_name(self):
 		return self.parent._getColumnContent(self.columnNumber)
