@@ -351,11 +351,11 @@ class MSHTML(IAccessible):
 			except:
 				log.exception("Error getting activeElement")
 		elif isinstance(relation,tuple):
-			body=HTMLNode.document.body
-			x=relation[0]-body.clientLeft
-			y=relation[1]-body.clientTop
+			windowHandle=kwargs.get('windowHandle')
+			p=ctypes.wintypes.POINT(x=relation[0],y=relation[1])
+			ctypes.windll.user32.ScreenToClient(windowHandle,ctypes.byref(p))
 			try:
-				HTMLNode=HTMLNode.document.elementFromPoint(x,y)
+				HTMLNode=HTMLNode.document.elementFromPoint(p.x,p.y)
 			except:
 				HTMLNode=None
 			if not HTMLNode:
