@@ -431,6 +431,16 @@ class MSHTML(IAccessible):
 		if self.HTMLNodeName in ("OBJECT","EMBED"):
 			self.HTMLNodeHasAncestorIAccessible=True
 
+	def _get_location(self):
+		if self.HTMLNodeName and not self.HTMLNodeName.startswith('#'):
+			r=self.HTMLNode.getBoundingClientRect()
+			width=r.right-r.left
+			height=r.bottom-r.top
+			p=ctypes.wintypes.POINT(x=r.left,y=r.top)
+			ctypes.windll.user32.ClientToScreen(self.windowHandle,ctypes.byref(p))
+			return (p.x,p.y,width,height)
+		return None
+
 	def _get_TextInfo(self):
 		if not hasattr(self,'_HTMLNodeSupportsTextRanges'):
 			try:
