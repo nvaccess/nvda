@@ -549,3 +549,14 @@ class _FakeTableCell(NVDAObject):
 
 	def _get_states(self):
 		return self.parent.states
+
+class FocusableUnfocusableContainer(NVDAObject):
+	"""Makes an unfocusable container focusable using its first focusable descendant.
+	One instance where this is useful is ARIA applications on the web where the author hasn't set a tabIndex.
+	"""
+	isFocusable = True
+
+	def setFocus(self):
+		for obj in self.recursiveDescendants:
+			if obj.isFocusable:
+				obj.setFocus()
