@@ -158,7 +158,7 @@ Although most laptops do not have a physical numberpad, some laptops can emulate
 If your laptop can not do this, or does not allow you to turn numlock off, you may want to switch to the Laptop layout instead.
 
 ++ NVDA Touch Gestures ++
-If you are running NVDA on a device with a touch screen, and its running Windows 8 or higher, you can also control NVDA directly via the touch screen.
+If you are running NVDA on a device with a touch screen and running Windows 8 or higher, you can also control NVDA directly via the touch screen.
 While NVDA is running, all touch input will go directly to NVDA. 
 Therefore, actions that can be performed normally without NVDA will not work.
 
@@ -168,50 +168,51 @@ To do this, place one finger anywhere on the screen.
 You can also keep your finger on the screen and move it around to read other controls and text that your finger moves over.
 
 +++ Touch Gestures +++
-When NVDA commands are described further along in this user guide, they may list a touch gesture which can be used to activate that command with the touch screen.
-Following are some instructions on how to perform the various touch gestures required to perform  NVDA commands with a touch screen.
+When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touch screen.
+Following are some instructions on how to perform the various touch gestures.
+
 ==== Taps ====
 Tap the screen quickly with one or more fingers.
 
 Tapping once with one  finger is simpley known as a tap.
-Tapping with 2 fingers at the same time is a 2-finger tap, and so on.
+Tapping with 2 fingers at the same time is a 2-finger tap and so on.
 
-If the same tap is performed one or more times again in quick succession, NVDA will instead see a special multi-tap gesture.
+If the same tap is performed one or more times again in quick succession, NVDA will instead treat this as a multi-tap gesture.
 Tapping twice will result in a double tap.
-Tapping 3 times will result in a tripple tap, and so on.
-Of course these multi-tap gestures also recognize how many fingers were used, so its possible to have gestures like a 2-finger tripple tap, or a 4-finger tap, etc. 
- 
- ==== Flicks ====
+Tapping 3 times will result in a triple tap and so on.
+Of course, these multi-tap gestures also recognize how many fingers were used, so it's possible to have gestures like a 2-finger triple tap, a 4-finger tap, etc. 
+
+==== Flicks ====
 Quickly swipe your finger across the screen.
 
-There are 4 possible flick gestures depending on the direction: flick left, flick right, flick up, and flick down.
+There are 4 possible flick gestures depending on the direction: flick left, flick right, flick up and flick down.
 
 Just like taps, more than one finger can be used to perform the gesture.
-Therefore gestures such as 2-finger flick up or 4-finger flick left are all possible.
+Therefore, gestures such as 2-finger flick up and 4-finger flick left are all possible.
 
 +++ Touch Modes +++
-As there are many more NVDA commands then there are possible touch gestures, NVDA has several touch modes you can switch between, which makes certain subsets of commands available.
-The two modes that exist for now are text mode and object mode. 
+As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
+The two modes are text mode and object mode. 
 Certain NVDA commands listed in this document may have a touch mode listed in brackets after the touch gesture.
-For example: flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
-If the command does not have a mode associated with it, it will work in any mode.
+For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
+If the command does not have a mode listed, it will work in any mode.
 
 %kc:beginInclude
 To toggle touch modes, perform a 3-finger tap.
 %kc:endInclude
 
- ++ Input Help Mode ++
-Many key and touch commands are mentioned through out the rest of this user guide, but an easy way to explore all the different commands is to turn on input help.
+++ Input Help Mode ++
+Many NVDA commands are mentioned throughout the rest of this user guide, but an easy way to explore all the different commands is to turn on input help.
 
 To turn on input help, press NVDA+1.
 To turn it off, press NVDA+1 again.
-While in input help, pressing any key or performing any touch gesture will report the action and describe what it does (if indeed it does do something).
+While in input help, performing any input gesture (such as pressing a key or performing a touch gesture) will report the action and describe what it does (if anything).
 The actual  commands will not execute while in input help mode.
 
 ++ The NVDA menu ++
 The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, access additional tools and exit NVDA.
 
-To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n on the keyboard, or perform a 2-finger double tap on a touch screen.
+To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n on the keyboard or perform a 2-finger double tap on the touch screen.
 You can also get to the NVDA menu via the windows system tray.
 Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
 When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
@@ -219,7 +220,7 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 ++ Basic NVDA commands ++
 %kc:beginInclude
 || Name | Key | Touch | Description |
-| Stop speech | Control | | 2-finger tap | Instantly stops speaking |
+| Stop speech | Control | 2-finger tap | Instantly stops speaking |
 | Pause Speech | Shift | none | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
 | NVDA Menu | NVDA+n | 2-finger double tap | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
 | Toggle Speech Mode | NVDA+s | none | Toggles speech mode between speech, beeps and off. |
@@ -1458,18 +1459,22 @@ Each entry key can only be listed once per section, including None.
 Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
 -
 
-Gesture identifiers consist of a two letter device code (kb for keyboard, br for braille display and ts for touch screen), a sub-device, layout or mode in brackets, a colon, and then a  type-specific string identifying one or mor keyboard or braille keys, or a touch gesture.
-For keyboard gestures, the part in brackets is the keyboard layout and is optional.
+Gesture identifiers consist of a two letter device code; a sub-device, layout or mode in brackets; a colon; and then a type-specific string identifying the actual input, such as key or touch gesture names.
+- For keyboard gestures, the device code is kb.
+The part in brackets is the keyboard layout and is optional.
 If not specified, the gesture will apply to all keyboard layouts.
 The string after the colon is one or more key names separated by a plus (+) sign.
-For braille display gestures, the part in brackets identifies the specific braille display and is mandatory.
+- For braille display gestures, the device code is br.
+The part in brackets identifies the specific braille display and is mandatory.
 The string after the colon is one or more key names separated by a plus (+) sign.
-For touch gestures, the part in brackets is the touch mode and is optional.
-The string after the colon is a touch gesture such as double_tap, 2fingerflickUp, or 3finger_tap as examples.
- 
+- For touch gestures, the device code is ts.
+The part in brackets is the touch mode and is optional.
+The string after the colon is a touch gesture; e.g. double_tap, 2fingerflickUp or 3finger_tap.
+-
+
 In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
 + Turn on Input Help.
-+ Activate the gesture (press the key, touch the screen etc).
++ Activate the gesture (press the key, touch the screen, etc.).
 + Turn off input help.
 + Activate View log in the NVDA Tools menu.
 + Examine the recent log entries.
