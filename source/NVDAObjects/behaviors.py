@@ -575,3 +575,4 @@ class FocusableUnfocusableContainer(NVDAObject):
 		for obj in self.recursiveDescendants:
 			if obj.isFocusable:
 				obj.setFocus()
+				break
