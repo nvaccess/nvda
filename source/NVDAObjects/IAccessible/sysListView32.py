@@ -369,10 +369,9 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			winKernel.readProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
-			windll.user32.ClientToScreen(self.windowHandle,byref(localRect))
-			windll.user32.ClientToScreen(self.windowHandle,byref(localRect,8))
-			return (localRect.left,localRect.top,localRect.right-localRect.left,localRect.bottom-localRect.top)
-		return None
+		windll.user32.ClientToScreen(self.windowHandle,byref(localRect))
+		windll.user32.ClientToScreen(self.windowHandle,byref(localRect,8))
+		return (localRect.left,localRect.top,localRect.right-localRect.left,localRect.bottom-localRect.top)
 
 	def _getColumnLocation(self,column):
 		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
