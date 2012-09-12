@@ -354,12 +354,9 @@ An NVDAObject for a window
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("windowThreadID: %s" % ret)
+		formatLong = self._formatLongDevInfoString
 		try:
-			ret = self.windowText
-			if isinstance(ret, basestring) and len(ret) > 100:
-				ret = "%r (truncated)" % ret[:100]
-			else:
-				ret = repr(ret)
+			ret = formatLong(self.windowText)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("windowText: %s" % ret)

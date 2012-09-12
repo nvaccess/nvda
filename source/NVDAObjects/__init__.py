@@ -892,6 +892,23 @@ This code is executed if a gain focus event is received by this object.
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
+	@staticmethod
+	def _formatLongDevInfoString(string, truncateLen=250):
+		"""Format a potentially long string value for inclusion in devInfo.
+		This should be used for arbitrary string values which aren't usually useful in debugging past a certain length.
+		If the string is too long to be useful, it will be truncated.
+		This string should be included as returned. There is no need to call repr.
+		@param string: The string to format.
+		@type string: nbasestring
+		@param truncateLen: The length at which to truncate the string.
+		@type truncateLen: int
+		@return: The formatted string.
+		@rtype: basestring
+		"""
+		if isinstance(string, basestring) and len(string) > truncateLen:
+			return "%r (truncated)" % string[:truncateLen]
+		return repr(string)
+
 	def _get_devInfo(self):
 		"""Information about this object useful to developers.
 		Subclasses may extend this, calling the superclass property first.
@@ -951,12 +968,9 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("location: %s" % ret)
+		formatLong = self._formatLongDevInfoString
 		try:
-			ret = self.value
-			if isinstance(ret, basestring) and len(ret) > 100:
-				ret = "%r (truncated)" % ret[:100]
-			else:
-				ret = repr(ret)
+			ret = formatLong(self.value)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("value: %s" % ret)

@@ -1338,8 +1338,9 @@ the NVDAObject for IAccessible
 		childID = self.IAccessibleChildID
 		info.append("IAccessibleChildID: %r" % childID)
 		info.append("IAccessible event parameters: windowHandle=%r, objectID=%r, childID=%r" % (self.event_windowHandle, self.event_objectID, self.event_childID))
+		formatLong = self._formatLongDevInfoString
 		try:
-			ret = repr(iaObj.accName(childID))
+			ret = formatLong(iaObj.accName(childID))
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("IAccessible accName: %s" % ret)
@@ -1366,16 +1367,12 @@ the NVDAObject for IAccessible
 			ret = "exception: %s" % e
 		info.append("IAccessible accState: %s" % ret)
 		try:
-			ret = repr(iaObj.accDescription(childID))
+			ret = formatLong(iaObj.accDescription(childID))
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("IAccessible accDescription: %s" % ret)
 		try:
-			ret = iaObj.accValue(childID)
-			if isinstance(ret, basestring) and len(ret) > 100:
-				ret = "%r (truncated)" % ret[:100]
-			else:
-				ret = repr(ret)
+			ret = formatLong(iaObj.accValue(childID))
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("IAccessible accValue: %s" % ret)
