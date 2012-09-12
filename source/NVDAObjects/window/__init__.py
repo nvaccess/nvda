@@ -360,6 +360,12 @@ An NVDAObject for a window
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("windowText: %s" % ret)
+		try:
+			self.redraw()
+			ret = formatLong(self.displayText)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("displayText: %s" % ret)
 		return info
 
 class Desktop(Window):
