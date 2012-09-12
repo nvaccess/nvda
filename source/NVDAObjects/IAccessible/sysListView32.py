@@ -424,9 +424,12 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _get_name(self):
 		if not self.parent.isMultiColumn:
-			if self.windowStyle & LVS_OWNERDRAWFIXED:
+			name = super(ListItem, self).name
+			if name:
+				return name
+			elif self.windowStyle & LVS_OWNERDRAWFIXED:
 				return self.displayText
-			return super(ListItem, self).name
+			return name
 		textList = []
 		for col in xrange(1, self.childCount + 1):
 			content = self._getColumnContent(col)
