@@ -146,12 +146,6 @@ class LVITEM64(Structure):
 		('iGroup',c_int),
 	]
 
-class NMLVDispInfoStruct(Structure):
-	_fields_=[
-		('hdr',winUser.NMHdrStruct),
-		('item',c_int),
-	]
-
 class LVCOLUMN(Structure):
 	_fields_=[
 		('mask',c_uint),
@@ -311,29 +305,6 @@ class ListItemWithoutColumnSupport(IAccessible):
 		else:
 			self.LVITEM = LVITEM
 			self.LVCOLUMN = LVCOLUMN
-
-	def _get_lvAppImageID(self):
-		item=self.LVITEM(iItem=self.IAccessibleChildID-1,mask=LVIF_IMAGE)
-		processHandle=self.processHandle
-		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		try:
-			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
-			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEM,0,internalItem)
-			dispInfo=NMLVDispInfoStruct()
-			dispInfo.item=internalItem
-			dispInfo.hdr.hwndFrom=self.windowHandle
-			dispInfo.hdr.idFrom=self.windowControlID
-			dispInfo.hdr.code=LVN_GETDISPINFO
-			internalDispInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(NMLVDispInfoStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			try:
-				winKernel.writeProcessMemory(processHandle,internalDispInfo,byref(dispInfo),sizeof(NMLVDispInfoStruct),None)
-				watchdog.cancellableSendMessage(self.parent.parent.windowHandle,winUser.WM_NOTIFY,LVN_GETDISPINFO,internalDispInfo)
-			finally:
-				winKernel.virtualFreeEx(processHandle,internalDispInfo,0,winKernel.MEM_RELEASE)
-			winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
-		finally:
-			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
-		return item.iImage
 
 	description = None
 
