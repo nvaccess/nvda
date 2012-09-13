@@ -87,6 +87,12 @@
 - Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
 - Fetching the role property in chooseNVDAObjectOverlayClasses no longer causes the role to be incorrect and thus not reported on focus for certain objects such as Windows command consoles and Scintilla controls. (#2569)
 - The NVDA Preferences, Tools and Help menus are now accessible as attributes on gui.mainFrame.sysTrayIcon named preferencesMenu, toolsMenu and helpMenu, respectively. This allows plugins to more easily add items to these menus.
+- Gettext message contexts are now supported. This allows multiple translations to be defined for a single English message depending on the context. (#1524)
+ - This is done using the pgettext(context, message) function.
+ - This is supported for both NVDA itself and add-ons.
+ - xgettext and msgfmt from GNU gettext must be used to create any PO and MO files. The Python tools do not support message contexts.
+ - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts.
+ - See http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts for more information.
 
 
 = 2012.2.1 =
