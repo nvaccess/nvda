@@ -73,6 +73,11 @@ def getAvailableLanguages():
 	return zip(l,d)
 
 def makePgettext(translations):
+	"""Obtaina  pgettext function for use with a gettext translations instance.
+	pgettext is used to support message contexts,
+	but Python 2.7's gettext module doesn't support this,
+	so NVDA must provide its own implementation.
+	"""
 	if isinstance(translations, gettext.GNUTranslations):
 		def pgettext(context, message):
 			message = unicode(message)
