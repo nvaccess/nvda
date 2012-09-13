@@ -94,9 +94,9 @@ To generate developer documentation:
 	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
 
 To generate a gettext translation template:
-	* xgettext from GNU gettext:
+	* xgettext and msgfmt from GNU gettext:
 		* A Windows build is available at http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/
-		* Copy xgettext.exe into the tools directory.
+		* Copy xgettext.exe and msgfmt.exe into the tools directory.
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must prepare the source tree.
