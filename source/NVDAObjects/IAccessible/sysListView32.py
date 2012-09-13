@@ -224,8 +224,6 @@ class List(List):
 		return super(List,self).event_gainFocus()
 
 	def _get_isMultiColumn(self):
-		if self.windowStyle & LVS_OWNERDRAWFIXED:
-			return False
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0) in (LV_VIEW_DETAILS, LV_VIEW_TILE)
 
 	def _get_rowCount(self):
@@ -394,7 +392,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
 
 	def _get_name(self):
-		if not self.parent.isMultiColumn:
+		if not self.parent.isMultiColumn or self._shouldDisableMultiColumn:
 			name = super(ListItem, self).name
 			if name:
 				return name
@@ -417,3 +415,16 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return "; ".join(textList)
 
 	value = None
+
+	def _get__shouldDisableMultiColumn(self):
+		if self.windowStyle & LVS_OWNERDRAWFIXED:
+			# This is owner drawn, but there may still be column content.
+			# accDescription will be empty if there is no column content,
+			# in which case multi-column support must be disabled.
+			ret = not super(ListItemWithoutColumnSupport, self).description
+			if ret:
+				self.childCount = 0
+		else:
+			ret = False
+		self._shouldDisableMultiColumn = ret
+		return ret
