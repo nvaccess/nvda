@@ -331,6 +331,14 @@ def nvdaControllerInternal_vbufChangeNotify(rootDocHandle, rootID):
 	virtualBuffers.VirtualBuffer.changeNotify(rootDocHandle, rootID)
 	return 0
 
+@WINFUNCTYPE(c_long, c_wchar_p)
+def nvdaControllerInternal_installAddonPackageFromPath(addonPath):
+	import wx
+	from gui import addonGui
+	log.debug("Requesting installation of add-on from %s", addonPath)
+	wx.CallAfter(addonGui.AddonsDialog.handleRemoteAddonInstall, addonPath)
+	return 0
+
 class RemoteLoader64(object):
 
 	def __init__(self):
@@ -387,6 +395,7 @@ def initialize():
 		("nvdaControllerInternal_inputCandidateListUpdate",nvdaControllerInternal_inputCandidateListUpdate),
 		("nvdaControllerInternal_inputConversionModeUpdate",nvdaControllerInternal_inputConversionModeUpdate),
 		("nvdaControllerInternal_vbufChangeNotify",nvdaControllerInternal_vbufChangeNotify),
+		("nvdaControllerInternal_installAddonPackageFromPath",nvdaControllerInternal_installAddonPackageFromPath),
 	]:
 		try:
 			_setDllFuncPointer(localLib,"_%s"%name,func)

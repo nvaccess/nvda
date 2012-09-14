@@ -10,7 +10,13 @@ import gui
 from logHandler import log
 import addonHandler
 
+
 class AddonsDialog(wx.Dialog):
+	_instance = None
+	def __new__(cls, *args, **kwargs):
+		if AddonsDialog._instance is None:
+			AddonsDialog._instance = super(AddonsDialog, cls).__new__(cls, *args, **kwargs)
+		return AddonsDialog._instance
 
 	def __init__(self,parent):
 		# Translators: The title of the Addons Dialog
@@ -64,59 +70,66 @@ class AddonsDialog(wx.Dialog):
 		if fd.ShowModal()!=wx.ID_OK:
 			return
 		addonPath=fd.GetPath()
+		self.installAddon(addonPath)
+
+	def installAddon(self, addonPath, closeAfter=False):
 		try:
-			bundle=addonHandler.AddonBundle(addonPath)
-		except:
-			log.error("Error opening addon bundle from %s"%addonPath,exc_info=True)
-			# Translators: The message displayed when an error occurs when opening an add-on package for adding. 
-			gui.messageBox(_("Failed to open add-on package file at %s - missing file or invalid file format")%addonPath,
-				# Translators: The title of a dialog presented when an error occurs.
-				_("Error"),
-				wx.OK | wx.ICON_ERROR)
-			return
-		# Translators: A message asking the user if they really wish to install an addon.
-		if gui.messageBox(_("Are you sure you want to install this add-on? Only install add-ons from trusted sources.\nAddon: {summary} {version}\nAuthor: {author}").format(**bundle.manifest),
-			# Translators: Title for message asking if the user really wishes to install an Addon.
-			_("Add-on Installation"),
-			wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
-			return
-		bundleName=bundle.manifest['name']
-		prevAddon=None
-		for addon in self.curAddons:
-			if not addon.isPendingRemove and bundleName==addon.manifest['name']:
-				prevAddon=addon
-				break
-		if prevAddon:
-			# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-			if gui.messageBox(_("A version of this add-on is already installed. Would you like to update it?"),
-				# Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
+			try:
+				bundle=addonHandler.AddonBundle(addonPath)
+			except:
+				log.error("Error opening addon bundle from %s"%addonPath,exc_info=True)
+				# Translators: The message displayed when an error occurs when opening an add-on package for adding. 
+				gui.messageBox(_("Failed to open add-on package file at %s - missing file or invalid file format")%addonPath,
+					# Translators: The title of a dialog presented when an error occurs.
+					_("Error"),
+					wx.OK | wx.ICON_ERROR)
+				return
+			# Translators: A message asking the user if they really wish to install an addon.
+			if gui.messageBox(_("Are you sure you want to install this add-on? Only install add-ons from trusted sources.\nAddon: {summary} {version}\nAuthor: {author}").format(**bundle.manifest),
+				# Translators: Title for message asking if the user really wishes to install an Addon.
 				_("Add-on Installation"),
 				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
 				return
-			prevAddon.requestRemove()
-		progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-		# Translators: The title of the dialog presented while an Addon is being installed.
-		_("Installing Add-on"),
-		# Translators: The message displayed while an addon is being installed.
-		_("Please wait while the add-on is being installed."))
-		try:
-			gui.ExecAndPump(addonHandler.installAddonBundle,bundle)
-			self.needsRestart=True
-		except:
-			log.error("Error installing  addon bundle from %s"%addonPath,exc_info=True)
-			self.refreshAddonsList()
-			progressDialog.done()
-			del progressDialog
-			# Translators: The message displayed when an error occurs when installing an add-on package.
-			gui.messageBox(_("Failed to install add-on  from %s")%addonPath,
-				# Translators: The title of a dialog presented when an error occurs.
-				_("Error"),
-				wx.OK | wx.ICON_ERROR)
-			return
-		else:
-			self.refreshAddonsList(activeIndex=-1)
-			progressDialog.done()
-			del progressDialog
+			bundleName=bundle.manifest['name']
+			prevAddon=None
+			for addon in self.curAddons:
+				if not addon.isPendingRemove and bundleName==addon.manifest['name']:
+					prevAddon=addon
+					break
+			if prevAddon:
+				# Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+				if gui.messageBox(_("A version of this add-on is already installed. Would you like to update it?"),
+				# Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
+				_("Add-on Installation"),
+				wx.YES|wx.NO|wx.ICON_WARNING)!=wx.YES:
+					return
+				prevAddon.requestRemove()
+			progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
+			# Translators: The title of the dialog presented while an Addon is being installed.
+			_("Installing Add-on"),
+			# Translators: The message displayed while an addon is being installed.
+			_("Please wait while the add-on is being installed."))
+			try:
+				gui.ExecAndPump(addonHandler.installAddonBundle,bundle)
+				self.needsRestart=True
+			except:
+				log.error("Error installing  addon bundle from %s"%addonPath,exc_info=True)
+				self.refreshAddonsList()
+				progressDialog.done()
+				del progressDialog
+				# Translators: The message displayed when an error occurs when installing an add-on package.
+				gui.messageBox(_("Failed to install add-on  from %s")%addonPath,
+					# Translators: The title of a dialog presented when an error occurs.
+					_("Error"),
+					wx.OK | wx.ICON_ERROR)
+				return
+			else:
+				self.refreshAddonsList(activeIndex=-1)
+				progressDialog.done()
+				del progressDialog
+		finally:
+			if closeAfter:
+				self.onClose(None)
 
 	def OnRemoveClick(self,evt):
 		index=self.addonsList.GetFirstSelected()
@@ -191,3 +204,13 @@ Description: {description}
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
 		gui.messageBox(message, title, wx.OK)
+
+	def __del__(self):
+		AddonsDialog._instance = None
+
+	@classmethod
+	def handleRemoteAddonInstall(cls, addonPath):
+		closeAfter = AddonsDialog._instance is None
+		dialog = AddonsDialog(gui.mainFrame)
+		dialog.installAddon(addonPath, closeAfter=closeAfter)
+		del dialog

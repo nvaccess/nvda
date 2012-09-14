@@ -18,6 +18,8 @@ import languageHandler
 import config
 import versionInfo
 from logHandler import log
+import addonHandler
+
 
 _wsh=None
 def _getWSH():
@@ -162,6 +164,7 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	createShortcut(os.path.join(docFolder,_("Commands Quick Reference")+".lnk"),targetPath=getDocFilePath("keyCommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
 	# Translators: The label of the Start Menu item to open the User Guide.
 	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
+	registerAddonFileAssociation(slaveExe)
 
 def isDesktopShortcutInstalled():
 	wsh=_getWSH()
@@ -204,6 +207,59 @@ def unregisterInstallation(keepDesktopShortcut=False):
 		_winreg.DeleteKey(_winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\nvda")
 	except WindowsError:
 		pass
+	unregisterAddonFileAssociation()
+
+def registerAddonFileAssociation(slaveExe):
+	try:
+		# Create progID for NVDA ad-ons
+		with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\%s" % addonHandler.NVDA_ADDON_PROG_ID, 0, _winreg.KEY_WRITE) as k:
+			_winreg.SetValueEx(k, None, 0, _winreg.REG_SZ, _("NVDA add-on package"))
+			with _winreg.CreateKeyEx(k, "DefaultIcon", 0, _winreg.KEY_WRITE) as k2:
+				_winreg.SetValueEx(k2, None, 0, _winreg.REG_SZ, "@{slaveExe},1".format(slaveExe=slaveExe))
+			# Point the open verb to nvda_slave addons_installAddonPackage action
+			with _winreg.CreateKeyEx(k, "shell\\open\\command", 0, _winreg.KEY_WRITE) as k2:
+				_winreg.SetValueEx(k2, None, 0, _winreg.REG_SZ, u"\"{slaveExe}\" addons_installAddonPackage \"%1\"".format(slaveExe=slaveExe))
+		# Now associate addon extension to the created prog id.
+		with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\.%s" % addonHandler.BUNDLE_EXTENSION, 0, _winreg.KEY_WRITE) as k:
+			_winreg.SetValueEx(k, None, 0, _winreg.REG_SZ, addonHandler.NVDA_ADDON_PROG_ID)
+			_winreg.SetValueEx(k, "Content Type", 0, _winreg.REG_SZ, addonHandler.BUNDLE_MIMETYPE)
+			# Add NVDA to the "open With" list
+			k2 = _winreg.CreateKeyEx(k, "OpenWithProgids\\%s" % addonHandler.NVDA_ADDON_PROG_ID, 0, _winreg.KEY_WRITE)
+			_winreg.CloseKey(k2)
+		# Notify the shell that a file association has changed:
+		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
+	except WindowsError:
+		log.error("Can not create addon file association.", exc_info=True)
+
+def unregisterAddonFileAssociation():
+	try:
+		# As per MSDN recomendation, we only need to remove the prog ID.
+		_deleteKeyAndSubkeys(_winreg.HKEY_LOCAL_MACHINE, "Software\\Classes\\%s" % addonHandler.NVDA_ADDON_PROG_ID)
+	except WindowsError:
+		# This is probably the first install, so just ignore the error.
+		return
+	# Notify the shell that a file association has changed:
+	shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
+
+# Windows API call regDeleteTree is only available on vist and above so rule our own.
+def _deleteKeyAndSubkeys(key, subkey):
+	with _winreg.OpenKey(key, subkey, 0, _winreg.KEY_WRITE|_winreg.KEY_READ) as k:
+		# Recursively delete subkeys (Depth first search order)
+		# So Pythonic... </rant>
+		i = 0
+		while True:
+			try:
+				subkeyName = _winreg.EnumKey(k, i)
+				# Recursive call.
+				_deleteKeyAndSubkeys(k, subkeyName)
+				i += 1
+			except WindowsError:
+				break
+	# Delete this key
+	try:
+		_winreg.DeleteKey(k, "")
+	except WindowsError:
+		log.warning("Error deleting registry key", exc_info=True)
 
 class RetriableFailure(Exception):
 	pass

@@ -79,4 +79,9 @@ interface NvdaControllerInternal {
  */
 	error_status_t __stdcall vbufChangeNotify([in] const int rootDocHandle, [in] const int rootID);
 
+/**
+* Requests for installation of the add-on package from specified path.
+* @param addonPath path to the add-on package file.
+*/
+	error_status_t __stdcall installAddonPackageFromPath([in, string] const wchar_t* addonPath);
 };

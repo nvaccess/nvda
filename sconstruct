@@ -124,9 +124,7 @@ env.SConscript('nvdaHelper/sconscript',exports=['env'])
 
 #Allow all NVDA's gettext po files to be compiled in source/locale
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
-	moFile=env.gettextMoFile(po)
-	#gettextMoFile can not be run in parallel so make sure scons knows this
-	env.SideEffect('_gettextMoFile',moFile)
+	env.gettextMoFile(po)
 
 #Allow all key command t2t files to be generated from their userGuide t2t sources
 for lang in os.listdir(userDocsDir.path):

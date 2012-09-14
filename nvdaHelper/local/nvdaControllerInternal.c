@@ -59,3 +59,8 @@ error_status_t(__stdcall *_nvdaControllerInternal_vbufChangeNotify)(const int, c
 error_status_t __stdcall nvdaControllerInternal_vbufChangeNotify(const int rootDocHandle, const int rootID) {
 	return _nvdaControllerInternal_vbufChangeNotify(rootDocHandle,rootID);
 }
+
+error_status_t(__stdcall *_nvdaControllerInternal_installAddonPackageFromPath)(const wchar_t *);
+error_status_t __stdcall nvdaControllerInternal_installAddonPackageFromPath(const wchar_t *addonPath) {
+	return _nvdaControllerInternal_installAddonPackageFromPath(addonPath);
+}
