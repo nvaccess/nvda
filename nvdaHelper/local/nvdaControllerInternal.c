@@ -29,6 +29,7 @@ error_status_t __stdcall nvdaControllerInternal_typedCharacterNotify(const long 
 	return _nvdaControllerInternal_typedCharacterNotify(threadID,ch);
 }
 
+
 error_status_t(__stdcall *_nvdaControllerInternal_logMessage)(const long, const long, const wchar_t*);
 error_status_t __stdcall nvdaControllerInternal_logMessage(const long level, const long processID, const wchar_t* message) {
 	return _nvdaControllerInternal_logMessage(level,processID,message);
@@ -37,6 +38,21 @@ error_status_t __stdcall nvdaControllerInternal_logMessage(const long level, con
 error_status_t(__stdcall *_nvdaControllerInternal_displayModelTextChangeNotify)(const long, const long, const long, const long, const long);
 error_status_t __stdcall nvdaControllerInternal_displayModelTextChangeNotify(const long hwnd, const long left, const long top, const long right, const long bottom) { 
 	return _nvdaControllerInternal_displayModelTextChangeNotify(hwnd,left,top,right,bottom);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_inputCompositionUpdate)(const wchar_t*, const int, const int, const int);
+error_status_t __stdcall nvdaControllerInternal_inputCompositionUpdate(const wchar_t* compositionString, const int selectionStart, const int selectionEnd, const int isReading) {
+	return _nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_inputCandidateListUpdate)(const wchar_t*, const long);
+error_status_t __stdcall nvdaControllerInternal_inputCandidateListUpdate(const wchar_t* candidates, const long selectionIndex) {
+	return _nvdaControllerInternal_inputCandidateListUpdate(candidates,selectionIndex);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_inputConversionModeUpdate)(const long, const long, const unsigned long);
+error_status_t __stdcall nvdaControllerInternal_inputConversionModeUpdate(const long oldFlags, const long newFlags, const unsigned long lcid) {
+	return _nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags,lcid);
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_vbufChangeNotify)(const int, const int);

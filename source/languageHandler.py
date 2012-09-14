@@ -1,3 +1,4 @@
+import __builtin__
 import os
 import sys
 import ctypes
@@ -71,16 +72,35 @@ def getAvailableLanguages():
 	#return a zipped up version of both the lists (a list with tuples of locale,label)
 	return zip(l,d)
 
+def makePgettext(translations):
+	"""Obtaina  pgettext function for use with a gettext translations instance.
+	pgettext is used to support message contexts,
+	but Python 2.7's gettext module doesn't support this,
+	so NVDA must provide its own implementation.
+	"""
+	if isinstance(translations, gettext.GNUTranslations):
+		def pgettext(context, message):
+			message = unicode(message)
+			try:
+				# Look up the message with its context.
+				return translations._catalog[u"%s\x04%s" % (context, message)]
+			except KeyError:
+				return message
+	else:
+		def pgettext(context, message):
+			return unicode(message)
+	return pgettext
+
 def setLanguage(lang):
 	global curLang
 	try:
 		if lang=="Windows":
 			windowsLCID=ctypes.windll.kernel32.GetUserDefaultUILanguage()
 			localeName=locale.windows_locale[windowsLCID]
-			gettext.translation('nvda',localedir='locale',languages=[localeName]).install(True)
+			trans=gettext.translation('nvda',localedir='locale',languages=[localeName])
 			curLang=localeName
 		else:
-			gettext.translation("nvda", localedir="locale", languages=[lang]).install(True)
+			trans=gettext.translation("nvda", localedir="locale", languages=[lang])
 			curLang=lang
 			localeChanged=False
 			#Try setting Python's locale to lang
@@ -98,11 +118,12 @@ def setLanguage(lang):
 			#Set the windows locale for this thread (NVDA core) to this locale.
 			LCID=localeNameToWindowsLCID(lang)
 			ctypes.windll.kernel32.SetThreadLocale(LCID)
-		return True
 	except IOError:
-		gettext.install("nvda", unicode=True)
+		trans=gettext.translation("nvda",fallback=True)
 		curLang="en"
-		return False
+	trans.install(unicode=True)
+	# Install our pgettext function.
+	__builtin__.__dict__["pgettext"] = makePgettext(trans)
 
 def getLanguage():
 	return curLang

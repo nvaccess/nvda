@@ -2,7 +2,7 @@ NVDA NVDA_VERSION User Guide
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Keyboard Commands Quick Reference
+%kc:title: NVDA NVDA_VERSION Commands Quick Reference
 
 = Table of Contents =[toc]
 %%toc
@@ -56,7 +56,7 @@ This applies to both original and modified copies of this software, plus any der
 For further details, you can [view the full licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + System Requirements +
-- Operating Systems: all 32-bit and 64-bit versions of Windows XP, Windows Vista and Windows 7 (including Server operating Systems).
+- Operating Systems: all 32-bit and 64-bit versions of Windows XP, Windows Vista, Windows 7 and Windows 8 (including Server operating Systems)
 - Memory: 256 mb or more of RAM
 - Processor speed: 1.0 ghz or above
 - About 50 MB of storage space.
@@ -148,14 +148,6 @@ By default, both the numpad Insert and Extended Insert keys are set as NVDA modi
 
 If you wish to cause one of the NVDA modifier keys to act like its original key (for instance you wish to turn capslock on when you have set capslock to be an NVDA modifier key) you can press the key twice in quick succession.
 
-+++ Input Help Mode +++
-Many key commands are mentioned through out the rest of this user guide, but an easy way to explore all the different key commands is to turn on input help.
-
-To turn on input help, press NVDA+1.
-To turn it off, press NVDA+1 again.
-While in input help, pressing any key will report what it does (if indeed it does do something).
-The keys will not actually perform their function while in input help mode, so you can press what ever keys you like.
-
 +++ Keyboard Layouts +++
 NVDA currently comes with two sets of key commands.
 There is a layout for Desktops and a layout for Laptops.
@@ -165,25 +157,77 @@ The Desktop layout makes heavy use of the numberpad (with numlock off).
 Although most laptops do not have a physical numberpad, some laptops can emulate one by holding down the FN key and pressing letters and numbers on the right-hand side of the keyboard (7 8 9 u i o j k l etc).
 If your laptop can not do this, or does not allow you to turn numlock off, you may want to switch to the Laptop layout instead.
 
+++ NVDA Touch Gestures ++
+If you are running NVDA on a device with a touch screen and running Windows 8 or higher, you can also control NVDA directly via the touch screen.
+While NVDA is running, all touch input will go directly to NVDA. 
+Therefore, actions that can be performed normally without NVDA will not work.
+
++++ Exploring the Screen +++
+The most basic action you can perform with the touch screen is to announce the control or text at any point on the screen.
+To do this, place one finger anywhere on the screen.
+You can also keep your finger on the screen and move it around to read other controls and text that your finger moves over.
+
++++ Touch Gestures +++
+When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touch screen.
+Following are some instructions on how to perform the various touch gestures.
+
+==== Taps ====
+Tap the screen quickly with one or more fingers.
+
+Tapping once with one  finger is simpley known as a tap.
+Tapping with 2 fingers at the same time is a 2-finger tap and so on.
+
+If the same tap is performed one or more times again in quick succession, NVDA will instead treat this as a multi-tap gesture.
+Tapping twice will result in a double tap.
+Tapping 3 times will result in a triple tap and so on.
+Of course, these multi-tap gestures also recognize how many fingers were used, so it's possible to have gestures like a 2-finger triple tap, a 4-finger tap, etc. 
+
+==== Flicks ====
+Quickly swipe your finger across the screen.
+
+There are 4 possible flick gestures depending on the direction: flick left, flick right, flick up and flick down.
+
+Just like taps, more than one finger can be used to perform the gesture.
+Therefore, gestures such as 2-finger flick up and 4-finger flick left are all possible.
+
++++ Touch Modes +++
+As there are many more NVDA commands than possible touch gestures, NVDA has several touch modes you can switch between which make certain subsets of commands available.
+The two modes are text mode and object mode. 
+Certain NVDA commands listed in this document may have a touch mode listed in brackets after the touch gesture.
+For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.
+If the command does not have a mode listed, it will work in any mode.
+
+%kc:beginInclude
+To toggle touch modes, perform a 3-finger tap.
+%kc:endInclude
+
+++ Input Help Mode ++
+Many NVDA commands are mentioned throughout the rest of this user guide, but an easy way to explore all the different commands is to turn on input help.
+
+To turn on input help, press NVDA+1.
+To turn it off, press NVDA+1 again.
+While in input help, performing any input gesture (such as pressing a key or performing a touch gesture) will report the action and describe what it does (if anything).
+The actual  commands will not execute while in input help mode.
+
 ++ The NVDA menu ++
 The NVDA menu allows you to control NVDA's settings, access help, save/revert your configuration, Modify speech dictionaries, access additional tools and exit NVDA.
 
-To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n.
+To get to the NVDA menu from anywhere in Windows while NVDA is running, press NVDA+n on the keyboard or perform a 2-finger double tap on the touch screen.
 You can also get to the NVDA menu via the windows system tray.
 Either right-click on the NVDA icon located in the system tray, or access the system tray by pressing the windows logo key+B, DownArrow to the NVDA icon and press the applications key located next to the right control key on most keyboards.
 When the menu comes up, You can use the arrow keys to navigate the menu, and the enter key to activate an item.
 
-++ Basic key commands ++
+++ Basic NVDA commands ++
 %kc:beginInclude
-|| Name | Key | Description |
-| Stop speech | Control | Instantly stops speaking |
-| Pause Speech | Shift | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
-| NVDA Menu | NVDA+n | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
-| Toggle Speech Mode | NVDA+s | Toggles speech mode between speech, beeps and off. |
-| Toggle Keyboard Help Mode | NVDA+1 | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
-| Quit NVDA | NVDA+q | Exits NVDA |
-| Pass next key through | NVDA+f2 | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
-| Toggle application sleep mode on and off | NVDA+shift+s | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable self voicing mode. |
+|| Name | Key | Touch | Description |
+| Stop speech | Control | 2-finger tap | Instantly stops speaking |
+| Pause Speech | Shift | none | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
+| NVDA Menu | NVDA+n | 2-finger double tap | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
+| Toggle Speech Mode | NVDA+s | none | Toggles speech mode between speech, beeps and off. |
+| Toggle Keyboard Help Mode | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
+| Quit NVDA | NVDA+q | none | Exits NVDA |
+| Pass next key through | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
+| Toggle application sleep mode on and off | NVDA+shift+s | none | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable self voicing mode. |
 %kc:endInclude
 
 ++ Reporting System Information ++
@@ -265,19 +309,19 @@ By default, the navigator object moves along with the System focus, though this 
 Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
 If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
 
-To navigate by object, use the following keys:
+To navigate by object, use the following commands:
 
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Report current object | NVDA+numpad5 | NVDA+control+i | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
-| Move to containing object | NVDA+numpad8 | NVDA+shift+i | Moves to the object containing the current navigator object |
-| Move to previous object | NVDA+numpad4 | NVDA+control+j | Moves to the object before the current navigator object |
-| Move to next object | NVDA+numpad6 | control+NVDA+l | Moves to the object after the current navigator object |
-| Move to first contained object | NVDA+numpad2 | NVDA+shift+comma | Moves to the first object contained by the current navigator object |
-| Move to focus object | NVDA+numpadMinus | NVDA+backspace | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
-| Activate current navigator object | NVDA+numpadEnter | NVDA+enter | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
-| Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
-| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | Reports the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
+|| Name | Desktop key | Laptop key | Touch | Description |
+| Report current object | NVDA+numpad5 | NVDA+control+i | none | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
+| Move to containing object | NVDA+numpad8 | NVDA+shift+i | flick up (object mode) | Moves to the object containing the current navigator object |
+| Move to previous object | NVDA+numpad4 | NVDA+control+j | flick left (object mode) | Moves to the object before the current navigator object |
+| Move to next object | NVDA+numpad6 | control+NVDA+l | flick right (object mode) | Moves to the object after the current navigator object |
+| Move to first contained object | NVDA+numpad2 | NVDA+shift+comma | flick down (object mode) | Moves to the first object contained by the current navigator object |
+| Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
+| Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
+| Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
+| Report navigator object dimensions | NVDA+numpadDelete | NVDA+delete | none | Reports the current navigator object's dimensions on screen in per centages (including distance from left and top of screen, and its width and height) |
 %kc:endInclude
 
 Note: numpad keys require numlock key to be turned off to work properly.
@@ -294,31 +338,31 @@ This can be toggled on and off.
 Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
 If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
 
-The following key commands are available for reviewing text:
+The following commands are available for reviewing text:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Move to top line in review | shift+numpad7 | NVDA+7 | Moves the review cursor to the top line of the text |
-| Move to previous line in review | numpad7 | NVDA+u | Moves the review cursor to the previous line of text |
-| Report current line in review | numpad8 | NVDA+i | Announces the current line of text where the review cursor is positioned. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
-| Move to next line in review | numpad9 | NVDA+o | Move the review cursor to the next line of text |
-| Move to bottom line in review | shift+numpad9 | NVDA+9 | Moves the review cursor to the bottom line of text |
-| Move to previous word in review | numpad4 | NVDA+j | Moves the review cursor to the previous word in the text |
-| Report current word in review | numpad5 | NVDA+k | Announces the current word in the text where the review cursor is positioned. Pressing twice spells the word. Pressing three times spells the word using character descriptions. |
-| Move to next word in review | numpad6 | NVDA+l | Move the review cursor to the next word in the text |
-| Move to start of line in review | shift+numpad1 | NVDA+shift+u | Moves the review cursor to the start of the current line in the text |
-| Move to previous character in review | numpad1 | NVDA+m | Moves the review cursor to the previous character on the current line in the text |
-| Report current character in review | numpad2 | NVDA+comma | Announces the current character on the line of text where the review cursor is positioned. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal. |
-| Move to next character in review | numpad3 | NVDA+dot | Move the review cursor to the next character on the current line of text |
-| Move to end of line in review | shift+numpad3 | NVDA+shift+o | Moves the review cursor to the end of the current line of text |
-| Say all with review | numpadPlus | NVDA+shift+downArrow | Reads from the current position of the review cursor, moving it as it goes |
-| Copy from review cursor | NVDA+f9 | NVDA+f9 | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
-| Copy to review cursor | NVDA+f10 | NVDA+f10 | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
-| Report text formatting | NVDA+f | NVDA+f | Reports the formatting of the text where the review cursor is currently situated |
+|| Name | Desktop key | Laptop key | Touch | Description |
+| Move to top line in review | shift+numpad7 | NVDA+7 | none | Moves the review cursor to the top line of the text |
+| Move to previous line in review | numpad7 | NVDA+u | flick up (text mode) | Moves the review cursor to the previous line of text |
+| Report current line in review | numpad8 | NVDA+i | none | Announces the current line of text where the review cursor is positioned. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
+| Move to next line in review | numpad9 | NVDA+o | flick down (text mode) | Move the review cursor to the next line of text |
+| Move to bottom line in review | shift+numpad9 | NVDA+9 | none | Moves the review cursor to the bottom line of text |
+| Move to previous word in review | numpad4 | NVDA+j | 2-finger flick left (text mode) | Moves the review cursor to the previous word in the text |
+| Report current word in review | numpad5 | NVDA+k | none | Announces the current word in the text where the review cursor is positioned. Pressing twice spells the word. Pressing three times spells the word using character descriptions. |
+| Move to next word in review | numpad6 | NVDA+l | 2-finger flick right (text mode) | Move the review cursor to the next word in the text |
+| Move to start of line in review | shift+numpad1 | NVDA+shift+u | none | Moves the review cursor to the start of the current line in the text |
+| Move to previous character in review | numpad1 | NVDA+m | flick left (text mode) | Moves the review cursor to the previous character on the current line in the text |
+| Report current character in review | numpad2 | NVDA+comma | none | Announces the current character on the line of text where the review cursor is positioned. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal. |
+| Move to next character in review | numpad3 | NVDA+dot | flick right (text mode) | Move the review cursor to the next character on the current line of text |
+| Move to end of line in review | shift+numpad3 | NVDA+shift+o | none | Moves the review cursor to the end of the current line of text |
+| Say all with review | numpadPlus | NVDA+shift+downArrow | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
+| Copy from review cursor | NVDA+f9 | NVDA+f9 | none | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
+| Copy to review cursor | NVDA+f10 | NVDA+f10 | none | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
+| Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated |
 %kc:endInclude
 
 Note: numpad keys require numlock key to be turned off to work properly.
 
-To help you remember these commands, note that the basic text review commands are organized in a grid of three by three, with top to bottom being line, word and character and left to right being previous, current and next.
+To help you remember the key commands, note that the basic text review commands are organized in a grid of three by three, with top to bottom being line, word and character and left to right being previous, current and next.
 The layout is illustrated as follows:
 | Previous line | Current line | Next line |
 | Previous word | Current word | Next word |
@@ -341,9 +385,9 @@ If you want it to follow object navigation and text review instead, you need to 
 
 The following two commands are used for switching to/from flat review:
 %kc:beginInclude
-|| Name | Desktop key | Laptop key | Description |
-| Move to flat review | NVDA+numpad7 | NVDA+pageUp | Moves to flat review, placing you at the position of the current navigator object, allowing you to review the screen (or document if you are currently inside one) with the text review commands. |
-| Move to object from flat review | NVDA+numpad1 | NVDA+pageDown | navigates to the object represented by the text at the current position of the review cursor in flat review |
+|| Name | Desktop key | Laptop key | Touch | Description |
+| Move to flat review | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | Moves to flat review, placing you at the position of the current navigator object, allowing you to review the screen (or document if you are currently inside one) with the text review commands. |
+| Move to object from flat review | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | navigates to the object represented by the text at the current position of the review cursor in flat review |
 %kc:endInclude
 
 ++ Navigating with the Mouse ++
@@ -443,8 +487,8 @@ Once you have chosen an item, you can use the provided buttons in the dialog to 
 %kc:endInclude
 
 ++ Embedded Objects ++
-Pages can include rich content using technologies such as Adobe Flash and Sun Java.
-Where these are encountered in browse mode, NVDA will report "embedded object".
+Pages can include rich content using technologies such as Adobe Flash and Sun Java, as well as applications and dialogs.
+Where these are encountered in browse mode, NVDA will report "embedded object", "application" or "dialog", respectively.
 You can press enter on these objects to interact with them.
 If it is accessible, you can then tab around it and interact with it like any other application.
 A key command is provided to return to the original page containing the embedded object:
@@ -803,6 +847,20 @@ If you minimize or switch away from a window that contains a progress bar, NVDA 
 Key: NVDA+5
 
 Toggles the announcement of new content in particular objects such as terminals and the history control in chat programs.
+
++++ Input Composition Settings +++
+The Input Composition Settings dialog can be found under the Preferences menu.
+This dialog allows you to control how NVDA reports the input of Asian characters, such as with IME or Text Service input methods.
+
+==== Automatically report all available candidates ====
+This option, which is on by default,  allows you to choose whether or not all visible candidates should be reported automatically when a candidate list appears or its page is changed.
+Having this option on for pictographic input methods such as chinese New ChangJie or Boshiami is useful, as you can automatically hear all symbols and their numbers and you can choose one right away.
+However, for phonetic input methods such as chinese New Phonetic, it may be more useful to turn this option off, as all the symbols will sound the same and you will have to use the arrow keys to navigate the list items individually to gain more information  from the character descriptions for each candidate.
+
+==== Report changes to the reading string ====
+Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
+You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.
+This option is on by default.
 
 +++ Browse Mode Settings (NVDA+control+b) +++
 The Browse Mode settings dialog can be found in the Preferences menu, under "Browse mode...".
@@ -1401,14 +1459,22 @@ Each entry key can only be listed once per section, including None.
 Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
 -
 
-Gesture identifiers consist of a two letter device code (kb for keyboard and br for braille display), a sub-device or layout in brackets, a colon, and then one or more key names separated by a plus (+) sign.
-For keyboard gestures, the part in brackets is the keyboard layout and is optional.
+Gesture identifiers consist of a two letter device code; a sub-device, layout or mode in brackets; a colon; and then a type-specific string identifying the actual input, such as key or touch gesture names.
+- For keyboard gestures, the device code is kb.
+The part in brackets is the keyboard layout and is optional.
 If not specified, the gesture will apply to all keyboard layouts.
-For braille display gestures, the part in brackets identifies the specific braille display and is mandatory.
+The string after the colon is one or more key names separated by a plus (+) sign.
+- For braille display gestures, the device code is br.
+The part in brackets identifies the specific braille display and is mandatory.
+The string after the colon is one or more key names separated by a plus (+) sign.
+- For touch gestures, the device code is ts.
+The part in brackets is the touch mode and is optional.
+The string after the colon is a touch gesture; e.g. double_tap, 2fingerflickUp or 3finger_tap.
+-
 
 In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
 + Turn on Input Help.
-+ Activate the gesture (press the key).
++ Activate the gesture (press the key, touch the screen, etc.).
 + Turn off input help.
 + Activate View log in the NVDA Tools menu.
 + Examine the recent log entries.

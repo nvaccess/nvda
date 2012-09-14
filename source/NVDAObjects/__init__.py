@@ -468,6 +468,17 @@ class NVDAObject(baseObject.ScriptableObject):
 			child=child.next
 		return children
 
+	def getChild(self, index):
+		"""Retrieve a child by index.
+		@note: Subclasses may override this if they have an efficient way to retrieve a single, arbitrary child.
+			The base implementation uses L{children}.
+		@param index: The 0-based index of the child to retrieve.
+		@type index: int
+		@return: The child.
+		@rtype: L{NVDAObject}
+		"""
+		return self.children[index]
+
 	def _get_rowNumber(self):
 		"""Retreaves the row number of this object if it is in a table.
 		@rtype: int
@@ -647,6 +658,18 @@ class NVDAObject(baseObject.ScriptableObject):
 		@rtype: L{NVDAObject} or None
 		"""
 		return None
+
+	def _get_isFocusable(self):
+		"""Whether this object is focusable.
+		@rtype: bool
+		"""
+		return controlTypes.STATE_FOCUSABLE in self.states
+
+	def _get_hasFocus(self):
+		"""Whether this object has focus.
+		@rtype: bool
+		"""
+		return controlTypes.STATE_FOCUSED in self.states
 
 	def setFocus(self):
 		"""
@@ -869,6 +892,23 @@ This code is executed if a gain focus event is received by this object.
 	def makeTextInfo(self,position):
 		return self.TextInfo(self,position)
 
+	@staticmethod
+	def _formatLongDevInfoString(string, truncateLen=250):
+		"""Format a potentially long string value for inclusion in devInfo.
+		This should be used for arbitrary string values which aren't usually useful in debugging past a certain length.
+		If the string is too long to be useful, it will be truncated.
+		This string should be included as returned. There is no need to call repr.
+		@param string: The string to format.
+		@type string: nbasestring
+		@param truncateLen: The length at which to truncate the string.
+		@type truncateLen: int
+		@return: The formatted string.
+		@rtype: basestring
+		"""
+		if isinstance(string, basestring) and len(string) > truncateLen:
+			return "%r (truncated)" % string[:truncateLen]
+		return repr(string)
+
 	def _get_devInfo(self):
 		"""Information about this object useful to developers.
 		Subclasses may extend this, calling the superclass property first.
@@ -899,6 +939,16 @@ This code is executed if a gain focus event is received by this object.
 			ret = "exception: %s" % e
 		info.append("states: %s" % ret)
 		try:
+			ret = repr(self.isFocusable)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("isFocusable: %s" % ret)
+		try:
+			ret = repr(self.hasFocus)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("hasFocus: %s" % ret)
+		try:
 			ret = repr(self)
 		except Exception as e:
 			ret = "exception: %s" % e
@@ -918,12 +968,9 @@ This code is executed if a gain focus event is received by this object.
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("location: %s" % ret)
+		formatLong = self._formatLongDevInfoString
 		try:
-			ret = self.value
-			if isinstance(ret, basestring) and len(ret) > 100:
-				ret = "%r (truncated)" % ret[:100]
-			else:
-				ret = repr(ret)
+			ret = formatLong(self.value)
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("value: %s" % ret)

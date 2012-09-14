@@ -18,9 +18,8 @@ from NVDAObjects.IAccessible import sysListView32, IAccessible
 class SearchBoxClient(IAccessible):
 	shouldAllowIAccessibleFocusEvent=False
 
-
- #Class for menu items  for Windows Places and Frequently used Programs (in start menu)
-class SysListView32MenuItem(sysListView32.ListItem):
+#Class for menu items  for Windows Places and Frequently used Programs (in start menu)
+class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 
 	#When focus moves to these items, an extra focus is fired on the parent
 	#However NVDA redirects it to the real focus.

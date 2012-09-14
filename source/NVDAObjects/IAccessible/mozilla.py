@@ -13,15 +13,11 @@ import eventHandler
 import controlTypes
 from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
+from NVDAObjects.behaviors import RowWithFakeNavigation
 
 class Mozilla(IAccessible):
 
 	IAccessibleTableUsesTableCellIndexAttrib=True
-
-	def _get_beTransparentToMouse(self):
-		if not hasattr(self,'IAccessibleTextObject') and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
-			return True
-		return super(Mozilla,self).beTransparentToMouse
 
 	def _get_parent(self):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
@@ -44,6 +40,8 @@ class Mozilla(IAccessible):
 		states = super(Mozilla, self).states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
 			states.add(controlTypes.STATE_CHECKABLE)
+		if self.IA2Attributes.get("hidden") == "true":
+			states.add(controlTypes.STATE_INVISIBLE)
 		return states
 
 	def _get_presentationType(self):
@@ -181,6 +179,7 @@ class GeckoPluginWindowRoot(WindowRoot):
 
 class TextLeaf(Mozilla):
 	role = controlTypes.ROLE_STATICTEXT
+	beTransparentToMouse = True
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
@@ -215,6 +214,22 @@ def findExtraOverlayClasses(obj, clsList):
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
 		clsList.append(cls)
+
+	if iaRole == oleacc.ROLE_SYSTEM_ROW:
+		clsList.append(RowWithFakeNavigation)
+	elif iaRole == oleacc.ROLE_SYSTEM_LISTITEM and hasattr(obj.parent, "IAccessibleTableObject"):
+		clsList.append(RowWithFakeNavigation)
+	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
+		# Check if the tree view is a table.
+		parent = obj.parent
+		# Tree view items may be nested, so skip any tree view item ancestors.
+		while parent and isinstance(parent, Mozilla) and parent.IAccessibleRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
+			newParent = parent.parent
+			parent.parent = newParent
+			parent = newParent
+		if hasattr(parent, "IAccessibleTableObject"):
+			clsList.append(RowWithFakeNavigation)
+
 	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
 		clsList.append(BrokenFocusedState)
 

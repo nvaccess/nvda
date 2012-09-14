@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5347\n"
+"Project-Id-Version: NVDA bzr main:5393\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-08-13 08:03+0100\n"
-"PO-Revision-Date: 2012-08-13 14:25-0800\n"
+"POT-Creation-Date: 2012-09-03 05:30+0100\n"
+"PO-Revision-Date: 2012-09-03 10:39-0800\n"
 "Last-Translator: Joseph Lee <joseph.lee22590@gmail.com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph.lee22590@gmail.com, nvda-korean@freelists.org>\n"
 "Language: \n"
@@ -37,7 +37,7 @@ msgstr "%d시간 %d분 남음"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
 #: globalCommands.py:830
-#: NVDAObjects/behaviors.py:54
+#: NVDAObjects/behaviors.py:55
 #, python-format
 msgid "%d percent"
 msgstr "%d 퍼센트"
@@ -61,7 +61,7 @@ msgstr "%s 커서"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:552
+#: braille.py:553
 #, python-format
 msgid "%s end"
 msgstr "%s 끝"
@@ -91,7 +91,7 @@ msgstr "&Acceleration"
 msgid "&Activate"
 msgstr "바로가기 (&A)"
 
-#: gui/settingsDialogs.py:1091
+#: gui/settingsDialogs.py:1115
 msgid "&Add"
 msgstr "추가 (&A)"
 
@@ -105,7 +105,7 @@ msgstr "Windows 로그인 후 NVDA 자동 실행 (&A)"
 msgid "&Beep for capitals"
 msgstr "경고음으로 대문자 알림 (&B)"
 
-#: gui/__init__.py:296
+#: gui/__init__.py:301
 msgid "&Browse mode..."
 msgstr "브라우저 모드 (&B)..."
 
@@ -116,7 +116,7 @@ msgstr "브라우저 모드 (&B)..."
 msgid "&Close"
 msgstr "닫기 (&C)"
 
-#: gui/settingsDialogs.py:1048
+#: gui/settingsDialogs.py:1072
 msgid "&Comment"
 msgstr "설명 (&C)"
 
@@ -126,15 +126,15 @@ msgstr "설명 (&C)"
 msgid "&Continue"
 msgstr "계속 (&C)"
 
-#: gui/__init__.py:568
+#: gui/__init__.py:573
 msgid "&Continue running"
 msgstr "계속 실행 (&C)"
 
-#: gui/__init__.py:302
+#: gui/__init__.py:307
 msgid "&Default dictionary..."
 msgstr "기본 발음 사전 (&D)..."
 
-#: gui/settingsDialogs.py:1075
+#: gui/settingsDialogs.py:1099
 msgid "&Dictionary entries"
 msgstr "발음 사전 단어 목록 (&D)"
 
@@ -155,7 +155,7 @@ msgstr "후원 마침 (&D)"
 msgid "&Download update"
 msgstr "업데이트 받기 (&D)"
 
-#: gui/settingsDialogs.py:1094
+#: gui/settingsDialogs.py:1118
 msgid "&Edit"
 msgstr "수정 (&E)"
 
@@ -166,7 +166,7 @@ msgstr "수정 (&E)"
 msgid "&Filter by:"
 msgstr "특정 구성요소 이름 검색 (&F)"
 
-#: gui/__init__.py:280
+#: gui/__init__.py:283
 msgid "&General settings..."
 msgstr "일반 설정 (&G)..."
 
@@ -176,7 +176,7 @@ msgstr "일반 설정 (&G)..."
 msgid "&Headings"
 msgstr "헤딩 (&H)"
 
-#: gui/__init__.py:359
+#: gui/__init__.py:364
 msgid "&Help"
 msgstr "도움말 (&H)"
 
@@ -184,11 +184,16 @@ msgstr "도움말 (&H)"
 msgid "&Inflection"
 msgstr "억양 (&I)"
 
-#: gui/__init__.py:560
+#: gui/__init__.py:297
+#, fuzzy
+msgid "&Input composition settings..."
+msgstr "마우스 설정 (&M)..."
+
+#: gui/__init__.py:565
 msgid "&Install NVDA on this computer"
 msgstr "컴퓨터에 NVDA 설치 (&I)"
 
-#: gui/__init__.py:330
+#: gui/__init__.py:335
 msgid "&Install NVDA..."
 msgstr "NVDA 설치 (&I)..."
 
@@ -207,7 +212,7 @@ msgstr "이전 바탕화면 핫키 그대로 사용 (&K)"
 msgid "&Keyboard layout:"
 msgstr "키보드 배열 (&K)"
 
-#: gui/__init__.py:288
+#: gui/__init__.py:291
 msgid "&Keyboard settings..."
 msgstr "키보드 설정 (&K)..."
 
@@ -219,17 +224,17 @@ msgstr "언어 (&L)"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "사용 언어 (언어 변경은 NVDA를 다시 실행하면 적용됩니다) (&L):"
 
-#: gui/settingsDialogs.py:1300
+#: gui/settingsDialogs.py:1324
 msgid "&Level"
 msgstr "레벨 (&L)"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:835
+#: gui/settingsDialogs.py:859
 msgid "&Maximum number of characters on one line"
 msgstr "줄 단 최대 글자 수 (&M)"
 
-#: gui/__init__.py:290
+#: gui/__init__.py:293
 msgid "&Mouse settings..."
 msgstr "마우스 설정 (&M)..."
 
@@ -247,16 +252,16 @@ msgstr "지금은 아니요 (&N)"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:842
+#: gui/settingsDialogs.py:866
 msgid "&Number of lines per page"
 msgstr "페이지당 줄 수 (&N)"
 
 # Object Presentation may mean a different thing in Korean. The above translation means "screen object output," as the dialog is concerned about announcing various objects such as tool tips and such.
-#: gui/__init__.py:294
+#: gui/__init__.py:299
 msgid "&Object presentation..."
 msgstr "화면 객체 표시 설정 (&O)..."
 
-#: gui/settingsDialogs.py:1042
+#: gui/settingsDialogs.py:1066
 msgid "&Pattern"
 msgstr "기존값 (&P)"
 
@@ -264,11 +269,11 @@ msgstr "기존값 (&P)"
 msgid "&Pitch"
 msgstr "음성 높이 (&P)"
 
-#: gui/__init__.py:312
+#: gui/__init__.py:317
 msgid "&Preferences"
 msgstr "설정 (&P)"
 
-#: gui/__init__.py:310
+#: gui/__init__.py:315
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "구두점/기호 발음 설정 (&P)..."
 
@@ -277,24 +282,24 @@ msgid "&Rate"
 msgstr "음성 속도 (&R)"
 
 #: gui/addonGui.py:41
-#: gui/settingsDialogs.py:1097
+#: gui/settingsDialogs.py:1121
 msgid "&Remove"
 msgstr "삭제 (&R)"
 
-#: gui/settingsDialogs.py:1045
-#: gui/settingsDialogs.py:1294
+#: gui/settingsDialogs.py:1069
+#: gui/settingsDialogs.py:1318
 msgid "&Replacement"
 msgstr "변환값 (&R)"
 
-#: gui/__init__.py:364
+#: gui/__init__.py:369
 msgid "&Reset configuration to factory defaults"
 msgstr "기본 환경설정으로 초기화 (&R)"
 
-#: gui/__init__.py:361
+#: gui/__init__.py:366
 msgid "&Revert to saved configuration"
 msgstr "저장된 환경설정으로 환원 (&R)"
 
-#: gui/__init__.py:366
+#: gui/__init__.py:371
 msgid "&Save configuration"
 msgstr "환경설정 저장 (&S)"
 
@@ -302,11 +307,11 @@ msgstr "환경설정 저장 (&S)"
 msgid "&Save configuration on exit"
 msgstr "NVDA 종료시 환경설정 저장 (&S)"
 
-#: gui/settingsDialogs.py:1279
+#: gui/settingsDialogs.py:1303
 msgid "&Symbols"
 msgstr "기호 (&S)"
 
-#: gui/__init__.py:282
+#: gui/__init__.py:285
 msgid "&Synthesizer..."
 msgstr "음성 엔진 (&S)..."
 
@@ -316,7 +321,7 @@ msgstr "음성 엔진 (&S)..."
 msgid "&Synthesizer:"
 msgstr "음성 엔진 (&S):"
 
-#: gui/__init__.py:306
+#: gui/__init__.py:311
 msgid "&Temporary dictionary..."
 msgstr "임시 발음사전 (&T)..."
 
@@ -324,11 +329,11 @@ msgstr "임시 발음사전 (&T)..."
 msgid "&Voice"
 msgstr "보이스 (&V)"
 
-#: gui/__init__.py:304
+#: gui/__init__.py:309
 msgid "&Voice dictionary..."
 msgstr "보이스 발음사전 (&V)..."
 
-#: gui/__init__.py:284
+#: gui/__init__.py:287
 msgid "&Voice settings..."
 msgstr "보이스 설정 (&V)..."
 
@@ -372,15 +377,15 @@ msgstr "-----"
 msgid "..."
 msgstr "..."
 
-#: gui/__init__.py:302
+#: gui/__init__.py:307
 msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
 msgstr "이 대화상자를 이용하여 기본 발음 사전에 단어를 추가할 수 있습니다."
 
-#: gui/__init__.py:306
+#: gui/__init__.py:311
 msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "이 대화상자를 이용하여 임시 발음 사전에 단어를 등록할 수 있습니다."
 
-#: gui/__init__.py:304
+#: gui/__init__.py:309
 msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "이 대화상자를 이용하여 보이스 발음 사전에 단어를 등록할 수 있습니다."
 
@@ -393,6 +398,12 @@ msgstr "Microsoft Windows용 무료 오픈소스 스크린 리더"
 msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
 msgstr "시스템에 NVDA 이전 버전이 설치되어 있습니다. 설치한 버전을 업데이트합니다."
 
+# Literally means: The add-on already exists. Would you like to update to installing version?
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#: gui/addonGui.py:91
+msgid "A version of this add-on is already installed. Would you like to update it?"
+msgstr "이미 설치되어 있는 추가 기능입니다. 설치하고자 하는 버전으로 업데이트 하시겠습니까?"
+
 #: globalCommands.py:831
 msgid "AC power on"
 msgstr "전원 켜짐"
@@ -402,12 +413,12 @@ msgstr "전원 켜짐"
 msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680"
 
-#: gui/__init__.py:215
-#: gui/__init__.py:357
+#: gui/__init__.py:218
+#: gui/__init__.py:362
 msgid "About NVDA"
 msgstr "NVDA 정보"
 
-#: gui/__init__.py:357
+#: gui/__init__.py:362
 msgid "About..."
 msgstr "NVDA 정보 (&A)..."
 
@@ -416,7 +427,7 @@ msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "NVDA 개발에 유용한 NVDA 파이턴 개발 컨솔을 엽니다"
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui/settingsDialogs.py:1121
+#: gui/settingsDialogs.py:1145
 msgid "Add Dictionary Entry"
 msgstr "발음사전 항목 추가"
 
@@ -426,7 +437,7 @@ msgid "Add-on Information"
 msgstr "추가 기능 정보"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
-#. Translators: A title for the dialog  asking if the user wishes to replace a previously installed add-on with this one.
+#. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
 #: gui/addonGui.py:80
 #: gui/addonGui.py:93
 msgid "Add-on Installation"
@@ -442,9 +453,14 @@ msgstr "추가 기능 관리자"
 msgid "Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"
 msgstr "추가 기능들이 설치되었거나 삭제되었습니다. 변경된 사항을 적용하려면 NVDA를 다시 시작해야 합니다. NVDA를 다시 시작하시겠습니까?"
 
+#. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
+#: NVDAHelper.py:211
+msgid "Alpha numeric input"
+msgstr ""
+
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:909
+#: gui/settingsDialogs.py:933
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "커서 이동시 서식 변경 알림 (속도 저하 가능성 있음)"
 
@@ -489,7 +505,7 @@ msgstr "첨부 파일"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:874
+#: gui/settingsDialogs.py:898
 msgid "Audio indication of focus and browse modes"
 msgstr "포커스와 탐색 모드 변경시 경고음 재생"
 
@@ -499,7 +515,7 @@ msgstr "저자"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:854
+#: gui/settingsDialogs.py:878
 msgid "Automatic &Say All on page load"
 msgstr "페이지 열리면 자동으로 읽기 (&S)"
 
@@ -517,13 +533,13 @@ msgstr "음성 엔진 지원시 자동으로 종속어 변경"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:869
+#: gui/settingsDialogs.py:893
 msgid "Automatic focus mode for caret movement"
 msgstr "케럿 움직일때 자동으로 포커스 모드로 전환"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:864
+#: gui/settingsDialogs.py:888
 msgid "Automatic focus mode for focus changes"
 msgstr "포커스 움직일때 자동으로 포커스 모드로 전환"
 
@@ -538,11 +554,17 @@ msgstr "음성 엔진 지원시 언어 자동 변경"
 msgid "Automatically check for &updates to NVDA"
 msgstr "NVDA 업데이트 자동 확인"
 
-#: gui/settingsDialogs.py:1235
+#. Translators: This is the label for a checkbox in the
+#. Input composition settings dialog.
+#: gui/settingsDialogs.py:739
+msgid "Automatically report all available &candidates"
+msgstr ""
+
+#: gui/settingsDialogs.py:1259
 msgid "Avoid splitting &words when possible"
 msgstr "가능하면 단어 끊지않고 출력"
 
-#: gui/__init__.py:286
+#: gui/__init__.py:289
 msgid "B&raille settings..."
 msgstr "점자 출력 설정 (&R)..."
 
@@ -559,7 +581,7 @@ msgstr "Baum/HumanWare/APH 디스플레이"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui/settingsDialogs.py:747
+#: gui/settingsDialogs.py:771
 msgid "Beep"
 msgstr "경고음"
 
@@ -569,16 +591,16 @@ msgstr "경고음"
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "caps lock이 켜져 있을때 소문자 입력시 경고음 출력"
 
-#: gui/settingsDialogs.py:1171
+#: gui/settingsDialogs.py:1195
 msgid "Braille &display:"
 msgstr "점자 디스플레이"
 
-#: gui/settingsDialogs.py:1245
+#: gui/settingsDialogs.py:1269
 msgid "Braille Display Error"
 msgstr "점자 출력 오류"
 
 #. Translators: This is the label for the braille settings dialog.
-#: gui/settingsDialogs.py:1167
+#: gui/settingsDialogs.py:1191
 msgid "Braille Settings"
 msgstr "점자 출력 설정"
 
@@ -587,12 +609,12 @@ msgstr "점자 출력 설정"
 msgid "Braille tethered to %s"
 msgstr "점자와 %s 커서 연계됨"
 
-#: gui/settingsDialogs.py:1218
+#: gui/settingsDialogs.py:1242
 msgid "Braille tethered to:"
 msgstr "점자 연계 커서"
 
 #. Translators: This is the label for the browse mode settings dialog.
-#: gui/settingsDialogs.py:830
+#: gui/settingsDialogs.py:854
 msgid "Browse Mode"
 msgstr "브라우저 모드"
 
@@ -612,6 +634,14 @@ msgstr "불가리아어 8종 컴퓨터 점자"
 msgid "CC:"
 msgstr "CC:"
 
+#. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
+#: NVDAObjects/inputComposition.py:107
+#: NVDAObjects/IAccessible/mscandui.py:39
+#: NVDAObjects/IAccessible/mscandui.py:162
+msgid "Candidate"
+msgstr ""
+
 #: gui/__init__.py:142
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr "NVDA 보안모드로 인해 환경 파일을 저장할 수 없습니다"
@@ -620,36 +650,36 @@ msgstr "NVDA 보안모드로 인해 환경 파일을 저장할 수 없습니다"
 msgid "Capital pitch change percentage"
 msgstr "대문자 음성 높이 퍼센트"
 
-#: gui/settingsDialogs.py:1051
+#: gui/settingsDialogs.py:1075
 msgid "Case &sensitive"
 msgstr "대소문자 구별 (&S)"
 
-#: gui/__init__.py:290
+#: gui/__init__.py:293
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "마우스 형태 읽기 및 마우스가 있는 객체 읽기를 설정합니다."
 
-#: gui/__init__.py:294
+#: gui/__init__.py:299
 msgid "Change reporting of objects"
 msgstr "화면 객체 표시 출력을 설정합니다."
 
-#: gui/__init__.py:298
+#: gui/__init__.py:303
 msgid "Change settings of document properties"
 msgstr "문서 속성 출력을 설정합니다."
 
-#: gui/settingsDialogs.py:1292
+#: gui/settingsDialogs.py:1316
 msgid "Change symbol"
 msgstr "기호 변경"
 
-#: gui/__init__.py:282
+#: gui/__init__.py:285
 msgid "Change the synthesizer to be used"
 msgstr "사용하고자 하는 음성 엔진을 선택합니다."
 
-#: gui/__init__.py:296
+#: gui/__init__.py:301
 msgid "Change virtual buffers specific settings"
 msgstr "가상 버퍼 출력에 대한 세부사항을 설정합니다."
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
-#: gui/__init__.py:355
+#: gui/__init__.py:360
 msgid "Check for update..."
 msgstr "업데이트 확인 (&C)..."
 
@@ -680,7 +710,7 @@ msgstr "중국어 (타이완, 북경어)"
 msgid "Choose Add-on Package File"
 msgstr "추가 기능 설치 파일 검색"
 
-#: gui/__init__.py:284
+#: gui/__init__.py:287
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "사용하고자 하는 음성, 속도, 높이 및 크기를 설정할 수 있습니다."
 
@@ -692,7 +722,7 @@ msgstr "현재 마우스 위치에서 왼쪽 마우스 버튼을 한번 클릭�
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "현재 마우스 위치에서 오른쪽 마우스 버튼을 한번 클릭합니다"
 
-#: gui/settingsDialogs.py:1078
+#: gui/settingsDialogs.py:1102
 msgid "Comment"
 msgstr "설명"
 
@@ -706,7 +736,12 @@ msgstr "Comments"
 msgid "Comments:"
 msgstr "주석"
 
-#: gui/__init__.py:514
+#. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
+#: NVDAObjects/inputComposition.py:51
+msgid "Composition"
+msgstr ""
+
+#: gui/__init__.py:519
 msgid "Configuration File Error"
 msgstr "환경파일 오류"
 
@@ -722,11 +757,15 @@ msgstr "사용자 환경설정을 설치 기본값으로 복원하였습니다."
 msgid "Configuration saved"
 msgstr "환경 저장됨"
 
-#: gui/__init__.py:292
+#: gui/__init__.py:297
+msgid "Configure how NVDA reports input composition and candidate selection for certain languages"
+msgstr ""
+
+#: gui/__init__.py:295
 msgid "Configure how and when the review cursor moves"
 msgstr "리뷰 커서 이동 방식 및 이동 시점을 설정합니다."
 
-#: gui/__init__.py:288
+#: gui/__init__.py:291
 msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "키보드 배열, 입력 글자, 단어, 기능키  읽기를 설정합니다."
 
@@ -735,7 +774,7 @@ msgstr "키보드 배열, 입력 글자, 단어, 기능키  읽기를 설정합�
 msgid "Connecting"
 msgstr "연결중"
 
-#: gui/__init__.py:348
+#: gui/__init__.py:353
 msgid "Contributors"
 msgstr "NVDA 개발 공헌자들 (&C)"
 
@@ -770,7 +809,7 @@ msgstr "자동 주석 윈도우 찾을 수 없음"
 msgid "Could not find comment window."
 msgstr "주석 윈도우 찾을 수 없음"
 
-#: gui/settingsDialogs.py:1245
+#: gui/settingsDialogs.py:1269
 #, python-format
 msgid "Could not load the %s display."
 msgstr "%s 디스플레이 활성화 실패."
@@ -792,7 +831,7 @@ msgstr "황경 파일 저장 실패 - 일기 전용 파일시스템일 수 있�
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "바탕 화면에 바로가기 아이콘 및 CTRL+Alt+N 실행키 만들기 (&D)"
 
-#: gui/__init__.py:564
+#: gui/__init__.py:569
 msgid "Create &portable copy"
 msgstr "휴대용 버전 만들기 (&P)"
 
@@ -801,7 +840,7 @@ msgstr "휴대용 버전 만들기 (&P)"
 msgid "Create Portable NVDA"
 msgstr "NVDA 휴대용 버전 만들기"
 
-#: gui/__init__.py:327
+#: gui/__init__.py:332
 msgid "Create Portable copy..."
 msgstr "휴대용 버전 만들기 (&C)..."
 
@@ -821,7 +860,7 @@ msgstr "크로아티아어 8점 컴퓨터 점자"
 msgid "Currently running application is %s"
 msgstr "%s 실행중; "
 
-#: gui/settingsDialogs.py:1202
+#: gui/settingsDialogs.py:1226
 msgid "Cursor blink rate (ms)"
 msgstr "커서 깜박이 (ms) 시간 (&C)"
 
@@ -876,12 +915,12 @@ msgstr "최근 메시지 중 하나를 보여줍니다."
 msgid "Distribution:"
 msgstr "Distribution:"
 
-#: gui/__init__.py:298
+#: gui/__init__.py:303
 msgid "Document &formatting..."
 msgstr "문서 서식 알림 (&F)..."
 
 #. Translators: This is the label for the document formatting dialog.
-#: gui/settingsDialogs.py:904
+#: gui/settingsDialogs.py:928
 msgid "Document Formatting"
 msgstr "문서 서식"
 
@@ -890,7 +929,7 @@ msgstr "문서 서식"
 msgid "Documentation"
 msgstr "설명서"
 
-#: gui/__init__.py:370
+#: gui/__init__.py:375
 msgid "Donate"
 msgstr "후원 (&D)"
 
@@ -921,13 +960,13 @@ msgstr "네델란드어 (벨기에) 1종"
 msgid "Dutch (netherlands) grade 1"
 msgstr "네델란드어 (네델란드) 1종"
 
-#: gui/__init__.py:373
-#: gui/__init__.py:572
+#: gui/__init__.py:378
+#: gui/__init__.py:577
 #: gui/logViewer.py:34
 msgid "E&xit"
 msgstr "종료 (&X)"
 
-#: gui/settingsDialogs.py:1197
+#: gui/settingsDialogs.py:1221
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "커서 위치의 점자 단어 풀이 (&X)"
 
@@ -939,7 +978,7 @@ msgid "Edge of table"
 msgstr "테이블 가장자리"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
-#: gui/settingsDialogs.py:1038
+#: gui/settingsDialogs.py:1062
 msgid "Edit Dictionary Entry"
 msgstr "발음사전 항목 변경"
 
@@ -1066,7 +1105,7 @@ msgid "Even pages header"
 msgstr "Even pages header"
 
 #: gui/__init__.py:174
-#: gui/__init__.py:373
+#: gui/__init__.py:378
 msgid "Exit NVDA"
 msgstr "NVDA 종료"
 
@@ -1205,12 +1244,17 @@ msgstr "프랑스어 (통합) 2종"
 msgid "From:"
 msgstr "보낸이: "
 
+#. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
+#: NVDAHelper.py:215
+msgid "Full shaped mode"
+msgstr ""
+
 #. Translators: This is the label for the general settings dialog.
 #: gui/settingsDialogs.py:113
 msgid "General Settings"
 msgstr "일반 설정"
 
-#: gui/__init__.py:280
+#: gui/__init__.py:283
 msgid "General settings"
 msgstr "일반 설정"
 
@@ -1247,7 +1291,7 @@ msgstr "그리스어 (그리스) 1종"
 # The translation literally means "predict/guess the object position when position is not known".
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:777
+#: gui/settingsDialogs.py:801
 msgid "Guess object &position information when unavailable"
 msgstr "객체 위치 없을때 위치 예상하기 &P)"
 
@@ -1258,6 +1302,11 @@ msgstr "HIMS 한소네"
 #: brailleDisplayDrivers/syncBraille/__init__.py:72
 msgid "HIMS SyncBraille"
 msgstr "HIMS 싱크브레일"
+
+#. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
+#: NVDAHelper.py:217
+msgid "Half shaped mode"
+msgstr ""
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers/handyTech.py:49
@@ -1287,7 +1336,7 @@ msgstr "HumanWare Brailliant BI/B"
 msgid "Hungarian 8 dot computer braille"
 msgstr "헝가리어 8점 컴퓨터 점자"
 
-#: gui/__init__.py:552
+#: gui/__init__.py:557
 msgid "I &agree"
 msgstr "동의함"
 
@@ -1316,6 +1365,12 @@ msgstr "한번 누르면 현재 시각을, 두번 누르면 현재 날짜를 알
 #: globalCommands.py:145
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "음성엔진 설정에서 현재 활성화된 설정값을 증가시킵니다."
+
+#. Translators: This is the label for the Input Composition settings dialog.
+#: gui/settingsDialogs.py:734
+#, fuzzy
+msgid "Input Composition Settings"
+msgstr "설정 복사중"
 
 #. Translators: The title of the Install NVDA dialog.
 #: gui/installerGui.py:82
@@ -1365,7 +1420,7 @@ msgid "Key words:"
 msgstr "Key words:"
 
 #: installer.py:159
-#: gui/__init__.py:340
+#: gui/__init__.py:345
 msgid "Keyboard Commands Quick Reference"
 msgstr "키보드 핫키 목록 (&K)"
 
@@ -1407,15 +1462,15 @@ msgstr "언어 오류"
 msgid "Latvian grade 1"
 msgstr "라트비아어 1종"
 
-#: gui/settingsDialogs.py:1283
+#: gui/settingsDialogs.py:1307
 msgid "Level"
 msgstr "레벨"
 
-#: gui/__init__.py:346
+#: gui/__init__.py:351
 msgid "License"
 msgstr "사용 약관 (&L)"
 
-#: gui/__init__.py:548
+#: gui/__init__.py:553
 msgid "License Agreement"
 msgstr "사용 약관 동의서"
 
@@ -1459,7 +1514,7 @@ msgid "MDV Lilli"
 msgstr "MDV Lilli"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-#: gui/__init__.py:324
+#: gui/__init__.py:329
 msgid "Manage &add-ons"
 msgstr "추가 기능 관리 (&A)"
 
@@ -1468,7 +1523,7 @@ msgid "Marks the current position of the review cursor as the start of text to b
 msgstr "현재 리뷰커서 위치를 클립보드에 복사할 텍스트의 시작으로 표시합니다."
 
 # The translation literally reads, "message alert display time". Borrowed from Braille Sense user guide.
-#: gui/settingsDialogs.py:1210
+#: gui/settingsDialogs.py:1234
 msgid "Message timeout (sec)"
 msgstr "알림 메시지 출력 시간 "
 
@@ -1621,9 +1676,14 @@ msgid "NVDA version {version} is available."
 msgstr "NVDA {version} 버전이 준비되어 있습니다."
 
 #: installer.py:156
-#: gui/__init__.py:344
+#: gui/__init__.py:349
 msgid "NVDA web site"
 msgstr "NVDA 웹사이트 (&N)"
+
+#. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
+#: NVDAHelper.py:209
+msgid "Native input"
+msgstr ""
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 #: appModules/msimn.py:24
@@ -1787,7 +1847,7 @@ msgid "Not in table"
 msgstr "테이블 아님"
 
 #. Translators: This is the label for the object presentation dialog.
-#: gui/settingsDialogs.py:734
+#: gui/settingsDialogs.py:758
 msgid "Object Presentation"
 msgstr "화면 객체 표시 설정"
 
@@ -1797,7 +1857,7 @@ msgstr "화면 객체 표시 설정"
 msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
 msgstr "객체가 차지하는 위치: 화면 좌측에서 %.1f 퍼센트, 화면 상단에서 %.1f 퍼센트; 길이: 화면의 %.1f 퍼센트; 높이: 화면의 %.1f 퍼센트"
 
-#: gui/__init__.py:469
+#: gui/__init__.py:474
 msgid "Options"
 msgstr "옵션"
 
@@ -1822,7 +1882,7 @@ msgstr "페키지"
 msgid "Pass next key through"
 msgstr "기능키 무시"
 
-#: gui/settingsDialogs.py:1079
+#: gui/settingsDialogs.py:1103
 msgid "Pattern"
 msgstr "기존값"
 
@@ -1857,7 +1917,7 @@ msgid "Please specify a directory in which to create the portable copy."
 msgstr "휴대용 버전을 저장할 폴더 경로를 선택하십시요"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
-#: gui/__init__.py:658
+#: gui/__init__.py:663
 msgid "Please wait"
 msgstr "잠시만 기다려 주십시요"
 
@@ -1936,13 +1996,13 @@ msgstr "Primary header"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:788
+#: gui/settingsDialogs.py:812
 msgid "Progress &bar output:"
 msgstr "진행률 표시"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:793
+#: gui/settingsDialogs.py:817
 msgid "Progress bar output"
 msgstr "징행률 표시"
 
@@ -1952,7 +2012,7 @@ msgstr "징행률 표시"
 msgid "Punctuation/symbol &level:"
 msgstr "구두점/기호 출력 레벨 (&L)"
 
-#: gui/__init__.py:321
+#: gui/__init__.py:326
 msgid "Python console"
 msgstr "Python console"
 
@@ -1966,7 +2026,7 @@ msgstr "NVDA를 종료합니다!"
 msgid "Rate boos&t"
 msgstr "음성 속도 부스트 (&T)"
 
-#: gui/settingsDialogs.py:1231
+#: gui/settingsDialogs.py:1255
 msgid "Read by &paragraph"
 msgstr "문단 단위로 점자 출력"
 
@@ -1988,15 +2048,15 @@ msgstr "새로 고침"
 msgid "Refreshes the document content"
 msgstr "문서 내용을 새로 고칩니다"
 
-#: gui/settingsDialogs.py:1082
+#: gui/settingsDialogs.py:1106
 msgid "Regexp"
 msgstr "Regexp"
 
-#: gui/settingsDialogs.py:1053
+#: gui/settingsDialogs.py:1077
 msgid "Regular &expression"
 msgstr "정규 표현식"
 
-#: gui/__init__.py:332
+#: gui/__init__.py:337
 msgid "Reload plugins"
 msgstr "플러그인 재등록 (&R)"
 
@@ -2013,50 +2073,50 @@ msgstr "나중에 알림 (&L)"
 msgid "Remove Add-on"
 msgstr "추가 기능 삭제"
 
-#: gui/settingsDialogs.py:1080
-#: gui/settingsDialogs.py:1282
+#: gui/settingsDialogs.py:1104
+#: gui/settingsDialogs.py:1306
 msgid "Replacement"
 msgstr "변경값"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:929
+#: gui/settingsDialogs.py:953
 msgid "Report &alignment"
 msgstr "문자 배치 알림 (&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:934
+#: gui/settingsDialogs.py:958
 msgid "Report &colors"
 msgstr "문자 색깔 알림 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:985
+#: gui/settingsDialogs.py:1009
 msgid "Report &headings"
 msgstr "헤딩 알림 (&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:762
+#: gui/settingsDialogs.py:786
 msgid "Report &help balloons"
 msgstr "도움말 알림창 알림 (&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:954
+#: gui/settingsDialogs.py:978
 msgid "Report &line numbers"
 msgstr "줄수 알림 (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:980
+#: gui/settingsDialogs.py:1004
 msgid "Report &links"
 msgstr "링크 알릶 (&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:949
+#: gui/settingsDialogs.py:973
 msgid "Report &pages"
 msgstr "페이지 알림 (&P)"
 
@@ -2068,80 +2128,86 @@ msgstr "마우스가 객체에 진입할 때 역할 알림 (&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:965
+#: gui/settingsDialogs.py:989
 msgid "Report &tables"
 msgstr "테이블 알림 (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:757
+#: gui/settingsDialogs.py:781
 msgid "Report &tooltips"
 msgstr "툴팁 알림 (&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:804
+#: gui/settingsDialogs.py:828
 msgid "Report background progress bars"
 msgstr "배경에 있는 프로그레스바 알림"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:995
+#: gui/settingsDialogs.py:1019
 msgid "Report block &quotes"
 msgstr "블럭퀕 알림 (&Q)"
 
 #. Translators: This is the label for a checkbox in the
+#. Input composition settings dialog.
+#: gui/settingsDialogs.py:744
+msgid "Report changes to the &reading string"
+msgstr ""
+
+#. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:809
+#: gui/settingsDialogs.py:833
 msgid "Report dynamic &content changes"
 msgstr "자동 변경 내용 알림 (&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:914
+#: gui/settingsDialogs.py:938
 msgid "Report font &name"
 msgstr "글골 이름 알림 (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:919
+#: gui/settingsDialogs.py:943
 msgid "Report font &size"
 msgstr "글골 크기 알림 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:924
+#: gui/settingsDialogs.py:948
 msgid "Report font attri&butes"
 msgstr "글골 특성 알림 (&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1005
+#: gui/settingsDialogs.py:1029
 msgid "Report fra&mes"
 msgstr "프레임 알림 (&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:859
+#: gui/settingsDialogs.py:883
 msgid "Report l&ayout tables"
 msgstr "구성 테이블 알림 (&L)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
-#: gui/settingsDialogs.py:960
+#: gui/settingsDialogs.py:984
 msgid "Report l&ine indentation"
 msgstr "줄 들여쓰기 알림 (&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:990
+#: gui/settingsDialogs.py:1014
 msgid "Report l&ists"
 msgstr "목록 알림 (&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1000
+#: gui/settingsDialogs.py:1024
 msgid "Report lan&dmarks"
 msgstr "랜드마크 알림 (&D)"
 
@@ -2153,43 +2219,43 @@ msgstr "마우스 모양 변경 알림 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:782
+#: gui/settingsDialogs.py:806
 msgid "Report object &descriptions"
 msgstr "객체 설명 알림 (&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:772
+#: gui/settingsDialogs.py:796
 msgid "Report object &position information"
 msgstr "화면 객체 위치정보 알림 (&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:767
+#: gui/settingsDialogs.py:791
 msgid "Report object shortcut &keys"
 msgstr "객체의 핫키 알림 (&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:944
+#: gui/settingsDialogs.py:968
 msgid "Report spelling errors"
 msgstr "철자 오류 알림"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:939
+#: gui/settingsDialogs.py:963
 msgid "Report st&yle"
 msgstr "글골 스타일 알림 (&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:975
+#: gui/settingsDialogs.py:999
 msgid "Report table cell c&oordinates"
 msgstr "현재 테이블 셀의 좌표 알림 (&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:970
+#: gui/settingsDialogs.py:994
 msgid "Report table row/column h&eaders"
 msgstr "테이블 행 및 열의 머릿말 알림 (&E)"
 
@@ -2240,11 +2306,11 @@ msgstr "클립보드 내용을 알려줍니다"
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
 msgstr "한번 누르면 프로그램이나 활성화된 창의 제목을 알려주고, 두번 누르면 제목을 발음하고 세번 누르면 제목을 클립보드에 복사합니다"
 
-#: gui/__init__.py:364
+#: gui/__init__.py:369
 msgid "Reset all settings to default state"
 msgstr "기본 환경설정으로 돌아갑니다."
 
-#: gui/__init__.py:361
+#: gui/__init__.py:366
 msgid "Reset all settings to saved state"
 msgstr "이전 저장된 설정으로 환원합니다."
 
@@ -2257,7 +2323,7 @@ msgstr "NVDA 재시작"
 msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "이전에 설정된 시작 마크부터 현재 위치한 리뷰 커서 위치의 텍스트를 클립보드에 복사합니다."
 
-#: gui/__init__.py:292
+#: gui/__init__.py:295
 msgid "Review &cursor..."
 msgstr "리뷰 커서 (&C)..."
 
@@ -2307,7 +2373,7 @@ msgstr "점자 디스플레이를 뒤로 움직입니다."
 msgid "Scrolls the braille display forward"
 msgstr "점자 디스플레이를 앞으로 움직입니다."
 
-#: IAccessibleHandler.py:673
+#: IAccessibleHandler.py:669
 msgid "Secure Desktop"
 msgstr "보안 desktop"
 
@@ -2339,7 +2405,7 @@ msgstr "화면 탐색 객체를 마우스 포인터에 있는 현재 객체로 �
 msgid "Show the Handy Tech driver configuration window."
 msgstr "Handy Tech 드라이버 설정 대화상자를 보여줍니다."
 
-#: gui/__init__.py:473
+#: gui/__init__.py:478
 msgid "Show this dialog when NVDA starts"
 msgstr "NVDA 실행때 이 창 띄우기"
 
@@ -2422,14 +2488,14 @@ msgstr "스페인어 1종"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui/settingsDialogs.py:743
+#: gui/settingsDialogs.py:767
 msgid "Speak"
 msgstr "말하기"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui/settingsDialogs.py:751
+#: gui/settingsDialogs.py:775
 msgid "Speak and beep"
 msgstr "비프음과 말하기"
 
@@ -2459,11 +2525,11 @@ msgstr "현재 사용중인 프로그램 이름과 NVDA 환경파일 이름을 �
 msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
 msgstr "리뷰커서가 위치한 현재 화면 탐색 객체의 단어를 읽습니다. 만약 이 키를 두번 누르면 한글자씩 읽어 줍니다."
 
-#: gui/__init__.py:308
+#: gui/__init__.py:313
 msgid "Speech &dictionaries"
 msgstr "음성 발음사전 (&D)"
 
-#: gui/__init__.py:318
+#: gui/__init__.py:323
 msgid "Speech viewer"
 msgstr "음성 출력 뷰어 (&S)"
 
@@ -2524,12 +2590,12 @@ msgstr "사용자의 NVDA 업데이트를 완료하였습니다"
 msgid "Swedish grade 1"
 msgstr "스웨덴어 1종"
 
-#: gui/settingsDialogs.py:1281
+#: gui/settingsDialogs.py:1305
 msgid "Symbol"
 msgstr "기호"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui/settingsDialogs.py:1268
+#: gui/settingsDialogs.py:1292
 msgid "Symbol Pronunciation"
 msgstr "기호 발음 설정"
 
@@ -2548,7 +2614,7 @@ msgstr "음성 엔진 오류"
 msgid "Tamil grade 1"
 msgstr "타밀어 1종"
 
-#: NVDAObjects/IAccessible/__init__.py:1535
+#: NVDAObjects/IAccessible/__init__.py:1542
 msgid "Taskbar"
 msgstr "작업 표시줄"
 
@@ -2589,11 +2655,6 @@ msgstr "NVDA 설치경로가 변경되었습니다. 새로운 경로 {path}에 N
 #: globalCommands.py:841
 msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
 msgstr "다음 입력키는 NVDA가 무시하고 응용 프로그램에 바료 입력됩니다"
-
-#. Translators: A message asking if the user wishes to replace a previously installed add-on with this one.
-#: gui/addonGui.py:91
-msgid "The same or another version of this add-on is currently installed. Would you like to remove the previously installed add-on and install this one instead?"
-msgstr "설치하고자 하는 추가 기능의 버전이 설치된 버전과 같거나 최신 버전입니다. 이전 버전을 지우고 설치하고자 하는 버전으로 대체하시겠습니까?"
 
 #: globalCommands.py:942
 msgid "The start marker must reside within the same object"
@@ -2675,11 +2736,11 @@ msgstr "입력 단어 읽기와 읽지않기 중 전환합니다."
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "마우스 이동에 따라 정보 읽기 여부를 토글합니다."
 
-#: gui/__init__.py:334
+#: gui/__init__.py:339
 msgid "Tools"
 msgstr "도구 (&T)"
 
-#: gui/settingsDialogs.py:1185
+#: gui/settingsDialogs.py:1209
 msgid "Translation &table:"
 msgstr "점자 출력 표기법 (&T)"
 
@@ -2757,7 +2818,7 @@ msgstr "NVDA 업데이트중"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:849
+#: gui/settingsDialogs.py:873
 msgid "Use &screen layout (when supported)"
 msgstr "스크린 구성 지원되면 사용 (&S)"
 
@@ -2769,7 +2830,7 @@ msgstr "철자 발음 지원시 사용 (&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/__init__.py:470
+#: gui/__init__.py:475
 #: gui/settingsDialogs.py:587
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "CapsLock을 NVDA 기능키로 사용"
@@ -2800,7 +2861,7 @@ msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "numpad Insert를 NVDA 기능키로 사용"
 
 #: installer.py:160
-#: gui/__init__.py:338
+#: gui/__init__.py:343
 msgid "User Guide"
 msgstr "사용 설명서 (&U)"
 
@@ -2816,7 +2877,7 @@ msgstr "음성 크기 (&O)"
 msgid "Version"
 msgstr "버전"
 
-#: gui/__init__.py:316
+#: gui/__init__.py:321
 msgid "View log"
 msgstr "로그 보기 (&V)"
 
@@ -2848,15 +2909,15 @@ msgstr ""
 "모든 후원은 NVDA를 개발하는 비영리 단체인 NV Access에 송금됩니다.\n"
 "여러분의 지원에 감사드립니다."
 
-#: gui/__init__.py:350
+#: gui/__init__.py:355
 msgid "We&lcome dialog"
 msgstr "NVDA 시작 대화상자 (&L)"
 
-#: gui/__init__.py:465
+#: gui/__init__.py:470
 msgid "Welcome to NVDA"
 msgstr "NVDA에 오신것을 환영합니다!"
 
-#: gui/__init__.py:456
+#: gui/__init__.py:461
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
@@ -2884,15 +2945,15 @@ msgstr "웨일즈어 1종"
 msgid "Welsh grade 2"
 msgstr "웨일즈어 2종"
 
-#: gui/__init__.py:342
+#: gui/__init__.py:347
 msgid "What's &new"
 msgstr "변경된 사항 (&N)"
 
-#: gui/__init__.py:366
+#: gui/__init__.py:371
 msgid "Write the current configuration to nvda.ini"
 msgstr "현재 환경설정을 nvda.ini에 저장합니다."
 
-#: gui/__init__.py:509
+#: gui/__init__.py:514
 msgid ""
 "Your configuration file contains errors. \n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
@@ -2950,6 +3011,12 @@ msgstr "alignment"
 #: characterProcessing.py:130
 msgid "all"
 msgstr "모두"
+
+#. Translators: For Japanese character input: alpha numeric (roman/english) mode.
+#: NVDAHelper.py:227
+#: NVDAHelper.py:236
+msgid "alphanumeric"
+msgstr "alphanumeric"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:51
@@ -3135,7 +3202,7 @@ msgstr "케럿"
 msgid "caret moves review cursor"
 msgstr "캐럿 이동시 리뷰커서도 이동"
 
-#: gui/settingsDialogs.py:1081
+#: gui/settingsDialogs.py:1105
 msgid "case"
 msgstr "case"
 
@@ -3482,7 +3549,7 @@ msgid "find the previous occurrence of the previously entered text string from t
 msgstr "찾고싶은 문자열을 현재커서부터 이전으로 이어서 찾습니다."
 
 #: globalCommands.py:913
-#: gui/settingsDialogs.py:1219
+#: gui/settingsDialogs.py:1243
 msgid "focus"
 msgstr "포커스"
 
@@ -3588,9 +3655,24 @@ msgstr "그루핑"
 msgid "h%s"
 msgstr "h%s"
 
+#. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
+#: NVDAHelper.py:223
+#: NVDAHelper.py:233
+msgid "half alphanumeric"
+msgstr "half alphanumeric"
+
 #: controlTypes.py:352
 msgid "half checked"
 msgstr "반만 선택됨"
+
+#. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
+#: NVDAHelper.py:225
+msgid "half katakana"
+msgstr "half katakana"
+
+#: NVDAHelper.py:234
+msgid "half katakana roman"
+msgstr "half katakana roman"
 
 #: controlTypes.py:367
 msgid "has auto complete"
@@ -3645,6 +3727,16 @@ msgstr "헤딩 레벨 6"
 #: controlTypes.py:204
 msgid "help balloon"
 msgstr "help balloon"
+
+#. Translators: For Japanese character input: Hiragana input mode.
+#: NVDAHelper.py:229
+msgid "hiragana"
+msgstr "hiragana"
+
+#. Translators: For Japanese character input: Hiragana Roman input mode.
+#: NVDAHelper.py:238
+msgid "hiragana roman"
+msgstr "hiragana roman"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:71
@@ -3720,6 +3812,16 @@ msgstr "적용"
 msgid "italic"
 msgstr "italic"
 
+#. Translators: For Japanese character input: Katacana input mode.
+#: NVDAHelper.py:231
+msgid "katakana"
+msgstr "katakana"
+
+#. Translators: For Japanese character input: Katacana Roman input mode.
+#: NVDAHelper.py:240
+msgid "katakana roman"
+msgstr "katakana roman"
+
 #: controlTypes.py:264
 msgid "label"
 msgstr "label"
@@ -3731,11 +3833,6 @@ msgstr "laptop"
 #: controlTypes.py:268
 msgid "layered pane"
 msgstr "layered pane"
-
-#: NVDAHelper.py:152
-#, python-format
-msgid "layout %s"
-msgstr "%s 레이아웃"
 
 #: globalCommands.py:524
 #: globalCommands.py:536
@@ -4555,8 +4652,8 @@ msgstr "위치 없는 객체"
 #: synthSettingsRing.py:74
 #: appModules/winamp.py:80
 #: appModules/winamp.py:90
-#: gui/settingsDialogs.py:739
-#: gui/settingsDialogs.py:1083
+#: gui/settingsDialogs.py:763
+#: gui/settingsDialogs.py:1107
 #: virtualBuffers/__init__.py:818
 msgid "off"
 msgstr "비활성화"
@@ -4583,7 +4680,7 @@ msgstr "올리브"
 #: synthSettingsRing.py:74
 #: appModules/winamp.py:78
 #: appModules/winamp.py:88
-#: gui/settingsDialogs.py:1083
+#: gui/settingsDialogs.py:1107
 #: virtualBuffers/__init__.py:818
 msgid "on"
 msgstr "활성화"
@@ -4769,7 +4866,7 @@ msgid "required"
 msgstr "필수입력사항"
 
 #: globalCommands.py:910
-#: gui/settingsDialogs.py:1219
+#: gui/settingsDialogs.py:1243
 msgid "review"
 msgstr "리뷰"
 
@@ -5217,8 +5314,15 @@ msgstr "알 수 없음"
 msgid "unknown color"
 msgstr "알 수 없는 색상"
 
-#: NVDAHelper.py:151
-msgid "unknown layout"
+#. Translators: The label for an unknown input method when switching input methods.
+#: NVDAHelper.py:306
+msgid "unknown input method"
+msgstr ""
+
+#. Translators: the label for an unknown language when switching input methods.
+#: NVDAHelper.py:281
+#, fuzzy
+msgid "unknown language"
 msgstr "알 수 없는 레이아웃"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
@@ -5334,6 +5438,11 @@ msgstr "{color}"
 msgid "{color} on {backgroundColor}"
 msgstr "{backgroundColor} 바탕에 {color}"
 
+#. Translators: the message announcing the language and keyboard layout when it changes
+#: NVDAHelper.py:312
+msgid "{language} - {layout}"
+msgstr "{language} - {layout}"
+
 #: versionInfo.py:45
 msgid ""
 "{longName} ({name})\n"
@@ -5360,6 +5469,13 @@ msgstr ""
 "{name}는 시각장애인을 위한 무료 공개 솔루션의 개발 도움 및 홍보를 지원하는 비영리단체인 NVAccess에 의해 개발되었습니다.\n"
 "만약 NVDA가 유용하다고 생각하고 기능향상이 지속되기를 원한다면, NVDA 메뉴에 있는 후원 기능을 통해 NV Access를 후원해 주셨으면 합니다."
 
+#. Translators: the formatted name of an input composition candidate item.
+#: NVDAObjects/inputComposition.py:144
+#: NVDAObjects/IAccessible/mscandui.py:50
+#, fuzzy
+msgid "{number}  {word}"
+msgstr "{number} slash {total}"
+
 #. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
@@ -5383,6 +5499,14 @@ msgstr ""
 "버전: {version}\n"
 "저자: {author}\n"
 "서령: {description}\n"
+
+#. Translators: a human friendly message used as the description for an input composition candidate symbol when typing east-Asian characters,  using both the symbol and its character description.
+#: NVDAObjects/behaviors.py:359
+msgid "{symbol} as in {description}"
+msgstr ""
+
+#~ msgid "layout %s"
+#~ msgstr "%s 레이아웃"
 
 #~ msgid "%s device found"
 #~ msgstr "%s 디스플레이 검색됨"

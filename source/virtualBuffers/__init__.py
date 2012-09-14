@@ -753,7 +753,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			obj.setFocus()
 			self.passThrough = True
 			reportPassThrough(self)
-		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
+		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT or obj.role in self.APPLICATION_ROLES:
 			obj.setFocus()
 			speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
 		else:
@@ -798,7 +798,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		return controlTypes.STATE_FOCUSABLE in obj.states
+		return obj.role not in self.APPLICATION_ROLES and controlTypes.STATE_FOCUSABLE in obj.states
 
 	def script_activatePosition(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)

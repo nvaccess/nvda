@@ -479,6 +479,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	macro_addHTMLAttributeToMap(L"aria-invalid",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-multiline",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"aria-label",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+	macro_addHTMLAttributeToMap(L"aria-hidden",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	pHTMLAttributeCollection2->Release();
 }
 
@@ -659,7 +660,7 @@ if(nodeName.compare(L"TABLE")==0) {
 	return tableInfoPtr;
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool interactiveAncestorHasContent, bool allowPreformattedText) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
 
@@ -725,6 +726,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		pHTMLElement3->get_isContentEditable(&varEditable);
 		isEditable=(varEditable==VARIANT_TRUE);
 		if(isEditable) attribsMap[L"IHTMLElement::isContentEditable"]=L"1";
+	}
+
+	if((tempIter=attribsMap.find(L"HTMLAttrib::aria-hidden"))!=attribsMap.end()&&tempIter->second==L"true") {
+		// aria-hidden
+		invisible=true;
 	}
 
 	//input nodes of type hidden must be treeted as being invisible.
@@ -829,6 +835,10 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			if(tempIter!=attribsMap.end()) {
 				IAValue=tempIter->second;
 			}
+		} else if(ariaRole.compare(L"application")==0) {
+			IARole=ROLE_SYSTEM_APPLICATION;
+		} else if(ariaRole.compare(L"dialog")==0) {
+			IARole=ROLE_SYSTEM_DIALOG;
 		}
 	} 
 	//IE doesn't seem to support aria-label yet so we want to override IAName with it
@@ -844,7 +854,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Is this node interactive?
-	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE)||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
+	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
 	if(nodeName.compare(L"OL")==0||nodeName.compare(L"UL")==0) {
@@ -890,24 +900,23 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 			contentString=tempIter->second;
 		}
 	} else if(nodeName.compare(L"IMG")==0) {
-		tempIter=attribsMap.find(L"HTMLAttrib::alt");
-		// If the alt attrib contains text, always use it.
-		// If the interactive ancestor has content, rely on the alt attrib, even if it is "".
-		// If the interactive ancestor has no content and the alt attrib is "", don't use it; fall back.
-		if(tempIter!=attribsMap.end()&&(interactiveAncestorHasContent||!tempIter->second.empty())) {
-			contentString=tempIter->second;
-			if(tempIter->second.empty()) {
-				// alt="", so this isn't really interactive and we don't want it to be rendered at all.
-				isInteractive=false;
+		if ((tempIter = attribsMap.find(L"HTMLAttrib::alt")) != attribsMap.end()) {
+			if (tempIter->second.empty()) {
+				// alt="", so don't render this at all.
+				isInteractive = false;
+			} else {
+				// There is alt text, so use it.
+				contentString = tempIter->second;
 			}
-		} else {
-			tempIter=attribsMap.find(L"HTMLAttrib::title");
-			if(tempIter!=attribsMap.end()) {
-				contentString=tempIter->second;
-			} else if(isInteractive&&!interactiveAncestorHasContent&&!IAValue.empty()) {
-				contentString=getNameForURL(IAValue);
-			} 
-		}
+		} else if ((tempIter = attribsMap.find(L"HTMLAttrib::title")) != attribsMap.end()) {
+			// There is a title, so use it.
+			contentString = tempIter->second;
+		} else if (ignoreInteractiveUnlabelledGraphics)
+			isInteractive = false;
+		else if (isInteractive && !IAValue.empty()) {
+			// The graphic is unlabelled, but we should try to derive a name for it.
+			contentString=getNameForURL(IAValue);
+		} 
 	} else if(nodeName.compare(L"INPUT")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::type");
 		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"file")==0) {
@@ -968,6 +977,8 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		contentString=L"\n";
 	} else if (nodeName.compare(L"math")==0) {
 		contentString=IAName;
+	} else if(IARole==ROLE_SYSTEM_APPLICATION||IARole==ROLE_SYSTEM_DIALOG) {
+		contentString=L" ";
 	} else {
 		renderChildren=true;
 	}
@@ -996,10 +1007,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Render content of children if we are allowed to
 	if(renderChildren) {
-		// Determine what to pass for interactiveAncestorHasContent when recursing.
-		// If this node is interactive, determine whether it has content.
-		// Otherwise, simply pass the value we were given.
-		bool newIntAncHasContent=isInteractive?(!IAName.empty()):interactiveAncestorHasContent;
+		if (isInteractive && !ignoreInteractiveUnlabelledGraphics) {
+			// Don't render interactive unlabelled graphic descendants if this node has a name,
+			// as author supplied names are preferred.
+			ignoreInteractiveUnlabelledGraphics = !IAName.empty();
+		}
+
 		//For children of frames we must get the child document via IAccessible
 		if(nodeName.compare(L"FRAME")==0||nodeName.compare(L"IFRAME")==0) {
 			LOG_DEBUG(L"using getRoodDOMNodeOfHTMLFrame to get the frame's child");
@@ -1007,7 +1020,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				IHTMLDOMNode* childPHTMLDOMNode=NULL;
 				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,newIntAncHasContent,allowPreformattedText);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -1031,7 +1044,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,newIntAncHasContent,allowPreformattedText);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText);
 							if(tempNode) {
 								previousNode=tempNode;
 							}

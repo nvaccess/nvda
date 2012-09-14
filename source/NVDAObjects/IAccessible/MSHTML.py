@@ -9,6 +9,8 @@ from comtypes import COMError
 import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
+import ctypes
+import ctypes.wintypes
 import contextlib
 import winUser
 import oleacc
@@ -329,6 +331,10 @@ class MSHTML(IAccessible):
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
 		IAccessibleObject=kwargs['IAccessibleObject']
+		#MSHTML should not be used for MSAA child elements.
+		#However, objectFromPoint can hit an MSAA child element but we still should try MSHTML's own elementFromPoint even in this case.
+		if kwargs.get('IAccessibleChildID') and not isinstance(relation,tuple):
+			return False
 		HTMLNode=None
 		try:
 			HTMLNode=HTMLNodeFromIAccessible(IAccessibleObject)
@@ -344,7 +350,19 @@ class MSHTML(IAccessible):
 				del kwargs['IAccessibleObject']
 			except:
 				log.exception("Error getting activeElement")
-
+		elif isinstance(relation,tuple):
+			windowHandle=kwargs.get('windowHandle')
+			p=ctypes.wintypes.POINT(x=relation[0],y=relation[1])
+			ctypes.windll.user32.ScreenToClient(windowHandle,ctypes.byref(p))
+			try:
+				HTMLNode=HTMLNode.document.elementFromPoint(p.x,p.y)
+			except:
+				HTMLNode=None
+			if not HTMLNode:
+				log.debugWarning("Error getting HTMLNode with elementFromPoint")
+				return False
+			del kwargs['IAccessibleObject']
+			del kwargs['IAccessibleChildID']
 		kwargs['HTMLNode']=HTMLNode
 		return True
 
@@ -412,6 +430,16 @@ class MSHTML(IAccessible):
 		#object and embed nodes give back an incorrect IAccessible via queryService, so we must treet it as an ancestor IAccessible
 		if self.HTMLNodeName in ("OBJECT","EMBED"):
 			self.HTMLNodeHasAncestorIAccessible=True
+
+	def _get_location(self):
+		if self.HTMLNodeName and not self.HTMLNodeName.startswith('#'):
+			r=self.HTMLNode.getBoundingClientRect()
+			width=r.right-r.left
+			height=r.bottom-r.top
+			p=ctypes.wintypes.POINT(x=r.left,y=r.top)
+			ctypes.windll.user32.ClientToScreen(self.windowHandle,ctypes.byref(p))
+			return (p.x,p.y,width,height)
+		return None
 
 	def _get_TextInfo(self):
 		if not hasattr(self,'_HTMLNodeSupportsTextRanges'):
@@ -583,6 +611,8 @@ class MSHTML(IAccessible):
 		ariaDropeffect=self.HTMLAttributes['aria-dropeffect']
 		if ariaDropeffect and ariaDropeffect!="none":
 			states.add(controlTypes.STATE_DROPTARGET)
+		if self.HTMLAttributes["aria-hidden"]=="true":
+			states.add(controlTypes.STATE_INVISIBLE)
 		if self.isContentEditable:
 			states.add(controlTypes.STATE_EDITABLE)
 			states.discard(controlTypes.STATE_READONLY)
@@ -725,6 +755,17 @@ class MSHTML(IAccessible):
 				pass
 		super(MSHTML,self).doAction(index=index)
 
+	def _get_isFocusable(self):
+		nodeName = self.HTMLNodeName
+		attribs = self.HTMLAttributes
+		if nodeName in ("BUTTON", "INPUT", "ISINDEX", "SELECT", "TEXTAREA"):
+			return not attribs["disabled"]
+		if nodeName == "A":
+			return bool(attribs["href"])
+		if nodeName in ( "BODY", "OBJECT", "APPLET"):
+			return True
+		return self.HTMLNode.hasAttribute("tabindex")
+
 	def setFocus(self):
 		if self.HTMLNodeHasAncestorIAccessible:
 			try:
@@ -755,6 +796,17 @@ class MSHTML(IAccessible):
 			except (COMError,NameError):
 				return ""
 		return self._HTMLNodeName
+
+	def _get_devInfo(self):
+		info = super(MSHTML, self).devInfo
+		info.append("MSHTML node has ancestor IAccessible: %r" % self.HTMLNodeHasAncestorIAccessible)
+		htmlNode = self.HTMLNode
+		try:
+			ret = repr(htmlNode.nodeName)
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("MSHTML nodeName: %s" % ret)
+		return info
 
 class V6ComboBox(IAccessible):
 	"""The object which receives value change events for combo boxes in MSHTML/IE 6.
@@ -851,6 +903,9 @@ class RootClient(IAccessible):
 	# Get rid of "MSAAHTML Registered Handler".
 	description = None
 
+class MSAATextLeaf(IAccessible):
+	role=controlTypes.ROLE_STATICTEXT
+
 def findExtraIAccessibleOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class for MSHTML objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -862,6 +917,10 @@ def findExtraIAccessibleOverlayClasses(obj, clsList):
 		return
 
 	if windowClass != "Internet Explorer_Server":
+		return
+
+	if obj.IAccessibleChildID>0 and iaRole==oleacc.ROLE_SYSTEM_TEXT:
+		clsList.append(MSAATextLeaf)
 		return
 
 	if iaRole == oleacc.ROLE_SYSTEM_WINDOW and obj.event_objectID > 0:

@@ -19,14 +19,15 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaControllerInternal.h"
 #include "typedCharacter.h"
 
+HWND typedCharacter_window=NULL;
+
 LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
-	static HWND charWindow=0;
 	static WPARAM lastCharacter=0;
 	MSG* pmsg=(MSG*)lParam;
 	if(pmsg->message==WM_KEYDOWN) {
-		charWindow=pmsg->hwnd;
+		typedCharacter_window=pmsg->hwnd;
 		lastCharacter=0;
-	} else if((charWindow!=0)&&(pmsg->message==WM_CHAR)&&(pmsg->hwnd==charWindow)&&(pmsg->wParam!=lastCharacter)) { 
+	} else if((typedCharacter_window!=0)&&(pmsg->message==WM_CHAR)&&(pmsg->hwnd==typedCharacter_window)&&(pmsg->wParam!=lastCharacter)) { 
 		nvdaControllerInternal_typedCharacterNotify(GetCurrentThreadId(),static_cast<wchar_t>(pmsg->wParam));
 		lastCharacter=pmsg->wParam;
 	}

@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: http://www.nvda-project.org/
-#Copyright 2010 James Teh <jamie@jantrid.net>.
+#Copyright 2010-2012 NV Access Limited
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -15,20 +15,16 @@
 import os
 import sys
 
-__path__=[os.path.join(sys.exec_prefix,'tools','i18n')]
-import msgfmt
-del __path__
-
-def gettextMoFile_actionFunc(target,source,env):
-	msgfmt.make(source[0].path,target[0].path)
-	msgfmt.MESSAGES={}
+# Get the path to msgfmt.
+MSGFMT = os.path.abspath(os.path.join("tools", "msgfmt.exe"))
 
 def exists(env):
 	return True
 
 def generate(env):
 	env['BUILDERS']['gettextMoFile']=env.Builder(
-		action=env.Action(gettextMoFile_actionFunc,lambda t,s,e: 'Compiling gettext template %s'%s[0].path),
+		action=env.Action([[MSGFMT,"-o","$TARGET","$SOURCE"]],
+			lambda t,s,e: 'Compiling gettext template %s'%s[0].path),
 		suffix='.mo',
 		src_suffix='.po'
 	)

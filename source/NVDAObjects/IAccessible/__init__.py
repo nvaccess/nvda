@@ -8,6 +8,7 @@ from comtypes import COMError, IServiceProvider, GUID
 import ctypes
 import os
 import re
+import itertools
 from comInterfaces.tom import ITextDocument
 import tones
 import languageHandler
@@ -31,7 +32,7 @@ from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
 import queueHandler
-from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection
+from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
 	try:
@@ -311,9 +312,8 @@ the NVDAObject for IAccessible
 
 	@classmethod
 	def getPossibleAPIClasses(cls,kwargs,relation=None):
-		if not kwargs.get('IAccessibleChildID'):
-			from . import MSHTML
-			yield MSHTML.MSHTML
+		from . import MSHTML
+		yield MSHTML.MSHTML
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
@@ -374,6 +374,13 @@ the NVDAObject for IAccessible
 		windowClassName=self.windowClassName
 		role=self.IAccessibleRole
 
+		if self.role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG) and not self.isFocusable:
+			# Make unfocusable applications focusable.
+			# This is particularly useful for ARIA applications.
+			# We use the NVDAObject role instead of IAccessible role here
+			# because of higher API classes; e.g. MSHTML.
+			clsList.insert(0, FocusableUnfocusableContainer)
+
 		if hasattr(self, "IAccessibleTextObject"):
 			if role==oleacc.ROLE_SYSTEM_TEXT:
 				isEditable=True
@@ -405,7 +412,10 @@ the NVDAObject for IAccessible
 				clsList.append(newCls)
 
 		# Some special cases.
-		if windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
+		if windowClassName.lower().startswith('mscandui'):
+			import mscandui
+			mscandui.findExtraOverlayClasses(self,clsList)
+		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from mozilla import GeckoPluginWindowRoot
 			clsList.append(GeckoPluginWindowRoot)
 		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen", "GeckoFPSandboxChildWindow"):
@@ -715,7 +725,8 @@ the NVDAObject for IAccessible
 				raise NotImplementedError
 		elif index==0:
 			try:
-				self.IAccessibleObject.accDoDefaultAction(self.IAccessibleChildID)
+				if self.IAccessibleObject.accDoDefaultAction(self.IAccessibleChildID)!=0:
+					raise NotImplementedError
 				return
 			except COMError:
 				raise NotImplementedError
@@ -982,6 +993,19 @@ the NVDAObject for IAccessible
 		children=[x for x in children if x and winUser.isDescendantWindow(self.windowHandle,x.windowHandle)]
 		return children
 
+	def getChild(self, index):
+		if self.IAccessibleChildID != 0:
+			return None
+		child = IAccessibleHandler.accChild(self.IAccessibleObject, index + 1)
+		if not child:
+			if index < self.childCount:
+				return super(IAccessible, self).getChild(index)
+			return None
+		if child[0] == self.IAccessibleObject:
+			return IAccessible(windowHandle=self.windowHandle, IAccessibleObject=self.IAccessibleObject, IAccessibleChildID=child[1],
+				event_windowHandle=self.event_windowHandle, event_objectID=self.event_objectID, event_childID=child[1])
+		return self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0], IAccessibleChildID=child[1]))
+
 	def _get_IA2Attributes(self):
 		try:
 			attribs = self.IAccessibleObject.attributes
@@ -1220,10 +1244,10 @@ the NVDAObject for IAccessible
 		return None
 
 	def event_valueChange(self):
-		if hasattr(self,'IAccessibleTextObject'):
-			self.hasContentChangedSinceLastSelection=True
+		if isinstance(self, EditableTextWithAutoSelectDetection):
+			self.hasContentChangedSinceLastSelection = True
 			return
-		return super(IAccessible,self).event_valueChange()
+		return super(IAccessible, self).event_valueChange()
 
 	def event_alert(self):
 		if self.role != controlTypes.ROLE_ALERT:
@@ -1314,6 +1338,12 @@ the NVDAObject for IAccessible
 		childID = self.IAccessibleChildID
 		info.append("IAccessibleChildID: %r" % childID)
 		info.append("IAccessible event parameters: windowHandle=%r, objectID=%r, childID=%r" % (self.event_windowHandle, self.event_objectID, self.event_childID))
+		formatLong = self._formatLongDevInfoString
+		try:
+			ret = formatLong(iaObj.accName(childID))
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accName: %s" % ret)
 		try:
 			ret = iaObj.accRole(childID)
 			for name, const in oleacc.__dict__.iteritems():
@@ -1336,6 +1366,54 @@ the NVDAObject for IAccessible
 		except Exception as e:
 			ret = "exception: %s" % e
 		info.append("IAccessible accState: %s" % ret)
+		try:
+			ret = formatLong(iaObj.accDescription(childID))
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accDescription: %s" % ret)
+		try:
+			ret = formatLong(iaObj.accValue(childID))
+		except Exception as e:
+			ret = "exception: %s" % e
+		info.append("IAccessible accValue: %s" % ret)
+		if isinstance(iaObj, IAccessibleHandler.IAccessible2):
+			try:
+				ret = iaObj.windowHandle
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 windowHandle: %s" % ret)
+			try:
+				ret = iaObj.uniqueID
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 uniqueID: %s" % ret)
+			try:
+				ret = iaObj.role()
+				for name, const in itertools.chain(oleacc.__dict__.iteritems(), IAccessibleHandler.__dict__.iteritems()):
+					if not name.startswith("ROLE_") and not name.startswith("IA2_ROLE_"):
+						continue
+					if ret == const:
+						ret = name
+						break
+				else:
+					ret = repr(ret)
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 role: %s" % ret)
+			try:
+				temp = iaObj.states
+				ret = ", ".join(
+					name for name, const in IAccessibleHandler.__dict__.iteritems()
+					if name.startswith("IA2_STATE_") and temp & const
+				) + " (%d)" % temp
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 states: %s" % ret)
+			try:
+				ret = repr(iaObj.attributes)
+			except Exception as e:
+				ret = "exception: %s" % e
+			info.append("IAccessible2 attributes: %s" % ret)
 		return info
 
 class ContentGenericClient(IAccessible):
@@ -1625,7 +1703,7 @@ _staticMap={
 	("TTntDrawGrid.UnicodeClass",oleacc.ROLE_SYSTEM_CLIENT):"List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LIST):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
-	("SysListView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysListView32.ListItem",
+	("SysListView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysListView32.ListItemWithoutColumnSupport",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINE):"sysTreeView32.TreeView",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINEITEM):"sysTreeView32.TreeViewItem",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysTreeView32.TreeViewItem",
@@ -1648,7 +1726,6 @@ _staticMap={
 	("TPTShellList",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("TProgressBar",oleacc.ROLE_SYSTEM_PROGRESSBAR):"ProgressBar",
 	("AcrobatSDIWindow",oleacc.ROLE_SYSTEM_CLIENT):"adobeAcrobat.AcrobatSDIWindowClient",
-	("mscandui21.candidate",oleacc.ROLE_SYSTEM_PUSHBUTTON):"IME.IMECandidate",
 	("SysMonthCal32",oleacc.ROLE_SYSTEM_CLIENT):"SysMonthCal32.SysMonthCal32",
 	("hh_kwd_vlist",oleacc.ROLE_SYSTEM_LIST):"hh.KeywordList",
 	("Scintilla",oleacc.ROLE_SYSTEM_CLIENT):"scintilla.Scintilla",

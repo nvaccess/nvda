@@ -76,7 +76,7 @@ class ControlField(Field):
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
-		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
+		elif role in (controlTypes.ROLE_SEPARATOR, controlTypes.ROLE_FOOTNOTE, controlTypes.ROLE_ENDNOTE, controlTypes.ROLE_EMBEDDEDOBJECT, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
 			return self.PRESCAT_MARKER
 		elif (
 			role in (controlTypes.ROLE_BLOCKQUOTE, controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME, controlTypes.ROLE_TOOLBAR, controlTypes.ROLE_MENUBAR, controlTypes.ROLE_POPUPMENU, controlTypes.ROLE_TABLE)
@@ -111,6 +111,9 @@ class FieldCommand(object):
 			raise ValueError("command: %s needs a formatField"%command)
 		self.command=command
 		self.field=field
+
+	def __repr__(self):
+		return "FieldCommand %s with %s"%(self.command,self.field)
 
 #Position constants
 POSITION_FIRST="first"
@@ -434,7 +437,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 		For example, this might activate the object at this position or click the point at this position.
 		@raise NotImplementedError: If not supported.
 		"""
-		raise NotImplementedError
+		if not self.obj.isInForeground:
+			raise NotImplementedError
+		import winUser
+		p=self.pointAtStart
+		oldX,oldY=winUser.getCursorPos()
+		winUser.setCursorPos(p.x,p.y)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
+		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
+		winUser.setCursorPos(oldX,oldY)
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
