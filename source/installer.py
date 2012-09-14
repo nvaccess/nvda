@@ -235,11 +235,11 @@ def unregisterAddonFileAssociation():
 	try:
 		# As per MSDN recomendation, we only need to remove the prog ID.
 		_deleteKeyAndSubkeys(_winreg.HKEY_LOCAL_MACHINE, "Software\\Classes\\%s" % addonHandler.NVDA_ADDON_PROG_ID)
-		# Notify the shell that a file association has changed:
-		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 	except WindowsError:
-		log.error("Error removing addon file association.", exc_info=True)
-
+		# This is probably the first install, so just ignore the error.
+		return
+	# Notify the shell that a file association has changed:
+	shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 
 # Windows API call regDeleteTree is only available on vist and above so rule our own.
 def _deleteKeyAndSubkeys(key, subkey):
