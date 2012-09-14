@@ -78,7 +78,7 @@ def main():
 				import winUser
 				winUser.MessageBox(0,
 				# Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
-				_("Can not install NVDA add-on from {path}.\n"
+				_("Cannot install NVDA add-on from {path}.\n"
 				"You must be running NVDA to be able to install add-ons.").format(path=addonPath),
 				0, winUser.MB_ICONERROR)
 		else:
