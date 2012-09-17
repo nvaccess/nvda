@@ -381,7 +381,8 @@ class CandidateItem(NVDAObject):
 		while obj and isinstance(obj,CandidateItem) and controlTypes.STATE_INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.next
-		self.visibleCandidateItemsText=", ".join(textList)
+		if len(textList)<=1: return None
+		self.visibleCandidateItemsText=(u", ".join(textList))+u", "
 		return self.visibleCandidateItemsText
 
 class RowWithFakeNavigation(NVDAObject):
