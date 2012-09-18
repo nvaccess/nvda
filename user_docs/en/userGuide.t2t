@@ -1442,34 +1442,25 @@ Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/driv
 %kc:endInclude
 
 ++ Papenmeier ++
-
 The following Braille displays are supported: 
-
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
-- BRAILLEX Trio (USB)
+- BRAILLEX Trio (USB and bluetooth)
+-
 
-Furthermore, connecting the Trio display via bluetooth is supported.
-Nevertheless USB is preferred and a fallback to bluetooth is established if no connection was retrieved via USB.
-If BrxCom is installed NVDA will prefer BrxCom. BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
+If BrxCom is installed, NVDA will use BrxCom.
+BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
 A new version of BrxCom which works with NVDA will be released by Papenmeier soon.  
 
-Most devices have an Easy Access Bar (EAB), that allows intuitive and fast operation.
-The EAB can be moved into four directions where generally each
-direction has two switches.
-The c-series is the only exception from this ruling.
+Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
+The EAB can be moved in four directions where generally each direction has two switches.
+The c-series is the only exception to this rule.
 
-The c-series and some other displays have two routing rows whereby the
-upper one is used to report formatting information.
-Holding one of the upper routing keys and pressing the EAB on c-series
-devices emulates the second switch state.
-Pressing and holding the up, down, right and left keys (or
-EAB) causes the corresponding action to be repeated.
+The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
+Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.
+Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
 
-
-Generally, following keys are available on braille displays:
-
-%kc:beginInclude
+Generally, the following keys are available on these braille displays:
 || Name | Key |
 | l1 | Left front key |
 | l2 | Left rear key |
@@ -1483,8 +1474,6 @@ Generally, following keys are available on braille displays:
 | right2 | 2 Steps right |
 | dn | 1 Step down |
 | dn2 | 2 Steps down |
-%kc:endInclude
-
 
 Following are the Papenmeier command assignments for NVDA:
 %kc:beginInclude
@@ -1494,19 +1483,17 @@ Following are the Papenmeier command assignments for NVDA:
 | Move braille display to previous line | up |
 | Move braille display to next line | dn |
 | Route to braille cell | routing |
-| Reports the character under the cursor | l1 |
-| Performs the default action | l2 |
-| Moves to flat review / focus | r1 |
-| Performs the default action | l2 |
-| Reports the title of the current application or foreground window | l1+up |
-| Reads the current application status bar | l2+down |
-| Moves the navigator object to the object containing it | up2 |
-| Moves the navigator object to the first object inside it | dn2 |
-| Moves the navigator object to the next object | left2 |
-| Moves the navigator object to the previous object | right2 |
-| Reports formatting info for the current review cursor position within a document | Upper routing strip |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Move to flat review/focus | r1 |
+| Report title | l1+up |
+| Report Status Bar | l2+down |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to previous object | left2 |
+| Move to next object | right2 |
+| Report text formatting | upper routing row |
 %kc:endInclude
-
 
 + Advanced Topics +
 
