@@ -82,6 +82,11 @@ To use the HIMS SyncBraille braille display driver:
 	* SyncBraille.dll, version 1.0.0.1: http://www.nvda-project.org/3rdParty/SyncBraille.dll
 		* Copy SyncBraille.dll into the source\brailleDisplayDrivers\syncBraille directory.
 
+To use the Papenmeier braille display driver:
+	* Python interface to FTDI driver/chip: http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip
+		* Download the archive.
+		* Extract ftdi2.py into the global Python site-packages directory.
+
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
 	* 7-Zip: http://www.7-zip.org/
