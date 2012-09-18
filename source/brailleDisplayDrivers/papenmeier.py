@@ -4,6 +4,7 @@
 #See the file COPYING for more details.
 #Author: Tobias Platen (nvda@lists.thm.de)
 #minor changes by Halim Sahin (nvda@lists.thm.de) and aliminator83@googlemail.com
+
 import time
 import wx
 import braille
@@ -48,7 +49,7 @@ def brl_auto_id():
 
 def brl_out(data,nrk,nlk,nv):
 	"""write data to braille cell with nv vertical cells, nrk cells right and nlk cells left
-	   some papenmeier displays have vertical cells, other displays have dummy cells with keys
+	some papenmeier displays have vertical cells, other displays have dummy cells with keys
 	"""
 	ret = []
 	ret.append( struct.pack('BB', STX, BRAILLE)) #STX,COMMAND BRAILLE
@@ -97,7 +98,7 @@ def brl_poll(dev):
 				status.append(d[0])
 				d=dev.read(1)
 	return "".join(status)
-       
+
 def brl_decode_trio(keys): 
 	"""decode routing keys on Trio"""
 	if(keys[0:3]=='KP_' ): #KEYSTATE CHANGED EVENT on Trio, not Braille keys
@@ -160,7 +161,7 @@ def brl_decode_key_names(driver):
 		except:
 			pass
 	return dec
-	
+
 def brl_join_keys(dec):
 	"""join key names with comma, this is used for key combinations"""
 	if(len(dec) == 1): return dec[0]
@@ -175,7 +176,7 @@ def brl_keyname_decoded(key,rest):
 	elif(key == 12 or key == 10): return 'l2' + rest
 	elif(key == 13 or key == 15): return 'r1' + rest
 	elif(key == 14 or key == 16): return 'r2' + rest
-	
+
 	elif(key == 3): return 'up' + rest
 	elif(key == 7): return 'dn' + rest
 	elif(key == 1): return 'left' + rest
@@ -231,7 +232,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						except:
 							log.debugWarning("connectBluetooth failed")
 
-	
 	def connectUSB(self,devlist):
 		"""try to connect to usb device,is triggered when BRXCOM is not installed and bluetooth
 connection could not be established"""
@@ -242,8 +242,7 @@ connection could not be established"""
 			log.info("connectUSB success")
 		except:
 			log.debugWarning("connectUSB failed")
-			
- 
+
 	def __init__(self): 
 		"""initialize driver"""
 		super(BrailleDisplayDriver, self).__init__()
@@ -258,7 +257,7 @@ connection could not be established"""
 		self.connectBrxCom()
 		if(self._baud == 1): return #brxcom is running, skip bluetooth and USB
 		self._modstate = 0
-		
+
 		#try to connect to usb device,
 		#if no usb device is found there may be a bluetooth device
 		try:
@@ -360,11 +359,11 @@ connection could not be established"""
 			except:
 				log.debugWarning('BROKEN PIPE - THIS SHOULD NEVER HAPPEN')
 		if(self.numCells == 0): raise Exception('no device found')
-				
+
 		#start keycheck timer
 		self.startTimer()
 		self.initmapping()                                     
-		
+
 	def startTimer(self):
 		"""start timers used by this driver"""
 		self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
@@ -381,10 +380,10 @@ connection could not be established"""
 			self._bluetoothTimer.Stop()
 		except:
 			pass
-		
+
 		self._keyCheckTimer = None
 		self._bluetoothTimer = None
-		
+
 	def initmapping(self):
 		if(self._proto == 'A'):
 			self._keynamesrepeat = {20: 'up2', 21: 'up', 22: 'dn', 23: 'dn2', 24: 'right', 25: 'left', 26: 'right2', 27: 'left2'}
@@ -423,7 +422,7 @@ connection could not be established"""
 		"""executes a gesture"""
 		if(gesture.id == 'r1'):  gesture.id = self.r1next()       
 		if(len(gesture.id)): inputCore.manager.executeGesture(gesture)
-		
+
 	def _handleKeyPresses(self): 
 		"""handles key presses and performs a gesture"""
 		try:
@@ -451,7 +450,7 @@ connection could not be established"""
 		except:
 			if(self._dev!=None): self._dev.close()
 			self._dev=None
-			
+
 	def r1next(self):
 		"""select next key event for r1,used by the inputgesture class"""
 		ret = self._r1next
@@ -464,8 +463,7 @@ connection could not be established"""
 		globalCommands.commands.script_reportFormatting(gesture)
 
 	script_upperRouting.__doc__ = _("Route to and report formatting")	
-        
-		
+
 	#global gestures
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
@@ -490,7 +488,6 @@ connection could not be established"""
 
 			"title": ("br(papenmeier):l1,up",),
 			"reportStatusLine": ("br(papenmeier):l2,dn",),
-			
 		}
 	})
 
@@ -502,7 +499,7 @@ class InputGesture(braille.BrailleDisplayGesture):
 	"""Input gesture for papenmeier displays"""
 
 	source = BrailleDisplayDriver.name
-	
+
 	def __init__(self, keys,driver):
 		"""create an input gesture and decode keys"""
 		super(InputGesture, self).__init__()
@@ -526,12 +523,12 @@ class InputGesture(braille.BrailleDisplayGesture):
 				key2 = keys & 0x0000FFFF
 				self.id=brl_keyname_decoded(key1, ',')+brl_keyname_decoded(key2, '')
 				return None
-		
+
 		if(driver._proto == 'A'):#non trio
 			decodedkeys = brl_decode_keys_A(keys[3:], 4, driver._voffset*2)
 		elif(driver._proto=='B'):#trio
 			decodedkeys = brl_decode_trio(keys)
-			
+
 		if(len(decodedkeys)==1 and decodedkeys[0]>=32 and decodedkeys[0]<32+driver.numCells*2):
 			#routing keys
 			self.routingIndex = (decodedkeys[0]-32)/2
@@ -545,4 +542,3 @@ class InputGesture(braille.BrailleDisplayGesture):
 		elif(len(decodedkeys) == 0 and len(driver.decodedkeys)>0):
 			self.id=brl_join_keys(brl_decode_key_names(driver))
 			driver.decodedkeys=[]
-			
