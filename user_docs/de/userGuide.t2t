@@ -1490,6 +1490,60 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Cursor zum Braillemodul bewegen | routing |
 %kc:endInclude
 
+++ Papenmeier ++
+Folgende Braillezeilen werden unterstützt:
+- BRAILLEX EL 40c, EL 80c, EL 20c, EL60c (USB)
+- BRAILLEX EL 40s, EL 80s, EL 2D80s, EL 70s, EL 66s (USB)
+- BRAILLEX Trio (USB)
+-
+Weiterhin wird die Anbindung der Braillex Trio an Bluetooth unterstützt; jedoch wird USB priorisiert und erst bei nichterfolgter Verbindung auf Bluetooth zurückgegriffen.
+Falls BrxCom installiert ist, wird dieser benutzt.
+BrxCom ist ein Programm welches unabhängig von Screenreadern Brailleingabe und Dateitransfer Zu Braillezeilen mit Notizfunktion ermöglicht. 
+Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
+
+Die meisten Braillezeilen besitzen eine Navigationsleiste (EAB), welche eine intuitive und schnelle Bedienung ermöglicht.
+Die Navigationsleiste kann in vier Richtungen bewegt werden, wobei sie in der Regel zwei Schalterstellungen je Richtung hat.
+Eine Ausnahme bildet die c-Serie.
+
+Die Zeilen der c-Serie und einige weitere verfügen über eine doppelte Routingreihe, wobei die obere in NVDA verwendet wird, um Formatierungsinformationen über das aktuell gewählte Zeichen anzuzeigen.
+Die zweite Schalterstellung der Navigationsleiste wird bei der c-serie ausgelöst, indem eine Taste der oberen Routing Reihe  gedrückt gehalten und gleichzeitig die EAB betätigt wird.
+Für die Aktionen auf, ab, links, rechts wird ein Repeat unterstützt; längeres Drücken löst die Aktion mehrfach aus.
+
+Die folgenden Schalter gibt es auf der Braillezeile:
+|| Name | Taste |
+| l1 | Linker Taster oben |
+| l2 | Linker Taster unten |
+| r1 | Rechter Taster oben |
+| r2 | Rechter Taster unten |
+| auf | Navigationsleiste einmal nach oben |
+| auf2 | Navigationsleiste zweimal nach oben |
+| links | Navigationsleiste einmal nach links |
+| links2 | Navigationsleiste zweimal nach links |
+| rechts | Navigationsleiste einmal nach rechts |
+| rechts2 | Navigationsleiste zweimal nach rechts |
+| ab | Navigationsleiste einmal nach unten |
+| ab2 | Navigationsleiste zweimal nach unten  |
+
+Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen verfügbar:
+%kc:beginInclude
+|| Name | Taste |
+| Braillezeile zurückscrollen | links |
+| Braillezeile vorwärtsscrollen | rechts |
+| Braillezeile zur vorigen Zeile bewegen | auf |
+| Braillezeile zur nächsten Zeile bewegen | ab |
+| Cursor zum Braillemodul ziehen | Routing |
+| Liest das Zeichen unter dem Cursor vor | l1 |
+| Führt die Standardaktion aus | l2 |
+| Zieht zum Flächenmodus / Focus | r1 |
+| Führt die Standardaktion aus | l2 |
+| Liest die Titelzeile des aktiven Fensters vor | l1+auf |
+| Liest die Statusleiste des aktiven Fensters vor | l2+ab |
+| Bewegt das Navigatorobjekt zum Elternobjekt | auf2 |
+| Bewegt das Navigatorobjekt zum ersten Kindobjektobjekt | ab2 |
+| Bewegt das Navigatorobjekt zum nächsten Objekt in der selben Hierarchie | links2 |
+| Bewegt das Navigatorobjekt zum vorherigen Objekt in der selben Hierarchie | rechts2 |
+| Liest Formatierungsinformationen für an der Cursorposition in einen Dokument vor | Obere Routingreihe |
+%kc:endInclude
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit der Sie viele weitere Braillezeilen ansteuern können.
@@ -1507,7 +1561,6 @@ Bitte lesen Sie die  [BRLTTY-Dokumentation für Tastaturtabellen http://mielke.c
 | Braillezeile zur nächsten Zeile bewegen | lndn (eine Zeile nach unten bewegen) |
 | Cursor zum Braillemodul ziehen | route (Cursor zum Zeichen bewegen) |
 %kc:endInclude
-
 
 + Erweiterte Themen +
 
