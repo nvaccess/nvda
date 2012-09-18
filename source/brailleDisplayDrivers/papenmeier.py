@@ -419,7 +419,7 @@ connection could not be established"""
 	def executeGesture(self,gesture):
 		"""executes a gesture"""
 		if(gesture.id == 'r1'):  gesture.id = next(self._r1next)
-		if(len(gesture.id)): inputCore.manager.executeGesture(gesture)
+		if gesture.id: inputCore.manager.executeGesture(gesture)
 
 	def _handleKeyPresses(self):
 		"""handles key presses and performs a gesture"""
@@ -437,7 +437,7 @@ connection could not be established"""
 				except:
 					return
 			s = brl_poll(self._dev)
-			if(len(s)):
+			if s:
 				self._repeatcount=0
 				ig = InputGesture(s,self)
 				self.executeGesture(ig)
