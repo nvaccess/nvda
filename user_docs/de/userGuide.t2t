@@ -1490,24 +1490,6 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Cursor zum Braillemodul bewegen | routing |
 %kc:endInclude
 
-
-++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit der Sie viele weitere Braillezeilen ansteuern können.
-Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://brl.thefreecat.org/brltty/].
-Dazu laden Sie sich das neueste Treiberpaket herunter und installieren es. Der Name sieht in etwa wie folgt aus: brltty-win-4.2-3.exe.
-Bei der Konfiguration der Braillezeile und des zu verwendeten Ports - insbesondere bei USB -, seien Sie sicher, dass Sie auch die passenden Treiber vom Hersteller bereits auf Ihrem System installiert haben.
-
-Folgende brltty-Befehle wurden an nvda zugewiesen.
-Bitte lesen Sie die  [BRLTTY-Dokumentation für Tastaturtabellen http://mielke.cc/brltty/doc/drivers/] für Informationen darüber, wie brltty-Befehle an Braillezeilentasten zugewiesen werden.
-%kc:beginInclude
-|| Name | BRLTTY-Befehl |
-| Braillezeile zurückscrollen | fwinlt (eine Zeilenlänge nach links bewegen) |
-| Braillezeile vorwärtsscrollen | fwinrt (eine Zeilenlänge nach rechts bewegen) |
-| Braillezeile zur vorigen Zeile bewegen | lnup (eine Zeile nach oben bewegen) |
-| Braillezeile zur nächsten Zeile bewegen | lndn (eine Zeile nach unten bewegen) |
-| Cursor zum Braillemodul ziehen | route (Cursor zum Zeichen bewegen) |
-%kc:endInclude
-
 ++ Papenmeier ++
 
 Folgende Braillezeilen werden unterstützt:
@@ -1579,6 +1561,22 @@ Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen verfügbar:
 | Liest Formatierungsinformationen für an der Cursorposition in einen Dokument vor | Obere Routingreihe |
 %kc:endInclude
 
+++ BRLTTY ++
+[BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit der Sie viele weitere Braillezeilen ansteuern können.
+Wenn Sie dies vorhaben, installieren Sie [BRLTTY für Windows http://brl.thefreecat.org/brltty/].
+Dazu laden Sie sich das neueste Treiberpaket herunter und installieren es. Der Name sieht in etwa wie folgt aus: brltty-win-4.2-3.exe.
+Bei der Konfiguration der Braillezeile und des zu verwendeten Ports - insbesondere bei USB -, seien Sie sicher, dass Sie auch die passenden Treiber vom Hersteller bereits auf Ihrem System installiert haben.
+
+Folgende brltty-Befehle wurden an nvda zugewiesen.
+Bitte lesen Sie die  [BRLTTY-Dokumentation für Tastaturtabellen http://mielke.cc/brltty/doc/drivers/] für Informationen darüber, wie brltty-Befehle an Braillezeilentasten zugewiesen werden.
+%kc:beginInclude
+|| Name | BRLTTY-Befehl |
+| Braillezeile zurückscrollen | fwinlt (eine Zeilenlänge nach links bewegen) |
+| Braillezeile vorwärtsscrollen | fwinrt (eine Zeilenlänge nach rechts bewegen) |
+| Braillezeile zur vorigen Zeile bewegen | lnup (eine Zeile nach oben bewegen) |
+| Braillezeile zur nächsten Zeile bewegen | lndn (eine Zeile nach unten bewegen) |
+| Cursor zum Braillemodul ziehen | route (Cursor zum Zeichen bewegen) |
+%kc:endInclude
 
 + Erweiterte Themen +
 
