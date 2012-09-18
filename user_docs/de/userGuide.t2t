@@ -1491,40 +1491,25 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 %kc:endInclude
 
 ++ Papenmeier ++
-
 Folgende Braillezeilen werden unterstützt:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2D80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB)
+-
+Weiterhin wird die Anbindung der Braillex Trio an Bluetooth unterstützt; jedoch wird USB priorisiert und erst bei nichterfolgter Verbindung auf Bluetooth zurückgegriffen.
+Falls BrxCom installiert ist, wird dieser benutzt.
+BrxCom ist ein Programm welches unabhängig von Screenreadern Brailleingabe und Dateitransfer Zu Braillezeilen mit Notizfunktion ermöglicht. 
+Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
 
-Weiterhin wird die Anbindung der Braillex Trio an
-Bluetooth unterstützt; jedoch wird USB priorisiert und erst bei
-nichterfolgter Verbindung auf Bluetooth zurückgegriffen.
-Falls BrxCom installiert ist, wird dieser benutzt. BrxCom ist ein Programm 
-welches unabhängig von Screenreadern Brailleingabe und Dateitransfer 
-Zu Braillezeilen mit Notizfunktion ermöglicht. 
-Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der 
-Firma Papenmeier veröffentlicht.
-
-Die meisten Braillezeilen besitzen eine Navigationsleiste (EAB), 
-welche eine intuitive und schnelle Bedienung ermöglicht.
-Die Navigationsleiste kann in vier Richtungen bewegt
-werden, wobei sie in der Regel zwei Schalterstellungen je Richtung hat.
+Die meisten Braillezeilen besitzen eine Navigationsleiste (EAB), welche eine intuitive und schnelle Bedienung ermöglicht.
+Die Navigationsleiste kann in vier Richtungen bewegt werden, wobei sie in der Regel zwei Schalterstellungen je Richtung hat.
 Eine Ausnahme bildet die c-Serie.
 
-Die Zeilen der c-Serie und einige weitere verfügen
-über eine doppelte Routingreihe, wobei die obere in NVDA verwendet wird,
-um Formatierungsinformationen über das aktuell gewählte Zeichen anzuzeigen.
-Die zweite Schalterstellung der Navigationsleiste wird bei der c-serie 
-ausgelöst, indem eine 
-Taste der oberen Routing Reihe  gedrückt gehalten und gleichzeitig die 
-EAB betätigt wird.
-Für die Aktionen auf, ab, links, rechts wird ein Repeat unterstützt; 
-längeres Drücken löst die Aktion mehrfach aus.
+Die Zeilen der c-Serie und einige weitere verfügen über eine doppelte Routingreihe, wobei die obere in NVDA verwendet wird, um Formatierungsinformationen über das aktuell gewählte Zeichen anzuzeigen.
+Die zweite Schalterstellung der Navigationsleiste wird bei der c-serie ausgelöst, indem eine Taste der oberen Routing Reihe  gedrückt gehalten und gleichzeitig die EAB betätigt wird.
+Für die Aktionen auf, ab, links, rechts wird ein Repeat unterstützt; längeres Drücken löst die Aktion mehrfach aus.
 
 Die folgenden Schalter gibt es auf der Braillezeile:
-
-%kc:beginInclude
 || Name | Taste |
 | l1 | Linker Taster oben |
 | l2 | Linker Taster unten |
@@ -1538,7 +1523,6 @@ Die folgenden Schalter gibt es auf der Braillezeile:
 | rechts2 | Navigationsleiste zweimal nach rechts |
 | ab | Navigationsleiste einmal nach unten |
 | ab2 | Navigationsleiste zweimal nach unten  |
-%kc:endInclude
 
 Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen verfügbar:
 %kc:beginInclude
