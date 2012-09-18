@@ -224,7 +224,15 @@ class List(List):
 		return super(List,self).event_gainFocus()
 
 	def _get_isMultiColumn(self):
-		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0) in (LV_VIEW_DETAILS, LV_VIEW_TILE)
+		view =  watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0)
+		if view in (LV_VIEW_DETAILS, LV_VIEW_TILE):
+			return True
+		elif view == 0:
+			# #2673: This could indicate that LVM_GETVIEW is not supported (comctl32 < 6.0).
+			# Unfortunately, it could also indicate LV_VIEW_ICON.
+			# Hopefully, no one sets LVS_REPORT and then LV_VIEW_ICON.
+			return self.windowStyle & LVS_TYPEMASK == LVS_REPORT
+		return False
 
 	def _get_rowCount(self):
 		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
