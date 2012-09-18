@@ -462,12 +462,10 @@ connection could not be established"""
 			"braille_previousLine": ("br(papenmeier):up",),
 			"braille_nextLine": ("br(papenmeier):dn",),
 			"braille_routeTo": ("br(papenmeier):route",),
-            "upperRouting": ("br(papenmeier):upperRouting",),
 
 			"navigatorObject_moveToFlatReviewAtObjectPosition": ("br(papenmeier):r1a",),
 			"braille_toggleTether": ("br(papenmeier):r2",),
 			"review_currentCharacter": ("br(papenmeier):l1",),
-			"reportFormatting": ("br(papenmeier):reportf",),
 			"navigatorObject_toFocus":("br(papenmeier):r1b",),
 			"navigatorObject_doDefaultAction": ("br(papenmeier):l2",),
 
