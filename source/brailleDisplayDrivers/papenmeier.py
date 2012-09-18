@@ -60,11 +60,8 @@ def brl_out(data,nrk,nlk,nv):
 	#write length to stream 
 	ret.append(struct.pack('BB',b,a))
 	#fill dummy bytes (left,vertical)
-	#TODO improve efficency here
-	for i in xrange(0,nv):
-		ret.append(struct.pack('BB',0x30,0x30))
-	for i in xrange(0,nlk):
-		ret.append(struct.pack('BBBB',0x30,0x30,0x30,0x30))
+	ret.append(struct.pack('BB',0x30,0x30)*nv)
+	ret.append(struct.pack('BBBB',0x30,0x30,0x30,0x30)*nlk)
 	#swap dot bits        
 	for d in data:
 		d2 = 0
@@ -80,8 +77,7 @@ def brl_out(data,nrk,nlk,nv):
 		b = 0x30|(d2 >> 4)
 		ret.append(struct.pack('BB',b,a))
 	#fill dummy bytes on (right)        
-	for i in xrange(0,nrk):
-		ret.append(struct.pack('BBBB',0x30,0x30,0x30,0x30))
+	ret.append(struct.pack('BBBB',0x30,0x30,0x30,0x30)*nrk)
 	#ETX        
 	ret.append(struct.pack('B',ETX))
 	return "".join(ret)
