@@ -43,7 +43,7 @@ BRAILLE = 0x43
 #Timeout for bluetooth
 BLUETOOTH_TIMEOUT = 0.2
 
-def brl_auto_id(): 
+def brl_auto_id():
 	"""send auto id command to braille display"""
 	return struct.pack('bbbbb',STX,AUTOID,0x50,0x50,ETX)
 	#device will respond with a message that allows identification of the display
@@ -58,12 +58,12 @@ def brl_out(data,nrk,nlk,nv):
 
 	a = 0x50|(d2 & 0x0F)
 	b = 0x50|(d2 >> 4)
-	#write length to stream 
+	#write length to stream
 	ret.append(struct.pack('BB',b,a))
 	#fill dummy bytes (left,vertical)
 	ret.append(struct.pack('BB',0x30,0x30)*nv)
 	ret.append(struct.pack('BBBB',0x30,0x30,0x30,0x30)*nlk)
-	#swap dot bits        
+	#swap dot bits
 	for d in data:
 		d2 = 0
 		if(d & 1): d2|=128
@@ -77,13 +77,13 @@ def brl_out(data,nrk,nlk,nv):
 		a = 0x30|(d2 & 0x0F)
 		b = 0x30|(d2 >> 4)
 		ret.append(struct.pack('BB',b,a))
-	#fill dummy bytes on (right)        
+	#fill dummy bytes on (right)
 	ret.append(struct.pack('BBBB',0x30,0x30,0x30,0x30)*nrk)
-	#ETX        
+	#ETX
 	ret.append(struct.pack('B',ETX))
 	return "".join(ret)
 
-def brl_poll(dev): 
+def brl_poll(dev):
 	"""read sequence from braille display"""
 	q = dev.inWaiting()
 	status = []
@@ -96,7 +96,7 @@ def brl_poll(dev):
 				d=dev.read(1)
 	return "".join(status)
 
-def brl_decode_trio(keys): 
+def brl_decode_trio(keys):
 	"""decode routing keys on Trio"""
 	if(keys[0:3]=='KP_' ): #KEYSTATE CHANGED EVENT on Trio, not Braille keys
 		keys = keys[3:]
@@ -115,7 +115,7 @@ def brl_decode_trio(keys):
 
 def brl_decode_keys_A(data,start,voffset):
 	"""decode routing keys non Trio devices"""
-	n = start                           #key index iterator 
+	n = start                           #key index iterator
 	j=  []
 	shift = 0
 	for i in xrange(0,len(data)):	#byte index
@@ -132,7 +132,7 @@ def brl_decode_keys_A(data,start,voffset):
 			if(a & 2): j.append(n+5-shift)
 			if(a & 4): j.append(n+6-shift)
 			if(a & 8): j.append(n+7-shift)
-			n+=8	
+			n+=8
 	return j
 
 def brl_decode_key_names_repeat(driver):
@@ -183,7 +183,7 @@ def brl_keyname_decoded(key,rest):
 	elif(key == 8): return 'dn2' + rest
 	elif(key == 2): return 'left2' + rest
 	elif(key == 6): return 'right2' + rest
-	else: return ''        
+	else: return ''
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier braille display driver.
@@ -240,7 +240,7 @@ connection could not be established"""
 		except:
 			log.debugWarning("connectUSB failed")
 
-	def __init__(self): 
+	def __init__(self):
 		"""initialize driver"""
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
@@ -277,7 +277,7 @@ connection could not be established"""
 					#no response, assume a Trio is connected
 					self._baud = 115200
 					self._dev.set_baud_rate(self._baud)
-					self._dev.purge()        
+					self._dev.purge()
 					self._dev.read(self._dev.inWaiting())
 					self.numCells = 40
 					self._proto = 'B'
@@ -359,7 +359,7 @@ connection could not be established"""
 
 		#start keycheck timer
 		self.startTimer()
-		self.initmapping()                                     
+		self.initmapping()
 
 	def startTimer(self):
 		"""start timers used by this driver"""
@@ -368,7 +368,7 @@ connection could not be established"""
 		#the keycheck timer polls the braille display for keypresses
 		self._bluetoothTimer = wx.PyTimer(self.connectBluetooth)
 		self._bluetoothTimer.Start(BLUETOOTH_INTERVAL)
-		#the bluetooth timer tries to reconnect if the bluetooth connection is lost 
+		#the bluetooth timer tries to reconnect if the bluetooth connection is lost
 
 	def stopTimer(self):
 		"""stop all timers"""
@@ -389,7 +389,7 @@ connection could not be established"""
 		else:
 			self._keynamesrepeat = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn', 21: 'dn2', 22: 'up', 23: 'up2'}
 			x = self.numCells * 2
-			self._keynames = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn', 21: 'dn2', 22: 'up', 23: 'up2', x+38: 'r1', x+39: 'r1', 30: 'l2', 31: 'l1'}	
+			self._keynames = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn', 21: 'dn2', 22: 'up', 23: 'up2', x+38: 'r1', x+39: 'r1', 30: 'l2', 31: 'l1'}
 
 	def terminate(self):
 		"""free resources used by this driver"""
@@ -400,7 +400,7 @@ connection could not be established"""
 			self._dev=None
 			if(self._brxnvda): self._brxnvda.brxnvda_close()
 		except:
-			self._dev=None        
+			self._dev=None
 
 	def display(self, cells):
 		"""write to braille display"""
@@ -420,7 +420,7 @@ connection could not be established"""
 		if(gesture.id == 'r1'):  gesture.id = next(self._r1next)
 		if(len(gesture.id)): inputCore.manager.executeGesture(gesture)
 
-	def _handleKeyPresses(self): 
+	def _handleKeyPresses(self):
 		"""handles key presses and performs a gesture"""
 		try:
 			if(self._brxnvda):
@@ -452,7 +452,7 @@ connection could not be established"""
 		globalCommands.commands.script_braille_routeTo(gesture)
 		globalCommands.commands.script_reportFormatting(gesture)
 
-	script_upperRouting.__doc__ = _("Route to and report formatting")	
+	script_upperRouting.__doc__ = _("Route to and report formatting")
 
 	#global gestures
 	gestureMap = inputCore.GlobalGestureMap({
@@ -525,7 +525,7 @@ class InputGesture(braille.BrailleDisplayGesture):
 			self.id = "route"
 			if(decodedkeys[0] % 2 == 1):
 				self.id="upperRouting"
-		#other keys                
+		#other keys
 		elif(len(decodedkeys) > 0 and len(decodedkeys) >= len(driver.decodedkeys)):
 			driver.decodedkeys.extend(decodedkeys)
 
