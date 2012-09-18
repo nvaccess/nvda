@@ -6,6 +6,7 @@
 #minor changes by Halim Sahin (nvda@lists.thm.de) and aliminator83@googlemail.com
 
 import time
+import itertools
 import wx
 import braille
 from logHandler import log
@@ -245,7 +246,7 @@ connection could not be established"""
 		self.numCells = 0
 		self._nlk = 0
 		self._nrk = 0
-		self._r1next = 'r1a'
+		self._r1next = itertools.cycle(('r1a', 'r1b'))
 		self.decodedkeys = []
 		self._baud = 0
 		self._dev = None
@@ -416,7 +417,7 @@ connection could not be established"""
 
 	def executeGesture(self,gesture):
 		"""executes a gesture"""
-		if(gesture.id == 'r1'):  gesture.id = self.r1next()       
+		if(gesture.id == 'r1'):  gesture.id = next(self._r1next)
 		if(len(gesture.id)): inputCore.manager.executeGesture(gesture)
 
 	def _handleKeyPresses(self): 
@@ -446,13 +447,6 @@ connection could not be established"""
 		except:
 			if(self._dev!=None): self._dev.close()
 			self._dev=None
-
-	def r1next(self):
-		"""select next key event for r1,used by the inputgesture class"""
-		ret = self._r1next
-		if(ret == 'r1a'): self._r1next = 'r1b'
-		if(ret == 'r1b'): self._r1next = 'r1a'
-		return ret
 
 	def script_upperRouting(self, gesture):
 		globalCommands.commands.script_braille_routeTo(gesture)
