@@ -2,9 +2,9 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 Tobias Platen, Halim Sahin, aliminator83, NV Access Limited
+#Copyright (C) 2012 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited
 #Author: Tobias Platen (nvda@lists.thm.de)
-#minor changes by Halim Sahin (nvda@lists.thm.de), aliminator83@googlemail.com and James Teh
+#minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com> and James Teh
 
 import time
 import itertools
