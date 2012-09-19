@@ -28,6 +28,7 @@ import winUser
 #for scripting
 from baseObject import ScriptableObject
 import globalCommands
+import scriptHandler
 
 #timer intervalls used by the driver
 KEY_CHECK_INTERVAL = 50
@@ -451,7 +452,7 @@ connection could not be established"""
 
 	def script_upperRouting(self, gesture):
 		globalCommands.commands.script_braille_routeTo(gesture)
-		globalCommands.commands.script_reportFormatting(gesture)
+		wx.CallLater(50, scriptHandler.executeScript, globalCommands.commands.script_reportFormatting, gesture)
 
 	script_upperRouting.__doc__ = _("Route to and report formatting")
 
