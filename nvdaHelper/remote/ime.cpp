@@ -83,6 +83,8 @@ static HMODULE gImm32Module = NULL;
 static DWORD lastConversionModeFlags=0;
 bool disableIMEConversionModeUpdateReporting=false;
 
+UINT wm_candidateChange=0;
+
 static LPINPUTCONTEXT2 (WINAPI* immLockIMC)(HIMC) = NULL;
 static BOOL (WINAPI* immUnlockIMC)(HIMC) = NULL;
 static LPVOID (WINAPI* immLockIMCC)(HIMCC) = NULL;
@@ -344,7 +346,7 @@ static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lPar
 			switch (pcwp->wParam) {
 				case IMN_OPENCANDIDATE:
 				case IMN_CHANGECANDIDATE:
-					handleCandidates(pcwp->hwnd);
+					PostMessage(pcwp->hwnd,wm_candidateChange,0,0);
 					break;
 
 				case IMN_CLOSECANDIDATE:
@@ -407,7 +409,16 @@ WCHAR* IME_getCompositionString() {
 	return comp_str;
 }
 
+LRESULT CALLBACK IME_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
+	MSG* pmsg=(MSG*)lParam;
+	if(pmsg->message==wm_candidateChange) {
+		handleCandidates(pmsg->hwnd);
+	}
+	return 0;
+}
+
 void IME_inProcess_initialize() {
+	wm_candidateChange=RegisterWindowMessage(L"nvda_wm_candidateChange");
 	gImm32Module = LoadLibraryA("imm32.dll");
 	if (gImm32Module) {
 		immLockIMC    = (LPINPUTCONTEXT2 (WINAPI*)(HIMC))
@@ -420,9 +431,11 @@ void IME_inProcess_initialize() {
 			GetProcAddress(gImm32Module, "ImmUnlockIMCC");
 	}
 	registerWindowsHook(WH_CALLWNDPROC, IME_callWndProcHook);
+	registerWindowsHook(WH_GETMESSAGE, IME_getMessageHook);
 }
 
 void IME_inProcess_terminate() {
 	unregisterWindowsHook(WH_CALLWNDPROC, IME_callWndProcHook);
+	unregisterWindowsHook(WH_GETMESSAGE, IME_getMessageHook);
 	if (gImm32Module)  FreeLibrary(gImm32Module);
 }
