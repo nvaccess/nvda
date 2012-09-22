@@ -364,6 +364,7 @@ class CandidateItem(NVDAObject):
 			return ", ".join(descriptions)
 
 	def reportFocus(self):
+		if not config.conf["inputComposition"]["announceSelectedCandidate"]: return
 		text=self.name
 		desc=self.description
 		if desc:

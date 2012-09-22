@@ -171,7 +171,9 @@ confspec = ConfigObj(StringIO(
 
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)
+	announceSelectedCandidate = boolean(default=True)
 	reportReadingStringChanges = boolean(default=True)
+	reportCompositionStringChanges = boolean(default=True)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
