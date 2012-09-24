@@ -45,12 +45,12 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 			number=int(self.candidateNumber)
 		except (TypeError,ValueError):
 			return super(BaseCandidateItem,self).name
-		word=super(BaseCandidateItem,self).name
-		# Translators: the formatted name of an input composition candidate item.
-		return _("{number}  {word}").format(number=number,word=word)
+		candidate=super(BaseCandidateItem,self).name
+		return self.getFormattedCandidateName(number,candidate)
 
 	def _get_description(self):
-		return self.getSymbolDescriptions(super(BaseCandidateItem,self).name)
+		candidate=super(BaseCandidateItem,self).name
+		return self.getFormattedCandidateDescription(candidate)
 
 	def _get_basicText(self):
 		return super(BaseCandidateItem,self).name

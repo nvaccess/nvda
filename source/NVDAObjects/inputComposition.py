@@ -139,15 +139,15 @@ class CandidateItem(CandidateItemBehavior,Window):
 
 	def _get_name(self):
 		number=self.candidateIndex+1
-		word=self.candidateStrings[self.candidateIndex]
-		# Translators: the formatted name of an input composition candidate item.
-		return _("{number}  {word}").format(number=number,word=word)
+		candidate=self.candidateStrings[self.candidateIndex]
+		return self.getFormattedCandidateName(number,candidate)
 
 	def _get_basicText(self):
 		return self.candidateStrings[self.candidateIndex]
 
 	def _get_description(self):
-		return self.getSymbolDescriptions(self.candidateStrings[self.candidateIndex])
+		candidate=self.candidateStrings[self.candidateIndex]
+		return self.getFormattedCandidateDescription(candidate)
 
 	def _get_next(self):
 		if self.candidateIndex<(len(self.candidateStrings)-1):

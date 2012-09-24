@@ -863,6 +863,11 @@ This option, which is on by default, allows you to choose whether NVDA should an
 For input methods where the selection can be changed with the arrow keys  (such as Chinese New Phonetic) this is necessary, but for some input methods it may be more efficient typing with this option turned off.
 Note that even with this option off, the review cursor will still be placed on the selected candidate allowing you to use object navigation / review to manually read this or other candidates.
 
+==== Always include short character descriptions for candidates ====
+This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when its selected or when its automatically read when the candidate list appears.
+Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
+This option may be useful for Korean and japanese input methods.
+ 
 ==== Report changes to the reading string ====
 Some input methods such as Chinese New Phonetic and New ChangJie have a reading string (sometimes known as a precomposition string).
 You can choose whether or not NVDA should announce new characters being typed into this reading string with this option.

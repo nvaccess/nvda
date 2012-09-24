@@ -172,6 +172,7 @@ confspec = ConfigObj(StringIO(
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)
 	announceSelectedCandidate = boolean(default=True)
+	alwaysIncludeShortCharacterDescriptionInCandidateName = boolean(default=True)
 	reportReadingStringChanges = boolean(default=True)
 	reportCompositionStringChanges = boolean(default=True)
 """

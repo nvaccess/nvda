@@ -342,26 +342,38 @@ class Terminal(LiveText, EditableText):
 
 class CandidateItem(NVDAObject):
 
-	def getSymbolDescriptions(self,symbols):
+	def getFormattedCandidateName(self,number,candidate):
+		if config.conf["inputComposition"]["alwaysIncludeShortCharacterDescriptionInCandidateName"]:
+			describedSymbols=[]
+			for symbol in candidate:
+				try:
+					symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
+				except TypeError:
+					symbolDescriptions=[]
+				if len(symbolDescriptions)>=1:
+					description=symbolDescriptions[0]
+					if description.startswith('(') and description.endswith(')'):
+						describedSymbols.append(description[1:-1])
+					else:
+						describedSymbols.append(_(u"{symbol} as in {description}").format(symbol=symbol,description=description))
+				else:
+					describedSymbols.append(symbol)
+			candidate=u", ".join(describedSymbols)
+		return _(u"{number} {candidate}").format(number=number,candidate=candidate)
+
+	def getFormattedCandidateDescription(self,candidate):
 		descriptions=[]
-		numSymbols=len(symbols)
-		for symbol in symbols:
-			try:
-				symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
-			except TypeError:
-				symbolDescriptions=[]
-			if numSymbols>1:
-				symbolDescriptions=symbolDescriptions[:1]
-			numSymbolDescriptions=len(symbolDescriptions)
-			for desc in symbolDescriptions:
-				if desc and desc[0]=='(' and desc[-1]==')':
-					desc=desc[1:-1]
-				elif numSymbolDescriptions==1:
-					# Translators: a human friendly message used as the description for an input composition candidate symbol when typing east-Asian characters,  using both the symbol and its character description.
-					desc=_("{symbol} as in {description}").format(symbol=symbol,description=desc)
-				descriptions.append(desc)
-		if descriptions:
-			return ", ".join(descriptions)
+		numSymbols=len(candidate)
+		if numSymbols!=1: return u""
+		symbol=candidate[0]
+		try:
+			symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
+		except TypeError:
+			symbolDescriptions=[]
+		if config.conf["inputComposition"]["alwaysIncludeShortCharacterDescriptionInCandidateName"]:
+			symbolDescriptions=symbolDescriptions[1:]
+		if len(symbolDescriptions)<1: return u""
+		return u", ".join(symbolDescriptions)
 
 	def reportFocus(self):
 		if not config.conf["inputComposition"]["announceSelectedCandidate"]: return
