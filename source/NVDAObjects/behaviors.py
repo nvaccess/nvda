@@ -355,10 +355,12 @@ class CandidateItem(NVDAObject):
 					if description.startswith('(') and description.endswith(')'):
 						describedSymbols.append(description[1:-1])
 					else:
+						# Translators: a message announcing a candidate's character and description.
 						describedSymbols.append(_(u"{symbol} as in {description}").format(symbol=symbol,description=description))
 				else:
 					describedSymbols.append(symbol)
 			candidate=u", ".join(describedSymbols)
+		# Translators: a formatted message announcing a candidate's number and candidate text.
 		return _(u"{number} {candidate}").format(number=number,candidate=candidate)
 
 	def getFormattedCandidateDescription(self,candidate):
