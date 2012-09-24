@@ -128,10 +128,10 @@ TABLES = (
 	("is.ctb", _("Icelandic 8 dot computer braille")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("it-it-g1.utb", _("Italian 6 dot computer braille")),
+	("it-it-comp6.utb", _("Italian 6 dot computer braille")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("it-it-g1.utb2", _("Italian 8 dot computer braille")),
+	("it-it-comp8.utb", _("Italian 8 dot computer braille")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("Lv-Lv-g1.utb", _("Latvian grade 1")),
