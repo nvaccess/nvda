@@ -79,6 +79,7 @@ typedef struct tagINPUTCONTEXT2 {
     DWORD           dwReserve[3];                   
 } INPUTCONTEXT2, *PINPUTCONTEXT2, NEAR *NPINPUTCONTEXT2, FAR *LPINPUTCONTEXT2;  
 
+static BOOL lastOpenStatus=true;
 static HMODULE gImm32Module = NULL;
 static DWORD lastConversionModeFlags=0;
 bool disableIMEConversionModeUpdateReporting=false;
@@ -124,6 +125,19 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 }
 
 typedef UINT (WINAPI* GetReadingString_funcType)(HIMC, UINT, LPWSTR, PINT, BOOL*, PUINT);
+
+void handleOpenStatus(HWND hwnd) {
+	if(!ImmGetProperty(GetKeyboardLayout(0),IGP_CONVERSION)) return;
+	/* Obtain IME context */
+	HIMC imc = ImmGetContext(hwnd);
+	if (!imc)  return;
+	BOOL opened=ImmGetOpenStatus(imc);
+	if(opened!=lastOpenStatus) {
+		nvdaControllerInternal_IMEOpenStatusUpdate(opened);
+		lastOpenStatus=opened;
+	}
+	ImmReleaseContext(hwnd, imc);
+}
 
 void handleReadingStringUpdate(HWND hwnd) {
 	/* Obtain IME context */
@@ -344,6 +358,9 @@ static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lPar
 	switch (pcwp->message) {
 		case WM_IME_NOTIFY:
 			switch (pcwp->wParam) {
+				case IMN_SETOPENSTATUS:
+					handleOpenStatus(pcwp->hwnd);
+					break;
 				case IMN_OPENCANDIDATE:
 				case IMN_CHANGECANDIDATE:
 					PostMessage(pcwp->hwnd,wm_candidateChange,0,0);

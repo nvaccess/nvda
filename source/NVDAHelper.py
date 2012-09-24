@@ -264,6 +264,18 @@ def nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags,lcid):
 	queueHandler.queueFunction(queueHandler.eventQueue,handleInputConversionModeUpdate,oldFlags,newFlags,lcid)
 	return 0
 
+@WINFUNCTYPE(c_long,c_long)
+def nvdaControllerInternal_IMEOpenStatusUpdate(opened):
+	if opened:
+		# Translators: a message when the IME open status changes to opened
+		message=_("IME opened")
+	else:
+		# Translators: a message when the IME open status changes to closed
+		message=_("IME closed")
+	import ui
+	queueHandler.queueFunction(queueHandler.eventQueue,ui.message,message)
+	return 0
+
 @WINFUNCTYPE(c_long,c_long,c_ulong,c_wchar_p)
 def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	global lastInputMethodName, lastInputLanguageName
@@ -393,6 +405,7 @@ def initialize():
 		("nvdaControllerInternal_logMessage",nvdaControllerInternal_logMessage),
 		("nvdaControllerInternal_inputCompositionUpdate",nvdaControllerInternal_inputCompositionUpdate),
 		("nvdaControllerInternal_inputCandidateListUpdate",nvdaControllerInternal_inputCandidateListUpdate),
+		("nvdaControllerInternal_IMEOpenStatusUpdate",nvdaControllerInternal_IMEOpenStatusUpdate),
 		("nvdaControllerInternal_inputConversionModeUpdate",nvdaControllerInternal_inputConversionModeUpdate),
 		("nvdaControllerInternal_vbufChangeNotify",nvdaControllerInternal_vbufChangeNotify),
 		("nvdaControllerInternal_installAddonPackageFromPath",nvdaControllerInternal_installAddonPackageFromPath),
