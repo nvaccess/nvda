@@ -84,6 +84,7 @@ class espeak_EVENT_id(Union):
 	_fields_=[
 		('number',c_int),
 		('name',c_char_p),
+		('string',c_char*8),
 	]
 
 class espeak_EVENT(Structure):
