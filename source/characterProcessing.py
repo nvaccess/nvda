@@ -124,11 +124,16 @@ SYMLVL_MOST = 200
 SYMLVL_ALL = 300
 SYMLVL_CHAR = 1000
 SPEECH_SYMBOL_LEVEL_LABELS = {
-	SYMLVL_NONE: _("none"),
-	SYMLVL_SOME: _("some"),
-	SYMLVL_MOST: _("most"),
-	SYMLVL_ALL: _("all"),
-	SYMLVL_CHAR: _("character"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_NONE: pgettext("symbolLevel", "none"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_SOME: pgettext("symbolLevel", "some"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_MOST: pgettext("symbolLevel", "most"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_ALL: pgettext("symbolLevel", "all"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_CHAR: pgettext("symbolLevel", "character"),
 }
 CONFIGURABLE_SPEECH_SYMBOL_LEVELS = (SYMLVL_NONE, SYMLVL_SOME, SYMLVL_MOST, SYMLVL_ALL)
 SPEECH_SYMBOL_LEVELS = CONFIGURABLE_SPEECH_SYMBOL_LEVELS + (SYMLVL_CHAR,)
