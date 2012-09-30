@@ -4,12 +4,20 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
+Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien syöttämiselle, kokeellinen tuki kosketusnäytöille Windows 8:ssa, sivunumeroiden lukeminen ja paranneltu taulukoiden tuki Adobe Readerissa, taulukkokomennot aktiivisille taulukon riveille ja Windowsin listanäkymäsäätimille sekä tuki usealle uudelle pistenäytölle.
 
 == Uudet ominaisuudet ==
+- NVDA tukee nyt aasialaisten kielten merkkien kirjoittamista IME- ja Tekstipalvelu-syöttömenetelmillä kaikissa sovelluksissa. Lisäksi on mahdollista:
+ - Ehdotuslistojen lukeminen ja niissä liikkuminen.
+ - Merkkiyhdistelmien lukeminen ja niissä liikkuminen.
+  - Lukumerkkijonon ilmoittaminen.
 - Alle- ja yliviivaus ilmoitetaan nyt Adobe Reader -asiakirjoissa. (#2410)
 - NVDA-näppäin toimii nyt kuin muutkin toimintonäppäimet Windowsin alasjäävien näppäinten ollessa käytössä. Tämä mahdollistaa NVDA-näppäimen käytön tarvitsematta pitää sitä alhaalla painettaessa samaan aikaan muita näppäimiä. (#230)
 - Tuki HIMS Braille Sense-, Braille EDGE- ja SyncBraille -pistenäytöille. (#1266, #1267)
 - Kun Toast-ilmoitukset tulevat näkyviin Windows 8:ssa, NVDA lukee ne ja siirtää navigointiobjektin niiden kohdalle lisävuorovaikutuksen mahdollistamiseksi. (#2143)
+- Kokeellinen tuki kosketusnäytöille Windows 8:ssa, mukaan lukien:
+ - Sormen alla olevan tekstin lukeminen sitä liikutettaessa
+ - Useita objektinavigointiin, tekstin lukemiseen ja muihin NVDA-komentoihin tarkoitettuja eleitä.
 - Tuki VIP Mudille. (#1728)
 - Jos taulukossa on yhteenveto, se luetaan nyt Adobe Readerissa. (#2465)
 - Taulukon rivien ja sarakkeiden ylätunnisteet luetaan nyt Adobe Readerissa. (#2193, #2527, #2528)
@@ -24,6 +32,10 @@
 - Taulukon rivien ja sarakkeiden ylätunnisteet on nyt mahdollista lukea selaustilan ulkopuolella IAccessible2-rajapintaa käyttävissä sovelluksissa, kuten Mozilla Firefoxissa. (#926)
 - Alustava tuki Microsoft Word 2013:n asiakirjasäätimelle. (#2543)
 - Tekstin tasauksen ilmoittaminen on nyt  mahdollista IAccessible2-rajapintaa käyttävissä sovelluksissa, kuten Mozilla Firefoxissa. (#2612)
+- Kun taulukon rivi tai standardi Windowsin useita sarakkeita sisältävä listanäkymäsäädin  on aktiivisena, taulukossa liikkumiseen tarkoitettuja komentoja voidaan nyt käyttää yksittäisiin soluihin pääsemiseksi. (#828)
+- Uusia pistetaulukoita: virolainen taso 0, portugalilainen 8 pisteen tietokonemerkistö, italialainen 6 pisteen tietokonemerkistö. (#2319, #2662)
+- Jos NVDA on asennettu tietokoneelle, lisäosapaketin avaaminen suoraan (esim. Resurssienhallinnasta tai verkkoselaimesta lataamisen jälkeen) asentaa sen NVDA:han. (#2306)
+- Tuki uudemmille Papenmeier BRAILLEX -pistenäytöille. (#1265)
 
 
 == Muutokset ==
@@ -32,8 +44,10 @@
 - Tallenna asetukset suljettaessa -asetus on nyt oletusarvoisesti käytössä uusissa kokoonpanoissa.
 - Kun aiemmin asennettua NVDA:n versiota päivitetään, työpöydän pikakuvakkeen pikanäppäintä ei pakoteta enää takaisin Ctrl+Alt+N:ksi, mikäli käyttäjä on muuttanut sen joksikin muuksi. (#2572)
 - Lisäosien hallinnan Lisäosat-lista näyttää nyt paketin nimen ennen sen tilaa. (#2548)
-- Jos nykyisestä asennetusta lisäosasta asennetaan sama tai jokin toinen versio, NVDA kysyy, halutaanko entinen lisäosa ensin poistaa virheen näyttämisen ja asennuksen keskeyttämisen sijaan. (#2501)
+- Jos nykyisestä asennetusta lisäosasta asennetaan sama tai jokin toinen versio, virheen näyttämisen ja asennuksen keskeyttämisen sijaan NVDA kysyy nyt, halutaanko se päivittää. (#2501)
 - Objektinavigointikomennot (kaikki paitsi Lue nykyinen objekti) ovat nyt vähemmän puheliaita. Lisätiedot saadaan edelleen Lue nykyinen objekti -komennolla. (#2560)
+- liblouis-pistekääntäjä päivitetty versioksi 2.5.1. (#2319, #2480, #2662, #2672)
+- NVDA:n näppäinkomentojen pikaopas -dokumentti on nimetty uudelleen komentojen pikaoppaaksi, sillä se sisältää nyt sekä kosketus- että näppäinkomentoja.
 
 
 == Korjatut ohjelmavirheet ==
@@ -55,7 +69,7 @@
 - Edistymispalkkien lukuasetusta noudatetaan nyt määrittelemättömille edistymispalkeille, joita NVDA näyttää asennettaessa, massamuistiversiota luotaessa jne. (#2574)
 - NVDA-komentoja ei ole enää mahdollista suorittaa pistenäytöltä Windowsin suojatun ruudun (kuten lukitusruudun) ollessa aktiivisena. (#2449)
 - Pistenäyttöä päivitetään nyt selaustilassa, mikäli näytettävä teksti muuttuu. (#2074)
-- Suoraan NVDA:n kautta puhuvien tai pistenäytöllä tekstiä näyttävien sovellusten ilmoitukset ohitetaan, mikäli unitila on käytössä.
+- Suoraan NVDA:n kautta puhuvien tai pistenäytöllä tekstiä näyttävien sovellusten ilmoitukset ohitetaan, mikäli lepotila on käytössä.
 - Suoraan NVDA:n kautta puhuvien tai pistenäytöllä tekstiä näyttävien sovellusten viestit ohitetaan oltaessa Windowsin suojatussa ruudussa, kuten lukitusnäytössä.
 - Selaustilassa ei ole enää mahdollista siirtyä pois dokumentin lopusta oikealla nuolinäppäimellä oltaessa viimeisen merkin kohdalla tai siirtymällä säilöelementin loppuun sen ollessa viimeinen kohde kyseisessä dokumentissa. (#2463)
 - Ylimääräistä sisältöä ei enää virheellisesti puhuta luettaessa valintaikkunoiden tekstiä verkkosovelluksissa (erityisesti ARIA-valintaikkunoissa, joissa ei ole aria-describedby-määrettä). (#2390)
@@ -63,6 +77,13 @@
 - Askelpalautin-näppäin käsitellään nyt oikein Windowsin komentokehotteessa kirjoitettuja sanoja luettaessa. (#2586)
 - Solujen koordinaatit näytetään taas pistenäytöllä Microsoft Excelissä.
 - NVDA ei jää enää Microsoft Wordissa jumiin luettelomuotoiluja sisältävään kappaleeseen yritettäessä liikkua vasemmalla nuolinäppäimellä tai Ctrl+vasen nuoli -yhdistelmällä luettelomerkin tai numeron päälle. (#2402)
+- Tiettyjen listaruutujen (erityisesti ARIA-tyyppisten) kohteita ei näytetä enää virheellisesti selaustilassa Mozilla-sovelluksissa.
+- NVDA piilottaa nyt verkkoselaimissa sisällön, joka on merkitty ruudunlukuohjelmilta piilotetuksi (erityisesti aria-hidden-määrettä käytettäessä). (#2117)
+- NVDA ei enää ala Lue kaikki -toiminnon aikana käyttämään oletuskieltä tilanteissa, joissa lause ei pääty pisteeseen. (#2630)
+- Fontin tiedot tunnistetaan nyt oikein Adobe Reader 10.1:ssä ja uudemmissa. (#2175)
+- Jos Adobe Readerissa on vaihtoehtoinen teksti saatavilla, vain se näytetään. Aiemmin näytettiin toisinaan ylimääräistä tekstiä. (#2174)
+- Kun verkkosivu sisältää sovelluksen, sen sisältöä ei enää näytetä selaustilassa. Tämä estää odottamattoman sovellukseen siirtymisen sivulla liikuttaessa. Sovelluksen kanssa voidaan olla vuorovaikutuksessa samalla tavalla kuin upotetuissa objekteissa. (#990)
+- Kiertopainikkeiden arvo luetaan nyt oikein sen muuttuessa Mozilla-sovelluksissa. (#2653)
 
 
 = 2012.2.1 =
