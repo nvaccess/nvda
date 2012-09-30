@@ -20,7 +20,7 @@ in-word -	(?<=[^\W_])[-]
 dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
-after-number %	(?<=\d)\%(?!\w)
+after-number %	(?<=\d)((\%)|(\s\%))(?=\W|$)
 
 # Fix pronunciation for some words
 no francs	F(?=\d|\s\d)

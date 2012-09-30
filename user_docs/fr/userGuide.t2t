@@ -2,7 +2,7 @@ Guide de l'utilisateur de NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Référence rapide des touches de commande
+%kc:title: NVDA NVDA_VERSION Résumé des commandes
 
 = Sommaire =[toc]
 %%toc
@@ -56,7 +56,7 @@ Ceci s'applique aussi bien à la version originale qu'aux copies modifiées  de 
 Pour plus de détails, vous pouvez [lire l'intégralité de la licence http://www.gnu.org/licenses/gpl.html]>
 
 + Configuration système requise +
-- Systèmes d'exploitation : Toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista et Windows 7 (y compris les versions Serveur).
+- Systèmes d'exploitation : Toutes les variantes, 32 ou 64 bits, de Windows XP, Windows Vista, Windows 7 et Windows 8 (y compris les versions Serveur).
 - Mémoire : 256 mo de RAM ou plus.
 - Vitesse processeur : 1.0 ghz ou plus.
 - Environ 50 MO d'espace disque.
@@ -148,14 +148,6 @@ Par défaut, les touches insert du pavé numérique et du clavier étendu sont d
 
 Si vous voulez utiliser l'une des touches NVDA dans sa fonction originale (par exemple si vous voulez utiliser verrouillage majuscules pour verrouiller les majuscules après l'avoir définie comme touche NVDA) vous devrez appuyer deux fois rapidement sur la touche.
 
-+++ Aide Clavier +++
-Beaucoup de touches de commande sont mentionnées dans la suite de ce guide, mais une manière simple d'explorer les différentes touches de commande est d'activer l'aide clavier.
-
-Pour activer l'aide clavier, appuyez sur NVDA+1. 
-Pour la désactiver, appuyez à nouveau sur NVDA+1. 
-Quand l'aide clavier est activée, l'appui sur une touche annonce sa fonction (si elle en a une). 
-La fonction n'est pas réellement exécutée, vous pouvez donc presser n'importe quelle touche sans crainte.
-
 +++ Les configurations Clavier +++
 NVDA comporte actuellement deux configurations clavier : 
 une pour les ordinateurs de bureau (Desktop) et une pour les ordinateurs portables (Laptop).
@@ -165,25 +157,77 @@ La configuration pour ordinateur de bureau fait un usage intensif du pavé numé
 Bien que la plupart des ordinateurs portables ne comportent pas de pavé numérique, certains peuvent l'émuler en maintenant enfoncée la touche FN puis en pressant les lettres et les chiffres à la droite du clavier ( 7 8 9 u i o j k l etc).
 Si votre ordinateur ne vous permet pas de le faire, ou ne vous permet pas de passer en verrouillage numérique désactivé, vous pouvez alors utiliser la configuration pour ordinateur portable.
 
+++ Jestes tectiles de NVDA ++
+Si vous démarrez NVDA avec un périphérique contenant un écran tactile, et que vous utilisez Windows 8 ou supérieur, vous pouvez aussi contrôler NVDA dirrectement via l'écran tactile.
+Tant que NVDA est démarré, toutes les manipulations sur l'écran tactile vont dirrectement à NVDA.
+De plus, toutes les actions qui peuvent être faites normalement sans NVDA ne fonctionneront pas.
+
++++ Explorer l'écran +++
+L'action la plus basique que vous pouvez effectuer avec l'écran tactile est d'annoncer le texte ou l'élément à n'importequel point de l'écran.
+Pour se faire, placez un doigt n'importe où sur l'écran.
+Vous pouvez également garder votre doigt sur l'écran et le bouger autour pour lire les autres éléments et textes sur lesquels votre doigt se place.
+
++++ Gestes tactiles +++
+Lorsque les commandes NVDA seront décrites dans ce guide utilisateur, elles peuvent lister un gest tactile qui peut être utiliser pour activer cette commande avec l'écran tactile.
+Voici quelques instructions sur la manière d'effectuer les gestes tactiles requis pour effectuer les commandes NVDA avec un écran tactile.
+
+==== Clique ====
+Tapez rapidement sur l'écran avec un ou plusieurs doigts.
+
+Taper avec un doigt est un simple clique.
+Cliquer avec deux doigts en même temps est un clique 2-doigts, et ainsi de suite.
+
+Si le même clique est fait une fois ou plus encore dans une succession rapide, NVDA le prendra comme un geste tactile multi-clique.
+Cliquer deux fois sera un double-clique.
+Cliquer trois fois sera un triple-clique etc.
+Ces jestes reconnaissent également combien de doigts ont été utilisés, il est donc possible d'avoir des jestes tel qu'un triple-clique à deux doigts, ou un clique à quatre doigts, etc.
+
+==== Glisser ====
+Glicez rapidement votre doigt sur l'écran.
+
+On peut glisser dans les quatre directions : glissé gauche, glissé droite, glissé bas, glissé haut.
+
+Il est aussi possible d'utiliser plusieurs doigts.
+Il est donc possible d'avoir un geste à deux doigts vers le haut ou trois vers la droite.
+
++++ Modes tactiles +++
+Comme il y a plus de commandes NVDA que de gestes tactiles possibles, NVDA a plusieur modes tactiles entre lesquels on peut basculer, qui rendent un sertain nombre de commandes disponibles.
+Les modes actuellement existants sont le mode texte et le mode objet.
+Certaines commandes listées dans ce manuel peuvent avoir un mode listé entre parenthèses après le geste.
+Par exemple, glissé haut (mode texte) signifi que cette commande sera exécutée si vous glissez vers le haut, mais seulement en mode texte.
+Si la commande n'a aucun mode associé, il fonctionnera dans tous.
+
+%kc:beginInclude
+Pour basculer entre les modes, faites un clique avec trois doigts.
+%kc:endInclude
+
+++ Aide des commandes ++
+Des commandes claviers et tactiles sont mentionnées tout au long de ce guide utilisateur, , mais une manière simple d'explorer les différentes touches de commande est d'activer l'aide clavier.
+
+Pour activer l'aide clavier, appuyez sur NVDA+1.
+Pour la désactiver, appuyez à nouveau sur NVDA+1.
+Quand l'aide clavier est activée, l'appui sur une touche Braille ou clavier, ou faire un geste à l'écran tactile annonce sa fonction (si elle en a une).
+La fonction n'est pas réellement exécutée, vous pouvez donc presser n'importe quelle touche sans crainte.
+
 ++ Le menu NVDA ++
 Le  menu NVDA vous permet de gérer les paramètres de NVDA, d'obtenir de l'aide, sauvegarder ou recharger la configuration, modifier le dictionnaire de prononciation, accéder à des outils additionnels ou quitter NVDA.
 
-Pour accéder au menu NVDA depuis n'importe où dans Windows pendant que NVDA est en fonction, appuyez sur NVDA+n.
+Pour accéder au menu NVDA depuis n'importe où dans Windows pendant que NVDA est en fonction, appuyez sur NVDA+n sur votre clavier, ou faites un double clique à deux doigts sur un écran tactile.
 Vous pouvez également y accéder par la barre des tâches système.
 Faites un clic droit sur l'icône de NVDA située dans la barre des tâches système, ou accédez à la barre des tâches système en pressant Windows+b,,pressez flècheBas jusqu'à atteindre l'icône NVDA puis pressez la touche Application généralement située à côté de la touche Control de droite.
  Quand le menu apparaît, vous pouvez utiliser les flèches pour naviguer dans le menu, et la touche entrée pour activer un élément.
 
-++ Les touches de commande de base ++
+++ Commande de base ++
 %kc:beginInclude
-|| Nom | Touche | Description |
-| Arrêt parole | Control | Arrêt instantané de la parole |
-| Pause parole | Maj | Pause instantanée de la parole, une seconde pression reprend la parole là où elle s'était arrêtée |
-| Menu NVDA | NVDA+n | Affiche le menu NVDA pour vous permettre d'accéder aux préférences, outils, aide etc |
-| Choix du Mode de Parole | NVDA+s | Permet de choisir le mode de parole : parole, bips, silence. |
-| Passage en mode aide clavier | NVDA+1 | Dans ce mode, l'appui sur n'importe quelle touche donnera son nom et la description de la commande NVDA qui lui est éventuellement associée |
-| Quitter NVDA | NVDA+q | Quitter NVDA |
-| Ignorer la touche suivante | NVDA+f2 | Indique à NVDA de passer la touche suivante directement à l'application, même si cette touche correspond normalement à une commande NVDA |
-| Bascule du mode veille | NVDA+maj+s | le mode veille désactive toutes les commandes NVDA ainsi que la parole et le braille pour l'application en cours. Ceci est utile dans les application fournissant leur propre système de revue d'écran. Pressez à nouveau la commande pour désactiver le mode veille. |
+|| Nom | Touche | Tactile | Description |
+| Arrêt parole | Control | Clique 2-doigts | Arrêt instantané de la parole |
+| Pause parole | Maj | Aucun | Pause instantanée de la parole, une seconde pression reprend la parole là où elle s'était arrêtée |
+| Menu NVDA | NVDA+n | Double-clique 2-doigts | Affiche le menu NVDA pour vous permettre d'accéder aux préférences, outils, aide etc |
+| Choix du Mode de Parole | NVDA+s | Aucun | Permet de choisir le mode de parole : parole, bips, silence. |
+| Passage en mode aide clavier | NVDA+1 | Aucun | Dans ce mode, l'appui sur n'importe quelle touche donnera son nom et la description de la commande NVDA qui lui est éventuellement associée |
+| Quitter NVDA | NVDA+q | Aucun | Quitter NVDA |
+| Ignorer la touche suivante | NVDA+f2 | Aucun | Indique à NVDA de passer la touche suivante directement à l'application, même si cette touche correspond normalement à une commande NVDA |
+| Bascule du mode veille | NVDA+maj+s | Aucun | le mode veille désactive toutes les commandes NVDA ainsi que la parole et le braille pour l'application en cours. Ceci est utile dans les application fournissant leur propre système de revue d'écran. Pressez à nouveau la commande pour désactiver le mode veille. |
 %kc:endInclude
 
 ++ Annonce des Informations Système ++
@@ -230,7 +274,7 @@ NVDA fournit les commandes clavier suivantes par rapport au curseur système :
 | Dire tout | NVDA+flècheBas | Démarre la lecture depuis la position du curseur système en lui faisant suivre la lecture |
 | Lire ligne courante | NVDA+flècheHaut | Lit la ligne où se trouve le curseur système. Une double pression épelle la ligne. |
 | Lire texte sélectionné | NVDA+Maj+flècheHaut | Lit tout le texte actuellement sélectionné |
-| Annonce du formatage du texte | NVDA+f | Annonce le formatage du texte à la position du curseur système |
+
 
 Dans un tableau, vous disposez également des touches de commandes suivantes :
 || Nom | Touche | Description |
@@ -265,19 +309,19 @@ Par défaut, l'objet navigateur suit le focus système, mais ce comportement peu
 Note : Par défaut, le Braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
 Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la revue.
 
-Pour naviguer par objet, utilisez les touches suivantes :
+Pour naviguer par objet, utilisez les commandes suivantes :
 
 %kc:beginInclude
-|| Nom | Touche Desktop | Touche Laptop | Description |
-| Annonce de l'objet courant | NVDA+pavnum5 | NVDA+control+i | Annonce l'objet navigateur courant, deux pressions épellent l'information, trois pressions copient le nom et le contenu de l'objet dans le presse-papier |
-| Aller à l'objet parent | NVDA+pavnum8 | NVDA+maj+i | Va à l'objet parent (qui contient l'objet navigateur courant) |
-| Aller à l'objet précédent | NVDA+pavnum4 | NVDA+control+j | Va à l'objet précédent l'objet navigateur courant |
-| Aller à l'objet suivant | NVDA+pavnum6 | control+NVDA+l | Va à l'objet suivant de l'objet navigateur courant |
-| Aller au premier objet inclus | NVDA+pavnum2 | NVDA+maj+virgule | Va au premier objet inclus dans l'objet navigateur courant |
-| Aller à l'objet en focus | NVDA+pavnumMoins | NVDA+retourArrière | Va à l'objet ayant le focus système, et place le curseur de revue sur le curseur système s'il est présent |
-| Activer l'objet navigateur courant | NVDA+pavnumEntrer | NVDA+entrer | Active l'objet navigateur courant (similaire à un clic de souris ou à presser la barre d'espace quand l'objet a le focus système) |
-| Amener le focus système à l'objet navigateur courant | NVDA+maj+pavnumMoins | NVDA+maj+retourArrière | Amène le focus système à l'objet navigateur courant si c'est possible |
-| Annoncer les dimensions de l'objet navigateur courant | NVDA+pavnumEffacement | NVDA+effacement | Annonce les dimensions de l'objet navigateur courant à l'écran (en incluant sa distance par rapport au haut et à la gauche de l'écran ainsi que sa hauteur et sa largeur |
+|| Nom | Touche Desktop | Touche Laptop | Tactile | Description |
+| Annonce de l'objet courant | NVDA+pavnum5 | NVDA+control+i | Aucun | Annonce l'objet navigateur courant, deux pressions épellent l'information, trois pressions copient le nom et le contenu de l'objet dans le presse-papier |
+| Aller à l'objet parent | NVDA+pavnum8 | NVDA+maj+i | Glisser vers le haut (mode objet) | Va à l'objet parent (qui contient l'objet navigateur courant) |
+| Aller à l'objet précédent | NVDA+pavnum4 | NVDA+control+j | Glisser vers la gauche (mode objet) | Va à l'objet précédent l'objet navigateur courant |
+| Aller à l'objet suivant | NVDA+pavnum6 | control+NVDA+l | Glisser vers la droite (mode objet) | Va à l'objet suivant de l'objet navigateur courant |
+| Aller au premier objet inclus | NVDA+pavnum2 | NVDA+maj+virgule | Glisser vers le bas (mode objet) | Va au premier objet inclus dans l'objet navigateur courant |
+| Aller à l'objet en focus | NVDA+pavnumMoins | NVDA+retourArrière | Aucun | Va à l'objet ayant le focus système, et place le curseur de revue sur le curseur système s'il est présent |
+| Activer l'objet navigateur courant | NVDA+pavnumEntrer | NVDA+entrer | Double-clique | Active l'objet navigateur courant (similaire à un clic de souris ou à presser la barre d'espace quand l'objet a le focus système) |
+| Amener le focus système à l'objet navigateur courant | NVDA+maj+pavnumMoins | NVDA+maj+retourArrière | Aucun | Amène le focus système à l'objet navigateur courant si c'est possible |
+| Annoncer les dimensions de l'objet navigateur courant | NVDA+pavnumEffacement | NVDA+effacement | Aucun | Annonce les dimensions de l'objet navigateur courant à l'écran (en incluant sa distance par rapport au haut et à la gauche de l'écran ainsi que sa hauteur et sa largeur |
 %kc:endInclude
 
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
@@ -296,29 +340,29 @@ Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [
 
 Vous disposez des commandes suivantes pour explorer du texte :
 %kc:beginInclude
-|| Nom | Touche Desktop | Touche Laptop | Description |
-| Aller à la première ligne en revue | Maj+pavnum7 | NVDA+7 | Amène le curseur de revue à la première ligne du texte |
-| Aller à la ligne précédente en revue | pavnum7 | NVDA+u | Amène le curseur de revue sur la ligne de texte précédente |
-| Annoncer la ligne courante en revue | pavnum8 | NVDA+i | Lit la ligne de texte sous le curseur de revue, une double pression épelle la ligne |
-| Aller à la ligne suivante en revue | pavnum9 | NVDA+o | Amène le curseur de revue à la ligne de texte suivante |
-| Aller à la dernière ligne en revue | maj+pavnum9 | NVDA+9 | Amène le curseur de revue à la dernière ligne de texte |
-| Aller au mot précédent en revue | pavnum4 | NVDA+j | Amène le curseur de revue au mot précédent dans le texte |
-| Annoncer le mot courant en revue | pavnum5 | NVDA+k | Lit le mot à la position du curseur de revue, une double pression épelle le mot |
-| Aller au mot suivant en revue | pavnum6 | NVDA+l | Amène le curseur de revue au mot suivant |
-| Aller au début de la ligne en revue | maj+pavnum1 | NVDA+maj+u | Amène le curseur de revue au début de la ligne courante |
-| Aller au caractère précédent en revue | pavnum1 | NVDA+virgule | Amène le curseur de revue au caractère précédent de la ligne courante |
-| Annoncer le caractère courant en revue | pavnum2 | NVDA+pointVirgule | Annonce le caractère courant sous le curseur de revue, une double pression annonce la valeur du caractère en décimal et hexadécimal |
-| Aller au caractère suivant en revue | pavnum3 | NVDA+deuxPoints | Amène le curseur de revue au caractère suivant de la ligne courante |
-| Aller en fin de ligne en revue | maj+pavnum3 | NVDA+maj+o | Amène le curseur de revue à la fin de la ligne courante |
-| Dire tout en revue | pavnumPlus | NVDA+maj+flècheBas | Lit en partant de la position du curseur de revue, celui-ci suivant la lecture |
-| copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Commence à copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas jusqu'à ce qu'on indique la fin du texte à copier |
-| Copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Copie depuis la position du curseur de revue préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. après l'appui sur cette touche, le texte est copié dans le presse-papier de Windows. |
-| Annonce du formatage du texte | NVDA+f | NVDA+f | Annonce le formatage du texte à la position du curseur de revue |
+|| Nom | Touche Desktop | Touche Laptop | Tactile | Description |
+| Aller à la première ligne en revue | Maj+pavnum7 | NVDA+7 | Aucun | Amène le curseur de revue à la première ligne du texte |
+| Aller à la ligne précédente en revue | pavnum7 | NVDA+u | Glisser vers le haut (mode texte) | Amène le curseur de revue sur la ligne de texte précédente |
+| Annoncer la ligne courante en revue | pavnum8 | NVDA+i | Aucun | Lit la ligne de texte sous le curseur de revue, une double pression épelle la ligne |
+| Aller à la ligne suivante en revue | pavnum9 | NVDA+o | Glisser vers le bas (mode texte) | Amène le curseur de revue à la ligne de texte suivante |
+| Aller à la dernière ligne en revue | maj+pavnum9 | NVDA+9 | Aucun | Amène le curseur de revue à la dernière ligne de texte |
+| Aller au mot précédent en revue | pavnum4 | NVDA+j | Glisser vers la gauche 2-doigts (mode texte) | Amène le curseur de revue au mot précédent dans le texte |
+| Annoncer le mot courant en revue | pavnum5 | NVDA+k | Aucun | Lit le mot à la position du curseur de revue, une double pression épelle le mot |
+| Aller au mot suivant en revue | pavnum6 | NVDA+l | Glisser vers la droite 2-doigts (mode texte) | Amène le curseur de revue au mot suivant |
+| Aller au début de la ligne en revue | maj+pavnum1 | NVDA+maj+u | Aucun | Amène le curseur de revue au début de la ligne courante |
+| Aller au caractère précédent en revue | pavnum1 | NVDA+virgule | Glisser vers la gauche (mode texte) | Amène le curseur de revue au caractère précédent de la ligne courante |
+| Annoncer le caractère courant en revue | pavnum2 | NVDA+pointVirgule | Aucun | Annonce le caractère courant sous le curseur de revue, une double pression annonce la valeur du caractère en décimal et hexadécimal |
+| Aller au caractère suivant en revue | pavnum3 | NVDA+deuxPoints | Glisser vers la droite (mode texte) | Amène le curseur de revue au caractère suivant de la ligne courante |
+| Aller en fin de ligne en revue | maj+pavnum3 | NVDA+maj+o | Aucun | Amène le curseur de revue à la fin de la ligne courante |
+| Dire tout en revue | pavnumPlus | NVDA+maj+flècheBas | Glisser vers le bas 3-doigts (mode texte) | Lit en partant de la position du curseur de revue, celui-ci suivant la lecture |
+| copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Aucun | Commence à copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas jusqu'à ce qu'on indique la fin du texte à copier |
+| Copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Aucun | Copie depuis la position du curseur de revue préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. après l'appui sur cette touche, le texte est copié dans le presse-papier de Windows. |
+| Annonce du formatage du texte | NVDA+f | NVDA+f | Aucun | Annonce le formatage du texte à la position du curseur de revue |
 %kc:endInclude
 
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
 
-Pour vous aider à mémoriser ces commandes, notez que les commandes de base de revue de texte sont organisées selon une grile de 3 sur 3 avec, de haut en bas, lignes, mots, caractères et, de gauche à droite, précédent, courant, suivant.
+Pour vous aider à mémoriser ces touches de commandes, notez que les commandes de base de revue de texte sont organisées selon une grile de 3 sur 3 avec, de haut en bas, lignes, mots, caractères et, de gauche à droite, précédent, courant, suivant.
 La disposition se présente ainsi :
 | Ligne précédente | Ligne courante | Ligne suivante |
 | Mot précédent | Mot courant | Mot suivant |
@@ -341,9 +385,9 @@ Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [
 
 les deux commandes suivantes sont utilisées pour la revue à plat :
 %kc:beginInclude
-|| Nom | Touche Desktop | Touche Laptop | Description |
-| Passer en mode revue à plat | NVDA+pavnum7 | NVDA+PagePrec | Passe en mode revue à plat à la position de l'objet navigateur courant, vous permettant d'explorer le contenu de l'écran ou d'un document en utilisant les commandes de revue de texte |
-| Aller à un objet depuis le mode revue à plat | NVDA+pavnum1 | NVDA+PageSuiv | aller à l'objet représenté par le texte à la position du curseur de revue en mode revue à plat |
+|| Nom | Touche Desktop | Touche Laptop | Tactile | Description |
+| Passer en mode revue à plat | NVDA+pavnum7 | NVDA+PagePrec | Glisser vers le haut 2-doigts | Passe en mode revue à plat à la position de l'objet navigateur courant, vous permettant d'explorer le contenu de l'écran ou d'un document en utilisant les commandes de revue de texte |
+| Aller à un objet depuis le mode revue à plat | NVDA+pavnum1 | NVDA+PageSuiv | Glisser vers le bas 2-doigts | aller à l'objet représenté par le texte à la position du curseur de revue en mode revue à plat |
 %kc:endInclude
 
 ++ Naviguer avec la souris ++
@@ -443,8 +487,8 @@ Quand vous avez choisi un élément, des boutons vous permettent de vous y rendr
 %kc:endInclude
 
 ++ Les Objets Embarqués ++
-Certaines pages peuvent  inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java. 
-Quand il en rencontre dans un document NVDA annonce "objet embarqué". 
+Certaines pages peuvent  inclure du contenu riche utilisant des technologies comme Adobe Flash ou Sun Java, tout comme des applications ou des boîtes de dialogue.
+Quand il en rencontre dans un document NVDA annonce "objet embarqué", "application", ou "dialogue" respectivement.
 Vous pouvez presser "entrer" sur ces objets pour interagir avec eux. 
 Si l'objet est accessible, vous pourrez interagir avec lui comme n'importe quelle autre application. 
 Une touche de commande permet de retourner à la page contenant l'objet embarqué.
@@ -551,10 +595,14 @@ Pour une manière plus rapide de contrôler les paramètres vocaux depuis n'impo
 Ce dialogue contient les options suivantes :
 
 ==== Voix ====
-Une liste déroulante qui donne la liste de toutes les voix du synthétiseur courant. A l'aide des flèches de direction, on peut entendre les différents choix.
+Une liste déroulante qui donne la liste de toutes les voix du synthétiseur courant.
+A l'aide des flèches de direction, on peut entendre les différents choix.
+Les flèches gauche et haute permettent de reculer d'un élément, droite et bas d'avancer.
 
 ==== Variante ====
-Une liste déroulante permettant de choisir la variante utilisée par le synthétiseur. Actuellement, seule eSpeak propose ce paramètre. Les variantes eSpeak sont comparables à des voix, dans la mesure où elles modifient significativement les attributs de la voix eSpeak.
+Une liste déroulante permettant de choisir la variante utilisée par le synthétiseur. Actuellement, seule eSpeak propose ce paramètre.
+Les variantes eSpeak sont comparables à des voix, dans la mesure où elles modifient significativement les attributs de la voix eSpeak.
+Les variantes sont par exemple homme ou femme.
 
 ==== Débit ====
 Cette option vous permet de modifier le débit de la parole.
@@ -565,24 +613,18 @@ Cette option vous permet de modifier la hauteur de la voix.
 C'est un potentiomètre gradué de 0 à 100, (0 pour le son le plus grave et 100 pour le plus aiguë).
 
 ==== Volume ====
-Cette option vous permet de modifier le volume de la voix.
-C'est un potentiomètre gradué de 0 à 100, (0 étant le volume le plus bas et 100 le plus élevé).
+Cette option est un potentiomètre gradué de 0 à 100 qui permet de modifier le volume de la voix, (0 étant le volume le plus bas et 100 le plus élevé).
 
 ==== Inflexion ====
 Un potentiomètre vous permettant de choisir  le niveau d'inflexion (variation en hauteur de la voix) que le synthétiseur devra utiliser.
 
 ==== Changement automatique de langue ====
-Cette case à cocher vous permet de choisir si NVDA doit changer de langue à la volée
-si une balise de langue est présente dans le texte en cours de lecture.
+Cette case à cocher vous permet de choisir si NVDA doit changer de langue à la volée si une balise de langue est présente dans le texte en cours de lecture.
 Par défaut, cette option est activée.
 À l'heure actuelle, seul le synthétiseur eSpeak prend en charge le changement automatique de langue.
 
 ==== Changement automatique de Dialecte ====
-Si le changement automatique de langue est activé,
-cette case à cocher vous permet de choisir si les changements de dialecte doivent être pris en compte
-en plus des changements de langues réels.
-Par exemple, un texte peut être en Anglais Américain et comporter des passages marqués comme Anglais Britannique.
-Si cette option est activée, le synthétiseur respectera les changements d'accent.
+Si le changement automatique de langue est activé, cette case à cocher vous permet de choisir si les changements de dialecte doivent être pris en compte en plus des changements de langues réels. Par exemple, un texte peut être en Anglais Américain et comporter des passages marqués comme Anglais Britannique. Si cette option est activée, le synthétiseur respectera les changements d'accent.
 Par défaut, cette option est désactivée.
 
 %kc:setting
@@ -599,10 +641,12 @@ Cette valeur est un pourcentage, une valeur négative réduit la hauteur, une va
 Pour n'avoir aucun changement de hauteur, entrez la valeur 0.
 
 ==== Dire "maj" avant les majuscules ====
-Une case à cocher qui, cochée, indique à NVDA de dire maj pour une lettre en majuscule quand on l'atteint par les flèches de direction ou lors de la frappe. Normalement, NVDA énonce chaque lettre majuscule avec un ton plus aiguë, mais ceci n'est pas correctement pris en charge par certains synthétiseurs, si bien que cette option est parfois utile.
+Une case à cocher qui, cochée, indique à NVDA de dire maj pour une lettre en majuscule quand on l'atteint par les flèches de direction ou lors de la frappe.
+Normalement, NVDA énonce chaque lettre majuscule avec un ton plus aiguë, mais ceci n'est pas correctement pris en charge par certains synthétiseurs, si bien que cette option est parfois utile.
 
 ==== Annoncer les majuscules par des bips ====
-Quand cette case à cocher est cochée, NVDA émettra un petit bip chaque fois qu'il rencontre un caractère majuscule. Comme l'option "Dire maj avant les majuscules" cette option est utile pour les synthétiseurs ne pouvant pas modifier la hauteur de leur voix pour les majuscules.
+Quand cette case à cocher est cochée, NVDA émettra un petit bip chaque fois qu'il rencontre un caractère majuscule.
+Comme l'option "Dire maj avant les majuscules", cette option est utile pour les synthétiseurs ne pouvant pas modifier la hauteur de leur voix pour les majuscules.
 
 ==== Utilisez la fonction d'épellation si elle est supportée ====[VoiceSpellingFunctionality]
 Certains mots ne comportent qu'un seul caractère, mais la prononciation est différente selon que le caractère est prononcé comme un caractèreunique (épellation) ou comme un mot.
@@ -805,16 +849,34 @@ Touche: NVDA+5
 Active ou désactive l'annonce de nouveau contenu en particulier dans les applications telles que les terminaux ou l'historique des programmes de tchat.
 
 +++ Paramètres de Saisie +++
-La boîte de dialogue Paramètres de Saisie se trouve dans le menu préférences. Cette boîte de dialogue permet de contrôler comment NVDA rapporte la saisie des caractères asiatiques, comme avec IME ou les services de texte et langues d'entrée.
+La boîte de dialogue Paramètres de Saisie se trouve dans le menu préférences.
+Cette boîte de dialogue permet de contrôler comment NVDA rapporte la saisie des caractères asiatiques, avec IME ou les services de texte et langues d'entrée.
+Notez bien que comme les méthodes de saisie varient beaucoup dans les possibilitées disponibles et leur rendu d'informations, il peut être utile de refaire cette configuration pour chaque méthode d'entrée afin de bénéficier de la meilleure utilisation.
 
 ==== Annonce automatique de toutes les suggestions disponibles ====
 Cette option, activée par défaut, permet de choisir si oui ou non toutes les suggestions visibles doivent être automatiquement rapportés quand une liste de suggestions aparaît ou quand sa page change.
-Activer cette option sur les méthodes d'entrée pictagraphic tels que chinois Nouveau ChangJie ou Boshiami est utile car vous pouvez entendre automatiquement tous les symboles et leurs numéros, et vous pouvez en choisir un tout de suite.
+Activer cette option sur les méthodes d'entrée pictographic tels que chinois Nouveau ChangJie ou Boshiami est utile car vous pouvez entendre automatiquement tous les symboles et leurs numéros, et vous pouvez en choisir un tout de suite.
 Toutefois, pour les méthodes de saisie phonétique comme le nouveau chinois phonétique, il peut être plus utile de désactiver cette option puisque tous les symboles ont les mêmes sons et vous devrez utiliser les touches fléchées pour naviguer dans les éléments de la liste individuellement pour obtenir plus d'informations de la descriptions de caractères pour chaque suggestion.
+
+==== Annoncer la suggestion sélectionnée ====
+Cette option, activée par défaut, vous permet de choisir si NVDA doit ou non annoncer la suggestion sélectionnée lorsqu'une liste de suggestion apparaît ou quand la sélection est changée.
+Pour les méthodes ou la suggestion peut être changée en utilisant les flèches (comme chinois nouveau phonétique) cela est nécessaire, cependant pour sertaines méthodes il est préférable de désactiver cette option.
+Notez que même si cette option est désactivée, le curseur de revue se placera toujours sur la suggestion sélectionnée, vous permettant toujours d'utiliser la navigation par objet ou le curseur de revue pour sélectionner la suggestion.
+
+==== Toujours inclure une description courte du caractère pour les suggestions ====
+Cette option, activée par défaut, permet de choisir si oui ou non NVDA doit fournir une description courte de chaque caractère d'une suggestion, quand elle est sélectionnée ou lors de la lecture de la liste quand elle apparaît.
+Notez que pour les langues comme le chinois, l'annonce des description de caractères suplémentaires pour la suggestion sélectionnée n'est pas affectée par cette option.
+Cette option est utile pour les méthodes d'entrées Coréennes et Japonnaises.
 
 ==== Annonce les changements dans la chaîne en cours de lecture ====
 Certains modes de saisie telles que le chinois ChangJie phonétique et Nouveau ChangJie peuvent avoir une chaîne de lecture (parfois connu sous le nom d'une chaîne précomposition).
 Avec cette option, vous pouvez choisir si oui ou non NVDA doit annoncer les nouveaux caractères  saisis dans la chaîne de lecture en cours.
+Cette option est activée par défaut.
+Notez que certaines ensiènes méthodes comme le Chinois ChangJie n'utilisent pas la chaîne en cour de lecture pour les caractères de précomposition, utilisez directement la chaîne de composition. Voyez l'option suivante pour configurer l'annonce de la chaîne de composition.
+
+==== Annoncer les changements dans la chaîne de composition ====
+Après que les données de lecture ou de précomposition aient été combinées en un symbole pictographique valide, la plupart des méthodes d'entrée placent ce symbole dans une chaîne de composition pour stoquer temporairement avec les autres symboles combinés avant de les insérer dans le document.
+Cette option permet de choisir si oui ou non NVDA doit annoncer tous les symboles quand ils apparaissent dans la chaîne de composition.
 Cette option est activée par défaut.
 
 +++ Paramètres du Mode Navigation (NVDA+control+b) +++
@@ -1002,7 +1064,7 @@ La console Python NVDA, située dans Outils du menu NVDA, est un outil de dével
  Pour plus d'informations, veuillez consulter le Guide du Développeur disponible dans [la section développement du site web de NVDA NVDA_URLwiki/Development].
 
 ++ Rechargement des Greffons ++
-Cet élément, quand on l'active, recharge les modules d'applications et les greffons généraux sans avoir à redémarrer NVDA ce qui peut être utile pour les développeurs.
+Cet élément, quand on l'active, recharge les modules d'applications et les modules complémentaires généraux sans avoir à redémarrer NVDA ce qui peut être utile pour les développeurs.
 
 + Synthétiseurs de parole pris en charge +[SupportedSpeechSynths]
 Cette section contient des informations concernant les synthétiseurs de parole pris en charge par NVDA.
@@ -1379,6 +1441,60 @@ Veuillez consulter la documentation du terminal pour savoir où se trouvent ces 
 | Aller à la cellule braille | route (amener le curseur au caractère) |
 %kc:endInclude
 
+++ Nouveaux modèles de Papenmeier BRAILLEX ++
+Les afficheurs Brailles suivant sont supportés :
+- BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
+- BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
+- BRAILLEX Trio (USB et bluetooth)
+-
+
+Si BrxCom est installé, NVDA utilisera BrxCom.
+BrxCom est un outil qui permet d'utiliser le clavier Braille indépendamment d'un lecteur d'écran.
+Une nouvelle version de BrxCom compatible avec NVDA sera bientôt mise à disposition par Papenmeier.
+
+La plupart des afficheurs ont une barre d'accès facile (EAB) qui permet des opérations intuitives et rapides.
+L'EAB peut être bougé dans quatre dirrections ou chaque dirrection a deux crans.
+La série-C est la seule exception à cette règle.
+
+La série-C et quelques autres afficheurs ont deux rangées de routines ou celle du haut sert à rapporter les informations de mise en forme.
+Garder enfoncée une des routines du haut puis presser l'EAB sur une série-c annule le second cran.
+Appuyer et garder les touches haute, basse, gauche et droite (ou EAB) répette la dernière commande.
+
+Généralement, les touches suivantes sont disponibles sur ces afficheurs Brailles :
+|| Nom | touche |
+| l1 | touche gauche devant |
+| l2 | touche gauche derrière |
+| r1 | touche droite devant |
+| r2 | touche droite derrière |
+| haut | Monter une fois vers le haut |
+| haut2 | Monter deux fois vers le haut |
+| gauche | un vers la gauche |
+| gauche2 | deux vers la gauche |
+| droite | un vers la droite |
+| droite2 | deux vers la droite |
+| dn | un vers le bas |
+| dn2 | deux vers le bas |
+
+Voici les  commandes assignées pour les afficheurs Papenmeier dans NVDA :
+%kc:beginInclude
+|| Nom | Touche |
+| Défilement arrière de l'affichage braille | gauche |
+| Défilement avant de l'affichage braille | droite |
+| Déplacer l'afficheur braille à la ligne précédante | up |
+| Déplacer le braille à la ligne suivante | dn |
+| Aller à la cellule Braille | routing |
+| Lire le caractère sous le curseur de revue | l1 |
+| Activer l'objet courant du navigateur | l2 |
+| Suivre la revue/le focus | r1 |
+| Lire le titre | l1+up |
+| Lire la barre d'état | l2+down |
+| Aller à l'objet parent | up2 |
+| Aller à l'objet enfant | dn2 |
+| Aller à l'objet précédent | left2 |
+| Aller à l'objet suivant | right2 |
+| Lire les informations de mise en forme | rangée de routines du haut |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] est un programme séparé qui permet de prendre en charge beaucoup plus de terminaux braille.
 Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://brl.thefreecat.org/brltty/].
@@ -1414,14 +1530,22 @@ Chaque entrée ne peut apparaître qu'une fois par section, y compris None.
 Les identifiants de geste terminés par une virgule doivent être entourés de quotes (" ou ').
 -
 
-Les identifiants de geste comprennent un code de matériel sur deux lettres (kb pour clavier, br pour terminal braille), un sous-code une disposition entre crochets, le signe deux-points, puis un ou plusieurs noms de touches séparés par le signe plus (+).
-Pour les gestes s'appliquant au clavier, la partie entre crochets correspond à la disposition clavier et est optionnelle.
+Les identifiants de geste comprennent un code de matériel sur deux lettres (kb pour clavier, br pour terminal braille et ts pour écran tactile), un sous-code une disposition entre crochets, le signe deux-points, puis un ou plusieurs noms de touches Braille, clavier ou tactile séparés par le signe plus (+).
+- Pour un raccourci clavier, le code est kb.
+La partie entre crochets correspond à la disposition clavier et est optionnelle.
 Si elle n'est pas indiquée, le geste s'appliquera à toutes les configurations clavier.
-Pour les gestes s'appliquant au terrminal braille, la partie entre crochet indique le terminal braille spécifique est est obligatoire.
+La chaîne après la virgule est un ou plusieurs noms de touches du clavier séparées par un signe plus (+).
+- Pour les gestes s'appliquant au terrminal braille, le cpdeestbr
+La partie entre crochet indique le terminal braille spécifique est est obligatoire.
+La chaîne après la virgule est un ou plusieurs noms de touches du terminal Braille séparées par un signe plus (+).
+- Pour les gestes tactiles, le code est ts
+La partie entre parenthèses spécifie le mode tactile à utiliser et est optionnelle.
+La partie après la virgule est un geste tactile comme double_tap (double clique), 2fingerflickUp (Glisser vers le haut 2-doigts), ou 3finger_tap (clique 3-doigt) par exemples.
+-
 
 Pour découvrir les identifiants de gestes, les noms de scripts, les noms de classes et de modules qui les contiennent, vous pouvez :
 + Activer l'aide des commandes.
-+ Activer le geste (presser la touche).
++ Activer le geste (presser la touche, toucher l'écran tactile etc).
 + Désactiver l'aide des commandes.
 + Activer la visionneuse de journal dans le menu outils de NVDA.
 + Examiner les entrées récentes du journal.
