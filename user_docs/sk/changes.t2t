@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
+
 == Nové vlastnosti ==
 - NVDA podporuje písanie znakov pre ázijské jazyky pomocou IME alebo textovej služby vo všetkých aplikáciách. Okrem toho:
 - navigáciu a možnosť výberu znaku v zozname návrhov;
@@ -13,6 +14,9 @@
 - Ak je zapnutá funkcia jedným prstom, kláves NVDA sa bude správať ako iné modifikačné klávesy (Ctrl, Alt, Windows). Toto vám umožňuje používať kláves NVDA bez toho, aby ste ho museli držať súčasne s inými klávesmi. (#230)
 - Podpora brailovských riadkov Braille Sense, Braille EDGE a SyncBraille od spoločnosti HIMS. (#1266, #1267)
 - Podpora pre notifikačné oznamy tzv. toast notifications v systéme Windows 8. Pri zobrazení takéhoto upozornenia NVDA prečíta obsah a nastaví na oznámenie navigačný objekt. (#2143)
+- experimentálna podpora pre dotykové ovládanie v systémoch Windows 8 zahŕňa:
+- Čítanie textu pri pohybe prstom po obrazovke
+- Gestá pre objektovú navigáciu, plošné prezeranie a iné príkazy NVDA.
 - Aplikačný modul pre program VIP Mud. (#1728)
 - Ak má tabuľka v dokumente programu Adobe Reader súhrn, NVDA ho prečíta. (#2465)
 - NVDA oznamuje čísla riadkov a hlavičky stĺpcov v programe Adobe Reader. (#2193, #2527, #2528)
@@ -27,6 +31,8 @@
 - V aplikáciách, ktoré využívajú IAccessible2 (napríklad Mozilla Firefox, Thunderbird...) hlavičky riadkov / stĺpcov tabuľky sú oznamované aj mimo režimu prehliadania. (#926)
 - Základná podpora pre MS Word 2013. (#2543)
 - NVDA dokáže oznámiť zarovnanie textu v aplikáciách využívajúcich IAccessible2, funguje napríklad v Mozilla aplikáciách. (#2612)
+- Ak sa nachádzate v riadku tabuľky alebo v štandartnom zozname s viacerými stĺpcami, na pohyb po stĺpcoch môžete použiť príkazy pre navigáciu v tabuľkách. (#828)
+- Nové brailovské tabuľky: Estónska grade 0, Portugalská 8-bodová sada. (#2139)
 
 
 == Zmeny ==
@@ -37,6 +43,8 @@
 - V správcovy doplnkov sa najprv zobrazuje názov doplnku a potom jeho stav. (#2548)
 - Pri inštalácii tej istej alebo novej verzie doplnku sa NVDA opýta, či chcete vymazať doteraz nainštalovaný doplnok. Pri aktualizovaní doplnkov NVDA nezobrazí chybu a nezatvorí okno s inštaláciou doplnku. (#2501)
 - Príkazy objektovej navigácie podávajú stručnejšiu informáciu o objekte. Podrobnejšiu informáciu získate prečítaním aktuálneho objektu. (#2560)
+- aktualizovaný balík liblouis na verziu 2.5.0.
+- Dokument "zoznam klávesových príkazov" bol premenovaný na "Zoznam príkazov", lebo obsahuje aj dotykové gestá.
 
 
 == opravy ==
@@ -67,9 +75,12 @@
 - NVDA sa nezasekne v odseku so zoznamom v MS Worde pri pokuse opustiť odrážku ľavou šípkou alebo ctrl+ľavá šípka. (#2402)
 - V režime prehliadania v Mozilla aplikáciách nie sú viac nesprávne zobrazované položky v zoznamových rámikoch (najčastejšie zoznamové rámiky typu ARIA).
 - NVDA odteraz v internetových prehliadačoch nezobrazuje obsah, ktorý má byť skrytý pre čítače obrazovky (ak sa použije atribút aria-hidden). (#2117)
-- Záporné peňažné hodnoty, ako napríklad -$123, sú vždy oznamované ako záporné, bez ohľadu na nastavenie úrovne 
-interpunkcie.  (#2625)
+- Záporné peňažné hodnoty, ako napríklad -$123, sú vždy oznamované ako záporné, bez ohľadu na nastavenie úrovne interpunkcie.  (#2625)
 - Počas plynulého čítania sa NVDA nevráti do pôvodného jazyka, ak veta pokračuje na nasledujúcom riadku. (#2630)
+- Informácie o type písma sú správne detegované v Adobe Readeri 10.1 a novších (#2175)
+- Ak je v dokumente programu Adobe reader dostupný alternatívny text, bude použitý len tento text. Doteraz NVDA čítal nadbytočný text. (#2174)
+- Ak dokument obsahuje aplikáciu, obsah aplikácie sa nezobrazí v režime prehliadania. Toto zabraňuje nechcenému vstupu do aplikácie počas čítania dokumentu. S aplikáciou môžete komunikovať rovnako, ako s vnorenými objektmi. (#990)
+- NVDA správne oznamuje zmenu hodnoty prepínacích tlačidiel v Mozilla aplikáciách. (#2653)
 
 
 = 2012.2.1 =
