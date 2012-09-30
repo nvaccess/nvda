@@ -1,19 +1,23 @@
-﻿Novità in NVDA
+﻿Novità in NVDA 
 
 
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
+Le novità principali in questa versione sono costituite dal supporto all'immissione dei caratteri asiatici; supporto sperimentale ai dispositivi touch screen in Windows 8; l'annuncio dei numeri di pagina e un notevole miglioramento per le tabelle in Adobe Reader; e il poter usare comandi di navigazione delle tabelle nelle finestre con visualizzazioni ad elenco.
 
 == Novità ==
 - NVDA è ora in grado di supportare la modalità di immissione per i caratteri asiatici, usando la tecnologia IME e i servizi di testo resi disponibili nelle applicazioni, comprendenti:
  - Annuncio e navigazione tra l'elenco dei caratteri suggeriti
-  - Annuncio e navigazione tra le stringhe di composizione
-  - Annuncio delle stringhe di lettura.
+ - Annuncio e navigazione tra le stringhe di composizione
+ - Annuncio delle stringhe di lettura.
 - In Adobe Reader vengono ora individuati elementi come sottolineato e barrato. (#2410)
 - Quando la funzione "tasti permanenti" in Windows è attiva, il tasto funzione di NVDA si comporterà come gli altri tasti funzione. Questo permette di poter usare il tasto funzione di NVDA senza doverlo tenere premuto mentre si premono altri tasti. (#230)
 - Supporto per i display Braille della Hims BrailleSense, Braille Edge e SyncBraille. (#1266, #1267)
 - Quando appare una notifica in Windows8, NVDA prima la annuncia, poi il navigatore ad oggetti viene posto su di essa in modo da migliorarne l'interazione. (#2143)
+- Supporto sperimentale per il touch screen in Windows8, comprendente:
+ - Lettura del testo situato sotto le dita mentre ci si sposta
+ - Gesti dedicati per effettuare la navigazione ad oggetti, la revisione del testo ed altri comandi di NVDA
 - Supporto per Vip Mud. (#1728)
 - In Adobe Reader, se una tabella ha un riassunto, esso viene letto correttamente. 
 - In Adobe Reader, possono essere annunciate le intestazioni di righe e colonne. (#2193, #2527, #2528)
@@ -28,6 +32,10 @@
 - Nei programmi che fanno uso di IAccessible2 come le applicazioni Mozilla, le intestazioni delle righe e delle colonne possono essere annunciate al di fuori della modalità navigazione. (#926)
 - Supporto iniziale al controllo documenti in Microsoft Word 2013. (#2543)
 - Nelle applicazioni che fanno uso di Iaccessible2 come i programmi di Mozilla, può essere annunciato l'allineamento del testo. (#2612)
+- Quando si incontra una riga di una tabella, o una visualizzazione ad elenco standard di Windows contenente molte colonne, si possono utilizzare i comandi di navigazione tabelle per esplorare il contenuto delle celle. (#828)
+- Nuove tabelle di traduzione Braille: Estone Grado 0, Portoghese Braille Computer 8 punti, Italiano 6 punti. (#2139, #2662)
+- Se NVDA è installato nel sistema, l'apertura diretta di un componente aggiuntivo (o da risorse del computer, oppure dal browser web dopo il download) lo installerà in NVDA. (#2306)
+- Introdotto il supporto per i nuovi display braille Braillex Papenmeier. (#1265)
 
 
 == Cambiamenti ==
@@ -38,6 +46,8 @@
 - Nell'elenco componenti aggiuntivi, ora viene visualizzato prima il nome del pacchetto seguito dallo stato. (#2548)
 - Se viene installato un componente aggiuntivo già presente, sia che la versione sia la stessa o una diversa, NVDA ora chiederà di rimuovere il vecchio ed installare il nuovo, piuttosto che dare un generico messaggio d'errore. (#2501)
 - I comandi di navigazione ad oggetti (ad eccezione del comando annuncia l'oggetto corrente) sono stati resi meno prolissi. è sempre possibile ottenere informazioni aggiuntive utilizzando il comando annuncia l'oggetto corrente.
+- Aggiornate le librerie LibLouis alla versione 2.5.0.
+- la voce "Guida rapida ai comandi da tastiera" è stata cambiata in "Guida rapida ai comandi" in quanto ora al suo interno si possono trovare anche riferimenti ai gesti, oltre che ai comandi da tastiera.
 
 
 == Bug corretti ==
@@ -68,12 +78,24 @@
 - In Microsoft Word, NVDA non presenta più problemi nell'esplorazione di un paragrafo avente elenchi puntati o numerati. (#2402)
 - Nella modalità navigazione nelle applicazioni Mozilla, gli elementi in alcune caselle ad elenco (nello specifico, caselle ad elenco ARIA), non vengono più interpretati in maniera errata.
 - Nei browser web, NVDA nasconde il contenuto che è stato marcato come nascosto per gli screen reader (nello specifico, si tratta dell'attributo aria-hidden). (#2117)
- 
+-  Le quantità negative di valuta (ad esempio -123$) ora vengono annunciate in maniera corretta. (#2625)
+- Durante la modalità Dire tutto, NVDA non tornerà più erroneamente alla lingua predefinita, se la riga non termina con un punto. (#2630)
+- vengono riconosciute correttamente le informazioni sul carattere in Adobe Reader 10.1 e successivi. (2175)
+- In Adobe Reader, se viene fornito del testo alternativo, verrà analizzato soltanto questo. In precedenza, talvolta veniva incluso del testo con caratteri incomprensibili. (#2174)
+- Nei browser web, se ci si trova in un documento che contiene un'applicazione, il contenuto di tale applicazione non viene più mostrato in modalità navigazione. Questo per prevenire la possibilità di finire inavvertitamente dentro l'applicazione durante la navigazione. Si può interagire con tale applicazione nello stesso modo in cui si interagisce con gli oggetti. (#990) 
+- Nelle applicazioni Mozilla, viene calcolato correttamente il valore dei pulsanti spin. (#2653)
+
 
 == Cambiamenti per sviluppatori ==
 - Il file di log precedente ora viene copiato nel file nvda-old.log subito dopo l'inizializzazione di NVDA. Tenere presente che se NVDA dovesse riavviarsi o crashare, le informazioni di log per quella sessione sono ancora accessibili. (#916)
 - Il recuperare le proprietà di un ruolo in chooseNVDAObjectOverlayClasses ora funzionerà correttamente  anche negli oggetti aventi controlli Scintilla o prompt dei comandi. (#2569)
 - I menu di NVDA Preferenze, Strumenti e Aiuto ora sono accessibili  come attributi su gui.mainFrame.sysTrayIcon chiamati rispettivamente preferencesMenu, toolsMenu e helpMenu. Questo permette ai componenti aggiuntivi di aggiungere voci a questi menu in maniera più rapida.
+- Introdotto il supporto per i messaggi di contesto gettext. Questo significa che possono essere definite più traduzioni per un singolo messaggio inglese, che dipenderanno dal contesto. (#1524)
+ - Realizzato grazie alla funzione pgettext(context, message).
+ - Viene garantito il supporto sia per NVDA che per i componenti aggiuntivi.
+ - Devono essere utilizzati xgettext e msgfmt da GNU gettext per la creazione dei file PO e MO. Gli strumenti python non supportano i messaggi di contesto.
+ - Per xgettext, passare --keyword=pgettext:1c,2 come argomento da linea di comando per abilitare l'inclusione dei messaggi di contesto.
+ - vedere http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts per maggiori informazioni.
 
 
 = 2012.2.1 =
