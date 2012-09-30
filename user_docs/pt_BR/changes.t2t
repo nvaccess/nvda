@@ -7,12 +7,20 @@
  Traduzido por Marlin Rodrigues da Silva
 
 = 2012.3 =
+ Entre os destaques desta versão estão inclusos o suporte para a entrada de caracteres asiáticos; suporte experimental para touch screens no Windows 8; anúncio do número das páginas e melhoras no suporte para tabelas no Adobe Reader; comandos para navegação por tabelas   em linhas de tabelas enfocadas e controles de listas de visualização  do Windows; e suporte para mais uma porção de linhas braille.
 
 == Novas Características ==
+- O NVDA agora pode oferecer suporte à entrada de caracteres asiáticos que usam IME e o serviço de métodos de entrada de textos em todas as aplicações, Incluindo:
+ - Anúncio e navegação das listas de sugestões;
+ - Anúncio e navegação das cadeias de composição;
+ - Anúncio das cadeias de leitura.
 - A presença de sublinhado e taxado agora é anunciada em documentos do Adobe Reader. (#2410)
 - Quando a função de teclas de aderência  estiver ativada no Windows, a tecla modificadora do NVDA agora se comportará como outras teclas modificadoras. Isto lhe permite usar a tecla modificadora do NVDA sem que precise mantê-la pressionada enquanto pressiona outras teclas. (#230)
 - Suporte para as linhas Braille Sense, Braille EDGE e SyncBraille da HIMS. (#1266, #1267)
 - Quando as notificações no Windows 8  aparecem, o NVDA as anuncia e move a navegação de objetos para o local, permitindo uma interação adicional. (#2143)
+- Suporte experimental para Touch screens no Windows 8, incluindo:
+ - Leitura de textos diretamente por onde você move seus dedos
+ - Vários gestos para executar a navegação de objetos, revisão de textos, e outros comandos do NVDA.
 - Suporte para o VIP Mud. (#1728)
 - No Adobe Reader, caso uma tabela possua um sumário, ele agora será apresentado. (#2465)
 - No Adobe Reader, os cabeçalhos de linhas e colunas das tabelas agora podem ser anunciados. (#2193)
@@ -20,11 +28,17 @@
 - O NVDA agora pode ler sugestões de auto-completar quando se digita endereços de email no Microsoft Outlook 2007. (#689)
 - Novas variantes para o eSpeak: Gene, Gene2. (#2512)
 - No Adobe Reader, o número das páginas agora pode ser anunciado. (#2534)
-- Agora é possível retornar as configurações do NVDA aos padrões originais pressionando NVDA+control+r três vezes rapidamente ou selecionando Retornar aos Padrões originais no menu do NVDA. (#2086)
+- Agora é possível retornar as configurações do NVDA aos padrões originais pressionando NVDA+control+r três vezes rapidamente ou indo ao menu do NVDA e selecionando Restaurar Configuração aos Padrões Originais. (#2086)
 - Suporte para as linhas braille Seika Versões 3, 4 e 5 e Seika80 da Nippon Telesoft. (#2452)
-- Nas linhas braille PAC Mate e Focus da Freedom Scientific, o primeiro e o último botões de sensores de cima agora podem ser utilizados para deslocar para trás e para a frente. (#2556)
+- Nas linhas braille PAC Mate e Focus da Freedom Scientific, o primeiro e o último botões de sensores de cima agora podem ser utilizados para deslocar-se para trás e para a frente. (#2556)
 - Muito mais recursos são agora suportados nas Linhas braille Focus da Freedom Scientific, tais como advance bars, rocker bars e certas combinações de pontos para ações comuns. (#2516)
 - Em aplicativos que usam IAccessible2 tais como os da Mozilla, os cabeçalhos de linhas e colunas das tabelas agora podem ser anunciados fora do modo de navegação. (#926)
+- Suporte primário para o controle de documentos no Microsoft Word 2013. (#2543)
+- O alinhamento dos textos agora pode ser anunciado em aplicativos que usam IAccessible2 tais como aplicativos da Mozilla. (#2612)
+- Quando uma linha de uma tabela ou um controle de visualização de lista  padrão do Windows que possua  múltiplas colunas recebe foco, você agora pode acessar individualmente as células usando os comandos para navegação de tabelas. (#828)
+- Novas tabelas de tradução braille: Estoniano grau 0, braille de 8 pontos Português para computador, braille de 6 pontos italiano para computador. (#2139, #2662)
+- Caso o NVDA esteja instalado no computador, ao abrir diretamente um pacote de complemento (isto é, a partir do Windows Explorer ou depois de baixá-lo por um navegador web) instala-lo-á no NVDA. (#2306) 
+- Suporte para os novos modelos das linhas braille Papenmeier BRAILLEX. (#1265)
 
 
 == Alterações ==
@@ -35,6 +49,8 @@
 - A lista do gestor de complementos agora mostra o nome do pacote antes de seu status. (#2548)
 - caso esteja instalando a mesma  ou outra versão de um complemento atualmente instalado, o NVDA irá perguntar se você deseja remover antes o antigo ao invés de simplesmente exibir uma mensagem de erro e abortar a instalação. (#2501)
 - Os comandos da navegação de objetos (exceto o comando anunciar o objeto atual) agora o anuncia com menos verbosidade. Você ainda pode obter informação extra usando o comando anunciar o objeto atual. (#2560)
+- Atualizado o transcritor braille liblouis para a versão 2.5.1.
+- O documento Referência Rápida de Teclas de Comando foi renomeado para Referência Rápida de Comandos, visto que agora inclui tanto comandos para touch screen como de teclado.
 
 
 == Correção de Falhas ==
@@ -45,32 +61,47 @@
 - O NVDA agora verifica a integridade de seu pacote de distribuição antes de executar. (#2475)
 - Os arquivos temporários de download do NVDA agora são removidos caso haja uma falha ao baixar atualizações. (#2477)
 - Ao copiar as configurações do usuário para as configurações do sistema (permitindo seu uso no logon do Windows e outras telas seguras) o NVDA já não travará no XP durante esse processo. (#2485) 
-- Tiles on the Windows 8 Start Screen are now presented better in speech and braille. The name is no longer repeated, unselected is no longer reported on all tiles, and live status information is presented as the description of the tile (e.g. current temperature for the Weather tile).
+- Os mozaicos na tela de início do Windows 8 agora são melhor apresentados em voz e braille. O nome já não é repetido, em todos os mozaicos já não será dito não selecionado, e a informação ao vivo do status é apresentada como a descrição do mozaico (por exemplo, a temperatura para o mozaico do tempo).
 - As senhas já não são anunciadas quando se lê campos de senhas no Microsoft Outlook e outros controles padrões de edição que são marcados como protegidos. (#2021)
 - No Adobe Reader, as alterações em campos de formulários agora são refletidas corretamente  no modo de navegação. (#2529)
 - Melhoras no suporte ao Verificador Ortográfico do Microsoft Word , incluindo uma leitura mais exata do erro ortográfico atual, e suporte à verificação ortográfica quando se executa uma cópia instalada do NVDA no Windows Vista ou superiores.
 - Complementos que contam com arquivos contendo caracteres não ingleses agora podem ser instalados corretamente em maior parte dos casos. (#2505)
 - No Adobe Reader, o idioma dos textos já não é perdido quando este é atualizado ou ao se deslocar por ele. (#2544)
--Ao instalar um complemento, o diálogo de confirmação agora exibe corretamente o nome traduzido do mesmo caso disponível. (#2422)
+- Ao instalar um complemento, o diálogo de confirmação agora exibe corretamente o nome traduzido do mesmo caso disponível. (#2422)
 - Em aplicativos que usam UI Automation, (tais como .net and Silverlight), foi corrigido o cáuculo de valores numéricos para controles como barras deslisantes. (#2417)
 - A configuração para o anúncio de barras de progresso agora é responsável pelas barras de progresso indeterminadas que o NVDA mostra ao instalar, criar cópia portátil, etc. (#2574)
-- •NVDA commands can no longer be executed from a braille display while a secure Windows screen (such as the Lock screen) is active. (#2449)
+- Comandos do NVDA já não podem ser executados a partir de uma linha braille enquanto uma tela segura do Windows (como a tela de bloqueio) encontra-se ativa. (#2449)
 - NO modo de navegação, o braille agora é atualizado se o texto que está sendo mostrado for alterado. (#2074)
-When on a secure Windows screen such as the Lock screen, messages from applications speaking or displaying braille directly via NVDA are now ignored.•
-In Browse mode, it is no longer possible to fall off the bottom of the document with the right arrow key when on the final character, or by jumping to the end of a container when that container is the last item in the document. (#2463)
+- Estando em uma tela segura do Windows, como por exemplo a tela de bloqueio, as mensagens oriundas de aplicativos em voz ou braille diretamente via NVDA serão agora ignoradas.
+- No modo de navegação, já não é possível ir além do final de um documento com a seta a direita caso esteja no último caractere, ou saltando para o fim de uma lista ou tabela quando esta for o último item deste documento. (#2463)
 - Conteúdos Estranhos já não são inclusos incorretamente a quando do anúncio do texto de diálogos em aplicativos web (especificamente, diálogos ARIA que não possuem o atributo aria-describedby). (#2390)
 - O NVDA já não anuncia ou situa incorretamente determinados campos de edição em documentos MSHTML (tais como Internet Explorer), especificamente onde uma função ARIA explicita tenha sido usada pelo autor da página web. (#2435)
 - A tecla backspace agora é controlada corretamente ao falar palavras digitadas em consoles de comando do Windows. (#2586)
 - As coordenadas de células no Microsoft Excell voltam a ser mostradas em Braille.
+- No Microsoft Word, o NVDA já não lhe deixa preso em um parágrafo com list formatting ao tentar navegar out over a marca ou número com a seta a esquerda ou control + seta a esquerda. (#2402)
+- No modo de navegação em aplicativos da Mozilla, os items em determinadas caixas de lista (especificamente em caixas de lista da ARIA) já não são dispostas incorretamente.
+- Em navegadores web, o NVDA agora oculta o conteúdo que está marcado como oculto para leitores de telas (especificamente, usando o atributo aria-hidden). (#2117)
+- Quantias negativas de dinheiro (como -$123) agora são anunciadas corretamente  como negativas, independentemente do grau de sinais. (#2625)
+- O NVDA já não retorna incorretamente ao idioma padrão durante uma leitura contínua onde uma linha não termina uma sentença. (#2630)
+- A informação da fonte agora é detectada corretamente no Adobe Reader 10.1 e posteriores. (#2175)
+- No Adobe Reader, caso haja um texto de descrição, somente aquele texto será exibido. Anteriormente, algumas vezes, textos estranhos eram inclusos. (#2174)
+- Onde um documento contém uma aplicação, o conteúdo da mesma já não é incluido no modo de navegação. Isso evita que você se mova por dentro da aplicação ao navegar. É possível interagir com a aplicação da mesma forma utilizada com os objetos embutidos. (#990)
+- Em aplicativos da Mozilla, os valores dos botões de rotação agora são anunciados corretamente quando alterados. (#2653)
 
 
 == Alterações Específicas para Desenvolvedores ==
 
 
 Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
-- O arquivo do log anterior agora é copiado para nvda-old.log a quando da inicialização do NVDA. Com efeito, caso ele trave ou seja reiniciado, as informações do log daquela sessão continuarão acessíveis para inspeção. (#916)
+- O arquivo contendo o log anterior agora é copiado para nvda-old.log a quando da inicialização do NVDA. Com efeito, caso ele trave ou seja reiniciado, as informações do log daquela sessão continuarão acessíveis para inspeção. (#916)
 - Fetching the role property in chooseNVDAObjectOverlayClasses no longer causes the role to be incorrect and thus not reported on focus for certain objects such as Windows command consoles and Scintilla controls. (#2569)
 - Os menus Preferências, Ferramentas e Ajuda são agora acessíveis como atributos em gui.mainFrame.sysTrayIcon com as respectivas denominações de preferencesMenu, toolsMenu e helpMenu. Isso permite que plugins adicionem itens mais ´facilmente a esses menus.
+- Mensagens de contexto Gettext agora são suportadas. Isso permite que  múltiplas traduções sejam definidas para uma única mensagem em Inglês de acordo com o contexto. (#1524) 
+ - Isso é feito usando a função pgettext(context, message).
+ - Recurso suportado tanto pelo próprio NVDA como por seus complementos. 
+ - xgettext and msgfmt from GNU gettext must be used to create any PO and MO files. The Python tools do not support message contexts. 
+ - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts. 
+ - Consulte http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts para mais informações. 
 
 
 = 2012.2.1 =
