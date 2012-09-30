@@ -42,9 +42,12 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
-		state = _("on") if inputCore.manager.isInputHelpActive else _("off")
 		# Translators: This will be presented when the input help is toggled.
-		ui.message(_("input help %s")%state)
+		stateOn = _("input help on")
+		# Translators: This will be presented when the input help is toggled.
+		stateOff = _("input help off")
+		state = stateOn if inputCore.manager.isInputHelpActive else stateOff
+		ui.message(state)
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
 	def script_toggleCurrentAppSleepMode(self,gesture):
@@ -174,33 +177,38 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleSpeakTypedCharacters(self,gesture):
 		if config.conf["keyboard"]["speakTypedCharacters"]:
-			onOff=_("off")
+			# Translators: The message announced when toggling the speak typed characters keyboard setting.
+			state = _("speak typed characters off")
 			config.conf["keyboard"]["speakTypedCharacters"]=False
 		else:
-			onOff=_("on")
+			# Translators: The message announced when toggling the speak typed characters keyboard setting.
+			state = _("speak typed characters on")
 			config.conf["keyboard"]["speakTypedCharacters"]=True
-		# Translators: The message announced when toggling the speak typed characters keyboard setting.
-		ui.message(_("speak typed characters")+" "+onOff)
+		ui.message(state)
 	script_toggleSpeakTypedCharacters.__doc__=_("Toggles on and off the speaking of typed characters")
 
 	def script_toggleSpeakTypedWords(self,gesture):
 		if config.conf["keyboard"]["speakTypedWords"]:
-			onOff=_("off")
+			# Translators: The message announced when toggling the speak typed words keyboard setting.
+			state = _("speak typed words off")
 			config.conf["keyboard"]["speakTypedWords"]=False
 		else:
-			onOff=_("on")
+			# Translators: The message announced when toggling the speak typed words keyboard setting.
+			state = _("speak typed words on")
 			config.conf["keyboard"]["speakTypedWords"]=True
-		ui.message(_("speak typed words")+" "+onOff)
+		ui.message(state)
 	script_toggleSpeakTypedWords.__doc__=_("Toggles on and off the speaking of typed words")
 
 	def script_toggleSpeakCommandKeys(self,gesture):
 		if config.conf["keyboard"]["speakCommandKeys"]:
-			onOff=_("off")
+			# Translators: The message announced when toggling the speak typed command keyboard setting.
+			state = _("speak command keys off")
 			config.conf["keyboard"]["speakCommandKeys"]=False
 		else:
-			onOff=_("on")
+			# Translators: The message announced when toggling the speak typed command keyboard setting.
+			state = _("speak command keys on")
 			config.conf["keyboard"]["speakCommandKeys"]=True
-		ui.message(_("speak command keys")+" "+onOff)
+		ui.message(state)
 	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
 
 	def script_cycleSpeechSymbolLevel(self,gesture):
@@ -606,15 +614,16 @@ class GlobalCommands(ScriptableObject):
 		speech.speechMode=speech.speechMode_talk
 		newMode=(curMode+1)%3
 		if newMode==speech.speechMode_off:
-			name=_("off")
+			# Translators: A speech mode which dissables speech output.
+			name=_("speech mode off")
 		elif newMode==speech.speechMode_beeps:
 			# Translators: A speech mode which will cause NVDA to beep instead of speaking.
-			name=_("beeps")
+			name=_("speech mode beeps")
 		elif newMode==speech.speechMode_talk:
 			# Translators: The normal speech mode; i.e. NVDA will talk as normal.
-			name=_("talk")
+			name=_("speech mode talk")
 		speech.cancelSpeech()
-		ui.message(_("speech mode %s")%name)
+		ui.message(name)
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
@@ -737,12 +746,14 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleMouseTracking(self,gesture):
 		if config.conf["mouse"]["enableMouseTracking"]:
-			onOff=_("off")
+			# Translators: presented when the mouse tracking is toggled.
+			state = _("Mouse tracking off")
 			config.conf["mouse"]["enableMouseTracking"]=False
 		else:
-			onOff=_("on")
+			# Translators: presented when the mouse tracking is toggled.
+			state = _("Mouse tracking on")
 			config.conf["mouse"]["enableMouseTracking"]=True
-		ui.message(_("Mouse tracking")+" "+onOff)
+		ui.message(state)
 	script_toggleMouseTracking.__doc__=_("Toggles the reporting of information as the mouse moves")
 
 	def script_title(self,gesture):
@@ -798,32 +809,38 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleReportDynamicContentChanges(self,gesture):
 		if config.conf["presentation"]["reportDynamicContentChanges"]:
-			onOff=_("off")
+			# Translators: presented when the present dynamic changes is toggled.
+			state = _("report dynamic content changes off")
 			config.conf["presentation"]["reportDynamicContentChanges"]=False
 		else:
-			onOff=_("on")
+			# Translators: presented when the present dynamic changes is toggled.
+			state = _("report dynamic content changes on")
 			config.conf["presentation"]["reportDynamicContentChanges"]=True
-		ui.message(_("report dynamic content changes")+" "+onOff)
+		ui.message(state)
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
 
 	def script_toggleCaretMovesReviewCursor(self,gesture):
 		if config.conf["reviewCursor"]["followCaret"]:
-			onOff=_("off")
+			# Translators: presented when toggled.
+			state = _("caret moves review cursor off")
 			config.conf["reviewCursor"]["followCaret"]=False
 		else:
-			onOff=_("on")
+			# Translators: presented when toggled.
+			state = _("caret moves review cursor on")
 			config.conf["reviewCursor"]["followCaret"]=True
-		ui.message(_("caret moves review cursor")+" "+onOff)
+		ui.message(state)
 	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
 
 	def script_toggleFocusMovesNavigatorObject(self,gesture):
 		if config.conf["reviewCursor"]["followFocus"]:
-			onOff=_("off")
+			# Translators: presented when toggled.
+			state = _("focus moves navigator object off")
 			config.conf["reviewCursor"]["followFocus"]=False
 		else:
-			onOff=_("on")
+			# Translators: presented when toggled.
+			state = _("focus moves navigator object on")
 			config.conf["reviewCursor"]["followFocus"]=True
-		ui.message(_("focus moves navigator object")+" "+onOff)
+		ui.message(state)
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
