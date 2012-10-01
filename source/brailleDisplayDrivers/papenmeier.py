@@ -469,7 +469,7 @@ connection could not be established"""
 			"braille_toggleTether": ("br(papenmeier):r2",),
 			"review_currentCharacter": ("br(papenmeier):l1",),
 			"navigatorObject_toFocus":("br(papenmeier):r1b",),
-			"navigatorObject_doDefaultAction": ("br(papenmeier):l2",),
+			"review_activate": ("br(papenmeier):l2",),
 
 			"navigatorObject_previous": ("br(papenmeier):left2",),
 			"navigatorObject_next": ("br(papenmeier):right2",),
