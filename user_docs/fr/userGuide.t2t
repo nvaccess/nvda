@@ -157,7 +157,7 @@ La configuration pour ordinateur de bureau fait un usage intensif du pavé numé
 Bien que la plupart des ordinateurs portables ne comportent pas de pavé numérique, certains peuvent l'émuler en maintenant enfoncée la touche FN puis en pressant les lettres et les chiffres à la droite du clavier ( 7 8 9 u i o j k l etc).
 Si votre ordinateur ne vous permet pas de le faire, ou ne vous permet pas de passer en verrouillage numérique désactivé, vous pouvez alors utiliser la configuration pour ordinateur portable.
 
-++ Jestes tectiles de NVDA ++
+++ Gestes tactiles de NVDA ++
 Si vous démarrez NVDA avec un périphérique contenant un écran tactile, et que vous utilisez Windows 8 ou supérieur, vous pouvez aussi contrôler NVDA dirrectement via l'écran tactile.
 Tant que NVDA est démarré, toutes les manipulations sur l'écran tactile vont dirrectement à NVDA.
 De plus, toutes les actions qui peuvent être faites normalement sans NVDA ne fonctionneront pas.
@@ -180,7 +180,7 @@ Cliquer avec deux doigts en même temps est un clique 2-doigts, et ainsi de suit
 Si le même clique est fait une fois ou plus encore dans une succession rapide, NVDA le prendra comme un geste tactile multi-clique.
 Cliquer deux fois sera un double-clique.
 Cliquer trois fois sera un triple-clique etc.
-Ces jestes reconnaissent également combien de doigts ont été utilisés, il est donc possible d'avoir des jestes tel qu'un triple-clique à deux doigts, ou un clique à quatre doigts, etc.
+Ces gestes reconnaissent également combien de doigts ont été utilisés, il est donc possible d'avoir des gestes tel qu'un triple-clique à deux doigts, ou un clique à quatre doigts, etc.
 
 ==== Glisser ====
 Glicez rapidement votre doigt sur l'écran.
@@ -1530,15 +1530,15 @@ Chaque entrée ne peut apparaître qu'une fois par section, y compris None.
 Les identifiants de geste terminés par une virgule doivent être entourés de quotes (" ou ').
 -
 
-Les identifiants de geste comprennent un code de matériel sur deux lettres (kb pour clavier, br pour terminal braille et ts pour écran tactile), un sous-code une disposition entre crochets, le signe deux-points, puis un ou plusieurs noms de touches Braille, clavier ou tactile séparés par le signe plus (+).
+Les identifiants de geste comprennent un code de matériel sur deux lettres (kb pour clavier, br pour terminal braille et ts pour écran tactile), un sous-code une disposition entre parenthèses, le signe deux-points, puis un ou plusieurs noms de touches Braille, clavier ou tactile séparés par le signe plus (+).
 - Pour un raccourci clavier, le code est kb.
-La partie entre crochets correspond à la disposition clavier et est optionnelle.
+La partie entre parenthèses correspond à la disposition clavier et est optionnelle.
 Si elle n'est pas indiquée, le geste s'appliquera à toutes les configurations clavier.
 La chaîne après la virgule est un ou plusieurs noms de touches du clavier séparées par un signe plus (+).
-- Pour les gestes s'appliquant au terrminal braille, le cpdeestbr
-La partie entre crochet indique le terminal braille spécifique est est obligatoire.
+- Pour les gestes s'appliquant au terrminal braille, le code est br.
+La partie entre parenthèses indique le terminal braille spécifique est est obligatoire.
 La chaîne après la virgule est un ou plusieurs noms de touches du terminal Braille séparées par un signe plus (+).
-- Pour les gestes tactiles, le code est ts
+- Pour les gestes tactiles, le code est ts.
 La partie entre parenthèses spécifie le mode tactile à utiliser et est optionnelle.
 La partie après la virgule est un geste tactile comme double_tap (double clique), 2fingerflickUp (Glisser vers le haut 2-doigts), ou 3finger_tap (clique 3-doigt) par exemples.
 -
