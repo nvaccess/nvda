@@ -18,6 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaControllerInternal.h"
 #include "typedCharacter.h"
 #include "tsf.h"
+#include <common/log.h>
 #include "ime.h"
 
 #define GETLANG()		LOWORD(g_hklCurrent)
@@ -79,6 +80,8 @@ typedef struct tagINPUTCONTEXT2 {
     DWORD           dwReserve[3];                   
 } INPUTCONTEXT2, *PINPUTCONTEXT2, NEAR *NPINPUTCONTEXT2, FAR *LPINPUTCONTEXT2;  
 
+HWND curIMEWindow=NULL;
+static HWND candidateIMEWindow=0;
 static BOOL lastOpenStatus=true;
 static HMODULE gImm32Module = NULL;
 static DWORD lastConversionModeFlags=0;
@@ -241,6 +244,24 @@ void handleIMEConversionModeUpdate(HWND hwnd, bool report) {
 	lastConversionModeFlags=flags;
 }
 
+inline void handleCandidatesClosed(HWND hwnd) {
+	if(!hwnd||hwnd!=candidateIMEWindow) return;
+	/* Obtain IME context */
+	HIMC imc = ImmGetContext(hwnd);
+	if (!imc) {
+		candidateIMEWindow=0;
+		nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
+		return;
+	}
+	DWORD count = 0;
+	DWORD len = ImmGetCandidateListCountW(imc, &count);
+	ImmReleaseContext(hwnd, imc);
+	if (!count) {
+		candidateIMEWindow=0;
+		nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
+	}
+}
+
 static bool handleCandidates(HWND hwnd) {
 	/* Obtain IME context */
 	HIMC imc = ImmGetContext(hwnd);
@@ -253,7 +274,7 @@ static bool handleCandidates(HWND hwnd) {
 		ImmReleaseContext(hwnd, imc);
 		return false;
 	}
-
+	candidateIMEWindow=hwnd;
 	/* Read first candidate list */
 	CANDIDATELIST* list = (CANDIDATELIST*)malloc(len);
 	ImmGetCandidateList(imc, 0, list, len);
@@ -295,7 +316,7 @@ static WCHAR* getCompositionString(HIMC imc, DWORD index) {
 	if (len < sizeof(WCHAR))  return NULL;
 	WCHAR* wstr = (WCHAR*)malloc(len + sizeof(WCHAR));
 	len = ImmGetCompositionStringW(imc, index, wstr, len) / sizeof(WCHAR);
-	wstr[len] = '\0';
+	wstr[len] = L'\0';
 	 return wstr;
 }
 
@@ -325,7 +346,6 @@ static bool handleEndComposition(HWND hwnd, WPARAM wParam, LPARAM lParam) {
 
 	wchar_t* comp_str = getCompositionString(imc, GCS_RESULTSTR);
 	ImmReleaseContext(hwnd, imc);
-
 	/* Generate notification */
 	nvdaControllerInternal_inputCompositionUpdate((comp_str?comp_str:L""),-1,-1,0);
 	if(comp_str) {
@@ -350,20 +370,18 @@ bool hasValidIMEContext(HWND hwnd) {
 	return valid_imc;
 }
 
-static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
-	static HWND curIMEWindow=NULL;
-	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
+static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	// Ignore messages with invalid HIMC
-	if(!hasValidIMEContext(pcwp->hwnd)) return 0; 
-	switch (pcwp->message) {
+	if(!hasValidIMEContext(hwnd)) return 0; 
+	switch (message) {
 		case WM_IME_NOTIFY:
-			switch (pcwp->wParam) {
+			switch (wParam) {
 				case IMN_SETOPENSTATUS:
-					handleOpenStatus(pcwp->hwnd);
+					handleOpenStatus(hwnd);
 					break;
 				case IMN_OPENCANDIDATE:
 				case IMN_CHANGECANDIDATE:
-					PostMessage(pcwp->hwnd,wm_candidateChange,0,0);
+					PostMessage(hwnd,wm_candidateChange,0,0);
 					break;
 
 				case IMN_CLOSECANDIDATE:
@@ -371,48 +389,55 @@ static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lPar
 					break;
 
 				case IMN_SETCONVERSIONMODE:
-					if(!disableIMEConversionModeUpdateReporting) handleIMEConversionModeUpdate(pcwp->hwnd,true);
+					if(!disableIMEConversionModeUpdateReporting) handleIMEConversionModeUpdate(hwnd,true);
+					break;
+
+				case IMN_PRIVATE:
+					if(!isTSFThread(true)) handleReadingStringUpdate(hwnd);
 					break;
 			}
+			break;
 
 		case WM_IME_COMPOSITION:
-			if(!isTSFThread(true)) {
-				handleReadingStringUpdate(pcwp->hwnd);
-				bool compFailed=false;
+			curIMEWindow=hwnd;
+			if(!isTSFThread(true)) {\
+				handleReadingStringUpdate(hwnd);
 				if(lParam&GCS_COMPSTR||lParam&GCS_CURSORPOS) {
-					compFailed=!handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
-					if(!compFailed) curIMEWindow=pcwp->hwnd;
-				}
-				if(compFailed&&curIMEWindow==pcwp->hwnd) {
-					handleEndComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
-					curIMEWindow=NULL;
-					//Disable further typed character notifications produced by TSF
-					typedCharacter_window=NULL;
+					handleComposition(hwnd, wParam, lParam);
 				}
 			}
 			break;
 
 		case WM_IME_ENDCOMPOSITION:
-			if(curIMEWindow==pcwp->hwnd&&!isTSFThread(true)) {
-				handleEndComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+			LOG_INFO(L"end composition");
+			if(curIMEWindow==hwnd) {
+				LOG_INFO(L"supported");
+				if(handleEndComposition(hwnd, wParam, lParam)) {
+					//Disable further typed character notifications produced by TSF
+					typedCharacter_window=NULL;
+				}
 				curIMEWindow=NULL;
-				//Disable further typed character notifications produced by TSF
-				typedCharacter_window=NULL;
 			}
 			break;
 
 		case WM_ACTIVATE:
 		case WM_SETFOCUS:
-			handleIMEConversionModeUpdate(pcwp->hwnd,false);
+			handleIMEConversionModeUpdate(hwnd,false);
 			if(!isTSFThread(true)) {
-				if (pcwp->hwnd != GetFocus())  break;
-				handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
-				handleCandidates(pcwp->hwnd);
+				if (hwnd != GetFocus())  break;
+				handleComposition(hwnd, wParam, lParam);
+				handleCandidates(hwnd);
 			}
 			break;
 		default:
 			break;
 	}
+	return 0;
+}
+
+static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
+	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
+	handleIMEWindowMessage(pcwp->hwnd,pcwp->message,pcwp->wParam,pcwp->lParam);
 	return 0;
 }
 
@@ -430,7 +455,10 @@ LRESULT CALLBACK IME_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 	MSG* pmsg=(MSG*)lParam;
 	if(pmsg->message==wm_candidateChange) {
 		handleCandidates(pmsg->hwnd);
+	} else {
+		handleCandidatesClosed(pmsg->hwnd);
 	}
+	handleIMEWindowMessage(pmsg->hwnd,pmsg->message,pmsg->wParam,pmsg->lParam);
 	return 0;
 }
 
