@@ -744,12 +744,14 @@ def processDestroyWinEvent(window,objectID,childID):
 		del liveNVDAObjectTable[(window,objectID,childID)]
 	except KeyError:
 		pass
+	#Specific support for input method MSAA candidate lists.
+	#When their window is destroyed we must correct focus to its parent - which could be a composition string
+	# so can't use generic focus correction. (#2695)
 	focus=api.getFocusObject()
-	if objectID==0 and childID==0 and not eventHandler.isPendingEvents("gainFocus"):
-		obj=focus
-		while isinstance(obj,NVDAObjects.window.Window) and obj.windowHandle==window:
-			obj=obj.parent
-		if obj and obj is not focus:
+	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
+	if objectID==0 and childID==0 and isinstance(focus,BaseCandidateItem) and window==focus.windowHandle and not eventHandler.isPendingEvents("gainFocus"):
+		obj=focus.parent
+		if obj:
 			eventHandler.queueEvent("gainFocus",obj)
 
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
