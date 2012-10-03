@@ -130,7 +130,8 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 typedef UINT (WINAPI* GetReadingString_funcType)(HIMC, UINT, LPWSTR, PINT, BOOL*, PUINT);
 
 void handleOpenStatus(HWND hwnd) {
-	if(!ImmGetProperty(GetKeyboardLayout(0),IGP_CONVERSION)) return;
+	//Only reported for japanese
+	if(((unsigned long)(GetKeyboardLayout(0))&0xff)!=0x11) return;
 	/* Obtain IME context */
 	HIMC imc = ImmGetContext(hwnd);
 	if (!imc)  return;
