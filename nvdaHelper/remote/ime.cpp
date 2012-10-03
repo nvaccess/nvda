@@ -401,7 +401,6 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 		case WM_IME_COMPOSITION:
 			curIMEWindow=hwnd;
 			if(!isTSFThread(true)) {\
-				handleReadingStringUpdate(hwnd);
 				if(lParam&GCS_COMPSTR||lParam&GCS_CURSORPOS) {
 					handleComposition(hwnd, wParam, lParam);
 				}
