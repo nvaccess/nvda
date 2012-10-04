@@ -153,8 +153,6 @@ env.SideEffect('_txt2tags',htmlFile)
 devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
 env.Alias("developerGuide",devGuide)
 
-env.Depends(sourceDir,userDocsDir)
-
 #Generate all needed comtypes COM interfaces
 command = ['cd', sourceDir.path, '&&', sys.executable]
 if release:
@@ -238,7 +236,7 @@ uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
 if certFile:
 	env.AddPostAction(uninstaller, [signExec])
 
-dist = env.NVDADist("dist", sourceDir, uiAccess=bool(certFile))
+dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile))
 env.Depends(dist,uninstaller)
 # Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
 env.Clean(dist, dist)
