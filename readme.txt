@@ -108,9 +108,9 @@ Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
 scons source
 You should do this again whenever the version of comtypes changes or language files are added or changed.
-Note that if you want to access user documentation from the help menu while running the source version, you will also need to add userDocs to the commandline like so:
-scons source userDocs
-Though while simply testing or committing changes, it may be faster usually just doing scons source as userDocs will change each time the revision number changes.
+Note that if you want to access user documentation from the help menu while running the source version, you will also need to add user_docs to the commandline like so:
+scons source user_docs
+Though while simply testing or committing changes, it may be faster usually just doing scons source as user documentation will change each time the revision number changes.
  
 === Compiling NVDAHelper with Debugging Options ===
 Among other things, preparing the source tree builds the NVDAHelper libraries.  
