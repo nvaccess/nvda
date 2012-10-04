@@ -543,7 +543,7 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).description
 
 	def _get_basicText(self):
-		if self.HTMLNode:
+		if self.HTMLNode and not self.HTMLNodeName=="SELECT":
 			try:
 				return self.HTMLNode.data or ""
 			except (COMError, AttributeError, NameError):
