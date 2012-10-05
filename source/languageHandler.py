@@ -68,7 +68,8 @@ def getAvailableLanguages():
 		d.append(label)
 	#include a 'user default, windows' language, which just represents the default language for this user account
 	l.append("Windows")
-	d.append("User default, windows")
+	# Translators: the label for the Windows default NVDA interface language.
+	d.append(_("User default"))
 	#return a zipped up version of both the lists (a list with tuples of locale,label)
 	return zip(l,d)
 
