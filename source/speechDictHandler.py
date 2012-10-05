@@ -57,7 +57,7 @@ class SpeechDict(list):
 			else:
 				temp=line.split("\t")
 				if len(temp) ==4:
-					self.append(SpeechDictEntry(temp[0],temp[1],comment,bool(int(temp[2])),bool(int(temp[3]))))
+					self.append(SpeechDictEntry(temp[0].replace(r'\#','#'),temp[1].replace(r'\#','#'),comment,bool(int(temp[2])),bool(int(temp[3]))))
 					comment=""
 				else:
 					log.warning("can't parse line '%s'" % line)
@@ -77,7 +77,7 @@ class SpeechDict(list):
 		for entry in self:
 			if entry.comment:
 				file.write("#%s\r\n"%entry.comment)
-			file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern,entry.replacement,int(entry.caseSensitive),int(entry.regexp)))
+			file.write("%s\t%s\t%s\t%s\r\n"%(entry.pattern.replace('#',r'\#'),entry.replacement.replace('#',r'\#'),int(entry.caseSensitive),int(entry.regexp)))
 		file.close()
 
 	def sub(self, text):
