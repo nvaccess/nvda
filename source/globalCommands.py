@@ -26,7 +26,6 @@ import config
 import winUser
 import appModuleHandler
 import winKernel
-from gui import mainFrame
 import treeInterceptorHandler
 import scriptHandler
 import ui
@@ -880,47 +879,47 @@ class GlobalCommands(ScriptableObject):
 	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
 
 	def script_activateGeneralSettingsDialog(self, gesture):
-		wx.CallAfter(mainFrame.onGeneralSettingsCommand, None)
+		wx.CallAfter(gui.mainFrame.onGeneralSettingsCommand, None)
 	script_activateGeneralSettingsDialog.__doc__ = _("Shows the NVDA general settings dialog")
 
 	def script_activateSynthesizerDialog(self, gesture):
-		wx.CallAfter(mainFrame.onSynthesizerCommand, None)
+		wx.CallAfter(gui.mainFrame.onSynthesizerCommand, None)
 	script_activateSynthesizerDialog.__doc__ = _("Shows the NVDA synthesizer dialog")
 
 	def script_activateVoiceDialog(self, gesture):
-		wx.CallAfter(mainFrame.onVoiceCommand, None)
+		wx.CallAfter(gui.mainFrame.onVoiceCommand, None)
 	script_activateVoiceDialog.__doc__ = _("Shows the NVDA voice settings dialog")
 
 	def script_activateKeyboardSettingsDialog(self, gesture):
-		wx.CallAfter(mainFrame.onKeyboardSettingsCommand, None)
+		wx.CallAfter(gui.mainFrame.onKeyboardSettingsCommand, None)
 	script_activateKeyboardSettingsDialog.__doc__ = _("Shows the NVDA keyboard settings dialog")
 
 	def script_activateMouseSettingsDialog(self, gesture):
-		wx.CallAfter(mainFrame.onMouseSettingsCommand, None)
+		wx.CallAfter(gui.mainFrame.onMouseSettingsCommand, None)
 	script_activateMouseSettingsDialog.__doc__ = _("Shows the NVDA mouse settings dialog")
 
 	def script_activateObjectPresentationDialog(self, gesture):
-		wx.CallAfter(mainFrame. onObjectPresentationCommand, None)
+		wx.CallAfter(gui.mainFrame. onObjectPresentationCommand, None)
 	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
 
 	def script_activateBrowseModeDialog(self, gesture):
-		wx.CallAfter(mainFrame.onBrowseModeCommand, None)
+		wx.CallAfter(gui.mainFrame.onBrowseModeCommand, None)
 	script_activateBrowseModeDialog.__doc__ = _("Shows the NVDA browse mode settings dialog")
 
 	def script_activateDocumentFormattingDialog(self, gesture):
-		wx.CallAfter(mainFrame.onDocumentFormattingCommand, None)
+		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 	script_activateDocumentFormattingDialog.__doc__ = _("Shows the NVDA document formatting settings dialog")
 
 	def script_saveConfiguration(self,gesture):
-		wx.CallAfter(mainFrame.onSaveConfigurationCommand, None)
+		wx.CallAfter(gui.mainFrame.onSaveConfigurationCommand, None)
 	script_saveConfiguration.__doc__ = _("Saves the current NVDA configuration")
 
 	def script_revertConfiguration(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
-			mainFrame.onRevertToSavedConfigurationCommand(None)
+			gui.mainFrame.onRevertToSavedConfigurationCommand(None)
 		elif scriptCount==2:
-			mainFrame.onRevertToDefaultConfigurationCommand(None)
+			gui.mainFrame.onRevertToDefaultConfigurationCommand(None)
 	script_revertConfiguration.__doc__ = _("Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults.")
 
 	def script_activatePythonConsole(self,gesture):
