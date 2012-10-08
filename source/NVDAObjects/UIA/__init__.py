@@ -616,6 +616,28 @@ class UIA(Window):
 		except COMError:
 			return False
 
+	def _get_positionInfo(self):
+		info=super(UIA,self).positionInfo or {}
+		try:
+			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+		except COMError:
+			itemIndex=0
+		if itemIndex>0:
+			info['indexInGroup']=itemIndex
+		parent=self.parent
+		parentCount=1
+		while parentCount<3 and isinstance(parent,UIA):
+			try:
+				itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
+			except COMError:
+				itemCount=0
+			if itemCount>0:
+				info['similarItemsInGroup']=itemCount
+				break
+			parent=parent.parent
+			parentCount+=1
+		return info
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
@@ -633,7 +655,9 @@ class TreeviewItem(UIA):
 		return level
 
 	def _get_positionInfo(self):
-		return {'level':self._level}
+		info=super(TreeviewItem,self).positionInfo or {}
+		info['level']=self._level
+		return info
 
 class UIColumnHeader(UIA):
 

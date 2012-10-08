@@ -36,6 +36,7 @@ Highlights of this release include support for Asian character input; experiment
 - New braille translation tables: Estonian grade 0, Portuguese 8 dot computer braille, Italian 6 dot computer braille. (#2319, #2662)
 - If NVDA is installed on the system, directly opening an NVDA add-on package (e.g. from Windows Explorer or after downloading in a web browser) will install it into NVDA. (#2306)
 - Support for newer models of Papenmeier BRAILLEX braille displays. (#1265)
+- Position information (e.g. 1 of 4) is now reported for Windows Explorer list items on Windows 7 and above. This also includes any UIAutomation controls that support the itemIndex and itemCount custom properties. (#2643)
 
 
 == Changes ==

@@ -474,7 +474,7 @@ the NVDAObject for IAccessible
 				self.useITextDocumentSupport=True
 				self.editAPIVersion=2
 				from NVDAObjects.window.edit import Edit
-				clsList.append(Edit)
+				#clsList.append(Edit)
 
 		#Window root IAccessibles
 		if self.event_childID==0 and self.IAccessibleRole==oleacc.ROLE_SYSTEM_WINDOW:
