@@ -350,6 +350,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		updateCheck.terminate()
 	log.debug("Terminating watchdog")
 	watchdog.terminate()
+	log.debug("Terminating global plugin handler")
+	globalPluginHandler.terminate()
 	log.debug("Terminating GUI")
 	gui.terminate()
 	config.saveOnExit()
@@ -369,8 +371,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		treeInterceptorHandler.terminate()
 	except:
 		log.error("Error cleaning up treeInterceptors",exc_info=True)
-	log.debug("Terminating global plugin handler")
-	globalPluginHandler.terminate()
 	log.debug("Terminating IAccessible support")
 	try:
 		IAccessibleHandler.terminate()
