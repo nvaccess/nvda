@@ -144,8 +144,8 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 	from NVDAObjects.behaviors import CandidateItem
 	focus=api.getFocusObject()
 	#IME keeps updating input composition while the candidate list is open
-	#Therefore ignore composition updates in this situation.
-	if isinstance(focus,CandidateItem):
+	#Therefore ignore composition updates if candidate selections are configured for speaking.  
+	if config.conf["inputComposition"]["announceSelectedCandidate"] and isinstance(focus,CandidateItem):
 		return 0
 	if not isinstance(focus,InputComposition):
 		parent=api.getDesktopObject().objectWithFocus()
