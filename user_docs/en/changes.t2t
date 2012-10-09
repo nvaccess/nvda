@@ -88,6 +88,7 @@ Highlights of this release include support for Asian character input; experiment
 - Updated support for Adobe Digital Editions so that it works in version 2.0. (#2688)
 - Pressing NVDA+upArrow while on a combo box in Internet Explorer and other MSHTML documents will no longer incorrectly read all items. Rather, just the active item will be read. (#2337)
 - Speech dictionaries will now properly save when using a number (#) sign within the pattern or replacement fields. (#961)
+- Browse mode for MSHTML documents (e.g. Internet Explorer) now correctly displays visible content contained within hidden content. Specifically: elements with a style of visibility:visible inside an element with style visibility:hidden. (#2097)
 
 
 == Changes for Developers ==

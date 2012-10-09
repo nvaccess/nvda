@@ -364,7 +364,7 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 	}\
 }
 
-inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool& invisible, bool& isBlock, wstring& listStyle) {
+inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool& dontRender, bool& isBlock, bool& hidden, wstring& listStyle) {
 	BSTR tempBSTR=NULL;
 	IHTMLElement2* pHTMLElement2=NULL;
 	int res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
@@ -383,7 +383,7 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	pHTMLCurrentStyle->get_visibility(&tempBSTR);
 	if(tempBSTR) {
 		LOG_DEBUG(L"Got visibility");
-		invisible=(_wcsicmp(tempBSTR,L"hidden")==0);
+		hidden=(_wcsicmp(tempBSTR,L"hidden")==0);
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
@@ -394,7 +394,7 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	if(tempBSTR) {
 		LOG_DEBUG(L"Got display");
 		if (_wcsicmp(tempBSTR,L"none")==0) {
-			invisible=true;
+			dontRender=true;
 			isBlock=false;
 		}
 		if (_wcsicmp(tempBSTR,L"inline")==0||_wcsicmp(tempBSTR,L"inline-block")==0) isBlock=false;
@@ -660,12 +660,12 @@ if(nodeName.compare(L"TABLE")==0) {
 	return tableInfoPtr;
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
 
 	//Handle text nodes
-	{ 
+	if(!shouldSkipText) { 
 		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->getIsBlock()&&!previousNode));
 		if(!s.empty()) {
 			LOG_DEBUG(L"Got text from node");
@@ -687,10 +687,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Find out block and visibility style
-	bool invisible=false;
+	bool dontRender=false;
+	bool hidden=false;
 	bool isBlock=true;
 	wstring listStyle;
-	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, invisible, isBlock,listStyle);
+	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, dontRender, isBlock,hidden,listStyle);
 	LOG_DEBUG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
 		LOG_DEBUG(L"Failed to get IHTMLDOMNode::nodeName");
@@ -730,14 +731,14 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	if((tempIter=attribsMap.find(L"HTMLAttrib::aria-hidden"))!=attribsMap.end()&&tempIter->second==L"true") {
 		// aria-hidden
-		invisible=true;
+		dontRender=true;
 	}
 
-	//input nodes of type hidden must be treeted as being invisible.
-	if(!invisible&&nodeName.compare(L"INPUT")==0) {
+	//input nodes of type hidden must be treeted as being dontRender.
+	if(!dontRender&&nodeName.compare(L"INPUT")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::type");
 		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"hidden")==0) {
-			invisible=true;
+			dontRender=true;
 		}
 	}
 
@@ -781,8 +782,9 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	nhAssert(parentNode);
 	previousNode=NULL;
 
-	//We do not want to render any content for invisible nodes
-	if(invisible) {
+	parentNode->setIsHidden(hidden||dontRender);
+	//We do not want to render any content for dontRender nodes
+	if(dontRender) {
 		return parentNode;
 	}
 
@@ -984,7 +986,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Add a textNode to the buffer containing any special content retreaved
-	if(!contentString.empty()) {
+	if(!hidden&&!contentString.empty()) {
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,contentString);
 		fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 	}
@@ -1020,7 +1022,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				IHTMLDOMNode* childPHTMLDOMNode=NULL;
 				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,hidden);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -1044,7 +1046,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,hidden);
 							if(tempNode) {
 								previousNode=tempNode;
 							}
@@ -1099,26 +1101,27 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	//Update attributes with table info
 	if(nodeName.compare(L"TABLE")==0) {
 		nhAssert(tableInfoPtr);
-		if(!tableInfoPtr->definitData) {
+		if(hidden||!tableInfoPtr->definitData) {
 			attribsMap[L"table-layout"]=L"1";
 		}
 		delete tableInfoPtr;
 		tableInfoPtr=NULL;
 	}
 
-	//Table cells should always be represented by at least a space, but if a space, then they should not be block.
-	if((nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
-		if(parentNode->getLength()==0) {
-			isBlock=false;
+	if(!hidden) {
+		//Table cells should always be represented by at least a space, but if a space, then they should not be block.
+		if((nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
+			if(parentNode->getLength()==0) {
+				isBlock=false;
+				buffer->addTextFieldNode(parentNode,previousNode,L" ");
+			}
+		}
+
+		//If a node is interactive, and still has no content, add a space
+		if(isInteractive&&parentNode->getLength()==0) {
 			buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		}
 	}
-
-	//If a node is interactive, and still has no content, add a space
-	if(isInteractive&&parentNode->getLength()==0) {
-		buffer->addTextFieldNode(parentNode,previousNode,L" ");
-	}
-
 
 	//Update block setting on node
 	parentNode->setIsBlock(isBlock);
@@ -1168,7 +1171,7 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 		pHTMLElement->Release();
 	}
 	nhAssert(pHTMLDOMNode);
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,false,false);
+	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,false,false,false);
 	pHTMLDOMNode->Release();
 }
 

@@ -181,6 +181,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
 
+		isHidden=attrs.get('isHidden')
+		if isHidden:
+			attrs['isHidden']=isHidden=="1"
+
 		# Handle table row and column headers.
 		for axis in "row", "column":
 			attr = attrs.pop("table-%sheadercells" % axis, None)

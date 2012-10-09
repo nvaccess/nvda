@@ -869,6 +869,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	return CHUNK_SEPARATOR.join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
+	if attrs.get('isHidden'):
+		return u""
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 
