@@ -409,9 +409,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 			break;
 
 		case WM_IME_ENDCOMPOSITION:
-			LOG_INFO(L"end composition");
 			if(curIMEWindow==hwnd) {
-				LOG_INFO(L"supported");
 				if(handleEndComposition(hwnd, wParam, lParam)) {
 					//Disable further typed character notifications produced by TSF
 					typedCharacter_window=NULL;
