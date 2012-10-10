@@ -436,11 +436,9 @@ class GlobalCommands(ScriptableObject):
 			try:
 				obj.doAction()
 				try:
-					realActionName=obj.getActionName()
+					actionName=obj.getActionName()
 				except NotImplementedError:
 					pass
-				if realActionName:
-					actionName=realActionName
 				ui.message(actionName)
 				return
 			except NotImplementedError:
