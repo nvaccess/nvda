@@ -1712,6 +1712,7 @@ _staticMap={
 	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"delphi.Form",
 	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLinkClient",
 	("SysLink",oleacc.ROLE_SYSTEM_LINK):"SysLink",
+	("ATL:4FAE8088",oleacc.ROLE_SYSTEM_LINK):"SysLink",
 	("#32771",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",
