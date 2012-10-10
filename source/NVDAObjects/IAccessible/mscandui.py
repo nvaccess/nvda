@@ -31,7 +31,12 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 	keyboardShortcut=""
 
 	def _get_candidateNumber(self):
-		return super(BaseCandidateItem,self).keyboardShortcut
+		number=super(BaseCandidateItem,self).keyboardShortcut
+		try:
+			number=int(number)
+		except (ValueError,TypeError):
+			pass
+		return number
 
 	def _get_parent(self):
 		parent=super(BaseCandidateItem,self).parent

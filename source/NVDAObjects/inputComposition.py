@@ -137,8 +137,11 @@ class CandidateItem(CandidateItemBehavior,Window):
 		clsList.append(CandidateItem)
 		return clsList
 
+	def _get_candidateNumber(self):
+		return self.candidateIndex+1
+
 	def _get_name(self):
-		number=self.candidateIndex+1
+		number=self.candidateNumber
 		candidate=self.candidateStrings[self.candidateIndex]
 		return self.getFormattedCandidateName(number,candidate)
 
