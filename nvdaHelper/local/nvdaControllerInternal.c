@@ -45,9 +45,9 @@ error_status_t __stdcall nvdaControllerInternal_inputCompositionUpdate(const wch
 	return _nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading);
 }
 
-error_status_t(__stdcall *_nvdaControllerInternal_inputCandidateListUpdate)(const wchar_t*, const long);
-error_status_t __stdcall nvdaControllerInternal_inputCandidateListUpdate(const wchar_t* candidates, const long selectionIndex) {
-	return _nvdaControllerInternal_inputCandidateListUpdate(candidates,selectionIndex);
+error_status_t(__stdcall *_nvdaControllerInternal_inputCandidateListUpdate)(const wchar_t*, const long, const wchar_t*);
+error_status_t __stdcall nvdaControllerInternal_inputCandidateListUpdate(const wchar_t* candidates, const long selectionIndex, const wchar_t* inputMethod) {
+	return _nvdaControllerInternal_inputCandidateListUpdate(candidates,selectionIndex,inputMethod);
 }
 
 error_status_t(__stdcall *_nvdaControllerInternal_IMEOpenStatusUpdate)(const long);

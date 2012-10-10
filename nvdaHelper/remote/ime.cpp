@@ -251,7 +251,7 @@ inline void handleCandidatesClosed(HWND hwnd) {
 	HIMC imc = ImmGetContext(hwnd);
 	if (!imc) {
 		candidateIMEWindow=0;
-		nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
+		nvdaControllerInternal_inputCandidateListUpdate(L"",-1,L"");
 		return;
 	}
 	DWORD count = 0;
@@ -259,7 +259,7 @@ inline void handleCandidatesClosed(HWND hwnd) {
 	ImmReleaseContext(hwnd, imc);
 	if (!count) {
 		candidateIMEWindow=0;
-		nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
+		nvdaControllerInternal_inputCandidateListUpdate(L"",-1,L"");
 	}
 }
 
@@ -303,8 +303,11 @@ static bool handleCandidates(HWND hwnd) {
 		ptr += (clen + 1);
 		++count;
 	}
+	HKL kbd_layout = GetKeyboardLayout(0);
+	WCHAR filename[MAX_PATH + 1]={0};
+	ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH);
 	if(cand_str&&wcslen(cand_str)>0) {
-		nvdaControllerInternal_inputCandidateListUpdate(cand_str,selection);
+		nvdaControllerInternal_inputCandidateListUpdate(cand_str,selection,filename);
 	}
 	/* Clean up */
 	free(cand_str);
@@ -386,7 +389,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 					break;
 
 				case IMN_CLOSECANDIDATE:
-					nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
+					nvdaControllerInternal_inputCandidateListUpdate(L"",-1,L"");
 					break;
 
 				case IMN_SETCONVERSIONMODE:

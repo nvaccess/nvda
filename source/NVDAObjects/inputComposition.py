@@ -127,10 +127,11 @@ class CandidateItem(CandidateItemBehavior,Window):
 	lastChild=None
 	states=set()
 
-	def __init__(self,parent=None,candidateStrings=[],candidateIndex=0):
+	def __init__(self,parent=None,candidateStrings=[],candidateIndex=0,inputMethod=None):
 		self.parent=parent
 		self.candidateStrings=candidateStrings
 		self.candidateIndex=candidateIndex
+		self.inputMethod=inputMethod
 		super(CandidateItem,self).__init__(windowHandle=parent.windowHandle)
 
 	def findOverlayClasses(self,clsList):
@@ -138,7 +139,11 @@ class CandidateItem(CandidateItemBehavior,Window):
 		return clsList
 
 	def _get_candidateNumber(self):
-		return self.candidateIndex+1
+		number=self.candidateIndex
+		#Most candidate lists start at 1, except for Boshiami which starts at 0.
+		if self.inputMethod!="LIUNT.IME":
+			number+=1
+		return number
 
 	def _get_name(self):
 		number=self.candidateNumber
@@ -154,8 +159,8 @@ class CandidateItem(CandidateItemBehavior,Window):
 
 	def _get_next(self):
 		if self.candidateIndex<(len(self.candidateStrings)-1):
-			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex+1)
+			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex+1,inputMethod=self.inputMethod)
 
 	def _get_previous(self):
 		if self.candidateIndex>0:
-			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex-1)
+			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex-1,inputMethod=self.inputMethod)

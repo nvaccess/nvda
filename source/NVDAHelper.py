@@ -170,7 +170,7 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0
 
-def handleInputCandidateListUpdate(candidatesString,selectionIndex):
+def handleInputCandidateListUpdate(candidatesString,selectionIndex,inputMethod):
 	candidateStrings=candidatesString.split('\n')
 	import speech
 	from NVDAObjects.inputComposition import InputComposition, CandidateList, CandidateItem
@@ -190,7 +190,7 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 	else:
 		parent=focus
 		wasCandidate=False
-	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
+	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex,inputMethod=inputMethod)
 	if wasCandidate and focus.windowHandle==item.windowHandle and focus.candidateIndex==item.candidateIndex and focus.name==item.name:
 		return
 	if config.conf["inputComposition"]["autoReportAllCandidates"] and item.visibleCandidateItemsText!=oldCandidateItemsText:
@@ -198,9 +198,9 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 		ui.message(item.visibleCandidateItemsText)
 	eventHandler.executeEvent("gainFocus",item)
 
-@WINFUNCTYPE(c_long,c_wchar_p,c_long)
-def nvdaControllerInternal_inputCandidateListUpdate(candidatesString,selectionIndex):
-	queueHandler.queueFunction(queueHandler.eventQueue,handleInputCandidateListUpdate,candidatesString,selectionIndex)
+@WINFUNCTYPE(c_long,c_wchar_p,c_long,c_wchar_p)
+def nvdaControllerInternal_inputCandidateListUpdate(candidatesString,selectionIndex,inputMethod):
+	queueHandler.queueFunction(queueHandler.eventQueue,handleInputCandidateListUpdate,candidatesString,selectionIndex,inputMethod)
 	return 0
 
 inputConversionModeMessages={
