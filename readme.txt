@@ -46,7 +46,7 @@ General dependencies:
 		*Download the source archive. The file name is something like MinHook_110_src.zip depending on exact version.
 			* You will need an account on CodeProject to download from there.
 		* extract the libMinHook directory from the source archive into the NVDA include directory.
-	* Boost C++ Libraries, version 1.42 or later:
+	* Boost C++ Libraries, any version from 1.42 to 1.47:
 		* You can download the latest Windows installer from http://www.boostpro.com/download
 		* On the components page of the installer, make sure to install at least all of the defaults (whatever is already checked).
 		* NVDA only uses the Boost headers; none of the pre-compiled libraries are necessary.
