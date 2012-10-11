@@ -500,6 +500,13 @@ A key command is provided to return to the original page containing the embedded
 + Application Specific NVDA Commands +
 NVDA provides its own extra commands for some applications to make certain tasks easier or to provide access to functionality which is not otherwise accessible to screen reader users.
 
+++ Microsoft Excel ++
+%kc:beginInclude
+|| Name | Key | Description |
+| Set column headers | NVDA+shift+c | Pressing this once tells NVDA this is the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting. | 
+| Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
+%kc:endInclude
+
 ++ foobar2000 ++
 %kc:beginInclude
 || Name | Key | Description |
