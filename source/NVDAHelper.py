@@ -287,6 +287,10 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	import NVDAObjects.window
 	if not isinstance(focus,NVDAObjects.window.Window) or threadID!=focus.windowThreadID:
 		return 0
+	import sayAllHandler
+	#Never announce changes while in sayAll (#1676)
+	if sayAllHandler.isRunning():
+		return 0
 	import queueHandler
 	import ui
 	languageID=hkl&0xffff
