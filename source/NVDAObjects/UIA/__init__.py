@@ -4,7 +4,8 @@
 #See the file COPYING for more details.
 #Copyright (C) 2009-2012 NV Access Limited
 
-from ctypes.wintypes import POINT
+from ctypes import byref
+from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 import weakref
 import UIAHandler
@@ -80,6 +81,11 @@ class UIATextInfo(textInfos.TextInfo):
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 		elif isinstance(position,UIA):
 			self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+		elif isinstance(position,textInfos.Point):
+			#rangeFromPoint causes a freeze in UIA client library!
+			#p=POINT(position.x,position.y)
+			#self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
+			raise NotImplementedError
 		else:
 			raise ValueError("Unknown position %s"%position)
 
