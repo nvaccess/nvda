@@ -105,6 +105,7 @@ Highlights of this release include support for Asian character input; experiment
  - xgettext and msgfmt from GNU gettext must be used to create any PO and MO files. The Python tools do not support message contexts.
  - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts.
  - See http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts for more information.
+- It is now possible to access built-in NVDA modules where they have been overridden by third party modules. See the nvdaBuiltin module for details.
 
 
 = 2012.2.1 =
