@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
-Highlights of this release include support for Asian character input; experimental support for touch screens on Windows 8; reporting of page numbers and improved support for tables in Adobe Reader; table navigation commands in focused table rows and Windows list-view controls; and support for several more braille displays.
+Highlights of this release include support for Asian character input; experimental support for touch screens on Windows 8; reporting of page numbers and improved support for tables in Adobe Reader; table navigation commands in focused table rows and Windows list-view controls; support for several more braille displays; and reporting of row and column headers in Microsoft Excel.
 
 == New Features ==
 - NVDA can now support Asian character input using IME and text service input methods in all applications, Including:
@@ -89,9 +89,10 @@ Highlights of this release include support for Asian character input; experiment
 - Updated support for Adobe Digital Editions so that it works in version 2.0. (#2688)
 - Pressing NVDA+upArrow while on a combo box in Internet Explorer and other MSHTML documents will no longer incorrectly read all items. Rather, just the active item will be read. (#2337)
 - Speech dictionaries will now properly save when using a number (#) sign within the pattern or replacement fields. (#961)
-- Browse mode for MSHTML documents (e.g. Internet Explorer) now correctly displays visible content contained within hidden content. Specifically: elements with a style of visibility:visible inside an element with style visibility:hidden. (#2097)
+- Browse mode for MSHTML documents (e.g. Internet Explorer) now correctly displays visible content contained within hidden content (specifically, elements with a style of visibility:visible inside an element with style visibility:hidden). (#2097)
 - Links in Windows XP's Security Center no longer report random junk after their names. (#1331)
-- UI Automation text controls e.g.  the search field in the Windows 7 Start Menu are now  correctly announced when moving the mouse over them rather than staying silent.
+- UI Automation text controls (e.g.  the search field in the Windows 7 Start Menu) are now  correctly announced when moving the mouse over them rather than staying silent.
+- Keyboard layout changes are no longer reported during say all, which was particularly problematic for multilingual documents including Arabic text. (#1676)
 
 
 == Changes for Developers ==
