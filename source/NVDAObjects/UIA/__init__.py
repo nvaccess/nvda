@@ -19,6 +19,7 @@ from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
+import braille
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -739,8 +740,11 @@ class Dialog(Dialog):
 class Toast(UIA):
 
 	def event_alert(self):
-		speech.speakObject(self)
-		api.setNavigatorObject(self)
+		if not config.conf["presentation"]["reportHelpBalloons"]:
+			return
+		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+		# TODO: Don't use getBrailleTextForProperties directly.
+		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
 class GridTileElement(UIA):
 
