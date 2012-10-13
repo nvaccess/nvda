@@ -93,6 +93,7 @@ Highlights of this release include support for Asian character input; experiment
 - Links in Windows XP's Security Center no longer report random junk after their names. (#1331)
 - UI Automation text controls (e.g.  the search field in the Windows 7 Start Menu) are now  correctly announced when moving the mouse over them rather than staying silent.
 - Keyboard layout changes are no longer reported during say all, which was particularly problematic for multilingual documents including Arabic text. (#1676)
+- The entire content of some UI Automation editable text controls (e.g. the Search Box in the Windows 7/8 Start Menu) is no longer announced every time it changes.
 
 
 == Changes for Developers ==

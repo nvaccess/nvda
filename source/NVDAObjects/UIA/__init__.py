@@ -641,6 +641,11 @@ class UIA(Window):
 			parentCount+=1
 		return info
 
+	def event_valueChange(self):
+		if isinstance(self, EditableTextWithoutAutoSelectDetection):
+			return
+		return super(UIA, self).event_valueChange()
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
