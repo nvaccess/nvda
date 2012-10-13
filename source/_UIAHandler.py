@@ -163,6 +163,10 @@ class UIAHandler(COMObject):
 		if not self.MTAThreadInitEvent.isSet:
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
+		if eventID==UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):
+			# We don't need the menuOpened event if focus has been fired,
+			# as focus should be more correct.
+			return
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
 			return
