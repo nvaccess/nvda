@@ -759,6 +759,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 
 	def _activatePosition(self, info):
 		obj = info.NVDAObjectAtStart
+		if not obj:
+			return
 		if self.shouldPassThrough(obj):
 			obj.setFocus()
 			self.passThrough = True
