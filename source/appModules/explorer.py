@@ -13,7 +13,9 @@ import eventHandler
 import mouseHandler
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import sysListView32, IAccessible
-from NVDAObjects.UIA import UIA
+import UIAHandler
+if UIAHandler.isUIAAvailable:
+	from NVDAObjects.UIA import UIA
 
 #win8hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
 class SearchBoxClient(IAccessible):
@@ -75,23 +77,24 @@ class NotificationArea(IAccessible):
 			return
 		super(NotificationArea, self).event_gainFocus()
 
-class GridTileElement(UIA):
+if UIAHandler.isUIAAvailable:
+	class GridTileElement(UIA):
 
-	role=controlTypes.ROLE_TABLECELL
+		role=controlTypes.ROLE_TABLECELL
 
-	def _get_description(self):
-		name=self.name
-		descriptionStrings=[]
-		for child in self.children:
-			description=child.basicText
-			if not description or description==name: continue
-			descriptionStrings.append(description)
-		return " ".join(descriptionStrings)
-		return description
+		def _get_description(self):
+			name=self.name
+			descriptionStrings=[]
+			for child in self.children:
+				description=child.basicText
+				if not description or description==name: continue
+				descriptionStrings.append(description)
+			return " ".join(descriptionStrings)
+			return description
 
-class GridListTileElement(UIA):
-	role=controlTypes.ROLE_TABLECELL
-	description=None
+	class GridListTileElement(UIA):
+		role=controlTypes.ROLE_TABLECELL
+		description=None
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -129,7 +132,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, NotificationArea)
 				return
 
-		if isinstance(obj, UIA):
+		if UIAHandler.isUIAAvailable and isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
 			if uiaClassName == "GridTileElement":
 				clsList.insert(0, GridTileElement)
