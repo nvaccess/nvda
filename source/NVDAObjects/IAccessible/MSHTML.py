@@ -471,8 +471,10 @@ class MSHTML(IAccessible):
 		presType=super(MSHTML,self).presentationType
 		if presType==self.presType_content and self.HTMLAttributes['role']=="presentation":
 			presType=self.presType_layout
-		if presType==self.presType_content and self.role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEBODY) and self.treeInterceptor and self.treeInterceptor.isNVDAObjectPartOfLayoutTable(self):
-			presType=self.presType_layout
+		if presType==self.presType_content and self.role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEBODY):
+			ti=self.treeInterceptor
+			if ti and ti.isReady and ti.isNVDAObjectPartOfLayoutTable(self):
+				presType=self.presType_layout
 		return presType
 
 
