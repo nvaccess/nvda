@@ -500,6 +500,13 @@ Se proporciona una orden de teclado para regresar a la página original que cont
 + Órdenes de NVDA Específicas para Aplicación +
 NVDA proporciona sus propias órdenes extra para algunas aplicaciones para hacer más fáciles ciertas tareas o para proporcionar acceso a funcionalidad que de otro modo no está accesible para los usuarios de lector de pantalla.
 
+++ Microsoft Excel ++
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| Configurar fila de encabezados de columna | NVDA+shift+c | Pulsando esto una vez dice a NVDA que esta es la fila que contiene encabezados de columna, los cuales deberían anunciarse automáticamente cuando te muevas entre columnas por esta fila. Pulsando dos veces limpiará la opción. | 
+| Configurar columna de encabezados de fila | NVDA+shift+r | Pulsando esto una vez  dice a NVDA que esta es la columna que contiene encabezados de fila, los que se deberían anunciar automáticamente  cuando te muevas entre filas después de esta columna. Pulsando dos veces limpiará la opción. | 
+%kc:endInclude
+
 ++ foobar2000 ++
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
@@ -853,10 +860,10 @@ El diálogo Opciones de Composición de Entrada puede encontrarse bajo el menú 
 Este diálogo te permite controlar cómo anuncia NVDA la entrada de Caracteres Asiáticos, tales como con IME o métodos de Servicio de entrada de texto .
 Ten en cuenta que debido al hecho de que los métodos de entrada varían en gran medida por sus características disponibles y por cómo transmiten la información, lo más probable será que sea necesario configurar estas opciones de modo diferencial para cada método de entrada para obtener la experiencia de escritura más eficiente.
 
-==== Anunciar Automáticamente todas las Candidatas Disponibles ====
-Esta opción, que está activada de manera predeterminada, te permite elegir si todas las candidatas visibles deberían anunciarse automáticamente cuando aparezca una lista de candidatas o su página cambie.
+==== Anunciar Automáticamente todos los Candidatos Disponibles ====
+Esta opción, que está activada de manera predeterminada, te permite elegir si todos los candidatos visibles deberían anunciarse automáticamente cuando aparezca una lista de candidatos o su página cambie.
 Tener esta opción activada para métodos de entrada pictográfica tales como chino Nuevo ChangJie o Boshiami, es útil pues puedes escuchar todos los símbolos automáticamente y sus números y puedes elegir uno inmediatamente.
-Sin embargo, para los métodos de entrada fonéticos tales como chino Nuevo Fonético, Podría ser más útil desactivar esta opción ya que todos los símbolos sonarán igual y tendrás que utilizar las teclas de cursor para navegar por los elementos de la lista individualmente para obtener más información de la descripción de caracteres para cada candidata.
+Sin embargo, para los métodos de entrada fonéticos tales como chino Nuevo Fonético, Podría ser más útil desactivar esta opción ya que todos los símbolos sonarán igual y tendrás que utilizar las teclas de cursor para navegar por los elementos de la lista individualmente para obtener más información de la descripción de caracteres para cada candidato.
 
 ==== Anunciar Candidato Seleccionado ====
 Esta Opción, que está activada por omisión, te permite elegir si NVDA debería anunciar el candidato seleccionado cuando aparece una lista de candidatos o cuando la selección se cambió.
