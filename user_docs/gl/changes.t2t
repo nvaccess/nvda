@@ -13,6 +13,7 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
  - Anunciado de lectura de cadeas.
 - A presenza de subliñados e tachados agora anúnciase nos documentos de Adobe Reader. (#2410)
 - Cando a función Windows Sticky Keys está activada, a tecla modificadora de NVDA agora comportarase como as outras teclas modificadoras. Esto permíteche utilizar a tecla modificadora do NVDA sen a necesidade de manter premeda mentres premes outras teclas. (#230)
+- Agora sopórtase o anunciado automático de cabeceiras de columna e de fila no Microsoft Excel. Preme NVDA+shift+c para configurar a fila que conteña cabeceiras de columna, e NVDA+shift+r para a columna que conteña cabeceiras de fila. Preme o script dúas veces en sucesión rápida para limpiar a opción. (#1519)
 - Soporte para as liñas braille HIMS Braille Sense, Braille EDGE y SyncBraille. (#1266, #1267)
 - Cando as Notificacións de Windows 8 aparezan, NVDA anunciaráas e moverá o navegador de obxectos alí para unha maior interacción. (#2143)
 - Soporte experimental para pantallas Tactiles no Windows 8, incluíndo:
@@ -36,6 +37,7 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - Novas táboas de transcripción braille: Estonio grado 0, braille computerizado Portugués de 8 pontos e braille italiano computerizado de 6 pontos. (#2319, #2662)
 - Se NVDA se instala no sistema, a apertura directa dun paquete de complemento do NVDA (é dicir dende o explorador de Windows ou despois de descargalo dun navegador web) instalarao no NVDA. (#2306)
 - Soporte para os modelos máis modernos das liñas de Papenmeier BRAILLEX. (#1265)
+- A información de posición (ex.: 1 de 4) agora anúnciase para os elementos de lista de Windows Explorer en Windows 7 e posterior. Esto tamén inclúe calquer control UIAutomation que soporte as propriedades personalizables itemIndex e itemCount. (#2643)
 
 
 == Cambios ==
@@ -48,17 +50,17 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - As ordes de navegación de obxectos (excepto a orde anunciar obxecto actual) agora anuncian con menos verbosidade. Aínda podes obter a información extra utilizando a orde de anunciar obxecto actual. (#2560)
 - Actualizado o transcriptor braille liblouis a 2.5.1.
 - O documento Referencia Rápida de Ordes de teclado de NVDA foi renomeado a Referencia Rápida de Ordes, así agora inclúe tanto ordes tactiles coma ordes de teclado.
+- A Lista de elementos en Modo Navegación agora lembrará o último tipo de elemento amosado (ex.: ligas, cabeceiras ou zoas) cada vez que se amose o diálogo dentro da mesma sesión de NVDA. (#365)
 
 
 == Corrección de Fallos ==
-- No Blio, o contido dos libros agora pode lerse en braille. (#2139)
 - No Windows Vista e posterior, NVDA xa non trata incorrectamente a tecla Windows como é ó mantela premeda cando se desbloquea Windows despóis de bloqueala premendo Windows+l. (#1856)
 - No Adobe Reader, as cabeceiras de fila agora recoñécense correctamente como celdas de táboa; é dicir, as coordinadas anúncianse e pódense acceder utilizando ordes de navegación de táboa. (#2444)
 - No Adobe Reader, as celdas de táboa que abranghen máis dunha columna e/ou fila agora manéxanse correctamente. (#2437)
 - O paquete de distribución de NVDA agora verifica a súa integridade antes de se executar. (#2475)
 - Os ficheiros descargados temporalmente agora elimínanse se se descarga un ficheiro de actualización do NVDA. (#2477)
 - Cando se copia a configuración do usuario á configuración do sistema (para utilizar na autentificación de Windows e outras pantallas seguras) NVDA xa non se colgará no XP mentres o estea a facer. (#2485)
-- As tellas na Pantalla de inicio de Windows 8 agora preséntanse mellor en voz e braille. O nome xa non se repite, xa non se anuncia non seleccioado en todos as tellas, e a información de estado en directo preséntase segundo a descripción da tella (ex.: temperatura actual para a tella do Tempo).
+- Os mosaicos na Pantalla de inicio de Windows 8 agora preséntanse mellor en voz e braille. O nome xa non se repite, xa non se anuncia non seleccioado en todos os mosaicos, e a información de estado en directo preséntase segundo a descripción da mosaico (ex.: temperatura actual para a mosaico do Tempo).
 - Os  contrasinais xa non se anuncian cando se lean campos de contrasinal no Microsoft Outlook e outros controis de edición estándar que estean marcados como protexidos. (#2021)
 - No Adobe Reader, os cambios para campos de formulario agora reflíctense correctamente no modo navegación. (#2529)
 - Melloras no soporte para o corrector de ortografía de Microsoft Word, incluíndo a lectura máis precisa do erro ortográfico actual, e a capacidade de soportar o corrector de ortografía cando se execute unha copia instalada do NVDA en Windows Vista ou superior.
@@ -84,12 +86,18 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - No Adobe Reader, se se proporciona texto alternativo, só se procesará ese texto. Anteriormente, algunhas veces incluíase texto extrano. (#2174)
 - Cando un documento contén unha aplicación, o contido da aplicación xa non se inclúe no modo navegación. Esto prevén de movementos inesperados dentro da aplicación cando se navega. Podes interactuar ca aplicación do mesmo modo que para os obxectos integrados. (#990)
 - En aplicacións de Mozilla, o valor dos botóns de flecha agora anúnciase correctamente cando cambian. (#2653)
+- Actualizado o soporte do Adobe Digital Editions para que funcione na versión 2.0. (#2688)
+- Premendo NVDA+flecha arriba mentres se estea nun cadro combinado en Internet Explorer e outros documentos MSHTML xa non se lerán incorrectamente todos os elementos. Pola contra, só se lerá o elemento activo. (#2337)
+- Os diccionarios da fala agora gardaranse apropriadamente cando se utilice un signo de número (#) dentro dos campos de edición patrón ou reemprazar. (#961)
+- O modo navegación para documentos MSHTML (ex.: Internet Explorer) agora amosa correctamente o contido visible que hai dentro do contido oculto. Específicamente: elementos cun estilo visibility:visible nun elemento con estilo visibility:hidden. (#2097)
+- As ligas no Centro de Seguridade de Windows XP xa non anuncian lixo aleatoriamente despois dos seus nomes. (#1331)
 
 
 == Cambios para Desenroladores ==
 - O ficheiro log anterior agora cópiase en nvda-old.log na inicialización do NVDA. Polo tanto, se NVDA se bloquea ou se reinicia, o rexistro de información  de esa sesión aínda é accesible para a súa inspección. (#916)
 - A obtención da propiedade de rol en chooseNVDAObjectOverlayClasses xa non causa que o rol sexa incorrecto e polo tanto non se anuncie en foco para certos obxectos como consolas de ordes de Windows e controis de Scintilla. (#2569)
 - Os menús do NVDA Preferencias, Ferramentas e Axuda agora son accesibles como atributos en gui.mainFrame.sysTrayIcon chamándose preferencesMenu, toolsMenu e helpMenu, respectivamente. Esto permite ós plugins engadir elementos moito máis sinxelamente a estos menús.
+- O script navigatorObject_doDefaultAction en globalCommands foi renomeado a review_activate.
 - Agora sopórtanse as mensaxes contextuais de Gettext. Esto permite que sexan definidas múltiples traduccións para unha soa mensaxe en Inglés dependendo do contexto. (#1524)
  - Esto faise utilizando a función pgettext(context, message).
  - Esto sopórtase tanto para NVDA mesmo como para os complementos.
