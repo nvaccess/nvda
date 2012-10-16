@@ -358,6 +358,8 @@ class UIA(Window):
 		except:
 			return False
 
+	shouldAllowUIAFocusEvent=True #: UIA focus events can be completely ignored on this object if set to false.
+
 	def _getUIAPattern(self,ID,interface):
 		punk=self.UIAElement.GetCurrentPattern(ID)
 		if punk:

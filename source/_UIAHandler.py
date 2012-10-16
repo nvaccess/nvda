@@ -174,7 +174,7 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj:
+		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
 			return
 		eventHandler.queueEvent(NVDAEventName,obj)
 
@@ -199,7 +199,7 @@ class UIAHandler(COMObject):
 			if self.clientObject.compareElements(sender,lastFocus) and lastFocus.currentHasKeyboardFocus:
 				return
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj:
+		if not obj or not obj.shouldAllowUIAFocusEvent:
 			return
 		eventHandler.queueEvent("gainFocus",obj)
 
