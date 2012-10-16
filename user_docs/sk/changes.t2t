@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
+Prednosti tejto verzie zahŕňajú podporu pre písanie ázijských znakov, experimentálnu podporu dotykových obrazoviek v systémoch Windows 8, oznamovanie čísel strán a lepšiu navigáciu v tabuľkách programu Adobe Reader a takisto podporu pre tabuľkové príkazy v tabuľkách a zoznamoch systému Windows a podporu pre nové brailovské riadky.
 
 == Nové vlastnosti ==
 - NVDA podporuje písanie znakov pre ázijské jazyky pomocou IME alebo textovej služby vo všetkých aplikáciách. Okrem toho:
@@ -32,7 +33,9 @@
 - Základná podpora pre MS Word 2013. (#2543)
 - NVDA dokáže oznámiť zarovnanie textu v aplikáciách využívajúcich IAccessible2, funguje napríklad v Mozilla aplikáciách. (#2612)
 - Ak sa nachádzate v riadku tabuľky alebo v štandartnom zozname s viacerými stĺpcami, na pohyb po stĺpcoch môžete použiť príkazy pre navigáciu v tabuľkách. (#828)
-- Nové brailovské tabuľky: Estónska grade 0, Portugalská 8-bodová sada. (#2139)
+- Nové brailovské tabuľky: Estónska grade 0, Portugalská 8-bodová počítačová  sada, Talianska 6-bodová počítačová sada. (#2139)
+- Ak je NVDA nainštalované v systéme, otvorenie doplnku s príponou nvda-addon automaticky nainštaluje doplnok. (#2306)
+- Podpora pre novšie brailovské riadky Papenmeier BRAILLEX. (#1265)
 
 
 == Zmeny ==
@@ -41,9 +44,9 @@
 - Možnosť "Uložiť nastavenia pri ukončení" je predvolene začiarknutá.
 - pri aktualizácii NVDA sa nezmení skratka NVDA na Ctrl+Alt+n, ak ju užívateľ pred aktualizáciou zmenil. (#2572)
 - V správcovy doplnkov sa najprv zobrazuje názov doplnku a potom jeho stav. (#2548)
-- Pri inštalácii tej istej alebo novej verzie doplnku sa NVDA opýta, či chcete vymazať doteraz nainštalovaný doplnok. Pri aktualizovaní doplnkov NVDA nezobrazí chybu a nezatvorí okno s inštaláciou doplnku. (#2501)
+- Pri inštalácii tej istej alebo novej verzie doplnku sa NVDA opýta, či chcete aktualizovať   doplnok. NVDA nezobrazí chybu a nezatvorí okno s inštaláciou doplnku. (#2501)
 - Príkazy objektovej navigácie podávajú stručnejšiu informáciu o objekte. Podrobnejšiu informáciu získate prečítaním aktuálneho objektu. (#2560)
-- aktualizovaný balík liblouis na verziu 2.5.0.
+- aktualizovaný balík liblouis na verziu 2.5.1. (#2319, #2480, #2662, #2672)
 - Dokument "zoznam klávesových príkazov" bol premenovaný na "Zoznam príkazov", lebo obsahuje aj dotykové gestá.
 
 
