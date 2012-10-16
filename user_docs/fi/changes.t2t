@@ -4,7 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
-Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien syöttämiselle, kokeellinen tuki kosketusnäytöille Windows 8:ssa, sivunumeroiden lukeminen ja paranneltu taulukoiden tuki Adobe Readerissa, taulukkokomennot aktiivisille taulukon riveille ja Windowsin listanäkymäsäätimille sekä tuki usealle uudelle pistenäytölle.
+Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien syöttämiselle, kokeellinen tuki kosketusnäytöille Windows 8:ssa, sivunumeroiden lukeminen ja paranneltu taulukoiden tuki Adobe Readerissa, taulukkokomennot aktiivisille taulukon riveille ja Windowsin listanäkymäsäätimille, tuki usealle uudelle pistenäytölle sekä rivien ja sarakkeiden ylätunnisteiden lukeminen Microsoft Excelissä.
 
 == Uudet ominaisuudet ==
 - NVDA tukee nyt aasialaisten kielten merkkien kirjoittamista IME- ja Tekstipalvelu-syöttömenetelmillä kaikissa sovelluksissa. Lisäksi on mahdollista:
@@ -13,8 +13,9 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
   - Lukumerkkijonon ilmoittaminen.
 - Alle- ja yliviivaus ilmoitetaan nyt Adobe Reader -asiakirjoissa. (#2410)
 - NVDA-näppäin toimii nyt kuin muutkin toimintonäppäimet Windowsin alasjäävien näppäinten ollessa käytössä. Tämä mahdollistaa NVDA-näppäimen käytön tarvitsematta pitää sitä alhaalla painettaessa samaan aikaan muita näppäimiä. (#230)
+- Sarakkeiden ja rivien ylätunnisteiden automaattista lukemista tuetaan nyt Microsoft Excelissä. Sarakkeiden ylätunnisteet sisältävä rivi määritetään painamalla NVDA+Shift+C ja rivien ylätunnisteet sisältävä sarake painamalla NVDA+Shift+R. Asetukset nollataan painamalla näitä komentoja kahdesti. (#1519)
 - Tuki HIMS Braille Sense-, Braille EDGE- ja SyncBraille -pistenäytöille. (#1266, #1267)
-- Kun Toast-ilmoitukset tulevat näkyviin Windows 8:ssa, NVDA lukee ne ja siirtää navigointiobjektin niiden kohdalle lisävuorovaikutuksen mahdollistamiseksi. (#2143)
+- NVDA lukee Windows 8:n Toast-ilmoitukset niiden tullessa näkyviin, jos kuplailmoitusten lukeminen on käytössä. (#2143)
 - Kokeellinen tuki kosketusnäytöille Windows 8:ssa, mukaan lukien:
  - Sormen alla olevan tekstin lukeminen sitä liikutettaessa
  - Useita objektinavigointiin, tekstin lukemiseen ja muihin NVDA-komentoihin tarkoitettuja eleitä.
@@ -36,6 +37,7 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
 - Uusia pistetaulukoita: virolainen taso 0, portugalilainen 8 pisteen tietokonemerkistö, italialainen 6 pisteen tietokonemerkistö. (#2319, #2662)
 - Jos NVDA on asennettu tietokoneelle, lisäosapaketin avaaminen suoraan (esim. Resurssienhallinnasta tai verkkoselaimesta lataamisen jälkeen) asentaa sen NVDA:han. (#2306)
 - Tuki uudemmille Papenmeier BRAILLEX -pistenäytöille. (#1265)
+- Sijaintitiedot (esim. 1 / 4) luetaan nyt Resurssienhallinnan listakohteille Windows 7:ssä ja uudemmissa. Tähän sisältyvät myös kaikki mukautettuja itemIndex- ja itemCount-ominaisuuksia tukevat UIAutomation-säätimet. (#2643)
 
 
 == Muutokset ==
@@ -48,10 +50,10 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
 - Objektinavigointikomennot (kaikki paitsi Lue nykyinen objekti) ovat nyt vähemmän puheliaita. Lisätiedot saadaan edelleen Lue nykyinen objekti -komennolla. (#2560)
 - liblouis-pistekääntäjä päivitetty versioksi 2.5.1. (#2319, #2480, #2662, #2672)
 - NVDA:n näppäinkomentojen pikaopas -dokumentti on nimetty uudelleen komentojen pikaoppaaksi, sillä se sisältää nyt sekä kosketus- että näppäinkomentoja.
+- Selaustilan Elementtilista muistaa nyt viimeksi näytetyn elementtityypin (esim. linkit, otsikot tai maamerkit) samassa NVDA-istunnossa jokaisella valintaikkunan näyttökerralla. (#365)
 
 
 == Korjatut ohjelmavirheet ==
-- Kirjojen sisältöä on nyt mahdollista lukea pistenäytöllä Blio-sovelluksessa. (#2139)
 - NVDA ei enää käsittele Windows-näppäintä virheellisesti alas painettuna, kun Windowsin lukitus avataan Windows+L-näppäinyhdistelmällä lukitsemisen jälkeen Windows Vistassa ja uudemmissa. (#1856)
 - Rivien ylätunnisteet tunnistetaan nyt asianmukaisesti taulukon soluiksi Adobe Readerissa, ts. koordinaatit luetaan ja niihin päästään taulukkonavigointikomennoilla. (#2444)
 - Useampaan sarakkeeseen ja/tai riviin jakaantuvat taulukon solut käsitellään nyt oikein Adobe Readerissa. (#2437, #2438, #2450)
@@ -84,6 +86,14 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
 - Jos Adobe Readerissa on vaihtoehtoinen teksti saatavilla, vain se näytetään. Aiemmin näytettiin toisinaan ylimääräistä tekstiä. (#2174)
 - Kun verkkosivu sisältää sovelluksen, sen sisältöä ei enää näytetä selaustilassa. Tämä estää odottamattoman sovellukseen siirtymisen sivulla liikuttaessa. Sovelluksen kanssa voidaan olla vuorovaikutuksessa samalla tavalla kuin upotetuissa objekteissa. (#990)
 - Kiertopainikkeiden arvo luetaan nyt oikein sen muuttuessa Mozilla-sovelluksissa. (#2653)
+- Adobe Digital Editionsin tuki päivitetty toimimaan 2.0-versiossa. (#2688)
+- yhdistelmäruudussa oltaessa ei enää lueta virheellisesti sen kaikkia kohteita NVDA+alanuoli-näppäimiä painettaessa Internet Explorerissa ja muissa MSHTML-dokumenteissa. Nyt vain aktiivinen kohde luetaan. (#2337)
+- Puhesanastot tallentuvat nyt oikein käytettäessä Korvattava- ja Korvaava-kentissä #-merkkiä. (#961)
+- Piilotetussa sisällössä oleva näkyvä sisältö näytetään nyt oikein selaustilassa MSHTML-dokumenteissa (esim. Internet Explorerissa). Erityisesti elementit, joissa on tyylinä visibility:visible sellaisen elementin sisässä, jossa on tyylinä visibility:hidden. (#2097)
+- Windows XP:n tietoturvakeskuksen linkkien kohdalla ei enää niiden nimien jälkeen lueta satunnaista roskaa. (#1331)
+- UI Automation -tekstisäätimet (esim. Windows 7:n Käynnistä-valikon hakukenttä) luetaan nyt oikein siirrettäessä hiiri niiden päälle.
+- Näppäimistöasettelun vaihtumisia ei enää ilmoiteta lue kaikki -toiminnon aikana, mikä oli erityisen ongelmallista monikielisissä asiakirjoissa, mukaan lukien arabialainen teksti. (#1676)
+- Joidenkin muokattavien UI Automation -tekstisäädinten  (esim. Windows 7:n/8:n Käynnistä-valikon hakuruutu) koko sisältöä ei enää lueta joka kerta sen muuttuessa.
 
 
 = 2012.2.1 =
