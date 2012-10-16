@@ -209,12 +209,12 @@ Enquanto estiver na ajuda de entrada, ao executar qualquer gesto de entrada (com
 ++ O Menu do NVDA ++
 O Menu do NVDA permite-lhe controlar suas opções, ir à ajuda, salvar/restaurar sua configuração, alterar os dicionários de voz, acessar ferramentas adicionais e sair do NVDA. 
 
-Com o mesmo em execução, você tem a possibilidade de acessar seu menu a partir de qualquer lugar do Windows pressionando NVDA+N.
-Também pode acessá-lo  através da área de notificação do Windows.
+Com o mesmo em execução, você tem a possibilidade de acessar seu menu a partir de qualquer lugar do Windows pressionando NVDA+N no teclado ou executando um duplo toque com dois dedos caso esteja em um touch screen.
+Também é possível acessá-lo  através da área de notificação do Windows.
 Basta clicar com o botão direito no ícone do NVDA que lá se encontra ou mova-se para a área de notificação com a tecla do logótipo do Windows+B, desloque-se com a Seta Abaixo até ao ícone deste leitor de tela e pressione a Tecla de Aplicações que se encontra em muitos teclados antes do Control direito.
 Quando o menu se abrir, pode usar as setas direcionais para navegar pelo mesmo e ativar um item com a tecla Enter. 
 
-++ Teclas de Comando Básicas ++
+++ Comandos Básicos do NVDA ++
 %kc:beginInclude
 || Nome | Tecla | Gesto de toque | Descrição |
 | Parar a voz | Control | Toque com dois dedos | Para instantaneamente a voz |
@@ -231,7 +231,7 @@ Quando o menu se abrir, pode usar as setas direcionais para navegar pelo mesmo e
 %kc:beginInclude
 || Nome | Tecla | Descrição |
 |  Anunciar data/hora | NVDA+f12 | Pressionando uma vez, anuncia a hora atual, duas vezes, anuncia a data |
-| Anunciar estado da bateria | NVDA+shift+b | Anuncia o estado da bateria, ou seja, si a eletricidad está sendo usada ou a porcentagem atual da carga. |
+| Anunciar o estado da bateria | NVDA+shift+b | Anuncia o estado da bateria, isto é, si a eletricidade está sendo usada ou a porcentagem atual da carga. |
 | Anunciar o Texto na Área de Transferência | NVDA+c | \ Anuncia o Texto na área de transferência si houver algum. |
 %kc:endInclude
 
@@ -491,6 +491,14 @@ Se forem acessíveis, pode pressionar Tab para navegar por eles e interagir como
 
 + Comandos do NVDA PARA Aplicações Específicas +
 O NVDA fornece seus próprios comandos adicionais para alguns aplicativos com vistas a executar mais facilmente determinadas tarefas ou para proporcionar acesso a funcionalidades que de outra forma não são acessíveis aos usuários de leitores de telas.
+
+++ Microsoft Excel ++
+
+%kc:beginInclude
+|| Nome | Tecla | Descrição |
+| Selecionar os cabeçalhos das colunas | NVDA+shift+c | Pressionado uma vez, informa ao NVDA que esta é a linha que contém os cabeçalhos das colunas, os quais deverão ser anunciados automaticamente ao mover-se entre colunas abaixo dessa linha. Ao pressionar duas vezes, limpará configuração. |
+| Selecionar os cabeçalhos das linhas | NVDA+shift+r | Pressionando-se uma vez, informa ao NVDA que esta é a coluna que contém os cabeçalhos das linhas, os quais deverão ser anunciados  automaticamente ao mover-se entre linhas dentro desta coluna. Pressione duas vezes e limpará a configuração. |
+%kc:endInclude
 
 ++ foobar2000 ++
 
@@ -1427,13 +1435,13 @@ Caso o BrxCom esteja instalado, o NVDA irá usá-lo.
 BrxCom é uma ferramenta que lhe permite usar a entrada Braille  independentemente de um leitor de telas.
 A new version of BrxCom which works with NVDA will be released by Papenmeier soon.  
 
-Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
-The EAB can be moved in four directions where generally each direction has two switches.
+Muitos dispositivos possuem uma Easy Access Bar (EAB) (barra de acesso rápido), que propicia uma operacionalidade intuitiva e rápida.
+A EAB pode ser movida em quatro direções, sendo que cada direção possui 2 modos.
 As série c- é a única excessão a esta regra.
 
 The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
 Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.
-Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
+Ao pressionar e manter pressionada as teclas cima, baixo, direita e esquerda (ou EAB) faz com que a ação correspondente  seja repetida.
 
 Geralmente, encontram-se  disponíveis as seguintes teclas nestas linhas  braille:
 || Nome | Tecla |
@@ -1456,10 +1464,10 @@ Geralmente, encontram-se  disponíveis as seguintes teclas nestas linhas  braill
 | Mover linha braille para trás | esquerda |
 | Mover linha braille para a frente | direita |
 | Mover linha braille para a linha anterior | cima |
-| Mover linha braille para a próxima linha | baixo |
+| Mover linha braille para a linha seguinte | baixo |
 | Guiar para a cela braille | sensor |
-| Anunciar o atual caractere em revisão | l1 |
-| Activar o objeto de navegação  atual | l2 |
+| Anunciar o caractere atual em revisão | l1 |
+| Ativar o objeto de navegação  atual | l2 |
 | Mover para a revisão plana/foco | r1 |
 | Anunciar o título | l1+cima |
 | Anunciar a barra de  Status | l2+baixo |
