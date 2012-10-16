@@ -96,6 +96,14 @@ if UIAHandler.isUIAAvailable:
 		role=controlTypes.ROLE_TABLECELL
 		description=None
 
+	class GridGroup(UIA):
+		"""A group in the Windows 8 Start Menu.
+		"""
+		# The name is determined from the first child, but this has no relevance.
+		name = None
+		#But the grouping is still important content
+		presentationType=UIA.presType_content
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -138,6 +146,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridTileElement)
 			elif uiaClassName == "GridListTileElement":
 				clsList.insert(0, GridListTileElement)
+			elif uiaClassName == "GridGroup":
+				clsList.insert(0, GridGroup)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
