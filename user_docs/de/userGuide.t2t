@@ -1641,10 +1641,15 @@ Die Datei kann mehrere Abschnitte enthalten, wobei jeder Abschnitt aus einem ode
 - Die Schlüsselnamen innerhalb der Abschnitte entsprechen den Skriptnamen, die sie zuweisen möchten. Alternativ kann auch der Name "none" verwendet werden, um eine Eingabemethodenzuweisung zu entfernen.
 - Der Wert eines Schlüssels ist eine Komma-getrennte Liste von Eingabemethoden, die einem Skript zugeordnet werden sollen.
 
-Die Namen der Eingabemethoden bestehen aus einem zweistelligen Geräte-Code ("kb" für die Tastatur, "br" für die Braillezeile oder "ts" für den Touchscreen), einem untergeordneten Geräte-Code, einem Touchscreen-arbeitsmodus oder einem Tastaturschema in Klammern, einem Doppelpunkt und schließlich einem oder mehreren Tastenbezeichnern oder touchscreen-gesten getrennt durch ein Plus-Zeichen.
+Die Namen der Eingabemethoden bestehen aus:
+- einem zweistelligen Geräte-Code ("kb" für die Tastatur, "br" für die Braillezeile oder "ts" für den Touchscreen),
+- einem untergeordneten Geräte-Code, einem Touchscreen-arbeitsmodus oder einem Tastaturschema in Klammern,
+- einem Doppelpunkt und schließlich 
+- einem oder mehreren Tastenbezeichnern oder touchscreen-gesten getrennt durch ein Plus-Zeichen.
+
 - Für Tastenkombinationen repräsentiert der Teil in Klammern den Namen eines Tastaturschemas und ist optional. Fehlt er, so wird die Eingabemethode in allen Tastaturschemen wirksam. 
 - Für Braillezeilen repräsentiert der Teil in Klammern den Namen der Braillezeile und ist zwingend notwendig.
-- Für touch-screen repräsentiert der Teil in Klammern den Namen eines Arbeitsmodus. Gültige Werte sind hier "Text" und "Object". Fehlt er, so funktioniert die Zuweisung in allen Arbeitsmodi.
+- Für Touchscreen repräsentiert der Teil in Klammern den Namen eines Arbeitsmodus. Gültige Werte sind hier "text" und "object". Fehlt er, so funktioniert die Zuweisung in allen Arbeitsmodi.
 
 Um die Skriptnamen, Anwendungsmodule, Klassen und Eingabemethoden zu ermitteln, können Sie folgendermaßen vorgehen:
 + Aktivieren sie die Eingabehilfe durch Drücken von nvda+1.
@@ -1686,11 +1691,11 @@ Anmerkung: Die Original-Tastenkombination NVDA+F12 zum Anzeigen der Uhrzeit und 
 Obwohl Sie ein Script prinzipiell an jede beliebige Tastenkombination zuweisen können, könnte es mit Tastenkombinationen in Verbindung mit der Alt-Taste vereinzelnd zu Probleme kommen, da NVDA die Umschalt-Tasten wie Alt, Umschalt, STRG oder dem Modifikator (NVDA-Taste) an das Betriebssystem weiterreicht, selbst wenn bereits ein Script zugewiesen wurde.
 Wenn Sie eine solche Tastenkombination drücken, könnte es vorkommen, dass sowohl die Menüleiste der Anwendung aktiviert wie auch das Script ausgeführt wird. In solchen Fällen ist es anzuraten, nur Umschalttasten wie Umschalt, STRG oder die NVDA-Taste zu verwenden.
 
-+++ Hinweise zur Zusammensetzung für Touchscreen-Gestennamen +++
-Wenn Sie eine Touchscren-Geste an ein Script zuweise wollen, müssen Sie den namen der Geste wie folgt zusamensetzen:
++++ Hinweise zur Zusammensetzung von Touchscreen-Gestennamen +++
+Wenn Sie eine Touchscren-Geste an ein Script zuweisen wollen, müssen Sie den namen der Geste wie folgt zusamensetzen:
 <[Finger]>_<[Anzahl]>_<Aktion>
 Hierbei Gilt:
-- <Finger>: Gibt die Anzahl der Finger an, mit der die Geste ausgeführt werden muss. Fehlt dieser Teil, wird eine 1-fingrigr Geste angenommen. Die angabe der Anzahl der Finger muss in der Form NFinger erfolgen, wobei n 1 oder größer sein kann.
+- <Finger>: Gibt die Anzahl der Finger an, mit der die Geste ausgeführt werden muss. Fehlt dieser Teil, wird eine Geste mit einem einzigen Finger angenommen. Die angabe der Anzahl der Finger muss in der Form Nfinger erfolgen, wobei N 1 oder größer sein kann.
 - Anzahl: Gibt die Zahl der Aktionen an, die zu einer Touchscreen-Geste gehören. Fehlt dieses Argument, wird eine Geste angenommen, die aus einer einzelnen Aktion besteht. Gültige Werte sind:
  - single: Die Geste besteht aus einer Aktion. Dies ist der Standard.
  - double: Die Geste besteht aus zwei Aktionen (z.B. Double_Tap für ein doppeltes Tippen).
@@ -1709,10 +1714,10 @@ Hierbei Gilt:
  - unknown: nicht eindeutig zuzuordnende Aktion
 
 Beispiele für gültige Gesten:
-- tap: einfaches Tippen mit einem Finger
-- double_tap: Doppeltimmen mit einem Finger
-- 2finger_triple_tap: dreifach Tippen mit zwei Fingern
-- 3finger_flickdown: mit 3 fingern nach unten streichen.
+- "ts:tap": einfaches Tippen mit einem Finger; funktioniert in allen Arbeitsmodi
+- "ts(text):double_tap": Doppeltippen mit einem Finger; funktioniert nur im textmodus
+- "ts(object):2finger_triple_tap": dreifach Tippen mit zwei Fingern; funktioniert nur im Objektmodus.
+- "ts:3finger_flickdown": mit 3 fingern nach unten streichen; funktioniert in allen Arbeitsmodi.
 
 ++ Erweiterte Anpassung der Aussprache von Satz- und Sonderzeichen ++
 Es gibt über den [Dialog zur Aussprache von Satz- und Sonderzeichen #SymbolPronunciation] hinaus noch weitere Möglichkeiten, die Aussprache von Satzzeichen zu beeinflussen. Sie können beispielsweise veranlassen, das bestimmte Zeichen unverarbeitet an die Sprachausgabe weitergegeben werden, um die Betonung zu beeinflussen oder Sie können weitere benutzerdefinierte Symbole hinzufügen.
