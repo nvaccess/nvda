@@ -154,15 +154,18 @@ def installAddonBundle(bundle):
 	addonPath = os.path.join(globalVars.appArgs.configPath, "addons",bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
 	bundle.extract(addonPath)
 	addon=Addon(addonPath)
+	# #2715: The add-on must be added to _availableAddons here so that
+	# translations can be used in installTasks module.
+	_availableAddons[addon.path]=addon
 	try:
 		addon.runInstallTask("onInstall")
 	except:
 		log.error("task 'onInstall' on addon '%s' failed"%addon.name,exc_info=True)
+		del _availableAddons[addon.path]
 		addon.completeRemove(runUninstallTask=False)
 		raise AddonError("Installation failed")
 	state['pendingInstallsSet'].add(bundle.manifest['name'])
 	saveState()
-	_availableAddons[addonPath]=addon
 	return addon
 
 class AddonError(Exception):
@@ -214,9 +217,14 @@ class Addon(object):
 	def completeRemove(self,runUninstallTask=True):
 		if runUninstallTask:
 			try:
+				# #2715: The add-on must be added to _availableAddons here so that
+				# translations can be used in installTasks module.
+				_availableAddons[self.path] = self
 				self.runInstallTask("onUninstall")
 			except:
 				log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
+			finally:
+				del _availableAddons[self.path]
 		shutil.rmtree(self.path,ignore_errors=True)
 		if os.path.exists(self.path):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
