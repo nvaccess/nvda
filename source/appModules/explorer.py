@@ -105,7 +105,7 @@ if UIAHandler.isUIAAvailable:
 		presentationType=UIA.presType_content
 
 	class ImmersiveLauncher(UIA):
-		#When the win8 start screen openes, focus correctly goes to th first tile, but then incorrectly back to the root of the window.
+		#When the win8 start screen openes, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
 		#Ignore focus events on this object.
 		shouldAllowUIAFocusEvent=False
 
@@ -153,7 +153,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridListTileElement)
 			elif uiaClassName == "GridGroup":
 				clsList.insert(0, GridGroup)
-			elif uiaClassName == "ImmersiveLauncher" and obj.role==controlTypes.ROLE_PANE:
+			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.ROLE_PANE:
 				clsList.insert(0, ImmersiveLauncher)
 
 	def event_NVDAObject_init(self, obj):
