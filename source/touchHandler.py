@@ -13,6 +13,7 @@ import inputCore
 import screenExplorer
 from logHandler import log
 import touchTracker
+import gui
 
 availableTouchModes=['text','object']
 
@@ -192,6 +193,16 @@ class TouchHandler(threading.Thread):
 				except inputCore.NoInputGestureAction:
 					pass
 			yield
+
+	def notifyInteraction(self, obj):
+		"""Notify the system that UI interaction is occurring via touch.
+		This should be called when performing an action on an object.
+		@param obj: The NVDAObject with which the user is interacting.
+		@type obj: L{NVDAObjects.NVDAObject}
+		"""
+		l, t, w, h = obj.location
+		oledll.oleacc.AccNotifyTouchInteraction(gui.mainFrame.Handle, obj.windowHandle,
+			POINT(l + (w / 2), t + (h / 2)))
 
 handler=None
 

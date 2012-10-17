@@ -427,6 +427,8 @@ class GlobalCommands(ScriptableObject):
 		pos=api.getReviewPosition()
 		try:
 			pos.activate()
+			if isinstance(gesture,touchHandler.TouchInputGesture):
+				touchHandler.handler.notifyInteraction(pos.NVDAObjectAtStart)
 			ui.message(actionName)
 			return
 		except NotImplementedError:
@@ -435,6 +437,8 @@ class GlobalCommands(ScriptableObject):
 		while obj:
 			try:
 				obj.doAction()
+				if isinstance(gesture,touchHandler.TouchInputGesture):
+					touchHandler.handler.notifyInteraction(obj)
 				try:
 					actionName=obj.getActionName()
 				except NotImplementedError:
