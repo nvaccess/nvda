@@ -90,7 +90,7 @@ class winampMainWindow(IAccessible):
 				# Translators: the user has pressed the repeat track toggle in winamp, repeat is now on.
 				onOff=pgettext("repeat", "on")
 			else:
-				# Translators: the user has pressed the repeat track toggle in winamp, repeat is now on.
+				# Translators: the user has pressed the repeat track toggle in winamp, repeat is now off.
 				onOff=pgettext("repeat", "off")
 			speech.speakMessage(onOff)
 
