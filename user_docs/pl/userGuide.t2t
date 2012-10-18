@@ -11,20 +11,19 @@
 NonVisual Desktop Access (NVDA) to darmowy i wolny screenreader dla systemu operacyjnego Microsoft Windows. Program pozwala osobom niewidomym i niedowidzącym korzystać z komputera bez ponoszenia większych kosztów niż osoby widzące. Informacja o tym, co jest widoczne na ekranie, przekazywana jest przez syntezator mowy lub monitor brajlowski.
 Program rozwijany jest przez organizację NV Access (http://www.nvaccess.org), oraz społeczność użytkowników. 
 
-NVDA oferuje między innymi:
-- Wsparcie dla popularnych aplikacji, w tym przeglądarek internetowych, klientów poczty, komunikatorów, programów i pakietów biurowych.
+NVDA pozwala osobom niewidomym korzystać z systemu operacyjnego MS Windows, a także durzej liczby rozmaitych programów działających pod kontrolą tego systemu takich jak np. przeglądarki internetowe, klienty poczty, komunikatory, programy i pakiety biurowe. Inne ważne właściwości NVDA to:
 - Wbudowany Syntezator mowy obsługujący ponad 20 języków
 - Ogłaszanie formatowania tekstu, jeśli jest dostępne, takie jak nazwa i rozmiar czcionki, styl oraz błędy ortograficzne.
 - Automatyczne ogłaszanie tekstu znajdującego się pod myszką oraz opcjonalna dźwiękowa sygnalizacja pozycji myszki.
 - Wsparcie dla wielu monitorów Brajlowskich
 - Możliwość uruchamiania z pamięci USB lub innych nośników przenośnych bez konieczności instalacji.
 - Łatwy w użyciu udźwiękowiony instalator.
-- Tłumaczenie na wiele języków.
+- Tłumaczenie na 40 języków.
 - Wsparcie dla nowszych systemów operacyjnych Windows, zarówno 32 jak i 64 bitowych
 - Możliwość dostępu do ekranu logowania w systemie oraz innych zabezpieczonych ekranów.
-- Wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge. UI Automation i iAccessible2 są także wspierane, jednak ich obsługa dostępna jest tylko pod kontrolą systemu windows7.
+- Wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge. UI Automation i iAccessible2 są także wspierane, jednak ich obsługa dostępna jest tylko pod kontrolą systemu windows7 i wyższych.
 - Wsparcie dla wiersza poleceń systemu Windows i aplikacji konsolowych.
--
+
 
 ++ Wersje Językowe ++
 Ważne jest, by ludzie z całego świata, bez względu na ojczysty język, mogli mieć równy dostęp do technologii.
@@ -44,7 +43,7 @@ NVDA obsługuje kody Brajla dla wielu języków, w tym podpisane i niepodpisane 
 ++ Licencja i Prawa Autorskie ++
 NVDA is copyright NVDA_COPYRIGHT_YEARS autorzy NVDA.
 
-NVDA 2006-2011 wszelkie prawa zastrzeżone.NVDA jest objęty przez GNU General Public License (wersja 2). Możesz za darmo udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu zainteresowanemu. Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a także każdego innego oprogramowania, które korzysta z kodu zaczerpniętego z tego programu. Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+NVDA 2006-2012 wszelkie prawa zastrzeżone.NVDA jest objęty przez GNU General Public License (wersja 2). Możesz za darmo udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu zainteresowanemu. Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a także każdego innego oprogramowania, które korzysta z kodu zaczerpniętego z tego programu. Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Wymagania Systemowe +
 - Systemy operacyjne: wsparcie wszystkich 32-bitowych i 64-bitowych wersji systemu Windows XP, Windows Vista i Windows 7 (w tym systemów operacyjnych dla serwerów).
@@ -118,11 +117,41 @@ NVDA jest domyślnie skonfigurowany do korzystania z układu dla komputera stacj
 
 Układ dla komputera stacjonarnego sprawia, że intensywnie wykorzystujemy klawiaturę numeryczną (z wyłączonym klawiszem NumLock).
 Mimo, że większość laptopów nie ma fizycznej klawiatury numerycznej, niektóre laptopy mogą emulować ją poprzez przytrzymanie klawisza FN i naciskając na litery i cyfry z prawej strony klawiatury (7 8 9 u i o j k l itp.). 
-Jeśli twój laptop nie może tego zrobić, albo nie pozwala wyłączyć klawisza NumLock, możesz przełączyć się na układ Laptopa. 
+Jeśli twój laptop nie może tego zrobić, albo nie pozwala wyłączyć klawisza NumLock, możesz przełączyć się na układ Laptopa.
+
+++ Gesty dotykowe ++
+Jeśli korzystasz z NVDA pod kontrolą systemu Windows 8 lub nowszego i posiadasz komputer z ekranem dotykowym, możesz korzystać z gestów dotykowych nvda.
+Gdy NVDA jest uruchomiony, gesty dotykowe wykonywane na ekranie są przechwytywane przez program bezpośrednio. Oznacza to, że opisane tu gesty nie zadziałają, gdy np. screenreader zostanie zamknięty.
+
++++ Eksploracja ekranu +++
+Najprostrzą żeczą, którą możesz zrobić z NVDA przy pomocy ekranu dotykowego, jest eksploracja ekranu. Umieść jeden palec na dowolnym miejscu ekranu, by usłyszeć dany obiekt.
+Przesuwaj palec po ekranie, by usłyszeć inne kontrolki lób tekst pod nim.
+Ilekroć w tym podręczniku zostanie wymieniona komenda klawiatórowa NVDA, zostanie podany gest dotykowy, który jest jej odpowiednikiem. Po nirzej wyjaśnienie jak wykonywać te gesty.
+
+==== stuknięcia ====
+Polegają na lekkim stuknięciu ekranu przy pomocy jednego lub wielu palców dłoni, przy czym stuknięcie jednym palcem traktowane jest inaczej, niż stuknięcie ekranu dwoma lub więcej palcami.
+Jeśli taki sam gest jest wykonywany szybko po sobie, NVDA traktuje to jako gest wielodotykowy tzn. stuknięcie dwukrotne traktowane jest inaczej niż trzykrotne itd. Podobnie sprawa ma się z ilością palców biorących udział w stuknięciu. Dwukrotne stuknięcie dwoma palcami będzie znaczyło dla programu coś innego niż trzykrotne stuknięcie czterema palcami itd.
+
+==== Machnięcia ====
+Polegają na szybkim przesówaniu palcem lób palcami po ekranie. Jest to gest podobny do delikatnego ztrzepywania kurzu z ekranu. Gest wykonujemy szybko i pewnie.
+
++++ Tryby dotyku +++
+Poniewarz istnieje więcej komend NVDA możliwych do wprowadzenia z klawiatóry niż możliwych do wykonania gestów, NVDA oferuje rużne tryby dotyku tyczące się innych podzestawów poleceń. Tryb obiektowy i tekstowy. Niektóre gesty wypisane w tym dokumencie mogą zatem mieć wymienione tryby użycia. Np. machnięcie w górę w trybie tekstowym oznacza, że aby wprowadzić to polecenie, musisz najpierw aktywować tryb tekstowy, a następnie wykonać właściwy gest.
+Jeśli dana komenda nie posiada opisu trybu, oznacza to że działa globalnie.
+
+%kc:beginInclude
+Aby przełączać tryby dotyku, wykonaj stuknięcie trzema palcami.
+%kc:endInclude
+
+++ Pomoc klawiatóry ++
+Wiele komend NVDA zostało opisanych w tym dokumencie. Najprostrzym sposobem by samodzielnie je odkrywać jest aktywacja trybu pomocy klawiatóry przez wciśnięcie klawiszy nvda+1. W tym trybie, wciśnięcie kombinacji klawiszy czy wykonanie gestu dotykowego zpowoduje opisanie, co dana komenda czy gest robi poza trybem pomocy. Możesz więc śmiało eksperymentować.
+Aby wyjść z trybu pomocy klawiatóry, wciśnij ponownie NVDA+1.
+
 
 ++ Menu NVDA ++
 Menu NVDA pozwala na zmianę ustawień, dostęp do pomocy, zachowywanie bieżących ustawień lub przywracanie ustawień wcześniej zapisanych oraz na wyjście z programu.
-Gdy program NVDA jest uruchomiony, wejście do menu odbywać się może na dwa sposoby: naciśnięcie NVDA+N lub kliknięcie prawym przyciskiem myszy w ikonę programu znajdującą się w obszarze powiadomień. 
+Gdy program NVDA jest uruchomiony, wejście do menu odbywać się może na 3 sposoby: naciśnięcie NVDA+N, lub podwujne stuknięcie dwoma palcami na ekranie dotykowym.
+Możesz także dostać się tam klikając ikonkę w obszarze powiadomień.
 Aby wejść do obszaru powiadomień naciśnij klawisz Windows+B, przejdź strzałkami kursora do ikony NVDA i naciśnij klawisz Aplikacje (w większości klawiatur umieszczony obok prawego klawisza Kontrol), albo użyj kombinacji klawiszy shift+klawisz funkcyjny f10.
 Spowoduje to rozwinięcie menu. Nawigacja w menu odbywa się za pomocą strzałek, natomiast aby aktywować wybrany element naciśnij Enter. 
 W menu znajduje się sześć pozycji. Pierwsze trzy stanowią: ustawienia, Narzędzia oraz Pomoc. 
