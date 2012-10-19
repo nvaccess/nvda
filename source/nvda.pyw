@@ -6,16 +6,16 @@
 
 """The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
 
-# #2729: Python's tempfile.get_default_tempdir() has a bug when handling multibyte paths. os.path.normcase is used incorrectly.
-# If this occurs, at least try using the user's temp environment variable as is. 
-import tempfile
-try:
-	tempfile.gettempdir()
-except IOError:
-	import os
-	tempfile.tempdir=os.getenv('temp')
-
 import ctypes
+
+# #2729: Python's tempfile.get_default_tempdir() has a bug when handling multibyte paths. os.path.normcase is used incorrectly.
+# Override this to use the temp path as returned by Windows.
+import tempfile
+tempPath = ctypes.create_unicode_buffer(260)
+if ctypes.windll.kernel32.GetTempPathW(260, tempPath) > 0:
+	# Strip trailing backslash which is always included.
+	tempfile.tempdir = tempPath.value[:-1]
+
 import os
 import sys
 import locale
