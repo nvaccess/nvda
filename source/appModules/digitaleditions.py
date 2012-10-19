@@ -12,19 +12,20 @@ import controlTypes
 from textInfos import DocumentWithPageTurns
 from NVDAObjects.UIA import UIA
 from keyboardHandler import KeyboardInputGesture
+import UIAHandler
 
 class BookContent(DocumentWithPageTurns, UIA):
 
 	def turnPage(self, previous=False):
 		try:
-			# Find the slider which indicates the current page.
-			pageSlider = self.parent.parent.next.lastChild
+			# Find the slider which indicates the current position.
+			posSlider = self.parent.parent.next.lastChild
 		except AttributeError:
 			raise RuntimeError
-		oldPos = pageSlider.value
+		# We need the raw value, not the percentage.
+		oldPos = posSlider.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueValuePropertyId, True)
 		KeyboardInputGesture.fromName("pageUp" if previous else "pageDown").send()
-		pageSlider.invalidateCache()
-		if pageSlider.value == oldPos:
+		if posSlider.UIAElement.getCurrentPropertyValueEx(UIAHandler.UIA_RangeValueValuePropertyId, True) == oldPos:
 			# No more pages.
 			raise RuntimeError
 
