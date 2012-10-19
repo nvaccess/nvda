@@ -151,10 +151,12 @@ def readTextHelper_generator(cursor):
 				try:
 					reader.obj.turnPage()
 				except RuntimeError:
-					pass
+					break
 				else:
 					reader=reader.obj.makeTextInfo(textInfos.POSITION_FIRST)
 					keepReading=True
+			else:
+				break
 
 		while speech.isPaused:
 			yield
