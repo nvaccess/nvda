@@ -20,12 +20,9 @@ class BookContent(DocumentWithPageTurns, UIA):
 			# Find the slider which indicates the current page.
 			pageSlider = self.parent.parent.next.lastChild
 		except AttributeError:
-			pageSlider = None
-		if pageSlider:
-			oldPos = pageSlider.value
+			raise RuntimeError
+		oldPos = pageSlider.value
 		KeyboardInputGesture.fromName("pageUp" if previous else "pageDown").send()
-		if not pageSlider:
-			return
 		pageSlider.invalidateCache()
 		if pageSlider.value == oldPos:
 			# No more pages.
