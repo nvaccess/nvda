@@ -59,7 +59,7 @@ Highlights of this release include support for Asian character input; experiment
 - In Adobe Reader, table cells spanning more than one column and/or row are now handled correctly. (#2437, #2438, #2450)
 - The NVDA distribution package now checks its integrity before executing. (#2475)
 - Temporary download files are now removed if downloading of an NVDA update fails. (#2477)
-- When copying the user configuration to the system configuration (for use on Windows logon and other secure screens) NVDA will no longer freeze on XP while doing so. (#2485)
+- NVDA will no longer freeze when it is running as an administrator while copying the user configuration to the system configuration (for use on Windows logon and other secure screens). (#2485)
 - Tiles on the Windows 8 Start Screen are now presented better in speech and braille. The name is no longer repeated, unselected is no longer reported on all tiles, and live status information is presented  as the description of the tile (e.g. current temperature for the Weather tile).
 - Passwords are no longer announced when reading password fields in Microsoft Outlook and other standard edit controls that are marked as protected. (#2021)
 - In Adobe Reader, changes to form fields are now correctly reflected in browse mode. (#2529)
