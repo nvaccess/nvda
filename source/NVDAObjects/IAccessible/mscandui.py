@@ -145,21 +145,31 @@ class MSCandUI21(IAccessible):
 
 class MSCandUIWindow_candidateListItem(MSCandUI_candidateListItem):
 
+	def _get_isValidCandidate(self):
+		if self.IAccessibleRole!=oleacc.ROLE_SYSTEM_LISTITEM:
+			return False
+		name=super(BaseCandidateItem,self).name
+		if not name:
+			return False
+		return True
+
 	def _get_candidateNumber(self):
 		index=self.IAccessibleChildID-2
 		if index>0:
-			return unicode(index)
+			return index
 
 	def _get_next(self):
 		childID=self.IAccessibleChildID+1
 		item=self.__class__(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=childID)
-		if item.IAccessibleRole==oleacc.ROLE_SYSTEM_LISTITEM:
+		if item.isValidCandidate:
 			return item
 
 	def _get_previous(self):
 		childID=self.IAccessibleChildID-1
 		if childID>=3:
-			return self.__class__(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=childID)
+			item=self.__class__(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=childID)
+			if item.isValidCandidate:
+				return item
 
 class MSCandUIWindow(IAccessible):
 
