@@ -400,7 +400,8 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
 
 	def _get_name(self):
-		if not self.parent.isMultiColumn or self._shouldDisableMultiColumn:
+		parent = self.parent
+		if not isinstance(parent, List) or not parent.isMultiColumn or self._shouldDisableMultiColumn:
 			name = super(ListItem, self).name
 			if name:
 				return name
