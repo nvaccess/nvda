@@ -95,7 +95,7 @@ Highlights of this release include support for Asian character input; experiment
 - UI Automation text controls (e.g.  the search field in the Windows 7 Start Menu) are now  correctly announced when moving the mouse over them rather than staying silent.
 - Keyboard layout changes are no longer reported during say all, which was particularly problematic for multilingual documents including Arabic text. (#1676)
 - The entire content of some UI Automation editable text controls (e.g. the Search Box in the Windows 7/8 Start Menu) is no longer announced every time it changes.
-- When moving between groups on the Windows 8 start screen, the first tile's name will no longer be reported as the group's name, which can speed up navigation. (#2658)
+- When moving between groups on the Windows 8 start screen, unlabeled groups no longer announce their first tile as the name of the group. (#2658)
 - When opening the Windows 8 start screen, the focus is correctly placed on the first tile, rather than jumping to the root of the start screen which can confuse navigation. (#2720)
 - NVDA will no longer fail to start when the user's profile path contains certain multibyte characters. (#2729)
 - In browse mode in Google Chrome, the text of tabs is now rendered correctly.
