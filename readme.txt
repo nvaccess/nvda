@@ -32,9 +32,7 @@ General dependencies:
 	* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
 		* If you don't have them already, all of these files have been bundled for convenience at http://www.nvda-project.org/3rdParty/system-dlls.7z
 		* Copy them either into the source directory or into your Windows system32 directory.
-	* Adobe Acrobat accessibility interface, version 9.1 or later:
-		* This can be found in the client files archive available from http://www.adobe.com/devnet/acrobat/interapplication_communication.html
-			* The archive is named something like Acrobat_Accessibility_9.1.zip.
+	* Adobe Acrobat accessibility interface, version XI or later: http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip
 		* Extract the AcrobatAccess.idl file into include\AcrobatAccess.
 	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
 		* Copy FlashAccessibility.tlb into the source\typelibs directory.

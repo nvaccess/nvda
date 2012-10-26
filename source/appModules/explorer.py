@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from comtypes import COMError
 import time
 import appModuleHandler
 import controlTypes
@@ -99,12 +100,21 @@ if UIAHandler.isUIAAvailable:
 	class GridGroup(UIA):
 		"""A group in the Windows 8 Start Menu.
 		"""
-		# The name is determined from the first child, but this has no relevance.
-		name = None
-		#But the grouping is still important content
 		presentationType=UIA.presType_content
 
-	class ImmersiveLauncher(UIA):
+		#Normally the name is the first tile which is rather redundant
+		#However some groups have custom header text which should be read instead
+		def _get_name(self):
+			child=self.firstChild
+			if isinstance(child,UIA):
+				try:
+					automationID=child.UIAElement.currentAutomationID
+				except COMError:
+					automationID=None
+				if automationID=="GridListGroupHeader":
+					return child.name
+
+class ImmersiveLauncher(UIA):
 		#When the win8 start screen openes, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
 		#Ignore focus events on this object.
 		shouldAllowUIAFocusEvent=False

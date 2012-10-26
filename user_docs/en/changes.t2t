@@ -32,6 +32,7 @@ Highlights of this release include support for Asian character input; experiment
 - NVDA can now read auto complete suggestions when entering email addresses in Microsoft Outlook 2007. (#689)
 - New eSpeak voice variants: Gene, Gene2. (#2512)
 - In Adobe Reader, page numbers can now be reported. (#2534)
+ - In Reader XI, page labels are reported where present, reflecting changes to page numbering in different sections, etc. In earlier versions, this is not possible and only sequential page numbers are reported.
 - It is now possible to reset NVDA's configuration to factory defaults either by pressing NVDA+control+r three times quickly or by choosing Reset to Factory Defaults from the NVDA menu. (#2086)
 - Support for the Seika Version 3, 4 and 5 and Seika80 braille displays from Nippon Telesoft. (#2452)
 - The first and last top routing buttons on Freedom Scientific PAC Mate and Focus Braille displays can now be used to scroll  backward and forward. (#2556)
@@ -57,6 +58,7 @@ Highlights of this release include support for Asian character input; experiment
 - Updated liblouis braille translator to 2.5.1. (#2319, #2480, #2662, #2672)
 - The NVDA Key Commands Quick Reference document has been renamed to Commands Quick Reference, as it now includes touch commands as well as keyboard commands.
 - The Elements list in Browse mode will now remember the last element type shown (e.g. links, headings or landmarks) each time the dialog is shown within the same session of NVDA. (#365)
+- Most Metro apps in Windows 8 (e.g. Mail, Calendar) no longer activate Browse Mode for the entire app.
 
 
 == Bug Fixes ==
@@ -100,9 +102,10 @@ Highlights of this release include support for Asian character input; experiment
 - UI Automation text controls (e.g.  the search field in the Windows 7 Start Menu) are now  correctly announced when moving the mouse over them rather than staying silent.
 - Keyboard layout changes are no longer reported during say all, which was particularly problematic for multilingual documents including Arabic text. (#1676)
 - The entire content of some UI Automation editable text controls (e.g. the Search Box in the Windows 7/8 Start Menu) is no longer announced every time it changes.
-- When moving between groups on the Windows 8 start screen, the first tile's name will no longer be reported as the group's name, which can speed up navigation. (#2658)
+- When moving between groups on the Windows 8 start screen, unlabeled groups no longer announce their first tile as the name of the group. (#2658)
 - When opening the Windows 8 start screen, the focus is correctly placed on the first tile, rather than jumping to the root of the start screen which can confuse navigation. (#2720)
 - NVDA will no longer fail to start when the user's profile path contains certain multibyte characters. (#2729)
+- In browse mode in Google Chrome, the text of tabs is now rendered correctly.
 
 
 == Changes for Developers ==

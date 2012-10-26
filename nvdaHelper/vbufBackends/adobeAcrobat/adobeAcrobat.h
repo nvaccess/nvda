@@ -19,6 +19,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <string>
 #include <list>
 #include <vbufBase/backend.h>
+#include <AcrobatAccess.h>
 
 class AdobeAcrobatVBufStorage_controlFieldNode_t;
 
@@ -46,6 +47,8 @@ typedef struct {
 class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 	private:
 
+	std::wstring* getPageNum(IPDDomNode* domNode);
+
 	AdobeAcrobatVBufStorage_controlFieldNode_t* fillVBuf(int docHandle, IAccessible* pacc, VBufStorage_buffer_t* buffer,
 		AdobeAcrobatVBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 		AdobeAcrobatVBufStorage_controlFieldNode_t* oldNode,
@@ -53,6 +56,8 @@ class AdobeAcrobatVBufBackend_t: public VBufBackend_t {
 	);
 
 	bool isXFA;
+
+	IPDDomDocPagination* docPagination;
 
 	protected:
 

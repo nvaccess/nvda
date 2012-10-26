@@ -20,12 +20,14 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "tsf.h"
 #include "inputLangChange.h"
 
+bool isWin8=false;
+
 LPARAM lastInputLangChange=0;
 
 LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
 	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
 	if((pcwp->message==WM_INPUTLANGCHANGE)&&(pcwp->lParam!=lastInputLangChange)) {
-		if(!isTSFThread(false)) {
+		if(!isTSFThread(isWin8)) {
 			wchar_t buf[KL_NAMELENGTH];
 			GetKeyboardLayoutName(buf);
 			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),static_cast<unsigned long>(pcwp->lParam),buf);
@@ -41,6 +43,10 @@ LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM
 }
 
 void inputLangChange_inProcess_initialize() {
+	WORD version=LOWORD(GetVersion());
+	if(LOBYTE(version)>6||(LOBYTE(version)==6&&HIBYTE(version)>=2)) {
+		isWin8=true;
+	}
 	registerWindowsHook(WH_CALLWNDPROC,inputLangChange_callWndProcHook);
 }
 

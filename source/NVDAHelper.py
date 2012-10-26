@@ -285,7 +285,9 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	if not focus or focus.sleepMode:
 		return 0
 	import NVDAObjects.window
-	if not isinstance(focus,NVDAObjects.window.Window) or threadID!=focus.windowThreadID:
+	#Generally we should not allow input lang changes from threads that are not focused.
+	#But threadIDs for console windows are always wrong so don't ignore for those.
+	if not isinstance(focus,NVDAObjects.window.Window) or (threadID!=focus.windowThreadID and focus.windowClassName!="ConsoleWindowClass"):
 		return 0
 	import sayAllHandler
 	#Never announce changes while in sayAll (#1676)

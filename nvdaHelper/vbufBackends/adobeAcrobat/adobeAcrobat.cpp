@@ -20,7 +20,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <remote/nvdaHelperRemote.h>
 #include <vbufBase/backend.h>
 #include <common/log.h>
-#include <AcrobatAccess.h>
 #include "adobeAcrobat.h"
 
 const int TEXTFLAG_UNDERLINE = 0x1;
@@ -285,7 +284,7 @@ inline void fillExplicitTableHeadersForCell(AdobeAcrobatVBufStorage_controlField
 		cell.addAttribute(L"table-rowheadercells", rowHeaders.str());
 }
 
-inline wstring* getPageNum(IPDDomNode* domNode) {
+wstring* AdobeAcrobatVBufBackend_t::getPageNum(IPDDomNode* domNode) {
 	// Get the page number.
 	IPDDomNodeExt* domNodeExt;
 	if (domNode->QueryInterface(IID_IPDDomNodeExt, (void**)&domNodeExt) != S_OK) 
@@ -297,6 +296,16 @@ inline wstring* getPageNum(IPDDomNode* domNode) {
 		return NULL;
 	}
 	domNodeExt->Release();
+
+	// Use the page label if possible.
+	BSTR label;
+	if (this->docPagination && this->docPagination->LabelForPageNum(firstPage, &label) == S_OK) {
+		wstring* ret = new wstring(label);
+		SysFreeString(label);
+		return ret;
+	}
+	
+	// If the label couldn't be retrieved, use the page number.
 	wostringstream s;
 	// GetPageNum returns 0-based numbers, but we want 1-based.
 	s << firstPage + 1;
@@ -459,7 +468,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	LOG_DEBUG(L"childCount is "<<childCount);
 
 	bool deletePageNum = false;
-	if (!pageNum && (pageNum = getPageNum(domNode)))
+	if (!pageNum && (pageNum = this->getPageNum(domNode)))
 		deletePageNum = true;
 
 	#define addAttrsToTextNode(node) { \
@@ -768,13 +777,13 @@ void AdobeAcrobatVBufBackend_t::renderThread_initialize() {
 void AdobeAcrobatVBufBackend_t::renderThread_terminate() {
 	unregisterWinEventHook(renderThread_winEventProcHook);
 	LOG_DEBUG(L"Unregistered winEvent hook");
+	if (this->docPagination)
+		this->docPagination->Release();
 	VBufBackend_t::renderThread_terminate();
 }
 
-bool checkIsXFA(IAccessible* rootPacc) {
-	VARIANT varChild, varState;
-	varChild.vt = VT_I4;
-	varChild.lVal = 0;
+bool checkIsXFA(IAccessible* rootPacc, VARIANT& varChild) {
+	VARIANT varState;
 	VariantInit(&varState);
 	if (rootPacc->get_accState(varChild, &varState) != S_OK) {
 		return false;
@@ -786,13 +795,32 @@ bool checkIsXFA(IAccessible* rootPacc) {
 	return !(states & STATE_SYSTEM_READONLY);
 }
 
+IPDDomDocPagination* getDocPagination(IAccessible* pacc, VARIANT& varChild) {
+	IServiceProvider* servProv;
+	if (pacc->QueryInterface(IID_IServiceProvider, (void**)&servProv) != S_OK)
+		return NULL;
+	IPDDomNode* domNode = getPDDomNode(varChild, servProv);
+	servProv->Release();
+	if (!domNode)
+		return NULL;
+	IPDDomDocPagination* ret;
+	if (domNode->QueryInterface(IID_IPDDomDocPagination, (void**)&ret) != S_OK)
+		ret = NULL;
+	domNode->Release();
+	return ret;
+}
+
 void AdobeAcrobatVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	LOG_DEBUG(L"Rendering from docHandle "<<docHandle<<L", ID "<<ID<<L", in to buffer at "<<buffer);
 	IAccessible* pacc=IAccessibleFromIdentifier(docHandle,ID);
 	nhAssert(pacc); //must get a valid IAccessible object
 	if (!oldNode) {
 		// This is the root node.
-		this->isXFA = checkIsXFA(pacc);
+		VARIANT varChild;
+		varChild.vt = VT_I4;
+		varChild.lVal = 0;
+		this->isXFA = checkIsXFA(pacc, varChild);
+		this->docPagination = getDocPagination(pacc, varChild);
 	}
 	this->fillVBuf(docHandle, pacc, buffer, NULL, NULL, static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(oldNode));
 	pacc->Release();
