@@ -22,9 +22,9 @@ General dependencies:
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
-	* liblouis, version 2.4.1 or later:
+	* liblouis, version 2.5.1 or later:
 		* Official web site: http://www.liblouis.org/
-		* Download page: http://www.abilitiessoft.com/downloads.html
+		* Download page: http://code.google.com/p/liblouis/downloads/list
 		* Download the liblouis source archive.
 		* Extract the contents of the top level directory in the archive into include\liblouis.
 	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/
@@ -46,7 +46,7 @@ General dependencies:
 		*Download the source archive. The file name is something like MinHook_110_src.zip depending on exact version.
 			* You will need an account on CodeProject to download from there.
 		* extract the libMinHook directory from the source archive into the NVDA include directory.
-	* Boost C++ Libraries, version 1.42 or later:
+	* Boost C++ Libraries, any version from 1.42 to 1.47:
 		* You can download the latest Windows installer from http://www.boostpro.com/download
 		* On the components page of the installer, make sure to install at least all of the defaults (whatever is already checked).
 		* NVDA only uses the Boost headers; none of the pre-compiled libraries are necessary.
@@ -71,7 +71,7 @@ To use the Handy Tech braille display driver:
 		* Copy these files from the SDK's prog directory into NVDA's source\brailleDisplayDrivers\handyTech directory: HtBrailleDriverServer.dll, HtBrailleDriverServer.tlb, sbsupport.dll, dealers.dat
 	* If you want to be able to use this driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
-To use the Baum braille display driver:
+To use the Baum, Brailliant B, hedo, Papenmeier and/or Seika braille display drivers:
 	* pyserial (for Python 2.x), version 2.5 or later: http://pypi.python.org/pypi/pyserial
 
 To use the HIMS Braille Sense/Braille EDGE braille display driver:
@@ -81,6 +81,11 @@ To use the HIMS Braille Sense/Braille EDGE braille display driver:
 To use the HIMS SyncBraille braille display driver:
 	* SyncBraille.dll, version 1.0.0.1: http://www.nvda-project.org/3rdParty/SyncBraille.dll
 		* Copy SyncBraille.dll into the source\brailleDisplayDrivers\syncBraille directory.
+
+To use the Papenmeier braille display driver:
+	* Python interface to FTDI driver/chip: http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip
+		* Download the archive.
+		* Extract ftdi2.py into the global Python site-packages directory.
 
 To build a binary version of NVDA:
 	* Py2Exe (for Python 2.7), version 0.6.9 or later: http://www.sourceforge.net/projects/py2exe/
@@ -94,16 +99,19 @@ To generate developer documentation:
 	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
 
 To generate a gettext translation template:
-	* xgettext from GNU gettext:
+	* xgettext and msgfmt from GNU gettext:
 		* A Windows build is available at http://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/
-		* Copy xgettext.exe into the tools directory.
+		* Copy xgettext.exe and msgfmt.exe into the tools directory.
 
 == Preparing the Source Tree ==
 Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
 scons source
 You should do this again whenever the version of comtypes changes or language files are added or changed.
-
+Note that if you want to access user documentation from the help menu while running the source version, you will also need to add user_docs to the commandline like so:
+scons source user_docs
+Though while simply testing or committing changes, it may be faster usually just doing scons source as user documentation will change each time the revision number changes.
+ 
 === Compiling NVDAHelper with Debugging Options ===
 Among other things, preparing the source tree builds the NVDAHelper libraries.  
 If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlags command line variable. It takes one or more of the following flags:

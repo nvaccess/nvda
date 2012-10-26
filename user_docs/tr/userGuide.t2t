@@ -2,7 +2,7 @@
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Klavye Komutları Hızlı Rehber
+%kc:title: NVDA NVDA_VERSION Komutlar Hızlı Rehber
 
 = İçindekiler =[toc]
 %%toc
@@ -56,7 +56,7 @@ Bu, Özgün ve değiştirilmiş yazılım kopyaları ile, bu kodları kullanan d
 Daha fazla detay için [Tam lisansı görüntüleyebilirsiniz. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Sistem Gereksinimleri +
-- İşletim Sistemleri Windows XP, Windows Vista ve Windows 7 (Server işletim sistemleri dahil) işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
+- İşletim Sistemleri: Windows XP, Windows Vista,  Windows 7 ve windows 8 (Server işletim sistemleri dahil) işletim sistemlerinin tüm 32 ve 64 bit sürümleri.
 - Hafıza: 256 mb Veya daha fazla ram
 - İşlemci Hızı: 1.0 ghz veya yukarısı
 - Yaklaşık 50 MB depolama alanı.
@@ -148,14 +148,6 @@ Varsayılan olarak, numaratördeki insert ve diğer insert tuşlarının her iki
 
 NVDA değişken tuşu olarak atadığınızbir tuşun, kendi özgün görevini yapmasını istiyorsanız, (Örneğin NVDA tuşu olarak büyük harfkilidi tuşunu ayarladıysanız, büyük harf kilidini açabilmek için), bu tuşa peşpeşe 2 kez basmanız gerekir.
 
-+++ Girdi Yardım Kipi +++
-Bu rehberin geri kalanında birçok tuş kombinasyonundan bahsedilecektir. ancak farklı tuş kombinasyonlarını keşfetmenizin en kolay yollarından birisi, girdi yardım kipini açmaktır.
-
-Girdi yardım kipini açmak için NVDA+1 tuşlarına basın.
-Girdi yardım kipini kapamak için de yine NVDA+1 tuşlarına basabilirsiniz.
-Girdi yardım kipi açıkken, bir tuş ya da tuş kombinasyonuna  bastığınızda, bu tuş ya da tuşların NVDA tarafından ne amaçla kullanıldığı söylenecektir.
-Girdi Yardım kipindeyken, tuşlar gerçek işlevlerini yerine getirmeyeceği için, istediğiniz tuş veya tuşlara basabilirsiniz.
-
 +++ Klavye Düzenleri +++
 NVDA şu an 2 klavye düzeniyle gelmektedir.
 Masaüstü ve dizüstü bilgisayarlar için klavye düzenleri bulunmaktadır.
@@ -165,25 +157,77 @@ Masaüstü düzeni numara kilidi kapalıyken yoğunlukla numaratörü kullanır.
 Birçok dizüstü bilgisayarın fiziki bir numaratörü olmamasına karşın, Bazı dizüstü bilgisayarlar FN tuşuyla birlikte sağ elin kullandığı 7 8 9 u ı o j k l gibi tuşlara basarak bu işlevi yapabilirler.
 Dizüstü bilgisayarınız bunu yapamıyorsa veya numaratörü kapamanıza izin vermiyorsa, dizüstü klavye düzenine geçmek isteyebilirsiniz.
 
+++ NVDA Dokunma Hareketleri ++
+NVDA'yı dokunmatik ekranı olan bir cihaz üzerinde kullanıyorsanız ve cihaz üzerinde Windows 8 ya da daha sonraki bir sürümü çalışıyorsa,  NVDA'yı dokunmatik ekranı kullanarak da kontrol edebilirsiniz.
+NVDA çalışırken bütün dokunma hareketleri doğrudan NVDA'ya gönderilir..
+Dolayısıyla, NVDA çalışmıyorken normal olarak gerçekleştirilen işlemler NVDA açıkken yapılmaz.
+
++++ Ekranı İnceleme +++
+Dokunmatik ekranla Gerçekleştirebileceğiniz en temel işlem  ekranda herhangi bir noktada bulunan metin ya da kontrolü seslendirmektir.
+Bunu yapmak için, ekranda herhangi bir yere bir parmağınızla dokunun.
+Parmağınızı ekranda gezdirerek diğer metin ya da kontrollerin seslendirilmesini de sağlayabilirsiniz.
+
++++ Dokunma Hareketleri +++
+Kullanıcı rehberinin geri kalanında NVDA komutları açıklanırken , bir işlemin gerçekleşmesi için yapılması gereken dokunma hareketi de listelenebilir  .
+Aşağıda, dokunmatik ekranda çalışan NVDA ile ilgili  komutların gerçekleşmesi için yapılabilecek dokunma hareketleri açıklanmaktadır.
+
+==== Dokunmalar ====
+Ekrana, bir ya da birkaç parmakla dokunun..
+
+Bir parmakla bir kez dokunmak anlamında "bir  dokunma" ifadesi kullanılır.
+Aynı zamanda iki parmakla dokunmak anlamında  da "iki parmakla dokunma" ifadesi kullanılır.
+
+Aynı dokunma hareketi arka arkaya yapılırsa,, NVDA bunu çoklu-dokunma hareketi olarak algılar.
+İki kez dokunmak çift dokunma olarak algılanır.
+Üç kez dokunmak da benzer şekilde üçlü dokunma olarak algılanır..
+Tabii  bu çoklu-dokunma hareketleri de birden fazla parmakla yapılabilir. Dolayısıyla, iki parmakla çift dokunma, üç parmakla  üçlü dokunma vb hareketler de kullanılabilir.
+
+==== Kaydırmalar ====
+Parmağınızı ekranda hızlı bir şekilde kaydırın.
+
+Kaydırdığınız yöne göre dört olası kaydırma hareketi vardır: sola kaydırma, sağa kaydırma, yukarı kaydırma ve aşağı kaydırma.
+
+Dokunmalarda olduğu gibi, kaydırma hareketleri için birden fazla parmak kullanılabilir.
+Dolayısıyla iki parmakla sağa kaydırma, dört parmakla yukarı kaydırma gibi hareketler mümkündür..
+
++++ Dokunma Kipleri +++
+Mümkün olan dokunma hareketlerinden daha fazla NVDA komutu bulunduğu için, NVDA, arasında geçiş yapabileceğiniz birden fazla dokunma kipine sahiptir.
+Şİmdilik, varolan iki kip, metin kipi ve nesne kipidir.
+Bu belgede listelenen bazı NVDA komutları, komut sonrasında parantez içinde belirtilecek kipler için geçerli olabilir.
+Örneğin, yukarı kaydırma (metin kipi) ifadesi bu komutun gerçekleştireceği işlemin metin kipi için geçerli olduğu anlamına gelir.
+Komutla ilgili herhangi bir kip verilmemişse, tüm kipler için geçerli olduğu anlamına gelir.
+
+%kc:beginInclude
+Dokunma kipleri arasında geçiş yapmak için, üç parmakla bir kez dokunun.
+%kc:endInclude
+
+++ Girdi Yardım Kipi ++
+Bu rehberin geri kalanında birçok dokunma hareketi ve tuş kombinasyonundan bahsedilecektir. ancak farklı tuş kombinasyonlarını keşfetmenizin en kolay yollarından birisi, girdi yardım kipini açmaktır.
+
+Girdi yardım kipini açmak için NVDA+1 tuşlarına basın.
+Girdi yardım kipini kapamak için de yine NVDA+1 tuşlarına basabilirsiniz.
+Girdi yardım kipi açıkken, bir tuş ya da tuş kombinasyonuna  bastığınızda veya bir dokunma hareketi yaptığınızda, tuşların ya da dokunma hareketinin NVDA tarafından ne amaçla kullanıldığı söylenecektir.
+Girdi Yardım kipindeyken, tuşlar gerçek işlevlerini yerine getirmeyeceği için, istediğiniz tuş veya tuşlara basabilirsiniz.
+
 ++ NVDA Menüsü ++
 NVDA menüsü altında, çeşitli ayarları değiştirmenizi, Yardıma erişimi, ayarlarınızı kalıcı olarak kaydetmenizi veya geri almanızı, konuşma sözlüğünü değiştirmenizi, NVDA'yla ilgili diğer ek araçlara erişiminizi ve NVDA'yı kapatmanızı sağlayacak menü ögelerine ulaşabilirsiniz.
 
-NVDA çalışırken, herhangi bir noktada NVDA menüsüne ulaşmak için NVDA+N tuşlarına basabilirsiniz.
+NVDA çalışırken, herhangi bir noktada NVDA menüsüne ulaşmak için NVDA+N tuşlarına basabilirsiniz ya da dokunmatik ekranda iki parmakla iki kez dokunabilirsiniz.
 veya Sistem tepsisi penceresinden buraya ulaşabilirsiniz.
 Sistem tepsisindeki NVDA simgesi üzerinde sağ tıklayın veya sistem tepsisine ulaşmak için windows tuşu+B harfine basın, aşağı oka basarak NVDA ikonunu bulun ve birçok klavyede sağdaki kontrol tuşunun hemen yanında bulunan uygulama tuşuna basın.
 Menü açıldığında, menü ögeleri arasında yön tuşlarınızla dolaşabilir ve bir ögeyi etkinleştirmek için girişe basabilirsiniz.
 
-++ Temel Klavye Komutları ++
+++ Temel NVDA Komutları ++
 %kc:beginInclude
-|| Ad | Kısayol tuşu | Tarif |
-| Konuşmayı Durdur | Kontrol | Ekran okuyucunun konuşmasını o an için durdurur |
-| Konuşmayı Duraklat | Şift | Konuşmayı O an için Duraklatır. Duraklama işlevi, geçerli sentezleyici tarafından destekleniyorsa, Şifte tekrar bastığınızda konuşma kaldığı yerden devam eder |
-| NVDA Menüsü | NVDA+n | Tercihler, Araçlar ve yardım gibi bölümlere ulaşabileceğiniz NVDA menüsünü açar |
-| Konuşma kipini açıp kapama | NVDA+s | Basıldıkça, konuşma kipini konuşma, bipler ve kapalı olarak değiştirir. |
-| Girdi yardım kipini açıp kapama | NVDA+1 | Kip açıkken, bir tuşa basıldığında, önce tuşların adı söylenir ve sonra kısayol NVDA ile ilişkiliyse, işlevi açıklanır |
-| NVDA'dan çıkış | NVDA+q | NVDA'yı kapatır |
-| Sonraki komutun NVDA işlevini yoksay | NVDA+f2 | Basılacak klavye kısayol tuşunun bir NVDA komutu olsa bile, bu komutu bir kereliğine yoksayarak geçerli uygulamanın tuşa atadığı işlevin gerçekleşmesini sağlar |
-| Uygulamaya özel uyku kipini açıp kapama | NVDA+shift+s | Uyku kipinde geçerli uygulamada Tüm NVDA komutları, konuşma ve braille geribildirimleri devre dışı kalır. Bu, kendi konuşması veya ekran okuma özelliği olan uygulamalarda çok yararlıdır. Uyku kipini kapamak için bu tuşlara tekrar basın. |
+|| Ad | Kısayol tuşu | Dokunma hareketi | Tarif |
+| Konuşmayı Durdur | Kontrol | iki parmakla bir kez dokunma | Ekran okuyucunun konuşmasını o an için durdurur |
+| Konuşmayı Duraklat | Şift | yok | Konuşmayı O an için Duraklatır. Duraklama işlevi, geçerli sentezleyici tarafından destekleniyorsa, Şifte tekrar bastığınızda konuşma kaldığı yerden devam eder |
+| NVDA Menüsü | NVDA+n | iki parmakla çift dokunma | Tercihler, Araçlar ve yardım gibi bölümlere ulaşabileceğiniz NVDA menüsünü açar |
+| Konuşma kipini açıp kapama | NVDA+s | yok | Basıldıkça, konuşma kipini konuşma, bipler ve kapalı olarak değiştirir. |
+| Girdi yardım kipini açıp kapama | NVDA+1 | yok | Kip açıkken, bir tuşa basıldığında, önce tuşların adı söylenir ve sonra kısayol NVDA ile ilişkiliyse, işlevi açıklanır |
+| NVDA'dan çıkış | NVDA+q | yok | NVDA'yı kapatır |
+| Sonraki komutun NVDA işlevini yoksay | NVDA+f2 | yok | Basılacak klavye kısayol tuşunun bir NVDA komutu olsa bile, bu komutu bir kereliğine yoksayarak geçerli uygulamanın tuşa atadığı işlevin gerçekleşmesini sağlar |
+| Uygulamaya özel uyku kipini açıp kapama | NVDA+shift+s | yok | Uyku kipinde geçerli uygulamada Tüm NVDA komutları, konuşma ve braille geribildirimleri devre dışı kalır. Bu, kendi konuşması veya ekran okuma özelliği olan uygulamalarda çok yararlıdır. Uyku kipini kapamak için bu tuşlara tekrar basın. |
 %kc:endInclude
 
 ++ Sistem Bilgisini Raporlama ++
@@ -265,19 +309,19 @@ Varsayılan olarak, nesne sunucusu sistem imleciyle birlikte hareket eder; ancak
 Braille'in varsayılan olarak nesne sunucusunu ve inceleme imlecini değil; [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
 Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [braillein takip edeceği imleç #BrailleTether] olarak inceleme imlecini ayarlamalısınız.
 
-Nesneler arasında dolaşmak için aşağıdaki tuşları kullanın:
+Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 
 %kc:beginInclude
-|| Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Tarif |
-| Geçerli nesnenin bildirimi | NVDA+numaratör5 | NVDA+kontrol+i | Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
-| Ana nesneye gitme | NVDA+numaratör8 | NVDA+shift+i | nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider |
-| önceki nesneye gitme | NVDA+numaratör4 | NVDA+kontrol+j | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir önceki nesneye taşır |
-| bir sonraki nesneye gitme | NVDA+numaratör6 | kontrol+NVDA+l | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
-| İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+ö | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
-| Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya konumlandırır |
-| Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
-| Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
-| Geçerli nesne sunucusunun boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | nesne sunucusunun konumundaki nesnenin ekrandaki genişlik, yükseklik, ekranın soluna ve üstüne mesafesi gibi bilgilerini yüzdelik cinsinden belirtir |
+|| Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma hareketi | Tarif |
+| Geçerli nesnenin bildirimi | NVDA+numaratör5 | NVDA+kontrol+i | yok | Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
+| Ana nesneye gitme | NVDA+numaratör8 | NVDA+shift+i | yukarı kaydırma | nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider |
+| önceki nesneye gitme | NVDA+numaratör4 | NVDA+kontrol+j | sola kaydırma | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir önceki nesneye taşır |
+| bir sonraki nesneye gitme | NVDA+numaratör6 | kontrol+NVDA+l | sağa kaydırma | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
+| İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+ö | aşağı kaydırma | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
+| Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | yok | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya konumlandırır |
+| Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | çift dokunma | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
+| Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | yok | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
+| Geçerli nesne sunucusunun boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | yok | nesne sunucusunun konumundaki nesnenin ekrandaki genişlik, yükseklik, ekranın soluna ve üstüne mesafesi gibi bilgilerini yüzdelik cinsinden belirtir |
 %kc:endInclude
 
 Not: Numaratördeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
@@ -294,31 +338,31 @@ Bu özellik açılıp kapatılabilir.
 Braille'in varsayılan olarak nesne sunucusunu ve inceleme imlecini değil; [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
 Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [braillein takip edeceği imleç #BrailleTether] olarak inceleme imlecini ayarlamalısınız.
 
-Metni incelerken, aşağıdaki tuş komutları kullanılabilir:
+Metni incelerken, aşağıdaki komutlar kullanılabilir:
 %kc:beginInclude
-|| Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Tarif |
-| inceleme imlecinde en üst satıra gitme | şift+numaratör7 | NVDA+7 | İnceleme imlecini metnin en üst satırına taşır |
-| inceleme imlecinde bir önceki satıra gitme | numaratör7 | NVDA+u | İnceleme imlecini metnin bir önceki satırına taşır |
-| İnceleme imlecinde üzerinde bulunulan satırı belirtme | numaratör8 | NVDA+i | İnceleme imlecinin üzerine konumlandığı satırı söyler. İki kez basıldığında satır harf harf kodlanır. Üç kez basıldığında ise satır Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
-| inceleme imlecinde bir sonraki satıra gitme | numaratör9 | NVDA+o | İnceleme imlecini metnin bir sonraki satırına taşır |
-| inceleme imlecinde son satıra gitme | şift+numaratör9 | NVDA+9 | İnceleme imlecini metnin son satırına taşır |
-| inceleme imlecinde bir önceki sözcüğe gitme | numaratör4 | NVDA+j | İnceleme imlecini metnin bir önceki sözcüğüne taşır |
-| İnceleme imlecinde üzerinde bulunulan sözcüğü belirtme | numaratör5 | NVDA+k | İnceleme imlecinin üzerine konumlandığı sözcüğü söyler. İki kez basıldığında sözcük harf harf kodlanır. Üç kez basıldığında sözcük, Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
-| inceleme imlecinde bir sonraki sözcüğe gitme | numaratör6 | NVDA+l | İnceleme imlecini metnin bir sonraki sözcüğüne taşır |
-| inceleme imlecinde satır başına gitme | şift+numaratör1 | NVDA+şift+u | İnceleme imlecini metinde üzerinde bulunduğunuz satırın başına taşır |
-| inceleme imlecinde bir önceki karaktere gitme | numaratör1 | NVDA+m | İnceleme imlecini metinde üzerinde bulunduğunuz satırdaki bir önceki karaktere taşır |
-| İnceleme imlecinde üzerinde bulunulan karakteri belirtme | numaratör2 | NVDA+ö | İnceleme imlecinin üzerine konumlandığı karakteri söyler. İki kez basıldığında, karakter tanımıyla söylenir. Üç kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
-| inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+ç | İnceleme imlecini metnin üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
-| inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+şift+o | İnceleme imlecini metinde üzerinde bulunduğunuz satırın sonuna taşır |
-| İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+AşağıYönTuşu | İnceleme imlecinde bulunduğunuz noktadan başlayarak metnin gittiği yere kadar okur |
-| İnceleme imlecinin bulunduğu yerden kopyalamayı başlatma | NVDA+f9 | NVDA+f9 | inceleme imlecinde bulunduğunuz pozisyondan itibaren metni kopyalamaya başlar. NVDA'ya metnin nereye kadar kopyalanacağını belirtmeden asıl kopyalama gerçekleşmez |
-| İnceleme imlecinin bulunduğu yere kadar kopyalama | NVDA+f10 | NVDA+f10 | inceleme imlecinde kopyalamanın başladığı yer olarak ayarlanan noktadan, inceleme imlecinin şu an bulunduğu noktaya kadar olan metni kopyalar. Bu tuşa basıldıktan sonra metin panoya kopyalanır |
-| Metin biçimini söyle | NVDA+f | NVDA+f | İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir |
+|| Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma hareketi | Tarif |
+| inceleme imlecinde en üst satıra gitme | şift+numaratör7 | NVDA+7 | yok | İnceleme imlecini metnin en üst satırına taşır |
+| inceleme imlecinde bir önceki satıra gitme | numaratör7 | NVDA+u | yukarı kaydırma (metin kipi) | İnceleme imlecini metnin bir önceki satırına taşır |
+| İnceleme imlecinde üzerinde bulunulan satırı belirtme | numaratör8 | NVDA+i | yok | İnceleme imlecinin üzerine konumlandığı satırı söyler. İki kez basıldığında satır harf harf kodlanır. Üç kez basıldığında ise satır Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
+| inceleme imlecinde bir sonraki satıra gitme | numaratör9 | NVDA+o | aşağı kaydırma (metin kipi) | İnceleme imlecini metnin bir sonraki satırına taşır |
+| inceleme imlecinde son satıra gitme | şift+numaratör9 | NVDA+9 | yok | İnceleme imlecini metnin son satırına taşır |
+| inceleme imlecinde bir önceki sözcüğe gitme | numaratör4 | NVDA+j | iki parmakla sola kaydırma (metin kipi) | İnceleme imlecini metnin bir önceki sözcüğüne taşır |
+| İnceleme imlecinde üzerinde bulunulan sözcüğü belirtme | numaratör5 | NVDA+k | yok | İnceleme imlecinin üzerine konumlandığı sözcüğü söyler. İki kez basıldığında sözcük harf harf kodlanır. Üç kez basıldığında sözcük, Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
+| inceleme imlecinde bir sonraki sözcüğe gitme | numaratör6 | NVDA+l | iki parmakla sağa kaydırma (metin kipi) | İnceleme imlecini metnin bir sonraki sözcüğüne taşır |
+| inceleme imlecinde satır başına gitme | şift+numaratör1 | NVDA+şift+u | yok | İnceleme imlecini metinde üzerinde bulunduğunuz satırın başına taşır |
+| inceleme imlecinde bir önceki karaktere gitme | numaratör1 | NVDA+m | sola kaydırma (metin kipi) | İnceleme imlecini metinde üzerinde bulunduğunuz satırdaki bir önceki karaktere taşır |
+| İnceleme imlecinde üzerinde bulunulan karakteri belirtme | numaratör2 | NVDA+ö | yok | İnceleme imlecinin üzerine konumlandığı karakteri söyler. İki kez basıldığında, karakter tanımıyla söylenir. Üç kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
+| inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+ç | sağa kaydırma (metin kipi) | İnceleme imlecini metnin üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
+| inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+şift+o | yok | İnceleme imlecini metinde üzerinde bulunduğunuz satırın sonuna taşır |
+| İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+AşağıYönTuşu | üç parmakla aşağı kaydırma (metin kipi) | İnceleme imlecinde bulunduğunuz noktadan başlayarak metnin gittiği yere kadar okur |
+| İnceleme imlecinin bulunduğu yerden kopyalamayı başlatma | NVDA+f9 | NVDA+f9 | yok | inceleme imlecinde bulunduğunuz pozisyondan itibaren metni kopyalamaya başlar. NVDA'ya metnin nereye kadar kopyalanacağını belirtmeden asıl kopyalama gerçekleşmez |
+| İnceleme imlecinin bulunduğu yere kadar kopyalama | NVDA+f10 | NVDA+f10 | yok | inceleme imlecinde kopyalamanın başladığı yer olarak ayarlanan noktadan, inceleme imlecinin şu an bulunduğu noktaya kadar olan metni kopyalar. Bu tuşa basıldıktan sonra metin panoya kopyalanır |
+| Metin biçimini söyle | NVDA+f | NVDA+f | yok | İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir |
 %kc:endInclude
 
 Not: Numaratördeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
 
-Bu komutları hatırlamanıza yardımcı olması için, temel metin inceleme komutlarının üçlü bir parmaklık biçiminde organize edildiğini lütfen not edin. yukarıdan aşağıya üçlü satır, sözcük ve karakter anlamına gelirken, soldan sağa üçlü önceki, üzerinde bulunulan ve sonraki anlamına gelmektedir.
+Tuş komutlarını hatırlamanıza yardımcı olması için, temel metin inceleme komutlarının üçlü bir parmaklık biçiminde organize edildiğini lütfen not edin. yukarıdan aşağıya üçlü satır, sözcük ve karakter anlamına gelirken, soldan sağa üçlü önceki, üzerinde bulunulan ve sonraki anlamına gelmektedir.
 Düzen aşağıdaki biçimde gösterilmiştir:
 | Önceki satır | Üzerinde bulunulan satır | Sonraki satır |
 | Önceki sözcük | üzerinde bulunulan sözcük | Sonraki sözcük |
@@ -339,11 +383,11 @@ Bu kipte ekranı incelerken, inceleme imlecinin mevcut pozisyonundaki nesneye at
 Braille'in varsayılan olarak nesne sunucusunu ve inceleme imlecini değil; [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
 Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [braillein takip edeceği imleç #BrailleTether] olarak inceleme imlecini ayarlamalısınız.
 
-Aşağıdaki 2 tuş komutuyla, ekran incelemesine geçilebilir veya nesne sunucusu ekran inceleme imlecinin mevcut konumundaki nesneye taşınabilir:
+Aşağıdaki iki komutla, ekran incelemesine geçilebilir veya nesne sunucusu ekran inceleme imlecinin mevcut konumundaki nesneye taşınabilir:
 %kc:beginInclude
-|| Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Tarif |
-| Ekran incelemesine geçiş | NVDA+numaratör7 | NVDA+sayfa yukarı | Ekran incelemesi kipine geçer ve sizi o anki nesne sunucusunun bulunduğu yere götürür. böylece tüm ekran içeriğini veya içinde  bulunduğunuz belgedeki metni, metin inceleme komutlarını kullanarak dolaşabilirsiniz. |
-| Ekran inceleme kipinden nesneye geçiş | NVDA+numaratör1 | NVDA+Sayfa aşağı | Ekran inceleme kipindeki imlecin üzerinde bulunduğu metni içeren nesneye gider |
+|| Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma hareketi | Tarif |
+| Ekran incelemesine geçiş | NVDA+numaratör7 | NVDA+önceki sayfa | iki parmakla yukarı kaydırma | Ekran incelemesi kipine geçer ve sizi o anki nesne sunucusunun bulunduğu yere götürür. böylece tüm ekran içeriğini veya içinde  bulunduğunuz belgedeki metni, metin inceleme komutlarını kullanarak dolaşabilirsiniz. |
+| Ekran inceleme kipinden nesneye geçiş | NVDA+numaratör1 | NVDA+sonraki sayfa  | iki parmakla aşağı kadırma | Ekran inceleme kipindeki imlecin üzerinde bulunduğu metni içeren nesneye gider |
 %kc:endInclude
 
 ++ Fare ile Dolaşım ++
@@ -443,9 +487,9 @@ Seçim düğmeleri, bu üç ögeden hangilerinin görüntüleneceğini belirleme
 %kc:endInclude
 
 ++ Gömülü Nesneler ++
-Sayfalar, Adobe Flash ve Sun Java gibi teknolojiler kullanan zengin içerikleri de barındırabilir.
-Bunlarla tarama kipinde karşılaşıldığında NVDA "gömülü nesne" şeklinde belirtecektir.
-Bu nesneler üzerinde girişe basarak onlarla etkileşime geçebilirsiniz.
+Sayfalar, Adobe Flash ve Sun Java gibi teknolojiler kullanan zengin içerikleri,  uygulama ya da iletişim kutularını de barındırabilir.
+Bu tür ögelerle tarama kipinde karşılaşıldığında NVDA "gömülü nesne", "uygulama" ya da "iletişim kutusu" şeklinde belirtecektir.
+Bu nesnelerle karşılaştığınızda, girişe basarak onlarla etkileşime geçebilirsiniz.
 Eğer erişilebilirse, tab tuşuyla içinde dolaşabilir ve diğer uygulamalar gibi etkileşimde bulunabilirsiniz.
 Gömülü nesneyi barındıran sayfaya geri dönmek için bir kısayol tuşu tanımlanmıştır:
 %kc:beginInclude
@@ -455,6 +499,13 @@ Gömülü nesneyi barındıran sayfaya geri dönmek için bir kısayol tuşu tan
 
 + Uygulamaya Özgü NVDA Komutları +
 NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu kullanıcıları için erişilebilir olmayan işlevleri onlar için de ulaşılabilir kılmak için  bazı uygulamalara  özgü özel komutlar sağlamaktadır.
+
+++ Microsoft Excel ++
+%kc:beginInclude
+|| Ad | Kısayol Tuşu | Tarif |
+| Sütun başlıklarını ayarla | NVDA+shift+c | Bir kez basıldığında mevcut satır sütun başlığı olarak ayarlanır ve sütunlar arasında dolaşılırken ayarlanan satırdaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+| Satır başlıklarını ayarla | NVDA+shift+r | Bir kez basıldığında mevcut sütun satır başlığı olarak ayarlanır ve satırlar arasında dolaşılırken ayarlanan sütundaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+%kc:endInclude
 
 ++ foobar2000 ++
 %kc:beginInclude
@@ -804,6 +855,37 @@ Kısayol tuşu: NVDA+5
 
 Terminal veya chat programlarının geçmiş alanları gibi belirli nesnelerdeki yeni içeriğin belirtilip belirtilmeyeceğini kontrol eder.
 
++++ Girdi Kompozisyon Ayarları +++
+Girdi kompozisyon ayarları iletişim kutusu Tercihler menüsü altında bulunabilir.
+Bu iletişim kutusu NVDA'nın Çince, Japonca ve Korece gibi dillerle ilgili girişleri, IME veya Text Service girdi metodları, nasıl bildireceğini ayarlamanızı sağlar.
+Taşıdıkları özellik ve bilgiler açısından girdi metodları farklılaştığından, daha verimli bir yazma deneyimi için bu seçenekleri her girdi metodu için ayrı ayrı konfigüre etmeniz gerekebilir.
+
+==== Mevcut tüm önerileri otomatik olarak seslendir ====
+Varsayılan olarak açık olan bu seçenek, bir öneri listesi oluştuğunda, görünen tüm önerilerin seslendirilip seslendirilmeyeceğini ayarlamanızı sağlar.
+Bu seçeneğin açık olması, chinese New ChangJie veya Boshiami gibi pictographic girdi metodları için faydalı olabilir.
+Ancak, chinese New Phonetic gibi phonetic girdi metodları için, seçeneğin kapalı olması daha faydalı olabilir. Tüm semboller benzer seslere sahip olduğu için öneri listesinde yön tuşlarını kullanarak seçim yapmak daha uygundur.
+
+==== Seçili Öneriyi Seslendir ====
+Varsayılan olarak açık olan bu seçenek, bir öneri listesi ortaya çıktığında ya da seçim değiştiğinde, seçili önerinin seslendirilip seslendirilmeyeceğini belirlemenizi sağlar.
+Seçimin yön tuşlarıyla değiştirilebildiği (Chinese New Phonetic) gibi girdi metodları  için bu gereklidir, ama bazı girdi metodları için bu seçeneğin kapalı olması daha verimli olacaktır.
+Bu seçenek kapalı olsa dahi, nesne dolaşımı yoluyla önerileri manuel olarak inceleyebilmeniz için, inceleme imleci seçili önerinin üzerinde konumlandırılır.
+
+==== Öneriler için daima kısa karakter tanımlarını da kullan ====
+This option, which is on by default, allows you to choose whether or not NVDA should provide a short description for each character in a candidate, either when its selected or when its automatically read when the candidate list appears.
+Note that for locales such as Chinese, the announcement of extra character descriptions for the selected candidate is not affected by this option.
+Bu seçenek Korece ve Japonca girdi metodları için faydalı olabilir.
+
+==== İfade okunuşlarındaki değişiklikleri bildir ====
+Chinese New Phonetic ve New ChangJie gibi bazı girdi metodları (kimi zaman precomposition string olarak bilinen) ifade okumalarına sahiptir.
+Bu seçenekle, ifadelerin okunuşlarında yeni karakter girişlerinin seslendirilip seslendirilmeyeceğini ayarlayabilirsiniz.
+Bu seçenek varsayılan olarak açıktır.
+Chinese ChangJie gibi bazı eski girdi metodlarının ön kompozisyon ifade okumaları yerine doğrudan ifade kompozisyonlarını kullandığını not edin. Lütfen ifade kompozisyonunun  seslendirilmesiyle ilgili ayar için sonraki seçeneğe  bakın .
+
+==== İfade Kompozisyonundaki Değişiklikleri Bildir ===
+After reading or precomposition data has been combined into a valid pictographic symbol, most input methods place this symbol into a composition string for temporary storage along with other combined symbols before they are finally inserted into the document.
+This option allows you to choose whether or not NVDA should report new symbols as they appear  in the composition string.
+Bu seçenek varsayılan olarak açıktır.
+
 +++ Tarama Kipi Ayarları (NVDA+kontrol+b) +++
 Tarama Kipi  Ayarları iletişim kutusu tercihler menüsü içindeki "Tarama Kipi..." bölümünün altında bulunur.
 
@@ -1057,6 +1139,11 @@ Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
 || Ad | Kısayol tuşu |
+| Scroll braille display back | topRouting1 (first cell on display) |
+| Scroll braille display forward | topRouting20/40/80 (last cell on display) |
+| Scroll braille display back | leftAdvanceBar |
+| Scroll braille display forward | rightAdvanceBar |
+| Toggle braille tethered to | leftGDFButton+rightGDFButton |
 | sol tekerlek hareketini açıp kapama | Sol tekerleğe basma |
 | Sol tekerlek hareketini kullanarak geri gitme | Sol tekerlek yukarı |
 | Sol tekerlek hareketini kullanarak ileri gitme | Sol tekerlek aşağı |
@@ -1064,6 +1151,38 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 | Sağ tekerlek hareketini kullanarak geri gitme | Sağ tekerlek yukarı |
 | Sağ tekerlek hareketini kullanarak ileri gitme | Sağ tekerlek aşağı |
 | imleci parmağın üzerinde bulunduğu Braille hücresine taşıma  | hücre üzerindeki braille iğnesi |
+| backspace key | dot7 |
+| enter key | dot8 |
+| shift+tab key | brailleSpaceBar+dot1+dot2 |
+| tab key | brailleSpaceBar+dot4+dot5 |
+| upArrow key | brailleSpaceBar+dot1 |
+| downArrow key | brailleSpaceBar+dot4 |
+| control+leftArrow key | brailleSpaceBar+dot2 |
+| control+rightArrow key | brailleSpaceBar+dot5 |
+| leftArrow | brailleSpaceBar+dot3 |
+| rightArrow key | brailleSpaceBar+dot6 |
+| home key | brailleSpaceBar+dot1+dot3 |
+| end key | brailleSpaceBar+dot4+dot6 |
+| control+home key | brailleSpaceBar+dot1+dot2+dot3 |
+| control+end key | brailleSpaceBar+dot4+dot5+dot6 |
+| alt key | brailleSpaceBar+dot1+dot3+dot4 |
+| alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| escape key | brailleSpaceBar+dot1+dot5 |
+| windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
+| space key | brailleSpaceBar |
+| windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Report Current Line | brailleSpaceBar+dot1+dot4 |
+| NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
+
+For newer Focus models that contain rocker bar keys (focus 40, focus 80 and focus blue):
+|| Name | Key |
+| Move braille display to previous line | leftRockerBarUp, rightRockerBarUp |
+| Move braille display to next line | leftRockerBarDown, rightRockerBarDown |
+
+For Focus 80 only:
+|| Name | Key |
+| Scroll braille display back | leftBumperBarUp, rightBumperBarUp |
+| Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1307,6 +1426,82 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 | Route to braille cell | routing |
 %kc:endInclude
 
+++ Seika Braille Displays ++
+[Nippon Telesoft http://www.nippontelesoft.com/] tarafından üretilen Seika Versiyon 3, 4 ve 5 (40 hücreli) ve Seika80 (80 hücreli) braille ekranlar desteklenmektedir.
+ http://www.seika-braille.com/ adresinde bu ekranlar hakkında daha fazla bilgi bulabilirsiniz.
+Önce üretici tarafından sağlanan USB sürücülerini kurmalısınız.
+
+Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
+Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
+%kc:beginInclude
+|| Ad | Kısayol tuşu |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | b3 |
+| Move braille display to next line | b4 |
+| Toggle braille tethered to | b5 |
+| Say all | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| NVDA Menu | left+right |
+| Route to braille cell | routing |
+%kc:endInclude
+
+++ Papenmeier BRAILLEX Yeni Modelleri ++
+Aşağıdaki Braille ekranlar desteklenmektedir: 
+- BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
+- BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
+- BRAILLEX Trio (USB and bluetooth)
+-
+
+If BrxCom is installed, NVDA will use BrxCom.
+BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
+A new version of BrxCom which works with NVDA will be released by Papenmeier soon.  
+
+Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
+The EAB can be moved in four directions where generally each direction has two switches.
+The c-series is the only exception to this rule.
+
+The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
+Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.
+Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
+
+Generally, the following keys are available on these braille displays:
+|| Name | Key |
+| l1 | Left front key |
+| l2 | Left rear key |
+| r1 | Right front key |
+| r2 | Right rear key |
+| up | 1 Step up |
+| up2 | 2 Steps up |
+| left | 1 Step left |
+| left2 | 2 Steps left |
+| right | 1 Step right |
+| right2 | 2 Steps right |
+| dn | 1 Step down |
+| dn2 | 2 Steps down |
+
+Following are the Papenmeier command assignments for NVDA:
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Route to braille cell | routing |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Move to flat review/focus | r1 |
+| Report title | l1+up |
+| Report Status Bar | l2+down |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to previous object | left2 |
+| Move to next object | right2 |
+| Report text formatting | upper routing row |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] çok daha fazla farklı braille ekranı destekleyebilmek için kullanılan ayrı bir programdır.
 bunu kullanabilmek için,[BRLTTY for Windows http://brl.thefreecat.org/brltty/] programını yüklemeniz gerekecektir.
@@ -1342,14 +1537,22 @@ Lütfen, None anahtarını bir dosya içerisinde yalnızca bir kez kullanabilece
 liste ayracı olarak kullanılan virgülden farklı bir amaçla kullanıldığının anlaşılması için, Virgülün (,) kullanıldığı kısayol belirtenleri tek tırnak (apostrof) içine alınabilir.
 -
 
-Tuş göstergeleri 2 harften (Klavye için, kb, braille için, br), parantez içinde bir alt araç veya klavye düzeni, bir iki nokta işareti ve artı (+) işaretiyle ayrılmış tuş değerlerinden oluşmaktadır.
+Tuş göstergeleri ya da hareketler 2 harften oluşan araç kodu (Klavye için, kb, braille için, br ve dokunma hareketi için ts), parantez içinde bir alt araç veya klavye düzeni, bir iki nokta işareti ve artı (+) işaretiyle ayrılmış tuş değerlerinden oluşmaktadır.
+- Klavye girdileri için araç kodu  kb harfleridir.
 Klavye tuş göstergeleri için [] köşeli parantez içindeki değer klavye düzenini belirtir ve isteğe bağlıdır.
 Bir değer belirtilmezse, düzenleme tüm klavye düzenleri için geçerli olur.
+İki nokta üstüste işaretinden sonraki ifade artı işareti (+) ile ayrılmış bir ya da birden fazla tuş adıdır
+- Braille ekran girdileri için  araç kodu br harfleridir.
 Braille tuş göstergeleri içinse köşeli parantez içindeki değer braille ekranı belirtir ve değer belirtilmesi zorunludur.
+İki nokta üstüste işaretinden sonraki ifade artı işareti (+) ile ayrılmış bir ya da birden fazla tuş adıdır
+- Dokunma hareketleri için , araç kodu ts harfleridir.
+Dokunma hareketleri için, parantez içindeki kısım dokunma kipini belirtir ve isteğe bağlıdır.
+İki nokta üstüste işaretinden sonraki ifade de double_tap, 2fingerflickUp ya da  3finger_tap gibi bir dokunma hareketidir.
+-
 
 Girdi göstergelerini, script adlarını, ve içinde bulundukları class ve modülleri keşfetmek için şunları yapın:
 + Girdi Yardımını açın.
-+ Girdi hareketini etkinleştirin (istediğiniz tuşa veya tuş kombinasyonuna basın).
++ Girdi hareketini etkinleştirin (istediğiniz tuşa veya tuş kombinasyonuna basın ya da bir dokunma hareketi yapın).
 + Girdi Yardımını kapatın.
 + NVDA araçlar menüsünden kayıt görüntüleyi (log görüntüle) açın.
 + Son girilen kayıtları inceleyin.

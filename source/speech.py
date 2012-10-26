@@ -869,6 +869,8 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	return CHUNK_SEPARATOR.join([x for x in textList if x])
 
 def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraDetail=False,reason=None):
+	if attrs.get('isHidden'):
+		return u""
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
 
@@ -982,6 +984,12 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# Translators: Indicates the page number in a document.
 			# %s will be replaced with the page number.
 			text=_("page %s")%pageNumber
+			textList.append(text)
+	if  formatConfig["reportHeadings"]:
+		headingLevel=attrs.get("heading-level")
+		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None
+		if headingLevel and headingLevel!=oldHeadingLevel:
+			text=_("heading level %d")%headingLevel
 			textList.append(text)
 	if  formatConfig["reportStyle"]:
 		style=attrs.get("style")
@@ -1214,6 +1222,14 @@ def speakWithoutPauses(speechSequence,detectBreaks=True):
 						speakWithoutPauses._pendingSpeechSequence=[]
 						finalSpeechSequence.extend(speechSequence[0:index])
 						finalSpeechSequence.append(before)
+						# Apply the last language change to the pending sequence.
+						# This will need to be done for any other speech change commands introduced in future.
+						for changeIndex in xrange(index-1,-1,-1):
+							change=speechSequence[changeIndex]
+							if not isinstance(change,LangChangeCommand):
+								continue
+							pendingSpeechSequence.append(change)
+							break
 						break
 				else:
 					pendingSpeechSequence.append(item)

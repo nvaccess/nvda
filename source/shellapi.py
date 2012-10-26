@@ -62,3 +62,10 @@ class SHFILEOPSTRUCT(Structure):
 		('lpszProgressTitle',c_wchar_p),
 	]
 
+	
+SHCNE_ASSOCCHANGED=0x08000000
+SHCNF_IDLIST=0x0
+shell32.SHChangeNotify.argtypes = [c_long, c_uint, c_void_p, c_void_p]
+shell32.SHChangeNotify.restype = None
+def SHChangeNotify(wEventId, uFlags, dwItem1, dwItem2):
+	shell32.SHChangeNotify(wEventId, uFlags, dwItem1, dwItem2)

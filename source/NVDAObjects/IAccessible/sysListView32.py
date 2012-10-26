@@ -1,6 +1,7 @@
-#NVDAObjects/sysListView32.py
+# -*- coding: UTF-8 -*-
+#NVDAObjects/IAccessible/sysListView32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -15,8 +16,10 @@ import eventHandler
 import winKernel
 import winUser
 from . import IAccessible, List
-from ..window import Window 
+from ..window import Window
 import watchdog
+from NVDAObjects.behaviors import RowWithoutCellObjects, RowWithFakeNavigation
+import config
 
 #Window messages
 LVM_FIRST=0x1000
@@ -26,6 +29,17 @@ LVM_GETGROUPINFOBYINDEX=LVM_FIRST+153
 LVM_GETITEMCOUNT=LVM_FIRST+4
 LVM_GETITEM=LVM_FIRST+75
 LVN_GETDISPINFO=0xFFFFFF4F
+LVM_GETITEMTEXTW=LVM_FIRST+115
+LVM_GETHEADER=LVM_FIRST+31
+LVM_GETCOLUMNORDERARRAY=LVM_FIRST+59
+LVM_GETCOLUMNW=LVM_FIRST+95
+LVM_GETSELECTEDCOUNT =(LVM_FIRST+50)
+LVNI_SELECTED =2
+LVM_GETNEXTITEM =(LVM_FIRST+12)
+LVM_GETVIEW=LVM_FIRST+143
+LV_VIEW_DETAILS=0x0001
+LVM_GETSUBITEMRECT=LVM_FIRST+56
+LV_VIEW_TILE=0x0004
 
 #item mask flags
 LVIF_TEXT=0x01 
@@ -48,7 +62,23 @@ LVIS_FOCUSED=0x01
 LVIS_SELECTED=0x02
 LVIS_STATEIMAGEMASK=0xF000
 
+LVS_REPORT=0x0001
+LVS_TYPEMASK=0x0003
 LVS_OWNERDRAWFIXED=0x0400
+
+#column mask flags
+LVCF_FMT=1
+LVCF_WIDTH=2
+LVCF_TEXT=4
+LVCF_SUBITEM=8
+LVCF_IMAGE=16
+LVCF_ORDER=32
+
+CBEMAXSTRLEN=260
+
+# listview header window messages
+HDM_FIRST=0x1200
+HDM_GETITEMCOUNT=HDM_FIRST
 
 class LVGROUP(Structure):
 	_fields_=[
@@ -62,30 +92,30 @@ class LVGROUP(Structure):
 		('stateMask',c_uint),
 		('state',c_uint),
 		('uAlign',c_uint),
-		('pszSubtitle',c_void_p),
-		('cchSubtitle',c_uint),
-		('pszTask',c_void_p),
-		('cchTask',c_uint),
-		('pszDescriptionTop',c_void_p),
-		('cchDescriptionTop',c_uint),
-		('pszDescriptionBottom',c_void_p),
-		('cchDescriptionBottom',c_uint),
-		('iTitleImage',c_int),
-		('iExtendedImage',c_int),
-		('iFirstItem',c_int),
-		('cItems',c_uint),
-		('pszSubsetTitle',c_void_p),
-		('cchSubsetTitle',c_uint),
 	]
 
-class LVItemStruct(Structure):
+class LVGROUP64(Structure):
+	_fields_=[
+		('cbSize',c_uint),
+		('mask',c_uint),
+		('pszHeader',c_ulonglong),
+		('cchHeader',c_int),
+		('pszFooter',c_ulonglong),
+		('cchFooter',c_int),
+		('iGroupId',c_int),
+		('stateMask',c_uint),
+		('state',c_uint),
+		('uAlign',c_uint),
+	]
+
+class LVITEM(Structure):
 	_fields_=[
 		('mask',c_uint),
 		('iItem',c_int),
 		('iSubItem',c_int),
 		('state',c_uint),
 		('stateMask',c_uint),
-		('text',LPWSTR),
+		('pszText',c_void_p),
 		('cchTextMax',c_int),
 		('iImage',c_int),
 		('lParam',LPARAM),
@@ -97,38 +127,80 @@ class LVItemStruct(Structure):
 		('iGroup',c_int),
 	]
 
-class NMLVDispInfoStruct(Structure):
+class LVITEM64(Structure):
 	_fields_=[
-		('hdr',winUser.NMHdrStruct),
-		('item',c_int),
+		('mask',c_uint),
+		('iItem',c_int),
+		('iSubItem',c_int),
+		('state',c_uint),
+		('stateMask',c_uint),
+		('pszText',c_ulonglong),
+		('cchTextMax',c_int),
+		('iImage',c_int),
+		('lParam',c_ulonglong),
+		('iIndent',c_int),
+		('iGroupID',c_int),
+		('cColumns',c_uint),
+		('puColumns',c_uint),
+		('piColFmt',c_ulonglong),
+		('iGroup',c_int),
 	]
 
-def getListGroupInfo(windowHandle,groupIndex):
-	processHandle=oleacc.GetProcessHandleFromHwnd(windowHandle)
-	if not processHandle:
-		return None
-	localInfo=LVGROUP()
-	localInfo.cbSize=sizeof(LVGROUP)
-	localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
-	localInfo.stateMask=0xffffffff
-	remoteInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(LVGROUP),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-	try:
-		winKernel.writeProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
-		messageRes=watchdog.cancellableSendMessage(windowHandle,LVM_GETGROUPINFOBYINDEX,groupIndex,remoteInfo)
-		winKernel.readProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(LVGROUP),None)
-	finally:
-		winKernel.virtualFreeEx(processHandle,remoteInfo,0,winKernel.MEM_RELEASE)
-	localHeader=create_unicode_buffer(localInfo.cchHeader)
-	winKernel.readProcessMemory(processHandle,localInfo.pszHeader,localHeader,localInfo.cchHeader*2,None)
-	localFooter=create_unicode_buffer(localInfo.cchFooter)
-	winKernel.readProcessMemory(processHandle,localInfo.pszFooter,localFooter,localInfo.cchFooter*2,None)
-	winKernel.closeHandle(processHandle)
-	if messageRes==1:
-		return dict(header=localHeader.value,footer=localFooter.value,groupID=localInfo.iGroupId,state=localInfo.state,uAlign=localInfo.uAlign,groupIndex=groupIndex)
-	else:
-		return None
+class LVCOLUMN(Structure):
+	_fields_=[
+		('mask',c_uint),
+		('fmt',c_int),
+		('cx',c_int),
+		('pszText',c_void_p),
+		('cchTextMax',c_int),
+		('iSubItem',c_int),
+		('iImage',c_int),
+		('iOrder',c_int),
+		('cxMin',c_int),
+		('cxDefault',c_int),
+		('cxIdeal',c_int),
+	]
+
+class LVCOLUMN64(Structure):
+	_fields_=[
+		('mask',c_uint),
+		('fmt',c_int),
+		('cx',c_int),
+		('pszText',c_ulonglong),
+		('cchTextMax',c_int),
+		('iSubItem',c_int),
+		('iImage',c_int),
+		('iOrder',c_int),
+		('cxMin',c_int),
+		('cxDefault',c_int),
+		('cxIdeal',c_int),
+	]
 
 class List(List):
+
+	def getListGroupInfo(self,groupIndex):
+		processHandle=self.processHandle
+		if not processHandle:
+			return None
+		localInfo=LVGROUP64() if self.appModule.is64BitProcess else LVGROUP()
+		localInfo.cbSize=sizeof(localInfo)
+		localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
+		localInfo.stateMask=0xffffffff
+		remoteInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(localInfo),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			winKernel.writeProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(localInfo),None)
+			messageRes=watchdog.cancellableSendMessage(self.windowHandle,LVM_GETGROUPINFOBYINDEX,groupIndex,remoteInfo)
+			winKernel.readProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(localInfo),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,remoteInfo,0,winKernel.MEM_RELEASE)
+		localHeader=create_unicode_buffer(localInfo.cchHeader)
+		winKernel.readProcessMemory(processHandle,localInfo.pszHeader,localHeader,localInfo.cchHeader*2,None)
+		localFooter=create_unicode_buffer(localInfo.cchFooter)
+		winKernel.readProcessMemory(processHandle,localInfo.pszFooter,localFooter,localInfo.cchFooter*2,None)
+		if messageRes==1:
+			return dict(header=localHeader.value,footer=localFooter.value,groupID=localInfo.iGroupId,state=localInfo.state,uAlign=localInfo.uAlign,groupIndex=groupIndex)
+		else:
+			return None
 
 	def _get_name(self):
 		name=super(List,self)._get_name()
@@ -142,7 +214,7 @@ class List(List):
 		if self is api.getFocusObject():
 			groupIndex=watchdog.cancellableSendMessage(self.windowHandle,LVM_GETFOCUSEDGROUP,0,0)
 			if groupIndex>=0:
-				info=getListGroupInfo(self.windowHandle,groupIndex)
+				info=self.getListGroupInfo(groupIndex)
 				if info is not None:
 					ancestors=api.getFocusAncestors()
 					if api.getFocusDifferenceLevel()==len(ancestors)-1:
@@ -150,6 +222,42 @@ class List(List):
 					groupingObj=GroupingItem(windowHandle=self.windowHandle,parentNVDAObject=self,groupInfo=info)
 					return eventHandler.queueEvent("gainFocus",groupingObj)
 		return super(List,self).event_gainFocus()
+
+	def _get_isMultiColumn(self):
+		view =  watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0)
+		if view in (LV_VIEW_DETAILS, LV_VIEW_TILE):
+			return True
+		elif view == 0:
+			# #2673: This could indicate that LVM_GETVIEW is not supported (comctl32 < 6.0).
+			# Unfortunately, it could also indicate LV_VIEW_ICON.
+			# Hopefully, no one sets LVS_REPORT and then LV_VIEW_ICON.
+			return self.windowStyle & LVS_TYPEMASK == LVS_REPORT
+		return False
+
+	def _get_rowCount(self):
+		return watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
+
+	def _get_columnCount(self):
+		if not self.isMultiColumn:
+			return 0
+		headerHwnd= watchdog.cancellableSendMessage(self.windowHandle,LVM_GETHEADER,0,0)
+		count = watchdog.cancellableSendMessage(headerHwnd, HDM_GETITEMCOUNT, 0, 0)
+		if not count:
+			return 1
+		return count
+
+	def _get__columnOrderArray(self):
+		coa=(c_int *self.columnCount)()
+		processHandle=self.processHandle
+		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			winKernel.writeProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+			res = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETCOLUMNORDERARRAY, self.columnCount, internalCoa)
+			if res:
+				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
+		return coa
 
 class GroupingItem(Window):
 
@@ -164,19 +272,20 @@ class GroupingItem(Window):
 	def _set_groupInfo(self,info):
 		self._groupInfoTime=time.time()
 		self._groupInfo=info
+		for gesture in ("kb:leftArrow", "kb:rightArrow"):
+			self.bindGesture(gesture, "collapseOrExpand")
 
 	def _get_groupInfo(self):
 		now=time.time()
 		if (now-self._groupInfoTime)>0.25:
 			self._groupInfoTime=now
-			self._groupInfo=getListGroupInfo(self.windowHandle,self._groupInfo['groupIndex'])
+			self._groupInfo=self.parent.getListGroupInfo(self._groupInfo['groupIndex'])
 		return self._groupInfo
 
 	def _get_name(self):
 		return self.groupInfo['header']
 
-	def _get_role(self):
-		return controlTypes.ROLE_GROUPING
+	role = controlTypes.ROLE_GROUPING
 
 	def _get_value(self):
 		return self.groupInfo['footer']
@@ -191,42 +300,22 @@ class GroupingItem(Window):
 
 	def script_collapseOrExpand(self,gesture):
 		gesture.send()
-		self.event_stateChange()
+		eventHandler.queueEvent("stateChange",self)
+
+class ListItemWithoutColumnSupport(IAccessible):
 
 	def initOverlayClass(self):
-		for gesture in ("kb:leftArrow", "kb:rightArrow"):
-			self.bindGesture(gesture, "collapseOrExpand")
+		if self.appModule.is64BitProcess:
+			self.LVITEM = LVITEM64
+			self.LVCOLUMN = LVCOLUMN64
+		else:
+			self.LVITEM = LVITEM
+			self.LVCOLUMN = LVCOLUMN
 
-class ListItem(IAccessible):
-
-	def _get_lvAppImageID(self):
-		item=LVItemStruct(iItem=self.IAccessibleChildID-1,mask=LVIF_IMAGE)
-		processHandle=self.processHandle
-		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(LVItemStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		try:
-			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
-			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEM,0,internalItem)
-			dispInfo=NMLVDispInfoStruct()
-			dispInfo.item=internalItem
-			dispInfo.hdr.hwndFrom=self.windowHandle
-			dispInfo.hdr.idFrom=self.windowControlID
-			dispInfo.hdr.code=LVN_GETDISPINFO
-			internalDispInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(NMLVDispInfoStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-			try:
-				winKernel.writeProcessMemory(processHandle,internalDispInfo,byref(dispInfo),sizeof(NMLVDispInfoStruct),None)
-				watchdog.cancellableSendMessage(self.parent.parent.windowHandle,winUser.WM_NOTIFY,LVN_GETDISPINFO,internalDispInfo)
-			finally:
-				winKernel.virtualFreeEx(processHandle,internalDispInfo,0,winKernel.MEM_RELEASE)
-			winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(LVItemStruct),None)
-		finally:
-			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
-		return item.iImage
-
-	def _get_description(self):
-		return None
+	description = None
 
 	def _get_value(self):
-		value=super(ListItem,self)._get_description()
+		value=super(ListItemWithoutColumnSupport,self)._get_description()
 		if (not value or value.isspace()) and self.windowStyle & LVS_OWNERDRAWFIXED:
 			value=self.displayText
 		if not value:
@@ -243,4 +332,108 @@ class ListItem(IAccessible):
 
 	def event_stateChange(self):
 		if self.hasFocus:
-			super(ListItem,self).event_stateChange()
+			super(ListItemWithoutColumnSupport,self).event_stateChange()
+
+class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
+
+	def _getColumnLocationRaw(self,index):
+		processHandle=self.processHandle
+		localRect=RECT(left=2,top=index)
+		internalRect=winKernel.virtualAllocEx(processHandle,None,sizeof(localRect),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			winKernel.writeProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
+			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETSUBITEMRECT, (self.IAccessibleChildID-1), internalRect)
+			winKernel.readProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
+		windll.user32.ClientToScreen(self.windowHandle,byref(localRect))
+		windll.user32.ClientToScreen(self.windowHandle,byref(localRect,8))
+		return (localRect.left,localRect.top,localRect.right-localRect.left,localRect.bottom-localRect.top)
+
+	def _getColumnLocation(self,column):
+		return self._getColumnLocationRaw(self.parent._columnOrderArray[column - 1])
+
+	def _getColumnContentRaw(self, index):
+		buffer=None
+		processHandle=self.processHandle
+		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			internalText=winKernel.virtualAllocEx(processHandle,None,CBEMAXSTRLEN*2,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			try:
+				item=self.LVITEM(iItem=self.IAccessibleChildID-1,mask=LVIF_TEXT|LVIF_COLUMNS,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
+				winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
+				len = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEMTEXTW, (self.IAccessibleChildID-1), internalItem)
+				if len:
+					winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
+					buffer=create_unicode_buffer(len)
+					winKernel.readProcessMemory(processHandle,item.pszText,buffer,sizeof(buffer),None)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalText,0,winKernel.MEM_RELEASE)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
+		return buffer.value if buffer else None
+
+	def _getColumnContent(self, column):
+		return self._getColumnContentRaw(self.parent._columnOrderArray[column - 1])
+
+	def _getColumnHeaderRaw(self,index):
+		buffer=None
+		processHandle=self.processHandle
+		internalColumn=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVCOLUMN),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		try:
+			internalText=winKernel.virtualAllocEx(processHandle,None,CBEMAXSTRLEN*2,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+			try:
+				column=self.LVCOLUMN(mask=LVCF_TEXT,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
+				winKernel.writeProcessMemory(processHandle,internalColumn,byref(column),sizeof(self.LVCOLUMN),None)
+				res = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETCOLUMNW, index, internalColumn)
+				if res:
+					winKernel.readProcessMemory(processHandle,internalColumn,byref(column),sizeof(self.LVCOLUMN),None)
+					buffer=create_unicode_buffer(column.cchTextMax)
+					winKernel.readProcessMemory(processHandle,column.pszText,buffer,sizeof(buffer),None)
+			finally:
+				winKernel.virtualFreeEx(processHandle,internalText,0,winKernel.MEM_RELEASE)
+		finally:
+			winKernel.virtualFreeEx(processHandle,internalColumn,0,winKernel.MEM_RELEASE)
+		return buffer.value if buffer else None
+
+	def _getColumnHeader(self, column):
+		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
+
+	def _get_name(self):
+		parent = self.parent
+		if not isinstance(parent, List) or not parent.isMultiColumn or self._shouldDisableMultiColumn:
+			name = super(ListItem, self).name
+			if name:
+				return name
+			elif self.windowStyle & LVS_OWNERDRAWFIXED:
+				return self.displayText
+			return name
+		textList = []
+		for col in xrange(1, self.childCount + 1):
+			content = self._getColumnContent(col)
+			if not content:
+				continue
+			if config.conf["documentFormatting"]["reportTableHeaders"] and col != 1:
+				header = self._getColumnHeader(col)
+			else:
+				header = None
+			if header:
+				textList.append("%s: %s" % (header, content))
+			else:
+				textList.append(content)
+		return "; ".join(textList)
+
+	value = None
+
+	def _get__shouldDisableMultiColumn(self):
+		if self.windowStyle & LVS_OWNERDRAWFIXED:
+			# This is owner drawn, but there may still be column content.
+			# accDescription will be empty if there is no column content,
+			# in which case multi-column support must be disabled.
+			ret = not super(ListItemWithoutColumnSupport, self).description
+			if ret:
+				self.childCount = 0
+		else:
+			ret = False
+		self._shouldDisableMultiColumn = ret
+		return ret

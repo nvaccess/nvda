@@ -64,6 +64,23 @@ def main():
 			import shellapi
 			import winUser
 			shellapi.ShellExecute(0,None,path,None,None,winUser.SW_SHOWNORMAL)
+		elif action == "addons_installAddonPackage":
+			try:
+				addonPath=unicode(args[0], "mbcs")
+			except IndexError:
+				raise ValueError("Addon path was not provided.")
+			#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
+			import ctypes
+			h=ctypes.windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
+			remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
+			ret = remoteLib.nvdaControllerInternal_installAddonPackageFromPath(addonPath)
+			if ret != 0:
+				import winUser
+				winUser.MessageBox(0,
+				# Translators: the message that is shown when the user tries to install an add-on from windows explorer and NVDA is not running.
+				_("Cannot install NVDA add-on from {path}.\n"
+				"You must be running NVDA to be able to install add-ons.").format(path=addonPath),
+				0, winUser.MB_ICONERROR)
 		else:
 			raise ValueError("No such action")
 

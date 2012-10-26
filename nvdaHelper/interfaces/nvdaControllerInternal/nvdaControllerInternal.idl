@@ -66,8 +66,24 @@ interface NvdaControllerInternal {
 	error_status_t __stdcall logMessage([in] const long level, [in] const long processID, [in,string] const wchar_t* message);
 
 /**
+ * Notifies NVDA of updates to the current input composition (including the full content, the selection offsets and the newly added text if any).
+ */
+	error_status_t __stdcall inputCompositionUpdate([in,string] const wchar_t* compositionString, [in] const int selectionStart, [in] const int selectionEnd, [in] const int isReading);
+
+	error_status_t __stdcall inputCandidateListUpdate([in,string] const wchar_t* candidates, [in] const long selectionIndex, [in,string] const wchar_t* inputMethod);
+
+	error_status_t __stdcall IMEOpenStatusUpdate([in] const long open);
+
+	error_status_t __stdcall inputConversionModeUpdate([in] const long oldFlags, [in] const long newFlags,[in] const unsigned long lcid);
+
+/**
  * Notifies NVDA that a virtual buffer has changed.
  */
 	error_status_t __stdcall vbufChangeNotify([in] const int rootDocHandle, [in] const int rootID);
-	
+
+/**
+* Requests for installation of the add-on package from specified path.
+* @param addonPath path to the add-on package file.
+*/
+	error_status_t __stdcall installAddonPackageFromPath([in, string] const wchar_t* addonPath);
 };

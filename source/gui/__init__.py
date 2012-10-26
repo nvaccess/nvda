@@ -199,6 +199,9 @@ class MainFrame(wx.Frame):
 	def onReviewCursorCommand(self,evt):
 		self._popupSettingsDialog(ReviewCursorDialog)
 
+	def onInputCompositionCommand(self,evt):
+		self._popupSettingsDialog(InputCompositionDialog)
+
 	def onObjectPresentationCommand(self,evt):
 		self._popupSettingsDialog(ObjectPresentationDialog)
 
@@ -276,7 +279,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.SetIcon(icon, versionInfo.name)
 
 		self.menu=wx.Menu()
-		menu_preferences=wx.Menu()
+		menu_preferences=self.preferencesMenu=wx.Menu()
 		item = menu_preferences.Append(wx.ID_ANY,_("&General settings..."),_("General settings"))
 		self.Bind(wx.EVT_MENU, frame.onGeneralSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer..."),_("Change the synthesizer to be used"))
@@ -291,6 +294,8 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
+		item = menu_preferences.Append(wx.ID_ANY,_("&Input composition settings..."),_("Configure how NVDA reports input composition and candidate selection for certain languages")) 
+		self.Bind(wx.EVT_MENU, frame.onInputCompositionCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
 		item = menu_preferences.Append(wx.ID_ANY,_("&Browse mode..."),_("Change virtual buffers specific settings")) 
@@ -311,7 +316,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 			self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
-		menu_tools = wx.Menu()
+		menu_tools = self.toolsMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
 			item = menu_tools.Append(wx.ID_ANY, _("View log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
@@ -333,11 +338,12 @@ class SysTrayIcon(wx.TaskBarIcon):
 		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
-		menu_help = wx.Menu()
+		menu_help = self.helpMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
 			item = menu_help.Append(wx.ID_ANY, _("User Guide"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
-			item = menu_help.Append(wx.ID_ANY, _("Keyboard Commands Quick Reference"))
+			# Translators: The label of a menu item to open the Commands Quick Reference document.
+			item = menu_help.Append(wx.ID_ANY, _("Commands &Quick Reference"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("keyCommands.html")), item)
 			item = menu_help.Append(wx.ID_ANY, _("What's &new"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)

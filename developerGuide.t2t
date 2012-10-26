@@ -508,7 +508,51 @@ Inside this method, you should decide which custom NVDA Object class(es) (if any
 If a custom class should be used, it must be inserted into the class list, usually at the beginning.
 You can also remove classes chosen by NVDA from the class list, although this is rarely required.
 
-++ Example 5: Labelling the Notepad Edit Field using a Custom NVDA Object ++
+++ Example 5: Command to Retrieve the Length of Text in an Edit Field Using a Custom NVDA Object ++
+This app module for notepad provides a command to report the number of characters in edit fields.
+You can activate it using NVDA+l.
+Notice that the command is specific to edit fields; i.e. it only works while you are focused in an edit field, rather than anywhere in the application.
+
+The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of notepad.py.
+
+```
+--- start ---
+import appModuleHandler
+from NVDAObjects.IAccessible import IAccessible
+import controlTypes
+import ui
+
+class AppModule(appModuleHandler.AppModule):
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.windowClassName == "Edit" and obj.role == controlTypes.ROLE_EDITABLETEXT:
+			clsList.insert(0, EnhancedEditField)
+
+class EnhancedEditField(IAccessible):
+
+	def script_reportLength(self, gesture):
+		ui.message("%d" % len(self.value))
+
+	__gestures = {
+		"kb:NVDA+l": "reportLength",
+	}
+
+--- end ---
+```
+
+++ Making Small Changes to an NVDA Object in App Modules ++
+Sometimes, you may wish to make only small changes to an NVDA Object in an application, such as overriding its name or role.
+In these cases, you don't need the full power of a custom NVDA Object class.
+To do this, you can use the NVDAObject_init event available only on App Modules.
+
+The event_NVDAObject_init method takes two arguments:
++ self: the AppModule instance.
++ obj: the NVDAObject being initialized.
++
+
+Inside this method, you can check whether this object is relevant and then override properties accordingly.
+
+++ Example 6: Labelling the Notepad Edit Field Using event_NVDAObject_init ++
 This app module for notepad makes NVDA report Notepad's main edit field as having a name of "content".
 That is, when it receives focus, NVDA will say "Content edit".
 
@@ -521,14 +565,9 @@ from NVDAObjects.window import Window
 
 class AppModule(appModuleHandler.AppModule):
 
-	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+	def event_NVDAObject_init(self, obj):
 		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
-			clsList.insert(0, LabelledEditField)
-
-class LabelledEditField(Window):
-
-	name="Content"
-
+			obj.name = "Content"
 --- end ---
 ```
 

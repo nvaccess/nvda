@@ -11,7 +11,8 @@ import textInfos
 import api
 import appModuleHandler
 from keyboardHandler import KeyboardInputGesture
-from NVDAObjects.IAccessible import sysListView32
+from NVDAObjects.window import Window
+from NVDAObjects.IAccessible import IAccessible, sysListView32
 import watchdog
 
 #Labels for the header fields of an email, by control ID
@@ -49,13 +50,14 @@ envelopeNames={
 class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
+		if not isinstance(obj,Window): return
 		controlID=obj.windowControlID
 		windowHandle=obj.windowHandle
 		parentWindow=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
 		parentClassName=winUser.getClassName(parentWindow)
 		#If this object is an email header field, and we have a custom label for it,
 		#Then set the object's name to the label 
-		if parentClassName=="OE_Envelope" and obj.IAccessibleChildID==0 and envelopeNames.has_key(controlID):
+		if parentClassName=="OE_Envelope" and isinstance(obj,IAccessible) and obj.IAccessibleChildID==0 and envelopeNames.has_key(controlID):
 			obj.name=envelopeNames[controlID]
 			obj.useITextDocumentSupport=True
 			obj.editValueUnit=textInfos.UNIT_STORY

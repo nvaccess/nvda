@@ -4,7 +4,8 @@
 #See the file COPYING for more details.
 #Copyright (C) 2009-2012 NV Access Limited
 
-from ctypes.wintypes import POINT
+from ctypes import byref
+from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 import weakref
 import UIAHandler
@@ -18,7 +19,8 @@ import textInfos
 from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
-from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection
+from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
+import braille
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -46,7 +48,14 @@ class UIATextInfo(textInfos.TextInfo):
 				fontSizeValue=UIAHandler.handler.reservedNotSupportedValue
 			if fontSizeValue!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['font-size']="%g pt"%float(fontSizeValue)
-		return formatField
+		if formatConfig["reportHeadings"]:
+			try:
+				styleIDValue=range.GetAttributeValue(UIAHandler.UIA_StyleIdAttributeId)
+			except COMError:
+				styleIDValue=UIAHandler.handler.reservedNotSupportedValue
+			if UIAHandler.StyleId_Heading1<=styleIDValue<=UIAHandler.StyleId_Heading9: 
+				formatField["heading-level"]=(styleIDValue-UIAHandler.StyleId_Heading1)+1
+		return textInfos.FieldCommand("formatChange",formatField)
 
 	def __init__(self,obj,position):
 		super(UIATextInfo,self).__init__(obj,position)
@@ -70,6 +79,13 @@ class UIATextInfo(textInfos.TextInfo):
 			self.collapse(True)
 		elif position==textInfos.POSITION_ALL:
 			self._rangeObj=self.obj.UIATextPattern.documentRange
+		elif isinstance(position,UIA):
+			self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+		elif isinstance(position,textInfos.Point):
+			#rangeFromPoint causes a freeze in UIA client library!
+			#p=POINT(position.x,position.y)
+			#self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
+			raise NotImplementedError
 		else:
 			raise ValueError("Unknown position %s"%position)
 
@@ -78,18 +94,98 @@ class UIATextInfo(textInfos.TextInfo):
 		if self.__class__ is not other.__class__: return False
 		return bool(self._rangeObj.compare(other._rangeObj))
 
+	def _get_NVDAObjectAtStart(self):
+		tempRange=self._rangeObj.clone()
+		tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,tempRange,UIAHandler.TextPatternRangeEndpoint_Start)
+		e=tempRange.getEnclosingElement()
+		obj=UIA(UIAElement=e.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
+		return obj if obj else self.obj
+
 	def _get_bookmark(self):
 		return self.copy()
+
+	def _getControlFieldForObject(self, obj):
+		role = obj.role
+		field = textInfos.ControlField()
+		field["role"] = obj.role
+		states = obj.states
+		# The user doesn't care about certain states, as they are obvious.
+		states.discard(controlTypes.STATE_EDITABLE)
+		states.discard(controlTypes.STATE_MULTILINE)
+		states.discard(controlTypes.STATE_FOCUSED)
+		field["states"] = states
+		field["name"] = obj.name
+		#field["_childcount"] = obj.childCount
+		field["level"] = obj.positionInfo.get("level")
+		if role == controlTypes.ROLE_TABLE:
+			field["table-id"] = 1 # FIXME
+			field["table-rowcount"] = obj.rowCount
+			field["table-columncount"] = obj.columnCount
+		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
+			field["table-id"] = 1 # FIXME
+			field["table-rownumber"] = obj.rowNumber
+			field["table-columnnumber"] = obj.columnNumber
+		return field
+
+	def _getTextWithFieldsForRange(self,obj,rangeObj,formatConfig):
+		#Graphics usually have no actual text, so render the name instead
+		if obj.role==controlTypes.ROLE_GRAPHIC:
+			yield obj.name
+			return
+		tempRange=rangeObj.clone()
+		children=rangeObj.getChildren()
+		for index in xrange(children.length):
+			child=children.getElement(index)
+			childObj=UIA(UIAElement=child.buildUpdatedCache(UIAHandler.handler.baseCacheRequest))
+			#Sometimes a child range can contain the same children as its parent (causing an infinite loop)
+			if childObj==obj:
+				continue
+			childRange=self.obj.UIATextPattern.rangeFromChild(child)
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)<0:
+				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
+			if childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)>0:
+				childRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,childRange,UIAHandler.TextPatternRangeEndpoint_Start)
+			text=tempRange.getText(-1)
+			if text:
+				yield self._getFormatFieldAtRange(tempRange,formatConfig)
+				yield text
+			field=self._getControlFieldForObject(childObj) if childObj else None
+			if field:
+				yield textInfos.FieldCommand("controlStart",field)
+			for x in self._getTextWithFieldsForRange(childObj,childRange,formatConfig):
+				yield x
+			if field:
+				yield textInfos.FieldCommand("controlEnd",None)
+			tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,childRange,UIAHandler.TextPatternRangeEndpoint_End)
+		tempRange.moveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_End)
+		text=tempRange.getText(-1)
+		if text:
+			yield self._getFormatFieldAtRange(tempRange,formatConfig)
+			yield text
 
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf["documentFormatting"]
-		rangeObj=self._rangeObj.Clone()
-		rangeObj.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_End,rangeObj,UIAHandler.TextPatternRangeEndpoint_Start)
-		rangeObj.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
-		formatField=self._getFormatFieldAtRange(rangeObj,formatConfig)
-		field=textInfos.FieldCommand("formatChange",formatField)
-		return [field,self.text]
+		fields=[]
+		try:
+			e=self._rangeObj.getEnclosingElement().buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		except COMError:
+			e=None
+		fields=[]
+		if e:
+			obj=UIA(UIAElement=e)
+			while obj and obj!=self.obj:
+				field=self._getControlFieldForObject(obj)
+				if field:
+					field=textInfos.FieldCommand("controlStart",field)
+					fields.append(field)
+				obj=obj.parent
+			fields.reverse()
+		ancestorCount=len(fields)
+		fields.extend(self._getTextWithFieldsForRange(self.obj,self._rangeObj,formatConfig))
+		fields.extend(textInfos.FieldCommand("controlEnd",None) for x in xrange(ancestorCount))
+		return fields
 
 	def _get_text(self):
 		return self._rangeObj.GetText(-1)
@@ -157,10 +253,6 @@ class UIA(Window):
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
-		if UIAClassName=="GridTileElement":
-			clsList.append(GridTileElement)
-		elif UIAClassName=="GridListTileElement":
-			clsList.append(GridListTileElement)
 		if UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(Toast)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
@@ -183,10 +275,19 @@ class UIA(Window):
 				pass
 		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
+		if self.UIAIsWindowElement and UIAClassName=="#32770":
+			clsList.append(Dialog)
+
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
 			super(UIA,self).findOverlayClasses(clsList)
+			if self.UIATextPattern:
+				#Since there is a UIA text pattern, there is no need to use the win32 edit support at all
+				import NVDAObjects.window.edit
+				for x in list(clsList):
+					if issubclass(x,NVDAObjects.window.edit.Edit):
+						clsList.remove(x)
 
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
@@ -243,13 +344,6 @@ class UIA(Window):
 			raise InvalidNVDAObject("no windowHandle")
 		super(UIA,self).__init__(windowHandle=windowHandle)
 
-		if UIAElement.getCachedPropertyValue(UIAHandler.UIA_IsTextPatternAvailablePropertyId): 
-			self.TextInfo=UIATextInfo
-			self.value=""
-		elif self.role==controlTypes.ROLE_WINDOW and self.UIAIsWindowElement:
-			import displayModel
-			self.TextInfo=displayModel.DisplayModelTextInfo
-
 		# UIARuntimeId is set by __new__.
 		if self.UIARuntimeId:
 			# This must be the last thing in the constructor,
@@ -264,23 +358,32 @@ class UIA(Window):
 		except:
 			return False
 
+	shouldAllowUIAFocusEvent=True #: UIA focus events can be completely ignored on this object if set to false.
+
+	def _getUIAPattern(self,ID,interface):
+		punk=self.UIAElement.GetCurrentPattern(ID)
+		if punk:
+			return punk.QueryInterface(interface)
+
 	def _get_UIAInvokePattern(self):
-		if not hasattr(self,'_UIAInvokePattern'):
-			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_InvokePatternId)
-			if punk:
-				self._UIAInvokePattern=punk.QueryInterface(UIAHandler.IUIAutomationInvokePattern)
-			else:
-				self._UIAInvokePattern=None
-		return self._UIAInvokePattern
+		self.UIAInvokePattern=self._getUIAPattern(UIAHandler.UIA_InvokePatternId,UIAHandler.IUIAutomationInvokePattern)
+		return self.UIAInvokePattern
 
 	def _get_UIATextPattern(self):
-		if not hasattr(self,'_UIATextPattern'):
-			punk=self.UIAElement.GetCurrentPattern(UIAHandler.UIA_TextPatternId)
-			if punk:
-				self._UIATextPattern=punk.QueryInterface(UIAHandler.IUIAutomationTextPattern)
-			else:
-				self._UIATextPattern=None
-		return self._UIATextPattern
+		self.UIATextPattern=self._getUIAPattern(UIAHandler.UIA_TextPatternId,UIAHandler.IUIAutomationTextPattern)
+		return self.UIATextPattern
+
+	def _get_UIALegacyIAccessiblePattern(self):
+		self.UIALegacyIAccessiblePattern=self._getUIAPattern(UIAHandler.UIA_LegacyIAccessiblePatternId,UIAHandler.IUIAutomationLegacyIAccessiblePattern)
+		return self.UIALegacyIAccessiblePattern
+
+	def _get_TextInfo(self):
+		if self.UIATextPattern: return UIATextInfo
+		textInfo=super(UIA,self).TextInfo
+		if textInfo is NVDAObjectTextInfo and self.UIAIsWindowElement and self.role==controlTypes.ROLE_WINDOW:
+			import displayModel
+			return displayModel.DisplayModelTextInfo
+		return textInfo
 
 	def setFocus(self):
 		self.UIAElement.setFocus()
@@ -518,6 +621,33 @@ class UIA(Window):
 		except COMError:
 			return False
 
+	def _get_positionInfo(self):
+		info=super(UIA,self).positionInfo or {}
+		try:
+			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+		except COMError:
+			itemIndex=0
+		if itemIndex>0:
+			info['indexInGroup']=itemIndex
+		parent=self.parent
+		parentCount=1
+		while parentCount<3 and isinstance(parent,UIA):
+			try:
+				itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
+			except COMError:
+				itemCount=0
+			if itemCount>0:
+				info['similarItemsInGroup']=itemCount
+				break
+			parent=parent.parent
+			parentCount+=1
+		return info
+
+	def event_valueChange(self):
+		if isinstance(self, EditableTextWithoutAutoSelectDetection):
+			return
+		return super(UIA, self).event_valueChange()
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
@@ -535,7 +665,9 @@ class TreeviewItem(UIA):
 		return level
 
 	def _get_positionInfo(self):
-		return {'level':self._level}
+		info=super(TreeviewItem,self).positionInfo or {}
+		info['level']=self._level
+		return info
 
 class UIColumnHeader(UIA):
 
@@ -611,26 +743,14 @@ class ListItem(UIA):
 				parent.event_valueChange()
 		super(ListItem, self).event_stateChange()
 
+class Dialog(Dialog):
+	role=controlTypes.ROLE_DIALOG
+
 class Toast(UIA):
 
 	def event_alert(self):
-		speech.speakObject(self)
-		api.setNavigatorObject(self)
-
-class GridTileElement(UIA):
-
-	role=controlTypes.ROLE_TABLECELL
-
-	def _get_description(self):
-		name=self.name
-		descriptionStrings=[]
-		for child in self.children:
-			description=child.basicText
-			if not description or description==name: continue
-			descriptionStrings.append(description)
-		return " ".join(descriptionStrings)
-		return description
-
-class GridListTileElement(UIA):
-	role=controlTypes.ROLE_TABLECELL
-	description=None
+		if not config.conf["presentation"]["reportHelpBalloons"]:
+			return
+		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+		# TODO: Don't use getBrailleTextForProperties directly.
+		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))

@@ -124,11 +124,16 @@ SYMLVL_MOST = 200
 SYMLVL_ALL = 300
 SYMLVL_CHAR = 1000
 SPEECH_SYMBOL_LEVEL_LABELS = {
-	SYMLVL_NONE: _("none"),
-	SYMLVL_SOME: _("some"),
-	SYMLVL_MOST: _("most"),
-	SYMLVL_ALL: _("all"),
-	SYMLVL_CHAR: _("character"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_NONE: pgettext("symbolLevel", "none"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_SOME: pgettext("symbolLevel", "some"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_MOST: pgettext("symbolLevel", "most"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_ALL: pgettext("symbolLevel", "all"),
+	# Translators: The level at which the given symbol will be spoken.
+	SYMLVL_CHAR: pgettext("symbolLevel", "character"),
 }
 CONFIGURABLE_SPEECH_SYMBOL_LEVELS = (SYMLVL_NONE, SYMLVL_SOME, SYMLVL_MOST, SYMLVL_ALL)
 SPEECH_SYMBOL_LEVELS = CONFIGURABLE_SPEECH_SYMBOL_LEVELS + (SYMLVL_CHAR,)
@@ -379,10 +384,10 @@ class SpeechSymbolProcessor(object):
 		symbols = self.computedSymbols = collections.OrderedDict()
 		# An indexable list of complex symbols for use in building/executing the regexp.
 		complexSymbolsList = self._computedComplexSymbolsList = []
-		# A list of simple symbol identifiers for use in building the regexp.
-		simpleSymbolIdentifiers = []
-		# Single character symbols.
-		characters = set()
+		# A list of multi-character simple symbols for use in building the regexp.
+		multiChars = []
+		# A list of single character symbols for use in building the regexp.
+		characters = []
 
 		# Add all complex symbols first, as they take priority.
 		for source in sources:
@@ -404,9 +409,10 @@ class SpeechSymbolProcessor(object):
 					# This is a new simple symbol.
 					# (All complex symbols have already been added.)
 					symbol = symbols[identifier] = SpeechSymbol(identifier)
-					simpleSymbolIdentifiers.append(identifier)
 					if len(identifier) == 1:
-						characters.add(identifier)
+						characters.append(identifier)
+					else:
+						multiChars.append(identifier)
 				# If fields weren't explicitly specified, inherit the value from later sources.
 				if symbol.replacement is None:
 					symbol.replacement = sourceSymbol.replacement
@@ -436,16 +442,17 @@ class SpeechSymbolProcessor(object):
 			if symbol.displayName is None:
 				symbol.displayName = symbol.identifier
 
-		characters = "".join(characters)
+		# Make characters into a regexp character set.
+		characters = "[%s]" % re.escape("".join(characters))
 		# The simple symbols must be ordered longest first so that the longer symbols will match.
-		simpleSymbolIdentifiers.sort(key=lambda identifier: len(identifier), reverse=True)
+		multiChars.sort(key=lambda identifier: len(identifier), reverse=True)
 
 		# Build the regexp.
 		patterns = [
 			# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
 			r"(?P<rstripSpace>  +$)",
 			# Repeated characters: more than 3 repeats.
-			r"(?P<repeated>(?P<repTmp>[%s])(?P=repTmp){3,})" % re.escape("".join(characters))
+			r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters
 		]
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
@@ -455,8 +462,9 @@ class SpeechSymbolProcessor(object):
 		# Simple symbols.
 		# These are all handled in one named group.
 		# Because the symbols are just text, we know which symbol matched just by looking at the matched text.
-		patterns.append(ur"(?P<simple>{})".format(
-			"|".join(re.escape(identifier) for identifier in simpleSymbolIdentifiers)
+		patterns.append(ur"(?P<simple>{multiChars}|{singleChars})".format(
+			multiChars="|".join(re.escape(identifier) for identifier in multiChars),
+			singleChars=characters
 		))
 		pattern = "|".join(patterns)
 		try:

@@ -29,6 +29,7 @@ error_status_t __stdcall nvdaControllerInternal_typedCharacterNotify(const long 
 	return _nvdaControllerInternal_typedCharacterNotify(threadID,ch);
 }
 
+
 error_status_t(__stdcall *_nvdaControllerInternal_logMessage)(const long, const long, const wchar_t*);
 error_status_t __stdcall nvdaControllerInternal_logMessage(const long level, const long processID, const wchar_t* message) {
 	return _nvdaControllerInternal_logMessage(level,processID,message);
@@ -39,7 +40,32 @@ error_status_t __stdcall nvdaControllerInternal_displayModelTextChangeNotify(con
 	return _nvdaControllerInternal_displayModelTextChangeNotify(hwnd,left,top,right,bottom);
 }
 
+error_status_t(__stdcall *_nvdaControllerInternal_inputCompositionUpdate)(const wchar_t*, const int, const int, const int);
+error_status_t __stdcall nvdaControllerInternal_inputCompositionUpdate(const wchar_t* compositionString, const int selectionStart, const int selectionEnd, const int isReading) {
+	return _nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionStart,selectionEnd,isReading);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_inputCandidateListUpdate)(const wchar_t*, const long, const wchar_t*);
+error_status_t __stdcall nvdaControllerInternal_inputCandidateListUpdate(const wchar_t* candidates, const long selectionIndex, const wchar_t* inputMethod) {
+	return _nvdaControllerInternal_inputCandidateListUpdate(candidates,selectionIndex,inputMethod);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_IMEOpenStatusUpdate)(const long);
+error_status_t __stdcall nvdaControllerInternal_IMEOpenStatusUpdate(const long opened) {
+	return _nvdaControllerInternal_IMEOpenStatusUpdate(opened);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_inputConversionModeUpdate)(const long, const long, const unsigned long);
+error_status_t __stdcall nvdaControllerInternal_inputConversionModeUpdate(const long oldFlags, const long newFlags, const unsigned long lcid) {
+	return _nvdaControllerInternal_inputConversionModeUpdate(oldFlags,newFlags,lcid);
+}
+
 error_status_t(__stdcall *_nvdaControllerInternal_vbufChangeNotify)(const int, const int);
 error_status_t __stdcall nvdaControllerInternal_vbufChangeNotify(const int rootDocHandle, const int rootID) {
 	return _nvdaControllerInternal_vbufChangeNotify(rootDocHandle,rootID);
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_installAddonPackageFromPath)(const wchar_t *);
+error_status_t __stdcall nvdaControllerInternal_installAddonPackageFromPath(const wchar_t *addonPath) {
+	return _nvdaControllerInternal_installAddonPackageFromPath(addonPath);
 }

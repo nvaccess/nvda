@@ -4,12 +4,21 @@
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
+Highlights of this release include support for Asian character input; experimental support for touch screens on Windows 8; reporting of page numbers and improved support for tables in Adobe Reader; table navigation commands in focused table rows and Windows list-view controls; support for several more braille displays; and reporting of row and column headers in Microsoft Excel.
 
 == New Features ==
+- NVDA can now support Asian character input using IME and text service input methods in all applications, Including:
+ - Reporting and navigation of candidate lists;
+ - Reporting and navigation of composition strings; and
+ - Reporting of reading strings.
 - The presence of underline and strikethrough is now reported in Adobe Reader documents. (#2410)
 - When the Windows Sticky Keys function is enabled, the NVDA modifier key will now behave like other modifier keys. This allows you to use the NVDA modifier key without needing to hold it down while you press other keys. (#230)
+- Automatic reporting of column and row headers is now supported in Microsoft Excel. Press NVDA+shift+c to set the row containing column headers and NVDA+shift+r to set the column containing row headers. Press either command twice in quick succession to clear the setting. (#1519)
 - Support for HIMS Braille Sense, Braille EDGE and SyncBraille braille displays. (#1266, #1267)
-- When Windows 8 Toast notifications appear, NVDA will announce them and move the navigator object there for further interaction. (#2143)
+- When Windows 8 Toast notifications appear, NVDA will report them if reporting of help balloons is enabled. (#2143)
+- Experimental support for Touch screens on Windows 8, including:
+ - Reading text directly under your finger while moving it around
+ - Many gestures for performing object navigation, text review, and other NVDA commands.
 - Support for VIP Mud. (#1728)
 - In Adobe Reader, if a table has a summary, it is now presented. (#2465)
 - In Adobe Reader, table row and column headers can now be reported. (#2193, #2527, #2528)
@@ -22,6 +31,13 @@
 - The first and last top routing buttons on Freedom Scientific PAC Mate and Focus Braille displays can now be used to scroll  backward and forward. (#2556)
 - Many more features are supported on Freedom Scientific Focus Braille displays such as advance bars, rocker bars and certain dot combinations for common actions. (#2516)
 - In applications using IAccessible2 such as Mozilla applications, table row and column headers can now be reported outside of browse mode. (#926)
+- Preliminary support for the document control in Microsoft Word 2013. (#2543)
+- Text alignment can now be reported in applications using IAccessible2 such as Mozilla applications. (#2612)
+- When a table row or standard Windows list-view control with multiple columns is focused, you can now use the table navigation commands to access individual cells. (#828)
+- New braille translation tables: Estonian grade 0, Portuguese 8 dot computer braille, Italian 6 dot computer braille. (#2319, #2662)
+- If NVDA is installed on the system, directly opening an NVDA add-on package (e.g. from Windows Explorer or after downloading in a web browser) will install it into NVDA. (#2306)
+- Support for newer models of Papenmeier BRAILLEX braille displays. (#1265)
+- Position information (e.g. 1 of 4) is now reported for Windows Explorer list items on Windows 7 and above. This also includes any UIAutomation controls that support the itemIndex and itemCount custom properties. (#2643)
 
 
 == Changes ==
@@ -30,18 +46,21 @@
 - The Save Settings On Exit option is now on by default for new configurations.
 - When updating a previously installed copy of NVDA, the desktop shortcut key is no longer forced back to control+alt+n if it was manually changed to something different by the user. (#2572)
 - The add-ons list in the Add-ons Manager now shows the package name before its status. (#2548)
-- If installing the same or another version of a currently installed add-on, NVDA will ask if you wish to remove the old add-on first, rather than just showing an error and aborting installation. (#2501)
+- If installing the same or another version of a currently installed add-on, NVDA will ask if you wish to update the add-on, rather than just showing an error and aborting installation. (#2501)
 - Object navigation commands (except the report current object command) now report with less verbosity. You can still obtain the extra information by using the report current object command. (#2560)
+- Updated liblouis braille translator to 2.5.1. (#2319, #2480, #2662, #2672)
+- The NVDA Key Commands Quick Reference document has been renamed to Commands Quick Reference, as it now includes touch commands as well as keyboard commands.
+- The Elements list in Browse mode will now remember the last element type shown (e.g. links, headings or landmarks) each time the dialog is shown within the same session of NVDA. (#365)
+- Most Metro apps in Windows 8 (e.g. Mail, Calendar) no longer activate Browse Mode for the entire app.
 
 
 == Bug Fixes ==
-- In Blio, the content of books can now be read in braille. (#2139)
 - In Windows Vista and later, NVDA no longer incorrectly treats the Windows key as being held down when unlocking Windows after locking it by pressing Windows+l. (#1856)
 - In Adobe Reader, row headers are now correctly recognised as table cells; i.e. coordinates are reported and they can be accessed using table navigation commands. (#2444)
 - In Adobe Reader, table cells spanning more than one column and/or row are now handled correctly. (#2437, #2438, #2450)
 - The NVDA distribution package now checks its integrity before executing. (#2475)
 - Temporary download files are now removed if downloading of an NVDA update fails. (#2477)
-- When copying the user configuration to the system configuration (for use on Windows logon and other secure screens) NVDA will no longer freeze on XP while doing so. (#2485)
+- NVDA will no longer freeze when it is running as an administrator while copying the user configuration to the system configuration (for use on Windows logon and other secure screens). (#2485)
 - Tiles on the Windows 8 Start Screen are now presented better in speech and braille. The name is no longer repeated, unselected is no longer reported on all tiles, and live status information is presented  as the description of the tile (e.g. current temperature for the Weather tile).
 - Passwords are no longer announced when reading password fields in Microsoft Outlook and other standard edit controls that are marked as protected. (#2021)
 - In Adobe Reader, changes to form fields are now correctly reflected in browse mode. (#2529)
@@ -58,11 +77,43 @@
 - Extraneous content is no longer incorrectly included when reporting the text of dialogs in web applications (specifically, ARIA dialogs with no aria-describedby attribute). (#2390)
 - NVDA no longer incorrectly reports or locates certain edit fields in MSHTML documents (e.g. Internet Explorer), specifically where an explicit ARIA role has been used by the web page author. (#2435)
 - The backspace key is now handled correctly when speaking typed words in Windows command consoles. (#2586)
+- Cell coordinates in Microsoft Excel are now shown again in Braille.
+- In Microsoft Word, NVDA no longer leaves you stuck on a paragraph with list formatting when trying to navigate out over a bullet or number with left arrow or control + left arrow. (#2402)
+- In browse mode in Mozilla applications, the items in certain list boxes (specifically, ARIA list boxes) are no longer incorrectly rendered.
+- In web browsers, NVDA now hides content which is marked as hidden from screen readers (specifically, using the aria-hidden attribute). (#2117)
+- Negative currency amounts (e.g. -$123) are now correctly spoken as negative, regardless of symbol level. (#2625)
+- During say all, NVDA will no longer incorrectly revert to the default language where a line does not end a sentence. (#2630)
+- Font information is now correctly detected in Adobe Reader 10.1 and later. (#2175)
+- In Adobe Reader, if alternate text is provided, only that text will be rendered. Previously, extraneous text was sometimes included. (#2174)
+- Where a document contains an application, the content of the application is no longer included in browse mode. This prevents unexpectedly moving inside the application when navigating. You can interact with the application in the same way as for embedded objects. (#990)
+- In Mozilla applications, the value of spin buttons is now correctly reported when it changes. (#2653)
+- Updated support for Adobe Digital Editions so that it works in version 2.0. (#2688)
+- Pressing NVDA+upArrow while on a combo box in Internet Explorer and other MSHTML documents will no longer incorrectly read all items. Rather, just the active item will be read. (#2337)
+- Speech dictionaries will now properly save when using a number (#) sign within the pattern or replacement fields. (#961)
+- Browse mode for MSHTML documents (e.g. Internet Explorer) now correctly displays visible content contained within hidden content (specifically, elements with a style of visibility:visible inside an element with style visibility:hidden). (#2097)
+- Links in Windows XP's Security Center no longer report random junk after their names. (#1331)
+- UI Automation text controls (e.g.  the search field in the Windows 7 Start Menu) are now  correctly announced when moving the mouse over them rather than staying silent.
+- Keyboard layout changes are no longer reported during say all, which was particularly problematic for multilingual documents including Arabic text. (#1676)
+- The entire content of some UI Automation editable text controls (e.g. the Search Box in the Windows 7/8 Start Menu) is no longer announced every time it changes.
+- When moving between groups on the Windows 8 start screen, unlabeled groups no longer announce their first tile as the name of the group. (#2658)
+- When opening the Windows 8 start screen, the focus is correctly placed on the first tile, rather than jumping to the root of the start screen which can confuse navigation. (#2720)
+- NVDA will no longer fail to start when the user's profile path contains certain multibyte characters. (#2729)
+- In browse mode in Google Chrome, the text of tabs is now rendered correctly.
 
 
 == Changes for Developers ==
 - Previous log file is now copied to nvda-old.log on NVDA initialization. Therefore, if NVDA crashes or is restarted, logging information from that session is still accessible for inspection. (#916)
 - Fetching the role property in chooseNVDAObjectOverlayClasses no longer causes the role to be incorrect and thus not reported on focus for certain objects such as Windows command consoles and Scintilla controls. (#2569)
+- The NVDA Preferences, Tools and Help menus are now accessible as attributes on gui.mainFrame.sysTrayIcon named preferencesMenu, toolsMenu and helpMenu, respectively. This allows plugins to more easily add items to these menus.
+- The navigatorObject_doDefaultAction script in globalCommands has been renamed to review_activate.
+- Gettext message contexts are now supported. This allows multiple translations to be defined for a single English message depending on the context. (#1524)
+ - This is done using the pgettext(context, message) function.
+ - This is supported for both NVDA itself and add-ons.
+ - xgettext and msgfmt from GNU gettext must be used to create any PO and MO files. The Python tools do not support message contexts.
+ - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts.
+ - See http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts for more information.
+- It is now possible to access built-in NVDA modules where they have been overridden by third party modules. See the nvdaBuiltin module for details.
+- Add-on translation support can now be used within the add-on installTasks module. (#2715)
 
 
 = 2012.2.1 =

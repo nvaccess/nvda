@@ -169,7 +169,7 @@ WB_RIGHTBREAK=7
 class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getPointFromOffset(self,offset):
-		if self.obj.editAPIVersion==1:
+		if self.obj.editAPIVersion==1 or self.obj.editAPIVersion>=3:
 			processHandle=self.obj.processHandle
 			internalP=winKernel.virtualAllocEx(processHandle,None,ctypes.sizeof(PointLStruct),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			try:
@@ -184,12 +184,10 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			res=watchdog.cancellableSendMessage(self.obj.windowHandle,EM_POSFROMCHAR,offset,None)
 			point=textInfos.Point(winUser.LOWORD(res),winUser.HIWORD(res))
 		(left,top,width,height)=self.obj.location
-		if point.x and point.y:
-			point.x=point.x+left
-			point.y=point.y+top
-			return point
-		else:
-			raise NotImplementedError
+		point.x=point.x+left
+		point.y=point.y+top
+		return point
+
 
 	def _getOffsetFromPoint(self,x,y):
 		(left,top,width,height)=self.obj.location

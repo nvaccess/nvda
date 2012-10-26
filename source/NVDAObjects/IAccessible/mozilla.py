@@ -13,15 +13,11 @@ import eventHandler
 import controlTypes
 from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
+from NVDAObjects.behaviors import RowWithFakeNavigation
 
 class Mozilla(IAccessible):
 
 	IAccessibleTableUsesTableCellIndexAttrib=True
-
-	def _get_beTransparentToMouse(self):
-		if not hasattr(self,'IAccessibleTextObject') and self.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in self.states:
-			return True
-		return super(Mozilla,self).beTransparentToMouse
 
 	def _get_parent(self):
 		#Special code to support Mozilla node_child_of relation (for comboboxes)
@@ -44,6 +40,8 @@ class Mozilla(IAccessible):
 		states = super(Mozilla, self).states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
 			states.add(controlTypes.STATE_CHECKABLE)
+		if self.IA2Attributes.get("hidden") == "true":
+			states.add(controlTypes.STATE_INVISIBLE)
 		return states
 
 	def _get_presentationType(self):
@@ -179,6 +177,10 @@ class GeckoPluginWindowRoot(WindowRoot):
 				log.debugWarning("NAVRELATION_EMBEDS failed")
 		return parent
 
+class TextLeaf(Mozilla):
+	role = controlTypes.ROLE_STATICTEXT
+	beTransparentToMouse = True
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -195,10 +197,39 @@ def findExtraOverlayClasses(obj, clsList):
 				cls = RootApplication
 		except COMError:
 			pass
+	elif iaRole == oleacc.ROLE_SYSTEM_TEXT:
+		# Check if this is a text leaf.
+		iaStates = obj.IAccessibleStates
+		# Text leaves are never focusable.
+		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
+		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
+			try:
+				ia2States = obj.IAccessibleObject.states
+			except COMError:
+				ia2States = 0
+			# This excludes a non-focusable @role="textbox".
+			if not (ia2States & IAccessibleHandler.IA2_STATE_EDITABLE):
+				cls = TextLeaf
 	if not cls:
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
 		clsList.append(cls)
+
+	if iaRole == oleacc.ROLE_SYSTEM_ROW:
+		clsList.append(RowWithFakeNavigation)
+	elif iaRole == oleacc.ROLE_SYSTEM_LISTITEM and hasattr(obj.parent, "IAccessibleTableObject"):
+		clsList.append(RowWithFakeNavigation)
+	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
+		# Check if the tree view is a table.
+		parent = obj.parent
+		# Tree view items may be nested, so skip any tree view item ancestors.
+		while parent and isinstance(parent, Mozilla) and parent.IAccessibleRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
+			newParent = parent.parent
+			parent.parent = newParent
+			parent = newParent
+		if hasattr(parent, "IAccessibleTableObject"):
+			clsList.append(RowWithFakeNavigation)
+
 	if iaRole in _IAccessibleRolesWithBrokenFocusedState:
 		clsList.append(BrokenFocusedState)
 

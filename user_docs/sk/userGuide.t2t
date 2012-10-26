@@ -2,7 +2,7 @@ NVDA NVDA_VERSION  Používateľská príručka
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Zoznam klávesových príkazov
+%kc:title: NVDA NVDA_VERSION Zoznam príkazov
 
 = Obsah =[toc]
 %%toc
@@ -56,7 +56,7 @@ Týka sa to oboch pôvodných, aj upravených kópií daného software.
 Pre viac informácií si môžete pozrieť [kompletnú licenciu (anglicky) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html].
 
 + Systémové požiadavky +
-- NVDA spustíte v 32 aj 64 bitových verziách systémov Windows XP, Vista, 7 a tiež v serverových edíciách Windows.
+- NVDA spustíte v 32 aj 64 bitových verziách systémov Windows XP, Vista, 7, 8 a tiež v serverových edíciách Windows.
 - Mali by ste mať najmenej 256 MB operačnej pamäte
 - Výkonnosť procesora sa odhaduje na 1 GHZ alebo rýchlejší. Spustíte ho i na pomalších počítačoch, ale štart programu bude pomalý, prejaví sa to najmä na načítaní internetových stránok.
 - Mali by ste mať aspoň 50 MB voľného miesta na disku
@@ -87,7 +87,7 @@ Ak ste úvodnú obrazovku zatvorili alebo chcete NVDA inštalovať z prenosnej v
 
 Po spustení inštalácie sa vás program opýta, či skutočne chcete NVDA inštalovať a takisto vás upozorní v prípade, že sa rozhodnete aktualizovať už nainštalovanú verziu NVDA.
 Inštaláciu spustíte aktivovaním tlačidla Pokračovať.
-počas inštalácie máte niekoľko možností, ktoré sú opísané v nasledujúcej podkapitole.
+Počas inštalácie máte niekoľko možností, ktoré sú opísané v nasledujúcej podkapitole.
 Po úspešnom nainštalovaní sa zobrazí okno so správou, ktoré môžete zatvoriť stlačením tlačidla OK.
 Po zatvorení okna sa NVDA reštartuje.
 
@@ -113,7 +113,7 @@ Môže to byť priečinok na vašom pevnom disku, USB kľúči, pamäťovej kart
 K dispozícii je tiež voľba, ktorá umožňuje zahrnúť do prenosnej verzie nastavenia práve prihláseného používateľa.
 Táto možnosť je dostupná len ak vytvárate prenosnú verziu z nainštalovanej verzie NVDA a nezobrazí sa, ak vytvárate prenosnú verziu priamo zo stiahnutého súboru zo stránky NVDA.
 Vytvorenie prenosnej verzie potvrdíte stlačením tlačidla Pokračovať.
-po úspešnom skopírovaní súborov sa zobrazí správa, ktorá vás informuje o úspešnosti operácie.
+Po úspešnom skopírovaní súborov sa zobrazí správa, ktorá vás informuje o úspešnosti operácie.
 Dialóg zatvorte aktivovaním tlačidla OK.
 
 + Začíname pracovať s NVDA +
@@ -443,8 +443,8 @@ Tlačidlami prejsť na alebo aktivovať vykonávame akcie pre prvky vybraté v z
 %kc:endInclude
 
 ++ Vnorené objekty ++
-Moderné webové stránky môžu byť obohatené o prvky Adobe flash alebo Sun Java.
-Ak sa tieto nachádzajú v dokumente, NVDA oznámi "vnorený objekt".
+Moderné webové stránky môžu byť obohatené o prvky Adobe flash, Sun Java, ale aj o dialógy či aplikácie.
+Ak sa tieto nachádzajú v dokumente, NVDA oznámi "vnorený objekt", "aplikácia", alebo "dialóg".
 Stlačením klávesu enter môžete premiestniť fokus do takéhoto vnoreného objektu.
 Ak je objekt prístupný, môžete sa v objekte pohybovať stláčaním klávesov tab alebo shift+tab.
 Je možné použiť klávesovú skratku na prechod späť do dokumentu v ktorom je objekt vnorený.
@@ -804,6 +804,20 @@ Klávesová skratka: NVDA+5
 
 Prepína automatické oznamovanie obsahu v niektorých objektoch ako sú napríklad terminály alebo prichádzajúci text v chatovacích programoch.
 
++++ Nastavenia vstupu +++
+Toto nastavenie nájdeme v možnostiach programu NVDA, pod názvom Nastavenia vstupu.
+Môžete tu nastaviť odozvu pri písaní ázijských znakov, ak je použitá textová služba alebo IME.
+
+==== Automaticky oznamovať všetky návrhy ====
+Táto možnosť je predvolene začiarknutá. Určuje, či budú oznamované všetky návrhy, ak sa zobrazí alebo zmení zoznam návrhov.
+Toto je užitočné pri písaní v piktografických písmach, ako napríklad chinese New ChangJie, alebo Boshiami. Budete počuť návrhy a zvolenú možnosť vyberiete zadaním konkrétneho čísla.
+Pri používaní fonetického písma, ako napríklad Chinese New Phonetic, je lepšie túto možnosť odčiarknuť. Všetky znaky totiž znejú rovnako a musíte si zoznam prehliadať šípkami, aby ste získali podrobnejšiu informáciu o vybratom znaku.
+
+==== Oznamovať zmeny v okne s výslovnosťou ====
+Pri niektorých písmach sa používa tzv. okno s výslovnosťou. Sú to napríklad Chinese New Phonetic a New ChangJie.
+Môžete nastaviť, či má NVDA oznamovať nové znaky, ktoré sa objavia v okne s výslovnosťou.
+Táto možnosť je predvolene začiarknutá.
+
 +++ Režim prehliadania (NVDA+CTRL+b) +++
 Toto nastavenie nájdeme v možnostiach programu NVDA, pod názvom režim prehliadania.
 
@@ -1057,6 +1071,11 @@ Nasleduje zoznam klávesových príkazov pre tento typ riadku.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
 %kc:beginInclude
 || Názov | Klávesová skratka |
+| Posunúť riadok späť | topRouting1 (prvý znak na riadku) |
+| Posunúť riadok vpred | topRouting20/40/80 (posledný znak na riadku) |
+| Posunúť riadok späť | leftAdvanceBar |
+| Posunúť riadok vpred | rightAdvanceBar |
+| Prepnúť nastavenie braillovský kurzor zviazaný s | ľavé GDF tlačidlo+pravé GDF tlačidlo |
 | Prepnúť akciu ľavého kolieska | Stlačenie ľavého kolieska |
 | posunúť späť pomocou ľavého kolieska | ľavé koliesko hore |
 | Posunúť vpred použitím ľavého kolieska | ľavé koliesko dolu |
@@ -1064,6 +1083,38 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | posunúť späť pomocou pravého kolieska | pravé koliesko hore |
 | Posunúť vpred použitím pravého kolieska | pravé koliesko dolu |
 | Prejsť na znak v brailly | smerové tlačidlá |
+| backspace | bod7 |
+| enter | dot8 |
+| shift+tab | braiolovská medzera+body 1,2 |
+| tab | brailovská medzera +body 4,5 |
+| šípka hore | brailovská medzera +bod 1 |
+| šípka dole | brailovská medzera +bod 4 |
+| ctrl+šípka vľavo | Brailovská medzera +bod 2 |
+| ctrl+šípka vprav | brailovská medzera +bod 5 |
+| šípka vľavo | brailovská medzera +bod 3 |
+| šípka vpravo | brailovská medzera+bod6 |
+| home | brailovská medzera +body 1,3 |
+| end | brailovská medzera+body 4,6 |
+| ctrl+home | brailovská medzera+body 1,2,3 |
+| ctrl+end | brailovská medzera+body 4,5,6 |
+| alt | brailovská medzera+body 1,3,4 |
+| alt+tab | brailovská medzera+body 2,3,4,5 |
+| escape | brailovská medzera+body 1,5 |
+| kláves windows | brailovská medzera+body2,4,5,6 |
+| medzera | brailovská medzera |
+| windows+d (minimalizovať všetky aplikácie) | brailovská medzera +body 1,2,3,4,5,6 |
+| prečítaj aktuálny riadok | brailovská medzera+body 1,4 |
+| Ponuka NVDA | brailovská medzera+ody 1,3,4,5 |
+
+Nové modely brailovských riadkov (focus 40, focus 80 a focus blue), ktoré majú tzv. rocker bars:
+|| Názov | Klávesová skratka |
+| posunúť riadok späť | leftRockerBarUp, rightRockerBarUp |
+| Posunúť riadok vpred | leftRockerBarDown, rightRockerBarDown |
+Len pre riadok Focus 80:
+
+|| Názov | Klávesová skratka |
+| Posunúť riadok späť | leftBumperBarUp, rightBumperBarUp |
+| Posunúť riadok vpred | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1134,7 +1185,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | nasledujúci riadok | DN |
 | Prejsť na znak v brailly | smerové tlačidlá |
 | shift+tab | SLF |
-| tab key | SRG |
+| tab  | SRG |
 | alt+tab | SDN |
 | alt+shift+tab | SUP |
 %kc:endInclude
@@ -1222,7 +1273,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | šípka dolu | medzera+bod4 |
 | ľavá šípka | medzera+bod3 |
 | pravá šípka | medzera+bod6 |
-| Ponuka NVDA | c1+c3+c4+c5 (command n) |
+| Ponuka NVDA | c1+c3+c4+c5 (príkaz n) |
 | shift+tab | medzera+bod1+bod3 |
 | tab | medzera+bod4+bod6 |
 | alt | medzera+bod1+bod3+bod4 (medzera+m) |
@@ -1231,7 +1282,7 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie 
 | windows+d (minimalizovať všetky aplikácie) | c1+c4+c5 (command d) |
 | kláves windows | medzera+bod3+bod4 |
 | alt+tab | medzera+bod2+bod3+bod4+bod5 (medzera+t) |
-| Čítať všetko | c1+c2+c3+c4+c5+c6 |
+| Plynulé čítanie | c1+c2+c3+c4+c5+c6 |
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE Series ++
@@ -1246,52 +1297,52 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie
 | Posunúť riadok vpred | right side scroll down |
 | Predchádzajúci riadok | left side scroll up |
 | Nasledujúci riadok | right side scroll up |
-| Prejsť na znak v brailly | routing |
-| emulácia shift+tab | bod1+bod2+medzera |
-| emulácia alt | bod1+bod3+bod4+medzera |
-| emulácia escape | bod1+bod5+medzera |
-| emulácia tab | bod4+bod5+medzera |
-| emulácia enter | bod8 |
-| emulácia backspace | bod7 |
-| emulácia šípka hore | bod1+medzera |
-| emulácia šípka dole | bod4+medzera |
-| emulácia capsLock | bod1+bod3+bod6+medzera |
-| emulácia shift+alt+tab | advance2+advance3+advance1 |
-| emulácia alt+tab | advance2+advance3 |
-| emulácia end | bod4+bod6+medzera |
-| emulácia ctrl+end | bod4+bod5+bod6+medzera |
-| emulácia home | bod1+bod3+medzera |
-| emulácia ctrl+home | bod1+bod2+bod3+medzera |
-| emulácia ľavá šípka | bod3+medzera |
-| emulácia ctrl+shift+ľavá šípka | bod2+bod8+medzera+advance1 |
-| emulácia ctrl+ľavá šípka | bod2+medzera |
-| emulácia shift+alt+ľavá šípka | bod2+bod7+advance1 |
-| emulácia alt+ľavá šípka | bod2+bod7 |
-| emulácia pravá šípka | bod6+medzera |
-| emulácia ctrl+shift+pravá šípka | bod5+bod8+medzera+advance1 |
-| emulácia ctrl+pravá šípka | bod5+medzera |
-| emulácia shift+alt+pravá šípka | bod5+bod7+advance1 |
-| emulácia alt+pravá šípka | bod5+bod7 |
-| emulácia page up | bod1+bod2+bod6+medzera |
-| emulácia ctrl+page up | bod1+bod2+bod6+bod8+medzera |
-| emulácia ctrl+shift+šípka hore | bod2+bod3+bod8+medzera+advance1 |
-| emulácia ctrl+šípka hore | bod2+bod3+medzera |
-| emulácia shift+alt+šípka hore | bod2+bod3+bod7+advance1 |
-| emulácia alt+šípka hore | bod2+bod3+bod7 |
-| emulácia shift+šípka hore | left side scroll down  +medzera |
-| emulácia pageDown | bod3+bod4+bod5+medzera |
-| emulácia ctrl+pagedown | bod3+bod4+bod5+bod8+medzera |
-| emulácia ctrl+shift+šípka dole | bod5+bod6+bod8+medzera+advance1 |
-| emulácia ctrl+šípka dole | bod5+bod6+medzera |
-| emulácia shift+alt+šípka dole | bod5+bod6+bod7+advance1 |
-| emulácia alt+šípka dole | bod5+bod6+bod7 |
-| emulácia shift+šípka dole | right side scroll down  +medzera |
-| emulácia delete | bod1+bod3+bod5+medzera |
-| emulácia f1 | bod1+bod2+bod5+medzera |
-| emulácia f3 | bod1+bod2+bod4+bod8 |
-| emulácia f4 | bod7+advance3 |
-| emulácia windows+b | bod1+bod2+advance1 |
-| emulácia windows+d | bod1+bod4+bod5+advance1 |
+| Prejsť na znak v brailly | smerové tlačidlá |
+| shift+tab | bod1+bod2+medzera |
+| alt | bod1+bod3+bod4+medzera |
+| escape | bod1+bod5+medzera |
+| tab | bod4+bod5+medzera |
+| enter | bod8 |
+| backspace | bod7 |
+| šípka hore | bod1+medzera |
+| šípka dole | bod4+medzera |
+| capsLock | bod1+bod3+bod6+medzera |
+| shift+alt+tab | advance2+advance3+advance1 |
+| alt+tab | advance2+advance3 |
+| end | bod4+bod6+medzera |
+| ctrl+end | bod4+bod5+bod6+medzera |
+| home | bod1+bod3+medzera |
+| ctrl+home | bod1+bod2+bod3+medzera |
+| ľavá šípka | bod3+medzera |
+| ctrl+shift+ľavá šípka | bod2+bod8+medzera+advance1 |
+| ctrl+ľavá šípka | bod2+medzera |
+| shift+alt+ľavá šípka | bod2+bod7+advance1 |
+| alt+ľavá šípka | bod2+bod7 |
+| pravá šípka | bod6+medzera |
+| ctrl+shift+pravá šípka | bod5+bod8+medzera+advance1 |
+| ctrl+pravá šípka | bod5+medzera |
+| shift+alt+pravá šípka | bod5+bod7+advance1 |
+| alt+pravá šípka | bod5+bod7 |
+| page up | bod1+bod2+bod6+medzera |
+| ctrl+page up | bod1+bod2+bod6+bod8+medzera |
+| ctrl+shift+šípka hore | bod2+bod3+bod8+medzera+advance1 |
+| ctrl+šípka hore | bod2+bod3+medzera |
+| shift+alt+šípka hore | bod2+bod3+bod7+advance1 |
+| alt+šípka hore | bod2+bod3+bod7 |
+| shift+šípka hore | left side scroll down  +medzera |
+| pageDown | bod3+bod4+bod5+medzera |
+| ctrl+pagedown | bod3+bod4+bod5+bod8+medzera |
+| ctrl+shift+šípka dole | bod5+bod6+bod8+medzera+advance1 |
+| ctrl+šípka dole | bod5+bod6+medzera |
+| shift+alt+šípka dole | bod5+bod6+bod7+advance1 |
+| alt+šípka dole | bod5+bod6+bod7 |
+| shift+šípka dole | right side scroll down  +medzera |
+| delete | bod1+bod3+bod5+medzera |
+| f1 | bod1+bod2+bod5+medzera |
+| f3 | bod1+bod2+bod4+bod8 |
+| f4 | bod7+advance3 |
+| windows+b | bod1+bod2+advance1 |
+| windows+d | bod1+bod4+bod5+advance1 |
 %kc:endInclude
 
 ++ HIMS SyncBraille ++
@@ -1304,7 +1355,29 @@ Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie
 || Názov | Klávesová skratka |
 | Posunúť riadok späť | left side scroll down  |
 | Posunúť riadok vpred | right side scroll down |
-| Prejsť na znak v brailly | routing |
+| Prejsť na znak v brailly | Smerové tlačidlá |
+%kc:endInclude
+
+++ Brailovské riadky od spoločnosti Seika ++
+Podporované sú 40-znakové verzie 3, 4 a 5 a takisto 80-znakový riadok Seika80 od spoločnosti [Nippon Telesoft http://www.nippontelesoft.com/].
+Viac informácii o týchto riadkoch nájdete na stránke http://www.seika-braille.com/.
+Aby ste mohli riadky používať, nainštalujte USB ovládač dodávaný so zariadením.
+
+Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
+Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením  na zistenie rozmiestnenia klávesov.
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Posunúť riadok späť | left |
+| Posunúť riadok vpred | right |
+| Predchádzajúci riadok | b3 |
+| Nasledujúci riadok | b4 |
+| Prepnúť nastavenie braillovský kurzor zviazaný s | b5 |
+| Plynulé čítanie | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| Ponuka NVDA | left+right |
+| prejsť na znak v braily | smerové tlačidlá |
 %kc:endInclude
 
 ++ BRLTTY ++

@@ -10,7 +10,7 @@ import struct
 import weakref
 from ctypes import *
 from ctypes.wintypes import HANDLE
-from comtypes import IUnknown, IServiceProvider
+from comtypes import IUnknown, IServiceProvider, COMError
 import comtypes.client
 import comtypes.client.lazybind
 import oleacc
@@ -95,11 +95,6 @@ class OrderedWinEventLimiter(object):
 				return
 		elif eventID==winUser.EVENT_OBJECT_HIDE:
 			k=(winUser.EVENT_OBJECT_SHOW,window,objectID,childID,threadID)
-			if k in self._genericEventCache:
-				del self._genericEventCache[k]
-				return
-		elif eventID==winUser.EVENT_OBJECT_DESTROY:
-			k=(winUser.EVENT_OBJECT_CREATE,window,objectID,childID,threadID)
 			if k in self._genericEventCache:
 				del self._genericEventCache[k]
 				return
@@ -400,15 +395,13 @@ def accHitTest(ia,x,y):
 def accChild(ia,child):
 	try:
 		res=ia.accChild(child)
-		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
-			new_ia=normalizeIAccessible(res)
-			new_child=0
-		elif isinstance(res,int):
-			new_ia=ia
-			new_child=res
-		return (new_ia,new_child)
+		if not res:
+			return (ia,child)
+		elif isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
+			return normalizeIAccessible(res),0
 	except:
-		return None
+		pass
+	return None
 
 def accParent(ia,child):
 	try:
@@ -456,6 +449,7 @@ winUser.EVENT_SYSTEM_SCROLLINGSTART:"scrollingStart",
 winUser.EVENT_SYSTEM_SWITCHEND:"switchEnd",
 winUser.EVENT_OBJECT_FOCUS:"gainFocus",
 winUser.EVENT_OBJECT_SHOW:"show",
+winUser.EVENT_OBJECT_HIDE:"hide",
 winUser.EVENT_OBJECT_DESTROY:"destroy",
 winUser.EVENT_OBJECT_DESCRIPTIONCHANGE:"descriptionChange",
 winUser.EVENT_OBJECT_LOCATIONCHANGE:"locationChange",
@@ -487,9 +481,6 @@ def winEventToNVDAEvent(eventID,window,objectID,childID,useCache=True):
 	@returns: the NVDA event name and the NVDAObject the event is for
 	@rtype: tuple of string and L{NVDAObjects.IAccessible.IAccessible}
 	"""
-	#We can't handle MSAA create events. (Destroys are handled elsewhere.)
-	if eventID == winUser.EVENT_OBJECT_CREATE:
-		return None
 	NVDAEventName=winEventIDsToNVDAEventNames.get(eventID,None)
 	if not NVDAEventName:
 		return None
@@ -526,6 +517,9 @@ def winEventCallback(handle,eventID,window,objectID,childID,threadID,timestamp):
 			return
 		#Ignore all locationChange events except ones for the caret
 		if eventID==winUser.EVENT_OBJECT_LOCATIONCHANGE and objectID!=winUser.OBJID_CARET:
+			return
+		if eventID==winUser.EVENT_OBJECT_DESTROY:
+			processDestroyWinEvent(window,objectID,childID)
 			return
 		#Change window objIDs to client objIDs for better reporting of objects
 		if (objectID==0) and (childID==0):
@@ -695,7 +689,7 @@ def processDesktopSwitchWinEvent(window,objectID,childID):
 		eventHandler.executeEvent("gainFocus",obj)
 
 def _correctFocus():
-	eventHandler.executeEvent("gainFocus",api.getDesktopObject().objectWithFocus())
+	eventHandler.queueEvent("gainFocus",api.getDesktopObject().objectWithFocus())
 
 def processForegroundWinEvent(window,objectID,childID):
 	"""checks to see if the foreground win event is not the same as the existing focus or any of its parents, 
@@ -737,7 +731,7 @@ def processForegroundWinEvent(window,objectID,childID):
 def processShowWinEvent(window,objectID,childID):
 	className=winUser.getClassName(window)
 	#For now we only support 'show' event for tooltips as otherwize we get flooded
-	if className=="tooltips_class32" and objectID==winUser.OBJID_CLIENT:
+	if className in ("tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
 		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
 		if NVDAEvent:
 			eventHandler.queueEvent(*NVDAEvent)
@@ -750,6 +744,15 @@ def processDestroyWinEvent(window,objectID,childID):
 		del liveNVDAObjectTable[(window,objectID,childID)]
 	except KeyError:
 		pass
+	#Specific support for input method MSAA candidate lists.
+	#When their window is destroyed we must correct focus to its parent - which could be a composition string
+	# so can't use generic focus correction. (#2695)
+	focus=api.getFocusObject()
+	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
+	if objectID==0 and childID==0 and isinstance(focus,BaseCandidateItem) and window==focus.windowHandle and not eventHandler.isPendingEvents("gainFocus"):
+		obj=focus.parent
+		if obj:
+			eventHandler.queueEvent("gainFocus",obj)
 
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	"""Process a menuStart win event.
@@ -825,8 +828,6 @@ def pumpAll():
 			focusWinEvents=[]
 			if winEvent[0]==winUser.EVENT_SYSTEM_DESKTOPSWITCH:
 				processDesktopSwitchWinEvent(*winEvent[1:])
-			elif winEvent[0]==winUser.EVENT_OBJECT_DESTROY:
-				processDestroyWinEvent(*winEvent[1:])
 			elif winEvent[0]==winUser.EVENT_OBJECT_SHOW:
 				processShowWinEvent(*winEvent[1:])
 			elif winEvent[0] in MENU_EVENTIDS+(winUser.EVENT_SYSTEM_SWITCHEND,):

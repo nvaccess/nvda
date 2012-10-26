@@ -7,6 +7,7 @@
 
 import time
 import tones
+import touchHandler
 import keyboardHandler
 import mouseHandler
 import eventHandler
@@ -25,7 +26,6 @@ import config
 import winUser
 import appModuleHandler
 import winKernel
-from gui import mainFrame
 import treeInterceptorHandler
 import scriptHandler
 import ui
@@ -41,9 +41,12 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleInputHelp(self,gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
-		state = _("on") if inputCore.manager.isInputHelpActive else _("off")
 		# Translators: This will be presented when the input help is toggled.
-		ui.message(_("input help %s")%state)
+		stateOn = _("input help on")
+		# Translators: This will be presented when the input help is toggled.
+		stateOff = _("input help off")
+		state = stateOn if inputCore.manager.isInputHelpActive else stateOff
+		ui.message(state)
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
 
 	def script_toggleCurrentAppSleepMode(self,gesture):
@@ -173,33 +176,38 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleSpeakTypedCharacters(self,gesture):
 		if config.conf["keyboard"]["speakTypedCharacters"]:
-			onOff=_("off")
+			# Translators: The message announced when toggling the speak typed characters keyboard setting.
+			state = _("speak typed characters off")
 			config.conf["keyboard"]["speakTypedCharacters"]=False
 		else:
-			onOff=_("on")
+			# Translators: The message announced when toggling the speak typed characters keyboard setting.
+			state = _("speak typed characters on")
 			config.conf["keyboard"]["speakTypedCharacters"]=True
-		# Translators: The message announced when toggling the speak typed characters keyboard setting.
-		ui.message(_("speak typed characters")+" "+onOff)
+		ui.message(state)
 	script_toggleSpeakTypedCharacters.__doc__=_("Toggles on and off the speaking of typed characters")
 
 	def script_toggleSpeakTypedWords(self,gesture):
 		if config.conf["keyboard"]["speakTypedWords"]:
-			onOff=_("off")
+			# Translators: The message announced when toggling the speak typed words keyboard setting.
+			state = _("speak typed words off")
 			config.conf["keyboard"]["speakTypedWords"]=False
 		else:
-			onOff=_("on")
+			# Translators: The message announced when toggling the speak typed words keyboard setting.
+			state = _("speak typed words on")
 			config.conf["keyboard"]["speakTypedWords"]=True
-		ui.message(_("speak typed words")+" "+onOff)
+		ui.message(state)
 	script_toggleSpeakTypedWords.__doc__=_("Toggles on and off the speaking of typed words")
 
 	def script_toggleSpeakCommandKeys(self,gesture):
 		if config.conf["keyboard"]["speakCommandKeys"]:
-			onOff=_("off")
+			# Translators: The message announced when toggling the speak typed command keyboard setting.
+			state = _("speak command keys off")
 			config.conf["keyboard"]["speakCommandKeys"]=False
 		else:
-			onOff=_("on")
+			# Translators: The message announced when toggling the speak typed command keyboard setting.
+			state = _("speak command keys on")
 			config.conf["keyboard"]["speakCommandKeys"]=True
-		ui.message(_("speak command keys")+" "+onOff)
+		ui.message(state)
 	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
 
 	def script_cycleSpeechSymbolLevel(self,gesture):
@@ -413,23 +421,36 @@ class GlobalCommands(ScriptableObject):
 			speech.speakMessage(_("No objects inside"))
 	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
 
-	def script_navigatorObject_doDefaultAction(self,gesture):
-		curObject=api.getNavigatorObject()
-		if not isinstance(curObject,NVDAObject):
-			speech.speakMessage(_("no navigator object"))
-			return
+	def script_review_activate(self,gesture):
+		# Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+		actionName=_("activate")
+		pos=api.getReviewPosition()
 		try:
-			action=curObject.getActionName()
-		except NotImplementedError:
-			ui.message(_("No default action"))
+			pos.activate()
+			if isinstance(gesture,touchHandler.TouchInputGesture):
+				touchHandler.handler.notifyInteraction(pos.NVDAObjectAtStart)
+			ui.message(actionName)
 			return
-		try:
-			curObject.doAction()
 		except NotImplementedError:
-			ui.message(_("default action failed"))
-			return
-		ui.message("%s"%action)
-	script_navigatorObject_doDefaultAction.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
+			pass
+		obj=api.getNavigatorObject()
+		while obj:
+			try:
+				obj.doAction()
+				if isinstance(gesture,touchHandler.TouchInputGesture):
+					touchHandler.handler.notifyInteraction(obj)
+				try:
+					actionName=obj.getActionName()
+				except NotImplementedError:
+					pass
+				ui.message(actionName)
+				return
+			except NotImplementedError:
+				pass
+			obj=obj.parent
+		# Translators: the message reported when there is no action to perform on the review position or navigator object.
+		ui.message(_("No action"))
+	script_review_activate.__doc__=_("Performs the default action on the current navigator object (example: presses it if it is a button).")
 
 	def script_review_top(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
@@ -594,15 +615,16 @@ class GlobalCommands(ScriptableObject):
 		speech.speechMode=speech.speechMode_talk
 		newMode=(curMode+1)%3
 		if newMode==speech.speechMode_off:
-			name=_("off")
+			# Translators: A speech mode which dissables speech output.
+			name=_("speech mode off")
 		elif newMode==speech.speechMode_beeps:
 			# Translators: A speech mode which will cause NVDA to beep instead of speaking.
-			name=_("beeps")
+			name=_("speech mode beeps")
 		elif newMode==speech.speechMode_talk:
 			# Translators: The normal speech mode; i.e. NVDA will talk as normal.
-			name=_("talk")
+			name=_("speech mode talk")
 		speech.cancelSpeech()
-		ui.message(_("speech mode %s")%name)
+		ui.message(name)
 		speech.speechMode=newMode
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
 
@@ -725,12 +747,14 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleMouseTracking(self,gesture):
 		if config.conf["mouse"]["enableMouseTracking"]:
-			onOff=_("off")
+			# Translators: presented when the mouse tracking is toggled.
+			state = _("Mouse tracking off")
 			config.conf["mouse"]["enableMouseTracking"]=False
 		else:
-			onOff=_("on")
+			# Translators: presented when the mouse tracking is toggled.
+			state = _("Mouse tracking on")
 			config.conf["mouse"]["enableMouseTracking"]=True
-		ui.message(_("Mouse tracking")+" "+onOff)
+		ui.message(state)
 	script_toggleMouseTracking.__doc__=_("Toggles the reporting of information as the mouse moves")
 
 	def script_title(self,gesture):
@@ -786,32 +810,38 @@ class GlobalCommands(ScriptableObject):
 
 	def script_toggleReportDynamicContentChanges(self,gesture):
 		if config.conf["presentation"]["reportDynamicContentChanges"]:
-			onOff=_("off")
+			# Translators: presented when the present dynamic changes is toggled.
+			state = _("report dynamic content changes off")
 			config.conf["presentation"]["reportDynamicContentChanges"]=False
 		else:
-			onOff=_("on")
+			# Translators: presented when the present dynamic changes is toggled.
+			state = _("report dynamic content changes on")
 			config.conf["presentation"]["reportDynamicContentChanges"]=True
-		ui.message(_("report dynamic content changes")+" "+onOff)
+		ui.message(state)
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
 
 	def script_toggleCaretMovesReviewCursor(self,gesture):
 		if config.conf["reviewCursor"]["followCaret"]:
-			onOff=_("off")
+			# Translators: presented when toggled.
+			state = _("caret moves review cursor off")
 			config.conf["reviewCursor"]["followCaret"]=False
 		else:
-			onOff=_("on")
+			# Translators: presented when toggled.
+			state = _("caret moves review cursor on")
 			config.conf["reviewCursor"]["followCaret"]=True
-		ui.message(_("caret moves review cursor")+" "+onOff)
+		ui.message(state)
 	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
 
 	def script_toggleFocusMovesNavigatorObject(self,gesture):
 		if config.conf["reviewCursor"]["followFocus"]:
-			onOff=_("off")
+			# Translators: presented when toggled.
+			state = _("focus moves navigator object off")
 			config.conf["reviewCursor"]["followFocus"]=False
 		else:
-			onOff=_("on")
+			# Translators: presented when toggled.
+			state = _("focus moves navigator object on")
 			config.conf["reviewCursor"]["followFocus"]=True
-		ui.message(_("focus moves navigator object")+" "+onOff)
+		ui.message(state)
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
 
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
@@ -851,47 +881,47 @@ class GlobalCommands(ScriptableObject):
 	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
 
 	def script_activateGeneralSettingsDialog(self, gesture):
-		wx.CallAfter(mainFrame.onGeneralSettingsCommand, None)
+		wx.CallAfter(gui.mainFrame.onGeneralSettingsCommand, None)
 	script_activateGeneralSettingsDialog.__doc__ = _("Shows the NVDA general settings dialog")
 
 	def script_activateSynthesizerDialog(self, gesture):
-		wx.CallAfter(mainFrame.onSynthesizerCommand, None)
+		wx.CallAfter(gui.mainFrame.onSynthesizerCommand, None)
 	script_activateSynthesizerDialog.__doc__ = _("Shows the NVDA synthesizer dialog")
 
 	def script_activateVoiceDialog(self, gesture):
-		wx.CallAfter(mainFrame.onVoiceCommand, None)
+		wx.CallAfter(gui.mainFrame.onVoiceCommand, None)
 	script_activateVoiceDialog.__doc__ = _("Shows the NVDA voice settings dialog")
 
 	def script_activateKeyboardSettingsDialog(self, gesture):
-		wx.CallAfter(mainFrame.onKeyboardSettingsCommand, None)
+		wx.CallAfter(gui.mainFrame.onKeyboardSettingsCommand, None)
 	script_activateKeyboardSettingsDialog.__doc__ = _("Shows the NVDA keyboard settings dialog")
 
 	def script_activateMouseSettingsDialog(self, gesture):
-		wx.CallAfter(mainFrame.onMouseSettingsCommand, None)
+		wx.CallAfter(gui.mainFrame.onMouseSettingsCommand, None)
 	script_activateMouseSettingsDialog.__doc__ = _("Shows the NVDA mouse settings dialog")
 
 	def script_activateObjectPresentationDialog(self, gesture):
-		wx.CallAfter(mainFrame. onObjectPresentationCommand, None)
+		wx.CallAfter(gui.mainFrame. onObjectPresentationCommand, None)
 	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
 
 	def script_activateBrowseModeDialog(self, gesture):
-		wx.CallAfter(mainFrame.onBrowseModeCommand, None)
+		wx.CallAfter(gui.mainFrame.onBrowseModeCommand, None)
 	script_activateBrowseModeDialog.__doc__ = _("Shows the NVDA browse mode settings dialog")
 
 	def script_activateDocumentFormattingDialog(self, gesture):
-		wx.CallAfter(mainFrame.onDocumentFormattingCommand, None)
+		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 	script_activateDocumentFormattingDialog.__doc__ = _("Shows the NVDA document formatting settings dialog")
 
 	def script_saveConfiguration(self,gesture):
-		wx.CallAfter(mainFrame.onSaveConfigurationCommand, None)
+		wx.CallAfter(gui.mainFrame.onSaveConfigurationCommand, None)
 	script_saveConfiguration.__doc__ = _("Saves the current NVDA configuration")
 
 	def script_revertConfiguration(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		if scriptCount==0:
-			mainFrame.onRevertToSavedConfigurationCommand(None)
+			gui.mainFrame.onRevertToSavedConfigurationCommand(None)
 		elif scriptCount==2:
-			mainFrame.onRevertToDefaultConfigurationCommand(None)
+			gui.mainFrame.onRevertToDefaultConfigurationCommand(None)
 	script_revertConfiguration.__doc__ = _("Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults.")
 
 	def script_activatePythonConsole(self,gesture):
@@ -983,6 +1013,30 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Plugins reloaded"))
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 
+	def script_touch_changeMode(self,gesture):
+		mode=touchHandler.handler._curTouchMode
+		index=touchHandler.availableTouchModes.index(mode)
+		index=(index+1)%len(touchHandler.availableTouchModes)
+		newMode=touchHandler.availableTouchModes[index]
+		touchHandler.handler._curTouchMode=newMode
+		ui.message(_("%s mode")%newMode)
+	script_touch_changeMode.__doc__=_("cycles between available touch modes")
+
+	def script_touch_newExplore(self,gesture):
+		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y,new=True)
+	script_touch_newExplore.__doc__=_("Reports the object and content directly under your finger")
+
+	def script_touch_explore(self,gesture):
+		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y)
+	script_touch_explore.__doc__=_("Reports the new object or content under your finger if different to where your finger was last")
+
+	def script_touch_hoverUp(self,gesture):
+		#Specifically for touch typing with onscreen keyboard keys
+		obj=api.getNavigatorObject()
+		import NVDAObjects.UIA
+		if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
+			obj.doAction()
+
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1013,58 +1067,80 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+control+i": "navigatorObject_current",
 		"kb:NVDA+numpad8": "navigatorObject_parent",
 		"kb(laptop):NVDA+shift+i": "navigatorObject_parent",
+		"ts(object):flickup":"navigatorObject_parent",
 		"kb:NVDA+numpad4": "navigatorObject_previous",
 		"kb(laptop):NVDA+control+j": "navigatorObject_previous",
+		"ts(object):flickleft":"navigatorObject_previous",
 		"kb:NVDA+numpad6": "navigatorObject_next",
 		"kb(laptop):NVDA+control+l": "navigatorObject_next",
+		"ts(object):flickright":"navigatorObject_next",
 		"kb:NVDA+numpad2": "navigatorObject_firstChild",
 		"kb(laptop):NVDA+shift+,": "navigatorObject_firstChild",
+		"ts(object):flickdown":"navigatorObject_firstChild",
 		"kb:NVDA+numpadMinus": "navigatorObject_toFocus",
 		"kb(laptop):NVDA+backspace": "navigatorObject_toFocus",
-		"kb:NVDA+numpadEnter": "navigatorObject_doDefaultAction",
-		"kb(laptop):NVDA+enter": "navigatorObject_doDefaultAction",
+		"kb:NVDA+numpadEnter": "review_activate",
+		"kb(laptop):NVDA+enter": "review_activate",
+		"ts:double_tap": "review_activate",
 		"kb:NVDA+shift+numpadMinus": "navigatorObject_moveFocus",
 		"kb(laptop):NVDA+shift+backspace": "navigatorObject_moveFocus",
 		"kb:NVDA+numpadDelete": "navigatorObject_currentDimensions",
 		"kb(laptop):NVDA+delete": "navigatorObject_currentDimensions",
 
+		#Touch-specific commands
+		"ts:tap":"touch_newExplore",
+		"ts:hoverDown":"touch_newExplore",
+		"ts:hover":"touch_explore",
+		"ts:3finger_tap":"touch_changeMode",
+		"ts:2finger_double_tap":"showGui",
+		"ts:hoverUp":"touch_hoverUp",
 		# Review cursor
 		"kb:shift+numpad7": "review_top",
 		"kb(laptop):NVDA+7": "review_top",
 		"kb:numpad7": "review_previousLine",
+		"ts(text):flickUp":"review_previousLine",
 		"kb(laptop):NVDA+u": "review_previousLine",
 		"kb:numpad8": "review_currentLine",
 		"kb(laptop):NVDA+i": "review_currentLine",
 		"kb:numpad9": "review_nextLine",
 		"kb(laptop):NVDA+o": "review_nextLine",
+		"ts(text):flickDown":"review_nextLine",
 		"kb:shift+numpad9": "review_bottom",
 		"kb(laptop):NVDA+9": "review_bottom",
 		"kb:numpad4": "review_previousWord",
 		"kb(laptop):NVDA+j": "review_previousWord",
+		"ts(text):2finger_flickLeft":"review_previousWord",
 		"kb:numpad5": "review_currentWord",
 		"kb(laptop):NVDA+k": "review_currentWord",
+		"ts(text):hoverUp":"review_currentWord",
 		"kb:numpad6": "review_nextWord",
 		"kb(laptop):NVDA+l": "review_nextWord",
+		"ts(text):2finger_flickRight":"review_nextWord",
 		"kb:shift+numpad1": "review_startOfLine",
 		"kb(laptop):NVDA+shift+u": "review_startOfLine",
 		"kb:numpad1": "review_previousCharacter",
 		"kb(laptop):NVDA+m": "review_previousCharacter",
+		"ts(text):flickLeft":"review_previousCharacter",
 		"kb:numpad2": "review_currentCharacter",
 		"kb(laptop):NVDA+,": "review_currentCharacter",
 		"kb:numpad3": "review_nextCharacter",
 		"kb(laptop):NVDA+.": "review_nextCharacter",
+		"ts(text):flickRight":"review_nextCharacter",
 		"kb:shift+numpad3": "review_endOfLine",
 		"kb(laptop):NVDA+shift+o": "review_endOfLine",
 		"kb:numpadPlus": "review_sayAll",
 		"kb(laptop):NVDA+shift+downArrow": "review_sayAll",
+		"ts(text):3finger_flickDown":"review_sayAll",
 		"kb:NVDA+f9": "review_markStartForCopy",
 		"kb:NVDA+f10": "review_copy",
 
 		# Flat review
 		"kb:NVDA+numpad7": "navigatorObject_moveToFlatReviewAtObjectPosition",
 		"kb(laptop):NVDA+pageUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
+		"ts(object):2finger_flickUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
 		"kb:NVDA+numpad1": "navigatorObject_moveToObjectAtFlatReviewPosition",
 		"kb(laptop):NVDA+pageDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
+		"ts(object):2finger_flickDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
 
 		# Mouse
 		"kb:numpadDivide": "leftMouseClick",

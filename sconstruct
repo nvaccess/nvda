@@ -124,9 +124,7 @@ env.SConscript('nvdaHelper/sconscript',exports=['env'])
 
 #Allow all NVDA's gettext po files to be compiled in source/locale
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
-	moFile=env.gettextMoFile(po)
-	#gettextMoFile can not be run in parallel so make sure scons knows this
-	env.SideEffect('_gettextMoFile',moFile)
+	env.gettextMoFile(po)
 
 #Allow all key command t2t files to be generated from their userGuide t2t sources
 for lang in os.listdir(userDocsDir.path):
@@ -154,8 +152,6 @@ htmlFile=env.txt2tags('developerGuide.t2t')
 env.SideEffect('_txt2tags',htmlFile)
 devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
 env.Alias("developerGuide",devGuide)
-
-env.Depends(sourceDir,userDocsDir)
 
 #Generate all needed comtypes COM interfaces
 command = ['cd', sourceDir.path, '&&', sys.executable]
@@ -240,7 +236,7 @@ uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
 if certFile:
 	env.AddPostAction(uninstaller, [signExec])
 
-dist = env.NVDADist("dist", sourceDir, uiAccess=bool(certFile))
+dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile))
 env.Depends(dist,uninstaller)
 # Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
 env.Clean(dist, dist)

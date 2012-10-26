@@ -141,6 +141,11 @@ class VBufStorage_fieldNode_t {
  */
 	bool isBlock;
 
+	/**
+	* True if this node his hidden - searches will not locate this node.
+	*/
+	bool isHidden;
+
 /**
  * a map to hold attributes for this field.
  */
@@ -288,6 +293,13 @@ class VBufStorage_fieldNode_t {
  * @param isBlock true if this field is a block element, false otherwise.
  */
 	void setIsBlock(bool isBlock);
+
+/**
+ * Set whether this field is a hidden node.
+ * If this is true, this field should not be found when searching by attributes.
+ * @param isBlock true if this field is a hidden element, false otherwise.
+ */
+	void setIsHidden(bool isHidden);
 
 /**
  * Getter for isBlock

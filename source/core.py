@@ -282,6 +282,12 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import mouseHandler
 	log.debug("initializing mouse handler")
 	mouseHandler.initialize()
+	import touchHandler
+	log.debug("Initializing touchHandler")
+	try:
+		touchHandler.initialize()
+	except NotImplementedError:
+		pass
 	import globalPluginHandler
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
@@ -344,6 +350,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		updateCheck.terminate()
 	log.debug("Terminating watchdog")
 	watchdog.terminate()
+	log.debug("Terminating global plugin handler")
+	globalPluginHandler.terminate()
 	log.debug("Terminating GUI")
 	gui.terminate()
 	config.saveOnExit()
@@ -363,8 +371,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		treeInterceptorHandler.terminate()
 	except:
 		log.error("Error cleaning up treeInterceptors",exc_info=True)
-	log.debug("Terminating global plugin handler")
-	globalPluginHandler.terminate()
 	log.debug("Terminating IAccessible support")
 	try:
 		IAccessibleHandler.terminate()
@@ -392,6 +398,11 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		NVDAHelper.terminate()
 	except:
 		log.error("Error terminating NVDAHelper",exc_info=True)
+	log.debug("Terminating touchHandler")
+	try:
+		touchHandler.terminate()
+	except:
+		log.error("Error terminating touchHandler")
 	log.debug("Terminating keyboard handler")
 	try:
 		keyboardHandler.terminate()

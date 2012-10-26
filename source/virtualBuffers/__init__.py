@@ -181,6 +181,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
 
+		isHidden=attrs.get('isHidden')
+		if isHidden:
+			attrs['isHidden']=isHidden=="1"
+
 		# Handle table row and column headers.
 		for axis in "row", "column":
 			attr = attrs.pop("table-%sheadercells" % axis, None)
@@ -271,6 +275,8 @@ class ElementsListDialog(wx.Dialog):
 	)
 	Element = collections.namedtuple("Element", ("textInfo", "text", "parent"))
 
+	lastSelectedElementType=0
+
 	def __init__(self, vbuf):
 		self.vbuf = vbuf
 		# Translators: The title of the browse mode Elements List dialog.
@@ -280,6 +286,7 @@ class ElementsListDialog(wx.Dialog):
 		# Translators: The label of a group of radio buttons to select the type of element
 		# in the browse mode Elements List dialog.
 		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
+		child.SetSelection(self.lastSelectedElementType)
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
 		mainSizer.Add(child,proportion=1)
 
@@ -317,12 +324,14 @@ class ElementsListDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 
 		self.tree.SetFocus()
-		self.initElementType(self.ELEMENT_TYPES[0][0])
+		self.initElementType(self.ELEMENT_TYPES[self.lastSelectedElementType][0])
 
 	def onElementTypeChange(self, evt):
+		elementType=evt.GetInt()
 		# We need to make sure this gets executed after the focus event.
 		# Otherwise, NVDA doesn't seem to get the event.
-		queueHandler.queueFunction(queueHandler.eventQueue, self.initElementType, self.ELEMENT_TYPES[evt.GetInt()][0])
+		queueHandler.queueFunction(queueHandler.eventQueue, self.initElementType, self.ELEMENT_TYPES[elementType][0])
+		self.lastSelectedElementType=elementType
 
 	def initElementType(self, elType):
 		if elType == "link":
@@ -532,7 +541,8 @@ class ElementsListDialog(wx.Dialog):
 
 	def onAction(self, activate):
 		self.Close()
-
+		# Save off the last selected element type on to the class so its used in initialization next time.
+		self.__class__.lastSelectedElementType=self.lastSelectedElementType
 		item = self.tree.GetSelection()
 		element = self.tree.GetItemPyData(item).textInfo
 		newCaret = element.copy()
@@ -749,11 +759,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 
 	def _activatePosition(self, info):
 		obj = info.NVDAObjectAtStart
+		if not obj:
+			return
 		if self.shouldPassThrough(obj):
 			obj.setFocus()
 			self.passThrough = True
 			reportPassThrough(self)
-		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT:
+		elif obj.role == controlTypes.ROLE_EMBEDDEDOBJECT or obj.role in self.APPLICATION_ROLES:
 			obj.setFocus()
 			speech.speakObject(obj, reason=controlTypes.REASON_FOCUS)
 		else:
@@ -798,7 +810,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		return controlTypes.STATE_FOCUSABLE in obj.states
+		return obj.role not in self.APPLICATION_ROLES and controlTypes.STATE_FOCUSABLE in obj.states
 
 	def script_activatePosition(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)

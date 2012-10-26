@@ -1,8 +1,8 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 3 aprile 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 31 agosto 2012, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Comandi da tastiera Guida Rapida
+%kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
 
 = Indice =[toc]
 %%toc
@@ -24,7 +24,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille
-- Tradotto in 39 lingue
+- Tradotto in 40 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
 - Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
@@ -32,7 +32,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-NVDA è stato tradotto in 37 lingue ossia Afrikaans, Albanese, Arabo, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
+Oltre all'inglese, NVDA è stato tradotto in 40 lingue ossia Afrikaans, Albanese, Amharic, Arabo, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -148,14 +148,6 @@ Da impostazioni predefinite entrambi i tasti Insert, della tastiera estesa e del
 
 Se si desidera che uno dei tasti funzione NVDA agisca usando la sua funzione originale (ad esempio si potrebbe volere attivare il BloccaMaiuscole che però è stato impostato come tasto funzione NVDA) sarà sufficiente premere quel tasto due volte in rapida successione.
 
-+++ Modalità Aiuto immissione +++
-La maggior parte dei comandi verranno citati in seguito nella presente guida, ma una maniera pratica per conoscerli, è di attivare l'aiuto immissione.
-
-Per farlo basta premere NVDA+1.
-Per disattivarlo basta ripremerlo nuovamente.
-Durante tale modalità, verranno annunciate le funzionalità associate ai vari tasti o combinazioni di essi se presenti senza però eseguirle. 
-Si è perciò liberi di premere ciò che si desidera senza preoccuparsi degli effetti.
- 
 +++ Layout Tastiera +++
 Al momento NVDA viene distribuito con due set di comandi per le tastiere.
 Esiste infatti un layout denominato "desktop", utile per i computer fissi, ed uno chiamato "laptop", più consono ai pc portatili.
@@ -165,25 +157,77 @@ Il Layout Desktop fa un uso massiccio del tastierino numerico (con NumLock impos
 Sebbene molti portatili non siano in possesso di un tastierino numerico fisico, molti di essi possono emularne le funzioni tenendo premuto il tasto FN e premendo lettere e numeri sulla parte destra della tastiera (7 8 9 u i o j k l etc).
 Se il portatile in proprio possesso non è in grado di compiere questa operazione, o non permette di impostare il tasto Numlock su spento, può risultare conveniente passare al layout Laptop.
 
+++ Gesti di NVDA nei dispositivi a tocco ++
+Se si sta eseguendo NVDA in un dispositivo dotato di touch screen e con un sistema operativo pari a Windows8 o superiore, è possibile controllare lo screen reader direttamente dallo schermo.
+Quando NVDA è in esecuzione, tutti i gesti di immissione a tocco verranno diretti a NVDA.
+Tenere presente che le azioni che normalmente funzionerebbero senza NVDA non saranno disponibili.
+
++++ Esplorazione dello schermo +++
+La caratteristica più basilare che ci si può aspettare toccando un touch screen è l'annuncio dei controlli o del testo presenti sullo schermo. 
+Per fare questo, posizionare un dito in un punto qualsiasi di quest'ultimo.
+è anche possibile mantenere il dito sullo schermo e iniziare a spostarsi, mentre lo screen reader leggerà gli oggetti o il testo che si incontrerà man mano.
+
++++ Gesti touch +++
+Nella descrizione dei comandi che si incontrerà più avanti in questo manuale, può essere compreso anche un gesto a tocco che può venir utilizzato per attivare quel comando sul touch screen.
+Di seguito vengono riportate alcune istruzioni di massima per utilizzare correttamente i comandi a tocco.
+
+==== Tap ====
+Toccare lo schermo velocemente con uno o più dita.
+
+Il gesto di toccare una volta con un dito viene comunemente chiamato tocco, in inglese tap.
+Il gesto di toccare una volta con due dita viene chiamato tocco con due dita, e così via.
+
+Se un tap viene eseguito in rapida successione, NVDA lo interpreterà come un gesto multitocco.
+Toccare velocemente per due volte viene chiamato doppio tap.
+Toccare velocemente per tre volte viene chiamato triplo tap, e così via.
+Naturalmente, nei gesti multi-tocco viene riconosciuto anche il numero di dita che si utilizza, per cui possiamo avere gesti del tipo "triplo tocco con due dita", tap con quattro dita, etc.
+
+==== Scorrimento ====
+Scorrere velocemente il dito sullo schermo, in inglese flick.
+
+Vi sono quattro gesti di scorrimento che dipendono dalla direzione: scorrimento a destra, scorrimento a sinistra, scorrimento in alto e scorrimento in basso.
+
+Esattamente come nei tap, il gesto può essere eseguito con più di un dito.
+Per cui, risulta possibile compiere gesti come lo scorrimento in alto con due dita o lo scorrimento a sinistra con quattro dita.
+
++++ Modalità di tocco +++
+Poiché esistono molti più comandi di NVDA rispetto ai gesti che possono essere eseguiti, NVDA permette di passare tra diverse modalità di tocco per far sì che possano essere impartiti il maggior numero di comandi attraverso i gesti.
+Le due modalità previste sono la modalità testo e quella a oggetti.
+Alcuni comandi di NVDA elencati in questa guida possono prevedere una modalità di tocco particolare, scritta tra parentesi, dopo il gesto.
+Ad esempio, scorrimento verso l'alto (modo testo), significa che il gesto sarà eseguito soltanto se ci si trova nella modalitàdi tocco testo.
+Se il comando non presenta una modalità di tocco, funzionerà in ogni circostanza.
+
+%kc:beginInclude
+Per cambiare la modalità di tocco, eseguire un tocco con tre dita.
+%kc:endInclude
+
+++ Modalità Aiuto immissione ++
+La maggior parte dei comandi verrà citata in seguito nella presente guida, ma una maniera pratica per conoscerli, è di attivare l'aiuto immissione.
+
+Per farlo basta premere NVDA+1.
+Per disattivarlo basta ripremerlo nuovamente.
+Durante tale modalità, verranno annunciate le funzionalità associate ai vari tasti o gesti se presenti senza però eseguirle. 
+Si è perciò liberi di premere ciò che si desidera senza preoccuparsi degli effetti.
+
 ++ Il menu di NVDA ++
 Il menu di NVDA consente di controllare le impostazioni dello screen reader, accedere all'aiuto in linea, salvare/ricaricare le configurazioni, modificare i dizionari per le sintesi vocali, leggere i file di log e uscire dal programma.
 
-Per accedere al menu di NVDA da qualsiasi punto ci si trovi in Windows mentre NVDA è in esecuzione, basterà premere la combinazione di tasti NVDA+n.
+Per accedere al menu di NVDA da qualsiasi punto ci si trovi in Windows mentre NVDA è in esecuzione, basterà premere la combinazione di tasti NVDA+n, o effettuare un doppio tap con due dita.
 In alternativa, si può ricorrere alla System Tray.
  Vi sono due modi, o premendo Windows+B per raggiungerla e scorrendo con le frecce sino ad arrivare alla voce NVDA, premendo infine il tasto applicazione, generalmente situato accanto al control di destra, Oppure, cliccare direttamente l'icona di NVDA sulla System Tray.
  Una volta che il menu appare, è possibile scorrerlo con le frecce direzionali, mentre per attivare un elemento come sempre è sufficiente premere invio.
 
 ++ Comandi di base da tastiera ++
 %kc:beginInclude
-|| Nome | Tasto | Descrizione |
-| Interrompe la Sintesi Vocale | Control | Ferma immediatamente la Sintesi Vocale |
-| Pausa Sintesi Vocale | Shift | Mette in pausa immediatamente la Sintesi Vocale. Premendo nuovamente il tasto la sintesi vocale riprenderà a parlare dal punto in cui era stata fermata (sempre che questo sia supportato dal sintetizzatore utilizzato, in genere non dovrebbe costituire un problema) |
-| Menu NVDA | NVDA+n | Mostra il Menu di NVDA per permettere di accedere alle Preferenze, agli strumenti, all'Aiuto etc |
-| Commuta modalità voce | NVDA+s | Commuta la modalità di voce tra parlare, disattivato e beeps. |
-| Commuta Modalità Aiuto Immissione | NVDA+1 | in questa modalità sarà possibile premere qualsiasi tasto e ne verrà annunciato il nome e la propria funzione in NVDA |
-| Uscire da NVDA | NVDA+q | Esce da NVDA |
-| Passa Tasto Successivo a | NVDA+f2 | Questo comando istruisce NVDA a passare la combinazione di tasti successiva all'applicazione attiva, anche se si tratta di un comando di NVDA. |
-| Attiva/disattiva modalità riposo | NVDA+shift+s | La modalità riposo, sleep mode disabilita tutti i comandi di NVDA e l'output tramite voce/braille per l'applicazione corrente. Risulta utile se si ha a che fare con programmi che forniscono direttamente indicazioni vocali. Ripremere la combinazione di tasti per disattivare questa funzione. |
+|| Nome | Tasto | Tocco | Descrizione |
+| Interrompe la Sintesi Vocale | Control | tocco con due dita | Ferma immediatamente la Sintesi Vocale |
+| Pausa Sintesi Vocale | Shift | Nessuno | Mette in pausa immediatamente la Sintesi Vocale. Premendo nuovamente il tasto la sintesi vocale riprenderà a parlare dal punto in cui era stata fermata (sempre che questo sia supportato dal sintetizzatore utilizzato, in genere non dovrebbe costituire un problema) |
+| Menu NVDA | NVDA+n | Doppio tocco con due dita | Mostra il Menu di NVDA per permettere di accedere alle Preferenze, agli strumenti, all'Aiuto etc |
+| Commuta modalità voce | NVDA+s | Nessuno | | Commuta la modalità di voce tra parlare, disattivato e beeps. |
+| Commuta Modalità Aiuto Immissione | NVDA+1 | Nessuno | in questa modalità sarà possibile premere qualsiasi tasto e ne verrà annunciato il nome e la propria funzione in NVDA |
+| Uscire da NVDA | NVDA+q | Nessuno | Esce da NVDA |
+| Passa Tasto Successivo a | NVDA+f2 | Nessuno | Questo comando istruisce NVDA a passare la combinazione di tasti successiva all'applicazione attiva, anche se si tratta di un comando di NVDA. |
+| Attiva/disattiva modalità riposo | NVDA+shift+s | Nessuno | La modalità riposo, sleep mode disabilita tutti i comandi di NVDA e l'output tramite voce/braille per l'applicazione corrente. Risulta utile se si ha a che fare con programmi che forniscono direttamente indicazioni vocali. Ripremere la combinazione di tasti per disattivare questa funzione. |
 %kc:endInclude
 
 ++ Conoscere Informazioni di sistema ++
@@ -267,16 +311,16 @@ Se si desidera che il braille segua invece la navigazione ad oggetti o quella in
 
 Per navigare ad oggetti, utilizzare i tasti seguenti:
 %kc:beginInclude
-|| Nome | layout Desktop | layout Laptop | Descrizione |
-| Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+control+i | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti |
-| Spostarsi all'oggetto contenitore  | NVDA+8 del tastierino numerico | NVDA+Shift+i | ci si sposta all'oggetto che contiene l'oggetto corrente |
-| Spostarsi all'oggetto precedente | NVDA+4 del tastierino numerico | NVDA+control+j | ci si Sposta all'oggetto precedente rispetto a quello attuale, sullo stesso livello |
-| Spostarsi all'oggetto successivo | NVDA+numpad6 | control+NVDA+l | ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello) |
-| Spostarsi al primo oggetto contenuto | NVDA+2 del tastierino numerico | NVDA+shift+virgola | Ci si sposta al primo oggetto contenuto nell'oggetto attuale |
-| Spostarsi all'oggetto focalizzato | NVDA+Meno del tastierino numerico | NVDA+Backspazio | Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato |
-| Attivare l'oggetto corrente | NVDA+Invio del tastierino numerico | NVDA+Invio | Attiva l'oggetto corrente (l'equivalente di cliccare col mouse o premere la barra spazio in presenza del focus) |
-| Spostare il focus di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+backspazio | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
-| Annuncia dimensioni dell'oggetto corrente | NVDA+Canc del tastierino numerico | NVDA+Canc | Annuncia le dimensioni dell'oggetto attuale sullo schermo in percentuali (incluse distanza dal bordo sinistro e superiore dello schermo, e la sua altezza e larghezza) |
+|| Nome | layout Desktop | layout Laptop | Tocco | Descrizione |
+| Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+control+i | Nessuno | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti |
+| Spostarsi all'oggetto contenitore  | NVDA+8 del tastierino numerico | NVDA+Shift+i | Scorrimento in alto (modo oggetti) | ci si sposta all'oggetto che contiene l'oggetto corrente |
+| Spostarsi all'oggetto precedente | NVDA+4 del tastierino numerico | NVDA+control+j | Scorrimento a sinistra (modo oggetti) | ci si Sposta all'oggetto precedente rispetto a quello attuale, sullo stesso livello |
+| Spostarsi all'oggetto successivo | NVDA+numpad6 | control+NVDA+l | Scorrimento a destra (modo oggetti) | ci si Sposta all'oggetto successivo rispetto a quello attuale, sullo stesso livello) |
+| Spostarsi al primo oggetto contenuto | NVDA+2 del tastierino numerico | NVDA+shift+virgola | Scorrimento in basso (modo oggetti) | Ci si sposta al primo oggetto contenuto nell'oggetto attuale |
+| Spostarsi all'oggetto focalizzato | NVDA+Meno del tastierino numerico | NVDA+Backspazio | Nessuno | Sposta il navigatore ad oggetti sull'oggetto che attualmente ha il focus di sistema, e porta anche il cursore di controllo in quella posizione, se il cursore di sistema è visualizzato |
+| Attivare l'oggetto corrente | NVDA+Invio del tastierino numerico | NVDA+Invio | Doppio tap | Attiva l'oggetto corrente (l'equivalente di cliccare col mouse o premere la barra spazio in presenza del focus) |
+| Spostare il focus di sistema sull'oggetto corrente | NVDA+Shift+meno del tastierino numerico | NVDA+Shift+backspazio | Nessuno | Sposta il focus di sistema alla posizione del navigatore ad oggetti se possibile, mentre se premuto due volte sposta il cursore di sistema alla posizione del cursore di controllo |
+| Annuncia dimensioni dell'oggetto corrente | NVDA+Canc del tastierino numerico | NVDA+Canc | Nessuno | Annuncia le dimensioni dell'oggetto attuale sullo schermo in percentuali (incluse distanza dal bordo sinistro e superiore dello schermo, e la sua altezza e larghezza) |
 %kc:endInclude
 
 Nota, Per utilizzare il tastierino numerico, il tasto NumLock deve essere impostato su spento.
@@ -296,24 +340,24 @@ Se si desidera che il braille segua invece la navigazione ad oggetti o quella in
 
 Sono disponibili i seguenti tasti caldi per esplorare il testo:
 %kc:beginInclude
-|| Nome | layout Desktop | layout Laptop | Descrizione |
-| Spostarsi  alla prima riga | shift+7 del tastierino numerico | NVDA+7 | Sposta il cursore di controllo  alla prima riga del testo |
-| Spostarsi alla riga precedente, modalità esplorazione | 7 del tastierino numerico | NVDA+u | Sposta il cursore di controllo alla riga di testo precedente |
-| Legge la riga corrente, modalità esplorazione | 8 del tastierino numerico | NVDA+i | Annuncia la riga di testo sulla quale è posizionato il cursore di controllo. Se premuto due volte ne fa lo spelling. Premuto tre volte effettua lo spelling con la descrizione dei caratteri |
-| Spostarsi alla riga successiva, modalità esplorazione | 9 del tastierino numerico | NVDA+o | Sposta il cursore di controllo alla riga di testo successiva |
-| Spostarsi all'ultima riga, modalità esplorazione | shift+9 del tastierino numerico | NVDA+9 | Sposta il cursore di controllo  all'ultima riga del testo |
-| Spostarsi alla parola precedente, modalità esplorazione | 4 del tastierino numerico | NVDA+j | Sposta il cursore di controllo alla parola precedente nel testo |
-| Legge la parola corrente, modalità esplorazione | 5 del tastierino numerico | NVDA+k | Annuncia la parola del testo sulla quale è posizionato il cursore di controllo. Se premuto due volte ne fa lo spelling. Premuto tre volte effettua lo spelling con la descrizione dei caratteri |
-| Spostarsi alla parola successiva, modalità esplorazione | 6 del tastierino numerico | NVDA+l | Sposta il cursore di controllo alla parola successiva nel testo |
-| Spostarsi all'inizio della riga, modalità esplorazione | shift+1 del tastierino numerico | NVDA+Shift+u | Sposta il cursore di controllo  all'inizio della riga |
-| Spostarsi al carattere precedente, modalità esplorazione | 1 del tastierino numerico | NVDA+m | Sposta il cursore di controllo al carattere precedente nella riga corrente di testo |
-| Legge il carattere corrente, modalità esplorazione | 2 del tastierino numerico | NVDA+virgola | Annuncia il carattere del testo sul quale è posizionato il cursore di controllo. Se premuto due volte effettua lo spelling mediante la sua descrizione. Se premuto tre volte fornisce il valore numerico del carattere in decimale e esadecimale. |
-| Spostarsi al carattere successivo, modalità esplorazione | 3 del tastierino numerico | NVDA+punto | Sposta il cursore di controllo al carattere di testo successivo nella riga corrente |
-| Spostarsi alla fine della riga, modalità esplorazione | shift+3 del tastierino numerico | NVDA+shift+o | Sposta il cursore di controllo alla fine della riga di testo corrente |
-| Dire tutto, modalità esplorazione | Più del tastierino numerico | NVDA+shift+freccia giù | Legge il testo dalla posizione attuale del cursore di controllo, spostando tale cursore man mano che la lettura continua |
-| Copiare dalla posizione  del cursore di controllo | NVDA+f9 | NVDA+f9 | Marca il punto di inizio del testo da copiare, partendo dalla posizione attuale del cursore di controllo. Si noti che NVDA non effettuerà alcuna operazione fino a quando non verrà specificato il punto di fine |
-| Copiare fino al cursore di controllo | NVDA+f10 | NVDA+f10 | Copia il testo dalla posizione marcata in precedenza con NVDA+f9 fino alla posizione attuale del cursore di controllo. Una volta effettuata questa operazione, il testo verrà copiato negli appunti |
-| Annuncia formattazione del testo | NVDA+f | Annuncia la formattazione del testo sul quale è posizionato il cursore di controllo |
+|| Nome | layout Desktop | layout Laptop | Tocco | Descrizione |
+| Spostarsi  alla prima riga | shift+7 del tastierino numerico | NVDA+7 | Nessuno | Sposta il cursore di controllo  alla prima riga del testo |
+| Spostarsi alla riga precedente, modalità esplorazione | 7 del tastierino numerico | NVDA+u | Scorrimento in alto (modo testo) | Sposta il cursore di controllo alla riga di testo precedente |
+| Legge la riga corrente, modalità esplorazione | 8 del tastierino numerico | NVDA+i | Nessuno | Annuncia la riga di testo sulla quale è posizionato il cursore di controllo. Se premuto due volte ne fa lo spelling. Premuto tre volte effettua lo spelling con la descrizione dei caratteri |
+| Spostarsi alla riga successiva, modalità esplorazione | 9 del tastierino numerico | NVDA+o | Scorrimento in basso (modo testo) | Sposta il cursore di controllo alla riga di testo successiva |
+| Spostarsi all'ultima riga, modalità esplorazione | shift+9 del tastierino numerico | NVDA+9 | Nessuno | Sposta il cursore di controllo  all'ultima riga del testo |
+| Spostarsi alla parola precedente, modalità esplorazione | 4 del tastierino numerico | NVDA+j | Scorrimento a sinistra con due dita (modo testo) | Sposta il cursore di controllo alla parola precedente nel testo |
+| Legge la parola corrente, modalità esplorazione | 5 del tastierino numerico | NVDA+k | Nessuno | Annuncia la parola del testo sulla quale è posizionato il cursore di controllo. Se premuto due volte ne fa lo spelling. Premuto tre volte effettua lo spelling con la descrizione dei caratteri |
+| Spostarsi alla parola successiva, modalità esplorazione | 6 del tastierino numerico | NVDA+l | Scorrimento a destra con due dita (modo testo) | Sposta il cursore di controllo alla parola successiva nel testo |
+| Spostarsi all'inizio della riga, modalità esplorazione | shift+1 del tastierino numerico | NVDA+Shift+u | Nessuno | Sposta il cursore di controllo all'inizio della riga |
+| Spostarsi al carattere precedente, modalità esplorazione | 1 del tastierino numerico | NVDA+m | Scorrimento a sinistra (modo testo) | Sposta il cursore di controllo al carattere precedente nella riga corrente di testo |
+| Legge il carattere corrente, modalità esplorazione | 2 del tastierino numerico | NVDA+virgola | Nessuno | Annuncia il carattere del testo sul quale è posizionato il cursore di controllo. Se premuto due volte effettua lo spelling mediante la sua descrizione. Se premuto tre volte fornisce il valore numerico del carattere in decimale e esadecimale. |
+| Spostarsi al carattere successivo, modalità esplorazione | 3 del tastierino numerico | NVDA+punto | Scorrimento a destra (modo testo) | Sposta il cursore di controllo al carattere di testo successivo nella riga corrente |
+| Spostarsi alla fine della riga, modalità esplorazione | shift+3 del tastierino numerico | NVDA+shift+o | Nessuno | Sposta il cursore di controllo alla fine della riga di testo corrente |
+| Dire tutto, modalità esplorazione | Più del tastierino numerico | NVDA+shift+freccia giù | Scorrimento in basso con tre dita (modo testo) | Legge il testo dalla posizione attuale del cursore di controllo, spostando tale cursore man mano che la lettura continua |
+| Copiare dalla posizione  del cursore di controllo | NVDA+f9 | NVDA+f9 | Nessuno | Marca il punto di inizio del testo da copiare, partendo dalla posizione attuale del cursore di controllo. Si noti che NVDA non effettuerà alcuna operazione fino a quando non verrà specificato il punto di fine |
+| Copiare fino al cursore di controllo | NVDA+f10 | NVDA+f10 | Nessuno | Copia il testo dalla posizione marcata in precedenza con NVDA+f9 fino alla posizione attuale del cursore di controllo. Una volta effettuata questa operazione, il testo verrà copiato negli appunti |
+| Annuncia formattazione del testo | NVDA+f | | Nessuno Annuncia la formattazione del testo sul quale è posizionato il cursore di controllo |
 %kc:endInclude
  
 Si noti che per un corretto funzionamento il tasto Numlock del tastierino numerico deve essere impostato su spento.
@@ -340,9 +384,9 @@ Se si desidera che il braille segua invece la navigazione ad oggetti o quella in
 
 I seguenti due comandi vengono utilizzati per attivare o meno la navigazione in linea:
 %kc:beginInclude
-|| Nome | Layout Desktop | Layout Laptop | Descrizione |
-| Passa alla navigazione in linea | NVDA+7 del tastierino numerico | NVDA+pagina su | Passa alla navigazione in linea, collocando l'utente alla posizione attuale del navigatore ad oggetti, permettendo di esplorare lo schermo (o il documento se ci si trova all'interno di esso) con i consueti comandi di revisione del testo usati dal cursore di controllo. |
-| Andare dalla navigazione in linea all'oggetto | NVDA+1 del tastierino numerico | NVDA+pagina giù | Attiva il navigatore ad oggetti a partire dalla posizione corrente nella navigazione in linea |
+|| Nome | Layout Desktop | Layout Laptop | Tocco | Descrizione |
+| Passa alla navigazione in linea | NVDA+7 del tastierino numerico | NVDA+pagina su | Scorrimento in alto con due dita | Passa alla navigazione in linea, collocando l'utente alla posizione attuale del navigatore ad oggetti, permettendo di esplorare lo schermo (o il documento se ci si trova all'interno di esso) con i consueti comandi di revisione del testo usati dal cursore di controllo. |
+| Andare dalla navigazione in linea all'oggetto | NVDA+1 del tastierino numerico | NVDA+pagina giù | Scorrimento in basso con due dita | Attiva il navigatore ad oggetti a partire dalla posizione corrente nella navigazione in linea |
 %kc:endInclude  
 
 
@@ -443,9 +487,9 @@ Una volta selezionato l'elemento, si possono utilizzare i bottoni che si trovano
 %kc:endInclude
 
 ++ Oggetti incorporati ++
-Le pagine web possono essere strutturate con diverse tecnologie al proprio interno, ad esempio contenuti di tipo Adobe Flash oppure Sun Java. 
-Quando NVDA incontra tali elementi, lo screen reader li interpreta come oggetti incorporati e annuncerà la parola "oggetto". 
-Sarà possibile interagire con l'oggetto premendo il tasto Invio
+Le pagine web possono essere strutturate con diverse tecnologie al proprio interno, ad esempio contenuti di tipo Adobe Flash, Sun Java, applicazioni o finestre di dialogo. 
+Quando NVDA incontra tali elementi in modalità navigazione, lo screen reader li annuncerà rispettivamente come oggetti, applicazioni o finestre di dialogo.
+Sarà possibile interagire con tali elementi premendo il tasto Invio
 Se risulterà accessibile, premere il tasto tab o comunque muoversi all'interno di esso come se si trattasse di una normale applicazione. 
 è stato previsto un tasto caldo per tornare alla pagina originale che contiene l'oggetto:
 %kc:beginInclude
@@ -804,6 +848,20 @@ Se ad esempio un'applicazione che contiene una barra di avanzamento viene minimi
   
 Permette di attivare o disattivare  la lettura di alcuni contenuti, in particolare nelle applicazioni che fanno uso di terminali o la cronologia delle chat.
   
++++ Impostazioni composizione nell'immissione +++
+Le impostazioni sulla composizione nell'immissione si trovano nel menu preferenze.
+Questa finestra di dialogo permette di controllare la modalità con cui NVDA annuncia la composizione di caratteri asiatici.
+
+==== Annuncia automaticamente tutti i caratteri suggeriti ====
+Questa opzione, attivata di default, permette di stabilire se debbano essere annunciati tutti i suggerimenti visibili, quando appare un elenco di questi elementi.
+risulta molto utile mantenere questa impostazione attiva specie per i tipi di immissione pittografici come il nuovo Cinese ChangJie, o Boshiami, in quanto si possono ascoltare automaticamente tutti i simboli e i loro numeri, permettendo poi di scegliere uno di questi.
+Comunque, per i metodi d'immissione fonetica ad esempio del nuovo cinese, può essere conveniente disattivare questa impostazione, in quanto tutti i simboli hanno il medesimo suono e si è costretti ad utilizzare le frecce per esplorarli ed ottenere maggiori informazioni dalla descrizione del carattere di ciascun suggerimento.
+
+==== Annuncia i cambiamenti alla stringa di lettura ====
+Alcuni metodi di immissione come il nuovo cinese fonetico o il ChangJie hanno una stringa di lettura (talvolta conosciuta come stringa di precomposizione).
+è possibile stabilire se NVDA debba annunciare o meno i caratteri che compaiono in questo tipo di stringhe.
+Questa opzione è attiva da impostazioni predefinite.
+  
 +++ Impostazioni Modalità navigazione (NVDA+Control+b) +++
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce Modalità navigazione. 
 
@@ -916,17 +974,18 @@ Utilizzando il campo "livello", è possibile stabilire il livello più basso dal
 Una volta terminate le modifiche, premere il pulsante OK per salvare i cambiamenti oppure il bottone Annulla per annullare l'operazione.
 
 ++ Salvare e caricare la configurazione ++
-NVDA non salva automaticamente le impostazioni correnti, quindi se si esce e rientra dal   programma le impostazioni torneranno al loro valore originale. 
+NVDA salva automaticamente le impostazioni correnti all'uscita.
 Si noti che comunque è possibile modificare questo comportamento tramite l'opzione presente nelle impostazioni generali del menu preferenze.
-Per salvare le impostazioni   scegliere la voce salva Configurazione dal menu di NVDA.
+Per salvare le impostazioni manualmente, scegliere la voce salva Configurazione dal menu di NVDA.
 
 Se si è fatto un errore nelle impostazioni e si desidera tornare indietro alle impostazioni salvate in precedenza, scegliere la voce "torna alla configurazione salvata dal menu NVDA.
+è anche possibile resettare le impostazioni ai valori predefiniti, scegliendo la voce "Ripristina la configurazione ai valori di fabbrica", presente sul menu principale di NVDA.
 
 I seguenti tasti rapidi risultano molto utili:
 %kc:beginInclude
 || Nome | Tasto Desktop | Tasto Laptop | Descrizione |
 | Salva Configurazione | NVDA+Control+c | NVDA+Control+c | Salva la configurazione attuale in modo che non verrà persa all'uscita da NVDA |
-| Torna alla configurazione salvata | NVDA+Control+r | NVDA+Control+r | Ripristina la configurazione di NVDA risalente all'ultima volta che essa è stata salvata |
+| Torna alla configurazione salvata | NVDA+Control+r | NVDA+Control+r | Ripristina la configurazione di NVDA risalente all'ultima volta che essa è stata salvata. Premere tre volte in rapida successione per ripristinare le impostazioni di configurazione predefinite |
 %kc:endInclude
 
 ++ File di configurazione e profili utente ++
@@ -979,9 +1038,9 @@ Fino a quando non verrà effettuata tale operazione, accanto al componente aggiu
 Il gestore dispone anche del pulsante chiudi, per chiudere la finestra di dialogo.
 Se sono stati installati o rimossi dei componenti, NVDA chiederà di potersi riavviare, in modo da rendere effettive le modifiche.
 
-+++ Una nota sui vecchi plugin personalizzati +++
 In passato è stato possibile aumentare le funzionalità di NVDA copiando driver e plugin individuali nella propria cartella contenente le configurazioni utente. 
-Sebbene questa versione di NVDA sia ancora in grado di caricarli, essi non saranno visualizzati nel gestore componenti aggiuntivi. Si consiglia di rimuovere questi file dalla propria configurazione e installare il componente aggiuntivo corrispondente se disponibile. 
+Sebbene questa versione di NVDA sia ancora in grado di caricarli, essi non saranno visualizzati nel gestore componenti aggiuntivi. 
+Si consiglia di rimuovere questi file dalla propria configurazione e installare il componente aggiuntivo corrispondente se disponibile. 
 
 ++ Console Python ++
 La Console Python di NVDA, situata nel menu strumenti, è uno strumento per sviluppatori che risulta utile in fase di debug, di diagnosi delle funzioni interne di NVDA o di analisi della gerarchia degli oggetti accessibili presenti in un'applicazione.
@@ -1056,6 +1115,11 @@ Segue un elenco dei tasti associati con NVDA:
 Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
 %kc:beginInclude
 || Nome | Tasto |
+| Scorri Display Braille indietro | topRouting1 (prima cella del Display) |
+| Scorri Display Braille avanti | topRouting20/40/80 (ultima cella del Display) |
+| Scorri display braille indietro | barraAvanzamentoSinistra |
+| Scorri display Braille avanti | barraAvanzamentoDestra |
+| Commuta inseguimento braille | leftGDFButton+rightGDFButton |
 | Toggle left wiz wheel action | leftWizWheelPress |
 | Move back using left wiz wheel action | leftWizWheelUp |
 | Move forward using left wiz wheel action | leftWizWheelDown |
@@ -1063,6 +1127,38 @@ Si prega di consultare la documentazione della propria barra braille per avere i
 | Move back using right wiz wheel action | rightWizWheelUp |
 | Move forward using right wiz wheel action | rightWizWheelDown |
 | Route to braille cell | routing |
+| Tasto backspace| punto7 |
+| tasto Invio | punto8 |
+| tasti shift+tab | spazio+punto1+punto2 |
+| tasto tab | spazio+punto4+punto5 |
+| freccia su |spazio+punto1 |
+| freccia giù | spazio+punto4 |
+| control+freccia sinistra | spazio+punto2 |
+| control+freccia destra | spazio+punto5 |
+| freccia sinistra | spazio+punto3 |
+| freccia destra | spazio+punto6 |
+| tasto inizio/home | spazio+punto1+punto3 |
+| tasto fine | spazio+punto4+punto6 |
+| control+home/inizio | spazio+punto1+punto2+punto3 |
+| control+fine | spazio+punto4+punto5+punto6 |
+| tasto alt | spazio+punto1+punto3+punto4 |
+| alt+tab | spazio+punto2+punto3+punto4+punto5 |
+| tasto esc | spazio+punto1+punto5 |
+| tasto windows | spazio+punto2+punto4+punto5+punto6 |
+| spazio |spazio |
+| tasto windows+d (riduce a icona tutte le applicazioni) | spazio+punto1+punto2+punto3+punto4+punto5+punto6 |
+| annuncia riga corrente | spazio+punto1+punto4 |
+| NVDA menu | spazio+punto1+punto3+punto4+punto5 |
+
+Per i modelli più recenti di Focus (focus 40, focus 80 e focus blue):
+|| Nome | Tasto |
+| Sposta display Braille alla riga precedente | leftRockerBarUp, rightRockerBarUp |
+| Sposta Display Braille alla riga successiva | leftRockerBarDown, rightRockerBarDown |
+
+Solo per Focus 80:
+|| Nome | Tasto |
+| Scorri display braille indietro | leftBumperBarUp, rightBumperBarUp |
+| Scorri display Braille avanti | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1239,7 +1335,6 @@ In caso di connessione tramite USB, è necessario prima installare i driver svil
 
 Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
-
 %kc:beginInclude
 || Nome | tasto |
 | Scorri display braille indietro | Scorri giù lato sinistro |
@@ -1307,6 +1402,82 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 | Route to braille cell | routing |
 %kc:endInclude
 
+++ Display Braille Seika ++
+NVDA supporta i modelli Seika 3, 4 e 5 a 40 caratteri e Seika80 a 80 caratteri, prodotti dalla [Nippon Telesoft http://www.nippontelesoft.com/].
+Si possono ottenere maggiori informazioni su queste barre braille visitando la pagina http://www.seika-braille.com/.
+è prima necessario installare i driver USB forniti in dotazione.
+
+Di seguito, ecco l'elenco dell'assegnazione dei tasti per queste righe braille con NVDA.
+Consultare la documentazione della barra braille per informazioni sulla posizione dei tasti.
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri display braille indietro | sinistro |
+| Scorri display braille avanti | destro |
+| Sposta display braille alla riga precedente | b3 |
+| Sposta display braille alla riga successiva | b4 |
+| Commuta inseguimento braille | b5 |
+| Dire tutto | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| Menu NVDA | sinistro+destro |
+| Route to braille cell | routing |
+%kc:endInclude
+
+++ Nuovi modelli Papenmeier BRAILLEX ++
+Sono supportati i seguenti display braille: 
+- BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
+- BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
+- BRAILLEX Trio (USB e bluetooth)
+-
+
+Se BrxCom è installato, NVDA lo utilizzerà.
+BrxCom è un utility che permette di gestire la scrittura tramite i tasti braille indipendentemente dallo screen reader in uso.
+Verrà realizzata presto da Papenmeier una nuova versione di BrXcom che funzioni con NVDA 
+
+La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
+Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
+la serie C è l'unica eccezione alla regola.
+
+Tale serie ed alcuni altri display  presentano due file di cursor routing dove la riga superiore viene utilizzata per ottenere informazioni sulla formattazione.
+Tenendo premuto uno dei tasti della fila superiore e spostando la barra di accesso rapido nella serie C, si simula la seconda posizione della EAB.
+Mantenendo premuti i tasti su, giù, destra e sinistra (o EAB) permetterà di ripetere l'azione corrispondente..
+
+In genere, sono disponibili i seguenti tasti in questi display braille::
+|| Nome | Tasto |
+| l1 | Tasto sinistro frontale |
+| l2 | Tasto sinistro posteriore |
+| r1 | tasto destro frontale |
+| r2 | tasto destro frontale |
+| up | uno scatto in su |
+| up2 | 2 scatti in su |
+| left | 1 scatto a sinistra |
+| left2 | 2 scatti a sinistra |
+| right | 1 Scatto a destra |
+| right2 | 2 Scatti a destra |
+| dn | 1 Scatto in basso |
+| dn2 | 2 Scatti in basso |
+
+Seguono i comandi per i Display Papenmeier associati con NVDA:
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorri Display braille indietro | left |
+| Scorri Display Braille avanti | right |
+| Sposta Display Braille alla riga precedente | up |
+| Sposta Display Braille alla riga successiva | dn |
+| Route to braille cell | routing |
+| Annuncia il carattere attuale sul cursore di controllo | l1 |
+| Attiva l'oggetto corrente | l2 |
+| Attiva navigazione in linea | r1 |
+| Annuncia Titolo | l1+up |
+| Annuncia barra di stato | l2+down |
+| Spostarsi all'oggetto contenitore | up2 |
+| Spostarsi al primo oggetto contenuto | dn2 |
+| Spostarsi all'oggetto precedente | left2 |
+| Spostarsi all'oggetto successivo  | right2 |
+| Annuncia formattazione testo | Riga cursor routing superiore |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] è un programma a parte del quale è possibile avvalersi per avere supporto per molte altre barre braille. 
 Per poterlo utilizzare, è necessario installare [BRLTTY per Windows http://brl.thefreecat.org/brltty/].
@@ -1324,15 +1495,10 @@ Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/drivers/] p
 | Route to braille cell | route (bring cursor to character) |
 %kc:endInclude
 
-++ altri drivers non ufficiali ++
-Sul sito della comunità italiana di NVDA sono presenti, alla voce download, drivers che non sono inclusi nello screen reader per ragioni tecniche e che verranno inseriti in seguito. Al momento possono essere scaricati drivers per la barra braille MB408l prodotta dalla MDV (Istituto Cavazza), per il Braillesense e SyncBraille prodotti dalla Hims, e per  i display Papenmeier, funzionanti però questi ultimi soltanto con la vecchia versione 2010.2, in quanto nessun utente si è dimostrato interessato per questi driver, e nessuno ci ha mai aiutato con i test. 
-Pertanto, Il lavoro di riscrittura dei Driver per i Display Braille Papenmeier verrà fatto soltanto se qualche utente si dimostrerà interessato.
-
 + Argomenti avanzati +
 
-++ Riassegnamento di tasti e note sull'immissione di gesture ++
-
-Gli utenti hanno la possibilità di inserire o sovrascrivere le gesture (ad esempio la pressione di un tasto) in unos peciale file di scripts nella cartella che contiene le configurazioni di NVDA per l'utente.
+++ Riassegnamento di tasti e note sull'immissione di gesti ++
+Gli utenti hanno la possibilità di inserire o sovrascrivere i gesti (ad esempio la pressione di un tasto) in unos peciale file di scripts nella cartella che contiene le configurazioni di NVDA per l'utente.
 Questo file si chiama gestures.ini.
 
 Esso utilizza la sintassi standard dei file .ini.
@@ -1347,14 +1513,22 @@ Ciascun tasto può venir elencato solo una volta per sezione, inclusa la parola 
 Gli identificatori di gesture terminanti con una virgola devonoessere racchiusi tra virgolette o apostrofi (" o ' ).
 -
 
-Gli identificatori di gesture consistono in un codice di due lettere che si riferiscono al dispositivo in questione (kb per la tastiera e br per i display braille), di un dispositivo secondario opzionale o un layout tastiera tra parentesi tonde, il segno dei DuePunti,  ed infine uno o più nomi di tasti separati dal segno più (+).
-Per le gesture tastiera, la parte tra parentesi è il layout tastiera e comunque risulta opzionale.
+Gli identificatori di gesture consistono in un codice di due lettere che si riferiscono al dispositivo in questione (kb per la tastiera, br per i display braille e ts per i dispositivi a tocco), di un dispositivo secondario opzionale o un layout tastiera tra parentesi tonde, il segno dei DuePunti, ed infine uno o più nomi di tasti separati dal segno più (+).
+- Per le gesture tastiera, il codice del dispositivo è kb.
+la parte tra parentesi è il layout tastiera e comunque risulta opzionale.
 Se non specificato, le gesture si applicheranno a tutti i layout tastiera.
-Per le gesture braille, la parte tra parentesi rappresenta il Display Braille specifico ed è obbligatoria.
+La stringa dopo i duepunti è costituita da uno o più tasti separati da un (+)
+- Per le gesture braille, il codice del dispositivo è br.
+la parte tra parentesi rappresenta il Display Braille specifico ed è obbligatoria.
+La stringa dopo i due punti è costituita da uno o più nomi di tasti separati dal segno più (+).
+- Per le gesture a tocco, il codice del dispositivo è ts.
+la parte tra parentesi rappresenta la modalità di tocco ed è opzionale.
+La stringa dopo i due punti è costituita da un gesto a tocco; ad esempio double_tap, 2fingerflickUp o 3finger_tap.
+-
 
 Per scoprire gli identificatori di gesture, i nomi di script e classe e modulo a cui appartengono, fare come segue:
 + Attivare l'aiuto Immissione dati, conosciuto anche come aiuto tastiera.
-+ Attivare la gesture (premere il tasto).
++ Attivare la gesture (premere il tasto, toccare lo schermo, etc).
 + Disattivare l'aiuto immissione dati.
 + Attivare il visualizzatore log situato nel menù strumenti di NVDA.
 + Esaminare i valori più recenti.
@@ -1396,7 +1570,6 @@ Infatti, NVDA invia ancora i tasti speciali (come Shift, Control e Alt) al siste
 Quindi, se si utilizza il tasto Alt in una gesture, la pressione della combinazione di tasti può attivare la barra dei menu, o anche eseguire lo script.
 Comunque, si consiglia di servirsi dei tasti Shift, Control e NVDA come tasti speciali.
 
- 
 ++ Personalizzazione avanzata dei simboli di punteggiatura ++
 in aggiunta a ciò che abbiamo visto nella [Finestra di dialogo Pronuncia Punteggiatura/Simboli #SymbolPronunciation], è possibile personalizzare la punteggiatura ed altri simboli in maniera diversa.
 Per esempio, è possibile specificare se inviare o meno un simbolo non processato al sintetizzatore, per modificare parametri come l'inflessione o provocare una pausa.
@@ -1406,13 +1579,7 @@ Il file si chiama symbols-xx.dic, dove xx costituisce il codice della lingua.
 Il formato di tale file è documentato nella guida per gli sviluppatori, sezione pronuncia/simboli, che si può leggere sul [sito internazionale di NVDA NVDA_URLwiki/Development].
 Comunque, non è possibile per gli utenti definire simboli troppo complessi.
  
- 
- + Ulteriori Informazioni +
++ Ulteriori Informazioni +
 Se si vogliono trovare maggiori informazioni o richiedere assistenza riguardo NVDA, si prega di visitare o il sito internazionale in lingua inglese su NVDA_URL, oppure quello relativo alla comunità italiana all'indirizzo www.nvda.it.
-In entrambe i siti web sarà possibile reperire documentazione aggiuntiva, supporto tecnico e risorse varie come forum o mailing list. In particolare, per quanto concerne il sito italiano, esiste una lista di discussione alla quale chiunque può iscriversi mandando un messaggio a:
-nvda-request@spazioausili.net
-e nell'oggetto del messaggio scrivere la parola "subscribe" senza le virgolette. Rispondere poi al messaggio di conferma.
-I messaggi che transitano nella mailing list sono tutti consultabili anche dal forum dedicato che si aggiorna in tempo reale, e che permette naturalmente anche di rispondere e di creare nuovi argomenti. Si trova all'indirizzo:
-http://www.spazioausili.net/forum/ausili/screen_reader/nvda
-
-
+In entrambe i siti web sarà possibile reperire documentazione aggiuntiva, supporto tecnico e risorse varie come forum o mailing list. In particolare, per quanto concerne il sito italiano, esiste una lista di discussione alla quale chiunque può iscriversi mandando un messaggio a: nvda-request@spazioausili.net e nell'oggetto del messaggio scrivere la parola "subscribe" senza le virgolette. Rispondere poi al messaggio di conferma.
+I messaggi che transitano nella mailing list sono tutti consultabili anche dal forum dedicato che si aggiorna in tempo reale, e che permette naturalmente anche di rispondere e di creare nuovi argomenti. Si trova all'indirizzo: http://www.spazioausili.net/forum/ausili/screen_reader/nvda 

@@ -12,6 +12,9 @@ from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import Dialog
 import appModuleHandler
 import eventHandler
+import UIAHandler
+if UIAHandler.isUIAAvailable:
+	from NVDAObjects.UIA import UIA
 
 """App module for the Windows Logon screen
 """
@@ -31,6 +34,16 @@ class LogonDialog(Dialog):
 			return
 
 		return super(LogonDialog, self).event_gainFocus()
+
+if UIAHandler.isUIAAvailable:
+	class Win8PasswordField(UIA):
+
+		#This UIA object has no invoke pattern, at least set focus.
+		def doAction(self,index=None):
+			if not index:
+				self.setFocus()
+			else:
+				super(Win8PasswordField,self).doAction(index)
 
 class XPPasswordField(IAccessible):
 
@@ -68,6 +81,9 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 
+		if UIAHandler.isUIAAvailable:
+			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName=="TouchEditInner" and obj.role==controlTypes.ROLE_EDITABLETEXT:
+				clsList.insert(0,Win8PasswordField)
 		if windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and obj.parent.parent and not obj.parent.parent.parent:
 			clsList.insert(0, LogonDialog)
 			return

@@ -205,6 +205,7 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	s<<L"_startOfNode=\""<<(startOffset==0?1:0)<<L"\" ";
 	s<<L"_endOfNode=\""<<(endOffset>=this->length?1:0)<<L"\" ";
 	s<<L"isBlock=\""<<this->isBlock<<L"\" ";
+	s<<L"isHidden=\""<<this->isHidden<<L"\" ";
 	int childCount=0;
 	for(VBufStorage_fieldNode_t* child=this->firstChild;child!=NULL;child=child->next) {
 		++childCount;
@@ -283,7 +284,7 @@ void VBufStorage_fieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffe
 	LOG_DEBUG(L"Disassociating fieldNode from buffer");
 }
 
-VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), attributes() {
+VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), isHidden(false), attributes() {
 	LOG_DEBUG(L"field node initialization at "<<this<<L"length is "<<length);
 }
 
@@ -341,6 +342,10 @@ std::wstring VBufStorage_fieldNode_t::getDebugInfo() const {
 
 void VBufStorage_fieldNode_t::setIsBlock(bool isBlock) {
 	this->isBlock=isBlock;
+}
+
+void VBufStorage_fieldNode_t::setIsHidden(bool isHidden) {
+	this->isHidden=isHidden;
 }
 
 int VBufStorage_fieldNode_t::getLength() {
@@ -943,7 +948,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 			bufferEnd=bufferStart+node->length;
 			LOG_DEBUG(L"start is now "<<bufferStart<<L" and end is now "<<bufferEnd);
 			LOG_DEBUG(L"Checking node "<<node->getDebugInfo());
-			if(node->length>0&&node->matchAttributes(attribsString)) {
+			if(node->length>0&&!(node->isHidden)&&node->matchAttributes(attribsString)) {
 				LOG_DEBUG(L"found a match");
 				break;
 			}
@@ -955,7 +960,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 			bufferStart+=tempRelativeStart;
 			bufferEnd=bufferStart+node->length;
 			LOG_DEBUG(L"start is now "<<bufferStart<<L" and end is now "<<bufferEnd);
-			if(node->length>0&&node->matchAttributes(attribsString)) {
+			if(node->length>0&&!(node->isHidden)&&node->matchAttributes(attribsString)) {
 				//Skip first containing parent match or parent match where offset hasn't changed 
 				if((bufferStart==offset)||(!skippedFirstMatch&&bufferStart<offset&&bufferEnd>offset)) {
 					LOG_DEBUG(L"skipping initial parent");
@@ -975,7 +980,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 			if(node) {
 				bufferEnd=bufferStart+node->length;
 			}
-		} while(node!=NULL&&!node->matchAttributes(attribsString));
+		} while(node!=NULL&&(node->isHidden||!node->matchAttributes(attribsString)));
 		LOG_DEBUG(L"end is now "<<bufferEnd);
 	}
 	if(node==NULL) {

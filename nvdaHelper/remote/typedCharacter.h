@@ -17,6 +17,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <wchar.h>
 
+extern HWND typedCharacter_window;
+
 void typedCharacter_inProcess_initialize();
 void typedCharacter_inProcess_terminate();
 

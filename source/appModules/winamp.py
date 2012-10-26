@@ -75,9 +75,11 @@ class winampMainWindow(IAccessible):
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			if getShuffle():
-				onOff=_("on")
+				# Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
+				onOff=pgettext("shuffle", "on")
 			else:
-				onOff=_("off")
+				# Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now off.
+				onOff=pgettext("shuffle", "off")
 			speech.speakMessage(onOff)
 
 	def script_repeatToggle(self,gesture):
@@ -85,9 +87,11 @@ class winampMainWindow(IAccessible):
 		if not isScriptWaiting():
 			api.processPendingEvents()
 			if getRepeat():
-				onOff=_("on")
+				# Translators: the user has pressed the repeat track toggle in winamp, repeat is now on.
+				onOff=pgettext("repeat", "on")
 			else:
-				onOff=_("off")
+				# Translators: the user has pressed the repeat track toggle in winamp, repeat is now off.
+				onOff=pgettext("repeat", "off")
 			speech.speakMessage(onOff)
 
 	__gestures = {

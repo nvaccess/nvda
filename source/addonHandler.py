@@ -30,6 +30,8 @@ import winKernel
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
 BUNDLE_EXTENSION = "nvda-addon"
+BUNDLE_MIMETYPE = "application/x-nvda-addon"
+NVDA_ADDON_PROG_ID = "NVDA.Addon.1"
 ADDON_PENDINGINSTALL_SUFFIX=".pendingInstall"
 DELETEDIR_SUFFIX=".delete"
 
@@ -152,15 +154,18 @@ def installAddonBundle(bundle):
 	addonPath = os.path.join(globalVars.appArgs.configPath, "addons",bundle.manifest['name']+ADDON_PENDINGINSTALL_SUFFIX)
 	bundle.extract(addonPath)
 	addon=Addon(addonPath)
+	# #2715: The add-on must be added to _availableAddons here so that
+	# translations can be used in installTasks module.
+	_availableAddons[addon.path]=addon
 	try:
 		addon.runInstallTask("onInstall")
 	except:
 		log.error("task 'onInstall' on addon '%s' failed"%addon.name,exc_info=True)
+		del _availableAddons[addon.path]
 		addon.completeRemove(runUninstallTask=False)
 		raise AddonError("Installation failed")
 	state['pendingInstallsSet'].add(bundle.manifest['name'])
 	saveState()
-	_availableAddons[addonPath]=addon
 	return addon
 
 class AddonError(Exception):
@@ -212,9 +217,14 @@ class Addon(object):
 	def completeRemove(self,runUninstallTask=True):
 		if runUninstallTask:
 			try:
+				# #2715: The add-on must be added to _availableAddons here so that
+				# translations can be used in installTasks module.
+				_availableAddons[self.path] = self
 				self.runInstallTask("onUninstall")
 			except:
 				log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
+			finally:
+				del _availableAddons[self.path]
 		shutil.rmtree(self.path,ignore_errors=True)
 		if os.path.exists(self.path):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
@@ -325,6 +335,8 @@ def initTranslation():
 	try:
 		callerFrame = inspect.currentframe().f_back
 		callerFrame.f_globals['_'] = translations.ugettext
+		# Install our pgettext function.
+		callerFrame.f_globals['pgettext'] = languageHandler.makePgettext(translations)
 	finally:
 		del callerFrame # Avoid reference problems with frames (per python docs)
 
@@ -372,7 +384,7 @@ class AddonBundle(object):
 					# #2505: Handle non-Unicode file names.
 					# Most archivers seem to use the local OEM code page, even though the spec says only cp437.
 					# HACK: Overriding info.filename is a bit ugly, but it avoids a lot of code duplication.
-					info.filename = info.filename.decode(str(winKernel.kernel32.GetOEMCP()))
+					info.filename = info.filename.decode("cp%d" % winKernel.kernel32.GetOEMCP())
 				z.extract(info, addonPath)
 
 	@property

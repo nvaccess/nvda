@@ -105,7 +105,7 @@ inline void processText(BSTR inText, wstring& outText) {
 
 VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
-	IPDDomNode* domNode,
+	IPDDomNode* domNode, IPDDomElement* domElement,
 	bool fallBackToName, wstring& lang, int flags, wstring* pageNum
 ) {
 	HRESULT res;
@@ -120,25 +120,34 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 		fontStatus = FontInfo_NoInfo;
 	}
 
-	long childCount;
-	if (fontStatus == FontInfo_MixedInfo) {
-		// This node contains text in more than one font.
-		// We need to descend further to get font information.
-		LOG_DEBUG(L"Mixed font info, descending");
-		if ((res = domNode->GetChildCount(&childCount)) != S_OK) {
-			LOG_DEBUG(L"IPDDomNode::GetChildCount returned " << res);
-			childCount = 0;
-		}
-		if (childCount == 0) {
-			// HACK: Child count really shouldn't be 0 if fontStatus is FontInfo_MixedInfo, but it sometimes is.
-			// Therefore, ignore FontInfo_MixedInfo in this case.
-			// Otherwise, the node will be rendered as empty.
-			LOG_DEBUG(L"Child count is 0, ignoring mixed font info");
-			fontStatus = FontInfo_NoInfo;
-		}
+	BSTR text = NULL;
+	if (domElement) {
+		// #2174: Alt or actual text should override any other text content.
+		// Unfortunately, GetTextContent() still includes the text of descendants,
+		// so handle this ourselves.
+		domElement->GetAttribute(L"Alt", NULL, &text);
+		if (!text)
+			domElement->GetAttribute(L"ActualText", NULL, &text);
+	}
+
+	long childCount = 0;
+	if (!text)
+		domNode->GetChildCount(&childCount);
+
+	if (fontStatus == FontInfo_NoInfo && childCount > 0) {
+		// HACK: #2175: Reader 10.1 and later report FontInfo_NoInfo even when there is mixed font info.
+		// Therefore, we must assume FontInfo_MixedInfo.
+		fontStatus = FontInfo_MixedInfo;
+	} else if (fontStatus == FontInfo_MixedInfo && childCount == 0) {
+		// HACK: Child count really shouldn't be 0 if fontStatus is FontInfo_MixedInfo, but it sometimes is.
+		// Therefore, ignore FontInfo_MixedInfo in this case.
+		// Otherwise, the node will be rendered as empty.
+		fontStatus = FontInfo_NoInfo;
 	}
 
 	if (fontStatus == FontInfo_MixedInfo) {
+		// This node contains text in more than one font.
+		// We need to descend further to get font information.
 		// Iterate through the children.
 		for (long childIndex = 0; childIndex < childCount; ++childIndex) {
 			IPDDomNode* domChild;
@@ -147,39 +156,29 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 				continue;
 			}
 			// Recursive call: render text for this child and its descendants.
-			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, fallBackToName, lang, flags, pageNum))
+			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, NULL, fallBackToName, lang, flags, pageNum))
 				previousNode = tempNode;
 			domChild->Release();
 		}
 	} else {
 
 		// We don't need to descend, so add the font info and text for this node.
-		BSTR text = NULL;
-		if ((res = domNode->GetTextContent(&text)) != S_OK) {
-			LOG_DEBUG(L"IPDDomNode::GetTextContent returned " << res);
-			text = NULL;
-		}
-		if (text && SysStringLen(text) == 0) {
-			SysFreeString(text);
-			text = NULL;
-		}
+		if (!text)
+			domNode->GetTextContent(&text);
 
 		if (!text) {
 			// GetTextContent() failed or returned nothing.
 			// This should mean there is no text.
 			// However, GetValue() or GetName() sometimes works nevertheless, so try it.
 			if (fallBackToName)
-				res = domNode->GetName(&text);
+				domNode->GetName(&text);
 			else
-				res = domNode->GetValue(&text);
-			if (res != S_OK) {
-				LOG_DEBUG(L"IPDDomNode::GetName/Value returned " << res);
-				text = NULL;
-			}
-			if (text && SysStringLen(text) == 0) {
-				SysFreeString(text);
-				text = NULL;
-			}
+				domNode->GetValue(&text);
+		}
+
+		if (text && SysStringLen(text) == 0) {
+			SysFreeString(text);
+			text = NULL;
 		}
 
 		if (text) {
@@ -189,10 +188,12 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 			if (previousNode) {
 				if (fontStatus == FontInfo_Valid) {
 					previousNode->addAttribute(L"font-name", fontName);
-					wostringstream s;
-					s.setf(ios::fixed);
-					s << setprecision(1) << fontSize << "pt";
-					previousNode->addAttribute(L"font-size", s.str());
+					if (fontSize > 0) {
+						wostringstream s;
+						s.setf(ios::fixed);
+						s << setprecision(1) << fontSize << "pt";
+						previousNode->addAttribute(L"font-size", s.str());
+					}
 					if ((fontFlags&PDDOM_FONTATTR_ITALIC)==PDDOM_FONTATTR_ITALIC) previousNode->addAttribute(L"italic", L"1");
 					if ((fontFlags&PDDOM_FONTATTR_BOLD)==PDDOM_FONTATTR_BOLD) previousNode->addAttribute(L"bold", L"1");
 				}
@@ -670,7 +671,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
 				addAttrsToTextNode(tempNode);
 		} else
-			tempNode = renderText(buffer, parentNode, previousNode, domNode, useNameAsContent, parentNode->language, textFlags, pageNum);
+			tempNode = renderText(buffer, parentNode, previousNode, domNode, domElement, useNameAsContent, parentNode->language, textFlags, pageNum);
 		if (tempNode) {
 			// There was text.
 			previousNode = tempNode;
