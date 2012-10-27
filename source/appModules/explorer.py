@@ -114,7 +114,7 @@ if UIAHandler.isUIAAvailable:
 				if automationID=="GridListGroupHeader":
 					return child.name
 
-class ImmersiveLauncher(UIA):
+	class ImmersiveLauncher(UIA):
 		#When the win8 start screen openes, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
 		#Ignore focus events on this object.
 		shouldAllowUIAFocusEvent=False
