@@ -4,7 +4,7 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
-Les apports majeurs de cette version incluent le support de la saisie des caractèrs asiatiques ; le support expérimental des écrans tactiles sous Windows 8 ; l'annonce des numéro de page et le support amélioré des tableaux dans Adobe Reader ; le support de la naviation entre les cellules des liste multi-colones ou en tableau ; et le support de plusieurs nouveaux afficheurs Braille.
+Les apports majeurs de cette version incluent le support de la saisie des caractèrs asiatiques ; le support expérimental des écrans tactiles sous Windows 8 ; l'annonce des numéro de page et le support amélioré des tableaux dans Adobe Reader ; le support de la navigation entre les cellules des liste multi-colones ou en tableau ; le support de plusieurs nouveaux afficheurs Braille ; et l'annonce des entêtes de lignes et colonnes dans les tableaux Microsoft Excel.
 
 == Nouvelles Fonctionnalités ==
 - NVDA supporte maintenant la saisie des caractères asiatiques en utilisant les méthodes IME et les services de saisie de texte dans toutes les applications, incluant :
@@ -15,7 +15,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - Quand la fonction touche rémanentes de Windows est activée, la touche NVDA se comportera comme les autre touches de combinaisons. Cela vous permet de l'utiliser sans la maintenire enfoncée pendant que vous pressez d'autre touches. (#230)
 - L'annonce de titre des lignes et colonnes de tableaux est maintenant supportée dans Microsoft Excel. Appuyez sur NVDA+maj+c pour définir la ligne contenant le titre des colonnes, et NVDA+maj+r pour la colonne contenant le titre des lignes. Appuyer deux fois rapidement l'une de ces combinaison efface le paramètre. (#1519)
 - Support pour les afficheurs braille HIMS Braille Sense, Braille EDGE et SyncBraille. (#1266, #1267)
-- Lorsque les notifications Toast Windows 8 apparaissent, NVDA les annonce et déplace le navigateur d'objet dessus pour plus d'interaction. (#2143)
+- Lorsque les notifications Toast Windows 8 apparaissent, NVDA les annonce si l'annonce des infobulles est activée. (#2143)
 - Support expérimentale des écrans tactiles sous Windows 8, incluant :
 - Lecture du texte sous le doigt lorsqu'on le bouge autour
 - Beaucoup de gestes pour naviguer entre les objets, le curseur de revue, et d'autres commandes de NVDA.
@@ -26,6 +26,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - NVDA peut maintenant lire les suggestions de l'autocomplétion lorsqu'on saisi des adresses e-mail dans Microsoft Outlook 2007. (#689)
 - Deux nouvelles variantes de voix Espeak : Gene, Gene2. (#2512)
 - Dans Adobe Reader, les numérots de pages peuvent maintenant être rapportés. (#2534)
+- Dans Reader 11, les étiquettes de pages sont maintenant raportées si présentes, reflettant les changements de numérot de page dans différentes sections, etc. Dans les version inférieures, ce n'est pas possible et seulement les numérots de pages séquenciels sont rapportés.
 - Il est maintenant possible de réinitialiser la configuration de NVDA à celle par défaut en appuyant trois fois sur NVDA+Ctrl+r, ou en choisissant Réinitialiser la configuration aux paramètres par défaut dans le menu de NVDA. (#2086)
 - Support des afficheurs braille Seika Version 3, 4 et 5 et Seika80 de Nippon Telesoft. (#2452)
 - les premiers et derniers curseurs routines des afficheurs braille Pacmate et Focus de Freedom Scientific peuvent maintenant être utilisés pour défiler vers l'avant ou vers l'arrière. (#2556)
@@ -41,7 +42,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 
 
 == Changements ==
-- Dans la boîte de dialogue de préférences du curseur de revue de NVDA, l'option suivre le focus clavier a été renomée en Suivre le focus système pour être cohérant avec les terminologies utilisées ailleur dans NVDA.
+- Dans la boîte de dialogue de préférences du curseur de revue de NVDA, l'option suivre le focus clavier a été renommée en Suivre le focus système pour être cohérant avec les terminologies utilisées ailleur dans NVDA.
 - Quand le braille suit la revue et que le curseur est dans un objet qui n'est pas un objet texte (P.EX. une zone d'édition), les touches routines activent maintenant l'objet. (#2386)
 - L'option Sauvegarder la configuration en quittant est activée par défaut pour les nouvelles configurations.
 - Lorsque l'on met à jours une copie installée de NVDA, le raccourci clavier du bureau n'est plus remis à control+alt+n s'il a été changé manuellement par l'utilisateur. (#2572)
@@ -49,8 +50,9 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - Lorsqu'on installe la même version ou une autre d'un module complémentaire actuellement installé, NVDA proposera de mettre à jour le module complémentaire plutôt qu'afficher un message d'erreur et abandonner. (#2501)
 - Les commandes de navigation par objets (excepté la commande rapporter l'objet courrant) rapporte maintenant moins d'informations. Vous pouvez toujours obtenire les autres informations en utilisant la commande Rapporter l'objet courrant. (#2560)
 - Mise à jour de liblouis vers la version 2.5.1. (#2319, #2480, #2662, #2672)
-- Le document Références Rapides des touches de Raccourcis a été renomé en résumé des touches de commandes puisqu'il inclue maintenant les commandes tactiles et les commandes clavier.
+- Le document Références Rapides des touches de Raccourcis a été renommé en résumé des touches de commandes puisqu'il inclue maintenant les commandes tactiles et les commandes clavier.
 - La liste d'éléments en mode Navigation se souviendra maintenant du type d'élément à afficher (Ex : les liens, les entêtes ou les repaires) chaque fois que ce dialogue est appelé dans la même session de NVDA. (#365)
+- La plupart des applications en interface Windows 8 (Ex : Mail, Calendrier) n'activent plus le mode navigation pour toute l'application.
 
 
 == Corrections de Bogues ==
@@ -59,7 +61,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - Dans Adobe Reader, les cellules sur plusieurs colonnes sont correctement traitées. (#2437, #2438, #2450)
 - Le package de NVDA distribué vérifie maintenant son intégrité avant de s'exécuter. (#2475)
 - Les fichiers temporaires de téléchargement sont maintenant supprimés si le téléchargement d'une mise à jour de NVDA échoue. (#2477)
-- Lorsque l'on copie la configuration utilisateur dans la configuration système (pour l'utiliser  dans l'écran d'identification à Windows et les autres écrans sécurisés de Windows) NVDA ne se figeras plus sous XP pendant la procédure. (#2485)
+- Lorsque l'on copie la configuration utilisateur dans la configuration système (pour l'utiliser  dans l'écran d'identification à Windows et les autres écrans sécurisés de Windows) NVDA ne se figeras plus sous XP pendant la procédure où il s'exécute en tant qu'administrateur. (#2485)
 - Les mosaïques dans l'écran de démarrage Windows 8 sont maintenant mieux présentées vocalement et en braille. Le nom n'est plus répété, non sélectionné n'est plus rapporté sur toutes les mosaïques, et l'information de statut en temps réel est présenté comme la description de la mosaïque (P.Ex. la température actuelle pour la météo).
 - Les mot de passes ne sont plus annoncés lorsqu'on lie un champ de mot de passe dans Microsoft Outlook et d'autres champs d'édition standards marqués comme protégés. (#2021)
 - Dans Adobe Reader, les changement dans les champs de formulaires sont correctement rendus en mode navigation. (#2529)
@@ -85,25 +87,34 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - Les informations de mise en forme sont correctement détectées dans Adobe Reader 10.1 et plus récent. (#2175)
 - Dans Adobe Reader, si un texte alternatif est fourni, seulement ce texte sera rendu. Précédamment, du texte en trop était lu. (#2174)
 - Lorsqu'un document contient une application, le contenu de l'application n'est plus inclus dans le mode navigation. Cela permet d'éviter de se déplacer dans l'application de manière inattendue. On peut se déplacer dans l'application de la même manière que pour un objet inclus. (#990)
-- Dans les applications Mozilla, les valeurs des boutons rotatifs sont correctement rapportées lorsuqu'elles changent. (#2653)
+- Dans les applications Mozilla, les valeurs des boutons rotatifs sont correctement rapportées lorsqu'elles changent. (#2653)
 - Mise à jour du support d'Adobe Digital Editions pour qu'il fonctionne avec la version 2.0. (#2688)
 - Appuyer sur NVDA+FlècheHaute lorsqu'on est dans une zone de liste dans Internet explorer et autres documents MSHTML ne lira plus tous les éléments. Seul l'élément actif sera lu. (#2337)
-- Les dictionnaires de paroles se sauvegarderont bien quand on utilise un dièse (#) dans le champ Mort réel et Remplacement. (#961)
-- Le mode navigation dans les documents MSHTML (ex : Internet Explorer) affiche maintenant le contenu visible contene dans du contenu invisible. Spécifiquement : les éléments ayant un style visibility:visible contenu dans un élément avec le style visibility:hidden. (#2097)
+- Les dictionnaires de paroles se sauvegarderont bien quand on utilise un dièse (#) dans le champ Mot réel et Remplacement. (#961)
+- Le mode navigation dans les documents MSHTML (ex : Internet Explorer) affiche maintenant le contenu visible contenu dans du contenu invisible. Spécifiquement : les éléments ayant un style visibility:visible contenu dans un élément avec le style visibility:hidden. (#2097)
 - Les liens du centre de sécurité de Windows XP ne rapportent plus de texte superflu après leur nom. (#1331)
+- Les champs de texte UI Automation (Ex : la zone de recherche du menu démarrer de Windows 7) sont dèsormais correctement annoncés lorsqu'on déplace la souris autour au lieux de ne rien dire.
+- Les changements de disposition de clavier ne sont plus annoncés pendant dire tout, ce qui était particulièrement problémathique dans les documents multi-lingues incluant du texte en Arabe. (#1676)
+- Le contenu entier de certains champs de texte UI Automation (ex : le champ de recherche dans le menu démarrer de Windows 7/8) n'est plus annoncé à chaque changement.
+- Lorsqu'on navigue entre les groupes dans l'écran d'accueil de Windows 8, un groupe sans étiquette n'annoncera plus la première mosaïque comme le nom du groupe. (#2658)
+- Lorsqu'on ouvre l'écran d'accueil de Windows 8, le focus est correctement placé sur le premier élément, au lieux de sauter au début de l'écran ce qui peut causer des confusions dans la navigation. (#2720)
+- NVDA ne plantera plus au démarrage lorsque le répertoire du profile de l'utilisateur contient des caractères multibyte. (#2729)
+- En mode navigation dans Google Chrome, le texte des onglets est maintenant correctement affiché.
 
 
 == Changements pour les développeurs ==
-- Le fichier journal précédant est maintenant renomé en nvda-old.log à l'initialisation de NVDA. Par conséquent, si NVDA plente ou est redémarré, les informations journalisées de cette session sont toujours accessibles pour inspection. (#916)
+- Le fichier journal précédent est maintenant renommé en nvda-old.log à l'initialisation de NVDA. Par conséquent, si NVDA plante ou est redémarré, les informations journalisées de cette session sont toujours accessibles pour inspection. (#916)
 - Accéder à la propriété role dans chooseNVDAObjectOverlayClasses ne la rend plus incorrecte et pas rapporté lors du focus pour certains objets tel que les fenêtres d'invites de commandes et les contrôles Scintilla. (#2569)
 - Les menus Préférences, Outils et Aide de NVDA sont maintenant accessibles comme des attributs de gui.mainFrame.sysTrayIcon només respectivement preferencesMenu, toolsMenu et helpMenu. Cela permet aux plugins de pouvoir plus facilement ajouter des éléments à ces menus.
-- Le script navigatorObject_doDefaultAction dans globalCommands a été renomé en review_activate.
+- Le script navigatorObject_doDefaultAction dans globalCommands a été renommé en review_activate.
 - Les messages de contexte Gettext sont maintenant supportés. Cela permet de pouvoir définir plusieurs traductions pour un message en Anglais selon le contecte. (#1524)
  - Cela se fait en utilisant la fonction pgettext(context, message).
  - Ceci est supporté aussi bien pour NVDA que pour les modules complémentaires.
  - xgettext et msgfmt de GNU Gettext doivent être utiliser pour créer tout fichier po ou mo. Les outils Python ne supportent pas les messages de contextes.
  - Pour xgettext, passez le paramètre de ligne de commande --keyword=pgettext:1c,2 pour activer l'inclusion des messages de contextes.
  - Visitez http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts pour plus d'informations.
+- Il est maintenant possible d'accéder aux modules intégrés de NVDA afin d'en étendre les fonctionnalités. Reportez-vous au module nvdaBuiltin pour plus de détails.
+- Le support de traduction dans les Modules complémentaires est maintenant supporté dans le module installTask du module complémentaire. (#2715)
 
 
 = 2012.2.1 =
