@@ -2,32 +2,106 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 2012.2-5225\n"
+"Project-Id-Version: 2012.3-5603\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-21 19:04+1000\n"
-"PO-Revision-Date: 2012-05-29 11:34+0800\n"
+"POT-Creation-Date: 2012-10-27 19:05+1000\n"
+"PO-Revision-Date: 2012-10-31 12:04+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <cyeric20@yahoo.com.hk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Poedit-Language: Traditional Chinese\n"
-"X-Poedit-Country: HONG KONG\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#: IAccessibleHandler.py:694
+#: IAccessibleHandler.py:667
 msgid "Secure Desktop"
 msgstr "安全桌面"
 
-#: NVDAHelper.py:140
-msgid "unknown layout"
-msgstr "未知的鍵盤輸入配置"
+#. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
+#: NVDAHelper.py:209
+msgid "Native input"
+msgstr "本地輸入"
 
-#: NVDAHelper.py:141
-#, python-format
-msgid "layout %s"
-msgstr "%s 為鍵盤輸入配置"
+#. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
+#: NVDAHelper.py:211
+msgid "Alpha numeric input"
+msgstr "英數輸入"
+
+#. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
+#: NVDAHelper.py:215
+msgid "Full shaped mode"
+msgstr "全形"
+
+#. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
+#: NVDAHelper.py:217
+msgid "Half shaped mode"
+msgstr "半形"
+
+#. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
+#: NVDAHelper.py:223 NVDAHelper.py:233
+msgid "half alphanumeric"
+msgstr "半形英數"
+
+#. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
+#: NVDAHelper.py:225
+msgid "half katakana"
+msgstr "半形片假名"
+
+#. Translators: For Japanese character input: alpha numeric (roman/english) mode.
+#: NVDAHelper.py:227 NVDAHelper.py:236
+msgid "alphanumeric"
+msgstr "英數"
+
+#. Translators: For Japanese character input: Hiragana input mode.
+#: NVDAHelper.py:229
+msgid "hiragana"
+msgstr "平假名"
+
+#. Translators: For Japanese character input: Katacana input mode.
+#: NVDAHelper.py:231
+msgid "katakana"
+msgstr "片假名"
+
+#: NVDAHelper.py:234
+msgid "half katakana roman"
+msgstr "羅馬半形片假名"
+
+#. Translators: For Japanese character input: Hiragana Roman input mode.
+#: NVDAHelper.py:238
+msgid "hiragana roman"
+msgstr "羅馬平假名"
+
+#. Translators: For Japanese character input: Katacana Roman input mode.
+#: NVDAHelper.py:240
+msgid "katakana roman"
+msgstr "羅馬片假名"
+
+#. Translators: a message when the IME open status changes to opened
+#: NVDAHelper.py:271
+msgid "IME opened"
+msgstr "IME 開啟"
+
+#. Translators: a message when the IME open status changes to closed
+#: NVDAHelper.py:274
+msgid "IME closed"
+msgstr "IME 關閉"
+
+#. Translators: the label for an unknown language when switching input methods.
+#: NVDAHelper.py:302
+msgid "unknown language"
+msgstr "未知的語言"
+
+#. Translators: The label for an unknown input method when switching input methods.
+#: NVDAHelper.py:327
+msgid "unknown input method"
+msgstr "未知的輸入法"
+
+#. Translators: the message announcing the language and keyboard layout when it changes
+#: NVDAHelper.py:333
+msgid "{language} - {layout}"
+msgstr "{language} - {layout}"
 
 #: appModuleHandler.py:143
 #, python-format
@@ -181,362 +255,385 @@ msgstr "西班牙語一級點字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:86
+msgid "Estonian grade 0"
+msgstr "愛沙尼亞語零級點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:89
+msgid "Ethiopic grade 1"
+msgstr "埃塞俄比亞語一級點字"
+
+#. Translators: The name of a braille table displayed in the
+#: braille.py:92
 msgid "Finnish 8 dot computer braille"
 msgstr "芬蘭語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:89
+#: braille.py:95
 msgid "French (Canada) grade 1"
 msgstr "法語 (加拿大) 一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:92
+#: braille.py:98
 msgid "French (Canada) grade 2"
 msgstr "法語 (加拿大) 二級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:95
+#: braille.py:101
 msgid "French (unified) 6 dot computer braille"
 msgstr "統一化法語六點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:98
+#: braille.py:104
 msgid "French (unified) 8 dot computer braille"
 msgstr "統一化法語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:101
+#: braille.py:107
 msgid "French (unified) Grade 2"
 msgstr "統一化法語二級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:104
+#: braille.py:110
 msgid "Greek (Greece) grade 1"
 msgstr "希臘語 (希臘) 一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:107
-msgid "Ethiopic grade 1"
-msgstr "埃塞俄比亞語一級點字"
-
-#. Translators: The name of a braille table displayed in the
-#. braille settings dialog.
-#: braille.py:110
+#: braille.py:113
 msgid "Hebrew 8 dot computer braille"
 msgstr "希伯來語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:113
+#: braille.py:116
 msgid "Hindi grade 1"
 msgstr "北印度語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:116
+#: braille.py:119
 msgid "Croatian 8 dot computer braille"
 msgstr "克羅地亞語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:119
+#: braille.py:122
 msgid "Hungarian 8 dot computer braille"
 msgstr "匈牙利語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:122
+#: braille.py:125
+msgid "Hungarian grade 1"
+msgstr "匈牙利語一級點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:128
 msgid "Icelandic 8 dot computer braille"
 msgstr "冰島語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:125
-msgid "Italian grade 1"
-msgstr "意大利語一級點字"
+#: braille.py:131
+msgid "Italian 6 dot computer braille"
+msgstr "義大利語 六點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:128
+#: braille.py:134
+msgid "Italian 8 dot computer braille"
+msgstr "義大利語 八點電腦點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:137
 msgid "Latvian grade 1"
 msgstr "拉脫維亞語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:131
+#: braille.py:140
 msgid "Dutch (Belgium) grade 1"
 msgstr "荷蘭語 (比利時) 一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:134
+#: braille.py:143
 msgid "Dutch (netherlands) grade 1"
 msgstr "荷蘭語 (荷蘭) 一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:137
+#: braille.py:146
 msgid "Norwegian 8 dot computer braille"
 msgstr "挪威語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:140
+#: braille.py:149
 msgid "Norwegian grade 0"
 msgstr "挪威語零級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:143
+#: braille.py:152
 msgid "Norwegian grade 1"
 msgstr "挪威語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:146
+#: braille.py:155
 msgid "Norwegian grade 2"
 msgstr "挪威語二級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:149
+#: braille.py:158
 msgid "Norwegian grade 3"
 msgstr "挪威語三級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:152
+#: braille.py:161
 msgid "Polish grade 1"
 msgstr "波蘭語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:155
+#: braille.py:164
+msgid "Portuguese 8 dot computer braille"
+msgstr "葡萄牙語 八點電腦點字"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:167
 msgid "Portuguese grade 1"
 msgstr "葡萄牙語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:158
+#: braille.py:170
 msgid "Portuguese grade 2"
 msgstr "葡萄牙語二級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:161
+#: braille.py:173
 msgid "Russian grade 1"
 msgstr "俄語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:164
+#: braille.py:176
 msgid "Swedish grade 1"
 msgstr "瑞典語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:167
+#: braille.py:179
 msgid "Slovak"
 msgstr "斯洛法克語"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:170
+#: braille.py:182
 msgid "Slovene grade 1"
 msgstr "斯洛文尼亞語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:173
+#: braille.py:185
 msgid "Serbian grade 1"
 msgstr "塞爾維亞語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:176
+#: braille.py:188
 msgid "Tamil grade 1"
 msgstr "泰米爾語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:179
+#: braille.py:191
 msgid "Turkish grade 1"
 msgstr "土耳其語一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:182
+#: braille.py:194
 msgid "Unified English Braille Code grade 1"
 msgstr "統一化英語點字碼一級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:185
+#: braille.py:197
 msgid "Unified English Braille Code grade 2"
 msgstr "統一化英語點字碼二級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:188
+#: braille.py:200
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "中文香港粵語點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:191
+#: braille.py:203
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "中文台灣注音點字"
 
 #. Translators: Displayed in braille for an object which is an
 #. editable text field.
-#: braille.py:197
+#: braille.py:209
 msgid "edt"
 msgstr "edt"
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
-#: braille.py:200
+#: braille.py:212
 msgid "lst"
 msgstr "lst"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
-#: braille.py:203
+#: braille.py:215
 msgid "mnubar"
 msgstr "mnubar"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
-#: braille.py:206
+#: braille.py:218
 msgid "mnu"
 msgstr "mnu"
 
 #. Translators: Displayed in braille for an object which is a
 #. button.
-#: braille.py:209
+#: braille.py:221
 msgid "btn"
 msgstr "btn"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
-#: braille.py:212
+#: braille.py:224
 msgid "chk"
 msgstr "chk"
 
 #. Translators: Displayed in braille for an object which is a
 #. radio button.
-#: braille.py:215
+#: braille.py:227
 msgid "rbtn"
 msgstr "rbtn"
 
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
-#: braille.py:218
+#: braille.py:230
 msgid "cbo"
 msgstr "cbo"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
-#: braille.py:221
+#: braille.py:233
 msgid "lnk"
 msgstr "lnk"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
-#: braille.py:224
+#: braille.py:236
 msgid "dlg"
 msgstr "dlg"
 
 #. Translators: Displayed in braille for an object which is a
 #. tree view.
-#: braille.py:227
+#: braille.py:239
 msgid "tv"
 msgstr "tv"
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
-#: braille.py:230
+#: braille.py:242
 msgid "tb"
 msgstr "tb"
 
 #. Translators: Displayed in braille for an object which is a
 #. separator.
-#: braille.py:233
+#: braille.py:245
 msgid "-----"
 msgstr "-----"
 
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
-#: braille.py:236
+#: braille.py:248
 msgid "gra"
 msgstr "gra"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-#: braille.py:241
+#: braille.py:253
 msgid "(x)"
 msgstr "(x)"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-#: braille.py:243
+#: braille.py:255
 msgid "(-)"
 msgstr "(-)"
 
 #. Translators: Displayed in braille when an object is selected.
-#: braille.py:245
+#: braille.py:257
 msgid "sel"
 msgstr "sel"
 
 #. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-#: braille.py:247
+#: braille.py:259
 msgid "submnu"
 msgstr "submnu"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
-#: braille.py:249
+#: braille.py:261
 msgid "..."
 msgstr "..."
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-#: braille.py:251
+#: braille.py:263
 msgid "-"
 msgstr "-"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-#: braille.py:253
+#: braille.py:265
 msgid "+"
 msgstr "+"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-#: braille.py:255
+#: braille.py:267
 msgid "ro"
 msgstr "ro"
 
 #. Translators: Displayed in braille when an object is clickable.
-#: braille.py:257
+#: braille.py:269
 msgid "clk"
 msgstr "clk"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-#: braille.py:261
+#: braille.py:273
 msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:403
+#: braille.py:420
 #, python-format
 msgid "h%s"
 msgstr "h%s"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:409
+#: braille.py:426
 msgid "vlnk"
 msgstr "vlnk"
 
@@ -544,68 +641,78 @@ msgstr "vlnk"
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 #. but this still might be used in some other cases.
 #. %s will be replaced with the negated state.
-#: braille.py:424
-#: speech.py:795
+#: braille.py:441 speech.py:814
 #, python-format
 msgid "not %s"
 msgstr "沒 %s"
 
-#: braille.py:437
-#: speech.py:803
-#, python-format
-msgid "%s of %s"
-msgstr "第 %s 項共 %s 項"
+#. Translators: Brailled to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
+#. {number} is replaced with the number of the item in the group.
+#. {total} is replaced with the total number of items in the group.
+#: braille.py:457 speech.py:825
+msgid "{number} of {total}"
+msgstr "第 {number} 項共 {total} 項"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:441
+#: braille.py:461
 #, python-format
 msgid "lv %s"
 msgstr "lv %s"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:446
+#: braille.py:466
 #, python-format
 msgid "r%s"
 msgstr "r%s"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:454
+#: braille.py:474
 #, python-format
 msgid "c%s"
 msgstr "c%s"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:549
+#: braille.py:565
 #, python-format
 msgid "%s end"
 msgstr "%s 完"
 
-#: characterProcessing.py:127
-#: synthDrivers\_espeak.py:311
-msgid "none"
-msgstr "沒有"
-
+#. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:128
-msgid "some"
-msgstr "小部份"
+msgctxt "symbolLevel"
+msgid "none"
+msgstr "不讀出"
 
-#: characterProcessing.py:129
-msgid "most"
-msgstr "大部分"
-
+#. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:130
-msgid "all"
-msgstr "全部"
+msgctxt "symbolLevel"
+msgid "some"
+msgstr "讀出小部分"
 
-#: characterProcessing.py:131
-#: controlTypes.py:293
-#: textInfos\__init__.py:196
+#. Translators: The level at which the given symbol will be spoken.
+#: characterProcessing.py:132
+msgctxt "symbolLevel"
+msgid "most"
+msgstr "讀出大部分"
+
+#. Translators: The level at which the given symbol will be spoken.
+#: characterProcessing.py:134
+msgctxt "symbolLevel"
+msgid "all"
+msgstr "讀出所有"
+
+#. Translators: The level at which the given symbol will be spoken.
+#: characterProcessing.py:136
+msgctxt "symbolLevel"
 msgid "character"
-msgstr "字元"
+msgstr "標點報讀等級"
 
 #: colors.py:75
 msgid "unknown color"
@@ -691,12 +798,8 @@ msgid "orange"
 msgstr "橙色"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#: compoundDocuments.py:401
-#: globalCommands.py:127
-#: speech.py:306
-#: speech.py:498
-#: speech.py:513
-#: virtualBuffers\__init__.py:717
+#: compoundDocuments.py:401 globalCommands.py:130 speech.py:323 speech.py:515
+#: speech.py:530 virtualBuffers\__init__.py:735
 #, python-format
 msgid "selected %s"
 msgstr "選取, %s"
@@ -749,8 +852,7 @@ msgstr "選單列"
 msgid "menu item"
 msgstr "選單項目"
 
-#: controlTypes.py:199
-#: controlTypes.py:319
+#: controlTypes.py:199 controlTypes.py:320
 msgid "menu"
 msgstr "選單"
 
@@ -778,8 +880,7 @@ msgstr "氣泡提示"
 msgid "tool tip"
 msgstr "工具提示"
 
-#: controlTypes.py:206
-#: speech.py:1089
+#: controlTypes.py:206 speech.py:1126
 msgid "link"
 msgstr "連結"
 
@@ -792,8 +893,7 @@ msgid "tree view item"
 msgstr "樹狀檢視項目"
 
 #. Translators: This is the name of a key on the keyboard.
-#: controlTypes.py:209
-#: keyLabels.py:137
+#: controlTypes.py:209 keyLabels.py:137
 msgid "tab"
 msgstr "tab"
 
@@ -893,8 +993,7 @@ msgstr "第五級標題"
 msgid "heading 6"
 msgstr "第六級標題"
 
-#: controlTypes.py:234
-#: textInfos\__init__.py:199
+#: controlTypes.py:234 textInfos\__init__.py:202
 msgid "paragraph"
 msgstr "段落"
 
@@ -965,8 +1064,7 @@ msgstr "圖示"
 msgid "directory pane"
 msgstr "目錄窗格"
 
-#: controlTypes.py:254
-#: NVDAObjects\window\edit.py:612
+#: controlTypes.py:254 NVDAObjects\window\edit.py:613
 msgid "embedded object"
 msgstr "嵌入式物件"
 
@@ -1092,6 +1190,10 @@ msgstr "邊界"
 msgid "caret"
 msgstr "次方號"
 
+#: controlTypes.py:293 textInfos\__init__.py:199
+msgid "character"
+msgstr "字元"
+
 #: controlTypes.py:294
 msgid "chart"
 msgstr "圖表"
@@ -1120,315 +1222,313 @@ msgstr "跳出選項的按鈕"
 msgid "menu button"
 msgstr "選單按鈕"
 
-#: controlTypes.py:301
+#. Translators: Reported for a button which expands a grid when it is pressed.
+#: controlTypes.py:302
 msgid "drop down button grid"
 msgstr "下拉按鈕區塊"
 
-#: controlTypes.py:302
+#: controlTypes.py:303
 msgid "equation"
 msgstr "公式"
 
-#: controlTypes.py:303
+#: controlTypes.py:304
 msgid "grip"
 msgstr "抓緊"
 
-#: controlTypes.py:304
+#: controlTypes.py:305
 msgid "hot key field"
 msgstr "快速鍵欄位"
 
-#: controlTypes.py:305
+#: controlTypes.py:306
 msgid "indicator"
 msgstr "指示標記"
 
-#: controlTypes.py:306
+#: controlTypes.py:307
 msgid "spin button"
 msgstr "調整按鈕"
 
-#: controlTypes.py:307
+#: controlTypes.py:308
 msgid "sound"
 msgstr "聲音"
 
-#: controlTypes.py:308
+#: controlTypes.py:309
 msgid "white space"
 msgstr "空白字元"
 
-#: controlTypes.py:309
+#: controlTypes.py:310
 msgid "tree view button"
 msgstr "樹狀檢視按鈕"
 
-#: controlTypes.py:310
+#: controlTypes.py:311
 msgid "IP address"
 msgstr "IP 位址"
 
-#: controlTypes.py:311
+#: controlTypes.py:312
 msgid "desktop icon"
 msgstr "桌面圖示"
 
-#: controlTypes.py:312
-#: controlTypes.py:336
+#: controlTypes.py:313 controlTypes.py:337
 msgid "alert"
 msgstr "請注意"
 
-#: controlTypes.py:313
+#: controlTypes.py:314
 msgid "IFrame"
 msgstr "內嵌頁框"
 
-#: controlTypes.py:314
+#: controlTypes.py:315
 msgid "desktop pane"
 msgstr "桌面窗格"
 
-#: controlTypes.py:315
+#: controlTypes.py:316
 msgid "option pane"
 msgstr "選項對話窗格"
 
-#: controlTypes.py:316
+#: controlTypes.py:317
 msgid "color chooser"
 msgstr "顏色選擇框"
 
-#: controlTypes.py:317
+#: controlTypes.py:318
 msgid "file chooser"
 msgstr "檔案選擇框"
 
-#: controlTypes.py:318
+#: controlTypes.py:319
 msgid "filler"
 msgstr "填寫框"
 
-#: controlTypes.py:320
+#: controlTypes.py:321
 msgid "panel"
 msgstr "面板"
 
-#: controlTypes.py:321
+#: controlTypes.py:322
 msgid "password edit"
 msgstr "密碼編輯區"
 
-#: controlTypes.py:322
+#: controlTypes.py:323
 msgid "font chooser"
 msgstr "字型選擇框"
 
-#: controlTypes.py:323
-#: textInfos\__init__.py:198
+#: controlTypes.py:324 textInfos\__init__.py:201
 msgid "line"
 msgstr "單行"
 
-#: controlTypes.py:324
+#: controlTypes.py:325
 msgid "font name"
 msgstr "字體名稱"
 
-#: controlTypes.py:325
+#: controlTypes.py:326
 msgid "font size"
 msgstr "字體大小"
 
 #. Translators: Reported when text is bolded.
-#: controlTypes.py:326
-#: speech.py:1018
+#: controlTypes.py:327 speech.py:1055
 msgid "bold"
 msgstr "粗體"
 
-#: controlTypes.py:327
+#: controlTypes.py:328
 msgid "ITALIC"
 msgstr "斜體"
 
-#: controlTypes.py:328
+#: controlTypes.py:329
 msgid "underline"
 msgstr "底線"
 
-#: controlTypes.py:329
+#: controlTypes.py:330
 msgid "foreground color"
 msgstr "前景色"
 
-#: controlTypes.py:330
+#: controlTypes.py:331
 msgid "background color"
 msgstr "背景色"
 
 #. Translators: Reported for superscript text.
-#: controlTypes.py:331
-#: speech.py:1054
+#: controlTypes.py:332 speech.py:1091
 msgid "superscript"
 msgstr "上標"
 
 #. Translators: Reported for subscript text.
-#: controlTypes.py:332
-#: speech.py:1057
+#: controlTypes.py:333 speech.py:1094
 msgid "subscript"
 msgstr "下標"
 
-#: controlTypes.py:333
+#: controlTypes.py:334
 msgid "style"
 msgstr "樣式"
 
-#: controlTypes.py:334
+#: controlTypes.py:335
 msgid "indent"
 msgstr "縮排"
 
-#: controlTypes.py:335
+#: controlTypes.py:336
 msgid "alignment"
 msgstr "對齊"
 
-#: controlTypes.py:337
+#: controlTypes.py:338
 msgid "data grid"
 msgstr "資料格網"
 
-#: controlTypes.py:338
+#: controlTypes.py:339
 msgid "data item"
 msgstr "資料項目"
 
-#: controlTypes.py:339
+#: controlTypes.py:340
 msgid "header item"
 msgstr "標題項目"
 
-#: controlTypes.py:340
+#: controlTypes.py:341
 msgid "thumb control"
 msgstr "滑桿控制按鈕"
 
-#: controlTypes.py:341
+#: controlTypes.py:342
 msgid "calendar"
 msgstr "行事曆"
 
-#: controlTypes.py:345
+#: controlTypes.py:346
 msgid "unavailable"
 msgstr "無法使用"
 
-#: controlTypes.py:346
+#: controlTypes.py:347
 msgid "focused"
 msgstr "焦點所在"
 
-#: controlTypes.py:347
+#: controlTypes.py:348
 msgid "selected"
 msgstr "選取"
 
-#: controlTypes.py:348
+#: controlTypes.py:349
 msgid "busy"
 msgstr "忙碌中"
 
-#: controlTypes.py:349
+#: controlTypes.py:350
 msgid "pressed"
 msgstr "按下"
 
-#: controlTypes.py:350
+#: controlTypes.py:351
 msgid "checked"
 msgstr "勾選"
 
-#: controlTypes.py:351
+#: controlTypes.py:352
 msgid "half checked"
 msgstr "部份勾選"
 
-#: controlTypes.py:352
+#: controlTypes.py:353
 msgid "read only"
 msgstr "唯讀"
 
-#: controlTypes.py:353
+#: controlTypes.py:354
 msgid "expanded"
 msgstr "展開"
 
-#: controlTypes.py:354
+#: controlTypes.py:355
 msgid "collapsed"
 msgstr "折疊"
 
-#: controlTypes.py:355
+#: controlTypes.py:356
 msgid "invisible"
 msgstr "隱藏"
 
-#: controlTypes.py:356
+#: controlTypes.py:357
 msgid "visited"
 msgstr "到訪過"
 
-#: controlTypes.py:357
+#: controlTypes.py:358
 msgid "linked"
 msgstr "連結"
 
-#: controlTypes.py:358
+#: controlTypes.py:359
 msgid "subMenu"
 msgstr "子選單"
 
-#: controlTypes.py:359
+#: controlTypes.py:360
 msgid "protected"
 msgstr "保密"
 
-#: controlTypes.py:360
+#: controlTypes.py:361
 msgid "required"
 msgstr "需要"
 
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
-#: controlTypes.py:363
+#: controlTypes.py:364
 msgid "defunct"
 msgstr "沒有功能"
 
-#: controlTypes.py:364
+#: controlTypes.py:365
 msgid "invalid entry"
 msgstr "輸入錯誤"
 
-#: controlTypes.py:365
+#: controlTypes.py:366
 msgid "modal"
 msgstr "樣式的"
 
-#: controlTypes.py:366
+#: controlTypes.py:367
 msgid "has auto complete"
 msgstr "可自動完成"
 
-#: controlTypes.py:367
+#: controlTypes.py:368
 msgid "multi line"
 msgstr "多行"
 
-#: controlTypes.py:368
+#: controlTypes.py:369
 msgid "iconified"
 msgstr "圖示化"
 
-#: controlTypes.py:369
+#: controlTypes.py:370
 msgid "off screen"
 msgstr "畫面以外的"
 
-#: controlTypes.py:370
+#: controlTypes.py:371
 msgid "selectable"
 msgstr "可選取"
 
-#: controlTypes.py:371
+#: controlTypes.py:372
 msgid "focusable"
 msgstr "焦點可到達"
 
-#: controlTypes.py:372
+#: controlTypes.py:373
 msgid "clickable"
 msgstr "可點擊"
 
-#: controlTypes.py:373
+#: controlTypes.py:374
 msgid "editable"
 msgstr "可編輯"
 
-#: controlTypes.py:374
+#: controlTypes.py:375
 msgid "checkable"
 msgstr "可核取"
 
-#: controlTypes.py:375
+#: controlTypes.py:376
 msgid "draggable"
 msgstr "可拖曳"
 
-#: controlTypes.py:376
+#: controlTypes.py:377
 msgid "dragging"
 msgstr "拖曳"
 
-#: controlTypes.py:377
+#. Translators: Reported where an object which is being dragged can be dropped.
+#. This is only reported for objects which support accessible drag and drop.
+#: controlTypes.py:380
 msgid "drop target"
 msgstr "放置目標"
 
-#: controlTypes.py:378
+#: controlTypes.py:381
 msgid "sorted"
 msgstr "排序"
 
-#: controlTypes.py:379
+#: controlTypes.py:382
 msgid "sorted ascending"
 msgstr "遞增排序"
 
-#: controlTypes.py:380
+#: controlTypes.py:383
 msgid "sorted descending"
 msgstr "遞減排序"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-#: controlTypes.py:385
+#: controlTypes.py:388
 msgid "not selected"
 msgstr "沒選取"
 
 #. Translators: This is presented when a checkbox is not checked.
-#: controlTypes.py:387
+#: controlTypes.py:390
 msgid "not checked"
 msgstr "沒勾選"
 
@@ -1448,7 +1548,7 @@ msgstr "輸入指令檔錯誤"
 msgid "Loading NVDA. Please wait..."
 msgstr "載入 NVDA 中, 請稍後..."
 
-#: core.py:294
+#: core.py:300
 msgid "NVDA started"
 msgstr "N V D A 已經啟動"
 
@@ -1474,15 +1574,18 @@ msgid "find a text string from the current cursor position"
 msgstr "從目前游標位置往下搜尋輸入的字串"
 
 #: cursorManager.py:111
-msgid "find the next occurrence of the previously entered text string from the current cursor's position"
+msgid ""
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
 msgstr "從目前游標位置向下尋找先前輸入的字串"
 
 #: cursorManager.py:118
-msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
+msgid ""
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
 msgstr "從目前游標位置向上尋找先前輸入的字串"
 
-#: cursorManager.py:245
-#: globalCommands.py:125
+#: cursorManager.py:245 globalCommands.py:128
 msgid "no selection"
 msgstr "沒有選取文字"
 
@@ -1490,738 +1593,872 @@ msgstr "沒有選取文字"
 msgid "copied to clipboard"
 msgstr "複製到剪貼簿"
 
-#: globalCommands.py:44
-#: globalCommands.py:179
-#: globalCommands.py:190
-#: globalCommands.py:200
-#: globalCommands.py:731
-#: globalCommands.py:792
-#: globalCommands.py:802
-#: globalCommands.py:812
-#: keyboardHandler.py:300
-#: synthSettingsRing.py:74
-#: appModules\winamp.py:78
-#: appModules\winamp.py:88
-#: gui\settingsDialogs.py:1068
-#: virtualBuffers\__init__.py:810
-msgid "on"
-msgstr "開"
-
-#. Translators: An option for progress bar output in the Object Presentation dialog
-#. which disables reporting of progress bars.
-#. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: globalCommands.py:44
-#: globalCommands.py:176
-#: globalCommands.py:187
-#: globalCommands.py:197
-#: globalCommands.py:597
-#: globalCommands.py:728
-#: globalCommands.py:789
-#: globalCommands.py:799
-#: globalCommands.py:809
-#: keyboardHandler.py:300
-#: synthSettingsRing.py:74
-#: appModules\winamp.py:80
-#: appModules\winamp.py:90
-#: gui\settingsDialogs.py:724
-#: gui\settingsDialogs.py:1068
-#: virtualBuffers\__init__.py:810
-msgid "off"
-msgstr "關"
+#. Translators: This will be presented when the input help is toggled.
+#: globalCommands.py:45
+msgid "input help on"
+msgstr "輸入說明模式開始"
 
 #. Translators: This will be presented when the input help is toggled.
-#: globalCommands.py:46
-#, python-format
-msgid "input help %s"
-msgstr "輸入說明 %s"
-
 #: globalCommands.py:47
-msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "切換輸入說明開關, 開的時候每按下按鍵會讀出相對應的功能"
+msgid "input help off"
+msgstr "輸入說明模式結束"
+
+#: globalCommands.py:50
+msgid ""
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
+msgstr "切換輸入說明模式開關, 開的時候每按下按鍵會讀出相對應的功能"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
-#: globalCommands.py:55
+#: globalCommands.py:58
 msgid "Sleep mode off"
-msgstr "睡眠模式關"
+msgstr "睡眠模式結束"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self vocing, such as klango or openbook.
-#: globalCommands.py:61
+#: globalCommands.py:64
 msgid "Sleep mode on"
-msgstr "睡眠模式開"
+msgstr "睡眠模式開始"
 
-#: globalCommands.py:62
+#: globalCommands.py:65
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "在目前應用程式切換 NVDA 的睡眠模式"
 
-#: globalCommands.py:79
-msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
+#: globalCommands.py:82
+msgid ""
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
 msgstr "讀出系統焦點所在的一行,連按兩次則把這一行的字元拼讀出來"
 
-#: globalCommands.py:82
+#: globalCommands.py:85
 msgid "left click"
 msgstr "左擊"
 
-#: globalCommands.py:85
+#: globalCommands.py:88
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "在目前鼠標位置點擊滑鼠左鍵一次"
 
-#: globalCommands.py:88
+#: globalCommands.py:91
 msgid "right click"
 msgstr "右擊"
 
-#: globalCommands.py:91
+#: globalCommands.py:94
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "在目前鼠標位置點擊滑鼠右鍵一次"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-#: globalCommands.py:96
+#: globalCommands.py:99
 msgid "left mouse button unlock"
 msgstr "滑鼠左鍵解鎖"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-#: globalCommands.py:100
+#: globalCommands.py:103
 msgid "left mouse button lock"
 msgstr "滑鼠左鍵鎖定"
 
-#: globalCommands.py:102
+#: globalCommands.py:105
 msgid "Locks or unlocks the left mouse button"
 msgstr "將滑鼠左鍵鎖定或解鎖"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-#: globalCommands.py:107
+#: globalCommands.py:110
 msgid "right mouse button unlock"
 msgstr "滑鼠右鍵解鎖"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-#: globalCommands.py:111
+#: globalCommands.py:114
 msgid "right mouse button lock"
 msgstr "滑鼠右鍵鎖定"
 
-#: globalCommands.py:113
+#: globalCommands.py:116
 msgid "Locks or unlocks the right mouse button"
 msgstr "將滑鼠右鍵鎖定或解鎖"
 
-#: globalCommands.py:128
-msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
+#: globalCommands.py:131
+msgid ""
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
 msgstr "讀出目前已選取的文字, 如果沒有選取, 也將其情況說出來"
 
-#: globalCommands.py:136
-msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
+#: globalCommands.py:139
+msgid ""
+"If pressed once, reports the current time. If pressed twice, reports the "
+"current date"
 msgstr "報出現在時間和日期, 按一下讀出時間, 連按兩下讀出日期"
 
-#: globalCommands.py:141
-#: globalCommands.py:150
-#: globalCommands.py:159
-#: globalCommands.py:168
+#: globalCommands.py:144 globalCommands.py:153 globalCommands.py:162
+#: globalCommands.py:171
 msgid "No settings"
 msgstr "沒有設定"
 
-#: globalCommands.py:145
+#: globalCommands.py:148
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "增加目前語音選項的設定值"
 
-#: globalCommands.py:154
+#: globalCommands.py:157
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "減少目前語音選項的設定值"
 
-#: globalCommands.py:163
+#: globalCommands.py:166
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr "切換到下一個語音控制選項"
 
-#: globalCommands.py:172
+#: globalCommands.py:175
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "切換到上一個語音控制選項"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
-#: globalCommands.py:182
-msgid "speak typed characters"
+#: globalCommands.py:180
+msgid "speak typed characters off"
+msgstr "不讀出輸入字元"
+
+#. Translators: The message announced when toggling the speak typed characters keyboard setting.
+#: globalCommands.py:184
+msgid "speak typed characters on"
 msgstr "讀出輸入字元"
 
-#: globalCommands.py:183
+#: globalCommands.py:187
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "切換讀出輸入字元開關"
 
+#. Translators: The message announced when toggling the speak typed words keyboard setting.
 #: globalCommands.py:192
-msgid "speak typed words"
+msgid "speak typed words off"
+msgstr "不讀出輸入字詞"
+
+#. Translators: The message announced when toggling the speak typed words keyboard setting.
+#: globalCommands.py:196
+msgid "speak typed words on"
 msgstr "讀出輸入字詞"
 
-#: globalCommands.py:193
+#: globalCommands.py:199
 msgid "Toggles on and off the speaking of typed words"
 msgstr "切換讀出輸入字詞開關"
 
-#: globalCommands.py:202
-msgid "speak command keys"
+#. Translators: The message announced when toggling the speak typed command keyboard setting.
+#: globalCommands.py:204
+msgid "speak command keys off"
+msgstr "不讀出指令鍵"
+
+#. Translators: The message announced when toggling the speak typed command keyboard setting.
+#: globalCommands.py:208
+msgid "speak command keys on"
 msgstr "讀出指令鍵"
 
-#: globalCommands.py:203
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+#: globalCommands.py:211
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
 msgstr "切換讀出指令鍵開關"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
-#: globalCommands.py:217
+#: globalCommands.py:225
 #, python-format
 msgid "symbol level %s"
-msgstr "%s 標點會被報讀"
+msgstr "%s標點"
 
-#: globalCommands.py:218
-msgid "Cycles through speech symbol levels which determine what symbols are spoken"
+#: globalCommands.py:226
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr "設定標點符號報讀程度"
 
-#: globalCommands.py:233
+#: globalCommands.py:241
 msgid "object has no location"
 msgstr "找不到物件的所在位置"
 
-#: globalCommands.py:239
+#: globalCommands.py:247
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "將鼠標移到目前的瀏覽物件"
 
-#: globalCommands.py:242
+#: globalCommands.py:250
 msgid "Move navigator object to mouse"
 msgstr "瀏覽游標移到鼠標"
 
-#: globalCommands.py:246
-msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
+#: globalCommands.py:254
+msgid ""
+"Sets the navigator object to the current object under the mouse pointer and "
+"speaks it"
 msgstr "將瀏覽游標移到並讀出鼠標所指的物件"
 
-#: globalCommands.py:259
+#: globalCommands.py:267
 msgid "No flat review for this object"
 msgstr "不能在此物件開啟平面瀏覽"
 
-#: globalCommands.py:260
-msgid "Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
+#: globalCommands.py:268
+msgid ""
+"Moves to flat review for the screen (or document if currently inside one) "
+"and positions the review cursor at the location of the current object"
 msgstr "在目前文件或畫面開啟平面瀏覽, 並且把瀏覽游標移到目前物件"
 
-#: globalCommands.py:272
+#: globalCommands.py:280
 msgid "No object at flat review position"
 msgstr "平面瀏覽位置沒有物件"
 
-#: globalCommands.py:273
-msgid "Moves navigator object to the object represented by the text at the position of the review cursor within flat review"
+#: globalCommands.py:281
+msgid ""
+"Moves navigator object to the object represented by the text at the position "
+"of the review cursor within flat review"
 msgstr "在平面瀏覽中把瀏覽物件移到目前的瀏覽游標"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-#: globalCommands.py:280
-#: globalCommands.py:314
-#: globalCommands.py:363
-#: globalCommands.py:377
-#: globalCommands.py:391
-#: globalCommands.py:405
-#: globalCommands.py:419
+#: globalCommands.py:288 globalCommands.py:322 globalCommands.py:371
+#: globalCommands.py:385 globalCommands.py:399 globalCommands.py:413
 msgid "no navigator object"
 msgstr "沒有瀏覽物件"
 
-#: globalCommands.py:306
-#: globalCommands.py:750
+#: globalCommands.py:314 globalCommands.py:774
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s 已複製到剪貼簿"
 
-#: globalCommands.py:309
-msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
-msgstr "讀出目前瀏覽物件的資訊, 連按兩次拼讀出該資訊, 連按三次則把物件名稱和值複製到剪貼簿"
-
 #: globalCommands.py:317
+msgid ""
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
+msgstr ""
+"讀出目前瀏覽物件的資訊, 連按兩次拼讀出該資訊, 連按三次則把物件名稱和值複製到"
+"剪貼簿"
+
+#: globalCommands.py:325
 msgid "No location information for navigator object"
 msgstr "沒有瀏覽物件的位置資訊"
 
-#: globalCommands.py:321
+#: globalCommands.py:329
 msgid "No location information for screen"
 msgstr "沒有畫面的位置資訊"
 
-#: globalCommands.py:327
+#: globalCommands.py:335
 #, python-format
-msgid "Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen"
-msgstr "物件邊沿的位置, 從螢幕左側向右算起為百分之 %.1f, 從螢幕上緣向下算起為百分之 %.1f, 寬度為百分之 %.1f, 高度為百分之 %.1f"
+msgid ""
+"Object edges positioned %.1f per cent from left edge of screen, %.1f per "
+"cent from top edge of screen, width is %.1f per cent of screen, height is "
+"%.1f per cent of screen"
+msgstr ""
+"物件邊沿的位置, 從螢幕左側向右算起為百分之 %.1f, 從螢幕上緣向下算起為百分之 "
+"%.1f, 寬度為百分之 %.1f, 高度為百分之 %.1f"
 
-#: globalCommands.py:328
+#: globalCommands.py:336
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "報出目前瀏覽物件的大小以及所在位置"
 
-#: globalCommands.py:337
+#: globalCommands.py:345
 msgid "move to focus"
 msgstr "移到系統焦點"
 
-#: globalCommands.py:339
-msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
+#: globalCommands.py:347
+msgid ""
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
 msgstr "將瀏覽游標移到目前系統焦點所在位置"
 
-#: globalCommands.py:344
-#: globalCommands.py:697
+#: globalCommands.py:352 globalCommands.py:719
 msgid "no focus"
 msgstr "沒有焦點"
 
-#: globalCommands.py:346
+#: globalCommands.py:354
 msgid "move focus"
 msgstr "移動焦點"
 
-#: globalCommands.py:353
+#: globalCommands.py:361
 msgid "no caret"
 msgstr "沒有編輯游標"
 
-#: globalCommands.py:358
-msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
-msgstr "按一次把鍵盤焦點移到目前瀏覽焦點, 連按兩次則把系統游標移到瀏覽游標的位置"
+#: globalCommands.py:366
+msgid ""
+"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"按一次把鍵盤焦點移到目前瀏覽焦點, 連按兩次則把系統游標移到瀏覽游標的位置"
 
-#: globalCommands.py:371
+#: globalCommands.py:379
 msgid "No containing object"
 msgstr "沒有包含物件"
 
-#: globalCommands.py:372
+#: globalCommands.py:380
 msgid "Moves the navigator object to the object containing it"
 msgstr "將瀏覽游標移到並讀出目前物件的母項目"
 
-#: globalCommands.py:385
+#: globalCommands.py:393
 msgid "No next"
 msgstr "沒有下一個物件了"
 
-#: globalCommands.py:386
+#: globalCommands.py:394
 msgid "Moves the navigator object to the next object"
 msgstr "將瀏覽游標移到下一個物件"
 
-#: globalCommands.py:399
+#: globalCommands.py:407
 msgid "No previous"
 msgstr "沒有前一個物件了"
 
-#: globalCommands.py:400
+#: globalCommands.py:408
 msgid "Moves the navigator object to the previous object"
 msgstr "將瀏覽游標移到上一個物件"
 
-#: globalCommands.py:413
+#: globalCommands.py:421
 msgid "No objects inside"
 msgstr "裡面沒有物件"
 
-#: globalCommands.py:414
+#: globalCommands.py:422
 msgid "Moves the navigator object to the first object inside it"
 msgstr "將瀏覽游標移到目前項目所包含的第一個物件"
 
-#: globalCommands.py:424
-msgid "No default action"
-msgstr "沒有預設動作"
+#. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
+#: globalCommands.py:426
+msgid "activate"
+msgstr "啟動"
 
-#: globalCommands.py:429
-msgid "default action failed"
-msgstr "執行預設動作失敗"
+#. Translators: the message reported when there is no action to perform on the review position or navigator object.
+#: globalCommands.py:452
+msgid "No action"
+msgstr "沒有動作"
 
-#: globalCommands.py:432
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
+#: globalCommands.py:453
+msgid ""
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
 msgstr "執行目前物件的預設動作, 例如物件若是按鈕就按下"
 
-#: globalCommands.py:438
-#: globalCommands.py:450
-#: globalCommands.py:492
+#: globalCommands.py:459 globalCommands.py:471 globalCommands.py:513
 msgid "top"
 msgstr "到了頂端"
 
-#: globalCommands.py:440
-msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
+#: globalCommands.py:461
+msgid ""
+"Moves the review cursor to the top line of the current navigator object and "
+"speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出第一行文字"
 
-#: globalCommands.py:452
-msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
+#: globalCommands.py:473
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出上一行文字"
 
-#: globalCommands.py:462
-msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr "在物件中讀出瀏覽游標所在的一行文字, 連按兩次則把這一行的字元拼讀出來, 連按三次則報讀這一整行的字詞字意解釋"
+#: globalCommands.py:483
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the current line will be spelled. "
+"Pressing three times will spell the line using character descriptions."
+msgstr ""
+"在物件中讀出瀏覽游標所在的一行文字, 連按兩次則把這一行的字元拼讀出來, 連按三"
+"次則報讀這一整行的字詞字意解釋"
 
-#: globalCommands.py:472
-#: globalCommands.py:480
-#: globalCommands.py:514
+#. Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container.
+#: globalCommands.py:493 globalCommands.py:501 globalCommands.py:535
+#: virtualBuffers\__init__.py:1433
 msgid "bottom"
 msgstr "到了底部"
 
-#: globalCommands.py:474
-msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
+#: globalCommands.py:495
+msgid ""
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出下一行文字"
 
-#: globalCommands.py:482
-msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
+#: globalCommands.py:503
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出最後一行文字"
 
-#: globalCommands.py:494
-msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
+#: globalCommands.py:515
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出前一個字詞"
 
-#: globalCommands.py:504
-msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
-msgstr "在物件中讀出瀏覽游標所在的一個單字或詞語, 連按兩次則把這一個單字或詞語拼讀出來, 連按三次則報讀單字或詞語的進一步解釋"
+#: globalCommands.py:525
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated. Pressing twice spells the word. Pressing three times spells the "
+"word using character descriptions"
+msgstr ""
+"在物件中讀出瀏覽游標所在的一個單字或詞語, 連按兩次則把這一個單字或詞語拼讀出"
+"來, 連按三次則報讀單字或詞語的進一步解釋"
 
-#: globalCommands.py:516
-msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
+#: globalCommands.py:537
+msgid ""
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出後一個字詞"
 
-#: globalCommands.py:524
-#: globalCommands.py:536
-#: appModules\totalcmd.py:35
+#: globalCommands.py:545 globalCommands.py:557 appModules\totalcmd.py:35
 msgid "left"
 msgstr "到了左端"
 
-#: globalCommands.py:526
-msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
+#: globalCommands.py:547
+msgid ""
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出目前這一行的第一個字元"
 
-#: globalCommands.py:544
-msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
+#: globalCommands.py:565
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object and speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出前一個字元"
 
-#: globalCommands.py:561
-msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "在物件中讀出瀏覽游標所在的一個字元, 連按兩次則讀出字元或單字的進一步解釋, 連按三次則讀出字元的 ASCII 值和十六進位值"
+#: globalCommands.py:582
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated. Pressing twice reports a description or example of that "
+"character. Pressing three times reports the numeric value of the character "
+"in decimal and hexadecimal"
+msgstr ""
+"在物件中讀出瀏覽游標所在的一個字元, 連按兩次則讀出字元或單字的進一步解釋, 連"
+"按三次則讀出字元的 ASCII 值和十六進位值"
 
-#: globalCommands.py:571
-#: globalCommands.py:588
-#: appModules\totalcmd.py:37
+#: globalCommands.py:592 globalCommands.py:609 appModules\totalcmd.py:37
 msgid "right"
 msgstr "到了右端"
 
-#: globalCommands.py:579
-msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
+#: globalCommands.py:600
+msgid ""
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出後一個字元"
 
-#: globalCommands.py:590
-msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
+#: globalCommands.py:611
+msgid ""
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
 msgstr "在物件中將瀏覽游標移到並讀出目前這一行的最後一個字元"
 
+#. Translators: A speech mode which dissables speech output.
+#: globalCommands.py:619
+msgid "speech mode off"
+msgstr "朗讀關閉"
+
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-#: globalCommands.py:600
-msgid "beeps"
-msgstr "發出嗶嗶聲"
+#: globalCommands.py:622
+msgid "speech mode beeps"
+msgstr "以嗶嗶聲代替朗讀"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-#: globalCommands.py:603
-msgid "talk"
-msgstr "報讀"
+#: globalCommands.py:625
+msgid "speech mode talk"
+msgstr "朗讀開啟"
 
-#: globalCommands.py:605
-#, python-format
-msgid "speech mode %s"
-msgstr "語音模式 %s"
+#: globalCommands.py:629
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"切換語音模式為關閉、發出嗶嗶聲或報讀三個模式, 切換成關閉的時候 NVDA 不會發出"
+"任何聲響, 切換成發出嗶嗶聲則以嗶嗶聲代替語音報讀, 切換成報讀則進行一般的語音"
+"報讀"
 
-#: globalCommands.py:607
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "切換語音模式為關閉、發出嗶嗶聲或報讀三個模式, 切換成關閉的時候 NVDA 不會發出任何聲響, 切換成發出嗶嗶聲則以嗶嗶聲代替語音報讀, 切換成報讀則進行一般的語音報讀"
-
-#: globalCommands.py:624
+#: globalCommands.py:646
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "把焦點移到最接近的一個文件"
 
-#: globalCommands.py:636
-msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "在瀏覽模式或焦點模式兩者之間切換, 切換到焦點模式下按鍵指令可直接操作目前焦點的控制項, 切換到瀏覽模式下則可使用方向鍵控制游標在文件之內移動"
+#: globalCommands.py:658
+msgid ""
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
+msgstr ""
+"在瀏覽模式或焦點模式兩者之間切換, 切換到焦點模式下按鍵指令可直接操作目前焦點"
+"的控制項, 切換到瀏覽模式下則可使用方向鍵控制游標在文件之內移動"
 
-#: globalCommands.py:640
+#: globalCommands.py:662
 msgid "Quits NVDA!"
 msgstr "關閉 NVDA"
 
-#: globalCommands.py:644
+#: globalCommands.py:666
 msgid "Shows the NVDA menu"
 msgstr "顯示 NVDA 選單"
 
-#: globalCommands.py:648
-msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "在物件中從目前瀏覽游標所在的一行文字往下報讀直到結尾, 瀏覽游標會跟隨移動"
+#: globalCommands.py:670
+msgid ""
+"reads from the review cursor  up to end of current text, moving the review "
+"cursor as it goes"
+msgstr ""
+"在物件中從目前瀏覽游標所在的一行文字往下報讀直到結尾, 瀏覽游標會跟隨移動"
 
-#: globalCommands.py:652
-msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr "在可編輯方塊或文件中 , 從目前編輯游標所在的位置往下報讀直到結尾, 編輯游標會跟隨移動"
+#: globalCommands.py:674
+msgid ""
+"reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
+msgstr ""
+"在可編輯方塊或文件中 , 從目前編輯游標所在的位置往下報讀直到結尾, 編輯游標會跟"
+"隨移動"
 
-#: globalCommands.py:683
+#: globalCommands.py:705
 msgid "No formatting information"
 msgstr "沒有格式資訊"
 
-#: globalCommands.py:687
-msgid "Reports formatting info for the current review cursor position within a document"
+#: globalCommands.py:709
+msgid ""
+"Reports formatting info for the current review cursor position within a "
+"document"
 msgstr "在文件中讀出瀏覽游標所在字元的格式資訊。"
 
-#: globalCommands.py:698
+#: globalCommands.py:720
 msgid "reports the object with focus"
 msgstr "讀出目前焦點的物件"
 
-#: globalCommands.py:718
+#: globalCommands.py:740
 msgid "No status line found"
 msgstr "找不到狀態列"
 
-#: globalCommands.py:724
+#: globalCommands.py:746
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "把瀏覽游標移到並讀出目前應用程式的狀態列"
 
-#: globalCommands.py:733
-msgid "Mouse tracking"
-msgstr "鼠標移動通知"
+#. Translators: presented when the mouse tracking is toggled.
+#: globalCommands.py:751
+msgid "Mouse tracking off"
+msgstr "不表示鼠標移動"
 
-#: globalCommands.py:734
+#. Translators: presented when the mouse tracking is toggled.
+#: globalCommands.py:755
+msgid "Mouse tracking on"
+msgstr "表示鼠標移動"
+
+#: globalCommands.py:758
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "切換每當鼠標移動時是否有所表示, 表示包括讀出鼠標所指的物件或文字以及播放聲音"
+msgstr ""
+"切換每當鼠標移動時是否有所表示, 表示包括讀出鼠標所指的物件或文字以及播放聲音"
 
-#: globalCommands.py:742
+#: globalCommands.py:766
 msgid "no title"
 msgstr "沒有標題"
 
-#: globalCommands.py:751
-msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
-msgstr "讀出目前應用程式的視窗標題, 如果連按兩次則把標題拼讀出來, 連按三次則把標題複製到剪貼簿"
+#: globalCommands.py:775
+msgid ""
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
+msgstr ""
+"讀出目前應用程式的視窗標題, 如果連按兩次則把標題拼讀出來, 連按三次則把標題複"
+"製到剪貼簿"
 
-#: globalCommands.py:757
+#: globalCommands.py:781
 msgid "speaks the current foreground object"
 msgstr "讀出目前的前景物件"
 
-#: globalCommands.py:768
-msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
+#: globalCommands.py:792
+msgid ""
+"Logs information about the current navigator object which is useful to "
+"developers and activates the log viewer so the information can be examined."
 msgstr "將目前物件資訊記錄下來, 並且開啟事件記錄器讓程式開發者能夠參考這些資訊"
 
-#: globalCommands.py:774
+#: globalCommands.py:798
 msgid "no progress bar updates"
 msgstr "進度列改變時沒有表示"
 
-#: globalCommands.py:777
+#: globalCommands.py:801
 msgid "speak progress bar updates"
 msgstr "進度列改變時讀出來"
 
-#: globalCommands.py:780
+#: globalCommands.py:804
 msgid "beep for progress bar updates"
 msgstr "進度列改變時發出嗶嗶聲"
 
-#: globalCommands.py:783
+#: globalCommands.py:807
 msgid "beep and speak progress bar updates"
 msgstr "進度列改變時發出嗶嗶聲並讀出來。"
 
-#: globalCommands.py:785
-msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "切換每當進度列改變時的報讀方式, 報讀方式有四個, 依序是：每隔百分之十讀出、發出嗶嗶聲、兩者皆開啟以及沒有表示"
+#: globalCommands.py:809
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"切換每當進度列改變時的報讀方式, 報讀方式有四個, 依序是：每隔百分之十讀出、發"
+"出嗶嗶聲、兩者皆開啟以及沒有表示"
 
-#: globalCommands.py:794
-msgid "report dynamic content changes"
+#. Translators: presented when the present dynamic changes is toggled.
+#: globalCommands.py:814
+msgid "report dynamic content changes off"
+msgstr "不讀出已變化的動態內容"
+
+#. Translators: presented when the present dynamic changes is toggled.
+#: globalCommands.py:818
+msgid "report dynamic content changes on"
 msgstr "讀出已變化的動態內容"
 
-#: globalCommands.py:795
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
+#: globalCommands.py:821
+msgid ""
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
 msgstr "切換讀出已改變的動態內容開關, 動態內容包括在 DOS 指令模式下的文字"
 
-#: globalCommands.py:804
-msgid "caret moves review cursor"
+#. Translators: presented when toggled.
+#: globalCommands.py:826
+msgid "caret moves review cursor off"
+msgstr "瀏覽游標不跟隨編輯游標移動"
+
+#. Translators: presented when toggled.
+#: globalCommands.py:830
+msgid "caret moves review cursor on"
 msgstr "瀏覽游標跟隨編輯游標移動"
 
-#: globalCommands.py:805
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
+#: globalCommands.py:833
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "切換是否讓瀏覽游標跟隨編輯游標移動"
 
-#: globalCommands.py:814
-msgid "focus moves navigator object"
+#. Translators: presented when toggled.
+#: globalCommands.py:838
+msgid "focus moves navigator object off"
+msgstr "瀏覽游標不跟隨系統焦點移動"
+
+#. Translators: presented when toggled.
+#: globalCommands.py:842
+msgid "focus moves navigator object on"
 msgstr "瀏覽游標跟隨系統焦點移動"
 
-#: globalCommands.py:815
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
+#: globalCommands.py:845
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "切換是否讓瀏覽游標跟隨系統焦點移動"
 
-#: globalCommands.py:827
+#: globalCommands.py:857
 msgid "no system battery"
 msgstr "系統沒有安裝電池"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:830
-#: NVDAObjects\behaviors.py:54
+#: globalCommands.py:860 NVDAObjects\behaviors.py:57
 #, python-format
 msgid "%d percent"
 msgstr "百分之 %d"
 
-#: globalCommands.py:831
+#: globalCommands.py:861
 msgid "AC power on"
 msgstr "交流電源已接通"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#: globalCommands.py:834
+#: globalCommands.py:864
 #, python-format
 msgid "%d hours and %d minutes remaining"
 msgstr "還有 %d 小時 %d 分鐘"
 
-#: globalCommands.py:836
+#: globalCommands.py:866
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "當沒有接上交流電源時讀出電池狀態和可用多久"
 
-#: globalCommands.py:840
+#: globalCommands.py:870
 msgid "Pass next key through"
 msgstr "跳過下一個按鍵指令"
 
-#: globalCommands.py:841
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
+#: globalCommands.py:871
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
 msgstr "忽略下一個 NVDA 的按鍵指令, 將其交由視窗相關的程式執行。"
 
-#: globalCommands.py:846
+#: globalCommands.py:876
 #, python-format
 msgid "Currently running application is %s"
 msgstr "目前執行中應用程式的檔名是 %s"
 
-#: globalCommands.py:849
+#: globalCommands.py:879
 #, python-format
 msgid " and currently loaded module is %s"
 msgstr "及載入模組是 %s"
 
-#: globalCommands.py:851
-msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
+#: globalCommands.py:881
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
 msgstr "讀出目前應用程式所屬檔名和載入模組名稱"
 
-#: globalCommands.py:855
+#: globalCommands.py:885
 msgid "Shows the NVDA general settings dialog"
 msgstr "開啟NVDA一般設定對話方塊"
 
-#: globalCommands.py:859
+#: globalCommands.py:889
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "開啟NVDA語音合成器對話方塊"
 
-#: globalCommands.py:863
+#: globalCommands.py:893
 msgid "Shows the NVDA voice settings dialog"
 msgstr "開啟NVDA語音設定對話方塊"
 
-#: globalCommands.py:867
+#: globalCommands.py:897
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "開啟NVDA鍵盤設定對話方塊"
 
-#: globalCommands.py:871
+#: globalCommands.py:901
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "開啟NVDA滑鼠設定對話方塊"
 
-#: globalCommands.py:875
+#: globalCommands.py:905
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "開啟NVDA物件顯示對話方塊"
 
-#: globalCommands.py:879
+#: globalCommands.py:909
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr "開啟 NVDA 瀏覽模式設定對話方塊"
 
-#: globalCommands.py:883
+#: globalCommands.py:913
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "開啟NVDA文件格式對話方塊"
 
-#: globalCommands.py:887
+#: globalCommands.py:917
 msgid "Saves the current NVDA configuration"
 msgstr "儲存目前 NVDA 的選項設定"
 
-#: globalCommands.py:891
-msgid "loads the saved NVDA configuration, overriding current changes"
-msgstr "還原至已儲存的設定"
+#: globalCommands.py:925
+msgid ""
+"Pressing once reverts the current configuration to the most recently saved "
+"state. Pressing three times reverts to factory defaults."
+msgstr ""
+"按一次把設定值還原到最近一次儲存狀態, 連按三次則把設定值回復到原始狀態."
 
-#: globalCommands.py:901
+#: globalCommands.py:935
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "開啟NVDA Python主控台, 主要是供程式開發者使用。"
 
-#: globalCommands.py:906
-#: gui\settingsDialogs.py:1204
+#: globalCommands.py:940 gui\settingsDialogs.py:1261
 msgid "review"
 msgstr "瀏覽游標"
 
-#: globalCommands.py:909
-#: gui\settingsDialogs.py:1204
+#: globalCommands.py:943 gui\settingsDialogs.py:1261
 msgid "focus"
 msgstr "系統焦點"
 
-#: globalCommands.py:910
+#: globalCommands.py:944
 #, python-format
 msgid "Braille tethered to %s"
 msgstr "點字游標移到 %s"
 
-#: globalCommands.py:911
+#: globalCommands.py:945
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "切換把點字游標移到系統焦點或瀏覽游標"
 
-#: globalCommands.py:919
+#: globalCommands.py:953
 msgid "There is no text on the clipboard"
 msgstr "剪貼簿內沒有文字"
 
-#: globalCommands.py:924
+#: globalCommands.py:958
 #, python-format
-msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
 msgstr "有大量文字在剪貼簿內, 共有 %s 個字元"
 
-#: globalCommands.py:925
+#: globalCommands.py:959
 msgid "Reports the text on the Windows clipboard"
 msgstr "讀出剪貼簿內的文字"
 
-#: globalCommands.py:929
+#: globalCommands.py:963
 msgid "Start marked"
 msgstr "標記複製文字起點"
 
-#: globalCommands.py:930
-msgid "Marks the current position of the review cursor as the start of text to be copied"
+#: globalCommands.py:964
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
 msgstr "把瀏覽游標目前的所在位置作為複製文字的起點"
 
-#: globalCommands.py:934
+#: globalCommands.py:968
 msgid "No start marker set"
 msgstr "沒有標記起點位置"
 
-#: globalCommands.py:938
+#: globalCommands.py:972
 msgid "The start marker must reside within the same object"
 msgstr "標記的位置必須與起點在同一物件中"
 
-#: globalCommands.py:943
+#: globalCommands.py:977
 msgid "Review selection copied to clipboard"
 msgstr "標記複製文字終點同時複製到剪貼簿"
 
-#: globalCommands.py:945
+#: globalCommands.py:979
 msgid "No text to copy"
 msgstr "沒有文字可複製"
 
-#: globalCommands.py:948
-msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
+#: globalCommands.py:982
+msgid ""
+"Retrieves the text from the previously set start marker up to and including "
+"the current position of the review cursor and copies it to the clipboard"
 msgstr "將剛設定過的開始位置和目前瀏覽游標位置之間的文字複製到剪貼簿"
 
-#: globalCommands.py:952
+#: globalCommands.py:986
 msgid "Scrolls the braille display back"
 msgstr "點字游標向後捲動"
 
-#: globalCommands.py:957
+#: globalCommands.py:991
 msgid "Scrolls the braille display forward"
 msgstr "點字游標向前捲動"
 
-#: globalCommands.py:962
+#: globalCommands.py:996
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "把游標移到這個點字格或啟動點字格之上的項目"
 
-#: globalCommands.py:967
+#: globalCommands.py:1001
 msgid "Moves the braille display to the previous line"
 msgstr "點字游標回上一行"
 
-#: globalCommands.py:972
+#: globalCommands.py:1006
 msgid "Moves the braille display to the next line"
 msgstr "點字游標到下一行"
 
-#: globalCommands.py:979
+#: globalCommands.py:1013
 msgid "Plugins reloaded"
 msgstr "外掛程式已重新載入"
 
-#: globalCommands.py:980
-msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
-msgstr "不需重啟NVDA即可重新載入應用程式模組及通用外掛程式，以便於 NVDA 程式開發者"
+#: globalCommands.py:1014
+msgid ""
+"Reloads app modules and global plugins without restarting NVDA, which can be "
+"Useful for developers"
+msgstr ""
+"不需重啟NVDA即可重新載入應用程式模組及通用外掛程式，以便於 NVDA 程式開發者"
 
-#: installer.py:175
-#: gui\__init__.py:340
+#: globalCommands.py:1022
+#, python-format
+msgid "%s mode"
+msgstr "%s 模式"
+
+#: globalCommands.py:1023
+msgid "cycles between available touch modes"
+msgstr "在可用的觸碰模式之間撤換"
+
+#: globalCommands.py:1027
+msgid "Reports the object and content directly under your finger"
+msgstr "報出指尖摸到的物件和內容"
+
+#: globalCommands.py:1031
+msgid ""
+"Reports the new object or content under your finger if different to where "
+"your finger was last"
+msgstr "報出指尖摸到新的物件和內容"
+
+#: installer.py:158 gui\__init__.py:350
 msgid "NVDA web site"
 msgstr "NVDA 網站"
 
-#: installer.py:176
+#: installer.py:159
 msgid "Uninstall NVDA"
 msgstr "解除安裝 NVDA(&U)"
 
-#: installer.py:177
+#: installer.py:160
 msgid "Explore NVDA user configuration directory"
 msgstr "瀏覽 NVDA 用戶設定檔資料夾(&E)"
 
-#: installer.py:178
-#: installer.py:179
+#. Translators: The label of the NVDA Documentation menu in the Start Menu.
+#: installer.py:162
 msgid "Documentation"
 msgstr "文件(&D)"
 
-#: installer.py:178
-#: gui\__init__.py:336
-msgid "Keyboard Commands Quick Reference"
-msgstr "按鍵指令快速參考表"
+#. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
+#: installer.py:164
+msgid "Commands Quick Reference"
+msgstr "指令快速參考表"
 
-#: installer.py:179
-#: gui\__init__.py:334
+#. Translators: The label of the Start Menu item to open the User Guide.
+#: installer.py:166 gui\__init__.py:343
 msgid "User Guide"
 msgstr "檢視用戶指南(&U)"
+
+#: installer.py:216
+msgid "NVDA add-on package"
+msgstr "NVDA 附加組件檔案"
 
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:9
@@ -2543,13 +2780,31 @@ msgstr "右邊 windows"
 msgid "break"
 msgstr "break"
 
-#: keyboardHandler.py:187
+#: keyboardHandler.py:228
 msgid "desktop"
 msgstr "桌上型電腦"
 
-#: keyboardHandler.py:188
+#: keyboardHandler.py:229
 msgid "laptop"
 msgstr "筆記型電腦"
+
+#: keyboardHandler.py:341 synthSettingsRing.py:74 gui\settingsDialogs.py:1125
+#: virtualBuffers\__init__.py:830
+msgid "on"
+msgstr "開"
+
+#. Translators: An option for progress bar output in the Object Presentation dialog
+#. which disables reporting of progress bars.
+#. See Progress bar output in the Object Presentation Settings section of the User Guide.
+#: keyboardHandler.py:341 synthSettingsRing.py:74 gui\settingsDialogs.py:781
+#: gui\settingsDialogs.py:1125 virtualBuffers\__init__.py:830
+msgid "off"
+msgstr "關"
+
+#. Translators: the label for the Windows default NVDA interface language.
+#: languageHandler.py:72
+msgid "User default"
+msgstr "預設語言"
 
 #: mouseHandler.py:136
 #, python-format
@@ -2575,9 +2830,7 @@ msgstr "模擬在系統鍵盤上按 %s"
 
 #. Translators: This is spoken when nvda moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
-#: speech.py:164
-#: speech.py:329
-#: speech.py:739
+#: speech.py:164 speech.py:346 speech.py:756
 msgid "blank"
 msgstr "空白"
 
@@ -2588,205 +2841,219 @@ msgid "cap %s"
 msgstr "大寫 %s"
 
 #. Translators: This is spoken when the given line has no indentation.
-#: speech.py:355
+#: speech.py:372
 msgid "no indent"
 msgstr "沒有縮排"
 
 #. Translators: This is spoken when the user has selected a large portion of text. Example output "1000 characters"
-#: speech.py:439
+#: speech.py:456
 #, python-format
 msgid "%d characters"
 msgstr "%d 個字元"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
-#: speech.py:492
+#: speech.py:509
 #, python-format
 msgid "selecting %s"
 msgstr "%s  選取"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
-#: speech.py:505
+#: speech.py:522
 #, python-format
 msgid "unselecting %s"
 msgstr "%s 沒選取"
 
-#: speech.py:507
+#: speech.py:524
 msgid "selection removed"
 msgstr "已選取的都移除了"
 
-#: speech.py:789
+#. Translators: Reported when drag and drop is finished.
+#. This is only reported for objects which support accessible drag and drop.
+#: speech.py:808
 msgid "done dragging"
 msgstr "拖曳完成"
 
-#: speech.py:809
-#: speech.py:812
+#: speech.py:831 speech.py:834
 #, python-format
 msgid "level %s"
 msgstr "第 %s 級"
 
-#: speech.py:825
-#: speech.py:1143
+#: speech.py:847 speech.py:1180
 #, python-format
 msgid "row %s"
 msgstr "第 %s 列"
 
-#: speech.py:832
-#: speech.py:1139
+#: speech.py:854 speech.py:1176
 #, python-format
 msgid "column %s"
 msgstr "第 %s 欄"
 
-#: speech.py:839
+#: speech.py:861
 #, python-format
 msgid "with %s rows and %s columns"
 msgstr "有 %s 列和 %s 欄"
 
-#: speech.py:841
+#: speech.py:863
 #, python-format
 msgid "with %s columns"
 msgstr "有 %s 欄"
 
-#: speech.py:843
+#: speech.py:865
 #, python-format
 msgid "with %s rows"
 msgstr "有 %s 列"
 
-#: speech.py:910
+#: speech.py:934
 #, python-format
 msgid "with %s items"
 msgstr "有 %s 個項目"
 
-#: speech.py:936
-#: speech.py:1089
+#: speech.py:960 speech.py:1126
 #, python-format
 msgid "out of %s"
 msgstr "離開 %s"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
-#: speech.py:962
+#: speech.py:986
 #, python-format
 msgid "page %s"
 msgstr "第 %s 頁"
 
+#: speech.py:992
+#, python-format
+msgid "heading level %d"
+msgstr "第 %d 級標題"
+
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
 #. %s will be replaced with the name of the style.
-#: speech.py:972
+#: speech.py:1002
 #, python-format
 msgid "style %s"
 msgstr "樣式 %s"
 
 #. Translators: Indicates that text has reverted to the default style.
 #. A style is a collection of formatting settings and depends on the application.
-#: speech.py:976
+#: speech.py:1006
 msgid "default style"
 msgstr "預設樣式"
 
-#. Translators: This is used to indicate a background color after the text color.
-#. The {backgroundColor} text will be replaced by the background color.
-#. For example, if the text is white on a black background,
-#. the output of this message in English would be "on black".
-#: speech.py:1004
-msgid "on {backgroundColor}"
-msgstr "在 {backgroundColor}"
+#. Translators: Reported when both the text and background colors change.
+#. {color} will be replaced with the text color.
+#. {backgroundColor} will be replaced with the background color.
+#: speech.py:1031
+msgid "{color} on {backgroundColor}"
+msgstr "{backgroundColor}底配{color}"
+
+#. Translators: Reported when the text color changes (but not the background color).
+#. {color} will be replaced with the text color.
+#: speech.py:1037
+msgid "{color}"
+msgstr "{color}"
+
+#. Translators: Reported when the background color changes (but not the text color).
+#. {backgroundColor} will be replaced with the background color.
+#: speech.py:1041
+msgid "{backgroundColor} background"
+msgstr "{backgroundColor}為底色"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
-#: speech.py:1011
+#: speech.py:1048
 #, python-format
 msgid "line %s"
 msgstr "第 %s 行"
 
 #. Translators: Reported when text is not bolded.
-#: speech.py:1020
+#: speech.py:1057
 msgid "no bold"
 msgstr "沒有粗體"
 
 #. Translators: Reported when text is italicized.
-#: speech.py:1026
+#: speech.py:1063
 msgid "italic"
 msgstr "斜體"
 
 #. Translators: Reported when text is not italicized.
-#: speech.py:1028
+#: speech.py:1065
 msgid "no italic"
 msgstr "沒有斜體"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
-#: speech.py:1035
+#: speech.py:1072
 msgid "strikethrough"
 msgstr "刪除線"
 
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
-#: speech.py:1038
+#: speech.py:1075
 msgid "no strikethrough"
 msgstr "沒有刪除線"
 
 #. Translators: Reported when text is underlined.
-#: speech.py:1044
+#: speech.py:1081
 msgid "underlined"
 msgstr "已加底線"
 
 #. Translators: Reported when text is not underlined.
-#: speech.py:1046
+#: speech.py:1083
 msgid "not underlined"
 msgstr "沒有加底線"
 
 #. Translators: Reported for text which is at the baseline position;
 #. i.e. not superscript or subscript.
-#: speech.py:1061
+#: speech.py:1098
 msgid "baseline"
 msgstr "基準線"
 
 #. Translators: Reported when text is left-aligned.
-#: speech.py:1070
+#: speech.py:1107
 msgid "align left"
 msgstr "靠左對齊"
 
 #. Translators: Reported when text is centered.
-#: speech.py:1073
+#: speech.py:1110
 msgid "align center"
 msgstr "置中對齊"
 
 #. Translators: Reported when text is right-aligned.
-#: speech.py:1076
+#: speech.py:1113
 msgid "align right"
 msgstr "靠右對齊"
 
 #. Translators: Reported when text is justified.
 #. See http://en.wikipedia.org/wiki/Typographic_alignment#Justified
-#: speech.py:1080
+#: speech.py:1117
 msgid "align justify"
 msgstr "左右對齊"
 
 #. Translators: Reported when text has reverted to default alignment.
-#: speech.py:1083
+#: speech.py:1120
 msgid "align default"
 msgstr "預設對齊"
 
 #. Translators: Reported when text contains a comment.
-#: speech.py:1096
+#: speech.py:1133
 msgid "has comment"
 msgstr "有註解"
 
 #. Translators: Reported when text contains a spelling error.
-#: speech.py:1104
+#: speech.py:1141
 msgid "spelling error"
 msgstr "拼錯字"
 
 #. Translators: Reported when moving out of text containing a spelling error.
-#: speech.py:1107
+#: speech.py:1144
 msgid "out of spelling error"
 msgstr "離開拼錯字"
 
-#: speech.py:1125
+#: speech.py:1162
 msgid "out of table"
 msgstr "離開表格"
 
-#: speech.py:1134
+#: speech.py:1171
 #, python-format
 msgid "table with %s columns and %s rows"
 msgstr "表格有 %s 欄和 %s 列"
@@ -2840,19 +3107,10 @@ msgstr "檢查更新版時發生錯誤"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:128
-#: updateCheck.py:341
-#: gui\__init__.py:144
-#: gui\__init__.py:153
-#: gui\addonGui.py:74
-#: gui\addonGui.py:88
-#: gui\addonGui.py:107
-#: gui\installerGui.py:54
-#: gui\installerGui.py:186
-#: gui\installerGui.py:194
-#: gui\installerGui.py:225
-#: gui\logViewer.py:74
-#: gui\settingsDialogs.py:208
+#: updateCheck.py:128 updateCheck.py:351 gui\__init__.py:148
+#: gui\__init__.py:157 gui\addonGui.py:84 gui\addonGui.py:123
+#: gui\installerGui.py:54 gui\installerGui.py:191 gui\installerGui.py:199
+#: gui\installerGui.py:230 gui\logViewer.py:74 gui\settingsDialogs.py:223
 msgid "Error"
 msgstr "錯誤"
 
@@ -2889,8 +3147,7 @@ msgstr "稍後提醒我(&L)"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
-#: updateCheck.py:205
-#: gui\addonGui.py:48
+#: updateCheck.py:205 gui\addonGui.py:54
 msgid "&Close"
 msgstr "關閉(&C)"
 
@@ -2905,60 +3162,64 @@ msgid "Connecting"
 msgstr "連線中"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:321
+#: updateCheck.py:331
 msgid "Downloading"
 msgstr "下載中"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:340
+#: updateCheck.py:350
 msgid "Error downloading update."
 msgstr "下載更新時發生錯誤."
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
-#: updateCheck.py:348
+#: updateCheck.py:358
 msgid "Update downloaded. It will now be installed."
 msgstr "更新版下在完成, 現在開始安裝."
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
-#: updateCheck.py:350
+#: updateCheck.py:360
 msgid "Install Update"
 msgstr "安裝更新版"
 
-#: updateCheck.py:361
+#: updateCheck.py:371
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "為了持續把 NVDA 作出改善, 我們需要你的支持.\n"
-"這個發展計劃主要依賴捐款者的支持, 你所捐出的一分一毫都能給我們的全職開發人員帶來合理回報.\n"
+"這個發展計劃主要依賴捐款者的支持, 你所捐出的一分一毫都能給我們的全職開發人員"
+"帶來合理回報.\n"
 "如果使用者每次下載程式時也都捐出 10 元, 我們就能維持計劃所需的一切費用.\n"
 "所有捐款都由一個開發 NVDA 的非牟利組織 NV Access 所接收.\n"
 "多謝支持."
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:370
+#: updateCheck.py:380
 msgid "Please Donate"
 msgstr "請捐款支持"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
-#: updateCheck.py:379
+#: updateCheck.py:389
 msgid "&Donate"
 msgstr "捐款支持(&D)"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:384
+#: updateCheck.py:394
 msgid "&Not now"
 msgstr "現在不要(&N)"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:399
+#: updateCheck.py:409
 msgid "&Done"
 msgstr "完成(&D)"
 
@@ -2981,30 +3242,91 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"{name} is developed by NV Access, a non-profit organisation committed to "
+"helping and promoting free and open source solutions for blind and vision "
+"impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider "
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "{longName} ({name})\n"
 "版本: {version}\n"
 "網址: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} 受 GNU 通用公共授權條款第二版所規範. 您可以自由分享或以任何方式修改本軟體, 前提是發布時必需包含該許可證, 同時公開原版與修改版的原始碼, 並加上任何用本軟體的原始碼所創造的軟體.\n"
+"{name} 受 GNU 通用公共授權條款第二版所規範. 您可以自由分享或以任何方式修改本"
+"軟體, 前提是發布時必需包含該許可證, 同時公開原版與修改版的原始碼, 並加上任何"
+"用本軟體的原始碼所創造的軟體.\n"
 "關於許可證的細節可以參考以下網頁:\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} 是由NV Access 所開發, NV Access 是一個致力於推廣視障者用自由開放軟體的非營利組織.\n"
-"若您覺得 NVDA 很實用, 並且希望它繼續進步, 請試著贊助 NV Access. 您可選擇 [NVDA 選單] 中的 [連結至贊助 NVDA 英文網頁] 選項, 即可開啟捐款頁面."
+"{name} 是由NV Access 所開發, NV Access 是一個致力於推廣視障者用自由開放軟體的"
+"非營利組織.\n"
+"若您覺得 NVDA 很實用, 並且希望它繼續進步, 請試著贊助 NV Access. 您可選擇 "
+"[NVDA 選單] 中的 [連結至贊助 NVDA 英文網頁] 選項, 即可開啟捐款頁面."
+
+#. Translators: a message announcing a candidate's character and description.
+#: NVDAObjects\behaviors.py:359
+msgid "{symbol} as in {description}"
+msgstr "{description}的{symbol}"
+
+#. Translators: a formatted message announcing a candidate's number and candidate text.
+#: NVDAObjects\behaviors.py:364
+msgid "{number} {candidate}"
+msgstr "{number} {candidate}"
+
+#. Translators: The message reported when a user attempts to use a table movement command
+#. but the cursor can't be moved in that direction because it is at the edge of the table.
+#: NVDAObjects\behaviors.py:412 virtualBuffers\__init__.py:1296
+msgid "edge of table"
+msgstr "表格的邊緣了"
+
+#. Translators: The description of an NVDA command.
+#: NVDAObjects\behaviors.py:438
+msgid "Moves the navigator object to the next column"
+msgstr "將瀏覽游標移到下一欄"
+
+#. Translators: The description of an NVDA command.
+#: NVDAObjects\behaviors.py:451
+msgid "Moves the navigator object to the previous column"
+msgstr "將瀏覽游標移到上一欄"
+
+#. Translators: The description of an NVDA command.
+#: NVDAObjects\behaviors.py:472
+msgid "Moves the navigator object and focus to the next row"
+msgstr "將瀏覽游標移到下一列"
+
+#. Translators: The description of an NVDA command.
+#: NVDAObjects\behaviors.py:478
+msgid "Moves the navigator object and focus to the previous row"
+msgstr "將瀏覽游標移到上一列"
+
+#. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
+#: NVDAObjects\inputComposition.py:51
+msgid "Composition"
+msgstr "字根"
+
+#. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
+#. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
+#: NVDAObjects\inputComposition.py:107 NVDAObjects\IAccessible\mscandui.py:44
+#: NVDAObjects\IAccessible\mscandui.py:177
+msgid "Candidate"
+msgstr "候選字詞"
 
 #: appModules\calc.py:30
 msgid "Display"
 msgstr "顯示"
 
-#: appModules\explorer.py:40
+#: appModules\explorer.py:43
 msgid "Start"
 msgstr "開始"
 
@@ -3017,102 +3339,99 @@ msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "讀出目前播放曲目的剩餘時間"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
-#: appModules\miranda32.py:118
+#: appModules\miranda32.py:118 appModules\vipmud.py:33
 msgid "No message yet"
 msgstr "沒有新訊息"
 
-#: appModules\miranda32.py:119
+#: appModules\miranda32.py:119 appModules\vipmud.py:34
 msgid "Displays one of the recent messages"
 msgstr "讀出最近的訊息"
 
 #. Translators: This is presented in outlook or live mail to indicate email attachments.
-#: appModules\msimn.py:20
+#: appModules\msimn.py:21
 msgid "Attachments"
 msgstr "附件"
 
 #. Translators: This is presented in outlook or live mail when creating a new email 'to:' or 'recipient:'
-#: appModules\msimn.py:22
+#: appModules\msimn.py:23
 msgid "To:"
 msgstr "收件者："
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
-#: appModules\msimn.py:24
+#: appModules\msimn.py:25
 msgid "Newsgroup:"
 msgstr "新聞群組："
 
 #. Translators: This is presented in outlook or live mail, email carbon copy
-#: appModules\msimn.py:26
+#: appModules\msimn.py:27
 msgid "CC:"
 msgstr "副本："
 
 #. Translators: This is presented in outlook or live mail, email subject
-#: appModules\msimn.py:28
+#: appModules\msimn.py:29
 msgid "Subject:"
 msgstr "主旨："
 
 #. Translators: This is presented in outlook or live mail, email sender
-#: appModules\msimn.py:30
-#: appModules\msimn.py:46
+#: appModules\msimn.py:31 appModules\msimn.py:47
 msgid "From:"
 msgstr "寄件者："
 
 #. Translators: This is presented in outlook or live mail, date of email
-#: appModules\msimn.py:32
+#: appModules\msimn.py:33
 msgid "Date:"
 msgstr "日期："
 
 #. Translators: This is presented in outlook or live mail
-#: appModules\msimn.py:34
+#: appModules\msimn.py:35
 msgid "Forward to:"
 msgstr "轉寄："
 
 #. Translators: This is presented in outlook or live mail
-#: appModules\msimn.py:36
+#: appModules\msimn.py:37
 msgid "Answer to:"
 msgstr "回覆："
 
 #. Translators: This is presented in outlook or live mail
-#: appModules\msimn.py:38
+#: appModules\msimn.py:39
 msgid "Organisation:"
 msgstr "組織："
 
 #. Translators: This is presented in outlook or live mail
-#: appModules\msimn.py:40
+#: appModules\msimn.py:41
 msgid "Distribution:"
 msgstr "分佈："
 
 #. Translators: This is presented in outlook or live mail
-#: appModules\msimn.py:42
+#: appModules\msimn.py:43
 msgid "Key words:"
 msgstr "關鍵字："
 
 #. Translators: This is presented in outlook or live mail, email blind carbon copy
-#: appModules\msimn.py:44
+#: appModules\msimn.py:45
 msgid "BCC:"
 msgstr "密件副本："
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
-#: appModules\msimn.py:109
-#: appModules\outlook.py:28
+#: appModules\msimn.py:111 appModules\outlook.py:31
 msgid "unread"
 msgstr "未閱讀"
 
-#: appModules\outlook.py:23
-#: appModules\outlook.py:36
+#: appModules\outlook.py:26 appModules\outlook.py:39
 #, python-format
 msgid "subject: %s"
 msgstr "主旨 %s"
 
-#: appModules\outlook.py:24
+#: appModules\outlook.py:27
 #, python-format
 msgid "received: %s"
 msgstr "收件 %s"
 
-#: appModules\outlook.py:30
+#: appModules\outlook.py:33
 msgid "attachment"
 msgstr "附件"
 
-#: appModules\outlook.py:37
+#: appModules\outlook.py:40
 #, python-format
 msgid "sent: %s"
 msgstr "送出 %s"
@@ -3196,6 +3515,30 @@ msgstr "停止"
 msgid "Record"
 msgstr "錄音"
 
+#. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now on.
+#: appModules\winamp.py:79
+msgctxt "shuffle"
+msgid "on"
+msgstr "隨機播放"
+
+#. Translators: the user has pressed the shuffle tracks toggle in winamp, shuffle is now off.
+#: appModules\winamp.py:82
+msgctxt "shuffle"
+msgid "off"
+msgstr "不隨機播放"
+
+#. Translators: the user has pressed the repeat track toggle in winamp, repeat is now on.
+#: appModules\winamp.py:91
+msgctxt "repeat"
+msgid "on"
+msgstr "重複播放"
+
+#. Translators: the user has pressed the repeat track toggle in winamp, repeat is now off.
+#: appModules\winamp.py:94
+msgctxt "repeat"
+msgid "off"
+msgstr "不重複播放"
+
 #. Translators: The name of a braille display.
 #: brailleDisplayDrivers\alvaBC6.py:45
 msgid "ALVA BC640/680 series"
@@ -3209,20 +3552,20 @@ msgstr "Baum/HumanWare/APH 點字顯示器"
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers\brailliantB.py:79
 msgid "HumanWare Brailliant BI/B series"
-msgstr "HumanWare Brailliant BI/B series"
+msgstr "HumanWare Brailliant BI/B 系列"
 
 #. Translators: Names of braille displays.
-#: brailleDisplayDrivers\freedomScientific.py:91
+#: brailleDisplayDrivers\freedomScientific.py:110
 msgid "Freedom Scientific Focus/PAC Mate series"
-msgstr "Freedom Scientific Focus/PAC Mate series"
+msgstr "Freedom Scientific Focus/PAC Mate 系列"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
-#: brailleDisplayDrivers\freedomScientific.py:99
+#: brailleDisplayDrivers\freedomScientific.py:118
 msgid "display scroll"
 msgstr "點字游標捲動"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line..
-#: brailleDisplayDrivers\freedomScientific.py:101
+#: brailleDisplayDrivers\freedomScientific.py:120
 msgid "line scroll"
 msgstr "單行捲動"
 
@@ -3245,470 +3588,508 @@ msgstr "MDV Lilli 點字顯示器"
 msgid "No braille"
 msgstr "不用點字顯示器"
 
-#: config\__init__.py:23
-msgid "Badly formed configuration file"
-msgstr "嚴重錯誤的設定檔"
+#: brailleDisplayDrivers\papenmeier.py:194
+msgid "Papenmeier BRAILLEX newer models"
+msgstr "Papenmeier BRAILLEX 新版"
 
-#: config\__init__.py:38
-#, python-format
-msgid "%s: %s, defaulting to %s"
-msgstr "%s: %s, 預設到 %s"
+#: brailleDisplayDrivers\papenmeier.py:457
+msgid "Route to and report formatting"
+msgstr "移到並讀出格式資訊"
 
-#: config\__init__.py:193
-#, python-format
-msgid "Error parsing configuration file: %s"
-msgstr "載入設定檔 %s 時發生錯誤"
-
-#: config\__init__.py:200
-#, python-format
-msgid ""
-"Errors in configuration file '%s':\n"
-"%s"
-msgstr ""
-"含有錯誤項目的設定檔 '%s':\n"
-"%s"
+#: brailleDisplayDrivers\seika.py:30
+msgid "Seika braille displays"
+msgstr "Seika 點字顯示器"
 
 #: gui\__init__.py:134
 msgid "Configuration applied"
 msgstr "設定套用了"
 
 #: gui\__init__.py:138
+msgid "Configuration restored to factory defaults"
+msgstr "設定值已經回復到原始狀態"
+
+#: gui\__init__.py:142
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr "NVDA 在安全模式下不能儲存設定"
 
-#: gui\__init__.py:142
+#: gui\__init__.py:146
 msgid "Configuration saved"
 msgstr "設定存好了"
 
-#: gui\__init__.py:144
+#: gui\__init__.py:148
 msgid "Could not save configuration - probably read only file system"
 msgstr "未能儲存設定, 因為設定檔可能位於唯讀的檔案系統"
 
-#: gui\__init__.py:153
+#: gui\__init__.py:157
 msgid "Please close the other NVDA settings dialog first"
 msgstr "請先關閉其他NVDA設定對話方塊"
 
-#: gui\__init__.py:157
+#: gui\__init__.py:161
 msgid "Default dictionary"
 msgstr "預設字庫"
 
-#: gui\__init__.py:160
+#: gui\__init__.py:164
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "語音字庫 (%s)"
 
-#: gui\__init__.py:163
+#: gui\__init__.py:167
 msgid "Temporary dictionary"
 msgstr "暫存字庫"
 
-#: gui\__init__.py:170
+#: gui\__init__.py:174
 msgid "Are you sure you want to quit NVDA?"
 msgstr "確定要結束 NVDA 嗎?"
 
-#: gui\__init__.py:170
-#: gui\__init__.py:367
+#: gui\__init__.py:174 gui\__init__.py:379
 msgid "Exit NVDA"
 msgstr "關閉 NVDA"
 
-#: gui\__init__.py:211
-#: gui\__init__.py:353
+#: gui\__init__.py:218 gui\__init__.py:363
 msgid "About NVDA"
 msgstr "關於 NVDA"
 
-#: gui\__init__.py:276
+#: gui\__init__.py:283
 msgid "&General settings..."
 msgstr "一般設定...(&G)"
 
-#: gui\__init__.py:276
+#: gui\__init__.py:283
 msgid "General settings"
 msgstr "一般設定"
 
-#: gui\__init__.py:278
+#: gui\__init__.py:285
 msgid "&Synthesizer..."
 msgstr "語音合成器...(&S)"
 
-#: gui\__init__.py:278
+#: gui\__init__.py:285
 msgid "Change the synthesizer to be used"
 msgstr "設定使用的語音合成器"
 
-#: gui\__init__.py:280
+#: gui\__init__.py:287
 msgid "&Voice settings..."
 msgstr "語音設定...(&V)"
 
-#: gui\__init__.py:280
+#: gui\__init__.py:287
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "設定朗讀人聲, 速度, 音調和音量"
 
-#: gui\__init__.py:282
+#: gui\__init__.py:289
 msgid "B&raille settings..."
 msgstr "點字設定...(&R)"
 
-#: gui\__init__.py:284
+#: gui\__init__.py:291
 msgid "&Keyboard settings..."
 msgstr "鍵盤設定...(&K)"
 
-#: gui\__init__.py:284
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
+#: gui\__init__.py:291
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
 msgstr "選擇套用哪一個鍵盤配置, 設定是否讀出輸入字元、字詞或指令"
 
-#: gui\__init__.py:286
+#: gui\__init__.py:293
 msgid "&Mouse settings..."
 msgstr "滑鼠設定...(&M)"
 
-#: gui\__init__.py:286
+#: gui\__init__.py:293
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "切換是否讀出鼠標型態和所指物件"
 
-#: gui\__init__.py:288
+#: gui\__init__.py:295
 msgid "Review &cursor..."
 msgstr "瀏覽游標...(&C)"
 
-#: gui\__init__.py:288
+#: gui\__init__.py:295
 msgid "Configure how and when the review cursor moves"
 msgstr "設定瀏覽游標移動方式"
 
-#: gui\__init__.py:290
+#: gui\__init__.py:297
+msgid "&Input composition settings..."
+msgstr "輸入法朗讀設定...(&I)"
+
+#: gui\__init__.py:297
+msgid ""
+"Configure how NVDA reports input composition and candidate selection for "
+"certain languages"
+msgstr "修改 NVDA 報讀某些語系輸入法的設定"
+
+#: gui\__init__.py:299
 msgid "&Object presentation..."
 msgstr "物件顯示...(&O)"
 
-#: gui\__init__.py:290
+#: gui\__init__.py:299
 msgid "Change reporting of objects"
 msgstr "修改物件朗讀設定"
 
-#: gui\__init__.py:292
+#: gui\__init__.py:301
 msgid "&Browse mode..."
 msgstr "瀏覽模式(&B)"
 
-#: gui\__init__.py:292
+#: gui\__init__.py:301
 msgid "Change virtual buffers specific settings"
 msgstr " 修改和虛擬緩衝有關的設定"
 
-#: gui\__init__.py:294
+#: gui\__init__.py:303
 msgid "Document &formatting..."
 msgstr "文件格式...(&F)"
 
-#: gui\__init__.py:294
+#: gui\__init__.py:303
 msgid "Change settings of document properties"
 msgstr "修改文件朗讀的設定"
 
-#: gui\__init__.py:298
+#: gui\__init__.py:307
 msgid "&Default dictionary..."
 msgstr "預設字庫...(&D)"
 
-#: gui\__init__.py:298
-msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
+#: gui\__init__.py:307
+msgid ""
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr "開啟預設字庫對話方塊, 方塊可讓你加入、修改或移除預設字庫項目"
 
-#: gui\__init__.py:300
+#: gui\__init__.py:309
 msgid "&Voice dictionary..."
 msgstr "語音字庫...(&V)"
 
-#: gui\__init__.py:300
-msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
+#: gui\__init__.py:309
+msgid ""
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
 msgstr "開啟語音字庫對話方塊, 方塊可讓你加入、修改或移除語音字庫項目"
 
-#: gui\__init__.py:302
+#: gui\__init__.py:311
 msgid "&Temporary dictionary..."
 msgstr "暫存字庫...(&T)"
 
-#: gui\__init__.py:302
-msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
+#: gui\__init__.py:311
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
 msgstr "開啟暫存字庫對話方塊, 方塊可讓你加入暫存字庫項目"
 
-#: gui\__init__.py:304
+#: gui\__init__.py:313
 msgid "Speech &dictionaries"
 msgstr "讀音修改字庫(&d)"
 
-#: gui\__init__.py:306
+#: gui\__init__.py:315
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "標點或特殊符號讀音(&P):"
 
-#: gui\__init__.py:308
+#: gui\__init__.py:317
 msgid "&Preferences"
 msgstr "偏好設定(&P)"
 
-#: gui\__init__.py:312
+#: gui\__init__.py:321
 msgid "View log"
 msgstr "檢視事件記錄 (&V)"
 
-#: gui\__init__.py:314
+#: gui\__init__.py:323
 msgid "Speech viewer"
 msgstr "報讀檢視器(&S)"
 
-#: gui\__init__.py:317
+#: gui\__init__.py:326
 msgid "Python console"
 msgstr "Python 主控台"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-#: gui\__init__.py:320
+#: gui\__init__.py:329
 msgid "Manage &add-ons"
-msgstr "管理插件(&A)"
+msgstr "管理附加組件(&A)"
 
-#: gui\__init__.py:323
+#: gui\__init__.py:332
 msgid "Create Portable copy..."
 msgstr "建立 NVDA 可攜版(&C)"
 
-#: gui\__init__.py:326
+#: gui\__init__.py:335
 msgid "&Install NVDA..."
 msgstr "安裝 NVDA...(&I)"
 
-#: gui\__init__.py:328
+#: gui\__init__.py:337
 msgid "Reload plugins"
 msgstr "重新載入外掛程式(&R)"
 
-#: gui\__init__.py:330
+#: gui\__init__.py:339
 msgid "Tools"
 msgstr "工具(&T)"
 
-#: gui\__init__.py:338
+#. Translators: The label of a menu item to open the Commands Quick Reference document.
+#: gui\__init__.py:346
+msgid "Commands &Quick Reference"
+msgstr "指令快速參考表(&Q)"
+
+#: gui\__init__.py:348
 msgid "What's &new"
 msgstr "最新版本資訊(&N)"
 
-#: gui\__init__.py:342
+#: gui\__init__.py:352
 msgid "License"
 msgstr "版權資訊(&L)"
 
-#: gui\__init__.py:344
+#: gui\__init__.py:354
 msgid "Contributors"
 msgstr "貢獻者名單(&O)"
 
-#: gui\__init__.py:346
+#: gui\__init__.py:356
 msgid "We&lcome dialog"
 msgstr "歡迎視窗(&L)"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
-#: gui\__init__.py:351
+#: gui\__init__.py:361
 msgid "Check for update..."
 msgstr "檢查更新(&C)"
 
-#: gui\__init__.py:353
+#: gui\__init__.py:363
 msgid "About..."
 msgstr "關於(&A)"
 
-#: gui\__init__.py:355
+#: gui\__init__.py:365
 msgid "&Help"
 msgstr "說明(&H)"
 
-#: gui\__init__.py:357
+#: gui\__init__.py:367
 msgid "&Revert to saved configuration"
 msgstr "還原設定 (&R)"
 
-#: gui\__init__.py:357
+#: gui\__init__.py:367
 msgid "Reset all settings to saved state"
 msgstr "回復所有設定到已儲存的狀態"
 
-#: gui\__init__.py:360
+#: gui\__init__.py:370
+msgid "&Reset configuration to factory defaults"
+msgstr "把設定值回復到原始狀態(&R)"
+
+#: gui\__init__.py:370
+msgid "Reset all settings to default state"
+msgstr "回復所有設定到原始狀態"
+
+#: gui\__init__.py:372
 msgid "&Save configuration"
 msgstr "儲存設定(&S)"
 
-#: gui\__init__.py:360
+#: gui\__init__.py:372
 msgid "Write the current configuration to nvda.ini"
 msgstr "將現在的設定寫入 nvda.ini 檔案"
 
-#: gui\__init__.py:364
+#: gui\__init__.py:376
 msgid "Donate"
 msgstr "連結至贊助 NVDA 英文網頁"
 
-#: gui\__init__.py:367
-#: gui\__init__.py:566
-#: gui\logViewer.py:34
+#: gui\__init__.py:379 gui\__init__.py:578 gui\logViewer.py:34
 msgid "E&xit"
 msgstr "結束(&X)"
 
-#: gui\__init__.py:450
+#: gui\__init__.py:462
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
 msgstr ""
 "歡迎使用 NVDA!\n"
 "NVDA 的許多按鍵指令都需要按住一個 NVDA 鍵, 然後同時按下其它的按鍵.\n"
-"所謂的 NVDA 鍵是指主鍵盤上的 insert 鍵和數字鍵盤的0, (它也是 insert 鍵), 其預設均為啟用.\n"
+"所謂的 NVDA 鍵是指主鍵盤上的 insert 鍵和數字鍵盤的0, (它也是 insert 鍵), 其預"
+"設均為啟用.\n"
 "您也可將 Caps Locks 設定為 NVDA 鍵.\n"
 "你可隨時按 NVDA+n 開啟 NVDA 的選單.\n"
 "此選單可讓你設定 NVDA 的各種選項、取得開發工具相關資訊及使用說明.\n"
 
-#: gui\__init__.py:459
+#: gui\__init__.py:471
 msgid "Welcome to NVDA"
 msgstr "歡迎使用 NVDA"
 
-#: gui\__init__.py:463
+#: gui\__init__.py:475
 msgid "Options"
 msgstr "選項"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\__init__.py:464
-#: gui\settingsDialogs.py:572
+#: gui\__init__.py:476 gui\settingsDialogs.py:587
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "將 Caps Lock 鍵設為 NVDA 鍵(&L)"
 
-#: gui\__init__.py:467
+#: gui\__init__.py:479
 msgid "Show this dialog when NVDA starts"
 msgstr "每當 NVDA 啟動時顯示此對話方塊(&S)"
 
-#: gui\__init__.py:503
+#: gui\__init__.py:515
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
 msgstr ""
 "發現程式的設定檔包含錯誤項目. \n"
-"您可按 'OK' 修正這些錯誤, 或按 'Cancel' 然後手動編輯設定檔以修正這些錯誤。若要獲取更多有關資料可在程式的記錄檔 'log file' 找到.\n"
+"您可按 'OK' 修正這些錯誤, 或按 'Cancel' 然後手動編輯設定檔以修正這些錯誤。若"
+"要獲取更多有關資料可在程式的記錄檔 'log file' 找到.\n"
 
-#: gui\__init__.py:508
+#: gui\__init__.py:520
 msgid "Configuration File Error"
 msgstr "設定檔錯誤"
 
-#: gui\__init__.py:542
+#: gui\__init__.py:554
 msgid "License Agreement"
 msgstr "許可協議"
 
-#: gui\__init__.py:546
+#: gui\__init__.py:558
 msgid "I &agree"
 msgstr "我同意(&A)"
 
-#: gui\__init__.py:554
+#: gui\__init__.py:566
 msgid "&Install NVDA on this computer"
 msgstr "把 NVDA 裝到電腦(&I)"
 
-#: gui\__init__.py:558
+#: gui\__init__.py:570
 msgid "Create &portable copy"
 msgstr "建立可攜版程式(&P)"
 
-#: gui\__init__.py:562
+#: gui\__init__.py:574
 msgid "&Continue running"
 msgstr "繼續執行 暫存版(&C)"
 
+#. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
+#: gui\__init__.py:664
+msgid "Please wait"
+msgstr "請等候"
+
 #. Translators: The title of the Addons Dialog
-#: gui\addonGui.py:17
+#: gui\addonGui.py:23
 msgid "Add-ons Manager"
-msgstr "插件管理器"
+msgstr "附加組件管理器"
 
 #. Translators: the label for the installed addons list in the addons manager.
-#: gui\addonGui.py:23
+#: gui\addonGui.py:29
 msgid "Installed Add-ons"
-msgstr "安裝插件"
+msgstr "附加組件"
 
-#: gui\addonGui.py:26
+#: gui\addonGui.py:32
+msgid "Package"
+msgstr "組件"
+
+#: gui\addonGui.py:33
 msgid "Status"
 msgstr "狀態"
 
-#: gui\addonGui.py:27
-msgid "Package"
-msgstr "插件包"
-
-#: gui\addonGui.py:28
+#: gui\addonGui.py:34
 msgid "Version"
 msgstr "版本"
 
-#: gui\addonGui.py:29
+#: gui\addonGui.py:35
 msgid "Author"
 msgstr "開發者"
 
-#: gui\addonGui.py:34
+#: gui\addonGui.py:40
 msgid "&About add-on..."
 msgstr "關於(&A)"
 
-#: gui\addonGui.py:38
+#: gui\addonGui.py:44
 msgid "&Install..."
 msgstr "安裝(&I)"
 
-#: gui\addonGui.py:41
-#: gui\settingsDialogs.py:1082
+#: gui\addonGui.py:47 gui\settingsDialogs.py:1139
 msgid "&Remove"
 msgstr "移除(&R)"
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
-#: gui\addonGui.py:60
+#: gui\addonGui.py:66
 msgid "Choose Add-on Package File"
-msgstr "選擇插件包檔案"
+msgstr "選擇附加組件檔"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#: gui\addonGui.py:62
+#: gui\addonGui.py:68
 msgid "NVDA Add-on Package (*.{ext})"
-msgstr "NVDA 插件包檔案 (*.{ext})"
+msgstr "NVDA 附加組件檔 (*.{ext})"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
-#: gui\addonGui.py:72
+#: gui\addonGui.py:82
 #, python-format
-msgid "Failed to open add-on package file at %s - missing file or invalid file format"
-msgstr "在 %s 開啟插件包檔案失敗, 沒有發現檔案, 又或檔案格式錯誤"
+msgid ""
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
+msgstr "在 %s 開啟附加組件檔案失敗, 沒有發現檔案, 又或檔案格式錯誤"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#: gui\addonGui.py:78
+#: gui\addonGui.py:88
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"您是否要安裝這個插件, 建議只安裝從信任來源得來的插件.\n"
-"插件: {summary} {version}\n"
+"您是否要安裝這個附加組件, 建議只安裝從信任來源得來的附加組件.\n"
+"附加組件: {summary} {version}\n"
 "開發者: {author}"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
-#: gui\addonGui.py:80
+#. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
+#: gui\addonGui.py:90 gui\addonGui.py:103
 msgid "Add-on Installation"
-msgstr "安裝插件"
+msgstr "安裝附加組件"
 
-#. Translators: The message displayed when an an addon already seems to be installed.
-#: gui\addonGui.py:86
-msgid "This add-on seems to already be installed. Please remove the existing add-on and try again."
-msgstr "發現系統已經安裝這個插件, 請先把插件移除, 然後重新安裝."
+#. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
+#: gui\addonGui.py:101
+msgid ""
+"A version of this add-on is already installed. Would you like to update it?"
+msgstr "發現已經安裝舊版的附加組件, 是否要更新它呢?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
-#: gui\addonGui.py:93
+#: gui\addonGui.py:109
 msgid "Installing Add-on"
-msgstr "正在安裝插件"
+msgstr "正在安裝附加組件"
 
 #. Translators: The message displayed while an addon is being installed.
-#: gui\addonGui.py:95
+#: gui\addonGui.py:111
 msgid "Please wait while the add-on is being installed."
-msgstr "請稍候, 正在安裝 插件"
+msgstr "請稍候, 正在安裝附加組件"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
-#: gui\addonGui.py:105
+#: gui\addonGui.py:121
 #, python-format
 msgid "Failed to install add-on  from %s"
-msgstr "從 %s 安裝插件失敗"
+msgstr "從 %s 安裝附加組件失敗"
 
-#: gui\addonGui.py:118
+#: gui\addonGui.py:137
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
-msgstr "是否從 NVDA 移除這個插件?"
+msgstr "是否從 NVDA 移除這個附加組件?"
 
-#: gui\addonGui.py:118
+#: gui\addonGui.py:137
 msgid "Remove Add-on"
-msgstr "移除插件"
+msgstr "移除附加組件"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
-#: gui\addonGui.py:128
+#: gui\addonGui.py:147
 msgid "install"
-msgstr "安裝好"
+msgstr "已安裝"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
-#: gui\addonGui.py:131
+#: gui\addonGui.py:150
 msgid "remove"
-msgstr "移除掉"
+msgstr "已刪除"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-#: gui\addonGui.py:134
+#: gui\addonGui.py:153
 msgid "running"
-msgstr "執行中"
+msgstr "已執行"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
-#: gui\addonGui.py:165
-msgid "Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"
-msgstr "插件已經遭到變更, 為讓新的變更生效, 您必須要重新啟動 NVDA,現在立即重新啟動嗎?"
+#: gui\addonGui.py:184
+msgid ""
+"Add-ons have been added or removed. You must restart NVDA for these changes "
+"to take effect. Would you like to restart now?"
+msgstr ""
+"附加組件已經變更, 為讓變更生效, 您必須要重新啟動 NVDA,現在立即重新啟動嗎?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
-#: gui\addonGui.py:167
+#: gui\addonGui.py:186
 msgid "Restart NVDA"
 msgstr "重開 NVDA"
 
 #. Translators: message shown in the Addon Information dialog.
-#: gui\addonGui.py:176
+#: gui\addonGui.py:195
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -3721,14 +4102,14 @@ msgstr ""
 "描述: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#: gui\addonGui.py:184
+#: gui\addonGui.py:203
 msgid "URL: {url}"
 msgstr "網址: {url}"
 
 #. Translators: title for the Addon Information dialog
-#: gui\addonGui.py:186
+#: gui\addonGui.py:205
 msgid "Add-on Information"
-msgstr "插件資訊"
+msgstr "附加組件資訊"
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 #: gui\installerGui.py:23
@@ -3752,19 +4133,25 @@ msgstr "請稍候, 正在安裝NVDA"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 #: gui\installerGui.py:44
-msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
-msgstr "安裝程式沒能移除或複寫檔案, 可能有其他帳戶的使用者正在執行 NVDA, 請確定安裝版本的 NVDA 現時沒有執行, 然後重試安裝."
+msgid ""
+"The installation is unable to remove or overwrite a file. Another copy of "
+"NVDA may be running on another logged-on user account. Please make sure all "
+"installed copies of NVDA are shut down and try the installation again."
+msgstr ""
+"安裝程式沒能移除或複寫檔案, 可能有其他帳戶的使用者正在執行 NVDA, 請確定安裝版"
+"本的 NVDA 現時沒有執行, 然後重試安裝."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:46
-#: gui\installerGui.py:219
+#: gui\installerGui.py:46 gui\installerGui.py:224
 msgid "File in Use"
 msgstr "檔案使用中"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui\installerGui.py:52
-msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
+msgid ""
+"The installation of NVDA failed. Please check the Log Viewer for more "
+"information."
 msgstr "NVDA 安裝失敗,  若要閱讀更多詳情可打開記錄檢視器."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
@@ -3784,9 +4171,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "請按 \"確定\" 啟動安裝好的程式."
 
 #. Translators: The title of a dialolg presented to indicate a successful operation.
-#: gui\installerGui.py:67
-#: gui\installerGui.py:232
-#: gui\settingsDialogs.py:210
+#: gui\installerGui.py:67 gui\installerGui.py:237 gui\settingsDialogs.py:225
 msgid "Success"
 msgstr "完成"
 
@@ -3802,12 +4187,16 @@ msgstr "若要把 NVDA 裝到電腦, 請按 \"繼續\" 按鈕."
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui\installerGui.py:88
-msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
+msgid ""
+"A previous copy of NVDA has been found on your system. This copy will be "
+"updated."
 msgstr "發現電腦已經裝有舊版 NVDA, 舊版程式將被更新."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #: gui\installerGui.py:91
-msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
+msgid ""
+"The installation path for NVDA has changed. it will now  be installed in "
+"{path}"
 msgstr "NVDA 的安裝路徑已經改變, 程式會被安裝到 {path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
@@ -3816,91 +4205,99 @@ msgid "Use NVDA on the Windows &logon screen"
 msgstr "在 Windows 登入畫面啟用 NVDA(&L)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:100
+#: gui\installerGui.py:102
+msgid "&Keep existing desktop shortcut"
+msgstr "保留原有的桌面捷徑(&K)"
+
+#. Translators: The label of a checkbox option in the Install NVDA dialog.
+#: gui\installerGui.py:105
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
 msgstr "建立桌面捷徑, 並設定啟動程式快捷鍵為 (control+alt+n)"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
-#: gui\installerGui.py:104
+#: gui\installerGui.py:109
 msgid "Copy &portable configuration to current user account"
 msgstr "複製可攜版設定檔到目前使用者帳戶"
 
 #. Translators: The label of a button to continue with the operation.
-#: gui\installerGui.py:113
-#: gui\installerGui.py:162
+#: gui\installerGui.py:118 gui\installerGui.py:167
 msgid "&Continue"
 msgstr "繼續(&C)"
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:137
+#: gui\installerGui.py:142
 msgid "Create Portable NVDA"
 msgstr "建立 NVDA 可攜版"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:140
-msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
-msgstr "若要建立 NVDA 可攜版, 請先指定擺放程式的整個路徑位置和設定相關選項, 然後按下 \"繼續\" 按鈕"
+#: gui\installerGui.py:145
+msgid ""
+"To create a portable copy of NVDA, please select the path and other options "
+"and then press Continue"
+msgstr ""
+"若要建立 NVDA 可攜版, 請先指定擺放程式的整個路徑位置和設定相關選項, 然後按下 "
+"\"繼續\" 按鈕"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:145
+#: gui\installerGui.py:150
 msgid "Portable &directory:"
 msgstr "放置可攜版的資料夾(&D)"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:149
+#: gui\installerGui.py:154
 msgid "Browse..."
 msgstr "瀏覽...(&B)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:154
+#: gui\installerGui.py:159
 msgid "Copy current &user configuration"
 msgstr "複製舊有的用戶設定檔到可攜版(&U)"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:177
+#: gui\installerGui.py:182
 msgid "Select portable  directory"
 msgstr "選擇放置可夔版的資料夾"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:185
+#: gui\installerGui.py:190
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "請選定擺放可攜版程式的資料夾."
 
 #. Translators: The message displayed when the user specifies an invalid destination drive
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:193
+#: gui\installerGui.py:198
 #, python-format
 msgid "Invalid drive %s"
 msgstr "不可用的磁碟機 %s"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
-#: gui\installerGui.py:207
+#: gui\installerGui.py:212
 msgid "Creating Portable Copy"
 msgstr "正在建立可攜版程式"
 
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
-#: gui\installerGui.py:209
+#: gui\installerGui.py:214
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "請稍候, 正在建立 NVDA 可攜版."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui\installerGui.py:217
+#: gui\installerGui.py:222
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA 沒能移除或複寫檔案"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
-#: gui\installerGui.py:224
+#: gui\installerGui.py:229
 #, python-format
 msgid "Failed to create portable copy: %s"
 msgstr "建立可攜版時發生錯誤, 位置在 %s"
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. %s will be replaced with the destination directory.
-#: gui\installerGui.py:231
+#: gui\installerGui.py:236
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
 msgstr "建立 NVDA 可攜版完成了, 位置在 %s"
@@ -3927,126 +4324,152 @@ msgid "Error saving log: %s"
 msgstr "儲存 %s 記錄檔案失敗"
 
 #. Translators: This is the label for the general settings dialog.
-#: gui\settingsDialogs.py:112
+#: gui\settingsDialogs.py:113
 msgid "General Settings"
 msgstr "一般設定"
 
-#: gui\settingsDialogs.py:114
+#: gui\settingsDialogs.py:115
 msgid "info"
 msgstr "資訊"
 
-#: gui\settingsDialogs.py:115
+#: gui\settingsDialogs.py:116
 msgid "debug warning"
 msgstr "偵錯警告"
 
-#: gui\settingsDialogs.py:116
+#: gui\settingsDialogs.py:117
 msgid "input/output"
 msgstr "輸入/輸出"
 
-#: gui\settingsDialogs.py:117
+#: gui\settingsDialogs.py:118
 msgid "debug"
 msgstr "偵錯"
 
-#: gui\settingsDialogs.py:122
-msgid "&Language (requires restart to fully take affect):"
-msgstr "選擇程式語言(需要重新啟動才可套用設定)(&L):"
+#: gui\settingsDialogs.py:123
+msgid "&Language (requires restart to fully take effect):"
+msgstr "選擇語言(需要重新啟動程式才可套用設定)(&L):"
 
-#: gui\settingsDialogs.py:126
+#: gui\settingsDialogs.py:127
 msgid "Language"
 msgstr "語言"
 
-#: gui\settingsDialogs.py:138
+#: gui\settingsDialogs.py:139
 msgid "&Save configuration on exit"
 msgstr "關閉程式前先儲存設定(&S)"
 
-#: gui\settingsDialogs.py:143
+#: gui\settingsDialogs.py:144
 msgid "&Warn before exiting NVDA"
 msgstr "關閉 NVDA 前須先確定(&W)"
 
-#: gui\settingsDialogs.py:147
+#: gui\settingsDialogs.py:148
 msgid "L&ogging level:"
 msgstr "事件記錄等級(&O):"
 
-#: gui\settingsDialogs.py:150
+#: gui\settingsDialogs.py:151
 msgid "Log level"
 msgstr "事件記錄等級"
 
-#: gui\settingsDialogs.py:160
+#: gui\settingsDialogs.py:161
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "在登入 Windows 後自動啟動 NVDA(&A)"
 
-#: gui\settingsDialogs.py:165
-msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
+#: gui\settingsDialogs.py:166
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr "在 Windows 登入畫面啟用 NVDA(需要系統管理員權限)(&U)"
 
-#: gui\settingsDialogs.py:170
-msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
+#: gui\settingsDialogs.py:171
+msgid ""
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
 msgstr "將已儲存的設定套用到登入或其他安全畫面(需要系統管理員權限)(&C)"
 
 #. Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
-#: gui\settingsDialogs.py:177
+#: gui\settingsDialogs.py:178
 msgid "Automatically check for &updates to NVDA"
 msgstr "自動檢查 NVDA 有否新版(&U)"
 
-#: gui\settingsDialogs.py:190
-msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
-msgstr "在你的用戶設定資料夾中發現一些自定插件, 把它們複製到系統設定檔可能有安全上的風險, 你是否仍然要複製設定呢?"
-
 #: gui\settingsDialogs.py:191
+msgid ""
+"Custom plugins were detected in your user settings directory. Copying these "
+"to the system profile could be a security risk. Do you still wish to copy "
+"your settings?"
+msgstr ""
+"在你的用戶設定資料夾中發現一些自定插件, 把它們複製到系統設定檔可能有安全上的"
+"風險, 你是否仍然要複製設定呢?"
+
+#: gui\settingsDialogs.py:192
 msgid "Warning"
 msgstr "警告"
 
 #. Translators: The title of the dialog presented while settings are being copied
-#: gui\settingsDialogs.py:197
+#: gui\settingsDialogs.py:198
 msgid "Copying Settings"
 msgstr "正在複製設定檔"
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
-#: gui\settingsDialogs.py:199
+#: gui\settingsDialogs.py:200
 msgid "Please wait while settings are copied to the system configuration."
 msgstr "請稍候, 正在把設定檔複製到系統設定檔"
 
-#: gui\settingsDialogs.py:208
+#. Translators: a message dialog asking to retry or cancel when copying settings  fails
+#: gui\settingsDialogs.py:209
+msgid ""
+"Unable to copy a file. Perhaps it is currently being used by another process "
+"or you have run out of disc space on the drive you are copying to."
+msgstr ""
+"無法複製檔案, 可能檔案目前被其他程序佔用了, 又或目標磁碟機可用空間不足."
+
+#. Translators: the title of a retry cancel dialog when copying settings  fails
+#: gui\settingsDialogs.py:211
+msgid "Error Copying"
+msgstr "複製失敗"
+
+#: gui\settingsDialogs.py:223
 msgid "Error copying NVDA user settings"
 msgstr "複製 NVDA 使用者設定失敗"
 
-#: gui\settingsDialogs.py:210
+#: gui\settingsDialogs.py:225
 msgid "Successfully copied NVDA user settings"
 msgstr "成功複製 NVDA 使用者設定"
 
-#: gui\settingsDialogs.py:219
+#: gui\settingsDialogs.py:234
 #, python-format
 msgid "Error in %s language file"
 msgstr "%s 語言檔案錯誤"
 
-#: gui\settingsDialogs.py:219
+#: gui\settingsDialogs.py:234
 msgid "Language Error"
 msgstr "語言錯誤"
 
-#: gui\settingsDialogs.py:233
+#: gui\settingsDialogs.py:248
 msgid "This change requires administrator privileges."
 msgstr "需要系統管理員權限才可變更"
 
-#: gui\settingsDialogs.py:233
+#: gui\settingsDialogs.py:248
 msgid "Insufficient Privileges"
 msgstr "沒有足夠的權限"
 
-#: gui\settingsDialogs.py:240
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "為了讓修改過的程式語言設定生效, 必須儲存設定並重新啟動 NVDA. 請按Enter鍵執行上述動作, 或可按取消, 手動儲存並重新啟動 NVDA."
+#: gui\settingsDialogs.py:255
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"為了讓修改過的程式語言設定生效, 必須儲存設定並重新啟動 NVDA. 請按Enter鍵執行"
+"上述動作, 或可按取消, 手動儲存並重新啟動 NVDA."
 
-#: gui\settingsDialogs.py:241
+#: gui\settingsDialogs.py:256
 msgid "Language Configuration Change"
 msgstr "修改語言設定"
 
 #. Translators: This is the label for the synthesizer dialog.
-#: gui\settingsDialogs.py:249
+#: gui\settingsDialogs.py:264
 msgid "Synthesizer"
 msgstr "語音合成器"
 
 #. Translators: This is a label for the select
 #. synthesizer combobox in the synthesizer dialog.
-#: gui\settingsDialogs.py:255
+#: gui\settingsDialogs.py:270
 msgid "&Synthesizer:"
 msgstr "語音合成器(&S):"
 
@@ -4054,593 +4477,632 @@ msgstr "語音合成器(&S):"
 #. device combo in the synthesizer dialog. Examples of
 #. of an output device are default soundcard, usb
 #. headphones, etc.
-#: gui\settingsDialogs.py:274
+#: gui\settingsDialogs.py:289
 msgid "Output &device:"
 msgstr "輸出裝置(&D):"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
 #. synthesizer.
-#: gui\settingsDialogs.py:297
+#: gui\settingsDialogs.py:312
 #, python-format
 msgid "Could not load the %s synthesizer."
 msgstr "未能載入 %s 語音合成器"
 
-#: gui\settingsDialogs.py:297
+#: gui\settingsDialogs.py:312
 msgid "Synthesizer Error"
 msgstr "語音合成器錯誤"
 
 #. Translators: This is the label for the voice settings dialog.
-#: gui\settingsDialogs.py:363
+#: gui\settingsDialogs.py:378
 msgid "Voice Settings"
 msgstr "語音設定"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:433
+#: gui\settingsDialogs.py:448
 msgid "Automatic language switching (when supported)"
 msgstr "有支援時自動轉換朗讀語言(&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:438
+#: gui\settingsDialogs.py:453
 msgid "Automatic dialect switching (when supported)"
 msgstr "有支援時自動轉換朗讀方言(&D)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:444
+#: gui\settingsDialogs.py:459
 msgid "Punctuation/symbol &level:"
 msgstr "標點符號報讀程度(&L):"
 
-#: gui\settingsDialogs.py:451
+#: gui\settingsDialogs.py:466
 msgid "Capital pitch change percentage"
 msgstr "大寫字母音調轉換百分率(&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:458
+#: gui\settingsDialogs.py:473
 msgid "Say &cap before capitals"
 msgstr "每當遇到大寫字母時先說大寫(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:463
+#: gui\settingsDialogs.py:478
 msgid "&Beep for capitals"
 msgstr "每當遇到大寫字母時發出嗶嗶聲(&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
-#: gui\settingsDialogs.py:468
+#: gui\settingsDialogs.py:483
 msgid "Use &spelling functionality if supported"
 msgstr "若有支援的情況下, 啟用拼字功能(&S)"
 
 #. Translators: This is the label for the keyboard settings dialog.
-#: gui\settingsDialogs.py:550
+#: gui\settingsDialogs.py:565
 msgid "Keyboard Settings"
 msgstr "鍵盤設定"
 
 #. Translators: This is the label for a combobox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:556
+#: gui\settingsDialogs.py:571
 msgid "&Keyboard layout:"
 msgstr "鍵盤配置(&K):"
 
 #. Translators: This is the name of a combobox in the keyboard settings dialog.
-#: gui\settingsDialogs.py:562
+#: gui\settingsDialogs.py:577
 msgid "Keyboard layout"
 msgstr "鍵盤配置"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:577
+#: gui\settingsDialogs.py:592
 msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "將數字鍵盤的 Insert 鍵設為 NVDA 鍵(&U)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:582
+#: gui\settingsDialogs.py:597
 msgid "Use extended Insert as an NVDA modifier key"
 msgstr "將主鍵盤的 Insert 鍵設為 NVDA 鍵(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:587
+#: gui\settingsDialogs.py:602
 msgid "Speak typed &characters"
 msgstr "讀出輸入字元(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:592
+#: gui\settingsDialogs.py:607
 msgid "Speak typed &words"
 msgstr "讀出輸入字詞(&W)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:597
+#: gui\settingsDialogs.py:612
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Caps Locks 鍵鎖定時, 輸入小寫字母會發出嗶嗶聲"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\settingsDialogs.py:602
+#: gui\settingsDialogs.py:617
 msgid "Speak command &keys"
 msgstr "讀出指令鍵(&K)"
 
 #. Translators: This is the label for the mouse settings dialog.
-#: gui\settingsDialogs.py:623
+#: gui\settingsDialogs.py:638
 msgid "Mouse Settings"
 msgstr "滑鼠設定"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:628
+#: gui\settingsDialogs.py:643
 msgid "Report mouse &shape changes"
 msgstr "報出鼠標型態的改變(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:633
+#: gui\settingsDialogs.py:648
 msgid "Enable mouse &tracking"
 msgstr "開啟鼠標移動通知(&T)"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:639
+#: gui\settingsDialogs.py:654
 msgid "Text &unit resolution:"
 msgstr "文字報讀範圍(&U):"
 
 #. Translators: This is the name of a combobox in the mouse settings dialog.
-#: gui\settingsDialogs.py:644
+#: gui\settingsDialogs.py:659
 msgid "text reporting unit"
 msgstr "文字報讀單位"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:654
+#: gui\settingsDialogs.py:669
 msgid "Report &role when mouse enters object"
 msgstr "讀出鼠標所指物件資訊(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:659
+#: gui\settingsDialogs.py:674
 msgid "play audio coordinates when mouse moves"
 msgstr "利用嗶嗶聲表示鼠標所在位置(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui\settingsDialogs.py:664
+#: gui\settingsDialogs.py:679
 msgid "brightness controls audio coordinates volume"
 msgstr "隨螢幕亮度改變嗶嗶聲的音量(&B)"
 
 #. Translators: This is the label for the review cursor settings dialog.
-#: gui\settingsDialogs.py:683
+#: gui\settingsDialogs.py:698
 msgid "Review Cursor Settings"
 msgstr "瀏覽游標設定"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:688
-msgid "Follow &keyboard focus"
-msgstr "跟隨系統焦點移動(&K)"
+#: gui\settingsDialogs.py:703
+msgid "Follow system &focus"
+msgstr "跟隨系統焦點移動(&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:693
+#: gui\settingsDialogs.py:708
 msgid "Follow System &Caret"
 msgstr "跟隨編輯游標移動(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:698
+#: gui\settingsDialogs.py:713
 msgid "Follow &mouse cursor"
 msgstr "跟隨鼠標移動(&M)"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui\settingsDialogs.py:703
+#: gui\settingsDialogs.py:718
 msgid "Simple review mode"
 msgstr "簡易瀏覽模式(&S)"
 
+#. Translators: This is the label for the Input Composition settings dialog.
+#: gui\settingsDialogs.py:734
+msgid "Input Composition Settings"
+msgstr "輸入法朗讀設定"
+
+#. Translators: This is the label for a checkbox in the
+#. Input composition settings dialog.
+#: gui\settingsDialogs.py:739
+msgid "Automatically report all available &candidates"
+msgstr "自動報出可見的候選字詞(&A)"
+
+#. Translators: This is the label for a checkbox in the
+#. Input composition settings dialog.
+#: gui\settingsDialogs.py:744
+msgid "Announce &selected candidate"
+msgstr "報出以選候選字詞和它的全部解釋配詞(&S)"
+
+#. Translators: This is the label for a checkbox in the
+#. Input composition settings dialog.
+#: gui\settingsDialogs.py:749
+msgid "Always include short character &description when announcing candidates"
+msgstr "報出候選單字的第一個解釋配詞(&D)"
+
+#. Translators: This is the label for a checkbox in the
+#. Input composition settings dialog.
+#: gui\settingsDialogs.py:754
+msgid "Report changes to the &reading string"
+msgstr "在報出候選字詞的時候也報出剛輸入的文字(&R)"
+
+#. Translators: This is the label for a checkbox in the
+#. Input composition settings dialog.
+#: gui\settingsDialogs.py:759
+msgid "Report changes to the &composition string"
+msgstr "報出輸入字根(&C)"
+
 #. Translators: This is the label for the object presentation dialog.
-#: gui\settingsDialogs.py:719
+#: gui\settingsDialogs.py:776
 msgid "Object Presentation"
 msgstr "物件顯示"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:728
+#: gui\settingsDialogs.py:785
 msgid "Speak"
 msgstr "報出百分比"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:732
+#: gui\settingsDialogs.py:789
 msgid "Beep"
 msgstr "發出嗶嗶聲"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui\settingsDialogs.py:736
+#: gui\settingsDialogs.py:793
 msgid "Speak and beep"
 msgstr "報出百分比及發出嗶嗶聲"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:742
+#: gui\settingsDialogs.py:799
 msgid "Report &tooltips"
 msgstr "報出工具提示(&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:747
+#: gui\settingsDialogs.py:804
 msgid "Report &help balloons"
 msgstr "報出氣泡提示(&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:752
+#: gui\settingsDialogs.py:809
 msgid "Report object shortcut &keys"
 msgstr "報出物件的便捷鍵(&K)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:757
+#: gui\settingsDialogs.py:814
 msgid "Report object &position information"
 msgstr "報出物件排列位置(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:762
+#: gui\settingsDialogs.py:819
 msgid "Guess object &position information when unavailable"
 msgstr "沒有物件位置資訊時，猜測位置(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:767
+#: gui\settingsDialogs.py:824
 msgid "Report object &descriptions"
 msgstr "報出物件說明(&D)"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:773
+#: gui\settingsDialogs.py:830
 msgid "Progress &bar output:"
 msgstr "進度列表示方式(&B):"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:778
+#: gui\settingsDialogs.py:835
 msgid "Progress bar output"
 msgstr "進度列表示方式"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:789
+#: gui\settingsDialogs.py:846
 msgid "Report background progress bars"
 msgstr "表示背景進度列的改變"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui\settingsDialogs.py:794
+#: gui\settingsDialogs.py:851
 msgid "Report dynamic &content changes"
 msgstr "報出動態內容的改變(&C)"
 
 #. Translators: This is the label for the browse mode settings dialog.
-#: gui\settingsDialogs.py:815
+#: gui\settingsDialogs.py:872
 msgid "Browse Mode"
 msgstr "瀏覽模式"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:820
+#: gui\settingsDialogs.py:877
 msgid "&Maximum number of characters on one line"
 msgstr "每行最多字元數(&M)"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:827
+#: gui\settingsDialogs.py:884
 msgid "&Number of lines per page"
 msgstr "每頁最多行數(&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:834
+#: gui\settingsDialogs.py:891
 msgid "Use &screen layout (when supported)"
 msgstr "呈現畫面的實際布局(當有支援時)(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:839
+#: gui\settingsDialogs.py:896
 msgid "Automatic &Say All on page load"
 msgstr "頁面載入後自動讀出全部內容(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:844
+#: gui\settingsDialogs.py:901
 msgid "Report l&ayout tables"
 msgstr "報出排版表格(&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:849
+#: gui\settingsDialogs.py:906
 msgid "Automatic focus mode for focus changes"
 msgstr "每當焦點改變時自動開關焦點模式(&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:854
+#: gui\settingsDialogs.py:911
 msgid "Automatic focus mode for caret movement"
 msgstr "每當游標移動時自動開關焦點模式(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui\settingsDialogs.py:859
+#: gui\settingsDialogs.py:916
 msgid "Audio indication of focus and browse modes"
 msgstr "以音效提示焦點模式或瀏覽模式的切換(&I)"
 
 #. Translators: This is the label for the document formatting dialog.
-#: gui\settingsDialogs.py:889
+#: gui\settingsDialogs.py:946
 msgid "Document Formatting"
 msgstr "文件格式"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:894
+#: gui\settingsDialogs.py:951
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "報出游標經過後的格式改變(程式反應可能稍為馳援)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:899
+#: gui\settingsDialogs.py:956
 msgid "Report font &name"
 msgstr "報出字體名稱(&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:904
+#: gui\settingsDialogs.py:961
 msgid "Report font &size"
 msgstr "報出字體大小(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:909
+#: gui\settingsDialogs.py:966
 msgid "Report font attri&butes"
 msgstr "報出字體屬性(&B)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:914
+#: gui\settingsDialogs.py:971
 msgid "Report &alignment"
 msgstr "報出對齊方式(&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:919
+#: gui\settingsDialogs.py:976
 msgid "Report &colors"
 msgstr "報出顏色(&C)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:924
+#: gui\settingsDialogs.py:981
 msgid "Report st&yle"
 msgstr "報出文字樣式(&Y)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:929
+#: gui\settingsDialogs.py:986
 msgid "Report spelling errors"
 msgstr "報出拼錯字(&R)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:934
+#: gui\settingsDialogs.py:991
 msgid "Report &pages"
 msgstr "報出頁碼(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:939
+#: gui\settingsDialogs.py:996
 msgid "Report &line numbers"
 msgstr "報出行數(&L)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
-#: gui\settingsDialogs.py:945
+#: gui\settingsDialogs.py:1002
 msgid "Report l&ine indentation"
 msgstr "報出單行的縮排(&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:950
+#: gui\settingsDialogs.py:1007
 msgid "Report &tables"
 msgstr "報出表格(&T)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:955
+#: gui\settingsDialogs.py:1012
 msgid "Report table row/column h&eaders"
 msgstr "報出表格的列及欄標題(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:960
+#: gui\settingsDialogs.py:1017
 msgid "Report table cell c&oordinates"
 msgstr "在表格中報出目前儲存格的座標(&O)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:965
+#: gui\settingsDialogs.py:1022
 msgid "Report &links"
 msgstr "報出連結(&L)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:970
+#: gui\settingsDialogs.py:1027
 msgid "Report &headings"
 msgstr "報出標題(&H)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:975
+#: gui\settingsDialogs.py:1032
 msgid "Report l&ists"
 msgstr "報出清單(&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:980
+#: gui\settingsDialogs.py:1037
 msgid "Report block &quotes"
 msgstr "報出引述區(&Q)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:985
+#: gui\settingsDialogs.py:1042
 msgid "Report lan&dmarks"
 msgstr "報出地標(&D)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui\settingsDialogs.py:990
+#: gui\settingsDialogs.py:1047
 msgid "Report fra&mes"
 msgstr "報出頁框(&M)"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
-#: gui\settingsDialogs.py:1023
+#: gui\settingsDialogs.py:1080
 msgid "Edit Dictionary Entry"
 msgstr "編輯字庫項目"
 
-#: gui\settingsDialogs.py:1027
+#: gui\settingsDialogs.py:1084
 msgid "&Pattern"
 msgstr "原來文字(&P)"
 
-#: gui\settingsDialogs.py:1030
-#: gui\settingsDialogs.py:1279
+#: gui\settingsDialogs.py:1087 gui\settingsDialogs.py:1336
 msgid "&Replacement"
 msgstr "代替文字(&R)"
 
-#: gui\settingsDialogs.py:1033
+#: gui\settingsDialogs.py:1090
 msgid "&Comment"
 msgstr "註解(&C)"
 
-#: gui\settingsDialogs.py:1036
+#: gui\settingsDialogs.py:1093
 msgid "Case &sensitive"
 msgstr "大小寫需相符(&S)"
 
-#: gui\settingsDialogs.py:1038
+#: gui\settingsDialogs.py:1095
 msgid "Regular &expression"
 msgstr "正規表達式(&E)"
 
-#: gui\settingsDialogs.py:1060
+#: gui\settingsDialogs.py:1117
 msgid "&Dictionary entries"
 msgstr "字庫項目(&D)"
 
-#: gui\settingsDialogs.py:1063
+#: gui\settingsDialogs.py:1120
 msgid "Comment"
 msgstr "註解"
 
-#: gui\settingsDialogs.py:1064
+#: gui\settingsDialogs.py:1121
 msgid "Pattern"
 msgstr "原來文字"
 
-#: gui\settingsDialogs.py:1065
-#: gui\settingsDialogs.py:1267
+#: gui\settingsDialogs.py:1122 gui\settingsDialogs.py:1324
 msgid "Replacement"
 msgstr "代替文字"
 
-#: gui\settingsDialogs.py:1066
+#: gui\settingsDialogs.py:1123
 msgid "case"
 msgstr "大小寫須相符"
 
-#: gui\settingsDialogs.py:1067
+#: gui\settingsDialogs.py:1124
 msgid "Regexp"
 msgstr "正規表達式"
 
-#: gui\settingsDialogs.py:1076
+#: gui\settingsDialogs.py:1133
 msgid "&Add"
 msgstr "新增(&A)"
 
-#: gui\settingsDialogs.py:1079
+#: gui\settingsDialogs.py:1136
 msgid "&Edit"
 msgstr "編輯(&E)"
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui\settingsDialogs.py:1106
+#: gui\settingsDialogs.py:1163
 msgid "Add Dictionary Entry"
 msgstr "新增字庫項目"
 
 #. Translators: This is the label for the braille settings dialog.
-#: gui\settingsDialogs.py:1152
+#: gui\settingsDialogs.py:1209
 msgid "Braille Settings"
 msgstr "點字設定"
 
-#: gui\settingsDialogs.py:1156
+#: gui\settingsDialogs.py:1213
 msgid "Braille &display:"
 msgstr "點字顯示器(&D):"
 
-#: gui\settingsDialogs.py:1170
+#: gui\settingsDialogs.py:1227
 msgid "Translation &table:"
 msgstr "點字轉換表(&T):"
 
-#: gui\settingsDialogs.py:1182
+#: gui\settingsDialogs.py:1239
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "把游標之下的文字以完整電腦點字顯示(&X)"
 
-#: gui\settingsDialogs.py:1187
+#: gui\settingsDialogs.py:1244
 msgid "Cursor blink rate (ms)"
 msgstr "游標閃示率 (以千分之一秒計)(&C)"
 
-#: gui\settingsDialogs.py:1195
+#: gui\settingsDialogs.py:1252
 msgid "Message timeout (sec)"
 msgstr "訊息顯示的時間 (以秒計)(&M)"
 
-#: gui\settingsDialogs.py:1203
+#: gui\settingsDialogs.py:1260
 msgid "Braille tethered to:"
 msgstr "點字游標跟隨(&B)"
 
-#: gui\settingsDialogs.py:1216
+#: gui\settingsDialogs.py:1273
 msgid "Read by &paragraph"
 msgstr "以段落顯示點字(&P)"
 
-#: gui\settingsDialogs.py:1220
+#: gui\settingsDialogs.py:1277
 msgid "Avoid splitting &words when possible"
 msgstr "可能的話避免分讀文字"
 
-#: gui\settingsDialogs.py:1230
+#: gui\settingsDialogs.py:1287
 #, python-format
 msgid "Could not load the %s display."
 msgstr "未能連接點字顯示器 %s"
 
-#: gui\settingsDialogs.py:1230
+#: gui\settingsDialogs.py:1287
 msgid "Braille Display Error"
 msgstr "連接點字顯示器失敗"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui\settingsDialogs.py:1253
+#: gui\settingsDialogs.py:1310
 msgid "Symbol Pronunciation"
 msgstr "符號讀音"
 
-#: gui\settingsDialogs.py:1264
+#: gui\settingsDialogs.py:1321
 msgid "&Symbols"
 msgstr "符號(&S)"
 
-#: gui\settingsDialogs.py:1266
+#: gui\settingsDialogs.py:1323
 msgid "Symbol"
 msgstr "符號"
 
-#: gui\settingsDialogs.py:1268
+#: gui\settingsDialogs.py:1325
 msgid "Level"
 msgstr "報讀等級"
 
-#: gui\settingsDialogs.py:1277
+#: gui\settingsDialogs.py:1334
 msgid "Change symbol"
 msgstr "變更符號"
 
-#: gui\settingsDialogs.py:1285
+#: gui\settingsDialogs.py:1342
 msgid "&Level"
 msgstr "報讀等級(&L)"
+
+#. Translators: name of the default espeak varient.
+#: synthDrivers\_espeak.py:312
+msgctxt "espeakVarient"
+msgid "none"
+msgstr "原來聲調"
 
 #. Translators: This is the name of the rate boost voice toggle
 #. which further increases the speaking rate when enabled.
@@ -4672,562 +5134,556 @@ msgstr "女聲二"
 msgid "No speech"
 msgstr "不用語音報讀"
 
-#: textInfos\__init__.py:197
+#: textInfos\__init__.py:200
 msgid "word"
 msgstr "單字"
 
-#: virtualBuffers\__init__.py:227
-#: virtualBuffers\__init__.py:235
+#: virtualBuffers\__init__.py:235 virtualBuffers\__init__.py:243
 #, python-format
 msgid "%s landmark"
 msgstr "%s 地標"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:260
+#: virtualBuffers\__init__.py:268
 msgid "Lin&ks"
 msgstr "連結(&K)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:263
+#: virtualBuffers\__init__.py:271
 msgid "&Headings"
 msgstr "標題(&H)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:266
+#: virtualBuffers\__init__.py:274
 msgid "Lan&dmarks"
 msgstr "地標(&D)"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:273
+#: virtualBuffers\__init__.py:283
 msgid "Elements List"
 msgstr "元件清單"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:278
+#: virtualBuffers\__init__.py:288
 msgid "Type:"
 msgstr "種類"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:291
+#: virtualBuffers\__init__.py:302
 msgid "&Filter by:"
 msgstr "僅列出含有所輸入字串的項目(&F)"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:301
+#: virtualBuffers\__init__.py:312
 msgid "&Activate"
 msgstr "啟動(&A)"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:306
+#: virtualBuffers\__init__.py:317
 msgid "&Move to"
 msgstr "移到(&M)"
 
-#: virtualBuffers\__init__.py:618
+#: virtualBuffers\__init__.py:636
 msgid "Refreshed"
 msgstr "重新整理"
 
-#: virtualBuffers\__init__.py:623
+#: virtualBuffers\__init__.py:641
 msgid "Loading document..."
 msgstr "載入文件中..."
 
-#: virtualBuffers\__init__.py:798
+#: virtualBuffers\__init__.py:818
 msgid "activates the current object in the document"
 msgstr "在虛擬文件中啟動目前的物件"
 
-#: virtualBuffers\__init__.py:806
+#: virtualBuffers\__init__.py:826
 msgid "Refreshes the document content"
 msgstr "更新虛擬文件的內容"
 
-#: virtualBuffers\__init__.py:811
+#: virtualBuffers\__init__.py:831
 #, python-format
 msgid "use screen layout %s"
 msgstr "呈現頁面實際布局 %s"
 
-#: virtualBuffers\__init__.py:812
-msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
+#: virtualBuffers\__init__.py:832
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
 msgstr "在虛擬文件內切換是否呈現頁面實際布局"
 
-#: virtualBuffers\__init__.py:895
+#: virtualBuffers\__init__.py:915
 msgid "Presents a list of links, headings or landmarks"
 msgstr "顯示連結、標題或地標的元件清單。"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: virtualBuffers\__init__.py:1268
+#: virtualBuffers\__init__.py:1288
 msgid "Not in a table cell"
 msgstr "不在表格的單元格中"
 
-#. Translators: The message reported when a user attempts to use a table movement command
-#. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: virtualBuffers\__init__.py:1276
-msgid "edge of table"
-msgstr "表格的邊緣了"
-
-#: virtualBuffers\__init__.py:1286
+#: virtualBuffers\__init__.py:1306
 msgid "moves to the next table row"
 msgstr "移到表格的下一列"
 
-#: virtualBuffers\__init__.py:1290
+#: virtualBuffers\__init__.py:1310
 msgid "moves to the previous table row"
 msgstr "移到表格的上一列"
 
-#: virtualBuffers\__init__.py:1294
+#: virtualBuffers\__init__.py:1314
 msgid "moves to the next table column"
 msgstr "移到表格的右一欄"
 
-#: virtualBuffers\__init__.py:1298
+#: virtualBuffers\__init__.py:1318
 msgid "moves to the previous table column"
 msgstr "移到表格的左一欄"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers\__init__.py:1393
-#: virtualBuffers\__init__.py:1407
+#: virtualBuffers\__init__.py:1413 virtualBuffers\__init__.py:1427
 msgid "Not in a container"
 msgstr "不在物件包中"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: virtualBuffers\__init__.py:1400
+#: virtualBuffers\__init__.py:1420
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "移到清單或表格等物件包的開頭位置"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: virtualBuffers\__init__.py:1414
+#: virtualBuffers\__init__.py:1438
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "移過清單或表格等物件包的結尾位置"
 
-#: virtualBuffers\__init__.py:1437
+#: virtualBuffers\__init__.py:1473
 msgid "moves to the next heading"
 msgstr "移到下一個標題"
 
-#: virtualBuffers\__init__.py:1437
+#: virtualBuffers\__init__.py:1473
 msgid "no next heading"
 msgstr "沒有下一個標題了"
 
-#: virtualBuffers\__init__.py:1438
+#: virtualBuffers\__init__.py:1474
 msgid "moves to the previous heading"
 msgstr "移到上一個標題"
 
-#: virtualBuffers\__init__.py:1438
+#: virtualBuffers\__init__.py:1474
 msgid "no previous heading"
 msgstr "沒有上一個標題了"
 
-#: virtualBuffers\__init__.py:1439
+#: virtualBuffers\__init__.py:1475
 msgid "moves to the next heading at level 1"
 msgstr "移到下一個第一級標題"
 
-#: virtualBuffers\__init__.py:1439
+#: virtualBuffers\__init__.py:1475
 msgid "no next heading at level 1"
 msgstr "沒有下一個第一級標題了"
 
-#: virtualBuffers\__init__.py:1440
+#: virtualBuffers\__init__.py:1476
 msgid "moves to the previous heading at level 1"
 msgstr "移到上一個第一級標題"
 
-#: virtualBuffers\__init__.py:1440
+#: virtualBuffers\__init__.py:1476
 msgid "no previous heading at level 1"
 msgstr "沒有上一個第一級標題了"
 
-#: virtualBuffers\__init__.py:1441
+#: virtualBuffers\__init__.py:1477
 msgid "moves to the next heading at level 2"
 msgstr "移到下一個第二級標題"
 
-#: virtualBuffers\__init__.py:1441
+#: virtualBuffers\__init__.py:1477
 msgid "no next heading at level 2"
 msgstr "沒有下一個第二級標題了"
 
-#: virtualBuffers\__init__.py:1442
+#: virtualBuffers\__init__.py:1478
 msgid "moves to the previous heading at level 2"
 msgstr "移到上一個第二級標題"
 
-#: virtualBuffers\__init__.py:1442
+#: virtualBuffers\__init__.py:1478
 msgid "no previous heading at level 2"
 msgstr "沒有上一個第二級標題了"
 
-#: virtualBuffers\__init__.py:1443
+#: virtualBuffers\__init__.py:1479
 msgid "moves to the next heading at level 3"
 msgstr "移到下一個第三級標題"
 
-#: virtualBuffers\__init__.py:1443
+#: virtualBuffers\__init__.py:1479
 msgid "no next heading at level 3"
 msgstr "沒有下一個第三級標題了"
 
-#: virtualBuffers\__init__.py:1444
+#: virtualBuffers\__init__.py:1480
 msgid "moves to the previous heading at level 3"
 msgstr "移到上一個第三級標題"
 
-#: virtualBuffers\__init__.py:1444
+#: virtualBuffers\__init__.py:1480
 msgid "no previous heading at level 3"
 msgstr "沒有上一個第三級標題了"
 
-#: virtualBuffers\__init__.py:1445
+#: virtualBuffers\__init__.py:1481
 msgid "moves to the next heading at level 4"
 msgstr "移到下一個第四級標題"
 
-#: virtualBuffers\__init__.py:1445
+#: virtualBuffers\__init__.py:1481
 msgid "no next heading at level 4"
 msgstr "沒有下一個第四級標題了"
 
-#: virtualBuffers\__init__.py:1446
+#: virtualBuffers\__init__.py:1482
 msgid "moves to the previous heading at level 4"
 msgstr "移到上一個第四級標題"
 
-#: virtualBuffers\__init__.py:1446
+#: virtualBuffers\__init__.py:1482
 msgid "no previous heading at level 4"
 msgstr "沒有上一個第四級標題了"
 
-#: virtualBuffers\__init__.py:1447
+#: virtualBuffers\__init__.py:1483
 msgid "moves to the next heading at level 5"
 msgstr "移到下一個第五級標題"
 
-#: virtualBuffers\__init__.py:1447
+#: virtualBuffers\__init__.py:1483
 msgid "no next heading at level 5"
 msgstr "沒有下一個第五級標題了"
 
-#: virtualBuffers\__init__.py:1448
+#: virtualBuffers\__init__.py:1484
 msgid "moves to the previous heading at level 5"
 msgstr "移到上一個第五級標題"
 
-#: virtualBuffers\__init__.py:1448
+#: virtualBuffers\__init__.py:1484
 msgid "no previous heading at level 5"
 msgstr "沒有上一個第五級標題了"
 
-#: virtualBuffers\__init__.py:1449
+#: virtualBuffers\__init__.py:1485
 msgid "moves to the next heading at level 6"
 msgstr "移到下一個第六級標題"
 
-#: virtualBuffers\__init__.py:1449
+#: virtualBuffers\__init__.py:1485
 msgid "no next heading at level 6"
 msgstr "沒有下一個第六級標題了"
 
-#: virtualBuffers\__init__.py:1450
+#: virtualBuffers\__init__.py:1486
 msgid "moves to the previous heading at level 6"
 msgstr "移到上一個第六級標題"
 
-#: virtualBuffers\__init__.py:1450
+#: virtualBuffers\__init__.py:1486
 msgid "no previous heading at level 6"
 msgstr "沒有上一個第六級標題了"
 
-#: virtualBuffers\__init__.py:1451
+#: virtualBuffers\__init__.py:1487
 msgid "moves to the next table"
 msgstr "移到下一個表格"
 
-#: virtualBuffers\__init__.py:1451
+#: virtualBuffers\__init__.py:1487
 msgid "no next table"
 msgstr "沒有下一個表格了"
 
-#: virtualBuffers\__init__.py:1452
+#: virtualBuffers\__init__.py:1488
 msgid "moves to the previous table"
 msgstr "移到上一個表格"
 
-#: virtualBuffers\__init__.py:1452
+#: virtualBuffers\__init__.py:1488
 msgid "no previous table"
 msgstr "沒有上一個表格了"
 
-#: virtualBuffers\__init__.py:1453
+#: virtualBuffers\__init__.py:1489
 msgid "moves to the next link"
 msgstr "移到下一個連結"
 
-#: virtualBuffers\__init__.py:1453
+#: virtualBuffers\__init__.py:1489
 msgid "no next link"
 msgstr "沒有下一個連結了"
 
-#: virtualBuffers\__init__.py:1454
+#: virtualBuffers\__init__.py:1490
 msgid "moves to the previous link"
 msgstr "移到上一個連結"
 
-#: virtualBuffers\__init__.py:1454
+#: virtualBuffers\__init__.py:1490
 msgid "no previous link"
 msgstr "沒有上一個連結了"
 
-#: virtualBuffers\__init__.py:1455
+#: virtualBuffers\__init__.py:1491
 msgid "moves to the next visited link"
 msgstr "移到下一個到訪過的連結"
 
-#: virtualBuffers\__init__.py:1455
+#: virtualBuffers\__init__.py:1491
 msgid "no next visited link"
 msgstr "沒有下一個到訪過的連結了"
 
-#: virtualBuffers\__init__.py:1456
+#: virtualBuffers\__init__.py:1492
 msgid "moves to the previous visited link"
 msgstr "移到上一個到訪過的連結"
 
-#: virtualBuffers\__init__.py:1456
+#: virtualBuffers\__init__.py:1492
 msgid "no previous visited link"
 msgstr "沒有上一個到訪過的連結了"
 
-#: virtualBuffers\__init__.py:1457
+#: virtualBuffers\__init__.py:1493
 msgid "moves to the next unvisited link"
 msgstr "移到下一個未到訪過的連結"
 
-#: virtualBuffers\__init__.py:1457
+#: virtualBuffers\__init__.py:1493
 msgid "no next unvisited link"
 msgstr "沒有下一個未到訪過的連結了"
 
-#: virtualBuffers\__init__.py:1458
+#: virtualBuffers\__init__.py:1494
 msgid "moves to the previous unvisited link"
 msgstr "移到上一個未到訪過的連結"
 
-#: virtualBuffers\__init__.py:1458
+#: virtualBuffers\__init__.py:1494
 msgid "no previous unvisited link"
 msgstr "沒有上一個未到訪過的連結了"
 
-#: virtualBuffers\__init__.py:1459
+#: virtualBuffers\__init__.py:1495
 msgid "moves to the next form field"
 msgstr "移到下一個表單區"
 
-#: virtualBuffers\__init__.py:1459
+#: virtualBuffers\__init__.py:1495
 msgid "no next form field"
 msgstr "沒有下一個表單區了"
 
-#: virtualBuffers\__init__.py:1460
+#: virtualBuffers\__init__.py:1496
 msgid "moves to the previous form field"
 msgstr "移到上一個表單區"
 
-#: virtualBuffers\__init__.py:1460
+#: virtualBuffers\__init__.py:1496
 msgid "no previous form field"
 msgstr "沒有上一個表單區了"
 
-#: virtualBuffers\__init__.py:1461
+#: virtualBuffers\__init__.py:1497
 msgid "moves to the next list"
 msgstr "移到下一個清單"
 
-#: virtualBuffers\__init__.py:1461
+#: virtualBuffers\__init__.py:1497
 msgid "no next list"
 msgstr "沒有下一個清單了"
 
-#: virtualBuffers\__init__.py:1462
+#: virtualBuffers\__init__.py:1498
 msgid "moves to the previous list"
 msgstr "移到上一個清單"
 
-#: virtualBuffers\__init__.py:1462
+#: virtualBuffers\__init__.py:1498
 msgid "no previous list"
 msgstr "沒有上一個清單了"
 
-#: virtualBuffers\__init__.py:1463
+#: virtualBuffers\__init__.py:1499
 msgid "moves to the next list item"
 msgstr "移到下一個清單項目"
 
-#: virtualBuffers\__init__.py:1463
+#: virtualBuffers\__init__.py:1499
 msgid "no next list item"
 msgstr "沒有下一個清單項目了"
 
-#: virtualBuffers\__init__.py:1464
+#: virtualBuffers\__init__.py:1500
 msgid "moves to the previous list item"
 msgstr "移到上一個清單項目"
 
-#: virtualBuffers\__init__.py:1464
+#: virtualBuffers\__init__.py:1500
 msgid "no previous list item"
 msgstr "沒有上一個清單項目了"
 
-#: virtualBuffers\__init__.py:1465
+#: virtualBuffers\__init__.py:1501
 msgid "moves to the next button"
 msgstr "移到下一個按鈕"
 
-#: virtualBuffers\__init__.py:1465
+#: virtualBuffers\__init__.py:1501
 msgid "no next button"
 msgstr "沒有下一個按鈕了"
 
-#: virtualBuffers\__init__.py:1466
+#: virtualBuffers\__init__.py:1502
 msgid "moves to the previous button"
 msgstr "移到上一個按鈕"
 
-#: virtualBuffers\__init__.py:1466
+#: virtualBuffers\__init__.py:1502
 msgid "no previous button"
 msgstr "沒有上一個按鈕了"
 
-#: virtualBuffers\__init__.py:1467
+#: virtualBuffers\__init__.py:1503
 msgid "moves to the next edit field"
 msgstr "移到下一個編輯區"
 
-#: virtualBuffers\__init__.py:1467
+#: virtualBuffers\__init__.py:1503
 msgid "no next edit field"
 msgstr "沒有下一個編輯區了"
 
-#: virtualBuffers\__init__.py:1468
+#: virtualBuffers\__init__.py:1504
 msgid "moves to the previous edit field"
 msgstr "移到上一個編輯區"
 
-#: virtualBuffers\__init__.py:1468
+#: virtualBuffers\__init__.py:1504
 msgid "no previous edit field"
 msgstr "沒有上一個編輯區了"
 
-#: virtualBuffers\__init__.py:1469
+#: virtualBuffers\__init__.py:1505
 msgid "moves to the next frame"
 msgstr "移到下一個頁框"
 
-#: virtualBuffers\__init__.py:1469
+#: virtualBuffers\__init__.py:1505
 msgid "no next frame"
 msgstr "沒有下一個頁框了"
 
-#: virtualBuffers\__init__.py:1470
+#: virtualBuffers\__init__.py:1506
 msgid "moves to the previous frame"
 msgstr "移到上一個頁框"
 
-#: virtualBuffers\__init__.py:1470
+#: virtualBuffers\__init__.py:1506
 msgid "no previous frame"
 msgstr "沒有上一個頁框了"
 
-#: virtualBuffers\__init__.py:1471
+#: virtualBuffers\__init__.py:1507
 msgid "moves to the next separator"
 msgstr "移到下一個分隔符號"
 
-#: virtualBuffers\__init__.py:1471
+#: virtualBuffers\__init__.py:1507
 msgid "no next separator"
 msgstr "沒有下一個分隔符號了"
 
-#: virtualBuffers\__init__.py:1472
+#: virtualBuffers\__init__.py:1508
 msgid "moves to the previous separator"
 msgstr "移到上一個分隔符號"
 
-#: virtualBuffers\__init__.py:1472
+#: virtualBuffers\__init__.py:1508
 msgid "no previous separator"
 msgstr "沒有上一個分隔符號了"
 
-#: virtualBuffers\__init__.py:1473
+#: virtualBuffers\__init__.py:1509
 msgid "moves to the next radio button"
 msgstr "移到下一個單選鈕"
 
-#: virtualBuffers\__init__.py:1473
+#: virtualBuffers\__init__.py:1509
 msgid "no next radio button"
 msgstr "沒有下一個單選鈕了"
 
-#: virtualBuffers\__init__.py:1474
+#: virtualBuffers\__init__.py:1510
 msgid "moves to the previous radio button"
 msgstr "移到上一個單選鈕"
 
-#: virtualBuffers\__init__.py:1474
+#: virtualBuffers\__init__.py:1510
 msgid "no previous radio button"
 msgstr "沒有上一個單選鈕了"
 
-#: virtualBuffers\__init__.py:1475
+#: virtualBuffers\__init__.py:1511
 msgid "moves to the next combo box"
 msgstr "移到下一個下拉方塊"
 
-#: virtualBuffers\__init__.py:1475
+#: virtualBuffers\__init__.py:1511
 msgid "no next combo box"
 msgstr "沒有下一個下拉方塊了"
 
-#: virtualBuffers\__init__.py:1476
+#: virtualBuffers\__init__.py:1512
 msgid "moves to the previous combo box"
 msgstr "移到上一個下拉方塊"
 
-#: virtualBuffers\__init__.py:1476
+#: virtualBuffers\__init__.py:1512
 msgid "no previous combo box"
 msgstr "沒有上一個下拉方塊了"
 
-#: virtualBuffers\__init__.py:1477
+#: virtualBuffers\__init__.py:1513
 msgid "moves to the next check box"
 msgstr "移到下一個核取方塊"
 
-#: virtualBuffers\__init__.py:1477
+#: virtualBuffers\__init__.py:1513
 msgid "no next check box"
 msgstr "沒有下一個核取方塊了"
 
-#: virtualBuffers\__init__.py:1478
+#: virtualBuffers\__init__.py:1514
 msgid "moves to the previous check box"
 msgstr "移到上一個核取方塊"
 
-#: virtualBuffers\__init__.py:1478
+#: virtualBuffers\__init__.py:1514
 msgid "no previous check box"
 msgstr "沒有上一個核取方塊了"
 
-#: virtualBuffers\__init__.py:1479
+#: virtualBuffers\__init__.py:1515
 msgid "moves to the next graphic"
 msgstr "移到下一張圖片"
 
-#: virtualBuffers\__init__.py:1479
+#: virtualBuffers\__init__.py:1515
 msgid "no next graphic"
 msgstr "沒有下一張圖片了"
 
-#: virtualBuffers\__init__.py:1480
+#: virtualBuffers\__init__.py:1516
 msgid "moves to the previous graphic"
 msgstr "移到上一張圖片"
 
-#: virtualBuffers\__init__.py:1480
+#: virtualBuffers\__init__.py:1516
 msgid "no previous graphic"
 msgstr "沒有上一張圖片了"
 
-#: virtualBuffers\__init__.py:1481
+#: virtualBuffers\__init__.py:1517
 msgid "moves to the next block quote"
 msgstr "移到下一個引述區"
 
-#: virtualBuffers\__init__.py:1481
+#: virtualBuffers\__init__.py:1517
 msgid "no next block quote"
 msgstr "沒有下一個引述區了"
 
-#: virtualBuffers\__init__.py:1482
+#: virtualBuffers\__init__.py:1518
 msgid "moves to the previous block quote"
 msgstr "移到上一個引述區"
 
-#: virtualBuffers\__init__.py:1482
+#: virtualBuffers\__init__.py:1518
 msgid "no previous block quote"
 msgstr "沒有上一個引述區了"
 
-#: virtualBuffers\__init__.py:1483
+#: virtualBuffers\__init__.py:1519
 msgid "skips forward past a block of links"
 msgstr "往下移到連結之後的文字"
 
-#: virtualBuffers\__init__.py:1483
+#: virtualBuffers\__init__.py:1519
 msgid "no more text after a block of links"
 msgstr "在連結之後沒有文字了"
 
-#: virtualBuffers\__init__.py:1484
+#: virtualBuffers\__init__.py:1520
 msgid "skips backward past a block of links"
 msgstr "往上移到連結之前的文字"
 
-#: virtualBuffers\__init__.py:1484
+#: virtualBuffers\__init__.py:1520
 msgid "no more text before a block of links"
 msgstr "在連結之前沒有文字了"
 
-#: virtualBuffers\__init__.py:1485
+#: virtualBuffers\__init__.py:1521
 msgid "moves to the next landmark"
 msgstr "移到下一個地標"
 
-#: virtualBuffers\__init__.py:1485
+#: virtualBuffers\__init__.py:1521
 msgid "no next landmark"
 msgstr "沒有下一個地標了"
 
-#: virtualBuffers\__init__.py:1486
+#: virtualBuffers\__init__.py:1522
 msgid "moves to the previous landmark"
 msgstr "移到上一個地標"
 
-#: virtualBuffers\__init__.py:1486
+#: virtualBuffers\__init__.py:1522
 msgid "no previous landmark"
 msgstr "沒有上一個地標了"
 
-#: virtualBuffers\__init__.py:1487
+#: virtualBuffers\__init__.py:1523
 msgid "moves to the next embedded object"
 msgstr "移到下一個嵌入式物件"
 
-#: virtualBuffers\__init__.py:1487
+#: virtualBuffers\__init__.py:1523
 msgid "no next embedded object"
 msgstr "沒有下一個嵌入式物件了"
 
-#: virtualBuffers\__init__.py:1488
+#: virtualBuffers\__init__.py:1524
 msgid "moves to the previous embedded object"
 msgstr "移到上一個嵌入式物件"
 
-#: virtualBuffers\__init__.py:1488
+#: virtualBuffers\__init__.py:1524
 msgid "no previous embedded object"
 msgstr "沒有上一個嵌入式物件了"
 
-#: virtualBuffers\__init__.py:1501
+#: virtualBuffers\__init__.py:1537
 msgid "focus mode"
 msgstr "焦點模式"
 
-#: virtualBuffers\__init__.py:1501
+#: virtualBuffers\__init__.py:1537
 msgid "browse mode"
 msgstr "瀏覽模式"
 
-#: NVDAObjects\IAccessible\__init__.py:1494
+#: NVDAObjects\IAccessible\__init__.py:1617
 msgid "Taskbar"
 msgstr "工作列"
 
@@ -5236,26 +5692,65 @@ msgstr "工作列"
 msgid "%s items"
 msgstr "%s 項目"
 
-#: NVDAObjects\UIA\__init__.py:495
+#: NVDAObjects\UIA\__init__.py:607
 msgid "invoke"
 msgstr "啟用"
 
-#: NVDAObjects\window\__init__.py:373
+#: NVDAObjects\window\__init__.py:376
 msgid "Desktop"
 msgstr "桌面"
 
-#: NVDAObjects\window\edit.py:260
-#: NVDAObjects\window\edit.py:261
+#: NVDAObjects\window\edit.py:258 NVDAObjects\window\edit.py:259
 msgid "default color"
 msgstr "預設顏色"
 
+#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
+#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#: NVDAObjects\window\excel.py:176 NVDAObjects\window\excel.py:193
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr "沒能設為標題, 請在文件格式設定中鉤選報出表頭的設定"
+
+#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
+#: NVDAObjects\window\excel.py:181
+msgid "Set column header row"
+msgstr "這一列定為欄標題"
+
+#. Translators: a message reported in the SetColumnHeaderRow script for Excel.
+#: NVDAObjects\window\excel.py:185
+msgid "Cleared column header row"
+msgstr "欄標題定義取消了"
+
+#: NVDAObjects\window\excel.py:186
+msgid ""
+"Pressing once will set the current row as the row where column headers "
+"should be found. Pressing twice clears the setting."
+msgstr "按一次把目前的一列定為欄標題, 按兩次取消定義"
+
+#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#: NVDAObjects\window\excel.py:198
+msgid "Set row header column"
+msgstr "這一欄定為列標題"
+
+#. Translators: a message reported in the SetRowHeaderColumn script for Excel.
+#: NVDAObjects\window\excel.py:202
+msgid "Cleared row header column"
+msgstr "列標題定義取消了"
+
+#: NVDAObjects\window\excel.py:203
+msgid ""
+"Pressing once will set the current column as the column where row headers "
+"should be found. Pressing twice clears the setting."
+msgstr "按一次把目前的一欄設為列標題, 按兩次取消定義"
+
 #. Translators: This is presented in Excel when the current cell contains a formula.
-#: NVDAObjects\window\excel.py:206
+#: NVDAObjects\window\excel.py:268
 msgid "has formula"
 msgstr "有公式"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#: NVDAObjects\window\excel.py:246
+#: NVDAObjects\window\excel.py:313
 #, python-format
 msgid "%s %s through %s %s"
 msgstr "%s %s 到 %s %s"
@@ -5302,17 +5797,68 @@ msgstr "文字框架"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:397
-#: NVDAObjects\window\winword.py:416
+#: NVDAObjects\window\winword.py:402 NVDAObjects\window\winword.py:421
 msgid "Not in table"
 msgstr "不在表格中"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects\window\winword.py:410
-#: NVDAObjects\window\winword.py:429
+#: NVDAObjects\window\winword.py:415 NVDAObjects\window\winword.py:434
 msgid "Edge of table"
 msgstr "表格的邊緣了"
+
+#: brailleDisplayDrivers\hims\__init__.py:109
+msgid "HIMS Braille Sense/Braille EDGE series"
+msgstr "HIMS Braille Sense/Braille EDGE 系列"
+
+#: brailleDisplayDrivers\syncBraille\__init__.py:72
+msgid "HIMS SyncBraille"
+msgstr "HIMS SyncBraille"
+
+#~ msgid "layout %s"
+#~ msgstr "%s 為鍵盤輸入配置"
+
+#~ msgid "default action failed"
+#~ msgstr "執行預設動作失敗"
+
+#~ msgid "beeps"
+#~ msgstr "發出嗶嗶聲"
+
+#~ msgid "talk"
+#~ msgstr "報讀"
+
+#~ msgid "Badly formed configuration file"
+#~ msgstr "嚴重錯誤的設定檔"
+
+#~ msgid "%s: %s, defaulting to %s"
+#~ msgstr "%s: %s, 預設到 %s"
+
+#~ msgid "Error parsing configuration file: %s"
+#~ msgstr "載入設定檔 %s 時發生錯誤"
+
+#~ msgid ""
+#~ "Errors in configuration file '%s':\n"
+#~ "%s"
+#~ msgstr ""
+#~ "含有錯誤項目的設定檔 '%s':\n"
+#~ "%s"
+
+#~ msgid "%s device found"
+#~ msgstr "找到 %s 個設備"
+
+#~ msgid "%s of %s"
+#~ msgstr "第 %s 項共 %s 項"
+
+#~ msgid "loads the saved NVDA configuration, overriding current changes"
+#~ msgstr "還原至已儲存的設定"
+
+#~ msgid ""
+#~ "This add-on seems to already be installed. Please remove the existing add-"
+#~ "on and try again."
+#~ msgstr "發現系統已經安裝這個插件, 請先把插件移除, 然後重新安裝."
+
+#~ msgid "Follow &keyboard focus"
+#~ msgstr "跟隨系統焦點移動(&K)"
 
 #~ msgid "User guide"
 #~ msgstr "用戶指南(&U)"
@@ -5430,9 +5976,6 @@ msgstr "表格的邊緣了"
 
 #~ msgid "slash"
 #~ msgstr "slash"
-
-#~ msgid "colon"
-#~ msgstr "colon"
 
 #~ msgid "semi"
 #~ msgstr "semi"
