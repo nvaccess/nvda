@@ -3,6 +3,31 @@
 
 %!includeconf: ../changes.t2tconf
 
+=2012.3=
+Najważniejsze nowości w tej wersji obejmują wsparcie dla wprowadzania znaków azjatyckich, eksperymentalną obsłógę ekranów dotykowych na Windows 8, zgłaszanie numerów stron, uleprzone wsparcie dla tabel w dokumentach Adobe Reader, komendy nawigacyjne dla tabel z punktem uwagi oraz kontrolek list, wsparcie dla kilku nowych monitorów brajlowskich oraz zgłaszanie nagłówków kolumn i linii w Microsoft Excel.
+
+== nowe funkcje ==
+- NVDA wspiera wpowadzanie znaków azjatyckich przy użyciu IME we wszystkich aplikacjach, włączając w to zgłaszanie list znaków kandydujących, zgłaszanie wzorów wprowadzania i odczytu.
+- Zgłaszanie podkreśleń w dokumentach Adobe Reader. (#2410)
+- Gdy włączona jest funkcja klawiszy trwałych w systemie Windows, klawisz NVDA zachowuje się jak każdy inny klawisz modyfikujący w rodzaju shift czy alt. Pozwala to używać go bez przymusu przytrzymywania go gdy zachodzi potrzeba jego użycia. (#230)
+- Automatyczne zgłaszanie nagłówków kolumn i linii w MS Excel. NVDA+shift+c by ustawić nagłówek kolumny, NVDA+shift+r by ustawić nagłówek linii. Dwukrotne wciśnięcie tych klawiszy czyści zaznaczenie. (#1519)
+- Wsparcie dla Hims Braille Sense, Braille Edge i Sync Braille. (#1266, #1267)
+- Wsparcie dla powiadomień w windows 8.
+- Testowe wsparcie dla ekranów dotykowych komputerów działających pod Windows 8, włączając w to gesty odczytu tekstu, nawigacji po obiektach i wiele innych.
+- Wsparcie dla VIP Mud. (#1728).
+- Opis tabel w Adobe Readerze jest zgłaszany. (#2193, #2527, #2528).
+- Nowe języki, Koreański, Nepalski, Amharic.
+- NVDA czyta sugestje autouzupełniania adresów email w programie MS Outlook 2007.
+- Nowe głosy espeaka: gene, gene2. (#2512)
+- Zgłaszanie numerów stron w Adobe Readerze. (#2534).
+- Możliwe jest zresetowanie konfiguracji NVDA do ustawień domyślnych przez trzykrotne wciśnięcie NVDA+ctrl+r lub wybranie odpowiedniego polecenia z menu. (#2086)
+- Wsparcie dla monitorów seika 3, 4, 5 i Seika80 firmy Nippon Telesoft. (#2452).
+- ostatnie górne przyciski routingu w monitorach Pac Mate i focus mogą zostać użyte do przewijania w tył i przód. (#2556).
+- W programach używających Iaccessible2, kolumny i linie tabel mogą być zgłaszane poza trybem przeglądania. (#926).
+- Kliknięcie w eksploratorze windows na plik dodatku NVDA, powoduje automatycznie jego instalację. (#2306)
+- Obsługa dla nowszych monitorów Papenmeyer BrailleX.
+- Informacja o pozycji na liście plików np. jeden z cztery, jest podawana w systemie windows7 i nowszych. Dotyczy to także dowolnych kontrolek UI Automation które to wspierają.
+
 =2012.2=
 Najważniejsze zmiany w tym wydaniu obejmują wbudowany instalator, możliwość tworzenia przenośnych kopii programu z poziomu menu, możliwość łatwego zarządzania dodatkami rozbudowującymi funkcjonalność programu, wsparcie dla grafiki w edytorze MS Word, wsparcie dla aplikacji metro w wsystemie MS Windows 8 i kilka innych poprawek.
 
