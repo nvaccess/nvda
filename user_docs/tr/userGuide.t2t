@@ -17,10 +17,10 @@ NVDA, Görmeyenlerin Windows işletim sistemi ve sistemde kurulu birçok farklı
 
 En dikkat çeken özelliklere şunlar dahildir:
 - internet web tarayıcıları, e-posta programları, sohbet programları ve ofis gibi popüler uygulamalara destek
-- 43'den fazla dili destekleyen ve programla gelen konuşma sentezleyicisi
+- 43'den fazla dili destekleyen ve programla birlikte kurulan konuşma sentezleyicisi
 - Mevcut olduğunda, yazıtipi adı ve boyutu, sitili, ve imla hataları gibi metin biçimlendirmelerinin bildirimi
 - Fare altındaki metnin otomatik bildirimi ve fare hareketlerinin isteğe bağlı sesle gösterimi
-- Birçok Braille refreshable ekranına destek
+- Birçok Braille (kabartma) ekrana destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
 - 40 dile çevrilmiş oluşu
@@ -30,7 +30,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Windows Komut İstemi ve Console uygulamalarının desteklenmesi
 -
 
-++ Uluslararasılaşma ++
+++ Yerel Dil Desteği ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
 İngilizcenin yanısıra, NVDA aşağıda belirtilen 40 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İtalyanca, İzlanda dili, Japonca, Korece, Lehçe, Macarca, Nepal dili, Norveççe, Portekizce, Rumence, Rusca, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
@@ -243,21 +243,21 @@ NVDA, bilinen yöntemlere ek olarak, inceleme imleci gibi sistemi incelemenize v
 
 ++ Nesneler ++[Objects]
 Her bir uygulama ve işletim sisteminin kendisi birçok nesneden oluşur.
-Bu  bir metin parçası, düğme, onay kutusu ya da yazılabilir metin alanı olabilir.
+Bu, bir metin bloğu, düğme, onay kutusu ya da düzenlenebilir bir yazı alanı olabilir.
 
 ++ Sistem odağıyla Dolaşım ++[SystemFocus]
 Sistem odağı, sadece "odak" olarak da anılır, klavyede basılacak tuşlardan etkilenecek olan [nesnedir #Objects].
-Örneğin bir yazılabilir metin alanına giriş yapıyorsanız bu yazı alanı sistem odağında demektir.
+Örneğin bir yazı alanına giriş yapıyorsanız bu yazı alanı sistem odağında demektir.
 
 NVDA ile windows içinde dolaşmanın en yaygın ve kolay yolu, Tab ve şift tab ile kontroller arasında ileri geri gidiş, Alt ile bir uygulamanın menü çubuğuna ulaşım ve yön tuşları kullanılarak menü ögeleri arasında dolaşım, veya alt+tab ile pencereler arasında dolaşım gibi temel windows komutlarını kullanmaktır. Bu, sistem odağını hareket ettirir; Örneğin, Bazı nesneler klavyede basılan tuşlara göre hareket eder.
-Siz yukarıda bahsedilen tuşlara bastıkça, NVDA Üzerine gelinen nesnenin adı, Türü, değeri, durumu, tanımı, klavye kısayolu ve pozisyonuyla ilgili bilgileri belirtecektir.
+Siz yukarıda bahsedilen tuşlara bastıkça, NVDA Üzerine gelinen nesnenin adı, Türü, değeri, durumu, tanımı, klavye kısayolu ve pozisyonuyla ilgili bilgileri seslendirecektir.
 
 Sistem odağıyla dolaşırken, bazı yararlı tuş kombinasyonları bulunmaktadır:
 %kc:beginInclude
 || Ad | Kısayol tuşu | Tarif |
-| Üzerinde bulunulan Odağın bildirimi | NVDA+tab | Sistem odağının üzerinde bulunduğu geçerli nesne veya kontrolü belirtir. İki kez basıldığında Bilgi harf harf söylenecektir  |
-| Başlığın Bildirimi | NVDA+t | Üzerinde bulunulan geçerli pencerenin başlığını belirtir. İki kez basıldığında Bilgi harf harf söylenecektir. Üç kez basıldığında bilgi panoya kopyalanır |
-| Etkin Pencerenin okunması | NVDA+b | O an etkin penceredeki tüm kontroller okunur (iletişim kutuları için yararlıdır) |
+| Üzerinde bulunulan Odağın bildirimi | NVDA+tab | Sistem odağının üzerinde bulunduğu geçerli nesne veya kontrolü belirtir. İki kez basıldığında Bilgi harf harf okunur  |
+| Başlığın Bildirimi | NVDA+t | Üzerinde bulunulan geçerli pencerenin başlığını seslendirir. İki kez basıldığında Bilgi harf harf söylenecektir. Üç kez basıldığında bilgi panoya kopyalanır |
+| Etkin Pencerenin okunması | NVDA+b | etkin  penceredeki tüm kontroller okunur (iletişim kutuları için yararlıdır) |
 | Durum çubuğunun bildirimi | NVDA+end | NVDA bulabilirse, durum çubuğunu belirtir. Bulamazsa, aktif pencerenin en alt satırı okunur. Bu komut, nesne sunucusunu da durum çubuğunun konumuna taşır |
 %kc:endInclude
 
@@ -268,10 +268,10 @@ Odak sistem düzeltme imleci olan bir nesnedeyken, metin üzerinde önceki sayfa
 Salt-okunur bir alan değilse, metin üzerinde değişiklik de yapabilirsiniz.
 Siz karakter karakter, sözcük sözcük ve satır satır dolaştıkça NVDA bunu size söyleyecek, ayrıca bir şeyi seçip seçmediğinizi de belirtecektir.
 
-Sistem imleciyle ilişkili olarak NVDA aşağıdaki tuş komutlarını sağlamaktadır:
+Sistem düzenleme imleciyle ilişkili olarak NVDA aşağıdaki tuş komutlarını sağlamaktadır:
 %kc:beginInclude
 || Ad | Kısayol tuşu | Tarif |
-| Tümünü Oku | NVDA+Aşağı yön tuşu | Sistem imlecinin bulunduğu yerden okumaya başlar, ve metnin gittiği yere kadar okumaya devam eder |
+| Tümünü Oku | NVDA+Aşağı yön tuşu | Sistem imlecinin bulunduğu yerden okumaya başlar, ve metnin sonuna kadar okumaya devam eder |
 | Bulunulan satırı okuma | NVDA+yukarı yön tuşu | Sistem imlecinin o an üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. |
 | Seçili metnin okunması | NVDA+Şift+Yukarı yön tuşu | o an seçili olan metni okur |
 | Metin biçimlendirmesinin bildirimi | NVDA+f | Sistem imlecinin üzerinde bulunduğu metnin biçim  bilgisini okur |
@@ -285,26 +285,26 @@ Tablolarda aşağıdaki tuşlar da kullanılabilir:
 %kc:endInclude
 
 ++ Nesne Dolaşımı ++
-Çoğu zaman, [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret]hareket ettiren uygulamalarla çalışırsınız.
-Öte yandan, Bazen aktif uygulamayı veya işletim sistemini odağı ya da düzenleme imlecinin konumunu değiştirmeden gezmek isteyebilirsiniz. 
+Çoğu zaman, [sistem odağını #SystemFocus] ve [sistem düzenleme imlecini #SystemCaret]hareket ettiren uygulamalarla çalışırsınız.
+Öte yandan, Bazen aktif uygulamayı veya işletim sistemini sistem odağını ya da düzenleme imlecinin konumunu değiştirmeden dolaşmak isteyebilirsiniz. 
 Aynı zamanda, normal şartlarda klavye ile ulaşamayacağınız [nesnelerle #Objects] çalışmak isteyebilirsiniz.
-İşte bu tür durumlar için, NVDA'nın nesne dolaşımını kullanabilirsiniz.
+İşte bu tür durumlar için, NVDA'nın nesne dolaşım özelliğini kullanabilirsiniz.
 
-böylece, metinler, düğmeler, onay kutuları, kayan göstergeler, listeler ve düzenlenebilir metin alanları gibi kişisel nesneler arasında dolaşabilir ve bunlar hakkında bilgi alabilirsiniz.
-Bir nesneye gittiğinizde, NVDA sistem imlecini hareket ettirdiğinizdekine benzer biçimde sizi bilgilendirecektir.
-Metni ekranda göründüğü şekliyle incelemek isterseniz, nesne sunucusunu kullanmak yerine [ekran inceleme kipine #FlatReview] geçebilirsiniz.
+böylece, metinler, düğmeler, onay kutuları, kayan göstergeler, listeler ve düzenlenebilir metin alanları gibi nesneler arasında dolaşabilir, bunlar hakkında bilgi alabilir, mümkünse üzerine geldiğiniz nesneyle etkileşim  kurabilirsiniz.
+Nesne dolaşım komutlarını kullanarak bir nesnenin üzerine geldiğinizde, NVDA sistem imlecini hareket ettirdiğinizdekine benzer biçimde sizi bilgilendirecektir.
+Nesnelerle ilgili metni ekranda göründüğü şekliyle incelemek isterseniz, nesne sunucusunu kullanmak yerine [ekran inceleme kipine #FlatReview] geçebilirsiniz.
 
-Ekrandaki tüm nesneler arasında tek tek dolaşmak yerine, hiyerarşik olarak gruplanmış nesneler arasında dolaşım olanağı sunulmaktadır.
+Nesne dolaşım özelliğiyle, ekrandaki tüm nesneler arasında tek tek dolaşmak yerine, hiyerarşik olarak gruplanmış nesneler arasında dolaşım olanağı sunulmaktadır.
 Yani, bir nesnenin içinde bulunan diğer nesnelere ulaşmak için o nesne içine girip  dolaşmanız gerekmektedir.
-Örneğin, bir listeyle karşılaşıldığında, tüm liste ögeleri arasında dolaşmak yerine, bir liste ögesinin altındaki diğer ögeleri görmek için, bu liste ögesinin alt nesnesi ya da nesnelerine giderek bu liste ögesi içinde dolaşmanız gerekecektir.
+Örneğin, not defteri uygulamasında menü çubuğu nesnesinin üzerine geldikten sonra nesnenin içine girip, dosya, düzen, görünüm, yardım gibi alt nesneler arasında dolaşabilirsiniz. Bir listeyle karşılaşıldığında, tüm liste ögeleri arasında dolaşmak yerine, bir liste ögesinin altındaki diğer ögeleri görmek için, bu liste ögesinin alt nesnesi ya da nesnelerine giderek bu liste ögesi içinde dolaşmanız gerekecektir.
 Bir liste ögesi ile aynı liste içinde bulunan diğer liste ögeleri arasında önceki nesne ve sonraki nesne komutlarıyla dolaşabilirsiniz.
 Önceki nesne komutuyla da bu ögeleri kapsayan liste nesnesine gidebilirsiniz.
 Bu şekilde, incelemekte olduğunuz uygulamanın liste ögeleri dışındaki kısmında bulunan nesnelere de kolayca ulaşabilirsiniz.
 Benzer biçimde, bir araç çubuğu da çeşitli kontrolleri kapsar ve  bu kontrollere erişebilmek için, araç çubuğu nesnesinin içine girmelisiniz.
 
 İncelenmekte olan nesneye dolaşım nesnesi denir. 
-Nesne sunucusuyla  Bir nesne üzerine geldikten sonra, nesneyi [metin inceleme komutlarını #ReviewingText] kullanarak inceleyebilirsiniz.
-Varsayılan olarak, nesne sunucusu sistem imleciyle birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
+Nesne dolaşım komutlarıyla bir nesne üzerine geldikten sonra, nesneyi [metin inceleme komutlarını #ReviewingText] kullanarak inceleyebilirsiniz.
+Varsayılan olarak, nesne sunucusu sistem odağıyla birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
 
 Braille'in varsayılan olarak nesne sunucusunu ve inceleme imlecini değil; [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
 Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [braillein takip edeceği imleç #BrailleTether] olarak inceleme imlecini ayarlamalısınız.
@@ -318,10 +318,10 @@ Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 | önceki nesneye gitme | NVDA+numaratör4 | NVDA+kontrol+j | sola kaydırma | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir önceki nesneye taşır |
 | bir sonraki nesneye gitme | NVDA+numaratör6 | kontrol+NVDA+l | sağa kaydırma | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
 | İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+ö | aşağı kaydırma | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
-| Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | yok | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya konumlandırır |
+| Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | yok | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya taşır |
 | Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | çift dokunma | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
 | Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | yok | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
-| Geçerli nesne sunucusunun boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | yok | nesne sunucusunun konumundaki nesnenin ekrandaki genişlik, yükseklik, ekranın soluna ve üstüne mesafesi gibi bilgilerini yüzdelik cinsinden belirtir |
+| Geçerli nesnenin boyutlarını bildirme | NVDA+numaratörSil | NVDA+Sil | yok | nesne sunucusunun konumundaki nesnenin ekrandaki genişlik, yükseklik, ekranın soluna ve üstüne mesafesi gibi bilgilerini yüzdelik cinsinden belirtir |
 %kc:endInclude
 
 Not: Numaratördeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
@@ -341,20 +341,20 @@ Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [brail
 Metni incelerken, aşağıdaki komutlar kullanılabilir:
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma hareketi | Tarif |
-| inceleme imlecinde en üst satıra gitme | şift+numaratör7 | NVDA+7 | yok | İnceleme imlecini metnin en üst satırına taşır |
-| inceleme imlecinde bir önceki satıra gitme | numaratör7 | NVDA+u | yukarı kaydırma (metin kipi) | İnceleme imlecini metnin bir önceki satırına taşır |
-| İnceleme imlecinde üzerinde bulunulan satırı belirtme | numaratör8 | NVDA+i | yok | İnceleme imlecinin üzerine konumlandığı satırı söyler. İki kez basıldığında satır harf harf kodlanır. Üç kez basıldığında ise satır Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
-| inceleme imlecinde bir sonraki satıra gitme | numaratör9 | NVDA+o | aşağı kaydırma (metin kipi) | İnceleme imlecini metnin bir sonraki satırına taşır |
-| inceleme imlecinde son satıra gitme | şift+numaratör9 | NVDA+9 | yok | İnceleme imlecini metnin son satırına taşır |
-| inceleme imlecinde bir önceki sözcüğe gitme | numaratör4 | NVDA+j | iki parmakla sola kaydırma (metin kipi) | İnceleme imlecini metnin bir önceki sözcüğüne taşır |
-| İnceleme imlecinde üzerinde bulunulan sözcüğü belirtme | numaratör5 | NVDA+k | yok | İnceleme imlecinin üzerine konumlandığı sözcüğü söyler. İki kez basıldığında sözcük harf harf kodlanır. Üç kez basıldığında sözcük, Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
-| inceleme imlecinde bir sonraki sözcüğe gitme | numaratör6 | NVDA+l | iki parmakla sağa kaydırma (metin kipi) | İnceleme imlecini metnin bir sonraki sözcüğüne taşır |
+| inceleme imlecinde en üst satıra gitme | şift+numaratör7 | NVDA+7 | yok | İnceleme imlecini en üst satıra taşır |
+| inceleme imlecinde bir önceki satıra gitme | numaratör7 | NVDA+u | yukarı kaydırma (metin kipi) | İnceleme imlecini bir önceki satıra taşır |
+| Mevcut satırı okuma | numaratör8 | NVDA+i | yok | İnceleme imlecinin üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. Üç kez basıldığında ise satır Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
+| inceleme imlecinde bir sonraki satıra gitme | numaratör9 | NVDA+o | aşağı kaydırma (metin kipi) | İnceleme imlecini  bir sonraki satıra taşır |
+| inceleme imlecinde son satıra gitme | şift+numaratör9 | NVDA+9 | yok | İnceleme imlecini son satıra taşır |
+| inceleme imlecinde bir önceki sözcüğe gitme | numaratör4 | NVDA+j | iki parmakla sola kaydırma (metin kipi) | İnceleme imlecini bir önceki sözcüğe taşır |
+|  Mevcut sözcüğü okuma | numaratör5 | NVDA+k | yok | İnceleme imlecinin üzerinde bulunduğu  sözcüğü okur. İki kez basıldığında sözcük harf harf kodlanır. Üç kez basıldığında sözcük, Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
+| inceleme imlecinde bir sonraki sözcüğe gitme | numaratör6 | NVDA+l | iki parmakla sağa kaydırma (metin kipi) | İnceleme imlecini bir sonraki sözcüğe taşır |
 | inceleme imlecinde satır başına gitme | şift+numaratör1 | NVDA+şift+u | yok | İnceleme imlecini metinde üzerinde bulunduğunuz satırın başına taşır |
-| inceleme imlecinde bir önceki karaktere gitme | numaratör1 | NVDA+m | sola kaydırma (metin kipi) | İnceleme imlecini metinde üzerinde bulunduğunuz satırdaki bir önceki karaktere taşır |
-| İnceleme imlecinde üzerinde bulunulan karakteri belirtme | numaratör2 | NVDA+ö | yok | İnceleme imlecinin üzerine konumlandığı karakteri söyler. İki kez basıldığında, karakter tanımıyla söylenir. Üç kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
-| inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+ç | sağa kaydırma (metin kipi) | İnceleme imlecini metnin üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
-| inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+şift+o | yok | İnceleme imlecini metinde üzerinde bulunduğunuz satırın sonuna taşır |
-| İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+AşağıYönTuşu | üç parmakla aşağı kaydırma (metin kipi) | İnceleme imlecinde bulunduğunuz noktadan başlayarak metnin gittiği yere kadar okur |
+| inceleme imlecinde bir önceki karaktere gitme | numaratör1 | NVDA+m | sola kaydırma (metin kipi) | İnceleme imlecini  üzerinde bulunulan satırdaki bir önceki karaktere taşır |
+| Mevcut karakteri okuma | numaratör2 | NVDA+ö | yok | İnceleme imlecinin üzerinde bulunduğu karakteri okur. İki kez basıldığında, karakter tanımıyla söylenir. Üç kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
+| inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+ç | sağa kaydırma (metin kipi) | İnceleme imlecini  üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
+| inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+şift+o | yok | İnceleme imlecini  üzerinde bulunulan satırın sonuna taşır |
+| İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+AşağıYönTuşu | üç parmakla aşağı kaydırma (metin kipi) | İnceleme imlecinde bulunulan noktadan başlayarak metnin sonuna  kadar okur |
 | İnceleme imlecinin bulunduğu yerden kopyalamayı başlatma | NVDA+f9 | NVDA+f9 | yok | inceleme imlecinde bulunduğunuz pozisyondan itibaren metni kopyalamaya başlar. NVDA'ya metnin nereye kadar kopyalanacağını belirtmeden asıl kopyalama gerçekleşmez |
 | İnceleme imlecinin bulunduğu yere kadar kopyalama | NVDA+f10 | NVDA+f10 | yok | inceleme imlecinde kopyalamanın başladığı yer olarak ayarlanan noktadan, inceleme imlecinin şu an bulunduğu noktaya kadar olan metni kopyalar. Bu tuşa basıldıktan sonra metin panoya kopyalanır |
 | Metin biçimini söyle | NVDA+f | NVDA+f | yok | İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir |
@@ -372,10 +372,10 @@ Düzen aşağıdaki biçimde gösterilmiştir:
 Genel olarak tek bir [nesnenin #Objects] içeriğini inceleyebilmenize rağmen, bazı nesneler, kapsadıkları nesneleri de incelemenize olanak tanır.
 Karmaşık belgelerin içeriğinin tamamını, ya da uygulama penceresiyle ilgili metnin tamamını, ekranda görüntülendiği şekliyle de inceleyebilirsiniz..
 Bu,  ekran incelemesi olarak adlandırılmaktadır.
-Bu özellik, birçok ekran okuyucuda bulunan inceleme imleci ya da fare imleciyle ilgili işlevlerle benzerlik göstermektedir.
+Bu özellik, başka  ekran okuyucularda bulunan inceleme imleci ya da fare imleciyle ilgili işlevlerle benzerlik göstermektedir.
 
 Ekran inceleme kipine geçtiğinizde, [nesne sunucusunun #ObjectNavigation] mevcut pozisyonunda konumlanırsınız.
-Nesne sunucusunu kullanmadıysanız, bu genellikle [sistem odağındaki #SystemFocus] nesne olacaktır.
+Nesne dolaşım  komutlarını kullanmadıysanız ve nesne sunucusu sistem odağını takip ediyorsa, ekran inceleme kipine geçtiğinizdeki konumunuz yüksek olasılıkla [sistem odağındaki #SystemFocus] nesne olacaktır.
 Örneğin, nesne sunucusu bir düğmenin üzerindeyse, ekran inceleme kipine geçtiğinizde bu düğmeyle ilgili metnin üzerinde olursunuz.
 Daha sonra, [metin inceleme tuşlarını  #ReviewingText] kullanarak nesneyle ilgili metnin yanısıra nesnenin bulunduğu ekranı inceleyebilirsiniz.
 Bu kipte ekranı incelerken, inceleme imlecinin mevcut pozisyonundaki nesneye atlayarak [nesne sunucusunu #ObjectNavigation] kullanmaya devam etmeniz de mümkündür.
@@ -386,64 +386,64 @@ Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [brail
 Aşağıdaki iki komutla, ekran incelemesine geçilebilir veya nesne sunucusu ekran inceleme imlecinin mevcut konumundaki nesneye taşınabilir:
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma hareketi | Tarif |
-| Ekran incelemesine geçiş | NVDA+numaratör7 | NVDA+önceki sayfa | iki parmakla yukarı kaydırma | Ekran incelemesi kipine geçer ve sizi o anki nesne sunucusunun bulunduğu yere götürür. böylece tüm ekran içeriğini veya içinde  bulunduğunuz belgedeki metni, metin inceleme komutlarını kullanarak dolaşabilirsiniz. |
-| Ekran inceleme kipinden nesneye geçiş | NVDA+numaratör1 | NVDA+sonraki sayfa  | iki parmakla aşağı kadırma | Ekran inceleme kipindeki imlecin üzerinde bulunduğu metni içeren nesneye gider |
+| Ekran incelemesine geçiş | NVDA+numaratör7 | NVDA+önceki sayfa | iki parmakla yukarı kaydırma | Ekran incelemesi kipine geçer ve nesne sunucusunun en son üzerinde bulunduğu nesneyle ilgili ekranı incelemenizi sağlar. böylece tüm ekran içeriğini veya içinde  bulunduğunuz belgedeki metni, metin inceleme komutlarını kullanarak dolaşabilirsiniz. |
+| Ekran inceleme kipinden nesne sunucusuna geçiş | NVDA+numaratör1 | NVDA+sonraki sayfa  | iki parmakla aşağı kadırma | Ekran inceleme kipindeyken, inceleme imlecinin konumunda  bir nesne varsa, nesne sunucusunu bu nesnenin üzerine taşır |
 %kc:endInclude
 
 ++ Fare ile Dolaşım ++
 Fare ile hareket ederken, varsayılan olarak NVDA, fare   ile üzerine gelinen   kontrolleri okur.
-Desteklendiğinde, NVDA metnin paragrafını okur. ancak bazı kontroller sadece satırın okunmasına izin vermektedir.
+Destekleniyorsa, NVDA metni paragraf bazında okur. ancak bazı kontroller sadece satırın okunmasına izin vermektedir.
 
 NVDA ayrıca, fare hareket ettikçe üzerinde bulunduğu nesnenin liste, düğme gibi türünü de okuyacak biçimde ayarlanabilmektedir.
-Bu, özellikle tamamen kör olanlar için sadece metnin yeterli olmadığı durumlarda çok yararlıdır.
+Bu, özellikle tamamen kör olanlar için sadece metnin okunmasının yeterli olmadığı durumlarda çok yararlıdır.
 
-NVDA, kullanıcıların ekran boyutlarına göre farenin tam olarak nerede olduğunu anlayabilmelerini sağlamak için, farenin o anki koordinatlarını bip sesleriyle çalmaktadır.
-Fare ekranın yukarısına doğru çıktıkça biplerin sesi incelir.
+NVDA, kullanıcıların ekran boyutlarına göre farenin tam olarak nerede olduğunu anlayabilmelerini sağlamak için, farenin o anki koordinatlarını bip sesleriyle raporlayabilir.
+Fare ekranda yukarı doğru çıktıkça biplerin sesi incelir.
 Fare ekranın sağ veya sol tarafına doğru hareket ettikçe, kullanıcıların steryo hoparlör kullandıkları varsayılarak ses de daha sağdan veya daha soldan gelir.
 
 Bu ekstra fare seçenekleri varsayılan olarak kapalıdır.
 Ancak bunların avantajlarından faydalanmak isterseniz, tercihler menüsü içinde bulunan fare ayarları bölümünden bu özellikleri ayarlayabilirsiniz.
 
-Fareyi hareket ettirmek için, fiziksel fare veya laptoplarda fare pedi bölümüne ihtiyaç olmasına karşın, NVDA'nın fare ile ilgili bir kaç komutu da bulunmaktadır:
+NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fare veya dizüstü  bilgisayarlarda fare pedlerini  kullanabilirsiniz. Ancak, farenin nesne sunucusunun konumuna ya da nesne sunucusunun fare konumuna taşınması için kullanılan ve sol ve sağ fare tuşlarıyla ilgili birkaç komut bulunmaktadır:
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Tarif |
 | Sol fare tıklaması | numaratörBölü | NVDA+Sol Yön Tuşu | Sol fare düğmesine bir kez tıklar çift tıklamak için tuşlara peşpeşe 2 kez basılabilir |
 | Sol fare kilidi | şift+numaratörbölü | NVDA+şift+SolYön Tuşu | Sol fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. bulunulan yeri taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
 | Sağ fare tıklaması | numaratörÇarpı | NVDA+SağYön Tuşu | sağ fare düğmesine bir kez tıklar. |
 | sağ fare kilidi | şift+numaratörÇarpı | NVDA+şift+SağYön tuşu | sağ fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. fareyi taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
-| Fareyi üzerinde bulunulan nesne sunucusuna taşıma | NVDA+numaratörbölü | NVDA+şift+f9 | Fareyi inceleme imlecinde üzerinde bulunulan nesne sunucusu üzerine taşır |
-| farenin altındaki nesneye gitme | NVDA+numaratörÇarpı | NVDA+şift+f10 | nesne sunucusu olarak farenin bulunduğu yerdeki nesne ayarlanır. |
+| Fareyi nesne sunucusunun üzerinde bulunduğu nesneye taşıma | NVDA+numaratörbölü | NVDA+şift+f9 | Fareyi nesne sunucusunun konumundaki nesnenin üzerine taşır |
+| farenin altındaki nesneye gitme | NVDA+numaratörÇarpı | NVDA+şift+f10 | nesne sunucusunu farenin konumundaki nesneye taşır. |
 %kc:endInclude
 
 + Tarama Kipi +
-Web sayfaları gibi kompleks salt okunur belgeler, NVDA'da tarama kipinde gösterilir.
+Web sayfaları gibi karmaşık salt okunur belgeler, NVDA'da tarama kipinde gösterilir.
  Bu, Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader ve Adobe Flash ile açılan belgeler için geçerlidir.
 
 Tarama kipi, web sayfası gibi bir içeriğin değişmez biçimde gösterildiği bir inceleme alanıdır ve içerik içinde yön tuşlarıyla dolaşılabilir.
-NVDA'nın [sistem düzenleme imleci  #SystemCaret] için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutlar bu kip için de geçerlidir.
-Metin içinde hareket ettikçe, metnin bir bağlantı veya başlık olup olmadığı gibi bilgiler de belirtilir.
+NVDA'nın [sistem düzenleme imleci  #SystemCaret] için geçerli olan hepsini okuma, tablo inceleme, yazı biçimini raporlama gibi komutları bu kip için de geçerlidir.
+Metin içinde hareket ettikçe, okunan metnin bir bağlantı veya başlık olup olmadığı gibi bilgiler de belirtilir.
 
 Bazen, belge içindeki kontrollerle doğrudan etkileşim içinde olmanız gerekebilir.
-Örneğin, yazılabilir alanlar ve listelerde giriş yapabilmeniz ya da imleci hareket ettirerek liste ögeleri arasında seçim yapabilmeniz için       kontrolle etkileşim içinde olmanız gerekir.
+Örneğin, yazılabilir alanlar ve liste kutularında  giriş yapabilmeniz ya da imleci hareket ettirerek liste ögeleri arasında seçim yapabilmeniz için       kontrolle etkileşim içinde olmanız gerekir.
 Bunu hemen hemen tüm tuşların doğrudan ilgili kontrollere aktarıldığı odak kipine geçerek yapabilirsiniz.
-Tarama kipindeyken, tab ile veya tıklayarak odak kipinin gerektirdiği bir kontrole gelindiğinde, NVDA otomatik olarak odak kipini açar.
-Bu kipin gerektirdiği kontrol üzerinde giriş veya boşluk çubuğuna basılarak da odak kipine geçilebildiğini lütfen not edin.
-NVDA otomatik olarak odak kipine geçtiğinde, tab ile veya tıklayarak odak kipine ihtiyaç olmayan bir yere geçildiğinde, NVDA otomatik olarak gözatma kipine geri döner.
-Odak kipine otomatik geçildiyse, eskeyp tuşuyla da tarama kipine geri dönülebilir.
+Tarama kipindeyken, tab ile veya tıklayarak odak kipinin gerektirdiği bir kontrole gelindiğinde, NVDA otomatik olarak odak kipini açabilir.
+Odak kipine geçmenin gerektiği durumlarda, kontrol üzerinde giriş veya boşluk çubuğuna basılarak da odak kipine geçilebildiğini lütfen not edin.
+NVDA otomatik olarak odak kipine geçtiyse, sonrasında tab ile veya başka bir yolla  odak kipine ihtiyaç olmayan bir noktaya geçildiğinde, NVDA otomatik olarak tarama kipine geri döner.
+Odak kipine otomatik olarak geçildiyse, eskeyp tuşuyla da tarama kipine geri dönülebilir.
 Tarama ve odak kipleri arasında manuel  olarak da geçiş yapabilirsiniz.
-Odak kipine manuel olarak  geçilebilmesine karşın, bu durumda, NVDA bu kipte kalır ve siz tekrar el ile tarama kipine geçmedikçe odak kipi kapanmaz.
+Odak kipine manuel olarak  geçildikten sonra, NVDA bu kipte kalır ve siz tekrar ilgili tuşlara basarak  odak kipinden çıkmadıkça tarama kipine geçilmez.
 %kc:beginInclude
 || Ad | Kısayol tuşu | Tarif |
-| Tarama ve odak kipleri arasında geçiş | NVDA+ara çubuğu | Odak ve tarama kipleri arasında geçiş yapar |
+| Tarama ve odak kipleri arasında geçiş | NVDA+aralık çubuğu | Odak ve tarama kipleri arasında geçiş yapar |
 | Odak kipinden çıkış | eskeyp | Odak kipine otomatik olarak geçildiyse, tarama kipine geri döner |
 | Tarama kipinde görüntülenen belgeyi güncelleme | NVDA+f5 | Geçerli belgeyi yeniden yükler. (İçeriğin bir kısmı eksik gibi görünüyorsa ya da ziyaret ettiğiniz sayfa sık aralıklarla güncelleniyorsa bu tuşları kullanmak yararlı olabilir.) |
-| Ara | NVDA+kontrol+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar |
+| Metin ara | NVDA+kontrol+f | Geçerli belgede yazıp bir metin arayabileceğiniz bir iletişim kutusu açar |
 | Sonrakini bul | NVDA+f3 | metni belgenin sonraki kısmında   arar |
 | Öncekini bul | NVDA+şift+f3 | metni belgenin önceki kısmında arar |
 %kc:endInclude
 
 
-++ Tek Harf Dolaşımı ++
+++ Tek Tuş Dolaşımı ++
 Tarama kipindeyken, NVDA, mevcut belgedeki belirli ögeler arasında daha seri bir dolaşım için, tek karakterlik tuşlar sağlamaktadır.
 
 %kc:beginInclude
@@ -472,8 +472,8 @@ Aşağıdaki tuşlara kendi başlarına basıldığında bir sonraki ögeye gidi
 -
 Tablolar, listeler vb öge bloklarının başına ve sonuna gitmek için:
 || Ad | Kısayol tuşu | Tarif |
-| Öge bloğunun başına git | shift+, | İçinde bulunulan öge bloğunun başına gider (liste, tablo vb) |
-| Öge bloğunun sonuna git | , | İçinde bulunulan öge bloğunun sonuna gider (liste, tablo vb) |
+| Öge bloğunun başına git | shift+, | İçinde bulunulan öge bloğunun başına, ilk ögesinin üzerine gider (liste, tablo vb) |
+| Öge bloğunun sonuna git | , | İçinde bulunulan öge bloğunun sonuna gider ve bloğun dışına çıkar (liste, tablo vb) |
 %kc:endInclude
 
 ++ Öge Listesi ++
@@ -490,11 +490,11 @@ Seçim düğmeleri, bu üç ögeden hangilerinin görüntüleneceğini belirleme
 Sayfalar, Adobe Flash ve Sun Java gibi teknolojiler kullanan zengin içerikleri,  uygulama ya da iletişim kutularını de barındırabilir.
 Bu tür ögelerle tarama kipinde karşılaşıldığında NVDA "gömülü nesne", "uygulama" ya da "iletişim kutusu" şeklinde belirtecektir.
 Bu nesnelerle karşılaştığınızda, girişe basarak onlarla etkileşime geçebilirsiniz.
-Eğer erişilebilirse, tab tuşuyla içinde dolaşabilir ve diğer uygulamalar gibi etkileşimde bulunabilirsiniz.
+Eğer erişilebilir olarak düzenlenmişse, tab tuşuyla içinde dolaşabilir ve diğer uygulamalar gibi etkileşimde bulunabilirsiniz.
 Gömülü nesneyi barındıran sayfaya geri dönmek için bir kısayol tuşu tanımlanmıştır:
 %kc:beginInclude
 || Ad | Kısayol tuşu | Tarif |
-| Gömülü nesneyi kapsayan belgeye geri dönme | NVDA+kontrol+ara çubuğu | odağı geçerli gömülü nesnenin dışına çıkararak bu nesneyi barındıran sayfaya geri döner |
+| Gömülü nesneyi kapsayan belgeye geri dön | NVDA+kontrol+ara çubuğu | odağı geçerli gömülü nesnenin dışına çıkararak bu nesneyi barındıran sayfaya geri döner |
 %kc:endInclude
 
 + Uygulamaya Özgü NVDA Komutları +
