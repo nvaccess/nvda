@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5535\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2012-10-11 05:30+0100\n"
-"PO-Revision-Date: 2012-10-11 22:55+0100\n"
+"PO-Revision-Date: 2012-10-30 23:12+0100\n"
 "Last-Translator: Bart Simons <bart@bartsimons.be>\n"
 "Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/projects/p/nvda/language/nl/)\n"
 "Language: nl\n"
@@ -663,7 +663,7 @@ msgstr "Kan configuratie niet bewaren - NVDA draait in beveiligde modus"
 #: NVDAObjects/window/excel.py:176
 #: NVDAObjects/window/excel.py:193
 msgid "Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"
-msgstr ""
+msgstr "Kan geen hoofdingen instellen. Schakel het melden van tabelhoofdingen in bij de Documentopmaak instellingen"
 
 #: gui/settingsDialogs.py:466
 msgid "Capital pitch change percentage"
@@ -1291,9 +1291,8 @@ msgstr "Van:"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 #: NVDAHelper.py:215
-#, fuzzy
 msgid "Full shaped mode"
-msgstr "Full shaped mode"
+msgstr "Volledige xmodus"
 
 #. Translators: This is the label for the general settings dialog.
 #: gui/settingsDialogs.py:113
@@ -1350,9 +1349,8 @@ msgstr "HIMS SyncBraille"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
 #: NVDAHelper.py:217
-#, fuzzy
 msgid "Half shaped mode"
-msgstr "Half shaped mode"
+msgstr "Halve xmodus"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers/handyTech.py:49
@@ -2234,7 +2232,7 @@ msgstr "&Rol weergeven wanneer muisaanwijzer zich binnen een object bevindt"
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:1007
 msgid "Report &tables"
-msgstr "&Ta&bellen weergeven"
+msgstr "&Tabellen weergeven"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -2257,16 +2255,14 @@ msgstr "&Citaatblokken weergeven"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 #: gui/settingsDialogs.py:759
-#, fuzzy
 msgid "Report changes to the &composition string"
-msgstr "Meld wijzigingen in de &composition string"
+msgstr "Meld wijzigingen in de &samenstellingsreeks"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 #: gui/settingsDialogs.py:754
-#, fuzzy
 msgid "Report changes to the &reading string"
-msgstr "Meld wijzigingen in de &reading string"
+msgstr "Meld wijzigingen in de &leesreeks"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -2363,13 +2359,13 @@ msgstr "&Stijl weergeven"
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:1017
 msgid "Report table cell c&oordinates"
-msgstr "Meldt tabel cel c&oördinaten"
+msgstr "Tabelcelc&oördinaten melden"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:1012
 msgid "Report table row/column h&eaders"
-msgstr "Geef rij- en kolomkoppen weer"
+msgstr "Rij- en kolomhoofdingen melden"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules/poedit.py:84
@@ -5287,7 +5283,7 @@ msgstr "Spreekt het huidige object uit dat zich op de voorgrond bevindt"
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 #: globalCommands.py:618
 msgid "speech mode beeps"
-msgstr "spraakmodus pietsignalen"
+msgstr "spraakmodus piepsignalen"
 
 #. Translators: A speech mode which dissables speech output.
 #: globalCommands.py:615
@@ -5296,9 +5292,8 @@ msgstr "spraakmodus uit"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 #: globalCommands.py:621
-#, fuzzy
 msgid "speech mode talk"
-msgstr "spraakmodus "
+msgstr "spraakmodus Spreek"
 
 #. Translators: Reported when text contains a spelling error.
 #: speech.py:1141
