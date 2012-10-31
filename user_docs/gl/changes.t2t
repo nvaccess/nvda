@@ -4,7 +4,7 @@ Que hai de Novo no NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2012.3 =
-O subliñable desta versión inclúe o soporte para a entrada de caracteres asiáticos; soporte experimental para pantallas tactiles en Windows 8; anunciado de números de páxina e soporte mellorado para táboas en Adobe Reader; ordes de navegación de táboa en filas de tabla enfocadas e controis de vista en lista de Windows; e o soporte para algunhas liñas braille máis.
+O subliñable desta versión inclúe o soporte para a entrada de caracteres asiáticos; soporte experimental para pantallas tactiles en Windows 8; anunciado de números de páxina e soporte mellorado para táboas en Adobe Reader; ordes de navegación de táboa en filas de táboa enfocadas e controis de vista en lista de Windows; o soporte para algunhas liñas braille máis; e cabeceiras de columna no Microsoft Excel.
 
 == Novas Características ==
 - NVDA agora pode soportar entrada de caracteres asiáticos utilizando IME e métodos de servicio de entrada de texto en todas as aplicacións, incluindo:
@@ -13,9 +13,9 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
  - Anunciado de lectura de cadeas.
 - A presenza de subliñados e tachados agora anúnciase nos documentos de Adobe Reader. (#2410)
 - Cando a función Windows Sticky Keys está activada, a tecla modificadora de NVDA agora comportarase como as outras teclas modificadoras. Esto permíteche utilizar a tecla modificadora do NVDA sen a necesidade de manter premeda mentres premes outras teclas. (#230)
-- Agora sopórtase o anunciado automático de cabeceiras de columna e de fila no Microsoft Excel. Preme NVDA+shift+c para configurar a fila que conteña cabeceiras de columna, e NVDA+shift+r para a columna que conteña cabeceiras de fila. Preme o script dúas veces en sucesión rápida para limpiar a opción. (#1519)
+- Agora sopórtase o anunciado automático de cabeceiras de columna e de fila no Microsoft Excel. Preme NVDA+shift+c para configurar a fila que conteña cabeceiras de columna e NVDA+shift+r para a columna que conteña cabeceiras de fila. Preme o script dúas veces en sucesión rápida para limpiar a opción. (#1519)
 - Soporte para as liñas braille HIMS Braille Sense, Braille EDGE y SyncBraille. (#1266, #1267)
-- Cando as Notificacións de Windows 8 aparezan, NVDA anunciaráas e moverá o navegador de obxectos alí para unha maior interacción. (#2143)
+- Cando as Notificacións de Windows 8 aparezan, NVDA anunciaráas se os globos de axuda están habilitados. (#2143)
 - Soporte experimental para pantallas Tactiles no Windows 8, incluíndo:
  - Lectura de texto directamente baixo o teu dedo mentres o moves
  - Moitos xestos para levar a cabo a navegación por obxectos, revisión de texto, e outras ordes de NVDA.
@@ -26,6 +26,7 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - NVDA agora pode ler suxerencias de autocompletado cando se introduzan enderezos de correo no Microsoft Outlook 2007. (#689)
 - Novas variantes de voz de eSpeak: Gene, Gene2. (#2512)
 - No Adobe Reader, agora poden anunciarse os números de páxina. (#2534)
+ - No Reader XI, as etiquetas de páxina anúncianse onde estean presentes, reflectindo cambios na numeración de páxinas en seccións diferentes, etc. en versións anteriores, esto non é posible e só se anunciaban os números de páxinas secuenciales.
 - Agora é posible reiniciar a configuración do NVDA ós valores predeterminados de fábrica premendo NVDA+control+r tres veces rápidamente ou escollendo Reiniciar ós Valores Predeterminados de Fábrica dende o menú NVDA (#2086).
 - Soporte para as liñas braille Seika Versión 3, 4 e 5 e Seika80 de Nippon Telesoft. (#2452)
 - O primeiro e o último dos sensores superiores das liñas braille Freedom Scientific Pacmate e Focus agora pódense utilizar para desprazar cara atrás ou adiante. (#2556).
@@ -51,6 +52,7 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - Actualizado o transcriptor braille liblouis a 2.5.1.
 - O documento Referencia Rápida de Ordes de teclado de NVDA foi renomeado a Referencia Rápida de Ordes, así agora inclúe tanto ordes tactiles coma ordes de teclado.
 - A Lista de elementos en Modo Navegación agora lembrará o último tipo de elemento amosado (ex.: ligas, cabeceiras ou zoas) cada vez que se amose o diálogo dentro da mesma sesión de NVDA. (#365)
+- A maioría das aplicacións Metro en Windows 8 (ex.: Mail, Calendar) xa non activan o Modo Navegación para toda a aplicación.
 
 
 == Corrección de Fallos ==
@@ -59,7 +61,7 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - No Adobe Reader, as celdas de táboa que abranghen máis dunha columna e/ou fila agora manéxanse correctamente. (#2437)
 - O paquete de distribución de NVDA agora verifica a súa integridade antes de se executar. (#2475)
 - Os ficheiros descargados temporalmente agora elimínanse se se descarga un ficheiro de actualización do NVDA. (#2477)
-- Cando se copia a configuración do usuario á configuración do sistema (para utilizar na autentificación de Windows e outras pantallas seguras) NVDA xa non se colgará no XP mentres o estea a facer. (#2485)
+- NVDA xa non se colgará cando se estea a executar coma un administrador mentres se copia a configuración do usuario á configuración do sistema (para utilizala na autentificación de Windows e noutras pantallas seguras). (#2485)
 - Os mosaicos na Pantalla de inicio de Windows 8 agora preséntanse mellor en voz e braille. O nome xa non se repite, xa non se anuncia non seleccioado en todos os mosaicos, e a información de estado en directo preséntase segundo a descripción da mosaico (ex.: temperatura actual para a mosaico do Tempo).
 - Os  contrasinais xa non se anuncian cando se lean campos de contrasinal no Microsoft Outlook e outros controis de edición estándar que estean marcados como protexidos. (#2021)
 - No Adobe Reader, os cambios para campos de formulario agora reflíctense correctamente no modo navegación. (#2529)
@@ -91,6 +93,13 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - Os diccionarios da fala agora gardaranse apropriadamente cando se utilice un signo de número (#) dentro dos campos de edición patrón ou reemprazar. (#961)
 - O modo navegación para documentos MSHTML (ex.: Internet Explorer) agora amosa correctamente o contido visible que hai dentro do contido oculto. Específicamente: elementos cun estilo visibility:visible nun elemento con estilo visibility:hidden. (#2097)
 - As ligas no Centro de Seguridade de Windows XP xa non anuncian lixo aleatoriamente despois dos seus nomes. (#1331)
+- Os controis de texto UI Automation ex.:  o campo de procura no menú de inicio do Windows 7 agora anúncianse correctamente cando se move o rato sobor deles en lugar de quedar en silenzo.
+- Os cambios de distribución do teclado xa non se anuncian durante ler todo, o que era especialmente problemático para documentos multilingües incluíndo texto árabe. (#1676)
+- Todo o contido dalgúns controis de texto editable UI Automation (ex.: o cadro de procura no menú de inicio do Windows 7/8) xa non se anuncia cada vez que cambie.
+- Cando te movas entre grupos na pantalla de inicio de Windows 8, os grupos non etiquetados xa non anunciarán o seu primeiro mosaico coma o nome do grupo. (#2658)
+- Ó abrir a pantalla de inicio de Windows 8, o foco colócase correctamente sobre o primeiro mosaico en lugar de saltar á raíz da pantalla de inicio, o que pode confundir na navegación. (2720)
+- NVDA xa non fallará ó arrancar cando a ruta de perfiles do usuario conteña certos caracteres multibyte. (#2729)
+- No modo navegación en Google Chrome, o texto das pestanas agora  procésase correctamente.
 
 
 == Cambios para Desenroladores ==
@@ -104,6 +113,8 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
  - Deben utilizarse xgettext e msgfmt de GNU gettext para criar calquera ficheiro PO e MO. As ferramentas de Python non soportan mensaxes contextuais.
  - Para xgettext, pasa o argumento de liña de órdenes --keyword=pgettext:1c,2 para habilitar a inclusión de mensaxes contextuais.
  - Mira http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts para máis información.
+- Agora é posible acceder ós módulos compilados de NVDA onde foran sobreescribidos por módulos de terceiros. Olla o módulo nvdaBuiltin para detalles.
+- Agora pode utilizarse o soporte de traducción de complementos dentro do módulo installTasks do complemento. (#2715)
 
 
 = 2012.2.1 =

@@ -500,6 +500,13 @@ Se risulterà accessibile, premere il tasto tab o comunque muoversi all'interno 
 + Comandi specifici di NVDA per le applicazioni +
 NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli utenti nello svolgimento di operazioni che, altrimenti, risulterebbero molto complesse e poco accessibili.
 
+++ Microsoft Excel ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Imposta intestazioni colonna | NVDA+shift+c | Premere una volta per dire a NVDA che questa è la riga che contiene le intestazioni della colonna, che dovranno essere annunciate automaticamente quando ci si sposta tra le colonne sotto quella riga. La doppia pressione cancellerà tale impostazione. | 
+| Imposta intestazioni riga | NVDA+shift+r | Premere una volta per dire a NVDA che questa è la colonna che contiene le intestazioni della riga, che dovranno essere annunciate automaticamente quando ci si sposta tra le righe sotto quella colonna. La doppia pressione cancellerà tale impostazione. | 
+%kc:endInclude
+
 ++ foobar	2000 ++
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
@@ -850,18 +857,35 @@ Permette di attivare o disattivare  la lettura di alcuni contenuti, in particola
   
 +++ Impostazioni composizione nell'immissione +++
 Le impostazioni sulla composizione nell'immissione si trovano nel menu preferenze.
-Questa finestra di dialogo permette di controllare la modalità con cui NVDA annuncia la composizione di caratteri asiatici.
+Questa finestra di dialogo permette di controllare la modalità con cui NVDA annuncia la composizione di caratteri asiatici, come IME o servizi di immissione testo.
+Si noti che a causa delle grandi differenze esistenti nelle caratteristiche disponibili per ciascun metodo di immissione, è caldamente consigliato configurare tutte le opzioni in maniera accurata per ciascun servizio di immissione, in modo da ottenere le prestazioni migliori.
 
 ==== Annuncia automaticamente tutti i caratteri suggeriti ====
 Questa opzione, attivata di default, permette di stabilire se debbano essere annunciati tutti i suggerimenti visibili, quando appare un elenco di questi elementi.
 risulta molto utile mantenere questa impostazione attiva specie per i tipi di immissione pittografici come il nuovo Cinese ChangJie, o Boshiami, in quanto si possono ascoltare automaticamente tutti i simboli e i loro numeri, permettendo poi di scegliere uno di questi.
 Comunque, per i metodi d'immissione fonetica ad esempio del nuovo cinese, può essere conveniente disattivare questa impostazione, in quanto tutti i simboli hanno il medesimo suono e si è costretti ad utilizzare le frecce per esplorarli ed ottenere maggiori informazioni dalla descrizione del carattere di ciascun suggerimento.
 
+==== Leggi suggerimento selezionato ====
+Questa opzione, attiva di default, permette di stabilire se NVDA debba leggere il suggerimento selezionato quando appare un'elenco di caratteri o quando la selezione viene modificata.
+Questo risulta necessario per quei metodi di immissione laddove la selezione può essere modificata con le frecce (come il Chinese New Phonetic),  ma per altri metodi di immissione può essere più conveniente scrivere disattivando questa opzione.
+Si noti che il cursore di controllo verrà comunque posizionato sul carattere suggerito, perciò sarà sempre possibile utilizzare tutti i comandi relativi alla navigazione ad oggetti.
+
+==== Includi sempre una breve descrizione del carattere durante la lettura dei suggerimenti ====
+questa opzione, attiva di default, permette di stabilire se NVDA debba fornire una breve descrizione per ciascun carattere suggerito, sia se viene selezionato, sia se viene letto quando appare il suggerimento.
+si noti che per alcune lingue come il cinese, tale opzione non ha effetto.
+Risulta invece molto utile per coreano e giapponese.
+
 ==== Annuncia i cambiamenti alla stringa di lettura ====
 Alcuni metodi di immissione come il nuovo cinese fonetico o il ChangJie hanno una stringa di lettura (talvolta conosciuta come stringa di precomposizione).
 è possibile stabilire se NVDA debba annunciare o meno i caratteri che compaiono in questo tipo di stringhe.
 Questa opzione è attiva da impostazioni predefinite.
-  
+Si noti che alcuni vecchi metodi di composizione come il cinese ChangJie potrebbero non faruso della stringa di lettura, ma usare invece la stringa di composizione diretta. Si veda l'opzione successiva per maggiori informazioni.
+
+==== Annuncia i cambiamenti alla stringa di composizione ====
+Dopo che i dati di precomposizione sono stati associati ad un simbolo pittografico, la maggior parte dei metodi di composizione mette questo simbolo in una stringa di composizione per salvare temporaneamente il contenuto assieme ad altri simboli prima che essi siano inseriti definitivamente nel documento.
+Questa opzione permette di stabilire se NVDA debba o meno annunciare i nuovi simboli man mano che compaiono nella stringa di composizione.
+L'opzione è attiva di default.
+
 +++ Impostazioni Modalità navigazione (NVDA+Control+b) +++
 Questa finestra di dialogo si trova nel menu preferenze, sotto la voce Modalità navigazione. 
 

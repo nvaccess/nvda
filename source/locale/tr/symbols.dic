@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’'"'”'-]
-negative number	(?<!\w)-(?=\d)
+negative number	(?<!\w)-(?=[$£€¥]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -168,3 +168,187 @@ _	alt çizgi	most
 υ	upsilon	some
 φ	fi	some
 ω	omega	some
+# Ottoman chars:
+أ	elif altında hemze	some
+ا	elif	some
+إ	elif	some
+آ	elif med	some
+ب	be	some
+ت	te	some
+ث	se	some
+ج	cim	some
+ح	ha	some
+خ	hı	some
+د	dal	some
+ذ	zel	some
+ر	ra	some
+ز	ze	some
+س	sin	some
+ش	şın	some
+ص	sad	some
+ض	dat	some
+ط	tı	some
+ظ	zı	some
+ع	ayn	some
+غ	ğayn	some
+ف	fe	some
+ق	kaf	some
+ك	kef	some
+ل	lam	some
+م	mim	some
+ن	nun	some
+ه	he	some
+و	vav	some
+ي	ye	some
+ﺍ	elif	some
+ﺎ	elif	some
+—	elif	some
+ﺀ	hemze	some
+ﺏ	be	some
+ﺐ	be	some
+ﺒ	be	some
+ﺑ	be	some
+ﭖ	pe	some
+ﭗ	pe	some
+ﭙ	pe	some
+ﭘ	pe	some
+ﺕ	te	some
+ﺖ	te	some
+ﺘ	te	some
+ﺗ	te	some
+ﺙ	se	some
+ﺚ	se	some
+ﺜ	se	some
+ﺛ	se	some
+ﺝ	cim	some
+ﺞ	cim	some
+ﺠ	cim	some
+ﺟ	cim	some
+ﭺ	çim	some
+ﭻ	çim	some
+ﭽ	çim	some
+ﭼ	çim	some
+ﺡ	ha	some
+ﺢ	ha	some
+ﺤ	ha	some
+ﺣ	ha	some
+ﺥ	hı	some
+ﺦ	hı	some
+ﺨ	hı	some
+ﺧ	hı	some
+ﺩ	dal	some
+ﺪ	dal	some
+ﺫ	zel	some
+ﺬ	zel	some
+ﺭ	re	some
+ﺮ	re	some
+ﺯ	ze	some
+ﺰ	ze	some
+ﮊ	je	some
+ﮋ	je	some
+ﺱ	sin	some
+ﺲ	sin	some
+ﺴ	sin	some
+ﺳ	sin	some
+ﺵ	şın	some
+ﺶ	şın	some
+ﺸ	şın	some
+ﺷ	şın	some
+ﺹ	sat	some
+ﺺ	sat	some
+ﺼ	sat	some
+ﺻ	sat	some
+ﺽ	dat	some
+ﺾ	dat	some
+ﻀ	dat	some
+ﺿ	dat	some
+ﻁ	tı	some
+ﻂ	tı	some
+ﻄ	tı	some
+ﻃ	tı	some
+ﻅ	zı	some
+ﻆ	zı	some
+ﻈ	zı	some
+ﻇ	zı	some
+ﻉ	ayın	some
+ﻊ	ayın	some
+ﻌ	ayın	some
+ﻋ	ayın	some
+ﻍ	gayın	some
+ﻎ	gayın	some
+ﻐ	gayın	some
+ﻏ	gayın	some
+ﻑ	fe	some
+ﻒ	fe	some
+ﻔ	fe	some
+ﻓ	fe	some
+ﻕ	kaf	some
+ﻖ	kaf	some
+ﻘ	kaf	some
+ﻗ	kaf	some
+ﻙ	kef	some
+ﻚ	kef	some
+ﻜ	kef	some
+ﻛ	kef	some
+ﮒ	gef	some
+ﮓ	gef	some
+ﮕ	gef	some
+ﮔ	gef	some
+ﯓ	Nef Sağır Kef	some
+ﯔ	Nef Sağır Kef	some
+ﯖ	Nef Sağır Kef	some
+ﯕ	Nef Sağır Kef	some
+ﻝ	lam	some
+ﻞ	lam	some
+ﻠ	lam	some
+ﻟ	lam	some
+ﻡ	mim	some
+ﻢ	mim	some
+ﻤ	mim	some
+ﻣ	mim	some
+ﻥ	nun	some
+ﻦ	nun	some
+ﻨ	nun	some
+ﻧ	nun	some
+ﻭ	vav	some
+ﻮ	vav	some
+ﻩ	he	some
+ﻪ	he	some
+ﻬ	he	some
+ﻫ	he	some
+ﻻ	lamelif	some
+ﻼ	lamelif	some
+ﻯ	ye	some
+ﻰ	ye	some
+ﻴ	ye	some
+ﻳ	ye	some
+ژ	j	some
+ە	hemze	some
+پ	pe	some
+چ	çim	some
+ً	İki Üstün	some
+ؤ	Vav Hemze	some
+ئ	ya hemze	some
+ٍ	İki Esre	some
+ٌ	İki Ötre	some
+ى	ye	some
+َ	Üstün	some
+ّ	Şed	some
+ى	ye	some
+ِ	esre	some
+ْ	Cezim sükun	some
+ة	ta-yı merbut	some
+ُ	Ötre	some
+،	virgül	some
+؛	Noktalı virgül	some
+ی	elif Maksure	some
+١	1	some
+٢	2	some
+٣	3	some
+٤	4	some
+٥	5	some
+٦	6	some
+٧	7	some
+٨	8	some
+٩	9	some
+٠	0	some

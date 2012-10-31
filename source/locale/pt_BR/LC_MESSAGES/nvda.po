@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5535\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2012-10-11 05:30+0100\n"
-"PO-Revision-Date: 2012-10-15 12:00-0300\n"
+"PO-Revision-Date: 2012-10-17 14:46-0300\n"
 "Last-Translator: Marlin Rodrigues <Rodrigues>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
 "<clever92000@yahoo.com.br>\n"
@@ -497,7 +497,7 @@ msgid ""
 "no selection it says so."
 msgstr ""
 "Anuncia o texto selecionado em campos de edição e documentos. Se não houver "
-"seleção alguma ele diz isso."
+"seleção alguma ele o informa."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:37
@@ -640,11 +640,11 @@ msgstr "Opções de Braile"
 #: globalCommands.py:940
 #, python-format
 msgid "Braille tethered to %s"
-msgstr "Braile vinculado a %s"
+msgstr "Braile vinculado ao %s"
 
 #: gui/settingsDialogs.py:1260
 msgid "Braille tethered to:"
-msgstr "Braile vinculado a:"
+msgstr "Braile vinculado ao:"
 
 #. Translators: This is the label for the browse mode settings dialog.
 #: gui/settingsDialogs.py:872
@@ -861,7 +861,7 @@ msgstr "Copiar opções atuais do &usuário"
 #. Translators: The title of the dialog presented while settings are being copied
 #: gui/settingsDialogs.py:198
 msgid "Copying Settings"
-msgstr "Copiando opções"
+msgstr "Copiando configurações"
 
 #: versionInfo.py:43
 msgid "Copyright (C) {years} NVDA Contributors"
@@ -871,18 +871,18 @@ msgstr "Copyright (C) {years} Colaboradores do NVDA"
 #. the 'automatic comments' window in poedit.
 #: appModules/poedit.py:82
 msgid "Could not find automatic comments window."
-msgstr "Não consegui achar a janela de comentários automáticos."
+msgstr "Não foi possível encontrar a janela de comentários automáticos."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 #: appModules/poedit.py:103
 msgid "Could not find comment window."
-msgstr "Não consegui achar a janela de comentários."
+msgstr "Não foi possível encontrar a janela de comentários."
 
 #: gui/settingsDialogs.py:1287
 #, python-format
 msgid "Could not load the %s display."
-msgstr "Não consegui carregar a linha braile %s."
+msgstr "Não foi possível carregar a linha braile %s."
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected
@@ -901,7 +901,7 @@ msgstr ""
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:105
 msgid "Create &desktop icon and shortcut key (control+alt+n)"
-msgstr "Criar ícone na área de trabalho e tecla de atalho (control+alt+n)"
+msgstr "&Criar ícone na área de trabalho e tecla de atalho (control+alt+n)"
 
 #: gui/__init__.py:570
 msgid "Create &portable copy"
@@ -971,7 +971,7 @@ msgstr "data:"
 
 #: globalCommands.py:157
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "Diminui a opção atualmente ativa no círculo das opções"
+msgstr "Diminui a opção atualmente ativa no anel de configurações de voz"
 
 #: gui/__init__.py:161
 msgid "Default dictionary"
@@ -1045,13 +1045,13 @@ msgstr "s&air"
 
 #: gui/settingsDialogs.py:1239
 msgid "E&xpand to computer braille for the word at the cursor"
-msgstr "E&xpandir para braile de computador a palavra sob o cursor"
+msgstr "&Expandir para braile de computador a palavra sob o cursor"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
 #: NVDAObjects/window/winword.py:415 NVDAObjects/window/winword.py:434
 msgid "Edge of table"
-msgstr "Beira da tabela"
+msgstr "Borda da tabela"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 #: gui/settingsDialogs.py:1080
@@ -1072,11 +1072,11 @@ msgstr "Emula o pressionar de %s no teclado do sistema"
 #. mouse settings dialog.
 #: gui/settingsDialogs.py:648
 msgid "Enable mouse &tracking"
-msgstr "Habilitar ras&treamento do mouse"
+msgstr "Habilitar &rastreamento do mouse"
 
 #: NVDAObjects/window/winword.py:83
 msgid "Endnotes"
-msgstr "Notas finais"
+msgstr "Notas de fim"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1126,16 +1126,16 @@ msgstr "Erro"
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 #: gui/settingsDialogs.py:211
 msgid "Error Copying"
-msgstr "Erro a copiar"
+msgstr "Erro ao copiar"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #: updateCheck.py:126
 msgid "Error checking for update."
-msgstr "Erro a procurar atualização."
+msgstr "Erro ao procurar atualização."
 
 #: gui/settingsDialogs.py:223
 msgid "Error copying NVDA user settings"
-msgstr "Erro a copiar as configurações de usuário do NVDA"
+msgstr "Erro ao copiar as configurações de usuário do NVDA"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 #: updateCheck.py:350
@@ -1156,7 +1156,7 @@ msgstr "Erro no módulo de aplicação %s"
 #: gui/logViewer.py:74
 #, python-format
 msgid "Error saving log: %s"
-msgstr "Erro a salvar log: %s"
+msgstr "Erro ao salvar o log: %s"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1184,7 +1184,7 @@ msgstr "encerrar o NVDA"
 
 #: installer.py:160
 msgid "Explore NVDA user configuration directory"
-msgstr "Explorar diretório de opções do usuário"
+msgstr "Explorar o diretório de opções do usuário"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
@@ -1197,7 +1197,7 @@ msgstr "Falha ao criar cópia portátil: %s"
 #: gui/addonGui.py:121
 #, python-format
 msgid "Failed to install add-on  from %s"
-msgstr "Falha a instalar complemento de %s"
+msgstr "Falha ao instalar complemento de %s"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #: gui/addonGui.py:82
@@ -1206,7 +1206,7 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"Falha a abrir arquivo de pacote de complemento em %s: arquivo faltando ou "
+"Falha ao abrir o arquivo de pacote de complemento em %s: arquivo faltando ou "
 "formato de arquivo inválido"
 
 #. Translators: The name of a braille table displayed in the
@@ -1452,19 +1452,19 @@ msgstr "ITÁLICO"
 #. braille settings dialog.
 #: braille.py:128
 msgid "Icelandic 8 dot computer braille"
-msgstr "Islandês, braile de computador, 8 pontos"
+msgstr "Islandês, braile de computador de 8 pontos"
 
 #: globalCommands.py:139
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
-"Se pressionada uma vez, anuncia a hora atual. Se pressionada duas vezes, "
+"Pressionada uma vez, anuncia a hora atual. Se pressionada duas vezes, "
 "anuncia a data atual"
 
 #: globalCommands.py:148
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "Aumenta a opção atualmente ativa no círculo das opções"
+msgstr "Aumenta a opção atualmente ativa no anel de configurações de voz"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 #: gui/settingsDialogs.py:734
@@ -1474,7 +1474,7 @@ msgstr "Opções de entrada para composição"
 #. Translators: The title of the Install NVDA dialog.
 #: gui/installerGui.py:82
 msgid "Install NVDA"
-msgstr "Instalar NVDA"
+msgstr "Instalar o NVDA"
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
 #: updateCheck.py:360
@@ -1725,7 +1725,7 @@ msgid ""
 "and speaks it"
 msgstr ""
 "Move o cursor de exploração para a última linha do objeto atual de navegação "
-"e o fala"
+"e a anuncia"
 
 #: globalCommands.py:543
 msgid ""
@@ -1733,7 +1733,7 @@ msgid ""
 "situated in the current navigator object and speaks it"
 msgstr ""
 "Move o cursor de exploração para o primeiro caractere da linha onde este "
-"está cituado dentro do objeto atual de navegação, e o fala"
+"está cituado dentro do objeto atual de navegação e o anuncia"
 
 #: globalCommands.py:607
 msgid ""
@@ -1741,7 +1741,7 @@ msgid ""
 "situated in the current navigator object and speaks it"
 msgstr ""
 "Move o cursor de exploração para o último caractere da linha onde este está "
-"cituado dentro do objeto atual de navegação, e o fala"
+"cituado dentro do objeto atual de navegação e o anuncia"
 
 #: globalCommands.py:596
 msgid ""
@@ -1749,7 +1749,7 @@ msgid ""
 "object and speaks it"
 msgstr ""
 "Move o cursor de exploração para o próximo caractere do objeto atual de "
-"navegação e o fala"
+"navegação e o lê"
 
 #: globalCommands.py:491
 msgid ""
@@ -1757,7 +1757,7 @@ msgid ""
 "speaks it"
 msgstr ""
 "Move o cursor de exploração para a próxima linha do objeto atual de "
-"navegação e a anuncia"
+"navegação e a lê"
 
 #: globalCommands.py:533
 msgid ""
@@ -1765,7 +1765,7 @@ msgid ""
 "speaks it"
 msgstr ""
 "Move o cursor de exploração para a próxima palavra do objeto atual de "
-"navegação e a anuncia"
+"navegação e a lê"
 
 #: globalCommands.py:561
 msgid ""
@@ -1773,7 +1773,7 @@ msgid ""
 "object and speaks it"
 msgstr ""
 "Move o cursor de exploração para o caractere anterior do objeto atual de "
-"navegação e o fala"
+"navegação e o lê"
 
 #: globalCommands.py:469
 msgid ""
@@ -1781,7 +1781,7 @@ msgid ""
 "and speaks it"
 msgstr ""
 "Move o cursor de exploração para a linha anterior do objeto atual de "
-"navegação e a anuncia"
+"navegação e a lê"
 
 #: globalCommands.py:511
 msgid ""
@@ -1789,7 +1789,7 @@ msgid ""
 "and speaks it"
 msgstr ""
 "Move o cursor de exploração para a palavra anterior do objeto atual de "
-"navegação e a anuncia"
+"navegação e a lê"
 
 #: globalCommands.py:457
 msgid ""
@@ -1797,7 +1797,7 @@ msgid ""
 "speaks it"
 msgstr ""
 "Move o cursor de exploração para a primeira linha do objeto atual de "
-"navegação e a anuncia"
+"navegação e a lê"
 
 #: globalCommands.py:268
 msgid ""
@@ -1809,11 +1809,11 @@ msgstr ""
 
 #: globalCommands.py:166
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr "Vai à próxima opção disponível no anel das opções de sintetizador"
+msgstr "Vai à próxima opção disponível no anel de configurações de voz"
 
 #: globalCommands.py:175
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr "Volta à opção anterior disponível no anel das opções de sintetizador"
+msgstr "Volta à opção anterior disponível no anel de configurações de voz"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 #: virtualBuffers/__init__.py:1418
@@ -2130,7 +2130,7 @@ msgstr ""
 #. Translators: The message displayed while an addon is being installed.
 #: gui/addonGui.py:111
 msgid "Please wait while the add-on is being installed."
-msgstr "Por favor aguarde enquanto o complemento está sendo instalado."
+msgstr "Por favor aguarde enquanto o complemento é instalado."
 
 #. Translators: The message displayed while NVDA is being updated.
 #: gui/installerGui.py:27
@@ -2656,7 +2656,7 @@ msgstr "Rola a linha braile para trás"
 
 #: globalCommands.py:987
 msgid "Scrolls the braille display forward"
-msgstr "Rola a linha para frente"
+msgstr "Rola a linha braille para frente"
 
 #: IAccessibleHandler.py:667
 msgid "Secure Desktop"
@@ -2806,13 +2806,13 @@ msgstr "Falar e bipar"
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:617
 msgid "Speak command &keys"
-msgstr "Falar tec&las de comando"
+msgstr "Falar &teclas de comando"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:602
 msgid "Speak typed &characters"
-msgstr "Falar caracteres &digitados"
+msgstr "Falar &caracteres digitados"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -2937,7 +2937,7 @@ msgstr "Dicionário temporário"
 #. mouse settings dialog.
 #: gui/settingsDialogs.py:654
 msgid "Text &unit resolution:"
-msgstr "&Unidade de texto:"
+msgstr "&Unidade de leitura de texto:"
 
 #: NVDAObjects/window/winword.py:91
 msgid "Text frame"
@@ -2989,7 +2989,7 @@ msgstr ""
 
 #: globalCommands.py:968
 msgid "The start marker must reside within the same object"
-msgstr "A marca de início tem que estar no mesmo objeto"
+msgstr "A marca de início deve estar no mesmo objeto"
 
 #: globalCommands.py:949
 msgid "There is no text on the clipboard"
@@ -3130,9 +3130,9 @@ msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
-"Liga ou desliga a ajuda de entrada; Se ligada, cada entrada como por exemplo "
-"pressionar uma tecla do teclado falará o script associado àquela entrada se "
-"houver algum."
+"Liga ou desliga a ajuda de entrada; Quando ligada, cada entrada como por "
+"exemplo pressionar uma tecla do teclado falará o script associado àquela "
+"entrada se houver algum."
 
 #: pythonConsole.py:40
 msgid "Type exit() to exit the console"
@@ -3294,8 +3294,8 @@ msgid ""
 "Thank you for your support."
 msgstr ""
 "Precisamos de seu auxílio a fim de continuar melhorando o NVDA.\n"
-"Esse projeto se assenta sobretudo em doações e patrossínios. Ao doar, "
-"ajudará a bancar o desenvolvimento em tempo integral.\n"
+"Esse projeto se assenta sobretudo em doações e patrossínios. Ao doar, estará "
+"ajudando a bancar o desenvolvimento em tempo integral.\n"
 "Mesmo se forem doados dez reais a cada vez que alguém baixa o programa, "
 "conseguiremos cobrir todos os custos do projeto.\n"
 "Toda doação vai para a NV Access, a organização sem fins lucrativos que "
@@ -3369,7 +3369,7 @@ msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Arquivo com mapa de gestos possui erros.\n"
+"O arquivo com mapa de gestos possui erros.\n"
 "Detalhes sobre os erros encontram-se no arquivo de log."
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
@@ -4291,7 +4291,7 @@ msgstr "pressiona botão esquerdo do mause"
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 #: globalCommands.py:99
 msgid "left mouse button unlock"
-msgstr "solta botão esquerdo do mause"
+msgstr "botão esquerdo solto"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:125
@@ -4619,7 +4619,7 @@ msgstr "volta à lista anterior"
 
 #: virtualBuffers/__init__.py:1498
 msgid "moves to the previous list item"
-msgstr "volta ao item de lista"
+msgstr "volta ao item de lista anterior"
 
 #: virtualBuffers/__init__.py:1508
 msgid "moves to the previous radio button"
@@ -4708,7 +4708,7 @@ msgstr "sem mais texto antes do bloco de linques"
 #: globalCommands.py:288 globalCommands.py:322 globalCommands.py:371
 #: globalCommands.py:385 globalCommands.py:399 globalCommands.py:413
 msgid "no navigator object"
-msgstr "nenhum objeto navegação"
+msgstr "nnão há objeto de navegação"
 
 #: virtualBuffers/__init__.py:1515
 msgid "no next block quote"
@@ -5299,7 +5299,7 @@ msgstr "exigido"
 
 #: globalCommands.py:936 gui/settingsDialogs.py:1261
 msgid "review"
-msgstr "explorar"
+msgstr "cursor de exploração"
 
 #: controlTypes.py:275
 msgid "rich edit"
@@ -5331,12 +5331,12 @@ msgstr "control direito"
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
 #: globalCommands.py:114
 msgid "right mouse button lock"
-msgstr "pressiona botão direito do mause"
+msgstr "pressiona o botão direito do mause"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
 #: globalCommands.py:110
 msgid "right mouse button unlock"
-msgstr "solta botão direito do mause"
+msgstr " botão direito solto"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:127
@@ -5775,7 +5775,7 @@ msgstr "não lida"
 #: speech.py:522
 #, python-format
 msgid "unselecting %s"
-msgstr "%s desselecionando"
+msgstr "%s desselecionado"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:81
@@ -5806,12 +5806,12 @@ msgstr "lnkv"
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 #: keyLabels.py:25
 msgid "volume down"
-msgstr "diminui volume"
+msgstr "diminui o volume"
 
 #. Translators: This is the name of the volume up key found on multimedia keyboards to increase playback volume.
 #: keyLabels.py:27
 msgid "volume up"
-msgstr "aumenta volume"
+msgstr "aumenta o volume"
 
 #: colors.py:98
 msgid "white"

@@ -134,7 +134,12 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	if (!text)
 		domNode->GetChildCount(&childCount);
 
-	if (fontStatus == FontInfo_NoInfo && childCount > 0) {
+	long nodeType = 0;
+	if (fontStatus == FontInfo_NoInfo && childCount > 0
+		// We never want to descend beneath word nodes,
+		// as word segments sometimes seem to double characters.
+		&& domNode->GetType(&nodeType) == S_OK && nodeType != CPDDomNode_Word
+	) {
 		// HACK: #2175: Reader 10.1 and later report FontInfo_NoInfo even when there is mixed font info.
 		// Therefore, we must assume FontInfo_MixedInfo.
 		fontStatus = FontInfo_MixedInfo;

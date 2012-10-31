@@ -116,6 +116,7 @@ def nvdaControllerInternal_logMessage(level,pid,message):
 	return 0
 
 def handleInputCompositionEnd(result):
+	print "composition end"
 	import speech
 	import characterProcessing
 	from NVDAObjects.inputComposition import InputComposition
@@ -166,6 +167,10 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
 		focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
+	elif focus.parent and isinstance(focus.parent,InputComposition):
+		#Candidates infront of composition string
+		announce=not config.conf["inputComposition"]["announceSelectedCandidate"]
+		focus.parent.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading,announce=announce)
 	else:
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0

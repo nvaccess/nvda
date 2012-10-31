@@ -1,21 +1,16 @@
 ﻿#locale/hu/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2012 NVDA Hungarian contributors.
+#Copyright (c) 2011 NV Access Inc
 #This file is covered by the GNU General Public License.
-complexSymbols:
-# identifier	regexp
-# Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
-# Others
 
-decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=\d)
+
+# please remove these, and correct regular expression names further down.
+# --cut--
+# Others
+#tizedes vessző	(?<=\d)\.(?=\d)
+#szóban lévő '	(?<=[^\W_])['’]
+#negatív szám	(?<!\w)-(?=[$£€¥]?\d)
+# -- end cut --
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -26,9 +21,9 @@ symbols:
 ? sentence ending	kérdőjel	all	always
 ; phrase ending	pontosvessző	most	always
 : phrase ending	kettőspont	most	always
-decimal point		none	always
-in-word '	aposztrof	all	norep
-negative number	minusz	none	norep
+tizedes vessző		none	always
+szóban lévő '	aposztrof	all	norep
+negatív szám	minusz	none	norep
 
 # Whitespace
 \0	üres	char
@@ -37,7 +32,7 @@ negative number	minusz	none	norep
 \f	oldaltörés	none
 \r	sor vége	char
  	szóköz	char
- 	szóköz	char	# no-break space
+ 	szóköz (töretlen)	char	# no-break space
 
 # Standard punctuation/symbols
 !	felkiáltójel	all
@@ -79,7 +74,6 @@ _	aláhúzás	most
 •	listaelem	some
 …	pont pont pont	all	never	# Unicode harompont (egy karakter!!!)
 ...	pont pont pont	all	never	# harom normal ASCII pont egymas utan!!!
-	listaelem	some
 “	bal idézőjel	most
 ”	jobb idézőjel	most
 ‘	bal aposztrof	most
