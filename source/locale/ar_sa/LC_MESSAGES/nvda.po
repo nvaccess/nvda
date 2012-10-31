@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5535\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2012-10-11 05:30+0100\n"
-"PO-Revision-Date: 2012-10-14 13:49-0000\n"
+"PO-Revision-Date: 2012-10-23 15:48-0000\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -674,8 +674,8 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"لا يمكن الإعلان عن العناوين. يرجى تفعيل إعداد الإعلان عن رؤوس الصفوف أو "
-"الأعمدة بالجدول بمحاورة تنسيق المستندات"
+"لا يمكن ضبط رؤوس الصفوف أو الأعمدة. يرجى تفعيل إعداد الإعلان عن رؤوس الصفوف "
+"أو الأعمدة بالجدول بمحاورة تنسيق المستندات"
 
 #: gui/settingsDialogs.py:466
 msgid "Capital pitch change percentage"
@@ -748,12 +748,12 @@ msgstr "اختيار الصوت، وسرعة القراءة، ومستوى ار�
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #: NVDAObjects/window/excel.py:185
 msgid "Cleared column header row"
-msgstr "تم إلغاء إعداد الإعلان عن عنوان الصف"
+msgstr "إلغاء رأس العمود الذي تم ضبطه"
 
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
 #: NVDAObjects/window/excel.py:202
 msgid "Cleared row header column"
-msgstr "تم إلغاء الإعلان عن عنوان الصف"
+msgstr "إلغاء رأس الصف الذي تم ضبطه"
 
 #: globalCommands.py:88
 msgid "Clicks the left mouse button once at the current mouse position"
@@ -1168,7 +1168,7 @@ msgstr "الخروج من البرنامج"
 
 #: installer.py:160
 msgid "Explore NVDA user configuration directory"
-msgstr "استكشاف مجلد إعدادات المستخدم"
+msgstr "إعدادات المستخدم"
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. %s will be replaced with the specific error message.
@@ -2151,15 +2151,15 @@ msgid ""
 "should be found. Pressing twice clears the setting."
 msgstr ""
 "بالضغط عليه مرة واحدة سيجعل العمود الحالي هو العمود الذي ينبغي البحث من "
-"خلاله عن عناوين الصفوف. وبالضغط عليه مرتين سيلغي هذا الإعداد."
+"خلاله عن رؤوس الصفوف. وبالضغط عليه مرتين سيلغي هذا الإعداد."
 
 #: NVDAObjects/window/excel.py:186
 msgid ""
 "Pressing once will set the current row as the row where column headers "
 "should be found. Pressing twice clears the setting."
 msgstr ""
-"بالضغط عليه مرة واحدة سيجعل الصف الحالي هو الصف الذي ينبغي البحث من خلاله "
-"على عناوين الأعمدة. وبالضغط عليه مرتين سيلغي الإعداد"
+"بالضغط عليه مرة واحدة سيجعل الصف الحالي هو الصف الذي ينبغي البحث من خلاله عن "
+"رءوس الأعمدة. وبالضغط عليه مرتين سيلغي الإعداد"
 
 #: NVDAObjects/window/winword.py:89
 msgid "Primary footer"
@@ -2625,12 +2625,12 @@ msgstr "سربي بدون اختصارات"
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #: NVDAObjects/window/excel.py:181
 msgid "Set column header row"
-msgstr "الإعلان عن عنوان العمود"
+msgstr "ضبط رأس العمود"
 
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
 #: NVDAObjects/window/excel.py:198
 msgid "Set row header column"
-msgstr "الإعلان عن عنوان الصفرأس الصف"
+msgstr "ضبط رأس الصف"
 
 #: globalCommands.py:347
 msgid ""
@@ -4871,7 +4871,7 @@ msgstr "غير محدد"
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes.py:388
 msgid "not selected"
-msgstr "غير مظلل"
+msgstr "غير محدد"
 
 #. Translators: Reported when text is not underlined.
 #: speech.py:1083
@@ -5322,24 +5322,24 @@ msgstr "يمكن تحديده"
 
 #: controlTypes.py:348
 msgid "selected"
-msgstr "مظلل"
+msgstr "محدد"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401 globalCommands.py:130 speech.py:323 speech.py:515
 #: speech.py:530 virtualBuffers/__init__.py:735
 #, python-format
 msgid "selected %s"
-msgstr "%s مظلل"
+msgstr "%s محدد"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
 #: speech.py:509
 #, python-format
 msgid "selecting %s"
-msgstr "تظليل %s"
+msgstr "تحديد %s"
 
 #: speech.py:524
 msgid "selection removed"
-msgstr "تم إزالة التظليل"
+msgstr "تم إزالة التحديد"
 
 #: appModules/outlook.py:40
 #, python-format
@@ -5680,7 +5680,7 @@ msgstr "غير مقروء"
 #: speech.py:522
 #, python-format
 msgid "unselecting %s"
-msgstr "إزالة تظليل %s"
+msgstr "إزالة تحديد %s"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:81
