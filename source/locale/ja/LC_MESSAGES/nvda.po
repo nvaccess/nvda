@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5535\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2012-10-11 05:30+0100\n"
-"PO-Revision-Date: 2012-10-13 10:40+0900\n"
+"PO-Revision-Date: 2012-10-23 12:24+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -994,7 +994,7 @@ msgstr "書式情報"
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
 #: installer.py:162
 msgid "Documentation"
-msgstr "ドキュメンテーション"
+msgstr "説明"
 
 #: gui/__init__.py:376
 msgid "Donate"
@@ -3199,7 +3199,7 @@ msgstr "テンキーのInsertキーをNVDAキーとして使用する"
 #. Translators: The label of the Start Menu item to open the User Guide.
 #: installer.py:166 gui/__init__.py:343
 msgid "User Guide"
-msgstr "ユーザーガイド(&U)"
+msgstr "ユーザーガイド"
 
 #. Translators: the label for the Windows default NVDA interface language.
 #: languageHandler.py:72
@@ -3276,15 +3276,11 @@ msgid ""
 "functions.\n"
 msgstr ""
 "NVDAへようこそ!\n"
-"NVDAの制御コマンドは、ほとんどの場合NVDAキーとそのほかのキーの組み合わせを必"
-"要とします。\n"
-"初期状態では、テンキーのInsertキーとメインのInsertキーの両方がNVDAキーとして"
-"動作します。\n"
-"また、英語キーボードをお使いの場合は、CapsLockキーをNVDAキーとして使用するこ"
-"ともできます。\n"
-"NVDA+Nキーを押すことで、いつでもNVDAメニューを表示させることができます。\n"
-"このメニューから、NVDAのカスタマイズを行ったり、ヘルプやその他の機能にアクセ"
-"スすることができます。\n"
+"NVDAキーを押しながらほかのキーを押すと、いろいろな操作ができます。\n"
+"インサートキーがNVDAキーとして使えますが、テンキーのインサートキーの設定は変更できます。\n"
+"NVDAキーとNを押すとNVDAメニューが開きます。\n"
+"NVDAメニューには、NVDAの設定の変更、説明、その他の機能があります。\n"
+"なお、英語キーボードでは、CapsLockキーをNVDAキーとして使えます。\n"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -4892,7 +4888,7 @@ msgstr "なし"
 #: characterProcessing.py:128
 msgctxt "symbolLevel"
 msgid "none"
-msgstr "を読まない"
+msgstr "読まない"
 
 #. Translators: Indicates that a particular state on an object is negated.
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
