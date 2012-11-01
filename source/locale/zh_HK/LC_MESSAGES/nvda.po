@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: 2012.3-5603\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-27 19:05+1000\n"
-"PO-Revision-Date: 2012-10-31 12:04+0800\n"
+"PO-Revision-Date: 2012-11-01 09:40+0800\n"
 "Last-Translator: Eric Yip <cyeric20@yahoo.com.hk>\n"
 "Language-Team: Eric Yip@ HKBU <cyeric20@yahoo.com.hk>\n"
 "MIME-Version: 1.0\n"
@@ -688,31 +688,31 @@ msgstr "%s 完"
 #: characterProcessing.py:128
 msgctxt "symbolLevel"
 msgid "none"
-msgstr "不讀出"
+msgstr "不報讀標點"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:130
 msgctxt "symbolLevel"
 msgid "some"
-msgstr "讀出小部分"
+msgstr "報讀一些標點"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:132
 msgctxt "symbolLevel"
 msgid "most"
-msgstr "讀出大部分"
+msgstr "報讀較多標點"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:134
 msgctxt "symbolLevel"
 msgid "all"
-msgstr "讀出所有"
+msgstr "報讀全部標點"
 
 #. Translators: The level at which the given symbol will be spoken.
 #: characterProcessing.py:136
 msgctxt "symbolLevel"
 msgid "character"
-msgstr "標點報讀等級"
+msgstr "標點報讀程度"
 
 #: colors.py:75
 msgid "unknown color"
@@ -1596,18 +1596,18 @@ msgstr "複製到剪貼簿"
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:45
 msgid "input help on"
-msgstr "輸入說明模式開始"
+msgstr "學習模式開始"
 
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:47
 msgid "input help off"
-msgstr "輸入說明模式結束"
+msgstr "學習模式結束"
 
 #: globalCommands.py:50
 msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
-msgstr "切換輸入說明模式開關, 開的時候每按下按鍵會讀出相對應的功能"
+msgstr "切換學習模式開始或結束, 開始之後每按下按鍵會讀出相對應的功能"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:58
@@ -1756,12 +1756,12 @@ msgstr "切換讀出指令鍵開關"
 #: globalCommands.py:225
 #, python-format
 msgid "symbol level %s"
-msgstr "%s標點"
+msgstr "%s"
 
 #: globalCommands.py:226
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr "設定標點符號報讀程度"
+msgstr "設定報讀多少標點符號"
 
 #: globalCommands.py:241
 msgid "object has no location"
@@ -2035,7 +2035,7 @@ msgstr "朗讀關閉"
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
 #: globalCommands.py:622
 msgid "speech mode beeps"
-msgstr "以嗶嗶聲代替朗讀"
+msgstr "以嗶嗶聲代替朗讀語音"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
 #: globalCommands.py:625
@@ -2256,7 +2256,7 @@ msgstr "忽略下一個 NVDA 的按鍵指令, 將其交由視窗相關的程式�
 #: globalCommands.py:876
 #, python-format
 msgid "Currently running application is %s"
-msgstr "目前執行中應用程式的檔名是 %s"
+msgstr "現時執行應用程式的檔名是 %s"
 
 #: globalCommands.py:879
 #, python-format
@@ -2513,12 +2513,12 @@ msgstr "增加音量"
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 #: keyLabels.py:29
 msgid "next track"
-msgstr "下一個曲目"
+msgstr "下一曲目"
 
 #. Translators: This is the name of the next track key found on multimedia keyboards to skip to next track in the mediaplayer.
 #: keyLabels.py:31
 msgid "previous track"
-msgstr "上一個曲目"
+msgstr "上一曲目"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards to stop the current playing track in the mediaplayer.
 #: keyLabels.py:33
@@ -4514,7 +4514,7 @@ msgstr "有支援時自動轉換朗讀方言(&D)"
 #. voice settings dialog.
 #: gui\settingsDialogs.py:459
 msgid "Punctuation/symbol &level:"
-msgstr "標點符號報讀程度(&L):"
+msgstr "報讀標點程度(&L):"
 
 #: gui\settingsDialogs.py:466
 msgid "Capital pitch change percentage"
@@ -4680,7 +4680,7 @@ msgstr "自動報出可見的候選字詞(&A)"
 #. Input composition settings dialog.
 #: gui\settingsDialogs.py:744
 msgid "Announce &selected candidate"
-msgstr "報出以選候選字詞和它的全部解釋配詞(&S)"
+msgstr "報出以選候選字和它的全部解釋配詞(&S)"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -5710,7 +5710,7 @@ msgstr "預設顏色"
 msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
-msgstr "沒能設為標題, 請在文件格式設定中鉤選報出表頭的設定"
+msgstr "沒能設為標題, 請在文件格式設定中勾選報出表格的列及欄標題"
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #: NVDAObjects\window\excel.py:181
@@ -5726,7 +5726,7 @@ msgstr "欄標題定義取消了"
 msgid ""
 "Pressing once will set the current row as the row where column headers "
 "should be found. Pressing twice clears the setting."
-msgstr "按一次把目前的一列定為欄標題, 按兩次取消定義"
+msgstr "按一次把目前的一列定為欄標題, 連按兩次取消定義"
 
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
 #: NVDAObjects\window\excel.py:198
@@ -5742,7 +5742,7 @@ msgstr "列標題定義取消了"
 msgid ""
 "Pressing once will set the current column as the column where row headers "
 "should be found. Pressing twice clears the setting."
-msgstr "按一次把目前的一欄設為列標題, 按兩次取消定義"
+msgstr "按一次把目前的一欄定為列標題, 連按兩次取消定義"
 
 #. Translators: This is presented in Excel when the current cell contains a formula.
 #: NVDAObjects\window\excel.py:268
