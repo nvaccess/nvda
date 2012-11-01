@@ -83,6 +83,7 @@ Highlights of this release include support for Asian character input; experiment
 - In browse mode in Mozilla applications, the items in certain list boxes (specifically, ARIA list boxes) are no longer incorrectly rendered.
 - In browse mode in Mozilla applications, certain controls that were rendered with an incorrect label or just whitespace are now rendered with the correct label.
 - In browse mode in Mozilla applications, some extraneous whitespace has been eliminated.
+- In browse mode in web browsers, certain graphics that are explicitly marked as presentational (specifically, with an alt="" attribute) are now correctly ignored.
 - In web browsers, NVDA now hides content which is marked as hidden from screen readers (specifically, using the aria-hidden attribute). (#2117)
 - Negative currency amounts (e.g. -$123) are now correctly spoken as negative, regardless of symbol level. (#2625)
 - During say all, NVDA will no longer incorrectly revert to the default language where a line does not end a sentence. (#2630)
