@@ -1217,15 +1217,23 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.display = None
 			self.displaySize = 0
 			return
+		# See if the user have defined a specific port to connect to
+		if name not in config.conf["braille"]:
+			config.conf["braille"][name] = {"port" : "auto"}
+		port = config.conf["braille"][name].get("port")
+		# Here we try to keep compatible with old drivers that don't support port setting
+		kwargs = {}
+		if port != "auto":
+			kwargs["port"] = port
 		try:
 			newDisplay = _getDisplayDriver(name)
 			if newDisplay == self.display.__class__:
 				# This is the same driver as was already set, so just re-initialise it.
 				self.display.terminate()
 				newDisplay = self.display
-				newDisplay.__init__()
+				newDisplay.__init__(**kwargs)
 			else:
-				newDisplay = newDisplay()
+				newDisplay = newDisplay(**kwargs)
 				if self.display:
 					try:
 						self.display.terminate()
@@ -1488,6 +1496,15 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		@param cells: The braille cells to display.
 		@type cells: [int, ...]
 		"""
+
+	@classmethod
+	def getPossiblePorts(cls):
+		""" Returns possible hardware ports for this driver.
+		
+		@return: ordered dictionary of name : description for each port
+		@rtype: OrderedDict
+		"""
+		raise NotImplementedError
 
 	#: Global input gesture map for this display driver.
 	#: @type: L{inputCore.GlobalGestureMap}

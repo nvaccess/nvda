@@ -80,6 +80,10 @@ confspec = ConfigObj(StringIO(
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
 
+	# Braille display driver settings
+	[[__many__]]
+		port = string(default="auto")
+
 # Presentation settings
 [presentation]
 		reportKeyboardShortcuts = boolean(default=true)

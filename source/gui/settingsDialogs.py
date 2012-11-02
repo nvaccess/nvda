@@ -1214,6 +1214,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		driverList = braille.getDisplayList()
 		self.displayNames = [driver[0] for driver in driverList]
 		self.displayList = wx.Choice(self, wx.ID_ANY, choices=[driver[1] for driver in driverList])
+		self.Bind(wx.EVT_CHOICE, self.onDisplayNameChanged, self.displayList)
 		try:
 			selection = self.displayNames.index(braille.handler.display.name)
 			self.displayList.SetSelection(selection)
@@ -1222,6 +1223,14 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer.Add(label)
 		sizer.Add(self.displayList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, label=_("&Port:"))
+		self.portsList = wx.Choice(self, wx.ID_ANY, choices=[])
+		sizer.Add(label)
+		sizer.Add(self.portsList)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+		self.updatePossiblePorts()
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Translation &table:"))
@@ -1283,6 +1292,10 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def onOk(self, evt):
 		display = self.displayNames[self.displayList.GetSelection()]
+		if display not in config.conf["braille"]:
+			config.conf["braille"][display] = {}
+		port = self.possiblePorts[self.portsList.GetSelection()][0]
+		config.conf["braille"][display]["port"] = port
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
@@ -1304,6 +1317,30 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		super(BrailleSettingsDialog,  self).onOk(evt)
+
+	def onDisplayNameChanged(self, evt):
+		self.updatePossiblePorts()
+
+	def updatePossiblePorts(self):
+		self.possiblePorts = [("auto", _("Automatic"),)]
+		displayName = self.displayNames[self.displayList.GetSelection()]
+		displayCls = braille._getDisplayDriver(displayName)
+		try:
+			for k, v in displayCls.getPossiblePorts().iteritems():
+				self.possiblePorts.append((k,v),)
+		except NotImplementedError:
+			pass # Only automatic port selection employed by the driver
+		self.portsList.SetItems([p[1] for p in self.possiblePorts])
+		try:
+			selectedPort = config.conf["braille"][displayName].get("port")
+		except KeyError:
+			selectedPort = "auto"
+		try:
+			portNames = [p[0] for p in self.possiblePorts]
+			selection = portNames.index(selectedPort)
+			self.portsList.SetSelection(selection)
+		except:
+			self.portsList.SetSelection(0) # revert to automatic.
 
 class SpeechSymbolsDialog(SettingsDialog):
 	# Translators: This is the label for the symbol pronunciation dialog.
