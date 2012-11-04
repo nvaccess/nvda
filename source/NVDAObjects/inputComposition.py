@@ -12,22 +12,18 @@ def calculateInsertedChars(oldComp,newComp):
 	oldLen=len(oldComp)
 	newLen=len(newComp)
 	minLen=min(oldLen,newLen)
-	print "oldLen %d, newLen %d, minLen %d"%(oldLen,newLen,minLen)
 	diffStart=0
 	diffEnd=newLen
 	for index in xrange(minLen):
-		print "checking start: index %d, new %c, old %c"%(index,newComp[index],oldComp[index])
 		if newComp[index]!=oldComp[index]:
 			break
 		diffStart=index+1
 	for index in xrange(minLen,0,-1):
 		backIndex=index-minLen-1
-		print "checking end: index %d, backIndex %d, new %c, old %c"%(index,backIndex,newComp[backIndex],oldComp[backIndex])
 		if newComp[backIndex]!=oldComp[backIndex]:
 			break
 		diffEnd=newLen+backIndex
 	diffEnd=max(diffEnd,diffStart+(newLen-oldLen))
-	print "diffStart %d, diffEnd %d"%(diffStart,diffEnd)
 	return newComp[diffStart:diffEnd]
 
 class InputCompositionTextInfo(OffsetsTextInfo):

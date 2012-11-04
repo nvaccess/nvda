@@ -253,7 +253,9 @@ class UIA(Window):
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
-		if UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
+		if UIAClassName=="WpfTextView":
+			clsList.append(WpfTextView)
+		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(Toast)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
@@ -754,3 +756,14 @@ class Toast(UIA):
 		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
 		# TODO: Don't use getBrailleTextForProperties directly.
 		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
+
+#WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
+#This causes major lags when using this control with Braille in NVDA. (#2759) 
+#For now just ignore the events.
+class WpfTextView(UIA):
+
+	def event_nameChange(self):
+		return
+
+	def event_stateChange(self):
+		return
