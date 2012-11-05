@@ -511,7 +511,12 @@ class MSHTML(IAccessible):
 		if self.HTMLNodeHasAncestorIAccessible:
 			return ""
 		#IE inappropriately generates the name from descendants on some controls
-		if self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT,oleacc.ROLE_SYSTEM_GROUPING):
+		if self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT):
+			return ""
+		#Adding an ARIA landmark or unknown role to a DIV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
+		# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
+		# E.g. row (#2780)
+		if self.HTMLNodeName=="DIV" and self.role==controlTypes.ROLE_GROUPING:
 			return ""
 		return super(MSHTML,self).name
 
