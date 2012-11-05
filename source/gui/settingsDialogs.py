@@ -1322,25 +1322,33 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.updatePossiblePorts()
 
 	def updatePossiblePorts(self):
-		self.possiblePorts = [("auto", _("Automatic"),)]
+		
 		displayName = self.displayNames[self.displayList.GetSelection()]
 		displayCls = braille._getDisplayDriver(displayName)
+		self.possiblePorts = []
+		if displayCls.canDoAutomaticPortSelection:
+			self.possiblePorts.append(("auto", _("Automatic"),))
 		try:
 			for k, v in displayCls.getPossiblePorts().iteritems():
 				self.possiblePorts.append((k,v),)
 		except NotImplementedError:
-			pass # Only automatic port selection employed by the driver
+			pass # Only automatic selection. no automatic should suply possible ports.
 		self.portsList.SetItems([p[1] for p in self.possiblePorts])
 		try:
 			selectedPort = config.conf["braille"][displayName].get("port")
 		except KeyError:
+			# Display not in config, use default as automatic.
 			selectedPort = "auto"
 		try:
 			portNames = [p[0] for p in self.possiblePorts]
 			selection = portNames.index(selectedPort)
 			self.portsList.SetSelection(selection)
 		except:
+			# No automatic selection neither port found, use first possible port.
 			self.portsList.SetSelection(0) # revert to automatic.
+		# If only automatic selection is available, disable the port selection control
+		enable = not (displayCls.canDoAutomaticPortSelection and len(self.possiblePorts) == 1)
+		self.portsList.Enable(enable)
 
 class SpeechSymbolsDialog(SettingsDialog):
 	# Translators: This is the label for the symbol pronunciation dialog.
