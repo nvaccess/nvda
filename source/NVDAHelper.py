@@ -116,7 +116,6 @@ def nvdaControllerInternal_logMessage(level,pid,message):
 	return 0
 
 def handleInputCompositionEnd(result):
-	print "composition end"
 	import speech
 	import characterProcessing
 	from NVDAObjects.inputComposition import InputComposition
@@ -144,8 +143,13 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 	from NVDAObjects.inputComposition import InputComposition
 	from NVDAObjects.behaviors import CandidateItem
 	focus=api.getFocusObject()
+	if focus.parent and isinstance(focus.parent,InputComposition):
+		#Candidates infront of existing composition string
+		announce=not config.conf["inputComposition"]["announceSelectedCandidate"]
+		focus.parent.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading,announce=announce)
+		return 0
 	#IME keeps updating input composition while the candidate list is open
-	#Therefore ignore composition updates if candidate selections are configured for speaking.  
+	#Therefore ignore new composition updates if candidate selections are configured for speaking.
 	if config.conf["inputComposition"]["announceSelectedCandidate"] and isinstance(focus,CandidateItem):
 		return 0
 	if not isinstance(focus,InputComposition):
@@ -167,10 +171,6 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 	focus=api.getFocusObject()
 	if isinstance(focus,InputComposition):
 		focus.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading)
-	elif focus.parent and isinstance(focus.parent,InputComposition):
-		#Candidates infront of composition string
-		announce=not config.conf["inputComposition"]["announceSelectedCandidate"]
-		focus.parent.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading,announce=announce)
 	else:
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0

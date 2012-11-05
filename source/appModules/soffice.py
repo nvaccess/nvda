@@ -67,13 +67,13 @@ class JAB_OOTableCell(JAB):
 
 	def _get_rowNumber(self):
 		try:
-			return gridCoordStringToNumbers(self.name)[0]
+			return gridCoordStringToNumbers(self.cellCoordsText)[0]
 		except ValueError:
 			return 0
 
 	def _get_columnNumber(self):
 		try:
-			return gridCoordStringToNumbers(self.name)[1]
+			return gridCoordStringToNumbers(self.cellCoordsText)[1]
 		except ValueError:
 			return 0
 

@@ -260,6 +260,8 @@ class MSHTML(VirtualBuffer):
 			attrs={"HTMLAttrib::role":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
 		elif nodeType == "embeddedObject":
 			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}
+		elif nodeType == "separator":
+			attrs = {"IHTMLDOMNode::nodeName": ["HR"]}
 		else:
 			return None
 		return attrs

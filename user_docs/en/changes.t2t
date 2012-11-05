@@ -9,6 +9,10 @@
 -Basic support for reading and writing messages in Lotus Notes 8.5. (#543)
 
 
+== Bug Fixes ==
+- The quick navigation keys for jumping to the next or previous separator in Browse Mode now works in Internet Explorer and other MSHTML controls. (#2781)
+
+
 = 2012.3 =
 Highlights of this release include support for Asian character input; experimental support for touch screens on Windows 8; reporting of page numbers and improved support for tables in Adobe Reader; table navigation commands in focused table rows and Windows list-view controls; support for several more braille displays; and reporting of row and column headers in Microsoft Excel.
 
@@ -59,6 +63,7 @@ Highlights of this release include support for Asian character input; experiment
 - The NVDA Key Commands Quick Reference document has been renamed to Commands Quick Reference, as it now includes touch commands as well as keyboard commands.
 - The Elements list in Browse mode will now remember the last element type shown (e.g. links, headings or landmarks) each time the dialog is shown within the same session of NVDA. (#365)
 - Most Metro apps in Windows 8 (e.g. Mail, Calendar) no longer activate Browse Mode for the entire app.
+- Updated Handy Tech BrailleDriver COM-Server to 1.4.2.0.
 
 
 == Bug Fixes ==
@@ -87,6 +92,9 @@ Highlights of this release include support for Asian character input; experiment
 - Cell coordinates in Microsoft Excel are now shown again in Braille.
 - In Microsoft Word, NVDA no longer leaves you stuck on a paragraph with list formatting when trying to navigate out over a bullet or number with left arrow or control + left arrow. (#2402)
 - In browse mode in Mozilla applications, the items in certain list boxes (specifically, ARIA list boxes) are no longer incorrectly rendered.
+- In browse mode in Mozilla applications, certain controls that were rendered with an incorrect label or just whitespace are now rendered with the correct label.
+- In browse mode in Mozilla applications, some extraneous whitespace has been eliminated.
+- In browse mode in web browsers, certain graphics that are explicitly marked as presentational (specifically, with an alt="" attribute) are now correctly ignored.
 - In web browsers, NVDA now hides content which is marked as hidden from screen readers (specifically, using the aria-hidden attribute). (#2117)
 - Negative currency amounts (e.g. -$123) are now correctly spoken as negative, regardless of symbol level. (#2625)
 - During say all, NVDA will no longer incorrectly revert to the default language where a line does not end a sentence. (#2630)
@@ -106,6 +114,9 @@ Highlights of this release include support for Asian character input; experiment
 - When opening the Windows 8 start screen, the focus is correctly placed on the first tile, rather than jumping to the root of the start screen which can confuse navigation. (#2720)
 - NVDA will no longer fail to start when the user's profile path contains certain multibyte characters. (#2729)
 - In browse mode in Google Chrome, the text of tabs is now rendered correctly.
+- In browse mode, menu buttons are now reported correctly.
+- In OpenOffice.org/LibreOffice Calc, reading spreadsheet cells now works correctly. (#2765)
+- NVDA can again function in the Yahoo! Mail message list when used from Internet Explorer. (#2780)
 
 
 == Changes for Developers ==
