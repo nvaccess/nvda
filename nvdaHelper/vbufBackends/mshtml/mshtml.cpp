@@ -627,6 +627,7 @@ wostringstream tempStringStream;
 	}
 	if(nodeName.compare(L"TABLE")==0) {
 		tableInfo=new fillVBuf_tableInfo;
+		tableInfo->tableNode=parentNode;
 		tableInfo->tableID=ID;
 		tableInfo->curRowNumber=0;
 		tableInfo->curColumnNumber=0;
@@ -640,11 +641,15 @@ wostringstream tempStringStream;
 		tempStringStream.str(L"");
 		tempStringStream<<ID;
 		attribsMap[L"table-id"]=tempStringStream.str();
+	} else if(tableInfo&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TBODY")==0||nodeName.compare(L"TFOOT")==0)) {
+		parentNode->setUpdateAncestor(tableInfo->tableNode);
 	} else if(tableInfo&&nodeName.compare(L"TR")==0) {
 		++tableInfo->curRowNumber;
 		tableInfo->curColumnNumber = 0;
+		parentNode->setUpdateAncestor(tableInfo->tableNode);
 	} if(tableInfo&&(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
 		++tableInfo->curColumnNumber;
+		parentNode->setUpdateAncestor(tableInfo->tableNode);
 		handleColsSpannedByPrevRows(*tableInfo);
 		tempStringStream.str(L"");
 		tempStringStream<<tableInfo->tableID;

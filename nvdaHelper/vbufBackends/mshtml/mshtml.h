@@ -38,6 +38,7 @@ typedef struct {
 	// Lists nodes with explicit headers along with their Headers attribute string.
 	std::list<std::pair<VBufStorage_controlFieldNode_t*, std::wstring>> nodesWithExplicitHeaders;
 	bool definitData;
+	VBufStorage_controlFieldNode_t* tableNode;
 } fillVBuf_tableInfo;
 
 void incBackendLibRefCount();
