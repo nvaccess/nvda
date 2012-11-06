@@ -147,6 +147,11 @@ class VBufStorage_fieldNode_t {
 	bool isHidden;
 
 /**
+ * points to an optional ancestor node which should be re-rendered instead of this node, if this node changes.
+ */
+	VBufStorage_controlFieldNode_t* updateAncestor;
+
+	/**
  * a map to hold attributes for this field.
  */
 	VBufStorage_attributeMap_t attributes;
@@ -300,6 +305,16 @@ class VBufStorage_fieldNode_t {
  * @param isBlock true if this field is a hidden element, false otherwise.
  */
 	void setIsHidden(bool isHidden);
+
+/**
+ * points to an optional ancestor node which should be re-rendered instead of this node, if this node changes.
+ */
+	VBufStorage_controlFieldNode_t* getUpdateAncestor();
+
+/**
+ * points to an optional ancestor node which should be re-rendered instead of this node, if this node changes.
+ */
+	void setUpdateAncestor(VBufStorage_controlFieldNode_t* updateAncestor);
 
 /**
  * Getter for isBlock

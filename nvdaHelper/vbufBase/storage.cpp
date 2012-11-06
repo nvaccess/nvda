@@ -284,7 +284,7 @@ void VBufStorage_fieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffe
 	LOG_DEBUG(L"Disassociating fieldNode from buffer");
 }
 
-VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), isHidden(false), attributes() {
+VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), isHidden(false), updateAncestor(NULL), attributes() {
 	LOG_DEBUG(L"field node initialization at "<<this<<L"length is "<<length);
 }
 
@@ -295,6 +295,11 @@ VBufStorage_fieldNode_t::~VBufStorage_fieldNode_t() {
 VBufStorage_controlFieldNode_t* VBufStorage_fieldNode_t::getParent() {
 	LOG_DEBUG(L"parent at "<<parent);
 	return parent;
+}
+
+VBufStorage_controlFieldNode_t* VBufStorage_fieldNode_t::getUpdateAncestor() {
+	LOG_DEBUG(L"updateAncestor at "<<updateAncestor);
+	return updateAncestor;
 }
 
 VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getPrevious() {
@@ -346,6 +351,10 @@ void VBufStorage_fieldNode_t::setIsBlock(bool isBlock) {
 
 void VBufStorage_fieldNode_t::setIsHidden(bool isHidden) {
 	this->isHidden=isHidden;
+}
+
+void VBufStorage_fieldNode_t::setUpdateAncestor(VBufStorage_controlFieldNode_t* node) {
+	this->updateAncestor=node;
 }
 
 int VBufStorage_fieldNode_t::getLength() {
