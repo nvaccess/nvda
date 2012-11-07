@@ -374,7 +374,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	} else {
 		isBlockElement=FALSE;
 	}
-	parentNode->setIsBlock(isBlockElement);
+	parentNode->isBlock=isBlockElement;
 
 	BSTR name=NULL;
 	if(pacc->get_accName(varChild,&name)!=S_OK)
@@ -692,7 +692,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			// Always render a space for empty table cells and unknowns.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-			parentNode->setIsBlock(false);
+			parentNode->isBlock=false;
 		}
 
 		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR) && parentNode->getLength() == 0) {

@@ -429,7 +429,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			parentNode->addAttribute(L"acrobat::stdname", stdName);
 			if (wcscmp(stdName, L"Span") == 0 || wcscmp(stdName, L"Link") == 0 || wcscmp(stdName, L"Quote") == 0) {
 				// This is an inline element.
-				parentNode->setIsBlock(false);
+				parentNode->isBlock=false;
 			}
 		}
 
@@ -640,7 +640,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		// No children, so this is a leaf node.
 		if (!this->isXFA && !stdName) {
 			// Non-XFA leaf nodes with no stdName are inline.
-			parentNode->setIsBlock(false);
+			parentNode->isBlock=false;
 		}
 
 		// Get the name.
@@ -700,7 +700,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		// Always render a space for empty table cells.
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		addAttrsToTextNode(previousNode);
-		parentNode->setIsBlock(false);
+		parentNode->isBlock=false;
 	} else if (role == ROLE_SYSTEM_TABLE) {
 		nhAssert(tableInfo);
 		for (list<pair<AdobeAcrobatVBufStorage_controlFieldNode_t*, wstring>>::iterator it = tableInfo->nodesWithExplicitHeaders.begin(); it != tableInfo->nodesWithExplicitHeaders.end(); ++it)

@@ -292,36 +292,6 @@ VBufStorage_fieldNode_t::~VBufStorage_fieldNode_t() {
 	LOG_DEBUG(L"fieldNode being destroied");
 }
 
-VBufStorage_controlFieldNode_t* VBufStorage_fieldNode_t::getParent() {
-	LOG_DEBUG(L"parent at "<<parent);
-	return parent;
-}
-
-VBufStorage_controlFieldNode_t* VBufStorage_fieldNode_t::getUpdateAncestor() {
-	LOG_DEBUG(L"updateAncestor at "<<updateAncestor);
-	return updateAncestor;
-}
-
-VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getPrevious() {
-	LOG_DEBUG(L"previous at "<<previous);
-	return previous;
-}
-
-VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getNext() {
-	LOG_DEBUG(L"next at "<<next);
-	return next;
-}
-
-VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getFirstChild() {
-	LOG_DEBUG(L"first child at "<<firstChild);
-	return firstChild;
-}
-
-VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getLastChild() {
-	LOG_DEBUG(L"last child at "<<lastChild);
-	return lastChild;
-}
-
 bool VBufStorage_fieldNode_t::addAttribute(const std::wstring& name, const std::wstring& value) {
 	LOG_DEBUG(L"Adding attribute "<<name<<L" with value "<<value);
 	this->attributes[name]=value;
@@ -344,22 +314,6 @@ std::wstring VBufStorage_fieldNode_t::getDebugInfo() const {
 	s<<L"field node at "<<this<<L", parent at "<<parent<<L", previous at "<<previous<<L", next at "<<next<<L", firstChild at "<<firstChild<<L", lastChild at "<<lastChild<<L", length is "<<length<<L", attributes are "<<getAttributesString();
 	return s.str();
 }
-
-void VBufStorage_fieldNode_t::setIsBlock(bool isBlock) {
-	this->isBlock=isBlock;
-}
-
-void VBufStorage_fieldNode_t::setIsHidden(bool isHidden) {
-	this->isHidden=isHidden;
-}
-
-void VBufStorage_fieldNode_t::setUpdateAncestor(VBufStorage_controlFieldNode_t* node) {
-	this->updateAncestor=node;
-}
-
-int VBufStorage_fieldNode_t::getLength() {
-		return this->length;
-	}
 
 //controlFieldNode implementation
 

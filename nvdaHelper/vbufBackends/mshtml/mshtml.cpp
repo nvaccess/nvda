@@ -642,14 +642,14 @@ wostringstream tempStringStream;
 		tempStringStream<<ID;
 		attribsMap[L"table-id"]=tempStringStream.str();
 	} else if(tableInfo&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TBODY")==0||nodeName.compare(L"TFOOT")==0)) {
-		parentNode->setUpdateAncestor(tableInfo->tableNode);
+		parentNode->updateAncestor=tableInfo->tableNode;
 	} else if(tableInfo&&nodeName.compare(L"TR")==0) {
 		++tableInfo->curRowNumber;
 		tableInfo->curColumnNumber = 0;
-		parentNode->setUpdateAncestor(tableInfo->tableNode);
+		parentNode->updateAncestor=tableInfo->tableNode;
 	} if(tableInfo&&(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
 		++tableInfo->curColumnNumber;
-		parentNode->setUpdateAncestor(tableInfo->tableNode);
+		parentNode->updateAncestor=tableInfo->tableNode;
 		handleColsSpannedByPrevRows(*tableInfo);
 		tempStringStream.str(L"");
 		tempStringStream<<tableInfo->tableID;
@@ -743,7 +743,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Handle text nodes
 	if(!shouldSkipText) { 
-		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->getIsBlock()&&!previousNode));
+		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->isBlock&&!previousNode));
 		if(!s.empty()) {
 			LOG_DEBUG(L"Got text from node");
 			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,s);
@@ -859,7 +859,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	nhAssert(parentNode);
 	previousNode=NULL;
 
-	parentNode->setIsHidden(hidden||dontRender);
+	parentNode->isHidden=(hidden||dontRender);
 	//We do not want to render any content for dontRender nodes
 	if(dontRender) {
 		return parentNode;
@@ -1209,7 +1209,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Update block setting on node
-	parentNode->setIsBlock(isBlock);
+	parentNode->isBlock=isBlock;
 
 	//Add all the collected attributes to the node
 	for(tempIter=attribsMap.begin();tempIter!=attribsMap.end();++tempIter) {
