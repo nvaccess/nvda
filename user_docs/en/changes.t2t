@@ -11,7 +11,8 @@
 
 == Bug Fixes ==
 - The quick navigation keys for jumping to the next or previous separator in Browse Mode now works in Internet Explorer and other MSHTML controls. (#2781)
-
+- If NVDA falls back to eSpeak or  no speech due to a configured speech synthesizer failing when NVDA starts, the configuration is no longer updated to set the fallback synthesizer as the configured choice, meaning that now the original synthesizer will be tried again next time NVDA starts.
+ 
 
 = 2012.3 =
 Highlights of this release include support for Asian character input; experimental support for touch screens on Windows 8; reporting of page numbers and improved support for tables in Adobe Reader; table navigation commands in focused table rows and Windows list-view controls; support for several more braille displays; and reporting of row and column headers in Microsoft Excel.
