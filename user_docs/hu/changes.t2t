@@ -3,6 +3,107 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2012.3 =
+
+A 2012.3. verzió legfontosabb újdonságai: ázsiai karakterbevitel támogatása, a windows 8 érintő képernyők alapvető támogatása, az oldalszámok bemondása és a táblázatok jobb felolvasása az adobe readerben, valamint a windows listanézetekben és a fókuszban lévő táblázatsorokban táblázatnavigációs parancsok használata.
+
+== Újdonságok ==
+
+- Az NVDA most már támogat ázsiai karakterbevitelt az IME és szövegbeviteli szolgáltatások segítségével minden alkalmazásban, ideértve:
+ - Navigálást és az elemek bemondását a javaslatok listában;
+ - A szerkesztési és az olvasási szöveg navigálását/bemondását.
+- Az áthúzást és aláhúzást a program felolvassa az Adobe Readerben. (#2410)
+- Ha a Windowsban a beragadó billentyűk szolgáltatás be van kapcsolva, az NVDA módosító billentyűje is ennek megfelelően viselkedik, azaz nem kell az NVDA billentyűt nyomva tartani a hozzá tartozó billentyű megnyomásakor. (#230)
+- Az NVDA támogatja a HIMS Braille Sense, Braille EDGE és SyncBraille braille kijelzőket. (#1266, #1267)
+- Ha a Windows 8-ban értesítések jelennek meg, az NVDA felolvassa őket, és odateszi a navigátor kurzort további interakciók elvégzéséhez. (#2143)
+- A windows 8 érintőképernyők alapvető támogatása, ideértve:
+- az ujjak alatt lévő szöveg mozgás közben történő felolvasását;
+- több megoldást az elemnavigációra, a szövegek áttekintésére és egyéb NVDA-parancsokra
+- a VIP Mud támogatása. (#1728)
+- Ha az adobe readerben a táblázatnak van összesítője, az NVDA felolvassa azt. (#2465)
+- Az Adobe Readerben a program felolvassa a táblázatok sor- és oszlopfejléceit. (#2193, #2527, #2528)
+- Új nyelv a programban az Amhara, Koreai, Nepáli.
+- Az NVDA felolvassa az automatikus kiegészítési javaslatokat e-mailcímek bevitelekor a Microsoft outlook 2007-ben. (#689)
+- Új eSpeak változatok: Gene, Gene2. (#2512)
+- Az Adobe Readerben a program felolvassa az oldalszámokat. (#2534)
+- Most már lehetőség van az NVDA alapértelmezett konfigurációjának visszaállítására az NVDA+kontroll+r billentyű háromszori megnyomásával, valamint az nvda menüből is. (#2086)
+- A program támogatja a Nippon Telesoft által gyártott Seika Version 3, 4 és 5 és Seika80 braille kijelzőket. (#2452)
+- Az első és utolsó kurzoráthelyező gombok a Freedom Scientific PAC Mate és Focus Braille kijelzőkön most már használhatóak előre és hátra görgetésre. (#2556)
+- Rengeteg egyéb Freedom Scientific Focus Braille kijelző funkció támogatása mint pl. görgők és egyes pontkombinációk általános műveletek végrehajtásához. (#2516)
+- Az IAccessible kisegítő technológiát használó alkalmazásokban, mint például a Mozilla alkalmazások, a táblázatok sor- és oszlopfejléceit helyesen olvassa a program az interaktív módban is. (#926)
+- A dokumentumot megjelenítő vezérlőelem alapvető támogatása a Microsoft Word 2013 programban. (#2543)
+- A program felolvassa a szövegigazítást az Iaccessible kisegítő technológiát használó alkalmazásokban (pl. mozilla alkalmazások). (#2612)
+- Ha egy táblázat sora vagy egy többoszlopos szabványos lista van a fókuszban, már használhatók a táblázatfelolvasó navigációs parancsok bármely cella felolvasásához. (#828)
+- Új braille fordítási táblák: észt 0. fokozat, Portugál 8 pontos számítógépes braille, olasz 6 pontos számítógépes braille. (#2139, #2662)
+- Ha az NVDA telepítve van, és egy NVDA-bővítménycsomagot közvetlenül megnyitunk (pl. az intézőben vagy egy webböngészőben letöltéskor), az NVDA közvetlenül telepíti azt. (#2306)
+- A program támogatja a Papenmeier BRAILLEX braille kijelzők újabb modelljeit. (#1265)
+- Elérhető a Magyar irodalmi braille tábla, melyet az "Informatika a Látássérültekért" Alapítvány készített.
+- Az NVDA bemondja a kurzor pozícióját (pl. 1 per 4) a Windows Explorer program listaelemei esetén Windows 7 (vagy újabb) operációs rendszer használatakor. Ez szintén működik olyan UIAutomation vezérlőelemekben is, melyek támogatják az itemIndex és itemCount tulajdonságokat. (#2643)
+
+
+== Változások ==
+
+- Ha a braille követi az áttekintő kurzort és az nem egy szöveges objektumon van (pl. szerkesztőmező), a kurzor áthelyező billentyűk aktiválják az objektumot. (#2386)
+- A beállítások mentése kilépéskor lehetőség alapértelmezetten aktiválva van új konfiguráció esetén.
+- Az NVDA egy előző verziójának frissítésekor a program parancsikonjának billentyűparancsa nem állítódik vissza a control+alt+n billentyűkombinációra, ha az előzőleg meg lett változtatva. (#2572)
+- A bővítmények kezelése párbeszédpanel a bővítmények állapotát most már a név után jeleníti meg. (#2548)
+- Ugyanaz, vagy egy más verziójú bővítmény frissítése esetén az NVDA most már rákérdez a felülírásra, hiba megjelenítése és a telepítés megszakítása helyett. (#2501)
+- A navigátor kurzor parancsai, (az aktuális elem felolvasása parancsot kivéve) kevésbé részletesen közöl egy adott elemről információkat. Részletes információkért használja az aktuális elem felolvasása parancsot. (#2560)
+- A liblouis braille fordító frissítve a 2.5.0 verzióra.
+- A billentyűparancsok listája NVDA parancsok listájára lett átnevezve, mivel az NVDA most már érintőképernyőkre vonatkozó parancsokat is tartalmaz.
+- Az elemek listája böngészőmódban most már megjegyzi az utoljára mutatott elem típusát, pl. hivatkozás, címsor, vagy jelzőpont, minden esetben, amikor a párbeszédpanelt megjelenítjük az nvda ugyanazon munkamenetében.
+- A legtöbb metro alkalmazásban windows 8 használatakor, mint pl. mail, naptár, az NVDA nem aktiválja a böngészőmódot a teljes alkalmazás számára.
+
+
+== Hibajavítások ==
+
+- A Blio alkalmazásban a könyvek tartalma most már braille-ben is olvasható. (#2139)
+- Windows Vista vagy újabb operációs rendszer esetén az NVDA már nem tekinti a Windows billentyűt úgy, mintha az nyomva lenne tartva a Windows feloldása után, ha azt előtte a Windows+l paranccsal zártuk le. (#1856)
+- A táblázatok fejlécei helyesen kerülnek felolvasásra az Adobe Reader program használatakor. (#2444)
+- A több sorból, vagy oszlopból álló táblázat cellákat az NVDA már helyesen kezeli az Adobe Reader programban. (#2437, #2438, #2450)
+- Az NVDA telepítő ellenőrzi hibamentességét futtatás előtt. (#2475)
+- Ha egy frissítés sikertelen, az NVDA eltávolítja az ideiglenes fájlokat. (#2477)
+- Az NVDA most már helyesen működik a beállítások másolásakor Windows XP esetén. (#2485)
+- A Windows 8 start képernyő elemei hatékonyabban olvashatóak Braille és beszéd használatakor. A név már nem ismétlődik, a kijelöletlen állapot nem hangzik el minden elem esetén, valamint a valós idejű információ az elem leírásaként szerepel (pl. az aktuális hőmérséklet az időjárás elem esetén).
+- A jelszó most már nem olvasható a Microsoft Outlook és egyéb szokásos, védettként jelölt szerkesztőmezők esetén. (#2021)
+- Egy űrlap változásai böngésző módban most már helyesen jelennek meg az Adobe Reader program használatakor. (#2529)
+- Hatékonyabb helyesírás ellenőrzés használat a Microsoft Office programban. A helyesírási hibák megbízhatóbban hangzanak el, valamint a telepített NVDA helyesen működik Windows Vista vagy újabb operációs rendszer esetén is.
+- A legtöbb esetben most már azok a bővítmények is telepíthetőek, melyek fájlnevei nem angol karaktereket tartalmaznak. (#2505)
+- A szöveg nyelve megőrzésre kerül odagörgetéskor, vagy ha a szöveg tartalma megváltozik az Adobe Reader programban. (#2544)
+- Egy bővítmény telepítésekor a megerősítő párbeszédpanel most már helyesen tartalmazza a bővítmény honosított nevét. (#2422)
+- UI Automation-t használó alkalmazások esetén (pl. .net és Silverlight), a vezérlőelemek numerikus értékei helyesen vannak megállapítva. (#2417)
+- A folyamatjelzőhöz kapcsolódó beállítások most már a végtelen folyamatjelzőkre is vonatkoznak, pl. hordozható verzió készítésekor, telepítéskor, stb. (#2574)
+- NVDA parancsok már nem futtathatóak egy braille kijelzőn mialatt egy bisztonsági képernyő, pl. a Windows feloldóképernyő aktív. (#2449)
+- Böngésző módban, braille esetén a megjelenített szöveg automatikusan frissül, ha időközben az megváltozott. (#2074)
+- Bisztonsági képernyőkön, mint pl. a Windows feloldóképernyő, a közvetlenül az NVDA-nak kiküldött szövegeket mind braille, mind pedig beszéd esetén a program figyelmen kívül hagyja.
+- Böngészőmódban most már nem lehet túlmenni egy dokumentum végén ha a kurzoraz utolsó karakteren, vagy elemen áll. (#2463)
+- Extra tartalom nem kerül felolvasásra webalkalmazások esetén (ARIA párbeszédpaneleken, melyek nem rendelkeznek aria-describedby tulajdonsággal). (#2390)
+- Az NVDA már nem talál, vagy jelez egyes szerkesztőmezőket MSHTML dokumentumok esetén (pl. az Internet Explorer programban, ha egy ARIA role meg van adva. (#2435)
+- A backspace billentyű helyesen működik Windows parancssorok és szavak felolvasása esetén. (#2586)
+- A cellák koordinátái ismét megjelennek brailleben a Microsoft Excel esetén.
+- Microsoft Word használatakor az NVDA már nem szorul be egy formázást tartalmazó bekezdésbe ha azt balra nyíl vagy ctrl+balra nyíl billentyűparancsal szeretnénk elhagyni, és a bekezdés előtt egy listaelem vagy szám található. (#2402)
+- Mozila alkalmazásokban böngésző módban bizonyos listaelemek, pl. aria listák esetén, már helyesen jelennek meg.
+- Webböngészőkben az NVDA most már elrejti azokat a tartalmakat, amelyeket a képernyőolvasók számára rejtettnek jelöltek meg, (különösképpen az aria rejtett tartalmakat). (#2117)
+- Negatív pénzösszeg feltüntetésekor, pl. -123 $, az NVDA most már helyesen olvassa fel a mínusz jelet függetlenül attól, hogy az írásjelek kimondási szintje milyenre van beállítva (#2625).
+- Folyamatos felolvasás közben az NVDA most már nem vált vissza helytelenül az alapértelmezett nyelvre akkor, ha egy mondat nem ér véget egy sor végén. (#2630)
+- Az adobe reader 10.1-ben és újabb verzióiban a betűtípus-információkat az NVDA most már helyesen észleli. (#2175)
+- Ha egy dokumentum tartalmaz alternatív szöveget, kizárólag csak ez fog megjelenni az Adobe Reader programban. Előzőleg egyéb szöveg is megjelenhetett. (#2174)
+- Ha egy dokumentum valamilyen belső alkalmazást tartalmaz, böngészőmódban az NVDA már nem jeleníti meg az alkalmazás tartalmát. Ezzel megelőzhető, hogy váratlanul az alkalmazás kódjába lépjünk böngészés közben. Az alkalmazásokkal ugyanúgy kommunikálhatunk, mint a beágyazott objektumokkal. (#990)
+- A Mozilla alkalmazások léptethető gombjainak értéke helyesen hangzik el változáskor. (#2653)
+- Frissült az Adobe Digital Editions támogatása, így már a 2.0-ás verzió is használható az NVDA-val. (#2688)
+- Ha az internet explorerben és más MSHTML dokumentumban egy kombinált listamezőn nvda-felnyilat nyomunk, a program most már nem rossz információkat olvas fel, hanem azt az aktív elemet, amelyen állunk. (#2337)
+- Az NVDA kivételszótárai helyesen elmentődnek ha a tényleges kifejezés vagy a behelyettesített kifejezés kettőskereszt jelet tartalmaz. (#961)
+- Az NVDA már helyesen jelenít meg látható tartalmat rejtett tartalomban (pl. visibility:visible stílusú tartalom visibility:hidden stílusú tartalomon belül) MSHTML (pl. Internet Explorer) dokumentumokban. (#2097)
+- A Windows XP Bisztonsági Központ hivatkozásai már nem tartalmaznak véletlenszerű karaktereket. (#1331)
+- UI Automation szerkesztőmezők (pl. a Windows 7 Start Menü keresőmezője) helyesen hangoznak el ha az egérmutató föléjük kerül.
+- A billentyűzetkiosztás változását a program most már többnyelvű dokumentumok folyamatos felolvasásakor nem olvassa fel (ez problémát jelentett pl. arab szövegeknél). (#1676)
+- Az UI automationt használó szerkesztőmezők belső tartalmának megváltozásakor (pl. windows 7 vagy 8 startmenüjének keresője) most már nem olvassa fel a program a szerkesztőmező teljes tartalmát annak minden egyes változásakor. 
+- Ha a windows 8 kezdő képernyőjén a programcsoportok között mozgunk, az NVDA most már nem olvassa fel a csoport első elemét a csoport neveként, ezzel is gyorsítva a navigációt. (#2658)
+- A Windows 8 kezdőképernyőjének megnyitásakor a fókusz most már az első elemre kerül, nem pedig a kezdőképernyő gyökerére, megkönnyítve a navigációt. (#2720)
+- Az NVDA most már rendesen indul akkor is, ha a felhasználói profil útvonala többájtos karaktereket tartalmaz. (#2729)
+- Böngészőmódban a fülek szövegei helyesen jelennek meg a Google Chrome programban.
+
+
 = 2012.2 =
 Ennek a kiadásnak a főbb újdonságai a következők: egységes telepítőkészlet és hordozható változat, automatikus frissítő, az új NVDA-bővítmények könnyű kezelése, ábrák bemondása a Microsoft Wordben, a windows 8 metro stílusú alkalmazások támogatása, valamint több fontos hibajavítás.
 
@@ -10,8 +111,8 @@ Ennek a kiadásnak a főbb újdonságai a következők: egységes telepítőkés
 - Az NVDA mostantól képes az új frissítések letöltésére, és feltelepítésére. (#73)
 - Egyszerűbbé vált a különböző külső illesztőprogramok és bővítmények kezelése az NVDA bővítmény kezelőjével (amely az eszközök menüben található). Ennek segítségével feltelepítheti és eltávolíthatja az NVDA programhoz készült bővítményeket (.nvda-addon). (#213)
 - A legtöbb közismert NVDA-funkció már windows 8 metro stílusú alkalmazásokban is működik, de csak az NVDA telepített változata esetén, ideértve a begépelt karakterek visszamondását, web dokumentumok esetén a böngészőmódot, valamint az internet explorer 10 metro felületének támogatását is. Az NVDA hordozható változatban nem fér hozzá a metro stílusú alkalmazásokhoz. (#1801) 
-- A böngésző módú dokumentumokban (internet explorer, firefox stb.) az információkat tartalmazó elemek (listák, táblázatok) elejére és végére lehet ugrani a shift+, és shift+. billentyűkombinációkkal.  (#123)
-- A görög nyelvet hozzáadták a programhoz.
+- A böngésző módú dokumentumokban (internet explorer, firefox stb.) az információkat tartalmazó elemek (listák, táblázatok) elejére és végére lehet ugrani a , és shift+, billentyűkombinációkkal.  (#123)
+- Az NVDA most már görög nyelven is elérhető.
 - Az ábrákat és az ábrafeliratokat (alt text) az NVDA már felolvassa a Microsoft Word dokumentumokban. (#2282, #1541)
 
 
@@ -22,7 +123,7 @@ Ennek a kiadásnak a főbb újdonságai a következők: egységes telepítőkés
 
 
 == Hibajavítások ==
-- Ha az automatikus nyelvváltás be van kapcsolva, az NVDA most már a helyes nyelven olvassa fel az ábrák feliratait, a címkéket és bizonyos más vezérlőelemeket a mozilla geckót használó alkalmazásokban (pl. Firefoxban), feltéve, hogy ezeket helyesen jelölték meg.
+- Ha az automatikus nyelvváltás be van kapcsolva, az NVDA most már a helyes nyelven olvassa fel az ábrák feliratait, a címkéket és bizonyos más vezérlőelemeket a mozilla gecko-t használó alkalmazásokban (pl. Firefoxban), feltéve, hogy ezeket helyesen jelölték meg.
 - Már nem áll meg a folyamatos felolvasás a BibleSeekerben vagy más ún. trx-szerkesztőmezőkben egy szakasz közepén.
 - A Windows 8 intézőben a fájltulajdonságok lap engedélyek lapfülén és a Windows 8 frissítőjében (windows update) az NVDA helyesen olvassa fel a megjelenő információkat.
 - Ki lett javítva az a hiba, hogy a Microsoft Wordben az NVDA néha lefagyott, ha egy dokumentumból nagyon hosszú sorokat vagy tartalomjegyzéket emeltünk át. (#2191)
