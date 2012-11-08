@@ -474,6 +474,30 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		}
 	}
 
+	//Expose all available actions
+	IAccessibleAction* paccAction=NULL;
+	pacc->QueryInterface(IID_IAccessibleAction,(void**)&paccAction);
+	if(paccAction) {
+		long nActions=0;
+		paccAction->nActions(&nActions);
+		for(int i=0;i<nActions;++i) {
+			BSTR actionName=NULL;
+			paccAction->get_name(i,&actionName);
+			if(actionName) {
+				wstring attribName=L"IAccessibleAction_";
+				attribName+=actionName;
+				s.str(L"");
+				s<<i;
+				parentNode->addAttribute(attribName,s.str());
+				if(wcscmp(actionName, L"click")==0||wcscmp(actionName, L"showlongdesc")==0) {
+					isInteractive=true;
+				}
+				SysFreeString(actionName);
+			}
+		}
+		paccAction->Release();
+	}
+
 	// Handle table cell information.
 	IAccessibleTableCell* paccTableCell = NULL;
 	// If paccTable is not NULL, it is the table interface for the table above this object.
