@@ -641,15 +641,11 @@ wostringstream tempStringStream;
 		tempStringStream.str(L"");
 		tempStringStream<<ID;
 		attribsMap[L"table-id"]=tempStringStream.str();
-	} else if(tableInfo&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TBODY")==0||nodeName.compare(L"TFOOT")==0)) {
-		parentNode->updateAncestor=tableInfo->tableNode;
 	} else if(tableInfo&&nodeName.compare(L"TR")==0) {
 		++tableInfo->curRowNumber;
 		tableInfo->curColumnNumber = 0;
-		parentNode->updateAncestor=tableInfo->tableNode;
 	} if(tableInfo&&(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
 		++tableInfo->curColumnNumber;
-		parentNode->updateAncestor=tableInfo->tableNode;
 		handleColsSpannedByPrevRows(*tableInfo);
 		tempStringStream.str(L"");
 		tempStringStream<<tableInfo->tableID;
@@ -858,6 +854,12 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	parentNode=buffer->addControlFieldNode(parentNode,previousNode,node);
 	nhAssert(parentNode);
 	previousNode=NULL;
+
+	//All inner parts of a table (rows, cells etc) if they are changed must re-render the entire table.
+	//This must be done even for nodes with display:none.
+	if(tableInfo&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TBODY")==0||nodeName.compare(L"TFOOT")==0||nodeName.compare(L"TR")==0||nodeName.compare(L"TH")==0||nodeName.compare(L"TD")==0)) {
+		parentNode->updateAncestor=tableInfo->tableNode;
+	}
 
 	parentNode->isHidden=(hidden||dontRender);
 	//We do not want to render any content for dontRender nodes
