@@ -24,7 +24,7 @@ Suas características mais notáveis são:
 - Suporte para diversas linhas braille;
 - Capacidade para  ser executado diretamente através de dispositivos USB e outros dispositivos portáteis sem necessitar de instalação;
 - Instalação com voz e fácil de usar;
-- Tradução para 40 idiomas;
+- Tradução para 41 idiomas;
 - Suporte para as modernas versões do sistema operacional Windows  incluindo variantes de 32 e 64 bit;
 - Possibilidade de uso na  tela de logon do Windows   e outras telas de segurança;
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superiores) ;
@@ -33,7 +33,7 @@ Suas características mais notáveis são:
 
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 40 idiomas, estando inclusos: Africâner, Albanês, Alemão, Amárico, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 41 idiomas, estando inclusos: Africâner, Albanês, Alemão, Amárico, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -706,7 +706,7 @@ Esta opção permite-lhe escolher se a linha Braille seguirá o cursor do sistem
 ==== Ler por Parágrafo ====
 Caso seja ativada, o braille será exibido por parágrafos em lugar de linhas.
 Além disso, os comandos de mover para a linha anterior e para a próxima linha irão mover respectivamente por parágrafos.
-Isso significa que você não terá que deslocar a linha braille ao fim de cada linha ainda quando um maior texto for ajustado na mesma.
+Isso significa que você não terá que mover linha braille ao fim de cada linha ainda quando um maior texto for ajustado na mesma.
   Isso pode permitir uma leitura mais fluente   em textos muito extensos.
 Esta opção está desativada por padrão.
 
@@ -1143,13 +1143,50 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 
 %kc:beginInclude
 || Nome | Tecla |
-| Alternar ação da roda esquerda | pressionar roda esquerda |
-| Mover-se para trás utilizando ação da roda esquerda | roda esquerda para cima |
-| Mover-se para a frente utilizando ação da roda esquerda | roda esquerda para baixo |
-| Alternar ação da roda direita | pressionar roda direita |
-| Mover-se para trás utilizando ação da roda direita | roda direita para cima |
-| Mover-se para a frente utilizando ação da roda direita | roda direita para baixo |
-| Guiar para a cela braille | sensor |
+| Mover linha braille para trás | topRouting1 (primeira célula da linha) |
+| Mover linha braille para a frente | topRouting20/40/80 (ýltima célula da linha) |
+| Mover linha braille para trás | leftAdvanceBar |
+| Mover linha braille para a frente | rightAdvanceBar |
+| Alternar "vínculo do Braille" | leftGDFButton+rightGDFButton |
+| Alternar a ação da roda esquerda | pressionar a roda esquerda |
+| Mover-se para trás usando  a ação da roda esquerda | roda esquerda para cima |
+| Mover-se para a frente usando  a ação da roda esquerda | roda esquerda para baixo |
+| Alternar a ação da roda direita | pressionar a roda direita |
+| Mover-se para Trás usando a ação da roda direita | roda direita para cima |
+| Mover-se para a frente usando a ação da roda Direita | roda direita para baixo |
+| Guiar para a célula braille | routing |
+| Tecla backspace | ponto 7 |
+| Tecla enter | ponto 8 |
+| Tecla shift+tab | brailleSpaceBar+ponto 1+ponto 2 |
+| Tecla tab | brailleSpaceBar+ponto 4+ponto 5 |
+| Tecla seta cima | brailleSpaceBar+ponto 1 |
+| Tecla seta baixo | brailleSpaceBar+ponto 4 |
+| Tecla control+seta a esquerda | brailleSpaceBar+ponto 2 |
+| Tecla control+seta direita | brailleSpaceBar+ponto 5 |
+| Tecla seta esquerda | brailleSpaceBar+ponto 3 |
+| Tecla seta direita | brailleSpaceBar+ponto 6 |
+| Tecla home | brailleSpaceBar+ponto 1+ponto 3 |
+| tecla end | brailleSpaceBar+ponto 4+ponto 6 |
+| Tecla control+home | brailleSpaceBar+ponto 1+ponto 2+dot3 |
+| Tecla control+end | brailleSpaceBar+ponto 4+ponto 5+ponto 6 |
+| Tecla alt | brailleSpaceBar+ponto 1+ponto 3+ponto 4 |
+| Tecla alt+tab | brailleSpaceBar+ponto 2+ponto 3+ponto 4+ponto 5 |
+| Tecla escape | brailleSpaceBar+ponto 1+ponto 5 |
+| Tecla windows | brailleSpaceBar+ponto 2+ponto 4+ponto 5+ponto 6 |
+| Tecla espaço | brailleSpaceBar |
+| Tecla windows+d (minimizar todas as aplicações) | brailleSpaceBar+ponto 1+ponto 2+ponto 3+ponto 4+ponto 5+ponto 6 |
+| Anunciar a linha atual | brailleSpaceBar+ponto 1+ponto 4 |
+| Menu do NVDA | brailleSpaceBar+ponto 1ponto 3+ponto 4+ponto 5 |
+
+Para modelos mais recentes da Focus que possuam teclas "rocker bar" (focus 40, focus 80 e focus blue):
+|| Nome | Tecla |
+| Mover linha braille para a linha anterior | leftRockerBarUp, rightRockerBarUp |
+| Mover linha braille para a linha seguinte | leftRockerBarDown, rightRockerBarDown |
+
+Apenas para a Focus 80:
+|| Nome | Tecla |
+| Mover linha braille para trás | leftBumperBarUp, rightBumperBarUp |
+| Mover linha braille para a frente | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
@@ -1157,7 +1194,7 @@ Ambas as linhas ALVA BC640 e BC680 da [Optelec http://www.optelec.com/] são sup
 Não é necessário instalar qualquer driver específico para utilizá-las.
 Para tanto, basta Conectar o terminal e configurar o NVDA para a utilizar.
 
-A seguir estão as teclas de comando dessa linha para o NVDA.
+A seguir estão as teclas de comando desta linha para o NVDA.
 Por favor consulte a documentação da mesma para descrições de onde essas teclas se encontram.
 
 %kc:beginInclude
@@ -1165,7 +1202,7 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Mover linha braille para trás | t1 |
 | Mover linha braille para a linha anterior | t2 |
 | Mover linha braille para a linha seguinte | t4 |
-| Mover a linha braille para a frente | t5 |
+| Mover linha braille para a frente | t5 |
 |Guiar para a cela braille  | sensor |
 | tecla shift+tab | sp1 |
 | tecla alt | sp2 |
@@ -1230,7 +1267,7 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 
 Várias linhas braille da [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] são suportadas quando conectadas via USB ou bluetooth.
 
-Estão entre estas:
+ Entre elas estão:
 - Baum: SuperVario, PocketVario
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
@@ -1255,7 +1292,7 @@ Por favor consulte a documentação da mesma para informações sobre onde essas
 Para linhas que tenham joystick:
 || Nome | Tecla |
 | tecla seta acima | acima |
-| tecla seta abaixo | abaixo |
+| tecla seta abaixo | baixo |
 | tecla seta a esquerda | esquerda |
 | tecla seta a direita | direita |
 | tecla enter | selecionar |
@@ -1273,7 +1310,7 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 | Mover Linha Braille para Trás | K1 |
 | Mover Linha Braille para a Frente | K3 |
 | Mover Linha Braille para a Linha Anterior | B2 |
-| Mover Linha Braille para a Próxima Linha | B5 |
+| Mover linha braille para a linha seguinte | B5 |
 | Guiar para a Cela Braille | sensor |
 | Alternar Vínculo do Braille | K2 |
 | Leitura Contínua | B6 |
@@ -1290,7 +1327,7 @@ Por favor consulte a documentação da linha para obter descrições de onde ess
 | Mover Linha Braille para Trás | K1 |
 | Mover Linha Braille para a Frente | K3 |
 | Mover Linha Braille para a Linha Anterior | B2 |
-| Mover Linha Braille para a Próxima Linha | B5 |
+| Mover linha braille para a linha seguinte | B5 |
 | Guiar para a Cela Braille | sensor |
 | Alternar Vínculo do Braille | K2 |
 | Leitura Contínua | B6 |
@@ -1433,30 +1470,30 @@ As seguintes linhas braille são suportadas:
 
 Caso o BrxCom esteja instalado, o NVDA irá usá-lo.
 BrxCom é uma ferramenta que lhe permite usar a entrada Braille  independentemente de um leitor de telas.
-A new version of BrxCom which works with NVDA will be released by Papenmeier soon.  
+Uma nova versão do BrxCom que funciona com o NVDA será lançada pela Papenmeier em pouco tempo.  
 
 Muitos dispositivos possuem uma Easy Access Bar (EAB) (barra de acesso rápido), que propicia uma operacionalidade intuitiva e rápida.
 A EAB pode ser movida em quatro direções, sendo que cada direção possui 2 modos.
 As série c- é a única excessão a esta regra.
 
-The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
-Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.
+A series-c e algumas outras linhas braille possuem duas linhas de sensores na qual a linha de cima é usada para informar a formatação.
+Segurando-se um dos sensores de cima e pressionando a EAB em dispositivos da series-c emulará o segundo estado alternável.
 Ao pressionar e manter pressionada as teclas cima, baixo, direita e esquerda (ou EAB) faz com que a ação correspondente  seja repetida.
 
 Geralmente, encontram-se  disponíveis as seguintes teclas nestas linhas  braille:
 || Nome | Tecla |
-| l1 | Left front key |
-| l2 | Left rear key |
-| r1 | Right front key |
-| r2 | Right rear key |
-| up | 1 Step up |
-| up2 | 2 Steps up |
-| left | 1 Step left |
-| left2 | 2 Steps left |
-| right | 1 Step right |
-| right2 | 2 Steps right |
-| dn | 1 Step down |
-| dn2 | 2 Steps down |
+| l1 | Tecla frontal esquerda |
+| l2 | Tecla traseira esquerda |
+| r1 | Tecla frontal direita |
+| r2 | Tecla traseira direita |
+| up | 1 passo acima |
+| up2 | 2 passos acima |
+| left | 1 passo à esquerda |
+| left2 | 2 passos  à esquerda |
+| right | 1 passo à direita |
+| right2 | 2 passos à direita |
+| dn | 1 passo abaixo |
+| dn2 | 2 passos abaixo |
 
  A seguir estão os comandos dos referidos modelos Papenmeier   para o NVDA:
 %kc:beginInclude
@@ -1475,7 +1512,7 @@ Geralmente, encontram-se  disponíveis as seguintes teclas nestas linhas  braill
 | Mover para o primeiro objeto filho | dn2 |
 | Mover para o objeto anterior | left2 |
 | Mover para o objeto seguinte | right2 |
-| Anunciar formatação do texto formatting | upper routing row |
+| Anunciar formatação do texto | linha de sensores de cima |
 %kc:endInclude
 
 ++ BRLTTY ++
