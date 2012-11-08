@@ -22,7 +22,7 @@ Le novità principali in questa versione sono costituite dal supporto all'immiss
 - Supporto per Vip Mud. (#1728)
 - In Adobe Reader, se una tabella ha un riassunto, esso viene letto correttamente. 
 - In Adobe Reader, possono essere annunciate le intestazioni di righe e colonne. (#2193, #2527, #2528)
-- Nuove lingue: Amharic, Coreano, Nepalese.
+- Nuove lingue: Amharic, Coreano, Nepalese, sloveno.
 - NVDA è in grado di leggere i suggerimenti nell'autocompletamento quando si inserisce un indirizzo in Microsoft Outlook 2007. (#689)
 - Nuove varianti di voce Espeak: Gene, Gene2. (#2512)
 - In Adobe Reader, ora possono venir annunciati i numeri di pagina. (#2534)
@@ -53,6 +53,7 @@ Le novità principali in questa versione sono costituite dal supporto all'immiss
 - la voce "Guida rapida ai comandi da tastiera" è stata cambiata in "Guida rapida ai comandi" in quanto ora al suo interno si possono trovare anche riferimenti ai gesti, oltre che ai comandi da tastiera.
 - La lista elementi in modalità navigazione ricorderà l'ultimo tipo di elemento mostrato (ad esempio link, intestazioni o sezioni) ogni qualvolta la finestra appaia nella medesima sessione di NVDA. (#365)
 - La maggior parte delle App Metro in Windows 8 (ad esempio Mail, Calendario) non attiverà più la modalità navigazione per l'intera app.
+- Aggiornato Handy Tech BrailleDriver COM-Server alla versione 1.4.2.0.
 
 
 == Bug corretti ==
@@ -81,8 +82,11 @@ Le novità principali in questa versione sono costituite dal supporto all'immiss
 - Le coordinate delle celle in Microsoft Excel vengono di nuovo visualizzate in Braille.
 - In Microsoft Word, NVDA non presenta più problemi nell'esplorazione di un paragrafo avente elenchi puntati o numerati. (#2402)
 - Nella modalità navigazione nelle applicazioni Mozilla, gli elementi in alcune caselle ad elenco (nello specifico, caselle ad elenco ARIA), non vengono più interpretati in maniera errata.
-- Nei browser web, NVDA nasconde il contenuto che è stato marcato come nascosto per gli screen reader (nello specifico, si tratta dell'attributo aria-hidden). (#2117)
--  Le quantità negative di valuta (ad esempio -123$) ora vengono annunciate in maniera corretta. (#2625)
+- Nelle applicazioni web Mozilla, NVDA nasconde il contenuto che è stato marcato come nascosto per gli screen reader (nello specifico, si tratta dell'attributo aria-hidden). (#2117)
+- Nelle applicazioni web Mozilla in modalità navigazione, alcuni controlli che venivano interpretati con un etichetta non corretta o proprio con uno spazio bianco, ora vengono riconosciuti correttamente.
+- Nelle applicazioni web Mozilla in modalità navigazione, sono stati eliminati alcuni spazi bianchi che non avevano motivo di esistere.
+- Nei browser web in modalità navigazione, alcuni grafici che sono considerati esplicitamente di presentazione (in sostanza quelli che contengono la stringa alt=""), vengono definitivamente ignorati.
+- Le quantità negative di valuta (ad esempio -123$) ora vengono annunciate in maniera corretta. (#2625)
 - Durante la modalità Dire tutto, NVDA non tornerà più erroneamente alla lingua predefinita, se la riga non termina con un punto. (#2630)
 - vengono riconosciute correttamente le informazioni sul carattere in Adobe Reader 10.1 e successivi. (2175)
 - In Adobe Reader, se viene fornito del testo alternativo, verrà analizzato soltanto questo. In precedenza, talvolta veniva incluso del testo con caratteri incomprensibili. (#2174)
@@ -100,6 +104,9 @@ Le novità principali in questa versione sono costituite dal supporto all'immiss
 - Quando viene aperta la schermata iniziale di Windows8, il focus viene ora posto correttamente sulla prima mattonella. (#2720)
 - NVDA non darà più messaggi di errore all'avvio se il percorso nome profilo utente contiene alcuni caratteri multibyte. (#2729)
 - In Google Chrome, il testo delle schede viene visualizzato correttamente anche in modalità navigazione.
+- Nella modalità navigazione, vengono annunciati correttamente i bottoni dei menu.
+- In OpenOffice.org/LibreOffice Calc, ora avviene correttamente la lettura delle celle dei fogli di calcolo. (#2765)
+- NVDA funziona di nuovo nell'elenco messaggi di Yahoo Mail in Internet Explorer. (#2780)
 
 
 == Cambiamenti per sviluppatori ==
