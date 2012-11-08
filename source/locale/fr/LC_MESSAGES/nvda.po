@@ -6,14 +6,15 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5535\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2012-10-11 05:30+0100\n"
-"PO-Revision-Date: 2012-10-27 12:40+0100\n"
-"Last-Translator: Michel Such <michel.such@free.fr>\n"
+"PO-Revision-Date: 2012-11-04 09:45+0100\n"
+"Last-Translator: Michel SUCH <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: globalCommands.py:875
 #, python-format
@@ -690,6 +691,9 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
+"Impossible de définir les entêtes. Veuillez activer l'annonce des titre des "
+"lignes et colonnes des tableaux dans les paramètres de Mise en Forme des "
+"Documents"
 
 #: gui/settingsDialogs.py:466
 msgid "Capital pitch change percentage"
@@ -767,7 +771,7 @@ msgstr "Ligne d'en-tête de colonne vide"
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
 #: NVDAObjects/window/excel.py:202
 msgid "Cleared row header column"
-msgstr ""
+msgstr "Colonne d'en-tête de ligne vide"
 
 #: globalCommands.py:88
 msgid "Clicks the left mouse button once at the current mouse position"
@@ -2203,12 +2207,16 @@ msgid ""
 "Pressing once will set the current column as the column where row headers "
 "should be found. Pressing twice clears the setting."
 msgstr ""
+"Un appui défini la colonne où les entêtes des lignes seront trouvées. Deux "
+"appuis supprime la configuration."
 
 #: NVDAObjects/window/excel.py:186
 msgid ""
 "Pressing once will set the current row as the row where column headers "
 "should be found. Pressing twice clears the setting."
 msgstr ""
+"Un appui défini la ligne où les entêtes des colonnes seront trouvées. Deux "
+"appuis supprime la configuration."
 
 #: NVDAObjects/window/winword.py:89
 msgid "Primary footer"
@@ -3772,7 +3780,7 @@ msgstr "style par défaut"
 #. i.e. it is dead and is no longer usable.
 #: controlTypes.py:364
 msgid "defunct"
-msgstr "défunt"
+msgstr "expiré"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:73
@@ -4388,7 +4396,7 @@ msgstr "homme 2"
 #. Translators: This is the name of the launch mediaplayer key found on multimedia keyboards to launch the mediaplayer.
 #: keyLabels.py:39
 msgid "media player"
-msgstr "média player"
+msgstr "lecteur multimédia"
 
 #: controlTypes.py:199 controlTypes.py:320
 msgid "menu"
@@ -5316,7 +5324,7 @@ msgstr "droite"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:131
 msgid "right alt"
-msgstr "alt droite"
+msgstr "alt droit"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:79
@@ -5359,7 +5367,7 @@ msgstr "ls"
 
 #: controlTypes.py:270
 msgid "root pane"
-msgstr "fenêtre racine"
+msgstr "sous-fenêtre racine"
 
 #: controlTypes.py:218
 msgid "row"
@@ -5394,7 +5402,7 @@ msgstr "arrêt défilement"
 
 #: controlTypes.py:277
 msgid "scroll pane"
-msgstr "fenêtre de défilement"
+msgstr "sous-fenêtre de défilement"
 
 #. Translators: Reported for the search landmark, normally found on web pages.
 #: aria.py:79
@@ -5810,12 +5818,12 @@ msgstr "lnv"
 #. Translators: This is the name of the volume down key found on multimedia keyboards to reduce playback volume.
 #: keyLabels.py:25
 msgid "volume down"
-msgstr "baisse du volume"
+msgstr "volume moins"
 
 #. Translators: This is the name of the volume up key found on multimedia keyboards to increase playback volume.
 #: keyLabels.py:27
 msgid "volume up"
-msgstr "hausse du volume"
+msgstr "volume plus"
 
 #: colors.py:98
 msgid "white"
@@ -5832,7 +5840,7 @@ msgstr "fenêtre"
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:55
 msgid "windows"
-msgstr "fenêtres"
+msgstr "windows"
 
 #: speech.py:863
 #, python-format
