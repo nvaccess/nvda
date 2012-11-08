@@ -23,7 +23,7 @@ Die wichtigsten Funktionen sind:
 - Unterstützung für zahlreiche Braillezeilen.
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung der Sprachausgaben.
-- Übersetzt in 40 Sprachen.
+- Übersetzt in 41 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
@@ -32,7 +32,7 @@ Die wichtigsten Funktionen sind:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 40 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 41 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, slovenisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung mit der Sprachausgabe ++
 Abgesehen von der Bereitstellung der Schnittstelle für Meldungen in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser über eine Sprachausgabe für dessen Sprache verfügt.
@@ -341,23 +341,23 @@ Um dies zu ändern, müssen Sie die  [Kopplung der Braillezeile konfigurieren #B
 Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Geste | Beschreibung |
-| Zur obersten Zeile springen | Umschalt+Nummerntaste 7 | NVDA+7 | keine | Zieht den NVDA-Cursor in die erste Zeile des Textes. |
-| Zur vorherigen Zeile springen | Num 7 | NVDA+U | nach oben streichen (Textmodus) | Zieht den NVDA-Cursor  zur vorherigen Zeile des Textes. |
-| Aktuelle Zeile ansagen | Num 8 | NVDA+I | keine | Sagt die aktuelle Zeile im Text an, in der sich der nvda-Cursor befindet. Bei zweimal Drücken wird sie buchstabiert. |
-| Zur nächsten Zeile springen | Num 9 | NVDA+O | nach unten streichen (Textmodus) | Zieht den NVDA-Cursor zur nächsten Zeile des Textes. |
-| Zur untersten Zeile  springen | Umschalt+Nummerntaste 9 | NVDA+9 | keine | Zieht den NVDA-Cursor in die letzte Zeile des Textes. |
-| Zum vorherigen Wort springen | Num 4 | NVDA+J | nach links streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum vorherigen Wort im Text. |
-| Aktuelles Wort ansagen | Num 5 | NVDA+K | keine | Sagt das aktuelle Wort im Text an, in dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird es buchstabiert. |
-| Zum nächsten Wort springen | Num 6 | NVDA+L | nach rechts streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum nächsten Wort im Text. |
-| Zum Zeilenanfang springen | Umschalt+Nummerntaste 1 | NVDA+Umschalt+U | keine | Zieht den NVDA-Cursor zum Zeilenanfang im Text. |
-| Zum vorherigen Zeichen springen | Num 1 | NVDA+M | nach links streichen (Textmodus) | Zieht den NVDA-Cursor  zum vorherigen Zeichen der aktuellen Zeile im Text. |
+| Zur obersten Zeile springen | Umschalt+Nummerntaste 7 | NVDA+7 | Keine | Zieht den NVDA-Cursor in die erste Zeile des Textes. |
+| Zur vorherigen Zeile springen | Nummerntaste 7 | NVDA+U | Nach oben streichen (Textmodus) | Zieht den NVDA-Cursor  zur vorherigen Zeile des Textes. |
+| Aktuelle Zeile ansagen | Nummerntaste 8 | NVDA+I | Keine | Sagt die aktuelle Zeile im Text an, in der sich der nvda-Cursor befindet. Bei zweimal Drücken wird sie buchstabiert. |
+| Zur nächsten Zeile springen | Nummerntaste 9 | NVDA+O | Nach unten streichen (Textmodus) | Zieht den NVDA-Cursor zur nächsten Zeile des Textes. |
+| Zur untersten Zeile springen | Umschalt+Nummerntaste 9 | NVDA+9 | Keine | Zieht den NVDA-Cursor in die letzte Zeile des Textes. |
+| Zum vorherigen Wort springen | Num 4 | NVDA+J | Nach links streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum vorherigen Wort im Text. |
+| Aktuelles Wort ansagen | Num 5 | NVDA+K | Keine | Sagt das aktuelle Wort im Text an, in dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird es buchstabiert. |
+| Zum nächsten Wort springen | Num 6 | NVDA+L | Nach rechts streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum nächsten Wort im Text. |
+| Zum Zeilenanfang springen | Umschalt+Nummerntaste 1 | NVDA+Umschalt+U | Keine | Zieht den NVDA-Cursor zum Zeilenanfang im Text. |
+| Zum vorherigen Zeichen springen | Num 1 | NVDA+M | Nach links streichen (Textmodus) | Zieht den NVDA-Cursor  zum vorherigen Zeichen der aktuellen Zeile im Text. |
 | Aktuelles Zeichen ansagen | Num 2 | NVDA+Komma | Sagt das aktuelle Zeichen in der Zeile im Text an, in dem sich der NVDA-Cursor befindet. Bei zweimal Drücken werden die numerischen Dezimal- und Hexadezimalwerte angesagt. |
-| Zum nächsten Zeichen springen | Num 3 | NVDA+Punkt | nach rechts streichen (Textmodus) | Zieht den NVDA-Cursor zum nächsten Zeichen der aktuellen Zeile im Text. |
-| Zum Zeilenende springen | Umschalt+Nummerntaste 3 | NVDA+Umschalt+O | keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
-| Alles ansagen | Num Plus | NVDA+Umschalt+Pfeiltaste nach unten | nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position den Text vor. |
-| Textformatierung ansagen | NVDA+F | NVDA+f | keine | Sagt die Formatierungen unter dem nvda-Cursor an. Diese info wird auch in Braille als Blitzmeldung angezeigt. |
-| Ab nvda-Cursor kopieren | NVDA+F9 | NVDA+F9 | keine | Startet von der aktuellen Cursor-Position den Kopiervorgang. Der Text wird nicht von NVDA kopiert, wenn Sie nicht festlegen, bis wohin  kopiert werden soll. |
-| Bis nvda-Cursor kopieren | NVDA+F10 | NVDA+F10 | keine | Kopiert von der Position die vorhin (mit "ab nvda-Cursor kopieren" festgelegt wurde) bis zur akttuellen Position des nvda-Cursors. Nach dem Betätigen der Tastenkombination, wird der Text in die Zwischenablage kopiert. |
+| Zum nächsten Zeichen springen | Num 3 | NVDA+Punkt | Nach rechts streichen (Textmodus) | Zieht den NVDA-Cursor zum nächsten Zeichen der aktuellen Zeile im Text. |
+| Zum Zeilenende springen | Umschalt+Nummerntaste 3 | NVDA+Umschalt+O | Keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
+| Alles ansagen | Num Plus | NVDA+Umschalt+Pfeiltaste nach unten | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position den Text vor. |
+| Textformatierung ansagen | NVDA+F | NVDA+F | Keine | Sagt die Formatierungen unter dem nvda-Cursor an. Diese info wird auch in Braille als Blitzmeldung angezeigt. |
+| Ab NVDA-Cursor kopieren | NVDA+F9 | NVDA+F9 | Keine | Startet von der aktuellen Cursor-Position den Kopiervorgang. Der Text wird nicht von NVDA kopiert, wenn Sie nicht festlegen, bis wohin  kopiert werden soll. |
+| Bis NVDA-Cursor kopieren | NVDA+F10 | NVDA+F10 | Keine | Kopiert von der Position die vorhin (mit "ab nvda-Cursor kopieren" festgelegt wurde) bis zur akttuellen Position des nvda-Cursors. Nach dem Betätigen der Tastenkombination, wird der Text in die Zwischenablage kopiert. |
 %kc:endInclude
 
 Hinweis: Um die Tasten des Nummernblocks benutzen zu können, muss dieser deaktiviert sein.
@@ -372,7 +372,7 @@ Das Layout ist wie folgt aufgebaut:
 Während sie sich normalerweise nur den Inhalt einzelner [Objekte #Objects] betrachten können, erlauben manche Objekte jedoch das Betrachten des gesamten Inhaltes (also einschließlich aller untergeordneten Objekte).
 Bei komplexen Dokumenten ist es so beispielsweise möglich, deren gesamten Inhalt zu erfassen. Anwendungsfenster können so ausgelesen werden, wie die darin enthaltenen Elemente visuell angeordnet sind.
 Dies wird als Flächenmodus bezeichnet.
-Dies funktioniert ähnlich eines Bildschirmbetrachters bzw. einer Maus-Emulation vieler kommerzieller Screenreader.
+Dieses funktioniert ähnlich eines Bildschirmbetrachters bzw. einer Maus-Emulation vieler kommerzieller Screenreader.
 
 Wenn Sie in den Flächenmodus wechseln, wird der Cursor an die Position des aktuellen [Navigatorobjekts #ObjectNavigation] gesetzt.
 Wenn Sie die Objektnavigation bis dahin noch nicht verwendet haben, ist dies üblicherweise das Objekt, das den [Fokus #SystemFocus] hat.
@@ -1240,7 +1240,7 @@ Die Braillezeilen Focus 40 Blue und alle PAC-Mate-Zeilen von der amerikanischen 
 Die Treiber für die Braillezeilen von FreedomScientific müssen auf Ihrem System vorab installiert sein.
 Falls Sie sie noch nicht installiert haben, können Sie sie von der Website [hier http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp] herunterladen.
 Obwohl auf dieser Seite nur Treiber für die Focus 40 Blue aufgeführt sind, werden die Treiber für alle Braillezeilen gleichermaßen von FreedomScientific unterstützt.
-Wenn Sie eine 64-bit-Version von windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von diesem Link installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
+Wenn Sie eine 64-Bit-Version von windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von diesem Link installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
 
 Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
@@ -1257,35 +1257,35 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 | Umschalten der Aktion am rechten Rollrädchen | Rechtes Rollrädchen drücken |
 | Rückwärtsscrollen des verwendeten rechten Rollrädchens | Rechtes Rollrädchen nach oben |
 | Vorwärtsscrollen des verwendeten rechten Rollrädchens | Rechtes Rollrädchen nach unten |
-| Zum aktuellen Modul auf der Braillezeile springen | Routing |
+| Zum aktuellen Modul auf der Braillezeile springen | Routingtaste |
 | Rücktaste | Punkt7 |
 | Eingabetaste | Punkt8 |
-| umschalt+tab | Leertaste+Punkt1+Punkt2 |
+| Umschalt+Tab | Leertaste+Punkt1+Punkt2 |
 | Tab | Leertaste+Punkt4+Punkt5 |
-| Pfeil auf | Leertaste+Punkt1 |
-| Pfeil ab | Leertaste+Punkt4 |
-| strg+Pfeil links | Leertaste+Punkt2 |
-| strg+Pfeil rechts | Leertaste+Punkt5 |
-| Pfeil links | Leertaste+Punkt3 |
-| Pfeil rechts | Leertaste+Punkt6 |
+| Pfeil nach oben | Leertaste+Punkt1 |
+| Pfeil nach unten | Leertaste+Punkt4 |
+| Steuerung+Pfeil nach links | Leertaste+Punkt2 |
+| Steuerung+Pfeil nach rechts | Leertaste+Punkt5 |
+| Pfeil nach links | Leertaste+Punkt3 |
+| Pfeil nach rechts | Leertaste+Punkt6 |
 | Pos1 | Leertaste+Punkt1+Punkt3 |
 | Ende | Leertaste+Punkt4+Punkt6 |
-| strg+pos1 | Leertaste+Punkt1+Punkt2+Punkt3 |
-| strg+Ende | Leertaste+Punkt4+Punkt5+Punkt6 |
-| alt | Leertaste+Punkt1+Punkt3+Punkt4 |
-| alt+tab | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 |
-| esc | Leertaste+Punkt1+Punkt5 |
-| win | Leertaste+Punkt2+Punkt4+Punkt5+Punkt6 |
+| Steuerung+Pos1 | Leertaste+Punkt1+Punkt2+Punkt3 |
+| Steuerung+Ende | Leertaste+Punkt4+Punkt5+Punkt6 |
+| Alt | Leertaste+Punkt1+Punkt3+Punkt4 |
+| Alt+Tab | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 |
+| ESC | Leertaste+Punkt1+Punkt5 |
+| Win | Leertaste+Punkt2+Punkt4+Punkt5+Punkt6 |
 | Leertaste | Leertaste |
-| win+d (alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
-| aktuelle Zeile ausgeben | Leertaste+Punkt1+Punkt4 |
+| Win+D (Alle Anwendungen minimieren) | Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6 |
+| Aktuelle Zeile ausgeben | Leertaste+Punkt1+Punkt4 |
 | NVDA-Menü anzeigen | Leertaste+Punkt1+Punkt3+Punkt4+Punkt5 |
-für neuere Modelle, die sog. rocker bar keys besitzen (focus 40, focus 80 und focus blue) sind folgende Tastenzuweisungen verfügbar:
+Für neuere Modelle, die "Fronttasten" besitzen (Focus 40, Focus 80 und Focus Blue) sind folgende Tastenzuweisungen verfügbar:
 || Name | Tastenkombination |
-| Braillezeile zur vorigen Zeile bewegen | leftRockerBarUp, rightRockerBarUp |
+| Braillezeile zur vorherigen Zeile bewegen | leftRockerBarUp, rightRockerBarUp |
 | Braillezeile zur nächsten Zeile bewegen | leftRockerBarDown, rightRockerBarDown |
 
-nur für Focus 80:
+Nur für Focus 80:
 || Name | Tastenkombination |
 | Braillezeile zurückscrollen | leftBumperBarUp, rightBumperBarUp |
 | Braillezeile weiterscrollen | leftBumperBarDown, rightBumperBarDown |
