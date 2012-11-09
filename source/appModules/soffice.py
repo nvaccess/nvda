@@ -17,8 +17,8 @@ from NVDAObjects.behaviors import EditableText
 from logHandler import log
 
 def gridCoordStringToNumbers(coordString):
-	if len(coordString)<2 or ' ' in coordString or coordString[0].isdigit() or not coordString[-1].isdigit(): 
-		raise ValueError("bad coord string: %s"%coordString) 
+	if not coordString or len(coordString)<2 or ' ' in coordString or coordString[0].isdigit() or not coordString[-1].isdigit(): 
+		raise ValueError("bad coord string: %r"%coordString) 
 	rowNum=0
 	colNum=0
 	coordStringRowStartIndex=None
