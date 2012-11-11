@@ -120,10 +120,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	@classmethod
 	def getPossiblePorts(cls):
 		ports = OrderedDict([("USB", "USB",)])
-		for port in (p for p in hwPortUtils.listComPorts() 
-		if p.get("bluetoothName") in bluetoothNames):
-			ports[port["port"].encode("MBCS")] = "Bluetooth: %s" % port.get("bluetoothName")
+		try:
+			cls._getBluetoothPorts().next()
+			ports["bluetooth"] = "Bluetooth"
+		except StopIteration:
+			pass
 		return ports
+
+	@classmethod
+	def _getBluetoothPorts(cls):
+		return (p["port"].encode("mbcs") for p in hwPortUtils.listComPorts() if p.get("bluetoothName") in bluetoothNames)
 
 	wizWheelActions=[
 		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
@@ -145,9 +151,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		self._messageWindowClassAtom=windll.user32.RegisterClassExW(byref(nvdaFsBrlWndCls))
 		self._messageWindow=windll.user32.CreateWindowExW(0,self._messageWindowClassAtom,u"nvdaFsBrlWndCls window",0,0,0,0,0,None,None,appInstance,None)
 		if port is None:
-			portsToTry = self.getPossiblePorts().iterkeys()
-		else:
-			portsToTry = (port,)
+			portsToTry = itertools.chain(["USB"], self._getBluetoothPorts())
+		elif port == "bluetooth":
+			portsToTry = self._getBluetoothPorts()
+		else: # USB
+			portsToTry = [port]
 		fbHandle=-1
 		for port in portsToTry:
 			fbHandle=fbOpen(port,self._messageWindow,nvdaFsBrlWm)
