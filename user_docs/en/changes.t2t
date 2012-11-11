@@ -6,11 +6,13 @@
 = 2013.1 =
 
 == New Features ==
--Basic support for reading and writing messages in Lotus Notes 8.5. (#543)
+- Basic support for reading and writing messages in Lotus Notes 8.5. (#543)
+- In Browse mode for MSHTML (e.g. Internet Explorer) and Gecko (e.g. Firefox), the existance of long descriptions are now announced. Its also possible to open the long description in a new window by pressing NVDA+d. (#809)
 
 
 == Bug Fixes ==
 - The quick navigation keys for jumping to the next or previous separator in Browse Mode now works in Internet Explorer and other MSHTML controls. (#2781)
+- If NVDA falls back to eSpeak or  no speech due to a configured speech synthesizer failing when NVDA starts, the configuration is no longer updated to set the fallback synthesizer as the configured choice, meaning that now the original synthesizer will be tried again next time NVDA starts.
 
 
 = 2012.3 =
@@ -32,7 +34,7 @@ Highlights of this release include support for Asian character input; experiment
 - Support for VIP Mud. (#1728)
 - In Adobe Reader, if a table has a summary, it is now presented. (#2465)
 - In Adobe Reader, table row and column headers can now be reported. (#2193, #2527, #2528)
-- New languages: Amharic, Korean, Nepali.
+- New languages: Amharic, Korean, Nepali, Slovenian.
 - NVDA can now read auto complete suggestions when entering email addresses in Microsoft Outlook 2007. (#689)
 - New eSpeak voice variants: Gene, Gene2. (#2512)
 - In Adobe Reader, page numbers can now be reported. (#2534)

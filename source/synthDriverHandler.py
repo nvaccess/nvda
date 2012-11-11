@@ -59,7 +59,7 @@ def getSynthList():
 def getSynth():
 	return _curSynth
 
-def setSynth(name):
+def setSynth(name,isFallback=False):
 	global _curSynth
 	if name is None: 
 		_curSynth.terminate()
@@ -89,17 +89,18 @@ def setSynth(name):
 			changeVoice(newSynth,voice)
 			newSynth.saveSettings() #save defaults
 		_curSynth=newSynth
-		config.conf["speech"]["synth"]=name
+		if not isFallback:
+			config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
 		return True
 	except:
 		log.error("setSynth", exc_info=True)
 		if prevSynthName:
-			setSynth(prevSynthName)
+			setSynth(prevSynthName,isFallback=True)
 		elif name not in ('espeak','silence'):
-			setSynth('espeak')
+			setSynth('espeak',isFallback=True)
 		elif name=='espeak':
-			setSynth('silence')
+			setSynth('silence',isFallback=True)
 		return False
 
 class SynthSetting(object):

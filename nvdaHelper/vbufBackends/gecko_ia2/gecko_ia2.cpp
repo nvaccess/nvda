@@ -374,7 +374,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	} else {
 		isBlockElement=FALSE;
 	}
-	parentNode->setIsBlock(isBlockElement);
+	parentNode->isBlock=isBlockElement;
 
 	BSTR name=NULL;
 	if(pacc->get_accName(varChild,&name)!=S_OK)
@@ -472,6 +472,30 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			} else
 				childCount=0;
 		}
+	}
+
+	//Expose all available actions
+	IAccessibleAction* paccAction=NULL;
+	pacc->QueryInterface(IID_IAccessibleAction,(void**)&paccAction);
+	if(paccAction) {
+		long nActions=0;
+		paccAction->nActions(&nActions);
+		for(int i=0;i<nActions;++i) {
+			BSTR actionName=NULL;
+			paccAction->get_name(i,&actionName);
+			if(actionName) {
+				wstring attribName=L"IAccessibleAction_";
+				attribName+=actionName;
+				s.str(L"");
+				s<<i;
+				parentNode->addAttribute(attribName,s.str());
+				if(wcscmp(actionName, L"click")==0||wcscmp(actionName, L"showlongdesc")==0) {
+					isInteractive=true;
+				}
+				SysFreeString(actionName);
+			}
+		}
+		paccAction->Release();
 	}
 
 	// Handle table cell information.
@@ -692,7 +716,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			// Always render a space for empty table cells and unknowns.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-			parentNode->setIsBlock(false);
+			parentNode->isBlock=false;
 		}
 
 		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR) && parentNode->getLength() == 0) {

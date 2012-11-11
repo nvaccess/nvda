@@ -22,7 +22,7 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - Soporte para o VIP Mud. (#1728)
 - No Adobe Reader, se unha táboa ten un resumo, agora preséntase. (#2465)
 - No Adobe Reader, as cabeceiras de fila e columna de táboa agora poden anunciarse. (#2193 #2527 #2528)
-- Novas linguas: Amárico, Coreano, Nepalí.
+- Novas linguas: Amárico, Coreano, Nepalí, Esloveno.
 - NVDA agora pode ler suxerencias de autocompletado cando se introduzan enderezos de correo no Microsoft Outlook 2007. (#689)
 - Novas variantes de voz de eSpeak: Gene, Gene2. (#2512)
 - No Adobe Reader, agora poden anunciarse os números de páxina. (#2534)
@@ -53,6 +53,7 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - O documento Referencia Rápida de Ordes de teclado de NVDA foi renomeado a Referencia Rápida de Ordes, así agora inclúe tanto ordes tactiles coma ordes de teclado.
 - A Lista de elementos en Modo Navegación agora lembrará o último tipo de elemento amosado (ex.: ligas, cabeceiras ou zoas) cada vez que se amose o diálogo dentro da mesma sesión de NVDA. (#365)
 - A maioría das aplicacións Metro en Windows 8 (ex.: Mail, Calendar) xa non activan o Modo Navegación para toda a aplicación.
+- Actualizado o Handy Tech BrailleDriver COM-Server a 1.4.2.0.
 
 
 == Corrección de Fallos ==
@@ -81,6 +82,9 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - As coordinadas das celdas agora amósanse de novo en Braille en Microsoft Excel.
 - No Microsoft Word, NVDA xa non te deixa enganchado nun parágrafo con formato de lista cando tentas navegar por unha viñeta ou número con flecha esquerda ou control + flecha esquerda. (#2402)
 - No modo navegación en aplicacións de Mozilla, os elementos en certos cadros de lista (específicamente, cadros de lista de ARIA) xa non se procesan incorrectamente.
+- No modo navegación nas aplicacións de Mozilla, certos controis que foron procesados con unha etiqueta incorrecta ou como espazo en branco agora procésanse ca etiqueta correcta.
+- No modo navegación nas aplicacións de Mozilla, elimináronse espazos en branco extranos.
+- En modo navegación nos navegadores web, certos gráficos que se marcaron explícitamente como presentables (específicamente, cun atributo alt="") agora ignóranse correctamente.
 - Nos navegadores web, NVDA agora agacha contido que se marcou como oculto para lectores de pantalla (específicamente, utilizando o atributo aria-hidden). (#2117)
 - As cantidades negativas en moeda (ex.: -$123) agora fálanse correctamente como negativos, independentemente do nível de símbolos. (#2625)
 - Durante ler todo, NVDA xa non voltará incorrectamente a á lingua predeterminada se unha liña non remata unha frase. (#2630)
@@ -100,6 +104,9 @@ O subliñable desta versión inclúe o soporte para a entrada de caracteres asi�
 - Ó abrir a pantalla de inicio de Windows 8, o foco colócase correctamente sobre o primeiro mosaico en lugar de saltar á raíz da pantalla de inicio, o que pode confundir na navegación. (2720)
 - NVDA xa non fallará ó arrancar cando a ruta de perfiles do usuario conteña certos caracteres multibyte. (#2729)
 - No modo navegación en Google Chrome, o texto das pestanas agora  procésase correctamente.
+- No modo navegación, os botóns de menú agora anúncianse correctamente.
+- No Calc de OpenOffice.org/LibreOffice, a lectura das celdas das follas de cálculo agora funciona correctamente. (#2765)
+- NVDA pode funcionar de novo na lista de mensaxes de Yahoo! Mail cando se utiliza dende Internet Explorer. (#2780)
 
 
 == Cambios para Desenroladores ==

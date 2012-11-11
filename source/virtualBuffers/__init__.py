@@ -757,6 +757,9 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		obj.doAction()
 
+	def _activateLongDesc(self,controlField):
+		raise NotImplementedError
+
 	def _activatePosition(self, info):
 		obj = info.NVDAObjectAtStart
 		if not obj:
@@ -811,6 +814,19 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
 		return obj.role not in self.APPLICATION_ROLES and controlTypes.STATE_FOCUSABLE in obj.states
+
+	def script_activateLongDesc(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand("character")
+		for field in reversed(info.getTextWithFields()):
+			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+				states=field.field.get('states')
+				if states and controlTypes.STATE_HASLONGDESC in states:
+					self._activateLongDesc(field.field)
+					break
+		else:
+			ui.message(_("No long description"))
+	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
 
 	def script_activatePosition(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -1450,6 +1466,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		braille.handler.handleUpdate(self)
 
 	__gestures = {
+		"kb:NVDA+d": "activateLongDesc",
 		"kb:enter": "activatePosition",
 		"kb:space": "activatePosition",
 		"kb:NVDA+f5": "refreshBuffer",

@@ -462,6 +462,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 		macro_addHTMLAttributeToMap(L"rowspan",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 		macro_addHTMLAttributeToMap(L"scope",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	}
+	macro_addHTMLAttributeToMap(L"longdesc",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"alt",true,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"title",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"src",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -627,6 +628,7 @@ wostringstream tempStringStream;
 	}
 	if(nodeName.compare(L"TABLE")==0) {
 		tableInfo=new fillVBuf_tableInfo;
+		tableInfo->tableNode=parentNode;
 		tableInfo->tableID=ID;
 		tableInfo->curRowNumber=0;
 		tableInfo->curColumnNumber=0;
@@ -738,7 +740,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Handle text nodes
 	if(!shouldSkipText) { 
-		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->getIsBlock()&&!previousNode));
+		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->isBlock&&!previousNode));
 		if(!s.empty()) {
 			LOG_DEBUG(L"Got text from node");
 			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,s);
@@ -854,7 +856,13 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	nhAssert(parentNode);
 	previousNode=NULL;
 
-	parentNode->setIsHidden(hidden||dontRender);
+	//All inner parts of a table (rows, cells etc) if they are changed must re-render the entire table.
+	//This must be done even for nodes with display:none.
+	if(tableInfo&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TBODY")==0||nodeName.compare(L"TFOOT")==0||nodeName.compare(L"TR")==0||nodeName.compare(L"TH")==0||nodeName.compare(L"TD")==0)) {
+		parentNode->updateAncestor=tableInfo->tableNode;
+	}
+
+	parentNode->isHidden=(hidden||dontRender);
 	//We do not want to render any content for dontRender nodes
 	if(dontRender) {
 		return parentNode;
@@ -928,7 +936,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Is this node interactive?
-	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
+	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::longdesc")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
 	if(nodeName.compare(L"OL")==0||nodeName.compare(L"UL")==0) {
@@ -1204,7 +1212,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Update block setting on node
-	parentNode->setIsBlock(isBlock);
+	parentNode->isBlock=isBlock;
 
 	//Add all the collected attributes to the node
 	for(tempIter=attribsMap.begin();tempIter!=attribsMap.end();++tempIter) {

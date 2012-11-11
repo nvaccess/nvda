@@ -25,7 +25,7 @@
 - Suporte para o VIP Mud. (#1728)
 - No Adobe Reader, caso uma tabela possua um sumário, ele agora será apresentado. (#2465)
 - No Adobe Reader, os cabeçalhos de linhas e colunas das tabelas agora podem ser anunciados. (#2193)
-- Novos idiomas: amárico, coreano, nepalês.
+- Novos idiomas: amárico, coreano, nepalês, esloveno.
 - O NVDA agora pode ler sugestões de auto-completar quando se digita endereços de email no Microsoft Outlook 2007. (#689)
 - Novas variantes para o eSpeak: Gene, Gene2. (#2512)
 - No Adobe Reader, o número das páginas agora pode ser anunciado. (#2534)
@@ -54,16 +54,17 @@
 - Atualizado o transcritor braille liblouis para a versão 2.5.1.
 - O documento Referência Rápida de Teclas de Comando foi renomeado para Referência Rápida de Comandos, visto que agora inclui tanto comandos para touch screen como de teclado.
 - A lista de elementos no modo de navegação agora relembrará o último tipo de elemento mostrado (isto é, links, cabeçalhos ou marcas) a cada vez que o diálogo for exibido na mesma sessão do NVDA. (#365) 
+- Vários aplicativos de estilo Metro no Windows 8 (Mail, Calendário) já não ativam o Modo de navegação para o aplicativo inteiro. 
+- Atualizado o Handy Tech BrailleDriver COM-Server para a versão 1.4.2.0. 
 
 
 == Correção de Falhas ==
-- No Blio, o conteúdo dos livros agora pode ser lido em braille. (#2139)
 - NO Windows Vista e posteriores, o NVDA já não trata incorretamente a tecla do Windows como se esta estivesse pressionada quando se o desbloqueia depois de bloquiá-lo pressionando Windows+l. (#1856)
 - No Adobe Reader, os cabeçalhos das linhas agora são reconhecidos apropriadamente como células de tabelas; ou seja, as coordenadas são anunciadas e os mesmos podem ser acessados usando os comandos de navegação em tabelas. (#2444)
 - No Adobe Reader, as células de tabelas que abrangem mais de uma coluna e/ou linha agora são controladas corretamente. (#2437, #2438, #2450)
 - O NVDA agora verifica a integridade de seu pacote de distribuição antes de executar. (#2475)
 - Os arquivos temporários de download do NVDA agora são removidos caso haja uma falha ao baixar atualizações. (#2477)
-- Ao copiar as configurações do usuário para as configurações do sistema (permitindo seu uso no logon do Windows e outras telas seguras) o NVDA já não travará no XP durante esse processo. (#2485) 
+- Ao copiar as configurações do usuário para as configurações do sistema (permitindo seu uso no logon do Windows e outras telas seguras) o NVDA já não travará durante esse processo. (#2485) 
 - Os mozaicos na tela de início do Windows 8 agora são melhor apresentados em voz e braille. O nome já não é repetido, em todos os mozaicos já não será dito não selecionado, e a informação ao vivo do status é apresentada como a descrição do mozaico (por exemplo, a temperatura para o mozaico do tempo).
 - As senhas já não são anunciadas quando se lê campos de senhas no Microsoft Outlook e outros controles padrões de edição que são marcados como protegidos. (#2021)
 - No Adobe Reader, as alterações em campos de formulários agora são refletidas corretamente  no modo de navegação. (#2529)
@@ -82,7 +83,10 @@
 - A tecla backspace agora é controlada corretamente ao falar palavras digitadas em consoles de comando do Windows. (#2586)
 - As coordenadas de células no Microsoft Excell voltam a ser mostradas em Braille.
 - No Microsoft Word, o NVDA já não lhe deixa preso em um parágrafo com formato de lista ao tentar navegar para fora de uma marca ou numeração com a seta a esquerda ou control + seta a esquerda. (#2402)
-- No modo de navegação em aplicativos da Mozilla, os items em determinadas caixas de lista (especificamente em caixas de lista da ARIA) já não são dispostas incorretamente.
+- No modo de navegação em aplicativos da Mozilla, os items em determinadas caixas de lista (especificamente em caixas de lista da ARIA) já não são dispostos incorretamente.
+- No modo de navegação em aplicativos da Mozilla, certos controles que eram apresentados com uma etiqueta incorreta ou apenas com um espaço em branco agora são apresentados com a etiqueta correta. 
+- No modo de navegação em aplicativos da Mozilla, alguns estranhos espaços em branco foram eliminados. 
+- No modo de navegação em navegadores web, certos gráficos que estão marcados explicitamente como apresentacionais (especificamente, com um atributo alt="") agora são corretamente ignorados. 
 - Em navegadores web, o NVDA agora oculta o conteúdo que está marcado como oculto para leitores de telas (especificamente, usando o atributo aria-hidden). (#2117)
 - Quantias negativas de dinheiro (como -$123) agora são anunciadas corretamente  como negativas, independentemente do grau de sinais. (#2625)
 - O NVDA já não retorna incorretamente ao idioma padrão durante uma leitura contínua onde uma linha não termina uma sentença. (#2630)
@@ -91,8 +95,20 @@
 - Onde um documento contém uma aplicação, o conteúdo da mesma já não é incluido no modo de navegação. Isso evita que você se mova por dentro da aplicação ao navegar. É possível interagir com a aplicação da mesma forma utilizada com os objetos embutidos. (#990)
 - Em aplicativos da Mozilla, os valores dos botões de rotação agora são anunciados corretamente quando alterados. (#2653)
 - Atualizado o suporte para o Adobe Digital Editions de forma a possibilitar que funcione com a versão 2.0. (#2688) 
- - Os dicionários de fala agora salvarão  apropriadamente as entradas caso seja usado o sinal de cardinal (#) dentro do campo original ou de substituição. (#961) 
-- As mudanças dos leiautes de teclado já não são anunciadas durante uma leitura contínua, pois isto era particularmente problemático para documentos multilingue, incluindo textos em Árabe. (#1676) 
+- Pressionando-se NVDA+seta acima dentro de  uma caixa de combinação no Internet Explorer e outros documentos MSHTML já não irá ler incorretamente todos os items. Em lugar disso, apenas o item ativo será lido. (#2337) 
+- Os dicionários de fala agora salvarão  apropriadamente as entradas caso seja usado o sinal de cardinal (#) dentro do campo original ou de substituição. (#961) 
+- O modo de navegação para documentos MSHTML (como o Internet Explorer) agora mostra corretamente conteúdos visíveis  contidos em conteúdos ocultos (especificamente, elementos com o estilo de visibilidade:visível dentro de um elemento que tenha o estilo de visibilidade:oculto). (#2097) 
+- Os links da Central de Segurança do Windows XP já não anunciam porções de textos desnecessários depois de seus nomes. (#1331) 
+- Os controles de texto UI Automation (como o campo de pesquisa no Menu Iniciar do Windows 7) agora são anunciados corretamente quando o mouse é movido sobre eles ao invés de permanecer em silêncio. 
+- As mudanças nos leiautes de teclado já não são anunciadas durante uma leitura contínua, algo que era particularmente problemático para documentos multilingue, incluindo textos em Árabe. (#1676) 
+- o conteúdo inteiro de alguns controles de edição de texto do UI Automation  (como a caixa de pesquisa no  Menu iniciar do Windows 7/8) já não é anunciado a cada vez que ele é alterado. 
+- Ao mover-se entre grupos na tela de início do Windows 8, os grupos não etiquetados já não anunciam seu primeiro mozaico como se fosse o nome do grupo. (#2658) 
+- Ao abrir a tela de início do Windows 8 , o foco é corretamente colocado no primeiro mozaico, em lugar de ir para a raiz da referida tela, visto que isso tornaria a navegação confusa. (#2720) 
+- O NVDA já não falha ao ser iniciado quando o caminho do perfio do usuário contém certos caracteres multibyte. (#2729) 
+- No Google Chrome, em modo de navegação, o texto das guias agora é esposto corretamente. 
+- No modo de navegação, os botões de menu agora são anunciados corretamente. 
+- No OpenOffice.org/LibreOffice Calc, a leitura das células das planilhas agora funciona corretamente. (#2765) 
+- O NVDA volta a funcionar na lista de mensagens do Yahoo! Mail quando se o acessa usando o Internet Explorer. (#2780)
  
 
 == Alterações Específicas para Desenvolvedores ==
@@ -110,6 +126,7 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
  - For xgettext, pass the --keyword=pgettext:1c,2 command line argument to enable inclusion of message contexts. 
  - Consulte http://www.gnu.org/software/gettext/manual/html_node/Contexts.html#Contexts para mais informações. 
 - It is now possible to access built-in NVDA modules where they have been overridden by third party modules. See the nvdaBuiltin module for details. 
+- Add-on translation support can now be used within the add-on installTasks module. (#2715) 
 
 
 = 2012.2.1 =

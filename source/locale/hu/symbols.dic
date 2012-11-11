@@ -4,32 +4,24 @@
 #This file is covered by the GNU General Public License.
 
 
-# please remove these, and correct regular expression names further down.
-# --cut--
-# Others
-#tizedes vessző	(?<=\d)\.(?=\d)
-#szóban lévő '	(?<=[^\W_])['’]
-#negatív szám	(?<!\w)-(?=[$£€¥]?\d)
-# -- end cut --
-
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	pont	all	always
-! sentence ending	felkiáltójel	all	always
-? sentence ending	kérdőjel	all	always
-; phrase ending	pontosvessző	most	always
-: phrase ending	kettőspont	most	always
-tizedes vessző		none	always
-szóban lévő '	aposztrof	all	norep
-negatív szám	minusz	none	norep
+. sentence ending	pont
+! sentence ending	felkiáltójel
+? sentence ending	kérdőjel
+; phrase ending	pontosvessző
+: phrase ending	kettőspont
+decimal point	
+in-word '	aposztrof
+negative number	minusz
 
 # Whitespace
-\0	üres	char
+\0	üres
 \t	tab
-\n	újsor	char
-\f	oldaltörés	none
+\n	újsor
+\f	oldaltörés
 \r	sor vége	char
  	szóköz	char
  	szóköz (töretlen)	char	# no-break space

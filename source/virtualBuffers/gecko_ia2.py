@@ -30,6 +30,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role=controlTypes.ROLE_BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		if attrs.get("IAccessibleAction_showlongdesc") is not None:
+			states.add(controlTypes.STATE_HASLONGDESC)
 		defaultAction=attrs.get('defaultAction','')
 		if defaultAction=="click":
 			states.add(controlTypes.STATE_CLICKABLE)
@@ -141,6 +143,13 @@ class Gecko_ia2(VirtualBuffer):
 		if obj.role == controlTypes.ROLE_GRAPHIC and controlTypes.STATE_LINKED in obj.states:
 			return True
 		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj) and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
+
+	def _activateLongDesc(self,controlField):
+		index=int(controlField['IAccessibleAction_showlongdesc'])
+		docHandle=int(controlField['controlIdentifier_docHandle'])
+		ID=int(controlField['controlIdentifier_ID'])
+		obj=self.getNVDAObjectFromIdentifier(docHandle,ID)
+		obj.doAction(index)
 
 	def _activateNVDAObject(self, obj):
 		try:

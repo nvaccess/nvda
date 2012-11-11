@@ -284,37 +284,12 @@ void VBufStorage_fieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t* buffe
 	LOG_DEBUG(L"Disassociating fieldNode from buffer");
 }
 
-VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), isHidden(false), attributes() {
+VBufStorage_fieldNode_t::VBufStorage_fieldNode_t(int lengthArg, bool isBlockArg): parent(NULL), previous(NULL), next(NULL), firstChild(NULL), lastChild(NULL), length(lengthArg), isBlock(isBlockArg), isHidden(false), updateAncestor(NULL), attributes() {
 	LOG_DEBUG(L"field node initialization at "<<this<<L"length is "<<length);
 }
 
 VBufStorage_fieldNode_t::~VBufStorage_fieldNode_t() {
 	LOG_DEBUG(L"fieldNode being destroied");
-}
-
-VBufStorage_controlFieldNode_t* VBufStorage_fieldNode_t::getParent() {
-	LOG_DEBUG(L"parent at "<<parent);
-	return parent;
-}
-
-VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getPrevious() {
-	LOG_DEBUG(L"previous at "<<previous);
-	return previous;
-}
-
-VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getNext() {
-	LOG_DEBUG(L"next at "<<next);
-	return next;
-}
-
-VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getFirstChild() {
-	LOG_DEBUG(L"first child at "<<firstChild);
-	return firstChild;
-}
-
-VBufStorage_fieldNode_t* VBufStorage_fieldNode_t::getLastChild() {
-	LOG_DEBUG(L"last child at "<<lastChild);
-	return lastChild;
 }
 
 bool VBufStorage_fieldNode_t::addAttribute(const std::wstring& name, const std::wstring& value) {
@@ -339,18 +314,6 @@ std::wstring VBufStorage_fieldNode_t::getDebugInfo() const {
 	s<<L"field node at "<<this<<L", parent at "<<parent<<L", previous at "<<previous<<L", next at "<<next<<L", firstChild at "<<firstChild<<L", lastChild at "<<lastChild<<L", length is "<<length<<L", attributes are "<<getAttributesString();
 	return s.str();
 }
-
-void VBufStorage_fieldNode_t::setIsBlock(bool isBlock) {
-	this->isBlock=isBlock;
-}
-
-void VBufStorage_fieldNode_t::setIsHidden(bool isHidden) {
-	this->isHidden=isHidden;
-}
-
-int VBufStorage_fieldNode_t::getLength() {
-		return this->length;
-	}
 
 //controlFieldNode implementation
 

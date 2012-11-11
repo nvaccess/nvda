@@ -23,7 +23,7 @@ Najvýznamnejšie prednosti programu:
 - Podpora množstva braillovských zobrazovačov
 - Možnosť spustenia programu z USB kľúča, alebo iného prenosného zariadenia, bez nutnosti inštalácie
 - Ozvučený inštalátor
-- Preložený do 40 jazykov
+- Preložený do 41 jazykov
 - Podpora pre moderné operačné systémy Windows, 32 aj 64 bitové verzie
 - Možnosť spúšťania na prihlasovacej obrazovke a iných zabezpečených obrazovkách Windows
 - Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation len vo Windows 7 a novších)
@@ -32,7 +32,7 @@ Najvýznamnejšie prednosti programu:
 
 ++ Medzinárodná podpora ++
 Je dôležité, aby ľudia na celom svete hovoriaci akýmkoľvek jazykom, mali kdekoľvek prístup k špeciálnym technológiám.
-NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 40 jazykov: Afrikánčina, Albánčina, Arabčina, Amharčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Japončina, Kórejčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Poľština, Portugalčina, Rumunčina, Ruština, Slovenčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
+NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 41 jazykov: Afrikánčina, Albánčina, Arabčina, Amharčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Japončina, Kórejčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Poľština, Portugalčina, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
 
 ++ Podpora hlasového výstupu ++
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítania textov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
@@ -501,7 +501,7 @@ Je možné použiť klávesovú skratku na prechod späť do dokumentu v ktorom 
 NVDA pre niektoré aplikácie implementuje svoje vlastné príkazy, čím buď umožňuje ľahšie vykonávať niektoré úlohy, alebo sprístupňuje časti aplikácií, ktoré nie sú inak prístupné používateľom odkázaným na čítač obrazovky.
 
 ++ Microsoft Excel ++
-+%kc:beginInclude
+%kc:beginInclude
 || Názov | Klávesová skratka | Description |
 | Nastaviť hlavičky stĺpcov |NVDA+shift+c | Stlačené raz nastavý aktuálny riadok ako riadok s hlavičkami tabuľky, takže NVDA bude oznamovať hlavičky pri pohybe medzi stĺpcami pod týmto rriadkom. Nastavenie vymažete dvojitým stlačením. |
 | Nastaviť hlavičky riadkov | NVDA+shift+r | Stlačené raz nastavý aktuálny stĺpec ako stĺpec s hlavičkami tabuľky, takže NVDA bude oznamovať hlavičky pri pohybe medzi riadkami. Nastavenie vymažete dvojitým stlačením. |
@@ -752,7 +752,7 @@ Klávesová skratka: NVDA+4
 
 Ak je zapnuté, NVDA bude čítať klávesové skratky použité ako príkazy, teda nie samotné znaky. Do tejto funkcie spadajú kombinácie znakov a klávesov napr. s klávesom Control.
 
-+++ Nastavenia myši +++[MouseSettings]
++++ Nastavenia myši (NVDA+control+m) +++[MouseSettings]
 Toto dialógové okno nájdeme v možnostiach programu NVDA.
 Dialóg obsahuje nasledujúce prvky:
 
@@ -858,15 +858,32 @@ Prepína automatické oznamovanie obsahu v niektorých objektoch ako sú naprík
 +++ Nastavenia vstupu +++
 Toto nastavenie nájdeme v možnostiach programu NVDA, pod názvom Nastavenia vstupu.
 Môžete tu nastaviť odozvu pri písaní ázijských znakov, ak je použitá textová služba alebo IME.
+Je dôležité si uvedomiť, že v závislosti od konkrétnych textových služieb sú dostupné rôzne vlastnosti pri vkladaní znakov s rôznymi spôsobmi sprístupnenia poskytovaných informácií. Preto je veľmi pravdepodobné, že bude potrebné tieto zmeny prispôsobiť tak, aby Ste s použitím konkrétnej textovej služby dosahovali čo najlepšie skúsenosti pri písaní.
 
 ==== Automaticky oznamovať všetky návrhy ====
 Táto možnosť je predvolene začiarknutá. Určuje, či budú oznamované všetky návrhy, ak sa zobrazí alebo zmení zoznam návrhov.
 Toto je užitočné pri písaní v piktografických písmach, ako napríklad chinese New ChangJie, alebo Boshiami. Budete počuť návrhy a zvolenú možnosť vyberiete zadaním konkrétneho čísla.
 Pri používaní fonetického písma, ako napríklad Chinese New Phonetic, je lepšie túto možnosť odčiarknuť. Všetky znaky totiž znejú rovnako a musíte si zoznam prehliadať šípkami, aby ste získali podrobnejšiu informáciu o vybratom znaku.
 
-==== Oznamovať zmeny v okne s výslovnosťou ====
-Pri niektorých písmach sa používa tzv. okno s výslovnosťou. Sú to napríklad Chinese New Phonetic a New ChangJie.
-Môžete nastaviť, či má NVDA oznamovať nové znaky, ktoré sa objavia v okne s výslovnosťou.
+==== Oznamovať vybratý návrh ====
+Táto predvolene začiarknutá voľba umožňuje nastaviť automatické oznamovanie ak sa na obrazovke objaví zoznam návrhov alebo ak dôjde ku zmene v tomto zozname.
+Pre textové služby, kde je možné v zozname návrhov vybrať položku pomocou kurzorových klávesov napr. chinese new phonetic je povolenie tohoto nastavenia nevihnutné, ale s inými službami bude písanie efektívnejšie ak bude toto nastavenie vypnuté.
+Ak bude aj toto nastavenie vypnuté, prehliadací kurzor bude vždy automaticky ukazovať na vybratý návrh, čo umožní rýchle čítanie pomocou objektovej navigácie a prehliadacieho kurzora.
+
+==== Oznamovať popis pre znaky v zozname návrhov ====
+Táto predvolene začiarknutá možnosť umožňuje nastaviť, či má NVDA pre každý znak v zozname návrhov prečítať krátky popis či už pri výbere návrhu alebo aj pri jeho automatickom prečítaní hneď ako sa objaví zoznam návrhov.
+Pre niektoré miestne nastavenia napr. čínštinu táto voľba nemá vplyv na oznamovanie rozšírených popisovpre znaky v zozname návrhu.
+Táto možnosť je užitočná pre textové služby, ktoré sa používajú pri zapisovaní japončiny a kórejčiny.
+
+==== Oznamovať zmeny predbežného návrhu ====
+Pri niektorých službách sa používa tzv. predbežný návrh Sú to napríklad Chinese New Phonetic a New ChangJie.
+Môžete nastaviť, či má NVDA oznamovať nové znaky, ktoré sa objavia v tomto návrhu.
+Táto možnosť je predvolene začiarknutá.
+Niektoré staršie textové služby napr. Chinese ChangJie môžu namiesto predbežného návrhu meniť priamo skladaný reťazec, v takom prípade si pozrite nasledujúce nastavenie.
+
+==== Oznamovať zmeny v práve skladanom reťazci ====
+Potom, čo z údajov v predbežnom návrhu vznikne správny piktografický symbol, ešte pred vložením do samotného dokumentu textové služby vložia tento symbol k ostatným symbolom do tzv. skladaného reťazca.
+Toto nastavuje, či NVDA bude oznamovať nové znaky, ktoré sa objavia v skladanom reťazci.
 Táto možnosť je predvolene začiarknutá.
 
 +++ Režim prehliadania (NVDA+CTRL+b) +++
@@ -1438,14 +1455,14 @@ Podporované sú tieto brailovské riadky:
 - BRAILLEX Trio (USB a bluetooth)
 -
 
-Ak máte nainštalované BrxCom, NVDA ho bude používať.
+Ak máte nainštalovaný BrxCom, NVDA ho bude používať.
 Pomocou BrxCom môžete písať priamo cez brailovský riadok nezávisle od použitého čítača obrazovky.
 Nová verzia BrxComu od spoločnosti Papenmeier s podporou pre NVDA by mala byť vydaná čoskoro.
 
 Väčšina zariadení má tzv. panel rýchleho prístupu, ktorý umožňuje rýchle a intuitívne ovládanie.
 Tento panel môžete posúvať do štyroch strán, pričom na každej strane sú dva prepínače.
 Vínimkou sú riadky zo série c.
--
+
 Tieto a aj niektoré ďalšie riadky majú dva rady smerových tlačidiel, pričom prvý rad sa používa na získanie informácii o formátovaní.
 Stlačením niektorého zo smerových tlačidiel v prvom rade v kombinácii s pohybom panela rýchleho prístupu emulujete prepnutie prepínača.
 Stlačením a podržaním tlačidiel up, down, right a left, prípadne pohybom na panely rýchleho prístupu zopakujete priradenú akciu.
@@ -1521,16 +1538,17 @@ Hodnota musí byť uzavretá v úvodzovkách "" alebo znakmi apostrof ''.
 - 
 
 Identifikátor vstupného príkazu pozostáva z dvoj znakového identifikátora zariadenia, nepovinného identifikátora subzariadenia, rozloženia klávesov, alebo režimu v zátvorke, dvojbodky a špecifického reťazca znázorňujúceho samotný vstup napr. názov klávesov alebo dotikového gesta.
-Pre gestá z klávesnice je kód zariadenia vždy kb.
+- Pre gestá z klávesnice je kód zariadenia vždy kb.
 Časť v zátvorke znamená rozloženie klávesnice a nie je povinná.
 Ak nie je zadaná, gesto sa použije pre všetky rozloženia klávesnice.
 Reťazec za znakom dvojbodka pozostáva z jedného alebo viacerých názvov klávesov oddelených znakom plus.
-Pre gestá braillovských riadkov je kód zariadenia vždy br.
+- Pre gestá braillovských riadkov je kód zariadenia vždy br.
 Časť v zátvorke identifikuje špecifický ovládač zariadenia a je povinná.
 Reťazec za znakom dvojbodka pozostáva z jedného alebo viacerých názvov klávesov oddelených znakom plus.
-Pre dotikové gestá je kód zariadenia vždy ts.
+- Pre dotikové gestá je kód zariadenia vždy ts.
 Časť v zátvorke nie je povinná a reprezentuje dotikový režim.
 Reťazec za znakom dvojbodka je názov dotikového gesta napr. double_tap, 2fingerflickUp, alebo 3finger_tap.
+-
 
 Na získanie identifikátorov vstupných príkazov, názvov modulov, tried a skriptov je možné:
 + aktivovať nápovedu vstupu.
