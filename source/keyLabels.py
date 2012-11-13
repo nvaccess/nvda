@@ -134,5 +134,5 @@ localizedKeyLabels = {
 	# Translators: This is the name of a key on the keyboard.
 	'break': _("break"),
 	# Translators: This is the name of a key on the keyboard.
-	'tab': _("tab"),
+	'tab': pgettext("keyLabel", "tab"),
 }
