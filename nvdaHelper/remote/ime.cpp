@@ -179,20 +179,22 @@ void handleReadingStringUpdate(HWND hwnd) {
 	DWORD version=0;
 	HMODULE IMEFile=NULL;
 	GetReadingString_funcType GetReadingString=NULL;
-	if(ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH)>0) {
+	if (isTSFThread(true)) {
+		// Look up filename of active TIP
+		if(getTIPFilename(curTSFClsID, filename, MAX_PATH)) {
+			IMEFile=LoadLibrary(filename);
+			if(IMEFile) {
+				GetReadingString=(GetReadingString_funcType)GetProcAddress(IMEFile, "GetReadingString");
+			}
+		}
+	}
+	else if(ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH)>0) {
 		IMEFile=LoadLibrary(filename);
 		if(IMEFile) {
 			GetReadingString=(GetReadingString_funcType)GetProcAddress(IMEFile, "GetReadingString");
 		}
 		if(!GetReadingString) {
 			version=getIMEVersion(kbd_layout,filename);
-		}
-	}
-	else if(getTIPFilename(curTSFClsID, filename, MAX_PATH)) {
-		// Look up filename of active TIP
-		IMEFile=LoadLibrary(filename);
-		if(IMEFile) {
-			GetReadingString=(GetReadingString_funcType)GetProcAddress(IMEFile, "GetReadingString");
 		}
 	}
 	if(GetReadingString) {
