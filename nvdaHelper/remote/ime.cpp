@@ -127,6 +127,32 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 	return version;
 }
 
+bool getTIPFilename(REFCLSID clsid, WCHAR* filename, DWORD len) {
+	// Format registry path for CLSID
+	WCHAR reg_path[100];
+	_snwprintf(reg_path, ARRAYSIZE(reg_path),
+		L"CLSID\\{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}\\InProcServer32",
+		clsid.Data1, clsid.Data2, clsid.Data3,
+		clsid.Data4[0], clsid.Data4[1], clsid.Data4[2], clsid.Data4[3],
+		clsid.Data4[4], clsid.Data4[5], clsid.Data4[6], clsid.Data4[7]);
+	HKEY reg_key = NULL;
+	RegOpenKeyW(HKEY_CLASSES_ROOT, reg_path, &reg_key);
+	if (!reg_key)  return false;
+	DWORD type = REG_NONE;
+	DWORD l = 0;
+	bool  result = false;
+	if ((ERROR_SUCCESS == RegQueryValueExW(reg_key, 0, 0, &type, 0, &l)) &&
+			(type == REG_SZ) && (l > 0) && (len >= l)) {
+		if (ERROR_SUCCESS ==
+				RegQueryValueExW(reg_key, 0, 0, 0, (LPBYTE)filename, &len)) {
+			filename[len] = '\0';
+			result = true;
+		}
+	}
+	RegCloseKey(reg_key);
+	return result;
+}
+
 typedef UINT (WINAPI* GetReadingString_funcType)(HIMC, UINT, LPWSTR, PINT, BOOL*, PUINT);
 
 void handleOpenStatus(HWND hwnd) {
@@ -160,6 +186,13 @@ void handleReadingStringUpdate(HWND hwnd) {
 		}
 		if(!GetReadingString) {
 			version=getIMEVersion(kbd_layout,filename);
+		}
+	}
+	else if(getTIPFilename(curTSFClsID, filename, MAX_PATH)) {
+		// Look up filename of active TIP
+		IMEFile=LoadLibrary(filename);
+		if(IMEFile) {
+			GetReadingString=(GetReadingString_funcType)GetProcAddress(IMEFile, "GetReadingString");
 		}
 	}
 	if(GetReadingString) {
@@ -397,7 +430,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 					break;
 
 				case IMN_PRIVATE:
-					if(!isTSFThread(true)) handleReadingStringUpdate(hwnd);
+					handleReadingStringUpdate(hwnd);
 					break;
 			}
 			break;
