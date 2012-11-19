@@ -383,7 +383,8 @@ stateLabels={
 	STATE_SORTED:_("sorted"),
 	STATE_SORTED_ASCENDING:_("sorted ascending"),
 	STATE_SORTED_DESCENDING:_("sorted descending"),
-	STATE_HASLONGDESC:"has long description",
+	# Translators: a state that denotes that an object (usually a graphic) has a long description.
+	STATE_HASLONGDESC:_("has long description"),
 }
 
 negativeStateLabels={

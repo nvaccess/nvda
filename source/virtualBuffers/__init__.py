@@ -758,6 +758,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		obj.doAction()
 
 	def _activateLongDesc(self,controlField):
+		"""
+		Activates (presents) the long description for a particular field (usually a graphic).
+		@param controlField: the field who's long description should be activated. This field is guaranteed to have states containing HASLONGDESC state. 
+		@type controlField: dict
+		"""
 		raise NotImplementedError
 
 	def _activatePosition(self, info):
@@ -825,7 +830,9 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 					self._activateLongDesc(field.field)
 					break
 		else:
+			# Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
 			ui.message(_("No long description"))
+	# Translators: the description for the activateLongDescription script on virtualBuffers.
 	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
 
 	def script_activatePosition(self,gesture):
