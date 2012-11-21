@@ -127,17 +127,17 @@ Standaard zijn zowel de numerieke Insert als de uitgebreide Insert-toets als NVD
 
 Om een toets die u als NVDA programmatoets hebt ingesteld zijn oorspronkelijke functie te laten uitvoeren (u wilt CapsLock bij voorbeeld aanzetten om hoofdletters te typen),  moet u deze toets tweemaal snel achter elkaar indrukken.
 
-+++ Toetsenbord layout +++
++++ Toetsenbordindeling +++
 Momenteel beschikt NVDA over twee profielen met toetscommando’s.
 Het ene profiel heeft de indeling van een standaard toetsenbord voor een Desktop PC, terwijl het andere de indeling van een laptoptoetsenbord heeft. 
-De standaardinstelling van NVDA is het Desktoptoetsenbord, maar in het NVDA-menu onder Opties en vervolgens Toetsenbord kunt u dit wijzigen in Laptoptoetsenbordlayout.
+De standaardinstelling van NVDA is het Desktoptoetsenbord, maar in het NVDA-menu onder Opties en vervolgens Toetsenbord kunt u dit wijzigen in Laptoptoetsenbordindeling.
 
 Bij de Desktoptoetsenbordindeling wordt zeer veel gebruik gemaakt van het numerike toetsenbord (NumLock moet hierbij uitstaan).
-Hoewel de meeste laptops geen apart numeriek toetsenbord hebben, kan dit soms wel worden gesimuleerd door de FN-toets indgedrukt te houden en letters en cijfers in te toetsen op het rechterdeel van het toetsenbord (7, 8, 9, u, i, o, j, k, l, etc.).
+Hoewel de meeste laptops geen apart numeriek toetsenbord hebben, kan dit soms wel worden gesimuleerd door de FN-toets ingedrukt te houden en letters en cijfers in te toetsen op het rechterdeel van het toetsenbord (7, 8, 9, u, i, o, j, k, l, etc.).
 Als dit niet mogelijk is op uw laptop of als u NumLock niet kunt uitschakelen, kunt u beter kiezen voor de laptop toetsenbordindeling. 
 
 ++ NVDA Aanraakgebaren ++
-Als u met NVDA werkt op eenapparaat met een aanraakscherm dat draait onder Windows 8 of hoger dan kunt u NVDA ook rechtstreeks via het aanraakscherm bedienen.
+Als u met NVDA werkt op een apparaat met een aanraakscherm dat draait onder Windows 8 of hoger dan kunt u NVDA ook rechtstreeks via het aanraakscherm bedienen.
 Terwijl NVDA actief is, gaat alle door aanraking gegenereerde invoer rechstreeks naar NVDA.
 Daarom zullen taken die normaal zonder NVDA kunnen worden uitgevoerd niet werken.
 
@@ -170,10 +170,9 @@ Net als bij tikken kunnen veegbewegingen met meer dan één vinger worden gemaak
 Daarom komen gebaren zoals een veegbeweging links met twee vingers en en veegbeweging omhoog met vier vingers, etc. allemaal voor.
 
 +++ Aanraakmodi +++
-Aangezien er veel meer NVDA-commando’s zijn dan mogelijke aanraakgebaren, kan in NVDA gewisseld worden tussen verschillend aanraakmodi die ervoor zorgen dat commando’s in groepen worden onderverdeeld.
+Aangezien er veel meer NVDA-commando’s zijn dan mogelijke aanraakgebaren, kan in NVDA gewisseld worden tussen verschillende aanraakmodi die ervoor zorgen dat commando’s in groepen worden onderverdeeld.
 De twee modi zijn de tekstmodus en de objectmodus.
-Bij een aantal NVDA-commando’s die u in deze handleiding tegenkomt, wordt, na het aanraakgebaar, tussen haakjes de toepasselijke modus vermeld.
-Zo betekent “veeg omhoog (tekst modus)” dat de NVDA-opdracht wordt uitgevoerd door een veegbeweging omhoog maar dan moet de tekstmodus wel actief zijn.
+Bij een aantal NVDA-commando’s die u in deze handleiding tegenkomt, wordt, na het aanraakgebaar, tussen haakjes de toepasselijke modus vermeld  Zo betekent “veeg omhoog (tekst modus)” dat de NVDA-opdracht wordt uitgevoerd door een veegbeweging omhoog maar dan moet de tekstmodus wel actief zijn.
 Als er bij een bepaald commando geen modus wordt aangegeven wordt dit altijd uitgevoerd ongeacht in welke modus men zich bevindt.
 
 %kc:beginInclude
@@ -199,7 +198,7 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 | Spraak pauzeren | Shift | geen | Spraakuitvoer wordt gepauzeerd. Druk Shift opnieuw in om verder te lezen vanaf de pauzepositie(als de gebruikte synthesizer dit ondersteunt) |
 | NVDA Menu | NVDA+n | dubbeltik met 2 vingers | Opent het menu voor opties, extra en hulp, etc. |
 | Spraakmodus | NVDA+s | geen | Wisselt spraakmodus tussen spreken, pieptonen en stilte. |
-| Toetsbeschrijvingsmodus aan-/uitzetten | NVDA+1 | geen | Als de toetsbeschrijvingsmodus is ingeschakeld hoort u bij elke toets die wordt ingedrukt de naam van de toets en de (eventuele) bijbehorende functie van de toets(en) |
+| Invoerhulpmodus aan-/uitzetten | NVDA+1 | geen | Als de invoerhulpmodus is ingeschakeld hoort u bij elke toets die wordt ingedrukt de naam van de toets en de (eventuele) bijbehorende functie van de toets(en) |
 | NVDA afsluiten | NVDA+q | geen | Sluit NVDA af |
 | Volgende toetsaanslag niet uitvoeren | NVDA+f2 | geen | De volgende toetsaanslag zal niet als NVDA-commando worden verwerkt maar als commando binnen de gebruikte toepassing worden uitgevoerd. |
 | Zet slaapmodus aan/uit voor huidige aplicatie | NVDA+shift+s | geen | Slaapmodus schakelt alle NVDA commando's en uitvoer in spraak en braille uit. Dit is vooral handig in applicaties die in hun eigen spraakuitvoer of schermlezer voorzien. Druk deze toets nogmaals in om slaapmodus weer uit te schakelen. |
@@ -208,7 +207,7 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 ++ Systeeminformatie melden ++
 %kc:beginInclude
 || Naam | Toets | Omschrijving |
-| Datum/tijd melden | NVDA+f12 | Eenmaal indrukken laat hudige tijd horen, tweemaal snel indrukken meldt de datum |
+| Datum/tijd melden | NVDA+f12 | Eenmaal indrukken laat huidige tijd horen, tweemaal snel indrukken meldt de datum |
 | Batterijstatus melden | NVDA+shift+b | Meldt de batterijstatus, of de computer is aangesloten op netstroom en het batterijpercentage. |
 | Tekst op het klembord melden | NVDA+c | Meldt de tekst op het klembord als er tekst op het klembord staat. |
 %kc:endInclude
@@ -1507,8 +1506,8 @@ De scripts worden opgemaakt in de standaard syntaxis voor ini-bestanden. Het bes
 - De sleutelnamen binnen de afzonderlijke onderdelen verwijzen naar de  scripts, die u zou willen toewijzen. Voor het geval dat u een toegewezen invoermethode ongedaan wilt maken, kan de naam "none" gebruikt worden. Een bepaalde sleutel, met inbegrip van “none”, mag slechts eenmaal per rubriek worden gebruikt.  
 - De waarde van een sleutel is een door komma’s gescheiden  lijst met invoermethodes die aan een script moeten worden   toegekend. De invoermethodenamen met de komma aan het einde moeten tussen enkele ( ‘)of dubbele (“) aanhalingstekens staan. 
  
-De namen van de invoermethodes bestaan uit een apparaatcode van twee letters – “kb” voor keyboard (toetsenbord)en "br" voor de brailleleesregel -, code voor een secundair apparaat of een toetsenbord-layout tussen vierkante haken, een Dubbele punt en tenslotte één of meer toetstekens gescheiden door een plusteken.
-Bij toetsenbordcommando’s heeft het gedeelte tussen vierkante haken betrekking op een toetsenbord-layout en is optioneel. Als dit ontbreekt, geldt de invoermethode voor elke layout. 
+De namen van de invoermethodes bestaan uit een apparaatcode van twee letters – “kb” voor keyboard (toetsenbord)en "br" voor de brailleleesregel -, code voor een secundair apparaat of een toetsenbordindeling tussen vierkante haken, een Dubbele punt en tenslotte één of meer toetstekens gescheiden door een plusteken.
+Bij toetsenbordcommando’s heeft het gedeelte tussen vierkante haken betrekking op een toetsenbordindeling en is optioneel. Als dit ontbreekt, geldt de invoermethode voor elke indeling. 
 Bij Brailleleesregels heeft het gedeelte tussen vierkante haken betrekking op de naam van de Brailleleesregel en mag beslist niet ontbreken.
  
 Om achter de scriptnamen, modules klassen en invoermethodes te komen, kunt u als volgt te werk gaan:
@@ -1542,7 +1541,7 @@ Als er nog geen gestures.ini bestand bestaat, moet u dit aanmaken in de gebruike
       dateTime = kb:NVDA+shift+t
 ```
  
-Hiermee wordt de toetscombinatie NVDA+Shift+T (voor elke toetsenbord-layout) aan het script "dateTime" toegewezen.
+Hiermee wordt de toetscombinatie NVDA+Shift+T (voor elke toetsenbordindeling) aan het script "dateTime" toegewezen.
 Opmerking : De oorspronkelijke toetscombinatie NVDA+F12 voor het weergeven datum en tijd functioneert nog steeds. Om deze koppeling te verwijderen, voegt u de volgende regel toe:
  
 ```
