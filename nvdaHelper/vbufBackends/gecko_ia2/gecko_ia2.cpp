@@ -486,9 +486,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			if(actionName) {
 				wstring attribName=L"IAccessibleAction_";
 				attribName+=actionName;
-				s.str(L"");
 				s<<i;
 				parentNode->addAttribute(attribName,s.str());
+				s.str(L"");
 				if(wcscmp(actionName, L"click")==0||wcscmp(actionName, L"showlongdesc")==0) {
 					isInteractive=true;
 				}
