@@ -1294,8 +1294,9 @@ class BrailleSettingsDialog(SettingsDialog):
 		display = self.displayNames[self.displayList.GetSelection()]
 		if display not in config.conf["braille"]:
 			config.conf["braille"][display] = {}
-		port = self.possiblePorts[self.portsList.GetSelection()][0]
-		config.conf["braille"][display]["port"] = port
+		if self.portSelectionPossible:
+			port = self.possiblePorts[self.portsList.GetSelection()][0]
+			config.conf["braille"][display]["port"] = port
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
@@ -1322,32 +1323,31 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.updatePossiblePorts()
 
 	def updatePossiblePorts(self):
-		
 		displayName = self.displayNames[self.displayList.GetSelection()]
 		displayCls = braille._getDisplayDriver(displayName)
 		self.possiblePorts = []
-		if displayCls.canDoAutomaticPortSelection:
-			self.possiblePorts.append(("auto", _("Automatic"),))
+		self.portSelectionPossible = True
 		try:
 			for k, v in displayCls.getPossiblePorts().iteritems():
 				self.possiblePorts.append((k,v),)
 		except NotImplementedError:
-			pass # Only automatic selection. no automatic should suply possible ports.
-		self.portsList.SetItems([p[1] for p in self.possiblePorts])
-		try:
-			selectedPort = config.conf["braille"][displayName].get("port")
-		except KeyError:
-			# Display not in config, use default as automatic.
-			selectedPort = "auto"
-		try:
-			portNames = [p[0] for p in self.possiblePorts]
-			selection = portNames.index(selectedPort)
-			self.portsList.SetSelection(selection)
-		except:
-			# No automatic selection neither port found, use first possible port.
-			self.portsList.SetSelection(0) # revert to automatic.
-		# If only automatic selection is available, disable the port selection control
-		enable = not (displayCls.canDoAutomaticPortSelection and len(self.possiblePorts) == 1)
+			self.portSelectionPossible = False
+		if self.portSelectionPossible:
+			self.portsList.SetItems([p[1] for p in self.possiblePorts])
+			try:
+				selectedPort = config.conf["braille"][displayName].get("port")
+			except KeyError:
+				# Display not in config, use default as automatic.
+				selectedPort = "auto"
+			try:
+				portNames = [p[0] for p in self.possiblePorts]
+				selection = portNames.index(selectedPort)
+				self.portsList.SetSelection(selection)
+			except:
+				# No automatic selection neither port found, use first possible port.
+				self.portsList.SetSelection(0) # revert to automatic.
+		# If no port selection is possible or only automatic selection is available, disable the port selection control
+		enable = self.portSelectionPossible and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)
 
 class SpeechSymbolsDialog(SettingsDialog):

@@ -1497,14 +1497,15 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		@type cells: [int, ...]
 		"""
 
-	#: Does this braille display have automatic port selection? (usually only USB or bluetooth connections)
-	#: @type: bool
-	canDoAutomaticPortSelection = True
+	#: Automatic port constant to be used by braille displays that support the "automatic" port
+	#: @type: Tupple
+	AUTOMATIC_PORT = ("auto", _("Automatic"))
 
 	@classmethod
 	def getPossiblePorts(cls):
 		""" Returns possible hardware ports for this driver.
-		
+		If the driver supports automatic port setting it should return as the first port C{brailleDisplayDriver.AUTOMATIC_PORT}
+
 		@return: ordered dictionary of name : description for each port
 		@rtype: OrderedDict
 		"""

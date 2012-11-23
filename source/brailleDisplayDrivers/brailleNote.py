@@ -94,13 +94,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def check(cls):
 		return True
 
-	canDoAutomaticPortSelection = False
 	@classmethod
 	def getPossiblePorts(cls):
 		ports = OrderedDict()
 		for p in hwPortUtils.listComPorts():
 			if p['port'].startswith("COM") and p.get("bluetoothAddress") is None:
-				ports[p["port"]] = _("Serial Port: {portName}").format(portName=p["port"])
+				ports[p["port"]] = _("Serial: {portName}").format(portName=p["port"])
 		return ports
 
 	def __init__(self, port):
