@@ -219,15 +219,15 @@ When the menu comes up, You can use the arrow keys to navigate the menu, and the
 
 ++ Basic NVDA commands ++
 %kc:beginInclude
-|| Name | Key | Touch | Description |
-| Stop speech | Control | 2-finger tap | Instantly stops speaking |
-| Pause Speech | Shift | none | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
-| NVDA Menu | NVDA+n | 2-finger double tap | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
-| Toggle Speech Mode | NVDA+s | none | Toggles speech mode between speech, beeps and off. |
-| Toggle Input Help Mode | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
-| Quit NVDA | NVDA+q | none | Exits NVDA |
-| Pass next key through | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
-| Toggle application sleep mode on and off | NVDA+shift+s | none | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable self voicing mode. |
+|| Name | Desktop key | Laptop key | Touch | Description |
+| Stop speech | Control | control | 2-finger tap | Instantly stops speaking |
+| Pause Speech | shift | shift | none | Instantly pauses speech. Pressing it again will continue speaking where it left off (if pausing is supported by the current synthesizer) |
+| NVDA Menu | NVDA+n | NVDA+n | 2-finger double tap | Pops up the NVDA menu to allow you to access preferences, tools and help etc |
+| Toggle Speech Mode | NVDA+s | NVDA+s | none | Toggles speech mode between speech, beeps and off. |
+| Toggle Input Help Mode | NVDA+1 | NVDA+1 | none | Pressing any key in this mode will report the key, and the description of any NVDA command associated with it |
+| Quit NVDA | NVDA+q | NVDA+q | none | Exits NVDA |
+| Pass next key through | NVDA+f2 | NVDA+f2 | none | Tells NVDA to pass the next key press straight through to the active application, even if it is normally treeted as an NVDA key command |
+| Toggle application sleep mode on and off | NVDA+shift+s | NVDA+shift+z | none | sleep mode disables all NVDA commands and speech/braille output for the current application. This is most useful in applications that provide their own speech or screen reading features. Press this command again to disable self voicing mode. |
 %kc:endInclude
 
 ++ Reporting System Information ++
@@ -254,11 +254,11 @@ As you do this, NVDA will report information about the object with focus, such a
 
 There are some key commands that are useful when moving with the System focus:
 %kc:beginInclude
-|| Name | key | Description |
-| Report current focus | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
-| Report title | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
-| Read active window | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
-| Report Status Bar | NVDA+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location |
+|| Name | Desktop key | Laptop key | Description |
+| Report current focus | NVDA+tab | NVDA+tab | announces the current object or control that has the System focus. Pressing twice will spell the information |
+| Report title | NVDA+t | NVDA+t | Reports the title of the currently active window. Pressing twice will spell the information. Pressing three times will copy it to the clipboard |
+| Read active window | NVDA+b | NVDA+b | reads all the controls in the currently active window (useful for dialogs) |
+| Report Status Bar | NVDA+end | NVDA+shift+end | Reports the Status Bar if NVDA finds one. It also moves the navigator object to this location |
 %kc:endInclude
 
 ++ Navigating with the System Caret ++[SystemCaret]
@@ -270,10 +270,10 @@ NVDA will announce as you move by character, word and line, and will also announ
 
 NVDA provides the following key commands in relation to the system caret:
 %kc:beginInclude
-|| Name | Key | Description |
-| Say all | NVDA+downArrow | Starts reading from the current position of the system caret, moving it along as it goes |
-| Read current line | NVDA+upArrow | Reads the line where the system caret is currently situated. Pressing twice spells the line. |
-| Read current text selection | NVDA+Shift+upArrow | Reads any currently selected text |
+|| Name | Desktop key | Laptop key | Description |
+| Say all | NVDA+downArrow | NVDA+a | Starts reading from the current position of the system caret, moving it along as it goes |
+| Read current line | NVDA+upArrow | NVDA+l | Reads the line where the system caret is currently situated. Pressing twice spells the line. |
+| Read current text selection | NVDA+Shift+upArrow | NVDA+shift+s | Reads any currently selected text |
 
 
 When within a table, the following key commands are also available:
@@ -313,11 +313,11 @@ To navigate by object, use the following commands:
 
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
-| Report current object | NVDA+numpad5 | NVDA+control+i | none | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
-| Move to containing object | NVDA+numpad8 | NVDA+shift+i | flick up (object mode) | Moves to the object containing the current navigator object |
-| Move to previous object | NVDA+numpad4 | NVDA+control+j | flick left (object mode) | Moves to the object before the current navigator object |
-| Move to next object | NVDA+numpad6 | control+NVDA+l | flick right (object mode) | Moves to the object after the current navigator object |
-| Move to first contained object | NVDA+numpad2 | NVDA+shift+comma | flick down (object mode) | Moves to the first object contained by the current navigator object |
+| Report current object | NVDA+numpad5 | NVDA+shift+o | none | Reports the current navigator object. Pressing twice spells the information, and pressing 3 times copies this object's name and value to the clipboard. |
+| Move to containing object | NVDA+numpad8 | NVDA+shift+upArrow | flick up (object mode) | Moves to the object containing the current navigator object |
+| Move to previous object | NVDA+numpad4 | NVDA+shift+leftArrow | flick left (object mode) | Moves to the object before the current navigator object |
+| Move to next object | NVDA+numpad6 | NVDA+shift+rightArrow | flick right (object mode) | Moves to the object after the current navigator object |
+| Move to first contained object | NVDA+numpad2 | NVDA+shift+downArrow | flick down (object mode) | Moves to the first object contained by the current navigator object |
 | Move to focus object | NVDA+numpadMinus | NVDA+backspace | none | Moves to the object that currently has the system focus, and also places the review cursor at the position of the System caret, if it is showing |
 | Activate current navigator object | NVDA+numpadEnter | NVDA+enter | double tap | Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus) |
 | Move System focus or caret to current review position | NVDA+shift+numpadMinus | NVDA+shift+backspace | none | pressed once Moves the System focus to the current navigator object, pressed twice moves the system caret to the position of the review cursor |
@@ -341,20 +341,20 @@ If you want it to follow object navigation and text review instead, you need to 
 The following commands are available for reviewing text:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
-| Move to top line in review | shift+numpad7 | NVDA+7 | none | Moves the review cursor to the top line of the text |
-| Move to previous line in review | numpad7 | NVDA+u | flick up (text mode) | Moves the review cursor to the previous line of text |
-| Report current line in review | numpad8 | NVDA+i | none | Announces the current line of text where the review cursor is positioned. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
-| Move to next line in review | numpad9 | NVDA+o | flick down (text mode) | Move the review cursor to the next line of text |
-| Move to bottom line in review | shift+numpad9 | NVDA+9 | none | Moves the review cursor to the bottom line of text |
-| Move to previous word in review | numpad4 | NVDA+j | 2-finger flick left (text mode) | Moves the review cursor to the previous word in the text |
-| Report current word in review | numpad5 | NVDA+k | none | Announces the current word in the text where the review cursor is positioned. Pressing twice spells the word. Pressing three times spells the word using character descriptions. |
-| Move to next word in review | numpad6 | NVDA+l | 2-finger flick right (text mode) | Move the review cursor to the next word in the text |
-| Move to start of line in review | shift+numpad1 | NVDA+shift+u | none | Moves the review cursor to the start of the current line in the text |
-| Move to previous character in review | numpad1 | NVDA+m | flick left (text mode) | Moves the review cursor to the previous character on the current line in the text |
-| Report current character in review | numpad2 | NVDA+comma | none | Announces the current character on the line of text where the review cursor is positioned. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal. |
-| Move to next character in review | numpad3 | NVDA+dot | flick right (text mode) | Move the review cursor to the next character on the current line of text |
-| Move to end of line in review | shift+numpad3 | NVDA+shift+o | none | Moves the review cursor to the end of the current line of text |
-| Say all with review | numpadPlus | NVDA+shift+downArrow | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
+| Move to top line in review | shift+numpad7 | NVDA+control+home | none | Moves the review cursor to the top line of the text |
+| Move to previous line in review | numpad7 | NVDA+upArrow | flick up (text mode) | Moves the review cursor to the previous line of text |
+| Report current line in review | numpad8 | NVDA+shift+. | none | Announces the current line of text where the review cursor is positioned. Pressing twice spells the line. Pressing three times spells the line using character descriptions. |
+| Move to next line in review | numpad9 | NVDA+downArrow | flick down (text mode) | Move the review cursor to the next line of text |
+| Move to bottom line in review | shift+numpad9 | NVDA+control+end | none | Moves the review cursor to the bottom line of text |
+| Move to previous word in review | numpad4 | NVDA+control+leftArrow | 2-finger flick left (text mode) | Moves the review cursor to the previous word in the text |
+| Report current word in review | numpad5 | NVDA+control+. | none | Announces the current word in the text where the review cursor is positioned. Pressing twice spells the word. Pressing three times spells the word using character descriptions. |
+| Move to next word in review | numpad6 | NVDA+control+rightArrow | 2-finger flick right (text mode) | Move the review cursor to the next word in the text |
+| Move to start of line in review | shift+numpad1 | NVDA+home | none | Moves the review cursor to the start of the current line in the text |
+| Move to previous character in review | numpad1 | NVDA+leftArrow | flick left (text mode) | Moves the review cursor to the previous character on the current line in the text |
+| Report current character in review | numpad2 | NVDA+. | none | Announces the current character on the line of text where the review cursor is positioned. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal. |
+| Move to next character in review | numpad3 | NVDA+rightArrow | flick right (text mode) | Move the review cursor to the next character on the current line of text |
+| Move to end of line in review | shift+numpad3 | NVDA+end | none | Moves the review cursor to the end of the current line of text |
+| Say all with review | numpadPlus | NVDA+shift+a | 3-finger flick down (text mode) | Reads from the current position of the review cursor, moving it as it goes |
 | Copy from review cursor | NVDA+f9 | NVDA+f9 | none | starts copying text from the current position of the review cursor. The actual copy is not performed until you tell NVDA where to copy to |
 | Copy to review cursor | NVDA+f10 | NVDA+f10 | none | Copies from the position of the review cursor currently set with Copy from review cursor, to the review cursor's current position. After pressing this key, the text will be copied to the Windows clipboard |
 | Report text formatting | NVDA+f | NVDA+f | none | Reports the formatting of the text where the review cursor is currently situated |
@@ -407,12 +407,12 @@ If you wish to take advantage of them, you can configure them from the [Mouse se
 Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA has a few key commands related to the mouse:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
-| Left mouse button click | numpadDivide | NVDA+leftArrow | clicks the left mouse button once. The common double click can be performed by pressing this key twice in quick succession |
-| Left mouse button lock | shift+numpadDivide | NVDA+shift+leftArrow | Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands |
-| Right mouse click | numpadMultiply | NVDA+rightArrow | Clicks the right mouse button once. |
-| Right mouse button lock | shift+numpadMultiply | NVDA+shift+rightArrow | Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands |
-| Move mouse to current navigator object | NVDA+numpadDivide | NVDA+shift+f9 | Moves the mouse to the location of the current navigator object and review cursor |
-| Navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+f10 | Set the navigator object to the object located at the position of the mouse |
+| Left mouse button click | numpadDivide | NVDA+[ | clicks the left mouse button once. The common double click can be performed by pressing this key twice in quick succession |
+| Left mouse button lock | shift+numpadDivide | NVDA+control+[ | Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands |
+| Right mouse click | numpadMultiply | NVDA+] | Clicks the right mouse button once. |
+| Right mouse button lock | shift+numpadMultiply | NVDA+control+] | Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands |
+| Move mouse to current navigator object | NVDA+numpadDivide | NVDA+shift+m | Moves the mouse to the location of the current navigator object and review cursor |
+| Navigate to the object under the mouse | NVDA+numpadMultiply | NVDA+shift+n | Set the navigator object to the object located at the position of the mouse |
 %kc:endInclude
 
 + Browse Mode +
