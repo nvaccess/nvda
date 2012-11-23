@@ -1056,7 +1056,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+t": "title",
 		"kb:NVDA+b": "speakForeground",
 		"kb(desktop):NVDA+end": "reportStatusLine",
-		"kb(desktop):NVDA+shift+end": "reportStatusLine",
+		"kb(laptop):NVDA+shift+end": "reportStatusLine",
 
 		# System caret
 		"kb(desktop):NVDA+downArrow": "sayAll",
@@ -1064,7 +1064,7 @@ class GlobalCommands(ScriptableObject):
 		"kb(desktop):NVDA+upArrow": "reportCurrentLine",
 		"kb(laptop):NVDA+l": "reportCurrentLine",
 		"kb(desktop):NVDA+shift+upArrow": "reportCurrentSelection",
-		"kb(desktop):NVDA+shift+s": "reportCurrentSelection",
+		"kb(laptop):NVDA+shift+s": "reportCurrentSelection",
 		"kb:NVDA+f": "reportFormatting",
 
 		# Object navigation
@@ -1153,7 +1153,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:shift+numpadDivide": "toggleLeftMouseButton",
 		"kb(laptop):NVDA+control+[": "toggleLeftMouseButton",
 		"kb:numpadMultiply": "rightMouseClick",
-		"kb(laptop):NVDA+control+]": "rightMouseClick",
+		"kb(laptop):NVDA+]": "rightMouseClick",
 		"kb:shift+numpadMultiply": "toggleRightMouseButton",
 		"kb(laptop):NVDA+control+]": "toggleRightMouseButton",
 		"kb:NVDA+numpadDivide": "moveMouseToNavigatorObject",
@@ -1196,11 +1196,11 @@ class GlobalCommands(ScriptableObject):
 		"kb(desktop):NVDA+control+leftArrow": "previousSynthSetting",
 		"kb(laptop):NVDA+shift+control+leftArrow": "previousSynthSetting",
 		"kb(desktop):NVDA+control+rightArrow": "nextSynthSetting",
-		"kb(desktop):NVDA+shift+control+rightArrow": "nextSynthSetting",
+		"kb(laptop):NVDA+shift+control+rightArrow": "nextSynthSetting",
 		"kb(desktop):NVDA+control+upArrow": "increaseSynthSetting",
 		"kb(laptop):NVDA+shift+control+upArrow": "increaseSynthSetting",
 		"kb(desktop):NVDA+control+downArrow": "decreaseSynthSetting",
-		"kb(desktop):NVDA+control+shift+downArrow": "decreaseSynthSetting",
+		"kb(laptop):NVDA+control+shift+downArrow": "decreaseSynthSetting",
 
 		# Tools
 		"kb:NVDA+f1": "navigatorObject_devInfo",
