@@ -99,7 +99,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		ports = OrderedDict()
 		for p in hwPortUtils.listComPorts():
 			if p['port'].startswith("COM") and p.get("bluetoothAddress") is None:
-				ports[p["port"]] = _("Serial: {portName}").format(portName=p["port"])
+				ports[p["port"]] = _("Serial: {portName}").format(portName=p["friendlyName"])
 		return ports
 
 	def __init__(self, port):
