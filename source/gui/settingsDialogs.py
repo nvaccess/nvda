@@ -1336,16 +1336,16 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.portsList.SetItems([p[1] for p in self.possiblePorts])
 			try:
 				selectedPort = config.conf["braille"][displayName].get("port")
+				if selectedPort is not None:
+					portNames = [p[0] for p in self.possiblePorts]
+					selection = portNames.index(selectedPort)
+				else:
+					# Port name is None on the config
+					selection = 0
 			except KeyError:
-				# Display not in config, use default as automatic.
-				selectedPort = "auto"
-			try:
-				portNames = [p[0] for p in self.possiblePorts]
-				selection = portNames.index(selectedPort)
-				self.portsList.SetSelection(selection)
-			except:
-				# No automatic selection neither port found, use first possible port.
-				self.portsList.SetSelection(0) # revert to automatic.
+				# Display name still not in the config.
+				selection = 0
+			self.portsList.SetSelection(selection)
 		# If no port selection is possible or only automatic selection is available, disable the port selection control
 		enable = self.portSelectionPossible and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)

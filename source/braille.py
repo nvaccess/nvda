@@ -1219,11 +1219,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		# See if the user have defined a specific port to connect to
 		if name not in config.conf["braille"]:
-			config.conf["braille"][name] = {"port" : "auto"}
+			# No port was set.
+			config.conf["braille"][name] = {"port" : None}
 		port = config.conf["braille"][name].get("port")
 		# Here we try to keep compatible with old drivers that don't support port setting
+		# or situations where the user hasn't set any port.
 		kwargs = {}
-		if port != "auto":
+		if port is not None:
 			kwargs["port"] = port
 		try:
 			newDisplay = _getDisplayDriver(name)
