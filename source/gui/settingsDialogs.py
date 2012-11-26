@@ -1336,7 +1336,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			self.portsList.SetItems([p[1] for p in self.possiblePorts])
 			try:
 				selectedPort = config.conf["braille"][displayName].get("port")
-				if selectedPort is not None:
+				if selectedPort:
 					portNames = [p[0] for p in self.possiblePorts]
 					selection = portNames.index(selectedPort)
 				else:

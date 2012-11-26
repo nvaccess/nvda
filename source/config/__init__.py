@@ -82,7 +82,7 @@ confspec = ConfigObj(StringIO(
 
 	# Braille display driver settings
 	[[__many__]]
-		port = string(default=None)
+		port = string(default="")
 
 # Presentation settings
 [presentation]
