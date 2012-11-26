@@ -730,8 +730,8 @@ def processForegroundWinEvent(window,objectID,childID):
 
 def processShowWinEvent(window,objectID,childID):
 	className=winUser.getClassName(window)
-	#For now we only support 'show' event for tooltips as otherwize we get flooded
-	if className in ("tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
+	#For now we only support 'show' event for tooltips, IMM candidates and notification bars  as otherwize we get flooded
+	if className in ("Frame Notification Bar","tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
 		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
 		if NVDAEvent:
 			eventHandler.queueEvent(*NVDAEvent)
