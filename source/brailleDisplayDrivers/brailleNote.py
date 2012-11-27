@@ -4,20 +4,9 @@
 #See the file COPYING for more details.
 # Copyright (C) 2011, 2012  Rui Batista <ruiandrebatista@gmail.com>
 
-""" Braille Display driver for the BrailleNote. classic
-This driver is only intended to work with
-BrailleNotes that communicate via the serial port.
-An RS232 serial port is required or an USB to RS232
-converter.
-This driver was only tested with a braillenote 32 BT classic (the first model).
-Newer BrailleNote Models were not tested or
-considered since I have no access to them. Maybe those
-work though, if the protocol is the same.
-No information is available about USB communications.
-Braillenote with qwerty keyboards may work but I have 
-no idea what keys those can send
-Except the thumb keys and cursor routing keys.
-Protocol description was gathered from the BRLTTY source distribution.
+""" Braille Display driver for the BrailleNote notetakers in terminal mode.
+
+This driver is experimental. It only supports serial communcation (rs-232) and (hopefully) bluetooth.
 """
 from collections import OrderedDict
 import serial
@@ -26,6 +15,8 @@ import braille
 import hwPortUtils
 import inputCore
 from logHandler import log
+
+bluetoothName_prefixes = ("braillenote", "apex")
 
 BAUD_RATE = 38400
 TIMEOUT = 0.1
@@ -88,38 +79,54 @@ for i in range(1,9):
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailleNote"
-	description = _("BrailleNote Classic")
+	description = _("BrailleNote")
 
 	@classmethod
 	def check(cls):
 		return True
 
 	@classmethod
+	def _getBluetoothPorts(cls):
+		return (p["port"] for p in hwPortUtils.listComPorts() \
+		if "bluetoothName" in p and any(p["bluetoothName"].startswith(prefix) for prefix in bluetoothName_prefixes))
+
+	@classmethod
 	def getPossiblePorts(cls):
 		ports = OrderedDict()
+		# See if we have any bluetooth ports available:
+		try:
+			cls._getBluetoothPorts().next()
+			ports.update([cls.AUTOMATIC_PORT])
+		except StopIteration:
+			pass
 		for p in hwPortUtils.listComPorts():
 			ports[p["port"]] = _("Serial: {portName}").format(portName=p["friendlyName"])
 		return ports
 
-	def __init__(self, port):
+	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self._serial = None
 		self._buffer = ""
-		log.debug("Checking port %s for a BrailleNote", port)
-		try:
-			self._serial = serial.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, parity=serial.PARITY_NONE)
-			log.debug("Port opened.")
-		except serial.SerialException:
-				raise RuntimeError("Can't open %s" % port)
-
-		# Check for cell information
-		if self._describe():
-			# ok, it is a braillenote
-			log.debug("BrailleNote found on %s with %d cells", port, self.numCells)
+		if port == "auto":
+			portsToTry = self._getBluetoothPorts()
 		else:
-			self._serial.close()
-			raise RuntimeError("Can't find braillenote in %s" % port)
-
+			portsToTry = (port,)
+		found = False
+		for port in portsToTry:
+			log.debug("Checking port %s for a BrailleNote", port)
+			try:
+				self._serial = serial.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, parity=serial.PARITY_NONE)
+			except serial.SerialException:
+				continue
+			# Check for cell information
+			if self._describe():
+				log.debug("BrailleNote found on %s with %d cells", port, self.numCells)
+				found = True
+				break
+			else:
+				self._serial.close()
+		if not found:
+			raise RuntimeError("Can't find a braillenote device (port = %s)" % port)
 		# start reading keys
 		self._readTimer = wx.PyTimer(self._readKeys)
 		self._readTimer.Start(READ_INTERVAL)
