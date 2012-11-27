@@ -270,7 +270,7 @@ class MSHTML(VirtualBuffer):
 
 	def _activateLongDesc(self,controlField):
 		longDesc=controlField['HTMLAttrib::longdesc']
-		self.rootNVDAObject.HTMLNode.document.open(longDesc,'_blank','location=no, menubar=no, toolbar=no')
+		self.rootNVDAObject.HTMLNode.document.parentWindow.open(longDesc,'_blank','location=no, menubar=no, toolbar=no')
 
 
 	def _activateNVDAObject(self,obj):

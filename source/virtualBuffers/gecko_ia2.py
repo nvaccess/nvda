@@ -32,8 +32,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
 		if attrs.get("IAccessibleAction_showlongdesc") is not None:
 			states.add(controlTypes.STATE_HASLONGDESC)
-		defaultAction=attrs.get('defaultAction','')
-		if defaultAction=="click":
+		if "IAccessibleAction_click" in attrs:
 			states.add(controlTypes.STATE_CLICKABLE)
 		grabbed = attrs.get("IAccessible2::attribute_grabbed")
 		if grabbed == "false":

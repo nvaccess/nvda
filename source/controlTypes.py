@@ -207,7 +207,8 @@ roleLabels={
 	ROLE_LINK:_("link"),
 	ROLE_TREEVIEW:_("tree view"),
 	ROLE_TREEVIEWITEM:_("tree view item"),
-	ROLE_TAB:_("tab"),
+	# Translators: The word presented for tabs in a tab enabled window.
+	ROLE_TAB: pgettext("controlType", "tab"),
 	ROLE_TABCONTROL:_("tab control"),
 	ROLE_SLIDER:_("slider"),
 	ROLE_PROGRESSBAR:_("progress bar"),
@@ -382,7 +383,8 @@ stateLabels={
 	STATE_SORTED:_("sorted"),
 	STATE_SORTED_ASCENDING:_("sorted ascending"),
 	STATE_SORTED_DESCENDING:_("sorted descending"),
-	STATE_HASLONGDESC:"has long description",
+	# Translators: a state that denotes that an object (usually a graphic) has a long description.
+	STATE_HASLONGDESC:_("has long description"),
 }
 
 negativeStateLabels={

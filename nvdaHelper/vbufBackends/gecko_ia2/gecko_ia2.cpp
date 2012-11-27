@@ -349,16 +349,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		LOG_DEBUG(L"pacc->get_attributes failed");
 	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
 
-	BSTR defaction=NULL;
-	if(pacc->get_accDefaultAction(varChild,&defaction)==S_OK) {
-		if(defaction&&SysStringLen(defaction)==0) {
-			SysFreeString(defaction);
-			defaction=NULL;
-		}
-	}
-	if(defaction)
-		parentNode->addAttribute(L"defaultAction",defaction);
-
 	//Check IA2Attributes, and or the role etc to work out if this object is a block element
 	bool isBlockElement=TRUE;
 	if(IA2States&IA2_STATE_MULTI_LINE) {
@@ -418,10 +408,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	bool isEditable = (role == ROLE_SYSTEM_TEXT && (states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE)) || IA2States & IA2_STATE_EDITABLE;
 	// Whether this node is a link or inside a link.
 	int inLink = states & STATE_SYSTEM_LINKED;
-	// Whether this node is clickable.
-	bool isClickable = defaction && wcscmp(defaction, L"click") == 0;
 	// Whether this node is interactive.
-	bool isInteractive = isEditable || inLink || isClickable || (states & STATE_SYSTEM_FOCUSABLE && role != ROLE_SYSTEM_DOCUMENT) || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT;
+	bool isInteractive = isEditable || inLink || (states & STATE_SYSTEM_FOCUSABLE && role != ROLE_SYSTEM_DOCUMENT) || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT;
+	// We aren't finished calculating isInteractive yet; actions are handled below.
 	// Whether the name is the content of this node.
 	bool nameIsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU;
 
@@ -486,9 +475,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			if(actionName) {
 				wstring attribName=L"IAccessibleAction_";
 				attribName+=actionName;
-				s.str(L"");
 				s<<i;
 				parentNode->addAttribute(attribName,s.str());
+				s.str(L"");
 				if(wcscmp(actionName, L"click")==0||wcscmp(actionName, L"showlongdesc")==0) {
 					isInteractive=true;
 				}
@@ -732,8 +721,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		SysFreeString(name);
 	if(value)
 		SysFreeString(value);
-	if(defaction)
-		SysFreeString(defaction);
 	if (IA2Text)
 		SysFreeString(IA2Text);
 	if(paccText)
