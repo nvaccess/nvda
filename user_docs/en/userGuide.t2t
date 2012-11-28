@@ -688,6 +688,18 @@ No braille means that you are not using braille.
 
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for more information about supported braille displays.
 
+==== Port ====
+This option, if available, allows you to choose what port or type of connection will be used to talk to the braille display you have selected.
+It is a combobox containing the possible choices for your braille display. You can move among them using the arrow keys.
+
+By default NVDA employes automatic port detection, which means the connection with the braille device will be established automaticaly, by scanning for available USB and bluetooth devices on your system.
+However, for some braille displays, you may be able to explicitly choose what port should be used, from a set of choices that depends on the specific braille display you have selected.
+Common options are "automatic" (which tells NVDA to employ the default automatic port selection procedure), "USB", "bluetooth", and legacy serial communication ports, if your braille display supports this type of communication.
+
+This option won't be available if your braille display only supports automatic port detection.
+
+You may consult the documentation for your braille display in the section [Supported Braille Displays #SupportedBrailleDisplays] to check for more details on the supported types of communication and available ports.
+
 ==== Translation Table ====
 The next option you will come to in this dialog is the braille table combo box.
 In this combo box, you will find braille tables for different languages. You can move from braille table to braille table in the list by using the arrow keys.
@@ -1135,6 +1147,9 @@ You will need the Freedom Scientific braille display drivers installed on your s
 If you do not have them already, you can obtain them from http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Although this page only mentions the Focus 40 Blue display, the drivers support all Freedom Scientific displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
+
+By default, NVDA can automaticaly detect and connect to your Focus display, either connected via USB or bluetooth. However, when configuring the display, you can explicitly select "USB" or "bluetooth" ports, to restrict the connection type used.
+This might come useful if you want to connect the focus display to NVDA using bluetooth, but still be able charge it using USB power from your computer.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
