@@ -16,7 +16,7 @@ import hwPortUtils
 import inputCore
 from logHandler import log
 
-bluetoothName_prefixes = ("braillenote", "apex")
+bluetoothName_prefixes = ("Braillenote", "APEX")
 
 BAUD_RATE = 38400
 TIMEOUT = 0.1
@@ -79,6 +79,7 @@ for i in range(1,9):
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailleNote"
+	# Translators: Names of braille displays
 	description = _("BrailleNote")
 
 	@classmethod
@@ -87,8 +88,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def _getBluetoothPorts(cls):
-		return (p["port"] for p in hwPortUtils.listComPorts() \
-		if "bluetoothName" in p and any(p["bluetoothName"].startswith(prefix) for prefix in bluetoothName_prefixes))
+		return (p["port"] for p in hwPortUtils.listComPorts()
+			if "bluetoothName" in p and any(p["bluetoothName"].startswith(prefix) for prefix in bluetoothName_prefixes))
 
 	@classmethod
 	def getPossiblePorts(cls):

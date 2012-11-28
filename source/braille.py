@@ -1501,6 +1501,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 
 	#: Automatic port constant to be used by braille displays that support the "automatic" port
 	#: @type: Tupple
+	# Translators String representing the automatic port selection for braille displays.
 	AUTOMATIC_PORT = ("auto", _("Automatic"))
 
 	@classmethod
