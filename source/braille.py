@@ -1507,7 +1507,7 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 	@classmethod
 	def getPossiblePorts(cls):
 		""" Returns possible hardware ports for this driver.
-		If the driver supports automatic port setting it should return as the first port C{brailleDisplayDriver.AUTOMATIC_PORT}
+		If the driver supports automatic port setting it should return as the first port L{brailleDisplayDriver.AUTOMATIC_PORT}
 
 		@return: ordered dictionary of name : description for each port
 		@rtype: OrderedDict
