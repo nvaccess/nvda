@@ -1,0 +1,129 @@
+#Aragonese symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+# Traduciu por Jorgtum
+# Softaragonés
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+complexSymbols:
+# identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
+… sentence ending	(?<=[^\s.])\…(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word -	(?<=[^\W_])[-]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
+dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+
+# Complex symbols
+. sentence ending	punto	all	always
+! sentence ending	zarrar exclamación	all	always
+? sentence ending	zarrar interrogación	all	always
+... sentence ending	PUNTOS SUSPENSIVOS	all	always	
+… sentence ending	PUNTOS SUSPENSIVOS	all	always	
+; phrase ending	punto y coma	most	always
+: phrase ending	dos puntos	most	always
+decimal point		none	always
+in-word '	apostrofo	all	norep
+in-word -	guión	all	norep
+negative number	menos	none	norep
+dates /	 	all	always
+
+# Whitespace
+\0	en blanco	char
+\t	tabulación
+\n	linia nueva	char
+\f	blinco de pachina	none
+\r	retorno de carro	char
+ 	espacio	char
+ 	espacio	char	# no-break space
+
+# Standard punctuation/symbols
+!	zarrar exclamación	all
+"	cometas	most
+\#	sinyal de numero	most
+$	dólar	all	norep
+£	libras	all	norep
+€	euros	all	norep
+¢	Centavos	all	norep
+¥	Yen	all	norep
+%	porciento	some
+&	ampersán	some
+'	apostrofo	all
+(	ubrir parentesi	most
+)	zarrar parentesi	most
+*	asterisco	most
++	mas	most
+,	coma	all	always
+-	guión	most
+.	punto	some
+/	barra 	some
+:	dos puntos	most	norep
+;	punto y coma	most
+<	menor que	most
+>	mayor que	most
+=	igual	most
+?	zarrar interrogación	all
+@	arroba	some
+´	accento agudo	some
+[	ubrir gafet	most
+]	zarrar gafet	most
+\\	barra inversa	most
+^	circumflexo	most
+_	guión baixo	most
+`	accento grieu	most
+{	ubrir clau	most
+}	zarrar clau	most
+|	barra vertical	most
+~	tilde	most
+¿	ubrir interrogación	all
+¡	ubrir exclamación	all
+
+# Other characters
+•	vinyeta	some
+…	PUNTOS SUSPENSIVOS	all	always
+...	PUNTOS SUSPENSIVOS	all	always
+	vinyeta	some
+“	ubrir cometas	most
+”	zarrar cometas	most
+‘	apostrofo	most
+’	apostrofo	most
+–	guión curto	most
+—	guión largo	most
+●	cerclo	most
+¨	dieresi	most
+‎	marca de cucha a dreita	char
+‏	marca de dreita a cucha	char
+■	Barra vertical cortada	some
+➔	flecha enta la dreita	some
+§	Sección	most
+°	graus	some
+«	ubrir cometas angulars
+»	zarrar cometas angulars
+µ	micro	some
+¹	1 sobreescrito	some
+²	ta o quadrau	some
+³	ta o cubo	some
+®	rechistrau	some
+™	Marca rechistrada	some
+©	copyright	some	norep
+±	mas menos	most
+×	multiplicau por	most
+÷	dividiu por	most
+→	Flecha enta la dreita	some
+✓	Marcau	some
+✔	Marcau	some
