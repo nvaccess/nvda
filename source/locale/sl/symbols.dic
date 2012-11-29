@@ -12,7 +12,8 @@ symbols:
 ? sentence ending	vprašaj
 ; phrase ending	podpičje
 : phrase ending	dvopičje
-in-word '	apostrof
+decimal point	celih
+in-word '	opuščaj
 negative number	minus
 
 # Whitespace
@@ -20,7 +21,7 @@ negative number	minus
 \t	tabulator
 \n	nova vrsta
 \f	prelom strani
-\r	carriage return
+\r	vračalka
  	presledek
  	preslednica
 
@@ -36,8 +37,8 @@ $	dolar
 %	odstotek
 &	and
 '	tick
-(	začetni okrogli oklepaj
-)	zaključni okrogli oklepaj
+(	okrogli oklepaj
+)	okrogli zaklepaj
 *	zvezdica
 +	plus
 ,	vejica
@@ -51,16 +52,16 @@ $	dolar
 =	enačaj
 ?	vprašaj
 @	afna
-[	začetni oglati oklepaj
-]	zaključni oglati oklepaj
+[	oglati oklepaj
+]	oglati zaklepaj
 \\	leva poševnica
-^	caret
+^	strešica
 _	podčrtaj
 `	krativec
-{	začetni zaviti oklepaj
-}	zaključni zaviti oklepaj
+{	zaviti oklepaj
+}	zaviti zaklepaj
 |	navpičnica
-~	tilda
+~	vijuga
 
 # Other characters
 •	bullet
@@ -81,7 +82,7 @@ _	podčrtaj
 ➔	right arrow
 §	section
 °	stopinje
-«	double dvojni začetni narekovaj
+«	dvojni začetni narekovaj
 »	dvojni zaključni narekovaj
 µ	mikro
 ¹	superscript 1
@@ -96,10 +97,4 @@ _	podčrtaj
 →	puščica desno
 ✓	check
 ✔	check
-
-
-
-# Additional Hebrew characters should go below this line.
-
-
 

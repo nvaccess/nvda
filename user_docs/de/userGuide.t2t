@@ -474,6 +474,7 @@ Zusätzlich können Sie auch den Fokusmodus erzwingen. In diesem Fall bleibt der
 | Suchen | NVDA+STRG+F | Öffnet ein weiteres Fenster, in dem Sie einen Text eingeben können, der im aktuellen Dokument gesucht werden soll. |
 | Vorwärts suchen | NVDA+F3 | Sucht die nächste Zeichenkette des gesuchten Textes im aktuellen Dokument, welche zuvor eingegeben wurde. |
 | Rückwärts suchen | NVDA+Umschalt+F3 | Sucht die vorherige Zeichenkette des gesuchten Textes im aktuellen Dokument, die zuvor eingegeben wurde. |
+| öffne ausführliche Beschreibung | NVDA+d | Öffnet ein neues Fenster, welches eine ausführliche Beschreibung für das aktuelle Objekt enthält, fals dieses eine ausführliche Beschreibung aufweist. |
 %kc:endInclude
 
 
@@ -1160,11 +1161,8 @@ Dieser Eintrag, einmal aktiviert, läd alle Anwendungsmodule sowie globale Plugi
 ++ portable Version erstellen ++
 Mit dieser Funktion können sie aus einer fest installierten Version von NVDA eine portable Version erstellen. Wenn Sie diesen Befehl aufrufen, erscheint ein Dialog mit folgenden Optionen:
 
-=== Verzeichnis für portable Version ===
+=== Portables Verzeichnis ===
 Hier können sie angeben, wohin die portable Version kopiert werden soll. Sie können den Ordnernamen entweder direkt eingeben oder über den Schalter "durchsuchen" einen Ordner auswählen.
-
-=== Datei für Autostart erstellen ===
-Mit diesem  Kontrollkästchen legen sie fest, ob im Stammordner des Laufwerks, auf dem die portable Version erstellt wird, eine Datei autorun.inf angelegt werden soll. Mit Hilfe einer solchen Datei wird es Ihnen möglich sein, NVDA automatisch beim anschließen des tragbaren Mediums zu starten.
 
 === Kopiere derzeitige Einstellungen des Benutzers ===
 Mit diesem Kontrollkästchen legen sie fest, ob die brnutzerspezifischen Einstellungen in die portable Version übernommen werden sollen.
@@ -1612,13 +1610,13 @@ Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen verfügbar:
 | Liest das Zeichen unter dem Cursor vor | l1 |
 | Führt die Standardaktion aus | l2 |
 | Zieht zum Flächenmodus / Focus | r1 |
-| Führt die Standardaktion aus | l2 |
+| Koppelt Braillezeile wahlweise an Fokus oder Anzeige | r2 |
 | Liest die Titelzeile des aktiven Fensters vor | l1+auf |
 | Liest die Statusleiste des aktiven Fensters vor | l2+ab |
 | Bewegt das Navigatorobjekt zum übergeordneten Objekt | auf2 |
 | Bewegt das Navigatorobjekt zum ersten beinhaltenden Objekt | ab2 |
-| Bewegt das Navigatorobjekt zum nächsten Objekt | links2 |
-| Bewegt das Navigatorobjekt zum vorherigen Objekt | rechts2 |
+| Bewegt das Navigatorobjekt zum nächsten Objekt | rechts2 |
+| Bewegt das Navigatorobjekt zum vorherigen Objekt | links2 |
 | Liest Formatierungsinformationen an der Cursorposition in einen Dokument vor | Obere Routingreihe |
 %kc:endInclude
 
