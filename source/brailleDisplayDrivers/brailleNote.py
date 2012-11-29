@@ -72,7 +72,7 @@ _keyNames = {
 # Dots:
 # Backspace is dot7 and enter dot8
 _dotNames = {}
-for i in range(1,9):
+for i in xrange(1,9):
 	key = globals()["DOT_%d" % i]
 	_dotNames[key] = "d%d" % i
 
@@ -224,44 +224,25 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"braille_nextLine": ("br(braillenote):tnext",),
 			"braille_routeTo": ("br(braillenote):routing",),
 			"braille_toggleTether": ("br(braillenote):tprevious+tnext",),
-			"kb:upArrow": ("br(braillenote):d1",),
-			"kb:downArrow": ("br(braillenote):d4",),
-			"kb:leftArrow": ("br(braillenote):d3",),
-			"kb:rightArrow": ("br(braillenote):d6",),
-			"kb:pageup": ("br(braillenote):d1+d3",),
-			"kb:pagedown": ("br(braillenote):d4+d6",),
-			"kb:home": ("br(braillenote):d1+d2",),
-			"kb:end": ("br(braillenote):d4+d5",),
-			"kb:control+home": ("br(braillenote):space+d2+d3",),
-			"kb:control+end": ("br(braillenote):space+d5+d6",),
+			"kb:upArrow": ("br(braillenote):space+d1",),
+			"kb:downArrow": ("br(braillenote):space+d4",),
+			"kb:leftArrow": ("br(braillenote):space+d3",),
+			"kb:rightArrow": ("br(braillenote):space+d6",),
+			"kb:pageup": ("br(braillenote):space+d1+d3",),
+			"kb:pagedown": ("br(braillenote):space+d4+d6",),
+			"kb:home": ("br(braillenote):space+d1+d2+d3",),
+			"kb:end": ("br(braillenote):space+d4+d5",),
+			"kb:control+home": ("br(braillenote):space+d1+d2+d3",),
+			"kb:control+end": ("br(braillenote):space+d4+d5+d6",),
 			"kb:space": ("br(braillenote):space",),
 			"kb:enter": ("br(braillenote):space+d8",),
-			"kb:shift+tab": ("br(braillenote):d2+d3",),
-			"kb:tab": ("br(braillenote):d5+d6",),
+			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6",),
+			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5",),
 			"kb:backspace": ("br(braillenote):space+d7",),
 			"showGui": ("br(braillenote):space+d1+d3+d4+d5",),
-			"kb:windows": ("br(braillenote):d2+d4+d5+d6",),
-			"kb:windows+d": ("br(braillenote):space+d1+d4+d5",),
-			"kb:alt": ("br(braillenote):d1+d3+d4",),
-			"kb:alt+tab": ("br(braillenote):space+d2+d3+d4+d5",),
-			"kb:escape": ("br(braillenote):d1+d5",),
-			"kb:alt+f4": ("br(braillenote):d1+d2+d3+d4+d5+d6",),
-			"kb:shift+upArrow": ("br(braillenote):space+d1",),
-			"kb:shift+downArrow": ("br(braillenote):space+d4",),
-			"kb:shift+leftArrow": ("br(braillenote):space+d3",),
-			"kb:shift+rightArrow": ("br(braillenote):space+d6",),
-			"kb:shift+pageup": ("br(braillenote):space+d1+d3",),
-			"kb:shift+pagedown": ("br(braillenote):space+d4+d6",),
-			"kb:shift+home": ("br(braillenote):space+d1+d2",),
-			"kb:shift+end": ("br(braillenote):space+d4+d5",),
-			"kb:control+shift+home": ("br(braillenote):space+d1+d2+d3",),
-			"kb:control+shift+end": ("br(braillenote):space+d4+d5+d6",),
-			"kb:applications": ("br(braillenote):d1+d2+d3+d4",),
-			"kb:control+c": ("br(braillenote):space+d1+d4",),
-			"kb:control+v": ("br(braillenote):space+d1+d2+d3+d6",),
-			"kb:control+x": ("br(braillenote):space+d1+d3+d4+d6",),
-			"toggleInputHelp": ("br(braillenote):d1+d2+d5",),
-			"dateTime": ("br(braillenote):d2+d3+d4+d5",),
+			"kb:windows": ("br(braillenote):space+d2+d4+d5+d6",),
+			"kb:alt": ("br(braillenote):space+d1+d3+d4",),
+			"toggleInputHelp": ("br(braillenote):space+d2+d3+d6",),
 		},
 	})
 
@@ -273,16 +254,14 @@ class InputGesture(braille.BrailleDisplayGesture):
 		# see what thumb keys are pressed:
 		names = set()
 		if keys is not None:
-			for i in range(4):
-				if (1 << i) & keys:
-					names.add(_keyNames[1 << i])
+			names.update(_keyNames[1 << i] for i in xrange(4)
+					if (1 << i) & keys)
 		elif dots is not None:
 		# now the dots
 			if space:
 				names.add(_keyNames[0])
-			for i in range(8):
-				if (1 << i) & dots:
-					names.add(_dotNames[1 << i])
+			names.update(_dotNames[1 << i] for i in xrange(8)
+					if (1 << i) & dots)
 		elif routing is not None:
 			self.routingIndex = routing
 			names.add('routing')
