@@ -9,6 +9,7 @@
 This driver is experimental. It only supports serial communcation (rs-232) and (hopefully) bluetooth.
 """
 from collections import OrderedDict
+import itertools
 import serial
 import wx
 import braille
@@ -16,7 +17,12 @@ import hwPortUtils
 import inputCore
 from logHandler import log
 
-bluetoothName_prefixes = ("Braillenote", "APEX")
+BLUETOOTH_NAMES = ("Braillenote", "APEX")
+
+USB_IDS = frozenset((
+	"VID_1C71&PID_C004", # Apex
+	))
+
 
 BAUD_RATE = 38400
 TIMEOUT = 0.1
@@ -87,20 +93,39 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return True
 
 	@classmethod
+	def _getUSBPorts(cls):
+		return (p["port"] for p in hwPortUtils.listComPorts()
+				if p["hardwareID"].startswith("USB") and any(p["hardwareID"][3:].startswith(id) for id in USB_IDS))
+
+	@classmethod
 	def _getBluetoothPorts(cls):
 		return (p["port"] for p in hwPortUtils.listComPorts()
-			if "bluetoothName" in p and any(p["bluetoothName"].startswith(prefix) for prefix in bluetoothName_prefixes))
+			if "bluetoothName" in p and any(p["bluetoothName"].startswith(prefix) for prefix in BLUETOOTH_NAMES))
 
 	@classmethod
 	def getPossiblePorts(cls):
 		ports = OrderedDict()
+		usb = bluetooth = False
+		# See if we have any USB ports available:
+		try:
+			cls._getUSBPorts().next()
+			usb = True
+		except StopIteration:
+			pass
 		# See if we have any bluetooth ports available:
 		try:
 			cls._getBluetoothPorts().next()
-			ports.update([cls.AUTOMATIC_PORT])
+			bluetooth = True
 		except StopIteration:
 			pass
+		if usb or bluetooth:
+			ports.update([cls.AUTOMATIC_PORT])
+		if usb:
+			ports["usb"] = "USB"
+		if bluetooth:
+			ports["bluetooth"] = "Bluetooth"
 		for p in hwPortUtils.listComPorts():
+			# Translators: Name of a serial communications port
 			ports[p["port"]] = _("Serial: {portName}").format(portName=p["friendlyName"])
 		return ports
 
@@ -109,6 +134,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._serial = None
 		self._buffer = ""
 		if port == "auto":
+			portsToTry = itertools.chain(self._getUSBPorts(), self._getBluetoothPorts())
+		elif port == "usb":
+			portsToTry = self._getUSBPorts()
+		elif port == "bluetooth":
 			portsToTry = self._getBluetoothPorts()
 		else:
 			portsToTry = (port,)
