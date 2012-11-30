@@ -3,6 +3,21 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1 =
+
+== Novas Características ==
+- Soporte básico para ler e escreber mensaxes en Lotus Notes 8.5. (#543)
+- No modo Navegación para MSHTML (ex.: Internet Explorer) e Gecko (ex.: Firefox), agora anúnciase a existencia de descripcións longas. Tamén é posible abrir a descripción longa nunha ventá nova premendo NVDA+d. (#809)
+- As notificacións en Internet Explorer 9 e superior agora fálanse (como contido bloqueado ou descargas de ficheiros). (#2343)
+- O anunciado automático das cabeceiras de fila e columna agora sopórtase para documentos en modo navegación en Internet Explorer e outros controis MSHTML. (#778)
+- Nova lingua: Aragonés
+
+
+== Corrección de Fallos ==
+- As teclas de navegación rápida para brincar ó seguinte ou anterior separador en modo Navegación agora funciona en Internet Explorer e outros controis MSHTML. (#2781)
+- Se NVDA volta a eSpeak ou non fala debido a un sintetizador de voz configurado que falla cando NVDA se inicia, a configuración xa non se actualiza para  configurarse co sintetizador ó que se retornou como a elección configurada, o que significa que agora o sintetizador orixinal probarase de novo a próxima vez que NVDA arranque. (#2589)
+
+
 = 2012.3 =
 O subliñable desta versión inclúe o soporte para a entrada de caracteres asiáticos; soporte experimental para pantallas tactiles en Windows 8; anunciado de números de páxina e soporte mellorado para táboas en Adobe Reader; ordes de navegación de táboa en filas de táboa enfocadas e controis de vista en lista de Windows; o soporte para algunhas liñas braille máis; e cabeceiras de columna no Microsoft Excel.
 
