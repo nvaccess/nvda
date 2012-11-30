@@ -3,10 +3,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5535\n"
+"Project-Id-Version: NVDA bzr main:5609\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-10-11 05:30+0100\n"
-"PO-Revision-Date: 2012-11-07 11:14-0300\n"
+"POT-Creation-Date: 2012-11-14 16:28+0000\n"
+"PO-Revision-Date: 2012-11-25 19:17-0300\n"
 "Last-Translator: Marlin Rodrigues <Rodrigues>\n"
 "Language-Team: Equipe de tradução do NVDA para Português do Brasil "
 "<clever92000@yahoo.com.br>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: source\n"
 
-#: globalCommands.py:875
+#: globalCommands.py:879
 #, python-format
 msgid " and currently loaded module is %s"
 msgstr " e o módulo atualmente carregado é %s"
@@ -31,13 +31,13 @@ msgid "%d characters"
 msgstr "%d caracteres"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#: globalCommands.py:860
+#: globalCommands.py:864
 #, python-format
 msgid "%d hours and %d minutes remaining"
 msgstr "%d horas e %d minutos restantes"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:856 NVDAObjects/behaviors.py:57
+#: globalCommands.py:860 NVDAObjects/behaviors.py:57
 #, python-format
 msgid "%d percent"
 msgstr "%d porcento"
@@ -48,7 +48,7 @@ msgstr "%d porcento"
 msgid "%s %s through %s %s"
 msgstr "%s %s through %s %s"
 
-#: globalCommands.py:314 globalCommands.py:770
+#: globalCommands.py:314 globalCommands.py:774
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s copiado para área de transferência"
@@ -75,7 +75,7 @@ msgstr "%s itens"
 msgid "%s landmark"
 msgstr "marca %s"
 
-#: globalCommands.py:1018
+#: globalCommands.py:1022
 #, python-format
 msgid "%s mode"
 msgstr "modo %s"
@@ -180,7 +180,7 @@ msgstr "Cabeçal&hos"
 msgid "&Help"
 msgstr "A&juda"
 
-#: synthDriverHandler.py:223
+#: synthDriverHandler.py:224
 msgid "&Inflection"
 msgstr "&Inflecção"
 
@@ -215,7 +215,7 @@ msgstr "&leiaute de teclado:"
 msgid "&Keyboard settings..."
 msgstr "Opções de &teclado..."
 
-#: synthDriverHandler.py:196
+#: synthDriverHandler.py:197
 msgid "&Language"
 msgstr "I&dioma"
 
@@ -263,7 +263,7 @@ msgstr "Apresentação de &objetos..."
 msgid "&Pattern"
 msgstr "&Original"
 
-#: synthDriverHandler.py:218
+#: synthDriverHandler.py:219
 msgid "&Pitch"
 msgstr "&tom"
 
@@ -275,7 +275,7 @@ msgstr "&Preferências"
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "&Pronúncia de pontuação e sinais..."
 
-#: synthDriverHandler.py:210
+#: synthDriverHandler.py:211
 msgid "&Rate"
 msgstr "v&elocidade"
 
@@ -321,7 +321,7 @@ msgstr "&Sintetizador:"
 msgid "&Temporary dictionary..."
 msgstr "Temporário..."
 
-#: synthDriverHandler.py:201
+#: synthDriverHandler.py:202
 msgid "&Voice"
 msgstr "&Voz"
 
@@ -417,7 +417,7 @@ msgstr ""
 "Uma versão deste complemento já se encontra instalada. Gostaria de atualizá-"
 "la?"
 
-#: globalCommands.py:857
+#: globalCommands.py:861
 msgid "AC power on"
 msgstr "Energia AC ligada"
 
@@ -434,7 +434,7 @@ msgstr "Sobre o NVDA"
 msgid "About..."
 msgstr "Sobre..."
 
-#: globalCommands.py:931
+#: globalCommands.py:935
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Ativa o terminal Python do NVDA, útil sobretudo para desenvolvimento"
 
@@ -469,7 +469,7 @@ msgstr ""
 "para que as alterações tenham efeito. Quer reiniciar agora?"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
-#: NVDAHelper.py:211
+#: NVDAHelper.py:216
 msgid "Alpha numeric input"
 msgstr "Entrada alfanumérica"
 
@@ -637,7 +637,7 @@ msgstr "Erro na Linha Braile"
 msgid "Braille Settings"
 msgstr "Opções de Braile"
 
-#: globalCommands.py:940
+#: globalCommands.py:944
 #, python-format
 msgid "Braille tethered to %s"
 msgstr "Braile vinculado ao %s"
@@ -669,8 +669,8 @@ msgstr "CC:"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
-#: NVDAObjects/inputComposition.py:107 NVDAObjects/IAccessible/mscandui.py:44
-#: NVDAObjects/IAccessible/mscandui.py:167
+#: NVDAObjects/inputComposition.py:103 NVDAObjects/IAccessible/mscandui.py:44
+#: NVDAObjects/IAccessible/mscandui.py:177
 msgid "Candidate"
 msgstr "Sugestão"
 
@@ -799,7 +799,7 @@ msgid "Comments:"
 msgstr "Commentários:"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
-#: NVDAObjects/inputComposition.py:51
+#: NVDAObjects/inputComposition.py:47
 msgid "Composition"
 msgstr "Composição"
 
@@ -927,10 +927,10 @@ msgstr "Criando Cópia Portátil"
 msgid "Croatian 8 dot computer braille"
 msgstr "Croata, computador braile de 8 pontos"
 
-#: globalCommands.py:872
+#: globalCommands.py:876
 #, python-format
 msgid "Currently running application is %s"
-msgstr "Aplicação atualmente executando é %s."
+msgstr "A aplicação atualmente executando é %s."
 
 #: gui/settingsDialogs.py:1244
 msgid "Cursor blink rate (ms)"
@@ -1151,7 +1151,7 @@ msgstr "Erro no arquivo de idioma %s"
 #: appModuleHandler.py:143
 #, python-format
 msgid "Error in appModule %s"
-msgstr "Erro no módulo de aplicação %s"
+msgstr "Erro no módulo da aplicação %s"
 
 #: gui/logViewer.py:74
 #, python-format
@@ -1232,7 +1232,7 @@ msgstr "Procurar"
 
 #: cursorManager.py:99
 msgid "Find Error"
-msgstr "Falha de procura"
+msgstr "Falha na procura"
 
 #. braille settings dialog.
 #. Translators: The name of a braille table displayed in the
@@ -1326,7 +1326,7 @@ msgid "From:"
 msgstr "de:"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
-#: NVDAHelper.py:215
+#: NVDAHelper.py:220
 msgid "Full shaped mode"
 msgstr "Modo formato cheio"
 
@@ -1384,7 +1384,7 @@ msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
-#: NVDAHelper.py:217
+#: NVDAHelper.py:222
 msgid "Half shaped mode"
 msgstr "Modo meio formato"
 
@@ -1426,25 +1426,25 @@ msgstr "Húngaro grau 1"
 msgid "I &agree"
 msgstr "C&oncordo"
 
-#: controlTypes.py:314
+#: controlTypes.py:316
 msgid "IFrame"
 msgstr "freime interna"
 
 #. Translators: a message when the IME open status changes to closed
-#: NVDAHelper.py:274
+#: NVDAHelper.py:279
 msgid "IME closed"
 msgstr "IME fechado"
 
 #. Translators: a message when the IME open status changes to opened
-#: NVDAHelper.py:271
+#: NVDAHelper.py:276
 msgid "IME opened"
 msgstr "IME aberto"
 
-#: controlTypes.py:311
+#: controlTypes.py:313
 msgid "IP address"
 msgstr "endereço ipê"
 
-#: controlTypes.py:328
+#: controlTypes.py:330
 msgid "ITALIC"
 msgstr "ITÁLICO"
 
@@ -1604,7 +1604,7 @@ msgstr "Log"
 msgid "Log level"
 msgstr "grau de log"
 
-#: globalCommands.py:788
+#: globalCommands.py:792
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -1622,7 +1622,7 @@ msgstr "MDV Lilli"
 msgid "Manage &add-ons"
 msgstr "Gerir &complementos"
 
-#: globalCommands.py:960
+#: globalCommands.py:964
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
@@ -1640,12 +1640,12 @@ msgid "Mouse Settings"
 msgstr "Opções de mouse"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:747
+#: globalCommands.py:751
 msgid "Mouse tracking off"
 msgstr "Rastreamento do mouse desligado"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:751
+#: globalCommands.py:755
 msgid "Mouse tracking on"
 msgstr "Rastreamento do mouse ligado"
 
@@ -1662,20 +1662,20 @@ msgstr ""
 "do cursor de exploração dentro da revisão plana"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: virtualBuffers/__init__.py:1436
+#: virtualBuffers/__init__.py:1454
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Move para depois do fim do elemento pai, por exemplo a lista ou a tabela"
 
-#: globalCommands.py:1002
+#: globalCommands.py:1006
 msgid "Moves the braille display to the next line"
 msgstr "Move a linha braile para a próxima linha"
 
-#: globalCommands.py:997
+#: globalCommands.py:1001
 msgid "Moves the braille display to the previous line"
 msgstr "Move a linha braile para a linha anterior"
 
-#: globalCommands.py:642
+#: globalCommands.py:646
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "Move o foco para o documento mais próximo que possua foco"
 
@@ -1719,7 +1719,7 @@ msgstr "Move o objeto de navegação e o foco para a coluna anterior"
 msgid "Moves the navigator object to the previous object"
 msgstr "Coloca como objeto de navegação o anterior"
 
-#: globalCommands.py:499
+#: globalCommands.py:503
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
@@ -1727,7 +1727,7 @@ msgstr ""
 "Move o cursor de exploração para a última linha do objeto atual de navegação "
 "e a anuncia"
 
-#: globalCommands.py:543
+#: globalCommands.py:547
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -1735,7 +1735,7 @@ msgstr ""
 "Move o cursor de exploração para o primeiro caractere da linha onde este "
 "está cituado dentro do objeto atual de navegação e o anuncia"
 
-#: globalCommands.py:607
+#: globalCommands.py:611
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
@@ -1743,7 +1743,7 @@ msgstr ""
 "Move o cursor de exploração para o último caractere da linha onde este está "
 "cituado dentro do objeto atual de navegação e o anuncia"
 
-#: globalCommands.py:596
+#: globalCommands.py:600
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
@@ -1751,7 +1751,7 @@ msgstr ""
 "Move o cursor de exploração para o próximo caractere do objeto atual de "
 "navegação e o lê"
 
-#: globalCommands.py:491
+#: globalCommands.py:495
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
@@ -1759,7 +1759,7 @@ msgstr ""
 "Move o cursor de exploração para a próxima linha do objeto atual de "
 "navegação e a lê"
 
-#: globalCommands.py:533
+#: globalCommands.py:537
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
@@ -1767,7 +1767,7 @@ msgstr ""
 "Move o cursor de exploração para a próxima palavra do objeto atual de "
 "navegação e a lê"
 
-#: globalCommands.py:561
+#: globalCommands.py:565
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
@@ -1775,7 +1775,7 @@ msgstr ""
 "Move o cursor de exploração para o caractere anterior do objeto atual de "
 "navegação e o lê"
 
-#: globalCommands.py:469
+#: globalCommands.py:473
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
@@ -1783,7 +1783,7 @@ msgstr ""
 "Move o cursor de exploração para a linha anterior do objeto atual de "
 "navegação e a lê"
 
-#: globalCommands.py:511
+#: globalCommands.py:515
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
@@ -1791,7 +1791,7 @@ msgstr ""
 "Move o cursor de exploração para a palavra anterior do objeto atual de "
 "navegação e a lê"
 
-#: globalCommands.py:457
+#: globalCommands.py:461
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
@@ -1816,7 +1816,7 @@ msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "Volta à opção anterior disponível no anel de configurações de voz"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: virtualBuffers/__init__.py:1418
+#: virtualBuffers/__init__.py:1436
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "Move para o início do elemento pai, por exemplo a lista ou a tabela"
 
@@ -1866,7 +1866,7 @@ msgid "NVDA web site"
 msgstr "Página do NVDA na Internet"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
-#: NVDAHelper.py:209
+#: NVDAHelper.py:214
 msgid "Native input"
 msgstr "Entrada nativa"
 
@@ -1876,7 +1876,7 @@ msgid "Newsgroup:"
 msgstr "Grupo de Notícias:"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
-#: globalCommands.py:448
+#: globalCommands.py:452
 msgid "No action"
 msgstr "Sem ação"
 
@@ -1907,7 +1907,7 @@ msgstr "Sem objeto pai"
 msgid "No flat review for this object"
 msgstr "Sem revisão plana para este objeto"
 
-#: globalCommands.py:701
+#: globalCommands.py:705
 msgid "No formatting information"
 msgstr "sem informações de formatação"
 
@@ -1918,6 +1918,10 @@ msgstr "sem informações de local para o objeto de navegação"
 #: globalCommands.py:329
 msgid "No location information for screen"
 msgstr "sem informações de local para tela"
+
+#: virtualBuffers/__init__.py:828
+msgid "No long description"
+msgstr "Sem descrição longa"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 #: appModules/miranda32.py:118 appModules/vipmud.py:33
@@ -1949,15 +1953,15 @@ msgstr "Sem configurações"
 msgid "No speech"
 msgstr "sem fala"
 
-#: globalCommands.py:964
+#: globalCommands.py:968
 msgid "No start marker set"
 msgstr "Sem marca de início"
 
-#: globalCommands.py:736
+#: globalCommands.py:740
 msgid "No status line found"
 msgstr "Linha de status não achada"
 
-#: globalCommands.py:975
+#: globalCommands.py:979
 msgid "No text to copy"
 msgstr "Sem texto a copiar"
 
@@ -2006,13 +2010,13 @@ msgstr "Norueguês grau 3"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers/__init__.py:1411 virtualBuffers/__init__.py:1425
+#: virtualBuffers/__init__.py:1429 virtualBuffers/__init__.py:1443
 msgid "Not in a container"
 msgstr "Não está num elemento que contenha outros"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: virtualBuffers/__init__.py:1286
+#: virtualBuffers/__init__.py:1304
 msgid "Not in a table cell"
 msgstr "não está numa célula de tabela"
 
@@ -2063,7 +2067,7 @@ msgstr "Pacote"
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Modelos mais recentes da Papenmeier BRAILLEX"
 
-#: globalCommands.py:866
+#: globalCommands.py:870
 msgid "Pass next key through"
 msgstr "passar a próxima tecla"
 
@@ -2071,7 +2075,7 @@ msgstr "passar a próxima tecla"
 msgid "Pattern"
 msgstr "Original"
 
-#: globalCommands.py:449
+#: globalCommands.py:453
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
@@ -2137,7 +2141,7 @@ msgstr "Por favor aguarde enquanto o complemento é instalado."
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr "Por favor aguarde enquanto se atualiza a instalação anterior do NVDA."
 
-#: globalCommands.py:1009
+#: globalCommands.py:1013
 msgid "Plugins reloaded"
 msgstr "Plug-ins recarregados"
 
@@ -2171,7 +2175,7 @@ msgstr "Português grau 1"
 msgid "Portuguese grade 2"
 msgstr "Português grau 2"
 
-#: virtualBuffers/__init__.py:913
+#: virtualBuffers/__init__.py:931
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Exibe uma lista de linques, cabeçalhos ou marcas"
 
@@ -2184,7 +2188,7 @@ msgstr ""
 "pressionada duas vezes, coloca o cursor do sistema na posição do cursor de "
 "exploração"
 
-#: globalCommands.py:921
+#: globalCommands.py:925
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
@@ -2238,7 +2242,7 @@ msgstr "Grau de sinais de &pontuação:"
 msgid "Python console"
 msgstr "Console Python"
 
-#: globalCommands.py:658
+#: globalCommands.py:662
 msgid "Quits NVDA!"
 msgstr "Sai do NVDA"
 
@@ -2266,7 +2270,7 @@ msgstr "Atualizar\tF5"
 msgid "Refreshed"
 msgstr "atualizado"
 
-#: virtualBuffers/__init__.py:824
+#: virtualBuffers/__init__.py:842
 msgid "Refreshes the document content"
 msgstr "Atualiza o conteúdo do documento"
 
@@ -2282,7 +2286,7 @@ msgstr "&Expressão regular"
 msgid "Reload plugins"
 msgstr "Recarregar plug-ins"
 
-#: globalCommands.py:1010
+#: globalCommands.py:1014
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
@@ -2500,7 +2504,7 @@ msgstr "Anuncia quaisquer comentários na janela de comentários automáticos."
 msgid "Reports any comments in the comments window"
 msgstr "Anuncia quaisquer comentários na janela de comentários."
 
-#: globalCommands.py:705
+#: globalCommands.py:709
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document"
@@ -2508,7 +2512,7 @@ msgstr ""
 "Anuncia informações de formatação na posição atual do cursor de exploração "
 "num documento"
 
-#: globalCommands.py:578
+#: globalCommands.py:582
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated. Pressing twice reports a description or example of that "
@@ -2542,7 +2546,7 @@ msgstr ""
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "Anuncia altura, largura e posição do objeto atual de navegação"
 
-#: globalCommands.py:479
+#: globalCommands.py:483
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled. "
@@ -2552,7 +2556,7 @@ msgstr ""
 "exploração; se pressionada duas vezes, soletra a linha; Pressionada três "
 "vezes soletra a linha usando descrições de caracteres."
 
-#: globalCommands.py:1027
+#: globalCommands.py:1031
 msgid ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
@@ -2560,7 +2564,7 @@ msgstr ""
 "Anuncia o novo objeto ou conteúdo sob o dedo se este for diferente daquele "
 "onde o dedo estava antes"
 
-#: globalCommands.py:1023
+#: globalCommands.py:1027
 msgid "Reports the object and content directly under your finger"
 msgstr "Anuncia o objeto ou conteúdo atualmente sob o dedo"
 
@@ -2568,11 +2572,11 @@ msgstr "Anuncia o objeto ou conteúdo atualmente sob o dedo"
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "Anuncia o tempo restante da faixa, caso haja alguma tocando"
 
-#: globalCommands.py:955
+#: globalCommands.py:959
 msgid "Reports the text on the Windows clipboard"
 msgstr "Anuncia o texto na área de transferência do Windows"
 
-#: globalCommands.py:771
+#: globalCommands.py:775
 msgid ""
 "Reports the title of the current application or foreground window. If "
 "pressed twice, spells the title. If pressed three times, copies the title to "
@@ -2595,7 +2599,7 @@ msgstr "Restaurar configurações ao estado salvo"
 msgid "Restart NVDA"
 msgstr "Reiniciar o NVDA"
 
-#: globalCommands.py:978
+#: globalCommands.py:982
 msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
@@ -2613,7 +2617,7 @@ msgstr "&Cursor de exploração..."
 msgid "Review Cursor Settings"
 msgstr "Opções do cursor de exploração"
 
-#: globalCommands.py:973
+#: globalCommands.py:977
 msgid "Review selection copied to clipboard"
 msgstr "Seleção de exploração copiada para área de transferência"
 
@@ -2626,7 +2630,7 @@ msgstr "Voltar"
 msgid "Route to and report formatting"
 msgstr "Mover e anunciar formatação"
 
-#: globalCommands.py:992
+#: globalCommands.py:996
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "Move o cursor para o objeto sob esta célula braile ou ativa o mesmo"
 
@@ -2640,7 +2644,7 @@ msgstr "Russo, grau 1"
 msgid "Save As"
 msgstr "Salvar como"
 
-#: globalCommands.py:913
+#: globalCommands.py:917
 msgid "Saves the current NVDA configuration"
 msgstr "Salva a configuração atual do NVDA"
 
@@ -2650,11 +2654,11 @@ msgstr "Salva a configuração atual do NVDA"
 msgid "Say &cap before capitals"
 msgstr "Dizer &cap antes de maiúsculas"
 
-#: globalCommands.py:982
+#: globalCommands.py:986
 msgid "Scrolls the braille display back"
 msgstr "Rola a linha braile para trás"
 
-#: globalCommands.py:987
+#: globalCommands.py:991
 msgid "Scrolls the braille display forward"
 msgstr "Rola a linha braille para frente"
 
@@ -2712,41 +2716,45 @@ msgstr "Mostra janela de configuração do controlador Handy Tech."
 msgid "Show this dialog when NVDA starts"
 msgstr "Mostrar esta janela ao iniciar o NVDA"
 
-#: globalCommands.py:905
+#: globalCommands.py:909
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr "Exibe a janela de opções do modo de navegação do NVDA"
 
-#: globalCommands.py:909
+#: globalCommands.py:913
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "Exibe a janela de opções para formatação de documentos no NVDA"
 
-#: globalCommands.py:881
+#: globalCommands.py:885
 msgid "Shows the NVDA general settings dialog"
 msgstr "Exibe a janela de opções gerais do NVDA"
 
-#: globalCommands.py:893
+#: globalCommands.py:897
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "Exibe a janela de opções de teclado do NVDA"
 
-#: globalCommands.py:662
+#: globalCommands.py:666
 msgid "Shows the NVDA menu"
 msgstr "Exibe o menu do NVDA"
 
-#: globalCommands.py:897
+#: globalCommands.py:901
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "Exibe a janela de opções de mouse do NVDA"
 
-#: globalCommands.py:901
+#: globalCommands.py:905
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "Exibe a janela de opções para apresentação de objetos no NVDA"
 
-#: globalCommands.py:885
+#: globalCommands.py:889
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "Exibe a janela de sintetizadores para o NVDA"
 
-#: globalCommands.py:889
+#: globalCommands.py:893
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Exibe a janela de opções de voz do NVDA"
+
+#: virtualBuffers/__init__.py:829
+msgid "Shows the long description at this position if one is found."
+msgstr "Exibe a descrição longa desta posição, se encontrada."
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
@@ -2820,7 +2828,7 @@ msgstr "Falar &caracteres digitados"
 msgid "Speak typed &words"
 msgstr "Falar &palavras digitadas"
 
-#: globalCommands.py:877
+#: globalCommands.py:881
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
@@ -2828,7 +2836,7 @@ msgstr ""
 "Fala o nome do executável da aplicação atualmente rodando, bem como o nome "
 "do módulo de aplicação atualmente carregado"
 
-#: globalCommands.py:521
+#: globalCommands.py:525
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. Pressing twice spells the word. Pressing three times spells the "
@@ -2847,11 +2855,11 @@ msgid "Speech viewer"
 msgstr "Exibidor de fala"
 
 #. Override the name, as Windows names this the "Application" menu contrary to all documentation.
-#: appModules/explorer.py:39
+#: appModules/explorer.py:43
 msgid "Start"
 msgstr "Início"
 
-#: globalCommands.py:959
+#: globalCommands.py:963
 msgid "Start marked"
 msgstr "Início marcado"
 
@@ -2943,7 +2951,7 @@ msgstr "&Unidade de leitura de texto:"
 msgid "Text frame"
 msgstr "Freime de texto"
 
-#: globalCommands.py:954
+#: globalCommands.py:958
 #, python-format
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
@@ -2979,7 +2987,7 @@ msgid ""
 msgstr ""
 "O caminho de instalação do NVDA mudou. Ele agora será instalado em {path}"
 
-#: globalCommands.py:867
+#: globalCommands.py:871
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -2987,11 +2995,11 @@ msgstr ""
 "A próxima tecla pressionada não será processada pelo NVDA; será enviada "
 "diretamente ao Windows."
 
-#: globalCommands.py:968
+#: globalCommands.py:972
 msgid "The start marker must reside within the same object"
 msgstr "A marca de início deve estar no mesmo objeto"
 
-#: globalCommands.py:949
+#: globalCommands.py:953
 msgid "There is no text on the clipboard"
 msgstr "Não há texto na área de transferência"
 
@@ -3019,7 +3027,7 @@ msgstr ""
 msgid "To:"
 msgstr "para:"
 
-#: globalCommands.py:941
+#: globalCommands.py:945
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "Alterna vinculação do braile entre a posição de foco e a de exploração"
 
@@ -3027,7 +3035,7 @@ msgstr "Alterna vinculação do braile entre a posição de foco e a de explora�
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "Liga e desliga o modo dormir para a aplicação ativa."
 
-#: globalCommands.py:805
+#: globalCommands.py:809
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
@@ -3035,7 +3043,7 @@ msgstr ""
 "Alterna entre bipes, fala, bipes e fala, e desativado, para o anúncio das "
 "atualizações em barras de progresso."
 
-#: globalCommands.py:654
+#: globalCommands.py:658
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -3047,7 +3055,7 @@ msgstr ""
 "controle diretamente. No modo de navegação você pode percorrer o documento "
 "usando setas, teclas rápidas de navegação, etc."
 
-#: globalCommands.py:625
+#: globalCommands.py:629
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -3057,7 +3065,7 @@ msgstr ""
 "NVDA nada diz; no modo de bipes, ele bipa sempre quando deveria falar algo; "
 "no modo de fala, continua falando normalmente."
 
-#: virtualBuffers/__init__.py:830
+#: virtualBuffers/__init__.py:848
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
@@ -3065,19 +3073,19 @@ msgstr ""
 "Determina se as informações devem ser mostradas no documento com a mesma "
 "disposição que aparecem na tela"
 
-#: globalCommands.py:841
+#: globalCommands.py:845
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "Liga e desliga o movimento do objeto de navegação conforme o foco muda"
 
-#: globalCommands.py:829
+#: globalCommands.py:833
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Liga e desliga o movimento do cursor de exploração conforme se move o cursor "
 "do sistema"
 
-#: globalCommands.py:817
+#: globalCommands.py:821
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -3101,7 +3109,7 @@ msgstr ""
 msgid "Toggles on and off the speaking of typed words"
 msgstr "Liga e desliga leitura de palavras digitadas"
 
-#: globalCommands.py:754
+#: globalCommands.py:758
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "Alterna o anúncio de informações conforme o mause é movido."
 
@@ -3252,11 +3260,11 @@ msgstr "Guia do Usuário"
 msgid "User default"
 msgstr "Padrão do usuário"
 
-#: synthDriverHandler.py:205
+#: synthDriverHandler.py:206
 msgid "V&ariant"
 msgstr "V&ariante"
 
-#: synthDriverHandler.py:214
+#: synthDriverHandler.py:215
 msgid "V&olume"
 msgstr "v&olume"
 
@@ -3377,11 +3385,11 @@ msgstr ""
 msgid "activate"
 msgstr "ativar"
 
-#: virtualBuffers/__init__.py:816
+#: virtualBuffers/__init__.py:834
 msgid "activates the current object in the document"
 msgstr "ativa o objeto atual do documento"
 
-#: controlTypes.py:313 controlTypes.py:337
+#: controlTypes.py:315 controlTypes.py:339
 msgid "alert"
 msgstr "alerta"
 
@@ -3411,7 +3419,7 @@ msgstr "alinhamento à esquerda"
 msgid "align right"
 msgstr "alinhamento à direita"
 
-#: controlTypes.py:336
+#: controlTypes.py:338
 msgid "alignment"
 msgstr "alinhamento"
 
@@ -3422,7 +3430,7 @@ msgid "all"
 msgstr "tudo"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
-#: NVDAHelper.py:227 NVDAHelper.py:236
+#: NVDAHelper.py:232 NVDAHelper.py:241
 msgid "alphanumeric"
 msgstr "alfanumérico"
 
@@ -3431,11 +3439,11 @@ msgstr "alfanumérico"
 msgid "alt"
 msgstr "alt"
 
-#: controlTypes.py:243
+#: controlTypes.py:245
 msgid "animation"
 msgstr "animação"
 
-#: controlTypes.py:244
+#: controlTypes.py:246
 msgid "application"
 msgstr "aplicação"
 
@@ -3459,7 +3467,7 @@ msgstr "anexo"
 msgid "back"
 msgstr "para trás"
 
-#: controlTypes.py:331
+#: controlTypes.py:333
 msgid "background color"
 msgstr "cor de fundo"
 
@@ -3479,11 +3487,11 @@ msgstr "bâner"
 msgid "baseline"
 msgstr "linha base"
 
-#: globalCommands.py:803
+#: globalCommands.py:807
 msgid "beep and speak progress bar updates"
 msgstr "bipar e falar em barras de progresso"
 
-#: globalCommands.py:800
+#: globalCommands.py:804
 msgid "beep for progress bar updates"
 msgstr "bipar em barras de progresso"
 
@@ -3501,7 +3509,7 @@ msgstr "em branco"
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
-#: controlTypes.py:238
+#: controlTypes.py:240
 msgid "block quote"
 msgstr "bloco de citação"
 
@@ -3510,21 +3518,21 @@ msgid "blue"
 msgstr "azul"
 
 #. Translators: Reported when text is bolded.
-#: controlTypes.py:327 speech.py:1055
+#: controlTypes.py:329 speech.py:1055
 msgid "bold"
 msgstr "negrito"
 
-#: controlTypes.py:291
+#: controlTypes.py:293
 msgid "border"
 msgstr "borda"
 
 #. Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container.
-#: globalCommands.py:489 globalCommands.py:497 globalCommands.py:531
-#: virtualBuffers/__init__.py:1431
+#: globalCommands.py:493 globalCommands.py:501 globalCommands.py:535
+#: virtualBuffers/__init__.py:1449
 msgid "bottom"
 msgstr "fim"
 
-#: controlTypes.py:245
+#: controlTypes.py:247
 msgid "box"
 msgstr "caixa"
 
@@ -3539,7 +3547,7 @@ msgstr "quebra"
 msgid "brightness controls audio coordinates volume"
 msgstr "brilho controla volume das coordenadas sonoras"
 
-#: virtualBuffers/__init__.py:1535
+#: virtualBuffers/__init__.py:1554
 msgid "browse mode"
 msgstr "modo de navegação"
 
@@ -3554,11 +3562,11 @@ msgstr "parar navegação"
 msgid "btn"
 msgstr "btn"
 
-#: controlTypes.py:349
+#: controlTypes.py:351
 msgid "busy"
 msgstr "ocupado"
 
-#: controlTypes.py:196
+#: controlTypes.py:197
 msgid "button"
 msgstr "botão"
 
@@ -3569,11 +3577,11 @@ msgstr "botão"
 msgid "c%s"
 msgstr "c%s"
 
-#: controlTypes.py:342
+#: controlTypes.py:344
 msgid "calendar"
 msgstr "calendário"
 
-#: controlTypes.py:248
+#: controlTypes.py:250
 msgid "canvas"
 msgstr "vela"
 
@@ -3588,21 +3596,21 @@ msgstr "cap %s"
 msgid "caps lock"
 msgstr "caps loc"
 
-#: controlTypes.py:249
+#: controlTypes.py:251
 msgid "caption"
 msgstr "legenda"
 
-#: controlTypes.py:292
+#: controlTypes.py:294
 msgid "caret"
 msgstr "circunflexo"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:822
+#: globalCommands.py:826
 msgid "caret moves review cursor off"
 msgstr "cursor do sistema não move o cursor de exploração"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:826
+#: globalCommands.py:830
 msgid "caret moves review cursor on"
 msgstr "cursor do sistema move o cursor de exploração"
 
@@ -3616,11 +3624,11 @@ msgstr "caixa"
 msgid "cbo"
 msgstr "cbo"
 
-#: controlTypes.py:216
+#: controlTypes.py:218
 msgid "cell"
 msgstr "célula"
 
-#: controlTypes.py:293 textInfos/__init__.py:199
+#: controlTypes.py:295 textInfos/__init__.py:199
 msgid "character"
 msgstr "caractere"
 
@@ -3630,23 +3638,23 @@ msgctxt "symbolLevel"
 msgid "character"
 msgstr "caractere"
 
-#: controlTypes.py:294
+#: controlTypes.py:296
 msgid "chart"
 msgstr "quadro"
 
-#: controlTypes.py:192
+#: controlTypes.py:193
 msgid "check box"
 msgstr "caixa de seleção"
 
-#: controlTypes.py:250
+#: controlTypes.py:252
 msgid "check menu item"
 msgstr "item de menu de seleção"
 
-#: controlTypes.py:375
+#: controlTypes.py:377
 msgid "checkable"
 msgstr "marcável"
 
-#: controlTypes.py:351
+#: controlTypes.py:353
 msgid "checked"
 msgstr "marcado"
 
@@ -3656,7 +3664,7 @@ msgstr "marcado"
 msgid "chk"
 msgstr "chk"
 
-#: controlTypes.py:373
+#: controlTypes.py:375
 msgid "clickable"
 msgstr "clicável"
 
@@ -3665,19 +3673,19 @@ msgstr "clicável"
 msgid "clk"
 msgstr "rlg"
 
-#: controlTypes.py:224
+#: controlTypes.py:226
 msgid "clock"
 msgstr "relógio"
 
-#: controlTypes.py:355
+#: controlTypes.py:357
 msgid "collapsed"
 msgstr "recolhido"
 
-#: controlTypes.py:317
+#: controlTypes.py:319
 msgid "color chooser"
 msgstr "seletor de cores"
 
-#: controlTypes.py:217
+#: controlTypes.py:219
 msgid "column"
 msgstr "coluna"
 
@@ -3686,11 +3694,11 @@ msgstr "coluna"
 msgid "column %s"
 msgstr "coluna %s"
 
-#: controlTypes.py:221
+#: controlTypes.py:223
 msgid "column header"
 msgstr "cabeçalho da coluna"
 
-#: controlTypes.py:200
+#: controlTypes.py:201
 msgid "combo box"
 msgstr "caixa de combinação"
 
@@ -3713,7 +3721,7 @@ msgstr "copiado para área de transferência"
 msgid "ctrl"
 msgstr "control"
 
-#: controlTypes.py:295
+#: controlTypes.py:297
 msgid "cursor"
 msgstr "cursor"
 
@@ -3727,7 +3735,7 @@ msgstr "aplicaçãon pessoal 1"
 msgid "custom application 2"
 msgstr "aplicaçãon pessoal 2"
 
-#: globalCommands.py:1019
+#: globalCommands.py:1023
 msgid "cycles between available touch modes"
 msgstr "Alterna entre modos de toque disponíveis"
 
@@ -3735,15 +3743,15 @@ msgstr "Alterna entre modos de toque disponíveis"
 msgid "dark red"
 msgstr "vermelho escuro"
 
-#: controlTypes.py:338
+#: controlTypes.py:340
 msgid "data grid"
 msgstr "grade de dados"
 
-#: controlTypes.py:339
+#: controlTypes.py:341
 msgid "data item"
 msgstr "item de dados"
 
-#: controlTypes.py:251
+#: controlTypes.py:253
 msgid "date edit"
 msgstr "edição de data"
 
@@ -3767,7 +3775,7 @@ msgstr "estilo padrão"
 
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
-#: controlTypes.py:364
+#: controlTypes.py:366
 msgid "defunct"
 msgstr "inutilizado"
 
@@ -3780,27 +3788,27 @@ msgstr "del"
 msgid "desktop"
 msgstr "computador de mesa"
 
-#: controlTypes.py:312
+#: controlTypes.py:314
 msgid "desktop icon"
 msgstr "ícone da área de trabalho"
 
-#: controlTypes.py:315
+#: controlTypes.py:317
 msgid "desktop pane"
 msgstr "painel da área de trabalho"
 
-#: controlTypes.py:296
+#: controlTypes.py:298
 msgid "diagram"
 msgstr "diagrama"
 
-#: controlTypes.py:297
+#: controlTypes.py:299
 msgid "dial"
 msgstr "rotor"
 
-#: controlTypes.py:191
+#: controlTypes.py:192
 msgid "dialog"
 msgstr "diálogo"
 
-#: controlTypes.py:253
+#: controlTypes.py:255
 msgid "directory pane"
 msgstr "painel de diretório"
 
@@ -3815,7 +3823,7 @@ msgstr "rolagem da linha"
 msgid "dlg"
 msgstr "dlg"
 
-#: controlTypes.py:242
+#: controlTypes.py:244
 msgid "document"
 msgstr "documento"
 
@@ -3831,50 +3839,50 @@ msgstr "sôlto"
 msgid "down arrow"
 msgstr "baixo"
 
-#: controlTypes.py:376
+#: controlTypes.py:378
 msgid "draggable"
 msgstr "arrastável"
 
-#: controlTypes.py:377
+#: controlTypes.py:379
 msgid "dragging"
 msgstr "arrastando"
 
-#: controlTypes.py:223
+#: controlTypes.py:225
 msgid "drop down button"
 msgstr "botão de lista"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
-#: controlTypes.py:302
+#: controlTypes.py:304
 msgid "drop down button grid"
 msgstr "grade de botões de lista"
 
-#: controlTypes.py:298
+#: controlTypes.py:300
 msgid "drop list"
 msgstr "lista extendida"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
 #. This is only reported for objects which support accessible drag and drop.
-#: controlTypes.py:380
+#: controlTypes.py:382
 msgid "drop target"
 msgstr "local onde soltar"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects/behaviors.py:412 virtualBuffers/__init__.py:1294
+#: NVDAObjects/behaviors.py:412 virtualBuffers/__init__.py:1312
 msgid "edge of table"
 msgstr "borda da tabela"
 
-#: controlTypes.py:195
+#: controlTypes.py:196
 msgid "edit"
 msgstr "edição"
 
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
-#: controlTypes.py:273
+#: controlTypes.py:275
 msgid "edit bar"
 msgstr "barra de edição"
 
-#: controlTypes.py:374
+#: controlTypes.py:376
 msgid "editable"
 msgstr "editável"
 
@@ -3889,7 +3897,7 @@ msgstr "edt"
 msgid "email"
 msgstr "e-mail"
 
-#: controlTypes.py:254 NVDAObjects/window/edit.py:613
+#: controlTypes.py:256 NVDAObjects/window/edit.py:613
 msgid "embedded object"
 msgstr "objeto embutido"
 
@@ -3898,7 +3906,7 @@ msgstr "objeto embutido"
 msgid "end"
 msgstr "end"
 
-#: controlTypes.py:255
+#: controlTypes.py:257
 msgid "end note"
 msgstr "nota de adendo"
 
@@ -3907,7 +3915,7 @@ msgstr "nota de adendo"
 msgid "enter"
 msgstr "ênter"
 
-#: controlTypes.py:303
+#: controlTypes.py:305
 msgid "equation"
 msgstr "equação"
 
@@ -3916,7 +3924,7 @@ msgstr "equação"
 msgid "escape"
 msgstr "squeipe"
 
-#: controlTypes.py:354
+#: controlTypes.py:356
 msgid "expanded"
 msgstr "expandido"
 
@@ -3933,11 +3941,11 @@ msgstr "feminina 1"
 msgid "female 2"
 msgstr "feminina 2"
 
-#: controlTypes.py:318
+#: controlTypes.py:320
 msgid "file chooser"
 msgstr "seletor de arquivos"
 
-#: controlTypes.py:319
+#: controlTypes.py:321
 msgid "filler"
 msgstr "preenchedor"
 
@@ -3961,57 +3969,57 @@ msgstr ""
 "procura a ocorrência anterior da cadeia textual digitada anteriormente, a "
 "partir da posição atual do cursor"
 
-#: globalCommands.py:939 gui/settingsDialogs.py:1261
+#: globalCommands.py:943 gui/settingsDialogs.py:1261
 msgid "focus"
 msgstr "foco"
 
-#: virtualBuffers/__init__.py:1535
+#: virtualBuffers/__init__.py:1554
 msgid "focus mode"
 msgstr "modo de foco"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:834
+#: globalCommands.py:838
 msgid "focus moves navigator object off"
 msgstr "foco não move o objeto de navegação"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:838
+#: globalCommands.py:842
 msgid "focus moves navigator object on"
 msgstr "foco move o objeto de navegação"
 
-#: controlTypes.py:372
+#: controlTypes.py:374
 msgid "focusable"
 msgstr "focável"
 
-#: controlTypes.py:347
+#: controlTypes.py:349
 msgid "focused"
 msgstr "com foco"
 
-#: controlTypes.py:323
+#: controlTypes.py:325
 msgid "font chooser"
 msgstr "seletor de fonte"
 
-#: controlTypes.py:325
+#: controlTypes.py:327
 msgid "font name"
 msgstr "nome da fonte"
 
-#: controlTypes.py:326
+#: controlTypes.py:328
 msgid "font size"
 msgstr "tamanho da fonte"
 
-#: controlTypes.py:257
+#: controlTypes.py:259
 msgid "foot note"
 msgstr "nota de rodapé"
 
-#: controlTypes.py:256
+#: controlTypes.py:258
 msgid "footer"
 msgstr "rodapé"
 
-#: controlTypes.py:330
+#: controlTypes.py:332
 msgid "foreground color"
 msgstr "cor de tela"
 
-#: controlTypes.py:226
+#: controlTypes.py:228
 msgid "form"
 msgstr "formulário"
 
@@ -4020,7 +4028,7 @@ msgstr "formulário"
 msgid "forward"
 msgstr "para frente"
 
-#: controlTypes.py:219
+#: controlTypes.py:221
 msgid "frame"
 msgstr "freime"
 
@@ -4036,7 +4044,7 @@ msgstr "erro no arquivo com mapa de gestos"
 
 #. Translators: Reported for an object which is a glass pane; i.e.
 #. a pane that is guaranteed to be on top of all panes beneath it.
-#: controlTypes.py:260
+#: controlTypes.py:262
 msgid "glass pane"
 msgstr "painel transparente"
 
@@ -4046,7 +4054,7 @@ msgstr "painel transparente"
 msgid "gra"
 msgstr "grá"
 
-#: controlTypes.py:203
+#: controlTypes.py:204
 msgid "graphic"
 msgstr "gráfico"
 
@@ -4058,11 +4066,11 @@ msgstr "verde"
 msgid "grey"
 msgstr "cinza"
 
-#: controlTypes.py:304
+#: controlTypes.py:306
 msgid "grip"
 msgstr "gancho"
 
-#: controlTypes.py:246
+#: controlTypes.py:248
 msgid "grouping"
 msgstr "grupo"
 
@@ -4074,24 +4082,24 @@ msgid "h%s"
 msgstr "h%s"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
-#: NVDAHelper.py:223 NVDAHelper.py:233
+#: NVDAHelper.py:228 NVDAHelper.py:238
 msgid "half alphanumeric"
 msgstr "meio alfanumérico"
 
-#: controlTypes.py:352
+#: controlTypes.py:354
 msgid "half checked"
 msgstr "meio marcado"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
-#: NVDAHelper.py:225
+#: NVDAHelper.py:230
 msgid "half katakana"
 msgstr "meio katakana"
 
-#: NVDAHelper.py:234
+#: NVDAHelper.py:239
 msgid "half katakana roman"
 msgstr "meio romano katakana"
 
-#: controlTypes.py:367
+#: controlTypes.py:369
 msgid "has auto complete"
 msgstr "possui autocompletar"
 
@@ -4105,39 +4113,39 @@ msgstr "possui comentário"
 msgid "has formula"
 msgstr "contém fórmula"
 
-#: controlTypes.py:261
+#: controlTypes.py:263
 msgid "header"
 msgstr "cabeçalho"
 
-#: controlTypes.py:340
+#: controlTypes.py:342
 msgid "header item"
 msgstr "item do cabeçalho"
 
-#: controlTypes.py:227
+#: controlTypes.py:229
 msgid "heading"
 msgstr "cabeçalho"
 
-#: controlTypes.py:228
+#: controlTypes.py:230
 msgid "heading 1"
 msgstr "cabeçalho 1"
 
-#: controlTypes.py:229
+#: controlTypes.py:231
 msgid "heading 2"
 msgstr "cabeçalho 2"
 
-#: controlTypes.py:230
+#: controlTypes.py:232
 msgid "heading 3"
 msgstr "cabeçalho 3"
 
-#: controlTypes.py:231
+#: controlTypes.py:233
 msgid "heading 4"
 msgstr "cabeçalho 4"
 
-#: controlTypes.py:232
+#: controlTypes.py:234
 msgid "heading 5"
 msgstr "cabeçalho 5"
 
-#: controlTypes.py:233
+#: controlTypes.py:235
 msgid "heading 6"
 msgstr "cabeçalho 6"
 
@@ -4146,17 +4154,17 @@ msgstr "cabeçalho 6"
 msgid "heading level %d"
 msgstr "cabeçalho nível %d"
 
-#: controlTypes.py:204
+#: controlTypes.py:205
 msgid "help balloon"
 msgstr "balão de ajuda"
 
 #. Translators: For Japanese character input: Hiragana input mode.
-#: NVDAHelper.py:229
+#: NVDAHelper.py:234
 msgid "hiragana"
 msgstr "hiragana"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
-#: NVDAHelper.py:238
+#: NVDAHelper.py:243
 msgid "hiragana roman"
 msgstr "romano hiragana"
 
@@ -4170,27 +4178,27 @@ msgstr "roume"
 msgid "home page"
 msgstr "página inicial"
 
-#: controlTypes.py:305
+#: controlTypes.py:307
 msgid "hot key field"
 msgstr "campo de tecla de atalho"
 
-#: controlTypes.py:252
+#: controlTypes.py:254
 msgid "icon"
 msgstr "ícone"
 
-#: controlTypes.py:369
+#: controlTypes.py:371
 msgid "iconified"
 msgstr "iconificado"
 
-#: controlTypes.py:262
+#: controlTypes.py:264
 msgid "image map"
 msgstr "mapa com imagem"
 
-#: controlTypes.py:335
+#: controlTypes.py:337
 msgid "indent"
 msgstr "endentação"
 
-#: controlTypes.py:306
+#: controlTypes.py:308
 msgid "indicator"
 msgstr "indicador"
 
@@ -4208,7 +4216,7 @@ msgstr "ajuda de entrada desligada"
 msgid "input help on"
 msgstr "ajuda de entrada ligada"
 
-#: controlTypes.py:263
+#: controlTypes.py:265
 msgid "input window"
 msgstr "janela de entrada"
 
@@ -4221,15 +4229,15 @@ msgstr "entrada/saída"
 msgid "install"
 msgstr "instalar"
 
-#: controlTypes.py:365
+#: controlTypes.py:367
 msgid "invalid entry"
 msgstr "entrada inválida"
 
-#: controlTypes.py:356
+#: controlTypes.py:358
 msgid "invisible"
 msgstr "invisível"
 
-#: NVDAObjects/UIA/__init__.py:602
+#: NVDAObjects/UIA/__init__.py:609
 msgid "invoke"
 msgstr "chamar"
 
@@ -4239,16 +4247,16 @@ msgid "italic"
 msgstr "itálico"
 
 #. Translators: For Japanese character input: Katacana input mode.
-#: NVDAHelper.py:231
+#: NVDAHelper.py:236
 msgid "katakana"
 msgstr "katakana"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
-#: NVDAHelper.py:240
+#: NVDAHelper.py:245
 msgid "katakana roman"
 msgstr "romano katakana"
 
-#: controlTypes.py:264
+#: controlTypes.py:266
 msgid "label"
 msgstr "rótulo"
 
@@ -4256,11 +4264,11 @@ msgstr "rótulo"
 msgid "laptop"
 msgstr "computador portátil"
 
-#: controlTypes.py:268
+#: controlTypes.py:270
 msgid "layered pane"
 msgstr "painel em camadas"
 
-#: globalCommands.py:541 globalCommands.py:553 appModules/totalcmd.py:35
+#: globalCommands.py:545 globalCommands.py:557 appModules/totalcmd.py:35
 msgid "left"
 msgstr "esquerda"
 
@@ -4318,7 +4326,7 @@ msgstr "cinza claro"
 msgid "lime"
 msgstr "linha"
 
-#: controlTypes.py:324 textInfos/__init__.py:201
+#: controlTypes.py:326 textInfos/__init__.py:201
 msgid "line"
 msgstr "linha"
 
@@ -4334,19 +4342,19 @@ msgstr "linha %s"
 msgid "line scroll"
 msgstr "Rola linha"
 
-#: controlTypes.py:206 speech.py:1126
+#: controlTypes.py:207 speech.py:1126
 msgid "link"
 msgstr "linque"
 
-#: controlTypes.py:358
+#: controlTypes.py:360
 msgid "linked"
 msgstr "vinculado"
 
-#: controlTypes.py:201
+#: controlTypes.py:202
 msgid "list"
 msgstr "lista"
 
-#: controlTypes.py:202
+#: controlTypes.py:203
 msgid "list item"
 msgstr "item de lista"
 
@@ -4387,19 +4395,19 @@ msgstr "masculina 2"
 msgid "media player"
 msgstr "tocador"
 
-#: controlTypes.py:199 controlTypes.py:320
+#: controlTypes.py:200 controlTypes.py:322
 msgid "menu"
 msgstr "menu"
 
-#: controlTypes.py:197
+#: controlTypes.py:198
 msgid "menu bar"
 msgstr "barra de menus"
 
-#: controlTypes.py:300
+#: controlTypes.py:302
 msgid "menu button"
 msgstr "botão de menu"
 
-#: controlTypes.py:198
+#: controlTypes.py:199
 msgid "menu item"
 msgstr "item de menu"
 
@@ -4415,7 +4423,7 @@ msgstr "mnu"
 msgid "mnubar"
 msgstr "mnubar"
 
-#: controlTypes.py:366
+#: controlTypes.py:368
 msgid "modal"
 msgstr "modal"
 
@@ -4433,223 +4441,223 @@ msgstr "move foco"
 msgid "move to focus"
 msgstr "mover para o foco"
 
-#: virtualBuffers/__init__.py:1515
+#: virtualBuffers/__init__.py:1534
 msgid "moves to the next block quote"
 msgstr "vai ao próximo bloco de citação"
 
-#: virtualBuffers/__init__.py:1499
+#: virtualBuffers/__init__.py:1518
 msgid "moves to the next button"
 msgstr "vai ao próximo botão"
 
-#: virtualBuffers/__init__.py:1511
+#: virtualBuffers/__init__.py:1530
 msgid "moves to the next check box"
 msgstr "vai à próxima caixa de seleção"
 
-#: virtualBuffers/__init__.py:1509
+#: virtualBuffers/__init__.py:1528
 msgid "moves to the next combo box"
 msgstr "vai à próxima caixa de combinação"
 
-#: virtualBuffers/__init__.py:1501
+#: virtualBuffers/__init__.py:1520
 msgid "moves to the next edit field"
 msgstr "vai ao próximo campo de edição"
 
-#: virtualBuffers/__init__.py:1521
+#: virtualBuffers/__init__.py:1540
 msgid "moves to the next embedded object"
 msgstr "vai ao próximo objeto embutido"
 
-#: virtualBuffers/__init__.py:1493
+#: virtualBuffers/__init__.py:1512
 msgid "moves to the next form field"
 msgstr "vai ao próximo campo de formulário"
 
-#: virtualBuffers/__init__.py:1503
+#: virtualBuffers/__init__.py:1522
 msgid "moves to the next frame"
 msgstr "vai à próxima freime"
 
-#: virtualBuffers/__init__.py:1513
+#: virtualBuffers/__init__.py:1532
 msgid "moves to the next graphic"
 msgstr "vai ao próximo gráfico"
 
-#: virtualBuffers/__init__.py:1471
+#: virtualBuffers/__init__.py:1490
 msgid "moves to the next heading"
 msgstr "vai ao próximo cabeçalho"
 
-#: virtualBuffers/__init__.py:1473
+#: virtualBuffers/__init__.py:1492
 msgid "moves to the next heading at level 1"
 msgstr "vai ao próximo cabeçalho no nível 1"
 
-#: virtualBuffers/__init__.py:1475
+#: virtualBuffers/__init__.py:1494
 msgid "moves to the next heading at level 2"
 msgstr "vai ao próximo cabeçalho no nível 2"
 
-#: virtualBuffers/__init__.py:1477
+#: virtualBuffers/__init__.py:1496
 msgid "moves to the next heading at level 3"
 msgstr "vai ao próximo cabeçalho no nível 3"
 
-#: virtualBuffers/__init__.py:1479
+#: virtualBuffers/__init__.py:1498
 msgid "moves to the next heading at level 4"
 msgstr "vai ao próximo cabeçalho no nível 4"
 
-#: virtualBuffers/__init__.py:1481
+#: virtualBuffers/__init__.py:1500
 msgid "moves to the next heading at level 5"
 msgstr "vai ao próximo cabeçalho no nível 5"
 
-#: virtualBuffers/__init__.py:1483
+#: virtualBuffers/__init__.py:1502
 msgid "moves to the next heading at level 6"
 msgstr "vai ao próximo cabeçalho no nível 6"
 
-#: virtualBuffers/__init__.py:1519
+#: virtualBuffers/__init__.py:1538
 msgid "moves to the next landmark"
 msgstr "vai à próxima marca"
 
-#: virtualBuffers/__init__.py:1487
+#: virtualBuffers/__init__.py:1506
 msgid "moves to the next link"
 msgstr "vai ao próximo linque"
 
-#: virtualBuffers/__init__.py:1495
+#: virtualBuffers/__init__.py:1514
 msgid "moves to the next list"
 msgstr "vai à próxima lista"
 
-#: virtualBuffers/__init__.py:1497
+#: virtualBuffers/__init__.py:1516
 msgid "moves to the next list item"
 msgstr "vai ao próximo item de lista"
 
-#: virtualBuffers/__init__.py:1507
+#: virtualBuffers/__init__.py:1526
 msgid "moves to the next radio button"
 msgstr "vai ao próximo botão de opção"
 
-#: virtualBuffers/__init__.py:1505
+#: virtualBuffers/__init__.py:1524
 msgid "moves to the next separator"
 msgstr "vai ao próximo separador"
 
-#: virtualBuffers/__init__.py:1485
+#: virtualBuffers/__init__.py:1504
 msgid "moves to the next table"
 msgstr "vai à próxima tabela"
 
-#: virtualBuffers/__init__.py:1312
+#: virtualBuffers/__init__.py:1330
 msgid "moves to the next table column"
 msgstr "vai à próxima coluna da tabela"
 
-#: virtualBuffers/__init__.py:1304
+#: virtualBuffers/__init__.py:1322
 msgid "moves to the next table row"
 msgstr "vai à próxima linha da tabela"
 
-#: virtualBuffers/__init__.py:1491
+#: virtualBuffers/__init__.py:1510
 msgid "moves to the next unvisited link"
 msgstr "vai ao próximo linque não visitado"
 
-#: virtualBuffers/__init__.py:1489
+#: virtualBuffers/__init__.py:1508
 msgid "moves to the next visited link"
 msgstr "vai ao próximo linque visitado"
 
-#: virtualBuffers/__init__.py:1516
+#: virtualBuffers/__init__.py:1535
 msgid "moves to the previous block quote"
 msgstr "volta ao bloco de citação anterior"
 
-#: virtualBuffers/__init__.py:1500
+#: virtualBuffers/__init__.py:1519
 msgid "moves to the previous button"
 msgstr "volta ao botão anterior"
 
-#: virtualBuffers/__init__.py:1512
+#: virtualBuffers/__init__.py:1531
 msgid "moves to the previous check box"
 msgstr "volta à caixa de seleção anterior"
 
-#: virtualBuffers/__init__.py:1510
+#: virtualBuffers/__init__.py:1529
 msgid "moves to the previous combo box"
 msgstr "volta à caixa de combinação anterior"
 
-#: virtualBuffers/__init__.py:1502
+#: virtualBuffers/__init__.py:1521
 msgid "moves to the previous edit field"
 msgstr "volta ao campo de edição anterior"
 
-#: virtualBuffers/__init__.py:1522
+#: virtualBuffers/__init__.py:1541
 msgid "moves to the previous embedded object"
 msgstr "volta ao objeto embutido anterior"
 
-#: virtualBuffers/__init__.py:1494
+#: virtualBuffers/__init__.py:1513
 msgid "moves to the previous form field"
 msgstr "volta ao campo de formulário anterior"
 
-#: virtualBuffers/__init__.py:1504
+#: virtualBuffers/__init__.py:1523
 msgid "moves to the previous frame"
 msgstr "volta à freime anterior"
 
-#: virtualBuffers/__init__.py:1514
+#: virtualBuffers/__init__.py:1533
 msgid "moves to the previous graphic"
 msgstr "volta ao gráfico anterior"
 
-#: virtualBuffers/__init__.py:1472
+#: virtualBuffers/__init__.py:1491
 msgid "moves to the previous heading"
 msgstr "volta ao cabeçalho anterior"
 
-#: virtualBuffers/__init__.py:1474
+#: virtualBuffers/__init__.py:1493
 msgid "moves to the previous heading at level 1"
 msgstr "volta ao cabeçalho anterior no nível 1"
 
-#: virtualBuffers/__init__.py:1476
+#: virtualBuffers/__init__.py:1495
 msgid "moves to the previous heading at level 2"
 msgstr "volta ao cabeçalho anterior no nível 2"
 
-#: virtualBuffers/__init__.py:1478
+#: virtualBuffers/__init__.py:1497
 msgid "moves to the previous heading at level 3"
 msgstr "volta ao cabeçalho anterior no nível 3"
 
-#: virtualBuffers/__init__.py:1480
+#: virtualBuffers/__init__.py:1499
 msgid "moves to the previous heading at level 4"
 msgstr "volta ao cabeçalho anterior no nível 4"
 
-#: virtualBuffers/__init__.py:1482
+#: virtualBuffers/__init__.py:1501
 msgid "moves to the previous heading at level 5"
 msgstr "volta ao cabeçalho anterior no nível 5"
 
-#: virtualBuffers/__init__.py:1484
+#: virtualBuffers/__init__.py:1503
 msgid "moves to the previous heading at level 6"
 msgstr "volta ao cabeçalho anterior no nível 6"
 
-#: virtualBuffers/__init__.py:1520
+#: virtualBuffers/__init__.py:1539
 msgid "moves to the previous landmark"
 msgstr "volta à marca anterior"
 
-#: virtualBuffers/__init__.py:1488
+#: virtualBuffers/__init__.py:1507
 msgid "moves to the previous link"
 msgstr "volta ao linque anterior"
 
-#: virtualBuffers/__init__.py:1496
+#: virtualBuffers/__init__.py:1515
 msgid "moves to the previous list"
 msgstr "volta à lista anterior"
 
-#: virtualBuffers/__init__.py:1498
+#: virtualBuffers/__init__.py:1517
 msgid "moves to the previous list item"
 msgstr "volta ao item de lista anterior"
 
-#: virtualBuffers/__init__.py:1508
+#: virtualBuffers/__init__.py:1527
 msgid "moves to the previous radio button"
 msgstr "volta ao botão de opção anterior"
 
-#: virtualBuffers/__init__.py:1506
+#: virtualBuffers/__init__.py:1525
 msgid "moves to the previous separator"
 msgstr "volta ao separador anterior"
 
-#: virtualBuffers/__init__.py:1486
+#: virtualBuffers/__init__.py:1505
 msgid "moves to the previous table"
 msgstr "volta à tabela anterior"
 
-#: virtualBuffers/__init__.py:1316
+#: virtualBuffers/__init__.py:1334
 msgid "moves to the previous table column"
 msgstr "volta à linha anterior da tabela"
 
-#: virtualBuffers/__init__.py:1308
+#: virtualBuffers/__init__.py:1326
 msgid "moves to the previous table row"
 msgstr "volta à linha anterior da tabela"
 
-#: virtualBuffers/__init__.py:1492
+#: virtualBuffers/__init__.py:1511
 msgid "moves to the previous unvisited link"
 msgstr "volta ao linque não visitado anterior"
 
-#: virtualBuffers/__init__.py:1490
+#: virtualBuffers/__init__.py:1509
 msgid "moves to the previous visited link"
 msgstr "volta ao linque visitado anterior"
 
-#: controlTypes.py:368
+#: controlTypes.py:370
 msgid "multi line"
 msgstr "multilinha"
 
@@ -4681,7 +4689,7 @@ msgstr "sem negrito"
 msgid "no caret"
 msgstr "sem cursor"
 
-#: globalCommands.py:352 globalCommands.py:715
+#: globalCommands.py:352 globalCommands.py:719
 msgid "no focus"
 msgstr "sem foco"
 
@@ -4695,11 +4703,11 @@ msgstr "sem indentação"
 msgid "no italic"
 msgstr "sem itálico"
 
-#: virtualBuffers/__init__.py:1517
+#: virtualBuffers/__init__.py:1536
 msgid "no more text after a block of links"
 msgstr "sem mais texto após o bloco de linques"
 
-#: virtualBuffers/__init__.py:1518
+#: virtualBuffers/__init__.py:1537
 msgid "no more text before a block of links"
 msgstr "sem mais texto antes do bloco de linques"
 
@@ -4710,207 +4718,207 @@ msgstr "sem mais texto antes do bloco de linques"
 msgid "no navigator object"
 msgstr "nnão há objeto de navegação"
 
-#: virtualBuffers/__init__.py:1515
+#: virtualBuffers/__init__.py:1534
 msgid "no next block quote"
 msgstr "sem bloco de citação seguinte"
 
-#: virtualBuffers/__init__.py:1499
+#: virtualBuffers/__init__.py:1518
 msgid "no next button"
 msgstr "sem botão seguinte"
 
-#: virtualBuffers/__init__.py:1511
+#: virtualBuffers/__init__.py:1530
 msgid "no next check box"
 msgstr "sem caixa de seleção seguinte"
 
-#: virtualBuffers/__init__.py:1509
+#: virtualBuffers/__init__.py:1528
 msgid "no next combo box"
 msgstr "sem caixa de combinação seguinte"
 
-#: virtualBuffers/__init__.py:1501
+#: virtualBuffers/__init__.py:1520
 msgid "no next edit field"
 msgstr "sem campo de edição seguinte"
 
-#: virtualBuffers/__init__.py:1521
+#: virtualBuffers/__init__.py:1540
 msgid "no next embedded object"
 msgstr "sem objeto embutido seguinte"
 
-#: virtualBuffers/__init__.py:1493
+#: virtualBuffers/__init__.py:1512
 msgid "no next form field"
 msgstr "sem campo de formulário seguinte"
 
-#: virtualBuffers/__init__.py:1503
+#: virtualBuffers/__init__.py:1522
 msgid "no next frame"
 msgstr "sem freime seguinte"
 
-#: virtualBuffers/__init__.py:1513
+#: virtualBuffers/__init__.py:1532
 msgid "no next graphic"
 msgstr "sem gráfico seguinte"
 
-#: virtualBuffers/__init__.py:1471
+#: virtualBuffers/__init__.py:1490
 msgid "no next heading"
 msgstr "sem cabeçalho seguinte"
 
-#: virtualBuffers/__init__.py:1473
+#: virtualBuffers/__init__.py:1492
 msgid "no next heading at level 1"
 msgstr "sem cabeçalho seguinte no nível 1"
 
-#: virtualBuffers/__init__.py:1475
+#: virtualBuffers/__init__.py:1494
 msgid "no next heading at level 2"
 msgstr "sem cabeçalho seguinte no nível 2"
 
-#: virtualBuffers/__init__.py:1477
+#: virtualBuffers/__init__.py:1496
 msgid "no next heading at level 3"
 msgstr "sem cabeçalho seguinte no nível 3"
 
-#: virtualBuffers/__init__.py:1479
+#: virtualBuffers/__init__.py:1498
 msgid "no next heading at level 4"
 msgstr "sem cabeçalho seguinte no nível 4"
 
-#: virtualBuffers/__init__.py:1481
+#: virtualBuffers/__init__.py:1500
 msgid "no next heading at level 5"
 msgstr "sem cabeçalho seguinte no nível 5"
 
-#: virtualBuffers/__init__.py:1483
+#: virtualBuffers/__init__.py:1502
 msgid "no next heading at level 6"
 msgstr "sem cabeçalho seguinte no nível 6"
 
-#: virtualBuffers/__init__.py:1519
+#: virtualBuffers/__init__.py:1538
 msgid "no next landmark"
 msgstr "sem marca seguinte"
 
-#: virtualBuffers/__init__.py:1487
+#: virtualBuffers/__init__.py:1506
 msgid "no next link"
 msgstr "sem linque seguinte"
 
-#: virtualBuffers/__init__.py:1495
+#: virtualBuffers/__init__.py:1514
 msgid "no next list"
 msgstr "sem lista seguinte"
 
-#: virtualBuffers/__init__.py:1497
+#: virtualBuffers/__init__.py:1516
 msgid "no next list item"
 msgstr "sem item de lista seguinte"
 
-#: virtualBuffers/__init__.py:1507
+#: virtualBuffers/__init__.py:1526
 msgid "no next radio button"
 msgstr "sem botão de opção seguinte"
 
-#: virtualBuffers/__init__.py:1505
+#: virtualBuffers/__init__.py:1524
 msgid "no next separator"
 msgstr "sem separador seguinte"
 
-#: virtualBuffers/__init__.py:1485
+#: virtualBuffers/__init__.py:1504
 msgid "no next table"
 msgstr "sem tabela seguinte"
 
-#: virtualBuffers/__init__.py:1491
+#: virtualBuffers/__init__.py:1510
 msgid "no next unvisited link"
 msgstr "sem linque não visitado seguinte"
 
-#: virtualBuffers/__init__.py:1489
+#: virtualBuffers/__init__.py:1508
 msgid "no next visited link"
 msgstr "sem linque visitado seguinte"
 
-#: virtualBuffers/__init__.py:1516
+#: virtualBuffers/__init__.py:1535
 msgid "no previous block quote"
 msgstr "sem bloco de citação anterior"
 
-#: virtualBuffers/__init__.py:1500
+#: virtualBuffers/__init__.py:1519
 msgid "no previous button"
 msgstr "sem botão anterior"
 
-#: virtualBuffers/__init__.py:1512
+#: virtualBuffers/__init__.py:1531
 msgid "no previous check box"
 msgstr "sem caixa de seleção anterior"
 
-#: virtualBuffers/__init__.py:1510
+#: virtualBuffers/__init__.py:1529
 msgid "no previous combo box"
 msgstr "sem caixa de combinação anterior"
 
-#: virtualBuffers/__init__.py:1502
+#: virtualBuffers/__init__.py:1521
 msgid "no previous edit field"
 msgstr "sem campo de edição anterior"
 
-#: virtualBuffers/__init__.py:1522
+#: virtualBuffers/__init__.py:1541
 msgid "no previous embedded object"
 msgstr "sem objeto embutido anterior"
 
-#: virtualBuffers/__init__.py:1494
+#: virtualBuffers/__init__.py:1513
 msgid "no previous form field"
 msgstr "sem campo de formulário anterior"
 
-#: virtualBuffers/__init__.py:1504
+#: virtualBuffers/__init__.py:1523
 msgid "no previous frame"
 msgstr "sem freime anterior"
 
-#: virtualBuffers/__init__.py:1514
+#: virtualBuffers/__init__.py:1533
 msgid "no previous graphic"
 msgstr "sem gráfico anterior"
 
-#: virtualBuffers/__init__.py:1472
+#: virtualBuffers/__init__.py:1491
 msgid "no previous heading"
 msgstr "sem cabeçalho anterior"
 
-#: virtualBuffers/__init__.py:1474
+#: virtualBuffers/__init__.py:1493
 msgid "no previous heading at level 1"
 msgstr "sem cabeçalho anterior no nível 1"
 
-#: virtualBuffers/__init__.py:1476
+#: virtualBuffers/__init__.py:1495
 msgid "no previous heading at level 2"
 msgstr "sem cabeçalho anterior no nível 2"
 
-#: virtualBuffers/__init__.py:1478
+#: virtualBuffers/__init__.py:1497
 msgid "no previous heading at level 3"
 msgstr "sem cabeçalho anterior no nível 3"
 
-#: virtualBuffers/__init__.py:1480
+#: virtualBuffers/__init__.py:1499
 msgid "no previous heading at level 4"
 msgstr "sem cabeçalho anterior no nível 4"
 
-#: virtualBuffers/__init__.py:1482
+#: virtualBuffers/__init__.py:1501
 msgid "no previous heading at level 5"
 msgstr "sem cabeçalho anterior no nível 5"
 
-#: virtualBuffers/__init__.py:1484
+#: virtualBuffers/__init__.py:1503
 msgid "no previous heading at level 6"
 msgstr "sem cabeçalho anterior no nível 6"
 
-#: virtualBuffers/__init__.py:1520
+#: virtualBuffers/__init__.py:1539
 msgid "no previous landmark"
 msgstr "sem marca anterior"
 
-#: virtualBuffers/__init__.py:1488
+#: virtualBuffers/__init__.py:1507
 msgid "no previous link"
 msgstr "sem linque anterior"
 
-#: virtualBuffers/__init__.py:1496
+#: virtualBuffers/__init__.py:1515
 msgid "no previous list"
 msgstr "sem lista anterior"
 
-#: virtualBuffers/__init__.py:1498
+#: virtualBuffers/__init__.py:1517
 msgid "no previous list item"
 msgstr "sem item de lista anterior"
 
-#: virtualBuffers/__init__.py:1508
+#: virtualBuffers/__init__.py:1527
 msgid "no previous radio button"
 msgstr "sem botão de opção anterior"
 
-#: virtualBuffers/__init__.py:1506
+#: virtualBuffers/__init__.py:1525
 msgid "no previous separator"
 msgstr "sem separador anterior"
 
-#: virtualBuffers/__init__.py:1486
+#: virtualBuffers/__init__.py:1505
 msgid "no previous table"
 msgstr "sem tabela anterior"
 
-#: virtualBuffers/__init__.py:1492
+#: virtualBuffers/__init__.py:1511
 msgid "no previous unvisited link"
 msgstr "sem linque não visitado anterior"
 
-#: virtualBuffers/__init__.py:1490
+#: virtualBuffers/__init__.py:1509
 msgid "no previous visited link"
 msgstr "sem linque visitado anterior"
 
-#: globalCommands.py:794
+#: globalCommands.py:798
 msgid "no progress bar updates"
 msgstr "Sem atualizações em barras de progresso"
 
@@ -4924,11 +4932,11 @@ msgstr "sem seleção"
 msgid "no strikethrough"
 msgstr "sem cancela"
 
-#: globalCommands.py:853
+#: globalCommands.py:857
 msgid "no system battery"
 msgstr "sem bateria de sistema"
 
-#: globalCommands.py:762
+#: globalCommands.py:766
 msgid "no title"
 msgstr "sem título"
 
@@ -4954,12 +4962,12 @@ msgid "not %s"
 msgstr "não %s"
 
 #. Translators: This is presented when a checkbox is not checked.
-#: controlTypes.py:390
+#: controlTypes.py:393
 msgid "not checked"
 msgstr "não marcado"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-#: controlTypes.py:388
+#: controlTypes.py:391
 msgid "not selected"
 msgstr "não selecionado"
 
@@ -4968,7 +4976,7 @@ msgstr "não selecionado"
 msgid "not underlined"
 msgstr "não sublinhado"
 
-#: controlTypes.py:265
+#: controlTypes.py:267
 msgid "note"
 msgstr "nota"
 
@@ -5060,11 +5068,11 @@ msgstr "objeto sem local"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:781
-#: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:828
+#: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:846
 msgid "off"
 msgstr "desativado"
 
-#. Translators: the user has pressed the repeat track toggle in winamp, repeat is now on.
+#. Translators: the user has pressed the repeat track toggle in winamp, repeat is now off.
 #: appModules/winamp.py:94
 msgctxt "repeat"
 msgid "off"
@@ -5076,7 +5084,7 @@ msgctxt "shuffle"
 msgid "off"
 msgstr "desligado"
 
-#: controlTypes.py:370
+#: controlTypes.py:372
 msgid "off screen"
 msgstr "fora da tela"
 
@@ -5087,7 +5095,7 @@ msgid "olive"
 msgstr "oliva"
 
 #: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
-#: virtualBuffers/__init__.py:828
+#: virtualBuffers/__init__.py:846
 msgid "on"
 msgstr "ativado"
 
@@ -5103,7 +5111,7 @@ msgctxt "shuffle"
 msgid "on"
 msgstr "ligado"
 
-#: controlTypes.py:316
+#: controlTypes.py:318
 msgid "option pane"
 msgstr "painel de opção"
 
@@ -5127,7 +5135,7 @@ msgstr "fora do erro"
 msgid "out of table"
 msgstr "fora da tabela"
 
-#: controlTypes.py:266
+#: controlTypes.py:268
 msgid "page"
 msgstr "página"
 
@@ -5148,19 +5156,19 @@ msgstr "peije dáun"
 msgid "page up"
 msgstr "peige ap"
 
-#: controlTypes.py:190
+#: controlTypes.py:191
 msgid "pane"
 msgstr "painel"
 
-#: controlTypes.py:321
+#: controlTypes.py:323
 msgid "panel"
 msgstr "painel"
 
-#: controlTypes.py:234 textInfos/__init__.py:202
+#: controlTypes.py:236 textInfos/__init__.py:202
 msgid "paragraph"
 msgstr "parágrafo"
 
-#: controlTypes.py:322
+#: controlTypes.py:324
 msgid "password edit"
 msgstr "edição de senha"
 
@@ -5175,7 +5183,7 @@ msgstr "Tocar sons de coordenada quando o mouse é movido"
 msgid "play pause"
 msgstr "toca e pausa"
 
-#: controlTypes.py:350
+#: controlTypes.py:352
 msgid "pressed"
 msgstr "pressionado"
 
@@ -5189,15 +5197,15 @@ msgstr "faixa anterior"
 msgid "print screen"
 msgstr "print scrin"
 
-#: controlTypes.py:212
+#: controlTypes.py:214
 msgid "progress bar"
 msgstr "barra de progresso"
 
-#: controlTypes.py:247
+#: controlTypes.py:249
 msgid "property page"
 msgstr "página de propriedades"
 
-#: controlTypes.py:360
+#: controlTypes.py:362
 msgid "protected"
 msgstr "protegido"
 
@@ -5212,11 +5220,11 @@ msgstr "púrpura"
 msgid "r%s"
 msgstr "l%s"
 
-#: controlTypes.py:193
+#: controlTypes.py:194
 msgid "radio button"
 msgstr "botão de opção"
 
-#: controlTypes.py:267
+#: controlTypes.py:269
 msgid "radio menu item"
 msgstr "item de menu de opção"
 
@@ -5226,11 +5234,11 @@ msgstr "item de menu de opção"
 msgid "rbtn"
 msgstr "rbtn"
 
-#: controlTypes.py:353
+#: controlTypes.py:355
 msgid "read only"
 msgstr "somente leitura"
 
-#: globalCommands.py:666
+#: globalCommands.py:670
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
@@ -5238,7 +5246,7 @@ msgstr ""
 "lê a partir do cursor de exploração até o fim do texto atual, movendo o "
 "cursor de exploração de modo que ele acompanhe a leitura"
 
-#: globalCommands.py:670
+#: globalCommands.py:674
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
@@ -5246,7 +5254,7 @@ msgstr ""
 "lê a partir do cursor do sistema até o fim do texto, movendo o cursor de "
 "modo que ele acompanhe a leitura"
 
-#: globalCommands.py:742
+#: globalCommands.py:746
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr ""
 "lê a barra de status da aplicação atual e move o cursor de navegação para ela"
@@ -5260,7 +5268,7 @@ msgstr "recebido em: %s"
 msgid "red"
 msgstr "vermelho"
 
-#: controlTypes.py:269
+#: controlTypes.py:271
 msgid "redundant object"
 msgstr "objeto redundante"
 
@@ -5275,37 +5283,37 @@ msgid "remove"
 msgstr "remover"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:810
+#: globalCommands.py:814
 msgid "report dynamic content changes off"
 msgstr "não anunciar atualizações em conteúdos dinâmicos"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:814
+#: globalCommands.py:818
 msgid "report dynamic content changes on"
 msgstr "anunciar atualizações em conteúdos dinâmicos"
 
-#: globalCommands.py:862
+#: globalCommands.py:866
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
 "Anuncia a carga da bateria e o tempo restante caso o AC não esteja plugado"
 
-#: globalCommands.py:716
+#: globalCommands.py:720
 msgid "reports the object with focus"
 msgstr "Anuncia objeto em foco"
 
-#: controlTypes.py:361
+#: controlTypes.py:363
 msgid "required"
 msgstr "exigido"
 
-#: globalCommands.py:936 gui/settingsDialogs.py:1261
+#: globalCommands.py:940 gui/settingsDialogs.py:1261
 msgid "review"
 msgstr "cursor de exploração"
 
-#: controlTypes.py:275
+#: controlTypes.py:277
 msgid "rich edit"
 msgstr "editável"
 
-#: globalCommands.py:588 globalCommands.py:605 appModules/totalcmd.py:37
+#: globalCommands.py:592 globalCommands.py:609 appModules/totalcmd.py:37
 msgid "right"
 msgstr "direita"
 
@@ -5353,11 +5361,11 @@ msgstr "uíndous direito"
 msgid "ro"
 msgstr "sl"
 
-#: controlTypes.py:270
+#: controlTypes.py:272
 msgid "root pane"
 msgstr "painel raiz"
 
-#: controlTypes.py:218
+#: controlTypes.py:220
 msgid "row"
 msgstr "linha"
 
@@ -5366,11 +5374,11 @@ msgstr "linha"
 msgid "row %s"
 msgstr "linha %s"
 
-#: controlTypes.py:222
+#: controlTypes.py:224
 msgid "row header"
 msgstr "cabeçalho da linha"
 
-#: controlTypes.py:276
+#: controlTypes.py:278
 msgid "ruler"
 msgstr "régua"
 
@@ -5379,7 +5387,7 @@ msgstr "régua"
 msgid "running"
 msgstr "executando"
 
-#: controlTypes.py:213
+#: controlTypes.py:215
 msgid "scroll bar"
 msgstr "barra de rolagem"
 
@@ -5388,7 +5396,7 @@ msgstr "barra de rolagem"
 msgid "scroll lock"
 msgstr "scrôl loc"
 
-#: controlTypes.py:277
+#: controlTypes.py:279
 msgid "scroll pane"
 msgstr "painel de rolagem"
 
@@ -5402,7 +5410,7 @@ msgstr "busca"
 msgid "search page"
 msgstr "página de busca"
 
-#: controlTypes.py:278
+#: controlTypes.py:280
 msgid "section"
 msgstr "seção"
 
@@ -5411,11 +5419,11 @@ msgstr "seção"
 msgid "sel"
 msgstr "sel"
 
-#: controlTypes.py:371
+#: controlTypes.py:373
 msgid "selectable"
 msgstr "selecionável"
 
-#: controlTypes.py:348
+#: controlTypes.py:350
 msgid "selected"
 msgstr "selecionado"
 
@@ -5441,11 +5449,11 @@ msgstr "seleção removida"
 msgid "sent: %s"
 msgstr "enviado em: %s"
 
-#: controlTypes.py:225
+#: controlTypes.py:227
 msgid "separator"
 msgstr "separador"
 
-#: controlTypes.py:279
+#: controlTypes.py:281
 msgid "shape"
 msgstr "forma"
 
@@ -5454,15 +5462,15 @@ msgstr "forma"
 msgid "shift"
 msgstr "chift"
 
-#: virtualBuffers/__init__.py:1518
+#: virtualBuffers/__init__.py:1537
 msgid "skips backward past a block of links"
 msgstr "pula para trás do bloco de linques"
 
-#: virtualBuffers/__init__.py:1517
+#: virtualBuffers/__init__.py:1536
 msgid "skips forward past a block of links"
 msgstr "pula o bloco de linques"
 
-#: controlTypes.py:211
+#: controlTypes.py:213
 msgid "slider"
 msgstr "deslizante"
 
@@ -5472,19 +5480,19 @@ msgctxt "symbolLevel"
 msgid "some"
 msgstr "pouco"
 
-#: controlTypes.py:381
+#: controlTypes.py:383
 msgid "sorted"
 msgstr "ordenado"
 
-#: controlTypes.py:382
+#: controlTypes.py:384
 msgid "sorted ascending"
 msgstr "ordem crescente"
 
-#: controlTypes.py:383
+#: controlTypes.py:385
 msgid "sorted descending"
 msgstr "ordem decrescente"
 
-#: controlTypes.py:308
+#: controlTypes.py:310
 msgid "sound"
 msgstr "som"
 
@@ -5503,7 +5511,7 @@ msgstr "não falar teclas de comando"
 msgid "speak command keys on"
 msgstr "falar teclas de comando"
 
-#: globalCommands.py:797
+#: globalCommands.py:801
 msgid "speak progress bar updates"
 msgstr "anunciar barras de progresso"
 
@@ -5527,22 +5535,22 @@ msgstr "não falar palavras digitadas"
 msgid "speak typed words on"
 msgstr "falar palavras digitadas"
 
-#: globalCommands.py:777
+#: globalCommands.py:781
 msgid "speaks the current foreground object"
 msgstr "anuncia o objeto atualmente em foco"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-#: globalCommands.py:618
+#: globalCommands.py:622
 msgid "speech mode beeps"
 msgstr "modo de fala é bipes"
 
 #. Translators: A speech mode which dissables speech output.
-#: globalCommands.py:615
+#: globalCommands.py:619
 msgid "speech mode off"
 msgstr "modo de fala é desligado"
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-#: globalCommands.py:621
+#: globalCommands.py:625
 msgid "speech mode talk"
 msgstr "modo de fala é falar"
 
@@ -5551,19 +5559,19 @@ msgstr "modo de fala é falar"
 msgid "spelling error"
 msgstr "erro ortográfico"
 
-#: controlTypes.py:307
+#: controlTypes.py:309
 msgid "spin button"
 msgstr "botão de rotação"
 
-#: controlTypes.py:299
+#: controlTypes.py:301
 msgid "split button"
 msgstr "botão de divisão"
 
-#: controlTypes.py:280
+#: controlTypes.py:282
 msgid "split pane"
 msgstr "painel de divisão"
 
-#: controlTypes.py:214
+#: controlTypes.py:216
 msgid "status bar"
 msgstr "barra de status"
 
@@ -5578,7 +5586,7 @@ msgstr "parar"
 msgid "strikethrough"
 msgstr "cancela"
 
-#: controlTypes.py:334
+#: controlTypes.py:336
 msgid "style"
 msgstr "estilo"
 
@@ -5590,7 +5598,7 @@ msgstr "estilo"
 msgid "style %s"
 msgstr "estilo %s"
 
-#: controlTypes.py:359
+#: controlTypes.py:361
 msgid "subMenu"
 msgstr "submenu"
 
@@ -5605,12 +5613,12 @@ msgid "submnu"
 msgstr "submnu"
 
 #. Translators: Reported for subscript text.
-#: controlTypes.py:333 speech.py:1094
+#: controlTypes.py:335 speech.py:1094
 msgid "subscript"
 msgstr "subescrito"
 
 #. Translators: Reported for superscript text.
-#: controlTypes.py:332 speech.py:1091
+#: controlTypes.py:334 speech.py:1091
 msgid "superscript"
 msgstr "superescrito"
 
@@ -5622,28 +5630,35 @@ msgstr "superescrito"
 msgid "symbol level %s"
 msgstr "grau de sinais %s"
 
+#. Translators: The word presented for tabs in a tab enabled window.
+#: controlTypes.py:211
+msgctxt "controlType"
+msgid "tab"
+msgstr "guia"
+
 #. Translators: This is the name of a key on the keyboard.
-#: controlTypes.py:209 keyLabels.py:137
+#: keyLabels.py:137
+msgctxt "keyLabel"
 msgid "tab"
 msgstr "tab"
 
-#: controlTypes.py:210
+#: controlTypes.py:212
 msgid "tab control"
 msgstr "guia"
 
-#: controlTypes.py:215
+#: controlTypes.py:217
 msgid "table"
 msgstr "tabela"
 
-#: controlTypes.py:240
+#: controlTypes.py:242
 msgid "table body"
 msgstr "corpo da tabela"
 
-#: controlTypes.py:241
+#: controlTypes.py:243
 msgid "table footer"
 msgstr "rodapé da tabela"
 
-#: controlTypes.py:239
+#: controlTypes.py:241
 msgid "table header"
 msgstr "cabeçalho da tabela"
 
@@ -5667,15 +5682,15 @@ msgstr "cerceta"
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
 #. to exist as a separate window.
-#: controlTypes.py:288
+#: controlTypes.py:290
 msgid "tear off menu"
 msgstr "menu de remoção"
 
-#: controlTypes.py:274
+#: controlTypes.py:276
 msgid "terminal"
 msgstr "terminal"
 
-#: controlTypes.py:194
+#: controlTypes.py:195
 msgid "text"
 msgstr "texto"
 
@@ -5684,7 +5699,7 @@ msgstr "texto"
 msgid "text \"%s\" not found"
 msgstr "texto \"%s\" não achado"
 
-#: controlTypes.py:289
+#: controlTypes.py:291
 msgid "text frame"
 msgstr "freime de texto"
 
@@ -5693,39 +5708,39 @@ msgstr "freime de texto"
 msgid "text reporting unit"
 msgstr "unidade mínima de texto a anunciar"
 
-#: controlTypes.py:341
+#: controlTypes.py:343
 msgid "thumb control"
 msgstr "controle thumb"
 
-#: controlTypes.py:189
+#: controlTypes.py:190
 msgid "title bar"
 msgstr "barra de título"
 
-#: controlTypes.py:290
+#: controlTypes.py:292
 msgid "toggle button"
 msgstr "botão de alternância"
 
-#: controlTypes.py:220
+#: controlTypes.py:222
 msgid "tool bar"
 msgstr "barra de ferramentas"
 
-#: controlTypes.py:205
+#: controlTypes.py:206
 msgid "tool tip"
 msgstr "dica de ferramenta"
 
-#: globalCommands.py:455 globalCommands.py:467 globalCommands.py:509
+#: globalCommands.py:459 globalCommands.py:471 globalCommands.py:513
 msgid "top"
 msgstr "início"
 
-#: controlTypes.py:207
+#: controlTypes.py:208
 msgid "tree view"
 msgstr "árvore"
 
-#: controlTypes.py:310
+#: controlTypes.py:312
 msgid "tree view button"
 msgstr "botão da árvore"
 
-#: controlTypes.py:208
+#: controlTypes.py:209
 msgid "tree view item"
 msgstr "item da árvore"
 
@@ -5735,11 +5750,11 @@ msgstr "item da árvore"
 msgid "tv"
 msgstr "árv"
 
-#: controlTypes.py:346
+#: controlTypes.py:348
 msgid "unavailable"
 msgstr "indisponível"
 
-#: controlTypes.py:329
+#: controlTypes.py:331
 msgid "underline"
 msgstr "sublinhado"
 
@@ -5748,7 +5763,7 @@ msgstr "sublinhado"
 msgid "underlined"
 msgstr "sublinhado"
 
-#: controlTypes.py:187
+#: controlTypes.py:188
 msgid "unknown"
 msgstr "desconhecido"
 
@@ -5757,12 +5772,12 @@ msgid "unknown color"
 msgstr "cor desconhecida"
 
 #. Translators: The label for an unknown input method when switching input methods.
-#: NVDAHelper.py:321
+#: NVDAHelper.py:332
 msgid "unknown input method"
 msgstr "método de entrada desconhecido"
 
 #. Translators: the label for an unknown language when switching input methods.
-#: NVDAHelper.py:296
+#: NVDAHelper.py:307
 msgid "unknown language"
 msgstr "idioma desconhecido"
 
@@ -5782,7 +5797,7 @@ msgstr "%s desselecionado"
 msgid "up arrow"
 msgstr "cima"
 
-#: virtualBuffers/__init__.py:829
+#: virtualBuffers/__init__.py:847
 #, python-format
 msgid "use screen layout %s"
 msgstr "Usar apresentação da tela %s"
@@ -5790,11 +5805,11 @@ msgstr "Usar apresentação da tela %s"
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
 #. As the user manipulates the scroll bars, the contents of the view port can change.
-#: controlTypes.py:284
+#: controlTypes.py:286
 msgid "view port"
 msgstr "porta de visualização"
 
-#: controlTypes.py:357
+#: controlTypes.py:359
 msgid "visited"
 msgstr "visitado"
 
@@ -5817,11 +5832,11 @@ msgstr "aumenta o volume"
 msgid "white"
 msgstr "branco"
 
-#: controlTypes.py:309
+#: controlTypes.py:311
 msgid "white space"
 msgstr "espaço em branco"
 
-#: controlTypes.py:188
+#: controlTypes.py:189
 msgid "window"
 msgstr "janela"
 
@@ -5879,7 +5894,7 @@ msgid "{color} on {backgroundColor}"
 msgstr "{color} sobre {backgroundColor}"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#: NVDAHelper.py:327
+#: NVDAHelper.py:338
 msgid "{language} - {layout}"
 msgstr "{language} - {layout}"
 
