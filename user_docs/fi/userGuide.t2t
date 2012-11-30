@@ -440,6 +440,7 @@ Vuorovaikutustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin s
 | Etsi | NVDA+Ctrl+F | Avaa valintaikkunan, jolla voidaan etsiä tekstiä nykyisestä dokumentista. |
 | Etsi seuraava | NVDA+F3 | Etsii dokumentista aiemmin haetun tekstin seuraavan esiintymän. |
 | Etsi edellinen | NVDA+Shift+F3 | Etsii dokumentista aiemmin haetun tekstin edellisen esiintymän. |
+| Avaa pitkä kuvaus | NVDA+D | Avaa kohdalla olevan elementin mahdollisen pitkän kuvauksen uuteen ikkunaan. | 
 %kc:endInclude
 
 
@@ -503,8 +504,8 @@ NVDA:ssa on joillekin sovelluksille omia lisäkomentoja tiettyjen tehtävien hel
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Määritä sarakkeiden ylätunnisteet | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen rivi sisältää sarakkeen ylätunnisteet, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
-| Määritä rivien ylätunnisteet | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen sarake sisältää rivin ylätunnisteet, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen jälkeen. Kahdesti painaminen nollaa tämän asetuksen. | 
+| Määritä sarakkeen otsikot | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen rivi sisältää sarakkeen otsikot, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
+| Määritä rivin otsikot | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen sarake sisältää rivin otsikot, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen jälkeen. Kahdesti painaminen nollaa tämän asetuksen. | 
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -943,7 +944,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - Rivinumerot
 - Rivien sisennykset
 - Taulukot
-- Taulukon rivien ja sarakkeiden ylätunnisteet
+- Taulukon rivien ja sarakkeiden otsikot
 - Taulukon solun koordinaatit
 - Linkit
 - Otsikot
