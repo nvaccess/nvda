@@ -3,6 +3,18 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1 =
+
+== Novità ==
+- Supporto alla lettura e scrittura dei messaggi in Lotus Notes 8.5. (#543)
+- In modalità navigazione MSHTML (ad esempio Internet Explorer) e Gecko (ad esempio Firefox), viene annunciata l'esistenza delle descrizioni degli elementi se esistente, tramite l'interpretazione dell'attributo longdesc. è anche possibile aprire la descrizione in una nuova finestra tramite nvda+d. (#809)
+
+
+== Bug Corretti ==
+- Il tasto rapido per spostarsi di sezione in sezione ora funziona anche con Internet Explorer. (#2781)
+- Se NVDA non riesce a caricare un sintetizzatore all'avvio ed è costretto a parlare tramite Espeak, la configurazione viene lasciata inalterata, il che significa che la prossima volta che si riavvierà NVDA, tenterà di caricare ancora il sintetizzatore scelto dall'utente in precedenza, anziché mantenere Espeak come predefinito.
+
+
 = 2012.3 =
 Le novità principali in questa versione sono costituite dal supporto all'immissione dei caratteri asiatici; supporto sperimentale ai dispositivi touch screen in Windows 8; l'annuncio dei numeri di pagina e un notevole miglioramento per le tabelle in Adobe Reader; il poter usare comandi di navigazione delle tabelle nelle finestre con visualizzazioni ad elenco; supporto per molti nuovi display braille; e la possibilità di annunciare le intestazioni di righe e colonne in Excel.
 
