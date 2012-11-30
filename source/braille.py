@@ -1520,8 +1520,20 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	#: @type: int
 	routingIndex = None
 
+	#: Bitmask of pressed dots if it is a braille keyboard gesture.
+	#: @type: int
+	dots = 0
+	
+	#: Is this a chord gesture or not. Chords are braille space bar plus any dot combination
+	chord = False
+
 	def _get_identifiers(self):
-		return (u"br({source}):{id}".format(source=self.source, id=self.id).lower(),)
+		ids = [u"br({source}):{id}".format(source=self.source, id=self.id).lower()]
+		if self.dots:
+			dotsString = "+".join("dot%d" % (i+1) for i in xrange(8) if (1 << i) & self.dots)
+			ids.append("br:%s" % dotsString)
+			ids.append("br:dots")
+		return ids
 
 	def _get_displayName(self):
 		return self.id

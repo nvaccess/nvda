@@ -105,9 +105,12 @@ def resetConfiguration(factoryDefaults=False):
 	"""
 	import config
 	import braille
+	import brailleInput
 	import speech
 	import languageHandler
 	import inputCore
+	log.debug("Terminating braille input")
+	brailleInput.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("terminating speech")
@@ -129,6 +132,8 @@ def resetConfiguration(factoryDefaults=False):
 	#braille
 	log.debug("Initializing braille")
 	braille.initialize()
+	log.debug("Initializing braille input")
+	brailleInput.initialize()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
@@ -224,6 +229,9 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	import braille
 	log.debug("Initializing braille")
 	braille.initialize()
+	log.debug("Initializing braille input")
+	import brailleInput
+	brailleInput.initialize()
 	import displayModel
 	log.debug("Initializing displayModel")
 	displayModel.initialize()
@@ -415,6 +423,8 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		log.error("error terminating mouse handler",exc_info=True)
 	log.debug("Terminating input core")
 	inputCore.terminate()
+	log.debug("Terminating brailleInput")
+	brailleInput.terminate()
 	log.debug("Terminating braille")
 	try:
 		braille.terminate()
