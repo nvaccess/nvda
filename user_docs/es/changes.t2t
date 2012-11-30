@@ -3,6 +3,21 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1 =
+
+== Nuevas Características ==
+- Soporte básico para leer y escribir mensajes en Lotus Notes 8.5. (#543)
+- En modo Navegación para MSHTML (ej.: Internet Explorer) y Gecko (ej.: Firefox), ahora se anuncia la existencia de descripciones largas. También es posible abrir la descripción larga en una ventana nueva pulsando NVDA+d. (#809)
+- Las notificaciones en Internet Explorer 9 y superior ahora se verbalizan (tales como contenido bloqueado o descargas de ficheros). (#2343)
+- El anunciado automático de los encabezados de fila y columna ahora se soporta para documentos en modo navegación en Internet Explorer y otros controles MSHTML. (#778)
+- Nuevo idioma: Aragonés
+
+
+== Corrección de Fallos ==
+- Las teclas de navegación rápida para saltar al siguiente o anterior separador en modo Navegación ahora funciona en Internet Explorer y otros controles MSHTML. (#2781)
+- Si NVDA regresa a eSpeak o no habla debido a un sintetizador de voz configurado que falla cuando NVDA se inicia, la configuración ya no se actualiza para  configurarse con el sintetizador al que se retornó como la elección configurada, lo que significa que ahora el sintetizador original se probará de nuevo la próxima vez que NVDA arranque. (#2589)
+
+
 = 2012.3 =
 Lo subrayable de esta versión incluye el soporte para la entrada de caracteres asiáticos; soporte experimental para pantallas táctiles en Windows 8; anunciado de números de página y soporte mejorado para tablas en Adobe Reader; órdenes de navegación de tabla en filas de tabla enfocadas y controles de vista en lista de Windows; soporte para algunas líneas braille más; y encabezados de columna en Microsoft Excel.
 
@@ -26,7 +41,7 @@ Lo subrayable de esta versión incluye el soporte para la entrada de caracteres 
 - NVDA ahora puede leer sugerencias de autocompletado cuando se introduzcan direcciones de correo en Microsoft Outlook 2007. (#689)
 - Nuevas variantes de voz de eSpeak: Gene, Gene2. (#2512)
 - En Adobe Reader, ahora pueden anunciarse los números de página. (#2534)
- - En Reader XI, las etiquetas de página se anuncian donde estén presentes, reflejando cambios en la numeración de páginas en secciones diferentes, etc. en versiones anteriores, esto no es posible y sólo los números de páginas secuenciales se anunciaban.
+- En Reader XI, las etiquetas de página se anuncian donde estén presentes, reflejando cambios en la numeración de páginas en secciones diferentes, etc. en versiones anteriores, esto no es posible y sólo los números de páginas secuenciales se anunciaban.
 - Ahora es posible reiniciar la configuración de NVDA a los valores predeterminados de fábrica pulsando NVDA+control+r tres veces rápidamente o eligiendo Reiniciar a los Valores Predeterminados de Fábrica desde el menú NVDA (#2086).
 - Soporte para las líneas braille Seika Versión 3, 4 y 5 y Seika80 de Nippon Telesoft. (#2452)
 - El primer y el último de los sensores superiores de las líneas braille Freedom Scientific Pacmate y Focus ahora pueden utilizarse para desplazar hacia atrás o adelante. (#2556).
