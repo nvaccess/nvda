@@ -23,7 +23,7 @@ Major highlights include:
 - Support for many refreshable braille displays
 - Ability to run entirely from a USB stick or other portable media without the need for installation
 - Easy to use talking installer
-- Translated into 41 languages
+- Translated into 42 languages
 - Support for modern Windows Operating Systems including both 32 and 64 bit variants
 - Ability to run on Windows logon and other secure screens
 - Support for common accessibility interfaces such as Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation (UI Automation only supported in Windows 7 and later)
@@ -32,7 +32,7 @@ Major highlights include:
 
 ++ Internationalization ++
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 41 languages including: Afrikaans, Albanian, Amharic, Arabic, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 42 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Brazilian Portuguese, Bulgarian, Croatian, Czech, Danish, Dutch, Finnish, French, Galician, Greek, Georgian, German, Hebrew, Hindi, Hungarian, Icelandic, Italian, Japanese, Korean, Nepali, Norwegian, Polish, Portuguese, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish, Tamil, Thai, Traditional and Simplified Chinese, Turkish, Ukrainian and Vietnamese.
 
 ++ Speech Synthesizer Support ++
 Apart from providing its messages and interface in several languages, NVDA can also enable the user to read content in any language, as long as they have a speech synthesizer that can speak that language.
@@ -80,6 +80,14 @@ However, if you wish to copy NVDA onto read-only media such as a CD, you should 
 Running the portable version directly from read-only media is not supported at this time.
 
 Using the temporary copy of NVDA is also an option (e.g. for demonstration purposes), though  starting NVDA in this way each time can become very time consuming.
+
+++ Portable and Temporary Copy Restrictions ++
+A part from the  inability to automatically start during and or after log-on, the portable and temporary copies of NVDA also have the following restrictions:
+ - The inability to interact with applications running with administrative privilidges, unless of course NVDA itself has been run also with these privilidges (not recommended).
+ - The inability to read User Account Control (UAC) screens when trying to start an application with administrative privilidges.
+ - Windows 8: the inability to support input from a touch screen.
+ - Windows 8: the inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
+
 
 ++ Installing NVDA ++
 If installing NVDA directly from the NVDA download package, press the Install NVDA button.

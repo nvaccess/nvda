@@ -82,6 +82,38 @@ template<typename TableType> inline void fillTableCounts(VBufStorage_controlFiel
 	}
 }
 
+inline int updateTableCounts(IAccessibleTableCell* tableCell, VBufStorage_buffer_t* tableBuffer) {
+	IUnknown* unk = NULL;
+	if (tableCell->get_table(&unk) != S_OK || !unk)
+		return 0;
+	IAccessible2* acc = NULL;
+	HRESULT res;
+	res = unk->QueryInterface(IID_IAccessible2, (void**)&acc);
+	unk->Release();
+	if (res != S_OK || !acc)
+		return 0;
+	int docHandle, id;
+	if (acc->get_windowHandle((HWND*)&docHandle) != S_OK
+			|| acc->get_uniqueID((long*)&id) != S_OK) {
+		acc->Release();
+		return 0;
+	}
+	VBufStorage_controlFieldNode_t* node = tableBuffer->getControlFieldNodeWithIdentifier(docHandle, id);
+	if (!node) {
+		acc->Release();
+		return 0;
+	}
+	IAccessibleTable2* table = NULL;
+	if (acc->QueryInterface(IID_IAccessibleTable2, (void**)&table) != S_OK || !table) {
+		acc->Release();
+		return 0;
+	}
+	fillTableCounts<IAccessibleTable2>(node, acc, table);
+	table->Release();
+	acc->Release();
+	return id;
+}
+
 inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAccessibleTable* paccTable, const wstring& cellIndexStr) {
 	wostringstream s;
 	long cellIndex = _wtoi(cellIndexStr.c_str());
@@ -409,7 +441,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether this node is a link or inside a link.
 	int inLink = states & STATE_SYSTEM_LINKED;
 	// Whether this node is interactive.
-	bool isInteractive = isEditable || inLink || (states & STATE_SYSTEM_FOCUSABLE && role != ROLE_SYSTEM_DOCUMENT) || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT;
+	// Certain objects are never interactive, even if other checks are true.
+	bool isNeverInteractive = !isEditable && (role == ROLE_SYSTEM_DOCUMENT || role == IA2_ROLE_INTERNAL_FRAME);
+	bool isInteractive = !isNeverInteractive && (isEditable || inLink || states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT);
 	// We aren't finished calculating isInteractive yet; actions are handled below.
 	// Whether the name is the content of this node.
 	bool nameIsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU;
@@ -478,7 +512,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 				s<<i;
 				parentNode->addAttribute(attribName,s.str());
 				s.str(L"");
-				if(wcscmp(actionName, L"click")==0||wcscmp(actionName, L"showlongdesc")==0) {
+				if(!isNeverInteractive&&(wcscmp(actionName, L"click")==0||wcscmp(actionName, L"showlongdesc")==0)) {
 					isInteractive=true;
 				}
 				SysFreeString(actionName);
@@ -489,22 +523,28 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 
 	// Handle table cell information.
 	IAccessibleTableCell* paccTableCell = NULL;
-	// If paccTable is not NULL, it is the table interface for the table above this object.
-	if ((paccTable2 || paccTable) && (
+	// For IAccessibleTable, we must always be passed the table interface by the caller.
+	// For IAccessibleTable2, we can always obtain the cell interface,
+	// which allows us to handle updates to table cells.
+	if (
 		pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell) == S_OK || // IAccessibleTable2
-		(IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end() // IAccessibleTable
-	)) {
-		// tableID is the IAccessible2::uniqueID for paccTable.
-		s << tableID;
-		parentNode->addAttribute(L"table-id", s.str());
-		s.str(L"");
+		(paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) // IAccessibleTable
+	) {
 		if (paccTableCell) {
 			// IAccessibleTable2
 			this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
+			if (!paccTable2) {
+				// This is an update; we're not rendering the entire table.
+				tableID = updateTableCounts(paccTableCell, this);
+			}
 			paccTableCell->Release();
 			paccTableCell = NULL;
 		} else // IAccessibleTable
 			fillTableCellInfo_IATable(parentNode, paccTable, IA2AttribsMapIt->second);
+		// tableID is the IAccessible2::uniqueID for paccTable.
+		s << tableID;
+		parentNode->addAttribute(L"table-id", s.str());
+		s.str(L"");
 		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
 		paccTable = NULL;
 		paccTable2 = NULL;

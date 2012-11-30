@@ -9,11 +9,16 @@
 - Basic support for reading and writing messages in Lotus Notes 8.5. (#543)
 - In Browse mode for MSHTML (e.g. Internet Explorer) and Gecko (e.g. Firefox), the existance of long descriptions are now announced. It's also possible to open the long description in a new window by pressing NVDA+d. (#809)
 - Notifications in Internet Explorer 9 and above are now spoken (such as content blocking or file downloads). (#2343)
+- Automatic reporting of table row and column headers is now supported for browse mode documents in Internet Explorer and other MSHTML controls. (#778)
+- New language: Aragonese
 
 
 == Bug Fixes ==
 - The quick navigation keys for jumping to the next or previous separator in Browse Mode now works in Internet Explorer and other MSHTML controls. (#2781)
 - If NVDA falls back to eSpeak or  no speech due to a configured speech synthesizer failing when NVDA starts, the configuration is no longer updated to set the fallback synthesizer as the configured choice, meaning that now the original synthesizer will be tried again next time NVDA starts. (#2589)
+- In browse mode in Mozilla applications, updates to tables are now rendered correctly. For example, in updated cells, row and column coordinates are reported and table navigation works as it should. (#2784)
+- In browse mode in web browsers, certain clickable unlabelled graphics which weren't previously rendered are now rendered correctly. (#2838)
+- Earlier versions of SecureCRT (such as 6.1.1) are now supported. (#2800)
 
 
 = 2012.3 =

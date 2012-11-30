@@ -2,9 +2,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA 2012.3:5594\n"
+"Project-Id-Version: NVDA bzr main:5609\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-10-25 05:30+0100\n"
+"POT-Creation-Date: 2012-11-14 16:28+0000\n"
 "PO-Revision-Date: 2012-10-28 20:05+0800\n"
 "Last-Translator: Aaron <waaron2000@yahoo.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
@@ -178,7 +178,7 @@ msgstr "標題(&H)"
 msgid "&Help"
 msgstr "說明(&H)"
 
-#: synthDriverHandler.py:223
+#: synthDriverHandler.py:224
 msgid "&Inflection"
 msgstr "語調(&I)"
 
@@ -213,7 +213,7 @@ msgstr "鍵盤配置(&K):"
 msgid "&Keyboard settings..."
 msgstr "鍵盤設定...(&K)"
 
-#: synthDriverHandler.py:196
+#: synthDriverHandler.py:197
 msgid "&Language"
 msgstr "語言(&L)"
 
@@ -261,7 +261,7 @@ msgstr "物件顯示...(&O)"
 msgid "&Pattern"
 msgstr "原來文字(&P)"
 
-#: synthDriverHandler.py:218
+#: synthDriverHandler.py:219
 msgid "&Pitch"
 msgstr "音調(&P)"
 
@@ -273,7 +273,7 @@ msgstr "偏好設定(&P)"
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "標點符號/特殊符號讀音...(&P) "
 
-#: synthDriverHandler.py:210
+#: synthDriverHandler.py:211
 msgid "&Rate"
 msgstr "速度(&R)"
 
@@ -319,7 +319,7 @@ msgstr "語音合成器(&S):"
 msgid "&Temporary dictionary..."
 msgstr "暫存字庫...(&T)"
 
-#: synthDriverHandler.py:201
+#: synthDriverHandler.py:202
 msgid "&Voice"
 msgstr "語音(&V)"
 
@@ -456,7 +456,7 @@ msgid ""
 msgstr "附加元件已新增或移除，必須重新啟動NVDA才能生效，您要現在重新啟動嗎?"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
-#: NVDAHelper.py:211
+#: NVDAHelper.py:216
 msgid "Alpha numeric input"
 msgstr "英數輸入"
 
@@ -653,7 +653,7 @@ msgstr "副本："
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
-#: NVDAObjects/inputComposition.py:107 NVDAObjects/IAccessible/mscandui.py:44
+#: NVDAObjects/inputComposition.py:103 NVDAObjects/IAccessible/mscandui.py:44
 #: NVDAObjects/IAccessible/mscandui.py:177
 msgid "Candidate"
 msgstr "候選字"
@@ -781,7 +781,7 @@ msgid "Comments:"
 msgstr "註解："
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
-#: NVDAObjects/inputComposition.py:51
+#: NVDAObjects/inputComposition.py:47
 msgid "Composition"
 msgstr "組字"
 
@@ -1298,7 +1298,7 @@ msgid "From:"
 msgstr "寄件者："
 
 #. Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
-#: NVDAHelper.py:215
+#: NVDAHelper.py:220
 msgid "Full shaped mode"
 msgstr "全形"
 
@@ -1356,7 +1356,7 @@ msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
 
 #. Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
-#: NVDAHelper.py:217
+#: NVDAHelper.py:222
 msgid "Half shaped mode"
 msgstr "半形"
 
@@ -1398,25 +1398,25 @@ msgstr "匈牙利語一級點字"
 msgid "I &agree"
 msgstr "我同意(&A)"
 
-#: controlTypes.py:314
+#: controlTypes.py:316
 msgid "IFrame"
 msgstr "內嵌頁框"
 
 #. Translators: a message when the IME open status changes to closed
-#: NVDAHelper.py:274
+#: NVDAHelper.py:279
 msgid "IME closed"
 msgstr "輸入法關閉"
 
 #. Translators: a message when the IME open status changes to opened
-#: NVDAHelper.py:271
+#: NVDAHelper.py:276
 msgid "IME opened"
 msgstr "輸入法開啟"
 
-#: controlTypes.py:311
+#: controlTypes.py:313
 msgid "IP address"
 msgstr "IP位址"
 
-#: controlTypes.py:328
+#: controlTypes.py:330
 msgid "ITALIC"
 msgstr "斜體"
 
@@ -1626,7 +1626,7 @@ msgid ""
 msgstr "從平面瀏覽將瀏覽游標移回到目前所指物件的文字"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: virtualBuffers/__init__.py:1438
+#: virtualBuffers/__init__.py:1454
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "跳過清單或表格"
 
@@ -1757,7 +1757,7 @@ msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "切換到前一個語音控制選項"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: virtualBuffers/__init__.py:1420
+#: virtualBuffers/__init__.py:1436
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "跳到清單或表格的開頭"
 
@@ -1807,7 +1807,7 @@ msgid "NVDA web site"
 msgstr "NVDA官網"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
-#: NVDAHelper.py:209
+#: NVDAHelper.py:214
 msgid "Native input"
 msgstr "中文輸入"
 
@@ -1859,6 +1859,11 @@ msgstr "沒有瀏覽物件的位置資訊"
 #: globalCommands.py:329
 msgid "No location information for screen"
 msgstr "沒有畫面的位置資訊"
+
+#: virtualBuffers/__init__.py:828
+#, fuzzy
+msgid "No long description"
+msgstr "讀出物件說明(&D)"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
 #: appModules/miranda32.py:118 appModules/vipmud.py:33
@@ -1947,13 +1952,13 @@ msgstr "挪威語三級點字"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers/__init__.py:1413 virtualBuffers/__init__.py:1427
+#: virtualBuffers/__init__.py:1429 virtualBuffers/__init__.py:1443
 msgid "Not in a container"
 msgstr "不在清單或表格中"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: virtualBuffers/__init__.py:1288
+#: virtualBuffers/__init__.py:1304
 msgid "Not in a table cell"
 msgstr "不在表格的儲存格中"
 
@@ -2107,7 +2112,7 @@ msgstr "葡萄牙語一級點字"
 msgid "Portuguese grade 2"
 msgstr "葡萄牙語二級點字"
 
-#: virtualBuffers/__init__.py:915
+#: virtualBuffers/__init__.py:931
 msgid "Presents a list of links, headings or landmarks"
 msgstr "顯示連結、標題及地標元件的清單"
 
@@ -2193,7 +2198,7 @@ msgstr "重新整理\tF5"
 msgid "Refreshed"
 msgstr "重新整理"
 
-#: virtualBuffers/__init__.py:826
+#: virtualBuffers/__init__.py:842
 msgid "Refreshes the document content"
 msgstr "更新文件內容"
 
@@ -2651,6 +2656,10 @@ msgstr "開啟NVDA語音合成器對話方塊"
 msgid "Shows the NVDA voice settings dialog"
 msgstr "開啟NVDA語音設定對話方塊"
 
+#: virtualBuffers/__init__.py:829
+msgid "Shows the long description at this position if one is found."
+msgstr ""
+
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
 #: gui/settingsDialogs.py:718
@@ -2745,7 +2754,7 @@ msgid "Speech viewer"
 msgstr "報讀檢視器"
 
 #. Override the name, as Windows names this the "Application" menu contrary to all documentation.
-#: appModules/explorer.py:42
+#: appModules/explorer.py:43
 msgid "Start"
 msgstr "開始"
 
@@ -2937,7 +2946,7 @@ msgid ""
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr "切換語音模式，依序是關閉、嗶嗶聲、開啟"
 
-#: virtualBuffers/__init__.py:832
+#: virtualBuffers/__init__.py:848
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
@@ -3116,11 +3125,11 @@ msgstr "用戶指南"
 msgid "User default"
 msgstr "使用者預設設定"
 
-#: synthDriverHandler.py:205
+#: synthDriverHandler.py:206
 msgid "V&ariant"
 msgstr "變聲(&A)"
 
-#: synthDriverHandler.py:214
+#: synthDriverHandler.py:215
 msgid "V&olume"
 msgstr "音量(&O)"
 
@@ -3235,11 +3244,11 @@ msgstr ""
 msgid "activate"
 msgstr "啟動"
 
-#: virtualBuffers/__init__.py:818
+#: virtualBuffers/__init__.py:834
 msgid "activates the current object in the document"
 msgstr "啟動文件中目前的物件"
 
-#: controlTypes.py:313 controlTypes.py:337
+#: controlTypes.py:315 controlTypes.py:339
 msgid "alert"
 msgstr "請注意"
 
@@ -3269,7 +3278,7 @@ msgstr "靠左對齊"
 msgid "align right"
 msgstr "靠右對齊"
 
-#: controlTypes.py:336
+#: controlTypes.py:338
 msgid "alignment"
 msgstr "對齊"
 
@@ -3280,7 +3289,7 @@ msgid "all"
 msgstr "全部"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
-#: NVDAHelper.py:227 NVDAHelper.py:236
+#: NVDAHelper.py:232 NVDAHelper.py:241
 msgid "alphanumeric"
 msgstr "英數"
 
@@ -3289,11 +3298,11 @@ msgstr "英數"
 msgid "alt"
 msgstr "alt"
 
-#: controlTypes.py:243
+#: controlTypes.py:245
 msgid "animation"
 msgstr "動畫"
 
-#: controlTypes.py:244
+#: controlTypes.py:246
 msgid "application"
 msgstr "應用程式"
 
@@ -3317,7 +3326,7 @@ msgstr "附件"
 msgid "back"
 msgstr "上一頁"
 
-#: controlTypes.py:331
+#: controlTypes.py:333
 msgid "background color"
 msgstr "背景色"
 
@@ -3359,7 +3368,7 @@ msgstr "空白"
 #. Translators: Presented for a section in a document which is a block quotation;
 #. i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 #. See http://en.wikipedia.org/wiki/Block_quotation
-#: controlTypes.py:238
+#: controlTypes.py:240
 msgid "block quote"
 msgstr "引述"
 
@@ -3368,21 +3377,21 @@ msgid "blue"
 msgstr "藍色"
 
 #. Translators: Reported when text is bolded.
-#: controlTypes.py:327 speech.py:1055
+#: controlTypes.py:329 speech.py:1055
 msgid "bold"
 msgstr "粗體"
 
-#: controlTypes.py:291
+#: controlTypes.py:293
 msgid "border"
 msgstr "邊界"
 
 #. Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container.
 #: globalCommands.py:493 globalCommands.py:501 globalCommands.py:535
-#: virtualBuffers/__init__.py:1433
+#: virtualBuffers/__init__.py:1449
 msgid "bottom"
 msgstr "到了底部"
 
-#: controlTypes.py:245
+#: controlTypes.py:247
 msgid "box"
 msgstr "方塊"
 
@@ -3397,7 +3406,7 @@ msgstr "break"
 msgid "brightness controls audio coordinates volume"
 msgstr "隨螢幕亮度改變音量"
 
-#: virtualBuffers/__init__.py:1537
+#: virtualBuffers/__init__.py:1554
 msgid "browse mode"
 msgstr "瀏覽模式"
 
@@ -3412,11 +3421,11 @@ msgstr "瀏覽器停止"
 msgid "btn"
 msgstr "btn"
 
-#: controlTypes.py:349
+#: controlTypes.py:351
 msgid "busy"
 msgstr "忙碌中"
 
-#: controlTypes.py:196
+#: controlTypes.py:197
 msgid "button"
 msgstr "按鈕"
 
@@ -3427,11 +3436,11 @@ msgstr "按鈕"
 msgid "c%s"
 msgstr "%s欄"
 
-#: controlTypes.py:342
+#: controlTypes.py:344
 msgid "calendar"
 msgstr "行事曆"
 
-#: controlTypes.py:248
+#: controlTypes.py:250
 msgid "canvas"
 msgstr "繪圖畫布"
 
@@ -3446,11 +3455,11 @@ msgstr "大寫%s"
 msgid "caps lock"
 msgstr "caps lock"
 
-#: controlTypes.py:249
+#: controlTypes.py:251
 msgid "caption"
 msgstr "文字描述"
 
-#: controlTypes.py:292
+#: controlTypes.py:294
 msgid "caret"
 msgstr "次方號"
 
@@ -3474,11 +3483,11 @@ msgstr "大小寫須相符"
 msgid "cbo"
 msgstr "cbo"
 
-#: controlTypes.py:216
+#: controlTypes.py:218
 msgid "cell"
 msgstr "儲存格"
 
-#: controlTypes.py:293 textInfos/__init__.py:199
+#: controlTypes.py:295 textInfos/__init__.py:199
 msgid "character"
 msgstr "字元"
 
@@ -3488,23 +3497,23 @@ msgctxt "symbolLevel"
 msgid "character"
 msgstr "字元"
 
-#: controlTypes.py:294
+#: controlTypes.py:296
 msgid "chart"
 msgstr "圖表"
 
-#: controlTypes.py:192
+#: controlTypes.py:193
 msgid "check box"
 msgstr "核取方塊"
 
-#: controlTypes.py:250
+#: controlTypes.py:252
 msgid "check menu item"
 msgstr "可核取功能表項目"
 
-#: controlTypes.py:375
+#: controlTypes.py:377
 msgid "checkable"
 msgstr "可核取"
 
-#: controlTypes.py:351
+#: controlTypes.py:353
 msgid "checked"
 msgstr "勾選"
 
@@ -3514,7 +3523,7 @@ msgstr "勾選"
 msgid "chk"
 msgstr "chk"
 
-#: controlTypes.py:373
+#: controlTypes.py:375
 msgid "clickable"
 msgstr "可點擊"
 
@@ -3523,19 +3532,19 @@ msgstr "可點擊"
 msgid "clk"
 msgstr "clk"
 
-#: controlTypes.py:224
+#: controlTypes.py:226
 msgid "clock"
 msgstr "時鐘"
 
-#: controlTypes.py:355
+#: controlTypes.py:357
 msgid "collapsed"
 msgstr "折疊"
 
-#: controlTypes.py:317
+#: controlTypes.py:319
 msgid "color chooser"
 msgstr "色彩選擇框"
 
-#: controlTypes.py:217
+#: controlTypes.py:219
 msgid "column"
 msgstr "欄"
 
@@ -3544,11 +3553,11 @@ msgstr "欄"
 msgid "column %s"
 msgstr "%s欄"
 
-#: controlTypes.py:221
+#: controlTypes.py:223
 msgid "column header"
 msgstr "欄標題"
 
-#: controlTypes.py:200
+#: controlTypes.py:201
 msgid "combo box"
 msgstr "下拉方塊"
 
@@ -3571,7 +3580,7 @@ msgstr "複製到剪貼簿"
 msgid "ctrl"
 msgstr "control"
 
-#: controlTypes.py:295
+#: controlTypes.py:297
 msgid "cursor"
 msgstr "游標"
 
@@ -3593,15 +3602,15 @@ msgstr "循環介於可觸控摸式"
 msgid "dark red"
 msgstr "暗紅色"
 
-#: controlTypes.py:338
+#: controlTypes.py:340
 msgid "data grid"
 msgstr "資料網格"
 
-#: controlTypes.py:339
+#: controlTypes.py:341
 msgid "data item"
 msgstr "資料項目"
 
-#: controlTypes.py:251
+#: controlTypes.py:253
 msgid "date edit"
 msgstr "日期編輯區"
 
@@ -3625,7 +3634,7 @@ msgstr "預設樣式"
 
 #. Translators: Reported when an object no longer exists in the user interface;
 #. i.e. it is dead and is no longer usable.
-#: controlTypes.py:364
+#: controlTypes.py:366
 msgid "defunct"
 msgstr "沒有功能"
 
@@ -3638,27 +3647,27 @@ msgstr "delete"
 msgid "desktop"
 msgstr "桌上型電腦"
 
-#: controlTypes.py:312
+#: controlTypes.py:314
 msgid "desktop icon"
 msgstr "桌面圖示"
 
-#: controlTypes.py:315
+#: controlTypes.py:317
 msgid "desktop pane"
 msgstr "桌面窗格"
 
-#: controlTypes.py:296
+#: controlTypes.py:298
 msgid "diagram"
 msgstr "圖表"
 
-#: controlTypes.py:297
+#: controlTypes.py:299
 msgid "dial"
 msgstr "撥打"
 
-#: controlTypes.py:191
+#: controlTypes.py:192
 msgid "dialog"
 msgstr "對話方塊"
 
-#: controlTypes.py:253
+#: controlTypes.py:255
 msgid "directory pane"
 msgstr "目錄窗格"
 
@@ -3673,7 +3682,7 @@ msgstr "點顯器捲動"
 msgid "dlg"
 msgstr "dlg"
 
-#: controlTypes.py:242
+#: controlTypes.py:244
 msgid "document"
 msgstr "文件"
 
@@ -3689,50 +3698,50 @@ msgstr "拖曳完成"
 msgid "down arrow"
 msgstr "向下鍵"
 
-#: controlTypes.py:376
+#: controlTypes.py:378
 msgid "draggable"
 msgstr "可拖曳"
 
-#: controlTypes.py:377
+#: controlTypes.py:379
 msgid "dragging"
 msgstr "拖曳"
 
-#: controlTypes.py:223
+#: controlTypes.py:225
 msgid "drop down button"
 msgstr "下拉按鈕"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
-#: controlTypes.py:302
+#: controlTypes.py:304
 msgid "drop down button grid"
 msgstr "下拉按鈕區塊"
 
-#: controlTypes.py:298
+#: controlTypes.py:300
 msgid "drop list"
 msgstr "下拉清單"
 
 #. Translators: Reported where an object which is being dragged can be dropped.
 #. This is only reported for objects which support accessible drag and drop.
-#: controlTypes.py:380
+#: controlTypes.py:382
 msgid "drop target"
 msgstr "放置目標"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects/behaviors.py:412 virtualBuffers/__init__.py:1296
+#: NVDAObjects/behaviors.py:412 virtualBuffers/__init__.py:1312
 msgid "edge of table"
 msgstr "表格的邊緣了"
 
-#: controlTypes.py:195
+#: controlTypes.py:196
 msgid "edit"
 msgstr "編輯區"
 
 #. Translators: May be reported for an editable text object in a toolbar.
 #. This is deprecated and is not often (if ever) used.
-#: controlTypes.py:273
+#: controlTypes.py:275
 msgid "edit bar"
 msgstr "編輯列"
 
-#: controlTypes.py:374
+#: controlTypes.py:376
 msgid "editable"
 msgstr "可編輯"
 
@@ -3747,7 +3756,7 @@ msgstr "edt"
 msgid "email"
 msgstr "電子郵件"
 
-#: controlTypes.py:254 NVDAObjects/window/edit.py:613
+#: controlTypes.py:256 NVDAObjects/window/edit.py:613
 msgid "embedded object"
 msgstr "嵌入式物件"
 
@@ -3757,7 +3766,7 @@ msgid "end"
 msgstr "end"
 
 # 此處依其所在位置翻譯，有別於在微軟 word的譯名，雖然其原文相同。
-#: controlTypes.py:255
+#: controlTypes.py:257
 msgid "end note"
 msgstr "章節附註"
 
@@ -3766,7 +3775,7 @@ msgstr "章節附註"
 msgid "enter"
 msgstr "enter"
 
-#: controlTypes.py:303
+#: controlTypes.py:305
 msgid "equation"
 msgstr "公式"
 
@@ -3775,7 +3784,7 @@ msgstr "公式"
 msgid "escape"
 msgstr "escape"
 
-#: controlTypes.py:354
+#: controlTypes.py:356
 msgid "expanded"
 msgstr "展開"
 
@@ -3792,11 +3801,11 @@ msgstr "女聲1"
 msgid "female 2"
 msgstr "女聲二"
 
-#: controlTypes.py:318
+#: controlTypes.py:320
 msgid "file chooser"
 msgstr "檔案選擇框"
 
-#: controlTypes.py:319
+#: controlTypes.py:321
 msgid "filler"
 msgstr "填寫框"
 
@@ -3820,7 +3829,7 @@ msgstr "從目前游標位置往前找先前輸入的字串"
 msgid "focus"
 msgstr "系統焦點"
 
-#: virtualBuffers/__init__.py:1537
+#: virtualBuffers/__init__.py:1554
 msgid "focus mode"
 msgstr "焦點模式"
 
@@ -3834,39 +3843,39 @@ msgstr "瀏覽游標跟隨系統焦點移動關閉"
 msgid "focus moves navigator object on"
 msgstr "瀏覽游標跟隨系統焦點移動開啟"
 
-#: controlTypes.py:372
+#: controlTypes.py:374
 msgid "focusable"
 msgstr "焦點可到達的"
 
-#: controlTypes.py:347
+#: controlTypes.py:349
 msgid "focused"
 msgstr "焦點所在"
 
-#: controlTypes.py:323
+#: controlTypes.py:325
 msgid "font chooser"
 msgstr "字型選擇框"
 
-#: controlTypes.py:325
+#: controlTypes.py:327
 msgid "font name"
 msgstr "字體名稱"
 
-#: controlTypes.py:326
+#: controlTypes.py:328
 msgid "font size"
 msgstr "字體大小"
 
-#: controlTypes.py:257
+#: controlTypes.py:259
 msgid "foot note"
 msgstr "註腳"
 
-#: controlTypes.py:256
+#: controlTypes.py:258
 msgid "footer"
 msgstr "頁尾"
 
-#: controlTypes.py:330
+#: controlTypes.py:332
 msgid "foreground color"
 msgstr "前景色"
 
-#: controlTypes.py:226
+#: controlTypes.py:228
 msgid "form"
 msgstr "表單"
 
@@ -3875,7 +3884,7 @@ msgstr "表單"
 msgid "forward"
 msgstr "下一頁"
 
-#: controlTypes.py:219
+#: controlTypes.py:221
 msgid "frame"
 msgstr "頁框"
 
@@ -3891,7 +3900,7 @@ msgstr "手勢對應檔有誤"
 
 #. Translators: Reported for an object which is a glass pane; i.e.
 #. a pane that is guaranteed to be on top of all panes beneath it.
-#: controlTypes.py:260
+#: controlTypes.py:262
 msgid "glass pane"
 msgstr "透明窗格"
 
@@ -3901,7 +3910,7 @@ msgstr "透明窗格"
 msgid "gra"
 msgstr "gra"
 
-#: controlTypes.py:203
+#: controlTypes.py:204
 msgid "graphic"
 msgstr "圖片"
 
@@ -3913,11 +3922,11 @@ msgstr "綠色"
 msgid "grey"
 msgstr "灰色"
 
-#: controlTypes.py:304
+#: controlTypes.py:306
 msgid "grip"
 msgstr "抓緊"
 
-#: controlTypes.py:246
+#: controlTypes.py:248
 msgid "grouping"
 msgstr "群組"
 
@@ -3929,24 +3938,24 @@ msgid "h%s"
 msgstr "h%s"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
-#: NVDAHelper.py:223 NVDAHelper.py:233
+#: NVDAHelper.py:228 NVDAHelper.py:238
 msgid "half alphanumeric"
 msgstr "英數半形"
 
-#: controlTypes.py:352
+#: controlTypes.py:354
 msgid "half checked"
 msgstr "部份勾選"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
-#: NVDAHelper.py:225
+#: NVDAHelper.py:230
 msgid "half katakana"
 msgstr "片假名半形"
 
-#: NVDAHelper.py:234
+#: NVDAHelper.py:239
 msgid "half katakana roman"
 msgstr "羅馬片假名半型"
 
-#: controlTypes.py:367
+#: controlTypes.py:369
 msgid "has auto complete"
 msgstr "可自動完成"
 
@@ -3960,39 +3969,39 @@ msgstr "有註解"
 msgid "has formula"
 msgstr "有公式"
 
-#: controlTypes.py:261
+#: controlTypes.py:263
 msgid "header"
 msgstr "頁首"
 
-#: controlTypes.py:340
+#: controlTypes.py:342
 msgid "header item"
 msgstr "標題項目"
 
-#: controlTypes.py:227
+#: controlTypes.py:229
 msgid "heading"
 msgstr "標題"
 
-#: controlTypes.py:228
+#: controlTypes.py:230
 msgid "heading 1"
 msgstr "一級標題"
 
-#: controlTypes.py:229
+#: controlTypes.py:231
 msgid "heading 2"
 msgstr "二級標題"
 
-#: controlTypes.py:230
+#: controlTypes.py:232
 msgid "heading 3"
 msgstr "三級標題"
 
-#: controlTypes.py:231
+#: controlTypes.py:233
 msgid "heading 4"
 msgstr "四級標題"
 
-#: controlTypes.py:232
+#: controlTypes.py:234
 msgid "heading 5"
 msgstr "五級標題"
 
-#: controlTypes.py:233
+#: controlTypes.py:235
 msgid "heading 6"
 msgstr "六級標題"
 
@@ -4001,17 +4010,17 @@ msgstr "六級標題"
 msgid "heading level %d"
 msgstr "標題層級 %d"
 
-#: controlTypes.py:204
+#: controlTypes.py:205
 msgid "help balloon"
 msgstr "氣泡提示"
 
 #. Translators: For Japanese character input: Hiragana input mode.
-#: NVDAHelper.py:229
+#: NVDAHelper.py:234
 msgid "hiragana"
 msgstr "平假名"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
-#: NVDAHelper.py:238
+#: NVDAHelper.py:243
 msgid "hiragana roman"
 msgstr "羅馬平假名"
 
@@ -4025,27 +4034,27 @@ msgstr "home"
 msgid "home page"
 msgstr "首頁"
 
-#: controlTypes.py:305
+#: controlTypes.py:307
 msgid "hot key field"
 msgstr "快速鍵欄位"
 
-#: controlTypes.py:252
+#: controlTypes.py:254
 msgid "icon"
 msgstr "圖示"
 
-#: controlTypes.py:369
+#: controlTypes.py:371
 msgid "iconified"
 msgstr "圖示化"
 
-#: controlTypes.py:262
+#: controlTypes.py:264
 msgid "image map"
 msgstr "圖像地圖"
 
-#: controlTypes.py:335
+#: controlTypes.py:337
 msgid "indent"
 msgstr "縮排"
 
-#: controlTypes.py:306
+#: controlTypes.py:308
 msgid "indicator"
 msgstr "指示標記"
 
@@ -4063,7 +4072,7 @@ msgstr "輸入說明關閉"
 msgid "input help on"
 msgstr "輸入說明開啟"
 
-#: controlTypes.py:263
+#: controlTypes.py:265
 msgid "input window"
 msgstr "輸入區"
 
@@ -4076,15 +4085,15 @@ msgstr "輸入/輸出"
 msgid "install"
 msgstr "安裝"
 
-#: controlTypes.py:365
+#: controlTypes.py:367
 msgid "invalid entry"
 msgstr "輸入錯誤"
 
-#: controlTypes.py:356
+#: controlTypes.py:358
 msgid "invisible"
 msgstr "隱藏"
 
-#: NVDAObjects/UIA/__init__.py:607
+#: NVDAObjects/UIA/__init__.py:609
 msgid "invoke"
 msgstr "啟用"
 
@@ -4094,16 +4103,16 @@ msgid "italic"
 msgstr "斜體"
 
 #. Translators: For Japanese character input: Katacana input mode.
-#: NVDAHelper.py:231
+#: NVDAHelper.py:236
 msgid "katakana"
 msgstr "片假名"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
-#: NVDAHelper.py:240
+#: NVDAHelper.py:245
 msgid "katakana roman"
 msgstr "羅馬片假名"
 
-#: controlTypes.py:264
+#: controlTypes.py:266
 msgid "label"
 msgstr "標記"
 
@@ -4111,7 +4120,7 @@ msgstr "標記"
 msgid "laptop"
 msgstr "筆記型電腦"
 
-#: controlTypes.py:268
+#: controlTypes.py:270
 msgid "layered pane"
 msgstr "layered pane"
 
@@ -4173,7 +4182,7 @@ msgstr "淺灰色"
 msgid "lime"
 msgstr "萊姆綠"
 
-#: controlTypes.py:324 textInfos/__init__.py:201
+#: controlTypes.py:326 textInfos/__init__.py:201
 msgid "line"
 msgstr "單行"
 
@@ -4189,19 +4198,19 @@ msgstr "第%s行"
 msgid "line scroll"
 msgstr "單行捲動"
 
-#: controlTypes.py:206 speech.py:1126
+#: controlTypes.py:207 speech.py:1126
 msgid "link"
 msgstr "連結"
 
-#: controlTypes.py:358
+#: controlTypes.py:360
 msgid "linked"
 msgstr "連結"
 
-#: controlTypes.py:201
+#: controlTypes.py:202
 msgid "list"
 msgstr "清單"
 
-#: controlTypes.py:202
+#: controlTypes.py:203
 msgid "list item"
 msgstr "清單項目"
 
@@ -4242,19 +4251,19 @@ msgstr "男聲二"
 msgid "media player"
 msgstr "媒體播放程式"
 
-#: controlTypes.py:199 controlTypes.py:320
+#: controlTypes.py:200 controlTypes.py:322
 msgid "menu"
 msgstr "功能表"
 
-#: controlTypes.py:197
+#: controlTypes.py:198
 msgid "menu bar"
 msgstr "功能表列"
 
-#: controlTypes.py:300
+#: controlTypes.py:302
 msgid "menu button"
 msgstr "功能表按鈕"
 
-#: controlTypes.py:198
+#: controlTypes.py:199
 msgid "menu item"
 msgstr "功能表項目"
 
@@ -4270,7 +4279,7 @@ msgstr "mnu"
 msgid "mnubar"
 msgstr "mnubar"
 
-#: controlTypes.py:366
+#: controlTypes.py:368
 msgid "modal"
 msgstr "樣式的"
 
@@ -4288,223 +4297,223 @@ msgstr "移動焦點"
 msgid "move to focus"
 msgstr "移到系統焦點"
 
-#: virtualBuffers/__init__.py:1517
+#: virtualBuffers/__init__.py:1534
 msgid "moves to the next block quote"
 msgstr "移到後一個引述"
 
-#: virtualBuffers/__init__.py:1501
+#: virtualBuffers/__init__.py:1518
 msgid "moves to the next button"
 msgstr "移到後一個按鈕"
 
-#: virtualBuffers/__init__.py:1513
+#: virtualBuffers/__init__.py:1530
 msgid "moves to the next check box"
 msgstr "移到後一個核取方塊"
 
-#: virtualBuffers/__init__.py:1511
+#: virtualBuffers/__init__.py:1528
 msgid "moves to the next combo box"
 msgstr "移到後一個下拉方塊"
 
-#: virtualBuffers/__init__.py:1503
+#: virtualBuffers/__init__.py:1520
 msgid "moves to the next edit field"
 msgstr "移到後一個編輯區"
 
-#: virtualBuffers/__init__.py:1523
+#: virtualBuffers/__init__.py:1540
 msgid "moves to the next embedded object"
 msgstr "移到後一個嵌入式物件"
 
-#: virtualBuffers/__init__.py:1495
+#: virtualBuffers/__init__.py:1512
 msgid "moves to the next form field"
 msgstr "移到後一個表單區"
 
-#: virtualBuffers/__init__.py:1505
+#: virtualBuffers/__init__.py:1522
 msgid "moves to the next frame"
 msgstr "移到後一個頁框"
 
-#: virtualBuffers/__init__.py:1515
+#: virtualBuffers/__init__.py:1532
 msgid "moves to the next graphic"
 msgstr "移到後一張圖片"
 
-#: virtualBuffers/__init__.py:1473
+#: virtualBuffers/__init__.py:1490
 msgid "moves to the next heading"
 msgstr "移到後一個標題"
 
-#: virtualBuffers/__init__.py:1475
+#: virtualBuffers/__init__.py:1492
 msgid "moves to the next heading at level 1"
 msgstr "移到後一個第一級標題"
 
-#: virtualBuffers/__init__.py:1477
+#: virtualBuffers/__init__.py:1494
 msgid "moves to the next heading at level 2"
 msgstr "移到後一個第二級標題"
 
-#: virtualBuffers/__init__.py:1479
+#: virtualBuffers/__init__.py:1496
 msgid "moves to the next heading at level 3"
 msgstr "移到後一個第三級標題"
 
-#: virtualBuffers/__init__.py:1481
+#: virtualBuffers/__init__.py:1498
 msgid "moves to the next heading at level 4"
 msgstr "移到後一個第四級標題"
 
-#: virtualBuffers/__init__.py:1483
+#: virtualBuffers/__init__.py:1500
 msgid "moves to the next heading at level 5"
 msgstr "移到後一個第五級標題"
 
-#: virtualBuffers/__init__.py:1485
+#: virtualBuffers/__init__.py:1502
 msgid "moves to the next heading at level 6"
 msgstr "移到後一個第六級標題"
 
-#: virtualBuffers/__init__.py:1521
+#: virtualBuffers/__init__.py:1538
 msgid "moves to the next landmark"
 msgstr "移到後一個地標"
 
-#: virtualBuffers/__init__.py:1489
+#: virtualBuffers/__init__.py:1506
 msgid "moves to the next link"
 msgstr "移到後一個連結"
 
-#: virtualBuffers/__init__.py:1497
+#: virtualBuffers/__init__.py:1514
 msgid "moves to the next list"
 msgstr "移到後一個清單"
 
-#: virtualBuffers/__init__.py:1499
+#: virtualBuffers/__init__.py:1516
 msgid "moves to the next list item"
 msgstr "移到後一個清單項目"
 
-#: virtualBuffers/__init__.py:1509
+#: virtualBuffers/__init__.py:1526
 msgid "moves to the next radio button"
 msgstr "移到後一個單選鈕"
 
-#: virtualBuffers/__init__.py:1507
+#: virtualBuffers/__init__.py:1524
 msgid "moves to the next separator"
 msgstr "移到後一個分隔符號"
 
-#: virtualBuffers/__init__.py:1487
+#: virtualBuffers/__init__.py:1504
 msgid "moves to the next table"
 msgstr "移到後一個表格"
 
-#: virtualBuffers/__init__.py:1314
+#: virtualBuffers/__init__.py:1330
 msgid "moves to the next table column"
 msgstr "移到表格的右一欄"
 
-#: virtualBuffers/__init__.py:1306
+#: virtualBuffers/__init__.py:1322
 msgid "moves to the next table row"
 msgstr "移到表格的下一列"
 
-#: virtualBuffers/__init__.py:1493
+#: virtualBuffers/__init__.py:1510
 msgid "moves to the next unvisited link"
 msgstr "移到後一個未到訪過的連結"
 
-#: virtualBuffers/__init__.py:1491
+#: virtualBuffers/__init__.py:1508
 msgid "moves to the next visited link"
 msgstr "移到後一個到訪過的連結"
 
-#: virtualBuffers/__init__.py:1518
+#: virtualBuffers/__init__.py:1535
 msgid "moves to the previous block quote"
 msgstr "移到前一個引述"
 
-#: virtualBuffers/__init__.py:1502
+#: virtualBuffers/__init__.py:1519
 msgid "moves to the previous button"
 msgstr "移到前一個按鈕"
 
-#: virtualBuffers/__init__.py:1514
+#: virtualBuffers/__init__.py:1531
 msgid "moves to the previous check box"
 msgstr "移到前一個核取方塊"
 
-#: virtualBuffers/__init__.py:1512
+#: virtualBuffers/__init__.py:1529
 msgid "moves to the previous combo box"
 msgstr "移到前一個下拉方塊"
 
-#: virtualBuffers/__init__.py:1504
+#: virtualBuffers/__init__.py:1521
 msgid "moves to the previous edit field"
 msgstr "移到前一個編輯區"
 
-#: virtualBuffers/__init__.py:1524
+#: virtualBuffers/__init__.py:1541
 msgid "moves to the previous embedded object"
 msgstr "移到前一個嵌入式物件"
 
-#: virtualBuffers/__init__.py:1496
+#: virtualBuffers/__init__.py:1513
 msgid "moves to the previous form field"
 msgstr "移到前一個表單區"
 
-#: virtualBuffers/__init__.py:1506
+#: virtualBuffers/__init__.py:1523
 msgid "moves to the previous frame"
 msgstr "移到前一個頁框"
 
-#: virtualBuffers/__init__.py:1516
+#: virtualBuffers/__init__.py:1533
 msgid "moves to the previous graphic"
 msgstr "移到前一張圖片"
 
-#: virtualBuffers/__init__.py:1474
+#: virtualBuffers/__init__.py:1491
 msgid "moves to the previous heading"
 msgstr "移到前一個標題"
 
-#: virtualBuffers/__init__.py:1476
+#: virtualBuffers/__init__.py:1493
 msgid "moves to the previous heading at level 1"
 msgstr "移到前一個第一級標題"
 
-#: virtualBuffers/__init__.py:1478
+#: virtualBuffers/__init__.py:1495
 msgid "moves to the previous heading at level 2"
 msgstr "移到前一個第二級標題"
 
-#: virtualBuffers/__init__.py:1480
+#: virtualBuffers/__init__.py:1497
 msgid "moves to the previous heading at level 3"
 msgstr "移到前一個第三級標題"
 
-#: virtualBuffers/__init__.py:1482
+#: virtualBuffers/__init__.py:1499
 msgid "moves to the previous heading at level 4"
 msgstr "移到前一個第四級標題"
 
-#: virtualBuffers/__init__.py:1484
+#: virtualBuffers/__init__.py:1501
 msgid "moves to the previous heading at level 5"
 msgstr "移到前一個第五級標題"
 
-#: virtualBuffers/__init__.py:1486
+#: virtualBuffers/__init__.py:1503
 msgid "moves to the previous heading at level 6"
 msgstr "移到前一個第六級標題"
 
-#: virtualBuffers/__init__.py:1522
+#: virtualBuffers/__init__.py:1539
 msgid "moves to the previous landmark"
 msgstr "移到前一個地標"
 
-#: virtualBuffers/__init__.py:1490
+#: virtualBuffers/__init__.py:1507
 msgid "moves to the previous link"
 msgstr "移到前一個連結"
 
-#: virtualBuffers/__init__.py:1498
+#: virtualBuffers/__init__.py:1515
 msgid "moves to the previous list"
 msgstr "移到前一個清單"
 
-#: virtualBuffers/__init__.py:1500
+#: virtualBuffers/__init__.py:1517
 msgid "moves to the previous list item"
 msgstr "移到前一個清單項目"
 
-#: virtualBuffers/__init__.py:1510
+#: virtualBuffers/__init__.py:1527
 msgid "moves to the previous radio button"
 msgstr "移到前一個單選鈕"
 
-#: virtualBuffers/__init__.py:1508
+#: virtualBuffers/__init__.py:1525
 msgid "moves to the previous separator"
 msgstr "移到前一個分隔符號"
 
-#: virtualBuffers/__init__.py:1488
+#: virtualBuffers/__init__.py:1505
 msgid "moves to the previous table"
 msgstr "移到前一個表格"
 
-#: virtualBuffers/__init__.py:1318
+#: virtualBuffers/__init__.py:1334
 msgid "moves to the previous table column"
 msgstr "移到表格的左一欄"
 
-#: virtualBuffers/__init__.py:1310
+#: virtualBuffers/__init__.py:1326
 msgid "moves to the previous table row"
 msgstr "移到表格的上一列"
 
-#: virtualBuffers/__init__.py:1494
+#: virtualBuffers/__init__.py:1511
 msgid "moves to the previous unvisited link"
 msgstr "移到前一個未到訪過的連結"
 
-#: virtualBuffers/__init__.py:1492
+#: virtualBuffers/__init__.py:1509
 msgid "moves to the previous visited link"
 msgstr "移到前一個到訪過的連結"
 
-#: controlTypes.py:368
+#: controlTypes.py:370
 msgid "multi line"
 msgstr "多行"
 
@@ -4550,11 +4559,11 @@ msgstr "沒有縮排"
 msgid "no italic"
 msgstr "沒有斜體"
 
-#: virtualBuffers/__init__.py:1519
+#: virtualBuffers/__init__.py:1536
 msgid "no more text after a block of links"
 msgstr "在此連結區之後沒有文字了"
 
-#: virtualBuffers/__init__.py:1520
+#: virtualBuffers/__init__.py:1537
 msgid "no more text before a block of links"
 msgstr "在連結區之前沒有文字了"
 
@@ -4565,203 +4574,203 @@ msgstr "在連結區之前沒有文字了"
 msgid "no navigator object"
 msgstr "沒有瀏覽物件"
 
-#: virtualBuffers/__init__.py:1517
+#: virtualBuffers/__init__.py:1534
 msgid "no next block quote"
 msgstr "沒有後一個引述了"
 
-#: virtualBuffers/__init__.py:1501
+#: virtualBuffers/__init__.py:1518
 msgid "no next button"
 msgstr "沒有後一個按鈕了"
 
-#: virtualBuffers/__init__.py:1513
+#: virtualBuffers/__init__.py:1530
 msgid "no next check box"
 msgstr "沒有後一個核取方塊了"
 
-#: virtualBuffers/__init__.py:1511
+#: virtualBuffers/__init__.py:1528
 msgid "no next combo box"
 msgstr "沒有後一個下拉方塊了"
 
-#: virtualBuffers/__init__.py:1503
+#: virtualBuffers/__init__.py:1520
 msgid "no next edit field"
 msgstr "沒有後一個編輯區了"
 
-#: virtualBuffers/__init__.py:1523
+#: virtualBuffers/__init__.py:1540
 msgid "no next embedded object"
 msgstr "沒有後一個嵌入式物件了"
 
-#: virtualBuffers/__init__.py:1495
+#: virtualBuffers/__init__.py:1512
 msgid "no next form field"
 msgstr "沒有後一個表單區了"
 
-#: virtualBuffers/__init__.py:1505
+#: virtualBuffers/__init__.py:1522
 msgid "no next frame"
 msgstr "沒有後一個頁框了"
 
-#: virtualBuffers/__init__.py:1515
+#: virtualBuffers/__init__.py:1532
 msgid "no next graphic"
 msgstr "沒有後一張圖片了"
 
-#: virtualBuffers/__init__.py:1473
+#: virtualBuffers/__init__.py:1490
 msgid "no next heading"
 msgstr "沒有後一個標題了"
 
-#: virtualBuffers/__init__.py:1475
+#: virtualBuffers/__init__.py:1492
 msgid "no next heading at level 1"
 msgstr "沒有後一個第一級標題了"
 
-#: virtualBuffers/__init__.py:1477
+#: virtualBuffers/__init__.py:1494
 msgid "no next heading at level 2"
 msgstr "沒有後一個第二級標題了"
 
-#: virtualBuffers/__init__.py:1479
+#: virtualBuffers/__init__.py:1496
 msgid "no next heading at level 3"
 msgstr "沒有後一個第三級標題了"
 
-#: virtualBuffers/__init__.py:1481
+#: virtualBuffers/__init__.py:1498
 msgid "no next heading at level 4"
 msgstr "沒有後一個第四級標題了"
 
-#: virtualBuffers/__init__.py:1483
+#: virtualBuffers/__init__.py:1500
 msgid "no next heading at level 5"
 msgstr "沒有後一個第五級標題了"
 
-#: virtualBuffers/__init__.py:1485
+#: virtualBuffers/__init__.py:1502
 msgid "no next heading at level 6"
 msgstr "沒有後一個第六級標題了"
 
-#: virtualBuffers/__init__.py:1521
+#: virtualBuffers/__init__.py:1538
 msgid "no next landmark"
 msgstr "沒有後一個地標了"
 
-#: virtualBuffers/__init__.py:1489
+#: virtualBuffers/__init__.py:1506
 msgid "no next link"
 msgstr "沒有後一個連結了"
 
-#: virtualBuffers/__init__.py:1497
+#: virtualBuffers/__init__.py:1514
 msgid "no next list"
 msgstr "沒有後一個清單了"
 
-#: virtualBuffers/__init__.py:1499
+#: virtualBuffers/__init__.py:1516
 msgid "no next list item"
 msgstr "沒有後一個清單項目了"
 
-#: virtualBuffers/__init__.py:1509
+#: virtualBuffers/__init__.py:1526
 msgid "no next radio button"
 msgstr "沒有後一個單選鈕了"
 
-#: virtualBuffers/__init__.py:1507
+#: virtualBuffers/__init__.py:1524
 msgid "no next separator"
 msgstr "沒有後一個分隔符號了"
 
-#: virtualBuffers/__init__.py:1487
+#: virtualBuffers/__init__.py:1504
 msgid "no next table"
 msgstr "沒有後一個表格了"
 
-#: virtualBuffers/__init__.py:1493
+#: virtualBuffers/__init__.py:1510
 msgid "no next unvisited link"
 msgstr "沒有後一個未到訪過的連結了"
 
-#: virtualBuffers/__init__.py:1491
+#: virtualBuffers/__init__.py:1508
 msgid "no next visited link"
 msgstr "沒有後一個到訪過的連結了"
 
-#: virtualBuffers/__init__.py:1518
+#: virtualBuffers/__init__.py:1535
 msgid "no previous block quote"
 msgstr "沒有前一個引述了"
 
-#: virtualBuffers/__init__.py:1502
+#: virtualBuffers/__init__.py:1519
 msgid "no previous button"
 msgstr "沒有前一個按鈕了"
 
-#: virtualBuffers/__init__.py:1514
+#: virtualBuffers/__init__.py:1531
 msgid "no previous check box"
 msgstr "沒有前一個核取方塊了"
 
-#: virtualBuffers/__init__.py:1512
+#: virtualBuffers/__init__.py:1529
 msgid "no previous combo box"
 msgstr "沒有前一個下拉方塊了"
 
-#: virtualBuffers/__init__.py:1504
+#: virtualBuffers/__init__.py:1521
 msgid "no previous edit field"
 msgstr "沒有前一個編輯區了"
 
-#: virtualBuffers/__init__.py:1524
+#: virtualBuffers/__init__.py:1541
 msgid "no previous embedded object"
 msgstr "沒有前一個嵌入式物件了"
 
-#: virtualBuffers/__init__.py:1496
+#: virtualBuffers/__init__.py:1513
 msgid "no previous form field"
 msgstr "沒有前一個表單區了"
 
-#: virtualBuffers/__init__.py:1506
+#: virtualBuffers/__init__.py:1523
 msgid "no previous frame"
 msgstr "沒有前一個頁框了"
 
-#: virtualBuffers/__init__.py:1516
+#: virtualBuffers/__init__.py:1533
 msgid "no previous graphic"
 msgstr "沒有前一張圖片了"
 
-#: virtualBuffers/__init__.py:1474
+#: virtualBuffers/__init__.py:1491
 msgid "no previous heading"
 msgstr "沒有前一個標題了"
 
-#: virtualBuffers/__init__.py:1476
+#: virtualBuffers/__init__.py:1493
 msgid "no previous heading at level 1"
 msgstr "沒有前一個第一級標題了"
 
-#: virtualBuffers/__init__.py:1478
+#: virtualBuffers/__init__.py:1495
 msgid "no previous heading at level 2"
 msgstr "沒有前一個第二級標題了"
 
-#: virtualBuffers/__init__.py:1480
+#: virtualBuffers/__init__.py:1497
 msgid "no previous heading at level 3"
 msgstr "沒有前一個第三級標題了"
 
-#: virtualBuffers/__init__.py:1482
+#: virtualBuffers/__init__.py:1499
 msgid "no previous heading at level 4"
 msgstr "沒有前一個第四級標題了"
 
-#: virtualBuffers/__init__.py:1484
+#: virtualBuffers/__init__.py:1501
 msgid "no previous heading at level 5"
 msgstr "沒有前一個第五級標題了"
 
-#: virtualBuffers/__init__.py:1486
+#: virtualBuffers/__init__.py:1503
 msgid "no previous heading at level 6"
 msgstr "沒有前一個第六級標題了"
 
-#: virtualBuffers/__init__.py:1522
+#: virtualBuffers/__init__.py:1539
 msgid "no previous landmark"
 msgstr "沒有前一個地標了"
 
-#: virtualBuffers/__init__.py:1490
+#: virtualBuffers/__init__.py:1507
 msgid "no previous link"
 msgstr "沒有前一個連結了"
 
-#: virtualBuffers/__init__.py:1498
+#: virtualBuffers/__init__.py:1515
 msgid "no previous list"
 msgstr "沒有前一個清單了"
 
-#: virtualBuffers/__init__.py:1500
+#: virtualBuffers/__init__.py:1517
 msgid "no previous list item"
 msgstr "沒有前一個清單項目了"
 
-#: virtualBuffers/__init__.py:1510
+#: virtualBuffers/__init__.py:1527
 msgid "no previous radio button"
 msgstr "沒有前一個單選鈕了"
 
-#: virtualBuffers/__init__.py:1508
+#: virtualBuffers/__init__.py:1525
 msgid "no previous separator"
 msgstr "沒有前一個分隔符號了"
 
-#: virtualBuffers/__init__.py:1488
+#: virtualBuffers/__init__.py:1505
 msgid "no previous table"
 msgstr "沒有前一個表格了"
 
-#: virtualBuffers/__init__.py:1494
+#: virtualBuffers/__init__.py:1511
 msgid "no previous unvisited link"
 msgstr "沒有前一個未到訪過的連結了"
 
-#: virtualBuffers/__init__.py:1492
+#: virtualBuffers/__init__.py:1509
 msgid "no previous visited link"
 msgstr "沒有前一個到訪過的連結了"
 
@@ -4809,12 +4818,12 @@ msgid "not %s"
 msgstr "沒%s"
 
 #. Translators: This is presented when a checkbox is not checked.
-#: controlTypes.py:390
+#: controlTypes.py:393
 msgid "not checked"
 msgstr "沒勾選"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-#: controlTypes.py:388
+#: controlTypes.py:391
 msgid "not selected"
 msgstr "沒選取"
 
@@ -4823,7 +4832,7 @@ msgstr "沒選取"
 msgid "not underlined"
 msgstr "沒有加底線"
 
-#: controlTypes.py:265
+#: controlTypes.py:267
 msgid "note"
 msgstr "註解"
 
@@ -4915,7 +4924,7 @@ msgstr "找不到物件的所在位置"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:781
-#: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:830
+#: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:846
 msgid "off"
 msgstr "關"
 
@@ -4931,7 +4940,7 @@ msgctxt "shuffle"
 msgid "off"
 msgstr "關"
 
-#: controlTypes.py:370
+#: controlTypes.py:372
 msgid "off screen"
 msgstr "畫面以外的"
 
@@ -4942,7 +4951,7 @@ msgid "olive"
 msgstr "橄欖綠"
 
 #: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
-#: virtualBuffers/__init__.py:830
+#: virtualBuffers/__init__.py:846
 msgid "on"
 msgstr "開"
 
@@ -4958,7 +4967,7 @@ msgctxt "shuffle"
 msgid "on"
 msgstr "開"
 
-#: controlTypes.py:316
+#: controlTypes.py:318
 msgid "option pane"
 msgstr "選項對話窗格"
 
@@ -4982,7 +4991,7 @@ msgstr "離開拼錯字"
 msgid "out of table"
 msgstr "離開表格"
 
-#: controlTypes.py:266
+#: controlTypes.py:268
 msgid "page"
 msgstr "頁"
 
@@ -5003,19 +5012,19 @@ msgstr "page down"
 msgid "page up"
 msgstr "page up"
 
-#: controlTypes.py:190
+#: controlTypes.py:191
 msgid "pane"
 msgstr "窗格"
 
-#: controlTypes.py:321
+#: controlTypes.py:323
 msgid "panel"
 msgstr "面板"
 
-#: controlTypes.py:234 textInfos/__init__.py:202
+#: controlTypes.py:236 textInfos/__init__.py:202
 msgid "paragraph"
 msgstr "段落"
 
-#: controlTypes.py:322
+#: controlTypes.py:324
 msgid "password edit"
 msgstr "密碼編輯區"
 
@@ -5030,7 +5039,7 @@ msgstr "隨鼠標移動發出聲音指示相對位置"
 msgid "play pause"
 msgstr "播放 暫停"
 
-#: controlTypes.py:350
+#: controlTypes.py:352
 msgid "pressed"
 msgstr "按下"
 
@@ -5044,15 +5053,15 @@ msgstr "前一個曲目"
 msgid "print screen"
 msgstr "print screen"
 
-#: controlTypes.py:212
+#: controlTypes.py:214
 msgid "progress bar"
 msgstr "進度列"
 
-#: controlTypes.py:247
+#: controlTypes.py:249
 msgid "property page"
 msgstr "內容頁"
 
-#: controlTypes.py:360
+#: controlTypes.py:362
 msgid "protected"
 msgstr "保密"
 
@@ -5067,11 +5076,11 @@ msgstr "紫色"
 msgid "r%s"
 msgstr "%s列"
 
-#: controlTypes.py:193
+#: controlTypes.py:194
 msgid "radio button"
 msgstr "單選紐"
 
-#: controlTypes.py:267
+#: controlTypes.py:269
 msgid "radio menu item"
 msgstr "單選功能表項目"
 
@@ -5081,7 +5090,7 @@ msgstr "單選功能表項目"
 msgid "rbtn"
 msgstr "rbtn"
 
-#: controlTypes.py:353
+#: controlTypes.py:355
 msgid "read only"
 msgstr "唯讀"
 
@@ -5112,7 +5121,7 @@ msgstr "收件:%s"
 msgid "red"
 msgstr "紅色"
 
-#: controlTypes.py:269
+#: controlTypes.py:271
 msgid "redundant object"
 msgstr "多餘物件"
 
@@ -5144,7 +5153,7 @@ msgstr "當沒有接交流電源時，讀出電池狀態和可用剩餘時間"
 msgid "reports the object with focus"
 msgstr "讀出焦點物件"
 
-#: controlTypes.py:361
+#: controlTypes.py:363
 msgid "required"
 msgstr "需要"
 
@@ -5152,7 +5161,7 @@ msgstr "需要"
 msgid "review"
 msgstr "瀏覽焦點"
 
-#: controlTypes.py:275
+#: controlTypes.py:277
 msgid "rich edit"
 msgstr "Rich text 編輯模式"
 
@@ -5204,11 +5213,11 @@ msgstr "右邊 windows"
 msgid "ro"
 msgstr "ro"
 
-#: controlTypes.py:270
+#: controlTypes.py:272
 msgid "root pane"
 msgstr "root pane"
 
-#: controlTypes.py:218
+#: controlTypes.py:220
 msgid "row"
 msgstr "列"
 
@@ -5217,11 +5226,11 @@ msgstr "列"
 msgid "row %s"
 msgstr "%s列"
 
-#: controlTypes.py:222
+#: controlTypes.py:224
 msgid "row header"
 msgstr "列標題"
 
-#: controlTypes.py:276
+#: controlTypes.py:278
 msgid "ruler"
 msgstr "尺規"
 
@@ -5230,7 +5239,7 @@ msgstr "尺規"
 msgid "running"
 msgstr "正在執行"
 
-#: controlTypes.py:213
+#: controlTypes.py:215
 msgid "scroll bar"
 msgstr "捲軸"
 
@@ -5239,7 +5248,7 @@ msgstr "捲軸"
 msgid "scroll lock"
 msgstr "scroll lock"
 
-#: controlTypes.py:277
+#: controlTypes.py:279
 msgid "scroll pane"
 msgstr "捲軸窗格"
 
@@ -5253,7 +5262,7 @@ msgstr "搜尋區"
 msgid "search page"
 msgstr "搜尋頁"
 
-#: controlTypes.py:278
+#: controlTypes.py:280
 msgid "section"
 msgstr "區塊"
 
@@ -5262,11 +5271,11 @@ msgstr "區塊"
 msgid "sel"
 msgstr "sel"
 
-#: controlTypes.py:371
+#: controlTypes.py:373
 msgid "selectable"
 msgstr "可選取"
 
-#: controlTypes.py:348
+#: controlTypes.py:350
 msgid "selected"
 msgstr "選取"
 
@@ -5292,11 +5301,11 @@ msgstr "已選取的都移除了"
 msgid "sent: %s"
 msgstr "送出:%s"
 
-#: controlTypes.py:225
+#: controlTypes.py:227
 msgid "separator"
 msgstr "分隔符號"
 
-#: controlTypes.py:279
+#: controlTypes.py:281
 msgid "shape"
 msgstr "外型"
 
@@ -5305,15 +5314,15 @@ msgstr "外型"
 msgid "shift"
 msgstr "shift"
 
-#: virtualBuffers/__init__.py:1520
+#: virtualBuffers/__init__.py:1537
 msgid "skips backward past a block of links"
 msgstr "往前移到連結區之前的文字"
 
-#: virtualBuffers/__init__.py:1519
+#: virtualBuffers/__init__.py:1536
 msgid "skips forward past a block of links"
 msgstr "往後移到連結區之後的文字"
 
-#: controlTypes.py:211
+#: controlTypes.py:213
 msgid "slider"
 msgstr "滑桿"
 
@@ -5323,19 +5332,19 @@ msgctxt "symbolLevel"
 msgid "some"
 msgstr "一些"
 
-#: controlTypes.py:381
+#: controlTypes.py:383
 msgid "sorted"
 msgstr "已排序"
 
-#: controlTypes.py:382
+#: controlTypes.py:384
 msgid "sorted ascending"
 msgstr "遞增排序"
 
-#: controlTypes.py:383
+#: controlTypes.py:385
 msgid "sorted descending"
 msgstr "遞減排序"
 
-#: controlTypes.py:308
+#: controlTypes.py:310
 msgid "sound"
 msgstr "聲音"
 
@@ -5402,19 +5411,19 @@ msgstr "語音模式開啟"
 msgid "spelling error"
 msgstr "拼錯字"
 
-#: controlTypes.py:307
+#: controlTypes.py:309
 msgid "spin button"
 msgstr "調整按鈕"
 
-#: controlTypes.py:299
+#: controlTypes.py:301
 msgid "split button"
 msgstr "分割按鈕"
 
-#: controlTypes.py:280
+#: controlTypes.py:282
 msgid "split pane"
 msgstr "分割窗格"
 
-#: controlTypes.py:214
+#: controlTypes.py:216
 msgid "status bar"
 msgstr "狀態列"
 
@@ -5429,7 +5438,7 @@ msgstr "停止"
 msgid "strikethrough"
 msgstr "刪除線"
 
-#: controlTypes.py:334
+#: controlTypes.py:336
 msgid "style"
 msgstr "樣式"
 
@@ -5441,7 +5450,7 @@ msgstr "樣式"
 msgid "style %s"
 msgstr "樣式%s"
 
-#: controlTypes.py:359
+#: controlTypes.py:361
 msgid "subMenu"
 msgstr "子功能表"
 
@@ -5456,12 +5465,12 @@ msgid "submnu"
 msgstr "submnu"
 
 #. Translators: Reported for subscript text.
-#: controlTypes.py:333 speech.py:1094
+#: controlTypes.py:335 speech.py:1094
 msgid "subscript"
 msgstr "下標"
 
 #. Translators: Reported for superscript text.
-#: controlTypes.py:332 speech.py:1091
+#: controlTypes.py:334 speech.py:1091
 msgid "superscript"
 msgstr "上標"
 
@@ -5473,28 +5482,37 @@ msgstr "上標"
 msgid "symbol level %s"
 msgstr "符號等級%s"
 
-#. Translators: This is the name of a key on the keyboard.
-#: controlTypes.py:209 keyLabels.py:137
+#. Translators: The word presented for tabs in a tab enabled window.
+#: controlTypes.py:211
+#, fuzzy
+msgctxt "controlType"
 msgid "tab"
 msgstr "tab"
 
-#: controlTypes.py:210
+#. Translators: This is the name of a key on the keyboard.
+#: keyLabels.py:137
+#, fuzzy
+msgctxt "keyLabel"
+msgid "tab"
+msgstr "tab"
+
+#: controlTypes.py:212
 msgid "tab control"
 msgstr "索引標籤"
 
-#: controlTypes.py:215
+#: controlTypes.py:217
 msgid "table"
 msgstr "表格"
 
-#: controlTypes.py:240
+#: controlTypes.py:242
 msgid "table body"
 msgstr "表身"
 
-#: controlTypes.py:241
+#: controlTypes.py:243
 msgid "table footer"
 msgstr "表尾"
 
-#: controlTypes.py:239
+#: controlTypes.py:241
 msgid "table header"
 msgstr "表頭"
 
@@ -5518,15 +5536,15 @@ msgstr "藍綠色"
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
 #. to exist as a separate window.
-#: controlTypes.py:288
+#: controlTypes.py:290
 msgid "tear off menu"
 msgstr "分離式功能表"
 
-#: controlTypes.py:274
+#: controlTypes.py:276
 msgid "terminal"
 msgstr "終端機"
 
-#: controlTypes.py:194
+#: controlTypes.py:195
 msgid "text"
 msgstr "文字"
 
@@ -5535,7 +5553,7 @@ msgstr "文字"
 msgid "text \"%s\" not found"
 msgstr "找不到\"%s\""
 
-#: controlTypes.py:289
+#: controlTypes.py:291
 msgid "text frame"
 msgstr "文字框架"
 
@@ -5544,23 +5562,23 @@ msgstr "文字框架"
 msgid "text reporting unit"
 msgstr "文字讀出單元"
 
-#: controlTypes.py:341
+#: controlTypes.py:343
 msgid "thumb control"
 msgstr "滑桿控制按鈕"
 
-#: controlTypes.py:189
+#: controlTypes.py:190
 msgid "title bar"
 msgstr "標題列"
 
-#: controlTypes.py:290
+#: controlTypes.py:292
 msgid "toggle button"
 msgstr "切換按鈕"
 
-#: controlTypes.py:220
+#: controlTypes.py:222
 msgid "tool bar"
 msgstr "工具列"
 
-#: controlTypes.py:205
+#: controlTypes.py:206
 msgid "tool tip"
 msgstr "工具提示"
 
@@ -5568,15 +5586,15 @@ msgstr "工具提示"
 msgid "top"
 msgstr "到了頂端"
 
-#: controlTypes.py:207
+#: controlTypes.py:208
 msgid "tree view"
 msgstr "樹狀檢視"
 
-#: controlTypes.py:310
+#: controlTypes.py:312
 msgid "tree view button"
 msgstr "樹狀檢視按鈕"
 
-#: controlTypes.py:208
+#: controlTypes.py:209
 msgid "tree view item"
 msgstr "樹狀檢視項目"
 
@@ -5586,11 +5604,11 @@ msgstr "樹狀檢視項目"
 msgid "tv"
 msgstr "tv"
 
-#: controlTypes.py:346
+#: controlTypes.py:348
 msgid "unavailable"
 msgstr "無法使用"
 
-#: controlTypes.py:329
+#: controlTypes.py:331
 msgid "underline"
 msgstr "底線"
 
@@ -5599,7 +5617,7 @@ msgstr "底線"
 msgid "underlined"
 msgstr "加底線"
 
-#: controlTypes.py:187
+#: controlTypes.py:188
 msgid "unknown"
 msgstr "不明"
 
@@ -5608,12 +5626,12 @@ msgid "unknown color"
 msgstr "未知的色彩"
 
 #. Translators: The label for an unknown input method when switching input methods.
-#: NVDAHelper.py:327
+#: NVDAHelper.py:332
 msgid "unknown input method"
 msgstr "未知的輸入法"
 
 #. Translators: the label for an unknown language when switching input methods.
-#: NVDAHelper.py:302
+#: NVDAHelper.py:307
 msgid "unknown language"
 msgstr "未知的語言"
 
@@ -5633,7 +5651,7 @@ msgstr "%s沒選取"
 msgid "up arrow"
 msgstr "向上鍵"
 
-#: virtualBuffers/__init__.py:831
+#: virtualBuffers/__init__.py:847
 #, python-format
 msgid "use screen layout %s"
 msgstr "使用螢幕實際配置%s"
@@ -5641,11 +5659,11 @@ msgstr "使用螢幕實際配置%s"
 #. Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 #. which represents the portion of the entire data that the user can see.
 #. As the user manipulates the scroll bars, the contents of the view port can change.
-#: controlTypes.py:284
+#: controlTypes.py:286
 msgid "view port"
 msgstr "檢視端口"
 
-#: controlTypes.py:357
+#: controlTypes.py:359
 msgid "visited"
 msgstr "到訪過"
 
@@ -5668,11 +5686,11 @@ msgstr "增加音量"
 msgid "white"
 msgstr "白色"
 
-#: controlTypes.py:309
+#: controlTypes.py:311
 msgid "white space"
 msgstr "空白字元"
 
-#: controlTypes.py:188
+#: controlTypes.py:189
 msgid "window"
 msgstr "視窗"
 
@@ -5730,7 +5748,7 @@ msgid "{color} on {backgroundColor}"
 msgstr "{color}，背景色為{backgroundColor}"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
-#: NVDAHelper.py:333
+#: NVDAHelper.py:338
 msgid "{language} - {layout}"
 msgstr "{language}-{layout}"
 

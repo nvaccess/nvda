@@ -23,7 +23,7 @@ O máis sinalable inclúe:
 - Soporte para moitas liñas de braille efímero
 - Capacidade para executarse compretamente dende unha memoria USB ou outros medios portables sen a necesidade de instalación
 - Instalador parlante sinxelo de utilizar
-- Traducido a 41 linguas
+- Traducido a 42 linguas
 - Soporte para Sistemas Operativos Windows modernos incluíndo variantes de 32 e 64 bit
 - Capacidade para executarse en ventás de autentificación de Windows  e outras pantallas seguras 
 - Soporte para interfaces comuns de accesibilidade como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation
@@ -32,7 +32,7 @@ O máis sinalable inclúe:
 
 ++ Internacionalización ++
 É importante que calquera persoa no mundo, sen importar que lingua fale, teña igual acceso á tecnoloxía. 
-Actualmente NVDA foi traducido a 41 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, Búlgaro, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
+Actualmente NVDA foi traducido a 42 linguas ademáis da lingua inglesa incluíndo: Afrikáans, Albanés, Alemán, Amárico, Árabe, aragonés, Búlgaro, Checo, Chinese Mandarín Chinese cantonés, Coreano, Croata, Danés, eslovaco, Esloveno, Español, Finlandés, Francés, Galego, Grego, Hebreo, Hindi, Holandés, Húngaro, Islandés, Italiano, Nepalí, Noruego, Polaco, Portugués, Portugués do Brasil, Rumano, Ruso, Servio, Sueco, Ucraniano, Tamil, Tailandés,, turco, Vietnamita, Xaponés e xeorxiano.
 
 ++ Soporte da Síntesis de Voz ++
 Ademáis de proporcionar as súas mensaxes e interface en varias linguas, NVDA tamén pode capacitar ó usuario para ler contidos en calquera lingua, tanto en canto teñan un sintetizador de voz que poida falar esa lingua en particular. 
@@ -80,6 +80,14 @@ Nembargantes, se desexas copiar ó NVDA nun medio de só lectura coma un CD, só
 Executar a versión portable directamente dende medios de só lectura non está soportado polo de agora.
   
 Utilizar a copia temporal do NVDA é tamén unha opción ex.: con propósitos de demostración, posto que iniciar NVDA de este xeito cada vez pode chegar a ser moi incómodo.
+
+++ Restriccións da Copia Portable e Temporal ++
+Ademáis da incapacidade de iniciarse automáticamente durante e ou despois da autentificación, as copias portable e temporal do NVDA tamén teñen as seguintes restriccións:
+- A incapacidade para interactuar con aplicacións que se executen con privilexios de administrador, ó menos que, por suposto, o mesmo NVDA tamén fora executado con estos privilexios (non é recomendable).
+- A incapacidade de ler as pantallas do Control de Contas do Usuario (UAC) cando tente iniciar unha aplicación con privilexios de administrador.
+- Windows 8: a incapacidade para soportar a entrada dende unha pantalla táctil.
+- Windows 8: a incapacidade de proporcionar características como modo navegación e fala de caracteres ó se escreber en Windows Store apps.
+
 
 ++ Instalando NVDA ++
 Se se instala NVDA directamente dende o paquete descargado do NVDA, preme o botón Instalar NVDA.
@@ -440,6 +448,7 @@ Ademáis, podes forzar manualmente o modo foco, despois permanecerá efectivo at
 | Procurar | NVDA+control+f | Desprega un diálogo no que podes teclear algún texto a atopar no  documento actual |
 | Procurar seguinte | NVDA+f3 | Atopa a seguinte  ocurrencia do texto no documento que buscaches anteriormente |
 | Procurar anterior | NVDA+shift+f3 | Atopa a ocurrencia anterior do texto no documento buscado anteriormente |
+| abrir descripción longa | NVDA+d | Abre unha ventá nova contendo unha descripción longa para o elemento sobre o que estea se ten unha. | 
 %kc:endInclude
 
 
