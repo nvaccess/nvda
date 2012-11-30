@@ -3,6 +3,19 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1 =
+
+
+== Nové vlastnosti ==
+- Základná podpora pre písanie a čítanie správ v Lotus Notes 8.5. (#543)
+- V režime prehliadania pre MSHTML (ako napríklad Internet explorer) a Gecko (napríklad Firefox), NVDA oznamuje dostupnosť dlhýh popisov. Dlhý popis sa dá zobraziť v novom okne po stlačení NVDA+d. (#809)
+
+
+== Opravy ==
+- Navigačné príkazy pre prechod na predchádzajuci a nasledujúci oddeľovač fungujú v prehliadači Internet Explorer a iných MSHTML prvkoch. (#2781)
+- Ak sa nepodarí načítať hlasový výstup a NVDA nastaví syntetizér eSpeak alebo Bez reči, tento syntetizér sa neuloží v nastaveniach, takže NVDA sa pokúsi načítať hlasový výstup pri najbližšom štarte.
+
+
 = 2012.3 =
 Prednosti tejto verzie zahŕňajú podporu pre písanie ázijských znakov, experimentálnu podporu dotykových obrazoviek v systémoch Windows 8, oznamovanie čísel strán a lepšiu navigáciu v tabuľkách programu Adobe Reader, podporu pre tabuľkové príkazy v tabuľkách a zoznamoch systému Windows, podporu pre nové brailovské riadky a možnosť oznamovania hlavičiek riadkov / stĺpcov v programe Microsoft Excel.
 
