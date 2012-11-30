@@ -409,7 +409,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	// Whether this node is a link or inside a link.
 	int inLink = states & STATE_SYSTEM_LINKED;
 	// Whether this node is interactive.
-	bool isInteractive = isEditable || inLink || (states & STATE_SYSTEM_FOCUSABLE && role != ROLE_SYSTEM_DOCUMENT) || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT;
+	bool isInteractive = isEditable || inLink || (states & STATE_SYSTEM_FOCUSABLE && role != ROLE_SYSTEM_DOCUMENT && role != IA2_ROLE_INTERNAL_FRAME) || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT;
 	// We aren't finished calculating isInteractive yet; actions are handled below.
 	// Whether the name is the content of this node.
 	bool nameIsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU;
