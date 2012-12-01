@@ -47,6 +47,9 @@ TABLES = (
 	("da-dk-g1.utb", _("Danish grade 1")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("da-dk-g2.ctb", _("Danish grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("de-de-comp8.ctb", _("German 8 dot computer braille")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
