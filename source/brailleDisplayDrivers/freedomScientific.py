@@ -13,6 +13,7 @@ import inputCore
 from baseObject import ScriptableObject
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
 from logHandler import log
+import brailleInput
 
 #Try to load the fs braille dll
 try:
@@ -227,7 +228,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 class InputGesture(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
-class KeyGesture(InputGesture):
+class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 
 	keyLabels=[
 		#Braille keys (byte 1)
@@ -257,8 +258,7 @@ class KeyGesture(InputGesture):
 		self.dots = keyBits & 0xff
 		# Is space?
 		if keyBits & (1 << 0x10):
-			self.chord = True
-
+			self.space = True
 
 class RoutingGesture(InputGesture):
 

@@ -11,6 +11,7 @@ import braille
 import config
 from logHandler import log
 import winUser
+import inputCore
 
 handler = None
 
@@ -46,3 +47,29 @@ class BrailleInputHandler(object):
 			input.ii.ki.dwFlags = winUser.KEYEVENTF_UNICODE
 			inputs.append(input)
 		winUser.SendInput(inputs)
+
+class BrailleInputGesture(inputCore.InputGesture):
+	"""Input from a braille keyboard.
+	This could either be as part of a braille display or a stand-alone unit.
+	L{dots} and L{space} should be set appropriately.
+	"""
+
+	#: Bitmask of pressed dots.
+	#: @type: int
+	dots = 0
+
+	#: Whether the space bar is pressed.
+	#: @type: bool
+	space = False
+
+	def _get_identifiers(self):
+		if self.space and self.dots:
+			dotsString = "+".join("dot%d" % (i+1) for i in xrange(8) if self.dots & (1 << i))
+			return ("bk:space+%s" % dotsString,
+				"bk:space+dots")
+		elif self.dots:
+			return ("bk:dots",)
+		elif self.space:
+			return ("bk:space",)
+		else:
+			return ()

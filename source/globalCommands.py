@@ -1202,7 +1202,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+downArrow": "decreaseSynthSetting",
 
 		# Braille keyboard
-		"br:dots" : "braille_dots",
+		"bk:dots" : "braille_dots",
 
 		# Tools
 		"kb:NVDA+f1": "navigatorObject_devInfo",

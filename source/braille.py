@@ -1497,6 +1497,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	"""A button, wheel or other control pressed on a braille display.
 	Subclasses must provide L{source} and L{id}.
 	L{routingIndex} should be provided for routing buttons.
+	Subclasses can also inherit from L{brailleInput.BrailleInputGesture} if the display has a braille keyboard.
 	If the braille display driver is a L{baseObject.ScriptableObject}, it can provide scripts specific to input gestures from this display.
 	"""
 
@@ -1520,19 +1521,11 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	#: @type: int
 	routingIndex = None
 
-	#: Bitmask of pressed dots if it is a braille keyboard gesture.
-	#: @type: int
-	dots = 0
-	
-	#: Is this a chord gesture or not. Chords are braille space bar plus any dot combination
-	chord = False
-
 	def _get_identifiers(self):
 		ids = [u"br({source}):{id}".format(source=self.source, id=self.id).lower()]
-		if self.dots:
-			dotsString = "+".join("dot%d" % (i+1) for i in xrange(8) if (1 << i) & self.dots)
-			ids.append("br:%s" % dotsString)
-			ids.append("br:dots")
+		import brailleInput
+		if isinstance(self, brailleInput.BrailleInputGesture):
+			ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
 		return ids
 
 	def _get_displayName(self):
