@@ -105,12 +105,9 @@ def resetConfiguration(factoryDefaults=False):
 	"""
 	import config
 	import braille
-	import brailleInput
 	import speech
 	import languageHandler
 	import inputCore
-	log.debug("Terminating braille input")
-	brailleInput.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
 	log.debug("terminating speech")
@@ -132,8 +129,6 @@ def resetConfiguration(factoryDefaults=False):
 	#braille
 	log.debug("Initializing braille")
 	braille.initialize()
-	log.debug("Initializing braille input")
-	brailleInput.initialize()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()
