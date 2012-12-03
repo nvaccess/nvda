@@ -95,7 +95,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def _getUSBPorts(cls):
 		return (p["port"] for p in hwPortUtils.listComPorts()
-				if p["hardwareID"].startswith("USB") and any(p["hardwareID"][3:].startswith(id) for id in USB_IDS))
+				if p["hardwareID"].startswith("USB\\") and any(p["hardwareID"][4:].startswith(id) for id in USB_IDS))
 
 	@classmethod
 	def _getBluetoothPorts(cls):
