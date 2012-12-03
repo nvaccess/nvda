@@ -558,7 +558,5 @@ KEYEVENTF_UNICODE = 0x04
 
 def SendInput(inputs):
 	n = len(inputs)
-	arr = (Input * n)()
-	for i, input in enumerate(inputs):
-		arr[i] = input
+	arr = (Input * n)(*inputs)
 	user32.SendInput(n, arr, sizeof(Input))
