@@ -5,15 +5,12 @@
 #Copyright (C) 2012 NV Access Limited
 #Copyright (C) 2012 Rui Batista
 
-
 import os.path
 import louis
-
 import braille
 import config
 from logHandler import log
 import winUser
-
 
 handler = None
 
@@ -26,8 +23,8 @@ def terminate():
 	global handler
 	handler = None
 
-
 class BrailleInputHandler(object):
+
 	def input(self, dots):
 		log.info(str(dots))
 		char = unichr(dots & 0xff)
