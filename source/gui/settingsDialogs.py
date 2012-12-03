@@ -1327,7 +1327,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		displayCls = braille._getDisplayDriver(displayName)
 		self.possiblePorts = []
 		try:
-			self.possiblePorts = list(displayCls.getPossiblePorts().iteritems())
+			self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
 		except NotImplementedError:
 			pass
 		if self.possiblePorts:
