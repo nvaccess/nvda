@@ -1294,7 +1294,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		display = self.displayNames[self.displayList.GetSelection()]
 		if display not in config.conf["braille"]:
 			config.conf["braille"][display] = {}
-		if self.portSelectionPossible:
+		if self.possiblePorts:
 			port = self.possiblePorts[self.portsList.GetSelection()][0]
 			config.conf["braille"][display]["port"] = port
 		if not braille.handler.setDisplayByName(display):
@@ -1326,28 +1326,22 @@ class BrailleSettingsDialog(SettingsDialog):
 		displayName = self.displayNames[self.displayList.GetSelection()]
 		displayCls = braille._getDisplayDriver(displayName)
 		self.possiblePorts = []
-		self.portSelectionPossible = True
 		try:
-			for k, v in displayCls.getPossiblePorts().iteritems():
-				self.possiblePorts.append((k,v),)
+			self.possiblePorts = list(displayCls.getPossiblePorts().iteritems())
 		except NotImplementedError:
-			self.portSelectionPossible = False
-		if self.portSelectionPossible:
+			pass
+		if self.possiblePorts:
 			self.portsList.SetItems([p[1] for p in self.possiblePorts])
 			try:
 				selectedPort = config.conf["braille"][displayName].get("port")
-				if selectedPort:
-					portNames = [p[0] for p in self.possiblePorts]
-					selection = portNames.index(selectedPort)
-				else:
-					# Port name is None on the config
-					selection = 0
-			except KeyError:
-				# Display name still not in the config.
+				portNames = [p[0] for p in self.possiblePorts]
+				selection = portNames.index(selectedPort)
+			except (KeyError, ValueError):
+				# Display name not in config or port not valid
 				selection = 0
 			self.portsList.SetSelection(selection)
 		# If no port selection is possible or only automatic selection is available, disable the port selection control
-		enable = self.portSelectionPossible and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
+		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
 		self.portsList.Enable(enable)
 
 class SpeechSymbolsDialog(SettingsDialog):
