@@ -28,7 +28,7 @@ class BrailleInputHandler(object):
 
 	def input(self, dots):
 		log.info(str(dots))
-		char = unichr(dots & 0xff)
+		char = unichr(dots | 0x8000)
 		text = louis.backTranslate(
 			[os.path.join(braille.TABLES_DIR, config.conf["braille"]["translationTable"]),
 			"braille-patterns.cti"],
@@ -67,10 +67,8 @@ class BrailleInputGesture(inputCore.InputGesture):
 			dotsString = "+".join("dot%d" % (i+1) for i in xrange(8) if self.dots & (1 << i))
 			return ("bk:space+%s" % dotsString,
 				"bk:space+dots")
-		elif self.dots:
+		elif self.dots or self.space:
 			return ("bk:dots",)
-		elif self.space:
-			return ("bk:space",)
 		else:
 			return ()
 
