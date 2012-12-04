@@ -73,3 +73,21 @@ class BrailleInputGesture(inputCore.InputGesture):
 			return ("bk:space",)
 		else:
 			return ()
+
+	def _get_displayName(self):
+		# Translators: Reported before braille input in input help mode.
+		out = [_("braille")]
+		if self.space and self.dots:
+			# Translators: Reported when braille space is pressed with dots in input help mode.
+			out.append(_("space with dot"))
+		elif self.dots:
+			# Translators: Reported when braille dots are pressed in input help mode.
+			out.append(_("dot"))
+		elif self.space:
+			# Translators: Reported when braille space is pressed in input help mode.
+			out.append(_("space"))
+		if self.dots:
+			for dot in xrange(8):
+				if self.dots & (1 << dot):
+					out.append(str(dot + 1))
+		return " ".join(out)
