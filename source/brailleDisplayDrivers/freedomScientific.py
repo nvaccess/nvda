@@ -256,7 +256,7 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 		# If some dots or space bar is pressed, this is a dots gesture.
 		self.dots = keyBits & 0xff
 		# Is space?
-		if keyBits & (1 << 0xff):
+		if keyBits & (1 << 0xf):
 			self.space = True
 
 class RoutingGesture(InputGesture):
