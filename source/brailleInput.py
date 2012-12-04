@@ -38,7 +38,6 @@ class BrailleInputHandler(object):
 	def input(self, dots):
 		"""Handle one cell of braille input.
 		"""
-		log.info(str(dots))
 		# liblouis requires us to set the highest bit for proper use of dotsIO.
 		char = unichr(dots | 0x8000)
 		text = louis.backTranslate(

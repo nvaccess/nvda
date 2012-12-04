@@ -217,7 +217,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 			"kb:alt+tab" : ("br(freedomScientific):dot2+dot3+dot4+dot5+brailleSpaceBar",),
 			"kb:escape" : ("br(freedomScientific):dot1+dot5+brailleSpaceBar",),
 			"kb:windows" : ("br(freedomScientific):dot2+dot4+dot5+dot6+brailleSpaceBar",),
-			"kb:space" : ("br(freedomScientific):brailleSpaceBar",),
 			"kb:windows+d" : ("br(freedomScientific):dot1+dot2+dot3+dot4+dot5+dot6+brailleSpaceBar",),
 			"reportCurrentLine" : ("br(freedomScientific):dot1+dot4+brailleSpaceBar",),
 			"showGui" :("br(freedomScientific):dot1+dot3+dot4+dot5+brailleSpaceBar",),
@@ -257,7 +256,7 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 		# If some dots or space bar is pressed, this is a dots gesture.
 		self.dots = keyBits & 0xff
 		# Is space?
-		if keyBits & (1 << 0x10):
+		if keyBits & (1 << 0xff):
 			self.space = True
 
 class RoutingGesture(InputGesture):
