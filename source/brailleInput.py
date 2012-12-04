@@ -2,8 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited
-#Copyright (C) 2012 Rui Batista
+#Copyright (C) 2012 NV Access Limited, Rui Batista
 
 import os.path
 import louis
@@ -13,6 +12,14 @@ from logHandler import log
 import winUser
 import inputCore
 
+"""Framework for handling braille input from the user.
+All braille input is represented by a {BrailleInputGesture}.
+Normally, all that is required is to create and execute a L{BrailleInputGesture},
+as there are built-in gesture bindings for braille input.
+"""
+
+#: The singleton BrailleInputHandler instance.
+#: @type: L{BrailleInputHandler}
 handler = None
 
 def initialize():
@@ -25,9 +32,14 @@ def terminate():
 	handler = None
 
 class BrailleInputHandler(object):
+	"""Handles braille input.
+	"""
 
 	def input(self, dots):
+		"""Handle one cell of braille input.
+		"""
 		log.info(str(dots))
+		# liblouis requires us to set the highest bit for proper use of dotsIO.
 		char = unichr(dots | 0x8000)
 		text = louis.backTranslate(
 			[os.path.join(braille.TABLES_DIR, config.conf["braille"]["translationTable"]),
@@ -49,7 +61,7 @@ class BrailleInputHandler(object):
 		winUser.SendInput(inputs)
 
 class BrailleInputGesture(inputCore.InputGesture):
-	"""Input from a braille keyboard.
+	"""Input (dots and/or space bar) from a braille keyboard.
 	This could either be as part of a braille display or a stand-alone unit.
 	L{dots} and L{space} should be set appropriately.
 	"""
