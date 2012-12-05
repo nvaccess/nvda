@@ -38,6 +38,8 @@ import watchdog
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
+VBufRemote_nodeHandle_t=ctypes.c_ulonglong
+
 
 def VBufStorage_findMatch_word(word):
 	return "~w%s" % word
@@ -68,11 +70,13 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		endOffset = ctypes.c_int()
 		docHandle = ctypes.c_int()
 		ID = ctypes.c_int()
-		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
+		node=VBufRemote_nodeHandle_t()
+		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID),ctypes.byref(node))
 		return docHandle.value, ID.value
 
 	def _getOffsetsFromFieldIdentifier(self, docHandle, ID):
-		node = NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
+		node=VBufRemote_nodeHandle_t()
+		NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID,ctypes.byref(node))
 		if not node:
 			raise LookupError
 		start = ctypes.c_int()
@@ -879,7 +883,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			raise ValueError("unknown direction: %s"%direction)
 		while True:
 			try:
-				node=NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset))
+				node=VBufRemote_nodeHandle_t()
+				NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
 			except:
 				return
 			if not node:
