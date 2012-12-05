@@ -1156,8 +1156,8 @@ If you do not have them already, you can obtain them from http://www.freedomscie
 Although this page only mentions the Focus 40 Blue display, the drivers support all Freedom Scientific displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
-By default, NVDA can automaticaly detect and connect to your Focus display, either connected via USB or bluetooth. However, when configuring the display, you can explicitly select "USB" or "bluetooth" ports, to restrict the connection type used.
-This might come useful if you want to connect the focus display to NVDA using bluetooth, but still be able charge it using USB power from your computer.
+By default, NVDA can automaticaly detect and connect to your Focus display, either connected via USB or bluetooth. However, when configuring the display, you can explicitly select "USB" or "bluetooth" ports, to restrict the connection type to be used.
+This might come useful if you want to connect the focus display to NVDA using bluetooth, but still be able to charge it using USB power from your computer.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1526,6 +1526,52 @@ Following are the Papenmeier command assignments for NVDA:
 | Report text formatting | upper routing row |
 %kc:endInclude
 
+++ Braillenote ++
+NVDA supports the Braillenote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader. The following models are supported:
+
+- Braillenote classic (serial connection only)
+- Braillenote PK (Serial and bluetooth connections)
+- Braillenote MPower (Serial and bluetooth connections)
+- Braillenote Apex (USB and Bluetooth connection)
+-
+
+When connecting your Braillenote to NVDA, you need to define the port that should be used for communications. If your device supports more than one type of connection, you must set the braille terminal port on braille terminal options. Please check the Braillenote manual for details.
+
+On NVDA's side, you may also need to set the port on the Braille Settings dialog.
+If NVDA detects your unit, when connected via USB or bluetooth, you can set the port to "automatic", "USB" or "bluetooth", depending on the available choices.
+If connecting using a legacy serial port (or an USB to serial converter), or if none of the previous options appear, you must explicitly choose the communications port to be used, from the list of hardware ports.
+
+Before connecting your Braillenote Apex using its USB client interface, you must install the provided drivers from Humanware.
+
+Following are the Braillenote command assignments for NVDA. Please check your Braillenote's documentation to find where these keys are located.
+
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | back |
+| Scroll braille display forward | advance |
+| Move braille display to previous line | previous |
+| Move braille display to next line | next |
+| Route to braille cell | routing |
+| Toggle braille tethered to | previous+next |
+| Up arrow key | space+dot1 |
+| Down arrow key | space+dot4 |
+| Left Arrow key | space+dot3 |
+| Right arrow key | space+dot6 |
+| Page up key | space+dot1+dot3 |
+| Page down key | space+dot4+dot6 |
+| Home key | space+dot1+dot2 |
+| End key | space+dot4+dot5 |
+| Control+home keys | space+dot1+dot2+dot3 |
+| Control+end keys | space+dot4+dot5+dot6 |
+| Space key | space |
+| Enter key | space+dot8 |
+| Backspace key | space+dot7 |
+| Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| Shift+tab keys | space+dot1+dot2+dot5+dot6 |
+| Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
+| Alt key | space+dot1+dot3+dot4 (space+m) |
+| Toggle input help | space+dot1+dot2+dot5 (space+h) |
+%kc:endInclude
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
