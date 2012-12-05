@@ -11,6 +11,7 @@
 - Notifications in Internet Explorer 9 and above are now spoken (such as content blocking or file downloads). (#2343)
 - Automatic reporting of table row and column headers is now supported for browse mode documents in Internet Explorer and other MSHTML controls. (#778)
 - New language: Aragonese
+- New braille translation table: Danish grade 2.
 
 
 == Bug Fixes ==
@@ -19,6 +20,8 @@
 - In browse mode in Mozilla applications, updates to tables are now rendered correctly. For example, in updated cells, row and column coordinates are reported and table navigation works as it should. (#2784)
 - In browse mode in web browsers, certain clickable unlabelled graphics which weren't previously rendered are now rendered correctly. (#2838)
 - Earlier versions of SecureCRT (such as 6.1.1) are now supported. (#2800)
+- For input  methods such as Easy Dots IME under XP, the reading string is now correctly reported.
+- The candidate list in the Chinese Simplified Microsoft Pinyin input method under Windows 7 is now correctly read when changing pages with left and right arrow, and when first opening it with Home.
 
 
 = 2012.3 =

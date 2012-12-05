@@ -5,7 +5,7 @@
 #See the file COPYING for more details.
 
 import ctypes
-from . import VirtualBuffer, VirtualBufferTextInfo
+from . import VirtualBuffer, VirtualBufferTextInfo, VBufRemote_nodeHandle_t
 import controlTypes
 import NVDAObjects.IAccessible
 import winUser
@@ -60,7 +60,8 @@ class WebKit(VirtualBuffer):
 		return True
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		node = NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.VBufHandle, docHandle, ID)
+		node=VBufRemote_nodeHandle_t()
+		NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.VBufHandle, docHandle, ID,ctypes.byref(node))
 		if not node:
 			return None
 		lresult = NVDAHelper.localLib.VBuf_getNativeHandleForNode(self.VBufHandle, node)
@@ -76,7 +77,8 @@ class WebKit(VirtualBuffer):
 		if not self.isReady or not obj.event_childID:
 			# We can only retrieve the node for objects obtained from events.
 			raise LookupError
-		node = NVDAHelper.localLib.VBuf_getNodeForNativeHandle(self.VBufHandle, obj.event_childID)
+		node=VBufRemote_nodeHandle_t()
+		NVDAHelper.localLib.VBuf_getNodeForNativeHandle(self.VBufHandle, obj.event_childID,ctypes.byref(node))
 		docHandle=ctypes.c_int()
 		ID=ctypes.c_int()
 		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(self.VBufHandle, node, ctypes.byref(docHandle), ctypes.byref(ID))
