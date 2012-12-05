@@ -222,7 +222,8 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			endOffset=ctypes.c_int()
 			docHandle=ctypes.c_int()
 			ID=ctypes.c_int()
-			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
+			node=VBufRemote_nodeHandle_t()
+			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID),ctypes.byref(node))
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
