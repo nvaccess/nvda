@@ -83,7 +83,7 @@ for i in xrange(1,9):
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "brailleNote"
 	# Translators: Names of braille displays
-	description = _("BrailleNote")
+	description = _("HumanWare BrailleNote")
 
 	@classmethod
 	def check(cls):
