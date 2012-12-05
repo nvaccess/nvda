@@ -259,7 +259,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:rightArrow": ("br(braillenote):space+d6",),
 			"kb:pageup": ("br(braillenote):space+d1+d3",),
 			"kb:pagedown": ("br(braillenote):space+d4+d6",),
-			"kb:home": ("br(braillenote):space+d1+d2+d3",),
+			"kb:home": ("br(braillenote):space+d1+d2",),
 			"kb:end": ("br(braillenote):space+d4+d5",),
 			"kb:control+home": ("br(braillenote):space+d1+d2+d3",),
 			"kb:control+end": ("br(braillenote):space+d4+d5+d6",),
