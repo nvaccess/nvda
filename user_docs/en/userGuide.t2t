@@ -697,12 +697,12 @@ No braille means that you are not using braille.
 Please see the [Supported Braille Displays #SupportedBrailleDisplays] section for more information about supported braille displays.
 
 ==== Port ====
-This option, if available, allows you to choose what port or type of connection will be used to talk to the braille display you have selected.
-It is a combobox containing the possible choices for your braille display. You can move among them using the arrow keys.
+This option, if available, allows you to choose what port or type of connection will be used to communicate with the braille display you have selected.
+It is a combo box containing the possible choices for your braille display.
 
-By default NVDA employes automatic port detection, which means the connection with the braille device will be established automaticaly, by scanning for available USB and bluetooth devices on your system.
-However, for some braille displays, you may be able to explicitly choose what port should be used, from a set of choices that depends on the specific braille display you have selected.
-Common options are "automatic" (which tells NVDA to employ the default automatic port selection procedure), "USB", "bluetooth", and legacy serial communication ports, if your braille display supports this type of communication.
+By default, NVDA employes automatic port detection, which means the connection with the braille device will be established automatically by scanning for available USB and bluetooth devices on your system.
+However, for some braille displays, you may be able to explicitly choose what port should be used.
+Common options are "Automatic" (which tells NVDA to employ the default automatic port selection procedure), "USB", "Bluetooth" and legacy serial communication ports if your braille display supports this type of communication.
 
 This option won't be available if your braille display only supports automatic port detection.
 
@@ -1156,8 +1156,9 @@ If you do not have them already, you can obtain them from http://www.freedomscie
 Although this page only mentions the Focus 40 Blue display, the drivers support all Freedom Scientific displays.
 If your system is running 64 bit Windows and the drivers were already installed by another screen reader, you will probably still need to install the drivers from this link, as the files required by NVDA were probably not installed by the other screen reader.
 
-By default, NVDA can automaticaly detect and connect to your Focus display, either connected via USB or bluetooth. However, when configuring the display, you can explicitly select "USB" or "bluetooth" ports, to restrict the connection type to be used.
-This might come useful if you want to connect the focus display to NVDA using bluetooth, but still be able to charge it using USB power from your computer.
+By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
+However, when configuring the display, you can explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
+This might be useful if you want to connect the focus display to NVDA using bluetooth, but still be able to charge it using USB power from your computer.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1526,24 +1527,25 @@ Following are the Papenmeier command assignments for NVDA:
 | Report text formatting | upper routing row |
 %kc:endInclude
 
-++ Braillenote ++
-NVDA supports the Braillenote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader. The following models are supported:
-
-- Braillenote classic (serial connection only)
-- Braillenote PK (Serial and bluetooth connections)
-- Braillenote MPower (Serial and bluetooth connections)
-- Braillenote Apex (USB and Bluetooth connection)
+++ HumanWare BrailleNote ++
+NVDA supports the BrailleNote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader.
+The following models are supported:
+- BrailleNote Classic (serial connection only)
+- BrailleNote PK (Serial and bluetooth connections)
+- BrailleNote MPower (Serial and bluetooth connections)
+- BrailleNote Apex (USB and Bluetooth connections)
 -
 
-When connecting your Braillenote to NVDA, you need to define the port that should be used for communications. If your device supports more than one type of connection, you must set the braille terminal port on braille terminal options. Please check the Braillenote manual for details.
+If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
+Please check the BrailleNote manual for details.
+In NVDA, you may also need to set the port in the Braille Settings dialog.
+If you are connecting via USB or bluetooth, you can set the port to "Automatic", "USB" or "Bluetooth", depending on the available choices.
+If connecting using a legacy serial port (or a USB to serial converter) or if none of the previous options appear, you must explicitly choose the communication port to be used from the list of hardware ports.
 
-On NVDA's side, you may also need to set the port on the Braille Settings dialog.
-If NVDA detects your unit, when connected via USB or bluetooth, you can set the port to "automatic", "USB" or "bluetooth", depending on the available choices.
-If connecting using a legacy serial port (or an USB to serial converter), or if none of the previous options appear, you must explicitly choose the communications port to be used, from the list of hardware ports.
+Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
 
-Before connecting your Braillenote Apex using its USB client interface, you must install the provided drivers from Humanware.
-
-Following are the Braillenote command assignments for NVDA. Please check your Braillenote's documentation to find where these keys are located.
+Following are the BrailleNote command assignments for NVDA.
+Please check your BrailleNote's documentation to find where these keys are located.
 
 %kc:beginInclude
 || Name | Key |
@@ -1572,6 +1574,7 @@ Following are the Braillenote command assignments for NVDA. Please check your Br
 | Alt key | space+dot1+dot3+dot4 (space+m) |
 | Toggle input help | space+dot1+dot2+dot5 (space+h) |
 %kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
