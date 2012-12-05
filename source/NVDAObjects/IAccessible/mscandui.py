@@ -127,6 +127,7 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 		"kb:pageUp":"changePage",
 		"kb:leftArrow":"changePage",
 		"kb:rightArrow":"changePage",
+		"kb:space":"changePage",
 		"kb:enter":"activate",
 	}
 
