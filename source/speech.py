@@ -858,7 +858,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
-		textList.append(_("with %s rows and %s columns")%(rowCount,columnCount))
+		textList.append(_("with {rowCount} rows and {columnCount} columns").format(rowCount=rowCount,columnCount=columnCount))
 	elif columnCount and not rowCount:
 		textList.append(_("with %s columns")%columnCount)
 	elif rowCount and not columnCount:
@@ -1168,7 +1168,7 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if newTable:
 		columnCount=tableInfo.get("column-count",0)
 		rowCount=tableInfo.get("row-count",0)
-		text=_("table with %s columns and %s rows")%(columnCount,rowCount)
+		text=_("table with {columnCount} columns and {rowCount} rows").format(columnCount=columnCount,rowCount=rowCount)
 		textList.append(text)
 	oldColumnNumber=oldTableInfo.get("column-number",0) if oldTableInfo else 0
 	columnNumber=tableInfo.get("column-number",0)
