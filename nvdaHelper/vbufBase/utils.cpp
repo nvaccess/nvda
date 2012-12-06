@@ -140,3 +140,16 @@ void multiValueAttribsStringToMap(const wstring &attribsString, multiValueAttrib
 		}
 	}
 }
+
+bool nodeHasUsefulContent(VBufStorage_fieldNode_t* node) {
+	int length = node->getLength();
+	if (length == 0)
+		return false;
+	if (length > 3)
+		return true;
+	wstring content;
+	node->getTextInRange(0, length, content, false);
+	if (isWhitespace(content.c_str()))
+		return false;
+	return true;
+}
