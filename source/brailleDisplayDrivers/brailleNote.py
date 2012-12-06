@@ -5,8 +5,8 @@
 # Copyright (C) 2011, 2012  Rui Batista <ruiandrebatista@gmail.com>
 
 """ Braille Display driver for the BrailleNote notetakers in terminal mode.
-
-This driver is experimental. It only supports serial communcation (rs-232) and (hopefully) bluetooth.
+USB, serial and bluetooth communications are supported.
+QWERTY keyboard input and scroll weels are not yet supported.
 """
 from collections import OrderedDict
 import itertools
@@ -43,9 +43,6 @@ THUNB_KEYS_TAG = 0x84
 CURSOR_KEY_TAG = 0x85
 # Status 
 STATUS_TAG = 0x86
-
-# ACCEPTED COMMANDS
-ACCEPTED_COMMANDS = [DOTS_TAG, DOTS_SPACE_TAG, DOTS_BACKSPACE_TAG, DOTS_ENTER_TAG, THUNB_KEYS_TAG, CURSOR_KEY_TAG]
 
 DESCRIBE_TAG = "\x1B?"
 DISPLAY_TAG = "\x1bB"
