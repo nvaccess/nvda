@@ -103,7 +103,7 @@ wstring getNameForURL(const wstring &url) {
 
 bool isWhitespace(const wchar_t *str) {
 	for (const wchar_t *c = str; *c; ++c) {
-		if (*c == L'\n' || !iswspace(*c))
+		if (!iswspace(*c))
 			return false;
 	}
 	return true;
