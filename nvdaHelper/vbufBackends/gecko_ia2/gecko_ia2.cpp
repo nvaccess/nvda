@@ -729,15 +729,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			}
 		}
 
-		if (nameIsContent && parentNode->getLength() == 0) {
-			// If there is no content and the name should be the content,
+		if (nameIsContent && !nodeHasUsefulContent(parentNode)) {
+			// If there is no useful content and the name should be the content,
 			// render the name if there is one.
 			if(name) {
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
-				if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
+				tempNode = buffer->addTextFieldNode(parentNode, NULL, name);
+				if(tempNode && !locale.empty()) tempNode->addAttribute(L"language", locale);
 			} else if(role==ROLE_SYSTEM_LINK&&value) {
 				// If a link has no name, derive it from the URL.
-				previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
+				buffer->addTextFieldNode(parentNode, NULL, getNameForURL(value));
 			}
 		}
 
