@@ -268,8 +268,12 @@ def getToshibaBluetoothPortInfo(port):
 				break
 			with winreg.OpenKey(rootKey, keyName) as itemKey:
 				with winreg.OpenKey(itemKey, "SCORIGINAL") as scorigKey:
-					if winreg.QueryValueEx(scorigKey, "PORTNAME")[0].rstrip("\0") != port:
-						# This isn't the port we're interested in.
+					try:
+						if winreg.QueryValueEx(scorigKey, "PORTNAME")[0].rstrip("\0") != port:
+							# This isn't the port we're interested in.
+							continue
+					except WindowsError:
+						# This isn't a COM port.
 						continue
 				addr = winreg.QueryValueEx(itemKey, "BDADDR")[0]
 				# addr is a string of raw bytes.
