@@ -197,8 +197,6 @@ def listComPorts(onlyAvailable=True):
 				try:
 					entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
 				except:
-					if port == "COM40":
-						raise
 					pass
 			ctypes.windll.advapi32.RegCloseKey(regKey)
 
