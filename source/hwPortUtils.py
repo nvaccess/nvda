@@ -178,11 +178,11 @@ def listComPorts(onlyAvailable=True):
 				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
 					raise ctypes.WinError()
 			else:
-				hwId = entry["hardwareID"] = buf.value
+				hwID = entry["hardwareID"] = buf.value
 
 			regKey = ctypes.windll.setupapi.SetupDiOpenDevRegKey(g_hdi, ctypes.byref(devinfo), DICS_FLAG_GLOBAL, 0, DIREG_DEV, winreg.KEY_READ)
 			port = entry["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
-			if hwId.startswith("BTHENUM\\"):
+			if hwID.startswith("BTHENUM\\"):
 				# This is a Microsoft bluetooth port.
 				try:
 					addr = winreg.QueryValueEx(regKey, "Bluetooth_UniqueID")[0].split("#", 1)[1].split("_", 1)[0]
@@ -192,7 +192,7 @@ def listComPorts(onlyAvailable=True):
 						entry["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
 				except:
 					pass
-			elif hwId.startswith("Bluetooth\\"):
+			elif hwID.startswith("Bluetooth\\"):
 				# This is a Toshiba bluetooth port.
 				try:
 					entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
