@@ -13,6 +13,8 @@
 - New language: Aragonese
 - New braille translation table: Danish grade 2.
 - Support for braille displays connected via bluetooth on a computer running the Bluetooth Stack for Windows by Toshiba. (#2419)
+- Support for port selection when using freedom Scientific displays (Automatic, USB or Bluetooth).
+- Support for the BrailleNote family of notetakers from Humanware when acting as a braille terminal for a screen reader. (#2012)
 
 
 == Bug Fixes ==
@@ -24,6 +26,12 @@
 - For input  methods such as Easy Dots IME under XP, the reading string is now correctly reported.
 - The candidate list in the Chinese Simplified Microsoft Pinyin input method under Windows 7 is now correctly read when changing pages with left and right arrow, and when first opening it with Home.
 - When custom symbol pronunciation information is saved, the advanced "preserve" field is no longer removed. (#2852)
+
+
+== Changes for Developers ==
+- Braille display drivers can now support manual port selection. (#426)
+ - This is most useful for braille displays which support connection via a legacy serial port.
+ - This is done using the getPossiblePorts class method on the BrailleDisplayDriver class.
 
 
 = 2012.3 =
