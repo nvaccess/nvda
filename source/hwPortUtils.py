@@ -3,6 +3,7 @@
 # Original serial scanner code from http://pyserial.svn.sourceforge.net/viewvc/*checkout*/pyserial/trunk/pyserial/examples/scanwin32.py
 # Modifications and enhancements by James Teh
 
+import itertools
 import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD
 import _winreg as winreg
@@ -177,12 +178,12 @@ def listComPorts(onlyAvailable=True):
 				if ctypes.GetLastError() != ERROR_INSUFFICIENT_BUFFER:
 					raise ctypes.WinError()
 			else:
-				entry["hardwareID"] = buf.value
+				hwId = entry["hardwareID"] = buf.value
 
 			regKey = ctypes.windll.setupapi.SetupDiOpenDevRegKey(g_hdi, ctypes.byref(devinfo), DICS_FLAG_GLOBAL, 0, DIREG_DEV, winreg.KEY_READ)
-			entry["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
-			if entry["hardwareID"].startswith("BTHENUM\\"):
-				# This is a bluetooth port.
+			port = entry["port"] = winreg.QueryValueEx(regKey, "PortName")[0]
+			if hwId.startswith("BTHENUM\\"):
+				# This is a Microsoft bluetooth port.
 				try:
 					addr = winreg.QueryValueEx(regKey, "Bluetooth_UniqueID")[0].split("#", 1)[1].split("_", 1)[0]
 					addr = int(addr, 16)
@@ -190,6 +191,14 @@ def listComPorts(onlyAvailable=True):
 					if addr:
 						entry["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
 				except:
+					pass
+			elif hwId.startswith("Bluetooth\\"):
+				# This is a Toshiba bluetooth port.
+				try:
+					entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
+				except:
+					if port == "COM40":
+						raise
 					pass
 			ctypes.windll.advapi32.RegCloseKey(regKey)
 
@@ -249,3 +258,23 @@ def getBluetoothDeviceInfo(address):
 	if res != 0:
 		raise ctypes.WinError(res)
 	return devInfo
+
+def getToshibaBluetoothPortInfo(port):
+	with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Toshiba\BluetoothStack\V1.0\EZC\DATA") as rootKey:
+		for index in itertools.count():
+			try:
+				keyName = winreg.EnumKey(rootKey, index)
+			except WindowsError:
+				break
+			with winreg.OpenKey(rootKey, keyName) as itemKey:
+				with winreg.OpenKey(itemKey, "SCORIGINAL") as scorigKey:
+					if winreg.QueryValueEx(scorigKey, "PORTNAME")[0].rstrip("\0") != port:
+						# This isn't the port we're interested in.
+						continue
+				addr = winreg.QueryValueEx(itemKey, "BDADDR")[0]
+				# addr is a string of raw bytes.
+				# Convert it to a single number.
+				addr = sum(ord(byte) << (byteNum * 8) for byteNum, byte in enumerate(reversed(addr)))
+				name = winreg.QueryValueEx(itemKey, "FRIENDLYNAME")[0].rstrip("\0")
+				return addr, name
+	raise LookupError
