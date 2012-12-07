@@ -7,9 +7,9 @@
 # Softaragones
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA main:5609\n"
+"Project-Id-Version: NVDA bzr main:5672\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-11-14 16:28+0000\n"
+"POT-Creation-Date: 2012-12-06 07:35+0000\n"
 "PO-Revision-Date: 2012-11-27 22:59+0100\n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -31,23 +31,11 @@ msgstr " y lo modulo actualment cargau ye %s"
 msgid "%d characters"
 msgstr "%d caracters"
 
-#. Translators: This is the estimated remaining runtime of the laptop battery.
-#: globalCommands.py:864
-#, python-format
-msgid "%d hours and %d minutes remaining"
-msgstr "En queda arredol de %d horas y %d minutos"
-
 #. Translators: This is presented to inform the user of the current battery percentage.
 #: globalCommands.py:860 NVDAObjects/behaviors.py:57
 #, python-format
 msgid "%d percent"
 msgstr "%d por cient"
-
-#. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-#: NVDAObjects/window/excel.py:313
-#, python-format
-msgid "%s %s through %s %s"
-msgstr "Dende %s %s enta %s %s"
 
 #: globalCommands.py:314 globalCommands.py:774
 #, python-format
@@ -61,7 +49,7 @@ msgstr "%s cursor"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:565
+#: braille.py:568
 #, python-format
 msgid "%s end"
 msgstr "fin de %s"
@@ -71,7 +59,7 @@ msgstr "fin de %s"
 msgid "%s items"
 msgstr "%s elementos"
 
-#: virtualBuffers/__init__.py:235 virtualBuffers/__init__.py:243
+#: virtualBuffers/__init__.py:240 virtualBuffers/__init__.py:248
 #, python-format
 msgid "%s landmark"
 msgstr "zona %s"
@@ -91,7 +79,7 @@ msgstr "&Acceleración"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers/__init__.py:312
+#: virtualBuffers/__init__.py:317
 msgid "&Activate"
 msgstr "&Activar"
 
@@ -163,7 +151,7 @@ msgstr "&Editar"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: virtualBuffers/__init__.py:302
+#: virtualBuffers/__init__.py:307
 msgid "&Filter by:"
 msgstr "&Filtrar por:"
 
@@ -173,7 +161,7 @@ msgstr "Opcions &Chenerals..."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers/__init__.py:271
+#: virtualBuffers/__init__.py:276
 msgid "&Headings"
 msgstr "&Capiters"
 
@@ -240,7 +228,7 @@ msgstr "Opcions de &churi..."
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers/__init__.py:317
+#: virtualBuffers/__init__.py:322
 msgid "&Move to"
 msgstr "&Mover ta"
 
@@ -339,38 +327,38 @@ msgid "&Warn before exiting NVDA"
 msgstr "&Alvertir antis de salir de NVDA"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-#: braille.py:273
+#: braille.py:276
 msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-#: braille.py:255
+#: braille.py:258
 msgid "(-)"
 msgstr "(-)"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-#: braille.py:253
+#: braille.py:256
 msgid "(x)"
 msgstr "(x)"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-#: braille.py:265
+#: braille.py:268
 msgid "+"
 msgstr "+"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-#: braille.py:263
+#: braille.py:266
 msgid "-"
 msgstr "-"
 
 #. Translators: Displayed in braille for an object which is a
 #. separator.
-#: braille.py:245
+#: braille.py:248
 msgid "-----"
 msgstr "-----"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
-#: braille.py:261
+#: braille.py:264
 msgid "..."
 msgstr "..."
 
@@ -674,7 +662,7 @@ msgstr "CC:"
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
 #: NVDAObjects/inputComposition.py:103 NVDAObjects/IAccessible/mscandui.py:44
-#: NVDAObjects/IAccessible/mscandui.py:177
+#: NVDAObjects/IAccessible/mscandui.py:190
 msgid "Candidate"
 msgstr "Candidato"
 
@@ -741,13 +729,13 @@ msgstr "Mirando actualizacions"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:200
+#: braille.py:203
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "Chino (Hong Kong, Cantonés)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:203
+#: braille.py:206
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "Chino (Taiwan, Mandarín)"
 
@@ -927,7 +915,7 @@ msgstr "Creyando una Copia Portable"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:119
+#: braille.py:122
 msgid "Croatian 8 dot computer braille"
 msgstr "Braille Crovata computerizau de 8 puntos"
 
@@ -968,6 +956,12 @@ msgstr "Checo grau 1"
 #: braille.py:47
 msgid "Danish grade 1"
 msgstr "Danés grau 1"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:50
+msgid "Danish grade 2"
+msgstr "Danés grau 2"
 
 #. Translators: This is presented in outlook or live mail, date of email
 #: appModules/msimn.py:33
@@ -1035,13 +1029,13 @@ msgstr "Se ye descargando l'actualización"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:140
+#: braille.py:143
 msgid "Dutch (Belgium) grade 1"
 msgstr "Neerlandés (Belchica) grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:143
+#: braille.py:146
 msgid "Dutch (netherlands) grade 1"
 msgstr "Neerlandés (Países Baixos) grau 1"
 
@@ -1065,7 +1059,7 @@ msgid "Edit Dictionary Entry"
 msgstr "Edición de Dentrada de Diccionario"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: virtualBuffers/__init__.py:283
+#: virtualBuffers/__init__.py:288
 msgid "Elements List"
 msgstr "Lista d'Elementos"
 
@@ -1086,37 +1080,37 @@ msgstr "Notas finals"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:62
+#: braille.py:65
 msgid "English (U.K.) grade 1"
 msgstr "Anglés (U.K.) grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:65
+#: braille.py:68
 msgid "English (U.K.) grade 2"
 msgstr "Anglés (U.K.) grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:68
+#: braille.py:71
 msgid "English (U.S.) 6 dot computer braille"
 msgstr "Braille d'Ordinador de 6 puntos Anglés (U.S.)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:71
+#: braille.py:74
 msgid "English (U.S.) 8 dot computer braille"
 msgstr "Braille d'Ordinador de 8 puntos Anglés (U.S.)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:74
+#: braille.py:77
 msgid "English (U.S.) grade 1"
 msgstr "Anglés (U.S.) grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:77
+#: braille.py:80
 msgid "English (U.S.) grade 2"
 msgstr "Anglés (U.S.) grau 2"
 
@@ -1166,13 +1160,13 @@ msgstr "Error en alzar log: %s"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:86
+#: braille.py:89
 msgid "Estonian grade 0"
 msgstr "Estonio grau 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:89
+#: braille.py:92
 msgid "Ethiopic grade 1"
 msgstr "Etiope grau 1"
 
@@ -1242,7 +1236,7 @@ msgstr "Fallo en a busca"
 
 #. braille settings dialog.
 #. Translators: The name of a braille table displayed in the
-#: braille.py:92
+#: braille.py:95
 msgid "Finnish 8 dot computer braille"
 msgstr "Braille computerizau Finlandés de 8 puntos"
 
@@ -1298,31 +1292,31 @@ msgstr "Serie d'as Freedom Scientific Focus/PAC Mate"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:95
+#: braille.py:98
 msgid "French (Canada) grade 1"
 msgstr "Francés (Canadá) grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:98
+#: braille.py:101
 msgid "French (Canada) grade 2"
 msgstr "Francés (Canadá) grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:101
+#: braille.py:104
 msgid "French (unified) 6 dot computer braille"
 msgstr "Braille d'ordinador de 6 puntos francés (unificau)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:104
+#: braille.py:107
 msgid "French (unified) 8 dot computer braille"
 msgstr "Braille d'ordinador de 8 puntos francés (unificau)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:107
+#: braille.py:110
 msgid "French (unified) Grade 2"
 msgstr "Francés (unificau) Grau 2"
 
@@ -1347,31 +1341,31 @@ msgstr "Opcions chenerals"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:50
+#: braille.py:53
 msgid "German 8 dot computer braille"
 msgstr "Braille Alemán computerizau de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:53
+#: braille.py:56
 msgid "German grade 0"
 msgstr "Alemán grau 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:56
+#: braille.py:59
 msgid "German grade 1"
 msgstr "Alemán grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:59
+#: braille.py:62
 msgid "German grade 2"
 msgstr "Alemán grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:110
+#: braille.py:113
 msgid "Greek (Greece) grade 1"
 msgstr "Griego (Grecia) grau 1"
 
@@ -1402,13 +1396,13 @@ msgstr "Linias braille Handy Tech"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:113
+#: braille.py:116
 msgid "Hebrew 8 dot computer braille"
 msgstr "Braille computerizau Hebreu de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:116
+#: braille.py:119
 msgid "Hindi grade 1"
 msgstr "Hindi grau 1"
 
@@ -1419,13 +1413,13 @@ msgstr "serie d'as HumanWare Brailliant BI/B"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:122
+#: braille.py:125
 msgid "Hungarian 8 dot computer braille"
 msgstr "Braille computerizau hungaro de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:125
+#: braille.py:128
 msgid "Hungarian grade 1"
 msgstr "Hungaro grau 1"
 
@@ -1457,7 +1451,7 @@ msgstr "cursiva"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:128
+#: braille.py:131
 msgid "Icelandic 8 dot computer braille"
 msgstr "Braille computerizau islandés de 8 puntos"
 
@@ -1517,13 +1511,13 @@ msgstr "Unidat %s invalida"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:131
+#: braille.py:134
 msgid "Italian 6 dot computer braille"
 msgstr "Braille computerizau italián de 6 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:134
+#: braille.py:137
 msgid "Italian 8 dot computer braille"
 msgstr "Braille computerizado italián de 8 puntos"
 
@@ -1548,7 +1542,7 @@ msgstr "Ran de mensaches alzaus en o &Log:"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers/__init__.py:274
+#: virtualBuffers/__init__.py:279
 msgid "Lan&dmarks"
 msgstr "&Zonas"
 
@@ -1566,7 +1560,7 @@ msgstr "Error d'idioma"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:137
+#: braille.py:140
 msgid "Latvian grade 1"
 msgstr "Letón grau 1"
 
@@ -1584,7 +1578,7 @@ msgstr "Acceptando a Licencia"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers/__init__.py:268
+#: virtualBuffers/__init__.py:273
 msgid "Lin&ks"
 msgstr "&Vinclos"
 
@@ -1592,7 +1586,7 @@ msgstr "&Vinclos"
 msgid "Loading NVDA. Please wait..."
 msgstr "Cargando NVDA. Aspera por favor..."
 
-#: virtualBuffers/__init__.py:641
+#: virtualBuffers/__init__.py:646
 msgid "Loading document..."
 msgstr "Se ye cargando o documento..."
 
@@ -1671,7 +1665,7 @@ msgstr ""
 "posición d'o cursor de revisión dentro d'a revisión plana"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: virtualBuffers/__init__.py:1454
+#: virtualBuffers/__init__.py:1467
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr ""
 "Se mueve ta la fin de l'elemento contenedor, tal como una lista u tabla"
@@ -1829,7 +1823,7 @@ msgstr ""
 "sintetizador"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: virtualBuffers/__init__.py:1436
+#: virtualBuffers/__init__.py:1449
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr ""
 "Se mueve ta l'empecipio d'un elemento contenedor, tal como una lista u tabla"
@@ -1933,7 +1927,8 @@ msgstr "No bi ha garra información de posición t'o navegador d'obchectos"
 msgid "No location information for screen"
 msgstr "No bi ha garra información de posición t'a pantalla"
 
-#: virtualBuffers/__init__.py:828
+#. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+#: virtualBuffers/__init__.py:839
 msgid "No long description"
 msgstr "No bi ha garra descripción larga"
 
@@ -1994,43 +1989,43 @@ msgstr "NonVisual Desktop Access"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:146
+#: braille.py:149
 msgid "Norwegian 8 dot computer braille"
 msgstr "Braille noruego computerizau de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:149
+#: braille.py:152
 msgid "Norwegian grade 0"
 msgstr "Noruego grau 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:152
+#: braille.py:155
 msgid "Norwegian grade 1"
 msgstr "Noruego grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:155
+#: braille.py:158
 msgid "Norwegian grade 2"
 msgstr "Noruego grau 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:158
+#: braille.py:161
 msgid "Norwegian grade 3"
 msgstr "Noruego grau 3"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers/__init__.py:1429 virtualBuffers/__init__.py:1443
+#: virtualBuffers/__init__.py:1442 virtualBuffers/__init__.py:1456
 msgid "Not in a container"
 msgstr "No yes en un contenedor"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: virtualBuffers/__init__.py:1304
+#: virtualBuffers/__init__.py:1317
 msgid "Not in a table cell"
 msgstr "No yes en una celda de tabla"
 
@@ -2046,15 +2041,14 @@ msgid "Object Presentation"
 msgstr "Presentación d'Obchectos"
 
 #: globalCommands.py:335
-#, python-format
 msgid ""
-"Object edges positioned %.1f per cent from left edge of screen, %.1f per "
-"cent from top edge of screen, width is %.1f per cent of screen, height is "
-"%.1f per cent of screen"
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
 msgstr ""
-"Os bordes de l'obchecto se colocan en %.1f por cient dende o canto cucho de "
-"a pantalla, %.1f por cient dende o canto superior d'a pantalla, a amplaria "
-"ye %.1f por cient d'a pantalla, l'altura ye %.1f por cient d'a pantalla"
+"Os bordes de l'obchecto se colocan en {left:.1f} por cient dende o canto cucho de "
+"a pantalla, {top:.1f} por cient dende o canto superior d'a pantalla, a amplaria "
+"ye {width:.1f} por cient d'a pantalla, l'altura ye {height:.1f} por cient d'a pantalla"
 
 #: gui/__init__.py:475
 msgid "Options"
@@ -2162,7 +2156,7 @@ msgstr "Plugins recargaus"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:161
+#: braille.py:164
 msgid "Polish grade 1"
 msgstr "Polaco grau 1"
 
@@ -2174,23 +2168,23 @@ msgstr "&Directorio portable:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:164
+#: braille.py:167
 msgid "Portuguese 8 dot computer braille"
 msgstr "Braille computerizau portugués de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:167
+#: braille.py:170
 msgid "Portuguese grade 1"
 msgstr "Portugués grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:170
+#: braille.py:173
 msgid "Portuguese grade 2"
 msgstr "Portugués grau 2"
 
-#: virtualBuffers/__init__.py:931
+#: virtualBuffers/__init__.py:944
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Presienta una lista de vinclos, capiters u zonas"
 
@@ -2281,11 +2275,11 @@ msgid "Refresh\tF5"
 msgstr "Refrescar\tF5"
 
 #. If this buffer has already had focus once while loaded, this is a refresh.
-#: virtualBuffers/__init__.py:636
+#: virtualBuffers/__init__.py:641
 msgid "Refreshed"
 msgstr "Refrescau"
 
-#: virtualBuffers/__init__.py:842
+#: virtualBuffers/__init__.py:854
 msgid "Refreshes the document content"
 msgstr "Refresca o conteniu d'o documento"
 
@@ -2655,7 +2649,7 @@ msgstr "Leva o cursor u activa l'obchecto baixo a celda braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:173
+#: braille.py:176
 msgid "Russian grade 1"
 msgstr "Ruso grau 1"
 
@@ -2681,7 +2675,7 @@ msgstr "Desplaza a linia braille enta zaga"
 msgid "Scrolls the braille display forward"
 msgstr "Desplaza a linia braille enta debant"
 
-#: IAccessibleHandler.py:667
+#: IAccessibleHandler.py:672
 msgid "Secure Desktop"
 msgstr "Escritorio Seguro"
 
@@ -2697,7 +2691,7 @@ msgstr "Seleccionar directorio portable"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:185
+#: braille.py:188
 msgid "Serbian grade 1"
 msgstr "Serbio grau 1"
 
@@ -2771,7 +2765,8 @@ msgstr "Amuestra o dialogo Sintetizadors de NVDA"
 msgid "Shows the NVDA voice settings dialog"
 msgstr "Amuestra o dialogo Opcions de Voz de NVDA"
 
-#: virtualBuffers/__init__.py:829
+#. Translators: the description for the activateLongDescription script on virtualBuffers.
+#: virtualBuffers/__init__.py:841
 msgid "Shows the long description at this position if one is found."
 msgstr "Amuestra a descripción larga en ista posición si bi'n ha una"
 
@@ -2793,25 +2788,25 @@ msgstr "Modo silencioso activau"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:179
+#: braille.py:182
 msgid "Slovak"
 msgstr "Eslovaco"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:182
+#: braille.py:185
 msgid "Slovene grade 1"
 msgstr "Esloveno grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:80
+#: braille.py:83
 msgid "Spanish 8 dot computer braille"
 msgstr "Braille espanyol computerizau de 8 puntos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:83
+#: braille.py:86
 msgid "Spanish grade 1"
 msgstr "Espanyol grau 1"
 
@@ -2924,7 +2919,7 @@ msgstr "S'ha esviellau bien a instalación de NVDA. "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:176
+#: braille.py:179
 msgid "Swedish grade 1"
 msgstr "Sueco grau 1"
 
@@ -2948,11 +2943,11 @@ msgstr "Error de Sintetizador"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:188
+#: braille.py:191
 msgid "Tamil grade 1"
 msgstr "Tamil grau 1"
 
-#: NVDAObjects/IAccessible/__init__.py:1617
+#: NVDAObjects/IAccessible/__init__.py:1621
 msgid "Taskbar"
 msgstr "Barra de quefers"
 
@@ -3086,7 +3081,7 @@ msgstr ""
 "desactivauNVDA no charra cosa. Quan ye en chuflar NVDA nomás chufla quan "
 "ameniste alvertir de bella cosa. Quan ye en charrar NVDA charra  normalment."
 
-#: virtualBuffers/__init__.py:848
+#: virtualBuffers/__init__.py:860
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
@@ -3152,7 +3147,7 @@ msgstr "Traducción:"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:191
+#: braille.py:194
 msgid "Turkish grade 1"
 msgstr "Turco grau 1"
 
@@ -3177,7 +3172,7 @@ msgstr "Tecleya o texto que deseyas trobar"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers/__init__.py:288
+#: virtualBuffers/__init__.py:293
 msgid "Type:"
 msgstr "Tipo:"
 
@@ -3198,13 +3193,13 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:194
+#: braille.py:197
 msgid "Unified English Braille Code grade 1"
 msgstr "Codigo Braille Grau 1 Anglés Unificau"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:197
+#: braille.py:200
 msgid "Unified English Braille Code grade 2"
 msgstr "Codigo Braille Grau 2 Anglés Unificau"
 
@@ -3408,7 +3403,7 @@ msgstr ""
 msgid "activate"
 msgstr "activar"
 
-#: virtualBuffers/__init__.py:834
+#: virtualBuffers/__init__.py:846
 msgid "activates the current object in the document"
 msgstr "activa l'obchecto actual en o documento"
 
@@ -3551,7 +3546,7 @@ msgstr "canto"
 
 #. Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container.
 #: globalCommands.py:493 globalCommands.py:501 globalCommands.py:535
-#: virtualBuffers/__init__.py:1449
+#: virtualBuffers/__init__.py:1462
 msgid "bottom"
 msgstr "fin"
 
@@ -3570,7 +3565,7 @@ msgstr "pausa"
 msgid "brightness controls audio coordinates volume"
 msgstr "o brilo controla o volumen d'as coordenadas de l'audio"
 
-#: virtualBuffers/__init__.py:1554
+#: virtualBuffers/__init__.py:1567
 msgid "browse mode"
 msgstr "modo navegación"
 
@@ -3581,7 +3576,7 @@ msgstr "aturar o navegador"
 
 #. Translators: Displayed in braille for an object which is a
 #. button.
-#: braille.py:221
+#: braille.py:224
 msgid "btn"
 msgstr "btn"
 
@@ -3595,7 +3590,7 @@ msgstr "botón"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:474
+#: braille.py:477
 #, python-format
 msgid "c%s"
 msgstr "c%s"
@@ -3643,7 +3638,7 @@ msgstr "caso"
 
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
-#: braille.py:230
+#: braille.py:233
 msgid "cbo"
 msgstr "cbo"
 
@@ -3683,7 +3678,7 @@ msgstr "marcau"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
-#: braille.py:224
+#: braille.py:227
 msgid "chk"
 msgstr "cxv"
 
@@ -3692,7 +3687,7 @@ msgid "clickable"
 msgstr "clicable"
 
 #. Translators: Displayed in braille when an object is clickable.
-#: braille.py:269
+#: braille.py:272
 msgid "clk"
 msgstr "clc"
 
@@ -3842,7 +3837,7 @@ msgstr "Desplazar anvista"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
-#: braille.py:236
+#: braille.py:239
 msgid "dlg"
 msgstr "dlg"
 
@@ -3891,7 +3886,7 @@ msgstr "soltar en destín"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects/behaviors.py:412 virtualBuffers/__init__.py:1312
+#: NVDAObjects/behaviors.py:412 virtualBuffers/__init__.py:1325
 msgid "edge of table"
 msgstr "canto d'a tabla"
 
@@ -3911,7 +3906,7 @@ msgstr "editable"
 
 #. Translators: Displayed in braille for an object which is an
 #. editable text field.
-#: braille.py:209
+#: braille.py:212
 msgid "edt"
 msgstr "ce"
 
@@ -3996,7 +3991,7 @@ msgstr ""
 msgid "focus"
 msgstr "foco"
 
-#: virtualBuffers/__init__.py:1554
+#: virtualBuffers/__init__.py:1567
 msgid "focus mode"
 msgstr "modo foco"
 
@@ -4073,7 +4068,7 @@ msgstr "panel transparent"
 
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
-#: braille.py:248
+#: braille.py:251
 msgid "gra"
 msgstr "grf"
 
@@ -4099,7 +4094,7 @@ msgstr "agrupación"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:420
+#: braille.py:423
 #, python-format
 msgid "h%s"
 msgstr "c%s"
@@ -4135,6 +4130,11 @@ msgstr "tien comentario"
 #: NVDAObjects/window/excel.py:268
 msgid "has formula"
 msgstr "tien formula"
+
+#. Translators: a state that denotes that an object (usually a graphic) has a long description.
+#: controlTypes.py:387
+msgid "has long description"
+msgstr "Como una descripción larga"
 
 #: controlTypes.py:263
 msgid "header"
@@ -4383,19 +4383,19 @@ msgstr "elemento de lista"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
-#: braille.py:233
+#: braille.py:236
 msgid "lnk"
 msgstr "vnc"
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
-#: braille.py:212
+#: braille.py:215
 msgid "lst"
 msgstr "lst"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:461
+#: braille.py:464
 #, python-format
 msgid "lv %s"
 msgstr "lb %s"
@@ -4436,13 +4436,13 @@ msgstr "elemento de menú"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
-#: braille.py:218
+#: braille.py:221
 msgid "mnu"
 msgstr "mnu"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
-#: braille.py:215
+#: braille.py:218
 msgid "mnubar"
 msgstr "barmnu"
 
@@ -4464,219 +4464,219 @@ msgstr "mover o foco"
 msgid "move to focus"
 msgstr "mover t'o foco"
 
-#: virtualBuffers/__init__.py:1534
+#: virtualBuffers/__init__.py:1547
 msgid "moves to the next block quote"
 msgstr "se mueve t'a siguient cita"
 
-#: virtualBuffers/__init__.py:1518
+#: virtualBuffers/__init__.py:1531
 msgid "moves to the next button"
 msgstr "se mueve t'o siguient botón"
 
-#: virtualBuffers/__init__.py:1530
+#: virtualBuffers/__init__.py:1543
 msgid "moves to the next check box"
 msgstr "se mueve t'a siguient caixeta de verificación"
 
-#: virtualBuffers/__init__.py:1528
+#: virtualBuffers/__init__.py:1541
 msgid "moves to the next combo box"
 msgstr "se mueve t'o siguient quadro combinau"
 
-#: virtualBuffers/__init__.py:1520
+#: virtualBuffers/__init__.py:1533
 msgid "moves to the next edit field"
 msgstr "se mueve t'o siguient campo d'edición"
 
-#: virtualBuffers/__init__.py:1540
+#: virtualBuffers/__init__.py:1553
 msgid "moves to the next embedded object"
 msgstr "se mueve t'o siguient obchecto integrau"
 
-#: virtualBuffers/__init__.py:1512
+#: virtualBuffers/__init__.py:1525
 msgid "moves to the next form field"
 msgstr "se mueve t'o siguient campo de formulario"
 
-#: virtualBuffers/__init__.py:1522
+#: virtualBuffers/__init__.py:1535
 msgid "moves to the next frame"
 msgstr "se mueve t'o siguient marco"
 
-#: virtualBuffers/__init__.py:1532
+#: virtualBuffers/__init__.py:1545
 msgid "moves to the next graphic"
 msgstr "se mueve t'o siguient grafico"
 
-#: virtualBuffers/__init__.py:1490
+#: virtualBuffers/__init__.py:1503
 msgid "moves to the next heading"
 msgstr "se mueve t'o siguient capitero"
 
-#: virtualBuffers/__init__.py:1492
+#: virtualBuffers/__init__.py:1505
 msgid "moves to the next heading at level 1"
 msgstr "se mueve t'o siguient capitero de ran 1"
 
-#: virtualBuffers/__init__.py:1494
+#: virtualBuffers/__init__.py:1507
 msgid "moves to the next heading at level 2"
 msgstr "se mueve t'o siguient capitero de ran 2"
 
-#: virtualBuffers/__init__.py:1496
+#: virtualBuffers/__init__.py:1509
 msgid "moves to the next heading at level 3"
 msgstr "se mueve t'o siguient capitero de ran 3"
 
-#: virtualBuffers/__init__.py:1498
+#: virtualBuffers/__init__.py:1511
 msgid "moves to the next heading at level 4"
 msgstr "se mueve t'o siguient capitero de ran 4"
 
-#: virtualBuffers/__init__.py:1500
+#: virtualBuffers/__init__.py:1513
 msgid "moves to the next heading at level 5"
 msgstr "se mueve t'o siguient capitero de ran 5"
 
-#: virtualBuffers/__init__.py:1502
+#: virtualBuffers/__init__.py:1515
 msgid "moves to the next heading at level 6"
 msgstr "se mueve t'o siguient capitero de ran 6"
 
-#: virtualBuffers/__init__.py:1538
+#: virtualBuffers/__init__.py:1551
 msgid "moves to the next landmark"
 msgstr "se mueve t'a siguient zona"
 
-#: virtualBuffers/__init__.py:1506
+#: virtualBuffers/__init__.py:1519
 msgid "moves to the next link"
 msgstr "se mueve t'o vinclo siguient"
 
-#: virtualBuffers/__init__.py:1514
+#: virtualBuffers/__init__.py:1527
 msgid "moves to the next list"
 msgstr "se mueve t'a lista siguient"
 
-#: virtualBuffers/__init__.py:1516
+#: virtualBuffers/__init__.py:1529
 msgid "moves to the next list item"
 msgstr "se mueve t'o siguient elemento de lista"
 
-#: virtualBuffers/__init__.py:1526
+#: virtualBuffers/__init__.py:1539
 msgid "moves to the next radio button"
 msgstr "se mueve t'o siguient botón d'opción"
 
-#: virtualBuffers/__init__.py:1524
+#: virtualBuffers/__init__.py:1537
 msgid "moves to the next separator"
 msgstr "se mueve t'o siguient separador"
 
-#: virtualBuffers/__init__.py:1504
+#: virtualBuffers/__init__.py:1517
 msgid "moves to the next table"
 msgstr "se mueve t'a siguient tabla"
 
-#: virtualBuffers/__init__.py:1330
+#: virtualBuffers/__init__.py:1343
 msgid "moves to the next table column"
 msgstr "se mueve t'a siguient columna d'a tabla"
 
-#: virtualBuffers/__init__.py:1322
+#: virtualBuffers/__init__.py:1335
 msgid "moves to the next table row"
 msgstr "se mueve t'a siguient ringlera d'a tabla"
 
-#: virtualBuffers/__init__.py:1510
+#: virtualBuffers/__init__.py:1523
 msgid "moves to the next unvisited link"
 msgstr "se mueve t'o siguient vinclo sin visitar"
 
-#: virtualBuffers/__init__.py:1508
+#: virtualBuffers/__init__.py:1521
 msgid "moves to the next visited link"
 msgstr "se mueve t'o siguient vinclo visitau"
 
-#: virtualBuffers/__init__.py:1535
+#: virtualBuffers/__init__.py:1548
 msgid "moves to the previous block quote"
 msgstr "se mueve t'a cita anterior"
 
-#: virtualBuffers/__init__.py:1519
+#: virtualBuffers/__init__.py:1532
 msgid "moves to the previous button"
 msgstr "se mueve t'o botón anterior"
 
-#: virtualBuffers/__init__.py:1531
+#: virtualBuffers/__init__.py:1544
 msgid "moves to the previous check box"
 msgstr "se mueve ta l'anterior caixeta de verificación"
 
-#: virtualBuffers/__init__.py:1529
+#: virtualBuffers/__init__.py:1542
 msgid "moves to the previous combo box"
 msgstr "se mueve ta l'anterior quadro combinau"
 
-#: virtualBuffers/__init__.py:1521
+#: virtualBuffers/__init__.py:1534
 msgid "moves to the previous edit field"
 msgstr "se mueve ta l'anterior campo d'edición"
 
-#: virtualBuffers/__init__.py:1541
+#: virtualBuffers/__init__.py:1554
 msgid "moves to the previous embedded object"
 msgstr "se mueve ta l'anterior obchecto integrau"
 
-#: virtualBuffers/__init__.py:1513
+#: virtualBuffers/__init__.py:1526
 msgid "moves to the previous form field"
 msgstr "se mueve ta l'anterior campo de formulario"
 
-#: virtualBuffers/__init__.py:1523
+#: virtualBuffers/__init__.py:1536
 msgid "moves to the previous frame"
 msgstr "se mueve t'o marco anterior"
 
-#: virtualBuffers/__init__.py:1533
+#: virtualBuffers/__init__.py:1546
 msgid "moves to the previous graphic"
 msgstr "se mueve ta l'anterior grafico"
 
-#: virtualBuffers/__init__.py:1491
+#: virtualBuffers/__init__.py:1504
 msgid "moves to the previous heading"
 msgstr "se mueve ta l'anterior capitero"
 
-#: virtualBuffers/__init__.py:1493
+#: virtualBuffers/__init__.py:1506
 msgid "moves to the previous heading at level 1"
 msgstr "se mueve ta l'anterior capitero de ran 1"
 
-#: virtualBuffers/__init__.py:1495
+#: virtualBuffers/__init__.py:1508
 msgid "moves to the previous heading at level 2"
 msgstr "se mueve ta l'anterior capitero de ran 2"
 
-#: virtualBuffers/__init__.py:1497
+#: virtualBuffers/__init__.py:1510
 msgid "moves to the previous heading at level 3"
 msgstr "se mueve ta l'anterior capitero de ran 3"
 
-#: virtualBuffers/__init__.py:1499
+#: virtualBuffers/__init__.py:1512
 msgid "moves to the previous heading at level 4"
 msgstr "se mueve ta l'anterior capitero de ran 4"
 
-#: virtualBuffers/__init__.py:1501
+#: virtualBuffers/__init__.py:1514
 msgid "moves to the previous heading at level 5"
 msgstr "se mueve ta l'anterior capitero de ran 5"
 
-#: virtualBuffers/__init__.py:1503
+#: virtualBuffers/__init__.py:1516
 msgid "moves to the previous heading at level 6"
 msgstr "se mueve ta l'anterior capitero de ran 6"
 
-#: virtualBuffers/__init__.py:1539
+#: virtualBuffers/__init__.py:1552
 msgid "moves to the previous landmark"
 msgstr "se mueve ta la zona anterior"
 
-#: virtualBuffers/__init__.py:1507
+#: virtualBuffers/__init__.py:1520
 msgid "moves to the previous link"
 msgstr "se mueve t'o vinclo anterior"
 
-#: virtualBuffers/__init__.py:1515
+#: virtualBuffers/__init__.py:1528
 msgid "moves to the previous list"
 msgstr "se mueve t'a lista anterior"
 
-#: virtualBuffers/__init__.py:1517
+#: virtualBuffers/__init__.py:1530
 msgid "moves to the previous list item"
 msgstr "se mueve ta l'anterior elemento de lista"
 
-#: virtualBuffers/__init__.py:1527
+#: virtualBuffers/__init__.py:1540
 msgid "moves to the previous radio button"
 msgstr "se mueve ta l'anterior botón d'opción"
 
-#: virtualBuffers/__init__.py:1525
+#: virtualBuffers/__init__.py:1538
 msgid "moves to the previous separator"
 msgstr "se mueve t'o separador anterior"
 
-#: virtualBuffers/__init__.py:1505
+#: virtualBuffers/__init__.py:1518
 msgid "moves to the previous table"
 msgstr "se mueve t'a tabla anterior"
 
-#: virtualBuffers/__init__.py:1334
+#: virtualBuffers/__init__.py:1347
 msgid "moves to the previous table column"
 msgstr "se mueve ta l'anterior columna d'a tabla"
 
-#: virtualBuffers/__init__.py:1326
+#: virtualBuffers/__init__.py:1339
 msgid "moves to the previous table row"
 msgstr "se mueve ta l'anterior ringlera d'a tabla"
 
-#: virtualBuffers/__init__.py:1511
+#: virtualBuffers/__init__.py:1524
 msgid "moves to the previous unvisited link"
 msgstr "se mueve ta l'anterior vinclo sin visitar"
 
-#: virtualBuffers/__init__.py:1509
+#: virtualBuffers/__init__.py:1522
 msgid "moves to the previous visited link"
 msgstr "se mueve ta l'anterior vinclo visitau"
 
@@ -4726,11 +4726,11 @@ msgstr "no bi ha garra sangría"
 msgid "no italic"
 msgstr "no bi ha garra cursiva"
 
-#: virtualBuffers/__init__.py:1536
+#: virtualBuffers/__init__.py:1549
 msgid "no more text after a block of links"
 msgstr "no bi ha mas texto dimpués d'un bloque de vinclos"
 
-#: virtualBuffers/__init__.py:1537
+#: virtualBuffers/__init__.py:1550
 msgid "no more text before a block of links"
 msgstr "no bi ha mas texto antis d'un bloque de vinclos"
 
@@ -4741,203 +4741,203 @@ msgstr "no bi ha mas texto antis d'un bloque de vinclos"
 msgid "no navigator object"
 msgstr "no bi ha garra navegador d'obchectos"
 
-#: virtualBuffers/__init__.py:1534
+#: virtualBuffers/__init__.py:1547
 msgid "no next block quote"
 msgstr "no bi ha siguient cita"
 
-#: virtualBuffers/__init__.py:1518
+#: virtualBuffers/__init__.py:1531
 msgid "no next button"
 msgstr "no bi ha siguient botón"
 
-#: virtualBuffers/__init__.py:1530
+#: virtualBuffers/__init__.py:1543
 msgid "no next check box"
 msgstr "no bi ha siguient caixeta de verificación"
 
-#: virtualBuffers/__init__.py:1528
+#: virtualBuffers/__init__.py:1541
 msgid "no next combo box"
 msgstr "no bi ha siguient quadro combinau"
 
-#: virtualBuffers/__init__.py:1520
+#: virtualBuffers/__init__.py:1533
 msgid "no next edit field"
 msgstr "no bi ha siguient campo d'edición"
 
-#: virtualBuffers/__init__.py:1540
+#: virtualBuffers/__init__.py:1553
 msgid "no next embedded object"
 msgstr "no bi ha siguient obchecto integrau"
 
-#: virtualBuffers/__init__.py:1512
+#: virtualBuffers/__init__.py:1525
 msgid "no next form field"
 msgstr "no bi ha siguient campo de formulario"
 
-#: virtualBuffers/__init__.py:1522
+#: virtualBuffers/__init__.py:1535
 msgid "no next frame"
 msgstr "no bi ha siguient marco"
 
-#: virtualBuffers/__init__.py:1532
+#: virtualBuffers/__init__.py:1545
 msgid "no next graphic"
 msgstr "no bi ha siguient grafico"
 
-#: virtualBuffers/__init__.py:1490
+#: virtualBuffers/__init__.py:1503
 msgid "no next heading"
 msgstr "no bi ha siguient capitero"
 
-#: virtualBuffers/__init__.py:1492
+#: virtualBuffers/__init__.py:1505
 msgid "no next heading at level 1"
 msgstr "no bi ha siguient capitero de ran 1"
 
-#: virtualBuffers/__init__.py:1494
+#: virtualBuffers/__init__.py:1507
 msgid "no next heading at level 2"
 msgstr "no bi ha siguient capitero de ran 2"
 
-#: virtualBuffers/__init__.py:1496
+#: virtualBuffers/__init__.py:1509
 msgid "no next heading at level 3"
 msgstr "no bi ha siguient capitero de ran 3"
 
-#: virtualBuffers/__init__.py:1498
+#: virtualBuffers/__init__.py:1511
 msgid "no next heading at level 4"
 msgstr "no bi ha siguient capitero de ran 4"
 
-#: virtualBuffers/__init__.py:1500
+#: virtualBuffers/__init__.py:1513
 msgid "no next heading at level 5"
 msgstr "no bi ha siguient capitero de ran 5"
 
-#: virtualBuffers/__init__.py:1502
+#: virtualBuffers/__init__.py:1515
 msgid "no next heading at level 6"
 msgstr "no bi ha siguient capitero de ran 6"
 
-#: virtualBuffers/__init__.py:1538
+#: virtualBuffers/__init__.py:1551
 msgid "no next landmark"
 msgstr "no bi ha siguient zona"
 
-#: virtualBuffers/__init__.py:1506
+#: virtualBuffers/__init__.py:1519
 msgid "no next link"
 msgstr "no bi ha siguient vinclo"
 
-#: virtualBuffers/__init__.py:1514
+#: virtualBuffers/__init__.py:1527
 msgid "no next list"
 msgstr "no bi ha siguient lista"
 
-#: virtualBuffers/__init__.py:1516
+#: virtualBuffers/__init__.py:1529
 msgid "no next list item"
 msgstr "no bi ha siguient elemento de lista"
 
-#: virtualBuffers/__init__.py:1526
+#: virtualBuffers/__init__.py:1539
 msgid "no next radio button"
 msgstr "no bi ha siguient botón d'opción"
 
-#: virtualBuffers/__init__.py:1524
+#: virtualBuffers/__init__.py:1537
 msgid "no next separator"
 msgstr "no bi ha siguient separador"
 
-#: virtualBuffers/__init__.py:1504
+#: virtualBuffers/__init__.py:1517
 msgid "no next table"
 msgstr "no bi ha siguient tabla"
 
-#: virtualBuffers/__init__.py:1510
+#: virtualBuffers/__init__.py:1523
 msgid "no next unvisited link"
 msgstr "no bi ha siguient vinclo sin visitar"
 
-#: virtualBuffers/__init__.py:1508
+#: virtualBuffers/__init__.py:1521
 msgid "no next visited link"
 msgstr "no bi ha siguient vinclo visitau"
 
-#: virtualBuffers/__init__.py:1535
+#: virtualBuffers/__init__.py:1548
 msgid "no previous block quote"
 msgstr "no bi ha cita anterior"
 
-#: virtualBuffers/__init__.py:1519
+#: virtualBuffers/__init__.py:1532
 msgid "no previous button"
 msgstr "no bi ha botón anterior"
 
-#: virtualBuffers/__init__.py:1531
+#: virtualBuffers/__init__.py:1544
 msgid "no previous check box"
 msgstr "no bi ha anterior caixeta de verificación"
 
-#: virtualBuffers/__init__.py:1529
+#: virtualBuffers/__init__.py:1542
 msgid "no previous combo box"
 msgstr "no bi ha anterior quadro combinau"
 
-#: virtualBuffers/__init__.py:1521
+#: virtualBuffers/__init__.py:1534
 msgid "no previous edit field"
 msgstr "no bi ha anterior campo d'edición"
 
-#: virtualBuffers/__init__.py:1541
+#: virtualBuffers/__init__.py:1554
 msgid "no previous embedded object"
 msgstr "no bi ha anterior obchecto integrau"
 
-#: virtualBuffers/__init__.py:1513
+#: virtualBuffers/__init__.py:1526
 msgid "no previous form field"
 msgstr "no bi ha anterior campo de formulario"
 
-#: virtualBuffers/__init__.py:1523
+#: virtualBuffers/__init__.py:1536
 msgid "no previous frame"
 msgstr "no bi ha marco anterior"
 
-#: virtualBuffers/__init__.py:1533
+#: virtualBuffers/__init__.py:1546
 msgid "no previous graphic"
 msgstr "no bi ha anterior grafico"
 
-#: virtualBuffers/__init__.py:1491
+#: virtualBuffers/__init__.py:1504
 msgid "no previous heading"
 msgstr "no bi ha anterior capitero"
 
-#: virtualBuffers/__init__.py:1493
+#: virtualBuffers/__init__.py:1506
 msgid "no previous heading at level 1"
 msgstr "no bi ha anterior capitero de ran 1"
 
-#: virtualBuffers/__init__.py:1495
+#: virtualBuffers/__init__.py:1508
 msgid "no previous heading at level 2"
 msgstr "no bi ha anterior capitero de ran 2"
 
-#: virtualBuffers/__init__.py:1497
+#: virtualBuffers/__init__.py:1510
 msgid "no previous heading at level 3"
 msgstr "no bi ha anterior capitero de ran 3"
 
-#: virtualBuffers/__init__.py:1499
+#: virtualBuffers/__init__.py:1512
 msgid "no previous heading at level 4"
 msgstr "no bi ha anterior capitero de ran 4"
 
-#: virtualBuffers/__init__.py:1501
+#: virtualBuffers/__init__.py:1514
 msgid "no previous heading at level 5"
 msgstr "no bi ha anterior capitero de ran 5"
 
-#: virtualBuffers/__init__.py:1503
+#: virtualBuffers/__init__.py:1516
 msgid "no previous heading at level 6"
 msgstr "no bi ha anterior capitero de ran 6"
 
-#: virtualBuffers/__init__.py:1539
+#: virtualBuffers/__init__.py:1552
 msgid "no previous landmark"
 msgstr "no bi ha zona anterior"
 
-#: virtualBuffers/__init__.py:1507
+#: virtualBuffers/__init__.py:1520
 msgid "no previous link"
 msgstr "no bi ha vinclo anterior"
 
-#: virtualBuffers/__init__.py:1515
+#: virtualBuffers/__init__.py:1528
 msgid "no previous list"
 msgstr "no bi ha lista anterior"
 
-#: virtualBuffers/__init__.py:1517
+#: virtualBuffers/__init__.py:1530
 msgid "no previous list item"
 msgstr "no bi ha anterior elemento de lista"
 
-#: virtualBuffers/__init__.py:1527
+#: virtualBuffers/__init__.py:1540
 msgid "no previous radio button"
 msgstr "no bi ha anterior botón d'opción"
 
-#: virtualBuffers/__init__.py:1525
+#: virtualBuffers/__init__.py:1538
 msgid "no previous separator"
 msgstr "no bi ha anterior separador"
 
-#: virtualBuffers/__init__.py:1505
+#: virtualBuffers/__init__.py:1518
 msgid "no previous table"
 msgstr "no bi ha anterior tabla"
 
-#: virtualBuffers/__init__.py:1511
+#: virtualBuffers/__init__.py:1524
 msgid "no previous unvisited link"
 msgstr "no bi ha anterior vinclo sin visitar"
 
-#: virtualBuffers/__init__.py:1509
+#: virtualBuffers/__init__.py:1522
 msgid "no previous visited link"
 msgstr "no bi ha anterior vinclo visitau"
 
@@ -4979,18 +4979,18 @@ msgstr "Denguna"
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 #. but this still might be used in some other cases.
 #. %s will be replaced with the negated state.
-#: braille.py:441 speech.py:814
+#: braille.py:444 speech.py:814
 #, python-format
 msgid "not %s"
 msgstr "no %s"
 
 #. Translators: This is presented when a checkbox is not checked.
-#: controlTypes.py:393
+#: controlTypes.py:394
 msgid "not checked"
 msgstr "no marcau"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
-#: controlTypes.py:391
+#: controlTypes.py:392
 msgid "not selected"
 msgstr "no trigau"
 
@@ -5091,7 +5091,7 @@ msgstr "l'obchecto no tiene posición"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:781
-#: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:846
+#: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:858
 msgid "off"
 msgstr "desenchegau"
 
@@ -5118,7 +5118,7 @@ msgid "olive"
 msgstr "verde oliva"
 
 #: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
-#: virtualBuffers/__init__.py:846
+#: virtualBuffers/__init__.py:858
 msgid "on"
 msgstr "enchegau"
 
@@ -5238,7 +5238,7 @@ msgstr "morau"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:466
+#: braille.py:469
 #, python-format
 msgid "r%s"
 msgstr "r%s"
@@ -5253,7 +5253,7 @@ msgstr "opción d'elemento de menú"
 
 #. Translators: Displayed in braille for an object which is a
 #. radio button.
-#: braille.py:227
+#: braille.py:230
 msgid "rbtn"
 msgstr "btr"
 
@@ -5382,7 +5382,7 @@ msgid "right windows"
 msgstr "windows dreita"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-#: braille.py:267
+#: braille.py:270
 msgid "ro"
 msgstr "nl"
 
@@ -5440,7 +5440,7 @@ msgid "section"
 msgstr "sección"
 
 #. Translators: Displayed in braille when an object is selected.
-#: braille.py:257
+#: braille.py:260
 msgid "sel"
 msgstr "sel"
 
@@ -5454,7 +5454,7 @@ msgstr "seleccionau"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401 globalCommands.py:130 speech.py:323 speech.py:515
-#: speech.py:530 virtualBuffers/__init__.py:735
+#: speech.py:530 virtualBuffers/__init__.py:740
 #, python-format
 msgid "selected %s"
 msgstr "seleccionada %s"
@@ -5487,11 +5487,11 @@ msgstr "forma"
 msgid "shift"
 msgstr "shift"
 
-#: virtualBuffers/__init__.py:1537
+#: virtualBuffers/__init__.py:1550
 msgid "skips backward past a block of links"
 msgstr "blinca enta zaga pasando un bloque de vinclos"
 
-#: virtualBuffers/__init__.py:1536
+#: virtualBuffers/__init__.py:1549
 msgid "skips forward past a block of links"
 msgstr "blinca enta debant pasando un bloque de vinclos"
 
@@ -5633,7 +5633,7 @@ msgid "subject: %s"
 msgstr "afer: %s"
 
 #. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-#: braille.py:259
+#: braille.py:262
 msgid "submnu"
 msgstr "smn"
 
@@ -5688,13 +5688,12 @@ msgid "table header"
 msgstr "capitero de tabla"
 
 #: speech.py:1171
-#, python-format
-msgid "table with %s columns and %s rows"
-msgstr "tabla con %s columnas y %s ringleras"
+msgid "table with {columnCount} columns and {rowCount} rows"
+msgstr "tabla con {columnCount} columnas y {rowCount} ringleras"
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
-#: braille.py:242
+#: braille.py:245
 msgid "tb"
 msgstr "tb"
 
@@ -5771,7 +5770,7 @@ msgstr "elemento d'arbol"
 
 #. Translators: Displayed in braille for an object which is a
 #. tree view.
-#: braille.py:239
+#: braille.py:242
 msgid "tv"
 msgstr "arb"
 
@@ -5822,7 +5821,7 @@ msgstr "deseleccionando %s"
 msgid "up arrow"
 msgstr "flecha enta alto"
 
-#: virtualBuffers/__init__.py:847
+#: virtualBuffers/__init__.py:859
 #, python-format
 msgid "use screen layout %s"
 msgstr "utilizar disenyo de pantalla %s"
@@ -5839,7 +5838,7 @@ msgid "visited"
 msgstr "visitau"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:426
+#: braille.py:429
 msgid "vlnk"
 msgstr "vvin"
 
@@ -5887,9 +5886,8 @@ msgid "with %s rows"
 msgstr "con %s ringleras"
 
 #: speech.py:861
-#, python-format
-msgid "with %s rows and %s columns"
-msgstr "con %s ringleras y %s columnas"
+msgid "with {rowCount} rows and {columnCount} columns"
+msgstr "con {rowCount} ringleras y {columnCount} columnas"
 
 #: textInfos/__init__.py:200
 msgid "word"
@@ -5917,6 +5915,16 @@ msgstr "{color}"
 #: speech.py:1031
 msgid "{color} on {backgroundColor}"
 msgstr "{color} sobre {backgroundColor}"
+
+#. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
+#: NVDAObjects/window/excel.py:313
+msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
+msgstr "{firstAddress} {firstContent} a traviés de {lastAddress} {lastContent}"
+
+#. Translators: This is the estimated remaining runtime of the laptop battery.
+#: globalCommands.py:864
+msgid "{hours:d} hours and {minutes:d} minutes remaining"
+msgstr "En queda arredol de {hours:d} horas y {minutes:d} minutos"
 
 #. Translators: the message announcing the language and keyboard layout when it changes
 #: NVDAHelper.py:338
@@ -5973,7 +5981,7 @@ msgstr ""
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#: braille.py:457 speech.py:825
+#: braille.py:460 speech.py:825
 msgid "{number} of {total}"
 msgstr "{number} de {total}"
 
@@ -5999,3 +6007,6 @@ msgstr ""
 #: NVDAObjects/behaviors.py:359
 msgid "{symbol} as in {description}"
 msgstr "{symbol} como en {description}"
+
+#~ msgid "%s %s through %s %s"
+#~ msgstr "Dende %s %s enta %s %s"
