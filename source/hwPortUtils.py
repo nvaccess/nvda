@@ -192,7 +192,7 @@ def listComPorts(onlyAvailable=True):
 						entry["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
 				except:
 					pass
-			elif hwID.startswith("Bluetooth\\"):
+			elif hwID == r"Bluetooth\0004&0002":
 				# This is a Toshiba bluetooth port.
 				try:
 					entry["bluetoothAddress"], entry["bluetoothName"] = getToshibaBluetoothPortInfo(port)
