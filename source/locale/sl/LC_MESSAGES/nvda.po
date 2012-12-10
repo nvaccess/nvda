@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5347\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-22 14:49+1000\n"
-"PO-Revision-Date: 2012-11-28 21:47+0100\n"
+"PO-Revision-Date: 2012-12-08 18:21+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl\n"
 "Language: Slovenian\n"
@@ -1171,7 +1171,7 @@ msgstr "razmejitvena plošča"
 #. As the user manipulates the scroll bars, the contents of the view port can change.
 #: controlTypes.py:284
 msgid "view port"
-msgstr ""
+msgstr "predstavitveno polje"
 
 #. Translators: Reported for an object that forms part of a menu system
 #. but which can be undocked from or torn off the menu system
@@ -3099,13 +3099,13 @@ msgstr "ni ležeče"
 #. See http://en.wikipedia.org/wiki/Strikethrough
 #: speech.py:1072
 msgid "strikethrough"
-msgstr ""
+msgstr "prečrtano"
 
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
 #: speech.py:1075
 msgid "no strikethrough"
-msgstr ""
+msgstr "ni prečrtano"
 
 #. Translators: Reported when text is underlined.
 #: speech.py:1081
@@ -3310,6 +3310,13 @@ msgid ""
 "develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
+"Potrebovali bomo vašo pomoč, da bomo lahko še naprej izboljševali NVDA.\n"
+"Ta projekt se zanaša predvsem na vaše donacije in dotacije. Z donacijo boste "
+"pomagali financirati polni razvoj.\n"
+"Če prispevate samo $10 na en dolpoteg, nam boste omogočili, da bomo lahko "
+"pokrili vse tekoče stroške projekta.\n"
+"Vse donacije prejme NV Access, neprofitna organizacija, ki razvija NVDA.\n"
+"Hvala za vašo podporo."
 
 #. Translators: The title of the dialog requesting donations from users.
 #: updateCheck.py:380
@@ -4275,6 +4282,9 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
+"Program za namestitev ne more odstraniti ali prepisati datoteke. Verjetno na "
+"drugem prijavljenem računu teče kopija NVDA. Prosimo, prepričajte se, da ste "
+"zaustavili vse kopije, ki so nameščene na računalniku in poskusite znova."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
@@ -4565,6 +4575,8 @@ msgid ""
 "Unable to copy a file. Perhaps it is currently being used by another process "
 "or you have run out of disc space on the drive you are copying to."
 msgstr ""
+"Ni mogoče preslikati datoteke. Verjetno jo uporablja drug proces ali pa na "
+"izbranem disku nimate dovolj prostora."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 #: gui\settingsDialogs.py:211
@@ -4845,7 +4857,7 @@ msgstr "Vedno vključi &kratek opis znaka, ko se naznani kandidate"
 #. Input composition settings dialog.
 #: gui\settingsDialogs.py:754
 msgid "Report changes to the &reading string"
-msgstr ""
+msgstr "Poročaj o spremembah v nizu &branja"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -4884,7 +4896,7 @@ msgstr "Izgovori in oddaj zvočni signal"
 #. object presentation settings dialog.
 #: gui\settingsDialogs.py:799
 msgid "Report &tooltips"
-msgstr ""
+msgstr "Poročaj o &zaslonskih namigih"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5174,7 +5186,7 @@ msgstr "dogodek"
 
 #: gui\settingsDialogs.py:1124
 msgid "Regexp"
-msgstr ""
+msgstr "Regexp"
 
 #: gui\settingsDialogs.py:1133
 msgid "&Add"
