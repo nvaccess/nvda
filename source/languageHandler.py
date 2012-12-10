@@ -51,11 +51,16 @@ def getLanguageDescription(language):
 	if not desc:
 		#Some hard-coded descriptions where we know the language fails on XP and so forth.
 		desc={
-			"am":pgettext("language name","Amharic"),
-			"an":pgettext("language name","Aragonese"),
-			"ar":pgettext("language name","Arabic"),
-			"ne":pgettext("language name","Nepali"),
-			"sr":pgettext("language name","Serbian (Latin)"),
+			# Translators: The name of a language supported by NVDA.
+			"am":pgettext("languageName","Amharic"),
+			# Translators: The name of a language supported by NVDA.
+			"an":pgettext("languageName","Aragonese"),
+			# Translators: The name of a language supported by NVDA.
+			"ar":pgettext("languageName","Arabic"),
+			# Translators: The name of a language supported by NVDA.
+			"ne":pgettext("languageName","Nepali"),
+			# Translators: The name of a language supported by NVDA.
+			"sr":pgettext("languageName","Serbian (Latin)"),
 		}.get(language,None)
 	return desc
 
