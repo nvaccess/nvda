@@ -146,6 +146,10 @@ class AutoUpdateChecker(UpdateChecker):
 		secs = CHECK_INTERVAL - int(min(time.time() - state["lastCheck"], CHECK_INTERVAL))
 		self._checkTimer.Start(secs * 1000, True)
 
+	def terminate(self):
+		self._checkTimer.Stop()
+		self._checkTimer = None
+
 	def setNextCheck(self, isRetry=False):
 		self._checkTimer.Stop()
 		self._checkTimer.Start((RETRY_INTERVAL if isRetry else CHECK_INTERVAL) * 1000, True)
@@ -445,4 +449,6 @@ def initialize():
 def terminate():
 	global state, autoChecker
 	state = None
-	autoChecker = None
+	if autoChecker:
+		autoChecker.terminate()
+		autoChecker = None
