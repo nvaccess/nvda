@@ -65,12 +65,16 @@ def completePendingAddonRemoves():
 	"""Removes any addons that could not be removed on the last run of NVDA"""
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
 	pendingRemovesSet=state['pendingRemovesSet']
-	for addonName in pendingRemovesSet:
+	for addonName in list(pendingRemovesSet):
 		addonPath=os.path.join(user_addons,addonName)
 		if os.path.isdir(addonPath):
 			addon=Addon(addonPath)
-			addon.completeRemove()
-	pendingRemovesSet.clear()
+			try:
+				addon.completeRemove()
+			except RuntimeError:
+				log.exception("Failed to remove %s add-on"%addonName)
+				continue
+		pendingRemovesSet.discard(addonName)
 
 def completePendingAddonInstalls():
 	user_addons = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "addons"))
@@ -225,11 +229,14 @@ class Addon(object):
 				log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
 			finally:
 				del _availableAddons[self.path]
+		tempPath=tempfile.mktemp(suffix=DELETEDIR_SUFFIX,dir=os.path.dirname(self.path))
+		try:
+			os.rename(self.path,tempPath)
+		except (WindowsError,IOError):
+			raise RuntimeError("Cannot rename add-on path for deletion")
 		shutil.rmtree(self.path,ignore_errors=True)
 		if os.path.exists(self.path):
 			log.error("Error removing addon directory %s, deferring until next NVDA restart"%self.path)
-			tempPath=tempfile.mktemp(suffix=DELETEDIR_SUFFIX,dir=os.path.dirname(self.path))
-			os.rename(self.path,tempPath)
 
 	@property
 	def name(self):
