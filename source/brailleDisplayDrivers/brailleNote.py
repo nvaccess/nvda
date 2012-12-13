@@ -17,12 +17,13 @@ import hwPortUtils
 import inputCore
 from logHandler import log
 
-BLUETOOTH_NAMES = ("Braillenote", "APEX")
-
+BLUETOOTH_NAMES = ("Braillenote",)
+BLUETOOTH_ADDRS = (
+	(0x0025EC000000, 0x0025EC01869F),
+)
 USB_IDS = frozenset((
 	"VID_1C71&PID_C004", # Apex
 	))
-
 
 BAUD_RATE = 38400
 TIMEOUT = 0.1
@@ -96,8 +97,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def _getBluetoothPorts(cls):
-		return (p["port"] for p in hwPortUtils.listComPorts()
-			if "bluetoothName" in p and any(p["bluetoothName"].startswith(prefix) for prefix in BLUETOOTH_NAMES))
+		for p in hwPortUtils.listComPorts():
+			try:
+				addr = p["bluetoothAddress"]
+				name = p["bluetoothName"]
+			except KeyError:
+				continue
+			if (any(first <= addr <= last for first, last in BLUETOOTH_ADDRS)
+					or any(name.startswith(prefix) for prefix in BLUETOOTH_NAMES)):
+				yield p["port"]
 
 	@classmethod
 	def getPossiblePorts(cls):
