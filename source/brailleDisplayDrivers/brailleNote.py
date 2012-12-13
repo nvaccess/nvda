@@ -19,7 +19,8 @@ from logHandler import log
 
 BLUETOOTH_NAMES = ("Braillenote",)
 BLUETOOTH_ADDRS = (
-	(0x0025EC000000, 0x0025EC01869F),
+	# (first, last),
+	(0x0025EC000000, 0x0025EC01869F), # Apex
 )
 USB_IDS = frozenset((
 	"VID_1C71&PID_C004", # Apex
