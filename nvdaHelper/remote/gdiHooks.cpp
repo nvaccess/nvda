@@ -104,7 +104,7 @@ void queueTextChangeNotify(HWND hwnd, RECT& rc) {
 	}
 }
 
-displayModelsMap_t<HDC> displayModelsByMemoryDC;
+displayModelsMap_t<HBITMAP> displayModelsByBitmap;
 displayModelsMap_t<HWND> displayModelsByWindow;
 
 /**
@@ -117,8 +117,7 @@ displayModelsMap_t<HWND> displayModelsByWindow;
 inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
 	//If we are allowed, acquire use of the displayModel maps
 	displayModel_t* model=NULL;
-	//If the DC has a window, then either get an existing displayModel using the window, or create a new one and store it by its window.
-	//If  the DC does not have a window, try and get the displayModel from our existing Memory DC displayModels. 
+	//Fetch or create a display model for the DC either by its window if it has one, or by its hBitmap (memory DC)
 	HWND hwnd=WindowFromDC(hdc);
 	LOG_DEBUG(L"window from DC is "<<hwnd);
 	if(hwnd) {
@@ -133,13 +132,19 @@ inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
 		if(model) model->acquire();
 		displayModelsByWindow.release();
 	} else {
-		displayModelsByMemoryDC.acquire();
-		displayModelsMap_t<HDC>::iterator i=displayModelsByMemoryDC.find(hdc);
-		if(i!=displayModelsByMemoryDC.end()) {
-			model=i->second;
+		HBITMAP hBitmap=static_cast<HBITMAP>(GetCurrentObject(hdc,OBJ_BITMAP));
+		if(hBitmap) {
+			displayModelsByBitmap.acquire();
+			displayModelsMap_t<HBITMAP>::iterator i=displayModelsByBitmap.find(hBitmap);
+			if(i!=displayModelsByBitmap.end()) {
+				model=i->second;
+			} else if(!noCreate) {
+				model=new displayModel_t();
+				displayModelsByBitmap.insert(make_pair(hBitmap,model));
+			}
+			if(model) model->acquire();
+			displayModelsByBitmap.release();
 		}
-		if(model) model->acquire();
-		displayModelsByMemoryDC.release();
 	}
 	return model;
 }
@@ -750,57 +755,23 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	return res;
 }
 
-//CreateCompatibleDC hook function
-//Hooked so we know when a memory DC is created, as its possible that its contents may at some point be bit blitted back to a window DC (double buffering).
-typedef HDC(WINAPI *CreateCompatibleDC_funcType)(HDC);
-CreateCompatibleDC_funcType real_CreateCompatibleDC=NULL;
-HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
-	//Call the real CreateCompatibleDC
-	HDC newHdc=real_CreateCompatibleDC(hdc);
-	//If the creation was successful, and the DC that was used in the creation process is a window DC, 
-	//we should create a displayModel for this DC so that text writes can be tracked in case  its ever bit blitted to a window DC. 
-	//We also need to acquire access to the model maps while we do this
-	if(!newHdc) return NULL;
-	displayModel_t* model=new displayModel_t();
-	displayModelsByMemoryDC.acquire();
-	displayModelsByMemoryDC.insert(make_pair(newHdc,model));
-	displayModelsByMemoryDC.release();
-	return newHdc;
-}
-
-//SelectObject hook function
-//If a bitmap is being selected, then  we fully clear the display model for this DC if it exists.
-typedef HGDIOBJ(WINAPI *SelectObject_funcType)(HDC,HGDIOBJ);
-SelectObject_funcType real_SelectObject=NULL;
-HGDIOBJ WINAPI fake_SelectObject(HDC hdc, HGDIOBJ hGdiObj) {
-	//Call the real SelectObject
-	HGDIOBJ res=real_SelectObject(hdc,hGdiObj);
-	//If The select was successfull, and the object is a bitmap,  we can go on.
-	if(res==0||hGdiObj==NULL||GetObjectType(hGdiObj)!=OBJ_BITMAP) return res;
-	//Try and get a displayModel for this DC
-	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
-	if(!model) return res;
-	model->clearAll();
-	model->release();
-	return res;
-}
-
-//DeleteDC hook function
-//Hooked so we can get rid of any memory DC no longer needed by the application.
-typedef BOOL(WINAPI *DeleteDC_funcType)(HDC);
-DeleteDC_funcType real_DeleteDC=NULL;
-BOOL WINAPI fake_DeleteDC(HDC hdc) {
-	//Call the real DeleteDC
-	BOOL res=real_DeleteDC(hdc);
+//DeleteObject hook function
+//Hooked so we can stop tracking  any memory bitmap  no longer needed by the application.
+typedef BOOL(WINAPI *DeleteObject_funcType)(HGDIOBJ);
+DeleteObject_funcType real_DeleteObject=NULL;
+BOOL WINAPI fake_DeleteObject(HGDIOBJ hObject) {
+	//Call the real DeleteObject
+	BOOL res=real_DeleteObject(hObject);
+	//If the object was a bitmap and it was successfully deleted, we should remove  the displayModel we have for it, if it exists.
 	if(res==0) return res;
-	//If the DC was successfully deleted, we should remove  the displayModel we have for it, if it exists.
-	displayModelsByMemoryDC.acquire();
-	displayModelsMap_t<HDC>::iterator i=displayModelsByMemoryDC.find(hdc);
-	if(i!=displayModelsByMemoryDC.end()) {
+	displayModelsByBitmap.acquire();
+	displayModelsMap_t<HBITMAP>::iterator i=displayModelsByBitmap.find(static_cast<HBITMAP>(hObject));
+	if(i!=displayModelsByBitmap.end()) {
 		i->second->requestDelete();
-		displayModelsByMemoryDC.erase(i);
+		Beep(550,50);
+		displayModelsByBitmap.erase(i);
 	}
-	displayModelsByMemoryDC.release();
+	displayModelsByBitmap.release();
 	return res;
 }
 
@@ -1142,9 +1113,7 @@ void gdiHooks_inProcess_initialize() {
 	hookClass_PolyTextOut<POLYTEXTW>::realFunction=apiHook_hookFunction_safe("GDI32.dll",PolyTextOutW,hookClass_PolyTextOut<POLYTEXTW>::fakeFunction);
 	hookClass_ExtTextOut<char>::realFunction=apiHook_hookFunction_safe("GDI32.dll",ExtTextOutA,hookClass_ExtTextOut<char>::fakeFunction);
 	hookClass_ExtTextOut<wchar_t>::realFunction=apiHook_hookFunction_safe("GDI32.dll",ExtTextOutW,hookClass_ExtTextOut<wchar_t>::fakeFunction);
-	real_CreateCompatibleDC=apiHook_hookFunction_safe("GDI32.dll",CreateCompatibleDC,fake_CreateCompatibleDC);
-	real_SelectObject=apiHook_hookFunction_safe("GDI32.dll",SelectObject,fake_SelectObject);
-	real_DeleteDC=apiHook_hookFunction_safe("GDI32.dll",DeleteDC,fake_DeleteDC);
+	real_DeleteObject=apiHook_hookFunction_safe("GDI32.dll",DeleteObject,fake_DeleteObject);
 	real_FillRect=apiHook_hookFunction_safe("USER32.dll",FillRect,fake_FillRect);
 	real_DrawFocusRect=apiHook_hookFunction_safe("USER32.dll",DrawFocusRect,fake_DrawFocusRect);
 	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
@@ -1174,13 +1143,13 @@ void gdiHooks_inProcess_terminate() {
 		displayModelsByWindow.erase(i++);
 	}  
 	displayModelsByWindow.release();
-	displayModelsByMemoryDC.acquire();
-	displayModelsMap_t<HDC>::iterator j=displayModelsByMemoryDC.begin();
-	while(j!=displayModelsByMemoryDC.end()) {
+	displayModelsByBitmap.acquire();
+	displayModelsMap_t<HBITMAP>::iterator j=displayModelsByBitmap.begin();
+	while(j!=displayModelsByBitmap.end()) {
 		j->second->requestDelete();
-		displayModelsByMemoryDC.erase(j++);
+		displayModelsByBitmap.erase(j++);
 	}  
-	displayModelsByMemoryDC.release();
+	displayModelsByBitmap.release();
 	EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=FALSE;
 	ScriptStringAnalyseArgsByAnalysis.clear();
