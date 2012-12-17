@@ -3,111 +3,98 @@
 #Copyright (c) 2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
-complexSymbols:
-# identifier	regexp
-# Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
-# Others
-decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=[$£€¥]?\d)
-
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	pika	all	always
-! sentence ending	klicaj	all	always
-? sentence ending	vprašaj	all	always
-; phrase ending	podpičje	most	always
-: phrase ending	dvopičje	most	always
-decimal point	celih	none	always
-in-word '	opuščaj	all	norep
-negative number	minus	none	norep
+. sentence ending	pika
+! sentence ending	klicaj
+? sentence ending	vprašaj
+; phrase ending	podpičje
+: phrase ending	dvopičje
+decimal point	celih
+in-word '	opuščaj
+negative number	minus
 
 # Whitespace
-\0	prazno	char	# null
+\0	prazno
 \t	tabulator
-\n	nova vrstica	char
-\f	prelom strani	none
-\r	konec vrstice	char
- 	presledek	char
- 	presledek	char	# no-break space
+\n	nova vrsta
+\f	prelom strani
+\r	vračalka
+ 	presledek
+ 	preslednica
 
 # Standard punctuation/symbols
-!	klicaj	all
-"	narekovaj	most
-\#	lestvica	most
-$	dolar	all	norep
-£	funt	all	norep
-€	evro	all	norep
-¢	Cents	all	norep
-¥	Jen	all	norep
-%	odstotek	some
-&	in	some
-'	tick	all
-(	okrogli oklepaj	most
-)	okrogli zaklepaj	most
-*	zvezdica	most
-+	plus	most
-,	vejica	all	always
--	minus	most
-.	pika	some
-/	desna poševnica	some
-:	dvopičje	most	norep
-;	podpičje	most
-<	je manjše	most
->	je večje	most
-=	je enako	most
-?	vprašaj	all
-@	afna	some
-[	oglati oklepaj	most
-]	oglati zaklepaj	most
-\\	leva poševnica	most
-^	strešica	most
-_	podčrtaj	most
-`	krativec	most
-{	zaviti oklepaj	most
-}	zaviti zaklepaj	most
-|	navpičnica	most
-~	vijuga	most
+!	klicaj
+"	narekovaj
+\#	lestvica
+$	dolar
+£	funt
+€	evro
+¢	Cents
+¥	Yen
+%	odstotek
+&	and
+'	tick
+(	okrogli oklepaj
+)	okrogli zaklepaj
+*	zvezdica
++	plus
+,	vejica
+-	minus
+.	pika
+/	desna poševnica
+:	dvopičje
+;	podpičje
+<	manjše
+>	večje
+=	enačaj
+?	vprašaj
+@	afna
+[	oglati oklepaj
+]	oglati zaklepaj
+\\	leva poševnica
+^	strešica
+_	podčrtaj
+`	krativec
+{	zaviti oklepaj
+}	zaviti zaklepaj
+|	navpičnica
+~	vijuga
 
 # Other characters
-•	bullet	some
-…	dot dot dot	all	always
-...	tropičje	all	always
-	bullet	some
-“	začetni narekovaj	most
-”	zaključni narekovaj	most
-‘	left tick	most
-’	right tick	most
-–	en dash	most
-—	em dash	most
-●	krogec	most
-¨	diaeresis	most
-‎	left to right mark	char
-‏	right to left mark	char
-■	black square	some
-➔	right arrow	some
-§	section	all
-°	stopinje	some
+•	bullet
+…	
+...	tropičje
+	bullet
+“	začetni narekovaj
+”	zaključni narekovaj
+‘	left tick
+’	right tick
+–	pomišljaj
+—	črtica
+●	krožec
+¨	diaeresis
+‎	left to right mark
+‏	right to left mark
+■	black square
+➔	right arrow
+§	section
+°	stopinje
 «	dvojni začetni narekovaj
 »	dvojni zaključni narekovaj
-µ	mikro	some
-¹	superscript 1	some
-²	superscript 2	some
-³	superscript 3	some
-®	registered	some
-™	Trademark	some
-©	Copyright	some
-±	Plus ali Minus	most
-×	krat	most
-÷	deljeno	most
-→	puščica desno	some
-✓	check	some
-✔	check	some
+µ	mikro
+¹	superscript 1
+²	superscript 2
+³	superscript 3
+®	registered
+™	Trademark
+©	Copyright
+±	Plus ali Minus
+×	krat
+÷	deljeno
+→	puščica desno
+✓	check
+✔	check
+
