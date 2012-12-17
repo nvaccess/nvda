@@ -696,6 +696,18 @@ Sin braille significa que no estás utilizando braille.
 
 Por favor mira la sección [Líneas Braille Soportadas #SupportedBrailleDisplays] para más información acerca de las líneas braille soportadas.
 
+==== Puerto ====
+Esta opción, si está disponible, te permite elegir qué puerto o tipo de conexión se utilizará para comunicar con la línea braille que tengas seleccionada.
+Es un cuadro combinado que contiene las opciones posibles para tu línea braille.
+
+Predeterminadamente, NVDA emplea la detección de puerto automática, lo cual significa que la conexión con el dispositivo braille se establecerá automáticamente escaneando los dispositivos USB y bluetooth disponibles en tu sistema.
+Por lo tanto, para algunas líneas braille, podrás elegir explícitamente qué puerto debería utilizarse.
+Opciones comunes son "Automático" (que dice a NVDA que emplee el procedimiento de selección de puerto predeterminado automático), "USB", "Bluetooth" y los puertos de comunicación serie si tu línea braille soportan este tipo de comunicación.
+
+Esta opción no estaría disponible si tu línea braille sólo soporta detección de puerto automática.
+
+Podrás consultar la documentación para tu línea braille en la sección [Líneas Braille Soportadas #SupportedBrailleDisplays] para informarte de más detalles sobre los tipos soportados de puertos y comunicación disponibles.
+
 ==== Tabla de Transcripción ====
 La siguiente opción que vendrá en este diálogo es el cuadro combinado para las tablas braille. 
 En este cuadro combinado, encontrarás tablas braille para diferentes idiomas. Puedes moverte de tabla braille a tabla braille en la lista utilizando las flechas.
@@ -1144,6 +1156,10 @@ Si no los tienes todavía, puedes obtenerlos desde http://www.freedomscientific.
 Aunque esta página sólo menciona la línea Focus 40 Blue, el controlador soporta todas las líneas de Freedom Scientific.
 Si tu sistema ejecuta un Windows de 64 bit y los controladores ya se instalaron por otro lector de pantalla, posiblemente todavía necesitarás instalar los controladores desde este enlace, puesto que los ficheros que requiere NVDA posiblemente no fueron instalados por el otro lector de pantalla.
 
+Predeterminadamente, NVDA puede detectar automáticamente y conectarse a estas líneas tanto a través de USB como de bluetooth.
+No obstante, cuando se configura la línea, puedes seleccionar explícitamente los puertos "USB" o "Bluetooth" para restringir el tipo de conexión a utilizar.
+Esto podría ser útil si quieres conectar la línea focus a NVDA utilizando bluetooth, y todavía podrías cargarla utilizando la energía del USB desde tu ordenador.
+
 Seguidamente van las asociaciones de teclas para esta línea con NVDA.
 Por favor mira la documentación de la línea para descriptciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
@@ -1509,6 +1525,54 @@ Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 | Mover al objeto anterior | left2 |
 | Mover al siguiente objeto | derecha2 |
 | Anunciar formato de texto | fila de sensores superior |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+NVDA soporta los anotadores electrónicos BrailleNote de [Humanware http://www.humanware.com] cuando actúen como un terminal braille para un lector de pantalla.
+Se soportan los siguientes modelos:
+- BrailleNote Classic (sólo conexión serie)
+- BrailleNote PK (Conexiones serie y bluetooth)
+- BrailleNote MPower (Conexiones serie y bluetooth)
+- BrailleNote Apex (Conexiones USB y Bluetooth)
+-
+
+Si tu dispositivo soporta más de un tipo de conexión, cuando conectes tu BrailleNote a NVDA, debes configurar el puerto de la terminal braille en las opciones de terminal braille.
+Por favor mira el manual del BrailleNote para detalles.
+En NVDA, también podrías necesitar configurar el puerto en el diálogo Opciones de Braille.
+Si te estás conectando a través de USB o bluetooth, puedes configurar el puerto a "Automático", "USB" o "Bluetooth", dependiendo de las opciones disponibles.
+Si te estás conectando utilizando un puerto serie (o un conversor de USB a serie) o si no aparece ninguna de las opciones anteriores, debes elegir explícitamente el puerto de comunicación a utilizarse desde la lista de puertos hardware.
+
+Antes de conectar tu BrailleNote Apex utilizando su cliente de interface USB, debes instalar los controladores proporcionados por HumanWare.
+
+Seguidamente van las asignaciones de órdenes del BrailleNote para NVDA.
+Por favor mira la documentación del BrailleNote para encontrar dónde se localizan estas teclas.
+
+%kc:beginInclude
+|| Nombre | Tecla |
+| Desplazar atrás línea braille | retroceder |
+| Desplazar adelante línea braille | avanzar |
+| Mover línea braille a la línea anterior | anterior |
+| Mover línea braille a la línea siguiente | siguiente |
+| Llevar a la celda braille | sensores |
+| Activar y desactivar seguimiento de braille | anterior+siguiente |
+| Tecla flecha arriba | espacio+punto1 |
+| Tecla flecha abajo | espacio+punto4 |
+| Tecla flecha izquierda | espacio+punmto3 |
+| Tecla flecha derecha | espacio+punto6 |
+| Tecla retroceso de página | espacio+punto1+punto3 |
+| Tecla avance de página | espacio+punto4+punto6 |
+| Tecla inicio | espacio+punto1+punto2 |
+| Tecla Fin | espacio+punto4+punto5 |
+| teclas Control+inicio | espacio+punto1+punto2+punto3 |
+| Teclas Control+fin | espacio+punto4+punto5+punto6 |
+| tecla espacio | espacio |
+| Tecla intro | espacio+punto8 |
+| Tecla Retroceso | espacio+punto7 |
+| Tecla Tab | espacio+punto2+punto3+punto4+punto5 (espacio+t) |
+| Teclas Shift+tab | espacio+punto1+punto2punto5+punto6 |
+| Tecla Windows | espacio+punto2+punto4+punto5+punto6 (espacio+w) |
+| Tecla Alt | espacio+punto1+punto3+punto4 (espacio+m) |
+| Activar y desactivar ayuda de entrada | espacio+punto1+punto2+punto5 (espacio+h) |
 %kc:endInclude
 
 ++ BRLTTY ++
