@@ -7,9 +7,9 @@
 # Softaragones
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5672\n"
+"Project-Id-Version: NVDA bzr main:5689\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-12-06 07:35+0000\n"
+"POT-Creation-Date: 2012-12-13 05:30+0000\n"
 "PO-Revision-Date: 2012-11-27 22:59+0100\n"
 "Last-Translator: Jorge Pérez Pérez <jorgtum@gmail.com>\n"
 "Language-Team: Softaragonés\n"
@@ -103,7 +103,7 @@ msgstr "&Modo navegación..."
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
-#: updateCheck.py:205 gui/addonGui.py:54
+#: updateCheck.py:209 gui/addonGui.py:54
 msgid "&Close"
 msgstr "&Zarrar"
 
@@ -130,18 +130,18 @@ msgstr "Dentradas d'o &Diccionario"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
-#: updateCheck.py:389
+#: updateCheck.py:393
 msgid "&Donate"
 msgstr "Fer una &donación"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:409
+#: updateCheck.py:413
 msgid "&Done"
 msgstr "&Feito"
 
 #. Translators: The label of a button to download an NVDA update.
-#: updateCheck.py:191
+#: updateCheck.py:195
 msgid "&Download update"
 msgstr "&Descargar actualización"
 
@@ -212,7 +212,7 @@ msgstr "&Idioma"
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&Idioma (Ta que tienga efecto completo cal reenchegar NVDA):"
 
-#: gui/settingsDialogs.py:1342
+#: gui/settingsDialogs.py:1381
 msgid "&Level"
 msgstr "&Libel"
 
@@ -234,7 +234,7 @@ msgstr "&Mover ta"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:394
+#: updateCheck.py:398
 msgid "&Not now"
 msgstr "Agora &no"
 
@@ -256,6 +256,10 @@ msgstr "&Patrón"
 msgid "&Pitch"
 msgstr "&Tono"
 
+#: gui/settingsDialogs.py:1228
+msgid "&Port:"
+msgstr "&Puerto:"
+
 #: gui/__init__.py:317
 msgid "&Preferences"
 msgstr "&Preferencias"
@@ -272,7 +276,7 @@ msgstr "Ve&locidat"
 msgid "&Remove"
 msgstr "Bo&rrar"
 
-#: gui/settingsDialogs.py:1087 gui/settingsDialogs.py:1336
+#: gui/settingsDialogs.py:1087 gui/settingsDialogs.py:1375
 msgid "&Replacement"
 msgstr "&Substituir"
 
@@ -292,7 +296,7 @@ msgstr "&Alzar configuración"
 msgid "&Save configuration on exit"
 msgstr "&Alzar configuración en salir"
 
-#: gui/settingsDialogs.py:1321
+#: gui/settingsDialogs.py:1360
 msgid "&Symbols"
 msgstr "&Simbolos"
 
@@ -470,6 +474,12 @@ msgstr ""
 "Incluir siempre una &descripción curta d'o caracter quan s'anuncien "
 "candidatos"
 
+#. Translators: The name of a language supported by NVDA.
+#: languageHandler.py:55
+msgctxt "languageName"
+msgid "Amharic"
+msgstr "Amarico"
+
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 #: gui/settingsDialogs.py:744
@@ -496,11 +506,23 @@ msgstr ""
 msgid "Answer to:"
 msgstr "Responder ta:"
 
+#. Translators: The name of a language supported by NVDA.
+#: languageHandler.py:59
+msgctxt "languageName"
+msgid "Arabic"
+msgstr "Arabe"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:29
 msgid "Arabic grade 1"
 msgstr "Arabe grau 1"
+
+#. Translators: The name of a language supported by NVDA.
+#: languageHandler.py:57
+msgctxt "languageName"
+msgid "Aragonese"
+msgstr "Aragonés"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui/addonGui.py:88
@@ -537,6 +559,13 @@ msgstr "Indicación con son d'os modos foco y navegación"
 #: gui/addonGui.py:35
 msgid "Author"
 msgstr "Autor"
+
+#. : Automatic port constant to be used by braille displays that support the "automatic" port
+#. : @type: Tupple
+#. Translators String representing the automatic port selection for braille displays.
+#: braille.py:1508
+msgid "Automatic"
+msgstr "Automatico:"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -585,7 +614,7 @@ msgstr "Mirar automaticament as &actualizacions de NVDA"
 msgid "Automatically report all available &candidates"
 msgstr "Anunciar automaticament totz os &candidatos disponibles"
 
-#: gui/settingsDialogs.py:1277
+#: gui/settingsDialogs.py:1286
 msgid "Avoid splitting &words when possible"
 msgstr "Privar deseparación de &parolas quan siga posible"
 
@@ -620,7 +649,7 @@ msgstr "Chuflar si se teclean letras minusclas quan o BloqMayus siga activau"
 msgid "Braille &display:"
 msgstr "&Linia braille:"
 
-#: gui/settingsDialogs.py:1287
+#: gui/settingsDialogs.py:1301
 msgid "Braille Display Error"
 msgstr "Error d'a Linia Braille"
 
@@ -634,7 +663,7 @@ msgstr "Opcions de braille"
 msgid "Braille tethered to %s"
 msgstr "O braille ancorau a %s"
 
-#: gui/settingsDialogs.py:1260
+#: gui/settingsDialogs.py:1269
 msgid "Braille tethered to:"
 msgstr "O braille ancorau a:"
 
@@ -700,7 +729,7 @@ msgstr "Cambiar l'anunciau d'os obchectos"
 msgid "Change settings of document properties"
 msgstr "Cambiar opcions d'as propiedatz d'o documento"
 
-#: gui/settingsDialogs.py:1334
+#: gui/settingsDialogs.py:1373
 msgid "Change symbol"
 msgstr "Cambiar simbolo"
 
@@ -832,7 +861,7 @@ msgstr ""
 "Configurar a lectura de caracters, parolas u teclas d'ordens en escribir"
 
 #. Translators: The progress message indicating that a connection is being established.
-#: updateCheck.py:254
+#: updateCheck.py:258
 msgid "Connecting"
 msgstr "Connectando"
 
@@ -871,7 +900,7 @@ msgstr "No s'ha trobau a finestra de comentarios automaticos."
 msgid "Could not find comment window."
 msgstr "No s'ha trobau a finestra comentarios."
 
-#: gui/settingsDialogs.py:1287
+#: gui/settingsDialogs.py:1301
 #, python-format
 msgid "Could not load the %s display."
 msgstr "No s'ha puesto cargar a linia %s."
@@ -924,7 +953,7 @@ msgstr "Braille Crovata computerizau de 8 puntos"
 msgid "Currently running application is %s"
 msgstr "Actualment l'aplicación en execución ye %s"
 
-#: gui/settingsDialogs.py:1244
+#: gui/settingsDialogs.py:1253
 msgid "Cursor blink rate (ms)"
 msgstr "Velocidat d'o parpadeyo d'o cursor (en MS)"
 
@@ -1013,17 +1042,17 @@ msgid "Donate"
 msgstr "Fer una donación"
 
 #. Translators: The label of a button to download and install an NVDA update.
-#: updateCheck.py:188
+#: updateCheck.py:192
 msgid "Download and &install update"
 msgstr "Descargar y &instalar l'actualización"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:331
+#: updateCheck.py:335
 msgid "Downloading"
 msgstr "Descargando"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
-#: updateCheck.py:252
+#: updateCheck.py:256
 msgid "Downloading Update"
 msgstr "Se ye descargando l'actualización"
 
@@ -1043,7 +1072,7 @@ msgstr "Neerlandés (Países Baixos) grau 1"
 msgid "E&xit"
 msgstr "&Salir"
 
-#: gui/settingsDialogs.py:1239
+#: gui/settingsDialogs.py:1248
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&Expandir a braille computerizau t'a parola en o cursor"
 
@@ -1116,7 +1145,7 @@ msgstr "Anglés (U.S.) grau 2"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:128 updateCheck.py:351 gui/addonGui.py:84
+#: updateCheck.py:128 updateCheck.py:355 gui/addonGui.py:84
 #: gui/addonGui.py:123 gui/__init__.py:148 gui/__init__.py:157
 #: gui/installerGui.py:54 gui/installerGui.py:191 gui/installerGui.py:199
 #: gui/installerGui.py:230 gui/logViewer.py:74 gui/settingsDialogs.py:223
@@ -1138,7 +1167,7 @@ msgid "Error copying NVDA user settings"
 msgstr "Error en copiar as opcions d'usuario de NVDA"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:350
+#: updateCheck.py:354
 msgid "Error downloading update."
 msgstr "Error en descargar actualización."
 
@@ -1286,7 +1315,7 @@ msgid "Forward to:"
 msgstr "Remitir ta:"
 
 #. Translators: Names of braille displays.
-#: brailleDisplayDrivers/freedomScientific.py:110
+#: brailleDisplayDrivers/freedomScientific.py:114
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "Serie d'as Freedom Scientific Focus/PAC Mate"
 
@@ -1406,6 +1435,11 @@ msgstr "Braille computerizau Hebreu de 8 puntos"
 msgid "Hindi grade 1"
 msgstr "Hindi grau 1"
 
+#. Translators: Names of braille displays
+#: brailleDisplayDrivers/brailleNote.py:86
+msgid "HumanWare BrailleNote"
+msgstr "Nota d'HumanWare Braille"
+
 #. Translators: The name of a series of braille displays.
 #: brailleDisplayDrivers/brailliantB.py:79
 msgid "HumanWare Brailliant BI/B series"
@@ -1479,7 +1513,7 @@ msgid "Install NVDA"
 msgstr "Instalar NVDA"
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
-#: updateCheck.py:360
+#: updateCheck.py:364
 msgid "Install Update"
 msgstr "Instalar Actualización"
 
@@ -1564,7 +1598,7 @@ msgstr "Error d'idioma"
 msgid "Latvian grade 1"
 msgstr "Letón grau 1"
 
-#: gui/settingsDialogs.py:1325
+#: gui/settingsDialogs.py:1364
 msgid "Level"
 msgstr "Libel"
 
@@ -1633,7 +1667,7 @@ msgstr ""
 "Marca a posición actual d'o cursor de revisión como o comienzo d'o texto a "
 "copiar"
 
-#: gui/settingsDialogs.py:1252
+#: gui/settingsDialogs.py:1261
 msgid "Message timeout (sec)"
 msgstr "Duración d'o mensache (segundos)"
 
@@ -1846,7 +1880,7 @@ msgid "NVDA Speech Viewer"
 msgstr "Visualizador de Voz de NVDA"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
-#: updateCheck.py:170
+#: updateCheck.py:174
 msgid "NVDA Update"
 msgstr "Esviellar NVDA"
 
@@ -1865,7 +1899,7 @@ msgstr "NVDA activau"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#: updateCheck.py:179
+#: updateCheck.py:183
 msgid "NVDA version {version} is available."
 msgstr "A versión {version} de NVDA ye disponible."
 
@@ -1877,6 +1911,12 @@ msgstr "Puesto Web de NVDA"
 #: NVDAHelper.py:214
 msgid "Native input"
 msgstr "Dentrada nativa"
+
+#. Translators: The name of a language supported by NVDA.
+#: languageHandler.py:61
+msgctxt "languageName"
+msgid "Nepali"
+msgstr "Nepalí"
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 #: appModules/msimn.py:25
@@ -1979,7 +2019,7 @@ msgid "No track playing"
 msgstr "No bi ha garra pista en reproducción"
 
 #. Translators: A message indicating that no update to NVDA is available.
-#: updateCheck.py:182
+#: updateCheck.py:186
 msgid "No update available."
 msgstr "No bi ha garra actualización disponible."
 
@@ -2046,9 +2086,10 @@ msgid ""
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
 "screen, height is {height:.1f} per cent of screen"
 msgstr ""
-"Os bordes de l'obchecto se colocan en {left:.1f} por cient dende o canto cucho de "
-"a pantalla, {top:.1f} por cient dende o canto superior d'a pantalla, a amplaria "
-"ye {width:.1f} por cient d'a pantalla, l'altura ye {height:.1f} por cient d'a pantalla"
+"Os bordes de l'obchecto se colocan en {left:.1f} por cient dende o canto "
+"cucho de a pantalla, {top:.1f} por cient dende o canto superior d'a "
+"pantalla, a amplaria ye {width:.1f} por cient d'a pantalla, l'altura ye "
+"{height:.1f} por cient d'a pantalla"
 
 #: gui/__init__.py:475
 msgid "Options"
@@ -2097,7 +2138,7 @@ msgid "Play"
 msgstr "Reproducir"
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:380
+#: updateCheck.py:384
 msgid "Please Donate"
 msgstr "Fe una donación"
 
@@ -2261,7 +2302,7 @@ msgstr "Salir d'o NVDA!"
 msgid "Rate boos&t"
 msgstr "Cha&rrar a escape!"
 
-#: gui/settingsDialogs.py:1273
+#: gui/settingsDialogs.py:1282
 msgid "Read by &paragraph"
 msgstr "Leyer por &paragrafo"
 
@@ -2304,7 +2345,7 @@ msgstr ""
 "puet estar util ta desembolicadors"
 
 #. Translators: The label of a button to remind the user later about performing some action.
-#: updateCheck.py:199
+#: updateCheck.py:203
 msgid "Remind me &later"
 msgstr "Remerar-me-lo mas &tardi"
 
@@ -2312,7 +2353,7 @@ msgstr "Remerar-me-lo mas &tardi"
 msgid "Remove Add-on"
 msgstr "Borrar complemento"
 
-#: gui/settingsDialogs.py:1122 gui/settingsDialogs.py:1324
+#: gui/settingsDialogs.py:1122 gui/settingsDialogs.py:1363
 msgid "Replacement"
 msgstr "Substituir por"
 
@@ -2689,11 +2730,22 @@ msgstr "Linias braille Seika"
 msgid "Select portable  directory"
 msgstr "Seleccionar directorio portable"
 
+#. Translators: The name of a language supported by NVDA.
+#: languageHandler.py:63
+msgctxt "languageName"
+msgid "Serbian (Latin)"
+msgstr "Serbio (Latino)"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:188
 msgid "Serbian grade 1"
 msgstr "Serbio grau 1"
+
+#. Translators: Name of a serial communications port
+#: brailleDisplayDrivers/brailleNote.py:126
+msgid "Serial: {portName}"
+msgstr "Serie: {portName}"
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #: NVDAObjects/window/excel.py:181
@@ -2923,12 +2975,12 @@ msgstr "S'ha esviellau bien a instalación de NVDA. "
 msgid "Swedish grade 1"
 msgstr "Sueco grau 1"
 
-#: gui/settingsDialogs.py:1323
+#: gui/settingsDialogs.py:1362
 msgid "Symbol"
 msgstr "Simbolo"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui/settingsDialogs.py:1310
+#: gui/settingsDialogs.py:1349
 msgid "Symbol Pronunciation"
 msgstr "Pronuncia de simbolo"
 
@@ -3135,7 +3187,7 @@ msgstr "Activa y desactiva l'anuncio d'información quan o churi se mueve"
 msgid "Tools"
 msgstr "Ferramientas"
 
-#: gui/settingsDialogs.py:1227
+#: gui/settingsDialogs.py:1236
 msgid "Translation &table:"
 msgstr "&Tabla de transcripción:"
 
@@ -3209,7 +3261,7 @@ msgstr "Desinstalar NVDA"
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
-#: updateCheck.py:358
+#: updateCheck.py:362
 msgid "Update downloaded. It will now be installed."
 msgstr "L'actualización s'ha descargau. Agora s'instalará."
 
@@ -3274,7 +3326,7 @@ msgid "User Guide"
 msgstr "Guida de l'Usuario"
 
 #. Translators: the label for the Windows default NVDA interface language.
-#: languageHandler.py:72
+#: languageHandler.py:87
 msgid "User default"
 msgstr "Predeterminau ta l'usuario"
 
@@ -3308,7 +3360,7 @@ msgstr "Diccionario por Voz (%s)"
 msgid "Warning"
 msgstr "Aviso"
 
-#: updateCheck.py:371
+#: updateCheck.py:375
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are "
@@ -3831,7 +3883,7 @@ msgid "directory pane"
 msgstr "panel de directorios"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
-#: brailleDisplayDrivers/freedomScientific.py:118
+#: brailleDisplayDrivers/freedomScientific.py:136
 msgid "display scroll"
 msgstr "Desplazar anvista"
 
@@ -3987,7 +4039,7 @@ msgstr ""
 "trobar l'aparición anterior d'a cadena de texto previament introducida dende "
 "a posición actual d'o cursor"
 
-#: globalCommands.py:943 gui/settingsDialogs.py:1261
+#: globalCommands.py:943 gui/settingsDialogs.py:1270
 msgid "focus"
 msgstr "foco"
 
@@ -4361,7 +4413,7 @@ msgid "line %s"
 msgstr "linia %s"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line..
-#: brailleDisplayDrivers/freedomScientific.py:120
+#: brailleDisplayDrivers/freedomScientific.py:138
 msgid "line scroll"
 msgstr "desplazar linia"
 
@@ -5330,7 +5382,7 @@ msgstr "anuncia l'obchecto con o foco"
 msgid "required"
 msgstr "requiesto"
 
-#: globalCommands.py:940 gui/settingsDialogs.py:1261
+#: globalCommands.py:940 gui/settingsDialogs.py:1270
 msgid "review"
 msgstr "revisión"
 
