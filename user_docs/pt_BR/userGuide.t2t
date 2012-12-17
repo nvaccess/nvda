@@ -24,7 +24,7 @@ Suas características mais notáveis são:
 - Suporte para diversas linhas braille;
 - Capacidade para  ser executado diretamente através de dispositivos USB e outros dispositivos portáteis sem necessitar de instalação;
 - Instalação com voz e fácil de usar;
-- Tradução para 41 idiomas;
+- Tradução para 42 idiomas;
 - Suporte para as modernas versões do sistema operacional Windows  incluindo variantes de 32 e 64 bit;
 - Possibilidade de uso na  tela de logon do Windows   e outras telas de segurança;
 - Suporte para interfaces comuns de acessibilidade tais como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation; (UI Automation é suportado apenas no Windows 7 e superiores) ;
@@ -33,7 +33,7 @@ Suas características mais notáveis são:
 
 ++ Internacionalização ++
 É importante que as pessoas tenham igual acesso às tecnologias em qualquer parte do mundo, independentemente do idioma que falem.
-Além do inglês, o NVDA está traduzido para 41 idiomas, estando inclusos: Africâner, Albanês, Alemão, Amárico, Árabe, Búlgaro, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
+Além do inglês, o NVDA está traduzido para 42 idiomas, estando inclusos: Africâner, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Chinês Simplificado, Chinês Tradicional, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Espanhol, Finlandês, Francês, Galego, Georgiano, Grego, Hebraico, Hindiano, Holandês, Húngaro, Islandês, Italiano, Japonês, Nepalês, Noroeguês, Polonês, Português do Brasil, Português de Portugal, Romeno, Russo, Sérvio, Sueco, Tailandês, Tâmil, Tcheco, Turco, Ucraniano e Vietnamita. 
 
 ++ Suporte de Sintetizador de Voz ++
 Além de fornecer as mensagens e interface em diversos idiomas, o NVDA também permite ao usuário ler o conteúdo em qualquer língua, desde que tenha um sintetizador de voz que fale esse idioma em particular. 
@@ -78,8 +78,16 @@ As cópias portáteis também oferecem elas próprias a capacidade de ser instal
 Todavia, se pretende copiar o NVDA para dentro de dispositivos de mídia somente leitura, como cds, você deve apenas copiar o pacote baixado.
 A execução de cópias portáteis diretamente de dispositivos somente leitura não é suportada até o momento.
 
-O Uso das cópias temporárias do  NVDA é também uma opção (isto é, para propósitos de demonstração), todavia iniciá-lo a cada vez dessa forma pode trazer um grande gasto de tempo.
+O Uso das cópias temporárias do  NVDA é também uma opção (isto é, para propósitos de demonstração), todavia iniciá-lo a cada vez dessa forma pode lhe trazer um grande gasto de tempo.
 
+++ Restrições às Cópias Portáteis e Temporárias ++
+Além da  impossibilidade de iniciar automaticamente durante e/ou depois do logon, as cópias portáteis e temporárias do NVDA também sofrem as seguintes restrições:
+ - Impossibilidade de interagir com aplicativos executados com privilégios administrativos, a menos que o próprio NVDA tenha sido executado também com esses privilégios (o que não é recomendado).
+ - Impossibilidade de ler as telas  do Controle de Conta do Usuário   (UAC) ao tentar iniciar um aplicativo com privilégios administrativos.
+ - Windows 8: impossibilidade de suportar entradas oriúndas de um touch screen.
+ - Windows 8: impossibilidade de oferecer recursos tais como o modo de navegação e o anúncio de caracteres digitados na loja de aplicativos (store apps) do Windows.
+
+ 
 ++ Instalando o NVDA ++
 Caso esteja instalando o NVDA diretamente do pacote baixado, pressione o botão Instalar o NVDA.
 Se você já fechou esse diálogo ou está pretendendo instalar por meio de uma cópia portátil, por favor selecione o item de menu Instalar o NVDA que se encontra no submenu Ferramentas de seu menu.
@@ -191,14 +199,14 @@ Deste modo, gestos tais como varredura para cima com 2 dedos e varredura para a 
   Pela razão de existirem muito mais comandos para o NVDA que gestos de toques possíveis,   este leitor de telas possui diferentes modos de toques entre os quais você pode alternar, tornando possíveis disponibilizar determinadas combinações de comandos.
  Os dois modos são o modo de texto e o modo de objeto.
 Certos comandos do NVDA presentes neste documento podem conter um modo de toque listado entre colchetes após o gesto de toque.
-Por exemplo, varredura para cima (modo de texto) significa que o comando será executado se você executar uma varredura para cima, mais apenas estando no modo de texto.
+Por exemplo, varredura para cima (modo de texto) significa que o comando será executado se você executar uma varredura para cima, mas apenas estando no modo de texto.
  Caso o comando não possua um modo listado, este então funcionará em qualquer modo.
  
  %kc:beginInclude
 Para alternar entre os modos de toques, execute um toque com 3 dedos.
 %kc:endInclude 
 
-++ Modo Ajuda de Entrada ++
+++ O Modo Ajuda de Entrada ++
 Muitos dos comandos do NVDA são mencionados ao longo deste guia do usuário, mas uma forma fácil de explorá-los é ativar a ajuda de entrada. 
 
 Para ativar a ajuda de entrada, pressione NVDA+1.
@@ -280,7 +288,7 @@ Quando estiver numa tabela, as seguintes teclas de atalho também estarão dispo
 | Mover para a próxima linha | control+alt+seta abaixo | Move o cursor do sistema para a linha seguinte (permanecendo na mesma coluna) |
 %kc:endInclude
 
-++ Navegação de Objetos ++
+++ A Navegação de Objetos ++
 Algumas vezes, você pode pretender explorar o aplicativo atual ou o sistema operacional sem mover o [foco #SystemFocus].
 Pode também querer trabalhar com [objetos #Objects] que não podem ser acessados normalmente usando o teclado.
 Nesses casos, você pode usar a navegação de objetos.
@@ -359,7 +367,7 @@ O esquema é ilustrado como se segue:
 | Palavra Anterior | Palavra Atual | Próxima Palavra |
 | Caractere Anterior | Caractere Atual | Próximo Caractere |
 
-++ Revisão Plana ++[FlatReview]
+++ A Revisão Plana ++[FlatReview]
 Enquanto geralmente você pode revisar o conteúdo de apenas um [objeto #Objects] individualmente, há alguns objetos nos quais é possível acessar o conteúdo dos objetos contidos neles.
 Documentos complexos oferecem-lhe a possibilidade de revisar seu conteúdo por completo e nas janelas de aplicações   pode-se rever todo  o texto da tela tal como aparece visualmente.
  Dá-se a isso o nome de revisão plana.
@@ -433,6 +441,7 @@ Adicionalmente, pode alternar manualmente forçando o modo de foco, sendo que as
 | Procurar | NVDA+control+f | Abre uma janela onde você pode digitar algum texto para procurar no documento atual |
 | Procurar seguinte | NVDA+f3 | Procura pela próxima ocorrência de texto já procurada no documento |
 | Procurar anterior | NVDA+shift+f3 | Procura pela ocorrência de texto anterior  já procurada no documento |
+| Abrir descrição longa | NVDA+d | Abre uma nova janela contendo a descrição longa  para o elemento sobre o qual você se encontra caso ele possua alguma. | 
 %kc:endInclude
 
 ++ Navegação por Caractere ++
@@ -568,7 +577,7 @@ Ao pressionar este botão, copiará as configurações atualmente salvas do usu�
 Para certificar-se de que todas as suas opções serão transferidas, verifique em primeiro lugar se salvou suas configurações com NVDA+Ctrl+C ou através do item respectivo do Menu do NVDA.
 Esta opção só estará disponível para as cópias instaladas do NVDA. 
 
-+++ Procurar Atualizações do NVDA Automaticamente +++
+==== Procurar Atualizações do NVDA Automaticamente ====
 Se abilitado, o NVDA irá procurar automaticamente por verssões atualizadas e lhe informará quando uma atualização estiver disponível.
 Você também pode procurar por atualizações manualmente selecionando o item correspondente no submenu ajuda do menu do NVDA.
 
@@ -661,7 +670,7 @@ Maior parte dos sintetizadores o suportam.
 Todavia, alguns sintetizadores Microsoft Speech API não o implementam corretamente e comportam-se de forma estranha quando esta opção está abilitada.
   Caso esteja enfrentando problemas com a pronúncia de caracteres individuais, experimente desabilitá-la.
   
-+++ Anel de Opções de Voz +++[SynthSettingsRing]
++++ O Anel de Configurações de Voz +++[SynthSettingsRing]
 Se desejar alterar rapidamente as opções de voz sem ir ao diálogo das mesmas, alguns comandos do NVDA lhe permitem mover-se através das opções de voz mais comuns, a partir de qualquer local desde que este esteja sendo executado:
 
 %kc:beginInclude
@@ -909,7 +918,7 @@ Se a marcar, porém, o NVDA anunciará também tabelas usadas puramente para rep
 
 ==== Configurar O Anúncio de Campos Tais Como Links E Títulos ====
 
- por favor veja as  opções no diálogo de formatação de documentos [DocumentFormattingSettings] para a configuração dos campos que serão falados quando estiver navegando, tais como links, cabeçalhos e tabelas.
+ por favor veja as  opções no [Diálogo de Formatação de Documentos #DocumentFormattingSettings] para a configuração dos campos que serão falados quando estiver navegando, tais como links, cabeçalhos e tabelas.
 
 ==== Modo de foco automático quando o foco muda ====
 Esta opção permite que o modo de foco seja ativado quando este for modificado.
