@@ -5,12 +5,33 @@
 = 2013.1 =
 
 == neue Funktionen ==
-- Grundlegende Unterstützung beim Lesen und Schreiben von Nachrichten in Lotus Notes 8.5 (#543)
+- Grundlegende Unterstützung beim Lesen und Schreiben von Nachrichten in Lotus Notes 8.5. (#543)
 - Im Lesemodus für mshtml  (z.B. Internet Explorer) und Gecko (z.B. Firefox) wird nun die Existenz langer Beschreibungen gemeldet. Sie können die lange Beschreibung jedoch auch durch Drücken von NVDA+d in einem neuen Fenster öffnen. (#809)
+- Im Internet Explorer 9 und neuer werden Benachrichtigungen korrekt ausgegeben (wenn z.B. Inhalte oder herunterzuladene Dateien blockiert werden). (#2343)
+- automatisches Ausgebe von Spalten- und Reihenüberschriften von Tabellen im Internet Explorer und anderen mshtml-Dokumenten wird unterstützt (#778)
+- neue Sprache: Aragonesisch
+- neue Braille-Übersetzungstabelle: dänische Kurzschrift.
+- Unterstützung für Bluetooth-Braillezeilen, die unter Verwendung des Bluetooth-Stacks von Toshiba mit dem Computer verbunden werden. (#2419)
+- Unterstützung für die Auswahl des Anschlusses bei Freedom Scientific-Braillezeilen (automatisch, USB oder Bluetooth).
+- Unterstützung für Humanware Braillenote (#2012)
+
 
 == Fehlerbehebungen ==
 - Die Schnellnavigationstasten zum Springen zu Trennlinien funktionieren nun in Internet Explorer und anderen mshtml-Dokumenten. (#2781)
-- Wenn es NVDA einmal nicht gelingen sollte, eine Sprachausgabe zu laden, sodass er auf Espeak zurückfallen oder die Sprachausgabe gänzlich deaktivieren muss, wird die Konfiguration nun nicht mehr aktualisiert und NVDA wird erneut versuchen, die ursprünglich gingestellte Sprachausgabe zu laden, wenn er das nächste Mal gestartet wird.
+- Wenn es NVDA einmal nicht gelingen sollte, eine Sprachausgabe zu laden, sodass es auf Espeak zurückfallen oder die Sprachausgabe gänzlich deaktivieren muss, wird die Konfiguration nun nicht mehr aktualisiert und NVDA wird erneut versuchen, die ursprünglich eingestellte Sprachausgabe zu laden, wenn es das nächste Mal gestartet wird. (#2589)
+- In Mozilla-Anwendungen werden Aktualisierungen in Tabellen korrekt verarbeitet. So werden beispielsweise Koordinaten von aktualisierten Zellen richtig angegeben; die Navigation sollte ebenfalls korrekt funktionieren. (#2784)
+- im Lesemodus in Internet-Browsern werden anklickbare unbeschriftete Grafiken nun korrekt verarbeitet. (#2838)
+- ältere und neuere Versionen von SecureCRT werden unterstützt. (#2800)
+- For input  methods such as Easy Dots IME under XP, the reading string is now correctly reported.
+- The candidate list in the Chinese Simplified Microsoft Pinyin input method under Windows 7 is now correctly read when changing pages with left and right arrow, and when first opening it with Home.
+- beim Speichern der Aussprache benutzerdefinierter Symbole wird das Feld "beibehalten" nicht mehr entfernt. (#2852)
+- Wird die automatische Prüfung auf Aktualisierungen deaktiviert, muss NVDA nicht mehr neu gestartet werden, damit die Änderung wirksam wird.
+- NVDA wird nun nicht mehr abstürzen, wenn bei der Deinstallation einer Erweiterung deren Ordner nicht gelöscht werden kann, weil er von einem anderen Programm verwendet wird. (#2860)
+
+== Änderungen für Entwickler ==
+- Braillezeilentreiber unterstützen die Auswahl des Anschlusses (#426)
+ - Dies für Braillezeilen sinnvoll, die an eine serielle Schnttstelle angeschlossen werden.
+ - Hierfür können Sie die Klassenmethode getPossiblePorts aus der Klasse BrailleDisplayDriver verwenden.
 
 = 2012.3 =
 Schwerpunkte in dieser Version sind: Unterstützung für asiatische Eingabemetoden, experimentelle Unterstützung für Touchscreens unter Windows 8, Ansage der Seitenzahlen sowie verbesserte Unterstützung von Tabellen in Adobe Reader, Befehle zur Navigation in Tabellen und Listenansichten im Explorer sowie Unterstützung zahlreicher weiterer Braillezeilen und das Lesen von Zeilen- bzw. Spaltenüberschriften in Microsoft Excel.
