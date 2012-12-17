@@ -668,15 +668,7 @@ BOOL WINAPI fake_DeleteDC(HDC hdc) {
 	return res;
 }
 
-//BitBlt hook function
-//Hooked so we can tell when content from one DC is being copied (bit blitted) to another (most likely from a memory DC to a window DC). 
-typedef BOOL(WINAPI *BitBlt_funcType)(HDC,int,int,int,int,HDC,int,int,DWORD);
-BitBlt_funcType real_BitBlt=NULL;
-BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop) {
-	//Call the real BitBlt
-	BOOL res=real_BitBlt(hdcDest,nXDest,nYDest,nWidth,nHeight,hdcSrc,nXSrc,nYSrc,dwRop);
-	//If bit blit didn't work, or its not a simple copy, we don't want to know about it
-	if(!res) return res;
+void StretchBlt_helper(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int nHeightDest, HDC hdcSrc, int nXSrc, int nYSrc, int nWidthSrc, int nHeightSrc, DWORD dwRop) {
 	BOOL useSource=FALSE;
 	switch(dwRop) {
 		case MERGECOPY:
@@ -702,17 +694,17 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 	displayModel_t* destModel=acquireDisplayModel(hdcDest,srcModel==NULL);
 	if(!destModel) {
 		if(srcModel) srcModel->release();
-		return res;
+		return;
 	}
-	RECT srcRect={nXSrc,nYSrc,nXSrc+nWidth,nYSrc+nHeight};
+	RECT srcRect={nXSrc,nYSrc,nXSrc+nWidthSrc,nYSrc+nHeightSrc};
 	//we record chunks using device coordinates -- DCs can move/resize
 	dcPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2);
-	POINT destPos={nXDest,nYDest};
-	dcPointsToScreenPoints(hdcDest,&destPos,1);
+	RECT destRect={nXDest,nYDest,nXDest+nWidthDest,nYDest+nHeightDest};
+	//we record chunks using device coordinates -- DCs can move/resize
+	dcPointsToScreenPoints(hdcDest,(LPPOINT)&destRect,2);
 	if(srcModel) {
 		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
-		srcModel->copyRectangle(srcRect,FALSE,TRUE,destPos.x,destPos.y,NULL,destModel);
-		RECT destRect={(srcRect.right-srcRect.left)+destPos.x,(srcRect.bottom-srcRect.top)+destPos.y};
+		srcModel->copyRectangle(srcRect,FALSE,TRUE,destRect,NULL,destModel);
 		HWND hwnd=WindowFromDC(hdcDest);
 		if(hwnd) queueTextChangeNotify(hwnd,destRect);
 	} else {
@@ -722,6 +714,30 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 	//release models and return
 	if(srcModel) srcModel->release();
 	destModel->release();
+	return;
+}
+
+//BitBlt hook function
+//Hooked so we can tell when content from one DC is being copied (bit blitted) to another (most likely from a memory DC to a window DC). 
+typedef BOOL(WINAPI *BitBlt_funcType)(HDC,int,int,int,int,HDC,int,int,DWORD);
+BitBlt_funcType real_BitBlt=NULL;
+BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop) {
+	//Call the real BitBlt
+	BOOL res=real_BitBlt(hdcDest,nXDest,nYDest,nWidth,nHeight,hdcSrc,nXSrc,nYSrc,dwRop);
+	//If bit blit didn't work, or its not a simple copy, we don't want to know about it
+	if(!res) return res;
+	StretchBlt_helper(hdcDest, nXDest, nYDest, nWidth, nHeight, hdcSrc, nXSrc, nYSrc, nWidth, nHeight, dwRop);
+	return res;
+}
+
+//StretchBlt hook function
+typedef BOOL(WINAPI *StretchBlt_funcType)(HDC,int,int,int,int,HDC,int,int,int,int,DWORD);
+StretchBlt_funcType real_StretchBlt=NULL;
+BOOL WINAPI fake_StretchBlt(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int nHeightDest, HDC hdcSrc, int nXSrc, int nYSrc, int nWidthSrc, int nHeightSrc, DWORD dwRop) {
+	//Call the real StretchBlt
+	BOOL res=real_StretchBlt(hdcDest,nXDest,nYDest,nWidthDest,nHeightDest,hdcSrc,nXSrc,nYSrc,nWidthSrc,nHeightSrc,dwRop);
+	if(!res) return res;
+	StretchBlt_helper(hdcDest, nXDest, nYDest, nWidthDest, nHeightDest, hdcSrc, nXSrc, nYSrc, nWidthSrc, nHeightSrc, dwRop);
 	return res;
 }
 
@@ -841,7 +857,8 @@ BOOL WINAPI fake_ScrollWindow(HWND hwnd, int XAmount, int YAmount, const RECT* l
 	RECT realClipRect=lpClipRect?*lpClipRect:clientRect;
 	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
 	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
-	model->copyRectangle(realScrollRect,TRUE,TRUE,realScrollRect.left+XAmount,realScrollRect.top+YAmount,&realClipRect,NULL);
+	RECT destRect={realScrollRect.left+XAmount,realScrollRect.top+YAmount,realScrollRect.right+XAmount,realScrollRect.bottom+YAmount};
+	model->copyRectangle(realScrollRect,TRUE,TRUE,destRect,&realClipRect,NULL);
 	model->release();
 	return res;
 }
@@ -869,7 +886,8 @@ BOOL WINAPI fake_ScrollWindowEx(HWND hwnd, int dx, int dy, const RECT* prcScroll
 	RECT realClipRect=prcClip?*prcClip:clientRect;
 	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
 	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
-	model->copyRectangle(realScrollRect,TRUE,TRUE,realScrollRect.left+dx,realScrollRect.top+dy,&realClipRect,NULL);
+	RECT destRect={realScrollRect.left+dx,realScrollRect.top+dy,realScrollRect.right+dx,realScrollRect.bottom+dy};
+	model->copyRectangle(realScrollRect,TRUE,TRUE,destRect,&realClipRect,NULL);
 	model->release();
 	return res;
 }
@@ -914,6 +932,7 @@ void gdiHooks_inProcess_initialize() {
 	real_FillRect=apiHook_hookFunction_safe("USER32.dll",FillRect,fake_FillRect);
 	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
 	real_BitBlt=apiHook_hookFunction_safe("GDI32.dll",BitBlt,fake_BitBlt);
+	real_StretchBlt=apiHook_hookFunction_safe("GDI32.dll",StretchBlt,fake_StretchBlt);
 	real_PatBlt=apiHook_hookFunction_safe("GDI32.dll",PatBlt,fake_PatBlt);
 	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
 	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);
