@@ -23,7 +23,7 @@ NVDA는 커뮤니티의 후원을 받으며 [NV Access http://www.nvaccess.org/]
 - 다양한 점자 디스플레이 지원
 - 인스톨 없이 USB 스틱이나 다른 휴대용 미디어에서 NVDA를 완벽하게 실행 가능
 - 손쉽게 사용할 수 있는 말하는 설치 과정
-- 41개국 언어로 번역됨
+- 42개국 언어로 번역됨
 - 최신 윈도우 (32 비트 및 64 비트) 버전 지원
 - 윈도우 로그온과 다른 보안 스크린에서도 실행 가능
 - 일반적인 접근성 인터페이스 지원 예: Microsoft Active Accessibility, Java Access Bridge, IAccessible2, UI 오토메이션(UI 오토메이션은 윈도우즈7 이상에서만 지원)
@@ -32,7 +32,7 @@ NVDA는 커뮤니티의 후원을 받으며 [NV Access http://www.nvaccess.org/]
 
 ++ 국제화 ++
 중요한 것은 세계 어느 곳에 사는 사람이라도 사용하는 언어와 관계없이 기술에 대한 접근이 평등해야 하는 것입니다.
-현재 NVDA는 한국어와 영어 외에 다음 언어들로 번역되어 출시되고 있습니다: 갈리시아어, 그리스어, 그루지아어, 네덜란드어, 네팔어, 노르웨이어, 덴마크어, 독일어, 러시아어, 루마니아어, 베트남어, 불가리아어, 세르비아어, 슬로바키아어, 슬로베니아어, 스웨덴어, 스페인어, 아이슬란드어, 아라비아어, 알바니아어, 아프리카어, 에디오피아어, 영어, 우크라이나어, 이탈리아어, 일본어, 중국어 (간체 및 번체), 체코어, 크로아티아어, 타밀어, 태국어, 터키어, 폴란드어, 포루투갈어 (브라질), 포루투갈어 (포루투갈), 프랑스어, 필란드어, 헝가리어, 헤브라이어, 힌디어 등 40가지 언어를 지원합니다.
+현재 NVDA는 한국어와 영어 외에 다음 언어들로 번역되어 출시되고 있습니다: 갈리시아어, 그리스어, 그루지아어, 네덜란드어, 네팔어, 노르웨이어, 덴마크어, 독일어, 러시아어, 루마니아어, 베트남어, 불가리아어, 세르비아어, 슬로바키아어, 슬로베니아어, 스웨덴어, 스페인어, 아이슬란드어, 아라곤어, 아라비아어, 알바니아어, 아프리카어, 에디오피아어, 영어, 우크라이나어, 이탈리아어, 일본어, 중국어 (간체 및 번체), 체코어, 크로아티아어, 타밀어, 태국어, 터키어, 폴란드어, 포루투갈어 (브라질), 포루투갈어 (포루투갈), 프랑스어, 필란드어, 헝가리어, 헤브라이어, 힌디어 등 42가지 언어를 지원합니다.
 
 ++ 음성 엔진 지원 ++
 프로그램 메세지와 인터페이스를 여러 언어로 제공하는 것 외에, NVDA는 사용자들이 가지고 있는 음성 엔진에 따라서 컨텐츠를 어떠한 언어로도 읽을 수 있게 합니다.
@@ -80,6 +80,14 @@ NVDA를 설치하면 부가적인 기능을 사용할 수 있습니다. 예를 �
 읽기전용 미디어에서 포터블 버전을 곧바로 실행하는 것은 지원하지 않습니다.
 
 NVDA를 임시 버전으로 사용하는 것도 한가지 선택사항이긴 합니다. (예를 들면 전시를 목적으로 할 때) 그러나 이 방식으로 NVDA를 시작하려 한다면 매번 NVDA를 실행할 때마다 매우 긴 시간이 소비될 것입니다.
+
+++ 휴대용 및 임시 버전 사용시 제한 사항 ++
+윈도우 로그인때 자동으로 시작 불가 외에 휴대용 및 임시 버전은 다음 기능들이 제한됩니다:
+- 관리자 권한으로 실행된 프로그램 사용 불가 (NVDA 자체가 관리자 권한으로 실행된 경우는 제외; 관리자 권한으로 NvDA를 실행하는것은 권장하지 않습니다).
+- 특정 프로그램을 관리자 권한으로 실행하고자 할때 나타나는 사용자 개정 컨트롤 (UAC) 대화상자 접근 불가.
+- 윈도우 8 사용시 터치스크린 조작 불가.
+- 윈도우 8에서 윈도우 스토어 (Windows Store) 앱에서 브라우즈 모드 및 입력된 글자 출력과 같은 기능 사용 불가.
+-
 
 ++ NVDA 설치하기 ++
 만약 다운로드 패키지에서 곧바로 NVDA를 설치하려면, 'NVDA 설치' 버튼을 누르세요.
@@ -688,6 +696,18 @@ NVDA는 보이스 설정에 접근하지 않아도 어느 곳에서나 보이스
 
 NVDA가 지원하는 점자 디스플레이에 관한 더 상세한 정보를 원하시면 [지원하는 점자 디스플레이 #SupportedBrailleDisplays] 섹션을 참조하세요.
 
+==== 포트 (Port) ====
+사용자가 선택한 점자디스플레이가 여러 연결 포트를 지원한다면 이 콤보박스에 나열된 포트 중 하나를 선택하여 특정 디스플레이와 연결하여 사용할 수 있습니다.
+만약 선택한 디스플레이가 "자동 연결" 방식 (아래를 참조 바람)만 지원할 경우 이 옵션은 나타나지 않습니다.
+
+일반적으로 점자디스플레이와 연결시 "자동 연결" 방식이 선택됩니다.
+이때 NVDA는 시스템에 설치된 USB 또는 블루투스 장치 중에서 사용자가 선택한 점자 디스플레이를 검색한 후 디스플레이가 인식이 되면 자동으로 연결을 시도합니다.
+
+만약 사용자가 선택한 디스플레이가 자동 연결 방식을 지원하지 않는 경우 특정 포트를 지정할 수 있습니다.
+이때 사용자는 자동 연결 (ㅜ이에서 언급한 방식 사용), USB, 블루투스 또는 옛 시리얼 포트 중 하나를 선택하여 특정 디스플레이와 연결을 시도할 수 있습니다.
+
+특정 디스플레이가 지원하는 포트에 대해서는 [Supported Braille Displays #SupportedBrailleDisplays] 섹션을 참조하시기 바랍니다.
+
 ==== 점자 출력 표기법 (Translation Table) ====
 이 대화상자의 두 번째 옵션은 점자 테이블(표기법) 콤보박스입니다.
 이 콤보박스에는 다양한 언어의 점자테이블이 있습니다. 목록 안에 있는 점자 테이블에서 점자테이블로 이동하려면 화살표키를 사용하세요.
@@ -1136,6 +1156,9 @@ Newfon은 Sergey Shishmintzev에 의해 개발되는 무료 상용 음성 엔진
 여기에서는 Focus 40 Blue에 대해 소개하고 있지만 점자 디스플레이 드라이버를 설치한 경우 Freedom Scientific에서 출시한 디스플레이를 사용할 수 있습니다.
 만약 64비트 윈도우와 스크린 리더를 설치한 경우 NVDA용 파일들이 설치되어있지 않을 수 있음으로 위 링크에서 드라이버를 다운받아 설치하시기 바랍니다.
 
+기본적으로 NVDA는 USB나 블루투스를 통해 이 디스플레이를 자동으로 인식 후 연결을 시도합니다.
+그러나 사용자는 특정 연결 방식 (포트)로만으로 연결하도록 (예: 블루투스로 사용하면서 USB로 충전할 경우) 포트를 지정할 수 있습니다.
+
 다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
 %kc:beginInclude
@@ -1502,6 +1525,57 @@ c 시리즈에서 EAB와 위 라우팅 키를 누르면 두번째 스위치 명�
 | 다음 객체로 이동 | right2 |
 | 글자 서식 알림 | upper routing row |
 %kc:endInclude
+
+++ 휴먼웨어 브레일노트 ++
+[휴먼웨어 http://www.humanware.com]에서 출시한 브레일노트 시리즈를 점자디스플레이로 사용할 수 있습니다.
+이때 브레일노트는 스크린 리더용 터미널 모드로 전환되어야 합니다.
+NvDA는 다음 브레일노트 모델을 지원합니다:
+
+- 브레일노트 클래식 (시리얼 포트로만 연결 가능)
+- 브레일노트 PK (시리얼 및 블루투스로 연결 가능)
+- 브레일노트 엠파워 (시리얼 및 블루투스로 연결 가능)
+- 브레일노트 에이펙스 (USB 및 블루투스로 연결 가능)
+-
+
+If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
+Please check the BrailleNote manual for details.
+In NVDA, you may also need to set the port in the Braille Settings dialog.
+If you are connecting via USB or bluetooth, you can set the port to "Automatic", "USB" or "Bluetooth", depending on the available choices.
+If connecting using a legacy serial port (or a USB to serial converter) or if none of the previous options appear, you must explicitly choose the communication port to be used from the list of hardware ports.
+
+Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
+
+다음은 브레일노트에 할당된 NVDA 기능키 목록입니다.
+각 키의 위치에 대해서는 브레일노트 사용설명서를 참고하십시요.
+
+%kc:beginInclude
+|| 이름 | 키 |
+| 점자 디스플레이 뒤로 스크롤 | back |
+| 점자 디스플레이 앞으로 스크롤 | advance |
+| 점자 디스플레이를 이전 줄로 이동 | previous |
+| 점자 디스플레이를 다음 줄로 이동 | next |
+| 점자 셀로 이동 | routing |
+| Toggle braille tethered to | previous+next |
+| 위쪽 방향키 | 스페이스+1점 |
+| 아래쪽 방향키 | 스페이스+4점 |
+| 왼쪽 방향키 | 스페이스+3점 |
+| 오른쪽 방향키 | 스페이스+6점 |
+| Page up key | 스페이스+1점+3점 |
+| Page down key | 스페이스+4점+6점 |
+| Home key | space+dot1+dot2 |
+| End key | space+dot4+dot5 |
+| Control+home keys | space+dot1+dot2+dot3 |
+| Control+end keys | space+dot4+dot5+dot6 |
+| Space key | space |
+| Enter key | space+dot8 |
+| Backspace key | space+dot7 |
+| Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| Shift+tab keys | space+dot1+dot2+dot5+dot6 |
+| windows 키 | 스페이스+2점+4점+5점+6점 (스페이스+w) |
+| Alt key | space+dot1+dot3+dot4 (space+m) |
+| Toggle input help | space+dot1+dot2+dot5 (space+h) |
+%kc:endInclude
+
  
 ++ BRLTTY ++
 외부 프로그램인 [BRLTTY http://mielke.cc/brltty/]을 사용하여 다른 점자 디스플레이를 사용할 수 있습니다.
