@@ -669,19 +669,13 @@ BOOL WINAPI fake_DeleteDC(HDC hdc) {
 }
 
 void StretchBlt_helper(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int nHeightDest, HDC hdcSrc, int nXSrc, int nYSrc, int nWidthSrc, int nHeightSrc, DWORD dwRop) {
-	BOOL useSource=FALSE;
-	switch(dwRop) {
-		case MERGECOPY:
-		case MERGEPAINT:
-		case NOTSRCCOPY:
-		case NOTSRCERASE:
-		case SRCAND:
-		case SRCCOPY:
-		case SRCERASE:
-		case SRCINVERT:
-		case SRCPAINT:
-		useSource=TRUE;
-	}
+	dwRop=dwRop&0x00ffffff;
+	bool useSource=(dwRop==MERGECOPY||dwRop==MERGEPAINT||dwRop==NOTSRCCOPY||dwRop==NOTSRCERASE||dwRop==PATPAINT||dwRop==SRCAND||dwRop==SRCCOPY||dwRop==SRCERASE||dwRop==SRCINVERT||dwRop==SRCPAINT);
+	bool destInvertBefore=dwRop==SRCERASE;
+	bool destInvertAfter=(dwRop==DSTINVERT||dwRop==NOTSRCERASE);
+	bool sourceInvert=(dwRop==MERGEPAINT||dwRop==NOTSRCCOPY||dwRop==PATPAINT);
+	bool opaqueSource=(dwRop==MERGECOPY||dwRop==NOTSRCCOPY||dwRop==SRCCOPY);
+	bool clearDest=(dwRop==BLACKNESS||dwRop==WHITENESS||dwRop==PATCOPY);
 	//If there is no source dc given, the destination dc should be used as the source
 	if(hdcSrc==NULL) hdcSrc=hdcDest;
 	//Try getting a display model for the source DC if one is needed.
@@ -702,14 +696,20 @@ void StretchBlt_helper(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int 
 	RECT destRect={nXDest,nYDest,nXDest+nWidthDest,nYDest+nHeightDest};
 	//we record chunks using device coordinates -- DCs can move/resize
 	dcPointsToScreenPoints(hdcDest,(LPPOINT)&destRect,2);
+	if(destInvertBefore) {
+		destModel->copyRectangle(destRect,TRUE,TRUE,TRUE,destRect,NULL,NULL);
+	}
 	if(srcModel) {
 		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
-		srcModel->copyRectangle(srcRect,FALSE,TRUE,destRect,NULL,destModel);
+		srcModel->copyRectangle(srcRect,FALSE,opaqueSource,sourceInvert,destRect,NULL,destModel);
 		HWND hwnd=WindowFromDC(hdcDest);
 		if(hwnd) queueTextChangeNotify(hwnd,destRect);
-	} else {
-		//As there is no source model, still at least clear the rectangle
-		destModel->clearRectangle(srcRect);
+	}
+	if(destInvertAfter) {
+		destModel->copyRectangle(destRect,TRUE,TRUE,TRUE,destRect,NULL,NULL);
+	}
+	if(clearDest) {
+		destModel->clearRectangle(destRect);
 	}
 	//release models and return
 	if(srcModel) srcModel->release();
@@ -869,7 +869,7 @@ BOOL WINAPI fake_ScrollWindow(HWND hwnd, int XAmount, int YAmount, const RECT* l
 	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
 	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
 	RECT destRect={realScrollRect.left+XAmount,realScrollRect.top+YAmount,realScrollRect.right+XAmount,realScrollRect.bottom+YAmount};
-	model->copyRectangle(realScrollRect,TRUE,TRUE,destRect,&realClipRect,NULL);
+	model->copyRectangle(realScrollRect,TRUE,TRUE,false,destRect,&realClipRect,NULL);
 	model->release();
 	return res;
 }
@@ -898,7 +898,7 @@ BOOL WINAPI fake_ScrollWindowEx(HWND hwnd, int dx, int dy, const RECT* prcScroll
 	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
 	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
 	RECT destRect={realScrollRect.left+dx,realScrollRect.top+dy,realScrollRect.right+dx,realScrollRect.bottom+dy};
-	model->copyRectangle(realScrollRect,TRUE,TRUE,destRect,&realClipRect,NULL);
+	model->copyRectangle(realScrollRect,TRUE,TRUE,false,destRect,&realClipRect,NULL);
 	model->release();
 	return res;
 }
@@ -949,9 +949,9 @@ void gdiHooks_inProcess_initialize() {
 	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
 	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);
 	real_DestroyWindow=apiHook_hookFunction_safe("USER32.dll",DestroyWindow,fake_DestroyWindow);
-	real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
-	real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
-	real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
+	//real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
+	//real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
+	//real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
 }
 
 void gdiHooks_inProcess_terminate() {

@@ -188,7 +188,7 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 	LOG_DEBUG(L"complete");
 }
 
-void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel) {
+void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, BOOL srcInvert, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel) {
 	if(!destModel) destModel=this;
 	RECT tempRect;
 	float scaleX=(float)(destRect.right-destRect.left)/(float)(srcRect.right-srcRect.left);
@@ -205,6 +205,11 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 		if(!IntersectRect(&tempRect,&srcRect,&(i->second->rect))) continue; 
 		//Copy the chunk
 		displayModelChunk_t* chunk=new displayModelChunk_t(*(i->second));
+		if(srcInvert) {
+			Beep(770,30);
+			chunk->formatInfo.color=(0xffffff-chunk->formatInfo.color);
+			chunk->formatInfo.backgroundColor=(0xffffff-chunk->formatInfo.backgroundColor);
+		}
 		//Tweek its rectangle coordinates to match where its going in the destination model
 		transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,chunk->rect.left);
 		transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,chunk->rect.right);

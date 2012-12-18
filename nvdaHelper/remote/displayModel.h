@@ -124,7 +124,7 @@ class displayModel_t: public LockableAutoFreeObject  {
  * @param destClippingRect an optional rectangle which will be used to clip all content being copied in to the destination model
  * @param destModel a pointer to the displayModel the chunks should be copied to (if NULL then this model is used) 
  */
-	void copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel);
+	void copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, BOOL srcInvert, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel);
 
 /**
  * Fetches the text contained in all chunks intersecting the given rectangle if provided, otherwize the text from all chunks in the model.
