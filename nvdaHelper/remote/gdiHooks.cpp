@@ -741,6 +741,17 @@ BOOL WINAPI fake_StretchBlt(HDC hdcDest, int nXDest, int nYDest, int nWidthDest,
 	return res;
 }
 
+//GdiTransparentBlt hook function
+typedef BOOL(WINAPI *GdiTransparentBlt_funcType)(HDC,int,int,int,int,HDC,int,int,int,int,UINT);
+GdiTransparentBlt_funcType real_GdiTransparentBlt=NULL;
+BOOL WINAPI fake_GdiTransparentBlt(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int nHeightDest, HDC hdcSrc, int nXSrc, int nYSrc, int nWidthSrc, int nHeightSrc, UINT crTransparent) {
+	//Call the real StretchBlt
+	BOOL res=real_GdiTransparentBlt(hdcDest,nXDest,nYDest,nWidthDest,nHeightDest,hdcSrc,nXSrc,nYSrc,nWidthSrc,nHeightSrc,crTransparent);
+	if(!res) return res;
+	StretchBlt_helper(hdcDest, nXDest, nYDest, nWidthDest, nHeightDest, hdcSrc, nXSrc, nYSrc, nWidthSrc, nHeightSrc, SRCPAINT);
+	return res;
+}
+
 typedef struct {
 	HDC hdc;
 	const void* pString;
@@ -933,6 +944,7 @@ void gdiHooks_inProcess_initialize() {
 	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
 	real_BitBlt=apiHook_hookFunction_safe("GDI32.dll",BitBlt,fake_BitBlt);
 	real_StretchBlt=apiHook_hookFunction_safe("GDI32.dll",StretchBlt,fake_StretchBlt);
+	real_GdiTransparentBlt=apiHook_hookFunction_safe("GDI32.dll",GdiTransparentBlt,fake_GdiTransparentBlt);
 	real_PatBlt=apiHook_hookFunction_safe("GDI32.dll",PatBlt,fake_PatBlt);
 	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
 	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);
