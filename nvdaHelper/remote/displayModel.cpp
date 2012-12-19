@@ -206,7 +206,6 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 		//Copy the chunk
 		displayModelChunk_t* chunk=new displayModelChunk_t(*(i->second));
 		if(srcInvert) {
-			Beep(770,30);
 			chunk->formatInfo.color=(0xffffff-chunk->formatInfo.color);
 			chunk->formatInfo.backgroundColor=(0xffffff-chunk->formatInfo.backgroundColor);
 		}
