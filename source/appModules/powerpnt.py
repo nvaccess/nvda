@@ -7,12 +7,15 @@
 import comtypes
 import comtypes.client
 import oleacc
+import speech
+import sayAllHandler
 import winUser
 import textInfos.offsets
 import eventHandler
 import appModuleHandler
 from NVDAObjects.window import Window
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
+from cursorManager import ReviewCursorManager
 import controlTypes
 
 #selection types
@@ -61,22 +64,25 @@ msoShapeTypesToNVDARoles={
 	msoDiagram:controlTypes.ROLE_DIAGRAM,
 }
 
-class DocumentWindow(Window):
-	"""Represents the document window for a presentation. Handles fetching of the Powerpoint object model, and bounces focus to the currently selected slide, shape or text frame."""
+class PaneClassDC(Window):
+	"""Handles fetching of the Powerpoint object model."""
 
-	def _get_ppDocumentWindow(self):
+	def _get_ppObjectModel(self):
 		"""Fetches and caches the Powerpoint DocumentWindow object for the current presentation."""
 		try:
 			pDispatch=oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
 		except (comtypes.COMError, WindowsError):
 			log.debugWarning("Could not get MS Word object model",exc_info=True)
 			return None
-		self.ppDocumentWindow=comtypes.client.dynamic.Dispatch(pDispatch)
-		return self.ppDocumentWindow
+		self.ppObjectModel=comtypes.client.dynamic.Dispatch(pDispatch)
+		return self.ppObjectModel
+
+class DocumentWindow(PaneClassDC):
+	"""Represents the document window for a presentation. Bounces focus to the currently selected slide, shape or text frame."""
 
 	def _get_ppSelection(self):
 		"""Fetches and caches the current Powerpoint Selection object for the current presentation."""
-		self.ppSelection=self.ppDocumentWindow.selection
+		self.ppSelection=self.ppObjectModel.selection
 		return self.ppSelection
 
 	def _get_selection(self):
@@ -187,6 +193,12 @@ class Slide(PpObject):
 	def _get_name(self):
 		return "Slide %d"%self.ppObject.slideNumber
 
+	def _get_children(self):
+		return [Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=shape) for shape in self.ppObject.shapes]
+
+	def _get_childCount(self):
+		return self.ppObject.shapes.count
+
 	__gestures={
 		"kb:downArrow":"selectionChange",
 		"kb:upArrow":"selectionChange",
@@ -226,6 +238,26 @@ class Shape(PpObject):
 
 	def _get_role(self):
 		return msoShapeTypesToNVDARoles.get(self.ppShapeType,controlTypes.ROLE_SHAPE)
+
+	def _get_children(self):
+		if self.ppShapeType==msoGroup:
+			return [Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=shape) for shape in self.ppObject.groupItems]
+		children=[]
+		if self.ppObject.hasTextFrame:
+			children.append(TextFrame(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=self.ppObject.textFrame))
+		if self.ppObject.hasTable:
+			children.append(Table(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=self.ppObject.table))
+		return children
+
+	def _get_childCount(self):
+		if self.ppShapeType==msoGroup:
+			return self.ppObject.groupItems.count
+		childCount=0
+		if self.ppObject.hasTextFrame:
+			childCount+=1
+		if self.ppObject.hasTable:
+			childCount+=1
+		return childCount
 
 	def _get_parent(self):
 		#Child shapes should have the group shape as its parent. But normal shapes should have the slide as its parent.
@@ -349,9 +381,83 @@ class TableCellTextFrame(TextFrame):
 		"kb:shift+tab":"selectionChange",
 	}
 
+class SlideShowWindow(ReviewCursorManager,PaneClassDC):
+
+	def _get_name(self):
+		return "Slide show - Slide %d"%self.ppSlide.slideNumber
+
+	value=None
+
+	def _get_ppSlide(self):
+		self.ppSlide=self.ppObjectModel.view.slide
+		return self.ppSlide
+
+	def _getShapeText(self,shape,cellShape=False):
+		if not shape.visible: return
+		if shape.hasTextFrame:
+			text=shape.textFrame.textRange.text.replace('\x0b','\n')
+			text=text.replace('\r','\n')
+			if text and not text.isspace():
+				yield text
+				return
+		if cellShape: return
+		shapeType=shape.type
+		if shapeType==msoGroup:
+			for childShape in shape.groupItems:
+				for chunk in self._getShapeText(childShape):
+					yield chunk
+			return
+		if shape.hasTable:
+			table=shape.table
+			for row in table.rows:
+				for cell in row.cells:
+					for chunk in self._getShapeText(cell.shape,cellShape=True):
+						yield chunk
+			return
+		label=shape.alternativeText
+		if not label:
+			label=shape.title
+		if label:
+			typeName=" ".join(shape.name.split(' ')[:-1])
+			if typeName and not typeName.isspace():
+				yield "%s %s"%(typeName,label)
+			else:
+				yield label
+
+	def _get_basicText(self):
+		chunks=[self.name]
+		for shape in self.ppSlide.shapes:
+			for chunk in self._getShapeText(shape):
+				chunks.append(chunk)
+		self.basicText="\n".join(chunks)
+		return self.basicText
+
+	def handleNewSlide(self):
+		speech.cancelSpeech()
+		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
+		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
+
+	def event_gainFocus(self):
+		self.handleNewSlide()
+
+	def script_changeSlide(self,gesture):
+		slideIndex=self.ppSlide.slideIndex
+		gesture.send()
+		del self.__dict__['ppSlide']
+		del self.__dict__['basicText']
+		if slideIndex!=self.ppSlide.slideIndex:
+			self.handleNewSlide()
+
+	__gestures={
+		"kb:pageUp":"changeSlide",
+		"kb:pageDown":"changeSlide",
+	}
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName=="paneClassDC" and isinstance(obj,Window) and not isinstance(obj,PpObject) and obj.role==controlTypes.ROLE_PANE:
 			if obj.childCount==0:
 				clsList.insert(0,DocumentWindow)
+			else:
+				clsList.insert(0,SlideShowWindow)
