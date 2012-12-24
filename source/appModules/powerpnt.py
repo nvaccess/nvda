@@ -449,6 +449,7 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 			self.handleNewSlide()
 
 	__gestures={
+		"kb:space":"changeSlide",
 		"kb:pageUp":"changeSlide",
 		"kb:pageDown":"changeSlide",
 	}
