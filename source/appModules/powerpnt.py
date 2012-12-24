@@ -18,6 +18,9 @@ from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
 from cursorManager import ReviewCursorManager
 import controlTypes
 
+#Bullet types
+ppBulletNumbered=2
+
 #selection types
 ppSelectionSlides=0
 ppSelectionShapes=2
@@ -63,6 +66,13 @@ msoShapeTypesToNVDARoles={
 	msoCanvas:controlTypes.ROLE_CANVAS,
 	msoDiagram:controlTypes.ROLE_DIAGRAM,
 }
+
+def getBulletText(ppBulletFormat):
+	t=ppBulletFormat.type
+	if t==ppBulletNumbered:
+		return "%d."%ppBulletFormat.number #(ppBulletFormat.startValue+(ppBulletFormat.number-1))
+	elif t:
+		return unichr(ppBulletFormat.character)
 
 class PaneClassDC(Window):
 	"""Handles fetching of the Powerpoint object model."""
@@ -318,6 +328,16 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 				return start,end
 		return offset,offset+1
 
+	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+		formatField=textInfos.FormatField()
+		startOffset,endOffset=self._startOffset,self._endOffset
+		if startOffset==0 or self._getTextRange(offset-1,offset).startswith('\n'):
+			b=self.obj.ppObject.textRange.characters(offset+1,offset+1).paragraphFormat.bullet
+			bulletText=getBulletText(b)
+			if bulletText:
+				formatField['line-prefix']=bulletText
+		return formatField,(startOffset,endOffset)
+
 class Table(Shape):
 	"""Represents the table shape in Powerpoint. Provides row and column counts."""
 	def _get_ppTable(self):
@@ -399,11 +419,15 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 	def _getShapeText(self,shape,cellShape=False):
 		if not shape.visible: return
 		if shape.hasTextFrame:
-			text=shape.textFrame.textRange.text.replace('\x0b','\n')
-			text=text.replace('\r','\n')
-			if text and not text.isspace():
-				yield text
-				return
+			for p in shape.textFrame.textRange.paragraphs(): 
+				bulletText=getBulletText(p.paragraphFormat.bullet)
+				text=p.text.replace('\x0b','\n')
+				text=text.replace('\r','\n')
+				text=text.rstrip()
+				text=" ".join([t for t in (bulletText,text) if t])
+				if text and not text.isspace():
+					yield text
+			return
 		if cellShape: return
 		shapeType=shape.type
 		if shapeType==msoGroup:
