@@ -189,6 +189,8 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 }
 
 void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, BOOL srcInvert, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel) {
+	//Make sure neither source or destination rectangle is collapsed. Pointless and can cause zero division errors. #2885 
+	if(srcRect.left==srcRect.right||srcRect.top==srcRect.bottom||destRect.left==destRect.right||destRect.top==destRect.bottom) return;
 	if(!destModel) destModel=this;
 	RECT tempRect;
 	float scaleX=(float)(destRect.right-destRect.left)/(float)(srcRect.right-srcRect.left);
