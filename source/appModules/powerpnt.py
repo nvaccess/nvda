@@ -223,7 +223,11 @@ class Shape(PpObject):
 
 	def _get_name(self):
 		"""The name is calculated firstly from the object's title, otherwize if its a generic shape, then  part of its programmatic name is used."""
-		title=self.ppObject.title
+		#Powerpoint 2003 shape objects do not have a title property 
+		try:
+			title=self.ppObject.title
+		except comtypes.COMError:
+			title=None
 		if title:
 			return title
 		if self.role==controlTypes.ROLE_SHAPE:
