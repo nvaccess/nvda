@@ -77,6 +77,18 @@ def getBulletText(ppBulletFormat):
 class PaneClassDC(Window):
 	"""Handles fetching of the Powerpoint object model."""
 
+	def findOverlayClasses(self,clsList):
+		m=self.ppObjectModel
+		if m:
+			#If there is a selection then its an editable document (slide).
+			#Otherwize it must be a slide show.
+			try:
+				m.selection
+				clsList.append(DocumentWindow)
+			except comtypes.COMError:
+				clsList.append(SlideShowWindow)
+		clsList.append(PaneClassDC)
+
 	def _get_ppObjectModel(self):
 		"""Fetches and caches the Powerpoint DocumentWindow object for the current presentation."""
 		try:
@@ -484,9 +496,9 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 
 class AppModule(appModuleHandler.AppModule):
 
-	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+	def event_gainFocus(self,obj,nextHandler):
 		if obj.windowClassName=="paneClassDC" and isinstance(obj,Window) and not isinstance(obj,PpObject) and obj.role==controlTypes.ROLE_PANE:
-			if obj.childCount==0:
-				clsList.insert(0,DocumentWindow)
-			else:
-				clsList.insert(0,SlideShowWindow)
+			newObj=PaneClassDC(windowHandle=obj.windowHandle)
+			eventHandler.queueEvent("gainFocus",newObj)
+		else:
+			nextHandler()
