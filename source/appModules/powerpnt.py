@@ -440,16 +440,22 @@ class TableCellTextFrame(TextFrame):
 class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 
 	def _get_name(self):
-		return "Slide show - Slide %d"%self.ppSlide.slideNumber
+		if self.ppSlide:
+			return _("Slide show - Slide {slideNumber}").format(slideNumber=self.ppSlide.slideNumber)
+		else:
+			return _("Slide Show - complete")
 
 	value=None
 
 	def _get_ppSlide(self):
-		self.ppSlide=self.ppObjectModel.view.slide
+		try:
+			self.ppSlide=self.ppObjectModel.view.slide
+		except comtypes.COMError:
+			log.debugWarning("end of slide show",exc_info=True)
+			return None
 		return self.ppSlide
 
 	def _getShapeText(self,shape,cellShape=False):
-		if not shape.visible: return
 		if shape.hasTextFrame:
 			for p in shape.textFrame.textRange.paragraphs(): 
 				bulletText=getBulletText(p.paragraphFormat.bullet)
@@ -485,6 +491,8 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 				yield label
 
 	def _get_basicText(self):
+		if not self.ppSlide:
+			return self.name
 		chunks=[self.name]
 		for shape in self.ppSlide.shapes:
 			for chunk in self._getShapeText(shape):
@@ -501,11 +509,13 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 		self.handleNewSlide()
 
 	def script_changeSlide(self,gesture):
-		slideIndex=self.ppSlide.slideIndex
+		slideIndex=self.ppSlide.slideIndex if self.ppSlide else None
 		gesture.send()
-		del self.__dict__['ppSlide']
-		del self.__dict__['basicText']
-		if slideIndex!=self.ppSlide.slideIndex:
+		if slideIndex is not None:
+			del self.__dict__['ppSlide']
+			del self.__dict__['basicText']
+		newSlideIndex=self.ppSlide.slideIndex if self.ppSlide else None
+		if newSlideIndex!=slideIndex:
 			self.handleNewSlide()
 
 	__gestures={
