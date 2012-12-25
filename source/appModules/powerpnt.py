@@ -17,6 +17,7 @@ from NVDAObjects.window import Window
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
 from cursorManager import ReviewCursorManager
 import controlTypes
+from logHandler import log
 
 #Bullet types
 ppBulletNumbered=2
@@ -74,6 +75,26 @@ def getBulletText(ppBulletFormat):
 	elif t:
 		return unichr(ppBulletFormat.character)
 
+def getPpObjectModel(windowHandle,forceForeground=False):
+	"""
+	Fetches the Powerpoint object model from a given PaneClassDC window.
+	If forceForeground is True, then NVDA will quickly grab foreground and give it back to Powerpoint, which forces Powerpoint to register its object model on start-up much quicker.
+	"""
+	if forceForeground:
+		import wx
+		import gui
+		d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
+		gui.mainFrame.prePopup()
+		d.Show()
+		d.Destroy()
+		gui.mainFrame.postPopup()
+	try:
+		pDispatch=oleacc.AccessibleObjectFromWindow(windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
+	except (comtypes.COMError, WindowsError):
+		log.debugWarning("Could not get MS Powerpoint object model",exc_info=True)
+		return None
+	return comtypes.client.dynamic.Dispatch(pDispatch)
+
 class PaneClassDC(Window):
 	"""Handles fetching of the Powerpoint object model."""
 
@@ -91,13 +112,12 @@ class PaneClassDC(Window):
 
 	def _get_ppObjectModel(self):
 		"""Fetches and caches the Powerpoint DocumentWindow object for the current presentation."""
-		try:
-			pDispatch=oleacc.AccessibleObjectFromWindow(self.windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
-		except (comtypes.COMError, WindowsError):
-			log.debugWarning("Could not get MS Word object model",exc_info=True)
-			return None
-		self.ppObjectModel=comtypes.client.dynamic.Dispatch(pDispatch)
-		return self.ppObjectModel
+		m=getPpObjectModel(self.windowHandle)
+		if not m:
+			m=getPpObjectModel(self.windowHandle,forceForeground=True)
+		if m:
+			self.ppObjectModel=m
+			return self.ppObjectModel
 
 class DocumentWindow(PaneClassDC):
 	"""Represents the document window for a presentation. Bounces focus to the currently selected slide, shape or text frame."""
