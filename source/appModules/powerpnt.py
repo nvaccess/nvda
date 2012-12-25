@@ -7,6 +7,7 @@
 import comtypes
 import comtypes.client
 import oleacc
+import api
 import speech
 import sayAllHandler
 import winUser
@@ -75,19 +76,10 @@ def getBulletText(ppBulletFormat):
 	elif t:
 		return unichr(ppBulletFormat.character)
 
-def getPpObjectModel(windowHandle,forceForeground=False):
+def getPpObjectModel(windowHandle):
 	"""
 	Fetches the Powerpoint object model from a given PaneClassDC window.
-	If forceForeground is True, then NVDA will quickly grab foreground and give it back to Powerpoint, which forces Powerpoint to register its object model on start-up much quicker.
 	"""
-	if forceForeground:
-		import wx
-		import gui
-		d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
-		gui.mainFrame.prePopup()
-		d.Show()
-		d.Destroy()
-		gui.mainFrame.postPopup()
 	try:
 		pDispatch=oleacc.AccessibleObjectFromWindow(windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
 	except (comtypes.COMError, WindowsError):
@@ -110,11 +102,14 @@ class PaneClassDC(Window):
 				clsList.append(SlideShowWindow)
 		clsList.append(PaneClassDC)
 
+	def __init__(self,windowHandle=None,ppObjectModel=None):
+		if ppObjectModel:
+			self.ppObjectModel=ppObjectModel
+		super(PaneClassDC,self).__init__(windowHandle=windowHandle)
+
 	def _get_ppObjectModel(self):
 		"""Fetches and caches the Powerpoint DocumentWindow object for the current presentation."""
 		m=getPpObjectModel(self.windowHandle)
-		if not m:
-			m=getPpObjectModel(self.windowHandle,forceForeground=True)
 		if m:
 			self.ppObjectModel=m
 			return self.ppObjectModel
@@ -526,9 +521,38 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 
 class AppModule(appModuleHandler.AppModule):
 
+	hasTriedPpAppSwitch=False
+
 	def event_gainFocus(self,obj,nextHandler):
 		if obj.windowClassName=="paneClassDC" and isinstance(obj,Window) and not isinstance(obj,PpObject) and obj.role==controlTypes.ROLE_PANE:
-			newObj=PaneClassDC(windowHandle=obj.windowHandle)
-			eventHandler.queueEvent("gainFocus",newObj)
-		else:
-			nextHandler()
+			#We can get a powerpoint object model from this window.
+			#Note that we fetch the object model outside of any NVDAObject as if it fails we may need to bounce focus out of Powerpoint and then back in to force it to register the model 
+			m=getPpObjectModel(obj.windowHandle)
+			if m:
+				#We successfully got an object model
+				#Create an NVDAObject that makes use of the object model to handle Document windows and Slide Show windows
+				#And bounce focus to it.
+				newObj=PaneClassDC(windowHandle=obj.windowHandle,ppObjectModel=m)
+				eventHandler.queueEvent("gainFocus",newObj)
+				return
+			elif not self.hasTriedPpAppSwitch:
+				#We failed to get the powerpoint object model, and we havn't yet tried fixing this by switching apps back and forth
+				#As Powerpoint may have just been opened, it can take up to 10 seconds for the object model to be ready.
+				#However, switching away to another application and back again forces the object model to be registered.
+				#This call of ppObjectModel will be None, but the next event_gainFocus should work
+				import wx
+				import gui
+				d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
+				gui.mainFrame.prePopup()
+				d.Show()
+				self.hasTriedPpAppSwitch=True
+				#Make sure NVDA detects and reports focus on the waiting dialog
+				api.processPendingEvents()
+				comtypes.client.PumpEvents(1)
+				d.Destroy()
+				gui.mainFrame.postPopup()
+				#Focus would have now landed back on this window causing a new event_gainFocus, nothing more to do here.
+				return
+			else:
+				log.error("Could not fetch Powerpoint object model")
+		nextHandler()
