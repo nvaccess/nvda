@@ -14,6 +14,7 @@ import winUser
 import textInfos.offsets
 import eventHandler
 import appModuleHandler
+from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
 from cursorManager import ReviewCursorManager
@@ -477,7 +478,10 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 			return
 		label=shape.alternativeText
 		if not label:
-			label=shape.title
+			try:
+				label=shape.title
+			except comtypes.COMError:
+				pass
 		if label:
 			typeName=" ".join(shape.name.split(' ')[:-1])
 			if typeName and not typeName.isspace():
@@ -524,7 +528,7 @@ class AppModule(appModuleHandler.AppModule):
 	hasTriedPpAppSwitch=False
 
 	def event_gainFocus(self,obj,nextHandler):
-		if obj.windowClassName=="paneClassDC" and isinstance(obj,Window) and not isinstance(obj,PpObject) and obj.role==controlTypes.ROLE_PANE:
+		if obj.windowClassName=="paneClassDC" and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT:
 			#We can get a powerpoint object model from this window.
 			#Note that we fetch the object model outside of any NVDAObject as if it fails we may need to bounce focus out of Powerpoint and then back in to force it to register the model 
 			m=getPpObjectModel(obj.windowHandle)
