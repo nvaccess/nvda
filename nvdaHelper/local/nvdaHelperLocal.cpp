@@ -78,7 +78,7 @@ const UINT CANCELSENDMESSAGE_CHECK_INTERVAL = 400;
 void(__stdcall *_notifySendMessageCancelled)() = NULL;
 
 LRESULT cancellableSendMessageTimeout(HWND hwnd, UINT Msg, WPARAM wParam, LPARAM lParam, UINT fuFlags, UINT uTimeout, PDWORD_PTR lpdwResult) {
-	fuFlags |= SMTO_BLOCK | SMTO_ABORTIFHUNG;
+	fuFlags |= SMTO_ABORTIFHUNG;
 	fuFlags &= ~SMTO_NOTIMEOUTIFNOTHUNG;
 	shouldCancelSendMessage = false;
 	LRESULT ret;
