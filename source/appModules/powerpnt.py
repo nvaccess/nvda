@@ -236,6 +236,15 @@ class Slide(PpObject):
 	role=controlTypes.ROLE_PANE
 
 	def _get_name(self):
+		#Slides usually contain a number, but master slides do not.
+		#Use the number if available otherwize use its name.
+		#Using the auto-generated name for normal slides is bad as the number is not corrected when the slides are reordered
+		try:
+			number=self.ppObject.slideNumber
+		except comtypes.COMError:
+			number=None
+		if number:
+			return _("Slide {slideNumber}").format(slideNumber=number)
 		return self.ppObject.name
 
 	def _get_children(self):
