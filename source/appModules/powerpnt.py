@@ -128,7 +128,12 @@ class DocumentWindow(PaneClassDC):
 		sel=self.ppSelection
 		selType=sel.type
 		if selType==ppSelectionSlides: #Slide
-			return Slide(windowHandle=self.windowHandle,documentWindow=self,ppObject=sel.slideRange[1])
+			try:
+				ppObj=sel.slideRange[1]
+			except comtypes.COMError:
+				# Probably a master slide
+				ppObj=self.ppObjectModel.view.slide
+			return Slide(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 		elif selType==ppSelectionShapes: #Shape
 			#The selected shape could be within a group shape
 			if sel.hasChildShapeRange:
@@ -185,6 +190,8 @@ class DocumentWindow(PaneClassDC):
 			shape=notesPage.shapes[2]
 			ppObj=shape.textFrame
 			return TextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
+		else:
+			import winsound; winsound.Beep(550,50)
 
 	def event_gainFocus(self):
 		"""Bounces focus to the currently selected slide, shape or Text frame."""
@@ -224,12 +231,12 @@ class Slide(PpObject):
 	"""Represents a single slide in Powerpoint."""
 
 	def _isEqual(self,other):
-		return super(Slide,self)._isEqual(other) and self.ppObject.slideID==other.ppObject.slideID
+		return super(Slide,self)._isEqual(other) and self.name==other.name
 
 	role=controlTypes.ROLE_PANE
 
 	def _get_name(self):
-		return "Slide %d"%self.ppObject.slideNumber
+		return self.ppObject.name
 
 	def _get_children(self):
 		return [Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=shape) for shape in self.ppObject.shapes]
