@@ -91,6 +91,9 @@ def getPpObjectModel(windowHandle):
 class PaneClassDC(Window):
 	"""Handles fetching of the Powerpoint object model."""
 
+	presentationType=Window.presType_content
+	role=controlTypes.ROLE_PANE
+
 	def findOverlayClasses(self,clsList):
 		m=self.ppObjectModel
 		if m:
@@ -197,6 +200,7 @@ class DocumentWindow(PaneClassDC):
 		"""Bounces focus to the currently selected slide, shape or Text frame."""
 		obj=self.selection
 		if obj:
+			eventHandler.queueEvent("focusEntered",self)
 			eventHandler.queueEvent("gainFocus",obj)
 		else:
 			super(DocumentWindow,self).event_gainFocus()
@@ -229,6 +233,8 @@ class PpObject(Window):
 
 class Slide(PpObject):
 	"""Represents a single slide in Powerpoint."""
+
+	presentationType=Window.presType_content
 
 	def _isEqual(self,other):
 		return super(Slide,self)._isEqual(other) and self.name==other.name
