@@ -29,6 +29,35 @@ ppSelectionSlides=0
 ppSelectionShapes=2
 ppSelectionText=3
 
+# values for enumeration 'PpViewType'
+ppViewSlide = 1
+ppViewSlideMaster = 2
+ppViewNotesPage = 3
+ppViewHandoutMaster = 4
+ppViewNotesMaster = 5
+ppViewOutline = 6
+ppViewSlideSorter = 7
+ppViewTitleMaster = 8
+ppViewNormal = 9
+ppViewPrintPreview = 10
+ppViewThumbnails = 11
+ppViewMasterThumbnails = 12
+
+ppViewTypeLabels={
+	ppViewSlide:_("Slide view"),
+	ppViewSlideMaster:_("Slide Master"),
+	ppViewNotesPage:_("Notes page"),
+	ppViewHandoutMaster:_("Handout Master"),
+	ppViewNotesMaster:_("Notes Master"),
+	ppViewOutline:_("Outline view"),
+	ppViewSlideSorter:_("Slide Sorter"),
+	ppViewTitleMaster:_("Title Master"),
+	ppViewNormal:_("Normal view"),
+	ppViewPrintPreview:_("Print Preview"),
+	ppViewThumbnails:_("Thumbnails"),
+	ppViewMasterThumbnails:_("Master Thumbnails"),
+}
+
 # values for enumeration 'MsoShapeType'
 msoShapeTypeMixed = -2
 msoAutoShape = 1
@@ -121,6 +150,15 @@ class PaneClassDC(Window):
 class DocumentWindow(PaneClassDC):
 	"""Represents the document window for a presentation. Bounces focus to the currently selected slide, shape or text frame."""
 
+	def _get_ppActiveViewType(self):
+		viewType=self.ppObjectModel.activePane.viewType
+		self.ppActiveViewType=viewType
+		return self.ppActiveViewType
+
+	def _get_name(self):
+		label=ppViewTypeLabels.get(self.ppActiveViewType)
+		return label or super(PaneClassDC,self).name
+
 	def _get_ppSelection(self):
 		"""Fetches and caches the current Powerpoint Selection object for the current presentation."""
 		self.ppSelection=self.ppObjectModel.selection
@@ -193,8 +231,6 @@ class DocumentWindow(PaneClassDC):
 			shape=notesPage.shapes[2]
 			ppObj=shape.textFrame
 			return TextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
-		else:
-			import winsound; winsound.Beep(550,50)
 
 	def event_gainFocus(self):
 		"""Bounces focus to the currently selected slide, shape or Text frame."""
