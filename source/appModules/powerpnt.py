@@ -150,13 +150,18 @@ class PaneClassDC(Window):
 class DocumentWindow(PaneClassDC):
 	"""Represents the document window for a presentation. Bounces focus to the currently selected slide, shape or text frame."""
 
-	def _get_ppActiveViewType(self):
+	def _get_ppDocumentViewType(self):
+		viewType=self.ppObjectModel.viewType
+		self.ppDocumentViewType=viewType
+		return self.ppDocumentViewType
+
+	def _get_ppActivePaneViewType(self):
 		viewType=self.ppObjectModel.activePane.viewType
-		self.ppActiveViewType=viewType
-		return self.ppActiveViewType
+		self.ppActivePaneViewType=viewType
+		return self.ppActivePaneViewType
 
 	def _get_name(self):
-		label=ppViewTypeLabels.get(self.ppActiveViewType)
+		label=ppViewTypeLabels.get(self.ppActivePaneViewType)
 		return label or super(PaneClassDC,self).name
 
 	def _get_ppSelection(self):
@@ -168,14 +173,14 @@ class DocumentWindow(PaneClassDC):
 		"""Fetches an NVDAObject representing the current presentation's selected slide, shape or text frame.""" 
 		sel=self.ppSelection
 		selType=sel.type
-		if selType==ppSelectionSlides: #Slide
-			try:
-				ppObj=sel.slideRange[1]
-			except comtypes.COMError:
-				# Probably a master slide
-				ppObj=self.ppObjectModel.view.slide
-			return Slide(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
-		elif selType==ppSelectionShapes: #Shape
+		if selType==0:
+			if self.ppActivePaneViewType==ppViewNotesPage and self.ppDocumentViewType==ppViewNormal:
+				#MS Powerpoint 2007 and below does not correctly indecate text selection in the notes page when in normal view
+				selType=ppSelectionText
+			elif self.ppActivePaneViewType==ppViewOutline:
+				#MS Powerpoint 2007 and below does not correctly indecate text selection in outline view
+				selType=ppSelectionText
+		if selType==ppSelectionShapes: #Shape
 			#The selected shape could be within a group shape
 			if sel.hasChildShapeRange:
 				ppObj=sel.childShapeRange[1]
@@ -224,13 +229,26 @@ class DocumentWindow(PaneClassDC):
 					obj.parent=TableCell(windowHandle=self.windowHandle,documentWindow=self,ppObject=selectedTableCell,table=table,rowNumber=rowNum,columnNumber=colNum)
 					return obj
 			#TextRange object did not have a parent, and we're not in a table.
-			#Perhaps we're in the notes page for the current slide?
-			#The TextFrame in this case will be located in the notes page's second shape.
-			slide=sel.slideRange[1]
-			notesPage=slide.notesPage[1]
-			shape=notesPage.shapes[2]
-			ppObj=shape.textFrame
-			return TextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
+			if self.ppActivePaneViewType==ppViewNotesPage and self.ppDocumentViewType==ppViewNormal:
+				#We're in the notes page in normal view
+				#The TextFrame in this case will be located in the notes page's second shape.
+				slide=sel.slideRange[1]
+				notesPage=slide.notesPage[1]
+				shape=notesPage.shapes[2]
+				ppObj=shape.textFrame
+				return NotesTextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
+			if ppObj:
+				return TextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
+		#No shape or text is selected, so either a slide is, or we're in a slide
+		try:
+			ppObj=sel.slideRange[1]
+		except comtypes.COMError:
+			try:
+				ppObj=self.ppObjectModel.view.slide
+			except comtypes.COMError:
+				ppObj=None
+		if ppObj:
+			return Slide(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 
 	def event_gainFocus(self):
 		"""Bounces focus to the currently selected slide, shape or Text frame."""
@@ -267,7 +285,7 @@ class PpObject(Window):
 		gesture.send()
 		self.handleSelectionChange()
 
-class Slide(PpObject):
+class Slide(	PpObject):
 	"""Represents a single slide in Powerpoint."""
 
 	presentationType=Window.presType_content
@@ -490,6 +508,11 @@ class TableCellTextFrame(TextFrame):
 		"kb:tab":"selectionChange",
 		"kb:shift+tab":"selectionChange",
 	}
+
+class NotesTextFrame(TextFrame):
+
+	def _get_parent(self):
+		return self.documentWindow
 
 class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 
