@@ -246,7 +246,7 @@ env.Clean([dist], buildDir)
 launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvdaLauncher.nsi", dist],
 	[[makensis, "/V2",
 	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
-	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE ${TARGET.abspath}",
+	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE=${TARGET.abspath}",
 	"$SOURCE"]])
 if certFile:
 	env.AddPostAction(launcher, [signExec])
