@@ -230,7 +230,7 @@ uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.n
 	[[makensis, "/V2",
 	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
 	"/DUNINSTEXE=%s"%uninstFile.abspath,
-	"/XOutFile ${TARGET.abspath}",
+	"/DINSTEXE=${TARGET.abspath}",
 	"$SOURCE"]])
 uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
 if certFile:
@@ -246,7 +246,7 @@ env.Clean([dist], buildDir)
 launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvdaLauncher.nsi", dist],
 	[[makensis, "/V2",
 	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
-	"/DNVDADistDir=${SOURCES[1].abspath}", "/XOutFile ${TARGET.abspath}",
+	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE ${TARGET.abspath}",
 	"$SOURCE"]])
 if certFile:
 	env.AddPostAction(launcher, [signExec])

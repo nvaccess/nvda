@@ -19,6 +19,8 @@ VIAddVersionKey "LegalCopyright" "${COPYRIGHT}"
 VIAddVersionKey "FileDescription" "NVDA launcher file"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 
+OutFile "${LAUNCHEREXE}"
+
 Function .onInit
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer
 System::Call 'kernel32::GetUserDefaultUILanguage() i .r0'
