@@ -11,6 +11,8 @@ import api
 import speech
 import sayAllHandler
 import winUser
+from NVDAObjects import NVDAObjectTextInfo
+from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
 import textInfos.offsets
 import eventHandler
 import appModuleHandler
@@ -25,7 +27,8 @@ from logHandler import log
 ppBulletNumbered=2
 
 #selection types
-ppSelectionSlides=0
+ppSelectionNone=0
+ppSelectionSlides=1
 ppSelectionShapes=2
 ppSelectionText=3
 
@@ -45,13 +48,13 @@ ppViewMasterThumbnails = 12
 
 ppViewTypeLabels={
 	ppViewSlide:_("Slide view"),
-	ppViewSlideMaster:_("Slide Master"),
+	ppViewSlideMaster:_("Slide Master view"),
 	ppViewNotesPage:_("Notes page"),
-	ppViewHandoutMaster:_("Handout Master"),
-	ppViewNotesMaster:_("Notes Master"),
+	ppViewHandoutMaster:_("Handout Master view"),
+	ppViewNotesMaster:_("Notes Master view"),
 	ppViewOutline:_("Outline view"),
-	ppViewSlideSorter:_("Slide Sorter"),
-	ppViewTitleMaster:_("Title Master"),
+	ppViewSlideSorter:_("Slide Sorter view"),
+	ppViewTitleMaster:_("Title Master view"),
 	ppViewNormal:_("Normal view"),
 	ppViewPrintPreview:_("Print Preview"),
 	ppViewThumbnails:_("Thumbnails"),
@@ -122,23 +125,8 @@ class PaneClassDC(Window):
 
 	presentationType=Window.presType_content
 	role=controlTypes.ROLE_PANE
-
-	def findOverlayClasses(self,clsList):
-		m=self.ppObjectModel
-		if m:
-			#If there is a selection then its an editable document (slide).
-			#Otherwize it must be a slide show.
-			try:
-				m.selection
-				clsList.append(DocumentWindow)
-			except comtypes.COMError:
-				clsList.append(SlideShowWindow)
-		clsList.append(PaneClassDC)
-
-	def __init__(self,windowHandle=None,ppObjectModel=None):
-		if ppObjectModel:
-			self.ppObjectModel=ppObjectModel
-		super(PaneClassDC,self).__init__(windowHandle=windowHandle)
+	value=None
+	TextInfo=DisplayModelTextInfo
 
 	def _get_ppObjectModel(self):
 		"""Fetches and caches the Powerpoint DocumentWindow object for the current presentation."""
@@ -147,22 +135,69 @@ class PaneClassDC(Window):
 			self.ppObjectModel=m
 			return self.ppObjectModel
 
+	def _get_currentSlide(self):
+		try:
+			ppSlide=self.ppObjectModel.view.slide
+		except comtypes.COMError:
+			return None
+		self.currentSlide=Slide(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppSlide)
+		return self.currentSlide
+
+	def event_gainFocus(self):
+		if not self.ppObjectModel and not self.appModule.hasTriedPpAppSwitch:
+			#We failed to get the powerpoint object model, and we havn't yet tried fixing this by switching apps back and forth
+			#As Powerpoint may have just been opened, it can take up to 10 seconds for the object model to be ready.
+			#However, switching away to another application and back again forces the object model to be registered.
+			#This call of ppObjectModel will be None, but the next event_gainFocus should work
+			import wx
+			import gui
+			d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
+			gui.mainFrame.prePopup()
+			d.Show()
+			self.appModule.hasTriedPpAppSwitch=True
+			#Make sure NVDA detects and reports focus on the waiting dialog
+			api.processPendingEvents()
+			comtypes.client.PumpEvents(1)
+			d.Destroy()
+			gui.mainFrame.postPopup()
+			#Focus would have now landed back on this window causing a new event_gainFocus, nothing more to do here.
+			return
+		super(PaneClassDC,self).event_gainFocus()
+
 class DocumentWindow(PaneClassDC):
 	"""Represents the document window for a presentation. Bounces focus to the currently selected slide, shape or text frame."""
 
 	def _get_ppDocumentViewType(self):
-		viewType=self.ppObjectModel.viewType
+		try:
+			viewType=self.ppObjectModel.viewType
+		except comtypes.COMError:
+			return None
 		self.ppDocumentViewType=viewType
 		return self.ppDocumentViewType
 
 	def _get_ppActivePaneViewType(self):
-		viewType=self.ppObjectModel.activePane.viewType
+		try:
+			viewType=self.ppObjectModel.activePane.viewType
+		except comtypes.COMError:
+			return None
 		self.ppActivePaneViewType=viewType
 		return self.ppActivePaneViewType
 
+	def _isEqual(self,other):
+		return self.windowHandle==other.windowHandle and self.name==other.name
+
 	def _get_name(self):
 		label=ppViewTypeLabels.get(self.ppActivePaneViewType)
-		return label or super(PaneClassDC,self).name
+		if not label: 
+			return super(PaneClassDC,self).name
+		slide=self.currentSlide
+		if slide:
+			label=" - ".join([slide.name,label])
+		return label
+
+	def _get_currentSlide(self):
+		if self.ppActivePaneViewType in (ppViewSlideSorter,ppViewThumbnails): return None
+		return super(DocumentWindow,self).currentSlide
 
 	def _get_ppSelection(self):
 		"""Fetches and caches the current Powerpoint Selection object for the current presentation."""
@@ -176,9 +211,6 @@ class DocumentWindow(PaneClassDC):
 		if selType==0:
 			if self.ppActivePaneViewType==ppViewNotesPage and self.ppDocumentViewType==ppViewNormal:
 				#MS Powerpoint 2007 and below does not correctly indecate text selection in the notes page when in normal view
-				selType=ppSelectionText
-			elif self.ppActivePaneViewType==ppViewOutline:
-				#MS Powerpoint 2007 and below does not correctly indecate text selection in outline view
 				selType=ppSelectionText
 		if selType==ppSelectionShapes: #Shape
 			#The selected shape could be within a group shape
@@ -194,7 +226,6 @@ class DocumentWindow(PaneClassDC):
 		elif selType==ppSelectionText: #Text frame
 			#TextRange objects in Powerpoint do not allow moving/expanding.
 			#Therefore A full TextRange object must be fetched from the original TextFrame the selection is in.
-			#Usually its just the TextRange object's parent, nice and simple
 			ppObj=sel.textRange.parent
 			if ppObj:
 				return TextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
@@ -239,16 +270,20 @@ class DocumentWindow(PaneClassDC):
 				return NotesTextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 			if ppObj:
 				return TextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
-		#No shape or text is selected, so either a slide is, or we're in a slide
-		try:
+		if selType==ppSelectionSlides:
 			ppObj=sel.slideRange[1]
-		except comtypes.COMError:
-			try:
-				ppObj=self.ppObjectModel.view.slide
-			except comtypes.COMError:
-				ppObj=None
-		if ppObj:
 			return Slide(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
+
+	def _get_firstChild(self):
+		return self.selection
+
+	def handleSelectionChange(self):
+		"""Pushes focus to the newly selected object."""
+		obj=self.selection
+		if not obj:
+			obj=DocumentWindow(windowHandle=self.windowHandle)
+		if obj and obj!=api.getFocusObject():
+			eventHandler.queueEvent("gainFocus",obj)
 
 	def event_gainFocus(self):
 		"""Bounces focus to the currently selected slide, shape or Text frame."""
@@ -259,6 +294,36 @@ class DocumentWindow(PaneClassDC):
 		else:
 			super(DocumentWindow,self).event_gainFocus()
 
+	def script_selectionChange(self,gesture):
+		gesture.send()
+		self.handleSelectionChange()
+	script_selectionChange.canPropagate=True
+
+	__gestures={
+		"kb:downArrow":"selectionChange",
+		"kb:upArrow":"selectionChange",
+		"kb:leftArrow":"selectionChange",
+		"kb:rightArrow":"selectionChange",
+		"kb:home":"selectionChange",
+		"kb:end":"selectionChange",
+		"kb:pageUp":"selectionChange",
+		"kb:pageDown":"selectionChange",
+		"kb:tab":"selectionChange",
+		"kb:shift+tab":"selectionChange",
+		"kb:control+enter":"selectionChange",
+		"kb:enter":"selectionChange",
+		"kb:f2":"selectionChange",
+		"kb:escape":"selectionChange",
+		"kb:delete":"selectionChange",
+		"kb:control+c":"selectionChange",
+		"kb:control+x":"selectionChange",
+		"kb:control+v":"selectionChange",
+	}
+
+class OutlinePane(EditableTextWithoutAutoSelectDetection,DocumentWindow):
+	TextInfo=EditableTextDisplayModelTextInfo
+	role=controlTypes.ROLE_EDITABLETEXT
+
 class PpObject(Window):
 	"""
 	The base NVDAObject for slides, shapes and text frames.
@@ -266,6 +331,9 @@ class PpObject(Window):
 	Also has some utility functions and scripts for managing selection changes.
 	Note No events are used to detect selection changes, its all keyboard commands for now.
 	"""
+
+	next=None
+	previous=None
 
 	def __init__(self,windowHandle=None,documentWindow=None,ppObject=None):
 		self.documentWindow=documentWindow
@@ -275,17 +343,10 @@ class PpObject(Window):
 	def _get_parent(self):
 		return self.documentWindow
 
-	def handleSelectionChange(self):
-		"""Pushes focus to the newly selected object."""
-		obj=self.documentWindow.selection
-		if obj and obj!=self:
-			eventHandler.queueEvent("gainFocus",obj)
-
 	def script_selectionChange(self,gesture):
-		gesture.send()
-		self.handleSelectionChange()
+		return self.documentWindow.script_selectionChange(gesture)
 
-class Slide(	PpObject):
+class Slide(PpObject):
 	"""Represents a single slide in Powerpoint."""
 
 	presentationType=Window.presType_content
@@ -307,28 +368,10 @@ class Slide(	PpObject):
 			return _("Slide {slideNumber}").format(slideNumber=number)
 		return self.ppObject.name
 
-	def _get_children(self):
-		return [Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=shape) for shape in self.ppObject.shapes]
-
-	def _get_childCount(self):
-		return self.ppObject.shapes.count
-
-	__gestures={
-		"kb:downArrow":"selectionChange",
-		"kb:upArrow":"selectionChange",
-		"kb:leftArrow":"selectionChange",
-		"kb:rightArrow":"selectionChange",
-		"kb:home":"selectionChange",
-		"kb:end":"selectionChange",
-		"kb:pageUp":"selectionChange",
-		"kb:pageDown":"selectionChange",
-		"kb:tab":"selectionChange",
-		"kb:shift+tab":"selectionChange",
-		"kb:control+enter":"selectionChange",
-	}
-
 class Shape(PpObject):
 	"""Represents a single shape (rectangle, group, picture, Text bos etc in Powerpoint."""
+
+	presentationType=Window.presType_content
 
 	def _get_ppShapeType(self):
 		"""Fetches and caches the type of this shape."""
@@ -357,48 +400,9 @@ class Shape(PpObject):
 	def _get_role(self):
 		return msoShapeTypesToNVDARoles.get(self.ppShapeType,controlTypes.ROLE_SHAPE)
 
-	def _get_children(self):
-		if self.ppShapeType==msoGroup:
-			return [Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=shape) for shape in self.ppObject.groupItems]
-		children=[]
-		if self.ppObject.hasTextFrame:
-			children.append(TextFrame(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=self.ppObject.textFrame))
-		if self.ppObject.hasTable:
-			children.append(Table(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=self.ppObject.table))
-		return children
-
-	def _get_childCount(self):
-		if self.ppShapeType==msoGroup:
-			return self.ppObject.groupItems.count
-		childCount=0
-		if self.ppObject.hasTextFrame:
-			childCount+=1
-		if self.ppObject.hasTable:
-			childCount+=1
-		return childCount
-
-	def _get_parent(self):
-		#Child shapes should have the group shape as its parent. But normal shapes should have the slide as its parent.
-		if self.ppObject.child:
-			parentGroup=self.ppObject.parentGroup
-			return Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=parentGroup)
-		parent=self.ppObject.parent
-		if parent:
-			return Slide(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=parent)
-		return super(Shape,self).parent
-
 	def _get_value(self):
 		if self.ppObject.hasTextFrame:
 			return self.ppObject.textFrame.textRange.text
-
-	__gestures={
-		"kb:tab":"selectionChange",
-		"kb:shift+tab":"selectionChange",
-		"kb:escape":"selectionChange",
-		"kb:enter":"selectionChange",
-		"kb:space":"selectionChange",
-		"kb:f2":"selectionChange",
-	}
 
 class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -488,10 +492,6 @@ class TextFrame(EditableTextWithoutAutoSelectDetection,PpObject):
 		if parent:
 			return Shape(windowHandle=self.windowHandle,documentWindow=self.documentWindow,ppObject=parent)
 
-	__gestures={
-		"kb:escape":"selectionChange",
-	}
-
 class TableCellTextFrame(TextFrame):
 	"""Represents a text frame inside a table cell in Powerpoint. Specifially supports the caret jumping into another cell with tab or arrows."""
 
@@ -500,7 +500,7 @@ class TableCellTextFrame(TextFrame):
 
 	def _caretScriptPostMovedHelper(self, speakUnit, info=None):
 		if not self.parent.ppObject.selected:
-			self.handleSelectionChange()
+			self.documentWindow.handleSelectionChange()
 		else:
 			super(TableCellTextFrame,self)._caretScriptPostMovedHelper(speakUnit, info=None)
 
@@ -516,21 +516,15 @@ class NotesTextFrame(TextFrame):
 
 class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 
+	TextInfo=NVDAObjectTextInfo
+
 	def _get_name(self):
-		if self.ppSlide:
-			return _("Slide show - Slide {slideNumber}").format(slideNumber=self.ppSlide.slideNumber)
+		if self.currentSlide:
+			return _("Slide show - {slideName}").format(slideName=self.currentSlide.name)
 		else:
 			return _("Slide Show - complete")
 
 	value=None
-
-	def _get_ppSlide(self):
-		try:
-			self.ppSlide=self.ppObjectModel.view.slide
-		except comtypes.COMError:
-			log.debugWarning("end of slide show",exc_info=True)
-			return None
-		return self.ppSlide
 
 	def _getShapeText(self,shape,cellShape=False):
 		if shape.hasTextFrame:
@@ -571,10 +565,10 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 				yield label
 
 	def _get_basicText(self):
-		if not self.ppSlide:
+		if not self.currentSlide:
 			return self.name
 		chunks=[self.name]
-		for shape in self.ppSlide.shapes:
+		for shape in self.currentSlide.ppObject.shapes:
 			for chunk in self._getShapeText(shape):
 				chunks.append(chunk)
 		self.basicText="\n".join(chunks)
@@ -589,12 +583,12 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 		self.handleNewSlide()
 
 	def script_changeSlide(self,gesture):
-		slideIndex=self.ppSlide.slideIndex if self.ppSlide else None
+		slideIndex=self.currentSlide.ppObject.slideIndex if self.currentSlide else None
 		gesture.send()
 		if slideIndex is not None:
-			del self.__dict__['ppSlide']
+			del self.__dict__['currentSlide']
 			del self.__dict__['basicText']
-		newSlideIndex=self.ppSlide.slideIndex if self.ppSlide else None
+		newSlideIndex=self.currentSlide.ppObject.slideIndex if self.currentSlide else None
 		if newSlideIndex!=slideIndex:
 			self.handleNewSlide()
 
@@ -608,36 +602,22 @@ class AppModule(appModuleHandler.AppModule):
 
 	hasTriedPpAppSwitch=False
 
-	def event_gainFocus(self,obj,nextHandler):
-		if obj.windowClassName=="paneClassDC" and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT:
-			#We can get a powerpoint object model from this window.
-			#Note that we fetch the object model outside of any NVDAObject as if it fails we may need to bounce focus out of Powerpoint and then back in to force it to register the model 
+	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
+		if obj.windowClassName=="paneClassDC" and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
 			m=getPpObjectModel(obj.windowHandle)
 			if m:
-				#We successfully got an object model
-				#Create an NVDAObject that makes use of the object model to handle Document windows and Slide Show windows
-				#And bounce focus to it.
-				newObj=PaneClassDC(windowHandle=obj.windowHandle,ppObjectModel=m)
-				eventHandler.queueEvent("gainFocus",newObj)
-				return
-			elif not self.hasTriedPpAppSwitch:
-				#We failed to get the powerpoint object model, and we havn't yet tried fixing this by switching apps back and forth
-				#As Powerpoint may have just been opened, it can take up to 10 seconds for the object model to be ready.
-				#However, switching away to another application and back again forces the object model to be registered.
-				#This call of ppObjectModel will be None, but the next event_gainFocus should work
-				import wx
-				import gui
-				d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
-				gui.mainFrame.prePopup()
-				d.Show()
-				self.hasTriedPpAppSwitch=True
-				#Make sure NVDA detects and reports focus on the waiting dialog
-				api.processPendingEvents()
-				comtypes.client.PumpEvents(1)
-				d.Destroy()
-				gui.mainFrame.postPopup()
-				#Focus would have now landed back on this window causing a new event_gainFocus, nothing more to do here.
-				return
+				try:
+					ppActivePaneViewType=m.activePane.viewType
+				except comtypes.COMError:
+					ppActivePaneViewType=None
+				if ppActivePaneViewType is None:
+					clsList.insert(0,SlideShowWindow)
+				else:
+					if ppActivePaneViewType==ppViewOutline:
+						clsList.insert(0,OutlinePane)
+					else:
+						clsList.insert(0,DocumentWindow)
+					self.ppActivePaneViewType=ppActivePaneViewType
 			else:
-				log.error("Could not fetch Powerpoint object model")
-		nextHandler()
+				clsList.insert(0,PaneClassDC)
+			self.ppObjectModel=m
