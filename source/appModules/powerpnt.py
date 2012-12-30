@@ -226,7 +226,11 @@ class DocumentWindow(PaneClassDC):
 		elif selType==ppSelectionText: #Text frame
 			#TextRange objects in Powerpoint do not allow moving/expanding.
 			#Therefore A full TextRange object must be fetched from the original TextFrame the selection is in.
-			ppObj=sel.textRange.parent
+			#MS Powerpoint 2003 also throws COMErrors when there is no TextRange.parent
+			try:
+				ppObj=sel.textRange.parent
+			except comtypes.COMError:
+				ppObj=None
 			if ppObj:
 				return TextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 			#For TextRange objects for TextFrame objects in table cells and the notes page, TextRange object's parent does not work! 
