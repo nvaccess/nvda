@@ -140,7 +140,7 @@ class PaneClassDC(Window):
 			ppSlide=self.ppObjectModel.view.slide
 		except comtypes.COMError:
 			return None
-		self.currentSlide=Slide(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppSlide)
+		self.currentSlide=SlideBase(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppSlide)
 		return self.currentSlide
 
 	def event_gainFocus(self):
@@ -196,7 +196,7 @@ class DocumentWindow(PaneClassDC):
 		return label
 
 	def _get_currentSlide(self):
-		if self.ppActivePaneViewType in (ppViewSlideSorter,ppViewThumbnails): return None
+		if self.ppActivePaneViewType in (ppViewSlideSorter,ppViewThumbnails,ppViewMasterThumbnails): return None
 		return super(DocumentWindow,self).currentSlide
 
 	def _get_ppSelection(self):
@@ -275,8 +275,16 @@ class DocumentWindow(PaneClassDC):
 			if ppObj:
 				return TextFrame(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 		if selType==ppSelectionSlides:
-			ppObj=sel.slideRange[1]
-			return Slide(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
+			try:
+				ppObj=sel.slideRange[1]
+			except comtypes.COMError:
+				#Master thumbnails sets the selected slide as view.slide but not selection.slideRange
+				try:
+					ppObj=self.ppObjectModel.view.slide
+				except comtypes.COMError:
+					ppObj=None
+			if ppObj:
+				return SlideBase(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 
 	def _get_firstChild(self):
 		return self.selection
@@ -350,26 +358,44 @@ class PpObject(Window):
 	def script_selectionChange(self,gesture):
 		return self.documentWindow.script_selectionChange(gesture)
 
-class Slide(PpObject):
-	"""Represents a single slide in Powerpoint."""
+class SlideBase(PpObject):
 
 	presentationType=Window.presType_content
 
+	def findOverlayClasses(self,clsList):
+		if self.documentWindow.ppActivePaneViewType in (ppViewSlideMaster,ppViewTitleMaster,ppViewNotesMaster,ppViewHandoutMaster,ppViewMasterThumbnails):
+			clsList.append(Master)
+		else:
+			clsList.append(Slide)
+		clsList.append(SlideBase)
+
 	def _isEqual(self,other):
-		return super(Slide,self)._isEqual(other) and self.name==other.name
+		return super(SlideBase,self)._isEqual(other) and self.name==other.name
 
 	role=controlTypes.ROLE_PANE
 
+class Slide(SlideBase):
+	"""Represents a single slide in Powerpoint."""
+
 	def _get_name(self):
-		#Slides usually contain a number, but master slides do not.
-		#Use the number if available otherwize use its name.
-		#Using the auto-generated name for normal slides is bad as the number is not corrected when the slides are reordered
 		try:
-			number=self.ppObject.slideNumber
+			title=self.ppObject.shapes.title.textFrame.textRange.text
 		except comtypes.COMError:
-			number=None
-		if number:
-			return _("Slide {slideNumber}").format(slideNumber=number)
+			title=None
+		number=self.ppObject.slideNumber
+		name=_("Slide {slideNumber}").format(slideNumber=number)
+		if title:
+			name+=" (%s)"%title
+		return name
+
+	def _get_positionInfo(self):
+		slideNumber=self.ppObject.slideNumber
+		numSlides=self.ppObject.parent.slides.count
+		return {'indexInGroup':slideNumber,'similarItemsInGroup':numSlides}
+
+class Master(SlideBase):
+
+	def _get_name(self):
 		return self.ppObject.name
 
 class Shape(PpObject):
