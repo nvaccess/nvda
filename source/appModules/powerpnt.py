@@ -364,7 +364,7 @@ class SlideBase(PpObject):
 	presentationType=Window.presType_content
 
 	def findOverlayClasses(self,clsList):
-		if self.documentWindow.ppActivePaneViewType in (ppViewSlideMaster,ppViewTitleMaster,ppViewNotesMaster,ppViewHandoutMaster,ppViewMasterThumbnails):
+		if isinstance(self.documentWindow,DocumentWindow) and self.documentWindow.ppActivePaneViewType in (ppViewSlideMaster,ppViewTitleMaster,ppViewNotesMaster,ppViewHandoutMaster,ppViewMasterThumbnails):
 			clsList.append(Master)
 		else:
 			clsList.append(Slide)
