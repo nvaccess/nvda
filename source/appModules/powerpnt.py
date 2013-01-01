@@ -7,6 +7,7 @@
 import comtypes
 import comtypes.client
 import oleacc
+import colors
 import api
 import speech
 import sayAllHandler
@@ -468,12 +469,40 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		formatField=textInfos.FormatField()
-		startOffset,endOffset=self._startOffset,self._endOffset
-		if startOffset==0 or self._getTextRange(offset-1,offset).startswith('\n'):
-			b=self.obj.ppObject.textRange.characters(offset+1,offset+1).paragraphFormat.bullet
+		curRun=None
+		if calculateOffsets:
+			runs=self.obj.ppObject.textRange.runs()
+			for run in runs:
+				start=run.start-1
+				end=start+run.length
+				if start<=offset<end:
+					startOffset=start
+					endOffset=end
+					curRun=run
+					break
+		if not curRun:
+			curRun=self.obj.ppObject.textRange.characters(offset+1)
+			startOffset,endOffset=offset,self._endOffset
+		if self._startOffset==0 or offset==self._startOffset and self._getTextRange(offset-1,offset).startswith('\n'):
+			b=curRun.paragraphFormat.bullet
 			bulletText=getBulletText(b)
 			if bulletText:
 				formatField['line-prefix']=bulletText
+		font=curRun.font
+		if formatConfig['reportFontName']:
+			formatField['font-name']=font.name
+		if formatConfig['reportFontSize']:
+			formatField['font-size']=str(font.size)
+		if formatConfig['reportFontAttributes']:
+			formatField['bold']=bool(font.bold)
+			formatField['italic']=bool(font.italic)
+			formatField['underline']=bool(font.underline)
+			if font.subscript:
+				formatField['text-position']='sub'
+			elif font.superscript:
+				formatField['text-position']='super'
+		if formatConfig['reportColor']:
+			formatField['color']=colors.RGB.fromCOLORREF(font.color.rgb)
 		return formatField,(startOffset,endOffset)
 
 class Table(Shape):
