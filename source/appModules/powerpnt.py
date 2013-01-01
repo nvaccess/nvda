@@ -412,7 +412,7 @@ class Shape(PpObject):
 		left=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointLeft)
 		top=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop)
 		right=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointLeft+pointWidth)
-		bottom=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointTop+pointHeight)
+		bottom=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop+pointHeight)
 		width=right-left
 		height=bottom-top
 		return (left,top,width,height)
