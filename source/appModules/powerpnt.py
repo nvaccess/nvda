@@ -404,6 +404,19 @@ class Shape(PpObject):
 
 	presentationType=Window.presType_content
 
+	def _get_location(self):
+		pointLeft=self.ppObject.left
+		pointTop=self.ppObject.top
+		pointWidth=self.ppObject.width
+		pointHeight=self.ppObject.height
+		left=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointLeft)
+		top=self.documentWindow.ppObjectModel.pointsToScreenPixelsY(pointTop)
+		right=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointLeft+pointWidth)
+		bottom=self.documentWindow.ppObjectModel.pointsToScreenPixelsX(pointTop+pointHeight)
+		width=right-left
+		height=bottom-top
+		return (left,top,width,height)
+
 	def _get_ppShapeType(self):
 		"""Fetches and caches the type of this shape."""
 		self.ppShapeType=self.ppObject.type
