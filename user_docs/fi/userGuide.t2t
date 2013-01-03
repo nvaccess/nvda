@@ -23,7 +23,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Tuki useille pistenäytöille
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
-- Käännökset 41 kielelle
+- Käännökset 42 kielelle
 - Tuki nykyaikaisille Windows-käyttöjärjestelmille, mukaan lukien sekä 32- että 64-bittiset versiot
 - Mahdollisuus käyttää Windowsin kirjautumisikkunassa ja muissa suojatuissa ruuduissa
 - Tuki yleisille esteettömyysrajapinnoille, kuten Microsoft Active Accessibility, Java Access Bridge, IAccessible2 sekä UI Automation (tuki UI Automationille vain Windows 7:ssä ja uudemmissa)
@@ -32,7 +32,7 @@ Tärkeimpiä ominaisuuksia ovat:
 
 ++ Kansainvälistäminen ++
 On tärkeää, että ihmiset kaikkialla maailmassa voivat käyttää samoja teknologioita riippumatta siitä, mitä kieltä he puhuvat.
-NVDA on saatavilla englannin lisäksi seuraavilla 41 kielellä: afrikaans, albania, amhari, arabia, brasilianportugali, bulgaria, espanja, galego, georgia, heprea, hindi, hollanti, islanti, italia, japani, korea, kreikka, kroatia, mandariinikiina, nepali, norja, perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, slovenia, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
+NVDA on saatavilla englannin lisäksi seuraavilla 42 kielellä: afrikaans, albania, amhara, arabia, aragonia, brasilianportugali, bulgaria, espanja, galego, georgia, heprea, hindi, hollanti, islanti, italia, japani, korea, kreikka, kroatia, mandariinikiina, nepali, norja, perinteinen kiina, portugali, puola, ranska, romania, ruotsi, saksa, serbia, slovakki, slovenia, suomi, tamili, tanska, thai, tshekki, turkki, ukraina, unkari, venäjä ja vietnam.
 
 ++ Puhesyntetisaattorituki ++
 Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useille kielille, käyttäjä voi myös lukea sisältöä millä tahansa kielellä, jos vain sitä tukeva puhesyntetisaattori on asennettu.
@@ -76,10 +76,18 @@ Asennetusta versiosta on mahdollista tehdä milloin tahansa myös massamuistiver
 
 Massamuistiversion luominen kannattaa valita, jos NVDA halutaan mukana kuljetettavaksi USB-muistitikulle tai muulle kirjoitettavalle tietovälineelle.
 Se voidaan myös asentaa myöhemmin mille tahansa tietokoneelle.
-Jos NVDA halutaan kopioida vain luettavissa olevalle tietovälineelle kuten CD:lle, tulee tällöin käyttää vain ladattua käynnistyspakettia.
+Jos NVDA halutaan kopioida vain luettavissa olevalle tietovälineelle, kuten CD:lle, tulee tällöin käyttää vain ladattua käynnistyspakettia.
 Massamuistiversion käyttämistä ei tueta suoraan vain luettavissa olevalta tietovälineeltä.
 
 Vaihtoehtona on myös NVDA:n väliaikaisversion käyttäminen (esim. esittelytarkoituksiin), vaikka joka kerta tällä tavalla käynnistäminen voikin olla hyvin aikaa vievää.
+
+++ Massamuisti- ja väliaikaisversioiden rajoitukset ++
+Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai sen jälkeen, on NVDA:n massamuisti- ja väliaikaisversioissa myös seuraavia rajoituksia:
+- Vuorovaikutus järjestelmänvalvojan oikeuksin käynnissä olevien sovellusten kanssa ei ole mahdollista, ellei NVDA:ta itseään ole käynnistetty samoilla oikeuksilla (ei suositella).
+- Käyttäjävalvonnan ruutujen lukeminen ei ole mahdollista yritettäessä käynnistää sovellusta järjestelmänvalvojan oikeuksilla.
+- Windows 8: kosketusnäyttösyötteiden käyttäminen ei ole mahdollista.
+- Windows 8: selaustila ja kirjoitettujen merkkien lukeminen eivät toimi Windows Storesta ladatuissa sovelluksissa.
+-
 
 ++ Asentaminen ++
 Mikäli asennetaan suoraan ladatusta paketista, painetaan Asenna NVDA -painiketta.
@@ -158,24 +166,24 @@ Vaikka useimmissa kannettavissa tietokoneissa ei olekaan fyysistä numeroryhmä�
 Jos käytettävässä kannettavassa ei voi tehdä tätä, tai Numlockin pois päältä kytkeminen ei ole mahdollista, voidaan ottaa käyttöön kannettavien näppäimistöasettelu.
 
 ++ NVDA:n kosketuseleet ++
-NVDA:ta voidaan ohjata myös kosketusnäytön välityksellä, mikäli sitä käytetään laitteessa, jossa on kosketusnäyttö ja Windows 8 tai uudempi käyttöjärjestelmä.
+NVDA:ta voidaan ohjata myös kosketusnäytön avulla, mikäli käytettävässä laitteessa on sellainen ja Windows 8 tai uudempi käyttöjärjestelmä.
 Kaikki kosketussyötteet välitetään suoraan NVDA:lle sen ollessa käynnissä.
-Tämän vuoksi sellaiset toiminnot eivät toimi, joita voidaan suorittaa normaalisti ilman NVDA:ta.
+Tämän vuoksi sellaisia toimintoja ei voi suorittaa, jotka toimivat normaalisti ilman NVDA:ta.
 
 +++ Ruudun tutkiminen +++
 Kaikkein alkeellisin toiminto, joka voidaan suorittaa kosketusnäytöllä, on säätimen tai tekstin lukeminen ruudun missä tahansa kohdassa.
-Tämä tehdään sijoittamalla sormi mihin tahansa näytöllä.
+Tämä tehdään sijoittamalla sormi mihin tahansa kohtaan näytöllä.
 Muita säätimiä ja tekstiä voidaan lukea myös pitämällä ja siirtämällä sormea näytöllä.
 
 +++ Kosketuseleet +++
-Kun NVDA-komentoja kuvaillaan edempänä tässä käyttöoppaassa, niissä saattaa olla mainittu kosketusele, jota voidaan käyttää kosketusnäytöllä kyseisen komennon suorittamiseen.
+Kun NVDA-komentoja kuvaillaan edempänä tässä käyttöoppaassa, niissä saatetaan mainita kosketusele, jota voidaan käyttää kosketusnäytöllä kyseisen komennon suorittamiseen.
 Seuraavassa on joitakin tietoja NVDA-komentojen suorittamisesta kosketusnäytöllä eri kosketuseleiden avulla.
 
 ==== Napautukset ====
 Napauta näyttöä nopeasti yhdellä tai useammalla sormella.
 
 Kerran napauttaminen yhdellä sormella tunnetaan yksinkertaisesti napautuksena.
-Yhtaikaa kahdella sormella napauttaminen on napauttaminen kahdella sormella jne.
+Yhtaikaa kahdella sormella napauttaminen tarkoittaa napauttamista kahdella sormella jne.
 
 Mikäli sama napautus suoritetaan kerran tai useammin nopeasti peräkkäin, NVDA käsittelee sitä moninapautuseleenä.
 Kahdesti napauttamisesta on seurauksena kaksoisnapautus.
@@ -188,7 +196,7 @@ Liu'uta sormea nopeasti näytöllä.
 Pyyhkäisyeleitä on neljä suunnasta riippuen: pyyhkäisy vasemmalle, pyyhkäisy oikealle, pyyhkäisy ylös ja pyyhkäisy alas.
 
 Eleen suorittamiseen voidaan käyttää useampaa kuin yhtä sormea samoin kuin napautuksissakin.
-Tämän vuoksi kaikki sellaiset eleet kuin pyyhkäisy ylös kahdella sormella tai pyyhkäisy vasemmalle neljällä sormella ovat mahdollisia.
+Tämän vuoksi sellaiset eleet kuin pyyhkäisy ylös kahdella sormella tai pyyhkäisy vasemmalle neljällä sormella ovat mahdollisia.
 
 +++ Kosketustilat +++
 Koska NVDA-komentoja on enemmän kuin mahdollisia kosketuseleitä, NVDA:ssa on tämän vuoksi useita kosketustiloja, joita vaihtamalla saadaan käyttöön tiettyyn alaluokkaan kuuluvia komentoja.
@@ -440,6 +448,7 @@ Vuorovaikutustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin s
 | Etsi | NVDA+Ctrl+F | Avaa valintaikkunan, jolla voidaan etsiä tekstiä nykyisestä dokumentista. |
 | Etsi seuraava | NVDA+F3 | Etsii dokumentista aiemmin haetun tekstin seuraavan esiintymän. |
 | Etsi edellinen | NVDA+Shift+F3 | Etsii dokumentista aiemmin haetun tekstin edellisen esiintymän. |
+| Avaa pitkä kuvaus | NVDA+D | Avaa kohdalla olevan elementin mahdollisen pitkän kuvauksen uuteen ikkunaan. | 
 %kc:endInclude
 
 
@@ -503,8 +512,8 @@ NVDA:ssa on joillekin sovelluksille omia lisäkomentoja tiettyjen tehtävien hel
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Määritä sarakkeiden ylätunnisteet | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen rivi sisältää sarakkeen ylätunnisteet, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
-| Määritä rivien ylätunnisteet | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen sarake sisältää rivin ylätunnisteet, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen jälkeen. Kahdesti painaminen nollaa tämän asetuksen. | 
+| Määritä sarakkeen otsikot | NVDA+Shift+C | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen rivi sisältää sarakkeen otsikot, jotka luetaan automaattisesti liikuttaessa sarakkeiden välillä kyseisen rivin alapuolella. Kahdesti painaminen nollaa tämän asetuksen. |
+| Määritä rivin otsikot | NVDA+Shift+R | Tämän komennon kerran painaminen kertoo NVDA:lle, että nykyinen sarake sisältää rivin otsikot, jotka luetaan automaattisesti liikuttaessa rivien välillä kyseisen sarakkeen jälkeen. Kahdesti painaminen nollaa tämän asetuksen. | 
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -640,7 +649,7 @@ Pikanäppäin: NVDA+P
 
 Tästä voidaan valita sanoina luettavien välimerkkien ja muiden symboleiden määrä.
 Esimerkiksi kun tasoksi on valittu kaikki, kaikki symbolit luetaan sanoina.
-Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin, eikä pelkästään käytössä olevaan.
+Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
 
 ==== Äänenkorkeuden muutos prosentteina isoille kirjaimille ====
 Tähän muokkauskenttään voidaan syöttää prosenttiluku, jonka verran puheäänen korkeus muuttuu isoja kirjaimia luettaessa.
@@ -685,7 +694,19 @@ Vaihtoehtojen välillä liikutaan nuolinäppäimillä.
 
 "Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
 
-[Tuetut pistenäytöt #Tuetutpistenaytot] -kappaleessa on lisätietoja tuetuista pistenäytöistä.
+Katso [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaleesta lisätietoja tuetuista pistenäytöistä.
+
+==== Portti ====
+Tällä asetuksella voidaan, jos se on käytettävissä, valita, mitä porttia tai yhteystyyppiä käytetään valitun pistenäytön kanssa kommunikointiin.
+Se on yhdistelmäruutu, joka sisältää käytettävissä olevat vaihtoehdot käyttämällesi pistenäytölle.
+
+NVDA käyttää oletusarvoisesti automaattista portintunnistusta, mikä tarkoittaa, että pistenäyttöön muodostetaan yhteys automaattisesti järjestelmän käytettävissä olevia USB- ja bluetooth-laitteita tutkimalla.
+Joillekin pistenäytöille voidaan kuitenkin itse valita käytettävä portti.
+Vaihtoehtoina ovat "Automaattinen" (joka käskee NVDA:ta käyttämään oletusarvoista automaattista portintunnistusta), "USB", "Bluetooth" sekä sarjaportit, mikäli pistenäyttö tukee sarjaportin kautta liittämistä.
+
+Tämä vaihtoehto ei ole käytettävissä, mikäli pistenäyttö tukee vain automaattista portintunnistusta.
+
+Katso [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaleesta lisätietoja pistenäyttösi tukemista kommunikointityypeistä ja käytettävissä olevista porteista.
 
 ==== Pistetaulukko ====
 Seuraavana tässä valintaikkunassa on "Pistetaulukko"-yhdistelmäruutu, jossa on pistetaulukkoja eri kielille.
@@ -868,7 +889,7 @@ Foneettisille syöttömenetelmille, kuten uusi foneettinen kiina, saattaa kuiten
 ==== Lue valittu ehdotus ====
 Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, lukeeko NVDA valitun ehdotuksen ehdotuslistan tullessa näkyviin tai valintaa muutettaessa.
 Tämä on tarpeen sellaisissa syöttömenetelmissä, joissa valintaa voidaan muuttaa nuolinäppäimillä (kuten esim. uusi foneettinen kiina), mutta joissakin kirjoittaminen saattaa olla tehokkaampaa, kun se on poistettu käytöstä.
-Huomaa, että vaikka tämä asetus ei ole käytössä, tarkastelukohdistin sijoitetaan silti valitun ehdotuksen kohdalle, mikä mahdollistaa objektinavigoinnin tai tekstinlukukomentojen käyttämisen kyseessä olevan tai muiden ehdotusten lukemiseen.
+Huomaa, että vaikka tämä asetus ei ole käytössä, niin tarkastelukohdistin sijoitetaan silti valitun ehdotuksen kohdalle, mikä mahdollistaa objektinavigoinnin tai tekstinlukukomentojen käyttämisen kyseessä olevan tai muiden ehdotusten lukemiseen.
 
 ==== Ilmoita aina lyhyet merkkikuvaukset ehdotuksia luettaessa ====
 Tällä asetuksella, joka on oletusarvoisesti käytössä, voidaan valita, lukeeko NVDA lyhyen kuvauksen kustakin ehdotuksen merkistä joko ehdotusta valittaessa tai automaattisesti luettaessa ehdotuslistan tullessa näkyviin.
@@ -943,7 +964,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - Rivinumerot
 - Rivien sisennykset
 - Taulukot
-- Taulukon rivien ja sarakkeiden ylätunnisteet
+- Taulukon rivien ja sarakkeiden otsikot
 - Taulukon solun koordinaatit
 - Linkit
 - Otsikot
@@ -988,8 +1009,8 @@ Toisella tämän valintaikkunan valintaruudulla voidaan määrittää, onko korv
 Säännöllinen lauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
 Säännöllisiä lausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
 
-+++ Välimerkkien ja symbolien lausuminen +++[Symbolienlausuminen]
-Tämän valintaikkunan avulla voidaan muuttaa välimerkkien ja muiden symbolien lausumistapaa sekä tasoa, jolla ne puhutaan.
++++ Välimerkkien ja symboleiden lausuminen +++[Symboleidenlausuminen]
+Tämän valintaikkunan avulla voidaan muuttaa välimerkkien ja muiden symboleiden lausumistapaa sekä tasoa, jolla ne puhutaan.
 
 Symbolia muutetaan valitsemalla se Symbolit-listasta.
 Korvaava-kentän avulla voidaan muuttaa tekstiä, joka puhutaan kyseisen symbolin sijasta.
@@ -1133,7 +1154,11 @@ Kaikkia [Freedom Scientificin http://www.freedomscientific.com/] Focus- ja PAC M
 Niiden käyttämiseksi on asennettava ajurit.
 Ne ovat ladattavissa osoitteesta http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Ajuri tukee kaikkia Freedom Scientificin pistenäyttöjä, vaikka sivulla mainitaankin vain Focus 40 Blue.
-Jos käytössä on 64-bittinen Windows ja ajurit on jo asennettu jonkin toisen ruudunlukuohjelman mukana, edellä mainitun linkin takaa löytyvät ajurit on silti asennettava, sillä muissa ei luultavasti ole NVDA:n tarvitsemia tiedostoja.
+Jos käytössä on 64-bittinen Windows ja ajurit on jo asennettu jonkin toisen ruudunlukuohjelman mukana, niin edellä mainitun linkin takaa löytyvät ajurit on silti asennettava, sillä muissa ohjelmistoissa ei välttämättä ole kaikkia NVDA:n tarvitsemia tiedostoja.
+
+NVDA tunnistaa oletusarvoisesti nämä pistenäytöt automaattisesti ja voi yhdistää niihin joko USB:n tai bluetoothin kautta.
+Yhteystyypin rajoittamiseksi voidaan kuitenkin myös itse valita USB- tai bluetooth-portti näytön asetuksia määritettäessä.
+Tästä voi olla hyötyä, jos Focus-näyttö halutaan yhdistää NVDA:han bluetoothilla ja silti ladata sitä tietokoneen USB-virralla.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1502,6 +1527,54 @@ Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 | Lue tekstin muotoilutiedot | ylärivin kosketuskohdistinnäppäimet |
 %kc:endInclude
 
+++ HumanWare BrailleNote ++
+NVDA tukee [Humanwaren http://www.humanware.com] BrailleNote-muistiinpanolaitteita, kun ne toimivat ruudunlukuohjelman pistenäyttönä.
+Seuraavia malleja tuetaan:
+- BrailleNote Classic (vain sarjaporttiliitäntä)
+- BrailleNote PK (sarjaportti- ja bluetooth-liitännät)
+- BrailleNote MPower (sarjaportti- ja bluetooth-liitännät)
+- BrailleNote Apex (USB- ja bluetooth-liitännät)
+-
+
+Käytettävä portti on määritettävä pistenäytön asetuksista, jos laitteesi tukee useampaa kuin yhtä liitäntätyyppiä.
+Katso lisätietoja BrailleNoten käsikirjasta.
+Portin määrittäminen voi olla tarpeen myös NVDA:n Pistenäytön asetukset -valintaikkunassa.
+Mikäli laite on liitetty USB:llä tai bluetoothilla, voidaan portiksi määrittää käytettävissä olevista vaihtoehdoista riippuen "Automaattinen", "USB" tai "Bluetooth".
+Jos liitäntänä käytetään sarjaporttia (tai USB-sarjaporttimuuntajaa) tai jos mikään edellisistä vaihtoehdoista ei ole käytettävissä, on käytettävä kommunikointiportti valittava sarjaporttien listasta.
+
+HumanWaren toimittamat ajurit on asennettava ennen BrailleNote Apex:in liittämistä sen USB-asiakasliitännällä.
+
+Seuraavassa on BrailleNoten komentomääritykset NVDA:ta käytettäessä.
+Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
+
+%kc:beginInclude
+|| Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | takaisin |
+| Vieritä pistenäyttöä eteenpäin | eteenpäin |
+| Siirrä pistenäyttö edelliselle riville | edellinen |
+| Siirrä pistenäyttö seuraavalle riville | seuraava |
+| Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| Vaihda Pistenäyttö seuraa -asetusta | edellinen+seuraava |
+| Ylänuolinäppäin | välilyönti+piste1 |
+| Alanuolinäppäin | välilyönti+piste4 |
+| Vasen nuolinäppäin | välilyönti+piste3 |
+| Oikea nuolinäppäin | välilyönti+piste6 |
+| Page up -näppäin | välilyönti+piste1+piste3 |
+| Page down -näppäin | välilyönti+piste4+piste6 |
+| Home-näppäin | välilyönti+piste1+piste2 |
+| End-näppäin | välilyönti+piste4+piste5 |
+| Ctrl+Home-näppäimet | välilyönti+piste1+piste2+piste3 |
+| Ctrl+End-näppäimet | välilyönti+piste4+piste5+piste6 |
+| Välilyöntinäppäin | välilyönti |
+| Enter-näppäin | välilyönti+piste8 |
+| Askelpalautin-näppäin | välilyönti+piste7 |
+| Sarkain-näppäin | välilyönti+piste2+piste3+piste4+piste5 (välilyönti+t) |
+| Shift+sarkain-näppäimet | välilyönti+piste1+piste2+piste5+piste6 |
+| Windows-näppäin | välilyönti+piste2+piste4+piste5+piste6 (välilyönti+w) |
+| Alt-näppäin | välilyönti+piste1+piste3+piste4 (välilyönti+m) |
+| Ota syöteohje käyttöön tai poista se käytöstä | välilyönti+piste1+piste2+piste5 (välilyönti+h) |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] on erillinen ohjelma, jonka avulla voidaan käyttää entistä useampia pistenäyttöjä.
 Sen käyttämiseksi on asennettava [BRLTTY:n Windows-versio http://brl.thefreecat.org/brltty/].
@@ -1594,14 +1667,14 @@ NVDA lähettää edelleen toimintonäppäimet (sellaiset kuin Shift, Ctrl ja Alt
 Niinpä jos syötekomennossa käytetään Alt-näppäintä, kyseisen näppäinyhdistelmän painaminen voisi sekä avata valikkorivin että suorittaa skriptin.
 Tämän vuoksi toimintonäppäimissä on parasta käyttää vain Shift-, Ctrl- ja NVDA-näppäimiä.
 
-++ edistynyt symbolien lausumisen mukauttaminen ++
-Välimerkkien ja muiden symbolien lausumista voidaan mukauttaa enemmänkin kuin mitä [Välimerkkien ja symbolien lausuminen #Symbolienlausuminen] -valintaikkunassa on mahdollista.
+++ edistynyt symboleiden lausumisen mukauttaminen ++
+Välimerkkien ja muiden symboleiden lausumista voidaan mukauttaa enemmänkin kuin mitä [Välimerkkien ja symboleiden lausuminen #Symboleidenlausuminen] -valintaikkunassa on mahdollista.
 Voidaan esimerkiksi määrittää, lähetetäänkö symboli syntetisaattorille sellaisenaan (esim. tauon tai äänensävyn muutoksen aikaansaamiseksi) ja lisätä omia symboleita.
 
 Tämä tehdään muokkaamalla NVDA:n käyttäjän asetushakemistossa olevaa symbolitiedostoa.
 Tiedosto on nimeltään symbols-xx.dic, jossa xx on kielikoodi.
 Tiedoston muoto on dokumentoitu Symboleiden lausuminen -kappaleessa kehittäjän oppaassa, joka on luettavissa [NVDA:n web-sivuston Development-osiossa NVDA_URLwiki/Development].
-Monimutkaisten symbolien määrittäminen ei ole kuitenkaan mahdollista.
+Monimutkaisten symboleiden määrittäminen ei ole kuitenkaan mahdollista.
 
 + Lisätietoja +
 Mikäli tarvitset lisätietoja tai neuvoja NVDA:han liittyen, käy  sen web-sivustolla osoitteessa NVDA_URL.

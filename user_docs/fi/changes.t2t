@@ -3,8 +3,36 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1 =
+
+== Uudet ominaisuudet ==
+- Alkeellinen tuki viestien lukemiselle ja kirjoittamiselle Lotus Notes 8.5:ssä. (#543)
+- Pitkät kuvaukset ilmoitetaan nyt selaustilassa MSHTML- ja Gecko-sovelluksissa (esim. Internet Explorerissa ja Firefoxissa). Ne on lisäksi mahdollista avata uuteen ikkunaan painamalla NVDA+D. (#809)
+- Ilmoitukset, kuten sisällön estäminen tai tiedostolataukset, puhutaan nyt Internet Explorer 9:ssä ja uudemmissa. (#2343)
+- Automaattista taulukon rivien ja sarakkeiden otsikoiden lukemista tuetaan nyt selaustiladokumenteissa Internet Explorerissa ja muissa MSHTML-säätimissä. (#778)
+- Uusi kieli: aragonia
+- Uusi pistetaulukko: tanskalainen taso 2.
+- Tuki bluetoothin kautta yhdistettäville pistenäytöille Toshiban bluetooth-pinoa käyttävissä tietokoneissa. (#2419)
+- Tuki portin valitsemiselle freedom Scientificin pistenäyttöjä käytettäessä (Automaattinen, USB tai Bluetooth).
+- Tuki Humanwaren BrailleNote-tuoteperheen muistiinpanolaitteille käytettäessä niitä pistenäyttönä ruudunlukuohjelmaa varten. (#2012)
+
+
+== Korjatut ohjelmavirheet ==
+- Pikanavigointinäppäimet seuraavaan tai edelliseen erottimeen siirtymiseksi selaustilassa toimivat nyt Internet Explorerissa ja muissa MSHTML-säätimissä. (#2781)
+- Mikäli NVDA turvautuu käynnistyessään eSpeakiin tai Ei puhetta -syntetisaattoriin käyttöön määritetyn puhesyntetisaattorin lataamisen epäonnistumisen vuoksi, varmistussyntetisaattoria ei enää muuteta oletukseksi, mikä tarkoittaa, että alkuperäinen syntetisaattori yritetään ladata nyt uudelleen seuraavalla NVDA:n käynnistyskerralla. (#2589)
+- Taulukoiden päivitykset näytetään nyt oikein selaustilassa Mozilla-sovelluksissa. Esim. rivien ja sarakkeiden koordinaatit luetaan päivitetyissä soluissa ja taulukossa liikkuminen toimii kuten pitääkin. (#2784)
+- Tietyt napsautettavat nimeämättömät kuvat, joita ei aiemmin näytetty, näytetään nyt asianmukaisesti selaustilassa verkkoselaimissa. (#2838)
+- Vanhempia ja uudempia SecureCRT:n versioita tuetaan. (#2800)
+- Lukumerkkijono luetaan nyt oikein Windows XP:ssä Sellaisilla syöttömenetelmillä kuin Easy Dots IME.
+- Yksinkertaistetun kiinan Microsoft Pinyin -syöttömenetelmän ehdotuslista luetaan nyt oikein vaihdettaessa sivuja vasemmalla ja oikealla nuolella ja avattaessa sitä ensimmäistä kertaa Home-näppäimellä Windows 7:ssä.
+- Edistynyttä "preserve"-kenttää ei enää poisteta omia symbolinlausumissääntöjä tallennettaessa. (#2852)
+- Kun automaattinen päivitysten tarkistus poistetaan käytöstä, NVDA:ta ei tarvitse enää käynnistää uudelleen muutoksen käyttöönottamiseksi.
+- NVDA käynnistyy nyt oikein, jos lisäosaa ei voida poistaa siksi, että sen hakemisto on jonkin toisen sovelluksen käytössä. (#2860)
+- DropBoxin asetukset-valintaikkunan välilehtien nimet näkyvät nyt kokonaistarkastelussa.
+
+
 = 2012.3 =
-Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien syöttämiselle, kokeellinen tuki kosketusnäytöille Windows 8:ssa, sivunumeroiden lukeminen ja paranneltu taulukoiden tuki Adobe Readerissa, taulukkokomennot aktiivisille taulukon riveille ja Windowsin listanäkymäsäätimille, tuki usealle uudelle pistenäytölle sekä rivien ja sarakkeiden ylätunnisteiden lukeminen Microsoft Excelissä.
+Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien syöttämiselle, kokeellinen tuki kosketusnäytöille Windows 8:ssa, sivunumeroiden lukeminen ja paranneltu taulukoiden tuki Adobe Readerissa, taulukkokomennot aktiivisille taulukon riveille ja Windowsin listanäkymäsäätimille, tuki usealle uudelle pistenäytölle sekä rivien ja sarakkeiden otsikoiden lukeminen Microsoft Excelissä.
 
 == Uudet ominaisuudet ==
 - NVDA tukee nyt aasialaisten kielten merkkien kirjoittamista IME- ja Tekstipalvelu-syöttömenetelmillä kaikissa sovelluksissa. Lisäksi on mahdollista:
@@ -13,7 +41,7 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
   - Lukumerkkijonon ilmoittaminen.
 - Alle- ja yliviivaus ilmoitetaan nyt Adobe Reader -asiakirjoissa. (#2410)
 - NVDA-näppäin toimii nyt kuin muutkin toimintonäppäimet Windowsin alasjäävien näppäinten ollessa käytössä. Tämä mahdollistaa NVDA-näppäimen käytön tarvitsematta pitää sitä alhaalla painettaessa samaan aikaan muita näppäimiä. (#230)
-- Sarakkeiden ja rivien ylätunnisteiden automaattista lukemista tuetaan nyt Microsoft Excelissä. Sarakkeiden ylätunnisteet sisältävä rivi määritetään painamalla NVDA+Shift+C ja rivien ylätunnisteet sisältävä sarake painamalla NVDA+Shift+R. Asetukset nollataan painamalla näitä komentoja kahdesti. (#1519)
+- Sarakkeiden ja rivien otsikoiden automaattista lukemista tuetaan nyt Microsoft Excelissä. Sarakkeiden otsikot sisältävä rivi määritetään painamalla NVDA+Shift+C ja rivien otsikot sisältävä sarake painamalla NVDA+Shift+R. Asetukset nollataan painamalla näitä komentoja kahdesti. (#1519)
 - Tuki HIMS Braille Sense-, Braille EDGE- ja SyncBraille -pistenäytöille. (#1266, #1267)
 - NVDA lukee Windows 8:n Toast-ilmoitukset niiden tullessa näkyviin, jos kuplailmoitusten lukeminen on käytössä. (#2143)
 - Kokeellinen tuki kosketusnäytöille Windows 8:ssa, mukaan lukien:
@@ -21,8 +49,8 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
  - Useita objektinavigointiin, tekstin lukemiseen ja muihin NVDA-komentoihin tarkoitettuja eleitä.
 - Tuki VIP Mudille. (#1728)
 - Jos taulukossa on yhteenveto, se luetaan nyt Adobe Readerissa. (#2465)
-- Taulukon rivien ja sarakkeiden ylätunnisteet luetaan nyt Adobe Readerissa. (#2193, #2527, #2528)
-- Uusia kieliä: amhari, korea, nepali ja slovenia.
+- Taulukon rivien ja sarakkeiden otsikot luetaan nyt Adobe Readerissa. (#2193, #2527, #2528)
+- Uusia kieliä: amhara, korea, nepali ja slovenia.
 - NVDA lukee nyt automaattisen täydennyksen ehdotukset Microsoft Outlook 2007:ssä sähköpostiosoitteita syötettäessä. (#689)
 - Uusia eSpeakin puheäänimuunnelmia: Gene, Gene2. (#2512)
 - Sivunumerot luetaan nyt Adobe Readerissa. (#2534)
@@ -31,7 +59,7 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
 - Tuki Nippon Telesoftin Seika (versioille 3, 4 ja 5)- sekä Seika80-pistenäytöille. (#2452)
 - Freedom Scientificin PAC Mate- ja Focus-pistenäyttöjen ensimmäistä ja viimeistä ylintä kosketuskohdistinnäppäintä voidaan nyt käyttää taakse- ja eteenpäin vierittämiseen. (#2556)
 - Freedom Scientificin Focus--pistenäytöissä tuetaan entistä useampia ominaisuuksia, kuten eteenpäin siirtävät näppäimet, keinunäppäimet sekä tietyt pisteyhdistelmät yleisille toiminnoille. (#2516)
-- Taulukon rivien ja sarakkeiden ylätunnisteet on nyt mahdollista lukea selaustilan ulkopuolella IAccessible2-rajapintaa käyttävissä sovelluksissa, kuten Mozilla Firefoxissa. (#926)
+- Taulukon rivien ja sarakkeiden otsikot on nyt mahdollista lukea selaustilan ulkopuolella IAccessible2-rajapintaa käyttävissä sovelluksissa, kuten Mozilla Firefoxissa. (#926)
 - Alustava tuki Microsoft Word 2013:n asiakirjasäätimelle. (#2543)
 - Tekstin tasauksen ilmoittaminen on nyt  mahdollista IAccessible2-rajapintaa käyttävissä sovelluksissa, kuten Mozilla Firefoxissa. (#2612)
 - Kun taulukon rivi tai standardi Windowsin useita sarakkeita sisältävä listanäkymäsäädin  on aktiivisena, taulukossa liikkumiseen tarkoitettuja komentoja voidaan nyt käyttää yksittäisiin soluihin pääsemiseksi. (#828)
@@ -58,7 +86,7 @@ Tämän version uusia ominaisuuksia ovat mm. tuki aasialaisten kielten merkkien 
 
 == Korjatut ohjelmavirheet ==
 - NVDA ei enää käsittele Windows-näppäintä virheellisesti alas painettuna, kun Windowsin lukitus avataan Windows+L-näppäinyhdistelmällä lukitsemisen jälkeen Windows Vistassa ja uudemmissa. (#1856)
-- Rivien ylätunnisteet tunnistetaan nyt asianmukaisesti taulukon soluiksi Adobe Readerissa, ts. koordinaatit luetaan ja niihin päästään taulukkonavigointikomennoilla. (#2444)
+- Rivien otsikot tunnistetaan nyt asianmukaisesti taulukon soluiksi Adobe Readerissa, ts. koordinaatit luetaan ja niihin päästään taulukkonavigointikomennoilla. (#2444)
 - Useampaan sarakkeeseen ja/tai riviin jakaantuvat taulukon solut käsitellään nyt oikein Adobe Readerissa. (#2437, #2438, #2450)
 - NVDA:n jakelupaketti tarkistaa nyt eheytensä ennen suorittamista. (#2475)
 - Tilapäiset lataustiedostot poistetaan, jos NVDA-päivityksen lataaminen epäonnistuu. (#2477)
@@ -214,7 +242,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat pistenäytön sujuvampi lu
 - NVDA toimii taas oikein Audiologic Tts3 -syntetisaattorilla. (#2109)
 - Microsoft Word -asiakirjoja käsitellään asianmukaisesti monirivisinä. Tämä saa pistenäytön toimimaan paremmin, kun asiakirja on aktiivisena.
 - Microsoft Internet Explorerissa ei enää ilmene virheitä siirrettäessä kohdistusta tiettyjen harvojen säädinten kohdalle. (#2121)
-- Käyttäjän tekemät muutokset välimerkkien/symbolien lausumiseen otetaan heti käyttöön sen sijaan, että tarvitsisi käynnistää NVDA uudelleen tai poistaa automaattinen kielen vaihtaminen käytöstä.
+- Käyttäjän tekemät muutokset välimerkkien ja symboleiden lausumiseen otetaan heti käyttöön sen sijaan, että tarvitsisi käynnistää NVDA uudelleen tai poistaa automaattinen kielen vaihtaminen käytöstä.
 - Puhe ei enää mykisty joissakin tapauksissa NVDA:n Näytä loki -sovelluksen Tallenna nimellä -valintaikkunassa eSpeakia käytettäessä. (#2145)
 
 
@@ -278,7 +306,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen puhesyntetis
 
 
 = 2011.2 =
-Tämän version tärkeimpiin uusiin ominaisuuksiin kuuluvat merkittävät välimerkkejä ja muita symboleita koskevat parannukset, mukaan lukien tasojen määrittäminen, omat nimet sekä merkkien kuvaukset, ei taukoja rivien lopussa lue kaikki -toiminnon aikana, paranneltu ARIA-tuki Internet Explorerissa, parempi tuki XFA- ja LiveCycle PDF -asiakirjoille Adobe Readerissa, mahdollisuus lukea ruudulla olevaa tekstiä useammassa sovelluksessa sekä mahdollisuus lukea muotoilutiedot ja värit ruudulla olevasta tekstistä.
+Tämän version tärkeimpiä uusia ominaisuuksia ovat merkittävät välimerkkejä ja muita symboleita koskevat parannukset, mukaan lukien tasojen määrittäminen, omat nimet sekä merkkien kuvaukset, ei taukoja rivien lopussa lue kaikki -toiminnon aikana, paranneltu ARIA-tuki Internet Explorerissa, parempi tuki XFA- ja LiveCycle PDF -asiakirjoille Adobe Readerissa, mahdollisuus lukea ruudulla olevaa tekstiä useammassa sovelluksessa sekä mahdollisuus lukea muotoilutiedot ja värit ruudulla olevasta tekstistä.
 
 == Uudet ominaisuudet ==
 - Nyt on mahdollista kuulla minkä tahansa merkin kuvaus painamalla kaksi kertaa nopeasti peräkkäin Lue nykyinen merkki -komentoa. Kuvakirjoituskielille, kuten perinteinen kiina, on yksi tai useampia kyseessä olevan symbolin sisältäviä esimerkkilauseita. Lisäksi Lue nykyinen sana- tai Lue nykyinen rivi -komennon kolmesti painaminen tavaa sanan/rivin käyttäen ensimmäistä näistä kuvauksista. (#55)
@@ -476,7 +504,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teksti
 
 
 = 2010.2 =
-Tämän version merkittäviin ominaisuuksiin kuuluvat huomattavasti yksinkertaistettu objektinavigointi, näennäispuskurit Flash -sisällölle, monien aiemmin saavuttamattomien säädinten käyttäminen ruudun tekstiä kaappaamalla, kokonaistarkastelu ruudulla olevalle tekstille, tuki IBM Lotus Symphony -asiakirjoille, taulukon rivien ja sarakkeiden otsikoiden lukeminen Mozilla Firefoxissa sekä huomattavasti parannellut käyttöohjeet.
+Tämän version merkittävimpiä uusia ominaisuuksia ovat huomattavasti yksinkertaistettu objektinavigointi, näennäispuskurit Flash-sisällölle, monien aiemmin saavuttamattomien säädinten käyttäminen ruudun tekstiä kaappaamalla, kokonaistarkastelu ruudulla olevalle tekstille, tuki IBM Lotus Symphony -asiakirjoille, taulukon rivien ja sarakkeiden otsikoiden lukeminen Mozilla Firefoxissa sekä huomattavasti parannellut käyttöohjeet.
 
 == Uudet ominaisuudet ==
 - Tarkastelukohdistimella liikkumista objekteissa on yksinkertaistettu huomattavasti. Tarkastelukohdistin sulkee nyt pois objektit, joista ei ole hyötyä käyttäjälle, esim. vain asettelutarkoituksiin käytettävät ja sellaiset, jotka eivät ole käytettävissä.

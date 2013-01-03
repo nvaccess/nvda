@@ -3,6 +3,39 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1 =
+
+== Nouvelles Fonctionnalités ==
+- Support basique pour la lecture et l'écriture de messages dans Lotus Notes 8.5. (#543)
+- En mode navigation dans les documents MSHTML (ex : Internet Explorer) et Gecko (ex : Firefox), l'existence des longues descriptions est maintenant annoncée. Il est aussi possible d'ouvrir les longues descriptions dans une nouvelle fenêtre en appuyant sur NVDA+D. (#809)
+- Les notifications dans Internet Explorer 9 et plus récent sont maintenant lues (comme les fenêtres publicitaires bloquées ou les téléchargements). (#2343)
+- L'annonce automatique du titre des lignes et colonnes d'un tableau est maintenant supportée dans Internet Explorer et les autres contrôles MSHTML. (#778)
+- Nouvelle langue : Aragonais.
+- Nouvelle table Braille : Dannois Grade 2.
+- Support des afficheurs Braille connectés via le Bluetooth sur les ordinateurs utilisant Bluetooth Stack for Windows by Toshiba. (#2419)
+- Support de la sélection du port pour les afficheurs freedom Scientific (Automatique, USB ou Bluetooth).
+- Support des bloc-notes BrailleNote de Humanware lorsqu'ils agissent comme afficheur Braille pour un lecteur d'écran. (#2012)
+
+
+== Corrections de Bogues ==
+- La touche de navigation rapide pour passer au séparateur précédent ou suivant en mode navigation fonctionne maintenant dans Internet Explorer et les autres documents MSHTML. (#2781)
+- Si NVDA revient à eSpeak ou pas de parole à cause d'une erreur dans le synthétiseur configuré lors du démarrage de NVDA, la configuration n'est plus modifiée pour prendre la valeur du nouveau synthétiseur, ce qui signifi que NVDA essayera encore de chargé le synthétiseur en erreur lors du prochain démarrage.
+- En mode navigation dans les applications Mozilla, les mises à jour de tableaux sont maintenant correctement rendues. Par exemple, dans les cellules mises à jour, les coordonnées de ligne et de colonne sont correctement annoncées et les touches de navigation dans un tableaux fonctionnent comme prévu. (#2784)
+- En mode navigation dans les navigateurs Internet, certains graphiques clicables sans étiquette n'étaient pas rendus et le sont maintenant correctement. (#2838)
+- Les anciennes et nouvelles versions de SecureCRT sont maintenant supportées. (#2800)
+- Pour certaines méthodes d'entrée IME dans Windows XP, la chaîne de lecture est maintenant correctement rapportée.
+- La liste de candidats de la méthode d'entrée Chinois simplifié Microsoft Pinyin sous Windows 7 est maintenant lue correctement lorsqu'on change de page avec les flèches gauche et droite, et en l'ouvrant la première fois avec Origine.
+- Quand la personnalisation de prononciations des symboles est sauvegardée, le champ avancé "préservé" n'est plus supprimé. (#2852)
+- Lorsqu'on désactive la recherche automatique de mise à jour, il n'est plus nécessaire de redémarrer NVDA pour que le changement prenne effet.
+- NVDA n'est plus en échèque dès le démarrage si un module complémentaire n'a pas pu être supprimé parce que son dossier est utilisé par une autre application. (#2860)
+
+
+== Changements pour les développeurs ==
+- Les afficheurs Braille peuvent maintenant supporter la sélection manuelle du port. (#426)
+ - C'est surtout utile pour les afficheurs Braille qui supportent la connexion via un port série.
+ - Cela se fait en utilisant la méthode de classe getPossiblePorts dans la classe BrailleDisplayDriver.
+
+
 = 2012.3 =
 Les apports majeurs de cette version incluent le support de la saisie des caractèrs asiatiques ; le support expérimental des écrans tactiles sous Windows 8 ; l'annonce des numéro de page et le support amélioré des tableaux dans Adobe Reader ; le support de la navigation entre les cellules des liste multi-colones ou en tableau ; le support de plusieurs nouveaux afficheurs Braille ; et l'annonce des entêtes de lignes et colonnes dans les tableaux Microsoft Excel.
 
@@ -22,7 +55,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - Support de VIP Mud. (#1728)
 - Dans Adobe Reader, si un tableau a un résumé, il est maintenant présenté. (#2465)
 - Dans Adobe Reader, les entêtes de lignes et de collones des tableaux peuvent maintenant être annoncés. (#2193, #2527, #2528)
-- Nouveaux langages : Éthiopien, Coréen, Népalais, Slovénien.
+- Nouvelles langues : Éthiopien, Coréen, Népalais, Slovénien.
 - NVDA peut maintenant lire les suggestions de l'autocomplétion lorsqu'on saisi des adresses e-mail dans Microsoft Outlook 2007. (#689)
 - Deux nouvelles variantes de voix Espeak : Gene, Gene2. (#2512)
 - Dans Adobe Reader, les numéros de pages peuvent maintenant être rapportés. (#2534)
@@ -36,7 +69,7 @@ Les apports majeurs de cette version incluent le support de la saisie des caract
 - L'alignement du texte peut maintenant être rapporté dans les applications utilisant IAccessible2 comme les applications Mozilla. (#2612)
 - Lorsqu'une ligne de tableau ou un élément d'une liste multi-colonnes standard Windows a le focus, il est possible d'utiliser les commande de navigation de tableau pour passer de cellule en cellule. (#828)
 - Nouvelles tables Brailles : Estonien Grade 0, Portugais Braille informatique 8 points, et Braille informatique Italien six points. (#2139, #2662)
-- Si NVDA est installé, ouvrire un paquet de module complémentaire NVDA (par exemple depuis l'explorateur ou après l'avoir téléchargé) proposera l'installation de celui-ci.  (#2306)
+- Si NVDA est installé, ouvrir un paquet de module complémentaire NVDA (par exemple depuis l'explorateur ou après l'avoir téléchargé) proposera l'installation de celui-ci.  (#2306)
 - Support des modèles plus récents de plages Braille Papenmeier BRAILLEX. (#1265)
 - L'information de position (Ex : 1 sur 4) est maintenant rapportée dans les éléments des listes de l'explorateur Windows dans Windows 7 et supérieur. Cela inclut également les éléments UIAutomation qui supportent les propriétés itemIndex et et itemCount. (#2643)
 

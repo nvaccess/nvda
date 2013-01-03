@@ -40,9 +40,9 @@ struct displayModelFormatInfo_t {
 
 struct displayModelChunk_t{
 	RECT rect;
-	int baseline;
+	long baseline;
 	std::wstring text;
-	std::deque<int> characterXArray;
+	std::deque<long> characterXArray;
 	displayModelFormatInfo_t formatInfo;
 /**
  * Truncates the chunk's text so that only the text that fits in the resulting rectangle is left.  
@@ -112,17 +112,19 @@ class displayModel_t: public LockableAutoFreeObject  {
  */
 	void clearAll();
 
+	inline void transposAndScaleCoordinate(long srcOffset, long destOffset, float scale, long& val) { val=(long)(((val-srcOffset)*scale)+destOffset); } 
+
+
 /**
  * Copies the chunks intersecting the given rectangle, in to the given display model, starting from the given coordinates.
  * @param srcRect the rectangle intersecting all the chunks in this model that will be copied.
  * @param removeFromSource if true then the content will be moved, rather than copied
  * @param opaqueCopy if true then the entire destination rectangle will be cleared before inserting any chunks, but if false then only space for each chunk will be cleared.
- * @param destX the x coordinate in the destination model where the rectangle's left edge  starts
- * @param destY the y coordinate in the destnation model where the rectangle's top edge starts
+ * @param destRect the destination rectangle where the chunks should be placed 
  * @param destClippingRect an optional rectangle which will be used to clip all content being copied in to the destination model
  * @param destModel a pointer to the displayModel the chunks should be copied to (if NULL then this model is used) 
  */
-	void copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, int destX, int destY, const RECT* destClippingRect, displayModel_t* destModel);
+	void copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, BOOL srcInvert, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel);
 
 /**
  * Fetches the text contained in all chunks intersecting the given rectangle if provided, otherwize the text from all chunks in the model.

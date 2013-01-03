@@ -6,8 +6,38 @@
 
  Traduzido por Marlin Rodrigues da Silva
 
+ = 2013.1 =
+
+== Novas Características ==
+- Suporte básico para a leitura e escrita de mensagens no Lotus Notes 8.5. (#543)
+- No modo de navegação para o MSHTML (como o  Internet Explorer) e Gecko (Firefox), a existência de descrições longas agora é anunciada. Também é possível abrir a descrição longa numa nova janela pressionando NVDA+d. (#809)
+- Notificações no Internet Explorer 9 e posteriores (tais como bloqueio de conteúdos ou downloads de arquivos) agora são anunciadas. (#2343) 
+- O anúncio automático dos cabeçalhos de linhas e colunas das tabelas agora é suportado para documentos do modo de navegação  no Internet Explorer e outros controles MSHTML. (#778) 
+- Novo idioma: Aragonês.
+- Nova tabela de tradução braille: Dinamarquês grau 2. 
+- Suporte para a seleção de porta quando se usa linhas da freedom Scientific  (Automática, USB ou Bluetooth). 
+
+
+== Correção de Falhas ==
+- As teclas de navegação rápida para saltar para o separador anterior e o seguinte no modo de navegação agora funcionam no Internet Explorer e outros controles MSHTML. (#2781)
+- No modo de navegação em aplicativos da Mozilla, atualizações em tabelas agora são exibidas  corretamente. Por exemplo, em  célilas atualizadas, as coordenadas das linhas e colunas são anunciadas e a navegação da tabela funciona como deveria. (#2784) 
+- No modo de navegação em navegadores web , certos gráficos clicáveis não etiquetados que anteriormente não eram expostos agora o são corretamente. (#2838) 
+- Versões anteriores e mais recentes do SecureCRT agora são suportadas. (#2800) --
+ Quando a procura automática por atualização é desabilitada, o NVDA já não precisa ser reiniciado para que a alteração faça efeito completamente. 
+- O NVDA já não falha para iniciar caso um complemento não possa ser removido pelo fato de sua pasta estar sendo usada no momento por outro aplicativo. (#2860) 
+
+
+ == Alterações Específicas para Desenvolvedores ==
+ 
+ 
+ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
+- Os drivers para linhas braille agora podem suportar a seleção manual de portas. (#426)
+ - This is most useful for braille displays which support connection via a legacy serial port. 
+ - This is done using the getPossiblePorts class method on the BrailleDisplayDriver class. 
+
+ 
 = 2012.3 =
- Entre os destaques desta versão estão inclusos o suporte para a entrada de caracteres asiáticos; suporte experimental para touch screens no Windows 8; anúncio do número das páginas e melhoras no suporte para tabelas no Adobe Reader; comandos para navegação por tabelas   em linhas de tabelas enfocadas e controles de listas de visualização  do Windows; suporte para mais uma porção de linhas braille; e anúncio dos cabeçalhos de linhas e colunas no Microsoft Excel. 
+Entre os destaques desta versão estão inclusos o suporte para a entrada de caracteres asiáticos; suporte experimental para touch screens no Windows 8; anúncio do número das páginas e melhoras no suporte para tabelas no Adobe Reader; comandos para navegação por tabelas   em linhas de tabelas enfocadas e controles de listas de visualização  do Windows; suporte para mais uma porção de linhas braille; e anúncio dos cabeçalhos de linhas e colunas no Microsoft Excel. 
 
 == Novas Características ==
 - O NVDA agora pode oferecer suporte à entrada de caracteres asiáticos que usam IME e o serviço de métodos de entrada de textos em todas as aplicações, Incluindo:
@@ -114,7 +144,7 @@
 == Alterações Específicas para Desenvolvedores ==
 
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
+Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - O arquivo contendo o log anterior agora é copiado para nvda-old.log a quando da inicialização do NVDA. Com efeito, caso ele trave ou seja reiniciado, as informações do log daquela sessão continuarão acessíveis para inspeção. (#916)
 - Fetching the role property in chooseNVDAObjectOverlayClasses no longer causes the role to be incorrect and thus not reported on focus for certain objects such as Windows command consoles and Scintilla controls. (#2569)
 - Os menus Preferências, Ferramentas e Ajuda são agora acessíveis como atributos em gui.mainFrame.sysTrayIcon com as respectivas denominações de preferencesMenu, toolsMenu e helpMenu. Isso permite que plugins adicionem itens mais ´facilmente a esses menus.
@@ -171,7 +201,7 @@ Os destaques dessa versão incluem um instalador integrado com o recurso de cria
 == Alterações Específicas para Desenvolvedores ==
 
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
+Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - Devido à substituição do anterior instalador do NVDA NSIS por um instalador integrado escrito em Python, já não se faz necessário aos tradutores manter os arquivos langstrings.txt para o instalador. Todas as strings de localização agora são controladas pelos arquivos gettext po.
 
 
@@ -248,7 +278,7 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 == Alterações Específicas para  Desenvolvedores ==
 
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
+Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - Agora existe um console Python remoto para situações onde seja necessária uma depuração remota. Consulte o Guia do Desenvolvedor para mais detalhes.
 - The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
 - TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
@@ -322,7 +352,7 @@ Os destaques desta versão incluem a mudança automática do idioma do sintetiza
 == Alterações Específicas para Desenvolvedores ==
 
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
+Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - O NVDA agora pode instruir aos sintetizadores de voz para alternar o idioma em  seções particulares da fala.
  - Para suportar essa função, os drivers precisam ter controle de speech.LangChangeCommand em seqüências passadas para SynthDriver.speak().
  - Os objetos para SynthDriver devem também fornecer a informação do idioma para OS OBJETOS de VoiceInfo (ou substituir o atributo do idioma para retomar o idioma atual). Caso contrário, o idioma da interface do usuário do NVDA será usado.
@@ -445,7 +475,7 @@ Os destaques desta versão incluem maiores implementações no tocante à  pontu
 == Alterações específicas para Desenvolvedores ==
 
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
+Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - A documentação para desenvolvedores agora pode ser gerada usando SCons. Consulte o arquivo readme.txt na  raíiz da distribuição do código para detalhes, incluindo dependências associadas.
 - Locales agora podem fornecer descrições para caracteres. Consulte a Seção sobre Descrições de Caracteres no Guia do Desenvolvedor para obter detalhes. (#55)
 - Locales agora podem fornecer informações sobre a pronúncia da pontuação e outros sinais específicos. Consulte a seção sobre Pronúncia de Pontuação no Guia do Desenvolvedor para obter detalhes. (#332)
@@ -541,7 +571,7 @@ Os destaques desta versão incluem o anúncio de cores para alguns controles; an
 == Alterações específicas para Desenvolvedores ==
 
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que forem relevantes para usuários comuns, serão traduzidos.
+Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
 - The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
 - All input from the user is now represented by an inputCore.InputGesture instance. (#601)

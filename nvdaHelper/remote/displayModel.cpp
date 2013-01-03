@@ -45,7 +45,7 @@ void displayModelChunk_t::generateXML(wstring& text) {
 void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	if(text.length()==0) return;
 	nhAssert(characterXArray.size()!=0);
-	deque<int>::iterator c=characterXArray.begin();
+	deque<long>::iterator c=characterXArray.begin();
 	wstring::iterator t=text.begin();
 	if(truncateBefore&&rect.left<truncatePointX) {
 		for(;t!=text.end()&&(*c)<truncatePointX;++c,++t);
@@ -188,16 +188,17 @@ void displayModel_t::clearRectangle(const RECT& rect, BOOL clearForText) {
 	LOG_DEBUG(L"complete");
 }
 
-void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, int destX, int destY, const RECT* destClippingRect, displayModel_t* destModel) {
+void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, BOOL srcInvert, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel) {
+	//Make sure neither source or destination rectangle is collapsed. Pointless and can cause zero division errors. #2885 
+	if(srcRect.left==srcRect.right||srcRect.top==srcRect.bottom||destRect.left==destRect.right||destRect.top==destRect.bottom) return;
 	if(!destModel) destModel=this;
 	RECT tempRect;
-	int deltaX=destX-srcRect.left;
-	int deltaY=destY-srcRect.top;
-	RECT destRect={srcRect.left+deltaX,srcRect.top+deltaY,srcRect.right+deltaX,srcRect.bottom+deltaY};
+	float scaleX=(float)(destRect.right-destRect.left)/(float)(srcRect.right-srcRect.left);
+	float scaleY=(float)(destRect.bottom-destRect.top)/(float)(srcRect.bottom-srcRect.top);
 	//If a clipping rectangle is provided, clip the destination rectangle
+	RECT clippedDestRect=destRect;
 	if(destClippingRect) {
-		IntersectRect(&tempRect,&destRect,destClippingRect);
-		destRect=tempRect;
+		IntersectRect(&clippedDestRect,&destRect,destClippingRect);
 	}
 	//Make copies of all the needed chunks, tweek their rectangle coordinates, truncate if needed, and store them in a temporary list
 	list<displayModelChunk_t*> copiedChunks;
@@ -206,20 +207,24 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 		if(!IntersectRect(&tempRect,&srcRect,&(i->second->rect))) continue; 
 		//Copy the chunk
 		displayModelChunk_t* chunk=new displayModelChunk_t(*(i->second));
-		//Tweek its rectangle coordinates to match where its going in the destination model
-		(chunk->rect.left)+=deltaX;
-		(chunk->rect.top)+=deltaY;
-		(chunk->rect.right)+=deltaX;
-		(chunk->rect.bottom)+=deltaY;
-		chunk->baseline+=deltaY;
-		//Tweek its character x coordinates to match where its going in the destination model
-		for(deque<int>::iterator x=chunk->characterXArray.begin();x!=chunk->characterXArray.end();++x) (*x)+=deltaX;
-		//Truncate the chunk so it does not stick outside of the destination rectangle
-		if(chunk->rect.left<destRect.left) {
-			chunk->truncate(destRect.left,TRUE);
+		if(srcInvert) {
+			chunk->formatInfo.color=(0xffffff-chunk->formatInfo.color);
+			chunk->formatInfo.backgroundColor=(0xffffff-chunk->formatInfo.backgroundColor);
 		}
-		if(chunk->rect.right>destRect.right) {
-			chunk->truncate(destRect.right,FALSE);
+		//Tweek its rectangle coordinates to match where its going in the destination model
+		transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,chunk->rect.left);
+		transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,chunk->rect.right);
+		transposAndScaleCoordinate(srcRect.top,destRect.top,scaleY,chunk->rect.top);
+		transposAndScaleCoordinate(srcRect.top,destRect.top,scaleY,chunk->rect.bottom);
+		transposAndScaleCoordinate(srcRect.top,destRect.top,scaleY,chunk->baseline);
+		//Tweek its character x coordinates to match where its going in the destination model
+		for(deque<long>::iterator x=chunk->characterXArray.begin();x!=chunk->characterXArray.end();++x) transposAndScaleCoordinate(srcRect.left,destRect.left,scaleX,*x);
+		//Truncate the chunk so it does not stick outside of the clipped destination rectangle
+		if(chunk->rect.left<clippedDestRect.left) {
+			chunk->truncate(clippedDestRect.left,TRUE);
+		}
+		if(chunk->rect.right>clippedDestRect.right) {
+			chunk->truncate(clippedDestRect.right,FALSE);
 		}
 		//if the chunk is now empty due to truncation then just delete it and move on to the next 
 		if(chunk->text.length()==0) {
@@ -232,7 +237,7 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 	//Clear the source rectangle if requested to do so (move rather than copy)
 	if(removeFromSource) this->clearRectangle(srcRect);
 	//Clear the entire destination rectangle if requested to do so
-	if(opaqueCopy) destModel->clearRectangle(destRect);
+	if(opaqueCopy) destModel->clearRectangle(clippedDestRect);
 	//insert the copied chunks in to the destination model
 	for(list<displayModelChunk_t*>::iterator i=copiedChunks.begin();i!=copiedChunks.end();++i) {
 		if(!opaqueCopy) destModel->clearRectangle((*i)->rect);
@@ -301,7 +306,7 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 				curLineText.append(chunk->text);
 			}
 			//Copy the character X positions from this chunk  in to the current line
-			deque<int>::const_iterator cxaIt=chunk->characterXArray.begin();
+			deque<long>::const_iterator cxaIt=chunk->characterXArray.begin();
 			while(cxaIt!=chunk->characterXArray.end()) {
 				tempCharLocation.left=*cxaIt;
 				tempCharLocation.top=chunk->rect.top;

@@ -47,6 +47,9 @@ TABLES = (
 	("da-dk-g1.utb", _("Danish grade 1")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("da-dk-g2.ctb", _("Danish grade 2")),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("de-de-comp8.ctb", _("German 8 dot computer braille")),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -1217,15 +1220,25 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self.display = None
 			self.displaySize = 0
 			return
+		# See if the user have defined a specific port to connect to
+		if name not in config.conf["braille"]:
+			# No port was set.
+			config.conf["braille"][name] = {"port" : ""}
+		port = config.conf["braille"][name].get("port")
+		# Here we try to keep compatible with old drivers that don't support port setting
+		# or situations where the user hasn't set any port.
+		kwargs = {}
+		if port:
+			kwargs["port"] = port
 		try:
 			newDisplay = _getDisplayDriver(name)
 			if newDisplay == self.display.__class__:
 				# This is the same driver as was already set, so just re-initialise it.
 				self.display.terminate()
 				newDisplay = self.display
-				newDisplay.__init__()
+				newDisplay.__init__(**kwargs)
 			else:
-				newDisplay = newDisplay()
+				newDisplay = newDisplay(**kwargs)
 				if self.display:
 					try:
 						self.display.terminate()
@@ -1488,6 +1501,21 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		@param cells: The braille cells to display.
 		@type cells: [int, ...]
 		"""
+
+	#: Automatic port constant to be used by braille displays that support the "automatic" port
+	#: @type: Tupple
+	# Translators String representing the automatic port selection for braille displays.
+	AUTOMATIC_PORT = ("auto", _("Automatic"))
+
+	@classmethod
+	def getPossiblePorts(cls):
+		""" Returns possible hardware ports for this driver.
+		If the driver supports automatic port setting it should return as the first port L{brailleDisplayDriver.AUTOMATIC_PORT}
+
+		@return: ordered dictionary of name : description for each port
+		@rtype: OrderedDict
+		"""
+		raise NotImplementedError
 
 	#: Global input gesture map for this display driver.
 	#: @type: L{inputCore.GlobalGestureMap}

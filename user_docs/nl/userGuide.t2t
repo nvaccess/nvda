@@ -23,7 +23,7 @@ Belangrijke functies zijn:
 - Ondersteuning voor veel brailleleesregels
 - Kan via usb-stick of ander  draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
-- In 40 talen beschikbaar
+- In 42 talen beschikbaar
 - Ondersteuning van moderne Windows besturingssystemen met inbegrip van 32- en 64-bit versies
 - Werken met beveiligde omgeving van Windows (inloggen e.d.) is mogelijk
 - Ondersteuning van gangbare toegankelijkheidsinterfaces zoals Microsoft Active Accessibility, Java Access Bridge, Iaccessible 2 en UI Automation (UI Automation alleen op Windows 7 of hoger)
@@ -32,7 +32,7 @@ Belangrijke functies zijn:
 
 ++ Internationalisering ++
 Het is belangrijk dat mensen overal ter wereld, ongeacht de taal die zij spreken, gelijke toegang krijgen tot technologie.
-Behalve de Engelse versie van NVDA is het programma beschikbaar in 40 talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Braziliaans-Portugees, Bulgaars, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, IJslands, Italiaans, Japans, Koreaans, Pools, Portugees, Roemeens, Servisch, Slowaaks, Spaans, Zweeds, Nederlands, Thai, Russisch, Traditioneel Chinees, etc. 
+Behalve de Engelse versie van NVDA is het programma beschikbaar in 42 talen, waaronder Afrikaans, Albanees, Amherisch, Arabisch, Braziliaans-Portugees, Bulgaars, Croatisch, Tsjechisch, Deens, Fins, Frans, Galisisch, Georgisch, Duits, Hebreeuws, Hindi, Hongaars, IJslands, Italiaans, Japans, Koreaans, Pools, Portugees, Roemeens, Servisch, Slowaaks, Spaans, Zweeds, Nederlands, Thai, Russisch, Traditioneel Chinees, etc. 
 
 ++ Ondersteuning voor spraaksynthese++
 U kunt een van de momenteel beschikbare talen kiezen om meldingen van NVDA, de interface of de inhoud van documenten te laten voorlezen. Bovendien is het mogelijk de inhoud van een document te laten voorlezen in een willekeurige andere taal  als op de computer een spraakmodule is geïnstalleerd die die taal spreekt.
@@ -71,9 +71,18 @@ Door het bestand dat u zojuist heeft gedownload uit te voeren wordt er een tijde
 
 Als u van plan bent NVDA altijd op deze computer te gebruiken, kiest u voor installeren. Een geïnstalleerde versie biedt extra functionaliteit, zoals het automatisch starten van het programma na aanmelding bij Windows en de mogelijkheid het Windows Aanmeldvenster (LogOn) en Beveiligingsschermen van Windows uit te lezen, wat met een draagbare of tijdelijke kopie niet mogelijk is. Ook kunt u er snelkoppelingen mee aanmaken voor het Menu Start en het bureaublad. Met de geïnstalleerde versie van NVDA kunt u te allen tijde een  draagbare kopie aanmaken.
 
-Als u NVDA wilt meenemen op een USB stick of op andere beschrijfbare media, dan moet u kiezen voor het aanmaken van een  draagbare kopie. Met de  draagbare kopie zelf kunt u op elk gewenst moment NVDA op een PC installeren. Als u NVDA echter naar media met het kenmerk alleen-lezen, zoals een CD, wilt kopiëren, moet u het downloadbestand daarvoor gebruiken. Op dit moment kan de  draagbare versie niet rechstreeks van media met het kenmerk alleen-lezen worden uitgevoerd.
+Als u NVDA wilt meenemen op een USB stick of op andere beschrijfbare media, dan moet u kiezen voor het aanmaken van een draagbare kopie.
+Met de  draagbare kopie zelf kunt u op elk gewenst moment NVDA op een PC installeren.
+Als u NVDA echter naar media met het kenmerk alleen-lezen, zoals een CD, wilt kopiëren, moet u het downloadbestand daarvoor gebruiken.
+Op dit moment kan de  draagbare versie niet rechstreeks van media met het kenmerk alleen-lezen worden uitgevoerd.
 
 De tijdelijke kopie van NVDA gebruiken is ook een optie, bij voorbeeld om het programma te demonstreren, maar het kost wel veel tijd als u NVDA telkens op deze manier moet starten.
+++ Beperkingen van de draagbare en tijdelijke versie van NVDA. ++
+Behalve dat bij gebruik van de draagbare of tijdelijke versie van NVDA het programma niet automatisch gestart kan worden na aanmelding bij Windows, gelden bovendien de volgende beperkingen:
+- Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
+- UAC-schermen (User Account Control) kunnen niet worden voorgelezen bij het starten van toepassingen die met beheerdersrechten worden uitgevoerd,
+- Windows 8: Geen ondersteuning voor invoer via het aanraakscherm,
+- Windows 8: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaarr.
 
 ++ NVDA installeren ++
 Als u NVDA direct vanuit het downloadbestand installeert, drukt u op de knop NVDA Installeren.  Als u het dialoogvenster reeds gesloten hebt of als u een installatie wilt uitvoeren vanuit een  draagbare kopie, kiest u NVDA Installeren wat u vindt onder Extra in het NVDA menu.
@@ -124,39 +133,53 @@ Standaard zijn zowel de numerieke Insert als de uitgebreide Insert-toets als NVD
 
 Om een toets die u als NVDA programmatoets hebt ingesteld zijn oorspronkelijke functie te laten uitvoeren (u wilt CapsLock bij voorbeeld aanzetten om hoofdletters te typen),  moet u deze toets tweemaal snel achter elkaar indrukken.
 
-+++ Toetsenbord layout +++
++++ Toetsenbordindeling +++
 Momenteel beschikt NVDA over twee profielen met toetscommando’s.
 Het ene profiel heeft de indeling van een standaard toetsenbord voor een Desktop PC, terwijl het andere de indeling van een laptoptoetsenbord heeft. 
-De standaardinstelling van NVDA is het Desktoptoetsenbord, maar in het NVDA-menu onder Opties en vervolgens Toetsenbord kunt u dit wijzigen in Laptoptoetsenbordlayout.
+De standaardinstelling van NVDA is het Desktoptoetsenbord, maar in het NVDA-menu onder Opties en vervolgens Toetsenbord kunt u dit wijzigen in Laptoptoetsenbordindeling.
 
 Bij de Desktoptoetsenbordindeling wordt zeer veel gebruik gemaakt van het numerike toetsenbord (NumLock moet hierbij uitstaan).
-Hoewel de meeste laptops geen apart numeriek toetsenbord hebben, kan dit soms wel worden gesimuleerd door de FN-toets indgedrukt te houden en letters en cijfers in te toetsen op het rechterdeel van het toetsenbord (7, 8, 9, u, i, o, j, k, l, etc.).
+Hoewel de meeste laptops geen apart numeriek toetsenbord hebben, kan dit soms wel worden gesimuleerd door de FN-toets ingedrukt te houden en letters en cijfers in te toetsen op het rechterdeel van het toetsenbord (7, 8, 9, u, i, o, j, k, l, etc.).
 Als dit niet mogelijk is op uw laptop of als u NumLock niet kunt uitschakelen, kunt u beter kiezen voor de laptop toetsenbordindeling. 
 
 ++ NVDA Aanraakgebaren ++
-Als u met NVDA werkt op eenapparaat met een aanraakscherm  dat draait onder Windows 8 of hoger dan kunt u NVDA ook rechtstreeks via het aanraakscherm bedienen. Terwijl NVDA actief is, gaat alle door aanraking gegenereerde invoer rechstreeks naar NVDA. Daarom zullen taken die normaal zonder NVDA kunnen worden uitgevoerd niet werken.
+Als u met NVDA werkt op een apparaat met een aanraakscherm dat draait onder Windows 8 of hoger dan kunt u NVDA ook rechtstreeks via het aanraakscherm bedienen.
+Terwijl NVDA actief is, gaat alle door aanraking gegenereerde invoer rechstreeks naar NVDA.
+Daarom zullen taken die normaal zonder NVDA kunnen worden uitgevoerd niet werken.
 
 +++ Het Beeldscherm Verkennen +++
-De meest elementaire taak die met behulp van het aanraakscherm kan worden uitgevoerd is het spraak-ondersteund uitlezen van het scherm, dus wat  is er aanwezig aan besturingselementen, tekst en dergelijke. U doet dit door één vinger op een willekeurige plaats op het scherm te zetten. Als u uw vinger op het scherm  houdt en hem over het scherm beweegt zullen knoppen en tekst die u tegenkomt worden gemeld.
+De meest elementaire taak die met behulp van het aanraakscherm kan worden uitgevoerd is het spraak-ondersteund uitlezen van het scherm, dus wat  is er aanwezig aan besturingselementen, tekst en dergelijke.
+U doet dit door één vinger op een willekeurige plaats op het scherm te zetten.
+Als u uw vinger op het scherm  houdt en hem over het scherm beweegt zullen knoppen en tekst die u tegenkomt worden gemeld.
 
 +++ Aanraakgebaren +++
-Bij de beschrijving van NVDA-commando's verderop in deze handleiding kunnen ook aanraakgebaren voorkomen die het bijbehorende commando via aanraking activeert. Hier volgen wat aanwijzingen voor het maken van de aanraakgebaren.
+Bij de beschrijving van NVDA-commando's verderop in deze handleiding kunnen ook aanraakgebaren voorkomen die het bijbehorende commando via aanraking activeert.
+Hier volgen wat aanwijzingen voor het maken van de aanraakgebaren.
 
 ==== Tikken ====
 Met de top / toppen van één of meer vingers snel op het scherm tikken.
 
-Eenmaal tikken met één vinger heet gewoon een tik. Met 2 vingers tegelijkertijd tikken heet een tik met twee vingers (two-finger tap) enzovoort. Een snelle opeenvolging van tikken wordt door NVDA geïnterpreteerd als een multi-tikgebaar. Twee tikken snel achter elkaar heet een dubbele tik (double tap), drie tikken snel achter elkaar is een driedubble tik (triple tap), enzovoorts. Bij deze multi-tikgebaren wordt ook herkend met hoeveel vingers de tikbeweging wordt gemaakt zodat er driedubbele tikken met twee vingers kunnen zijn, maar ook een tik met vier vingers.
+Eenmaal tikken met één vinger heet gewoon een tik.
+Met 2 vingers tegelijkertijd tikken heet een tik met twee vingers (two-finger tap) enzovoort.
+
+Een snelle opeenvolging van tikken wordt door NVDA geïnterpreteerd als een multi-tikgebaar.
+Twee tikken snel achter elkaar heet een dubbele tik (double tap),
+drie tikken snel achter elkaar is een driedubble tik (triple tap), enzovoorts.
+Bij deze multi-tikgebaren wordt ook herkend met hoeveel vingers de tikbeweging wordt gemaakt zodat er driedubbele tikken met twee vingers kunnen zijn, maar ook een tik met vier vingers.
 
 ==== Veegbewegingen ====
 Met de vinger of vingers snel over het scherm bewegen / vegen.
 
 Er zijn vier mogelijke, richting-afhankelijke veegbewegingen: veeg links, veeg rechts, veeg omhoog en veeg omlaag. 
 
-Net als bij tikken kunnen veegbewegingen met meer dan één vinger worden gemaakt. Daarom komen gebaren zoals een veegbeweging links met twee vingers en en veegbeweging omhoog met vier vingers, etc. allemaal voor.
+Net als bij tikken kunnen veegbewegingen met meer dan één vinger worden gemaakt.
+Daarom komen gebaren zoals een veegbeweging links met twee vingers en en veegbeweging omhoog met vier vingers, etc. allemaal voor.
 
 +++ Aanraakmodi +++
-
-Aangezien er veel meer NVDA-commando’s zijn dan mogelijke aanraakgebaren, kan in NVDA gewisseld worden tussen verschillend aanraakmodi die ervoor zorgen dat commando’s in groepen worden onderverdeeld. De twee modi zijn de tekstmodus en de objectmodus. Bij een aantal NVDA-commando’s die u in deze handleiding tegenkomt, wordt, na het aanraakgebaar, tussen haakjes de toepasselijke modus vermeld  Zo betekent “veeg omhoog (tekst modus)” dat de NVDA-opdracht wordt uitgevoerd door een veegbeweging omhoog maar dan moet de tekstmodus wel actief zijn. Als er bij een bepaald commando geen modus wordt aangegeven wordt dit altijd uitgevoerd ongeacht in welke modus men zich bevindt.
+Aangezien er veel meer NVDA-commando’s zijn dan mogelijke aanraakgebaren, kan in NVDA gewisseld worden tussen verschillende aanraakmodi die ervoor zorgen dat commando’s in groepen worden onderverdeeld.
+De twee modi zijn de tekstmodus en de objectmodus.
+Bij een aantal NVDA-commando’s die u in deze handleiding tegenkomt, wordt, na het aanraakgebaar, tussen haakjes de toepasselijke modus vermeld  Zo betekent “veeg omhoog (tekst modus)” dat de NVDA-opdracht wordt uitgevoerd door een veegbeweging omhoog maar dan moet de tekstmodus wel actief zijn.
+Als er bij een bepaald commando geen modus wordt aangegeven wordt dit altijd uitgevoerd ongeacht in welke modus men zich bevindt.
 
 %kc:beginInclude
 Wisselen tussen aanraakmodi doet u door eenmaal tikken met drie vingers.
@@ -170,9 +193,8 @@ Om invoerhulp in te schakelen drukt u op de NVDA-toets+1. Om deze functie uit te
 Via het NVDA-menu kunt u de instellingen van het programma aanpassen, hulpinformatie opvragen, uw configuratie opslaan of teruggaan naar een eerder opgeslagen configuratie, uitspraakwoordenboeken aanpassen, extra opties instellen, NVDA afsluiten.
 
 U kunt het menu vanuit elke Windows-toepassing oproepen door op de NVDA-toets +n te drukken of door op het aanraakscherm te dubbeltikken met twee vingers. NVDA moet dan wel actief zijn.
-
-U kunt het NVDA-menu ook openen via het Windows systeemvak. Klik met de rechtermuisknop op het NVDA-ikoontje in het systeemvak of  ga naar het systeemvak door de Windows-toets+b in te drukken om vervolgens naar beneden te pijlen tot u NVDA-knop hoort waarna u de contextmenutoets indrukt. Op de meeste toetsenborden zit de contextmenutoets rechts naast de rechter Windows-toets. 
-(NB Als er geen aparte Contextmenutoets is, kunt u Shift+F10 hiervoor gebruiken.)
+U kunt het NVDA-menu ook openen via het Windows systeemvak.
+Klik met de rechtermuisknop op het NVDA-ikoontje in het systeemvak of  ga naar het systeemvak door de Windows-toets+b in te drukken om vervolgens naar beneden te pijlen tot u NVDA-knop hoort waarna u de contextmenutoets indrukt. Op de meeste toetsenborden zit de contextmenutoets rechts naast de rechter Windows-toets.  (NB Als er geen aparte Contextmenutoets is, kunt u Shift+F10 hiervoor gebruiken.)
 Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te gaan en de entertoets om een item te activeren. 
 
 ++ De NVDA-basiscommando’s ++
@@ -182,7 +204,7 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 | Spraak pauzeren | Shift | geen | Spraakuitvoer wordt gepauzeerd. Druk Shift opnieuw in om verder te lezen vanaf de pauzepositie(als de gebruikte synthesizer dit ondersteunt) |
 | NVDA Menu | NVDA+n | dubbeltik met 2 vingers | Opent het menu voor opties, extra en hulp, etc. |
 | Spraakmodus | NVDA+s | geen | Wisselt spraakmodus tussen spreken, pieptonen en stilte. |
-| Toetsbeschrijvingsmodus aan-/uitzetten | NVDA+1 | geen | Als de toetsbeschrijvingsmodus is ingeschakeld hoort u bij elke toets die wordt ingedrukt de naam van de toets en de (eventuele) bijbehorende functie van de toets(en) |
+| Invoerhulpmodus aan-/uitzetten | NVDA+1 | geen | Als de invoerhulpmodus is ingeschakeld hoort u bij elke toets die wordt ingedrukt de naam van de toets en de (eventuele) bijbehorende functie van de toets(en) |
 | NVDA afsluiten | NVDA+q | geen | Sluit NVDA af |
 | Volgende toetsaanslag niet uitvoeren | NVDA+f2 | geen | De volgende toetsaanslag zal niet als NVDA-commando worden verwerkt maar als commando binnen de gebruikte toepassing worden uitgevoerd. |
 | Zet slaapmodus aan/uit voor huidige aplicatie | NVDA+shift+s | geen | Slaapmodus schakelt alle NVDA commando's en uitvoer in spraak en braille uit. Dit is vooral handig in applicaties die in hun eigen spraakuitvoer of schermlezer voorzien. Druk deze toets nogmaals in om slaapmodus weer uit te schakelen. |
@@ -191,7 +213,7 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 ++ Systeeminformatie melden ++
 %kc:beginInclude
 || Naam | Toets | Omschrijving |
-| Datum/tijd melden | NVDA+f12 | Eenmaal indrukken laat hudige tijd horen, tweemaal snel indrukken meldt de datum |
+| Datum/tijd melden | NVDA+f12 | Eenmaal indrukken laat huidige tijd horen, tweemaal snel indrukken meldt de datum |
 | Batterijstatus melden | NVDA+shift+b | Meldt de batterijstatus, of de computer is aangesloten op netstroom en het batterijpercentage. |
 | Tekst op het klembord melden | NVDA+c | Meldt de tekst op het klembord als er tekst op het klembord staat. |
 %kc:endInclude
@@ -212,16 +234,18 @@ De meest gangbare manier om met NVDA te navigeren, is het verplaatsen van de foc
 - tab of shift+tab om de focus naar het volgende of vorige element te verplaatsen in een dialoogvenster,
 - alt (of F10) om de menubalk te focuseren en vervolgens het gebruik van de pijltoetsen om door menu's te navigeren,
 - alt+tab om tussen actieve toepassingen te wisselen.
+- 
 
 Terwijl u dit doet, zal NVDA informatie over het object geven dat de focus heeft. Deze betreft o.a.:
 
 - de naam,
- type (knop, selectievakje, invoerveld, etc.,
-– beschrijving (meestal verschijnt een informatie ballon als de gebruiker met de muis over het object gaat),
+- type (knop, selectievakje, invoerveld, etc.,
+- beschrijving (meestal verschijnt een informatie ballon als de gebruiker met de muis over het object gaat),
 - waarde (bv. De inhoud van een invoerveld) ,
 - positie (bv. «1 van 5» in een lijst  of «1 van 1 niveau 0» in een boomstructuur),
 - sneltoets (bv. Ongedaan maken Ctrl + z),
 - status van het object (bv. Geactiveerd, geselecteerd, niet beschikbaar, etc.).
+- 
 
 Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfocus:
 %kc:beginInclude
@@ -411,6 +435,7 @@ Het is ook mogelijk om handmatig de focusmodus in te schakelen, deze zal dan act
 | Zoeken | NVDA+control+f | Er wordt een venster geopend waarin u tekst kunt typen die in het huidige document moet worden opgezocht |
 | Volgende zoeken | NVDA+f3 | Hiermee kunt u nagaan of tekst van een zoekopdracht verderop in het document nog vaker voorkomt. |
 | Vorige zoeken | NVDA+shift+f3 | Hiermee kunt u nagaan of de gezochte tekst eerder in het document voorkomt |
+| Uitgebreide beschrijving openen | NVDA+d | Er wordt een nieuw venster geopendmet een uitgebreide beschrijving, voor zover aanwezig,  van het element waarop u zich bevindt. |
 %kc:endInclude
 
 
@@ -1487,8 +1512,8 @@ De scripts worden opgemaakt in de standaard syntaxis voor ini-bestanden. Het bes
 - De sleutelnamen binnen de afzonderlijke onderdelen verwijzen naar de  scripts, die u zou willen toewijzen. Voor het geval dat u een toegewezen invoermethode ongedaan wilt maken, kan de naam "none" gebruikt worden. Een bepaalde sleutel, met inbegrip van “none”, mag slechts eenmaal per rubriek worden gebruikt.  
 - De waarde van een sleutel is een door komma’s gescheiden  lijst met invoermethodes die aan een script moeten worden   toegekend. De invoermethodenamen met de komma aan het einde moeten tussen enkele ( ‘)of dubbele (“) aanhalingstekens staan. 
  
-De namen van de invoermethodes bestaan uit een apparaatcode van twee letters – “kb” voor keyboard (toetsenbord)en "br" voor de brailleleesregel -, code voor een secundair apparaat of een toetsenbord-layout tussen vierkante haken, een Dubbele punt en tenslotte één of meer toetstekens gescheiden door een plusteken.
-Bij toetsenbordcommando’s heeft het gedeelte tussen vierkante haken betrekking op een toetsenbord-layout en is optioneel. Als dit ontbreekt, geldt de invoermethode voor elke layout. 
+De namen van de invoermethodes bestaan uit een apparaatcode van twee letters – “kb” voor keyboard (toetsenbord)en "br" voor de brailleleesregel -, code voor een secundair apparaat of een toetsenbordindeling tussen vierkante haken, een Dubbele punt en tenslotte één of meer toetstekens gescheiden door een plusteken.
+Bij toetsenbordcommando’s heeft het gedeelte tussen vierkante haken betrekking op een toetsenbordindeling en is optioneel. Als dit ontbreekt, geldt de invoermethode voor elke indeling. 
 Bij Brailleleesregels heeft het gedeelte tussen vierkante haken betrekking op de naam van de Brailleleesregel en mag beslist niet ontbreken.
  
 Om achter de scriptnamen, modules klassen en invoermethodes te komen, kunt u als volgt te werk gaan:
@@ -1522,7 +1547,7 @@ Als er nog geen gestures.ini bestand bestaat, moet u dit aanmaken in de gebruike
       dateTime = kb:NVDA+shift+t
 ```
  
-Hiermee wordt de toetscombinatie NVDA+Shift+T (voor elke toetsenbord-layout) aan het script "dateTime" toegewezen.
+Hiermee wordt de toetscombinatie NVDA+Shift+T (voor elke toetsenbordindeling) aan het script "dateTime" toegewezen.
 Opmerking : De oorspronkelijke toetscombinatie NVDA+F12 voor het weergeven datum en tijd functioneert nog steeds. Om deze koppeling te verwijderen, voegt u de volgende regel toe:
  
 ```

@@ -350,12 +350,17 @@ def windowFromAccessibleObject(ia):
 		return 0
 
 def accessibleChildren(ia,startIndex,numChildren):
-	children=oleacc.AccessibleChildren(ia,startIndex,numChildren)
-	for childNum in xrange(len(children)):
-		if isinstance(children[childNum],comtypes.client.lazybind.Dispatch) or isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
-			children[childNum]=(normalizeIAccessible(children[childNum]),0)
-		elif isinstance(children[childNum],int):
-			children[childNum]=(ia,children[childNum])
+	children=[]
+	for child in oleacc.AccessibleChildren(ia,startIndex,numChildren):
+		if child is None:
+			# This is a bug in the server.
+			# Filtering these out here makes life easier for the caller.
+			continue
+		elif isinstance(child,comtypes.client.lazybind.Dispatch) or isinstance(child,comtypes.client.dynamic._Dispatch) or isinstance(child,IUnknown):
+			child=(normalizeIAccessible(child),0)
+		elif isinstance(child,int):
+			child=(ia,child)
+		children.append(child)
 	return children
 
 def accFocus(ia):
@@ -730,8 +735,8 @@ def processForegroundWinEvent(window,objectID,childID):
 
 def processShowWinEvent(window,objectID,childID):
 	className=winUser.getClassName(window)
-	#For now we only support 'show' event for tooltips as otherwize we get flooded
-	if className in ("tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
+	#For now we only support 'show' event for tooltips, IMM candidates and notification bars  as otherwize we get flooded
+	if className in ("Frame Notification Bar","tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
 		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
 		if NVDAEvent:
 			eventHandler.queueEvent(*NVDAEvent)

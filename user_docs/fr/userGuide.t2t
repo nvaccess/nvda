@@ -23,7 +23,7 @@ Ses points forts sont :
 - La prise en charge de nombreux afficheurs braille
 - La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer
 - Un installateur parlant facile à utiliser
-- Une traduction dans 41 langues
+- Une traduction dans 42 langues
 - La prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits
 - L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés
 - Prise en charge des interfaces d'accessibilités communes telles que Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7)
@@ -32,7 +32,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies. 
-A ce jour, NVDA a été traduit en 41 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, le Bulgare, le Chinois Traditionnel et simplifié, le Coréen, le Croate, le Danois, l'Espagnol, l'Éthiopien, le Finnois, le Français, le Galicien, le Grecque, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Néerlandais, le népalais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Slovénien, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
+A ce jour, NVDA a été traduit en 42 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, l'Aragonais, le Bulgare, le Chinois Traditionnel et simplifié, le Coréen, le Croate, le Danois, l'Espagnol, l'Éthiopien, le Finnois, le Français, le Galicien, le Grecque, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Islandais, l'Italien, le Japonais, le Néerlandais, le népalais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Slovénien, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
 
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -80,6 +80,14 @@ Cependant, si vous souhaitez copier NVDA sur un support en lecture seul comme un
 Démarrer dirrectement la version portable depuis un support en lecture seule n'est pas supporté pour le moment.
   
 Utiliser la version temporaire de NVDA est aussi une option, par exemple pour une démonstration, car démarrer NVDA dans ce mode à chaque fois peut prendre beaucoup de temps.
+
+++ Restrictions des versions portables et temporaires ++
+A part l'impossibilité de démarrer pendant ou après l'ouverture de session, les version portable et temporaire de NVDA ont également les restrictions suivantes :
+- Impossible d'interagir avec les applications démarrées avec les privilèges administrateur, sauf biensur si NVDA a été démarré avec ces privilèges (non recommandé).
+- Impossible de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur.
+- Windows 8 : impossible d'utiliser un écran tactile comme support d'entrée.
+- Windows 8 : fonctionnalités impossible comme le mode navigation ou l'annonce des caractères saisis dans les applications du Windows Store.
+-
 
 ++ Installer NVDA ++
 Si vous installez directement par le package téléchargé, cliquez sur le bouton Installer NVDA sur cet ordinateur.
@@ -224,7 +232,7 @@ Faites un clic droit sur l'icône de NVDA située dans la barre des tâches syst
 | Pause parole | Maj | Aucun | Pause instantanée de la parole, un second appui reprend la parole là où elle s'était arrêtée |
 | Menu NVDA | NVDA+n | Double-clic 2-doigts | Affiche le menu NVDA pour vous permettre d'accéder aux préférences, outils, aide etc |
 | Choix du Mode de Parole | NVDA+s | Aucun | Permet de choisir le mode de parole : parole, bips, silence. |
-| Passage en mode aide clavier | NVDA+1 | Aucun | Dans ce mode, l'appui sur n'importe quelle touche donnera son nom et la description de la commande NVDA qui lui est éventuellement associée |
+| Passage en mode aide à la saisie | NVDA+1 | Aucun | Dans ce mode, l'appui sur n'importe quelle touche donnera son nom et la description de la commande NVDA qui lui est éventuellement associée |
 | Quitter NVDA | NVDA+q | Aucun | Quitter NVDA |
 | Ignorer la touche suivante | NVDA+f2 | Aucun | Indique à NVDA de passer la touche suivante directement à l'application, même si cette touche correspond normalement à une commande NVDA |
 | Bascule du mode veille | NVDA+maj+s | Aucun | le mode veille désactive toutes les commandes NVDA ainsi que la parole et le braille pour l'application en cours. Ceci est utile dans les application fournissant leur propre système de revue d'écran. Appuyez à nouveau la combinaison pour désactiver le mode veille. |
@@ -440,6 +448,7 @@ De plus, vous pouvez aussi passer manuellement NVDA en mode formulaire, après q
 | Rechercher | NVDA+control+f | Affiche un dialogue qui vous permet de rechercher du texte dans le document courant |
 | Rechercher suivant | NVDA+f3 | Recherche l'occurrence suivante du texte que vous avez préalablement recherché dans le document |
 | Rechercher précédent | NVDA+maj+f3 | Recherche l'occurrence précédente du texte que vous avez préalablement recherché dans le document |
+| Ouvrir description longue | NVDA+d | Ouvre une nouvelle fenêtre contenant une longue description de l'élément sur lequel vous êtes s'il en a une. | 
 %kc:endInclude
 
 
@@ -686,6 +695,18 @@ Déplacez-vous entre les options en utilisant les flèches.
 Pas de Braille signifie que vous n'utilisez pas le Braille.
 
 Reportez-vous à la section [Terminaux Braille pris en charge #SupportedBrailleDisplays] pour les informations concernant les terminaux Braille.
+
+==== Port ====
+Cette option, si disponible, vous permet de choisir quel port ou type de connexion sera utilisé pour communiquer avec l'afficheur Braille sélectionné.
+C'est une liste déroulente contenant les choix possibles pour votre afficheur Braille.
+
+Par défaut, NVDA emploie la détection automatique, ce qui veut dire que la connexion avec le périphérique Braille sera établie automatiquement en recherchant les périphériques USB et Bluetooth connectés à votre ordinateur.
+De plus, pour sertains afficheurs Braille, vous pourriez choisir explicitement quel port sera utilisé.
+Les options communes sont "automatique" (qui spécifit à NVDA d'employer la procédure par défaut), "USB", "Bluetooth" et port série si votre afficheur Braille supporte ce type de communication.
+
+Cette option ne sera pas disponible si votre afficheur Braille supporte seulement la détection automatique du port.
+
+Vous devriez consulter la documentation de votre afficheur Braille dans la section [Afficheurs Braille supportés #SupportedBrailleDisplays] pour plus de détailles sur les types de communications supportés et les ports disponibles.
 
 ==== Table de conversion ====
 L'option suivante est la liste déroulante des tables de conversion. 
@@ -1135,6 +1156,10 @@ Si vous ne les avez pas déjà, vous pourrez les obtenir sur http://www.freedoms
 Bien que cette page ne mentionne que le terminal Focus 40 Blue, le pilote supporte tous les terminaux de Freedon Scientific.
 Si votre système est sous Windows 64 bits et que les pilotes ont déjà été installés par une autre revue d'écran, vous devrez probablement installer quand-même installer les pilotes car les fichiers nécessaires pour NVDA n'auront probablement été installés par l'autre revue d'écran.
 
+Par défaut, NVDA peut automatiquement détecter et se connecter à ces afficheurs via USB ou Bluetooth.
+Lorsque vous configurerez l'afficheur, vous pourrez sélectionner explicitement "USB" ou "Bluetooth" pour restraindre le type de connexion qui sera utilisé.
+Cela peut être utile si vous voulez connecter l'afficheur Focus à NVDA via le Bluetooth tout en le chargeant en utilisant l'USB.
+
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ses touches.
 %kc:beginInclude
@@ -1500,6 +1525,54 @@ Voici les  commandes assignées pour les afficheurs Papenmeier dans NVDA :
 | Aller à l'objet précédent | left2 |
 | Aller à l'objet suivant | right2 |
 | Lire les informations de mise en forme | rangée de routines du haut |
+%kc:endInclude
+
+++ BrailleNote de HumanWare ++
+NVDA supporte les bloc-notes BrailleNote de [HumanWare http://www.humanware.com] lorsque celui-ci agi comme afficheur Braille pour un lecteur d'écran.
+Les modèles suivants sont supportés :
+- BrailleNote Classic (connexion série seulement)
+- BrailleNote PK (connexion Série et Bluetooth)
+- BrailleNote MPower (connexion Série et Bluetooth)
+- BrailleNote Apex (connexion Bluetooth et USB)
+-
+
+Si votre périphérique supporte plusieurs types de connexion, en connectant votre BrailleNote à NVDA, vous devez définir le port dans les options de votre afficheur Braille.
+Lisez le manuel de votre BrailleNote pour plus de détailles.
+Dans NVDA, vous devriez également configurer le port dans les paramètres Brailles.
+Si vous le connectez via USB ou le Bluetooth, vous pouvez le configurer sur "Automatique", "USB" ou "Bluetooth selon ce qui est disponible.
+Si vous le connectez à un port série ou un convertisseur USB-Série ou si aucune de ces dernières option n'apparaît, vous devez choisir explicitement le port de communication à utiliser dans la liste des ports matériels.
+
+Avant de connecter votre BrailleNote Apex en utilisant son interface client USB, vous devez installer le pilote fourni par HumanWare.
+
+Voici les assignements de touches BrailleNote pour NVDA.
+Consultez la documentation de votre BrailleNote pour savoir où se trouvent ces touches.
+
+%kc:beginInclude
+|| Nom | touche |
+| Défilement affichage braille  arrière | Arrière |
+| Défilement affichage braille  avant | Avant |
+| Déplacer l'affichage Braille vers la ligne précédente | Précédent |
+| Déplacer l'affichage Braille vers la ligne suivante | Suivant |
+| Joindre à la célule Braille | routing |
+| Basculer le suivi de l'affichage Braille | Précédent+Suivant |
+| Touche Flèche haute | Espace+Point 1 |
+| Touche Flèche bassee | Espace+Point 4 |
+| Touche Flèche gauche | Espace+Point 3 |
+| Touche Flèche droite | Espace+Point 6 |
+| Touche page précédente | Espace+Point 1+Point 3 |
+| Touche Page Suivante | Espace+Point4+Point6 |
+| Touche Origine | Espace+Point1+Point2 |
+| Touche fin | Espace+Point4+Point5 |
+| Control+Origine | Espace+Point1+Point2+Point3 |
+| Touche Espace | Espace |
+| Control+Fin | Espace+Point4+Point5+Point6 |
+| Entrée | Espace+Point8 |
+| Touche retour arrière | Espace+Point7 |
+| Touche Tab | Espace+Point2+Point3+Point4+Point5 (Espace+t) |
+| Maj+Tab | Espace+Point1+Point2+Point5+Point6 |
+| Touche Windows | Espace+Point2+Point4+Point5+Point6 |
+| touche alt | Espace+Point1+Point3+Point4 (Espace+m) |
+| Basculer aide à la saisie | Espace+Point1+Point2+Point5 (Espace+h) |
 %kc:endInclude
 
 ++ BRLTTY ++

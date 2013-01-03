@@ -365,7 +365,7 @@ class CandidateItem(NVDAObject):
 
 	def getFormattedCandidateDescription(self,candidate):
 		descriptions=[]
-		numSymbols=len(candidate)
+		numSymbols=len(candidate) if candidate else 0
 		if numSymbols!=1: return u""
 		symbol=candidate[0]
 		try:

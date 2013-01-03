@@ -1,4 +1,3 @@
-#NVDAObjects/IAccessible.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
@@ -31,7 +30,6 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
-import queueHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
@@ -361,12 +359,6 @@ the NVDAObject for IAccessible
 			kwargs['event_childID']=0
 		return True
 
-	@classmethod
-	def windowHasExtraIAccessibles(cls,windowHandle):
-		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
-		style=winUser.getWindowStyle(windowHandle)
-		return bool(style&winUser.WS_SYSMENU)
-
 	def findOverlayClasses(self,clsList):
 		if self.event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(self.windowHandle): 
 			clsList.append(JavaVMRoot)
@@ -412,6 +404,12 @@ the NVDAObject for IAccessible
 				clsList.append(newCls)
 
 		# Some special cases.
+		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
+			clsList.append(IEFrameNotificationBar)
+		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
+			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
+			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
+				clsList.append(IENotificationBar)
 		if windowClassName.lower().startswith('mscandui'):
 			import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
@@ -1318,17 +1316,10 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
-	def _get_presentationType(self):
-		if not self.windowHasExtraIAccessibles(self.windowHandle) and self.role==controlTypes.ROLE_WINDOW:
-			return self.presType_layout
-		return super(IAccessible,self).presentationType
-
 	def _get_isPresentableFocusAncestor(self):
 		IARole = self.IAccessibleRole
 		if IARole == oleacc.ROLE_SYSTEM_CLIENT and self.windowStyle & winUser.WS_SYSMENU:
 			return True
-		if IARole == oleacc.ROLE_SYSTEM_WINDOW:
-			return False
 		return super(IAccessible, self).isPresentableFocusAncestor
 
 	def _get_devInfo(self):
@@ -1430,11 +1421,27 @@ class ContentGenericClient(IAccessible):
 		return val
 
 class GenericWindow(IAccessible):
+
 	TextInfo=displayModel.DisplayModelTextInfo
+	isPresentableFocusAncestor=False
 
 class WindowRoot(GenericWindow):
 
 	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
+
+	@classmethod
+	def windowHasExtraIAccessibles(cls,windowHandle):
+		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
+		style=winUser.getWindowStyle(windowHandle)
+		return bool(style&winUser.WS_SYSMENU)
+
+	def _get_presentationType(self):
+		states=self.states
+		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+			return self.presType_unavailable
+		if not self.windowHasExtraIAccessibles(self.windowHandle):
+			return self.presType_layout
+		return self.presType_content
 
 	def _get_parent(self):
 		if self.parentUsesSuperOnWindowRootIAccessible:
@@ -1679,6 +1686,27 @@ class ListviewPane(IAccessible):
 	role=controlTypes.ROLE_LIST
 	TextInfo=displayModel.DisplayModelTextInfo
 	name=""
+
+class IEFrameNotificationBar(IAccessible):
+
+	def event_show(self):
+		child=self.simpleFirstChild
+		if isinstance(child,Dialog):
+			child.event_alert()
+
+#The Internet Explorer notification toolbar should be handled as an alert
+class IENotificationBar(Dialog,IAccessible):
+	name=""
+	role=controlTypes.ROLE_ALERT
+
+	def event_alert(self):
+		speech.cancelSpeech()
+		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+		child=self.simpleFirstChild
+		while child:
+			if child.role!=controlTypes.ROLE_STATICTEXT:
+				speech.speakObject(child,reason=controlTypes.REASON_FOCUS)
+			child=child.simpleNext
 
 ###class mappings
 

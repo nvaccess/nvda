@@ -936,7 +936,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Is this node interactive?
-	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::longdesc")!=attribsMap.end());
+	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY"&&nodeName!=L"IFRAME")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::longdesc")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
 	if(nodeName.compare(L"OL")==0||nodeName.compare(L"UL")==0) {
@@ -1141,13 +1141,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 
 		//A node who's rendered children produces no content, or only a small amount of whitespace should render its title or URL
-		int length=parentNode->getLength();
-		if(length>0&&length<=3) {
-		contentString=L" ";
-			parentNode->getTextInRange(0,length,contentString,false);
-			if(isWhitespace(contentString.c_str())) length=0;
-		}
-		if(length==0) {
+		if(!nodeHasUsefulContent(parentNode)) {
 			contentString=L"";
 			if(!IAName.empty()) {
 				contentString=IAName;
