@@ -678,10 +678,10 @@ If you are having problems with the pronunciation of individual characters, try 
 If you wish to quickly change speech settings without going to the Voice settings dialog, there are some NVDA key commands that allow you to move through the most common speech settings from anywhere while running NVDA:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Description |
-| Move to next synth setting | NVDA+control+rightArrow | NVDA+control+rightArrow | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
-| Move to previous synth setting | NVDA+control+leftArrow | NVDA+control+leftArrow | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
-| Increment current synth setting | NVDA+control+upArrow | NVDA+control+upArrow | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
-| Decrement current synth setting | NVDA+control+downArrow | NVDA+control+downArrow | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
+| Move to next synth setting | NVDA+control+rightArrow | NVDA+shift+control+rightArrow | Moves to the next available speech setting after the current, wrapping around to the first setting again after the last |
+| Move to previous synth setting | NVDA+control+leftArrow | NVDA+shift+control+leftArrow | Moves to the next available speech setting before the current, wrapping around to the last setting after the first |
+| Increment current synth setting | NVDA+control+upArrow | NVDA+shift+control+upArrow | increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume |
+| Decrement current synth setting | NVDA+control+downArrow | NVDA+shift+control+downArrow | decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume |
 %kc:endInclude
 
 +++ Braille Settings +++
@@ -783,8 +783,7 @@ The mouse pointer in Windows changes shape to convey certain information such as
 
 %kc:setting
 ==== Enable mouse tracking ====
-| Desktop key | NVDA+m |
-| Laptop key | NVDA+shift+m |
+Key: NVDA+m
 
 When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.
 
@@ -808,8 +807,7 @@ This dialog contains the following options:
 
 %kc:setting
 ==== Follow System Focus ====
-| Desktop key | NVDA+7 |
-| Laptop key | NVDA+control+7 |
+Key: NVDA+7
 
 When enabled, The review cursor will always be placed in the same object as the current system focus as it changes.
 
@@ -854,8 +852,7 @@ Uncheck this checkbox if you don't wish to have the description reported along w
 
 %kc:setting
 ==== Progress bar output ====
-| Desktop key | NVDA+u |
-| Laptop key | NVDA+control+f2 |
+Key: NVDA+u
 
 This option controls how NVDA reports progress bar updates to you.
 
