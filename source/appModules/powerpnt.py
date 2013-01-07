@@ -49,23 +49,41 @@ ppPlaceholderVerticalObject = 17
 ppPlaceholderPicture = 18
 
 ppPlaceholderLabels={
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderTitle:_("Title placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderBody:_("Text placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderCenterTitle:_("Center Title placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderSubtitle:_("Subtitle placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderVerticalTitle:_("Vertical Title placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderVerticalBody:_("Vertical Text placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderObject:_("Object placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderChart:_("Chart placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderBitmap:_("Bitmap placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderMediaClip:_("Media Clip placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderOrgChart:_("Org Chart placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderTable:_("Table placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderSlideNumber:_("Slide Number placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderHeader:_("Header placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderFooter:_("Footer placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderDate:_("Date placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderVerticalObject:_("Vertical Object placeholder"),
+	# Translators: Describes a type of placeholder shape in Microsoft PowerPoint. 
 	ppPlaceholderPicture:_("Picture placeholder"),
 }
 
@@ -90,17 +108,29 @@ ppViewThumbnails = 11
 ppViewMasterThumbnails = 12
 
 ppViewTypeLabels={
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewSlide:_("Slide view"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewSlideMaster:_("Slide Master view"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewNotesPage:_("Notes page"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewHandoutMaster:_("Handout Master view"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewNotesMaster:_("Notes Master view"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewOutline:_("Outline view"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewSlideSorter:_("Slide Sorter view"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewTitleMaster:_("Title Master view"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewNormal:_("Normal view"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewPrintPreview:_("Print Preview"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewThumbnails:_("Thumbnails"),
+	# Translators: a label for a particular view or pane in Microsoft PowerPoint
 	ppViewMasterThumbnails:_("Master Thumbnails"),
 }
 
@@ -194,6 +224,7 @@ class PaneClassDC(Window):
 			#This call of ppObjectModel will be None, but the next event_gainFocus should work
 			import wx
 			import gui
+			# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 			d=wx.Dialog(None,title=_("Waiting for Powerpoint..."))
 			gui.mainFrame.prePopup()
 			d.Show()
@@ -426,6 +457,7 @@ class Slide(SlideBase):
 		except comtypes.COMError:
 			title=None
 		number=self.ppObject.slideNumber
+		# Translators: the label for a slide in Microsoft PowerPoint.
 		name=_("Slide {slideNumber}").format(slideNumber=number)
 		if title:
 			name+=" (%s)"%title
@@ -644,8 +676,10 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 
 	def _get_name(self):
 		if self.currentSlide:
+			# Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
 			return _("Slide show - {slideName}").format(slideName=self.currentSlide.name)
 		else:
+			# Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 			return _("Slide Show - complete")
 
 	value=None
