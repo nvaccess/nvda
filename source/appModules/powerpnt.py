@@ -50,11 +50,11 @@ ppPlaceholderPicture = 18
 
 ppPlaceholderLabels={
 	ppPlaceholderTitle:_("Title placeholder"),
-	ppPlaceholderBody:_("body placeholder"),
+	ppPlaceholderBody:_("Text placeholder"),
 	ppPlaceholderCenterTitle:_("Center Title placeholder"),
 	ppPlaceholderSubtitle:_("Subtitle placeholder"),
 	ppPlaceholderVerticalTitle:_("Vertical Title placeholder"),
-	ppPlaceholderVerticalBody:_("Vertical Body placeholder"),
+	ppPlaceholderVerticalBody:_("Vertical Text placeholder"),
 	ppPlaceholderObject:_("Object placeholder"),
 	ppPlaceholderChart:_("Chart placeholder"),
 	ppPlaceholderBitmap:_("Bitmap placeholder"),
