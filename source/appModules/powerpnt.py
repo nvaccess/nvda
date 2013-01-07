@@ -27,6 +27,48 @@ from logHandler import log
 #Bullet types
 ppBulletNumbered=2
 
+# values for enumeration 'PpPlaceholderType'
+ppPlaceholderMixed = -2
+ppPlaceholderTitle = 1
+ppPlaceholderBody = 2
+ppPlaceholderCenterTitle = 3
+ppPlaceholderSubtitle = 4
+ppPlaceholderVerticalTitle = 5
+ppPlaceholderVerticalBody = 6
+ppPlaceholderObject = 7
+ppPlaceholderChart = 8
+ppPlaceholderBitmap = 9
+ppPlaceholderMediaClip = 10
+ppPlaceholderOrgChart = 11
+ppPlaceholderTable = 12
+ppPlaceholderSlideNumber = 13
+ppPlaceholderHeader = 14
+ppPlaceholderFooter = 15
+ppPlaceholderDate = 16
+ppPlaceholderVerticalObject = 17
+ppPlaceholderPicture = 18
+
+ppPlaceholderLabels={
+	ppPlaceholderTitle:_("Title placeholder"),
+	ppPlaceholderBody:_("body placeholder"),
+	ppPlaceholderCenterTitle:_("Center Title placeholder"),
+	ppPlaceholderSubtitle:_("Subtitle placeholder"),
+	ppPlaceholderVerticalTitle:_("Vertical Title placeholder"),
+	ppPlaceholderVerticalBody:_("Vertical Body placeholder"),
+	ppPlaceholderObject:_("Object placeholder"),
+	ppPlaceholderChart:_("Chart placeholder"),
+	ppPlaceholderBitmap:_("Bitmap placeholder"),
+	ppPlaceholderMediaClip:_("Media Clip placeholder"),
+	ppPlaceholderOrgChart:_("Org Chart placeholder"),
+	ppPlaceholderTable:_("Table placeholder"),
+	ppPlaceholderSlideNumber:_("Slide Number placeholder"),
+	ppPlaceholderHeader:_("Header placeholder"),
+	ppPlaceholderFooter:_("Footer placeholder"),
+	ppPlaceholderDate:_("Date placeholder"),
+	ppPlaceholderVerticalObject:_("Vertical Object placeholder"),
+	ppPlaceholderPicture:_("Picture placeholder"),
+}
+
 #selection types
 ppSelectionNone=0
 ppSelectionSlides=1
@@ -404,6 +446,12 @@ class Shape(PpObject):
 
 	presentationType=Window.presType_content
 
+	def _get_ppPlaceholderType(self):
+		try:
+			return self.ppObject.placeholderFormat.type
+		except comtypes.COMError:
+			return None
+
 	def _get_location(self):
 		pointLeft=self.ppObject.left
 		pointTop=self.ppObject.top
@@ -431,6 +479,10 @@ class Shape(PpObject):
 			title=None
 		if title:
 			return title
+		if self.ppShapeType==msoPlaceholder:
+			label=ppPlaceholderLabels.get(self.ppPlaceholderType)
+			if label:
+				return label
 		if self.role==controlTypes.ROLE_SHAPE:
 			name=self.ppObject.name
 			return " ".join(name.split(' ')[:-1])
