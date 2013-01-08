@@ -31,6 +31,7 @@
 - NVDA no longer fails to start if an add-on cannot be removed due to its directory currently being in use by another application. (#2860)
 - Tab labels in DropBox's preferences dialog can now be seen with Flat Review.
 - If the input language is changed to something other than the default, NVDA now detects keys correctly for commands and input help mode.
+- For languages such as German where the + (plus) sign is a single key on the keyboard, it is now possible to bind commands to it by using the word "plus". (#2898)
 
 
 == Changes for Developers ==

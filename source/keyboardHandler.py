@@ -285,6 +285,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			return unichr(self.vkCode).lower()
 		vkChar = winUser.user32.MapVirtualKeyExW(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
 		if vkChar>0:
+			if vkChar == 43: # "+"
+				# A gesture identifier can't include "+" except as a separator.
+				return "plus"
 			return unichr(vkChar).lower()
 
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
@@ -396,6 +399,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		keyNames = name.split("+")
 		keys = []
 		for keyName in keyNames:
+			if keyName == "plus":
+				# A key name can't include "+" except as a separator.
+				keyName = "+"
 			if keyName == VK_WIN:
 				vk = winUser.VK_LWIN
 				ext = False
