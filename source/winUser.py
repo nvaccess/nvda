@@ -493,7 +493,7 @@ def PostMessage(hwnd, msg, wParam, lParam):
 
 user32.VkKeyScanExW.restype = SHORT
 def VkKeyScanEx(ch, hkl):
-	res = user32.VkKeyScanW(WCHAR(ch), hkl)
+	res = user32.VkKeyScanExW(WCHAR(ch), hkl)
 	if res == -1:
 		raise LookupError
 	return res >> 8, res & 0xFF
