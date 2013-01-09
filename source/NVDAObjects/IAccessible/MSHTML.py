@@ -80,6 +80,7 @@ nodeNamesToNVDARoles={
 	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"FIELDSET":controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
+	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
 }
 
 def IAccessibleFromHTMLNode(HTMLNode):
