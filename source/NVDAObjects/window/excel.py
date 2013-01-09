@@ -310,7 +310,7 @@ class ExcelSelection(ExcelBase):
 		firstCell=self.excelRangeObject.Item(1)
 		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
 		# Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-		return _("%s %s through %s %s")%(self.getCellAddress(firstCell),firstCell.Text,self.getCellAddress(lastCell),lastCell.Text)
+		return _("{firstAddress} {firstContent} through {lastAddress} {lastContent}").format(firstAddress=self.getCellAddress(firstCell),firstContent=firstCell.Text,lastAddress=self.getCellAddress(lastCell),lastContent=lastCell.Text)
 
 	def _get_parent(self):
 		worksheet=self.excelRangeObject.Worksheet

@@ -491,9 +491,9 @@ def PostMessage(hwnd, msg, wParam, lParam):
 	if not user32.PostMessageW(hwnd, msg, wParam, lParam):
 		raise WinError()
 
-user32.VkKeyScanW.restype = SHORT
-def VkKeyScan(ch):
-	res = user32.VkKeyScanW(WCHAR(ch))
+user32.VkKeyScanExW.restype = SHORT
+def VkKeyScanEx(ch, hkl):
+	res = user32.VkKeyScanExW(WCHAR(ch), hkl)
 	if res == -1:
 		raise LookupError
 	return res >> 8, res & 0xFF

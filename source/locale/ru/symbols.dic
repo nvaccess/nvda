@@ -1,95 +1,113 @@
-﻿complexSymbols:
+﻿#locale/ru/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
-decimal point	(?<=\d)\,(?=\d)
-in-word '	апостроф
-negative number	минус
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Others
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
+
 # Complex symbols
-. sentence ending	точка	# . в конце предложения
-! sentence ending	восклицательный знак	# ! в конце предложения
-? sentence ending	вопросительный знак	# ? в конце предложения
-; phrase ending	точка с запятой	# ; в конце фразы
-: phrase ending	двоеточие	# : в конце фразы
-decimal point	запятая	# разделитель десятичного числа
-in-word '	апостроф #апостроф в середине слова
-negative number	минус
+. sentence ending	точка	all	always
+! sentence ending	восклицательный знак	all	always
+? sentence ending	вопросительный знак	all	always
+; phrase ending	точка с запятой	most	always
+: phrase ending	двоеточие	most	always
+decimal point		none	always
+in-word '	апостроф	all	norep
+negative number	минус	none	norep
 
 # Whitespace
-\0	чисто
+\0	чисто	char	# null
 \t	таб
-\n	перевод строки
-\f	разделитель страниц
-\r	возврат каретки
- 	пробел
- 	пробел	# no-break space
+\n	перевод строки	char
+\f	разделитель страниц	none
+\r	возврат каретки	char
+ 	пробел	char
+ 	пробел	char	# no-break space
 
 # Standard punctuation/symbols
-!	восклицательный знак
-"	кавычки
-\#	решетка
-$	доллар
-£	фунт
-€	евро
-¢	центы
-¥	ена
-%	процент
-&	амперсанд
-'	апостроф
-(	левая скобка
-)	правая скобка
-*	звездочка
-+	плюс
-,	запятая
--	минус
-.	точка
-/	косая черта
-:	двоеточие
-;	точка с запятой
-<	меньше
->	больше
-=	равно
-?	вопросительный знак
-@	собачка
-[	левая квадратная скобка
-]	правая квадратная скобка
-\\	обратная косая черта
-^	крышка
-_	подчеркивание
-`	обратный апостроф
-{	левая фигурная скобка
-}	правая фигурная скобка
-|	вертикальная черта
-~	тильда
+!	восклицательный знак	all
+"	кавычки	most
+\#	решетка	most
+$	доллар	all	norep
+£	фунт	all	norep
+€	евро	all	norep
+¢	центы	all	norep
+¥	ена	all	norep
+%	процент	some
+&	амперсанд	some
+'	апостроф	all
+(	левая круглая	most
+)	правая круглая	most
+*	звездочка	most
++	плюс	most
+,	запятая	all	always
+-	минус	most
+.	точка	some
+/	косая черта	some
+:	двоеточие	most	norep
+;	точка с запятой	most
+<	меньше	most
+>	больше	most
+=	равно	most
+?	вопросительный знак	all
+@	собачка	some
+[	левая квадратная	most
+]	правая квадратная	most
+\\	обратная косая черта	most
+^	крышка	most
+_	подчеркивание	most
+`	обратный апостроф	most
+{	левая фигурная	most
+}	правая фигурная	most
+|	вертикальная черта	most
+~	тильда	most
 
 # Other characters
-•	буллит
-…	многоточие
-...	многоточие
-	буллит
-“	левая кавычка
-”	правая кавычка
-‘	левая одиночная кавычка
-’	правая одиночная кавычка
-–	тире
-—	тире
-●	кружок
-¨	диерезис
-№	номер	most
-■	черный квадрат
-➔	стрелка вправо
-§	секция
-°	градусов
-«	левые угловые кавычки
-«	правые угловые кавычки
-®	зарегистрировано
-™	торговая марка
-©	авторское право
-±	плюс или минус
-×	умножить
-÷	поделить на
-→	стрелка вправо
-✓	отметка
-✔	отметка
-
+•	маркер	some
+…	многоточие	all	always
+...	многоточие	all	always
+	маркер	some
+“	левая кавычка	most
+”	правая кавычка	most
+‘	левая одиночная кавычка	most
+’	правая одиночная кавычка	most
+–	тире	most
+—	тире	most
+●	кружок	most
+¨	диерезис	most
+‎	метка слева на право	char
+‏	метка справа налево	char
+■	черный квадрат	some
+➔	стрелка вправо	some
+§	секция	all
+°	градусов	some
+«	левая двойная угловая
+»	правая двойная угловая
+µ	микро	some
+¹	верхний индекс 1	some
+²	верхний индекс 2	some
+³	верхний индекс 3	some
+®	зарегистрировано	some
+™	торговая марка	some
+©	авторское право	some
+±	плюс или минус	most
+×	умножить	most
+÷	поделить на	most
+→	стрелка вправо	some
+✓	отметка	some
+✔	отметка	some

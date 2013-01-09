@@ -23,7 +23,7 @@ Najvýznamnejšie prednosti programu:
 - Podpora množstva braillovských zobrazovačov
 - Možnosť spustenia programu z USB kľúča, alebo iného prenosného zariadenia, bez nutnosti inštalácie
 - Ozvučený inštalátor
-- Preložený do 41 jazykov
+- Preložený do 42 jazykov
 - Podpora pre moderné operačné systémy Windows, 32 aj 64 bitové verzie
 - Možnosť spúšťania na prihlasovacej obrazovke a iných zabezpečených obrazovkách Windows
 - Kompatibilita s rôznymi rozhraniami slúžiacimi na sprístupnenie aplikácií: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation len vo Windows 7 a novších)
@@ -32,7 +32,7 @@ Najvýznamnejšie prednosti programu:
 
 ++ Medzinárodná podpora ++
 Je dôležité, aby ľudia na celom svete hovoriaci akýmkoľvek jazykom, mali kdekoľvek prístup k špeciálnym technológiám.
-NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 41 jazykov: Afrikánčina, Albánčina, Arabčina, Amharčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Japončina, Kórejčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Poľština, Portugalčina, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
+NVDA bol dodnes okrem angličtiny lokalizovaný do týchto 42 jazykov: Afrikánčina, Albánčina, Arabčina, Aragónčina, Amharčina, Brazílčina, Bulharčina, Čeština, Dánčina, Fínčina, Francúzština, Galícijčina, Gréčtina, Gruzínčina, Hebrejčina,  Hindčina, Holandčina, Chorvátčina, Islandčina, Japončina, Kórejčina, Maďarčina, Nemčina, Nepálčina, Nórčina, Poľština, Portugalčina, Rumunčina, Ruština, Slovenčina, Slovinčina, Srbčina, Španielčina, Švédčina, Taliančina, Tamilčina, Thajčina, Tradičná čínština, Turečtina, Ukrajinčina, Vietnamčina a Zjednodušená čínština.
 
 ++ Podpora hlasového výstupu ++
 Bez ohľadu na poskytovanie hlásení, a rozhraní v niekoľkých jazykoch, NVDA ponúka možnosť čítania textov v akomkoľvek jazyku, pokiaľ je dostupný hlasový výstup pre daný jazyk.
@@ -76,10 +76,18 @@ z nainštalovanej verzie môžete kedykoľvek vytvoriť prenosnú verziu.
 
 Ak chcete NVDA používať z USB kľúča alebo z iného zapisovateľného média (pamäťová karta a podobne), v úvodnom dialógu vyberte možnosť vytvoriť prenosnú verziu.
 prenosnú verziu môžete kedykoľvek neskôr nainštalovať do počítača, takže budete môcť využívať výhody nainštalovanej verzie.
-Ak chcete NVDA nahrať na CD alebo iný druh média len na čítanie, skopírujte priamo súbor stiahnutý so stránky NVDA.
+Ak chcete NVDA nahrať na CD alebo iný druh média len na čítanie, skopírujte priamo súbor stiahnutý zo stránky NVDA.
 Spúšťanie skutočnej prenosnej verzie z média len na čítanie nie je zatiaľ podporované.
 
 V úvodnom dialógu môžete tiež aktivovať tlačidlo Ponechať spustenú dočasnú kópiu. Toto sa môže zísť, ak NVDA niekomu ukazujete. Spúšťanie NVDA takýmto spôsobom pri bežnom používaní je však zdĺhavé.
+
+++ obmedzenia pre prenosnú verziu a dočasnú kópiu ++
+Okrem toho, že nie je možné automaticky spustiť NVDA počas prihlásenia alebo po ňom, má prenosná verzia a dočasná kópia NVDA tieto obmedzenia:
+- Nemožnosť pracovať s aplikáciami, ktoré bežia správami administrátora, ak spustená verzia NVDA tiež nemá práva administrátora (čo sa však neodporúča).
+- Nemožnosť čítať obrazovku na prepnutie užívateľského účtu (UAC) pri pokuse spustiť aplikáciu s právami administrátora.
+- Nefunguje používanie dotykovej klávesnice v systéme Windows 8.
+- Nemôžete využívať režim prehliadania a čítanie napísaných znakov vo Windows Store v systéme Windows 8.
+
 
 ++ Inštalácia NVDA ++
 Ak ste si stiahli NVDA a chcete ho nainštalovať, aktivujte tlačidlo Nainštalovať NVDA na úvodnej obrazovke.
@@ -224,7 +232,7 @@ Po zobrazení ponuky programu môžete použiť šípky na pohyb po položkách,
 | Pozastaviť reč | Shift | Nie je | Okamžite pozastaví reč. Po nasledujúcom stlačení bude reč pokračovať na prerušenom mieste ak to práve používaný hlasový výstup podporuje |
 | Ponuka NVDA | NVDA+n | Dvojnásobné klepnutie dvoma prstami | Zobrazí ponuku NVDA, odkiaľ je možné pristupovať k nastaveniam, nástrojom a pomocníkovi |
 | Prepnúť režim reči | NVDA+s | Nie je | Prepína režim reči medzi hovoriť, pípať a vypnuté. |
-| Nápoveda vstupu | NVDA+1 | Nie je | Zapína a vypína nápovedu vstupu. Keď je zapnutá, NVDA oznámi názov a popis skriptu, ktorý je s klávesom asociovaný. Pre vypnutie stlačte znova NVDA+.1 | 
+| Nápoveda vstupu | NVDA+1 | Nie je | Zapína a vypína nápovedu vstupu. Keď je zapnutá, NVDA oznámi názov a popis skriptu, ktorý je s klávesom asociovaný. Pre vypnutie stlačte znova NVDA+1. | 
 | Ukončiť NVDA | NVDA+q | Nie je | Opýta sa či naozaj chcete ukončiť NVDA. V dialógu všeobecné nastavenia je voľba, ktorou sa otázka pred ukončením dá vypnúť. |
 | Prepustiť nasledujúci kláves | NVDA+f2 | Nie je | Prinúti NVDA nasledujúci stlačený kláves prepustiť aktívnej aplikácii aj keď sa jedná o príkaz programu NVDA. |
 | Prepnúť režim spánku | NVDA+shift+s | Nie je | Režim spánku deaktivuje všetky klávesové skratky a hlasový a braillový výstup. Toto je užitočné pre aplikácie, ktoré sami poskytujú niektorý z takýchto druhov výstupu. |

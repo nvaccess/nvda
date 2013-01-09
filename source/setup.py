@@ -174,7 +174,7 @@ setup(
 		"excludes": ["comInterfaces", "Tkinter",
 			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
 		"packages": ["NVDAObjects","virtualBuffers","appModules","brailleDisplayDrivers","synthDrivers"],
-		"includes": ["nvdaBuiltin", "ftdi2"],
+		"includes": ["nvdaBuiltin"],
 	}},
 	data_files=[
 		(".",glob("*.dll")+glob("*.manifest")+["builtin.dic"]),

@@ -201,6 +201,17 @@ def initialize():
 def terminate():
 	winInputHook.terminate()
 
+def getInputHkl():
+	"""Obtain the hkl currently being used for input.
+	This retrieves the hkl from the thread of the focused window.
+	"""
+	focus = api.getFocusObject()
+	if focus:
+		thread = focus.windowThreadID
+	else:
+		thread = 0
+	return winUser.user32.GetKeyboardLayout(thread)
+
 class KeyboardInputGesture(inputCore.InputGesture):
 	"""A key pressed on the traditional system keyboard.
 	"""
@@ -272,8 +283,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		if 32 < self.vkCode < 128:
 			return unichr(self.vkCode).lower()
-		vkChar = winUser.user32.MapVirtualKeyW(self.vkCode, winUser.MAPVK_VK_TO_CHAR)
+		vkChar = winUser.user32.MapVirtualKeyExW(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
 		if vkChar>0:
+			if vkChar == 43: # "+"
+				# A gesture identifier can't include "+" except as a separator.
+				return "plus"
 			return unichr(vkChar).lower()
 
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
@@ -385,12 +399,15 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		keyNames = name.split("+")
 		keys = []
 		for keyName in keyNames:
+			if keyName == "plus":
+				# A key name can't include "+" except as a separator.
+				keyName = "+"
 			if keyName == VK_WIN:
 				vk = winUser.VK_LWIN
 				ext = False
 			elif len(keyName) == 1:
 				ext = False
-				requiredMods, vk = winUser.VkKeyScan(keyName)
+				requiredMods, vk = winUser.VkKeyScanEx(keyName, getInputHkl())
 				if requiredMods & 1:
 					keys.append((winUser.VK_SHIFT, False))
 				if requiredMods & 2:

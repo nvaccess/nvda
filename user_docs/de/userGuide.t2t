@@ -23,7 +23,7 @@ Die wichtigsten Funktionen sind:
 - Unterstützung für zahlreiche Braillezeilen.
 - Ausführen von einem USB-Stick oder anderen transportablen Medien.
 - Einfache Bedienung während der Installation mit Unterstützung der Sprachausgaben.
-- Übersetzt in 41 Sprachen.
+- Übersetzt in 42 Sprachen.
 - Unterstützung für moderne Windows-Betriebssystemvarianten (für 32- / 64-Bit).
 - Lauffähig im Windows-Anmeldebildschirm sowie in den Dialogen der Sicherheitshinweise.
 - Unterstützung für übliche Schnittstellen zur Barrierefreiheit wie zum Beispiel Microsoft Active Accessibility, Java Access Bridge, IAccessible2 und UI Automation (UI Automation wird nur unter Windows 7 und höher unterstützt).
@@ -32,7 +32,7 @@ Die wichtigsten Funktionen sind:
 
 ++ Internationalisierung ++
 Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprechen, dass sie den gleichen Zugang zu Technologien erhalten.
-NVDA wurde bislang in 41 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, slovenisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
+NVDA wurde bislang in 42 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, aragonesisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Finnisch, Französisch, Gälisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, slovenisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung mit der Sprachausgabe ++
 Abgesehen von der Bereitstellung der Schnittstelle für Meldungen in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser über eine Sprachausgabe für dessen Sprache verfügt.
@@ -80,6 +80,14 @@ Wenn Sie NVDA jedoch auf ein schreibgeschütztes Medium wie etwa eine CD kopiere
 Die ausführung einer portablen Kopie direkt von einem schreibgeschützten Medium wird momentan noch nicht unterstützt.
   
 Die Ausführung der temporären Kopie kann z.B. für demonstrationszwecke sinnvoll sein, der start einer solchen Version ist allerdings sehr zeitintensiv.
+
+++ Einschränkungen portabler und temporärer Kopien von NVDA ++
+Abgesehen von vom fehlenden Autostart besitzen portable und temporäre Kopien von NVDA folgende Einschränkungen:
+- NVDA kann nicht auf Anwendungen zugreifen, die mit Administratorrechten ausgeführt werden; eine Ausnahme stellt hier der Fall dar, dass NVDA ebenfalls mit Administratorrechten ausgeführt wird. Dies wird jedoch nicht empfohlen.
+- Die Dialoge der Benutzerkontensteuerung können nicht ausgelesen werden.
+- Touch Screens werden unter Windows 8 nicht unterstützt.
+- Windows 8: in Windows Store-Anwendungen funktioniert der Lesemodus nicht. Gleiches gilt auch für die Ansage eingegebener Zeichen.
+-
 
 ++ NVDA installieren ++
 Wenn Sie NVDA direkt von einer heruntergeladenen Datei aus installieren wollen, drücken Sie einfach den Schalter "installieren", sobald der Eingangsdialog erscheint.
@@ -224,7 +232,7 @@ In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste
 | Sprechen anhalten | Umschalt | keine | Hält sofort den Lesevorgang an oder setzt bei erneutem Drücken den Lesevorgang fort (sofern das von der Sprachausgabe unterstützt wird). |
 | NVDA-Menü | NVDA+N | 2-Finger-Doppel-Tippen | Öffnet das NVDA-Menü von wo aus Sie auf die Einstellungen, Extras, etc. zugreifen können. |
 | Sprachmodus umschalten | NVDA+s | keine | Schaltet den Sprachmodus zwischen Sprache, Signaltöne und aus um. |
-| Modus der Eingabehilfe umschalten | NVDA+1 | keine | Bei Drücken einer Taste in diesem Modus, wird die in NVDA assoziierte Taste und die dazugehörige Beschreibung angesagt und in Braille als Blitzmeldungen angezeigt. |
+| Modus der Eingabehilfe umschalten | NVDA+1 | keine | Bei Drücken einer Taste in diesem Modus, wird die in NVDA assoziierte Taste und die dazugehörige Beschreibung angesagt und in Braille angezeigt. |
 | NVDA beenden | NVDA+Q | keine | Beendet NVDA. |
 | Taste durchreichen | NVDA+F2 | keine | Veranlasst NVDA, dass die nächst betätigte Taste nicht von NVDA abgefangen wird, sondern direkt an die laufende Anwendung weitergereicht wird (sogar wenn es sich um einen Tastenbefehl von NVDA handelt). |
 | Schlafmodus umschalten | nvda+umschalt+s | keine | legt fest, ob die aktuelle Anwendung eine eigene sprachunterstützung besitzt, nützlich für Programme oder spiele, die im System installierte Sprachausgaben selbsttätig ansteuern (z.B. speakon oder Klango) oder eine eigene Sprachausgabe zur Verfügung stellen (wie z.B. Spiele wie shades of doom, Top speed o.ä.)  |
@@ -572,6 +580,10 @@ In diesem Abschnitt werden einige bekannte Probleme beschrieben, die beim Umgang
 - Ursache: Ursache dieses Problems ist eine Schutzfunktion, die in Adobe Reader X standardmäßig aktiviert ist und NVDA daran hindert, das Pdf-Dokument im Lesemodus aufzubereiten. 
 - Lösung: deaktivieren Sie in den Einstellungen von Adobe Reader X (bearbeiten / Voreinstellungen) in der Kategorie "allgemein" die Option "Geschützten Modus beim Start aktivieren". Es erscheint eine Nachfrage, die Sie darüber informiert, dass die Einstellung erst beim Neustart von Adobe Reader x wirksam wird. Bestätigen Sie diese Nachfrage mit "ja" und starten Sie Adobe Reader X anschließend neu. Jetzt sollte NVDA die im Adobe Reader X angezeigten Pdf-Dokumente im Lesemodus aufbereiten können.
 
+++ Adobe Reader XI ++
+- Problem: Beim Lesen von Pdf-Dokumenten mit Adobe Reader XI kann es in der Werkseinstellung zu Problemen kommen, weil NVDA das Dokument nicht im Lesemodus anzeigt, sondern nur ein Grafikobjekt darstellt. 
+- Ursache: Ursache dieses Problems ist eine Schutzfunktion, die in Adobe Reader XI standardmäßig aktiviert ist und NVDA daran hindert, das Pdf-Dokument im Lesemodus aufzubereiten. 
+- Lösung: deaktivieren Sie in den Einstellungen von Adobe Reader XI (bearbeiten / Voreinstellungen) in der Kategorie "Sicherheit (erweitert)" die Option "Geschützten Modus beim Start aktivieren". Es erscheint eine Nachfrage, die Sie darüber informiert, dass die Einstellung erst beim Neustart von Adobe Reader x wirksam wird. Bestätigen Sie diese Nachfrage mit "ja" und starten Sie Adobe Reader X anschließend neu. Jetzt sollte NVDA die im Adobe Reader X angezeigten Pdf-Dokumente im Lesemodus aufbereiten können.
 
 ++ Firefox ++
 - Problem: Wenn Sie versuchen, mit Firefox (beobachtet ab Version 7) eine Webseite zu öffnen und Firefox beendet sich, noch ehe die Seite geladen ist, könnte dies an der Funktion "Automatisch alles lesen nach Aufruf einer Internetseite" liegen. 
@@ -759,6 +771,18 @@ Der Eintrag "Keine Braillezeile" bedeutet, dass Sie ggf. keine Braillezeile ange
 Bitte lesen Sie weiter im Abschnitt [Unterstützte Braillezeilen #SupportedBrailleDisplays] für weitere Informationen.
 
 hinweis: Falls es beim initialisieren des Braillezeilentreibers beim Start von NVDA zu Problemen gekommen sein sollte, wechselt nvda automatisch zu "keine Braillezeile". Fatalerweise wird diese Einstellung gespeichert, wenn in den allgemeinen Einstellungen die Option "Einstellungen beim Beenden speichern" aktiviert ist! Dies hat zur Folge, dass Sie nach einem Neustart von NVDA die Braillezeile neu einstellen müssen.
+
+==== anschluss ====
+Sofern diese Option verfügbar ist, erlaubt sie Ihnen, den Anschluss auszuwählen, über den die gewählte Braillezeile mit Ihrem Rechner kommunizieren soll.
+In diesem Kombinationsfeld werden die möglichen Anschlüsse angezeigt.
+
+Standardmäßig wird NVDA automatisch sämtliche USB-Aschlüsse und Bluetooth-Geräte nach Ihrer Braillezeile absuchen.
+Für manche Braillezeilen können Sie jedoch genau festlegen, wie die Zeile angeschlossen ist.
+Übliche Auswahlmöglichkeiten sind "automatisch" (die oben beschriebene automatische Suche nach dem Anschluss), "Bluetooth" "USB" oder einer der seriellen Anschlüsse, sofern Ihre Braillezeile diese Verbindungsart unterstützt.
+
+Diese Option ist nicht verfügbar, wenn Ihre Braillezeile nur die automatische Suche nach dem Anschluss unterstützt.
+
+Sehen Sie im Abschnitt "[unterstützte Braillezeilen #SupportedBrailleDisplays]" für Informationen darüber nach, welche anschlüsse für Ihre Braillezeile zur Verfügung stehen.
 
 ==== Übersetzungstabelle ====
 Die nächste Option ist die Auswahlliste der Braille-Tabellen, in der die entsprechende Tabelle für die benötigte Sprache mit den Pfeiltasten ausgewählt werden kann.
@@ -1240,6 +1264,10 @@ Falls Sie sie noch nicht installiert haben, können Sie sie von der Website [hie
 Obwohl auf dieser Seite nur Treiber für die Focus 40 Blue aufgeführt sind, werden die Treiber für alle Braillezeilen gleichermaßen von FreedomScientific unterstützt.
 Wenn Sie eine 64-Bit-Version von windows einsetzen und die Treiber bereits von einem anderen screenreader installiert wurden, müssen Sie wahrscheinlich trotzdem die Treiber von diesem Link installieren, weil die Dateien, die NVDA benötigt wahrscheinlich nicht von dem anderen Screenreader installiert wurden.
 
+Für gewöhnlich kann NVDA den verwendeten Anschluss automatisch erkennen, gleichgültig ob die Braillezeile per usb oder per Bluetooth verbunden ist.
+Beim Konfigurieren der Braillezeile können Sie jedoch die Verbindungsart ausdrücklich festlegen, indem Sie als anschluss entweder USB oder Bluetooth auswählen.
+Dies kann sinnvoll sein, wenn Sie z.B. eine Focus-Braillezeile per Bluetooth mit NVDA verbinden wollen, aber dennoch den USB-Anschluss Ihres Rechners zum Laden der Zeile verwenden wollen.
+
 Folgende Tastenkombinationen bei dieser Braillezeile sind für NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 %kc:beginInclude
@@ -1618,6 +1646,54 @@ Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen verfügbar:
 | Bewegt das Navigatorobjekt zum nächsten Objekt | rechts2 |
 | Bewegt das Navigatorobjekt zum vorherigen Objekt | links2 |
 | Liest Formatierungsinformationen an der Cursorposition in einen Dokument vor | Obere Routingreihe |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+NVDA unterstützt die Braillenote-Modelle von [Humanware http://www.humanware.com] sofern diese als Braillezeilen betrieben werden.
+Die folgenden Modelle werden unterstützt:
+- BrailleNote Classic (nur serielle Verbindung)
+- BrailleNote PK (seriell und Bluetooth)
+- BrailleNote MPower (seriell und Bluetooth)
+- BrailleNote Apex (Verbunden über USB oder Bluetooth)
+-
+
+Wenn Ihre Braillezeile mehr als eine Verbindungsmethode unterstützt, müssen Sie den verwendeten Anschluss in den Braille-Terminal-Einstellungen festlegen.
+Bitte lesen Sie das Benutzerhandbuch zu Ihrer Braillezeile für weitere informationen.
+Zudem müssen Sie den verwendeten Anschluss in den Braille-Einstellungen von NVDA festlegen.
+Wenn die Brailezeile über USB oder Bluetooth verbunden wird, können Sie "automatisch", "USB" oder "Bluetooth" einstellen.
+Wenn Sie einen seriellen Anschluss (oder einen usb-to-Serial-Converter) verwenden, müssen Sie den verwendeten Anschluss ausdrücklich auswählen.
+
+Bevor Sie di Braillenote über USB verbinden können, müssen Sie den von Humanware bereitgestellten Treiber installieren.
+
+Folgende Braillenote-Befehle können Sie in NVDA verwenden:
+Bitte sehen sie im Benutzerhandbuch zu Ihrer Braillezeile nach, wo sich die entsprechenden Tasten befinden.
+
+%kc:beginInclude
+|| Name | Taste |
+| Braillezeile zurückscrollen | back |
+| Braillezeile vorwärtsscrollen | advance |
+| zur vorigen Zeile springen | previous |
+| zur nächsten Zeile springen | next |
+| Cursor zum Braillemodul bewegen | routing |
+| Kopplung der Braillezeile ändern | previous+next |
+| Pfeiltaste nach oben | Leertaste+punkt1 |
+| Pfeiltaste nach unten | Leertaste+Punkt4 |
+| Pfeiltaste nach links | Leertaste+Punkt3 |
+| Pfeiltaste nach rechts | Leertaste+Punkt6 |
+| Bild nach oben | Leertaste+Punkt1+Punkt3 |
+| bild nach unten | Leertaste+Punkt4+Punkt6 |
+| Taste pos1 | Leertaste+Punkt1+Punkt2 |
+| Taste ende | Leertaste+Punkt4+Punkt5 |
+| strg+pos1 | Leertaste+Punkt1+Punkt2+Punkt3 |
+| strg+Ende | Leertaste+Punkt4+Punkt5+Punkt6 |
+| Leertaste | Leertaste |
+| Eingabetaste | Leertaste+Punkt8 |
+| Rücktaste | Leertaste+Punkt7 |
+| Tab | Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+t) |
+| Umschalt+Tab | Leertaste+Punkt1+Punkt2+Punkt5+Punkt6 |
+| windows-Taste | Leertaste+Punkt2+Punkt4+Punkt5+Punkt6 (Leertaste+w) |
+| Alt | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+m) |
+| Eingabehilfe ein/ausschalten | Leertaste+Punkt1+Punkt2+Punkt5 (Leertaste+h) |
 %kc:endInclude
 
 ++ BRLTTY ++

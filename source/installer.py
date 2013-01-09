@@ -12,6 +12,7 @@ import time
 import os
 import tempfile
 import shutil
+import itertools
 import shellapi
 import globalVars
 import languageHandler
@@ -19,7 +20,6 @@ import config
 import versionInfo
 from logHandler import log
 import addonHandler
-
 
 _wsh=None
 def _getWSH():
@@ -246,20 +246,15 @@ def _deleteKeyAndSubkeys(key, subkey):
 	with _winreg.OpenKey(key, subkey, 0, _winreg.KEY_WRITE|_winreg.KEY_READ) as k:
 		# Recursively delete subkeys (Depth first search order)
 		# So Pythonic... </rant>
-		i = 0
-		while True:
+		for i in itertools.count():
 			try:
 				subkeyName = _winreg.EnumKey(k, i)
-				# Recursive call.
-				_deleteKeyAndSubkeys(k, subkeyName)
-				i += 1
 			except WindowsError:
 				break
-	# Delete this key
-	try:
+			# Recursive call.
+			_deleteKeyAndSubkeys(k, subkeyName)
+		# Delete this key
 		_winreg.DeleteKey(k, "")
-	except WindowsError:
-		log.warning("Error deleting registry key", exc_info=True)
 
 class RetriableFailure(Exception):
 	pass

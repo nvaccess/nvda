@@ -359,12 +359,6 @@ the NVDAObject for IAccessible
 			kwargs['event_childID']=0
 		return True
 
-	@classmethod
-	def windowHasExtraIAccessibles(cls,windowHandle):
-		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
-		style=winUser.getWindowStyle(windowHandle)
-		return bool(style&winUser.WS_SYSMENU)
-
 	def findOverlayClasses(self,clsList):
 		if self.event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(self.windowHandle): 
 			clsList.append(JavaVMRoot)
@@ -1322,17 +1316,10 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
-	def _get_presentationType(self):
-		if not self.windowHasExtraIAccessibles(self.windowHandle) and self.role==controlTypes.ROLE_WINDOW:
-			return self.presType_layout
-		return super(IAccessible,self).presentationType
-
 	def _get_isPresentableFocusAncestor(self):
 		IARole = self.IAccessibleRole
 		if IARole == oleacc.ROLE_SYSTEM_CLIENT and self.windowStyle & winUser.WS_SYSMENU:
 			return True
-		if IARole == oleacc.ROLE_SYSTEM_WINDOW:
-			return False
 		return super(IAccessible, self).isPresentableFocusAncestor
 
 	def _get_devInfo(self):
@@ -1434,11 +1421,27 @@ class ContentGenericClient(IAccessible):
 		return val
 
 class GenericWindow(IAccessible):
+
 	TextInfo=displayModel.DisplayModelTextInfo
+	isPresentableFocusAncestor=False
 
 class WindowRoot(GenericWindow):
 
 	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
+
+	@classmethod
+	def windowHasExtraIAccessibles(cls,windowHandle):
+		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
+		style=winUser.getWindowStyle(windowHandle)
+		return bool(style&winUser.WS_SYSMENU)
+
+	def _get_presentationType(self):
+		states=self.states
+		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+			return self.presType_unavailable
+		if not self.windowHasExtraIAccessibles(self.windowHandle):
+			return self.presType_layout
+		return self.presType_content
 
 	def _get_parent(self):
 		if self.parentUsesSuperOnWindowRootIAccessible:

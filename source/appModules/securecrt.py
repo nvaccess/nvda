@@ -15,7 +15,7 @@ import appModuleHandler
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName in ("AfxFrameOrView80u", "AfxFrameOrView90u") and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
+		if obj.windowClassName in ("AfxFrameOrView80u", "AfxFrameOrView90u", "AfxFrameOrView100u") and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
 			try:
 				clsList.remove(DisplayModelEditableText)
 			except ValueError:

@@ -8,11 +8,27 @@
 == Novità ==
 - Supporto alla lettura e scrittura dei messaggi in Lotus Notes 8.5. (#543)
 - In modalità navigazione MSHTML (ad esempio Internet Explorer) e Gecko (ad esempio Firefox), viene annunciata l'esistenza delle descrizioni degli elementi se esistente, tramite l'interpretazione dell'attributo longdesc. è anche possibile aprire la descrizione in una nuova finestra tramite nvda+d. (#809)
+- Ora vengono annunciate le notifiche in Internet Explorer 9 e superiori, ad esempio download di file o contenuti bloccati. (#2343)
+- Annuncio automatico delle intestazioni riga/colonna nelle tabelle per la modalità navigazione in Internet Explorer e altri controlli MSHTML. (#778)
+- Nuova lingua: Aragonese
+- Nuova tabella Braille: Danese grado 2.
+- Supporto per i display Braille connessi tramite Bluetooth su computer che eseguono lo stack Bluetooth prodotto da Toshiba. (#2419)
+- Supporto per la selezione della porta per i Display Braille Freedom Scientific (Automatica, Usb o Bluetooth).
+- Supporto per i display Braille Braillenote della Humanware quando configurati per funzionare come periferica per screen reader. (#2012)
 
-
+ 
 == Bug Corretti ==
 - Il tasto rapido per spostarsi di sezione in sezione ora funziona anche con Internet Explorer. (#2781)
-- Se NVDA non riesce a caricare un sintetizzatore all'avvio ed è costretto a parlare tramite Espeak, la configurazione viene lasciata inalterata, il che significa che la prossima volta che si riavvierà NVDA, tenterà di caricare ancora il sintetizzatore scelto dall'utente in precedenza, anziché mantenere Espeak come predefinito.
+- Se NVDA non riesce a caricare un sintetizzatore all'avvio ed è costretto a parlare tramite Espeak, la configurazione viene lasciata inalterata, il che significa che la prossima volta che si riavvierà NVDA, tenterà di caricare ancora il sintetizzatore scelto dall'utente in precedenza, anziché mantenere Espeak come predefinito. (#2589)
+- Nelle applicazioni Mozilla in modalità navigazione, vengono ora riportati correttamente gli aggiornamenti delle tabelle. Ad esempio, nelle celle aggiornate, vengono annunciate correttamente le coordinate delle colonne e delle righe. (#2684)
+- Nei browser web in modalità navigazione, ora vengono intercettati anche elementi grafici cliccabili non etichettati che non venivano mostrati in precedenza. (#2838)
+- Vengono supportate tutte le versioni  del programma SecureCRT. (#2800)
+- Per i metodi di immissione asiatici come "Easy dots IME" in Windows Xp,  la stringa di lettura viene annunciata correttamente.
+- L'elenco dei suggerimenti nel metodo di immissione cinese semplificato Microsoft Pinyin input method su Windows 7 viene ora letto correttamente  quando si cambia pagina con le frecce destra e sinistra, e quando viene aperto col tasto home..
+- Quando viene salvata la pronuncia di un nuovo simbolo, il campo "preserve" non viene più rimosso.
+- Quando il controllo aggiornamenti  viene disattivato, NVDA non necessita più di essere riavviato affinché le modifiche abbiano effetto.
+- NVDA non ha più problemi nell'avviarsi nel caso in cui un componente aggiuntivo non possa essere rimosso in quanto la directory che lo contiene è in uso da un'altra applicazione. (#2860)
+- Le etichette delle schede in Dropbox, ad esempio quelle nella finestra preferenze, possono ora essere raggiunte anche con la navigazione in linea.
 
 
 = 2012.3 =

@@ -23,7 +23,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - Birçok Braille (kabartma) ekrana destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
-- 41 dile çevrilmiş oluşu
+- 42 dile çevrilmiş oluşu
 - 32 ve 64 bit dahil modern Windows işletim sistemlerinin desteklenmesi
 - Windows Logon ve diğer güvenlik ekranlarında çalışabilme yeteneği
 - Microsoft Active Accessibility, Java Access Bridge, IAccessible2 and UI Automation, UI Automation sadece windows 7 ve sonraki işletim sistemlerinde desteklenir, gibi yaygın erişilebilirlik arayüzlerinin desteklenmesi
@@ -32,7 +32,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 
 ++ Yerel Dil Desteği ++
 Dünyada nerede yaşıyor olurlarsa olsunlar ve hangi dili konuşurlarsa konuşsunlar, İnsanların teknolojiye eşit biçimde erişebilmeleri önemlidir.
-İngilizcenin yanısıra, NVDA aşağıda belirtilen 41 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İtalyanca, İzlanda dili, Japonca, Korece, Lehçe, Macarca, Nepal dili, Norveççe, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
+İngilizcenin yanısıra, NVDA aşağıda belirtilen 42 dile de çevrilmiştir. Afrikaca, Almanca, Amharca, Aragonca, Arapça, Arnavutça, Brezilya Portekizcesi, Bulgarca, Çekce, Danimarka dili, Dutch, Fince, Fransızca, Galiçyaca, Geleneksel ve basitleştirilmiş Çince, Gürcüce, Hırvatça, Hint dili, İbranice, İspanyolca, İsveç dili, İtalyanca, İzlanda dili, Japonca, Korece, Lehçe, Macarca, Nepal dili, Norveççe, Portekizce, Rumence, Rusca, Slovence, Sırpça, Slovakca, Tamil dili, Tayca, Türkçe, Ukraynaca, Yunanca, ve Viyetnamca.
 
 ++ Konuşma Sentezleyici Desteği ++
 Kendi mesajları ve arayüzünü birçok dilde sağlamanın yanında, NVDA Kullanıcıların bir içeriği konuşma sentezleyiciler aracılığıyla istedikleri dilde okuyabilmelerine olanak tanır.
@@ -78,8 +78,16 @@ NVDA'yı USB bellek ya da benzer taşınabilir ortamlara kopyalamak istiyorsanı
 Taşınabilir kopyayı, daha sonra başka bir bilgisayara NVDA'yı kurmak için de kullanabilirsiniz.
 Ancak, NVDA'yı CD gibi salt okunur bir medyaya kopyalamak istiyorsanız, yalnızca indirdiğiniz NVDA paketini kopyalamalısınız.
 NVDA taşınabilir sürümünün salt okunur bir medya üzerinden çalıştırılması şimdilik desteklenmemektedir.
-  
+
 NVDA'nın geçici kopyasını kullanmaya devam etmek de bir seçenek olabilir, özellikle test ve demonstrasyon amacıyla, tabii her seferinde NVDA'nın bu şekilde başlatılması lüzumundan fazla zaman alacaktır.
+
+++ Taşınabilir ve Geçici Kopyaların Kısıtları ++
+Windows'a giriş yaparken ya da giriş sonrasında otomatik olarak çalıştırılamamalarının yanında, taşınabilir ve geçici kopyalar aşağıdaki kısıtlara da sahiptir:
+- Yönetici yetkisiyle çalışan uygulamalarla etkileşim kuramaması, ki NVDA taşınabilir ve geçici kopyaları da yönetici yetkisiyle çalıştırılmaz.
+- Bir uygulama yönetici yetkisi istediğinde karşılaşılan kullanıcı hesap kontrol (UAC) ekranlarının okunamaması.
+- Windows 8: dokunmatik ekranlarda dokunma hareketlerinin çalışmaması.
+- Windows 8: Windows Store apps gibi uygulamalarda, tarama kipi gibi özelliklerin çalışmaması ya da karakter girişlerinin seslendirilmemesi.
+-
 
 ++ NVDA'yı Kurma ++
 NVDA'yı doğrudan indirdiğiniz dosya üzerinden kuruyorsanız, NVDA'yı kur düğmesine basın.

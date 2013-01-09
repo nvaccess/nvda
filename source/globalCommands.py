@@ -333,7 +333,7 @@ class GlobalCommands(ScriptableObject):
 		percentFromTop=(float(top-deskTop)/deskHeight)*100
 		percentWidth=(float(width)/deskWidth)*100
 		percentHeight=(float(height)/deskHeight)*100
-		ui.message(_("Object edges positioned %.1f per cent from left edge of screen, %.1f per cent from top edge of screen, width is %.1f per cent of screen, height is %.1f per cent of screen")%(percentFromLeft,percentFromTop,percentWidth,percentHeight))
+		ui.message(_("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight))
 	script_navigatorObject_currentDimensions.__doc__=_("Reports the hight, width and position of the current navigator object")
 
 	def script_navigatorObject_toFocus(self,gesture):
@@ -862,7 +862,7 @@ class GlobalCommands(ScriptableObject):
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
 		elif sps.BatteryLifeTime!=0xffffffff: 
 			# Translators: This is the estimated remaining runtime of the laptop battery.
-			text += _("%d hours and %d minutes remaining") % (sps.BatteryLifeTime / 3600, (sps.BatteryLifeTime % 3600) / 60)
+			text += _("{hours:d} hours and {minutes:d} minutes remaining") .format(hours=sps.BatteryLifeTime / 3600, minutes=(sps.BatteryLifeTime % 3600) / 60)
 		ui.message(text)
 	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")
 

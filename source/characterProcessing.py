@@ -331,6 +331,9 @@ class SpeechSymbols(object):
 		for field in reversed(fields[2:]):
 			if field == "-":
 				del fields[-1]
+			else:
+				# This field specifies a value, so no more fields can be stripped.
+				break
 		if symbol.displayName:
 			fields.append("# %s" % symbol.displayName)
 		return u"\t".join(fields)
