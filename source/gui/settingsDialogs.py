@@ -1233,7 +1233,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.updatePossiblePorts()
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		label = wx.StaticText(self, wx.ID_ANY, label=_("Translation &table:"))
+		label = wx.StaticText(self, wx.ID_ANY, label=_("&Output table:"))
 		self.tableNames = [table[0] for table in braille.TABLES]
 		self.tableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.TABLES])
 		try:
@@ -1246,7 +1246,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &input table:"))
+		label = wx.StaticText(self, wx.ID_ANY, label=_("&Input table:"))
 		self.inputTableNames = [table[0] for table in braille.INPUT_TABLES]
 		self.inputTableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.INPUT_TABLES])
 		try:
