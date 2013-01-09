@@ -14,6 +14,8 @@ from comtypes.automation import IDispatch
 import oleacc
 import config
 
+MK_E_UNAVAILABLE = -2147221021
+
 def _lresultFromGetActiveObject(progid, dynamic):
 	o = comtypes.client.GetActiveObject(progid, dynamic=dynamic)
 	if not isinstance(o, IUnknown):
@@ -25,7 +27,12 @@ def getActiveObject(progid, dynamic=False):
 	This is similar to comtypes.client.GetActiveObject
 	except that it can retrieve objects from normal processes when NVDA is running with uiAccess.
 	"""
-	# TODO: Try in our own process first; no point spawning a process when we don't need to.
+	try:
+		return comtypes.client.GetActiveObject(progid, dynamic=dynamic)
+	except WindowsError as e:
+		if e.winerror != MK_E_UNAVAILABLE:
+			# This isn't related to privileges.
+			raise
 	p = subprocess.Popen((config.SLAVE_FILENAME, "comGetActiveObject", progid, "%d" % dynamic),
 		stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	try:
