@@ -207,6 +207,9 @@ TABLES = (
 	("zh-tw.ctb", _("Chinese (Taiwan, Mandarin)"), False),
 )
 
+#: Braille tables that support input (only computer braille tables yet).
+INPUT_TABLES = tuple(t for t in TABLES if t[2])
+
 roleLabels = {
 	# Translators: Displayed in braille for an object which is an
 	# editable text field.
