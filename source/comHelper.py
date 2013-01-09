@@ -27,7 +27,7 @@ def getActiveObject(progid, dynamic=False):
 	"""
 	# TODO: Try in our own process first; no point spawning a process when we don't need to.
 	p = subprocess.Popen((config.SLAVE_FILENAME, "comGetActiveObject", progid, "%d" % dynamic),
-		stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+		stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	try:
 		# FIXME: Throw better exception for COM error in slave.
 		lres = int(p.stdout.readline())
