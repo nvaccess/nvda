@@ -36,3 +36,10 @@ comtypes.client.lazybind.Dispatch.__getattr__=new__getattr__
 def new__call__(self,*args,**kwargs):
 	return comtypes.client.dynamic.MethodCaller(0,self)(*args,**kwargs)
 comtypes.client.dynamic._Dispatch.__call__=new__call__
+
+#Monkey patch to force dynamic Dispatch on all vt_dispatch variant values.
+#Certainly needed for comtypes COM servers, but currently very fiddly to do just for that case 
+oldVARIANT_value_fget=VARIANT.value.fget
+def newVARIANT_value_fget(self):
+	return self._get_value(dynamic=True)
+VARIANT.value=property(newVARIANT_value_fget,VARIANT.value.fset,VARIANT.value.fdel)
