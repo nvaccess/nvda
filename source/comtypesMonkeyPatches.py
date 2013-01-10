@@ -3,6 +3,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from logHandler import log
+
 #Monkey patch comtypes to support byref in variants
 from comtypes.automation import VARIANT, VT_BYREF
 from ctypes import cast, c_void_p
@@ -36,6 +38,21 @@ comtypes.client.lazybind.Dispatch.__getattr__=new__getattr__
 def new__call__(self,*args,**kwargs):
 	return comtypes.client.dynamic.MethodCaller(0,self)(*args,**kwargs)
 comtypes.client.dynamic._Dispatch.__call__=new__call__
+
+# Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
+# This causes Release() to be called more than it should, which is very nasty and will eventually cause us to access pointers which have been freed.
+from comtypes import _compointer_base
+_cpbDel = _compointer_base.__del__
+def newCpbDel(self):
+	if hasattr(self, "_deleted"):
+		# Don't allow this to be called more than once.
+		log.debugWarning("COM pointer %r already deleted" % self)
+		return
+	_cpbDel(self)
+	self._deleted = True
+newCpbDel.__name__ = "__del__"
+_compointer_base.__del__ = newCpbDel
+del _compointer_base
 
 #Monkey patch to force dynamic Dispatch on all vt_dispatch variant values.
 #Certainly needed for comtypes COM servers, but currently very fiddly to do just for that case 
