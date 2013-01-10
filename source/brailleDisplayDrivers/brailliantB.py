@@ -55,14 +55,20 @@ FIRST_ROUTING_KEY = 80
 
 def _getPorts():
 	# USB.
-	with _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\Vid_1c71&Pid_c005") as rootKey:
-		for index in itertools.count():
-			try:
-				keyName = _winreg.EnumKey(rootKey, index)
-			except WindowsError:
-				break
-			with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
-				yield "USB", _winreg.QueryValueEx(paramsKey, "PortName")[0]
+	try:
+		rootKey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Enum\USB\Vid_1c71&Pid_c005")
+	except WindowsError:
+		# A display has never been connected via USB.
+		pass
+	else:
+		with rootKey:
+			for index in itertools.count():
+				try:
+					keyName = _winreg.EnumKey(rootKey, index)
+				except WindowsError:
+					break
+				with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
+					yield "USB", _winreg.QueryValueEx(paramsKey, "PortName")[0]
 
 	# Bluetooth.
 	for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
