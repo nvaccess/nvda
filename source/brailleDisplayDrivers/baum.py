@@ -265,6 +265,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		for group, groupKeysDown in keysDown.iteritems():
 			if group == BAUM_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xfc:
 				# This is braille input.
+				# 0xfc covers command keys. The space bars are covered by 0x3.
 				self.dots = groupKeysDown >> 8
 				self.space = groupKeysDown & 0x3
 			if group == BAUM_ROUTING_KEYS:
