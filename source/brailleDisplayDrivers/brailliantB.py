@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited
+#Copyright (C) 2012-2013 NV Access Limited
 
 import os
 import time
@@ -14,6 +14,7 @@ import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
+import brailleInput
 
 TIMEOUT = 0.2
 BAUD_RATE = 115200
@@ -52,6 +53,9 @@ KEY_NAMES = {
 	20: "down",
 }
 FIRST_ROUTING_KEY = 80
+DOT1_KEY = 2
+DOT8_KEY = 9
+SPACE_KEY = 10
 
 def _getPorts():
 	# USB.
@@ -211,7 +215,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		},
 	})
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
 	source = BrailleDisplayDriver.name
 
@@ -220,7 +224,18 @@ class InputGesture(braille.BrailleDisplayGesture):
 		self.keyCodes = set(keys)
 
 		self.keyNames = names = set()
+		isBrailleInput = True
 		for key in self.keyCodes:
+			if isBrailleInput:
+				if DOT1_KEY <= key <= DOT8_KEY:
+					self.dots |= 1 << (key - DOT1_KEY)
+				elif key == SPACE_KEY:
+					self.space = True
+				else:
+					# This is not braille input.
+					isBrailleInput = False
+					self.dots = 0
+					self.space = False
 			if key >= FIRST_ROUTING_KEY:
 				names.add("routing")
 				self.routingIndex = key - FIRST_ROUTING_KEY
