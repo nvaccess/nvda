@@ -41,6 +41,9 @@
 - Braille display drivers can now support manual port selection. (#426)
  - This is most useful for braille displays which support connection via a legacy serial port.
  - This is done using the getPossiblePorts class method on the BrailleDisplayDriver class.
+- Braille input from braille keyboards is now supported. (#808)
+ - Braille input is encompassed by the brailleInput.BrailleInputGesture class or a subclass thereof.
+ - Subclasses of braille.BrailleDisplayGesture (as implemented in braille display drivers) can also inherit from brailleInput.BrailleInputGesture. This allows display commands and braille input to be handled by the same gesture class.
 
 
 = 2012.3 =
