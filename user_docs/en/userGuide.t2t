@@ -20,7 +20,7 @@ Major highlights include:
 - Built-in speech synthesizer supporting over 43 languages
 - reporting of textual formatting where available such as font name and size, style and spelling errors
 - Automatic announcement of text under the mouse and optional audible indication of the mouse position
-- Support for many refreshable braille displays
+- Support for many refreshable braille displays, including input of computer braille from a braille keyboard for displays which have one
 - Ability to run entirely from a USB stick or other portable media without the need for installation
 - Easy to use talking installer
 - Translated into 42 languages
@@ -710,17 +710,18 @@ You may consult the documentation for your braille display in the section [Suppo
 
 ==== Output Table ====
 The next option you will come to in this dialog is the braille output table combo box.
-In this combo box, you will find braille tables for different languages, braille standards and grades. The chosen table will be used to translate text into braille to be shown in your braille display.
+In this combo box, you will find braille tables for different languages, braille standards and grades.
+The chosen table will be used to translate text into braille to be presented on your braille display.
 You can move from braille table to braille table in the list by using the arrow keys.
 
 ==== Input Table ====
-Compplementary to the previous option, the next setting you will find is the braille input table combo box.
-In this combo box, you will find braille tables for different languages you can choose from, to back-translate braille patterns you can input with your braille display perkines-style keyboard.
-NVDA only supports computer braille input, so only 8 dot computer braille tables will be shown.
+Complementary to the previous option, the next setting you will find is the braille input table combo box.
+The chosen table will be used to translate braille entered on your braille display's Perkins-style keyboard into text.
+NVDA currently only supports computer braille input, so only 8 dot computer braille tables will be shown.
 You can move from braille table to braille table in the list by using the arrow keys.
 
-Note that this option has only any effect if your braille device has a perkines-style keyboard, and this feature is supported by the specific braille display driver.
-You may check the [Supported Braille Displays #SupportedBrailleDisplays] section for more information.
+Note that this option is only useful if your braille display has a Perkins-style keyboard and this feature is supported by the braille display driver.
+If input is not supported on a display which does have a braille keyboard, this will be noted in the [Supported Braille Displays #SupportedBrailleDisplays] section.
 
 ==== Expand to computer braille for the word at the cursor ====
 This option allows the word that is under the cursor to be displayed in non-contracted computer braille.
@@ -1225,6 +1226,9 @@ Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] ar
 You do not need any specific drivers to be installed to use these displays.
 Just plug in the display and configure NVDA to use it.
 
+While these displays do have a braille keyboard, they handle translation from braille to text themselves.
+Therefore, NVDA's braille input table setting is not relevant.
+
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 %kc:beginInclude
@@ -1252,6 +1256,8 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ Handy Tech Displays ++
 NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
 For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+
+Braille input is not yet supported.
 
 Following are the key assignments for this display with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1391,6 +1397,8 @@ Please see the display's documentation for descriptions of where these keys can 
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
 If connecting via USB, you will need to install the USB drivers from HIMS on your system.
+
+Braille input is not yet supported.
 
 Following are the key assignments for these displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -1590,6 +1598,9 @@ Please check your BrailleNote's documentation to find where these keys are locat
 In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
 When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
+
+For displays which have a braille keyboard, BRLTTY currently handles braille input itself.
+Therefore, NVDA's braille input table setting is not relevant.
 
 Following are the BRLTTY command assignments for NVDA.
 Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
