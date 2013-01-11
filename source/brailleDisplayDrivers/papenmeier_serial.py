@@ -64,7 +64,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def check(cls):
 		"""should return false if there is a missing dependency"""
 		return True
-	
+
 	@classmethod
 	def getPossiblePorts(cls):
 		ports = OrderedDict()
@@ -78,7 +78,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		table = []
 		for i in xrange(0, self.numCells): table +=[1]
 		self._dev.write(brl_out(512+self._offsetHorizontal, table))
-	
+
 	def __init__(self, port):
 		"""Initializes braille display driver"""
 		super(BrailleDisplayDriver, self).__init__()
@@ -104,7 +104,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				if(dic == -1):
 					self._dev.close()
 					self._dev=None
-					
+
 		#set parameters for display
 		if(dic == 2):
 			self.numCells = 40
@@ -270,7 +270,6 @@ def brl_keyname(keyindex, driver):
 		else: return ''
 
 class InputGesture(braille.BrailleDisplayGesture):
-
 	"""input gesture class for papenmeier_serial displays used only by the driver"""
 
 	source = BrailleDisplayDriver.name
