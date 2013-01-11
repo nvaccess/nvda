@@ -1592,7 +1592,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Cursor zum Braillemodul bewegen | routing |
 %kc:endInclude
 
-++ Papenmeier ++
+++ Papenmeier BRAILLEX neuere Modelle ++
 Folgende Braillezeilen werden unterstützt:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2D80s, EL 70s, EL 66s (USB)
@@ -1695,6 +1695,94 @@ Bitte sehen sie im Benutzerhandbuch zu Ihrer Braillezeile nach, wo sich die ents
 | Alt | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+m) |
 | Eingabehilfe ein/ausschalten | Leertaste+Punkt1+Punkt2+Punkt5 (Leertaste+h) |
 %kc:endInclude
+
+++ Papenmeier Braillezeilen ältere Modelle ++
+Folgende Braillezeilen werden unterstützt:
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+
+Beachten Sie, dass diese Zeilen ausschließlich durch eine serielle Schnittstelle verbunden werden können. Daher sollten Sie den Anschluss wählen, nachdem Sie diesen Treiber im Braillezeilen Einstellungsdialog gewählt haben.
+
+Die meisten Braillezeilen besitzen eine Navigationsleiste (EAB), 
+welche eine intuitive und schnelle Bedienung ermöglicht.
+Die Navigationsleiste kann in vier Richtungen bewegt
+werden, wobei sie in der Regel zwei Schalterstellungen je Richtung hat.
+
+Für die Aktionen auf, ab, links, rechts wird ein Repeat unterstützt; 
+längeres Drücken löst die Aktion mehrfach aus.
+Braillezeilen ohne Navigationsleiste verwenden Tasten an der 
+Vorderseite zur Navigation.
+
+Die folgenden Schalter gibt es auf der Braillezeile:
+
+%kc:beginInclude
+|| Name | Taste |
+| l1 | Linker Taster oben |
+| l2 | Linker Taster unten |
+| r1 | Rechter Taster oben |
+| r2 | Rechter Taster unten |
+| auf | Navigationsleiste einmal nach oben |
+| auf2 | Navigationsleiste zweimal nach oben |
+| links | Navigationsleiste einmal nach links |
+| links2 | Navigationsleiste zweimal nach links |
+| rechts | Navigationsleiste einmal nach rechts |
+| rechts2 | Navigationsleiste zweimal nach rechts |
+| ab | Navigationsleiste einmal nach unten |
+| ab2 | Navigationsleiste zweimal nach unten  |
+%kc:endInclude
+
+Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen verfügbar:
+
+Geräte mit EAB
+|| Name | Taste |
+| Braillezeile zurückscrollen | links |
+| Braillezeile vorwärtsscrollen | rechts |
+| Braillezeile zur vorigen Zeile bewegen | auf |
+| Braillezeile zur nächsten Zeile bewegen | ab |
+| Cursor zum Braillemodul ziehen | Routing |
+| Liest das Zeichen unter dem Cursor vor | l1 |
+| Führt die Standardaktion aus | l2 |
+| Zieht zum Flächenmodus / Focus | r1 |
+| Führt die Standardaktion aus | l2 |
+| Liest die Titelzeile des aktiven Fensters vor | l1auf |
+| Liest die Statusleiste des aktiven Fensters vor | l2ab |
+| Bewegt das Navigatorobjekt zum Elternobjekt | auf2 |
+| Bewegt das Navigatorobjekt zum ersten Kindobjektobjekt | ab2 |
+| Bewegt das Navigatorobjekt zum nächsten Objekt in der selben Hierarchie | links2 |
+| Bewegt das Navigatorobjekt zum vorherigen Objekt in der selben Hierarchie | rechts2 |
+| Liest Formatierungsinformationen für an der Cursorposition in einen Dokument vor | Obere Routingreihe |
+
+BRAILLEX Tiny
+|| Name | Taste |
+| Liest das Zeichen unter dem Cursor vor | l1 |
+| Führt die Standardaktion aus | l2 |
+| Braillezeile zurückscrollen | links |
+| Braillezeile vorwärtsscrollen | rechts |
+| Braillezeile zur vorigen Zeile bewegen | auf |
+| Braillezeile zur nächsten Zeile bewegen | ab |
+| Koppelt die Brailleanzeige wahlweise an Focus oder Anzeigecursor | r2 |
+| Zieht zum Flächenmodus / Focus | r1 |
+| Liest Formatierungsinformationen für an der Cursorposition in einen Dokument vor | reportf |
+| Bewegt das Navigatorobjekt zum übergeordneten Objekt | r1+auf |
+| Bewegt das Navigatorobjekt zum ersten beinhaltenden Objekt | r1+ab |
+| Bewegt das Navigatorobjekt zum nächsten Objekt | r1+rechts |
+| Bewegt das Navigatorobjekt zum vorherigen Objekt | r1+links |
+
+BRAILLEX 2D Screen
+|| Name | Taste |
+| Liest das Zeichen unter dem Cursor vor | l1 |
+| Führt die Standardaktion aus | l2 |
+| Koppelt die Brailleanzeige wahlweise an Focus oder Anzeigecursor | r2 |
+| Liest Formatierungsinformationen für an der Cursorposition in einen Dokument vor | reportf |
+| Braillezeile zur vorigen Zeile bewegen | auf |
+| Braillezeile zurückscrollen | links |
+| Zieht zum Flächenmodus / Focus | r1 |
+| Braillezeile vorwärtsscrollen | rechts |
+| Braillezeile zur nächsten Zeile bewegen | ab |
+| Bewegt das Navigatorobjekt zum nächsten Objekt in der selben Hierachie | links2 |
+| Bewegt das Navigatorobjekt zum Elternobjekt | auf2 |
+| Bewegt das Navigatorobjekt zum ersten Kindobjektobjekt | dn2 |
+| Bewegt das Navigatorobjekt zum vorherigen Objekt in der selben Hierachie | rechts2 |
 
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] ist ein separates Programm, mit der Sie viele weitere Braillezeilen ansteuern können.
