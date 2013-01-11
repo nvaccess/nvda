@@ -1527,22 +1527,21 @@ Following are the Papenmeier command assignments for NVDA:
 | Report text formatting | upper routing row |
 %kc:endInclude
 
-++ Papenmeier Braille Displays older Models ++
+++ Papenmeier Braille BRAILLEX Older Models ++
 The following Braille displays are supported: 
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
+-
 
-Note that those displays can be connected by serial port only. Hence, you should select the port the display is connected after you have choosen this driver in the braille settings dialogue.
-Some of those devices have an Easy Access Bar (EAB), that allows intuitive and fast operation.
-The EAB can be moved into four directions where generally each
-direction has two switches.
-Pressing and holding the up, down, right and left keys (or
-EAB) causes the corresponding action to be repeated.
+Note that these displays can only be connected via a serial port.
+Therefore, you should select the port to which the display is connected after you have choosen this driver in the Braille Settings dialogue.
 
-Older devices do not have an EAB - front keys are
-used instead.
+Some of these devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
+The EAB can be moved in four directions where generally each direction has two switches.
+Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
+Older devices do not have an EAB; front keys are used instead.
 
-Generally, following keys are available on braille displays:
+Generally, the following keys are available on braille displays:
 
 || Name | Key |
 | l1 | Left front key |
@@ -1560,56 +1559,57 @@ Generally, following keys are available on braille displays:
 
 Following are the Papenmeier command assignments for NVDA:
 
-Devices with EAB 
+%kc:beginInclude
+Devices with EAB:
 || Name | Key |
 | Scroll braille display back | left |
 | Scroll braille display forward | right |
 | Move braille display to previous line | up |
 | Move braille display to next line | dn |
 | Route to braille cell | routing |
-| Reports the character under the cursor | l1 |
-| Performs the default action | l2 |
-| Moves to flat review / focus | r1 |
-| Performs the default action | l2 |
-| Reports the title of the current application or foreground window | l1up |
-| Reads the current application status bar | l2down |
-| Moves the navigator object to the object containing it | up2 |
-| Moves the navigator object to the first object inside it | dn2 |
-| Moves the navigator object to the next object | left2 |
-| Moves the navigator object to the previous object | right2 |
-| Reports formatting info for the current review cursor position within a document | Upper routing strip |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Move to flat review / focus | r1 |
+| Report title | l1up |
+| Report Status Bar | l2down |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to next object | left2 |
+| Move to previous object | right2 |
+| Report text formatting | Upper routing strip |
 
-BRAILLEX Tiny
+BRAILLEX Tiny:
 || Name | Key |
-| Reports the character under the cursor | l1 |
-| Performs the default action | l2 |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
 | Scroll braille display back | left |
 | Scroll braille display forward | right |
 | Move braille display to previous line | up |
 | Move braille display to next line | dn |
 | Toggle braille tethered to | r2 |
-| Moves to flat review / focus | r1 |
+| Move to flat review / focus | r1 |
 | Move to containing object | r1+up |
 | Move to first contained object | r1+dn |
 | Move to previous object | r1+left |
 | Move to next object | r1+right |
-| Reports formatting info for the current review cursor position within a document | reportf |
+| Report text formatting | reportf |
 
-BRAILLEX 2D Screen
+BRAILLEX 2D Screen:
 || Name | Key |
-| Reports the character under the cursor | l1 |
-| Performs the default action | l2 |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
 | Toggle braille tethered to | r2 |
-| Reports formatting info for the current review cursor position within a document | reportf |
+| Report text formatting | reportf |
 | Move braille display to previous line | up |
 | Scroll braille display back | left |
-| Moves to flat review / focus | r1 |
+| Move to flat review / focus | r1 |
 | Scroll braille display forward | right |
 | Move braille display to next line | dn |
-| Moves the navigator object to the next object | left2 |
-| Moves the navigator object to the object containing it | up2 |
-| Moves the navigator object to the first object inside it | dn2 |
-| Moves the navigator object to the previous object | right2 |
+| Move to next object | left2 |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to previous object | right2 |
+%kc:endInclude
 
 ++ HumanWare BrailleNote ++
 NVDA supports the BrailleNote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader.
