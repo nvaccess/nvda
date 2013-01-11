@@ -274,11 +274,12 @@ class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 		keys=[self.keyLabels[num] for num in xrange(24) if (keyBits>>num)&1]
 		extendedKeys=[self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num)&1]
 		self.id="+".join(set(keys+extendedKeys))
-		# If some dots or space bar is pressed, this is a dots gesture.
-		self.dots = keyBits & 0xff
-		# Is space?
-		if keyBits & (1 << 0xf):
-			self.space = True
+		# Don't say is this a dots gesture if some keys either from dots and space are pressed.
+		if not extendedKeyBits and not keyBits & ~(0xff | (1 << 0xf)):
+			self.dots = keyBits & 0xff
+			# Is space?
+			if keyBits & (1 << 0xf):
+				self.space = True
 
 class RoutingGesture(InputGesture):
 
