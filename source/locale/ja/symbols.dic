@@ -1,16 +1,17 @@
-﻿#locale/ja/symbols.dic A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 1999-2002 Bilingual Emacspeak Project Copyright (c)
-#2011-2012 NVDA Contributors Copyright (c) 2012 Takuya Nishimoto
-#(nishimotz), Martin (mahoro-ba.net) This file is covered by the GNU
-#General Public License.
+﻿#locale/ja/symbols.dic 
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 1999-2002 Bilingual Emacspeak Project
+#Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2012 Takuya Nishimoto(nishimotz), Martin (mahoro-ba.net)
+#This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-行末の丸	(?<=[^\s。])\。(?=[\"'”’)\s]|$)
-行末の点	(?<=[^\s、])\、(?=[\"'”’)\s]|$)
-行末の感嘆符	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
-行末の疑問符	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
+文末の丸	(?<=[^\s。])\。(?=[\"'”’)\s]|$)
+文中の点	(?<=[^\s、])\、(?=[\"'”’)\s]|$)
+文末の感嘆符	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
+文末の疑問符	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
 
 # Others
 decimal point	(?<=\d)\.(?=\d)
@@ -19,8 +20,8 @@ negative number	(?<!\w)-(?=[$＄€£￡¢￠¥\\￥]?\d)
 comma between numbers	(?<=\d)\,(?=\d)
 複数のピリオド	(?<=\.)\.|\.(?=\.)
 単語中のピリオド	(?<=[\w])\.+(?=[\w])
-数字の間のゼンカクピリオド	(?<=[\d])．(?=[\d])
-数字の間のゼンカクカンマ	(?<=[\d])，(?=[\d])
+数字の間の全角ピリオド	(?<=[\d])．(?=[\d])
+数字の間の全角カンマ	(?<=[\d])，(?=[\d])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
