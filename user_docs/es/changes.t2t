@@ -6,6 +6,7 @@ Qué hay de Nuevo en NVDA
 = 2013.1 =
 
 == Nuevas Características ==
+- Soporte básico para editar y leer presentaciones de Microsoft PowerPoint. (#501)
 - Soporte básico para leer y escribir mensajes en Lotus Notes 8.5. (#543)
 - En modo Navegación para MSHTML (ej.: Internet Explorer) y Gecko (ej.: Firefox), ahora se anuncia la existencia de descripciones largas. También es posible abrir la descripción larga en una ventana nueva pulsando NVDA+d. (#809)
 - Las notificaciones en Internet Explorer 9 y superior ahora se verbalizan (tales como contenido bloqueado o descargas de ficheros). (#2343)
@@ -15,6 +16,7 @@ Qué hay de Nuevo en NVDA
 - Soporte para líneas braille conectadas a través de bluetooth en un ordenador ejecutando el Bluetooth Stack for Windows de Toshiba. (#2419)
 - Soporte para la selección de puerto cuando se utilicen líneas freedom Scientific (Automático, USB o Bluetooth).
 - Soporte para la familia BrailleNote de anotadores electrónicos de Humanware cuando actúen como una terminal braille para un lector de pantalla. (#2012)
+- Soporte para  modelos antiguos de las líneas braille Papenmeier BRAILLEX. (#2679)
 
 
 == Corrección de Fallos ==
@@ -27,8 +29,13 @@ Qué hay de Nuevo en NVDA
 - La lista de candidatos del método de entrada Chino Simplificado Microsoft Pinyin bajo Windows 7 ahora se lee correctamente cuando se cambian páginas con las flechas izquierda y derecha, y cuando se la abre primero con Inicio.
 - Cuando se guarda la información de pronunciación personalizada de símbolos , el campo avanzado "preserve" ya no se elimina. (#2852)
 - Cuando se desactiva la detección automática de actualizaciones, NVDA ya no ha de ser reiniciado para que todos los cambios tengan efecto.
-- NVDA ya no falla al iniciarse si un complemento no se puede eliminar debido a que su directorio está siendo actualmente usado por otra aplicación. (#2860)
- 
+- NVDA ya no falla al iniciarse si un complemento no se puede eliminar debido a que su directorio se esté utilizando actualmente por otra aplicación. (#2860)
+- Las etiquetas de pestañas en el diálogo de preferencias de DropBox ahora pueden verse con la Revisión Plana. 
+- Si el idioma de entrada se cambia a algún otro que el predeterminado, NVDA ahora detecta las teclas correctamente para órdenes y el modo de ayuda de entrada.
+- Para idiomas tales como el alemán donde el signo + (más) es una  tecla sola en el teclado, ahora es posible vincularle órdenes utilizando la palabra "plus". (#2898)
++- En Internet Explorer y otros controles  MSHTML, las comillas ahora se anuncian donde proceda. (#2888)
+- El controlador de las líneas HumanWare Brailliant BI/Bbraille ahora puede  seleccionarse cuando la línea esté conectado a través de Bluetooth pero nunca se hayan conectado a través de USB.
+
 
 == Cambios para Desarrolladores ==
 - Los controladores de línea Braille ahora pueden soportar la selección manual de puertos. (#426)
