@@ -3,10 +3,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5687\n"
+"Project-Id-Version: NVDA bzr main:5745\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-12-11 06:41+0000\n"
-"PO-Revision-Date: 2012-12-11 12:16+0200\n"
+"POT-Creation-Date: 2013-01-14 05:30+0000\n"
+"PO-Revision-Date: 2013-01-14 08:41+0200\n"
 "Last-Translator: Jani Kinnunen\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "MIME-Version: 1.0\n"
@@ -169,7 +169,7 @@ msgstr "&Sävy:"
 
 #: gui/__init__.py:297
 msgid "&Input composition settings..."
-msgstr "S&yöttömenetelmä..."
+msgstr "Sy&öttömenetelmä..."
 
 #: gui/__init__.py:566
 msgid "&Install NVDA on this computer"
@@ -634,6 +634,11 @@ msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr ""
 "Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:109
+msgid "Bitmap placeholder"
+msgstr "Bittikartan paikkamerkki"
+
 #: gui/settingsDialogs.py:1213
 msgid "Braille &display:"
 msgstr "Piste&näyttö:"
@@ -706,6 +711,11 @@ msgstr "Äänenkorkeuden muutos prosentteina isoille kirjaimille"
 msgid "Case &sensitive"
 msgstr "Sama &kirjainkoko"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:97
+msgid "Center Title placeholder"
+msgstr "Keskitetyn otsikon paikkamerkki"
+
 #: gui/__init__.py:293
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr ""
@@ -731,6 +741,11 @@ msgstr "Vaihda käytettävää syntetisaattoria"
 #: gui/__init__.py:301
 msgid "Change virtual buffers specific settings"
 msgstr "Muuta selaustilan asetuksia"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:107
+msgid "Chart placeholder"
+msgstr "Kaavion paikkamerkki"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 #: gui/__init__.py:361
@@ -982,6 +997,11 @@ msgstr "Tanska, taso 1"
 #: braille.py:50
 msgid "Danish grade 2"
 msgstr "Tanska, taso 2"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:123
+msgid "Date placeholder"
+msgstr "Päiväyksen paikkamerkki"
 
 #. Translators: This is presented in outlook or live mail, date of email
 #: appModules/msimn.py:33
@@ -1285,6 +1305,11 @@ msgstr "Seuraa järjestelmä&kohdistinta"
 msgid "Follow system &focus"
 msgstr "Seuraa järjestelmä&kohdistusta"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:121
+msgid "Footer placeholder"
+msgstr "Alatunnisteen paikkamerkki"
+
 #: NVDAObjects/window/winword.py:88
 msgid "Footnotes"
 msgstr "Alaviitteet"
@@ -1407,10 +1432,20 @@ msgstr "HIMS SyncBraille"
 msgid "Half shaped mode"
 msgstr "Puolikkaat merkit"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:158
+msgid "Handout Master view"
+msgstr "Tiivistelmän perustyylinäkymä"
+
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers/handyTech.py:49
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:119
+msgid "Header placeholder"
+msgstr "Ylätunnisteen paikkamerkki"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1425,12 +1460,12 @@ msgid "Hindi grade 1"
 msgstr "Hindi, taso 1"
 
 #. Translators: Names of braille displays
-#: brailleDisplayDrivers/brailleNote.py:86
+#: brailleDisplayDrivers/brailleNote.py:88
 msgid "HumanWare BrailleNote"
 msgstr "HumanWare BrailleNote"
 
 #. Translators: The name of a series of braille displays.
-#: brailleDisplayDrivers/brailliantB.py:79
+#: brailleDisplayDrivers/brailliantB.py:85
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B"
 
@@ -1602,7 +1637,7 @@ msgstr "Käyttöoikeussopimus"
 msgid "Lin&ks"
 msgstr "Lin&kit"
 
-#: core.py:203
+#: core.py:156
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA käynnistetään, odota..."
 
@@ -1652,6 +1687,16 @@ msgid ""
 msgstr ""
 "Merkitsee tarkastelukohdistimen nykyisen sijainnin kopioitavan tekstin "
 "alkukohdaksi"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:174
+msgid "Master Thumbnails"
+msgstr "Perustyylin pikkukuvat"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:111
+msgid "Media Clip placeholder"
+msgstr "Medialeikkeen paikkamerkki"
 
 #: gui/settingsDialogs.py:1261
 msgid "Message timeout (sec)"
@@ -1826,7 +1871,7 @@ msgid ""
 "Moves to flat review for the screen (or document if currently inside one) "
 "and positions the review cursor at the location of the current object"
 msgstr ""
-"Siirtyy ruudun tai asiakirjan kokonaistarkasteluun mikäli mahdollista, ja "
+"Siirtää ruudun tai asiakirjan kokonaistarkasteluun mikäli mahdollista, ja "
 "sijoittaa tarkastelukohdistimen nykyiseen objektiin."
 
 #: globalCommands.py:166
@@ -1877,7 +1922,7 @@ msgstr "NVDA:n lisäosapaketti"
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ei voi poistaa tai korvata tiedostoa."
 
-#: core.py:300
+#: core.py:253
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -2011,6 +2056,11 @@ msgstr "Ei päivityksiä saatavilla."
 msgid "NonVisual Desktop Access"
 msgstr "Non-Visual Desktop Access"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:168
+msgid "Normal view"
+msgstr "Normaali näkymä"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:149
@@ -2059,6 +2109,16 @@ msgstr "Ei taulukon solussa"
 msgid "Not in table"
 msgstr "Ei taulukossa"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:160
+msgid "Notes Master view"
+msgstr "Muistiinpanon perustyylinäkymä"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:156
+msgid "Notes page"
+msgstr "Muistiinpanosivu"
+
 #. Translators: This is the label for the object presentation dialog.
 #: gui/settingsDialogs.py:776
 msgid "Object Presentation"
@@ -2075,14 +2135,29 @@ msgstr ""
 "prosenttia ruudun leveydestä, korkeus on {height:.1f} prosenttia ruudun "
 "korkeudesta"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:105
+msgid "Object placeholder"
+msgstr "Objektin paikkamerkki"
+
 #: gui/__init__.py:475
 msgid "Options"
 msgstr "Asetukset"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:113
+msgid "Org Chart placeholder"
+msgstr "Organisaatiokaavion paikkamerkki"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:39
 msgid "Organisation:"
 msgstr "Yritys:"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:162
+msgid "Outline view"
+msgstr "Jäsennysnäkymä"
 
 #. Translators: This is the label for the select output
 #. device combo in the synthesizer dialog. Examples of
@@ -2100,6 +2175,11 @@ msgstr "Paketti"
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX (uudemmat mallit)"
 
+#. Translators: Names of braille displays.
+#: brailleDisplayDrivers/papenmeier_serial.py:61
+msgid "Papenmeier BRAILLEX older models"
+msgstr "Papenmeier BRAILLEX (vanhemmat mallit)"
+
 #: globalCommands.py:870
 msgid "Pass next key through"
 msgstr "Välitä seuraava näppäinpainallus"
@@ -2115,6 +2195,11 @@ msgid ""
 msgstr ""
 "Suorittaa oletustoiminnon nykyiselle navigointiobjektille (painaa "
 "esimerkiksi painiketta)"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:127
+msgid "Picture placeholder"
+msgstr "Kuvan paikkamerkki"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:16
@@ -2249,6 +2334,11 @@ msgstr "Ensisijainen alatunniste"
 #: NVDAObjects/window/winword.py:90
 msgid "Primary header"
 msgstr "Ensisijainen ylätunniste"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:170
+msgid "Print Preview"
+msgstr "Esikatselu"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
@@ -2654,6 +2744,7 @@ msgid "Rewind"
 msgstr "Kelaa taaksepäin"
 
 #: brailleDisplayDrivers/papenmeier.py:457
+#: brailleDisplayDrivers/papenmeier_serial.py:157
 msgid "Route to and report formatting"
 msgstr "Siirrä pistesoluun ja lue muotoilutiedot"
 
@@ -2718,7 +2809,8 @@ msgid "Serbian grade 1"
 msgstr "Serbia, taso 1"
 
 #. Translators: Name of a serial communications port
-#: brailleDisplayDrivers/brailleNote.py:126
+#: brailleDisplayDrivers/brailleNote.py:135
+#: brailleDisplayDrivers/papenmeier_serial.py:73
 msgid "Serial: {portName}"
 msgstr "Sarja: {portName}"
 
@@ -2818,6 +2910,41 @@ msgstr "Lepotila pois"
 #: globalCommands.py:64
 msgid "Sleep mode on"
 msgstr "Lepotila käytössä"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:154
+msgid "Slide Master view"
+msgstr "Dian perustyylinäkymä"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:117
+msgid "Slide Number placeholder"
+msgstr "Dianumeron paikkamerkki"
+
+#. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
+#: appModules/powerpnt.py:696
+msgid "Slide Show - complete"
+msgstr "Diaesitys - päättynyt"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:164
+msgid "Slide Sorter view"
+msgstr "Dialajittelunäkymä"
+
+#. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:693
+msgid "Slide show - {slideName}"
+msgstr "Diaesitys - {slideName}"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:152
+msgid "Slide view"
+msgstr "Dianäkymä"
+
+#. Translators: the label for a slide in Microsoft PowerPoint.
+#: appModules/powerpnt.py:480
+msgid "Slide {slideNumber}"
+msgstr "Dia {slideNumber}"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2922,6 +3049,11 @@ msgstr "Pysäytä"
 msgid "Subject:"
 msgstr "Aihe:"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:99
+msgid "Subtitle placeholder"
+msgstr "Alaotsikon paikkamerkki"
+
 #. Translators: The title of a dialolg presented to indicate a successful operation.
 #: gui/installerGui.py:67 gui/installerGui.py:237 gui/settingsDialogs.py:225
 msgid "Success"
@@ -2972,13 +3104,18 @@ msgstr "Puhesyntetisaattori"
 msgid "Synthesizer Error"
 msgstr "Syntetisaattorivirhe"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:115
+msgid "Table placeholder"
+msgstr "Taulukon paikkamerkki"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:191
 msgid "Tamil grade 1"
 msgstr "Tamili, taso 1"
 
-#: NVDAObjects/IAccessible/__init__.py:1621
+#: NVDAObjects/IAccessible/__init__.py:1624
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -2995,6 +3132,11 @@ msgstr "Teksti&yksikön tarkkuus:"
 #: NVDAObjects/window/winword.py:91
 msgid "Text frame"
 msgstr "Tekstikehys"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:95
+msgid "Text placeholder"
+msgstr "Tekstin paikkamerkki"
 
 #: globalCommands.py:958
 #, python-format
@@ -3046,6 +3188,21 @@ msgstr "Leikepöydällä ei ole tekstiä"
 #: gui/settingsDialogs.py:248
 msgid "This change requires administrator privileges."
 msgstr "Tämä muutos edellyttää järjestelmänvalvojan oikeuksia."
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:172
+msgid "Thumbnails"
+msgstr "Pikkukuvat"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:166
+msgid "Title Master view"
+msgstr "Otsikon perustyylinäkymä"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:93
+msgid "Title placeholder"
+msgstr "Otsikon paikkamerkki"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui/installerGui.py:145
@@ -3318,6 +3475,21 @@ msgstr "&Voimakkuus:"
 msgid "Version"
 msgstr "Versio"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:125
+msgid "Vertical Object placeholder"
+msgstr "Pystysuuntaisen objektin paikkamerkki"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:103
+msgid "Vertical Text placeholder"
+msgstr "Pystysuuntaisen tekstin paikkamerkki"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:101
+msgid "Vertical Title placeholder"
+msgstr "Pystysuuntaisen otsikon paikkamerkki"
+
 #: gui/__init__.py:321
 msgid "View log"
 msgstr "Näytä l&oki"
@@ -3331,6 +3503,11 @@ msgstr "Ääniasetukset"
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "Puheäänikohtainen sanasto (%s)"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#: appModules/powerpnt.py:268
+msgid "Waiting for Powerpoint..."
+msgstr "Odotetaan PowerPointia..."
 
 #: gui/settingsDialogs.py:192
 msgid "Warning"
@@ -3348,12 +3525,12 @@ msgid ""
 "Thank you for your support."
 msgstr ""
 "Tarvitsemme apuasi voidaksemme jatkaa NVDA:n parantelua.\n"
-"Tämä hanke perustuu etupäässä lahjoituksiin ja avustuksiin. Lahjoittamalla "
-"autat rahoittamaan kokopäiväistä kehitystä.\n"
+"Tämä projekti perustuu etupäässä lahjoituksiin ja avustuksiin. "
+"Lahjoittamalla autat rahoittamaan täysipäiväistä kehitystä.\n"
 "Jos kutakin latausta kohti lahjoitettaisiin edes 10 dollaria, kykenisimme "
-"kattamaan kaikki hankkeen kustannukset.\n"
+"kattamaan kaikki projektin kustannukset.\n"
 "Lahjoitukset ottaa vastaan NV Access, NVDA:ta kehittävä voittoa "
-"tavoittelematon järjestö.\n"
+"tavoittelematon organisaatio.\n"
 "Kiitos tuestasi."
 
 #: gui/__init__.py:356
@@ -3414,10 +3591,10 @@ msgid ""
 "about the errors can be found in the log file.\n"
 msgstr ""
 "Asetustiedostossa on virheitä. \n"
-"Paina OK korjataksesi virheet, tai paina Peruuta, jos haluat tehdä "
+"Paina OK korjataksesi virheet, tai paina Peruuta, jos haluat itse tehdä "
 "korjaukset myöhemmin. Lisätietoja virheistä löytyy lokitiedostosta.\n"
 
-#: core.py:85
+#: core.py:38
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
@@ -3829,7 +4006,7 @@ msgstr "puuttuu"
 msgid "delete"
 msgstr "del"
 
-#: keyboardHandler.py:228
+#: keyboardHandler.py:239
 msgid "desktop"
 msgstr "pöytäkone"
 
@@ -4083,7 +4260,7 @@ msgstr "kehys"
 msgid "fuchsia"
 msgstr "fuksia"
 
-#: core.py:87
+#: core.py:40
 msgid "gesture map File Error"
 msgstr "Virhe syötekomentotiedostossa"
 
@@ -4310,7 +4487,7 @@ msgstr "latinalainen katakana"
 msgid "label"
 msgstr "nimi"
 
-#: keyboardHandler.py:229
+#: keyboardHandler.py:240
 msgid "laptop"
 msgstr "kannettava"
 
@@ -5117,7 +5294,7 @@ msgstr "objektilla ei ole sijaintia"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:781
+#: keyboardHandler.py:355 synthSettingsRing.py:74 gui/settingsDialogs.py:781
 #: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:858
 msgid "off"
 msgstr "pois"
@@ -5144,7 +5321,7 @@ msgstr "ruudun ulkopuolinen"
 msgid "olive"
 msgstr "oliivi"
 
-#: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
+#: keyboardHandler.py:355 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
 #: virtualBuffers/__init__.py:858
 msgid "on"
 msgstr "päällä"

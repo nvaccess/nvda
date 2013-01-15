@@ -6,6 +6,7 @@
 = 2013.1 =
 
 == Uudet ominaisuudet ==
+- Alkeellinen tuki Microsoft PowerPoint -esitysten muokkaamiselle ja lukemiselle. (#501)
 - Alkeellinen tuki viestien lukemiselle ja kirjoittamiselle Lotus Notes 8.5:ssä. (#543)
 - Pitkät kuvaukset ilmoitetaan nyt selaustilassa MSHTML- ja Gecko-sovelluksissa (esim. Internet Explorerissa ja Firefoxissa). Ne on lisäksi mahdollista avata uuteen ikkunaan painamalla NVDA+D. (#809)
 - Ilmoitukset, kuten sisällön estäminen tai tiedostolataukset, puhutaan nyt Internet Explorer 9:ssä ja uudemmissa. (#2343)
@@ -14,7 +15,8 @@
 - Uusi pistetaulukko: tanskalainen taso 2.
 - Tuki bluetoothin kautta yhdistettäville pistenäytöille Toshiban bluetooth-pinoa käyttävissä tietokoneissa. (#2419)
 - Tuki portin valitsemiselle freedom Scientificin pistenäyttöjä käytettäessä (Automaattinen, USB tai Bluetooth).
-- Tuki Humanwaren BrailleNote-tuoteperheen muistiinpanolaitteille käytettäessä niitä pistenäyttönä ruudunlukuohjelmaa varten. (#2012)
+- Tuki Humanwaren BrailleNote-tuoteperheen muistiinpanolaitteille käytettäessä niitä ruudunlukuohjelman pistenäyttönä. (#2012)
+- Tuki Papenmeier BRAILLEX -pistenäyttöjen vanhemmille malleille. (#2679)
 
 
 == Korjatut ohjelmavirheet ==
@@ -28,7 +30,11 @@
 - Edistynyttä "preserve"-kenttää ei enää poisteta omia symbolinlausumissääntöjä tallennettaessa. (#2852)
 - Kun automaattinen päivitysten tarkistus poistetaan käytöstä, NVDA:ta ei tarvitse enää käynnistää uudelleen muutoksen käyttöönottamiseksi.
 - NVDA käynnistyy nyt oikein, jos lisäosaa ei voida poistaa siksi, että sen hakemisto on jonkin toisen sovelluksen käytössä. (#2860)
-- DropBoxin asetukset-valintaikkunan välilehtien nimet näkyvät nyt kokonaistarkastelussa.
+- DropBoxin asetusvalintaikkunan välilehtien nimet näkyvät nyt kokonaistarkastelussa.
+- NVDA tunnistaa nyt oikein komennoissa käytettävät ja syöteohjetilassa painettavat näppäimet, jos syöttökieleksi on määritetty jokin muu kuin oletuskieli.
+- Sellaisissa kielissä, joissa +-merkki on yksittäinen näppäin (kuten esim. saksa), siihen on nyt mahdollista liittää komentoja käyttämällä sanaa "plus". (#2898)
+- Sisennykselliset kappaleenvaihdot luetaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä. (#2888)
+- HumanWare Brailliant BI/B -pistenäyttöajuri on nyt mahdollista valita, kun näyttö on liitetty tietokoneeseen Bluetoothilla, mutta ei vielä kertaakaan USB:llä.
 
 
 = 2012.3 =
