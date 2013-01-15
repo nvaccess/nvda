@@ -696,6 +696,18 @@ Bu seçenekler arasında yön tuşlarınızı kullanarak dolaşın.
 
 Lütfen desteklenen braille ekranlarla ilgili daha fazla bilgi için [Desteklenen Braille Ekranlar #SupportedBrailleDisplays] bölümüne bakın.
 
+==== Port ====
+Bu seçenek, eğer mevcutsa, seçtiğiniz kabartma ekranla hangi port ya da bağlantı tipini kullanarak bağlantı kuracağınızı belirlemenizi sağlar.
+Bu, kabartma ekranınız için mevcut seçeneklerin sunulduğu bir seçim kutusudur.
+
+Varsayılan olarak, NVDA otomatik  port belirlemeyi kullanır, yani  kabartma ekranla bağlantı mevcut USB     ve bluetooth araçları taranarak otomatik olarak belirlenir.
+Ancak, bazı kabartma ekranlar için, hangi bağlantıyı kullanacağınızı özel olarak belirleyebilmeniz de mümkündür.
+Genel seçenekler (NVDA'ya varsayılan otomatik  port  seçme prosedürünü kullanmasını söyleyen) "Otomatik", "USB", "Bluetooth" ve eğer kabartma ekranınız destekliyorsa seri bağlantı  portlarıdır.
+
+Bu bölüm  braille ekranınız  yalnızca otomatik port belirlemeyi destekliyorsa gösterilmez.
+
+Desteklenen bağlantı tipleri ve mevcut portlar için daha fazla detaya ulaşmak için [desteklenen braille ekranlar #SupportedBrailleDisplays] bölümünde Braille ekranınızın dokümantasyonuna baş vurabilirsiniz.
+
 ==== Çeviri Tablosu ====
 Bu iletişim kutusundaki bir sonraki seçenek bir braille tablo seçim kutusudur.
 Bu seçim kutusunda, farklı diller için braille tabloları bulacaksınız. Bir braille tablodan diğer braille tabloya yön tuşlarını kullanarak geçebilirsiniz.
@@ -1144,6 +1156,10 @@ Eğer henüz bu sürücüler elinizde yoksa, bunları http://www.freedomscientif
 Bu sayfada Yalnızca Focus 40 Blue sürücülerinden bahsedilmesine karşın, bu sürücüler tüm Freedom Scientific ekranlarını desteklemektedir.
 Sisteminiz 64 bit Windows ise ve sürücüler başka bir ekran okuyucu tarafından yüklenmiş olsa bile, NVDA'nın ihtiyaç duyduğu dosyalar yüklenmiş olmayabileceği için muhtemelen bu bağlantıdaki sürücüleri ayrıca yüklemeniz gerekecektir..
 
+Varsayılan olarak, NVDA bu ekranları otomatik olarak bulup USB ya da bluetooth ile bağlanabilir.
+Öte yandan, ekranla ilgili ayarları yaparken, "USB" ya da  "Bluetooth" portlarını seçerek  bağlantı tipine kendiniz karar verebilirsiniz.
+Bu, örneğin ekranınıza bluetooth ile bağlanıp aynı zamanda USB üzerinden de cihazı şarj etmeye devam etmek istemeniz durumunda faydalı olabilir.
+
 Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
@@ -1509,6 +1525,54 @@ Following are the Papenmeier command assignments for NVDA:
 | Move to previous object | left2 |
 | Move to next object | right2 |
 | Report text formatting | upper routing row |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+NVDA supports the BrailleNote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader.
+The following models are supported:
+- BrailleNote Classic (serial connection only)
+- BrailleNote PK (Serial and bluetooth connections)
+- BrailleNote MPower (Serial and bluetooth connections)
+- BrailleNote Apex (USB and Bluetooth connections)
+-
+
+If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
+Please check the BrailleNote manual for details.
+In NVDA, you may also need to set the port in the Braille Settings dialog.
+If you are connecting via USB or bluetooth, you can set the port to "Automatic", "USB" or "Bluetooth", depending on the available choices.
+If connecting using a legacy serial port (or a USB to serial converter) or if none of the previous options appear, you must explicitly choose the communication port to be used from the list of hardware ports.
+
+Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
+
+Following are the BrailleNote command assignments for NVDA.
+Please check your BrailleNote's documentation to find where these keys are located.
+
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | back |
+| Scroll braille display forward | advance |
+| Move braille display to previous line | previous |
+| Move braille display to next line | next |
+| Route to braille cell | routing |
+| Toggle braille tethered to | previous+next |
+| Up arrow key | space+dot1 |
+| Down arrow key | space+dot4 |
+| Left Arrow key | space+dot3 |
+| Right arrow key | space+dot6 |
+| Page up key | space+dot1+dot3 |
+| Page down key | space+dot4+dot6 |
+| Home key | space+dot1+dot2 |
+| End key | space+dot4+dot5 |
+| Control+home keys | space+dot1+dot2+dot3 |
+| Control+end keys | space+dot4+dot5+dot6 |
+| Space key | space |
+| Enter key | space+dot8 |
+| Backspace key | space+dot7 |
+| Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| Shift+tab keys | space+dot1+dot2+dot5+dot6 |
+| Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
+| Alt key | space+dot1+dot3+dot4 (space+m) |
+| Toggle input help | space+dot1+dot2+dot5 (space+h) |
 %kc:endInclude
 
 ++ BRLTTY ++
