@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5689\n"
+"Project-Id-Version: NVDA bzr main:5745\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-12-13 05:30+0000\n"
-"PO-Revision-Date: 2012-12-13 12:24+0545\n"
+"POT-Creation-Date: 2013-01-14 05:30+0000\n"
+"PO-Revision-Date: 2013-01-15 07:26+0545\n"
 "Last-Translator: हिम प्रसाद गौतम \n"
 "Language-Team: हिम प्रसाद गौतम <himjee@yahoo.com>\n"
 "Language: Nepali\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "योजनाको नाम र संस्करण: नेत्रवाणी - १.१.०2\n"
-"प्रथम अनुवादक: हिम प्रसाद गौतम(नेपाल) <drishtibachak@gmail.com>, <himjee@yahoo."
+"प्रथम अनुवादक: हिम प्रसाद गौतम(नेपाल) <Urdubachak@gmail.com>, <himjee@yahoo."
 "com>\n"
 "अनुवाद मिति: २०६९ साल असार १५ गते\n"
 "पुनरावलोकन मिति: २०६९ साल श्रावण १५ गते\n"
@@ -374,7 +374,7 @@ msgstr "ढुकुटीको सुचीमा शब्द थपेर �
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
-msgstr "ढुकुटीमा राख्न चाहेको शब्द सम्पादन बाकसमा लेखेर अस्थायी ढुकुटी  बनाउन सकिने पातो ।"
+msgstr "ढुकुटीमा राख्न चाहेको शब्द सम्पादन बाकसमा लेखेर अस्थायी ढुकुटी बनाउन सकिने पातो ।"
 
 #: gui/__init__.py:309
 msgid ""
@@ -435,7 +435,7 @@ msgid "Add-on Information"
 msgstr "थप-साधन सम्बन्धी जानकारी "
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
-#. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
+#. Translators: A title for the dialog asking if the user wishes to update a previously installed add-on with this one.
 #: gui/addonGui.py:90 gui/addonGui.py:103
 msgid "Add-on Installation"
 msgstr "थप-साधनको स्थापना"
@@ -454,7 +454,7 @@ msgstr ""
 "थप-साधनहरूलाई हटाइयो अथवा थप गरियो । यसको प्रभावका लागि नेत्रवाणीलाई फेरी सुरुवात "
 "गर्नु पर्छ । के अहिले नै नेत्रवाणीलाई सुरुवात गरि हाल्ने हो?"
 
-#. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
+#. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method language currently selected.
 #: NVDAHelper.py:216
 msgid "Alpha numeric input"
 msgstr "वर्णसङ्ख्यक लगानी"
@@ -635,6 +635,11 @@ msgstr "टीँ गर"
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "caps चाबी नलगाई साना वर्ण लेख्दा टीँ गर"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:109
+msgid "Bitmap placeholder"
+msgstr "Bitmap खोपी"
+
 #: gui/settingsDialogs.py:1213
 msgid "Braille &display:"
 msgstr "ब्रेल &पटल"
@@ -679,7 +684,7 @@ msgid "CC:"
 msgstr "वोधार्थः"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
-#. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
+#. Translators: A label for a 'candidate' list which contains symbols the user can choose from when typing east-asian characters into a document.
 #: NVDAObjects/inputComposition.py:103 NVDAObjects/IAccessible/mscandui.py:44
 #: NVDAObjects/IAccessible/mscandui.py:190
 msgid "Candidate"
@@ -696,7 +701,7 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"शिर्षक तय गर्न सकिदैन । कृपया कागजातको स्वरूप अनुकूलतामा तालिकाको शीर्षकलाई  बताउने "
+"शिर्षक तय गर्न सकिदैन । कृपया कागजातको स्वरूप अनुकूलतामा तालिकाको शीर्षकलाई बताउने "
 "परिस्थितिमा राख्नु होला ।"
 
 #: gui/settingsDialogs.py:466
@@ -706,6 +711,11 @@ msgstr "Capital पीच फेरिएको प्रतिशत"
 #: gui/settingsDialogs.py:1093
 msgid "Case &sensitive"
 msgstr "रुप &संवेदन सिल"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:97
+msgid "Center Title placeholder"
+msgstr "केन्द्रिय शिर्षक खोपी"
 
 #: gui/__init__.py:293
 msgid "Change reporting of mouse shape and object under mouse"
@@ -730,6 +740,11 @@ msgstr "प्रयोगमा ल्याउनु पर्ने संश
 #: gui/__init__.py:301
 msgid "Change virtual buffers specific settings"
 msgstr "अवास्तविक buffers सम्बन्धी विशेष अनुकूलतालाई बदल्नु होस् ।"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:107
+msgid "Chart placeholder"
+msgstr "चित्र खोपी"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 #: gui/__init__.py:361
@@ -975,6 +990,11 @@ msgstr "डेनिश श्रेणी १"
 msgid "Danish grade 2"
 msgstr "डेनिश श्रेणी २"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:123
+msgid "Date placeholder"
+msgstr "मिति खोपी"
+
 #. Translators: This is presented in outlook or live mail, date of email
 #: appModules/msimn.py:33
 msgid "Date:"
@@ -1134,7 +1154,7 @@ msgstr "अङ्ग्रेजी (अमेरिका) श्रेणी �
 msgid "Error"
 msgstr "गल्थी"
 
-#. Translators: the title of a retry cancel dialog when copying settings  fails
+#. Translators: the title of a retry cancel dialog when copying settings fails
 #: gui/settingsDialogs.py:211
 msgid "Error Copying"
 msgstr "नक्कल उतारमा गल्ती"
@@ -1207,7 +1227,7 @@ msgstr "%s घुमन्ते प्रति बनाउन सकिएन
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #: gui/addonGui.py:121
 #, python-format
-msgid "Failed to install add-on  from %s"
+msgid "Failed to install add-on from %s"
 msgstr "%s बाट थप-साधन स्थापना गर्न सकिएन । "
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
@@ -1230,7 +1250,7 @@ msgid "Fast forward"
 msgstr "तीव्र अग्रगमन"
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
-#. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
+#. Translators: the title of a retry cancel dialog when NVDA portable copy creation fails
 #: gui/installerGui.py:46 gui/installerGui.py:224
 msgid "File in Use"
 msgstr "फाइल प्रयोगमा छ ।"
@@ -1274,6 +1294,11 @@ msgstr "प्रणाली &Caret पछ्याऊ ।"
 #: gui/settingsDialogs.py:703
 msgid "Follow system &focus"
 msgstr "प्रणाली &केन्द्रीयता पछ्याऊ ।"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:121
+msgid "Footer placeholder"
+msgstr "पाद टिप्पणी खोपी"
 
 #: NVDAObjects/window/winword.py:88
 msgid "Footnotes"
@@ -1397,10 +1422,20 @@ msgstr "HIMS SyncBraille"
 msgid "Half shaped mode"
 msgstr "अर्ध प्रकारको मुद्रा"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:158
+msgid "Handout Master view"
+msgstr "आलेखको मूल रुप"
+
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers/handyTech.py:49
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech ब्रेल पटल"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:119
+msgid "Header placeholder"
+msgstr "शिर्षक खोपी"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1415,12 +1450,12 @@ msgid "Hindi grade 1"
 msgstr "हिन्दी श्रेणी १"
 
 #. Translators: Names of braille displays
-#: brailleDisplayDrivers/brailleNote.py:86
+#: brailleDisplayDrivers/brailleNote.py:88
 msgid "HumanWare BrailleNote"
 msgstr "HumanWare ब्रेलनोट"
 
 #. Translators: The name of a series of braille displays.
-#: brailleDisplayDrivers/brailliantB.py:79
+#: brailleDisplayDrivers/brailliantB.py:85
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B series"
 
@@ -1592,7 +1627,7 @@ msgstr "इजाजतको मन्जुरी"
 msgid "Lin&ks"
 msgstr "&लिङ्क"
 
-#: core.py:203
+#: core.py:156
 msgid "Loading NVDA. Please wait..."
 msgstr "नेत्रवाणी सक्रिय हुँदैछ, पर्खनु होस् ।"
 
@@ -1641,6 +1676,16 @@ msgid ""
 msgstr ""
 "नक्कल उतारिने लागिएको पाठको सुरुको स्थानमा रहेको चालू समीक्षा कर्सरको स्थिति जनाउँछ "
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:174
+msgid "Master Thumbnails"
+msgstr "मूल अँगुठाछाप "
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:111
+msgid "Media Clip placeholder"
+msgstr "श्रव्यदृश्य टुक्रा खोपी"
+
 #: gui/settingsDialogs.py:1261
 msgid "Message timeout (sec)"
 msgstr "सन्देश समाप्ति समय ( सेकेन्डमा)"
@@ -1673,8 +1718,8 @@ msgstr ""
 
 #. Translators: Description for the Move past end of container command in browse mode.
 #: virtualBuffers/__init__.py:1467
-msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Moves past the end  of the container element, such as a list or table"
+msgid "Moves past the end of the container element, such as a list or table"
+msgstr "Moves past the end of the container element, such as a list or table"
 
 #: globalCommands.py:1006
 msgid "Moves the braille display to the next line"
@@ -1840,7 +1885,7 @@ msgstr "नेत्र वाणीको थप-साधन पोको"
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "नेत्र वाणीले फाइल मेटाउन अथवा हटाउन सकेन ।"
 
-#: core.py:300
+#: core.py:253
 msgid "NVDA started"
 msgstr "नेत्रवाणी सक्रिय भयो"
 
@@ -1854,7 +1899,7 @@ msgstr "नेत्र वाणीको {version} संस्करण उ�
 msgid "NVDA web site"
 msgstr "वेभ साइट"
 
-#. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
+#. Translators: A mode that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 #: NVDAHelper.py:214
 msgid "Native input"
 msgstr "स्थानीय लगानी"
@@ -1904,7 +1949,7 @@ msgstr "यो वस्तुको सालाखाला समीक्ष
 
 #: globalCommands.py:705
 msgid "No formatting information"
-msgstr "स्वरूपको जानकारी छैन ।"
+msgstr "ढाँचाको जानकारी छैन ।"
 
 #: globalCommands.py:325
 msgid "No location information for navigator object"
@@ -1974,6 +2019,11 @@ msgstr "अद्यावधिक अनुपलब्ध,"
 msgid "NonVisual Desktop Access"
 msgstr "नदेख्नेहरूको डेस्कटपमा पहुँच"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:168
+msgid "Normal view"
+msgstr "सामान्य रुप"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:149
@@ -2022,6 +2072,16 @@ msgstr "तालिकाको कोठामा छैन ।"
 msgid "Not in table"
 msgstr "तालिकामा छैन"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:160
+msgid "Notes Master view"
+msgstr "टिप्पणी मूल रुप"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:156
+msgid "Notes page"
+msgstr "टिप्पणी पृष्ठ"
+
 #. Translators: This is the label for the object presentation dialog.
 #: gui/settingsDialogs.py:776
 msgid "Object Presentation"
@@ -2037,14 +2097,29 @@ msgstr ""
 "स्क्रिनको {top:.1f} प्रतिशत, चौडाइ स्क्रिनको {width:.1f} प्रतिशत र उचाइ स्क्रिनको "
 "{height:.1f} प्रतिशत ।"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:105
+msgid "Object placeholder"
+msgstr "वस्तु खोपी"
+
 #: gui/__init__.py:475
 msgid "Options"
 msgstr "विकल्प"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:113
+msgid "Org Chart placeholder"
+msgstr "Org चित्र खोपी"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:39
 msgid "Organisation:"
 msgstr "संस्थाः"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:162
+msgid "Outline view"
+msgstr "बाह्यरेखा रुप"
 
 #. Translators: This is the label for the select output
 #. device combo in the synthesizer dialog. Examples of
@@ -2052,7 +2127,7 @@ msgstr "संस्थाः"
 #. headphones, etc.
 #: gui/settingsDialogs.py:289
 msgid "Output &device:"
-msgstr "प्रतिफल &साधन:"
+msgstr "प्रतिफल &उपकरण:"
 
 #: gui/addonGui.py:32
 msgid "Package"
@@ -2061,6 +2136,11 @@ msgstr "पोको"
 #: brailleDisplayDrivers/papenmeier.py:194
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX नयाँ नमुनाहरू"
+
+#. Translators: Names of braille displays.
+#: brailleDisplayDrivers/papenmeier_serial.py:61
+msgid "Papenmeier BRAILLEX older models"
+msgstr "Papenmeier ब्रेल पुरानो मोडेल"
 
 #: globalCommands.py:870
 msgid "Pass next key through"
@@ -2074,8 +2154,12 @@ msgstr "ढर्रा"
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
-msgstr ""
-"चालू विचरण वस्तुमा  निर्धारित कार्य गरि दिन्छ (जस्तै: टाँक रहे छ भने यसलाई दबाउँछ)."
+msgstr "चालू विचरण वस्तुमा निर्धारित कार्य गरि दिन्छ (जस्तै: टाँक रहे छ भने यसलाई दबाउँछ)."
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:127
+msgid "Picture placeholder"
+msgstr "तश्वीर खोपी"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:16
@@ -2210,6 +2294,11 @@ msgstr "प्राथमिक पाद टिपोट"
 #: NVDAObjects/window/winword.py:90
 msgid "Primary header"
 msgstr "प्राथमिक सिर टिपोट"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:170
+msgid "Print Preview"
+msgstr "छपाइ चेहरा"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
@@ -2522,7 +2611,7 @@ msgstr ""
 #: globalCommands.py:317
 msgid ""
 "Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
+"and pressing three times Copies name and value of this object to the "
 "clipboard"
 msgstr ""
 "चालू विचरण वस्तु बताउने छ । दुई पटक थिच्दा हिज्जेको जानकारी र तीन पटक थिच्दा यसको नाम "
@@ -2589,7 +2678,7 @@ msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
 msgstr ""
-"पहिले नै तय गरेको सुरुवात अङ्कित वा समीक्षा कर्सरको हालको स्थानको पाठ  लिन्छ र "
+"पहिले नै तय गरेको सुरुवात अङ्कित वा समीक्षा कर्सरको हालको स्थानको पाठ लिन्छ र "
 "क्पिपपाटीमा उतार्छ ।"
 
 #: gui/__init__.py:295
@@ -2611,6 +2700,7 @@ msgid "Rewind"
 msgstr "प्रतिगमन"
 
 #: brailleDisplayDrivers/papenmeier.py:457
+#: brailleDisplayDrivers/papenmeier_serial.py:157
 msgid "Route to and report formatting"
 msgstr "बाटो समाउ र स्वरूप बताउ"
 
@@ -2640,11 +2730,11 @@ msgstr "capitals अगाडी cap &भन"
 
 #: globalCommands.py:986
 msgid "Scrolls the braille display back"
-msgstr "ब्रेल दृश्यलाई पछाडी पल्टाउ छ"
+msgstr "ब्रेल पटललाई पछाडी पल्टाउ छ"
 
 #: globalCommands.py:991
 msgid "Scrolls the braille display forward"
-msgstr "ब्रेल दृश्यलाई अगाडी पल्टाउ छ"
+msgstr "ब्रेल पटललाई अगाडी पल्टाउ छ"
 
 #: IAccessibleHandler.py:672
 msgid "Secure Desktop"
@@ -2652,12 +2742,12 @@ msgstr "सुरक्षित डेस्कटप"
 
 #: brailleDisplayDrivers/seika.py:30
 msgid "Seika braille displays"
-msgstr "Seika ब्रेल दृश्यक"
+msgstr "Seika ब्रेल पटल"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 #: gui/installerGui.py:182
-msgid "Select portable  directory"
+msgid "Select portable directory"
 msgstr "घुमन्ते घर्राको चयन गर्नु होस् । "
 
 #. Translators: The name of a language supported by NVDA.
@@ -2673,7 +2763,8 @@ msgid "Serbian grade 1"
 msgstr "सर्भियाली श्रेणी १"
 
 #. Translators: Name of a serial communications port
-#: brailleDisplayDrivers/brailleNote.py:126
+#: brailleDisplayDrivers/brailleNote.py:135
+#: brailleDisplayDrivers/papenmeier_serial.py:73
 msgid "Serial: {portName}"
 msgstr "क्रमसङ्ख्या: {portName}"
 
@@ -2754,7 +2845,7 @@ msgstr "यदि फेला पर्योr भने यो अवस्थ
 #. review cursor settings dialog.
 #: gui/settingsDialogs.py:718
 msgid "Simple review mode"
-msgstr "साधारण समीक्षा पाटी"
+msgstr "साधारण समीक्षा मुद्रा"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:58
@@ -2765,6 +2856,41 @@ msgstr "निद्रा मुद्रा भङ्ग"
 #: globalCommands.py:64
 msgid "Sleep mode on"
 msgstr "निद्रा मुद्रामा"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:154
+msgid "Slide Master view"
+msgstr "प्रस्तुति मूल रुप"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:117
+msgid "Slide Number placeholder"
+msgstr "प्रस्तुति क्रम खोपी"
+
+#. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
+#: appModules/powerpnt.py:696
+msgid "Slide Show - complete"
+msgstr "प्रस्तुतिकरण सम्पन्न "
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:164
+msgid "Slide Sorter view"
+msgstr "प्रस्तुति प्वाल रुप"
+
+#. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:693
+msgid "Slide show - {slideName}"
+msgstr "प्रस्तुति प्रदर्शन- {slideName}"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:152
+msgid "Slide view"
+msgstr "प्रस्तुति रुप"
+
+#. Translators: the label for a slide in Microsoft PowerPoint.
+#: appModules/powerpnt.py:480
+msgid "Slide {slideNumber}"
+msgstr "प्रस्तुति {slideNumber}"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2868,6 +2994,11 @@ msgstr "विश्राम"
 msgid "Subject:"
 msgstr "विषयः"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:99
+msgid "Subtitle placeholder"
+msgstr "उप शिर्षक खोपी"
+
 #. Translators: The title of a dialolg presented to indicate a successful operation.
 #: gui/installerGui.py:67 gui/installerGui.py:237 gui/settingsDialogs.py:225
 msgid "Success"
@@ -2918,13 +3049,18 @@ msgstr "संस्लेषक"
 msgid "Synthesizer Error"
 msgstr "संश्लेषकको गल्ती"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:115
+msgid "Table placeholder"
+msgstr "तालिका खोपी"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:191
 msgid "Tamil grade 1"
-msgstr "अरबी श्रेणी १"
+msgstr "तामिल श्रेणी १"
 
-#: NVDAObjects/IAccessible/__init__.py:1621
+#: NVDAObjects/IAccessible/__init__.py:1624
 msgid "Taskbar"
 msgstr "कार्य पट्टी"
 
@@ -2942,6 +3078,11 @@ msgstr "पाठ &एकाइ Resolution:"
 msgid "Text frame"
 msgstr "पाठ फ्रेम"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:95
+msgid "Text placeholder"
+msgstr "पाठ खोपी"
+
 #: globalCommands.py:958
 #, python-format
 msgid ""
@@ -2956,8 +3097,8 @@ msgid ""
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
 "यो स्थापना पोको ले फाइल हटाउन अथवा मेटाएर फेरी लेख्न सकेन । अर्को फाईलवालाले नेत्र "
-"वाणीको अर्को प्रतिको उपयोग पो गरेको छ कि?  कृपया सबै नेत्रवाणी बन्द भए नभएको यकिन "
-"गरेर फेरी प्रयास गर्नु होस् ।"
+"वाणीको अर्को प्रतिको उपयोग पो गरेको छ कि? कृपया सबै नेत्रवाणी बन्द भए नभएको यकिन गरेर "
+"फेरी प्रयास गर्नु होस् ।"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui/installerGui.py:52
@@ -2970,7 +3111,7 @@ msgstr ""
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #: gui/installerGui.py:91
 msgid ""
-"The installation path for NVDA has changed. it will now  be installed in "
+"The installation path for NVDA has changed. it will now be installed in "
 "{path}"
 msgstr "नेत्रवाणी भित्रने बाटो बदलियो । अब यो {path} मा भित्रिने छ ।"
 
@@ -2993,6 +3134,21 @@ msgstr "क्लिप पाटीमा कुनै सामाग्री
 #: gui/settingsDialogs.py:248
 msgid "This change requires administrator privileges."
 msgstr "यो बदलाव लागू हुन प्रशासकीय सुविधा चाहिन्छ"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:172
+msgid "Thumbnails"
+msgstr "औला काँटी"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:166
+msgid "Title Master view"
+msgstr "शिर्षक मूल रुप"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:93
+msgid "Title placeholder"
+msgstr "शिर्षक खोपी"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui/installerGui.py:145
@@ -3020,7 +3176,7 @@ msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "ब्रेल को tethering केन्द्रीयता र समीक्षा स्थान सित साटासाट हुन्छ ।"
 
 #: globalCommands.py:65
-msgid "Toggles  sleep mode on and off for  the active application."
+msgid "Toggles sleep mode on and off for the active application."
 msgstr "सक्रिय अनुप्रयोग को निद्रा मुद्रा खुल्ने वा सुरु हुने क्रिया साटिन्छ ।"
 
 #: globalCommands.py:809
@@ -3056,7 +3212,7 @@ msgstr ""
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
-msgstr "कागजातहरूका सामाग्री खोजेको बेला पर्दाको रूपरेखाको  संरक्षण उल्टाइ दिन्छ ।"
+msgstr "कागजातहरूका सामाग्री खोजेको बेला पर्दाको रूपरेखाको संरक्षण उल्टाइ दिन्छ ।"
 
 #: globalCommands.py:845
 msgid ""
@@ -3146,7 +3302,7 @@ msgstr "किसिम:"
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
-#. Translators: a message dialog asking to retry or cancel when copying settings  fails
+#. Translators: a message dialog asking to retry or cancel when copying settings fails
 #: gui/settingsDialogs.py:209
 msgid ""
 "Unable to copy a file. Perhaps it is currently being used by another process "
@@ -3251,6 +3407,21 @@ msgstr "आय&तन"
 msgid "Version"
 msgstr "संस्करण"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:125
+msgid "Vertical Object placeholder"
+msgstr "ठाडो वस्तु खोपी"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:103
+msgid "Vertical Text placeholder"
+msgstr "ठाडो पाठ खोपी"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:101
+msgid "Vertical Title placeholder"
+msgstr "ठाडो शिर्षक खोपी"
+
 #: gui/__init__.py:321
 msgid "View log"
 msgstr "दृश्य लगत पुस्तिका"
@@ -3264,6 +3435,11 @@ msgstr "आवाजको अनुकूलता"
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "आवाजको ढुकुटी %s"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#: appModules/powerpnt.py:268
+msgid "Waiting for Powerpoint..."
+msgstr "प्रस्तुतिकरणको प्रतिक्षा"
 
 #: gui/settingsDialogs.py:192
 msgid "Warning"
@@ -3343,11 +3519,11 @@ msgid ""
 "edit your config file at a later stage to make corrections. More details "
 "about the errors can be found in the log file.\n"
 msgstr ""
-"तापाईको अभियोजन फाइलमा गल्ती छ ।\n"
+"तपाईको अभियोजन फाइलमा गल्ती छ ।\n"
 " अहिले नै गल्ती सच्याउने हो भने 'ठीक' टाँक र पछि आफैँले अभियोजन फाइल सम्पादन गर्ने हो भने "
 "'रद्द' टाँक दबाउनु होला । गल्तीको विस्तृत विवरण लगत पुस्तिकामा छ ।\n"
 
-#: core.py:85
+#: core.py:38
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
@@ -3757,7 +3933,7 @@ msgstr "निकम्मा"
 msgid "delete"
 msgstr "Delete"
 
-#: keyboardHandler.py:228
+#: keyboardHandler.py:239
 msgid "desktop"
 msgstr "डेस्कटप"
 
@@ -3930,13 +4106,13 @@ msgstr "कर्सरको स्थानको एक पाठ लाई �
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr "पहिले नै लेखेको पाठ हाल कर्सर देखी अगाडी रहेको अर्को स्थानबाट  फेला पार्ने छ ।"
+msgstr "पहिले नै लेखेको पाठ हाल कर्सर देखी अगाडी रहेको अर्को स्थानबाट फेला पार्ने छ ।"
 
 #: cursorManager.py:118
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr "पहिले नै लेखेको पाठ हाल कर्सर देखि पछाडी रहेको अर्को स्थानबाट  फेला पार्ने छ ।"
+msgstr "पहिले नै लेखेको पाठ हाल कर्सर देखि पछाडी रहेको अर्को स्थानबाट फेला पार्ने छ ।"
 
 #: globalCommands.py:943 gui/settingsDialogs.py:1270
 msgid "focus"
@@ -4007,7 +4183,7 @@ msgstr "फ्रेम"
 msgid "fuchsia"
 msgstr "अबिरे"
 
-#: core.py:87
+#: core.py:40
 msgid "gesture map File Error"
 msgstr "Gesture नक्सा फाइलमा गल्ती छ"
 
@@ -4234,7 +4410,7 @@ msgstr "काताकाना रोमन"
 msgid "label"
 msgstr "छाप"
 
-#: keyboardHandler.py:229
+#: keyboardHandler.py:240
 msgid "laptop"
 msgstr "ल्यापटप"
 
@@ -5041,7 +5217,7 @@ msgstr "बस्तुको स्थानको टुङ्गो छैन
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:781
+#: keyboardHandler.py:355 synthSettingsRing.py:74 gui/settingsDialogs.py:781
 #: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:858
 msgid "off"
 msgstr "बन्द"
@@ -5068,7 +5244,7 @@ msgstr "पर्दा बन्द छ ।"
 msgid "olive"
 msgstr "जैतुन"
 
-#: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
+#: keyboardHandler.py:355 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
 #: virtualBuffers/__init__.py:858
 msgid "on"
 msgstr "खुल्यो"
@@ -5214,10 +5390,9 @@ msgstr "पढ्न मात्र मिल्ने "
 
 #: globalCommands.py:670
 msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
+"reads from the review cursor up to end of current text, moving the review "
 "cursor as it goes"
-msgstr ""
-"समीक्षा कर्सर देखि चालू पाठको अन्त सम्मका पाठहरू  समीक्षा कर्सर चले अनुसार पढ्ने गर्छ"
+msgstr "समीक्षा कर्सर देखि चालू पाठको अन्त सम्मका पाठहरू समीक्षा कर्सर चले अनुसार पढ्ने गर्छ"
 
 #: globalCommands.py:674
 msgid ""
@@ -5358,12 +5533,12 @@ msgstr "चली रहेको"
 
 #: controlTypes.py:215
 msgid "scroll bar"
-msgstr "सार्ने चाबी"
+msgstr "सार्ने पट्टी"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:91
 msgid "scroll lock"
-msgstr "scroll lock"
+msgstr "सार्ने चाबी"
 
 #: controlTypes.py:279
 msgid "scroll pane"
@@ -5390,18 +5565,18 @@ msgstr "चयन"
 
 #: controlTypes.py:373
 msgid "selectable"
-msgstr "रोज्न सकिने"
+msgstr "चयन योग्य"
 
 #: controlTypes.py:350
 msgid "selected"
-msgstr "रोजेको"
+msgstr "चयनित"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401 globalCommands.py:130 speech.py:323 speech.py:515
 #: speech.py:530 virtualBuffers/__init__.py:740
 #, python-format
 msgid "selected %s"
-msgstr "%s चुनियो"
+msgstr "%s चयनित"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
 #: speech.py:509
@@ -5674,7 +5849,7 @@ msgstr "पाठ फ्रेम"
 #. Translators: This is the name of a combobox in the mouse settings dialog.
 #: gui/settingsDialogs.py:659
 msgid "text reporting unit"
-msgstr "पाठ बताउने एकाइ"
+msgstr "पाठ प्रतिवेदन एकाइ"
 
 #: controlTypes.py:343
 msgid "thumb control"
@@ -5912,9 +6087,9 @@ msgstr ""
 "यो इजाजत अनलाइनमा हेर्न : http://www.gnu.org/licenses/old-licenses/gpl-2.0."
 "html मा भ्रमण गर्नु होला ।\n"
 "\n"
-"{name}- एउटा NV Access नामक  नाफा नलिई दृश्य विहीन तथा देख्न कठिनाइ भएका "
+"{name}- एउटा NV Access नामक नाफा नलिई दृश्य विहीन तथा देख्न कठिनाइ भएका "
 "व्यक्तिहरूका लागि निःशुल्क र खुल्ला श्रोत युक्त समाधान मार्फत सहयोग एवम् प्रवर्धन गर्न "
-"वचनबद्ध संस्था  को उत्पादन हो ।\n"
+"वचनबद्ध संस्था को उत्पादन हो ।\n"
 "यदि नेत्रवाणी उपयोगी जस्तो लाग्यो र यसको निरन्तर विकास होस् भन्ने चाहना राख्नु हुन्छ भने, "
 "कृपया NV Access लाई चन्दा दिनु होस् । दान गर्नका लागि तपाइले 'दान गर्नु होस् ' भन्ने मेनु "
 "लाई चयन गर्नु होला ।"
