@@ -6,6 +6,7 @@ Que hai de Novo no NVDA
 = 2013.1 =
 
 == Novas Características ==
+- Soporte básico para editar e ler presentacións de Microsoft PowerPoint. (#501)
 - Soporte básico para ler e escreber mensaxes en Lotus Notes 8.5. (#543)
 - No modo Navegación para MSHTML (ex.: Internet Explorer) e Gecko (ex.: Firefox), agora anúnciase a existencia de descripcións longas. Tamén é posible abrir a descripción longa nunha ventá nova premendo NVDA+d. (#809)
 - As notificacións en Internet Explorer 9 e superior agora fálanse (como contido bloqueado ou descargas de ficheiros). (#2343)
@@ -15,6 +16,7 @@ Que hai de Novo no NVDA
 - Soporte para liñas braille conectadas a traverso do bluetooth nun ordenador executando o Bluetooth Stack for Windows de Toshiba. (#2419)
 - Soporte para a selección de porto cando se utilicen liñas freedom Scientific (Automático, USB ou Bluetooth).
 - Soporte para a familia BrailleNote de anotadores electrónicos de Humanware cando actúen como unha terminal braille para un lector de pantalla. (#2012)
+- Soporte para  modelos antigos das liñas braille Papenmeier BRAILLEX. (#2679)
 
 
 == Corrección de Fallos ==
@@ -28,6 +30,11 @@ Que hai de Novo no NVDA
 - Cando se garda a información de pronunciación persoalizada de símbolos , o campo avanzado "preserve" xa non se elimina. (#2852)
 - Cando se desactiva a detección automática de actualizacións, NVDA xa non ten de reiniciarse para que todos os cambios teñan efecto.
 - NVDA xa non falla ó iniciarse se un complemento non se pode eliminar debido a que o seu directorio está a ser utilizado actualmente por outra aplicación. (#2860)
+- As etiquetas de pestanas no diálogo de preferencias do DropBox agora poden verse ca Revisión Cha. 
+- Se a lingua de entrada se cambia a algún outro que o predeterminado, NVDA agora detecta as teclas correctamente para ordes e o modo de axuda de entrada.
+- Para linguas como a alemana onde o signo + (máis) é unha  tecla soa no teclado, agora é posible vincularlle ordes utilizando a palabra "plus". (#2898)
++- En Internet Explorer e outros controis  MSHTML, as comiñas agora anúncianse onde proceda. (#2888)
+- O controlador das liñas HumanWare Brailliant BI/Bbraille agora pode  seleccionarse cando a liña estea conectada a través do Bluetooth pero nunca se conectaran a través do USB.
 
 
 == Cambios para Desenroladores ==
