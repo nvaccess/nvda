@@ -1,92 +1,78 @@
-﻿#locale/en/symbols.dic
+﻿#locale/is/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011 NV Access Inc
+#Copyright (c) 2011-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
-
-complexSymbols:
-# identifier	regexp
-# Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
-# Others
-decimal point	(?<=\d)\.(?=\d) # should be , instead of .  for Icelandic
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)-(?=\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
 
 # Complex symbols
-. sentence ending	punktur	all	always
-! sentence ending	upphrópun	all	always
-? sentence ending	spurningamerki	all	always
-; phrase ending	semíkomma	most	always
-: phrase ending	tvípunktur	most	always
+. sentence ending	punktur
+! sentence ending	upphrópun
+? sentence ending	spurningamerki
+; phrase ending	semíkomma
+: phrase ending	tvípunktur
 decimal point		none	always
-in-word '	úrfellingarmerki	all	norep
-negative number	mínus	none	norep
+in-word '	úrfellingarmerki
+negative number	mínus
 
 # Whitespace
-\0	autt	char	# null
+\0	autt
 \t	dálkabil
-\n	ný lína	char
-\f	ný síða	none
-\r	línubil 	char
- 	bil	char
+\n	ný lína
+\f	ný síða
+\r	línubil
+ 	bil
  	bil	char	# no-break space
 
 # Standard punctuation/symbols
-!	upphrópun	all
-"	gæsalöpp	most
-\#	oddakassi	most
-$	dollaramerki	all	norep
-£	pundmerki	all	norep
-€	evrur	all	norep
-%	prósent	some
-&	og	some
-'	úrfellingarmerki	all
-(	svigi opnast	most
-)	svigi lokast	most
-*	stjarna	most
-+	plús	most
-,	komma	all	always
--	bandstrik	most
-.	punktur	some
-/	skástrik	some
-:	tvípunktur	most	norep
-;	semíkomma	most
-<	minna en	most
->	stærra en	most
-=	samasem	most
-?	spurningamerki	all
-@	hjá	some
-[	hornklofi opnast	most
-]	hornklofi lokast	most
-\\	öfugt skástrik	most
-^	veldismerki	most
-_	undirstrik	most
-`	bylgja	most
-{	slaufusvigi opnast	most
-}	slaufusvigi lokast	most
-|	pípa	most
-~	bylgja	most
+!	upphrópun
+"	gæsalöpp
+\#	oddakassi
+$	dollaramerki
+£	pundmerki
+€	evrur
+%	prósent
+&	og
+'	úrfellingarmerki
+(	svigi opnast
+)	svigi lokast
+*	stjarna
++	plús
+,	komma
+-	bandstrik
+.	punktur
+/	skástrik
+:	tvípunktur
+;	semíkomma
+<	minna en
+>	stærra en
+=	samasem
+?	spurningamerki
+@	hjá
+[	hornklofi opnast
+]	hornklofi lokast
+\\	öfugt skástrik
+^	veldismerki
+_	undirstrik
+`	bylgja
+{	slaufusvigi opnast
+}	slaufusvigi lokast
+|	pípa
+~	bylgja
 
 # Other characters
-•	upptalningarmerki	some
-…	punktur punktur punktur	all	always
-...	punktur punktur punktur	all	always
-	upptalningarmerki	some
-“	gæsalappir opnast	most
-”	gæsalappir lokast	most
-‘	vinstri komma	most
-’	hægri komma	most
-–	þankastrik lengra	most
-—	þankastrik styttra	most
-●	hringur	most
-¨	diaeresis	most
-‎	vinstri til hægri mark	char
-‏	hægri til vinstri mark	char
+•	upptalningarmerki
+…	punktur punktur punktur
+...	punktur punktur punktur
+	upptalningarmerki
+“	gæsalappir opnast
+”	gæsalappir lokast
+‘	vinstri komma
+’	hægri komma
+–	þankastrik lengra
+—	þankastrik styttra
+●	hringur
+¨	diaeresis
+‎	vinstri til hægri mark
+‏	hægri til vinstri mark

@@ -696,6 +696,18 @@ Nessun display  braille significa che non si sta utilizzando il Braille.
 
 Si veda la sezione [Display Braille supportati #SupportedBrailleDisplays] per maggiori informazioni sui modelli disponibili.
 
+==== Porta ====
+Questa opzione, se disponibile, permette di scegliere la porta, oppure il tipo di connessione da utilizzare per comunicare con il display braille selezionato.
+Si tratta di una casella combinata che contiene le scelte possibili riferite al proprio display braille.
+
+Per impostazioni predefinite, NVDA supporta il riconoscimento automatico della porta, il che significa che la connessione con il dispositivo braille sarà stabilita automaticamente tramite la scansione dei dispositivi presenti nel sistema via USB e Bluetooth.
+Comunque, per alcuni display braille, sarà anche possibile stabilire manualmente la porta da utilizzare.
+Le opzioni più comuni sono "automatica" per far sì che NVDA stabilisca da solo la porta esatta da utilizzare, "USB", "bluetooth", e seriale, se il display braille supporta questo tipo di comunicazione.
+
+Quest'ultima opzione non sarà disponibile se il display braille supporta soltanto il riconoscimento delle porte automatico.
+
+Si consiglia di consultare la documentazione presente nella sezione [Display braille supportati #SupportedBrailleDisplays] per avere maggiori informazioni sulle porte e le connessioni disponibili per il display braille che si sta utilizzando.
+
 ==== Tabella di traduzione ====
 L'opzione successiva è denominata Tabella di traduzione. 
 Si tratta di una casella combinata all'interno della quale si trovano varie tabelle Braille per parecchie lingue. Selezionare con le frecce verticali la tabella desiderata.
@@ -1144,6 +1156,10 @@ Nel caso non si sia in possesso di tali drivers, è possibile scaricarli dall'in
 Sebbene nella pagina sia nominata solo la barra Focus 40, il driver funzionerà per tutti i modelli Freedom.
 Da notare che se nel proprio sistema si sta utilizzando una versione di Windows a 64 bit e i driver sono già stati installati da un altro screen reader, è probabile che sia necessario installare comunque il pacchetto, in quanto difficilmente quello screen reader avrà installato tutti i file utilizzati da NVDA.
 
+Per impostazioni predefinite, NVDA è in grado di individuare e connettersi automaticamente a questi display via USB o Bluetooth.
+Comunque, sarà anche possibile selezionare la sola connessione USB o Bluetooth, per restringere il tipo di connessioni da utilizzare.
+Questo potrebbe essere utile ad esempio se si vuole usare la Focus con NVDA via Bluetooth, ma si desidera caricare la batteria tramite la connessione USB.
+
 Segue un elenco dei tasti associati con NVDA:
 Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
 %kc:beginInclude
@@ -1481,7 +1497,7 @@ In genere, sono disponibili i seguenti tasti in questi display braille::
 | l1 | Tasto sinistro frontale |
 | l2 | Tasto sinistro posteriore |
 | r1 | tasto destro frontale |
-| r2 | tasto destro frontale |
+| r2 | tasto destro posteriore |
 | up | uno scatto in su |
 | up2 | 2 scatti in su |
 | left | 1 scatto a sinistra |
@@ -1509,6 +1525,137 @@ Seguono i comandi per i Display Papenmeier associati con NVDA:
 | Spostarsi all'oggetto precedente | left2 |
 | Spostarsi all'oggetto successivo  | right2 |
 | Annuncia formattazione testo | Riga cursor routing superiore |
+%kc:endInclude
+
+++ Papenmeier Braille BRAILLEX vecchi modelli ++
+Sono supportati i seguenti display braille:
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Si noti che questi display braille si possono connettere solo tramite porta seriale.
+Inoltre, è anche necessario selezionare la porta esatta alla quale la barra braille è connessa.
+
+La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
+Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
+La pressione prolungata verso l'alto, basso, destra o sinistra dei tasti o della EAB fa in modo che l'azione corrispondente venga ripetuta.
+
+I dispositivi più vecchi non sono equipaggiati con la EAB. Vengono utilizzati i tasti frontali.
+
+In genere, sono disponibili i seguenti tasti in questi display braille::
+|| Nome | Tasto |
+| l1 | Tasto sinistro frontale |
+| l2 | Tasto sinistro posteriore |
+| r1 | tasto destro frontale |
+| r2 | tasto destro posteriore |
+| up | uno scatto in su |
+| up2 | 2 scatti in su |
+| left | 1 scatto a sinistra |
+| left2 | 2 scatti a sinistra |
+| right | 1 Scatto a destra |
+| right2 | 2 Scatti a destra |
+| dn | 1 Scatto in basso |
+| dn2 | 2 Scatti in basso |
+
+Seguono i comandi per i Display Papenmeier associati con NVDA:
+%kc:beginInclude
+Dispositivi con EAB
+|| Nome | Tasto |
+| Scorri Display braille indietro | left |
+| Scorri Display Braille avanti | right |
+| Sposta Display Braille alla riga precedente | up |
+| Sposta Display Braille alla riga successiva | dn |
+| Route to braille cell | routing |
+| Annuncia il carattere attuale sul cursore di controllo | l1 |
+| Attiva l'oggetto corrente | l2 |
+| Attiva navigazione in linea | r1 |
+| Annuncia Titolo | l1+up |
+| Annuncia barra di stato | l2+down |
+| Spostarsi all'oggetto contenitore | up2 |
+| Spostarsi al primo oggetto contenuto | dn2 |
+| Spostarsi all'oggetto precedente | left2 |
+| Spostarsi all'oggetto successivo  | right2 |
+| Annuncia formattazione testo | Riga cursor routing superiore |
+
+BRAILLEX Tiny:
+|| Nome | Tasto |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Toggle braille tethered to | r2 |
+| Move to flat review / focus | r1 |
+| Move to containing object | r1+up |
+| Move to first contained object | r1+dn |
+| Move to previous object | r1+left |
+| Move to next object | r1+right |
+| Report text formatting | reportf |
+
+BRAILLEX 2D Screen:
+|| Nome | Tasto |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Toggle braille tethered to | r2 |
+| Report text formatting | reportf |
+| Move braille display to previous line | up |
+| Scroll braille display back | left |
+| Move to flat review / focus | r1 |
+| Scroll braille display forward | right |
+| Move braille display to next line | dn |
+| Move to next object | left2 |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to previous object | right2 |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+NVDA supporta la famiglia di barre Braillenote della [Humanware http://www.humanware.com] quando configurati per operare come terminali per screen reader.
+Sono supportati i seguenti modelli:
+- BrailleNote Classic (solo connessione seriale)
+- BrailleNote PK (Connessione seriale e bluetooth )
+- BrailleNote MPower (connessione seriale e bluetooth)
+- BrailleNote Apex (connessione USB e Bluetooth)
+-
+
+Se il proprio dispositivo supporta più di un tipo di connessione, quando si connette il Braillenote a NVDA, è necessario impostare  la porta nelle opzioni terminale braille del Braillenote.
+Si prega di consultare il manuale del Braillenote per maggiori informazioni.
+In NVDA, potrebbe anche essere necessario impostare la porta nella finestra di dialogo Impostazioni Braille.
+Se ci si connette via USB o bluetooth, è possibile impostare la porta su "Automatico", "USB" o "Bluetooth", a seconda delle scelte disponibili.
+Se ci si collega tramite una porta seriale (o un convertitore da USB a seriale) o se nessuna delle opzioni precedenti è disponibile, è necessario scegliere la porta di comunicazione da utilizzare dall'elenco delle porte hardware.
+
+Prima di collegare il BrailleNote Apex utilizzando la sua interfaccia USB, è necessario installare i driver forniti da HumanWare.
+
+Seguono i tasti che sono stati assegnati con NVDA a Brltty.
+Si prega di consultare la documentazione del BrailleNote per informazioni su dove siano situati i tasti.
+
+%kc:beginInclude
+|| Nome | Tasto |
+| Scorre Display Braille indietro | back |
+| Scorre Display Braille avanti | advance |
+| Sposta Display Braille alla riga precedente | previous |
+| Sposta display braille alla riga successiva | next |
+| Route to braille cell | routing |
+| Commuta inseguimento braille | previous+next |
+| Freccia su | spazio+punto1 |
+| Freccia giù | spazio+punto4 |
+| Freccia sinistra | spazio+punto3 |
+| Freccia destra | spazio+punto6 |
+| Pagina su | spazio+punto1+punto3 |
+| Pagina giù | spazio+punto4+punto6 |
+| Tasto Home | spazio+punto1+punto2 |
+| Tasto End | spazio+punto4+punto5 |
+| Control+home | spazio+punto1+punto2+punto3 |
+| Control+end | spazio+punto4+punto5+punto6 |
+| Spazio | space |
+| Invio | spazio+punto8 |
+| Backspace | spazio+punto7 |
+| Tasto Tab| spazio+punto2+punto3+punto4+punto5 (spazio+t) |
+| Shift+tab | spazio+punto1+punto2+punto5+punto6 |
+| Tasto Windows | spazio+punto2+punto4+punto5+punto6 (spazio+w) |
+| Tasto Alt | spazio+punto1+punto3+punto4 (spazio+m) |
+| Commuta aiuto immissione | spazio+punto1+punto2+punto5 (spazio+h) |
 %kc:endInclude
 
 ++ BRLTTY ++

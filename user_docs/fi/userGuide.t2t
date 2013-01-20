@@ -1484,13 +1484,13 @@ NVDA käyttää BrxCom:ia, mikäli se on asennettu.
 BrxCom on työkalu, joka mahdollistaa pistesyötön käyttämisen itsenäisesti ruudunlukuohjelmasta riippumatta.
 Papenmeier julkaisee piakkoin siitä NVDA:lla toimivan version.
 
-Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava Easy Access Bar (EAB).
+Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttösauva (EAB).
 Sitä voidaan siirtää neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
 C-sarjan näytöt ovat ainoa poikkeus.
 
 Niissä ja muutamissa muissa näytöissä on kaksi kosketuskohdistinriviä, joista ylempää käytetään muotoilutietojen lukemiseen.
 C-sarjan laitteissa ylärivin jonkin näppäimen alhaalla pitäminen ja EAB::n painaminen jäljittelee toisen kytkimen tilaa.
-Ylös-, alas-, oikea- sekä vasen-näppäinten (tai EAB:n) painaminen ja alhaalla pitäminen aiheuttaa toiminnon toistamisen.
+Ylös-, alas-, oikea- sekä vasen-näppäinten (tai EAB:n) painaminen ja alhaalla pitäminen toistaa toiminnon.
 
 Näissä pistenäytöissä on käytettävissä yleensä seuraavat näppäimet:
 || Nimi | Näppäin |
@@ -1527,6 +1527,90 @@ Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 | Lue tekstin muotoilutiedot | ylärivin kosketuskohdistinnäppäimet |
 %kc:endInclude
 
+++ Papenmeier BRAILLEX (vanhemmat mallit) ++
+Seuraavia pistenäyttöjä tuetaan:
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Huomaa, että nämä pistenäytöt voidaan liittää vain sarjaportin kautta.
+Tämän vuoksi portti, johon pistenäyttö on liitetty, tulee valita sen jälkeen, kun näiden pistenäyttöjen ajuri on valittu Pistenäytön asetukset -valintaikkunasta.
+
+Joissakin laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttösauva (EAB).
+Sitä voidaan liikuttaa neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
+Ylös-, alas-, oikea- ja vasen-näppäinten (tai EAB:n) painaminen ja alhaalla pitäminen toistaa kyseessä olevan toiminnon.
+Vanhemmissa laitteissa ei ole EAB:tä; sen sijaan käytetään etupaneelin näppäimiä.
+
+Näissä pistenäytöissä on yleensä käytettävissä seuraavat näppäimet:
+
+|| Nimi | Näppäin |
+| l1 | Vasen etunäppäin |
+| l2 | Vasen takanäppäin |
+| r1 | Oikea etunäppäin |
+| r2 | Oikea takanäppäin |
+| ylös | 1 askel ylöspäin |
+| ylös2 | 2 askelta ylöspäin |
+| vasen | 1 askel vasemmalle |
+| vasen2 | 2 askelta vasemmalle |
+| oikea | 1 askel oikealle |
+| oikea2 | 2 askelta oikealle |
+| dn | 1 askel alaspäin |
+| dn2 | 2 askelta alaspäin |
+
+Seuraaavassa on Papenmeierin komentomääritykset NVDA:lle:
+
+%kc:beginInclude
+Laitteet, joissa on EAB:
+|| Nimi | Näppäin |
+| Vieritä pistenäyttöä taaksepäin | vasen |
+| Vieritä pistenäyttöä eteenpäin | oikea |
+| Siirrä pistenäyttö edelliselle riville | ylös |
+| Siirrä pistenäyttö seuraavalle riville | dn |
+| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
+| Lue nykyinen merkki | l1 |
+| Aktivoi nykyinen navigointiobjekti | l2 |
+| Siirrä kokonaistarkasteluun / kohdistukseen | r1 |
+| Lue ikkunan nimi | l1ylös |
+| Lue tilarivi | l2alas |
+| Siirrä säilöobjektiin | ylös2 |
+| Siirrä ensimmäiseen sisältöobjektiin | dn2 |
+| Siirrä seuraavaan objektiin | vasen2 |
+| Siirrä edelliseen objektiin | oikea2 |
+| Lue tekstin muotoilutiedot | Ylärivin kosketuskohdistinnäppäimet |
+
+BRAILLEX Tiny:
+|| Nimi | Näppäin |
+| Lue nykyinen merkki | l1 |
+| Aktivoi nykyinen navigointiobjekti | l2 |
+| Vieritä pistenäyttöä taaksepäin | vasen |
+| Vieritä pistenäyttöä eteenpäin | oikea |
+| Siirrä pistenäyttö edelliselle riville | ylös |
+| Siirrä pistenäyttö seuraavalle riville | dn |
+| Vaihda Pistenäyttö seuraa -asetusta | r2 |
+| Siirrä kokonaistarkasteluun / kohdistukseen | r1 |
+| Siirrä säilöobjektiin | r1+ylös |
+| Siirrä ensimmäiseen sisältöobjektiin | r1+dn |
+| Siirrä edelliseen objektiin | r1+vasen |
+| Siirrä seuraavaan objektiin | r1+oikea |
+| Lue tekstin muotoilutiedot | reportf |
+
+BRAILLEX 2D Screen:
+|| Nimi | Näppäin |
+| Lue nykyinen merkki | l1 |
+| Aktivoi nykyinen navigointiobjekti | l2 |
+| Vaihda Pistenäyttö seuraa -asetusta | r2 |
+| Lue tekstin muotoilutiedot | reportf |
+| Siirrä pistenäyttö edelliselle riville | ylös |
+| Vieritä pistenäyttöä taaksepäin | vasen |
+| Siirrä kokonaistarkasteluun / kohdistukseen | r1 |
+| Vieritä pistenäyttöä eteenpäin | oikea |
+| Siirrä pistenäyttö seuraavalle riville | dn |
+| Siirrä seuraavaan objektiin | vasen2 |
+| Siirrä säilöobjektiin | ylös2 |
+| Siirrä ensimmäiseen sisältöobjektiin | dn2 |
+| Siirrä edelliseen objektiin | oikea2 |
+%kc:endInclude
+
 ++ HumanWare BrailleNote ++
 NVDA tukee [Humanwaren http://www.humanware.com] BrailleNote-muistiinpanolaitteita, kun ne toimivat ruudunlukuohjelman pistenäyttönä.
 Seuraavia malleja tuetaan:
@@ -1553,7 +1637,7 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 | Vieritä pistenäyttöä eteenpäin | eteenpäin |
 | Siirrä pistenäyttö edelliselle riville | edellinen |
 | Siirrä pistenäyttö seuraavalle riville | seuraava |
-| Siirrä pistesoluun | kosketuskohdistinnäppäin |
+| Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 | Vaihda Pistenäyttö seuraa -asetusta | edellinen+seuraava |
 | Ylänuolinäppäin | välilyönti+piste1 |
 | Alanuolinäppäin | välilyönti+piste4 |

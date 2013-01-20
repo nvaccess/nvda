@@ -6,22 +6,30 @@
 = 2013.1 =
 
 == Nové vlastnosti ==
+- Základná podpora pre úpravu a čítanie prezentácií  v programe Microsoft Powerpoint. (#501)
 - Základná podpora pre písanie a čítanie správ v Lotus Notes 8.5. (#543)
 - V režime prehliadania pre MSHTML (ako napríklad Internet explorer) a Gecko (napríklad Firefox), NVDA oznamuje dostupnosť dlhýh popisov. Dlhý popis sa dá zobraziť v novom okne po stlačení NVDA+d. (#809)
 - NVDA vie prečítať upozornenia (napríklad pri zablokovaní obsahu alebo sťahovaní súboru) v prehliadači Internet Explorer 9 a novších. (#2343)
 - Je podporované automatické oznamovanie hlavičiek riadkov / stĺpcov tabuľky v prehliadači Internet Explorer a iných MSHTML prvkoch. (#778)
 - NVDA je preložené do Aragónčiny.
 - Doplnená tabuľka pre Dánsky skratkopis.
+- Podpora pre brailovské riadky pripojené cez Bluetooth, ak je použitý Toshiba Bluetooth stack. (#2419)
+- Pri používaní riadkov od Freedom scientific je možné vybrať port (Automaticky, USb, bluetooth).
+- Zápisníky BrailleNote od Humanware je možné použiť ako externé brailovské riadky. (#2012)
 
 
 == Opravy ==
-- Navigačné príkazy pre prechod na predchádzajuci a nasledujúci oddeľovač fungujú v prehliadači Internet Explorer a iných MSHTML prvkoch. (#2781)
+- Príkazy rýchlej navigácie pre prechod medzi oddeľovačmi fungujú v prehliadači Internet explorer a MSHTML prvkoch. (#2781)
 - Ak sa nepodarí načítať hlasový výstup a NVDA nastaví syntetizér eSpeak alebo Bez reči, tento syntetizér sa neuloží v nastaveniach, takže NVDA sa pokúsi načítať hlasový výstup pri najbližšom štarte.  (#2589)
 - V režime prehliadania v Mozilla aplikáciách sa správne zobrazuje tabuľka, ktorá sa aktualizovala. NVDA správne oznamuje súradnice buniek a funguje navigácia po tabuľke. (#2784)
 - pri prehliadaní internetových stránok v režime prehliadania, sú správne spracované nepopísané klikateľné obrázky. (#2838)
 - Podpora pre staršie a novšie verzie SecureCRT . (#2800)
 - Vo vstupných metódach pre Windows XP, ako napríklad Easy Dots IME, sú správne oznamované zmeny predbežného návrhu.
 - V zozname návrhov pri použití Microsoft Pinyin vstupnej metódy pre zjednodušenú Čínštinu v systéme Windows 7, správne funguje ľavá a práva šípka na presun medzi stránkami a kláves Home pre otvorenie zoznamu.
+- Ak sa uložia zmeny v nastavení výslovnosti interpunkčných a špeciálnych symbolov, položka úroveň sa nestratí. (#2852)
+- po vypnutí automatickej kontroly aktualizácií sa zmena prejaví okamžite a nie až po reštarte NVDA.
+- MVDA nezamrzne, ak pri štarte nemôže odstrániť priečinok po odstránenom doplnku, ak je tento používaný inou aplikáciou. (#2860)
+- Názvy záložiek v nastaveniach aplikácie Dropbox sa dajú čítať pomocou plošného prezerania.
 
 
 = 2012.3 =

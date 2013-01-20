@@ -1527,6 +1527,90 @@ Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 | Anunciar formato de texto | fila de sensores superior |
 %kc:endInclude
 
+++ Modelos Antiguos Papenmeier Braille BRAILLEX ++
+Se soportan las siguientes líneas Braille: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Ten en cuenta que estas líneas sólo se pueden conectar a través de un puerto serie.
+Por lo tanto, deberías seleccionar el puerto al cual se conecta la línea antes de haber elegido este controlador en el diálogo Opciones de Braille.
+
+Algunos de estos dispositivos tienen una barra de acceso rápido (EAB) que permite un accionamiento rápido e intuitivo.
+El EAB se puede mover en cuatro direcciones donde, generalmente, cada dirección tiene dos movimientos.
+Pulsando y manteniendo las teclas Arriba, abajo, derecha e izquierda (o EAB) se hace que la acción correspondiente sea repetida.
+Los dispositivos más antiguos no tienen una EAB; se utilizan, en su lugar, teclas frontales .
+
+Generalmente, las siguientes teclas están disponibles en las líneas braille:
+
+|| Nombre | Tecla |
+| l1 | Tecla frontal izquierda |
+| l2 | Tecla trasera izquierda |
+| r1 | Tecla frontal derecha |
+| r2 | Tecla trasera derecha|
+| up | 1 paso arriba|
+| up2 | 2 pasos arriba |
+| left | 1 paso a la izquierda |
+| left2 | 2 pasos a la izquierda |
+| right | 1 paso a la derecha |
+| right2 | 2 pasos a la derecha |
+| dn | 1 paso abajo |
+| dn2 | 2 pasos abajo |
+
+Seguidamente van las asignaciones de órdenes de las Papenmeier para NVDA:
+
+%kc:beginInclude
+Dispositivos con EAB:
+|| Nombre | Tecla |
+| Desplazar la línea braille atrás | izquierda |
+| Desplazar la línea braille adelante | derecha |
+| Mover la línea braille a la línea anterior | arriba |
+| Mover la línea braille a la línea siguiente | abajo |
+| Ir a la celda braille | sensores |
+| Anunciar carácter actual en revisión | l1 |
+| Activar navegador de objetos actual | l2 |
+| Moverse a la revisión plana / foco | r1 |
+| Anunciar título | l1up |
+| Anunciar Barra de Estado| l2down |
+| Moverse al objeto contenedor | up2 |
+| Moverse al primer objeto contenido | dn2 |
+| Moverse al siguiente objeto | left2 |
+| Moverse al objeto anterior | right2 |
+| Anunciar formato de texto | Upper routing strip |
+
+BRAILLEX Tiny:
+|| Nombre | Tecla |
+| Anunciar carácter actual en revisión | l1 |
+| Activar navegador de objetos actual | l2 |
+| Desplazar línea braille atrás | left |
+| Desplazar línea braille adelante | right |
+| Mover línea braille a la línea anterior | up |
+| Mover línea braille a la línea siguiente | dn |
+| Activar y desactivar seguimiento de braille | r2 |
+| Moverse al modo de revisión pplana / foco | r1 |
+| Moverse al objeto contenedor | r1+up |
+| Moverse al primer objeto contenido | r1+dn |
+| Moverse al objeto anterior | r1+left |
+| Moverse al siguiente objeto | r1+right |
+| Anunciar formato de texto | reportf |
+
+BRAILLEX 2D Screen:
+|| Nombre | Tecla |
+| Anunciar carácter actual en revisión | l1 |
+| Activar navegador de objetos actual | l2 |
+| Activar o desactivar seguimiento de braille | r2 |
+| Anunciar formato de texto | reportf |
+| Mover línea braille a la línea anterior| up |
+| Desplazar línea braille atrás | left |
+| Moverse a revisión plana / foco | r1 |
+| Desplazar línea braille adelante | right |
+| Mover línea braille a la línea siguiente | dn |
+| Moverse al objeto siguiente | left2 |
+| Moverse al objeto contenedor | up2 |
+| Moverse al primer objeto contenido | dn2 |
+| Moverse al objeto anterior | right2 |
+%kc:endInclude
+
 ++ HumanWare BrailleNote ++
 NVDA soporta los anotadores electrónicos BrailleNote de [Humanware http://www.humanware.com] cuando actúen como un terminal braille para un lector de pantalla.
 Se soportan los siguientes modelos:

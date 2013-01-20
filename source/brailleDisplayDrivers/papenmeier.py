@@ -389,9 +389,9 @@ connection could not be established"""
 			x = self.numCells * 2 + 4
 			self._keynames = {x+28: 'r1', x+29: 'r2', 20: 'up2', 21: 'up', 22: 'dn', 23: 'dn2', 24: 'right', 25: 'left', 26: 'right2', 27: 'left2', 28: 'l1', 29: 'l2'}
 		else:
-			self._keynamesrepeat = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn', 21: 'dn2', 22: 'up', 23: 'up2'}
+			self._keynamesrepeat = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn2', 21: 'dn', 22: 'up', 23: 'up2'}
 			x = self.numCells * 2
-			self._keynames = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn', 21: 'dn2', 22: 'up', 23: 'up2', x+38: 'r2', x+39: 'r1', 30: 'l2', 31: 'l1'}
+			self._keynames = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn2', 21: 'dn', 22: 'up', 23: 'up2', x+38: 'r2', x+39: 'r1', 30: 'l2', 31: 'l1'}
 
 	def terminate(self):
 		"""free resources used by this driver"""

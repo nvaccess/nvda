@@ -696,6 +696,18 @@ Medzi jednotlivými voľbami je možné sa pohybovať použitím kurzorových kl
 
 Prosím, prečítajte si tiež [Podporované braillovské zobrazovače #SupportedBrailleDisplays] pre získanie viac informácií o podporovaných zariadeniach.
 
+==== Port ====
+Táto možnosť, ak je dostupná, určuje, aký port sa použije pri komunikácii s vybratým brailovským zobrazovačom.
+V zozname si môžete vybrať jednu z možností pre váš brailovský zobrazovač.
+
+NVDA predvolene automaticky určí, cez aký port bude komunikovať s vybratým zariadením. Znamená to, že skontroluje všetky pripojené Bluetooth a USB zariadenia.
+Pre niektoré brailovské riadky však môžete samy určiť port.
+Najčastejšie možnosti sú "automaticky" (kedy NVDA samo určuje typ pripojenia), "USB", "Bluetooth" a označenia sériových portov, ak brailovský riadok podporuje komunikáciu cez sériový port.
+
+Táto možnosť nie je dostupná, ak zvolený riadok podporuje len automatický výber komunikačného portu.
+
+Pre podrobnejšie informácie si pozrite časť [Podporované brailovské zobrazovače #SupportedBrailleDisplays].
+
 ==== Prekladová tabuľka ====
 Ďalšou voľbou je prekladová tabuľka.
 Dostupné je množstvo tabuliek pre rôzne jazyky. Tú správnu si vyberiete listovaním kurzorovými klávesmi.
@@ -1144,6 +1156,10 @@ Ak ich ešte nemáte, môžete ich stiahnuť zo stránky: http://www.freedomscie
 Aj keď na stránke sa píše len o riadku Focus 40 Blue, ovládač spolupracuje so všetkými zobrazovačmi Freedom scientific.
 Ak máte nainštalovanú 64 bitovú edíciu Windows a používate aj iný čítač obrazovky, budete pravdepodobne musieť tiež nainštalovať ovládač, pretože potrebné súbory sa nemuseli nainštalovať počas inštalácie iného čítača.
 
+NVDA sa dokáže predvolene k týmto zobrazovačom pripojiť cez USB alebo Bluetooth rozhranie.
+Môžete však samy určiť typ pripojenia a obmedziť ho len na pripojenie cez "USB" alebo "bluetooth".
+Toto je užitočné, ak chcete nabiť riadok cez USb, ale chcete ho používať cez Bluetooth.
+
 Nasleduje zoznam klávesových príkazov pre tento typ riadku.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
 %kc:beginInclude
@@ -1509,6 +1525,54 @@ Nasleduje zoznam klávesových príkazov pre tieto typy riadkov:
 | Predchádzajúci objekt | left2 |
 | Nasledujúci objekt | right2 |
 | Formátovanie textu | prvý rad smerových tlačidiel |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+NVDA podporuje zápisníky BrailleNote od [Humanware http://www.humanware.com], ak sú nastavené do režimu pre príjem príkazov z čítača obrazovky.
+Podporované sú tieto typy:
+- BrailleNote Classic (len cez sériový port)
+- BrailleNote PK (Sériový port a Bluetooth)
+- BrailleNote MPower (Sériový port a Bluetooth)
+- BrailleNote Apex (USB a Bluetooth)
+-
+
+Ak zariadenie podporuje viacero druhov pripojenia, je potrebné nastaviť druh pripojenia "braille terminal port" v nastaveniach "braille terminal".
+Podrobnosti nájdete v návode k Braillenote.
+Môžete tiež chcieť nastaviť port v nastaveniach braillu.
+Ak sa pripájate cez USb alebo Bluetooth, môžete si vybrať automatickú detekciu portu, "Bluetooth" alebo "USB", v závislosti od vybraného zariadenia.
+Ak sa pripájate cez niektorý zo sériových portov, alebo cez USB / sériový prevodník, alebo ak nie sú dostupné iné možnosti, musíte si vybrať niektorý z hardwarových komunikačných portov.
+
+Pred pripojením BrailleNote Apex cez USb je potrebné nainštalovať ovládač dodávaný od výrobcu.
+
+Nasleduje zoznam klávesových príkazov pre tento typ riadku.
+Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
+
+%kc:beginInclude
+|| Názov | Klávesová skratka |
+| Posunúť riadok späť | back |
+| Posunúť riadok vpred| advance |
+| Predchádzajúci riadok | previous |
+| Nasledujúci riadok | next |
+| Prejsť na znak v brailly | smerové tlačidlá |
+| Prepnúť nastavenie braillovský kurzor zviazaný s | previous+next |
+| Šípka hore | medzera+bod1 |
+| Šípka dole | medzera+bod4 |
+| Šípka vľavo | space+bod3 |
+| Šípka vpravo | space+bod6 |
+| Strana hore | medzera+body 1,3 |
+| Strana dole | medzera+body 4,6 |
+| Home | medzera+body 1,2 |
+| End | medzera+body 4,5 |
+| Control+home | medzera+body 1,2,3 |
+| Control+end | medzera+body 4,5,6 |
+| Medzera | medzera |
+| Enter | medzera+bod8 |
+| Backspace | medzera+bod7 |
+| Tab | medzera+body 2345 (medzera+t) |
+| Shift+tab | medzera+body 1,2,5,6 |
+| Windows | medzera+body 2,4,5,6 (medzera+w) |
+| Alt | medzera+body 1,3,4 (medzera+m) |
+| Nápoveda vstupu| medzera+body 1,2,5 (medzera+h) |
 %kc:endInclude
 
 ++ BRLTTY ++

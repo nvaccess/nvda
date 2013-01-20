@@ -3,10 +3,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5687\n"
+"Project-Id-Version: NVDA bzr main:5745\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-12-11 06:47+0000\n"
-"PO-Revision-Date: 2012-12-11 21:10-0200\n"
+"POT-Creation-Date: 2013-01-14 05:30+0000\n"
+"PO-Revision-Date: 2013-01-14 18:50+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -632,6 +632,11 @@ msgstr "ビープ"
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "CapsLockがオンのとき、小文字が入力されたらビープ音を鳴らす"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:109
+msgid "Bitmap placeholder"
+msgstr "ビットマップのプレースホルダー"
+
 #: gui/settingsDialogs.py:1213
 msgid "Braille &display:"
 msgstr "点字ディスプレイ(&D)"
@@ -703,6 +708,11 @@ msgstr "大文字のピッチ変更率"
 msgid "Case &sensitive"
 msgstr "大文字小文字を区別(&S)"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:97
+msgid "Center Title placeholder"
+msgstr "センタータイトルのプレースホルダー"
+
 #: gui/__init__.py:293
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr ""
@@ -728,6 +738,11 @@ msgstr "使用する音声エンジンの選択"
 #: gui/__init__.py:301
 msgid "Change virtual buffers specific settings"
 msgstr "仮想バッファー固有の設定"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:107
+msgid "Chart placeholder"
+msgstr "チャートのプレースホルダー"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 #: gui/__init__.py:361
@@ -975,6 +990,11 @@ msgstr "デンマーク語1級点字"
 #: braille.py:50
 msgid "Danish grade 2"
 msgstr "デンマーク語2級点字"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:123
+msgid "Date placeholder"
+msgstr "日付のプレースホルダー"
 
 #. Translators: This is presented in outlook or live mail, date of email
 #: appModules/msimn.py:33
@@ -1278,6 +1298,11 @@ msgstr "システムキャレットを追跡(&C)"
 msgid "Follow system &focus"
 msgstr "システムフォーカスを追跡(&F)"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:121
+msgid "Footer placeholder"
+msgstr "フッターのプレイスホルダー"
+
 #: NVDAObjects/window/winword.py:88
 msgid "Footnotes"
 msgstr "脚注"
@@ -1400,10 +1425,20 @@ msgstr "HIMS社製 SyncBraille"
 msgid "Half shaped mode"
 msgstr "半角モード"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:158
+msgid "Handout Master view"
+msgstr "配布資料マスター表示"
+
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers/handyTech.py:49
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech社製点字ディスプレイ"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:119
+msgid "Header placeholder"
+msgstr "ヘッダーのプレースホルダー"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1418,12 +1453,12 @@ msgid "Hindi grade 1"
 msgstr "ヒンディー語1級点字"
 
 #. Translators: Names of braille displays
-#: brailleDisplayDrivers/brailleNote.py:86
+#: brailleDisplayDrivers/brailleNote.py:88
 msgid "HumanWare BrailleNote"
 msgstr "HumanWareブレイルノート"
 
 #. Translators: The name of a series of braille displays.
-#: brailleDisplayDrivers/brailliantB.py:79
+#: brailleDisplayDrivers/brailliantB.py:85
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare社のBrailliant BI/Bシリーズ"
 
@@ -1597,7 +1632,7 @@ msgstr "使用許諾契約"
 msgid "Lin&ks"
 msgstr "リンク(&K)"
 
-#: core.py:203
+#: core.py:156
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDAを読み込み中です。お待ちください..."
 
@@ -1645,6 +1680,16 @@ msgid ""
 "copied"
 msgstr ""
 "レビューカーソルの現在位置を、コピーするテキストの始点としてマークします"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:174
+msgid "Master Thumbnails"
+msgstr "マスターサムネイル"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:111
+msgid "Media Clip placeholder"
+msgstr "メディアクリップのプレースホルダー"
 
 #: gui/settingsDialogs.py:1261
 msgid "Message timeout (sec)"
@@ -1857,7 +1902,7 @@ msgstr "NVDA アドオン パッケージ"
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDAはファイルを削除または上書きできません。"
 
-#: core.py:300
+#: core.py:253
 msgid "NVDA started"
 msgstr "NVDA起動"
 
@@ -1991,6 +2036,11 @@ msgstr "更新はありません。"
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:168
+msgid "Normal view"
+msgstr "標準の表示"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:149
@@ -2039,6 +2089,16 @@ msgstr "テーブルのセル内ではありません"
 msgid "Not in table"
 msgstr "テーブル内ではありません"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:160
+msgid "Notes Master view"
+msgstr "ノートマスター表示"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:156
+msgid "Notes page"
+msgstr "ノートページ"
+
 #. Translators: This is the label for the object presentation dialog.
 #: gui/settingsDialogs.py:776
 msgid "Object Presentation"
@@ -2054,14 +2114,29 @@ msgstr ""
 "にあり、画面の幅の{width:.1f}パーセント、高さの{height:.1f}パーセントを占めて"
 "います"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:105
+msgid "Object placeholder"
+msgstr "オブジェクトのプレースホルダー"
+
 #: gui/__init__.py:475
 msgid "Options"
 msgstr "オプション"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:113
+msgid "Org Chart placeholder"
+msgstr "組織図のプレースホルダー"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:39
 msgid "Organisation:"
 msgstr "組織:"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:162
+msgid "Outline view"
+msgstr "アウトライン表示"
 
 #. Translators: This is the label for the select output
 #. device combo in the synthesizer dialog. Examples of
@@ -2079,6 +2154,11 @@ msgstr "パッケージ"
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier ブレイレックスの新型機種"
 
+#. Translators: Names of braille displays.
+#: brailleDisplayDrivers/papenmeier_serial.py:61
+msgid "Papenmeier BRAILLEX older models"
+msgstr "Papenmeier ブレイレックスの旧機種"
+
 #: globalCommands.py:870
 msgid "Pass next key through"
 msgstr "次に押したキーを直接渡す"
@@ -2094,6 +2174,11 @@ msgid ""
 msgstr ""
 "現在のナビゲーターオブジェクトの初期動作を実行（例：もしそれがボタンであれば"
 "押す）"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:127
+msgid "Picture placeholder"
+msgstr "画像のプレースホルダー"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:16
@@ -2227,6 +2312,11 @@ msgstr "プライマリーフッター"
 #: NVDAObjects/window/winword.py:90
 msgid "Primary header"
 msgstr "プライマリーヘッダー"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:170
+msgid "Print Preview"
+msgstr "印刷プレビュー"
 
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
@@ -2629,6 +2719,7 @@ msgid "Rewind"
 msgstr "巻き戻し"
 
 #: brailleDisplayDrivers/papenmeier.py:457
+#: brailleDisplayDrivers/papenmeier_serial.py:157
 msgid "Route to and report formatting"
 msgstr "タッチカーソルで書式を通知"
 
@@ -2691,7 +2782,8 @@ msgid "Serbian grade 1"
 msgstr "セルビア語1級点字"
 
 #. Translators: Name of a serial communications port
-#: brailleDisplayDrivers/brailleNote.py:126
+#: brailleDisplayDrivers/brailleNote.py:135
+#: brailleDisplayDrivers/papenmeier_serial.py:73
 msgid "Serial: {portName}"
 msgstr "シリアルポート: {portName}"
 
@@ -2784,6 +2876,41 @@ msgstr "スリープモードオフ"
 #: globalCommands.py:64
 msgid "Sleep mode on"
 msgstr "スリープモードオン"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:154
+msgid "Slide Master view"
+msgstr "スライドマスター表示"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:117
+msgid "Slide Number placeholder"
+msgstr "スライド番号のプレースホルダー"
+
+#. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
+#: appModules/powerpnt.py:696
+msgid "Slide Show - complete"
+msgstr "スライドショーの最後"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:164
+msgid "Slide Sorter view"
+msgstr "スライド並べ替え表示"
+
+#. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:693
+msgid "Slide show - {slideName}"
+msgstr "スライドショー {slideName}"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:152
+msgid "Slide view"
+msgstr "スライド表示"
+
+#. Translators: the label for a slide in Microsoft PowerPoint.
+#: appModules/powerpnt.py:480
+msgid "Slide {slideNumber}"
+msgstr "スライド {slideNumber}"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2890,6 +3017,11 @@ msgstr "停止"
 msgid "Subject:"
 msgstr "件名:"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:99
+msgid "Subtitle placeholder"
+msgstr "サブタイトルのプレースホルダー"
+
 #. Translators: The title of a dialolg presented to indicate a successful operation.
 #: gui/installerGui.py:67 gui/installerGui.py:237 gui/settingsDialogs.py:225
 msgid "Success"
@@ -2940,13 +3072,18 @@ msgstr "音声エンジン"
 msgid "Synthesizer Error"
 msgstr "音声エンジンエラー"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:115
+msgid "Table placeholder"
+msgstr "テーブルのプレースホルダー"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:191
 msgid "Tamil grade 1"
 msgstr "タミル語1級点字"
 
-#: NVDAObjects/IAccessible/__init__.py:1621
+#: NVDAObjects/IAccessible/__init__.py:1624
 msgid "Taskbar"
 msgstr "タスクバー"
 
@@ -2963,6 +3100,11 @@ msgstr "テキストの読み上げ範囲(&U)"
 #: NVDAObjects/window/winword.py:91
 msgid "Text frame"
 msgstr "テキストフレーム"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:95
+msgid "Text placeholder"
+msgstr "テキストのプレースホルダー"
 
 #: globalCommands.py:958
 #, python-format
@@ -3015,6 +3157,21 @@ msgstr "クリップボードにテキストがありません"
 #: gui/settingsDialogs.py:248
 msgid "This change requires administrator privileges."
 msgstr "この変更には管理者権限が必要です。"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:172
+msgid "Thumbnails"
+msgstr "サムネイル"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:166
+msgid "Title Master view"
+msgstr "タイトルマスター表示"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:93
+msgid "Title placeholder"
+msgstr "タイトルのプレースホルダー"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui/installerGui.py:145
@@ -3278,6 +3435,21 @@ msgstr "音量(&O)"
 msgid "Version"
 msgstr "バージョン"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:125
+msgid "Vertical Object placeholder"
+msgstr "縦書きオブジェクトのプレースホルダー"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:103
+msgid "Vertical Text placeholder"
+msgstr "縦書きテキストのプレースホルダー"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:101
+msgid "Vertical Title placeholder"
+msgstr "縦書きタイトルのプレースホルダー"
+
 #: gui/__init__.py:321
 msgid "View log"
 msgstr "ログを見る(&V)"
@@ -3291,6 +3463,11 @@ msgstr "音声設定"
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "音声辞書(%s)"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#: appModules/powerpnt.py:268
+msgid "Waiting for Powerpoint..."
+msgstr "パワーポイントの処理を待っています"
 
 #: gui/settingsDialogs.py:192
 msgid "Warning"
@@ -3375,7 +3552,7 @@ msgstr ""
 "で、後から手動で設定ファイルを編集することもできます。エラーの詳細はログファ"
 "イルで確認してください。\n"
 
-#: core.py:85
+#: core.py:38
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
@@ -3787,7 +3964,7 @@ msgstr "消滅"
 msgid "delete"
 msgstr "デリート"
 
-#: keyboardHandler.py:228
+#: keyboardHandler.py:239
 msgid "desktop"
 msgstr "デスクトップ"
 
@@ -4037,7 +4214,7 @@ msgstr "フレーム"
 msgid "fuchsia"
 msgstr "フクシア"
 
-#: core.py:87
+#: core.py:40
 msgid "gesture map File Error"
 msgstr "ジェスチャーマップファイルエラー"
 
@@ -4264,7 +4441,7 @@ msgstr "カタカナ ローマジ"
 msgid "label"
 msgstr "ラベル"
 
-#: keyboardHandler.py:229
+#: keyboardHandler.py:240
 msgid "laptop"
 msgstr "ラップトップ"
 
@@ -5071,7 +5248,7 @@ msgstr "オブジェクトに位置情報がありません"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:781
+#: keyboardHandler.py:355 synthSettingsRing.py:74 gui/settingsDialogs.py:781
 #: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:858
 msgid "off"
 msgstr "オフ"
@@ -5098,7 +5275,7 @@ msgstr "オフスクリーン"
 msgid "olive"
 msgstr "オリーブ"
 
-#: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
+#: keyboardHandler.py:355 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
 #: virtualBuffers/__init__.py:858
 msgid "on"
 msgstr "オン"
