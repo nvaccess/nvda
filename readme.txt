@@ -94,6 +94,12 @@ To build a binary version of NVDA:
 		* Copy both ansi\uac.dll and uac.nsh into the uninstaller directory.
 
 To generate developer documentation:
+	* epydoc, version 3.0.1:
+		* Official web site: http://epydoc.sourceforge.net/
+		* Epydoc is no longer being maintained, but there is a bug in version 3.0.1 which affects NVDA.
+		* A build including a fix for this bug can be found at: http://files.nvaccess.org/3rdParty/epydoc-3.0.1+bug2585292.win32.exe
+
+To generate developer documentation for nvdaHelper:
 	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
 
 To generate a gettext translation template:
@@ -141,6 +147,10 @@ The archive will be placed in the output directory.
 To generate developer documentation, type:
 scons devDocs
 The developer docs will be placed in the devDocs folder in the output directory.
+
+To generate developer documentation for nvdaHelper (not included in the devDocs target):
+scons devDocs_nvdaHelper
+The documentation will be placed in the devDocs\nvdaHelper folder in the output directory.
 
 To generate an archive of debug symbols for the various dll/exe binaries, type:
 scons symbolsArchive
