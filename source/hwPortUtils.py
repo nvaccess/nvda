@@ -3,13 +3,13 @@
 # Original serial scanner code from http://pyserial.svn.sourceforge.net/viewvc/*checkout*/pyserial/trunk/pyserial/examples/scanwin32.py
 # Modifications and enhancements by James Teh
 
+"""Utilities for working with hardware connection ports.
+"""
+
 import itertools
 import ctypes
 from ctypes.wintypes import BOOL, WCHAR, HWND, DWORD, ULONG, WORD
 import _winreg as winreg
-
-"""Utilities for working with hardware connection ports.
-"""
 
 def ValidHandle(value):
 	if value == 0:

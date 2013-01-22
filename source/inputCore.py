@@ -4,6 +4,12 @@
 #See the file COPYING for more details.
 #Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
+"""Core framework for handling input from the user.
+Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
+The singleton L{InputManager} (L{manager}) manages functionality related to input from the user.
+For example, it is used to execute gestures and handle input help.
+"""
+
 import sys
 import os
 import itertools
@@ -20,12 +26,6 @@ from logHandler import log
 import globalVars
 import languageHandler
 import controlTypes
-
-"""Core framework for handling input from the user.
-Every piece of input from the user (e.g. a key press) is represented by an L{InputGesture}.
-The singleton L{InputManager} (L{manager}) manages functionality related to input from the user.
-For example, it is used to execute gestures and handle input help.
-"""
 
 class NoInputGestureAction(LookupError):
 	"""Informs that there is no action to execute for a gesture.
