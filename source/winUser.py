@@ -519,3 +519,44 @@ def getSystemStickyKeys():
 	sk = STICKYKEYS()
 	user32.SystemParametersInfoW(SPI_GETSTICKYKEYS, 0, byref(sk), 0)
 	return sk
+
+
+# START SENDINPUT TYPE DECLARATIONS
+PUL = POINTER(c_ulong)
+class KeyBdInput(Structure):
+    _fields_ = [("wVk", c_ushort),
+             ("wScan", c_ushort),
+             ("dwFlags", c_ulong),
+             ("time", c_ulong),
+             ("dwExtraInfo", PUL)]
+
+class HardwareInput(Structure):
+    _fields_ = [("uMsg", c_ulong),
+             ("wParamL", c_short),
+             ("wParamH", c_ushort)]
+
+class MouseInput(Structure):
+    _fields_ = [("dx", c_long),
+             ("dy", c_long),
+             ("mouseData", c_ulong),
+             ("dwFlags", c_ulong),
+             ("time",c_ulong),
+             ("dwExtraInfo", PUL)]
+
+class Input_I(Union):
+    _fields_ = [("ki", KeyBdInput),
+              ("mi", MouseInput),
+              ("hi", HardwareInput)]
+
+class Input(Structure):
+    _fields_ = [("type", c_ulong),
+             ("ii", Input_I)]
+
+INPUT_KEYBOARD = 1
+KEYEVENTF_UNICODE = 0x04
+# END SENDINPUT TYPE DECLARATIONS
+
+def SendInput(inputs):
+	n = len(inputs)
+	arr = (Input * n)(*inputs)
+	user32.SendInput(n, arr, sizeof(Input))

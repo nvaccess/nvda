@@ -1233,7 +1233,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.updatePossiblePorts()
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		label = wx.StaticText(self, wx.ID_ANY, label=_("Translation &table:"))
+		label = wx.StaticText(self, wx.ID_ANY, label=_("&Output table:"))
 		self.tableNames = [table[0] for table in braille.TABLES]
 		self.tableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.TABLES])
 		try:
@@ -1243,6 +1243,19 @@ class BrailleSettingsDialog(SettingsDialog):
 			pass
 		sizer.Add(label)
 		sizer.Add(self.tableList)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, label=_("&Input table:"))
+		self.inputTableNames = [table[0] for table in braille.INPUT_TABLES]
+		self.inputTableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.INPUT_TABLES])
+		try:
+			selection = self.inputTableNames.index(config.conf["braille"]["inputTable"])
+			self.inputTableList.SetSelection(selection)
+		except:
+			pass
+		sizer.Add(label)
+		sizer.Add(self.inputTableList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		self.expandAtCursorCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("E&xpand to computer braille for the word at the cursor"))
@@ -1301,6 +1314,7 @@ class BrailleSettingsDialog(SettingsDialog):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
 		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
+		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		try:
 			val = int(self.cursorBlinkRateEdit.GetValue())
