@@ -125,6 +125,8 @@ confspec = ConfigObj(StringIO(
 	speakTypedWords = boolean(default=false)
 	beepForLowercaseWithCapslock = boolean(default=true)
 	speakCommandKeys = boolean(default=false)
+	speechInterruptForCharacters = boolean(default=true)
+	speechInterruptForEnter = boolean(default=true)
 
 [virtualBuffers]
 	maxLineLength = integer(default=100)

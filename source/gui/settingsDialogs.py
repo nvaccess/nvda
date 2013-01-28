@@ -609,6 +609,16 @@ class KeyboardSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.wordsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings dialog.
+		self.speechInterruptForCharsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speech interrupt for typed characters"))
+		self.speechInterruptForCharsCheckBox.SetValue(config.conf["keyboard"]["speechInterruptForCharacters"])
+		settingsSizer.Add(self.speechInterruptForCharsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
+		self.speechInterruptForEnterCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speech interrupt for Enter key"))
+		self.speechInterruptForEnterCheckBox.SetValue(config.conf["keyboard"]["speechInterruptForEnter"])
+		settingsSizer.Add(self.speechInterruptForEnterCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.beepLowercaseCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Beep if typing lowercase letters when caps lock is on"))
 		self.beepLowercaseCheckBox.SetValue(config.conf["keyboard"]["beepForLowercaseWithCapslock"])
 		settingsSizer.Add(self.beepLowercaseCheckBox,border=10,flag=wx.BOTTOM)
@@ -629,6 +639,8 @@ class KeyboardSettingsDialog(SettingsDialog):
 		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
+		config.conf["keyboard"]["speechInterruptForCharacters"]=self.speechInterruptForCharsCheckBox.IsChecked()
+		config.conf["keyboard"]["speechInterruptForEnter"]=self.speechInterruptForEnterCheckBox.IsChecked()
 		config.conf["keyboard"]["beepForLowercaseWithCapslock"]=self.beepLowercaseCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
 		super(KeyboardSettingsDialog, self).onOk(evt)
