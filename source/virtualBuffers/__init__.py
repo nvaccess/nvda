@@ -401,6 +401,8 @@ class ElementsListDialog(wx.Dialog):
 		item = None
 		defaultItem = None
 		matched = False
+		#Do case-insensitive matching by lowering both filterText and each element's text.
+		filterText=filterText.lower()
 		for element in self._elements:
 			if filterText not in element.text.lower():
 				item = None
