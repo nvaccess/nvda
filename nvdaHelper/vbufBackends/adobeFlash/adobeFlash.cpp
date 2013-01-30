@@ -30,6 +30,8 @@ void AdobeFlashVBufBackend_t::renderThread_initialize() {
 
 void AdobeFlashVBufBackend_t::renderThread_terminate() {
 	unregisterWinEventHook(renderThread_winEventProcHook);
+	if (this->accPropServices)
+		this->accPropServices->Release();
 	VBufBackend_t::renderThread_terminate();
 }
 
@@ -154,6 +156,34 @@ int id=accChildID;
 	return parentNode;
 }
 
+long AdobeFlashVBufBackend_t::getAccId(IAccessible* acc) {
+	IAccessibleIdentity* accId = NULL;
+	if (acc->QueryInterface(IID_IAccIdentity, (void**)&accId) != S_OK || !accId)
+		return -1;
+	BYTE* idString=NULL;
+	DWORD idLen=0;
+	HRESULT res;
+	res = accId->GetIdentityString(CHILDID_SELF, &idString, &idLen);
+	accId->Release();
+	if (res != S_OK || !idString)
+		return -1;
+	if (!this->accPropServices) {
+		// Only retrieve this the first time it's needed.
+		if (CoCreateInstance(CLSID_AccPropServices, NULL, CLSCTX_SERVER, IID_IAccPropServices, (void**)&this->accPropServices) != S_OK) {
+			CoTaskMemFree(idString);
+			return -1;
+		}
+	}
+	HWND hwnd;
+	DWORD objId;
+	DWORD childId;
+	res = this->accPropServices->DecomposeHwndIdentityString(idString, idLen, &hwnd, &objId, &childId);
+	CoTaskMemFree(idString);
+	if (res != S_OK)
+		return -1;
+	return objId;
+}
+
 void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
 	DWORD_PTR res=0;
 	//Get an IAccessible by sending WM_GETOBJECT directly to bypass any proxying, to speed things up.
@@ -199,7 +229,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 	pacc->Release();
 }
 
-AdobeFlashVBufBackend_t::AdobeFlashVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID) {
+AdobeFlashVBufBackend_t::AdobeFlashVBufBackend_t(int docHandle, int ID): VBufBackend_t(docHandle,ID), accPropServices(NULL) {
 }
 
 extern "C" __declspec(dllexport) VBufBackend_t* VBufBackend_create(int docHandle, int ID) {

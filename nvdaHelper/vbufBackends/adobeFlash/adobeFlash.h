@@ -23,6 +23,10 @@ class AdobeFlashVBufBackend_t: public VBufBackend_t {
 
 	VBufStorage_fieldNode_t* renderControlContent(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, IAccessible* pacc, long accChildID);
 
+	IAccPropServices* accPropServices;
+
+	long getAccId(IAccessible* acc);
+
 	protected:
 
 	static void CALLBACK renderThread_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time);
