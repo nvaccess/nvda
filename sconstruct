@@ -119,6 +119,8 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 outputDir=Dir(env['outputDir'])
 devDocsOutputDir=outputDir.Dir('devDocs')
 
+env.SConscript('source/comInterfaces_sconscript',exports=['env'])
+
 #Process nvdaHelper scons files
 env.SConscript('nvdaHelper/sconscript',exports=['env'])
 
@@ -154,13 +156,13 @@ devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move(
 env.Alias("developerGuide",devGuide)
 
 #Generate all needed comtypes COM interfaces
-command = ['cd', sourceDir.path, '&&', sys.executable]
-if release:
-	command.append('-O')
-command.append('generateComInterfaces.py')
-comInterfaces = env.Command(sourceDir.Dir('comInterfaces'), None, [command])
-env.AlwaysBuild(comInterfaces)
-env.Depends(comInterfaces,sourceDir.Dir('typelibs'))
+#command = ['cd', sourceDir.path, '&&', sys.executable]
+#if release:
+#	command.append('-O')
+#command.append('generateComInterfaces.py')
+#comInterfaces = env.Command(sourceDir.Dir('comInterfaces'), None, [command])
+#env.AlwaysBuild(comInterfaces)
+#env.Depends(comInterfaces,sourceDir.Dir('typelibs'))
 
 
 # A builder to generate an NVDA distribution.
