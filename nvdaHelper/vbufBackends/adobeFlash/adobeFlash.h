@@ -15,6 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef VIRTUALBUFFER_BACKENDS_ADOBEFLASH_H
 #define VIRTUALBUFFER_BACKENDS_ADOBEFLASH_H
 
+#include <oleacc.h>
 #include <set>
 #include <vbufBase/backend.h>
 

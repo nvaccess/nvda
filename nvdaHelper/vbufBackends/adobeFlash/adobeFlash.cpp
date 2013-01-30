@@ -15,6 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #include <map>
 #include <windows.h>
+#include <initguid.h>
 #include <oleacc.h>
 #include <common/log.h>
 #include <remote/nvdaHelperRemote.h>
@@ -157,7 +158,7 @@ int id=accChildID;
 }
 
 long AdobeFlashVBufBackend_t::getAccId(IAccessible* acc) {
-	IAccessibleIdentity* accId = NULL;
+	IAccIdentity* accId = NULL;
 	if (acc->QueryInterface(IID_IAccIdentity, (void**)&accId) != S_OK || !accId)
 		return -1;
 	BYTE* idString=NULL;
