@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2010-2013 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -12,8 +12,8 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#ifndef VIRTUALBUFFER_BACKENDS_MSAATEST_H
-#define VIRTUALBUFFER_BACKENDS_MSAATEST_H
+#ifndef VIRTUALBUFFER_BACKENDS_ADOBEFLASH_H
+#define VIRTUALBUFFER_BACKENDS_ADOBEFLASH_H
 
 #include <set>
 #include <vbufBase/backend.h>
