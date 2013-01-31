@@ -48,7 +48,7 @@ void CALLBACK AdobeFlashVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHO
 	}
 
 	int docHandle=(int)hwnd;
-	int ID=(childID>0)?childID:objectID;
+	int ID=(childID==CHILDID_SELF&&objectID>0)?objectID:childID;
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
 		AdobeFlashVBufBackend_t* backend=NULL;
 		HWND rootWindow=(HWND)((*i)->rootDocHandle);
