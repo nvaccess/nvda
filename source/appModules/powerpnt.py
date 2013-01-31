@@ -563,7 +563,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start,end
 
 	def _getTextRange(self,start,end):
-		text=self.obj.ppObject.textRange.text[start:end].replace('\x0b','\n')+'\n'
+		text=self.obj.ppObject.textRange.text[start:end].replace('\x0b','\n')
 		text=text.replace('\r','\n')
 		return text
 
