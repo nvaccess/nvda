@@ -48,22 +48,22 @@ void CALLBACK AdobeFlashVBufBackend_t::renderThread_winEventProcHook(HWINEVENTHO
 	}
 
 	int docHandle=(int)hwnd;
-	int ID=childID;
-	VBufBackend_t* backend=NULL;
+	int ID=(childID>0)?childID:objectID;
 	for(VBufBackendSet_t::iterator i=runningBackends.begin();i!=runningBackends.end();++i) {
+		AdobeFlashVBufBackend_t* backend=NULL;
 		HWND rootWindow=(HWND)((*i)->rootDocHandle);
-		if(rootWindow==hwnd) {
-			backend=(*i);
+		if(rootWindow!=hwnd)
+			continue;
+		backend=static_cast<AdobeFlashVBufBackend_t*>(*i);
+		VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
+		if(node)
+			backend->invalidateSubtree(node);
+		if(!backend->isWindowless) {
+			// If this is not windowless, there can only be one backend with this docHandle,
+			// so stop searching.
+			break;
 		}
 	}
-	if(!backend) {
-		return;
-	}
-	VBufStorage_controlFieldNode_t* node=backend->getControlFieldNodeWithIdentifier(docHandle,ID);
-	if(!node) {
-		return;
-	}
-	backend->invalidateSubtree(node);
 }
 
 VBufStorage_fieldNode_t* AdobeFlashVBufBackend_t::renderControlContent(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, int id, IAccessible* pacc) {
