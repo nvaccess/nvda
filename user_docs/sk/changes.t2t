@@ -16,6 +16,8 @@
 - Podpora pre brailovské riadky pripojené cez Bluetooth, ak je použitý Toshiba Bluetooth stack. (#2419)
 - Pri používaní riadkov od Freedom scientific je možné vybrať port (Automaticky, USb, bluetooth).
 - Zápisníky BrailleNote od Humanware je možné použiť ako externé brailovské riadky. (#2012)
+- Podpora pre staršie zobrazovače Papenmeier BRAILLEX (#2679)
+- Odteraz je možné písať pomocou 8-bodového počítačového kódu na riadkoch, ktoré majú brailovskú klávesnicu. (#808)
 
 
 == Opravy ==
@@ -30,6 +32,10 @@
 - po vypnutí automatickej kontroly aktualizácií sa zmena prejaví okamžite a nie až po reštarte NVDA.
 - MVDA nezamrzne, ak pri štarte nemôže odstrániť priečinok po odstránenom doplnku, ak je tento používaný inou aplikáciou. (#2860)
 - Názvy záložiek v nastaveniach aplikácie Dropbox sa dajú čítať pomocou plošného prezerania.
+- Ak sa zmení rozloženie klávesnice na iné ako predvolené, NVDA správne rozpoznáva klávesy pre príkazy a v nápovede vstupu.
+- Pre jazyky, v ktorých je symbol + (plus) samostatným klávesom (napríklad aj v slovenčine) je možné použiť tento kláves pri priraďovaní klávesových skratiek tak, že napíšete slovo "plus". (#2898)
+- V prehliadači Internet explorer a v MSHTML prvkoch sú správne oznamované citácie. (#2888)
+- Zobrazovač HumanWare série Brailliant BI/B sa dá používať cez Bluetooth aj v prípade, že nebol doposiaľ pripojený cez USB.
 
 
 = 2012.3 =
