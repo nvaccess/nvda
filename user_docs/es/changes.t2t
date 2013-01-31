@@ -17,6 +17,7 @@ Qué hay de Nuevo en NVDA
 - Soporte para la selección de puerto cuando se utilicen líneas freedom Scientific (Automático, USB o Bluetooth).
 - Soporte para la familia BrailleNote de anotadores electrónicos de Humanware cuando actúen como una terminal braille para un lector de pantalla. (#2012)
 - Soporte para  modelos antiguos de las líneas braille Papenmeier BRAILLEX. (#2679)
+- Soporte para la entrada de braille computerizado  para líneas braille que tengan un teclado braille. (#808)
 
 
 == Corrección de Fallos ==
@@ -24,7 +25,7 @@ Qué hay de Nuevo en NVDA
 - Si NVDA regresa a eSpeak o no habla debido a un sintetizador de voz configurado que falla cuando NVDA se inicia, la configuración ya no se actualiza para  configurarse con el sintetizador al que se retornó como la elección configurada, lo que significa que ahora el sintetizador original se probará de nuevo la próxima vez que NVDA arranque. (#2589)
 - En modo navegación en aplicaciones de Mozilla, las actualizaciones de las tablas ahora se procesan correctamente. Por ejemplo, en actualización de celdas, las coordenadas de fila y columna se anuncian y la navegación de la tabla funciona como debería. (#2784)
 - En modo navegación en navegadores web, ciertos gráficos cliqueables no etiquetados que no se procesaban anteriormente ahora se procesan correctamente. (#2838)
-- Las versiones anteriores y actuales T (tales como la 6.1.1) ahora se soportan. (#2800)
+- Las versiones anteriores y actuales (tales como la 6.1.1) ahora se soportan. (#2800)
 - Para métodos de entrada tales como Easy Dots IME bajo XP, la cadena de lectura ahora se anuncia correctamente.
 - La lista de candidatos del método de entrada Chino Simplificado Microsoft Pinyin bajo Windows 7 ahora se lee correctamente cuando se cambian páginas con las flechas izquierda y derecha, y cuando se la abre primero con Inicio.
 - Cuando se guarda la información de pronunciación personalizada de símbolos , el campo avanzado "preserve" ya no se elimina. (#2852)
@@ -34,13 +35,16 @@ Qué hay de Nuevo en NVDA
 - Si el idioma de entrada se cambia a algún otro que el predeterminado, NVDA ahora detecta las teclas correctamente para órdenes y el modo de ayuda de entrada.
 - Para idiomas tales como el alemán donde el signo + (más) es una  tecla sola en el teclado, ahora es posible vincularle órdenes utilizando la palabra "plus". (#2898)
 +- En Internet Explorer y otros controles  MSHTML, las comillas ahora se anuncian donde proceda. (#2888)
-- El controlador de las líneas HumanWare Brailliant BI/Bbraille ahora puede  seleccionarse cuando la línea esté conectado a través de Bluetooth pero nunca se hayan conectado a través de USB.
+- El controlador de las líneas HumanWare Brailliant BI/Bbraille ahora puede  seleccionarse cuando la línea esté conectada a través de Bluetooth pero nunca se hayan conectado a través de USB.
 
 
 == Cambios para Desarrolladores ==
 - Los controladores de línea Braille ahora pueden soportar la selección manual de puertos. (#426)
  - Esto es mayoritariamente útil para líneas braille que soporten conexión a través de un puerto serie.
  - Esto se hace utilizando el método de la clase getPossiblePorts en la clase BrailleDisplayDriver.
+- Ahora se soporta la entrada braille  desde teclados braille. (#808)
+ - La entrada braille se abarca por la clase brailleInput.BrailleInputGesture o una subclase de la misma.
+ - Las subclases de braille.BrailleDisplayGesture (según se implementaron en los controladores de las líneas braille) también pueden heredar de brailleInput.BrailleInputGesture. Esto permite mostrar órdenes  y que la entrada braille se maneje por la misma clase gesture.
 
 
 = 2012.3 =

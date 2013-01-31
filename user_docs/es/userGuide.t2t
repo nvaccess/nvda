@@ -20,7 +20,7 @@ Lo más reseñable incluye:
 - Sintetizador de voz integrado que soporta sobre 43 idiomas
 - anunciado de formato de texto donde esté disponible tal como nombre y tamaño de la fuente, estilo y errores de ortografía
 - Anunciado automático de texto bajo el ratón e indicación opcional audible  de la posición del ratón
-- Soporte para muchas líneas de braille efímero
+- Soporte para muchas líneas de braille efímero incluyendo la entrada de braille computerizado para líneas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
 - Traducido a 42 idiomas
@@ -700,7 +700,7 @@ Por favor mira la sección [Líneas Braille Soportadas #SupportedBrailleDisplays
 Esta opción, si está disponible, te permite elegir qué puerto o tipo de conexión se utilizará para comunicar con la línea braille que tengas seleccionada.
 Es un cuadro combinado que contiene las opciones posibles para tu línea braille.
 
-Predeterminadamente, NVDA emplea la detección de puerto automática, lo cual significa que la conexión con el dispositivo braille se establecerá automáticamente escaneando los dispositivos USB y bluetooth disponibles en tu sistema.
+De forma predeterminada, NVDA emplea la detección de puerto automática, lo cual significa que la conexión con el dispositivo braille se establecerá automáticamente escaneando los dispositivos USB y bluetooth disponibles en tu sistema.
 Por lo tanto, para algunas líneas braille, podrás elegir explícitamente qué puerto debería utilizarse.
 Opciones comunes son "Automático" (que dice a NVDA que emplee el procedimiento de selección de puerto predeterminado automático), "USB", "Bluetooth" y los puertos de comunicación serie si tu línea braille soportan este tipo de comunicación.
 
@@ -708,11 +708,22 @@ Esta opción no estaría disponible si tu línea braille sólo soporta detecció
 
 Podrás consultar la documentación para tu línea braille en la sección [Líneas Braille Soportadas #SupportedBrailleDisplays] para informarte de más detalles sobre los tipos soportados de puertos y comunicación disponibles.
 
-==== Tabla de Transcripción ====
-La siguiente opción que vendrá en este diálogo es el cuadro combinado para las tablas braille. 
-En este cuadro combinado, encontrarás tablas braille para diferentes idiomas. Puedes moverte de tabla braille a tabla braille en la lista utilizando las flechas.
+==== Tabla de Salida ====
+La siguiente opción que vendrá en este diálogo es el cuadro combinado de la tabla de salida braille.
+En este cuadro combinado, encontrarás tablas braille, estándares braille y grados para diferentes idiomas.
+La tabla elegida se utilizará para transcribir texto a braille para presentarlo en la línea braille.
+Puedes moverte entre las tablas braille en la lista utilizando las teclas de cursor.
 
-==== Expandir a braille de ordenador para la palabra en el cursor ====
+==== Tabla de Entrada ====
+Complementariamente con la opción anterior, el siguiente ajuste que encontrarás es el cuadro combinado de la tabla de entrada braille.
+La tabla elegida se utilizará para transcribir a texto el braille introducido en el teclado tipo perkins de la línea braille.
+Actualmente NVDA sólo soporta la entrada de braille computerizado, así que sólo se mostrarán tablas de braille computerizado de 8 puntos.
+Puedes moverte entre las tablas braille en la lista utilizando las teclas de cursor.
+
+Ten en cuenta que esta opción sólo es útil si tu línea braille tiene un teclado tipo Perkins y si esta característica se soporta por el controlador de la línea braille.
+Si la entrada no se soporta en una línea que tenga un teclado braille, esto se notificará en la sección [Líneas Braille Soportadas #SupportedBrailleDisplays].
+
+ ==== Expandir a braille de ordenador para la palabra en el cursor ====
 Esta opción permite a la palabra que está bajo el cursor ser mostrada en braille de ordenador no contraído.
 
 ==== Velocidad de Parpadeo del Cursor ====
@@ -1213,7 +1224,10 @@ Sólo para la Focus 80:
 ++ Optelec ALVA BC640/680 ++
 Ambas líneas ALVA BC640 y BC680 de [Optelec http://www.optelec.com/] se soportan.
 No necesitas instalar ningún controlador en especial para utilizar estas líneas.
-Sólo enchufa la línea y configura NVDA para utilizarlas.
+Sólo enchufa la línea y configura NVDA para utilizarla.
+
+Mientras estas líneas tengan un teclado braille, manejan la transcripción de braille a texto por sí mismas.
+Por lo tanto, la configuración de la tabla de entrada braille de NVDA es irrelevante.
 
 Seguidamente van las asignaciones de teclas para esta línea con NVDA.
 Por favor mira la documentación de la línea para descripciones de dónde pueden encontrarse estas teclas.
@@ -1242,6 +1256,8 @@ Por favor mira la documentación de la línea para descripciones de dónde puede
 ++ Líneas Handy Tech ++
 NVDA soporta todas las líneas de [Handy Tech http://www.handytech.de/].
 Para algunas líneas antiguas USB, necesitarás instalar los controladores USB de Handy Tech en tu sistema.
+
+La entrada Braille  todavía no está soportada.
 
 Seguidamente van las asignaciones de teclas para esta línea con NVDA.
 Por favor mira la documentación de la línea para descripciones de dónde pueden encontrarse estas teclas.
@@ -1381,6 +1397,8 @@ Por favor mira la documentación de la línea para descripciones de dónde puede
 ++ Series de la HIMS Braille Sense/Braille EDGE ++
 NVDA soporta las líneas Braille Sense y Braille EDGE de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
+
+La entrada Braille  todavía no está soportada.
 
 Seguidamente van las asignaciones de teclas para estas líneas con NVDA.
 Por favor mira la documentación de las líneas para descripciones de dónde pueden encontrarse estas teclas.
@@ -1522,8 +1540,8 @@ Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 | Anunciar barra de estado | l2+abajo |
 | Mover al objeto contenido | arriba2 |
 | Mover al primer objeto contenido | dn2 |
-| Mover al objeto anterior | left2 |
-| Mover al siguiente objeto | derecha2 |
+| Mover al objeto anterior | derecha2 |
+| Mover al siguiente objeto | izquierda2 |
 | Anunciar formato de texto | fila de sensores superior |
 %kc:endInclude
 
@@ -1664,6 +1682,9 @@ Por favor mira la documentación del BrailleNote para encontrar dónde se locali
 Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 Deberías descargar e instalar el último paquete instalable, que se llamará, por ejemplo, brltty-win-4.2-2.exe.
 Cuando configures la línea y puerto a utilizar,  asegúrate de prestar gran atención a las instrucciones, especialmente si estás utilizando una línea USB y ya tienes los controladores del fabricante instalados.
+
+Para líneas que tengan un teclado braille, BRLTTY actualmente maneja la entrada braille por sí mismo.
+Por lo tanto, la opción tabla braille de entrada de NVDA es irrelevante.
 
 Seguidamente van las asignaciones a órdenes BRLTTY para NVDA.
 Por favor mira [la documentación de tablas de teclas de BRLTTY http://mielke.cc/brltty/doc/drivers/] para información acerca de cómo están mapeadas las órdenes de BRLTTY para controlar las líneas braille.
