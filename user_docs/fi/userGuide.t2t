@@ -20,7 +20,7 @@ Tärkeimpiä ominaisuuksia ovat:
 - Yli 43 kieltä tukeva sisäänrakennettu puhesyntetisaattori
 - Automaattinen tekstin muotoilutietojen, kuten fontin nimen ja koon, tyylin sekä kirjoitusvirheiden, lukeminen aina kun mahdollista
 - Automaattinen hiiren alla olevan tekstin lukeminen ja valinnainen hiiren sijainnin ilmaiseminen äänimerkeillä
-- Tuki useille pistenäytöille
+- Tuki useille pistenäytöille, mukaan lukien pistekirjoituksen syöttäminen tietokonemerkistöä käyttäen pistenäytöissä, joissa on pistenäppäimistö
 - Mahdollisuus käyttää USB-muistitikulta tai muulta siirrettävältä tietovälineeltä ilman asennusta
 - Helppokäyttöinen puhuva asennusohjelma
 - Käännökset 42 kielelle
@@ -708,9 +708,20 @@ Tämä vaihtoehto ei ole käytettävissä, mikäli pistenäyttö tukee vain auto
 
 Katso [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaleesta lisätietoja pistenäyttösi tukemista kommunikointityypeistä ja käytettävissä olevista porteista.
 
-==== Pistetaulukko ====
-Seuraavana tässä valintaikkunassa on "Pistetaulukko"-yhdistelmäruutu, jossa on pistetaulukkoja eri kielille.
+==== Tulostustaulukko ====
+Seuraavana tässä valintaikkunassa on "Tulostustaulukko"-yhdistelmäruutu.
+Se sisältää pistetaulukoita eri kielille ja pistekirjoitusstandardeille sekä -tasoille.
+Valittua taulukkoa käytetään tekstin kääntämiseen pistenäytöllä näytettäväksi pistekirjoitukseksi.
 Vaihtoehtojen välillä voidaan liikkua nuolinäppäimillä.
+
+==== Syöttötaulukko ====
+Edellistä vaihtoehtoa täydentää Syöttötaulukko-yhdistelmäruutu.
+Valittua taulukkoa käytetään pistenäytön Perkins-tyylisellä pistenäppäimistöllä syötetyn pistekirjoituksen kääntämiseen tekstiksi.
+NVDA tukee tällä hetkellä ainoastaan tietokonemerkistöllä syöttämistä, joten vain 8 pisteen tietokonemerkistön taulukot näytetään.
+Vaihtoehtojen välillä voidaan liikkua nuolinäppäimillä.
+
+Huomaa, että tästä vaihtoehdosta on hyötyä vain, jos pistenäytössä on Perkins-tyylinen -näppäimistö ja mikäli näytön ajuri tukee tätä ominaisuutta.
+Mikäli pistenäppäimistön sisältävä pistenäyttö ei tue syöttämistä, siitä huomautetaan [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaleessa.
 
 ==== Laajenna kohdistimen kohdalla oleva sana ====
 Kun tämä asetus on käytössä, kohdistimen alla oleva sana näytetääntavallisella tietokonemerkistöllä.
@@ -1215,6 +1226,9 @@ Vain Focus 80:
 Niiden käyttämiseksi ei tarvitse asentaa ajureita.
 Riittää, että pistenäyttö kytketään tietokoneeseen ja määritetään NVDA käyttämään sitä.
 
+Vaikka näissä pistenäytöissä onkin pistenäppäimistö, ne huolehtivat itse pistekirjoituksen kääntämisestä tekstiksi.
+Tämän vuoksi NVDA:n pistesyöttötaulukkoasetuksella ei ole merkitystä.
+
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
@@ -1242,6 +1256,8 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 ++ Handy Tech ++
 NVDA tukee kaikkia [Handy Techin http://www.handytech.de/] pistenäyttöjä sekä USB-liitännällä että bluetooth-yhteydellä.
 Vanhempia USB-malleja varten tietokoneelle on asennettava Handy Techin USB-ajurit.
+
+Pistesyöttöä ei vielä tueta.
 
 Seuraavassa on lueteltu näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
@@ -1382,6 +1398,8 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 NVDA tukee [HIMS:in http://www.hims-inc.com/] Braille Sense- ja Braille EDGE -pistenäyttöjä USB-liitännällä tai Bluetoothilla kytkettyinä.
 Mikäli käytetään USB-liitäntää, on tietokoneelle asennettava HIMS:in ajurit.
 
+Pistesyöttöä ei vielä tueta.
+
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:beginInclude
@@ -1490,7 +1508,7 @@ C-sarjan näytöt ovat ainoa poikkeus.
 
 Niissä ja muutamissa muissa näytöissä on kaksi kosketuskohdistinriviä, joista ylempää käytetään muotoilutietojen lukemiseen.
 C-sarjan laitteissa ylärivin jonkin näppäimen alhaalla pitäminen ja EAB::n painaminen jäljittelee toisen kytkimen tilaa.
-Ylös-, alas-, oikea- sekä vasen-näppäinten (tai EAB:n) painaminen ja alhaalla pitäminen toistaa toiminnon.
+Ylös-, alas-, oikea- sekä vasen-näppäinten (tai EAB:n) painaminen ja alhaalla pitäminen toistaa kyseessä olevan toiminnon.
 
 Näissä pistenäytöissä on käytettävissä yleensä seuraavat näppäimet:
 || Nimi | Näppäin |
@@ -1498,32 +1516,32 @@ Näissä pistenäytöissä on käytettävissä yleensä seuraavat näppäimet:
 | l2 | Vasen takanäppäin |
 | r1 | Oikea etunäppäin |
 | r2 | Oikea takanäppäin |
-| ylös | Yksi askel ylös |
-| ylös2 | Kaksi askelta ylös |
-| vasen | Yksi askel vasemmalle |
-| vasen2 | Kaksi askelta vasemmalle |
-| oikea | Yksi askel oikealle |
-| oikea2 | Kaksi askelta oikealle |
+| up | Yksi askel ylös |
+| up2 | Kaksi askelta ylös |
+| left | Yksi askel vasemmalle |
+| left2 | Kaksi askelta vasemmalle |
+| right | Yksi askel oikealle |
+| right2 | Kaksi askelta oikealle |
 | dn | Yksi askel alas |
 | dn2 | Kaksi askelta alas |
 
 Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 %kc:beginInclude
 || Nimi | Näppäin |
-| Vieritä pistenäyttöä taaksepäin | vasen |
-| Vieritä pistenäyttöä eteenpäin | oikea |
-| Siirrä pistenäyttö edelliselle riville | ylös |
+| Vieritä pistenäyttöä taaksepäin | left |
+| Vieritä pistenäyttöä eteenpäin | right |
+| Siirrä pistenäyttö edelliselle riville | up |
 | Siirrä pistenäyttö edelliselle riville | dn |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
 | Siirrä kokonaistarkasteluun/kohdistukseen | r1 |
-| Lue ikkunan nimi | l1+ylös |
-| Lue tilarivi | l2+alas |
-| Siirrä säilöobjektiin | ylös2 |
+| Lue ikkunan nimi | l1+up |
+| Lue tilarivi | l2+down |
+| Siirrä säilöobjektiin | up2 |
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
-| Siirrä edelliseen objektiin | vasen2 |
-| Siirrä seuraavaan objektiin | oikea2 |
+| Siirrä edelliseen objektiin | left2 |
+| Siirrä seuraavaan objektiin | right2 |
 | Lue tekstin muotoilutiedot | ylärivin kosketuskohdistinnäppäimet |
 %kc:endInclude
 
@@ -1548,12 +1566,12 @@ Näissä pistenäytöissä on yleensä käytettävissä seuraavat näppäimet:
 | l2 | Vasen takanäppäin |
 | r1 | Oikea etunäppäin |
 | r2 | Oikea takanäppäin |
-| ylös | 1 askel ylöspäin |
-| ylös2 | 2 askelta ylöspäin |
-| vasen | 1 askel vasemmalle |
-| vasen2 | 2 askelta vasemmalle |
-| oikea | 1 askel oikealle |
-| oikea2 | 2 askelta oikealle |
+| up | 1 askel ylöspäin |
+| up2 | 2 askelta ylöspäin |
+| left | 1 askel vasemmalle |
+| left2 | 2 askelta vasemmalle |
+| right | 1 askel oikealle |
+| right2 | 2 askelta oikealle |
 | dn | 1 askel alaspäin |
 | dn2 | 2 askelta alaspäin |
 
@@ -1562,36 +1580,36 @@ Seuraaavassa on Papenmeierin komentomääritykset NVDA:lle:
 %kc:beginInclude
 Laitteet, joissa on EAB:
 || Nimi | Näppäin |
-| Vieritä pistenäyttöä taaksepäin | vasen |
-| Vieritä pistenäyttöä eteenpäin | oikea |
-| Siirrä pistenäyttö edelliselle riville | ylös |
+| Vieritä pistenäyttöä taaksepäin | left |
+| Vieritä pistenäyttöä eteenpäin | right |
+| Siirrä pistenäyttö edelliselle riville | up |
 | Siirrä pistenäyttö seuraavalle riville | dn |
 | Siirrä pistesoluun | kosketuskohdistinnäppäimet |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
 | Siirrä kokonaistarkasteluun / kohdistukseen | r1 |
-| Lue ikkunan nimi | l1ylös |
-| Lue tilarivi | l2alas |
-| Siirrä säilöobjektiin | ylös2 |
+| Lue ikkunan nimi | l1up |
+| Lue tilarivi | l2down |
+| Siirrä säilöobjektiin | up2 |
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
-| Siirrä seuraavaan objektiin | vasen2 |
-| Siirrä edelliseen objektiin | oikea2 |
+| Siirrä seuraavaan objektiin | right2 |
+| Siirrä edelliseen objektiin | left2 |
 | Lue tekstin muotoilutiedot | Ylärivin kosketuskohdistinnäppäimet |
 
 BRAILLEX Tiny:
 || Nimi | Näppäin |
 | Lue nykyinen merkki | l1 |
 | Aktivoi nykyinen navigointiobjekti | l2 |
-| Vieritä pistenäyttöä taaksepäin | vasen |
-| Vieritä pistenäyttöä eteenpäin | oikea |
-| Siirrä pistenäyttö edelliselle riville | ylös |
+| Vieritä pistenäyttöä taaksepäin | left |
+| Vieritä pistenäyttöä eteenpäin | right |
+| Siirrä pistenäyttö edelliselle riville | up |
 | Siirrä pistenäyttö seuraavalle riville | dn |
 | Vaihda Pistenäyttö seuraa -asetusta | r2 |
 | Siirrä kokonaistarkasteluun / kohdistukseen | r1 |
-| Siirrä säilöobjektiin | r1+ylös |
+| Siirrä säilöobjektiin | r1+up |
 | Siirrä ensimmäiseen sisältöobjektiin | r1+dn |
-| Siirrä edelliseen objektiin | r1+vasen |
-| Siirrä seuraavaan objektiin | r1+oikea |
+| Siirrä edelliseen objektiin | r1+left |
+| Siirrä seuraavaan objektiin | r1+right |
 | Lue tekstin muotoilutiedot | reportf |
 
 BRAILLEX 2D Screen:
@@ -1600,15 +1618,15 @@ BRAILLEX 2D Screen:
 | Aktivoi nykyinen navigointiobjekti | l2 |
 | Vaihda Pistenäyttö seuraa -asetusta | r2 |
 | Lue tekstin muotoilutiedot | reportf |
-| Siirrä pistenäyttö edelliselle riville | ylös |
-| Vieritä pistenäyttöä taaksepäin | vasen |
+| Siirrä pistenäyttö edelliselle riville | up |
+| Vieritä pistenäyttöä taaksepäin | left |
 | Siirrä kokonaistarkasteluun / kohdistukseen | r1 |
-| Vieritä pistenäyttöä eteenpäin | oikea |
+| Vieritä pistenäyttöä eteenpäin | right |
 | Siirrä pistenäyttö seuraavalle riville | dn |
-| Siirrä seuraavaan objektiin | vasen2 |
-| Siirrä säilöobjektiin | ylös2 |
+| Siirrä seuraavaan objektiin | left2 |
+| Siirrä säilöobjektiin | up2 |
 | Siirrä ensimmäiseen sisältöobjektiin | dn2 |
-| Siirrä edelliseen objektiin | oikea2 |
+| Siirrä edelliseen objektiin | right2 |
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++
@@ -1664,6 +1682,9 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 Sen käyttämiseksi on asennettava [BRLTTY:n Windows-versio http://brl.thefreecat.org/brltty/].
 Siitä tulisi asentaa uusin versio, jonka tiedostonimi on esimerkiksi brltty-win-4.2-2.exe.
 Käytettävää pistenäyttöä ja porttia määritettäessä on syytä kiinnittää tarkasti huomiota ohjeisiin, erityisesti jos käytetään USB-pistenäyttöä ja mikäli valmistajan ajurit on jo asennettu.
+
+BRLTTY huolehtii tällä hetkellä itse pistesyötöstä näytöissä, joissa on pistenäppäimistö.
+Tämän vuoksi NVDA:n pistesyöttötaulukkoasetuksella ei ole merkitystä
 
 Seuraavassa on BRLTTY:n näppäinkomennot NVDA:ta käytettäessä.
 Katso [BRLTTY:n näppäintaulukoiden ohjetta http://mielke.cc/brltty/doc/drivers/] saadaksesi tietoja siitä, miten BRLTTY:n komennot määritetään pistenäyttöjen näppäimiin.
