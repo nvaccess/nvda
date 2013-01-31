@@ -1484,33 +1484,33 @@ Hvis BrxCom er installeret, vil NVDA benytte BrxCom.
 BrxCom er et værktøj der giver dig mulighed for, at bruge punktdisplayet uafhængigt af en skærmlæser.
 En ny version af BrxCom der virker med NVDA bliver snart udgivet af Papenmeier.  
 
-De fleste enheder har en Let Adgang bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
+De fleste enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
 EAB kan bevæge sig i fire retninger, hvor der generelt er to tilhørende stillinger.
 C-serien er den eneste undtagelse.
 
 C-serien samt nogle andre displays har to rækker med markøranføringsknapper, hvor den øvester række bruges til at rapportere formateringsinformation.
 Hvis du holder en af de øverste  Markøranføringsknapper og trykker på EAB på C-serien, vil enheden emulere handlingen for den anden stilling.
-Hvis du trykker og holder på piletasterne op, ned, højre og venstre, samt EAB, vil den tilsvarende handling gentages.
+Hvis du trykker og holder på piletasterne op, ned, højre og venstre (eller EAB) vil den tilsvarende handling gentages.
 
 De følgende taster er generelt tilgængelige på disse punktdisplays:
 || Navn | Tast |
-| l1 | Left front Tast |
-| l2 | Left rear Tast |
-| r1 | Right front Tast |
-| r2 | Right rear Tast |
-| up | 1 Step up |
-| up2 | 2 Steps up |
-| left | 1 Step left |
-| left2 | 2 Steps left |
-| right | 1 Step right |
-| right2 | 2 Steps right |
-| dn | 1 Step down |
-| dn2 | 2 Steps down |
+| l1 | Venstre front Tast |
+| l2 | Venstre tast bag |
+| r1 | Højre front Tast |
+| r2 | Højre Tast bag |
+| op | 1 trin op|
+| op2 | To trin op |
+| Venstre | 1 trin til højre |
+| venstre2 | 2 trin til venstre |
+| Højre | 1 Trin til højre |
+| Venstre2 | 2 trin til højre |
+| ned | 1 trin ned |
+| Ned2 | 2 trin ned |
 
 Papenmeier kommandoer til NVDA er som følgende:
 %kc:beginInclude
 || Navn | Tast |
-| Rul punktdisplay tilbage | left |
+| Rul punktdisplay tilbage | venstre |
 | Rul punktdisplay fremad | højre |
 | Flyt punktdisplay to forrige linje | op |
 | Flyt punktdisplay til næste linje | ned |
@@ -1519,12 +1519,96 @@ Papenmeier kommandoer til NVDA er som følgende:
 | Aktiver det aktuelle navigatorobjekt | l2 |
 | Flyt til flad visning/fokus | r1 |
 | Rapportér titel | l1+up |
-| Rapportër statuslinje | l2+down |
+| Rapportër statuslinje | l2+ned |
 | Flyt til overordnet objekt | op2 |
 | Flyt til første underordnet objekt | ned2 |
-| Move to previous object | venstre2 |
-| Move to next object | højre2 |
+| Flyt til forrige objekt | venstre2 |
+| Flyt til næste objekt | højre2 |
 | Rapportér tekstformatering | øverste markøranføringsknapper |
+%kc:endInclude
+
+++ Papenmeier Braille BRAILLEX Ældre Modeller ++
+Følgende punktdisplays er understøttede: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Bemærk, at disse punktdisplays kun kan opkobles med en serielport.
+Derfor er det nødvendigt at vælge porten, du har koblet dit punktdisplay til, når du har valgt dit punktdisplay. Dette kan indstilles i dialogen Braille-indstillinger.
+
+Nogle enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
+EAB kan bevæge sig i fire retninger, hvor der generelt er to tilhørende stillinger.
+Hvis du trykker og holder på piletasterne op, ned, højre og venstre (eller EAB) vil den tilsvarende handling gentages.
+Ældre enheder har ikke en AEB; front taster er brugt i stedet.
+
+Følgende taster er generelt tilgængelige på disse punktdisplays:
+
+|| Navn | Tast |
+| l1 | Venstre front tast |
+| l2 | Venstre tast bag |
+| r1 | Højre front tast |
+| r2 | Højre tast bag |
+| op | 1 trin op |
+| op2 | 2 trin op |
+| venstre | 1 trin venstre |
+| venstre2 | 2 trin venstre |
+| højre | 1 trin til højre |
+| højre2 | 2 trin til højre |
+| ned | 1 trin ned |
+| ned2 | 2 trin ned |
+
+Papenmeier kommandoer til NVDA er som følgende:
+
+%kc:beginInclude
+Enheder med EAB:
+|| Navn | Tast |
+| Rul punktdisplay tilbage | venstre |
+| Rul punktdisplay fremad | højre |
+| Flyt punktdisplay to forrige linje | op |
+| Flyt punktdisplay til næste linje | ned |
+| Flyt til punktcelle | Markøranføringsknapper |
+| Rapportér aktuelt tegn ved ubegrænset markør | l1 |
+| Aktiver det aktuelle navigatorobjekt | l2 |
+| Flyt til flad visning/fokus | r1 |
+| Rapportér titel | l1+up |
+| Rapportër statuslinje | l2+ned |
+| Flyt til overordnet objekt | op2 |
+| Flyt til første underordnet objekt | ned2 |
+| Flyt til næste objekt | højre2 |
+| Flyt til forrige objekt | venstre2 |
+| Rapportér tekstformatering | øverste markøranføringsknapper |
+
+BRAILLEX Tiny:
+|| Navn | Tast |
+| Rapportér aktuelt tegn ved ubegrænset markør | l1 |
+| Aktiver det aktuelle navigatorobjekt | l2 |
+| Rul punktdisplay tilbage | venstre |
+| Rul punktdisplay fremad | højre |
+| Flyt punktdisplay to forrige linje | op |
+| Flyt punktdisplay til næste linje | ned |
+| Skift punkt tøjret til indstilling | r2 |
+| Skift til flad visning / fokus | r1 |
+| Flyt til overordnet objekt | R1+op |
+| Flyt til første underordnet objekt | R1+ned |
+| Flyt til forrige objekt | R1+venstre |
+| Flyt til næste objekt | R1+højre |
+| Rapportér tekstformatering | reportf |
+
+BRAILLEX 2D Screen:
+|| Navn | Tast |
+| Rapportér aktuelt tegn ved ubegrænset markør | l1 |
+| Aktiver det aktuelle navigatorobjekt | l2 |
+| Skift punkt tøjret til indstilling | r2 |
+| Rapportér tekstformatering | reportf |
+| Flyt punktdisplay to forrige linje | op |
+| Rul punktdisplay tilbage | venstre |
+| Skift til flad visning / fokus | r1 |
+| Rul punktdisplay fremad | højre |
+| Flyt punktdisplay til næste linje | ned |
+| Flyt til næste objekt | Venstre2 |
+| Flyt til overordnet objekt | Op2 |
+| Flyt til første underordnet objekt | Ned2 |
+| Flyt til forrige objekt | Højre2 |
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++
