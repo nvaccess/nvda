@@ -17,6 +17,7 @@ Que hai de Novo no NVDA
 - Soporte para a selección de porto cando se utilicen liñas freedom Scientific (Automático, USB ou Bluetooth).
 - Soporte para a familia BrailleNote de anotadores electrónicos de Humanware cando actúen como unha terminal braille para un lector de pantalla. (#2012)
 - Soporte para  modelos antigos das liñas braille Papenmeier BRAILLEX. (#2679)
+- Soporte para a entrada de braille computerizado  para liñas braille que posúan un teclado braille. (#808)
 
 
 == Corrección de Fallos ==
@@ -41,6 +42,9 @@ Que hai de Novo no NVDA
 - Os controladores de liña Braille agora poden soportar a selección manual de portos. (#426)
  - Esto é maioritariamente útil para liñas braille que soporten conexión a traverso dun porto serie.
  - Esto faise utilizando o método da clase getPossiblePorts na clase BrailleDisplayDriver.
+- Agora sopórtase a entrada braille  dende teclados braille. (#808)
+ - A entrada braille abránguese pola crase brailleInput.BrailleInputGesture ou unha subcrase da mesma.
+ - As subcrases de braille.BrailleDisplayGesture (segundo se implementaron nos controladores das liñas braille) tamén poden herdar de brailleInput.BrailleInputGesture. Esto permite amosar ordes  e que a entrada braille se manelle pola mesma crase gesture.
 
 
 = 2012.3 =
