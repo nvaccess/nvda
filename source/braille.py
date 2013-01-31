@@ -377,9 +377,12 @@ class Region(object):
 			self.brailleCells.append(0)
 			self.brailleToRawPos.append(0)
 		if self.cursorPos is not None:
-			# HACK: Work around a liblouis bug whereby the returned cursor position is not within the braille cells returned.
-			if brailleCursorPos >= len(self.brailleCells):
-				brailleCursorPos = len(self.brailleCells) - 1
+			# HACK: The cursorPos returned by liblouis is notoriously buggy (#2947 among other issues).
+			# rawToBraillePos is usually accurate.
+			try:
+				brailleCursorPos = self.rawToBraillePos[self.cursorPos]
+			except IndexError:
+				pass
 		else:
 			brailleCursorPos = None
 		self.brailleCursorPos = brailleCursorPos
