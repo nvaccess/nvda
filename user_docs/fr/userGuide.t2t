@@ -1527,6 +1527,90 @@ Voici les  commandes assignées pour les afficheurs Papenmeier dans NVDA :
 | Lire les informations de mise en forme | rangée de routines du haut |
 %kc:endInclude
 
+++ Papenmeier Braille BRAILLEX modèles anciens ++
+Les afficheurs Braille suivants sont supportés :
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Notez que ces afficheurs ne peuvent être connectés qu'en port série.
+Vous devez donc sélectionner le port série où l'afficheur est connecté après avoir sélectionné le pilote dans la boîte de dialogue des préférences Braille.
+
+Certains de ces périphériques ont une barre d'accès facile (EAB) qui permet une opération rapide et intuitive.
+L'EAB peut être bougée dans quatre directions où chaque direction a généralement deux crans.
+Garder appuyée la touche haut, basse, gauche, droite (ou EAB) répette l'action correspondante.
+Les ansiens modèles n'ont pas d'EAB ; les touches de façade sont utilisées à la place.
+
+Globalement, les touches suivantes sont disponibles sur les afficheurs Braille :
+
+|| Nom | Touche |
+| l1 | Touche avant gauche |
+| l2 | Touche arrière droite |
+| r1 | Touche avant droite |
+| r2 | Touche arrière droite |
+| up | 1 appui vers le haut |
+| up2 | 2 appuis vers le haut |
+| left | 1 appui gauche |
+| left2 | 2 appuis gauche |
+| right | 1 appui à droite |
+| right2 | 2 appuis à droite |
+| dn | 1 appui en bas |
+| dn2 | 2 appuis en bas |
+
+Les commandes Papenmeier disponibles dans NVDA sont les suivantes :
+
+%kc:beginInclude
+Périphériques avec EAB :
+|| Nom | Touche |
+| Défilement affichage braille  arrière | Left |
+| Défilement affichage braille  avant | Right |
+| Déplacer l'affichage Braille vers la ligne précédente | Up |
+| Déplacer l'affichage Braille vers la ligne suivante | Down |
+| Joindre à la célule Braille | routing |
+| Annonce le caractère courant sous la revue | l1 |
+| Activer l'objet courant du navigateur | l2 |
+| Ce déplacer à la revue à plat/au focus | r1 |
+| Dire titre | l1up |
+| Lire barre d'état | l2down |
+| Aller à l'objet contenant | up2 |
+| Aller au premier objet contenu | dn2 |
+| Aller à l'objet suivant | right2 |
+| Aller à l'objet précédant | left2 |
+| Annoncer la mise en forme du texte | Routines haut |
+
+BRAILLEX Tiny :
+|| Nom | Touche |
+| Annoncer le caractère sous le curseur de revue | l1 |
+| Activer l'objet sous le navigateur | l2 |
+| Défiler le Braille vers l'arrière | left |
+| Défiler le Braille vers l'avant | right |
+| Déplacer le Braille à la ligne précédante | up |
+| Déplacer le Braille à la ligne suivante | dn |
+| Basculer le suivi du braille | r2 |
+| Ce déplacer à la revue à plat / au focus | r1 |
+| Aller à l'objet contenant | r1+up |
+| Aller au premier objet contenu | r1+dn |
+| Aller à l'objet précédant | r1+left |
+| Aller à l'objet suivant | r1+right |
+| Annoncer la mise en forme | reportf |
+
+BRAILLEX 2D Screen:
+|| Nom | Touche |
+| Annoncer le caractère sous le curseur de revue | l1 |
+| Activer l'objet sous le navigateur | l2 |
+| Basculer le suivi du braille | r2 |
+| Annoncer la mise en forme | reportf |
+| Déplacer le Braille à la ligne précédante | up |
+| Défiler le Braille vers l'arrière | left |
+| Ce déplacer à la revue à plat / au focus | r1 |
+| Défiler le Braille vers l'avant | right |
+| Déplacer le Braille à la ligne suivante | dn |
+| Aller à l'objet suivant | left2 |
+| Aller à l'objet contenant | up2 |
+| Aller au premier objet contenu | dn2 |
+| Aller à l'objet précédant | right2 |
+%kc:endInclude
+
 ++ BrailleNote de HumanWare ++
 NVDA supporte les bloc-notes BrailleNote de [HumanWare http://www.humanware.com] lorsque celui-ci agi comme afficheur Braille pour un lecteur d'écran.
 Les modèles suivants sont supportés :
