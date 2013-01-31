@@ -55,17 +55,35 @@ class Root(IAccessible):
 	def _get_parent(self):
 		return getNVDAObjectFromEvent(self.windowHandle,0,0)
 
+class PluginClientWithBrokenFocus(IAccessible):
+	"""The client of a Flash plugin with broken focus behaviour.
+	#2546: In Flash protected mode, the Flash content is in another window beneath the plugin window.
+	Unfortunately, Flash doesn't bother to set focus to this window.
+	To work around this, when focus hits this object, focus is forced to the child.
+	"""
+
+	def event_gainFocus(self):
+		try:
+			self.firstChild.firstChild.setFocus()
+		except AttributeError:
+			super(PluginClientWithBrokenFocus, self).event_gainFocus()
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Flash object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
+	iaRole = obj.IAccessibleRole
+	if obj.windowClassName == "GeckoPluginWindow" and iaRole == oleacc.ROLE_SYSTEM_CLIENT and obj.childCount == 1 and obj.firstChild.windowClassName == "GeckoFPSandboxChildWindow":
+		clsList.append(PluginClientWithBrokenFocus)
+		return
+
 	try:
 		servProv = obj.IAccessibleObject.QueryInterface(IServiceProvider)
 	except COMError:
 		return
 
 	# Check whether this is the Flash root accessible.
-	if obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
+	if iaRole == oleacc.ROLE_SYSTEM_CLIENT:
 		try:
 			servProv.QueryService(IFlashAccessibility._iid_, IFlashAccessibility)
 			clsList.append(Root)
