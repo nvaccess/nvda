@@ -22,11 +22,13 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 class AdobeFlashVBufBackend_t: public VBufBackend_t {
 	private:
 
-	VBufStorage_fieldNode_t* renderControlContent(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, IAccessible* pacc, long accChildID);
+	VBufStorage_fieldNode_t* renderControlContent(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, int id, IAccessible* pacc);
 
 	IAccPropServices* accPropServices;
 
 	long getAccId(IAccessible* acc);
+
+	bool isWindowless;
 
 	protected:
 
