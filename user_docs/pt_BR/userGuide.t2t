@@ -46,6 +46,7 @@ Para usuários que tenham uma linha Braille, o NVDA pode transmitir a informaç�
  Consulte por favor a seção [Linhas Braille Suportadas #SupportedBrailleDisplays] para informações sobre os terminais Braille compatíveis.
 
 O NVDA suporta códigos Braille para diversos idiomas, incluindo os códigos Braille contraídos, não contraídos e de computador para alguns idiomas. 
+
 ++ Licença e Copyright ++
 NVDA copyright 2006-2012 Coolaboradores do NVDA.
 O NVDA encontra-se sob a licença pública GNU General Public License (Versão 2).
@@ -1169,7 +1170,7 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 %kc:beginInclude
 || Nome | Tecla |
 | Mover linha braille para trás | topRouting1 (primeira célula da linha) |
-| Mover linha braille para a frente | topRouting20/40/80 (ýltima célula da linha) |
+| Mover linha braille para a frente | topRouting20/40/80 (última célula da linha) |
 | Mover linha braille para trás | leftAdvanceBar |
 | Mover linha braille para a frente | rightAdvanceBar |
 | Alternar "vínculo do Braille" | leftGDFButton+rightGDFButton |
@@ -1179,10 +1180,10 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Alternar a ação da roda direita | pressionar a roda direita |
 | Mover-se para Trás usando a ação da roda direita | roda direita para cima |
 | Mover-se para a frente usando a ação da roda Direita | roda direita para baixo |
-| Guiar para a célula braille | routing |
+| Guiar para a célula braille | sensor |
 | Tecla backspace | ponto 7 |
 | Tecla enter | ponto 8 |
-| Tecla shift+tab | brailleSpaceBar+ponto 1+ponto 2 |
+| Comando shift+tab | brailleSpaceBar+ponto 1+ponto 2 |
 | Tecla tab | brailleSpaceBar+ponto 4+ponto 5 |
 | Tecla seta cima | brailleSpaceBar+ponto 1 |
 | Tecla seta baixo | brailleSpaceBar+ponto 4 |
@@ -1228,7 +1229,7 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Mover linha braille para a linha anterior | t2 |
 | Mover linha braille para a linha seguinte | t4 |
 | Mover linha braille para a frente | t5 |
-|Guiar para a cela braille  | sensor |
+| Guiar para a cela braille  | sensor |
 | tecla shift+tab | sp1 |
 | tecla alt | sp2 |
 | tecla escape | sp3 |
@@ -1587,8 +1588,8 @@ Dispositivos que possuem EAB:
 | Ler Barra de Status | l2down |
 | Mover para o objeto pai | up2 |
 | Mover para o primeiro objeto filho | dn2 |
-| Mover para o objeto seguinte | left2 |
-| Mover para o objeto anterior | right2 |
+| Mover para o objeto seguinte | right2 |
+| Mover para o objeto anterior | left2 |
 | Anunciar formatação de texto | Upper routing strip |
 
 BRAILLEX Tiny:
