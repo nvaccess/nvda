@@ -77,12 +77,14 @@ Als u NVDA echter naar media met het kenmerk alleen-lezen, zoals een CD, wilt ko
 Op dit moment kan de  draagbare versie niet rechtstreeks van media met het kenmerk alleen-lezen worden uitgevoerd.
 
 De tijdelijke kopie van NVDA gebruiken is ook een optie, bij voorbeeld om het programma te demonstreren, maar het kost wel veel tijd als u NVDA telkens op deze manier moet starten.
+
 ++ Beperkingen van de draagbare en tijdelijke versie van NVDA. ++
 Behalve dat bij gebruik van de draagbare of tijdelijke versie van NVDA het programma niet automatisch gestart kan worden na aanmelding bij Windows, gelden bovendien de volgende beperkingen:
 - Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
 - UAC-schermen (User Account Control) kunnen niet worden voorgelezen bij het starten van toepassingen die met beheerdersrechten worden uitgevoerd,
 - Windows 8: Geen ondersteuning voor invoer via het aanraakscherm,
 - Windows 8: Mogelijkheden zoals bladermodus en het uitspreken van getypte karakters bij apps uit de Windows Store zijn niet beschikbaar.
+-
 
 ++ NVDA installeren ++
 Als u NVDA direct vanuit het downloadbestand installeert, drukt u op de knop NVDA Installeren.  Als u het dialoogvenster reeds gesloten hebt of als u een installatie wilt uitvoeren vanuit een  draagbare kopie, kiest u NVDA Installeren wat u vindt onder Extra in het NVDA menu.
@@ -101,7 +103,7 @@ Met deze optie kunt u bepalen of de gebruikte instellingen van de NVDA kopie die
 ++ Een  draagbare Kopie aanmaken ++
 Als u een  draagbare kopie  direct vanuit het downloadbestand aanmaakt, drukt u op de knop  Draagbare Kopie Aanmaken.  Als u het dialoogvenster reeds gesloten hebt of als u werkt met een geïnstalleerde versie van NVDA, kiest u  Draagbare Kopie Aanmaken wat u vindt onder Extra in het NVDA menu.
 
-In het dialoogvenster dat wordt geopend kunt u aangeven waar de  draagbare versie moet worden aangemaakt. Dit kan een map op de harde schijf zijn of op een USB stick dan wel op een ander type  draagbare media. U vindt hier ook een optie waarmee de gebruikte NVDA instellingen van de momenteel aangemelde gebruiker kunnen worden gekopieerd naar de configuratie van de zojuist aangemaakte  draagbare versie. Deze  optie is alleen beschikbaar wanneer de  draagbare versie wordt aangemaakt vanuit een op uw computer geïnstalleerde versie van NVDA  en niet wanneer u de  versie  direct vanuit het downloadbestand uitvoert. Door op de knop Doorgaan te drukken wordt de  draagbare kopie aangemaakt. Zodra het aanmaken is voltooid, hoort u de melding dat dit gelukt is. Druk nu op OK om het dialoogvenster te sluiten.
+In het dialoogvenster dat wordt geopend kunt u aangeven waar de  draagbare versie moet worden aangemaakt. Dit kan een map op de harde schijf zijn of op een USB stick dan wel op een ander type  draagbare media. U vindt hier ook een optie waarmee de gebruikte NVDA instellingen van de momenteel aangemelde gebruiker kunnen worden gekopieerd naar de configuratie van de zojuist aangemaakte draagbare versie. Deze  optie is alleen beschikbaar wanneer de  draagbare versie wordt aangemaakt vanuit een op uw computer geïnstalleerde versie van NVDA  en niet wanneer u de  versie  direct vanuit het downloadbestand uitvoert. Door op de knop Doorgaan te drukken wordt de  draagbare kopie aangemaakt. Zodra het aanmaken is voltooid, hoort u de melding dat dit gelukt is. Druk nu op OK om het dialoogvenster te sluiten.
 
 + Aan de slag met NVDA +
 
@@ -111,7 +113,7 @@ U kunt het programma ook starten door in het dialoogvenster Uitvoeren de letters
 
 Om de  draagbare versie van NVDA te starten gaat u naar de map waarin u de uitgepakte bestanden hebt opgeslagen. Daar selecteert u NVDA.exe. Druk op de Entertoets of dubbelklik op het bestand.
 
-Bij het opstarten van het programma hoort u eerst een reeks in hoogte oplopende tonen die aangeven dat NVDA wordt geladen. Afhankelijk van de snelheid van uw PC, of, als wordt geladen van een usb-stick of een ander wat trager medium, kan het laden even duren.  Als het laden extra lang duurt, hoort u "NVDA wordt geladen. Even geduld...." 
+Bij het opstarten van het programma hoort u eerst een reeks in hoogte oplopende tonen die aangeven dat NVDA wordt geladen. Afhankelijk van de snelheid van uw PC, of, als wordt geladen van een usb-stick of een ander wat trager medium, kan het laden even duren.  Als het laden extra lang duurt, hoort u "NVDA wordt geladen. Even geduld....". 
 
 Als u niets hoort, of u krijgt een foutmelding van Windows dan wel een in hoogte aflopende tonenreeks hoort, is er iets fout gegaan met het programma. U doet er dan goed aan dit te melden aan de ontwikkelaars van NVDA.
 Op de NVDA website kunt u lezen hoe u dit kunt doen.
@@ -207,8 +209,7 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 | Invoerhulpmodus aan-/uitzetten | NVDA+1 | geen | Als de invoerhulpmodus is ingeschakeld hoort u bij elke toets die wordt ingedrukt de naam van de toets en de (eventuele) bijbehorende functie van de toets(en) |
 | NVDA afsluiten | NVDA+q | geen | Sluit NVDA af |
 | Volgende toetsaanslag niet uitvoeren | NVDA+f2 | geen | De volgende toetsaanslag zal niet als NVDA-commando worden verwerkt maar als commando binnen de gebruikte toepassing worden uitgevoerd. |
-| Zet slaapmodus aan/uit voor huidige applicatie | NVDA+shift+s | geen | Slaapmodus schakelt alle NVDA commando's en uitvoer in spraak en braille uit. Dit is vooral handig in applicaties die in hun eigen spraakuitvoer of schermlezer voorzien. Druk deze toets nogmaals in om slaapmodus weer uit te schakelen. |
-%kc:endInclude
+| Zet slaapmodus aan/uit voor huidige applicatie | NVDA+shift+s | geen | Slaapmodus schakelt alle NVDA commando's en uitvoer in spraak en braille uit. Dit is vooral handig in applicaties die in hun eigen spraakuitvoer of schermlezer voorzien. Druk deze toets nogmaals in om slaapmodus weer uit te schakelen. |%kc:endInclude
 
 ++ Systeeminformatie melden ++
 %kc:beginInclude
@@ -706,9 +707,9 @@ Toets: NVDA+control+t
 
 Hiermee kunt u bepalen of de leesregel de systeemfocus dan wel de navigatorobject- / reviewcursor moet volgen
 
-==== Lezen per paragraaf ====
-Als deze optie is ingeschakeld, zal braille per paragraaf in plaats van per regel worden weergegeven.
-Ook de vorige/volgende regel commando's zullen van paragraaf naar paragraaf springen.
+==== Lezen per alinea ====
+Als deze optie is ingeschakeld, zal braille per alinea in plaats van per regel worden weergegeven.
+Ook de vorige/volgende regel commando's zullen van alinea naar alinea springen.
 Dit betekent dat u de brailleleesregel niet hoeft te scrollen aan het eind van een regel als er nog meer tekst op de leesregel past.
 Dit maakt het mogelijk om grote hoeveelheden tekst vloeiender te lezen.
 Deze optie is standaard uitgeschakeld.
@@ -1498,6 +1499,86 @@ De volgende toetscommando's zijn voor Papenmeier-Brailleleesregels beschikbaar:
 | Navigatorobject naar voorafgaand object verplaatsen | rechts2 |
 | Documentopmaak weergeven | bovenste rij routingtoetsen ||
  %kc:endInclude
+
+++ Papenmeier Braille BRAILLEX Oudere Modellen ++
+De volgende brailleleesregels worden ondersteund: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Merk op dat deze leesregels alleen via een seriële poort kunnen worden aangesloten.
+U dien daarom de poort waarop de leesregel is aangeslotente selecteren nadat u deze driver hebt gekozen in het dialoogvenster Braille-instellingen van het NVDA-menu. 
+Sommige leesregels hebben een gebruiksvriendelijke navigatiebalk (EAB = Easy Access Bar, waarmee intuïtief en snel gewerkt kan worden.
+De navigatiebalk kan in vier richtingen bewogen worden waarbij er als regel twee schakelpunten per richting zijn.
+Oudere toestellen hebben geen EAB; In plaats daarvan worden toetsen aan de voorkant gebruikt.
+
+Doorgaans beschikken de leesregels over de volgende toetsen :
+
+|| Naam | Toets |
+| l1 | Linkertoets voor |
+| l2 | Linkertoets achter |
+| r1 | Rechtertoets voor |
+| r2 | Rechtertoets achter |
+| up | 1 Stap omhoog |
+| up2 | 2 Stappen omhoog |
+| left | 1 Stap naar links |
+| left2 | 2 Stappen naar links |
+| right | 1 Stap naar rechts |
+| right2 | 2 Stappen naar rechts |
+| dn | 1 Stap omlaag |
+| dn2 | 2 Stappen omlaag |
+
+In NVDA zijn de volgende toetscommando's voor Papenmeier-Brailleleesregels beschikbaar:
+
+%kc:beginInclude
+Toestellen met EAB:
+|| Naam | Toets |
+| Brailleregel terugscrollen | links |
+| Brailleregel vooruitscrollen | rechts |
+| Brailleregel naar vorige regel verplaatsen | omhoog |
+| Brailleregel naar volgende regel verplaatsen | omlaag |
+| Cursor naar Braillecel verplaatsen | Routing |
+| Teken onder cursor voorlezen | l1 |
+| Huidige navigatorobject activeren | l2 |
+| Naar flat review / focus gaan | r1 |
+| Titel van actieve venster weergeven | l1+omhoog |
+| Statusbalk actieve venster weergeven | l2+omlaag |
+| Navigatorobject naar hoger niveau verplaatsen | omhoog2 |
+| Navigatorobject één niveau naar beneden verplaatsen | omlaag2 |
+| Navigatorobject naar volgende Object verplaatsen | rechts2 |
+| Navigatorobject naar voorafgaand object verplaatsen | links2 |
+| Documentopmaak weergeven | bovenste rij routingtoetsen | 
+
+BRAILLEX Tiny:
+|| Naam | Toets |
+| Teken onder cursor voorlezen | l1 |
+| Huidige navigatorobject activeren | l2 |
+| Brailleregel vooruitscrollen | rechts |
+| Brailleregel naar vorige regel verplaatsen | omhoog |
+| Brailleregel naar volgende regel verplaatsen | omlaag |
+| Braillevolgmodus wisselen | r2 |
+| Naar flat review / focus gaan | r1 |
+| Navigatorobject naar hoger niveau verplaatsen | r1+up |
+| Navigatorobject één niveau naar beneden verplaatsen | r1+dn |
+| Navigatorobject naar voorafgaand Object verplaatsen | r1+left |
+|Navigatorobject naar volgende Object verplaatsen | r1+right |
+| Documentopmaak weergeven | reportf |
+
+BRAILLEX 2D Screen:
+|| Naam | Toets |
+| Teken onder cursor voorlezen | l1 |
+| Huidige navigatorobject activeren | l2 |
+| Documentopmaak weergeven | reportf |
+| Naar vorige regel gaan | up/omhoog |
+| Leesregel terugscrollen | left/links |
+| Naar flat review / focus gaan | r1 |
+| Leesregel vooruitscrollen| right/rechts |
+| Naar volgende regel gaan | dn/omlaag |
+| Naar volgend object gaan | left2/links2 |
+| Één niveau omhoog gaan | up2/omhoog2 |
+| ÉÉn niveau omlaag gaan | dn2/omlaag2 |
+| Naar voorafgaand object gaan | right2/rechts2 |
+%kc:endInclude
 
 ++ HumanWare BrailleNote ++
 NVDA ondersteunt de BrailleNote notitieapparaten van [Humanware http://www.humanware.com] wanneer deze gebruikt worden als leesregel voor een schermlezer.
