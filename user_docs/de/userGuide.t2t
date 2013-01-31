@@ -1643,6 +1643,8 @@ Die folgenden Braillezeilen werden unterstützt:
 - BRAILLEX Tiny, 2D Screen
 -
 
+
+=== allgemeines ===
 Bedenken Sie, dass diese Braillezeilen nur seriell angeschlossen werden können.
 Hierfür müssen Sie in den Braile-Einstellungen von NVDA den Anschluss angeben, mit dem die Braillezeile verbunden ist.
 
@@ -1670,7 +1672,9 @@ im Allgemeinen gibt es auf allen Braillezeilen die folgenden Tasten:
 Die folgenden Befehle sind in nvda verfügbar:
 
 %kc:beginInclude
-Geräte mit Navigationsleiste:
+
+
+=== Geräte mit Navigationsleiste ===
 || Name | Taste |
 | Braillezeile zurückscrollen | links |
 | Braillezeile vorwärtsscrollen | rechts |
@@ -1684,12 +1688,12 @@ Geräte mit Navigationsleiste:
 | Statuszeile ausgeben | l2+ab |
 | zum übergeordneten Objekt springen | auf2 |
 | zum ersten untergeordneten Objekt springen | ab2 |
-| zum nächsten objekt bewegen | rechts2 |
-| zum vorigen Objekt bewegen | links2 |
+| zum vorherigen objekt bewegen | links2 |
+| zum nächsten Objekt bewegen | rechts2 |
 | Textformatierungen angeben | obere Routingreihe |
 
 
-BRAILLEX Tiny:
+=== BRAILLEX Tiny ===
 Bei der Braillex Tiny sind die von NVDA  zurückgegebenen Tastennamen wie folgt den Daumentasten zugeordnet:
 || Name | Daumentaste |
 | L1 | FN - Funktion |
@@ -1720,7 +1724,8 @@ Folgende NVDA-Befehle sind für diese Braillezeile verfügbar:
 | Titelzeile der aktuellen Anwendung anzeigen | L1+Auf |
 | Statuszeile anzeigen | L2+ab |
 
-BRAILLEX 2D Screen:
+
+=== BRAILLEX 2D Screen ===
 || Name | Taste |
 | aktuelles Zeichen am NVDA-Cursor angeben | l1 |
 | aktuelles Navigatorobjekt aktivieren | l2 |
