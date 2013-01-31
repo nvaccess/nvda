@@ -751,6 +751,7 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 
 	def event_gainFocus(self):
+		super(SlideShowWindow,self).event_gainFocus()
 		self.reportNewSlide()
 
 	def handleSlideChange(self):
