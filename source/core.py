@@ -278,6 +278,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 				IAccessibleHandler.pumpAll()
 				queueHandler.pumpAll()
 				mouseHandler.pumpAll()
+				braille.pumpAll()
 			except:
 				log.exception("errors in this core pump cycle")
 			baseObject.AutoPropertyObject.invalidateCaches()

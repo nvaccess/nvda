@@ -586,6 +586,8 @@ def getFormatFieldBraille(field):
 
 class TextInfoRegion(Region):
 
+	pendingCaretUpdate=False #: True if the cursor should be updated for this region on the display
+
 	def __init__(self, obj):
 		super(TextInfoRegion, self).__init__()
 		self.obj = obj
@@ -1387,7 +1389,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		region = self.mainBuffer.regions[-1]
 		if region.obj is not obj:
 			return
-		self._doCursorMove(region)
+		region.pendingCaretUpdate=True
+
+	def handlePendingCaretUpdate(self):
+		"""Checks to see if the final text region needs its caret updated and if so calls _doCursorMove for the region."""
+		region=self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
+		if isinstance(region,TextInfoRegion) and region.pendingCaretUpdate:
+			self._doCursorMove(region)
+			region.pendingCaretUpdate=False
 
 	def _doCursorMove(self, region):
 		self.mainBuffer.saveWindow()
@@ -1449,6 +1458,10 @@ def initialize():
 		handler.handleGainFocus(api.getFocusObject())
 	else:
 		handler.handleReviewMove()
+
+def pumpAll():
+	"""Runs tasks at the end of each core cycle. For now just caret updates."""
+	handler.handlePendingCaretUpdate()
 
 def terminate():
 	global handler
