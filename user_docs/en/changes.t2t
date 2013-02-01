@@ -47,6 +47,7 @@
 - Text selection is now correctly shown on a braille display in applications such as Microsoft word 2003 and Internet Explorer edit controls.
 - It is again possible to select text in a backward direction in Microsoft Word while Braille is enabled.
 - When reviewing,  backspacing or deleting characters  In Scintilla edit controls, NVDA correctly announces multibyte characters. (#2855)
+- NVDA will no longer fail to install when the user's profile path contains certain multibyte characters. (#2729)
 
 
 == Changes for Developers ==
