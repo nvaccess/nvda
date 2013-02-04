@@ -11,7 +11,7 @@ import os
 import wx
 import gui
 
-class NewLaptopLayout(wx.Dialog):
+class NewLaptopKeyboardLayout(wx.Dialog):
 	MESSAGE = _(
 		# Translators: Information about NVDA's new laptop keyboard layout.
 		"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent.\n"
@@ -20,7 +20,7 @@ class NewLaptopLayout(wx.Dialog):
 
 	def __init__(self, parent):
 		# Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
-		super(NewLaptopLayout, self).__init__(parent, title=_("New Laptop Keyboard layout"))
+		super(NewLaptopKeyboardLayout, self).__init__(parent, title=_("New Laptop Keyboard layout"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		item = wx.StaticText(self, label=self.MESSAGE)
 		mainSizer.Add(item, border=20, flag=wx.LEFT | wx.RIGHT | wx.TOP)
