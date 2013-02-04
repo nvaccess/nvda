@@ -9,6 +9,7 @@
  = 2013.1 =
 
 == Novas Características ==
+- Suporte básico  para a edição e leitura de apresentações no Microsoft PowerPoint. (#501)
 - Suporte básico para a leitura e escrita de mensagens no Lotus Notes 8.5. (#543)
 - No modo de navegação para o MSHTML (como o  Internet Explorer) e Gecko (Firefox), a existência de descrições longas agora é anunciada. Também é possível abrir a descrição longa numa nova janela pressionando NVDA+d. (#809)
 - Notificações no Internet Explorer 9 e posteriores (tais como bloqueio de conteúdos ou downloads de arquivos) agora são anunciadas. (#2343) 
@@ -16,15 +17,23 @@
 - Novo idioma: Aragonês.
 - Nova tabela de tradução braille: Dinamarquês grau 2. 
 - Suporte para a seleção de porta quando se usa linhas da freedom Scientific  (Automática, USB ou Bluetooth). 
+- Suporte para a família de notetakers BrailleNote da Humanware quando usados com função de terminal braille para leitores de telas. (#2012)
+- Suporte para modelos antigos das linhas braille Papenmeier BRAILLEX. (#2679)
+- Suporte para entrada de braille de computador em  linhas que possuam um teclado braille. (#808)
 
 
 == Correção de Falhas ==
 - As teclas de navegação rápida para saltar para o separador anterior e o seguinte no modo de navegação agora funcionam no Internet Explorer e outros controles MSHTML. (#2781)
+- Caso o NVDA precise retornar ao eSpeak ou à opção sem fala devido à falha num sintetizador selecionado quando o NVDA é iniciado, a configuração já não é atualizada para definir o sintetizador que falhou como o escolhido, o que significa que agora o sintetizador original será novamente escolhido na próxima vez que o NVDA for iniciado. (#2589) 
 - No modo de navegação em aplicativos da Mozilla, atualizações em tabelas agora são exibidas  corretamente. Por exemplo, em  célilas atualizadas, as coordenadas das linhas e colunas são anunciadas e a navegação da tabela funciona como deveria. (#2784) 
 - No modo de navegação em navegadores web , certos gráficos clicáveis não etiquetados que anteriormente não eram expostos agora o são corretamente. (#2838) 
-- Versões anteriores e mais recentes do SecureCRT agora são suportadas. (#2800) --
- Quando a procura automática por atualização é desabilitada, o NVDA já não precisa ser reiniciado para que a alteração faça efeito completamente. 
-- O NVDA já não falha para iniciar caso um complemento não possa ser removido pelo fato de sua pasta estar sendo usada no momento por outro aplicativo. (#2860) 
+- Versões anteriores e mais recentes do SecureCRT agora são suportadas. (#2800) ----
+- Quando a procura automática por atualização é desabilitada, o NVDA já não precisa ser reiniciado para que a alteração faça efeito completamente. 
+- O NVDA já não falha ao iniciar caso um complemento não possa ser removido pelo fato de sua pasta estar sendo usada no momento por outro aplicativo. (#2860) 
+- As etiquetas das guias no diálogo de preferências do DropBox agora podem ser vistas usando a revisão plana. 
+- Para idiomas como o alemão onde o sinal de + (plus, mais) consiste de uma única tecla no teclado, agora é possível vincular comandos a este sinal usando a palavra "plus". (#2898)
+- No Internet Explorer e outros controles MSHTML, os blocos de citação agora são anunciados apropriadamente. (#2888)
+- The HumanWare Brailliant BI/B series braille display driver can now be selected when the display is connected via Bluetooth but has never been connected via USB.
 
 
  == Alterações Específicas para Desenvolvedores ==

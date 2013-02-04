@@ -34,6 +34,7 @@ class AdobeFlash(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(AdobeFlash,self).__init__(rootNVDAObject,backendName="adobeFlash")
+		self.isWindowless = rootNVDAObject.event_objectID > 0
 
 	def __contains__(self,obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
@@ -49,10 +50,16 @@ class AdobeFlash(VirtualBuffer):
 		return True
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
+		if self.isWindowless:
+			objId = ID
+			childId = 0
+		else:
+			objId = winUser.OBJID_CLIENT
+			childId = ID
+		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, objId, childId)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		return obj.windowHandle, obj.event_childID
+		return obj.windowHandle, obj.event_objectID if obj.event_objectID > 0 else obj.event_childID
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="formField":

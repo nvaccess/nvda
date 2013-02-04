@@ -20,7 +20,7 @@ En dikkat çeken özelliklere şunlar dahildir:
 - 43'den fazla dili destekleyen ve programla birlikte kurulan konuşma sentezleyicisi
 - Mevcut olduğunda, yazıtipi adı ve boyutu, sitili, ve imla hataları gibi metin biçimlendirmelerinin bildirimi
 - Fare altındaki metnin otomatik bildirimi ve fare hareketlerinin isteğe bağlı sesle gösterimi
-- Birçok Braille (kabartma) ekrana destek
+- Braille klavyesi bulunanlardan bilgisayar braille girişi yapılmasını da kapsayan Birçok Braille (kabartma) ekran için destek
 - Kuruluma ihtiyaç duyulmaksızın bütün olarak USB bellek veya başka bir taşınabilir aygıttan çalışabilme yeteneği
 - Kullanımı kolay konuşan kurulum aracı
 - 42 dile çevrilmiş oluşu
@@ -696,9 +696,32 @@ Bu seçenekler arasında yön tuşlarınızı kullanarak dolaşın.
 
 Lütfen desteklenen braille ekranlarla ilgili daha fazla bilgi için [Desteklenen Braille Ekranlar #SupportedBrailleDisplays] bölümüne bakın.
 
-==== Çeviri Tablosu ====
-Bu iletişim kutusundaki bir sonraki seçenek bir braille tablo seçim kutusudur.
-Bu seçim kutusunda, farklı diller için braille tabloları bulacaksınız. Bir braille tablodan diğer braille tabloya yön tuşlarını kullanarak geçebilirsiniz.
+==== Port ====
+Bu seçenek, eğer mevcutsa, seçtiğiniz kabartma ekranla hangi port ya da bağlantı tipini kullanarak bağlantı kuracağınızı belirlemenizi sağlar.
+Bu, kabartma ekranınız için mevcut seçeneklerin sunulduğu bir seçim kutusudur.
+
+Varsayılan olarak, NVDA otomatik  port belirlemeyi kullanır, yani  kabartma ekranla bağlantı mevcut USB     ve bluetooth araçları taranarak otomatik olarak belirlenir.
+Ancak, bazı kabartma ekranlar için, hangi bağlantıyı kullanacağınızı özel olarak belirleyebilmeniz de mümkündür.
+Genel seçenekler (NVDA'ya varsayılan otomatik  port  seçme prosedürünü kullanmasını söyleyen) "Otomatik", "USB", "Bluetooth" ve eğer kabartma ekranınız destekliyorsa seri bağlantı  portlarıdır.
+
+Bu bölüm  braille ekranınız  yalnızca otomatik port belirlemeyi destekliyorsa gösterilmez.
+
+Desteklenen bağlantı tipleri ve mevcut portlar için daha fazla detaya ulaşmak için [desteklenen braille ekranlar #SupportedBrailleDisplays] bölümünde Braille ekranınızın dokümantasyonuna baş vurabilirsiniz.
+
+==== Çıktı Tablosu ====
+Bu iletişim kutusundaki bir sonraki seçenek braille çıktı tablosu seçim kutusudur.
+Bu seçim kutusunda, farklı diller için braille tabloları bulacaksınız.
+Seçilen tablo, kabartma ekranda metnin nasıl gösterileceğini belirler.
+Bir braille tablodan diğerine yön tuşlarını kullanarak geçebilirsiniz.
+
+==== Girdi Tablosu ====
+Önceki seçeneği bütünleyen bir özellik olarak, bulacağınız sonraki ayar braille girdi tablosu seçim kutusudur.
+Seçilen tablo kabartma ekranınızın klavyesinden braille olarak metin girişi yapmanız için kullanılır .
+NVDA şuanda yalnızca bilgisayar braille girişini destekler, dolayısıyla sadece 8 noktalı bilgisayar braille tabloları gösterilir.
+Bir braille tablodan diğerine yön tuşlarını kullanarak geçebilirsiniz.
+
+Bu işlev yalnızca, üzerinde klavye bulunan ve sürücüsü bu özelliği destekleyen braille ekranlar için geçerlidir.
+Üzerinde klavye bulunduğu halde kabartma  ekran bu özelliği desteklemiyorsa, bu  [Desteklenen Kabartma Ekranlar #SupportedBrailleDisplays] bölümünde belirtilir.
 
 ==== İmleç altındaki sözcüğü bilgisayar braille olarak Genişlet ====
 Bu seçenek, imlecin üzerinde bulunduğu sözcüğün kısaltmasız bilgisayar braille ile gösterilmesini sağlar.
@@ -1144,6 +1167,10 @@ Eğer henüz bu sürücüler elinizde yoksa, bunları http://www.freedomscientif
 Bu sayfada Yalnızca Focus 40 Blue sürücülerinden bahsedilmesine karşın, bu sürücüler tüm Freedom Scientific ekranlarını desteklemektedir.
 Sisteminiz 64 bit Windows ise ve sürücüler başka bir ekran okuyucu tarafından yüklenmiş olsa bile, NVDA'nın ihtiyaç duyduğu dosyalar yüklenmiş olmayabileceği için muhtemelen bu bağlantıdaki sürücüleri ayrıca yüklemeniz gerekecektir..
 
+Varsayılan olarak, NVDA bu ekranları otomatik olarak bulup USB ya da bluetooth ile bağlanabilir.
+Öte yandan, ekranla ilgili ayarları yaparken, "USB" ya da  "Bluetooth" portlarını seçerek  bağlantı tipine kendiniz karar verebilirsiniz.
+Bu, örneğin ekranınıza bluetooth ile bağlanıp aynı zamanda USB üzerinden de cihazı şarj etmeye devam etmek istemeniz durumunda faydalı olabilir.
+
 Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
@@ -1199,6 +1226,9 @@ USB veya bluetooth ile bağlandıklarında, [Optelec http://www.optelec.com/] ta
 Bu ekranları kullanmak için belirli bir sürücüye gereksiniminiz bulunmamaktadır.
 Yalnızca ekranı takın ve kullanmak için NVDA'yı ayarlayın.
 
+Bu ekranların üzerinde braille klavye olmasının yanında, braille metin çevirisi de bu ekranlar tarafından yapılır.
+Dolayısıyla, NVDA'nın braille girdi tablo ayarı bu ekranları etkilemez.
+
 Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
 %kc:beginInclude
@@ -1224,8 +1254,10 @@ Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgel
 %kc:endInclude
 
 ++ Handy Tech Displays ++
-NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen tüm ekranları desteklemektedir. Bazı daha eski USB ekranlar için Handy Tech sürücülerini sisteminize yüklemeniz gerekecektir.
+NVDA USB veya bluetooth ile bağlandıklarında [Handy Tech http://www.handytech.de/] tarafından üretilen tüm ekranları desteklemektedir.
+Bazı daha eski USB ekranlar için Handy Tech sürücülerini sisteminize yüklemeniz gerekecektir.
 
+Braille girişi henüz desteklenmemektedir.
 
 Aşağıda bu ekranla kullanılabilecek tuş kombinasyonları yer almaktadır.
 Lütfen bu tuşların nerede bulunacağıyla ilgili Braille ekran yardım belgelerine bakın.
@@ -1365,6 +1397,8 @@ Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA USB ya da bluetooth ile bağlandıklarında [Hims http://www.hims-inc.com/] tarafından üretilen Braille Sense ve Braille EDGE ekranlarını destekler. 
 USB üzerinden bağlıyorsanız, sisteminize HIMS tarafından dağıtılan USB sürücülerini kurmanız gerekir.
+
+Braille girişi henüz desteklenmemektedir.
 
 Aşağıda braille ekranı NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
@@ -1511,11 +1545,146 @@ Following are the Papenmeier command assignments for NVDA:
 | Report text formatting | upper routing row |
 %kc:endInclude
 
+++ Papenmeier Braille BRAILLEX Older Models ++
+The following Braille displays are supported: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Note that these displays can only be connected via a serial port.
+Therefore, you should select the port to which the display is connected after you have choosen this driver in the Braille Settings dialogue.
+
+Some of these devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
+The EAB can be moved in four directions where generally each direction has two switches.
+Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
+Older devices do not have an EAB; front keys are used instead.
+
+Generally, the following keys are available on braille displays:
+
+|| Name | Key |
+| l1 | Left front key |
+| l2 | Left rear key |
+| r1 | Right front key |
+| r2 | Right rear key |
+| up | 1 Step up |
+| up2 | 2 Steps up |
+| left | 1 Step left |
+| left2 | 2 Steps left |
+| right | 1 Step right |
+| right2 | 2 Steps right |
+| dn | 1 Step down |
+| dn2 | 2 Steps down |
+
+Following are the Papenmeier command assignments for NVDA:
+
+%kc:beginInclude
+Devices with EAB:
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Route to braille cell | routing |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Move to flat review / focus | r1 |
+| Report title | l1up |
+| Report Status Bar | l2down |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to next object | right2 |
+| Move to previous object | left2 |
+| Report text formatting | Upper routing strip |
+
+BRAILLEX Tiny:
+|| Name | Key |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Toggle braille tethered to | r2 |
+| Move to flat review / focus | r1 |
+| Move to containing object | r1+up |
+| Move to first contained object | r1+dn |
+| Move to previous object | r1+left |
+| Move to next object | r1+right |
+| Report text formatting | reportf |
+
+BRAILLEX 2D Screen:
+|| Name | Key |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Toggle braille tethered to | r2 |
+| Report text formatting | reportf |
+| Move braille display to previous line | up |
+| Scroll braille display back | left |
+| Move to flat review / focus | r1 |
+| Scroll braille display forward | right |
+| Move braille display to next line | dn |
+| Move to next object | left2 |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to previous object | right2 |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+NVDA supports the BrailleNote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader.
+The following models are supported:
+- BrailleNote Classic (serial connection only)
+- BrailleNote PK (Serial and bluetooth connections)
+- BrailleNote MPower (Serial and bluetooth connections)
+- BrailleNote Apex (USB and Bluetooth connections)
+-
+
+If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
+Please check the BrailleNote manual for details.
+In NVDA, you may also need to set the port in the Braille Settings dialog.
+If you are connecting via USB or bluetooth, you can set the port to "Automatic", "USB" or "Bluetooth", depending on the available choices.
+If connecting using a legacy serial port (or a USB to serial converter) or if none of the previous options appear, you must explicitly choose the communication port to be used from the list of hardware ports.
+
+Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
+
+Following are the BrailleNote command assignments for NVDA.
+Please check your BrailleNote's documentation to find where these keys are located.
+
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | back |
+| Scroll braille display forward | advance |
+| Move braille display to previous line | previous |
+| Move braille display to next line | next |
+| Route to braille cell | routing |
+| Toggle braille tethered to | previous+next |
+| Up arrow key | space+dot1 |
+| Down arrow key | space+dot4 |
+| Left Arrow key | space+dot3 |
+| Right arrow key | space+dot6 |
+| Page up key | space+dot1+dot3 |
+| Page down key | space+dot4+dot6 |
+| Home key | space+dot1+dot2 |
+| End key | space+dot4+dot5 |
+| Control+home keys | space+dot1+dot2+dot3 |
+| Control+end keys | space+dot4+dot5+dot6 |
+| Space key | space |
+| Enter key | space+dot8 |
+| Backspace key | space+dot7 |
+| Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| Shift+tab keys | space+dot1+dot2+dot5+dot6 |
+| Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
+| Alt key | space+dot1+dot3+dot4 (space+m) |
+| Toggle input help | space+dot1+dot2+dot5 (space+h) |
+%kc:endInclude
+
 ++ BRLTTY ++
 [BRLTTY http://mielke.cc/brltty/] çok daha fazla farklı braille ekranı destekleyebilmek için kullanılan ayrı bir programdır.
 bunu kullanabilmek için,[BRLTTY for Windows http://brl.thefreecat.org/brltty/] programını yüklemeniz gerekecektir.
 En son kurulum sürümünü indirip kurmalısınız. bunun adı şu biçimde olabilir: brltty-win-4.2-2.exe.
 Ekranı ve kullanılacak portu ayarlarken, özellikle USB sürücüleri kullanıyorsanız ve elinizde üreticilerin sürücüleri varsa, yönergeleri yakından takip ettiğinizden emin olun.
+
+Kabartma klavyesi bulunan ekranlar için, BRLTTY şuanda braille girişini kendisi yönetmektedir.
+Dolayısıyla, NVDA'nın braille girdi tablosu ayarı bu ekranları etkilemez.
 
 Aşağıda NVDA için BRLTTY tuş komutları bulunmaktadır.
 Lütfen [BRLTTY tuş tabloları yardımına  http://mielke.cc/brltty/doc/drivers/] BRLTTY komutlarının braille ekran kontrollerinde nasıl konumlandığı hakkında daha fazla bilgi almak için bakın.

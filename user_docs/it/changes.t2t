@@ -6,6 +6,7 @@
 = 2013.1 =
 
 == Novità ==
+- Supporto di base alla modifica e alla lettura delle presentazioni in Microsoft Powerpoint. (#501)
 - Supporto alla lettura e scrittura dei messaggi in Lotus Notes 8.5. (#543)
 - In modalità navigazione MSHTML (ad esempio Internet Explorer) e Gecko (ad esempio Firefox), viene annunciata l'esistenza delle descrizioni degli elementi se esistente, tramite l'interpretazione dell'attributo longdesc. è anche possibile aprire la descrizione in una nuova finestra tramite nvda+d. (#809)
 - Ora vengono annunciate le notifiche in Internet Explorer 9 e superiori, ad esempio download di file o contenuti bloccati. (#2343)
@@ -15,9 +16,10 @@
 - Supporto per i display Braille connessi tramite Bluetooth su computer che eseguono lo stack Bluetooth prodotto da Toshiba. (#2419)
 - Supporto per la selezione della porta per i Display Braille Freedom Scientific (Automatica, Usb o Bluetooth).
 - Supporto per i display Braille Braillenote della Humanware quando configurati per funzionare come periferica per screen reader. (#2012)
-
+- Supporto ai vecchi modelli Papenmeier utilizzati tramite porta seriale. (#2679)
  
-== Bug Corretti ==
+
+ == Bug Corretti ==
 - Il tasto rapido per spostarsi di sezione in sezione ora funziona anche con Internet Explorer. (#2781)
 - Se NVDA non riesce a caricare un sintetizzatore all'avvio ed è costretto a parlare tramite Espeak, la configurazione viene lasciata inalterata, il che significa che la prossima volta che si riavvierà NVDA, tenterà di caricare ancora il sintetizzatore scelto dall'utente in precedenza, anziché mantenere Espeak come predefinito. (#2589)
 - Nelle applicazioni Mozilla in modalità navigazione, vengono ora riportati correttamente gli aggiornamenti delle tabelle. Ad esempio, nelle celle aggiornate, vengono annunciate correttamente le coordinate delle colonne e delle righe. (#2684)
@@ -29,9 +31,13 @@
 - Quando il controllo aggiornamenti  viene disattivato, NVDA non necessita più di essere riavviato affinché le modifiche abbiano effetto.
 - NVDA non ha più problemi nell'avviarsi nel caso in cui un componente aggiuntivo non possa essere rimosso in quanto la directory che lo contiene è in uso da un'altra applicazione. (#2860)
 - Le etichette delle schede in Dropbox, ad esempio quelle nella finestra preferenze, possono ora essere raggiunte anche con la navigazione in linea.
+/ Se la lingua di immissione viene modificata in un valore diverso da quello predefinito, NVDA individua correttamente i tasti per l'aiuto immissione e per i comandi.
+- Per le lingue come il tedesco in cui il (più) + è un tasto singolo  sulla tastiera, è ora possibile associare i comandi ad esso usando la parola "plus". ;(# 2898)
+- In Internet Explorer e altri controlli MSHTML, i blocchi tra virgolette vengono  ora annunciati correttamente nella posizione appropriata. (#2888)
+- Il Display braille HumanWare Brailliant BI / B può ora essere selezionato quando il display è collegato tramite Bluetooth, ma non è mai stato collegato via USB.
 
 
-= 2012.3 =
+	= 2012.3 =
 Le novità principali in questa versione sono costituite dal supporto all'immissione dei caratteri asiatici; supporto sperimentale ai dispositivi touch screen in Windows 8; l'annuncio dei numeri di pagina e un notevole miglioramento per le tabelle in Adobe Reader; il poter usare comandi di navigazione delle tabelle nelle finestre con visualizzazioni ad elenco; supporto per molti nuovi display braille; e la possibilità di annunciare le intestazioni di righe e colonne in Excel.
 
 == Novità ==

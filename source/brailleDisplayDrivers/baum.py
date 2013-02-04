@@ -12,6 +12,7 @@ import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
+import brailleInput
 
 TIMEOUT = 0.2
 BAUD_RATE = 19200
@@ -196,7 +197,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		command = self._ser.read(1)
 		length = BAUM_RSP_LENGTHS.get(command, 0)
 		if command == BAUM_ROUTING_KEYS:
-			length = self.numCells / 8
+			length = 10 if self.numCells > 40 else 5
 		arg = self._ser.read(length)
 		return command, arg
 
@@ -252,7 +253,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		},
 	})
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
 	source = BrailleDisplayDriver.name
 
@@ -262,6 +263,11 @@ class InputGesture(braille.BrailleDisplayGesture):
 
 		self.keyNames = names = set()
 		for group, groupKeysDown in keysDown.iteritems():
+			if group == BAUM_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xfc:
+				# This is braille input.
+				# 0xfc covers command keys. The space bars are covered by 0x3.
+				self.dots = groupKeysDown >> 8
+				self.space = groupKeysDown & 0x3
 			if group == BAUM_ROUTING_KEYS:
 				for index in xrange(braille.handler.display.numCells):
 					if groupKeysDown & (1 << index):

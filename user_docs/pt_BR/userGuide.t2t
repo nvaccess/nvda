@@ -1,7 +1,6 @@
 ﻿Guía do Usuário do NVDA NVDA_VERSION
 
 Traduzido por Marlin Rodrigues da Silva
-
 %!includeconf: ../userGuide.t2tconf
 %!PostProc(html): ^<HTML>$ <HTML LANG='pt_BR'>
 %kc:title: Referência Rápida de Comandos do NVDA NVDA_VERSION
@@ -47,6 +46,7 @@ Para usuários que tenham uma linha Braille, o NVDA pode transmitir a informaç�
  Consulte por favor a seção [Linhas Braille Suportadas #SupportedBrailleDisplays] para informações sobre os terminais Braille compatíveis.
 
 O NVDA suporta códigos Braille para diversos idiomas, incluindo os códigos Braille contraídos, não contraídos e de computador para alguns idiomas. 
+
 ++ Licença e Copyright ++
 NVDA copyright 2006-2012 Coolaboradores do NVDA.
 O NVDA encontra-se sob a licença pública GNU General Public License (Versão 2).
@@ -369,7 +369,7 @@ O esquema é ilustrado como se segue:
 
 ++ A Revisão Plana ++[FlatReview]
 Enquanto geralmente você pode revisar o conteúdo de apenas um [objeto #Objects] individualmente, há alguns objetos nos quais é possível acessar o conteúdo dos objetos contidos neles.
-Documentos complexos oferecem-lhe a possibilidade de revisar seu conteúdo por completo e nas janelas de aplicações   pode-se rever todo  o texto da tela tal como aparece visualmente.
+Documentos complexos oferecem-lhe a possibilidade de revisar seu conteúdo por completo, assim como nas janelas de aplicações   pode-se rever todo  o texto da tela tal como aparece visualmente.
  Dá-se a isso o nome de revisão plana.
 É algo semelhante à revisão de tela ou à funcionalidade de cursor do mouse existente  em muitos outros leitores de telas.
 
@@ -693,29 +693,42 @@ O item "Sem Braille" significa que o braille não está sendo usado.
 
 Por favor consulte a seção [ Linhas Braille Suportadas #SupportedBrailleDisplays] para obter mais informação sobre as linhas Braille suportadas.
 
+==== Porta ====
+Esta opção, se disponível, permite-lhe escolher qual porta ou tipo de conecção será usado para comunicar com a  linha braille que você selecionou.
+Consiste numa caixa de combinação contendo as escolhas possíveis  para sua linha braille.
+
+Por padrão, o NVDA utiliza-se da detecção automática de porta, o que significa que a conecção com a linha braille será estabelecida automaticamente, buscando por dispositivos USB e bluetooth em seu sistema.
+Todavia, para algumas linhas braille, você pode escolher explicitamente qual  porta deve ser usada.
+As opções Comuns são "Automática" (que diz ao NVDA para aplicar o procedimento padrão de seleção automática de porta), "USB", "Bluetooth" e a comunicação por portas seriais, caso sua linha braille suporte esse tipo de conecção.
+
+Esta opção não estará disponível se sua linha braille suporta apenas a detecção automática de porta.
+
+Você pode consultar a documentação sobre sua linha braille na seção [Linhas Braille Suportadas #SupportedBrailleDisplays] com vistas a obter mais detalhes sobre os tipos de comunicação suportados e portas disponíveis.
+ 
 ==== Tabela de Tradução ====
-A opção seguinte que se encontra neste diálogo é uma caixa de combinação para as tabelas Braille.
-Aqui encontrará diversas para vários idiomas. Pode-se mover de tabela Braille em tabela Braille na lista utilizando as Setas.
+A opção seguinte que se encontra neste diálogo é uma caixa de combinação referente às tabelas Braille.
+Aqui encontrará diversas para vários idiomas.
+Pode-se mover pela lista de tabelas braille utilizando as Setas.
 
 ==== Expandir Para Braille De Computador a Palavra Sobre O Cursor ====
-Esta opção permite que a palavra que está sob o cursor apareça em Braille de computador não contraído.
+Esta opção permite que a palavra que está sob o cursor apareça para o caso específico do Braille de computador não contraído.
 
 ==== Velocidade de intermitência do Cursor (milésimos) ====
 Esta opção é um campo numérico que lhe permite alterar a velocidade de intermitência do cursor em milésimos de segundo.
 
 ==== Tempo limite de Mensagens (segundos) ====
-Esta opção é um campo numérico que controla durante quanto tempo são apresentadas as mensagens do sistema na linha Braille.
+Esta opção é um campo numérico que permite controlar durante quanto tempo são apresentadas as mensagens do sistema na linha Braille.
 
 %kc:setting
 ==== Braille Vinculado a ====[BrailleTether]
 Tecla: NVDA+control+t
 
-Esta opção permite-lhe escolher se a linha Braille seguirá o cursor do sistema, ou se segue o navegador de objetos / cursor de exploração.
+Esta opção permite-lhe escolher se a linha Braille seguirá o cursor do sistema, ou se irá seguir o navegador de objetos / cursor de exploração.
 
 ==== Ler por Parágrafo ====
 Caso seja ativada, o braille será exibido por parágrafos em lugar de linhas.
 Além disso, os comandos de mover para a linha anterior e para a próxima linha irão mover respectivamente por parágrafos.
-Isso significa que você não terá que mover linha braille ao fim de cada linha ainda quando um maior texto for ajustado na mesma.
+Isso significa que você não terá que mover a linha braille ao fim de cada linha, mesmo quando um texto maior for exposto  na mesma.
   Isso pode permitir uma leitura mais fluente   em textos muito extensos.
 Esta opção está desativada por padrão.
 
@@ -723,17 +736,17 @@ Esta opção está desativada por padrão.
 Esta caixa de diálogo encontra-se no menu Preferências, no item "Opções do teclado...".
 A mesma contém as seguintes opções: 
 
-==== Layout de teclado ====
+==== Leiaute de teclado ====
 Esta caixa de combinação permite-lhe escolher o leiaute de teclado que o NVDA utilizará. Atualmente, os dois que vêm com este leitor de tela são o Desktop para computadores de mesa e o Laptop para computadores portáteis. 
 
 ==== Usar Caps Lock como uma tecla modificadora do NVDA ====
 Se esta caixa de seleção estiver marcada, o Caps Lock poderá ser usado como uma tecla modificadora do NVDA.
 
 ==== Usar Insert Extendida Como uma Tecla Modificadora do NVDA ====
-Se esta caixa de seleção estiver marcada, a tecla Insert extendida (que encontra-se normalmente acima das setas, perto do Home e End) poderá ser usada como uma tecla modificadora do NVDA.
+Se esta caixa de seleção estiver marcada, a tecla Insert extendida (que encontra-se normalmente acima das setas, perto do Home e do End) poderá ser usada como uma tecla modificadora do NVDA.
 
 ==== Usar Insert do Teclado Numérico Como uma Tecla Modificadora do NVDA ====
-Se esta caixa de seleção estiver marcada, o Insert do bloco numérico poderá ser utilizado como uma tecla modificadora do NVDA.
+Se esta caixa de seleção estiver marcada, o Insert do bloco numérico poderá também ser utilizado como uma tecla modificadora do NVDA.
 
 %kc:setting
 ==== Falar Caracteres Digitados ====
@@ -745,7 +758,7 @@ Uma caixa de seleção que quando marcada informa ao NVDA para anunciar todos os
 ==== Falar Palavras Digitadas ====
 Tecla: NVDA+3
 
-Quando está selecionada faz com que o NVDA anuncie todas as palavras que introduzir através do teclado.
+Quando está selecionada faz com que o NVDA anuncie todas as palavras que você introduzir através do teclado.
 
 ==== Apita se digitar letras minúsculas com caps lock ligado ====
 Quando marcada, um beep de alerta será ouvido caso digite uma letra em conjunto com a tecla shift.
@@ -756,7 +769,7 @@ Portanto, é bastante útil ser alertado sobre isso.
 ==== Falar Teclas de Comando ====
 Tecla: NVDA+4
 
-Quando está marcada informa ao NVDA para anunciar todas as teclas que não são caracteres que pressionar através do teclado. Isto inclui combinações de teclas tais como o Control mais outra letra.
+Quando está marcada informa ao NVDA para anunciar todas as teclas que não são caracteres que você pressionar através do teclado. Isto inclui combinações de teclas tais como o Control mais outra letra.
 
 +++ Opções de Mouse (NVDA+control+m) +++
 O diálogo das opções de mouse encontra-se no menu Preferências, mais propriamente no item "Opções do mouse...".
@@ -772,7 +785,7 @@ O ponteiro do mouse altera a sua forma no Windows para fornecer determinada info
 | Tecla de Laptop | NVDA+shift+m |
 
 Uma caixa de seleção que quando marcada faz com que o NVDA anuncie o texto atual sobre o ponteiro do mouse, conforme se move pela tela.
-Isto permite que procure coisas no mesmo, através do movimento físico do mouse, antes que encontre através da navegação de objetos. 
+Isto permite que procure coisas no mesmo através do movimento físico do mouse, ao invés de tentar encontrar através da navegação de objetos. 
 
 ==== Unidade de Texto ====
 Se o NVDA estiver configurado para anunciar o texto sob o ponteiro do mouse à medida que o move, esta opção permite escolher exatamente quanto texto será anunciado.
@@ -929,12 +942,12 @@ Esta opção quando marcada permite que o NVDA ative e desative o modo de foco q
 Por exemplo, se for pressionando a Seta Abaixo numa página Web e encontrar uma área de edição, este leitor de tela ativará automaticamente o modo de foco. Se pressionar as setas para sair da área de edição, o NVDA voltará ao modo de navegação.
 
 ==== Indicação sonora de mudança entre modo de foco e navegação ====
-Se esta opção estiver marcada, o NVDA reproduzirá sons especiais quando alternar entre os modos de navegação e foco, em vez de falar a alteração.
+Se esta opção estiver marcada, o NVDA reproduzirá sons especiais quando alternar entre os modos de navegação e foco, em vez de anunciar a alteração.
 
 +++ Opções de Formatação de Documentos (NVDA+control+d) +++[DocumentFormattingSettings]
 Esta caixa de diálogo está no menu Preferências, mais propriamente no item "Formatação de Documentos...".
 
-Maior parte das caixas de seleção neste diálogo permitem-lhe configurar que tipo de formatação pretende ouvir automaticamente enquanto se move com o cursor pelos documentos.
+Maior parte das caixas de seleção neste diálogo lhe permitem configurar que tipo de formatação pretende ouvir automaticamente enquanto se move com o cursor pelos documentos.
 Por exemplo, se marcar a caixa de seleção para informar o nome da fonte a medida que avançar pelo texto com tipos de fonte diferentes, este será anunciado.
 
 Pode configurar o anúncio de: 
@@ -947,7 +960,7 @@ Pode configurar o anúncio de:
 - Erros Ortográficos
 - Número das Páginas
 - Número das Linhas
-- Identação das Linhas
+- Indentação das Linhas
 - Tabelas
 - Cabeçalhos de Linhas e Colunas das Tabelas
 - Coordenadas de Células em Tabelas
@@ -1147,13 +1160,17 @@ Ainda que esta página mencione somente a linha Focus Blue 40, este driver supor
 
 Se seu sistema é de 64 bit  e os drivers já foram instalados por outro leitor de telas, provavelmente você continuará necessitando instalar os drivers do link acima, pois os arquivos necessários para o NVDA provavelmente não foram instalados pelo outro leitor de telas.
 
+Por padrão, o NVDA pode detectar e conectar-se automaticamente  a estas linhas tanto via USB como por bluetooth.
+Todavia, ao configurar a linha, é possível escolher explicitamente as portas "USB" ou "Bluetooth" para restringir o tipo de conecção a ser usado.
+Isto pode ser útil se você deseja conectar as linhas focus ao NVDA usando o bluetooth, e ainda assim continuar tendo a possibilidade de usá-lo através do USB de seu computador.
+
 A seguir estão as teclas de comando dessa linha para o NVDA.
 Por favor consulte a documentação da mesma para descrições de onde essas teclas se encontram.
 
 %kc:beginInclude
 || Nome | Tecla |
 | Mover linha braille para trás | topRouting1 (primeira célula da linha) |
-| Mover linha braille para a frente | topRouting20/40/80 (ýltima célula da linha) |
+| Mover linha braille para a frente | topRouting20/40/80 (última célula da linha) |
 | Mover linha braille para trás | leftAdvanceBar |
 | Mover linha braille para a frente | rightAdvanceBar |
 | Alternar "vínculo do Braille" | leftGDFButton+rightGDFButton |
@@ -1163,10 +1180,10 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Alternar a ação da roda direita | pressionar a roda direita |
 | Mover-se para Trás usando a ação da roda direita | roda direita para cima |
 | Mover-se para a frente usando a ação da roda Direita | roda direita para baixo |
-| Guiar para a célula braille | routing |
+| Guiar para a célula braille | sensor |
 | Tecla backspace | ponto 7 |
 | Tecla enter | ponto 8 |
-| Tecla shift+tab | brailleSpaceBar+ponto 1+ponto 2 |
+| Comando shift+tab | brailleSpaceBar+ponto 1+ponto 2 |
 | Tecla tab | brailleSpaceBar+ponto 4+ponto 5 |
 | Tecla seta cima | brailleSpaceBar+ponto 1 |
 | Tecla seta baixo | brailleSpaceBar+ponto 4 |
@@ -1176,7 +1193,7 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Tecla seta direita | brailleSpaceBar+ponto 6 |
 | Tecla home | brailleSpaceBar+ponto 1+ponto 3 |
 | tecla end | brailleSpaceBar+ponto 4+ponto 6 |
-| Tecla control+home | brailleSpaceBar+ponto 1+ponto 2+dot3 |
+| Tecla control+home | brailleSpaceBar+ponto 1+ponto 2ponto3 |
 | Tecla control+end | brailleSpaceBar+ponto 4+ponto 5+ponto 6 |
 | Tecla alt | brailleSpaceBar+ponto 1+ponto 3+ponto 4 |
 | Tecla alt+tab | brailleSpaceBar+ponto 2+ponto 3+ponto 4+ponto 5 |
@@ -1212,7 +1229,7 @@ Por favor consulte a documentação da mesma para descrições de onde essas tec
 | Mover linha braille para a linha anterior | t2 |
 | Mover linha braille para a linha seguinte | t4 |
 | Mover linha braille para a frente | t5 |
-|Guiar para a cela braille  | sensor |
+| Guiar para a cela braille  | sensor |
 | tecla shift+tab | sp1 |
 | tecla alt | sp2 |
 | tecla escape | sp3 |
@@ -1481,8 +1498,8 @@ Caso o BrxCom esteja instalado, o NVDA irá usá-lo.
 BrxCom é uma ferramenta que lhe permite usar a entrada Braille  independentemente de um leitor de telas.
 Uma nova versão do BrxCom que funciona com o NVDA será lançada pela Papenmeier em pouco tempo.  
 
-Muitos dispositivos possuem uma Easy Access Bar (EAB) (barra de acesso rápido), que propicia uma operacionalidade intuitiva e rápida.
-A EAB pode ser movida em quatro direções, sendo que cada direção possui 2 modos.
+Muitos dispositivos possuem uma Easy Access Bar (EAB) (Barra de Acesso Fácil), que propicia uma operacionalidade intuitiva e rápida.
+A EAB pode ser movida em quatro direções, sendo que cada direção possui 2 estados.
 As série c- é a única excessão a esta regra.
 
 A series-c e algumas outras linhas braille possuem duas linhas de sensores na qual a linha de cima é usada para informar a formatação.
@@ -1522,6 +1539,138 @@ Geralmente, encontram-se  disponíveis as seguintes teclas nestas linhas  braill
 | Mover para o objeto anterior | left2 |
 | Mover para o objeto seguinte | right2 |
 | Anunciar formatação do texto | linha de sensores de cima |
+%kc:endInclude
+
+++ Papenmeier Braille BRAILLEX Modelos Antigos ++
+As seguintes linhas braille são suportadas: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Tenha em conta que essas linhas só podem ser conectadas através de uma porta serial.
+Portanto, você deve selecionar a porta por meio da qual conectará a linha logo depois de escolher esse driver no Diálogo de Opções de Braille.
+
+Alguns desses dispositivos possuem uma Easy Access Bar (EAB) (Barra de Acesso Fácil),  que propicia uma operacionalidade intuitiva e rápida.
+A EAB pode ser movida em quatro direções, sendo que cada direção possui 2 modos.
+Ao pressionar e manter pressionada as teclas cima, baixo, direita e esquerda (ou EAB) faz com que a ação correspondente  seja repetida.
+
+ Certos dispositivos mais antigos não possuem uma EAB; as teclas frontais são usadas em seu lugar.
+
+Geralmente, as seguintes teclas estão disponíveis nestas linhas braille:
+
+|| Nome | Tecla |
+| l1 | Tecla frontal esquerda |
+| l2 | Tecla traseira esquerda |
+| r1 | Tecla frontal direita |
+| r2 | Tecla traseira direita |
+| up | 1 passo acima |
+| up2 | 2 passos acima |
+| left | 1 passo à esquerda |
+| left2 | 2 passos à esquerda |
+| right | 1 passo à direita |
+| right2 | 2 passos à direita |
+| dn | 1 passo abaixo |
+| dn2 | 2 passos abaixo |
+
+ A seguir estão os comandos Papenmeier atribuidos  para o NVDA:
+%kc:beginInclude
+Dispositivos que possuem EAB:
+|| Nome | Tecla |
+| Mover linha braille para trás | left |
+| Mover linha braille para a ffrente | right |
+| Mover linha braille para a linha anterior | up |
+| Mover linha braille para a linha seguinte | dn |
+| Guiar para a cela braille | sensor |
+| Anunciar o caractere atual em revisão | l1 |
+| Ativar o atual objeto de navegação | l2 |
+| Mover para a revisão plana/foco | r1 |
+| Anunciar título | l1up |
+| Ler Barra de Status | l2down |
+| Mover para o objeto pai | up2 |
+| Mover para o primeiro objeto filho | dn2 |
+| Mover para o objeto seguinte | right2 |
+| Mover para o objeto anterior | left2 |
+| Anunciar formatação de texto | Upper routing strip |
+
+BRAILLEX Tiny:
+|| Nome | Tecla |
+| Anunciar o caractere atual revisão | l1 |
+| Ativar o atual objeto de navegação  | l2 |
+| Mover linha braille para trás | left |
+| Mover linha braille para a frente | right |
+| Mover linha braille para a linha anterior | up |
+| Mover linha braille para a linha seguinte | dn |
+|  Alternar vínculo do braille | r2 |
+| Mover para a revisão plana/foco | r1 |
+| Mover para o objeto pai | r1+up |
+| Mover para o primeiro objeto filho | r1+dn |
+| Mover para o objeto anterior | r1+left |
+| Mover para o objeto seguinte | r1+right |
+| Anunciar formatação de texto | reportf |
+
+BRAILLEX 2D Screen:
+|| Nome | Tecla |
+| Anunciar o caractere atual  em revisão | l1 |
+| Ativar o atual objeto de navegação  | l2 |
+| Alternar vínculo do braille | r2 |
+| Anunciar formatação de texto | reportf |
+| Mover linha braille para a linha anterior | up |
+| Mover linha braille para trás | left |
+| Mover para a revisão plana/foco | r1 |
+| Mover linha braille para a frente | right |
+| Mover linha braille para a linha seguinte | dn |
+| Mover para o próximo objeto | left2 |
+| Mover para o objeto pai | up2 |
+| Mover para o primeiro objeto filho | dn2 |
+| Mover para o objeto anterior | right2 |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+O NVDA suporta os notetakers BrailleNote da [Humanware http://www.humanware.com] quando usados com função de terminal braille para leitores de telas.
+Os seguintes modelos são suportados:
+- BrailleNote Clássico (conecção apenas por porta serial)
+- BrailleNote PK (conecção por porta serial e bluetooth)
+- BrailleNote MPower (conecção por porta serial e bluetooth)
+- BrailleNote Apex (conecção USB e Bluetooth )
+-
+
+Se seu dispositivo suporta mais de um tipo de conecção, ao conectar seu BrailleNote para usar com o NVDA, você precisa  configurá-lo como porta de terminal braille   nas opções de terminal braille.
+ Por favor consulte o manual do BrailleNote  para mais detalhes.
+No NVDA, poderá também ser necessário configurar a porta no Diálogo das Opções de Braille.
+Caso esteja conectando via USB ou bluetooth, você pode configurar a porta para "Automático", "USB" ou "Bluetooth", dependendo das opções disponíveis.
+Caso conecte usando uma ligação por porta serial (ou um conversor de USB para serial) ou se nenhuma das opções anteriores aparece, você deve escolher explicitamente a porta de comunicação a ser usada na lista de portas de  hardware.
+
+ Antes de conectar seu BrailleNote Apex usando sua interface para cliente USB, você precisa instalar os drivers fornecidos pela HumanWare.
+
+ A seguir estão os comandos BrailleNote atribuidos para o NVDA.
+Por favor consulte a documentação de seu BrailleNote para informações sobre onde essas teclas se encontram.
+
+%kc:beginInclude
+|| Nome | Tecla |
+| Mover linha braille para trás | back |
+| Mover linha braille para a frente | advance |
+| Mover linha braille para a linha anterior | previous |
+| Mover linha braille para a linha seguinte | next |
+| Guiar para a cela braille | sensor |
+| Alternar vínculo do braille | previous+next |
+| Tecla seta acima | espaço+ponto1 |
+| Tecla seta abaixo | espaço+ponto4 |
+| Tecla seta a esquerda | espaço+ponto3 |
+| Tecla seta a direita | espaço+ponto6 |
+| Tecla page up | espaço+ponto1+ponto3 |
+| Tecla page down | espaço+ponto4+ponto6 |
+| Tecla home | espaço+ponto1+ponto2 |
+| Tecla end | espaço+ponto4+ponto5 |
+| Comando control+home | espaço+ponto1+ponto2+ponto3 |
+| Comando control+end | espaço+ponto4+ponto5+ponto6 |
+| Tecla espaço | espaço |
+| Tecla enter | espaço+ponto8 |
+| Tecla backspace | espaço+ponto7 |
+| Tecla tab | espaço+ponto2+ponto3+ponto4+ponto5 (espaço+t) |
+| Comando shift+tab | espaço+ponto1+ponto2+ponto5+ponto6 |
+| Tecla Windows  | espaço+ponto2+ponto4+ponto5+ponto6 (espaço+w) |
+| Tecla alt | espaço+ponto1+ponto3+ponto4 (espaço+m) |
+| Alternar ajuda de entrada | espaço+ponto1+ponto2+ponto5 (espaço+h) |
 %kc:endInclude
 
 ++ BRLTTY ++
@@ -1580,7 +1729,7 @@ Para encontrar os identificadores de gesto, assim como os nomes dos scripts e a 
 + Desativar a Ajuda de Entrada. 
 + Ativar o visualizador do log no menú ferramentas. 
 + examinar as entradas recentes do log.
-Uma destas proporciona informação sobre o gesto de entrada enviado, incluindo o módulo.classe e script si está vinculado a um.
+Uma destas proporciona informação sobre o gesto de entrada enviado, incluindo o módulo.classe e script si está vinculado a algum.
 
 
 Segue um exemplo de como vincular NVDA+shift+t ao script data/hora.

@@ -688,7 +688,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					continue;
 				}
 				IAccessible2* childPacc=NULL;
-				varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
+				if(varChildren[i].pdispVal) varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
 				if (!childPacc) {
 					VariantClear(&(varChildren[i]));
 					continue;

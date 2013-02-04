@@ -30,6 +30,7 @@ import treeInterceptorHandler
 import scriptHandler
 import ui
 import braille
+import brailleInput
 import inputCore
 import virtualBuffers
 import characterProcessing
@@ -1005,6 +1006,10 @@ class GlobalCommands(ScriptableObject):
 			braille.handler.buffer.regions[-1].nextLine()
 	script_braille_nextLine.__doc__ = _("Moves the braille display to the next line")
 
+	def script_braille_dots(self, gesture):
+		brailleInput.handler.input(gesture.dots)
+	script_braille_dots.__doc__= _("Inputs braille dots via the braille keyboard")
+
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
 		appModuleHandler.reloadAppModules()
@@ -1201,6 +1206,9 @@ class GlobalCommands(ScriptableObject):
 		"kb(laptop):NVDA+shift+control+upArrow": "increaseSynthSetting",
 		"kb(desktop):NVDA+control+downArrow": "decreaseSynthSetting",
 		"kb(laptop):NVDA+control+shift+downArrow": "decreaseSynthSetting",
+
+		# Braille keyboard
+		"bk:dots" : "braille_dots",
 
 		# Tools
 		"kb:NVDA+f1": "navigatorObject_devInfo",

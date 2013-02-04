@@ -220,6 +220,7 @@ class EditableTextWithoutAutoSelectDetection(EditableText):
 		except:
 			return
 		speech.speakSelectionChange(oldInfo,newInfo)
+		braille.handler.handleCaretMove(self)
 
 	__changeSelectionGestures = (
 		"kb:shift+upArrow",

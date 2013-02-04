@@ -36,7 +36,7 @@ void getTextFromIAccessible(wstring& textBuf, IAccessible2* pacc2, bool useNewTe
 		for(int i=0;i<childCount;++i) {
 			if(varChildren[i].vt==VT_DISPATCH) {
 				IAccessible2* pacc2Child=NULL;
-				if(varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&pacc2Child)==S_OK) {
+				if(varChildren[i].pdispVal&&varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&pacc2Child)==S_OK) {
 					getTextFromIAccessible(textBuf,pacc2Child,false,true);
 					pacc2Child->Release();
 				}

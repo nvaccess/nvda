@@ -2,6 +2,8 @@
 Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
+import pythonMonkeyPatches
+
 import sys
 import os
 import logHandler

@@ -1,0 +1,57 @@
+###
+#This file is a part of the NVDA project.
+#URL: http://www.nvda-project.org/
+#Copyright 2006-2010 NVDA contributers.
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License version 2.0, as published by
+#the Free Software Foundation.
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#This license can be found at:
+#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+###
+
+Import(
+	'env',
+)
+
+def interfaceAction(target,source,env):
+	clsid=env.get('clsid')
+	if clsid:
+		source=(clsid,env['majorVersion'],env['minorVersion'])
+	else:
+		source=str(source[0])
+	comtypes.client.GetModule(source)
+
+interfaceBuilder=env.Builder(
+	action=env.Action(interfaceAction),
+)
+env['BUILDERS']['comtypesInterface']=interfaceBuilder
+
+	#Bit of a dance to force comtypes generated interfaces in to our directory
+import comtypes.client
+comtypes.client.gen_dir=Dir('comInterfaces').abspath
+import sys
+sys.modules['comtypes.gen']=comtypes.gen=__import__("comInterfaces",globals(),locals(),[])
+
+COM_INTERFACES = {
+	"UIAutomationClient.py": ('{944de083-8fb8-45cf-bcb7-c477acb2f897}',1,0),
+	"IAccessible2Lib.py": "typelibs/ia2.tlb",
+	#"Accessibility.py": ('{1EA4DBF0-3C3B-11CF-810C-00AA00389B71}',1,0),
+	"tom.py": ('{8CC497C9-A1DF-11CE-8098-00AA0047BE5D}',1,0),
+	"SpeechLib.py": ('{C866CA3A-32F7-11D2-9602-00C04F8EE628}',5,0),
+	"AcrobatAccessLib.py": "typelibs/AcrobatAccess.tlb",
+	"FlashAccessibility.py": "typelibs/FlashAccessibility.tlb",
+}
+
+for k,v in COM_INTERFACES.iteritems():
+	target=Dir('comInterfaces').File(k)
+	source=clsid=majorVersion=None
+	if isinstance(v,basestring):
+		env.comtypesInterface(target,v)
+	else:
+		env.comtypesInterface(target,Dir('comInterfaces').File('__init__.py'),clsid=v[0],majorVersion=v[1],minorVersion=v[2])
+
+#When cleaning comInterfaces get rid of everything except for things starting with __ (e.g. __init__.py)
+env.Clean(Dir('comInterfaces'),Glob('comInterfaces/[!_]*')+Glob('comInterfaces/_[!_]*'))

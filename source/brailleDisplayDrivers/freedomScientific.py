@@ -14,6 +14,7 @@ import inputCore
 from baseObject import ScriptableObject
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
 from logHandler import log
+import brailleInput
 
 #Try to load the fs braille dll
 try:
@@ -237,7 +238,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 			"kb:alt+tab" : ("br(freedomScientific):dot2+dot3+dot4+dot5+brailleSpaceBar",),
 			"kb:escape" : ("br(freedomScientific):dot1+dot5+brailleSpaceBar",),
 			"kb:windows" : ("br(freedomScientific):dot2+dot4+dot5+dot6+brailleSpaceBar",),
-			"kb:space" : ("br(freedomScientific):brailleSpaceBar",),
 			"kb:windows+d" : ("br(freedomScientific):dot1+dot2+dot3+dot4+dot5+dot6+brailleSpaceBar",),
 			"reportCurrentLine" : ("br(freedomScientific):dot1+dot4+brailleSpaceBar",),
 			"showGui" :("br(freedomScientific):dot1+dot3+dot4+dot5+brailleSpaceBar",),
@@ -248,7 +248,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 class InputGesture(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
-class KeyGesture(InputGesture):
+class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 
 	keyLabels=[
 		#Braille keys (byte 1)
@@ -274,7 +274,12 @@ class KeyGesture(InputGesture):
 		keys=[self.keyLabels[num] for num in xrange(24) if (keyBits>>num)&1]
 		extendedKeys=[self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num)&1]
 		self.id="+".join(set(keys+extendedKeys))
-
+		# Don't say is this a dots gesture if some keys either from dots and space are pressed.
+		if not extendedKeyBits and not keyBits & ~(0xff | (1 << 0xf)):
+			self.dots = keyBits & 0xff
+			# Is space?
+			if keyBits & (1 << 0xf):
+				self.space = True
 
 class RoutingGesture(InputGesture):
 

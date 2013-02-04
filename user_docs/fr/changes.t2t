@@ -6,6 +6,7 @@ Quoi de Neuf dans NVDA
 = 2013.1 =
 
 == Nouvelles Fonctionnalités ==
+- Support basique de l'édition et de la lecture des présentations Microsoft PowerPoint. (#501)
 - Support basique pour la lecture et l'écriture de messages dans Lotus Notes 8.5. (#543)
 - En mode navigation dans les documents MSHTML (ex : Internet Explorer) et Gecko (ex : Firefox), l'existence des longues descriptions est maintenant annoncée. Il est aussi possible d'ouvrir les longues descriptions dans une nouvelle fenêtre en appuyant sur NVDA+D. (#809)
 - Les notifications dans Internet Explorer 9 et plus récent sont maintenant lues (comme les fenêtres publicitaires bloquées ou les téléchargements). (#2343)
@@ -15,19 +16,25 @@ Quoi de Neuf dans NVDA
 - Support des afficheurs Braille connectés via le Bluetooth sur les ordinateurs utilisant Bluetooth Stack for Windows by Toshiba. (#2419)
 - Support de la sélection du port pour les afficheurs freedom Scientific (Automatique, USB ou Bluetooth).
 - Support des bloc-notes BrailleNote de Humanware lorsqu'ils agissent comme afficheur Braille pour un lecteur d'écran. (#2012)
+- Support des anciens modèles d'afficheur Braille Papenmeier BRAILLEX. (#2679)
 
 
 == Corrections de Bogues ==
 - La touche de navigation rapide pour passer au séparateur précédent ou suivant en mode navigation fonctionne maintenant dans Internet Explorer et les autres documents MSHTML. (#2781)
 - Si NVDA revient à eSpeak ou pas de parole à cause d'une erreur dans le synthétiseur configuré lors du démarrage de NVDA, la configuration n'est plus modifiée pour prendre la valeur du nouveau synthétiseur, ce qui signifi que NVDA essayera encore de chargé le synthétiseur en erreur lors du prochain démarrage.
 - En mode navigation dans les applications Mozilla, les mises à jour de tableaux sont maintenant correctement rendues. Par exemple, dans les cellules mises à jour, les coordonnées de ligne et de colonne sont correctement annoncées et les touches de navigation dans un tableaux fonctionnent comme prévu. (#2784)
-- En mode navigation dans les navigateurs Internet, certains graphiques clicables sans étiquette n'étaient pas rendus et le sont maintenant correctement. (#2838)
+- En mode navigation dans les navigateurs Internet, certains graphiques cliquables sans étiquette n'étaient pas rendus et le sont maintenant correctement. (#2838)
 - Les anciennes et nouvelles versions de SecureCRT sont maintenant supportées. (#2800)
 - Pour certaines méthodes d'entrée IME dans Windows XP, la chaîne de lecture est maintenant correctement rapportée.
 - La liste de candidats de la méthode d'entrée Chinois simplifié Microsoft Pinyin sous Windows 7 est maintenant lue correctement lorsqu'on change de page avec les flèches gauche et droite, et en l'ouvrant la première fois avec Origine.
 - Quand la personnalisation de prononciations des symboles est sauvegardée, le champ avancé "préservé" n'est plus supprimé. (#2852)
 - Lorsqu'on désactive la recherche automatique de mise à jour, il n'est plus nécessaire de redémarrer NVDA pour que le changement prenne effet.
 - NVDA n'est plus en échèque dès le démarrage si un module complémentaire n'a pas pu être supprimé parce que son dossier est utilisé par une autre application. (#2860)
+- Le nom des onglets dans la boîte de dialogue des préférences de DropBox peut maintenant être vu en mode revue à plat.
+- Si la langue d'entrée est changée par une autre que celle par défaut, NVDA détecte maintenant correctement les touches pour les commandes et l'aide à la saisie.
+- Pour les langues comme l'Allemand ou le signe + (plus) est une seul touche du clavier, il est maintenant possible d'y assigner un raccourci avec le mot "plus". (#2898)
+- Dans Internet Explorer et les autres contrôles MSHTML, les bloques de citation sont signalées à l'endroit approprié. (#2888)
+- Les afficheurs Braille HumanWare de série Brailliant BI/B peuvent maintenant être sélectionnés quand l'afficheur est connecté via bluetooth mais qu'il n'a jamais été connecté via USB.
 
 
 == Changements pour les développeurs ==

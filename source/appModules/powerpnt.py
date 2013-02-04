@@ -5,8 +5,11 @@
 #See the file COPYING for more details.
 
 import comtypes
+from comtypes.automation import IDispatch
 import comtypes.client
+import ctypes
 import oleacc
+import queueHandler
 import colors
 import api
 import speech
@@ -17,12 +20,49 @@ from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
 import textInfos.offsets
 import eventHandler
 import appModuleHandler
-from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.IAccessible import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects.window import Window
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
 from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
+
+#comtypes COM interface definition for Powerpoint application object's events 
+class EApplication(IDispatch):
+	_iid_=comtypes.GUID('{914934C2-5A91-11CF-8700-00AA0060263B}')
+	_methods_=[]
+	_disp_methods_=[
+		comtypes.DISPMETHOD([comtypes.dispid(2001)],None,"WindowSelectionChange",
+			(['in'],ctypes.POINTER(IDispatch),'sel'),),
+		comtypes.DISPMETHOD([comtypes.dispid(2013)],None,"SlideShowNextSlide",
+			(['in'],ctypes.POINTER(IDispatch),'slideShowWindow'),),
+	]
+
+#Our implementation of the EApplication COM interface to receive application events
+class ppEApplicationSink(comtypes.COMObject):
+	_com_interfaces_=[EApplication,IDispatch]
+
+	def SlideShowNextSlide(self,slideShowWindow=None):
+		i=winUser.getGUIThreadInfo(0)
+		oldFocus=api.getFocusObject()
+		if not isinstance(oldFocus,SlideShowWindow) or i.hwndFocus!=oldFocus.windowHandle:
+			return
+		oldFocus.handleSlideChange()
+
+	def WindowSelectionChange(self,sel):
+		print sel
+		i=winUser.getGUIThreadInfo(0)
+		oldFocus=api.getFocusObject()
+		if not isinstance(oldFocus,Window) or i.hwndFocus!=oldFocus.windowHandle:
+			return
+		if isinstance(oldFocus,DocumentWindow):
+			documentWindow=oldFocus
+		elif isinstance(oldFocus,PpObject):
+			documentWindow=oldFocus.documentWindow
+		else:
+			return
+		documentWindow.ppSelection=sel
+		documentWindow.handleSelectionChange()
 
 #Bullet types
 ppBulletNumbered=2
@@ -203,7 +243,7 @@ class PaneClassDC(Window):
 
 	def _get_ppObjectModel(self):
 		"""Fetches and caches the Powerpoint DocumentWindow object for the current presentation."""
-		m=getPpObjectModel(self.windowHandle)
+		m=self.appModule.fetchPpObjectModel(self.windowHandle)
 		if m:
 			self.ppObjectModel=m
 			return self.ppObjectModel
@@ -385,28 +425,7 @@ class DocumentWindow(PaneClassDC):
 		self.handleSelectionChange()
 	script_selectionChange.canPropagate=True
 
-	__gestures={
-		"kb:downArrow":"selectionChange",
-		"kb:upArrow":"selectionChange",
-		"kb:leftArrow":"selectionChange",
-		"kb:rightArrow":"selectionChange",
-		"kb:home":"selectionChange",
-		"kb:end":"selectionChange",
-		"kb:pageUp":"selectionChange",
-		"kb:pageDown":"selectionChange",
-		"kb:tab":"selectionChange",
-		"kb:shift+tab":"selectionChange",
-		"kb:control+enter":"selectionChange",
-		"kb:enter":"selectionChange",
-		"kb:f2":"selectionChange",
-		"kb:escape":"selectionChange",
-		"kb:delete":"selectionChange",
-		"kb:control+c":"selectionChange",
-		"kb:control+x":"selectionChange",
-		"kb:control+v":"selectionChange",
-	}
-
-class OutlinePane(EditableTextWithoutAutoSelectDetection,DocumentWindow):
+class OutlinePane(EditableTextWithoutAutoSelectDetection,PaneClassDC):
 	TextInfo=EditableTextDisplayModelTextInfo
 	role=controlTypes.ROLE_EDITABLETEXT
 
@@ -544,7 +563,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start,end
 
 	def _getTextRange(self,start,end):
-		text=self.obj.ppObject.textRange.text[start:end].replace('\x0b','\n')+'\n'
+		text=self.obj.ppObject.textRange.text[start:end].replace('\x0b','\n')
 		text=text.replace('\r','\n')
 		return text
 
@@ -654,12 +673,6 @@ class TableCellTextFrame(TextFrame):
 	def _isEqual(self,other):
 		return self.parent==other.parent
 
-	def _caretScriptPostMovedHelper(self, speakUnit, info=None):
-		if not self.parent.ppObject.selected:
-			self.documentWindow.handleSelectionChange()
-		else:
-			super(TableCellTextFrame,self)._caretScriptPostMovedHelper(speakUnit, info=None)
-
 	__gestures={
 		"kb:tab":"selectionChange",
 		"kb:shift+tab":"selectionChange",
@@ -732,37 +745,46 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 		self.basicText="\n".join(chunks)
 		return self.basicText
 
-	def handleNewSlide(self):
+	def reportNewSlide(self):
 		speech.cancelSpeech()
 		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
 		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 
 	def event_gainFocus(self):
-		self.handleNewSlide()
+		super(SlideShowWindow,self).event_gainFocus()
+		self.reportNewSlide()
 
-	def script_changeSlide(self,gesture):
-		slideIndex=self.currentSlide.ppObject.slideIndex if self.currentSlide else None
-		gesture.send()
-		if slideIndex is not None:
+	def handleSlideChange(self):
+		try:
 			del self.__dict__['currentSlide']
+		except KeyError:
+			pass
+		try:
 			del self.__dict__['basicText']
-		newSlideIndex=self.currentSlide.ppObject.slideIndex if self.currentSlide else None
-		if newSlideIndex!=slideIndex:
-			self.handleNewSlide()
+		except KeyError:
+			pass
+		self.reportNewSlide()
 
-	__gestures={
-		"kb:space":"changeSlide",
-		"kb:pageUp":"changeSlide",
-		"kb:pageDown":"changeSlide",
-	}
 
 class AppModule(appModuleHandler.AppModule):
 
 	hasTriedPpAppSwitch=False
+	ppApplication=None
+	_ppEApplicationConnectionPoint=None
+
+	def fetchPpObjectModel(self,windowHandle):
+		m=getPpObjectModel(windowHandle)
+		if m:
+			if not self.ppApplication:
+				self.ppApplication=m.application #Must be held -- not enough to hold the connectionPoint
+			if not self._ppEApplicationConnectionPoint:
+				sink=ppEApplicationSink().QueryInterface(comtypes.IUnknown)
+				self._ppEApplicationConnectionPoint=comtypes.client._events._AdviseConnection(self.ppApplication,EApplication,sink)
+		return m
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if obj.windowClassName=="paneClassDC" and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
-			m=getPpObjectModel(obj.windowHandle)
+			m=self.fetchPpObjectModel(obj.windowHandle)
 			if m:
 				try:
 					ppActivePaneViewType=m.activePane.viewType
