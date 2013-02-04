@@ -10,6 +10,7 @@
 import os
 import wx
 import gui
+import config
 
 class NewLaptopKeyboardLayout(wx.Dialog):
 	MESSAGE = _(
@@ -31,10 +32,21 @@ class NewLaptopKeyboardLayout(wx.Dialog):
 		mainSizer.Add(whatsNewButton)
 
 		mainSizer.Add(self.CreateButtonSizer(wx.OK),flag=wx.TOP|wx.BOTTOM|wx.ALIGN_CENTER_HORIZONTAL,border=20)
+		self.Bind(wx.EVT_BUTTON, lambda evt: self.Close(), id=wx.ID_OK)
+
+		self.Bind(wx.EVT_CLOSE, self.onClose)
 
 		whatsNewButton.SetFocus()
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
+
+	def onClose(self, evt):
+		config.conf["upgrade"]["newLaptopKeyboardLayout"] = True
+		try:
+			config.save()
+		except:
+			pass
+		self.EndModal(0)
 
 	def onWhatsNew(self, evt):
 		os.startfile(gui.getDocFilePath("changes.html"))

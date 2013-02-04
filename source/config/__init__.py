@@ -182,6 +182,9 @@ confspec = ConfigObj(StringIO(
 	alwaysIncludeShortCharacterDescriptionInCandidateName = boolean(default=True)
 	reportReadingStringChanges = boolean(default=True)
 	reportCompositionStringChanges = boolean(default=True)
+
+[upgrade]
+	newLaptopKeyboardLayout = boolean(default=false)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
