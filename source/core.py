@@ -38,6 +38,9 @@ def doStartupDialogs():
 		gui.messageBox(_("Your gesture map file contains errors.\n"
 				"More details about the errors can be found in the log file."),
 			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
+	if not config.conf["upgrade"]["newLaptopKeyboardLayout"]:
+		from gui import upgradeAlerts
+		upgradeAlerts.NewLaptopKeyboardLayout.run()
 
 def restart():
 	"""Restarts NVDA by starting a new copy with -r."""

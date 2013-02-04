@@ -227,15 +227,15 @@ In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste
 
 ++ Allgemeine Befehle für NVDA ++
 %kc:beginInclude
-|| Name | Tastenkombination | Geste | Beschreibung |
-| Sprechen stoppen | Steuerung | 2-Finger-tippen | Unterbricht augenblicklich den laufenden Sprechvorgang. |
-| Sprechen anhalten | Umschalt | keine | Hält sofort den Lesevorgang an oder setzt bei erneutem Drücken den Lesevorgang fort (sofern das von der Sprachausgabe unterstützt wird). |
-| NVDA-Menü | NVDA+N | 2-Finger-Doppel-Tippen | Öffnet das NVDA-Menü. Von hier aus können Sie auf die Einstellungen, Extras, etc. zugreifen. |
-| Sprachmodus umschalten | NVDA+s | keine | Schaltet den Sprachmodus zwischen Sprache, Signaltöne und aus um. |
-| Modus der Eingabehilfe umschalten | NVDA+1 | keine | Bei Drücken einer Taste in diesem Modus wird die soeben gedrückte Taste und die dazugehörige Beschreibung angesagt und in Braille angezeigt, sofern die Taste mit einer Funktion belegt ist. |
-| NVDA beenden | NVDA+Q | keine | Beendet NVDA. |
-| Taste durchreichen | NVDA+F2 | keine | Veranlasst NVDA, dass die Taste, die Sie als nächstes drücken, nicht von NVDA abgefangen, sondern direkt an die laufende Anwendung weitergereicht wird (sogar wenn es sich um einen Tastenbefehl von NVDA handelt). |
-| Schlafmodus umschalten | nvda+umschalt+s | keine | legt fest, ob die aktuelle Anwendung eine eigene sprachunterstützung besitzt, nützlich für Programme oder spiele, die im System installierte Sprachausgaben selbsttätig ansteuern (z.B. speakon oder Klango) oder eine eigene Sprachausgabe zur Verfügung stellen (wie z.B. Spiele wie shades of doom, Top speed o.ä.)  |
+|| Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Geste | Beschreibung |
+| Sprechen stoppen | Steuerung | Steuerung | 2-Finger-tippen | Unterbricht augenblicklich den laufenden Sprechvorgang. |
+| Sprechen anhalten | Umschalt | Umschalt | keine | Hält sofort den Lesevorgang an oder setzt bei erneutem Drücken den Lesevorgang fort (sofern das von der Sprachausgabe unterstützt wird). |
+| NVDA-Menü | NVDA+N | NVDA+N | 2-Finger-Doppel-Tippen | Öffnet das NVDA-Menü von wo aus Sie auf die Einstellungen, Extras, etc. zugreifen können. |
+| Sprachmodus umschalten | NVDA+s | NVDA++S | keine | Schaltet den Sprachmodus zwischen Sprache, Signaltöne und aus um. |
+| Modus der Eingabehilfe umschalten | NVDA+1 | NVDA+1 | keine | Bei Drücken einer Taste in diesem Modus, wird die in NVDA assoziierte Taste und die dazugehörige Beschreibung angesagt und in Braille als Blitzmeldungen angezeigt. |
+| NVDA beenden | NVDA+Q | NVDA+Q | keine | Beendet NVDA. |
+| Taste durchreichen | NVDA+F2 | NVDA+F2 | keine | Veranlasst NVDA, dass die nächst betätigte Taste nicht von NVDA abgefangen wird, sondern direkt an die laufende Anwendung weitergereicht wird (sogar wenn es sich um einen Tastenbefehl von NVDA handelt). |
+| Schlafmodus umschalten | nvda+umschalt+s | NVDA+Umschalt+Z | keine | legt fest, ob die aktuelle Anwendung eine eigene sprachunterstützung besitzt, nützlich für Programme oder spiele, die im System installierte Sprachausgaben selbsttätig ansteuern (z.B. speakon oder Klango) oder eine eigene Sprachausgabe zur Verfügung stellen (wie z.B. Spiele wie shades of doom, Top speed o.ä.)  |
 %kc:endInclude
 
 ++ Informationen des Systems ausgeben ++
@@ -262,11 +262,19 @@ Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über 
 
 Einige nützliche Tastenkombinationen zum Navigieren mit dem Systemfokus sind:
 %kc:beginInclude
+<<<<<<< TREE
+|| Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
+| Aktuellen Fokus ansagen | NVDA+Tabulatortaste | NVDA+Tabulatortaste | Spricht das aktuell fokusierte Objekt. Bei zweimal Drücken werden die Informationen buchstabiert. |
+| Titelleiste ansagen | NVDA+T | NVDA+T | Liest die Titelleiste der aktuellen Anwendung vor. Bei zweimal Drücken, werden die Informationen buchstabiert. Bei drei Mal wird der Text in die Zwischenablage kopiert. Diese Information wird auch in Braille als Blitzmeldung angezeigt. |
+| Aktives Fenster vorlesen | NVDA+B | NVDA+B | Liest alle Steuerelemente im aktiven Fenster vor (hilfreich für Dialogfelder). |
+| Statuszeile lesen | NVDA+ende | NVDA+Umschalt+Ende | Liest die Statuszeile vor, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Die Statuszeile wird auch in Braille als Blitzmeldung angezeigt. |
+=======
 || Name | Tastenkombination | Beschreibung |
 | Aktuellen Fokus ansagen | NVDA+Tabulatortaste | Spricht das aktuell fokusierte Objekt. Bei zweimaligem Drücken werden die Informationen buchstabiert. |
 | Titelleiste ansagen | NVDA+T | Liest die Titelleiste der aktuellen Anwendung vor. Bei zweimaligem Drücken werden die Informationen buchstabiert. Wenn Sie die Tastenkombination dreimal drücken, wird der Text in die Zwischenablage kopiert. Diese Information wird auch in Braille als Blitzmeldung angezeigt. |
 | Aktives Fenster vorlesen | NVDA+B | Liest alle Steuerelemente im aktiven Fenster vor (hilfreich für Dialogfelder). |
 | Statuszeile lesen | NVDA+ende | Liest die Statuszeile vor, falls eine gefunden wird und platziert den NVDA-Cursor darauf. Die Statuszeile wird auch in Braille als Blitzmeldung angezeigt. |
+>>>>>>> MERGE-SOURCE
 %kc:endInclude
 
 ++ Mit dem System-Cursor navigieren ++[SystemCaret]
@@ -278,10 +286,17 @@ NVDA wird hierbei jedes Zeichen, jedes Wort oder auch jede Zeile ansagen, wenn S
 
 Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Verfügung:
 %kc:beginInclude
+<<<<<<< TREE
+|| Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Beschreibung |
+| Alles ansagen | NVDA+Pfeil nach unten | NVDA+A | Beginnt ab der aktuellen Position des System-Cursors vorzulesen und zieht diesen mit.
+| Aktuelle Zeile vorlesen | NVDA+Pfeiltaste nach oben | NVDA+L | Liest die aktuelle Zeile, in der sich der System-Cursor befindet, vor. Bei zweimal Drücken wird die Zeile buchstabiert. |
+| Aktuelle Textauswahl vorlesen | NVDA+Umschalt+Pfeil nach oben | NVDA+Umschalt+S | Liest den aktuell markierten Text vor. |
+=======
 || Name | Tastenkombination | Beschreibung |
 | Alles ansagen | NVDA+Pfeil nach unten | Beginnt ab der aktuellen Position des System-Cursors vorzulesen und zieht diesen mit.
 | Aktuelle Zeile vorlesen | NVDA+Pfeiltaste nach oben | Liest die aktuelle Zeile vor, in der sich der System-Cursor befindet. Bei zweimaligem Drücken wird die Zeile buchstabiert. |
 | Aktuelle Textauswahl vorlesen | NVDA+Umschalt+Pfeil nach oben | Liest den aktuell markierten Text vor. |
+>>>>>>> MERGE-SOURCE
 
 
 Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügung:
@@ -321,11 +336,19 @@ Mit den folgenden Befehlen navigieren Sie zwischen den Objekten:
 
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Geste | Beschreibung |
+<<<<<<< TREE
+| Aktuelles Objekt ansagen | NVDA+Nummerntaste 5 | NVDA+Umschalt+O | keine | Sagt das aktuelle Navigator-Objekt an. Bei zweimal Drücken werden die Informationen buchstabiert und bei drei mal wird die Information in die Zwischenablage kopiert. |
+| Zum übergeordneten Objekt navigieren | NVDA+Nummerntaste 8 | NVDA+Umschalt+Pfeiltaste nach oben | nach oben streichen (Objektmodus) | Navigiert zur übergeordneten Ebene des aktuellen Navigator-Objekts. |
+| Zum vorherigen Objekt navigieren | NVDA+Nummerntaste 4 | NVDA+Umschalt+Pfeiltaste nach links | nach links streichen (Objektmodus) | Navigiert zum vorherigen Objekt. |
+| Zum nächsten Objekt navigieren | NVDA+Nummerntaste 6 | NVDA+Umschalt+Pfeiltaste nach rechts | nach rechts streichen (Objektmodus) | Navigiert zum nächsten Objekt. |
+| Zum ersten untergeordneten Objekt navigieren | NVDA+Nummerntaste 2 | NVDA+Umschalt+Pfeiltaste nach unten | nach unten streichen (Objektmodus) | Navigiert zum ersten untergeordneten Objekt ausgehend vom aktuellen Navigator-Objekt. |
+=======
 | Aktuelles Objekt ansagen | NVDA+Nummerntaste 5 | NVDA+STRG+I | keine | Sagt das aktuelle Navigator-Objekt an. Bei zweimaligem Drücken werden die Informationen buchstabiert Wenn Sie die Tastenkombination dreimal drücken, wird die Information in die Zwischenablage kopiert. |
 | Zum übergeordneten Objekt navigieren | NVDA+Nummerntaste 8 | NVDA+Umschalt+I | nach oben streichen (Objektmodus) | Navigiert zur übergeordneten Ebene des aktuellen Navigator-Objekts. |
 | Zum vorherigen Objekt navigieren | NVDA+Nummerntaste 4 | NVDA+STRG+J | nach links streichen (Objektmodus) | Navigiert zum vorherigen Objekt. |
 | Zum nächsten Objekt navigieren | NVDA+Nummerntaste 6 | NVDA+STRG+L | nach rechts streichen (Objektmodus) | Navigiert zum nächsten Objekt. |
 | Zum ersten untergeordneten Objekt navigieren | NVDA+Nummerntaste 2 | NVDA+Umschalt+Komma | nach unten streichen (Objektmodus) | Navigiert zum ersten untergeordneten Objekt ausgehend vom aktuellen Navigator-Objekt. |
+>>>>>>> MERGE-SOURCE
 | Zum Fokus-Objekt navigieren | NVDA+Nummerntaste Minus | NVDA+Rücktaste | keine | Navigiert zum aktuell fokussierten Objekt und zieht den NVDA-Cursor zum System-Cursor, sofern dieser sichtbar ist. |
 | Aktuelles Navigator-Objekt aktivieren | NVDA+Nummerntaste Eingabetaste | NVDA+Eingabetaste | Doppeltippen | Aktiviert das aktuelle Navigator-Objekt (ähnlich einem Mausklick oder dem Drücken der Leertaste). |
 | System-Cursor zum aktuellen Navigator-Objekt oder die Einfügemarke zum nvda-cursor ziehen | NVDA+Umschalt+Nummerntaste Minus | NVDA+Umschalt+Rücktaste | keine | Wird diese Tastenkombination einmal gedrückt, wird der Systemfokus zum aktuellen Navigator-Objekt gezogen. Wird sie zweimal gedrückt, so wird die Einfügemarke zum nvda-Cursor gezogen. |
@@ -349,6 +372,22 @@ Um dies zu ändern, müssen Sie die  [Kopplung der Braillezeile konfigurieren #B
 Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Geste | Beschreibung |
+<<<<<<< TREE
+| Zur obersten Zeile springen | Umschalt+Nummerntaste 7 | NVDA+Umschalt+Pos1 | Keine | Zieht den NVDA-Cursor in die erste Zeile des Textes. |
+| Zur vorherigen Zeile springen | Nummerntaste 7 | NVDA+Pfeiltaste nach oben | Nach oben streichen (Textmodus) | Zieht den NVDA-Cursor  zur vorherigen Zeile des Textes. |
+| Aktuelle Zeile ansagen | Nummerntaste 8 | NVDA+Umschalt+Punkt | Keine | Sagt die aktuelle Zeile im Text an, in der sich der nvda-Cursor befindet. Bei zweimal Drücken wird sie buchstabiert. |
+| Zur nächsten Zeile springen | Nummerntaste 9 | NVDA+Pfeiltaste nach unten | Nach unten streichen (Textmodus) | Zieht den NVDA-Cursor zur nächsten Zeile des Textes. |
+| Zur untersten Zeile springen | Umschalt+Nummerntaste 9 | NVDA+Control+Ende | Keine | Zieht den NVDA-Cursor in die letzte Zeile des Textes. |
+| Zum vorherigen Wort springen | Num 4 | NVDA+STRG+Pfeiltaste nach links | Nach links streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum vorherigen Wort im Text. |
+| Aktuelles Wort ansagen | Num 5 | NVDA+STRG+Punkt | Keine | Sagt das aktuelle Wort im Text an, in dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird es buchstabiert. |
+| Zum nächsten Wort springen | Num 6 | NVDA+STRG+Pfeiltaste nach rechts | Nach rechts streichen mit zwei Fingern (Textmodus) | Zieht den NVDA-Cursor zum nächsten Wort im Text. |
+| Zum Zeilenanfang springen | Umschalt+Nummerntaste 1 | NVDA+Pos1 | Keine | Zieht den NVDA-Cursor zum Zeilenanfang im Text. |
+| Zum vorherigen Zeichen springen | Num 1 | NVDA+NVDA+Pfeiltaste nach links | Nach links streichen (Textmodus) | Zieht den NVDA-Cursor  zum vorherigen Zeichen der aktuellen Zeile im Text. |
+| Aktuelles Zeichen ansagen | Num 2 | NVDA+Punkt | Sagt das aktuelle Zeichen in der Zeile im Text an, in dem sich der NVDA-Cursor befindet. Bei zweimal Drücken werden die numerischen Dezimal- und Hexadezimalwerte angesagt. |
+| Zum nächsten Zeichen springen | Num 3 | NVDA+Pfeiltaste nach rechts | Nach rechts streichen (Textmodus) | Zieht den NVDA-Cursor zum nächsten Zeichen der aktuellen Zeile im Text. |
+| Zum Zeilenende springen | Umschalt+Nummerntaste 3 | NVDA+ende | Keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
+| Alles ansagen | Nummerntaste Plus | NVDA+Umschalt+A | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position den Text vor. |
+=======
 | Zur obersten Zeile springen | Umschalt+Nummerntaste 7 | NVDA+7 | Keine | Zieht den NVDA-Cursor in die erste Zeile des Textes. |
 | Zur vorherigen Zeile springen | Nummerntaste 7 | NVDA+U | Nach oben streichen (Textmodus) | Zieht den NVDA-Cursor  zur vorherigen Zeile des Textes. |
 | Aktuelle Zeile ansagen | Nummerntaste 8 | NVDA+I | Keine | Sagt die aktuelle Zeile im Text an, in der sich der nvda-Cursor befindet. Bei zweimaligem Drücken wird sie buchstabiert. |
@@ -363,6 +402,7 @@ Die folgenden Tastenkombinationen zum Betrachten von Text sind verfügbar:
 | Zum nächsten Zeichen springen | Num 3 | NVDA+Punkt | Nach rechts streichen (Textmodus) | Zieht den NVDA-Cursor zum nächsten Zeichen der aktuellen Zeile im Text. |
 | Zum Zeilenende springen | Umschalt+Nummerntaste 3 | NVDA+Umschalt+O | Keine | Zieht den NVDA-Cursor zum Zeilenende im Text. |
 | Alles ansagen | Num Plus | NVDA+Umschalt+Pfeiltaste nach unten | Nach unten streichen mit drei Fingern (Textmodus) | Liest von der aktuellen Cursor-Position den Text vor. |
+>>>>>>> MERGE-SOURCE
 | Textformatierung ansagen | NVDA+F | NVDA+F | Keine | Sagt die Formatierungen unter dem nvda-Cursor an. Diese info wird auch in Braille als Blitzmeldung angezeigt. |
 | Ab NVDA-Cursor kopieren | NVDA+F9 | NVDA+F9 | Keine | Startet von der aktuellen Cursor-Position den Kopiervorgang. Der Text wird nicht von NVDA kopiert, wenn Sie nicht festlegen, bis wohin  kopiert werden soll. |
 | Bis NVDA-Cursor kopieren | NVDA+F10 | NVDA+F10 | Keine | Kopiert von der Position die vorhin (mit "ab nvda-Cursor kopieren" festgelegt wurde) bis zur akttuellen Position des nvda-Cursors. Nach dem Betätigen der Tastenkombination, wird der Text in die Zwischenablage kopiert. |

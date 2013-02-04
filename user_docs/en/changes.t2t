@@ -5,6 +5,22 @@
 
 = 2013.1 =
 
+== Important ==
+
+=== New Laptop Keyboard Layout ===
+The laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent.
+The new layout uses the arrow keys in combination with the NVDA key and other modifiers for review commands.
+
+Please note the following changes to commonly used commands:
+|| Name | Key |
+| Say all | NVDA+a |
+| Read current line | NVDA+l |
+| Read current text selection | NVDA+shift+s |
+| Report status bar | NVDA+shift+end |
+In addition, among other changes, all of the object navigation, text review, mouse click and synth settings ring commands have changed.
+Please see the [Commands Quick Reference keyCommands.html] document for the new keys.
+
+
 == New Features ==
 - Basic support for editing and reading Microsoft PowerPoint presentations. (#501)
 - Basic support for reading and writing messages in Lotus Notes 8.5. (#543)
@@ -23,6 +39,7 @@
 
 == Changes ==
 - Updated liblouis braille translator to 2.5.2. (#2737)
+- The laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent. (#804)
 
 
 == Bug Fixes ==
