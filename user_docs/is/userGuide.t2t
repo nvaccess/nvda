@@ -257,7 +257,7 @@ Hlutur er hvert stakt atriði, svo sem hluti af texta, hnappur, gátreitur, stik
 Kerfisfókusinn, yfirleitt kallaður bara, fókus, er sá [object #Objects] sem tekur á móti lyklainnslætti frá lyklaborðinu.
 Sem dæmi, ef þú skrifar inn í ritsvæði, þá hefur ritsvæðið fókusinn.
 
-Algengasta aðferðin við að vafra um Windows með NVDA er með því að færa einfaldlega kerfisfókusinn með Windows lyklaborðs skipunum, eins og að styðja á tab og shift+tab til að fara áfram eða tilbaka milli stjórntækja, styðja á alt til að færa sig í valmyndareinina og nota örvalykla til að vafra í valmyndum, sem og að nota alt+tab til að skipta milli þeirra forrita sem eru í gangi.
+Algengasta aðferðin við að vafra um Windows með NVDA er með því að færa einfaldlega kerfisfókusinn með Windows lyklaborðs skipunum, eins og að styðja á tab og shift+tab til að fara áfram eða til baka milli stjórntækja, styðja á alt til að færa sig í valmyndareinina og nota örvalykla til að vafra í valmyndum, sem og að nota alt+tab til að skipta milli þeirra forrita sem eru í gangi.
 Þegar þetta er gert, þá mun NVDA tilkynna upplýsingar um hlutinn sem hefur fókus, svo sem nafn, gerð, gildi, stöðu, lýsingu, lyklaborðs flýtilykil og staðsetningar upplýsingar.
 
 Það eru nokkrar lyklaborðs skipanir sem eru ansi gagnlegar þegar unnið er með Kerfisfókus:
@@ -302,7 +302,7 @@ Hlutavöfrun gerir þér kleift að vafra um og sækja upplýsingar um einstaka 
 Þegar þú vafrar til hlutar mun NVDA tilkynna hann á svipaðan hátt og kerfisfókusinn.
 Til að lesa texta sem birtist á skjánum, er í staðinn hægt að nota [flat review #FlatReview].
 
-Í staðinn fyrir að þurfa að vafra fram og tilbaka milli allra hluta í kerfinu, þá er hlutum raðað í stigveldi.
+Í staðinn fyrir að þurfa að vafra fram og til baka milli allra hluta í kerfinu, þá er hlutum raðað í stigveldi.
 Þetta þýðir að sumir hlutir innihalda aðra hluti og þú þarft að vafra inn í þá til að fá aðgang að þeim hlutum sem þeir innihalda.
 Sem dæmi, listi inniheldur listaatriði, þar af leiðandi þarf að fara inn í listann til að lesa þau atriði.
 Ef þú hefur vafrað að listaatriði, þá muntu færast að næsta og fyrra listaatriði í þeim lista ef þú heldur áfram að vafra.
@@ -1040,8 +1040,8 @@ Sjálfgefin stilling er að NVDA vistar stillingar þegar þú lokar forritinu.
 Þessari stillingu er þó hægt að breyta í Almennar Stillingar skilaboðglugganum í Valkostir valmyndinni.
 Til að vista stillingar handvirkt, veldu Vista stillingar í NVDA valmyndinni.
 
-Ef þú gerir mistök í þínum stillingum og þarft að fara tilbaka í áður vistaðar stillingar, veldu þá "fara tilbaka í vistaðar stillingar" valkostinn í NVDA valmyndinni.
-Þú getur líka endurhlaðið stillingum tilbaka í grunnstillingar NVDA með því að velja Endurhlaða stillingar yfir í Sjálfgefnar stillingar, sem er einnig í NVDA valmyndinni.
+Ef þú gerir mistök í þínum stillingum og þarft að fara til baka í áður vistaðar stillingar, veldu þá "fara til baka í vistaðar stillingar" valkostinn í NVDA valmyndinni.
+Þú getur líka endurhlaðið stillingum til baka í grunnstillingar NVDA með því að velja Endurhlaða stillingar yfir í Sjálfgefnar stillingar, sem er einnig í NVDA valmyndinni.
 
 Eftirfarandi NVDA skipanir eru einnig gagnlegar:
 %kc:beginInclude
@@ -1181,16 +1181,16 @@ Hér á eftir eru þeir lyklar sem eru skilgreindir af NVDA fyrir þennan skjá.
 Vinsamlegast lesið upplýsingarnar sem fylgdu með skjánum til að fá útskýringu á því hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | topRouting1 (fyrsta sellan á skjánum) |
+| Skruna til baka | topRouting1 (fyrsta sellan á skjánum) |
 | Skruna áfram | topRouting20/40/80 (síðasta sellan á skjánum) |
-| Skruna tilbaka | leftAdvanceBar |
+| Skruna til baka | leftAdvanceBar |
 | Skruna áfram | rightAdvanceBar |
 | Breyta hvort blindraletur sé samofið | leftGDFButton+rightGDFButton |
 | Breyta aðgerð vinstri wiz hjóls | leftWizWheelPress |
-| Fara tilbaka með vinstri wiz hjóls aðgerð | leftWizWheelUp |
+| Fara til baka með vinstri wiz hjóls aðgerð | leftWizWheelUp |
 | Fara áfram með vinstri wiz hjóls aðgerð | leftWizWheelDown |
 | Breyta hægri wiz hjóls aðgerð | rightWizWheelPress |
-| Fara tilbaka með hægri wiz hjóls aðgerð | rightWizWheelUp |
+| Fara til baka með hægri wiz hjóls aðgerð | rightWizWheelUp |
 | Fara áfram með hægri wiz hjóls aðgerð | rightWizWheelDown |
 | Beina í blindraleturs sellu | beining |
 | hoplykill | punktur7 |
@@ -1218,12 +1218,12 @@ Vinsamlegast lesið upplýsingarnar sem fylgdu með skjánum til að fá útský
  
 Fyrir nýrri Focus módel sem innihalda "ruggandi" sláar-lykla (focus 40, focus 80 og focus blue):
 || Nafn | Lykill |
-| Fara tilbaka í fyrri línu | leftRockerBarUp, rightRockerBarUp |
+| Fara til baka í fyrri línu | leftRockerBarUp, rightRockerBarUp |
 | Fara í næstu línu | leftRockerBarDown, rightRockerBarDown |
  
 Aðeins fyrir Focus 80:
 || Nafn | Lykill |
-| Skruna tilbaka | leftBumperBarUp, rightBumperBarUp |
+| Skruna til baka | leftBumperBarUp, rightBumperBarUp |
 | Skruna áfram | leftBumperBarDown, rightBumperBarDown |
 %kc:endInclude
  
@@ -1239,8 +1239,8 @@ Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar notaður með NVDA.
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að nálgast upplýsingar um hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | t1 |
-| Skruna tilbaka að fyrri línu | t2 |
+| Skruna til baka | t1 |
+| Skruna til baka að fyrri línu | t2 |
 | Skruna að næstu línu | t4 |
 | Skruna áfram | t5 |
 | Beina að blindraleturs sellu | routing |
@@ -1269,9 +1269,9 @@ Eftirfarandi eru þær lyklaskipanir sem eiga við skjáinn þegar hann er nota�
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | left, up |
+| Skruna til baka | left, up |
 | Skruna áfram | right, down |
-| Skruna tilbaka í fyrri línu | b4 |
+| Skruna til baka í fyrri línu | b4 |
 | Skruna í næstu línu | b5 |
 | Beina að blindraleturs sellu | routing |
 | shift+dálklykill | esc |
@@ -1294,7 +1294,7 @@ Eftirfarandi eru lyklaskipanirnar fyrir þennan skjá þegar hann er notaður me
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá leiðbeiningar um hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | LF |
+| Skruna til baka | LF |
 | Skruna áfram | RG |
 | Fara í fyrri línu | UP |
 | Fara í næstu línu | DN |
@@ -1321,7 +1321,7 @@ Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með 
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | d2 |
+| Skruna til baka | d2 |
 | Skruna áfram | d5 |
 | Fara að fyrri línu | d1 |
 | Fara að næstu línu | d3 |
@@ -1344,7 +1344,7 @@ Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með 
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | K1 |
+| Skruna til baka | K1 |
 | Skruna áfram | K3 |
 | Fara í fyrri línu | B2 |
 | Fara í næstu línu | B5 |
@@ -1361,7 +1361,7 @@ Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með 
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | K1 |
+| Skruna til baka | K1 |
 | Skruna áfram | K3 |
 | Fara í fyrri línu | B2 |
 | Fara í næstu línu | B5 |
@@ -1378,7 +1378,7 @@ Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með 
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | vinstri |
+| Skruna til baka | vinstri |
 | Skruna áfram | hægri |
 | Fara í fyrri línu | upp |
 | Fara í næstu línu | niður |
@@ -1410,7 +1410,7 @@ Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með 
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | vinstri hlið skruna niður |
+| Skruna til baka | vinstri hlið skruna niður |
 | Skruna áfram | hægri hlið skruna niður |
 | Fara í fyrri línu | vinstri hlið skruna upp |
 | Fara í næstu línu | hægri hlið skruna upp |
@@ -1470,7 +1470,7 @@ Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með 
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | vinstri hlið skruna niður |
+| Skruna til baka | vinstri hlið skruna niður |
 | Skruna áfram | hægri hlið skruna niður |
 | Beina í blindraleturs sellu | beining |
 %kc:endInclude
@@ -1484,7 +1484,7 @@ Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með 
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | vinstri |
+| Skruna til baka | vinstri |
 | Skruna áfram | hægri |
 | Fara í fyrri línu | b3 |
 | Fara í næstu línu | b4 |
@@ -1534,7 +1534,7 @@ Venjulega eru eftirfarandi lyklaskipanir á þessum blindraletursskjám:
 Eftirfarandi eru Papenmeier skipanir fyrir NVDA:
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | vinstri |
+| Skruna til baka | vinstri |
 | Skruna áfram | hægri |
 | Fara í fyrri línu | upp |
 | Fara í næstu línu | niður |
@@ -1586,7 +1586,7 @@ Eftirfarandi eru Papenmeier lyklaskipanir fyrir NVDA:
 %kc:beginInclude
 Skjáir með EAB:
 || Nafn | Lykill |
-| Skruna tilbaka | vinstri |
+| Skruna til baka | vinstri |
 | Skruna áfram | hægri |
 | Fara í fyrri línu | upp |
 | Fara í næstu línu | niður |
@@ -1606,7 +1606,7 @@ BRAILLEX Tiny:
 || Nafn | Lykill |
 | Tilkynna bókstaf í skoðun | vinstri1 |
 | Virkja núverandi leiðsöguhlut | vinstri2 |
-| Skruna tilbaka | vinstri |
+| Skruna til baka | vinstri |
 | Skruna áfram | hægri |
 | Fara í fyrri línu | upp |
 | Fara í næstu línu | niður |
@@ -1625,7 +1625,7 @@ BRAILLEX 2D Screen:
 | Breyta blindraletur samofið við | hægri2 |
 | Tilkynna stílsnið texta | reportf |
 | Fara í fyrri línu | upp |
-| Skruna tilbaka | vinstri |
+| Skruna til baka | vinstri |
 | Fara í flata skoðun / fókus | hægri1 |
 | Skruna áfram | hægri |
 | Fara í næstu línu | niður |
@@ -1657,7 +1657,7 @@ Vinsamlegast ráðfærið ykkur við handbók skjásins til að fá upplýsingar
 
 %kc:beginInclude
 || Nafn | Lykill |
-| Skruna tilbaka | afturábak |
+| Skruna til baka | afturábak |
 | Skruna áfram | áfram |
 | Fara í fyrri línu | fyrri |
 | Fara í næstu línu | næsta |
@@ -1696,7 +1696,7 @@ Eftirfarandi eru lyklaskipanir BRLTTY þegar forritið er keyrt með NVDA.
 Vinsamlegast ráðfærið ykkur við http://mielke.cc/brltty/doc/drivers/] fyrir frekari upplýsingar um hvernig skipanir BRLTTY er stýrt að stjórntækjum á blindraletursskjám.
 %kc:beginInclude
 || Nafn | BRLTTY skipun |
-| Skruna tilbaka | fwinlt (til vinstri um einn glugga) |
+| Skruna til baka | fwinlt (til vinstri um einn glugga) |
 | Skruna áfram | fwinrt (til hægri um einn glugga) |
 | Fara í fyrri línu | lnup (upp eina línu) |
 | Fara í næstu línu | lndn (niður eina línu) |

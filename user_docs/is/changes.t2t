@@ -1,0 +1,45 @@
+Hvað er nýtt í NVDA
+
+
+%!includeconf: ../changes.t2tconf
+
+= 2013.1 =
+
+== Nýjir Eiginleikar ==
+- Grunn stuðningur við endurskoðun og lestur á Microsoft Powerpoint glærum. (#501)
+- Grunn stuðningur við endurskoðun og lestur skilaboða í Lotus Notes 8.5. (#543)
+- Þegar unnið er í vafraham með MSHTML (sb. Internet Explorer) og Gecko (sb. Firefox), þá mun tilvist lengri lýsinga nú vera tilkynnt. Einnig er hægt að opna lengri lýsinguna í sér glugga með því að styðja á NVDA+d. (#809)
+- Tilkynningar í Internet Explorer 9 og nýrri útgáfum eru nú lesnar (sb. niðurhal á skrám og hindrun á birtingu efnis, eins og sprettiglugga). (#2343)
+- Sjálfvirk tilkynning á fyrirsögnum raða og dálka er nú studd þegar unnið er í vafraham með skjöl í Internet Explorer eða öðrum MSHTML stjórntækjum. (#778)
+- Nýtt tungumál: Aragóníska
+- Nýjar blindraleturs töflur: Danska stig 2, Kóreska stig 1. (#2737)
+- Stuðningur fyrir blindraletursskjái sem tengjast með Blátönn á tölvu sem keyrir Bluetooth Stack for Windows by Toshiba. (#2419)
+- Stuðningur við val á tengjum þegar unnið er með Freedom Scientific skjái (Sjálfvirkt, USB eða Blátönn).
+- Stuðningur við BrailleNote seríuna af notetakers frá Humanware, þegar þeir eru notaðir sem blindraletursskjáir fyrir skjálesarann. (#2012)
+- Stuðningur við eldri módel af Papenmeier BRAILLEX blindraletursskjáum. (#2679)
+- Stuðningur við innslátt tölvu-blindraleturs á blindraletursskjám sem innihalda innbyggð lyklaborð. (#808)
+- Nýjar lyklaborðs stillingar sem gera kleift að velja um hvort NVDA eigi að trufla lestur með innslegnum bókstöfum eða þegar stutt er á færslulykilinn. (#698)
+
+
+== Breytingar ==
+- Uppfærsla á liblouis blindraleturs þýðanda upp í 2.5.2. (#2737)
+
+
+== Lagaðar Villur ==
+- Flýtilyklarnir til að fara í fyrri eða næstu skilstiku í Vafraham virka núna í Internet Explorer og öðrum MSHTML stjórntækjum. (#2781)
+- Ef NVDA skiptir aftur yfir í eSpeak eða Ekkert tal vegna þess að talgervillinn sem átti að nota ræsti sér ekki, þá er stillingunni nú breytt þannig að þegar NVDA er ræst aftur þá mun forritið á nýjan leik reyna að ræsa sama talgervli. (#2589)
+- Þegar í Vafraham í Mozilla Firefox forritum, þá munu uppfærslur á töflum nú skilgreinast rétt. Sem dæmi, í uppfærðum sellum, þá munu hnitmið raða og dálka nú vera rétt og vöfrun virkar sem skildi. (#2784)
+- Þegar unnið er með Vafraham, í vöfrum, þá eru nú smellanlegir-grafískir/mynd hlutir nú skilgreindir rétt. (#2838)
+- Eldri og nýrri útgáfur af SecureCRT eru nú studdar. (#2800)
+- Fyrir inntaks aðferðir eins og Easy Dots IME í XP, þá er lestrarstrengurinn nú rétt tilkynntur.
+- Uppástungulistinn fyrir Kínverskt Einfaldað Microsoft Pinyin inntak í Windows 7 er nú lesinn rétt þegar skipt er milli síða með ör til hægri og vinstri, og einnig þegar notaður er Heim lykillinn.
+- Þegar sérsniðin tákna framburður er vistaður, þá er þróaði "geyma" reiturinn ekki lengur fjarlægður. (#2852)
+- Þegar sjálfvirk uppfærslu leitun er afvirkjuð, þá þarf NVDA ekki lengur að vera endurræst til að breytingin taki gildi.
+- Engin villa kemur upp í ræsingu NVDA lengur, þegar ekki er hægt að fjarlægja viðbót vegna þess að mappan sem hún er í er þegar í notkun af öðru forriti. (#2860)
+- Flipa í valkosta skilaboðaglugga DropBox forritsins er nú hægt að skoða með Flatri skoðun.
+- Ef inntaks tungumáli er breytt í annað en sjálfgefið, þá mun NVDA nú greina lyklainnslátt rétt fyrir skipanir og aðra inntaks hjálp.
+- Fyrir tungumál eins og Þýsku þar sem + (plús) merkið er einn lykill á lyklaborðinu, þá er nú hægt að binda skipanir við merkið með því að nota orðið "plus". (#2898)
+- Í Internet Explorer og öðrum MSHTML stjórntækjum þá eru tilvitnanir núna tilkynntar þar sem við á. (#2888)
+- Reklarnir fyrir Humanware Brailliant BI/B seríuna af blindraletursskjám er nú hægt að velja þegar skjárinn er tengdur með Blátönn, þrátt fyrir að hann hafi aldrei verið tengdur með USB.
+- Síun á atriðum í Vafrahams Eigindalistanum með stórum stöfum virkar nú sem skildi, líkt og síun á smáum bókstöfum. (#2951)
+- Í Mozilla vöfrum þá er nú hægt að nota Vafraham þegar Flash efni er í fókus. (#2546)
