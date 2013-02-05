@@ -5,19 +5,41 @@
 
 = 2013.1 =
 
+== Tärkeää ==
+
+=== Uusi kannettavien tietokoneiden näppäimistöasettelu ===
+Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin uudelleen, jotta se olisi intuitiivisempi ja johdonmukaisempi.
+Uudessa asettelussa käytetään nuolinäppäimiä yhdessä NVDA-näppäimen kanssa sekä tekstinlukukomennoissa myös muita muokkausnäppäimiä.
+
+Huomaa seuraavat yleisimmin käytettyihin komentoihin tehdyt muutokset:
+|| Nimi | Näppäinkomento |
+| Lue kaikki | NVDA+A |
+| Lue nykyinen rivi | NVDA+L |
+| Lue valittu teksti | NVDA+Shift+S |
+| Lue tilarivi | NVDA+Shift+End |
+Lisäksi muun muassa kaikki objektinavigointi-, tekstinluku-, hiiren napsautus- sekä syntetisaattorin asetusrenkaan komennot ovat muuttuneet.
+Katso uudet näppäinkomennot [Komentojen pikaoppaasta. keyCommands.html].
+
+
 == Uudet ominaisuudet ==
 - Alkeellinen tuki Microsoft PowerPoint -esitysten muokkaamiselle ja lukemiselle. (#501)
 - Alkeellinen tuki viestien lukemiselle ja kirjoittamiselle Lotus Notes 8.5:ssä. (#543)
 - Pitkät kuvaukset ilmoitetaan nyt selaustilassa MSHTML- ja Gecko-sovelluksissa (esim. Internet Explorerissa ja Firefoxissa). Ne on lisäksi mahdollista avata uuteen ikkunaan painamalla NVDA+D. (#809)
-- Ilmoitukset, kuten sisällön estäminen tai tiedostolataukset, puhutaan nyt Internet Explorer 9:ssä ja uudemmissa. (#2343)
+- Ilmoitukset, kuten sisällön estäminen tai tiedostolataukset, luetaan nyt Internet Explorer 9:ssä ja uudemmissa. (#2343)
 - Automaattista taulukon rivien ja sarakkeiden otsikoiden lukemista tuetaan nyt selaustiladokumenteissa Internet Explorerissa ja muissa MSHTML-säätimissä. (#778)
 - Uusi kieli: aragonia
-- Uusi pistetaulukko: tanskalainen taso 2.
+- Uusia pistetaulukoita: tanskalainen taso 2, korealainen taso 1.
 - Tuki bluetoothin kautta yhdistettäville pistenäytöille Toshiban bluetooth-pinoa käyttävissä tietokoneissa. (#2419)
-- Tuki portin valitsemiselle freedom Scientificin pistenäyttöjä käytettäessä (Automaattinen, USB tai Bluetooth).
+- Portin valitseminen on nyt mahdollista Freedom Scientificin pistenäyttöjä käytettäessä (Automaattinen, USB tai Bluetooth).
 - Tuki Humanwaren BrailleNote-tuoteperheen muistiinpanolaitteille käytettäessä niitä ruudunlukuohjelman pistenäyttönä. (#2012)
 - Tuki Papenmeier BRAILLEX -pistenäyttöjen vanhemmille malleille. (#2679)
 - Tuki pistekirjoituksen syöttämiselle tietokonemerkistöä käyttäen pistenäytöissä, joissa on pistenäppäimistö. (#808)
+- Uusia näppäimistöasetuksia, joilla voidaan valita, keskeyttääkö NVDA puhumisen merkkejä kirjoitettaessa ja/tai Enteriä painettaessa. (#698)
+
+
+== Muutokset ==
+- Liblouis-pistekääntäjä päivitetty versioksi 2.5.2. (#2737)
+- Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin uudelleen, jotta se olisi intuitiivisempi ja johdonmukaisempi. (#804)
 
 
 == Korjatut ohjelmavirheet ==
@@ -36,6 +58,13 @@
 - Sellaisissa kielissä, joissa +-merkki on yksittäinen näppäin (kuten esim. saksa), siihen on nyt mahdollista liittää komentoja käyttämällä sanaa "plus". (#2898)
 - Sisennykselliset kappaleenvaihdot luetaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä. (#2888)
 - HumanWare Brailliant BI/B -pistenäyttöajuri on nyt mahdollista valita, kun näyttö on liitetty tietokoneeseen Bluetoothilla, mutta ei vielä kertaakaan USB:llä.
+- Elementtien suodattaminen isoilla kirjaimilla kirjoitetulla tekstillä selaustilan Elementtilistassa näyttää nyt tuloksia, joiden kirjainkoolla ei ole väliä aivan kuten pienellä kirjoitetutkin. Aiemmin ei näytetty mitään. (#2951)
+- Selaustilan käyttäminen on taas mahdollista Mozilla-sovelluksissa Flash-sisällön ollessa aktiivisena. (#2546)
+- Pistekohdistin sijoitetaan nyt oikein, kun se on  sellaisen sanan jäljessä, jonka merkki esitetään useassa pistesolussa (esim. ison alkukirjaimen merkki, kirjainmerkki, numeromerkki jne) lyhennepistekirjoitustaulukkoa käytettäessä ja Laajenna kohdistimen kohdalla oleva sana -asetuksen ollessa käytössä. (#2947)
+- Tekstin valitseminen näytetään nyt oikein pistenäytöllä sellaisissa sovelluksissa kuin Microsoft word 2003 ja Internet Explorerin muokkaussäätimet.
+- Tekstin taaksepäin valitseminen on taas mahdollista Microsoft Wordissa pistenäytön ollessa käytössä.
+- NVDA lukee monitavuiset merkit oikein Scintilla-muokkaussäätimissä tekstiä luettaessa, askelpalautinta käytettäessä tai merkkejä poistettaessa. (#2855)
+- NVDA:n asennus ei enää epäonnistu, kun käyttäjäprofiilin hakemistopolku sisältää tiettyjä monitavuisia merkkejä. (#2729)
 
 
 = 2012.3 =

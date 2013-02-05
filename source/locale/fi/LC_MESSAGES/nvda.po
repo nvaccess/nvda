@@ -3,13 +3,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5788\n"
+"Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2013-01-31 05:30+0000\n"
-"PO-Revision-Date: 2013-01-28 12:57+0200\n"
+"POT-Creation-Date: 2013-02-04 05:30+0000\n"
+"PO-Revision-Date: 2013-02-04 15:05+0200\n"
 "Last-Translator: Jani Kinnunen\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -44,7 +43,7 @@ msgstr "%s kohdistin"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:575
+#: braille.py:578
 #, python-format
 msgid "%s end"
 msgstr "%s lop"
@@ -561,7 +560,7 @@ msgstr "Tekijä"
 #. : Automatic port constant to be used by braille displays that support the "automatic" port
 #. : @type: Tupple
 #. Translators String representing the automatic port selection for braille displays.
-#: braille.py:1515
+#: braille.py:1531
 msgid "Automatic"
 msgstr "Automaattinen"
 
@@ -1529,6 +1528,20 @@ msgid ""
 "current date"
 msgstr "Lukee kerran painettaessa kellonajan, kahdesti painettaessa päiväyksen"
 
+#. Translators: Information about NVDA's new laptop keyboard layout.
+#: gui/upgradeAlerts.py:18
+msgid ""
+"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
+"order to make it more intuitive and consistent.\n"
+"If you use the laptop layout, please see the What's New document for more "
+"information."
+msgstr ""
+"Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin "
+"uudelleen NVDA:n 2013.1-versiossa, jotta se olisi intuitiivisempi ja "
+"johdonmukaisempi.\n"
+"Mikäli käytät kannettavien näppäimistöasettelua, katso lisätietoja Mitä "
+"uutta -dokumentista."
+
 #: globalCommands.py:149
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "Suurentaa syntetisaattorin asetusrenkaan aktiivista asetusta"
@@ -1608,9 +1621,8 @@ msgstr "Näppäimistöasettelu"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:141
-#, fuzzy
 msgid "Korean grade 1"
-msgstr "Norja, taso 1"
+msgstr "Korea, taso 1"
 
 #: gui/settingsDialogs.py:148
 msgid "L&ogging level:"
@@ -1658,7 +1670,7 @@ msgstr "Käyttöoikeussopimus"
 msgid "Lin&ks"
 msgstr "Lin&kit"
 
-#: core.py:156
+#: core.py:159
 msgid "Loading NVDA. Please wait..."
 msgstr "NVDA käynnistetään, odota..."
 
@@ -1943,7 +1955,7 @@ msgstr "NVDA:n lisäosapaketti"
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ei voi poistaa tai korvata tiedostoa."
 
-#: core.py:256
+#: core.py:259
 msgid "NVDA started"
 msgstr "NVDA käynnissä"
 
@@ -1967,6 +1979,11 @@ msgstr "Natiivi syöte"
 msgctxt "languageName"
 msgid "Nepali"
 msgstr "Nepali"
+
+#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
+#: gui/upgradeAlerts.py:24
+msgid "New Laptop Keyboard layout"
+msgstr "Uusi kannettavien näppäimistöasettelu"
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 #: appModules/msimn.py:25
@@ -2392,6 +2409,12 @@ msgstr "Sulkee NVDA:n"
 #: synthDrivers/espeak.py:26
 msgid "Rate boos&t"
 msgstr "Nopeuden l&isäys"
+
+#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
+#. to open the What's New document.
+#: gui/upgradeAlerts.py:30
+msgid "Read What's New"
+msgstr "Lue, mitä uutta"
 
 #: gui/settingsDialogs.py:1307
 msgid "Read by &paragraph"
@@ -3047,14 +3070,13 @@ msgstr "P&uhesanastot"
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:617
 msgid "Speech interrupt for Enter key"
-msgstr ""
+msgstr "Keskeytä puhe Enter-näppäintä painettaessa"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:612
-#, fuzzy
 msgid "Speech interrupt for typed characters"
-msgstr "Lue &kirjoitetut merkit"
+msgstr "Keskeytä puhe merkkejä kirjoitettaessa"
 
 #: gui/__init__.py:323
 msgid "Speech viewer"
@@ -3149,7 +3171,7 @@ msgstr "Taulukon paikkamerkki"
 msgid "Tamil grade 1"
 msgstr "Tamili, taso 1"
 
-#: NVDAObjects/IAccessible/__init__.py:1624
+#: NVDAObjects/IAccessible/__init__.py:1634
 msgid "Taskbar"
 msgstr "Tehtäväpalkki"
 
@@ -3829,7 +3851,7 @@ msgstr "painike"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:484
+#: braille.py:487
 #, python-format
 msgid "c%s"
 msgstr "s%s"
@@ -4338,7 +4360,7 @@ msgstr "ryhmä"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:430
+#: braille.py:433
 #, python-format
 msgid "h%s"
 msgstr "o%s"
@@ -4639,7 +4661,7 @@ msgstr "lst"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:471
+#: braille.py:474
 #, python-format
 msgid "lv %s"
 msgstr "ts %s"
@@ -5223,7 +5245,7 @@ msgstr "ei mitään"
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 #. but this still might be used in some other cases.
 #. %s will be replaced with the negated state.
-#: braille.py:451 speech.py:814
+#: braille.py:454 speech.py:814
 #, python-format
 msgid "not %s"
 msgstr "ei %s"
@@ -5482,7 +5504,7 @@ msgstr "sinipunainen"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:476
+#: braille.py:479
 #, python-format
 msgid "r%s"
 msgstr "r%s"
@@ -6087,7 +6109,7 @@ msgid "visited"
 msgstr "avattu"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:436
+#: braille.py:439
 msgid "vlnk"
 msgstr "alnk"
 
@@ -6230,7 +6252,7 @@ msgstr ""
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#: braille.py:467 speech.py:825
+#: braille.py:470 speech.py:825
 msgid "{number} of {total}"
 msgstr "{number} / {total}"
 
