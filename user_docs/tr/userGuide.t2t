@@ -227,15 +227,15 @@ Menü açıldığında, menü ögeleri arasında yön tuşlarınızla dolaşabil
 
 ++ Temel NVDA Komutları ++
 %kc:beginInclude
-|| Ad | Kısayol tuşu | Dokunma hareketi | Tarif |
-| Konuşmayı Durdur | Kontrol | iki parmakla bir kez dokunma | Ekran okuyucunun konuşmasını o an için durdurur |
-| Konuşmayı Duraklat | Şift | yok | Konuşmayı O an için Duraklatır. Duraklama işlevi, geçerli sentezleyici tarafından destekleniyorsa, Şifte tekrar bastığınızda konuşma kaldığı yerden devam eder |
-| NVDA Menüsü | NVDA+n | iki parmakla çift dokunma | Tercihler, Araçlar ve yardım gibi bölümlere ulaşabileceğiniz NVDA menüsünü açar |
-| Konuşma kipini açıp kapama | NVDA+s | yok | Basıldıkça, konuşma kipini konuşma, bipler ve kapalı olarak değiştirir. |
-| Girdi yardım kipini açıp kapama | NVDA+1 | yok | Kip açıkken, bir tuşa basıldığında, önce tuşların adı söylenir ve sonra kısayol NVDA ile ilişkiliyse, işlevi açıklanır |
-| NVDA'dan çıkış | NVDA+q | yok | NVDA'yı kapatır |
-| Sonraki komutun NVDA işlevini yoksay | NVDA+f2 | yok | Basılacak klavye kısayol tuşunun bir NVDA komutu olsa bile, bu komutu bir kereliğine yoksayarak geçerli uygulamanın tuşa atadığı işlevin gerçekleşmesini sağlar |
-| Uygulamaya özel uyku kipini açıp kapama | NVDA+shift+s | yok | Uyku kipinde geçerli uygulamada Tüm NVDA komutları, konuşma ve braille geribildirimleri devre dışı kalır. Bu, kendi konuşması veya ekran okuma özelliği olan uygulamalarda çok yararlıdır. Uyku kipini kapamak için bu tuşlara tekrar basın. |
+|| Ad | Masaüstü Kısayol tuşu | Dizüstü kısayol tuşu | Dokunma hareketi | Tarif |
+| Konuşmayı Durdur | Kontrol | Kontrol | iki parmakla bir kez dokunma | Ekran okuyucunun konuşmasını o an için durdurur |
+| Konuşmayı Duraklat | Şift | Şift | yok | Konuşmayı O an için Duraklatır. Duraklama işlevi, geçerli sentezleyici tarafından destekleniyorsa, Şifte tekrar bastığınızda konuşma kaldığı yerden devam eder |
+| NVDA Menüsü | NVDA+n | NVDA+n | iki parmakla çift dokunma | Tercihler, Araçlar ve yardım gibi bölümlere ulaşabileceğiniz NVDA menüsünü açar |
+| Konuşma kipini açıp kapama | NVDA+s | NVDA+s | yok | Basıldıkça, konuşma kipini konuşma, bipler ve kapalı olarak değiştirir. |
+| Girdi yardım kipini açıp kapama | NVDA+1 | NVDA+1 | yok | Kip açıkken, bir tuşa basıldığında, önce tuşların adı söylenir ve sonra kısayol NVDA ile ilişkiliyse, işlevi açıklanır |
+| NVDA'dan çıkış | NVDA+q | NVDA+q | yok | NVDA'yı kapatır |
+| Sonraki komutun NVDA işlevini yoksay | NVDA+f2 | NVDA+f2 | yok | Basılacak klavye kısayol tuşunun bir NVDA komutu olsa bile, bu komutu bir kereliğine yoksayarak geçerli uygulamanın tuşa atadığı işlevin gerçekleşmesini sağlar |
+| Uygulamaya özel uyku kipini açıp kapama | NVDA+shift+s | NVDA+shift+z | yok | Uyku kipinde geçerli uygulamada Tüm NVDA komutları, konuşma ve braille geribildirimleri devre dışı kalır. Bu, kendi konuşması veya ekran okuma özelliği olan uygulamalarda çok yararlıdır. Uyku kipini kapamak için bu tuşlara tekrar basın. |
 %kc:endInclude
 
 ++ Sistem Bilgisini Raporlama ++
@@ -262,11 +262,11 @@ Siz yukarıda bahsedilen tuşlara bastıkça, NVDA Üzerine gelinen nesnenin ad�
 
 Sistem odağıyla dolaşırken, bazı yararlı tuş kombinasyonları bulunmaktadır:
 %kc:beginInclude
-|| Ad | Kısayol tuşu | Tarif |
-| Üzerinde bulunulan Odağın bildirimi | NVDA+tab | Sistem odağının üzerinde bulunduğu geçerli nesne veya kontrolü belirtir. İki kez basıldığında Bilgi harf harf okunur  |
-| Başlığın Bildirimi | NVDA+t | Üzerinde bulunulan geçerli pencerenin başlığını seslendirir. İki kez basıldığında Bilgi harf harf söylenecektir. Üç kez basıldığında bilgi panoya kopyalanır |
-| Etkin Pencerenin okunması | NVDA+b | etkin  penceredeki tüm kontroller okunur (iletişim kutuları için yararlıdır) |
-| Durum çubuğunun bildirimi | NVDA+end | NVDA bulabilirse, durum çubuğunu belirtir. Bulamazsa, aktif pencerenin en alt satırı okunur. Bu komut, nesne sunucusunu da durum çubuğunun konumuna taşır |
+|| Ad | Masaüstü kısayol tuşu | Dizüstü kısayol tuşu | Tarif |
+| Üzerinde bulunulan Odağın bildirimi | NVDA+tab | NVDA+tab | Sistem odağının üzerinde bulunduğu geçerli nesne veya kontrolü belirtir. İki kez basıldığında Bilgi harf harf okunur  |
+| Başlığın Bildirimi | NVDA+t | NVDA+t | Üzerinde bulunulan geçerli pencerenin başlığını seslendirir. İki kez basıldığında Bilgi harf harf söylenecektir. Üç kez basıldığında bilgi panoya kopyalanır |
+| Etkin Pencerenin okunması | NVDA+b | NVDA+b | etkin  penceredeki tüm kontroller okunur (iletişim kutuları için yararlıdır) |
+| Durum çubuğunun bildirimi | NVDA+end | NVDA+shift+end | NVDA bulabilirse, durum çubuğunu belirtir. Bulamazsa, aktif pencerenin en alt satırı okunur. Bu komut, nesne sunucusunu da durum çubuğunun konumuna taşır |
 %kc:endInclude
 
 ++ Sistem Düzenleme İmleciyle Dolaşım ++[SystemCaret]
@@ -278,11 +278,11 @@ Siz karakter karakter, sözcük sözcük ve satır satır dolaştıkça NVDA bun
 
 Sistem düzenleme imleciyle ilişkili olarak NVDA aşağıdaki tuş komutlarını sağlamaktadır:
 %kc:beginInclude
-|| Ad | Kısayol tuşu | Tarif |
-| Tümünü Oku | NVDA+Aşağı yön tuşu | Sistem imlecinin bulunduğu yerden okumaya başlar, ve metnin sonuna kadar okumaya devam eder |
-| Bulunulan satırı okuma | NVDA+yukarı yön tuşu | Sistem imlecinin o an üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. |
-| Seçili metnin okunması | NVDA+Şift+Yukarı yön tuşu | o an seçili olan metni okur |
-| Metin biçimlendirmesinin bildirimi | NVDA+f | Sistem imlecinin üzerinde bulunduğu metnin biçim  bilgisini okur |
+|| Ad | Masaüstü kısayol tuşu | Dizüstü kısayol tuşu | Tarif |
+| Tümünü Oku | NVDA+Aşağı yön tuşu | NVDA+a | Sistem imlecinin bulunduğu yerden okumaya başlar, ve metnin sonuna kadar okumaya devam eder |
+| Bulunulan satırı okuma | NVDA+yukarı yön tuşu | NVDA+l | Sistem imlecinin o an üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. |
+| Seçili metnin okunması | NVDA+Şift+Yukarı yön tuşu | NVDA+Şift+s | o an seçili olan metni okur |
+| Metin biçimlendirmesinin bildirimi | NVDA+f | NVDA+f | Sistem imlecinin üzerinde bulunduğu metnin biçim  bilgisini okur |
 
 Tablolarda aşağıdaki tuşlar da kullanılabilir:
 || Ad | Kısayol tuşu | Tarif |
@@ -321,11 +321,11 @@ Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma hareketi | Tarif |
-| Geçerli nesnenin bildirimi | NVDA+numaratör5 | NVDA+kontrol+i | yok | Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
-| Ana nesneye gitme | NVDA+numaratör8 | NVDA+shift+i | yukarı kaydırma | nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider |
-| önceki nesneye gitme | NVDA+numaratör4 | NVDA+kontrol+j | sola kaydırma | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir önceki nesneye taşır |
-| bir sonraki nesneye gitme | NVDA+numaratör6 | kontrol+NVDA+l | sağa kaydırma | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
-| İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+ö | aşağı kaydırma | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
+| Geçerli nesnenin bildirimi | NVDA+numaratör5 | NVDA+shift+o | yok | Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır. |
+| Ana nesneye gitme | NVDA+numaratör8 | NVDA+shift+yukarı yön tuşu | yukarı kaydırma | nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider |
+| önceki nesneye gitme | NVDA+numaratör4 | NVDA+shift+sol yön tuşu | sola kaydırma | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir önceki nesneye taşır |
+| bir sonraki nesneye gitme | NVDA+numaratör6 | NVDA+shift+sağ yön tuşu | sağa kaydırma | nesne sunucusunu, üzerinde bulunulan nesneyle  aynı seviyede bulunan bir sonraki nesneye taşır |
+| İlk Yavru nesneye gitme | NVDA+numaratör2 | NVDA+shift+aşağı yön tuşu | aşağı kaydırma | Nesne sunucusunu, Üzerinde bulunulan nesnenin ilk alt nesnesine taşır ve okur. |
 | Odaktaki nesneye gitme | NVDA+numaratörMinus | NVDA+GeriSil | yok | Nesne sunucusunu, sistem odağının üzerinde bulunduğu nesneye taşır ve varsa, inceleme imlecini de sistem düzenleme imlecinin bulunduğu noktaya taşır |
 | Üzerinde bulunulan nesneyi  etkinleştirme | NVDA+numaratörEnter | NVDA+enter | çift dokunma | Sistem odağı bir şeyin üzerindeyken oraya fare ile tıklamak veya boşluk çubuğuna basılmasına benzer biçimde, nesne sunucusunun üzerinde bulunduğu nesneyi etkinleştirir |
 | Sistem odağını nesne sunucusuna taşıma | NVDA+şift+numaratörEksi | NVDA+şift+GeriSil | yok | Eğer mümkünse, bir kez basıldığında sistem odağını nesne sunucusunun konumuna; iki kez basıldığında, sistem düzenleme imlecini inceleme imlecinin konumuna taşır |
@@ -349,20 +349,20 @@ Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [brail
 Metni incelerken, aşağıdaki komutlar kullanılabilir:
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma hareketi | Tarif |
-| inceleme imlecinde en üst satıra gitme | şift+numaratör7 | NVDA+7 | yok | İnceleme imlecini en üst satıra taşır |
-| inceleme imlecinde bir önceki satıra gitme | numaratör7 | NVDA+u | yukarı kaydırma (metin kipi) | İnceleme imlecini bir önceki satıra taşır |
-| Mevcut satırı okuma | numaratör8 | NVDA+i | yok | İnceleme imlecinin üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. Üç kez basıldığında ise satır Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
-| inceleme imlecinde bir sonraki satıra gitme | numaratör9 | NVDA+o | aşağı kaydırma (metin kipi) | İnceleme imlecini  bir sonraki satıra taşır |
-| inceleme imlecinde son satıra gitme | şift+numaratör9 | NVDA+9 | yok | İnceleme imlecini son satıra taşır |
-| inceleme imlecinde bir önceki sözcüğe gitme | numaratör4 | NVDA+j | iki parmakla sola kaydırma (metin kipi) | İnceleme imlecini bir önceki sözcüğe taşır |
-|  Mevcut sözcüğü okuma | numaratör5 | NVDA+k | yok | İnceleme imlecinin üzerinde bulunduğu  sözcüğü okur. İki kez basıldığında sözcük harf harf kodlanır. Üç kez basıldığında sözcük, Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
-| inceleme imlecinde bir sonraki sözcüğe gitme | numaratör6 | NVDA+l | iki parmakla sağa kaydırma (metin kipi) | İnceleme imlecini bir sonraki sözcüğe taşır |
-| inceleme imlecinde satır başına gitme | şift+numaratör1 | NVDA+şift+u | yok | İnceleme imlecini metinde üzerinde bulunduğunuz satırın başına taşır |
-| inceleme imlecinde bir önceki karaktere gitme | numaratör1 | NVDA+m | sola kaydırma (metin kipi) | İnceleme imlecini  üzerinde bulunulan satırdaki bir önceki karaktere taşır |
-| Mevcut karakteri okuma | numaratör2 | NVDA+ö | yok | İnceleme imlecinin üzerinde bulunduğu karakteri okur. İki kez basıldığında, karakter tanımıyla söylenir. Üç kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
-| inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+ç | sağa kaydırma (metin kipi) | İnceleme imlecini  üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
-| inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+şift+o | yok | İnceleme imlecini  üzerinde bulunulan satırın sonuna taşır |
-| İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+AşağıYönTuşu | üç parmakla aşağı kaydırma (metin kipi) | İnceleme imlecinde bulunulan noktadan başlayarak metnin sonuna  kadar okur |
+| inceleme imlecinde en üst satıra gitme | şift+numaratör7 | NVDA+kontorl+home | yok | İnceleme imlecini en üst satıra taşır |
+| inceleme imlecinde bir önceki satıra gitme | numaratör7 | NVDA+yukarı yön tuşu | yukarı kaydırma (metin kipi) | İnceleme imlecini bir önceki satıra taşır |
+| Mevcut satırı okuma | numaratör8 | NVDA+shift+nokta | yok | İnceleme imlecinin üzerinde bulunduğu satırı okur. İki kez basıldığında satır harf harf kodlanır. Üç kez basıldığında ise satır Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
+| inceleme imlecinde bir sonraki satıra gitme | numaratör9 | NVDA+aşağı yön tuşu  | aşağı kaydırma (metin kipi) | İnceleme imlecini  bir sonraki satıra taşır |
+| inceleme imlecinde son satıra gitme | şift+numaratör9 | NVDA+kontrol+end | yok | İnceleme imlecini son satıra taşır |
+| inceleme imlecinde bir önceki sözcüğe gitme | numaratör4 | NVDA+kontrol+sol yön tuşu | iki parmakla sola kaydırma (metin kipi) | İnceleme imlecini bir önceki sözcüğe taşır |
+|  Mevcut sözcüğü okuma | numaratör5 | NVDA+kontrol+nokta | yok | İnceleme imlecinin üzerinde bulunduğu  sözcüğü okur. İki kez basıldığında sözcük harf harf kodlanır. Üç kez basıldığında sözcük, Adana, Bolu, Ceyhan gibi karakter tanımlarıyla kodlanır. |
+| inceleme imlecinde bir sonraki sözcüğe gitme | numaratör6 | NVDA+kontrol+sağ yön tuşu | iki parmakla sağa kaydırma (metin kipi) | İnceleme imlecini bir sonraki sözcüğe taşır |
+| inceleme imlecinde satır başına gitme | şift+numaratör1 | NVDA+home | yok | İnceleme imlecini metinde üzerinde bulunduğunuz satırın başına taşır |
+| inceleme imlecinde bir önceki karaktere gitme | numaratör1 | NVDA+sol yön tuşu | sola kaydırma (metin kipi) | İnceleme imlecini  üzerinde bulunulan satırdaki bir önceki karaktere taşır |
+| Mevcut karakteri okuma | numaratör2 | NVDA+nokta | yok | İnceleme imlecinin üzerinde bulunduğu karakteri okur. İki kez basıldığında, karakter tanımıyla söylenir. Üç kez basıldığında karakterin değerini numerik olarak ondalık ve onaltılık sistemlerde belirtir. |
+| inceleme imlecinde bir sonraki karaktere gitme | numaratör3 | NVDA+sağ yön tuşu | sağa kaydırma (metin kipi) | İnceleme imlecini  üzerinde bulunulan satırdaki bir sonraki karaktere taşır |
+| inceleme imlecinde satır sonuna gitme | şift+numaratör3 | NVDA+end | yok | İnceleme imlecini  üzerinde bulunulan satırın sonuna taşır |
+| İnceleme imlecinde tümünü okuma | numaratörArtı | NVDA+şift+a | üç parmakla aşağı kaydırma (metin kipi) | İnceleme imlecinde bulunulan noktadan başlayarak metnin sonuna  kadar okur |
 | İnceleme imlecinin bulunduğu yerden kopyalamayı başlatma | NVDA+f9 | NVDA+f9 | yok | inceleme imlecinde bulunduğunuz pozisyondan itibaren metni kopyalamaya başlar. NVDA'ya metnin nereye kadar kopyalanacağını belirtmeden asıl kopyalama gerçekleşmez |
 | İnceleme imlecinin bulunduğu yere kadar kopyalama | NVDA+f10 | NVDA+f10 | yok | inceleme imlecinde kopyalamanın başladığı yer olarak ayarlanan noktadan, inceleme imlecinin şu an bulunduğu noktaya kadar olan metni kopyalar. Bu tuşa basıldıktan sonra metin panoya kopyalanır |
 | Metin biçimini söyle | NVDA+f | NVDA+f | yok | İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir |
@@ -415,12 +415,12 @@ Ancak bunların avantajlarından faydalanmak isterseniz, tercihler menüsü içi
 NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fare veya dizüstü  bilgisayarlarda fare pedlerini  kullanabilirsiniz. Ancak, farenin nesne sunucusunun konumuna ya da nesne sunucusunun fare konumuna taşınması için kullanılan ve sol ve sağ fare tuşlarıyla ilgili birkaç komut bulunmaktadır:
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Tarif |
-| Sol fare tıklaması | numaratörBölü | NVDA+Sol Yön Tuşu | Sol fare düğmesine bir kez tıklar çift tıklamak için tuşlara peşpeşe 2 kez basılabilir |
-| Sol fare kilidi | şift+numaratörbölü | NVDA+şift+SolYön Tuşu | Sol fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. bulunulan yeri taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
-| Sağ fare tıklaması | numaratörÇarpı | NVDA+SağYön Tuşu | sağ fare düğmesine bir kez tıklar. |
-| sağ fare kilidi | şift+numaratörÇarpı | NVDA+şift+SağYön tuşu | sağ fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. fareyi taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
-| Fareyi nesne sunucusunun üzerinde bulunduğu nesneye taşıma | NVDA+numaratörbölü | NVDA+şift+f9 | Fareyi nesne sunucusunun konumundaki nesnenin üzerine taşır |
-| farenin altındaki nesneye gitme | NVDA+numaratörÇarpı | NVDA+şift+f10 | nesne sunucusunu farenin konumundaki nesneye taşır. |
+| Sol fare tıklaması | numaratörBölü | NVDA+ğ | Sol fare düğmesine bir kez tıklar çift tıklamak için tuşlara peşpeşe 2 kez basılabilir |
+| Sol fare kilidi | şift+numaratörbölü | NVDA+kontrol+ğ | Sol fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. bulunulan yeri taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
+| Sağ fare tıklaması | numaratörÇarpı | NVDA+ü | sağ fare düğmesine bir kez tıklar. |
+| sağ fare kilidi | şift+numaratörÇarpı | NVDA+kontrol+ü | sağ fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. fareyi taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin |
+| Fareyi nesne sunucusunun üzerinde bulunduğu nesneye taşıma | NVDA+numaratörbölü | NVDA+şift+m | Fareyi nesne sunucusunun konumundaki nesnenin üzerine taşır |
+| farenin altındaki nesneye gitme | NVDA+numaratörÇarpı | NVDA+şift+n | nesne sunucusunu farenin konumundaki nesneye taşır. |
 %kc:endInclude
 
 + Tarama Kipi +
@@ -678,10 +678,10 @@ Eğer karakterlerin seslendirilmemesi gibi bir sorun yaşıyorsanız bu seçene�
 Eğer NVDA ile çalışırken ses ayarları iletişim kutusuna gitmeden herhangi bir yerde seri biçimde konuşma ayarlarını değiştirmek istiyorsanız, en sık kullanılan konuşma ayarlarını  değiştirmenizi sağlayan bazı NVDA tuş komutları bulunmaktadır:
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Tarif |
-| Bir sonraki sentezleyici ayarına gitme | NVDA+kontrol+SağYön tuşu | NVDA+kontrol+SağYön tuşu | Geçerli sentezleyici ayarından bir sonrakine geçer. eğer en son sentezleyici ayarındaysanız en baştakine atlar |
-| Bir önceki sentezleyici ayarına gitme | NVDA+kontrol+SolYön tuşu | NVDA+kontrol+SolYön tuşu | Geçerli sentezleyici ayarından bir öncekine geçer. eğer en baştaki sentezleyici ayarındaysanız en sondakine atlar |
-| Geçerli sentezleyici ayarını arttırma | NVDA+kontrol+YukarıYön tuşu | NVDA+kontrol+YukarıYön tuşu | üzerinde bulunduğunuz sentezleyici ayarını arttırır. (örnek: hızı arttırır, bir sonraki sesi seçer, ses seviyesini arttırır.) |
-| Geçerli sentezleyici ayarını azaltma | NVDA+kontrol+AşağıYön tuşu | NVDA+kontrol+AşağıYön tuşu | üzerinde bulunduğunuz sentezleyici ayarını azaltır. (örnek: hızı azaltır, bir önceki sesi seçer, ses seviyesini azaltır.) |
+| Bir sonraki sentezleyici ayarına gitme | NVDA+kontrol+Sağ Yön tuşu | NVDA+kontrol+shift+Sağ Yön tuşu | Geçerli sentezleyici ayarından bir sonrakine geçer. eğer en son sentezleyici ayarındaysanız en baştakine atlar |
+| Bir önceki sentezleyici ayarına gitme | NVDA+kontrol+SolYön tuşu | NVDA+kontrol+shift+Sol Yön tuşu | Geçerli sentezleyici ayarından bir öncekine geçer. eğer en baştaki sentezleyici ayarındaysanız en sondakine atlar |
+| Geçerli sentezleyici ayarını arttırma | NVDA+kontrol+YukarıYön tuşu | NVDA+kontrol+shift+Yukarı Yön tuşu | üzerinde bulunduğunuz sentezleyici ayarını arttırır. (örnek: hızı arttırır, bir sonraki sesi seçer, ses seviyesini arttırır.) |
+| Geçerli sentezleyici ayarını azaltma | NVDA+kontrol+Aşağı Yön tuşu | NVDA+kontrol+shift+Aşağı Yön tuşu | üzerinde bulunduğunuz sentezleyici ayarını azaltır. (örnek: hızı azaltır, bir önceki sesi seçer, ses seviyesini azaltır.) |
 %kc:endInclude
 
 +++ Braille Ayarları +++
@@ -773,6 +773,12 @@ Kısayol tuşu: NVDA+3
 
 Etkinleştirildiğinde, NVDA yazdığınız her sözcüğü söyleyecektir.
 
+==== Karakterlere Basıldığında Konuşmayı Durdur ====
+Açıksa,, bu seçenek bir karaktere basıldığında konuşmanın durmasına neden olur. Varsayılan olarak açıktır.
+
+==== Enter tuşuna basıldığında konuşmayı durdur ====
+Açıksa, bu seçenek enter tuşuna basıldığında konuşmanın durmasına neden olur. Varsayılan olarak açıktır.
+
 ==== Büyük Harf Kilidi Açıkken, şifte basılarak küçük harf Yazılırsa Bip Sesi Çıkar ====
 Etkinleştirildiğinde, büyük harf kilidi açıkken şift tuşuyla birlikte bir harfe basıldığında uyarı bipi duyulacaktır.
 Genellikle, büyük harf kilidi açıkken şiftle birlikte bir harf yazmak istem dışıdır ve çoğunlukla büyük harf kilidinin açık olduğunun farkında olunmamasından kaynaklanır.
@@ -794,8 +800,7 @@ Fare işaretleyicisi pencerelerde bir alanın yazılabilir olduğu veya bir şey
 
 %kc:setting
 ==== Fare İzlemesini Etkinleştir ====
-| Masaüstü Kısayol tuşu | NVDA+m |
-| Dizüstü Kısayol tuşu | NVDA+şift+m |
+Kısayol tuşu: NVDA+m |
 
 Etkinleştirildiğinde, fare ile ekranda dolaşırken, NVDA, fare işaretinin altında bulunan metni söyleyecektir. Bu, ekrandaki bir şeyi nesne dolaşımı yerine, fiziksel olarak fareyi hareket ettirerek bulmanızı sağlar.
 
@@ -819,8 +824,7 @@ içinde aşağıdaki seçenekler mevcuttur:
 
 %kc:setting
 ==== Sistem Odağını Takip et ====
-| Masaüstü Kısayol tuşu | NVDA+7 |
-| Dizüstü Kısayol tuşu | NVDA+kontrol+7 |
+Kısayol tuşu: NVDA+7 |
 
 Etkinleştirildiğinde, nesne sunucusu sistem (klavye) odağını takip eder.
 
@@ -865,8 +869,7 @@ Nesne adıyla birlikte tarifini duymak istemiyorsanız, bu onay kutusunun işare
 
 %kc:setting
 ==== Aşama Çubuğu bildirimi ====
-| Masaüstü Kısayol tuşu | NVDA+u |
-| Dizüstü Kısayol tuşu | NVDA+kontrol+f2 |
+Kısayol tuşu: NVDA+u |
 
 Bu seçenek Aşama çubuğu bilgilerini NVDA'nın size nasıl bildireceğini kontrol etmenizi sağlar.
 
