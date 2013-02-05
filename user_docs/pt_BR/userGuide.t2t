@@ -224,23 +224,23 @@ Quando o menu se abrir, pode usar as setas direcionais para navegar pelo mesmo e
 
 ++ Comandos Básicos do NVDA ++
 %kc:beginInclude
-|| Nome | Tecla | Gesto de toque | Descrição |
-| Parar a voz | Control | Toque com dois dedos | Para instantaneamente a voz |
-| Pausar a voz | Shift | Indisponível | Pausa instantaneamente a voz. Pressionada novamente continuará a falar desde onde parou (se a pausa for suportada pelo sintetizador atual) |
-| Menu do NVDA | NVDA+n | Duplo toque com 2 dedos | Abre o Menu do NVDA que lhe permite ir às preferências, ferramentas, ajuda,   etc |
-| Alternar Modo de Fala | NVDA+s | Indisponível | Alterna o modo de fala entre fala, beep e desativado. |
-| Alternar Modo Ajuda de Entrada | NVDA+1 | Indisponível | Ao pressionar qualquer tecla neste modo, será informada a tecla e a descrição de qualquer comando do NVDA associado com ela |
-| Encerrar o NVDA | NVDA+q | Indisponível | Sai do NVDA |
-| Passar a próxima tecla | NVDA+f2 | Indisponível |  Informa ao NVDA para deixar passar a próxima tecla pressionada para a aplicação ativa, mesmo se for uma tecla de comando normal |
-| Alternar Modo Dormir Num Aplicativo entre Ligado e Desligado | NVDA+shift+s | Indisponível | O modo dormir desabilita todos os comandos de teclado do nvda e a saída de voz/braille para o aplicativo atual. Isso é muito útil em programas com voz própria ou recurso de leitura de telas. Pressione novamente este comando para desligar o modo dormir. |
+|| Nome | Tecla de desktop | Tecla de laptop | Gesto de toque | Descrição |
+| Parar a voz | Control | Control | Toque com dois dedos | Para instantaneamente a voz |
+| Pausar a voz | Shift | Shift | Indisponível | Pausa instantaneamente a voz. Pressionada novamente continuará a falar desde onde parou (se a pausa for suportada pelo sintetizador atual) |
+| Menu do NVDA | NVDA+n | NVDA+n \ Duplo toque com 2 dedos | Abre o Menu do NVDA que lhe permite ir às preferências, ferramentas, ajuda,   etc |
+| Alternar Modo de Fala | NVDA+s | NVDA+s | Indisponível | Alterna o modo de fala entre fala, beep e desativado. |
+| Alternar Modo Ajuda de Entrada | NVDA+1 | NVDA+1 | Indisponível | Ao pressionar qualquer tecla neste modo, será informada a tecla e a descrição de qualquer comando do NVDA associado com ela |
+| Encerrar o NVDA | NVDA+q | NVDA+q | Indisponível | Sai do NVDA |
+| Passar a próxima tecla | NVDA+f2 | NVDA+f2 | Indisponível |  Informa ao NVDA para deixar passar a próxima tecla pressionada para a aplicação ativa, mesmo se for uma tecla de comando normal |
+| Alternar Modo Dormir em um aplicativo entre ligado e desligado | NVDA+shift+s | NVDA+shift+z | Indisponível | O modo dormir desabilita todos os comandos de teclado do nvda e a saída de voz/braille para o aplicativo atual. Isso é muito útil em programas com voz própria ou recurso de leitura de telas. Pressione novamente este comando para desligar o modo dormir. |
 %kc:endInclude
 
 ++ Anunciando Informações do Sistema ++
 %kc:beginInclude
 || Nome | Tecla | Descrição |
 |  Anunciar data/hora | NVDA+f12 | Pressionando uma vez, anuncia a hora atual, duas vezes, anuncia a data |
-| Anunciar o estado da bateria | NVDA+shift+b | Anuncia o estado da bateria, isto é, si a eletricidade está sendo usada ou a porcentagem atual da carga. |
-| Anunciar o Texto na Área de Transferência | NVDA+c | \ Anuncia o Texto na área de transferência si houver algum. |
+| 	Anunciar o estado da bateria | NVDA+shift+b | Anuncia o estado da bateria, isto é, si a eletricidade está sendo usada ou a porcentagem atual da carga. |
+| Anunciar o Texto na Área de Transferência | NVDA+c | Anuncia o Texto na área de transferência si houver algum. |
 %kc:endInclude
 
 + Navegando com o NVDA +
@@ -259,11 +259,11 @@ Quando você faz isso, o NVDA anuncia  a informação sobre o objeto em foco, ta
 
 Existem alguns comandos de teclado úteis quando se move com o foco: 
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
-| Informar o foco atual | NVDA+tab | Anuncia o objeto atual ou controle que tem o foco do sistema. Ao pressionar duas vezes soletrará a informação |
-| Anunciar o título | NVDA+t | Anuncia o título da janela atualmente em execução. Ao pressionar duas vezes soletrará a informação. Três vezes copiará o conteúdo para a área de transferência |
-| Ler janela ativa | NVDA+b | Lê todos os controles na janela atual em execução (muito útil para diálogos) |
-| Ler a Barra de Status | NVDA+end | Lê a barra de status caso o NVDA a encontre. Este comando também move a navegação de objetos para sua localização |
+|| Nome | Tecla de desktop | Tecla de laptop | Descrição |
+| Informar o foco atual | NVDA+tab | | NVDA+tab | Anuncia o objeto atual ou controle que tem o foco do sistema. Ao pressionar duas vezes soletrará a informação |
+| Anunciar o título | NVDA+t | NVDA+t | Anuncia o título da janela atualmente em execução. Ao pressionar duas vezes soletrará a informação. Três vezes copiará o conteúdo para a área de transferência |
+| Ler janela ativa | NVDA+b | NVDA+b | Lê todos os controles na janela atual em execução (muito útil para diálogos) |
+| Ler a Barra de Status | NVDA+end | NVDA+shift+end | Lê a barra de status caso o NVDA a encontre. Este comando também move a navegação de objetos para sua localização |
 %kc:endInclude
 
 ++ Navegando com o Cursor do Sistema ++[SystemCaret]
@@ -274,10 +274,10 @@ O NVDA anunciará como se mover por Caractere, palavra, linha e também informar
  
 Este leitor de telas fornece os seguintes comandos em relação ao cursor do sistema:
 %kc:beginInclude
-|| Nome | Tecla | Descrição |
-| Leitura contínua | NVDA+seta abaixo | Inicia a leitura a partir da posição atual do cursor do sistema, movendo-o pelo texto |
-| Ler linha atual | NVDA+seta acima | Lê a linha onde o cursor do sistema está posicionado atualmente. Ao pressionar duas vezes soletra a linha |
-| Ler texto atualmente selecionado | NVDA+Shift+seta acima | Lê qualquer texto selecionado atualmente |
+|| Nome | Tecla de desktop | Tecla de laptop | Descrição |
+| Leitura contínua | NVDA+seta abaixo | NVDA+SETA ABAIXO | Inicia a leitura a partir da posição atual do cursor do sistema, movendo-o pelo texto |
+| Ler linha atual | NVDA+seta acima | NVDA+l | Lê a linha onde o cursor do sistema está posicionado atualmente. Ao pressionar duas vezes soletra a linha |
+| Ler texto atualmente selecionado | NVDA+Shift+seta acima | NVDA+shift+s | Lê qualquer texto selecionado atualmente |
 
 
 Quando estiver numa tabela, as seguintes teclas de atalho também estarão disponíveis:
@@ -314,14 +314,14 @@ Note que o braille não acompanha a navegação de objetos e a revisão de texto
 Para navegar pelos objetos utilize as seguintes teclas de atalho: 
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Gesto de Toque | Descrição |
-| Anunciar o objeto atual | NVDA+5 do teclado numérico | NVDA+control+i | Indisponível | Anuncia o objeto de navegação atual. Se pressionada duas vezes, soletra o objeto. Pressionando-se três vezes, copia o texto para a área de transferência. |
-| Mover para o pai do objeto atual | NVDA+8 do teclado Numérico | NVDA+shift+i | Varredura para Cima (Modo de objeto) | Move para o objeto que contém o atual objeto de navegação |
-| Mover para o objeto anterior | NVDA+4 do teclado numérico | NVDA+control+j | Varredura para a esquerda (Modo de objeto) | Move para o objeto anterior ao objeto de navegação atual |
-| Mover para o objeto seguinte | NVDA+6 do teclado numérico | control+NVDA+l | Varredura para a direita (Modo de objeto) | Move para o objeto seguinte ao objeto de navegação atual |
-| Mover para o primeiro objeto filho | NVDA+2 do teclado numérico | NVDA+shift+vírgula | Varredura para baixo (Modo de objeto) | Move para o primeiro objeto contido no objeto de navegação atual |
-| Mover para o objeto em foco | NVDA+Menos do teclado numérico | NVDA+backespaço | Indisponível | Move para o objeto que tem o foco do sistema atual, e também posiciona o cursor de exploração na posição do cursor do sistema, se o mesmo estiver visível |
+| Anunciar o objeto atual | NVDA+5 do teclado numérico | NVDA+shift+o | Indisponível | Anuncia o objeto de navegação atual. Se pressionada duas vezes, soletra o objeto. Pressionando-se três vezes, copia o texto para a área de transferência. |
+| Mover para o pai do objeto atual | NVDA+8 do teclado Numérico | NVDA+shift+seta acima | Varredura para Cima (Modo de objeto) | Move para o objeto que contém o atual objeto de navegação |
+| Mover para o objeto anterior | NVDA+4 do teclado numérico | NVDA+shift+seta a esquerda | Varredura para a esquerda (Modo de objeto) | Move para o objeto anterior ao objeto de navegação atual |
+| Mover para o objeto seguinte | NVDA+6 do teclado numérico | NVDA+shift+seta a direita | Varredura para a direita (Modo de objeto) | Move para o objeto seguinte ao objeto de navegação atual |
+| Mover para o primeiro objeto filho | NVDA+2 do teclado numérico | NVDA+shift+seta abaixo | Varredura para baixo (Modo de objeto) | Move para o primeiro objeto contido no objeto de navegação atual |
+| Mover para o objeto em foco | NVDA+Menos do teclado numérico | NVDA+backspace | Indisponível | Move para o objeto que tem o foco do sistema atual, e também posiciona o cursor de exploração na posição do cursor do sistema, se o mesmo estiver visível |
 | Ativar objeto de navegação atual | NVDA+Enter do teclado numérico | NVDA+enter | Duplo Toque | Ativa o objeto de navegação atual (o mesmo que clicar com o mouse ou pressionar a barra de espaços quando se tem o foco) |
-| Mover o foco ou o cursor do sistema para a posição atual da revisão | NVDA+shift+Menos do teclado numérico | NVDA+shift+backespaço | Indisponível | Se pressionada uma vez, coloca o foco sobre o objeto de navegação atual. Duas vezes, coloca o cursor do sistema na posição do cursor de exploração |
+| Mover o foco ou o cursor do sistema para a posição atual da revisão | NVDA+shift+Menos do teclado numérico | NVDA+shift+backspace | Indisponível | Se pressionada uma vez, coloca o foco sobre o objeto de navegação atual. Duas vezes, coloca o cursor do sistema na posição do cursor de exploração |
 | Anunciar dimensões do objeto de navegação atual | NVDA+Delete do teclado numérico | NVDA+delete | Indisponível | Anuncia as dimensões do objeto de navegação atual em relação à tela em percentagens (incluindo a distância da esquerda e do topo da tela, largura e altura do mesmo|
 %kc:endInclude
 
@@ -340,20 +340,20 @@ Note que o braille não acompanha a navegação de objetos e a revisão de texto
 As seguintes teclas de atalho estão disponíveis para a revisão de texto: 
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Gesto de toque | Descrição |
-| Mover para a primeira linha em revisão | shift+7 do teclado numérico | NVDA+7 | Indisponível | Move o cursor de exploração para a primeira linha do texto e a anuncia |
-| Mover para a linha anterior em revisão | 7 do teclado numérico | NVDA+u | Varredura para cima (Modo de texto) | Move o cursor de exploração para a linha anterior do texto e a anuncia |
- | Ler linha atual em revisão | 8 do teclado numérico | NVDA+i | Indisponível | Lê a linha atual do texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a linha. Pressionando-se três vezes, soletra-a usando descrições de caracteres. |
-| Mover para a próxima linha em revisão | 9 do teclado numérico | NVDA+o | Varredura para baixo (Modo de texto) | Move o cursor de exploração para a próxima linha do texto e a anuncia |
-| Mover para a última linha em revisão | shift+9 do teclado numérico | NVDA+9 | Indisponível | Move o cursor de exploração para a última linha do texto e a anuncia |
-| Mover para a palavra anterior em revisão | 4 do teclado numérico | NVDA+j | Varredura para a esquerda com 2 dedos (Modo de texto) | Move o cursor de exploração para a palavra anterior no texto e a anuncia |
-| Ler palavra atual em revisão | 5 do teclado numérico | NVDA+k | Indisponível | Anuncia a palavra atual no texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a palavra. Três vezes, soletra usando descrições de caracteres. |
-| Mover para a próxima palavra em revisão | 6 do teclado numérico | NVDA+l | Varredura para a direita com 2 dedos (Modo de texto) | Move o cursor de exploração para a próxima palavra no texto e a anuncia |
-| mover para o início da linha em revisão | shift+1 do teclado numérico | NVDA+shift+u | Indisponível | Move o cursor de exploração para o primeiro caractere da linha atual no texto e o anuncia |
-| Mover para o caractere anterior em revisão | 1 do teclado numérico | NVDA+m | Varredura para a esquerda (Modo de texto) | Move o cursor de exploração para o caractere anterior na linha atual no texto e o anuncia |
-| Ler o caractere atual em revisão | 2 do teclado numérico | NVDA+vírgula | Indisponível | Anuncia o caractere do objeto de navegação atual onde  se encontra o cursor de exploração. Ao pressionar duas vezes rapidamente, dá uma descrição descrição ou exemplo do caractere. Pressionado três vezes, anuncia o valor numérico decimal e hexadecimal do caractere. |
-| Mover para o próximo caractere em revisão | 3 do teclado numérico | NVDA+ponto | Varredura para a direita (Modo de texto) | Move o cursor de exploração para o caractere seguinte na linha atual do texto e o anuncia |
-| Mover para o fim da linha em revisão | shift+3 do teclado numérico | NVDA+shift+o | Indisponível | Move o cursor de exploração para o último caractere da linha atual do texto e o anuncia |
-| Ler tudo com revisão | Mais do teclado numérico | NVDA+shift+seta abaixo | Varredura para baixo com 3 dedos (Modo de texto) | Lê a partir da posição atual do cursor de exploração, movendo-o até ao fim do texto |
+| Mover para a primeira linha em revisão | shift+7 do teclado numérico | NVDA+control+home | Indisponível | Move o cursor de exploração para a primeira linha do texto e a anuncia |
+| Mover para a linha anterior em revisão | 7 do teclado numérico | NVDA+seta acima | Varredura para cima (Modo de texto) | Move o cursor de exploração para a linha anterior do texto e a anuncia |
+ | Ler linha atual em revisão | 8 do teclado numérico | NVDA+shift+ponto | Indisponível | Lê a linha atual do texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a linha. Pressionando-se três vezes, soletra-a usando descrições de caracteres. |
+| Mover para a próxima linha em revisão | 9 do teclado numérico | NVDA+seta abaixo | Varredura para baixo (Modo de texto) | Move o cursor de exploração para a próxima linha do texto e a anuncia |
+| Mover para a última linha em revisão | shift+9 do teclado numérico | NVDA+control+end | Indisponível | Move o cursor de exploração para a última linha do texto e a anuncia |
+| Mover para a palavra anterior em revisão | 4 do teclado numérico | NVDA+control+seta a direita | Varredura para a esquerda com 2 dedos (Modo de texto) | Move o cursor de exploração para a palavra anterior no texto e a anuncia |
+| Ler palavra atual em revisão | 5 do teclado numérico | NVDA+control+ponto | Indisponível | Anuncia a palavra atual no texto onde está posicionado o cursor de exploração. Ao pressionar duas vezes rapidamente soletra a palavra. Três vezes, soletra usando descrições de caracteres. |
+| Mover para a próxima palavra em revisão | 6 do teclado numérico | NVDA+control+seta a direita | Varredura para a direita com 2 dedos (Modo de texto) | Move o cursor de exploração para a próxima palavra no texto e a anuncia |
+| mover para o início da linha em revisão | shift+1 do teclado numérico | NVDA+home | Indisponível | Move o cursor de exploração para o primeiro caractere da linha atual no texto e o anuncia |
+| Mover para o caractere anterior em revisão | 1 do teclado numérico | NVDA+seta a esquerda | Varredura para a esquerda (Modo de texto) | Move o cursor de exploração para o caractere anterior na linha atual no texto e o anuncia |
+| Ler o caractere atual em revisão | 2 do teclado numérico | NVDA+ponto | Indisponível | Anuncia o caractere do objeto de navegação atual onde  se encontra o cursor de exploração. Ao pressionar duas vezes rapidamente, fornece uma descrição ou exemplo do caractere. Pressionado três vezes, anuncia o valor numérico decimal e hexadecimal do caractere. |
+| Mover para o próximo caractere em revisão | 3 do teclado numérico | NVDA+seta a direita | Varredura para a direita (Modo de texto) | Move o cursor de exploração para o caractere seguinte na linha atual do texto e o anuncia |
+| Mover para o fim da linha em revisão | shift+3 do teclado numérico | NVDA+end | Indisponível | Move o cursor de exploração para o último caractere da linha atual do texto e o anuncia |
+| Ler tudo com revisão | Mais do teclado numérico | NVDA+a | Varredura para baixo com 3 dedos (Modo de texto) | Lê a partir da posição atual do cursor de exploração, movendo-o até ao fim do texto |
 | Copiar a partir do cursor de exploração | NVDA+f9 | NVDA+f9 | Indisponível | Inicia a cópia do texto a partir da posição atual do cursor de exploração. A cópia atual não será efetuada até que informe ao NVDA onde pretende copiar |
 | Copiar até ao cursor de exploração  | NVDA+f10 | NVDA+f10 | Indisponível | Copia a partir da posição do cursor de exploração definida atualmente com a cópia do cursor de exploração, até a posição do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows |
 | Informar formatação de texto | NVDA+f | NVDA+f | Indisponível | Anuncia a formatação do texto onde o cursor de exploração está posicionado atualmente |
@@ -382,7 +382,7 @@ Poderá também navegar diretamente para o objeto que abrange a posição atual 
 Note que o braille não acompanha a navegação de objetos e a revisão de texto por padrão, mas sim o [foco #SystemFocus] e o [cursor do sistema #SystemCaret].
  Caso queira que em lugar disso, o braille acompanhe a navegação de objetos e a revisão de texto, você deve [configurar o braille para ser vinculado a #BrailleTether] exploração.
 
-Os seguintes dois comandos são utilizados para alternar para e a partir da revisão plana:
+Os dois seguintes comandos são utilizados para alternar para e a partir da revisão plana:
 
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Gesto de toque | Descrição |
@@ -402,17 +402,17 @@ Quanto mais alto estiver o mouse na tela, mais agudo será o tom dos beeps.
 Quanto mais à esquerda ou à direita da tela estiver o mouse, mais à esquerda ou à direita o som será tocado (supondo-se que o usuário possui caixas ou fones stereo).
 
 Estas características adicionais do mouse não se encontram ativadas por padrão no NVDA.
-Se pretender tirar partido das mesmas, pode configurá-las a partir do diálogo das [opções do mouse #MouseSettings], que se encontram nas Preferências, no menu do NVDA.
+Se pretender, porém, tirar partido das mesmas, pode configurá-las a partir do diálogo das [opções do mouse #MouseSettings], que se encontram nas Preferências, no menu do NVDA.
 
 Ainda que um mouse físico ou um touchpad precisem ser utilizados para navegar com o mouse, o NVDA possui alguns comandos relacionados a este:
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-| Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+seta a esquerda | Clica uma vez com o botão esquerdo do mouse. O habitual dúplo clique pode ser realizado pressionando duas vezes rapidamente este comando |
-| Pressionar o botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+shift+seta a esquerda | Mantém o botão esquerdo do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
-| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+seta a direita | Clica uma vez com o botão direito do mouse |
-| Pressionar o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+shift+seta a direita | Mantém o botão direito do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
-| Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+f9 | Move o mouse Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
-| Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+f10 | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
+| Clicar com o botão esquerdo do mouse | Barra do teclado numérico | NVDA+abre colchetes | Clica uma vez com o botão esquerdo do mouse. O habitual dúplo clique pode ser realizado pressionando duas vezes rapidamente este comando |
+| Pressionar o botão esquerdo do mouse | shift+barra do teclado numérico | NVDA+control+abre colchetes | Mantém o botão esquerdo do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova o mouse quer seja fisicamente ou utilizando qualquer comando que o movimente |
+| Clicar com o botão direito do mouse | Asterisco do teclado numérico | NVDA+fecha colchetes | Clica uma vez com o botão direito do mouse |
+| Pressionar o botão direito do mouse | shift+asterisco do teclado numérico | NVDA+control+fecha colchetes | Mantém o botão direito do mouse pressionado. Execute-o novamente para desbloqueá-lo. Para arrastar o mouse, pressione esta tecla de atalho e em seguida mova-o quer seja fisicamente ou utilizando qualquer comando que movimente o mesmo |
+| Mover o mouse para o objeto de navegação atual | NVDA+barra do teclado numérico | NVDA+shift+m | Move o mouse Move o mouse para a localização do objeto de navegação atual e do cursor de exploração |
+| Navegar para o objeto sob o mouse | NVDA+asterisco do teclado numérico | NVDA+shift+n | Coloca como objeto de navegação aquele que se encontra sob o ponteiro do mouse |
 %kc:endInclude
 
 + Modo de Navegação +
@@ -569,7 +569,7 @@ Se esta opção estiver marcada, o NVDA será executado automaticamente logo que
 Esta opção só estará disponível para as cópias instaladas do NVDA.
 
 ==== Usar o NVDA no Logon do Windows (Requer privilégios administrativos) ====
-Caso inicie cessão no Windows através do nome de usuário e senha, ao marcar esta opção permitirá que o NVDA seja executado automaticamente no logon quando este sistema operacional for executado.
+Caso precise iniciar cessão no Windows através da inserção do nome de usuário e senha, ao marcar esta opção permitirá que o NVDA seja executado automaticamente no logon quando este sistema operacional for executado.
 Esta opção só estará disponível para as cópias instaladas do NVDA. 
 
 ==== Usar as opções salvas atuais no logon e outras telas seguras (requer privilégios administrativos) ====
@@ -675,10 +675,10 @@ Se desejar alterar rapidamente as opções de voz sem ir ao diálogo das mesmas,
 
 %kc:beginInclude
 || Nome | Tecla de Desktop | Tecla de Laptop | Descrição |
-| Mover para a próxima opção de voz | NVDA+control+seta a direita | NVDA+control+seta a direita | Move para a próxima opção de voz disponível depois da atual e circula novamente para a primeira opção depois da última  |
-| Move para a opção de voz anterior | NVDA+control+seta a esquerda | NVDA+control+seta a esquerda | Move para a opção de voz anterior disponível depois da atual e circula novamente para a última  depois da primeira |
-| Aumentar a opção de voz atual | NVDA+control+seta acima | NVDA+control+seta acima | aumenta a opção de voz atual onde estiver. Ex: aumenta a velocidade, escolhe a voz seguinte, aumenta o volume |
-| Diminuir a opção de voz atual | NVDA+control+seta abaixo | NVDA+control+seta abaixo | Diminui a opção de voz atual onde estiver. Ex: diminui a velocidade, escolhe a voz anterior, diminui o volume |
+| Mover para a próxima opção de voz | NVDA+control+seta a direita | NVDA+shift+control+seta a direita | Move para a próxima opção de voz disponível depois da atual e circula novamente para a primeira opção depois da última  |
+| Mover para a opção de voz anterior | NVDA+control+seta a esquerda | NVDA+shift+control+seta a esquerda | Move para a opção de voz anterior disponível depois da atual e circula novamente para a última  depois da primeira |
+| Aumentar a opção de voz atual | NVDA+control+seta acima | NVDA+shift+control+seta acima | aumenta a opção de voz atual onde estiver. Ex: aumenta a velocidade, escolhe a voz seguinte, aumenta o volume |
+| Diminuir a opção de voz atual | NVDA+control+seta abaixo | NVDA+shift+control+seta abaixo | Diminui a opção de voz atual onde estiver. Ex: diminui a velocidade, escolhe a voz anterior, diminui o volume |
 %kc:endInclude
 
 +++ Opções de Braille +++
@@ -752,7 +752,7 @@ Se esta caixa de seleção estiver marcada, o Insert do bloco numérico poderá 
 ==== Falar Caracteres Digitados ====
 Tecla: NVDA+2
 
-Uma caixa de seleção que quando marcada informa ao NVDA para anunciar todos os caracteres introduzidos através do teclado.
+Consiste numa caixa de seleção que quando marcada informa ao NVDA para anunciar todos os caracteres introduzidos através do teclado.
 
 %kc:setting
 ==== Falar Palavras Digitadas ====
@@ -781,10 +781,9 @@ O ponteiro do mouse altera a sua forma no Windows para fornecer determinada info
 
 %kc:setting
 ==== Habilitar Rastreamento do Mouse ====
-| Tecla de Desktop | NVDA+m |
-| Tecla de Laptop | NVDA+shift+m |
+| Tecla | NVDA+m |
 
-Uma caixa de seleção que quando marcada faz com que o NVDA anuncie o texto atual sobre o ponteiro do mouse, conforme se move pela tela.
+Esta é uma caixa de seleção que quando marcada faz com que o NVDA anuncie o texto atual sobre o ponteiro do mouse, conforme este se move pela tela.
 Isto permite que procure coisas no mesmo através do movimento físico do mouse, ao invés de tentar encontrar através da navegação de objetos. 
 
 ==== Unidade de Texto ====
@@ -807,19 +806,18 @@ Este diálogo contém as seguintes opções:
 
 %kc:setting
 ==== Acompanhar Foco do Teclado ====
-| Tecla de Desktop | NVDA+7 |
-| Tecla de Laptop | NVDA+control+7 |
+| Tecla | NVDA+7 |
 
-Quando ativado, o cursor de exploração será sempre colocado no mesmo objeto quando o foco atual for alterado.
+Quando ativad, o cursor de exploração será sempre colocado no mesmo objeto quando o foco atual for alterado.
 
 %kc:setting
 ==== Acompanhar Cursor do Sistema ====
 Tecla: NVDA+6
 
-Quando ativado, o cursor de exploração será movido automaticamente para a posição do cursor do sistema a cada vez que se mover. 
+Quando ativada, o cursor de exploração será movido automaticamente para a posição do cursor do sistema a cada vez que se mover. 
 
 ==== Acompanhar Cursor do Mouse ====
-Se ativado, o cursor de exploração seguirá o mouse quando se mover.
+Se ativado, o cursor de exploração seguirá o mouse quando o mesmo se mover.
 
 ==== Modo Simples de Exploração ====
 Quando ativado, o NVDA filtrará a hierarquia dos objetos que podem ser navegados para excluir quaisquer objetos inutilizáveis.
@@ -853,20 +851,19 @@ Desmarque esta caixa  se não desejar ouvir a descrição anunciada em conjunto 
 
 %kc:setting
 ==== Informação da barra de progresso ====
-| Tecla de Desktop | NVDA+u |
-| Tecla de Laptop | NVDA+control+f2 |
+| Tecla | NVDA+u |
 
 Esta opção controla como o NVDA informará as atualizações nas barras de progresso.
-Tem as seguintes opções:
+Possui as seguintes opções:
 Desativado: As barras de progresso não serão anunciadas quando houver qualquer alteração.
-Falar: Esta opção dá ordem ao NVDA para anunciar as barras de progresso em percentagens. Cada vez que há uma alteração à Barra de Progresso, o NVDA anuncia o novo valor.
+Falar: Esta opção dá ordem ao NVDA para anunciar as barras de progresso em percentagens. Cada vez que há uma alteração na Barra de Progresso, o NVDA anuncia o novo valor.
 Bipar: Esta opção dá ordem ao leitor de tela para reproduzir um beep sempre que houver uma alteração na barra de progresso. O beep mais agudo indica que a barra de progresso chegou ao fim.
-Falar e bipar: Esta opção diz ao NVDA para reproduzir um beep e anunciar o valor quando houver uma alteração à barra de progresso.
+Falar e bipar: Esta opção diz ao NVDA para reproduzir um beep e anunciar o valor quando houver uma alteração na barra de progresso.
 -
 
 ==== Anunciar Barras de Progresso não visíveis ====
 Esta opção, se marcada, diz a este leitor de tela que continue a anunciar uma barra de progresso, ainda que a mesma não esteja fisicamente em primeiro plano.
-Se minimizar ou alterar o foco para outra janela que possua uma barra de progresso, este programa continuará a dar informação da mesma, permitindo a realização de outras tarefas enquanto o NVDA segue a barra de progresso.
+Caso você minimize ou desloque o foco para outra janela, saindo assim daquela onde se encontraa  barra de progresso, este programa continuará a dar informação da mesma, permitindo a realização de outras tarefas enquanto o NVDA segue a barra de progresso.
 
 %kc:setting
 ==== Anunciar atualizações nos conteúdos dinâmicos ====

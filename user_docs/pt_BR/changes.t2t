@@ -8,6 +8,23 @@
 
  = 2013.1 =
 
+ == Important ==
+
+=== Novo Leiaute de teclado Laptop ===
+O leiaute de teclado laptop foi completamente redesenhado com vistas a tornar-se mais intuitivo e consistente.
+Esse novo esquema usa as setas em combinação com a tecla NVDA e outras teclas modificadoras para os comandos de exploração e navegação de objetos.
+
+
+ Deve-se notar as seguintes alterações para comandos comumente usados:
+|| Nome | Tecla |
+| Leitura contínua | NVDA+a |
+| Ler linha atual | NVDA+l |
+| Ler texto atualmente selecionado | NVDA+shift+s |
+| Ler a barra de status | NVDA+shift+end |
+Addicionalmente, várias outras mudanças, todos os comandos da navegação de objetos, revisão de textos, clique do mouse e anel  de configuração de voz foram alterados.
+Por favor consulte o documento da [Referência Rápida de Comandos keyCommands.html] para as novas teclas.
+
+
 == Novas Características ==
 - Suporte básico  para a edição e leitura de apresentações no Microsoft PowerPoint. (#501)
 - Suporte básico para a leitura e escrita de mensagens no Lotus Notes 8.5. (#543)
@@ -22,6 +39,11 @@
 - Suporte para entrada de braille de computador em  linhas que possuam um teclado braille. (#808)
 
 
+== Alterações ==
+- Atualizado o transcritor braille liblouis para a versão 2.5.2.
+- O leiaute de teclado laptop foi completamente redesenhado com vistas a tornar-se mais intuitivo e consistente. (#804)
+
+
 == Correção de Falhas ==
 - As teclas de navegação rápida para saltar para o separador anterior e o seguinte no modo de navegação agora funcionam no Internet Explorer e outros controles MSHTML. (#2781)
 - Caso o NVDA precise retornar ao eSpeak ou à opção sem fala devido à falha num sintetizador selecionado quando o NVDA é iniciado, a configuração já não é atualizada para definir o sintetizador que falhou como o escolhido, o que significa que agora o sintetizador original será novamente escolhido na próxima vez que o NVDA for iniciado. (#2589) 
@@ -33,9 +55,17 @@
 - As etiquetas das guias no diálogo de preferências do DropBox agora podem ser vistas usando a revisão plana. 
 - Para idiomas como o alemão onde o sinal de + (plus, mais) consiste de uma única tecla no teclado, agora é possível vincular comandos a este sinal usando a palavra "plus". (#2898)
 - No Internet Explorer e outros controles MSHTML, os blocos de citação agora são anunciados apropriadamente. (#2888)
-- The HumanWare Brailliant BI/B series braille display driver can now be selected when the display is connected via Bluetooth but has never been connected via USB.
+- O driver para as linhas braille HumanWare Brailliant BI/B series agora pode ser selecionado quando a linha é conectada via Bluetooth mas nunca havia sido conectada via USB.
+- ao filtrar elementos na lista de elementos do Modo de navegação usando textos que contenham letras maiúsculas, agora retorna resultados de casos insensíveis assim como minúsculas em lugar de não trazer qualquer resultado. (#2951) 
+- em navegadores da Mozilla, o modo de navegação volta a poder ser usado quando conteúdo Flash recebe  foco. (#2546) 
+- Ao usar uma tabela de braille contraído   e estando ativada a opção expandir para braille de computador a palavra sob o cursor, o cursor braille agora é posicionado corretamente quando colocado depois de uma palavra na qual haja um caractere representado por múltiplas celas braille (como sinal de maiúsculo, sinal de letras, sinal de números, etc.). (#2947) 
+- A seleção de Textos agora é exibida corretamente nas linhas braille nos controles editáveis em aplicativos como o Microsoft word 2003 e Internet Explorer. 
+- Volta a ser possível selecionar textos em retrocesso no Microsoft Word enquanto o Braille está ativado. 
+- Ao revisar, apagar para trás ou com delete os caracteres em controles editáveis Scintilla, o NVDA agora anuncia corretamente os caracteres multibyte. (#2855)
+- o NVDA já não falha ao ser instalado quando o caminho para o perfil do usuário contém certos caracteres multibyte. (#2729) 
+- O anúncio de grupos para controles de Visualização de Lista (SysListview32) em aplicativos de 64-bit já não causa um erro. 
 
-
+ 
  == Alterações Específicas para Desenvolvedores ==
  
  
@@ -43,7 +73,10 @@
 - Os drivers para linhas braille agora podem suportar a seleção manual de portas. (#426)
  - This is most useful for braille displays which support connection via a legacy serial port. 
  - This is done using the getPossiblePorts class method on the BrailleDisplayDriver class. 
-
+- A entrada de Braille a partir de teclados braille agora [e suportada. (#808) 
+ - Braille input is encompassed by the brailleInput.BrailleInputGesture class or a subclass thereof. 
+ - Subclasses of braille.BrailleDisplayGesture (as implemented in braille display drivers) can also inherit from brailleInput.BrailleInputGesture. This allows display commands and braille input to be handled by the same gesture class. 
+ 
  
 = 2012.3 =
 Entre os destaques desta versão estão inclusos o suporte para a entrada de caracteres asiáticos; suporte experimental para touch screens no Windows 8; anúncio do número das páginas e melhoras no suporte para tabelas no Adobe Reader; comandos para navegação por tabelas   em linhas de tabelas enfocadas e controles de listas de visualização  do Windows; suporte para mais uma porção de linhas braille; e anúncio dos cabeçalhos de linhas e colunas no Microsoft Excel. 
