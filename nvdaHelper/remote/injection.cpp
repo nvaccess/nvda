@@ -100,17 +100,20 @@ HHOOK WINAPI fake_SetWindowsHookExA(int IdHook, HOOKPROC lpfn, HINSTANCE hMod, D
 	}
 	//See if we have previously hooked this thread ourselves.
 	//If not then do nothing more.
+	inprocThreadsLock.acquire();
 	map<long,HHOOK>::iterator i=hooksByThread->find(dwThreadId);
-	if(i==hooksByThread->end()) return res;
-	//Unhook our previous hook for this thread and rehook it again, placing our hook before the non-NVDA hook just registered 
-	if(UnhookWindowsHookEx(i->second)) {
-		i->second=SetWindowsHookEx(IdHook,ourHookProc,NULL,dwThreadId);
-	} else {
-		i->second=0;
+	if(i!=hooksByThread->end()) {
+		//Unhook our previous hook for this thread and rehook it again, placing our hook before the non-NVDA hook just registered 
+		if(UnhookWindowsHookEx(i->second)) {
+			i->second=SetWindowsHookEx(IdHook,ourHookProc,NULL,dwThreadId);
+		} else {
+			i->second=0;
+		}
+		if(i->second==0) {
+			hooksByThread->erase(i);
+		}
 	}
-	if(i->second==0) {
-		hooksByThread->erase(i);
-	}
+	inprocThreadsLock.release();
 	return res;
 }
 
