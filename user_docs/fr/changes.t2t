@@ -5,6 +5,22 @@ Quoi de Neuf dans NVDA
 
 = 2013.1 =
 
+== Important ==
+
+=== Nouvelle disposition clavier ordinateur portable ===
+La disposition clavier ordinateur portable a été revue pour être plus intuitive et cohérente.
+La nouvelle disposition utilise les flèches combinées avec la touche NVDA et autres touches pour les commandes de revue.
+
+Notez les changements suivants pour les commandes communément utilisées :
+|| Nom | Touche |
+| Dire tout | NVDA+a |
+| Lire la ligne courrante | NVDA+l |
+| Lire le texte sélectionné | NVDA+shift+s |
+| Lire la barre d'état | NVDA+shift+end |
+En plus d'autres changements, toutes les commandes de la navigation par objet, de la revue de texte, clique souris et de paramétrage de voix ont changées.
+Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux raccourcis.
+
+
 == Nouvelles Fonctionnalités ==
 - Support basique de l'édition et de la lecture des présentations Microsoft PowerPoint. (#501)
 - Support basique pour la lecture et l'écriture de messages dans Lotus Notes 8.5. (#543)
@@ -12,11 +28,18 @@ Quoi de Neuf dans NVDA
 - Les notifications dans Internet Explorer 9 et plus récent sont maintenant lues (comme les fenêtres publicitaires bloquées ou les téléchargements). (#2343)
 - L'annonce automatique du titre des lignes et colonnes d'un tableau est maintenant supportée dans Internet Explorer et les autres contrôles MSHTML. (#778)
 - Nouvelle langue : Aragonais.
-- Nouvelle table Braille : Dannois Grade 2.
+- Nouvelles tables Braille : Dannois Grade 2, Coréen Grade 1. (#2737)
 - Support des afficheurs Braille connectés via le Bluetooth sur les ordinateurs utilisant Bluetooth Stack for Windows by Toshiba. (#2419)
 - Support de la sélection du port pour les afficheurs freedom Scientific (Automatique, USB ou Bluetooth).
 - Support des bloc-notes BrailleNote de Humanware lorsqu'ils agissent comme afficheur Braille pour un lecteur d'écran. (#2012)
 - Support des anciens modèles d'afficheur Braille Papenmeier BRAILLEX. (#2679)
+- Support de la saisie en braille informatique pour les afficheurs braille disposant d'un clavier braille. (#808)
+- Nouvelles options de clavier permettant d'interrompre ou non la parole lorsqu'on appuie sur une touche et ou sur entrer. (#698)
+
+
+== Changements ==
+- LibLouis Braille Translator mis à jours vers la version 1.5.2. (#2737)
+- La disposition clavier ordinateur portable a été revue pour être plus intuitive et cohérente. (#804)
 
 
 == Corrections de Bogues ==
@@ -35,6 +58,13 @@ Quoi de Neuf dans NVDA
 - Pour les langues comme l'Allemand ou le signe + (plus) est une seul touche du clavier, il est maintenant possible d'y assigner un raccourci avec le mot "plus". (#2898)
 - Dans Internet Explorer et les autres contrôles MSHTML, les bloques de citation sont signalées à l'endroit approprié. (#2888)
 - Les afficheurs Braille HumanWare de série Brailliant BI/B peuvent maintenant être sélectionnés quand l'afficheur est connecté via bluetooth mais qu'il n'a jamais été connecté via USB.
+- Filtrer les éléments dans la liste des éléments en mode navigation avec des filtres en texte majuscules retourne maintenant les même résultats que si tout était en minuscule. (#2951)
+- Dans les navigateurs Mozilla, le mode navigation peut à nouveau être utilisé quand du contenu flash est activé. (#2546)
+- Lorsque l'on utilise une table braille abrégé et que l'option Afficher le mot sous le curseur en braille informatique est éctivée, le curseur braille est maintenant positionné correctement lorsque situé après un mot dans lequel un caractère est représenté par plusieurs cellules brailles (ex : signe majuscule, signe de lettre, signe de nombre, etc.). (#2947)
+- Le texte sélectionné est maintenant correctement affiché en braille dans des applications comme Microsoft Word 2003 et les zone d'édition dans Internet Explorer.
+- Il est à nouveau possible de sélectionner du texte en arrière dans Microsoft Word lorsque le braille est activé.
+- Lorsqu'on lit ou supprime un caractère avec backspace ou suppr dans une zone d'édition Scintilla, NVDA annonce correctement les caractères multibyte. (#2855)
+- NVDA n'échouera plus à s'installer lorsque le chemin du profile contient des caractères multibyte. (#2729)
 
 
 == Changements pour les développeurs ==

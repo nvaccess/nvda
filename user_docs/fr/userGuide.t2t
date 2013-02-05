@@ -20,7 +20,7 @@ Ses points forts sont :
 - Un synthétiseur intégré prenant en charge plus de 43 langues
 - l'annonce, quand c'est possible, d'informations de formatage du texte telles que le nom et la taille de la police, le style et les fautes d'orthographe
 - L'annonce automatique du texte sous la souris et, en option, l'indication sonore de la position de la souris
-- La prise en charge de nombreux afficheurs braille
+- La prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille
 - La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer
 - Un installateur parlant facile à utiliser
 - Une traduction dans 42 langues
@@ -227,15 +227,15 @@ Faites un clic droit sur l'icône de NVDA située dans la barre des tâches syst
 
 ++ Commande de base ++
 %kc:beginInclude
-|| Nom | Touche | Tactile | Description |
-| Arrêt parole | Control | Clic 2-doigts | Arrêt instantané de la parole |
-| Pause parole | Maj | Aucun | Pause instantanée de la parole, un second appui reprend la parole là où elle s'était arrêtée |
-| Menu NVDA | NVDA+n | Double-clic 2-doigts | Affiche le menu NVDA pour vous permettre d'accéder aux préférences, outils, aide etc |
-| Choix du Mode de Parole | NVDA+s | Aucun | Permet de choisir le mode de parole : parole, bips, silence. |
-| Passage en mode aide à la saisie | NVDA+1 | Aucun | Dans ce mode, l'appui sur n'importe quelle touche donnera son nom et la description de la commande NVDA qui lui est éventuellement associée |
-| Quitter NVDA | NVDA+q | Aucun | Quitter NVDA |
-| Ignorer la touche suivante | NVDA+f2 | Aucun | Indique à NVDA de passer la touche suivante directement à l'application, même si cette touche correspond normalement à une commande NVDA |
-| Bascule du mode veille | NVDA+maj+s | Aucun | le mode veille désactive toutes les commandes NVDA ainsi que la parole et le braille pour l'application en cours. Ceci est utile dans les application fournissant leur propre système de revue d'écran. Appuyez à nouveau la combinaison pour désactiver le mode veille. |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Tactile | Description |
+| Arrêt parole | Control | Control | Clic 2-doigts | Arrêt instantané de la parole |
+| Pause parole | Maj | Maj | Aucun | Pause instantanée de la parole, un second appui reprend la parole là où elle s'était arrêtée |
+| Menu NVDA | NVDA+n | NVDA+n | Double-clic 2-doigts | Affiche le menu NVDA pour vous permettre d'accéder aux préférences, outils, aide etc |
+| Choix du Mode de Parole | NVDA+s | NVDA+s | Aucun | Permet de choisir le mode de parole : parole, bips, silence. |
+| Passage en mode aide à la saisie | NVDA+1 | NVDA+1 | Aucun | Dans ce mode, l'appui sur n'importe quelle touche donnera son nom et la description de la commande NVDA qui lui est éventuellement associée |
+| Quitter NVDA | NVDA+q | NVDA+q | Aucun | Quitter NVDA |
+| Ignorer la touche suivante | NVDA+f2 | NVDA+f2 | Aucun | Indique à NVDA de passer la touche suivante directement à l'application, même si cette touche correspond normalement à une commande NVDA |
+| Bascule du mode veille | NVDA+maj+s | NVDA+maj+z | Aucun | le mode veille désactive toutes les commandes NVDA ainsi que la parole et le braille pour l'application en cours. Ceci est utile dans les application fournissant leur propre système de revue d'écran. Appuyez à nouveau la combinaison pour désactiver le mode veille. |
 %kc:endInclude
 
 ++ Annonce des Informations Système ++
@@ -262,11 +262,11 @@ La manière la plus commune de naviguer dans Windows avec NVDA, est de simplemen
 
 Quelques touches de commande utiles pour naviguer avec le focus :
 %kc:beginInclude
-|| Nom | Touche | Description |
-| Annonce du focus courant | NVDA+tab | annonce l'objet en cours ou le contrôle qui a le focus système. Un double appui épelle l'information |
-| Annonce du titre | NVDA+t | Annonce le titre de la fenêtre active. Un double appui épelle l'information, un triple appui la copie dans le presse-papier |
-| Lecture de la fenêtre active | NVDA+b | lit tous les contrôles de la fenêtre active (utile pour les dialogues) |
-| Annonce de la barre d'état | NVDA+fin | Lit la barre d'état si NVDA en trouve une. Déplace aussi l'objet navigateur à la barre d'état |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Description |
+| Annonce du focus courant | NVDA+tab | NVDA+tab | Annonce l'objet en cours ou le contrôle qui a le focus système. Un double appui épelle l'information |
+| Annonce du titre | NVDA+t | NVDA+t | Annonce le titre de la fenêtre active. Un double appui épelle l'information, un triple appui la copie dans le presse-papier |
+| Lecture de la fenêtre active | NVDA+b | NVDA+b | lit tous les contrôles de la fenêtre active (utile pour les dialogues) |
+| Annonce de la barre d'état | NVDA+fin | NVDA+maj+fin | Lit la barre d'état si NVDA en trouve une. Déplace aussi l'objet navigateur à la barre d'état |
 %kc:endInclude
 
 ++ Naviguer avec le curseur système ++[SystemCaret]
@@ -278,10 +278,10 @@ NVDA annonce le déplacement par caractère, mot ou ligne, et annonce aussi la s
 
 NVDA fournit les commandes clavier suivantes par rapport au curseur système :
 %kc:beginInclude
-|| Nom | Touche | Description |
-| Dire tout | NVDA+flècheBas | Démarre la lecture depuis la position du curseur système en lui faisant suivre la lecture |
-| Lire ligne courante | NVDA+flècheHaut | Lit la ligne où se trouve le curseur système. Un double appui épelle la ligne. |
-| Lire texte sélectionné | NVDA+Maj+flècheHaut | Lit tout le texte actuellement sélectionné |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Description |
+| Dire tout | NVDA+flècheBas | NVDA+a | Démarre la lecture depuis la position du curseur système en lui faisant suivre la lecture |
+| Lire ligne courante | NVDA+flècheHaut | NVDA+l | Lit la ligne où se trouve le curseur système. Un double appui épelle la ligne. |
+| Lire texte sélectionné | NVDA+Maj+flècheHaut | NVDA+Maj+s | Lit tout le texte actuellement sélectionné |
 
 
 Dans un tableau, vous disposez également des touches de commandes suivantes :
@@ -320,12 +320,12 @@ Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [
 Pour naviguer par objet, utilisez les commandes suivantes :
 
 %kc:beginInclude
-|| Nom | Touche Desktop | Touche Laptop | Tactile | Description |
-| Annonce de l'objet courant | NVDA+pavnum5 | NVDA+control+i | Aucun | Annonce l'objet navigateur courant, deux appuis épellent l'information, trois appuis copient le nom et le contenu de l'objet dans le presse-papier |
-| Aller à l'objet parent | NVDA+pavnum8 | NVDA+maj+i | Glisser vers le haut (mode objet) | Va à l'objet parent (qui contient l'objet navigateur courant) |
-| Aller à l'objet précédent | NVDA+pavnum4 | NVDA+control+j | Glisser vers la gauche (mode objet) | Va à l'objet précédent l'objet navigateur courant |
-| Aller à l'objet suivant | NVDA+pavnum6 | control+NVDA+l | Glisser vers la droite (mode objet) | Va à l'objet suivant de l'objet navigateur courant |
-| Aller au premier objet inclus | NVDA+pavnum2 | NVDA+maj+virgule | Glisser vers le bas (mode objet) | Va au premier objet inclus dans l'objet navigateur courant |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Tactile | Description |
+| Annonce de l'objet courant | NVDA+pavnum5 | NVDA+Maj+o | Aucun | Annonce l'objet navigateur courant, deux appuis épellent l'information, trois appuis copient le nom et le contenu de l'objet dans le presse-papier |
+| Aller à l'objet parent | NVDA+pavnum8 | NVDA+maj+flècheHaut | Glisser vers le haut (mode objet) | Va à l'objet parent (qui contient l'objet navigateur courant) |
+| Aller à l'objet précédent | NVDA+pavnum4 | NVDA+maj+flècheGauche | Glisser vers la gauche (mode objet) | Va à l'objet précédent l'objet navigateur courant |
+| Aller à l'objet suivant | NVDA+pavnum6 | maj+NVDA+flècheDroite | Glisser vers la droite (mode objet) | Va à l'objet suivant de l'objet navigateur courant |
+| Aller au premier objet inclus | NVDA+pavnum2 | NVDA+maj+flècheBas | Glisser vers le bas (mode objet) | Va au premier objet inclus dans l'objet navigateur courant |
 | Aller à l'objet en focus | NVDA+pavnumMoins | NVDA+retourArrière | Aucun | Va à l'objet ayant le focus système, et place le curseur de revue sur le curseur système s'il est présent |
 | Activer l'objet navigateur courant | NVDA+pavnumEntrer | NVDA+entrer | Double-clic | Active l'objet navigateur courant (similaire à un clic de souris ou à appuyer la barre d'espace quand l'objet a le focus système) |
 | Amener le focus système à l'objet navigateur courant | NVDA+maj+pavnumMoins | NVDA+maj+retourArrière | Aucun | Amène le focus système à l'objet navigateur courant si c'est possible |
@@ -348,21 +348,21 @@ Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [
 
 Vous disposez des commandes suivantes pour explorer du texte :
 %kc:beginInclude
-|| Nom | Touche Desktop | Touche Laptop | Tactile | Description |
-| Aller à la première ligne en revue | Maj+pavnum7 | NVDA+7 | Aucun | Amène le curseur de revue à la première ligne du texte |
-| Aller à la ligne précédente en revue | pavnum7 | NVDA+u | Glisser vers le haut (mode texte) | Amène le curseur de revue sur la ligne de texte précédente |
-| Annoncer la ligne courante en revue | pavnum8 | NVDA+i | Aucun | Lit la ligne de texte sous le curseur de revue, un double appui épelle la ligne |
-| Aller à la ligne suivante en revue | pavnum9 | NVDA+o | Glisser vers le bas (mode texte) | Amène le curseur de revue à la ligne de texte suivante |
-| Aller à la dernière ligne en revue | maj+pavnum9 | NVDA+9 | Aucun | Amène le curseur de revue à la dernière ligne de texte |
-| Aller au mot précédent en revue | pavnum4 | NVDA+j | Glisser vers la gauche 2-doigts (mode texte) | Amène le curseur de revue au mot précédent dans le texte |
-| Annoncer le mot courant en revue | pavnum5 | NVDA+k | Aucun | Lit le mot à la position du curseur de revue, un double appui épelle le mot |
-| Aller au mot suivant en revue | pavnum6 | NVDA+l | Glisser vers la droite 2-doigts (mode texte) | Amène le curseur de revue au mot suivant |
-| Aller au début de la ligne en revue | maj+pavnum1 | NVDA+maj+u | Aucun | Amène le curseur de revue au début de la ligne courante |
-| Aller au caractère précédent en revue | pavnum1 | NVDA+virgule | Glisser vers la gauche (mode texte) | Amène le curseur de revue au caractère précédent de la ligne courante |
-| Annoncer le caractère courant en revue | pavnum2 | NVDA+pointVirgule | Aucun | Annonce le caractère courant sous le curseur de revue, un double appui annonce la valeur du caractère en décimal et hexadécimal |
-| Aller au caractère suivant en revue | pavnum3 | NVDA+deuxPoints | Glisser vers la droite (mode texte) | Amène le curseur de revue au caractère suivant de la ligne courante |
-| Aller en fin de ligne en revue | maj+pavnum3 | NVDA+maj+o | Aucun | Amène le curseur de revue à la fin de la ligne courante |
-| Dire tout en revue | pavnumPlus | NVDA+maj+flècheBas | Glisser vers le bas 3-doigts (mode texte) | Lit en partant de la position du curseur de revue, celui-ci suivant la lecture |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Tactile | Description |
+| Aller à la première ligne en revue | Maj+pavnum7 | NVDA+control+début | Aucun | Amène le curseur de revue à la première ligne du texte |
+| Aller à la ligne précédente en revue | pavnum7 | NVDA+flècheHaut | Glisser vers le haut (mode texte) | Amène le curseur de revue sur la ligne de texte précédente |
+| Annoncer la ligne courante en revue | pavnum8 | NVDA+maj+point | Aucun | Lit la ligne de texte sous le curseur de revue, un double appui épelle la ligne |
+| Aller à la ligne suivante en revue | pavnum9 | NVDA+flècheBas | Glisser vers le bas (mode texte) | Amène le curseur de revue à la ligne de texte suivante |
+| Aller à la dernière ligne en revue | maj+pavnum9 | NVDA+control+fin | Aucun | Amène le curseur de revue à la dernière ligne de texte |
+| Aller au mot précédent en revue | pavnum4 | NVDA+control+flècheGauche | Glisser vers la gauche 2-doigts (mode texte) | Amène le curseur de revue au mot précédent dans le texte |
+| Annoncer le mot courant en revue | pavnum5 | NVDA+control+point-virgule | Aucun | Lit le mot à la position du curseur de revue, un double appui épelle le mot |
+| Aller au mot suivant en revue | pavnum6 | NVDA+ctrl+flècheDroite | Glisser vers la droite 2-doigts (mode texte) | Amène le curseur de revue au mot suivant |
+| Aller au début de la ligne en revue | maj+pavnum1 | NVDA+début | Aucun | Amène le curseur de revue au début de la ligne courante |
+| Aller au caractère précédent en revue | pavnum1 | NVDA+flècheGauche | Glisser vers la gauche (mode texte) | Amène le curseur de revue au caractère précédent de la ligne courante |
+| Annoncer le caractère courant en revue | pavnum2 | NVDA+point-virgule | Aucun | Annonce le caractère courant sous le curseur de revue, un double appui annonce la valeur du caractère en décimal et hexadécimal |
+| Aller au caractère suivant en revue | pavnum3 | NVDA+flècheDroite | Glisser vers la droite (mode texte) | Amène le curseur de revue au caractère suivant de la ligne courante |
+| Aller en fin de ligne en revue | maj+pavnum3 | NVDA+fin | Aucun | Amène le curseur de revue à la fin de la ligne courante |
+| Dire tout en revue | pavnumPlus | NVDA+maj+a | Glisser vers le bas 3-doigts (mode texte) | Lit en partant de la position du curseur de revue, celui-ci suivant la lecture |
 | copier à partir du curseur de revue | NVDA+f9 | NVDA+f9 | Aucun | Commence à copier le texte depuis la position du curseur de revue. La copie ne s'effectue pas jusqu'à ce qu'on indique la fin du texte à copier |
 | Copier jusqu'au curseur de revue | NVDA+f10 | NVDA+f10 | Aucun | Copie depuis la position du curseur de revue préalablement définie par "copier à partir du curseur de revue" jusqu'à la position actuelle du curseur de revue. après l'appui sur cette touche, le texte est copié dans le presse-papier de Windows. |
 | Annonce du formatage du texte | NVDA+f | NVDA+f | Aucun | Annonce le formatage du texte à la position du curseur de revue |
@@ -414,13 +414,13 @@ Si vous voulez en tirer profit, vous pouvez les configurer par le dialogue Param
 
 Bien qu'une souris physique devrait être utilisée pour naviguer à la souris, NVDA possède quelques commandes clavier liées à la souris :
 %kc:beginInclude
-|| Nom | Touche Desktop | Touche Laptop | Description |
-| Clic gauche | pavnumDiviser | NVDA+flècheGauche | simple clic gauche. Le double clic s'obtient par deux appuis rapides |
-| Verrouillage du bouton gauche de la souris | maj+pavnumDiviser | NVDA+maj+flècheGauche | Verrouille le bouton gauche de la souris en position enfoncée. Unesecond appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
-| Clic droit | pavnumMultiplier | NVDA+flècheDroite | Simple clic droit |
-| Verrouillage du bouton droit de la souris | maj+pavnumMultiplier | NVDA+maj+flècheDroite | Verrouille le bouton droit de la souris en position enfoncée, un second appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
-| Amener la souris à l'objet navigateur courant | NVDA+pavnumDiviser | NVDA+maj+f9 | Amène la souris à la position de l'objet navigateur courant puis au curseur de revue |
-| Aller à l'objet sous la souris | NVDA+pavnumMultiplier | NVDA+maj+f10 | Amène l'objet navigateur à l'objet situé à la position de la souris |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Description |
+| Clic gauche | pavnumDiviser | NVDA+uAccentGrave | simple clic gauche. Le double clic s'obtient par deux appuis rapides |
+| Verrouillage du bouton gauche de la souris | maj+pavnumDiviser | NVDA+maj+uAccentGrave | Verrouille le bouton gauche de la souris en position enfoncée. Unesecond appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
+| Clic droit | pavnumMultiplier | NVDA+astérisque | Simple clic droit |
+| Verrouillage du bouton droit de la souris | maj+pavnumMultiplier | NVDA+maj+astérisque | Verrouille le bouton droit de la souris en position enfoncée, un second appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet |
+| Amener la souris à l'objet navigateur courant | NVDA+pavnumDiviser | NVDA+maj+m | Amène la souris à la position de l'objet navigateur courant puis au curseur de revue |
+| Aller à l'objet sous la souris | NVDA+pavnumMultiplier | NVDA+maj+n | Amène l'objet navigateur à l'objet situé à la position de la souris |
 %kc:endInclude
 
 + Le Mode Navigation +
@@ -677,11 +677,11 @@ Si vous rencontrez des problèmes à l'épellation de caractères, essayez de d�
 +++ Boucle des paramètres synthétiseur +++[SynthSettingsRing]
 Si vous voulez changer rapidement les paramètres vocaux sans passer par le dialogue Paramètres vocaux, il y a quelques touches de commandes qui vous permettent de le faire de n'importe où quand NVDA est en fonction.
 %kc:beginInclude
-|| Nom | Touche Desktop | Touche Laptop | Description |
-| Aller au paramètre synthétiseur suivant | NVDA+control+flèchDroite | NVDA+control+flècheDroite | Va au prochain paramètre synthétiseur applicable, retourne au premier après le dernier |
-| Aller au paramètre synthétiseur précédent | NVDA+control+flècheGauche | NVDA+control+flècheGauche | Va au précédent paramètre synthétiseur applicable, retourne au dernier après le premier |
-| Augmenter le paramètre synthétiseur courant | NVDA+control+flècheHaut | NVDA+control+flècheHaut | Augmente le paramètre synthétiseur sur lequel vous vous trouvez. Ex : augmente le débit, choisit la voix suivante, augmente le volume |
-| Diminuer le paramètre synthétiseur courant | NVDA+control+flècheBas | NVDA+control+flècheBas | diminue le paramètre synthétiseur sur lequel vous vous trouvez. Ex : diminue le débit, choisit la voix précédente, diminue le volume |
+|| Nom | Ordinateur de bureau | Ordinateur portable | Description |
+| Aller au paramètre synthétiseur suivant | NVDA+control+flèchDroite | NVDA+control+maj+flècheDroite | Va au prochain paramètre synthétiseur applicable, retourne au premier après le dernier |
+| Aller au paramètre synthétiseur précédent | NVDA+control+flècheGauche | NVDA+control+maj+flècheGauche | Va au précédent paramètre synthétiseur applicable, retourne au dernier après le premier |
+| Augmenter le paramètre synthétiseur courant | NVDA+control+flècheHaut | NVDA+control+maj+flècheHaut | Augmente le paramètre synthétiseur sur lequel vous vous trouvez. Ex : augmente le débit, choisit la voix suivante, augmente le volume |
+| Diminuer le paramètre synthétiseur courant | NVDA+control+flècheBas | NVDA+control+maj+flècheBas | diminue le paramètre synthétiseur sur lequel vous vous trouvez. Ex : diminue le débit, choisit la voix précédente, diminue le volume |
 %kc:endInclude
 
 +++  Paramètres Braille +++
@@ -708,11 +708,22 @@ Cette option ne sera pas disponible si votre afficheur Braille supporte seulemen
 
 Vous devriez consulter la documentation de votre afficheur Braille dans la section [Afficheurs Braille supportés #SupportedBrailleDisplays] pour plus de détailles sur les types de communications supportés et les ports disponibles.
 
-==== Table de conversion ====
-L'option suivante est la liste déroulante des tables de conversion. 
-Dans cette liste, vous trouverez des tables braille pour différentes langues. Vous pouvez vous déplacer de table en table en utilisant les flèches.
+==== Table de sortie ====
+L'option suivante est la liste déroulante des tables de sortie.
+Dans cette liste, vous trouverez des tables braille pour différentes langues, Braille intégral, informatique, abrégé et autres.
+La table choisie sera utilisée pour traduire le texte en braille qui sera présenté sur votre afficheur Braille.
+Vous pouvez vous déplacer de table en table en utilisant les flèches.
 
-==== Afficher le mot sous le curseur en intégral ==== 
+==== Table d'entrée ====
+En complément de l'option précédente, l'option que vous trouverez en suite est la liste déroulante des tables d'entrée.
+La table choisie sera utilisée pour traduire en texte le braille saisi à l'aide du clavier Perkins de votre afficheur braille.
+Pour le moment NVDA ne prend en charge que le braille informatique, seul les tables brailles informatiques huit points seront donc affichées.
+Vous pouvez vous déplacer de table en table en utilisant les flèches.
+
+Notez bien que cette option n'est utile que si votre afficheur braille dispose d'un clavier Perkins et que le pilote de celui-ci supporte cette fonctionnalité.
+Si la saisie n'est pas supportée par un afficheur qui dispose d'un clavier Perkins, cela sera noté dans la section [Afficheurs Brailles Supportés #SupportedBrailleDisplays].
+
+==== Afficher le mot sous le curseur en braille informatique ==== 
 Cette option permet d'afficher le mot sous le curseur en intégral.
 
 ==== Vitesse de clignotement du curseur (ms) ====
@@ -762,6 +773,12 @@ Touche : nVDA+3
 
 Quand cette case est cochée, NVDA prononcera chaque mot  frappé au clavier.
 
+==== Interruption de la parole à la frappe d''un caractère ====
+Si cette option est activée, la parole sera interrompue à chaque fois qu'un caractère est saisi. Cette option est activée par défaut.
+
+==== Interruption de la parole à l'appui de la touche entrer ====
+Si cette option est activée, la parole sera interrompue à chaque fois que la touche entrer est appuyée. Cette option est activée par défaut.
+
 ==== Émettre un bip si on entre une lettre minuscule quand le verrouillage majuscule est activé ====
 Quand cette case est cochée, un bip d'avertissement est émis si on entre une lettre en combinaison avec la touche maj alors que le verrouillage majuscule est activé.
 Généralement, cela n'est pas intentionnel est provient du fait qu'on a oublié que le verrouillage majuscule était activé.
@@ -783,8 +800,7 @@ Sous Windows, le pointeur de souris change de forme pour transmettre certaines i
 
 %kc:setting
 ==== Activer le suivi de la souris ====
-| Touche Desktop | NVDA+m |
-| Touche Laptop | NVDA+maj+m |
+Raccourci clavier : NVDA+m
 
 Quand cette case est cochée, NVDA annonce le texte présentement sous le pointeur souris, lorsqu'on la déplace sur l'écran. Cela vous permet de trouver un objet sur l'écran en déplaçant la souris au lieu de recourir à la navigation par objet. 
 
@@ -808,8 +824,7 @@ ce dialogue contient les options suivantes :
 
 %kc:setting
 ==== Suivre le focus système ====
-| Touche Desktop | NVDA+7 |
-| Touche Laptop | NVDA+control+7 |
+Raccourci clavier : NVDA+7
 
 Quand l'option est activée, le curseur de revue est toujours placé dans le même objet que le focus système quand il change.
 
@@ -854,8 +869,7 @@ Décochez cette case si vous pensez que vous n'avez pas besoin d'entendre leur d
 
 %kc:setting
 ==== Suivi des barres de progression ====
-| Touche Desktop | NVDA+u |
-| Touche Laptop | NVDA+control+f2 |
+Raccourci : NVDA+u
 
 Cette option   vous présente une liste déroulante qui contrôle la manière dont NVDA vous annonce l'évolution des barres de progression. 
 
@@ -1215,6 +1229,9 @@ Les terminaux BC640 et BC680 de chez [Optelec http://www.optelec.com/] sont pris
 Vous n'avez besoin d'aucun pilote particulier pour utiliser ces terminaux.
 Il suffit de brancher le terminal et de configurer NVDA pour l'utiliser.
 
+Bien que ces afficheurs disposent d'un clavier Braille, ils gèrent eux-même la saisie du braille.
+L'option table d'entrée n'est donc pas applicable.
+
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ses touches.
 %kc:beginInclude
@@ -1242,6 +1259,8 @@ Veuillez consulter la documentation du terminal pour savoir où se situent ses t
 ++ Les terminaux Handy Tech ++
 NVDA prend en charge tous les terminaux de chez [Handy Tech http://www.handytech.de/] en USB ou Bluetooth.
 Pour les terminaux USB les plus anciens, vous devrez installer le pilote USB Handy Tech sur votre système.
+
+La saisie du braille n'est pas encore supportée.
 
 Voici les assignations de touches pour ces terminaux avec NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ses touches.
@@ -1381,6 +1400,8 @@ Veuillez consulter la documentation du terminal pour savoir où se trouvent ces 
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA supporte les afficheurs braille Braille Sense et Braille EDGE de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou bluetooth. 
 Si connectée via USB, vous devrez installer le driver USB de HIMS dans votre système.
+
+La saisie du braille n'est pas encore supportée.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se trouvent ces touches.
@@ -1664,6 +1685,9 @@ Consultez la documentation de votre BrailleNote pour savoir où se trouvent ces 
 Pour l'utiliser, il vous faut installer [BRLTTY pour Windows http://brl.thefreecat.org/brltty/].
 Vous devez télécharger et installer la version la plus récente avec installateur qui s'appellera, par exemple, brltty-win-4.2-2.exe.
 Quand vous configurerez le terminal et le port à utiliser, portez une attention particulière aux instructions, en particulier si vous utilisez un terminal USB et que le pilote du constructeur est déjà installé.
+
+Pour les afficheurs disposant d'un clavier Braille, BRLTTY gèrent la saisie du braille.
+L'option table d'entrée n'est donc pas applicable.
 
 Voici les assignations de commandes BRLTTY pour NVDA.
 Veuillez consulter la [documentation tableau des touches de BRLTTY http://mielke.cc/brltty/doc/drivers/] pour des informations sur la manière Dont BRLTTY lie ses commandes aux touches sur les terminaux braille.

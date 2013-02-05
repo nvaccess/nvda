@@ -3,10 +3,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5788\n"
+"Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2013-01-31 05:30+0000\n"
-"PO-Revision-Date: 2013-01-28 17:30+0100\n"
+"POT-Creation-Date: 2013-02-04 05:30+0000\n"
+"PO-Revision-Date: 2013-02-04 22:05+0100\n"
 "Last-Translator: Michel SUCH <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -45,7 +45,7 @@ msgstr "curseur %s"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:575
+#: braille.py:578
 #, python-format
 msgid "%s end"
 msgstr "fin %s"
@@ -175,7 +175,7 @@ msgstr "Paramètres de &saisie..."
 
 #: gui/settingsDialogs.py:1261
 msgid "&Input table:"
-msgstr "Table d'&entrée"
+msgstr "Table de &saisie"
 
 #: gui/__init__.py:566
 msgid "&Install NVDA on this computer"
@@ -250,7 +250,7 @@ msgstr "Présentation des &objets..."
 
 #: gui/settingsDialogs.py:1248
 msgid "&Output table:"
-msgstr "Table de &sortie:"
+msgstr "Table d'&affichage:"
 
 #: gui/settingsDialogs.py:1096
 msgid "&Pattern"
@@ -572,7 +572,7 @@ msgstr "Auteur"
 #. : Automatic port constant to be used by braille displays that support the "automatic" port
 #. : @type: Tupple
 #. Translators String representing the automatic port selection for braille displays.
-#: braille.py:1515
+#: braille.py:1531
 msgid "Automatic"
 msgstr "automatiques :"
 
@@ -1544,6 +1544,20 @@ msgid ""
 "current date"
 msgstr "Un appui annonce l'heure, deux appui annoncent la date"
 
+#. Translators: Information about NVDA's new laptop keyboard layout.
+#: gui/upgradeAlerts.py:18
+msgid ""
+"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
+"order to make it more intuitive and consistent.\n"
+"If you use the laptop layout, please see the What's New document for more "
+"information."
+msgstr ""
+"Dans NVDA 2013.1, la disposition de clavier pour ordinateur portable"
+"a été entièrement redéfinie dans le but de la rendre plus intuitive"
+"et plus cohérente.\n"
+"Si vous utilisez la disposition clavier pour ordinateur portable,"
+"veuillez lire le document Quoi de Neuf pour plus d'inforpation."
+
 #: globalCommands.py:149
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr ""
@@ -1624,9 +1638,8 @@ msgstr "Disposition du clavier"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:141
-#, fuzzy
 msgid "Korean grade 1"
-msgstr "Norvégien grade 1"
+msgstr "Coréen grade 1"
 
 #: gui/settingsDialogs.py:148
 msgid "L&ogging level:"
@@ -1674,7 +1687,7 @@ msgstr "Accord de licence"
 msgid "Lin&ks"
 msgstr "Lie&ns"
 
-#: core.py:156
+#: core.py:159
 msgid "Loading NVDA. Please wait..."
 msgstr "Chargement de NVDA. veuillez patienter..."
 
@@ -1955,7 +1968,7 @@ msgstr "Paquet de module complémentaire de NVDA"
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ne peut pas supprimer ou remplacer un fichier."
 
-#: core.py:256
+#: core.py:259
 msgid "NVDA started"
 msgstr "NVDA démarré"
 
@@ -1979,6 +1992,11 @@ msgstr "Saisie native"
 msgctxt "languageName"
 msgid "Nepali"
 msgstr "Népali"
+
+#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
+#: gui/upgradeAlerts.py:24
+msgid "New Laptop Keyboard layout"
+msgstr "Nouvelle disposition pour clavier d'ordinateur portable"
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 #: appModules/msimn.py:25
@@ -2406,6 +2424,12 @@ msgstr "quitter NVDA !"
 #: synthDrivers/espeak.py:26
 msgid "Rate boos&t"
 msgstr "tripler le débi&t"
+
+#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
+#. to open the What's New document.
+#: gui/upgradeAlerts.py:30
+msgid "Read What's New"
+msgstr "Lire quoi de &neuf"
 
 #: gui/settingsDialogs.py:1307
 msgid "Read by &paragraph"
@@ -3061,14 +3085,13 @@ msgstr "&Dictionnaires de prononciation"
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:617
 msgid "Speech interrupt for Enter key"
-msgstr ""
+msgstr "Interruption de la parole à l'appui de la touche entrer"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:612
-#, fuzzy
 msgid "Speech interrupt for typed characters"
-msgstr "Écho clavier par &caractère"
+msgstr "Interruption de la parole à la frappe d''un caractère"
 
 #: gui/__init__.py:323
 msgid "Speech viewer"
@@ -3163,7 +3186,7 @@ msgstr "Espace réservé de tableau"
 msgid "Tamil grade 1"
 msgstr "Tamoul grade 1"
 
-#: NVDAObjects/IAccessible/__init__.py:1624
+#: NVDAObjects/IAccessible/__init__.py:1634
 msgid "Taskbar"
 msgstr "Barre de tâches"
 
@@ -3841,7 +3864,7 @@ msgstr "bouton"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:484
+#: braille.py:487
 #, python-format
 msgid "c%s"
 msgstr "c%s"
@@ -4350,7 +4373,7 @@ msgstr "groupage"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:430
+#: braille.py:433
 #, python-format
 msgid "h%s"
 msgstr "t%s"
@@ -4651,7 +4674,7 @@ msgstr "lst"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:471
+#: braille.py:474
 #, python-format
 msgid "lv %s"
 msgstr "nv %s"
@@ -5235,7 +5258,7 @@ msgstr "aucun"
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 #. but this still might be used in some other cases.
 #. %s will be replaced with the negated state.
-#: braille.py:451 speech.py:814
+#: braille.py:454 speech.py:814
 #, python-format
 msgid "not %s"
 msgstr "non %s"
@@ -5494,7 +5517,7 @@ msgstr "violet"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:476
+#: braille.py:479
 #, python-format
 msgid "r%s"
 msgstr "l%s"
@@ -6099,7 +6122,7 @@ msgid "visited"
 msgstr "visité"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:436
+#: braille.py:439
 msgid "vlnk"
 msgstr "lnv"
 
@@ -6242,7 +6265,7 @@ msgstr ""
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#: braille.py:467 speech.py:825
+#: braille.py:470 speech.py:825
 msgid "{number} of {total}"
 msgstr "{number} sur {total}"
 
