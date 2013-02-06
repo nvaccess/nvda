@@ -2,8 +2,9 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2012 NV Access Limited
+#Copyright (C) 2010-2013 NV Access Limited
 
+from comtypes import COMError
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
@@ -37,6 +38,14 @@ class AdobeFlash(VirtualBuffer):
 		self.isWindowless = rootNVDAObject.event_objectID > 0
 
 	def __contains__(self,obj):
+		if self.isWindowless:
+			if obj.windowHandle != self.rootNVDAObject.windowHandle:
+				return False
+			try:
+				self.rootNVDAObject.IAccessibleObject.accChild(obj.event_objectID)
+				return True
+			except COMError:
+				return False
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
 
 	def _get_isAlive(self):
