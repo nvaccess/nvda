@@ -22,7 +22,6 @@ _remoteLoader64=None
 localLib=None
 generateBeep=None
 VBuf_getTextInRange=None
-nvdaInProcUtils_sysListView32_getGroupInfo=None
 lastInputLanguageName=None
 lastInputMethodName=None
 
@@ -404,7 +403,7 @@ class RemoteLoader64(object):
 		winKernel.closeHandle(self._process)
 
 def initialize():
-	global _remoteLib, _remoteLoader64, localLib, generateBeep,VBuf_getTextInRange, nvdaInProcUtils_sysListView32_getGroupInfo
+	global _remoteLib, _remoteLoader64, localLib, generateBeep,VBuf_getTextInRange
 	localLib=cdll.LoadLibrary('lib/nvdaHelperLocal.dll')
 	for name,func in [
 		("nvdaController_speakText",nvdaController_speakText),
@@ -435,9 +434,6 @@ def initialize():
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
-	nvdaInProcUtils_sysListView32_getGroupInfo = CFUNCTYPE(c_long, c_long, c_long, c_int, POINTER(BSTR), POINTER(BSTR), POINTER(c_int))(
-		("nvdaInProcUtils_sysListView32_getGroupInfo", localLib),
-		((1,), (1,), (1,), (2,), (2,), (2,)))
 	#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 	h=windll.kernel32.LoadLibraryExW(os.path.abspath(ur"lib\nvdaHelperRemote.dll"),0,0x8)
 	if not h:
