@@ -146,12 +146,8 @@ class LVCOLUMN64(Structure):
 class List(List):
 
 	def getListGroupInfo(self,groupIndex):
-		header=BSTR()
-		footer=BSTR()
-		state=c_int()
-		if watchdog.cancellableExecute(NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getGroupInfo,self.appModule.helperLocalBindingHandle,self.windowHandle,groupIndex,byref(header),byref(footer),byref(state))!=0:
-			return None
-		return dict(header=header.value,footer=footer.value,state=state.value,groupIndex=groupIndex)
+		header,footer,state=watchdog.cancellableExecute(NVDAHelper.nvdaInProcUtils_sysListView32_getGroupInfo,self.appModule.helperLocalBindingHandle,self.windowHandle,groupIndex)
+		return dict(header=header,footer=footer,state=state,groupIndex=groupIndex)
 
 	def _get_name(self):
 		name=super(List,self)._get_name()
