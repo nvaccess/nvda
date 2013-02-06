@@ -240,7 +240,7 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 			VARIANT* varChildren;
 			if(!(varChildren=(VARIANT*)malloc(sizeof(VARIANT)*childCount)))
 				return;
-			if(AccessibleChildren(pacc,0,childCount,varChildren,&childCount)!=S_OK)
+			if(FAILED(AccessibleChildren(pacc,0,childCount,varChildren,&childCount)))
 				childCount=0;
 			for(long i=0;i<childCount;++i) {
 				if (varChildren[i].vt != VT_DISPATCH || !varChildren[i].pdispVal) {
