@@ -59,7 +59,13 @@ class AdobeFlash(VirtualBuffer):
 		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, objId, childId)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		return obj.windowHandle, obj.event_objectID if obj.event_objectID > 0 else obj.event_childID
+		info = obj.IAccessibleIdentity
+		if info:
+			# Trust IAccIdentity over the event parameters.
+			accId = info["objectID"]
+		else:
+			accId = obj.event_objectID if obj.event_objectID > 0 else obj.event_childID
+		return obj.windowHandle, accId
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="formField":
