@@ -189,8 +189,10 @@ void AdobeFlashVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle
 		WCHAR* wclass = (WCHAR*)malloc(sizeof(WCHAR) * 256);
 		if (!wclass)
 			return;
-		if (GetClassName((HWND)docHandle, wclass, 256) == 0)
+		if (GetClassName((HWND)docHandle, wclass, 256) == 0) {
+			free(wclass);
 			return;
+		}
 		this->isWindowless = wcscmp(wclass, L"Internet Explorer_Server") == 0;
 		free(wclass);
 	}
