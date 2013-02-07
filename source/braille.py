@@ -1395,8 +1395,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""Checks to see if the final text region needs its caret updated and if so calls _doCursorMove for the region."""
 		region=self.mainBuffer.regions[-1] if self.mainBuffer.regions else None
 		if isinstance(region,TextInfoRegion) and region.pendingCaretUpdate:
-			self._doCursorMove(region)
-			region.pendingCaretUpdate=False
+			try:
+				self._doCursorMove(region)
+			finally:
+				region.pendingCaretUpdate=False
 
 	def _doCursorMove(self, region):
 		self.mainBuffer.saveWindow()
