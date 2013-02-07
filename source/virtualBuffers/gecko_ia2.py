@@ -30,6 +30,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role=controlTypes.ROLE_BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
+		if role == controlTypes.ROLE_EDITABLETEXT and not (controlTypes.STATE_FOCUSABLE in states or controlTypes.STATE_UNAVAILABLE in states or controlTypes.STATE_EDITABLE in states):
+			# This is a text leaf.
+			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
+			role = controlTypes.ROLE_STATICTEXT
 		if attrs.get("IAccessibleAction_showlongdesc") is not None:
 			states.add(controlTypes.STATE_HASLONGDESC)
 		if "IAccessibleAction_click" in attrs:
