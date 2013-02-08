@@ -761,8 +761,11 @@ class TextInfoRegion(Region):
 		# Strip line ending characters, but add a space in case the cursor is at the end of the reading unit.
 		self.rawText = self.rawText.rstrip("\r\n\0\v\f") + " "
 		self._rawToContentPos.append(self._currentContentPos)
-		del self.rawTextTypeforms[len(self.rawText) - 1:]
+		rawTextLen = len(self.rawText)
+		del self.rawTextTypeforms[rawTextLen - 1:]
 		self.rawTextTypeforms.append(louis.plain_text)
+		if self.cursorPos is not None and self.cursorPos >= rawTextLen:
+			self.cursorPos = rawTextLen - 1
 
 		# If this is not the start of the object, hide all previous regions.
 		start = cursor.obj.makeTextInfo(textInfos.POSITION_FIRST)
