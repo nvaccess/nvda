@@ -949,9 +949,9 @@ void gdiHooks_inProcess_initialize() {
 	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
 	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);
 	real_DestroyWindow=apiHook_hookFunction_safe("USER32.dll",DestroyWindow,fake_DestroyWindow);
-	//real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
-	//real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
-	//real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
+	real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
+	real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
+	real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
 }
 
 void gdiHooks_inProcess_terminate() {
