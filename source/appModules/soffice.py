@@ -150,8 +150,8 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
-			obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset)
-			formatField["link"] = True
+			if obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset) != -1:
+				formatField["link"] = True
 		except COMError:
 			pass
 
