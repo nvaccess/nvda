@@ -4,6 +4,22 @@
 %!includeconf: ../changes.t2tconf
 = 2013.1 =
 
+== wichtig ==
+
+=== neues Laptop-Tastaturschema ===
+Das Laptop-Tastaturschema wurde überarbeitet, wodurch es intuitiver und konsistenter wird.
+So werden z.B. die Pfeiltasten in Kombination mit der NVDA-Taste und anderen Umschaltern zum Betrachten von Text verwendet.
+
+Folgende Änderungen wurden an häufig verwendeten Befehlen vorgenommen:
+|| Name | Tastenkombination |
+| alles ansagen | NVDA+a |
+| aktuelle Zeile lesen | NVDA+l |
+| aktuelle Textauswahl lesen | NVDA+shift+s |
+| Statuszeile vorlesen | NVDA+Umschalt+ende |
+Zudem wurden die Befehle für die objektnavigation, zum Betrachten von Text, für Mausaktionen sowie der Synthesizer-Einstellungsring geändert.
+Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] nach.
+
+
 == Neue Funktionen ==
 - Grundlegende Unterstützung für das Lesen und bearbeiten von Microsoft PowerPoint-Präsentationen. (#501)
 - Grundlegende Unterstützung beim Lesen und Schreiben von Nachrichten in Lotus Notes 8.5. (#543)
@@ -11,13 +27,18 @@
 - Im Internet Explorer 9 und neuer werden Benachrichtigungen korrekt ausgegeben (wenn z. B. Inhalte oder herunterzuladene Dateien blockiert werden). (#2343)
 - Automatisches Ausgebe von Spalten- und Reihenüberschriften von Tabellen im Internet Explorer und anderen mshtml-Dokumenten wird unterstützt (#778)
 - Neue Sprache: Aragonesisch
-- Neue Braille-Übersetzungstabelle: Dänische Kurzschrift.
+- neue Braille-Übersetzungstabellen: Dänische Kurzschrift, koreanische Vollschrift. (#2737)
 - Unterstützung für Bluetooth-Braillezeilen, die unter Verwendung des Bluetooth-Stacks von Toshiba mit dem Computer verbunden werden. (#2419)
 - Unterstützung für die Auswahl des Anschlusses bei FreedomScientific-Braillezeilen (automatisch, USB oder Bluetooth).
 - Unterstützung für  Notizgeräte der Braillenote Familie von Humanware, wenn diese als Braillezeile für einen Bildschirmleser arbeiten. (#2012)
 - Unterstützung für ältere Papenmeier-Braillezeilen (#2679)
+- Unterstützung für die Eingabe von Computer-Braille für Braillezeilen, die eine Braille-Tastatur besitzen. (#808)
+- neue Tastaturoptionen erlauben das Unterbrechen der Sprache beim Eingeben von Zeichen Bzw. beim Drücken der Eingabetaste. (#698)
 -
 
+== Änderungen ==
+- Liblouis Braille-Übersetzer auf 2.5.2 aktualisiert. (#2737)
+- Das Laptop-Tastaturschema wurde komplett überarbeitet, wodurch es intuitiver und konsistenter wird. (#804)
 
 == Fehlerbehebungen ==
 - Die Schnellnavigationstasten zum Springen zu Trennlinien funktionieren nun in Internet Explorer und anderen MSHTML-Dokumenten. (#2781)
@@ -35,13 +56,24 @@
 - Für Sprachen wie z. B. deutsch, bei denen das Pluszeichen(+) eine einzelne Taste ist, ist es nun möglich, das Pluszeichen in Tastenkombinationen zu verwenden, in dem man das Wort "plus" verwendet. (#2898)
 - In Internetexplorer und anderen MSHTML Elementen werden Zitate nun angesagt, wenn Sie auftauchen. (#2888)
 - Der Braillezeilentreiber für die HumanWare Brailliant BI/B serie  kann nun ausgewählt werden, wenn die Braillezeile  mittels Bluetooth verbunden wurde, aber noch nie  über USB verbunden wurde.
+- Wenn beim Eingeben eines Filterbegriffs in die Elementliste im lesemodus Großbuchstaben verwendet werden, wird nun ohne Berücksichtigung von Groß-/Kleinschreibung gefiltert (wie beim Eingeben von Kleinbuchstaben) (#2951)
+- in Mozilla-Browsern kann nun wieder der Lesemodus verwendet werden, wenn Flash-Inhalte den Fokus haben. (#2546)
+- Wenn Sie eine Kurzschrift-Übersetzungstabelle verwenden und die Option zum Ausschreiben des aktuellen Wortes in Computerbraille aktiviert ist, wird der Braille-Cursor nun korrekt gesetzt, wenn er hinter einem Wort steht, das ein Zeichen enthält, das durch mehrere Braille-Zeichen dargestellt wird. (z.B.  Großbuchstaben, Zahlenzeichen usw.). (#2947)
+- In Microsoft Word und in Internet Explorer wird markierter Text nun korrekt in Braille angezeigt.
+- Wenn Sie eine Braillezeile benutzen, können Sie nun wieder Text rückwärts markieren, wenn Sie sich in Microsoft Word befinden.
+- Wenn sie in Scintilla-Eingabefeldern die Befehle zum Betrachten von Text verwenden oder Zeichen löschen, wird nvda Multibyte-Zeichen korrekt ausgeben. (#2855)
+- Die Installation von NVDA wird nun nicht mehr fehlschlagen, wenn der Name des Benutzerprofilverzeichnisses bestimmte Multibyte-Zeichen enthält. (#2729)
+- Bei der Angabe von Gruppen in Listen-Steuerelementen (syslistview32) in 64-Bit-Anwendungen kommt es nun nicht mehr zu einem Fehler.
+- im Lesemodus von Mozilla-Anwendungen werden Textinhalte nun nicht mehr fälschlicherweise als deaktiviert angezeigt, auch wenn das selten der Fall ist. (#2959)
 -
 
 == Änderungen für Entwickler ==
 - Braillezeilentreiber unterstützen die Auswahl des Anschlusses (#426)
  - Dies ist für Braillezeilen sinnvoll, die an eine serielle Schnittstelle angeschlossen werden.
  - Hierfür können Sie die Klassenmethode getPossiblePorts aus der Klasse BrailleDisplayDriver verwenden.
- -
+- Braille-Eingabe von Braille-Tastaturen wird nun unterstützt (#808)
+ - Braille-eingaben werden in die Klasse  brailleInput.BrailleInputGesture oder eine abgeleitete Klasse eingeschlossen.
+ - Unterklassen von  braille.BrailleDisplayGesture (wie sie z.B. in Braillezeilentreibern implementiert sind) können auch von  brailleInput.BrailleInputGesture ableiten. Dies ermöglicht die Verarbeitung von Braille-Navigationsbefehlen und Braille-Eingaben von ein und derselben Klasse.
 -
 
 = 2012.3 =
