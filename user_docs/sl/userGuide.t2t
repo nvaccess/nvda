@@ -2,7 +2,7 @@
 
 
 %!includeconf: ../userGuide.t2tconf
-%kc:title: NVDA NVDA_VERSION Commands Quick Reference
+%kc:title: NVDA NVDA_VERSION Hitra Referenca za Ukaze
 
 = Kazalo Vsebine =[toc]
 %%toc
@@ -17,33 +17,84 @@ NVDA omogoča slepim in osebam s preostankom vida dostop in interakcijo z operac
 
 Glavni poudarki so:
 - Podpora za pogosto uporabljene programe vključno z internetnimi brskalniki, programi za e-pošto, programi za neposredno klepetanje in pisarniškimi zbirkami
-Vgrajena govorna sinteza, ki podpira več kot 43 jezikov
-Poročanje o postavitvi besedila, kjer je to mogoče; na primer velikost in ime pisave, slogovne in črkovne nepravilnosti
+- Vgrajena govorna sinteza, ki podpira več kot 43 jezikov
+- Poročanje o postavitvi besedila, kjer je to mogoče; na primer velikost in ime pisave, slogovne in črkovne nepravilnosti
 - Samodejno obvestilo o besedilu pod miško in zvočna indikacija o položaju miške, če to želite
-- Podpora za veliko brajevih vrstic
+- Podpora za veliko brajevih vrstic vključno s podporo vnosa računalniške brajice za vrstice, ki vsebujejo brajevo tipkovnico
 - Možno uporabljati preko USB ključka ali drugega prenosljivega medija brez namestitve v računalnik
 - Govorna podpora ob namestitvi v sistem
-- Prevedeno v 40 jezikov
+- Prevedeno v 42 jezikov
 - Podpora za aktualne Windows operacijske sisteme tako 32-bitne kot 64-bitne
 - Možno poganjati na Windows prijavnem zaslonu in drugih "varnih" namizjih
 - Podpora za več vmesnikov za prilagoditev na primer Microsoft Active Accessibility, Java Access Bridge, IAccessible2 in UI Automation (le-ta je podprt v Windows 7 in novejših)
-Podpora Windows Ukaznemu pozivu in programom v konzoli
+- Podpora Windows Ukaznemu pozivu in programom v konzoli
 - 
 
 ++ Internacionalizacija ++
 Pomembno je, da imajo ljudje, ne glede kateri jezik govorijo, enak dostop do tehnologije.
-Poleg Angleščine je NVDA prevedena v 40 jezikov vključno z: Afrikanščino, Albanščino, Amhariščino, Arabščino, Bolgarščino, Brazilsko Portugalščino, Češčino, Danščino, Finščino, Francoščino, Galicijščino, Grščino, Gruzijščino, Hebrejščino, Hindujščino, Hrvaščino, Islandščino, Italijanščino, Japonščino, Korejščino, Madžarščino,Nepalščino, Nemščino, Nizozemščino, Norveščino, Poljščino, Portugalščino, Romunščino, Ruščino, Slovaščino, Srbščino, Španščino, Švedščino, Tamilščino, Tajščino, Tradicionalno in Poenostavljeno Kitajščino, Turščino, Ukrajinščino in Vietnamščino.
+Poleg Angleščine je NVDA prevedena v 42 jezikov vključno z: Afrikanščino, Albanščino, Amhariščino, Arabščino, Aragonščino (Španija), Bolgarščino, Brazilsko Portugalščino, Češčino, Danščino, Finščino, Francoščino, Galicijščino, Grščino, Gruzijščino, Hebrejščino, Hindujščino, Hrvaščino, Islandščino, Italijanščino, Japonščino, Korejščino, Madžarščino,Nepalščino, Nemščino, Nizozemščino, Norveščino, Poljščino, Portugalščino, Romunščino, Ruščino, Slovaščino, Slovenščino, Srbščino, Španščino, Švedščino, Tamilščino, Tajščino, Tradicionalno in Poenostavljeno Kitajščino, Turščino, Ukrajinščino in Vietnamščino.
 
 ++ Podpora Govorni sintezi ++
 Ločeno od podajanja sporočil in vmesnika v naštetih jezikih NVDA omogoča uporabnici/ku, da bere vsebino v kateremkoli jeziku tako dolgo, dokler ima na računalniku nameščeno govorno sintezo za izbran jezik.
 
 NVDA prihaja skupaj z [eSpeakom http://espeak.sourceforge.net/], prosto in odprtokodno, večjezično govorno sintezo.
 
-Informacije o drugih govornih sintezah, ki jih podpira NVDA, lahko najdete  
+Informacije o drugih govornih sintezah, ki jih podpira NVDA, lahko najdete v razdelku [Podprte Govorne Sinteze #SupportedSpeechSynths] tega vodiča.
 
 ++ Podpora Brajici ++
+Za tiste, ki posedujejo brajevo vrstico, NVDA lahko prikazuje sporočila in druge aktivnosti tudi na njih.
+Prosimo, oglejte si [Podprte Brajeve Vrstice #SupportedBrailleDisplays] razdelek za več informacij o podprtih brajevih vrsticah.
+
+NVDA podpira precej brajevih kodnih tabel vključno z računalniškimi, kratkopisnimi in normalnimi za veliko jezikov.
 
 ++ Licenca in Avtorske Pravice ++
+Avtorske pravice NVDA_COPYRIGHT_YEARS nad NVDA pripadajo NVDA sodelujočim.
+
+NVDA je zaščitena z GNU Splošno Javno Licenco (druga različica).
+Ta program lahko spreminjate ali delite na okoli, na kakršenkoli način želite,vse dokler ga spremlja omenjena licenca in dajete izvorno kodo na voljo vsakomur, ki to želi.
+To se nanaša tako na pristno izdajo, kot spremenjene kopije tega programa in tudi na derivate.
+Več podrobnosti je na voljo [na strani z besedilom licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Sistemske Zahteve +
+- Operacijski Sistemi: vse 32-bitne in 64-bitne različice sistema Windows XP, Viste, 7 in 8 (vključno s Strežniškimi različicami)
+- Pomnilnik: 256 MB RAMa ali več
+- Procesorska hitrost: 1,0  GHz ali hitrejši
+- Približno 50 MB prostora na disku
+-
 
++ Kako Dobiti in Postaviti NVDA +
+Če še nimate svoje kopije NVDA, jo lahko snamete iz: [www.nvda-project.org NVDA_URL].
+
+Pojdite na razdelek download in tam boste našli povezavo za prenos najnovejše različice NVDA.
+
+Ko boste preneseno datoteko prvič zagnali, se bo namestila začasna kopija NVDA.
+Potem vas bomo vprašali, če želite NVDA namestiti na vaš računalnik, izdelati prenosljivo kopijo na vaš USB ključ ali želite zgolj uporabljati to začasno kopijo.
+
+Če želite NVDA vedno uporabljati na izbranem računalniku, potem boste želeli izbrati Namesti NVDA na ta računalnik.
+Namestitev NVDA na računalnik vam omogoča med drugim interakcijo na prijavnem zaslonu in na varnih zaslonih ter samodejni zagon po prijavi, kar ni možno, če imate prenosljivo ali začasno kopijo. Poleg tega omogoča tudi ustvarjanje programskega sklopa v meniju Start in bližnjice na namizju.
+Nameščena kopija NVDA omogoča, da si sami iz nje kadarkoli izdelate prenosljivo kopijo. 
+
+Če želite s seboj vzeti NVDA na USB ključku ali drugem zapisljivem mediju, potem morate izbrati ustvari prenosljivo kopijo.
+Prenosljiva kopija omogoča samonamestitev kasneje na izbrani računalnik.
+Kakorkoli, če želite NVDA preslikati na medij, ki je samo za branje (CD ali drug), potem na medij zapišite samo paket, ki ste ga dolpotegnili.
+Poganjanje z medija, ki je samo za branje, trenutno ni podprto.
+
+Možno je uporabiti tudi začasno kopijo (na primer za demonstracijske prikaze), čeprav je pot zagona NVDA v tem načinu precej zamudno.
+
+++ Omejitve Začasne in Prenosljive Kopije ++
+Ločeno od tega, da se NVDA ne more samodejno zagnati med in ali po prijavi, imata prenosljiva in začasna kopija še naslednje omejitve:
+- Nezmožnost biti v interakcijami s programi, ki tečejo s skrbniškimi pravicami, dokler seveda tudi NVDA sama ne teče z istimi pravicami (ni priporočljivoo).
+- Nezmožnost branja zaslonov Nadzora Uporabniškega računa (NURR), ko se poskuša zagnati program s skrbniškimi pravicami.
+- Windows 8: nezmožnost podpirati vnos preko zaslona na dotik.
+- Windows 8: nezmožnost oskrbeti značilnosti, kot so recimo Brskalniško delovanje in izgovor natipkanih znakov v Windows Store apps.
+-
+
+++ Namestitev NVDA ++
+Če nameščate NVDA neposredno s paketa, ki ste ga prenesli na sistem, potem pritisnite gumb Namesti NVDA.
+Če ste že zaprli to pogovorno okno ali pa želite namestiti NVDA iz prenosljive kopije, potem izberite Namesti NVDA element, ki ga najdete pod Orodji v meniju NVDA.
+
+Pogovorno okno namestitve, ki se prikaže, potrdi, ali želite namestiti NVDA in pove tudi ali bo ta namestitev posodobila prejšnjo namestitev.
+S pritiskom na gumb Nadaljuj, boste sprožili nameščanje NVDA.
+V tem pogovornem oknu je še nekaj možnosti, ki jih ta priročnik razloži spodaj.
+Ko je namestitev končana, se prikaže sporočilo o tem, da je namestitev končana.
+Pritisk na gumba V redu na tej točki bo ponovno zagnal na novo nameščeno kopijo NVDA.
