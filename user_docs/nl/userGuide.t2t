@@ -20,7 +20,7 @@ Belangrijke functies zijn:
 - Ingebouwde spraakmodule met ondersteuning voor meer dan 43 talen
 - Vermeldding van tekstopmaakeigenschappen , voor zover beschikbaar, zoals naam lettertype, grootte, stijl- en spelfouten
 - Tekst onder de muis wordt automatisch voorgelezen en er kan een akoestisch signaal worden ingesteld dat de muispositie aangeeft
-- Ondersteuning voor veel brailleleesregels
+- Ondersteuning voor veel brailleleesregels, inclusief invoer van computerbraille voor leesregels met een brailletoetsenbord
 - Kan via usb-stick of ander  draagbare media worden gedraaid zonder dat installatie nodig is
 - Eenvoudige installatie dankzij gesproken ondersteuning
 - In 42 talen beschikbaar
@@ -77,7 +77,6 @@ Als u NVDA echter naar media met het kenmerk alleen-lezen, zoals een CD, wilt ko
 Op dit moment kan de  draagbare versie niet rechtstreeks van media met het kenmerk alleen-lezen worden uitgevoerd.
 
 De tijdelijke kopie van NVDA gebruiken is ook een optie, bij voorbeeld om het programma te demonstreren, maar het kost wel veel tijd als u NVDA telkens op deze manier moet starten.
-
 ++ Beperkingen van de draagbare en tijdelijke versie van NVDA. ++
 Behalve dat bij gebruik van de draagbare of tijdelijke versie van NVDA het programma niet automatisch gestart kan worden na aanmelding bij Windows, gelden bovendien de volgende beperkingen:
 - Werken met toepassingen die met beheerdersrechten worden uitgevoerd is niet mogelijk, tenzij NVDA ook met deze rechten wordt uitgevoerd natuurlijk, (niet aan te bevelen),
@@ -664,8 +663,8 @@ Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dial
 | De huidige synthesizerinstelling aflopend bijstellen | NVDA+control+Pijl Omlaag | NVDA+control+Pijl Omlaag |Stelt momenteel gebruikte spraakinstelling naar beneden bij. Verlaagt bij voorbeeld snelheid en volume, selecteert vorige stem |
 %kc:endInclude
 
-+++ Braille-instellingen +++
-Onder “Opties” in het NVDA-menu gaat u naar “Braille” om het dialoogvenster voor de braille-instellingen te openen.
++++ Brailleïnstellingen +++
+Onder “Opties” in het NVDA-menu gaat u naar “Braille” om het dialoogvenster voor de brailleïnstellingen te openen.
 
 ==== Brailleleesregel ====
 Allereerst komt u in dit dialoogvenster een uitklapvenster met de naam brailleleesregel tegen.
@@ -685,12 +684,21 @@ Bij sommige brailleleesregels is het echter mogelijk expliciet te bepalen welke 
 De normale procedure is dat opties "Automatisch" worden ingesteld (hetgeen  inhoudt dat NVDA standaard een automatische poortselectie zal uitvoeren) voor "USB", "Bluetooth" en legacy seriële communicatiepoorten, als het type communicatie door uw leesregel wordt ondersteund.
 
 Deze optie is niet beschikbaar als uw brailleleesregel alleen automatische poortdetectie ondersteunt. 
-
 Raadpleeg de documentatie van uw brailleleesregel in de rubriek [ondersteunde Brailleleesregels #SupportedBrailleDisplays] voor meer informatie over de ondersteunde communicatietypes en beschikbare poorten.
  
-==== Talentabel ====
-De volgende optie die u in dit dialoogvenster tegen komt is het uitklapvenster voor de verschillende brailletabellen.
-U treft tabellen aan voor een aantal talen. Met de pijltjestoetsen kunt u de gewenste tabel in de lijst selecteren. 
+==== Uitvoertabel ====
+Vervolgens komt u in dit dialoogvenster de vervolgkeuzelijst met braille-uitvoertabellen tegen.
+In de lijst vindt u brailletabellen voor verschillende talen, braillestandaarden en gradaties.
+De gekozen tabel zorgt ervoor  dat tekst wordt omgezet in braille voor weergave op de brailleleesregel.
+U kunt de pijltjestoetsen gebruiken om door de lijst met brailletabellen te navigeren.
+
+==== Invoertabel ====
+Terwijl de uitvoertabel tekst omzet in braille, kunt u via deze vervolgkeuzelijst kiezen welke invoertabel u wilt gebruiken om   braille, (ingevoerd met het brailletoetsenbord van uw leesregel), om te zetten in tekst.
+Momenteel ondersteunt NVDA alleen computerbrailleïnvoer, zodat alleen 8-punts computerbrailletabellen worden getoond.
+U kunt de pijltjestoetsen gebruiken om door de lijst met brailletabellen te navigeren.
+
+Merk op dat deze instelling alleen zinvol is als uw leesregel over een toetsenbord van het Perkins-type beschikt en het stuurprogramma van uw brailleleesregel hiervoor ondersteuning biedt. 
+Als invoer niet wordt ondersteund door een leesregel  die is uitgerust met een brailletoetsenbord, wordt dit vermeld in de rubriek [ondersteunde Brailleleesregels #SupportedBrailleDisplays].
 
 ==== woord onder cursor uitbreiden naar computerbraille ====
 Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven in onverkort computerbraille.
@@ -1179,6 +1187,9 @@ Voor de nieuwere Focusmodellen die uitgerust zijn met "rocker bar" toetsen
 Zowel de ALVA BC640 als de BC680 leesregel van [Optelec http://www.optelec.com/] worden ondersteund.
 U hoeft geen specifieke drivers te installeren om deze leesregels te gebruiken.
 Sluit de leesregel aan en pas de configuratie van NVDA aan voor het gebruik van deze leesregels.
+
+Hoewel deze leesregels  wel een brailletoetsenbord hebben, zorgen ze zelf voor de omzetting van  braille naar tekst.
+Het is dan ook niet relevant dat er  in NVDA een brailleïnfvoertabel wordt ingesteld.
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
