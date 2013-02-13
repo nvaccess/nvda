@@ -64,7 +64,9 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - Le texte sélectionné est maintenant correctement affiché en braille dans des applications comme Microsoft Word 2003 et les zone d'édition dans Internet Explorer.
 - Il est à nouveau possible de sélectionner du texte en arrière dans Microsoft Word lorsque le braille est activé.
 - Lorsqu'on lit ou supprime un caractère avec backspace ou suppr dans une zone d'édition Scintilla, NVDA annonce correctement les caractères multibyte. (#2855)
-- NVDA n'échouera plus à s'installer lorsque le chemin du profile contient des caractères multibyte. (#2729)
+- NVDA n'échouera plus à l'installation lorsque le chemin du profile contient des caractères multibyte. (#2729)
+- L'annonce des groupes dans les vues de liste (SysListview32) dans les applications 64-bits ne cause plus d'erreur.
+- En mode navigation dans les applications Mozilla, le contenu texte n'est plus considéré comme éditable dans de rares cas. (#2959)
 
 
 == Changements pour les développeurs ==
