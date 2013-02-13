@@ -5,6 +5,22 @@ Qué hay de Nuevo en NVDA
 
 = 2013.1 =
 
+== Importante ==
+
+=== Nueva Distribución Teclado Portátil ===
+La distribución de teclado portátil se rediseñó por completo para hacerla más intuitiva y consistente.
+La nueva distribución utiliza las teclas de cursor en combinación con la tecla NVDA y otras modificadoras para órdenes de revisión.
+
+Por favor ten en cuenta los siguientes  cambios para órdenes comúnmente utilizadas:
+|| Nombre | Tecla |
+| Leer todo | NVDA+a |
+| Leer línea actual | NVDA+l |
+| Leer selección de texto actual | NVDA+shift+s |
+| Anunciar barra de estado | NVDA+shift+fin |
+Además, entre otros cambios, han variado las órdenes para toda la navegación de objetos, revisión de texto, clic del ratón y grupos de opciones del sintetizador.
+Por favor mira el documento [Referencia Rápida de Órdenes keyCommands.html] para las nuevas teclas.
+
+
 == Nuevas Características ==
 - Soporte básico para editar y leer presentaciones de Microsoft PowerPoint. (#501)
 - Soporte básico para leer y escribir mensajes en Lotus Notes 8.5. (#543)
@@ -12,12 +28,18 @@ Qué hay de Nuevo en NVDA
 - Las notificaciones en Internet Explorer 9 y superior ahora se verbalizan (tales como contenido bloqueado o descargas de ficheros). (#2343)
 - El anunciado automático de los encabezados de fila y columna ahora se soporta para documentos en modo navegación en Internet Explorer y otros controles MSHTML. (#778)
 - Nuevo idioma: Aragonés
-- Nueva tabla de transcripción braille:  Danés grado 2.
+- Nuevas tablas de transcripción braille:  Danés grado 2, Coreano grado 1.
 - Soporte para líneas braille conectadas a través de bluetooth en un ordenador ejecutando el Bluetooth Stack for Windows de Toshiba. (#2419)
 - Soporte para la selección de puerto cuando se utilicen líneas freedom Scientific (Automático, USB o Bluetooth).
 - Soporte para la familia BrailleNote de anotadores electrónicos de Humanware cuando actúen como una terminal braille para un lector de pantalla. (#2012)
 - Soporte para  modelos antiguos de las líneas braille Papenmeier BRAILLEX. (#2679)
 - Soporte para la entrada de braille computerizado  para líneas braille que tengan un teclado braille. (#808)
+- Nuevas opciones de teclado que permiten  elegir si NVDA debería interrumpir la voz para los caracteres escritos o la tecla Intro. (#698)
+
+
+== Cambios ==
+- Actualizado el transcriptor braille liblouis a 2.5.2. (#2737)
+- La distribución de teclado portátil se ha rediseñado por completo para hacerla más intuitiva y consistente. (#804)
 
 
 == Corrección de Fallos ==
@@ -35,7 +57,16 @@ Qué hay de Nuevo en NVDA
 - Si el idioma de entrada se cambia a algún otro que el predeterminado, NVDA ahora detecta las teclas correctamente para órdenes y el modo de ayuda de entrada.
 - Para idiomas tales como el alemán donde el signo + (más) es una  tecla sola en el teclado, ahora es posible vincularle órdenes utilizando la palabra "plus". (#2898)
 +- En Internet Explorer y otros controles  MSHTML, las comillas ahora se anuncian donde proceda. (#2888)
-- El controlador de las líneas HumanWare Brailliant BI/Bbraille ahora puede  seleccionarse cuando la línea esté conectada a través de Bluetooth pero nunca se hayan conectado a través de USB.
+- El controlador de las líneas HumanWare Brailliant BI/Bbraille ahora puede  seleccionarse cuando las líneas estén conectadas a través de Bluetooth pero nunca se hayan conectado a través de USB.
+- El filtrado de elementos en la Lista de Elementos del modo navegación con el filtro de texto en mayúsculas ahora devuelve resultados no sensibles a las mayúsculas igual que en minúsculas en lugar de nada en absoluto. (#2951)
+- En navegadores de Mozilla, el modo navegación puede utilizarse de nuevo cuando se enfoque contenido Flash. (#2546)
+- Cuando se utilice una tabla de braille contraído y esté habilitada la opción expandir a braille computerizado para la palabra en el cursor , el cursor braille ahora se coloca correctamente cuando se encuentre después de  una palabra donde un carácter se  represente con varias celdas braille (ej.: signo de mayúsculas, signo de diálogo, signo de número, etc.). (#2947)
+- La selección de texto ahora se muestra correctamente en una línea braille en aplicaciones tales como controles de edición de Microsoft word 2003 e Internet Explorer.
+- Es posible de nuevo seleccionar texto en una dirección hacia atrás en Microsoft Word mientras esté habilitado el Braille.
+- Cuando se esté en revisión,  eliminando caracteres con retroceso o suprimir en controles de edición de Scintilla, NVDA anuncia correctamente caracteres multibyte. (#2855)
+- NVDA ya no fallará al instalar cuando la ruta del perfil de usuario contenga ciertos caracteres multibyte. (#2729)
+- El anunciado de grupos para controles Vista de Lista (SysListview32) en aplicaciones de 64 bit ya no causa un error.
++- En modo navegación en aplicaciones de Mozilla, el contenido de texto ya no se trata incorrectamente como editable en algunos casos extraños. (#2959)
 
 
 == Cambios para Desarrolladores ==
