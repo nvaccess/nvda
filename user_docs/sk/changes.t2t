@@ -5,19 +5,41 @@
 
 = 2013.1 =
 
+== Dôležité ==
+
+=== Nové rozloženie klávesnice laptop ===
+V snahe zjednodušiť ovládanie NVDA sme prepracovali rozloženie klávesnice Laptop tak, aby bolo intuitívnejšie.
+V novom rozložení sa na prehliadanie  používajú šípky v kombinácií s klávesom NVDA a inými modifikátormi.
+
+Pozorne si prezrite najčastejšie používané skratky, ktoré boli zmenené:
+|| Názov | Klávesová skratka |
+| Plynulé čítanie | NVDA+a |
+| Aktuálny riadok | NVDA+l |
+| Aktuálny výber | NVDA+shift+s |
+| Stavový riadok | NVDA+shift+end |
+okrem iného sa zmenili všetky skratky súvisiace s objektovou navigáciou, plošným prezeraním, ovládaním myši a kruhom nastavení hlasového výstupu.
+Pozrite si prosím [Zoznam príkazov keyCommands.html], kde nájdete ostatné skratky.
+
+
 == Nové vlastnosti ==
 - Základná podpora pre úpravu a čítanie prezentácií  v programe Microsoft Powerpoint. (#501)
 - Základná podpora pre písanie a čítanie správ v Lotus Notes 8.5. (#543)
-- V režime prehliadania pre MSHTML (ako napríklad Internet explorer) a Gecko (napríklad Firefox), NVDA oznamuje dostupnosť dlhýh popisov. Dlhý popis sa dá zobraziť v novom okne po stlačení NVDA+d. (#809)
+- V režime prehliadania v MSHTML (ako napríklad Internet explorer) a Gecko (napríklad Firefox), NVDA oznamuje dostupnosť dlhýh popisov. Dlhý popis sa dá zobraziť v novom okne po stlačení NVDA+d. (#809)
 - NVDA vie prečítať upozornenia (napríklad pri zablokovaní obsahu alebo sťahovaní súboru) v prehliadači Internet Explorer 9 a novších. (#2343)
-- Je podporované automatické oznamovanie hlavičiek riadkov / stĺpcov tabuľky v prehliadači Internet Explorer a iných MSHTML prvkoch. (#778)
+- Podporované automatické oznamovanie hlavičiek riadkov / stĺpcov tabuľky v prehliadači Internet Explorer a iných MSHTML prvkoch. (#778)
 - NVDA je preložené do Aragónčiny.
-- Doplnená tabuľka pre Dánsky skratkopis.
+- Doplnené tabuľky pre Dánsky skratkopis a Kórejský plnopis. (#2737)
 - Podpora pre brailovské riadky pripojené cez Bluetooth, ak je použitý Toshiba Bluetooth stack. (#2419)
 - Pri používaní riadkov od Freedom scientific je možné vybrať port (Automaticky, USb, bluetooth).
 - Zápisníky BrailleNote od Humanware je možné použiť ako externé brailovské riadky. (#2012)
 - Podpora pre staršie zobrazovače Papenmeier BRAILLEX (#2679)
 - Odteraz je možné písať pomocou 8-bodového počítačového kódu na riadkoch, ktoré majú brailovskú klávesnicu. (#808)
+- V dialógu Nastavenia klávesnice pribudli dve položky určujúce, či má NVDA prerušiť reč pri písaní a stlačení klávesu Enter. (#698)
+
+
+== Zmeny ==
+- aktualizovaný prekladač do braillu liblouis  2.5.2. (#2737)
+- Rozloženie klávesnice laptop bolo prepracované v snahe urobiť ovládanie NVDA jednoduchšie a intuitívnejšie. (#804)
 
 
 == Opravy ==
@@ -32,10 +54,19 @@
 - po vypnutí automatickej kontroly aktualizácií sa zmena prejaví okamžite a nie až po reštarte NVDA.
 - MVDA nezamrzne, ak pri štarte nemôže odstrániť priečinok po odstránenom doplnku, ak je tento používaný inou aplikáciou. (#2860)
 - Názvy záložiek v nastaveniach aplikácie Dropbox sa dajú čítať pomocou plošného prezerania.
-- Ak sa zmení rozloženie klávesnice na iné ako predvolené, NVDA správne rozpoznáva klávesy pre príkazy a v nápovede vstupu.
+- Ak sa zmení rozloženie klávesnice na iné ako predvolené, NVDA správne interpretuje klávesy pre príkazy a v nápovede vstupu.
 - Pre jazyky, v ktorých je symbol + (plus) samostatným klávesom (napríklad aj v slovenčine) je možné použiť tento kláves pri priraďovaní klávesových skratiek tak, že napíšete slovo "plus". (#2898)
 - V prehliadači Internet explorer a v MSHTML prvkoch sú správne oznamované citácie. (#2888)
 - Zobrazovač HumanWare série Brailliant BI/B sa dá používať cez Bluetooth aj v prípade, že nebol doposiaľ pripojený cez USB.
+- Zadanie veľkých písmen do filtra v zozname prvkov vráti ako výsledok všetky zhody, aj také, ktoré obsahujú malé písmená. Doposiaľ použitie veľkých písmen vrátilo prázdny výsledok. (#2951)
+- V prehliadačoch Mozilla je opäť možné použiť režim prehliadania v prípadoch, ak má fokus Flash objekt. (#2546)
+- Ak je použitá tabuľka pre skratkopis a je začiarknuté "Slovo, kde sa nachádza kurzor zobraziť počítačovým braillom", brailovský kurzor je správne umiestnený aj v prípadoch, ak slovo pred kurzorom obsahuje viacbunkové znaky (veľké písmená, číslicový znak, znak pre písmená a podobne). (#2947)
+- Na brailovských riadkoch sa správne zobrazuje výber textu v aplikáciách Microsoft word 2003 a editačných poliach programu Internet Explorer.
+- Opäť je možné vyberať text v aplikácii Microsoft Word pri aktívnom brailovskom riadku.
+- NVDA správne oznamuje viacbytové znaky pri úprave a čítaní v Scintilla editačných poliach. (#2855)
+- NVDA nespadne počas inštalácie, ak cesta k užívateľským dátam obsahuje niektoré viacbytové znaky. (#2729)
+- Oznamovanie skupínv zoznamoch (SysListview32) v 64-bitových aplikáciách nespôsobuje chybu.
+- V režime prehliadania v prehliadači Firefox nie je v ojedinelých prípadoch  text oznamovaný ako editačné pole. (#2959)
 
 
 = 2012.3 =
