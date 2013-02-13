@@ -791,13 +791,18 @@ class AppModule(appModuleHandler.AppModule):
 				except comtypes.COMError:
 					ppActivePaneViewType=None
 				if ppActivePaneViewType is None:
+					try:
+						m=m.presentation.slideShowWindow
+					except (AttributeError,COMError):
+						pass
+					if not m: return
 					clsList.insert(0,SlideShowWindow)
 				else:
 					if ppActivePaneViewType==ppViewOutline:
 						clsList.insert(0,OutlinePane)
 					else:
 						clsList.insert(0,DocumentWindow)
-					self.ppActivePaneViewType=ppActivePaneViewType
+					obj.ppActivePaneViewType=ppActivePaneViewType
 			else:
 				clsList.insert(0,PaneClassDC)
-			self.ppObjectModel=m
+			obj.ppObjectModel=m
