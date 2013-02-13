@@ -65,6 +65,8 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - It is again possible to select text in a backward direction in Microsoft Word while Braille is enabled.
 - When reviewing,  backspacing or deleting characters  In Scintilla edit controls, NVDA correctly announces multibyte characters. (#2855)
 - NVDA will no longer fail to install when the user's profile path contains certain multibyte characters. (#2729)
+- Reporting of groups for List View controls (SysListview32) in 64-bit applications no longer causes an error.
+- In browse mode in Mozilla applications, text content is no longer incorrectly treated as editable in some rare cases. (#2959)
 
 
 == Changes for Developers ==
