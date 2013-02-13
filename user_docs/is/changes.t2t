@@ -43,3 +43,12 @@ Hvað er nýtt í NVDA
 - Reklarnir fyrir Humanware Brailliant BI/B seríuna af blindraletursskjám er nú hægt að velja þegar skjárinn er tengdur með Blátönn, þrátt fyrir að hann hafi aldrei verið tengdur með USB.
 - Síun á atriðum í Vafrahams Eigindalistanum með stórum stöfum virkar nú sem skildi, líkt og síun á smáum bókstöfum. (#2951)
 - Í Mozilla vöfrum þá er nú hægt að nota Vafraham þegar Flash efni er í fókus. (#2546)
+
+
+== Changes for Developers ==
+- Braille display drivers can now support manual port selection. (#426)
+ - This is most useful for braille displays which support connection via a legacy serial port.
+ - This is done using the getPossiblePorts class method on the BrailleDisplayDriver class.
+
+
+

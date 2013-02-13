@@ -20,7 +20,7 @@ Nokkrir mikilvægir eiginleikar:
 - Innbyggður talgervill sem styður yfir 43 tungumál
 - tilkynningar um letur samsetningu þar sem það er mögulegt, svo sem tegund, stærð, stíl og stafsetningarvillur
 - Sjálfvirkar tilkynningar um texta undir músarbendli og einnig valkostur um hljóð tilkynningu á staðsetningu músar
-- Stuðningur við marga blindraletursskjái, sem og stuðningur við inntak tölvu-blindraleturs á þeim skjám sem hafa lyklaborð
+- Stuðningur við marga punktaletursskjái, sem og stuðningur við inntak tölvu-punktaleturs á þeim skjám sem hafa lyklaborð
 - Möguleiki á að keyra hugbúnaðinn frá USB lykli eða öðrum lausum diski án þess að setja hugbúnaðinn upp á stýrikerfinu
 - Einfaldur, talandi uppsetningarálfur
 - Þýtt yfir á 42 tungumál
@@ -41,11 +41,11 @@ Með NVDA fylgir einnig [eSpeak http://espeak.sourceforge.net/], gjaldfrjáls, f
 
 Upplýsingar um aðra talgervla sem NVDA styður er hægt að finna í [Supported Speech Synthesizers #SupportedSpeechSynths] hlutanum.
 
-++ Blindraleturs stuðningur ++
-Fyrir notendur sem eiga blindraletursskjá þá getur NVDA birt upplýsingar líka á blindraletri.
+++ Punktaleturs stuðningur ++
+Fyrir notendur sem eiga punktaletursskjá þá getur NVDA birt upplýsingar líka á blindraletri.
 Vinsamlegast styðjist við [Supported Braille Displays #SupportedBrailleDisplays] hlutann fyrir upplýsingar um þá skjái.
 
-NVDA styður blindraleturskóðun fyrir mörg tungumál, þmt. styttingar, venjulegt og tölvu blindraleturskóðun á mörgum tungumálum.
+NVDA styður punktaleturskóðun fyrir mörg tungumál, þmt. styttingar, venjulegt og tölvu punktaleturskóðun á mörgum tungumálum.
 
 ++ Leyfi og höfundaréttur ++
 NVDA er höfundarréttarvarið af NVDA_COPYRIGHT_YEARS NVDA tilleggjendur.
@@ -235,7 +235,7 @@ Annað hvort að hægri smella á NVDA táknið í kerfisreininni, eða flytja f
 | Skipta milli Innsláttar Hjálparviðmóts | NVDA+1 | enginn | Þeir lyklar sem stutt er á í þessu viðmóti verða tilkynntir, sem og lýsing á öllum NVDA flýtilykla skipunum sem eru tengdar við lyklana |
 | Hætta í NVDA | NVDA+q | enginn | Slekkur á NVDA |
 | Hleypa næsta lykli í gegn | NVDA+f2 | enginn | Segir NVDA að sleppa næsta lykli í gegn í forritinu sem er virkt, þrátt fyrir að lykillinn sem stutt er á sé venjulega túlkaður sem NVDA flýtilykill |
-| Skipta milli virkjunar eða afvirkjunar á svefnham forrits| NVDA+shift+s | enginn | svefnhamur afvirkjar allar NVDA flýtilykla skipanir og lestur/blindraletur fyrir það forrit sem er virkt. Þetta er mjög gagnlegt í forritum sem bjóða upp á eigin rödd eða skjálestrar eiginleika. Styddu á sömu lykla aftur til að afvirkja. |
+| Skipta milli virkjunar eða afvirkjunar á svefnham forrits| NVDA+shift+s | enginn | svefnhamur afvirkjar allar NVDA flýtilykla skipanir og lestur/punktaletur fyrir það forrit sem er virkt. Þetta er mjög gagnlegt í forritum sem bjóða upp á eigin rödd eða skjálestrar eiginleika. Styddu á sömu lykla aftur til að afvirkja. |
 %kc:endInclude
 
 ++ Tilkynning Kerfisupplýsinga ++
@@ -388,7 +388,7 @@ Sem dæmi, ef leiðsögu-hluturinn er hnappur, þá muntu yfirleitt verða stað
 Þú getur svo unnið með/lesið textann með því að nota [text review commands #ReviewingText] þaðan.
 Þú getur einnig vafrað beint til þess hlutar sem inniheldur staðsetningu bendilsins, og þar með notað [object navigation #ObjectNavigation] þaðan.
 
-Athugið að sjálfgefin stilling er að blindraletur eltir [focus #SystemFocus] og [caret #SystemCaret] í staðinn fyrir að elta hlutavöfrunina og textaskoðunina. 
+Athugið að sjálfgefin stilling er að punktaletur eltir [focus #SystemFocus] og [caret #SystemCaret] í staðinn fyrir að elta hlutavöfrunina og textaskoðunina. 
 Ef þú vilt fremur að það elti hlutavöfrun og textaskoðunina, þá þarf að [configure braille to be tethered to #BrailleTether].
 
 Eftirfarandi tvær skipanir virkja/afvirkja flötu skoðunina:
@@ -684,59 +684,59 @@ Ef þú vilt með skjótum hætti breyta stillingum talgervilsins án þess að 
 | Lækka valda talgervla stillingu | NVDA+kontrol+örNiður | NVDA+kontrol+örNiður | Lækkar gildi þeirrar radd stillingar sem er valin. Sb. lækkar hraða, velur fyrri rödd, lækkar tónstyrk |
 %kc:endInclude
 
-+++ Blindraleturs stillingar +++
-Skilaboðagluggann fyrir blindraleturs stillingar er hægt að kalla fram með því að fara í Valkostir valmyndina og þaðan í blindraleturs stillingar.
++++ Punktaleturs stillingar +++
+Skilaboðagluggann fyrir punktaleturs stillingar er hægt að kalla fram með því að fara í Valkostir valmyndina og þaðan í punktaleturs stillingar.
 
-==== Blindraleturs skjár ====
-Fyrsti valkosturinn sem þú hafnar í þegar komið er í skilaboðaglugga Blindraleturs er fjölvalsreitur sem heitir "Blindraletursskjár".
-Þér verða birtir nokkrir valkostir, eftir því hvaða reklar fyrir blindraletursskjái eru uppsettir í stýrikerfinu.
+==== Punktaleturs skjár ====
+Fyrsti valkosturinn sem þú hafnar í þegar komið er í skilaboðaglugga Punktaleturs er fjölvalsreitur sem heitir "Punktaletursskjár".
+Þér verða birtir nokkrir valkostir, eftir því hvaða reklar fyrir punktaletursskjái eru uppsettir í stýrikerfinu.
 Þú vafrar milli þessara valkosta með örvalyklunum.
 
-Ekkert blindraletur þýðir að þú ert ekki að nota blindraletur.
+Ekkert punktaletur þýðir að þú ert ekki að nota punktaletur.
 
-Sjá [Supported Braille Displays #SupportedBrailleDisplays] fyrir frekari upplýsingar um þá blindraletursskjái sem eru studdir.
+Sjá [Supported Braille Displays #SupportedBrailleDisplays] fyrir frekari upplýsingar um þá punktaletursskjái sem eru studdir.
 
 ==== Tengi ====
-Þessi valkostur, ef hann er í boði, gerir kleift að velja hvaða tengi eða tegund tengingar verður notuð til að eiga samskipti við blindraletursskjáinn sem þú hefur valið.
-Þetta er fjölvalsreitur sem inniheldur þá kosti sem eru í boði blindraletursskjáinn þinn.
+Þessi valkostur, ef hann er í boði, gerir kleift að velja hvaða tengi eða tegund tengingar verður notuð til að eiga samskipti við punktaletursskjáinn sem þú hefur valið.
+Þetta er fjölvalsreitur sem inniheldur þá kosti sem eru í boði punktaletursskjáinn þinn.
 
-Sjálfgefin stilling er að NVDA noti sjálfvirka tengiskoðun, sem þýðir að tengingin við blindraleturstækið verður virkjuð sjálfkrafa með því að skima eftir mögulegum USB og Blátannar tækjum í stýrikerfinu.
-Aftur á móti þá er hægt á sumum blindraleturstækjum að velja nákvæmlega hvaða tengi verður notað.
-Algengir valkostir eru "Sjálfvirkt" (sem segir NVDA að nota sjálfvirka tengiskoðun), "USB", "Blátannar" og seríal samskiptatengi ef blindraletursskjárinn þinn styður slík samskipti.
+Sjálfgefin stilling er að NVDA noti sjálfvirka tengiskoðun, sem þýðir að tengingin við punktaleturstækið verður virkjuð sjálfkrafa með því að skima eftir mögulegum USB og Blátannar tækjum í stýrikerfinu.
+Aftur á móti þá er hægt á sumum punktaleturstækjum að velja nákvæmlega hvaða tengi verður notað.
+Algengir valkostir eru "Sjálfvirkt" (sem segir NVDA að nota sjálfvirka tengiskoðun), "USB", "Blátannar" og seríal samskiptatengi ef punktaletursskjárinn þinn styður slík samskipti.
 
 Þessi valkostur er ekki í boði ef skjárinn þinn styður aðeins sjálfvirka tengiskoðun.
 
-Ágætt er að lesa yfir upplýsingar um blindraletursskjáinn í [Supported Braille Displays #SupportedBrailleDisplays] hlutanum til að nálgast frekari upplýsingar um studdar samskipta tegundir og þau tengi sem eru til reiðu.
+Ágætt er að lesa yfir upplýsingar um punktaletursskjáinn í [Supported Braille Displays #SupportedBrailleDisplays] hlutanum til að nálgast frekari upplýsingar um studdar samskipta tegundir og þau tengi sem eru til reiðu.
 
 ==== Úttaks Tafla ====
-Næsti valkostur í skilaboðaglugganum er fjölvalsreitur fyrir blindraleturs úttaks töfluna.
-Í þessum fjölvalsreit er að finna þær blindraleturs töflur, staðla og stig fyrir mismunandi tungumál.
-Valda taflan verður notuð til að þýða texta yfir í blindraletur sem síðan er birt á blindraletursskjánum.
-Þú getur valið milli blindraleturs taflanna í listanum með því að nota örvalyklana.
+Næsti valkostur í skilaboðaglugganum er fjölvalsreitur fyrir punktaleturs úttaks töfluna.
+Í þessum fjölvalsreit er að finna þær punktaleturs töflur, staðla og stig fyrir mismunandi tungumál.
+Valda taflan verður notuð til að þýða texta yfir í punktaletur sem síðan er birt á punktaletursskjánum.
+Þú getur valið milli punktaleturs taflanna í listanum með því að nota örvalyklana.
 
 ==== Inntaks Taflan ====
-Í samræmi við fyrri valkostinn, þá er næsta stilling í glugganum fjölvalsreitur fyrir blindraleturs inntaks töfluna.
-Valda taflan verður notuð til að þýða blindraleturs innsláttinn á Perkins samhæfanlegt lyklaborð yfir í texta.
-Sem stendur styður NVDA aðeins tölvu-Blindraleturs inntak, sem þýðir að einungis 8-punkta tölvu blindraletur verður birt.
-Þú getur valið milli blindraleturs taflna í listanum með örvalyklunum.
+Í samræmi við fyrri valkostinn, þá er næsta stilling í glugganum fjölvalsreitur fyrir punktaleturs inntaks töfluna.
+Valda taflan verður notuð til að þýða punktaleturs innsláttinn á Perkins samhæfanlegt lyklaborð yfir í texta.
+Sem stendur styður NVDA aðeins tölvu-Punktaleturs inntak, sem þýðir að einungis 8-punkta tölvu punktaletur verður birt.
+Þú getur valið milli punktaleturs taflna í listanum með örvalyklunum.
 
-Athugið að þessi valkostur er aðeins gagnlegur ef blindraleturs skjárinn er með Perkins samhæfanlegt lyklaborð og ef rekillinn sem er notaður fyrir skjáinn styður þennan eiginleika.
-Ef insláttur er ekki studdur á skjá sem inniheldur blindraleturs lyklaborð, þá mun það koma fram í [Supported Braille Displays #SupportedBrailleDisplays] hlutanum.
+Athugið að þessi valkostur er aðeins gagnlegur ef punktaleturs skjárinn er með Perkins samhæfanlegt lyklaborð og ef rekillinn sem er notaður fyrir skjáinn styður þennan eiginleika.
+Ef insláttur er ekki studdur á skjá sem inniheldur punktaleturs lyklaborð, þá mun það koma fram í [Supported Braille Displays #SupportedBrailleDisplays] hlutanum.
 
-==== Stækka orðið undir bendlinum yfir í tölvu blindraletur ====
+==== Stækka orðið undir bendlinum yfir í tölvu punktaletur ====
 Þessi valkostur gerir kleift að birta orðið sem er undir bendlinum í óstyttu tölvublindraletri.
 
 ==== Blikkhraði bendils ====
 Þessi valkostur er númerískt gildi sem gerir kleift að breyta blikkhraða bendilsins í millisekúndum.
 
 ==== Skilaboðalengd (sek) ====
-Þessi valkostur er númerískt gildi sem stýrir hversu lengi skilaboð frá stýrikerfinu birtast á blindraletursskjánum.
+Þessi valkostur er númerískt gildi sem stýrir hversu lengi skilaboð frá stýrikerfinu birtast á punktaletursskjánum.
 
 %kc:setting
-==== Blindraletur Samofið við ====[BrailleTether]
+==== Punktaletur Samofið við ====[BrailleTether]
 Lykill: NVDA+kontrol+t
 
-Þessi valkostur gerir kleift að velja hvort blindraletursskjárinn mun fylgja fókus stýrikerfisins, eða hvort hann fylgir leiðsögu-hlutnum / skoðunarbendli.
+Þessi valkostur gerir kleift að velja hvort punktaletursskjárinn mun fylgja fókus stýrikerfisins, eða hvort hann fylgir leiðsögu-hlutnum / skoðunarbendli.
 
 ==== Lesa eftir Málsgreinum ====
 Ef virkjað, þá mun blindraletrið birta málsgreinar í stað lína.
@@ -1080,7 +1080,7 @@ Aftur á móti, ef þú smellir á þennan glugga, þá mun NVDA tímabundið h�
 
 ++ Viðbóta stjórnandinn ++
 Viðbóta stjórnandinn, sem er hægt að nálgast undir Verkfæri í NVDA valmyndinni, gerir kleift að setja upp og taka burt viðbótarpakka fyrir NVDA.
-Þessir pakkar eru í boði stofnunarinnar og innihalda sérsniðin kóða sem getur bætt við eða breytt eiginleikum í NVDA eða jafnvel boðið upp á stuðning við fleiri blindraletursskjái og talgervla.
+Þessir pakkar eru í boði stofnunarinnar og innihalda sérsniðin kóða sem getur bætt við eða breytt eiginleikum í NVDA eða jafnvel boðið upp á stuðning við fleiri punktaletursskjái og talgervla.
 
 Viðbótar stjórnandinn inniheldur lista yfir alla skjái og viðbætur sem eru þegar sett  upp í NVDA stillingunum þínum.
 Nafn pakka, útgáfa og höfundur er birt fyrir hvern pakka, þó svo að frekari upplýsingar eins og lýsing og vefsíðuslóð sé hægt að lesa með því að velja pakkann og velja hnappinn Um pakkann.
@@ -1163,12 +1163,12 @@ Til að niðurhala þessum talgervli, heimsækið downloads hlutann á Rússnesk
  
 Þessi talgervill styður ekki [spelling functionality #VoiceSpellingFunctionality].
  
-+ Studdir blindraletursskjáir +[SupportedBrailleDisplays]
-Þessi hluti inniheldur upplýsingar um blindraletursskjái sem eru studdir af NVDA.
++ Studdir punktaletursskjáir +[SupportedBrailleDisplays]
+Þessi hluti inniheldur upplýsingar um punktaletursskjái sem eru studdir af NVDA.
  
 ++ Freedom Scientific Focus/PAC Mate Series ++
 Allir Focus og PAC Mate skjáir frá [Freedom Scientific http://www.freedomscientific.com/] eru studdir þegar tengdir með USB eða Blátönn.
-Þú munt þurfa Freedom Scientific rekla fyrir blindraletursskjáinn uppsetta á stýrikerfinu.
+Þú munt þurfa Freedom Scientific rekla fyrir punktaletursskjáinn uppsetta á stýrikerfinu.
 Ef þú ert ekki með þá uppsetta, þá er hægt að sækja þá á http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
 Þrátt fyrir að þessi síða minnist aðeins á Focus 40 Blue skjáinn, þá styðja reklarnir alla skjái frá Freedom Scientific.
 Ef stýrikerfið er 64 bita Windows og reklarnir voru þegar settir upp þegar annar skjálesari var settur upp, þá mun að öllum líkindum samt þurfa að sækja og setja upp reklana frá þessum tengli, þar sem skrárnar sems NVDA þarfnast voru líklega ekki settar upp af hinum skjálesaranum.
@@ -1185,14 +1185,14 @@ Vinsamlegast lesið upplýsingarnar sem fylgdu með skjánum til að fá útský
 | Skruna áfram | topRouting20/40/80 (síðasta sellan á skjánum) |
 | Skruna til baka | leftAdvanceBar |
 | Skruna áfram | rightAdvanceBar |
-| Breyta hvort blindraletur sé samofið | leftGDFButton+rightGDFButton |
+| Breyta hvort punktaletur sé samofið | leftGDFButton+rightGDFButton |
 | Breyta aðgerð vinstri wiz hjóls | leftWizWheelPress |
 | Fara til baka með vinstri wiz hjóls aðgerð | leftWizWheelUp |
 | Fara áfram með vinstri wiz hjóls aðgerð | leftWizWheelDown |
 | Breyta hægri wiz hjóls aðgerð | rightWizWheelPress |
 | Fara til baka með hægri wiz hjóls aðgerð | rightWizWheelUp |
 | Fara áfram með hægri wiz hjóls aðgerð | rightWizWheelDown |
-| Beina í blindraleturs sellu | beining |
+| Beina í punktaleturs sellu | beining |
 | hoplykill | punktur7 |
 | færslulykill | punktur8 |
 | shift+dálklykill | brailleSpaceBar+punktur1+punktur2 |
@@ -1232,8 +1232,8 @@ Bæði ALVA BC640 og BC680 skjáirnir frá [Optelec http://www.optelec.com/] eru
 Enga sértæka rekla þarf að setja upp til að nota þessa skjái.
 Stingdu bara skjánum í samband og stilltu NVDA til að nota hann.
  
-Þrátt fyrir að þessir skjáir sé með blindraleturs lyklaborð, þá sjá þeir sjálfir um þýðinguna frá blindraletri yfir í venjulegan texta.
-Þar af leiðandi skiptir stillingin á inntaks töflu blindraleturs í NVDA ekki máli í þessu samhengi.
+Þrátt fyrir að þessir skjáir sé með punktaleturs lyklaborð, þá sjá þeir sjálfir um þýðinguna frá blindraletri yfir í venjulegan texta.
+Þar af leiðandi skiptir stillingin á inntaks töflu punktaleturs í NVDA ekki máli í þessu samhengi.
  
 Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar notaður með NVDA.
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að nálgast upplýsingar um hvar þessir lyklar eru staðsettir.
@@ -1243,7 +1243,7 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að nálgast upplý
 | Skruna til baka að fyrri línu | t2 |
 | Skruna að næstu línu | t4 |
 | Skruna áfram | t5 |
-| Beina að blindraleturs sellu | routing |
+| Beina að punktaleturs sellu | routing |
 | shift+dálklykill | sp1 |
 | Alt lykill | sp2 |
 | Lausnarlykill | sp3 |
@@ -1263,7 +1263,7 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að nálgast upplý
 NVDA styður alla skjái frá [Handy Tech http://www.handytech.de/] þegar þeir eru tengdir með USB eða Blátönn.
 Fyrir eldri USB skjái, þarf að setja upp USB rekla frá Handy Tech á stýrikerfið.
  
-Blindraleturs innsláttur er ekki ennþá studdur.
+Punktaleturs innsláttur er ekki ennþá studdur.
  
 Eftirfarandi eru þær lyklaskipanir sem eiga við skjáinn þegar hann er notaður með NVDA.
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
@@ -1273,7 +1273,7 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 | Skruna áfram | right, down |
 | Skruna til baka í fyrri línu | b4 |
 | Skruna í næstu línu | b5 |
-| Beina að blindraleturs sellu | routing |
+| Beina að punktaleturs sellu | routing |
 | shift+dálklykill | esc |
 | Altlykill | b2+b4+b5 |
 | Lausnarlykill | b4+b6 |
@@ -1286,7 +1286,7 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 %kc:endInclude
  
 ++ MDV Lilli ++
-Lilli blindraletursskjárinn, sem hægt er að fá hjá [MDV http://www.mdvbologna.it/] er studdur.
+Lilli punktaletursskjárinn, sem hægt er að fá hjá [MDV http://www.mdvbologna.it/] er studdur.
 Enga sértæka rekla þarf að setja upp til að nota skjáinn.
 Þú stingur honum bara í samband og stillir NVDA til að nota hann.
  
@@ -1298,14 +1298,14 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá leiðbeinin
 | Skruna áfram | RG |
 | Fara í fyrri línu | UP |
 | Fara í næstu línu | DN |
-| Beina í blindraleturs sellu | route |
+| Beina í punktaleturs sellu | route |
 | shift+dálklykill | SLF |
 | dálklykill | SRG |
 | alt+dálklykill | SDN |
 | alt+shift+dálklykill | SUP |
 %kc:endInclude
  
-++ Baum/Humanware/APH Blindraletursskjáir ++
+++ Baum/Humanware/APH Punktaletursskjáir ++
 Nokkrir [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] og [APH http://www.aph.org/] skjáir eru studdir þegar notast er við USB eða Blátannar tengingu.
 Þar með talið:
 - Baum: SuperVario, PocketVario
@@ -1325,7 +1325,7 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 | Skruna áfram | d5 |
 | Fara að fyrri línu | d1 |
 | Fara að næstu línu | d3 |
-| Beina að blindraleturs sellu | routing |
+| Beina að punktaleturs sellu | routing |
 
 Fyrir skjái sem hafa stýripinna:
 || Nafn | Lykill |
@@ -1348,8 +1348,8 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 | Skruna áfram | K3 |
 | Fara í fyrri línu | B2 |
 | Fara í næstu línu | B5 |
-| Beina í blindraleturs sellu | routing |
-| Breyta blindraletur samofið við | K2 |
+| Beina í punktaleturs sellu | routing |
+| Breyta punktaletur samofið við | K2 |
 | Lesa allt | B6 |
 %kc:endInclude
  
@@ -1365,8 +1365,8 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 | Skruna áfram | K3 |
 | Fara í fyrri línu | B2 |
 | Fara í næstu línu | B5 |
-| Beina í blindraleturs sellu | routing |
-| Breyta blindraletur samofið við | K2 |
+| Beina í punktaleturs sellu | routing |
+| Breyta punktaletur samofið við | K2 |
 | Lesa allt | B6 |
 %kc:endInclude
  
@@ -1382,8 +1382,8 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 | Skruna áfram | hægri |
 | Fara í fyrri línu | upp |
 | Fara í næstu línu | niður |
-| Beina í blindraleturs sellu | beining |
-| Breyta blindraletur samofið við | upp+niður |
+| Beina í punktaleturs sellu | beining |
+| Breyta punktaletur samofið við | upp+niður |
 | örUpp | bilslá+punktur1 |
 | örNiður | bilslá+punktur4 |
 | örVinstri | bilslá+punktur3 |
@@ -1404,7 +1404,7 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 NVDA styður Braille Sence og Braille EDGE skjáina frá [Hims http://www.hims-inc.com/] þegar þeir eru tengdir með USB eða Blátönn.
 Ef þú tengir þá með USB, þá þarf að keyra inn USB rekla frá HIMS inn á stýrikerfið.
  
-Blindraleturs inntak er ekki ennþá stutt.
+Punktaleturs inntak er ekki ennþá stutt.
  
 Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með NVDA.
 Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
@@ -1414,7 +1414,7 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 | Skruna áfram | hægri hlið skruna niður |
 | Fara í fyrri línu | vinstri hlið skruna upp |
 | Fara í næstu línu | hægri hlið skruna upp |
-| Beina í blindraleturs sellu | beining |
+| Beina í punktaleturs sellu | beining |
 | shift+dálklykill | punktur1+punktur2+bilslá |
 | altlykill | punktur1+punktur3+punktur4+Bilslá |
 | lausnarlykill | punktur1+punktur5+Bilslá |
@@ -1472,11 +1472,11 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 || Nafn | Lykill |
 | Skruna til baka | vinstri hlið skruna niður |
 | Skruna áfram | hægri hlið skruna niður |
-| Beina í blindraleturs sellu | beining |
+| Beina í punktaleturs sellu | beining |
 %kc:endInclude
  
-++ Seika Blindraletursskjáir ++
-Seika, útgáfur 3, 4 og 5 (40 sellna) og Seika80 (80 sellna) blindraletursskjáir frá [Nippon Telesoft http://www.nippontelesoft.com/] eru studdir.
+++ Seika Punktaletursskjáir ++
+Seika, útgáfur 3, 4 og 5 (40 sellna) og Seika80 (80 sellna) punktaletursskjáir frá [Nippon Telesoft http://www.nippontelesoft.com/] eru studdir.
 Hægt er að nálgast frekari upplýsingar um þessa skjái á http://www.seika-braille.com/.
 Fyrst þarf að keyra inn USB rekla frá framleiðandanum.
  
@@ -1488,24 +1488,24 @@ Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á
 | Skruna áfram | hægri |
 | Fara í fyrri línu | b3 |
 | Fara í næstu línu | b4 |
-| Breyta blindraletur samofið í | b5 |
+| Breyta punktaletur samofið í | b5 |
 | Lesa allt | b6 |
 | dálklykill | b1 |
 | shift+dálklykill | b2 |
 | alt+dálklykill | b1+b2 |
 | NVDA Valmynd | vinstri+hægri |
-| Beina í blindraleturs sellu | beining |
+| Beina í punktaleturs sellu | beining |
 %kc:endInclude
  
 ++ Papenmeier BRAILLEX Nýrri Módel ++
-Eftirfarandi blindraletursskjáir eru studdir:
+Eftirfarandi punktaletursskjáir eru studdir:
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB og Blátannar)
 -
  
 Ef BrxCom er sett upp, þá mun NVDA nota BrxCom.
-BrxCom er verkfæri sem gerir kleift að nota blindraleturs inntak óháð skjálesaranum.
+BrxCom er verkfæri sem gerir kleift að nota punktaleturs inntak óháð skjálesaranum.
 Ný útgáfa af BrxCom sem virkar með NVDA verður gefin út fljótlega af Papenmeier.
  
 Flestir skjáirnir hafa Easy Access Bar (EAB) sem greiðir fyrir skjótri og skilvirkri vinnu notanda.
@@ -1516,7 +1516,7 @@ C-línan og sumir aðrir skjáir hafa tvær beiningar raðir þar sem efri röð
 Ef einum af efri beiningar lyklunum er haldið niðri og stutt á EAB slánna á c-línu skjá, þá er líkt eftir seinni virkninni.
 Með því að styðja á og halda niðri upp, niður, vinstri og hægri lyklunum eða (EAB) þá munu viðeigandi aðgerðir verða endurteknar.
 
-Venjulega eru eftirfarandi lyklaskipanir á þessum blindraletursskjám:
+Venjulega eru eftirfarandi lyklaskipanir á þessum punktaletursskjám:
 || Nafn | Lykill |
 | v1 | Vinstri fremri lykill |
 | v2 | Vinstri aftari lykill |
@@ -1538,7 +1538,7 @@ Eftirfarandi eru Papenmeier skipanir fyrir NVDA:
 | Skruna áfram | hægri |
 | Fara í fyrri línu | upp |
 | Fara í næstu línu | niður |
-| Beina í blindraleturs sellu | beining |
+| Beina í punktaleturs sellu | beining |
 | Tilkynna bókstaf í skoðun | vinstri1 |
 | Virkja leiðsögu hlut sem er í fókus | vinstri2 |
 | Fara í flata skoðun/fókus | hægri1 |
@@ -1552,13 +1552,13 @@ Eftirfarandi eru Papenmeier skipanir fyrir NVDA:
 %kc:endInclude
  
 ++ Papenmeier Braille BRAILLEX Eldri Módel ++
-Eftirfarandi blindraletursskjáir eru studdir:
+Eftirfarandi punktaletursskjáir eru studdir:
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
 -
  
 Athugið að þessa skjái er aðeins hægt að tengja með seríal samskiptatengi.
-Þar af leiðandi ætti að velja tengið sem skjárinn er tengdur við eftir að búið er að skilgreina þennan rekil í Blindraleturs Stillingar skilaboðaglugganum.
+Þar af leiðandi ætti að velja tengið sem skjárinn er tengdur við eftir að búið er að skilgreina þennan rekil í Punktaleturs Stillingar skilaboðaglugganum.
  
 Sumir af þessum skjám hafa Easy Access Bar (EAB) sem greiðir fyrir skjótri og skilvirkni vinnu hjá notanda.
 EAB er hægt að hreyfa í fjórar áttir þar sem hver átt hefur venjulega tvær virknir.
@@ -1590,7 +1590,7 @@ Skjáir með EAB:
 | Skruna áfram | hægri |
 | Fara í fyrri línu | upp |
 | Fara í næstu línu | niður |
-| Beina í blindraleturs sellu | beining |
+| Beina í punktaleturs sellu | beining |
 | Tilkynna bókstaf í skoðun | vinstri1 |
 | Virkja leiðsöguhlut sem hefur fókus | vinstri2 |
 | Skipta í flata skoðun / fókus | hægri1 |
@@ -1610,7 +1610,7 @@ BRAILLEX Tiny:
 | Skruna áfram | hægri |
 | Fara í fyrri línu | upp |
 | Fara í næstu línu | niður |
-| Breyta blindraleturs samofið við | hægri2 |
+| Breyta punktaleturs samofið við | hægri2 |
 | Fara í flata skoðun / fókus | hægri1 |
 | Fara í hlut | hægri1+upp |
 | Fara í fyrsta innihald hlutar | hægri1+niður |
@@ -1622,7 +1622,7 @@ BRAILLEX 2D Screen:
 || Nafn | Lykill |
 | Tilkynna staf í skoðun | vinstri1 |
 | Virkja núverandi leiðsöguhlut | vinstri2 |
-| Breyta blindraletur samofið við | hægri2 |
+| Breyta punktaletur samofið við | hægri2 |
 | Tilkynna stílsnið texta | reportf |
 | Fara í fyrri línu | upp |
 | Skruna til baka | vinstri |
@@ -1644,9 +1644,9 @@ Eftirfarandi módel eru studd:
 - BrailleNote Apex (USB og Blátannar tengingar)
 -
 
-Ef tækið þitt styður fleiri en eina gerð tengingum þá verður að stilla blindraleturs skipanalínutengið þegar tækið er tengt við tölvuna.
+Ef tækið þitt styður fleiri en eina gerð tengingum þá verður að stilla punktaleturs skipanalínutengið þegar tækið er tengt við tölvuna.
 Vinsamlegast ráðfærið ykkur við BrailleNote handbókina.
-Í NVDA gæti einnig verið mögulegt að þurfa að skilgreina tengið í Blindraleturs stillingar skilaboðaglugganum.
+Í NVDA gæti einnig verið mögulegt að þurfa að skilgreina tengið í Punktaleturs stillingar skilaboðaglugganum.
 Ef þú tengir með USB eða Blátönn, þá er hægt að stilla tengið á "Sjálfvirkt", "USB" eða "Blátönn", eftir því hvað er í boði.
 Ef tengt er með eldri seríal samskiptatengjum (eða USB í seríal breyti) eða ef enginn af áðurnefndum valkostum er í boði, þá þarf að sérstaklega skilgreina hvaða samskiptatengi á að nota úr listanum yfir vélbúnaðar samskiptatengi.
 
@@ -1661,8 +1661,8 @@ Vinsamlegast ráðfærið ykkur við handbók skjásins til að fá upplýsingar
 | Skruna áfram | áfram |
 | Fara í fyrri línu | fyrri |
 | Fara í næstu línu | næsta |
-| Beina í blindraleturs sellu | beining |
-| Breyta blindraletur samofið við | fyrri+næsta |
+| Beina í punktaleturs sellu | beining |
+| Breyta punktaletur samofið við | fyrri+næsta |
 | örUpp | bilslá+punktur1 |
 | örNiður | bilslá+punktur4 |
 | örVinstri | bilslá+punktur3 |
@@ -1684,23 +1684,23 @@ Vinsamlegast ráðfærið ykkur við handbók skjásins til að fá upplýsingar
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] er sér forrit sem hægt er að nota til að fá stuðning við fleiri blindraletursskjái.
+[BRLTTY http://mielke.cc/brltty/] er sér forrit sem hægt er að nota til að fá stuðning við fleiri punktaletursskjái.
 Til að framkvæma þetta þarf að keyra inn [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 Best er að hlaða niður og keyra inn nýjasta uppsetningarpakkanum, sem mun heita, sem dæmi, brltty-win-4.2-2.exe.
 Þegar skjárinn og tengið eru stillt til, gangið þá úr skugga um að fylgja nákvæmlega leiðbeiningunum, sérstaklega ef nota skal USB skjá og reklarnir fyrir hann eru þegar keyrðir inn.
 
-Fyrir skjái sem hafa blindraleturs lyklaborð, þá sér BRLTTY forritið sjálft um blindraleturs inntakið.
-Þar af leiðandi á blindraleturstafla NVDA ekki við hér.
+Fyrir skjái sem hafa punktaleturs lyklaborð, þá sér BRLTTY forritið sjálft um punktaleturs inntakið.
+Þar af leiðandi á punktaleturstafla NVDA ekki við hér.
 
 Eftirfarandi eru lyklaskipanir BRLTTY þegar forritið er keyrt með NVDA.
-Vinsamlegast ráðfærið ykkur við http://mielke.cc/brltty/doc/drivers/] fyrir frekari upplýsingar um hvernig skipanir BRLTTY er stýrt að stjórntækjum á blindraletursskjám.
+Vinsamlegast ráðfærið ykkur við http://mielke.cc/brltty/doc/drivers/] fyrir frekari upplýsingar um hvernig skipanir BRLTTY er stýrt að stjórntækjum á punktaletursskjám.
 %kc:beginInclude
 || Nafn | BRLTTY skipun |
 | Skruna til baka | fwinlt (til vinstri um einn glugga) |
 | Skruna áfram | fwinrt (til hægri um einn glugga) |
 | Fara í fyrri línu | lnup (upp eina línu) |
 | Fara í næstu línu | lndn (niður eina línu) |
-| Beina í blindraleturs sellu | route (færa bendil að staf) |
+| Beina í punktaleturs sellu | route (færa bendil að staf) |
 %kc:endInclude
 
 + Þróað Efni +
@@ -1726,8 +1726,8 @@ Bendinga auðkenningar samanstanda af tveggja stafa kóða; undir-keyrslu, snið
 Hlutinn í svigum er útlitssnið lyklaborðsins og er valfrjálst.
 Ef ekki skilgreint, þá mun bendingin eiga við öll útlitssnið lyklaborða.
 Strengurinn á eftir tvípunktinum er eitt eða fleiri lyklanöfn aðgreind með plús (+) merkinu.
-- Fyrir blindraleturs bendingar, þá er kóðinn br.
-Hlutinn í svigum auðkennir ákveðinn blindraletursskjá og er skylt að skilgreina hann.
+- Fyrir punktaleturs bendingar, þá er kóðinn br.
+Hlutinn í svigum auðkennir ákveðinn punktaletursskjá og er skylt að skilgreina hann.
 Strengurinn á eftir tvípunktinum inniheldur eitt eða fleiri lyklanöfn aðgreind með plús (+) merkinu.
 - Fyrir snerti-bendingar, þá er kóðinn ts.
 Hlutinn í svigum er snertihamurinn og er valfrjáls.
