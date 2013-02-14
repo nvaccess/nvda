@@ -109,6 +109,10 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 		reportSelectedCandidate(item)
 
 	def script_changePage(self,gesture):
+		try:
+			del self.__dict__['visibleCandidateItemsText']
+		except KeyError:
+			pass
 		gesture.send()
 		api.processPendingEvents()
 		oldItem=item=self
