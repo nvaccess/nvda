@@ -236,7 +236,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	#: All possible keyboard layouts, where layout names are mapped to localised layout names.
 	#: @type: dict
 	LAYOUTS = {
+		# Translators: One of the keyboard layouts for NVDA.
 		"desktop": _("desktop"),
+		# Translators: One of the keyboard layouts for NVDA.
 		"laptop": _("laptop"),
 	}
 

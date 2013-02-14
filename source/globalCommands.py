@@ -61,7 +61,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			eventHandler.executeEvent("loseFocus",curFocus)
 			curApp.sleepMode=True
-			# Translators: This is presented when sleep mode is activated, the focused application is self vocing, such as klango or openbook.
+			# Translators: This is presented when sleep mode is activated, the focused application is self voicing, such as klango or openbook.
 			ui.message(_("Sleep mode on"))
 	script_toggleCurrentAppSleepMode.__doc__=_("Toggles  sleep mode on and off for  the active application.")
 	script_toggleCurrentAppSleepMode.allowInSleepMode=True
@@ -83,12 +83,14 @@ class GlobalCommands(ScriptableObject):
 	script_reportCurrentLine.__doc__=_("Reports the current line under the application cursor. Pressing this key twice will spell the current line")
 
 	def script_leftMouseClick(self,gesture):
+		# Translators: Reported when left mouse button is clicked.
 		ui.message(_("left click"))
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP,0,0,None,None)
 	script_leftMouseClick.__doc__=_("Clicks the left mouse button once at the current mouse position")
 
 	def script_rightMouseClick(self,gesture):
+		# Translators: Reported when right mouse button is clicked.
 		ui.message(_("right click"))
 		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTDOWN,0,0,None,None)
 		winUser.mouse_event(winUser.MOUSEEVENTF_RIGHTUP,0,0,None,None)
@@ -142,6 +144,7 @@ class GlobalCommands(ScriptableObject):
 	def script_increaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
 		if not settingName:
+			# Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 			ui.message(_("No settings"))
 			return
 		settingValue=globalVars.settingsRing.increase()
@@ -239,6 +242,7 @@ class GlobalCommands(ScriptableObject):
 			try:
 				(left,top,width,height)=obj.location
 			except:
+				# Translators: Reported when the object has no location for the mouse to move to it.
 				ui.message(_("object has no location"))
 				return
 			x=left+(width/2)
@@ -248,6 +252,7 @@ class GlobalCommands(ScriptableObject):
 	script_moveMouseToNavigatorObject.__doc__=_("Moves the mouse pointer to the current navigator object")
 
 	def script_moveNavigatorObjectToMouse(self,gesture):
+		# Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 		ui.message(_("Move navigator object to mouse"))
 		obj=api.getMouseObject()
 		api.setNavigatorObject(obj)
@@ -265,6 +270,7 @@ class GlobalCommands(ScriptableObject):
 			pos.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(pos)
 		else:
+			# Translators: reported when object does not support flat review (example: some graphic window).
 			speech.speakMessage(_("No flat review for this object"))
 	script_navigatorObject_moveToFlatReviewAtObjectPosition.__doc__=_("Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object")
 
@@ -278,6 +284,7 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(obj)
 			speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
 		else:
+			# Translators: Reported when there is no object at flat review position.
 			speech.speakMessage(_("No object at flat review position"))
 	script_navigatorObject_moveToObjectAtFlatReviewPosition.__doc__=_("Moves navigator object to the object represented by the text at the position of the review cursor within flat review")
 
@@ -312,6 +319,7 @@ class GlobalCommands(ScriptableObject):
 					speech.speakSpelling(text)
 				else:
 					if api.copyToClip(text):
+						# Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 						speech.speakMessage(_("%s copied to clipboard")%text)
 		else:
 			speech.speakObject(curObject,reason=controlTypes.REASON_QUERY)
@@ -323,16 +331,19 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("no navigator object"))
 		location=obj.location
 		if not location:
+			# Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
 			ui.message(_("No location information for navigator object"))
 		(left,top,width,height)=location
 		deskLocation=api.getDesktopObject().location
 		if not deskLocation:
+			# Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
 			ui.message(_("No location information for screen"))
 		(deskLeft,deskTop,deskWidth,deskHeight)=deskLocation
 		percentFromLeft=(float(left-deskLeft)/deskWidth)*100
 		percentFromTop=(float(top-deskTop)/deskHeight)*100
 		percentWidth=(float(width)/deskWidth)*100
 		percentHeight=(float(height)/deskHeight)*100
+		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 		ui.message(_("Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen").format(left=percentFromLeft,top=percentFromTop,width=percentWidth,height=percentHeight))
 	script_navigatorObject_currentDimensions.__doc__=_("Reports the hight, width and position of the current navigator object")
 
@@ -343,6 +354,7 @@ class GlobalCommands(ScriptableObject):
 		except (NotImplementedError,RuntimeError):
 			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
 		api.setReviewPosition(pos)
+		# Translators: Reported when attempting to move the navigator object to focus.
 		speech.speakMessage(_("move to focus"))
 		speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
 	script_navigatorObject_toFocus.__doc__=_("Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible.")
@@ -350,8 +362,12 @@ class GlobalCommands(ScriptableObject):
 	def script_navigatorObject_moveFocus(self,gesture):
 		obj=api.getNavigatorObject()
 		if not isinstance(obj,NVDAObject):
+			# Translators: Reported when:
+			# 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
+			# 2. Trying to move focus to navigator object but there is no focus.
 			speech.speakMessage(_("no focus"))
 		if scriptHandler.getLastScriptRepeatCount()==0:
+			# Translators: Reported when attempting to move focus to navigator object.
 			ui.message(_("move focus"))
 			obj.setFocus()
 		else:
@@ -359,6 +375,7 @@ class GlobalCommands(ScriptableObject):
 			try:
 				review.updateCaret()
 			except NotImplementedError:
+				# Translators: Reported when trying to move caret to the position of the review cursor but there is no caret.
 				ui.message(_("no caret"))
 				return
 			info=review.copy()
@@ -377,6 +394,7 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
+			# Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 			speech.speakMessage(_("No containing object"))
 	script_navigatorObject_parent.__doc__=_("Moves the navigator object to the object containing it")
 
@@ -391,6 +409,7 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
+			# Translators: Reported when there is no next object (current object is the last object).
 			speech.speakMessage(_("No next"))
 	script_navigatorObject_next.__doc__=_("Moves the navigator object to the next object")
 
@@ -405,6 +424,7 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
+			# Translators: Reported when there is no previous object (current object is the first object).
 			speech.speakMessage(_("No previous"))
 	script_navigatorObject_previous.__doc__=_("Moves the navigator object to the previous object")
 
@@ -419,6 +439,7 @@ class GlobalCommands(ScriptableObject):
 			api.setNavigatorObject(curObject)
 			speech.speakObject(curObject,reason=controlTypes.REASON_FOCUS)
 		else:
+			# Translators: Reported when there is no contained (first child) object such as inside a document.
 			speech.speakMessage(_("No objects inside"))
 	script_navigatorObject_firstChild.__doc__=_("Moves the navigator object to the first object inside it")
 
@@ -616,7 +637,7 @@ class GlobalCommands(ScriptableObject):
 		speech.speechMode=speech.speechMode_talk
 		newMode=(curMode+1)%3
 		if newMode==speech.speechMode_off:
-			# Translators: A speech mode which dissables speech output.
+			# Translators: A speech mode which disables speech output.
 			name=_("speech mode off")
 		elif newMode==speech.speechMode_beeps:
 			# Translators: A speech mode which will cause NVDA to beep instead of speaking.
@@ -703,6 +724,7 @@ class GlobalCommands(ScriptableObject):
 			textList.append(text)
 
 		if not textList:
+			# Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 			ui.message(_("No formatting information"))
 			return
 
@@ -738,6 +760,7 @@ class GlobalCommands(ScriptableObject):
 				api.setReviewPosition(info)
 				found=True
 		if not found:
+			# Translators: Reported when there is no status line for the current program or window.
 			ui.message(_("No status line found"))
 			return
 		if scriptHandler.getLastScriptRepeatCount()==0:
@@ -764,6 +787,7 @@ class GlobalCommands(ScriptableObject):
 		if not isinstance(title,basestring) or not title or title.isspace():
 			title=obj.appModule.appName  if obj.appModule else None
 			if not isinstance(title,basestring) or not title or title.isspace():
+				# Translators: Reported when there is no title text for current program or window.
 				title=_("no title")
 		repeatCount=scriptHandler.getLastScriptRepeatCount()
 		if repeatCount==0:
@@ -796,15 +820,19 @@ class GlobalCommands(ScriptableObject):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
 		if outputMode=="both":
 			outputMode="off"
+			# Translators: A mode where no progress bar updates are given.
 			ui.message(_("no progress bar updates"))
 		elif outputMode=="off":
 			outputMode="speak"
+			# Translators: A mode where progress bar updates will be spoken.
 			ui.message(_("speak progress bar updates"))
 		elif outputMode=="speak":
 			outputMode="beep"
+			# Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 			ui.message(_("beep for progress bar updates"))
 		else:
 			outputMode="both"
+			# Translators: A mode where both speech and beeps will indicate progress bar updates.
 			ui.message(_("beep and speak progress bar updates"))
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=outputMode
 	script_toggleProgressBarOutput.__doc__=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates")
@@ -855,10 +883,12 @@ class GlobalCommands(ScriptableObject):
 			log.error("error accessing system power status")
 			return
 		if sps.BatteryFlag & NO_SYSTEM_BATTERY:
+			# Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 			ui.message(_("no system battery"))
 			return
 		# Translators: This is presented to inform the user of the current battery percentage.
 		text = _("%d percent") % sps.BatteryLifePercent + " "
+		# Translators: This is presented when AC power is connected such as when recharging a laptop battery.
 		if sps.ACLineStatus & AC_ONLINE: text += _("AC power on")
 		elif sps.BatteryLifeTime!=0xffffffff: 
 			# Translators: This is the estimated remaining runtime of the laptop battery.
@@ -868,15 +898,22 @@ class GlobalCommands(ScriptableObject):
 
 	def script_passNextKeyThrough(self,gesture):
 		keyboardHandler.passNextKeyThrough()
+		# Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 		ui.message(_("Pass next key through"))
 	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
 
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()
 		appName=appModuleHandler.getAppNameFromProcessID(focus.processID,True)
+		# Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
+		# Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
+		# If there is an appModule for the current program, NVDA speaks the name of the module after presenting this message.
 		message = _("Currently running application is %s") % appName
 		mod=focus.appModule
 		if isinstance(mod,appModuleHandler.AppModule) and type(mod)!=appModuleHandler.AppModule:
+			# Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
+			# For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
+			# This message will not be presented if there is no module for the current program.
 			message += _(" and currently loaded module is %s") % mod.appModuleName.split(".")[0]
 		ui.message(message)
 	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
@@ -942,6 +979,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			braille.handler.tether = braille.handler.TETHER_FOCUS
 			tetherMsg = _("focus")
+		# Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
 		ui.message(_("Braille tethered to %s") % tetherMsg)
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
 
@@ -951,32 +989,40 @@ class GlobalCommands(ScriptableObject):
 		except:
 			text = None
 		if not text or not isinstance(text,basestring) or text.isspace():
+			# Translators: Presented when there is no text on the clipboard.
 			ui.message(_("There is no text on the clipboard"))
 			return
 		if len(text) < 1024: 
 			ui.message(text)
 		else:
+			# Translators: If the number of characters on the clipboard is greater than about 1000, it reports this message and gives number of characters on the clipboard.
+			# Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 			ui.message(_("The clipboard contains a large portion of text. It is %s characters long") % len(text))
 	script_reportClipboardText.__doc__ = _("Reports the text on the Windows clipboard")
 
 	def script_review_markStartForCopy(self, gesture):
 		self._copyStartMarker = api.getReviewPosition().copy()
+		# Translators: Indicates start of review cursor text to be copied to clipboard.
 		ui.message(_("Start marked"))
 	script_review_markStartForCopy.__doc__ = _("Marks the current position of the review cursor as the start of text to be copied")
 
 	def script_review_copy(self, gesture):
 		if not getattr(self, "_copyStartMarker", None):
+			# Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 			ui.message(_("No start marker set"))
 			return
 		pos = api.getReviewPosition().copy()
 		if self._copyStartMarker.obj != pos.obj:
+			# Translators: Presented when trying to copy text residing on a different object (that is, start marker is in object 1 but trying to copy text from object 2).
 			ui.message(_("The start marker must reside within the same object"))
 			return
 		pos.move(textInfos.UNIT_CHARACTER, 1, endPoint="end")
 		pos.setEndPoint(self._copyStartMarker, "startToStart")
 		if pos.compareEndPoints(pos, "startToEnd") < 0 and pos.copyToClipboard():
+			# Translators: Presented when some review text has been copied to clipboard.
 			ui.message(_("Review selection copied to clipboard"))
 		else:
+			# Translators: Presented when there is no text selection to copy from review cursor.
 			ui.message(_("No text to copy"))
 			return
 		self._copyStartMarker = None
@@ -1015,6 +1061,7 @@ class GlobalCommands(ScriptableObject):
 		appModuleHandler.reloadAppModules()
 		globalPluginHandler.reloadGlobalPlugins()
 		NVDAObject.clearDynamicClassCache()
+		# Translators: Presented when plugins (app modules and global plugins) are reloaded.
 		ui.message(_("Plugins reloaded"))
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 

@@ -72,6 +72,7 @@ class RGB(namedtuple('RGB',('red','green','blue'))):
 		if foundName:
 			return foundName
 		longestDistance=255.0
+		# Translators: Reported when text is written in unknown color.
 		closestName=_("unknown color")
 		for possibleRGB,possibleName  in RGBToNames.iteritems():
 			distance=math.sqrt(abs(self.red-possibleRGB.red)**2+abs(self.green-possibleRGB.green)**2+abs(self.blue-possibleRGB.blue)**2)
@@ -85,22 +86,34 @@ RGBToNamesCache={}
 
 RGBToNames={
 	#Standard 16 HTML 4 colors
+	# Translators: The color black.
 	RGB(0x00,0x00,0x00):_('black'),
+	# Translators: The color green.
 	RGB(0x00,0x80,0x00):_('green'),
+	# Translators: The light gray color.
 	RGB(0xc0,0xc0,0xc0):_('light grey'),
 	# Translators: The color lime.
 	# For more info see: http://en.wikipedia.org/wiki/Lime_%28color%29
 	RGB(0x00,0xff,0x00):_('lime'),
+	# Translators: The color gray (halfway between white and black).
 	RGB(0x80,0x80,0x80):_('grey'),
 	# Translators: the color olive.
 	# For more info see: http://en.wikipedia.org/wiki/Olive_%28color%29#Olive
 	RGB(0x80,0x80,0x00):_('olive'),
+	# Translators: The color white.
 	RGB(0xff,0xff,0xff):_('white'),
+	# Translators: The color yellow.
 	RGB(0xff,0xff,0x00):_('yellow'),
+	# Translators: The dark red color.
 	RGB(0x80,0x00,0x00):_('dark red'),
+	# Translators: The color navy blue (dark blue).
+	# For more info see http://en.wikipedia.org/wiki/Navy_blue
 	RGB(0x00,0x00,0xa0):_('navy blue'),
+	# Translators: The color red.
 	RGB(0xff,0x00,0x00):_('red'),
+	# Translators: The color blue.
 	RGB(0x00,0x00,0xff):_('blue'),
+	# Translators: The color purple.
 	RGB(0x80,0x00,0x80):_('purple'),
 	# Translators: The color teal, which is a mix of green and blue, mostly green.
 	# For more info see http://en.wikipedia.org/wiki/Teal

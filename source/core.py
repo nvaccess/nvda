@@ -156,6 +156,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	speech.initialize()
 	if not globalVars.appArgs.minimal and (time.time()-globalVars.startTime)>5:
 		log.debugWarning("Slow starting core (%.2f sec)" % (time.time()-globalVars.startTime))
+		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 	import wx
 	log.info("Using wx version %s"%wx.version())
@@ -256,6 +257,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 		wx.CallAfter(gui.installerGui.doSilentInstall)
 	elif not globalVars.appArgs.minimal:
 		try:
+			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 			braille.handler.message(_("NVDA started"))
 		except:
 			log.error("", exc_info=True)
