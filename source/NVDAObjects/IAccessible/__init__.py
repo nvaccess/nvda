@@ -282,8 +282,10 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
 		try:
 			ht = self.obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
-			hl = ht.hyperlink(ht.hyperlinkIndex(offset))
-			return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
+			hi = ht.hyperlinkIndex(offset)
+			if hi != -1:
+				hl = ht.hyperlink(hi)
+				return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
 		except COMError:
 			pass
 
@@ -291,6 +293,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# This could possibly be optimised by caching.
 		text = self._getTextRange(0, offset + 1)
 		childIndex = text.count(u"\uFFFC")
+		if childIndex == 0:
+			raise LookupError
 		try:
 			return IAccessible(IAccessibleObject=IAccessibleHandler.accChild(self.obj.IAccessibleObject, childIndex)[0], IAccessibleChildID=0)
 		except COMError:
