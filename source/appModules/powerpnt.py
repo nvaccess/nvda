@@ -728,6 +728,16 @@ class SlideShowTreeInterceptor(TreeInterceptor):
 		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
 		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 
+	def script_toggleNotesMode(self,gesture):
+		self.rootNVDAObject.notesMode=not self.rootNVDAObject.notesMode
+		self.rootNVDAObject.handleSlideChange()
+	# Translators: The description for a script
+	script_toggleNotesMode.__doc__=_("Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA")
+
+	__gestures={
+		"kb:control+shift+s":"toggleNotesMode",
+	}
+
 class ReviewableSlideshowTreeInterceptor(ReviewCursorManager,SlideShowTreeInterceptor):
 	"""A TreeInterceptor for Slide show content but with caret navigation via ReivewCursorManager."""
 	pass
@@ -821,16 +831,6 @@ class SlideShowWindow(PaneClassDC):
 			pass
 		self.reportFocus()
 		self.treeInterceptor.reportNewSlide()
-
-	def script_toggleNotesMode(self,gesture):
-		self.notesMode=not self.notesMode
-		self.handleSlideChange()
-	# Translators: The description for a script
-	script_toggleNotesMode.__doc__=_("Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA")
-
-	__gestures={
-		"kb:control+shift+s":"toggleNotesMode",
-	}
 
 class AppModule(appModuleHandler.AppModule):
 
