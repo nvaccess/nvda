@@ -15,6 +15,7 @@ import api
 import speech
 import sayAllHandler
 import winUser
+from treeInterceptorHandler import TreeInterceptor
 from NVDAObjects import NVDAObjectTextInfo
 from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
 import textInfos.offsets
@@ -23,6 +24,7 @@ import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects.window import Window
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
+import braille
 from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
@@ -47,7 +49,7 @@ class ppEApplicationSink(comtypes.COMObject):
 		oldFocus=api.getFocusObject()
 		if not isinstance(oldFocus,SlideShowWindow) or i.hwndFocus!=oldFocus.windowHandle:
 			return
-		oldFocus.handleSlideChange()
+		oldFocus.treeInterceptor.rootNVDAObject.handleSlideChange()
 
 	def WindowSelectionChange(self,sel):
 		print sel
@@ -683,9 +685,56 @@ class NotesTextFrame(TextFrame):
 	def _get_parent(self):
 		return self.documentWindow
 
-class SlideShowWindow(ReviewCursorManager,PaneClassDC):
+class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
+	"""The TextInfo for Slide Show treeInterceptors. Based on NVDAObjectTextInfo but tweeked to work with TreeInterceptors by using basicText on the treeInterceptor's rootNVDAObject."""
 
-	TextInfo=NVDAObjectTextInfo
+	def _getStoryText(self):
+		return self.obj.rootNVDAObject.basicText
+
+class SlideShowTreeInterceptor(TreeInterceptor):
+	"""A TreeInterceptor for showing Slide show content. Has no caret navigation, a CursorManager must be used on top. """
+
+	def _get_isAlive(self):
+		return winUser.isWindow(self.rootNVDAObject.windowHandle)
+
+	def __contains__(self,obj):
+		return isinstance(obj,Window) and obj.windowHandle==self.rootNVDAObject.windowHandle
+
+	hadFocusOnce=False
+
+	def event_treeInterceptor_gainFocus(self):
+		braille.handler.handleGainFocus(self)
+		self.rootNVDAObject.reportFocus()
+		if not self.hadFocusOnce:
+			self.hadFocusOnce=True
+			self.reportNewSlide()
+		else:
+			info = self.selection
+			if not info.isCollapsed:
+				speech.speakSelectionMessage(_("selected %s"), info.text)
+			else:
+				info.expand(textInfos.UNIT_LINE)
+				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
+
+	def event_gainFocus(self,obj,nextHandler):
+		pass
+
+	TextInfo=SlideShowTreeInterceptorTextInfo
+
+	def makeTextInfo(self,position):
+		return self.TextInfo(self,position)
+
+	def reportNewSlide(self):
+		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
+		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
+
+class ReviewableSlideshowTreeInterceptor(ReviewCursorManager,SlideShowTreeInterceptor):
+	"""A TreeInterceptor for Slide show content but with caret navigation via ReivewCursorManager."""
+	pass
+
+class SlideShowWindow(PaneClassDC):
+
+	treeInterceptorClass=ReviewableSlideshowTreeInterceptor
 
 	def _get_name(self):
 		if self.currentSlide:
@@ -696,6 +745,7 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 			return _("Slide Show - complete")
 
 	value=None
+	role=controlTypes.ROLE_DOCUMENT
 
 	def _getShapeText(self,shape,cellShape=False):
 		if shape.hasTextFrame:
@@ -738,21 +788,12 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 	def _get_basicText(self):
 		if not self.currentSlide:
 			return self.name
-		chunks=[self.name]
+		chunks=[]
 		for shape in self.currentSlide.ppObject.shapes:
 			for chunk in self._getShapeText(shape):
 				chunks.append(chunk)
 		self.basicText="\n".join(chunks)
 		return self.basicText
-
-	def reportNewSlide(self):
-		speech.cancelSpeech()
-		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
-		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
-
-	def event_gainFocus(self):
-		super(SlideShowWindow,self).event_gainFocus()
-		self.reportNewSlide()
 
 	def handleSlideChange(self):
 		try:
@@ -763,8 +804,7 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 			del self.__dict__['basicText']
 		except KeyError:
 			pass
-		self.reportNewSlide()
-
+		self.treeInterceptor.reportNewSlide()
 
 class AppModule(appModuleHandler.AppModule):
 
