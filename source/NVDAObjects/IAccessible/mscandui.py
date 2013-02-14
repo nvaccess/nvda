@@ -119,7 +119,8 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 		while item and isinstance(item.candidateNumber,int):
 			oldItem=item
 			item=item.previous
-		reportSelectedCandidate(oldItem,allowDuplicate=True,newList=True)
+		if oldItem and isinstance(oldItem.candidateNumber,int) and oldItem.name:
+			reportSelectedCandidate(oldItem,allowDuplicate=True,newList=True)
 
 	def script_activate(self,gesture):
 		self.doAction()
@@ -156,7 +157,8 @@ class MSCandUI21(IAccessible):
 		elif role==controlTypes.ROLE_MENUBUTTON:
 			item=candidateList.firstChild.next.next
 			item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
-			reportSelectedCandidate(item)
+			if item and isinstance(item.candidateNumber,int) and item.name:
+				reportSelectedCandidate(item)
 
 ###IME 2002
 
