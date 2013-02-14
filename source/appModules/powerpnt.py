@@ -735,17 +735,21 @@ class ReviewableSlideshowTreeInterceptor(ReviewCursorManager,SlideShowTreeInterc
 class SlideShowWindow(PaneClassDC):
 
 	treeInterceptorClass=ReviewableSlideshowTreeInterceptor
+	notesMode=False #: If true then speaker notes will be exposed as this object's basicText, rather than the actual slide content.
 
 	def _get_name(self):
 		if self.currentSlide:
-			# Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-			return _("Slide show - {slideName}").format(slideName=self.currentSlide.name)
+			if self.notesMode:
+				# Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+				return _("Slide show notes - {slideName}").format(slideName=self.currentSlide.name)
+			else:
+				# Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+				return _("Slide show - {slideName}").format(slideName=self.currentSlide.name)
 		else:
 			# Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 			return _("Slide Show - complete")
 
 	value=None
-	role=controlTypes.ROLE_DOCUMENT
 
 	def _getShapeText(self,shape,cellShape=False):
 		if shape.hasTextFrame:
@@ -789,11 +793,22 @@ class SlideShowWindow(PaneClassDC):
 		if not self.currentSlide:
 			return self.name
 		chunks=[]
-		for shape in self.currentSlide.ppObject.shapes:
+		ppObject=self.currentSlide.ppObject
+		if self.notesMode:
+			ppObject=ppObject.notesPage
+		for shape in ppObject.shapes:
 			for chunk in self._getShapeText(shape):
 				chunks.append(chunk)
 		self.basicText="\n".join(chunks)
-		return self.basicText
+		if not self.basicText:
+			if self.notesMode:
+				# Translators: The message for no notes  for a slide in a slide show
+				self.basicText=_("No notes")
+			else:
+				# Translators: The message for an empty slide in a slide show
+				self.basicText=_("Empty slide")
+		return self.basicText or _("Empty slide")
+
 
 	def handleSlideChange(self):
 		try:
@@ -804,7 +819,18 @@ class SlideShowWindow(PaneClassDC):
 			del self.__dict__['basicText']
 		except KeyError:
 			pass
+		self.reportFocus()
 		self.treeInterceptor.reportNewSlide()
+
+	def script_toggleNotesMode(self,gesture):
+		self.notesMode=not self.notesMode
+		self.handleSlideChange()
+	# Translators: The description for a script
+	script_toggleNotesMode.__doc__=_("Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA")
+
+	__gestures={
+		"kb:control+shift+s":"toggleNotesMode",
+	}
 
 class AppModule(appModuleHandler.AppModule):
 
