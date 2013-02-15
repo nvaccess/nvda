@@ -41,12 +41,12 @@ class AdobeFlash(VirtualBuffer):
 		if self.isWindowless:
 			if not isinstance(obj, NVDAObjects.IAccessible.IAccessible):
 				return False
-			try:
-				docHandle, ID = self.getIdentifierFromNVDAObject(obj)
-			except LookupError:
+			if obj.windowHandle != self.rootDocHandle:
 				return False
-			if docHandle != self.rootDocHandle:
+			info = obj.IAccessibleIdentity
+			if not info:
 				return False
+			ID=info['objectID']
 			try:
 				self.rootNVDAObject.IAccessibleObject.accChild(ID)
 				return True
