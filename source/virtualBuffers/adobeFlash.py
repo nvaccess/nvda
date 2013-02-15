@@ -39,14 +39,17 @@ class AdobeFlash(VirtualBuffer):
 
 	def __contains__(self,obj):
 		if self.isWindowless:
-			if obj.windowHandle != self.rootNVDAObject.windowHandle:
+			if not isinstance(obj, NVDAObjects.IAccessible.IAccessible):
+				return False
+			docHandle, ID = self.getIdentifierFromNVDAObject(obj)
+			if docHandle != self.rootDocHandle:
 				return False
 			try:
-				self.rootNVDAObject.IAccessibleObject.accChild(obj.event_objectID)
+				self.rootNVDAObject.IAccessibleObject.accChild(ID)
 				return True
 			except COMError:
 				return False
-		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
+		return winUser.isDescendantWindow(self.rootDocHandle, obj.windowHandle)
 
 	def _get_isAlive(self):
 		if self.isLoading:
@@ -73,7 +76,12 @@ class AdobeFlash(VirtualBuffer):
 			# Trust IAccIdentity over the event parameters.
 			accId = info["objectID"]
 		else:
-			accId = obj.event_objectID if obj.event_objectID > 0 else obj.event_childID
+			accId = obj.event_objectID
+			if accId is None:
+				# We don't have event parameters, so we can't get an ID.
+				raise LookupError
+			if accId <= 0:
+				accId = obj.event_childID
 		return obj.windowHandle, accId
 
 	def _searchableAttribsForNodeType(self,nodeType):
