@@ -154,6 +154,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		globalCommands.commands.script_braille_routeTo(gesture)
 		wx.CallLater(50, scriptHandler.executeScript, globalCommands.commands.script_reportFormatting, gesture)
 
+	# Translators: Describes action of routing buttons on a braille display.
 	script_upperRouting.__doc__ = _("Route to and report formatting")
 
 	def terminate(self):

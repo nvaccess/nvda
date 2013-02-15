@@ -23,13 +23,16 @@ def getContactString(obj):
 def getReceivedMessageString(obj):
 	nameList=[]
 	nameList.append(obj.senderName)
+	# Translators: This is presented in outlook or live mail, email subject
 	nameList.append(_("subject: %s")%obj.subject)
+	# Translators: This is presented in outlook or live mail, email received date/time.
 	nameList.append(_("received: %s")%obj.receivedTime)
 
 	text=", ".join(nameList)
 	if obj.unread:
 		text="%s %s"%(_("unread"),text)
 	if obj.attachments.count>0:
+		# Translators: This is presented in outlook or live mail, indicating email attachments
 		text="%s %s"%(_("attachment"),text)
 	return text
 
@@ -37,6 +40,7 @@ def getSentMessageString(obj):
 	nameList=[]
 	nameList.append(obj.to)
 	nameList.append(_("subject: %s")%obj.subject)
+	# Translators: This is presented in outlook or live mail, email sent date/time.
 	nameList.append(_("sent: %s")%obj.sentOn)
 	return ", ".join(nameList)
 

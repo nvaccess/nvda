@@ -41,12 +41,14 @@ class AppModule(appModuleHandler.AppModule):
 	def script_reportRemainingTime(self,gesture):
 		times=self.getElapsedAndTotal()
 		if times is None:
+			# Translators: Reported when no track is playing in Foobar 2000.
 			ui.message(_("No track playing"))
 			return
 		elapsedTime,totalTime = times
 		remainingTime = totalTime-elapsedTime
 		msg = time.strftime(getOutputFormat(remainingTime),time.gmtime(remainingTime))
 		ui.message(msg)
+	# Translators: The description of an NVDA command for Foobar 2000.
 	script_reportRemainingTime.__doc__ = _("Reports the remaining time of the currently playing track, if any")
 
 	__gestures = {

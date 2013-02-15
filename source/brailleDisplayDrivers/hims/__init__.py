@@ -106,6 +106,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	""" HIMS Braille Sense/Braille EDGE braille displays.
 	"""
 	name = "hims"
+	# Translators: The name of a series of braille displays.
 	description = _("HIMS Braille Sense/Braille EDGE series")
 
 	@classmethod

@@ -191,6 +191,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier braille display driver.
 	"""
 	name = "papenmeier"
+	# Translators: Names of braille displays.
 	description = _("Papenmeier BRAILLEX newer models")
 
 	@classmethod

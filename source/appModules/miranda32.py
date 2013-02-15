@@ -116,6 +116,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			# Translators: This is presented to inform the user that no instant message has been received.
 			ui.message(_("No message yet"))
+	# Translators: The description of an NVDA command to view one of the recent messages.
 	script_readMessage.__doc__=_("Displays one of the recent messages")
 
 	def __init__(self, *args, **kwargs):
