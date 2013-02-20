@@ -124,6 +124,13 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 
 	def script_activate(self,gesture):
 		self.doAction()
+		api.processPendingEvents()
+		oldItem=item=self
+		while item and isinstance(item.candidateNumber,int):
+			oldItem=item
+			item=item.previous
+		if oldItem and isinstance(oldItem.candidateNumber,int) and oldItem.name:
+			reportSelectedCandidate(oldItem,allowDuplicate=True,newList=True)
 
 	__gestures={
 		"kb:downArrow":"nextItem",
@@ -132,7 +139,7 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 		"kb:pageUp":"changePage",
 		"kb:leftArrow":"changePage",
 		"kb:rightArrow":"changePage",
-		"kb:space":"changePage",
+		"kb:space":"activate",
 		"kb:enter":"activate",
 	}
 
