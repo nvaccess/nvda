@@ -4,6 +4,7 @@ Qué bi ha de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2013.1 =
+Os aspectos mas destacaus d'ista versión incluyen un disenyo de teclau portatil mas intuitivo y consistent, suporte basico ta Microsoft PowerPoint, l'emparo a las descripcions largas en os navegadors web, y l'emparo ta la dentrada de braille d'ordinador ta linias braille que tienen un teclau braille.
 
 == Important ==
 
@@ -41,7 +42,6 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 - Actualizau o transcriptor braille liblouis a 2.5.2. (#2737)
 - A distribución de teclau portatil s'ha redisenyau por completo ta fer-la mas intuitiva y consistent. (#804)
 
-
 == Corrección de Fallos ==
 				- As teclas de navegación rapida ta blincar a o siguient u anterior separador en modo Navegación agora funcionan en Internet Explorer y atros controls MSHTML. (#2781)
 - Si NVDA torna a eSpeak u no charra a causa d'un sintetizador de voz configurau que falla quan NVDA s'encieta, a configuración ya no s'actualiza ta  configurar-se con o sintetizador a o que se retornó como a esleción configurada, o que significa que agora o sintetizador orichinal se prebará de nuevo a proxima vegada que NVDA ranque. (#2589)
@@ -67,8 +67,8 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 - NVDA ya no fallará en instalar quan a rota d'o perfil d'usuario contienga bells caracters multibyte. (#2729)
 - L'anunciau de grupos ta controls Vista de Lista (SysListview32) en aplicacions de 64 bit ya no causa una error.
 - En modo navegación en aplicacions de Mozilla, o conteniu de texto ya no se tracta incorrectament como editable en qualques casos extranyos. (#2959)
-
-
+- En IBM Lotus Symphony y OpenOffice, movendo lo cursor agora se mueve o cursor de revisión si cal
+- O conteniu d'Adobe Flash ye agora accesible en Internet Explorer ta Windows 8. (# 2454)	
 == Cambeos ta Desembolicadors ==
 - Os controladors de linia Braille agora pueden suportar a selección manual de puertos. (#426)
  - Isto ye mayoritariament util ta linias braille que suporten connexión a traviés d'un puerto serie.
