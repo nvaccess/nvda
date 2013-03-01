@@ -1,10 +1,10 @@
 # Arabic interface messages for NVDA.
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5822\n"
+"Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2013-02-04 05:30+0000\n"
-"PO-Revision-Date: 2013-02-12 00:38+0200\n"
+"POT-Creation-Date: 2013-02-14 05:30+0000\n"
+"PO-Revision-Date: 2013-02-19 16:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -557,7 +557,7 @@ msgstr "المبرمج"
 #. : Automatic port constant to be used by braille displays that support the "automatic" port
 #. : @type: Tupple
 #. Translators String representing the automatic port selection for braille displays.
-#: braille.py:1531
+#: braille.py:1536
 msgid "Automatic"
 msgstr "آلي"
 
@@ -641,7 +641,7 @@ msgstr ""
 "إصدار تنبيه عند كتابة الأحرف مع مفتاح التبديل أثناء تشغيل مفتاح تكبير الحروف"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:109
+#: appModules/powerpnt.py:111
 msgid "Bitmap placeholder"
 msgstr "وعاء لخريطة مبدئية"
 
@@ -718,7 +718,7 @@ msgid "Case &sensitive"
 msgstr "&حساس لحالة الأحرف"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:97
+#: appModules/powerpnt.py:99
 msgid "Center Title placeholder"
 msgstr "وعاء لللعنوان الرئيسي"
 
@@ -747,7 +747,7 @@ msgid "Change virtual buffers specific settings"
 msgstr "تغيير إعدادات الذاكرة التخيلية"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:107
+#: appModules/powerpnt.py:109
 msgid "Chart placeholder"
 msgstr "وعاء رسم"
 
@@ -997,7 +997,7 @@ msgid "Danish grade 2"
 msgstr "دنيماركي باختصارات"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:123
+#: appModules/powerpnt.py:125
 msgid "Date placeholder"
 msgstr "وعاء التاريخ"
 
@@ -1099,6 +1099,11 @@ msgstr "تعديل مدخلات المعجم"
 #: virtualBuffers/__init__.py:288
 msgid "Elements List"
 msgstr "قائمة العناصر"
+
+#. Translators: The message for an empty slide in a slide show
+#: appModules/powerpnt.py:809 appModules/powerpnt.py:810
+msgid "Empty slide"
+msgstr "شريحة فارغة"
 
 #: scriptHandler.py:33
 #, python-format
@@ -1304,7 +1309,7 @@ msgid "Follow system &focus"
 msgstr "اتبع مؤشر ال&نظام"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:121
+#: appModules/powerpnt.py:123
 msgid "Footer placeholder"
 msgstr "وعاء تذييل العرض التقديمي"
 
@@ -1431,7 +1436,7 @@ msgid "Half shaped mode"
 msgstr "نمط نصف الشكل"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:158
+#: appModules/powerpnt.py:160
 msgid "Handout Master view"
 msgstr "عرض النشرات الرئيسية"
 
@@ -1441,7 +1446,7 @@ msgid "Handy Tech braille displays"
 msgstr "الأسطر الإلكترونية هانديتيك"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:119
+#: appModules/powerpnt.py:121
 msgid "Header placeholder"
 msgstr "وعاء رأس العرض التقديمي"
 
@@ -1709,12 +1714,12 @@ msgid ""
 msgstr "بدأ التحديد من نقطة وجود المؤشر للنسخ"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:174
+#: appModules/powerpnt.py:176
 msgid "Master Thumbnails"
 msgstr "المصغرات الرئيسية"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:111
+#: appModules/powerpnt.py:113
 msgid "Media Clip placeholder"
 msgstr "وعاء مقطع موسيقي"
 
@@ -2009,6 +2014,11 @@ msgstr "لا توجد رسائل بعد"
 msgid "No next"
 msgstr "لا يوجد المزيد من الكائنات"
 
+#. Translators: The message for no notes  for a slide in a slide show
+#: appModules/powerpnt.py:806
+msgid "No notes"
+msgstr "لا توجد ملاحظات جانبية بهذه الشريحة"
+
 #: globalCommands.py:281
 msgid "No object at flat review position"
 msgstr "لا يوجد كائن في وضع الاستعراض المسطح"
@@ -2056,7 +2066,7 @@ msgid "NonVisual Desktop Access"
 msgstr "التواصل غير المرئي مع الحاسوب"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:168
+#: appModules/powerpnt.py:170
 msgid "Normal view"
 msgstr "العرض العادي"
 
@@ -2109,12 +2119,12 @@ msgid "Not in table"
 msgstr "خارج جدول"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:160
+#: appModules/powerpnt.py:162
 msgid "Notes Master view"
 msgstr "عرض الملاحظات الرئيسية"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:156
+#: appModules/powerpnt.py:158
 msgid "Notes page"
 msgstr "صفحة الملاحظات"
 
@@ -2134,7 +2144,7 @@ msgstr ""
 "{height:.1f} بالمائة من الشاشة"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:105
+#: appModules/powerpnt.py:107
 msgid "Object placeholder"
 msgstr "وعاء لكائن"
 
@@ -2143,7 +2153,7 @@ msgid "Options"
 msgstr "خيارات"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:113
+#: appModules/powerpnt.py:115
 msgid "Org Chart placeholder"
 msgstr "وعاء لرسم org"
 
@@ -2153,7 +2163,7 @@ msgid "Organisation:"
 msgstr "منظمة:"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:162
+#: appModules/powerpnt.py:164
 msgid "Outline view"
 msgstr "العرض الملخص"
 
@@ -2193,7 +2203,7 @@ msgid ""
 msgstr "تنفيذ الفعل الخاص بالكائن الحالي"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:127
+#: appModules/powerpnt.py:129
 msgid "Picture placeholder"
 msgstr "وعاء لصورة"
 
@@ -2332,7 +2342,7 @@ msgid "Primary header"
 msgstr "رأس الصفحة"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:170
+#: appModules/powerpnt.py:172
 msgid "Print Preview"
 msgstr "المعاينة قبل الطباعة"
 
@@ -2898,37 +2908,42 @@ msgid "Sleep mode on"
 msgstr "وضع الصمت تشغيل"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:154
+#: appModules/powerpnt.py:156
 msgid "Slide Master view"
 msgstr "عرض الشريحة الرئيسية"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:117
+#: appModules/powerpnt.py:119
 msgid "Slide Number placeholder"
 msgstr "وعاء لرقم الشريحة"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
-#: appModules/powerpnt.py:696
+#: appModules/powerpnt.py:750
 msgid "Slide Show - complete"
 msgstr "اختتام العرض التقديمي"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:164
+#: appModules/powerpnt.py:166
 msgid "Slide Sorter view"
 msgstr "عرض فرز الشرائح"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#: appModules/powerpnt.py:693
+#: appModules/powerpnt.py:747
 msgid "Slide show - {slideName}"
 msgstr "عرض الشرائح - {slideName}اختتام العرض التقديمي"
 
+#. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:744
+msgid "Slide show notes - {slideName}"
+msgstr "ملاحظات الشريحة - {slideName}"
+
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:152
+#: appModules/powerpnt.py:154
 msgid "Slide view"
 msgstr "عرض الشريحة"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#: appModules/powerpnt.py:480
+#: appModules/powerpnt.py:482
 msgid "Slide {slideNumber}"
 msgstr "شريحة {slideNumber}"
 
@@ -3047,7 +3062,7 @@ msgid "Subject:"
 msgstr "الموضوع:"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:99
+#: appModules/powerpnt.py:101
 msgid "Subtitle placeholder"
 msgstr "وعاء عنوان فرعي"
 
@@ -3102,7 +3117,7 @@ msgid "Synthesizer Error"
 msgstr "خلل في آلة النطق"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:115
+#: appModules/powerpnt.py:117
 msgid "Table placeholder"
 msgstr "وعاء جدول"
 
@@ -3131,7 +3146,7 @@ msgid "Text frame"
 msgstr "إطار نصي"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:95
+#: appModules/powerpnt.py:97
 msgid "Text placeholder"
 msgstr "وعاء نصي"
 
@@ -3185,17 +3200,17 @@ msgid "This change requires administrator privileges."
 msgstr "يتطلب هذا التعديل صلاحيات إدارية."
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:172
+#: appModules/powerpnt.py:174
 msgid "Thumbnails"
 msgstr "مصغرات"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:166
+#: appModules/powerpnt.py:168
 msgid "Title Master view"
 msgstr "عرض شريحة العنوان الرئيسية"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:93
+#: appModules/powerpnt.py:95
 msgid "Title placeholder"
 msgstr "وعاء عنوان"
 
@@ -3241,6 +3256,17 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr "الانتقال بين النمط التفاعلي ونمط التصفح "
+
+#. Translators: The description for a script
+#: appModules/powerpnt.py:829
+msgid ""
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
+msgstr ""
+"الانتقال بين تشغيل وتعطيل الإعلان عن ملاحظات المعلق أو المحتوى الفعلي "
+"للشريحة. هذا لم يغير شيء مما يظهر على الشاشة, بل سيتم الإعلان عما يمكن "
+"للمستخدم قراءته باستخدام NVDA"
 
 #: globalCommands.py:630
 msgid ""
@@ -3443,17 +3469,17 @@ msgid "Version"
 msgstr "رقم الإصدار"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:125
+#: appModules/powerpnt.py:127
 msgid "Vertical Object placeholder"
 msgstr "وعاء كائن رأسي"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:103
+#: appModules/powerpnt.py:105
 msgid "Vertical Text placeholder"
 msgstr "وعاء نص رأسي"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:101
+#: appModules/powerpnt.py:103
 msgid "Vertical Title placeholder"
 msgstr "وعاء عنوان رأسي"
 
@@ -3472,7 +3498,7 @@ msgid "Voice dictionary (%s)"
 msgstr "معجم صوت (%s)"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-#: appModules/powerpnt.py:268
+#: appModules/powerpnt.py:270
 msgid "Waiting for Powerpoint..."
 msgstr "في انتظار powerpoint"
 
@@ -5625,7 +5651,7 @@ msgstr "محدد"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401 globalCommands.py:131 speech.py:323 speech.py:515
-#: speech.py:530 virtualBuffers/__init__.py:742
+#: speech.py:530 appModules/powerpnt.py:714 virtualBuffers/__init__.py:742
 #, python-format
 msgid "selected %s"
 msgstr "%s محدد"
