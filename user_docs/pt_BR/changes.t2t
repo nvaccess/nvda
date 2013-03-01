@@ -64,6 +64,9 @@ Por favor consulte o documento da [Referência Rápida de Comandos keyCommands.h
 - Ao revisar, apagar para trás ou com delete os caracteres em controles editáveis Scintilla, o NVDA agora anuncia corretamente os caracteres multibyte. (#2855)
 - o NVDA já não falha ao ser instalado quando o caminho para o perfil do usuário contém certos caracteres multibyte. (#2729) 
 - O anúncio de grupos para controles de Visualização de Lista (SysListview32) em aplicativos de 64-bit já não causa um erro. 
+- No modo de navegação em aplicativos da Mozilla, conteúdos de texto já não são tratados incorretamente como editáveis em alguns casos raros. (#2959) 
+- No IBM Lotus Symphony e OpenOffice, ao mover-se o cursor do sistema agora move o cursor de revisão caso seja apropriado. 
+- Conteúdos Flash agora são acessíveis com o Internet Explorer no Windows 8. (#2454) 
 
  
  == Alterações Específicas para Desenvolvedores ==
