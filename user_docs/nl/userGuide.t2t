@@ -13,7 +13,7 @@ Door het geven van informatie in synthetische spraak en braille stelt NVDA blind
 NVDA wordt ontwikkeld door [NV Access http://www.nvaccess.org/], met bijdragen van de gebruikers.
 
 ++ Algemene kenmerken ++
-NVDA stelt blinden en slechtzienden in staat om te werken met het Windows besturingssysteem en veel toepassingen van derden.
+NVDA stelt blinden en slehtzienden in staat om te werken met het Windows besturingssysteem en veel toepassingen van derden.
 
 Belangrijke functies zijn:
 - Ondersteuning voor populaire toepassingen zoals webbrowsers, emailprogramma’s, chatprogramma’s en kantoorapplicaties   
@@ -119,7 +119,7 @@ Op de NVDA website kunt u lezen hoe u dit kunt doen.
 
 Wanneer NVDA de eerste keer start, komt u in het welkomstscherm van het programma dat u informatie geeft over de NVDA-toets en het NVDA-menu.
 Verderop in deze handleiding kunt u hier meer over lezen.
-Op het welkomstscherm treft u ook 2 aankruisvakjes aan.
+Op het welkomstscherm treft u ook 2 selectievakjes aan.
 Als u het eerste vakje aankruist, wordt de CapsLock-toets ook als NVDA-toets gebruikt. Door het andere vakje aan te kruisen, zal het welkomstscherm steeds verschijnen bij het starten van NVDA.
 
 ++ Over NVDA toetsenbordcommando’s ++
@@ -200,20 +200,20 @@ Wanneer het menu is geopend gebruikt u de pijltjestoetsen om door het menu te ga
 
 ++ De NVDA-basiscommando’s ++
 %kc:beginInclude
-|| Naam | Toets | Aanraken | Beschrijving |
-| Spraak stoppen | Control | 1tik met 2 vingers | Spreken wordt gestopt |
-| Spraak pauzeren | Shift | geen | Spraakuitvoer wordt gepauzeerd. Druk Shift opnieuw in om verder te lezen vanaf de pauzepositie(als de gebruikte synthesizer dit ondersteunt) |
-| NVDA Menu | NVDA+n | dubbeltik met 2 vingers | Opent het menu voor opties, extra en hulp, etc. |
-| Spraakmodus | NVDA+s | geen | Wisselt spraakmodus tussen spreken, pieptonen en stilte. |
-| Invoerhulpmodus aan-/uitzetten | NVDA+1 | geen | Als de invoerhulpmodus is ingeschakeld hoort u bij elke toets die wordt ingedrukt de naam van de toets en de (eventuele) bijbehorende functie van de toets(en) |
-| NVDA afsluiten | NVDA+q | geen | Sluit NVDA af |
-| Volgende toetsaanslag niet uitvoeren | NVDA+f2 | geen | De volgende toetsaanslag zal niet als NVDA-commando worden verwerkt maar als commando binnen de gebruikte toepassing worden uitgevoerd. |
-| Zet slaapmodus aan/uit voor huidige applicatie | NVDA+shift+s | geen | Slaapmodus schakelt alle NVDA commando's en uitvoer in spraak en braille uit. Dit is vooral handig in applicaties die in hun eigen spraakuitvoer of schermlezer voorzien. Druk deze toets nogmaals in om slaapmodus weer uit te schakelen. |%kc:endInclude
+|| Naam | Desktoptoets | Laptoptoets | Aanraken | Beschrijving |
+| Spraak stoppen | Control | Control | 1tik met 2 vingers | Spreken wordt gestopt |
+| Spraak pauzeren | Shift | Shift | geen | Spraakuitvoer wordt gepauzeerd. Druk Shift opnieuw in om verder te lezen vanaf de pauzepositie(als de gebruikte synthesizer dit ondersteunt) |
+| NVDA Menu | NVDA+n | NVDA+n | dubbeltik met 2 vingers | Opent het menu voor opties, extra en hulp, etc. |
+| Spraakmodus | NVDA+s | NVDA+s | geen | Wisselt spraakmodus tussen spreken, pieptonen en stilte. |
+| Invoerhulpmodus aan-/uitzetten | NVDA+1 | NVDA+1 | geen | Als de invoerhulpmodus is ingeschakeld hoort u bij elke toets die wordt ingedrukt de naam van de toets en de (eventuele) bijbehorende functie van de toets(en) |
+| NVDA afsluiten | NVDA+q | NVDA+q | geen | Sluit NVDA af |
+| Volgende toetsaanslag niet uitvoeren | NVDA+f2 | NVDA+f2 | geen | De volgende toetsaanslag zal niet als NVDA-commando worden verwerkt maar als commando binnen de gebruikte toepassing worden uitgevoerd. |
+| Zet slaapmodus aan/uit voor huidige applicatie | NVDA+shift+s | NVDA+Shift+z | geen | Slaapmodus schakelt alle NVDA commando's en uitvoer in spraak en braille uit. Dit is vooral handig in applicaties die in hun eigen spraakuitvoer of schermlezer voorzien. Druk deze toets nogmaals in om slaapmodus weer uit te schakelen. |%kc:endInclude
 
 ++ Systeeminformatie melden ++
 %kc:beginInclude
-|| Naam | Toets | Omschrijving |
-| Datum/tijd melden | NVDA+f12 | Eenmaal indrukken laat huidige tijd horen, tweemaal snel indrukken meldt de datum |
+|| Naam | Ttoets | Omschrijving |
+| Datum/tijd melden | NVDA+f12 | NVDA+f1| Eenmaal indrukken laat huidige tijd horen, tweemaal snel indrukken meldt de datum |
 | Batterijstatus melden | NVDA+shift+b | Meldt de batterijstatus, of de computer is aangesloten op netstroom en het batterijpercentage. |
 | Tekst op het klembord melden | NVDA+c | Meldt de tekst op het klembord als er tekst op het klembord staat. |
 %kc:endInclude
@@ -223,7 +223,7 @@ Met NVDA kunt u  op   verschillende manieren door en in het systeem  navigeren, 
 
 ++ Objecten ++[Objects]
 Elk programma en het besturingssysteem zelf bestaat uit veel objecten.
-Een object is een afzonderlijk element zoals een stuk tekst, knop, aankruisvakje, schuifregelaar, lijst of bewerkbaar tekstvak.
+Een object is een afzonderlijk element zoals een stuk tekst, knop, selectievakje, schuifregelaar, lijst of bewerkbaar tekstvak.
 
 ++ Navigeren met de systeemfocus ++[SystemFocus]
 De systeemfocus, of kortweg de focus, is het [object #Objects] waar de toetsen die op het toetsenbord worde aangeslagen betrekking op hebben ( de interactie).
@@ -249,11 +249,11 @@ Terwijl u dit doet, zal NVDA informatie over het object geven dat de focus heeft
 
 Enkele toetscommando’s die van pas komen bij het verplaatsen van de systeemfocus:
 %kc:beginInclude
-|| Naam | Toets| Beschrijving|
-| Huidige focus melden | NVDA+tab | laat horen welk object of besturingselement momenteel is gefocusseerd. Bij tweemaal indrukken wordt informatie gespeld |
-| Titel/naam melden | NVDA+t | Laat horen hoe het momenteel actieve venster heet. Bij tweemaal indrukken wordt de informatie gespeld. Bij driemaal indrukken wordt deze naar het klembord gekopieerd. |
-| Actieve venster voorlezen | NVDA+b | Leest de inhoud (knoppen, uitklapnenu’s,selectievakjes, etc.) voor. Handig voor dialoogvensters |
-| Statusbalk voorlezen | NVDA+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. |
+|| Naam | Desktoptoets | Laptoptoets | Beschrijving|
+| Huidige focus melden | NVDA+tab | NVDA+tab | laat horen welk object of besturingselement momenteel is gefocusseerd. Bij tweemaal indrukken wordt informatie gespeld |
+| Titel/naam melden | NVDA+t | NVDA+t | Laat horen hoe het momenteel actieve venster heet. Bij tweemaal indrukken wordt de informatie gespeld. Bij driemaal indrukken wordt deze naar het klembord gekopieerd. |
+| Actieve venster voorlezen | NVDA+b | NVDA+b | Leest de inhoud (knoppen, uitklapnenu’s,selectievakjes, etc.) voor. Handig voor dialoogvensters |
+| Statusbalk voorlezen | NVDA+End | NVDA+Shift+End | Leest de statusbalk als NVDA deze kan vinden. Het navigator object wordt ook naar de statusbalk verplaatst. |
 %kc:endInclude
 
 ++ Navigeren met de systeemcursor ++[SystemCaret]
@@ -265,10 +265,10 @@ NVDA meldt of u navigeert per teken, woord of regel. Ook wordt het selecteren en
 
 U kunt de volgende NVDA-toetscommando’s gebruiken om met de textcursor te navigeren:
 %kc:beginInclude
-|| Naam | Toets| Beschrijving|
-| Alles voorlezen | NVDA+pijl omlaag | Voorlezen starten vanaf de huidige positie van de tekstcursor die tijdens het lezen wordt verplaatst. |
-| Deze regel lezen | NVDA+pijl omhoog | Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen. Bij tweemaal drukken wordt regel gespeld. |
-| Geselecteerde tekst lezen | NVDA+Shift+pijl omhoog | Hiermee wordt geselecteerde tekst voorgelezen. |
+|| Naam | Desktoptoets | Laptoptoets | Beschrijving|
+| Alles voorlezen | NVDA+pijl omlaag | NVDA+a | Voorlezen starten vanaf de huidige positie van de tekstcursor die tijdens het lezen wordt verplaatst. |
+| Deze regel lezen | NVDA+pijl omhoog | NVDA+l | Hiermee wordt de regel waarin de tekstcursor zich momenteel bevindt voorgelezen. Bij tweemaal drukken wordt regel gespeld. |
+| Geselecteerde tekst lezen | NVDA+Shift+pijl omhoog | NVDA+Shift+s | Hiermee wordt geselecteerde tekst voorgelezen. |
 
 
 Binnen een tabel kunt u ook de volgende toetscommando’s gebruiken:
@@ -307,16 +307,16 @@ Als de braille uitvoer de objectnavigatie en tekst review moet volgen, [configur
 Voor objectnavigatie zijn de volgende toetscombinaties beschikbaar:
 
 %kc:beginInclude
-|| Naam | Desktoptoets | Laptoptoets | Beschrijving |
-| Informatie over huidig object | NVDA+numeriek5 | NVDA+control+i | Geeft informatie over huidig navigator object. Bij tweemaal snel drukken wordt informatie gespeld. |
-| Naar hoger niveau navigeren | NVDA+numeriek8 | NVDA+shift+i | Hiermee gaat u naar een hoger niveau (de map) waartoe het huidige navigator object behoort |
-| Naar vorig object gaan | NVDA+numeriek4 | NVDA+control+j | Hiermee navigeert u naar het object dat direct voorafgaat aan het huidige navigator object|
-| Naar het volgende object gaan | NVDA+numeriek6 | control+NVDA+l | Hiermee navigeert u naar het object dat volgt op het huidige navigator object |
-| Naar een lager niveau gaan | NVDA+numeriek2 | NVDA+shift+komma | Hiermee navigeert u vanuit het huidige navigator object (hoofdmap) naar het niveau eronder waar u bij de bijbehorende objecten komt |
-| Naar gefocusseerd object gaan | NVDA+numeriek minteken | NVDA+backspace | Hiermee navigeert u naar het object waar de systeemfocus zich momenteel bevindt, en verplaatst u de leescursor (review cursor) naar de positie van de tekstcursor als deze zichtbaar is |
-| Huidige navigator object activeren | NVDA+numeriek entertoets | NVDA+enter | Hiermee wordt het huidige navigator object geactiveerd(hetzelfde effect als klikken met de muis of het indrukken van de spatiebalk bij gefocusseerd object) |
-| Verplaats de systeem focus of cursor naar de huidige review positie | NVDA+shift+numeriek minteken | NVDA+shift+backspace | Een maal drukken verplaatst de focus naar het huidige navigator object, twee maal drukken verplaatst de systeem cursor naar de review cursor |
-| Afmetingen van navigator object weergeven | NVDA+numeriek Del | NVDA+del | De afmetingen van het huidige navigator object op het scherm worden met percentages aangegeven(u hoort de afstand vanaf de linker- en bovenkant van het scherm,en hoe breed en hoog het is) |
+|| Naam | Desktoptoets | Laptoptoets | Aanraken | Beschrijving |
+| Informatie over huidig object | NVDA+numeriek5 | NVDA+shift+o | geen | Geeft informatie over huidig navigator object. Bij tweemaal snel drukken wordt informatie gespeld. |
+| Naar hoger niveau navigeren | NVDA+numeriek8 | NVDA+shift+Pijl Omhoog | Veeg omhoog (objectmodus) | Hiermee gaat u naar een hoger niveau (de map) waartoe het huidige navigator object behoort |
+| Naar vorig object gaan | NVDA+numeriek4 | NVDA+shift+Pijl links | Veeg links(objectmodus) | Hiermee navigeert u naar het object dat direct voorafgaat aan het huidige navigator object|
+| Naar het volgende object gaan | NVDA+numeriek6 | NVDA+shift+Pijl rechts | Veeg rechts (objectmodus) | Hiermee navigeert u naar het object dat volgt op het huidige navigator object |
+| Naar een lager niveau gaan | NVDA+numeriek2 | NVDA+shift+Pijl omlaag | Veeg omlaag (objectmodus) | Hiermee navigeert u vanuit het huidige navigator object (hoofdmap) naar het niveau eronder waar u bij de bijbehorende objecten komt |
+| Naar gefocusseerd object gaan | NVDA+numeriek minteken | NVDA+backspace | geen | Hiermee navigeert u naar het object waar de systeemfocus zich momenteel bevindt, en verplaatst u de leescursor (review cursor) naar de positie van de tekstcursor als deze zichtbaar is |
+| Huidige navigator object activeren | NVDA+numeriek entertoets | NVDA+enter | dubbel tikken | Hiermee wordt het huidige navigator object geactiveerd(hetzelfde effect als klikken met de muis of het indrukken van de spatiebalk bij gefocusseerd object) |
+| Verplaats de systeem focus of cursor naar de huidige review positie | NVDA+shift+numeriek minteken | NVDA+shift+backspace | geen | Een maal drukken verplaatst de focus naar het huidige navigator object, twee maal drukken verplaatst de systeem cursor naar de review cursor |
+| Afmetingen van navigator object weergeven | NVDA+numeriek Del | NVDA+del | geen | De afmetingen van het huidige navigator object op het scherm worden met percentages aangegeven(u hoort de afstand vanaf de linker- en bovenkant van het scherm,en hoe breed en hoog het is) |
 %kc:endInclude |
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock uitgeschakeld worden.
@@ -335,29 +335,29 @@ Als de braille uitvoer de objectnavigatie en tekst review moet volgen, [configur
 
 Voor het nalezen van tekst kunt u de volgende toetscombinaties gebruiken:
 %kc:beginInclude
-|| Naam| Desktoptoets| Laptoptoets | Beschrijving |
-| in de leesmodus naar de eerste regel gaan | shift+numeriek7 | NVDA+7 | De leescursor wordt naar de eerste regel van de tekst verplaatst |
-| In de leesmodus naar de vorige regel gaan | numeriek7 | NVDA+u | De leescursor wordt naar de vorige regel van de tekst verplaatst |
-| Huidige regel van leescursor weergeven | numeriek8 | NVDA+i | Zegt in welke regel van de tekst de leescursor zich bevindt. Bij tweemaal drukken wordt de regel gespeld. Bij drie maal drukken wordt de regel gespeld met symboolomschrijvingen. |
-| In de leesmodus naar de volgende regel gaan | numeriek9 | NVDA+o, | De leescursor wordt naar de volgende tekstregel verplaatst |
-| In de leesmodus naar de laatste regel gaan | shift+numeriek9 | NVDA+9, | De leescursor wordt naar de laatste tekstregel verplaatst |
-| In de leesmodus naar het vorige woord gaan | numeriek4 | NVDA+j | De leescursor wordt naar het vorige woord in de tekst verplaatst |
-| Het woord waar de leescursor zich bevindt weergeven | numeriek5 | NVDA+k | Vertelt op welk woord in de tekst de leescursor nu staat. Bij tweemaal drukken wordt het woord gespeld. Bij drie maal drukken wordt het woord gespeld met symboolomschrijvingen. |
-| In de leesmodus naar het volgende woord gaan | numeriek6 | NVDA+l | De leescursor wordt naar het volgende woord in de tekst verplaatst |
-| In de leesmodus naar begin van een regel gaan | shift+numeriek1 | NVDA+shift+u | De leescursor wordt naar het begin van de huidige regel verplaatst |
-| Ga in de leesmodus naar vorig karakter | numeriek1 | NVDA+m | De leescursor wordt naar het vorige karakter in de huidige tekstregel verplaatst |
-| Huidige karakter onder de leescursor weergeven | numeriek2 | NVDA+komma | Noemt het huidige karakter in de tekstregel waar de leescursor zich bevindt. Tweemaal drukken geeft een omschrijving of voorbeeld van het karakter. Drie maal drukken geeft de numerieke waarde in decimalen en hexadecimalen. |
-| In de leesmodus naar het volgende karakter gaan | numeriek3 | NVDA+punt | De leescursor wordt naar het volgende karakter verplaatst in de huidige tekstregel|
-| In de leesmodus naar het einde van de regel gaan | shift+numeriek3 | NVDA+shift+o | De leescursor wordt naar het einde van de huidige tekstregel verplaatst |
-| Alles voorlezen in leesmodus | numeriek Plus | NVDA+shift+pijl omlaag | Leest vanaf de huidige positie van de leescursor waarbij de leescursor zich mee beweegt.  |
-| Vanaf de leescursor kopiëren | NVDA+f9 | NVDA+f9 |Er wordt tekst gekopieerd vanaf de huidige leescursorpositie. Het feitelijke kopiëren gebeurt pas nadat u hebt aangegeven waarheen gekopieerd moet worden |
-| Tot leescursor kopiëren | NVDA+f10 | NVDA+f10 | Het tekstgebied dat met NVDA+f9 is gemarkeerd wordt met de opdracht NVDA+f10 naar het klembord gekopieerd. |
-| Tekstopmaak weergeven | NVDA+f | NVDA+f | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt |
+|| Naam | Desktoptoets | Laptoptoets | Aanraken | Beschrijving |
+| in de leesmodus naar de eerste regel gaan | shift+numeriek7 | NVDA+control+Home | geen | De leescursor wordt naar de eerste regel van de tekst verplaatst |
+| In de leesmodus naar de vorige regel gaan | numeriek7 | NVDA+Pijl omhoog | Veeg omhoog (tekstmodus) | De leescursor wordt naar de vorige regel van de tekst verplaatst |
+| Huidige regel van leescursor weergeven | numeriek8 | NVDA+shift+punt-teken | geen | Zegt in welke regel van de tekst de leescursor zich bevindt. Bij tweemaal drukken wordt de regel gespeld. Bij drie maal drukken wordt de regel gespeld met symboolomschrijvingen. |
+| In de leesmodus naar de volgende regel gaan | numeriek9 | NVDA+Pijl omlaag, | Veeg omlaag (tekstmodus) | De leescursor wordt naar de volgende tekstregel verplaatst |
+| In de leesmodus naar de laatste regel gaan | shift+numeriek9 | NVDA+control+End, | geen | De leescursor wordt naar de laatste tekstregel verplaatst |
+| In de leesmodus naar het vorige woord gaan | numeriek4 | NVDA+control+pijl links | Veeg links met 2 vingers (tekstmodus) | De leescursor wordt naar het vorige woord in de tekst verplaatst |
+| Het woord waar de leescursor zich bevindt weergeven | numeriek5 | NVDA+control+punt-teken | geen | Vertelt op welk woord in de tekst de leescursor nu staat. Bij tweemaal drukken wordt het woord gespeld. Bij drie maal drukken wordt het woord gespeld met symboolomschrijvingen. |
+| In de leesmodus naar het volgende woord gaan | numeriek6 | NVDA+control+pijl rechts | Veeg rechts met 2 vingers (tekstmodus) | De leescursor wordt naar het volgende woord in de tekst verplaatst |
+| In de leesmodus naar begin van een regel gaan | shift+numeriek1 | NVDA+home | geen | De leescursor wordt naar het begin van de huidige regel verplaatst |
+| Ga in de leesmodus naar vorig karakter | numeriek1 | NVDA+pijl links | Veeg links (tekstmodus) | De leescursor wordt naar het vorige karakter in de huidige tekstregel verplaatst |
+| Huidige karakter onder de leescursor weergeven | numeriek2 | NVDA+punt | geen | Noemt het huidige karakter in de tekstregel waar de leescursor zich bevindt. Tweemaal drukken geeft een omschrijving of voorbeeld van het karakter. Drie maal drukken geeft de numerieke waarde in decimalen en hexadecimalen. |
+| In de leesmodus naar het volgende karakter gaan | numeriek3 | NVDA+pijl rechts | Veeg rechts (tekstmodus)| De leescursor wordt naar het volgende karakter verplaatst in de huidige tekstregel|
+| In de leesmodus naar het einde van de regel gaan | shift+numeriek3 | NVDA+End | geen | De leescursor wordt naar het einde van de huidige tekstregel verplaatst |
+| Alles voorlezen in leesmodus | numeriek Plus | NVDA+shift+a | Veeg omlaag met 3 vingers (tekstmodus) | Leest vanaf de huidige positie van de leescursor waarbij de leescursor zich mee beweegt.  |
+| Vanaf de leescursor kopiëren | NVDA+f9 | NVDA+f9 | geen |Er wordt tekst gekopieerd vanaf de huidige leescursorpositie. Het feitelijke kopiëren gebeurt pas nadat u hebt aangegeven waarheen gekopieerd moet worden |
+| Tot leescursor kopiëren | NVDA+f10 | NVDA+f10 | geen | Het tekstgebied dat met NVDA+f9 is gemarkeerd wordt met de opdracht NVDA+f10 naar het klembord gekopieerd. |
+| Tekstopmaak weergeven | NVDA+f | NVDA+f | geen | NVDA laat horen hoe de tekst waarin de leescursor zich bevindt, is opgemaakt |
 %kc:endInclude
 
 Let op: voor een goede werking van de numerieke toetsen moet NumLock worden uitgeschakeld.
 
-Om deze commando’s beter te kunnen onthouden zou u zich een tabel kunnen voorstellen met drie kolommen en drie rijen. Van boven naar beneden: regel, woord en karakter, en van links naar rechts; vorig, huidig en volgend. 
+Om de basiscommando’s voor het navigeren met  de leescursor beter te kunnen onthouden zou u zich een tabel kunnen voorstellen met drie kolommen en drie rijen. Van boven naar beneden: regel, woord en karakter, en van links naar rechts; vorig, huidig en volgend. 
 Dit ziet er dan als volgt uit:
 | Vorige regel | Huidige regel | Volgende regel |
 | Vorig woord | Huidig woord | Volgend woord |
@@ -402,12 +402,12 @@ Als u deze functionaliteit wilt gebruiken, kunt u deze inschakelen in het [muisi
 Hoewel u voor het navigeren met de muis een fysieke muis of een muispad moet gebruiken, zijn er een aantal toetscombinaties in NVDA waarmee muisbewegingen en muiskliks kunnen worden gesimuleerd:
 %kc:beginInclude
 || Naam | Desktoptoets | Laptoptoets | Beschrijving |
-| Klikken met linker muisknop | numeriek Gedeeld Door | NVDA+Pijl Links | Dit is hetzelfde als éénmaal klikken met linker muisknop. Deze toets tweemaal snel drukken is gelijk aan dubbelklikken met de muis. |
-| Linker muisknop vergrendelen | shift+numeriek Gedeeld Door | NVDA+shift+Pijl Links | Hiermee houdt u de linker muisknop ingedrukt. Door nogmaals te drukken wordt de knop weer los gelaten. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de linker muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
-| Klikken met rechter muisknop | numeriek Vermenigvuldig | NVDA+Pijl Rechts | Dit is gelijk aan eenmaal klikken met rechter muisknop. |
-| Rechter muisknop vergrendelen | shift+numeriek Vermenigvuldig | NVDA+shift+Pijl Rechts |Hiermee wordt rechter muisknop ingedrukt gehouden. Door nogmaals te drukken wordt de vergrendeling opgeheven. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de rechter muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
-| Muis naar huidige navigator object verplaatsen | NVDA+numeriek Gedeeld Door | NVDA+shift+f9 | Muis wordt verplaatst naar huidig object en de leescursor |
-| naar het object onder de muisaanwijzer gaan | NVDA+numeriek Vermenigvuldig | NVDA+shift+f10 | Verplaats het navigator object naar de muispositie |
+| Klikken met linker muisknop | numeriek Gedeeld Door | NVDA+[ (vierkante haak openen | Dit is hetzelfde als éénmaal klikken met linker muisknop. Deze toets tweemaal snel drukken is gelijk aan dubbelklikken met de muis. |
+| Linker muisknop vergrendelen | shift+numeriek Gedeeld Door | NVDA+control+[ (vierkante haak openen) | Hiermee houdt u de linker muisknop ingedrukt. Door nogmaals te drukken wordt de knop weer los gelaten. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de linker muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
+| Klikken met rechter muisknop | numeriek Vermenigvuldig | NVDA+] (vierkante haak sluiten) | Dit is gelijk aan eenmaal klikken met rechter muisknop. |
+| Rechter muisknop vergrendelen | shift+numeriek Vermenigvuldig | NVDA+control+] (vierkante haak sluiten) | Hiermee wordt rechter muisknop ingedrukt gehouden. Door nogmaals te drukken wordt de vergrendeling opgeheven. Om te kunnen slepen met de muis drukt u deze toetscombinatie zodat de rechter muisknop ingedrukt blijft. Vervolgens kunt u de muis fysiek verplaatsen of met een van de andere daarvoor bestemde commando’s. |
+| Muis naar huidige navigator object verplaatsen | NVDA+numeriek Gedeeld Door | NVDA+shift+m | Muis wordt verplaatst naar huidig object en de leescursor |
+| naar het object onder de muisaanwijzer gaan | NVDA+numeriek Vermenigvuldig | NVDA+shift+n | Verplaats het navigator object naar de muispositie |
 %kc:endInclude
 
 + Bladermodus +
@@ -438,7 +438,6 @@ Het is ook mogelijk om handmatig de focusmodus in te schakelen, deze zal dan act
 | Uitgebreide beschrijving openen | NVDA+d | Er wordt een nieuw venster geopend met een uitgebreide beschrijving, voor zover aanwezig,  van het element waarop u zich bevindt. |
 %kc:endInclude
 
-
 ++ Lettertoetsnavigatie ++
 Om in de bladermodus snel te kunnen navigeren, kunt u een lettertoets gebruiken om naar bepaalde velden te springen in een document.
 
@@ -456,7 +455,7 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 - e: edit field (tekstvak)
 - b: button (knop)
 - x: checkbox (selectievakje)
-- c: combo box (keuzelijst)
+- c: combo box (vervolgkeuzelijst)
 - r: radio button (keuzerondje)
 - q: block quote (blokcitaat)
 - s: separator (scheiding)
@@ -618,7 +617,7 @@ Met de schuifregelaar kunt u het volume van de stem instellen waarbij 0 het laag
 Met de schuifregelaar kunt u instellen welk intonatieniveau de stem moet gebruiken, dus hoe sterk de stem in toonhoogte moet variëren. De enige synthesizer die op het moment deze mogelijkheid biedt is eSpeak.
 
 ==== Automatisch van taal wisselen ====
-Dit aankruisvakje bepaalt of NVDA automatisch van taal moet wisselen als het te lezen document is voorzien van taalcodes, zoals NL voor Nederlands.
+Dit selectievakje bepaalt of NVDA automatisch van taal moet wisselen als het te lezen document is voorzien van taalcodes, zoals NL voor Nederlands.
 Deze optie is standaard ingeschakeld.
 Op dit moment wordt het automatisch wisselen van taal enkel door de eSpeak synthesizer ondersteund.
 
@@ -656,11 +655,11 @@ Merk op dat deze functionaliteit voor het Engels van groot belang is, maar dat d
 +++ Synth settings ring +++[SynthSettingsRing]
 Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster “Steminstellingen”, kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
 %kc:beginInclude
-|| Naam | Desktoptoets| Laptoptoets | Beschrijving |
-| Naar volgende synthesizerinstelling gaan | NVDA+control+pijl rechts | NVDA+control+pijl rechts | Hiermee wordt steeds een volgende spraakinstelling gekozen. Na de laatst beschikbare instelling begint u weer vooraan enz. |
-| Naar vorige spraakinstelling gaan | NVDA+control+pijl Links | NVDA+control+pijl Links | Hiermee wordt de spraakinstelling gekozen die onmiddellijk voorafgaat aan de huidige. Eenmaal bij de eerste instelling bovenaan de lijst aangekomen begint u weer onderaan enzovoorts. |
-| Oplopend bijstellen van huidige synthesizerinstelling | NVDA+control+Pijl Omhoog | NVDA+control+Pijl Omhoog |Stelt de momenteel gebruikte spraakinstelling naar bovenbij. Verhoogt bij voorbeeld snelheid en volume, selecteert volgende stem. |
-| De huidige synthesizerinstelling aflopend bijstellen | NVDA+control+Pijl Omlaag | NVDA+control+Pijl Omlaag |Stelt momenteel gebruikte spraakinstelling naar beneden bij. Verlaagt bij voorbeeld snelheid en volume, selecteert vorige stem |
+|| Naam | Desktoptoets | Laptoptoets | Beschrijving |
+| Naar volgende synthesizerinstelling gaan | NVDA+control+pijl rechts | NVDA+shift+control+pijl rechts | Hiermee wordt steeds een volgende spraakinstelling gekozen. Na de laatst beschikbare instelling begint u weer vooraan enz. |
+| Naar vorige spraakinstelling gaan | NVDA+control+pijl Links | NVDA+shift+control+pijl Links | Hiermee wordt de spraakinstelling gekozen die onmiddellijk voorafgaat aan de huidige. Eenmaal bij de eerste instelling bovenaan de lijst aangekomen begint u weer onderaan enzovoorts. |
+| Oplopend bijstellen van huidige synthesizerinstelling | NVDA+control+Pijl Omhoog | NVDA+shift+control+Pijl Omhoog |Stelt de momenteel gebruikte spraakinstelling naar bovenbij. Verhoogt bij voorbeeld snelheid en volume, selecteert volgende stem. |
+| De huidige synthesizerinstelling aflopend bijstellen | NVDA+control+Pijl Omlaag | NVDA+shift+control+Pijl Omlaag |Stelt momenteel gebruikte spraakinstelling naar beneden bij. Verlaagt bij voorbeeld snelheid en volume, selecteert vorige stem |
 %kc:endInclude
 
 +++ Brailleïnstellingen +++
@@ -677,7 +676,7 @@ Meer informatie over ondersteunde brailleleesregels vindt u onder [Supported Bra
 
 ==== Poort ====
 Voor zover beschikbaar, kunt u met deze optie bepalen welke poort of welk type verbinding moet worden gebruikt om te communiceren met de geselecteerde brailleleesregel.
-In de keuzelijst treft u de mogelijkheden aan die voor de gebruikte leesregel beschikbaar zijn.
+In de vervolgkeuzelijst treft u de mogelijkheden aan die voor de gebruikte leesregel beschikbaar zijn.
 
 Standaard wordt door NVDA een automatische poortdetectie uitgevoerd. Dit houdt in dat verbinding met het brailleapparaat automatisch tot stand wordt gebracht bij het zoeken naar beschikbare usb- of bluetooth-apparaten op uw systeem.
 Bij sommige brailleleesregels is het echter mogelijk expliciet te bepalen welke poort gebruikt moet worden.
@@ -750,6 +749,12 @@ Toets: NVDA+3
 
 Door dit selectievakje aan te kruisen wordt elk woord dat u getypt hebt uitgesproken.
 
+==== Spraak onderbreken bij het typen van karakters ====
+Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer er een letterteken wordt getypt. Deze instelling staat standaard "aan".   
+
+==== Spraak onderbreken  bij drukken van Enter-toets ====
+Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer de Enter-toets wordt ingedrukt. Deze instelling staat standaard "aan".   
+
 ==== Piep bij het typen van kleine letters terwijl capslock is ingeschakeld ====
 Als deze optie is geactiveerd, zal NVDA piepen bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
 Meestal is het niet de bedoeling om letters in combinatie met de shift toets te typen als capslock is ingeschakeld, u heeft capslock dan wellicht per ongeluk aangezet.
@@ -771,8 +776,7 @@ In Windows verandert de vorm van de muisaanwijzer om aan te geven waar de comput
 
 %kc:setting
 ==== De muis volgen activeren====
-| Desktoptoets | NVDA+m |
-| Laptoptoets | NVDA+shift+m |
+ Toets : NVDA+m |
 
 Door het selectievakje aan te kruisen wordt de tekst gelezen die zich onder de muisaanwijzer bevindt bij verplaatsing van de muis over het scherm. U kunt dus naar iets zoeken door de muis zelf te verplaatsen in plaats van zoeken met objectnavigatie.
 
@@ -796,8 +800,7 @@ In het dialoogvenster treft u de volgende keuzemogelijkheden aan:
 
 %kc:setting
 ==== Volg de systeemfocus====
-| Desktoptoets | NVDA+7 |
-| Laptoptoets | NVDA+control+7 |
+ Toets : NVDA+7 |
 
 Als het selectievakje is aangevinkt zal de leescursor (reviewcursor) steeds meegaan met de toetsenbord- of systeemfocus, dus ook als deze laatste verandert.
 
@@ -842,9 +845,7 @@ Vink dit selectievakje niet aan als u, behalve de naam van het object, geen extr
 
 %kc:setting
 ==== Weergave voortschrijdingsbalk ====
-| Desktoptoets | NVDA+u |
-| Laptoptoets | NVDA+control+f2 |
-
+ Toets : NVDA+u |
 Via het uitklapvenster kunt u kiezen hoe u wilt worden geïnformeerd over de voortgang van de voortschrijdingsbalk.
 
 U kunt kiezen uit
@@ -918,7 +919,7 @@ Als het selectievakje niet is aangekruist zal NVDA alleen dan tabelinformatie ge
 Als het selectievakje is aangevinkt, zal NVDA ook tabellen melden die louter optisch van aard zijn. 
 
 ==== Het melden van velden zoals links en koppen instellen====
-Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings] om de velden in te stellen die worden uitgesproken bij het navigeren, zoals links, koppen en trabellen.
+Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings] om de velden in te stellen die worden uitgesproken bij het navigeren, zoals links, koppen en tabellen.
 
 ==== Automatische focusmodus bij focuswijzigingen====
 Hiermee wordt de focusmodus automatisch geactiveerd bij focusveranderingen.
@@ -934,7 +935,7 @@ Als het selectievakje is aangekruist, hoort u een bepaald geluid als gewisseld w
 +++ Documentopmaakinstellingen (NVDA+control+d) +++[DocumentFormattingSettings]
 U vindt het dialoogvenster Documentopmaak in het NVDA-menu onder Opties. 
 
-U kunt de meeste aankruisvakjes gebruiken om te bepalen welke informatie over de opmaak van een document u wilt horen als u de cursor in het document verplaatst.
+U kunt de meeste selectievakjes gebruiken om te bepalen welke informatie over de opmaak van een document u wilt horen als u de cursor in het document verplaatst.
 Als u bij voorbeeld Lettertype vermelden aankruist, wordt de naam hiervan gemeld telkens wanneer u bij een ander lettertype terecht komt.
 
 U kunt de vermelding laten horen van:
@@ -1220,6 +1221,8 @@ NVDA ondersteunt alle via usb-gekoppelde of blutooth-verbondenleesregels van [Ha
 Voor sommige oudere USB-leesregels moeten de USB-drivers van Handy Tech op uw computer worden geïnstalleerd.
 Bovendien moet u de universele driver van Handy Tech installeren. Deze vindt u op ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
+Brailleïnvoer wordt nog niet ondersteund.
+
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregel raadplegen.)
 %kc:beginInclude
@@ -1363,6 +1366,8 @@ Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van t
 NVDA ondersteunt de leesregelmodellen Braile Sense en Braille Edge van [Hims http://www.hims-inc.com/], die via 
 USB of Bluetooth kunnen worden aangesloten. 
 Als u  voor de USB-aansluiting kiest, moet u wel eerst de USB-driver van HIMS op uw Systeem installeren.
+
+Brailleïnvoer wordt nog niet ondersteund.
 
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
@@ -1643,6 +1648,10 @@ Raadpleeg de documentatie bij de  BrailleNote voor informatie over de positie va
 Om er gebruik van te maken moet u [BRLTTY voor Windows http://brl.thefreecat.org/brltty/] installeren.
 U moet de nieuwste versie van het programma (bij voorbeeld, met als naam brltty-win-4.2-2.exe) downloaden en installeren.
 Wanneer u de leesregel configureert en de te gebruiken poort instelt, moet u ervoor zorgen de instructies nauwkeurig op te volgen, vooral bij gebruik van een USB-leesregel waarvoor de drivers van de fabrikant reeds zijn geïnstalleerd.
+
+Het  Brltty-programma zorgt zelf voor de verwerking van brailleïnvoer van leesregels die over een brailletoetsenbord beschikken.
+Het is dan ook niet relevant dat een invoertabel in NVDA wordt ingesteld.
+
 De volgende brltty-commando's worden in NVDA ondersteund.
 Voor informatie over toetsenbordtabellen kunt u de  [BRLTTY-Documentatie op 
 http://mielke.cc/brltty/doc/drivers/] raadplegen.
