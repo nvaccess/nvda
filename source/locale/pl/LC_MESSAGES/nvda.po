@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5788\n"
+"Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2013-01-31 05:30+0000\n"
-"PO-Revision-Date: 2013-01-19 16:36+0100\n"
+"POT-Creation-Date: 2013-02-14 05:30+0000\n"
+"PO-Revision-Date: 2013-02-17 18:05+0100\n"
 "Last-Translator: Hubert Meyer <killer@tyflonet.com>\n"
 "Language-Team:  <killer@tyflonet.com>\n"
 "Language: \n"
@@ -27,12 +27,14 @@ msgid "%d characters"
 msgstr "%d znaków"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:861 NVDAObjects/behaviors.py:57
+#: globalCommands.py:861
+#: NVDAObjects/behaviors.py:57
 #, python-format
 msgid "%d percent"
 msgstr "%d procent"
 
-#: globalCommands.py:315 globalCommands.py:775
+#: globalCommands.py:315
+#: globalCommands.py:775
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s skopiowano do schowka"
@@ -44,7 +46,7 @@ msgstr "kursor %s"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:575
+#: braille.py:578
 #, python-format
 msgid "%s end"
 msgstr "%s koniec"
@@ -54,7 +56,8 @@ msgstr "%s koniec"
 msgid "%s items"
 msgstr "%s obiektów"
 
-#: virtualBuffers/__init__.py:240 virtualBuffers/__init__.py:248
+#: virtualBuffers/__init__.py:240
+#: virtualBuffers/__init__.py:248
 #, python-format
 msgid "%s landmark"
 msgstr "%s punkt orientacyjny"
@@ -98,7 +101,8 @@ msgstr "&Tryb przeglądania..."
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
-#: updateCheck.py:209 gui/addonGui.py:54
+#: updateCheck.py:209
+#: gui/addonGui.py:54
 msgid "&Close"
 msgstr "zamknij"
 
@@ -107,7 +111,8 @@ msgid "&Comment"
 msgstr "&Komentarz:"
 
 #. Translators: The label of a button to continue with the operation.
-#: gui/installerGui.py:118 gui/installerGui.py:167
+#: gui/installerGui.py:118
+#: gui/installerGui.py:167
 msgid "&Continue"
 msgstr "kontynuuj"
 
@@ -173,9 +178,8 @@ msgid "&Input composition settings..."
 msgstr "ustawienia wprowadzania"
 
 #: gui/settingsDialogs.py:1261
-#, fuzzy
 msgid "&Input table:"
-msgstr "Koniec tabeli"
+msgstr "tabela wprowadzania"
 
 #: gui/__init__.py:566
 msgid "&Install NVDA on this computer"
@@ -249,9 +253,8 @@ msgid "&Object presentation..."
 msgstr "Prezentacja &obiektów..."
 
 #: gui/settingsDialogs.py:1248
-#, fuzzy
 msgid "&Output table:"
-msgstr "&Urządzenie wyjściowe"
+msgstr "tabela wyjścia"
 
 #: gui/settingsDialogs.py:1096
 msgid "&Pattern"
@@ -277,11 +280,13 @@ msgstr "&Wymowa symboli i interpunkcja"
 msgid "&Rate"
 msgstr "&Prędkość:"
 
-#: gui/addonGui.py:47 gui/settingsDialogs.py:1151
+#: gui/addonGui.py:47
+#: gui/settingsDialogs.py:1151
 msgid "&Remove"
 msgstr "&Usuń"
 
-#: gui/settingsDialogs.py:1099 gui/settingsDialogs.py:1401
+#: gui/settingsDialogs.py:1099
+#: gui/settingsDialogs.py:1401
 msgid "&Replacement"
 msgstr "&Zamień na:"
 
@@ -372,23 +377,15 @@ msgid "..."
 msgstr "..."
 
 #: gui/__init__.py:307
-msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries "
-"to the list"
-msgstr ""
-"Okno dialogowe, w którym można ustawiać słownik domyślny poprzez dodawanie "
-"wpisów do listy"
+msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
+msgstr "Okno dialogowe, w którym można ustawiać słownik domyślny poprzez dodawanie wpisów do listy"
 
 #: gui/__init__.py:311
-msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries "
-"to the edit box"
+msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
 msgstr "Zmień listę wpisów w słowniku tymczasowym"
 
 #: gui/__init__.py:309
-msgid ""
-"A dialog where you can set voice-specific dictionary by adding dictionary "
-"entries to the list"
+msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
 msgstr "Zmień listę wpisów w słowniku specyficznym dla głosu"
 
 #: versionInfo.py:40
@@ -397,20 +394,13 @@ msgstr "Darmowy i wolny screen reader dla Microsoft Windows"
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui/installerGui.py:88
-msgid ""
-"A previous copy of NVDA has been found on your system. This copy will be "
-"updated."
-msgstr ""
-"W twoim systemie znaleziono poprzednią kopię NVDA. Kopia ta zostanie teraz "
-"zaktualizowana"
+msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
+msgstr "W twoim systemie znaleziono poprzednią kopię NVDA. Kopia ta zostanie teraz zaktualizowana"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 #: gui/addonGui.py:101
-msgid ""
-"A version of this add-on is already installed. Would you like to update it?"
-msgstr ""
-"Ta sama, lób nowsza wersja tego dodatku jest już zainstalowana. Czy chcesz "
-"usunąć starszą wersję tej wtyczki, a na jej miejsce zainstalować nową?"
+msgid "A version of this add-on is already installed. Would you like to update it?"
+msgstr "Ta sama, lób nowsza wersja tego dodatku jest już zainstalowana. Czy chcesz usunąć starszą wersję tej wtyczki, a na jej miejsce zainstalować nową?"
 
 #: globalCommands.py:862
 msgid "AC power on"
@@ -421,7 +411,8 @@ msgstr "Zasilanie z sieci"
 msgid "ALVA BC640/680 series"
 msgstr "ALVA BC640/680 series"
 
-#: gui/__init__.py:218 gui/__init__.py:363
+#: gui/__init__.py:218
+#: gui/__init__.py:363
 msgid "About NVDA"
 msgstr "o programie"
 
@@ -445,7 +436,8 @@ msgstr "informacja o wtyczce"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
-#: gui/addonGui.py:90 gui/addonGui.py:103
+#: gui/addonGui.py:90
+#: gui/addonGui.py:103
 msgid "Add-on Installation"
 msgstr "instalacja wtyczek"
 
@@ -456,12 +448,8 @@ msgstr "manager wtyczek"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
 #: gui/addonGui.py:184
-msgid ""
-"Add-ons have been added or removed. You must restart NVDA for these changes "
-"to take effect. Would you like to restart now?"
-msgstr ""
-"wtyczki zostały dodane lób usunięte. Aby zmiany zadziałały, należy "
-"zrestartować NVDA. Czy chcesz zrobić to teraz?"
+msgid "Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"
+msgstr "wtyczki zostały dodane lób usunięte. Aby zmiany zadziałały, należy zrestartować NVDA. Czy chcesz zrobić to teraz?"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 #: NVDAHelper.py:216
@@ -493,12 +481,8 @@ msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "zgłaszaj zmiany &formatowania za kursorem (może spowalniać)"
 
 #: globalCommands.py:132
-msgid ""
-"Announces the current selection in edit controls and documents. If there is "
-"no selection it says so."
-msgstr ""
-"Czyta bieżące zaznaczenie tekstu w polu edycji lub dokumencie. Jeżeli żadne "
-"zaznaczenie nie występuje, użytkownik zostanie o tym poinformowany."
+msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
+msgstr "Czyta bieżące zaznaczenie tekstu w polu edycji lub dokumencie. Jeżeli żadne zaznaczenie nie występuje, użytkownik zostanie o tym poinformowany."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:37
@@ -527,13 +511,11 @@ msgstr "Aragoński"
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui/addonGui.py:88
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from "
-"trusted sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"Czy jesteś pewien, że chcesz zainstalować tą wtyczkę? Pamiętaj, by "
-"instalować dodatki tylko z zaufanego źródła.\n"
+"Czy jesteś pewien, że chcesz zainstalować tą wtyczkę? Pamiętaj, by instalować dodatki tylko z zaufanego źródła.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 
@@ -563,7 +545,7 @@ msgstr "Autor"
 #. : Automatic port constant to be used by braille displays that support the "automatic" port
 #. : @type: Tupple
 #. Translators String representing the automatic port selection for braille displays.
-#: braille.py:1515
+#: braille.py:1536
 msgid "Automatic"
 msgstr "automatyczne"
 
@@ -646,7 +628,7 @@ msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "dźwięk dla &małych liter przy włączonym capslok"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:109
+#: appModules/powerpnt.py:111
 msgid "Bitmap placeholder"
 msgstr "bitmapa"
 
@@ -695,7 +677,8 @@ msgstr "Kopia do:"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
-#: NVDAObjects/inputComposition.py:103 NVDAObjects/IAccessible/mscandui.py:44
+#: NVDAObjects/inputComposition.py:103
+#: NVDAObjects/IAccessible/mscandui.py:44
 #: NVDAObjects/IAccessible/mscandui.py:190
 msgid "Candidate"
 msgstr "znak kandydujący"
@@ -706,13 +689,10 @@ msgstr "Nie można zapisać konfiguracji - NVDA w bezpiecznym trybie"
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-#: NVDAObjects/window/excel.py:176 NVDAObjects/window/excel.py:193
-msgid ""
-"Cannot set headers. Please enable reporting of table headers in Document "
-"Formatting Settings"
-msgstr ""
-"Nie można ustawić nagłówka. Włącz zgłaszanie nagłówków tabel w ustawieniach "
-"nvda/formatowanie dokumentów"
+#: NVDAObjects/window/excel.py:176
+#: NVDAObjects/window/excel.py:193
+msgid "Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"
+msgstr "Nie można ustawić nagłówka. Włącz zgłaszanie nagłówków tabel w ustawieniach nvda/formatowanie dokumentów"
 
 #: gui/settingsDialogs.py:466
 msgid "Capital pitch change percentage"
@@ -723,7 +703,7 @@ msgid "Case &sensitive"
 msgstr "Uwzględniaj &wielkość liter"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:97
+#: appModules/powerpnt.py:99
 msgid "Center Title placeholder"
 msgstr "środkowy obszar tytułu"
 
@@ -752,7 +732,7 @@ msgid "Change virtual buffers specific settings"
 msgstr "Zmień ustawienia wirtualnych buforów"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:107
+#: appModules/powerpnt.py:109
 msgid "Chart placeholder"
 msgstr "wykres"
 
@@ -856,21 +836,15 @@ msgid "Configuration saved"
 msgstr "Ustawienia zapisane"
 
 #: gui/__init__.py:297
-msgid ""
-"Configure how NVDA reports input composition and candidate selection for "
-"certain languages"
-msgstr ""
-"konfiguruje sposób zgłaszania kandydatów i kompozycji. Dot. języków "
-"azjatyckich"
+msgid "Configure how NVDA reports input composition and candidate selection for certain languages"
+msgstr "konfiguruje sposób zgłaszania kandydatów i kompozycji. Dot. języków azjatyckich"
 
 #: gui/__init__.py:295
 msgid "Configure how and when the review cursor moves"
 msgstr "Skonfiguruj jak i kiedy przemieszcza się kursor"
 
 #: gui/__init__.py:291
-msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command "
-"keys"
+msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
 msgstr "Zmień ustawienia klawiatury oraz wypowiadania znaków, słów i klawiszy"
 
 #. Translators: The progress message indicating that a connection is being established.
@@ -928,9 +902,7 @@ msgstr "Nie można załadować syntezatora %s."
 
 #: gui/__init__.py:148
 msgid "Could not save configuration - probably read only file system"
-msgstr ""
-"Nie można zapisać ustawień konfiguracyjnych - prawdopodobnie dysk jest tylko "
-"do odczytu"
+msgstr "Nie można zapisać ustawień konfiguracyjnych - prawdopodobnie dysk jest tylko do odczytu"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:105
@@ -971,21 +943,12 @@ msgid "Cursor blink rate (ms)"
 msgstr "&Tempo migania kursora (w milisekundach)"
 
 #: gui/settingsDialogs.py:191
-msgid ""
-"Custom plugins were detected in your user settings directory. Copying these "
-"to the system profile could be a security risk. Do you still wish to copy "
-"your settings?"
-msgstr ""
-"W katalogu ustawień tego użytkownika wykryto wtyczki. Skopiowanie ich do "
-"profilu systemowego może stanowić zagrożenie bezpieczeństwa. Czy nadal "
-"chcesz skopiować swoje ustawienia?"
+msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
+msgstr "W katalogu ustawień tego użytkownika wykryto wtyczki. Skopiowanie ich do profilu systemowego może stanowić zagrożenie bezpieczeństwa. Czy nadal chcesz skopiować swoje ustawienia?"
 
 #: globalCommands.py:227
-msgid ""
-"Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr ""
-"Przełącza poziom wymawiania interpunkcji określając, jakie znaki są "
-"odczytywane"
+msgid "Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr "Przełącza poziom wymawiania interpunkcji określając, jakie znaki są odczytywane"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1006,7 +969,7 @@ msgid "Danish grade 2"
 msgstr "Duński (stopień 2)"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:123
+#: appModules/powerpnt.py:125
 msgid "Date placeholder"
 msgstr "data"
 
@@ -1031,7 +994,8 @@ msgstr "Pulpit"
 msgid "Display"
 msgstr "Wyświetl"
 
-#: appModules/miranda32.py:119 appModules/vipmud.py:34
+#: appModules/miranda32.py:119
+#: appModules/vipmud.py:34
 msgid "Displays one of the recent messages"
 msgstr "Pokazuje ostatnią wiadomość"
 
@@ -1085,7 +1049,9 @@ msgstr "Holenderski belgijski (stopień 1)"
 msgid "Dutch (netherlands) grade 1"
 msgstr "Holenderski (stopień 1)"
 
-#: gui/__init__.py:379 gui/__init__.py:578 gui/logViewer.py:34
+#: gui/__init__.py:379
+#: gui/__init__.py:578
+#: gui/logViewer.py:34
 msgid "E&xit"
 msgstr "Wyjście"
 
@@ -1095,7 +1061,8 @@ msgstr "&Rozwiń słowo pod kursorem do brajla komputerowego"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects/window/winword.py:415 NVDAObjects/window/winword.py:434
+#: NVDAObjects/window/winword.py:415
+#: NVDAObjects/window/winword.py:434
 msgid "Edge of table"
 msgstr "Koniec tabeli"
 
@@ -1108,6 +1075,12 @@ msgstr "Edytuj wpis w słowniku"
 #: virtualBuffers/__init__.py:288
 msgid "Elements List"
 msgstr "Lista elementów"
+
+#. Translators: The message for an empty slide in a slide show
+#: appModules/powerpnt.py:809
+#: appModules/powerpnt.py:810
+msgid "Empty slide"
+msgstr "slajd pusty"
 
 #: scriptHandler.py:33
 #, python-format
@@ -1162,10 +1135,18 @@ msgstr "Angielski amerykański (stopień 2)"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:128 updateCheck.py:355 gui/addonGui.py:84
-#: gui/addonGui.py:123 gui/__init__.py:148 gui/__init__.py:157
-#: gui/installerGui.py:54 gui/installerGui.py:191 gui/installerGui.py:199
-#: gui/installerGui.py:230 gui/logViewer.py:74 gui/settingsDialogs.py:223
+#: updateCheck.py:128
+#: updateCheck.py:355
+#: gui/addonGui.py:84
+#: gui/addonGui.py:123
+#: gui/__init__.py:148
+#: gui/__init__.py:157
+#: gui/installerGui.py:54
+#: gui/installerGui.py:191
+#: gui/installerGui.py:199
+#: gui/installerGui.py:230
+#: gui/logViewer.py:74
+#: gui/settingsDialogs.py:223
 msgid "Error"
 msgstr "Błąd"
 
@@ -1224,7 +1205,8 @@ msgstr "Stopka parzystych stron"
 msgid "Even pages header"
 msgstr "Nagłówek parzystych stron"
 
-#: gui/__init__.py:174 gui/__init__.py:379
+#: gui/__init__.py:174
+#: gui/__init__.py:379
 msgid "Exit NVDA"
 msgstr "Zakończ NVDA"
 
@@ -1248,12 +1230,8 @@ msgstr "nieudało się zainstalować wtyczki z %s"
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #: gui/addonGui.py:82
 #, python-format
-msgid ""
-"Failed to open add-on package file at %s - missing file or invalid file "
-"format"
-msgstr ""
-"Nieudało się otworzyć pakietu z wtyczką %s - brakujący plik lub "
-"nieprawidłowy format"
+msgid "Failed to open add-on package file at %s - missing file or invalid file format"
+msgstr "Nieudało się otworzyć pakietu z wtyczką %s - brakujący plik lub nieprawidłowy format"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1268,7 +1246,8 @@ msgstr "Przewiń w przód"
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui/installerGui.py:46 gui/installerGui.py:224
+#: gui/installerGui.py:46
+#: gui/installerGui.py:224
 msgid "File in Use"
 msgstr "plik w użyciu"
 
@@ -1313,7 +1292,7 @@ msgid "Follow system &focus"
 msgstr "Śledź karetkę &Systemową"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:121
+#: appModules/powerpnt.py:123
 msgid "Footer placeholder"
 msgstr "obszar stopki"
 
@@ -1322,14 +1301,8 @@ msgid "Footnotes"
 msgstr "przypisy"
 
 #: gui/settingsDialogs.py:255
-msgid ""
-"For the new language to take effect, the configuration must be saved and "
-"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
-"manually save and exit at a later time."
-msgstr ""
-"Aby nowy język zaczął w pełni działać, należy zapisać ustawienia i "
-"zrestartować NVDA. Naciśnij enter, aby zapisać i zrestartować NVDA teraz, "
-"lub anuluj, żeby zrobić to ręcznie później."
+msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
+msgstr "Aby nowy język zaczął w pełni działać, należy zapisać ustawienia i zrestartować NVDA. Naciśnij enter, aby zapisać i zrestartować NVDA teraz, lub anuluj, żeby zrobić to ręcznie później."
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:35
@@ -1372,7 +1345,8 @@ msgid "French (unified) Grade 2"
 msgstr "Francuski (ujednolicony) (stopień 2)"
 
 #. Translators: This is presented in outlook or live mail, email sender
-#: appModules/msimn.py:31 appModules/msimn.py:47
+#: appModules/msimn.py:31
+#: appModules/msimn.py:47
 msgid "From:"
 msgstr "Od:"
 
@@ -1440,7 +1414,7 @@ msgid "Half shaped mode"
 msgstr "tryb półkształtowy"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:158
+#: appModules/powerpnt.py:160
 msgid "Handout Master view"
 msgstr "widok pisma"
 
@@ -1450,7 +1424,7 @@ msgid "Handy Tech braille displays"
 msgstr "Monitory brajlowskie Handy Tech"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:119
+#: appModules/powerpnt.py:121
 msgid "Header placeholder"
 msgstr "obszar nagłówka"
 
@@ -1521,12 +1495,17 @@ msgid "Icelandic 8 dot computer braille"
 msgstr "Islandzki 8-punktowy brajl komputerowy"
 
 #: globalCommands.py:140
+msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
+msgstr "Jednokrotne naciśnięcie podaje bieżący czas. Dwukrotne naciśnięcie podaje bieżącą datę"
+
+#. Translators: Information about NVDA's new laptop keyboard layout.
+#: gui/upgradeAlerts.py:18
 msgid ""
-"If pressed once, reports the current time. If pressed twice, reports the "
-"current date"
+"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent.\n"
+"If you use the laptop layout, please see the What's New document for more information."
 msgstr ""
-"Jednokrotne naciśnięcie podaje bieżący czas. Dwukrotne naciśnięcie podaje "
-"bieżącą datę"
+"W NVDA 2013.1, układ klawiatóry został całkowicie zmieniony.\n"
+"Jeśli używasz układu dla laptopa, zajrzyj do dokumentu co nowego."
 
 #: globalCommands.py:149
 msgid "Increases the currently active setting in the synth settings ring"
@@ -1539,7 +1518,7 @@ msgstr "ustawienia wprowadzania układów"
 
 #: globalCommands.py:1011
 msgid "Inputs braille dots via the braille keyboard"
-msgstr ""
+msgstr "wprowadza punkty brajla przy pomocy klawiatóry brajlowskiej"
 
 #. Translators: The title of the Install NVDA dialog.
 #: gui/installerGui.py:82
@@ -1607,9 +1586,8 @@ msgstr "Układ klawiatury"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:141
-#, fuzzy
 msgid "Korean grade 1"
-msgstr "Norweski (stopień 1)"
+msgstr "koreański (stopień 1)"
 
 #: gui/settingsDialogs.py:148
 msgid "L&ogging level:"
@@ -1657,7 +1635,7 @@ msgstr "licencja"
 msgid "Lin&ks"
 msgstr "linki"
 
-#: core.py:156
+#: core.py:159
 msgid "Loading NVDA. Please wait..."
 msgstr "Ładowanie NVDA... proszę czekać..."
 
@@ -1682,12 +1660,8 @@ msgid "Log level"
 msgstr "Poziom logu"
 
 #: globalCommands.py:793
-msgid ""
-"Logs information about the current navigator object which is useful to "
-"developers and activates the log viewer so the information can be examined."
-msgstr ""
-"Podaje użyteczne dla programistów informacje o bieżącym obiekcie w "
-"hierarchii nawigacji."
+msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
+msgstr "Podaje użyteczne dla programistów informacje o bieżącym obiekcie w hierarchii nawigacji."
 
 #. Translators: Name of a braille display.
 #: brailleDisplayDrivers/lilli.py:44
@@ -1700,18 +1674,16 @@ msgid "Manage &add-ons"
 msgstr "zarządzaj dodatkami"
 
 #: globalCommands.py:965
-msgid ""
-"Marks the current position of the review cursor as the start of text to be "
-"copied"
+msgid "Marks the current position of the review cursor as the start of text to be copied"
 msgstr "Ustawia pod kursorem początek zaznaczenia kopiowanego tekstu"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:174
+#: appModules/powerpnt.py:176
 msgid "Master Thumbnails"
 msgstr "główne  miniatóry"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:111
+#: appModules/powerpnt.py:113
 msgid "Media Clip placeholder"
 msgstr "obszar multimediów"
 
@@ -1739,11 +1711,8 @@ msgid "Move navigator object to mouse"
 msgstr "Sprowadź bieżący obiekt nawigacyjny do wskaźnika myszy"
 
 #: globalCommands.py:282
-msgid ""
-"Moves navigator object to the object represented by the text at the position "
-"of the review cursor within flat review"
-msgstr ""
-"Przenosi do tekstowego obiektu w pozycji kursora w ramach trybu nawigacji"
+msgid "Moves navigator object to the object represented by the text at the position of the review cursor within flat review"
+msgstr "Przenosi do tekstowego obiektu w pozycji kursora w ramach trybu nawigacji"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 #: virtualBuffers/__init__.py:1469
@@ -1760,8 +1729,7 @@ msgstr "Przenosi monitor brajlowski do poprzedniej linii"
 
 #: globalCommands.py:647
 msgid "Moves the focus to the next closest document that contains the focus"
-msgstr ""
-"Przenosi punkt uwagi do najbliższego dokumentu, posiadającego taki punkt."
+msgstr "Przenosi punkt uwagi do najbliższego dokumentu, posiadającego taki punkt."
 
 #: globalCommands.py:248
 msgid "Moves the mouse pointer to the current navigator object"
@@ -1779,9 +1747,7 @@ msgstr "Przenosy wskaźnik myszy i punkt uwagi do poprzedniej kolumny"
 
 #: globalCommands.py:423
 msgid "Moves the navigator object to the first object inside it"
-msgstr ""
-"Sprowadza bieżący obiekt nawigacyjny do poprzednika obiektu, na którym się "
-"znajduje, po czym go wypowiada"
+msgstr "Sprowadza bieżący obiekt nawigacyjny do poprzednika obiektu, na którym się znajduje, po czym go wypowiada"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects/behaviors.py:438
@@ -1794,9 +1760,7 @@ msgstr "Sprowadź bieżący obiekt do wskaźnika myszy"
 
 #: globalCommands.py:381
 msgid "Moves the navigator object to the object containing it"
-msgstr ""
-"Sprowadza bieżący obiekt nawigacyjny do obiektu następującego po tym, na "
-"którym się znajduje, po czym go wypowiada"
+msgstr "Sprowadza bieżący obiekt nawigacyjny do obiektu następującego po tym, na którym się znajduje, po czym go wypowiada"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects/behaviors.py:451
@@ -1808,72 +1772,48 @@ msgid "Moves the navigator object to the previous object"
 msgstr "Sprowadź bieżący obiekt do wskaźnika myszy"
 
 #: globalCommands.py:504
-msgid ""
-"Moves the review cursor to the bottom line of the current navigator object "
-"and speaks it"
+msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
 msgstr "Przenosi kursor do ostatniej linii bieżącego obiektu"
 
 #: globalCommands.py:548
-msgid ""
-"Moves the review cursor to the first character of the line where it is "
-"situated in the current navigator object and speaks it"
+msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
 msgstr "Przenosi kursor do pierwszego znaku bieżącej linii"
 
 #: globalCommands.py:612
-msgid ""
-"Moves the review cursor to the last character of the line where it is "
-"situated in the current navigator object and speaks it"
+msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
 msgstr "Przenosi kursor do ostatniego znaku bieżącej linii"
 
 #: globalCommands.py:601
-msgid ""
-"Moves the review cursor to the next character of the current navigator "
-"object and speaks it"
+msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
 msgstr "Przenosi kursor do następnego znaku bieżącego obiektu"
 
 #: globalCommands.py:496
-msgid ""
-"Moves the review cursor to the next line of the current navigator object and "
-"speaks it"
+msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
 msgstr "Przenosi kursor do następnej linii bieżącego obiektu"
 
 #: globalCommands.py:538
-msgid ""
-"Moves the review cursor to the next word of the current navigator object and "
-"speaks it"
+msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
 msgstr "Przenosi kursor do następnego słowa bieżącego obiektu"
 
 #: globalCommands.py:566
-msgid ""
-"Moves the review cursor to the previous character of the current navigator "
-"object and speaks it"
+msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
 msgstr "Przenosi kursor do poprzedniego znaku bieżącego obiektu"
 
 #: globalCommands.py:474
-msgid ""
-"Moves the review cursor to the previous line of the current navigator object "
-"and speaks it"
+msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
 msgstr "Przenosi kursor do poprzedniej linii bieżącego obiektu"
 
 #: globalCommands.py:516
-msgid ""
-"Moves the review cursor to the previous word of the current navigator object "
-"and speaks it"
+msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
 msgstr "Przenosi kursor do poprzedniego słowa bieżącego obiektu"
 
 #: globalCommands.py:462
-msgid ""
-"Moves the review cursor to the top line of the current navigator object and "
-"speaks it"
+msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
 msgstr "Przenosi kursor do pierwszej linii bieżącego obiektu"
 
 #: globalCommands.py:269
-msgid ""
-"Moves to flat review for the screen (or document if currently inside one) "
-"and positions the review cursor at the location of the current object"
-msgstr ""
-"Przełącza w tryb przeglądu danego ekranu (lub dokumentu, o ile się w nim "
-"znajduje), po czym umieszcza kursor na bieżącym obiekcie"
+msgid "Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object"
+msgstr "Przełącza w tryb przeglądu danego ekranu (lub dokumentu, o ile się w nim znajduje), po czym umieszcza kursor na bieżącym obiekcie"
 
 #: globalCommands.py:167
 msgid "Moves to the next available setting in the synth settings ring"
@@ -1919,7 +1859,7 @@ msgstr "pliki pakietów wtyczek nvda(*.{ext})"
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "nvda nie może nadpisać lub usunąć pliku"
 
-#: core.py:256
+#: core.py:259
 msgid "NVDA started"
 msgstr "nvda uruchomiony"
 
@@ -1929,7 +1869,8 @@ msgstr "nvda uruchomiony"
 msgid "NVDA version {version} is available."
 msgstr "NVDA w wersji {version} jest dostępna"
 
-#: installer.py:158 gui/__init__.py:350
+#: installer.py:158
+#: gui/__init__.py:350
 msgid "NVDA web site"
 msgstr "Strona WWW"
 
@@ -1943,6 +1884,11 @@ msgstr "wprowadzanie narodowe"
 msgctxt "languageName"
 msgid "Nepali"
 msgstr "nepalski"
+
+#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
+#: gui/upgradeAlerts.py:24
+msgid "New Laptop Keyboard layout"
+msgstr "nowy układ dla laptopa"
 
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 #: appModules/msimn.py:25
@@ -1999,13 +1945,19 @@ msgid "No long description"
 msgstr "brak długiego opisu"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
-#: appModules/miranda32.py:118 appModules/vipmud.py:33
+#: appModules/miranda32.py:118
+#: appModules/vipmud.py:33
 msgid "No message yet"
 msgstr "Brak wiadomości"
 
 #: globalCommands.py:394
 msgid "No next"
 msgstr "brak następnego"
+
+#. Translators: The message for no notes  for a slide in a slide show
+#: appModules/powerpnt.py:806
+msgid "No notes"
+msgstr "bez przypisów"
 
 #: globalCommands.py:281
 msgid "No object at flat review position"
@@ -2019,7 +1971,9 @@ msgstr "brak obiektów wewnątrz"
 msgid "No previous"
 msgstr "brak poprzedniego"
 
-#: globalCommands.py:145 globalCommands.py:154 globalCommands.py:163
+#: globalCommands.py:145
+#: globalCommands.py:154
+#: globalCommands.py:163
 #: globalCommands.py:172
 msgid "No settings"
 msgstr "Brak ustawień"
@@ -2054,7 +2008,7 @@ msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:168
+#: appModules/powerpnt.py:170
 msgid "Normal view"
 msgstr "Widok normalny"
 
@@ -2090,7 +2044,8 @@ msgstr "Norweski stopień 3"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers/__init__.py:1444 virtualBuffers/__init__.py:1458
+#: virtualBuffers/__init__.py:1444
+#: virtualBuffers/__init__.py:1458
 msgid "Not in a container"
 msgstr "poza kontenerem"
 
@@ -2102,17 +2057,18 @@ msgstr "poza tabelą"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects/window/winword.py:402 NVDAObjects/window/winword.py:421
+#: NVDAObjects/window/winword.py:402
+#: NVDAObjects/window/winword.py:421
 msgid "Not in table"
 msgstr "poza tabelą"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:160
+#: appModules/powerpnt.py:162
 msgid "Notes Master view"
 msgstr "widok przypisu"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:156
+#: appModules/powerpnt.py:158
 msgid "Notes page"
 msgstr "strona przypisu"
 
@@ -2122,16 +2078,11 @@ msgid "Object Presentation"
 msgstr "Prezentacja obiektów"
 
 #: globalCommands.py:336
-msgid ""
-"Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
-"screen, height is {height:.1f} per cent of screen"
-msgstr ""
-"Położenie krawędzi obiektu na ekranie: %.1f procent od lewej, %.1f procent "
-"od góry, %.1f procent od prawej, %.1f procent od dołu"
+msgid "Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen"
+msgstr "Położenie krawędzi obiektu na ekranie: %.1f procent od lewej, %.1f procent od góry, %.1f procent od prawej, %.1f procent od dołu"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:105
+#: appModules/powerpnt.py:107
 msgid "Object placeholder"
 msgstr "obszar obiektu"
 
@@ -2140,7 +2091,7 @@ msgid "Options"
 msgstr "Opcje"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:113
+#: appModules/powerpnt.py:115
 msgid "Org Chart placeholder"
 msgstr "obszar wykresu"
 
@@ -2150,7 +2101,7 @@ msgid "Organisation:"
 msgstr "Organizacja:"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:162
+#: appModules/powerpnt.py:164
 msgid "Outline view"
 msgstr "widok zarysu"
 
@@ -2184,15 +2135,11 @@ msgid "Pattern"
 msgstr "wzorzec:"
 
 #: globalCommands.py:454
-msgid ""
-"Performs the default action on the current navigator object (example: "
-"presses it if it is a button)."
-msgstr ""
-"Wykonuje domyślną akcję na bieżącym obiekcie (na przykład: jeśli jest to "
-"przycisk, naciska go)."
+msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
+msgstr "Wykonuje domyślną akcję na bieżącym obiekcie (na przykład: jeśli jest to przycisk, naciska go)."
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:127
+#: appModules/powerpnt.py:129
 msgid "Picture placeholder"
 msgstr "obszar obrazka"
 
@@ -2291,37 +2238,20 @@ msgid "Presents a list of links, headings or landmarks"
 msgstr "Przedstawia listę linków, nagłówków lub punktów orientacyjnych"
 
 #: globalCommands.py:367
-msgid ""
-"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
-"sets the system caret to the position of the review cursor"
-msgstr ""
-"Pojedyńcze wciśnięcie ustawia punkt uwagi klawiatóry do pozycji obiektu "
-"nawigacyjnego. Podwujne wciśnięcie ustawia karetkę systemową na pozycji "
-"kursora przeglądu."
+msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
+msgstr "Pojedyńcze wciśnięcie ustawia punkt uwagi klawiatóry do pozycji obiektu nawigacyjnego. Podwujne wciśnięcie ustawia karetkę systemową na pozycji kursora przeglądu."
 
 #: globalCommands.py:926
-msgid ""
-"Pressing once reverts the current configuration to the most recently saved "
-"state. Pressing three times reverts to factory defaults."
-msgstr ""
-"pojedyńcze wciśnięcie wczytuję najbardziej aktualną z zapisanych "
-"konfigurację, potrujne przywraca konfigurację fabryczną"
+msgid "Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults."
+msgstr "pojedyńcze wciśnięcie wczytuję najbardziej aktualną z zapisanych konfigurację, potrujne przywraca konfigurację fabryczną"
 
 #: NVDAObjects/window/excel.py:203
-msgid ""
-"Pressing once will set the current column as the column where row headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Pojedyńcze naciśnięcie wskazuje kolumnę z nagłówkiem wiersza, podwujne "
-"przyciśnięcie czyści ustawienie"
+msgid "Pressing once will set the current column as the column where row headers should be found. Pressing twice clears the setting."
+msgstr "Pojedyńcze naciśnięcie wskazuje kolumnę z nagłówkiem wiersza, podwujne przyciśnięcie czyści ustawienie"
 
 #: NVDAObjects/window/excel.py:186
-msgid ""
-"Pressing once will set the current row as the row where column headers "
-"should be found. Pressing twice clears the setting."
-msgstr ""
-"Pojedyńcze naciśnięcie wskazuje linię z nagłówkiem wiersza, podwujne "
-"przyciśnięcie czyści ustawienie"
+msgid "Pressing once will set the current row as the row where column headers should be found. Pressing twice clears the setting."
+msgstr "Pojedyńcze naciśnięcie wskazuje linię z nagłówkiem wiersza, podwujne przyciśnięcie czyści ustawienie"
 
 #: NVDAObjects/window/winword.py:89
 msgid "Primary footer"
@@ -2332,7 +2262,7 @@ msgid "Primary header"
 msgstr "Podstawowy nagłówek"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:170
+#: appModules/powerpnt.py:172
 msgid "Print Preview"
 msgstr "podgląd wydruku"
 
@@ -2367,6 +2297,12 @@ msgstr "Zamyka NVDA"
 #: synthDrivers/espeak.py:26
 msgid "Rate boos&t"
 msgstr "pod&kręć szybkość"
+
+#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
+#. to open the What's New document.
+#: gui/upgradeAlerts.py:30
+msgid "Read What's New"
+msgstr "Read What's New"
 
 #: gui/settingsDialogs.py:1307
 msgid "Read by &paragraph"
@@ -2403,12 +2339,8 @@ msgid "Reload plugins"
 msgstr "przeładuj &wtyczki"
 
 #: globalCommands.py:1019
-msgid ""
-"Reloads app modules and global plugins without restarting NVDA, which can be "
-"Useful for developers"
-msgstr ""
-"Przeładowuje modóły i globalne wtyczki bez konieczności restartu nvda, "
-"użyteczne dla programistów."
+msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
+msgstr "Przeładowuje modóły i globalne wtyczki bez konieczności restartu nvda, użyteczne dla programistów."
 
 #. Translators: The label of a button to remind the user later about performing some action.
 #: updateCheck.py:203
@@ -2419,7 +2351,8 @@ msgstr "przypomnij później"
 msgid "Remove Add-on"
 msgstr "&Usuń dodatek"
 
-#: gui/settingsDialogs.py:1134 gui/settingsDialogs.py:1389
+#: gui/settingsDialogs.py:1134
+#: gui/settingsDialogs.py:1389
 msgid "Replacement"
 msgstr "Zamień na:"
 
@@ -2621,58 +2554,31 @@ msgid "Reports any comments in the comments window"
 msgstr "odczytuje tre ść okna komentarza"
 
 #: globalCommands.py:710
-msgid ""
-"Reports formatting info for the current review cursor position within a "
-"document"
+msgid "Reports formatting info for the current review cursor position within a document"
 msgstr "Czyta informacje o formatowaniu dla aktualnej pozycji kursora"
 
 #: globalCommands.py:583
-msgid ""
-"Reports the character of the current navigator object where the review "
-"cursor is situated. Pressing twice reports a description or example of that "
-"character. Pressing three times reports the numeric value of the character "
-"in decimal and hexadecimal"
-msgstr ""
-"Podaje znak bieżącego obiektu nawigacyjnego, w którym znajduje się punkt "
-"przeglądu. Dwókrotne naciśnięcie powoduje odczytanie kodu ASCII oraz "
-"wartości szesnastkowej tego znaku."
+msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
+msgstr "Podaje znak bieżącego obiektu nawigacyjnego, w którym znajduje się punkt przeglądu. Dwókrotne naciśnięcie powoduje odczytanie kodu ASCII oraz wartości szesnastkowej tego znaku."
 
 #: globalCommands.py:83
-msgid ""
-"Reports the current line under the application cursor. Pressing this key "
-"twice will spell the current line"
-msgstr ""
-"Czyta bieżącą linię kursora. Dwukrotne naciśnięcie literuje bieżącą linię"
+msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
+msgstr "Czyta bieżącą linię kursora. Dwukrotne naciśnięcie literuje bieżącą linię"
 
 #: globalCommands.py:318
-msgid ""
-"Reports the current navigator object. Pressing twice spells this information,"
-"and pressing three times Copies name and value of this  object to the "
-"clipboard"
-msgstr ""
-"Podaje bierzący obiekt nawigacyjny. Dwukrotne wciśnięcie literuję tą "
-"informację. Trzykrotne wciśnięcie kopiuje obiekt wraz z zawartością do "
-"schowka"
+msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
+msgstr "Podaje bierzący obiekt nawigacyjny. Dwukrotne wciśnięcie literuję tą informację. Trzykrotne wciśnięcie kopiuje obiekt wraz z zawartością do schowka"
 
 #: globalCommands.py:337
 msgid "Reports the hight, width and position of the current navigator object"
-msgstr ""
-"Podaje wysokość, szerokość oraz pozycję bieżącego obiektu w hierarchii "
-"nawigacji"
+msgstr "Podaje wysokość, szerokość oraz pozycję bieżącego obiektu w hierarchii nawigacji"
 
 #: globalCommands.py:484
-msgid ""
-"Reports the line of the current navigator object where the review cursor is "
-"situated. If this key is pressed twice, the current line will be spelled. "
-"Pressing three times will spell the line using character descriptions."
-msgstr ""
-"Odczytuje wiersz, w którym obecnie znajduje się punkt przeglądu. Dwukrotne "
-"naciśnięcie literuje ten wiersz."
+msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
+msgstr "Odczytuje wiersz, w którym obecnie znajduje się punkt przeglądu. Dwukrotne naciśnięcie literuje ten wiersz."
 
 #: globalCommands.py:1036
-msgid ""
-"Reports the new object or content under your finger if different to where "
-"your finger was last"
+msgid "Reports the new object or content under your finger if different to where your finger was last"
 msgstr "zgłasza nowy obiekt pod palcem"
 
 #: globalCommands.py:1032
@@ -2688,13 +2594,8 @@ msgid "Reports the text on the Windows clipboard"
 msgstr "Czyta tekst ze schowka"
 
 #: globalCommands.py:776
-msgid ""
-"Reports the title of the current application or foreground window. If "
-"pressed twice, spells the title. If pressed three times, copies the title to "
-"the clipboard"
-msgstr ""
-"Czyta tytuł bieżącej aplikacji lub okna. Dwukrotne naciśnięcie literuje "
-"tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka"
+msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
+msgstr "Czyta tytuł bieżącej aplikacji lub okna. Dwukrotne naciśnięcie literuje tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka"
 
 #: gui/__init__.py:370
 msgid "Reset all settings to default state"
@@ -2710,9 +2611,7 @@ msgid "Restart NVDA"
 msgstr "zrestartuj nvda"
 
 #: globalCommands.py:983
-msgid ""
-"Retrieves the text from the previously set start marker up to and including "
-"the current position of the review cursor and copies it to the clipboard"
+msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
 msgstr "Kopiuje do schowka tekst od początku zaznaczenia do bieżącego kursora"
 
 #: gui/__init__.py:295
@@ -2740,9 +2639,7 @@ msgstr "sprowadź kursor i zgłoś formatowanie"
 
 #: globalCommands.py:997
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr ""
-"umieszcza kursor, lób aktywuje obiekt pod daną komórką na monitorze "
-"brajlowskim"
+msgstr "umieszcza kursor, lób aktywuje obiekt pod daną komórką na monitorze brajlowskim"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2815,20 +2712,12 @@ msgid "Set row header column"
 msgstr "nagłówek linii"
 
 #: globalCommands.py:348
-msgid ""
-"Sets the navigator object to the current focus, and the review cursor to the "
-"position of the caret inside it, if possible."
-msgstr ""
-"sprowadza obiekt nawigacyjny do punktu uwagi, i przenosi kursor do karetki w "
-"ramach tego obiektu, gdy jest to możliwe"
+msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
+msgstr "sprowadza obiekt nawigacyjny do punktu uwagi, i przenosi kursor do karetki w ramach tego obiektu, gdy jest to możliwe"
 
 #: globalCommands.py:255
-msgid ""
-"Sets the navigator object to the current object under the mouse pointer and "
-"speaks it"
-msgstr ""
-"Sprowadza bieżący obiekt nawigacyjny do bieżącego obiektu pod wskaźnikiem "
-"myszy i wypowiada jego nazwę"
+msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
+msgstr "Sprowadza bieżący obiekt nawigacyjny do bieżącego obiektu pod wskaźnikiem myszy i wypowiada jego nazwę"
 
 #: brailleDisplayDrivers/handyTech.py:86
 msgid "Show the Handy Tech driver configuration window."
@@ -2896,37 +2785,42 @@ msgid "Sleep mode on"
 msgstr "tryb uśpienia włączony"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:154
+#: appModules/powerpnt.py:156
 msgid "Slide Master view"
 msgstr "slajd widok główny"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:117
+#: appModules/powerpnt.py:119
 msgid "Slide Number placeholder"
 msgstr "obszar numeru slajdu"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
-#: appModules/powerpnt.py:696
+#: appModules/powerpnt.py:750
 msgid "Slide Show - complete"
 msgstr "pokaz zakończony"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:164
+#: appModules/powerpnt.py:166
 msgid "Slide Sorter view"
 msgstr "widok  sortera slajdów"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#: appModules/powerpnt.py:693
+#: appModules/powerpnt.py:747
 msgid "Slide show - {slideName}"
 msgstr "pokaz{slideName}"
 
+#. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:744
+msgid "Slide show notes - {slideName}"
+msgstr "Slide show notes - {slideName}"
+
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:152
+#: appModules/powerpnt.py:154
 msgid "Slide view"
 msgstr "widok slajdu"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#: appModules/powerpnt.py:480
+#: appModules/powerpnt.py:482
 msgid "Slide {slideNumber}"
 msgstr "slajd {slideNumber}"
 
@@ -2987,21 +2881,12 @@ msgid "Speak typed &words"
 msgstr "Czytaj pisane &słowa"
 
 #: globalCommands.py:882
-msgid ""
-"Speaks the filename of the active application along with the name of the "
-"currently loaded appModule"
-msgstr ""
-"Podaje nazwę pliku bieżącej aplikacji oraz ewentualną nazwę załadowanego "
-"modułu NVDA do jej obsługi"
+msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
+msgstr "Podaje nazwę pliku bieżącej aplikacji oraz ewentualną nazwę załadowanego modułu NVDA do jej obsługi"
 
 #: globalCommands.py:526
-msgid ""
-"Speaks the word of the current navigator object where the review cursor is "
-"situated. Pressing twice spells the word. Pressing three times spells the "
-"word using character descriptions"
-msgstr ""
-"Odczytuje wiersz, w którym obecnie znajduje się punkt przeglądu. Dwukrotne "
-"naciśnięcie literuje ten wiersz."
+msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
+msgstr "Odczytuje wiersz, w którym obecnie znajduje się punkt przeglądu. Dwukrotne naciśnięcie literuje ten wiersz."
 
 #: gui/__init__.py:313
 msgid "Speech &dictionaries"
@@ -3011,14 +2896,13 @@ msgstr "&Słowniki wymowy"
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:617
 msgid "Speech interrupt for Enter key"
-msgstr ""
+msgstr "przerwa mowy dla klawisza enter"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 #: gui/settingsDialogs.py:612
-#, fuzzy
 msgid "Speech interrupt for typed characters"
-msgstr "Czytaj pisane &znaki"
+msgstr "przerwij mowę dla wpisywanych znaków"
 
 #: gui/__init__.py:323
 msgid "Speech viewer"
@@ -3048,12 +2932,14 @@ msgid "Subject:"
 msgstr "Temat:"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:99
+#: appModules/powerpnt.py:101
 msgid "Subtitle placeholder"
 msgstr "obszar napisów"
 
 #. Translators: The title of a dialolg presented to indicate a successful operation.
-#: gui/installerGui.py:67 gui/installerGui.py:237 gui/settingsDialogs.py:225
+#: gui/installerGui.py:67
+#: gui/installerGui.py:237
+#: gui/settingsDialogs.py:225
 msgid "Success"
 msgstr "Operacja zakończona powodzeniem."
 
@@ -3103,7 +2989,7 @@ msgid "Synthesizer Error"
 msgstr "Błąd syntezatora"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:115
+#: appModules/powerpnt.py:117
 msgid "Table placeholder"
 msgstr "nagłówek tabeli"
 
@@ -3113,7 +2999,7 @@ msgstr "nagłówek tabeli"
 msgid "Tamil grade 1"
 msgstr "Tamil (stopień 1)"
 
-#: NVDAObjects/IAccessible/__init__.py:1624
+#: NVDAObjects/IAccessible/__init__.py:1634
 msgid "Taskbar"
 msgstr "Pasek zadań"
 
@@ -3132,50 +3018,33 @@ msgid "Text frame"
 msgstr "ramka tekstowa"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:95
+#: appModules/powerpnt.py:97
 msgid "Text placeholder"
 msgstr "obszar tekstu"
 
 #: globalCommands.py:959
 #, python-format
-msgid ""
-"The clipboard contains a large portion of text. It is %s characters long"
+msgid "The clipboard contains a large portion of text. It is %s characters long"
 msgstr "W schowku %s znaków"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 #: gui/installerGui.py:44
-msgid ""
-"The installation is unable to remove or overwrite a file. Another copy of "
-"NVDA may be running on another logged-on user account. Please make sure all "
-"installed copies of NVDA are shut down and try the installation again."
-msgstr ""
-"Instalator nie może nadpisać lub usunąć pliku. Upewnij się, że na twoim "
-"koncie funkcjonuje tylko jedna kopia nvda, że żadna inna wersja programu nie"
+msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
+msgstr "Instalator nie może nadpisać lub usunąć pliku. Upewnij się, że na twoim koncie funkcjonuje tylko jedna kopia nvda, że żadna inna wersja programu nie"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui/installerGui.py:52
-msgid ""
-"The installation of NVDA failed. Please check the Log Viewer for more "
-"information."
-msgstr ""
-"instalacja NVDA niepowiodła się. Aby dowiedzieć się więcej, uruchom podgląd "
-"logów."
+msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
+msgstr "instalacja NVDA niepowiodła się. Aby dowiedzieć się więcej, uruchom podgląd logów."
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #: gui/installerGui.py:91
-msgid ""
-"The installation path for NVDA has changed. it will now  be installed in "
-"{path}"
-msgstr ""
-"Ścieżka instalacji programu została zmieniona z dotychczasowej, na  {path}"
+msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
+msgstr "Ścieżka instalacji programu została zmieniona z dotychczasowej, na  {path}"
 
 #: globalCommands.py:872
-msgid ""
-"The next key that is pressed will not be handled at all by NVDA, it will be "
-"passed directly through to Windows."
-msgstr ""
-"Kolejny wciśnięty klawisz nie zostanie uwzględniony przez NVDA, lecz "
-"bezpośrednio przez system Windows"
+msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
+msgstr "Kolejny wciśnięty klawisz nie zostanie uwzględniony przez NVDA, lecz bezpośrednio przez system Windows"
 
 #: globalCommands.py:973
 msgid "The start marker must reside within the same object"
@@ -3190,25 +3059,23 @@ msgid "This change requires administrator privileges."
 msgstr "Zmiana ta wymaga uprawnień administratora."
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:172
+#: appModules/powerpnt.py:174
 msgid "Thumbnails"
 msgstr "miniatóry"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:166
+#: appModules/powerpnt.py:168
 msgid "Title Master view"
 msgstr "widok tytółu"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:93
+#: appModules/powerpnt.py:95
 msgid "Title placeholder"
 msgstr "obszar tytułu"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui/installerGui.py:145
-msgid ""
-"To create a portable copy of NVDA, please select the path and other options "
-"and then press Continue"
+msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "Aby utworzyć kopię przenośną, ustaw jej ścieżkę, opcje i naciśnij ok."
 
 #. Translators: An informational message in the Install NVDA dialog.
@@ -3223,82 +3090,51 @@ msgstr "Do:"
 
 #: globalCommands.py:946
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr ""
-"Przełącza powiązanie tekstu prezentowanego na monitorze brajlowskim pomiędzy "
-"punktem uwagi a punktem przeglądu"
+msgstr "Przełącza powiązanie tekstu prezentowanego na monitorze brajlowskim pomiędzy punktem uwagi a punktem przeglądu"
 
 #: globalCommands.py:66
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "zmienia stan trybu uśpienia dla aktywnej aplikacji"
 
 #: globalCommands.py:810
-msgid ""
-"Toggles between beeps, speech, beeps and speech, and off, for reporting "
-"progress bar updates"
-msgstr ""
-"Przełącza pomiędzy dźwięki, mowa, lub dźwięki i mowa albo wyłącza "
-"raportowanie aktualizacji paska postępu"
+msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
+msgstr "Przełącza pomiędzy dźwięki, mowa, lub dźwięki i mowa albo wyłącza raportowanie aktualizacji paska postępu"
 
 #: globalCommands.py:659
-msgid ""
-"Toggles between browse mode and focus mode. When in focus mode, keys will "
-"pass straight through to the application, allowing you to interact directly "
-"with a control. When in browse mode, you can navigate the document with the "
-"cursor, quick navigation keys, etc."
-msgstr ""
-"Przełącza między trybem formularza i trybem przeglądania. W trybie "
-"formularza naciskane klawisze trafiają wprost do pola formularza, pozwalając "
-"na przykład na wpisywanie tekstu w polu edycji. Natomiast w trybie "
-"przeglądania naciskane klawisze sterują przeglądaniem dokumentu, pozwalając "
-"na przykład na szybką nawigację po nagłówkach i innych elementach."
+msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
+msgstr "Przełącza między trybem formularza i trybem przeglądania. W trybie formularza naciskane klawisze trafiają wprost do pola formularza, pozwalając na przykład na wpisywanie tekstu w polu edycji. Natomiast w trybie przeglądania naciskane klawisze sterują przeglądaniem dokumentu, pozwalając na przykład na szybką nawigację po nagłówkach i innych elementach."
+
+#. Translators: The description for a script
+#: appModules/powerpnt.py:829
+msgid "Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA"
+msgstr "Przełącza między odczytem przypisów a aktualnym slajdem. Nie dotyczy to tego co widać na ekranie a jedynie tego, co można odczytać z NVDA."
 
 #: globalCommands.py:630
-msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it "
-"its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr ""
-"Przełącza tryby komunikacji: mowa, dźwięki lub wyłączone. W trybie mowy NVDA "
-"czyta normalnie. W trybie dźwięków NVDA wydaje prosty dźwięk zamiast mowy. W "
-"trybie wyłączonym NVDA nie mówi nic."
+msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr "Przełącza tryby komunikacji: mowa, dźwięki lub wyłączone. W trybie mowy NVDA czyta normalnie. W trybie dźwięków NVDA wydaje prosty dźwięk zamiast mowy. W trybie wyłączonym NVDA nie mówi nic."
 
 #: virtualBuffers/__init__.py:862
-msgid ""
-"Toggles on and off if the screen layout is preserved while rendering the "
-"document content"
-msgstr ""
-"Przełącza układ ekranu podczas renderowania jeżeli jest zachowana zawartość "
-"wirtualnego bufora"
+msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
+msgstr "Przełącza układ ekranu podczas renderowania jeżeli jest zachowana zawartość wirtualnego bufora"
 
 #: globalCommands.py:846
-msgid ""
-"Toggles on and off the movement of the navigator object due to focus changes"
-msgstr ""
-"Włącza i wyłącza zmianę bieżącego obiektu w hierarchii nawigacji przy "
-"przenoszeniu punktu uwagi"
+msgid "Toggles on and off the movement of the navigator object due to focus changes"
+msgstr "Włącza i wyłącza zmianę bieżącego obiektu w hierarchii nawigacji przy przenoszeniu punktu uwagi"
 
 #: globalCommands.py:834
-msgid ""
-"Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr ""
-"Włącza i wyłącza przesuwanie kursora podczas ruchów kursora klawiatury."
+msgid "Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr "Włącza i wyłącza przesuwanie kursora podczas ruchów kursora klawiatury."
 
 #: globalCommands.py:822
-msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new "
-"text in dos console windows"
-msgstr ""
-"Włącza i wyłącza informowanie o dynamicznie zmieniającej się treści, na "
-"przykład nowym tekście w oknie konsoli"
+msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
+msgstr "Włącza i wyłącza informowanie o dynamicznie zmieniającej się treści, na przykład nowym tekście w oknie konsoli"
 
 #: globalCommands.py:188
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "Włącza i wyłącza czytanie znaków podczas pisania"
 
 #: globalCommands.py:212
-msgid ""
-"Toggles on and off the speaking of typed keys, that are not specifically "
-"characters"
+msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
 msgstr "Włącza i wyłącza czytanie naciskanych klawiszy poleceń"
 
 #: globalCommands.py:200
@@ -3307,9 +3143,7 @@ msgstr "Włącza i wyłącza czytanie słów podczas pisania"
 
 #: globalCommands.py:759
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr ""
-"Włącza i wyłącza podawanie informacji o wskazywanych obiektach przy ruchach "
-"myszy"
+msgstr "Włącza i wyłącza podawanie informacji o wskazywanych obiektach przy ruchach myszy"
 
 #: gui/__init__.py:339
 msgid "Tools"
@@ -3328,14 +3162,8 @@ msgid "Turkish grade 1"
 msgstr "Turecki(stopień 1)"
 
 #: globalCommands.py:51
-msgid ""
-"Turns input help on or off. When on, any input such as pressing a key on the "
-"keyboard will tell you what script is associated with that input, if any."
-msgstr ""
-"Włącza i wyłącza pomoc klawiatury. Gdy pomoc klawiatury jest włączona, "
-"wpisanie dowolnego polecenia poprzez wciśnięcie klawisza lub kombinacji "
-"klawiszy spowoduje wypowiedzenie informacji, jaka funkcja  jest skojarzona z "
-"tą kombinacją, o ile jakaś jest."
+msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
+msgstr "Włącza i wyłącza pomoc klawiatury. Gdy pomoc klawiatury jest włączona, wpisanie dowolnego polecenia poprzez wciśnięcie klawisza lub kombinacji klawiszy spowoduje wypowiedzenie informacji, jaka funkcja  jest skojarzona z tą kombinacją, o ile jakaś jest."
 
 #: pythonConsole.py:40
 msgid "Type exit() to exit the console"
@@ -3362,12 +3190,8 @@ msgstr "URL: {url}"
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 #: gui/settingsDialogs.py:209
-msgid ""
-"Unable to copy a file. Perhaps it is currently being used by another process "
-"or you have run out of disc space on the drive you are copying to."
-msgstr ""
-"Nie można skopiować pliku. Zbyt mało miejsca na dysku lub inny proces urzywa "
-"tego zasobu"
+msgid "Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to."
+msgstr "Nie można skopiować pliku. Zbyt mało miejsca na dysku lub inny proces urzywa tego zasobu"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3410,31 +3234,23 @@ msgstr "w&ykrywanie wymowy"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/__init__.py:476 gui/settingsDialogs.py:587
+#: gui/__init__.py:476
+#: gui/settingsDialogs.py:587
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Użyj &CapsLock jako klawisza NVDA"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:96
 msgid "Use NVDA on the Windows &logon screen"
-msgstr ""
-"Używaj NVDA na ekranie logowania systemu Windows (wymaga uprawnień "
-"administratora)"
+msgstr "Używaj NVDA na ekranie logowania systemu Windows (wymaga uprawnień administratora)"
 
 #: gui/settingsDialogs.py:166
-msgid ""
-"Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr ""
-"Używaj NVDA na ekranie logowania systemu Windows (wymaga uprawnień "
-"administratora)"
+msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr "Używaj NVDA na ekranie logowania systemu Windows (wymaga uprawnień administratora)"
 
 #: gui/settingsDialogs.py:171
-msgid ""
-"Use currently saved settings on the logon and other secure screens (requires "
-"administrator privileges)"
-msgstr ""
-"Używaj zapisanych ustawień NVDA na ekranie logowania i innych "
-"zabezpieczonych ekranach (wymaga uprawnień administratora)"
+msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
+msgstr "Używaj zapisanych ustawień NVDA na ekranie logowania i innych zabezpieczonych ekranach (wymaga uprawnień administratora)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -3449,7 +3265,8 @@ msgid "Use numpad Insert as an NVDA modifier key"
 msgstr "Użyj &numerycznego Insert jako klawisza NVDA"
 
 #. Translators: The label of the Start Menu item to open the User Guide.
-#: installer.py:166 gui/__init__.py:343
+#: installer.py:166
+#: gui/__init__.py:343
 msgid "User Guide"
 msgstr "podręcznik użytkownika"
 
@@ -3471,17 +3288,17 @@ msgid "Version"
 msgstr "wersja"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:125
+#: appModules/powerpnt.py:127
 msgid "Vertical Object placeholder"
 msgstr "pionowy obszar obiektu"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:103
+#: appModules/powerpnt.py:105
 msgid "Vertical Text placeholder"
 msgstr "obszar tekstu w pionie"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:101
+#: appModules/powerpnt.py:103
 msgid "Vertical Title placeholder"
 msgstr "obszar tytółu w pionie"
 
@@ -3500,7 +3317,7 @@ msgid "Voice dictionary (%s)"
 msgstr "Słownik głosu (%s)"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-#: appModules/powerpnt.py:268
+#: appModules/powerpnt.py:270
 msgid "Waiting for Powerpoint..."
 msgstr "oczekiwanie na Powerpoint"
 
@@ -3511,19 +3328,14 @@ msgstr "ostrzeżenie"
 #: updateCheck.py:375
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are "
-"helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of "
-"the ongoing costs of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which "
-"develops NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "Aby NVDA nadal się rozwijało, potrzebuje twojego wsparcia.\n"
-"NVDA polega przede wszystkim na wsparciu użytkowników. Dzięki twojej pomocy, "
-"będziemy mogli rozwijać program przez cały czas.\n"
-"Jeśli prześlesz nam choć kilka dolarów po pobraniu programu, będziemy mogli "
-"pokryć koszty związane z utrzymaniem projektu.\n"
+"NVDA polega przede wszystkim na wsparciu użytkowników. Dzięki twojej pomocy, będziemy mogli rozwijać program przez cały czas.\n"
+"Jeśli prześlesz nam choć kilka dolarów po pobraniu programu, będziemy mogli pokryć koszty związane z utrzymaniem projektu.\n"
 "Z góry dziękujemy za pomoc."
 
 #: gui/__init__.py:356
@@ -3537,28 +3349,19 @@ msgstr "Witaj w NVDA"
 #: gui/__init__.py:462
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key "
-"while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the "
-"NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA "
-"functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
 msgstr ""
-"Witaj w NVDA - Darmowym, wolnym i otwartym programie udźwiękawiającym dla "
-"systemu Windows.\n"
-"Podczas pracy z tym programem będziesz często korzystać z kombinacji "
-"specjalnego klawisza NVDA z innymi klawiszami.\n"
-"Domyślnie rolę klawisza NVDA pełni klawisz Insert obecny w pobliżu klawiszy "
-"strzałek lub na klawiaturze numerycznej (numpad).\n"
-"Możesz również zmienić ustawienia tak, aby rolę klawisza NVDA pełnił "
-"CapsLock.\n"
-"Większość poleceń programu możesz wydawać trzymając wciśnięty klawisz NVDA i "
-"naciskając inne klawisze (podobnie, jak robisz to z Shiftem).\n"
+"Witaj w NVDA - Darmowym, wolnym i otwartym programie udźwiękawiającym dla systemu Windows.\n"
+"Podczas pracy z tym programem będziesz często korzystać z kombinacji specjalnego klawisza NVDA z innymi klawiszami.\n"
+"Domyślnie rolę klawisza NVDA pełni klawisz Insert obecny w pobliżu klawiszy strzałek lub na klawiaturze numerycznej (numpad).\n"
+"Możesz również zmienić ustawienia tak, aby rolę klawisza NVDA pełnił CapsLock.\n"
+"Większość poleceń programu możesz wydawać trzymając wciśnięty klawisz NVDA i naciskając inne klawisze (podobnie, jak robisz to z Shiftem).\n"
 "Naciśnij NVDA + n w dowolnym momencie, aby wejść do głównego menu programu.\n"
-"W tym menu znajdziesz pomoc, zmienisz ustawienia NVDA i uzyskasz dostęp do "
-"innych funkcji.\n"
+"W tym menu znajdziesz pomoc, zmienisz ustawienia NVDA i uzyskasz dostęp do innych funkcji.\n"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3583,14 +3386,10 @@ msgstr "Zapisz bieżące ustawienia do pliku nvda.ini"
 #: gui/__init__.py:515
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-"edit your config file at a later stage to make corrections. More details "
-"about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
 msgstr ""
 "Twój plik konfiguracyjny zawiera błędy. \n"
-"naciśnij \"Ok\", aby je naprawić, lub \"Anuluj\", jeśli chcesz ręcznie "
-"edytować plik konfiguracyjny i dokonać poprawek w terminie późniejszym. "
-"Więcej szczegółów o błędach można znaleźć w pliku logu. \n"
+"naciśnij \"Ok\", aby je naprawić, lub \"Anuluj\", jeśli chcesz ręcznie edytować plik konfiguracyjny i dokonać poprawek w terminie późniejszym. Więcej szczegółów o błędach można znaleźć w pliku logu. \n"
 
 #: core.py:38
 msgid ""
@@ -3609,7 +3408,8 @@ msgstr "&Aktywuj link"
 msgid "activates the current object in the document"
 msgstr "Aktywuje bieżący obiekt w dokumencie"
 
-#: controlTypes.py:315 controlTypes.py:339
+#: controlTypes.py:315
+#: controlTypes.py:339
 msgid "alert"
 msgstr "ostrzeżenie"
 
@@ -3650,7 +3450,8 @@ msgid "all"
 msgstr "Wszystko"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
-#: NVDAHelper.py:232 NVDAHelper.py:241
+#: NVDAHelper.py:232
+#: NVDAHelper.py:241
 msgid "alphanumeric"
 msgstr "alfanumeryczny"
 
@@ -3722,7 +3523,9 @@ msgstr "Czarny"
 
 #. Translators: This is spoken when nvda moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
-#: speech.py:164 speech.py:346 speech.py:756
+#: speech.py:164
+#: speech.py:346
+#: speech.py:756
 msgid "blank"
 msgstr "pusta"
 
@@ -3738,7 +3541,8 @@ msgid "blue"
 msgstr "Niebieski"
 
 #. Translators: Reported when text is bolded.
-#: controlTypes.py:329 speech.py:1055
+#: controlTypes.py:329
+#: speech.py:1055
 msgid "bold"
 msgstr "pogrubienie"
 
@@ -3747,7 +3551,9 @@ msgid "border"
 msgstr "granica"
 
 #. Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container.
-#: globalCommands.py:494 globalCommands.py:502 globalCommands.py:536
+#: globalCommands.py:494
+#: globalCommands.py:502
+#: globalCommands.py:536
 #: virtualBuffers/__init__.py:1464
 msgid "bottom"
 msgstr "koniec"
@@ -3758,9 +3564,8 @@ msgstr "pole"
 
 #. Translators: Reported before braille input in input help mode.
 #: brailleInput.py:88
-#, fuzzy
 msgid "braille"
-msgstr "Bez brajla"
+msgstr "brajl"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:135
@@ -3798,7 +3603,7 @@ msgstr "przycisk"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:484
+#: braille.py:487
 #, python-format
 msgid "c%s"
 msgstr "c%s"
@@ -3854,7 +3659,8 @@ msgstr "cbo"
 msgid "cell"
 msgstr "komórka"
 
-#: controlTypes.py:295 textInfos/__init__.py:199
+#: controlTypes.py:295
+#: textInfos/__init__.py:199
 msgid "character"
 msgstr "znak"
 
@@ -3915,7 +3721,8 @@ msgstr "wybór kolorów"
 msgid "column"
 msgstr "kolumna"
 
-#: speech.py:854 speech.py:1176
+#: speech.py:854
+#: speech.py:1176
 #, python-format
 msgid "column %s"
 msgstr "kolumna %s"
@@ -3989,7 +3796,8 @@ msgstr "debugowanie"
 msgid "debug warning"
 msgstr "ostrzeżenie debugowania"
 
-#: NVDAObjects/window/edit.py:258 NVDAObjects/window/edit.py:259
+#: NVDAObjects/window/edit.py:258
+#: NVDAObjects/window/edit.py:259
 msgid "default color"
 msgstr "kolor domyślny"
 
@@ -4062,9 +3870,8 @@ msgstr "przeciąganie gotowe"
 
 #. Translators: Reported when braille dots are pressed in input help mode.
 #: brailleInput.py:94
-#, fuzzy
 msgid "dot"
-msgstr "edt"
+msgstr "kropka"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:83
@@ -4100,7 +3907,8 @@ msgstr "upuszczanie"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects/behaviors.py:412 virtualBuffers/__init__.py:1327
+#: NVDAObjects/behaviors.py:412
+#: virtualBuffers/__init__.py:1327
 msgid "edge of table"
 msgstr "Koniec tabeli"
 
@@ -4129,7 +3937,8 @@ msgstr "edt"
 msgid "email"
 msgstr "E-mail"
 
-#: controlTypes.py:256 NVDAObjects/window/edit.py:613
+#: controlTypes.py:256
+#: NVDAObjects/window/edit.py:613
 msgid "embedded object"
 msgstr "obiekt zagnieżdżony"
 
@@ -4186,22 +3995,15 @@ msgid "find a text string from the current cursor position"
 msgstr "szuka tekstu od bieżącej pozycji kursora"
 
 #: cursorManager.py:111
-msgid ""
-"find the next occurrence of the previously entered text string from the "
-"current cursor's position"
-msgstr ""
-"szuka następnego wystąpienia poprzednio wprowadzonego tekstu od bieżącej "
-"pozycji kursora"
+msgid "find the next occurrence of the previously entered text string from the current cursor's position"
+msgstr "szuka następnego wystąpienia poprzednio wprowadzonego tekstu od bieżącej pozycji kursora"
 
 #: cursorManager.py:118
-msgid ""
-"find the previous occurrence of the previously entered text string from the "
-"current cursor's position"
-msgstr ""
-"szuka poprzedniego wystąpienia wcześniej wprowadzonego tekstu od bieżącej "
-"pozycji kursora"
+msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
+msgstr "szuka poprzedniego wystąpienia wcześniej wprowadzonego tekstu od bieżącej pozycji kursora"
 
-#: globalCommands.py:944 gui/settingsDialogs.py:1295
+#: globalCommands.py:944
+#: gui/settingsDialogs.py:1295
 msgid "focus"
 msgstr "punkt uwagi"
 
@@ -4308,13 +4110,14 @@ msgstr "grupa"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:430
+#: braille.py:433
 #, python-format
 msgid "h%s"
 msgstr "h%s"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
-#: NVDAHelper.py:228 NVDAHelper.py:238
+#: NVDAHelper.py:228
+#: NVDAHelper.py:238
 msgid "half alphanumeric"
 msgstr "półalfanumeryczny"
 
@@ -4505,7 +4308,9 @@ msgstr "Laptop"
 msgid "layered pane"
 msgstr "panel warstwowy"
 
-#: globalCommands.py:546 globalCommands.py:558 appModules/totalcmd.py:35
+#: globalCommands.py:546
+#: globalCommands.py:558
+#: appModules/totalcmd.py:35
 msgid "left"
 msgstr "lewy"
 
@@ -4548,7 +4353,8 @@ msgstr "lewy shift"
 msgid "left windows"
 msgstr "lewy klawisz Windows"
 
-#: speech.py:831 speech.py:834
+#: speech.py:831
+#: speech.py:834
 #, python-format
 msgid "level %s"
 msgstr "poziom %s"
@@ -4563,7 +4369,8 @@ msgstr "Jasno szary"
 msgid "lime"
 msgstr "Limonka"
 
-#: controlTypes.py:326 textInfos/__init__.py:201
+#: controlTypes.py:326
+#: textInfos/__init__.py:201
 msgid "line"
 msgstr "linia"
 
@@ -4579,7 +4386,8 @@ msgstr "linia %s"
 msgid "line scroll"
 msgstr "przewiń linię"
 
-#: controlTypes.py:207 speech.py:1126
+#: controlTypes.py:207
+#: speech.py:1126
 msgid "link"
 msgstr "link"
 
@@ -4609,7 +4417,7 @@ msgstr "lst"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:471
+#: braille.py:474
 #, python-format
 msgid "lv %s"
 msgstr "lv %s"
@@ -4632,7 +4440,8 @@ msgstr "męski 2"
 msgid "media player"
 msgstr "odtwarzacz multimedialny"
 
-#: controlTypes.py:200 controlTypes.py:322
+#: controlTypes.py:200
+#: controlTypes.py:322
 msgid "menu"
 msgstr "menu"
 
@@ -4926,7 +4735,8 @@ msgstr "bez pogrubienia"
 msgid "no caret"
 msgstr "Brak karetki"
 
-#: globalCommands.py:353 globalCommands.py:720
+#: globalCommands.py:353
+#: globalCommands.py:720
 msgid "no focus"
 msgstr "brak punktu uwagi"
 
@@ -4950,8 +4760,12 @@ msgstr "brak tekstu przed grupą linków"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-#: globalCommands.py:289 globalCommands.py:323 globalCommands.py:372
-#: globalCommands.py:386 globalCommands.py:400 globalCommands.py:414
+#: globalCommands.py:289
+#: globalCommands.py:323
+#: globalCommands.py:372
+#: globalCommands.py:386
+#: globalCommands.py:400
+#: globalCommands.py:414
 msgid "no navigator object"
 msgstr "Brak obiektu nawigacyjnego"
 
@@ -5159,7 +4973,8 @@ msgstr "brak poprzedniego odwiedzonego linku"
 msgid "no progress bar updates"
 msgstr "nie sygnalizuj zmian na paskach postępu"
 
-#: cursorManager.py:245 globalCommands.py:129
+#: cursorManager.py:245
+#: globalCommands.py:129
 msgid "no selection"
 msgstr "bez zaznaczenia"
 
@@ -5193,7 +5008,8 @@ msgstr "brak"
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 #. but this still might be used in some other cases.
 #. %s will be replaced with the negated state.
-#: braille.py:451 speech.py:814
+#: braille.py:454
+#: speech.py:814
 #, python-format
 msgid "not %s"
 msgstr "nie %s"
@@ -5304,8 +5120,11 @@ msgstr "brak danych o lokalizacji obiektu"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:359 synthSettingsRing.py:74 gui/settingsDialogs.py:793
-#: gui/settingsDialogs.py:1137 virtualBuffers/__init__.py:860
+#: keyboardHandler.py:359
+#: synthSettingsRing.py:74
+#: gui/settingsDialogs.py:793
+#: gui/settingsDialogs.py:1137
+#: virtualBuffers/__init__.py:860
 msgid "off"
 msgstr "wyłączone"
 
@@ -5331,7 +5150,9 @@ msgstr "poza ekranem"
 msgid "olive"
 msgstr "Oliwkowy"
 
-#: keyboardHandler.py:359 synthSettingsRing.py:74 gui/settingsDialogs.py:1137
+#: keyboardHandler.py:359
+#: synthSettingsRing.py:74
+#: gui/settingsDialogs.py:1137
 #: virtualBuffers/__init__.py:860
 msgid "on"
 msgstr "włączone"
@@ -5358,7 +5179,8 @@ msgstr "panel opcji"
 msgid "orange"
 msgstr "Pomarańczowy"
 
-#: speech.py:960 speech.py:1126
+#: speech.py:960
+#: speech.py:1126
 #, python-format
 msgid "out of %s"
 msgstr "Koniec %s"
@@ -5401,7 +5223,8 @@ msgstr " "
 msgid "panel"
 msgstr "panel"
 
-#: controlTypes.py:236 textInfos/__init__.py:202
+#: controlTypes.py:236
+#: textInfos/__init__.py:202
 msgid "paragraph"
 msgstr "akapit"
 
@@ -5452,7 +5275,7 @@ msgstr "Purpurowy"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:476
+#: braille.py:479
 #, python-format
 msgid "r%s"
 msgstr "r%s"
@@ -5476,18 +5299,12 @@ msgid "read only"
 msgstr "tylko do odczytu"
 
 #: globalCommands.py:671
-msgid ""
-"reads from the review cursor  up to end of current text, moving the review "
-"cursor as it goes"
+msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
 msgstr "Czyta od kursora do końca tekstu, przenosząc kursor w miarę czytania"
 
 #: globalCommands.py:675
-msgid ""
-"reads from the system caret up to the end of the text, moving the caret as "
-"it goes"
-msgstr ""
-"Odczytuje tekst od kursora systemowego do końca, przenosząc kursor w miarę "
-"czytania"
+msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
+msgstr "Odczytuje tekst od kursora systemowego do końca, przenosząc kursor w miarę czytania"
 
 #: globalCommands.py:747
 msgid "reads the current application status bar and moves the navigator to it"
@@ -5538,7 +5355,8 @@ msgstr "odczytuje obiekt posiadający aktualnie punkt uwagi"
 msgid "required"
 msgstr "wymagane"
 
-#: globalCommands.py:941 gui/settingsDialogs.py:1295
+#: globalCommands.py:941
+#: gui/settingsDialogs.py:1295
 msgid "review"
 msgstr "Przeglądanie"
 
@@ -5546,7 +5364,9 @@ msgstr "Przeglądanie"
 msgid "rich edit"
 msgstr "pole edycji z formatem"
 
-#: globalCommands.py:593 globalCommands.py:610 appModules/totalcmd.py:37
+#: globalCommands.py:593
+#: globalCommands.py:610
+#: appModules/totalcmd.py:37
 msgid "right"
 msgstr "prawy"
 
@@ -5602,7 +5422,8 @@ msgstr "panel główny"
 msgid "row"
 msgstr "wiersz"
 
-#: speech.py:847 speech.py:1180
+#: speech.py:847
+#: speech.py:1180
 #, python-format
 msgid "row %s"
 msgstr "linia %s"
@@ -5661,8 +5482,13 @@ msgid "selected"
 msgstr "zaznaczony"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#: compoundDocuments.py:401 globalCommands.py:131 speech.py:323 speech.py:515
-#: speech.py:530 virtualBuffers/__init__.py:742
+#: compoundDocuments.py:401
+#: globalCommands.py:131
+#: speech.py:323
+#: speech.py:515
+#: speech.py:530
+#: appModules/powerpnt.py:714
+#: virtualBuffers/__init__.py:742
 #, python-format
 msgid "selected %s"
 msgstr "zaznaczone %s"
@@ -5731,14 +5557,15 @@ msgstr "dźwięk"
 
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
-#: brailleInput.py:97 keyLabels.py:63
+#: brailleInput.py:97
+#: keyLabels.py:63
 msgid "space"
 msgstr "odstęp"
 
 #. Translators: Reported when braille space is pressed with dots in input help mode.
 #: brailleInput.py:91
 msgid "space with dot"
-msgstr ""
+msgstr "kropka spacją"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 #: globalCommands.py:205
@@ -5841,7 +5668,8 @@ msgstr "styl %s"
 msgid "subMenu"
 msgstr "rozwijane"
 
-#: appModules/outlook.py:26 appModules/outlook.py:39
+#: appModules/outlook.py:26
+#: appModules/outlook.py:39
 #, python-format
 msgid "subject: %s"
 msgstr "temat: %s"
@@ -5852,12 +5680,14 @@ msgid "submnu"
 msgstr "->"
 
 #. Translators: Reported for subscript text.
-#: controlTypes.py:335 speech.py:1094
+#: controlTypes.py:335
+#: speech.py:1094
 msgid "subscript"
 msgstr "indeks dolny"
 
 #. Translators: Reported for superscript text.
-#: controlTypes.py:334 speech.py:1091
+#: controlTypes.py:334
+#: speech.py:1091
 msgid "superscript"
 msgstr "indeks górny"
 
@@ -5966,7 +5796,9 @@ msgstr "pasek narzędzi"
 msgid "tool tip"
 msgstr "dymek"
 
-#: globalCommands.py:460 globalCommands.py:472 globalCommands.py:514
+#: globalCommands.py:460
+#: globalCommands.py:472
+#: globalCommands.py:514
 msgid "top"
 msgstr "początek"
 
@@ -6020,7 +5852,8 @@ msgid "unknown language"
 msgstr "nieznany język"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
-#: appModules/msimn.py:111 appModules/outlook.py:31
+#: appModules/msimn.py:111
+#: appModules/outlook.py:31
 msgid "unread"
 msgstr "nieprzeczytane"
 
@@ -6052,7 +5885,7 @@ msgid "visited"
 msgstr "odwiedzony"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:436
+#: braille.py:439
 msgid "vlnk"
 msgstr "vln"
 
@@ -6152,33 +5985,19 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are "
-"free to share or change this software in any way you like as long as it is "
-"accompanied by the license and you make all source code available to anyone "
-"who wants it. This applies to both original and modified copies of this "
-"software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
-"gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to "
-"helping and promoting free and open source solutions for blind and vision "
-"impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider "
-"donating to NV Access. You can do this by selecting Donate from the NVDA "
-"menu."
+"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
 msgstr ""
 "{longName} ({name})\n"
 "Wersja: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} podlega pod GNU General Public License (wersja 2). Możesz za darmo "
-"udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz "
-"do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu "
-"zainteresowanemu. Dotyczy to zarówno oryginalnej wersji programu, jak i jego "
-"zmienionych kopii, a także każdego innego oprogramowania, które korzysta z "
-"kodu zaczerpniętego z tego programu.\n"
+"{name} podlega pod GNU General Public License (wersja 2). Możesz za darmo udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu zainteresowanemu. Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a także każdego innego oprogramowania, które korzysta z kodu zaczerpniętego z tego programu.\n"
 "Dokładne brzmienie licencji znajdziesz online pod adresem:\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
 
@@ -6188,7 +6007,8 @@ msgstr ""
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#: braille.py:467 speech.py:825
+#: braille.py:470
+#: speech.py:825
 msgid "{number} of {total}"
 msgstr "{number} z {total}"
 
