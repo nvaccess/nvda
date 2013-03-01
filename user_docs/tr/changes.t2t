@@ -4,6 +4,7 @@
 %!includeconf: ../changes.t2tconf
 
 = 2013.1 =
+Highlights of this release include a more intuitive and consistent laptop keyboard layout; basic support for Microsoft PowerPoint; support for long descriptions in web browsers; and support for input of computer braille for braille displays which have a braille keyboard.
 
 == Important ==
 
@@ -67,6 +68,8 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - NVDA will no longer fail to install when the user's profile path contains certain multibyte characters. (#2729)
 - Reporting of groups for List View controls (SysListview32) in 64-bit applications no longer causes an error.
 - In browse mode in Mozilla applications, text content is no longer incorrectly treated as editable in some rare cases. (#2959)
+- In IBM Lotus Symphony and OpenOffice, moving the caret now moves the review cursor if appropriate.
+- Adobe Flash content is now accessible in Internet Explorer in Windows 8. (#2454)
 
 
 == Changes for Developers ==

@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5822\n"
+"Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2013-02-04 05:30+0000\n"
-"PO-Revision-Date: 2013-02-05 20:29+0200\n"
+"POT-Creation-Date: 2013-02-14 05:30+0000\n"
+"PO-Revision-Date: 2013-02-14 20:39+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: globalCommands.py:880
 #, python-format
@@ -562,7 +562,7 @@ msgstr "Yazar"
 #. : Automatic port constant to be used by braille displays that support the "automatic" port
 #. : @type: Tupple
 #. Translators String representing the automatic port selection for braille displays.
-#: braille.py:1531
+#: braille.py:1536
 msgid "Automatic"
 msgstr "Otomatik"
 
@@ -647,7 +647,7 @@ msgstr ""
 "Büyük harf kilidi açık olduğu halde şift tuşu kullanılıyorsa bip sesi çıkar"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:109
+#: appModules/powerpnt.py:111
 msgid "Bitmap placeholder"
 msgstr "Resim Yer tutucusu"
 
@@ -724,7 +724,7 @@ msgid "Case &sensitive"
 msgstr "Büyük-küçük harf  &duyarlı"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:97
+#: appModules/powerpnt.py:99
 msgid "Center Title placeholder"
 msgstr "Ana başlık Yer tutucusu"
 
@@ -753,7 +753,7 @@ msgid "Change virtual buffers specific settings"
 msgstr "Sanal tamponlarla ilgili ayarları değiştir"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:107
+#: appModules/powerpnt.py:109
 msgid "Chart placeholder"
 msgstr "Şema Yer tutucusu"
 
@@ -1006,7 +1006,7 @@ msgid "Danish grade 2"
 msgstr "danimarka dili derece 2"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:123
+#: appModules/powerpnt.py:125
 msgid "Date placeholder"
 msgstr "Tarih Yer tutucusu"
 
@@ -1108,6 +1108,11 @@ msgstr "Sözlük Kaydını düzenle"
 #: virtualBuffers/__init__.py:288
 msgid "Elements List"
 msgstr "öge listesi"
+
+#. Translators: The message for an empty slide in a slide show
+#: appModules/powerpnt.py:809 appModules/powerpnt.py:810
+msgid "Empty slide"
+msgstr "Boş slayt"
 
 #: scriptHandler.py:33
 #, python-format
@@ -1313,7 +1318,7 @@ msgid "Follow system &focus"
 msgstr "Sistem odağını &takip et"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:121
+#: appModules/powerpnt.py:123
 msgid "Footer placeholder"
 msgstr "Altbilgi Yer tutucusu"
 
@@ -1441,7 +1446,7 @@ msgid "Half shaped mode"
 msgstr "Yarı biçim kipi"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:158
+#: appModules/powerpnt.py:160
 msgid "Handout Master view"
 msgstr "İzleyici ana görünümü"
 
@@ -1451,7 +1456,7 @@ msgid "Handy Tech braille displays"
 msgstr "Handy Tech Braille Ekranları"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:119
+#: appModules/powerpnt.py:121
 msgid "Header placeholder"
 msgstr "Üstbilgi Yer tutucusu"
 
@@ -1719,12 +1724,12 @@ msgstr ""
 "olarak işaretler"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:174
+#: appModules/powerpnt.py:176
 msgid "Master Thumbnails"
 msgstr "Ana Parmak Ucu"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:111
+#: appModules/powerpnt.py:113
 msgid "Media Clip placeholder"
 msgstr "Medya klibi Yer tutucusu"
 
@@ -2029,6 +2034,11 @@ msgstr "Henüz mesaj yok"
 msgid "No next"
 msgstr "İleride nesne yok"
 
+#. Translators: The message for no notes  for a slide in a slide show
+#: appModules/powerpnt.py:806
+msgid "No notes"
+msgstr "Not bulunamadı"
+
 #: globalCommands.py:281
 msgid "No object at flat review position"
 msgstr "Ekran inceleme imlecinin pozisyonunda nesne yok"
@@ -2076,7 +2086,7 @@ msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:168
+#: appModules/powerpnt.py:170
 msgid "Normal view"
 msgstr "Normal görünüm"
 
@@ -2129,12 +2139,12 @@ msgid "Not in table"
 msgstr "Bir tabloda değil"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:160
+#: appModules/powerpnt.py:162
 msgid "Notes Master view"
 msgstr "Ana Not Görünümü"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:156
+#: appModules/powerpnt.py:158
 msgid "Notes page"
 msgstr "Notlar Sayfası"
 
@@ -2153,7 +2163,7 @@ msgstr ""
 "ekranın yüzde {width:.1f}, yükseklik {height:.1f}"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:105
+#: appModules/powerpnt.py:107
 msgid "Object placeholder"
 msgstr "Nesne Yer tutucusu"
 
@@ -2162,7 +2172,7 @@ msgid "Options"
 msgstr "Seçenekler"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:113
+#: appModules/powerpnt.py:115
 msgid "Org Chart placeholder"
 msgstr "Org Şeması Yer tutucusu"
 
@@ -2172,7 +2182,7 @@ msgid "Organisation:"
 msgstr "Organizasyon:"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:162
+#: appModules/powerpnt.py:164
 msgid "Outline view"
 msgstr "Anahat Görünümü"
 
@@ -2215,7 +2225,7 @@ msgstr ""
 "işlev görür)."
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:127
+#: appModules/powerpnt.py:129
 msgid "Picture placeholder"
 msgstr "Resim Yer tutucusu"
 
@@ -2354,7 +2364,7 @@ msgid "Primary header"
 msgstr "Birincil başlık"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:170
+#: appModules/powerpnt.py:172
 msgid "Print Preview"
 msgstr "Baskı Önizleme"
 
@@ -2925,37 +2935,42 @@ msgid "Sleep mode on"
 msgstr "Uyku kipi açık"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:154
+#: appModules/powerpnt.py:156
 msgid "Slide Master view"
 msgstr "Slayt ana görünümü"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:117
+#: appModules/powerpnt.py:119
 msgid "Slide Number placeholder"
 msgstr "Slayt Numarası Yer tutucusu"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
-#: appModules/powerpnt.py:696
+#: appModules/powerpnt.py:750
 msgid "Slide Show - complete"
 msgstr "Slayt gösterisi tamamlandı"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:164
+#: appModules/powerpnt.py:166
 msgid "Slide Sorter view"
 msgstr "Slayt Sıralayıcısı Görünümü"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#: appModules/powerpnt.py:693
+#: appModules/powerpnt.py:747
 msgid "Slide show - {slideName}"
 msgstr "Slayt gösterisi - {slideName}"
 
+#. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:744
+msgid "Slide show notes - {slideName}"
+msgstr "Slayt gösterisi notları - {slideName}"
+
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:152
+#: appModules/powerpnt.py:154
 msgid "Slide view"
 msgstr "Slayt Görünümü"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#: appModules/powerpnt.py:480
+#: appModules/powerpnt.py:482
 msgid "Slide {slideNumber}"
 msgstr "Slayt {slideNumber}"
 
@@ -3076,7 +3091,7 @@ msgid "Subject:"
 msgstr "Konu:"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:99
+#: appModules/powerpnt.py:101
 msgid "Subtitle placeholder"
 msgstr "Alt Başlık Yer tutucusu"
 
@@ -3131,7 +3146,7 @@ msgid "Synthesizer Error"
 msgstr "Sentezleyici hatası"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:115
+#: appModules/powerpnt.py:117
 msgid "Table placeholder"
 msgstr "Tablo Yer tutucusu"
 
@@ -3160,7 +3175,7 @@ msgid "Text frame"
 msgstr "metin çerçevesi"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:95
+#: appModules/powerpnt.py:97
 msgid "Text placeholder"
 msgstr "Metin Yer tutucusu"
 
@@ -3219,17 +3234,17 @@ msgid "This change requires administrator privileges."
 msgstr "Bu değişiklik yönetici yetkisi gerektirir"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:172
+#: appModules/powerpnt.py:174
 msgid "Thumbnails"
 msgstr "Parmak ucu"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:166
+#: appModules/powerpnt.py:168
 msgid "Title Master view"
 msgstr "Ana Başlık Görünümü"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:93
+#: appModules/powerpnt.py:95
 msgid "Title placeholder"
 msgstr "Başlık Yer tutucusu"
 
@@ -3281,6 +3296,17 @@ msgstr ""
 "doğrudan mevcut uygulamaya gönderilir, bu sizin doğrudan uygulamayla ilgili "
 "kontrolle etkileşiminizi sağlar. Tarama kipindeyken, açık belge içerisinde  "
 "dolaşabilir, hızlı kısayol tuşlarını kullanabilirsiniz."
+
+#. Translators: The description for a script
+#: appModules/powerpnt.py:829
+msgid ""
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
+msgstr ""
+"Konuşmacı notlarının mı yoksa slayt içeriğinin mi seslendirileceği "
+"belirlenir. Bu, ekranda görüntüleneni değiştirmez, yalnızca NVDA'nın neyi "
+"seslendireceği değiştirilmiş olur."
 
 #: globalCommands.py:630
 msgid ""
@@ -3495,17 +3521,17 @@ msgid "Version"
 msgstr "Versiyon"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:125
+#: appModules/powerpnt.py:127
 msgid "Vertical Object placeholder"
 msgstr "Dikey Nesne Yer tutucusu"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:103
+#: appModules/powerpnt.py:105
 msgid "Vertical Text placeholder"
 msgstr "Dikey Metin Yer tutucusu"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:101
+#: appModules/powerpnt.py:103
 msgid "Vertical Title placeholder"
 msgstr "Dikey Başlık Yer tutucusu"
 
@@ -3524,7 +3550,7 @@ msgid "Voice dictionary (%s)"
 msgstr "Ses sözlüğü (%s)"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-#: appModules/powerpnt.py:268
+#: appModules/powerpnt.py:270
 msgid "Waiting for Powerpoint..."
 msgstr "Powerpoint bekleniyor..."
 
@@ -5683,7 +5709,7 @@ msgstr "seçili"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401 globalCommands.py:131 speech.py:323 speech.py:515
-#: speech.py:530 virtualBuffers/__init__.py:742
+#: speech.py:530 appModules/powerpnt.py:714 virtualBuffers/__init__.py:742
 #, python-format
 msgid "selected %s"
 msgstr "%s seçildi"
