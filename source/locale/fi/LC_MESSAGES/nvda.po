@@ -3,10 +3,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5822\n"
+"Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2013-02-04 05:30+0000\n"
-"PO-Revision-Date: 2013-02-12 14:54+0200\n"
+"POT-Creation-Date: 2013-02-14 05:30+0000\n"
+"PO-Revision-Date: 2013-02-15 18:22+0200\n"
 "Last-Translator: Jani Kinnunen\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
 "MIME-Version: 1.0\n"
@@ -228,7 +228,7 @@ msgstr "&Hiiri..."
 #. in the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:322
 msgid "&Move to"
-msgstr "&Siirry"
+msgstr "S&iirry"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
@@ -560,7 +560,7 @@ msgstr "Tekijä"
 #. : Automatic port constant to be used by braille displays that support the "automatic" port
 #. : @type: Tupple
 #. Translators String representing the automatic port selection for braille displays.
-#: braille.py:1531
+#: braille.py:1536
 msgid "Automatic"
 msgstr "Automaattinen"
 
@@ -644,7 +644,7 @@ msgstr ""
 "Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:109
+#: appModules/powerpnt.py:111
 msgid "Bitmap placeholder"
 msgstr "Bittikartan paikkamerkki"
 
@@ -721,7 +721,7 @@ msgid "Case &sensitive"
 msgstr "Sama &kirjainkoko"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:97
+#: appModules/powerpnt.py:99
 msgid "Center Title placeholder"
 msgstr "Keskitetyn otsikon paikkamerkki"
 
@@ -752,7 +752,7 @@ msgid "Change virtual buffers specific settings"
 msgstr "Muuta selaustilan asetuksia"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:107
+#: appModules/powerpnt.py:109
 msgid "Chart placeholder"
 msgstr "Kaavion paikkamerkki"
 
@@ -1008,7 +1008,7 @@ msgid "Danish grade 2"
 msgstr "Tanska, taso 2"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:123
+#: appModules/powerpnt.py:125
 msgid "Date placeholder"
 msgstr "Päiväyksen paikkamerkki"
 
@@ -1110,6 +1110,11 @@ msgstr "Muokkaa sanastomerkintää"
 #: virtualBuffers/__init__.py:288
 msgid "Elements List"
 msgstr "Elementtilista"
+
+#. Translators: The message for an empty slide in a slide show
+#: appModules/powerpnt.py:809 appModules/powerpnt.py:810
+msgid "Empty slide"
+msgstr "Tyhjä dia"
 
 #: scriptHandler.py:33
 #, python-format
@@ -1315,7 +1320,7 @@ msgid "Follow system &focus"
 msgstr "Seuraa järjestelmä&kohdistusta"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:121
+#: appModules/powerpnt.py:123
 msgid "Footer placeholder"
 msgstr "Alatunnisteen paikkamerkki"
 
@@ -1442,7 +1447,7 @@ msgid "Half shaped mode"
 msgstr "Puolikkaat merkit"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:158
+#: appModules/powerpnt.py:160
 msgid "Handout Master view"
 msgstr "Tiivistelmän perustyylinäkymä"
 
@@ -1452,7 +1457,7 @@ msgid "Handy Tech braille displays"
 msgstr "Handy Tech"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:119
+#: appModules/powerpnt.py:121
 msgid "Header placeholder"
 msgstr "Ylätunnisteen paikkamerkki"
 
@@ -1722,12 +1727,12 @@ msgstr ""
 "alkukohdaksi"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:174
+#: appModules/powerpnt.py:176
 msgid "Master Thumbnails"
 msgstr "Perustyylin pikkukuvat"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:111
+#: appModules/powerpnt.py:113
 msgid "Media Clip placeholder"
 msgstr "Medialeikkeen paikkamerkki"
 
@@ -2048,6 +2053,11 @@ msgstr "Ei viestejä"
 msgid "No next"
 msgstr "Ei seuraavaa"
 
+#. Translators: The message for no notes  for a slide in a slide show
+#: appModules/powerpnt.py:806
+msgid "No notes"
+msgstr "Ei muistiinpanoja"
+
 #: globalCommands.py:281
 msgid "No object at flat review position"
 msgstr "Ei objektia kokonaistarkastelun kohdassa"
@@ -2095,7 +2105,7 @@ msgid "NonVisual Desktop Access"
 msgstr "Non-Visual Desktop Access"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:168
+#: appModules/powerpnt.py:170
 msgid "Normal view"
 msgstr "Normaali näkymä"
 
@@ -2148,12 +2158,12 @@ msgid "Not in table"
 msgstr "Ei taulukossa"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:160
+#: appModules/powerpnt.py:162
 msgid "Notes Master view"
 msgstr "Muistiinpanon perustyylinäkymä"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:156
+#: appModules/powerpnt.py:158
 msgid "Notes page"
 msgstr "Muistiinpanosivu"
 
@@ -2174,7 +2184,7 @@ msgstr ""
 "korkeudesta"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:105
+#: appModules/powerpnt.py:107
 msgid "Object placeholder"
 msgstr "Objektin paikkamerkki"
 
@@ -2183,7 +2193,7 @@ msgid "Options"
 msgstr "Asetukset"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:113
+#: appModules/powerpnt.py:115
 msgid "Org Chart placeholder"
 msgstr "Organisaatiokaavion paikkamerkki"
 
@@ -2193,7 +2203,7 @@ msgid "Organisation:"
 msgstr "Yritys:"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:162
+#: appModules/powerpnt.py:164
 msgid "Outline view"
 msgstr "Jäsennysnäkymä"
 
@@ -2235,7 +2245,7 @@ msgstr ""
 "esimerkiksi painiketta)"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:127
+#: appModules/powerpnt.py:129
 msgid "Picture placeholder"
 msgstr "Kuvan paikkamerkki"
 
@@ -2374,7 +2384,7 @@ msgid "Primary header"
 msgstr "Ensisijainen ylätunniste"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:170
+#: appModules/powerpnt.py:172
 msgid "Print Preview"
 msgstr "Esikatselu"
 
@@ -2956,37 +2966,42 @@ msgid "Sleep mode on"
 msgstr "Lepotila käytössä"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:154
+#: appModules/powerpnt.py:156
 msgid "Slide Master view"
 msgstr "Dian perustyylinäkymä"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:117
+#: appModules/powerpnt.py:119
 msgid "Slide Number placeholder"
 msgstr "Dianumeron paikkamerkki"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
-#: appModules/powerpnt.py:696
+#: appModules/powerpnt.py:750
 msgid "Slide Show - complete"
 msgstr "Diaesitys - päättynyt"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:164
+#: appModules/powerpnt.py:166
 msgid "Slide Sorter view"
 msgstr "Dialajittelunäkymä"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#: appModules/powerpnt.py:693
+#: appModules/powerpnt.py:747
 msgid "Slide show - {slideName}"
 msgstr "Diaesitys - {slideName}"
 
+#. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:744
+msgid "Slide show notes - {slideName}"
+msgstr "Diaesityksen muistiinpanot - {slideName}"
+
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:152
+#: appModules/powerpnt.py:154
 msgid "Slide view"
 msgstr "Dianäkymä"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#: appModules/powerpnt.py:480
+#: appModules/powerpnt.py:482
 msgid "Slide {slideNumber}"
 msgstr "Dia {slideNumber}"
 
@@ -3106,7 +3121,7 @@ msgid "Subject:"
 msgstr "Aihe:"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:99
+#: appModules/powerpnt.py:101
 msgid "Subtitle placeholder"
 msgstr "Alaotsikon paikkamerkki"
 
@@ -3161,7 +3176,7 @@ msgid "Synthesizer Error"
 msgstr "Syntetisaattorivirhe"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:115
+#: appModules/powerpnt.py:117
 msgid "Table placeholder"
 msgstr "Taulukon paikkamerkki"
 
@@ -3190,7 +3205,7 @@ msgid "Text frame"
 msgstr "Tekstikehys"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:95
+#: appModules/powerpnt.py:97
 msgid "Text placeholder"
 msgstr "Tekstin paikkamerkki"
 
@@ -3246,17 +3261,17 @@ msgid "This change requires administrator privileges."
 msgstr "Tämä muutos edellyttää järjestelmänvalvojan oikeuksia."
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:172
+#: appModules/powerpnt.py:174
 msgid "Thumbnails"
 msgstr "Pikkukuvat"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:166
+#: appModules/powerpnt.py:168
 msgid "Title Master view"
 msgstr "Otsikon perustyylinäkymä"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:93
+#: appModules/powerpnt.py:95
 msgid "Title placeholder"
 msgstr "Otsikon paikkamerkki"
 
@@ -3309,6 +3324,17 @@ msgstr ""
 "näppäinten painallukset välitetään suoraan nykyiselle sovellukselle, mikä "
 "mahdollistaa suoran vuorovaikutuksen säädinten kanssa. Selaustilassa "
 "dokumentissa voidaan liikkua kohdistimella, pikanavigointinäppäimillä jne."
+
+#. Translators: The description for a script
+#: appModules/powerpnt.py:829
+msgid ""
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
+msgstr ""
+"Vaihtaa esittäjän muistiinpanojen tai varsinaisen dian sisällön lukemisen "
+"välillä. Tämä ei muuta sitä, mitä näytöllä näkyy, vaan sitä, mitä NVDA:lla "
+"voidaan lukea."
 
 #: globalCommands.py:630
 msgid ""
@@ -3528,17 +3554,17 @@ msgid "Version"
 msgstr "Versio"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:125
+#: appModules/powerpnt.py:127
 msgid "Vertical Object placeholder"
 msgstr "Pystysuuntaisen objektin paikkamerkki"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:103
+#: appModules/powerpnt.py:105
 msgid "Vertical Text placeholder"
 msgstr "Pystysuuntaisen tekstin paikkamerkki"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:101
+#: appModules/powerpnt.py:103
 msgid "Vertical Title placeholder"
 msgstr "Pystysuuntaisen otsikon paikkamerkki"
 
@@ -3557,7 +3583,7 @@ msgid "Voice dictionary (%s)"
 msgstr "Puheäänikohtainen sanasto (%s)"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-#: appModules/powerpnt.py:268
+#: appModules/powerpnt.py:270
 msgid "Waiting for Powerpoint..."
 msgstr "Odotetaan PowerPointia..."
 
@@ -5719,7 +5745,7 @@ msgstr "valittu"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:401 globalCommands.py:131 speech.py:323 speech.py:515
-#: speech.py:530 virtualBuffers/__init__.py:742
+#: speech.py:530 appModules/powerpnt.py:714 virtualBuffers/__init__.py:742
 #, python-format
 msgid "selected %s"
 msgstr "valittu %s"
