@@ -4,6 +4,7 @@ Quoi de Neuf dans NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2013.1 =
+Les apports majeurs de cette version incluent une disposition clavier ordinateur portable plus intuitive et logique ; un support basique de Microsoft PowerPoint ; le support des descriptions longues dans les navigateurs web ; et le support de la saisie du braille informatique pour les afficheurs brailles disposant d'un clavier braille.
 
 == Important ==
 
@@ -17,7 +18,7 @@ Notez les changements suivants pour les commandes communément utilisées :
 | Lire la ligne courrante | NVDA+l |
 | Lire le texte sélectionné | NVDA+shift+s |
 | Lire la barre d'état | NVDA+shift+end |
-En plus d'autres changements, toutes les commandes de la navigation par objet, de la revue de texte, clique souris et de paramétrage de voix ont changées.
+En plus d'autres changements, toutes les commandes de la navigation par objet, de la revue de texte, clic souris et de paramétrage de voix ont changé.
 Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux raccourcis.
 
 
@@ -52,7 +53,7 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - La liste de candidats de la méthode d'entrée Chinois simplifié Microsoft Pinyin sous Windows 7 est maintenant lue correctement lorsqu'on change de page avec les flèches gauche et droite, et en l'ouvrant la première fois avec Origine.
 - Quand la personnalisation de prononciations des symboles est sauvegardée, le champ avancé "préservé" n'est plus supprimé. (#2852)
 - Lorsqu'on désactive la recherche automatique de mise à jour, il n'est plus nécessaire de redémarrer NVDA pour que le changement prenne effet.
-- NVDA n'est plus en échèque dès le démarrage si un module complémentaire n'a pas pu être supprimé parce que son dossier est utilisé par une autre application. (#2860)
+- NVDA n'est plus en échec dès le démarrage si un module complémentaire n'a pas pu être supprimé parce que son dossier est utilisé par une autre application. (#2860)
 - Le nom des onglets dans la boîte de dialogue des préférences de DropBox peut maintenant être vu en mode revue à plat.
 - Si la langue d'entrée est changée par une autre que celle par défaut, NVDA détecte maintenant correctement les touches pour les commandes et l'aide à la saisie.
 - Pour les langues comme l'Allemand ou le signe + (plus) est une seul touche du clavier, il est maintenant possible d'y assigner un raccourci avec le mot "plus". (#2898)
@@ -67,6 +68,8 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - NVDA n'échouera plus à l'installation lorsque le chemin du profile contient des caractères multibyte. (#2729)
 - L'annonce des groupes dans les vues de liste (SysListview32) dans les applications 64-bits ne cause plus d'erreur.
 - En mode navigation dans les applications Mozilla, le contenu texte n'est plus considéré comme éditable dans de rares cas. (#2959)
+- Dans IBM Lotus Symphony et OpenOffice, déplacer le curseur déplace également le curseur de revue lorsqu'aproprié.
+- Le contenu Adobe Flash est maintenant accessible dans Internet Explorer sous Windows 8. (#2454)
 
 
 == Changements pour les développeurs ==
