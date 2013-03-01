@@ -3,11 +3,12 @@
 
 %!includeconf: ../changes.t2tconf
 = 2013.1 =
+Schwerpunkte dieser Version sind u.a. ein intuitiveres Tastaturschema für Laptops; grundlegende Unterstützung für Microsoft Powerpoint; Unterstützung für lange Beschreibungen in Web-Browsern; sowie die Unterstützung für die Eingabe von Computerbraille mit Hilfe von Braillezeilen, die eine Brailletastatur besitzen.
 
 == wichtig ==
 
 === neues Laptop-Tastaturschema ===
-Das Laptop-Tastaturschema wurde überarbeitet, wodurch es intuitiver und konsistenter wird.
+Das Laptop-Tastaturschema wurde überarbeitet, sodass es intuitiver und konsistenter wird.
 So werden z.B. die Pfeiltasten in Kombination mit der NVDA-Taste und anderen Umschaltern zum Betrachten von Text verwendet.
 
 Folgende Änderungen wurden an häufig verwendeten Befehlen vorgenommen:
@@ -16,7 +17,7 @@ Folgende Änderungen wurden an häufig verwendeten Befehlen vorgenommen:
 | aktuelle Zeile lesen | NVDA+l |
 | aktuelle Textauswahl lesen | NVDA+shift+s |
 | Statuszeile vorlesen | NVDA+Umschalt+ende |
-Zudem wurden die Befehle für die objektnavigation, zum Betrachten von Text, für Mausaktionen sowie der Synthesizer-Einstellungsring geändert.
+Zudem wurden die Befehle für die objektnavigation, zum Betrachten von Text, für Mausaktionen sowie der Sprachausgaben-Einstellungsring geändert.
 Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] nach.
 
 
@@ -63,8 +64,10 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - Wenn Sie eine Braillezeile benutzen, können Sie nun wieder Text rückwärts markieren, wenn Sie sich in Microsoft Word befinden.
 - Wenn sie in Scintilla-Eingabefeldern die Befehle zum Betrachten von Text verwenden oder Zeichen löschen, wird nvda Multibyte-Zeichen korrekt ausgeben. (#2855)
 - Die Installation von NVDA wird nun nicht mehr fehlschlagen, wenn der Name des Benutzerprofilverzeichnisses bestimmte Multibyte-Zeichen enthält. (#2729)
-- Bei der Angabe von Gruppen in Listen-Steuerelementen (syslistview32) in 64-Bit-Anwendungen kommt es nun nicht mehr zu einem Fehler.
+- Bei der Ausgabe von Gruppen in Listen-Steuerelementen (syslistview32) in 64-Bit-Anwendungen kommt es nun nicht mehr zu einem Fehler.
 - im Lesemodus von Mozilla-Anwendungen werden Textinhalte nun nicht mehr fälschlicherweise als deaktiviert angezeigt, auch wenn das selten der Fall ist. (#2959)
+- in IBM Lotus Symphony und Openoffice.org wird nun der NVDA-Cursor mitgezogen, wenn der Systemcursor bewegt wird.
+- Im Internet Explorer unter windows 8 sind Adobe-Flash-Inhalte nun zugänglich. (#2454)
 -
 
 == Änderungen für Entwickler ==
