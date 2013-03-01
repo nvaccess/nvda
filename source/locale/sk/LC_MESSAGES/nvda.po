@@ -1,10 +1,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5822\n"
+"Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2013-02-04 05:30+0000\n"
-"PO-Revision-Date: 2013-02-08 14:18+0100\n"
+"POT-Creation-Date: 2013-02-14 05:30+0000\n"
+"PO-Revision-Date: 2013-02-19 14:27+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "Language: \n"
@@ -544,7 +544,7 @@ msgstr "Autor"
 #. : Automatic port constant to be used by braille displays that support the "automatic" port
 #. : @type: Tupple
 #. Translators String representing the automatic port selection for braille displays.
-#: braille.py:1531
+#: braille.py:1536
 msgid "Automatic"
 msgstr "Automatické"
 
@@ -627,8 +627,7 @@ msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "Pípať pri písaní malých písmen ak je zapnutý caps lock"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:109
-#, fuzzy
+#: appModules/powerpnt.py:111
 msgid "Bitmap placeholder"
 msgstr "Obrázok zástupný symbol"
 
@@ -703,8 +702,7 @@ msgid "Case &sensitive"
 msgstr "Rozlišovať malé a veľké pí&smená"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:97
-#, fuzzy
+#: appModules/powerpnt.py:99
 msgid "Center Title placeholder"
 msgstr "Podnadpis zástupný symbol"
 
@@ -733,8 +731,7 @@ msgid "Change virtual buffers specific settings"
 msgstr "Zmení nastavenia špecifické pre režim prehliadania."
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:107
-#, fuzzy
+#: appModules/powerpnt.py:109
 msgid "Chart placeholder"
 msgstr "Graf zástupný symbol"
 
@@ -971,8 +968,7 @@ msgid "Danish grade 2"
 msgstr "Dánčina skratkopis"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:123
-#, fuzzy
+#: appModules/powerpnt.py:125
 msgid "Date placeholder"
 msgstr "Dátum zástupný symbol"
 
@@ -1078,6 +1074,12 @@ msgstr "Upraviť Položku Slovníka"
 #: virtualBuffers/__init__.py:288
 msgid "Elements List"
 msgstr "Zoznam prvkov"
+
+#. Translators: The message for an empty slide in a slide show
+#: appModules/powerpnt.py:809
+#: appModules/powerpnt.py:810
+msgid "Empty slide"
+msgstr "Prázdna snímka"
 
 #: scriptHandler.py:33
 #, python-format
@@ -1289,8 +1291,7 @@ msgid "Follow system &focus"
 msgstr "Sledovať systémový &fokus"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:121
-#, fuzzy
+#: appModules/powerpnt.py:123
 msgid "Footer placeholder"
 msgstr "Päta zástupný symbol"
 
@@ -1412,7 +1413,7 @@ msgid "Half shaped mode"
 msgstr "Režim polovičných tvarov"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:158
+#: appModules/powerpnt.py:160
 msgid "Handout Master view"
 msgstr "Zobrazenie Predlohy podkladov"
 
@@ -1422,8 +1423,7 @@ msgid "Handy Tech braille displays"
 msgstr "Zobrazovače Handy Tech"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:119
-#, fuzzy
+#: appModules/powerpnt.py:121
 msgid "Header placeholder"
 msgstr "Hlavička zástupný symbol"
 
@@ -1677,14 +1677,12 @@ msgid "Marks the current position of the review cursor as the start of text to b
 msgstr "Označí aktuálnu pozíciu prehliadacieho kurzora ako začiatok textu, ktorý bude skopírovaný do schránky."
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:174
-#, fuzzy
+#: appModules/powerpnt.py:176
 msgid "Master Thumbnails"
 msgstr "Predloha s náhľadmi"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:111
-#, fuzzy
+#: appModules/powerpnt.py:113
 msgid "Media Clip placeholder"
 msgstr "Multymediálny klip zástupný symbol"
 
@@ -1955,6 +1953,11 @@ msgstr "Zatiaľ nebola doručená žiadna správa"
 msgid "No next"
 msgstr " nenájdený"
 
+#. Translators: The message for no notes  for a slide in a slide show
+#: appModules/powerpnt.py:806
+msgid "No notes"
+msgstr "Žiadne poznámky"
+
 #: globalCommands.py:281
 msgid "No object at flat review position"
 msgstr "Žiadny objekt na pozícii prehliadacieho kurzora plošného prehliadania"
@@ -2004,8 +2007,7 @@ msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:168
-#, fuzzy
+#: appModules/powerpnt.py:170
 msgid "Normal view"
 msgstr "Normálne zobrazenie"
 
@@ -2060,14 +2062,12 @@ msgid "Not in table"
 msgstr "Nie v tabuľke"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:160
-#, fuzzy
+#: appModules/powerpnt.py:162
 msgid "Notes Master view"
 msgstr "Zobrazenie predlohy poznámok"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:156
-#, fuzzy
+#: appModules/powerpnt.py:158
 msgid "Notes page"
 msgstr "Strana s poznámkami"
 
@@ -2081,8 +2081,7 @@ msgid "Object edges positioned {left:.1f} per cent from left edge of screen, {to
 msgstr "Rohy objektu umiestnené {left:.1f} percent od ľavého kraja, {top:.1f} percent od horného kraja obrazovky, šírka je {width:.1f} percent šírky obrazovky a víška je {height:.1f} percent výšky obrazovky."
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:105
-#, fuzzy
+#: appModules/powerpnt.py:107
 msgid "Object placeholder"
 msgstr "objekt zástupný symbol"
 
@@ -2091,8 +2090,7 @@ msgid "Options"
 msgstr "Možnosti"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:113
-#, fuzzy
+#: appModules/powerpnt.py:115
 msgid "Org Chart placeholder"
 msgstr "Organizačná schéma zástupný symbol"
 
@@ -2102,8 +2100,7 @@ msgid "Organisation:"
 msgstr "Organizácia"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:162
-#, fuzzy
+#: appModules/powerpnt.py:164
 msgid "Outline view"
 msgstr "zobrazenie prehľadu"
 
@@ -2141,8 +2138,7 @@ msgid "Performs the default action on the current navigator object (example: pre
 msgstr "Vykoná predvolenú akciu aktuálneho objektu (napríklad: dvojklik ak aktuálny objekt je tlačidlo)."
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:127
-#, fuzzy
+#: appModules/powerpnt.py:129
 msgid "Picture placeholder"
 msgstr "Obrázok zástupný symbol"
 
@@ -2265,8 +2261,7 @@ msgid "Primary header"
 msgstr "Primárna hlavička"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:170
-#, fuzzy
+#: appModules/powerpnt.py:172
 msgid "Print Preview"
 msgstr "Ukážka pred tlačou"
 
@@ -2789,44 +2784,42 @@ msgid "Sleep mode on"
 msgstr "Režim spánku zapnutý"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:154
-#, fuzzy
+#: appModules/powerpnt.py:156
 msgid "Slide Master view"
 msgstr "Zobrazenie Predlohy snímky"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:117
-#, fuzzy
+#: appModules/powerpnt.py:119
 msgid "Slide Number placeholder"
 msgstr "Číslo snímky zástupný symbol"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
-#: appModules/powerpnt.py:696
-#, fuzzy
+#: appModules/powerpnt.py:750
 msgid "Slide Show - complete"
 msgstr "Koniec prezentácie"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:164
-#, fuzzy
+#: appModules/powerpnt.py:166
 msgid "Slide Sorter view"
 msgstr "Zobrazenie Radenia snímok"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#: appModules/powerpnt.py:693
-#, fuzzy
+#: appModules/powerpnt.py:747
 msgid "Slide show - {slideName}"
 msgstr "Snímka - {slideName}"
 
+#. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:744
+msgid "Slide show notes - {slideName}"
+msgstr "Poznámky pre snímku {slideName}"
+
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:152
-#, fuzzy
+#: appModules/powerpnt.py:154
 msgid "Slide view"
 msgstr "Zobrazenie snímok"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#: appModules/powerpnt.py:480
-#, fuzzy
+#: appModules/powerpnt.py:482
 msgid "Slide {slideNumber}"
 msgstr "Snímka {slideNumber}"
 
@@ -2938,8 +2931,7 @@ msgid "Subject:"
 msgstr "Predmet"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:99
-#, fuzzy
+#: appModules/powerpnt.py:101
 msgid "Subtitle placeholder"
 msgstr "Podnadpis zástupný symbol"
 
@@ -2996,8 +2988,7 @@ msgid "Synthesizer Error"
 msgstr "Chyba hlasového výstupu"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:115
-#, fuzzy
+#: appModules/powerpnt.py:117
 msgid "Table placeholder"
 msgstr "Tabuľka zástupný symbol"
 
@@ -3026,8 +3017,7 @@ msgid "Text frame"
 msgstr "Textový rámik"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:95
-#, fuzzy
+#: appModules/powerpnt.py:97
 msgid "Text placeholder"
 msgstr "Text zástupný symbol"
 
@@ -3068,20 +3058,17 @@ msgid "This change requires administrator privileges."
 msgstr "Zmena tohoto nastavenia si vyžaduje práva administrátora."
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:172
-#, fuzzy
+#: appModules/powerpnt.py:174
 msgid "Thumbnails"
 msgstr "Náhľady"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
-#: appModules/powerpnt.py:166
-#, fuzzy
+#: appModules/powerpnt.py:168
 msgid "Title Master view"
 msgstr "Zobrazenie predlohy úvodnej snímky"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:93
-#, fuzzy
+#: appModules/powerpnt.py:95
 msgid "Title placeholder"
 msgstr "Nadpis zástupný symbol"
 
@@ -3115,6 +3102,11 @@ msgstr "Prepína medzi čítať, pípať, čítať aj pípať alebo žiadnym ozn
 #: globalCommands.py:659
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
 msgstr "Prepína medzi režimom fokusu a prehliadacím režimom. V režime fokusu sú stláčané klávesy prepustené aktívnej aplikácii, čo umožní priamu interakciu so zameraným prvkom. V prehliadacom režime je možné čítať dokument pomocou kurzorových klávesov, používať rýchlu navigáciu a podobne."
+
+#. Translators: The description for a script
+#: appModules/powerpnt.py:829
+msgid "Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA"
+msgstr "Prepína medzi zobrazením poznámok a aktuálnej snímky. Toto neovplyvňuje zobrazenie na obrazovke."
 
 #: globalCommands.py:630
 msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
@@ -3295,20 +3287,17 @@ msgid "Version"
 msgstr "Verzia"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:125
-#, fuzzy
+#: appModules/powerpnt.py:127
 msgid "Vertical Object placeholder"
 msgstr "Vertikálny objekt zástupný symbol"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:103
-#, fuzzy
+#: appModules/powerpnt.py:105
 msgid "Vertical Text placeholder"
 msgstr "Vertikálny text zástupný symbol"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
-#: appModules/powerpnt.py:101
-#, fuzzy
+#: appModules/powerpnt.py:103
 msgid "Vertical Title placeholder"
 msgstr "Vertikálny nadpis zástupný symbol"
 
@@ -3327,8 +3316,7 @@ msgid "Voice dictionary (%s)"
 msgstr "Slovník pre aktuálny hlas (%s)"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-#: appModules/powerpnt.py:268
-#, fuzzy
+#: appModules/powerpnt.py:270
 msgid "Waiting for Powerpoint..."
 msgstr "Čakám na Powerpoint..."
 
@@ -5498,6 +5486,7 @@ msgstr "vybraté"
 #: speech.py:323
 #: speech.py:515
 #: speech.py:530
+#: appModules/powerpnt.py:714
 #: virtualBuffers/__init__.py:742
 #, python-format
 msgid "selected %s"
