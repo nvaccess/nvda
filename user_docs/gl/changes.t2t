@@ -4,6 +4,7 @@ Que hai de Novo no NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2013.1 =
+O máis subliñable nesta versión inclúe unha distribución de teclado portátil máis intuitiva e consistente; soporte básico para o Microsoft PowerPoint; soporte para descripcións longas en navegadores web; e soporte para a entrada de braille computerizado para liñas braille que teñan un teclado braille.
 
 == Importante ==
 
@@ -47,16 +48,16 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 - Se NVDA volta a eSpeak ou non fala debido a un sintetizador de voz configurado que falla cando NVDA se inicia, a configuración xa non se actualiza para  configurarse co sintetizador ó que se retornou como a elección configurada, o que significa que agora o sintetizador orixinal probarase de novo a próxima vez que NVDA arranque. (#2589)
 - No modo navegación en aplicacións de Mozilla, as actualizacións das táboas agora procésanse correctamente. Por exemplo, en actualización de celdas, as cordinadas de fila e columna anúncianse e a navegación da táboa funciona como debería. (#2784)
 - No modo navegación en navegadores web, certos gráficos cliqueables non etiquetados que non se procesaban anteriormente agora procésanse correctamente. (#2838)
-- As versións anteriores e actuais do SecureCRT (como a 6.1.1) agora se soportan. (#2800)
+- As versións anteriores e actuais do SecureCRT (como a 6.1.1) agora sopórtanse. (#2800)
 - Para métodos de entrada como Easy Dots IME baixo XP, a cadea de lectura agora anúnciase correctamente.
 - A lista de candidatos do método de entrada Chinés Simplificado Microsoft Pinyin baixo Windows 7 agora lese correctamente cando se cambian páxinas cas flechas esquerda e dereita, e cando se abre primeiro con Inicio.
 - Cando se garda a información de pronunciación persoalizada de símbolos , o campo avanzado "preserve" xa non se elimina. (#2852)
 - Cando se desactiva a detección automática de actualizacións, NVDA xa non ten de reiniciarse para que todos os cambios teñan efecto.
 - NVDA xa non falla ó iniciarse se un complemento non se pode eliminar debido a que o seu directorio está a ser utilizado actualmente por outra aplicación. (#2860)
 - As etiquetas de pestanas no diálogo de preferencias do DropBox agora poden verse ca Revisión Cha. 
-- Se a lingua de entrada se cambia a algún outro que o predeterminado, NVDA agora detecta as teclas correctamente para ordes e o modo de axuda de entrada.
+- Se a lingua de entrada se cambia a algúnha outra que a predeterminada, NVDA agora detecta as teclas correctamente para ordes e o modo de axuda de entrada.
 - Para linguas como a alemana onde o signo + (máis) é unha  tecla soa no teclado, agora é posible vincularlle ordes utilizando a palabra "plus". (#2898)
-+- En Internet Explorer e outros controis  MSHTML, as comiñas agora anúncianse onde proceda. (#2888)
+- En Internet Explorer e outros controis  MSHTML, as comiñas agora anúncianse onde proceda. (#2888)
 - O controlador das liñas HumanWare Brailliant BI/Bbraille agora pode  seleccionarse cando a liña estea conectada a través do Bluetooth pero nunca se conectaran a través do USB.
 - O filtrado de elementos na Lista de Elementos do modo navegación co filtro de texto en maiúsculas agora devolve resultados non sensibles ás maiúsculas igual que nas minúsculas en lugar de nada en absoluto. (#2951)
 - Nos navegadores de Mozilla, o modo navegación pode utilizarse de novo cando se enfoque contido Flash. (#2546)
@@ -67,6 +68,8 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 - NVDA xa non fallará ó instalar cando a ruta do perfil do usuario conteña certos caracteres multibyte. (#2729)
 - O anunciado de grupos para controis Vista de Lista (SysListview32) en aplicacións de 64 bit xa non causa un erro.
 +- No modo navegación nas aplicacións de Mozilla, o contido de texto xa non se trata incorrectamente como editable nalgúns casos extranos. (#2959)
+- No IBM Lotus Symphony e no OpenOffice, movendo o cursor do sistema agora móvese o cursor de revisión se procede.
+- O contido do Adobe Flash agora é accesible en Internet Explorer en Windows 8. (#2454)
 
 
 == Cambios para Desenroladores ==
