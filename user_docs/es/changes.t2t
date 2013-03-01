@@ -4,6 +4,7 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2013.1 =
+Lo más subrayable en esta versión incluye una distribución de teclado portátil más intuitiva y consistente; soporte básico para Microsoft PowerPoint; soporte para descripciones largas en navegadores web; y soporte para la entrada de braille computerizado para líneas braille que tengan un teclado braille.
 
 == Importante ==
 
@@ -56,7 +57,7 @@ Por favor mira el documento [Referencia Rápida de Órdenes keyCommands.html] pa
 - Las etiquetas de pestañas en el diálogo de preferencias de DropBox ahora pueden verse con la Revisión Plana. 
 - Si el idioma de entrada se cambia a algún otro que el predeterminado, NVDA ahora detecta las teclas correctamente para órdenes y el modo de ayuda de entrada.
 - Para idiomas tales como el alemán donde el signo + (más) es una  tecla sola en el teclado, ahora es posible vincularle órdenes utilizando la palabra "plus". (#2898)
-+- En Internet Explorer y otros controles  MSHTML, las comillas ahora se anuncian donde proceda. (#2888)
+- En Internet Explorer y otros controles  MSHTML, las comillas ahora se anuncian donde proceda. (#2888)
 - El controlador de las líneas HumanWare Brailliant BI/Bbraille ahora puede  seleccionarse cuando las líneas estén conectadas a través de Bluetooth pero nunca se hayan conectado a través de USB.
 - El filtrado de elementos en la Lista de Elementos del modo navegación con el filtro de texto en mayúsculas ahora devuelve resultados no sensibles a las mayúsculas igual que en minúsculas en lugar de nada en absoluto. (#2951)
 - En navegadores de Mozilla, el modo navegación puede utilizarse de nuevo cuando se enfoque contenido Flash. (#2546)
@@ -67,6 +68,8 @@ Por favor mira el documento [Referencia Rápida de Órdenes keyCommands.html] pa
 - NVDA ya no fallará al instalar cuando la ruta del perfil de usuario contenga ciertos caracteres multibyte. (#2729)
 - El anunciado de grupos para controles Vista de Lista (SysListview32) en aplicaciones de 64 bit ya no causa un error.
 +- En modo navegación en aplicaciones de Mozilla, el contenido de texto ya no se trata incorrectamente como editable en algunos casos extraños. (#2959)
+- En IBM Lotus Symphony y OpenOffice, moviendo el cursor del sistema ahora se mueve  el cursor de revisión si procede.
+- El contenido de Adobe Flash ahora es accesible en Internet Explorer en Windows 8. (#2454)
 
 
 == Cambios para Desarrolladores ==
