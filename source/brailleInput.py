@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited, Rui Batista
+#Copyright (C) 2012-2013 NV Access Limited, Rui Batista
 
 import os.path
 import louis
@@ -84,6 +84,8 @@ class BrailleInputGesture(inputCore.InputGesture):
 			return ()
 
 	def _get_displayName(self):
+		if not self.dots and not self.space:
+			return None
 		# Translators: Reported before braille input in input help mode.
 		out = [_("braille")]
 		if self.space and self.dots:

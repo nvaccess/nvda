@@ -1585,6 +1585,11 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		return ids
 
 	def _get_displayName(self):
+		import brailleInput
+		if isinstance(self, brailleInput.BrailleInputGesture):
+			name = brailleInput.BrailleInputGesture._get_displayName(self)
+			if name:
+				return name
 		return self.id
 
 	def _get_scriptableObject(self):
