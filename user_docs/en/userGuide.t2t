@@ -1504,6 +1504,7 @@ The following Braille displays are supported:
 If BrxCom is installed, NVDA will use BrxCom.
 BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
 A new version of BrxCom which works with NVDA will be released by Papenmeier soon.  
+However, braille input is possible with the Trio device without BrxCom.
 
 Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
 The EAB can be moved in four directions where generally each direction has two switches.
@@ -1547,6 +1548,29 @@ Following are the Papenmeier command assignments for NVDA:
 | Move to next object | right2 |
 | Report text formatting | upper routing row |
 %kc:endInclude
+
+Brailleinput Trio
+The Trio model has four additional keys which are in front of the braille keyboard.
+These are (ordered from left to right):
+| left thumb key (LT) |
+| Space |
+| Space |
+| Right thumb key (RT) |
+Currently, the right thumb key is not in use. The inner keys are both mapped to space.
+
+%kc:beginInclude
+|| Dot 7 | Backspace |
+| Dot 8 | Enter |
+| Space + Dot 7 | Escape |
+| Space + Dot 2 | Arrow up |
+| Space + Dot 1 | Arrow left |
+| Space + Dot 4 | Arrow right |
+| Space + Dot 5 | Arrow down |
+| LT + Dot 2  | Control |
+| LT + Dot 3  | Alt | 
+| Space + Dots 1,2,3,4,5,6 | Control+Escape  |
+| Space + Dots 3,7 | TAB |
+%kc:endInclude 
 
 ++ Papenmeier Braille BRAILLEX Older Models ++
 The following Braille displays are supported: 
