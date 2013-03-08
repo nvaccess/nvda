@@ -57,6 +57,12 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 		LOG_DEBUG(L"AccessibleObjectFromEvent failed");
 		return NULL;
 	}
+	if (varChild.lVal!=CHILDID_SELF) {
+		// IAccessible2 can't be implemented on a simple child,
+		// so this object is invalid.
+		pacc->Release();
+		return NULL;
+	}
 	VariantClear(&varChild);
 	if(pacc->QueryInterface(IID_IServiceProvider,(void**)&pserv)!=S_OK) {
 		pacc->Release();
@@ -688,7 +694,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					continue;
 				}
 				IAccessible2* childPacc=NULL;
-				varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
+				if(varChildren[i].pdispVal) varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
 				if (!childPacc) {
 					VariantClear(&(varChildren[i]));
 					continue;

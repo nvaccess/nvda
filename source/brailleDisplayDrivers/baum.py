@@ -3,15 +3,17 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2011 James Teh <jamie@jantrid.net>
+#Copyright (C) 2010-2013 NV Access Limited
 
 import time
+from collections import OrderedDict
 import wx
 import serial
 import hwPortUtils
 import braille
 import inputCore
 from logHandler import log
+import brailleInput
 
 TIMEOUT = 0.2
 BAUD_RATE = 19200
@@ -92,14 +94,24 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def check(cls):
 		return True
 
-	def __init__(self):
-		super(BrailleDisplayDriver, self).__init__()
-		self.numCells = 0
-		self._deviceID = None
+	@classmethod
+	def getPossiblePorts(cls):
+		ports = OrderedDict()
+		comPorts = list(hwPortUtils.listComPorts(onlyAvailable=True))
+		try:
+			next(cls._getAutoPorts(comPorts))
+			ports.update((cls.AUTOMATIC_PORT,))
+		except StopIteration:
+			pass
+		for portInfo in comPorts:
+			# Translators: Name of a serial communications port.
+			ports[portInfo["port"]] = _("Serial: {portName}").format(portName=portInfo["friendlyName"])
+		return ports
 
-		# Scan all available com ports.
+	@classmethod
+	def _getAutoPorts(cls, comPorts):
 		# Try bluetooth ports last.
-		for portInfo in sorted(hwPortUtils.listComPorts(onlyAvailable=True), key=lambda item: "bluetoothName" in item):
+		for portInfo in sorted(comPorts, key=lambda item: "bluetoothName" in item):
 			port = portInfo["port"]
 			hwID = portInfo["hardwareID"]
 			if hwID.startswith(r"FTDIBUS\COMPORT"):
@@ -119,7 +131,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					continue
 			else:
 				continue
+			yield port, portType
 
+	def __init__(self, port="Auto"):
+		super(BrailleDisplayDriver, self).__init__()
+		self.numCells = 0
+		self._deviceID = None
+
+		if port == "auto":
+			tryPorts = self._getAutoPorts(hwPortUtils.listComPorts(onlyAvailable=True))
+		else:
+			tryPorts = ((port, "serial"),)
+		for port, portType in tryPorts:
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			try:
@@ -196,7 +219,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		command = self._ser.read(1)
 		length = BAUM_RSP_LENGTHS.get(command, 0)
 		if command == BAUM_ROUTING_KEYS:
-			length = self.numCells / 8
+			length = 10 if self.numCells > 40 else 5
 		arg = self._ser.read(length)
 		return command, arg
 
@@ -252,7 +275,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		},
 	})
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 
 	source = BrailleDisplayDriver.name
 
@@ -262,6 +285,11 @@ class InputGesture(braille.BrailleDisplayGesture):
 
 		self.keyNames = names = set()
 		for group, groupKeysDown in keysDown.iteritems():
+			if group == BAUM_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xfc:
+				# This is braille input.
+				# 0xfc covers command keys. The space bars are covered by 0x3.
+				self.dots = groupKeysDown >> 8
+				self.space = groupKeysDown & 0x3
 			if group == BAUM_ROUTING_KEYS:
 				for index in xrange(braille.handler.display.numCells):
 					if groupKeysDown & (1 << index):

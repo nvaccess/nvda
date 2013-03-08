@@ -171,9 +171,9 @@ setup(
 	}],
 	options = {"py2exe": {
 		"bundle_files": 3,
-		"excludes": ["comInterfaces", "Tkinter",
+		"excludes": ["Tkinter",
 			"serial.loopback_connection", "serial.rfc2217", "serial.serialcli", "serial.serialjava", "serial.serialposix", "serial.socket_connection"],
-		"packages": ["NVDAObjects","virtualBuffers","appModules","brailleDisplayDrivers","synthDrivers"],
+		"packages": ["NVDAObjects","virtualBuffers","appModules","comInterfaces","brailleDisplayDrivers","synthDrivers"],
 		"includes": ["nvdaBuiltin"],
 	}},
 	data_files=[
@@ -181,7 +181,6 @@ setup(
 		("documentation", ['../copying.txt', '../contributors.txt']),
 		("lib", glob("lib/*.dll")),
 		("lib64", glob("lib64/*.dll") + glob("lib64/*.exe")),
-		("comInterfaces", glob("comInterfaces/*%s"%compiledModExtention)),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("louis/tables",glob("louis/tables/*"))

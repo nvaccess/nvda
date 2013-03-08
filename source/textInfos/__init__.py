@@ -4,18 +4,18 @@
 #See the file COPYING for more details.
 #Copyright (C) 2006-2012 NV Access Limited
 
+"""Framework for accessing text content in widgets.
+The core component of this framework is the L{TextInfo} class.
+In order to access text content for a widget, a L{TextInfo} implementation is required.
+A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
+"""
+
 import weakref
 import re
 import baseObject
 import config
 import speech
 import controlTypes
-
-"""Framework for accessing text content in widgets.
-The core component of this framework is the L{TextInfo} class.
-In order to access text content for a widget, a L{TextInfo} implementation is required.
-A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
-"""
 
 class Field(dict):
 	"""Provides information about a piece of text."""

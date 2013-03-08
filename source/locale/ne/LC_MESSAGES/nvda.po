@@ -1,24 +1,24 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NVDA bzr main:5689\n"
+"Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
-"POT-Creation-Date: 2012-12-13 05:30+0000\n"
-"PO-Revision-Date: 2012-12-13 12:24+0545\n"
-"Last-Translator: हिम प्रसाद गौतम \n"
+"POT-Creation-Date: 2013-02-14 05:30+0000\n"
+"PO-Revision-Date: 2013-02-14 22:40+0545\n"
+"Last-Translator: \n"
 "Language-Team: हिम प्रसाद गौतम <himjee@yahoo.com>\n"
 "Language: Nepali\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "योजनाको नाम र संस्करण: नेत्रवाणी - १.१.०2\n"
-"प्रथम अनुवादक: हिम प्रसाद गौतम(नेपाल) <drishtibachak@gmail.com>, <himjee@yahoo."
+"प्रथम अनुवादक: हिम प्रसाद गौतम(नेपाल) <Urdubachak@gmail.com>, <himjee@yahoo."
 "com>\n"
 "अनुवाद मिति: २०६९ साल असार १५ गते\n"
 "पुनरावलोकन मिति: २०६९ साल श्रावण १५ गते\n"
 "भाषा टोली: हिम प्रसाद गौतम <drishtivachak@gmail.com> मात्रै\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 
-#: globalCommands.py:879
+#: globalCommands.py:880
 #, python-format
 msgid " and currently loaded module is %s"
 msgstr "साथै चालू भारीत module %s हो ।"
@@ -30,12 +30,12 @@ msgid "%d characters"
 msgstr "%d वर्ण"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:860 NVDAObjects/behaviors.py:57
+#: globalCommands.py:861 NVDAObjects/behaviors.py:57
 #, python-format
 msgid "%d percent"
 msgstr "%d प्रतिशत"
 
-#: globalCommands.py:314 globalCommands.py:774
+#: globalCommands.py:315 globalCommands.py:775
 #, python-format
 msgid "%s copied to clipboard"
 msgstr "%s क्लिप पाटीमा उतारियो ।"
@@ -47,7 +47,7 @@ msgstr "%s कर्सर"
 
 #. Translators: Displayed in braille at the end of a control field such as a list or table.
 #. %s is replaced with the control's role.
-#: braille.py:568
+#: braille.py:578
 #, python-format
 msgid "%s end"
 msgstr "%s अन्त"
@@ -62,7 +62,7 @@ msgstr "%s सामाग्रीहरू"
 msgid "%s landmark"
 msgstr "%s कित्ता"
 
-#: globalCommands.py:1022
+#: globalCommands.py:1027
 #, python-format
 msgid "%s mode"
 msgstr "%s मुद्रा"
@@ -81,7 +81,7 @@ msgstr "प्रवे&ग"
 msgid "&Activate"
 msgstr "&सक्रिय बनाउ"
 
-#: gui/settingsDialogs.py:1133
+#: gui/settingsDialogs.py:1145
 msgid "&Add"
 msgstr "थपि देउ"
 
@@ -105,7 +105,7 @@ msgstr "&खोतल्ने मुद्रा ..."
 msgid "&Close"
 msgstr "&बन्द गर"
 
-#: gui/settingsDialogs.py:1090
+#: gui/settingsDialogs.py:1102
 msgid "&Comment"
 msgstr "& प्रतिक्रिया"
 
@@ -122,7 +122,7 @@ msgstr "&कार्यको निरन्तरता"
 msgid "&Default dictionary..."
 msgstr "&निर्धारित ढुकुटी"
 
-#: gui/settingsDialogs.py:1117
+#: gui/settingsDialogs.py:1129
 msgid "&Dictionary entries"
 msgstr "&ढुकुटी प्रविष्टि"
 
@@ -143,7 +143,7 @@ msgstr "&समाप्त"
 msgid "&Download update"
 msgstr "&अद्यावधिक डाउनलोड गर"
 
-#: gui/settingsDialogs.py:1136
+#: gui/settingsDialogs.py:1148
 msgid "&Edit"
 msgstr "&सम्पादन"
 
@@ -174,6 +174,10 @@ msgstr "&उतार-चढाव"
 #: gui/__init__.py:297
 msgid "&Input composition settings..."
 msgstr "&मिलावट अनुकूलता लगानी "
+
+#: gui/settingsDialogs.py:1261
+msgid "&Input table:"
+msgstr "&लगानि तालिका"
 
 #: gui/__init__.py:566
 msgid "&Install NVDA on this computer"
@@ -210,13 +214,13 @@ msgstr "&भाषा "
 msgid "&Language (requires restart to fully take effect):"
 msgstr "&भाषा (पूर्ण रूपले काम गर्न नेत्रवाणी फेरी सुरुवात गर्नु पर्छ ।):"
 
-#: gui/settingsDialogs.py:1381
+#: gui/settingsDialogs.py:1407
 msgid "&Level"
 msgstr "&तह"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:877
+#: gui/settingsDialogs.py:889
 msgid "&Maximum number of characters on one line"
 msgstr "एक पङ्तिमा &अधिकतम वर्णहरूको सङ्ख्या"
 
@@ -238,7 +242,7 @@ msgstr "&अहिले होइन"
 
 #. Translators: This is the label for a textfield in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:884
+#: gui/settingsDialogs.py:896
 msgid "&Number of lines per page"
 msgstr "&प्रति पृष्ट पङ्तिहरूको सङ्ख्या ।"
 
@@ -246,7 +250,11 @@ msgstr "&प्रति पृष्ट पङ्तिहरूको सङ�
 msgid "&Object presentation..."
 msgstr "&वस्तुको प्रस्तुतीकरण"
 
-#: gui/settingsDialogs.py:1084
+#: gui/settingsDialogs.py:1248
+msgid "&Output table:"
+msgstr "&प्रतिफल तालिका"
+
+#: gui/settingsDialogs.py:1096
 msgid "&Pattern"
 msgstr "&ढर्रा"
 
@@ -254,7 +262,7 @@ msgstr "&ढर्रा"
 msgid "&Pitch"
 msgstr "&पीच"
 
-#: gui/settingsDialogs.py:1228
+#: gui/settingsDialogs.py:1240
 msgid "&Port:"
 msgstr "&स्थल"
 
@@ -270,11 +278,11 @@ msgstr "सङ्केत र &चिन्हको उच्चारण"
 msgid "&Rate"
 msgstr "&दर"
 
-#: gui/addonGui.py:47 gui/settingsDialogs.py:1139
+#: gui/addonGui.py:47 gui/settingsDialogs.py:1151
 msgid "&Remove"
 msgstr "&हटाउ"
 
-#: gui/settingsDialogs.py:1087 gui/settingsDialogs.py:1375
+#: gui/settingsDialogs.py:1099 gui/settingsDialogs.py:1401
 msgid "&Replacement"
 msgstr "&प्रतिस्थापन"
 
@@ -294,7 +302,7 @@ msgstr "अभियोजन लाइ &बचत गर"
 msgid "&Save configuration on exit"
 msgstr "ब&हिर्गमन गर्दा अभियोजनलाई बचत गर"
 
-#: gui/settingsDialogs.py:1360
+#: gui/settingsDialogs.py:1386
 msgid "&Symbols"
 msgstr "&चिन्ह"
 
@@ -329,38 +337,38 @@ msgid "&Warn before exiting NVDA"
 msgstr "नेत्रवाणी बन्द हुँदा &सचेत गराऊ"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is not checked.
-#: braille.py:276
+#: braille.py:283
 msgid "( )"
 msgstr "( )"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is half checked.
-#: braille.py:258
+#: braille.py:265
 msgid "(-)"
 msgstr "(-)"
 
 #. Translators: Displayed in braille when an object (e.g. a check box) is checked.
-#: braille.py:256
+#: braille.py:263
 msgid "(x)"
 msgstr "(x)"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is collapsed.
-#: braille.py:268
+#: braille.py:275
 msgid "+"
 msgstr "+"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) is expanded.
-#: braille.py:266
+#: braille.py:273
 msgid "-"
 msgstr "-"
 
 #. Translators: Displayed in braille for an object which is a
 #. separator.
-#: braille.py:248
+#: braille.py:255
 msgid "-----"
 msgstr "-----"
 
 #. Translators: Displayed in braille when an object supports autocompletion.
-#: braille.py:264
+#: braille.py:271
 msgid "..."
 msgstr "..."
 
@@ -374,7 +382,7 @@ msgstr "ढुकुटीको सुचीमा शब्द थपेर �
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
-msgstr "ढुकुटीमा राख्न चाहेको शब्द सम्पादन बाकसमा लेखेर अस्थायी ढुकुटी  बनाउन सकिने पातो ।"
+msgstr "ढुकुटीमा राख्न चाहेको शब्द सम्पादन बाकसमा लेखेर अस्थायी ढुकुटी बनाउन सकिने पातो ।"
 
 #: gui/__init__.py:309
 msgid ""
@@ -403,7 +411,7 @@ msgstr ""
 "यो थप-साधन को एउटा संस्करण पहिले नै भित्रिएको रहेछ । के तपाई पहिले नै भित्रि सकेको थप-"
 "साधनलाई अद्यावधिक गर्न चाहनु हुन्छ?"
 
-#: globalCommands.py:861
+#: globalCommands.py:862
 msgid "AC power on"
 msgstr "विद्युत् लाइनमा जोडिएको छ ।"
 
@@ -420,12 +428,12 @@ msgstr "नेत्र वाणीको बारेमा"
 msgid "About..."
 msgstr "मेरो बारेमा"
 
-#: globalCommands.py:935
+#: globalCommands.py:936
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "विकासको लागि मुख्यतया उपयोगी हुने नेत्रवाणी पाइथन कन्सोल सक्रिय बनाउ छ ।"
 
 #. Translators: This is the label for the add dictionary entry dialog.
-#: gui/settingsDialogs.py:1163
+#: gui/settingsDialogs.py:1175
 msgid "Add Dictionary Entry"
 msgstr "ढुकुटी प्रविष्टिमा थप गर"
 
@@ -461,7 +469,7 @@ msgstr "वर्णसङ्ख्यक लगानी"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
-#: gui/settingsDialogs.py:749
+#: gui/settingsDialogs.py:761
 msgid "Always include short character &description when announcing candidates"
 msgstr "उम्मेद्वारको घोषणा गर्दा सधै छोटो वर्ण र विवरणलाई समावेस गर । "
 
@@ -473,17 +481,17 @@ msgstr "आम्हारिक"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
-#: gui/settingsDialogs.py:744
+#: gui/settingsDialogs.py:756
 msgid "Announce &selected candidate"
 msgstr "चयन गरिएको उम्मेद्वारको &घोषणा गर ।"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:951
+#: gui/settingsDialogs.py:963
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr "कर्सर पछिका कागजातको स्वरूपमा भएको परिवर्तन बताउने छ । (ढिलाई हुन्छ)"
 
-#: globalCommands.py:131
+#: globalCommands.py:132
 msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
@@ -502,9 +510,10 @@ msgctxt "languageName"
 msgid "Arabic"
 msgstr "अरबी"
 
+#. (fileName, displayName, supportsInput),
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:29
+#: braille.py:30
 msgid "Arabic grade 1"
 msgstr "अरबी श्रेणी १"
 
@@ -542,7 +551,7 @@ msgstr "संलग्न"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:916
+#: gui/settingsDialogs.py:928
 msgid "Audio indication of focus and browse modes"
 msgstr "केन्द्री यताको श्रव्य सङ्केत र खोतल्ने मुद्रा"
 
@@ -553,13 +562,13 @@ msgstr "लेखक"
 #. : Automatic port constant to be used by braille displays that support the "automatic" port
 #. : @type: Tupple
 #. Translators String representing the automatic port selection for braille displays.
-#: braille.py:1508
+#: braille.py:1536
 msgid "Automatic"
 msgstr "स्वचालित"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:896
+#: gui/settingsDialogs.py:908
 msgid "Automatic &Say All on page load"
 msgstr "सुरु हुन साथ सबै पृष्ठ &खुरू खुरू बताउ "
 
@@ -577,13 +586,13 @@ msgstr "समर्थित भाषिका हो भने स्वय�
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:911
+#: gui/settingsDialogs.py:923
 msgid "Automatic focus mode for caret movement"
 msgstr "caret को गति अनुसार स्वचालित मुद्रा"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:906
+#: gui/settingsDialogs.py:918
 msgid "Automatic focus mode for focus changes"
 msgstr "केन्द्री यताको फेर बदल अनुसार स्वचालित केन्द्रित मुद्रा"
 
@@ -600,11 +609,11 @@ msgstr "स्वचालित &नेत्र वाणीको अद्�
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
-#: gui/settingsDialogs.py:739
+#: gui/settingsDialogs.py:751
 msgid "Automatically report all available &candidates"
 msgstr "उपलब्ध सबै &उम्मेदवारहरूको बारेमा स्वतः बताउ"
 
-#: gui/settingsDialogs.py:1286
+#: gui/settingsDialogs.py:1311
 msgid "Avoid splitting &words when possible"
 msgstr "सम्भव भएसम्म शब्द टुक्रिन नपाओस्"
 
@@ -618,47 +627,52 @@ msgid "BCC:"
 msgstr "थप बोधार्थः"
 
 #. Translators: Names of braille displays.
-#: brailleDisplayDrivers/baum.py:89
+#: brailleDisplayDrivers/baum.py:90
 msgid "Baum/HumanWare/APH braille displays"
 msgstr "Baum/HumanWare/APH ब्रेल पटल"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui/settingsDialogs.py:789
+#: gui/settingsDialogs.py:801
 msgid "Beep"
 msgstr "टीँ गर"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:612
+#: gui/settingsDialogs.py:622
 msgid "Beep if typing lowercase letters when caps lock is on"
 msgstr "caps चाबी नलगाई साना वर्ण लेख्दा टीँ गर"
 
-#: gui/settingsDialogs.py:1213
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:111
+msgid "Bitmap placeholder"
+msgstr "Bitmap खोपी"
+
+#: gui/settingsDialogs.py:1225
 msgid "Braille &display:"
 msgstr "ब्रेल &पटल"
 
-#: gui/settingsDialogs.py:1301
+#: gui/settingsDialogs.py:1326
 msgid "Braille Display Error"
 msgstr "ब्रेल पटलको त्रुटी"
 
 #. Translators: This is the label for the braille settings dialog.
-#: gui/settingsDialogs.py:1209
+#: gui/settingsDialogs.py:1221
 msgid "Braille Settings"
 msgstr "ब्रेलको अनुकूलता"
 
-#: globalCommands.py:944
+#: globalCommands.py:945
 #, python-format
 msgid "Braille tethered to %s"
 msgstr "ब्रेललाई %s मा मिलाउ"
 
-#: gui/settingsDialogs.py:1269
+#: gui/settingsDialogs.py:1294
 msgid "Braille tethered to:"
 msgstr "ब्रेलको मिलान:"
 
 #. Translators: This is the label for the browse mode settings dialog.
-#: gui/settingsDialogs.py:872
+#: gui/settingsDialogs.py:884
 msgid "Browse Mode"
 msgstr "खोतल्ने मुद्रा"
 
@@ -669,7 +683,7 @@ msgstr "उघार "
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:35
+#: braille.py:36
 msgid "Bulgarian 8 dot computer braille"
 msgstr "बुल्गेरियाजी थोप्लो ८ .कल्पयन्त्र ब्रेल"
 
@@ -696,16 +710,21 @@ msgid ""
 "Cannot set headers. Please enable reporting of table headers in Document "
 "Formatting Settings"
 msgstr ""
-"शिर्षक तय गर्न सकिदैन । कृपया कागजातको स्वरूप अनुकूलतामा तालिकाको शीर्षकलाई  बताउने "
+"शिर्षक तय गर्न सकिदैन । कृपया कागजातको स्वरूप अनुकूलतामा तालिकाको शीर्षकलाई बताउने "
 "परिस्थितिमा राख्नु होला ।"
 
 #: gui/settingsDialogs.py:466
 msgid "Capital pitch change percentage"
 msgstr "Capital पीच फेरिएको प्रतिशत"
 
-#: gui/settingsDialogs.py:1093
+#: gui/settingsDialogs.py:1105
 msgid "Case &sensitive"
 msgstr "रुप &संवेदन सिल"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:99
+msgid "Center Title placeholder"
+msgstr "केन्द्रिय शिर्षक खोपी"
 
 #: gui/__init__.py:293
 msgid "Change reporting of mouse shape and object under mouse"
@@ -719,7 +738,7 @@ msgstr "वस्तु प्रतिवेदनमा हेरफेर"
 msgid "Change settings of document properties"
 msgstr "कागजातको चरित्रहरूको अनुकूलतामा परिवर्तन"
 
-#: gui/settingsDialogs.py:1373
+#: gui/settingsDialogs.py:1399
 msgid "Change symbol"
 msgstr "चिन्ह बदल्नु होस् ।"
 
@@ -730,6 +749,11 @@ msgstr "प्रयोगमा ल्याउनु पर्ने संश
 #: gui/__init__.py:301
 msgid "Change virtual buffers specific settings"
 msgstr "अवास्तविक buffers सम्बन्धी विशेष अनुकूलतालाई बदल्नु होस् ।"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:109
+msgid "Chart placeholder"
+msgstr "चित्र खोपी"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 #: gui/__init__.py:361
@@ -748,13 +772,13 @@ msgstr "अद्यावधि करणका लागि निरीक्
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:203
+#: braille.py:207
 msgid "Chinese (Hong Kong, Cantonese)"
 msgstr "चिनियाँ (हङ्कङ्ग, क्यान्टोनी)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:206
+#: braille.py:210
 msgid "Chinese (Taiwan, Mandarin)"
 msgstr "चिनियाँ (ताइवान, मन्दारिन)"
 
@@ -777,11 +801,11 @@ msgstr "महल शिर्षक नभएको हरफ"
 msgid "Cleared row header column"
 msgstr "हरफ शीर्षक नभएको महल"
 
-#: globalCommands.py:88
+#: globalCommands.py:89
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr "सुलसुले रहेको स्थानमा देब्रे टाँक एक पटक किटिक्क पार्ने छ ।"
 
-#: globalCommands.py:94
+#: globalCommands.py:95
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr "सुलसुले रहेको स्थानमा दाहिने टाँक एक पटक किटिक्क पार्ने छ "
 
@@ -795,7 +819,7 @@ msgstr "आदेशको &छरितो सन्दर्भसूची"
 msgid "Commands Quick Reference"
 msgstr "आदेशको छरितो सन्दर्भसूची"
 
-#: gui/settingsDialogs.py:1120
+#: gui/settingsDialogs.py:1132
 msgid "Comment"
 msgstr "प्रतिक्रिया"
 
@@ -860,7 +884,7 @@ msgstr "योगदान दिनेहरू"
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui/installerGui.py:109
 msgid "Copy &portable configuration to current user account"
-msgstr "&घुमन्ते अभियोजन वर्तमान उपभोक्ताको खातामा सारी देउ ।"
+msgstr "&फिरन्ते अभियोजन वर्तमान उपभोक्ताको खातामा सारी देउ ।"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 #: gui/installerGui.py:159
@@ -888,7 +912,7 @@ msgstr "स्वचालित प्रतिक्रिया विन्�
 msgid "Could not find comment window."
 msgstr "प्रतिक्रिया बाकस फेला परेन ।"
 
-#: gui/settingsDialogs.py:1301
+#: gui/settingsDialogs.py:1326
 #, python-format
 msgid "Could not load the %s display."
 msgstr "%s पटल बहन गर्न सकिएन"
@@ -912,34 +936,34 @@ msgstr "डेस्कटपमा प्रतिमा र द्रुतम
 
 #: gui/__init__.py:570
 msgid "Create &portable copy"
-msgstr "&घुमन्ते प्रति बनाउ ।"
+msgstr "&फिरन्ते प्रति बनाउ ।"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui/installerGui.py:142
 msgid "Create Portable NVDA"
-msgstr "घुमन्ते नेत्रवाणी जन्माउ ।"
+msgstr "फिरन्ते नेत्रवाणी जन्माउ ।"
 
 #: gui/__init__.py:332
 msgid "Create Portable copy..."
-msgstr "घुमन्ते प्रति बनाउ ।"
+msgstr "फिरन्ते प्रति बनाउ ।"
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is bieng created.
 #: gui/installerGui.py:212
 msgid "Creating Portable Copy"
-msgstr "घुमन्ते प्रति बनाउँदै छु ।"
+msgstr "फिरन्ते प्रति बनाउँदै छु ।"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:122
+#: braille.py:123
 msgid "Croatian 8 dot computer braille"
 msgstr "क्रोएसियाली ८ थोप्लो कल्पयन्त्र ब्रेल"
 
-#: globalCommands.py:876
+#: globalCommands.py:877
 #, python-format
 msgid "Currently running application is %s"
 msgstr "हाल चालू अनुप्रयोग %s हो ।"
 
-#: gui/settingsDialogs.py:1253
+#: gui/settingsDialogs.py:1278
 msgid "Cursor blink rate (ms)"
 msgstr "कर्सर चम्किने दर (मिलि सेकेन्ड)"
 
@@ -952,35 +976,40 @@ msgstr ""
 "तपाइको उपभोक्ता घर्रामा चालू PlugIns पाइयो । यी दुबैलाई यो प्रणालीमा उतार्दा खतरनाक "
 "हुन सक्छ । के तपाइ आफ्नो अनुकूलताको नक्कल उतार्न नै चाहनु हुन्छ?"
 
-#: globalCommands.py:226
+#: globalCommands.py:227
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr "\"कुन सङ्केत बोलियो भनि निर्धारण गर्ने ध्वनि सङ्केत तहमा फन्को मार्छ ।"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:44
+#: braille.py:45
 msgid "Czech grade 1"
 msgstr "चेक श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:47
+#: braille.py:48
 msgid "Danish grade 1"
 msgstr "डेनिश श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:50
+#: braille.py:51
 msgid "Danish grade 2"
 msgstr "डेनिश श्रेणी २"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:125
+msgid "Date placeholder"
+msgstr "मिति खोपी"
 
 #. Translators: This is presented in outlook or live mail, date of email
 #: appModules/msimn.py:33
 msgid "Date:"
 msgstr "मितिः"
 
-#: globalCommands.py:157
+#: globalCommands.py:158
 msgid "Decreases the currently active setting in the synth settings ring"
 msgstr "संश्लेषको घण्टी अनुकूलतामा चालू सक्रिय अनुकूलता लाई घटाउने छ "
 
@@ -1010,7 +1039,7 @@ msgid "Document &formatting..."
 msgstr "कागजात &स्वरूप...."
 
 #. Translators: This is the label for the document formatting dialog.
-#: gui/settingsDialogs.py:946
+#: gui/settingsDialogs.py:958
 msgid "Document Formatting"
 msgstr "कागजातको स्वरूप"
 
@@ -1040,13 +1069,13 @@ msgstr "अद्यावधिक डाउनलोड हुँदैछ ।
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:143
+#: braille.py:147
 msgid "Dutch (Belgium) grade 1"
 msgstr "डच (बेल्जियम) श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:146
+#: braille.py:150
 msgid "Dutch (netherlands) grade 1"
 msgstr "डच (नेदरल्याण्ड) श्रेणी १"
 
@@ -1054,7 +1083,7 @@ msgstr "डच (नेदरल्याण्ड) श्रेणी १"
 msgid "E&xit"
 msgstr "&बहिर्गमन"
 
-#: gui/settingsDialogs.py:1248
+#: gui/settingsDialogs.py:1273
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "कर्सर मुनिको शब्द विस्तारित रुपमा &देखाउ "
 
@@ -1065,7 +1094,7 @@ msgid "Edge of table"
 msgstr "तालिकाको किनारा"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
-#: gui/settingsDialogs.py:1080
+#: gui/settingsDialogs.py:1092
 msgid "Edit Dictionary Entry"
 msgstr "ढुकुटी प्रविष्टि सम्पादन गर्नु होस् "
 
@@ -1074,6 +1103,11 @@ msgstr "ढुकुटी प्रविष्टि सम्पादन ग
 msgid "Elements List"
 msgstr "तत्त्वहरूको सूची"
 
+#. Translators: The message for an empty slide in a slide show
+#: appModules/powerpnt.py:809 appModules/powerpnt.py:810
+msgid "Empty slide"
+msgstr "खाली प्रस्तुतीपत्र"
+
 #: scriptHandler.py:33
 #, python-format
 msgid "Emulates pressing %s on the system keyboard"
@@ -1081,7 +1115,7 @@ msgstr "%s लाई थिच्दा प्रणाली कुञ्जी
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:648
+#: gui/settingsDialogs.py:660
 msgid "Enable mouse &tracking"
 msgstr "सुलसुले &दौडाहा योग्य बनाउ "
 
@@ -1091,37 +1125,37 @@ msgstr "पुछार टिप्पणी"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:65
+#: braille.py:66
 msgid "English (U.K.) grade 1"
 msgstr "अङ्ग्रेजी (बेलायत) श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:68
+#: braille.py:69
 msgid "English (U.K.) grade 2"
 msgstr "अङ्ग्रेजी (बेलायत) श्रेणी २"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:71
+#: braille.py:72
 msgid "English (U.S.) 6 dot computer braille"
 msgstr "अङ्ग्रेजी (अमेरिकी).६. कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:74
+#: braille.py:75
 msgid "English (U.S.) 8 dot computer braille"
 msgstr "अङ्ग्रेजी (अमेरिकी) ८ थोप्लो कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:77
+#: braille.py:78
 msgid "English (U.S.) grade 1"
 msgstr "अङ्ग्रेजी (अमेरिका) श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:80
+#: braille.py:81
 msgid "English (U.S.) grade 2"
 msgstr "अङ्ग्रेजी (अमेरिका) श्रेणी २"
 
@@ -1171,13 +1205,13 @@ msgstr "गल्ती लगत पुस्तिका %s"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:89
+#: braille.py:90
 msgid "Estonian grade 0"
 msgstr "ईस्टोनियन श्रेणी ०"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:92
+#: braille.py:93
 msgid "Ethiopic grade 1"
 msgstr "इथियोपियाजी श्रेणी १"
 
@@ -1202,7 +1236,7 @@ msgstr "नेत्रवाणी उपभोक्ता अभियोज�
 #: gui/installerGui.py:229
 #, python-format
 msgid "Failed to create portable copy: %s"
-msgstr "%s घुमन्ते प्रति बनाउन सकिएन ।"
+msgstr "%s फिरन्ते प्रति बनाउन सकिएन ।"
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #: gui/addonGui.py:121
@@ -1220,7 +1254,7 @@ msgstr "%s मा थप-साधनको पोको खोल्न सक�
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:32
+#: braille.py:33
 msgid "Farsi grade 1"
 msgstr "फारसी श्रेणी १"
 
@@ -1245,7 +1279,7 @@ msgstr "त्रुटी फेला पार"
 
 #. braille settings dialog.
 #. Translators: The name of a braille table displayed in the
-#: braille.py:95
+#: braille.py:96
 msgid "Finnish 8 dot computer braille"
 msgstr "फिनिस ८ .कल्पयन्त्र ब्रेल"
 
@@ -1259,21 +1293,26 @@ msgstr "प्रथम पृष्ट सिर टिपोट "
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:713
+#: gui/settingsDialogs.py:725
 msgid "Follow &mouse cursor"
 msgstr "सुलसुलेको कर्सर पछ्याऊ"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:708
+#: gui/settingsDialogs.py:720
 msgid "Follow System &Caret"
 msgstr "प्रणाली &Caret पछ्याऊ ।"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:703
+#: gui/settingsDialogs.py:715
 msgid "Follow system &focus"
 msgstr "प्रणाली &केन्द्रीयता पछ्याऊ ।"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:123
+msgid "Footer placeholder"
+msgstr "पाद टिप्पणी खोपी"
 
 #: NVDAObjects/window/winword.py:88
 msgid "Footnotes"
@@ -1295,37 +1334,37 @@ msgid "Forward to:"
 msgstr "तर्फ प्रेषितः"
 
 #. Translators: Names of braille displays.
-#: brailleDisplayDrivers/freedomScientific.py:114
+#: brailleDisplayDrivers/freedomScientific.py:115
 msgid "Freedom Scientific Focus/PAC Mate series"
 msgstr "फ्रिडम साइन्टिफिक फोकस/पि 80 शृङ्खला"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:98
+#: braille.py:99
 msgid "French (Canada) grade 1"
 msgstr "फ्रान्सेली (क्यानेडा) श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:101
+#: braille.py:102
 msgid "French (Canada) grade 2"
 msgstr "फ्रान्सेली (क्यानेडा) श्रेणी २"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:104
+#: braille.py:105
 msgid "French (unified) 6 dot computer braille"
 msgstr "फ्रान्सेली (एकीकृत) ६. कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:107
+#: braille.py:108
 msgid "French (unified) 8 dot computer braille"
 msgstr "फ्रान्सेली (एकीकृत) ८ थोप्लो कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:110
+#: braille.py:111
 msgid "French (unified) Grade 2"
 msgstr "फ्रान्सेली (एकीकृत) श्रेणी २"
 
@@ -1350,37 +1389,37 @@ msgstr "सामान्य अनुकूलता"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:53
+#: braille.py:54
 msgid "German 8 dot computer braille"
 msgstr "जर्मनी ८ .कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:56
+#: braille.py:57
 msgid "German grade 0"
 msgstr "जर्मनी श्रेणी ०"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:59
+#: braille.py:60
 msgid "German grade 1"
 msgstr "जर्मनी श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:62
+#: braille.py:63
 msgid "German grade 2"
 msgstr "जर्मनी श्रेणी २"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:113
+#: braille.py:114
 msgid "Greek (Greece) grade 1"
 msgstr "ग्रीक (ग्रीस) श्रेणी १"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:819
+#: gui/settingsDialogs.py:831
 msgid "Guess object &position information when unavailable"
 msgstr "बस्तुको &अवस्थाको जानकारी नभए अनुमान गर"
 
@@ -1397,42 +1436,52 @@ msgstr "HIMS SyncBraille"
 msgid "Half shaped mode"
 msgstr "अर्ध प्रकारको मुद्रा"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:160
+msgid "Handout Master view"
+msgstr "आलेखको मूल रुप"
+
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers/handyTech.py:49
 msgid "Handy Tech braille displays"
 msgstr "Handy Tech ब्रेल पटल"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:121
+msgid "Header placeholder"
+msgstr "शिर्षक खोपी"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:116
+#: braille.py:117
 msgid "Hebrew 8 dot computer braille"
 msgstr "हिब्रु ८ थोप्लो कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:119
+#: braille.py:120
 msgid "Hindi grade 1"
 msgstr "हिन्दी श्रेणी १"
 
 #. Translators: Names of braille displays
-#: brailleDisplayDrivers/brailleNote.py:86
+#: brailleDisplayDrivers/brailleNote.py:89
 msgid "HumanWare BrailleNote"
 msgstr "HumanWare ब्रेलनोट"
 
 #. Translators: The name of a series of braille displays.
-#: brailleDisplayDrivers/brailliantB.py:79
+#: brailleDisplayDrivers/brailliantB.py:89
 msgid "HumanWare Brailliant BI/B series"
 msgstr "HumanWare Brailliant BI/B series"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:125
+#: braille.py:126
 msgid "Hungarian 8 dot computer braille"
 msgstr "हङ्गेरयाली ८ थोप्लो कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:128
+#: braille.py:129
 msgid "Hungarian grade 1"
 msgstr "हङ्गेरियाली श्रेणी १"
 
@@ -1464,24 +1513,41 @@ msgstr "छड्के"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:131
+#: braille.py:132
 msgid "Icelandic 8 dot computer braille"
 msgstr "जर्मनी ८ .कल्पयन्त्र ब्रेल"
 
-#: globalCommands.py:139
+#: globalCommands.py:140
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr "एक पटक थिच्दा समय र लगातार दुई पटक थिचे मिति बताउने छ"
 
-#: globalCommands.py:148
+#. Translators: Information about NVDA's new laptop keyboard layout.
+#: gui/upgradeAlerts.py:18
+msgid ""
+"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
+"order to make it more intuitive and consistent.\n"
+"If you use the laptop layout, please see the What's New document for more "
+"information."
+msgstr ""
+"नेत्रवाणीको 2013.1 संस्करणमा  ल्यापटपको कुञ्जीपाटी रुपरेखा अझै सरल र स्थिर बनाउने उद्देश्यले "
+"पूरै नयाँ रुपमा उपलब्ध छ ।  \n"
+"यदि ल्यापटप रुपरेखा तय गरिएको  छ भने , थप कुरा के रहेछ भनेर जान्न उपभोक्ता निर्देशिका "
+"पढ्नु होला ।"
+
+#: globalCommands.py:149
 msgid "Increases the currently active setting in the synth settings ring"
 msgstr "संश्लेषणको घण्टी अनुकूलतामा चालू सक्रिय अनुकूलता लाई बढाउने छ "
 
 #. Translators: This is the label for the Input Composition settings dialog.
-#: gui/settingsDialogs.py:734
+#: gui/settingsDialogs.py:746
 msgid "Input Composition Settings"
 msgstr "अनुकूलता मिलावट लगानी"
+
+#: globalCommands.py:1011
+msgid "Inputs braille dots via the braille keyboard"
+msgstr "ब्रेल कुञ्जीपाटी मार्फत ब्रेल थोप्लाहरू लेख्ने छ ।"
 
 #. Translators: The title of the Install NVDA dialog.
 #: gui/installerGui.py:82
@@ -1521,13 +1587,13 @@ msgstr "अवैध भकारी %s ।"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:134
+#: braille.py:135
 msgid "Italian 6 dot computer braille"
 msgstr "इटालियन ६ थोप्लो कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:137
+#: braille.py:138
 msgid "Italian 8 dot computer braille"
 msgstr "इटालियन ८ थोप्लो कल्पयन्त्र ब्रेल"
 
@@ -1545,6 +1611,12 @@ msgstr "कुञ्जीपाटीको अनुकूलता "
 #: gui/settingsDialogs.py:577
 msgid "Keyboard layout"
 msgstr "&कुञ्जीपाटीको रूपरेखा"
+
+#. Translators: The name of a braille table displayed in the
+#. braille settings dialog.
+#: braille.py:141
+msgid "Korean grade 1"
+msgstr "कोरियाली श्रेणी १"
 
 #: gui/settingsDialogs.py:148
 msgid "L&ogging level:"
@@ -1570,11 +1642,11 @@ msgstr "भाषामा गल्ती"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:140
+#: braille.py:144
 msgid "Latvian grade 1"
 msgstr "लाट्भियालि श्रेणी १"
 
-#: gui/settingsDialogs.py:1364
+#: gui/settingsDialogs.py:1390
 msgid "Level"
 msgstr "तह"
 
@@ -1592,19 +1664,19 @@ msgstr "इजाजतको मन्जुरी"
 msgid "Lin&ks"
 msgstr "&लिङ्क"
 
-#: core.py:203
+#: core.py:159
 msgid "Loading NVDA. Please wait..."
 msgstr "नेत्रवाणी सक्रिय हुँदैछ, पर्खनु होस् ।"
 
-#: virtualBuffers/__init__.py:646
+#: virtualBuffers/__init__.py:648
 msgid "Loading document..."
-msgstr "कागजातहरू खोल्दै छु"
+msgstr "कागजातहरू पल्टाउँदै छु"
 
-#: globalCommands.py:105
+#: globalCommands.py:106
 msgid "Locks or unlocks the left mouse button"
 msgstr "सुलसुलेको देब्रे टाँकमा चाबी लाग्छ वा खोलिन्छ ।"
 
-#: globalCommands.py:116
+#: globalCommands.py:117
 msgid "Locks or unlocks the right mouse button"
 msgstr "सुलसुलेको दाहिने टाँकमा चाबी लाग्छ वा खोलिन्छ ।"
 
@@ -1616,7 +1688,7 @@ msgstr "पुस्तिका"
 msgid "Log level"
 msgstr "आरम्भ तह"
 
-#: globalCommands.py:792
+#: globalCommands.py:793
 msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
@@ -1634,37 +1706,47 @@ msgstr "MDV Lilli"
 msgid "Manage &add-ons"
 msgstr "&थप-साधनहरूको व्यवस्थापन "
 
-#: globalCommands.py:964
+#: globalCommands.py:965
 msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
 msgstr ""
 "नक्कल उतारिने लागिएको पाठको सुरुको स्थानमा रहेको चालू समीक्षा कर्सरको स्थिति जनाउँछ "
 
-#: gui/settingsDialogs.py:1261
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:176
+msgid "Master Thumbnails"
+msgstr "मूल अँगुठाछाप "
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:113
+msgid "Media Clip placeholder"
+msgstr "श्रव्यदृश्य टुक्रा खोपी"
+
+#: gui/settingsDialogs.py:1286
 msgid "Message timeout (sec)"
 msgstr "सन्देश समाप्ति समय ( सेकेन्डमा)"
 
 #. Translators: This is the label for the mouse settings dialog.
-#: gui/settingsDialogs.py:638
+#: gui/settingsDialogs.py:650
 msgid "Mouse Settings"
 msgstr "सुलसुलेको अनुकूलता"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:751
+#: globalCommands.py:752
 msgid "Mouse tracking off"
 msgstr "सुलसुलेको दौडाहा रोकियो ।"
 
 #. Translators: presented when the mouse tracking is toggled.
-#: globalCommands.py:755
+#: globalCommands.py:756
 msgid "Mouse tracking on"
 msgstr "सुलसुलेको दौडाहा खुल्यो ।"
 
-#: globalCommands.py:250
+#: globalCommands.py:251
 msgid "Move navigator object to mouse"
 msgstr "विचरण वस्तु सुलसुले समक्ष जाने छ ।"
 
-#: globalCommands.py:281
+#: globalCommands.py:282
 msgid ""
 "Moves navigator object to the object represented by the text at the position "
 "of the review cursor within flat review"
@@ -1672,23 +1754,23 @@ msgstr ""
 "सालाखाला समीक्षा भित्रैको समीक्षा कर्सर बसेको पाठले प्रतिनिधित्व गरेको वस्तुमा सर्छ ।"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: virtualBuffers/__init__.py:1467
+#: virtualBuffers/__init__.py:1469
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Moves past the end  of the container element, such as a list or table"
+msgstr "विगतको एकाई  जस्तै सुचि अथवा तालिका को अन्तमा जान्छ ।, "
 
-#: globalCommands.py:1006
+#: globalCommands.py:1007
 msgid "Moves the braille display to the next line"
 msgstr "ब्रेल दृश्यक अगाडिको लाइनमा सर्छ"
 
-#: globalCommands.py:1001
+#: globalCommands.py:1002
 msgid "Moves the braille display to the previous line"
 msgstr "ब्रेल दृश्यकलाई अघिल्लो लाइनमा सार्छ ।"
 
-#: globalCommands.py:646
+#: globalCommands.py:647
 msgid "Moves the focus to the next closest document that contains the focus"
 msgstr "केन्द्रीयता लाइ नजिकको यही केन्द्रीयता भएको कागजातमा सार्छ ।"
 
-#: globalCommands.py:247
+#: globalCommands.py:248
 msgid "Moves the mouse pointer to the current navigator object"
 msgstr "सुलसुलेको चुच्चो चालू विचरण वस्तुमा सर्ने छ ।"
 
@@ -1702,7 +1784,7 @@ msgstr "विचरण वस्तु तल्लो हरफमा सर�
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "विचरण वस्तु माथिल्लो हरफमा सर्छ र केन्द्रित हुन्छ ।"
 
-#: globalCommands.py:422
+#: globalCommands.py:423
 msgid "Moves the navigator object to the first object inside it"
 msgstr "विचरण वस्तु प्रथम वस्तु भित्र सर्ने छ ।"
 
@@ -1711,11 +1793,11 @@ msgstr "विचरण वस्तु प्रथम वस्तु भि�
 msgid "Moves the navigator object to the next column"
 msgstr "विचरण वस्तु दाहिने महलमा सर्छ ।"
 
-#: globalCommands.py:394
+#: globalCommands.py:395
 msgid "Moves the navigator object to the next object"
 msgstr "विचरण वस्तु अगाडिको वस्तुमा सर्ने छ ।"
 
-#: globalCommands.py:380
+#: globalCommands.py:381
 msgid "Moves the navigator object to the object containing it"
 msgstr "विचरण वस्तुलाई त्यो वस्तु भएको स्थानमा सार्छ"
 
@@ -1724,71 +1806,71 @@ msgstr "विचरण वस्तुलाई त्यो वस्तु �
 msgid "Moves the navigator object to the previous column"
 msgstr "विचरण वस्तु दाहिने महलमा सर्छ ।"
 
-#: globalCommands.py:408
+#: globalCommands.py:409
 msgid "Moves the navigator object to the previous object"
 msgstr "विचरण वस्तुलाई अघिल्लो वस्तुमा सार्छ"
 
-#: globalCommands.py:503
+#: globalCommands.py:504
 msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
 msgstr "समीक्षा कर्सरलाई चालू विचरण वस्तुको पुछारको लाइनमा सार्छ र यसलाई बताई दिन्छ"
 
-#: globalCommands.py:547
+#: globalCommands.py:548
 msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr "चालू विचरण वस्तु भित्र रहेको समीक्षा कर्सर प्रथम वर्णमा सर्छ र बोल्छ"
 
-#: globalCommands.py:611
+#: globalCommands.py:612
 msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr "चालू विचरण वस्तु भित्र रहेको समीक्षा कर्सर अन्तिम वर्णमा सर्छ र बोल्छ"
 
-#: globalCommands.py:600
+#: globalCommands.py:601
 msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr "समीक्षा कर्सर चालू विचरण वस्तुको अगिल्लो वर्णमा सर्छ र बोल्छ ।"
 
-#: globalCommands.py:495
+#: globalCommands.py:496
 msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr "समीक्षा कर्सरलाई चालू विचरण वस्तुको पछिल्लो लाइनमा सार्छ र यसलाई बताई दिन्छ"
 
-#: globalCommands.py:537
+#: globalCommands.py:538
 msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
 msgstr "चालू विचरण वस्तु भित्र रहेको समीक्षा कर्सर अगिल्लो शब्दमा सर्छ र बोल्छ"
 
-#: globalCommands.py:565
+#: globalCommands.py:566
 msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
 msgstr "समीक्षा कर्सर चालू विचरण वस्तुको पछिल्लो वर्णमा सर्छ र बोल्छ ।"
 
-#: globalCommands.py:473
+#: globalCommands.py:474
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr "समीक्षा कर्सरलाई चालू विचरण वस्तुको अघिल्लो लाइनमा सार्छ र यसलाई बताई दिन्छ"
 
-#: globalCommands.py:515
+#: globalCommands.py:516
 msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
 msgstr "चालू विचरण वस्तु भित्र रहेको समीक्षा कर्सर पछिल्लो शब्दमा सर्छ र बोल्छ"
 
-#: globalCommands.py:461
+#: globalCommands.py:462
 msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr "समीक्षा कर्सरलाई चालू विचरण वस्तुको सिरानको लाइनमा सार्छ र यसलाई बताई दिन्छ"
 
-#: globalCommands.py:268
+#: globalCommands.py:269
 msgid ""
 "Moves to flat review for the screen (or document if currently inside one) "
 "and positions the review cursor at the location of the current object"
@@ -1796,16 +1878,16 @@ msgstr ""
 "मोटामोटी समीक्षा पर्दामा ( कागजातमा भए सो मा नै) सर्ने छ र समीक्षा कर्सर चालू वस्तुको "
 "स्थानमा आउने छ ।"
 
-#: globalCommands.py:166
+#: globalCommands.py:167
 msgid "Moves to the next available setting in the synth settings ring"
 msgstr "संश्लेषको घण्टी अनुकूलता उपलब्ध अगाडिको अनुकूलतामा जाने छ "
 
-#: globalCommands.py:175
+#: globalCommands.py:176
 msgid "Moves to the previous available setting in the synth settings ring"
 msgstr "संश्लेषको घण्टी अनुकूलता उपलब्ध पछाडिको अनुकूलतामा जाने छ "
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: virtualBuffers/__init__.py:1449
+#: virtualBuffers/__init__.py:1451
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "तालिका वा सूचि जस्ता तत्व हुने भाँडोको सुरुमा सर्छ, "
 
@@ -1840,7 +1922,7 @@ msgstr "नेत्र वाणीको थप-साधन पोको"
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "नेत्र वाणीले फाइल मेटाउन अथवा हटाउन सकेन ।"
 
-#: core.py:300
+#: core.py:259
 msgid "NVDA started"
 msgstr "नेत्रवाणी सक्रिय भयो"
 
@@ -1865,13 +1947,18 @@ msgctxt "languageName"
 msgid "Nepali"
 msgstr "नेपाली"
 
+#. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
+#: gui/upgradeAlerts.py:24
+msgid "New Laptop Keyboard layout"
+msgstr "ल्यापटपको नयाँ कुञ्जीपाटी रूपरेखा"
+
 #. Translators: This is presented in outlook or live mail when sending an email to a newsgroup
 #: appModules/msimn.py:25
 msgid "Newsgroup:"
 msgstr "समाचार समूहः"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
-#: globalCommands.py:452
+#: globalCommands.py:453
 msgid "No action"
 msgstr "कुनै क्रिया छैन ।"
 
@@ -1894,28 +1981,28 @@ msgstr "ब्रेल छैन"
 msgid "No comment."
 msgstr "प्रतिक्रिया छ"
 
-#: globalCommands.py:379
+#: globalCommands.py:380
 msgid "No containing object"
 msgstr "कुनै वस्तु समावेश छैन"
 
-#: globalCommands.py:267
+#: globalCommands.py:268
 msgid "No flat review for this object"
 msgstr "यो वस्तुको सालाखाला समीक्षा छैन"
 
-#: globalCommands.py:705
+#: globalCommands.py:706
 msgid "No formatting information"
-msgstr "स्वरूपको जानकारी छैन ।"
+msgstr "ढाँचाको जानकारी छैन ।"
 
-#: globalCommands.py:325
+#: globalCommands.py:326
 msgid "No location information for navigator object"
 msgstr "विचरण वस्तु कहाँ छ पत्तो भएन ।"
 
-#: globalCommands.py:329
+#: globalCommands.py:330
 msgid "No location information for screen"
 msgstr "पर्दामा कहाँ निर भनेर पत्तो भएन ।"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-#: virtualBuffers/__init__.py:839
+#: virtualBuffers/__init__.py:841
 msgid "No long description"
 msgstr "विवरण लामो छैन ।"
 
@@ -1924,24 +2011,29 @@ msgstr "विवरण लामो छैन ।"
 msgid "No message yet"
 msgstr "हालसम्म कुनै सन्देश छैन"
 
-#: globalCommands.py:393
+#: globalCommands.py:394
 msgid "No next"
 msgstr "अगाडि छैन ।"
 
-#: globalCommands.py:280
+#. Translators: The message for no notes  for a slide in a slide show
+#: appModules/powerpnt.py:806
+msgid "No notes"
+msgstr "टिप्पणी छैन ।"
+
+#: globalCommands.py:281
 msgid "No object at flat review position"
 msgstr "सालाखाला समीक्षा अवस्थामा कुनै वस्तु छैन"
 
-#: globalCommands.py:421
+#: globalCommands.py:422
 msgid "No objects inside"
 msgstr "भित्र कुनै वस्तु छैन ।"
 
-#: globalCommands.py:407
+#: globalCommands.py:408
 msgid "No previous"
 msgstr "पछाडि छैन ।"
 
-#: globalCommands.py:144 globalCommands.py:153 globalCommands.py:162
-#: globalCommands.py:171
+#: globalCommands.py:145 globalCommands.py:154 globalCommands.py:163
+#: globalCommands.py:172
 msgid "No settings"
 msgstr "अनुकूलता छैन"
 
@@ -1949,15 +2041,15 @@ msgstr "अनुकूलता छैन"
 msgid "No speech"
 msgstr "मौनता"
 
-#: globalCommands.py:968
+#: globalCommands.py:969
 msgid "No start marker set"
 msgstr "सुरुवात अङ्कित गरिएको छैन"
 
-#: globalCommands.py:740
+#: globalCommands.py:741
 msgid "No status line found"
 msgstr "स्थिति लेखन भेटिएन"
 
-#: globalCommands.py:979
+#: globalCommands.py:980
 msgid "No text to copy"
 msgstr "प्रतिलिपि उतारिने पाठ छैन "
 
@@ -1974,45 +2066,50 @@ msgstr "अद्यावधिक अनुपलब्ध,"
 msgid "NonVisual Desktop Access"
 msgstr "नदेख्नेहरूको डेस्कटपमा पहुँच"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:170
+msgid "Normal view"
+msgstr "सामान्य रुप"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:149
+#: braille.py:153
 msgid "Norwegian 8 dot computer braille"
 msgstr "नर्बेजीयाली ८ थोप्लो कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:152
+#: braille.py:156
 msgid "Norwegian grade 0"
 msgstr "नर्वेजियाली श्रेणी ०"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:155
+#: braille.py:159
 msgid "Norwegian grade 1"
 msgstr "नर्वेजियाली श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:158
+#: braille.py:162
 msgid "Norwegian grade 2"
 msgstr "नर्वेजियाली श्रेणी २"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:161
+#: braille.py:165
 msgid "Norwegian grade 3"
 msgstr "नर्वेजियाली श्रेणी ३"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers/__init__.py:1442 virtualBuffers/__init__.py:1456
+#: virtualBuffers/__init__.py:1444 virtualBuffers/__init__.py:1458
 msgid "Not in a container"
 msgstr "भाँडामा छैन"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: virtualBuffers/__init__.py:1317
+#: virtualBuffers/__init__.py:1319
 msgid "Not in a table cell"
 msgstr "तालिकाको कोठामा छैन ।"
 
@@ -2022,12 +2119,22 @@ msgstr "तालिकाको कोठामा छैन ।"
 msgid "Not in table"
 msgstr "तालिकामा छैन"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:162
+msgid "Notes Master view"
+msgstr "टिप्पणी मूल रुप"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:158
+msgid "Notes page"
+msgstr "टिप्पणी पृष्ठ"
+
 #. Translators: This is the label for the object presentation dialog.
-#: gui/settingsDialogs.py:776
+#: gui/settingsDialogs.py:788
 msgid "Object Presentation"
 msgstr "बस्तु प्रस्तुतीकरण"
 
-#: globalCommands.py:335
+#: globalCommands.py:336
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
@@ -2037,14 +2144,29 @@ msgstr ""
 "स्क्रिनको {top:.1f} प्रतिशत, चौडाइ स्क्रिनको {width:.1f} प्रतिशत र उचाइ स्क्रिनको "
 "{height:.1f} प्रतिशत ।"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:107
+msgid "Object placeholder"
+msgstr "वस्तु खोपी"
+
 #: gui/__init__.py:475
 msgid "Options"
 msgstr "विकल्प"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:115
+msgid "Org Chart placeholder"
+msgstr "Org चित्र खोपी"
 
 #. Translators: This is presented in outlook or live mail
 #: appModules/msimn.py:39
 msgid "Organisation:"
 msgstr "संस्थाः"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:164
+msgid "Outline view"
+msgstr "बाह्यरेखा रुप"
 
 #. Translators: This is the label for the select output
 #. device combo in the synthesizer dialog. Examples of
@@ -2052,7 +2174,7 @@ msgstr "संस्थाः"
 #. headphones, etc.
 #: gui/settingsDialogs.py:289
 msgid "Output &device:"
-msgstr "प्रतिफल &साधन:"
+msgstr "ध्वनी प्रतिफल &उपकरण:"
 
 #: gui/addonGui.py:32
 msgid "Package"
@@ -2062,20 +2184,29 @@ msgstr "पोको"
 msgid "Papenmeier BRAILLEX newer models"
 msgstr "Papenmeier BRAILLEX नयाँ नमुनाहरू"
 
-#: globalCommands.py:870
+#. Translators: Names of braille displays.
+#: brailleDisplayDrivers/papenmeier_serial.py:61
+msgid "Papenmeier BRAILLEX older models"
+msgstr "Papenmeier ब्रेल पुरानो मोडेल"
+
+#: globalCommands.py:871
 msgid "Pass next key through"
 msgstr "अर्को कुञ्जीमा हस्तान्तरित"
 
-#: gui/settingsDialogs.py:1121
+#: gui/settingsDialogs.py:1133
 msgid "Pattern"
 msgstr "ढर्रा"
 
-#: globalCommands.py:453
+#: globalCommands.py:454
 msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
-msgstr ""
-"चालू विचरण वस्तुमा  निर्धारित कार्य गरि दिन्छ (जस्तै: टाँक रहे छ भने यसलाई दबाउँछ)."
+msgstr "चालू विचरण वस्तुमा निर्धारित कार्य गरि दिन्छ (जस्तै: टाँक रहे छ भने यसलाई दबाउँछ)."
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:129
+msgid "Picture placeholder"
+msgstr "तश्वीर खोपी"
 
 #. Translators: This is the name of a button in sound recorder.
 #: appModules/sndrec32.py:16
@@ -2101,7 +2232,7 @@ msgstr "भित्रया इएको प्रति सुरु गर�
 #. in the Create Portable NVDA dialog.
 #: gui/installerGui.py:190
 msgid "Please specify a directory in which to create the portable copy."
-msgstr "घुमन्ते प्रति सिर्जना गर्ने घर्रा बताइ दिनु होस् । "
+msgstr "फिरन्ते प्रति सिर्जना गर्ने घर्रा बताइ दिनु होस् । "
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 #: gui/__init__.py:664
@@ -2116,7 +2247,7 @@ msgstr "पर्खनु होस् है, नेत्रवाणी भ�
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 #: gui/installerGui.py:214
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "पर्खनु होस् है, घुमन्ते प्रति बनाउँदै छु ।"
+msgstr "पर्खनु होस् है, फिरन्ते प्रति बनाउँदै छु ।"
 
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 #: gui/settingsDialogs.py:200
@@ -2133,13 +2264,13 @@ msgstr "पर्खनु होस् है, थप-साधनहरू भ
 msgid "Please wait while your previous installation of NVDA is being updated."
 msgstr "पर्खनु होस् है, तपाइको पुरानो नेत्रवाणी नयाँ बनाइँदै च ।"
 
-#: globalCommands.py:1013
+#: globalCommands.py:1018
 msgid "Plugins reloaded"
 msgstr "जडान फेरी गरियो"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:164
+#: braille.py:168
 msgid "Polish grade 1"
 msgstr "पोल्यान्डेली श्रेणी १"
 
@@ -2147,31 +2278,31 @@ msgstr "पोल्यान्डेली श्रेणी १"
 #. in the Create Portable NVDA dialog.
 #: gui/installerGui.py:150
 msgid "Portable &directory:"
-msgstr "घुमन्ते &घर्रा"
+msgstr "फिरन्ते &घर्रा"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:167
+#: braille.py:171
 msgid "Portuguese 8 dot computer braille"
 msgstr "पुर्तगाली ८ थोप्लो कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:170
+#: braille.py:174
 msgid "Portuguese grade 1"
 msgstr "पुर्तगाली श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:173
+#: braille.py:177
 msgid "Portuguese grade 2"
 msgstr "पुर्तगाली श्रेणी १"
 
-#: virtualBuffers/__init__.py:944
+#: virtualBuffers/__init__.py:946
 msgid "Presents a list of links, headings or landmarks"
 msgstr "लिङ्क, शीर्षक र कित्ताको सूची देखाउने छ ।"
 
-#: globalCommands.py:366
+#: globalCommands.py:367
 msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
@@ -2179,7 +2310,7 @@ msgstr ""
 "एक पटक थिच्दा कुञ्जीपाटीको केन्द्रीयता विचरण वस्तुमा र , दुई पटक थिच्दा प्रणाली caret "
 "लाइ समीक्षा कर्सरको स्थानमा स्थापित गर्छ ।"
 
-#: globalCommands.py:925
+#: globalCommands.py:926
 msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
@@ -2211,15 +2342,20 @@ msgstr "प्राथमिक पाद टिपोट"
 msgid "Primary header"
 msgstr "प्राथमिक सिर टिपोट"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:172
+msgid "Print Preview"
+msgstr "छपाइ चेहरा"
+
 #. Translators: This is the label for a combobox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:830
+#: gui/settingsDialogs.py:842
 msgid "Progress &bar output:"
 msgstr "प्रगति &पट्टी नतिजा"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:835
+#: gui/settingsDialogs.py:847
 msgid "Progress bar output"
 msgstr "प्रगति पट्टी नतिजा "
 
@@ -2233,7 +2369,7 @@ msgstr "चिन्ह/सङ्केत &तह:"
 msgid "Python console"
 msgstr "पाइथन कन्सोल"
 
-#: globalCommands.py:662
+#: globalCommands.py:663
 msgid "Quits NVDA!"
 msgstr "नेत्रवाणी परित्याग गर्छ!"
 
@@ -2243,7 +2379,13 @@ msgstr "नेत्रवाणी परित्याग गर्छ!"
 msgid "Rate boos&t"
 msgstr "दर &वृद्धि"
 
-#: gui/settingsDialogs.py:1282
+#. Translators: The label of a button in the New Laptop Keyboard Layout dialog
+#. to open the What's New document.
+#: gui/upgradeAlerts.py:30
+msgid "Read What's New"
+msgstr "नयाँ कुरा पढ्नु होस् ।"
+
+#: gui/settingsDialogs.py:1307
 msgid "Read by &paragraph"
 msgstr " लगातार &अनुच्छेद पढ"
 
@@ -2257,19 +2399,19 @@ msgid "Refresh\tF5"
 msgstr "ताजकी य करण \tF5"
 
 #. If this buffer has already had focus once while loaded, this is a refresh.
-#: virtualBuffers/__init__.py:641
+#: virtualBuffers/__init__.py:643
 msgid "Refreshed"
 msgstr "ताजा भयो"
 
-#: virtualBuffers/__init__.py:854
+#: virtualBuffers/__init__.py:856
 msgid "Refreshes the document content"
 msgstr "कागजातका सामाग्रीहरू ताजा पार्छ"
 
-#: gui/settingsDialogs.py:1124
+#: gui/settingsDialogs.py:1136
 msgid "Regexp"
 msgstr "Regexp"
 
-#: gui/settingsDialogs.py:1095
+#: gui/settingsDialogs.py:1107
 msgid "Regular &expression"
 msgstr "नियमित &अभिव्यक्ति"
 
@@ -2277,7 +2419,7 @@ msgstr "नियमित &अभिव्यक्ति"
 msgid "Reload plugins"
 msgstr "फेरि लाइनसित जोडि देउ"
 
-#: globalCommands.py:1014
+#: globalCommands.py:1019
 msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
@@ -2294,194 +2436,194 @@ msgstr "मलाई पछि &सम्झाउ है!"
 msgid "Remove Add-on"
 msgstr "&थप-साधनलाई हटाउ"
 
-#: gui/settingsDialogs.py:1122 gui/settingsDialogs.py:1363
+#: gui/settingsDialogs.py:1134 gui/settingsDialogs.py:1389
 msgid "Replacement"
 msgstr "प्रतिस्थापन"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:971
+#: gui/settingsDialogs.py:983
 msgid "Report &alignment"
 msgstr "&पङ्‌क्तिबद्धता बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:976
+#: gui/settingsDialogs.py:988
 msgid "Report &colors"
 msgstr "&रङ्ग बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1027
+#: gui/settingsDialogs.py:1039
 msgid "Report &headings"
 msgstr "&शीर्षक बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:804
+#: gui/settingsDialogs.py:816
 msgid "Report &help balloons"
 msgstr "&औजार चिनारी बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:996
+#: gui/settingsDialogs.py:1008
 msgid "Report &line numbers"
 msgstr "&लाइन सङ्ख्या बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1022
+#: gui/settingsDialogs.py:1034
 msgid "Report &links"
 msgstr "&लिङ्क बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:991
+#: gui/settingsDialogs.py:1003
 msgid "Report &pages"
 msgstr "&पृष्ट सङ्ख्या बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:669
+#: gui/settingsDialogs.py:681
 msgid "Report &role when mouse enters object"
 msgstr "&सुलसुले वस्तुमा प्रेस गर्दाको भूमिका बताउने छ ।"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1007
+#: gui/settingsDialogs.py:1019
 msgid "Report &tables"
 msgstr "&तालिका बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:799
+#: gui/settingsDialogs.py:811
 msgid "Report &tooltips"
 msgstr "&औजार टिप्पणी बताउ ।"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:846
+#: gui/settingsDialogs.py:858
 msgid "Report background progress bars"
 msgstr "प्रगति पट्टीको पृष्ठभूमि बताऊ ।"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1037
+#: gui/settingsDialogs.py:1049
 msgid "Report block &quotes"
 msgstr "&उद्धृत हिस्सा बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
-#: gui/settingsDialogs.py:759
+#: gui/settingsDialogs.py:771
 msgid "Report changes to the &composition string"
 msgstr "&बनावट पदावलीको परिवर्तन बताउने छ ।"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
-#: gui/settingsDialogs.py:754
+#: gui/settingsDialogs.py:766
 msgid "Report changes to the &reading string"
 msgstr "&पढिरहेको पदावलीमा आएको परिवर्तन बताउने छ ।"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:851
+#: gui/settingsDialogs.py:863
 msgid "Report dynamic &content changes"
 msgstr "गतिशील &सामाग्री हेरफेर बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:956
+#: gui/settingsDialogs.py:968
 msgid "Report font &name"
 msgstr "वर्णाकृतिको &नाम बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:961
+#: gui/settingsDialogs.py:973
 msgid "Report font &size"
 msgstr "वर्णाकृतिको &आकार बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:966
+#: gui/settingsDialogs.py:978
 msgid "Report font attri&butes"
 msgstr "वर्णाकृतिको &सिरीखुरी बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1047
+#: gui/settingsDialogs.py:1059
 msgid "Report fra&mes"
 msgstr "&पृष्ट सङ्ख्या बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:901
+#: gui/settingsDialogs.py:913
 msgid "Report l&ayout tables"
 msgstr "तालिका &रेखाङ्कन बताउ"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
 #.
-#: gui/settingsDialogs.py:1002
+#: gui/settingsDialogs.py:1014
 msgid "Report l&ine indentation"
 msgstr "लाइन &indentation बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1032
+#: gui/settingsDialogs.py:1044
 msgid "Report l&ists"
 msgstr "&सुची बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1042
+#: gui/settingsDialogs.py:1054
 msgid "Report lan&dmarks"
 msgstr "&कित्ता बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:643
+#: gui/settingsDialogs.py:655
 msgid "Report mouse &shape changes"
 msgstr "सुलसुलेको बदलिएको &आकृति बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:824
+#: gui/settingsDialogs.py:836
 msgid "Report object &descriptions"
 msgstr "वस्तुको &विवरण बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:814
+#: gui/settingsDialogs.py:826
 msgid "Report object &position information"
 msgstr "बस्तुको &अवस्थाको जानकारी देउ"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
-#: gui/settingsDialogs.py:809
+#: gui/settingsDialogs.py:821
 msgid "Report object shortcut &keys"
 msgstr "वस्तुको द्रुतमार्ग &कुञ्जी बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:986
+#: gui/settingsDialogs.py:998
 msgid "Report spelling errors"
 msgstr "गल्ती हिज्जे बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:981
+#: gui/settingsDialogs.py:993
 msgid "Report st&yle"
 msgstr "&शैली बताउ"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1017
+#: gui/settingsDialogs.py:1029
 msgid "Report table cell c&oordinates"
 msgstr "तालिका कोठाको स्थान बताउ "
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
-#: gui/settingsDialogs.py:1012
+#: gui/settingsDialogs.py:1024
 msgid "Report table row/column h&eaders"
 msgstr "तालिका हरफ/महल को &शीर्षक बताउ"
 
@@ -2495,13 +2637,13 @@ msgstr "स्वतः प्रतिक्रिया लेख्ने ब
 msgid "Reports any comments in the comments window"
 msgstr "प्रतिक्रिया लेख्ने बाकसमा प्रतिक्रिया जनाउने छ ।"
 
-#: globalCommands.py:709
+#: globalCommands.py:710
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document"
 msgstr "चालू समीक्षा कर्सर रहेको स्थानको कागजातको स्वरूप जनाउने छ । "
 
-#: globalCommands.py:582
+#: globalCommands.py:583
 msgid ""
 "Reports the character of the current navigator object where the review "
 "cursor is situated. Pressing twice reports a description or example of that "
@@ -2511,7 +2653,7 @@ msgstr ""
 "समीक्षा कर्सर रहेको स्थानको विचरण वस्तु को वर्ण बारेमा जानकारी दिन्छ । दुई पटक दबाउँदा "
 "त्यो वर्णको विवरण बताउँछ ।"
 
-#: globalCommands.py:82
+#: globalCommands.py:83
 msgid ""
 "Reports the current line under the application cursor. Pressing this key "
 "twice will spell the current line"
@@ -2519,7 +2661,7 @@ msgstr ""
 "अनुप्रयोग कर्सर रहेको सक्रिय हरफ पढ्ने छ । लगातार यो कुञ्जी २ पटक थिचेमा सक्रिय हरफको "
 "हिज्जे भन्ने छ ।"
 
-#: globalCommands.py:317
+#: globalCommands.py:318
 msgid ""
 "Reports the current navigator object. Pressing twice spells this information,"
 "and pressing three times Copies name and value of this  object to the "
@@ -2528,11 +2670,11 @@ msgstr ""
 "चालू विचरण वस्तु बताउने छ । दुई पटक थिच्दा हिज्जेको जानकारी र तीन पटक थिच्दा यसको नाम "
 "तथा मान क्लिप पाटीमा उतार्ने छ ।"
 
-#: globalCommands.py:336
+#: globalCommands.py:337
 msgid "Reports the hight, width and position of the current navigator object"
 msgstr "चालू विचरण वस्तुको लम्बाइ, चौडाइ र स्थान बताउने छ ।"
 
-#: globalCommands.py:483
+#: globalCommands.py:484
 msgid ""
 "Reports the line of the current navigator object where the review cursor is "
 "situated. If this key is pressed twice, the current line will be spelled. "
@@ -2542,7 +2684,7 @@ msgstr ""
 "कुञ्जी दुई पटक दबाएमा चालू लाइनको हिज्जे र तिन पटक दबाएमा वर्णको विवरण सहित चालू "
 "लाइनको हिज्जे बताउँछ ।"
 
-#: globalCommands.py:1031
+#: globalCommands.py:1036
 msgid ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
@@ -2550,7 +2692,7 @@ msgstr ""
 "यस अघि भन्दा हाल औँला रहेको स्थानको तल नया वस्तु अथवा सामाग्री पाएमा यसलाई बताइ "
 "दिनेछ ।"
 
-#: globalCommands.py:1027
+#: globalCommands.py:1032
 msgid "Reports the object and content directly under your finger"
 msgstr "तपाइको औँलाको तल रहेको वस्तु र सामाग्रीलाई बताइ दिनेछ ।"
 
@@ -2558,11 +2700,11 @@ msgstr "तपाइको औँलाको तल रहेको वस्�
 msgid "Reports the remaining time of the currently playing track, if any"
 msgstr "कुनै ट्याक बज्दै छ भने बज्न लाग्ने बाकी समय जनाउने छ"
 
-#: globalCommands.py:959
+#: globalCommands.py:960
 msgid "Reports the text on the Windows clipboard"
 msgstr "क्लिप पाटीमा भएका पाठहरू बताउने छ ।"
 
-#: globalCommands.py:775
+#: globalCommands.py:776
 msgid ""
 "Reports the title of the current application or foreground window. If "
 "pressed twice, spells the title. If pressed three times, copies the title to "
@@ -2584,12 +2726,12 @@ msgstr "सबै अनुकूलताहरू पुरानै अवस
 msgid "Restart NVDA"
 msgstr "नेत्रवाणीलाइ फेरी चालू गर ।"
 
-#: globalCommands.py:982
+#: globalCommands.py:983
 msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
 msgstr ""
-"पहिले नै तय गरेको सुरुवात अङ्कित वा समीक्षा कर्सरको हालको स्थानको पाठ  लिन्छ र "
+"पहिले नै तय गरेको सुरुवात अङ्कित वा समीक्षा कर्सरको हालको स्थानको पाठ लिन्छ र "
 "क्पिपपाटीमा उतार्छ ।"
 
 #: gui/__init__.py:295
@@ -2597,11 +2739,11 @@ msgid "Review &cursor..."
 msgstr "समीक्षा &कर्सर"
 
 #. Translators: This is the label for the review cursor settings dialog.
-#: gui/settingsDialogs.py:698
+#: gui/settingsDialogs.py:710
 msgid "Review Cursor Settings"
 msgstr "समीक्षा कर्सर अनुकूलता"
 
-#: globalCommands.py:977
+#: globalCommands.py:978
 msgid "Review selection copied to clipboard"
 msgstr "समीक्षा चयन क्लिप पाटीमा उतारियो"
 
@@ -2611,16 +2753,17 @@ msgid "Rewind"
 msgstr "प्रतिगमन"
 
 #: brailleDisplayDrivers/papenmeier.py:457
+#: brailleDisplayDrivers/papenmeier_serial.py:157
 msgid "Route to and report formatting"
 msgstr "बाटो समाउ र स्वरूप बताउ"
 
-#: globalCommands.py:996
+#: globalCommands.py:997
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr "यो ब्रेल कोठा को तलको वस्तुलाई सक्रिय कर्सर भएतिर लैजान्छ ।"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:176
+#: braille.py:180
 msgid "Russian grade 1"
 msgstr "रूसी श्रेणी १"
 
@@ -2628,7 +2771,7 @@ msgstr "रूसी श्रेणी १"
 msgid "Save As"
 msgstr "यसरी बचत गर"
 
-#: globalCommands.py:917
+#: globalCommands.py:918
 msgid "Saves the current NVDA configuration"
 msgstr "चालू नेत्र वाणीको अभियोजन बचत गर्छ"
 
@@ -2638,13 +2781,13 @@ msgstr "चालू नेत्र वाणीको अभियोजन �
 msgid "Say &cap before capitals"
 msgstr "capitals अगाडी cap &भन"
 
-#: globalCommands.py:986
+#: globalCommands.py:987
 msgid "Scrolls the braille display back"
-msgstr "ब्रेल दृश्यलाई पछाडी पल्टाउ छ"
+msgstr "ब्रेल पटललाई पछाडी पल्टाउ छ"
 
-#: globalCommands.py:991
+#: globalCommands.py:992
 msgid "Scrolls the braille display forward"
-msgstr "ब्रेल दृश्यलाई अगाडी पल्टाउ छ"
+msgstr "ब्रेल पटललाई अगाडी पल्टाउ छ"
 
 #: IAccessibleHandler.py:672
 msgid "Secure Desktop"
@@ -2652,13 +2795,13 @@ msgstr "सुरक्षित डेस्कटप"
 
 #: brailleDisplayDrivers/seika.py:30
 msgid "Seika braille displays"
-msgstr "Seika ब्रेल दृश्यक"
+msgstr "Seika ब्रेल पटल"
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
 #: gui/installerGui.py:182
 msgid "Select portable  directory"
-msgstr "घुमन्ते घर्राको चयन गर्नु होस् । "
+msgstr "फिरन्ते घर्राको चयन गर्नु होस् । "
 
 #. Translators: The name of a language supported by NVDA.
 #: languageHandler.py:63
@@ -2668,12 +2811,13 @@ msgstr "सर्बेयाली (Latin)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:188
+#: braille.py:192
 msgid "Serbian grade 1"
 msgstr "सर्भियाली श्रेणी १"
 
 #. Translators: Name of a serial communications port
-#: brailleDisplayDrivers/brailleNote.py:126
+#: brailleDisplayDrivers/brailleNote.py:136
+#: brailleDisplayDrivers/papenmeier_serial.py:73
 msgid "Serial: {portName}"
 msgstr "क्रमसङ्ख्या: {portName}"
 
@@ -2687,7 +2831,7 @@ msgstr "महल शीर्षकको हरफ बनाउ"
 msgid "Set row header column"
 msgstr "हरफ शीर्षकको महल बनाउ"
 
-#: globalCommands.py:347
+#: globalCommands.py:348
 msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
@@ -2695,7 +2839,7 @@ msgstr ""
 "विचरण वस्तुलाई चालू केन्द्रीयता बनाउ छ र समीक्षा कर्सर सम्भव भएमा caret भएको स्थान "
 "भित्रै राख्छ ।"
 
-#: globalCommands.py:254
+#: globalCommands.py:255
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
@@ -2709,104 +2853,144 @@ msgstr "Handy Tech driver को अभियोजन देखाउ "
 msgid "Show this dialog when NVDA starts"
 msgstr "नेत्रवाणी सुरु हुँदा यो पातो देखाउ"
 
-#: globalCommands.py:909
+#: globalCommands.py:910
 msgid "Shows the NVDA browse mode settings dialog"
 msgstr "नेत्रवाणी खोतल्ने मुद्राको अनुकूलताको पातो देखाउने छ ।"
 
-#: globalCommands.py:913
+#: globalCommands.py:914
 msgid "Shows the NVDA document formatting settings dialog"
 msgstr "नेत्रवाणी कागजात स्वरूप अनुकूलताको पातो देखाउने छ ।"
 
-#: globalCommands.py:885
+#: globalCommands.py:886
 msgid "Shows the NVDA general settings dialog"
 msgstr "नेत्र वाणीको सामान्य अनुकूलताको पातो देखाउने छ ।"
 
-#: globalCommands.py:897
+#: globalCommands.py:898
 msgid "Shows the NVDA keyboard settings dialog"
 msgstr "नेत्रवाणी कुञ्जीपाटी अनुकूलताको पातो देखाउने छ ।"
 
-#: globalCommands.py:666
+#: globalCommands.py:667
 msgid "Shows the NVDA menu"
 msgstr "नेत्रवाणीको मेनु देखाउ छ ।"
 
-#: globalCommands.py:901
+#: globalCommands.py:902
 msgid "Shows the NVDA mouse settings dialog"
 msgstr "नेत्रवाणी सुलसुलेको अनुकूलताको पातो देखाउने छ ।"
 
-#: globalCommands.py:905
+#: globalCommands.py:906
 msgid "Shows the NVDA object presentation settings dialog"
 msgstr "नेत्रवाणी वस्तुको प्रस्तुतीकरणको अनुकूलताको पातो देखाउने छ ।"
 
-#: globalCommands.py:889
+#: globalCommands.py:890
 msgid "Shows the NVDA synthesizer dialog"
 msgstr "नेत्रवाणी संश्लेषक अनुकूलताको पातो देखाउने छ ।"
 
-#: globalCommands.py:893
+#: globalCommands.py:894
 msgid "Shows the NVDA voice settings dialog"
 msgstr "नेत्रवाणी आवाजको अनुकूलताको पातो देखाउने छ ।"
 
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
-#: virtualBuffers/__init__.py:841
+#: virtualBuffers/__init__.py:843
 msgid "Shows the long description at this position if one is found."
 msgstr "यदि फेला पर्योr भने यो अवस्थामा लामो विवरण देखाउँछ ।"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
-#: gui/settingsDialogs.py:718
+#: gui/settingsDialogs.py:730
 msgid "Simple review mode"
-msgstr "साधारण समीक्षा पाटी"
+msgstr "साधारण समीक्षा मुद्रा"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
-#: globalCommands.py:58
+#: globalCommands.py:59
 msgid "Sleep mode off"
 msgstr "निद्रा मुद्रा भङ्ग"
 
 #. Translators: This is presented when sleep mode is activated, the focused application is self vocing, such as klango or openbook.
-#: globalCommands.py:64
+#: globalCommands.py:65
 msgid "Sleep mode on"
 msgstr "निद्रा मुद्रामा"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:156
+msgid "Slide Master view"
+msgstr "प्रस्तुतिपत्र मूल रुप"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:119
+msgid "Slide Number placeholder"
+msgstr "प्रस्तुतिपत्रको क्रम खोपी"
+
+#. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
+#: appModules/powerpnt.py:750
+msgid "Slide Show - complete"
+msgstr "प्रस्तुतिपत्र प्रदर्शन सकियो ।"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:166
+msgid "Slide Sorter view"
+msgstr "प्रस्तुतिपत्रहरुको  झ्यालरुप"
+
+#. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:747
+msgid "Slide show - {slideName}"
+msgstr "प्रस्तुतिपत्रको नाम"
+
+#. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+#: appModules/powerpnt.py:744
+msgid "Slide show notes - {slideName}"
+msgstr "प्रस्तुतिपत्र प्रदर्शनी टीप्पणी - {slideName}"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:154
+msgid "Slide view"
+msgstr "प्रस्तुतिपत्रको रुप"
+
+#. Translators: the label for a slide in Microsoft PowerPoint.
+#: appModules/powerpnt.py:482
+msgid "Slide {slideNumber}"
+msgstr "प्रस्तुतिपत्र {slideNumber}"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:182
+#: braille.py:186
 msgid "Slovak"
 msgstr "स्लोभाकी"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:185
+#: braille.py:189
 msgid "Slovene grade 1"
 msgstr "स्लोभाकि श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:83
+#: braille.py:84
 msgid "Spanish 8 dot computer braille"
 msgstr "फिनिस ८ .कल्पयन्त्र ब्रेल"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:86
+#: braille.py:87
 msgid "Spanish grade 1"
 msgstr "स्पेन सेली श्रेणी १"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by speaking.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui/settingsDialogs.py:785
+#: gui/settingsDialogs.py:797
 msgid "Speak"
 msgstr "बोल"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which reports progress bar updates by both speaking and beeping.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: gui/settingsDialogs.py:793
+#: gui/settingsDialogs.py:805
 msgid "Speak and beep"
 msgstr "टीँ गर्दै बोल "
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui/settingsDialogs.py:617
+#: gui/settingsDialogs.py:627
 msgid "Speak command &keys"
 msgstr "आदेश &कुञ्जी बताउ"
 
@@ -2822,13 +3006,13 @@ msgstr "टङ्कण गरेको &वर्ण बताउ"
 msgid "Speak typed &words"
 msgstr "टङ्कण गरेको &शब्द बताउ"
 
-#: globalCommands.py:881
+#: globalCommands.py:882
 msgid ""
 "Speaks the filename of the active application along with the name of the "
 "currently loaded appModule"
 msgstr "हाल वहन गरिएको appModule का साथै सक्रिय अनुप्रयोगको फाइलको नाम बताउ छ ।"
 
-#: globalCommands.py:525
+#: globalCommands.py:526
 msgid ""
 "Speaks the word of the current navigator object where the review cursor is "
 "situated. Pressing twice spells the word. Pressing three times spells the "
@@ -2841,6 +3025,18 @@ msgstr ""
 msgid "Speech &dictionaries"
 msgstr "वाचकीको &ढुकुटीहरू"
 
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:617
+msgid "Speech interrupt for Enter key"
+msgstr "Enter कुञ्जीका लागि वाचन अवरूद्ध भयो ।"
+
+#. Translators: This is the label for a checkbox in the
+#. keyboard settings dialog.
+#: gui/settingsDialogs.py:612
+msgid "Speech interrupt for typed characters"
+msgstr "टङ्कण गरिएको वर्णका लागि वाचन अवरुद्ध भयो ।"
+
 #: gui/__init__.py:323
 msgid "Speech viewer"
 msgstr "वाचकी दृश्यक"
@@ -2850,7 +3046,7 @@ msgstr "वाचकी दृश्यक"
 msgid "Start"
 msgstr "सुरुवात"
 
-#: globalCommands.py:963
+#: globalCommands.py:964
 msgid "Start marked"
 msgstr "सुरुवात अङ्कित"
 
@@ -2868,6 +3064,11 @@ msgstr "विश्राम"
 msgid "Subject:"
 msgstr "विषयः"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:101
+msgid "Subtitle placeholder"
+msgstr "उप शिर्षक खोपी"
+
 #. Translators: The title of a dialolg presented to indicate a successful operation.
 #: gui/installerGui.py:67 gui/installerGui.py:237 gui/settingsDialogs.py:225
 msgid "Success"
@@ -2882,7 +3083,7 @@ msgstr "नेत्रवाणी उपभोक्ता अनुकूल�
 #: gui/installerGui.py:236
 #, python-format
 msgid "Successfully created a portable copy of NVDA at %s"
-msgstr "नेत्र वाणीको घुमन्ते प्रति सफलता पूर्वक %s मा बनाएँ ।"
+msgstr "नेत्र वाणीको फिरन्ते प्रति सफलता पूर्वक %s मा बनाएँ ।"
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 #: gui/installerGui.py:60
@@ -2896,16 +3097,16 @@ msgstr "तपाइको नेत्रवानीलाई सफल ता
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:179
+#: braille.py:183
 msgid "Swedish grade 1"
 msgstr "स्वीडेने ली श्रेणी १"
 
-#: gui/settingsDialogs.py:1362
+#: gui/settingsDialogs.py:1388
 msgid "Symbol"
 msgstr "चिन्ह"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
-#: gui/settingsDialogs.py:1349
+#: gui/settingsDialogs.py:1375
 msgid "Symbol Pronunciation"
 msgstr "चिन्ह उच्चारण"
 
@@ -2918,13 +3119,18 @@ msgstr "संस्लेषक"
 msgid "Synthesizer Error"
 msgstr "संश्लेषकको गल्ती"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:117
+msgid "Table placeholder"
+msgstr "तालिका खोपी"
+
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:191
+#: braille.py:195
 msgid "Tamil grade 1"
-msgstr "अरबी श्रेणी १"
+msgstr "तामिल श्रेणी १"
 
-#: NVDAObjects/IAccessible/__init__.py:1621
+#: NVDAObjects/IAccessible/__init__.py:1634
 msgid "Taskbar"
 msgstr "कार्य पट्टी"
 
@@ -2934,7 +3140,7 @@ msgstr "अस्ताई ढुकुटी"
 
 #. Translators: This is the label for a combobox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:654
+#: gui/settingsDialogs.py:666
 msgid "Text &unit resolution:"
 msgstr "पाठ &एकाइ Resolution:"
 
@@ -2942,7 +3148,12 @@ msgstr "पाठ &एकाइ Resolution:"
 msgid "Text frame"
 msgstr "पाठ फ्रेम"
 
-#: globalCommands.py:958
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:97
+msgid "Text placeholder"
+msgstr "पाठ खोपी"
+
+#: globalCommands.py:959
 #, python-format
 msgid ""
 "The clipboard contains a large portion of text. It is %s characters long"
@@ -2956,8 +3167,8 @@ msgid ""
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
 "यो स्थापना पोको ले फाइल हटाउन अथवा मेटाएर फेरी लेख्न सकेन । अर्को फाईलवालाले नेत्र "
-"वाणीको अर्को प्रतिको उपयोग पो गरेको छ कि?  कृपया सबै नेत्रवाणी बन्द भए नभएको यकिन "
-"गरेर फेरी प्रयास गर्नु होस् ।"
+"वाणीको अर्को प्रतिको उपयोग पो गरेको छ कि? कृपया सबै नेत्रवाणी बन्द भए नभएको यकिन गरेर "
+"फेरी प्रयास गर्नु होस् ।"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui/installerGui.py:52
@@ -2974,7 +3185,7 @@ msgid ""
 "{path}"
 msgstr "नेत्रवाणी भित्रने बाटो बदलियो । अब यो {path} मा भित्रिने छ ।"
 
-#: globalCommands.py:871
+#: globalCommands.py:872
 msgid ""
 "The next key that is pressed will not be handled at all by NVDA, it will be "
 "passed directly through to Windows."
@@ -2982,11 +3193,11 @@ msgstr ""
 "यस पछि दबाइने कुञ्जी नेत्र वाणीले कुनै पनि हालतमा लिइने छैन । यो सोझै विन्डो तिर पठाइने छ "
 "।"
 
-#: globalCommands.py:972
+#: globalCommands.py:973
 msgid "The start marker must reside within the same object"
 msgstr "सुरुवात परिचायक उही वस्तु भित्रै रहनु पर्छ ।"
 
-#: globalCommands.py:953
+#: globalCommands.py:954
 msgid "There is no text on the clipboard"
 msgstr "क्लिप पाटीमा कुनै सामाग्री छैन ।"
 
@@ -2994,13 +3205,28 @@ msgstr "क्लिप पाटीमा कुनै सामाग्री
 msgid "This change requires administrator privileges."
 msgstr "यो बदलाव लागू हुन प्रशासकीय सुविधा चाहिन्छ"
 
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:174
+msgid "Thumbnails"
+msgstr "औला काँटी"
+
+#. Translators: a label for a particular view or pane in Microsoft PowerPoint
+#: appModules/powerpnt.py:168
+msgid "Title Master view"
+msgstr "शिर्षक मूल रुप"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:95
+msgid "Title placeholder"
+msgstr "शिर्षक खोपी"
+
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui/installerGui.py:145
 msgid ""
 "To create a portable copy of NVDA, please select the path and other options "
 "and then press Continue"
 msgstr ""
-"नेत्र वाणीको घुमन्ते प्रति बनाउन पहिले Path र अरू विकल्पको चयन गरी निरन्तरता टाँकलाई "
+"नेत्र वाणीको फिरन्ते प्रति बनाउन पहिले Path र अरू विकल्पको चयन गरी निरन्तरता टाँकलाई "
 "दबाउनु होला ।"
 
 #. Translators: An informational message in the Install NVDA dialog.
@@ -3015,15 +3241,15 @@ msgstr ""
 msgid "To:"
 msgstr "लाईः"
 
-#: globalCommands.py:945
+#: globalCommands.py:946
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr "ब्रेल को tethering केन्द्रीयता र समीक्षा स्थान सित साटासाट हुन्छ ।"
 
-#: globalCommands.py:65
+#: globalCommands.py:66
 msgid "Toggles  sleep mode on and off for  the active application."
 msgstr "सक्रिय अनुप्रयोग को निद्रा मुद्रा खुल्ने वा सुरु हुने क्रिया साटिन्छ ।"
 
-#: globalCommands.py:809
+#: globalCommands.py:810
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
@@ -3031,7 +3257,7 @@ msgstr ""
 "प्रगति पट्टीको अद्यावधिक स्थिति बताउँदा टीँ गर्ने, वाचन, टीँ गर्ने र वाचन र मौनताको "
 "अवस्था फेरिन्छ । "
 
-#: globalCommands.py:658
+#: globalCommands.py:659
 msgid ""
 "Toggles between browse mode and focus mode. When in focus mode, keys will "
 "pass straight through to the application, allowing you to interact directly "
@@ -3042,7 +3268,17 @@ msgstr ""
 "नियन्त्रकले हस्तक्षेप गरी कुञ्जी प्रेषित हुन्छ भने खोतल्ने मुद्रामा हुँदा, कागजातमा छरितो विचरण "
 "कुञ्जी जस्ता कुञ्जीले सोझै काम गरिन्छ । "
 
-#: globalCommands.py:629
+#. Translators: The description for a script
+#: appModules/powerpnt.py:829
+msgid ""
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
+msgstr ""
+"वाचकको टिप्पणी अथवा वास्तविक प्रस्तुतिपत्र सामाग्रीहरू  बिच साटोफेरो हुन्छ । यसले पर्दामा "
+"देखिएकोलाई केही गर्दैन तर उपभोक्तालाई नेत्रवाणीले जे पढेर सुनाउछ त्यसलाई भने परिवर्तन गर्छ ।"
+
+#: globalCommands.py:630
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
 "will not speak anything. If beeps then NVDA will simply beep each time it "
@@ -3052,23 +3288,23 @@ msgstr ""
 "नेत्रवाणी केही बोल्दैन, टीँ मुद्रामा हुँदा बोल्न सक्ने अवस्था आएमा टीँ गरि दिन्छ । बोल्ने "
 "मुद्रामा हुँदा नेत्रवाणी सामान्य रूपमा बोल्छ ।"
 
-#: virtualBuffers/__init__.py:860
+#: virtualBuffers/__init__.py:862
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
-msgstr "कागजातहरूका सामाग्री खोजेको बेला पर्दाको रूपरेखाको  संरक्षण उल्टाइ दिन्छ ।"
+msgstr "कागजातहरूका सामाग्री खोजेको बेला पर्दाको रूपरेखाको संरक्षण उल्टाइ दिन्छ ।"
 
-#: globalCommands.py:845
+#: globalCommands.py:846
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr "केन्द्रीयता फेरिएको कारणले विचरण वस्तुको चाललाई उल्टाइ दिन्छ ।"
 
-#: globalCommands.py:833
+#: globalCommands.py:834
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "Caret हिँडेको कारणले समीक्षा कर्सरको चाललाई उल्टाइ दिन्छ । "
 
-#: globalCommands.py:821
+#: globalCommands.py:822
 msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
@@ -3076,32 +3312,28 @@ msgstr ""
 "गतिसित सामाग्रीको परिवर्तनको जानकारी दिने प्रक्रियालाई उल्टाइ दिनेछ जस्तै dos console "
 "windows का नया पाठहरू ।"
 
-#: globalCommands.py:187
+#: globalCommands.py:188
 msgid "Toggles on and off the speaking of typed characters"
 msgstr "टङ्कण गरेको वर्ण बोल्ने वा नबोल्ने प्रक्रिया लाई उल्टाउने छ ।"
 
-#: globalCommands.py:211
+#: globalCommands.py:212
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
 msgstr ""
 "वर्ण टङ्कण गरेको मात्रै नभएर दबाएको कुञ्जी बोल्ने वा नबोल्ने प्रक्रियालाई उल्टाउने छ ।"
 
-#: globalCommands.py:199
+#: globalCommands.py:200
 msgid "Toggles on and off the speaking of typed words"
 msgstr "टङ्कण गरेको शब्द बोल्ने वा नबोल्ने प्रक्रियालाई उल्टाउने छ ।"
 
-#: globalCommands.py:758
+#: globalCommands.py:759
 msgid "Toggles the reporting of information as the mouse moves"
 msgstr "सुलसुलेको हिँडाइको सूचना बताउने कार्य फेरिन्छ ।"
 
 #: gui/__init__.py:339
 msgid "Tools"
 msgstr "औजारहरू"
-
-#: gui/settingsDialogs.py:1236
-msgid "Translation &table:"
-msgstr "अनुवाद &तालिका"
 
 #. Translators: this is the label for the edit area in poedit
 #. that contains a translation.
@@ -3111,11 +3343,11 @@ msgstr "संस्थाः"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:194
+#: braille.py:198
 msgid "Turkish grade 1"
 msgstr "तुर्कि श्रेणी १"
 
-#: globalCommands.py:50
+#: globalCommands.py:51
 msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
@@ -3157,13 +3389,13 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:197
+#: braille.py:201
 msgid "Unified English Braille Code grade 1"
 msgstr "एकीकृत अङ्ग्रेजी ब्रेल कोड श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:200
+#: braille.py:204
 msgid "Unified English Braille Code grade 2"
 msgstr "एकीकृत अङ्ग्रेजी ब्रेल कोड श्रेणी २"
 
@@ -3184,7 +3416,7 @@ msgstr "नेत्रवाणीलाई अद्यावधि करण 
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
-#: gui/settingsDialogs.py:891
+#: gui/settingsDialogs.py:903
 msgid "Use &screen layout (when supported)"
 msgstr "पर्दा &रूपरेखाको उपयोग गर (समर्थन गर्छ भने)"
 
@@ -3251,6 +3483,21 @@ msgstr "आय&तन"
 msgid "Version"
 msgstr "संस्करण"
 
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:127
+msgid "Vertical Object placeholder"
+msgstr "ठाडो वस्तु खोपी"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:105
+msgid "Vertical Text placeholder"
+msgstr "ठाडो पाठ खोपी"
+
+#. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
+#: appModules/powerpnt.py:103
+msgid "Vertical Title placeholder"
+msgstr "ठाडो शिर्षक खोपी"
+
 #: gui/__init__.py:321
 msgid "View log"
 msgstr "दृश्य लगत पुस्तिका"
@@ -3264,6 +3511,11 @@ msgstr "आवाजको अनुकूलता"
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "आवाजको ढुकुटी %s"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+#: appModules/powerpnt.py:270
+msgid "Waiting for Powerpoint..."
+msgstr "प्रस्तुतिकरणको प्रतिक्षा"
 
 #: gui/settingsDialogs.py:192
 msgid "Warning"
@@ -3318,13 +3570,13 @@ msgstr ""
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:38
+#: braille.py:39
 msgid "Welsh grade 1"
 msgstr "वेल्स श्रेणी १"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
-#: braille.py:41
+#: braille.py:42
 msgid "Welsh grade 2"
 msgstr "वेल्स श्रेणी २"
 
@@ -3343,22 +3595,22 @@ msgid ""
 "edit your config file at a later stage to make corrections. More details "
 "about the errors can be found in the log file.\n"
 msgstr ""
-"तापाईको अभियोजन फाइलमा गल्ती छ ।\n"
+"तपाईको अभियोजन फाइलमा गल्ती छ ।\n"
 " अहिले नै गल्ती सच्याउने हो भने 'ठीक' टाँक र पछि आफैँले अभियोजन फाइल सम्पादन गर्ने हो भने "
 "'रद्द' टाँक दबाउनु होला । गल्तीको विस्तृत विवरण लगत पुस्तिकामा छ ।\n"
 
-#: core.py:85
+#: core.py:38
 msgid ""
 "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
 msgstr "Gesture नक्सा फाइलमा गल्ती छ । विस्तृत विवरण त्रुटी लगत पुस्तिकामा हेर्नु होला ।"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#: globalCommands.py:426
+#: globalCommands.py:427
 msgid "activate"
 msgstr "सक्रिय बनाउ"
 
-#: virtualBuffers/__init__.py:846
+#: virtualBuffers/__init__.py:848
 msgid "activates the current object in the document"
 msgstr "कागजातमा भएका चालू वस्तुलाई सक्रिय बनाउ छ ।"
 
@@ -3460,11 +3712,11 @@ msgstr "ब्यानर"
 msgid "baseline"
 msgstr "आधारभूत"
 
-#: globalCommands.py:807
+#: globalCommands.py:808
 msgid "beep and speak progress bar updates"
 msgstr "टीँ गर्दै अद्यावधिक प्रगति पट्टी बताउ ।"
 
-#: globalCommands.py:804
+#: globalCommands.py:805
 msgid "beep for progress bar updates"
 msgstr "प्रगति पट्टी अद्यावधिक हुँदा टीँ गर ।"
 
@@ -3500,14 +3752,19 @@ msgid "border"
 msgstr "सिमाना"
 
 #. Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container.
-#: globalCommands.py:493 globalCommands.py:501 globalCommands.py:535
-#: virtualBuffers/__init__.py:1462
+#: globalCommands.py:494 globalCommands.py:502 globalCommands.py:536
+#: virtualBuffers/__init__.py:1464
 msgid "bottom"
 msgstr "पुछार"
 
 #: controlTypes.py:247
 msgid "box"
 msgstr "बाकस"
+
+#. Translators: Reported before braille input in input help mode.
+#: brailleInput.py:88
+msgid "braille"
+msgstr "ब्रेल"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:135
@@ -3516,11 +3773,11 @@ msgstr "break"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:679
+#: gui/settingsDialogs.py:691
 msgid "brightness controls audio coordinates volume"
 msgstr "चहकले श्रव्य विन्दुहरूको आयतन नियन्त्रण गर्छ "
 
-#: virtualBuffers/__init__.py:1567
+#: virtualBuffers/__init__.py:1569
 msgid "browse mode"
 msgstr "खोतल्ने मुद्रामा"
 
@@ -3531,7 +3788,7 @@ msgstr "उघार्न रोक"
 
 #. Translators: Displayed in braille for an object which is a
 #. button.
-#: braille.py:224
+#: braille.py:231
 msgid "btn"
 msgstr "टाँक"
 
@@ -3545,7 +3802,7 @@ msgstr "टाँक"
 
 #. Translators: Displayed in braille for a table cell column number.
 #. %s is replaced with the column number.
-#: braille.py:477
+#: braille.py:487
 #, python-format
 msgid "c%s"
 msgstr "c%s"
@@ -3578,22 +3835,22 @@ msgid "caret"
 msgstr "caret"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:826
+#: globalCommands.py:827
 msgid "caret moves review cursor off"
 msgstr "समीक्षा कर्सरमा caret जादैन ।"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:830
+#: globalCommands.py:831
 msgid "caret moves review cursor on"
 msgstr "समीक्षा कर्सरमा caret जान्छ"
 
-#: gui/settingsDialogs.py:1123
+#: gui/settingsDialogs.py:1135
 msgid "case"
 msgstr "अवस्था"
 
 #. Translators: Displayed in braille for an object which is a
 #. combo box.
-#: braille.py:233
+#: braille.py:240
 msgid "cbo"
 msgstr "कम्बो बाकस"
 
@@ -3633,7 +3890,7 @@ msgstr "टिक छ"
 
 #. Translators: Displayed in braille for an object which is a
 #. check box.
-#: braille.py:227
+#: braille.py:234
 msgid "chk"
 msgstr "टिक"
 
@@ -3642,7 +3899,7 @@ msgid "clickable"
 msgstr "किटिक्क गर्ने"
 
 #. Translators: Displayed in braille when an object is clickable.
-#: braille.py:272
+#: braille.py:279
 msgid "clk"
 msgstr "टिक"
 
@@ -3708,7 +3965,7 @@ msgstr "मिलाइएको अनुप्रयोग 1"
 msgid "custom application 2"
 msgstr "मिलाइएको अनुप्रयोग 2"
 
-#: globalCommands.py:1023
+#: globalCommands.py:1028
 msgid "cycles between available touch modes"
 msgstr "उपलब्ध स्पर्श मुद्राहरूमा घुमि रहन्छ ।"
 
@@ -3757,7 +4014,7 @@ msgstr "निकम्मा"
 msgid "delete"
 msgstr "Delete"
 
-#: keyboardHandler.py:228
+#: keyboardHandler.py:239
 msgid "desktop"
 msgstr "डेस्कटप"
 
@@ -3786,13 +4043,13 @@ msgid "directory pane"
 msgstr "घर्रा पातो"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
-#: brailleDisplayDrivers/freedomScientific.py:136
+#: brailleDisplayDrivers/freedomScientific.py:137
 msgid "display scroll"
 msgstr "स्क्रोल पट्टी देखाउ"
 
 #. Translators: Displayed in braille for an object which is a
 #. dialog.
-#: braille.py:239
+#: braille.py:246
 msgid "dlg"
 msgstr "पाटी"
 
@@ -3806,6 +4063,11 @@ msgstr "कागजातहरू"
 #: speech.py:808
 msgid "done dragging"
 msgstr "घिसारियो"
+
+#. Translators: Reported when braille dots are pressed in input help mode.
+#: brailleInput.py:94
+msgid "dot"
+msgstr "थोप्लो"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:83
@@ -3841,7 +4103,7 @@ msgstr "राख्ने लक्ष्य"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects/behaviors.py:412 virtualBuffers/__init__.py:1325
+#: NVDAObjects/behaviors.py:412 virtualBuffers/__init__.py:1327
 msgid "edge of table"
 msgstr "तालिकाको किनारा"
 
@@ -3861,7 +4123,7 @@ msgstr "सम्पादन योग्य"
 
 #. Translators: Displayed in braille for an object which is an
 #. editable text field.
-#: braille.py:212
+#: braille.py:219
 msgid "edt"
 msgstr "सम्पादन"
 
@@ -3930,29 +4192,29 @@ msgstr "कर्सरको स्थानको एक पाठ लाई �
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr "पहिले नै लेखेको पाठ हाल कर्सर देखी अगाडी रहेको अर्को स्थानबाट  फेला पार्ने छ ।"
+msgstr "पहिले नै लेखेको पाठ हाल कर्सर देखी अगाडी रहेको अर्को स्थानबाट फेला पार्ने छ ।"
 
 #: cursorManager.py:118
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
-msgstr "पहिले नै लेखेको पाठ हाल कर्सर देखि पछाडी रहेको अर्को स्थानबाट  फेला पार्ने छ ।"
+msgstr "पहिले नै लेखेको पाठ हाल कर्सर देखि पछाडी रहेको अर्को स्थानबाट फेला पार्ने छ ।"
 
-#: globalCommands.py:943 gui/settingsDialogs.py:1270
+#: globalCommands.py:944 gui/settingsDialogs.py:1295
 msgid "focus"
 msgstr "केन्द्र"
 
-#: virtualBuffers/__init__.py:1567
+#: virtualBuffers/__init__.py:1569
 msgid "focus mode"
 msgstr "कुन्दीतल मुद्रा"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:838
+#: globalCommands.py:839
 msgid "focus moves navigator object off"
 msgstr "केन्द्रीयता विचरण वस्तुमा सर्दैन।"
 
 #. Translators: presented when toggled.
-#: globalCommands.py:842
+#: globalCommands.py:843
 msgid "focus moves navigator object on"
 msgstr "केन्द्रीयता विचरण वस्तुमा सर्छ ।"
 
@@ -4007,7 +4269,7 @@ msgstr "फ्रेम"
 msgid "fuchsia"
 msgstr "अबिरे"
 
-#: core.py:87
+#: core.py:40
 msgid "gesture map File Error"
 msgstr "Gesture नक्सा फाइलमा गल्ती छ"
 
@@ -4019,7 +4281,7 @@ msgstr "अन्तिम पातो"
 
 #. Translators: Displayed in braille for an object which is a
 #. graphic.
-#: braille.py:251
+#: braille.py:258
 msgid "gra"
 msgstr "ग्रा"
 
@@ -4045,7 +4307,7 @@ msgstr "सामुहिकृत"
 
 #. Translators: Displayed in braille for a heading with a level.
 #. %s is replaced with the level.
-#: braille.py:423
+#: braille.py:433
 #, python-format
 msgid "h%s"
 msgstr "h%s"
@@ -4181,12 +4443,12 @@ msgid "info"
 msgstr "जानकारी"
 
 #. Translators: This will be presented when the input help is toggled.
-#: globalCommands.py:47
+#: globalCommands.py:48
 msgid "input help off"
 msgstr "कार्य सम्पादन मुद्रा ।"
 
 #. Translators: This will be presented when the input help is toggled.
-#: globalCommands.py:45
+#: globalCommands.py:46
 msgid "input help on"
 msgstr "कार्य विवरण जानकारी मुद्रा ।"
 
@@ -4234,7 +4496,7 @@ msgstr "काताकाना रोमन"
 msgid "label"
 msgstr "छाप"
 
-#: keyboardHandler.py:229
+#: keyboardHandler.py:240
 msgid "laptop"
 msgstr "ल्यापटप"
 
@@ -4242,7 +4504,7 @@ msgstr "ल्यापटप"
 msgid "layered pane"
 msgstr "तह कृत पातो"
 
-#: globalCommands.py:545 globalCommands.py:557 appModules/totalcmd.py:35
+#: globalCommands.py:546 globalCommands.py:558 appModules/totalcmd.py:35
 msgid "left"
 msgstr "देब्रे"
 
@@ -4256,7 +4518,7 @@ msgstr "देब्रे alt"
 msgid "left arrow"
 msgstr "देब्रे Arrow"
 
-#: globalCommands.py:85
+#: globalCommands.py:86
 msgid "left click"
 msgstr "देब्रे टाँक क किटिक्क "
 
@@ -4266,12 +4528,12 @@ msgid "left control"
 msgstr "देब्रे Control"
 
 #. Translators: This is presented when the left mouse button is locked down (used for drag and drop).
-#: globalCommands.py:103
+#: globalCommands.py:104
 msgid "left mouse button lock"
 msgstr "सुलसुलेको देब्रे टाँकमा चाबी लाग्यो ।"
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
-#: globalCommands.py:99
+#: globalCommands.py:100
 msgid "left mouse button unlock"
 msgstr "सुलसुलेको देब्रे टाँकमा चाबी खुल्यो ।"
 
@@ -4312,7 +4574,7 @@ msgid "line %s"
 msgstr "लाइन %s"
 
 #. Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line..
-#: brailleDisplayDrivers/freedomScientific.py:138
+#: brailleDisplayDrivers/freedomScientific.py:139
 msgid "line scroll"
 msgstr "रेखात्मक स्क्रोल "
 
@@ -4334,19 +4596,19 @@ msgstr "सूची सामाग्री"
 
 #. Translators: Displayed in braille for an object which is a
 #. link.
-#: braille.py:236
+#: braille.py:243
 msgid "lnk"
 msgstr "लिङ्क"
 
 #. Translators: Displayed in braille for an object which is a
 #. list.
-#: braille.py:215
+#: braille.py:222
 msgid "lst"
 msgstr "सूचि"
 
 #. Translators: Displayed in braille when an object (e.g. a tree view item) has a hierarchical level.
 #. %s is replaced with the level.
-#: braille.py:464
+#: braille.py:474
 #, python-format
 msgid "lv %s"
 msgstr "दृश्यपट्टी%s"
@@ -4387,13 +4649,13 @@ msgstr "मेनु सामाग्री"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu.
-#: braille.py:221
+#: braille.py:228
 msgid "mnu"
 msgstr "मेनु"
 
 #. Translators: Displayed in braille for an object which is a
 #. menu bar.
-#: braille.py:218
+#: braille.py:225
 msgid "mnubar"
 msgstr "मेनुपट्टी"
 
@@ -4407,227 +4669,227 @@ msgctxt "symbolLevel"
 msgid "most"
 msgstr "धेरै जसो"
 
-#: globalCommands.py:354
+#: globalCommands.py:355
 msgid "move focus"
 msgstr "केन्द्र सर्ने छ"
 
-#: globalCommands.py:345
+#: globalCommands.py:346
 msgid "move to focus"
 msgstr "केन्द्रित स्थानमा सर्ने छ"
 
-#: virtualBuffers/__init__.py:1547
+#: virtualBuffers/__init__.py:1549
 msgid "moves to the next block quote"
 msgstr "अगाडिको ब्लक उद्धरणमा सर्छ"
 
-#: virtualBuffers/__init__.py:1531
+#: virtualBuffers/__init__.py:1533
 msgid "moves to the next button"
 msgstr "अगिल्लो टाँकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1543
+#: virtualBuffers/__init__.py:1545
 msgid "moves to the next check box"
 msgstr "अगिल्लो चेक बाकसमा सर्छ"
 
-#: virtualBuffers/__init__.py:1541
+#: virtualBuffers/__init__.py:1543
 msgid "moves to the next combo box"
 msgstr "अगिल्लो कम्बो बाकसमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1533
+#: virtualBuffers/__init__.py:1535
 msgid "moves to the next edit field"
 msgstr "अगिल्लो सम्पादन क्षेत्रमा सर्छ"
 
-#: virtualBuffers/__init__.py:1553
+#: virtualBuffers/__init__.py:1555
 msgid "moves to the next embedded object"
 msgstr "अर्को टाँसिएको वस्तुमा सर्ने छ"
 
-#: virtualBuffers/__init__.py:1525
+#: virtualBuffers/__init__.py:1527
 msgid "moves to the next form field"
 msgstr "अगिल्लो फारमको क्षेत्रमा सर्छ"
 
-#: virtualBuffers/__init__.py:1535
+#: virtualBuffers/__init__.py:1537
 msgid "moves to the next frame"
 msgstr "अगिल्लो फ्रेममा सर्छ"
 
-#: virtualBuffers/__init__.py:1545
+#: virtualBuffers/__init__.py:1547
 msgid "moves to the next graphic"
 msgstr "अगिल्लो चित्रमा सर्छ"
 
-#: virtualBuffers/__init__.py:1503
+#: virtualBuffers/__init__.py:1505
 msgid "moves to the next heading"
 msgstr "अगिल्लो शीर्षकमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1505
+#: virtualBuffers/__init__.py:1507
 msgid "moves to the next heading at level 1"
 msgstr "अगाडीको पहिलो तहको शीर्षकमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1507
+#: virtualBuffers/__init__.py:1509
 msgid "moves to the next heading at level 2"
 msgstr "अगाडीको दोस्रो तहको शीर्षकमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1509
+#: virtualBuffers/__init__.py:1511
 msgid "moves to the next heading at level 3"
 msgstr "अगिल्लो तेस्रो तहको शीर्षकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1511
+#: virtualBuffers/__init__.py:1513
 msgid "moves to the next heading at level 4"
 msgstr "अगिल्लो चौथो तहको शीर्षकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1513
+#: virtualBuffers/__init__.py:1515
 msgid "moves to the next heading at level 5"
 msgstr "अगिल्लो पाचन तहको शीर्षकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1515
+#: virtualBuffers/__init__.py:1517
 msgid "moves to the next heading at level 6"
 msgstr "अगिल्लो छैठौँ तहको शीर्षकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1551
+#: virtualBuffers/__init__.py:1553
 msgid "moves to the next landmark"
 msgstr "अगिल्लो कित्तामा सर्छ"
 
-#: virtualBuffers/__init__.py:1519
+#: virtualBuffers/__init__.py:1521
 msgid "moves to the next link"
 msgstr "अगिल्लो लिङ्कमा सर्छ"
 
-#: virtualBuffers/__init__.py:1527
+#: virtualBuffers/__init__.py:1529
 msgid "moves to the next list"
 msgstr "अघिल्लो सूचीमा सर्छ"
 
-#: virtualBuffers/__init__.py:1529
+#: virtualBuffers/__init__.py:1531
 msgid "moves to the next list item"
 msgstr "अगिल्लो सूची सामाग्रीमा सर्छ"
 
-#: virtualBuffers/__init__.py:1539
+#: virtualBuffers/__init__.py:1541
 msgid "moves to the next radio button"
 msgstr "अगिल्लो रेडियो बटनमा सर्छ"
 
-#: virtualBuffers/__init__.py:1537
+#: virtualBuffers/__init__.py:1539
 msgid "moves to the next separator"
 msgstr "अगिल्लो विभाजकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1517
+#: virtualBuffers/__init__.py:1519
 msgid "moves to the next table"
 msgstr "अगिल्लो तालिकामा सर्छ"
 
-#: virtualBuffers/__init__.py:1343
+#: virtualBuffers/__init__.py:1345
 msgid "moves to the next table column"
 msgstr "तालिकाको अगिल्लो महलमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1335
+#: virtualBuffers/__init__.py:1337
 msgid "moves to the next table row"
 msgstr "तालिकाको अगिल्लो हरफमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1523
+#: virtualBuffers/__init__.py:1525
 msgid "moves to the next unvisited link"
 msgstr "अगिल्लो नहेरेको लिङ्कमा सर्छ"
 
-#: virtualBuffers/__init__.py:1521
+#: virtualBuffers/__init__.py:1523
 msgid "moves to the next visited link"
 msgstr "अगिल्लो हेरेको लिङ्कमा सर्छ"
 
-#: virtualBuffers/__init__.py:1548
+#: virtualBuffers/__init__.py:1550
 msgid "moves to the previous block quote"
 msgstr "पछिल्लो लिङ्क हिस्सामा सर्छ"
 
-#: virtualBuffers/__init__.py:1532
+#: virtualBuffers/__init__.py:1534
 msgid "moves to the previous button"
 msgstr "पछिल्लो टाँकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1544
+#: virtualBuffers/__init__.py:1546
 msgid "moves to the previous check box"
 msgstr "पछिल्लो चेक बाकसमा सर्छ"
 
-#: virtualBuffers/__init__.py:1542
+#: virtualBuffers/__init__.py:1544
 msgid "moves to the previous combo box"
 msgstr "पछिल्लो कम्बो बाकसमा सर्छ"
 
-#: virtualBuffers/__init__.py:1534
+#: virtualBuffers/__init__.py:1536
 msgid "moves to the previous edit field"
 msgstr "पछिल्लो सम्पादन क्षेत्रमा सर्छ"
 
-#: virtualBuffers/__init__.py:1554
+#: virtualBuffers/__init__.py:1556
 msgid "moves to the previous embedded object"
 msgstr "पछिल्लो टाँसिएको वस्तुमा सर्छ"
 
-#: virtualBuffers/__init__.py:1526
+#: virtualBuffers/__init__.py:1528
 msgid "moves to the previous form field"
 msgstr "पछिल्लो फारमको क्षेत्रमा सर्छ"
 
-#: virtualBuffers/__init__.py:1536
+#: virtualBuffers/__init__.py:1538
 msgid "moves to the previous frame"
 msgstr "पछिल्लो फ्रेममा सर्छ"
 
-#: virtualBuffers/__init__.py:1546
+#: virtualBuffers/__init__.py:1548
 msgid "moves to the previous graphic"
 msgstr "पछिल्लो ग्राफिक्समा सर्छ"
 
-#: virtualBuffers/__init__.py:1504
+#: virtualBuffers/__init__.py:1506
 msgid "moves to the previous heading"
 msgstr "पछिल्लो शीर्षकमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1506
+#: virtualBuffers/__init__.py:1508
 msgid "moves to the previous heading at level 1"
 msgstr "पछाडिको पहिलो तहको शीर्षकमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1508
+#: virtualBuffers/__init__.py:1510
 msgid "moves to the previous heading at level 2"
 msgstr "पछाडिको दोस्रो तहको शीर्षकमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1510
+#: virtualBuffers/__init__.py:1512
 msgid "moves to the previous heading at level 3"
 msgstr "पछिल्लो तेस्रो तहको शीर्षकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1512
+#: virtualBuffers/__init__.py:1514
 msgid "moves to the previous heading at level 4"
 msgstr "पछिल्लो चौथो तहको शीर्षकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1514
+#: virtualBuffers/__init__.py:1516
 msgid "moves to the previous heading at level 5"
 msgstr "पछिल्लो पाछौं तहको शीर्षकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1516
+#: virtualBuffers/__init__.py:1518
 msgid "moves to the previous heading at level 6"
 msgstr "पछिल्लो छैठौँ तहको शीर्षकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1552
+#: virtualBuffers/__init__.py:1554
 msgid "moves to the previous landmark"
 msgstr "अघिल्लो कित्तामा सर्ने छ"
 
-#: virtualBuffers/__init__.py:1520
+#: virtualBuffers/__init__.py:1522
 msgid "moves to the previous link"
 msgstr "पछिल्लो लिङ्कमा सर्छ"
 
-#: virtualBuffers/__init__.py:1528
+#: virtualBuffers/__init__.py:1530
 msgid "moves to the previous list"
 msgstr "पछिल्लो सूचीमा सर्छ"
 
-#: virtualBuffers/__init__.py:1530
+#: virtualBuffers/__init__.py:1532
 msgid "moves to the previous list item"
 msgstr "पछिल्लो सूची सामाग्रीमा सर्छ"
 
-#: virtualBuffers/__init__.py:1540
+#: virtualBuffers/__init__.py:1542
 msgid "moves to the previous radio button"
 msgstr "पछिल्लो रेडियो बटनमा सर्छ"
 
-#: virtualBuffers/__init__.py:1538
+#: virtualBuffers/__init__.py:1540
 msgid "moves to the previous separator"
 msgstr "पछिल्लो विभाजकमा सर्छ"
 
-#: virtualBuffers/__init__.py:1518
+#: virtualBuffers/__init__.py:1520
 msgid "moves to the previous table"
 msgstr "पछिल्लो तालिकामा सर्छ"
 
-#: virtualBuffers/__init__.py:1347
+#: virtualBuffers/__init__.py:1349
 msgid "moves to the previous table column"
 msgstr "तालिकाको पछाडिको महलमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1339
+#: virtualBuffers/__init__.py:1341
 msgid "moves to the previous table row"
 msgstr "तालिकाको माथिल्लो हरफमा सर्छ ।"
 
-#: virtualBuffers/__init__.py:1524
+#: virtualBuffers/__init__.py:1526
 msgid "moves to the previous unvisited link"
 msgstr "पछिल्लो नहेरेको लिङ्कमा सर्छ"
 
-#: virtualBuffers/__init__.py:1522
+#: virtualBuffers/__init__.py:1524
 msgid "moves to the previous visited link"
 msgstr "पछिल्लो तालिकामा सर्छ"
 
@@ -4659,11 +4921,11 @@ msgstr "अर्को ट्रयाक"
 msgid "no bold"
 msgstr "मोटो होइनd"
 
-#: globalCommands.py:361
+#: globalCommands.py:362
 msgid "no caret"
 msgstr "caret छैन"
 
-#: globalCommands.py:352 globalCommands.py:719
+#: globalCommands.py:353 globalCommands.py:720
 msgid "no focus"
 msgstr "कतै केन्द्रित छैन ।"
 
@@ -4677,226 +4939,226 @@ msgstr "indent छैन"
 msgid "no italic"
 msgstr "छड्के होइन"
 
-#: virtualBuffers/__init__.py:1549
+#: virtualBuffers/__init__.py:1551
 msgid "no more text after a block of links"
 msgstr "लिङ्क हिस्साको अगाडी पाठ छैन"
 
-#: virtualBuffers/__init__.py:1550
+#: virtualBuffers/__init__.py:1552
 msgid "no more text before a block of links"
 msgstr "लिङ्कको हिस्साको अगाडि पाठ छैन"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-#: globalCommands.py:288 globalCommands.py:322 globalCommands.py:371
-#: globalCommands.py:385 globalCommands.py:399 globalCommands.py:413
+#: globalCommands.py:289 globalCommands.py:323 globalCommands.py:372
+#: globalCommands.py:386 globalCommands.py:400 globalCommands.py:414
 msgid "no navigator object"
 msgstr "विचरण वस्तु छैन ।"
 
-#: virtualBuffers/__init__.py:1547
+#: virtualBuffers/__init__.py:1549
 msgid "no next block quote"
 msgstr "अगाडि लिङ्क हिस्सा छैन"
 
-#: virtualBuffers/__init__.py:1531
+#: virtualBuffers/__init__.py:1533
 msgid "no next button"
 msgstr "अगाडि टाँक छैन"
 
-#: virtualBuffers/__init__.py:1543
+#: virtualBuffers/__init__.py:1545
 msgid "no next check box"
 msgstr "अगाडि चेक बाकस छैन"
 
-#: virtualBuffers/__init__.py:1541
+#: virtualBuffers/__init__.py:1543
 msgid "no next combo box"
 msgstr "अगाडि कम्बो बाकस छैन"
 
-#: virtualBuffers/__init__.py:1533
+#: virtualBuffers/__init__.py:1535
 msgid "no next edit field"
 msgstr "अगाडि सम्पादन क्षेत्र छैन"
 
-#: virtualBuffers/__init__.py:1553
+#: virtualBuffers/__init__.py:1555
 msgid "no next embedded object"
 msgstr "अर्को टाँसिएको वस्तु छैन"
 
-#: virtualBuffers/__init__.py:1525
+#: virtualBuffers/__init__.py:1527
 msgid "no next form field"
 msgstr "अगाडि फारमको क्षेत्र छैन"
 
-#: virtualBuffers/__init__.py:1535
+#: virtualBuffers/__init__.py:1537
 msgid "no next frame"
 msgstr "अगाडि फ्रेम छैन"
 
-#: virtualBuffers/__init__.py:1545
+#: virtualBuffers/__init__.py:1547
 msgid "no next graphic"
 msgstr "अगाडि ग्राफिक्स छैन"
 
-#: virtualBuffers/__init__.py:1503
+#: virtualBuffers/__init__.py:1505
 msgid "no next heading"
 msgstr "अगाडी शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1505
+#: virtualBuffers/__init__.py:1507
 msgid "no next heading at level 1"
 msgstr "अगाडी पहिलो तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1507
+#: virtualBuffers/__init__.py:1509
 msgid "no next heading at level 2"
 msgstr "अगाडी दोस्रो तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1509
+#: virtualBuffers/__init__.py:1511
 msgid "no next heading at level 3"
 msgstr "अगाडी तेस्रो तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1511
+#: virtualBuffers/__init__.py:1513
 msgid "no next heading at level 4"
 msgstr "अगाडी चौथो तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1513
+#: virtualBuffers/__init__.py:1515
 msgid "no next heading at level 5"
 msgstr "अगाडि पाछौं तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1515
+#: virtualBuffers/__init__.py:1517
 msgid "no next heading at level 6"
 msgstr "अगाडि छैठौँ तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1551
+#: virtualBuffers/__init__.py:1553
 msgid "no next landmark"
 msgstr "अर्को कित्ता छैन"
 
-#: virtualBuffers/__init__.py:1519
+#: virtualBuffers/__init__.py:1521
 msgid "no next link"
 msgstr "अगाडी लिङ्क छैन"
 
-#: virtualBuffers/__init__.py:1527
+#: virtualBuffers/__init__.py:1529
 msgid "no next list"
 msgstr "अगाडि सूची छैन"
 
-#: virtualBuffers/__init__.py:1529
+#: virtualBuffers/__init__.py:1531
 msgid "no next list item"
 msgstr "अगाडि सूची सामाग्री छैन"
 
-#: virtualBuffers/__init__.py:1539
+#: virtualBuffers/__init__.py:1541
 msgid "no next radio button"
 msgstr "अगाडि रेडियो टाँक छैन"
 
-#: virtualBuffers/__init__.py:1537
+#: virtualBuffers/__init__.py:1539
 msgid "no next separator"
 msgstr "अगाडि विभाजक छैन"
 
-#: virtualBuffers/__init__.py:1517
+#: virtualBuffers/__init__.py:1519
 msgid "no next table"
 msgstr "अगाडी तालिका छैन"
 
-#: virtualBuffers/__init__.py:1523
+#: virtualBuffers/__init__.py:1525
 msgid "no next unvisited link"
 msgstr "अगाडी नहेरेको लिङ्क छैन"
 
-#: virtualBuffers/__init__.py:1521
+#: virtualBuffers/__init__.py:1523
 msgid "no next visited link"
 msgstr "अगाडी हेरेको लिङ्क छैन"
 
-#: virtualBuffers/__init__.py:1548
+#: virtualBuffers/__init__.py:1550
 msgid "no previous block quote"
 msgstr "पछाडि लिङ्क हिस्सा छैन"
 
-#: virtualBuffers/__init__.py:1532
+#: virtualBuffers/__init__.py:1534
 msgid "no previous button"
 msgstr "पछाडि टाँक छैन"
 
-#: virtualBuffers/__init__.py:1544
+#: virtualBuffers/__init__.py:1546
 msgid "no previous check box"
 msgstr "पछाडि चेक बाकस छैन"
 
-#: virtualBuffers/__init__.py:1542
+#: virtualBuffers/__init__.py:1544
 msgid "no previous combo box"
 msgstr "पछाडि कम्बो बाकस छैन"
 
-#: virtualBuffers/__init__.py:1534
+#: virtualBuffers/__init__.py:1536
 msgid "no previous edit field"
 msgstr "पछाडि सम्पादन क्षेत्र छैन"
 
-#: virtualBuffers/__init__.py:1554
+#: virtualBuffers/__init__.py:1556
 msgid "no previous embedded object"
 msgstr "पछाडि टाँसिएको वस्तु छैन"
 
-#: virtualBuffers/__init__.py:1526
+#: virtualBuffers/__init__.py:1528
 msgid "no previous form field"
 msgstr "पछाडी फारमको क्षेत्र छैन"
 
-#: virtualBuffers/__init__.py:1536
+#: virtualBuffers/__init__.py:1538
 msgid "no previous frame"
 msgstr "पछाडि फ्रेम छैन"
 
-#: virtualBuffers/__init__.py:1546
+#: virtualBuffers/__init__.py:1548
 msgid "no previous graphic"
 msgstr "पछाडि ग्राफिक्स छैन"
 
-#: virtualBuffers/__init__.py:1504
+#: virtualBuffers/__init__.py:1506
 msgid "no previous heading"
 msgstr "पछाडी शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1506
+#: virtualBuffers/__init__.py:1508
 msgid "no previous heading at level 1"
 msgstr "पछाडी पहिलो तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1508
+#: virtualBuffers/__init__.py:1510
 msgid "no previous heading at level 2"
 msgstr "पछाडी दोस्रो तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1510
+#: virtualBuffers/__init__.py:1512
 msgid "no previous heading at level 3"
 msgstr "पछाडी तेस्रो तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1512
+#: virtualBuffers/__init__.py:1514
 msgid "no previous heading at level 4"
 msgstr "पछाडी चौथो तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1514
+#: virtualBuffers/__init__.py:1516
 msgid "no previous heading at level 5"
 msgstr "पछाडि पाछौं तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1516
+#: virtualBuffers/__init__.py:1518
 msgid "no previous heading at level 6"
 msgstr "पछाडि छैठौँ तहको शीर्षक छैन"
 
-#: virtualBuffers/__init__.py:1552
+#: virtualBuffers/__init__.py:1554
 msgid "no previous landmark"
 msgstr "अघिल्लो कित्ता छैन"
 
-#: virtualBuffers/__init__.py:1520
+#: virtualBuffers/__init__.py:1522
 msgid "no previous link"
 msgstr "पछाडी लिङ्क छैन"
 
-#: virtualBuffers/__init__.py:1528
+#: virtualBuffers/__init__.py:1530
 msgid "no previous list"
 msgstr "पछाडि सुची छैन"
 
-#: virtualBuffers/__init__.py:1530
+#: virtualBuffers/__init__.py:1532
 msgid "no previous list item"
 msgstr "पछाडि सूची सामाग्री छैन"
 
-#: virtualBuffers/__init__.py:1540
+#: virtualBuffers/__init__.py:1542
 msgid "no previous radio button"
 msgstr "पछाडि रेडियो टाँक छैन"
 
-#: virtualBuffers/__init__.py:1538
+#: virtualBuffers/__init__.py:1540
 msgid "no previous separator"
 msgstr "पछाडि विभाजक छैन"
 
-#: virtualBuffers/__init__.py:1518
+#: virtualBuffers/__init__.py:1520
 msgid "no previous table"
 msgstr "पछाडी तालिका छैन"
 
-#: virtualBuffers/__init__.py:1524
+#: virtualBuffers/__init__.py:1526
 msgid "no previous unvisited link"
 msgstr "पछाडी नहेरेको लिङ्क छैन"
 
-#: virtualBuffers/__init__.py:1522
+#: virtualBuffers/__init__.py:1524
 msgid "no previous visited link"
 msgstr "पछाडी हेरेको लिङ्क छैन"
 
-#: globalCommands.py:798
+#: globalCommands.py:799
 msgid "no progress bar updates"
 msgstr "अद्यावधिक प्रगति पट्टी छैन ।"
 
-#: cursorManager.py:245 globalCommands.py:128
+#: cursorManager.py:245 globalCommands.py:129
 msgid "no selection"
 msgstr "कुनै चयन छैन"
 
@@ -4906,11 +5168,11 @@ msgstr "कुनै चयन छैन"
 msgid "no strikethrough"
 msgstr "Strikethrough होइन"
 
-#: globalCommands.py:857
+#: globalCommands.py:858
 msgid "no system battery"
 msgstr "यस प्रणालीमा ब्याट्री छैन ।"
 
-#: globalCommands.py:766
+#: globalCommands.py:767
 msgid "no title"
 msgstr "शीर्षक छैन ।"
 
@@ -4930,7 +5192,7 @@ msgstr "कुनै पनि होइन"
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 #. but this still might be used in some other cases.
 #. %s will be replaced with the negated state.
-#: braille.py:444 speech.py:814
+#: braille.py:454 speech.py:814
 #, python-format
 msgid "not %s"
 msgstr "%s होइन"
@@ -5034,15 +5296,15 @@ msgstr "numpad गुणन"
 msgid "numpad plus"
 msgstr "numpad जोड"
 
-#: globalCommands.py:241
+#: globalCommands.py:242
 msgid "object has no location"
 msgstr "बस्तुको स्थानको टुङ्गो छैन ।"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:781
-#: gui/settingsDialogs.py:1125 virtualBuffers/__init__.py:858
+#: keyboardHandler.py:359 synthSettingsRing.py:74 gui/settingsDialogs.py:793
+#: gui/settingsDialogs.py:1137 virtualBuffers/__init__.py:860
 msgid "off"
 msgstr "बन्द"
 
@@ -5068,8 +5330,8 @@ msgstr "पर्दा बन्द छ ।"
 msgid "olive"
 msgstr "जैतुन"
 
-#: keyboardHandler.py:341 synthSettingsRing.py:74 gui/settingsDialogs.py:1125
-#: virtualBuffers/__init__.py:858
+#: keyboardHandler.py:359 synthSettingsRing.py:74 gui/settingsDialogs.py:1137
+#: virtualBuffers/__init__.py:860
 msgid "on"
 msgstr "खुल्यो"
 
@@ -5148,7 +5410,7 @@ msgstr "पाल्सी शब्द"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings dialog.
-#: gui/settingsDialogs.py:674
+#: gui/settingsDialogs.py:686
 msgid "play audio coordinates when mouse moves"
 msgstr "सुलसुले हिँड्दा श्रव्य विन्दुहरू बताउ"
 
@@ -5189,7 +5451,7 @@ msgstr "बैजनी"
 
 #. Translators: Displayed in braille for a table cell row number.
 #. %s is replaced with the row number.
-#: braille.py:469
+#: braille.py:479
 #, python-format
 msgid "r%s"
 msgstr "r%s"
@@ -5204,7 +5466,7 @@ msgstr "रेडियो मेनु सामाग्री"
 
 #. Translators: Displayed in braille for an object which is a
 #. radio button.
-#: braille.py:230
+#: braille.py:237
 msgid "rbtn"
 msgstr "रेडियो टाँक"
 
@@ -5212,20 +5474,19 @@ msgstr "रेडियो टाँक"
 msgid "read only"
 msgstr "पढ्न मात्र मिल्ने "
 
-#: globalCommands.py:670
+#: globalCommands.py:671
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
-msgstr ""
-"समीक्षा कर्सर देखि चालू पाठको अन्त सम्मका पाठहरू  समीक्षा कर्सर चले अनुसार पढ्ने गर्छ"
+msgstr "समीक्षा कर्सर देखि चालू पाठको अन्त सम्मका पाठहरू समीक्षा कर्सर चले अनुसार पढ्ने गर्छ"
 
-#: globalCommands.py:674
+#: globalCommands.py:675
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
 msgstr "caret हिँडे अनुसार प्रणाली caret देखि पाठको अन्त सम्म पढ्छ "
 
-#: globalCommands.py:746
+#: globalCommands.py:747
 msgid "reads the current application status bar and moves the navigator to it"
 msgstr "चालू अनुप्रयोग स्थिति पट्टी पढ्छ र विचरण लाई यसमा सार्छ ।"
 
@@ -5253,20 +5514,20 @@ msgid "remove"
 msgstr "&हटाउ"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:814
+#: globalCommands.py:815
 msgid "report dynamic content changes off"
 msgstr "गतिशील सामाग्री परिवर्तन बताउने छैन ।"
 
 #. Translators: presented when the present dynamic changes is toggled.
-#: globalCommands.py:818
+#: globalCommands.py:819
 msgid "report dynamic content changes on"
 msgstr "गतिशील सामाग्री परिवर्तन बताउने छ ।"
 
-#: globalCommands.py:866
+#: globalCommands.py:867
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr "विद्युत् लाइनमा जोडिएको छैन भने ब्याट्रीको अवस्था र बाकी काम गर्ने समय बताउने छ ।"
 
-#: globalCommands.py:720
+#: globalCommands.py:721
 msgid "reports the object with focus"
 msgstr "केन्द्रित वस्तु चिनाउने छ"
 
@@ -5274,7 +5535,7 @@ msgstr "केन्द्रित वस्तु चिनाउने छ"
 msgid "required"
 msgstr "आवश्यक"
 
-#: globalCommands.py:940 gui/settingsDialogs.py:1270
+#: globalCommands.py:941 gui/settingsDialogs.py:1295
 msgid "review"
 msgstr "समीक्षा"
 
@@ -5282,7 +5543,7 @@ msgstr "समीक्षा"
 msgid "rich edit"
 msgstr "रिच सम्पादन"
 
-#: globalCommands.py:592 globalCommands.py:609 appModules/totalcmd.py:37
+#: globalCommands.py:593 globalCommands.py:610 appModules/totalcmd.py:37
 msgid "right"
 msgstr "दाहिने"
 
@@ -5296,7 +5557,7 @@ msgstr "दाहिने Alt"
 msgid "right arrow"
 msgstr "दाहिने Arrow"
 
-#: globalCommands.py:91
+#: globalCommands.py:92
 msgid "right click"
 msgstr "दाहिने टाँक किटिक्क"
 
@@ -5306,12 +5567,12 @@ msgid "right control"
 msgstr "दाहिने Control"
 
 #. Translators: This is presented when the right mouse button is locked down (used for drag and drop).
-#: globalCommands.py:114
+#: globalCommands.py:115
 msgid "right mouse button lock"
 msgstr "सुलसुलेको दाहिने टाँकमा चाबी लाग्यो ।"
 
 #. Translators: This is presented when the right mouse button lock is released (used for drag and drop).
-#: globalCommands.py:110
+#: globalCommands.py:111
 msgid "right mouse button unlock"
 msgstr "सुलसुलेको दाहिने टाँकमा चाबी खुल्यो ।"
 
@@ -5326,7 +5587,7 @@ msgid "right windows"
 msgstr "दाहिने windows"
 
 #. Translators: Displayed in braille when an object (e.g. an editable text field) is read-only.
-#: braille.py:270
+#: braille.py:277
 msgid "ro"
 msgstr "हरफ"
 
@@ -5358,12 +5619,12 @@ msgstr "चली रहेको"
 
 #: controlTypes.py:215
 msgid "scroll bar"
-msgstr "सार्ने चाबी"
+msgstr "सार्ने पट्टी"
 
 #. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:91
 msgid "scroll lock"
-msgstr "scroll lock"
+msgstr "सार्ने चाबी"
 
 #: controlTypes.py:279
 msgid "scroll pane"
@@ -5384,24 +5645,24 @@ msgid "section"
 msgstr "खण्ड"
 
 #. Translators: Displayed in braille when an object is selected.
-#: braille.py:260
+#: braille.py:267
 msgid "sel"
 msgstr "चयन"
 
 #: controlTypes.py:373
 msgid "selectable"
-msgstr "रोज्न सकिने"
+msgstr "चयन योग्य"
 
 #: controlTypes.py:350
 msgid "selected"
-msgstr "रोजेको"
+msgstr "चयनित"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#: compoundDocuments.py:401 globalCommands.py:130 speech.py:323 speech.py:515
-#: speech.py:530 virtualBuffers/__init__.py:740
+#: compoundDocuments.py:401 globalCommands.py:131 speech.py:323 speech.py:515
+#: speech.py:530 appModules/powerpnt.py:714 virtualBuffers/__init__.py:742
 #, python-format
 msgid "selected %s"
-msgstr "%s चुनियो"
+msgstr "%s चयनित"
 
 #. Translators: This is spoken while the user is in the process of selecting something, For example: "selecting hello"
 #: speech.py:509
@@ -5431,11 +5692,11 @@ msgstr "आकार"
 msgid "shift"
 msgstr "shift"
 
-#: virtualBuffers/__init__.py:1550
+#: virtualBuffers/__init__.py:1552
 msgid "skips backward past a block of links"
 msgstr "लिङ्कको विगत हिस्सा भन्दा पछाडि जान्छ"
 
-#: virtualBuffers/__init__.py:1549
+#: virtualBuffers/__init__.py:1551
 msgid "skips forward past a block of links"
 msgstr "लिङ्कको हिस्साको अगाडि जान्छ"
 
@@ -5465,61 +5726,67 @@ msgstr "घट्दो क्रममा वर्णानुक्रमि�
 msgid "sound"
 msgstr "ध्वनि"
 
+#. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
-#: keyLabels.py:63
+#: brailleInput.py:97 keyLabels.py:63
 msgid "space"
 msgstr "space"
 
+#. Translators: Reported when braille space is pressed with dots in input help mode.
+#: brailleInput.py:91
+msgid "space with dot"
+msgstr "थोप्लाहरू सहित खालीस्थान"
+
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
-#: globalCommands.py:204
+#: globalCommands.py:205
 msgid "speak command keys off"
 msgstr "आदेश कुञ्जी बताऊने छैन ।"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
-#: globalCommands.py:208
+#: globalCommands.py:209
 msgid "speak command keys on"
 msgstr "आदेश कुञ्जी बताऊने छ ।"
 
-#: globalCommands.py:801
+#: globalCommands.py:802
 msgid "speak progress bar updates"
 msgstr "अद्यावधिक प्रगति बताउ ।"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
-#: globalCommands.py:180
+#: globalCommands.py:181
 msgid "speak typed characters off"
 msgstr "टङ्कण गरेको वर्ण बताउदैन ।"
 
 #. Translators: The message announced when toggling the speak typed characters keyboard setting.
-#: globalCommands.py:184
+#: globalCommands.py:185
 msgid "speak typed characters on"
 msgstr "टङ्कण गरेको वर्ण बताइन् छ ।"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
-#: globalCommands.py:192
+#: globalCommands.py:193
 msgid "speak typed words off"
 msgstr "टङ्कण गरेको शब्द बताईदैन ।"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
-#: globalCommands.py:196
+#: globalCommands.py:197
 msgid "speak typed words on"
 msgstr "टङ्कण गरेको शब्द बताईनेछ ।"
 
-#: globalCommands.py:781
+#: globalCommands.py:782
 msgid "speaks the current foreground object"
 msgstr "चालू अग्रभूमीको वस्तु बताउने छ ।"
 
 #. Translators: A speech mode which will cause NVDA to beep instead of speaking.
-#: globalCommands.py:622
+#: globalCommands.py:623
 msgid "speech mode beeps"
 msgstr "टीँ टीँ मुद्रा "
 
 #. Translators: A speech mode which dissables speech output.
-#: globalCommands.py:619
+#: globalCommands.py:620
 msgid "speech mode off"
 msgstr "मौन मुद्रा "
 
 #. Translators: The normal speech mode; i.e. NVDA will talk as normal.
-#: globalCommands.py:625
+#: globalCommands.py:626
 msgid "speech mode talk"
 msgstr "वाचन मुद्रा "
 
@@ -5577,7 +5844,7 @@ msgid "subject: %s"
 msgstr "विषयः %s "
 
 #. Translators: Displayed in braille when an object has a popup (usually a sub-menu).
-#: braille.py:262
+#: braille.py:269
 msgid "submnu"
 msgstr "उपमेनु"
 
@@ -5594,7 +5861,7 @@ msgstr "टाउकोमा"
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
 #. %s will be replaced with the symbol level; e.g. none, some, most and all.
-#: globalCommands.py:225
+#: globalCommands.py:226
 #, python-format
 msgid "symbol level %s"
 msgstr "सङ्केत तह %s"
@@ -5637,7 +5904,7 @@ msgstr "{columnCount} महलहरू र {rowCount} हरफहरू भ�
 
 #. Translators: Displayed in braille for an object which is a
 #. table.
-#: braille.py:245
+#: braille.py:252
 msgid "tb"
 msgstr "वृक्षपट्टि"
 
@@ -5672,9 +5939,9 @@ msgid "text frame"
 msgstr "पाठ फ्रेम"
 
 #. Translators: This is the name of a combobox in the mouse settings dialog.
-#: gui/settingsDialogs.py:659
+#: gui/settingsDialogs.py:671
 msgid "text reporting unit"
-msgstr "पाठ बताउने एकाइ"
+msgstr "पाठ प्रतिवेदन एकाइ"
 
 #: controlTypes.py:343
 msgid "thumb control"
@@ -5696,7 +5963,7 @@ msgstr "औजार पट्टी"
 msgid "tool tip"
 msgstr "औजार टिपोट"
 
-#: globalCommands.py:459 globalCommands.py:471 globalCommands.py:513
+#: globalCommands.py:460 globalCommands.py:472 globalCommands.py:514
 msgid "top"
 msgstr "सिरान"
 
@@ -5714,7 +5981,7 @@ msgstr "वृक्ष दृश्य सामाग्री"
 
 #. Translators: Displayed in braille for an object which is a
 #. tree view.
-#: braille.py:242
+#: braille.py:249
 msgid "tv"
 msgstr "औजार दृश्य"
 
@@ -5765,7 +6032,7 @@ msgstr "%s चुनिएन"
 msgid "up arrow"
 msgstr "माथि arrow"
 
-#: virtualBuffers/__init__.py:859
+#: virtualBuffers/__init__.py:861
 #, python-format
 msgid "use screen layout %s"
 msgstr "पर्दाको रूपरेखा %s प्रयोग गर"
@@ -5782,7 +6049,7 @@ msgid "visited"
 msgstr "हेरीएको"
 
 #. Translators: Displayed in braille for a link which has been visited.
-#: braille.py:429
+#: braille.py:439
 msgid "vlnk"
 msgstr "हेरेको"
 
@@ -5866,7 +6133,7 @@ msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} देखि {lastAddress} {lastContent} सम्म"
 
 #. Translators: This is the estimated remaining runtime of the laptop battery.
-#: globalCommands.py:864
+#: globalCommands.py:865
 msgid "{hours:d} hours and {minutes:d} minutes remaining"
 msgstr "{hours:d} घण्टा र {minutes:d} मिनेट काम गर्ला"
 
@@ -5912,9 +6179,9 @@ msgstr ""
 "यो इजाजत अनलाइनमा हेर्न : http://www.gnu.org/licenses/old-licenses/gpl-2.0."
 "html मा भ्रमण गर्नु होला ।\n"
 "\n"
-"{name}- एउटा NV Access नामक  नाफा नलिई दृश्य विहीन तथा देख्न कठिनाइ भएका "
+"{name}- एउटा NV Access नामक नाफा नलिई दृश्य विहीन तथा देख्न कठिनाइ भएका "
 "व्यक्तिहरूका लागि निःशुल्क र खुल्ला श्रोत युक्त समाधान मार्फत सहयोग एवम् प्रवर्धन गर्न "
-"वचनबद्ध संस्था  को उत्पादन हो ।\n"
+"वचनबद्ध संस्था को उत्पादन हो ।\n"
 "यदि नेत्रवाणी उपयोगी जस्तो लाग्यो र यसको निरन्तर विकास होस् भन्ने चाहना राख्नु हुन्छ भने, "
 "कृपया NV Access लाई चन्दा दिनु होस् । दान गर्नका लागि तपाइले 'दान गर्नु होस् ' भन्ने मेनु "
 "लाई चयन गर्नु होला ।"
@@ -5925,7 +6192,7 @@ msgstr ""
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#: braille.py:460 speech.py:825
+#: braille.py:470 speech.py:825
 msgid "{number} of {total}"
 msgstr "{total} मद्धे {number}"
 
@@ -5951,6 +6218,9 @@ msgstr ""
 #: NVDAObjects/behaviors.py:359
 msgid "{symbol} as in {description}"
 msgstr "जस्तै {description} मा {symbol} "
+
+#~ msgid "Translation &table:"
+#~ msgstr "अनुवाद &तालिका"
 
 #~ msgid "%s %s through %s %s"
 #~ msgstr "%s %s देखि %s %s सम्म"

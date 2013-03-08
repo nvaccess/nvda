@@ -4,17 +4,43 @@ Qué hay de Nuevo en NVDA
 %!includeconf: ../changes.t2tconf
 
 = 2013.1 =
+Lo más subrayable en esta versión incluye una distribución de teclado portátil más intuitiva y consistente; soporte básico para Microsoft PowerPoint; soporte para descripciones largas en navegadores web; y soporte para la entrada de braille computerizado para líneas braille que tengan un teclado braille.
+
+== Importante ==
+
+=== Nueva Distribución Teclado Portátil ===
+La distribución de teclado portátil se rediseñó por completo para hacerla más intuitiva y consistente.
+La nueva distribución utiliza las teclas de cursor en combinación con la tecla NVDA y otras modificadoras para órdenes de revisión.
+
+Por favor ten en cuenta los siguientes  cambios para órdenes comúnmente utilizadas:
+|| Nombre | Tecla |
+| Leer todo | NVDA+a |
+| Leer línea actual | NVDA+l |
+| Leer selección de texto actual | NVDA+shift+s |
+| Anunciar barra de estado | NVDA+shift+fin |
+Además, entre otros cambios, han variado las órdenes para toda la navegación de objetos, revisión de texto, clic del ratón y grupos de opciones del sintetizador.
+Por favor mira el documento [Referencia Rápida de Órdenes keyCommands.html] para las nuevas teclas.
+
 
 == Nuevas Características ==
+- Soporte básico para editar y leer presentaciones de Microsoft PowerPoint. (#501)
 - Soporte básico para leer y escribir mensajes en Lotus Notes 8.5. (#543)
 - En modo Navegación para MSHTML (ej.: Internet Explorer) y Gecko (ej.: Firefox), ahora se anuncia la existencia de descripciones largas. También es posible abrir la descripción larga en una ventana nueva pulsando NVDA+d. (#809)
 - Las notificaciones en Internet Explorer 9 y superior ahora se verbalizan (tales como contenido bloqueado o descargas de ficheros). (#2343)
 - El anunciado automático de los encabezados de fila y columna ahora se soporta para documentos en modo navegación en Internet Explorer y otros controles MSHTML. (#778)
 - Nuevo idioma: Aragonés
-- Nueva tabla de transcripción braille:  Danés grado 2.
+- Nuevas tablas de transcripción braille:  Danés grado 2, Coreano grado 1.
 - Soporte para líneas braille conectadas a través de bluetooth en un ordenador ejecutando el Bluetooth Stack for Windows de Toshiba. (#2419)
 - Soporte para la selección de puerto cuando se utilicen líneas freedom Scientific (Automático, USB o Bluetooth).
 - Soporte para la familia BrailleNote de anotadores electrónicos de Humanware cuando actúen como una terminal braille para un lector de pantalla. (#2012)
+- Soporte para  modelos antiguos de las líneas braille Papenmeier BRAILLEX. (#2679)
+- Soporte para la entrada de braille computerizado  para líneas braille que tengan un teclado braille. (#808)
+- Nuevas opciones de teclado que permiten  elegir si NVDA debería interrumpir la voz para los caracteres escritos o la tecla Intro. (#698)
+
+
+== Cambios ==
+- Actualizado el transcriptor braille liblouis a 2.5.2. (#2737)
+- La distribución de teclado portátil se ha rediseñado por completo para hacerla más intuitiva y consistente. (#804)
 
 
 == Corrección de Fallos ==
@@ -22,18 +48,37 @@ Qué hay de Nuevo en NVDA
 - Si NVDA regresa a eSpeak o no habla debido a un sintetizador de voz configurado que falla cuando NVDA se inicia, la configuración ya no se actualiza para  configurarse con el sintetizador al que se retornó como la elección configurada, lo que significa que ahora el sintetizador original se probará de nuevo la próxima vez que NVDA arranque. (#2589)
 - En modo navegación en aplicaciones de Mozilla, las actualizaciones de las tablas ahora se procesan correctamente. Por ejemplo, en actualización de celdas, las coordenadas de fila y columna se anuncian y la navegación de la tabla funciona como debería. (#2784)
 - En modo navegación en navegadores web, ciertos gráficos cliqueables no etiquetados que no se procesaban anteriormente ahora se procesan correctamente. (#2838)
-- Las versiones anteriores y actuales T (tales como la 6.1.1) ahora se soportan. (#2800)
+- Las versiones anteriores y actuales (tales como la 6.1.1) ahora se soportan. (#2800)
 - Para métodos de entrada tales como Easy Dots IME bajo XP, la cadena de lectura ahora se anuncia correctamente.
 - La lista de candidatos del método de entrada Chino Simplificado Microsoft Pinyin bajo Windows 7 ahora se lee correctamente cuando se cambian páginas con las flechas izquierda y derecha, y cuando se la abre primero con Inicio.
 - Cuando se guarda la información de pronunciación personalizada de símbolos , el campo avanzado "preserve" ya no se elimina. (#2852)
 - Cuando se desactiva la detección automática de actualizaciones, NVDA ya no ha de ser reiniciado para que todos los cambios tengan efecto.
-- NVDA ya no falla al iniciarse si un complemento no se puede eliminar debido a que su directorio está siendo actualmente usado por otra aplicación. (#2860)
- 
+- NVDA ya no falla al iniciarse si un complemento no se puede eliminar debido a que su directorio se esté utilizando actualmente por otra aplicación. (#2860)
+- Las etiquetas de pestañas en el diálogo de preferencias de DropBox ahora pueden verse con la Revisión Plana. 
+- Si el idioma de entrada se cambia a algún otro que el predeterminado, NVDA ahora detecta las teclas correctamente para órdenes y el modo de ayuda de entrada.
+- Para idiomas tales como el alemán donde el signo + (más) es una  tecla sola en el teclado, ahora es posible vincularle órdenes utilizando la palabra "plus". (#2898)
+- En Internet Explorer y otros controles  MSHTML, las comillas ahora se anuncian donde proceda. (#2888)
+- El controlador de las líneas HumanWare Brailliant BI/Bbraille ahora puede  seleccionarse cuando las líneas estén conectadas a través de Bluetooth pero nunca se hayan conectado a través de USB.
+- El filtrado de elementos en la Lista de Elementos del modo navegación con el filtro de texto en mayúsculas ahora devuelve resultados no sensibles a las mayúsculas igual que en minúsculas en lugar de nada en absoluto. (#2951)
+- En navegadores de Mozilla, el modo navegación puede utilizarse de nuevo cuando se enfoque contenido Flash. (#2546)
+- Cuando se utilice una tabla de braille contraído y esté habilitada la opción expandir a braille computerizado para la palabra en el cursor , el cursor braille ahora se coloca correctamente cuando se encuentre después de  una palabra donde un carácter se  represente con varias celdas braille (ej.: signo de mayúsculas, signo de diálogo, signo de número, etc.). (#2947)
+- La selección de texto ahora se muestra correctamente en una línea braille en aplicaciones tales como controles de edición de Microsoft word 2003 e Internet Explorer.
+- Es posible de nuevo seleccionar texto en una dirección hacia atrás en Microsoft Word mientras esté habilitado el Braille.
+- Cuando se esté en revisión,  eliminando caracteres con retroceso o suprimir en controles de edición de Scintilla, NVDA anuncia correctamente caracteres multibyte. (#2855)
+- NVDA ya no fallará al instalar cuando la ruta del perfil de usuario contenga ciertos caracteres multibyte. (#2729)
+- El anunciado de grupos para controles Vista de Lista (SysListview32) en aplicaciones de 64 bit ya no causa un error.
++- En modo navegación en aplicaciones de Mozilla, el contenido de texto ya no se trata incorrectamente como editable en algunos casos extraños. (#2959)
+- En IBM Lotus Symphony y OpenOffice, moviendo el cursor del sistema ahora se mueve  el cursor de revisión si procede.
+- El contenido de Adobe Flash ahora es accesible en Internet Explorer en Windows 8. (#2454)
+
 
 == Cambios para Desarrolladores ==
 - Los controladores de línea Braille ahora pueden soportar la selección manual de puertos. (#426)
  - Esto es mayoritariamente útil para líneas braille que soporten conexión a través de un puerto serie.
  - Esto se hace utilizando el método de la clase getPossiblePorts en la clase BrailleDisplayDriver.
+- Ahora se soporta la entrada braille  desde teclados braille. (#808)
+ - La entrada braille se abarca por la clase brailleInput.BrailleInputGesture o una subclase de la misma.
+ - Las subclases de braille.BrailleDisplayGesture (según se implementaron en los controladores de las líneas braille) también pueden heredar de brailleInput.BrailleInputGesture. Esto permite mostrar órdenes  y que la entrada braille se maneje por la misma clase gesture.
 
 
 = 2012.3 =

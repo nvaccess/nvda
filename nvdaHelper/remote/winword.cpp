@@ -34,6 +34,7 @@ using namespace std;
 #define wdDISPID_APPLICATION_SCREENUPDATING 26
 #define wdDISPID_SELECTION_RANGE 400
 #define wdDISPID_SELECTION_SETRANGE 100
+#define wdDISPID_SELECTION_STARTISACTIVE 404
 #define wdDISPID_RANGE_STORYTYPE 7
 #define wdDISPID_RANGE_MOVEEND 111
 #define wdDISPID_RANGE_COLLAPSE 101
@@ -158,6 +159,10 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
+	BOOL startWasActive=false;
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,&startWasActive)!=S_OK) {
+		LOG_DEBUGWARNING(L"selection.StartIsActive failed");
+	}
 	IDispatch* pDispatchOldSelRange=NULL;
 	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK||!pDispatchOldSelRange) {
 		LOG_DEBUGWARNING(L"selection.range failed");
@@ -174,6 +179,8 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
 	//Move the selection back to its original location
 	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
+	//Restore the old selection direction
+	_com_dispatch_raw_propput(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,startWasActive);
 	//Reenable screen updating
 	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }

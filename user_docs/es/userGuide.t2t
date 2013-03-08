@@ -20,7 +20,7 @@ Lo más reseñable incluye:
 - Sintetizador de voz integrado que soporta sobre 43 idiomas
 - anunciado de formato de texto donde esté disponible tal como nombre y tamaño de la fuente, estilo y errores de ortografía
 - Anunciado automático de texto bajo el ratón e indicación opcional audible  de la posición del ratón
-- Soporte para muchas líneas de braille efímero
+- Soporte para muchas líneas de braille efímero incluyendo la entrada de braille computerizado para líneas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
 - Traducido a 42 idiomas
@@ -227,15 +227,15 @@ Cuando aparezca el menú, puedes utilizar las teclas de cursor para navegar por 
 
 ++ Órdenes Básicas de NVDA ++
 %kc:beginInclude
-|| Nombre | Tecla | Táctil | Descripción |
-| Detener voz | Control | toque con 2 dedos | Detiene la voz instantáneamente |
-| Pausar Voz | Shift | no | Pausa la voz instantáneamente, pulsándola nuevamente continuará hablando donde se detuvo (si el pausado se soporta por el sintetizador actual) |
-| Menú NVDA | NVDA+n | doble toque con 2 dedos | despliega el menú NVDA para permitirte acceder a preferencias, herramientas y ayuda etc. |
-| Conmutar Modo Ayuda de entrada | NVDA+1 | no | Pulsando cualquier tecla  en este modo se anunciará la tecla, y la descripción de cualquier orden de NVDA asociada con ella | 
-| Conmutar Modo de Voz | NVDA+s | no | Conmuta el modo voz entre verbalizar, pitidos y desactivado. |
-| Salir de NVDA | NVDA+q | no | Sale de NVDA |
-| Dejar pasar siguiente tecla | NVDA+f2 | no | Dice a NVDA que deje pasar la siguiente tecla pulsada directamente a la aplicación activa, si está normalmente tratada como una tecla de órdenes de NVDA |
-| activar y desactivar modo de aplicación silencioso | NVDA+shift+s | no ! el modo silencioso desactiva todas las órdenes de NVDA y la salida de voz/braille para la aplicación actual. Esto es más útil en aplicaciones que proporcionan su propia voz o características de lectura de pantalla. Pulsa esta orden nuevamente para desactivar el modo silencioso. |
+|| Nombre | Tecla escritorio | Tecla portátil | Táctil | Descripción |
+| Detener voz | Control |  control | toque con 2 dedos | Detiene la voz instantáneamente |
+| Pausar Voz | Shift | shift | no | Pausa la voz instantáneamente, pulsándola nuevamente continuará hablando donde se detuvo (si el pausado se soporta por el sintetizador actual) |
+| Menú NVDA | NVDA+n | NVDA+n | doble toque con 2 dedos | despliega el menú NVDA para permitirte acceder a preferencias, herramientas y ayuda etc. |
+| Conmutar Modo Ayuda de entrada | NVDA+1 | NVDA+1 | no | Pulsando cualquier tecla  en este modo se anunciará la tecla, y la descripción de cualquier orden de NVDA asociada con ella | 
+| Conmutar Modo de Voz | NVDA+s | NVDA+s | no | Conmuta el modo voz entre verbalizar, pitidos y desactivado. |
+| Salir de NVDA | NVDA+q | NVDA+q | no | Sale de NVDA |
+| Dejar pasar siguiente tecla | NVDA+f2 | NVDA+f2 | no | Dice a NVDA que deje pasar la siguiente tecla pulsada directamente a la aplicación activa, si está normalmente tratada como una tecla de órdenes de NVDA |
+| activar y desactivar modo de aplicación silencioso | NVDA+shift+s | NVDA+shift+z | no ! el modo silencioso desactiva todas las órdenes de NVDA y la salida de voz/braille para la aplicación actual. Esto es más útil en aplicaciones que proporcionan su propia voz o características de lectura de pantalla. Pulsa esta orden nuevamente para desactivar el modo silencioso. |
 %kc:endInclude
 
 ++ Anunciando Información del Sistema ++
@@ -262,11 +262,11 @@ Cuando hagas esto, NVDA anunciará información sobre lo que tiene el foco, tal 
 
 Hay algunas órdenes de teclado útiles cuando nos movamos con el foco:
 %kc:beginInclude
-|| Nombre | tecla | Descripción |
-| Anunciar foco actual | NVDA+tab. | anuncia el objeto actual o control que tenga el foco del sistema. Pulsando dos veces deletreará la información  |
-| Anunciar título | NVDA+t | Anuncia el título de la ventana activa actualmente. Pulsando dos veces deletreará la información. Pulsándolo tres veces la copiará al portapapeles |
-| Leer la ventana activa | NVDA+b | lee todos los controles en la ventana actualmente activa (útil para diálogos) |
-| Anunciar Barra de Estado | NVDA+fin | Anuncia la barra de estado si NVDA encuentra una. También mueve el navegador de objetos a esta localización |
+|| Nombre | tecla escritorio | tecla portátil | Descripción |
+| Anunciar foco actual | NVDA+tab | NVDA+tab | anuncia el objeto actual o control que tenga el foco del sistema. Pulsando dos veces deletreará la información  |
+| Anunciar título | NVDA+t | NVDA+t | Anuncia el título de la ventana activa actualmente. Pulsando dos veces deletreará la información. Pulsándolo tres veces la copiará al portapapeles |
+| Leer la ventana activa | NVDA+b | NVDA+b | lee todos los controles en la ventana actualmente activa (útil para diálogos) |
+| Anunciar Barra de Estado | NVDA+fin | NVDA+shift+fin | Anuncia la barra de estado si NVDA encuentra una. También mueve el navegador de objetos a esta localización |
 %kc:endInclude
 
 ++ Navegando con el Cursor del Sistema ++[SystemCaret]
@@ -278,10 +278,10 @@ NVDA anunciará según te muevas por caráccteres, palabras, líneas, y también
 
 NVDA proporciona las siguientes teclas de órdenes en relación al cursor del sistema:
 %kc:beginInclude
-|| Nombre | Tecla | Descripción |
-| Leer todo | NVDA+Flecha Abajo | Comienza la lectura desde la posición actual del cursor del sistema, moviéndolo según se desplaza |
-| Leer línea actual | NVDA+Flecha Arriba | Lee la línea donde esté situado actualmente el cursor del sistema. Pulsando dos veces deletrea la línea. |
-| Leer la selección de texto actual | NVDA+Shift+Flecha Arriba | Lee cualquier texto seleccionado actualmente |
+|| Nombre | Tecla escritorio | Tecla portátil | Descripción |
+| Leer todo | NVDA+Flecha Abajo | NVDA+a | Comienza la lectura desde la posición actual del cursor del sistema, moviéndolo según se desplaza |
+| Leer línea actual | NVDA+Flecha Arriba | NVDA+l | Lee la línea donde esté situado actualmente el cursor del sistema. Pulsando dos veces deletrea la línea. |
+| Leer la selección de texto actual | NVDA+Shift+Flecha Arriba | NVDA+shift+s | Lee cualquier texto seleccionado actualmente |
 
 
 Cuando estés en una tabla, las siguientes teclas de órdenes también están disponibles:
@@ -321,11 +321,11 @@ Para navegar por objetos, utiliza las siguientes órdenes:
 
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portátil | Táctil | Descripción |
-| Anunciar objeto actual | NVDA+5 Teclado numérico | NVDA+control+i | no | Anuncia el navegador de objetos actual. Pulsando dos veces deletrea la información y pulsando 3 veces copia este nombre y valor del objeto al portapapeles. |
-| Navegar a objeto contenedor | NVDA+8 teclado numérico | NVDA+shift+i | deslizar arriba (Modo objeto) | Navega al contenedor del navegador de objetos actual |
-| Navegar al objeto anterior | NVDA+4 teclado numérico | NVDA+control+j | deslizar a la izquierda (modo objeto) | Navega al objeto directamente antes del actual navegador de objetos |
-| Navegar al siguiente objeto | NVDA+6 teclado numérico | control+NVDA+l | deslizar a la derecha (modo objeto) | Navega al objeto directamente después del actual navegador de objetos |
-| Navegar al primer objeto contenido | NVDA+2 teclado numérico | NVDA+shift+coma | deslizar abajo (modo objeto) | Navega al primer objeto contenido por el actual navegador de objetos |
+| Anunciar objeto actual | NVDA+5 Teclado numérico | NVDA+shift+o  | no | Anuncia el navegador de objetos actual. Pulsando dos veces deletrea la información y pulsando 3 veces copia este nombre y valor del objeto al portapapeles. |
+| Navegar a objeto contenedor | NVDA+8 teclado numérico | NVDA+shift+flecha arriba  | deslizar arriba (Modo objeto) | Navega al contenedor del navegador de objetos actual |
+| Navegar al objeto anterior | NVDA+4 teclado numérico | NVDA+shift+flecha izquierda | deslizar a la izquierda (modo objeto) | Navega al objeto directamente antes del actual navegador de objetos |
+| Navegar al siguiente objeto | NVDA+6 teclado numérico | NVDA+shift+flecha derecha  | deslizar a la derecha (modo objeto) | Navega al objeto directamente después del actual navegador de objetos |
+| Navegar al primer objeto contenido | NVDA+2 teclado numérico | NVDA+shift+flecha abajo  | deslizar abajo (modo objeto) | Navega al primer objeto contenido por el actual navegador de objetos |
 | Navegar al objeto del foco | NVDA+Menos teclado numérico | NVDA+Retroceso | no | Navega al objeto que tiene actualmente el foco del sistema, y también coloca el cursor de revisión en la posición del cursor del Sistema, si se muestra |
 | Activar actual navegador de objetos | NVDA+Intro teclado numérico | NVDA+Intro | doble toque | Activa el actual navegador de objetos (similar a hacer clic con el ratón o pulsar espacio cuando tiene el foco del sistema) |
 | Mover foco del Sistema a actual navegador de objetos | NVDA+shift+Menos teclado numérico | NVDA+shift+retroceso | no | pulsado una vez Mueve el foco del Sistema al navegador de objetos actual, pulsado dos veces mueve el cursor del sistema a la posición del cursor de revisión |
@@ -349,20 +349,20 @@ Si en su lugar quieres seguir al navegador de objetos y a la revisión de texto,
 Las siguientes órdenes están disponibles para revisión de texto: 
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portátil | Táctil | Descripción |
-| mover a la línea superior en revisión | shift+7 teclado numérico | NVDA+7 | no | Mueve el cursor de revisión a la línea superior del texto |
-| Mover a la línea anterior en revisión | 7 teclado numérico | NVDA+u | deslizar arriba (modo texto) | Mueve el cursor de revisión a la línea anterior de texto |
-| Anunciar línea actual en revisión | 8 teclado numérico | NVDA+i | no | Anuncia la línea actual de texto donde esté colocado el cursor de revisión. Pulsando dos veces deletrea la línea, Pulsando tres veces deletrea la línea utilizando descripciones de carácteres. |
-| Mover a la línea siguiente en revisión | 9 teclado numérico | NVDA+o | deslizar abajo (modo texto) | Mueve el cursor de revisión a la línea siguiente de texto |
-| Mover a la línea inferior en revisión | shift+9 teclado numérico | NVDA+9 | no | Mueve el cursor de revisión a la línea inferior de texto |
-| Mover a la palabra anterior en revisión | 4 teclado numérico | NVDA+j | deslizar con 2 dedos a la izquierda (modo texto) | Mueve el cursor de revisión a la palabra anterior en el texto |
-| Anunciar palabra actual en revisión | 5 teclado numérico | NVDA+k | no | Anuncia la palabra actual en el texto donde esté posicionado el cursor de revisión. Pulsando dos veces deletrea la palabra, pulsando tres veces deletrea la palabra utilizando descripciones de carácteres. |
-| Mover a la siguiente palabra en revisión | 6 teclado numérico | NVDA+l | desplazar con 2 dedos a la derecha (modo texto) | Mueve el cursor de revisión a la siguiente palabra en el texto |
-| mover al inicio de la línea en revisión | shift+1 teclado numérico | NVDA+shift+u | no | Mueve el cursor de revisión al comienzo de la línea actual en el texto |
-| Mover al carácter anterior en revisión | 1 teclado numérico | NVDA+m | deslizar a la izquierda (modo texto) | Mueve el cursor de revisión al carácter anterior en la línea actual en el texto |
-| Anunciar carácter actual en revisión | 2 teclado numérico | NVDA+coma | no | Anuncia el carácter actual en la línea de texto donde esté posicionado el cursor de revisión. Pulsando dos veces anuncia una descripción o ejemplo de ese carácter. Pulsando tres veces anuncia el valor numérico del carácter en decimal y hexadecimal. |
-| Mover al siguiente carácter en revisión | 3 teclado numérico | NVDA+punto | deslizar a la derecha (modo texto) | Mueve el cursor de revisión al siguiente carácter en la línea actual de texto |
-| Mover al final de la línea en revisión | shift+3 teclado numérico | NVDA+shift+o | no | Mueve el cursor de revisión al final de la línea actual de texto |
-| Leer todo con revisión | Más teclado numérico | NVDA+shift+Flecha abajo | deslizar con 3 dedos abajo (modo texto) | Lee desde la posición actual del cursor de revisión, moviéndolo según baja |
+| mover a la línea superior en revisión | shift+7 teclado numérico | NVDA+control+inicio  | no | Mueve el cursor de revisión a la línea superior del texto |
+| Mover a la línea anterior en revisión | 7 teclado numérico | NVDA+flecha arriba  | deslizar arriba (modo texto) | Mueve el cursor de revisión a la línea anterior de texto |
+| Anunciar línea actual en revisión | 8 teclado numérico | NVDA+shift+.  | no | Anuncia la línea actual de texto donde esté colocado el cursor de revisión. Pulsando dos veces deletrea la línea, Pulsando tres veces deletrea la línea utilizando descripciones de carácteres. |
+| Mover a la línea siguiente en revisión | 9 teclado numérico | NVDA+FLECHA abajo  | deslizar abajo (modo texto) | Mueve el cursor de revisión a la línea siguiente de texto |
+| Mover a la línea inferior en revisión | shift+9 teclado numérico | NVDA+control+fin | no | Mueve el cursor de revisión a la línea inferior de texto |
+| Mover a la palabra anterior en revisión | 4 teclado numérico | NVDA+control+flecha izquierda  | deslizar con 2 dedos a la izquierda (modo texto) | Mueve el cursor de revisión a la palabra anterior en el texto |
+| Anunciar palabra actual en revisión | 5 teclado numérico | NVDA+control+.  | no | Anuncia la palabra actual en el texto donde esté posicionado el cursor de revisión. Pulsando dos veces deletrea la palabra, pulsando tres veces deletrea la palabra utilizando descripciones de carácteres. |
+| Mover a la siguiente palabra en revisión | 6 teclado numérico | NVDA+control+flecha derecha  | desplazar con 2 dedos a la derecha (modo texto) | Mueve el cursor de revisión a la siguiente palabra en el texto |
+| mover al inicio de la línea en revisión | shift+1 teclado numérico | NVDA+inicio  | no | Mueve el cursor de revisión al comienzo de la línea actual en el texto |
+| Mover al carácter anterior en revisión | 1 teclado numérico | NVDA+flecha izquierda  | deslizar a la izquierda (modo texto) | Mueve el cursor de revisión al carácter anterior en la línea actual en el texto |
+| Anunciar carácter actual en revisión | 2 teclado numérico | NVDA+. | no | Anuncia el carácter actual en la línea de texto donde esté posicionado el cursor de revisión. Pulsando dos veces anuncia una descripción o ejemplo de ese carácter. Pulsando tres veces anuncia el valor numérico del carácter en decimal y hexadecimal. |
+| Mover al siguiente carácter en revisión | 3 teclado numérico | NVDA+flecha derecha | deslizar a la derecha (modo texto) | Mueve el cursor de revisión al siguiente carácter en la línea actual de texto |
+| Mover al final de la línea en revisión | shift+3 teclado numérico | NVDA+fin | no | Mueve el cursor de revisión al final de la línea actual de texto |
+| Leer todo con revisión | Más teclado numérico | NVDA+shift+a | deslizar con 3 dedos abajo (modo texto) | Lee desde la posición actual del cursor de revisión, moviéndolo según baja |
 | copiar desde cursor de revisión | NVDA+f9 | NVDA+f9 | no | Comienza el copiado de texto desde la posición actual del cursor de revisión. La copia actual no se lleva a cabo hasta que digas a NVDA dónde copiar |
 | Copiar a cursor de revisión | NVDA+f10 | NVDA+f10 | no | Copia desde la posición del cursor de revisión actualmente fijada con Copiar desde cursor de revisión, a la actual posición del cursor de revisión.  Después de pulsar esta tecla, el texto se copiará al portapapeles de Windows |
 | Anunciar formato del texto | NVDA+f | NVDA+f | no | Informa del formato del texto donde esté situado actualmente el cursor de revisión |
@@ -370,7 +370,7 @@ Las siguientes órdenes están disponibles para revisión de texto:
 
 nota: las teclas del teclado numérico requieren que la tecla BloqNum sea desactivada para funcionar apropiadamente.
 
-Para ayudarte a recordar las órdenes de teclado, ten en cuenta que las órdenes de revisión básica de texto se organizan en una rejilla de tres por tres, yendo de superior a inferior con línea, palabra y carácter y yendo de izquierda a derecha   con anterior, actual y siguiente.
+Una buena manera Para recordar  las órdenes básicas de revisión de texsto cuando se utiliza la distribución de escritorio es imaginarlas en una rejilla de tres por tres, yendo de superior a inferior con línea, palabra y carácter y yendo de izquierda a derecha   con anterior, actual y siguiente.
 La disposición está ilustrada como sigue:
 | Línea anterior | Línea actual | Línea siguiente |
 | Palabra anterior | Palabra actual | Palabra siguiente |
@@ -415,12 +415,12 @@ Si deseas sacar partido de ellas, puedes configurarlas desde el diálogo [Opcion
 Si bien un ratón físico o un trackpad se podrían utilizar para navegar con el ratón, NVDA tiene unas pocas teclas de órdenes relacionadas con el ratón:
 %kc:beginInclude
 || Nombre | Tecla Escritorio | Tecla Portátil | Descripción |
-| Clic botón izquierdo del ratón | Dividir teclado numérico | NVDA+Flecha izquierda | Hace clic en el botón izquierdo del ratón una vez. El común doble clic puede llevarse a cabo pulsando esta tecla dos veces en rápida sucesión |
-| Bloquear botón izquierdo del ratón | shift+Dividir teclado numérico | NVDA+shift+Flecha izquierda | Mantiene pulsado el botón izquierdo del ratón. Púlsalo de nuevo para liberarlo. Para arrastrar el ratón,  pulsa esta tecla para bloquear el botón izquierdo y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
-| Clic botón derecho del ratón | Multiplicar teclado numérico | NVDA+flecha derecha | Hace Clic en el botón derecho del ratón una vez. |
-| Bloquear botón derecho del ratón | shift+Multiplicar teclado numérico | NVDA+shift+flecha derecha | Mantiene pulsado el botón derecho del ratón. Pulsa otra vez para liberarlo. Para arrastrar el ratón,  pulsa esta tecla  para bloquear el botón derecho y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
-| Mover ratón a navegador de objetos actual | NVDA+Dividir teclado numérico | NVDA+shift+f9 | Mueve el ratón a la posición del navegador de objetos actual y cursor de revisión |
-| navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+f10 | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
+| Clic botón izquierdo del ratón | Dividir teclado numérico | NVDA+[ | Hace clic en el botón izquierdo del ratón una vez. El común doble clic puede llevarse a cabo pulsando esta tecla dos veces en rápida sucesión |
+| Bloquear botón izquierdo del ratón | shift+Dividir teclado numérico | NVDA+control+[ | Mantiene pulsado el botón izquierdo del ratón. Púlsalo de nuevo para liberarlo. Para arrastrar el ratón,  pulsa esta tecla para bloquear el botón izquierdo y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
+| Clic botón derecho del ratón | Multiplicar teclado numérico | NVDA+] | Hace Clic en el botón derecho del ratón una vez. |
+| Bloquear botón derecho del ratón | shift+Multiplicar teclado numérico | NVDA+control+] | Mantiene pulsado el botón derecho del ratón. Pulsa otra vez para liberarlo. Para arrastrar el ratón,  pulsa esta tecla  para bloquear el botón derecho y entonces mueve el ratón físicamente o utiliza una de las otras órdenes de enrutamiento del ratón |
+| Mover ratón a navegador de objetos actual | NVDA+Dividir teclado numérico | NVDA+shift+m | Mueve el ratón a la posición del navegador de objetos actual y cursor de revisión |
+| navegar al objeto bajo el ratón | NVDA+Multiplicar teclado numérico | NVDA+shift+n | Pone el navegador de objetos en el objeto localizado en la posición del ratón |
 %kc:endInclude
 
 + Modo Navegación +
@@ -678,10 +678,10 @@ Si estás teniendo problemas con la pronunciación de carácteres individuales, 
 Si deseas cambiar rápidamente opciones de voz  sin ir al diálogo de Opciones de Voz, hay algunas teclas de órdenes de NVDA que te permiten moverte a través de las opciones de voz más comunes, desde cualquier lugar mientras se ejecuta NVDA:
 %kc:beginInclude
 || Nombre | Tecla Sobremesa | Tecla Portátil | Descripción |
-| Mover a la siguiente opción de sintetizador | NVDA+control+Flecha derecha | NVDA+control+Flecha derecha | Se mueve a la siguiente opción de voz disponible después de la actual, pasando por la primera opción de nuevo después de la última |
-| Mover a la opción de sintetizador anterior | NVDA+control+Flecha izquierda | NVDA+control+Flecha izquierda | Se mueve a la opción de voz anterior disponible después de la actual, pasando por la primera opción de nuevo después de la última |
-| Incrementar actual opción de sintetizador | NVDA+control+Flecha arriba | NVDA+control+Flecha arriba | incrementa la opción de voz actual sobre la que estés. Ej.: incrementa la velocidad, elige la siguiente voz, incrementa el volumen |
-| Decrementar actual opción de sintetizador | NVDA+control+Flecha abajo | NVDA+control+Flecha abajo | decrementa la opción de voz actual sobre la que estés. Ej.: decrementa la velocidad, elige  la voz anterior, decrementa el volumen |
+| Mover a la siguiente opción de sintetizador | NVDA+control+Flecha derecha | NVDA+shift+control+Flecha derecha | Se mueve a la siguiente opción de voz disponible después de la actual, pasando por la primera opción de nuevo después de la última |
+| Mover a la opción de sintetizador anterior | NVDA+control+Flecha izquierda | NVDA+shift+control+Flecha izquierda | Se mueve a la opción de voz anterior disponible después de la actual, pasando por la primera opción de nuevo después de la última |
+| Incrementar actual opción de sintetizador | NVDA+control+Flecha arriba | NVDA+shift+control+Flecha arriba | incrementa la opción de voz actual sobre la que estés. Ej.: incrementa la velocidad, elige la siguiente voz, incrementa el volumen |
+| Decrementar actual opción de sintetizador | NVDA+control+Flecha abajo | NVDA+shift+control+Flecha abajo | decrementa la opción de voz actual sobre la que estés. Ej.: decrementa la velocidad, elige  la voz anterior, decrementa el volumen |
 %kc:endInclude
 
 +++ Opciones de Braille +++
@@ -700,7 +700,7 @@ Por favor mira la sección [Líneas Braille Soportadas #SupportedBrailleDisplays
 Esta opción, si está disponible, te permite elegir qué puerto o tipo de conexión se utilizará para comunicar con la línea braille que tengas seleccionada.
 Es un cuadro combinado que contiene las opciones posibles para tu línea braille.
 
-Predeterminadamente, NVDA emplea la detección de puerto automática, lo cual significa que la conexión con el dispositivo braille se establecerá automáticamente escaneando los dispositivos USB y bluetooth disponibles en tu sistema.
+De forma predeterminada, NVDA emplea la detección de puerto automática, lo cual significa que la conexión con el dispositivo braille se establecerá automáticamente escaneando los dispositivos USB y bluetooth disponibles en tu sistema.
 Por lo tanto, para algunas líneas braille, podrás elegir explícitamente qué puerto debería utilizarse.
 Opciones comunes son "Automático" (que dice a NVDA que emplee el procedimiento de selección de puerto predeterminado automático), "USB", "Bluetooth" y los puertos de comunicación serie si tu línea braille soportan este tipo de comunicación.
 
@@ -708,11 +708,22 @@ Esta opción no estaría disponible si tu línea braille sólo soporta detecció
 
 Podrás consultar la documentación para tu línea braille en la sección [Líneas Braille Soportadas #SupportedBrailleDisplays] para informarte de más detalles sobre los tipos soportados de puertos y comunicación disponibles.
 
-==== Tabla de Transcripción ====
-La siguiente opción que vendrá en este diálogo es el cuadro combinado para las tablas braille. 
-En este cuadro combinado, encontrarás tablas braille para diferentes idiomas. Puedes moverte de tabla braille a tabla braille en la lista utilizando las flechas.
+==== Tabla de Salida ====
+La siguiente opción que vendrá en este diálogo es el cuadro combinado de la tabla de salida braille.
+En este cuadro combinado, encontrarás tablas braille, estándares braille y grados para diferentes idiomas.
+La tabla elegida se utilizará para transcribir texto a braille para presentarlo en la línea braille.
+Puedes moverte entre las tablas braille en la lista utilizando las teclas de cursor.
 
-==== Expandir a braille de ordenador para la palabra en el cursor ====
+==== Tabla de Entrada ====
+Complementariamente con la opción anterior, el siguiente ajuste que encontrarás es el cuadro combinado de la tabla de entrada braille.
+La tabla elegida se utilizará para transcribir a texto el braille introducido en el teclado tipo perkins de la línea braille.
+Actualmente NVDA sólo soporta la entrada de braille computerizado, así que sólo se mostrarán tablas de braille computerizado de 8 puntos.
+Puedes moverte entre las tablas braille en la lista utilizando las teclas de cursor.
+
+Ten en cuenta que esta opción sólo es útil si tu línea braille tiene un teclado tipo Perkins y si esta característica se soporta por el controlador de la línea braille.
+Si la entrada no se soporta en una línea que tenga un teclado braille, esto se notificará en la sección [Líneas Braille Soportadas #SupportedBrailleDisplays].
+
+ ==== Expandir a braille de ordenador para la palabra en el cursor ====
 Esta opción permite a la palabra que está bajo el cursor ser mostrada en braille de ordenador no contraído.
 
 ==== Velocidad de Parpadeo del Cursor ====
@@ -760,7 +771,13 @@ Cuando está marcada significa que NVDA anunciará todos los carácteres según 
 ==== Verbalizar palabras al escribir ====
 Tecla: NVDA+3
 
-Cuando está marcada significa que NVDA anunciará todas las palabras al escribirlas en el teclado. 
+Cuando esté marcada significa que NVDA anunciará todas las palabras al escribirlas en el teclado. 
+
+==== Interrupción de Voz para Caracteres Escritos ====
+Si está activada, esta opción causará que la voz se interrumpa cada vez que se escriba un carácter. Esto está activado de manera predeterminada.
+
+==== Interrupción de Voz para la Tecla Intro ====
+Si está activada, esta opción causará que la voz se interrumpa cada vez que se pulse la tecla Intro. Esto está activado de manera predeterminada.
 
 ==== Pitar si se Teclean Letras Minúsculas Cuando BloqMayus está Activado ====
 Cuando está activada, se escuchará un pitido de aviso si se escribe una letra con la tecla shift mientras BloqMayus está activada.
@@ -782,9 +799,8 @@ Una casilla de verificación, que cuando se marca significa que NVDA anunciará 
 El puntero del ratón en Windows cambia su forma para comunicar cierta información tal como cuando algo es editable, o cuando algo es cargable etc.
 
 %kc:setting
-==== Anunciar texto bajo el Ratón ====
-| Tecla Escritorio | NVDA+m |
-| Tecla Portátil | NVDA+shift+m |
+==== Habilitar Seguimiento del  Ratón ====
+Tecla: NVDA+m |
 
 Cuando está marcada significa que NVDA anunciará el texto actualmente bajo el puntero del ratón, según lo muevas por la pantalla. Esto te permite encontrar cosas en la pantalla, moviendo físicamente el ratón, en lugar de tratar de encontrarlas a través del navegador de objetos.
 
@@ -800,7 +816,7 @@ Marcando esta casilla de verificación haces que NVDA reproduzca pitidos cuando 
 
 ==== El Brillo controla el volumen del audio ====
 Si la casilla de verificación 'reproducir audio cuando el ratón se mueva' está marcada, entonces marcando esta casilla de verificación significa que el volumen de los pitidos de audio está controlado por cómo el brillo de la pantalla esté bajo el ratón. 
-Esto está desverificado de forma predeterminada.
+Esta opción está desverificada de forma predeterminada.
 
 +++ Opciones de Cursor de Revisión +++
 Se encuentra en el menú Preferencias bajo "Cursor de Revisión..."
@@ -808,8 +824,7 @@ Este diálogo contiene las siguientes opciones:
 
 %kc:setting
 ==== Seguir al Foco Del sistema ====
-| Tecla Sobremesa | NVDA+7 |
-| Tecla Portátil | NVDA+control+7 |
+Tecla: NVDA+7
 
 Cuando se activa, el cursor de revisión siempre se colocará en el mismo objeto tan pronto como el actual foco del sistema cambie.
 
@@ -854,8 +869,7 @@ Desmarca esta casilla de verificación si crees que no necesitas escuchar la des
 
 %kc:setting
 ==== Salida en las Barras de Progreso ====
-| Tecla Sobremesa | NVDA+u |
-| Tecla Portátil | NVDA+control+f2 |
+Tecla: NVDA+u
 
 Esta opción se te presenta con un cuadro combinado que controla cómo NVDA anuncia las actualizaciones de las barras de progreso. 
 
@@ -1213,7 +1227,10 @@ Sólo para la Focus 80:
 ++ Optelec ALVA BC640/680 ++
 Ambas líneas ALVA BC640 y BC680 de [Optelec http://www.optelec.com/] se soportan.
 No necesitas instalar ningún controlador en especial para utilizar estas líneas.
-Sólo enchufa la línea y configura NVDA para utilizarlas.
+Sólo enchufa la línea y configura NVDA para utilizarla.
+
+Mientras estas líneas tengan un teclado braille, manejan la transcripción de braille a texto por sí mismas.
+Por lo tanto, la configuración de la tabla de entrada braille de NVDA es irrelevante.
 
 Seguidamente van las asignaciones de teclas para esta línea con NVDA.
 Por favor mira la documentación de la línea para descripciones de dónde pueden encontrarse estas teclas.
@@ -1242,6 +1259,8 @@ Por favor mira la documentación de la línea para descripciones de dónde puede
 ++ Líneas Handy Tech ++
 NVDA soporta todas las líneas de [Handy Tech http://www.handytech.de/].
 Para algunas líneas antiguas USB, necesitarás instalar los controladores USB de Handy Tech en tu sistema.
+
+La entrada Braille  todavía no está soportada.
 
 Seguidamente van las asignaciones de teclas para esta línea con NVDA.
 Por favor mira la documentación de la línea para descripciones de dónde pueden encontrarse estas teclas.
@@ -1381,6 +1400,8 @@ Por favor mira la documentación de la línea para descripciones de dónde puede
 ++ Series de la HIMS Braille Sense/Braille EDGE ++
 NVDA soporta las líneas Braille Sense y Braille EDGE de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
+
+La entrada Braille  todavía no está soportada.
 
 Seguidamente van las asignaciones de teclas para estas líneas con NVDA.
 Por favor mira la documentación de las líneas para descripciones de dónde pueden encontrarse estas teclas.
@@ -1522,9 +1543,93 @@ Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 | Anunciar barra de estado | l2+abajo |
 | Mover al objeto contenido | arriba2 |
 | Mover al primer objeto contenido | dn2 |
-| Mover al objeto anterior | left2 |
-| Mover al siguiente objeto | derecha2 |
+| Mover al objeto anterior | derecha2 |
+| Mover al siguiente objeto | izquierda2 |
 | Anunciar formato de texto | fila de sensores superior |
+%kc:endInclude
+
+++ Modelos Antiguos Papenmeier Braille BRAILLEX ++
+Se soportan las siguientes líneas Braille: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Ten en cuenta que estas líneas sólo se pueden conectar a través de un puerto serie.
+Por lo tanto, deberías seleccionar el puerto al cual se conecta la línea antes de haber elegido este controlador en el diálogo Opciones de Braille.
+
+Algunos de estos dispositivos tienen una barra de acceso rápido (EAB) que permite un accionamiento rápido e intuitivo.
+El EAB se puede mover en cuatro direcciones donde, generalmente, cada dirección tiene dos movimientos.
+Pulsando y manteniendo las teclas Arriba, abajo, derecha e izquierda (o EAB) se hace que la acción correspondiente sea repetida.
+Los dispositivos más antiguos no tienen una EAB; se utilizan, en su lugar, teclas frontales .
+
+Generalmente, las siguientes teclas están disponibles en las líneas braille:
+
+|| Nombre | Tecla |
+| l1 | Tecla frontal izquierda |
+| l2 | Tecla trasera izquierda |
+| r1 | Tecla frontal derecha |
+| r2 | Tecla trasera derecha|
+| up | 1 paso arriba|
+| up2 | 2 pasos arriba |
+| left | 1 paso a la izquierda |
+| left2 | 2 pasos a la izquierda |
+| right | 1 paso a la derecha |
+| right2 | 2 pasos a la derecha |
+| dn | 1 paso abajo |
+| dn2 | 2 pasos abajo |
+
+Seguidamente van las asignaciones de órdenes de las Papenmeier para NVDA:
+
+%kc:beginInclude
+Dispositivos con EAB:
+|| Nombre | Tecla |
+| Desplazar la línea braille atrás | izquierda |
+| Desplazar la línea braille adelante | derecha |
+| Mover la línea braille a la línea anterior | arriba |
+| Mover la línea braille a la línea siguiente | abajo |
+| Ir a la celda braille | sensores |
+| Anunciar carácter actual en revisión | l1 |
+| Activar navegador de objetos actual | l2 |
+| Moverse a la revisión plana / foco | r1 |
+| Anunciar título | l1up |
+| Anunciar Barra de Estado| l2down |
+| Moverse al objeto contenedor | up2 |
+| Moverse al primer objeto contenido | dn2 |
+| Moverse al siguiente objeto | left2 |
+| Moverse al objeto anterior | right2 |
+| Anunciar formato de texto | Upper routing strip |
+
+BRAILLEX Tiny:
+|| Nombre | Tecla |
+| Anunciar carácter actual en revisión | l1 |
+| Activar navegador de objetos actual | l2 |
+| Desplazar línea braille atrás | left |
+| Desplazar línea braille adelante | right |
+| Mover línea braille a la línea anterior | up |
+| Mover línea braille a la línea siguiente | dn |
+| Activar y desactivar seguimiento de braille | r2 |
+| Moverse al modo de revisión pplana / foco | r1 |
+| Moverse al objeto contenedor | r1+up |
+| Moverse al primer objeto contenido | r1+dn |
+| Moverse al objeto anterior | r1+left |
+| Moverse al siguiente objeto | r1+right |
+| Anunciar formato de texto | reportf |
+
+BRAILLEX 2D Screen:
+|| Nombre | Tecla |
+| Anunciar carácter actual en revisión | l1 |
+| Activar navegador de objetos actual | l2 |
+| Activar o desactivar seguimiento de braille | r2 |
+| Anunciar formato de texto | reportf |
+| Mover línea braille a la línea anterior| up |
+| Desplazar línea braille atrás | left |
+| Moverse a revisión plana / foco | r1 |
+| Desplazar línea braille adelante | right |
+| Mover línea braille a la línea siguiente | dn |
+| Moverse al objeto siguiente | left2 |
+| Moverse al objeto contenedor | up2 |
+| Moverse al primer objeto contenido | dn2 |
+| Moverse al objeto anterior | right2 |
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++
@@ -1580,6 +1685,9 @@ Por favor mira la documentación del BrailleNote para encontrar dónde se locali
 Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 Deberías descargar e instalar el último paquete instalable, que se llamará, por ejemplo, brltty-win-4.2-2.exe.
 Cuando configures la línea y puerto a utilizar,  asegúrate de prestar gran atención a las instrucciones, especialmente si estás utilizando una línea USB y ya tienes los controladores del fabricante instalados.
+
+Para líneas que tengan un teclado braille, BRLTTY actualmente maneja la entrada braille por sí mismo.
+Por lo tanto, la opción tabla braille de entrada de NVDA es irrelevante.
 
 Seguidamente van las asignaciones a órdenes BRLTTY para NVDA.
 Por favor mira [la documentación de tablas de teclas de BRLTTY http://mielke.cc/brltty/doc/drivers/] para información acerca de cómo están mapeadas las órdenes de BRLTTY para controlar las líneas braille.

@@ -1,16 +1,17 @@
-﻿#locale/ja/symbols.dic A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 1999-2002 Bilingual Emacspeak Project Copyright (c)
-#2011-2012 NVDA Contributors Copyright (c) 2012 Takuya Nishimoto
-#(nishimotz), Martin (mahoro-ba.net) This file is covered by the GNU
-#General Public License.
+﻿#locale/ja/symbols.dic 
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (C) 1999-2002 Bilingual Emacspeak Project
+#Copyright (c) 2011-2012 NVDA Contributors
+#Copyright (c) 2012 Takuya Nishimoto(nishimotz), Martin (mahoro-ba.net)
+#This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
 # Sentence endings.
-行末の丸	(?<=[^\s。])\。(?=[\"'”’)\s]|$)
-行末の点	(?<=[^\s、])\、(?=[\"'”’)\s]|$)
-行末の感嘆符	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
-行末の疑問符	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
+文末の丸	(?<=[^\s。])\。(?=[\"'”’)\s]|$)
+文中の点	(?<=[^\s、])\、(?=[\"'”’)\s]|$)
+文末の感嘆符	(?<=[^\s！])\！(?=[\"'”’)\s]|$)
+文末の疑問符	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
 
 # Others
 decimal point	(?<=\d)\.(?=\d)
@@ -19,8 +20,8 @@ negative number	(?<!\w)-(?=[$＄€£￡¢￠¥\\￥]?\d)
 comma between numbers	(?<=\d)\,(?=\d)
 複数のピリオド	(?<=\.)\.|\.(?=\.)
 単語中のピリオド	(?<=[\w])\.+(?=[\w])
-数字の間のゼンカクピリオド	(?<=[\d])．(?=[\d])
-数字の間のゼンカクカンマ	(?<=[\d])，(?=[\d])
+数字の間の全角ピリオド	(?<=[\d])．(?=[\d])
+数字の間の全角カンマ	(?<=[\d])，(?=[\d])
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -35,14 +36,14 @@ decimal point		none	always
 comma between numbers		none	always
 in-word '	アポストロフィ	some
 negative number	マイナス	none	norep
-行末の丸	マル	some
-行末の点	テン	some
-行末の感嘆符	カンタンフ	some
-行末の疑問符	ギモンフ	some
+文末の丸	マル	some
+文中の点	テン	some
+文末の感嘆符	カンタンフ	some
+文末の疑問符	ギモンフ	some
 複数のピリオド	ドット	some
 単語中のピリオド	ドット	some
-数字の間のゼンカクピリオド		none	always
-数字の間のゼンカクカンマ		none	always
+数字の間の全角ピリオド		none	always
+数字の間の全角カンマ		none	always
 
 # Other characters
 •	ナカテン	most
@@ -172,13 +173,13 @@ _	アンダーライン	some
 ＾	ベキジョー	all
 ￣	オーバーライン	most
 ＿	アンダーライン	most
-ヽ	クリカエシ	all	always
-ヾ	クリカエシ ダクテン	all	always
-ゝ	クリカエシ	all	always
-ゞ	クリカエシ ダクテン	all	always
+ヽ	クリカエシ	char	always
+ヾ	クリカエシ ダクテン	char	always
+ゝ	クリカエシ	char	always
+ゞ	クリカエシ ダクテン	char	always
 〃	オナジク	all
 仝	ドージョー	all
-々	オドリジ	all	always
+々	オドリジ	char	always
 〆	シメ	all	always
 〇	レイ	all
 ―	ダッシュ	some

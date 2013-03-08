@@ -13,6 +13,7 @@ import itertools
 import serial
 import wx
 import braille
+import brailleInput
 import hwPortUtils
 import inputCore
 from logHandler import log
@@ -269,7 +270,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:end": ("br(braillenote):space+d4+d5",),
 			"kb:control+home": ("br(braillenote):space+d1+d2+d3",),
 			"kb:control+end": ("br(braillenote):space+d4+d5+d6",),
-			"kb:space": ("br(braillenote):space",),
 			"kb:enter": ("br(braillenote):space+d8",),
 			"kb:shift+tab": ("br(braillenote):space+d1+d2+d5+d6",),
 			"kb:tab": ("br(braillenote):space+d2+d3+d4+d5",),
@@ -281,7 +281,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		},
 	})
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys=None, dots=None, space=False, routing=None):
@@ -293,7 +293,9 @@ class InputGesture(braille.BrailleDisplayGesture):
 					if (1 << i) & keys)
 		elif dots is not None:
 		# now the dots
+			self.dots = dots
 			if space:
+				self.space = space
 				names.add(_keyNames[0])
 			names.update(_dotNames[1 << i] for i in xrange(8)
 					if (1 << i) & dots)

@@ -3,11 +3,32 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1 =
+Najważniejsze zmiany w tej wersji to przeprojektowany układ klawiatóry dla laptopów (zmienionych skrutów szukaj w pliku keycommands.html w katalogu z instalacją NVDA) podstawowe wsparcie dla Microsoft Power Point, wsparcie długich opisów w przeglądarkach internetowych oraz możliwość wprowadzania znaków brajla komputerowego dla tych monitorów brajlowskich, które dają taką możliwość.
+
+== Nowe funkcje ==
+- Podstawowe wsparcie edycji i odczytu prezentacji Microsoft Poverpoint. (#501).
+- Podstawowe wsparcie dla pisania i odczytu wiadomości w Lotus Notes 8.5. (#543)
+- Istnienie długich opisów w trybie przeglądania jest zgłaszane. Taki opis można pokazać w osobnym oknie. NVDA+D. (#809)
+- Odczyt powiadomień w Microsoft IE 9. (#2343).
+- Automatyczne zgłaszanie nagłówków i kolumn tabel w Ie. (#778).
+- Nowy Jezyk. Aragoński.
+- Nowe tablice brajlowskie. Duński stopnia II, Koreański I.
+- Wsparcie dla monitorów brajlowskich połączonych przez bluetooth do komputerów, na których bluetooth obsługuje Bluetooth Stack for Windows firmy Toshiba. (#2419)
+- Wybór portów przy monitorach Freedom Scientific.
+- Wsparcie dla notatników z rodziny BrailleNote firmy Humanvare.
+- Wsparcie starszych modelów Pappenmeyer Braillex. (#2679).
+- Wsparcie dla wprowadzania znaków przy pomocy monitorów brajlowskich posiadających klawiatórę. (#808).
+
+
+
+
+
 =2012.3=
 Najważniejsze nowości w tej wersji obejmują wsparcie dla wprowadzania znaków azjatyckich, eksperymentalną obsłógę ekranów dotykowych na Windows 8, zgłaszanie numerów stron, uleprzone wsparcie dla tabel w dokumentach Adobe Reader, komendy nawigacyjne dla tabel z punktem uwagi oraz kontrolek list, wsparcie dla kilku nowych monitorów brajlowskich oraz zgłaszanie nagłówków kolumn i linii w Microsoft Excel.
 
 == nowe funkcje ==
-- NVDA wspiera wpowadzanie znaków azjatyckich przy użyciu IME we wszystkich aplikacjach, włączając w to zgłaszanie list znaków kandydujących, zgłaszanie wzorów wprowadzania i odczytu.
+- NVDA wspiera wprowadzanie znaków azjatyckich przy użyciu IME we wszystkich aplikacjach, włączając w to zgłaszanie list znaków kandydujących, zgłaszanie wzorów wprowadzania i odczytu.
 - Zgłaszanie podkreśleń w dokumentach Adobe Reader. (#2410)
 - Gdy włączona jest funkcja klawiszy trwałych w systemie Windows, klawisz NVDA zachowuje się jak każdy inny klawisz modyfikujący w rodzaju shift czy alt. Pozwala to używać go bez przymusu przytrzymywania go gdy zachodzi potrzeba jego użycia. (#230)
 - Automatyczne zgłaszanie nagłówków kolumn i linii w MS Excel. NVDA+shift+c by ustawić nagłówek kolumny, NVDA+shift+r by ustawić nagłówek linii. Dwukrotne wciśnięcie tych klawiszy czyści zaznaczenie. (#1519)

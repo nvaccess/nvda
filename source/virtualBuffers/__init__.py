@@ -245,6 +245,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList = []
 		landmark = field.get("landmark")
 		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
+			# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		text = super(VirtualBufferTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
@@ -401,6 +402,8 @@ class ElementsListDialog(wx.Dialog):
 		item = None
 		defaultItem = None
 		matched = False
+		#Do case-insensitive matching by lowering both filterText and each element's text.
+		filterText=filterText.lower()
 		for element in self._elements:
 			if filterText not in element.text.lower():
 				item = None
@@ -638,11 +641,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
+			# Translators: Reported when a page reloads (example: after refreshing a webpage).
 			speech.speakMessage(_("Refreshed"))
 		if api.getFocusObject().treeInterceptor == self:
 			self.event_treeInterceptor_gainFocus()
 
 	def _loadProgress(self):
+		# Translators: Reported while loading a document.
 		ui.message(_("Loading document..."))
 
 	def unloadBuffer(self):
@@ -856,6 +861,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def script_toggleScreenLayout(self,gesture):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
+		# Translators: Presented when use screen layout option is toggled.
 		speech.speakMessage(_("use screen layout %s")%onOff)
 	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the document content")
 

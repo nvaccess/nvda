@@ -160,7 +160,7 @@ def speakSpelling(text,locale=None,useCharacterDescriptions=False):
 		locale=defaultLanguage
 
 	if not text:
-		# Translators: This is spoken when nvda moves to an empty line.
+		# Translators: This is spoken when NVDA moves to an empty line.
 		return getSynth().speak((_("blank"),))
 	if not text.isspace():
 		text=text.rstrip()
@@ -521,6 +521,7 @@ def speakSelectionChange(oldInfo,newInfo,speakSelected=True,speakUnselected=True
 				# Translators: This is spoken to indicate what has been unselected. for example 'unselecting hello'
 				speakSelectionMessage(_("unselecting %s"),text)
 		elif len(unselectedTextList)>0:
+			# Translators: Reported when selection is removed.
 			speakMessage(_("selection removed"))
 			if not newInfo.isCollapsed:
 				text=newInfo.text
@@ -831,6 +832,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 				textList.insert(0,_("level %s")%level)
 				oldTreeLevel=level
 			else:
+				# Translators: Speaks the item level in treeviews (example output: level 2).
 				textList.append(_('level %s')%propertyValues['positionInfo_level'])
 	if cellCoordsText or rowNumber or columnNumber:
 		tableID = propertyValues.get("_tableID")
@@ -844,6 +846,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 			if rowHeaderText:
 				textList.append(rowHeaderText)
 			if includeTableCellCoords and not cellCoordsText: 
+				# Translators: Speaks current row number (example output: row 3).
 				textList.append(_("row %s")%rowNumber)
 			oldRowNumber = rowNumber
 		if columnNumber and (not sameTable or columnNumber != oldColumnNumber):
@@ -851,6 +854,7 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 			if columnHeaderText:
 				textList.append(columnHeaderText)
 			if includeTableCellCoords and not cellCoordsText:
+				# Translators: Speaks current column number (example output: column 3).
 				textList.append(_("column %s")%columnNumber)
 			oldColumnNumber = columnNumber
 	if includeTableCellCoords and cellCoordsText:
@@ -858,10 +862,13 @@ def getSpeechTextForProperties(reason=controlTypes.REASON_QUERY,**propertyValues
 	rowCount=propertyValues.get('rowCount',0)
 	columnCount=propertyValues.get('columnCount',0)
 	if rowCount and columnCount:
+		# Translators: Speaks number of columns and rows in a table (example output: with 3 rows and 2 columns).
 		textList.append(_("with {rowCount} rows and {columnCount} columns").format(rowCount=rowCount,columnCount=columnCount))
 	elif columnCount and not rowCount:
+		# Translators: Speaks number of columns (example output: with 4 columns).
 		textList.append(_("with %s columns")%columnCount)
 	elif rowCount and not columnCount:
+		# Translators: Speaks number of rows (example output: with 2 rows).
 		textList.append(_("with %s rows")%rowCount)
 	if rowCount or columnCount:
 		# The caller is entering a table, so ensure that it is treated as a new table, even if the previous table was the same.
@@ -931,6 +938,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	# Special cases
 	if speakEntry and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		# List.
+		# Translators: Speaks number of items in a list (example output: list with 5 items).
 		return roleText+" "+_("with %s items")%childCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
@@ -957,6 +965,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	):
 		return CHUNK_SEPARATOR.join([x for x in nameText,(stateText if speakStatesFirst else roleText),(roleText if speakStatesFirst else stateText),valueText,descriptionText,levelText,keyboardShortcutText if x])
 	elif fieldType in ("end_removedFromControlFieldStack","end_relative") and roleText and ((not extraDetail and speakExitForLine) or (extraDetail and speakExitForOther)):
+		# Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 		return _("out of %s")%roleText
 
 	# Special cases
@@ -989,6 +998,7 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 		headingLevel=attrs.get("heading-level")
 		oldHeadingLevel=attrsCache.get("heading-level") if attrsCache is not None else None
 		if headingLevel and headingLevel!=oldHeadingLevel:
+			# Translators: Speaks the heading level (example output: heading level 2).
 			text=_("heading level %d")%headingLevel
 			textList.append(text)
 	if  formatConfig["reportStyle"]:
@@ -1159,6 +1169,7 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if tableInfo is None and oldTableInfo is None:
 		return ""
 	if tableInfo is None and oldTableInfo is not None:
+		# Translators: Indicates end of a table.
 		return _("out of table")
 	if not oldTableInfo or tableInfo.get("table-id")!=oldTableInfo.get("table-id"):
 		newTable=True
@@ -1168,6 +1179,7 @@ def getTableInfoSpeech(tableInfo,oldTableInfo,extraDetail=False):
 	if newTable:
 		columnCount=tableInfo.get("column-count",0)
 		rowCount=tableInfo.get("row-count",0)
+		# Translators: reports number of columns and rows in a table (example output: table with 3 columns and 5 rows).
 		text=_("table with {columnCount} columns and {rowCount} rows").format(columnCount=columnCount,rowCount=rowCount)
 		textList.append(text)
 	oldColumnNumber=oldTableInfo.get("column-number",0) if oldTableInfo else 0

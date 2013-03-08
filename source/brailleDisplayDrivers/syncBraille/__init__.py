@@ -69,6 +69,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	""" HIMS SyncBraille braille display.
 	"""
 	name = "syncBraille"
+	# Translators: The name of a braille display.
 	description = _("HIMS SyncBraille")
 
 	@classmethod

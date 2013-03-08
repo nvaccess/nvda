@@ -669,6 +669,7 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 		return clsList
 
 	def _get_name(self):
+		# Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 		return _("Secure Desktop")
 
 	def _get_role(self):

@@ -150,8 +150,8 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
-			obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset)
-			formatField["link"] = True
+			if obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset) != -1:
+				formatField["link"] = True
 		except COMError:
 			pass
 
@@ -228,7 +228,7 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role=obj.role
 		windowClassName=obj.windowClassName
-		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME"):
+		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME", "SALFRAME"):
 			if role==controlTypes.ROLE_TABLECELL:
 				clsList.insert(0, SymphonyTableCell)
 			elif hasattr(obj, "IAccessibleTextObject"):

@@ -153,12 +153,12 @@ Spowoduje to rozwinięcie menu. Nawigacja w menu odbywa się za pomocą strzałe
 
 ++ Podstawowe Polecenia Klawiszowe ++
 %kc:beginInclude
-|| Działanie | Skróty Klawiszowe | gest dotykowy | Opis |
-| Zatrzymuje mowę | Kontrol | stuknięcie dwoma palcami | Natychmiast przestaje czytać |
-| Pauza mowy | Shift | brak | Natychmiast zatrzymuje mowę. Naciskając ponownie będzie mówić od momentu w którym zostało przerwane (jeśli wstrzymywanie jest obsługiwane przez syntezator). |
-| NVDA Menu | NVDA+n | podwujne stuknięcie dwoma palcami | Pojawia się meni NVDA, aby umożliwić dostęp do ustawień, narzędzi, pomocy itp. || Przełączanie trybu pomocy klawiatury | NVDA+1 | brak | Naciśnięcie dowolnego klawisza w tym trybie zostanie odczytany klawisz, i opis wszelkich poleceń NVDA z nim związane |
-| Zakończ NVDA | NVDA+q | brak | Kończy działanie NVDA | | Przepuść następny klawisz | NVDA+f2 | brak | Jednorazowo przepuszcza następny naciśnięty klawisz wprost do systemu bez przetwarzania go w NVDA. Nawet jeżeli przepuszczony klawisz posiada w NVDA swoją funkcję, nie zostanie ona wykonana. |
-| Włącz/wyłącz tryb uśpienia dla aktywnej aplikacji | nvda+shift+s | brak | ustawienie trybu uśpienia dla konkretnej aplikacji sprawia, że nvda przestaje mówić w jej oknie, nie reaguje na wciskane skróty klawiszowe oraz przestaje wyświetlać tekst na monitorze brajlowskim. Może być to użyteczne w przypadku programów posiadających wbudowane funkcje odczytu interface'u. Aby wyłączyć tryb uśpienia, w oknie takiej aplikacji należy wcisnąć skrót ponownie |
+|| Działanie | Skrót desktopa | skrót laptopa | gest dotykowy | Opis |
+| Zatrzymuje mowę | Kontrol | control | stuknięcie dwoma palcami | Natychmiast przestaje czytać |
+| Pauza mowy | Shift | shift | brak | Natychmiast zatrzymuje mowę. Naciskając ponownie będzie mówić od momentu w którym zostało przerwane (jeśli wstrzymywanie jest obsługiwane przez syntezator). |
+| NVDA Menu | NVDA+n | NVDA+N | podwujne stuknięcie dwoma palcami | Pojawia się meni NVDA, aby umożliwić dostęp do ustawień, narzędzi, pomocy itp. || Przełączanie trybu pomocy klawiatury | NVDA+1 | brak | Naciśnięcie dowolnego klawisza w tym trybie zostanie odczytany klawisz, i opis wszelkich poleceń NVDA z nim związane |
+| Zakończ NVDA | NVDA+q | NVDA+q | brak | Kończy działanie NVDA | | Przepuść następny klawisz | NVDA+f2 | NVDA+f2 | brak | Jednorazowo przepuszcza następny naciśnięty klawisz wprost do systemu bez przetwarzania go w NVDA. Nawet jeżeli przepuszczony klawisz posiada w NVDA swoją funkcję, nie zostanie ona wykonana. |
+| Włącz/wyłącz tryb uśpienia dla aktywnej aplikacji | nvda+shift+s | NVDA+shift+z | brak | ustawienie trybu uśpienia dla konkretnej aplikacji sprawia, że nvda przestaje mówić w jej oknie, nie reaguje na wciskane skróty klawiszowe oraz przestaje wyświetlać tekst na monitorze brajlowskim. Może być to użyteczne w przypadku programów posiadających wbudowane funkcje odczytu interface'u. Aby wyłączyć tryb uśpienia, w oknie takiej aplikacji należy wcisnąć skrót ponownie |
 %kc:endInclude
 
 ++ odczyt informacji systemowych ++
@@ -179,28 +179,29 @@ Kiedy dany obiekt uzyska punkt uwagi, NVDA poinformuje cię o jego nazwie, typie
 
 Przydatne skróty klawiszowe do nawigacji za pomocą punktu uwagi:
 %kc:beginInclude
-|| Działanie | Skróty Klawiszowe | Opis |
-| Odczytuje aktualny punkt uwagi | NVDA+tab | Odczytuje obiekt posiadający aktualnie punkt uwagi. Dwukrotne naciśnięcie oznacza informacje  |
-| Odczytuje tytuł okna | NVDA+t | Odczytuje tytuł aktualnej aplikacji lub okna. Dwukrotne naciśnięcie literuje tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka. |
-| Odczytuje aktywne okno | NVDA+b | Odczytuje zawartość obiektu na pierwszym planie (aktualnie aktywnego okna). Funkcja przydatna zwłaszcza w przypadku okna dialogowego lub komunikatu, którego pojawienie się nie zostało zauważone. |
+|| Działanie | Skrót PC | skrót laptop | Opis |
+| Odczytuje aktualny punkt uwagi | NVDA+tab | NVDA+tab | Odczytuje obiekt posiadający aktualnie punkt uwagi. Dwukrotne naciśnięcie literuje informacje  |
+| Odczytuje tytuł okna | NVDA+t | NVDA+t | Odczytuje tytuł aktualnej aplikacji lub okna. Dwukrotne naciśnięcie literuje tytuł. Trzykrotne naciśnięcie kopiuje tytuł do schowka. |
+| Odczytuje aktywne okno | NVDA+b | NVDA+b | Odczytuje zawartość obiektu na pierwszym planie (aktualnie aktywnego okna). Funkcja przydatna zwłaszcza w przypadku okna dialogowego lub komunikatu, którego pojawienie się nie zostało zauważone. |
+| Odczytaj pasek statusu | NVDA+end | NVDA+shift+end | odczytuje pasek statusu jeśli napodka na takowy, przenosi tam także kursor myszy.
 %kc:endInclude
 
 ++ Nawigacja Kursorem ++
 
 NVDA wykorzystuje następujące klawisze poleceń do nawigacji kursorem klawiatury:
 %kc:beginInclude
-|| Działanie | Skróty Klawiszowe | Opis |
-| Czyta wszystko | NVDA+strzałka w dół | Odczytuje od bieżącej pozycji kursora do końca tekstu, przesuwając kursor podczas czytania. |
-| Odczytuje aktualną linię | NVDA+strzałka w górę | Odczytuje aktualną linię w miejscu kursora. Dwukrotne naciśnięcie literuje aktualną linię. |
-| Odczytuje aktualne zaznaczenie | NVDA+Shift+strzałka w górę | Odczytuje cały aktualnie zaznaczony tekst |
-| Odczytuje formatowanie tekstu | NVDA+f | Odczytuje formatowanie tekstu, w którym obecnie  znajduje się kursor |
+|| Działanie | Skrót PC | skrót laptop | Opis |
+| Czyta wszystko | NVDA+strzałka w dół | NVDA+a | Odczytuje od bieżącej pozycji kursora do końca tekstu, przesuwając kursor podczas czytania. |
+| Odczytuje aktualną linię | NVDA+strzałka w górę | NVDA+l | Odczytuje aktualną linię w miejscu kursora. Dwukrotne naciśnięcie literuje aktualną linię. |
+| Odczytuje aktualne zaznaczenie | NVDA+Shift+strzałka w górę | NVDA+shift+s | Odczytuje cały aktualnie zaznaczony tekst |
+| Odczytuje formatowanie tekstu | NVDA+f | brak | Odczytuje formatowanie tekstu, w którym obecnie  znajduje się kursor |
 
-Dostępne klawisze poleceń do poruszania się po tabelach:
-|| Działanie | Skróty Klawiszowe | Opis |
-| Przechodzi do poprzedniej kolumny | kontrol+alt+strzałka w lewo | Przenosi kursor do poprzedniej kolumny (pozostając w tej samej linii) |
-| Przechodzi do następnej kolumny | kontrol+alt+strzałka w prawo | Przenosi kursor do następnej kolumny (pozostając w tej samej linii) |
-| Przechodzi do poprzedniej linii | kontrol+alt+strzałka w górę | Przenosi kursor do poprzedniej linii (pozostając w tej samej kolumnie) |
-| Przechodzi do następnej linii | kontrol+alt+strzałka w dół | Przenosi kursor do następnej linii (pozostając w tej samej kolumnie) |
+Do poruszania się w struktórze tabel słurzą
+|| Działanie | skrót | opis |
+| przejdź do poprzedniej kolumny | CTRL+ALT+kursor w lewo | przenosi kursor do poprzedniej kolumny w tej samej linii |
+| Przejdź do następnej kolumny | CTRL+ALT+kursor w prawo | przenosi kursor do następnej kolumny w tej samej linii |
+| Przejdź do poprzedniej linii | CTRL+ALT+kursor w górę | Przenosi kursor do linii poprzedniej |
+| Do następnej linii w tabeli | NVDA+shift+dół | Przenosi do następnej linii. |
 %kc:endInclude
 
 ++ Nawigacja w Hierarchii Obiektów ++
@@ -214,11 +215,11 @@ Poniżej znajdują się skróty klawiszowe do nawigacji w hierarchii obiektów:
 
 %kc:beginInclude
 || Działanie | Skróty Klawiszowe Desktopa | Skróty Klawiszowe Laptopa | gest dotykowy | | Opis |
-| Odczytuje aktualny obiekt | NVDA+numeryczne 5 | NVDA+kontrol+i | brak | Odczytuje aktualny obiekt w hierarchii nawigacji. Dwukrotne naciśnięcie literuje informację, trzykrotne kopiuje nazwę obiektu wraz z zawartością do schowka. |
-| Przechodzi do obiektu rodzica | NVDA+numeryczne 8 | NVDA+shift+i | machnięcie w górę (tryb obiektowy) | Przechodzi do rodzica (w kierunku korzenia drzewa) aktualnego obiektu. |
-| Przechodzi do poprzedniego obiektu      | NVDA+numeryczne 4 | NVDA+kontrol+j | machnięcie w lewo (tryb obiektowy) | Przechodzi do poprzedniego obiektu znajdującego się na tym samym poziomie. |
-| Przechodzi do następnego obiektu | NVDA+numeryczne 6 | kontrol+NVDA+l | machnięcie w prawo (tryb obiektowy) | Przechodzi do następnego obiektu znajdującego się na tym samym poziomie. |
-| Przechodzi do pierwszego obiektu potomka | NVDA+numeryczne 2 | NVDA+shift+comma | machnięcie w dół (tryb obiektowy) | Przechodzi do pierwszego potomka (pierwsza gałąź odchodząca od danego elementu). |
+| Odczytuje aktualny obiekt | NVDA+numeryczne 5 | NVDA+shift+o | brak | Odczytuje aktualny obiekt w hierarchii nawigacji. Dwukrotne naciśnięcie literuje informację, trzykrotne kopiuje nazwę obiektu wraz z zawartością do schowka. |
+| Przechodzi do obiektu rodzica | NVDA+numeryczne 8 | NVDA+shift+strzałka w górę | machnięcie w górę (tryb obiektowy) | Przechodzi do rodzica (w kierunku korzenia drzewa) aktualnego obiektu. |
+| Przechodzi do poprzedniego obiektu      | NVDA+numeryczne 4 | NVDA+shift+strzałka w lewo | machnięcie w lewo (tryb obiektowy) | Przechodzi do poprzedniego obiektu znajdującego się na tym samym poziomie. |
+| Przechodzi do następnego obiektu | NVDA+numeryczne 6 | NVDA+shift+strzałka w prawo | machnięcie w prawo (tryb obiektowy) | Przechodzi do następnego obiektu znajdującego się na tym samym poziomie. |
+| Przechodzi do pierwszego obiektu potomka | NVDA+numeryczne 2 | NVDA+shift+strzałka w dół | machnięcie w dół (tryb obiektowy) | Przechodzi do pierwszego potomka (pierwsza gałąź odchodząca od danego elementu). |
 | Przechodzi do punktu uwagi | NVDA+numeryczny Minus | NVDA+backspace | brak | Przechodzi do obiektu, który aktualnie posiada punkt uwagi, oraz umieszcza kursor przeglądu na pozycji kursora Systemu |
 | Aktywuje aktualny obiekt | NVDA+numeryczny Enter | NVDA+enter | podwujne stuknięcie | Aktywuje bieżący obiekt (podobnie jak kliknięcie myszą lub naciśnięcie klawisza spacji gdy ma punkt uwagi) |
 | Przenosi punkt uwagi na aktualny obiekt | NVDA+shift+numeryczny Minus | NVDA+shift+backspace | brak | Przenosi punkt uwagi do obecnego obiektu, jeśli to możliwe. |
@@ -244,23 +245,23 @@ Jeśli program, którego używasz, pozwala na nawigację za pomocą kursora klaw
 Do przeglądu tekstu są dostępne następujące polecenia:
 %kc:beginInclude
 || Działanie | Skróty Klawiszowe Desktopa | Skróty Klawiszowe Laptopa | gest dotykowy | Opis |
-| Przenosi punkt przeglądu do pierwszej linii | shift+numeryczne 7 | NVDA+7 | brak | Przenosi punkt przeglądu do pierwszej linii w aktualnym obiekcie |
-| Przechodzi do poprzedniej linii w przeglądzie | numeryczne 7 | NVDA+u | machnięcie w górę (tryb tekstowy) | Przenosi punkt przeglądu do poprzedniej linii. |
-| Odczytuje linię w przeglądzie | numeryczne 8 | NVDA+i | brak | Odczytuje linię, w którym jest obecnie punkt przeglądu. Dwukrotne naciśnięcie literuje ją, trzykrotne literuje fonetycznie. |
-| Przechodzi do następnej linii w przeglądzie | numeryczne 9 | NVDA+o | machnięcie w dół (tryb tekstowy) | Przenosi punkt przeglądu do następnej linii. |
-| Przechodzi do ostatniej linii w przeglądzie | shift+numeryczne 9 | NVDA+9 | brak | Przenosi punkt przeglądu do ostatniej linii w aktualnym obiekcie. |
-| Przechodzi do poprzedniego wyrazu w przeglądzie | numeryczne 4 | NVDA+j | machnięcie dwoma palcami w lewo (tryb tekstowy) | Przenosi punkt przeglądu do poprzedniego wyrazu w tekście. |
-| Odczytuje aktualny wyraz w przeglądzie | numeryczne 5 | NVDA+k | brak | Odczytuje aktualny wyraz w tekście, w którym jest umieszczony kursor przeglądu. Dwukrotne naciśnięcie literuje wyraz, trzykrotne literuje fonetycznie. |
-| Przechodzi do następnego wyrazu w przeglądzie | numeryczne 6 | NVDA+l | machnięcie dwoma palcami w prawo | Przenosi punkt przeglądu do następnego wyrazu w tekście. |
-| Przechodzi na początek wiersza w przeglądzie | shift+numeryczne 1 | NVDA+shift+u | brak | Przenosi punkt przeglądu na początek aktualnej linii w tekście. |
-| Przechodzi do poprzedniego znaku w przeglądzie | numeryczne 1 | NVDA+m | machnięcie jednym palcem w lewo (tryb tekstowy) | Przenosi kursor przeglądu do poprzedniego znaku aktualnej linii w tekście |
-| Odczytuje aktualny znak w przeglądzie | numeryczne 2 | NVDA+comma | brak | Odczytuje aktualny znak w punkcie przeglądu. Dwukrotne wciśnięcie literuje znak. Trzykrotne naciśnięcie podaje wartość kodu ASCII dziesiętnie i szesnastkowo. |
-| Przechodzi do następnego znaku w przeglądzie | numeryczne 3 | NVDA+dot | machnięcie jednym palcem w prawo (tryb tekstowy) | Przenosi punkt przeglądu do następnego znaku aktualnej linii. |
-| Przechodzi na koniec linii w przeglądzie | shift+numeryczne 3 | NVDA+shift+o | brak | Przenosi punkt przeglądu na koniec aktualnej linii. |
-| Odczytuje wszystko z przeglądu | numeryczny Plus | NVDA+shift+strzałka w dół | machnięcie trzema palcami w dół (tryb tekstowy) | Odczytuje od punktu przeglądu do końca tekstu. |
-| Przenosi kursor do punktu przeglądu | kontrol+numeryczny Minus | NVDA+kontrol+backspace | brak | Przenosi kursor klawiatury do punktu przeglądu. |
-| Kopiuj od punktu zaznaczenia | NVDA+f9 | brak | NVDA+f9 | Ustawia w aktualnym punkcie przeglądu początek zaznaczenia kopiowanego tekstu. |
+| Przenosi punkt przeglądu do pierwszej linii | shift+numeryczne 7 | NVDA+control+home | brak | Przenosi punkt przeglądu do pierwszej linii w aktualnym obiekcie |
+| Przechodzi do poprzedniej linii w przeglądzie | numeryczne 7 | NVDA+strzałka w górę | machnięcie w górę (tryb tekstowy) | Przenosi punkt przeglądu do poprzedniej linii. |
+| Odczytuje linię w przeglądzie | numeryczne 8 | NVDA+shift+kropka | brak | Odczytuje linię, w którym jest obecnie punkt przeglądu. Dwukrotne naciśnięcie literuje ją, trzykrotne literuje fonetycznie. |
+| Przechodzi do następnej linii w przeglądzie | numeryczne 9 | NVDA+strzałka w dół | machnięcie w dół (tryb tekstowy) | Przenosi punkt przeglądu do następnej linii. |
+| Przechodzi do ostatniej linii w przeglądzie | shift+numeryczne 9 | NVDA+control+end | brak | Przenosi punkt przeglądu do ostatniej linii w aktualnym obiekcie. |
+| Przechodzi do poprzedniego wyrazu w przeglądzie | numeryczne 4 | NVDA+control+lewo | machnięcie dwoma palcami w lewo (tryb tekstowy) | Przenosi punkt przeglądu do poprzedniego wyrazu w tekście. |
+| Odczytuje aktualny wyraz w przeglądzie | numeryczne 5 | NVDA+control+kropka | brak | Odczytuje aktualny wyraz w tekście, w którym jest umieszczony kursor przeglądu. Dwukrotne naciśnięcie literuje wyraz, trzykrotne literuje fonetycznie. |
+| Przechodzi do następnego wyrazu w przeglądzie | numeryczne 6 | NVDA+control+strzałka w prawo | machnięcie dwoma palcami w prawo | Przenosi punkt przeglądu do następnego wyrazu w tekście. |
+| Przechodzi na początek wiersza w przeglądzie | shift+numeryczne 1 | NVDA+home | brak | Przenosi punkt przeglądu na początek aktualnej linii w tekście. |
+| Przechodzi do poprzedniego znaku w przeglądzie | numeryczne 1 | NVDA+lewo | machnięcie jednym palcem w lewo (tryb tekstowy) | Przenosi kursor przeglądu do poprzedniego znaku aktualnej linii w tekście |
+| Odczytuje aktualny znak w przeglądzie | numeryczne 2 | NVDA+kropka | brak | Odczytuje aktualny znak w punkcie przeglądu. Dwukrotne wciśnięcie literuje znak. Trzykrotne naciśnięcie podaje wartość kodu ASCII dziesiętnie i szesnastkowo. |
+| Przechodzi do następnego znaku w przeglądzie | numeryczne 3 | NVDA+prawo | machnięcie jednym palcem w prawo (tryb tekstowy) | Przenosi punkt przeglądu do następnego znaku aktualnej linii. |
+| Przechodzi na koniec linii w przeglądzie | shift+numeryczne 3 | NVDA+end | brak | Przenosi punkt przeglądu na koniec aktualnej linii. |
+| Odczytaj wszystko z przeglądu | numeryczny Plus | NVDA+shift+a | machnięcie trzema palcami w dół (tryb tekstowy) | Odczytuje od punktu przeglądu do końca tekstu. |
+| Kopiuj od punktu zaznaczenia | NVDA+f9 | nvda+f9 | brak | Ustawia w aktualnym punkcie przeglądu początek zaznaczenia kopiowanego tekstu. |
 | Kopiuj do punktu zaznaczenia | NVDA+f10 | NVDA+f10 | brak | Kopiuje do schowka tekst od początku zaznaczenia do aktualnego punktu przeglądu. |
+| Informacje o formatowaniu | NVDa+f | NVDA+F | brak | odczytuje informacje o formatowaniu tekstu pod kursorem. |
 %kc:endInclude
 
 UWAGA: Aby skróty na klawiaturze numerycznej działały poprawnie, należy wyłączyć klawisz Num Lock.
@@ -292,18 +293,18 @@ Jeśli wskaźnik myszy będzie poruszał sie w górę ekranu, to wydawane dźwi�
 Podobnie jeśli wskaźnik będzie poruszał się w lewo, to dźwięki będą dochodzić z lewej strony, jeśli w prawo, to z prawej.
 Aby sygnalizowanie dźwiękiem położenia myszy działało efektywnie, powinieneś zaopatrzyć się w słuchawki stereofoniczne.
 
-Wyżej wymienione opcje dotyczące nawigacji myszą nie są domyślnie włączone.
+Wyżej opisane opcje dotyczące nawigacji myszą nie są domyślnie włączone.
 Możesz skonfigurować je korzystając z okna dialogowego "Ustawienia myszy" dostępnego z menu Ustawienia.
 
-Mimo, że często korzystasz z fizycznej myszki lub TrackPada do nawigacji z NVDA, to jest jeszcze kilka poleceń klawiszowych zastępujących fizyczną myszkę, które znajdują się w poniższej tabeli:
+Mimo, że czasem wygodniej jest korzystać z fizycznej myszki lub TrackPada do nawigacji z NVDA, to jest kilka poleceń klawiszowych zastępujących fizyczną myszkę, które znajdują się w poniższej tabeli:
 %kc:beginInclude
 || Działanie | Skróty Klawiszowe Desktopa | Skróty Klawiszowe Laptop | Opis |
-| Lewy przycisk myszy | numeryczny Slesz | NVDA+strzałka w lewo | Wykonuje jedeno kliknięcie lewym przyciskiem myszy. Dwukrotne kliknięcie może być wykonywane przez naciśnięcie tego klawisza dwa razy w krótkich odstępach czasu |
-| Blokuje lewy przycisk myszy | shift+numeryczny Slesz | NVDA+shift+strzałka w lewo | Blokuje lub zwalnia lewy przycisk myszy (Metoda: przeciągnij i upuść) |
-| Prawy przycisk myszy | numeryczna Gwiazdka | NVDA+strzałka w prawo | Wykonuje jedeno kliknięcie prawym przyciskiem myszy. |
-| Blokuje prawy przycisk myszy | shift+numeryczna Gwiazdka | NVDA+shift+strzałka w prawo | Blokuje lub zwalnia prawy przycisk myszy (Metoda: przeciągnij i upuść). |
-| Przesuwa mysz do aktualnego obiektu | NVDA+numeryczny Slesz | NVDA+shift+f9 | Przesuwa mysz w miejsce aktualnego obiektu i kursora przeglądu. |
-| Przechodzi do obiektu pod myszą | NVDA+numeryczna Gwiazdka | NVDA+shift+f10 | Przechodzi do obiektu znajdującego się pod wskaźnikiem myszy. |
+| Lewy przycisk myszy | numeryczny Slesz | NVDA+lewy nawias kwadratowy ("[") | Wykonuje jedno kliknięcie lewym przyciskiem myszy. Dwukrotne kliknięcie może być wykonywane przez naciśnięcie tego klawisza dwa razy w krótkich odstępach czasu |
+| Blokuj lewy przycisk myszy | shift+numeryczny Slesz | NVDA+control+lewy nawias kwadratowy ("[") | Blokuje lub zwalnia lewy przycisk myszy (Metoda: przeciągnij i upuść) |
+| Prawy przycisk myszy | numeryczna Gwiazdka | NVDA+prawy nawias kwadratowy ("]") | Wykonuje jedno kliknięcie prawym przyciskiem myszy. |
+| Blokuj prawy przycisk myszy | shift+numeryczna Gwiazdka | NVDA+control+prawy nawias kwadratowy ("[") | Blokuje lub zwalnia prawy przycisk myszy (Metoda: przeciągnij i upuść). |
+| Przesuń mysz do aktualnego obiektu | NVDA+numeryczny Slesz | NVDA+shift+m | Przesuwa mysz w miejsce aktualnego obiektu i kursora przeglądu. |
+| Przejdź do obiektu pod myszą | NVDA+numeryczna Gwiazdka | NVDA+shift+n | Przechodzi do obiektu znajdującego się pod wskaźnikiem myszy. |
 %kc:endInclude
 
 + Tryb przeglądania +
@@ -314,13 +315,13 @@ Często zachodzi potrzeba interakcji z dokumentami takimi jak strony internetowe
 
 %kc:beginInclude
 || Działanie | Skróty Klawiszowe | Opis |
-| Przełącza tryby wirtualnego bufora | NVDA+space | Przełącza pomiędzy trybem formularza i trybem przeglądania |
+| Przełącz tryby wirtualnego bufora | NVDA+space | Przełącza pomiędzy trybem formularza i trybem przeglądania |
 | Wyjście z trybu formularza | escape | Przełącza się na tryb przeglądania, jeśli wcześniej tryb formularza był włączony automatycznie |
 =======
-| Przełącza tryby przeglądania | NVDA+spacja | Przełącza pomiędzy trybem formularza i trybem przeglądania |
-| Wyjście z trybu formularza | escape | Przełącza się na tryb przeglądania, jeśli wcześniej tryb formularza włączył się automatycznie |
+| Przełącz tryby przeglądania | NVDA+spacja | Przełącza pomiędzy trybem formularza i trybem przeglądania |
+| Wyjdź z trybu formularza | escape | Przełącza się na tryb przeglądania, jeśli wcześniej tryb formularza włączył się automatycznie |
 
-| Odświeża zawartość dokumentu | NVDA+f5 | Odświeża aktualny dokument w trybie przeglądania. (przydatne w przypadku, gdy niektórych treści brakuje na stronie.) |
+| Odśwież zawartość dokumentu | NVDA+f5 | Odświeża aktualny dokument w trybie przeglądania. (przydatne w przypadku, gdy niektórych treści brakuje na stronie.) |
 | Znajdź | NVDA+kontrol+f | Pojawia się okno dialogowe, w którym można wpisać tekst, aby przeszukać aktualny dokument |
 | Znajdź następny | NVDA+f3 | Znajduje następne wystąpienie tekstu w dokumencie, które zostało wcześniej wyszukane |
 | Znajdź poprzedni | NVDA+shift+f3 | Znajduje poprzednie wystąpienie tekstu w dokumencie wcześniej wyszukane |
@@ -363,7 +364,7 @@ Pole edycyjne w oknie dialogowym, pozwala na filtrowanie listy ułatwiając wysz
 
 %kc:beginInclude
 || Działanie | Skrót Klawiszowy | Opis |
-| Wyświetla listę pozycji w trybie przeglądania | NVDA+f7 | Pojawia się lista elementów, na której znajdują się linki, nagłówki i punkty orientacyjne.|
+| Wyświetl listę pozycji w trybie przeglądania | NVDA+f7 | Pojawia się lista elementów, na której znajdują się linki, nagłówki i punkty orientacyjne.|
 %kc:endInclude
 
 ++ Obiekty zagnieżdżone ++
@@ -391,6 +392,12 @@ NVDA udostępnia polecenia dla niektórych aplikacji aby uczynić niektóre zada
 | podaj pozostały czas | CTRL+shift+r | podaje czas pozostały do końca aktualnie odtwarzanego utworu. |
 %kc:endInclude
 Opisana komenda działa tylko dla domyślnego ustawienia formatowania linii statusu dla odtwarzacza.
+++ Poedit ++
+%kc:beginInclude
+|| akcja | klawisz | szczegóły |
+| odczytaj okno komentarzy | Ncontrol+shift+c | czyta wszystkie komentarze w oknie komentarzy. |
+| Odczytaj z okna automatycznych komentarzy | control+shift+a | Czyta komentarze z okna automatycznych komentarzy. |
+%kc:endInclude
 
 
 + Konfigurowanie NVDA +
@@ -516,10 +523,10 @@ Niektóre słowa zawierają tylko jeden znak, lecz wymowa rużni się w zależno
 Jeśli chcesz szybko zmienić ustawienia mowy znajdujące się w oknie dialogowym Ustawienia głosu istnieją klawisze poleceń, które pozwalają ustawić najczęściej zmieniane ustawienia mowy takie, jak szybkość odczytywania czy wysokość głosu można je ustawiać w dowolnej chwili podczas pracy NVDA:
 %kc:beginInclude
 || Działanie | Skróty Klawiszowe Desktopa | Skróty Klawiszowe Laptopa | Opis |
-| Przechodzi do następnych ustawień głosu | NVDA+kontrol+strzałka w prawo | NVDA+kontrol+strzałka w prawo | Przechodzi do następnego parametru ustawień syntezatora. |
-| Przechodzi do poprzednich ustawień głosu | NVDA+kontrol+strzałka w lewo | NVDA+kontrol+strzałka w lewo | Przechodzi do poprzedniego parametru ustawień syntezatora. |
-| Zwiększa parametr ustawień głosu | NVDA+kontrol+strzałka w górę | NVDA+kontrol+strzałka w górę | Zwiększa aktualnie wybrany parametr ustawień syntezatora. |
-| Zmniejsz parametr ustawień głosu | NVDA+kontrol+strzałka w dół | NVDA+kontrol+strzałka w dół | Zmniejsza aktualnie wybrany parametr ustawień syntezatora. Na przykład: zmniejsza szybkość, wybiera inny głos, zmniejsza głośność. |
+| Do następnych ustawień głosu | NVDA+kontrol+strzałka w prawo | NVDA+kontrol+shift+strzałka w prawo | Przechodzi do następnego parametru ustawień syntezatora. |
+| Do poprzednich ustawień głosu | NVDA+kontrol+strzałka w lewo | NVDA+shift+control+strzałka w lewo | Przechodzi do poprzedniego parametru ustawień syntezatora. |
+| Zwiększ parametr ustawień głosu | NVDA+kontrol+strzałka w górę | NVDA+kontrol+shift+strzałka w górę | Zwiększa aktualnie wybrany parametr ustawień syntezatora. |
+| Zmniejsz parametr ustawień głosu | NVDA+kontrol+strzałka w dół | NVDA+kontrol+shift+strzałka w dół | Zmniejsza aktualnie wybrany parametr ustawień syntezatora. Na przykład: zmniejsza szybkość, wybiera inny głos, zmniejsza głośność. |
 %kc:endInclude
 
 +++ Ustawienia Brajlowskie +++
@@ -531,9 +538,17 @@ Pierwsza opcja to Monitor Brajlowski: pole rozwijalne służące do wyboru używ
 "Bez brajla" tą opcję należy oznaczyć, jeśli nie posiadasz monitora brajlowskiego.
 
 Więcej informacji na temat obsługiwanych monitorów brajlowskich znajdziesz w rozdziale [Obsługiwane Monitory Brajlowskie #SupportedBrailleDisplays].
+==== port ====
+Ta opcja, jeśli jest dostępna, pozwala określić jaki port lub typ połączenia będzie użyty do komunikacji z monitorem brajlowskim.
+Domyślnie zaznaczona jest opcja automatycznego wykrywania sprawiająca, że NVDA automagicznie wykrywa dostępne urządzenia bluetooth czy usb i ustanawia połączenie z monitorem, jednak niektóre monitory wymagają jawnego zadeklarowania typu łączności.
+
 
 ==== Kodowanie Brajla ====
 Pole rozwijalne pozwalające na wybór tablicy kodów brajlowskich dla różnych języków oraz stopni, poruszając się po liście za pomocą klawiszy strzałek.
+==== Tabela wprowadzania ====
+Wybrana tabela zostanie użyta do tłumaczenia znaków wprowadzanych na monitorze brajlowskim do tekstu czarnodfukowego. NVDA wspiera narazie jedynie ośmiopunktowy brajl komputerowy, więc tylko takie tablice są dostępne.
+Ta funkcja jest urzyteczna jedynie wtedy, gdy twuj monitor brajlowski posiada klawiatórę w stylu perkinsa, pozwalającą na pisanie tekstu w brajlu.
+
 
 ==== Rozwiń wyraz pod kursorem do brajla komputerowego ====
 Ta opcja pozwala na rozwijanie wyrazu pod kursorem do brajla komputerowego: Jeśli zaznaczysz tę opcję, wyraz znajdujący się aktualnie w miejscu kursora będzie na monitorze brajlowskim prezentowany w brajlu komputerowym, bez skrótów.
@@ -784,13 +799,8 @@ Aby wybrać dany symbol, zaznacz go na liście. Pole zamień określa w jaki spo
 
 
 ++ Zapisywanie i Przywracanie Ustawień ++
-NVDA domyślnie nie zapisuje ustawień automatycznie.
-Jeśli zamkniesz program i uruchomisz go ponownie, zostaną przywrócone poprzednio zapisane (lub oryginalne) ustawienia.
-Istnieją dwa sposoby zapisywania zmienionych ustawień.
-Pierwszym z nich jest wybranie opcji "Zapisz ustawienia przed wyjściem" w oknie dialogowym Główne ustawienia.
-Druga możliwość to wybranie polecenia "Zapisz ustawienia" z menu NVDA (skrót Kontrol+NVDA+C).
-Jeśli uruchamiasz NVDA z nośnika tylko do odczytu (read-only), takiego jak płyta CD, zapisanie ustawień nie będzie możliwe i NVDA poinformuje cię o tym.
-Jeśli przez pomyłkę zmienisz ustawienia programu, możesz skorzystać z opcji "Przywróć zapisane ustawienia" dostępnej z menu NVDA lub za pomocą skrótu Kontrol+NVDA+R, co przywróci poprzednio zapisane ustawienia.
+NVDA domyślnie zapisuje ustawień automatycznie.
+Jeśli przez pomyłkę zmienisz ustawienia programu, możesz skorzystać z opcji "Przywróć zapisane ustawienia" dostępnej z menu NVDA, co przywróci poprzednio zapisane ustawienia.
 
 Przydatne są także poniżej następujące klawisze poleceń NVDA::
 %kc:beginInclude
@@ -808,7 +818,8 @@ Aby dostać się do katalogu z ustawieniami wersji instalacyjnej NVDA, przejdź 
 
 Ustawienia z ekranu logowania NVDA i (UAC) są przechowywane w katalogu systemConfig w katalogu instalacyjnym NVDA.
 Zwykle taką konfigurację należy zostawić jako domyślną aby zmienić konfigurację ekranu logowania/(UAC).
-W jaki sposób można skonfigurować NVDA po zalogowaniu się do systemu, należy to zrobić w następujący sposób:
+W jaki sposób można skonfigurować NVDA po zalogowaniu się do systemu?
+ należy to zrobić w następujący sposób:
  wybierz ustawienia -> ogólne w tym oknie naciśnij przycisk „Używaj obecnie zapisanych ustawień logowania i innych bezpiecznych ekranów”, i konfiguracja do ekranu logowania zostanie skopiowana.
 
 + Dodatkowe Narzędzia +
@@ -817,12 +828,13 @@ W jaki sposób można skonfigurować NVDA po zalogowaniu się do systemu, należ
 Podgląd logów znajduje się w menu Narzędzia, i umożliwia przeglądanie zapisu wszystkich wewnętrznych zdarzeń programu, które wystąpiły od ostatniego uruchomienia NVDA.
 
 Oprócz czytania treści, można także zapisać kopię pliku dziennika lub odświeżyć podgląd, żeby pokazać bardziej aktualne informacje.
-Działania te są dostępne w menu Podgląd Logu.
+Polecenia te są dostępne w menu Podgląd Logu.
 
 ++ Podgląd Mowy ++
 Aby włączyć podgląd mowy, zaznacz pozycję w menu Narzędzia "Podgląd Mowy" w menu NVDA. Aby wyłączyć tą opcję usuń zaznaczenie "Podgląd Mowy" w menu .
 Gdy podgląd mowy jest włączony, nvda pokazuje na ekranie wypowiadany przez siebie tekst. Może być to przydatne dla developerów, którzy chcą dostosować swój program do potrzeb osób niewidomych.
 Gdy klikniesz lub umieścisz punkt uwagi wewnątrz podglądu, NVDA tymczasowo zatrzyma aktualizację tekstu, dzięki czemu możesz łatwo zaznaczyć lub skopiować istniejące treści.
+
 
 ++ Konsola Pythona ++
 Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania dostępności w hierarchii aplikacji.
@@ -831,7 +843,7 @@ Więcej informacji znajdziecie w sekcji development na oficjalnej stronie projek
 ++ przeładuj wtyczki ++
 Po aktywacji tego polecenia wszystkie moduły aplikacji oraz wtyczki zostaną przeładowane bez potrzeby restartu nvda. Jest to użyteczne dla programistów.
 ++ Manager dodatków ++
-Manager dodatków znajduje się w menu narzędzia i pozwala zarządzać wtyczkami do programu rozwijanymi przez społeczność użytkowników. Wtyczki te mogą dodawać do screenreadera nowe funkcje, modyfikować aktualne działanie lub być np. sterownikami dla oficjalnie nie wspieranych monitorów brajlowskich. Ze względów bezpieczeństwa radzimy jednak instalować wyłącznie wtyczki z zaufanych źródeł, ponieważ zainstalowany dodatek nie ma wewnątrz programu żadnych ograniczeń, może więc w teorii przejąć kontrolę nad twoim komputerem lub wykradać twoje osobiste dane.
+Manager dodatków znajduje się w menu narzędzia i pozwala zarządzać wtyczkami do programu rozwijanymi przez społeczność użytkowników. Wtyczki te mogą dodawać do screenreadera nowe funkcje, modyfikować aktualne działanie lub być np. sterownikami dla oficjalnie nie wspieranych monitorów brajlowskich albo syntezatorów mowy. Ze względów bezpieczeństwa radzimy jednak instalować wyłącznie wtyczki z zaufanych źródeł, ponieważ zainstalowany dodatek nie ma wewnątrz programu żadnych ograniczeń, może więc w teorii przejąć kontrolę nad twoim komputerem lub wykradać twoje osobiste dane.
 
 
 

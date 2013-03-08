@@ -311,11 +311,12 @@ GlyphTranslatorCache glyphTranslatorCache;
  * @param fuOptions flags accepted by GDI32's ExtTextOut.
  * @param textAlign possible flags returned by GDI32's GetTextAlign.
  * @param lpString the string of unicode text you wish to record.
+ * @param codePage not used in the unicode version
  * @param characterWidths an optional array of character widths 
  * @param cbCount the length of the string in characters.
  * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
@@ -434,18 +435,19 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 /**
  * an overload of ExtTextOutHelper to work with ansi strings.
  * @param lpString the string of ansi text you wish to record.
+ * @param codePage the code page used for the string which will be converted to unicode
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
 	int newCount=0;
 	wchar_t* newString=NULL;
 	if(lpString&&cbCount) {
-		newCount=MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,NULL,0);
+		newCount=MultiByteToWideChar(codePage,0,lpString,cbCount,NULL,0);
 		if(newCount>0) {
 			newString=(wchar_t*)calloc(newCount+1,sizeof(wchar_t));
-			MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,newString,newCount);
+			MultiByteToWideChar(codePage,0,lpString,cbCount,newString,newCount);
 		}
 	}
-	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,characterWidths,newCount,resultTextSize);
+	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,characterWidths,newCount,resultTextSize);
 	if(newString) free(newString);
 }
 
@@ -474,7 +476,7 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	//If we can't get a display model then stop here.
 	if(!model) return res;
 	//Calculate the size of the text
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,NULL,cbCount,NULL);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,CP_THREAD_ACP,NULL,cbCount,NULL);
 	model->release();
 	return res;
 }
@@ -515,7 +517,7 @@ template<typename WA_POLYTEXT> BOOL WINAPI hookClass_PolyTextOut<WA_POLYTEXT>::f
 			curPos.y=curPptxt->y;
 		}
 		//record the text
-		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpstr,curPptxt->pdx,curPptxt->n,&curTextSize);
+		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpstr,CP_THREAD_ACP,curPptxt->pdx,curPptxt->n,&curTextSize);
 		//If the DC's current position should be used,  move our idea of it by the size of the text just recorded
 		if(textAlign&TA_UPDATECP) {
 			curPos.x+=curTextSize.cx;
@@ -608,7 +610,7 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	//If we can't get a display model then stop here
 	if(!model) return res;
 	//Record the text in the displayModel
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,lpDx,cbCount,NULL);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,CP_THREAD_ACP,lpDx,cbCount,NULL);
 	//Release the displayModel and return
 	model->release();
 	return res;
@@ -737,6 +739,13 @@ BOOL WINAPI fake_StretchBlt(HDC hdcDest, int nXDest, int nYDest, int nWidthDest,
 	//Call the real StretchBlt
 	BOOL res=real_StretchBlt(hdcDest,nXDest,nYDest,nWidthDest,nHeightDest,hdcSrc,nXSrc,nYSrc,nWidthSrc,nHeightSrc,dwRop);
 	if(!res) return res;
+	//#2989: KMPlayer uses stretchBlt with SRCCOPY  to place a graphic over the top of its menu items replacing the real text.
+	//Therefore at the moment don't allow stretchBlt SRCCOPY to clear previous text -- change it to SRCAND if blitting directly to a menu window
+	HWND hwnd=NULL;
+	wchar_t className[7]; 
+	if(hdcDest&&dwRop==SRCCOPY&&(hwnd=WindowFromDC(hdcDest))&&GetClassName(hwnd,className,ARRAYSIZE(className))>0&&wcscmp(className,L"#32768")==0) {
+		dwRop=SRCAND;
+	}
 	StretchBlt_helper(hdcDest, nXDest, nYDest, nWidthDest, nHeightDest, hdcSrc, nXSrc, nYSrc, nWidthSrc, nHeightSrc, dwRop);
 	return res;
 }
@@ -750,6 +759,46 @@ BOOL WINAPI fake_GdiTransparentBlt(HDC hdcDest, int nXDest, int nYDest, int nWid
 	if(!res) return res;
 	StretchBlt_helper(hdcDest, nXDest, nYDest, nWidthDest, nHeightDest, hdcSrc, nXSrc, nYSrc, nWidthSrc, nHeightSrc, SRCPAINT);
 	return res;
+}
+
+//Converts a GDI font charset identifier to a Windows codePage identifier
+inline int charSetToCodePage(int charset) {
+	//Mappings from http://support.microsoft.com/kb/165478
+	switch(charset) {
+		case DEFAULT_CHARSET:
+		return CP_ACP;
+		case SYMBOL_CHARSET:
+		return CP_SYMBOL;
+		case MAC_CHARSET:
+		return CP_MACCP;
+		case OEM_CHARSET:
+		return CP_OEMCP;
+		case ANSI_CHARSET:
+		return 1252;
+		case RUSSIAN_CHARSET:
+		return 1251;
+		case EASTEUROPE_CHARSET:
+		return 1250;
+	case GREEK_CHARSET:
+		return 1253;
+		case TURKISH_CHARSET:
+		return 1254;
+		case BALTIC_CHARSET:
+		return 1257;
+		case HEBREW_CHARSET:
+		return 1255;
+		case ARABIC_CHARSET:
+		return 1256;
+		case SHIFTJIS_CHARSET:
+		return 932;
+		case HANGEUL_CHARSET:
+		return 949;
+		case CHINESEBIG5_CHARSET:
+		return 950;
+		default:
+		LOG_ERROR(L"Unknown charset "<<charset);
+	}
+	return -1;
 }
 
 typedef struct {
@@ -839,7 +888,12 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 		return res;
 	}
 	BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
-	ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),NULL,i->second.cString,NULL);
+	if(i->second.iCharset==-1) { //Unicode
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),CP_THREAD_ACP,NULL,i->second.cString,NULL);
+	} else { // character set
+		int codePage=charSetToCodePage(i->second.iCharset);
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(char*)(i->second.pString),codePage,NULL,i->second.cString,NULL);
+	}
 	model->release();
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	return res;
@@ -949,9 +1003,9 @@ void gdiHooks_inProcess_initialize() {
 	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
 	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);
 	real_DestroyWindow=apiHook_hookFunction_safe("USER32.dll",DestroyWindow,fake_DestroyWindow);
-	//real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
-	//real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
-	//real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
+	real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
+	real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
+	real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
 }
 
 void gdiHooks_inProcess_terminate() {

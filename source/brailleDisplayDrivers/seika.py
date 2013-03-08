@@ -27,6 +27,7 @@ READ_INTERVAL = 50
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "seika"
+	# Translators: Names of braille displays.
 	description = _("Seika braille displays")
 	numCells = 0
 

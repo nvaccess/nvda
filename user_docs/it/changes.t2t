@@ -5,19 +5,44 @@
 
 = 2013.1 =
 
+== Importante == 
+
+=== Nuovo layout tastiera laptop === 
+Il layout per tastiere laptop è stato completamente rifatto per renderlo più semplice e intuitivo. 
+Il nuovo layout utilizza i tasti freccia in combinazione con il tasto NVDA e altri tasti funzione per i comandi di revisione. 
+
+Si consiglia di leggere con attenzione i cambiamenti per i comandi seguenti: 
+|| Nome | Tasto | 
+| Dire tutto | NVDA+a | 
+| Leggere la riga corrente | NVDA+l | 
+| Leggere il testo selezionato | NVDA+shift+s | 
+| Annunciare il contenuto della barra di stato | NVDA+shift+fine | 
+In aggiunta, sono stati cambiati tutti i comandi inerenti la navigazione ad oggetti, la revisione del testo, il click del mouse e la possibilità di modificare al volo le impostazioni del sintetizzatore. 
+Si prega di consultare il documento [Comandi rapidi keyCommands.html] per i nuovi tasti.
+
+
 == Novità ==
+- Supporto di base alla modifica e alla lettura delle presentazioni in Microsoft Powerpoint. (#501)
 - Supporto alla lettura e scrittura dei messaggi in Lotus Notes 8.5. (#543)
 - In modalità navigazione MSHTML (ad esempio Internet Explorer) e Gecko (ad esempio Firefox), viene annunciata l'esistenza delle descrizioni degli elementi se esistente, tramite l'interpretazione dell'attributo longdesc. è anche possibile aprire la descrizione in una nuova finestra tramite nvda+d. (#809)
 - Ora vengono annunciate le notifiche in Internet Explorer 9 e superiori, ad esempio download di file o contenuti bloccati. (#2343)
 - Annuncio automatico delle intestazioni riga/colonna nelle tabelle per la modalità navigazione in Internet Explorer e altri controlli MSHTML. (#778)
 - Nuova lingua: Aragonese
-- Nuova tabella Braille: Danese grado 2.
+- Nuove tabelle Braille: Danese grado 2, Coreano grado 1. (#2737)
 - Supporto per i display Braille connessi tramite Bluetooth su computer che eseguono lo stack Bluetooth prodotto da Toshiba. (#2419)
 - Supporto per la selezione della porta per i Display Braille Freedom Scientific (Automatica, Usb o Bluetooth).
 - Supporto per i display Braille Braillenote della Humanware quando configurati per funzionare come periferica per screen reader. (#2012)
+- Supporto ai vecchi modelli Papenmeier utilizzati tramite porta seriale. (#2679)
+- Supporto alla scrittura diretta tramite display braille con tastiera in stile perkins. (#804)
+- - Nuove impostazioni della tastiera che consentono di selezionare se NVDA debba interrompere il parlato per i caratteri digitati e o il tasto ENTER. ;(# 698)
+ 
+
+ == Cambiamenti ==
+ - Aggiornato liblouis Braille Translator alla versione 2.5.2. ;(# 2737)
+- Il layout tastiera laptop è stato completamente riprogettato in modo da renderlo più intuitivo e coerente. ;(# 804)
 
  
-== Bug Corretti ==
+ == Bug Corretti ==
 - Il tasto rapido per spostarsi di sezione in sezione ora funziona anche con Internet Explorer. (#2781)
 - Se NVDA non riesce a caricare un sintetizzatore all'avvio ed è costretto a parlare tramite Espeak, la configurazione viene lasciata inalterata, il che significa che la prossima volta che si riavvierà NVDA, tenterà di caricare ancora il sintetizzatore scelto dall'utente in precedenza, anziché mantenere Espeak come predefinito. (#2589)
 - Nelle applicazioni Mozilla in modalità navigazione, vengono ora riportati correttamente gli aggiornamenti delle tabelle. Ad esempio, nelle celle aggiornate, vengono annunciate correttamente le coordinate delle colonne e delle righe. (#2684)
@@ -29,8 +54,28 @@
 - Quando il controllo aggiornamenti  viene disattivato, NVDA non necessita più di essere riavviato affinché le modifiche abbiano effetto.
 - NVDA non ha più problemi nell'avviarsi nel caso in cui un componente aggiuntivo non possa essere rimosso in quanto la directory che lo contiene è in uso da un'altra applicazione. (#2860)
 - Le etichette delle schede in Dropbox, ad esempio quelle nella finestra preferenze, possono ora essere raggiunte anche con la navigazione in linea.
+/ Se la lingua di immissione viene modificata in un valore diverso da quello predefinito, NVDA individua correttamente i tasti per l'aiuto immissione e per i comandi.
+- Per le lingue come il tedesco in cui il (più) + è un tasto singolo  sulla tastiera, è ora possibile associare i comandi ad esso usando la parola "plus". ;(# 2898)
+- In Internet Explorer e altri controlli MSHTML, i blocchi tra virgolette vengono  ora annunciati correttamente nella posizione appropriata. (#2888)
+- Il Display braille HumanWare Brailliant BI / B può ora essere selezionato quando il display è collegato tramite Bluetooth, ma non è mai stato collegato via USB.
+- L'operazione di filtraggio degli elementi nell'elenco elementi della modalità navigazione è stata migliorata. (#2951)
+- Quando si utilizza un browser Mozilla, può essere usata di nuovo la modalità navigazione in presenza di oggetti flash. (#2546)
+- Quando si utilizza una tabella con braille contratto e l'opzione espandi la parola sotto al cursore è attiva, il cursore braille viene ora posizionato correttamente quando collocato dopo una parola laddove un carattere è rappresentato da celle braille multiple (ad esempio segno per maiuscole, lettere, numeri etc.). (#2947)
+- La selezione del testo è ora visualizzata correttamente  sul display braille nei campi editazione di applicazioni come Microsoft Word 2003 e Internet Explorer.
+- è di nuovo possibile selezionare il testo all'indietro in Microsoft Word quando il Braille è abilitato.
+- Durante la revisione o la cancellazione del testo col tasto canc o backspace nei controlli scintilla, NVDA ora annuncia correttamente i caratteri multibyte. (#2855)
+- NVDA non si rifiuterà più di installarsi quando il percorso del profilo utente contiene caratteri multibyte. (#2729)
 
 
+== Cambiamenti per sviluppatori ==
+- I driver dei display braille supportano la selezione manuale della porta. (#426)
+ - Questo risulta molto utile per i display braille che supportano il collegamento tramite una porta seriale.
+ - L'operazione viene effettuata utilizzando la classe getPossiblePorts sulla classe BrailleDisplayDriver.
+- Viene supportata l'immissione tramite tastiera braille. (#808)
+ - L'immissione braille è gestita dalla classe brailleInput.BrailleInputGesture o una sottoclasse della stessa.
+ - Le sottoclassi braille.BrailleDisplayGesture (come implementate nei driver dei display braille) possono anche ereditare da brailleInput.BrailleInputGesture. Ciò permette la gestione dei comandi dei display braille e dell'immissione braille dalla stessa classe gesture.
+ 
+ 
 = 2012.3 =
 Le novità principali in questa versione sono costituite dal supporto all'immissione dei caratteri asiatici; supporto sperimentale ai dispositivi touch screen in Windows 8; l'annuncio dei numeri di pagina e un notevole miglioramento per le tabelle in Adobe Reader; il poter usare comandi di navigazione delle tabelle nelle finestre con visualizzazioni ad elenco; supporto per molti nuovi display braille; e la possibilità di annunciare le intestazioni di righe e colonne in Excel.
 

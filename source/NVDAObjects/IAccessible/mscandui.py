@@ -109,16 +109,28 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 		reportSelectedCandidate(item)
 
 	def script_changePage(self,gesture):
+		try:
+			del self.__dict__['visibleCandidateItemsText']
+		except KeyError:
+			pass
 		gesture.send()
 		api.processPendingEvents()
 		oldItem=item=self
 		while item and isinstance(item.candidateNumber,int):
 			oldItem=item
 			item=item.previous
-		reportSelectedCandidate(oldItem,allowDuplicate=True,newList=True)
+		if oldItem and isinstance(oldItem.candidateNumber,int) and oldItem.name:
+			reportSelectedCandidate(oldItem,allowDuplicate=True,newList=True)
 
 	def script_activate(self,gesture):
 		self.doAction()
+		api.processPendingEvents()
+		oldItem=item=self
+		while item and isinstance(item.candidateNumber,int):
+			oldItem=item
+			item=item.previous
+		if oldItem and isinstance(oldItem.candidateNumber,int) and oldItem.name:
+			reportSelectedCandidate(oldItem,allowDuplicate=True,newList=True)
 
 	__gestures={
 		"kb:downArrow":"nextItem",
@@ -127,7 +139,7 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 		"kb:pageUp":"changePage",
 		"kb:leftArrow":"changePage",
 		"kb:rightArrow":"changePage",
-		"kb:space":"changePage",
+		"kb:space":"activate",
 		"kb:enter":"activate",
 	}
 
@@ -152,7 +164,8 @@ class MSCandUI21(IAccessible):
 		elif role==controlTypes.ROLE_MENUBUTTON:
 			item=candidateList.firstChild.next.next
 			item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
-			reportSelectedCandidate(item)
+			if item and isinstance(item.candidateNumber,int) and item.name:
+				reportSelectedCandidate(item)
 
 ###IME 2002
 

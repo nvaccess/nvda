@@ -133,6 +133,7 @@ def pumpAll():
 	if config.conf["mouse"]["reportMouseShapeChanges"] and mouseShapeChanged>0:
 		if mouseShapeChanged==10:
 			mouseShapeChanged=0
+			# Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 			speech.speakMessage(_("%s cursor")%curMouseShape)
 		else:
 			mouseShapeChanged+=1

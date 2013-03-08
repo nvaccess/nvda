@@ -5,24 +5,66 @@
 #See the file COPYING for more details.
 
 import comtypes
+from comtypes.automation import IDispatch
 import comtypes.client
+import ctypes
 import oleacc
+import queueHandler
 import colors
 import api
 import speech
 import sayAllHandler
 import winUser
+from treeInterceptorHandler import TreeInterceptor
 from NVDAObjects import NVDAObjectTextInfo
 from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
 import textInfos.offsets
 import eventHandler
 import appModuleHandler
-from NVDAObjects.IAccessible import IAccessible
+from NVDAObjects.IAccessible import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects.window import Window
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection
+import braille
 from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
+
+#comtypes COM interface definition for Powerpoint application object's events 
+class EApplication(IDispatch):
+	_iid_=comtypes.GUID('{914934C2-5A91-11CF-8700-00AA0060263B}')
+	_methods_=[]
+	_disp_methods_=[
+		comtypes.DISPMETHOD([comtypes.dispid(2001)],None,"WindowSelectionChange",
+			(['in'],ctypes.POINTER(IDispatch),'sel'),),
+		comtypes.DISPMETHOD([comtypes.dispid(2013)],None,"SlideShowNextSlide",
+			(['in'],ctypes.POINTER(IDispatch),'slideShowWindow'),),
+	]
+
+#Our implementation of the EApplication COM interface to receive application events
+class ppEApplicationSink(comtypes.COMObject):
+	_com_interfaces_=[EApplication,IDispatch]
+
+	def SlideShowNextSlide(self,slideShowWindow=None):
+		i=winUser.getGUIThreadInfo(0)
+		oldFocus=api.getFocusObject()
+		if not isinstance(oldFocus,SlideShowWindow) or i.hwndFocus!=oldFocus.windowHandle:
+			return
+		oldFocus.treeInterceptor.rootNVDAObject.handleSlideChange()
+
+	def WindowSelectionChange(self,sel):
+		print sel
+		i=winUser.getGUIThreadInfo(0)
+		oldFocus=api.getFocusObject()
+		if not isinstance(oldFocus,Window) or i.hwndFocus!=oldFocus.windowHandle:
+			return
+		if isinstance(oldFocus,DocumentWindow):
+			documentWindow=oldFocus
+		elif isinstance(oldFocus,PpObject):
+			documentWindow=oldFocus.documentWindow
+		else:
+			return
+		documentWindow.ppSelection=sel
+		documentWindow.handleSelectionChange()
 
 #Bullet types
 ppBulletNumbered=2
@@ -203,7 +245,7 @@ class PaneClassDC(Window):
 
 	def _get_ppObjectModel(self):
 		"""Fetches and caches the Powerpoint DocumentWindow object for the current presentation."""
-		m=getPpObjectModel(self.windowHandle)
+		m=self.appModule.fetchPpObjectModel(self.windowHandle)
 		if m:
 			self.ppObjectModel=m
 			return self.ppObjectModel
@@ -385,28 +427,7 @@ class DocumentWindow(PaneClassDC):
 		self.handleSelectionChange()
 	script_selectionChange.canPropagate=True
 
-	__gestures={
-		"kb:downArrow":"selectionChange",
-		"kb:upArrow":"selectionChange",
-		"kb:leftArrow":"selectionChange",
-		"kb:rightArrow":"selectionChange",
-		"kb:home":"selectionChange",
-		"kb:end":"selectionChange",
-		"kb:pageUp":"selectionChange",
-		"kb:pageDown":"selectionChange",
-		"kb:tab":"selectionChange",
-		"kb:shift+tab":"selectionChange",
-		"kb:control+enter":"selectionChange",
-		"kb:enter":"selectionChange",
-		"kb:f2":"selectionChange",
-		"kb:escape":"selectionChange",
-		"kb:delete":"selectionChange",
-		"kb:control+c":"selectionChange",
-		"kb:control+x":"selectionChange",
-		"kb:control+v":"selectionChange",
-	}
-
-class OutlinePane(EditableTextWithoutAutoSelectDetection,DocumentWindow):
+class OutlinePane(EditableTextWithoutAutoSelectDetection,PaneClassDC):
 	TextInfo=EditableTextDisplayModelTextInfo
 	role=controlTypes.ROLE_EDITABLETEXT
 
@@ -544,7 +565,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start,end
 
 	def _getTextRange(self,start,end):
-		text=self.obj.ppObject.textRange.text[start:end].replace('\x0b','\n')+'\n'
+		text=self.obj.ppObject.textRange.text[start:end].replace('\x0b','\n')
 		text=text.replace('\r','\n')
 		return text
 
@@ -654,12 +675,6 @@ class TableCellTextFrame(TextFrame):
 	def _isEqual(self,other):
 		return self.parent==other.parent
 
-	def _caretScriptPostMovedHelper(self, speakUnit, info=None):
-		if not self.parent.ppObject.selected:
-			self.documentWindow.handleSelectionChange()
-		else:
-			super(TableCellTextFrame,self)._caretScriptPostMovedHelper(speakUnit, info=None)
-
 	__gestures={
 		"kb:tab":"selectionChange",
 		"kb:shift+tab":"selectionChange",
@@ -670,14 +685,76 @@ class NotesTextFrame(TextFrame):
 	def _get_parent(self):
 		return self.documentWindow
 
-class SlideShowWindow(ReviewCursorManager,PaneClassDC):
+class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
+	"""The TextInfo for Slide Show treeInterceptors. Based on NVDAObjectTextInfo but tweeked to work with TreeInterceptors by using basicText on the treeInterceptor's rootNVDAObject."""
 
-	TextInfo=NVDAObjectTextInfo
+	def _getStoryText(self):
+		return self.obj.rootNVDAObject.basicText
+
+class SlideShowTreeInterceptor(TreeInterceptor):
+	"""A TreeInterceptor for showing Slide show content. Has no caret navigation, a CursorManager must be used on top. """
+
+	def _get_isAlive(self):
+		return winUser.isWindow(self.rootNVDAObject.windowHandle)
+
+	def __contains__(self,obj):
+		return isinstance(obj,Window) and obj.windowHandle==self.rootNVDAObject.windowHandle
+
+	hadFocusOnce=False
+
+	def event_treeInterceptor_gainFocus(self):
+		braille.handler.handleGainFocus(self)
+		self.rootNVDAObject.reportFocus()
+		if not self.hadFocusOnce:
+			self.hadFocusOnce=True
+			self.reportNewSlide()
+		else:
+			info = self.selection
+			if not info.isCollapsed:
+				speech.speakSelectionMessage(_("selected %s"), info.text)
+			else:
+				info.expand(textInfos.UNIT_LINE)
+				speech.speakTextInfo(info, reason=controlTypes.REASON_CARET, unit=textInfos.UNIT_LINE)
+
+	def event_gainFocus(self,obj,nextHandler):
+		pass
+
+	TextInfo=SlideShowTreeInterceptorTextInfo
+
+	def makeTextInfo(self,position):
+		return self.TextInfo(self,position)
+
+	def reportNewSlide(self):
+		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
+		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
+
+	def script_toggleNotesMode(self,gesture):
+		self.rootNVDAObject.notesMode=not self.rootNVDAObject.notesMode
+		self.rootNVDAObject.handleSlideChange()
+	# Translators: The description for a script
+	script_toggleNotesMode.__doc__=_("Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA")
+
+	__gestures={
+		"kb:control+shift+s":"toggleNotesMode",
+	}
+
+class ReviewableSlideshowTreeInterceptor(ReviewCursorManager,SlideShowTreeInterceptor):
+	"""A TreeInterceptor for Slide show content but with caret navigation via ReivewCursorManager."""
+	pass
+
+class SlideShowWindow(PaneClassDC):
+
+	treeInterceptorClass=ReviewableSlideshowTreeInterceptor
+	notesMode=False #: If true then speaker notes will be exposed as this object's basicText, rather than the actual slide content.
 
 	def _get_name(self):
 		if self.currentSlide:
-			# Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-			return _("Slide show - {slideName}").format(slideName=self.currentSlide.name)
+			if self.notesMode:
+				# Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
+				return _("Slide show notes - {slideName}").format(slideName=self.currentSlide.name)
+			else:
+				# Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
+				return _("Slide show - {slideName}").format(slideName=self.currentSlide.name)
 		else:
 			# Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 			return _("Slide Show - complete")
@@ -725,57 +802,73 @@ class SlideShowWindow(ReviewCursorManager,PaneClassDC):
 	def _get_basicText(self):
 		if not self.currentSlide:
 			return self.name
-		chunks=[self.name]
-		for shape in self.currentSlide.ppObject.shapes:
+		chunks=[]
+		ppObject=self.currentSlide.ppObject
+		if self.notesMode:
+			ppObject=ppObject.notesPage
+		for shape in ppObject.shapes:
 			for chunk in self._getShapeText(shape):
 				chunks.append(chunk)
 		self.basicText="\n".join(chunks)
-		return self.basicText
+		if not self.basicText:
+			if self.notesMode:
+				# Translators: The message for no notes  for a slide in a slide show
+				self.basicText=_("No notes")
+			else:
+				# Translators: The message for an empty slide in a slide show
+				self.basicText=_("Empty slide")
+		return self.basicText or _("Empty slide")
 
-	def handleNewSlide(self):
-		speech.cancelSpeech()
-		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
-		sayAllHandler.readText(sayAllHandler.CURSOR_CARET)
 
-	def event_gainFocus(self):
-		self.handleNewSlide()
-
-	def script_changeSlide(self,gesture):
-		slideIndex=self.currentSlide.ppObject.slideIndex if self.currentSlide else None
-		gesture.send()
-		if slideIndex is not None:
+	def handleSlideChange(self):
+		try:
 			del self.__dict__['currentSlide']
+		except KeyError:
+			pass
+		try:
 			del self.__dict__['basicText']
-		newSlideIndex=self.currentSlide.ppObject.slideIndex if self.currentSlide else None
-		if newSlideIndex!=slideIndex:
-			self.handleNewSlide()
-
-	__gestures={
-		"kb:space":"changeSlide",
-		"kb:pageUp":"changeSlide",
-		"kb:pageDown":"changeSlide",
-	}
+		except KeyError:
+			pass
+		self.reportFocus()
+		self.treeInterceptor.reportNewSlide()
 
 class AppModule(appModuleHandler.AppModule):
 
 	hasTriedPpAppSwitch=False
+	ppApplication=None
+	_ppEApplicationConnectionPoint=None
+
+	def fetchPpObjectModel(self,windowHandle):
+		m=getPpObjectModel(windowHandle)
+		if m:
+			if not self.ppApplication:
+				self.ppApplication=m.application #Must be held -- not enough to hold the connectionPoint
+			if not self._ppEApplicationConnectionPoint:
+				sink=ppEApplicationSink().QueryInterface(comtypes.IUnknown)
+				self._ppEApplicationConnectionPoint=comtypes.client._events._AdviseConnection(self.ppApplication,EApplication,sink)
+		return m
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if obj.windowClassName=="paneClassDC" and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
-			m=getPpObjectModel(obj.windowHandle)
+			m=self.fetchPpObjectModel(obj.windowHandle)
 			if m:
 				try:
 					ppActivePaneViewType=m.activePane.viewType
 				except comtypes.COMError:
 					ppActivePaneViewType=None
 				if ppActivePaneViewType is None:
+					try:
+						m=m.presentation.slideShowWindow
+					except (AttributeError,COMError):
+						pass
+					if not m: return
 					clsList.insert(0,SlideShowWindow)
 				else:
 					if ppActivePaneViewType==ppViewOutline:
 						clsList.insert(0,OutlinePane)
 					else:
 						clsList.insert(0,DocumentWindow)
-					self.ppActivePaneViewType=ppActivePaneViewType
+					obj.ppActivePaneViewType=ppActivePaneViewType
 			else:
 				clsList.insert(0,PaneClassDC)
-			self.ppObjectModel=m
+			obj.ppObjectModel=m

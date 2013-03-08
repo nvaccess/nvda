@@ -1,0 +1,1793 @@
+﻿NVDA NVDA_VERSION User Guide
+
+
+%!includeconf: ../userGuide.t2tconf
+%kc:title: NVDA NVDA_VERSION Commands Quick Reference
+
+= Table of Contents =[toc]
+%%toc
+
++ Kynning +
+NonVisual Desktop Access (NVDA) er gjaldfrjáls opinn-hugbúnaðar skjálesari fyrir Microsoft Windows stýrikerfið.
+NVDA gerir blindum og sjónskertum notendum kleift að nota Windows stýrikerfið með því að lesa upplýsingar af skjánum og birta þær á blindraletri sem og með upplestri frá talgervli, allt þetta án þess að auka kostnaður leggist til.
+NVDA er þróað af [NV Access http://www.nvaccess.org/], með frjálsum framlögum frá samfélaginu.
+
+++ Helstu eiginleikar ++
+NVDA gerir blindum og sjónskertum einstaklingum kleift að vinna með Windows stýrikerfið sem og einnig ýmsan annan hugbúnað.
+
+Nokkrir mikilvægir eiginleikar:
+- Stuðningur fyrir vinsæl forrit eins og vefvafra, tölvupóst forrit, Internet spjallforrit og Office pakkann
+- Innbyggður talgervill sem styður yfir 43 tungumál
+- tilkynningar um letur samsetningu þar sem það er mögulegt, svo sem tegund, stærð, stíl og stafsetningarvillur
+- Sjálfvirkar tilkynningar um texta undir músarbendli og einnig valkostur um hljóð tilkynningu á staðsetningu músar
+- Stuðningur við marga punktaletursskjái, sem og stuðningur við inntak tölvu-punktaleturs á þeim skjám sem hafa lyklaborð
+- Möguleiki á að keyra hugbúnaðinn frá USB lykli eða öðrum lausum diski án þess að setja hugbúnaðinn upp á stýrikerfinu
+- Einfaldur, talandi uppsetningarálfur
+- Þýtt yfir á 42 tungumál
+- Stuðningur við nútíma Windows stýrikerfi, bæði 32 og 64 bita útgáfurnar
+- Hægt að keyra við innskráningarglugga Windows og í öðrum öryggisgluggum
+- Stuðningur við algeng aðgengisviðmót, svo sem Microsoft Active Accessibility, Java Access Bridge, IAccessible2 og UI Automation (UI Automation er aðeins stutt í Windows 7 og nýrri stýrikerfum)
+- Stuðningur við Windows Skipanalínu glugga og Skipanalínu forrit
+-
+
+++ Alþjóðavæðing ++
+Það er mikilvægt að fólk hafi jafnt aðgengi að tækni, sama hvar það býr í heiminum eða hvaða tungumál það talar.
+Fyrir utan ensku, þá hefur NVDA verið þýtt yfir á 42 tungumál, þmt: Afríkönsku, Albönsku, Amharic, Arabísku, Aragónísku, Brasilíska Portúgölsku, Búlgörsku, Króatísku, Tékknesku, Dönsku, Hollensku, Íslensku, Ítölsku, Japönsku, Kóresku, Nepölsku, Norsku, Pólsku, Portúgölsku, Rúmensku, Rússnesku, Serbísku, Slovak, Slóvönsku, Spönsku, Sænsku, Tamil, Taílensku, hefðbundna og einfaldaða Kínversku, Tyrknesku, Úkraínsku og Víetnömsku.
+
+++ Talgervla stuðningur ++
+Fyrir utan að bjóða upp á tilkynningar og valmyndir í nokkrum tungumálum, þá býður NVDA einnig upp á skjálestur í öllum tungumálum, ef settur er upp talgervill sem getur lesið það tungumál.
+
+Með NVDA fylgir einnig [eSpeak http://espeak.sourceforge.net/], gjaldfrjáls, fjöltyngdur,opinn hugbúnaður.
+
+Upplýsingar um aðra talgervla sem NVDA styður er hægt að finna í [Supported Speech Synthesizers #SupportedSpeechSynths] hlutanum.
+
+++ Punktaleturs stuðningur ++
+Fyrir notendur sem eiga punktaletursskjá þá getur NVDA birt upplýsingar líka á blindraletri.
+Vinsamlegast styðjist við [Supported Braille Displays #SupportedBrailleDisplays] hlutann fyrir upplýsingar um þá skjái.
+
+NVDA styður punktaleturskóðun fyrir mörg tungumál, þmt. styttingar, venjulegt og tölvu punktaleturskóðun á mörgum tungumálum.
+
+++ Leyfi og höfundaréttur ++
+NVDA er höfundarréttarvarið af NVDA_COPYRIGHT_YEARS NVDA tilleggjendur.
+
+NVDA er varið af GNU General Public Licence (útgáfa 2).
+Þér er heimilt að dreifa eða breyta hugbúnaðinum eftir vild svo lengi sem sama leyfi fylgir með og að allur frumkóði sé gerður aðgengilegur þeim sem eftir því óska.
+Þetta á við bæði frum- og breyttar útgáfur af þessum hugbúnaði, sem og allri tengdri vinnu.
+Fyrir nánari upplýsingar, er hægt að lesa [view the full licence. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+
++ Kerfiskröfur +
+- Stýrikerfi: allar 32 bita og 64 bita útgáfur af Windows XP, Windows Vista, Windows 7 og Windows 8 (þmt. netþjóna stýrikerfi) 
+- Minni: 256mb eða meira RAM
+- Örgjörvi: 1.0Ghz eða stærri
+- Uþb. 50mb af geymsluminni.
+-
+
++ Sækja og setja upp NVDA +
+Ef þú átt ekki eintak af NVDA, þá er hægt að niðurhala því frá [www.nvda-project.org NVDA_URL].
+
+Veljið niðurhals tengilinn og þar er tengill til að hala niður nýjustu útgáfunni af NVDA.
+
+Með því að ræsa skránni sem var halað niður er hægt að keyra NVDA.
+Því næst er spurt hvort þú viljir setja upp NVDA, búa til fiseintak eða bara nota eintakið sem er í gangi.
+
+Ef þú ætlar alltaf að keyra NVDA á tölvunni þá er best að velja uppsetninguna á NVDA.
+Með því að setja upp NVDA á tölvunni er hægt að velja um hvort NVDA ræsi eftir innskráningu notanda inn á stýrikerfið, möguleikann á að lesa innskráningargluggann og Windows öryggisglugga (sem ekki er hægt án þess að setja NVDA upp á tölvunni) sem og einnig eru settir upp flýtivísar í Ræsa valmyndina og á skjáborðið. 
+Einnig er hægt að búa til fisútgáfu af NVDA hvenær sem er þegar búið er að setja upp forritið.
+
+Ef þú vilt flytja NVDA með þér á USB lykli eða öðrum lausum hörðum diski, þá þarf að búa til fisútgáfu.
+Fisútgáfuna er einnig hægt að setja upp á annarri tölvu síðar, ef vill.
+Aftur á móti ef þú vilt afrita NVDA yfir á geisladisk, þá er best að brenna niðurhalspakkann sjálfan á þann miðil. 
+Eins og er styður NVDA ekki keyrslu á hugbúnaðinum frá geisladiski.
+
+Það er mögulegt að nota aðeins tímabundnu útgáfuna af NVDA (til dæmis ef á að sýna hugbúnaðinn), en það er tímafrekt að ræsa NVDA alltaf með þessum hætti.
+
+++ Takmarkanir Fis- og Tímabundnu útgáfanna ++
+Fyrir utan að ekki sé hægt að láta NVDA ræsa sér sjálfkrafa meðan eða eftir innskráningu, þá hafa fis- og tímabundnu útgáfurnar einnig eftirfarandi takmarkanir:
+- Ómögulegt er að vinna með forrit sem gera kröfu um kerfisstjóraaðgang, nema ef NVDA sé einnig ræst með kerfisstjóra aðgangi (ekki mælt með þessu).
+- Ómögulegt að lesa User Account Control (UAC) skjái þegar reynt er að ræsa forriti sem gerir kröfu um kerfisstjóra aðgang.
+- Windows 8: ómögulegt að greina innslátt frá snertiskjáum.
+- Windows 8: ómögulegt að bjóða upp á eiginleikana vafraham og lestur á skrifuðum stöfum í Windows Store forritum.
+-
+
+++ Uppsetning NVDA ++
+Ef NVDA er sett upp með niðurhals skránni, veljið Setja upp NVDA hnappinn.
+Ef þú hefur þegar lokað þessum glugga og vilt heldur setja upp frá fisútgáfu, veljið Setja upp NVDA valkostinn undir Verkfæri í NVDA valmyndinni.
+
+Uppsetningarglugginn sem birtist staðfestir hvort þú vilt setja upp NVDA og mun einnig segja þér hvort þessi uppsetning mun uppfæra fyrri uppsetningu.
+Með því að velja Áfram hnappinn hefst uppsetningin á NVDA.
+Það eru einnig nokkrir valkostir í þessum glugga sem verða útskýrðir hér að neðan.
+Þegar uppsetningu er lokið, mun tilkynning birtast sem segir að uppsetningin hafi heppnast.
+Með því að velja OK hnappinn endurræsist þín nýja uppsetning á NVDA.
+
++++ Ræsing við Windows Innskráningu +++
+Þessi valkostur segir til um hvort NVDA eigi að ræsast sjálfkrafa með Windows innskráningunni áður en þú hefur slegið inn lykilorðið.
+Valkosturinn á einnig við UAC stjórnun og aðra öryggisskjái.
+
++++ Búa til skjáborðs flýtivísi (ctrl+alt+n) +++
+Þessi valkostur segir til um hvort NVDA eigi að búa til flýtivísi á skjáborðið sem gerir þér kleift að ræsa NVDA.
+Ef þessi flýtivísir er búinn til þá er honum einnig útnefndur flýtilykillinn control+alt+n sem gerir þér kleift að ræsa NVDA hvenær sem er með þessum lyklainnslætti.
+
++++ Afrita Stillingar Fisútgáfu til Notendareiknings +++
+Þessi valkostur segir til um hvort NVDA eigi að afrita notendastillingar frá NVDA eintakinu sem er í gangi til notendareikningsins sem er innskráður, og þá fyrir þá útgáfu af NVDA sem er sett upp.
+Þetta mun ekki afrita stillingar frá öðrum notendum tölvunnar né kerfisstillingar á innskráningarglugga tölvunnar eða öðrum öryggisgluggum.
+Þessi valkostur er aðeins í boði þegar sett er upp frá fisútgáfu, ekki þegar NVDA er sett upp beint út niðurhalsskránni.
+
+++ Framleiðsla Fisútgáfu ++
+Ef búin er til fisútgáfa beint frá NVDA niðurhalsskránni, veljið þá Útbúa Fisútgáfu Eintak hnappinn.
+Ef þú hefur þegar lokað þessum glugga og ert að keyra uppsetta útgáfu af NVDA, veldu þá Útbúa Fisútgáfu valkostinn undir Verkfæri í NVDA valmyndinni.
+
+Glugginn sem birtist gerir þér kleift að velja hvar fisútgáfan skal útbúin.
+Þetta getur verið skrá á harða diskinum, USB lykli eða öðrum lausum miðli.
+Það er einnig hægt að velja um hvort NVDA eigi að afrita stillingar notandans og flytja þær með framleiðslunni á fisútgáfunni.
+Þessi valkostur er aðeins mögulegur þegar útbúin er fisútgáfa úr uppsettri útgáfu, en ekki þegar unnið er með niðurhalsskránna.
+Með því að velja Áfram hefst framleiðsla á fisútgáfunni.
+Þegar því er lokið birtast skilaboð um að framleiðsla hafi heppnast.
+Veldu OK til að loka þessum skilaboðum.
+
++ Hafist handa með NVDA +
+
+++ Ræsing NVDA ++
+Ef NVDA hefur verið sett upp með uppsetningarálfinum, þá er einfaldast að ræsa NVDA með flýtilyklinum control+alt+n, eða með því að velja NVDA úr NVDA valmyndinni í Forrit í Ræsa valmyndinni.
+Einnig er hægt að skrifa NVDA inn í Keyra gluggann og styðja á færslulykilinn.
+
+Til að ræsa fisútgáfunni, veljið þá möppuna þar sem NVDA var afpakkað og styðjið á enter eða tvísmellið á nvda.exe.
+
+Þegar NVDA ræsist, þá munu fyrst heyrast nokkrir tónar (til tilkynningar um að NVDA sé að ræsast).
+Það er svo háð tölvunni sjálfri, eða hvort þú ert að keyra NVDA af USB lykli eða öðrum hægum samskiptamiðli, hversu lengi það tekur að ræsa forritinu. 
+Ef það tekur lengri tíma en venjulega þá ætti NVDA að segja "Hleð inn NVDA. Vinsamlegast bíðið..."
+
+Ef ekkert af þessu heyrist, eða ef þú heyrir villuhljóð hjá Windows eða nokkra tóna, þá þýðir það að villa hefur komið upp hjá NVDA, og hugsanlega þarf að tilkynna villuna til hönnuða NVDA.
+Vinsamlegast lesið ykkur til um þetta á vefsíðu NVDA.
+
+Þegar NVDA ræsist í fyrsta skipti, á er þér mætt með glugga sem býður upp á nokkrar grunnupplýsingar um NVDA lykilinn og NVDA valmyndina.
+(Frekari upplýsingar um þetta í þessari handbók.)
+Glugginn inniheldur einnig tvo gátreiti.
+Sá fyrri segir til um hvort NVDA eigi að nota hástafalás sem NVDA breytilykilinn, og sá seinni segir til um hvort að Velkominn glugginn eigi að birtast í hvert skipti sem NVDA ræsist.
+ 
+++ NVDA flýtilykla skipanir ++
+
++++ The NVDA Breytilykilinn +++
+Flestar NVDA flýtilykla skipanir samanstanda venjulega af því að styðja á ákveðinn lykil sem er kallaður NVDA breytilykillinn, og svo styðja á einn eða fleiri lykla til.
+Undantekningin á þessu eru textalestur skipanir sem nota bara númerísku lyklana til að framkalla skipanir.
+
+Í NVDA er hægt velja milli þess að nota númerískt Insert, Insert eða hástafalás sem NVDA breytilykilinn.
+
+Sjálfgefið val er að bæði númerískt Insert og Insert lyklarnir virki sem NVDA breytilykilinn.
+
+Ef þú vilt framkalla sömu skipun fyrir lyklana og þeir hafa þegar NVDA er ekki ræst, þá er stutt á þá tvisvar, hratt. (Til dæmis ef þú vilt virkja/afvirkja hástafalásinn þegar hann er notaður sem breytilykilinn.)
+
++++ Lyklaborðs tilhögun +++
+NVDA inniheldur tvær gerðir af lyklaskipunum.
+Önnur fyrir borðtölvur og hin fyrir fartölvur.
+NVDA er sjálfkrafa stillt til að nota borðtölvu viðmótið, en þessu er hægt að breyta yfir í fartölvu viðmót, með því að fara í Lyklaborðs Stillingar, sem er staðsett undir Valkostir í NVDA valmyndinni.
+
+Borðtölvu viðmótið notar númeríska hluta lyklaborðsins talsvert (þegar slökkt er á talnalás). 
+Þrátt fyrir að margar fartölvur séu ekki með númerískt lyklaborð, þá eru til fartölvur sem líkja eftir númerísku lyklaborði með því að notandi haldi niðri FN lyklinum og styðji á bókstafi og tölur á hægri hlið lyklaborðsins (7 8 9 u i o j k l osfrv).
+Ef fartölvan þín býður ekki upp á þetta, eða gerir þér ekki kleift að slökkva á talnalásnum, þá gæti verið ráð að skipta yfir í Fartölvu viðmótið í staðinn.
+
+++ NVDA Snerti skipanir ++
+Ef NVDA er keyrt á tölvu með snertiskjá sem keyrir Windows 8 eða nýrri útgáfur, þá er einnig hægt að stjórna NVDA með snertiskjánum.
+Meðan NVDA er í gangi, þá munu allar snertingar flytjast beint til NVDA. 
+Þar af leiðandi munu aðgerðir sem venjulega er hægt að framkvæma þegar NVDA er ekki í gangi, ekki virka.
+ 
++++ Skjárinn kannaður +++
+Grunnaðgerðin sem hægt er að framkvæma með snertiskjá er að framkalla lestur á því atriði þar sem fingurinn snertir skjáinn.
+Til að gera þetta, staðsettu þá fingurinn hvar sem er á skjánum.
+Þú getur einnig látið fingurinn vera á skjánum og dregið hann til, til að fá atriði og texta lesinn meðan fingurinn færist yfir þau.
+
++++ Snerti skipanir +++
+Þegar NVDA skipunum er líst síðar í þessari handbók, þá gætu þær sagt til um snerti skipun sem hægt er að nota til að virkja aðgerðina á snertiskjám.
+Eftirfarandi eru nokkrar upplýsingar um hvernig skal framkvæma ýmsar snerti skipanir.
+
+==== Smellir ====
+Smella á skjáinn hratt með einum eða fleiri fingrum.
+
+Að smella einu sinni með einum fingri er kallað að smella.
+Að smella með 2 fingrum á sama tíma er kallað 2-fingra smellur, osfrv.
+
+Ef sami smellur er framkvæmdur einu sinni eða oftar með stuttu millibili, þá mun NVDA túlka það sem fjölda-smell aðgerð.
+Að smella tvisvar mun túlkast af NVDA sem tvöfaldur smellur.
+Að smella þrisvar mun túlkast af NVDA sem þrefaldur smellur, osfrv.
+Að sjálfsögðu munu þessir smellir einnig verða skilgreindir eftir því hversu margir fingur eru notaðir til að smella, þ.a.l. er að hægt að nýta aðgerðir eins og 2-fingra þrefaldan smell, 4-fingra smell, osfrv.
+
+==== Flettingar ====
+Strjúktu fingrinum snöggt yfir skjáinn.
+
+Það eru 4 mögulegar flettinga skipanir, fletta vinstri, fletta hægri, fletta upp og fletta niður.
+
+Eins og með smelli, þá er hægt að nota fleiri en einn fingur til að framkvæma flettingar. 
+Þess vegna er hægt að nota aðgerðir eins og 2-fingra flettingu upp og 4-fingra flettingu til vinstri, osfrv.
+
++++ Snertihamur +++
+Þar sem það eru til umtalsvert fleiri NVDA skipanir en hægt er að framkvæma með snerti skipunum, þá býður NVDA upp á nokkra snertihami sem hægt er að skipta yfir í til að veita aðgang að fleiri skipunum.
+Þau viðmót heita textahamur og hlutahamur.
+Ákveðnar NVDA skipanir sem gefnar eru upp í þessari handbók gætu listað snertihami í sviga á eftir snertiskipuninni.
+Sem dæmi, fletta upp (textahamur) þýðir að skipunin mun aðeins verða framkvæmd ef þú flettir upp, og aðeins þá ef þú ert í textaham.
+Ef skipunin listar ekki tiltekið viðmót, þá virkar hún í öllum viðmótum.
+
+%kc:beginInclude
+Til að skipta milli hama, framkvæmdu 3-fingra smell.
+%kc:endInclude
+
+++ Innsláttar Hjálparviðmót ++
+Margar NVDA skipanir eru tilgreindar í þessari handbók, en einföld leið til að kynna sér þær er að virkja innsláttar hjálparviðmótið.
+
+Til að virkja innsláttar hjálparviðmótið, styddu á NVDA+1.
+Til að afvirkja, styddu aftur á NVDA+1.
+Þegar hjálparviðmótið er virkjað, þá munu allar aðgerðir sem eru framkvæmdar (svo sem að styðja á lykil eða framkvæma snertiskipun) verða tilkynntar af talgervlinum og útskýrt hvað þær gera (ef eitthvað).
+Skipanirnar sjálfar framkvæmast ekki í hjálparviðmótinu.
+
+++ NVDA valmyndin ++
+NVDA valmyndin veitir þér aðgang að stillingum NVDA, hjálpinni, vista/endurvirkja stillingum, breyta raddorðabókum, fleiri verkfærum og afvirkjun NVDA.
+
+Til að kalla fram NVDA valmyndina hvaðan sem er í Windows meðan NVDA er í gangi, styddu á NVDA+n á lyklaborðinu eða framkvæmdu 2-fingra tvöfaldan smell á snertiskjáinn.
+Einnig er hægt að nálgast NVDA valmyndina í kerfisrein Windows.
+Annað hvort að hægri smella á NVDA táknið í kerfisreininni, eða flytja fókusinn í kerfisreinina með því að styðja á Windows+b, örNiður að NVDA íkoninu og styðja á forritslykilinn sem er við hliðina á hægri control lyklinum á flestum lyklaborðum.
+Þegar valmyndin birtist er hægt að nota örvalyklana til að vafra um valmyndina og færslulykilinn til að virkja atriði.
+
+++ Grunnskipanir NVDA ++
+%kc:beginInclude
+|| Nafn | Lykill | Snerting | Lýsing |
+| Stöðva lestur | Control | 2-fingra smellur | Stöðvar lestur samstundis |
+| Pása Lestur | Shift | enginn | Pásar lestur samstundis. Með því að styðja aftur þá hefst lestur þar sem frá var horfið (ef pásun er studd af talgervlinum sem þú notar) |
+| NVDA Valmynd | NVDA+n | 2-fingra tvöfaldur smellur | Kallar fram NVDA valmyndina sem veitir aðgang að stillingum, verkfærum, hjálp, osfrv |
+| Skipta milli Raddviðmóta | NVDA+s | enginn | Skiptir milli lesturs, hljóðtilkynninga og slökkt. |
+| Skipta milli Innsláttar Hjálparviðmóts | NVDA+1 | enginn | Þeir lyklar sem stutt er á í þessu viðmóti verða tilkynntir, sem og lýsing á öllum NVDA flýtilykla skipunum sem eru tengdar við lyklana |
+| Hætta í NVDA | NVDA+q | enginn | Slekkur á NVDA |
+| Hleypa næsta lykli í gegn | NVDA+f2 | enginn | Segir NVDA að sleppa næsta lykli í gegn í forritinu sem er virkt, þrátt fyrir að lykillinn sem stutt er á sé venjulega túlkaður sem NVDA flýtilykill |
+| Skipta milli virkjunar eða afvirkjunar á svefnham forrits| NVDA+shift+s | enginn | svefnhamur afvirkjar allar NVDA flýtilykla skipanir og lestur/punktaletur fyrir það forrit sem er virkt. Þetta er mjög gagnlegt í forritum sem bjóða upp á eigin rödd eða skjálestrar eiginleika. Styddu á sömu lykla aftur til að afvirkja. |
+%kc:endInclude
+
+++ Tilkynning Kerfisupplýsinga ++
+%kc:beginInclude
+|| Nafn | lykill | Lýsing |
+| Tilkynna dagsetningu/tíma | NVDA+f12 | Ef stutt er einu sinni á lyklasamsetninguna er sagt hvað klukkan er, ef stutt er tvisvar þá er dagsetningin tilkynnt |
+| Tilkynna stöðu batterís | NVDA+shift+b | Tilkynnir stöðu á batteríi, þ.e. hvort tölvan sé í hleðslu eða hver staða á hleðslu er. |
+| Tilkynna texta á klemmuspjaldi | NVDA+c | Les þann texta sem er á klemmuspjaldinu. |
+%kc:endInclude
+
++ Vafrað með NVDA +
+NVDA gerir þér kleift að skoða og vafra um stýrikerfið á nokkra vegu, þmt. með venjulegri skoðun og endurskoðun.
+
+++ Hlutir ++[Objects]
+Hvert forrit og stýrikerfið sjálft samanstanda af mörgum hlutum.
+Hlutur er hvert stakt atriði, svo sem hluti af texta, hnappur, gátreitur, stika, listi eða jafnvel ritsvæði.
+
+++ Vafrað með Kerfisfókus ++[SystemFocus]
+Kerfisfókusinn, yfirleitt kallaður bara, fókus, er sá [object #Objects] sem tekur á móti lyklainnslætti frá lyklaborðinu.
+Sem dæmi, ef þú skrifar inn í ritsvæði, þá hefur ritsvæðið fókusinn.
+
+Algengasta aðferðin við að vafra um Windows með NVDA er með því að færa einfaldlega kerfisfókusinn með Windows lyklaborðs skipunum, eins og að styðja á tab og shift+tab til að fara áfram eða til baka milli stjórntækja, styðja á alt til að færa sig í valmyndareinina og nota örvalykla til að vafra í valmyndum, sem og að nota alt+tab til að skipta milli þeirra forrita sem eru í gangi.
+Þegar þetta er gert, þá mun NVDA tilkynna upplýsingar um hlutinn sem hefur fókus, svo sem nafn, gerð, gildi, stöðu, lýsingu, lyklaborðs flýtilykil og staðsetningar upplýsingar.
+
+Það eru nokkrar lyklaborðs skipanir sem eru ansi gagnlegar þegar unnið er með Kerfisfókus:
+%kc:beginInclude
+|| Nafn | lykill | Lýsing |
+| Tilkynna stöðu fókus | NVDA+tab | tilkynnir hvaða hlutur hefur Kerfisfókus. Ef stutt er tvisvar þá eru upplýsingarnar stafaðar |
+| Tilkynna titil | NVDA+t | Tilkynnir titil virka gluggans. Ef stutt er tvisvar, þá eru upplýsingarnar stafaðar. Ef stutt er þrisvar þá afritast upplýsingarnar á klemmuspjaldið |
+| Lesa virka gluggann | NVDA+b | les allar upplýsingar í þeim glugga sem er virkur (gagnlegt í ýmsum gluggum sem birtast í stýrikerfinu) |
+| Tilkynna Stöðurein | NVDA+end | Tilkynnir stöðureinina ef hún fyrirfinnst. Flytur einnig hlut-fókus á þennan stað |
+%kc:endInclude
+
+++ Vafrað með Kerfisbendli ++[SystemCaret]
+Þegar [object #Objects] sem bjóða upp á vöfrun og/eða ritun texta hafa [focused #SystemFocus], þá er hægt að flytja sig um textann með kerfisbendlinum, einnig kallaður ritbendill.
+
+Þegar fókusinn er á hlut sem hefur virkjaðan kerfisbendilinn, þá er hægt að nota örvalyklana, síða upp, síða niður, heim, endir, osfrv. til að færa sig í gegnum textann.
+Þú getur einnig breytt textanum ef stjórntækið býður upp á ritskoðun.
+NVDA mun tilkynna þegar þú færir þig milli stafa, orða og lína, og mun einnig tilkynna þegar þú velur og afvelur texta.
+
+NVDA býður upp á eftirfarandi lyklaskipanir í samstarfi við kerfisbendilinn:
+%kc:beginInclude
+|| Nafn | Lykill | Lýsing |
+| Lesa allt | NVDA+örNiður | Hefur lestur frá staðsetningu kerfisbendils, og flytur hann eftir því sem lestur heldur áfram |
+| Lesa línu | NVDA+örUpp | Les línuna þar sem kerfisbendillinn er staðsettur. Ef stutt er tvisvar þá er línan stöfuð. |
+| Lesa valinn texta | NVDA+Shift+örUpp | Les allan valinn texta |
+
+
+Þegar unnið er í töflu þá eru eftirfarandi lyklaskipanir einnig í boði:
+|| Nafn | Lykill | Lýsing |
+| Fara í fyrri dálk | control+alt+örVinstri | Færir kerfisbendil í fyrri dálk (heldur sig í sömu röð) |
+| Fara í næsta dálk | control+alt+örHægri | Færir kerfisbendil í næsta dálk (heldur sig í sömu röð) |
+| Fara í fyrri röð | control+alt+örUpp | Færir kerfisbendil í fyrri röð (heldur sig í sama dálki) |
+| Fara í næstu röð | control+alt+örNiður | Færir kerfisbendil í næstu röð (heldur sig í sama dálki) |
+%kc:endInclude
+
+++ Hlutavöfrun ++
+Yfirleitt, þegar unnið er með forrit, er notast við skipanir sem færa til [focus #SystemFocus] og [caret #SystemCaret].
+En það kemur fyrir að notandi vill skoða forritið eða stýrikerfið án þess að hreyfa fókusinn eða bendilinn.
+Þú gætir líka viljað vinna með [objects #Objects] sem eru ekki aðgengilegir með lyklaborðinu.
+Í slíkum kringumstæðum er hægt að nota hlutavöfrun.
+
+Hlutavöfrun gerir þér kleift að vafra um og sækja upplýsingar um einstaka [objects #Objects]
+Þegar þú vafrar til hlutar mun NVDA tilkynna hann á svipaðan hátt og kerfisfókusinn.
+Til að lesa texta sem birtist á skjánum, er í staðinn hægt að nota [flat review #FlatReview].
+
+Í staðinn fyrir að þurfa að vafra fram og til baka milli allra hluta í kerfinu, þá er hlutum raðað í stigveldi.
+Þetta þýðir að sumir hlutir innihalda aðra hluti og þú þarft að vafra inn í þá til að fá aðgang að þeim hlutum sem þeir innihalda.
+Sem dæmi, listi inniheldur listaatriði, þar af leiðandi þarf að fara inn í listann til að lesa þau atriði.
+Ef þú hefur vafrað að listaatriði, þá muntu færast að næsta og fyrra listaatriði í þeim lista ef þú heldur áfram að vafra.
+Með því að færa þig upp í stigveldinu ferðu aftur í listann sjálfan.
+Þú getur svo fært þig fram yfir listann ef þú vilt aðgengi að öðrum hlutum.
+Á sama hátt þá inniheldur verkfærastika, verkfæri, svo þú þarf að vafra innan stikunnar til að fá aðgang að verkfærum hennar.
+
+Sá hlutur sem verið er að skoða er kallaður leiðsögu-hluturinn.
+Þegar þú vafrar að hlut þá er hægt að skoða hann með [text review commands #ReviewingText].
+Það er sjálfgefin stilling að leiðsögu-hluturinn færist með kerfisbendlinum, en það er hægt að virkja og afvirkja þessa hegðun.
+
+Athugið, sjálfgefin stilling er að blindraletrið fylgir [focus #SystemFocus] og [caret #SystemCaret] í staðinn fyrir hlutavöfrun og textaskoðun. 
+Ef þú vilt fremur að það fylgi hlutavöfrun þá þarf að [configure braille to be tethered to #BrailleTether].
+
+Til að vafra eftir hlutum eru notaðar eftirfarandi skipanir:
+
+%kc:beginInclude
+|| Nafn | Borðtölvu lykill | Fartölvu lykill | Snerting | Lýsing |
+| Tilkynna hlut | NVDA+númerískt5 | NVDA+kontrol+i | enginn | Tilkynnir hlutinn. Með því að styðja tvisvar eru upplýsingar stafaðar og með því að styða 3 afritast upplýsingar um nafn og gildi á klemmuspjaldið. |
+| Fara í innihald hlutar | NVDA+númerískt8 | NVDA+shift+i | fletta upp (hlutahamur) | Færir fókus í hlutinn sem inniheldur leiðsöguhlutinn |
+| Fara í fyrri hlut | NVDA+númerískt4 | NVDA+kontrol+j | fletta vinstri (hlutahamur) | Færir þig í fyrri hlut |
+| Fara í næsta hlut | NVDA+númerískt6 | control+NVDA+l | fletta hægri (hlutahamur) | Færir þig í næsta hlut |
+| Fara í fyrsta listaatriði | NVDA+númerískt2 | NVDA+shift+komma | fletta niður (hlutahamur) | Færir þig í fyrsta listaatriðið í leiðsögu hlutinum |
+| Fara að hlut sem hefur fókus | NVDA+númerísktMínus | NVDA+hoplykill | enginn | Færir þig að hlutinum sem hefur fókus, sem og staðsetur ritbendil hjá kerfisbendlinum, ef hann er sýnilegur |
+| Virkja leiðsögu hlutinn | NVDA+númerískurFærslulykill | NVDA+færslulykill | tvísmella | Virkjar leiðsöguhlutinn (svipað og að smella með músinni eða styðja á bilslá þegar hluturinn hefur kerfisfókus |
+| Færa kerfisfókus að bendli eða núverandi staðsetningu | NVDA+shift+númerísktMínus | NVDA+shift+hoplykill | enginn | ef stutt er einu sinni Færist kerfisfókus að leiðsögu-hlut, stutt tvisvar færir kerfisbendil að staðsetningu ritbendils |
+| Tilkynna umfang leiðsögu-hlutar | NVDA+númerísktEyða | NVDA+eyða | enginn | Tilkynnir umfang leiðsögu-hlutar í prósentum (þmt. fjarlægð frá vinstri hlið og efri hlið skjás sem og breidd og hæð) |
+%kc:endInclude
+
+ATH: talnalásinn á lyklaborðinu þarf að vera óvirkur til að númerískir lyklar virki.
+
+++ Texta skoðun ++[ReviewingText]
+NVDA gerir kleift að lesa innihald [navigator object #ObjectNavigation] (þmt. [flat review #FlatReview]) eftir bókstaf, orði eða línu.
+Þetta er helst gagnlegt á stöðum (þmt. Windows skipunarlinu gluggum) þar sem ekki fyrirfinnst [system caret #SystemCaret].
+Sem dæmi, þú gætir notað þetta til að lesa langan texta í skilaboðaglugga.
+
+Þegar þú færir til þennan bendil, þá fylgir ekki kerfisbendillinn með, sem þýðir að þú getur lesið textann í glugganum án þess að tapa fyrri staðsetningu.
+Aftur á móti, þá er það sjálfgefin stilling að hann fylgi með kerfisbendlinum. 
+Þetta er hægt að afvirkja ef vill.
+
+Athugið að blindraletrið fylgir [focus #SystemFocus] og [caret #SystemCaret] að sjálfgefnu, í staðinn fyrir hlutvöfruninni og texta skoðun.
+Ef þú vilt heldur að það fylgi hlutvöfrun og texta skoðun þá þarf að [configure braille to be tethered to #BrailleTether] skoðun.
+
+Eftirfarandi skipanir eru til reiðu til að skoða texta:
+%kc:beginInclude
+|| Nafn | Borðtölvu lykill | Fartölvu lykill | Snerting | Lýsing |
+| Fara í efstu línu í skoðun | shift+númerískt7 | NVDA+7 | enginn | Færir skoðunar bendil í efstu línu textans |
+| Fara í næstu línu í skoðun | númerískt7 | NVDA+u | fletta upp (texta hamur) | Færir skoðunarbendil í næstu textalínu |
+| Tilkynna textalínu sem er í skoðun | númerískt8 | NVDA+i | enginn | Tilkynnir þá textalínu þar sem skoðunarbendillinn er staðsettur. Ef stutt er tvisvar þá er línan stöfuð. Ef stutt er þrisvar þá er línan stöfuð með bókstafa lýsingum. |
+| Fara í næstu línu í skoðun | númerískt9 | NVDA+o | fletta niður (texta hamur) | Færa skoðunarbendil í næstu textalínu |
+| Fara í neðstu línu í skoðun | shift+númerískt9 | NVDA+9 | enginn | Færir skoðunarbendilinn í neðstu textalínuna |
+| Fara í fyrra orð í skoðun | númerískt4 | NVDA+j | 2-fingra fletta vinstri (textahamur) | Færir skoðunarbendil að fyrra orði í texta |
+| Tilkynna valið orð í skoðun | númerískt5 | NVDA+k | enginn | Tilkynnir það orð í textanum þar sem skoðunarbendillinn er staðsettur. Ef stutt er tvisvar þá er orðið stafað. Ef stutt er þrisvar þá er orðið stafað með bókstafalýsingum. |
+| Fara að næsta orði í skoðun | númerískt6 | NVDA+l | 2-fingra fletta hægri (textahamur) | Færa skoðunarbendil að næsta orði í textanum |
+| Fara að byrjun textalínu | shift+númerískt1 | NVDA+shift+u | enginn | Færir skoðunarbendilinn að byrjun textalínunnar |
+| Fara að fyrri bókstaf í skoðun | númerískt1 | NVDA+m | fletta vinstri (textahamur) | Færir skoðunarbendil að fyrri bókstaf í textalínunni |
+| Tilkynna bókstaf í skoðun | númerískt2 | NVDA+komma | enginn | Tilkynnir þann bókstaf þar sem skoðunarbendill er staðsettur. Ef stutt er tvisvar tilkynnist lýsing eða dæmi um bókstafinn. Ef stutt er þrisvar tilkynnist númerískt gildi hans í desimal eða hexadesimal. |
+| Fara að næsta bókstaf í skoðun | númerískt3 | NVDA+punktur | fletta hægri (textahamur) | Færa skoðunarbendil að næsta bókstaf í textalínunni |
+| Fara að enda textalínu í skoðun | shift+númerískt3 | NVDA+shift+o | enginn | Færir skoðunarbendil að enda textalínunnar |
+| Lesa allt sem er í skoðun | númerísktPlús | NVDA+shift+örNiður | 3-fingra fletta niður (textahamur) | Les frá staðsetningu bendils, færir hann sjálfkrafa eftir því sem lestur heldur áfram |
+| Afrita frá skoðunarbendli | NVDA+f9 | NVDA+f9 | enginn | hefur afritun á texta frá staðsetningu skoðunarbendils. Afritun hefst ekki fyrr en NVDA hefur verið sagt hvert skal afrit |
+| Afrita að skoðunarbendli | NVDA+f10 | NVDA+f10 | enginn | Afritar frá áður skilgreindri staðsetningu skoðunarbendils að núverandi staðsetningu skoðunarbendils. Eftir að stutt hefur verið á þennan lykil límist inn innihald Windows klemmuspjaldsins |
+| Tilkynna stílsnið texta | NVDA+f | NVDA+f | enginn | Tilkynnir stílsnið texta þar sem skoðunarbendill er staðsettur |
+%kc:endInclude
+
+ATH: talnalás þarf að vera afvirkjaður til að númerískir lyklar virki sem NVDA flýtilyklar.
+
+Til að auðveldara sé að muna flýtilyklana, þá hefur flýtilyklum fyrir textaskipanir verið raðað upp í töflusnið, þrír á móti þremur, listað að ofanverðu er það lína, orð og stafur og frá vinstri til hægri í töflunni er fyrri, núverandi og næsta staðsetning.
+Útlistunin er sem sagt eftirfarandi:
+| Fyrri lína | Núverandi lína | Næsta lína |
+| Fyrra orð | Núverandi orð | Næsta orð |
+| Fyrri bókstafur | Núverandi bókstafur | Næsti bókstafur |
+
+++ Flöt skoðun ++[FlatReview]
+Þrátt fyrir að það sé yfirleitt þannig að aðeins sé hægt að skoða innihald eins hlutar [object #Objects], þá bjóða sumir hlutir upp á þann möguleika að skoða hluti sem eru geymdir innan þeirra.
+Flókin skjöl gera þér kleift að skoða allt innihald þeirra og forritsgluggar gera kleift að skoða texta á skjánum eins og hann birtist myndrænt.
+Þetta er kallað flöt skoðun.
+Þetta er svipað og hugtökin skjáskoðun eða músarbendils virkni í mörgum öðrum Windows skjálesurum.
+
+Þegar er unnið er í flatri skoðun þá ertu staðsettur þar sem núverandi [navigator object #ObjectNavigation] er.
+Ef þú hefur ekki notað hlutavöfrun, þá er þetta yfirleitt sú staðsetning sem hefur [focus #SystemFocus].
+Sem dæmi, ef leiðsögu-hluturinn er hnappur, þá muntu yfirleitt verða staðsettur á textanum í hnappnum þegar unnið er í flatri skoðun.
+Þú getur svo unnið með/lesið textann með því að nota [text review commands #ReviewingText] þaðan.
+Þú getur einnig vafrað beint til þess hlutar sem inniheldur staðsetningu bendilsins, og þar með notað [object navigation #ObjectNavigation] þaðan.
+
+Athugið að sjálfgefin stilling er að punktaletur eltir [focus #SystemFocus] og [caret #SystemCaret] í staðinn fyrir að elta hlutavöfrunina og textaskoðunina. 
+Ef þú vilt fremur að það elti hlutavöfrun og textaskoðunina, þá þarf að [configure braille to be tethered to #BrailleTether].
+
+Eftirfarandi tvær skipanir virkja/afvirkja flötu skoðunina:
+%kc:beginInclude
+|| Nafn | Borðtölvu lykill | Fartölvu lykill | Snerting | Lýsing |
+| Fara í flata skoðun | NVDA+númerískt7 | NVDA+síðaUpp | 2-fingra fletta upp | Flytur í flata skoðun, staðsetur fókus við upphaf staðsetningu núverandi leiðsöguhlutar, gerir þér kleift að skoða skjáinn (eða skjal ef þú ert þegar inni í skjali) með textaskoðunar skipunum. |
+| Færa á hlut frá flatri skoðun | NVDA+númerískt1 | NVDA+síðaUpp | 2-fingra fletta niður | vafrar að hlutnum sem birtur er með texta á núverandi staðsetningu bendilsins í flatri skoðun |
+%kc:endInclude
+
+++ Vafrað með Músinni ++
+Þegar þú hreyfir músina, þá sjálfkrafa tilkynnir NVDA þann texta sem er undir músarbendlinum.
+Þar sem það er stutt, þá les NVDA alla málsgreinina sem músarbendillinn er staðsettur á, en stundum er þó bara línan lesin.
+
+NVDA er einnig hægt að stilla til að lesa tegund [object #Objects] undir músarbendlinum (sb. lista, hnapp, osfrv.).
+Þetta getur verið gagnlegt fyrir blinda notendur, þar sem stundum eru textaupplýsingarnar ekki nægjanlegar.
+
+NVDA býður upp á aðferð fyrir notendur til að skilja hvar músin er staðsett í samhengi við umfang skjásins sem unnið er með, með því að tilkynna staðsetningu músarinnar með hljóðmerkjum.
+Því hærra sem músin er á skjánum, þeim mun bjartara er hljóðmerkið.
+Því lengra til vinstri eða hægri músin er á skjánum, þeim mun lengra til vinstri eða hægri mun hljóðið heyrast (að því gefnu að notuð sé heyrnartól eða hátalarar).
+
+Þessir eiginleikar músarinnar eru ekki sjálfkrafa virkjaðir í NVDA.
+Ef þú vilt nýta þá, þá er hægt að sérsníða þá í [Mouse settings #MouseSettings] skilaboðaglugganum, í Stillingar valmynd NVDA.
+
+Þrátt fyrir að best sé að nota mús þegar vafrað er um með þessum hætti, þá inniheldur NVDA nokkra flýtilykla í tengslum við slíka vöfrun:
+%kc:beginInclude
+|| Nafn | Borðtölvu lykill | Fartölvu lykill | Lýsing |
+| Vinstri músarsmellur | númerísktDeiling | NVDA+örVinstri | einn vinstri músarsmellur. Hin algenga tvísmelli aðgerð er framkvæmd með því að styðja tvisvar sinnum snöggt á lykilinn |
+| Læsa niðri vinstri músarhnappi | shift+númerísktDeiling | NVDA+shift+örVinstri | Læsir vinstri músarhnappi niðri. Stutt aftur til að losa hann. Til að draga til músina, styddu á þennan lykil til að festa niðri vinstri músarsmell aðgerðina og hreyfðu svo músina til með fyrrgreindum músar flýtilyklum eða með músinni sjálfri |
+| Hægri músarsmellur | númerísktMargföldun | NVDA+örHægri | Hægri músarsmellur. |
+| Læsa hægri músarsmelli | shift+númerísktMargföldun | NVDA+shift+örHægri | Læsir niðri hægri músarsmelli. Styðja aftur til að afvirkja. Til að draga músina, styðja á þennan flýtilykil til að læsa músinni og hreyfið síðan til músina eða notið flýtilykla til að hreyfa músarbendilinn |
+| Færa mús að staðsetningu leiðsögu hlutar | NVDA+númerísktDeiling | NVDA+shift+f9 | Færir músina að staðsetningu leiðsögu-hlutar og bendils |
+| Vafra að hlut undir músarbendli | NVDA+númerísktMargföldun | NVDA+shift+f10 | Færa leiðsögu-hlut að þeim hlut sem er staðsettur undir músinni |
+%kc:endInclude
+
++ Vafrahamur +
+Flókin skjöl sem eru aðeins til lesturs, eins og vefsíður, eru lesin í NVDA með vafraham.
+Þmt. skjöl í Mozilla Firefox, Microsoft Internet Explorer, Google Chrome, Adobe Reader og Adobe Flash.
+
+Í vafraham þá er innihald skjalsins lesið í flatri framsetningu sem hægt er að vafra um með örvalyklunum eins og það væri venjulegt textaskjal.
+Allir flýtilyklar NVDA sem snúa að [system caret #SystemCaret] munu virka í þessu viðmóti; sb. lesa allt, tilkynna stílsnið, töflu vafraskipanir, osfrv. 
+Upplýsingar eins og hvort texti sé tengill, fyrirsögn, osfrv. eru tilkynntar í sama vetfangi og textinn þegar þú vafrar.
+
+Stundum þá þarf að vinna með stjórntæki í þessum skjölum.
+Sem dæmi, þú munt þurfa að gera þetta með textasvæði og lista svo hægt sé að slá inn þá bókstafi sem þarf og svo hægt sé að nota örvalykla til að vinna með stjórntækin.
+Þú gerir þetta með því að skipta um fókusham, þar sem flestum lyklum er sleppt í gegn.
+Þegar unnið er í vafraham, þá er sjálfgefin stilling sú að NVDA mun skipta um fókusham ef dálklykill er notaður til að fara á stjórntæki eða ef stjórntæki er virkjað.
+Að sama skapi, ef vafrað er til stjórntækis með dálklykli eða það virkjað með smelli, og það svo gerir ekki kröfu um fókus ham, þá er sjálfkrafa aftur skipt yfir í vafraham.
+Einnig er hægt að styðja á færslulykil eða bilslá til að skipta milli fókushams á stjórntækjum sem gera þá kröfu.
+Ef stutt er á lausnarlykil þá er skipt aftur yfir í vafraham.
+Til viðbótar, þá er einnig hægt að þvinga fram fókusham handvirkt, en þá mun hann verða virkur þar til þú svo afvirkjar hann aftur.
+
+%kc:beginInclude
+|| Nafn | Lykill | Lýsing |
+| Skipta milli vafra/fókushams | NVDA+bilslá | Skiptir milli fókushams og vafrahams |
+| Hætta í fókusham | lausnarlykill | skiptir aftur yfir í vafraham ef fókushamur var áður virkjaður handvirkt |
+| Endurhlaða vafraham skjals | NVDA+f5 | Endurhleður innihaldi skjals (gagnlegt ef efni virðist vanta í skjalið) |
+| Leita | NVDA+kontrol+f | Kallar fram skilaboðaglugga þar sem hægt er að slá inn texta til að leita að í skjalinu |
+| Finna næsta | NVDA+f3 | Finnur hvar textinn sem leitað var að kemur næst fyrir í skjalinu |
+| Finna fyrri | NVDA+shift+f3 | Finnur hvar textinn sem leitað var að kom áður fyrir í skjalinu |
+| Löng lýsing | NVDA+d | Opnar glugga sem inniheldur langa lýsingu á þeim lið sem leitað var að, ef hann er til. | 
+%kc:endInclude
+
+
+++ Vafrað með einum lykli ++
+Þegar unnið er í vafraham, þá býður NVDA upp á að nota einstaka bókstafi til að vafra milli svæða í skjalinu, svo hægt sé að vinna skilvirkar.
+
+%kc:beginInclude
+Þegar stutt er á eftirfarandi lykla færist fókusinn sjálfkrafa á það svæði sem þeir tilheyra, og ef stutt er líka á shift, þá er farið á fyrra atriði:
+- h: fyrirsögn
+- l: listi
+- i: lista atriði
+- t: tafla
+- k: tengill
+- n: næsti texti sem er ekki tengill
+- f: formsvæði
+- u: tengill sem  hefur ekki verið heimsóttur áður
+- v: tengill sem hefur verið heimsóttur
+- e: textasvæði
+- b: hnappur
+- x: gátreitur
+- c: samsettur listi
+- r: útvarps hnappur
+- q: bálktilvitnun
+- s: skilslá
+- m: rammi
+- g: grafík
+- d: kennileiti
+- o: samofinn hlutur
+- 1 til 6: fyrirsagnir frá stigum 1 til 6
+-
+Til að flytja sig að upphafi eða lokum, atriða eins og lista og taflna:
+|| Nafn | Lykill | Lýsing |
+| Fara til upphafs innihaldsins | shift+komma | Flytur fókusinn að upphafi innihaldsins (lista, taflna, osfrv.) þar sem bendillinn er staðsettur |
+| Fara framhjá enda innihalds | komma | Flytur fókusinn framhjá enda innihaldsins (lista, töflu, osfrv.) þar sem bendillinn er staðsettur |
+%kc:endInclude
+
+++ Atriðalistinn ++
+Atriðalistinn getur innihaldið tengla, fyrirsagnir eða kennileiti í skjalinu.
+Útvarpshnappar gera þér kleift að skipta milli þessara þriggja tegunda af upplýsingum.
+Einnig er boðið upp á skrifsvæði í skilaboðaglugganum sem gerir þér kleift að sía listann og leita að ákveðnu atriði á síðunni.
+Þegar þú hefur valið atriði, þá er hægt að nota hnappana sem boðið er upp á í skilaboðaglugganum til að fara til eða virkja það atriði.
+%kc:beginInclude
+|| Name | Key | Description |
+| Vafahamur atriðalisti | NVDA+f7 | Kallar fram Atriðalistann sem inniheldur tengla, fyrirsagnir og kennileiti í skjalinu |
+%kc:endInclude
+
+++ Samofnir Hlutir ++
+Síður geta innihaldið efni eins og Adobe Flash og Sun Java tæknina sem og forrit og skilaboðaglugga.
+Þegar vafrað er að slíkum þáttum í vafraham, þá mun NVDA tilkynna "samofinn hlutur", "forrit" og "skilaboðagluggi".
+Hægt er að styðja á færslulykilinn til að vinna með þessa þætti.
+Ef sá þáttur er aðgengilegur, þá er hægt að styðja á dálklykilinn til að vafra um þáttinn sem og að vinna með hann eins og önnur forrit.
+Sérstakur flýtilykill er notaður til að fara aftur yfir á síðuna sem inniheldur þennan þátt:
+%kc:beginInclude
+|| Nafn | Lykill | Lýsing |
+| Fara aftur yfir í skjalið sem geymir samofna hlutinn | NVDA+kontrol+bilslá | Færir fókusinn úr samofna þættinum og aftur yfir í skjalið sem inniheldur hann |
+%kc:endInclude
+
++ Sérhæfðar forritaskipanir í NVDA +
+NVDA býður upp á sínar eigin sérhæfðu skipanir fyrir sum forrit til að  auðvelda framkvæmd ákveðinna aðgerða eða til að tryggja aðgengi að virkni forritsins sem annars er ekki aðgengileg skjálestrarnotendum.
+
+++ Microsoft Excel ++
+%kc:beginInclude
+|| Nafn | Lykill | Lýsing |
+| Skilgreina dálka fyrirsagnir | NVDA+shift+c | Ef stutt er einu sinni, NVDA er sagt að þetta sé röðin sem inniheldur dálka fyrirsagnir, sem ættu að tilkynnast sjálfkrafa ef vafrað er milli dálka fyrir neðan þessa röð. Ef stutt er tvisvar, þá er þetta afvirkjað. |
+| Skilgreina fyrirsagnir raða | NVDA+shift+r | Ef stutt er einu sinni, NVDA er sagt að þetta sé dálkurinn sem inniheldur fyrirsagnir raða, sem ættu að tilkynnast sjálfkrafa ef vafrað er milli raða fyrir aftan þennan dálk. Ef stutt er tvisvar, þá er þetta afvirkjað. |
+%kc:endInclude
+
+++ foobar2000 ++
+%kc:beginInclude
+|| Nafn | Lykill | Lýsing |
+| Tilkynna eftirstandandi tíma | kontrol+shift+r | Tilkynnir ef einhver tími er eftir af hljóðskránni sem verið er að spila. |
+%kc:endInclude
+
+ATH: Tilkynna eftirstandandi tíma flýtilykillinn virkar aðeins með sjálfgefna stílsniðs strengnum fyrir stöðulínu foobar.
+
+++ Miranda IM ++
+%kc:beginInclude
+|| Nafn | Lykill | Lýsing |
+| Tilkynna síðustu skilaboð | NVDA+kontrol+1-4 | Tilkynnir eitt af síðustu skilaboðum, eftir því hvaða lykil er stutt á; sb. NVDA+kontrol+2 les næstsíðustu skilaboð. |
+%kc:endInclude
+
+++ Poedit ++
+%kc:beginInclude
+|| Nafn | Lykill | Lýsing |
+| Tilkynnir athugasemda gluggann | kontrol+shift+c | Tilkynnir allar athugasemdir í athugasemda glugganum. |
+| Tilkynnir sjálfvirka athugasemda gluggann | kontrol+shift+a | Tilkynnir allar athugasemdir í sjálfvirka athugasemda glugganum. |
+%kc:endInclude
+
++ Stillingar NVDA +
+
+++ Valkostir ++
+%kc:settingsSection: || Nafn | Borðtölvu lykill | Fartölvu lykill | Lýsing |
+Flestum stillingum NVDA er hægt að breyta með því að nota skilaboðaglugga sem nálgast má í undirvalmyndum NVDA valmyndarinnar.
+Í öllum skilaboðagluggum NVDA stillinganna er stutt á OK hnappinn til að samþykkja þær breytingar sem hafa verið gerðar.
+Til að hætta við breytingar er stutt á Hætta við hnappinn eða lausnarlykilinn.
+Sumum stillingum er einnig hægt að breyta með flýtilyklum, sem eru listaðir þar sem á við, hér að neðan.
+
++++ Grunn stillingar (NVDA+kontrol+g) +++
+Grunn stillinga skilaboðaglugginn er í Valkostir valmyndinni.
+Hann inniheldur eftirfarandi valkosti:
+
+==== Tungumál ====
+Fjölvalmyndareitur sem skilgreinir á hvaða tungumáli NVDA stjórnborðið sem og öll skilaboð birtast á.
+Það eru mörg tungumál í boði, en sjálfgefinn valkostur er "User Default, Windows".
+Þessi valkostur segir NVDA að nota sama tungumál og Windows stýrikerfið er skilgreint til að vinna með.
+
+Vinsamlegast hafið í huga að endurræsa þarf NVDA eftir að tungumáli hefur verið breytt. 
+NVDA mun spyrja hvort þú vilt endurræsa forritinu, ef þú breytir valinu.
+Veldu OK og NVDA mun þá endurræsast.
+
+==== Vista Stillingar við Lokun ====
+Þessi valkostur er gátreitur, þegar hakað er í hann þá vistar NVDA sjálfkrafa þær breytingar sem hafa verið gerðar á stillingum.
+
+==== Aðvörun áður en hætt er í NVDA ====
+Þessi valkostur er gátreitur sem býður upp á að spurning birtist í skilaboðaglugga um hvort notandi vilji hætta í forritinu.
+Þegar hakað er í hann þá birtist skilaboðagluggi þar sem spurt er hvort notandi vilji raunverulega hætta í NVDA.
+
+==== Skráningar Stig ====
+Þetta er fjölvalreitur sem gerir kleift að velja um hversu mikið NVDA skráir á meðan forritið er í keyrslu.
+Yfirleitt ættu notendur ekki að þurfa að eiga við þetta þar sem ekki mikið er skráð.
+Aftur á móti, ef þú vilt skrá upplýsingar fyrir villuskýrslu, þá er þetta gagnlegur valkostur.
+
+==== Sjálfkrafa ræsa NVDA eftir að skráð er inn á Windows ====
+Ef þessi valkostur er virkjaður þá mun NVDA sjálfkrafa ræsa sér um leið og þú hefur skráð þig inn á Windows.
+Þessi valkostur er aðeins í boði fyrir NVDA eintök sem hafa verið sett upp á stýrikerfið.
+
+==== Nota NVDA í Windows innskráningar glugganum (krefst kerfisstjóra réttinda ====
+Ef þú skráir þig inn á Windows með notendanafni og lykilorði, þá mun virkjun á þessum valkosti láta NVDA ræsa sér sjálfkrafa í innskráningar glugganum þegar stýrikerfið ræsist.
+Þessi valkostur er aðeins til reiðu fyrir uppsett eintök af NVDA.
+
+==== Nota vistaðar stillingar í innskráningar glugganum og öðrum öryggis gluggum ====
+Með því að virkja þennan hnapp þá afritast þínar vistuðu NVDA stillingar inn í kerfisstillinga möppu NVDA, sem gerir það að verkum að NVDA notar þær í innskráningar glugganum, User Account Control (UAC) og öðrum öryggis gluggum Windows.
+Til að tryggja að allar stillingar afritist, vistaðu þá fyrst stillingarnar þínar með kontrol+NVDA+c eða vistaðu stillingarnar í NVDA valmyndinni.
+Þessi valkostur er aðeins til reiðu fyrir uppsett eintök af NVDA.
+
+==== Sjálfvirk leit eftir uppfærslum fyrir NVDA ====
+Ef þetta er virkjað, þá mun NVDA sjálfkrafa leita eftir uppfærðum útgáfum af forritinu og láta vita þegar uppfærsla er til reiðu.
+Þú getur einnig kannað handvirkt hvort uppfærslur séu til reiðu með því að velja Leita að uppfærslum í Hjálp valmyndinni í NVDA stjórnborðinu.
+
++++ Talgervla valkostir (NVDA+kontrol+s) +++
+Talgervla skilaboðaglugginn, sem er geymdur í "Talgervill..." í Valkostir valmyndinni, gerir kleift að velja hvaða talgervil NVDA á að nota.
+Þegar talgervill hefur verið valinn, þá er OK hnappurinn virkjaður og NVDA mun hlaða inn talgervlinum.
+Ef villa kemur upp við virkjun talgervilsins, þá mun NVDA láta vita af því með skilaboðum og halda svo áfram að nota upphaflega talgervilinn.
+
+==== Talgervill ====
+Þessi valkostur gerir kleift að velja hvaða talgervil NVDA á að nota.
+
+Til að fara yfir lista af öllum talgervlum sem NVDA styður, sjá [Supported Speech Synthesizers #SupportedSpeechSynths] hlutann.
+
+Eitt sértækt atriði sem mun alltaf birtast í þessum lista er "Ekkert tal", sem gerir kleift að nota NVDA án talgervils.
+Þetta getur verið gagnlegt fyrir þann sem vill aðeins nota NVDA með blindraletri, eða sjáandi hönnuð sem vill aðeins nota Talskoðun.
+
+==== Hljóðkort ====
+Þessi valkostur gerir kleift að velja hvaða hljóðkort NVDA á að nota fyrir þann talgervil sem er valinn.
+
++++ Raddstillingar (NVDA+kontrol+v) +++[VoiceSettings]
+Raddstillinga skilaboðaglugginn, sem er í Valkostir valmyndinni, inniheldur ýmsar stillingar til að breyta hljóð áhrifum raddarinnar.
+Fyrir skjótari leið til að breyta hljóð áhrifum, hvar sem þú ert staddur í stýrikerfinu, sjá [Synth Settings Ring #SynthSettingsRing] hlutann.
+
+Raddstillingar skilaboðaglugginn inniheldur eftirfarandi valkosti:
+
+==== Rödd ====
+Fyrsti valkosturinn í þessum glugga er fjölvalsreitur með lista af öllum þeim röddum sem talgervillinn inniheldur, sem þú hefur virkjaðan.
+Þú getur notað örvalykla til að fara yfir listann af valkostum.
+Ör til vinstri og upp, færa þig ofar í listanum, á meðan ör til hægri og niður færa þig neðar í listanum.
+
+==== Hreimur ====
+Ef þú notar eSpeak talgervilinn sem fylgir með NVDA, þá er þetta valkostur sem býður upp á val af sérsniðnum hreim raddarinnar.
+Hreimar eSpeak eru eins og raddir, þar sem þeir bjóða upp á svolítið mismunandi eiginleika eSpeak raddarinnar.
+Sumir hreimar hljóma meira eins og karlmanns rödd, sumir eins og kvenmanns rödd og sumir hljóma jafnvel eins og froskar.
+
+==== Hraði ====
+Þessi valkostur gerir kleift að breyta hraða raddarinnar.
+Þetta er stika sem fer frá 0 og upp í 100, (þar sem 0 er hægast og 100 hraðast).
+
+==== Tónhæð ====
+Þessi valkostur gerir kleift að breyta tónhæð raddarinnar.
+Þetta er stika sem fer frá 0 og upp í 100, (þar sem 0 er hæst og 100 lægst).
+
+==== Tónstyrkur ====
+Þetta er stika sem fer frá 0 og upp í 100, (þar sem 0 er lægst og 100 hæst).
+
+==== Tónbeyging ====
+Þetta er stika sem gerir kleift að velja hversu mikil tónbeyging er notuð (hækkun og lækkun á tónhæð) með talgervlinum. (Sem stendur er eSpeak eini talgervillinn þar sem þessi valkostur er mögulegur)
+
+==== Sjálfvirk breyting tungumáls ====
+Þessi valkostur segir til um hvort NVDA eigi að skipta tungumál talgervils sjálfkrafa eður ei, að því gefnu að tungumálið sé rétt skilgreint í skjalinu sem verið er að lesa.
+Þessi valkostur er sjálfkrafa virkjaður.
+Sem stendur er eSpeak eini talgervillinn sem styður þessa aðgerð.
+
+==== Sjálfvirk skipting á framburði ====
+Ef sjálfvirk skipting á tungumáli er virk, þá mun þessi valkostur gera kleift að velja hvort breyting á framburði eigi að gerast sjálfkrafa eður ei. Sem dæmi, ef unnið er með Amerísk enska rödd en skjal er opnað sem er skilgreint sem Bresk enska, þá mun talgervillinn sjálfkrafa skipta um hreim.
+Þessi valkostur er sjálfkrafa ekki virkjaður.
+
+%kc:setting
+==== Greinarmerkja/Tákna Stig ====
+Lykill: NVDA+p
+
+Þetta gerir þér kleift að velja það magn af greinarmerkjum og öðrum táknum sem skulu lesin sem orð.
+Sem dæmi, þegar valið er allt, þá munu öll tákn verða lesin sem orð.
+Þessi kostur gildir um alla talgervla, ekki bara þann talgervil sem er valinn núna.
+
+==== Hástafa tónhæð, prósentustig ====
+Þessi skrifreitur býður upp á að slá inn það magn sem tónhæð skal breytast um þegar lesnir eru hástafir.
+Þetta gildi er í prósentum, þar sem neikvætt gildi lækkar tónhæðina og jákvætt gildi hækkar hana.
+Til að engin breyting sé gerð er notaður tölustafurinn 0.
+
+==== Segja "hástaf" á undan háfstöfum ====
+Þessi stilling er gátreitur sem, þegar hakað er í hann, segir NVDA að segja orðið "hástafur" áður en hástafir eru lesnir sem sjálfstæðir bókstafir, til dæmis þegar orð eru stöfuð.
+Venjulega hækkar NVDA tónhæðina eilítið fyrir alla hástafi, en sumir talgervlar styðja þetta ekki vel, þar af leiðandi er ekki víst að þessi stilling sé gagnleg.
+
+==== Tónn fyrir hástafi ====
+Ef hakað er í þennan gátreit þá mun NVDA gefa frá sér smá tón í hvert skipti sem hástafur kemur fyrir í textanum.
+Eins og með "Segja hástaf á undan hástöfum" stillinguna, þá er þetta gagnlegt fyrir talgervla sem styðja ekki breytingu á tónhæð á undan hástöfum.
+
+==== Nota stafsetningar skoðun ef hún er studd ====[VoiceSpellingFunctionality]
+Sum orð samanstanda aðeins af einum staf, en framburðurinn er mismunandi eftir því hvort bókstafurinn er lesinn einn og sér (eins og þegar hann er stafaður) eða sem hluti af orði.
+Sem dæmi, í ensku þá er "a" bæði bókstafur og orð.
+Þessi valkostur gerir talgervlinum kleift að greina milli þess hvort stafurinn sé hluti af orði eða hvort hann stendur einn og sér, ef talgervillinn styður þessa virkni.
+Flestir talgervlar styðja þetta.
+
+Þessi valkostur ætti jafnan að vera virkjaður.
+Aftur á móti, þá eru nokkrir Microsoft Speech API talgervlar sem ekki vinna rétt með þessa stillingu og hegða sér einkennilega þegar hún er virkjuð.
+Ef þú átt í vandræðum með framburð á sjálfstæðum bókstöfum, þá er ráð að afvirkja þennan möguleika.
+
++++ Talgervla stillinga hringurinn +++[SynthSettingsRing]
+Ef þú vilt með skjótum hætti breyta stillingum talgervilsins án þess að fara í Radd stillinga skilaboðagluggann, þá eru nokkrir flýtilyklar í NVDA sem gera kleift að fara milli flestra radd stillinga hvar sem þú ert staddur á meðan NVDA er í gangi:
+%kc:beginInclude
+|| Nafn | Borðtölvu lykill | Fartölvu lykill | Lýsing |
+| Fara í næstu talgervla stillingu | NVDA+kontrol+örHægri | NVDA+kontrol+örHægri | Fer í næstu radd stillingu, þetta er hringur þannig að á endanum ertu kominn í sömu stillingu |
+| Fara í fyrri talgervla stillingu | NVDA+kontrol+örVinstri | NVDA+kontrol+örVinstri | Fer í fyrri radd stillingu, þetta er hringur þannig að á endanum ertu kominn aftur í fyrri stillingu |
+| Hækka valda talgervla stillingu | NVDA+kontrol+örUpp | NVDA+kontrol+örUpp | Hækkar gildi þeirrar radd stillingar sem er valin. Sb. eykur hraða, velur næstu rödd, eykur tónstyrk |
+| Lækka valda talgervla stillingu | NVDA+kontrol+örNiður | NVDA+kontrol+örNiður | Lækkar gildi þeirrar radd stillingar sem er valin. Sb. lækkar hraða, velur fyrri rödd, lækkar tónstyrk |
+%kc:endInclude
+
++++ Punktaleturs stillingar +++
+Skilaboðagluggann fyrir punktaleturs stillingar er hægt að kalla fram með því að fara í Valkostir valmyndina og þaðan í punktaleturs stillingar.
+
+==== Punktaleturs skjár ====
+Fyrsti valkosturinn sem þú hafnar í þegar komið er í skilaboðaglugga Punktaleturs er fjölvalsreitur sem heitir "Punktaletursskjár".
+Þér verða birtir nokkrir valkostir, eftir því hvaða reklar fyrir punktaletursskjái eru uppsettir í stýrikerfinu.
+Þú vafrar milli þessara valkosta með örvalyklunum.
+
+Ekkert punktaletur þýðir að þú ert ekki að nota punktaletur.
+
+Sjá [Supported Braille Displays #SupportedBrailleDisplays] fyrir frekari upplýsingar um þá punktaletursskjái sem eru studdir.
+
+==== Tengi ====
+Þessi valkostur, ef hann er í boði, gerir kleift að velja hvaða tengi eða tegund tengingar verður notuð til að eiga samskipti við punktaletursskjáinn sem þú hefur valið.
+Þetta er fjölvalsreitur sem inniheldur þá kosti sem eru í boði punktaletursskjáinn þinn.
+
+Sjálfgefin stilling er að NVDA noti sjálfvirka tengiskoðun, sem þýðir að tengingin við punktaleturstækið verður virkjuð sjálfkrafa með því að skima eftir mögulegum USB og Blátannar tækjum í stýrikerfinu.
+Aftur á móti þá er hægt á sumum punktaleturstækjum að velja nákvæmlega hvaða tengi verður notað.
+Algengir valkostir eru "Sjálfvirkt" (sem segir NVDA að nota sjálfvirka tengiskoðun), "USB", "Blátannar" og seríal samskiptatengi ef punktaletursskjárinn þinn styður slík samskipti.
+
+Þessi valkostur er ekki í boði ef skjárinn þinn styður aðeins sjálfvirka tengiskoðun.
+
+Ágætt er að lesa yfir upplýsingar um punktaletursskjáinn í [Supported Braille Displays #SupportedBrailleDisplays] hlutanum til að nálgast frekari upplýsingar um studdar samskipta tegundir og þau tengi sem eru til reiðu.
+
+==== Úttaks Tafla ====
+Næsti valkostur í skilaboðaglugganum er fjölvalsreitur fyrir punktaleturs úttaks töfluna.
+Í þessum fjölvalsreit er að finna þær punktaleturs töflur, staðla og stig fyrir mismunandi tungumál.
+Valda taflan verður notuð til að þýða texta yfir í punktaletur sem síðan er birt á punktaletursskjánum.
+Þú getur valið milli punktaleturs taflanna í listanum með því að nota örvalyklana.
+
+==== Inntaks Taflan ====
+Í samræmi við fyrri valkostinn, þá er næsta stilling í glugganum fjölvalsreitur fyrir punktaleturs inntaks töfluna.
+Valda taflan verður notuð til að þýða punktaleturs innsláttinn á Perkins samhæfanlegt lyklaborð yfir í texta.
+Sem stendur styður NVDA aðeins tölvu-Punktaleturs inntak, sem þýðir að einungis 8-punkta tölvu punktaletur verður birt.
+Þú getur valið milli punktaleturs taflna í listanum með örvalyklunum.
+
+Athugið að þessi valkostur er aðeins gagnlegur ef punktaleturs skjárinn er með Perkins samhæfanlegt lyklaborð og ef rekillinn sem er notaður fyrir skjáinn styður þennan eiginleika.
+Ef insláttur er ekki studdur á skjá sem inniheldur punktaleturs lyklaborð, þá mun það koma fram í [Supported Braille Displays #SupportedBrailleDisplays] hlutanum.
+
+==== Stækka orðið undir bendlinum yfir í tölvu punktaletur ====
+Þessi valkostur gerir kleift að birta orðið sem er undir bendlinum í óstyttu tölvublindraletri.
+
+==== Blikkhraði bendils ====
+Þessi valkostur er númerískt gildi sem gerir kleift að breyta blikkhraða bendilsins í millisekúndum.
+
+==== Skilaboðalengd (sek) ====
+Þessi valkostur er númerískt gildi sem stýrir hversu lengi skilaboð frá stýrikerfinu birtast á punktaletursskjánum.
+
+%kc:setting
+==== Punktaletur Samofið við ====[BrailleTether]
+Lykill: NVDA+kontrol+t
+
+Þessi valkostur gerir kleift að velja hvort punktaletursskjárinn mun fylgja fókus stýrikerfisins, eða hvort hann fylgir leiðsögu-hlutnum / skoðunarbendli.
+
+==== Lesa eftir Málsgreinum ====
+Ef virkjað, þá mun blindraletrið birta málsgreinar í stað lína.
+Að sama skapi, þá munu skipanir fyrir fyrri og næstu línu færa þig eftir málsgreinum í staðinn.
+Þetta þýðir að þú þarft ekki að skruna með skjánum í lok hverrar línu þar sem meiri texti myndi komast fyrir á skjánum.
+Þetta getur haft það í för með sér að lestur á lengri texta sé þægilegri.
+Sjálfgefin stilling er að þetta er afvirkjað.
+
++++ Lyklaborðs Stillingar (NVDA+kontrol+k) +++
+Þessi skilaboðagluggi er í "Lyklaborðs stillingar..." undir Valkostir valmyndinni.
+Hann inniheldur eftirfarandi valkosti:
+
+==== Lyklaborðs snið ====
+Þessi fjölvalsreitur gerir kleift að velja hvaða snið á lyklaborðinu NVDA notast við. Sem stendur eru tvö snið til reiðu, Borðtölvu og Fartölvu.
+
+==== Nota hástafalás sem NVDA breytilykilinn ====
+Ef hakað er í þennan gátreit þá verður hástafalás notaður sem NVDA breytilykilinn.
+
+==== Nota Insert lykilinn sem NVDA breytilykilinn ====
+Ef hakað er í þennan gátreit, þá verður Insert lykilinn (venjulega staðsettur fyrir ofan örvalyklana, nálægt Heim og Endir) notaður sem NVDA breytilykillinn.
+
+==== Nota númeríska Insert sem NVDA breytilykilinn ====
+Ef hakað er í þennan gátreit, þá verður Insert lykillinn á númeríska lyklaborðinu notaður sem NVDA breytilykillinn.
+
+%kc:setting
+==== Lesa bókstafi sem eru slegnir inn ====
+Lykill: NVDA+2
+
+Þegar virkjað, þá mun NVDA tilkynna alla bókstafi sem eru slegnir inn.
+
+%kc:setting
+==== Lesa orð sem eru slegin inn ====
+Lykill: NVDA+3
+
+Þegar virkjað, þá mun NVDA tilkynna öll orð sem eru slegin inn.
+
+==== Lestur tekur mið af innslegnum bókstöfum ====
+Ef virkjað, þá mun lesturinn taka mið af öllum bókstöfum sem eru slegnir inn. Þetta er virkjað sem sjálfgefin stilling.
+
+==== Lestur tekur mið af færslulykli ====
+Ef virkjað, þá mun lesturinn taka mið af færslulyklinum. Þetta er virkjað sem sjálfgefin stilling.
+
+==== Hljóðmerki ef slegnir eru inn lágstafir þegar hástafalás er virkur ====
+Ef virkjað, þá mun hljóðmerki heyrast þegar sleginn er inn stafur með shift lyklinum á meðan hástafalás er virkjaður.
+Yfirleitt er það ekki gert með vilja að slá inn bókstafi með shift lyklinum þegar hástafalás er virkjaður og oftast átta notendur sig ekki á því að hástafalásinn er virkur.
+Þar af leiðandi getur verið gagnlegt að fá aðvörun um þetta.
+
+%kc:setting
+==== Tilkynna Aðgerðalykla ====
+Lykill: NVDA+4
+
+Ef virkjað, þá mun NVDA tilkynna alla aðra lykla en bókstafi sem stutt er á. Þmt. samsetningu á lyklum eins og til dæmis kontrol plús annar lykill.
+
++++ Músar Stillingar (NVDA+kontrol+m) +++[MouseSettings]
+Músar Stillingar skilaboðaglugginn er í "Músar stillingar..." undir Valkostir valmyndinni.
+Hann inniheldur eftirtalda valkosti:
+
+==== Tilkynna breytingar á útliti músar ====
+Ef hakað er í þennan gátreit þá mun NVDA tilkynna í hvert skipti sem músarbendillinn breytir um útlit.
+Músarbendillinn í Windows breytir um útlit til upplýsingar, t.d. þegar hann er á skrifsvæði eða þegar forrit hleðst inn.
+
+%kc:setting
+==== Virkja eftirfylgni við músina ====
+| Borðtölvu lykill | NVDA+m |
+| Fartölvu lykill | NVDA+shift+m |
+
+Ef virkjað, mun NVDA tilkynna textann sem er undir músarbendlinum eftir því sem hann er hreyfður um skjáinn. Þetta gerir kleift að finna hluti á skjánum, með því að hreyfa til músina, í staðinn fyrir að leita eftir þeim með hlutavöfrun.
+
+==== Texta úrvinnsla ====
+Ef NVDA er stillt til að tilkynna textann undir músinni þegar hún er hreyfð, þá gerir þessi valkostur kleift að stilla hversu mikið er lesið.
+Valkostirnir eru bókstafur, orð, lína og málsgrein.
+
+==== Tilkynna hlutverk hlutarins sem músin er staðsett á ====
+Ef hakað er í þennan gátreit þá mun NVDA tilkynna hlutverk (gerð) hlutarins sem músin er staðsett á.
+
+==== Spila hljóð-kennileiti þegar músin hreyfist ====
+Ef hakað er í þennan gátreit mun NVDA spila tóna eftir því sem músin hreyfist, svo notandi geti áttað sig á því hvar hún er staðsett mtt. umfang skjásins.
+
+==== Tónhæðs stillingar á hljóð-kennileitum ====
+Ef "Spila hljóð-kennileiti þegar músin hreyfist" valkosturinn er virkjaður, þá virkjun á þessum gátreit gera það að verkum að tónstyrkur hljóðmerkis kennileitanna mun stýrast af því hversu bjartur skjárinn er þar sem músin er staðsett.
+Sjálfgefin stilling er að þetta sé afvirkjað.
+
++++ Skoðunarbendill Stillingar +++
+"Skoðunarbendill..." er hægt að finna í Valkostir valmyndinni.
+Þessi skilaboðagluggi inniheldur eftirtalda valkosti:
+
+%kc:setting
+==== Fylgja Stýrikerfis Fókus ====
+| Borðtölvu lykill | NVDA+7 |
+| Fartölvu lykill | NVDA+kontrol+7 |
+
+Þegar þetta er virkjað, þá mun skoðunarbendillinn alltaf verða staðsettur á sama hlut og stýrikerfis fókusinn þegar hann breytist.
+
+%kc:setting
+==== Fylgja Stýrikerfisbendil ====
+Lykill: NVDA+6
+
+Ef virkjað, þá mun skoðunarbendillinn sjálfkrafa verða fluttur að staðsetningu stýrikerfisbendils í hvert skipti sem hann hreyfist.
+
+==== Músar fylgni ====
+Ef virkjað, þá mun skoðunarbendillinn fylgja músinni þegar hún hreyfist.
+
+==== Einfaldur Skoðunarhamur ====
+Ef virkjað, þá mun NVDA sía frá hluti sem hægt er að vafra á milli sem ekki eru gagnlegir notanda; sb. ósýnilegir hlutir og hlutir sem eru einungis notaðir til að skilgreina sjáanlegt útlit.
+
++++ Birtingarmyndir Hluta Stillingar (NVDA+kontrol+o) +++
+Geymt í "Birtingamyndir Hluta..." undir Valkostir valmyndinni.
+Þessi skilaboðagluggi inniheldur eftirtalda valkosti:
+
+==== Tilkynna Verkfæra ábendingar ====
+Ef þessi gátreitur er virkjaður þá mun NVDA tilkynna ábendingar um verkfæri þegar þær birtast á skjánum.
+Mörg forrit og skilaboðagluggar birta skilaboð (eða ábendingar) þegar músarbendillinn er dregin yfir þau eða þegar fókusinn er fluttur á þau.
+
+==== Tilkynna Hjálparblöðrur ====
+Ef hakað er í þennan gátreit þá mun NVDA tilkynna hjálparblöðrur þegar þær birtast á skjánum.
+Hjálparblöðrur eru eins og verkfæra ábendingar, en jafnan stærri að umfangi, og eru tengdar við breytingar í stýrikerfinu, eins og þegar netkapall er tekin úr sambandi, eða jafnvel til að láta vita um öryggis stillingar í Windows.
+
+==== Tilkynna flýtilykla Hlutar ====
+Ef hakað er í þennan gátreit þá mun NVDA einnig tilkynna þann flýtilykil sem er tengdur við þennan hlut eða stjórntæki.
+Sem dæmi, Skrá valmyndin getur verið með skilgreindan flýtilykil.
+
+==== Tilkynna upplýsingar um staðsetningu hlutar ====
+Þessi valkostur býður upp á að skilgreina hvort tilkynna eigi staðsetningu hlutar (sb. 1 af 4) þegar vafrað er milli hluta með fókus eða hluta skoðun.
+
+==== Giska á staðsetningu hlutar ef upplýsingar vantar ====
+Ef tilkynning á staðsetningu hlutar er virk, þá gerir virkni þessa valkostar NVDA kleift að giska á staðsetningu tiltekins hlutar ef upplýsingar þar að lútandi vantar.
+
+Ef virkt, þá mun NVDA tilkynna staðsetningu hlutar fyrir fleiri stjórntæki líka, eins og t.d. í valmyndarein og verkfærastikum, en þessar tilkynningar gætu verið svolítið ónákvæmar.
+
+==== Tilkynna lýsingu Hlutar ====
+Takið hakið úr þessum gátreit ef ekki skal lesa upp lýsingu til viðbótar við nafn hlutarins.
+
+%kc:setting
+==== Framvindustikan úttak ====
+| Borðtölvu lykill | NVDA+u |
+| Fartölvu lykill | NVDA+kontrol+f2 |
+
+Þessi valkostur stýrir því hvernig NVDA tilkynnir uppfærslur á framvindustikunni.
+
+Eftirfarandi valkostir eru í boði
+- Slökkt: Breytingar á framvindustikunni verða ekki lesnar.
+- Tilkynna: Þessi valkostur gerir NVDA kleift að tilkynna breytingar í prósentum. Í hvert skipti sem breytingar verða á framvindustikunni þá mun NVDA tilkynna um nýja gildið.
+- Tónn: Gerir það að verkum að NVDA gefur frá tónmerki þegar breytingar verða á framvindustikunni. Þeim mun hærra sem hljóðmerkið er þeim styttra er eftir af aðgerðinni.
+- Tónn og Tilkynning: Segir NVDA að gefa frá sér tónmerki sem og tilkynna breytingar á framvindustikunni.
+-
+
+==== Tilkynna framvindustiku sem er í bakgrunni ====
+Ef hakað er í þennan gátreit þá mun NVDA halda áfram að tilkynna stöðu framvindustiku, þrátt fyrir að hún sé í bakgrunni á skjánum. 
+Sem dæmi, ef þú færir fókusinn yfir í annan glugga þá mun NVDA samt fylgjast með framvindunni, sem gerir þér kleift að vinna með aðra hluti á meðan.
+
+%kc:setting
+==== Tilkynna breytingar á síbreytanlegu efni ====
+Lykill: NVDA+5
+
+Virkjar/Afvirkjar tilkynningar á nýju efni í sértækum hlutum eins og til dæmis skipalínu gluggum og skilaboðasögu í spjallforritum.
+
++++ Innsláttar samsetning Stillingar +++
+Skilaboðaglugginn fyrir Innsláttar samsetningu er geymdur í Valkostir valmyndinni.
+Þessi skilaboðagluggi gerir kleift að stjórna því hvernig NVDA tilkynnir innslátt af Asískum stöfum, eins og með IME eða Text Service innsláttar aðferðum.
+Hafa ber í huga að vegna þess hversu ólíkar innsláttar aðferðirnar eru og hversu ólikt er hve mikið af upplýsingum þær hafa að geyma, þá er líklegt að það þurfi að endurstilla þær eftir því hvaða innsláttar form er notað, til að þær gagnist sem best.
+
+==== Sjálfkrafa tilkynna alla mögulega valkosti ====
+Þessi valkostur er sjálfkrafa virkjaður, og gerir kleift að velja um hvort allir sjáanlegir möguleikar ættu að vera tilkynntir þegar valkosta listi af stöfum/táknum birtist eða þegar síðunni er breytt.
+Að hafa þennan valkost virkan þegar unnið er með piktógrafískt innsláttarform eins og ChanJie Kínversku eða Boshiami er gagnlegt, þar sem þú sjálfkrafa færð tilkynnt öll tákn og þeirra tölur sem gerir kleift að velja milli þeirra um leið.
+Aftur á móti fyrir hljóðréttan innslátt eins og í Hljóðræn Kínverska, þá getur verið gagnlegra að slökkva á þessum valkosti, þar sem öll tákn munu hljóma eins og þú vilt ekki þurfa að nota örvalykla til að vafra milli listaatriða til að sækja frekari upplýsingar um bókstafalýsingu fyrir hvern og einn valkost.
+
+==== Tilkynna Valið Atriði ====
+Þessi kostur er sjálfkrafa virkur, en hann gerir þér kleift að velja um hvort NVDA tilkynnir um valið atriði, þegar atriðalisti birtist eða þegar vali er breytt.
+Fyrir innsláttarham þar sem vali getur verið breytt með örvalyklum (eins og í Hljóðrænni Kínversku), þá er þetta nauðsynlegt, en fyrir sum innsláttarform þá gæti verið árangursríkara að slökkva á þessum eiginleika með verið er að vélrita.
+Þrátt fyrir að slökkt sé á þessum valkosti, þá mun skoðunarbendillinn samt vera staðsettur á valda atriðinu sem gerir þér kleift að nota hlutavöfrun / hlutaskoðun til að handvirkt tilkynna um þennan kost eða aðra.
+
+==== Innihalda ávallt stutta lýsingu á bókstöfum í atriðum ====
+Þessi kostur er sjálfkrafa virkur, en hann gerir kleift að velja hvort NVDA eigi að tilkynna stutta lýsingu á öllum bókstöfum í atriðinu, annaðhvort þegar það er valið eða þegar það er sjálfkrafa lesið á meðan atriðalistinn birtist.
+Hafa ber í huga að fyrir tungumál eins og Kínversku, þá mun tilkynning á auka bókstafalýsingum á völdum atriðum ekki hafa áhrif hér.
+Þessi kostur gæti verið gagnlegur fyrir Kóreskan og Japanskan innsláttarham.
+
+==== Tilkynna breytingar á lestrarstrengnum ====
+Sum innsláttarform eins og Hljóðræn Kínverska og ChangJie hafa lestrarstreng (stundum kallað for-framleiðslu strengur).
+Þú getur valið um hvort NVDA tilkynni nýja bókstafi sem eru slegnir inn í lestrarstrenginn með þessum valkosti.
+Þessi valkostur er sjálfkrafa virkjaður.
+Hafa ber í huga að eldri innsláttarform eins og ChanJie Kínverska nota hugsanlega ekki lestrarstrenginn til að geyma for-framleiðslu bókstafi, en í staðinn nota samsetningarstrenginn. Vinsamlegast kannið næsta lið fyrir upplýsingar um stillingar á tilkynningum á framleiðslu strengnum.
+
+==== Tilkynna breytingar á framleiðslu strengnum ====
+Eftir að for-framleiðslu gögn hafa verið sameinuð inn í gilt piktógrafískt tákn, þá munu flest innsláttarform staðsetja þetta tákn inn í framleiðslustreng í tímabundna geymslu með öðrum sameinuðum táknum áður en þau eru að lokum sett inn í skjalið.
+Þessi valkostur gerir kleift að velja um hvort NVDA eigi að tilkynna nýju táknin þegar þau birtast í framleiðslustrengnum.
+Þessi valkostur er sjálfkrafa virkjaður.
+
++++ Vafrahams Stillingar (NVDA+kontrol+b) +++
+Skilaboðaglugginn fyrir Vafraham er geymdur í "Vafrahamur..." undir Valkostir valmyndinni.
+
+Þessi skilaboðagluggi inniheldur eftirfarandi valkosti:
+
+==== Mesti fjöldi bókstafa á einni línu ====
+Þessi reitur gerir kleift að skilgreina mestu lengd línu í vafraham (í bókstöfum).
+
+==== Mesti fjöldi lína á síðu ====
+Þessi reitur skilgreinir fjölda lína sem fókusinn flyst um þegar stutt er á síða upp eða síða niður í vafraham.
+
+%kc:setting
+==== Nota skjáútlit ====
+Lykill: NVDA+v
+
+Þessi valkostur gerir kleift að skilgreina hvort efni í vafraham eigi að staðsetja efni eins og tengla og aðra reiti á sinni eigin línu, eða hvort það eigi að taka þá með í sjálfu textaflæðinu eins og það birtist. Ef kosturinn er virkjaður þá ættu hlutir að vera lesnir upp eins og þeir birtast á skjánum, ef valkosturinn er óvirkur þá ættu öll atriði að birtast á sitt hvorri línunni.
+
+==== Sjálfkrafa lesa allt þegar síðan er hlaðin inn ====
+Þessi gátreitur virkjar/afvirkjar hvort lestur á vefsíðu hefst sjálfkrafa eftir að henni hefur verið hlaðið inn í vafraham.
+Þessi valkostur er sjálfkrafa virkjaður.
+
+==== Tilkynna Snið Taflna ====
+Þegar þetta er afvirkjað þá mun NVDA aðeins tilkynna töflur sem innihalda gögn á töflusniði (þar sem það er eðlilegt að vita að um töflu sé að ræða). 
+En ef virkjað, þá mun NVDA einnig tilkynna töflur sem eru aðeins notaðar fyrir myndræna framsetningu.
+
+==== Stillingar á tilkynningum atriða eins og tengla og fyrirsagna ====
+Vinsamlegast kannið valkostina í [Document Formatting Settings dialog #DocumentFormattingSettings] til að stilla til þau atriði sem skal tilkynnast þegar þú vafrar, eins og tengla, fyrirsagnir og töflur.
+
+==== Sjálfvirkur fókushamur fyrir fókus breytingar ====
+Þessi valkostur gerir kleift að virkja fókusham ef fókusinn breytist.
+Sem dæmi, ef þú ert á vefsíðu, ef stutt er á dálklykil og þú lendir á formi, og þessi valkostur er virkjaður, þá mun fókushamur sjálfkrafa virkjast.
+
+==== Sjálfvirkur fókushamur fyrir bendil hreyfingar ====
+Þegar þessi valkostur er virkjaður þá mun NVDA geta farið í og úr fókusham þegar örvalyklarnir eru notaðir.
+Sem dæmi, ef þú notar örvalykil til að fara niður vefsíðu og lendir á skrifreit, þá mun NVDA sjálfkrafa flytja þig í fókusham. Ef þú notar örvalykil til að fara úr skrifreitinum, þá mun NVDA flytja þig aftur í vafraham.
+
+==== Hljóðtilkynningar á Fókusham og Vafraham ====
+Ef þetta er virkjað þá mun NVDA gefa hljóðmerki til að láta vita að verið sé að skipta milli fókusham og vafrahams, fremur en að tilkynna breytinguna.
+
++++ Skjal Stílsniðs stillingar (NVDA+kontrol+d)  +++[DocumentFormattingSettings]
+Þessi skilaboðagluggi er í "Skjalsnið..." undir Valkostir valmyndinni.
+
+Flestir gátreitirnir í þessum skilaboðaglugga eru til að stilla hvaða tegund af stílsniði þú vilt fá tilkynnt þegar þú færir bendilinn um skjöl.
+Sem dæmi, ef þú hakar í tilkynna leturgerð gátreitinn, þá mun leturgerðin í textanum verða tilkynnt í hvert skipti sem þú kemur að leturgerð í textanum sem er önnur en sú sem var áður.
+
+Þú getur stillt inn eftirfarandi tilkynningar:
+- Leturgerð
+- Leturstærð
+- Letur eiginleikar
+- Textajöfnun
+- Litir
+- Textastíll
+- Stafsetningarvillur
+- Síðunúmer
+- Línunúmer
+- Línu inndráttur
+- Töflur
+- Töflur raða/dálka fyrirsagnir
+- Töflur staðsetning rúðu
+- Tenglar
+- Fyrirsagnir
+- Listar
+- Tilvitnanir
+- Kennileiti
+- Rammar
+-
+
+==== Tilkynna stílsniðs breytingar eftir bendli ====
+Ef virkjuð, þá mun þessi stilling segja NVDA að reyna að greina allar stílsniðs breytingar í línunni á meðan hún er lesin, þrátt fyrir að þetta geti dregið úr frammistöðu NVDA.
+
+Sjálfgefin stilling er að NVDA greini það stílsnið sem kerfisbendillinn / Skoðunarbendillinn eru staðsettir á, og í sumum tilvikum jafnvel stílsniðið á allri textalínunni, en þá aðeins ef það gerir það ekki að verkum að það dragi úr afköstum.
+
+Virkið þennan eiginleika þegar verið er að prófarkalesa skjöl í forritum eins og Microsoft Word, þar sem stílsniðið skiptir máli.
+
++++ Talorðabækur +++
+Talorðabóka valmyndin (sem er í Valkostir valmyndinni) inniheldur skilaboðaglugga sem gerir kleift að stjórna því hvernig NVDA ber fram ákveðin orð og hendingar.
+Það eru núna þrjár mismunandi tegundir af talorðabókum.
+Þær eru:
+- Sjálfgefin: reglur í þessari orðabók hafa áhrif á allt tal í NVDA.
+- Rödd: reglur í þessari orðabók hafa bara áhrif á þá rödd í talgervlinum sem er núna í notkun.
+- Tímabundin: reglur í þessari orðabók hafa áhrif á allt tal í NVDA, en aðeins fyrir núverandi notkun. Þessar reglur eru tímabundnar og munu glatast ef NVDA er endurræst.
+-
+
+Allir skilaboðagluggar orðabókanna innihalda lista af reglum sem hægt er að nota til að vinna úr lestrinum.
+Skilaboðaglugginn inniheldur líka Bæta við, Breyta og fjarlægja hnappa.
+
+Til að bæta nýrri reglu inn í orðabókina, styddu á Bæta við hnappinn, og fylltu inn í reitina í skilaboðaglugganum sem birtist og veldu svo OK.
+Þú munt núna finna nýju regluna í listanum yfir þær reglur sem eru til.
+En til að ganga úr skugga um að reglan sé sannarlega vistuð, vertu þá viss um að velja OK til að loka glugganum þegar þú hefur lokið við að breyta/bæta við reglum.
+
+Reglurnar fyrir talorðabækur NVDA gera kleift að breyta einum bókstafastreng yfir í annan.
+Einfalt dæmi um þetta er þegar þú vilt að NVDA segi orðið froskur í hvert skipti sem lesa skal orðið fugl.
+Í skilaboðaglugganum fyrir Bæta við, þá er einfaldasta leiðin til að gera þetta með því að slá inn orðið fugl í Fyrirmynd reitinn, og orðið froskur í Breyta reitinn.
+Þú gætir einnig viljað slá inn lýsingu á reglunni í Athugasemdir reitinn (eitthvað í líkingu við: breytir fugl í frosk).
+
+Talorðabækur NVDA eru talsvert öflugari en að bara geta framkvæmt einfalda útskiptingu orða.
+Bæta við skilaboðaglugginn inniheldur einnig gátreit til að skilgreina hvort þú viljir að reglan sé háð bókstafa stærð (þ.e. hvort NVDA eigi að láta sig það varða hvort um stóra eða smáa bókstafi sé að ræða.
+Sjálfgefin stilling er að NVDA hunsar bókstafa stærð).
+Annar gátreitur gerir kleift að skilgreina hvort fyrirmyndin sé "Venjulegt tjáningarform".
+Venjulegt tjáningarform er fyrirmynd sem inniheldur sértæk tákn sem gera kleift að setja saman fleiri en einn bókstaf í einu, eða tengja saman bara tölur, eða bara bókstafi, svo eitthvað sé nefnt.
+Venjuleg tjáningarform eru ekki tekin með í þessari handbók, en það er mikið til að slíku efni á Internetinu sem getur gefið frekari upplýsingar.
+
++++ Greinarmerki/Tákn framburður +++[SymbolPronunciation]
+Þessi skilaboðagluggi gerir kleift að breyta því hvernig greinarmerki og önnur tákn eru borin fram, sem og á hvaða tákn-stigi þau eru lesin.
+
+Til að breyta tákni, veldu það fyrst í Tákn listanum.
+Fyrirmyndar reiturinn gerir kleift að breyta textanum sem skal lesinn í staðinn fyrir táknið.
+Með því að nota Stig reitinn, þá er hægt að breyta lægsta tákn stiginu þar sem þetta tákn skal lesið.
+
+Þegar vinnu er lokið, veldu OK hnappinn til að vista þær breytingar sem hafa verið gerðar eða Hætta við hnappinn til að hunsa þær.
+
+++ Vistun og Endurhlöðun á Stillingum ++
+Sjálfgefin stilling er að NVDA vistar stillingar þegar þú lokar forritinu.
+Þessari stillingu er þó hægt að breyta í Almennar Stillingar skilaboðglugganum í Valkostir valmyndinni.
+Til að vista stillingar handvirkt, veldu Vista stillingar í NVDA valmyndinni.
+
+Ef þú gerir mistök í þínum stillingum og þarft að fara til baka í áður vistaðar stillingar, veldu þá "fara til baka í vistaðar stillingar" valkostinn í NVDA valmyndinni.
+Þú getur líka endurhlaðið stillingum til baka í grunnstillingar NVDA með því að velja Endurhlaða stillingar yfir í Sjálfgefnar stillingar, sem er einnig í NVDA valmyndinni.
+
+Eftirfarandi NVDA skipanir eru einnig gagnlegar:
+%kc:beginInclude
+|| Nafn | Borðtölvu lykill | Fartölvu lykill | Lýsing |
+| Vista stillingar | NVDA+kontrol+c | NVDA+kontrol+c | Vistar núverandi stillingar svo þær glatist ekki þegar þú hættir í NVDA |
+| Endurhlaða stillingum | NVDA+kontrol+r | NVDA+kontrol+r | Ef stutt er einu sinni þá endurhlaðast þínar stillingar í síðustu vistun. Ef stutt er þrisvar sinnum þá endurhlaðast stillingarnar aftur yfir í sjálfgefnar stillingar. |
+%kc:endInclude
+
+++ Stillingaskrár og notenda prófílar ++
+Flytjanlegar útgáfur af NVDA vista allar stillingar, sérsniðin appModul og sérsniðna rekla í möppu sem heitir userConfig, sem geymd er í NVDA möppunni.
+
+Uppsettar útgáfur af NVDA vista allar stillingar, sérsniðin appModul og sérsniðna rekla í sérstaka NVDA möppu sem er staðsett í Windows notenda prófílnum þínum.
+Þetta þýðir að allir notendur tölvunnar geta haft sínar eigin NVDA stillingar.
+Til að komast í þína stillinga möppu fyrir uppsetta útgáfu af NVDA, opna Ræsa hnappinn, fara í Forrit -> NVDA -> skoða stillinga möppu notanda.
+
+Stillingar fyrir NVDA þegar keyrt er í innskráningarglugga eða UAC gluggum eru geymdar í systemConfig möppunni sem er í uppsetningar möppu NVDA.
+Yfirleitt ætti ekki að breyta þessari stillingu.
+Til að breyta því hvernig NVDA er stillt við innskráningar/UAC gluggana, stilltu þá NVDA eins og þér passar best á meðan þú ert skráður inn í Windows, segðu svo NVDA að afrita stillingarnar yfir á innskráningargluggann með því að nota hnappinn í Almennar stillingar skilaboðaglugganum.
+
++ Auka Verkfæri +
+
+++ Færsluskoðun ++
+Færsluskoðun, sem er í Verkfæri inni í NVDA valmyndinni, gerir kleift að skoða allar færslur sem hafa verið vistaðar þar til núna, frá því að NVDA var ræst.
+
+Fyrir utan að geta lesið efnið, þá er einnig hægt að vista eintak af færsluskýrslunni, eða endurhlaða skoðunina svo hún sýni sem nýlegast eintak af öllu því sem hefur átt sér stað síðan Færsluskoðun var opnað.
+Þessar aðgerðir eru undir Skoðun í Færsla valmyndinni.
+
+++ Lestrarskoðun ++
+Fyrir sjáandi forrita hönnuði eða fólk sem er að sýna prufueintak af NVDA, þá er hægt að kalla fram skilaboðaglugga sem birtir allan þann texta sem NVDA er að lesa.
+
+Til að virkja lestrarskoðun, veldu þá "Lestrarskoðun" valmyndaatriðið í Verkfæri í NVDA valmyndinni.
+Taktu hakið úr þessu atriði til að afvirkja.
+
+Á meðan lestrarskoðun er virk, þá uppfærist það stanslaust til að sýna þann texta sem verið er að lesa núna.
+Aftur á móti, ef þú smellir á þennan glugga, þá mun NVDA tímabundið hætta að uppfæra textann, svo auðvelt sé að velja eða afrita efnið.
+
+++ Viðbóta stjórnandinn ++
+Viðbóta stjórnandinn, sem er hægt að nálgast undir Verkfæri í NVDA valmyndinni, gerir kleift að setja upp og taka burt viðbótarpakka fyrir NVDA.
+Þessir pakkar eru í boði stofnunarinnar og innihalda sérsniðin kóða sem getur bætt við eða breytt eiginleikum í NVDA eða jafnvel boðið upp á stuðning við fleiri punktaletursskjái og talgervla.
+
+Viðbótar stjórnandinn inniheldur lista yfir alla skjái og viðbætur sem eru þegar sett  upp í NVDA stillingunum þínum.
+Nafn pakka, útgáfa og höfundur er birt fyrir hvern pakka, þó svo að frekari upplýsingar eins og lýsing og vefsíðuslóð sé hægt að lesa með því að velja pakkann og velja hnappinn Um pakkann.
+
+Til að setja upp viðbótar pakka, veldu Setja upp hnappinn.
+Þetta gerir kleift að vafra að viðbótarpakkanum (.nvda-addon skránni) einhvers staðar á tölvunni þinni eða netkerfinu.
+Þegar þú velur Opna, þá mun NVDA spyrja hvort þú viljir setja upp viðbótina.
+Þar sem virkni viðbótarpakkans er óhindruð í NVDA, sem í teóríunni gæti falið í sér aðgang að persónulegum gögnum og jafnvel tölvunni sjálfri ef NVDA eintakið er uppsett, þá er þar af leiðandi mjög mikilvægt að setja aðeins upp viðbætur frá þeim sem þú treystir.
+Þegar viðbótin er uppsett, þá mun NVDA endurræsa sér til að viðbótin keyrist með.
+Þar til það er gert, mun staðan "uppsett" fyrir þá viðbót birtast í listanum fyrir viðbætur.
+
+Til að fjarlægja viðbót, veldu viðbótarpakkann úr listanum og veldu á Fjarlægja hnappinn.
+NVDA spyr hvort þú viljir gera þetta.
+Eins og með uppsetninguna, þá mun NVDA endurræsast til að viðbótin sé að fullu fjarlægð.
+Þar til það er gert, þá mun staðan: "fjarlægja" fyrir þá viðbót birtast í listanum fyrir viðbætur.
+
+Viðbótar stjórnandinn inniheldur einnig Loka hnapp til að loka glugganum.
+Ef þú hefur sett upp eða fjarlægt viðbót, þá mun NVDA fyrst spyrja þig hvort þú vilt endurræsa svo að breytingarnar geti tekið gildi.
+
+Áður var hægt að teygja á virkni NVDA með því að afrita sjálfstæðar viðbætur og rekla í stillingamöppu NVDA.
+Þrátt fyrir að þessi útgáfa af NVDA geti ennþá keyrt þær, þá birtast þær ekki sem valkostir í Viðbótar stjórnandanum.
+Það er best að fjarlægja þessar skrár úr stillingunum og setja upp viðeigandi viðbót, ef hún er til.
+
+++ Python Stjórnborðið ++
+NVDA Python stjórnborðið, sem er undir Verkfæri í NVDA valmyndinni, er þróunarverkfæri sem er gagnlegt í villuleitun, almennnri skoðun á innviði NVDA og skoðun á aðgengi stigveldis forritsins.
+Fyrir frekari upplýsingar, sjá Developer Guide sem hægt er að sækja frá [the Development section of the NVDA web site NVDA_URLwiki/Development].
+
+++ Endurhlaða viðbótum ++
+Þegar þetta er virkjað, þá endurhlaðast öll app módúl og víðtækar viðbætur án þess að NVDA endurræsist, sem getur verið gagnlegt fyrir hönnuði.
+
++ Studdir Talgervlar +[SupportedSpeechSynths]
+Þessi hluti inniheldur upplýsingar um þá talgervla sem NVDA styður.
+Til að fá ennþá ítarlegri lista yfir gjaldfrjálsa talgervla og talgervla sem hægt er að kaupa og hlaða niður til notkunar með NVDA vinsamlegast lesið eftirfarandi vefsíðu [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+
+++ eSpeak ++
+[eSpeak http://espeak.sourceforge.net/] talgervillinn er innbyggður í NVDA og gerir ekki kröfur um neina sértæka rekla eða íhluti svo hægt sé að keyra hann inn.
+NVDA ræsir sér með eSpeak sem sjálfgefinn talgervil.
+Þar sem talgervillinn er byggður inn í NVDA, þá er hann góður valkostur þegar keyra skal NVDA á USB lykli á öðrum stýrikerfum.
+
+Allar raddir sem fyglja með eSpeak tala einnig önnur tungumál.
+Það eru 43 raddir studdar af eSpeak.
+
+Það eru einnig ýmsar útgáfur sem hægt er að velja milli til að breyta hljómi raddarinnar.
+
+++ Microsoft Speech API útgáfa 4 (SAPI 4) ++
+SAPI 4 er eldri Microsoft staðall fyrir talgervla.
+Marga talgervla sem styðja þennan staðal er hægt að kaupa eða hlaða niður gjaldfrjálst frá ýmsum fyrirtækjum og vefsíðum.
+Þegar þessi talgervill er notaður með NVDA, þá eru þær raddir sem eru í boði (aðgengilegar úr [Voice Settings dialog #VoiceSettings] eða úr [Synth Settings Ring #SynthSettingsRing] skilaboðagluggunum) allar þær raddir sem eru settar upp sem SAPI 4 vélar á stýrikerfinu.
+
+Ef þú hefur SAPI 4 raddir settar upp en talgervillinn listar þær ekki sem valkosti, vinsamlegast keyrið þá inn SAPI 4.0 keyrsluskrárnar sem hægt er að nálgast á http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+
+++ Microsoft Speech API útgáfa 5 (SAPI 5) ++
+SAPI 5 er Microsoft staðall fyrir talgervla.
+Marga talgervla sem styðja þennan staðal er hægt að kaupa eða hlaða niður gjaldfrjálst frá ýmsum fyrirtækjum og vefsíðum, en stýrikerfið þitt kemur líklega með einni SAPI 5 rödd uppsettri.
+Þegar talgervillinn er notaður með NVDA, þá munu þær raddir sem eru í boði (aðgengilegar úr [Voice Settings dialog #VoiceSettings] eða úr [Synth Settings Ring #SynthSettingsRing] valmyndunum) innihalda allar raddir sem í boði eru frá SAPI 5 vélinni sem er uppsett á stýrikerfinu.
+
+++ Microsoft Speech Platform ++
+Microsoft Speech Platform býður upp á raddir fyrir mörg tungumál sem eru venjulega notuð í þróun á netþjóna-útgáfum af tal-forritum.
+Þessar raddir er líka hægt að nota með NVDA.
+
+Til að nota þessar raddir, þá þarf að setja upp tvö forrit:
+- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+Þessi vefsíða inniheldur margar skrár fyrir bæði raddgreiningu og texta-í-tal.
+Veldu þær skrár sem innihalda TTS gögn fyrir það tungumál/raddir sem vill.
+Sem dæmi, skráin MSSpeech_TTS_en-US_ZiraPro.msi er Amerísk-Ensk rödd.
+ -
+-
+ 
+++ Audiologic Tts3 ++
+Þetta er talgervill sem er sérsniðinn fyrir ítölsku.
+Þú verður að hafa talgervilinn uppsettann á tölvunni til að geta notað hann með NVDA.
+Fyrir frekari upplýsingar er hægt að fara á vefsíðuna www.audiologic.it.
+ 
+Þessi talgervill styður ekki [spelling functionality #VoiceSpellingFunctionality].
+ 
+++ Newfon ++
+Newfon er gjaldfrjáls talgervill, hannaður af Sergey Shishmintzev, en hann styður bæði Rússnesku og Úkraínsku.
+Til að niðurhala þessum talgervli, heimsækið downloads hlutann á Rússnesku NVDA community síðunni: http://ru.nvda-community.org/?page_id=10
+ 
+Þessi talgervill styður ekki [spelling functionality #VoiceSpellingFunctionality].
+ 
++ Studdir punktaletursskjáir +[SupportedBrailleDisplays]
+Þessi hluti inniheldur upplýsingar um punktaletursskjái sem eru studdir af NVDA.
+ 
+++ Freedom Scientific Focus/PAC Mate Series ++
+Allir Focus og PAC Mate skjáir frá [Freedom Scientific http://www.freedomscientific.com/] eru studdir þegar tengdir með USB eða Blátönn.
+Þú munt þurfa Freedom Scientific rekla fyrir punktaletursskjáinn uppsetta á stýrikerfinu.
+Ef þú ert ekki með þá uppsetta, þá er hægt að sækja þá á http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
+Þrátt fyrir að þessi síða minnist aðeins á Focus 40 Blue skjáinn, þá styðja reklarnir alla skjái frá Freedom Scientific.
+Ef stýrikerfið er 64 bita Windows og reklarnir voru þegar settir upp þegar annar skjálesari var settur upp, þá mun að öllum líkindum samt þurfa að sækja og setja upp reklana frá þessum tengli, þar sem skrárnar sems NVDA þarfnast voru líklega ekki settar upp af hinum skjálesaranum.
+ 
+Það er sjálfgefin stilling að NVDA greini og tengist þessum skjám með USB eða Blátönn.
+Aftur á móti þegar skjárinn er stilltur til, þá er hægt að skilgreina um að velja aðeins "USB" eða "Blátönn" tengin til að takmarka þá tengingu sem er notuð aðeins við þessa kosti.
+Þetta gæti verið gagnlegt ef þú vilt tengja focus skjáinn við NVDA með Blátönn, en samt geta hlaðið hann með USB tenginu á tölvunni.
+ 
+Hér á eftir eru þeir lyklar sem eru skilgreindir af NVDA fyrir þennan skjá.
+Vinsamlegast lesið upplýsingarnar sem fylgdu með skjánum til að fá útskýringu á því hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | topRouting1 (fyrsta sellan á skjánum) |
+| Skruna áfram | topRouting20/40/80 (síðasta sellan á skjánum) |
+| Skruna til baka | leftAdvanceBar |
+| Skruna áfram | rightAdvanceBar |
+| Breyta hvort punktaletur sé samofið | leftGDFButton+rightGDFButton |
+| Breyta aðgerð vinstri wiz hjóls | leftWizWheelPress |
+| Fara til baka með vinstri wiz hjóls aðgerð | leftWizWheelUp |
+| Fara áfram með vinstri wiz hjóls aðgerð | leftWizWheelDown |
+| Breyta hægri wiz hjóls aðgerð | rightWizWheelPress |
+| Fara til baka með hægri wiz hjóls aðgerð | rightWizWheelUp |
+| Fara áfram með hægri wiz hjóls aðgerð | rightWizWheelDown |
+| Beina í punktaleturs sellu | beining |
+| hoplykill | punktur7 |
+| færslulykill | punktur8 |
+| shift+dálklykill | brailleSpaceBar+punktur1+punktur2 |
+| dálklykill | brailleSpaceBar+punktur4+punktur5 |
+| örUpp | brailleSpaceBar+punktur1 |
+| örNiður | brailleSpaceBar+punktur4 |
+| kontrol+örVinstri | brailleSpaceBar+punktur2 |
+| kontrol+örHægri | brailleSpaceBar+punktur5 |
+| örVinstri | brailleSpaceBar+punktur3 |
+| örHægri | brailleSpaceBar+punktur6 |
+| Heim | brailleSpaceBar+punktur1+punktur3 |
+| Endir | brailleSpaceBar+punktur4+punktur6 |
+| kontrol+Heim | brailleSpaceBar+punktur1+punktur2+punktur3 |
+| kontrol+Endir | brailleSpaceBar+punktur4+punktur5+punktur6 |
+| Alt | brailleSpaceBar+punktur1+punktur3+punktur4 |
+| Alt+Dálklykill | brailleSpaceBar+punktur2+punktur3+punktur4+punktur5 |
+| Lausnarlykill | brailleSpaceBar+punktur1+punktur5 |
+| Windowslykill | brailleSpaceBar+punktur2+punktur4+punktur5+punktur6 |
+| bilslá | brailleSpaceBar |
+| Windows+d (takmarkar alla gluggan) | brailleSpaceBar+punktur1+punktur2+punktur3+punktur4+punktur5+punktur6 |
+| Tilkynna línu | brailleSpaceBar+punktur1+punktur4 |
+| NVDA valmynd | brailleSpaceBar+punktur1+punktur3+punktur4+punktur5 |
+ 
+Fyrir nýrri Focus módel sem innihalda "ruggandi" sláar-lykla (focus 40, focus 80 og focus blue):
+|| Nafn | Lykill |
+| Fara til baka í fyrri línu | leftRockerBarUp, rightRockerBarUp |
+| Fara í næstu línu | leftRockerBarDown, rightRockerBarDown |
+ 
+Aðeins fyrir Focus 80:
+|| Nafn | Lykill |
+| Skruna til baka | leftBumperBarUp, rightBumperBarUp |
+| Skruna áfram | leftBumperBarDown, rightBumperBarDown |
+%kc:endInclude
+ 
+++ Optelec ALVA BC640/680 ++
+Bæði ALVA BC640 og BC680 skjáirnir frá [Optelec http://www.optelec.com/] eru studdir þegar tengdir með USB eða Blátönn.
+Enga sértæka rekla þarf að setja upp til að nota þessa skjái.
+Stingdu bara skjánum í samband og stilltu NVDA til að nota hann.
+ 
+Þrátt fyrir að þessir skjáir sé með punktaleturs lyklaborð, þá sjá þeir sjálfir um þýðinguna frá blindraletri yfir í venjulegan texta.
+Þar af leiðandi skiptir stillingin á inntaks töflu punktaleturs í NVDA ekki máli í þessu samhengi.
+ 
+Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að nálgast upplýsingar um hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | t1 |
+| Skruna til baka að fyrri línu | t2 |
+| Skruna að næstu línu | t4 |
+| Skruna áfram | t5 |
+| Beina að punktaleturs sellu | routing |
+| shift+dálklykill | sp1 |
+| Alt lykill | sp2 |
+| Lausnarlykill | sp3 |
+| Dálklykill | sp4 |
+| örUpp | spUp |
+| örNiður | spDown |
+| örVinstri | spLeft |
+| örHægri | spRight |
+| Færslulykill | spEnter |
+| NVDA Valmyndin | sp1+sp3 |
+| Windows+D (takmarkar alla glugga) | sp1+sp4 |
+| Windowslykill | sp2+sp3 |
+| Alt+Dálklykill | sp2+sp4 |
+%kc:endInclude
+ 
+++ Handy Tech Skjáir ++
+NVDA styður alla skjái frá [Handy Tech http://www.handytech.de/] þegar þeir eru tengdir með USB eða Blátönn.
+Fyrir eldri USB skjái, þarf að setja upp USB rekla frá Handy Tech á stýrikerfið.
+ 
+Punktaleturs innsláttur er ekki ennþá studdur.
+ 
+Eftirfarandi eru þær lyklaskipanir sem eiga við skjáinn þegar hann er notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | left, up |
+| Skruna áfram | right, down |
+| Skruna til baka í fyrri línu | b4 |
+| Skruna í næstu línu | b5 |
+| Beina að punktaleturs sellu | routing |
+| shift+dálklykill | esc |
+| Altlykill | b2+b4+b5 |
+| Lausnarlykill | b4+b6 |
+| Dálklykill | enter |
+| Færslulykill | esc+enter |
+| örUpp | leftSpace |
+| örNiður | rightSpace |
+| NVDA Valmynd | b2+b4+b5+b6 |
+| Handy Tech stillingar | b4+b8 |
+%kc:endInclude
+ 
+++ MDV Lilli ++
+Lilli punktaletursskjárinn, sem hægt er að fá hjá [MDV http://www.mdvbologna.it/] er studdur.
+Enga sértæka rekla þarf að setja upp til að nota skjáinn.
+Þú stingur honum bara í samband og stillir NVDA til að nota hann.
+ 
+Eftirfarandi eru lyklaskipanirnar fyrir þennan skjá þegar hann er notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá leiðbeiningar um hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | LF |
+| Skruna áfram | RG |
+| Fara í fyrri línu | UP |
+| Fara í næstu línu | DN |
+| Beina í punktaleturs sellu | route |
+| shift+dálklykill | SLF |
+| dálklykill | SRG |
+| alt+dálklykill | SDN |
+| alt+shift+dálklykill | SUP |
+%kc:endInclude
+ 
+++ Baum/Humanware/APH Punktaletursskjáir ++
+Nokkrir [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] og [APH http://www.aph.org/] skjáir eru studdir þegar notast er við USB eða Blátannar tengingu.
+Þar með talið:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Aðrir skjáir frá Baum gætu einnig virkað, en þetta hefur þó ekki verið prófað.
+ 
+Ef nota á USB tengingu, þá þarf fyrst að keyra inn USB reklana sem framleiðandinn gefur út.
+Fyrir APH Refreshabraille, þarf USB tengingin að vera stillt á seríal.
+ 
+Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | d2 |
+| Skruna áfram | d5 |
+| Fara að fyrri línu | d1 |
+| Fara að næstu línu | d3 |
+| Beina að punktaleturs sellu | routing |
+
+Fyrir skjái sem hafa stýripinna:
+|| Nafn | Lykill |
+| örUpp | upp |
+| örNiður | niður |
+| örVinstri | vinstri |
+| örHægri | hægri |
+| færslulykill | velja |
+%kc:endInclude
+ 
+++ hedo ProfiLine USB ++
+hedo ProfiLine USB frá [hedo Reha-Technik http://www.hedo.de/] er studdur.
+Fyrst þarf að keyra inn USB reklana sem framleiðandinn hefur útbúið.
+ 
+Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | K1 |
+| Skruna áfram | K3 |
+| Fara í fyrri línu | B2 |
+| Fara í næstu línu | B5 |
+| Beina í punktaleturs sellu | routing |
+| Breyta punktaletur samofið við | K2 |
+| Lesa allt | B6 |
+%kc:endInclude
+ 
+++ hedo MobilLine USB ++
+hedo MobilLine USB skjárinn frá [hedo Reha-Technik http://www.hedo.de/] er studdur.
+Fyrst þarf að keyra inn reklana sem framleiðandinn hefur útbúið.
+ 
+Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | K1 |
+| Skruna áfram | K3 |
+| Fara í fyrri línu | B2 |
+| Fara í næstu línu | B5 |
+| Beina í punktaleturs sellu | routing |
+| Breyta punktaletur samofið við | K2 |
+| Lesa allt | B6 |
+%kc:endInclude
+ 
+++ HumanWare Brailliant BI/B Series ++
+Brailliant BI og B seríurnar af skjáum frá [HumanWare http://www.humanware.com/], þmt. BI 32, BI 40, og B 80, eru studdar  þegar tengst er með USB eða Blátönn.
+Ef tengst er með USB, þá þarf fyrst að keyra inn USB reklana sem framleiðandinn hefur útbúið.
+
+Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | vinstri |
+| Skruna áfram | hægri |
+| Fara í fyrri línu | upp |
+| Fara í næstu línu | niður |
+| Beina í punktaleturs sellu | beining |
+| Breyta punktaletur samofið við | upp+niður |
+| örUpp | bilslá+punktur1 |
+| örNiður | bilslá+punktur4 |
+| örVinstri | bilslá+punktur3 |
+| örHægri | bilslá+punktur6 |
+| NVDA Valmynd | c1+c3+c4+c5 (command n) |
+| shift+dálklykill | bilslá+punktur1+punktur3 |
+| dálklykill | bilslá+punktur4+punktur6 |
+| altlykill | bilslá+punktur1+punktur3+punktur4 (bilslá+m) |
+| lausnarlykill | bilslá+punktur1+punktur5 (bilslá+e) |
+| færslulykill | punktur8 |
+| windows+d (takmarkar alla glugga) | c1+c4+c5 (command d) |
+| windowslykill | bilslá+punktur3+punktur4 |
+| alt+dálklykill | bilslá+punktur2+punktur3+punktur4+punktur5 (bilslá+t) |
+| Lesa allt | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+ 
+++ HIMS Braille Sense/Braille EDGE Series ++
+NVDA styður Braille Sence og Braille EDGE skjáina frá [Hims http://www.hims-inc.com/] þegar þeir eru tengdir með USB eða Blátönn.
+Ef þú tengir þá með USB, þá þarf að keyra inn USB rekla frá HIMS inn á stýrikerfið.
+ 
+Punktaleturs inntak er ekki ennþá stutt.
+ 
+Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | vinstri hlið skruna niður |
+| Skruna áfram | hægri hlið skruna niður |
+| Fara í fyrri línu | vinstri hlið skruna upp |
+| Fara í næstu línu | hægri hlið skruna upp |
+| Beina í punktaleturs sellu | beining |
+| shift+dálklykill | punktur1+punktur2+bilslá |
+| altlykill | punktur1+punktur3+punktur4+Bilslá |
+| lausnarlykill | punktur1+punktur5+Bilslá |
+| dálklykill | punktur4+punktur5+Bilslá |
+| færslulykill | punktur8 |
+| hoplykill | punktur7 |
+| örUpp | punktur1+Bilslá |
+| örNiður | punktur4+Bilslá |
+| hástafalás | punktur1+punktur3+punktur6+bilslá |
+| shift+alt+dálklykill | advance2+advance3+advance1 |
+| alt+dálklykill | advance2+advance3 |
+| Endir | punktur4+punktur6+bilslá |
+| Kontrol+Endir | punktur4+punktur5+punktur6+bilslá |
+| Heim | punktur1+punktur3+bilslá |
+| kontrol+Heim | punktur1+punktur2+punktur3+bilslá |
+| örVinstri | punktur3+bilslá |
+| kontrol+shift+örVinstri | punktur2+punktur8+bilslá+advance1 |
+| kontrol+örVinstri | punktur2+bilslá |
+| shift+alt+örVinstri | punktur2+punktur7+advance1 |
+| alt+örVinstri | punktur2+punktur7 |
+| örHægri | punktur6+bilslá |
+| kontrol+shift+örHægri | punktur5+punktur8+bilslá+advance1 |
+| kontrol+örHægri | punktur5+bilslá |
+| shift+alt+örHægri | punktur5+punktur7+advance1 |
+| alt+örHægri | punktur5+punktur7 |
+| síðaUpp | punktur1+punktur2+punktur6+bilslá |
+| kontrol+síðaUpp | punktur1+punktur2+punktur6+punktur8+bilslá |
+| kontrol+shift+örUpp | punktur2+punktur3+punktur8+bilslá+advance1 |
+| kontrol+örUpp | punktur2+punktur3+bilslá |
+| shift+alt+örUpp | punktur2+punktur3+punktur7+advance1 |
+| alt+örUpp | punktur2+punktur3+punktur7 |
+| shift+örUpp | vinstri hlið skruna niður + bilslá |
+| síðaNiður | punktur3+punktur4+punktur5+bilslá |
+| kontrol+síðaNiður | punktur3+dot4+punktur5+punktur8+bilslá |
+| kontrol+shift+örNiður | punktur5+punktur6+punktur8+bilslá+advance1 |
+| kontrol+örNiður | punktur5+punktur6+bilslá |
+| shift+alt+örNiður | punktur5+punktur6+punktur7+advance1 |
+| alt+örNiður | punktur5+punktur6+punktur7 |
+| shift+örNiður | hægri hlið skruna niður + bilslá |
+| Eyða | punktur1+punktur3+punktur5+bilslá |
+| f1 lykill | punktur1+punktur2+punktur5+bilslá |
+| f3 lykill | punktur1+punktur2+punktur4+punktur8 |
+| f4 lykill | punktur7+advance3 |
+| windows+b | punktur1+punktur2+advance1 |
+| windows+d | punktur1+punktur4+punktur5+advance1 |
+%kc:endInclude
+ 
+++ HIMS SyncBraille ++
+NVDA styður SyncBraille skjáina frá [HIMS http://www.hims-inc.com/].
+Þú munt þurfa að keyra inn USB reklana frá HIMS inn á stýrikerfið.
+ 
+Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | vinstri hlið skruna niður |
+| Skruna áfram | hægri hlið skruna niður |
+| Beina í punktaleturs sellu | beining |
+%kc:endInclude
+ 
+++ Seika Punktaletursskjáir ++
+Seika, útgáfur 3, 4 og 5 (40 sellna) og Seika80 (80 sellna) punktaletursskjáir frá [Nippon Telesoft http://www.nippontelesoft.com/] eru studdir.
+Hægt er að nálgast frekari upplýsingar um þessa skjái á http://www.seika-braille.com/.
+Fyrst þarf að keyra inn USB rekla frá framleiðandanum.
+ 
+Eftirfarandi eru lyklaskipanir fyrir þennan skjá þegar hann er notaður með NVDA.
+Vinsamlegast lesið handbókina sem fylgdi með skjánum til að fá lýsingu á því hvar þessir lyklar eru staðsettir.
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | vinstri |
+| Skruna áfram | hægri |
+| Fara í fyrri línu | b3 |
+| Fara í næstu línu | b4 |
+| Breyta punktaletur samofið í | b5 |
+| Lesa allt | b6 |
+| dálklykill | b1 |
+| shift+dálklykill | b2 |
+| alt+dálklykill | b1+b2 |
+| NVDA Valmynd | vinstri+hægri |
+| Beina í punktaleturs sellu | beining |
+%kc:endInclude
+ 
+++ Papenmeier BRAILLEX Nýrri Módel ++
+Eftirfarandi punktaletursskjáir eru studdir:
+- BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
+- BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
+- BRAILLEX Trio (USB og Blátannar)
+-
+ 
+Ef BrxCom er sett upp, þá mun NVDA nota BrxCom.
+BrxCom er verkfæri sem gerir kleift að nota punktaleturs inntak óháð skjálesaranum.
+Ný útgáfa af BrxCom sem virkar með NVDA verður gefin út fljótlega af Papenmeier.
+ 
+Flestir skjáirnir hafa Easy Access Bar (EAB) sem greiðir fyrir skjótri og skilvirkri vinnu notanda.
+EAB er hægt að færa í fjórar áttir þar sem venjulega hver átt, hefur tvær virknir.
+C-línan er eina undantekningin á þessari reglu.
+ 
+C-línan og sumir aðrir skjáir hafa tvær beiningar raðir þar sem efri röðin er notuð til að birta stílsniðs upplýsingar.
+Ef einum af efri beiningar lyklunum er haldið niðri og stutt á EAB slánna á c-línu skjá, þá er líkt eftir seinni virkninni.
+Með því að styðja á og halda niðri upp, niður, vinstri og hægri lyklunum eða (EAB) þá munu viðeigandi aðgerðir verða endurteknar.
+
+Venjulega eru eftirfarandi lyklaskipanir á þessum punktaletursskjám:
+|| Nafn | Lykill |
+| v1 | Vinstri fremri lykill |
+| v2 | Vinstri aftari lykill |
+| h1 | Hægri fremri lykill |
+| h2 | Hægri aftari lykill |
+| upp | 1 Stig upp |
+| upp2 | 2 Stig upp |
+| vinstri | 1 Stig vinstri |
+| vinstri2 | 2 Stig vinstri |
+| hægri | 1 Stig hægri |
+| hægri2 | 2 Stig hægri |
+| niður | 1 Stig niður |
+| niður2 | 2 Stig niður |
+
+Eftirfarandi eru Papenmeier skipanir fyrir NVDA:
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | vinstri |
+| Skruna áfram | hægri |
+| Fara í fyrri línu | upp |
+| Fara í næstu línu | niður |
+| Beina í punktaleturs sellu | beining |
+| Tilkynna bókstaf í skoðun | vinstri1 |
+| Virkja leiðsögu hlut sem er í fókus | vinstri2 |
+| Fara í flata skoðun/fókus | hægri1 |
+| Tilkynna titil | vinstri1+upp |
+| Tilkynna stöðurein | vinstri2+niður |
+| Fara í hlutinn | upp2 |
+| Fara í fyrsta hlut í innihaldi | niður2 |
+| Fara í fyrri hlut | vinstri2 |
+| Fara í næsta hlut | hægri2 |
+| Tilkynna stílsnið texta | efri beiningar röð |
+%kc:endInclude
+ 
+++ Papenmeier Braille BRAILLEX Eldri Módel ++
+Eftirfarandi punktaletursskjáir eru studdir:
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+ 
+Athugið að þessa skjái er aðeins hægt að tengja með seríal samskiptatengi.
+Þar af leiðandi ætti að velja tengið sem skjárinn er tengdur við eftir að búið er að skilgreina þennan rekil í Punktaleturs Stillingar skilaboðaglugganum.
+ 
+Sumir af þessum skjám hafa Easy Access Bar (EAB) sem greiðir fyrir skjótri og skilvirkni vinnu hjá notanda.
+EAB er hægt að hreyfa í fjórar áttir þar sem hver átt hefur venjulega tvær virknir.
+Ef stutt er á og haldið niðri upp, niður, hægri og vinstri lyklunum eða (EAB) þá verða samsvarandi aðgerðir endurteknar.
+Eldri tæki hafa ekki EAB; þar eru hnappar framan á skjánum notaðir í staðinn.
+ 
+Venjulega eru eftirfarandi lyklar til reiðu fyrir þessa skjái:
+ 
+|| Nafn | Lykill |
+| vinstri1 | Vinstri fremri lykill |
+| vinstri2 | Vinstri aftari lykill |
+| hægri1 | Hægri fremri lykill |
+| hægri2 | Hægri aftari lykill |
+| upp | 1 Stig upp |
+| upp2 | 2 Stig upp |
+| vinstri | 1 Stig vinstri |
+| vinstri2 | 2 Stig vinstri |
+| hægri | 1 Stig hægri |
+| hægri2 | 2 Stig hægri |	
+| niður | 1 Stig niður |
+| niður2 | 2 Stig niður |
+ 
+Eftirfarandi eru Papenmeier lyklaskipanir fyrir NVDA:
+ 
+%kc:beginInclude
+Skjáir með EAB:
+|| Nafn | Lykill |
+| Skruna til baka | vinstri |
+| Skruna áfram | hægri |
+| Fara í fyrri línu | upp |
+| Fara í næstu línu | niður |
+| Beina í punktaleturs sellu | beining |
+| Tilkynna bókstaf í skoðun | vinstri1 |
+| Virkja leiðsöguhlut sem hefur fókus | vinstri2 |
+| Skipta í flata skoðun / fókus | hægri1 |
+| Tilkynna titil | vinstri1upp |
+| Tilkynna stöðurein | vinstri2niður |
+| Fara í innihald hlutar | upp2 |
+| Fara í fyrsta hlut í innihaldinu | niður2 |
+| Fara í næsta hlut | hægri2 |
+| Fara í fyrri hlut | vinstri2 |
+| Tilkynna stílsnið texta | Efri beiningar rönd |
+
+BRAILLEX Tiny:
+|| Nafn | Lykill |
+| Tilkynna bókstaf í skoðun | vinstri1 |
+| Virkja núverandi leiðsöguhlut | vinstri2 |
+| Skruna til baka | vinstri |
+| Skruna áfram | hægri |
+| Fara í fyrri línu | upp |
+| Fara í næstu línu | niður |
+| Breyta punktaleturs samofið við | hægri2 |
+| Fara í flata skoðun / fókus | hægri1 |
+| Fara í hlut | hægri1+upp |
+| Fara í fyrsta innihald hlutar | hægri1+niður |
+| Fara í fyrri hlut | hægri1+vinstri |
+| Fara í næsta hlut | hægri1+hægri |
+| Tilkynna stílsnið texta | reportf |
+
+BRAILLEX 2D Screen:
+|| Nafn | Lykill |
+| Tilkynna staf í skoðun | vinstri1 |
+| Virkja núverandi leiðsöguhlut | vinstri2 |
+| Breyta punktaletur samofið við | hægri2 |
+| Tilkynna stílsnið texta | reportf |
+| Fara í fyrri línu | upp |
+| Skruna til baka | vinstri |
+| Fara í flata skoðun / fókus | hægri1 |
+| Skruna áfram | hægri |
+| Fara í næstu línu | niður |
+| Fara í næsta hlut | vinstri2 |
+| Fara í hlut | upp2 |
+| Fara í fyrsta innihald hlutar | niður2 |
+| Fara í fyrri hlut | hægri2 |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+NVDA styður BrailleNote vélarnar frá [Humanware http://www.humanware.com] þegar notaðar sem skipanalínu skjástöð fyrir skjálesara.
+Eftirfarandi módel eru studd:
+- BrailleNote Classic (aðeins seríal tenging)
+- BrailleNote PK (Seríal og Blátannar tengingar)
+- BrailleNote MPower (Seríal og Blátannar tengingar)
+- BrailleNote Apex (USB og Blátannar tengingar)
+-
+
+Ef tækið þitt styður fleiri en eina gerð tengingum þá verður að stilla punktaleturs skipanalínutengið þegar tækið er tengt við tölvuna.
+Vinsamlegast ráðfærið ykkur við BrailleNote handbókina.
+Í NVDA gæti einnig verið mögulegt að þurfa að skilgreina tengið í Punktaleturs stillingar skilaboðaglugganum.
+Ef þú tengir með USB eða Blátönn, þá er hægt að stilla tengið á "Sjálfvirkt", "USB" eða "Blátönn", eftir því hvað er í boði.
+Ef tengt er með eldri seríal samskiptatengjum (eða USB í seríal breyti) eða ef enginn af áðurnefndum valkostum er í boði, þá þarf að sérstaklega skilgreina hvaða samskiptatengi á að nota úr listanum yfir vélbúnaðar samskiptatengi.
+
+Áður en þú tengir BrailleNote Apex þá verður fyrst að setja upp reklana sem útbúnir eru af HumanWare.
+
+Eftirfarandi eru BrailleNote lyklaskipanir þegar skjárinn er notaður með NVDA.
+Vinsamlegast ráðfærið ykkur við handbók skjásins til að fá upplýsingar um hvar þessir lyklar eru staðsettir.
+
+%kc:beginInclude
+|| Nafn | Lykill |
+| Skruna til baka | afturábak |
+| Skruna áfram | áfram |
+| Fara í fyrri línu | fyrri |
+| Fara í næstu línu | næsta |
+| Beina í punktaleturs sellu | beining |
+| Breyta punktaletur samofið við | fyrri+næsta |
+| örUpp | bilslá+punktur1 |
+| örNiður | bilslá+punktur4 |
+| örVinstri | bilslá+punktur3 |
+| örHægri | bilslá+punktur6 |
+| síðaUpp | bilslá+punktur1+punktur3 |
+| síðaNiður | bilslá+punktur4+punktur6 |
+| Heim | bilslá+punktur1+punktur2 |
+| Endir | bilslá+punktur4+punktur5 |
+| Kontrol+Heim | bilslá+punktur1+punktur2+punktur3 |
+| Kontrol+Endir | bilslá+punktur4+punktur5+punktur6 |
+| Bilslá | bilslá |
+| Færslulykill | bilslá+punktur8 |
+| Hoplykill | bilslá+punktur7 |
+| Dálklykill | bilslá+punktur2+punktur3+punktur4+punktur5 (bilslá+t) |
+| Shift+Dálklykill | bilslá+punktur1+punktur2+punktur5+punktur6 |
+| Windowslykill | bilslá+punktur2+punktur4+punktur5+punktur6 (bilslá+w) |
+| Altlykill | bilslá+punktur1+punktur3+punktur4 (bilslá+m) |
+| Breyta inntaks hjálp | bislá+punktur1+punktur2+punktur5 (bilslá+h) |
+%kc:endInclude
+
+++ BRLTTY ++
+[BRLTTY http://mielke.cc/brltty/] er sér forrit sem hægt er að nota til að fá stuðning við fleiri punktaletursskjái.
+Til að framkvæma þetta þarf að keyra inn [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+Best er að hlaða niður og keyra inn nýjasta uppsetningarpakkanum, sem mun heita, sem dæmi, brltty-win-4.2-2.exe.
+Þegar skjárinn og tengið eru stillt til, gangið þá úr skugga um að fylgja nákvæmlega leiðbeiningunum, sérstaklega ef nota skal USB skjá og reklarnir fyrir hann eru þegar keyrðir inn.
+
+Fyrir skjái sem hafa punktaleturs lyklaborð, þá sér BRLTTY forritið sjálft um punktaleturs inntakið.
+Þar af leiðandi á punktaleturstafla NVDA ekki við hér.
+
+Eftirfarandi eru lyklaskipanir BRLTTY þegar forritið er keyrt með NVDA.
+Vinsamlegast ráðfærið ykkur við http://mielke.cc/brltty/doc/drivers/] fyrir frekari upplýsingar um hvernig skipanir BRLTTY er stýrt að stjórntækjum á punktaletursskjám.
+%kc:beginInclude
+|| Nafn | BRLTTY skipun |
+| Skruna til baka | fwinlt (til vinstri um einn glugga) |
+| Skruna áfram | fwinrt (til hægri um einn glugga) |
+| Fara í fyrri línu | lnup (upp eina línu) |
+| Fara í næstu línu | lndn (niður eina línu) |
+| Beina í punktaleturs sellu | route (færa bendil að staf) |
+%kc:endInclude
+
++ Þróað Efni +
+
+++ Endurskilgreining á lyklum og aðrar Inntaks Bendingar ++
+Notendur geta breytt skilgreiningum á inntaks bendingum (eins og lykla innslætti) í forskriftum í sérstakri skrá sem er í notendamöppunni í NVDA stillinga möppunni.
+Þessi skrá heitir gestures.ini.
+
+Þessi skrá notar staðlaða ini setningarfræði.
+Þessi skrá getur innihaldið marga hluta og hver hluti getur haft eina eða fleiri færslur.
+
+Hver hluti býður upp á skilgreiningu á forskriftum í ákveðinni Python módúlu og klassa inni í NVDA.
+- Nafn hlutans ætti að vera sama nafn og Python módúlan og klassinn, aðgreint með punkti (.).
+- Lykillinn að hverri færslu er nafnið á forskriftinni þar sem inntaks bendingarnar eru bundnar.
+Einnig er hægt að nota None til að leysa inntaks bendingarnar frá forskriftinni þar sem þær voru áður bundnar.
+Hverja færslu er aðeins hægt að lista einu sinni í hverjum hluta, þmt. None.
+- Færslugildið er kommu (,) aðgreindur listi af inntaks auðkenningum fyrir þær inntaks bendingar sem ættu að vera bundnar.
+Bendinga auðkenningar sem enda á kommu verða að vera í gæsalöppum (" eða ').
+-
+
+Bendinga auðkenningar samanstanda af tveggja stafa kóða; undir-keyrslu, sniði eða ham í sviga; tvípunkti; og svo sérsniðnum streng sem skilgreinir sjálft inntakið, eins og nafn á lykli eða snertingar-bendingum.
+- Fyrir lyklaborðs bendingar, þá er kóðinn kb.
+Hlutinn í svigum er útlitssnið lyklaborðsins og er valfrjálst.
+Ef ekki skilgreint, þá mun bendingin eiga við öll útlitssnið lyklaborða.
+Strengurinn á eftir tvípunktinum er eitt eða fleiri lyklanöfn aðgreind með plús (+) merkinu.
+- Fyrir punktaleturs bendingar, þá er kóðinn br.
+Hlutinn í svigum auðkennir ákveðinn punktaletursskjá og er skylt að skilgreina hann.
+Strengurinn á eftir tvípunktinum inniheldur eitt eða fleiri lyklanöfn aðgreind með plús (+) merkinu.
+- Fyrir snerti-bendingar, þá er kóðinn ts.
+Hlutinn í svigum er snertihamurinn og er valfrjáls.
+Strengurinn á eftir tvípunktinum snerti-bending; sb. double_tap, 2fingerflickUp eða 3finger_tap.
+-
+
+Til að uppgötva fleiri bendinga auðkenningar, forskriftanöfn og klassann og módúluna þar sem þau eru geymd, þá er hægt að:
++ Kveikja á Inntaks Hjálp.
++ Virkja bendinguna (styðja á lykilinn, snerta skjáinn, osfrv.).
++ Slökkva á Inntaks hjálp.
++ Virkja Skoða skráninguna í NVDA Verkfæri valmyndinni.
++ Kanna nýlegar skráningarfærslur.
+Eitthvað af þessu ætti að gefa þér upplýsingar um inntaks bendinguna sem þú framkvæmdir, þar með talið module.class og forskrift ef hún er til staðar í þessu tilfelli.
++
+
+Hér á eftir er dæmi um hvernig þú getur bundið NVDA+shift+t við dagsetningu og tíma forskriftina.
+
+Til að finna rétta forskriftarnafnið og module.class fyrir dagsetningu og tíma, þá þarf að virkja Inntaks Hjálp og styðja á NVDA+f12 (þar sem þetta er núverandi flýtilykill/bending fyrir dagsetningu og tíma forskriftina).
+Þú myndir því næst slökkva á Inntaks Hjálp og skoða færsluskránna.
+
+Neðarlega muntu finna:
+
+```
+INFO - inputCore.InputManager._handleInputHelp (13:17:22):
+Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
+```
+
+Út frá þessu  er að hægt átta sig á að forskriftin heitir dateTime og module.class er globalCommands.GlobalCommands.
+
+Ef skráin er ekki nú þegar til, þá þarf að búa til textaskrá sem heitir gestures.ini og vista hana í notendastillingar möppunni og bæta við eftirfarandi innihaldi:
+
+```
+[globalCommands.GlobalCommands]
+	dateTime = kb:NVDA+shift+t
+```
+
+Þetta mun binda lyklainnsláttinn NVDA+shift+t (í öllum útlitssniðum lyklaborða) við dateTime forskriftina.
+
+Þrátt fyrir þetta mun upphaflegi NVDA+f12 flýtilykilinn samt virka.
+Ef þú vilt fjarlægja þessa bindingu, þá myndirðu bæta við eftirfarandi línu:
+
+```
+	None = kb:NVDA+f12
+```
+
+Þrátt fyrir að hægt sé að láta forskriftir vera bundnar við hvaða lykil seem er, þá getur verið óheppilegt að nota alt lykilinn á lyklaborðinu.
+NVDA sendir samt sem áður breytilykla (eins og shift, kontrol og alt) til stýrikerfisins, þrátt fyrir að þeir eigi að leiða til annarrar skipunar í forskrift.
+Þar af leiðandi, ef þú notar alt í bendingu, þá gæti innsláttur á þessum lykli virkjað valmyndareinina og einnig forskriftina.
+Þess vegna er líklega best að nota bara shift, kontrol og NVDA breytilykilinn sem breytilykla í forskriftum.
+
+++ Þróuð Sérsnið á Framburði Tákna ++
+Það er mögulegt að sérsníða framburð á greinarmerkjum og öðrum táknum, fram yfir það sem er hægt að gera með [Punctuation/symbol pronunciation #SymbolPronunciation] skilaboðaglugganum.
+Sem dæmi, þú getur skilgreint hvort að táknið sé sent beint til talgervilsins (sb. til að framkalla pásu eða breytingu á ítónun) og þú getur einnig bætt við sérsniðnum táknum.
+
+Til að gera þetta, þá þarf að breyta tákna-framburður upplýsingaskránni sem er geymd í notenda stillingamöppunni í NVDA möppunni.
+Skráin heitir symbols-xx.dic, þar sem xx er tungumálakóðinn.
+Stílsniðið á þessari skrá er skilgreint betur í Symbol Pronunciation hlutanum í NVDA Developer Guide, sem hægt er að skoða á [the Development section of the NVDA web site NVDA_URLwiki/Development].
+Aftur á móti er ekki mögulegt fyrir notendur að skilgreina flókin tákn.
+
++ Frekari Upplýsingar +
+Ef þig vantar frekari upplýsingar eða aðstoð vegna NVDA, vinsamlegast skoðið NVDA heimasíðuna NVDA_URL.
+Þar er hægt að finna frekari upplýsingar, sem og tæknilegan stuðning og efni frá samfélagi notenda.
+Þessi vefur hefur einnig að geyma upplýsingar og efni sem varðar þróun NVDA hugbúnaðar.

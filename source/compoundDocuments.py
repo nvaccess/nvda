@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2012 NV Access Limited
+#Copyright (C) 2010-2013 NV Access Limited
 
 import winUser
 import textInfos
@@ -14,6 +14,8 @@ from treeInterceptorHandler import TreeInterceptor
 import speech
 import braille
 from NVDAObjects import behaviors
+import api
+import config
 
 class CompoundTextInfo(textInfos.TextInfo):
 
@@ -405,6 +407,9 @@ class CompoundDocument(EditableText, TreeInterceptor):
 	def event_caret(self, obj, nextHandler):
 		self.detectPossibleSelectionChange()
 		braille.handler.handleCaretMove(self)
+		caret = self.makeTextInfo(textInfos.POSITION_CARET)
+		if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self.rootNVDAObject:
+			api.setReviewPosition(caret)
 
 	def event_gainFocus(self, obj, nextHandler):
 		if not isinstance(obj, behaviors.EditableText):

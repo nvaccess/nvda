@@ -236,6 +236,7 @@ JapaneseInputConversionModeMessages= {
 	11: _("katakana"),
 	# Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 	16: _("half alphanumeric"),
+	# Translators: For Japanese character input: half katakana roman input mode.
 	19: _("half katakana roman"),
 	# Translators: For Japanese character input: alpha numeric (roman/english) mode.
 	24: _("alphanumeric"),

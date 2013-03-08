@@ -17,10 +17,10 @@ NVDA giver blinde og mennesker med nedsat syn mulighed for at få adgang til og 
 
 Af væsentlige funktioner kan nævnes:
 - Understøttelse for populære applikationer som web browsers, email klienter, internet chat programmer og office suites
-- Indbygget talesyntese der understøtter over 43 sprog
+- Indbygget talesyntese der understøtter over 42 sprog
 - Rapportering af tekstuel formatering hvor det er muligt, såsom skrifttype og størrelse, og typografi og stavefejl.
 - Læser automatisk teksten under musen op og kan valgfrit indstille akustisk angivelse af musens position
-- Understøttelse for mange opdaterbare punktdisplays
+- Understøttelse for mange opdaterbare punktdisplays, herunder indtastning af computerbraille for punktdisplays med et punkttastatur
 - Kan køre fra en USB-stik eller andet bærbart medie uden 	installation
 - En talende installation der er let at bruge
 - Oversat til 42 sprog
@@ -227,15 +227,15 @@ Når menuen kommer op, kan du bruge piletasterne til at navigere rundt i menuen,
 
 ++ Grundlæggende tastaturkommandoer ++
 %kc:beginInclude
-| | Navn | Tast | Bevægelse | Beskrivelse |
-| Stop tale | Kontrol | enkelt tryk med to fingre | stopper talen med det samme |
-| Pause Tale | Shift | Ingen | pauser straks tale. ved Tryk på den igen vil talen fortsætte, hvor den slap (hvis pause er understøttet af nuværende talesyntese) |
-| NVDA Menu | NVDA+n | Dobbelttryk med to fingre | Fremkalder NVDA menuen, så du får adgang til indstillinger, værktøjer og hjælp osv. |
-| Skift Tale Tilstand | NVDA+s | ingen | Skifter tale tilstand mellem tale, bip og slår tale fra. |
-| Skift Tastatur Hjælp tilstand | NVDA+1 | ingen | Hvis du trykker på en tast i denne tilstand vil tasten blive oplæst, sammen med den eventuelle NVDA kommando der er tilknyttet tasten |
-| Afslut NVDA | NVDA+q | ingen | Afslutter NVDA |
-| Slip næste tast igennem | NVDA+F2 | ingen | Fortæller NVDA at den næste tast slippes lige igennem til den aktive applikation, selv om det normalt er en NVDA kommando |
-| Slå dvaletilstand til og fra | NVDA+skift+s | ingen | Dvaletilstand deaktivere alle NVDA-kommandoer og tale/punkt output i den aktive applikation. Dette er mest brugbart når du benytter et program der gør brug af egne skærmlæsefunktioner. Tryk kommandoen en gang til for at aktivere dvaletilstand. |
+| | Navn | Skrivebord tast | Laptop tast | Bevægelse | Beskrivelse |
+| Stop tale | Kontrol | kontrol | enkelt tryk med to fingre | stopper talen med det samme |
+| Pause Tale | Shift | Shift | Ingen | pauser straks tale. ved Tryk på den igen vil talen fortsætte, hvor den slap (hvis pause er understøttet af nuværende talesyntese) |
+| NVDA Menu | NVDA+n | NVDA+N | Dobbelttryk med to fingre | Fremkalder NVDA menuen, så du får adgang til indstillinger, værktøjer og hjælp osv. |
+| Skift Tale Tilstand | NVDA+s | NVDA+S | ingen | Skifter tale tilstand mellem tale, bip og slår tale fra. |
+| Skift Tastatur Hjælp tilstand | NVDA+1 | NVDA+1 | ingen | Hvis du trykker på en tast i denne tilstand vil tasten blive oplæst, sammen med den eventuelle NVDA kommando der er tilknyttet tasten |
+| Afslut NVDA | NVDA+q | NVDA+Q | ingen | Afslutter NVDA |
+| Slip næste tast igennem | NVDA+F2 | NVDA+F2 | ingen | Fortæller NVDA at den næste tast slippes lige igennem til den aktive applikation, selv om det normalt er en NVDA kommando |
+| Slå dvaletilstand til og fra | NVDA+skift+s | NVDA+Skift+Z | ingen | Dvaletilstand deaktivere alle NVDA-kommandoer og tale/punkt output i den aktive applikation. Dette er mest brugbart når du benytter et program der gør brug af egne skærmlæsefunktioner. Tryk kommandoen en gang til for at aktivere dvaletilstand. |
 %kc:endInclude
 
 ++ Rapportering af Systeminformationer ++
@@ -258,15 +258,15 @@ Systemfokus, også bare kendt som fokus, er [objektet #Objects] der modtager tas
 For eksempel, hvis du skriver i et redigerbart teksfelt har tekstfeltet fokus.
 
 Den mest almindelige måde at navigere rundt med NVDA i Windows er simpelthen ved at bevæge sig rundt med de almindelige Windows-tastatur kommandoer, såsom at trykke på Tab og Skift + TAB for at flytte frem og tilbage mellem kontrol elementerne og trykke ALT for at komme til menulinjen og derefter bruge pilene til at navigere i menuer, og ved hjælp af ALT + TAB for at flytte mellem kørende programmer.
-Dette flytter systemfokus dvs. det objekt, der tager imod det, du indtaster på tastaturet. Mens du gør dette, vil NVDA informere dig om oplysninger om objektet som har fokus såsom dets navn, type, værdi, tilstand, beskrivelse, tastatur genvej og positionelle oplysninger. 
+Mens du gør dette, vil NVDA informere dig om oplysninger om objektet som har fokus såsom dets navn, type, værdi, tilstand, beskrivelse, tastatur genvej og positionelle oplysninger. 
 
 Der er nogle nyttige kommandoer,, når du flytter fokus rundt i systemet:
 %kc:beginInclude
-| | Navn | Tast | Beskrivelse |
-| Annoncér aktuelt fokus | NVDA+Tab | annoncerer det aktuelle objekt eller kontrol, der er i fokus. ved at Trykke to gange vil oplysningerne blive stavet |
-| Annoncér titel | NVDA+t | annoncerer titlen på det aktuelle aktive vindue. Ved at trykke to gange vil oplysningerne blive stavet. Ved at trykke tre gange vil oplysningerne blive kopieret til udklips holderen |
-| Læs aktiv vindue | NVDA+b | læser alle kontrolelementerne i det aktive vindue (nyttigt  i dialogbokse) |
-| Annoncér statuslinje | NVDA+end | Annoncerer statuslinjen hvis NVDA finder den. Dette flytter også navigatorobjektet til denne position |
+| | Navn | Skrivebord tast | Laptop tast | Beskrivelse |
+| Annoncér aktuelt fokus | NVDA+Tab | NVDA+Tab | annoncerer det aktuelle objekt eller kontrol, der er i fokus. ved at Trykke to gange vil oplysningerne blive stavet |
+| Annoncér titel | NVDA+t | NVDA+T | annoncerer titlen på det aktuelle aktive vindue. Ved at trykke to gange vil oplysningerne blive stavet. Ved at trykke tre gange vil oplysningerne blive kopieret til udklips holderen |
+| Læs aktiv vindue | NVDA+b | NVDA+B | læser alle kontrolelementerne i det aktive vindue (nyttigt  i dialogbokse) |
+| Annoncér statuslinje | NVDA+end | NVDA+Shift+End | Annoncerer statuslinjen hvis NVDA finder den. Dette flytter også navigatorobjektet til denne position |
 %kc:endInclude
 
 ++ Navigering med systemmarkøren ++[SystemCaret]
@@ -278,10 +278,10 @@ NVDA vil annoncere mens du bevæger dig imellem tegn, ord og linie, og vilogså 
 
 Følgende taste kommandoer kan bruges i forbindelse med systemmarkøren:
 %kc:beginInclude
-| | Navn | Tast | Beskrivelse |
-| Læs alt | NVDA+pil ned | Starter læsningen fra markørens nuværende position og flytter markøren med ned i teksten |
-| Læs den nuværende linje | NVDA+pil op | Læser den linje, hvor markøren for øjeblikket befinder sig. Ved at trykke to gange vil linien blive stavet. |
-| Læs nuværende tekstmarkering | NVDA+Skift+pil op | Læser den tekst der pt. er markeret |
+| | Navn | Skrivebord Tast | Laptop tast | Beskrivelse |
+| Læs alt | NVDA+pil ned | NVDA+A | Starter læsningen fra markørens nuværende position og flytter markøren med ned i teksten |
+| Læs den nuværende linje | NVDA+pil op | NVDA+L | Læser den linje, hvor markøren for øjeblikket befinder sig. Ved at trykke to gange vil linien blive stavet. |
+| Læs nuværende tekstmarkering | NVDA+Skift+pil op | NVDA+Skift+S | Læser den tekst der pt. er markeret |
 
 
 Når man er i en tabel, er følgende kommandoer også tilgængelige:
@@ -321,11 +321,11 @@ For at navigere imellem objekter, skal du benytte følgende kommandoer:
 
 %kc:beginInclude
 | | Navn | Desktop Tast | Laptop tast | Bevægelse | Beskrivelse |
-| Annoncér det aktuelle objekt | NVDA+numpad5 | NVDA+kontrol+i | Ingen | Rapporterer det nuværende navigator objekt. Ved at Trykke to gange bliver oplysningerne stavet. |
-| Naviger til overordnede objekt | NVDA+numpad8 | NVDA+skift+i | ingen | Navigerer til det overordnede (container) objekt i forhold til det aktuelle navigator objekt |
-| Naviger til forrige objekt | NVDA+numpad4 | NVDA+kontrol+j | Svirp til venstre | Navigerer til objektet lige før det nuværende navigator objekt |
-| Naviger til næste objekt | NVDA+numpad6 | kontrol+NVDA+l | Svirp til højre | Navigerer til det objekt der findes efter det nuværende navigator objekt |
-| Gå til første barneobjekt | NVDA+numpad2 | NVDA+skift +komma | svirp ned (teksttilstand) | Navigerer til det første barn der indgår i det nuværende navigator objekt |
+| Annoncér det aktuelle objekt | NVDA+numpad5 | NVDA+skift+o | Ingen | Rapporterer det nuværende navigator objekt. Ved at Trykke to gange bliver oplysningerne stavet. Ved at trykke tre gange kopieres navn og værdi til udklipsholderen. |
+| Naviger til overordnede objekt | NVDA+numpad8 | NVDA+skift+pil op | ingen | Navigerer til det overordnede (container) objekt i forhold til det aktuelle navigator objekt |
+| Naviger til forrige objekt | NVDA+numpad4 | NVDA+skift+venstre pil | Svirp til venstre | Navigerer til objektet lige før det nuværende navigator objekt |
+| Naviger til næste objekt | NVDA+numpad6 | NVDA+shift+højre pil | Svirp til højre | Navigerer til det objekt der findes efter det nuværende navigator objekt |
+| Gå til første barneobjekt | NVDA+numpad2 | NVDA+skift+pil ned | svirp ned (teksttilstand) | Navigerer til det første barn der indgår i det nuværende navigator objekt |
 | Naviger til det objekt der er i fokus | NVDA+numpadMinus | NVDA+Backspace | ingen | Navigerer til det objekt, der i øjeblikket er i fokus, og placere den ubegrænsede markør ved systemets markør, hvis den er synlig |
 | Aktiver nuværende navigator objekt | NVDA+numpadEnter | NVDA+enter | dobbelttryk | Aktiverer det nuværende navigator objekt (svarende til at klikke med musen eller trykke på mellemrums tasten, når det er i fokus) |
 | Flyt System fokus til det nuværende navigator objekt | NVDA+skift+numpadMinus | NVDA+skift+Backspace | ingen | Flytter System fokus til det nuværende navigator objekt, hvis det er muligt |
@@ -349,20 +349,20 @@ Hvis du derimod ønsker at punkt skal følge objekt navigation og tekstgennemsyn
 Følgende tastekommandoer er tilgængelige for gennemgang af tekst:
 %kc:beginInclude
 || Navn | Desktoptast | Laptoptast | Bevægelse | Beskrivelse |
-| flyt den ubegrænsede markør til øverste linje   | skift+numpad7 | NVDA+7 | ingen | Flytter den ubegrænsede markør til den første linje i teksten |
-| flyt den ubegrænsede markør til forrige linje   | numpad7 | NVDA+u | Svirp op (teksttilstand) | Flytter den ubegrænsede markør til den forrige linje i teksten |
-| oplæs nuværende linje hvor den ubegrænset markør er placeret | numpad8 | NVDA+i | Ingen | Annoncerer den linje i teksten, hvor den ubegrænsede markør er placeret. Ved at trykke to gange vil teksten blive stavet |
-| Flyt den ubegrænsede markør til næste linje i teksten | numpad9 | NVDA+o | Svirp ned (teksttilstand) | Flytter den den ubegrænsede markør til næste linje med tekst |
-| Flyt den ubegrænsede markør til den sidste linie i teksten | skift+numpad9 | NVDA+9 | ingen | Flytter den ubegrænsede markør til den nederste linje i teksten |
-| Flyt den ubegrænsede markør til det forrige ord i teksten | numpad4 | NVDA+j | Svirp til venstre med to fingre | Flytter den ubegrænsede markør til det forrige ord i teksten |
-| oplæs det aktuelle ord hvor den ubegrænsede markør er placeret | numpad5 | NVDA+k | ingen | annoncerer nuværende ord i teksten, hvor den ubegrænsede markør er placeret. Ved at trykke to gange bliver ordet stavet. |
-| Flyt den ubegrænsede markør til næste ord i teksten | numpad6 | NVDA+l | Svirp til højre med to fingre (teksttilstand) | Flyt den ubegrænsede markør til det næste ord i teksten |
-| Gå til starten af linjen i teksten | skift+numpad1 | NVDA+skift+u | ingen | Flytter den ubegrænsede markør til starten af den aktuelle linje i teksten |
-| Flyt den ubegrænsede markør til forrige tegn i teksten | numpad1 | NVDA+m | Svirp til venstre (teksttilstand) | Flytter den ubegrænsede markør til det forrige tegn på den aktuelle linje i teksten |
+| flyt den ubegrænsede markør til øverste linje   | skift+numpad7 | NVDA+kontrol+hjem | ingen | Flytter den ubegrænsede markør til den første linje i teksten |
+| flyt den ubegrænsede markør til forrige linje   | numpad7 | NVDA+pil op | Svirp op (teksttilstand) | Flytter den ubegrænsede markør til den forrige linje i teksten |
+| oplæs nuværende linje hvor den ubegrænset markør er placeret | numpad8 | NVDA+skift+. | Ingen | Annoncerer den linje i teksten, hvor den ubegrænsede markør er placeret. Ved at trykke to gange vil teksten blive stavet |
+| Flyt den ubegrænsede markør til næste linje i teksten | numpad9 | NVDA+pil ned | Svirp ned (teksttilstand) | Flytter den den ubegrænsede markør til næste linje med tekst |
+| Flyt den ubegrænsede markør til den sidste linie i teksten | skift+numpad9 | NVDA+kontrol+end | ingen | Flytter den ubegrænsede markør til den nederste linje i teksten |
+| Flyt den ubegrænsede markør til det forrige ord i teksten | numpad4 | NVDA+kontrol+venstre pil | Svirp til venstre med to fingre | Flytter den ubegrænsede markør til det forrige ord i teksten |
+| oplæs det aktuelle ord hvor den ubegrænsede markør er placeret | numpad5 | NVDA+kontrol+. | ingen | annoncerer nuværende ord i teksten, hvor den ubegrænsede markør er placeret. Ved at trykke to gange bliver ordet stavet. |
+| Flyt den ubegrænsede markør til næste ord i teksten | numpad6 | NVDA+kontrol+venstre pil | Svirp til højre med to fingre (teksttilstand) | Flyt den ubegrænsede markør til det næste ord i teksten |
+| Gå til starten af linjen i teksten | skift+numpad1 | NVDA+hjem | ingen | Flytter den ubegrænsede markør til starten af den aktuelle linje i teksten |
+| Flyt den ubegrænsede markør til forrige tegn i teksten | numpad1 | NVDA+venstre pil | Svirp til venstre (teksttilstand) | Flytter den ubegrænsede markør til det forrige tegn på den aktuelle linje i teksten |
 | oplæs det aktuelle tegn hvor den ubegrænsede markør er placeret | numpad2 | NVDA+komma | ingen | Annoncerer det aktuelle tegn på den tekstlinje, hvor den ubegrænsede markør er placeret. Ved at trykke to gange bliver tegnet oplæst som en numerisk værdi og hexadecimalt. |
-| Flyt den ubegrænsede markør til næste tegn i teksten | numpad3 | NVDA+prik | Svirp til højre (teksttilstand) | Flyt den ubegrænsede markør til det næste tegn på den aktuelle linie med tekst |
-| Flyt den ubegrænsede markør til slutningen af linjen i teksten | skift+numpad3 | NVDA+skift+o | Ingen | Flytter den ubegrænsede markør til slutningen af den aktuelle linje med tekst |
-| oplæs alt tekst fra den ubegrænsede markørs position | numpadPlus | NVDA+skift+pil ned | Svirp ned med tre fingre (teksttilstand) | Læser fra den ubegrænsede markørs aktuelle position, samtidig med at den ubegrænsede markør flytter med |
+| Flyt den ubegrænsede markør til næste tegn i teksten | numpad3 | NVDA+højre pil | Svirp til højre (teksttilstand) | Flyt den ubegrænsede markør til det næste tegn på den aktuelle linie med tekst |
+| Flyt den ubegrænsede markør til slutningen af linjen i teksten | skift+numpad3 | NVDA+end | Ingen | Flytter den ubegrænsede markør til slutningen af den aktuelle linje med tekst |
+| oplæs alt tekst fra den ubegrænsede markørs position | numpadPlus | NVDA+skift+A | Svirp ned med tre fingre (teksttilstand) | Læser fra den ubegrænsede markørs aktuelle position, samtidig med at den ubegrænsede markør flytter med |
 | Kopier fra den ubegrænsede markør | NVDA+f9 | NVDA+f9 | ingen | Begynder at kopiere tekst fra den ubegrænsede markørs position. Den faktiske kopiering får ikke virkning, før du fortæller NVDA hvor du skal kopiere til |
 | Kopier til den ubegrænset markør | NVDA+F10 | NVDA+F10 | ingen | Kopierer fra den position hvor du før startede kopieringen fra den ubegrænsede markør med NVDA + f9   og så til den nuværende position af den ubegrænsede markør. Efter der er trykket på denne tast, vil teksten blive kopieret til Windows Udklipsholder |
 | Annoncér tekstformatering | NVDA+f | NVDA+f | ingen | Annoncerer formateringsoplysninger af den tekst hvor den ubegrænsede markør har fokus |
@@ -415,12 +415,12 @@ Hvis man ønsker at drage fordel af dem, kan de konfigureres fra Muse indstillin
 Selv om en fysisk mus eller pegefelt skal bruges til at navigere med musen, har NVDA  et par vigtige kommandoer relateret til musen:
 %kc:beginInclude
 | | Navn | Desktop tast | Laptop tast | Beskrivelse |
-| Venstre museknap | numpadDivision | NVDA+Venstre pil | Simulere et enkelt venstre museklik. et dobbeltklik kan udføres ved at trykke på denne tast to gange hurtigt efter hinanden |
-| Låse Venstre museknap | skift+numpadDivision | NVDA+skift+venstre pil | Låser den venstre museknap. Tryk igen for at frigive den. for At trække musen, skal du trykke på denne tast for at låse den venstre museknap nede og derefter flytte musen enten fysisk eller ved at bruge en af de andre muse flytte kommandoer |
-| Højre klik med musen | numpadMultiplicer | NVDA+højre pil | Simulere et enkelt højre museklik. |
-| Lås Højre museknap | skift+numpadMultiplicer | NVDA+skift+højre pil | Låse højre museknap. Tryk igen for at frigive den. for At trække musen, skal du trykke på denne tast for at låse højre knap og derefter flytte musen enten fysisk eller brug en af de andre muse flytte kommandoer |
-| Flyt musen til det nuværende navigator objekt | NVDA+numpadDivision | NVDA+skift+f9 | Flytter musen til placeringen af det nuværende navigator objekt og ubegrænset markør |
-| Naviger til objektet under musen | NVDA+numpadMultiplicer | NVDA+skift+F10 | Placer navigator objektet til objektet ved musens position |
+| Venstre museknap | numpadDivision | NVDA+[ | Simulere et enkelt venstre museklik. et dobbeltklik kan udføres ved at trykke på denne tast to gange hurtigt efter hinanden |
+| Låse Venstre museknap | skift+numpadDivision | NVDA+kontrol+[ | Låser den venstre museknap. Tryk igen for at frigive den. for At trække musen, skal du trykke på denne tast for at låse den venstre museknap nede og derefter flytte musen enten fysisk eller ved at bruge en af de andre muse flytte kommandoer |
+| Højre klik med musen | numpadMultiplicer | NVDA+] | Simulere et enkelt højre museklik. |
+| Lås Højre museknap | skift+numpadMultiplicer | NVDA+kontrol+] | Låse højre museknap. Tryk igen for at frigive den. for At trække musen, skal du trykke på denne tast for at låse højre knap og derefter flytte musen enten fysisk eller brug en af de andre muse flytte kommandoer |
+| Flyt musen til det nuværende navigator objekt | NVDA+numpadDivision | NVDA+skift+M | Flytter musen til placeringen af det nuværende navigator objekt og ubegrænset markør |
+| Naviger til objektet under musen | NVDA+numpadMultiplicer | NVDA+skift+n | Placer navigator objektet til objektet ved musens position |
 %kc:endInclude
 
 + Gennemsynstilstand +
@@ -678,10 +678,10 @@ Hvis du har problemer med udtalen af diverse bogstaver kan du forsøge at deakti
 Hvis du hurtigt ønsker at ændre taleindstillingerne uden først at skulle åbne dialogboksen med stemmeindstillingerne, findes en række NVDA tastaturkommandoer, der giver mulighed for at flytte mellem de mest almindelige indstillinger for talesyntesen fra et hvilket som helst sted, hvis blot NVDA kører:
 %kc:beginInclude
 || Navn | Desktop tast | Laptop tast | Beskrivelse |
-| Flyt til næste talesynteseindstilling | NVDA+kontrol+ højre pil | NVDA+kontrol+højre pil | Flytter til den næste tilgængeligetalesyntese-indstilling før den aktuelle og folder rundt til den første indstilling efter den sidste |
-| Flyt til forrige talesynteseindstilling | NVDA+kontrol+venstre pil | NVDA+kontrol+venstre pil | Flytter til den forrige tilgængeligetalesyntese-indstilling før den aktuelle og folder rundt til den sidste indstilling efter den første |
-| Forøg aktuelle synteseindstilling | NVDA+kontrol+pil op | NVDA+kontrol+pil op | Forøger den synteseindstilling, som du i øjeblikket er ved at ændre fx forøger hastigheden, vælger den næste stemme, forøger lydstyrken |
-| Formindsk aktuelle synteseindstilling | NVDA+kontrol+pil ned | NVDA+kontrol+pil ned | Formindsker den synteseindstilling, som du i øjeblikket er ved at ændre fx formindsker hastigheden, vælger den forrige stemme, formindsker lydstyrken |
+| Flyt til næste talesynteseindstilling | NVDA+kontrol+ højre pil | NVDA+skift+kontrol+højre pil | Flytter til den næste tilgængeligetalesyntese-indstilling før den aktuelle og folder rundt til den første indstilling efter den sidste |
+| Flyt til forrige talesynteseindstilling | NVDA+kontrol+venstre pil | NVDA+skift+kontrol+venstre pil | Flytter til den forrige tilgængeligetalesyntese-indstilling før den aktuelle og folder rundt til den sidste indstilling efter den første |
+| Forøg aktuelle synteseindstilling | NVDA+kontrol+pil op | NVDA+skift+kontrol+pil op | Forøger den synteseindstilling, som du i øjeblikket er ved at ændre fx forøger hastigheden, vælger den næste stemme, forøger lydstyrken |
+| Formindsk aktuelle synteseindstilling | NVDA+kontrol+pil ned | NVDA+skift+kontrol+pil ned | Formindsker den synteseindstilling, som du i øjeblikket er ved at ændre fx formindsker hastigheden, vælger den forrige stemme, formindsker lydstyrken |
 %kc:endInclude
 
 +++ Punkt-indstillinger +++
@@ -708,9 +708,20 @@ Denne indstilling er ikke tilgængelig, hvis dit display kun understøtter autom
 
 Læs dokumentationen for dit punktdisplay i afsnittet [Understøttede punktdisplays #SupportedBrailleDisplays] for at læse om de mulige tilkoblingsmuligheder og tilgængelige porte.
 
-==== Oversættelsestabel ====
-Den næste valgmulighed, du kommer til i denne dialogboks, er komboboksen Punkttabel.
-I denne komboboks finder du punkttabeller for en lang række sprog. Med piletasterne flytter du fra den ene punkttabel til den næste på listen.
+==== Output tabel ====
+Den næste valgmulighed, du kommer til i denne dialogboks, er komboboksen output tabel.
+I denne komboboks finder du punkttabeller for en lang række sprog,  uforkortet samt forkortet punkt.
+Den valgte tabel vil blive brugt til at oversætte punkt på dit punktdisplay.
+Med piletasterne flytter du fra den ene punkttabel til den næste på listen.
+
+==== Input tabel ====
+Den næste valgmulighed er komboboksen input tabel.
+Den valgte tabel vil benyttes til at oversatte den indtastede tekst skrevet på dit Perkins punkttastatur.
+NVDA understøtter på nuværende tidspunkt kun 8-punkt computerbraille, så kun disse tabeller vises.
+Du kan flytte mellem de forskellige tabeller ved brug af piletasterne.
+
+Bemærk, at denne indstilling kun er nyttig, hvis dit punktdisplay har et Perkins punkttastatur og funktionen er understøttet af driveren.
+Hvis input ikke er understøttet af et punktdisplay med tilhørende tastatur, vil dette være noteret i kapitlet [Understøttede Punktdisplays #SupportedBrailleDisplays]
 
 ==== Udvid ordet ved markøren til computer-braille ====
 Denne valgmulighed tillader ordet under cursoren at blive vist i uforkortet computerbraille.
@@ -762,6 +773,12 @@ Tast: NVDA+3
 
 Når denne funktion er slået til, oplæser NVDA alle de ord, du skriver på tastaturet.
 
+==== Afbryd tale når tegn indtastes
+Hvis denne indstilling er slået til, vil talen afbrydes hver gang et tegn indtastes. Denne indstilling er som standard slået til.
+
+==== Afbryd tale når Enter-tast trykkes
+Hvis denne indstilling er slået til, vil talen afbrydes hver gang Enter-tasten er trykket. Denne indstilling er som standard slået til.
+
 ==== Bip hvis der skrives med små bogstaver når Caps Lock er slået til ====
 Når denne indstilling er valgt, vil du høre et advarende bip, hvis et bogstav er indtastet med skift-tasten når Caps Lock er slået til.
 Indtastning af bogstaver med skift tasten holdt nede når Caps Lock er slået til er generelt utilsigtet, og er som sædvanligt fordi man ikke har indset, at Caps Lock er slået til.
@@ -783,8 +800,7 @@ I Windows ændrer musemarkøren form for at videregive visse typer af informatio
 
 %kc:setting
 ==== Slå musefølgning til  ====
-| Desktop Tast | NVDA+m |
-| Laptop key | NVDA+shift+m |
+Tast: NVDA+m |
 
 Når denne funktion er slået til, oplæser NVDA den tekst, der i øjeblikket befinder sig under musemarkøren i takt med, at musemarkøren flyttes rundt på skærmen. Det giver mulighed for at finde ting på skærmen ved fysisk at bevæge musen, i stedet for at lede efter dem ved hjælp af objektnavigation.
 
@@ -808,8 +824,7 @@ Denne dialogboks indeholder følgende valgmuligheder :
 
 %kc:setting
 ==== Følg systemfokus  ====
-| Desktop tast | NVDA+7 |
-| Laptop tast | NVDA+kontrol+7 |
+Tast: NVDA+7 |
 
 Når denne funktion er slået til, placeres den ubegrænsede markør altid i samme objekt som det aktuelle systemfokus, når det ændrer sig.
 
@@ -854,8 +869,7 @@ Afkryds denne tjekboks, hvis du ikke føler det nødvendigt at høre beskrivelse
 
 %kc:setting
 ==== Output for behandlingslinje  ====
-| Desktop tast | NVDA+u |
-| Laptop tast | NVDA+control+f2 |
+Tast: NVDA+u |
 
 Denne indstilling bestemmer, hvordan NVDA annoncerer opdateringer af behandlingslinjer.
 
@@ -1215,6 +1229,9 @@ Der er understøttelse for både ALVA BC640 og BC680 punktdisplays fra [Optelec 
 Der kræves ingen særskilte drivere installeret for at bruge disse displays.
 Sæt blot displayet til computeren og indstil NVDA til at bruge det.
 
+Selv om disse punktdisplays har et tastatur, håndtere de selv oversættelsen fra punkt til tekst.
+Derfor er NVDAs punkt input indstilling ikke relevant.
+
 Dette er tastekombinationerne til dette display til brug af NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
@@ -1242,6 +1259,8 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 ++ Handy Tech Displays ++
 NVDA understøtter alle displays fra [Handy Tech http://www.handytech.de/] når displayet er forbundet via USB eller Bluetooth.
 Ældre punktdisplays kræver, at du installerer USB-driveren fra handy Tech på computeren.
+
+Punkt input er endnu ikke understøttet.
 
 Dette er tastekombinationerne til dette display til brug af NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
@@ -1382,6 +1401,8 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 NVDA understøtter Braille Sense og Braille EDGE displays fra [Hims http://www.hims-inc.com/] hvis disse displays kobles til med USB eller Bluetooth. 
 Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra HIMS på dit system.
 
+Braille input er endnu ikke understøttet.
+
 Dette er tastekombinationerne til dette display til brug af NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
@@ -1484,33 +1505,33 @@ Hvis BrxCom er installeret, vil NVDA benytte BrxCom.
 BrxCom er et værktøj der giver dig mulighed for, at bruge punktdisplayet uafhængigt af en skærmlæser.
 En ny version af BrxCom der virker med NVDA bliver snart udgivet af Papenmeier.  
 
-De fleste enheder har en Let Adgang bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
+De fleste enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
 EAB kan bevæge sig i fire retninger, hvor der generelt er to tilhørende stillinger.
 C-serien er den eneste undtagelse.
 
 C-serien samt nogle andre displays har to rækker med markøranføringsknapper, hvor den øvester række bruges til at rapportere formateringsinformation.
 Hvis du holder en af de øverste  Markøranføringsknapper og trykker på EAB på C-serien, vil enheden emulere handlingen for den anden stilling.
-Hvis du trykker og holder på piletasterne op, ned, højre og venstre, samt EAB, vil den tilsvarende handling gentages.
+Hvis du trykker og holder på piletasterne op, ned, højre og venstre (eller EAB) vil den tilsvarende handling gentages.
 
 De følgende taster er generelt tilgængelige på disse punktdisplays:
 || Navn | Tast |
-| l1 | Left front Tast |
-| l2 | Left rear Tast |
-| r1 | Right front Tast |
-| r2 | Right rear Tast |
-| up | 1 Step up |
-| up2 | 2 Steps up |
-| left | 1 Step left |
-| left2 | 2 Steps left |
-| right | 1 Step right |
-| right2 | 2 Steps right |
-| dn | 1 Step down |
-| dn2 | 2 Steps down |
+| l1 | Venstre front Tast |
+| l2 | Venstre tast bag |
+| r1 | Højre front Tast |
+| r2 | Højre Tast bag |
+| op | 1 trin op|
+| op2 | To trin op |
+| Venstre | 1 trin til højre |
+| venstre2 | 2 trin til venstre |
+| Højre | 1 Trin til højre |
+| Venstre2 | 2 trin til højre |
+| ned | 1 trin ned |
+| Ned2 | 2 trin ned |
 
 Papenmeier kommandoer til NVDA er som følgende:
 %kc:beginInclude
 || Navn | Tast |
-| Rul punktdisplay tilbage | left |
+| Rul punktdisplay tilbage | venstre |
 | Rul punktdisplay fremad | højre |
 | Flyt punktdisplay to forrige linje | op |
 | Flyt punktdisplay til næste linje | ned |
@@ -1519,12 +1540,96 @@ Papenmeier kommandoer til NVDA er som følgende:
 | Aktiver det aktuelle navigatorobjekt | l2 |
 | Flyt til flad visning/fokus | r1 |
 | Rapportér titel | l1+up |
-| Rapportër statuslinje | l2+down |
+| Rapportër statuslinje | l2+ned |
 | Flyt til overordnet objekt | op2 |
 | Flyt til første underordnet objekt | ned2 |
-| Move to previous object | venstre2 |
-| Move to next object | højre2 |
+| Flyt til forrige objekt | venstre2 |
+| Flyt til næste objekt | højre2 |
 | Rapportér tekstformatering | øverste markøranføringsknapper |
+%kc:endInclude
+
+++ Papenmeier Braille BRAILLEX Ældre Modeller ++
+Følgende punktdisplays er understøttede: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Bemærk, at disse punktdisplays kun kan opkobles med en serielport.
+Derfor er det nødvendigt at vælge porten, du har koblet dit punktdisplay til, når du har valgt dit punktdisplay. Dette kan indstilles i dialogen Braille-indstillinger.
+
+Nogle enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
+EAB kan bevæge sig i fire retninger, hvor der generelt er to tilhørende stillinger.
+Hvis du trykker og holder på piletasterne op, ned, højre og venstre (eller EAB) vil den tilsvarende handling gentages.
+Ældre enheder har ikke en AEB; front taster er brugt i stedet.
+
+Følgende taster er generelt tilgængelige på disse punktdisplays:
+
+|| Navn | Tast |
+| l1 | Venstre front tast |
+| l2 | Venstre tast bag |
+| r1 | Højre front tast |
+| r2 | Højre tast bag |
+| op | 1 trin op |
+| op2 | 2 trin op |
+| venstre | 1 trin venstre |
+| venstre2 | 2 trin venstre |
+| højre | 1 trin til højre |
+| højre2 | 2 trin til højre |
+| ned | 1 trin ned |
+| ned2 | 2 trin ned |
+
+Papenmeier kommandoer til NVDA er som følgende:
+
+%kc:beginInclude
+Enheder med EAB:
+|| Navn | Tast |
+| Rul punktdisplay tilbage | venstre |
+| Rul punktdisplay fremad | højre |
+| Flyt punktdisplay to forrige linje | op |
+| Flyt punktdisplay til næste linje | ned |
+| Flyt til punktcelle | Markøranføringsknapper |
+| Rapportér aktuelt tegn ved ubegrænset markør | l1 |
+| Aktiver det aktuelle navigatorobjekt | l2 |
+| Flyt til flad visning/fokus | r1 |
+| Rapportér titel | l1+up |
+| Rapportër statuslinje | l2+ned |
+| Flyt til overordnet objekt | op2 |
+| Flyt til første underordnet objekt | ned2 |
+| Flyt til næste objekt | højre2 |
+| Flyt til forrige objekt | venstre2 |
+| Rapportér tekstformatering | øverste markøranføringsknapper |
+
+BRAILLEX Tiny:
+|| Navn | Tast |
+| Rapportér aktuelt tegn ved ubegrænset markør | l1 |
+| Aktiver det aktuelle navigatorobjekt | l2 |
+| Rul punktdisplay tilbage | venstre |
+| Rul punktdisplay fremad | højre |
+| Flyt punktdisplay to forrige linje | op |
+| Flyt punktdisplay til næste linje | ned |
+| Skift punkt tøjret til indstilling | r2 |
+| Skift til flad visning / fokus | r1 |
+| Flyt til overordnet objekt | R1+op |
+| Flyt til første underordnet objekt | R1+ned |
+| Flyt til forrige objekt | R1+venstre |
+| Flyt til næste objekt | R1+højre |
+| Rapportér tekstformatering | reportf |
+
+BRAILLEX 2D Screen:
+|| Navn | Tast |
+| Rapportér aktuelt tegn ved ubegrænset markør | l1 |
+| Aktiver det aktuelle navigatorobjekt | l2 |
+| Skift punkt tøjret til indstilling | r2 |
+| Rapportér tekstformatering | reportf |
+| Flyt punktdisplay to forrige linje | op |
+| Rul punktdisplay tilbage | venstre |
+| Skift til flad visning / fokus | r1 |
+| Rul punktdisplay fremad | højre |
+| Flyt punktdisplay til næste linje | ned |
+| Flyt til næste objekt | Venstre2 |
+| Flyt til overordnet objekt | Op2 |
+| Flyt til første underordnet objekt | Ned2 |
+| Flyt til forrige objekt | Højre2 |
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++
@@ -1580,6 +1685,9 @@ Se venligst dokumentationen til din BrailleNote for at finde ud af, hvor du kan 
 For at kunne bruge det, skal programmet [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 Det anbefales, at du henter og installerer den seneste installationspakke, som f.eks. kan have navnet brltty-win-4.2-2.exe.
 Under konfigurationen af displayet og den port, der skal bruges, skal du følge instruktionerne nøje, især hvis du benytter et USB-display og allerede har installeret producentens drivere.
+
+BRLTTY håndtere selv braille input, hvis det tilkoblede punktdisplay har et punkttastatur.
+Braille input indstillingen er ikke relevant.
 
 Dette er tastekombinationerne til BRLTTY til brug af NVDA.
 Se venligst [BRLTTY dokumentationen for tastekombinationer http://mielke.cc/brltty/doc/drivers/] for yderliger information om, hvordan BRLTTY kommandoer er indstillet til kontroller på diverse punktdisplays.

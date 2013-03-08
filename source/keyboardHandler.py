@@ -236,7 +236,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	#: All possible keyboard layouts, where layout names are mapped to localised layout names.
 	#: @type: dict
 	LAYOUTS = {
+		# Translators: One of the keyboard layouts for NVDA.
 		"desktop": _("desktop"),
+		# Translators: One of the keyboard layouts for NVDA.
 		"laptop": _("laptop"),
 	}
 
@@ -338,6 +340,10 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if inputCore.manager.isInputHelpActive:
 			return self.SPEECHEFFECT_CANCEL
 		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
+			return None
+		if not config.conf['keyboard']['speechInterruptForCharacters'] and (not self.shouldReportAsCommand or self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT)):
+			return None
+		if self.vkCode==winUser.VK_RETURN and not config.conf['keyboard']['speechInterruptForEnter']:
 			return None
 		if self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT):
 			return self.SPEECHEFFECT_RESUME if speech.isPaused else self.SPEECHEFFECT_PAUSE
