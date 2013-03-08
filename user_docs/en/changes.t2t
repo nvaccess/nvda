@@ -81,6 +81,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - Braille input from braille keyboards is now supported. (#808)
  - Braille input is encompassed by the brailleInput.BrailleInputGesture class or a subclass thereof.
  - Subclasses of braille.BrailleDisplayGesture (as implemented in braille display drivers) can also inherit from brailleInput.BrailleInputGesture. This allows display commands and braille input to be handled by the same gesture class.
+- You can now use comHelper.getActiveObject to get an active COM object from a normal process when NVDA is running with the UIAccess privilege. (#2483)
 
 
 = 2012.3 =
