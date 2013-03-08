@@ -67,11 +67,11 @@ NVDA on ladattavissa osoitteesta [www.nvda-project.org NVDA_URL].
 
 Viimeisimmän version latauslinkki löytyy Download-osiosta.
 
-Ladatun tiedoston suorittaminen käynnistää NVDA:n väliaikaisversion.
-Seuraavaksi kysytään, halutaanko se asentaa, luoda massamuistiversio tai jatkaa väliaikaisversion käyttämistä.
+Ladatun tiedoston suorittaminen käynnistää NVDA:n tilapäisversion.
+Seuraavaksi kysytään, halutaanko se asentaa, luoda massamuistiversio tai jatkaa tilapäisversion käyttämistä.
 
 Kannattaa valita asennusvaihtoehto, jos NVDA:ta aiotaan käyttää aina samalla tietokoneella.
-Asentaminen mahdollistaa sellaiset lisätoiminnot kuin automaattinen käynnistys Windowsiin kirjautumisen jälkeen, kirjautumisikkunan ja suojattujen ruutujen lukeminen (massamuisti- ja väliaikaisversioilla tämä ei ole mahdollista) ja pikakuvakkeen luomisen Käynnistä-valikkoon ja työpöydälle.
+Asentaminen mahdollistaa sellaiset lisätoiminnot kuin automaattinen käynnistys Windowsiin kirjautumisen jälkeen, kirjautumisikkunan ja suojattujen ruutujen lukeminen (massamuisti- ja tilapäisversioilla tämä ei ole mahdollista) sekä pikakuvakkeen luomisen Käynnistä-valikkoon ja työpöydälle.
 Asennetusta versiosta on mahdollista tehdä milloin tahansa myös massamuistiversio.
 
 Massamuistiversion luominen kannattaa valita, jos NVDA halutaan mukana kuljetettavaksi USB-muistitikulle tai muulle kirjoitettavalle tietovälineelle.
@@ -79,12 +79,12 @@ Se voidaan myös asentaa myöhemmin mille tahansa tietokoneelle.
 Jos NVDA halutaan kopioida vain luettavissa olevalle tietovälineelle, kuten CD:lle, tulee tällöin käyttää vain ladattua käynnistyspakettia.
 Massamuistiversion käyttämistä ei tueta suoraan vain luettavissa olevalta tietovälineeltä.
 
-Vaihtoehtona on myös NVDA:n väliaikaisversion käyttäminen (esim. esittelytarkoituksiin), vaikka joka kerta tällä tavalla käynnistäminen voikin olla hyvin aikaa vievää.
+Vaihtoehtona on myös NVDA:n tilapäisversion käyttäminen (esim. esittelytarkoituksiin), vaikka joka kerta tällä tavalla käynnistäminen voikin olla hyvin aikaa vievää.
 
-++ Massamuisti- ja väliaikaisversioiden rajoitukset ++
-Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai sen jälkeen, on NVDA:n massamuisti- ja väliaikaisversioissa myös seuraavia rajoituksia:
+++ Massamuisti- ja tilapäisversioiden rajoitukset ++
+Sen lisäksi, ettei automaattinen käynnistys toimi kirjautumisen aikana ja/tai sen jälkeen, on NVDA:n massamuisti- ja tilapäisversioissa myös seuraavia rajoituksia:
 - Vuorovaikutus järjestelmänvalvojan oikeuksin käynnissä olevien sovellusten kanssa ei ole mahdollista, ellei NVDA:ta itseään ole käynnistetty samoilla oikeuksilla (ei suositella).
-- Käyttäjävalvonnan ruutujen lukeminen ei ole mahdollista yritettäessä käynnistää sovellusta järjestelmänvalvojan oikeuksilla.
+- Käyttäjävalvonnan kehotteiden lukeminen ei ole mahdollista yritettäessä käynnistää sovellusta järjestelmänvalvojan oikeuksilla.
 - Windows 8: kosketusnäyttösyötteiden käyttäminen ei ole mahdollista.
 - Windows 8: selaustila ja kirjoitettujen merkkien lukeminen eivät toimi Windows Storesta ladatuissa sovelluksissa.
 -
@@ -917,7 +917,7 @@ Asetus on oletusarvoisesti käytössä.
 Huomaa, että jotkin vanhemmat syöttömenetelmät, kuten kiinalainen ChangJie, eivät saata käyttää lukumerkkijonoa esiyhdistelmän merkkien säilyttämiseen, vaan käyttävät niiden sijaan suoraan merkkiyhdistelmää. Katso seuraavaa asetusta merkkiyhdistelmän lukemisen määrittämiseksi.
 
 ==== Lue merkkiyhdistelmän muutokset ====
-Kun luku- tai esiyhdistelmätiedot on yhdistetty kelvolliseksi kuvakirjoitussymboliksi, useimmat syöttömenetelmät sijoittavat sen väliaikaisesti talteen merkkiyhdistelmään muiden yhdistettyjen symboleiden kanssa ennen niiden lopullista asiakirjaan lisäämistä.
+Kun luku- tai esiyhdistelmätiedot on yhdistetty kelvolliseksi kuvakirjoitussymboliksi, useimmat syöttömenetelmät sijoittavat sen tilapäisesti talteen merkkiyhdistelmään muiden yhdistettyjen symboleiden kanssa ennen niiden lopullista asiakirjaan lisäämistä.
 Tällä asetuksella voidaan valita, lukeeko NVDA uudet symbolit niiden tullessa näkyviin merkkiyhdistelmässä.
 Asetus on oletusarvoisesti käytössä.
 
@@ -1504,6 +1504,7 @@ Seuraavia pistenäyttöjä tuetaan:
 NVDA käyttää BrxCom:ia, mikäli se on asennettu.
 BrxCom on työkalu, joka mahdollistaa pistesyötön käyttämisen itsenäisesti ruudunlukuohjelmasta riippumatta.
 Papenmeier julkaisee piakkoin siitä NVDA:lla toimivan version.
+Trio-mallissa pistesyöttö on kuitenkin mahdollista ilman BrxCom:iakin.
 
 Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttösauva (EAB).
 Sitä voidaan siirtää neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
@@ -1547,6 +1548,31 @@ Seuraavassa on Papenmeierin näppäinmääritykset NVDA:lle:
 | Siirrä seuraavaan objektiin | right2 |
 | Lue tekstin muotoilutiedot | ylärivin kosketuskohdistinnäppäimet |
 %kc:endInclude
+
+Trio-mallissa on neljä lisänäppäintä, jotka ovat pistenäppäimistön edessä.
+Ne ovat vasemmalta oikealle järjestyksessä:
+- vasen peukalonäppäin (lt)
+- välilyönti
+- välilyönti
+- oikea peukalonäppäin (rt)
+-
+Oikea peukalonäppäin ei ole tällä hetkellä käytössä.
+Molemmat sisemmät näppäimet on liitetty välilyöntiin.
+
+%kc:beginInclude
+|| Nimi | Näppäinkomento |
+| askelpalautin-näppäin | piste 7 |
+| Enter-näppäin | piste 8 |
+| Esc-näppäin | välilyönti ja piste 7 |
+| ylänuolinäppäin | välilyönti ja piste 2 |
+| vasen nuolinäppäin | välilyönti ja piste 1 |
+| oikea nuolinäppäin | välilyönti ja piste 4 |
+| alanuolinäppäin | välilyönti ja piste 5 |
+| Ctrl-näppäin | lt+piste 2 |
+| Alt-näppäin | lt+piste 3 |
+| Ctrl+Esc-näppäimet | välilyönti ja pisteet 1 2 3 4 5 6 |
+| sarkain-näppäin | välilyönti ja pisteet 3 7 |
+%kc:endInclude 
 
 ++ Papenmeier BRAILLEX (vanhemmat mallit) ++
 Seuraavia pistenäyttöjä tuetaan:
