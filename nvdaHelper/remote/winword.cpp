@@ -46,6 +46,7 @@ using namespace std;
 #define wdDISPID_RANGE_END 4
 #define wdDISPID_RANGE_INFORMATION 313
 #define wdDISPID_RANGE_STYLE 151
+#define wdDISPID_RANGE_LANGUAGEID 153
 #define wdDISPID_STYLE_NAMELOCAL 0
 #define wdDISPID_RANGE_SPELLINGERRORS 316
 #define wdDISPID_SPELLINGERRORS_COUNT 1
@@ -117,6 +118,9 @@ using namespace std;
 #define wdAlignParagraphCenter 1
 #define wdAlignParagraphRight 2
 #define wdAlignParagraphJustify 3
+#define wdLanguageNone 0  //&H0
+#define wdNoProofing 1024  //&H400
+#define wdLanguageUnknown 9999999
 
 #define formatConfig_reportFontName 1
 #define formatConfig_reportFontSize 2
@@ -132,10 +136,11 @@ using namespace std;
 #define formatConfig_reportLinks 2048
 #define formatConfig_reportComments 4096
 #define formatConfig_reportHeadings 8192
+#define formatConfig_reportLanguage 16384
 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
- 
+
 UINT wm_winword_expandToLine=0;
 typedef struct {
 	int offset;
@@ -400,7 +405,15 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				formatAttribsStream<<L"invalid-spelling=\""<<iVal<<L"\" ";
 			}
 		}
-	} 
+	}
+	if (formatConfig&formatConfig_reportLanguage) {
+		int languageId = 0;
+		if (_com_dispatch_raw_propget(pDispatchRange,	wdDISPID_RANGE_LANGUAGEID, VT_I4, &languageId)==S_OK) {
+			if (languageId != wdLanguageNone && languageId != wdNoProofing && languageId != wdLanguageUnknown) {
+				formatAttribsStream<<L"wdLanguageId=\""<<languageId<<L"\" ";
+			}
+		}
+	}
 }
 
 inline int getInlineShapesCount(IDispatch* pDispatchRange) {
