@@ -229,7 +229,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return field
 
 	def _normalizeFormatField(self,field):
-		print field
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=colors.RGB.fromCOLORREF(int(color))		
@@ -246,7 +245,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		"""
 		gets a normalized locale from a lcid
 		"""
-		print lcid
 		lang = locale.windows_locale[lcid]
 		if lang:
 			return languageHandler.normalizeLanguage(lang)
