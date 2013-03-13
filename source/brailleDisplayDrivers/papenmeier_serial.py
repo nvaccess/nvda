@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited
+#Copyright (C) 2012-2013 Tobias Platen, Halim Sahin, Ali-Riza Ciftcioglu, NV Access Limited
 #Author: Tobias Platen (nvda@lists.thm.de)
 #minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com> and James Teh
 #used braille port selection code from braillenote driver
@@ -94,7 +94,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if(self._dev is None):
 				self._dev = serial.Serial(self._port, baudrate=baud)
 				self._dev.write(brl_auto_id())
-				if (baud == 19200): time.sleep(0.06)
+				if (baud == 19200): time.sleep(0.2)
 				else: time.sleep(0.03)
 				displaytype = brl_poll(self._dev)
 				dic = -1
@@ -220,15 +220,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"review_activate": ("br(papenmeier_serial):l2",),
 			"reportFormatting": ("br(papenmeier_serial):reportf",),
 
-			"navigatorObject_previous": ("br(papenmeier_serial):left2",),
-			"navigatorObject_next": ("br(papenmeier_serial):right2",),
-			"navigatorObject_parent": ("br(papenmeier_serial):up2",),
-			"navigatorObject_firstChild": ("br(papenmeier_serial):dn2",),
-
-			"navigatorObject_previous": ("br(papenmeier_serial):r1,left",),
-			"navigatorObject_next": ("br(papenmeier_serial):r1,right",),
-			"navigatorObject_parent": ("br(papenmeier_serial):r1,up",),
-			"navigatorObject_firstChild": ("br(papenmeier_serial):r1,dn",),
+			"navigatorObject_previous": ("br(papenmeier_serial):left2", "br(papenmeier_serial):r1,left"),
+			"navigatorObject_next": ("br(papenmeier_serial):right2", "br(papenmeier_serial):r1,right"),
+			"navigatorObject_parent": ("br(papenmeier_serial):up2", "br(papenmeier_serial):r1,up"),
+			"navigatorObject_firstChild": ("br(papenmeier_serial):dn2", "br(papenmeier_serial):r1,dn"),
 
 			"title": ("br(papenmeier_serial):l1,up",),
 			"reportStatusLine": ("br(papenmeier_serial):l2,dn",),
@@ -238,10 +233,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	__gestures = {
 		"br(papenmeier_serial):upperRouting": "upperRouting",
 	}
-
-#keys on display with eab
-# 1 4 .......... 16 64
-# 2 8 .......... 32 128
 
 def brl_keyname2(keys):
 	"""returns keyname for key index on displays with eab"""
