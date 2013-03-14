@@ -1401,8 +1401,6 @@ Por favor mira la documentación de la línea para descripciones de dónde puede
 NVDA soporta las líneas Braille Sense y Braille EDGE de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
 
-La entrada Braille  todavía no está soportada.
-
 Seguidamente van las asignaciones de teclas para estas líneas con NVDA.
 Por favor mira la documentación de las líneas para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
@@ -1504,6 +1502,7 @@ Se soportan las siguientes líneas Braille:
 Si está instalado BrxCom, NVDA utilizará BrxCom.
 BrxCom es una herramienta que te permite utilizar la entrada Braille independientemente de un lector de pantalla.
 Papenmeier liberará pronto una versión nueva de BrxCom que funcione con NVDA.  
+Sin embargo, la entrada braille es posible con el dispositivo Trio sin BrxCom.
 
 La mayoría de los dispositivos tienen una Barra de Acceso Fácil (EAB) que permite operar rápida e intuitivamente.
 La EAB puede moverse en cuatro direcciones donde en general cada dirección tiene dos posiciones.
@@ -1547,6 +1546,31 @@ Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 | Mover al siguiente objeto | izquierda2 |
 | Anunciar formato de texto | fila de sensores superior |
 %kc:endInclude
+
+El modelo Trio tiene cuatro teclas adicionales que están delante del teclado braille.
+Estas son (ordenadas de izquierda a derecha):
+- tecla de pulgar izquierdo (lt)
+- espacio
+- espacio
+- tecla de pulgar derecho (rt)
+-
+Actualmente, la tecla pulgar derecho no se utiliza.
+Las teclas interiores se mapean a espacio.
+
+%kc:beginInclude
+|| Nombre | Tecla |
+| tecla retroceso | punto 7 |
+| tecla intro | punto 8 |
+| tecla escape | espacio con punto 7 |
+| tecla flecha arriba | espacio con punto  2 |
+| tecla flecha izquierda | espacio con punto 1 |
+| tecla flecha derecha | espacio con punto 4 |
+| tecla flecha abajo | espacio con punto 5 |
+| tecla control | lt+punto2 |
+| tecla alt | lt+punto3 |
+| tecla control+escape | espacio con puntos 1 2 3 4 5 6 |
+| tecla tab | espacio con puntos 3 7 |
+%kc:endInclude 
 
 ++ Modelos Antiguos Papenmeier Braille BRAILLEX ++
 Se soportan las siguientes líneas Braille: 
