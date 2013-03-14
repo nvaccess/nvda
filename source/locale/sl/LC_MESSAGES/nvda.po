@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2013-02-18 05:30+0000\n"
-"PO-Revision-Date: 2013-02-20 18:37+0100\n"
+"PO-Revision-Date: 2013-02-26 02:47+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: Slovenian\n"
@@ -81,7 +81,7 @@ msgstr "&Pospešitev"
 #. in the browse mode Elements List dialog.
 #: virtualBuffers/__init__.py:318
 msgid "&Activate"
-msgstr "&Aktiviraj"
+msgstr "&Sproži"
 
 #: gui/settingsDialogs.py:1145
 msgid "&Add"
@@ -321,7 +321,7 @@ msgstr "&Sintetizator:"
 
 #: gui/__init__.py:311
 msgid "&Temporary dictionary..."
-msgstr "&Začasni slovar..."
+msgstr "&Začasen slovar..."
 
 #: synthDriverHandler.py:202
 msgid "&Voice"
@@ -396,12 +396,12 @@ msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
 msgstr ""
-"pogovorno okno, kjer se lahko nastavi poseben slovar za glas s dodajanjem "
+"pogovorno okno, kjer se lahko nastavi poseben slovar za glas z dodajanjem "
 "slovarskih vnosov na seznam."
 
 #: versionInfo.py:40
 msgid "A free and open source screen reader for Microsoft Windows"
-msgstr "Prost in odprtokodni bralnik zaslona za Microsoft Windows"
+msgstr "Prost in odprtokoden bralnik zaslona za Microsoft Windows"
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui/installerGui.py:88
@@ -492,6 +492,7 @@ msgstr "Amhariščina"
 msgid "Announce &selected candidate"
 msgstr "Naznani &izbranega kandidata"
 
+# obdrži pozornost na tem nizu
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui/settingsDialogs.py:963
@@ -586,11 +587,12 @@ msgstr "Samodejno &Preberi vse, ko se stran naloži"
 msgid "Automatic comments:"
 msgstr "Samodejni komentarji:"
 
+# mogoče je vejica, mogoče ne
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 #: gui/settingsDialogs.py:453
 msgid "Automatic dialect switching (when supported)"
-msgstr "Samodejna menjava narečja (ko je to možno)"
+msgstr "Samodejna menjava narečja, (ko je to možno)"
 
 # boljši prevod po testu, ko se bo videlo, kaj to v resnici počne
 #. Translators: This is the label for a checkbox in the
@@ -605,11 +607,12 @@ msgstr "Samodejno delovanje žarišča ob premiku kazalke"
 msgid "Automatic focus mode for focus changes"
 msgstr "Samodejno delovanje žarišča ob spremembi žarišča"
 
+# isto kot pri drugi vejici
 #. Translators: This is the label for a checkbox in the
 #. voice settings dialog.
 #: gui/settingsDialogs.py:448
 msgid "Automatic language switching (when supported)"
-msgstr "Samodejna menjava jezika (ko je to možno)"
+msgstr "Samodejna menjava jezika, (ko je to možno)"
 
 #. Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
 #: gui/settingsDialogs.py:178
@@ -656,7 +659,7 @@ msgstr "Oddaj zvočni signal, ko pišem male črke in je Caps log vključen"
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules/powerpnt.py:111
 msgid "Bitmap placeholder"
-msgstr "Ograda točkovne slikeOgrada "
+msgstr "Ograda točkovne slike"
 
 #: gui/settingsDialogs.py:1225
 msgid "Braille &display:"
@@ -2976,7 +2979,7 @@ msgstr "Pokaže NVDA pogovorno okno za nastavitve tipkovnice"
 
 #: globalCommands.py:688
 msgid "Shows the NVDA menu"
-msgstr "Pokaže menij NVDA"
+msgstr "Pokaže meni NVDA"
 
 #: globalCommands.py:939
 msgid "Shows the NVDA mouse settings dialog"
@@ -3696,7 +3699,7 @@ msgstr ""
 "Kot privzeti tipki NVDA lahko uporabite glavni insert in tistega na "
 "številski strani.\n"
 "NVDA lahko nastavite tako, da bo CapsLock tipka NVDA.\n"
-"Pritisnite NVDA+n kadarkoli želite odpreti menij NVDA.\n"
+"Pritisnite NVDA+n kadarkoli želite odpreti meni NVDA.\n"
 "S tega menija lahko upravljate z NVDA, pridobite pomoč in dostopate do "
 "drugih dejanj v NVDA.\n"
 
@@ -4866,7 +4869,7 @@ msgstr "predvajalnik"
 #. Translators: Identifies a menu such as file menu.
 #: controlTypes.py:213 controlTypes.py:402
 msgid "menu"
-msgstr "menij"
+msgstr "meni"
 
 #. Translators: Text used to identify menu bar of a program.
 #: controlTypes.py:209
@@ -6137,7 +6140,7 @@ msgstr "%s slog"
 #. Translators: This is presented when the control menu item has a submenu.
 #: controlTypes.py:468
 msgid "subMenu"
-msgstr "podmenij"
+msgstr "podmeni"
 
 #. Translators: This is presented in outlook or live mail, email subject
 #: appModules/outlook.py:27 appModules/outlook.py:42
@@ -6229,7 +6232,7 @@ msgstr "turkizno-modro"
 #. to exist as a separate window.
 #: controlTypes.py:358
 msgid "tear off menu"
-msgstr "izloči menij"
+msgstr "izloči meni"
 
 #. Translators: Identifies a terminal window such as command prompt.
 #: controlTypes.py:340
@@ -6282,7 +6285,7 @@ msgstr "zaslonski namig"
 
 #: globalCommands.py:481 globalCommands.py:493 globalCommands.py:535
 msgid "top"
-msgstr "že zgoraj"
+msgstr "zgoraj"
 
 #. Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 #: controlTypes.py:229

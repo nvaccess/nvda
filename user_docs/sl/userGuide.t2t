@@ -83,7 +83,7 @@ Možno je uporabiti tudi začasno kopijo (na primer za demonstracijske prikaze),
 
 ++ Omejitve Začasne in Prenosljive Kopije ++
 Ločeno od tega, da se NVDA ne more samodejno zagnati med in ali po prijavi, imata prenosljiva in začasna kopija še naslednje omejitve:
-- Nezmožnost biti v interakcijami s programi, ki tečejo s skrbniškimi pravicami, dokler seveda tudi NVDA sama ne teče z istimi pravicami (ni priporočljivoo).
+- Nezmožnost biti v interakciji s programi, ki tečejo s skrbniškimi pravicami, dokler seveda tudi NVDA sama ne teče z istimi pravicami (ni priporočljivo).
 - Nezmožnost branja zaslonov Nadzora Uporabniškega računa (NURR), ko se poskuša zagnati program s skrbniškimi pravicami.
 - Windows 8: nezmožnost podpirati vnos preko zaslona na dotik.
 - Windows 8: nezmožnost oskrbeti značilnosti, kot so recimo Brskalniško delovanje in izgovor natipkanih znakov v Windows Store apps.
@@ -100,4 +100,12 @@ Ko je namestitev končana, se prikaže sporočilo o tem, da je namestitev konča
 Pritisk na gumba V redu na tej točki bo ponovno zagnal na novo nameščeno kopijo NVDA.
 
 +++ Zagon ob Prijavi v Windows +++
-Ta možnost omogoča, da se lahko NVDA samodejno zažene medtem, ko ste na prijavnem zaslonu še preden morate vnesti geslo za prijavo v sistem.
+Ta možnost omogoča, da se lahko NVDA samodejno zažene medtem, ko ste na prijavnem zaslonu, še preden morate vnesti geslo za prijavo v sistem.
+To vključuje tudi NUR nadzor in druge "varne" zaslone.
+
++++ Ustvari Bližnjico na Namizju (ctrl+alt+n) +++
+Ta možnost omogoča izbiro, če želite, da mora NVDA ustvariti bližnjico na namizju za zagon NVDA.
+Ta bližnjica, če jo boste ustvarili, bo ustvarila tudi kombinacijo bližnjičnih tipk za zagon control+alt+n. S to kombinacijo tipk boste potem lahko NVDA zagnali, kadarkoli boste želeli.
+
++++ Preslikaj Trenutno Konfiguracijo na Trenuten Uporabniški Račun +++
+Ta možnost vam omogoča izbiro ali mora ali pa ne NVDA preslikati trenutno uporabniško konfiguracijo v uporabi v konfiguracijo trenutno prijavljenega uporabnika za nameščeno kopijo NVDA.
