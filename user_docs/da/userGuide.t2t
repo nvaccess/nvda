@@ -370,7 +370,7 @@ Følgende tastekommandoer er tilgængelige for gennemgang af tekst:
 
 Bemærk: for at kunne bruge numpad tasterne kræver det at numlock tasten er slået fra.
 
-For at hjælpe dig med at huske disse kommandoer, er de grundlæggende læsekommandoer organiseret i et gitter af tre x tre, fra øverst til nederst, hvor øverst til nederst er ord og bogstav, og venstre mod højre er forrige, aktuel og næste.
+For at hjælpe dig med at huske disse kommandoer, bemærk venligst aat følgende kun gælder desktop layout, er de grundlæggende læsekommandoer organiseret i et gitter af tre x tre, fra øverst til nederst, hvor øverst til nederst er ord og bogstav, og venstre mod højre er forrige, aktuel og næste.
 Layoutet er således illustreret:
 | Forrige linie | Nuværende linie | Næste linje |
 | Forrige ord | Nuværende ord | Næste ord |
@@ -1401,8 +1401,6 @@ Se venligst dokumentationen til dit display for at finde ud af, hvor du kan find
 NVDA understøtter Braille Sense og Braille EDGE displays fra [Hims http://www.hims-inc.com/] hvis disse displays kobles til med USB eller Bluetooth. 
 Hvis du ønsker at koble displayet til ved brug af USB, skal du først installere driveren fra HIMS på dit system.
 
-Braille input er endnu ikke understøttet.
-
 Dette er tastekombinationerne til dette display til brug af NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.
 %kc:beginInclude
@@ -1504,6 +1502,7 @@ Følgende punktdisplay er understøttede
 Hvis BrxCom er installeret, vil NVDA benytte BrxCom.
 BrxCom er et værktøj der giver dig mulighed for, at bruge punktdisplayet uafhængigt af en skærmlæser.
 En ny version af BrxCom der virker med NVDA bliver snart udgivet af Papenmeier.  
+Punktinput er dog muligt med en TRIO enhed uden BrxCom.
 
 De fleste enheder har en Easy Access bjælke (EAB) der giver mulighed for intuitive og hurtige handlinger.
 EAB kan bevæge sig i fire retninger, hvor der generelt er to tilhørende stillinger.
@@ -1546,6 +1545,31 @@ Papenmeier kommandoer til NVDA er som følgende:
 | Flyt til forrige objekt | venstre2 |
 | Flyt til næste objekt | højre2 |
 | Rapportér tekstformatering | øverste markøranføringsknapper |
+%kc:endInclude
+
+Trio modellen har yderligere fire knapper. Disse er placeret foran punkttastaturet.
+Knapperne går fra venstre mod højre.
+- Venstre thumb key (LT)
+- mellemrum
+- mellemrum
+- højre thumb key (RT)
+-
+På nuværende tidspunkt er højre thumb key ikke taget i brug.
+De indre taster er begge brugt som mellemrumstaster.
+
+%kc:beginInclude
+|| Navn | Tast |
+| backspace tast | punkt 7 |
+| enter tast | punkt 8 |
+| escape tast | mellemrum med punkt 7 |
+| pilOp tast | mellemrum med punkt 2 |
+| pilOp tast | mellemrum med punkt 1 |
+| højrePil tast | mellemrum med punkt 4 |
+| pilNed | mellemrum med punkt 5 |
+| kontrol tast | lt+punkt2 |
+| alt tast | lt+punkt3 |
+| kontrol+escape tast | mellemrum med punkt 1 2 3 4 5 6 |
+| tab tast | mellemrum med punkt 3 7 |
 %kc:endInclude
 
 ++ Papenmeier Braille BRAILLEX Ældre Modeller ++
