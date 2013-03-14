@@ -25,6 +25,7 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 == Nouvelles Fonctionnalités ==
 - Support basique de l'édition et de la lecture des présentations Microsoft PowerPoint. (#501)
 - Support basique pour la lecture et l'écriture de messages dans Lotus Notes 8.5. (#543)
+- Support du changement automatique de langue lors de la lecture de documents dans Microsoft Word. (#2047)
 - En mode navigation dans les documents MSHTML (ex : Internet Explorer) et Gecko (ex : Firefox), l'existence des longues descriptions est maintenant annoncée. Il est aussi possible d'ouvrir les longues descriptions dans une nouvelle fenêtre en appuyant sur NVDA+D. (#809)
 - Les notifications dans Internet Explorer 9 et plus récent sont maintenant lues (comme les fenêtres publicitaires bloquées ou les téléchargements). (#2343)
 - L'annonce automatique du titre des lignes et colonnes d'un tableau est maintenant supportée dans Internet Explorer et les autres contrôles MSHTML. (#778)
@@ -36,6 +37,7 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - Support des anciens modèles d'afficheur Braille Papenmeier BRAILLEX. (#2679)
 - Support de la saisie en braille informatique pour les afficheurs braille disposant d'un clavier braille. (#808)
 - Nouvelles options de clavier permettant d'interrompre ou non la parole lorsqu'on appuie sur une touche et ou sur entrer. (#698)
+- Support de certains navigateurs basés sur Google Chrome : Rockmelt, BlackHawk, Comodo Dragon et SRWare Iron. (#2236, #2813, #2814, #2815)
 
 
 == Changements ==
@@ -61,7 +63,7 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - Les afficheurs Braille HumanWare de série Brailliant BI/B peuvent maintenant être sélectionnés quand l'afficheur est connecté via bluetooth mais qu'il n'a jamais été connecté via USB.
 - Filtrer les éléments dans la liste des éléments en mode navigation avec des filtres en texte majuscules retourne maintenant les même résultats que si tout était en minuscule. (#2951)
 - Dans les navigateurs Mozilla, le mode navigation peut à nouveau être utilisé quand du contenu flash est activé. (#2546)
-- Lorsque l'on utilise une table braille abrégé et que l'option Afficher le mot sous le curseur en braille informatique est éctivée, le curseur braille est maintenant positionné correctement lorsque situé après un mot dans lequel un caractère est représenté par plusieurs cellules brailles (ex : signe majuscule, signe de lettre, signe de nombre, etc.). (#2947)
+- Lorsque l'on utilise une table braille abrégé et que l'option Afficher le mot sous le curseur en braille informatique est activée, le curseur braille est maintenant positionné correctement lorsque situé après un mot dans lequel un caractère est représenté par plusieurs cellules brailles (ex : signe majuscule, signe de lettre, signe de nombre, etc.). (#2947)
 - Le texte sélectionné est maintenant correctement affiché en braille dans des applications comme Microsoft Word 2003 et les zone d'édition dans Internet Explorer.
 - Il est à nouveau possible de sélectionner du texte en arrière dans Microsoft Word lorsque le braille est activé.
 - Lorsqu'on lit ou supprime un caractère avec backspace ou suppr dans une zone d'édition Scintilla, NVDA annonce correctement les caractères multibyte. (#2855)
@@ -70,12 +72,17 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - En mode navigation dans les applications Mozilla, le contenu texte n'est plus considéré comme éditable dans de rares cas. (#2959)
 - Dans IBM Lotus Symphony et OpenOffice, déplacer le curseur déplace également le curseur de revue lorsqu'aproprié.
 - Le contenu Adobe Flash est maintenant accessible dans Internet Explorer sous Windows 8. (#2454)
+- Correction du support bluetooth de l'afficheur braille Papenmeier Braillex Trio. (#2995)
 
 
 == Changements pour les développeurs ==
 - Les afficheurs Braille peuvent maintenant supporter la sélection manuelle du port. (#426)
  - C'est surtout utile pour les afficheurs Braille qui supportent la connexion via un port série.
  - Cela se fait en utilisant la méthode de classe getPossiblePorts dans la classe BrailleDisplayDriver.
+- La saisie en braille via un clavier braille est maintenant supportée. (#808)
+ - La saisie en braille est gérée par la classe brailleInput.BrailleInputGesture ou d'une sous-classe.
+ - Les sous-classes de braille.BrailleDisplayGesture (implémentée comme dans les pilotes d'afficheurs brailles) peuvent aussi hériter de brailleInput.BrailleInputGesture. Cela permet que les commandes braille et la saisie soient gérés par la même classe de commande.
+- On peut maintenant utiliser comHelper.getActiveObject pour récupérer un objet COM depuis un processus normal quand NVDA est exécuté avec le privilège UIAccess. (#2483)
 
 
 = 2012.3 =

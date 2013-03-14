@@ -1399,9 +1399,7 @@ Veuillez consulter la documentation du terminal pour savoir où se trouvent ces 
 
 ++ HIMS Braille Sense/Braille EDGE Series ++
 NVDA supporte les afficheurs braille Braille Sense et Braille EDGE de [Hims http://www.hims-inc.com/] quand ils sont connectés via USB ou bluetooth. 
-Si connectée via USB, vous devrez installer le driver USB de HIMS dans votre système.
-
-La saisie du braille n'est pas encore supportée.
+Si vous connectez votre afficheur braille par USB, vous devrez installer le driver USB de HIMS dans votre système.
 
 Voici les assignations de touches pour ce terminal sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se trouvent ces touches.
@@ -1504,6 +1502,7 @@ Les afficheurs Brailles suivant sont supportés :
 Si BrxCom est installé, NVDA utilisera BrxCom.
 BrxCom est un outil qui permet d'utiliser le clavier Braille indépendamment d'un lecteur d'écran.
 Une nouvelle version de BrxCom compatible avec NVDA sera bientôt mise à disposition par Papenmeier.
+De plus, la saisie en braille est possible avec le Trio sans BrxCom.
 
 La plupart des afficheurs ont une barre d'accès facile (EAB) qui permet des opérations intuitives et rapides.
 L'EAB peut être bougé dans quatre dirrections ou chaque dirrection a deux crans.
@@ -1547,6 +1546,31 @@ Voici les  commandes assignées pour les afficheurs Papenmeier dans NVDA :
 | Aller à l'objet suivant | right2 |
 | Lire les informations de mise en forme | rangée de routines du haut |
 %kc:endInclude
+
+Le modèle Trio a quatre touches additionnelles en face du clavier braille.
+Elles sont (ordonnées de gauche à droite) :
+- touche thumb gauche (lt)
+- espace
+- espace
+- touche thumb droite (rt)
+-
+Pour le moment, rt n'est pas utilisée.
+Les touches intérieures font toutes les deux espace.
+
+%kc:beginInclude
+|| Nom | Touche |
+| touche retour arrière | point 7 |
+| touche entrée | point 8 |
+| touche echapp | espace avec point 7 |
+| touche flèche haute | espace avec point 2 |
+| touche flèche gauche | espace avec point 1 |
+| touche flèche droite | espace avec point 4 |
+| flèche basse | espace avec point 5 |
+| touche contrôle | lt+point 2 |
+| touche alt | lt+point 3 |
+| touches contrôle+echapp | espace avec les points 1 2 3 4 5 6 |
+| touche tab | espaces avec points 3 7 |
+%kc:endInclude 
 
 ++ Papenmeier Braille BRAILLEX modèles anciens ++
 Les afficheurs Braille suivants sont supportés :
