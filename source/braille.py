@@ -371,11 +371,6 @@ class Region(object):
 		# liblouis gives us back a character string of cells, so convert it to a list of ints.
 		# For some reason, the highest bit is set, so only grab the lower 8 bits.
 		self.brailleCells = [ord(cell) & 255 for cell in braille]
-		# HACK: Work around a liblouis bug whereby an empty braille translation is returned.
-		if not self.brailleCells:
-			# Just provide a space.
-			self.brailleCells.append(0)
-			self.brailleToRawPos.append(0)
 		if self.cursorPos is not None:
 			# HACK: The cursorPos returned by liblouis is notoriously buggy (#2947 among other issues).
 			# rawToBraillePos is usually accurate.
