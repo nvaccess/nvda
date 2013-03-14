@@ -371,6 +371,15 @@ class Region(object):
 		# liblouis gives us back a character string of cells, so convert it to a list of ints.
 		# For some reason, the highest bit is set, so only grab the lower 8 bits.
 		self.brailleCells = [ord(cell) & 255 for cell in braille]
+		# #2466: HACK: liblouis incorrectly truncates trailing spaces from its output in some cases.
+		# Detect this and add the spaces to the end of the output.
+		if self.rawText and self.rawText[-1] == " ":
+			# rawToBraillePos isn't truncated, even though brailleCells is.
+			# Use this to figure out how long brailleCells should be and thus how many spaces to add.
+			correctCellsLen = self.rawToBraillePos[-1] + 1
+			currentCellsLen = len(self.brailleCells)
+			if correctCellsLen > currentCellsLen:
+				self.brailleCells.extend((0,) * (correctCellsLen - currentCellsLen))
 		if self.cursorPos is not None:
 			# HACK: The cursorPos returned by liblouis is notoriously buggy (#2947 among other issues).
 			# rawToBraillePos is usually accurate.
