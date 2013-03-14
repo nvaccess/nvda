@@ -36,6 +36,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - Support for older models of Papenmeier BRAILLEX braille displays. (#2679)
 - Support for input of computer braille for braille displays which have a braille keyboard. (#808)
 - New keyboard settings that allow  the choice for whether NVDA should interrupt speech for typed characters and or the Enter key. (#698)
+- Support for several browsers based on Google Chrome: Rockmelt, BlackHawk, Comodo Dragon and SRWare Iron. (#2236, #2813, #2814, #2815)
 
 
 == Changes ==
@@ -70,6 +71,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - In browse mode in Mozilla applications, text content is no longer incorrectly treated as editable in some rare cases. (#2959)
 - In IBM Lotus Symphony and OpenOffice, moving the caret now moves the review cursor if appropriate.
 - Adobe Flash content is now accessible in Internet Explorer in Windows 8. (#2454)
+- Fixed Bluetooth support for Papenmeier Braillex Trio. (#2995)
 
 
 == Changes for Developers ==
@@ -79,6 +81,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - Braille input from braille keyboards is now supported. (#808)
  - Braille input is encompassed by the brailleInput.BrailleInputGesture class or a subclass thereof.
  - Subclasses of braille.BrailleDisplayGesture (as implemented in braille display drivers) can also inherit from brailleInput.BrailleInputGesture. This allows display commands and braille input to be handled by the same gesture class.
+- You can now use comHelper.getActiveObject to get an active COM object from a normal process when NVDA is running with the UIAccess privilege. (#2483)
 
 
 = 2012.3 =
