@@ -161,9 +161,9 @@ Actualment NVDA viene con dos conchuntos de  teclas d'ordens.
 Bi ha una distribución ta sobremesa y una distribución ta portatils.
 De traza predeterminada NVDA se configura ta emplegar a distribución de sobremesa, encara que puetz cambiar a la distribución de portatils en as Opcions de Teclau, que se troban en Preferencias en o menú NVDA.
 	
-A distribución sobremesa fa un uso amplio d'o teclau numerico (con o bloqueyo numerico desactivau).
+A distribución de sobremesa fa un uso amplio d'o teclau numerico (con o bloqueyo numerico desactivau).
 Encara que a mayoría d'os portatils no tienen un teclau numerico fisico, qualques portatils pueden emular un mantenendo pretada a tecla FN y pretando letras y numeros en a man dreita d'o teclau (7 8 9 u i u j k l etc.).
-Si o tuyo portatil no puet fer isto, u no te permite desactivar o bloqueyo numerico, podrás querer cambiar a la distribución Portatil en o suyo puesto.
+Si o tuyo portatil no puet fer isto, u no te permite desactivar o bloqueyo numerico, podrás querer cambiar a la distribución Portatil en cuenta.
 
 ++ Cenyos tactils de NVDA ++
 Si yes executando NVDA en un dispositivo con una pantalla tactil y ye executando Windows 8 u superior, tamién puetz controlar a NVDA dreitament a traviés d'a pantalla tactil.
@@ -1401,8 +1401,6 @@ Por favor mira a documentación d'a linia ta descripcions d'án pueden trobar-se
 NVDA suporta as linias Braille Sense y Braille EDGE de [Hims http://www.hims-inc.com/] quan se connectan a traviés d'USB u bluetooth. 
 Si se connectan a traviés d'USB, amenesterás instalar os controladors USB d'HIMS en o sistema.
 
-A dentrada Braille  encara no ye suportada.
-
 Seguidament van as asignacions de teclas ta istas linias con NVDA.
 Por favor mira a documentación d'as linias ta descripcions d'án pueden trobar-se istas teclas.
 %kc:beginInclude
@@ -1504,6 +1502,7 @@ Se suportan as siguients linias Braille:
 Si ye instalau o BrxCom, NVDA emplegará o BrxCom.
 BrxCom ye una ferramienta que te permite emplegar a dentrada Braille independientment d'un lector de pantalla.
 Papenmeier liberará luego una versión nueva de BrxCom que funcione con NVDA.  
+Manimenos, a dentrada de braille ye posible con o dispositivo sin BrxCom Trio.
 
 A mayoría d'os dispositivos tienen una Barra d'Acceso Facil (EAB) que permite operar rapida y intuitivament.
 A EAB puet mover-se en quatro adrezas an en cheneral cada adreza tien dos posicions.
@@ -1544,11 +1543,36 @@ Seguidament van as asignacions d'ordens d'a Papenmeier ta NVDA:
 | Mover a l'obchecto conteniu | alto2 |
 | Mover a o primer obchecto conteniu | dn2 |
 | Mover a l'obchecto anterior | dreita2 |
-| Mover a o siguient obchecto | cucha2 |
-| Anunciar formato de texto | ringlera de sensores superior |
+| Mover a lo siguient obchecto | cucha2 |
+| Anunciar o formato de texto | ringlera de sensors superior |
 %kc:endInclude
 
-++ Modelos Antigos Papenmeier Braille BRAILLEX ++
+O modelo Trio tien quatro teclas adicionals que se troban debant d'o teclau braille.
+Istas son (ordenaus de cucha a dreita):
+- Tecla de pulgar cucho (lt)
+- Espacio
+- Espacio
+- Tecla de  pulgar dreito (rt)
+-
+Actualment, a tecla de pulgar dreito no ye en uso.
+As teclas internas s'asignan tanto a lo espacio.
+
+% kc: beginInclude
+ | | Nombre | Clau |
+ | Tecla de retroceso | punto 7 |
+ | Enter | punto 8 |
+ | Tecla d'escape | espacio con o punto 7 |
+ | Fflecha alto | espacio con o punto 2 |
+ | Fflecha cucha | espacio con o punto 1 |
+ | Flecha dreita | espacio con o punto 4 |
+ | Flecha abaixo | espacio con o punto 5 |
+ | Tecla control | lt + punto 2 |
+ | Alt | lt + punto 3 |
+ | Control + tecla d'escape | espacio con os puntos 1 2 3 4 5 y 6 |
+ | Tabulador | espacio con os puntos 3 y 7 |
+% kc: endInclude
+
+++ Modelos Antigos de Papenmeier Braille BRAILLEX ++
 Se suportan as siguients linias Braille: 
 - BRAILLEX O 80, O 2D-80, O 40 P
 - BRAILLEX Tiny, 2D Screen

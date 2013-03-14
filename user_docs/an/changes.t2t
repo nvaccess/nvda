@@ -25,6 +25,7 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 == Nuevas Caracteristicas ==
 - Suporte basico ta editar y leyer presentacions de Microsoft PowerPoint. (#501)
 - Suporte basico ta leyer y escribir mensaches en Lotus Notes 8.5. (#543)
+- Suporte ta lo cambeo automatico d'idioma quan se leyen documentos en Microsoft Word. (# 2047)
 - En modo Navegación ta MSHTML (eix.: Internet Explorer) y Gecko (eix.: Firefox), agora s'anuncia a existencia de descripcions largas. Tamién ye posible ubrir a descripción larga en una finestra nueva pretando NVDA+d. (#809)
 - As notificacions en Internet Explorer 9 y superior agora se charran (tals como conteniu bloqueyau u descargas de fichers). (#2343)
 - L'anunciau automatico d'os capiters de ringlera y columna agora se suporta ta documentos en modo navegación en Internet Explorer y atros controls MSHTML. (#778)
@@ -36,6 +37,7 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 - Suporte ta  modelos antigos d'as linias braille Papenmeier BRAILLEX. (#2679)
 - Suporte ta la dentrada de braille computerizau ta linias braille que tiengan un teclau braille. (#808)
 - Nuevas opcions de teclau que permiten  trigar si NVDA habría d'interrumpir a voz ta os caracters escritos u a tecla Intro. (#698)
+ - Suporte ta quantos navegadors basaus ​​en Google Chrome: Rockmelt, BlackHawk, Comodo Dragon y SRWare Iron. (# 2236, # 2813, # 2814, # 2815)
 
 
 == Cambeos ==
@@ -69,6 +71,9 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 - En modo navegación en aplicacions de Mozilla, o conteniu de texto ya no se tracta incorrectament como editable en qualques casos extranyos. (#2959)
 - En IBM Lotus Symphony y OpenOffice, movendo lo cursor agora se mueve o cursor de revisión si cal
 - O conteniu d'Adobe Flash ye agora accesible en Internet Explorer ta Windows 8. (# 2454)	
+- Suporte fixo ta Bluetooth Papenmeier Trio Braillex. (# 2995)
+
+
 == Cambeos ta Desembolicadors ==
 - Os controladors de linia Braille agora pueden suportar a selección manual de puertos. (#426)
  - Isto ye mayoritariament util ta linias braille que suporten connexión a traviés d'un puerto serie.
@@ -76,6 +81,7 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 - Agora se suporta a dentrada braille  dende teclaus braille. (#808)
  - A dentrada braille s'abarca por a clase brailleInput.BrailleInputGesture u una subclase d'a mesma.
  - As subclases de braille.BrailleDisplayGesture (seguntes s'implementaron en os controladors d'as linias braille) tamién pueden heredar de brailleInput.BrailleInputGesture. Isto permite amostrar ordens  y que a dentrada braille se manelle por a mesma clase gesture.
+- Agora se puet usar comHelper.getActiveObject ta obtener un obchecto COM activo d'un proceso normal quan NVDA s'executa con o privilechio UIAccess. (# 2483)
 
 
 = 2012.3 =
