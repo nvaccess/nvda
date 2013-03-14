@@ -23,6 +23,7 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 
 == Neue Funktionen ==
 - Grundlegende Unterstützung für das Lesen und bearbeiten von Microsoft PowerPoint-Präsentationen. (#501)
+- Unterstützung für den automatischen Sprachenwechsel beim Lesen von Dokumenten in Microsoft Word. (#2047) 
 - Grundlegende Unterstützung beim Lesen und Schreiben von Nachrichten in Lotus Notes 8.5. (#543)
 - Im Lesemodus für MSHTML (z. B. Internet Explorer) und Gecko (z. B. Firefox) wird nun die Existenz langer Beschreibungen gemeldet. Sie können die lange Beschreibung jedoch auch durch Drücken von NVDA+d in einem neuen Fenster öffnen. (#809)
 - Im Internet Explorer 9 und neuer werden Benachrichtigungen korrekt ausgegeben (wenn z. B. Inhalte oder herunterzuladene Dateien blockiert werden). (#2343)
@@ -35,6 +36,7 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - Unterstützung für ältere Papenmeier-Braillezeilen (#2679)
 - Unterstützung für die Eingabe von Computer-Braille für Braillezeilen, die eine Braille-Tastatur besitzen. (#808)
 - neue Tastaturoptionen erlauben das Unterbrechen der Sprache beim Eingeben von Zeichen Bzw. beim Drücken der Eingabetaste. (#698)
+- Unterstützung für zahlreiche Chrome-basierte Browser: Rockmelt, BlackHawk, Comodo Dragon und SRWare Iron. (#2236, #2813, #2814, #2815)
 -
 
 == Änderungen ==
@@ -68,6 +70,7 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - im Lesemodus von Mozilla-Anwendungen werden Textinhalte nun nicht mehr fälschlicherweise als deaktiviert angezeigt, auch wenn das selten der Fall ist. (#2959)
 - in IBM Lotus Symphony und Openoffice.org wird nun der NVDA-Cursor mitgezogen, wenn der Systemcursor bewegt wird.
 - Im Internet Explorer unter windows 8 sind Adobe-Flash-Inhalte nun zugänglich. (#2454)
+- Bluetooth-Unterstützung für Papenmeier Braillex Trio korrigiert. (#2995)
 -
 
 == Änderungen für Entwickler ==
@@ -77,6 +80,8 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - Braille-Eingabe von Braille-Tastaturen wird nun unterstützt (#808)
  - Braille-eingaben werden in die Klasse  brailleInput.BrailleInputGesture oder eine abgeleitete Klasse eingeschlossen.
  - Unterklassen von  braille.BrailleDisplayGesture (wie sie z.B. in Braillezeilentreibern implementiert sind) können auch von  brailleInput.BrailleInputGesture ableiten. Dies ermöglicht die Verarbeitung von Braille-Navigationsbefehlen und Braille-Eingaben von ein und derselben Klasse.
+ -
+- Sie können nun comHelper.getActiveObject verwenden, um ein Com-Objekt von einem normalen Prozess zu erstellen, wenn NVDA mit UIAccess-Berechtigungen ausgeführt wird. (#2483)
 -
 
 = 2012.3 =

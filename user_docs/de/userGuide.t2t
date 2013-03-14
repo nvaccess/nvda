@@ -1492,8 +1492,6 @@ Bitte sehen Sie in der Dokumentation der Braillezeile nach wo die entsprechenden
 NVDA unterstützt die Braillezeilenmodelle Braile Sense und Braille Edge von [Hims http://www.hims-inc.com/], wahlweise mit USB- oder Bluetooth-Anbindung. 
 Wenn Sie die Braillezeile per USB anschließen, müssen Sie noch den USB-Treiber von HIMS auf Ihrem System installieren.
 
-Die Eingabe von Braillezeichen wird noch nicht unterstützt.
-
 Folgende Tastenkombinationen sind im NVDA verfügbar:
 Bitte sehen Sie in der Dokumentation zur Braillezeile nach, wo sich die entsprechenden Tasten befinden.
 %kc:beginInclude
@@ -1598,6 +1596,7 @@ Folgende Braillezeilen werden unterstützt:
 Falls BrxCom installiert ist, wird es benutzt.
 BrxCom ist ein Programm, welches unabhängig von Screenreadern Brailleingabe und Dateitransfer Zu Braillezeilen mit Notizfunktion ermöglicht. 
 Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
+Bei der Braillex Trio ist Braille-Eingabe jedoch auch ohne brxcom möglich.
 
 Die meisten Braillezeilen besitzen eine Navigationsleiste (EAB), welche eine intuitive und schnelle Bedienung ermöglicht.
 Die Navigationsleiste kann in vier Richtungen bewegt werden, wobei sie in der Regel zwei Schalterstellungen je Richtung hat.
@@ -1644,6 +1643,31 @@ Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen verfügbar:
 | Liest Formatierungsinformationen an der Cursorposition in einen Dokument vor | Obere Routingreihe |
 %kc:endInclude
 
+Die Braillex Trio besitzt vor der BrailleTastatur noch vier zusätzliche Tasten.
+Dies sind von links nach rechts:
+- nach links springen (lt)
+- Leertaste
+- Leertaste
+- nach rechts springen (rt)
+-
+
+Die Taste rt wird momentan noch nicht verwendet.
+Die inneren Tasten sind als Leertasten belegt.
+
+%kc:beginInclude
+|| Name | Key |
+| rücktaste | Punkt 7 |
+| Eingabetaste | Punkt 8 |
+| esc | Leertaste + Punkt 7 |
+| Pfeil nach oben | Leertaste + Punkt 2 |
+| Pfeil nach links | Leertaste + Punkt 1 |
+| Pfeil nach rechts | Leertaste + Punkt 4 |
+| Pfeil nach unten | Leertaste + Punkt 5 |
+| strg | lt+Punkt2 |
+| alt | lt+Punkt3 |
+| strg+esc | Leertaste + Punkte 1 2 3 4 5 6 |
+| tab | Leertaste + Punkte 3 7 |
+%kc:endInclude 
 
 ++ Papenmeier Braille BRAILLEX ältere Modelle ++
 Die folgenden Braillezeilen werden unterstützt:
