@@ -1368,8 +1368,6 @@ NVDA ondersteunt de leesregelmodellen Braile Sense en Braille Edge van [Hims htt
 USB of Bluetooth kunnen worden aangesloten. 
 Als u  voor de USB-aansluiting kiest, moet u wel eerst de USB-driver van HIMS op uw Systeem installeren.
 
-Brailleïnvoer wordt nog niet ondersteund.
-
 Bij gebruik van deze leesregels met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
 %kc:beginInclude
@@ -1444,14 +1442,14 @@ De modellen Seika Version 3, 4 en 5 (40 cellen) en de Seika80 (80 cellen)  van
 [Nippon Telesoft http://www.nippontelesoft.com/] worden ondersteund.  Meer 
 informatie over deze leesregels vindt u op [http://www.seika-braille.com/ ] . 
 U moet eerst  de usb-driver van de fabrikant installeren voordat u de 
-leesregel op de computer aansluit..
+leesregel op de computer aansluit.
 
 Bij gebruik van deze leesregel met NVDA zijn de volgende toetscombinaties van 
 toepassing:
 (Informatie over de plaats van de toetsen vindt u in de documentatie bij deze leesregel.)
 
 %kc:beginInclude
- || Naam | Toets |
+|| Naam | Toets |
 | Brailleregel terugscrollen | links |
 | Brailleregel vooruit scrollen | rechts |
 | Brailleregel naar vorige regel verplaatsen | B3 |
@@ -1462,7 +1460,7 @@ toepassing:
 | tab | B1 |
 | shift+tab | B2 |
 |alt+tab | b1+b2 |
-|NVDA-menu | links+rechts ||
+| NVDA-menu | links+rechts ||
 %kc:endInclude
 
 ++ Papenmeier Braillex Nieuwere Modellen ++
@@ -1472,8 +1470,8 @@ De volgende brailleleesregels worden ondersteund:
 - BRAILLEX EL 40s, EL 80s, EL 2D80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB en Bluetooth)
 -
-
 Als BrxCom is geïnstalleerd, zal NVDA BrxCom gebruiken. BrxCom is een hulpprogramma waarmee u de Braille-invoer onafhankelijk van een schermlezer kunt gebruiken. Door de firma Papenmeier zal spoedig een nieuwe versie van BrxCom die voor NVDA geschikt is, worden uitgebracht. 
+Met de Braillex Trio is brailleïnvoer echter wel mogelijk  zonder BrxCom.
 
 De meeste leesregels hebben een gebruiksvriendelijke navigatiebalk (EAB = Easy Access Bar, waarmee intuïtief en snel gewerkt kan worden.
 De navigatiebalk kan in vier richtingen bewogen worden waarbij er als regel twee schakelpunten per richting zijn.
@@ -1515,7 +1513,32 @@ De volgende toetscommando's zijn voor Papenmeier-Brailleleesregels beschikbaar:
 | Navigatorobject naar volgende Object verplaatsen | links2 |
 | Navigatorobject naar voorafgaand object verplaatsen | rechts2 |
 | Documentopmaak weergeven | bovenste rij routingtoetsen ||
- %kc:endInclude
+%kc:endInclude
+
+De Braillex Trio heeft vierr extra toetsen die zich voor het brailletoetsenbord bevinden.
+Van links naar rechts zijn dit:
+- linker duimtoets (lt)
+- spatie
+- spatie
+- rechter duimtoets (rt)
+-
+Momenteel is de rechterduimtoets buiten gebruik.
+De twee binnenste toetsen zijn als spatietoets gedefinieerd.
+
+%kc:beginInclude
+|| Naam | Toets |
+| backspace-toets | punt 7 |
+| enter-toets | punt 8 |
+| escape-toets | spatie + punt 7 |
+| pijl omhoog-toets | spatie + punt 2 |
+| linker pijltoets | spatie + punt 1 |
+| rechter pijltoets | spatie + punt 4 |
+| pijl omlaag-toets | spatie + puunt 5 |
+| Ctrl-toets | lt+punt2 |
+| alt-toets | lt+punt3 |
+| ctrl+escape-toets | spatie + punt 1 2 3 4 5 6 |
+| tab-toets | spatie + punt 3 7 |
+%kc:endInclude 
 
 ++ Papenmeier Braille BRAILLEX Oudere Modellen ++
 De volgende brailleleesregels worden ondersteund: 
