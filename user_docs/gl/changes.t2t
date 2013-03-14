@@ -25,6 +25,7 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 == Novas Características ==
 - Soporte básico para editar e ler presentacións de Microsoft PowerPoint. (#501)
 - Soporte básico para ler e escreber mensaxes en Lotus Notes 8.5. (#543)
+- Soporte para o cambio automático de lingua cando se lean documentos no Microsoft Word. (#2047) 
 - No modo Navegación para MSHTML (ex.: Internet Explorer) e Gecko (ex.: Firefox), agora anúnciase a existencia de descripcións longas. Tamén é posible abrir a descripción longa nunha ventá nova premendo NVDA+d. (#809)
 - As notificacións en Internet Explorer 9 e superior agora fálanse (como contido bloqueado ou descargas de ficheiros). (#2343)
 - O anunciado automático das cabeceiras de fila e columna agora sopórtase para documentos en modo navegación en Internet Explorer e outros controis MSHTML. (#778)
@@ -36,7 +37,8 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 - Soporte para  modelos antigos das liñas braille Papenmeier BRAILLEX. (#2679)
 - Soporte para a entrada de braille computerizado  para liñas braille que posúan un teclado braille. (#808)
 - Novas opcións de teclado que permiten  escoller se NVDA debería interrumpir a fala para os caracteres escribidos ou a tecla Intro. (#698)
-
+- Soporte para varios navegadores web baseados no Google chrome: Rockmelt, BlackHawk, Comodo Dragon e SRWare Iron. (#2236, #2813, #2814, #2815)
+ 
 
 == Cambios ==
 - Actualizado o transcriptor braille liblouis ó 2.5.2. (#2737)
@@ -67,7 +69,7 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 - Cando se estea en revisión,  eliminando caracteres co retroceso ou suprimir en controis de edición de Scintilla, NVDA anuncia correctamente caracteres multibyte. (#2855)
 - NVDA xa non fallará ó instalar cando a ruta do perfil do usuario conteña certos caracteres multibyte. (#2729)
 - O anunciado de grupos para controis Vista de Lista (SysListview32) en aplicacións de 64 bit xa non causa un erro.
-+- No modo navegación nas aplicacións de Mozilla, o contido de texto xa non se trata incorrectamente como editable nalgúns casos extranos. (#2959)
+- No modo navegación nas aplicacións de Mozilla, o contido de texto xa non se trata incorrectamente como editable nalgúns casos extranos. (#2959)
 - No IBM Lotus Symphony e no OpenOffice, movendo o cursor do sistema agora móvese o cursor de revisión se procede.
 - O contido do Adobe Flash agora é accesible en Internet Explorer en Windows 8. (#2454)
 
@@ -79,6 +81,7 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 - Agora sopórtase a entrada braille  dende teclados braille. (#808)
  - A entrada braille abránguese pola crase brailleInput.BrailleInputGesture ou unha subcrase da mesma.
  - As subcrases de braille.BrailleDisplayGesture (segundo se implementaron nos controladores das liñas braille) tamén poden herdar de brailleInput.BrailleInputGesture. Esto permite amosar ordes  e que a entrada braille se manelle pola mesma crase gesture.
+- Agora podes utilizar comHelper.getActiveObject para conseguer un obxecto COM activo dende un proceso normal cando NVDA estea executándose co privilexio UIAccess. (#2483)
 
 
 = 2012.3 =
