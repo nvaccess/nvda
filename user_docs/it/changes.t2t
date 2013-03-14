@@ -2,8 +2,8 @@
 
 
 %!includeconf: ../changes.t2tconf
-
 = 2013.1 =
+Le caratteristiche più importanti di questa versione comprendono un layout tastiera per i portatili più coerente e intuitivo; il supporto di base per Microsoft PowerPoint; la gestione degli attributi longdesc nei browser web e il supporto per l'immissione del Braille computer per i display braille che dispongono una tastiera braille.
 
 == Importante == 
 
@@ -35,10 +35,11 @@ Si prega di consultare il documento [Comandi rapidi keyCommands.html] per i nuov
 - Supporto ai vecchi modelli Papenmeier utilizzati tramite porta seriale. (#2679)
 - Supporto alla scrittura diretta tramite display braille con tastiera in stile perkins. (#804)
 - - Nuove impostazioni della tastiera che consentono di selezionare se NVDA debba interrompere il parlato per i caratteri digitati e o il tasto ENTER. ;(# 698)
+- Supporto per diversi browser basati su Google Chrome: Rockmelt, BlackHawk, Comodo Dragon e SRWare Iron. (#2236, #2813, #2814, #2815)
  
-
- == Cambiamenti ==
- - Aggiornato liblouis Braille Translator alla versione 2.5.2. ;(# 2737)
+ 
+== Cambiamenti ==
+- Aggiornato liblouis Braille Translator alla versione 2.5.2. ;(# 2737)
 - Il layout tastiera laptop è stato completamente riprogettato in modo da renderlo più intuitivo e coerente. ;(# 804)
 
  
@@ -65,6 +66,11 @@ Si prega di consultare il documento [Comandi rapidi keyCommands.html] per i nuov
 - è di nuovo possibile selezionare il testo all'indietro in Microsoft Word quando il Braille è abilitato.
 - Durante la revisione o la cancellazione del testo col tasto canc o backspace nei controlli scintilla, NVDA ora annuncia correttamente i caratteri multibyte. (#2855)
 - NVDA non si rifiuterà più di installarsi quando il percorso del profilo utente contiene caratteri multibyte. (#2729)
+- L'annuncio dei gruppi per i controlli visualizzazione ad elenco di tipo SysListview32) in applicazioni a 64 bit non causa più un errore.
+- In modalità navigazione nelle applicazioni Mozilla, il contenuto del testo non è più considerato incorrettamente come modificabile in alcuni rari casi. (#2959)
+- In IBM Lotus Symphony e Openoffice, lo spostamento del cursore di sistema provoca anche lo spostamento del cursore di controllo se necessario.
+- I contenuti di tipo Adobe Flash sono ora accessibili in Internet Explorer in Windows 8. (#2454)
+- Corretto il supporto Bluetooth per il display braille Trio della Papenmeier. (#2995)
 
 
 == Cambiamenti per sviluppatori ==
@@ -74,8 +80,9 @@ Si prega di consultare il documento [Comandi rapidi keyCommands.html] per i nuov
 - Viene supportata l'immissione tramite tastiera braille. (#808)
  - L'immissione braille è gestita dalla classe brailleInput.BrailleInputGesture o una sottoclasse della stessa.
  - Le sottoclassi braille.BrailleDisplayGesture (come implementate nei driver dei display braille) possono anche ereditare da brailleInput.BrailleInputGesture. Ciò permette la gestione dei comandi dei display braille e dell'immissione braille dalla stessa classe gesture.
- 
- 
+- È ora possibile utilizzare comHelper.getActiveObject per ottenere un oggetto COM attivo da un processo normale quando NVDA è in esecuzione con privilegi uiAccess. ;(# 2483)
+
+
 = 2012.3 =
 Le novità principali in questa versione sono costituite dal supporto all'immissione dei caratteri asiatici; supporto sperimentale ai dispositivi touch screen in Windows 8; l'annuncio dei numeri di pagina e un notevole miglioramento per le tabelle in Adobe Reader; il poter usare comandi di navigazione delle tabelle nelle finestre con visualizzazioni ad elenco; supporto per molti nuovi display braille; e la possibilità di annunciare le intestazioni di righe e colonne in Excel.
 
