@@ -1,49 +1,12 @@
 ﻿NVDA NVDA_VERSION felhasználói útmutató
-
-
+A felhasználói útmutató elkészítésében részt vettek: Dr. Simon Gergely, Németh Dávid, Ócsvári Áron, Osztolykán Róbert, Papp László
+Ez az útmutató az angol felhasználói dokumentációt figyelembe véve készült, így tartalma azzal nem megegyező.
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION parancsok listája
 
-A fordításban részt vettek: Dr. Simon Gergely, Németh Dávid, Ócsvári Áron, Osztolykán Róbert, Papp László
-
 = Tartalomjegyzék =[toc]
 %%toc
-
-+ A kézikönyv használata +
-
-Tisztelt Felhasználó!
-
-Ön most a Non Visual Desktop Access (azaz NVDA) képernyőolvasó program felhasználói kézikönyvét olvassa.
-
-ez egy html dokumentum, amelyet webböngésző programja (Internet explorer, Firefox, stb.) nyitott meg.
-
-Ezt a kézikönyvet háromféleképpen érheti el:
-
-- az interneten 
-- az NVDA menüjében, 
-- a fájlrendszerben az NVDA dokumentációs mappájában.
--
-
-NVDA képernyőolvasó használata esetén nyomja meg az insert-N billentyűparancsot, a menüből válassza a súgó almenüt, abban a felhasználói útmutató parancsot.
-
-Ha ezt a kézikönyvet más képernyőolvasó programmal olvassa, kérjük, forduljon segítségért az adott képernyőolvasó súgójához, dokumentációjához vagy technikai támogató szolgálatához. Az NVDA honosító csapatnak nem áll módjában más képernyőolvasók használatához segítséget nyújtani.
-
-Ha az NVDA képernyőolvasó programot futtatja, az NVDA billentyűparancsai nagy segítségére lesznek a dokumentumban való tájékozódáskor.
-
-Néhány billentyűparancs a teljesség igénye nélkül:
-
-- A tartalomjegyzékben válasszon egy hivatkozást és nyomja meg az entert, a program a kívánt dokumentumrészhez (fejezethez, alfejezethez) ugrik.
-- A hivatkozások listáját az NVDA+f7 billentyűvel (insert + f7, vagy capslock+f7) kérheti le 
-- a tab billentyűvel hivatkozásról hivatkozásra léphet.
-- A H és shift+H billentyűkkel címsorról címsorra ugrálhat előre vagy hátra 
-- Az L billentyűvel listát, 
-- az I billentyűvel listaelemet kereshet, így könnyedén megtalálja az Önt érdeklő felsorolásokat. 
-- Az NVDA billentyű valamelyik Insert vagy a capslock lehet, ld. később részletesen. 
-- Az NVDA-gomb+controll+F billentyűparanccsal tetszőleges kifejezésre kereshet 
-- A folyamatos felolvasást az NVDA+lenyíllal indíthatja el, a felolvasást bármikor megállíthatja a controll billentyűvel. 
-- Az alt-f4 a böngészőprogramot, a controll-f4 (vagy control-w) a megnyitott böngészőlapot zárja be anélkül, hogy a többi megnyitott oldal bezáródna. 
--
-
+%!include: chapter0.t2t
 + Bevezetés +
 ++ Általános Jellemzők ++
 
@@ -67,7 +30,7 @@ Főbb jellemzői:
 
 ++ Honosítás ++
 
-Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg 40 nyelvre lett lefordítva, többek között: Afrikai, Amhara, Albán, Arab, Brazil Portugál, Bolgár, Horvát, Cseh, Dán, Holland, Finn, Francia, Galíciai, Görög, Grúz, Német, Héber, Indiai, Magyar, Olasz, Japán, Norvég, Kóreai, Nepáli, Lengyel, Portugál, Román, Orosz, Szerb, Szlovák, Spanyol, Svéd, Tamil, Hagyományos Kínai, Tájföldi, Ukrán és Vietnámi nyelvre, sőt még eszperantóra is.
+Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg 42 nyelvre lett lefordítva, többek között: Afrikai, Amhara, Aragóniai, Albán, Arab, Brazil Portugál, Bolgár, Horvát, Cseh, Dán, Holland, Finn, Francia, Galíciai, Görög, Grúz, Német, Héber, Indiai, Magyar, Olasz, Japán, Norvég, Kóreai, Nepáli, Lengyel, Portugál, Román, Orosz, Szerb, Szlovák, Szlovén, Spanyol, Svéd, Tamil, Hagyományos Kínai, Tájföldi, Ukrán és Vietnámi nyelvre, sőt még eszperantóra is.
 
 ++ Beszédszintetizátor Támogatás ++
 
@@ -108,7 +71,7 @@ A letöltött fájl elindításakor az NVDA egy átmeneti példánya töltődik 
 Ha fel szeretné telepíteni az NVDA programot, a "telepítés" gombot kell megnyomnia.
 Az NVDA telepítésével elérhetővé válik néhány extra funkció, úgy mint a program automatiku s elindulása a rendszer betöltésekor, vagy a Windows bejelentkező és biztonsági képernyők olvasása. Ezen felül a telepített verzió képes elkészíteni sajátmaga hordozható verzióját is.
 
-Ha magával szeretnévinni egy hordozható eszközön az NVDA programot, válassza a "Hordozható verzió készítése" lehetőséget. A hordozható verzió fel tudja telepíteni saját magát az éppen futó számítógépre.
+Ha magával szeretnévinni egy hordozható eszközön az NVDA programot, válassza a "Hordozható verzió készítése" lehetőséget. A hordozható verzió fel tudja telepíteni saját magát az éppen futó számítógépre. Ha egy csak olvasható adathordozóról szeretné futtatni a programot (pl. cd/dvd), akkor a letöltött telepítőfájlt másolja fel rá, ugyanis az NVDA hordozható változata nem támogatja a csak olvasható eszközöket.
 
 Az NVDA átmeneti példányának használata főképp demonstrációs célokat szolgál, a gép újraindulásakor ez és az ekkor megadott összes beállítás elveszik.
 
@@ -125,7 +88,7 @@ A beállítás bekapcsolásával az NVDA képes lesz beszédtámogatást nyújta
 A jelölőnégyzet bejelöése után a program elhelyezi parancsikonját az asztalon, amit a ctrl+alt+n (vagy az altgr + n, azaz a jobb alt + n) billentyűparanccsal is aktiválhat.
 Figyelem! Néhány programozási nyelvben sokat használják a } (végkapcsos) jelet, mely a magyar billentyűzeten az NVDA  billentyűparancsának felel meg.
 
-+++ A hordozható verzió beállításainak átmásolása +++
+++ A hordozható verzió beállításainak átmásolása ++
 Ez a funkció csak akkor érhető el, ha az NVDA telepítését a hordozható verzió futtatása közben indítja el. A beállítás bekapcsolásakor  a már előzőleg elvégzett beállításokat, bővítményeket átmásolja a telepítő az aktuális felhasználó mappájába.
 
 ++ Hordozható verzió készítése ++
@@ -135,7 +98,7 @@ A hordozható verzió jelenleg nem futtatható írásvédett eszközökön (pl. 
 
 A felbukkanó párbeszédablakban kiválaszthatja az NVDA hordozható verziójának pontos helyét. Ez lehet egy hordozható eszköz főkönyvtára, de megadható egy könyvtár az ön gépének merevlemezén is.
 
-Lehetősége van a felhasználói beállítások átmásolására is, ekkor az összes beállítás (beleértve a használt bővítményekkel együtt) másolásra kerül. Ez csak abban az esetben érhető el, ha a hordozható verziót egy már feltelepített verzióból készíti el.
+Lehetősége van a felhasználói beállítások átmásolására, ekkor az összes beállítás (beleértve a használt bővítményekkel együtt) másolásra kerül. Ez csak abban az esetben érhető el, ha a hordozható verziót egy már feltelepített verzióból készíti el.
 
 A hordozható verzió elkészítéséhez nyomja meg a "folytatás" gombot. A telepítő egy párbeszédablakban fogja tájékoztatni a telepítés sikerességéről, amit az OK gomb megnyomásával zárhat be.
 
@@ -235,31 +198,29 @@ Az érintési módok váltogatásához használja a három ujjas érintést.
 
 Rengeteg beviteli parancsról említést teszünk ebben a felhasználói útmutatóban, de a parancsok legegyszerűbb megismerése a bevitel súgó bekapcsolásával érhető el. 
 
-A bevitel súgóban - ha funkcióval van ellátva bármely billentyű vagy érintési parancs, annak kiadásakor arról rövid tájékoztatást kaphat. A billentyűk és parancsok nem fognak a megszokott módon működni, lehetővé téve azok minnél jobb megismerését. 
+A bevitel súgót az NVDA+1 billentyűprancs lenyomásával kapcsolhatja ki-be. Bekapcsolás után  ha funkcióval van ellátva bármely billentyű vagy érintési parancs, annak kiadásakor arról rövid tájékoztatást kaphat. A billentyűk és parancsok nem fognak a megszokott módon működni, lehetővé téve azok minnél jobb megismerését. 
 
 ++ Az NVDA Menüje ++
-
-Az NVDA menüje elérhetővé teszi az NVDA beállításait, ugyanitt megtekintheti a súgót, elmentheti és betöltheti a beállításokat, módosíthatja a kivételszótárat, elolvashatja a napló fájlt, valamint kiléphet az NVDA programból. 
 
 A Windows bármely területén, az NVDA futása közben az NVDA menü az NVDA+n billentyűparanccsal, vagy két ujjas dupla érintéssel aktiválható.
 
 A menü aktiválása után billentyűzet esetén használja a nyíl billentyűket a navigáláshoz, és az enter billentyűt egy menüelem aktiválásához.
 
-A beállítások almenü az NVDA beállításainak megváltoztatását teszi lehetővé. Az eszközök almenü egy pár hasznos alkalmazást tartalmaz, mint pl. az NVDA naplónézőjét, a bővítménykezelőt és az NVDA Python konzolt fejlesztők részére. A súgó almenüben többek között megtekintheti a felhasználói útmutatót és a billentyűparancsok listáját. Szintén az NVDA menüből mentheti el, illetve töltheti be a beállításokat. Ugyancsak ebben a menüben léphet ki az NVDA programból. 
-
 Az NVDA menü a rendszertálcáról is elérhető. Kattintson a jobb egérgombbal az NVDA rendszertálcaikonjára, vagy a windowsgomb+b billentyűparanccsal ugorjon a rendszertálcára, majd a nyíl billentyűkkel keresse meg az NVDA ikonját és nyomja meg az alkalmazás billentyűt. 
+
+A beállítások almenü az NVDA beállításainak megváltoztatását teszi lehetővé. Az eszközök almenü egy pár hasznos alkalmazást tartalmaz, mint pl. az NVDA naplónézőjét, a bővítménykezelőt és az NVDA Python konzolt fejlesztők részére. A súgó almenüben többek között megtekintheti a felhasználói útmutatót és a billentyűparancsok listáját. Szintén az NVDA menüből mentheti el, illetve töltheti be a beállításokat. Ugyancsak ebben a menüben léphet ki az NVDA programból. 
 
 ++ Néhány alapvető NVDA parancs ++
 %kc:beginInclude
-|| Név | Billentyűparancs | Érintési parancs | Leírás |
-| Beszéd leállítása | Control | 2 ujjas érintés | A beszéd azonnali leállítása |
-| A beszéd megállítása | Shift | nincs | Az első lenyomáskor a beszéd abbamarad, de a gomb újbóli lenyomása után a beszéd a megállítás helyétől folytatódik. Ez csak azokkal a beszédszintetizátorokkal működik, amelyek támogatják ezt a funkciót. |
-| NVDA Menü | NVDA+n | 2 ujjas dupla érintés | Felugrik az NVDA menüje, ahonnan elérheti a beállításokat, a súgót, stb. |
-| Váltás a beszédmódok között | NVDA+s | nincs | Vált a beszédmódok (beszéd, hangjelzés, néma) között. |
-| A beviteli súgó be-ki kapcsolása | NVDA+1 | nincs | Ha a bevitel súgó be van kapcsolva, és ha funkcióval van ellátva bármely parancs, akkor annak kiadása esetén arról rövid tájékoztatást kaphat. |
-| Az NVDA bezárása | NVDA+q | nincs | Bezárja a programot |
-| Billentyűparancs átadása | NVDA+f2 | nincs | Az ezutáni billentyűparancsot az NVDA figyelmen kívül hagyja, és átadja az aktív alkalmazásnak. |
-| Az alvómód be- és kikapcsolása | NVDA+shift+s | nincs | Az alvómód kikapcsolja az NVDA összes billentyűparancsát és beszéd/braille kimenetét egy adott alkalmazásban. A billentyűparancs újbóli lenyomására visszaállítja azt. Ez azokban az alkalmazásokban előnyös, amelyek rendelkeznek saját beszéddel, vagy képernyőolvasó tulajdonságokkal. |
+|| Név | Asztali billentyűparancs | Laptop billentyűparancs | Érintési parancs | Leírás |
+| Beszéd leállítása | Control  | Control | 2 ujjas érintés | A beszéd azonnali leállítása |
+| A beszéd megállítása | Shift | Shift | nincs | Az első lenyomáskor a beszéd abbamarad, de a gomb újbóli lenyomása után a beszéd a megállítás helyétől folytatódik. Ez csak azokkal a beszédszintetizátorokkal működik, amelyek támogatják ezt a funkciót. |
+| NVDA Menü | NVDA+n | NVDA+n | 2 ujjas dupla érintés | Felugrik az NVDA menüje, ahonnan elérheti a beállításokat, a súgót, stb. |
+| Váltás a beszédmódok között | NVDA+s | NVDA+s | nincs | Vált a beszédmódok (beszéd, hangjelzés, néma) között. |
+| A beviteli súgó be-ki kapcsolása | NVDA+1 | NVDA+1 | nincs | Ha a bevitel súgó be van kapcsolva, és ha funkcióval van ellátva bármely parancs, akkor annak kiadása esetén arról rövid tájékoztatást kaphat. |
+| Az NVDA bezárása | NVDA+q | NVDA+q | nincs | Bezárja a programot |
+| Billentyűparancs átadása | NVDA+f2 | NVDA+f2 | nincs | Az ezutáni billentyűparancsot az NVDA figyelmen kívül hagyja, és átadja az aktív alkalmazásnak. |
+| Az alvómód be- és kikapcsolása | NVDA+shift+s | NVDA+shift+z | nincs | Az alvómód kikapcsolja az NVDA összes billentyűparancsát és beszéd/braille kimenetét egy adott alkalmazásban. A billentyűparancs újbóli lenyomására visszaállítja azt. Ez azokban az alkalmazásokban előnyös, amelyek rendelkeznek saját beszéddel, vagy képernyőolvasó tulajdonságokkal. |
 %kc:endInclude
 
 ++ Rendszerinformációk bemondása ++
@@ -293,11 +254,11 @@ Ha ezek valamelyikét lenyomja, az NVDA elmond néhány információt az adott o
 
 Néhány hasznos billentyűparancs a fókusszal történő mozgás esetén:
 %kc:beginInclude
-|| Név | Billentyűparancs | Leírás |
-| aktuális objektum felolvasása | NVDA+tab | Bemondja az aktuális fókuszban lévő vezérlőelemet, vagy objektumot, kétszeri lenyomásra betűzi.
-| Az aktív ablak felolvasása | NVDA+B | Felolvassa az előtérben lévő ablak tartalmát (hasznos lehet párbeszédpanelek felolvastatásakor) 
-| Az ablak címének bemondása | NVDA+T | Felolvassa az aktív ablak címét 
-| Állapotsor bemondása | NVDA+end | Bemondja az aktív alkalmazás állapotsorát (ha az NVDA megtalálja), és a navigátor kurzort oda  helyezi. |
+|| Név | Asztali billentyűparancs | Laptop billentyűparancs | Leírás |
+| aktuális objektum felolvasása | NVDA+tab | NVDA+tab | Bemondja az aktuális fókuszban lévő vezérlőelemet, vagy objektumot, kétszeri lenyomásra betűzi.
+| Az ablak címének bemondása | NVDA+T | NVDA+T | Felolvassa az aktív ablak címét 
+| Az aktív ablak felolvasása | NVDA+B | NVDA+B | Felolvassa az előtérben lévő ablak tartalmát (hasznos lehet párbeszédpanelek felolvastatásakor) 
+| Állapotsor bemondása | NVDA+end | NVDA+shift+end | Bemondja az aktív alkalmazás állapotsorát (ha az NVDA megtalálja), és a navigátor kurzort oda  helyezi. |
 %kc:endInclude
 
 ++ Navigáció a rendszerkurzorral ++[SystemCaret]
@@ -310,10 +271,10 @@ Ha a rendszerkurzorral navigál, az áttekintő kurzor követni fogja azt.
 
 Az NVDA a következő billentyűparancsokat biztosítja a rendszerkurzor mozgatásához:
 %kc:beginInclude
-|| Név | Billentyűparancs | Leírás |
-| folyamatos felolvasás | NVDA+lenyíl | A rendszerkurzor aktuális pozíciójától a szöveg végéig olvas. |
-| Aktuális sor felolvasása | NVDA+felnyíl | Felolvassa a kurzornál lévő sort, kétszer megnyomva betűzi azt. |
-| A kijelölt szöveg felolvasása | NVDA+Shift+felnyíl | Felolvassa a kijelölt szöveget. |
+|| Név | Asztali billentyűparancs | Laptop billentyűparancs | Leírás |
+| folyamatos felolvasás | NVDA+lenyíl | NVDA+a | A rendszerkurzor aktuális pozíciójától a szöveg végéig olvas. |
+| Aktuális sor felolvasása | NVDA+felnyíl | NVDA+l | Felolvassa a kurzornál lévő sort, kétszer megnyomva betűzi azt. |
+| A kijelölt szöveg felolvasása | NVDA+Shift+felnyíl | NVDA+shift+s | Felolvassa a kijelölt szöveget. |
 | A karakter formázásának bemondása | NVDA+f | Bemondja a formázási beállítását annak a karakternek, melyen a rendszerkurzor éppen áll. |
 
 Ha egy táblázatban áll, a következő billentyűparancsok érhetők el:
@@ -343,11 +304,11 @@ Hasonlóképpen, egy eszköztár vezérlőelemeinek megtekintéséhez az eszköz
 Az elemek közötti közlekedéshez használja a következő parancsokat:
 %kc:beginInclude
 || Név | asztali billentyűparancs | Laptop billentyűparancs | Érintési parancs | Leírás |
-| az aktuális objektum bemondása | NVDA+5 a numerikus billentyűzeten | NVDA+control+i | Nincs | Felolvassa az aktuális objektumot, kétszeri megnyomásra betüzi azt, háromszori lenyomásra pedig az objektum nevét és értékét a vágólapra másolja. |
-| Az objektum szülőelemére lépés | NVDA+8 a numerikus billentyűzeten | NVDA+shift+i |  felfelé pöccintés (elem mód) | A szülő elemre lép (egy szinttel visszalép a fanézet gyökere felé). |
-| az előző elemre lépés | NVDA+4 a numerikus billentyűzeten | NVDA+control+j |  balra pöccintés (elem mód) | Az előző, a jelenlegivel azonos szinten lévő elemre lép. |
-| A következő elemre lépés | NVDA+6 a numerikus billentyűzeten | control+NVDA+l |  jobbra pöccintés (elem mód) | A következő, a jelenlegivel azonos szinten lévő elemre lép |
-| Az első gyermekelemre lépés | NVDA+2 a numerikus billentyűzeten | NVDA+shift+vessző |  lefelé pöccintés (elem mód) | Az aktuális objektum első gyermekelemére lép. |
+| az aktuális objektum bemondása | NVDA+5 a numerikus billentyűzeten | NVDA+shift+o | Nincs | Felolvassa az aktuális objektumot, kétszeri megnyomásra betüzi azt, háromszori lenyomásra pedig az objektum nevét és értékét a vágólapra másolja. |
+| Az objektum szülőelemére lépés | NVDA+8 a numerikus billentyűzeten | NVDA+shift+felnyíl |  felfelé pöccintés (elem mód) | A szülő elemre lép (egy szinttel visszalép a fanézet gyökere felé). |
+| az előző elemre lépés | NVDA+4 a numerikus billentyűzeten | NVDA+shift+balranyíl | balra pöccintés (elem mód) | Az előző, a jelenlegivel azonos szinten lévő elemre lép. |
+| A következő elemre lépés | NVDA+6 a numerikus billentyűzeten | NVDA+shift+jobbranyíl |  jobbra pöccintés (elem mód) | A következő, a jelenlegivel azonos szinten lévő elemre lép |
+| Az első gyermekelemre lépés | NVDA+2 a numerikus billentyűzeten | NVDA+shift+lefelenyíl |  lefelé pöccintés (elem mód) | Az aktuális objektum első gyermekelemére lép. |
 | A navigátor kurzor és az áttekintő kurzor áthelyezése | NVDA+minusz a numerikus billentyűzeten | NVDA+backspace | nincs | A navigátor kurzort az aktuális fókuszhoz, az áttekintő kurzort ha lehetséges, a kurzor aktuális pozíciójához helyezi. |
 | Az aktuális objektum aktiválása | NVDA+enter a numerikus billentyűzeten | NVDA+enter | dupla érintés | Aktiválja az aktuális elemet (pl. enter, szimpla vagy dupla kattintás). |
 | A kurzor áthelyezése a navigátor kurzorhoz | NVDA+shift+Minusz a numerikus billentyűzeten | NVDA+shift+backspace | nincs | A kurzort egyszeri lenyomásra a navigátor kurzorhoz, háromszori lenyomásra pedig az áttekintő kurzorhoz helyezi |
@@ -367,20 +328,20 @@ Ha mozgatja az áttekintő kurzort, a rendszer kurzor nem követi azt. Ezzel sze
 Az áttekintő kurzor parancsai:
 %kc:beginInclude
 || Név | Asztali billentyűparancs | Laptop billentyűparancs | Érintésiparancs | Leírás |
-| ugrás a szöveg első sorára | Shift+7 a numerikus billentyűzeten | NVDA+7 | nincs | Az áttekintő kurzort a szöveg első sorára viszi. |
-| Ugrás az előző sorra | 7 a numerikus billentyűzeten | NVDA+u | felfelé pöccintés (szöveges mód) | Az áttekintő kurzort az előző sorra viszi. |
-| Az aktuális sor felolvasása | 8 a numerikus billentyűzeten | NVDA+i | nincs | Felolvassa az áttekintő kurzornál lévő sort, háromszor megnyomva betűzi azt |
-| Ugrás a következő sorra | 9 a numerikus billentyűzeten | NVDA+o | lefelé pöccintés (szövetes mód) | Az áttekintő kurzort a szöveg következő sorára helyezi. |
-| alsó sor felolvasása | Shift+9 a numerikus billentyűzeten | NVDA+9 | nincs | Az áttekintő kurzort a szöveg alsó sorához helyezi |
-| Ugrás az előző szóhoz | 4 a numerikus billentyűzeten | NVDA+J | két ujjas pöccintés balra (szöveges mód) | Az áttekintő kurzort a szöveg előző szavához helyezi. |
-| jelenlegi szó felolvasása | 5 a numerikus billentyűzeten | NVDA+k | nincs | Bemondja az áttekintő kurzornál lévő szót. Kétszeri lenyomásra betűzi, háromszori lenyomásra a karakter leírással betűzi azt. |
-| Ugrás a következő szóhoz | 6 a numerikus billentyűzeten | NVDA+l | két ujjas jobbra pöccintés (szöveges mód) | Az áttekintő kurzort a következő szóhoz helyezi. |
-| Ugrás a sor elejére | Shift+1 a numerikus billentyűzeten | NVDA+shift+u | nincs | Az áttekintő kurzort az aktuális sor elejére helyezi. |
-| Ugrás az előző karakterre | 1 a numerikus billentyűzeten | NVDA+m | pöccintés balra (szöveges mód) | Az áttekintő kurzort az előző karakterhez helyezi. |
-| Jelenlegi karakter felolvasása | 2 a numerikus billentyűzeten | NVDA+vessző | nincs | Bemondja azt a karaktert, ahol az áttekintő kurzor található. Kétszeri lenyomásra a karakterhez tartozó szót, háromszori lenyomásra a decimális és a hexadecimális kódját mondja be. |
-| Ugrás a következő karakterre | 3 a numerikus billentyűzeten | NVDA+pont | jobbra pöccintés (szöveges mód) | Az áttekintő kurzort a következő, az aktuális sorban lévő  karakterre helyezi. |
-| áttekintő kurzor a sor végéhez | Shift+3 a numerikus billentyűzeten | NVDA+shift+o | nincs | Az áttekintő kurzort a sor végéhez helyezi.
-| Folyamatos felolvasás az áttekintő kurzorral | + (plusz) a numerikus billentyűzeten | NVDA+shift+lenyíl | három ujjas lefelé pöccintés | Folyamatos olvasás az aktuális pozíciótól az elem tartalmának végéig. |
+| ugrás a szöveg első sorára | Shift+7 a numerikus billentyűzeten | NVDA+control+home | nincs | Az áttekintő kurzort a szöveg első sorára viszi. |
+| Ugrás az előző sorra | 7 a numerikus billentyűzeten | NVDA+felnyíl | felfelé pöccintés (szöveges mód) | Az áttekintő kurzort az előző sorra viszi. |
+| Az aktuális sor felolvasása | 8 a numerikus billentyűzeten | NVDA+shift+. (pont) | nincs | Felolvassa az áttekintő kurzornál lévő sort, háromszor megnyomva betűzi azt |
+| Ugrás a következő sorra | 9 a numerikus billentyűzeten | NVDA+lefelenyíl | lefelé pöccintés (szöveges mód) | Az áttekintő kurzort a szöveg következő sorára helyezi. |
+| alsó sor felolvasása | Shift+9 a numerikus billentyűzeten | NVDA+control+end | nincs | Az áttekintő kurzort a szöveg alsó sorához helyezi |
+| Ugrás az előző szóhoz | 4 a numerikus billentyűzeten | NVDA+control+balranyíl | két ujjas pöccintés balra (szöveges mód) | Az áttekintő kurzort a szöveg előző szavához helyezi. |
+| jelenlegi szó felolvasása | 5 a numerikus billentyűzeten | NVDA+control+. (pont) | nincs | Bemondja az áttekintő kurzornál lévő szót. Kétszeri lenyomásra betűzi, háromszori lenyomásra a karakter leírással betűzi azt. |
+| Ugrás a következő szóhoz | 6 a numerikus billentyűzeten | NVDA+control+jobbranyíl | két ujjas jobbra pöccintés (szöveges mód) | Az áttekintő kurzort a következő szóhoz helyezi. |
+| Ugrás a sor elejére | Shift+1 a numerikus billentyűzeten | NVDA+home | nincs | Az áttekintő kurzort az aktuális sor elejére helyezi. |
+| Ugrás az előző karakterre | 1 a numerikus billentyűzeten | NVDA+balranyíl | pöccintés balra (szöveges mód) | Az áttekintő kurzort az előző karakterhez helyezi. |
+| Jelenlegi karakter felolvasása | 2 a numerikus billentyűzeten | NVDA+. (pont) | nincs | Bemondja azt a karaktert, ahol az áttekintő kurzor található. Kétszeri lenyomásra a karakterhez tartozó szót, háromszori lenyomásra a decimális és a hexadecimális kódját mondja be. |
+| Ugrás a következő karakterre | 3 a numerikus billentyűzeten | NVDA+jobbranyíl | jobbra pöccintés (szöveges mód) | Az áttekintő kurzort a következő, az aktuális sorban lévő  karakterre helyezi. |
+| áttekintő kurzor a sor végéhez | Shift+3 a numerikus billentyűzeten | NVDA+end | nincs | Az áttekintő kurzort a sor végéhez helyezi.
+| Folyamatos felolvasás az áttekintő kurzorral | + (plusz) a numerikus billentyűzeten | NVDA+shift+a | három ujjas lefelé pöccintés | Folyamatos olvasás az aktuális pozíciótól az elem tartalmának végéig. |
 | Szöveg másolásának megkezdése az áttekintő kurzorral | NVDA+f9 | NVDA+f9 | nincs | Megjelöli az áttekintő kurzor aktuális pozícióját. |
 | A kijelölt szöveg vágólapra másolása | NVDA+f10 | NVDA+f10 | nincs | A megadott kezdőponttól az áttekintő kurzor jelenlegi pozíciójáig lévő szöveget a vágólapra másolja. |
 | Szöveg formázásának bemondása | NVDA+f | NVDA+f | nincs | Bemondja az áttekintő kurzornál található formázási információkat |
@@ -388,7 +349,7 @@ Az áttekintő kurzor parancsai:
 
 Megjegyzés: a numerikus billentyűzet billentyűi akkor működnek megfelelően, ha a numlock ki van kapcsolva.
 
-A könnyű megjegyezhetőség érdekében igyekeztünk egyfajta struktúrát kialakítani. A billentyűk elhelyezkedése egyfajta táblázatként is felfoghatók. Így a soronkénti felosztás a következő:
+A könnyű megjegyezhetőség érdekében igyekeztünk egyfajta struktúrát kialakítani. Az asztali billentyűk elhelyezkedése egyfajta táblázatként is felfoghatók. Így a soronkénti felosztás a következő:
 | sor | szó | karakter |
 Az oszloponkénti felosztás pedig a következő:
 | előző | jelenlegi | következő |
@@ -433,12 +394,12 @@ Ezek a funkciók alapértelmezés szerint ki vannak kapcsolva, de ha ki szeretn�
 Bár az egér használatához egy fizikai egér (vagy más mutatóeszköz, pl. Trackball) szükséges, az NVDA rendelkezik néhány billentyűparanccsal a könnyebb használat érdekében.
 %kc:beginInclude
 || Név | Asztali billentyűparancs | Laptop billentyűparancs | Leírás |
-| bal egérgomb kattintás | Numerikus / | NVDA+balnyíl | Egyszeri kattintást végez a bal egérgombbal. Dupla kattintáshoz nyomja le kétszer egymás után gyorsan. |
-| bal egérgomb zárolása és feloldása | Shift+numerikus / | NVDA+shift+balnyíl | Zárolja a bal egérgombot, következő lenyomásra feloldja. Ez ugyanazt a funkciót látja el, mintha kézzel nyomva tartaná a bal egérgombot. |
-| jobb egérgomb kattintás | Numerikus * | NVDA+jobbranyíl | Egyszeri kattintást végez a jobb egérgombbal. |
-| Jobb egérgomb zárolása és feloldása | Shift +numerikus * | NVDA+shift+jobbranyíl | Zárolja a jobb egérgombot, a következő lenyomásra feloldja azt. Ez ugyanazt a funkciót látja el, mintha kézzel nyomva tartaná a jobb egérgombot. |
-| Az egérmutató áthelyezése a navigátor kurzorhoz | NVDA+numerikus per | NVDA+shift+f9 | Az egérmutatót a navigátor kurzornál található elemhez helyezi. |
-| A navigátor kurzor áthelyezése az egérmutatóhoz | NVDA+numerikus csillag | NVDA+shift+f10 | A navigátor kurzort az egérmutatónál lévő elemhez helyezi. |
+| bal egérgomb kattintás | Numerikus / | NVDA+ő | Egyszeri kattintást végez a bal egérgombbal. Dupla kattintáshoz nyomja le kétszer egymás után gyorsan. |
+| bal egérgomb zárolása és feloldása | Shift+numerikus / | NVDA+control+ő | Zárolja a bal egérgombot, következő lenyomásra feloldja. Ez ugyanazt a funkciót látja el, mintha kézzel nyomva tartaná a bal egérgombot. |
+| jobb egérgomb kattintás | Numerikus * | NVDA+ú | Egyszeri kattintást végez a jobb egérgombbal. |
+| Jobb egérgomb zárolása és feloldása | Shift +numerikus * | NVDA+control+ú | Zárolja a jobb egérgombot, a következő lenyomásra feloldja azt. Ez ugyanazt a funkciót látja el, mintha kézzel nyomva tartaná a jobb egérgombot. |
+| Az egérmutató áthelyezése a navigátor kurzorhoz | NVDA+numerikus per | NVDA+shift+m | Az egérmutatót a navigátor kurzornál található elemhez helyezi. |
+| A navigátor kurzor áthelyezése az egérmutatóhoz | NVDA+numerikus csillag | NVDA+shift+n | A navigátor kurzort az egérmutatónál lévő elemhez helyezi. |
 %kc:endInclude
 
 + A virtuális kijelzők +
@@ -587,6 +548,7 @@ Az ellenőrzést kézzel is elvégezheti az NVDA menü -súgó almenüjében a f
 
 A beszédszintetizátor párbeszédpanelen, mely megtalálható Beszédszintetizátor néven a beállítások almenüben, vagy megnyitható az NVDA+Control+S billentyűparancs leütésével, kiválasztható, hogy az NVDA melyik beszédszintetizátort használja.
 
+==== Beszédszintetizátor ====
 A Beszédszintetizátor kombinált listamező tartalmazza a választható beszédszintetizátorokat. Használja a fel-le nyilakat a kívánt beszédszintetizátor kiválasztásához.
 
 Ha valami hiba történt a szintetizátor betöltésekor, a program egy felugró üzenetben értesíti önt, és visszatölti a régi beállításokat.
@@ -603,6 +565,7 @@ A Sapi5 szintetizátor a Microsoft hangokat használja, amelyek be vannak épít
 A csendes üzemmódban (silence) az NVDA nem nyújt beszédtámogatást futás közben.
 Kérjük, vegye figyelembe, hogy a többi sapi 4 és sapi 5-ös hang csak a számítógépre való telepítés után jelenik meg a szintetizátor listában.
 
+==== Kimeneti hangeszköz ====
 A kimeneti hangeszköz kombinált listamezőben meghatározhatja, hogy a kiválasztott beszédszintetizátor melyik hangkártyán vagy hangeszközön szólaljon meg. Windows Xp és windows 7 esetén a Microsoft hangleképző az alapértelmezettként beállított eszközt használja, de a listában a telepített hangeszközök bármelyikét kiválaszthatja. Így pl. a gépbe épített hangkártyát, usb-s hangszórót vagy fejhallgatót, illetőleg minden olyan hangeszközt, amelyet a Windows felismer és kezel és képes legalább arra, hogy hangkimenetként viselkedjen.
 
 Az NVDA képes arra is, hogy átváltson az idő közben csatlakoztatott hangeszközre. Ha pl. egy usb-s fejhallgatót használ alapértelmezett hangeszközként, de ezt csak menet közben csatlakoztatja, az NVDA képes átváltani rá, a fejhallgató kihúzásakor pedig képes visszaváltani egy másik használható hangeszközre.
@@ -664,10 +627,10 @@ Ha a jelölőnégyzet be van jelölve, egy rövid csipogó hang hallható a nagy
 Lehetősége van a beszéd beállítások párbeszédablak megnyitása nélkül is megváltoztatni a beszéd különböző paramétereit. Ehhez a következő billentyűparancsok állnak rendelkezésére:
 %kc:beginInclude
 || Név | Asztali billentyűparancs | Laptop billentyűparancs | Leírás |
-| Ugrás a következő szintetizátor beállításra | NVDA+control+jobbra nyíl | NVDA+control+jobbra nyíl | A következő beszéd beállításra ugrik. Ha elérte az utolsót, akkor az elsőre lép. |
-| Ugrás az előző szintetizátor beállításra | NVDA+control+balra nyíl | NVDA+control+balra nyíl | Az előző beszéd beállításra ugrik. Ha elérte az utolsót, akkor az elsőre lép. |
-| Az aktuális beállítás értékének növelése | NVDA+control+fel nyíl | NVDA+control+fel nyíl | A gomb megnyomására nő az aktuális beszéd beállítás (hangkarakter, intonáció, beszéd tempó, stb.) értéke. |
-| Az aktuális beállítás értékének csökkentése | NVDA+control+le nyíl | NVDA+control+le nyíl | A gomb megnyomására csökken az aktuális beszéd beállítás (hangkarakter, intonáció, beszéd tempó, stb.) értéke. |
+| Ugrás a következő szintetizátor beállításra | NVDA+control+jobbnyíl | NVDA+shift+control+jobbra nyíl | A következő beszéd beállításra ugrik. Ha elérte az utolsót, akkor az elsőre lép. |
+| Ugrás az előző szintetizátor beállításra | NVDA+control+balnyíl | NVDA+shift+control+balra nyíl | Az előző beszéd beállításra ugrik. Ha elérte az utolsót, akkor az elsőre lép. |
+| Az aktuális beállítás értékének növelése | NVDA+control+fel nyíl | NVDA+shift+control+felnyíl | A gomb megnyomására nő az aktuális beszéd beállítás (hangkarakter, intonáció, beszéd tempó, stb.) értéke. |
+| Az aktuális beállítás értékének csökkentése | NVDA+control+le nyíl | NVDA+shift+control+lenyíl | A gomb megnyomására csökken az aktuális beszéd beállítás (hangkarakter, intonáció, beszéd tempó, stb.) értéke. |
 %kc:endInclude
 
 +++ Braille beállítások +++
@@ -755,8 +718,7 @@ E jelölőnégyzet bejelölése esetén az NVDA mindig bemondja, ha az egérmuta
 
 %kc:setting
 ===== Az egérmutató alatti szöveg felolvasása  =====
-| Asztali billentyűparancs | NVDA+m |
-| Laptop billentyűparancs | NVDA+shift+m |
+Billentyűparancs: NVDA+m
 
 E jelölőnégyzet bejelölése esetén az NVDA bemondja azt a szöveget, amely az egérmutató alatt van, annak mozgásakor a képernyőn. Ez lehetővé teszi, hogy az egér valódi mozgatásával térképezze fel a képernyőt, ne pedig az elemek közötti navigációval.
 
@@ -791,8 +753,7 @@ Ez a párbeszédablak az alábbi beállításokat tartalmazza:
 
 %kc:setting
 ==== A billentyűzet követése====
-| Asztali billentyűparancs | NVDA+7 |
-| Laptop billentyűparancs | NVDA+control+7 |
+Billentyűparancs: NVDA+7
 
 A beállítás engedélyezésével az áttekintő kurzor mindig az aktív elem szövegét mutatja.
 
@@ -869,8 +830,7 @@ Kapcsolja ki ezt a jelölőnégyzetet, ha nem kívánja, hogy az NVDA felolvassa
 
 %kc:setting
 ===== Hangjelzés folyamatjelző változásakor  =====
-| Asztali billentyűparancs | NVDA+u |
-| Laptop billentyűparancs | NVDA+F2 |
+Billentyűparancs: NVDA+u
 
 A folyamatjelző egy olyan vezérlőelem, amely egy vonalzóra hasonlít. Egy lassú folyamat esetén a folyamatjelző a feladat előrehaladtával folyamatosan kivilágosodik, továbbá százalékban mutatja, hogy a munka hol tart. Folyamatjelzők pl. weboldal betölltődésekor, e-mailek lehívásakor vagy hangfájlok feldolgozásakor jelennek meg. Az NVDA képes hanggal jelezni, hogy hol tart a folyamat, a hang egyre emelkedik. Ez néha jobb, mintha számokat hallanánk. Egy kombinált listamezőben választhatja ki, hogy az NVDA milyen tájékoztatást adjon a folyamatjelzőkről. 
 
