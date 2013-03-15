@@ -47,7 +47,8 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 
 == Bug Fixes ==
 - The quick navigation keys for jumping to the next or previous separator in Browse Mode now work in Internet Explorer and other MSHTML controls. (#2781)
-- If NVDA falls back to eSpeak or  no speech due to a configured speech synthesizer failing when NVDA starts, the configuration is no longer updated to set the fallback synthesizer as the configured choice, meaning that now the original synthesizer will be tried again next time NVDA starts. (#2589)
+- If NVDA falls back to eSpeak or no speech due to the configured speech synthesizer failing when NVDA starts, the configured choice is no longer automatically set to the fallback synthesizer. This means that now, the original synthesizer will be tried again next time NVDA starts. (#2589)
+- If NVDA falls back to no braille due to the configured braille display failing when NVDA starts, the configured display is no longer automatically set to no braille. This means that now, the original display will be tried again next time NVDA starts. (#2264)
 - In browse mode in Mozilla applications, updates to tables are now rendered correctly. For example, in updated cells, row and column coordinates are reported and table navigation works as it should. (#2784)
 - In browse mode in web browsers, certain clickable unlabelled graphics which weren't previously rendered are now rendered correctly. (#2838)
 - Earlier and newer versions of SecureCRT are now supported. (#2800)

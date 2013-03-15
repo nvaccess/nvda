@@ -1234,7 +1234,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			self.handleGainFocus(api.getFocusObject())
 
-	def setDisplayByName(self, name):
+	def setDisplayByName(self, name, isFallback=False):
 		if not name:
 			self.display = None
 			self.displaySize = 0
@@ -1266,12 +1266,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.display = newDisplay
 			self.displaySize = newDisplay.numCells
 			self.enabled = bool(self.displaySize)
-			config.conf["braille"]["display"] = name
+			if not isFallback:
+				config.conf["braille"]["display"] = name
 			log.info("Loaded braille display driver %s, current display has %d cells." %(name, self.displaySize))
 			return True
 		except:
 			log.error("Error initializing display driver", exc_info=True)
-			self.setDisplayByName("noBraille")
+			self.setDisplayByName("noBraille", isFallback=True)
 			return False
 
 	def _updateDisplay(self):
