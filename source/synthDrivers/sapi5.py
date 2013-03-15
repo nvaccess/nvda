@@ -54,7 +54,9 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVoices(self):
 		voices=OrderedDict()
 		v=self._getVoiceTokens()
-		for i in range(len(v)):
+		# #2629: Iterating uses IEnumVARIANT and GetBestInterface doesn't work on tokens returned by some token enumerators.
+		# Therefore, fetch the items by index, as that method explicitly returns the correct interface.
+		for i in xrange(len(v)):
 			try:
 				ID=v[i].Id
 				name=v[i].GetDescription()
@@ -113,7 +115,11 @@ class SynthDriver(SynthDriver):
 			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
 
 	def _set_voice(self,value):
-		for voice in self._getVoiceTokens():
+		tokens = self._getVoiceTokens()
+		# #2629: Iterating uses IEnumVARIANT and GetBestInterface doesn't work on tokens returned by some token enumerators.
+		# Therefore, fetch the items by index, as that method explicitly returns the correct interface.
+		for i in xrange(len(tokens)):
+			voice=tokens[i]
 			if value==voice.Id:
 				break
 		else:
