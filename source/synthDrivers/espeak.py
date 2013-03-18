@@ -149,7 +149,11 @@ class SynthDriver(SynthDriver):
 		if not identifier:
 			return
 		self._voice=identifier
-		_espeak.setVoiceAndVariant(voice=identifier,variant=self._variant)
+		try:
+			_espeak.setVoiceAndVariant(voice=identifier,variant=self._variant)
+		except:
+			self._voice=None
+			raise
 		self._language=super(SynthDriver,self).language
 
 	def _get_lastIndex(self):
