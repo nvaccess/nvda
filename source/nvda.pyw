@@ -5,7 +5,9 @@
 #See the file COPYING for more details.
 
 """The NVDA launcher. It can handle some command-line arguments (including help). It sets up logging, and then starts the core."""
- 
+
+import pythonMonkeyPatches
+
 import ctypes
 import os
 import sys

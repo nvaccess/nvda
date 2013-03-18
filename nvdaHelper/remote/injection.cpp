@@ -15,6 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <string>
 #include <sstream>
 #include <set>
+#include <map>
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <shlwapi.h>
@@ -33,18 +34,23 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+typedef HHOOK(WINAPI *SetWindowsHookEx_funcType)(int,HOOKPROC,HINSTANCE,DWORD);
+
 HINSTANCE dllHandle=NULL;
 wchar_t dllDirectory[MAX_PATH];
 wchar_t desktopSpecificNamespace[64];
 LockableObject inprocThreadsLock;
 HANDLE inprocMgrThreadHandle=NULL;
 HWINEVENTHOOK inprocWinEventHookID=0;
-set<HHOOK> inprocCurrentWindowsHooks;
+map<long,HHOOK> callWndProcHooksByThread;
+map<long,HHOOK> getMessageHooksByThread;
 long tlsIndex_inThreadInjectionID=0;
 bool isProcessExiting=false;
 bool isSecureModeNVDAProcess=false;
+SetWindowsHookEx_funcType real_SetWindowsHookExA=NULL;
 
 //Code executed in-process
+
 
 //General in-process winEvent callback
 //Used for all possible winEvents in this process
@@ -59,20 +65,67 @@ void CALLBACK inproc_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HWND 
 		HHOOK tempHook;
 		if((tempHook=SetWindowsHookEx(WH_GETMESSAGE,inProcess_getMessageHook,dllHandle,threadID))==0) {
 			LOG_DEBUGWARNING(L"SetWindowsHookEx with WH_GETMESSAGE failed, GetLastError returned "<<GetLastError());
-		} else inprocCurrentWindowsHooks.insert(tempHook);
+		} else getMessageHooksByThread.insert(make_pair(threadID,tempHook));
 		if((tempHook=SetWindowsHookEx(WH_CALLWNDPROC,inProcess_callWndProcHook,dllHandle,threadID))==0) {
 			LOG_DEBUGWARNING(L"SetWindowsHookEx with WH_CALLWNDPROC failed, GetLastError returned "<<GetLastError());
-		} else inprocCurrentWindowsHooks.insert(tempHook);
+		} else callWndProcHooksByThread.insert(make_pair(threadID,tempHook));
 	}
 	inprocThreadsLock.release();
 	//Call the winEvent callback for the in-process subsystems.
 	inProcess_winEventCallback(hookID,eventID,hwnd,objectID,childID,threadID,time);
 }
 
+//An implementation of SetWindowsHookExA that ensures that our W hooks always happen before other peoples' A hooks
+HHOOK WINAPI fake_SetWindowsHookExA(int IdHook, HOOKPROC lpfn, HINSTANCE hMod, DWORD dwThreadId) {
+	//Call the real SetWindowsHookExA
+	HHOOK res=real_SetWindowsHookExA(IdHook,lpfn,hMod,dwThreadId);
+	//We only go on if the real call did not fail and this is a thread-specific hook
+	if(!res||!dwThreadId) return res;
+	//Find our correct hooksByThread map and hookProc
+	//based on the hook type.
+	//If not supported then don't do anything more
+	map<long,HHOOK>* hooksByThread=NULL;
+	HOOKPROC ourHookProc=NULL;
+	switch(IdHook) {
+		case WH_GETMESSAGE:
+		hooksByThread=&getMessageHooksByThread;
+		ourHookProc=inProcess_getMessageHook;
+		break;
+		case WH_CALLWNDPROC:
+		hooksByThread=&callWndProcHooksByThread;
+		ourHookProc=inProcess_callWndProcHook;
+		break;
+		default:
+		return res;
+	}
+	//See if we have previously hooked this thread ourselves.
+	//If not then do nothing more.
+	inprocThreadsLock.acquire();
+	map<long,HHOOK>::iterator i=hooksByThread->find(dwThreadId);
+	if(i!=hooksByThread->end()) {
+		//Unhook our previous hook for this thread and rehook it again, placing our hook before the non-NVDA hook just registered 
+		if(UnhookWindowsHookEx(i->second)) {
+			i->second=SetWindowsHookEx(IdHook,ourHookProc,NULL,dwThreadId);
+		} else {
+			i->second=0;
+		}
+		if(i->second==0) {
+			hooksByThread->erase(i);
+		}
+	}
+	inprocThreadsLock.release();
+	return res;
+}
+
 //Unregisters any current windows hooks
 void killRunningWindowsHooks() {
-	for(set<HHOOK>::iterator i=inprocCurrentWindowsHooks.begin();i!=inprocCurrentWindowsHooks.end();++i) {
-		UnhookWindowsHookEx(*i);
+	for(map<long,HHOOK>::iterator i=getMessageHooksByThread.begin();i!=getMessageHooksByThread.end();) {
+		UnhookWindowsHookEx(i->second);
+		getMessageHooksByThread.erase(i++);
+	}
+	for(map<long,HHOOK>::iterator i=callWndProcHooksByThread.begin();i!=callWndProcHooksByThread.end();) {
+		UnhookWindowsHookEx(i->second);
+		callWndProcHooksByThread.erase(i++);
 	}
 }
 
@@ -114,7 +167,10 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	}
 	//Initialize API hooking
 	apiHook_initialize();
-//Fore secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
+	//Hook SetWindowsHookExA so that we can juggle hooks around a bit.
+	//Fixes #2411
+	real_SetWindowsHookExA=apiHook_hookFunction_safe("USER32.dll",SetWindowsHookExA,fake_SetWindowsHookExA);
+	//Fore secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
 if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32.dll",OpenClipboard,fake_OpenClipboard);
 	//Initialize in-process subsystems
 	inProcess_initialize();
@@ -334,6 +390,10 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 			RpcBindingFree(&nvdaControllerBindingHandle);
 			RpcBindingFree(&nvdaControllerInternalBindingHandle);
 		}
+	} else if(reason==DLL_THREAD_DETACH) {
+		long threadID=GetCurrentThreadId();
+		getMessageHooksByThread.erase(threadID);
+		callWndProcHooksByThread.erase(threadID);
 	}
 	return TRUE;
 }

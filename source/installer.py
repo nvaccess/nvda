@@ -12,6 +12,7 @@ import time
 import os
 import tempfile
 import shutil
+import itertools
 import shellapi
 import globalVars
 import languageHandler
@@ -19,7 +20,6 @@ import config
 import versionInfo
 from logHandler import log
 import addonHandler
-
 
 _wsh=None
 def _getWSH():
@@ -155,14 +155,17 @@ def registerInstallation(installDir,startMenuFolder,shouldCreateDesktopShortcut,
 	if shouldCreateDesktopShortcut:
 		createShortcut(u"NVDA.lnk",targetPath=slaveExe,arguments="launchNVDA -r",hotkey="CTRL+ALT+N",workingDirectory=installDir,prependSpecialFolder="AllUsersDesktop")
 	createShortcut(os.path.join(startMenuFolder,"NVDA.lnk"),targetPath=NVDAExe,workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 	createShortcut(os.path.join(startMenuFolder,_("NVDA web site")+".lnk"),targetPath=versionInfo.url,prependSpecialFolder="AllUsersPrograms")
+	# Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 	createShortcut(os.path.join(startMenuFolder,_("Uninstall NVDA")+".lnk"),targetPath=os.path.join(installDir,"uninstall.exe"),workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
+	# Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
 	createShortcut(os.path.join(startMenuFolder,_("Explore NVDA user configuration directory")+".lnk"),targetPath=slaveExe,arguments="explore_userConfigPath",workingDirectory=installDir,prependSpecialFolder="AllUsersPrograms")
 	# Translators: The label of the NVDA Documentation menu in the Start Menu.
 	docFolder=os.path.join(startMenuFolder,_("Documentation"))
 	# Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 	createShortcut(os.path.join(docFolder,_("Commands Quick Reference")+".lnk"),targetPath=getDocFilePath("keyCommands.html",installDir),prependSpecialFolder="AllUsersPrograms")
-	# Translators: The label of the Start Menu item to open the User Guide.
+	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
 	createShortcut(os.path.join(docFolder,_("User Guide")+".lnk"),targetPath=getDocFilePath("userGuide.html",installDir),prependSpecialFolder="AllUsersPrograms")
 	registerAddonFileAssociation(slaveExe)
 
@@ -213,6 +216,7 @@ def registerAddonFileAssociation(slaveExe):
 	try:
 		# Create progID for NVDA ad-ons
 		with _winreg.CreateKeyEx(_winreg.HKEY_LOCAL_MACHINE, "SOFTWARE\\Classes\\%s" % addonHandler.NVDA_ADDON_PROG_ID, 0, _winreg.KEY_WRITE) as k:
+			# Translators: A file extension label for NVDA add-on package.
 			_winreg.SetValueEx(k, None, 0, _winreg.REG_SZ, _("NVDA add-on package"))
 			with _winreg.CreateKeyEx(k, "DefaultIcon", 0, _winreg.KEY_WRITE) as k2:
 				_winreg.SetValueEx(k2, None, 0, _winreg.REG_SZ, "@{slaveExe},1".format(slaveExe=slaveExe))
@@ -246,20 +250,15 @@ def _deleteKeyAndSubkeys(key, subkey):
 	with _winreg.OpenKey(key, subkey, 0, _winreg.KEY_WRITE|_winreg.KEY_READ) as k:
 		# Recursively delete subkeys (Depth first search order)
 		# So Pythonic... </rant>
-		i = 0
-		while True:
+		for i in itertools.count():
 			try:
 				subkeyName = _winreg.EnumKey(k, i)
-				# Recursive call.
-				_deleteKeyAndSubkeys(k, subkeyName)
-				i += 1
 			except WindowsError:
 				break
-	# Delete this key
-	try:
+			# Recursive call.
+			_deleteKeyAndSubkeys(k, subkeyName)
+		# Delete this key
 		_winreg.DeleteKey(k, "")
-	except WindowsError:
-		log.warning("Error deleting registry key", exc_info=True)
 
 class RetriableFailure(Exception):
 	pass

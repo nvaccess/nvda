@@ -30,8 +30,13 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			role=controlTypes.ROLE_BLOCKQUOTE
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
 		states|=set(IAccessibleHandler.IAccessible2StatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible2::state_%s'%x,0)) and x in IAccessibleHandler.IAccessible2StatesToNVDAStates)
-		defaultAction=attrs.get('defaultAction','')
-		if defaultAction=="click":
+		if role == controlTypes.ROLE_EDITABLETEXT and not (controlTypes.STATE_FOCUSABLE in states or controlTypes.STATE_UNAVAILABLE in states or controlTypes.STATE_EDITABLE in states):
+			# This is a text leaf.
+			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
+			role = controlTypes.ROLE_STATICTEXT
+		if attrs.get("IAccessibleAction_showlongdesc") is not None:
+			states.add(controlTypes.STATE_HASLONGDESC)
+		if "IAccessibleAction_click" in attrs:
 			states.add(controlTypes.STATE_CLICKABLE)
 		grabbed = attrs.get("IAccessible2::attribute_grabbed")
 		if grabbed == "false":
@@ -142,6 +147,13 @@ class Gecko_ia2(VirtualBuffer):
 			return True
 		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj) and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
 
+	def _activateLongDesc(self,controlField):
+		index=int(controlField['IAccessibleAction_showlongdesc'])
+		docHandle=int(controlField['controlIdentifier_docHandle'])
+		ID=int(controlField['controlIdentifier_ID'])
+		obj=self.getNVDAObjectFromIdentifier(docHandle,ID)
+		obj.doAction(index)
+
 	def _activateNVDAObject(self, obj):
 		try:
 			obj.doAction()
@@ -180,13 +192,13 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType=="unvisitedLink":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
 		elif nodeType=="formField":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_OUTLINE,oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
 		elif nodeType=="list":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
 		elif nodeType=="listItem":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LISTITEM]}
 		elif nodeType=="button":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
+			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_BUTTONMENU]}
 		elif nodeType=="edit":
 			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_READONLY:[None]}
 		elif nodeType=="frame":

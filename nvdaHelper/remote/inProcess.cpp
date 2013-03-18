@@ -111,7 +111,7 @@ bool unregisterWindowsHook(int hookType, HOOKPROC hookProc) {
 
 //GetMessage hook callback
 LRESULT CALLBACK inProcess_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
-	if(code<0) {
+	if(code<0||wParam==PM_NOREMOVE) {
 		return CallNextHookEx(0,code,wParam,lParam);
 	}
 	//Hookprocs may unregister or register hooks themselves, so we must copy the hookprocs before executing

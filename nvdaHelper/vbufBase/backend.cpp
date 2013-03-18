@@ -130,6 +130,7 @@ void VBufBackend_t::renderThread_terminate() {
 }
 
 bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
+	if(node->updateAncestor) node=node->updateAncestor;
 	if(!isNodeInBuffer(node)) {
 		LOG_DEBUGWARNING(L"Node at "<<node<<L" not in buffer at "<<this);
 		return false;

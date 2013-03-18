@@ -1,4 +1,3 @@
-#NVDAObjects/IAccessible.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2012 NVDA Contributors
 #This file is covered by the GNU General Public License.
@@ -31,7 +30,6 @@ from NVDAObjects.window import Window
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
 import NVDAObjects.JAB
 import eventHandler
-import queueHandler
 from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer
 
 def getNVDAObjectFromEvent(hwnd,objectID,childID):
@@ -284,8 +282,10 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
 		try:
 			ht = self.obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext)
-			hl = ht.hyperlink(ht.hyperlinkIndex(offset))
-			return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
+			hi = ht.hyperlinkIndex(offset)
+			if hi != -1:
+				hl = ht.hyperlink(hi)
+				return IAccessible(IAccessibleObject=hl.QueryInterface(IAccessibleHandler.IAccessible2), IAccessibleChildID=0)
 		except COMError:
 			pass
 
@@ -293,6 +293,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# This could possibly be optimised by caching.
 		text = self._getTextRange(0, offset + 1)
 		childIndex = text.count(u"\uFFFC")
+		if childIndex == 0:
+			raise LookupError
 		try:
 			return IAccessible(IAccessibleObject=IAccessibleHandler.accChild(self.obj.IAccessibleObject, childIndex)[0], IAccessibleChildID=0)
 		except COMError:
@@ -361,12 +363,6 @@ the NVDAObject for IAccessible
 			kwargs['event_childID']=0
 		return True
 
-	@classmethod
-	def windowHasExtraIAccessibles(cls,windowHandle):
-		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
-		style=winUser.getWindowStyle(windowHandle)
-		return bool(style&winUser.WS_SYSMENU)
-
 	def findOverlayClasses(self,clsList):
 		if self.event_objectID==winUser.OBJID_CLIENT and JABHandler.isJavaWindow(self.windowHandle): 
 			clsList.append(JavaVMRoot)
@@ -412,13 +408,29 @@ the NVDAObject for IAccessible
 				clsList.append(newCls)
 
 		# Some special cases.
+		if windowClassName=="Frame Notification Bar" and role==oleacc.ROLE_SYSTEM_CLIENT:
+			clsList.append(IEFrameNotificationBar)
+		elif windowClassName=="DirectUIHWND" and role==oleacc.ROLE_SYSTEM_TOOLBAR:
+			parentWindow=winUser.getAncestor(self.windowHandle,winUser.GA_PARENT)
+			if parentWindow and winUser.getClassName(parentWindow)=="Frame Notification Bar":
+				clsList.append(IENotificationBar)
 		if windowClassName.lower().startswith('mscandui'):
 			import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
 			from mozilla import GeckoPluginWindowRoot
 			clsList.append(GeckoPluginWindowRoot)
-		if (windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2)) or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen", "GeckoFPSandboxChildWindow"):
+		maybeFlash = False
+		if ((windowClassName in ("MozillaWindowClass", "GeckoPluginWindow") and not isinstance(self.IAccessibleObject, IAccessibleHandler.IAccessible2))
+				or windowClassName in ("MacromediaFlashPlayerActiveX", "ApolloRuntimeContentWindow", "ShockwaveFlash", "ShockwaveFlashLibrary", "ShockwaveFlashFullScreen", "GeckoFPSandboxChildWindow")):
+			maybeFlash = True
+		elif windowClassName == "Internet Explorer_Server" and self.event_objectID > 0:
+			# #2454: In Windows 8 IE, Flash is exposed in the same HWND as web content.
+			from .MSHTML import MSHTML
+			# This is only possibly Flash if it isn't MSHTML.
+			if not isinstance(self, MSHTML):
+				maybeFlash = True
+		if maybeFlash:
 			# This is possibly a Flash object.
 			from . import adobeFlash
 			adobeFlash.findExtraOverlayClasses(self, clsList)
@@ -1318,17 +1330,10 @@ the NVDAObject for IAccessible
 	def event_selectionWithIn(self):
 		return self.event_stateChange()
 
-	def _get_presentationType(self):
-		if not self.windowHasExtraIAccessibles(self.windowHandle) and self.role==controlTypes.ROLE_WINDOW:
-			return self.presType_layout
-		return super(IAccessible,self).presentationType
-
 	def _get_isPresentableFocusAncestor(self):
 		IARole = self.IAccessibleRole
 		if IARole == oleacc.ROLE_SYSTEM_CLIENT and self.windowStyle & winUser.WS_SYSMENU:
 			return True
-		if IARole == oleacc.ROLE_SYSTEM_WINDOW:
-			return False
 		return super(IAccessible, self).isPresentableFocusAncestor
 
 	def _get_devInfo(self):
@@ -1430,11 +1435,27 @@ class ContentGenericClient(IAccessible):
 		return val
 
 class GenericWindow(IAccessible):
+
 	TextInfo=displayModel.DisplayModelTextInfo
+	isPresentableFocusAncestor=False
 
 class WindowRoot(GenericWindow):
 
 	parentUsesSuperOnWindowRootIAccessible=True #: on a window root IAccessible, super should be used instead of accParent
+
+	@classmethod
+	def windowHasExtraIAccessibles(cls,windowHandle):
+		"""Finds out whether this window has things such as a system menu / titleBar / scroll bars, which would be represented as extra IAccessibles"""
+		style=winUser.getWindowStyle(windowHandle)
+		return bool(style&winUser.WS_SYSMENU)
+
+	def _get_presentationType(self):
+		states=self.states
+		if controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_UNAVAILABLE in states:
+			return self.presType_unavailable
+		if not self.windowHasExtraIAccessibles(self.windowHandle):
+			return self.presType_layout
+		return self.presType_content
 
 	def _get_parent(self):
 		if self.parentUsesSuperOnWindowRootIAccessible:
@@ -1680,6 +1701,27 @@ class ListviewPane(IAccessible):
 	TextInfo=displayModel.DisplayModelTextInfo
 	name=""
 
+class IEFrameNotificationBar(IAccessible):
+
+	def event_show(self):
+		child=self.simpleFirstChild
+		if isinstance(child,Dialog):
+			child.event_alert()
+
+#The Internet Explorer notification toolbar should be handled as an alert
+class IENotificationBar(Dialog,IAccessible):
+	name=""
+	role=controlTypes.ROLE_ALERT
+
+	def event_alert(self):
+		speech.cancelSpeech()
+		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+		child=self.simpleFirstChild
+		while child:
+			if child.role!=controlTypes.ROLE_STATICTEXT:
+				speech.speakObject(child,reason=controlTypes.REASON_FOCUS)
+			child=child.simpleNext
+
 ###class mappings
 
 _staticMap={
@@ -1702,6 +1744,7 @@ _staticMap={
 	("TRichViewEdit",oleacc.ROLE_SYSTEM_CLIENT):"delphi.TRichViewEdit",
 	("TTntDrawGrid.UnicodeClass",oleacc.ROLE_SYSTEM_CLIENT):"List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LIST):"sysListView32.List",
+	("SysListView32",oleacc.ROLE_SYSTEM_GROUPING):"sysListView32.List",
 	("SysListView32",oleacc.ROLE_SYSTEM_LISTITEM):"sysListView32.ListItem",
 	("SysListView32",oleacc.ROLE_SYSTEM_MENUITEM):"sysListView32.ListItemWithoutColumnSupport",
 	("SysTreeView32",oleacc.ROLE_SYSTEM_OUTLINE):"sysTreeView32.TreeView",
@@ -1712,6 +1755,7 @@ _staticMap={
 	("TWizardForm",oleacc.ROLE_SYSTEM_CLIENT):"delphi.Form",
 	("SysLink",oleacc.ROLE_SYSTEM_CLIENT):"SysLinkClient",
 	("SysLink",oleacc.ROLE_SYSTEM_LINK):"SysLink",
+	("ATL:4FAE8088",oleacc.ROLE_SYSTEM_LINK):"SysLink",
 	("#32771",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("TaskSwitcherWnd",oleacc.ROLE_SYSTEM_LIST):"TaskList",
 	("#32771",oleacc.ROLE_SYSTEM_LISTITEM):"TaskListIcon",

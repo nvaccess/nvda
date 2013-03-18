@@ -350,12 +350,17 @@ def windowFromAccessibleObject(ia):
 		return 0
 
 def accessibleChildren(ia,startIndex,numChildren):
-	children=oleacc.AccessibleChildren(ia,startIndex,numChildren)
-	for childNum in xrange(len(children)):
-		if isinstance(children[childNum],comtypes.client.lazybind.Dispatch) or isinstance(children[childNum],comtypes.client.dynamic._Dispatch) or isinstance(children[childNum],IUnknown):
-			children[childNum]=(normalizeIAccessible(children[childNum]),0)
-		elif isinstance(children[childNum],int):
-			children[childNum]=(ia,children[childNum])
+	children=[]
+	for child in oleacc.AccessibleChildren(ia,startIndex,numChildren):
+		if child is None:
+			# This is a bug in the server.
+			# Filtering these out here makes life easier for the caller.
+			continue
+		elif isinstance(child,comtypes.client.lazybind.Dispatch) or isinstance(child,comtypes.client.dynamic._Dispatch) or isinstance(child,IUnknown):
+			child=(normalizeIAccessible(child),0)
+		elif isinstance(child,int):
+			child=(ia,child)
+		children.append(child)
 	return children
 
 def accFocus(ia):
@@ -664,6 +669,7 @@ class SecureDesktopNVDAObject(NVDAObjects.window.Desktop):
 		return clsList
 
 	def _get_name(self):
+		# Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 		return _("Secure Desktop")
 
 	def _get_role(self):
@@ -730,8 +736,8 @@ def processForegroundWinEvent(window,objectID,childID):
 
 def processShowWinEvent(window,objectID,childID):
 	className=winUser.getClassName(window)
-	#For now we only support 'show' event for tooltips as otherwize we get flooded
-	if className in ("tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
+	#For now we only support 'show' event for tooltips, IMM candidates and notification bars  as otherwize we get flooded
+	if className in ("Frame Notification Bar","tooltips_class32","mscandui21.candidate","mscandui40.candidate","MSCandUIWindow_Candidate") and objectID==winUser.OBJID_CLIENT:
 		NVDAEvent=winEventToNVDAEvent(winUser.EVENT_OBJECT_SHOW,window,objectID,childID)
 		if NVDAEvent:
 			eventHandler.queueEvent(*NVDAEvent)
@@ -744,12 +750,14 @@ def processDestroyWinEvent(window,objectID,childID):
 		del liveNVDAObjectTable[(window,objectID,childID)]
 	except KeyError:
 		pass
+	#Specific support for input method MSAA candidate lists.
+	#When their window is destroyed we must correct focus to its parent - which could be a composition string
+	# so can't use generic focus correction. (#2695)
 	focus=api.getFocusObject()
-	if objectID==0 and childID==0 and not eventHandler.isPendingEvents("gainFocus"):
-		obj=focus
-		while isinstance(obj,NVDAObjects.window.Window) and obj.windowHandle==window:
-			obj=obj.parent
-		if obj and obj is not focus:
+	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
+	if objectID==0 and childID==0 and isinstance(focus,BaseCandidateItem) and window==focus.windowHandle and not eventHandler.isPendingEvents("gainFocus"):
+		obj=focus.parent
+		if obj:
 			eventHandler.queueEvent("gainFocus",obj)
 
 def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):

@@ -73,12 +73,17 @@ confspec = ConfigObj(StringIO(
 [braille]
 	display = string(default=noBraille)
 	translationTable = string(default=en-us-comp8.ctb)
+	inputTable = string(default=en-us-comp8.ctb)
 	expandAtCursor = boolean(default=true)
 	cursorBlinkRate = integer(default=500,min=0,max=2000)
 	messageTimeout = integer(default=4,min=1,max=20)
 	tetherTo = string(default="focus")
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
+
+	# Braille display driver settings
+	[[__many__]]
+		port = string(default="")
 
 # Presentation settings
 [presentation]
@@ -120,6 +125,8 @@ confspec = ConfigObj(StringIO(
 	speakTypedWords = boolean(default=false)
 	beepForLowercaseWithCapslock = boolean(default=true)
 	speakCommandKeys = boolean(default=false)
+	speechInterruptForCharacters = boolean(default=true)
+	speechInterruptForEnter = boolean(default=true)
 
 [virtualBuffers]
 	maxLineLength = integer(default=100)
@@ -175,6 +182,9 @@ confspec = ConfigObj(StringIO(
 	alwaysIncludeShortCharacterDescriptionInCandidateName = boolean(default=True)
 	reportReadingStringChanges = boolean(default=True)
 	reportCompositionStringChanges = boolean(default=True)
+
+[upgrade]
+	newLaptopKeyboardLayout = boolean(default=false)
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"

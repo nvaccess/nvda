@@ -103,7 +103,7 @@ wstring getNameForURL(const wstring &url) {
 
 bool isWhitespace(const wchar_t *str) {
 	for (const wchar_t *c = str; *c; ++c) {
-		if (*c == L'\n' || !iswspace(*c))
+		if (!iswspace(*c))
 			return false;
 	}
 	return true;
@@ -139,4 +139,17 @@ void multiValueAttribsStringToMap(const wstring &attribsString, multiValueAttrib
 			str.push_back(*it);
 		}
 	}
+}
+
+bool nodeHasUsefulContent(VBufStorage_fieldNode_t* node) {
+	int length = node->getLength();
+	if (length == 0)
+		return false;
+	if (length > 3)
+		return true;
+	wstring content;
+	node->getTextInRange(0, length, content, false);
+	if (isWhitespace(content.c_str()))
+		return false;
+	return true;
 }

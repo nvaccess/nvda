@@ -12,7 +12,7 @@ import winUser
 from . import IAccessible
 from NVDAObjects.behaviors import CandidateItem as CandidateItemBehavior
 
-def reportSelectedCandidate(candidateObject,allowDuplicate=False):
+def reportSelectedCandidate(candidateObject,allowDuplicate=False,newList=False):
 	if not eventHandler.isPendingEvents("gainFocus") and (allowDuplicate or candidateObject!=api.getFocusObject()):
 		if not isinstance(api.getFocusObject(),BaseCandidateItem):
 			oldCandidateItemsText=None
@@ -21,7 +21,7 @@ def reportSelectedCandidate(candidateObject,allowDuplicate=False):
 		else:
 			oldCandidateItemsText=api.getFocusObject().visibleCandidateItemsText
 			candidateObject.container=api.getFocusObject().container
-		if config.conf["inputComposition"]["autoReportAllCandidates"] and candidateObject.visibleCandidateItemsText!=oldCandidateItemsText:
+		if config.conf["inputComposition"]["autoReportAllCandidates"] and (newList or candidateObject.visibleCandidateItemsText!=oldCandidateItemsText):
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,candidateObject.visibleCandidateItemsText)
 		eventHandler.queueEvent("gainFocus",candidateObject)
 
@@ -31,7 +31,12 @@ class BaseCandidateItem(CandidateItemBehavior,IAccessible):
 	keyboardShortcut=""
 
 	def _get_candidateNumber(self):
-		return super(BaseCandidateItem,self).keyboardShortcut
+		number=super(BaseCandidateItem,self).keyboardShortcut
+		try:
+			number=int(number)
+		except (ValueError,TypeError):
+			pass
+		return number
 
 	def _get_parent(self):
 		parent=super(BaseCandidateItem,self).parent
@@ -68,6 +73,16 @@ class MSCandUI_candidateListItem(BaseCandidateItem):
 
 class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 
+	def _get_previous(self):
+		item=super(MSCandUI21_candidateMenuItem,self).previous
+		if not item or controlTypes.STATE_INVISIBLE in item.states: return
+		return MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
+
+	def _get_next(self):
+		item=super(MSCandUI21_candidateMenuItem,self).next
+		if not item or controlTypes.STATE_INVISIBLE in item.states: return
+		return MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
+
 	def doAction(self,index=None):
 		if not index:
 			l=self.location
@@ -85,31 +100,46 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 
 	def script_nextItem(self,gesture):
 		item=self.next
-		if not item or controlTypes.STATE_INVISIBLE in item.states: return
-		item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
+		if not item or not isinstance(item.candidateNumber,int): return
 		reportSelectedCandidate(item)
 
 	def script_previousItem(self,gesture):
 		item=self.previous
-		if not item or controlTypes.STATE_INVISIBLE in item.states: return
-		item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
+		if not item or not isinstance(item.candidateNumber,int): return
 		reportSelectedCandidate(item)
 
 	def script_changePage(self,gesture):
+		try:
+			del self.__dict__['visibleCandidateItemsText']
+		except KeyError:
+			pass
 		gesture.send()
 		api.processPendingEvents()
-		item=self.parent.firstChild.next.next
-		item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
-		reportSelectedCandidate(item,allowDuplicate=True)
+		oldItem=item=self
+		while item and isinstance(item.candidateNumber,int):
+			oldItem=item
+			item=item.previous
+		if oldItem and isinstance(oldItem.candidateNumber,int) and oldItem.name:
+			reportSelectedCandidate(oldItem,allowDuplicate=True,newList=True)
 
 	def script_activate(self,gesture):
 		self.doAction()
+		api.processPendingEvents()
+		oldItem=item=self
+		while item and isinstance(item.candidateNumber,int):
+			oldItem=item
+			item=item.previous
+		if oldItem and isinstance(oldItem.candidateNumber,int) and oldItem.name:
+			reportSelectedCandidate(oldItem,allowDuplicate=True,newList=True)
 
 	__gestures={
 		"kb:downArrow":"nextItem",
 		"kb:upArrow":"previousItem",
 		"kb:pageDown":"changePage",
 		"kb:pageUp":"changePage",
+		"kb:leftArrow":"changePage",
+		"kb:rightArrow":"changePage",
+		"kb:space":"activate",
 		"kb:enter":"activate",
 	}
 
@@ -134,27 +164,38 @@ class MSCandUI21(IAccessible):
 		elif role==controlTypes.ROLE_MENUBUTTON:
 			item=candidateList.firstChild.next.next
 			item=MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
-			reportSelectedCandidate(item)
+			if item and isinstance(item.candidateNumber,int) and item.name:
+				reportSelectedCandidate(item)
 
 ###IME 2002
 
 class MSCandUIWindow_candidateListItem(MSCandUI_candidateListItem):
 
+	def _get_isValidCandidate(self):
+		if self.IAccessibleRole!=oleacc.ROLE_SYSTEM_LISTITEM:
+			return False
+		name=super(BaseCandidateItem,self).name
+		if not name:
+			return False
+		return True
+
 	def _get_candidateNumber(self):
 		index=self.IAccessibleChildID-2
 		if index>0:
-			return unicode(index)
+			return index
 
 	def _get_next(self):
 		childID=self.IAccessibleChildID+1
 		item=self.__class__(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=childID)
-		if item.IAccessibleRole==oleacc.ROLE_SYSTEM_LISTITEM:
+		if item.isValidCandidate:
 			return item
 
 	def _get_previous(self):
 		childID=self.IAccessibleChildID-1
 		if childID>=3:
-			return self.__class__(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=childID)
+			item=self.__class__(IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=childID)
+			if item.isValidCandidate:
+				return item
 
 class MSCandUIWindow(IAccessible):
 

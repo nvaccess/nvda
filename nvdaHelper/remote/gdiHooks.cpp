@@ -311,11 +311,12 @@ GlyphTranslatorCache glyphTranslatorCache;
  * @param fuOptions flags accepted by GDI32's ExtTextOut.
  * @param textAlign possible flags returned by GDI32's GetTextAlign.
  * @param lpString the string of unicode text you wish to record.
+ * @param codePage not used in the unicode version
  * @param characterWidths an optional array of character widths 
  * @param cbCount the length of the string in characters.
  * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
@@ -434,18 +435,19 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 /**
  * an overload of ExtTextOutHelper to work with ansi strings.
  * @param lpString the string of ansi text you wish to record.
+ * @param codePage the code page used for the string which will be converted to unicode
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
 	int newCount=0;
 	wchar_t* newString=NULL;
 	if(lpString&&cbCount) {
-		newCount=MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,NULL,0);
+		newCount=MultiByteToWideChar(codePage,0,lpString,cbCount,NULL,0);
 		if(newCount>0) {
 			newString=(wchar_t*)calloc(newCount+1,sizeof(wchar_t));
-			MultiByteToWideChar(CP_THREAD_ACP,0,lpString,cbCount,newString,newCount);
+			MultiByteToWideChar(codePage,0,lpString,cbCount,newString,newCount);
 		}
 	}
-	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,characterWidths,newCount,resultTextSize);
+	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,characterWidths,newCount,resultTextSize);
 	if(newString) free(newString);
 }
 
@@ -474,7 +476,7 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	//If we can't get a display model then stop here.
 	if(!model) return res;
 	//Calculate the size of the text
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,NULL,cbCount,NULL);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,CP_THREAD_ACP,NULL,cbCount,NULL);
 	model->release();
 	return res;
 }
@@ -515,7 +517,7 @@ template<typename WA_POLYTEXT> BOOL WINAPI hookClass_PolyTextOut<WA_POLYTEXT>::f
 			curPos.y=curPptxt->y;
 		}
 		//record the text
-		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpstr,curPptxt->pdx,curPptxt->n,&curTextSize);
+		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpstr,CP_THREAD_ACP,curPptxt->pdx,curPptxt->n,&curTextSize);
 		//If the DC's current position should be used,  move our idea of it by the size of the text just recorded
 		if(textAlign&TA_UPDATECP) {
 			curPos.x+=curTextSize.cx;
@@ -608,7 +610,7 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	//If we can't get a display model then stop here
 	if(!model) return res;
 	//Record the text in the displayModel
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,lpDx,cbCount,NULL);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,CP_THREAD_ACP,lpDx,cbCount,NULL);
 	//Release the displayModel and return
 	model->release();
 	return res;
@@ -668,28 +670,14 @@ BOOL WINAPI fake_DeleteDC(HDC hdc) {
 	return res;
 }
 
-//BitBlt hook function
-//Hooked so we can tell when content from one DC is being copied (bit blitted) to another (most likely from a memory DC to a window DC). 
-typedef BOOL(WINAPI *BitBlt_funcType)(HDC,int,int,int,int,HDC,int,int,DWORD);
-BitBlt_funcType real_BitBlt=NULL;
-BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop) {
-	//Call the real BitBlt
-	BOOL res=real_BitBlt(hdcDest,nXDest,nYDest,nWidth,nHeight,hdcSrc,nXSrc,nYSrc,dwRop);
-	//If bit blit didn't work, or its not a simple copy, we don't want to know about it
-	if(!res) return res;
-	BOOL useSource=FALSE;
-	switch(dwRop) {
-		case MERGECOPY:
-		case MERGEPAINT:
-		case NOTSRCCOPY:
-		case NOTSRCERASE:
-		case SRCAND:
-		case SRCCOPY:
-		case SRCERASE:
-		case SRCINVERT:
-		case SRCPAINT:
-		useSource=TRUE;
-	}
+void StretchBlt_helper(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int nHeightDest, HDC hdcSrc, int nXSrc, int nYSrc, int nWidthSrc, int nHeightSrc, DWORD dwRop) {
+	dwRop=dwRop&0x00ffffff;
+	bool useSource=(dwRop==MERGECOPY||dwRop==MERGEPAINT||dwRop==NOTSRCCOPY||dwRop==NOTSRCERASE||dwRop==PATPAINT||dwRop==SRCAND||dwRop==SRCCOPY||dwRop==SRCERASE||dwRop==SRCINVERT||dwRop==SRCPAINT);
+	bool destInvertBefore=dwRop==SRCERASE;
+	bool destInvertAfter=(dwRop==DSTINVERT||dwRop==NOTSRCERASE);
+	bool sourceInvert=(dwRop==MERGEPAINT||dwRop==NOTSRCCOPY||dwRop==PATPAINT);
+	bool opaqueSource=(dwRop==MERGECOPY||dwRop==NOTSRCCOPY||dwRop==SRCCOPY);
+	bool clearDest=(dwRop==BLACKNESS||dwRop==WHITENESS||dwRop==PATCOPY);
 	//If there is no source dc given, the destination dc should be used as the source
 	if(hdcSrc==NULL) hdcSrc=hdcDest;
 	//Try getting a display model for the source DC if one is needed.
@@ -702,27 +690,115 @@ BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHe
 	displayModel_t* destModel=acquireDisplayModel(hdcDest,srcModel==NULL);
 	if(!destModel) {
 		if(srcModel) srcModel->release();
-		return res;
+		return;
 	}
-	RECT srcRect={nXSrc,nYSrc,nXSrc+nWidth,nYSrc+nHeight};
+	RECT srcRect={nXSrc,nYSrc,nXSrc+nWidthSrc,nYSrc+nHeightSrc};
 	//we record chunks using device coordinates -- DCs can move/resize
 	dcPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2);
-	POINT destPos={nXDest,nYDest};
-	dcPointsToScreenPoints(hdcDest,&destPos,1);
+	RECT destRect={nXDest,nYDest,nXDest+nWidthDest,nYDest+nHeightDest};
+	//we record chunks using device coordinates -- DCs can move/resize
+	dcPointsToScreenPoints(hdcDest,(LPPOINT)&destRect,2);
+	if(destInvertBefore) {
+		destModel->copyRectangle(destRect,TRUE,TRUE,TRUE,destRect,NULL,NULL);
+	}
 	if(srcModel) {
 		//Copy the requested rectangle from the source model in to the destination model, at the given coordinates.
-		srcModel->copyRectangle(srcRect,FALSE,TRUE,destPos.x,destPos.y,NULL,destModel);
-		RECT destRect={(srcRect.right-srcRect.left)+destPos.x,(srcRect.bottom-srcRect.top)+destPos.y};
+		srcModel->copyRectangle(srcRect,FALSE,opaqueSource,sourceInvert,destRect,NULL,destModel);
 		HWND hwnd=WindowFromDC(hdcDest);
 		if(hwnd) queueTextChangeNotify(hwnd,destRect);
-	} else {
-		//As there is no source model, still at least clear the rectangle
-		destModel->clearRectangle(srcRect);
+	}
+	if(destInvertAfter) {
+		destModel->copyRectangle(destRect,TRUE,TRUE,TRUE,destRect,NULL,NULL);
+	}
+	if(clearDest) {
+		destModel->clearRectangle(destRect);
 	}
 	//release models and return
 	if(srcModel) srcModel->release();
 	destModel->release();
+	return;
+}
+
+//BitBlt hook function
+//Hooked so we can tell when content from one DC is being copied (bit blitted) to another (most likely from a memory DC to a window DC). 
+typedef BOOL(WINAPI *BitBlt_funcType)(HDC,int,int,int,int,HDC,int,int,DWORD);
+BitBlt_funcType real_BitBlt=NULL;
+BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop) {
+	//Call the real BitBlt
+	BOOL res=real_BitBlt(hdcDest,nXDest,nYDest,nWidth,nHeight,hdcSrc,nXSrc,nYSrc,dwRop);
+	//If bit blit didn't work, or its not a simple copy, we don't want to know about it
+	if(!res) return res;
+	StretchBlt_helper(hdcDest, nXDest, nYDest, nWidth, nHeight, hdcSrc, nXSrc, nYSrc, nWidth, nHeight, dwRop);
 	return res;
+}
+
+//StretchBlt hook function
+typedef BOOL(WINAPI *StretchBlt_funcType)(HDC,int,int,int,int,HDC,int,int,int,int,DWORD);
+StretchBlt_funcType real_StretchBlt=NULL;
+BOOL WINAPI fake_StretchBlt(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int nHeightDest, HDC hdcSrc, int nXSrc, int nYSrc, int nWidthSrc, int nHeightSrc, DWORD dwRop) {
+	//Call the real StretchBlt
+	BOOL res=real_StretchBlt(hdcDest,nXDest,nYDest,nWidthDest,nHeightDest,hdcSrc,nXSrc,nYSrc,nWidthSrc,nHeightSrc,dwRop);
+	if(!res) return res;
+	//#2989: KMPlayer uses stretchBlt with SRCCOPY  to place a graphic over the top of its menu items replacing the real text.
+	//Therefore at the moment don't allow stretchBlt SRCCOPY to clear previous text -- change it to SRCAND if blitting directly to a menu window
+	HWND hwnd=NULL;
+	wchar_t className[7]; 
+	if(hdcDest&&dwRop==SRCCOPY&&(hwnd=WindowFromDC(hdcDest))&&GetClassName(hwnd,className,ARRAYSIZE(className))>0&&wcscmp(className,L"#32768")==0) {
+		dwRop=SRCAND;
+	}
+	StretchBlt_helper(hdcDest, nXDest, nYDest, nWidthDest, nHeightDest, hdcSrc, nXSrc, nYSrc, nWidthSrc, nHeightSrc, dwRop);
+	return res;
+}
+
+//GdiTransparentBlt hook function
+typedef BOOL(WINAPI *GdiTransparentBlt_funcType)(HDC,int,int,int,int,HDC,int,int,int,int,UINT);
+GdiTransparentBlt_funcType real_GdiTransparentBlt=NULL;
+BOOL WINAPI fake_GdiTransparentBlt(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int nHeightDest, HDC hdcSrc, int nXSrc, int nYSrc, int nWidthSrc, int nHeightSrc, UINT crTransparent) {
+	//Call the real StretchBlt
+	BOOL res=real_GdiTransparentBlt(hdcDest,nXDest,nYDest,nWidthDest,nHeightDest,hdcSrc,nXSrc,nYSrc,nWidthSrc,nHeightSrc,crTransparent);
+	if(!res) return res;
+	StretchBlt_helper(hdcDest, nXDest, nYDest, nWidthDest, nHeightDest, hdcSrc, nXSrc, nYSrc, nWidthSrc, nHeightSrc, SRCPAINT);
+	return res;
+}
+
+//Converts a GDI font charset identifier to a Windows codePage identifier
+inline int charSetToCodePage(int charset) {
+	//Mappings from http://support.microsoft.com/kb/165478
+	switch(charset) {
+		case DEFAULT_CHARSET:
+		return CP_ACP;
+		case SYMBOL_CHARSET:
+		return CP_SYMBOL;
+		case MAC_CHARSET:
+		return CP_MACCP;
+		case OEM_CHARSET:
+		return CP_OEMCP;
+		case ANSI_CHARSET:
+		return 1252;
+		case RUSSIAN_CHARSET:
+		return 1251;
+		case EASTEUROPE_CHARSET:
+		return 1250;
+	case GREEK_CHARSET:
+		return 1253;
+		case TURKISH_CHARSET:
+		return 1254;
+		case BALTIC_CHARSET:
+		return 1257;
+		case HEBREW_CHARSET:
+		return 1255;
+		case ARABIC_CHARSET:
+		return 1256;
+		case SHIFTJIS_CHARSET:
+		return 932;
+		case HANGEUL_CHARSET:
+		return 949;
+		case CHINESEBIG5_CHARSET:
+		return 950;
+		default:
+		LOG_ERROR(L"Unknown charset "<<charset);
+	}
+	return -1;
 }
 
 typedef struct {
@@ -812,7 +888,12 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 		return res;
 	}
 	BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
-	ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),NULL,i->second.cString,NULL);
+	if(i->second.iCharset==-1) { //Unicode
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),CP_THREAD_ACP,NULL,i->second.cString,NULL);
+	} else { // character set
+		int codePage=charSetToCodePage(i->second.iCharset);
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(char*)(i->second.pString),codePage,NULL,i->second.cString,NULL);
+	}
 	model->release();
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	return res;
@@ -841,7 +922,8 @@ BOOL WINAPI fake_ScrollWindow(HWND hwnd, int XAmount, int YAmount, const RECT* l
 	RECT realClipRect=lpClipRect?*lpClipRect:clientRect;
 	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
 	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
-	model->copyRectangle(realScrollRect,TRUE,TRUE,realScrollRect.left+XAmount,realScrollRect.top+YAmount,&realClipRect,NULL);
+	RECT destRect={realScrollRect.left+XAmount,realScrollRect.top+YAmount,realScrollRect.right+XAmount,realScrollRect.bottom+YAmount};
+	model->copyRectangle(realScrollRect,TRUE,TRUE,false,destRect,&realClipRect,NULL);
 	model->release();
 	return res;
 }
@@ -869,7 +951,8 @@ BOOL WINAPI fake_ScrollWindowEx(HWND hwnd, int dx, int dy, const RECT* prcScroll
 	RECT realClipRect=prcClip?*prcClip:clientRect;
 	ClientToScreen(hwnd,(LPPOINT)&realClipRect);
 	ClientToScreen(hwnd,((LPPOINT)&realClipRect)+1);
-	model->copyRectangle(realScrollRect,TRUE,TRUE,realScrollRect.left+dx,realScrollRect.top+dy,&realClipRect,NULL);
+	RECT destRect={realScrollRect.left+dx,realScrollRect.top+dy,realScrollRect.right+dx,realScrollRect.bottom+dy};
+	model->copyRectangle(realScrollRect,TRUE,TRUE,false,destRect,&realClipRect,NULL);
 	model->release();
 	return res;
 }
@@ -914,6 +997,8 @@ void gdiHooks_inProcess_initialize() {
 	real_FillRect=apiHook_hookFunction_safe("USER32.dll",FillRect,fake_FillRect);
 	real_BeginPaint=apiHook_hookFunction_safe("USER32.dll",BeginPaint,fake_BeginPaint);
 	real_BitBlt=apiHook_hookFunction_safe("GDI32.dll",BitBlt,fake_BitBlt);
+	real_StretchBlt=apiHook_hookFunction_safe("GDI32.dll",StretchBlt,fake_StretchBlt);
+	real_GdiTransparentBlt=apiHook_hookFunction_safe("GDI32.dll",GdiTransparentBlt,fake_GdiTransparentBlt);
 	real_PatBlt=apiHook_hookFunction_safe("GDI32.dll",PatBlt,fake_PatBlt);
 	real_ScrollWindow=apiHook_hookFunction_safe("USER32.dll",ScrollWindow,fake_ScrollWindow);
 	real_ScrollWindowEx=apiHook_hookFunction_safe("USER32.dll",ScrollWindowEx,fake_ScrollWindowEx);

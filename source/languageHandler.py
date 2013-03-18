@@ -35,19 +35,34 @@ def localeNameToWindowsLCID(localeName):
 	return LCID
 
 def getLanguageDescription(language):
-	"""Finds out the description (licalized full name) of a given local name"""
+	"""Finds out the description (localized full name) of a given local name"""
+	desc=None
 	LCID=localeNameToWindowsLCID(language)
-	if LCID==0: return None
-	buf=ctypes.create_unicode_buffer(1024)
-	#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
-	if '_' not in language:
-		res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGDISPLAYNAME,buf,1024)
-	else:
-		res=0
-	if res==0:
-		res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGUAGE,buf,1024)
-	sLanguage=buf.value
-	return sLanguage
+	if LCID!=0:
+		buf=ctypes.create_unicode_buffer(1024)
+		#If the original locale didn't have country info (was just language) then make sure we just get language from Windows
+		if '_' not in language:
+			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGDISPLAYNAME,buf,1024)
+		else:
+			res=0
+		if res==0:
+			res=ctypes.windll.kernel32.GetLocaleInfoW(LCID,LOCALE_SLANGUAGE,buf,1024)
+		desc=buf.value
+	if not desc:
+		#Some hard-coded descriptions where we know the language fails on XP and so forth.
+		desc={
+			# Translators: The name of a language supported by NVDA.
+			"am":pgettext("languageName","Amharic"),
+			# Translators: The name of a language supported by NVDA.
+			"an":pgettext("languageName","Aragonese"),
+			# Translators: The name of a language supported by NVDA.
+			"ar":pgettext("languageName","Arabic"),
+			# Translators: The name of a language supported by NVDA.
+			"ne":pgettext("languageName","Nepali"),
+			# Translators: The name of a language supported by NVDA.
+			"sr":pgettext("languageName","Serbian (Latin)"),
+		}.get(language,None)
+	return desc
 
 def getAvailableLanguages():
 	"""generates a list of locale names, plus their full localized language and country names.
@@ -68,7 +83,8 @@ def getAvailableLanguages():
 		d.append(label)
 	#include a 'user default, windows' language, which just represents the default language for this user account
 	l.append("Windows")
-	d.append("User default, windows")
+	# Translators: the label for the Windows default NVDA interface language.
+	d.append(_("User default"))
 	#return a zipped up version of both the lists (a list with tuples of locale,label)
 	return zip(l,d)
 

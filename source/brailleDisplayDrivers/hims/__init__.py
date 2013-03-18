@@ -2,7 +2,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2012 Gianluca Casalino, NV Access Limited
+#Copyright (C) 2010-2013 Gianluca Casalino, NV Access Limited
 
 from logHandler import log
 from ctypes import *
@@ -11,6 +11,7 @@ import braille
 import inputCore
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
 import hwPortUtils
+from brailleInput import BrailleInputGesture
 
 HIMS_KEYPRESSED = 0x01
 HIMS_KEYRELEASED = 0x02
@@ -59,6 +60,7 @@ HIMS_KEYS = {
 	0x400000: 'Advance7',
 	0x800000: 'Advance8'
 }
+SPACE_KEY = 0x100
 
 pressedKeys = set()
 _ignoreKeyPresses = False
@@ -106,6 +108,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	""" HIMS Braille Sense/Braille EDGE braille displays.
 	"""
 	name = "hims"
+	# Translators: The name of a series of braille displays.
 	description = _("HIMS Braille Sense/Braille EDGE series")
 
 	@classmethod
@@ -203,7 +206,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		}
 	})
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.BrailleDisplayGesture, BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 	def __init__(self, keys):
 		super(InputGesture, self).__init__()
@@ -213,7 +216,18 @@ class InputGesture(braille.BrailleDisplayGesture):
 			return
 		self.keyCodes = set(keys)
 		names = set()
+		isBrailleInput = True
 		for value in self.keyCodes: 
+			if isBrailleInput:
+				if 0xff & value:
+					self.dots |= value
+				elif value == SPACE_KEY:
+					self.space = True
+				else:
+					# This is not braille input.
+					isBrailleInput = False
+					self.dots = 0
+					self.space = False
 			try:
 				name = HIMS_KEYS[value]
 				if isinstance(name, dict):

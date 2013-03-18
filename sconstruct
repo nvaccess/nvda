@@ -119,6 +119,8 @@ outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot
 outputDir=Dir(env['outputDir'])
 devDocsOutputDir=outputDir.Dir('devDocs')
 
+env.SConscript('source/comInterfaces_sconscript',exports=['env'])
+
 #Process nvdaHelper scons files
 env.SConscript('nvdaHelper/sconscript',exports=['env'])
 
@@ -153,16 +155,14 @@ env.SideEffect('_txt2tags',htmlFile)
 devGuide=env.Command(devDocsOutputDir.File('developerGuide.html'),htmlFile,Move('$TARGET','$SOURCE'))
 env.Alias("developerGuide",devGuide)
 
-env.Depends(sourceDir,userDocsDir)
-
 #Generate all needed comtypes COM interfaces
-command = ['cd', sourceDir.path, '&&', sys.executable]
-if release:
-	command.append('-O')
-command.append('generateComInterfaces.py')
-comInterfaces = env.Command(sourceDir.Dir('comInterfaces'), None, [command])
-env.AlwaysBuild(comInterfaces)
-env.Depends(comInterfaces,sourceDir.Dir('typelibs'))
+#command = ['cd', sourceDir.path, '&&', sys.executable]
+#if release:
+#	command.append('-O')
+#command.append('generateComInterfaces.py')
+#comInterfaces = env.Command(sourceDir.Dir('comInterfaces'), None, [command])
+#env.AlwaysBuild(comInterfaces)
+#env.Depends(comInterfaces,sourceDir.Dir('typelibs'))
 
 
 # A builder to generate an NVDA distribution.
@@ -232,13 +232,13 @@ uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.n
 	[[makensis, "/V2",
 	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
 	"/DUNINSTEXE=%s"%uninstFile.abspath,
-	"/XOutFile ${TARGET.abspath}",
+	"/DINSTEXE=${TARGET.abspath}",
 	"$SOURCE"]])
 uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
 if certFile:
 	env.AddPostAction(uninstaller, [signExec])
 
-dist = env.NVDADist("dist", sourceDir, uiAccess=bool(certFile))
+dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile))
 env.Depends(dist,uninstaller)
 # Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
 env.Clean(dist, dist)
@@ -248,7 +248,7 @@ env.Clean([dist], buildDir)
 launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvdaLauncher.nsi", dist],
 	[[makensis, "/V2",
 	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"',
-	"/DNVDADistDir=${SOURCES[1].abspath}", "/XOutFile ${TARGET.abspath}",
+	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE=${TARGET.abspath}",
 	"$SOURCE"]])
 if certFile:
 	env.AddPostAction(launcher, [signExec])
@@ -293,6 +293,8 @@ def makePot(target, source, env):
 
 devDocs_nvdaHelper_temp=env.Doxygen(source='nvdaHelper/doxyfile')
 devDocs_nvdaHelper=env.Command(devDocsOutputDir.Dir('nvdaHelper'),devDocs_nvdaHelper_temp,Move('$TARGET','$SOURCE'))
+env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
+env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
 
 devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 	"cd", sourceDir.path, "&&",
@@ -305,8 +307,8 @@ devDocs_nvda = env.Command(devDocsOutputDir.Dir("nvda"), None, [[
 	"synthDrivers", "textInfos", "virtualBuffers",
 ]])
 
-env.Alias('devDocs',devDocsOutputDir)
-env.Clean('devDocs',devDocsOutputDir)
+env.Alias('devDocs', [devGuide, devDocs_nvda])
+env.Clean('devDocs', [devGuide, devDocs_nvda])
 
 pot = env.Command(outputDir.File("%s.pot" % outFilePrefix),
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.

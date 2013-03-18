@@ -70,7 +70,7 @@ interface NvdaControllerInternal {
  */
 	error_status_t __stdcall inputCompositionUpdate([in,string] const wchar_t* compositionString, [in] const int selectionStart, [in] const int selectionEnd, [in] const int isReading);
 
-	error_status_t __stdcall inputCandidateListUpdate([in,string] const wchar_t* candidates, [in] const long selectionIndex);
+	error_status_t __stdcall inputCandidateListUpdate([in,string] const wchar_t* candidates, [in] const long selectionIndex, [in,string] const wchar_t* inputMethod);
 
 	error_status_t __stdcall IMEOpenStatusUpdate([in] const long open);
 

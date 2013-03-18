@@ -1,14 +1,17 @@
 # -*- coding: UTF-8 -*-
 #NVDAObjects/IAccessible/sysListView32.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2012 NV Access Limited, Peter VÃ¡gner
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
 import time
 from ctypes import *
 from ctypes.wintypes import *
+from comtypes import BSTR
 import oleacc
+import NVDAHelper
+import watchdog
 import controlTypes
 import speech
 import api
@@ -25,7 +28,6 @@ import config
 LVM_FIRST=0x1000
 LVM_GETITEMSTATE=LVM_FIRST+44
 LVM_GETFOCUSEDGROUP=LVM_FIRST+93
-LVM_GETGROUPINFOBYINDEX=LVM_FIRST+153
 LVM_GETITEMCOUNT=LVM_FIRST+4
 LVM_GETITEM=LVM_FIRST+75
 LVN_GETDISPINFO=0xFFFFFF4F
@@ -50,13 +52,6 @@ LVIF_INDENT=0x10
 LVIF_GROUPID=0x100
 LVIF_COLUMNS=0x200
 
-#group mask flags
-LVGF_HEADER=0x1
-LVGF_FOOTER=0x2
-LVGF_STATE=0x4
-LVGF_ALIGN=0x8
-LVGF_GROUPID=0x10
-
 #Item states
 LVIS_FOCUSED=0x01
 LVIS_SELECTED=0x02
@@ -79,34 +74,6 @@ CBEMAXSTRLEN=260
 # listview header window messages
 HDM_FIRST=0x1200
 HDM_GETITEMCOUNT=HDM_FIRST
-
-class LVGROUP(Structure):
-	_fields_=[
-		('cbSize',c_uint),
-		('mask',c_uint),
-		('pszHeader',c_void_p),
-		('cchHeader',c_int),
-		('pszFooter',c_void_p),
-		('cchFooter',c_int),
-		('iGroupId',c_int),
-		('stateMask',c_uint),
-		('state',c_uint),
-		('uAlign',c_uint),
-	]
-
-class LVGROUP64(Structure):
-	_fields_=[
-		('cbSize',c_uint),
-		('mask',c_uint),
-		('pszHeader',c_ulonglong),
-		('cchHeader',c_int),
-		('pszFooter',c_ulonglong),
-		('cchFooter',c_int),
-		('iGroupId',c_int),
-		('stateMask',c_uint),
-		('state',c_uint),
-		('uAlign',c_uint),
-	]
 
 class LVITEM(Structure):
 	_fields_=[
@@ -176,31 +143,19 @@ class LVCOLUMN64(Structure):
 		('cxIdeal',c_int),
 	]
 
+class AutoFreeBSTR(BSTR):
+	"""A BSTR that *always* frees itself on deletion.""" 
+	_needsfree=True
+
 class List(List):
 
 	def getListGroupInfo(self,groupIndex):
-		processHandle=self.processHandle
-		if not processHandle:
+		header=AutoFreeBSTR()
+		footer=AutoFreeBSTR()
+		state=c_int()
+		if watchdog.cancellableExecute(NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getGroupInfo,self.appModule.helperLocalBindingHandle,self.windowHandle,groupIndex,byref(header),byref(footer),byref(state))!=0:
 			return None
-		localInfo=LVGROUP64() if self.appModule.is64BitProcess else LVGROUP()
-		localInfo.cbSize=sizeof(localInfo)
-		localInfo.mask=LVGF_HEADER|LVGF_FOOTER|LVGF_STATE|LVGF_ALIGN|LVGF_GROUPID
-		localInfo.stateMask=0xffffffff
-		remoteInfo=winKernel.virtualAllocEx(processHandle,None,sizeof(localInfo),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
-		try:
-			winKernel.writeProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(localInfo),None)
-			messageRes=watchdog.cancellableSendMessage(self.windowHandle,LVM_GETGROUPINFOBYINDEX,groupIndex,remoteInfo)
-			winKernel.readProcessMemory(processHandle,remoteInfo,byref(localInfo),sizeof(localInfo),None)
-		finally:
-			winKernel.virtualFreeEx(processHandle,remoteInfo,0,winKernel.MEM_RELEASE)
-		localHeader=create_unicode_buffer(localInfo.cchHeader)
-		winKernel.readProcessMemory(processHandle,localInfo.pszHeader,localHeader,localInfo.cchHeader*2,None)
-		localFooter=create_unicode_buffer(localInfo.cchFooter)
-		winKernel.readProcessMemory(processHandle,localInfo.pszFooter,localFooter,localInfo.cchFooter*2,None)
-		if messageRes==1:
-			return dict(header=localHeader.value,footer=localFooter.value,groupID=localInfo.iGroupId,state=localInfo.state,uAlign=localInfo.uAlign,groupIndex=groupIndex)
-		else:
-			return None
+		return dict(header=header.value,footer=footer.value,state=state.value,groupIndex=groupIndex)
 
 	def _get_name(self):
 		name=super(List,self)._get_name()
@@ -400,7 +355,8 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		return self._getColumnHeaderRaw(self.parent._columnOrderArray[column - 1])
 
 	def _get_name(self):
-		if not self.parent.isMultiColumn or self._shouldDisableMultiColumn:
+		parent = self.parent
+		if not isinstance(parent, List) or not parent.isMultiColumn or self._shouldDisableMultiColumn:
 			name = super(ListItem, self).name
 			if name:
 				return name

@@ -8,6 +8,8 @@ import ctypes
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
+import locale
+import languageHandler
 import ui
 import NVDAHelper
 import XMLFormatting
@@ -124,6 +126,7 @@ formatConfigFlagsMap={
 	"reportLinks":2048,
 	"reportComments":4096,
 	"reportHeadings":8192,
+	"autoLanguageSwitching":16384,	
 }
 
 class WordDocumentTextInfo(textInfos.TextInfo):
@@ -172,6 +175,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def getTextWithFields(self,formatConfig=None):
 		if not formatConfig:
 			formatConfig=config.conf['documentFormatting']
+		formatConfig['autoLanguageSwitching']=config.conf['speech'].get('autoLanguageSwitching',False)
 		startOffset=self._rangeObj.start
 		endOffset=self._rangeObj.end
 		if startOffset==endOffset:
@@ -227,9 +231,24 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _normalizeFormatField(self,field):
 		color=field.pop('color',None)
 		if color is not None:
-			field['color']=colors.RGB.fromCOLORREF(int(color))
+			field['color']=colors.RGB.fromCOLORREF(int(color))		
+		try:
+			languageId = int(field.pop('wdLanguageId',0))
+			if languageId:
+				field['language']=self._getLanguageFromLcid(languageId)
+		except:
+			log.debugWarning("language error",exc_info=True)
+			pass
 		return field
 
+	def _getLanguageFromLcid(self, lcid):
+		"""
+		gets a normalized locale from a lcid
+		"""
+		lang = locale.windows_locale[lcid]
+		if lang:
+			return languageHandler.normalizeLanguage(lang)
+		
 	def expand(self,unit):
 		if unit==textInfos.UNIT_LINE and self.basePosition not in (textInfos.POSITION_CARET,textInfos.POSITION_SELECTION):
 			unit=textInfos.UNIT_SENTENCE

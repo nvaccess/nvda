@@ -19,9 +19,26 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <vbufBase/backend.h>
 
 typedef struct {
-	int tableID;
-	long curRowIndex;
+	int uniqueId;
+	int type;
+} TableHeaderInfo;
+
+typedef struct {
+	long tableID;
+	int curRowNumber;
+	int curColumnNumber;
+	// Maps column numbers to remaining row spans.
+	std::map<int, int> columnRowSpans;
+	// Maps column numbers to table-columnheadercells attribute values.
+	std::map<int, std::wstring> columnHeaders;
+	// Maps row numbers to table-rowheadercells attribute values.
+	std::map<int, std::wstring> rowHeaders;
+	// Maps node id strings to TableHeaderInfo.
+	std::map<std::wstring, TableHeaderInfo> headersInfo;
+	// Lists nodes with explicit headers along with their Headers attribute string.
+	std::list<std::pair<VBufStorage_controlFieldNode_t*, std::wstring>> nodesWithExplicitHeaders;
 	bool definitData;
+	VBufStorage_controlFieldNode_t* tableNode;
 } fillVBuf_tableInfo;
 
 void incBackendLibRefCount();
@@ -32,7 +49,7 @@ class MshtmlVBufBackend_t: public VBufBackend_t {
 
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL);
 
-	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText);
+	VBufStorage_fieldNode_t* fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText);
 
 	virtual ~MshtmlVBufBackend_t();
 

@@ -182,75 +182,135 @@ STATE_SORTED=0x80000000
 STATE_SORTED_ASCENDING=0x100000000
 STATE_SORTED_DESCENDING=0x200000000
 STATES_SORTED=frozenset([STATE_SORTED,STATE_SORTED_ASCENDING,STATE_SORTED_DESCENDING])
+STATE_HASLONGDESC=0x400000000
 
 roleLabels={
+	# Translators: The word for an unknown control type.
 	ROLE_UNKNOWN:_("unknown"),
+	# Translators: The word for window of a program suchas document window.
 	ROLE_WINDOW:_("window"),
+	# Translators: Used to identify title bar of a program.
 	ROLE_TITLEBAR:_("title bar"),
+	# Translators: The word used for pane such as desktop pane.
 	ROLE_PANE:_("pane"),
+	# Translators: The word used to denote a dialog box such as open dialog.
 	ROLE_DIALOG:_("dialog"),
+	# Translators: The text used to identify check boxes such as select check box.
 	ROLE_CHECKBOX:_("check box"),
+	# Translators: The text used to identify radio buttons such as yes or no radio button.
 	ROLE_RADIOBUTTON:_("radio button"),
+	# Translators: The word used to identify a static text such as dialog text.
 	ROLE_STATICTEXT:_("text"),
+	# Translators: The word used to identify edit fields such as subject edit field.
 	ROLE_EDITABLETEXT:_("edit"),
+	# Translators: The word used to identify a button such as OK button.
 	ROLE_BUTTON:_("button"),
+	# Translators: Text used to identify menu bar of a program.
 	ROLE_MENUBAR:_("menu bar"),
+	# Translators: Used to identify a menu item such as an item in file menu.
 	ROLE_MENUITEM:_("menu item"),
+	# Translators: The word used for menus such as edit menu.
 	ROLE_POPUPMENU:_("menu"),
+	# Translators: Used to identify combo boxes such as file type combo box.
 	ROLE_COMBOBOX:_("combo box"),
+	# Translators: The word used for lists such as folder list.
 	ROLE_LIST:_("list"),
+	# Translators: Used to identify a list item such as email list items.
 	ROLE_LISTITEM:_("list item"),
+	# Translators: The word used to identify graphics such as webpage graphics.
 	ROLE_GRAPHIC:_("graphic"),
+	# Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 	ROLE_HELPBALLOON:_("help balloon"),
+	# Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 	ROLE_TOOLTIP:_("tool tip"),
+	# Translators: Identifies a link in webpage documents.
 	ROLE_LINK:_("link"),
+	# Translators: Identifies a treeview (a tree-like structure such as treeviews for subfolders).
 	ROLE_TREEVIEW:_("tree view"),
+	# Translators: Identifies a tree view item.
 	ROLE_TREEVIEWITEM:_("tree view item"),
-	ROLE_TAB:_("tab"),
+	# Translators: The word presented for tabs in a tab enabled window.
+	ROLE_TAB: pgettext("controlType", "tab"),
+	# Translators: Identifies a tab control such as webpage tabs in web browsers.
 	ROLE_TABCONTROL:_("tab control"),
+	# Translators: Identifies a slider such as volume slider.
 	ROLE_SLIDER:_("slider"),
+	# Translators: Identifies a progress bar such as NvDA update progress.
 	ROLE_PROGRESSBAR:_("progress bar"),
+	# Translators: Identifies a scroll bar.
 	ROLE_SCROLLBAR:_("scroll bar"),
+	# Translators: Identifies a status bar (text at the bottom bar of the screen such as cursor position in a document).
 	ROLE_STATUSBAR:_("status bar"),
+	# Translators: Identifies a table such as ones used in various websites.
 	ROLE_TABLE:_("table"),
+	# Translators: Identifies a cell in a table.
 	ROLE_TABLECELL:_("cell"),
+	# Translators: Identifies a column (a group of vertical cells in a table).
 	ROLE_TABLECOLUMN:_("column"),
+	# Translators: Identifies a row (a group of horizontal cells in a table).
 	ROLE_TABLEROW:_("row"),
+	# Translators: Identifies a frame (a smaller window in a webpage or a document).
 	ROLE_FRAME:_("frame"),
+	# Translators: Identifies a tool bar.
 	ROLE_TOOLBAR:_("tool bar"),
+	# Translators: Identifies a column header in tables and spreadsheets.
 	ROLE_TABLECOLUMNHEADER:_("column header"),
+	# Translators: Identifies a row header in tables and spreadsheets.
 	ROLE_TABLEROWHEADER:_("row header"),
+	# Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 	ROLE_DROPDOWNBUTTON:_("drop down button"),
+	# Translators: Identifies an element.
 	ROLE_CLOCK:_("clock"),
+	# Translators: Identifies a separator (a horizontal line drawn on the screen).
 	ROLE_SEPARATOR:_("separator"),
+	# Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
 	ROLE_FORM:_("form"),
+	# Translators: Identifies a heading (a bold text used for identifying a section).
 	ROLE_HEADING:_("heading"),
+	# Translators: Identifies a heading level.
 	ROLE_HEADING1:_("heading 1"),
+	# Translators: Identifies a heading level.
 	ROLE_HEADING2:_("heading 2"),
+	# Translators: Identifies a heading level.
 	ROLE_HEADING3:_("heading 3"),
+	# Translators: Identifies a heading level.
 	ROLE_HEADING4:_("heading 4"),
+	# Translators: Identifies a heading level.
 	ROLE_HEADING5:_("heading 5"),
+	# Translators: Identifies a heading level.
 	ROLE_HEADING6:_("heading 6"),
+	# Translators: Identifies a paragraph (a group of text surrounded by blank lines).
 	ROLE_PARAGRAPH:_("paragraph"),
 	# Translators: Presented for a section in a document which is a block quotation;
 	# i.e. a long quotation in a separate paragraph distinguished by indentation, etc.
 	# See http://en.wikipedia.org/wiki/Block_quotation
 	ROLE_BLOCKQUOTE:_("block quote"),
+	# Translators: Identifies a table header (a short text at the start of a table which describes what the table is about).
 	ROLE_TABLEHEADER:_("table header"),
+	# Translators: Identifies a table body (the main body of the table).
 	ROLE_TABLEBODY:_("table body"),
+	# Translators: Identifies a table footer (text placed at the end of the table).
 	ROLE_TABLEFOOTER:_("table footer"),
+	# Translators: Identifies a document (for example, a webpage document).
 	ROLE_DOCUMENT:_("document"),
+	# Translators: Identifies an animation in a document or a webpage.
 	ROLE_ANIMATION:_("animation"),
+	# Translators: Identifies an application in webpages.
 	ROLE_APPLICATION:_("application"),
+	# Translators: Identifies a box element.
 	ROLE_BOX:_("box"),
+	# Translators: Identifies a grouping (a number of related items grouped together, such as related options in dialogs).
 	ROLE_GROUPING:_("grouping"),
+	# Translators: Identifies a property page such as drive properties dialog.
 	ROLE_PROPERTYPAGE:_("property page"),
 	ROLE_CANVAS:_("canvas"),
 	ROLE_CAPTION:_("caption"),
 	ROLE_CHECKMENUITEM:_("check menu item"),
 	ROLE_DATEEDITOR:_("date edit"),
+	# Translators: Identifies an icon.
 	ROLE_ICON:_("icon"),
 	ROLE_DIRECTORYPANE:_("directory pane"),
+	# Translators: Identifies an embedded object such as flash content.
 	ROLE_EMBEDDEDOBJECT:_("embedded object"),
 	ROLE_ENDNOTE:_("end note"),
 	ROLE_FOOTER:_("footer"),
@@ -259,11 +319,16 @@ roleLabels={
 	# a pane that is guaranteed to be on top of all panes beneath it.
 	ROLE_GLASSPANE:_("glass pane"),
 	ROLE_HEADER:_("header"),
+	# Translators: Identifies an image map (a type of graphical link).
 	ROLE_IMAGEMAP:_("image map"),
+	# Translators: Identifies an input window.
 	ROLE_INPUTWINDOW:_("input window"),
+	# Translators: Identifies a label.
 	ROLE_LABEL:_("label"),
 	ROLE_NOTE:_("note"),
+	# Translators: Identifies a page.
 	ROLE_PAGE:_("page"),
+	# Translators: Identifies a radio menu item.
 	ROLE_RADIOMENUITEM:_("radio menu item"),
 	ROLE_LAYEREDPANE:_("layered pane"),
 	ROLE_REDUNDANTOBJECT:_("redundant object"),
@@ -271,12 +336,17 @@ roleLabels={
 	# Translators: May be reported for an editable text object in a toolbar.
 	# This is deprecated and is not often (if ever) used.
 	ROLE_EDITBAR:_("edit bar"),
+	# Translators: Identifies a terminal window such as command prompt.
 	ROLE_TERMINAL:_("terminal"),
 	ROLE_RICHEDIT:_("rich edit"),
 	ROLE_RULER:_("ruler"),
+	# Translators: Identifies a scroll pane.
 	ROLE_SCROLLPANE:_("scroll pane"),
+	# Translators: Identifies a section of text.
 	ROLE_SECTION:_("section"),
+	# Translators: Identifies a shape.
 	ROLE_SHAPE:_("shape"),
+	# Translators: Identifies a split pane.
 	ROLE_SPLITPANE:_("split pane"),
 	# Translators: Reported for a view port; i.e. an object usually used in a scroll pane
 	# which represents the portion of the entire data that the user can see.
@@ -287,6 +357,7 @@ roleLabels={
 	# to exist as a separate window.
 	ROLE_TEAROFFMENU:_("tear off menu"),
 	ROLE_TEXTFRAME:_("text frame"),
+	# Translators: Identifies a toggle button (a button used to toggle something).
 	ROLE_TOGGLEBUTTON:_("toggle button"),
 	ROLE_BORDER:_("border"),
 	ROLE_CARET:_("caret"),
@@ -300,39 +371,63 @@ roleLabels={
 	ROLE_MENUBUTTON:_("menu button"),
 	# Translators: Reported for a button which expands a grid when it is pressed.
 	ROLE_DROPDOWNBUTTONGRID:_("drop down button grid"),
+	# Translators: Identifies an equation.
 	ROLE_EQUATION:_("equation"),
 	ROLE_GRIP:_("grip"),
+	# Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
 	ROLE_HOTKEYFIELD:_("hot key field"),
 	ROLE_INDICATOR:_("indicator"),
+	# Translators: Identifies a spin button (a button used to go through options in a spinning fashion).
 	ROLE_SPINBUTTON:_("spin button"),
+	# Translators: Identifies a sound clip on websites.
 	ROLE_SOUND:_("sound"),
+	# Translators: Identifies a whitespace.
 	ROLE_WHITESPACE:_("white space"),
+	# Translators: Identifies a tree view button.
 	ROLE_TREEVIEWBUTTON:_("tree view button"),
+	# Translators: Identifies an IP address (an IP address field element).
 	ROLE_IPADDRESS:_("IP address"),
+	# Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
 	ROLE_DESKTOPICON:_("desktop icon"),
+	# Translators: Identifies an alert message.
 	ROLE_ALERT:_("alert"),
 	ROLE_INTERNALFRAME:_("IFrame"),
+	# Translators: Identifies desktop pane (the desktop window).
 	ROLE_DESKTOPPANE:_("desktop pane"),
 	ROLE_OPTIONPANE:_("option pane"),
 	ROLE_COLORCHOOSER:_("color chooser"),
 	ROLE_FILECHOOSER:_("file chooser"),
 	ROLE_FILLER:_("filler"),
+	# Translators: Identifies a menu such as file menu.
 	ROLE_MENU:_("menu"),
 	ROLE_PANEL:_("panel"),
+	# Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 	ROLE_PASSWORDEDIT:_("password edit"),
 	ROLE_FONTCHOOSER:_("font chooser"),
 	ROLE_LINE:_("line"),
+	# Translators: Identifies a font name.
 	ROLE_FONTNAME:_("font name"),
+	# Translators: Identifies font size.
 	ROLE_FONTSIZE:_("font size"),
+	# Translators: Describes text formatting.
 	ROLE_BOLD:_("bold"),
+	# Translators: Describes text formatting.
 	ROLE_ITALIC:_("ITALIC"),
+	# Translators: Describes text formatting.
 	ROLE_UNDERLINE:_("underline"),
+	# Translators: Describes text formatting.
 	ROLE_FGCOLOR:_("foreground color"),
+	# Translators: Describes text formatting.
 	ROLE_BGCOLOR:_("background color"),
+	# Translators: Describes text formatting.
 	ROLE_SUPERSCRIPT:_("superscript"),
+	# Translators: Describes text formatting.
 	ROLE_SUBSCRIPT:_("subscript"),
+	# Translators: Describes style of text.
 	ROLE_STYLE:_("style"),
+	# Translators: Describes text formatting.
 	ROLE_INDENT:_("indent"),
+	# Translators: Describes text formatting.
 	ROLE_ALIGNMENT:_("alignment"),
 	ROLE_ALERT:_("alert"),
 	ROLE_DATAGRID:_("data grid"),
@@ -343,28 +438,47 @@ roleLabels={
 }
 
 stateLabels={
+	# Translators: This is presented when a control or document is unavailable.
 	STATE_UNAVAILABLE:_("unavailable"),
+	# Translators: This is presented when a control has focus.
 	STATE_FOCUSED:_("focused"),
+	# Translators: This is presented when the control is selected.
 	STATE_SELECTED:_("selected"),
+	# Translators: This is presented when a document is busy.
 	STATE_BUSY:_("busy"),
+	# Translators: This is presented when a button is pressed.
 	STATE_PRESSED:_("pressed"),
+	# Translators: This is presented when a check box is checked.
 	STATE_CHECKED:_("checked"),
+	# Translators: This is presented when a three state check box is half checked.
 	STATE_HALFCHECKED:_("half checked"),
+	# Translators: This is presented when the control is a read-only control such as read-only edit box.
 	STATE_READONLY:_("read only"),
+	# Translators: This is presented when a tree view or submenu item is expanded.
 	STATE_EXPANDED:_("expanded"),
+	# Translators: This is presented when a tree view or submenu is collapsed.
 	STATE_COLLAPSED:_("collapsed"),
+	# Translators: This is presented when a control or a document becomes invisible.
 	STATE_INVISIBLE:_("invisible"),
+	# Translators: This is presented when a visited link is encountered.
 	STATE_VISITED:_("visited"),
+	# Translators: This is presented when a link is encountered.
 	STATE_LINKED:_("linked"),
+	# Translators: This is presented when the control menu item has a submenu.
 	STATE_HASPOPUP:_("subMenu"),
+	# Translators: This is presented when a protected control or a document is encountered.
 	STATE_PROTECTED:_("protected"),
+	# Translators: This is presented when a required form field is encountered.
 	STATE_REQUIRED:_("required"),
 	# Translators: Reported when an object no longer exists in the user interface;
 	# i.e. it is dead and is no longer usable.
 	STATE_DEFUNCT:_("defunct"),
+	# Translators: This is presented when an invalid entry has been made.
 	STATE_INVALID_ENTRY:_("invalid entry"),
 	STATE_MODAL:_("modal"),
+	# Translators: This is presented when a field supports auto completion of entered text such as email address field in Microsoft Outlook.
 	STATE_AUTOCOMPLETE:_("has auto complete"),
+	# Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
 	STATE_MULTILINE:_("multi line"),
 	STATE_ICONIFIED:_("iconified"),
 	STATE_OFFSCREEN:_("off screen"),
@@ -381,6 +495,8 @@ stateLabels={
 	STATE_SORTED:_("sorted"),
 	STATE_SORTED_ASCENDING:_("sorted ascending"),
 	STATE_SORTED_DESCENDING:_("sorted descending"),
+	# Translators: a state that denotes that an object (usually a graphic) has a long description.
+	STATE_HASLONGDESC:_("has long description"),
 }
 
 negativeStateLabels={

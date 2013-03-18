@@ -309,7 +309,8 @@ def info():
 
 def getVariantDict():
 	dir='synthDrivers\\espeak-data\\voices\\!v'
-	variantDict={"none":_("none")}
+	# Translators: name of the default espeak varient.
+	variantDict={"none": pgettext("espeakVarient", "none")}
 	for fileName in os.listdir(dir):
 		if os.path.isfile("%s\\%s"%(dir,fileName)):
 			file=codecs.open("%s\\%s"%(dir,fileName))

@@ -4,18 +4,18 @@
 #See the file COPYING for more details.
 #Copyright (C) 2006-2012 NV Access Limited
 
+"""Framework for accessing text content in widgets.
+The core component of this framework is the L{TextInfo} class.
+In order to access text content for a widget, a L{TextInfo} implementation is required.
+A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
+"""
+
 import weakref
 import re
 import baseObject
 import config
 import speech
 import controlTypes
-
-"""Framework for accessing text content in widgets.
-The core component of this framework is the L{TextInfo} class.
-In order to access text content for a widget, a L{TextInfo} implementation is required.
-A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
-"""
 
 class Field(dict):
 	"""Provides information about a piece of text."""
@@ -71,7 +71,7 @@ class ControlField(Field):
 			return self.PRESCAT_LAYOUT
 
 		if (
-			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON)
+			role in (controlTypes.ROLE_LINK, controlTypes.ROLE_HEADING, controlTypes.ROLE_BUTTON, controlTypes.ROLE_RADIOBUTTON, controlTypes.ROLE_CHECKBOX, controlTypes.ROLE_GRAPHIC, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_TAB, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_SLIDER, controlTypes.ROLE_SPINBUTTON, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_PROGRESSBAR, controlTypes.ROLE_TOGGLEBUTTON, controlTypes.ROLE_MENUBUTTON)
 			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
 			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
 		):

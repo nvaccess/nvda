@@ -20,7 +20,7 @@ in-word -	(?<=[^\W_])[-]
 dates .	((?<=\b\d\d)\.(?=\d\d.(\d{2}|\d{4})\b))|((?<=\b\d\d.\d\d)\.(?=(\d{2}|\d{4})\b))
 dates /	((?<=\b\d\d)\/(?=\d\d/(\d{2}|\d{4})\b))|((?<=\b\d\d/\d\d)\/(?=(\d{2}|\d{4})\b))
 
-after-number %	(?<=\d)\%(?!\w)
+after-number %	(?<=\d)((\%)|(\s\%))(?=\W|$)
 
 # Fix pronunciation for some words
 no francs	F(?=\d|\s\d)
@@ -80,6 +80,7 @@ $	dollar
 >	supérieur
 =	égal
 ?	point dinterrogation	some
+¿	point dinterrogation renversé	some
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
@@ -95,7 +96,8 @@ _	souligné
 
 # Other characters
 •	puce
-…	points de suspension
+…	points de suspension	some	norep
+...	point point point
 	puce
 “	guillemet ouvert
 ”	guillemet fermé
@@ -103,7 +105,8 @@ _	souligné
 ’	apostrophe droite
 –	tiret demicadratin
 —	tiret cadratin
-§	paragraphe
+§	section
+¶	paragraphe	all
 ●	astérisque
 ¨	tréma
 ‎	gauche à droite
@@ -121,7 +124,7 @@ _	souligné
 ¹	puissance 1
 ²	puissance 2
 ³	puissance 3
-®	marque registrée
+®	marque déposée
 ™	marque de fabrique
 ©	Copyright
 ±	Plus ou Moins

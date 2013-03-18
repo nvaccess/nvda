@@ -140,6 +140,7 @@ def fetchAppModule(processID,appName):
 		except:
 			log.error("error in appModule %r"%modName, exc_info=True)
 			# We can't present a message which isn't unicode, so use appName, not modName.
+			# Translators: This is presented when errors are found in an appModule (example output: error in appModule explorer).
 			ui.message(_("Error in appModule %s")%appName)
 
 	# Use the base AppModule.

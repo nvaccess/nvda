@@ -18,6 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "nvdaControllerInternal.h"
 #include "typedCharacter.h"
 #include "tsf.h"
+#include <common/log.h>
 #include "ime.h"
 
 #define GETLANG()		LOWORD(g_hklCurrent)
@@ -79,6 +80,8 @@ typedef struct tagINPUTCONTEXT2 {
     DWORD           dwReserve[3];                   
 } INPUTCONTEXT2, *PINPUTCONTEXT2, NEAR *NPINPUTCONTEXT2, FAR *LPINPUTCONTEXT2;  
 
+HWND curIMEWindow=NULL;
+static HWND candidateIMEWindow=0;
 static BOOL lastOpenStatus=true;
 static HMODULE gImm32Module = NULL;
 static DWORD lastConversionModeFlags=0;
@@ -124,10 +127,37 @@ DWORD getIMEVersion(HKL kbd_layout, wchar_t* filename) {
 	return version;
 }
 
+bool getTIPFilename(REFCLSID clsid, WCHAR* filename, DWORD len) {
+	// Format registry path for CLSID
+	WCHAR reg_path[100];
+	_snwprintf(reg_path, ARRAYSIZE(reg_path),
+		L"CLSID\\{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}\\InProcServer32",
+		clsid.Data1, clsid.Data2, clsid.Data3,
+		clsid.Data4[0], clsid.Data4[1], clsid.Data4[2], clsid.Data4[3],
+		clsid.Data4[4], clsid.Data4[5], clsid.Data4[6], clsid.Data4[7]);
+	HKEY reg_key = NULL;
+	RegOpenKeyW(HKEY_CLASSES_ROOT, reg_path, &reg_key);
+	if (!reg_key)  return false;
+	DWORD type = REG_NONE;
+	DWORD l = 0;
+	bool  result = false;
+	if ((ERROR_SUCCESS == RegQueryValueExW(reg_key, 0, 0, &type, 0, &l)) &&
+			(type == REG_SZ) && (l > 0) && (len >= l)) {
+		if (ERROR_SUCCESS ==
+				RegQueryValueExW(reg_key, 0, 0, 0, (LPBYTE)filename, &len)) {
+			filename[len] = '\0';
+			result = true;
+		}
+	}
+	RegCloseKey(reg_key);
+	return result;
+}
+
 typedef UINT (WINAPI* GetReadingString_funcType)(HIMC, UINT, LPWSTR, PINT, BOOL*, PUINT);
 
 void handleOpenStatus(HWND hwnd) {
-	if(!ImmGetProperty(GetKeyboardLayout(0),IGP_CONVERSION)) return;
+	//Only reported for japanese
+	if(((unsigned long)(GetKeyboardLayout(0))&0xff)!=0x11) return;
 	/* Obtain IME context */
 	HIMC imc = ImmGetContext(hwnd);
 	if (!imc)  return;
@@ -149,7 +179,16 @@ void handleReadingStringUpdate(HWND hwnd) {
 	DWORD version=0;
 	HMODULE IMEFile=NULL;
 	GetReadingString_funcType GetReadingString=NULL;
-	if(ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH)>0) {
+	if (isTSFThread(true)) {
+		// Look up filename of active TIP
+		if(getTIPFilename(curTSFClsID, filename, MAX_PATH)) {
+			IMEFile=LoadLibrary(filename);
+			if(IMEFile) {
+				GetReadingString=(GetReadingString_funcType)GetProcAddress(IMEFile, "GetReadingString");
+			}
+		}
+	}
+	else if(ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH)>0) {
 		IMEFile=LoadLibrary(filename);
 		if(IMEFile) {
 			GetReadingString=(GetReadingString_funcType)GetProcAddress(IMEFile, "GetReadingString");
@@ -241,6 +280,24 @@ void handleIMEConversionModeUpdate(HWND hwnd, bool report) {
 	lastConversionModeFlags=flags;
 }
 
+inline void handleCandidatesClosed(HWND hwnd) {
+	if(!hwnd||hwnd!=candidateIMEWindow) return;
+	/* Obtain IME context */
+	HIMC imc = ImmGetContext(hwnd);
+	if (!imc) {
+		candidateIMEWindow=0;
+		nvdaControllerInternal_inputCandidateListUpdate(L"",-1,L"");
+		return;
+	}
+	DWORD count = 0;
+	DWORD len = ImmGetCandidateListCountW(imc, &count);
+	ImmReleaseContext(hwnd, imc);
+	if (!count) {
+		candidateIMEWindow=0;
+		nvdaControllerInternal_inputCandidateListUpdate(L"",-1,L"");
+	}
+}
+
 static bool handleCandidates(HWND hwnd) {
 	/* Obtain IME context */
 	HIMC imc = ImmGetContext(hwnd);
@@ -253,7 +310,7 @@ static bool handleCandidates(HWND hwnd) {
 		ImmReleaseContext(hwnd, imc);
 		return false;
 	}
-
+	candidateIMEWindow=hwnd;
 	/* Read first candidate list */
 	CANDIDATELIST* list = (CANDIDATELIST*)malloc(len);
 	ImmGetCandidateList(imc, 0, list, len);
@@ -281,8 +338,11 @@ static bool handleCandidates(HWND hwnd) {
 		ptr += (clen + 1);
 		++count;
 	}
+	HKL kbd_layout = GetKeyboardLayout(0);
+	WCHAR filename[MAX_PATH + 1]={0};
+	ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH);
 	if(cand_str&&wcslen(cand_str)>0) {
-		nvdaControllerInternal_inputCandidateListUpdate(cand_str,selection);
+		nvdaControllerInternal_inputCandidateListUpdate(cand_str,selection,filename);
 	}
 	/* Clean up */
 	free(cand_str);
@@ -295,7 +355,7 @@ static WCHAR* getCompositionString(HIMC imc, DWORD index) {
 	if (len < sizeof(WCHAR))  return NULL;
 	WCHAR* wstr = (WCHAR*)malloc(len + sizeof(WCHAR));
 	len = ImmGetCompositionStringW(imc, index, wstr, len) / sizeof(WCHAR);
-	wstr[len] = '\0';
+	wstr[len] = L'\0';
 	 return wstr;
 }
 
@@ -325,7 +385,6 @@ static bool handleEndComposition(HWND hwnd, WPARAM wParam, LPARAM lParam) {
 
 	wchar_t* comp_str = getCompositionString(imc, GCS_RESULTSTR);
 	ImmReleaseContext(hwnd, imc);
-
 	/* Generate notification */
 	nvdaControllerInternal_inputCompositionUpdate((comp_str?comp_str:L""),-1,-1,0);
 	if(comp_str) {
@@ -350,69 +409,73 @@ bool hasValidIMEContext(HWND hwnd) {
 	return valid_imc;
 }
 
-static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
-	static HWND curIMEWindow=NULL;
-	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
+static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
 	// Ignore messages with invalid HIMC
-	if(!hasValidIMEContext(pcwp->hwnd)) return 0; 
-	switch (pcwp->message) {
+	if(!hasValidIMEContext(hwnd)) return 0; 
+	switch (message) {
 		case WM_IME_NOTIFY:
-			switch (pcwp->wParam) {
+			switch (wParam) {
 				case IMN_SETOPENSTATUS:
-					handleOpenStatus(pcwp->hwnd);
+					handleOpenStatus(hwnd);
 					break;
 				case IMN_OPENCANDIDATE:
 				case IMN_CHANGECANDIDATE:
-					PostMessage(pcwp->hwnd,wm_candidateChange,0,0);
+					PostMessage(hwnd,wm_candidateChange,0,0);
 					break;
 
 				case IMN_CLOSECANDIDATE:
-					nvdaControllerInternal_inputCandidateListUpdate(L"",-1);
+					nvdaControllerInternal_inputCandidateListUpdate(L"",-1,L"");
 					break;
 
 				case IMN_SETCONVERSIONMODE:
-					if(!disableIMEConversionModeUpdateReporting) handleIMEConversionModeUpdate(pcwp->hwnd,true);
+					if(!disableIMEConversionModeUpdateReporting) handleIMEConversionModeUpdate(hwnd,true);
+					break;
+
+				case IMN_PRIVATE:
+					// Needed in XP to support EasyDots IME
+					if (!isUIElementMgrSafe || !isTSFThread(true))
+						handleReadingStringUpdate(hwnd);
 					break;
 			}
+			break;
 
 		case WM_IME_COMPOSITION:
-			if(!isTSFThread(true)) {
-				handleReadingStringUpdate(pcwp->hwnd);
-				bool compFailed=false;
+			curIMEWindow=hwnd;
+			if(!isTSFThread(true)) {\
 				if(lParam&GCS_COMPSTR||lParam&GCS_CURSORPOS) {
-					compFailed=!handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
-					if(!compFailed) curIMEWindow=pcwp->hwnd;
-				}
-				if(compFailed&&curIMEWindow==pcwp->hwnd) {
-					handleEndComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
-					curIMEWindow=NULL;
-					//Disable further typed character notifications produced by TSF
-					typedCharacter_window=NULL;
+					handleComposition(hwnd, wParam, lParam);
 				}
 			}
 			break;
 
 		case WM_IME_ENDCOMPOSITION:
-			if(curIMEWindow==pcwp->hwnd&&!isTSFThread(true)) {
-				handleEndComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
+			if(curIMEWindow==hwnd) {
+				if(handleEndComposition(hwnd, wParam, lParam)) {
+					//Disable further typed character notifications produced by TSF
+					typedCharacter_window=NULL;
+				}
 				curIMEWindow=NULL;
-				//Disable further typed character notifications produced by TSF
-				typedCharacter_window=NULL;
 			}
 			break;
 
 		case WM_ACTIVATE:
 		case WM_SETFOCUS:
-			handleIMEConversionModeUpdate(pcwp->hwnd,false);
+			handleIMEConversionModeUpdate(hwnd,false);
 			if(!isTSFThread(true)) {
-				if (pcwp->hwnd != GetFocus())  break;
-				handleComposition(pcwp->hwnd, pcwp->wParam, pcwp->lParam);
-				handleCandidates(pcwp->hwnd);
+				if (hwnd != GetFocus())  break;
+				handleComposition(hwnd, wParam, lParam);
+				handleCandidates(hwnd);
 			}
 			break;
 		default:
 			break;
 	}
+	return 0;
+}
+
+static LRESULT CALLBACK IME_callWndProcHook(int code, WPARAM wParam, LPARAM lParam) {
+	CWPSTRUCT* pcwp=(CWPSTRUCT*)lParam;
+	handleIMEWindowMessage(pcwp->hwnd,pcwp->message,pcwp->wParam,pcwp->lParam);
 	return 0;
 }
 
@@ -430,7 +493,10 @@ LRESULT CALLBACK IME_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 	MSG* pmsg=(MSG*)lParam;
 	if(pmsg->message==wm_candidateChange) {
 		handleCandidates(pmsg->hwnd);
+	} else {
+		handleCandidatesClosed(pmsg->hwnd);
 	}
+	handleIMEWindowMessage(pmsg->hwnd,pmsg->message,pmsg->wParam,pmsg->lParam);
 	return 0;
 }
 

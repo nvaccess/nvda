@@ -12,22 +12,18 @@ def calculateInsertedChars(oldComp,newComp):
 	oldLen=len(oldComp)
 	newLen=len(newComp)
 	minLen=min(oldLen,newLen)
-	print "oldLen %d, newLen %d, minLen %d"%(oldLen,newLen,minLen)
 	diffStart=0
 	diffEnd=newLen
 	for index in xrange(minLen):
-		print "checking start: index %d, new %c, old %c"%(index,newComp[index],oldComp[index])
 		if newComp[index]!=oldComp[index]:
 			break
 		diffStart=index+1
 	for index in xrange(minLen,0,-1):
 		backIndex=index-minLen-1
-		print "checking end: index %d, backIndex %d, new %c, old %c"%(index,backIndex,newComp[backIndex],oldComp[backIndex])
 		if newComp[backIndex]!=oldComp[backIndex]:
 			break
 		diffEnd=newLen+backIndex
 	diffEnd=max(diffEnd,diffStart+(newLen-oldLen))
-	print "diffStart %d, diffEnd %d"%(diffStart,diffEnd)
 	return newComp[diffStart:diffEnd]
 
 class InputCompositionTextInfo(OffsetsTextInfo):
@@ -77,10 +73,10 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 			if newText:
 				queueHandler.queueFunction(queueHandler.eventQueue,speech.speakText,newText,symbolLevel=characterProcessing.SYMLVL_ALL)
 
-	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,isReading):
+	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,isReading,announce=True):
 		if isReading and not config.conf["inputComposition"]["reportReadingStringChanges"]: return
 		if not isReading and not config.conf["inputComposition"]["reportCompositionStringChanges"]: return
-		self.reportNewText((self.readingString if isReading else self.compositionString),compositionString)
+		if announce: self.reportNewText((self.readingString if isReading else self.compositionString),compositionString)
 		hasChanged=False
 		if isReading:
 			self.readingString=compositionString
@@ -127,18 +123,26 @@ class CandidateItem(CandidateItemBehavior,Window):
 	lastChild=None
 	states=set()
 
-	def __init__(self,parent=None,candidateStrings=[],candidateIndex=0):
+	def __init__(self,parent=None,candidateStrings=[],candidateIndex=0,inputMethod=None):
 		self.parent=parent
 		self.candidateStrings=candidateStrings
 		self.candidateIndex=candidateIndex
+		self.inputMethod=inputMethod
 		super(CandidateItem,self).__init__(windowHandle=parent.windowHandle)
 
 	def findOverlayClasses(self,clsList):
 		clsList.append(CandidateItem)
 		return clsList
 
+	def _get_candidateNumber(self):
+		number=self.candidateIndex
+		#Most candidate lists start at 1, except for Boshiami which starts at 0.
+		if self.inputMethod!="LIUNT.IME":
+			number+=1
+		return number
+
 	def _get_name(self):
-		number=self.candidateIndex+1
+		number=self.candidateNumber
 		candidate=self.candidateStrings[self.candidateIndex]
 		return self.getFormattedCandidateName(number,candidate)
 
@@ -151,8 +155,8 @@ class CandidateItem(CandidateItemBehavior,Window):
 
 	def _get_next(self):
 		if self.candidateIndex<(len(self.candidateStrings)-1):
-			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex+1)
+			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex+1,inputMethod=self.inputMethod)
 
 	def _get_previous(self):
 		if self.candidateIndex>0:
-			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex-1)
+			return CandidateItem(parent=self.parent,candidateStrings=self.candidateStrings,candidateIndex=self.candidateIndex-1,inputMethod=self.inputMethod)

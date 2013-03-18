@@ -9,6 +9,7 @@ import time
 import api
 import queueHandler
 import controlTypes
+import NVDAHelper
 import winKernel
 import winUser
 import eventHandler
@@ -20,6 +21,8 @@ from comtypes.gen.UIAutomationClient import *
 UIA_StyleIdAttributeId=40034
 StyleId_Heading1=70001
 StyleId_Heading9=70009
+ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
+ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
 
 re_MSAAProxyProviderDescription=re.compile(r'Microsoft: (Annotation|MSAA) Proxy \(unmanaged:uiautomationcore.dll\)',re.IGNORECASE)
 
@@ -98,7 +101,7 @@ UIAEventIdsToNVDAEventNames={
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
 	#UIA_MenuModeEndEventId:"menuModeEnd",
-	UIA_Text_TextSelectionChangedEventId:"caret",
+	#UIA_Text_TextSelectionChangedEventId:"caret",
 	UIA_ToolTipOpenedEventId:"alert",
 	#UIA_AsyncContentLoadedEventId:"documentLoadComplete",
 	#UIA_ToolTipClosedEventId:"hide",
@@ -138,6 +141,9 @@ class UIAHandler(COMObject):
 			self.UIAWindowHandleCache={}
 			self.baseTreeWalker=self.clientObject.RawViewWalker
 			self.baseCacheRequest=self.windowCacheRequest.Clone()
+			import UIAHandler
+			self.ItemIndex_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemIndex_Property_GUID),u"ItemIndex",1)
+			self.ItemCount_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemCount_Property_GUID),u"ItemCount",1)
 			for propertyId in (UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_IsKeyboardFocusablePropertyId,UIA_IsPasswordPropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsSelectionItemPatternAvailablePropertyId,UIA_IsTextPatternAvailablePropertyId):
 				self.baseCacheRequest.addProperty(propertyId)
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
@@ -157,6 +163,10 @@ class UIAHandler(COMObject):
 		if not self.MTAThreadInitEvent.isSet:
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
+		if eventID==UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):
+			# We don't need the menuOpened event if focus has been fired,
+			# as focus should be more correct.
+			return
 		NVDAEventName=UIAEventIdsToNVDAEventNames.get(eventID,None)
 		if not NVDAEventName:
 			return
@@ -164,7 +174,7 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj:
+		if not obj or (NVDAEventName=="gainFocus" and not obj.shouldAllowUIAFocusEvent):
 			return
 		eventHandler.queueEvent(NVDAEventName,obj)
 
@@ -189,7 +199,7 @@ class UIAHandler(COMObject):
 			if self.clientObject.compareElements(sender,lastFocus) and lastFocus.currentHasKeyboardFocus:
 				return
 		obj=NVDAObjects.UIA.UIA(UIAElement=sender)
-		if not obj:
+		if not obj or not obj.shouldAllowUIAFocusEvent:
 			return
 		eventHandler.queueEvent("gainFocus",obj)
 

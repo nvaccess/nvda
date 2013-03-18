@@ -4,6 +4,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from comtypes import COMError
 import time
 import appModuleHandler
 import controlTypes
@@ -13,6 +14,9 @@ import eventHandler
 import mouseHandler
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import sysListView32, IAccessible
+import UIAHandler
+if UIAHandler.isUIAAvailable:
+	from NVDAObjects.UIA import UIA
 
 #win8hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
 class SearchBoxClient(IAccessible):
@@ -36,6 +40,7 @@ class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 
 class ClassicStartMenu(Window):
 	# Override the name, as Windows names this the "Application" menu contrary to all documentation.
+	# Translators: The title of the Start menu/screen in your language (only the word start).
 	name = _("Start")
 
 	def event_gainFocus(self):
@@ -74,6 +79,47 @@ class NotificationArea(IAccessible):
 			return
 		super(NotificationArea, self).event_gainFocus()
 
+if UIAHandler.isUIAAvailable:
+	class GridTileElement(UIA):
+
+		role=controlTypes.ROLE_TABLECELL
+
+		def _get_description(self):
+			name=self.name
+			descriptionStrings=[]
+			for child in self.children:
+				description=child.basicText
+				if not description or description==name: continue
+				descriptionStrings.append(description)
+			return " ".join(descriptionStrings)
+			return description
+
+	class GridListTileElement(UIA):
+		role=controlTypes.ROLE_TABLECELL
+		description=None
+
+	class GridGroup(UIA):
+		"""A group in the Windows 8 Start Menu.
+		"""
+		presentationType=UIA.presType_content
+
+		#Normally the name is the first tile which is rather redundant
+		#However some groups have custom header text which should be read instead
+		def _get_name(self):
+			child=self.firstChild
+			if isinstance(child,UIA):
+				try:
+					automationID=child.UIAElement.currentAutomationID
+				except COMError:
+					automationID=None
+				if automationID=="GridListGroupHeader":
+					return child.name
+
+	class ImmersiveLauncher(UIA):
+		#When the win8 start screen openes, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
+		#Ignore focus events on this object.
+		shouldAllowUIAFocusEvent=False
+
 class AppModule(appModuleHandler.AppModule):
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -109,6 +155,17 @@ class AppModule(appModuleHandler.AppModule):
 			if toolbarParent and toolbarParent.windowClassName == "SysPager":
 				clsList.insert(0, NotificationArea)
 				return
+
+		if UIAHandler.isUIAAvailable and isinstance(obj, UIA):
+			uiaClassName = obj.UIAElement.cachedClassName
+			if uiaClassName == "GridTileElement":
+				clsList.insert(0, GridTileElement)
+			elif uiaClassName == "GridListTileElement":
+				clsList.insert(0, GridListTileElement)
+			elif uiaClassName == "GridGroup":
+				clsList.insert(0, GridGroup)
+			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.ROLE_PANE:
+				clsList.insert(0, ImmersiveLauncher)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName

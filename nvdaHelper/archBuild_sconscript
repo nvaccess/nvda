@@ -100,6 +100,9 @@ env.Install(libInstallDir,adobeAcrobatVBufBackend)
 adobeFlashVBufBackend=env.SConscript('vbufBackends/adobeFlash/sconscript')
 env.Install(libInstallDir,adobeFlashVBufBackend)
 
+lotusNotesRichTextVBufBackend=env.SConscript('vbufBackends/lotusNotesRichText/sconscript')
+env.Install(libInstallDir,lotusNotesRichTextVBufBackend)
+
 geckoVBufBackend=env.SConscript('vbufBackends/gecko_ia2/sconscript')
 env.Install(libInstallDir,geckoVBufBackend)
 

@@ -6,6 +6,7 @@
 
 from ctypes import *
 from ctypes.wintypes import *
+from collections import OrderedDict
 import itertools
 import hwPortUtils
 import braille
@@ -13,6 +14,7 @@ import inputCore
 from baseObject import ScriptableObject
 from winUser import WNDCLASSEXW, WNDPROC, LRESULT, HCURSOR
 from logHandler import log
+import brailleInput
 
 #Try to load the fs braille dll
 try:
@@ -45,6 +47,9 @@ nvdaFsBrlWm=windll.user32.RegisterWindowMessageW(u"nvdaFsBrlWm")
 inputType_keys=3
 inputType_routing=4
 inputType_wizWheel=5
+
+# Names of freedom scientific bluetooth devices
+bluetoothNames = ("Focus 40 BT",)
 
 keysPressed=0
 extendedKeysPressed=0
@@ -113,6 +118,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 	def check(cls):
 		return bool(fsbLib)
 
+	@classmethod
+	def getPossiblePorts(cls):
+		ports = OrderedDict([cls.AUTOMATIC_PORT, ("USB", "USB",)])
+		try:
+			cls._getBluetoothPorts().next()
+			ports["bluetooth"] = "Bluetooth"
+		except StopIteration:
+			pass
+		return ports
+
+	@classmethod
+	def _getBluetoothPorts(cls):
+		return (p["port"].encode("mbcs") for p in hwPortUtils.listComPorts() if p.get("bluetoothName") in bluetoothNames)
+
 	wizWheelActions=[
 		# Translators: The name of a key on a braille display, that scrolls the display to show previous/next part of a long line.
 		(_("display scroll"),("globalCommands","GlobalCommands","braille_scrollBack"),("globalCommands","GlobalCommands","braille_scrollForward")),
@@ -120,7 +139,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		(_("line scroll"),("globalCommands","GlobalCommands","braille_previousLine"),("globalCommands","GlobalCommands","braille_nextLine")),
 	]
 
-	def __init__(self):
+	def __init__(self, port="auto"):
 		self.leftWizWheelActionCycle=itertools.cycle(self.wizWheelActions)
 		action=self.leftWizWheelActionCycle.next()
 		self.gestureMap.add("br(freedomScientific):leftWizWheelUp",*action[1])
@@ -132,11 +151,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 		super(BrailleDisplayDriver,self).__init__()
 		self._messageWindowClassAtom=windll.user32.RegisterClassExW(byref(nvdaFsBrlWndCls))
 		self._messageWindow=windll.user32.CreateWindowExW(0,self._messageWindowClassAtom,u"nvdaFsBrlWndCls window",0,0,0,0,0,None,None,appInstance,None)
+		if port == "auto":
+			portsToTry = itertools.chain(["USB"], self._getBluetoothPorts())
+		elif port == "bluetooth":
+			portsToTry = self._getBluetoothPorts()
+		else: # USB
+			portsToTry = [port]
 		fbHandle=-1
-		for port in itertools.chain(("USB",),
-			(portInfo["port"].encode("mbcs") for portInfo in hwPortUtils.listComPorts(onlyAvailable=True)
-				if portInfo.get("bluetoothName") == "Focus 40 BT")
-		):
+		for port in portsToTry:
 			fbHandle=fbOpen(port,self._messageWindow,nvdaFsBrlWm)
 			if fbHandle!=-1:
 				break
@@ -216,7 +238,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 			"kb:alt+tab" : ("br(freedomScientific):dot2+dot3+dot4+dot5+brailleSpaceBar",),
 			"kb:escape" : ("br(freedomScientific):dot1+dot5+brailleSpaceBar",),
 			"kb:windows" : ("br(freedomScientific):dot2+dot4+dot5+dot6+brailleSpaceBar",),
-			"kb:space" : ("br(freedomScientific):brailleSpaceBar",),
 			"kb:windows+d" : ("br(freedomScientific):dot1+dot2+dot3+dot4+dot5+dot6+brailleSpaceBar",),
 			"reportCurrentLine" : ("br(freedomScientific):dot1+dot4+brailleSpaceBar",),
 			"showGui" :("br(freedomScientific):dot1+dot3+dot4+dot5+brailleSpaceBar",),
@@ -227,7 +248,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver,ScriptableObject):
 class InputGesture(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
-class KeyGesture(InputGesture):
+class KeyGesture(InputGesture, brailleInput.BrailleInputGesture):
 
 	keyLabels=[
 		#Braille keys (byte 1)
@@ -253,7 +274,12 @@ class KeyGesture(InputGesture):
 		keys=[self.keyLabels[num] for num in xrange(24) if (keyBits>>num)&1]
 		extendedKeys=[self.extendedKeyLabels[num] for num in xrange(4) if (extendedKeyBits>>num)&1]
 		self.id="+".join(set(keys+extendedKeys))
-
+		# Don't say is this a dots gesture if some keys either from dots and space are pressed.
+		if not extendedKeyBits and not keyBits & ~(0xff | (1 << 0xf)):
+			self.dots = keyBits & 0xff
+			# Is space?
+			if keyBits & (1 << 0xf):
+				self.space = True
 
 class RoutingGesture(InputGesture):
 

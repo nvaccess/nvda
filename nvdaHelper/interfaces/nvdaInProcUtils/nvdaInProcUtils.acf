@@ -18,4 +18,5 @@ interface NvdaInProcUtils {
 	[fault_status,comm_status] unregisterNVDAProcess();
 	[fault_status,comm_status] winword_expandToLine();
 	[fault_status,comm_status] winword_getTextInRange();
+	[fault_status,comm_status] sysListView32_getGroupInfo();
 }

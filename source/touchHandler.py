@@ -1,3 +1,10 @@
+#touchHandler.py
+#A part of NonVisual Desktop Access (NVDA)
+#This file is covered by the GNU General Public License.
+#See the file COPYING for more details.
+#Copyright (C) 2012 NV Access Limited
+
+import threading
 from ctypes import *
 from ctypes.wintypes import *
 import sys
@@ -12,6 +19,7 @@ import inputCore
 import screenExplorer
 from logHandler import log
 import touchTracker
+import gui
 
 availableTouchModes=['text','object']
 
@@ -119,22 +127,49 @@ class TouchInputGesture(inputCore.InputGesture):
 	def _get_displayName(self):
 		return " ".join(self._rawIdentifiers[1][3:].split('_'))
 
-class TouchHandler(object):
+class TouchHandler(threading.Thread):
 
 	def __init__(self):
+		super(TouchHandler,self).__init__()
 		self._curTouchMode='object'
-		self._appInstance=windll.kernel32.GetModuleHandleW(None)
-		self._cInputTouchWindowProc=winUser.WNDPROC(self.inputTouchWndProc)
-		self._wc=winUser.WNDCLASSEXW(cbSize=sizeof(winUser.WNDCLASSEXW),lpfnWndProc=self._cInputTouchWindowProc,hInstance=self._appInstance,lpszClassName="inputTouchWindowClass")
-		self._wca=windll.user32.RegisterClassExW(byref(self._wc))
-		self._touchWindow=windll.user32.CreateWindowExW(0,self._wca,u"NVDA touch input",0,0,0,0,0,HWND_MESSAGE,None,self._appInstance,None)
-		windll.user32.RegisterPointerInputTarget(self._touchWindow,PT_TOUCH)
-		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,ANRUS_TOUCH_MODIFICATION_ACTIVE)
-		self.trackerManager=touchTracker.TrackerManager()
-		self.screenExplorer=screenExplorer.ScreenExplorer()
-		self.screenExplorer.updateReview=True
-		self.gesturePump=self.gesturePumpFunc()
-		queueHandler.registerGeneratorObject(self.gesturePump)
+		self.initializedEvent=threading.Event()
+		self.threadExc=None
+		self.start()
+		self.initializedEvent.wait()
+		if self.threadExc:
+			raise self.threadExc
+
+	def terminate(self):
+		windll.user32.PostThreadMessageW(self.ident,WM_QUIT,0,0)
+		self.join()
+
+	def run(self):
+		try:
+			self._appInstance=windll.kernel32.GetModuleHandleW(None)
+			self._cInputTouchWindowProc=winUser.WNDPROC(self.inputTouchWndProc)
+			self._wc=winUser.WNDCLASSEXW(cbSize=sizeof(winUser.WNDCLASSEXW),lpfnWndProc=self._cInputTouchWindowProc,hInstance=self._appInstance,lpszClassName="inputTouchWindowClass")
+			self._wca=windll.user32.RegisterClassExW(byref(self._wc))
+			self._touchWindow=windll.user32.CreateWindowExW(0,self._wca,u"NVDA touch input",0,0,0,0,0,HWND_MESSAGE,None,self._appInstance,None)
+			windll.user32.RegisterPointerInputTarget(self._touchWindow,PT_TOUCH)
+			oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,ANRUS_TOUCH_MODIFICATION_ACTIVE)
+			self.trackerManager=touchTracker.TrackerManager()
+			self.screenExplorer=screenExplorer.ScreenExplorer()
+			self.screenExplorer.updateReview=True
+			self.gesturePump=self.gesturePumpFunc()
+			queueHandler.registerGeneratorObject(self.gesturePump)
+		except Exception as e:
+			self.threadExc=e
+		finally:
+			self.initializedEvent.set()
+		msg=MSG()
+		while windll.user32.GetMessageW(byref(msg),None,0,0):
+			windll.user32.TranslateMessage(byref(msg))
+			windll.user32.DispatchMessageW(byref(msg))
+		self.gesturePump.close()
+		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,0)
+		windll.user32.UnregisterPointerInputTarget(self._touchWindow,PT_TOUCH)
+		windll.user32.DestroyWindow(self._touchWindow)
+		windll.user32.UnregisterClassW(self._wca,self._appInstance)
 
 	def inputTouchWndProc(self,hwnd,msg,wParam,lParam):
 		if msg>=_WM_POINTER_FIRST and msg<=_WM_POINTER_LAST:
@@ -150,13 +185,6 @@ class TouchHandler(object):
 			return 0
 		return windll.user32.DefWindowProcW(hwnd,msg,wParam,lParam)
 
-	def terminate(self):
-		self.gesturePump.close()
-		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,0)
-		windll.user32.UnregisterPointerInputTarget(self._touchWindow,PT_TOUCH)
-		windll.user32.DestroyWindow(self._touchWindow)
-		windll.user32.UnregisterClassW(self._wca,self._appInstance)
-
 	def setMode(self,mode):
 		if mode not in availableTouchModes:
 			raise ValueError("Unknown mode %s"%mode)
@@ -171,6 +199,16 @@ class TouchHandler(object):
 				except inputCore.NoInputGestureAction:
 					pass
 			yield
+
+	def notifyInteraction(self, obj):
+		"""Notify the system that UI interaction is occurring via touch.
+		This should be called when performing an action on an object.
+		@param obj: The NVDAObject with which the user is interacting.
+		@type obj: L{NVDAObjects.NVDAObject}
+		"""
+		l, t, w, h = obj.location
+		oledll.oleacc.AccNotifyTouchInteraction(gui.mainFrame.Handle, obj.windowHandle,
+			POINT(l + (w / 2), t + (h / 2)))
 
 handler=None
 

@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2010-2013 NV Access Limited
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -12,16 +12,23 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#ifndef VIRTUALBUFFER_BACKENDS_MSAATEST_H
-#define VIRTUALBUFFER_BACKENDS_MSAATEST_H
+#ifndef VIRTUALBUFFER_BACKENDS_ADOBEFLASH_H
+#define VIRTUALBUFFER_BACKENDS_ADOBEFLASH_H
 
+#include <oleacc.h>
 #include <set>
 #include <vbufBase/backend.h>
 
 class AdobeFlashVBufBackend_t: public VBufBackend_t {
 	private:
 
-	VBufStorage_fieldNode_t* renderControlContent(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, IAccessible* pacc, long accChildID);
+	VBufStorage_fieldNode_t* renderControlContent(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, int docHandle, int id, IAccessible* pacc);
+
+	IAccPropServices* accPropServices;
+
+	long getAccId(IAccessible* acc);
+
+	bool isWindowless;
 
 	protected:
 

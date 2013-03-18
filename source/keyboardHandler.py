@@ -201,6 +201,17 @@ def initialize():
 def terminate():
 	winInputHook.terminate()
 
+def getInputHkl():
+	"""Obtain the hkl currently being used for input.
+	This retrieves the hkl from the thread of the focused window.
+	"""
+	focus = api.getFocusObject()
+	if focus:
+		thread = focus.windowThreadID
+	else:
+		thread = 0
+	return winUser.user32.GetKeyboardLayout(thread)
+
 class KeyboardInputGesture(inputCore.InputGesture):
 	"""A key pressed on the traditional system keyboard.
 	"""
@@ -225,7 +236,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	#: All possible keyboard layouts, where layout names are mapped to localised layout names.
 	#: @type: dict
 	LAYOUTS = {
+		# Translators: One of the keyboard layouts for NVDA.
 		"desktop": _("desktop"),
+		# Translators: One of the keyboard layouts for NVDA.
 		"laptop": _("laptop"),
 	}
 
@@ -272,8 +285,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 		if 32 < self.vkCode < 128:
 			return unichr(self.vkCode).lower()
-		vkChar = winUser.user32.MapVirtualKeyW(self.vkCode, winUser.MAPVK_VK_TO_CHAR)
+		vkChar = winUser.user32.MapVirtualKeyExW(self.vkCode, winUser.MAPVK_VK_TO_CHAR, getInputHkl())
 		if vkChar>0:
+			if vkChar == 43: # "+"
+				# A gesture identifier can't include "+" except as a separator.
+				return "plus"
 			return unichr(vkChar).lower()
 
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
@@ -324,6 +340,10 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if inputCore.manager.isInputHelpActive:
 			return self.SPEECHEFFECT_CANCEL
 		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
+			return None
+		if not config.conf['keyboard']['speechInterruptForCharacters'] and (not self.shouldReportAsCommand or self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT)):
+			return None
+		if self.vkCode==winUser.VK_RETURN and not config.conf['keyboard']['speechInterruptForEnter']:
 			return None
 		if self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT):
 			return self.SPEECHEFFECT_RESUME if speech.isPaused else self.SPEECHEFFECT_PAUSE
@@ -385,12 +405,15 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		keyNames = name.split("+")
 		keys = []
 		for keyName in keyNames:
+			if keyName == "plus":
+				# A key name can't include "+" except as a separator.
+				keyName = "+"
 			if keyName == VK_WIN:
 				vk = winUser.VK_LWIN
 				ext = False
 			elif len(keyName) == 1:
 				ext = False
-				requiredMods, vk = winUser.VkKeyScan(keyName)
+				requiredMods, vk = winUser.VkKeyScanEx(keyName, getInputHkl())
 				if requiredMods & 1:
 					keys.append((winUser.VK_SHIFT, False))
 				if requiredMods & 2:

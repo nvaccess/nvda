@@ -44,7 +44,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 			displayModelsMap_t<HWND>::iterator j=displayModelsByWindow.find(*i);
 			if(j!=displayModelsByWindow.end()) {
 				j->second->acquire();
-				j->second->copyRectangle(textRect,FALSE,FALSE,textRect.left,textRect.top,NULL,tempModel);
+				j->second->copyRectangle(textRect,FALSE,FALSE,false,textRect,NULL,tempModel);
 				j->second->release();
 			}
 			displayModelsByWindow.release();

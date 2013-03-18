@@ -591,11 +591,11 @@ This manifest file contains key = value pares declaring info such as the add-on'
 +++ Available Fields +++
 Although it is highly suggested that manifests contain all fields, the fields marked as mandatory must be included.
 Otherwise, the add-on will not install.  
-- name: A short unique name for the add-on. This is used to differentiate add-ons internally. (Mandatory)
-- summary: A few words describing the add-on. This is shown to the user as its display name. (Mandatory)
+- name: A short unique name for the add-on. This is used to differentiate add-ons internally and is not shown to the user. (Mandatory)
+- summary: The name of the add-on as shown to the user. (Mandatory)
 - version: The version of this add-on; e.g. 2.0. (Mandatory)
 - author: The author of this add-on, preferably in the form Full Name <email address>; e.g. Michael Curran <mick@kulgan.net>. (Mandatory)
-- description: A sentence or two describing what the add-on does in more  detail.
+- description: A sentence or two describing what the add-on does.
 - url: A URL where this add-on, further info and upgrades can be found.
 -
 

@@ -38,6 +38,8 @@ import watchdog
 VBufStorage_findDirection_forward=0
 VBufStorage_findDirection_back=1
 VBufStorage_findDirection_up=2
+VBufRemote_nodeHandle_t=ctypes.c_ulonglong
+
 
 def VBufStorage_findMatch_word(word):
 	return "~w%s" % word
@@ -68,11 +70,13 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		endOffset = ctypes.c_int()
 		docHandle = ctypes.c_int()
 		ID = ctypes.c_int()
-		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID))
+		node=VBufRemote_nodeHandle_t()
+		NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle, offset, ctypes.byref(startOffset), ctypes.byref(endOffset), ctypes.byref(docHandle), ctypes.byref(ID),ctypes.byref(node))
 		return docHandle.value, ID.value
 
 	def _getOffsetsFromFieldIdentifier(self, docHandle, ID):
-		node = NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID)
+		node=VBufRemote_nodeHandle_t()
+		NVDAHelper.localLib.VBuf_getControlFieldNodeWithIdentifier(self.obj.VBufHandle, docHandle, ID,ctypes.byref(node))
 		if not node:
 			raise LookupError
 		start = ctypes.c_int()
@@ -181,6 +185,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if tableLayout:
 			attrs['table-layout']=tableLayout=="1"
 
+		isHidden=attrs.get('isHidden')
+		if isHidden:
+			attrs['isHidden']=isHidden=="1"
+
 		# Handle table row and column headers.
 		for axis in "row", "column":
 			attr = attrs.pop("table-%sheadercells" % axis, None)
@@ -214,7 +222,8 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 			endOffset=ctypes.c_int()
 			docHandle=ctypes.c_int()
 			ID=ctypes.c_int()
-			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID))
+			node=VBufRemote_nodeHandle_t()
+			NVDAHelper.localLib.VBuf_locateControlFieldNodeAtOffset(self.obj.VBufHandle,offset,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(docHandle),ctypes.byref(ID),ctypes.byref(node))
 			return startOffset.value,endOffset.value
 		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
 
@@ -236,6 +245,7 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		textList = []
 		landmark = field.get("landmark")
 		if formatConfig["reportLandmarks"] and reportStart and landmark and field.get("_startOfNode"):
+			# Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
 			textList.append(_("%s landmark") % aria.landmarkRoles[landmark])
 		text = super(VirtualBufferTextInfo, self).getControlFieldBraille(field, ancestors, reportStart, formatConfig)
 		if text:
@@ -271,6 +281,8 @@ class ElementsListDialog(wx.Dialog):
 	)
 	Element = collections.namedtuple("Element", ("textInfo", "text", "parent"))
 
+	lastSelectedElementType=0
+
 	def __init__(self, vbuf):
 		self.vbuf = vbuf
 		# Translators: The title of the browse mode Elements List dialog.
@@ -280,6 +292,7 @@ class ElementsListDialog(wx.Dialog):
 		# Translators: The label of a group of radio buttons to select the type of element
 		# in the browse mode Elements List dialog.
 		child = wx.RadioBox(self, wx.ID_ANY, label=_("Type:"), choices=tuple(et[1] for et in self.ELEMENT_TYPES))
+		child.SetSelection(self.lastSelectedElementType)
 		child.Bind(wx.EVT_RADIOBOX, self.onElementTypeChange)
 		mainSizer.Add(child,proportion=1)
 
@@ -317,12 +330,14 @@ class ElementsListDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 
 		self.tree.SetFocus()
-		self.initElementType(self.ELEMENT_TYPES[0][0])
+		self.initElementType(self.ELEMENT_TYPES[self.lastSelectedElementType][0])
 
 	def onElementTypeChange(self, evt):
+		elementType=evt.GetInt()
 		# We need to make sure this gets executed after the focus event.
 		# Otherwise, NVDA doesn't seem to get the event.
-		queueHandler.queueFunction(queueHandler.eventQueue, self.initElementType, self.ELEMENT_TYPES[evt.GetInt()][0])
+		queueHandler.queueFunction(queueHandler.eventQueue, self.initElementType, self.ELEMENT_TYPES[elementType][0])
+		self.lastSelectedElementType=elementType
 
 	def initElementType(self, elType):
 		if elType == "link":
@@ -387,6 +402,8 @@ class ElementsListDialog(wx.Dialog):
 		item = None
 		defaultItem = None
 		matched = False
+		#Do case-insensitive matching by lowering both filterText and each element's text.
+		filterText=filterText.lower()
 		for element in self._elements:
 			if filterText not in element.text.lower():
 				item = None
@@ -532,7 +549,8 @@ class ElementsListDialog(wx.Dialog):
 
 	def onAction(self, activate):
 		self.Close()
-
+		# Save off the last selected element type on to the class so its used in initialization next time.
+		self.__class__.lastSelectedElementType=self.lastSelectedElementType
 		item = self.tree.GetSelection()
 		element = self.tree.GetItemPyData(item).textInfo
 		newCaret = element.copy()
@@ -623,11 +641,13 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			return
 		if self._hadFirstGainFocus:
 			# If this buffer has already had focus once while loaded, this is a refresh.
+			# Translators: Reported when a page reloads (example: after refreshing a webpage).
 			speech.speakMessage(_("Refreshed"))
 		if api.getFocusObject().treeInterceptor == self:
 			self.event_treeInterceptor_gainFocus()
 
 	def _loadProgress(self):
+		# Translators: Reported while loading a document.
 		ui.message(_("Loading document..."))
 
 	def unloadBuffer(self):
@@ -747,8 +767,18 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		obj.doAction()
 
+	def _activateLongDesc(self,controlField):
+		"""
+		Activates (presents) the long description for a particular field (usually a graphic).
+		@param controlField: the field who's long description should be activated. This field is guaranteed to have states containing HASLONGDESC state. 
+		@type controlField: dict
+		"""
+		raise NotImplementedError
+
 	def _activatePosition(self, info):
 		obj = info.NVDAObjectAtStart
+		if not obj:
+			return
 		if self.shouldPassThrough(obj):
 			obj.setFocus()
 			self.passThrough = True
@@ -800,6 +830,21 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		"""
 		return obj.role not in self.APPLICATION_ROLES and controlTypes.STATE_FOCUSABLE in obj.states
 
+	def script_activateLongDesc(self,gesture):
+		info=self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand("character")
+		for field in reversed(info.getTextWithFields()):
+			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+				states=field.field.get('states')
+				if states and controlTypes.STATE_HASLONGDESC in states:
+					self._activateLongDesc(field.field)
+					break
+		else:
+			# Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
+			ui.message(_("No long description"))
+	# Translators: the description for the activateLongDescription script on virtualBuffers.
+	script_activateLongDesc.__doc__=_("Shows the long description at this position if one is found.")
+
 	def script_activatePosition(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		self._activatePosition(info)
@@ -816,6 +861,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	def script_toggleScreenLayout(self,gesture):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
 		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
+		# Translators: Presented when use screen layout option is toggled.
 		speech.speakMessage(_("use screen layout %s")%onOff)
 	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the document content")
 
@@ -844,7 +890,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			raise ValueError("unknown direction: %s"%direction)
 		while True:
 			try:
-				node=NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset))
+				node=VBufRemote_nodeHandle_t()
+				NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,attribs,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
 			except:
 				return
 			if not node:
@@ -1438,6 +1485,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		braille.handler.handleUpdate(self)
 
 	__gestures = {
+		"kb:NVDA+d": "activateLongDesc",
 		"kb:enter": "activatePosition",
 		"kb:space": "activatePosition",
 		"kb:NVDA+f5": "refreshBuffer",

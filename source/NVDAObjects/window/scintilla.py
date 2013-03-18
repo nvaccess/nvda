@@ -191,7 +191,21 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._getLineOffsets(offset)
 
 	def _getCharacterOffsets(self,offset):
-		return [offset,watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)]
+		if offset>=self._getStoryLength(): return offset,offset+1
+		end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,offset,0)
+		start=offset
+		tempOffset=offset-1
+		while True:
+			start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,tempOffset,0)
+			if start<end:
+				break
+			elif tempOffset==0:
+				start=tempOffset
+				break
+			else:
+				tempOffset-=1
+		return [start,end]
+
 
 #The Scintilla NVDA object, inherists the generic MSAA NVDA object
 class Scintilla(EditableTextWithAutoSelectDetection, Window):

@@ -609,6 +609,16 @@ class KeyboardSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.wordsCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings dialog.
+		self.speechInterruptForCharsCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speech interrupt for typed characters"))
+		self.speechInterruptForCharsCheckBox.SetValue(config.conf["keyboard"]["speechInterruptForCharacters"])
+		settingsSizer.Add(self.speechInterruptForCharsCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
+		self.speechInterruptForEnterCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Speech interrupt for Enter key"))
+		self.speechInterruptForEnterCheckBox.SetValue(config.conf["keyboard"]["speechInterruptForEnter"])
+		settingsSizer.Add(self.speechInterruptForEnterCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.beepLowercaseCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Beep if typing lowercase letters when caps lock is on"))
 		self.beepLowercaseCheckBox.SetValue(config.conf["keyboard"]["beepForLowercaseWithCapslock"])
 		settingsSizer.Add(self.beepLowercaseCheckBox,border=10,flag=wx.BOTTOM)
@@ -629,6 +639,8 @@ class KeyboardSettingsDialog(SettingsDialog):
 		config.conf["keyboard"]["useExtendedInsertAsNVDAModifierKey"]=self.extendedInsertAsNVDAModifierCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedCharacters"]=self.charsCheckBox.IsChecked()
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
+		config.conf["keyboard"]["speechInterruptForCharacters"]=self.speechInterruptForCharsCheckBox.IsChecked()
+		config.conf["keyboard"]["speechInterruptForEnter"]=self.speechInterruptForEnterCheckBox.IsChecked()
 		config.conf["keyboard"]["beepForLowercaseWithCapslock"]=self.beepLowercaseCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
 		super(KeyboardSettingsDialog, self).onOk(evt)
@@ -1214,6 +1226,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		driverList = braille.getDisplayList()
 		self.displayNames = [driver[0] for driver in driverList]
 		self.displayList = wx.Choice(self, wx.ID_ANY, choices=[driver[1] for driver in driverList])
+		self.Bind(wx.EVT_CHOICE, self.onDisplayNameChanged, self.displayList)
 		try:
 			selection = self.displayNames.index(braille.handler.display.name)
 			self.displayList.SetSelection(selection)
@@ -1224,7 +1237,15 @@ class BrailleSettingsDialog(SettingsDialog):
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		label = wx.StaticText(self, wx.ID_ANY, label=_("Translation &table:"))
+		label = wx.StaticText(self, wx.ID_ANY, label=_("&Port:"))
+		self.portsList = wx.Choice(self, wx.ID_ANY, choices=[])
+		sizer.Add(label)
+		sizer.Add(self.portsList)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+		self.updatePossiblePorts()
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, label=_("&Output table:"))
 		self.tableNames = [table[0] for table in braille.TABLES]
 		self.tableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.TABLES])
 		try:
@@ -1234,6 +1255,19 @@ class BrailleSettingsDialog(SettingsDialog):
 			pass
 		sizer.Add(label)
 		sizer.Add(self.tableList)
+		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		label = wx.StaticText(self, wx.ID_ANY, label=_("&Input table:"))
+		self.inputTableNames = [table[0] for table in braille.INPUT_TABLES]
+		self.inputTableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.INPUT_TABLES])
+		try:
+			selection = self.inputTableNames.index(config.conf["braille"]["inputTable"])
+			self.inputTableList.SetSelection(selection)
+		except:
+			pass
+		sizer.Add(label)
+		sizer.Add(self.inputTableList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		self.expandAtCursorCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("E&xpand to computer braille for the word at the cursor"))
@@ -1283,10 +1317,16 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def onOk(self, evt):
 		display = self.displayNames[self.displayList.GetSelection()]
+		if display not in config.conf["braille"]:
+			config.conf["braille"][display] = {}
+		if self.possiblePorts:
+			port = self.possiblePorts[self.portsList.GetSelection()][0]
+			config.conf["braille"][display]["port"] = port
 		if not braille.handler.setDisplayByName(display):
 			gui.messageBox(_("Could not load the %s display.")%display, _("Braille Display Error"), wx.OK|wx.ICON_WARNING, self)
 			return 
 		config.conf["braille"]["translationTable"] = self.tableNames[self.tableList.GetSelection()]
+		config.conf["braille"]["inputTable"] = self.inputTableNames[self.inputTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		try:
 			val = int(self.cursorBlinkRateEdit.GetValue())
@@ -1304,6 +1344,31 @@ class BrailleSettingsDialog(SettingsDialog):
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		super(BrailleSettingsDialog,  self).onOk(evt)
+
+	def onDisplayNameChanged(self, evt):
+		self.updatePossiblePorts()
+
+	def updatePossiblePorts(self):
+		displayName = self.displayNames[self.displayList.GetSelection()]
+		displayCls = braille._getDisplayDriver(displayName)
+		self.possiblePorts = []
+		try:
+			self.possiblePorts.extend(displayCls.getPossiblePorts().iteritems())
+		except NotImplementedError:
+			pass
+		if self.possiblePorts:
+			self.portsList.SetItems([p[1] for p in self.possiblePorts])
+			try:
+				selectedPort = config.conf["braille"][displayName].get("port")
+				portNames = [p[0] for p in self.possiblePorts]
+				selection = portNames.index(selectedPort)
+			except (KeyError, ValueError):
+				# Display name not in config or port not valid
+				selection = 0
+			self.portsList.SetSelection(selection)
+		# If no port selection is possible or only automatic selection is available, disable the port selection control
+		enable = len(self.possiblePorts) > 0 and not (len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto")
+		self.portsList.Enable(enable)
 
 class SpeechSymbolsDialog(SettingsDialog):
 	# Translators: This is the label for the symbol pronunciation dialog.

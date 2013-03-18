@@ -364,7 +364,7 @@ inline wstring getTextFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool allowPref
 	}\
 }
 
-inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool& invisible, bool& isBlock, wstring& listStyle) {
+inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool& dontRender, bool& isBlock, bool& hidden, wstring& listStyle) {
 	BSTR tempBSTR=NULL;
 	IHTMLElement2* pHTMLElement2=NULL;
 	int res=pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
@@ -383,7 +383,7 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	pHTMLCurrentStyle->get_visibility(&tempBSTR);
 	if(tempBSTR) {
 		LOG_DEBUG(L"Got visibility");
-		invisible=(_wcsicmp(tempBSTR,L"hidden")==0);
+		hidden=(_wcsicmp(tempBSTR,L"hidden")==0);
 		SysFreeString(tempBSTR);
 		tempBSTR=NULL;
 	} else {
@@ -394,7 +394,7 @@ inline void getCurrentStyleInfoFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode, bool&
 	if(tempBSTR) {
 		LOG_DEBUG(L"Got display");
 		if (_wcsicmp(tempBSTR,L"none")==0) {
-			invisible=true;
+			dontRender=true;
 			isBlock=false;
 		}
 		if (_wcsicmp(tempBSTR,L"inline")==0||_wcsicmp(tempBSTR,L"inline-block")==0) isBlock=false;
@@ -448,6 +448,7 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 	}
 	IHTMLDOMAttribute* tempAttribNode=NULL;
 	VARIANT tempVar;
+	macro_addHTMLAttributeToMap(L"id",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	if(nodeName.compare(L"TABLE")==0) {
 		macro_addHTMLAttributeToMap(L"summary",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if(nodeName.compare(L"A")==0) {
@@ -457,7 +458,11 @@ inline void getAttributesFromHTMLDOMNode(IHTMLDOMNode* pHTMLDOMNode,wstring& nod
 		macro_addHTMLAttributeToMap(L"value",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	} else if(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0) {
 		macro_addHTMLAttributeToMap(L"headers",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+		macro_addHTMLAttributeToMap(L"colspan",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+		macro_addHTMLAttributeToMap(L"rowspan",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
+		macro_addHTMLAttributeToMap(L"scope",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	}
+	macro_addHTMLAttributeToMap(L"longdesc",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"alt",true,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"title",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
 	macro_addHTMLAttributeToMap(L"src",false,pHTMLAttributeCollection2,attribsMap,tempVar,tempAttribNode);
@@ -560,113 +565,182 @@ inline void fillTextFormattingForTextNode(VBufStorage_controlFieldNode_t* parent
 	fillTextFormatting_helper(pHTMLElement2,textNode);
 }
 
-inline fillVBuf_tableInfo* fillVBuf_helper_collectAndUpdateTableInfo(IHTMLDOMNode* pHTMLDOMNode, wstring nodeName, int ID, fillVBuf_tableInfo* tableInfoPtr, map<wstring,wstring>& attribsMap) {
+const int TABLEHEADER_COLUMN = 0x1;
+const int TABLEHEADER_ROW = 0x2;
+
+inline void fillExplicitTableHeadersForCell(VBufStorage_controlFieldNode_t& cell, int docHandle, wstring& headersAttr, fillVBuf_tableInfo& tableInfo) {
+	wostringstream colHeaders, rowHeaders;
+
+	// The Headers attribute string is in the form "id id ..."
+	// Loop through all the ids.
+	size_t lastPos = headersAttr.length();
+	size_t startPos = 0;
+	while (startPos < lastPos) {
+		// Search for a space, which indicates the end of this id.
+		size_t endPos = headersAttr.find(L' ', startPos);
+		if (endPos == wstring::npos)
+			endPos=lastPos;
+		// headersAttr[startPos:endPos] is the id of a single header.
+		// Find the info for the header associated with this id string.
+		map<wstring, TableHeaderInfo>::const_iterator it = tableInfo.headersInfo.find(headersAttr.substr(startPos, endPos - startPos));
+		startPos = endPos + 1;
+		if (it == tableInfo.headersInfo.end())
+			continue;
+
+		if (it->second.type & TABLEHEADER_COLUMN)
+			colHeaders << docHandle << L"," << it->second.uniqueId << L";";
+		if (it->second.type & TABLEHEADER_ROW)
+			rowHeaders<< docHandle << L"," << it->second.uniqueId << L";";
+	}
+
+	if (colHeaders.tellp() > 0)
+		cell.addAttribute(L"table-columnheadercells", colHeaders.str());
+	if (rowHeaders.tellp() > 0)
+		cell.addAttribute(L"table-rowheadercells", rowHeaders.str());
+}
+
+/*
+ * Adjusts the current column number to skip past columns spanned by previous rows,
+ * decrementing row spans as they are encountered.
+ */
+inline void handleColsSpannedByPrevRows(fillVBuf_tableInfo& tableInfo) {
+	for (; ; ++tableInfo.curColumnNumber) {
+		map<int, int>::iterator it = tableInfo.columnRowSpans.find(tableInfo.curColumnNumber);
+		if (it == tableInfo.columnRowSpans.end()) {
+			// This column is not spanned by a previous row.
+			return;
+		}
+		nhAssert(it->second != 0); // 0 row span should never occur.
+		// This row has been covered, so decrement the row span.
+		--it->second;
+		if (it->second == 0)
+			tableInfo.columnRowSpans.erase(it);
+	}
+	nhAssert(false); // Code should never reach this point.
+}
+
+inline fillVBuf_tableInfo* fillVBuf_helper_collectAndUpdateTableInfo(VBufStorage_controlFieldNode_t* parentNode, wstring nodeName, int docHandle, int ID, fillVBuf_tableInfo* tableInfo, map<wstring,wstring>& attribsMap) {
 	map<wstring,wstring>::const_iterator tempIter;
 wostringstream tempStringStream;
 	//Many in-table elements identify a data table
 	if((nodeName.compare(L"THEAD")==0||nodeName.compare(L"TFOOT")==0||nodeName.compare(L"TH")==0||nodeName.compare(L"CAPTION")==0||nodeName.compare(L"COLGROUP")==0||nodeName.compare(L"ROWGROUP")==0)) {
-		if(tableInfoPtr) tableInfoPtr->definitData=true;
+		if(tableInfo) tableInfo->definitData=true;
 	}
-if(nodeName.compare(L"TABLE")==0) {
-		tableInfoPtr=new fillVBuf_tableInfo;
-		tableInfoPtr->tableID=ID;
-		tableInfoPtr->curRowIndex=0;
-		tableInfoPtr->definitData=false;
+	if(nodeName.compare(L"TABLE")==0) {
+		tableInfo=new fillVBuf_tableInfo;
+		tableInfo->tableNode=parentNode;
+		tableInfo->tableID=ID;
+		tableInfo->curRowNumber=0;
+		tableInfo->curColumnNumber=0;
+		tableInfo->definitData=false;
 		//summary attribute suggests a data table
 		tempIter=attribsMap.find(L"HTMLAttrib::summary");
 		if(tempIter!=attribsMap.end()) {
-			tableInfoPtr->definitData=true;
+			tableInfo->definitData=true;
 		}
 		//Collect tableID, and row and column counts
-		IHTMLTable* pHTMLTable=NULL;
-		pHTMLDOMNode->QueryInterface(IID_IHTMLTable,(void**)&pHTMLTable);
-		if(pHTMLTable) {
-			tempStringStream.str(L"");
-			tempStringStream<<ID;
-			attribsMap[L"table-id"]=tempStringStream.str();
-			long colCount=0;
-			pHTMLTable->get_cols(&colCount);
-			if(colCount>0) {
-				tempStringStream.str(L"");
-				tempStringStream<<colCount;
-				attribsMap[L"table-columncount"]=tempStringStream.str();
-			}
-			IHTMLElementCollection* pHTMLElementCollection=NULL;
-			pHTMLTable->get_rows(&pHTMLElementCollection);
-			if(pHTMLElementCollection) {
-				long rowCount=0;
-				pHTMLElementCollection->get_length(&rowCount);
-				if(rowCount>0) {
-					tempStringStream.str(L"");
-					tempStringStream<<rowCount;
-					attribsMap[L"table-rowcount"]=tempStringStream.str();
-				}
-				pHTMLElementCollection->Release();
-			}
-			pHTMLTable->Release();
-		}
-	} else if(tableInfoPtr&&nodeName.compare(L"TR")==0) {
-		IHTMLTableRow* pHTMLTableRow=NULL;
-		pHTMLDOMNode->QueryInterface(IID_IHTMLTableRow,(void**)&pHTMLTableRow);
-		if(pHTMLTableRow) {
-			pHTMLTableRow->get_rowIndex(&(tableInfoPtr->curRowIndex));
-			++(tableInfoPtr->curRowIndex);
-			pHTMLTableRow->Release();
-		}
-	}
-	//Collect table cell information
-	if(tableInfoPtr&&(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
 		tempStringStream.str(L"");
-		tempStringStream<<tableInfoPtr->tableID;
+		tempStringStream<<ID;
 		attribsMap[L"table-id"]=tempStringStream.str();
-		//A cell with the headers attribute is definitly a data table
+	} else if(tableInfo&&nodeName.compare(L"TR")==0) {
+		++tableInfo->curRowNumber;
+		tableInfo->curColumnNumber = 0;
+	} if(tableInfo&&(nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
+		++tableInfo->curColumnNumber;
+		handleColsSpannedByPrevRows(*tableInfo);
+		tempStringStream.str(L"");
+		tempStringStream<<tableInfo->tableID;
+		attribsMap[L"table-id"]=tempStringStream.str();
+		tempStringStream.str(L"");
+		tempStringStream<<tableInfo->curRowNumber;
+		attribsMap[L"table-rownumber"]=tempStringStream.str();
+		int startCol = tableInfo->curColumnNumber;
+		tempStringStream.str(L"");
+		tempStringStream<<startCol;
+		attribsMap[L"table-columnnumber"]=tempStringStream.str();
 		tempIter=attribsMap.find(L"HTMLAttrib::headers");
 		if(tempIter!=attribsMap.end()) {
-			tableInfoPtr->definitData=true;
+			//A cell with the headers attribute is definitly a data table
+			tableInfo->definitData=true;
+			//Explicit headers must be recorded later as they may not have been rendered yet.
+			tableInfo->nodesWithExplicitHeaders.push_back(make_pair(parentNode, tempIter->second));
+		} else {
+			map<int, wstring>::const_iterator headersIt;
+			// Add implicit column headers for this cell.
+			if ((headersIt = tableInfo->columnHeaders.find(startCol)) != tableInfo->columnHeaders.end())
+				attribsMap[L"table-columnheadercells"]=headersIt->second;
+			// Add implicit row headers for this cell.
+			if ((headersIt = tableInfo->rowHeaders.find(tableInfo->curRowNumber)) != tableInfo->rowHeaders.end())
+				attribsMap[L"table-rowheadercells"]=headersIt->second;
 		}
-		if(tableInfoPtr->curRowIndex>0) {
-			tempStringStream.str(L"");
-			tempStringStream<<tableInfoPtr->curRowIndex;
-			attribsMap[L"table-rownumber"]=tempStringStream.str();
+		// The last row spanned by this cell.
+		// This will be updated below if there is a row span.
+		int endRow = tableInfo->curRowNumber;
+		tempIter=attribsMap.find(L"HTMLAttrib::colspan");
+		if(tempIter!=attribsMap.end()) {
+			attribsMap[L"table-columnsspanned"]=tempIter->second;
+			tableInfo->curColumnNumber += max(_wtoi(tempIter->second.c_str()) - 1, 0);
 		}
-		IHTMLTableCell* pHTMLTableCell=NULL;
-		pHTMLDOMNode->QueryInterface(IID_IHTMLTableCell,(void**)&pHTMLTableCell);
-		if(pHTMLTableCell) {
-			long columnIndex=0;
-			pHTMLTableCell->get_cellIndex(&columnIndex);
-			++columnIndex;
-			if(columnIndex>0) {
-				tempStringStream.str(L"");
-				tempStringStream<<columnIndex;
-				attribsMap[L"table-columnnumber"]=tempStringStream.str();
+		tempIter=attribsMap.find(L"HTMLAttrib::rowspan");
+		if(tempIter!=attribsMap.end()) {
+			attribsMap[L"table-rowsspanned"]=tempIter->second;
+			// Keep trakc of how many rows after this one are spanned by this cell.
+			int span = _wtoi(tempIter->second.c_str()) - 1;
+			if (span > 0) {
+				// The row span needs to be recorded for each spanned column.
+				for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
+					tableInfo->columnRowSpans[col] = span;
+					endRow += span;
 			}
-			long colSpan=0;
-			pHTMLTableCell->get_colSpan(&colSpan);
-			if(colSpan>1) {
-				tempStringStream.str(L"");
-				tempStringStream<<colSpan;
-				attribsMap[L"table-columnsspanned"]=tempStringStream.str();
+		}
+		if(nodeName.compare(L"TH")==0) {
+			int headerType = 0;
+			tempIter=attribsMap.find(L"HTMLAttrib::scope");
+			if(tempIter!=attribsMap.end()) {
+				if (wcscmp(tempIter->second.c_str(), L"col") == 0)
+					headerType = TABLEHEADER_COLUMN;
+				else if (wcscmp(tempIter->second.c_str(), L"row") == 0)
+					headerType = TABLEHEADER_ROW;
+				else if (wcscmp(tempIter->second.c_str(), L"Both") == 0)
+					headerType = TABLEHEADER_COLUMN | TABLEHEADER_ROW;
 			}
-			long rowSpan=0;
-			pHTMLTableCell->get_rowSpan(&rowSpan);
-			if(rowSpan>1) {
-				tempStringStream.str(L"");
-				tempStringStream<<rowSpan;
-				attribsMap[L"table-rowsspanned"]=tempStringStream.str();
+			if (!headerType) {
+				if(tableInfo->curColumnNumber==1) headerType=TABLEHEADER_ROW;
+				if(tableInfo->curRowNumber==1) headerType|=TABLEHEADER_COLUMN;
 			}
-			pHTMLTableCell->Release();
+			if (headerType & TABLEHEADER_COLUMN) {
+				// Record this as a column header for each spanned column.
+				tempStringStream.str(L"");
+				tempStringStream << docHandle << L"," << ID << L";";
+				for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
+					tableInfo->columnHeaders[col] += tempStringStream.str();
+			}
+			if (headerType & TABLEHEADER_ROW) {
+				// Record this as a row header for each spanned row.
+				tempStringStream.str(L"");
+				tempStringStream << docHandle << L"," << ID << L";";
+				for (int row = tableInfo->curRowNumber; row <= endRow; ++row)
+					tableInfo->rowHeaders[row] += tempStringStream.str();
+			}
+			tempIter=attribsMap.find(L"HTMLAttrib::id");
+		if(tempIter!=attribsMap.end()) {
+				// Record the id string and associated header info for use when handling explicitly defined headers.
+				TableHeaderInfo& headerInfo = tableInfo->headersInfo[tempIter->second];
+				headerInfo.uniqueId = ID;
+				headerInfo.type = headerType;
+			}
 		}
 	}
-	return tableInfoPtr;
+	return tableInfo;
 }
 
-VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfoPtr, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText) {
+VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buffer, VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode, IHTMLDOMNode* pHTMLDOMNode, int docHandle, fillVBuf_tableInfo* tableInfo, int* LIIndexPtr, bool ignoreInteractiveUnlabelledGraphics, bool allowPreformattedText, bool shouldSkipText) {
 	BSTR tempBSTR=NULL;
 	wostringstream tempStringStream;
 
 	//Handle text nodes
-	{ 
-		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->getIsBlock()&&!previousNode));
+	if(!shouldSkipText) { 
+		wstring s=getTextFromHTMLDOMNode(pHTMLDOMNode,allowPreformattedText,(parentNode&&parentNode->isBlock&&!previousNode));
 		if(!s.empty()) {
 			LOG_DEBUG(L"Got text from node");
 			VBufStorage_textFieldNode_t* textNode=buffer->addTextFieldNode(parentNode,previousNode,s);
@@ -687,10 +761,11 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Find out block and visibility style
-	bool invisible=false;
+	bool dontRender=false;
+	bool hidden=false;
 	bool isBlock=true;
 	wstring listStyle;
-	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, invisible, isBlock,listStyle);
+	getCurrentStyleInfoFromHTMLDOMNode(pHTMLDOMNode, dontRender, isBlock,hidden,listStyle);
 	LOG_DEBUG(L"Trying to get IHTMLDOMNode::nodeName");
 	if(pHTMLDOMNode->get_nodeName(&tempBSTR)!=S_OK||!tempBSTR) {
 		LOG_DEBUG(L"Failed to get IHTMLDOMNode::nodeName");
@@ -730,14 +805,14 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	if((tempIter=attribsMap.find(L"HTMLAttrib::aria-hidden"))!=attribsMap.end()&&tempIter->second==L"true") {
 		// aria-hidden
-		invisible=true;
+		dontRender=true;
 	}
 
-	//input nodes of type hidden must be treeted as being invisible.
-	if(!invisible&&nodeName.compare(L"INPUT")==0) {
+	//input nodes of type hidden must be treeted as being dontRender.
+	if(!dontRender&&nodeName.compare(L"INPUT")==0) {
 		tempIter=attribsMap.find(L"HTMLAttrib::type");
 		if(tempIter!=attribsMap.end()&&tempIter->second.compare(L"hidden")==0) {
-			invisible=true;
+			dontRender=true;
 		}
 	}
 
@@ -781,8 +856,15 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	nhAssert(parentNode);
 	previousNode=NULL;
 
-	//We do not want to render any content for invisible nodes
-	if(invisible) {
+	//All inner parts of a table (rows, cells etc) if they are changed must re-render the entire table.
+	//This must be done even for nodes with display:none.
+	if(tableInfo&&(nodeName.compare(L"THEAD")==0||nodeName.compare(L"TBODY")==0||nodeName.compare(L"TFOOT")==0||nodeName.compare(L"TR")==0||nodeName.compare(L"TH")==0||nodeName.compare(L"TD")==0)) {
+		parentNode->updateAncestor=tableInfo->tableNode;
+	}
+
+	parentNode->isHidden=(hidden||dontRender);
+	//We do not want to render any content for dontRender nodes
+	if(dontRender) {
 		return parentNode;
 	}
 
@@ -854,7 +936,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Is this node interactive?
-	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end());
+	bool isInteractive=isEditable||(IAStates&STATE_SYSTEM_FOCUSABLE&&nodeName!=L"BODY"&&nodeName!=L"IFRAME")||(IAStates&STATE_SYSTEM_LINKED)||(attribsMap.find(L"HTMLAttrib::onclick")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmouseup")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::onmousedown")!=attribsMap.end())||(attribsMap.find(L"HTMLAttrib::longdesc")!=attribsMap.end());
 	//Set up numbering for lists
 	int LIIndex=0;
 	if(nodeName.compare(L"OL")==0||nodeName.compare(L"UL")==0) {
@@ -867,7 +949,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Collect and update table information
-	tableInfoPtr=fillVBuf_helper_collectAndUpdateTableInfo(pHTMLDOMNode, nodeName, ID, tableInfoPtr, attribsMap); 
+	tableInfo=fillVBuf_helper_collectAndUpdateTableInfo(parentNode, nodeName, docHandle,ID, tableInfo, attribsMap); 
 
 	//Generate content for nodes
 	wstring contentString=L"";
@@ -984,7 +1066,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 	}
 
 	//Add a textNode to the buffer containing any special content retreaved
-	if(!contentString.empty()) {
+	if(!hidden&&!contentString.empty()) {
 		previousNode=buffer->addTextFieldNode(parentNode,previousNode,contentString);
 		fillTextFormattingForNode(pHTMLDOMNode,previousNode);
 	}
@@ -1020,7 +1102,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 				IHTMLDOMNode* childPHTMLDOMNode=NULL;
 				getHTMLSubdocumentBodyFromIAccessibleFrame(pacc,&childPHTMLDOMNode);
 				if(childPHTMLDOMNode) {
-					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText);
+					previousNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,hidden);
 					childPHTMLDOMNode->Release();
 				}
 			}
@@ -1044,7 +1126,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 						}
 						IHTMLDOMNode* childPHTMLDOMNode=NULL;
 						if(childPDispatch->QueryInterface(IID_IHTMLDOMNode,(void**)&childPHTMLDOMNode)==S_OK) {
-							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfoPtr,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText);
+							VBufStorage_fieldNode_t* tempNode=this->fillVBuf(buffer,parentNode,previousNode,childPHTMLDOMNode,docHandle,tableInfo,LIIndexPtr,ignoreInteractiveUnlabelledGraphics,allowPreformattedText,hidden);
 							if(tempNode) {
 								previousNode=tempNode;
 							}
@@ -1059,13 +1141,7 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 		}
 
 		//A node who's rendered children produces no content, or only a small amount of whitespace should render its title or URL
-		int length=parentNode->getLength();
-		if(length>0&&length<=3) {
-		contentString=L" ";
-			parentNode->getTextInRange(0,length,contentString,false);
-			if(isWhitespace(contentString.c_str())) length=0;
-		}
-		if(length==0) {
+		if(!nodeHasUsefulContent(parentNode)) {
 			contentString=L"";
 			if(!IAName.empty()) {
 				contentString=IAName;
@@ -1098,30 +1174,39 @@ VBufStorage_fieldNode_t* MshtmlVBufBackend_t::fillVBuf(VBufStorage_buffer_t* buf
 
 	//Update attributes with table info
 	if(nodeName.compare(L"TABLE")==0) {
-		nhAssert(tableInfoPtr);
-		if(!tableInfoPtr->definitData) {
+		nhAssert(tableInfo);
+		if(hidden||!tableInfo->definitData) {
 			attribsMap[L"table-layout"]=L"1";
 		}
-		delete tableInfoPtr;
-		tableInfoPtr=NULL;
+		for (list<pair<VBufStorage_controlFieldNode_t*, wstring>>::iterator it = tableInfo->nodesWithExplicitHeaders.begin(); it != tableInfo->nodesWithExplicitHeaders.end(); ++it)
+			fillExplicitTableHeadersForCell(*it->first, docHandle, it->second, *tableInfo);
+		wostringstream s;
+		s << tableInfo->curRowNumber;
+		parentNode->addAttribute(L"table-rowcount", s.str());
+		s.str(L"");
+		s << tableInfo->curColumnNumber;
+		parentNode->addAttribute(L"table-columncount", s.str());
+		delete tableInfo;
+		tableInfo=NULL;
 	}
 
-	//Table cells should always be represented by at least a space, but if a space, then they should not be block.
-	if((nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
-		if(parentNode->getLength()==0) {
-			isBlock=false;
+	if(!hidden) {
+		//Table cells should always be represented by at least a space, but if a space, then they should not be block.
+		if((nodeName.compare(L"TD")==0||nodeName.compare(L"TH")==0)) {
+			if(parentNode->getLength()==0) {
+				isBlock=false;
+				buffer->addTextFieldNode(parentNode,previousNode,L" ");
+			}
+		}
+
+		//If a node is interactive, and still has no content, add a space
+		if(isInteractive&&parentNode->getLength()==0) {
 			buffer->addTextFieldNode(parentNode,previousNode,L" ");
 		}
 	}
 
-	//If a node is interactive, and still has no content, add a space
-	if(isInteractive&&parentNode->getLength()==0) {
-		buffer->addTextFieldNode(parentNode,previousNode,L" ");
-	}
-
-
 	//Update block setting on node
-	parentNode->setIsBlock(isBlock);
+	parentNode->isBlock=isBlock;
 
 	//Add all the collected attributes to the node
 	for(tempIter=attribsMap.begin();tempIter!=attribsMap.end();++tempIter) {
@@ -1168,7 +1253,7 @@ IHTMLDOMNode* pHTMLDOMNode=NULL;
 		pHTMLElement->Release();
 	}
 	nhAssert(pHTMLDOMNode);
-	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,false,false);
+	this->fillVBuf(buffer,NULL,NULL,pHTMLDOMNode,docHandle,NULL,NULL,false,false,false);
 	pHTMLDOMNode->Release();
 }
 

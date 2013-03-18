@@ -64,8 +64,7 @@ def readObjectsHelper_generator(obj):
 	speechGen=generateObjectSubtreeSpeech(obj,itertools.count())
 	objIndexMap={}
 	keepReading=True
-	keepUpdating=True
-	while keepUpdating:
+	while True:
 		# lastReceivedIndex might be None if other speech was interspersed with this say all.
 		# In this case, we want to send more text in case this was the last chunk spoken.
 		if lastReceivedIndex is None or (lastSentIndex-lastReceivedIndex)<=1:
@@ -106,8 +105,7 @@ def readTextHelper_generator(cursor):
 	lastReceivedIndex=0
 	cursorIndexMap={}
 	keepReading=True
-	keepUpdating=True
-	while keepUpdating:
+	while True:
 		if not reader.obj:
 			# The object died, so we should too.
 			return
@@ -153,10 +151,12 @@ def readTextHelper_generator(cursor):
 				try:
 					reader.obj.turnPage()
 				except RuntimeError:
-					pass
+					break
 				else:
 					reader=reader.obj.makeTextInfo(textInfos.POSITION_FIRST)
 					keepReading=True
+			else:
+				break
 
 		while speech.isPaused:
 			yield

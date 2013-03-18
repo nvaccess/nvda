@@ -26,6 +26,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 using namespace std;
 
+CLSID curTSFClsID={0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
 bool isUIElementMgrSafe=false;
 
 
@@ -491,11 +492,13 @@ STDMETHODIMP TsfSink::OnEndEdit(
 	if(!pRange) {
 		if(inComposition) {
 			inComposition=false;
-			wchar_t* edit_str=HandleEditRecord(cookie, pEditRec);
-			nvdaControllerInternal_inputCompositionUpdate((edit_str?edit_str:L""),-1,-1,0);
-			if(edit_str) free(edit_str);
-			//Disable further typed character notifications produced by TSF
-			typedCharacter_window=NULL;
+			if(!curIMEWindow) {
+				wchar_t* edit_str=HandleEditRecord(cookie, pEditRec);
+				nvdaControllerInternal_inputCompositionUpdate((edit_str?edit_str:L""),-1,-1,0);
+				if(edit_str) free(edit_str);
+				//Disable further typed character notifications produced by TSF
+				typedCharacter_window=NULL;
+			}
 		}
 		return S_OK;
 	}
@@ -524,10 +527,12 @@ STDMETHODIMP TsfSink::OnEndEdit(
 STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activated) {
 	const CLSID null_clsid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
 	if (!activated) {
+		curTSFClsID=null_clsid;
 		hasActiveProfile=false;
 		return S_OK;
 	}
 	//Re-enable IME conversion mode update reporting as input lang change window message disabled it while completing the switch
+	curTSFClsID=rClsID;
 	disableIMEConversionModeUpdateReporting=false;
 	if (IsEqualCLSID(rClsID, null_clsid)) {
 		hasActiveProfile = false;

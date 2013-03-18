@@ -9,6 +9,8 @@ import comtypes.automation
 import wx
 import re
 import oleacc
+import ui
+import config
 import textInfos
 import colors
 import eventHandler
@@ -147,6 +149,59 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 class ExcelCell(ExcelBase):
 
+	columnHeaderRows={}
+	rowHeaderColumns={}
+
+	def _get_columnHeaderText(self):
+		tableID=self.tableID
+		rowNumber=self.rowNumber
+		columnNumber=self.columnNumber
+		columnHeaderRow=self.columnHeaderRows.get(tableID) or None
+		if columnHeaderRow and rowNumber>columnHeaderRow:
+			return self.excelCellObject.parent.cells(columnHeaderRow,columnNumber).text
+
+	def _get_rowHeaderText(self):
+		tableID=self.tableID
+		rowNumber=self.rowNumber
+		columnNumber=self.columnNumber
+		rowHeaderColumn=self.rowHeaderColumns.get(tableID) or None
+		if rowHeaderColumn and columnNumber>rowHeaderColumn:
+			return self.excelCellObject.parent.cells(rowNumber,rowHeaderColumn).text
+
+	def script_setColumnHeaderRow(self,gesture):
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		tableID=self.tableID
+		if not config.conf['documentFormatting']['reportTableHeaders']:
+			# Translators: a message reported in the SetColumnHeaderRow script for Excel.
+			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
+			return
+		if scriptCount==0:
+			self.columnHeaderRows[tableID]=self.rowNumber
+			# Translators: a message reported in the SetColumnHeaderRow script for Excel.
+			ui.message(_("Set column header row"))
+		elif scriptCount==1 and tableID in self.columnHeaderRows:
+			del self.columnHeaderRows[tableID]
+			# Translators: a message reported in the SetColumnHeaderRow script for Excel.
+			ui.message(_("Cleared column header row"))
+	script_setColumnHeaderRow.__doc__=_("Pressing once will set the current row as the row where column headers should be found. Pressing twice clears the setting.")
+
+	def script_setRowHeaderColumn(self,gesture):
+		scriptCount=scriptHandler.getLastScriptRepeatCount()
+		tableID=self.tableID
+		if not config.conf['documentFormatting']['reportTableHeaders']:
+			# Translators: a message reported in the SetRowHeaderColumn script for Excel.
+			ui.message(_("Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"))
+			return
+		if scriptCount==0:
+			self.rowHeaderColumns[tableID]=self.columnNumber
+			# Translators: a message reported in the SetRowHeaderColumn script for Excel.
+			ui.message(_("Set row header column"))
+		elif scriptCount==1 and tableID in self.rowHeaderColumns:
+			del self.rowHeaderColumns[tableID]
+			# Translators: a message reported in the SetRowHeaderColumn script for Excel.
+			ui.message(_("Cleared row header column"))
+	script_setRowHeaderColumn.__doc__=_("Pressing once will set the current column as the column where row headers should be found. Pressing twice clears the setting.")
+
 	@classmethod
 	def kwargsFromSuper(cls,kwargs,relation=None):
 		windowHandle=kwargs['windowHandle']
@@ -198,6 +253,13 @@ class ExcelCell(ExcelBase):
 	def _get_columnNumber(self):
 		return self._rowAndColumnNumber[1]
 
+	def _get_tableID(self):
+		address=self.excelCellObject.address(1,1,0,1)
+		ID="".join(address.split('!')[:-1])
+		ID="%s %s"%(ID,self.windowHandle)
+		return ID
+
+		
 	def _get_value(self):
 		return self.excelCellObject.Text
 
@@ -225,6 +287,11 @@ class ExcelCell(ExcelBase):
 		if previous:
 			return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=previous)
 
+	__gestures = {
+		"kb:NVDA+shift+c": "setColumnHeaderRow",
+		"kb:NVDA+shift+r": "setRowHeaderColumn",
+	}
+
 class ExcelSelection(ExcelBase):
 
 	role=controlTypes.ROLE_TABLECELL
@@ -243,7 +310,7 @@ class ExcelSelection(ExcelBase):
 		firstCell=self.excelRangeObject.Item(1)
 		lastCell=self.excelRangeObject.Item(self.excelRangeObject.Count)
 		# Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
-		return _("%s %s through %s %s")%(self.getCellAddress(firstCell),firstCell.Text,self.getCellAddress(lastCell),lastCell.Text)
+		return _("{firstAddress} {firstContent} through {lastAddress} {lastContent}").format(firstAddress=self.getCellAddress(firstCell),firstContent=firstCell.Text,lastAddress=self.getCellAddress(lastCell),lastContent=lastCell.Text)
 
 	def _get_parent(self):
 		worksheet=self.excelRangeObject.Worksheet

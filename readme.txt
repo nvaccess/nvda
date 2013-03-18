@@ -22,7 +22,7 @@ General dependencies:
 	* ConfigObj, version 4.6.0 or later:
 		* Web site: http://www.voidspace.org.uk/python/configobj.html
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
-	* liblouis, version 2.5.1 or later:
+	* liblouis, version 2.5.2 or later:
 		* Official web site: http://www.liblouis.org/
 		* Download page: http://code.google.com/p/liblouis/downloads/list
 		* Download the liblouis source archive.
@@ -32,9 +32,7 @@ General dependencies:
 	* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
 		* If you don't have them already, all of these files have been bundled for convenience at http://www.nvda-project.org/3rdParty/system-dlls.7z
 		* Copy them either into the source directory or into your Windows system32 directory.
-	* Adobe Acrobat accessibility interface, version 9.1 or later:
-		* This can be found in the client files archive available from http://www.adobe.com/devnet/acrobat/interapplication_communication.html
-			* The archive is named something like Acrobat_Accessibility_9.1.zip.
+	* Adobe Acrobat accessibility interface, version XI or later: http://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip
 		* Extract the AcrobatAccess.idl file into include\AcrobatAccess.
 	* Adobe FlashAccessibility interface typelib: http://www.nvda-project.org/3rdParty/FlashAccessibility.tlb
 		* Copy FlashAccessibility.tlb into the source\typelibs directory.
@@ -46,7 +44,7 @@ General dependencies:
 		*Download the source archive. The file name is something like MinHook_110_src.zip depending on exact version.
 			* You will need an account on CodeProject to download from there.
 		* extract the libMinHook directory from the source archive into the NVDA include directory.
-	* Boost C++ Libraries, version 1.42 or later:
+	* Boost C++ Libraries, any version from 1.42 to 1.47:
 		* You can download the latest Windows installer from http://www.boostpro.com/download
 		* On the components page of the installer, make sure to install at least all of the defaults (whatever is already checked).
 		* NVDA only uses the Boost headers; none of the pre-compiled libraries are necessary.
@@ -67,7 +65,7 @@ To use the MDV Lilli braille display driver:
 		* Copy lilli.dll into the source\brailleDisplayDrivers directory.
 
 To use the Handy Tech braille display driver:
-	* Handy Tech Braille SDK, version 1.3.0.2 or later: https://www.handytech.de/downloads.php?kategorie=135&sub=145&lang=en
+	* Handy Tech Braille SDK, version 1.4.2.0: ftp://ftp.handytech.de/public/Software/BrailleDriver/HTBrailleSDK_1420a.zip
 		* Copy these files from the SDK's prog directory into NVDA's source\brailleDisplayDrivers\handyTech directory: HtBrailleDriverServer.dll, HtBrailleDriverServer.tlb, sbsupport.dll, dealers.dat
 	* If you want to be able to use this driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
@@ -96,6 +94,12 @@ To build a binary version of NVDA:
 		* Copy both ansi\uac.dll and uac.nsh into the uninstaller directory.
 
 To generate developer documentation:
+	* epydoc, version 3.0.1:
+		* Official web site: http://epydoc.sourceforge.net/
+		* Epydoc is no longer being maintained, but there is a bug in version 3.0.1 which affects NVDA.
+		* A build including a fix for this bug can be found at: http://files.nvaccess.org/3rdParty/epydoc-3.0.1+bug2585292.win32.exe
+
+To generate developer documentation for nvdaHelper:
 	* Doxygen Windows installer (1.7.3 or above): http://www.stack.nl/~dimitri/doxygen/download.html 
 
 To generate a gettext translation template:
@@ -108,7 +112,10 @@ Before you can run the NVDA source code, you must prepare the source tree.
 You do this by opening a command prompt, changing to the root of the NVDA source distribution and typing:
 scons source
 You should do this again whenever the version of comtypes changes or language files are added or changed.
-
+Note that if you want to access user documentation from the help menu while running the source version, you will also need to add user_docs to the commandline like so:
+scons source user_docs
+Though while simply testing or committing changes, it may be faster usually just doing scons source as user documentation will change each time the revision number changes.
+ 
 === Compiling NVDAHelper with Debugging Options ===
 Among other things, preparing the source tree builds the NVDAHelper libraries.  
 If trying to debug nvdaHelper, You can control various  debugging options  with the nvdaHelperDebugFlags command line variable. It takes one or more of the following flags:
@@ -140,6 +147,10 @@ The archive will be placed in the output directory.
 To generate developer documentation, type:
 scons devDocs
 The developer docs will be placed in the devDocs folder in the output directory.
+
+To generate developer documentation for nvdaHelper (not included in the devDocs target):
+scons devDocs_nvdaHelper
+The documentation will be placed in the devDocs\nvdaHelper folder in the output directory.
 
 To generate an archive of debug symbols for the various dll/exe binaries, type:
 scons symbolsArchive

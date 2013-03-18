@@ -38,7 +38,7 @@ version(2.0)
 interface VBuf {
 
 	typedef [context_handle] void* VBufRemote_bufferHandle_t;
-	typedef long VBufRemote_nodeHandle_t;
+	typedef unsigned hyper VBufRemote_nodeHandle_t;
 
 /**
  * Creates a new virtualBuffer
@@ -81,9 +81,10 @@ interface VBuf {
  * @param offset the offset to use
  * @param nodeStartOffset memory where the found text field's start offset will be placed.
  * @param nodeEndOffset memory where the found text field's end offset will be placed.
- * @return the located text field node.
+ * @param foundNode the located text field node.
+ * @return non-zero if the node is found.
  */
-	VBufRemote_nodeHandle_t locateTextFieldNodeAtOffset([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [out] int *nodeStartOffset, [out] int *nodeEndOffset);
+	int locateTextFieldNodeAtOffset([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [out] int *nodeStartOffset, [out] int *nodeEndOffset, [out] VBufRemote_nodeHandle_t* foundNode);
 
 /**
  * locates the deepest control field node at the given offset
@@ -93,18 +94,20 @@ interface VBuf {
  * @param endOffset memory where the found text field's end offset will be placed.
  * @param docHandle memory where the docHandle of the found control field node will be placed.
  * @param ID memory where the ID of the found control field node will be placed.
- * @return the located control field node.
+ * @param foundNode the located control field node.
+ * @return non-zero if the node is found.
  */
-	 VBufRemote_nodeHandle_t locateControlFieldNodeAtOffset([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [out] int *startOffset, [out] int *endOffset, [out] int* docHandle, [out] int* ID);
+	 int locateControlFieldNodeAtOffset([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [out] int *startOffset, [out] int *endOffset, [out] int* docHandle, [out] int* ID, [out] VBufRemote_nodeHandle_t* foundNode);
 
 /**
  * locates the controlFieldNode with the given identifier
  * @param buffer the virtual buffer to use
  * @param docHandle the docHandle of the control field node you wish to find
  * @param ID the ID of the control field node you wish to find
- * @return the controlFieldNode with the given identifier
+ * @param foundNode the  controlFieldNode with the given identifier
+ * @return non-zero if the node is found.
  */
-	VBufRemote_nodeHandle_t getControlFieldNodeWithIdentifier([in] VBufRemote_bufferHandle_t buffer, [in] int docHandle, [in] int ID);
+	int getControlFieldNodeWithIdentifier([in] VBufRemote_bufferHandle_t buffer, [in] int docHandle, [in] int ID, [out] VBufRemote_nodeHandle_t* foundNode);
 
 /**
  * Retreaves the identifier for the given controlFieldNode.
@@ -124,9 +127,10 @@ interface VBuf {
  * @param attribsString the attributes the node should contain
  * @param startOffset memory where the start offset of the found node can be placed
  * @param endOffset memory where the end offset of the found node will be placed
- * @return the found field node
+ * @param foundNode the found field node
+ * @return non-zero if the node is found.
  */
-	VBufRemote_nodeHandle_t findNodeByAttributes([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [in] int direction, [in,string] const wchar_t* attribsString, [out] int *startOffset, [out] int *endOffset);
+	int findNodeByAttributes([in] VBufRemote_bufferHandle_t buffer, [in] int offset, [in] int direction, [in,string] const wchar_t* attribsString, [out] int *startOffset, [out] int *endOffset, [out] VBufRemote_nodeHandle_t* foundNode);
 
 /**
  * Retreaves the current selection offsets for the buffer
@@ -192,8 +196,9 @@ interface VBuf {
  * The way in which it is used is implementation specific.
  * @param buffer the virtual buffer to use
  * @param handle the handle in question.
- * @return the node or 0 on error.
+ * @param node the node
+ * @return non-zero if a node could be found.
  */
-	VBufRemote_nodeHandle_t getNodeForNativeHandle([in] VBufRemote_bufferHandle_t buffer, [in] int handle);
+	int getNodeForNativeHandle([in] VBufRemote_bufferHandle_t buffer, [in] int handle, [out] VBufRemote_nodeHandle_t* node);
 
 }

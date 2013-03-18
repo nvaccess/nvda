@@ -80,6 +80,7 @@ nodeNamesToNVDARoles={
 	"EMBED":controlTypes.ROLE_EMBEDDEDOBJECT,
 	"FIELDSET":controlTypes.ROLE_GROUPING,
 	"OPTION":controlTypes.ROLE_LISTITEM,
+	"BLOCKQUOTE":controlTypes.ROLE_BLOCKQUOTE,
 }
 
 def IAccessibleFromHTMLNode(HTMLNode):
@@ -471,8 +472,13 @@ class MSHTML(IAccessible):
 		presType=super(MSHTML,self).presentationType
 		if presType==self.presType_content and self.HTMLAttributes['role']=="presentation":
 			presType=self.presType_layout
-		if presType==self.presType_content and self.role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEBODY) and self.treeInterceptor and self.treeInterceptor.isNVDAObjectPartOfLayoutTable(self):
-			presType=self.presType_layout
+		if presType==self.presType_content and self.role in (controlTypes.ROLE_TABLECELL,controlTypes.ROLE_TABLEROW,controlTypes.ROLE_TABLE,controlTypes.ROLE_TABLEBODY):
+			ti=self.treeInterceptor
+			try:
+				if ti and ti.isReady and ti.isNVDAObjectPartOfLayoutTable(self):
+					presType=self.presType_layout
+			except LookupError:
+				pass
 		return presType
 
 
@@ -509,7 +515,12 @@ class MSHTML(IAccessible):
 		if self.HTMLNodeHasAncestorIAccessible:
 			return ""
 		#IE inappropriately generates the name from descendants on some controls
-		if self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT,oleacc.ROLE_SYSTEM_GROUPING):
+		if self.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUBAR,oleacc.ROLE_SYSTEM_TOOLBAR,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TABLE,oleacc.ROLE_SYSTEM_DOCUMENT):
+			return ""
+		#Adding an ARIA landmark or unknown role to a DIV node makes an IAccessible with role_system_grouping and a name calculated from descendants.
+		# This name should also be ignored, but check NVDA's role, not accRole as its possible that NVDA chose a better role
+		# E.g. row (#2780)
+		if self.HTMLNodeName=="DIV" and self.role==controlTypes.ROLE_GROUPING:
 			return ""
 		return super(MSHTML,self).name
 
@@ -543,7 +554,7 @@ class MSHTML(IAccessible):
 		return super(MSHTML,self).description
 
 	def _get_basicText(self):
-		if self.HTMLNode:
+		if self.HTMLNode and not self.HTMLNodeName=="SELECT":
 			try:
 				return self.HTMLNode.data or ""
 			except (COMError, AttributeError, NameError):

@@ -2,8 +2,9 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2010-2012 NV Access Limited
+#Copyright (C) 2010-2013 NV Access Limited
 
+from comtypes import COMError
 from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
@@ -34,9 +35,24 @@ class AdobeFlash(VirtualBuffer):
 
 	def __init__(self,rootNVDAObject):
 		super(AdobeFlash,self).__init__(rootNVDAObject,backendName="adobeFlash")
+		self.isWindowless = rootNVDAObject.event_objectID > 0
 
 	def __contains__(self,obj):
-		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
+		if self.isWindowless:
+			if not isinstance(obj, NVDAObjects.IAccessible.IAccessible):
+				return False
+			if obj.windowHandle != self.rootDocHandle:
+				return False
+			info = obj.IAccessibleIdentity
+			if not info:
+				return False
+			ID=info['objectID']
+			try:
+				self.rootNVDAObject.IAccessibleObject.accChild(ID)
+				return True
+			except COMError:
+				return False
+		return winUser.isDescendantWindow(self.rootDocHandle, obj.windowHandle)
 
 	def _get_isAlive(self):
 		if self.isLoading:
@@ -49,10 +65,27 @@ class AdobeFlash(VirtualBuffer):
 		return True
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
-		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, winUser.OBJID_CLIENT, ID)
+		if self.isWindowless:
+			objId = ID
+			childId = 0
+		else:
+			objId = winUser.OBJID_CLIENT
+			childId = ID
+		return NVDAObjects.IAccessible.getNVDAObjectFromEvent(docHandle, objId, childId)
 
 	def getIdentifierFromNVDAObject(self,obj):
-		return obj.windowHandle, obj.event_childID
+		info = obj.IAccessibleIdentity
+		if info:
+			# Trust IAccIdentity over the event parameters.
+			accId = info["objectID"]
+		else:
+			accId = obj.event_objectID
+			if accId is None:
+				# We don't have event parameters, so we can't get an ID.
+				raise LookupError
+			if accId <= 0:
+				accId = obj.event_childID
+		return obj.windowHandle, accId
 
 	def _searchableAttribsForNodeType(self,nodeType):
 		if nodeType=="formField":

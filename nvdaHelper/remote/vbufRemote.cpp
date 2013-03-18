@@ -77,28 +77,28 @@ int VBufRemote_isFieldNodeAtOffset(VBufRemote_bufferHandle_t buffer, VBufRemote_
 	return res;
 }
 
-VBufRemote_nodeHandle_t VBufRemote_locateTextFieldNodeAtOffset(VBufRemote_bufferHandle_t buffer, int offset, int *nodeStartOffset, int *nodeEndOffset) {
+int VBufRemote_locateTextFieldNodeAtOffset(VBufRemote_bufferHandle_t buffer, int offset, int *nodeStartOffset, int *nodeEndOffset, VBufRemote_nodeHandle_t* foundNode) {
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	VBufRemote_nodeHandle_t res=(VBufRemote_nodeHandle_t)(backend->locateTextFieldNodeAtOffset(offset,nodeStartOffset,nodeEndOffset));
+	*foundNode=(VBufRemote_nodeHandle_t)(backend->locateTextFieldNodeAtOffset(offset,nodeStartOffset,nodeEndOffset));
 	backend->lock.release();
-	return res;
+	return (*foundNode)!=NULL;
 }
 
-VBufRemote_nodeHandle_t VBufRemote_locateControlFieldNodeAtOffset(VBufRemote_bufferHandle_t buffer, int offset, int *nodeStartOffset, int *nodeEndOffset, int *docHandle, int *ID) {
+int VBufRemote_locateControlFieldNodeAtOffset(VBufRemote_bufferHandle_t buffer, int offset, int *nodeStartOffset, int *nodeEndOffset, int *docHandle, int *ID, VBufRemote_nodeHandle_t* foundNode) {
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	VBufRemote_nodeHandle_t res=(VBufRemote_nodeHandle_t)(backend->locateControlFieldNodeAtOffset(offset,nodeStartOffset,nodeEndOffset,docHandle,ID));
+	*foundNode=(VBufRemote_nodeHandle_t)(backend->locateControlFieldNodeAtOffset(offset,nodeStartOffset,nodeEndOffset,docHandle,ID));
 	backend->lock.release();
-	return res;
+	return (*foundNode)!=0;
 }
 
-VBufRemote_nodeHandle_t VBufRemote_getControlFieldNodeWithIdentifier(VBufRemote_bufferHandle_t buffer, int docHandle, int ID) { 
+int VBufRemote_getControlFieldNodeWithIdentifier(VBufRemote_bufferHandle_t buffer, int docHandle, int ID, VBufRemote_nodeHandle_t* foundNode) { 
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	VBufRemote_nodeHandle_t res=(VBufRemote_nodeHandle_t)(backend->getControlFieldNodeWithIdentifier(docHandle,ID));
+	*foundNode=(VBufRemote_nodeHandle_t)(backend->getControlFieldNodeWithIdentifier(docHandle,ID));
 	backend->lock.release();
-	return res;
+	return (*foundNode)!=0;
 }
 
 int VBufRemote_getIdentifierFromControlFieldNode(VBufRemote_bufferHandle_t buffer, VBufRemote_nodeHandle_t node, int* docHandle, int* ID) { 
@@ -109,12 +109,12 @@ int VBufRemote_getIdentifierFromControlFieldNode(VBufRemote_bufferHandle_t buffe
 	return res;
 }
 
-VBufRemote_nodeHandle_t VBufRemote_findNodeByAttributes(VBufRemote_bufferHandle_t buffer, int offset, int direction, const wchar_t* attribsString, int *startOffset, int *endOffset) { 
+int VBufRemote_findNodeByAttributes(VBufRemote_bufferHandle_t buffer, int offset, int direction, const wchar_t* attribsString, int *startOffset, int *endOffset, VBufRemote_nodeHandle_t* foundNode) { 
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	VBufRemote_nodeHandle_t res=(VBufRemote_nodeHandle_t)(backend->findNodeByAttributes(offset,(VBufStorage_findDirection_t)direction,attribsString,startOffset,endOffset));
+	*foundNode=(VBufRemote_nodeHandle_t)(backend->findNodeByAttributes(offset,(VBufStorage_findDirection_t)direction,attribsString,startOffset,endOffset));
 	backend->lock.release();
-	return res;
+	return (*foundNode)!=0;
 }
 
 int VBufRemote_getSelectionOffsets(VBufRemote_bufferHandle_t buffer, int *startOffset, int *endOffset) {
@@ -171,12 +171,12 @@ int VBufRemote_getNativeHandleForNode(VBufRemote_bufferHandle_t buffer, VBufRemo
 	return res;
 }
 
-VBufRemote_nodeHandle_t VBufRemote_getNodeForNativeHandle(VBufRemote_bufferHandle_t buffer, int nativeHandle) {
+int VBufRemote_getNodeForNativeHandle(VBufRemote_bufferHandle_t buffer, int nativeHandle, VBufRemote_nodeHandle_t* node) {
 	VBufBackend_t* backend=(VBufBackend_t*)buffer;
 	backend->lock.acquire();
-	VBufStorage_controlFieldNode_t* node=backend->getNodeForNativeHandle(nativeHandle);
+	*node=(VBufRemote_nodeHandle_t)(backend->getNodeForNativeHandle(nativeHandle));
 	backend->lock.release();
-	return (VBufRemote_nodeHandle_t)node;
+	return (*node)!=0;
 }
 
 //Special cleanup method for VBufRemote when client is lost

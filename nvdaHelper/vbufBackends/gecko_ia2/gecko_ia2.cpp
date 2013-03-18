@@ -57,6 +57,12 @@ IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 		LOG_DEBUG(L"AccessibleObjectFromEvent failed");
 		return NULL;
 	}
+	if (varChild.lVal!=CHILDID_SELF) {
+		// IAccessible2 can't be implemented on a simple child,
+		// so this object is invalid.
+		pacc->Release();
+		return NULL;
+	}
 	VariantClear(&varChild);
 	if(pacc->QueryInterface(IID_IServiceProvider,(void**)&pserv)!=S_OK) {
 		pacc->Release();
@@ -80,6 +86,38 @@ template<typename TableType> inline void fillTableCounts(VBufStorage_controlFiel
 		s << count;
 		node->addAttribute(L"table-columncount", s.str());
 	}
+}
+
+inline int updateTableCounts(IAccessibleTableCell* tableCell, VBufStorage_buffer_t* tableBuffer) {
+	IUnknown* unk = NULL;
+	if (tableCell->get_table(&unk) != S_OK || !unk)
+		return 0;
+	IAccessible2* acc = NULL;
+	HRESULT res;
+	res = unk->QueryInterface(IID_IAccessible2, (void**)&acc);
+	unk->Release();
+	if (res != S_OK || !acc)
+		return 0;
+	int docHandle, id;
+	if (acc->get_windowHandle((HWND*)&docHandle) != S_OK
+			|| acc->get_uniqueID((long*)&id) != S_OK) {
+		acc->Release();
+		return 0;
+	}
+	VBufStorage_controlFieldNode_t* node = tableBuffer->getControlFieldNodeWithIdentifier(docHandle, id);
+	if (!node) {
+		acc->Release();
+		return 0;
+	}
+	IAccessibleTable2* table = NULL;
+	if (acc->QueryInterface(IID_IAccessibleTable2, (void**)&table) != S_OK || !table) {
+		acc->Release();
+		return 0;
+	}
+	fillTableCounts<IAccessibleTable2>(node, acc, table);
+	table->Release();
+	acc->Release();
+	return id;
 }
 
 inline void fillTableCellInfo_IATable(VBufStorage_controlFieldNode_t* node, IAccessibleTable* paccTable, const wstring& cellIndexStr) {
@@ -349,16 +387,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		LOG_DEBUG(L"pacc->get_attributes failed");
 	map<wstring,wstring>::const_iterator IA2AttribsMapIt;
 
-	BSTR defaction=NULL;
-	if(pacc->get_accDefaultAction(varChild,&defaction)==S_OK) {
-		if(defaction&&SysStringLen(defaction)==0) {
-			SysFreeString(defaction);
-			defaction=NULL;
-		}
-	}
-	if(defaction)
-		parentNode->addAttribute(L"defaultAction",defaction);
-
 	//Check IA2Attributes, and or the role etc to work out if this object is a block element
 	bool isBlockElement=TRUE;
 	if(IA2States&IA2_STATE_MULTI_LINE) {
@@ -374,7 +402,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	} else {
 		isBlockElement=FALSE;
 	}
-	parentNode->setIsBlock(isBlockElement);
+	parentNode->isBlock=isBlockElement;
 
 	BSTR name=NULL;
 	if(pacc->get_accName(varChild,&name)!=S_OK)
@@ -418,12 +446,13 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	bool isEditable = (role == ROLE_SYSTEM_TEXT && (states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE)) || IA2States & IA2_STATE_EDITABLE;
 	// Whether this node is a link or inside a link.
 	int inLink = states & STATE_SYSTEM_LINKED;
-	// Whether this node is clickable.
-	bool isClickable = defaction && wcscmp(defaction, L"click") == 0;
 	// Whether this node is interactive.
-	bool isInteractive = isEditable || inLink || isClickable || (states & STATE_SYSTEM_FOCUSABLE && role != ROLE_SYSTEM_DOCUMENT) || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT;
+	// Certain objects are never interactive, even if other checks are true.
+	bool isNeverInteractive = !isEditable && (role == ROLE_SYSTEM_DOCUMENT || role == IA2_ROLE_INTERNAL_FRAME);
+	bool isInteractive = !isNeverInteractive && (isEditable || inLink || states & STATE_SYSTEM_FOCUSABLE || states & STATE_SYSTEM_UNAVAILABLE || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == IA2_ROLE_EMBEDDED_OBJECT);
+	// We aren't finished calculating isInteractive yet; actions are handled below.
 	// Whether the name is the content of this node.
-	bool nameIsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME || role == IA2_ROLE_HEADING;
+	bool nameIsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON || role == IA2_ROLE_TOGGLE_BUTTON || role == ROLE_SYSTEM_MENUITEM || role == ROLE_SYSTEM_GRAPHIC || (role == ROLE_SYSTEM_TEXT && !isEditable) || role == IA2_ROLE_SECTION || role == IA2_ROLE_TEXT_FRAME || role == IA2_ROLE_HEADING || role == ROLE_SYSTEM_PAGETAB || role == ROLE_SYSTEM_BUTTONMENU;
 
 	IAccessibleText* paccText=NULL;
 	IAccessibleHypertext* paccHypertext=NULL;
@@ -474,24 +503,54 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		}
 	}
 
+	//Expose all available actions
+	IAccessibleAction* paccAction=NULL;
+	pacc->QueryInterface(IID_IAccessibleAction,(void**)&paccAction);
+	if(paccAction) {
+		long nActions=0;
+		paccAction->nActions(&nActions);
+		for(int i=0;i<nActions;++i) {
+			BSTR actionName=NULL;
+			paccAction->get_name(i,&actionName);
+			if(actionName) {
+				wstring attribName=L"IAccessibleAction_";
+				attribName+=actionName;
+				s<<i;
+				parentNode->addAttribute(attribName,s.str());
+				s.str(L"");
+				if(!isNeverInteractive&&(wcscmp(actionName, L"click")==0||wcscmp(actionName, L"showlongdesc")==0)) {
+					isInteractive=true;
+				}
+				SysFreeString(actionName);
+			}
+		}
+		paccAction->Release();
+	}
+
 	// Handle table cell information.
 	IAccessibleTableCell* paccTableCell = NULL;
-	// If paccTable is not NULL, it is the table interface for the table above this object.
-	if ((paccTable2 || paccTable) && (
+	// For IAccessibleTable, we must always be passed the table interface by the caller.
+	// For IAccessibleTable2, we can always obtain the cell interface,
+	// which allows us to handle updates to table cells.
+	if (
 		pacc->QueryInterface(IID_IAccessibleTableCell, (void**)&paccTableCell) == S_OK || // IAccessibleTable2
-		(IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end() // IAccessibleTable
-	)) {
-		// tableID is the IAccessible2::uniqueID for paccTable.
-		s << tableID;
-		parentNode->addAttribute(L"table-id", s.str());
-		s.str(L"");
+		(paccTable && (IA2AttribsMapIt = IA2AttribsMap.find(L"table-cell-index")) != IA2AttribsMap.end()) // IAccessibleTable
+	) {
 		if (paccTableCell) {
 			// IAccessibleTable2
 			this->fillTableCellInfo_IATable2(parentNode, paccTableCell);
+			if (!paccTable2) {
+				// This is an update; we're not rendering the entire table.
+				tableID = updateTableCounts(paccTableCell, this);
+			}
 			paccTableCell->Release();
 			paccTableCell = NULL;
 		} else // IAccessibleTable
 			fillTableCellInfo_IATable(parentNode, paccTable, IA2AttribsMapIt->second);
+		// tableID is the IAccessible2::uniqueID for paccTable.
+		s << tableID;
+		parentNode->addAttribute(L"table-id", s.str());
+		s.str(L"");
 		// We're now within a cell, so descendant nodes shouldn't refer to this table anymore.
 		paccTable = NULL;
 		paccTable2 = NULL;
@@ -635,7 +694,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 					continue;
 				}
 				IAccessible2* childPacc=NULL;
-				varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
+				if(varChildren[i].pdispVal) varChildren[i].pdispVal->QueryInterface(IID_IAccessible2,(void**)&childPacc);
 				if (!childPacc) {
 					VariantClear(&(varChildren[i]));
 					continue;
@@ -676,15 +735,15 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			}
 		}
 
-		if (nameIsContent && parentNode->getLength() == 0) {
-			// If there is no content and the name should be the content,
+		if (nameIsContent && !nodeHasUsefulContent(parentNode)) {
+			// If there is no useful content and the name should be the content,
 			// render the name if there is one.
 			if(name) {
-				previousNode=buffer->addTextFieldNode(parentNode,previousNode,name);
-				if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
+				tempNode = buffer->addTextFieldNode(parentNode, NULL, name);
+				if(tempNode && !locale.empty()) tempNode->addAttribute(L"language", locale);
 			} else if(role==ROLE_SYSTEM_LINK&&value) {
 				// If a link has no name, derive it from the URL.
-				previousNode = buffer->addTextFieldNode(parentNode, previousNode, getNameForURL(value));
+				buffer->addTextFieldNode(parentNode, NULL, getNameForURL(value));
 			}
 		}
 
@@ -692,7 +751,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 			// Always render a space for empty table cells and unknowns.
 			previousNode=buffer->addTextFieldNode(parentNode,previousNode,L" ");
 			if(previousNode&&!locale.empty()) previousNode->addAttribute(L"language",locale);
-			parentNode->setIsBlock(false);
+			parentNode->isBlock=false;
 		}
 
 		if ((isInteractive || role == ROLE_SYSTEM_SEPARATOR) && parentNode->getLength() == 0) {
@@ -708,8 +767,6 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		SysFreeString(name);
 	if(value)
 		SysFreeString(value);
-	if(defaction)
-		SysFreeString(defaction);
 	if (IA2Text)
 		SysFreeString(IA2Text);
 	if(paccText)

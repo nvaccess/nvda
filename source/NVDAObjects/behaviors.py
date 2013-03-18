@@ -365,7 +365,7 @@ class CandidateItem(NVDAObject):
 
 	def getFormattedCandidateDescription(self,candidate):
 		descriptions=[]
-		numSymbols=len(candidate)
+		numSymbols=len(candidate) if candidate else 0
 		if numSymbols!=1: return u""
 		symbol=candidate[0]
 		try:
@@ -388,12 +388,12 @@ class CandidateItem(NVDAObject):
 	def _get_visibleCandidateItemsText(self):
 		obj=self
 		textList=[]
-		while obj and isinstance(obj,CandidateItem) and controlTypes.STATE_INVISIBLE not in obj.states:
+		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.STATE_INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.previous
 		textList.reverse()
 		obj=self.next
-		while obj and isinstance(obj,CandidateItem) and controlTypes.STATE_INVISIBLE not in obj.states:
+		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.STATE_INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.next
 		if len(textList)<=1: return None

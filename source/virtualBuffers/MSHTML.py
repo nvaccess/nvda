@@ -44,6 +44,8 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		if not role:
 			role=IAccessibleHandler.IAccessibleRolesToNVDARoles.get(accRole,controlTypes.ROLE_UNKNOWN)
 		states=set(IAccessibleHandler.IAccessibleStatesToNVDAStates[x] for x in [1<<y for y in xrange(32)] if int(attrs.get('IAccessible::state_%s'%x,0)) and x in IAccessibleHandler.IAccessibleStatesToNVDAStates)
+		if attrs.get('HTMLAttrib::longdesc'):
+			states.add(controlTypes.STATE_HASLONGDESC)
 		#IE exposes destination anchors as links, this is wrong
 		if nodeName=="A" and role==controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
 			role=controlTypes.ROLE_TEXTFRAME
@@ -260,9 +262,16 @@ class MSHTML(VirtualBuffer):
 			attrs={"HTMLAttrib::role":[VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]}
 		elif nodeType == "embeddedObject":
 			attrs = {"IHTMLDOMNode::nodeName": ["OBJECT","EMBED","APPLET"]}
+		elif nodeType == "separator":
+			attrs = {"IHTMLDOMNode::nodeName": ["HR"]}
 		else:
 			return None
 		return attrs
+
+	def _activateLongDesc(self,controlField):
+		longDesc=controlField['HTMLAttrib::longdesc']
+		self.rootNVDAObject.HTMLNode.document.parentWindow.open(longDesc,'_blank','location=no, menubar=no, toolbar=no')
+
 
 	def _activateNVDAObject(self,obj):
 		super(MSHTML,self)._activateNVDAObject(obj)

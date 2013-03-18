@@ -23,6 +23,7 @@ VIAddVersionKey "FileDescription" "${appName} installer"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 
 ;Minimal installer to generate uninstaller
+OutFile "${INSTEXE}";
 
 Section "install"
 SetAutoClose true

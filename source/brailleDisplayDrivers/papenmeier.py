@@ -13,6 +13,7 @@ import braille
 from logHandler import log
 
 import inputCore
+import brailleInput
 import ftdi2
 import struct
 
@@ -87,16 +88,16 @@ def brl_out(data,nrk,nlk,nv):
 
 def brl_poll(dev):
 	"""read sequence from braille display"""
-	q = dev.inWaiting()
-	status = []
-	if(q>0):
-		d=dev.read(1)
-		if(ord(d[0])==STX):#first char must be an STX
-			d=dev.read(1)
-			while(ord(d[0])!=ETX): #read until ETX
-				status.append(d[0])
-				d=dev.read(1)
-	return "".join(status)
+	if dev.inWaiting() > 3:
+		status = []
+		status.append(dev.read(4))
+		if(ord(status[0][0])==STX):#first char must be an STX
+			if status[0][1] == 'K' or status[0][1] == 'L': l = (2*(((ord(status[0][2]) - 0x50) << 4) + (ord(status[0][3]) - 0x50)) +1)
+			else: l=6
+			status.append(dev.read(l))
+		if ord(status[-1][-1]) == ETX:
+			return "".join(status)[1:-1] # strip STX and ETX
+	return ""
 
 def brl_decode_trio(keys):
 	"""decode routing keys on Trio"""
@@ -191,6 +192,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	"""papenmeier braille display driver.
 	"""
 	name = "papenmeier"
+	# Translators: Names of braille displays.
 	description = _("Papenmeier BRAILLEX newer models")
 
 	@classmethod
@@ -227,6 +229,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 							self._dev = serial.Serial(port, baudrate = 57600,timeout = BLUETOOTH_TIMEOUT, writeTimeout = BLUETOOTH_TIMEOUT)
 							self.numCells = 40
 							self._proto = 'B'
+							self._voffset = 0
 							log.info("connectBluetooth success")
 						except:
 							log.debugWarning("connectBluetooth failed")
@@ -255,7 +258,6 @@ connection could not be established"""
 		self._proto = None
 		self.connectBrxCom()
 		if(self._baud == 1): return #brxcom is running, skip bluetooth and USB
-		self._modstate = 0
 
 		#try to connect to usb device,
 		#if no usb device is found there may be a bluetooth device
@@ -389,9 +391,11 @@ connection could not be established"""
 			x = self.numCells * 2 + 4
 			self._keynames = {x+28: 'r1', x+29: 'r2', 20: 'up2', 21: 'up', 22: 'dn', 23: 'dn2', 24: 'right', 25: 'left', 26: 'right2', 27: 'left2', 28: 'l1', 29: 'l2'}
 		else:
-			self._keynamesrepeat = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn', 21: 'dn2', 22: 'up', 23: 'up2'}
+			self._keynamesrepeat = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn2', 21: 'dn', 22: 'up', 23: 'up2'}
 			x = self.numCells * 2
-			self._keynames = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn', 21: 'dn2', 22: 'up', 23: 'up2', x+38: 'r2', x+39: 'r1', 30: 'l2', 31: 'l1'}
+			self._keynames = {16: 'left2', 17: 'right2', 18: 'left', 19: 'right', 20: 'dn2', 21: 'dn', 22: 'up', 23: 'up2', x+38: 'r2', x+39: 'r1', 30: 'l2', 31: 'l1'}
+			self._dotNames={32: 'd6', 1: 'd1', 2: 'd2', 4: 'd3', 8: 'd4', 64: 'd7', 128: 'd8', 16: 'd5'}
+			self._thumbs = {1:"rt", 2:"space", 4:"lt"}
 
 	def terminate(self):
 		"""free resources used by this driver"""
@@ -420,7 +424,7 @@ connection could not be established"""
 	def executeGesture(self,gesture):
 		"""executes a gesture"""
 		if(gesture.id == 'r1'):  gesture.id = next(self._r1next)
-		if gesture.id: inputCore.manager.executeGesture(gesture)
+		if gesture.id or (gesture.dots or gesture.space): inputCore.manager.executeGesture(gesture)
 
 	def _handleKeyPresses(self):
 		"""handles key presses and performs a gesture"""
@@ -469,7 +473,7 @@ connection could not be established"""
 			"braille_toggleTether": ("br(papenmeier):r2",),
 			"review_currentCharacter": ("br(papenmeier):l1",),
 			"navigatorObject_toFocus":("br(papenmeier):r1b",),
-			"navigatorObject_doDefaultAction": ("br(papenmeier):l2",),
+			"review_activate": ("br(papenmeier):l2",),
 
 			"navigatorObject_previous": ("br(papenmeier):left2",),
 			"navigatorObject_next": ("br(papenmeier):right2",),
@@ -478,6 +482,17 @@ connection could not be established"""
 
 			"title": ("br(papenmeier):l1,up",),
 			"reportStatusLine": ("br(papenmeier):l2,dn",),
+			"kb:enter": ("br(papenmeier):d8",),
+			"kb:backspace": ("br(papenmeier):d7",),
+			"kb:alt": ("br(papenmeier):lt+d3",),
+			"kb:control": ("br(papenmeier):lt+d2",),
+			"kb:escape": ("br(papenmeier):space+d7",),
+			"kb:control+escape": ("br(papenmeier):lt+d1+d2+d3+d4+d5+d6",),
+			"kb:tab": ("br(papenmeier):space+d3+d7",),
+			"kb:upArrow": ("br(papenmeier):space+d2",),
+			"kb:downArrow": ("br(papenmeier):space+d5",),
+			"kb:leftArrow": ("br(papenmeier):space+d1",),
+			"kb:rightArrow": ("br(papenmeier):space+d4",),
 		}
 	})
 
@@ -485,18 +500,40 @@ connection could not be established"""
 	 "br(papenmeier):upperRouting": "upperRouting",
 	}
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	"""Input gesture for papenmeier displays"""
-
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys,driver):
+	def __init__(self, keys, driver):
 		"""create an input gesture and decode keys"""
 		super(InputGesture, self).__init__()
 		self.id=''
 
 		if(keys is None):
 			self.id=brl_join_keys(brl_decode_key_names_repeat(driver))
+			return
+
+		if keys[0] == 'L' and driver._baud!=1:
+			#get dots
+			z  = ord('0')
+			b = ord(keys[4])-z
+			c = ord(keys[5])-z
+			d = ord(keys[6])-z
+			dots = c << 4 | d
+			thumbs = b&7
+			if thumbs and dots: 
+				names = set()
+				names.update(driver._thumbs[1 << i] for i in xrange(3) if (1 << i) & thumbs)
+				names.update(driver._dotNames[1 << i] for i in xrange(8)if (1 << i) & dots)
+				self.id = "+".join(names)
+				self.space = True
+				self.dots = dots
+			elif dots == 64:
+				self.id = "d7"
+			elif dots == 128:
+				self.id = "d8"
+			elif thumbs == 2: self.space = True
+			else:self.dots = dots
 			return
 
 		if(driver._baud==1):#brxcom

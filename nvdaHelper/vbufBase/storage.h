@@ -137,11 +137,6 @@ class VBufStorage_fieldNode_t {
 	int length;
 
 /**
- * true if this field should cause a line break at its start and end when a buffer is calculating lines.
- */
-	bool isBlock;
-
-/**
  * a map to hold attributes for this field.
  */
 	VBufStorage_attributeMap_t attributes;
@@ -227,32 +222,48 @@ class VBufStorage_fieldNode_t {
 	public:
 
 /**
+ * true if this field should cause a line break at its start and end when a buffer is calculating lines.
+ */
+	bool isBlock;
+
+	/**
+	* True if this node his hidden - searches will not locate this node.
+	*/
+	bool isHidden;
+
+/**
+ * points to an optional ancestor node which should be re-rendered instead of this node, if this node changes.
+ */
+	VBufStorage_controlFieldNode_t* updateAncestor;
+
+/**
  * points to this node's parent control field node.
  * it is garenteed that this node will be one of the parent's children (firstChild [next next...] or lastChild [previous previous...]).
  */
-	VBufStorage_controlFieldNode_t* getParent();
+	inline VBufStorage_controlFieldNode_t* getParent() { return this->parent; }
 
 /**
  * points to the node directly before this node that shares the same parent as this node. 
  */
-	VBufStorage_fieldNode_t* getPrevious();
+	inline VBufStorage_fieldNode_t* getPrevious() { return this->previous; }
 
 /**
  * points to the node directly after this node that shares the same parent as this node.
  */
-	VBufStorage_fieldNode_t* getNext();
+	inline VBufStorage_fieldNode_t* getNext() { return this->next; }
+
 
 /**
  * points to this node's first child. 
  * The child will have no previous node, and it will have this node as its parent.
  */
-	VBufStorage_fieldNode_t* getFirstChild();
+	inline VBufStorage_fieldNode_t* getFirstChild() { return this->firstChild; }
 
 /**
  * points to this node's last child.
  * the child will have no next node, and it will have this node as its parent.
  */
-	VBufStorage_fieldNode_t* getLastChild();
+	inline VBufStorage_fieldNode_t* getLastChild() { return this->lastChild; }
 
 /**
  * Adds an attribute to this field.
@@ -283,23 +294,9 @@ class VBufStorage_fieldNode_t {
 	virtual std::wstring getDebugInfo() const;
 
 /**
- * Set whether this field is a block element.
- * If this is true, this field should cause a line break at its start and end when a buffer is calculating lines.
- * @param isBlock true if this field is a block element, false otherwise.
- */
-	void setIsBlock(bool isBlock);
-
-/**
- * Getter for isBlock
- */
-	bool getIsBlock() {
-		return isBlock;
-	}
-
-/**
  * Retreave the length of this node.
  */
-	int getLength();
+	inline int getLength() { return this->length; }
 
 };
 

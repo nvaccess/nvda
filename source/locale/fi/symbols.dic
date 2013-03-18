@@ -5,18 +5,9 @@
 
 complexSymbols:
 # identifier	regexp
-# Sentence endings.
-... sentence ending	(?<=[^\s.])(\s\.|\.)\.\.(?=[\"'”’)\s]|$)
-… sentence ending	(?<=[^\s…])\…(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])(\s\!|\!)(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s!])(\s\?|\?)(?=[\"'”’)\s]|$)
-# Phrase endings.
-; phrase ending	(?<=[^\s!])(\s\;|\;)(?=[\"'”’)\s]|$)
-: phrase ending	(?<=[^\s!])(\s\:|\:)(?=[\"'”’)\s]|$)
-# Others
 decimal point	(?<=\d)\,(?=\d)
 percent	(?<=\d)\ ?\%(?!\w)
-dates	(((0?[1-9]|[12]\d|3[01])\.(0?[13578]|1[02])\.((1[6-9]|[2-9]\d)?\d{2}|\d))|((0?[1-9]|[12]\d|30)\.(0?[13456789]|1[012])\.((1[6-9]|[2-9]\d)?\d{2}|\d))|((0?[1-9]|1\d|2[0-8])\.]0?2\.]((1[6-9]|[2-9]\d)?\d{2}|\d))|(29\.0?2\.((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00|[048])))
+dates	(((0?[1-9]|[12]\d|3[01])[\.](0?[13578]|1[02])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.](0?[13456789]|1[012])[\.]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.]0?2[\.]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.]0?2[\.]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))
 euro	^(0|(([1-9]{1}|[1-9]{1}[0-9]{1}|[1-9]{1}[0-9]{2}){1}(\ [0-9]{3}){0,})),(([0-9]{2})|\-\-)([\ ]{1})(€){1}$
 thousands	(^(((\d)|(\d\d)|(\d\d\d))(\xA0|\x20))*((\d)|(\d\d)|(\d\d\d))([,.]\d*)?$)
 
@@ -103,25 +94,25 @@ _	alaviiva	most
 ‑	sitova viiva	most
 →	nuoli oikealle	most
 −	miinus	some
-►	musta osoitin oikealle	all
-⇒	kaksoisnuoli oikealle	all
-♥	hertta	all
-♡	valkoinen hertta	all
-♧	valkoinen risti	all
-♢	valkoinen ruutu	all
-○	valkoinen ympyrä	all
-♤	valkoinen pata	all
-☆	valkoinen tähti	all
-♠	musta pata	all
-♣	musta risti all
-♦	musta ruutu	all
-★	musta tähti	all
-■	musta neliö	some
-➔	nuoli oikealle	some
+►	musta osoitin oikealle	most
+⇒	kaksoisnuoli oikealle	most
+♥	hertta	most
+♡	valkoinen hertta	most
+♧	valkoinen risti	most
+♢	valkoinen ruutu	most
+○	valkoinen ympyrä	most
+♤	valkoinen pata	most
+☆	valkoinen tähti	most
+♠	musta pata	most
+♣	musta risti most
+♦	musta ruutu	most
+★	musta tähti	most
+■	musta neliö	most
+➔	nuoli oikealle	most
 ¡	käänteinen huuto	most
 ¦	katkopystyviiva	most
-ª	feminiinisen järjestysluvun merkki	some
-º	maskuliinisen järjestysluvun merkki	some
+ª	feminiinisen järjestysluvun merkki	most
+º	maskuliinisen järjestysluvun merkki	most
 ¹	potenssiin 1	some	# yläindeksi 1
 ²	potenssiin 2	some	# yläindeksi 2
 ³	potenssiin 3	some	# yläindeksi 3
@@ -129,19 +120,18 @@ _	alaviiva	most
 ·	rivinkeskinen piste	most
 ¸	sedilji	most
 ‣	kolmikulmainen luettelomerkki	most
-©	copyright	some
-š	hattu äss
-Š	iso hattu äss
-ž	hattu tset
-Ž	iso hattu tset
-æ	tanskalainen ää
-Æ	iso tanskalainen ää
-ø	tanskalainen öö
-Ø	iso tanskalainen öö
-œ	oo ee ligatuuri
-Œ	iso oo ee ligatuuri
-ð	eth
-Ð	iso eth
+š	hattu äss	most
+Š	iso hattu äss	most
+ž	hattu tset	most
+Ž	iso hattu tset	most
+æ	tanskalainen ää	most
+Æ	iso tanskalainen ää	most
+ø	tanskalainen öö	most
+Ø	iso tanskalainen öö	most
+œ	oo ee ligatuuri	most
+Œ	iso oo ee ligatuuri	most
+ð	eth	most
+Ð	iso eth	most
 «	vasen kulmalainaus
 »	oikea kulmalainaus
 µ	mikro	some
@@ -149,31 +139,30 @@ _	alaviiva	most
 †	risti	most
 ‡	kaksoisristi	most
 ☼	valkoinen aurinko säteineen	most
-ǝ	e ylösalaisin	some
-ɐ	a ylösalaisin	some
-ɯ	m ylösalaisin	some
-ʇ	t ylösalaisin	some
-ʍ	w ylösalaisin	some
-ʎ	y ylösalaisin	some
+ǝ	e ylösalaisin	most
+ɐ	a ylösalaisin	most
+ɯ	m ylösalaisin	most
+ʇ	t ylösalaisin	most
+ʍ	w ylösalaisin	most
+ʎ	y ylösalaisin	most
 ˜	pieni tilde	most
-þ	thorn	some
-Þ	iso thorn	some
-ç	see sedilji
-Ç	iso see sedilji
+þ	thorn	most
+Þ	iso thorn	most
+ç	see sedilji	most
+Ç	iso see sedilji	most
 ‰	promille	most
 §	pykälä	some
-¶	kappale
-¯	viiva aksentti
+¶	kappale	most
+¯	viiva aksentti	most
 ÷	jaettuna	most
-×	kertaa	most
-✓	valintamerkki	some
-✔	valintamerkki	some
-
+×	kertaa	some
+✓	valintamerkki	most
+✔	valintamerkki	most
 °	astetta	some
 ¢	sentti	all	norep
 ¤	valuuttamerkki	some
 ≠	eri suuri kuin	some
-∞	ääretön	some
+∞	ääretön	most
 √	neliöjuuri	some
 ½	yksi kahdesosa	some
 ⅔	kaksi kolmasosaa	some
@@ -185,59 +174,59 @@ _	alaviiva	most
 ₨	rupia	some
 ™	tavaramerkki	most
 ®	rekisteröity tavaramerkki	most
-©	copyright	most
+©	copyright	some
 ¥	jeni	all	norep
 Α	iso alfa	some
 Β	iso beetta	some
 Γ	iso gamma	some
 Δ	iso delta	some
-Ε	iso epsilon	some
-Ζ	iso zeetta	some
-Η	iso eetta	some
-Θ	iso theetta	some
-Ι	iso joota	some
-Κ	iso kappa	some
-Λ	iso lambda	some
-Μ	iso myy	some
-Ν	iso nyy	some
-Ξ	iso ksii	some
-Ο	iso omikron	some
-Π	iso pii	some
-Ρ	iso roo	some
-Σ	iso sigma	some
-Τ	iso tau	some
-Υ	iso ypsilon	some
-Φ	iso fii	some
-Χ	iso kii	some
-Ψ	iso psii	some
-Ω	iso omega	some
+Ε	iso epsilon	most
+Ζ	iso zeetta	most
+Η	iso eetta	most
+Θ	iso theetta	most
+Ι	iso joota	most
+Κ	iso kappa	most
+Λ	iso lambda	most
+Μ	iso myy	most
+Ν	iso nyy	most
+Ξ	iso ksii	most
+Ο	iso omikron	most
+Π	iso pii	most
+Ρ	iso roo	most
+Σ	iso sigma	most
+Τ	iso tau	most
+Υ	iso ypsilon	most
+Φ	iso fii	most
+Χ	iso kii	most
+Ψ	iso psii	most
+Ω	iso omega	most
 α	alfa	some
 β	beetta	some
 γ	gamma	some
 δ	delta	some
-ε	epsilon	some
-ζ	zeetta	some
-η	eetta	some
-θ	theetta	some
-ι	joota	some
-κ	kappa	some
-λ	lambda	some
-μ	myy	some
-ν	nyy	some
-ξ	ksii	some
-ο	omikron	some
-π	pii	some
-ρ	roo	some
-ς	loppu sigma	some
-σ	sigma	some
-τ	tau	some
-υ	ypsilon	some
-φ	fii	some
-χ	kii	some
-ψ	psii	some
-ω	omega	some
+ε	epsilon	most
+ζ	zeetta	most
+η	eetta	most
+θ	theetta	most
+ι	joota	most
+κ	kappa	most
+λ	lambda	most
+μ	myy	most
+ν	nyy	most
+ξ	ksii	most
+ο	omikron	most
+π	pii	most
+ρ	roo	most
+ς	loppu sigma	most
+σ	sigma	most
+τ	tau	most
+υ	ypsilon	most
+φ	fii	most
+χ	kii	most
+ψ	psii	most
+ω	omega	most
 ☺	valkoiset hymyilevät kasvot	most
 ☂	sateenvarjo	most
-♩	neljäsosanuotti	some
-♪	kahdeksasosanuotti	some
-♫	varrellinen kahdeksasosanuotti	some
+♩	neljäsosanuotti	most
+♪	kahdeksasosanuotti	most
+♫	varrellinen kahdeksasosanuotti	most

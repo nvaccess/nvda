@@ -34,6 +34,7 @@ using namespace std;
 #define wdDISPID_APPLICATION_SCREENUPDATING 26
 #define wdDISPID_SELECTION_RANGE 400
 #define wdDISPID_SELECTION_SETRANGE 100
+#define wdDISPID_SELECTION_STARTISACTIVE 404
 #define wdDISPID_RANGE_STORYTYPE 7
 #define wdDISPID_RANGE_MOVEEND 111
 #define wdDISPID_RANGE_COLLAPSE 101
@@ -45,6 +46,7 @@ using namespace std;
 #define wdDISPID_RANGE_END 4
 #define wdDISPID_RANGE_INFORMATION 313
 #define wdDISPID_RANGE_STYLE 151
+#define wdDISPID_RANGE_LANGUAGEID 153
 #define wdDISPID_STYLE_NAMELOCAL 0
 #define wdDISPID_RANGE_SPELLINGERRORS 316
 #define wdDISPID_SPELLINGERRORS_COUNT 1
@@ -116,6 +118,9 @@ using namespace std;
 #define wdAlignParagraphCenter 1
 #define wdAlignParagraphRight 2
 #define wdAlignParagraphJustify 3
+#define wdLanguageNone 0  //&H0
+#define wdNoProofing 1024  //&H400
+#define wdLanguageUnknown 9999999
 
 #define formatConfig_reportFontName 1
 #define formatConfig_reportFontSize 2
@@ -131,10 +136,11 @@ using namespace std;
 #define formatConfig_reportLinks 2048
 #define formatConfig_reportComments 4096
 #define formatConfig_reportHeadings 8192
+#define formatConfig_reportLanguage 16384
 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
- 
+
 UINT wm_winword_expandToLine=0;
 typedef struct {
 	int offset;
@@ -158,6 +164,10 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 		LOG_DEBUGWARNING(L"application.selection failed");
 		return;
 	}
+	BOOL startWasActive=false;
+	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,&startWasActive)!=S_OK) {
+		LOG_DEBUGWARNING(L"selection.StartIsActive failed");
+	}
 	IDispatch* pDispatchOldSelRange=NULL;
 	if(_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_SELECTION_RANGE,VT_DISPATCH,&pDispatchOldSelRange)!=S_OK||!pDispatchOldSelRange) {
 		LOG_DEBUGWARNING(L"selection.range failed");
@@ -174,6 +184,8 @@ void winword_expandToLine_helper(HWND hwnd, winword_expandToLine_args* args) {
 	_com_dispatch_raw_propget(pDispatchSelection,wdDISPID_RANGE_END,VT_I4,&(args->lineEnd));
 	//Move the selection back to its original location
 	_com_dispatch_raw_method(pDispatchOldSelRange,wdDISPID_RANGE_SELECT,DISPATCH_METHOD,VT_EMPTY,NULL,NULL);
+	//Restore the old selection direction
+	_com_dispatch_raw_propput(pDispatchSelection,wdDISPID_SELECTION_STARTISACTIVE,VT_BOOL,startWasActive);
 	//Reenable screen updating
 	_com_dispatch_raw_propput(pDispatchApplication,wdDISPID_APPLICATION_SCREENUPDATING,VT_BOOL,true);
 }
@@ -393,7 +405,15 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				formatAttribsStream<<L"invalid-spelling=\""<<iVal<<L"\" ";
 			}
 		}
-	} 
+	}
+	if (formatConfig&formatConfig_reportLanguage) {
+		int languageId = 0;
+		if (_com_dispatch_raw_propget(pDispatchRange,	wdDISPID_RANGE_LANGUAGEID, VT_I4, &languageId)==S_OK) {
+			if (languageId != wdLanguageNone && languageId != wdNoProofing && languageId != wdLanguageUnknown) {
+				formatAttribsStream<<L"wdLanguageId=\""<<languageId<<L"\" ";
+			}
+		}
+	}
 }
 
 inline int getInlineShapesCount(IDispatch* pDispatchRange) {

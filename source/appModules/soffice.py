@@ -17,8 +17,8 @@ from NVDAObjects.behaviors import EditableText
 from logHandler import log
 
 def gridCoordStringToNumbers(coordString):
-	if len(coordString)<2 or ' ' in coordString or coordString[0].isdigit() or not coordString[-1].isdigit(): 
-		raise ValueError("bad coord string: %s"%coordString) 
+	if not coordString or len(coordString)<2 or ' ' in coordString or coordString[0].isdigit() or not coordString[-1].isdigit(): 
+		raise ValueError("bad coord string: %r"%coordString) 
 	rowNum=0
 	colNum=0
 	coordStringRowStartIndex=None
@@ -67,13 +67,13 @@ class JAB_OOTableCell(JAB):
 
 	def _get_rowNumber(self):
 		try:
-			return gridCoordStringToNumbers(self.name)[0]
+			return gridCoordStringToNumbers(self.cellCoordsText)[0]
 		except ValueError:
 			return 0
 
 	def _get_columnNumber(self):
 		try:
-			return gridCoordStringToNumbers(self.name)[1]
+			return gridCoordStringToNumbers(self.cellCoordsText)[1]
 		except ValueError:
 			return 0
 
@@ -150,8 +150,8 @@ class SymphonyTextInfo(IA2TextTextInfo):
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
-			obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset)
-			formatField["link"] = True
+			if obj.IAccessibleTextObject.QueryInterface(IAccessibleHandler.IAccessibleHypertext).hyperlinkIndex(offset) != -1:
+				formatField["link"] = True
 		except COMError:
 			pass
 
@@ -228,7 +228,7 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		role=obj.role
 		windowClassName=obj.windowClassName
-		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME"):
+		if isinstance(obj, IAccessible) and windowClassName in ("SALTMPSUBFRAME", "SALSUBFRAME", "SALFRAME"):
 			if role==controlTypes.ROLE_TABLECELL:
 				clsList.insert(0, SymphonyTableCell)
 			elif hasattr(obj, "IAccessibleTextObject"):

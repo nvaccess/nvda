@@ -143,9 +143,14 @@ def handleInputCompositionStart(compositionString,selectionStart,selectionEnd,is
 	from NVDAObjects.inputComposition import InputComposition
 	from NVDAObjects.behaviors import CandidateItem
 	focus=api.getFocusObject()
+	if focus.parent and isinstance(focus.parent,InputComposition):
+		#Candidates infront of existing composition string
+		announce=not config.conf["inputComposition"]["announceSelectedCandidate"]
+		focus.parent.compositionUpdate(compositionString,selectionStart,selectionEnd,isReading,announce=announce)
+		return 0
 	#IME keeps updating input composition while the candidate list is open
-	#Therefore ignore composition updates in this situation.
-	if isinstance(focus,CandidateItem):
+	#Therefore ignore new composition updates if candidate selections are configured for speaking.
+	if config.conf["inputComposition"]["announceSelectedCandidate"] and isinstance(focus,CandidateItem):
 		return 0
 	if not isinstance(focus,InputComposition):
 		parent=api.getDesktopObject().objectWithFocus()
@@ -170,7 +175,7 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 		queueHandler.queueFunction(queueHandler.eventQueue,handleInputCompositionStart,compositionString,selectionStart,selectionEnd,isReading)
 	return 0
 
-def handleInputCandidateListUpdate(candidatesString,selectionIndex):
+def handleInputCandidateListUpdate(candidatesString,selectionIndex,inputMethod):
 	candidateStrings=candidatesString.split('\n')
 	import speech
 	from NVDAObjects.inputComposition import InputComposition, CandidateList, CandidateItem
@@ -190,7 +195,7 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 	else:
 		parent=focus
 		wasCandidate=False
-	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex)
+	item=CandidateItem(parent=parent,candidateStrings=candidateStrings,candidateIndex=selectionIndex,inputMethod=inputMethod)
 	if wasCandidate and focus.windowHandle==item.windowHandle and focus.candidateIndex==item.candidateIndex and focus.name==item.name:
 		return
 	if config.conf["inputComposition"]["autoReportAllCandidates"] and item.visibleCandidateItemsText!=oldCandidateItemsText:
@@ -198,9 +203,9 @@ def handleInputCandidateListUpdate(candidatesString,selectionIndex):
 		ui.message(item.visibleCandidateItemsText)
 	eventHandler.executeEvent("gainFocus",item)
 
-@WINFUNCTYPE(c_long,c_wchar_p,c_long)
-def nvdaControllerInternal_inputCandidateListUpdate(candidatesString,selectionIndex):
-	queueHandler.queueFunction(queueHandler.eventQueue,handleInputCandidateListUpdate,candidatesString,selectionIndex)
+@WINFUNCTYPE(c_long,c_wchar_p,c_long,c_wchar_p)
+def nvdaControllerInternal_inputCandidateListUpdate(candidatesString,selectionIndex,inputMethod):
+	queueHandler.queueFunction(queueHandler.eventQueue,handleInputCandidateListUpdate,candidatesString,selectionIndex,inputMethod)
 	return 0
 
 inputConversionModeMessages={
@@ -231,6 +236,7 @@ JapaneseInputConversionModeMessages= {
 	11: _("katakana"),
 	# Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
 	16: _("half alphanumeric"),
+	# Translators: For Japanese character input: half katakana roman input mode.
 	19: _("half katakana roman"),
 	# Translators: For Japanese character input: alpha numeric (roman/english) mode.
 	24: _("alphanumeric"),
@@ -285,7 +291,13 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 	if not focus or focus.sleepMode:
 		return 0
 	import NVDAObjects.window
-	if not isinstance(focus,NVDAObjects.window.Window) or threadID!=focus.windowThreadID:
+	#Generally we should not allow input lang changes from threads that are not focused.
+	#But threadIDs for console windows are always wrong so don't ignore for those.
+	if not isinstance(focus,NVDAObjects.window.Window) or (threadID!=focus.windowThreadID and focus.windowClassName!="ConsoleWindowClass"):
+		return 0
+	import sayAllHandler
+	#Never announce changes while in sayAll (#1676)
+	if sayAllHandler.isRunning():
 		return 0
 	import queueHandler
 	import ui

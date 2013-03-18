@@ -4,7 +4,8 @@
 #See the file COPYING for more details.
 #Copyright (C) 2009-2012 NV Access Limited
 
-from ctypes.wintypes import POINT
+from ctypes import byref
+from ctypes.wintypes import POINT, RECT
 from comtypes import COMError
 import weakref
 import UIAHandler
@@ -19,6 +20,7 @@ from logHandler import log
 from NVDAObjects.window import Window
 from NVDAObjects import NVDAObjectTextInfo, InvalidNVDAObject
 from NVDAObjects.behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
+import braille
 
 class UIATextInfo(textInfos.TextInfo):
 
@@ -79,6 +81,11 @@ class UIATextInfo(textInfos.TextInfo):
 			self._rangeObj=self.obj.UIATextPattern.documentRange
 		elif isinstance(position,UIA):
 			self._rangeObj=self.obj.UIATextPattern.rangeFromChild(position.UIAElement)
+		elif isinstance(position,textInfos.Point):
+			#rangeFromPoint causes a freeze in UIA client library!
+			#p=POINT(position.x,position.y)
+			#self._rangeObj=self.obj.UIATextPattern.RangeFromPoint(p)
+			raise NotImplementedError
 		else:
 			raise ValueError("Unknown position %s"%position)
 
@@ -246,11 +253,9 @@ class UIA(Window):
 
 		UIAControlType=self.UIAElement.cachedControlType
 		UIAClassName=self.UIAElement.cachedClassName
-		if UIAClassName=="GridTileElement":
-			clsList.append(GridTileElement)
-		elif UIAClassName=="GridListTileElement":
-			clsList.append(GridListTileElement)
-		if UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
+		if UIAClassName=="WpfTextView":
+			clsList.append(WpfTextView)
+		elif UIAClassName=="ToastContentHost" and UIAControlType==UIAHandler.UIA_ToolTipControlTypeId:
 			clsList.append(Toast)
 		if UIAControlType==UIAHandler.UIA_ProgressBarControlTypeId:
 			clsList.append(ProgressBar)
@@ -354,6 +359,8 @@ class UIA(Window):
 			return UIAHandler.handler.clientObject.CompareElements(self.UIAElement,other.UIAElement)
 		except:
 			return False
+
+	shouldAllowUIAFocusEvent=True #: UIA focus events can be completely ignored on this object if set to false.
 
 	def _getUIAPattern(self,ID,interface):
 		punk=self.UIAElement.GetCurrentPattern(ID)
@@ -616,6 +623,33 @@ class UIA(Window):
 		except COMError:
 			return False
 
+	def _get_positionInfo(self):
+		info=super(UIA,self).positionInfo or {}
+		try:
+			itemIndex=self.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemIndex_PropertyId)
+		except COMError:
+			itemIndex=0
+		if itemIndex>0:
+			info['indexInGroup']=itemIndex
+		parent=self.parent
+		parentCount=1
+		while parentCount<3 and isinstance(parent,UIA):
+			try:
+				itemCount=parent.UIAElement.getCurrentPropertyValue(UIAHandler.handler.ItemCount_PropertyId)
+			except COMError:
+				itemCount=0
+			if itemCount>0:
+				info['similarItemsInGroup']=itemCount
+				break
+			parent=parent.parent
+			parentCount+=1
+		return info
+
+	def event_valueChange(self):
+		if isinstance(self, EditableTextWithoutAutoSelectDetection):
+			return
+		return super(UIA, self).event_valueChange()
+
 class TreeviewItem(UIA):
 
 	def _get_value(self):
@@ -633,7 +667,9 @@ class TreeviewItem(UIA):
 		return level
 
 	def _get_positionInfo(self):
-		return {'level':self._level}
+		info=super(TreeviewItem,self).positionInfo or {}
+		info['level']=self._level
+		return info
 
 class UIColumnHeader(UIA):
 
@@ -715,23 +751,19 @@ class Dialog(Dialog):
 class Toast(UIA):
 
 	def event_alert(self):
-		speech.speakObject(self)
-		api.setNavigatorObject(self)
+		if not config.conf["presentation"]["reportHelpBalloons"]:
+			return
+		speech.speakObject(self,reason=controlTypes.REASON_FOCUS)
+		# TODO: Don't use getBrailleTextForProperties directly.
+		braille.handler.message(braille.getBrailleTextForProperties(name=self.name, role=self.role))
 
-class GridTileElement(UIA):
+#WpfTextView fires name state changes once a second, plus when IUIAutomationTextRange::GetAttributeValue is called.
+#This causes major lags when using this control with Braille in NVDA. (#2759) 
+#For now just ignore the events.
+class WpfTextView(UIA):
 
-	role=controlTypes.ROLE_TABLECELL
+	def event_nameChange(self):
+		return
 
-	def _get_description(self):
-		name=self.name
-		descriptionStrings=[]
-		for child in self.children:
-			description=child.basicText
-			if not description or description==name: continue
-			descriptionStrings.append(description)
-		return " ".join(descriptionStrings)
-		return description
-
-class GridListTileElement(UIA):
-	role=controlTypes.ROLE_TABLECELL
-	description=None
+	def event_stateChange(self):
+		return
