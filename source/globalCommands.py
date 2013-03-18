@@ -457,15 +457,16 @@ class GlobalCommands(ScriptableObject):
 			pass
 		obj=api.getNavigatorObject()
 		while obj:
+			realActionName=actionName
+			try:
+				realActionName=obj.getActionName()
+			except:
+				pass
 			try:
 				obj.doAction()
 				if isinstance(gesture,touchHandler.TouchInputGesture):
 					touchHandler.handler.notifyInteraction(obj)
-				try:
-					actionName=obj.getActionName()
-				except NotImplementedError:
-					pass
-				ui.message(actionName)
+				ui.message(realActionName)
 				return
 			except NotImplementedError:
 				pass
