@@ -445,8 +445,8 @@ class SynthDriver(baseObject.AutoPropertyObject):
 			voice=c.get("voice",None)
 			try:
 				changeVoice(self,voice)
-			except LookupError:
-				log.warning("No such voice: %s" % voice)
+			except:
+				log.warning("Invalid voice: %s" % voice)
 				# Update the configuration with the correct voice.
 				c["voice"]=self.voice
 				# We need to call changeVoice here so that required initialisation can be performed.
