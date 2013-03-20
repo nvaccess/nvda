@@ -1066,6 +1066,43 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Plugins reloaded"))
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
 
+	def script_navigatorObject_nextInFlow(self,gesture):
+		curObject=api.getNavigatorObject()
+		newObject=None
+		if curObject.simpleFirstChild:
+			newObject=curObject.simpleFirstChild
+		elif curObject.simpleNext:
+			newObject=curObject.simpleNext
+		elif curObject.simpleParent:
+			parent=curObject.simpleParent
+			while parent and not parent.simpleNext:
+				parent=parent.simpleParent
+			if parent:
+				newObject=parent.simpleNext
+		if newObject:
+			api.setNavigatorObject(newObject)
+			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
+		else:
+			# Translators: a message when there is no next object when navigating
+			ui.message(_("no next"))
+	script_navigatorObject_nextInFlow.__doc__=_("Moves to the next object in a flattened view of the object navigation hyrarchi")
+
+	def script_navigatorObject_previousInFlow(self,gesture):
+		curObject=api.getNavigatorObject()
+		newObject=curObject.simplePrevious
+		if newObject:
+			while newObject.simpleLastChild:
+				newObject=newObject.simpleLastChild
+		else:
+			newObject=curObject.simpleParent
+		if newObject:
+			api.setNavigatorObject(newObject)
+			speech.speakObject(newObject,reason=controlTypes.REASON_FOCUS)
+		else:
+			# Translators: a message when there is no next object when navigating
+			ui.message(_("no next"))
+	script_navigatorObject_previousInFlow.__doc__=_("Moves to the previous object in a flattened view of the object navigation hyrarchi")
+
 	def script_touch_changeMode(self,gesture):
 		mode=touchHandler.handler._curTouchMode
 		index=touchHandler.availableTouchModes.index(mode)
@@ -1128,10 +1165,12 @@ class GlobalCommands(ScriptableObject):
 		"ts(object):flickup":"navigatorObject_parent",
 		"kb:NVDA+numpad4": "navigatorObject_previous",
 		"kb(laptop):NVDA+shift+leftArrow": "navigatorObject_previous",
-		"ts(object):flickleft":"navigatorObject_previous",
+		"ts(object):flickleft":"navigatorObject_previousInFlow",
+		"ts(object):2finger_flickleft":"navigatorObject_previous",
 		"kb:NVDA+numpad6": "navigatorObject_next",
 		"kb(laptop):NVDA+shift+rightArrow": "navigatorObject_next",
-		"ts(object):flickright":"navigatorObject_next",
+		"ts(object):flickright":"navigatorObject_nextInFlow",
+		"ts(object):2finger_flickright":"navigatorObject_next",
 		"kb:NVDA+numpad2": "navigatorObject_firstChild",
 		"kb(laptop):NVDA+shift+downArrow": "navigatorObject_firstChild",
 		"ts(object):flickdown":"navigatorObject_firstChild",
