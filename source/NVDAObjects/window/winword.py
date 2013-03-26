@@ -187,13 +187,21 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			log.debugWarning("winword_getTextInRange failed with %d"%res)
 			return [self.text]
 		commandList=XMLFormatting.XMLTextParser().parse(text.value)
-		for index in xrange(len(commandList)):
-			if isinstance(commandList[index],textInfos.FieldCommand):
-				field=commandList[index].field
+		for index,item in enumerate(commandList):
+			if isinstance(item,textInfos.FieldCommand):
+				field=item.field
 				if isinstance(field,textInfos.ControlField):
-					commandList[index].field=self._normalizeControlField(field)
+					item.field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
-					commandList[index].field=self._normalizeFormatField(field)
+					item.field=self._normalizeFormatField(field)
+			elif index>0 and isinstance(item,basestring) and item.isspace():
+				 #2047: don't expose language for whitespace as its incorrect for east-asian languages 
+				lastItem=commandList[index-1]
+				if isinstance(lastItem,textInfos.FieldCommand) and isinstance(lastItem.field,textInfos.FormatField):
+					try:
+						del lastItem.field['language']
+					except KeyError:
+						pass
 		return commandList
 
 	def _normalizeControlField(self,field):
