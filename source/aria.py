@@ -77,4 +77,6 @@ landmarkRoles = {
 	"navigation": _("navigation"),
 	# Translators: Reported for the search landmark, normally found on web pages.
 	"search": _("search"),
+	# Translators: Reported for the form landmark, normally found on web pages.
+	"form": _("form"),
 }
