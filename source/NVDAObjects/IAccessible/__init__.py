@@ -172,7 +172,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [min(start,end),max(start,end)]
 
 	def _setSelectionOffsets(self,start,end):
-		for selIndex in range(self.obj.IAccessibleTextObject.NSelections):
+		for selIndex in xrange(self.obj.IAccessibleTextObject.NSelections):
 			self.obj.IAccessibleTextObject.RemoveSelection(selIndex)
 		self.obj.IAccessibleTextObject.AddSelection(start,end)
 

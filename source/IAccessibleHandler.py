@@ -931,7 +931,7 @@ def getRecursiveTextFromIAccessibleTextObject(obj,startOffset=0,endOffset=-1):
 	except:
 		return text
 	textList=[]
-	for i in range(len(text)):
+	for i in xrange(len(text)):
 		t=text[i]
 		if ord(t)==0xFFFC:
 			try:

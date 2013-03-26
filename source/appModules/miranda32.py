@@ -224,7 +224,7 @@ class MPropertyPage(Dialog,IAccessible):
 				tc=None
 			if tc and tc.role==controlTypes.ROLE_TABCONTROL:
 				children=tc.children
-				for index in range(len(children)):
+				for index in xrange(len(children)):
 					if (children[index].role==controlTypes.ROLE_TAB) and (controlTypes.STATE_SELECTED in children[index].states):
 						name=children[index].name
 						break

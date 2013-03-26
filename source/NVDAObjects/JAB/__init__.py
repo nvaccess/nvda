@@ -351,7 +351,7 @@ class JAB(Window):
 
 	def _get_children(self):
 		children=[]
-		for index in range(self._JABAccContextInfo.childrenCount):
+		for index in xrange(self._JABAccContextInfo.childrenCount):
 			jabContext=self.jabContext.getAccessibleChildFromContext(index)
 			if jabContext:
 				children.append(JAB(jabContext=jabContext))
