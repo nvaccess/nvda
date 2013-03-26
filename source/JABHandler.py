@@ -463,7 +463,19 @@ def event_stateChange(vmID,accContext,oldState,newState):
 def internal_event_caretChange(vmID, event,source,oldPos,newPos):
 	if oldPos<0 and newPos>=0:
 		internalQueueFunction(event_gainFocus,vmID,source)
+	internalQueueFunction(event_caret,vmID,source)
 	bridgeDll.releaseJavaObject(vmID,event)
+
+def event_caret(vmID, accContext):
+	jabContext = JABContext(vmID=vmID, accContext=accContext)
+	focus = api.getFocusObject()
+	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
+		obj = focus
+	else:
+		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+		if not obj:
+			return
+	eventHandler.queueEvent("caret", obj)
 
 def event_enterJavaWindow(hwnd):
 	vmID=c_int()
