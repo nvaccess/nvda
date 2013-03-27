@@ -468,6 +468,10 @@ the NVDAObject for IAccessible
 		elif windowClassName == "WebViewWindowClass":
 			from . import webKit
 			webKit.findExtraOverlayClasses(self, clsList)
+		elif windowClassName == "Chrome_RenderWidgetHostHWND":
+			from . import chromium
+			chromium.findExtraOverlayClasses(self, clsList)
+
 
 		#Support for Windowless richEdit
 		if not hasattr(IAccessible,"IID_ITextServices"):
