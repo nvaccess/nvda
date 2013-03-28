@@ -402,6 +402,9 @@ class DocumentWindow(PaneClassDC):
 			if ppObj:
 				return SlideBase(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppObj)
 
+	def _get_focusRedirect(self):
+		return self.selection
+
 	def _get_firstChild(self):
 		return self.selection
 

@@ -251,7 +251,15 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation="focus")
-		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
+		if not APIClass:
+			return None
+		obj=APIClass(chooseBestAPI=False,**kwargs)
+		if not obj:
+			return None
+		focusRedirect=obj.focusRedirect
+		if focusRedirect:
+			obj=focusRedirect
+		return obj
 
 	@staticmethod
 	def objectInForeground():
@@ -291,6 +299,8 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""The opposite to L{NVDAObject.__eq__}
 		"""
 		return not self.__eq__(other)
+
+	focusRedirect=None #: Another object which should be treeted as the focus if focus is ever given to this object.
 
 	def _get_treeInterceptorClass(self):
 		"""
