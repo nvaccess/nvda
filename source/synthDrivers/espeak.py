@@ -64,7 +64,7 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item,speech.IndexCommand):
 				textList.append("<mark name=\"%d\" />"%item.index)
 			elif isinstance(item,speech.CharacterModeCommand):
-				textList.append("<say-as interpret-as=\"characters\">" if item.state else "</say-as>")
+				textList.append("<say-as type=\"spell-out\">" if item.state else "</say-as>")
 			elif isinstance(item,speech.LangChangeCommand):
 				if langChanged:
 					textList.append("</voice>")
