@@ -431,6 +431,7 @@ windowClassMap={
 	"WFMAINRE":"RichEdit20",
 	"RichEdit20A":"RichEdit20",
 	"RichEdit20W":"RichEdit20",
+	"TChatRichEdit":"RichEdit20",
 	"TskRichEdit.UnicodeClass":"RichEdit20",
 	"RichEdit20WPT":"RichEdit20",
 	"RICHEDIT60W":"RICHEDIT50W",
