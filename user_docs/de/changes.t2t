@@ -33,6 +33,7 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - Unterstützung für Bluetooth-Braillezeilen, die unter Verwendung des Bluetooth-Stacks von Toshiba mit dem Computer verbunden werden. (#2419)
 - Unterstützung für die Auswahl des Anschlusses bei FreedomScientific-Braillezeilen (automatisch, USB oder Bluetooth).
 - Unterstützung für  Notizgeräte der Braillenote Familie von Humanware, wenn diese als Braillezeile für einen Bildschirmleser arbeiten. (#2012)
+- Unterstützung für die Auswahl der Schnittstelle, die für Braillezeilen von Freedom Scientific genutzt werden soll (automatisch, USB, Bluetooth). 
 - Unterstützung für ältere Papenmeier-Braillezeilen (#2679)
 - Unterstützung für die Eingabe von Computer-Braille für Braillezeilen, die eine Braille-Tastatur besitzen. (#808)
 - neue Tastaturoptionen erlauben das Unterbrechen der Sprache beim Eingeben von Zeichen Bzw. beim Drücken der Eingabetaste. (#698)
@@ -45,7 +46,8 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 
 == Fehlerbehebungen ==
 - Die Schnellnavigationstasten zum Springen zu Trennlinien funktionieren nun in Internet Explorer und anderen MSHTML-Dokumenten. (#2781)
-- Wenn es NVDA einmal nicht gelingen sollte, eine Sprachausgabe zu laden, sodass es auf eSpeak zurückfallen oder die Sprachausgabe gänzlich deaktivieren muss, wird die Konfiguration nun nicht mehr aktualisiert und NVDA wird erneut versuchen, die ursprünglich eingestellte Sprachausgabe zu laden, wenn es das nächste Mal gestartet wird. (#2589)
+- Wenn es NVDA einmal nicht gelingen sollte, eine Sprachausgabe zu laden, sodass es auf eSpeak zurückfallen oder die Sprachausgabe gänzlich deaktivieren muss, wird die Konfiguration nun nicht mehr aktualisiert und NVDA wird erneut versuchen, die ursprünglich eingestellte Sprachausgabe zu laden, wenn es neu gestartet wird. (#2589)
+- Wenn es NVDA einmal nicht gelingen sollte, eine Braillezeile anzusteuern, sodass es auf keine Braillezeile zurückfällt, wird die Konfiguration nun nicht mehr aktualisiert und NVDA wird erneut versuchen, die ursprünglich eingestellte Braillezeile anzusteuern, wenn es neu gestartet wird. (#2264)
 - In Mozilla-Anwendungen werden Aktualisierungen in Tabellen korrekt verarbeitet. So werden beispielsweise Koordinaten von aktualisierten Zellen richtig angegeben; die Navigation sollte ebenfalls korrekt funktionieren. (#2784)
 - Im Lesemodus in Internet-Browsern werden anklickbare unbeschriftete Grafiken nun korrekt verarbeitet. (#2838)
 - Ältere und neuere Versionen von SecureCRT werden unterstützt. (#2800)
@@ -71,7 +73,7 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - in IBM Lotus Symphony und Openoffice.org wird nun der NVDA-Cursor mitgezogen, wenn der Systemcursor bewegt wird.
 - Im Internet Explorer unter windows 8 sind Adobe-Flash-Inhalte nun zugänglich. (#2454)
 - Bluetooth-Unterstützung für Papenmeier Braillex Trio korrigiert. (#2995)
--
+- Bestimmte Microsoft SAPI-5-Stimmen wie z. B. Stimmen von Koba Speech konten von NVDA nicht verwendet werden. Dies wurde nun behoben (#2629).
 
 == Änderungen für Entwickler ==
 - Braillezeilentreiber unterstützen die Auswahl des Anschlusses (#426)

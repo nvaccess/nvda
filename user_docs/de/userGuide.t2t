@@ -643,7 +643,6 @@ Wenn Sie dieses Kontrollfeld aktiviert haben, wird NVDA gleich nach der Anmeldun
 
 Hinweise:
 - Diese Option ist nur in der installierten Version verfügbar!
-- Wenn Sie NVDA zusammen mit BRLTTY einsetzen, kann es unter Umständen vorkommen, dass die Braillezeile nicht von NVDA gefunden wird (auf der Zeile ist "No attachable console" zu lesen). Dies ist auf Probleme mit der Startreihenfolge zurückzuführen. Das Problem tritt immer dann auf, wenn NVDA *vor* BRLTTY gestartet wird und beim Ansteuern der Braillezeile "ins Leere greift". Diese Situation kann durch einen Neustart von NVDA gelöst werden, wenn der Rechner vollständig hochgefahren ist. Dies funktioniert allerdings nur dann zuverlässig, wenn die Konfiguration nach dem Einstellen von BRLTTY als Braillezeile einmal gespeichert wurde und die Option "Einstellungen beim beenden Speichern" *NICHT* aktiviert ist.
 -
 
 
@@ -770,7 +769,6 @@ Der Eintrag "Keine Braillezeile" bedeutet, dass Sie ggf. keine Braillezeile ange
 
 Bitte lesen Sie weiter im Abschnitt [Unterstützte Braillezeilen #SupportedBrailleDisplays] für weitere Informationen.
 
-hinweis: Falls es beim initialisieren des Braillezeilentreibers beim Start von NVDA zu Problemen gekommen sein sollte, wechselt nvda automatisch zu "keine Braillezeile". Fatalerweise wird diese Einstellung gespeichert, wenn in den allgemeinen Einstellungen die Option "Einstellungen beim Beenden speichern" aktiviert ist! Dies hat zur Folge, dass Sie nach einem Neustart von NVDA die Braillezeile neu einstellen müssen.
 
 ==== anschluss ====
 Sofern diese Option verfügbar ist, erlaubt sie Ihnen, den Anschluss auszuwählen, über den die gewählte Braillezeile mit Ihrem Rechner kommunizieren soll.
@@ -1242,6 +1240,16 @@ Zum Download der Sprachausgabe, besuchen Sie den Downloadbereich der Website der
 
 Diese Sprachausgabe unterstützt die [Buchstabierfunktionalität #VoiceSpellingFunctionality] nicht.
 
+
+++ Nuance Vocalizer für NVDA ++
+Nuance Vocalizer ist eine kommerzielle und hochwertige Sprachausgabe, die von Nuance Communications, Inc. entwickelt und von Tiflotecnia, Lda. als NVDA-Erweiterung verpackt wurde.
+Vocalizer enthält über 50 Stimmen in über 30 Sprachen.
+Alle Komponenten von Vocalizer sowie alle Stimmen liegen als NVDA-Erweiterungen vor. Dies ermöglicht den Einsatz der Stimmen in portablen Versionen von NVDA.
+
+Weitere Informationen über Vocalizer und dessen Installation finden Sie auf der Webseite des Händlers unter [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Ein Teil des Erlöses aus dem Verkauf von Vocalizer fließt als Spende an NV Access, um die Weiterentwicklung von NVDA zu fördern.
+
+
 + Unterstützte Braillezeilen +[SupportedBrailleDisplays]
 Dieser Bereich beinhaltet Informationen über Braillezeilen, die mit NVDA betrieben werden können.
 
@@ -1594,7 +1602,7 @@ Folgende Braillezeilen werden unterstützt:
 -
 
 Falls BrxCom installiert ist, wird es benutzt.
-BrxCom ist ein Programm, welches unabhängig von Screenreadern Brailleingabe und Dateitransfer Zu Braillezeilen mit Notizfunktion ermöglicht. 
+BrxCom ist ein Programm, welches unabhängig von Screenreadern Brailleeingabe ermöglicht. 
 Eine neue Version von BrxCom, welche mit NVDA läuft wird in Kürze von der Firma Papenmeier veröffentlicht.
 Bei der Braillex Trio ist Braille-Eingabe jedoch auch ohne brxcom möglich.
 
@@ -1821,7 +1829,7 @@ Bitte sehen sie im Benutzerhandbuch zu Ihrer Braillezeile nach, wo sich die ents
 | Umschalt+Tab | Leertaste+Punkt1+Punkt2+Punkt5+Punkt6 |
 | windows-Taste | Leertaste+Punkt2+Punkt4+Punkt5+Punkt6 (Leertaste+w) |
 | Alt | Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+m) |
-| Eingabehilfe ein/ausschalten | Leertaste+Punkt1+Punkt2+Punkt5 (Leertaste+h) |
+| Eingabehilfe ein-/ausschalten | Leertaste+Punkt2+Punkt3+Punkt6 (Leertaste+tief gestelltes h) |
 %kc:endInclude
 
 ++ BRLTTY ++
