@@ -32,8 +32,8 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 - Nuevo idioma: Aragonés
 - Nuevas tablas de transcripción braille:  Danés grau 2, Coreán grau 1.
 - Suporte ta linias braille connectadas a traviés de bluetooth en un ordinador executando o Bluetooth Stack for Windows de Toshiba. (#2419)
-- Suporte ta la selección de puerto quan s'utilicen linias freedom Scientific (Automatico, USB u Bluetooth).
-- Suporte ta la familia BrailleNote d'anotadors electronicos d'Humanware quan actúen como una terminal braille ta un lector de pantalla. (#2012)
+- Suporte ta la selección de puerto quan s'emplegan linias Freedom Scientific (automatico, USB u Bluetooth).
+- Suporte ta la familia BrailleNote de anotadors de HumanWare en actuar como un terminal de Braille ta un lector de pantalla. (# 2012)
 - Suporte ta  modelos antigos d'as linias braille Papenmeier BRAILLEX. (#2679)
 - Suporte ta la dentrada de braille computerizau ta linias braille que tiengan un teclau braille. (#808)
 - Nuevas opcions de teclau que permiten  trigar si NVDA habría d'interrumpir a voz ta os caracters escritos u a tecla Intro. (#698)
@@ -41,12 +41,14 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 
 
 == Cambeos ==
-- Actualizau o transcriptor braille liblouis a 2.5.2. (#2737)
+- Esviellau o transcriptor braille liblouis a 2.5.2. (#2737)
 - A distribución de teclau portatil s'ha redisenyau por completo ta fer-la mas intuitiva y consistent. (#804)
+- Esviellau o sintetizador de voz eSpeak ta la versión 1.47.01. (#2680)
 
 == Corrección de Fallos ==
 				- As teclas de navegación rapida ta blincar a o siguient u anterior separador en modo Navegación agora funcionan en Internet Explorer y atros controls MSHTML. (#2781)
-- Si NVDA torna a eSpeak u no charra a causa d'un sintetizador de voz configurau que falla quan NVDA s'encieta, a configuración ya no s'actualiza ta  configurar-se con o sintetizador a o que se retornó como a esleción configurada, o que significa que agora o sintetizador orichinal se prebará de nuevo a proxima vegada que NVDA ranque. (#2589)
+- Si NVDA se reenchega sin eSpeak u no bi ha voz a causa d'a falta d'un sintetizador de voz configurau quan NVDA ranca, a opción configurada ya no s'estableix automaticament en o sintetizador de reserva. Isto significa que agora, se prebará de nuevo o sintetizador orichinal a proxima vegada que s'enciete NVDA. (# 2589)2589)
+- Si NVDA se configura sin braille porque falla a linia Braille configurada quan NVDA ranca, a linea configurada ya no se configura automaticament sin braille. Isto significa que agora, a visualización orichinal s'intentará de nuevo a proxima vegada que s'enciete NVDA. (# 2264)
 - En modo navegación en aplicacions de Mozilla, as actualizacions d'as tablas agora se procesan correctament. Por eixemplo, en actualización de celdas, as coordenadas de ringlera y columna s'anuncian y a navegación d'a tabla funciona como habría de. (#2784)
 - En modo navegación en navegadors web, bells graficos cliqueables no etiquetados que no se procesaban anteriorment agora se procesan correctament. (#2838)
 - As versions anteriors y actuals (tals como a 6.1.1) agora se suportan. (#2800)
@@ -72,6 +74,9 @@ Por favor uella-te o documento [Referencia Rapida d'Ordens keyCommands.html] ta 
 - En IBM Lotus Symphony y OpenOffice, movendo lo cursor agora se mueve o cursor de revisión si cal
 - O conteniu d'Adobe Flash ye agora accesible en Internet Explorer ta Windows 8. (# 2454)	
 - Suporte fixo ta Bluetooth Papenmeier Trio Braillex. (# 2995)
+- Apanyada la imposibilidat d'emplegar qualques voces de Microsoft Speech API versión 5 como as voces d'a fabla Koba 2(# 2629)
+- En as aplicacions que emplegan o Java Access Bridge, as linias braille agora se esviellan correctament quan o cursor se mueve en os campos de texto editables. (# 3107)
+- Suporte ta los marcadors d'os formularios en os documentos en modo navegación  que suportan marcadors (# 2997)
 
 
 == Cambeos ta Desembolicadors ==

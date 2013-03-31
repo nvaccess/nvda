@@ -1105,8 +1105,8 @@ NVDA는 정말로 추가기능을 삭제할 것인지 묻습니다.
 NVDA 메뉴 -> 도구에 있는 NVDA 파이썬 콘솔은 개발 도구로서 디버깅과 NVDA 내부에 대한 일반적인 검사 혹은 애플리케이션에 대한 접근성 계층 구조의 검사에 유용합니다.
 더 상세한 정보는 [NVDA 웹사이트의 개발 섹션 NVDA_URLwiki/Development]에서 이용 가능한 개발자 안내서를 참조하세요.
 
-++ 플러그인 다시 불러오기 ++
-이 항목이 활성화 되면 NVDA 재시작 없이 애플리케이션 모듈과 전역 플러그인을 다시 불러옵니다. 이 옵션은 개발자에게 유용합니다.
+++ 플러그인 재등록 ++
+이 옵션을 선택하면 NVDA 재시작 없이 애플리케이션 모듈과 전역 플러그인을 다시 불러옵니다. 이 옵션은 개발자에게 유용합니다.
 
 + 지원하는 음성 엔진 +[SupportedSpeechSynths]
 이 섹션은 NVDA가 지원하는 음성 엔진에 관한 정보를 포함하고 있습니다.
@@ -1159,6 +1159,14 @@ Newfon은 Sergey Shishmintzev에 의해 개발되는 무료 상용 음성 엔진
 이 음성 엔진을 다운로드하려면, 러시아 NVDA 커뮤니티 사이트의 다운로드 섹션 http://ru.nvda-community.org/?page_id=10을 방문하세요. 
 
 이 음성 엔진은 [spelling functionality #VoiceSpellingFunctionality]을 지원하지 않습니다.
+
+++ Nuance 보컬라이저 ++
+Nuance 보컬라이저는 뉴언스에서 개발하고 Tiflotecnia에서 NVDA용 페키지로 개발한 상용 고음질 음성 엔진입니다.
+한번의 설치로 30개 언어, 50여개 보이스를 사용할 수 있습니다.
+음성 엔진 파일과 보이스들은 추가 기능 페키지로 되어 ㅣㅇㅆ서 NVDA 휴대용 버전에서도 설치 및 사용이 가능합니다.
+
+더 자세한 정보 및 구입 방법에 대해서는 [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/] 사이트를 방문하시기 바랍니다.
+음성 엔진 구입시 일정 금액은 NVDA 개발 후원금으로 NV Access에 송금됩니다.
 
 + 지원하는 점자 디스플레이들 +[SupportedBrailleDisplays]
 이 섹션에서는 NVDA와 점자 디스플레이 기능키에 대한 정보를 수록합니다.
@@ -1690,18 +1698,18 @@ NvDA는 다음 브레일노트 모델을 지원합니다:
 | 오른쪽 방향키 | 스페이스+6점 |
 | Page up key | 스페이스+1점+3점 |
 | Page down key | 스페이스+4점+6점 |
-| Home key | space+dot1+dot2 |
-| End key | space+dot4+dot5 |
-| Control+home keys | space+dot1+dot2+dot3 |
-| Control+end keys | space+dot4+dot5+dot6 |
+| Home key | space+1점+2점 |
+| End key | space+4점+5점 |
+| Control+home keys | space+1점+2점+3점 |
+| Control+end keys | space+4점+5점+6점 |
 | Space key | space |
-| Enter key | space+dot8 |
-| Backspace key | space+dot7 |
-| Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
-| Shift+tab keys | space+dot1+dot2+dot5+dot6 |
+| Enter key | space+8점 |
+| Backspace key | space+7점 |
+| Tab key | space+2점+3점+4점+5점 (space+t) |
+| Shift+tab keys | space+1점+2점+5점+6점 |
 | windows 키 | 스페이스+2점+4점+5점+6점 (스페이스+w) |
-| Alt key | space+dot1+dot3+dot4 (space+m) |
-| 입력 도움말 시작/종료 | space+dot1+dot2+dot5 (space+h) |
+| Alt key | space+1점+3점+4점 (space+m) |
+| 입력 도움말 시작/종료 | space+2점+5점+6점 |
 %kc:endInclude
 
 ++ BRLTTY ++

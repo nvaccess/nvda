@@ -235,7 +235,7 @@ Cuando aparezca el menú, puedes utilizar las teclas de cursor para navegar por 
 | Conmutar Modo de Voz | NVDA+s | NVDA+s | no | Conmuta el modo voz entre verbalizar, pitidos y desactivado. |
 | Salir de NVDA | NVDA+q | NVDA+q | no | Sale de NVDA |
 | Dejar pasar siguiente tecla | NVDA+f2 | NVDA+f2 | no | Dice a NVDA que deje pasar la siguiente tecla pulsada directamente a la aplicación activa, si está normalmente tratada como una tecla de órdenes de NVDA |
-| activar y desactivar modo de aplicación silencioso | NVDA+shift+s | NVDA+shift+z | no ! el modo silencioso desactiva todas las órdenes de NVDA y la salida de voz/braille para la aplicación actual. Esto es más útil en aplicaciones que proporcionan su propia voz o características de lectura de pantalla. Pulsa esta orden nuevamente para desactivar el modo silencioso. |
+| activar y desactivar modo de aplicación silencioso | NVDA+shift+s | NVDA+shift+z | no | el modo silencioso desactiva todas las órdenes de NVDA y la salida de voz/braille para la aplicación actual. Esto es más útil en aplicaciones que proporcionan su propia voz o características de lectura de pantalla. Pulsa esta orden nuevamente para desactivar el modo silencioso. |
 %kc:endInclude
 
 ++ Anunciando Información del Sistema ++
@@ -475,7 +475,7 @@ Las siguientes teclas por sí mismas saltan al siguiente campo, con la tecla shi
 - s: separador
 - m: marco
 - g: gráfico
-- d: zona
+- d: punto de referencia
 - o: objeto integrado
 - 1 a 6: encabezados de 1 a 6 respectivamente
 -
@@ -486,13 +486,13 @@ Para moverte al comienzo o final de elementos contenedores tales como listas y t
 %kc:endInclude
 
 ++ La Lista de Elementos ++
-La lista de elementos proporciona acceso a una lista de enlaces, encabezados o zonas en la página. 
+La lista de elementos proporciona acceso a una lista de enlaces, encabezados o puntos de referencia en la página. 
 Los botones de opción te permiten cambiar entre estos tres tipos de información. 
 Se Proporciona también un campo de edición en el diálogo el cual te permite filtrar la lista para ayudarte a buscar un elemento en particular en la página. 
 Una vez hayas elegido un elemento, puedes utilizar los botones proporcionados en el diálogo para moverte a, o activar, ese elemento.
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Lista de elementos del Modo Navegación | NVDA+f7 | Despliega la lista de elementos que contiene enlaces, encabezados y zonas ARIA del documento actual |
+| Lista de elementos del Modo Navegación | NVDA+f7 | Despliega la lista de elementos que contiene enlaces, encabezados y puntos de referencia ARIA del documento actual |
 %kc:endInclude
 
 ++ Objetos Integrados ++
@@ -984,7 +984,7 @@ Puedes configurar el anunciado de:
 - Encabezados
 - Listas
 - Citas
-- Zonas
+- Puntos de referencia
 - Marcos
 -
 
@@ -1159,6 +1159,14 @@ Newfon es un sintetizador comercial liberado por Sergey Shishmintzev que soporta
 Para descargar este sintetizador, por favor visita  la sección de descargas del sitio Web de la comunidad rusa de NVDA: http://ru.nvda-community.org/?page_id=10
 
 Este sintetizador no soporta la [funcionalidad de deletreo #VoiceSpellingFunctionality].
+
+++ Nuance Vocalizer para NVDA ++
+Nuance Vocalizer es un sintetizador de voz commercial y de alta calidad desarrollado por Nuance Communications, Inc., y empaquetado especialmente para NVDA por Tiflotecnia, Lda.
+Contiene más de 50 voces diferentes que puedes instalar, hablando en más de 30 idiomas.
+Todos los componentes y voces del sintetizador se agrupan en paquetes de complemento, los cuales permiten su uso completo en copias portables de NVDA.
+
+Puedes obtener más información acerca de Nuance Vocalizer para NVDA y de cómo comprarlo, en su sitio web en [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Un porcentaje de las ventas de este producto se dona a NV Access, para financiar el desarrollo del Lector de Pantalla  NVDA.
 
 + Líneas Braille Soportadas +[SupportedBrailleDisplays]
 Esta sección contiene información acerca de las líneas braille soportadas por NVDA.
@@ -1701,7 +1709,7 @@ Por favor mira la documentación del BrailleNote para encontrar dónde se locali
 | Teclas Shift+tab | espacio+punto1+punto2punto5+punto6 |
 | Tecla Windows | espacio+punto2+punto4+punto5+punto6 (espacio+w) |
 | Tecla Alt | espacio+punto1+punto3+punto4 (espacio+m) |
-| Activar y desactivar ayuda de entrada | espacio+punto1+punto2+punto5 (espacio+h) |
+| Activar y desactivar ayuda de entrada | espacio+punto2+punto3+punto6 (espacio+h abajo) |
 %kc:endInclude
 
 ++ BRLTTY ++

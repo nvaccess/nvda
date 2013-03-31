@@ -43,11 +43,13 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 == Changements ==
 - LibLouis Braille Translator mis à jours vers la version 1.5.2. (#2737)
 - La disposition clavier ordinateur portable a été revue pour être plus intuitive et cohérente. (#804)
+- Mise à jours de la synthèse vocale eSpeak vers la version 1.47.01. (#2680)
 
 
 == Corrections de Bogues ==
 - La touche de navigation rapide pour passer au séparateur précédent ou suivant en mode navigation fonctionne maintenant dans Internet Explorer et les autres documents MSHTML. (#2781)
-- Si NVDA revient à eSpeak ou pas de parole à cause d'une erreur dans le synthétiseur configuré lors du démarrage de NVDA, la configuration n'est plus modifiée pour prendre la valeur du nouveau synthétiseur, ce qui signifi que NVDA essayera encore de chargé le synthétiseur en erreur lors du prochain démarrage.
+- Si NVDA revient à eSpeak ou pas de parole à cause d'une erreur dans le synthétiseur configuré lors du démarrage de NVDA, la configuration n'est plus modifiée pour prendre la valeur du nouveau synthétiseur, ce qui signifi que NVDA essayera encore de chargé le synthétiseur en erreur lors du prochain démarrage. (#2589)
+- Si NVDA revient à pas de braille à cause d'une erreur dans l'afficheur braille configuré lors du démarrage de NVDA, la configuration n'est plus modifiée pour prendre la valeur du nouvel afficheur, ce qui signifi que NVDA essayera encore de chargé l'afficheur braille en erreur lors du prochain démarrage. (#2264)
 - En mode navigation dans les applications Mozilla, les mises à jour de tableaux sont maintenant correctement rendues. Par exemple, dans les cellules mises à jour, les coordonnées de ligne et de colonne sont correctement annoncées et les touches de navigation dans un tableaux fonctionnent comme prévu. (#2784)
 - En mode navigation dans les navigateurs Internet, certains graphiques cliquables sans étiquette n'étaient pas rendus et le sont maintenant correctement. (#2838)
 - Les anciennes et nouvelles versions de SecureCRT sont maintenant supportées. (#2800)
@@ -73,6 +75,9 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - Dans IBM Lotus Symphony et OpenOffice, déplacer le curseur déplace également le curseur de revue lorsqu'aproprié.
 - Le contenu Adobe Flash est maintenant accessible dans Internet Explorer sous Windows 8. (#2454)
 - Correction du support bluetooth de l'afficheur braille Papenmeier Braillex Trio. (#2995)
+- Corrigée l'impossibilité d'utiliser certaines voix Microsoft SAPI version 5 tel que les voix Koba Speech 2. (#2629)
+- Dans les applications utilisant Java Access Bridge, l'afficheur braille s'actualise correctement lorsque le curseur se déplace dans une zone d'édition. (#3107)
+- Support du repère form en mode navigation dans les documents supportant les repères. (#2997)
 
 
 == Changements pour les développeurs ==

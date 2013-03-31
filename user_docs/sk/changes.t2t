@@ -43,11 +43,13 @@ Pozrite si prosím [Zoznam príkazov keyCommands.html], kde nájdete ostatné sk
 == Zmeny ==
 - aktualizovaný prekladač do braillu liblouis  2.5.2. (#2737)
 - Rozloženie klávesnice laptop bolo prepracované v snahe urobiť ovládanie NVDA jednoduchšie a intuitívnejšie. (#804)
+- Hlasový výstup eSpeak aktualizovaný na verziu 1.47.01. (#2680)
 
 
 == Opravy ==
 - Príkazy rýchlej navigácie pre prechod medzi oddeľovačmi fungujú v prehliadači Internet explorer a MSHTML prvkoch. (#2781)
-- Ak sa nepodarí načítať hlasový výstup a NVDA nastaví syntetizér eSpeak alebo Bez reči, tento syntetizér sa neuloží v nastaveniach, takže NVDA sa pokúsi načítať hlasový výstup pri najbližšom štarte.  (#2589)
+- Ak sa nepodarí načítať hlasový výstup a NVDA nastaví syntetizér eSpeak alebo Bez reči, tento syntetizér sa neuloží v nastaveniach, takže NVDA sa pokúsi načítať hlasový výstup znovu  pri najbližšom štarte.  (#2589)
+- Ak sa nepodarí načítaťbrailovský riadok a NVDA nastavímožnosť žiadny zobrazovač, tento   sa neuloží v nastaveniach, takže NVDA sa pokúsi načítať zobrazovač znovu  pri najbližšom štarte.  (#2589)
 - V režime prehliadania v Mozilla aplikáciách sa správne zobrazuje tabuľka, ktorá sa aktualizovala. NVDA správne oznamuje súradnice buniek a funguje navigácia po tabuľke. (#2784)
 - pri prehliadaní internetových stránok v režime prehliadania, sú správne spracované nepopísané klikateľné obrázky. (#2838)
 - Podpora pre staršie a novšie verzie SecureCRT . (#2800)
@@ -73,6 +75,7 @@ Pozrite si prosím [Zoznam príkazov keyCommands.html], kde nájdete ostatné sk
 - V programoch IBM Lotus Symphony a OpenOffice sa pri pohybe textovým kurzorom pohybuje aj prehliadací kurzor, ak je to potrebné.
 - obsah Adobe Flash je prístupný v prehliadači Internet Explorer v systéme Windows 8. (#2454)
 - Opravená bluetooth podpora pre riadky Papenmeier Braillex Trio. (#2995)
+- Opravená chyba, pri ktorej nebolo možné používať niektoré syntézy pod Microsoft Speech API 5, ako napríklad hlasy Koba Speech 2. (#2629)
 
 
 = 2012.3 =
