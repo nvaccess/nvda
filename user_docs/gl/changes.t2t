@@ -43,11 +43,13 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 == Cambios ==
 - Actualizado o transcriptor braille liblouis ó 2.5.2. (#2737)
 - A distribución de teclado portátil redeseñouse  por completo para facela máis intuitiva e consistente. (#804)
+- Actualizado o sintetizador de voz eSpeak a 1.47.01. (#2680)
 
 
 == Corrección de Fallos ==
 - As teclas de navegación rápida para brincar ó seguinte ou anterior separador en modo Navegación agora funcionan en Internet Explorer e outros controis MSHTML. (#2781)
-- Se NVDA volta a eSpeak ou non fala debido a un sintetizador de voz configurado que falla cando NVDA se inicia, a configuración xa non se actualiza para  configurarse co sintetizador ó que se retornou como a elección configurada, o que significa que agora o sintetizador orixinal probarase de novo a próxima vez que NVDA arranque. (#2589)
+- Se o NVDA se cambia a eSpeak debido a que o sintetizador de voz configurado falla cando NVDA arrinca, o sintetizador configurado xa non se deixa automáticamente na opción de eSpeak. Esto significa que agora, o sintetizador orixinal será probado de novo a próxima vez que NVDA arrinque. (#2589)
+- Se o NVDA se cambia a sen braille debido a que a liña braille configurada  falla cando NVDA arrinca, a liña configurada xa non se deixa automáticamente na opción de sen braille. Esto significa que agora, a liña orixinal será probada de novo a próxima vez que NVDA arrinque. (#2264)
 - No modo navegación en aplicacións de Mozilla, as actualizacións das táboas agora procésanse correctamente. Por exemplo, en actualización de celdas, as cordinadas de fila e columna anúncianse e a navegación da táboa funciona como debería. (#2784)
 - No modo navegación en navegadores web, certos gráficos cliqueables non etiquetados que non se procesaban anteriormente agora procésanse correctamente. (#2838)
 - As versións anteriores e actuais do SecureCRT (como a 6.1.1) agora sopórtanse. (#2800)
@@ -72,6 +74,10 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 - No modo navegación nas aplicacións de Mozilla, o contido de texto xa non se trata incorrectamente como editable nalgúns casos extranos. (#2959)
 - No IBM Lotus Symphony e no OpenOffice, movendo o cursor do sistema agora móvese o cursor de revisión se procede.
 - O contido do Adobe Flash agora é accesible en Internet Explorer en Windows 8. (#2454)
+- Correxido o soporte Bluetooth para a Papenmeier Braillex Trio. (#2995)
+- Correxida a incapacidade para utilizar certas voces de Microsoft Speech API versión 5 como as voces de Koba Speech 2. (#2629)
++- En aplicacións que utilicen o Java Access Bridge, agora as liñas braille actualízanse correctamente cando o cursor se mova en campos de texto editables . (#3107)
++- Sopórtase o ponto de referencia en formulario en modo navegación en documentos que soporten pontos de referencia. (#2997) 
 
 
 == Cambios para Desenroladores ==
@@ -724,7 +730,7 @@ Esta revisión enfócase principalmente en corrección de fallos e melloras á e
 
 == Novas características ==
 - 	NVDA xa non falla ó arrancar nun sistema sen dispositivos de saída de audio. Obviamente, será necesario utilizar unha líña braille ou o Display synthesiser para a saída neste caso. (#425)
-- Foi engadida unha casiña de verificación Anunciar Zonas ó diálogo de Opcións de formato de Documento que che permite configurar se NVDA debería anunciar zonas en documentos web. Para compatibilidade ca versión anterior, a opción está activada de maneira predeterminada.
+- Foi engadida unha casiña de verificación Anunciar pontos de referencia ó diálogo de Opcións de formato de Documento que che permite configurar se NVDA debería anunciar pontos de referencia en documentos web. Para compatibilidade ca versión anterior, a opción está activada de maneira predeterminada.
 - Se falar teclas de ordes está activada NVDA agora anunciará os nomes das teclas multimedia (ex.: reproducir, deter, páxina de comezo, etc.) cando sexan premedas. (#472)
 - NVDA agora anuncia a palabra que estea sendo eliminada cando se prema control+retroceso en controis que o soporten. (#491)
 - As flechas de cursor agora poden ser utilizadas na ventá do formateador Web para navegar e ler o texto. (#452)
@@ -804,8 +810,8 @@ O máis suliñable desta versión inclúe o soporte para edicións de 64 bit de 
 - NVDA pode ler pantallas seguras de Windows como a autentificación de Windows (logon), control+alt+suprimir e pantallas do UAC en Windows XP e posteriores. A leitura das pantallas de autentificación de Windows (logon) pode ser configurada dende o diálogo de Opcións Xerais. (#97)
 - Engadido un controlador para as liñas braille da serie Optelec ALVA BC6.
 - Cando se navega por documentos web, agora podes premer n e shift+n para saltar cara adiante e cara atrás pasando bloques de ligas, respectivamente.
-- Cando se navega por documentos web, as zonas de ARIA agora son anunciadas, e podes moverte adiante e atrás a traverso deles utilizando d e shift+d, respectivamente. (#192)
-- O diálogo de lista de ligas dispoñible cando se exploran documentos web convertiuse agora nun diálogo Lista de Elementos que pode listar ligas, cabeceiras e zonas. As cabeceiras e zonas son presentados xerárquicamente. (#363)
+- Cando se navega por documentos web, os pontos de referencia de ARIA agora son anunciados, e podes moverte adiante e atrás a traverso deles utilizando d e shift+d, respectivamente. (#192)
+- O diálogo de lista de ligas dispoñible cando se exploran documentos web convertiuse agora nun diálogo Lista de Elementos que pode listar ligas, cabeceiras e pontos de referencia. As cabeceiras e pontos de referencia son presentados xerárquicamente. (#363)
 - O novo diálogo Lista de Elementos filtra a lista segundo escribas para conter só aquéles elementos incluído o texto que foi tecleado. Podes premer retroceso para limpiar o filtro tal que todos os elementos sexan presentados novamente. (#173)
 - As versións portátiles do NVDA agora procuran no directorio 'userConfig' dentro do directorio de NVDA, as configuracións do usuario. Como a versión do instalador, esto mantén a configuración do usuario separada do NVDA.  
 - Os módulos personais de apps, os controladores de liñas braille e os controladores de sintetizadores agora poden ser almacenados  no directorio da configuración do usuario. (#337)
