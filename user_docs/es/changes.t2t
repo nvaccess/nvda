@@ -43,11 +43,13 @@ Por favor mira el documento [Referencia Rápida de Órdenes keyCommands.html] pa
 == Cambios ==
 - Actualizado el transcriptor braille liblouis a 2.5.2. (#2737)
 - La distribución de teclado portátil se ha rediseñado por completo para hacerla más intuitiva y consistente. (#804)
+- Actualizado el sintetizador de voz eSpeak a 1.47.01. (#2680)
 
 
 == Corrección de Fallos ==
 - Las teclas de navegación rápida para saltar al siguiente o anterior separador en modo Navegación ahora funcionan en Internet Explorer y otros controles MSHTML. (#2781)
-- Si NVDA regresa a eSpeak o no habla debido a un sintetizador de voz configurado que falla cuando NVDA se inicia, la configuración ya no se actualiza para  configurarse con el sintetizador al que se retornó como la elección configurada, lo que significa que ahora el sintetizador original se probará de nuevo la próxima vez que NVDA arranque. (#2589)
+- Si NVDA se cambia a eSpeak debido a que el sintetizador de voz configurado falla cuando NVDA arranca, el sintetizador configurado ya no se deja automáticamente en la opción de eSpeak. Esto significa que ahora, el sintetizador original será probado de nuevo la próxima vez que NVDA arranque. (#2589)
+- Si NVDA se cambia a sin braille debido a que la línea braille configurada  falla cuando NVDA arranca, la línea configurada ya no se deja automáticamente en la opción de sin braille. Esto significa que ahora, la línea original será probada de nuevo la próxima vez que NVDA arranque. (#2264)
 - En modo navegación en aplicaciones de Mozilla, las actualizaciones de las tablas ahora se procesan correctamente. Por ejemplo, en actualización de celdas, las coordenadas de fila y columna se anuncian y la navegación de la tabla funciona como debería. (#2784)
 - En modo navegación en navegadores web, ciertos gráficos cliqueables no etiquetados que no se procesaban anteriormente ahora se procesan correctamente. (#2838)
 - Las versiones anteriores y actuales (tales como la 6.1.1) ahora se soportan. (#2800)
@@ -73,6 +75,9 @@ Por favor mira el documento [Referencia Rápida de Órdenes keyCommands.html] pa
 - En IBM Lotus Symphony y OpenOffice, moviendo el cursor del sistema ahora se mueve  el cursor de revisión si procede.
 - El contenido de Adobe Flash ahora es accesible en Internet Explorer en Windows 8. (#2454)
 - Corregido el soporte Bluetooth para la Papenmeier Braillex Trio. (#2995)
+- Corregida la incapacidad para utilizar ciertas voces de Microsoft Speech API versión 5 tales como las voces de Koba Speech 2. (#2629)
++- En aplicaciones que utilicen el Java Access Bridge, ahora las líneas braille se actualizan correctamente cuando el cursor se mueva en campos de texto editables . (#3107)
++- Se soporta el punto de referencia en formulario en modo navegación en documentos que soporten puntos de referencia. (#2997) 
 
 
 == Cambios para Desarrolladores ==
@@ -133,7 +138,7 @@ Lo subrayable de esta versión incluye el soporte para la entrada de caracteres 
 - Las órdenes de navegación de objetos (excepto la orden anunciar objeto actual) ahora anuncian con menos verbosidad. Todavía puedes obtener la información extra utilizando la orden de anunciar objeto actual. (#2560)
 - Actualizado el transcriptor braille liblouis a 2.5.1.
 - El documento Referencia Rápida de Órdenes de teclado de NVDA ha sido renombrado a Referencia Rápida de Órdenes, así ahora incluye tanto órdenes táctiles como órdenes de teclado.
-- La Lista de elementos en Modo Navegación ahora recordará el último tipo de elemento mostrado (ej.: enlaces, encabezados o zonas) cada vez que se muestre el diálogo dentro de la misma sesión de NVDA. (#365)
+- La Lista de elementos en Modo Navegación ahora recordará el último tipo de elemento mostrado (ej.: enlaces, encabezados o puntos de referencia) cada vez que se muestre el diálogo dentro de la misma sesión de NVDA. (#365)
 - La mayoría de las aplicaciones Metro en Windows 8 (ej.: Mail, Calendar) ya no activan el Modo Navegación para toda la aplicación.
 - Actualizado el Handy Tech BrailleDriver COM-Server a 1.4.2.0.
 
@@ -241,7 +246,7 @@ Lo reseñable de esta versión incluye una característica que integra el instal
 - En aplicaciones que utilicen Java Access Bridge, los campos de texto editable ya no informan de caracteres extraños en ciertas circumstancias. (#1892)
 - En aplicaciones que utilicen Java Access Bridge, cuando se esté al final de un campo de texto editable, la línea actual  ahora se anuncia correctamente. (#1892)
 - En modo navegación en aplicaciones que utilicen Mozilla Gecko 14 y posterior (ej.: Firefox 14), ahora la navegación rápida funciona en bloques de citas y objetos integrados. (#2287)
-- En Internet Explorer 9 NVDA ya no lee contenido indeseado cuando el foco se mueve dentro de ciertas zonas o elementos enfocables (específicamente un elemento div que es enfocable o que tiene un rol de zona ARIA). 
+- En Internet Explorer 9 NVDA ya no lee contenido indeseado cuando el foco se mueve dentro de ciertos puntos de referencia o elementos enfocables (específicamente un elemento div que es enfocable o que tiene un rol de punto de referencia ARIA). 
 - Los iconos para los atajos para NVDA en el Escritorio y en el Menú de Inicio ahora se muestran correctamente en ediciones de 64 bit de Windows. (#354)
 
 
@@ -725,7 +730,7 @@ Esta revisión se enfoca principalmente en corrección de fallos y mejoras a la 
 
 == Nuevas características ==
 - NVDA ya no falla al arrancar en un sistema sin dispositivos de salida de audio. Obviamente, será necesario utilizar una línea braille o el Display synthesiser para la salida en este caso. (#425)
-- Ha sido añadida una casilla de verificación Anunciar Zonas al diálogo de Opciones de formato de Documento que te permite configurar si NVDA debería anunciar zonas en documentos web. Para compatibilidad con la versión anterior, la opción está activada de forma predeterminada.
+- Ha sido añadida una casilla de verificación Anunciar Puntos de Referencia al diálogo de Opciones de formato de Documento que te permite configurar si NVDA debería anunciar puntos de referencia en documentos web. Para compatibilidad con la versión anterior, la opción está activada de forma predeterminada.
 - Si verbalizar teclas de órdenes está activada NVDA ahora anunciará los nombres de las teclas multimedia (ex.: reproducir, detener, página de inicio, etc.) cuando sean presionadas. (#472)
 - NVDA ahora anuncia la palabra que esté siendo eliminada cuando se presiona control+retroceso en controles que lo soporten. (#491)
 - Las flechas de cursor ahora pueden ser utilizadas en la ventana del formateador Web para navegar y leer el texto. (#452)
