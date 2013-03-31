@@ -1160,6 +1160,14 @@ Se on ladattavissa venäläisen NVDA-yhteisösivuston lataukset-osiosta osoittee
 
 Tämä syntetisaattori ei tue [tavaustoimintoa #Tavaustoiminto].
 
+++ Nuance Vocalizer for NVDA ++
+Nuance Vocalizer on Nuance Communications, Inc.:n kehittämä ja Tiflotecnia, Lda:n erityisesti NVDA:ta varten paketoima kaupallinen ja korkealaatuinen puhesyntetisaattori.
+Siihen sisältyy yli 50 eri puheääntä yli 30 kielellä.
+Kaikki syntetisaattorin osat ja puheäänet toimitetaan lisäosapaketteina, mikä mahdollistaa käytön NVDA:n massamuistiversioissa.
+
+Saat lisätietoja Nuance Vocalizer for NVDA:sta ja sen ostamisesta tuotteen verkkosivustolta osoitteesta [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Prosenttiosuus tämän tuotteen myynnistä lahjoitetaan NV Accessille NVDA:n jatkokehityksen rahoittamiseksi.
+
 + Tuetut pistenäytöt +[Tuetutpistenaytot]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
@@ -1504,13 +1512,13 @@ BrxCom on työkalu, joka mahdollistaa pistesyötön käyttämisen itsenäisesti 
 Papenmeier julkaisee piakkoin siitä NVDA:lla toimivan version.
 Trio-mallissa pistesyöttö on kuitenkin mahdollista ilman BrxCom:iakin.
 
-Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttösauva (EAB).
+Useimmissa laitteissa on intuitiivisen ja nopean käytön mahdollistava ohjaustankonäppäin (EAB).
 Sitä voidaan siirtää neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
 C-sarjan näytöt ovat ainoa poikkeus.
 
 Niissä ja muutamissa muissa näytöissä on kaksi kosketuskohdistinriviä, joista ylempää käytetään muotoilutietojen lukemiseen.
-C-sarjan laitteissa ylärivin jonkin näppäimen alhaalla pitäminen ja EAB::n painaminen jäljittelee toisen kytkimen tilaa.
-Ylös-, alas-, oikea- sekä vasen-näppäinten (tai EAB:n) painaminen ja alhaalla pitäminen toistaa kyseessä olevan toiminnon.
+C-sarjan laitteissa ylärivin jonkin näppäimen alhaalla pitäminen ja ohjaustankonäppäimen painaminen jäljittelee toisen kytkimen tilaa.
+Ylös-, alas-, oikea- sekä vasen-näppäinten (tai ohjaustankonäppäimen) painaminen ja alhaalla pitäminen toistaa kyseessä olevan toiminnon.
 
 Näissä pistenäytöissä on käytettävissä yleensä seuraavat näppäimet:
 || Nimi | Näppäinkomento |
@@ -1581,10 +1589,10 @@ Seuraavia pistenäyttöjä tuetaan:
 Huomaa, että nämä pistenäytöt voidaan liittää vain sarjaportin kautta.
 Tämän vuoksi portti, johon pistenäyttö on liitetty, tulee valita sen jälkeen, kun näiden pistenäyttöjen ajuri on valittu Pistenäytön asetukset -valintaikkunasta.
 
-Joissakin laitteissa on intuitiivisen ja nopean käytön mahdollistava helppokäyttösauva (EAB).
+Joissakin laitteissa on intuitiivisen ja nopean käytön mahdollistava ohjaustankonäppäin (EAB).
 Sitä voidaan liikuttaa neljään suuntaan, joissa kussakin on yleensä kaksi kytkintä.
-Ylös-, alas-, oikea- ja vasen-näppäinten (tai EAB:n) painaminen ja alhaalla pitäminen toistaa kyseessä olevan toiminnon.
-Vanhemmissa laitteissa ei ole EAB:tä; sen sijaan käytetään etupaneelin näppäimiä.
+Ylös-, alas-, oikea- ja vasen-näppäinten (tai ohjaustankonäppäimen) painaminen ja alhaalla pitäminen toistaa kyseessä olevan toiminnon.
+Vanhemmissa laitteissa ei ole ohjaustankonäppäintä; sen sijaan käytetään etupaneelin näppäimiä.
 
 Näissä pistenäytöissä on yleensä käytettävissä seuraavat näppäimet:
 
@@ -1605,7 +1613,7 @@ Näissä pistenäytöissä on yleensä käytettävissä seuraavat näppäimet:
 Seuraaavassa on Papenmeierin komentomääritykset NVDA:lle:
 
 %kc:beginInclude
-Laitteet, joissa on EAB:
+Laitteet, joissa on ohjaustankonäppäin (EAB):
 || Nimi | Näppäinkomento |
 | Vieritä pistenäyttöä taaksepäin | left |
 | Vieritä pistenäyttöä eteenpäin | right |
@@ -1701,7 +1709,7 @@ Katso laitteen käyttöohjeesta tarkat kuvaukset näppäinten paikoista.
 | Shift+sarkain-näppäinyhdistelmä | välilyönti+piste1+piste2+piste5+piste6 |
 | Windows-näppäin | välilyönti+piste2+piste4+piste5+piste6 (välilyönti+w) |
 | Alt-näppäin | välilyönti+piste1+piste3+piste4 (välilyönti+m) |
-| Ota syöteohje käyttöön tai poista se käytöstä | välilyönti+piste1+piste2+piste5 (välilyönti+h) |
+| Ota syöteohje käyttöön tai poista se käytöstä | välilyönti+piste2+piste3+piste6 (välilyönti+alempi h) |
 %kc:endInclude
 
 ++ BRLTTY ++
