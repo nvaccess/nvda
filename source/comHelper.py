@@ -37,8 +37,10 @@ def getActiveObject(progid, dynamic=False):
 	p = subprocess.Popen((config.SLAVE_FILENAME, "comGetActiveObject", progid, "%d" % dynamic),
 		stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	try:
-		# FIXME: Throw better exception for COM error in slave.
-		lres = int(p.stdout.readline())
+		try:
+			lres = int(p.stdout.readline())
+		except ValueError:
+			raise RuntimeError("Helper process unable to get object; see log for details")
 		o = oleacc.ObjectFromLresult(lres, 0,
 			IDispatch if dynamic else IUnknown)
 		if dynamic:
