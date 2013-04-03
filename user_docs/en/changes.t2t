@@ -79,6 +79,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - In applications using the Java Access Bridge, braille displays are now updated correctly when the caret moves in editable text fields . (#3107)
 - Support the form landmark in browse mode documents that support landmarks. (#2997) 
 - The eSpeak synth driver now handles reading by character more appropriately (e.g. announcing a letter's name or value rather than just its sound or generic name). (#3106)
+- NVDA no longer fails to copy user settings for use on logon and other secure screens, when the user's profile path contains non-ascii characters. (#3092)
 
 
 == Changes for Developers ==

@@ -40,7 +40,7 @@ def main():
 				None,winUser.SW_SHOWNORMAL)
 		elif action=="setNvdaSystemConfig":
 			import config
-			config._setSystemConfig(args[0])
+			config._setSystemConfig(args[0].decode('mbcs'))
 		elif action == "config_setStartOnLogonScreen":
 			enable = bool(int(args[0]))
 			import config
