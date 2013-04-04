@@ -15,6 +15,7 @@ import oleacc
 import config
 
 MK_E_UNAVAILABLE = -2147221021
+CO_E_CLASSSTRING = -2147221005
 
 def _lresultFromGetActiveObject(progid, dynamic):
 	o = comtypes.client.GetActiveObject(progid, dynamic=dynamic)
@@ -30,14 +31,16 @@ def getActiveObject(progid, dynamic=False):
 	try:
 		return comtypes.client.GetActiveObject(progid, dynamic=dynamic)
 	except WindowsError as e:
-		if e.winerror != MK_E_UNAVAILABLE:
+		if e.winerror not in (MK_E_UNAVAILABLE, CO_E_CLASSSTRING):
 			# This isn't related to privileges.
 			raise
 	p = subprocess.Popen((config.SLAVE_FILENAME, "comGetActiveObject", progid, "%d" % dynamic),
 		stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 	try:
-		# FIXME: Throw better exception for COM error in slave.
-		lres = int(p.stdout.readline())
+		try:
+			lres = int(p.stdout.readline())
+		except ValueError:
+			raise RuntimeError("Helper process unable to get object; see log for details")
 		o = oleacc.ObjectFromLresult(lres, 0,
 			IDispatch if dynamic else IUnknown)
 		if dynamic:
