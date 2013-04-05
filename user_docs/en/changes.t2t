@@ -80,6 +80,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - Support the form landmark in browse mode documents that support landmarks. (#2997) 
 - The eSpeak synthesizer driver now handles reading by character more appropriately (e.g. announcing a foreign letter's name or value rather than just its sound or generic name). (#3106)
 - NVDA no longer fails to copy user settings for use on logon and other secure screens when the user's profile path contains non-ASCII characters. (#3092)
+- NVDA no longer freezes when using Asian character input in some .NET applications. (#3005)
 
 
 == Changes for Developers ==

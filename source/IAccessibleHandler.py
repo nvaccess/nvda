@@ -369,7 +369,12 @@ def accFocus(ia):
 		if isinstance(res,comtypes.client.lazybind.Dispatch) or isinstance(res,comtypes.client.dynamic._Dispatch) or isinstance(res,IUnknown):
 			new_ia=normalizeIAccessible(res)
 			new_child=0
+		elif res==0:
+			# #3005: Don't call accChild for CHILDID_SELF.
+			new_ia=ia
+			new_child=res
 		elif isinstance(res,int):
+			# accFocus can return a child ID even when there is actually an IAccessible for that child; e.g. Lotus Symphony.
 			try:
 				new_ia=ia.accChild(res)
 			except:
