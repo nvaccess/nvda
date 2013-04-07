@@ -29,21 +29,21 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 - No modo Navegación para MSHTML (ex.: Internet Explorer) e Gecko (ex.: Firefox), agora anúnciase a existencia de descripcións longas. Tamén é posible abrir a descripción longa nunha ventá nova premendo NVDA+d. (#809)
 - As notificacións en Internet Explorer 9 e superior agora fálanse (como contido bloqueado ou descargas de ficheiros). (#2343)
 - O anunciado automático das cabeceiras de fila e columna agora sopórtase para documentos en modo navegación en Internet Explorer e outros controis MSHTML. (#778)
-- Nova lingua: Aragonés
+- Novas linguas: Aragonés, irlandés.
 - Novas táboas de transcripción braille:  Danés grado 2, Coreano grao 1.
 - Soporte para liñas braille conectadas a traverso do bluetooth nun ordenador executando o Bluetooth Stack for Windows de Toshiba. (#2419)
 - Soporte para a selección de porto cando se utilicen liñas freedom Scientific (Automático, USB ou Bluetooth).
 - Soporte para a familia BrailleNote de anotadores electrónicos de Humanware cando actúen como unha terminal braille para un lector de pantalla. (#2012)
 - Soporte para  modelos antigos das liñas braille Papenmeier BRAILLEX. (#2679)
 - Soporte para a entrada de braille computerizado  para liñas braille que posúan un teclado braille. (#808)
-- Novas opcións de teclado que permiten  escoller se NVDA debería interrumpir a fala para os caracteres escribidos ou a tecla Intro. (#698)
+- Novas opcións de teclado que permiten  escoller se NVDA debería interrumpir a fala para os caracteres escribidos e/ou a tecla Intro. (#698)
 - Soporte para varios navegadores web baseados no Google chrome: Rockmelt, BlackHawk, Comodo Dragon e SRWare Iron. (#2236, #2813, #2814, #2815)
  
 
 == Cambios ==
 - Actualizado o transcriptor braille liblouis ó 2.5.2. (#2737)
 - A distribución de teclado portátil redeseñouse  por completo para facela máis intuitiva e consistente. (#804)
-- Actualizado o sintetizador de voz eSpeak a 1.47.01. (#2680)
+- Actualizado o sintetizador de voz eSpeak a 1.47.04. (#2680)
 
 
 == Corrección de Fallos ==
@@ -78,6 +78,8 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 - Correxida a incapacidade para utilizar certas voces de Microsoft Speech API versión 5 como as voces de Koba Speech 2. (#2629)
 +- En aplicacións que utilicen o Java Access Bridge, agora as liñas braille actualízanse correctamente cando o cursor se mova en campos de texto editables . (#3107)
 +- Sopórtase o ponto de referencia en formulario en modo navegación en documentos que soporten pontos de referencia. (#2997) 
+- O controlador do sintetizador de voz eSpeak agora manexa a lectura por caracteres máis apropriadamente (ex.: anuncia un nome de letra extranxeiro ou un valor en lugar de só o seu son ou nome xenérico). (#3106)
+- NVDA xa non falla ó copiar as opcións do usuario para utilizalas na autentificación e noutras pantallas seguras cando a ruta do perfil do usuario contén caracteres non ASCII. (#3092)
 
 
 == Cambios para Desenroladores ==
