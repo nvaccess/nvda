@@ -48,6 +48,7 @@ map<HWND,int> windowsForTextChangeNotifications;
 map<HWND,RECT> textChangeNotifications;
 UINT_PTR textChangeNotifyTimerID=0;
 DWORD tls_index_inTextOutHook=TLS_OUT_OF_INDEXES;
+DWORD tls_index_curScriptTextOutScriptAnalysis=TLS_OUT_OF_INDEXES;
 
 void CALLBACK textChangeNotifyTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
 	map<HWND,RECT> tempMap;
@@ -315,8 +316,9 @@ GlyphTranslatorCache glyphTranslatorCache;
  * @param characterWidths an optional array of character widths 
  * @param cbCount the length of the string in characters.
  * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
+ * @param rtl if true the text should be marked as rtl (right to left, not ltr - left to right). The function still expects the text in left-to-right order 
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize, bool rtl) {
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
@@ -425,7 +427,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
 		formatInfo.backgroundColor=GetBkColor(hdc);
-		model->insertChunk(textRect,baselinePoint.y,newText,characterEndXArray,formatInfo,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
+		model->insertChunk(textRect,baselinePoint.y,newText,characterEndXArray,formatInfo,rtl,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		HWND hwnd=WindowFromDC(hdc);
 		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}
@@ -437,7 +439,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
  * @param lpString the string of ansi text you wish to record.
  * @param codePage the code page used for the string which will be converted to unicode
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize, bool rtl) {
 	int newCount=0;
 	wchar_t* newString=NULL;
 	if(lpString&&cbCount) {
@@ -447,7 +449,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 			MultiByteToWideChar(codePage,0,lpString,cbCount,newString,newCount);
 		}
 	}
-	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,characterWidths,newCount,resultTextSize);
+	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,characterWidths,newCount,resultTextSize,rtl);
 	if(newString) free(newString);
 }
 
@@ -476,7 +478,7 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	//If we can't get a display model then stop here.
 	if(!model) return res;
 	//Calculate the size of the text
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,CP_THREAD_ACP,NULL,cbCount,NULL);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,NULL,0,textAlign,FALSE,lpString,CP_THREAD_ACP,NULL,cbCount,NULL,false);
 	model->release();
 	return res;
 }
@@ -517,7 +519,7 @@ template<typename WA_POLYTEXT> BOOL WINAPI hookClass_PolyTextOut<WA_POLYTEXT>::f
 			curPos.y=curPptxt->y;
 		}
 		//record the text
-		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpstr,CP_THREAD_ACP,curPptxt->pdx,curPptxt->n,&curTextSize);
+		ExtTextOutHelper(model,hdc,curPos.x,curPos.y,&curClearRect,curPptxt->uiFlags,textAlign,FALSE,curPptxt->lpstr,CP_THREAD_ACP,curPptxt->pdx,curPptxt->n,&curTextSize,false);
 		//If the DC's current position should be used,  move our idea of it by the size of the text just recorded
 		if(textAlign&TA_UPDATECP) {
 			curPos.x+=curTextSize.cx;
@@ -609,8 +611,11 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	displayModel_t* model=acquireDisplayModel(hdc);
 	//If we can't get a display model then stop here
 	if(!model) return res;
+	//Find out if this is rtl
+	SCRIPT_ANALYSIS* psa=(SCRIPT_ANALYSIS*)TlsGetValue(tls_index_curScriptTextOutScriptAnalysis);
 	//Record the text in the displayModel
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,CP_THREAD_ACP,lpDx,cbCount,NULL);
+	bool rtl=(psa?psa->fRTL:false);
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,CP_THREAD_ACP,lpDx,cbCount,NULL,rtl);
 	//Release the displayModel and return
 	model->release();
 	return res;
@@ -864,7 +869,7 @@ typedef HRESULT(WINAPI *ScriptStringOut_funcType)(SCRIPT_STRING_ANALYSIS,int,int
 ScriptStringOut_funcType real_ScriptStringOut=NULL;
 HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UINT uOptions,const RECT *prc,int iMinSel,int iMaxSel,BOOL fDisabled) {
 	//Call the real ScriptStringOut
-	TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
+	//TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
 	HRESULT res=real_ScriptStringOut(ssa,iX,iY,uOptions,prc,iMinSel,iMaxSel,fDisabled);
 	TlsSetValue(tls_index_inTextOutHook,(LPVOID)0);
 	//If ScriptStringOut was successful we can go on
@@ -889,15 +894,27 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 	}
 	BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
 	if(i->second.iCharset==-1) { //Unicode
-		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),CP_THREAD_ACP,NULL,i->second.cString,NULL);
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),CP_THREAD_ACP,NULL,i->second.cString,NULL,false);
 	} else { // character set
 		int codePage=charSetToCodePage(i->second.iCharset);
-		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(char*)(i->second.pString),codePage,NULL,i->second.cString,NULL);
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(char*)(i->second.pString),codePage,NULL,i->second.cString,NULL,false);
 	}
 	model->release();
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	return res;
 }
+
+//ScriptTextOut
+//Hooked so we can look at the current SCRIPT_ANALYSIS structure being used within an inner call to ExtTextOut
+typedef HRESULT(WINAPI *ScriptTextOut_funcType)(const HDC,SCRIPT_CACHE*,int,int,UINT,const RECT*,const SCRIPT_ANALYSIS*,const WCHAR*,int,const WORD*,int,const int*,const int*,const GOFFSET*);
+ScriptTextOut_funcType real_ScriptTextOut=NULL;
+HRESULT WINAPI fake_ScriptTextOut(const HDC hdc, SCRIPT_CACHE* psc, int x, int y, UINT fuOptions, const RECT* lprc, const SCRIPT_ANALYSIS* psa, const WCHAR* pwcReserved, int iReserved, const WORD* pwGlyphs, int cGlyphs, const int* piAdvanced, const int* piJustify, const GOFFSET* pGoffset) {
+	TlsSetValue(tls_index_curScriptTextOutScriptAnalysis,(LPVOID)psa);
+	HRESULT res=real_ScriptTextOut(hdc, psc, x, y, fuOptions, lprc, psa, pwcReserved, iReserved, pwGlyphs, cGlyphs, piAdvanced, piJustify, pGoffset);
+	TlsSetValue(tls_index_curScriptTextOutScriptAnalysis,NULL);
+	return res;
+}
+
 
 //ScrollWindow hook function
 typedef BOOL(WINAPI *ScrollWindow_funcType)(HWND,int,int,const RECT*, const RECT*);
@@ -978,6 +995,7 @@ BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 
 void gdiHooks_inProcess_initialize() {
 	tls_index_inTextOutHook=TlsAlloc();
+	tls_index_curScriptTextOutScriptAnalysis=TlsAlloc();
 	//Initialize the timer for text change notifications
 	textChangeNotifyTimerID=SetTimer(NULL,NULL,50,textChangeNotifyTimerProc);
 	nhAssert(textChangeNotifyTimerID);
@@ -1006,6 +1024,7 @@ void gdiHooks_inProcess_initialize() {
 	real_ScriptStringAnalyse=apiHook_hookFunction_safe("USP10.dll",ScriptStringAnalyse,fake_ScriptStringAnalyse);
 	real_ScriptStringFree=apiHook_hookFunction_safe("USP10.dll",ScriptStringFree,fake_ScriptStringFree);
 	real_ScriptStringOut=apiHook_hookFunction_safe("USP10.dll",ScriptStringOut,fake_ScriptStringOut);
+	real_ScriptTextOut=apiHook_hookFunction_safe("USP10.dll",ScriptTextOut,fake_ScriptTextOut);
 }
 
 void gdiHooks_inProcess_terminate() {
@@ -1033,4 +1052,5 @@ void gdiHooks_inProcess_terminate() {
 	ScriptStringAnalyseArgsByAnalysis.clear();
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	TlsFree(tls_index_inTextOutHook);
+	TlsFree(tls_index_curScriptTextOutScriptAnalysis);
 }

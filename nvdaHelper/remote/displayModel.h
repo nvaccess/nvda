@@ -44,7 +44,8 @@ struct displayModelChunk_t{
 	std::wstring text;
 	std::deque<long> characterXArray;
 	displayModelFormatInfo_t formatInfo;
-/**
+	bool rtl;
+	/**
  * Truncates the chunk's text so that only the text that fits in the resulting rectangle is left.  
  * @param truncatePointX the x position at which to truncate
  * @param truncateBefore if true then the chunk is truncated from the left all the way up to  truncation point, if false then its truncated from the point to the end.
@@ -98,7 +99,7 @@ class displayModel_t: public LockableAutoFreeObject  {
  * @param characterEndXArray an array of x positions for the end of each character.
  * @param clippingRect a optional pointer to a rectangle which if specified will be used to clip the text so that none falls outside this rectangle. 
  */
-	void insertChunk(const RECT& rect, int baseline, const std::wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, const RECT* clippingRect);
+	void insertChunk(const RECT& rect, int baseline, const std::wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, bool rtl, const RECT* clippingRect);
 
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.

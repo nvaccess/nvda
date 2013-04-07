@@ -17,6 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <deque>
 #include <list>
 #include <set>
+#include <algorithm>
 #include <common/xml.h>
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
@@ -26,7 +27,8 @@ using namespace std;
 
 void displayModelChunk_t::generateXML(wstring& text) {
 	wstringstream s;
-	s<<L"<text";
+	s<<L"<text ";
+	s<<L"rtl=\""<<(rtl?1:0)<<L"\" ";
 	s<<L" font-name=\""<<formatInfo.fontName<<L"\" ";
 	s<<L" font-size=\""<<formatInfo.fontSize<<L"pt\" ";
 	if(this->formatInfo.bold) s<<L" bold=\"true\"";
@@ -36,8 +38,10 @@ void displayModelChunk_t::generateXML(wstring& text) {
 	s<<L" background-color=\""<<this->formatInfo.backgroundColor<<L"\"";
 	s<<L">";
 	text.append(s.str());
-	for(wstring::iterator i=this->text.begin();i!=this->text.end();++i) {
-		appendCharToXML(*i,text);
+	if(rtl) {
+		for(wstring::reverse_iterator i=this->text.rbegin();i!=this->text.rend();++i) appendCharToXML(*i,text);
+	} else {
+		for(wstring::iterator i=this->text.begin();i!=this->text.end();++i) appendCharToXML(*i,text);
 	}
 	text.append(L"</text>");
 }
@@ -81,13 +85,14 @@ size_t displayModel_t::getChunkCount() {
 	return chunksByYX.size();
 }
 
-void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, const RECT* clippingRect) {
+void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, bool rtl, const RECT* clippingRect) {
 	displayModelChunk_t* chunk=new displayModelChunk_t;
 	LOG_DEBUG(L"created new chunk at "<<chunk);
 	chunk->rect=rect;
 	chunk->baseline=baseline;
 	chunk->text=text;
 	chunk->formatInfo=formatInfo;
+	chunk->rtl=rtl;
 	chunk->characterXArray.push_back(rect.left);
 	for(unsigned int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
@@ -303,10 +308,13 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			if(useXML) {
 				chunk->generateXML(curLineText);
 			} else {
+				wstring::iterator curLineTextOldEnd=curLineText.end();
 				curLineText.append(chunk->text);
+				if(chunk->rtl) reverse(curLineTextOldEnd,curLineText.end());
 			}
 			//Copy the character X positions from this chunk  in to the current line
 			deque<long>::const_iterator cxaIt=chunk->characterXArray.begin();
+			deque<charLocation_t>::iterator curLineCharacterLocationsOldEnd=curLineCharacterLocations.end();
 			while(cxaIt!=chunk->characterXArray.end()) {
 				tempCharLocation.left=*cxaIt;
 				tempCharLocation.top=chunk->rect.top;
@@ -316,7 +324,8 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 				tempCharLocation.baseline=chunk->baseline;
 				curLineCharacterLocations.push_back(tempCharLocation);
 			}
-		lastChunkRight=chunk->rect.right;
+			if(chunk->rtl) reverse(curLineCharacterLocationsOldEnd,curLineCharacterLocations.end());
+			lastChunkRight=chunk->rect.right;
 		}
 		if((chunkIt==chunksByYX.end()||chunkIt->first.first>curLineBaseline)&&curLineText.length()>0) {
 			//This is the end of the line
