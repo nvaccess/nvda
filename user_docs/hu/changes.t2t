@@ -3,6 +3,75 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1 =
+
+E kiadás főb újdonságai: egy sokkal eredetibb és logikusabb laptop billentyűzetkiosztás; a Microsoft Powerpoint alapvető támogatása; a hosszú leírások támogatása a webböngészőkben; valamint a számítógépes braille bevitel támogatása azoknál a braille kijelzőknél, melyeknek van braille billentyűzetük. 
+
+== Fontos ==
+
+=== Új Laptop Billentyűkiosztás ===
+
+A laptop billentyűkiosztást teljesen újratervezték, hogy az minél kézreállóbb és logikusabb legyen.
+Az új kiosztásban a nyilakat az NVDA és más módosító billentyűk kombinációjával kell használni az áttekintő parancsokhoz.
+
+Kérjük, vegye figyelembe a változásokat a gyakran használt parancsoknál:
+|| Funkció | Billentyűparancs |
+| Folyamatos felolvasás | NVDA+a |
+| Sor felolvasása | NVDA+l |
+| Kijelölt szövegrész felolvasása | NVDA+shift+s |
+| Állapotsor felolvasása | NVDA+shift+end |
+Ezzel összefüggésben más is változott, pl. az elemek közötti navigáció, az áttekintő kurzor, az egérkattintás, valamint a szintetizátor beállítási kör. 
+Kérjük, tanulmányozza a billentyűparancsok jegyzékét (keycommands.html) az új billentyűparancsok elsajátításához!
+
+
+== Újdonságok ==
+- A Microsoft Powerpoint prezentációk szerkesztésének alapvető támogatása (#501),
+- Üzenetek írásának és olvasásának alapvető támogatása a Lotus Notes 8.5-ben (#543)
+- Böngészőmódban MS-HTML (pl. IE) és Gecko (Pl. Firefox) dokumentumokban az NVDA jelzi a hosszú leírásokat. Ezek külön ablakban is megnyithatók az NVDA+D billentyűparanccsal. (#809)
+- Az internet explorer 9-ben és újabb verzióiban az NVDA most már felolvassa az értesítéseket (Pl. tartalom blokkolása vagy fájl letöltése). (#2343)
+Az IE-ben és más MS-html vezérlőkön az NVDA már automatikusan felolvassa a sor- és oszlopfejeket. (#778)
+- Új nyelv: Aragóniai
+- Új Braille fordítótáblák: Dán 2. fokozat, Koreai 1. fokozat.(#2737)
+- Bluetoothos braille kijelzők támogatása bluetooth kapcsolaton keresztül olyan gépeken, melyek a Toshiba által fejlesztett Bluetooth Stack for Windows szoftvert / drivert futtatják. (#2419)
+- A portkijelölés támogatása Freedom Scientific-féle braille kijelzőkön (automatikus, usb vagy bluetooth).
+- Papenmeier BRAILLEX braille kijelzők régebbi modelleinek támogatása (#2679).
+- Számítógépes braille bevitel támogatása olyan braile kijelzőknél, melyeknek saját braille billentyűzetük van.(#808)
+- Új billentyűzet-beállítások, melyek segítségével meghatározható, hogy az NVDA a beszédet megszakítsa-e billentyűleütéskor, illetve az enter használata során(#698).
+- A program támogatja Google Chrome alapú böngészőket, pl. Rockmelt, BlackHawk, Comodo Dragon and SRWare Iron. (#2236, #2813, #2814, #2815)
+ 
+
+== Változások ==
+- Frissítették a Lib-Louis braille fordítót a 2.5.2. verzióra (#2737).
+- A laptop billentyűkiosztást teljesen újratervezték, hogy az minél magától értetődőbb és logikusabb legyen. (#804)
+- Az eSpeak beszédszintetizátor frissítve lett az 1.47.04-es verzióra. (#2680)
+
+
+== Javítások ==
+- Most már rendesen működik az előző és következő elválasztóra ugró navigációs gyorsbillentyű az internet explorerben és más MS-Html vezérlőkben.(#2781)
+- Ha az NVDA egy hibás szintetizátor-beállítás miatt az Espeak-ez térne vissza vagy beszéd nélkül indulna, most már nem menti el a program a hibás beállítást, hanem a legközelebbi indításakor megpróbál visszatérni az eredetileg beállított beszédszintetizátorhoz. (#2589)
+- Mozilla alkalmazásokban a táblázatok frissülésekor az NVDA most már helyesen rendezi el őket. Pl. helyesen olvassa fel a táblázatcellák sor- és oszlopkoordinátáit, és úgy működnek a táblázat-navigációs parancsok is, ahogy megszoktuk. (#2784)
+- Böngészőmódban a webböngészőkben bizonyos kattintható címkézetlen ábrák, melyek korábban nem voltak jól megjeleníthetők és kezelhetők, most már megfelelően használhatók. (#2838)
+- Most már a program egyaránt támogatja a biztonsági képernyők régebbi és újabb verzióit. (#2800)
+- Az NVDA most már nem omlik össze induláskor ha egy bővítmény azért nem távolítható el, mert a mappáját egy másik folyamat használja. (#2860)
+- A dropbox beálítások párbeszédpanelén a lapfülek címkéi immár sík áttekintéssel is felolvastathatók.
+- Ha az NVDA nyelvét az alapértelmezettről valamilyen másikra állítjuk át, az NVDA helyesen észleli a billentyűparancsokat normál s beviteli módban is.
+- Az olyan nyelvekben, mint a német, ahol a plusz billentyű egybillentyűs, a billentyűparancsok megadásánál már a "plus" szó is használható ehhez a billentyűhöz.#2898)
+- Az internet explorerben és más MS-Html vezérlőkben az NVDA most már a megfelelő helyen jelzi az idézetblokkokat. (#2888)
+- Mozilla böngészőkben a böngészőmód már újra használható, ha egy flash objektum volt megnyitva. (#2546)
+- Most már helyesen jelzi az NVDA a braille kijelzőkön a szövegkijelöléseket pl. Ms Word 2003-ban, IE szerkesztőmezőkben.
+- Ha scintilla szerkesztőmezőkben böngészünk, backspace-szel vagy delel karaktert törlünk, az NVDA most már helyesen olvassa fel a több-bájtos karaktereket. (#2855)
+- Az NVDA telepítése most már nem hiúsul meg, ha a felhasználói profil útvonalában bizonyos többájtos karakterek vannak. (#2729)
+- Mozila alkalmazásokban bizonyos szöveges tartalmakat a program már nem kezel szerkeszthetőként (ez korábban ritkán előfordult). (#2959)
+- IBM Lotus Symphony-ban és Open Office-ban a kurzor mozgását megfelelően követi az áttekintőkurzor. if appropriate.
+- Az Adobe Flash tartalom  már elérhető ie-ben windows 8 alatt. (#2454)
+- Javították  a Papenmeier Braillex Trio bluetooth támogatását. (#2995)
+- Javítva lett a Microsoft Sapi 5 hangok kezelése, úgy mint a Koba Speech 2 hangjai. (#2629)
+- Azon alkalmazásoknál, amik a  Java AccessBridge kiegészítőt használják, a braille kijelző már frissül, ha az áttekintő kurzor egy szerkeszthető mezőbe lép.  (#3107)
+- Az űrlap jelzőpont támogatása azon web-dokumentumokban, amik támogatják a jelzőpontokat. (#2997)
+- Az eSpeak szintetizátora mostantól jobban kezeli az ismeretlen karakterek bemondását (pl. elmondja az idegen betű nevét vagy értékét, annak generikus neve helyett).  (#3106)
+- Az NVDA többé már nem fagy le a felhasználói beállítások átmásolásakor a bejelentkező és egyéb biztonsági képernyők használatához, ha a felhasználó neve tartalmaz nem-ascii karaktereket.  (#3092)
+
+
 = 2012.3 =
 
 A 2012.3. verzió legfontosabb újdonságai: ázsiai karakterbevitel támogatása, a windows 8 érintő képernyők alapvető támogatása, az oldalszámok bemondása és a táblázatok jobb felolvasása az adobe readerben, valamint a windows listanézetekben és a fókuszban lévő táblázatsorokban táblázatnavigációs parancsok használata.
