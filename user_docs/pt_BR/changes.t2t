@@ -8,7 +8,7 @@
 
  = 2013.1 =
 
- == Important ==
+ == Importante ==
 
 === Novo Leiaute de teclado Laptop ===
 O leiaute de teclado laptop foi completamente redesenhado com vistas a tornar-se mais intuitivo e consistente.
@@ -32,8 +32,9 @@ Por favor consulte o documento da [Referência Rápida de Comandos keyCommands.h
 - No modo de navegação para o MSHTML (como o  Internet Explorer) e Gecko (Firefox), a existência de descrições longas agora é anunciada. Também é possível abrir a descrição longa numa nova janela pressionando NVDA+d. (#809)
 - Notificações no Internet Explorer 9 e posteriores (tais como bloqueio de conteúdos ou downloads de arquivos) agora são anunciadas. (#2343) 
 - O anúncio automático dos cabeçalhos de linhas e colunas das tabelas agora é suportado para documentos do modo de navegação  no Internet Explorer e outros controles MSHTML. (#778) 
-- Novo idioma: Aragonês.
+- Novo idioma: Aragonês, Irlandês.
 - Nova tabela de tradução braille: Dinamarquês grau 2. 
+- Suporte para linhas braille conectadas via bluetooth em computadores que usem dispositivos Bluetooth para o Windows fabricados pela Toshiba. (#2419)
 - Suporte para a seleção de porta quando se usa linhas da freedom Scientific  (Automática, USB ou Bluetooth). 
 - Suporte para a família de notetakers BrailleNote da Humanware quando usados com função de terminal braille para leitores de telas. (#2012)
 - Suporte para modelos antigos das linhas braille Papenmeier BRAILLEX. (#2679)
@@ -66,7 +67,7 @@ Por favor consulte o documento da [Referência Rápida de Comandos keyCommands.h
 - ao filtrar elementos na lista de elementos do Modo de navegação usando textos que contenham letras maiúsculas, agora retorna resultados de casos insensíveis assim como minúsculas em lugar de não trazer qualquer resultado. (#2951) 
 - em navegadores da Mozilla, o modo de navegação volta a poder ser usado quando conteúdo Flash recebe  foco. (#2546) 
 - Ao usar uma tabela de braille contraído   e estando ativada a opção expandir para braille de computador a palavra sob o cursor, o cursor braille agora é posicionado corretamente quando colocado depois de uma palavra na qual haja um caractere representado por múltiplas celas braille (como sinal de maiúsculo, sinal de letras, sinal de números, etc.). (#2947) 
-- A seleção de Textos agora é exibida corretamente nas linhas braille nos controles editáveis em aplicativos como o Microsoft word 2003 e Internet Explorer. 
+- A seleção de Textos agora é exibida corretamente pelas linhas braille nos controles editáveis em aplicativos como o Microsoft word 2003 e Internet Explorer. 
 - Volta a ser possível selecionar textos em retrocesso no Microsoft Word enquanto o Braille está ativado. 
 - Ao revisar, apagar para trás ou com delete os caracteres em controles editáveis Scintilla, o NVDA agora anuncia corretamente os caracteres multibyte. (#2855)
 - o NVDA já não falha ao ser instalado quando o caminho para o perfil do usuário contém certos caracteres multibyte. (#2729) 
@@ -76,7 +77,11 @@ Por favor consulte o documento da [Referência Rápida de Comandos keyCommands.h
 - Conteúdos Flash agora são acessíveis com o Internet Explorer no Windows 8. (#2454) 
 - Corrigido o suporte de Bluetooth para a linha braille Papenmeier Braillex Trio. (#2995)
 - Corrigida a incapacidade para usar certas vozes Microsoft Speech API versão 5 tais como as vozes Koba Speech 2. (#2629)
- 
+- Em aplicações que usam Java Access Bridge, as linhas braille agora são atualizadas corretamente quando o cursor é movido em campos de edição de texto. (#3107)
+Suporte para marcas de formulários em documentos no modo de navegação, caso suportem marcas. (#2997) 
+ - O driver para o sintetizador eSpeak agora controla a leitura por caractere mais apropriadamente (isto é, anuncia o nome de uma letra ou seu valor ao invés de falar apenas seu som ou seu nome genérico). (#3106)
+- O NVDA já não falha ao copiar configurações do usuário para uso no logon e outras telas seguras, quando o caminho do perfio do usuário contém caracteres não-ascii. (#3092)
+
  
  == Alterações Específicas para Desenvolvedores ==
  
