@@ -29,7 +29,7 @@ Katso uudet näppäinkomennot [komentojen pikaoppaasta. keyCommands.html]
 - Pitkät kuvaukset ilmoitetaan nyt selaustilassa MSHTML- ja Gecko-sovelluksissa (esim. Internet Explorerissa ja Firefoxissa). Ne on lisäksi mahdollista avata uuteen ikkunaan painamalla NVDA+D. (#809)
 - Ilmoitukset, kuten sisällön estäminen tai tiedostolataukset, luetaan nyt Internet Explorer 9:ssä ja uudemmissa. (#2343)
 - Automaattista taulukon rivien ja sarakkeiden otsikoiden lukemista tuetaan nyt selaustiladokumenteissa Internet Explorerissa ja muissa MSHTML-säätimissä. (#778)
-- Uusi kieli: aragonia
+- Uusia kieliä: aragonia, iiri
 - Uusia pistetaulukoita: tanskalainen taso 2, korealainen taso 1.
 - Tuki bluetoothin kautta yhdistettäville pistenäytöille Toshiban bluetooth-pinoa käyttävissä tietokoneissa. (#2419)
 - Portin valitseminen on nyt mahdollista Freedom Scientificin pistenäyttöjä käytettäessä (Automaattinen, USB tai Bluetooth).
@@ -43,7 +43,7 @@ Katso uudet näppäinkomennot [komentojen pikaoppaasta. keyCommands.html]
 == Muutokset ==
 - Liblouis-pistekääntäjä päivitetty versioksi 2.5.2. (#2737)
 - Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin uudelleen, jotta se olisi intuitiivisempi ja johdonmukaisempi. (#804)
-- eSpeak-puhesyntetisaattori päivitetty versioksi 1.47.01. (#2680)
+- eSpeak-puhesyntetisaattori päivitetty versioksi 1.47.04. (#2680)
 
 
 == Korjatut ohjelmavirheet ==
@@ -78,6 +78,8 @@ Katso uudet näppäinkomennot [komentojen pikaoppaasta. keyCommands.html]
 - Korjattu ongelma, joka aiheutti sen, että tiettyjen Microsoft Speech API versio 5 -puheäänten, kuten Koba Speech 2, käyttäminen ei ollut mahdollista. (#2629)
 - Pistenäyttö päivittyy nyt oikein Java Access Bridgeä käyttävissä sovelluksissa liikutettaessa kohdistinta muokattavissa tekstikentissä. (#3107)
 - Lomake-maamerkkiä tuetaan nyt maamerkkejä tukevissa selaustiladokumenteissa. (#2997)
+- eSpeak-syntetisaattoriajuri käsittelee nyt merkeittäin lukemista asianmukaisemmin (esim. lukee vierasperäisen kirjaimen nimen tai arvon sen äänen tai yleisnimen sijaan). (#3106)
+- Käyttäjän asetusten kopiointi kirjautumisikkunassa ja muissa suojatuissa ruuduissa käytettäväksi ei enää epäonnistu, kun käyttäjäprofiilin hakemistopolku sisältää muita kuin ASCII-merkkejä. (#3092)
 
 
 = 2012.3 =
@@ -471,12 +473,12 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat merkittävät välimerkkej
 Tämä julkaisu korjaa muutamia versiosta 2011.1 löydettyjä tietoturva- ja muita merkittäviä ongelmia.
 
 == Korjatut ohjelmavirheet ==
-- NVDA-valikon Lahjoita-vaihtoehto on nyt poissa käytöstä kirjautumis- ja muissa suojatuissa ruuduissa, koska se on tietoturvariski. (#1419)
-- Kopioiminen, leikkaaminen ja liittäminen on nyt estetty suojatulla työpöydällä (kirjautumis- ja muissa suojatuissa ruuduissa), koska se on tietoturvariski. (#1421)
+- NVDA-valikon Lahjoita-vaihtoehto on nyt poissa käytöstä kirjautumisikkunassa ja muissa suojatuissa ruuduissa, sillä se on tietoturvariski. (#1419)
+- Kopioiminen, leikkaaminen ja liittäminen on nyt estetty suojatulla työpöydällä (kirjautumisikkunassa ja muissa suojatuissa ruuduissa), sillä se on tietoturvariski. (#1421)
 - Siirrä näennäispuskuriin -komento (NVDA+Ctrl+välilyönti) toimii nyt Firefox 4:ssa kuten pitääkin poistuttaessa upotetuista objekteista, kuten Flash-sisällöstä. (#1429)
 - Kun komentonäppäinten lukeminen on otettu käyttöön, Shift-näppäimen kanssa painettuja merkkejä ei enää virheellisesti  sanota komentonäppäimiksi. (#1422)
 - Kun komentonäppäinten lukeminen on otettu käyttöön, välilyönnin painaminen yhdessä muiden muokkausnäppäinten kuin Shiftin kanssa (kuten Ctrl ja Alt) ilmoitetaan nyt komentonäppäimeksi. (#1424)
-- Lokiin kirjaaminen on nyt kokonaan poissa käytöstä kirjautumis- ja muissa suojatuissa ruuduissa, koska se on tietoturvariski. (#1435)
+- Lokiin kirjaaminen on nyt kokonaan poissa käytöstä kirjautumisikkunassa ja muissa suojatuissa ruuduissa, koska se on tietoturvariski. (#1435)
 - Syötekomennot kirjataan nyt käyttöohjeen mukaisesti lokiin syöteohjetilassa, vaikka niitä ei olisikaan määritelty mihinkään skriptiin. (#1425)
 
 
@@ -523,9 +525,9 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teksti
 - Välimerkkinäppäimet sanotaan nyt syöteohjeessa, vaikka välimerkkien puhuminen on poistettu käytöstä. (#977)
 -  Näppäimistöasetteluiden nimet näppäimistöasetukset-valintaikkunassa näytetään nyt NVDA:ssa määritetyllä kielellä sen sijaan, että ne näytettäisiin aina englanniksi. (#558)
 - Korjattu ongelma, joka aiheutti sen, että jotkin kohteet näytettiin tyhjinä Adobe Reader -asiakirjoissa, esim. sisällysluettelon linkit Apple iPhone iOS 4.1 -käyttöohjeessa.
-- NVDA:n Yleiset asetukset -valintaikkunan "Käytä tallennettuja asetuksia kirjautumis- ja muissa suojatuissa ruuduissa" -painike toimii nyt, mikäli sitä on käytetty heti NVDA:n asennuksen jälkeen, mutta ennen kuin mikään suojattu ruutu on tullut näkyviin. NVDA ilmoitti aiemmin, että asetusten kopiointi onnistui, vaikka tosiasiassa ei tapahtunut mitään. (#1194)
-- Kahta NVDA:n asetusvalintaikkunaa ei voi enää olla auki samanaikaisesti. Tämä korjaa ongelmia, jotka aiheuttivat yhden avoimen valintaikkunan riippuvuutta toisesta, esim. syntetisaattorin vaihtaminen samaan aikaan kun Ääniasetukset-valintaikkuna on avoinna. (#603)
-- NVDA:n Yleiset asetukset -valintaikkunan "Käytä nykyisiä tallennettuja asetuksia kirjautumis- ja muissa suojatuissa ruuduissa" -painike ei enää toimi virheellisesti Käyttäjätilien valvonnan kehotteen ilmestymisen jälkeen järjestelmissä, joissa Käyttäjätilien valvonta on käytössä, mikälikäyttäjätilin nimessä on välilyönti. (#918)
+- NVDA:n Yleiset asetukset -valintaikkunan "Käytä tallennettuja asetuksia kirjautumisikkunassa ja muissa suojatuissa ruuduissa" -painike toimii nyt, mikäli sitä on käytetty heti NVDA:n asennuksen jälkeen, mutta ennen kuin mikään suojattu ruutu on tullut näkyviin. NVDA ilmoitti aiemmin, että asetusten kopiointi onnistui, vaikka tosiasiassa ei tapahtunut mitään. (#1194)
+- Kahta NVDA:n asetusvalintaikkunaa ei voi enää olla auki samanaikaisesti. Tämä korjaa ongelmia, jotka aiheuttivat yhden avoimen valintaikkunan riippuvuutta toisesta, esim. syntetisaattorin vaihtaminen samaan aikaan kun Ääniasetukset-valintaikkuna on auki. (#603)
+- NVDA:n Yleiset asetukset -valintaikkunan "Käytä nykyisiä tallennettuja asetuksia kirjautumisikkunassa ja muissa suojatuissa ruuduissa" -painike ei enää toimi virheellisesti Käyttäjätilien valvonnan kehotteen ilmestymisen jälkeen järjestelmissä, joissa Käyttäjätilien valvonta on käytössä, mikälikäyttäjätilin nimessä on välilyönti. (#918)
 - NVDA käyttää nyt Internet Explorerissa ja muissa MSHTML-säätimissä  linkin nimen selvittämiseen viimeisenä keinona URL-osoitetta sen sijaan, että näyttäisi tyhjiä linkkejä. (#633)
 - NVDA ei enää ohita  kohdistusta AOL Instant Messenger 7:n valikoissa. (#655)
 - Virheiden asianmukaiset nimet luetaan nyt Microsoft Wordin Kieliasun tarkistus -valintaikkunassa (esim. ei ole sanastossa, kielioppivirhe, välimerkit). Aiemmin kaikkia sanottiin kielioppivirheiksi. (#883)
@@ -577,7 +579,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat huomattavasti yksinker
 - Otettu käyttöön kokonaistarkastelun komennot: (#58)
  - NVDA+numeroryhmän 7: siirtää kokonaistarkasteluun ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstinlukukomennoilla.
  - NVDA+numeroryhmän 1: siirtää tarkastelukohdistimen sen kohdalla olevan tekstin sisältävään objektiin, mikä mahdollistaa objekti kerrallaan liikkumisen kyseisestä kohdasta lähtien.
-- NVDA:n nykyiset asetukset voidaan kopioida suojatuissa ruuduissa käytettäväksi (esim. kirjautumis- ja käyttäjätilien valvonnan ruudut) painamalla Yleiset asetukset -valintaikkunassa olevaa painiketta.
+- NVDA:n nykyiset asetukset voidaan kopioida suojatuissa ruuduissa käytettäväksi (esim. kirjautumisikkuna ja käyttäjätilien valvonnan kehotteet) painamalla Yleiset asetukset -valintaikkunassa olevaa painiketta.
 - Tuki Mozilla Firefox 4:lle.
 - Tuki Internet Explorer 9:lle.
 
@@ -589,7 +591,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat huomattavasti yksinker
 - Jos kohdistus siirtyy Näytä puhe -toiminnon ikkunaan (otetaan käyttöön Työkalut-valikosta) esim. siksi, että sitä napsautettiin hiirellä, ikkunaan ei ilmesty uutta tekstiä ennen kuin kohdistus siirtyy siitä pois. Tämä mahdollistaa helpomman tekstin valitsemisen esim. kopiointia varten.
 - Lokinkatselu- ja Python-konsoli-ikkunat suurennetaan avattaessa.
 - Kun Microsoft Excelissä on työkirja aktiivisena ja kun useampi kuin yksi solu on valittuna, valinnan alue luetaan, eikä vain aktiivista solua. (#763)
-- NVDA:n asetusten tallentaminen ja tiettyjen asetusten muuttaminen on nyt estetty kirjautumis- ja käyttäjätilien valvonnan ja muissa suojatuissa ruuduissa.
+- NVDA:n asetusten tallentaminen ja tiettyjen asetusten muuttaminen on nyt estetty kirjautumisikkunassa, käyttäjätilien valvonnan kehotteissa ja muissa suojatuissa ruuduissa.
 - eSpeak-puhesyntetisaattori päivitetty versioksi 1.44.03.
 - Jos NVDA on jo käynnissä, työpöydällä olevan NVDA-pikakuvakkeen avaaminen (Ctrl+Alt+N-näppäinyhdistelmän painaminen mukaan lukien) käynnistää sen uudelleen.
 - Hiiriasetukset-valintaikkunan Lue hiiren alla oleva teksti -valintaruutu korvattu Käytä hiiren seurantaa -valintaruudulla, joka sopii paremmin yhteen hiiren seurannan päälle ja pois kytkevän NVDA+M-komennon kanssa.
@@ -631,7 +633,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat huomattavasti yksinker
 
 
 == 2010.1 ==
-Tämä julkaisu keskittyy pääasiassa virheiden korjaamiseen ja käyttäjäkokemuksen parantamiseen, mukaan lukien muutamia huomattavia vakauteen liittyviä korjauksia.
+Tämä julkaisu keskittyy pääasiassa virheiden korjaamiseen ja käyttökokemuksen parantamiseen, mukaan lukien muutamia huomattavia vakauteen liittyviä korjauksia.
 
 === Uudet ominaisuudet ===
 - NVDA käynnistyy nyt järjestelmissä, joissa ei ole äänilaitteita. Tietojen tulostamiseen on tällöin käytettävä pistenäyttöä tai Silence-syntetisaattoria yhdessä Näytä puhe -toiminnon kanssa. (#425)
@@ -700,7 +702,7 @@ Tämä julkaisu keskittyy pääasiassa virheiden korjaamiseen ja käyttäjäkoke
 
 
 == 2009.1 ==
-Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows-versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumis- ja Ctrl+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus käyttää web-sivujen Flash- ja Java-sisältöä. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttäjäkokemukseen.
+Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows-versioille, huomattavasti paranneltu tuki Internet Explorerille ja Adobe Readerille, tuki Windows 7:lle, Windowsin kirjautumisikkunan ja Ctrl+Alt+Delete-ruutujen sekä Käyttäjätilien valvonnan (UAC) kehotteiden lukeminen sekä mahdollisuus käyttää verkkosivujen Flash- ja Java-sisältöä. Lisäksi on useita merkittäviä korjauksia NVDA:n vakauteen ja parannuksia yleiseen käyttökokemukseen.
 
 === Uudet ominaisuudet ===
 - Virallinen tuki Windowsin 64-bittisille versioille. (#309)
@@ -716,7 +718,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat tuki 64-bittisille Windows
 - Tuki Windows Live Mailille (pelkkää tekstiä sisältävät viestit voidaan nyt lukea).
 - Jos käyttäjä siirtyy Windows Vistassa suojatulle työpöydälle (joko siksi, että Käyttäjätilien valvonnan valintaikkuna tuli näkyviin tai koska painettiin Ctrl+Alt+Delete), NVDA ilmoittaa, että suojattu työpöytä on aktiivisena.
 - NVDA voi lukea hiiren alla olevan tekstin komentorivi-ikkunoissa.
-- Lisätty UI Automation -tuki Windows 7:ään sisältyvän UI Automation -asiakasrajapinnan kautta, sekä tehty korjauksia NVDA:n käyttökokemuksen parantamiseksi Windows 7:ssä.
+- Lisätty UI Automation -tuki Windows 7:ään sisältyvän UI Automation -asiakasrajapinnan kautta ja tehty korjauksia NVDA:n käyttökokemuksen parantamiseksi Windows 7:ssä.
 - NVDA voidaan määrittää käynnistymään automaattisesti Windowsiin kirjautumisen jälkeen. Asetus löytyy Yleiset asetukset -valintaikkunasta.
 - NVDA voi nyt lukea Windowsin suojatut ruudut, kuten kirjautumisikkunan ja Ctrl+Alt+Delete-ruudun sekä Windows Vistan ja uudempien Käyttäjätilien valvonnan kehotteet. Windowsin kirjautumisikkunan lukeminen voidaan määrittää Yleiset asetukset -valintaikkunasta. (#97)
 - Lisätty ajuri Optelec ALVA BC6 -sarjan pistenäytöille
