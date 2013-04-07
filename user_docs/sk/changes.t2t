@@ -29,7 +29,7 @@ Pozrite si prosím [Zoznam príkazov keyCommands.html], kde nájdete ostatné sk
 - V režime prehliadania v MSHTML (ako napríklad Internet explorer) a Gecko (napríklad Firefox), NVDA oznamuje dostupnosť dlhýh popisov. Dlhý popis sa dá zobraziť v novom okne po stlačení NVDA+d. (#809)
 - NVDA vie prečítať upozornenia (napríklad pri zablokovaní obsahu alebo sťahovaní súboru) v prehliadači Internet Explorer 9 a novších. (#2343)
 - Podporované automatické oznamovanie hlavičiek riadkov / stĺpcov tabuľky v prehliadači Internet Explorer a iných MSHTML prvkoch. (#778)
-- NVDA je preložené do Aragónčiny.
+- NVDA je preložené do Aragónčiny a Írčiny.
 - Doplnené tabuľky pre Dánsky skratkopis a Kórejský plnopis. (#2737)
 - Podpora pre brailovské riadky pripojené cez Bluetooth, ak je použitý Toshiba Bluetooth stack. (#2419)
 - Pri používaní riadkov od Freedom scientific je možné vybrať port (Automaticky, USb, bluetooth).
@@ -43,7 +43,7 @@ Pozrite si prosím [Zoznam príkazov keyCommands.html], kde nájdete ostatné sk
 == Zmeny ==
 - aktualizovaný prekladač do braillu liblouis  2.5.2. (#2737)
 - Rozloženie klávesnice laptop bolo prepracované v snahe urobiť ovládanie NVDA jednoduchšie a intuitívnejšie. (#804)
-- Hlasový výstup eSpeak aktualizovaný na verziu 1.47.01. (#2680)
+- Hlasový výstup eSpeak aktualizovaný na verziu 1.47.04. (#2680)
 
 
 == Opravy ==
@@ -76,6 +76,10 @@ Pozrite si prosím [Zoznam príkazov keyCommands.html], kde nájdete ostatné sk
 - obsah Adobe Flash je prístupný v prehliadači Internet Explorer v systéme Windows 8. (#2454)
 - Opravená bluetooth podpora pre riadky Papenmeier Braillex Trio. (#2995)
 - Opravená chyba, pri ktorej nebolo možné používať niektoré syntézy pod Microsoft Speech API 5, ako napríklad hlasy Koba Speech 2. (#2629)
+- V aplikáciách využívajúcich Java Access Bridge sa brailovský riadok správne aktualizuje pri zmene polohy systémového kurzora v editačných poliach. (#3107)
+- Podpora pre oblasť formulár v dokumentoch, na ktorých sa využívajú oblasti stránky. (#2997)
+- ovládač syntézy eSpeak lepšie spracúva znaky pri čítaní po znakoch (oznamuje názov znaku alebo jeho hodnotu a nie len čistý zvuk). (#3106)
+- NVDA viac nezamrzne pri pokuse skopírovať používateľské nastavenia na prihlasovaciu obrazovku a zabezpečené obrazovky, ak cesta profilu používateľa obsahuje aj iné ako ascii znaky. (#3092)
 
 
 = 2012.3 =

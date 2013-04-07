@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 06 febbraio 2013, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 4 aprile 2013, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
@@ -16,7 +16,7 @@ Lo screen reader è sviluppato da [NV Access http://www.nvaccess.org/], con cont
 NVDA permette alle persone non vedenti di accedere ed interagire con il sistema operativo Windows e con diverse applicazioni di terze parti.
 
 Le caratteristiche principali possono essere riassunte nei seguenti punti:
-- Supporto alle applicazioni più comuni come browsers web, posta elettronica, wordprocessor e software per chattare.
+- Supporto alle applicazioni più comuni come browser web, posta elettronica, wordprocessor e software per chattare.
 - sintesi vocale incorporata capace di parlare più di 43 lingue
 - Capacità di funzionare interamente da una chiavetta USB o altri dispositivi portatili senza bisogno di installazione
 - Installazione guidata semplice ed intuitiva tramite sintesi vocale
@@ -24,7 +24,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille, compresa la possibilità di immettere testo usando la tastiera della barra braille se presente
-- Tradotto in 42 lingue
+- Tradotto in 43 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
 - Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
@@ -32,7 +32,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-Oltre all'inglese, NVDA è stato tradotto in 42 lingue ossia Afrikaans, Albanese, Amharic, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
+Oltre all'inglese, NVDA è stato tradotto in 43 lingue ossia Afrikaans, Albanese, Amharic, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, Irlandese, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -87,7 +87,7 @@ Oltre al fatto di non poter essere eseguite automaticamente all'avvio automatico
  - Impossibilità di leggere le schermate del controllo Utente (UAC), quando si cerca di avviare un'applicazione con privilegi amministrativi.
  - Windows 8: impossibilità di gestire la scrittura o qualsiasi operazione effettuata tramite Touch Screen.
  - Windows 8: impossibilità di fornire le caratteristiche di ripetizione dei caratteri digitati e l'utilizzo della modalità navigazione in Windows Store.
-
+-
 
 ++ Installazione di NVDA ++
 Se si installa NVDA direttamente dal pacchetto principale, sarà sufficiente premere il pulsante Installa NVDA.
@@ -708,18 +708,14 @@ Quest'ultima opzione non sarà disponibile se il display braille supporta soltan
 
 Si consiglia di consultare la documentazione presente nella sezione [Display braille supportati #SupportedBrailleDisplays] per avere maggiori informazioni sulle porte e le connessioni disponibili per il display braille che si sta utilizzando.
 
-==== Tabella di traduzione ====
-L'opzione successiva è denominata Tabella di traduzione. 
-Si tratta di una casella combinata all'interno della quale si trovano varie tabelle Braille per parecchie lingue. Selezionare con le frecce verticali la tabella desiderata.
-
-==== Tabella d'uscita ====
-L'opzione successiva che si raggiunge in questa  finestra è rappresentata dalla casella combinata Tabella Braille d'uscita.
+==== Tabella lettura ====
+L'opzione successiva che si raggiunge in questa  finestra è rappresentata dalla casella combinata Tabella Braille lettura.
 In questa casella combinata, vengono elencate tabelle braille per svariate lingue, tipi e gradi di braille.
 La tabella scelta verrà utilizzata per tradurre il testo in braille da presentare poi sulla barra.
 è possibile spostarsi da una tabella braille all'altra utilizzando le frecce.
 
-==== Tabella di immissione ====
-Similmente all'opzione vista in precedenza, l'impostazione successiva è chiamata Tabella braille d'immissione.
+==== Tabella scrittura ====
+Similmente all'opzione vista in precedenza, l'impostazione successiva è chiamata Tabella braille scrittura.
 La tabella selezionata verrà utilizzata per tradurre i caratteri braille inseriti tramite tastiera perkins in testo.
 NVDA per il momento supporta l'immissione di tipo computer braille, perciò verrà usato soltanto il braille a otto punti.
 Ci si può spostare da una tabella all'altra utilizzando le frecce.
@@ -1164,6 +1160,14 @@ Per scaricare la sintesi si veda l'apposita pagina di download nel sito della co
 
 Questo sintetizzatore non supporta [funzionalità spelling #VoiceSpellingFunctionality].
 
+++ Nuance Vocalizer per NVDA ++
+Nuance Vocalizer è una sintesi vocale commerciale di alta qualità sviluppata da Nuance Communications, Inc., e realizzato ad uso esclusivo per NVDA da Tiflotecnia, Lda.
+Contiene più di 50 voci diverse, tutte facilmente installabili, arrivando a parlare in oltre 30 lingue. 
+Tutte le voci e i file che costituiscono l'intero programma vengono distribuiti sotto forma di componenti aggiuntivi, di modo da renderne possibile l'utilizzo anche su copie portable.
+
+Per ottenere maggiori informazioni ed eventualmente acquistare le sintesi vocali, è possibile consultare la pagina dedicata per l'Italia all'indirizzo http://www.nvda.it/promozione-il-pacchetto-vocalizer oppure a livello internazionale questo link [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Una percentuale delle vendite di questo prodotto è devoluto a NV Access, per finanziare un ulteriore sviluppo dello screen reader NVDA.
+
 + Display braille supportati +[SupportedBrailleDisplays]
 Questa sezione contiene informazioni sulle barre braille supportate da NVDA.
 
@@ -1404,8 +1408,6 @@ Si legga la documentazione della propria barra Braille per ottenere informazioni
 NVDA supporta i modelli Braille Sense e Braille EDGE prodotti dalla [Hims http://www.hims-inc.com/] quando connessi tramite USB o bluetooth.
 In caso di connessione tramite USB, è necessario prima installare i driver sviluppati dal produttore.
 
-L'immissione tramite tastiera braille non è ancora supportata.
-
 Di seguito, ecco l'elenco dell'assegnazione dei tasti  per questa riga braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
 %kc:beginInclude
@@ -1507,7 +1509,7 @@ Sono supportati i seguenti display braille:
 Se BrxCom è installato, NVDA lo utilizzerà.
 BrxCom è un utility che permette di gestire la scrittura tramite i tasti braille indipendentemente dallo screen reader in uso.
 Verrà realizzata presto da Papenmeier una nuova versione di BrXcom che funzioni con NVDA 
-
+In ogni caso, la scrittura tramite tastiera sarà sempre disponibile per i dispositivi Trio anche senza la presenza di BrxCom.
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
 Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
 la serie C è l'unica eccezione alla regola.
@@ -1550,6 +1552,32 @@ Seguono i comandi per i Display Papenmeier associati con NVDA:
 | Spostarsi all'oggetto successivo  | right2 |
 | Annuncia formattazione testo | Riga cursor routing superiore |
 %kc:endInclude
+
+I modelli Trio dispongono di ulteriori quattro tasti aggiuntivi presenti sulla parte frontale della tastiera braille.
+Partendo da sinistra verso destra, essi sono:
+- left thumb key (lt)
+- spazio
+- spazio
+- right thumb key (rt)
+-
+
+Attualmente, il tasto right Thumb key non viene utilizzato.
+I tasti più interni svolgono la funzione di barra spaziatrice.
+
+%kc:beginInclude
+|| Nome | Tasto |
+| backspace | punto 7 |
+| invio | punto 8 |
+| escape | spazio con punto 7 |
+| Freccia su| spazio con punto 2 |
+| Freccia sinistra | spazio con punto 1 |
+| Freccia Destra | spazio con punto 4 |
+| Freccia giù | spazio con punto 5 |
+| control | lt+punto2 |
+| alt | lt+punto3 |
+| control+escape | spazio con punto 1 2 3 4 5 6 |
+| tab | spazio con punto 3 7 |
+%kc:endInclude 
 
 ++ Papenmeier Braille BRAILLEX vecchi modelli ++
 Sono supportati i seguenti display braille:
@@ -1679,7 +1707,7 @@ Si prega di consultare la documentazione del BrailleNote per informazioni su dov
 | Shift+tab | spazio+punto1+punto2+punto5+punto6 |
 | Tasto Windows | spazio+punto2+punto4+punto5+punto6 (spazio+w) |
 | Tasto Alt | spazio+punto1+punto3+punto4 (spazio+m) |
-| Commuta aiuto immissione | spazio+punto1+punto2+punto5 (spazio+h) |
+| Commuta aiuto immissione | spazio+punto2+punto3+punto6 (spazio+h abbassata) |
 %kc:endInclude
 
 ++ BRLTTY ++

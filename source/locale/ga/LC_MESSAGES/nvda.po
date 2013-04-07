@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: NVDA 2013.1-5975\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2013-03-21 19:28+1000\n"
-"PO-Revision-Date: 2013-03-29 12:31-0500\n"
-"Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
+"PO-Revision-Date: 2013-04-07 11:14-0000\n"
+"Last-Translator: Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 #: IAccessibleHandler.py:673
@@ -1753,12 +1754,16 @@ msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
+"Aimsigh an chéad áit eile a bhfuil an téacs is déanaí iontráilte, ó ionad "
+"reatha an chúrsóra."
 
 #: cursorManager.py:118
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
+"Aimsigh an tarlú seo chaite den téacs is déanaí iontráilte ó ionad reatha an "
+"chúrsóra."
 
 #: cursorManager.py:245 globalCommands.py:131
 msgid "no selection"
@@ -1783,6 +1788,9 @@ msgid ""
 "Turns input help on or off. When on, any input such as pressing a key on the "
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
+"Tosaigh nó múch cabhair an ionchuir.  Nuair a bhíonn sí ar siúil, inseoidh "
+"ionchur ar bith (mar shampla ag brú cnaipe ar an méarchlár) duit cén script "
+"a bhaineann leis."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:59
@@ -1857,12 +1865,16 @@ msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
 msgstr ""
+"Fógair an roghnúchn sa rialú eagarthóireachta agus cáipéisí.  Mura bhfuil "
+"roghnúchán ar bith ann, deirtear nach bhfuil."
 
 #: globalCommands.py:142
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
 msgstr ""
+"Má brúitear uair amháin é, tuairiscítear an t-am láithreach. Má brúitear "
+"faoi dhó é, tuairiscítear an dáta láithreach."
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 #: globalCommands.py:148 globalCommands.py:157 globalCommands.py:166
@@ -1898,7 +1910,7 @@ msgstr "léigh carachtair chlóscríofa"
 
 #: globalCommands.py:191
 msgid "Toggles on and off the speaking of typed characters"
-msgstr ""
+msgstr "Léigh nó ná léigh carachtair chlóscríofa"
 
 #. Translators: The message announced when toggling the speak typed words keyboard setting.
 #: globalCommands.py:196
@@ -1912,7 +1924,7 @@ msgstr "léigh focail chlóscríofa"
 
 #: globalCommands.py:203
 msgid "Toggles on and off the speaking of typed words"
-msgstr ""
+msgstr "Léigh nó ná léigh focail chlóscríofa"
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 #: globalCommands.py:208
@@ -1928,7 +1940,7 @@ msgstr "léigh eochracha ordaithe"
 msgid ""
 "Toggles on and off the speaking of typed keys, that are not specifically "
 "characters"
-msgstr ""
+msgstr "Léigh nó ná léigh eochracha ordaithe"
 
 #. Translators: Reported when the user cycles through speech symbol levels
 #. which determine what symbols are spoken.
@@ -1970,8 +1982,8 @@ msgstr "Níl aon athbhreithniú cothrom don réad seo"
 
 #: globalCommands.py:275
 msgid ""
-"Moves to flat review for the screen (or document if currently inside one) and "
-"positions the review cursor at the location of the current object"
+"Moves to flat review for the screen (or document if currently inside one) "
+"and positions the review cursor at the location of the current object"
 msgstr ""
 
 #. Translators: Reported when there is no object at flat review position.
@@ -2013,7 +2025,7 @@ msgstr "Gan eolas maidir le suíomh an réada nascleantóra"
 #. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
 #: globalCommands.py:340
 msgid "No location information for screen"
-msgstr ""
+msgstr "Ní féidir eolas faoi shuíomh a fháil ón scáileán"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #: globalCommands.py:347
@@ -2037,8 +2049,8 @@ msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"Bog an réad nascleantóra go dtí an fócas, agus bog an cursóir athbhreithnithe "
-"go dtí an charait taobh istigh de, más féidir."
+"Bog an réad nascleantóra go dtí an fócas, agus bog an cursóir "
+"athbhreithnithe go dtí an charait taobh istigh de, más féidir."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -2066,7 +2078,7 @@ msgstr ""
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 #: globalCommands.py:398
 msgid "No containing object"
-msgstr ""
+msgstr "Níl sé taobh istigh de réad eile"
 
 #: globalCommands.py:399
 msgid "Moves the navigator object to the object containing it"
@@ -2075,7 +2087,7 @@ msgstr "Bog an réad nascleantóra go dtí an réad ina bhfuil sé"
 #. Translators: Reported when there is no next object (current object is the last object).
 #: globalCommands.py:413
 msgid "No next"
-msgstr "Gan réad ina dhiaidh seo"
+msgstr "Níl aon réad ina dhiaidh seo"
 
 #: globalCommands.py:414
 msgid "Moves the navigator object to the next object"
@@ -2084,7 +2096,7 @@ msgstr "Bog an réad nascleantóra go dtí an chéad réad eile"
 #. Translators: Reported when there is no previous object (current object is the first object).
 #: globalCommands.py:428
 msgid "No previous"
-msgstr "Gan réad roimhe seo"
+msgstr "Níl aon réad roimhe seo"
 
 #: globalCommands.py:429
 msgid "Moves the navigator object to the previous object"
@@ -2111,8 +2123,8 @@ msgstr "Gan gníomh"
 
 #: globalCommands.py:475
 msgid ""
-"Performs the default action on the current navigator object (example: presses "
-"it if it is a button)."
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
 msgstr ""
 "Déan an gníomh réamhshocraithe sa réad nascleantóra (mar shampla: brúigh é "
 "más cnaipe é)"
@@ -2126,16 +2138,16 @@ msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Bog an cursóir athbhreithnithe go dtí an chéad líne sa réad nascleantóra agus "
-"léigh é"
+"Bog an cursóir athbhreithnithe go dtí an chéad líne sa réad nascleantóra "
+"agus léigh é"
 
 #: globalCommands.py:495
 msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr ""
-"Bog an cursóir athbhreithnithe go dtí an líne roimhe seo sa réad nascleantóra "
-"agus léigh é"
+"Bog an cursóir athbhreithnithe go dtí an líne roimhe seo sa réad "
+"nascleantóra agus léigh é"
 
 #: globalCommands.py:505
 msgid ""
@@ -2155,8 +2167,8 @@ msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr ""
-"Bog an cursóir athbhreithnithe go dtí an chéad líne eile sa réad nascleantóra "
-"agus léigh é"
+"Bog an cursóir athbhreithnithe go dtí an chéad líne eile sa réad "
+"nascleantóra agus léigh é"
 
 #: globalCommands.py:525
 msgid ""
@@ -2211,10 +2223,10 @@ msgstr ""
 
 #: globalCommands.py:604
 msgid ""
-"Reports the character of the current navigator object where the review cursor "
-"is situated. Pressing twice reports a description or example of that "
-"character. Pressing three times reports the numeric value of the character in "
-"decimal and hexadecimal"
+"Reports the character of the current navigator object where the review "
+"cursor is situated. Pressing twice reports a description or example of that "
+"character. Pressing three times reports the numeric value of the character "
+"in decimal and hexadecimal"
 msgstr ""
 
 #: globalCommands.py:614 globalCommands.py:631 appModules\totalcmd.py:37
@@ -2223,8 +2235,8 @@ msgstr "deas"
 
 #: globalCommands.py:622
 msgid ""
-"Moves the review cursor to the next character of the current navigator object "
-"and speaks it"
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
 msgstr ""
 "Bog an cursóir athbhreithnithe go dtí an chéad charachtar eile sa réad "
 "nascleantóra, agus léigh é"
@@ -2234,8 +2246,8 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"Bog an cursóir athbhreithnithe go dtí an carachtar deiridh sa líne ina bhfuil "
-"sé sa réad nascleantóra, agus léigh é"
+"Bog an cursóir athbhreithnithe go dtí an carachtar deiridh sa líne ina "
+"bhfuil sé sa réad nascleantóra, agus léigh é"
 
 #. Translators: A speech mode which disables speech output.
 #: globalCommands.py:641
@@ -2255,8 +2267,8 @@ msgstr "mód cainte: gnáth"
 #: globalCommands.py:651
 msgid ""
 "Toggles between the speech modes of off, beep and talk. When set to off NVDA "
-"will not speak anything. If beeps then NVDA will simply beep each time it its "
-"supposed to speak something. If talk then NVDA wil just speak normally."
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
 
 #: globalCommands.py:668
@@ -2283,13 +2295,17 @@ msgstr "Taispeáin an roghchlár NVDA"
 msgid ""
 "reads from the review cursor  up to end of current text, moving the review "
 "cursor as it goes"
-msgstr "léigh ón chursóir athbhreithnithe go dtí deireadh an téacs reatha, agus an cursóir ag leanúint an téacs"
+msgstr ""
+"léigh ón chursóir athbhreithnithe go dtí deireadh an téacs reatha, agus an "
+"cursóir ag leanúint an téacs"
 
 #: globalCommands.py:696
 msgid ""
-"reads from the system caret up to the end of the text, moving the caret as it "
-"goes"
-msgstr "léigh ó charait an chórais go dtí deireadh an téacs, agus an charait ag leanúint an téacs"
+"reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
+msgstr ""
+"léigh ó charait an chórais go dtí deireadh an téacs, agus an charait ag "
+"leanúint an téacs"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 #: globalCommands.py:728
@@ -2300,7 +2316,9 @@ msgstr "Gan faisnéis fhormáidithe"
 msgid ""
 "Reports formatting info for the current review cursor position within a "
 "document"
-msgstr "Tabhair tuairisc ar an bhformáidiú atá i bhfeidhm ag ionad an chursóra athbhreithnithe sa cháipéis"
+msgstr ""
+"Tabhair tuairisc ar an bhformáidiú atá i bhfeidhm ag ionad an chursóra "
+"athbhreithnithe sa cháipéis"
 
 #: globalCommands.py:743
 msgid "reports the object with focus"
@@ -2328,7 +2346,7 @@ msgstr "Rianaigh an luch"
 
 #: globalCommands.py:782
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr ""
+msgstr "Rianaigh nó ná rianaigh an luch"
 
 #. Translators: Reported when there is no title text for current program or window.
 #: globalCommands.py:791
@@ -2337,9 +2355,9 @@ msgstr "gan teideal"
 
 #: globalCommands.py:800
 msgid ""
-"Reports the title of the current application or foreground window. If pressed "
-"twice, spells the title. If pressed three times, copies the title to the "
-"clipboard"
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
 msgstr ""
 "Léigh teideal an fheidhmchláir reatha nó an fhuinneog sa tulra. Má bhrúnn tú "
 "faoi dhó é, litreofar an teideal. Trí huaire agus cóipeálfar an teideal go "
@@ -2393,8 +2411,8 @@ msgstr "tabhair tuairisc nuair a athraíonn ábhar dinimiciúil"
 
 #: globalCommands.py:850
 msgid ""
-"Toggles on and off the reporting of dynamic content changes, such as new text "
-"in dos console windows"
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
 msgstr ""
 
 #. Translators: presented when toggled.
@@ -2450,7 +2468,9 @@ msgstr "{hours:d} uair agus {minutes:d} nóiméad fágtha"
 
 #: globalCommands.py:897
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "taispeáin stádas an chadhnra agus an t-am fágtha mura bhfuil sé plugáilte isteach"
+msgstr ""
+"taispeáin stádas an chadhnra agus an t-am fágtha mura bhfuil sé plugáilte "
+"isteach"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 #: globalCommands.py:902
@@ -2507,19 +2527,19 @@ msgstr "Taispeáin socruithe an mhéarchláir NVDA"
 
 #: globalCommands.py:939
 msgid "Shows the NVDA mouse settings dialog"
-msgstr ""
+msgstr "Taispeáin socruithe luiche NVDA"
 
 #: globalCommands.py:943
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr ""
+msgstr "Taispeáin socruithe maidir le léiriú réada NVDA"
 
 #: globalCommands.py:947
 msgid "Shows the NVDA browse mode settings dialog"
-msgstr ""
+msgstr "Taispeáin socruithe maidir le mód brabhsála NVDA"
 
 #: globalCommands.py:951
 msgid "Shows the NVDA document formatting settings dialog"
-msgstr ""
+msgstr "Taispeáin socruithe maidir le formáidiú na cáipéise"
 
 #: globalCommands.py:955
 msgid "Saves the current NVDA configuration"
@@ -2562,7 +2582,8 @@ msgstr "Níl aon téacs sa ghearrthaisce"
 #. Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 #: globalCommands.py:1000
 #, python-format
-msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Tá go leor téacs sa ghearrthaisce, %s carachtar ar fad"
 
 #: globalCommands.py:1001
@@ -2640,6 +2661,8 @@ msgid ""
 "Reloads app modules and global plugins without restarting NVDA, which can be "
 "Useful for developers"
 msgstr ""
+"Athluchtaigh modúil agus breiseáin chomhchoiteanna gan NVDA a atosú. "
+"Úsáideach d'fhorbróirí"
 
 #: globalCommands.py:1074
 #, python-format
@@ -2648,7 +2671,7 @@ msgstr "Mód %s"
 
 #: globalCommands.py:1075
 msgid "cycles between available touch modes"
-msgstr ""
+msgstr "téigh trí na móid tadhaill atá ar fáil"
 
 #: globalCommands.py:1079
 msgid "Reports the object and content directly under your finger"
@@ -3515,8 +3538,8 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free "
-"to share or change this software in any way you like as long as it is "
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
 "accompanied by the license and you make all source code available to anyone "
 "who wants it. This applies to both original and modified copies of this "
 "software, plus any derivative works.\n"
@@ -3528,7 +3551,8 @@ msgid ""
 "helping and promoting free and open source solutions for blind and vision "
 "impaired people.\n"
 "If you find NVDA useful and want it to continue to improve, please consider "
-"donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 
 #. Translators: a message announcing a candidate's character and description.
@@ -3918,9 +3942,9 @@ msgstr "Sleamhnán {slideNumber}"
 #. Translators: The description for a script
 #: appModules\powerpnt.py:735
 msgid ""
-"Toggles between reporting the speaker notes or the actual slide content. This "
-"does not change what is visible on-screen, but only what the user can read "
-"with NVDA"
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
 msgstr ""
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
@@ -4164,7 +4188,8 @@ msgstr "Socruithe an &mhéarchláir..."
 
 #: gui\__init__.py:291
 msgid ""
-"Configure keyboard layout, speaking of typed characters, words or command keys"
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
 msgstr ""
 
 #: gui\__init__.py:293
@@ -4223,8 +4248,8 @@ msgstr "Foclóir &réamhshocraithe..."
 
 #: gui\__init__.py:307
 msgid ""
-"A dialog where you can set default dictionary by adding dictionary entries to "
-"the list"
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
 msgstr ""
 
 #: gui\__init__.py:309
@@ -4478,8 +4503,11 @@ msgstr "Pacáiste Breiseáin NVDA (*.{ext})"
 #: gui\addonGui.py:82
 #, python-format
 msgid ""
-"Failed to open add-on package file at %s - missing file or invalid file format"
-msgstr "Níorbh fhéidir pacáiste breiseáin ag %s a oscailt - comhad ar iarraidh nó comhad neamhbhailí"
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
+msgstr ""
+"Níorbh fhéidir pacáiste breiseáin ag %s a oscailt - comhad ar iarraidh nó "
+"comhad neamhbhailí"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui\addonGui.py:88
@@ -4623,7 +4651,8 @@ msgid ""
 "The installation of NVDA failed. Please check the Log Viewer for more "
 "information."
 msgstr ""
-"Theip ar shuiteáil NVDA. Féach ar an logchomhad chun tuilleadh eolais a fháil."
+"Theip ar shuiteáil NVDA. Féach ar an logchomhad chun tuilleadh eolais a "
+"fháil."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 #: gui\installerGui.py:60
@@ -4845,14 +4874,19 @@ msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "&Tosaigh NVDA go huathoibríoch nuair a logálaim isteach in Windows"
 
 #: gui\settingsDialogs.py:166
-msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
-msgstr "Úsáid NVDA ar an scáileán logála isteach Windows (riarthóir an chórais amháin)"
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgstr ""
+"Úsáid NVDA ar an scáileán logála isteach Windows (riarthóir an chórais "
+"amháin)"
 
 #: gui\settingsDialogs.py:171
 msgid ""
 "Use currently saved settings on the logon and other secure screens (requires "
 "administrator privileges)"
-msgstr "Úsáid na socruithe sábháilte ar an scáileán logála isteach agus ar scáileáin shlána eile (riarthóir an chórais amháin)"
+msgstr ""
+"Úsáid na socruithe sábháilte ar an scáileán logála isteach agus ar scáileáin "
+"shlána eile (riarthóir an chórais amháin)"
 
 #. Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
 #: gui\settingsDialogs.py:178
@@ -4919,8 +4953,8 @@ msgstr "Níl cead agat é seo a dhéanamh"
 
 #: gui\settingsDialogs.py:255
 msgid ""
-"For the new language to take effect, the configuration must be saved and NVDA "
-"must be restarted. Press enter to save and restart NVDA, or cancel to "
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
 "manually save and exit at a later time."
 msgstr ""
 
@@ -5060,7 +5094,8 @@ msgstr ""
 #. keyboard settings dialog.
 #: gui\settingsDialogs.py:622
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Déan bíp nuair a chlóscríobhtar litreacha beaga agus glas ceannlitreacha ann"
+msgstr ""
+"Déan bíp nuair a chlóscríobhtar litreacha beaga agus glas ceannlitreacha ann"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -6244,8 +6279,8 @@ msgstr ""
 
 #: NVDAObjects\window\excel.py:186
 msgid ""
-"Pressing once will set the current row as the row where column headers should "
-"be found. Pressing twice clears the setting."
+"Pressing once will set the current row as the row where column headers "
+"should be found. Pressing twice clears the setting."
 msgstr ""
 
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.

@@ -29,21 +29,21 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - In Browse mode for MSHTML (e.g. Internet Explorer) and Gecko (e.g. Firefox), the existance of long descriptions are now announced. It's also possible to open the long description in a new window by pressing NVDA+d. (#809)
 - Notifications in Internet Explorer 9 and above are now spoken (such as content blocking or file downloads). (#2343)
 - Automatic reporting of table row and column headers is now supported for browse mode documents in Internet Explorer and other MSHTML controls. (#778)
-- New language: Aragonese
+- New language: Aragonese, Irish
 - New braille translation tables: Danish grade 2, Korean grade 1. (#2737)
 - Support for braille displays connected via bluetooth on a computer running the Bluetooth Stack for Windows by Toshiba. (#2419)
 - Support for port selection when using Freedom Scientific displays (Automatic, USB or Bluetooth).
 - Support for the BrailleNote family of notetakers from HumanWare when acting as a braille terminal for a screen reader. (#2012)
 - Support for older models of Papenmeier BRAILLEX braille displays. (#2679)
 - Support for input of computer braille for braille displays which have a braille keyboard. (#808)
-- New keyboard settings that allow  the choice for whether NVDA should interrupt speech for typed characters and or the Enter key. (#698)
+- New keyboard settings that allow  the choice for whether NVDA should interrupt speech for typed characters and/or the Enter key. (#698)
 - Support for several browsers based on Google Chrome: Rockmelt, BlackHawk, Comodo Dragon and SRWare Iron. (#2236, #2813, #2814, #2815)
 
 
 == Changes ==
 - Updated liblouis braille translator to 2.5.2. (#2737)
 - The laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent. (#804)
-- Updated eSpeak speech synthesizer to 1.47.01. (#2680)
+- Updated eSpeak speech synthesizer to 1.47.04. (#2680)
 
 
 == Bug Fixes ==
@@ -78,6 +78,8 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - Fixed inability to use certain Microsoft Speech API version 5 voices such as Koba Speech 2 voices. (#2629)
 - In applications using the Java Access Bridge, braille displays are now updated correctly when the caret moves in editable text fields . (#3107)
 - Support the form landmark in browse mode documents that support landmarks. (#2997) 
+- The eSpeak synthesizer driver now handles reading by character more appropriately (e.g. announcing a foreign letter's name or value rather than just its sound or generic name). (#3106)
+- NVDA no longer fails to copy user settings for use on logon and other secure screens when the user's profile path contains non-ASCII characters. (#3092)
 
 
 == Changes for Developers ==

@@ -43,6 +43,8 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 == Änderungen ==
 - Liblouis Braille-Übersetzer auf 2.5.2 aktualisiert. (#2737)
 - Das Laptop-Tastaturschema wurde komplett überarbeitet, wodurch es intuitiver und konsistenter wird. (#804)
+- Espeak auf 1.47.04 aktualisiert. (#2680)
+-
 
 == Fehlerbehebungen ==
 - Die Schnellnavigationstasten zum Springen zu Trennlinien funktionieren nun in Internet Explorer und anderen MSHTML-Dokumenten. (#2781)
@@ -73,7 +75,12 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - in IBM Lotus Symphony und Openoffice.org wird nun der NVDA-Cursor mitgezogen, wenn der Systemcursor bewegt wird.
 - Im Internet Explorer unter windows 8 sind Adobe-Flash-Inhalte nun zugänglich. (#2454)
 - Bluetooth-Unterstützung für Papenmeier Braillex Trio korrigiert. (#2995)
-- Bestimmte Microsoft SAPI-5-Stimmen wie z. B. Stimmen von Koba Speech konten von NVDA nicht verwendet werden. Dies wurde nun behoben (#2629).
+- Bestimmte Microsoft SAPI-5-Stimmen wie z. B. Stimmen von Koba Speech konnten von NVDA nicht verwendet werden. Dies wurde nun behoben (#2629).
+- In Java-Anwendungen wird nun die Braille-Anzeige korrekt aktualisiert, wenn Sie sich innerhalb von Textfeldern bewegen. (#3107)
+- Unterstützung von Landmark-Formularen. (#2997) 
+- Espeak behandet nun beim zeichenweisen Navigieren Zeichen aus fremden Sprachen besser (#3106)
+- das Kopieren der Benutzerkonfiguration in die Systemkonfiguration funktioniert jetzt auch, wenn der name des Benutzerprofilverzeichnisses nicht-ascii-Zeichen enthält (#3092)
+-
 
 == Änderungen für Entwickler ==
 - Braillezeilentreiber unterstützen die Auswahl des Anschlusses (#426)
