@@ -28,6 +28,7 @@ using namespace std;
 void displayModelChunk_t::generateXML(wstring& text) {
 	wstringstream s;
 	s<<L"<text ";
+	s<<L"baseline=\""<<baseline<<L"\" ";
 	s<<L"rtl=\""<<(rtl?1:0)<<L"\" ";
 	s<<L" font-name=\""<<formatInfo.fontName<<L"\" ";
 	s<<L" font-size=\""<<formatInfo.fontSize<<L"pt\" ";
@@ -250,11 +251,21 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 	}
 }
 
-void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, bool useXML, wstring& text, deque<charLocation_t>& characterLocations) {
-	charLocation_t tempCharLocation;
+void displayModel_t::generateWhitespaceXML(long baseline, bool lineEnd, wstring& text) {
+	wstringstream s;
+	s<<L"<text ";
+	s<<L"baseline=\""<<baseline<<L"\" ";
+	s<<L">";
+	text.append(s.str());
+	text.append(lineEnd?L"\n":L" ");
+	text.append(L"</text>");
+}
+
+void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, wstring& text, deque<RECT>& characterLocations) {
+	RECT tempCharLocation;
 	RECT tempRect;
 	wstring curLineText;
-	deque<charLocation_t> curLineCharacterLocations;
+	deque<RECT> curLineCharacterLocations;
 	int curLineMinTop=-1;
 	int curLineMaxBottom=-1;
 	int curLineBaseline=-1;
@@ -292,36 +303,24 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			}
 			//Add space before this chunk if necessary
 			if(((chunk->rect.left-lastChunkRight)>=minHorizontalWhitespace)&&(lastChunkRight>rect.left||!stripOuterWhitespace)) {
-				if(useXML) {
-					curLineText+=L"<text> </text>";
-				} else {
-					curLineText+=L'\0';
-				}
+				generateWhitespaceXML(curLineBaseline,false,curLineText);
 				tempCharLocation.left=lastChunkRight;
 				tempCharLocation.top=curLineBaseline-1;
 				tempCharLocation.right=chunk->rect.left;
 				tempCharLocation.bottom=curLineBaseline+1;
-				tempCharLocation.baseline=curLineBaseline;
 				curLineCharacterLocations.push_back(tempCharLocation);
 			}
 			//Add text from this chunk to the current line
-			if(useXML) {
-				chunk->generateXML(curLineText);
-			} else {
-				wstring::iterator curLineTextOldEnd=curLineText.end();
-				curLineText.append(chunk->text);
-				if(chunk->rtl) reverse(curLineTextOldEnd,curLineText.end());
-			}
+			chunk->generateXML(curLineText);
 			//Copy the character X positions from this chunk  in to the current line
 			deque<long>::const_iterator cxaIt=chunk->characterXArray.begin();
-			deque<charLocation_t>::iterator curLineCharacterLocationsOldEnd=curLineCharacterLocations.end();
+			deque<RECT>::iterator curLineCharacterLocationsOldEnd=curLineCharacterLocations.end();
 			while(cxaIt!=chunk->characterXArray.end()) {
 				tempCharLocation.left=*cxaIt;
 				tempCharLocation.top=chunk->rect.top;
 				++cxaIt;
 				tempCharLocation.right=(cxaIt!=chunk->characterXArray.end())?*cxaIt:chunk->rect.right;
 				tempCharLocation.bottom=chunk->rect.bottom;
-				tempCharLocation.baseline=chunk->baseline;
 				curLineCharacterLocations.push_back(tempCharLocation);
 			}
 			if(chunk->rtl) reverse(curLineCharacterLocationsOldEnd,curLineCharacterLocations.end());
@@ -332,24 +331,22 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			if(((curLineMinTop-lastLineBottom)>=minVerticalWhitespace)&&(lastLineBottom>rect.top||!stripOuterWhitespace)) {
 				//There is space between this line and the last,
 				//Insert a blank line in between.
-				text+=(useXML?L"<text>\n</text>":L"\n");
+				generateWhitespaceXML(-1,true,text);
 				tempCharLocation.left=rect.left;
 				tempCharLocation.top=lastLineBottom;
 				tempCharLocation.right=rect.right;
 				tempCharLocation.bottom=curLineMinTop;
-				tempCharLocation.baseline=-1;
 				characterLocations.push_back(tempCharLocation);
 			}
 			//Insert this line in to the output.
 			text.append(curLineText);
 			characterLocations.insert(characterLocations.end(),curLineCharacterLocations.begin(),curLineCharacterLocations.end());
 			//Add a linefeed to complete the line
-			text+=(useXML?L"<text>\n</text>":L"\n");
+			generateWhitespaceXML(curLineBaseline,true,text);
 			tempCharLocation.left=lastChunkRight;
 			tempCharLocation.top=curLineBaseline-1;
 			tempCharLocation.right=rect.right;
 			tempCharLocation.bottom=curLineBaseline+1;
-			tempCharLocation.baseline=curLineBaseline;
 			characterLocations.push_back(tempCharLocation);
 			//Reset the current line values
 			curLineText.clear();
@@ -362,12 +359,11 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 	if(!stripOuterWhitespace&&(rect.bottom-lastLineBottom)>=minVerticalWhitespace) {
 		//There is a gap between the bottom of the final line and the bottom of the requested rectangle,
 		//So add a blank line.
-		text+=(useXML?L"<text>\n</text>":L"\n");
+		generateWhitespaceXML(-1,true,text);
 		tempCharLocation.left=rect.left;
 		tempCharLocation.top=lastLineBottom;
 		tempCharLocation.right=rect.right;
 		tempCharLocation.bottom=rect.bottom;
-		tempCharLocation.baseline=-1;
 		characterLocations.push_back(tempCharLocation);
 	}
 }

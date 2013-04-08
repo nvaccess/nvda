@@ -20,14 +20,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <common/lock.h>
 
-typedef struct {
-	int left;
-	int top;
-	int right;
-	int bottom;
-	int baseline;
-} charLocation_t;
-
 struct displayModelFormatInfo_t {
 	wchar_t fontName[32];
 	int fontSize;
@@ -128,14 +120,18 @@ class displayModel_t: public LockableAutoFreeObject  {
 	void copyRectangle(const RECT& srcRect, BOOL removeFromSource, BOOL opaqueCopy, BOOL srcInvert, const RECT& destRect, const RECT* destClippingRect, displayModel_t* destModel);
 
 /**
+ * Generates xml representing whitespace between chunks 
+ */
+	void generateWhitespaceXML(long baseline, bool lineEnd, std::wstring& text);
+
+/**
  * Fetches the text contained in all chunks intersecting the given rectangle if provided, otherwize the text from all chunks in the model.
  * The chunks are ordered by Y and then by x.
  * @param rect the retangle which intersects the wanted chunks.
- * @param useXML  the text will be marked up with XML including formatting
  * @param text a string in which all the rendered text will be placed.
  * @param characterPoints a deque in which the points for each character in text will be placed.
  */
-	void renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, bool useXML, std::wstring& text, std::deque<charLocation_t>& characterLocations);
+	void renderText(const RECT& rect, const int minHorizontalWhitespace, const int minVerticalWhitespace, const bool stripOuterWhitespace, std::wstring& text, std::deque<RECT>& characterLocations);
 
 };
 

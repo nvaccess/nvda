@@ -19,18 +19,18 @@ _textChangeNotificationObjs=[]
 
 def initialize():
 	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow
-	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
-def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML=False):
-	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,useXML)
+def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace):
+	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace)
 	if not text or not cpBuf:
 		return u"",[]
 
 	characterLocations = []
 	cpBufIt = iter(cpBuf)
 	for cp in cpBufIt:
-		characterLocations.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt)), c_short(ord(next(cpBufIt))).value))
+		characterLocations.append((ord(cp), ord(next(cpBufIt)), ord(next(cpBufIt)), ord(next(cpBufIt))))
 	return text, characterLocations
 
 def requestTextChangeNotifications(obj, enable):
@@ -62,41 +62,50 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	minHorizontalWhitespace=8
 	minVerticalWhitespace=32
 
-	_cache__textAndRects = True
-	def _get__textAndRects(self,useXML=False):
+	_cache__storyFieldsAndRects = True
+	def _get__storyFieldsAndRects(self):
 		try:
 			left, top, width, height = self.obj.location
 		except TypeError:
 			# No location; nothing we can do.
-			return u"", []
+			return [],[]
 		bindingHandle=self.obj.appModule.helperLocalBindingHandle
 		if not bindingHandle:
 			log.debugWarning("AppModule does not have a binding handle")
-			return u"",[]
-		return getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace,useXML)
-
-	def _getStoryText(self):
-		return self._textAndRects[0]
-
-	def _getStoryLength(self):
-		return len(self._getStoryText())
-
-	def _getTextRange(self, start, end):
-		return self._getStoryText()[start:end]
-
-	def getTextWithFields(self,formatConfig=None):
-		start=self._startOffset
-		end=self._endOffset
-		if start==end:
-			return u""
-		text=self._get__textAndRects(useXML=True)[0]
+			return [],[]
+		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace)
 		if not text:
-			return u""
+			return [],[]
 		text="<control>%s</control>"%text
 		commandList=XMLFormatting.XMLTextParser().parse(text)
+		for item in commandList:
+			if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
+				self._normalizeFormatField(item.field)
+		return commandList,rects
+
+	def _getStoryOffsetLocations(self):
+		baseline=None
+		rtl=None
+		lastEndOffset=0
+		commandList,rects=self._storyFieldsAndRects
+		for item in commandList:
+			if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
+				baseline=item.field['baseline']
+				rtl=item.field['rtl']
+			elif isinstance(item,basestring):
+				endOffset=lastEndOffset+len(item)
+				for rect in rects[lastEndOffset:endOffset]:
+					yield rect,baseline,rtl
+				lastEndOffset=endOffset
+
+	def _getFieldsInRange(self,start,end):
+		storyFields=self._storyFieldsAndRects[0]
+		if not storyFields:
+			return []
+		commandList=self._storyFieldsAndRects[0]
 		#Strip  unwanted commands and text from the start and the end to honour the requested offsets
 		stringOffset=0
-		for index in xrange(len(commandList)-1):
+		for index in xrange(len(storyFields)-1):
 			command=commandList[index]
 			if isinstance(command,basestring):
 				stringLen=len(command)
@@ -118,13 +127,28 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 					commandList[index]=command[0:end-stringOffset]
 					del commandList[index+1:-1]
 					break
-		for item in commandList:
-			if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
-				self._normalizeFormatField(item.field)
 		return commandList
+
+	def _getStoryText(self):
+		return u"".join(x for x in self._storyFieldsAndRects[0] if isinstance(x,basestring))
+
+	def _getStoryLength(self):
+		return len(self._getStoryText())
+
+	def _getTextRange(self, start, end):
+		return u"".join(x for x in self._getFieldsInRange(start,end) if isinstance(x,basestring))
+
+	def getTextWithFields(self,formatConfig=None):
+		start=self._startOffset
+		end=self._endOffset
+		if start==end:
+			return u""
+		return self._getFieldsInRange(start,end)
 
 	def _normalizeFormatField(self,field):
 		field['bold']=True if field.get('bold')=="true" else False
+		field['baseline']=int(field.get('baseline','-1'))
+		field['rtl']=True if field.get('rtl')=="1" else False
 		field['italic']=True if field.get('italic')=="true" else False
 		field['underline']=True if field.get('underline')=="true" else False
 		color=field.get('color')
@@ -134,25 +158,24 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		if bkColor is not None:
 			field['background-color']=colors.RGB.fromCOLORREF(int(bkColor))
 
-
 	def _getPointFromOffset(self, offset):
-		text,rects=self._textAndRects
-		if not text or not rects or offset>=len(rects):
+		rects=self._storyFieldsAndRects[1]
+		if not rects or offset>=len(rects):
 			raise LookupError
 		x,y=rects[offset][:2]
 		return textInfos.Point(x, y)
 
 	def _getOffsetFromPoint(self, x, y):
-		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
+		for charOffset, (charLeft, charTop, charRight, charBottom) in enumerate(self._storyFieldsAndRects[1]):
 			if charLeft<=x<charRight and charTop<=y<charBottom:
 				return charOffset
 		raise LookupError
 
 	def _getClosestOffsetFromPoint(self,x,y):
 		#Enumerate the character rectangles
-		a=enumerate(self._textAndRects[1])
+		a=enumerate(self._storyFieldsAndRects[1])
 		#Convert calculate center points for all the rectangles
-		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom,charBaseline) in a)
+		b=((charOffset,(charLeft+(charRight-charLeft)/2,charTop+(charBottom-charTop)/2)) for charOffset,(charLeft,charTop,charRight,charBottom) in a)
 		#Calculate distances from all center points to the given x and y
 		#But place the distance before the character offset, to make sorting by distance easier
 		c=((math.sqrt(abs(x-cx)**2+abs(y-cy)**2),charOffset) for charOffset,(cx,cy) in b)
@@ -189,6 +212,26 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 	minHorizontalWhitespace=1
 	minVerticalWhitespace=4
 
+	def _findCaretOffsetFromLocation(self,caretRect,validateBaseline=True,validateHanging=True):
+		for charOffset, ((charLeft, charTop, charRight, charBottom),charBaseline,charRtl) in enumerate(self._getStoryOffsetLocations()):
+			# Skip any character that does not overlap the caret vertically
+			if (caretRect.bottom<=charTop or caretRect.top>=charBottom):
+				continue
+			# Skip any character that does not overlap the caret horizontally
+			if (caretRect.right<=charLeft or caretRect.left>=charRight):
+				continue
+			# skip over any character that does not have a baseline or who's baseline the caret does not go through
+			if validateBaseline and (charBaseline<0 or not (caretRect.top<charBaseline<=caretRect.bottom)):
+				continue
+			# Does the caret hang off the right side of the character more than the left?
+			if validateHanging:
+				hanging=max(0,charLeft-caretRect.left)-max(0,caretRect.right-charRight)
+				# Skip any character who's reading direction disagrees with the caret's hanging direction 
+				if (charRtl and hanging>0) or (not charRtl and hanging<0):
+					continue
+			return charOffset
+		raise LookupError
+
 	def _getCaretOffset(self):
 		caretRect = winUser.getGUIThreadInfo(self.obj.windowThreadID).rcCaret
 		objLocation=self.obj.location
@@ -204,23 +247,24 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		winUser.user32.ClientToScreen(self.obj.windowHandle, byref(tempPoint))
 		caretRect.right=min(objRect.right,tempPoint.x)
 		caretRect.bottom=min(objRect.bottom,tempPoint.y)
-		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
-			#Real text with a character baseline
-			#The caret must be  anywhere before the horizontal center of the character and the bottom of the caret must touch or go through the character baseline
-			if charBaseline>=0 and caretRect.left<((charLeft+charRight)/2) and caretRect.top<charBaseline<=caretRect.bottom:
-				return charOffset
-		for charOffset, (charLeft, charTop, charRight, charBottom,charBaseline) in enumerate(self._textAndRects[1]):
-			#vertical whitespace (possible blank lines)
-			#The caret must be fully contained in the whitespace to match
-			if charBaseline==-1 and caretRect.left>=charLeft and caretRect.right<=charRight and not (caretRect.bottom<=charTop or charBottom<=caretRect.top):
-				return charOffset
-		raise RuntimeError
+		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline and is totally within or on the correct side for the reading order
+		try:
+			return self._findCaretOffsetFromLocation(caretRect,validateBaseline=True,validateHanging=True)
+		except LookupError:
+			pass
+		# Find a character offset where the caret overlaps vertically, overlaps horizontally, overlaps the baseline, but does not care about reading order (probably whitespace at beginning or end of a line)
+		try:
+			return self._findCaretOffsetFromLocation(caretRect,validateBaseline=True,validateHanging=False)
+		except LookupError:
+			pass
+		# Find a character offset where the caret overlaps vertically, overlaps horizontally, but does not care about baseline or reading order (probably vertical whitespace -- blank lines)
+		return self._findCaretOffsetFromLocation(caretRect,validateBaseline=False,validateHanging=False)
 
 	def _setCaretOffset(self,offset):
-		rects=self._textAndRects[1]
+		rects=self._storyFieldsAndRects[1]
 		if offset>=len(rects):
 			raise RuntimeError("offset %d out of range")
-		left,top,right,bottom,baseline=rects[offset]
+		left,top,right,bottom=rects[offset]
 		x=left #+(right-left)/2
 		y=top+(bottom-top)/2
 		oldX,oldY=winUser.getCursorPos()
