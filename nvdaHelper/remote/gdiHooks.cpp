@@ -341,12 +341,12 @@ GlyphTranslatorCache glyphTranslatorCache;
  * @param textAlign possible flags returned by GDI32's GetTextAlign.
  * @param lpString the string of unicode text you wish to record.
  * @param codePage not used in the unicode version
- * @param characterWidths an optional array of character widths 
+ * @param lpdx an optional array of x (or x and y paires if ETO_PDY is set) that describes where the next character starts relative to the origin of the current character. 
  * @param cbCount the length of the string in characters.
  * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
  * @param direction >0 for left to right, <0 for right to left, 0 for neutral or unknown. Text must still be passed in in visual order.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize, int direction) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction) {
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
@@ -355,7 +355,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		//Also if opaquing is requested, clear this rectangle in the given display model
 		if(fuOptions&ETO_OPAQUE) model->clearRectangle(clearRect);
 	}
-	//If there is no string given, or its only glyphs, then we don't need to go further
+	//If there is no string given, then we don't need to go further
 	if(!lpString||cbCount<=0) return;
 	wstring newText=L"";
 	bool fromGlyphs=false;
@@ -377,28 +377,47 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//Search for and remove the first & symbol if we have been requested to stip hotkey indicator.
 	if(stripHotkeyIndicator) {
 		size_t pos=newText.find(L'&');
-		if(pos!=wstring::npos) newText.erase(pos,1);
+		if(pos!=wstring::npos) {
+			newText.erase(pos,1);
+			cbCount--;
+		}
 	}
 	//Fetch the text metrics for this font
 	TEXTMETRIC tm;
 	GetTextMetrics(hdc,&tm);
-	//Calculate character ends X array 
-	int* characterEndXArray=(int*)calloc(newText.length(),sizeof(int));
-	if(characterWidths) {
-		int ac=0;
-		for(unsigned int i=0;i<newText.length();++i) characterEndXArray[i]=(ac+=characterWidths[(fuOptions&ETO_PDY)?(i*2):i]);
-		resultTextSize->cx=ac;
-		resultTextSize->cy=tm.tmHeight;
+	//Calculate character extents array 
+	POINT* characterExtents=(POINT*)calloc(cbCount,sizeof(POINT));
+	if(lpdx) {
+		long acX=0;
+		long acY=tm.tmHeight;
+		for(int i=0;i<cbCount;++i) {
+			characterExtents[i].x=(acX+=lpdx[(fuOptions&ETO_PDY)?(i*2):i]);
+			if(fuOptions&ETO_PDY) characterExtents[i].y=(acY+=lpdx[(i*2)+1]);
+		}
+		resultTextSize->cx=acX;
+		resultTextSize->cy=acY;
 	} else {
-		GetTextExtentExPoint(hdc,newText.c_str(),static_cast<int>(newText.length()),0,NULL,characterEndXArray,resultTextSize);
+		long* characterExtentsX=(long*)calloc(cbCount,sizeof(long));
+		if(fromGlyphs) {
+			GetTextExtentExPointI(hdc,(LPWORD)lpString,cbCount,0,NULL,(LPINT)characterExtentsX,resultTextSize);
+		} else {
+			GetTextExtentExPoint(hdc,newText.c_str(),cbCount,0,NULL,(LPINT)characterExtentsX,resultTextSize);
+		}
+		for(int i=0;i<cbCount;++i) {
+			characterExtents[i].x=characterExtentsX[i];
+			characterExtents[i].y=tm.tmHeight;
+		}
+		free(characterExtentsX);
 	}
+	//Convert the character extents from logical to physical points but keep them relative 
+	LPtoDP(hdc,characterExtents,cbCount);
 	//are we writing a transparent background?
 	if(tm.tmCharSet!=SYMBOL_CHARSET&&!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
 		//Find out if the text we're writing is just whitespace
 		BOOL whitespace=TRUE;
 		for(wstring::iterator i=newText.begin();i!=newText.end()&&(whitespace=iswspace(*i));++i);
 		if(whitespace) {
-			free(characterEndXArray);
+			free(characterExtents);
 			return;
 		}
 	}
@@ -439,7 +458,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	}
 	//Make sure this is text, and that its not using the symbol charset (e.g. the tick for a checkbox)
 	//Before recording the text.
-	if(newText.length()>0&&tm.tmCharSet!=SYMBOL_CHARSET) {
+	if(cbCount>0&&tm.tmCharSet!=SYMBOL_CHARSET) {
 		displayModelFormatInfo_t formatInfo;
 		LOGFONT logFont;
 		HGDIOBJ fontObj=GetCurrentObject(hdc,OBJ_FONT);
@@ -455,12 +474,12 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
 		formatInfo.backgroundColor=GetBkColor(hdc);
-		model->insertChunk(textRect,baselinePoint.y,newText,characterEndXArray,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
+		model->insertChunk(textRect,baselinePoint.y,newText,characterExtents,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		TextInsertionTracker::reportTextInsertion();
 		HWND hwnd=WindowFromDC(hdc);
 		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}
-	free(characterEndXArray);
+	free(characterExtents);
 }
 
 /**
@@ -468,7 +487,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
  * @param lpString the string of ansi text you wish to record.
  * @param codePage the code page used for the string which will be converted to unicode
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize, int direction) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* lpdx, int cbCount, LPSIZE resultTextSize, int direction) {
 	int newCount=0;
 	wchar_t* newString=NULL;
 	if(lpString&&cbCount) {
@@ -478,7 +497,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 			MultiByteToWideChar(codePage,0,lpString,cbCount,newString,newCount);
 		}
 	}
-	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,characterWidths,newCount,resultTextSize,direction);
+	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,lpdx,newCount,resultTextSize,direction);
 	if(newString) free(newString);
 }
 

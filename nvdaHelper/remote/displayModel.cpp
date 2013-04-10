@@ -82,7 +82,7 @@ size_t displayModel_t::getChunkCount() {
 	return chunksByYX.size();
 }
 
-void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, int direction, const RECT* clippingRect) {
+void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& text, POINT* characterExtents, const displayModelFormatInfo_t& formatInfo, int direction, const RECT* clippingRect) {
 	displayModelChunk_t* chunk=new displayModelChunk_t;
 	LOG_DEBUG(L"created new chunk at "<<chunk);
 	chunk->rect=rect;
@@ -91,7 +91,7 @@ void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& 
 	chunk->formatInfo=formatInfo;
 	chunk->direction=direction;
 	chunk->characterXArray.push_back(rect.left);
-	for(unsigned int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
+	for(unsigned int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterExtents[i].x+rect.left); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
 	//If a clipping rect is specified, and the chunk falls outside the clipping rect
 	//Truncate the chunk so that it stays inside the clipping rect.

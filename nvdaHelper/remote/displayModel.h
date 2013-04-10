@@ -88,10 +88,10 @@ class displayModel_t: public LockableAutoFreeObject  {
  * Inserts a text chunk in to the model.
  * @param rect the rectangle bounding the text.
  * @param text the string of unicode text in the chunk.
- * @param characterEndXArray an array of x positions for the end of each character.
+ * @param characterExtents an array of screen points denoting the end of each character  relative to the start of the string
  * @param clippingRect a optional pointer to a rectangle which if specified will be used to clip the text so that none falls outside this rectangle. 
  */
-	void insertChunk(const RECT& rect, int baseline, const std::wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, int direction, const RECT* clippingRect);
+	void insertChunk(const RECT& rect, int baseline, const std::wstring& text, POINT* characterExtents, const displayModelFormatInfo_t& formatInfo, int direction, const RECT* clippingRect);
 
 /**
  * Removes all chunks intersecting the given rectangle. Currently this must be called before inserting chunks as chunks should never overlap.
