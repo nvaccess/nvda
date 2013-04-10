@@ -266,7 +266,13 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		elif isinstance(position,NVDAObject):
 			start,end=self._getOffsetsFromNVDAObject(position)
 			position=textInfos.offsets.Offsets(start,end)
-		if position==textInfos.POSITION_FIRST:
+
+		if type(position) is type(self):
+			# This is a direct TextInfo to TextInfo copy.
+			# Copy over the contents of the property cache, and any private instance variables (includes the TextInfo's offsets) 
+			self._propertyCache.update(position._propertyCache)
+			self.__dict__.update({x:y for x,y in position.__dict__.iteritems() if x.startswith('_') and x!='_propertyCache'})
+		elif position==textInfos.POSITION_FIRST:
 			self._startOffset=self._endOffset=0
 		elif position==textInfos.POSITION_LAST:
 			self._startOffset=self._endOffset=max(self._getStoryLength()-1,0)
@@ -322,11 +328,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		self._startOffset,self._endOffset=self._getUnitOffsets(unit,self._startOffset)
 
 	def copy(self):
-		o=self.__class__(self.obj,self.bookmark)
-		for item in self.__dict__.keys():
-			if item.startswith('_'):
-				o.__dict__[item]=self.__dict__[item]
-		return o
+		return self.__class__(self.obj,self)
 
 	def compareEndPoints(self,other,which):
 		if which=="startToStart":
