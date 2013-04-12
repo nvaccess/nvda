@@ -860,9 +860,12 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 
 	def script_toggleScreenLayout(self,gesture):
 		config.conf["virtualBuffers"]["useScreenLayout"]=not config.conf["virtualBuffers"]["useScreenLayout"]
-		onOff=_("on") if config.conf["virtualBuffers"]["useScreenLayout"] else _("off")
-		# Translators: Presented when use screen layout option is toggled.
-		speech.speakMessage(_("use screen layout %s")%onOff)
+		if config.conf["virtualBuffers"]["useScreenLayout"]:
+			# Translators: Presented when use screen layout option is toggled.
+			speech.speakMessage(_("use screen layout on"))
+		else:
+			# Translators: Presented when use screen layout option is toggled.
+			speech.speakMessage(_("use screen layout off"))
 	script_toggleScreenLayout.__doc__ = _("Toggles on and off if the screen layout is preserved while rendering the document content")
 
 	def _searchableAttributesForNodeType(self,nodeType):
@@ -1506,58 +1509,143 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 
 # Add quick navigation scripts.
 qn = VirtualBuffer.addQuickNav
-qn("heading", key="h", nextDoc=_("moves to the next heading"), nextError=_("no next heading"),
-	prevDoc=_("moves to the previous heading"), prevError=_("no previous heading"))
-qn("heading1", key="1", nextDoc=_("moves to the next heading at level 1"), nextError=_("no next heading at level 1"),
-	prevDoc=_("moves to the previous heading at level 1"), prevError=_("no previous heading at level 1"))
-qn("heading2", key="2", nextDoc=_("moves to the next heading at level 2"), nextError=_("no next heading at level 2"),
-	prevDoc=_("moves to the previous heading at level 2"), prevError=_("no previous heading at level 2"))
-qn("heading3", key="3", nextDoc=_("moves to the next heading at level 3"), nextError=_("no next heading at level 3"),
-	prevDoc=_("moves to the previous heading at level 3"), prevError=_("no previous heading at level 3"))
-qn("heading4", key="4", nextDoc=_("moves to the next heading at level 4"), nextError=_("no next heading at level 4"),
-	prevDoc=_("moves to the previous heading at level 4"), prevError=_("no previous heading at level 4"))
-qn("heading5", key="5", nextDoc=_("moves to the next heading at level 5"), nextError=_("no next heading at level 5"),
-	prevDoc=_("moves to the previous heading at level 5"), prevError=_("no previous heading at level 5"))
-qn("heading6", key="6", nextDoc=_("moves to the next heading at level 6"), nextError=_("no next heading at level 6"),
-	prevDoc=_("moves to the previous heading at level 6"), prevError=_("no previous heading at level 6"))
-qn("table", key="t", nextDoc=_("moves to the next table"), nextError=_("no next table"),
-	prevDoc=_("moves to the previous table"), prevError=_("no previous table"), readUnit=textInfos.UNIT_LINE)
-qn("link", key="k", nextDoc=_("moves to the next link"), nextError=_("no next link"),
-	prevDoc=_("moves to the previous link"), prevError=_("no previous link"))
-qn("visitedLink", key="v", nextDoc=_("moves to the next visited link"), nextError=_("no next visited link"),
-	prevDoc=_("moves to the previous visited link"), prevError=_("no previous visited link"))
-qn("unvisitedLink", key="u", nextDoc=_("moves to the next unvisited link"), nextError=_("no next unvisited link"),
-	prevDoc=_("moves to the previous unvisited link"), prevError=_("no previous unvisited link"))
-qn("formField", key="f", nextDoc=_("moves to the next form field"), nextError=_("no next form field"),
-	prevDoc=_("moves to the previous form field"), prevError=_("no previous form field"), readUnit=textInfos.UNIT_LINE)
-qn("list", key="l", nextDoc=_("moves to the next list"), nextError=_("no next list"),
-	prevDoc=_("moves to the previous list"), prevError=_("no previous list"), readUnit=textInfos.UNIT_LINE)
-qn("listItem", key="i", nextDoc=_("moves to the next list item"), nextError=_("no next list item"),
-	prevDoc=_("moves to the previous list item"), prevError=_("no previous list item"))
-qn("button", key="b", nextDoc=_("moves to the next button"), nextError=_("no next button"),
-	prevDoc=_("moves to the previous button"), prevError=_("no previous button"))
-qn("edit", key="e", nextDoc=_("moves to the next edit field"), nextError=_("no next edit field"),
-	prevDoc=_("moves to the previous edit field"), prevError=_("no previous edit field"), readUnit=textInfos.UNIT_LINE)
-qn("frame", key="m", nextDoc=_("moves to the next frame"), nextError=_("no next frame"),
-	prevDoc=_("moves to the previous frame"), prevError=_("no previous frame"), readUnit=textInfos.UNIT_LINE)
-qn("separator", key="s", nextDoc=_("moves to the next separator"), nextError=_("no next separator"),
-	prevDoc=_("moves to the previous separator"), prevError=_("no previous separator"))
-qn("radioButton", key="r", nextDoc=_("moves to the next radio button"), nextError=_("no next radio button"),
-	prevDoc=_("moves to the previous radio button"), prevError=_("no previous radio button"))
-qn("comboBox", key="c", nextDoc=_("moves to the next combo box"), nextError=_("no next combo box"),
-	prevDoc=_("moves to the previous combo box"), prevError=_("no previous combo box"))
-qn("checkBox", key="x", nextDoc=_("moves to the next check box"), nextError=_("no next check box"),
-	prevDoc=_("moves to the previous check box"), prevError=_("no previous check box"))
-qn("graphic", key="g", nextDoc=_("moves to the next graphic"), nextError=_("no next graphic"),
-	prevDoc=_("moves to the previous graphic"), prevError=_("no previous graphic"))
-qn("blockQuote", key="q", nextDoc=_("moves to the next block quote"), nextError=_("no next block quote"),
-	prevDoc=_("moves to the previous block quote"), prevError=_("no previous block quote"))
-qn("notLinkBlock", key="n", nextDoc=_("skips forward past a block of links"), nextError=_("no more text after a block of links"),
-	prevDoc=_("skips backward past a block of links"), prevError=_("no more text before a block of links"), readUnit=textInfos.UNIT_LINE)
-qn("landmark", key="d", nextDoc=_("moves to the next landmark"), nextError=_("no next landmark"),
-	prevDoc=_("moves to the previous landmark"), prevError=_("no previous landmark"), readUnit=textInfos.UNIT_LINE)
-qn("embeddedObject", key="o", nextDoc=_("moves to the next embedded object"), nextError=_("no next embedded object"),
-	prevDoc=_("moves to the previous embedded object"), prevError=_("no previous embedded object"))
+qn("heading", key="h",
+	nextDoc=_("moves to the next heading"),
+	nextError=_("no next heading"),
+	prevDoc=_("moves to the previous heading"),
+	prevError=_("no previous heading"))
+qn("heading1", key="1",
+	nextDoc=_("moves to the next heading at level 1"),
+	nextError=_("no next heading at level 1"),
+	prevDoc=_("moves to the previous heading at level 1"),
+	prevError=_("no previous heading at level 1"))
+qn("heading2", key="2",
+	nextDoc=_("moves to the next heading at level 2"),
+	nextError=_("no next heading at level 2"),
+	prevDoc=_("moves to the previous heading at level 2"),
+	prevError=_("no previous heading at level 2"))
+qn("heading3", key="3",
+	nextDoc=_("moves to the next heading at level 3"),
+	nextError=_("no next heading at level 3"),
+	prevDoc=_("moves to the previous heading at level 3"),
+	prevError=_("no previous heading at level 3"))
+qn("heading4", key="4",
+	nextDoc=_("moves to the next heading at level 4"),
+	nextError=_("no next heading at level 4"),
+	prevDoc=_("moves to the previous heading at level 4"),
+	prevError=_("no previous heading at level 4"))
+qn("heading5", key="5",
+	nextDoc=_("moves to the next heading at level 5"),
+	nextError=_("no next heading at level 5"),
+	prevDoc=_("moves to the previous heading at level 5"),
+	prevError=_("no previous heading at level 5"))
+qn("heading6", key="6",
+	nextDoc=_("moves to the next heading at level 6"),
+	nextError=_("no next heading at level 6"),
+	prevDoc=_("moves to the previous heading at level 6"),
+	prevError=_("no previous heading at level 6"))
+qn("table", key="t",
+	nextDoc=_("moves to the next table"),
+	nextError=_("no next table"),
+	prevDoc=_("moves to the previous table"),
+	prevError=_("no previous table"),
+	readUnit=textInfos.UNIT_LINE)
+qn("link", key="k",
+	nextDoc=_("moves to the next link"),
+	nextError=_("no next link"),
+	prevDoc=_("moves to the previous link"),
+	prevError=_("no previous link"))
+qn("visitedLink", key="v",
+	nextDoc=_("moves to the next visited link"),
+	nextError=_("no next visited link"),
+	prevDoc=_("moves to the previous visited link"),
+	prevError=_("no previous visited link"))
+qn("unvisitedLink", key="u",
+	nextDoc=_("moves to the next unvisited link"),
+	nextError=_("no next unvisited link"),
+	prevDoc=_("moves to the previous unvisited link"), 
+	prevError=_("no previous unvisited link"))
+qn("formField", key="f",
+	nextDoc=_("moves to the next form field"),
+	nextError=_("no next form field"),
+	prevDoc=_("moves to the previous form field"),
+	prevError=_("no previous form field"),
+	readUnit=textInfos.UNIT_LINE)
+qn("list", key="l",
+	nextDoc=_("moves to the next list"),
+	nextError=_("no next list"),
+	prevDoc=_("moves to the previous list"),
+	prevError=_("no previous list"),
+	readUnit=textInfos.UNIT_LINE)
+qn("listItem", key="i",
+	nextDoc=_("moves to the next list item"),
+	nextError=_("no next list item"),
+	prevDoc=_("moves to the previous list item"),
+	prevError=_("no previous list item"))
+qn("button", key="b",
+	nextDoc=_("moves to the next button"),
+	nextError=_("no next button"),
+	prevDoc=_("moves to the previous button"),
+	prevError=_("no previous button"))
+qn("edit", key="e",
+	nextDoc=_("moves to the next edit field"),
+	nextError=_("no next edit field"),
+	prevDoc=_("moves to the previous edit field"),
+	prevError=_("no previous edit field"),
+	readUnit=textInfos.UNIT_LINE)
+qn("frame", key="m",
+	nextDoc=_("moves to the next frame"),
+	nextError=_("no next frame"),
+	prevDoc=_("moves to the previous frame"),
+	prevError=_("no previous frame"),
+	readUnit=textInfos.UNIT_LINE)
+qn("separator", key="s",
+	nextDoc=_("moves to the next separator"),
+	nextError=_("no next separator"),
+	prevDoc=_("moves to the previous separator"),
+	prevError=_("no previous separator"))
+qn("radioButton", key="r",
+	nextDoc=_("moves to the next radio button"),
+	nextError=_("no next radio button"),
+	prevDoc=_("moves to the previous radio button"),
+	prevError=_("no previous radio button"))
+qn("comboBox", key="c",
+	nextDoc=_("moves to the next combo box"),
+	nextError=_("no next combo box"),
+	prevDoc=_("moves to the previous combo box"),
+	prevError=_("no previous combo box"))
+qn("checkBox", key="x",
+	nextDoc=_("moves to the next check box"),
+	nextError=_("no next check box"),
+	prevDoc=_("moves to the previous check box"),
+	prevError=_("no previous check box"))
+qn("graphic", key="g",
+	nextDoc=_("moves to the next graphic"),
+	nextError=_("no next graphic"),
+	prevDoc=_("moves to the previous graphic"),
+	prevError=_("no previous graphic"))
+qn("blockQuote", key="q",
+	nextDoc=_("moves to the next block quote"),
+	nextError=_("no next block quote"),
+	prevDoc=_("moves to the previous block quote"), 
+	revError=_("no previous block quote"))
+qn("notLinkBlock", key="n",
+	nextDoc=_("skips forward past a block of links"),
+	nextError=_("no more text after a block of links"),
+	prevDoc=_("skips backward past a block of links"),
+	prevError=_("no more text before a block of links"),
+	readUnit=textInfos.UNIT_LINE)
+qn("landmark", key="d",
+	nextDoc=_("moves to the next landmark"),
+	nextError=_("no next landmark"),
+	prevDoc=_("moves to the previous landmark"),
+	prevError=_("no previous landmark"),
+	readUnit=textInfos.UNIT_LINE)
+qn("embeddedObject", key="o",
+	nextDoc=_("moves to the next embedded object"),
+	nextError=_("no next embedded object"),
+	prevDoc=_("moves to the previous embedded object"),
+	prevError=_("no previous embedded object"))
 del qn
 
 def reportPassThrough(virtualBuffer):
@@ -1570,6 +1658,9 @@ def reportPassThrough(virtualBuffer):
 			sound = r"waves\focusMode.wav" if virtualBuffer.passThrough else r"waves\browseMode.wav"
 			nvwave.playWaveFile(sound)
 		else:
-			speech.speakMessage(_("focus mode") if virtualBuffer.passThrough else _("browse mode"))
+			if virtualBuffer.passThrough:
+				speech.speakMessage(_("focus mode"))
+			else 
+				speech.speakMessage(_("browse mode"))
 		reportPassThrough.last = virtualBuffer.passThrough
 reportPassThrough.last = False

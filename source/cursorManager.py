@@ -78,7 +78,10 @@ class CursorManager(baseObject.ScriptableObject):
 			speech.speakSelectionChange(oldInfo,self.selection)
 
 	def doFindTextDialog(self):
-		d = wx.TextEntryDialog(gui.mainFrame, _("Type the text you wish to find"), _("Find"), defaultValue=self._lastFindText)
+		d = wx.TextEntryDialog(gui.mainFrame, 
+			_("Type the text you wish to find"),
+			_("Find"),
+			defaultValue=self._lastFindText)
 		def callback(result):
 			if result == wx.ID_OK:
 				# Make sure this happens after focus returns to the document.
