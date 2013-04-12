@@ -1628,7 +1628,7 @@ qn("blockQuote", key="q",
 	nextDoc=_("moves to the next block quote"),
 	nextError=_("no next block quote"),
 	prevDoc=_("moves to the previous block quote"), 
-	revError=_("no previous block quote"))
+	prevError=_("no previous block quote"))
 qn("notLinkBlock", key="n",
 	nextDoc=_("skips forward past a block of links"),
 	nextError=_("no more text after a block of links"),
@@ -1660,7 +1660,7 @@ def reportPassThrough(virtualBuffer):
 		else:
 			if virtualBuffer.passThrough:
 				speech.speakMessage(_("focus mode"))
-			else 
+			else:
 				speech.speakMessage(_("browse mode"))
 		reportPassThrough.last = virtualBuffer.passThrough
 reportPassThrough.last = False
