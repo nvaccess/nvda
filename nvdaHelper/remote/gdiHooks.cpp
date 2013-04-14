@@ -316,9 +316,9 @@ GlyphTranslatorCache glyphTranslatorCache;
  * @param characterWidths an optional array of character widths 
  * @param cbCount the length of the string in characters.
  * @param resultTextSize an optional pointer to a SIZE structure that will contain the size of the text.
- * @param rtl if true the text should be marked as rtl (right to left, not ltr - left to right). The function still expects the text in left-to-right order 
+ * @param direction >0 for left to right, <0 for right to left, 0 for neutral or unknown. Text must still be passed in in visual order.
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize, bool rtl) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const wchar_t* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize, int direction) {
 	RECT clearRect={0,0,0,0};
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
@@ -427,7 +427,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.underline=logFont.lfUnderline?true:false;
 		formatInfo.color=GetTextColor(hdc);
 		formatInfo.backgroundColor=GetBkColor(hdc);
-		model->insertChunk(textRect,baselinePoint.y,newText,characterEndXArray,formatInfo,rtl,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
+		model->insertChunk(textRect,baselinePoint.y,newText,characterEndXArray,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		HWND hwnd=WindowFromDC(hdc);
 		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}
@@ -439,7 +439,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
  * @param lpString the string of ansi text you wish to record.
  * @param codePage the code page used for the string which will be converted to unicode
   */
-void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize, bool rtl) {
+void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* lprc,UINT fuOptions,UINT textAlign, BOOL stripHotkeyIndicator, const char* lpString, const int codePage, const int* characterWidths, int cbCount, LPSIZE resultTextSize, int direction) {
 	int newCount=0;
 	wchar_t* newString=NULL;
 	if(lpString&&cbCount) {
@@ -449,7 +449,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 			MultiByteToWideChar(codePage,0,lpString,cbCount,newString,newCount);
 		}
 	}
-	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,characterWidths,newCount,resultTextSize,rtl);
+	ExtTextOutHelper(model,hdc,x,y,lprc,fuOptions,textAlign,stripHotkeyIndicator,newString,codePage,characterWidths,newCount,resultTextSize,direction);
 	if(newString) free(newString);
 }
 
@@ -614,8 +614,11 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	//Find out if this is rtl
 	SCRIPT_ANALYSIS* psa=(SCRIPT_ANALYSIS*)TlsGetValue(tls_index_curScriptTextOutScriptAnalysis);
 	//Record the text in the displayModel
-	bool rtl=(psa?psa->fRTL:false);
-	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,CP_THREAD_ACP,lpDx,cbCount,NULL,rtl);
+	int direction=0;
+	if(psa) {
+		direction=(psa->fRTL)?-1:1;
+	}
+	ExtTextOutHelper(model,hdc,pos.x,pos.y,lprc,fuOptions,textAlign,FALSE,lpString,CP_THREAD_ACP,lpDx,cbCount,NULL,direction);
 	//Release the displayModel and return
 	model->release();
 	return res;

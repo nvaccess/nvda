@@ -29,7 +29,7 @@ void displayModelChunk_t::generateXML(wstring& text) {
 	wstringstream s;
 	s<<L"<text ";
 	s<<L"baseline=\""<<baseline<<L"\" ";
-	s<<L"rtl=\""<<(rtl?1:0)<<L"\" ";
+	s<<L"direction=\""<<direction<<L"\" ";
 	s<<L" font-name=\""<<formatInfo.fontName<<L"\" ";
 	s<<L" font-size=\""<<formatInfo.fontSize<<L"pt\" ";
 	if(this->formatInfo.bold) s<<L" bold=\"true\"";
@@ -39,11 +39,7 @@ void displayModelChunk_t::generateXML(wstring& text) {
 	s<<L" background-color=\""<<this->formatInfo.backgroundColor<<L"\"";
 	s<<L">";
 	text.append(s.str());
-	if(rtl) {
-		for(wstring::reverse_iterator i=this->text.rbegin();i!=this->text.rend();++i) appendCharToXML(*i,text);
-	} else {
-		for(wstring::iterator i=this->text.begin();i!=this->text.end();++i) appendCharToXML(*i,text);
-	}
+	for(wstring::iterator i=this->text.begin();i!=this->text.end();++i) appendCharToXML(*i,text);
 	text.append(L"</text>");
 }
 
@@ -86,14 +82,14 @@ size_t displayModel_t::getChunkCount() {
 	return chunksByYX.size();
 }
 
-void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, bool rtl, const RECT* clippingRect) {
+void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& text, int* characterEndXArray, const displayModelFormatInfo_t& formatInfo, int direction, const RECT* clippingRect) {
 	displayModelChunk_t* chunk=new displayModelChunk_t;
 	LOG_DEBUG(L"created new chunk at "<<chunk);
 	chunk->rect=rect;
 	chunk->baseline=baseline;
 	chunk->text=text;
 	chunk->formatInfo=formatInfo;
-	chunk->rtl=rtl;
+	chunk->direction=direction;
 	chunk->characterXArray.push_back(rect.left);
 	for(unsigned int i=0;i<(text.length()-1);++i) chunk->characterXArray.push_back(characterEndXArray[i]+rect.left); 
 	LOG_DEBUG(L"filled in chunk with rectangle from "<<rect.left<<L","<<rect.top<<L" to "<<rect.right<<L","<<rect.bottom<<L" with text of "<<text);
@@ -251,13 +247,13 @@ void displayModel_t::copyRectangle(const RECT& srcRect, BOOL removeFromSource, B
 	}
 }
 
-void displayModel_t::generateWhitespaceXML(long baseline, bool lineEnd, wstring& text) {
+void displayModel_t::generateWhitespaceXML(long baseline, wstring& text) {
 	wstringstream s;
 	s<<L"<text ";
 	s<<L"baseline=\""<<baseline<<L"\" ";
 	s<<L">";
 	text.append(s.str());
-	text.append(lineEnd?L"\n":L" ");
+	text.append(L" ");
 	text.append(L"</text>");
 }
 
@@ -303,7 +299,7 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			}
 			//Add space before this chunk if necessary
 			if(((chunk->rect.left-lastChunkRight)>=minHorizontalWhitespace)&&(lastChunkRight>rect.left||!stripOuterWhitespace)) {
-				generateWhitespaceXML(curLineBaseline,false,curLineText);
+				generateWhitespaceXML(curLineBaseline,curLineText);
 				tempCharLocation.left=lastChunkRight;
 				tempCharLocation.top=curLineBaseline-1;
 				tempCharLocation.right=chunk->rect.left;
@@ -323,7 +319,6 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 				tempCharLocation.bottom=chunk->rect.bottom;
 				curLineCharacterLocations.push_back(tempCharLocation);
 			}
-			if(chunk->rtl) reverse(curLineCharacterLocationsOldEnd,curLineCharacterLocations.end());
 			lastChunkRight=chunk->rect.right;
 		}
 		if((chunkIt==chunksByYX.end()||chunkIt->first.first>curLineBaseline)&&curLineText.length()>0) {
@@ -331,7 +326,7 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			if(((curLineMinTop-lastLineBottom)>=minVerticalWhitespace)&&(lastLineBottom>rect.top||!stripOuterWhitespace)) {
 				//There is space between this line and the last,
 				//Insert a blank line in between.
-				generateWhitespaceXML(-1,true,text);
+				generateWhitespaceXML(-1,text);
 				tempCharLocation.left=rect.left;
 				tempCharLocation.top=lastLineBottom;
 				tempCharLocation.right=rect.right;
@@ -342,7 +337,7 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			text.append(curLineText);
 			characterLocations.insert(characterLocations.end(),curLineCharacterLocations.begin(),curLineCharacterLocations.end());
 			//Add a linefeed to complete the line
-			generateWhitespaceXML(curLineBaseline,true,text);
+			generateWhitespaceXML(curLineBaseline,text);
 			tempCharLocation.left=lastChunkRight;
 			tempCharLocation.top=curLineBaseline-1;
 			tempCharLocation.right=rect.right;
@@ -359,7 +354,7 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 	if(!stripOuterWhitespace&&(rect.bottom-lastLineBottom)>=minVerticalWhitespace) {
 		//There is a gap between the bottom of the final line and the bottom of the requested rectangle,
 		//So add a blank line.
-		generateWhitespaceXML(-1,true,text);
+		generateWhitespaceXML(-1,text);
 		tempCharLocation.left=rect.left;
 		tempCharLocation.top=lastLineBottom;
 		tempCharLocation.right=rect.right;
