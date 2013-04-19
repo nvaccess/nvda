@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NVDA 2013.1-5975\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2013-03-21 19:28+1000\n"
-"PO-Revision-Date: 2013-04-07 11:14-0000\n"
+"PO-Revision-Date: 2013-04-11 16:50-0000\n"
 "Last-Translator: Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -1754,16 +1754,16 @@ msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"Aimsigh an chéad áit eile a bhfuil an téacs is déanaí iontráilte, ó ionad "
-"reatha an chúrsóra."
+"Aimsigh an chéad áit eile tar éis ionad reatha an chúrsóra ina bhfuil an "
+"téacs is déanaí iontráilte"
 
 #: cursorManager.py:118
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
 msgstr ""
-"Aimsigh an tarlú seo chaite den téacs is déanaí iontráilte ó ionad reatha an "
-"chúrsóra."
+"Aimsigh an chéad áit roimh ionad reatha an chúrsóra ina bhfuil an téacs is "
+"déanaí iontráilte"
 
 #: cursorManager.py:245 globalCommands.py:131
 msgid "no selection"
@@ -1954,6 +1954,8 @@ msgstr "leibhéal siombalach %s"
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
+"Rothaigh trí leibhéil na siombail cainte a chinneann ar na siombailí a bheith "
+"le rá"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 #: globalCommands.py:246
@@ -1974,6 +1976,8 @@ msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
+"Bíodh an réad nascleantóra mar a gcéanna leis an réad atá faoi phointeoir na "
+"luiche faoi láthair."
 
 #. Translators: reported when object does not support flat review (example: some graphic window).
 #: globalCommands.py:274
@@ -1985,17 +1989,21 @@ msgid ""
 "Moves to flat review for the screen (or document if currently inside one) "
 "and positions the review cursor at the location of the current object"
 msgstr ""
+"Bog go dtí an t-athbhreithniú cothrom le haghaidh an scáileáin (nó na cáipéise más "
+"i gceann acu faoi láthair) agus cuir an cúrsóir athbhreithnithe ag ionad an réada"
 
 #. Translators: Reported when there is no object at flat review position.
 #: globalCommands.py:288
 msgid "No object at flat review position"
-msgstr ""
+msgstr "Níl aon réad ag an ionad athbhreithnithe sin."
 
 #: globalCommands.py:289
 msgid ""
 "Moves navigator object to the object represented by the text at the position "
 "of the review cursor within flat review"
 msgstr ""
+"Bog an réad nascleantóra go dtí an réad atá léirithe sa téacs ag ionad "
+"an chúrsóra athbhreithnithe laistigh den athbhreithniú cothrom"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -2016,6 +2024,9 @@ msgid ""
 "and pressing three times Copies name and value of this  object to the "
 "clipboard"
 msgstr ""
+"Tuairiscigh an réad nascleantóra reatha.  Má bhrúitear faoi dhó é litrítear "
+"an t-eolas seo, agus má bhrúitear trí huaire é, cuirtear an réad seo sa "
+"ghearrthaisce"
 
 #. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
 #: globalCommands.py:335
