@@ -250,6 +250,7 @@ class PaneClassDC(Window):
 			self.ppObjectModel=m
 			return self.ppObjectModel
 
+	_cache_currentSlide=False
 	def _get_currentSlide(self):
 		try:
 			ppSlide=self.ppObjectModel.view.slide
@@ -413,7 +414,7 @@ class DocumentWindow(PaneClassDC):
 		obj=self.selection
 		if not obj:
 			obj=DocumentWindow(windowHandle=self.windowHandle)
-		if obj and obj!=api.getFocusObject():
+		if obj and obj!=api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			eventHandler.queueEvent("gainFocus",obj)
 
 	def event_gainFocus(self):
@@ -429,6 +430,15 @@ class DocumentWindow(PaneClassDC):
 		gesture.send()
 		self.handleSelectionChange()
 	script_selectionChange.canPropagate=True
+
+	__gestures={k:"selectionChange" for k in (
+		"kb:tab","kb:shift+tab",
+		"kb:leftArrow","kb:rightArrow","kb:upArrow","kb:downArrow",
+		"kb:shift+leftArrow","kb:shift+rightArrow","kb:shift+upArrow","kb:shift+downArrow",
+		"kb:pageUp","kb:pageDown",
+		"kb:home","kb:control+home","kb:end","kb:control+end",
+		"kb:shift+home","kb:shift+control+home","kb:shift+end","kb:shift+control+end",
+	)}
 
 class OutlinePane(EditableTextWithoutAutoSelectDetection,PaneClassDC):
 	TextInfo=EditableTextDisplayModelTextInfo
@@ -455,6 +465,10 @@ class PpObject(Window):
 
 	def script_selectionChange(self,gesture):
 		return self.documentWindow.script_selectionChange(gesture)
+
+	__gestures={
+		"kb:escape":"selectionChange",
+	}
 
 class SlideBase(PpObject):
 
@@ -555,6 +569,11 @@ class Shape(PpObject):
 	def _get_value(self):
 		if self.ppObject.hasTextFrame:
 			return self.ppObject.textFrame.textRange.text
+
+	__gestures={
+		"kb:enter":"selectionChange",
+		"kb:f2":"selectionChange",
+	}
 
 class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 
@@ -737,7 +756,16 @@ class SlideShowTreeInterceptor(TreeInterceptor):
 	# Translators: The description for a script
 	script_toggleNotesMode.__doc__=_("Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA")
 
+	def script_slideChange(self,gesture):
+		gesture.send()
+		self.rootNVDAObject.handleSlideChange()
+
 	__gestures={
+		"kb:space":"slideChange",
+		"kb:enter":"slideChange",
+		"kb:backspace":"slideChange",
+		"kb:pageUp":"slideChange",
+		"kb:pageDown":"slideChange",
 		"kb:control+shift+s":"toggleNotesMode",
 	}
 
@@ -746,6 +774,8 @@ class ReviewableSlideshowTreeInterceptor(ReviewCursorManager,SlideShowTreeInterc
 	pass
 
 class SlideShowWindow(PaneClassDC):
+
+	_lastSlideChangeID=None
 
 	treeInterceptorClass=ReviewableSlideshowTreeInterceptor
 	notesMode=False #: If true then speaker notes will be exposed as this object's basicText, rather than the actual slide content.
@@ -822,12 +852,15 @@ class SlideShowWindow(PaneClassDC):
 				self.basicText=_("Empty slide")
 		return self.basicText or _("Empty slide")
 
-
 	def handleSlideChange(self):
 		try:
 			del self.__dict__['currentSlide']
 		except KeyError:
 			pass
+		curSlideChangeID=self.name
+		if curSlideChangeID==self._lastSlideChangeID:
+			return
+		self._lastSlideChangeID=curSlideChangeID
 		try:
 			del self.__dict__['basicText']
 		except KeyError:
