@@ -24,24 +24,26 @@ Si prega di consultare il documento [Comandi rapidi keyCommands.html] per i nuov
 == Novità ==
 - Supporto di base alla modifica e alla lettura delle presentazioni in Microsoft Powerpoint. (#501)
 - Supporto alla lettura e scrittura dei messaggi in Lotus Notes 8.5. (#543)
+- Supporto per il cambio automatico della lingua durante la lettura documenti in Microsoft Word. (#2047)
 - In modalità navigazione MSHTML (ad esempio Internet Explorer) e Gecko (ad esempio Firefox), viene annunciata l'esistenza delle descrizioni degli elementi se esistente, tramite l'interpretazione dell'attributo longdesc. è anche possibile aprire la descrizione in una nuova finestra tramite nvda+d. (#809)
 - Ora vengono annunciate le notifiche in Internet Explorer 9 e superiori, ad esempio download di file o contenuti bloccati. (#2343)
 - Annuncio automatico delle intestazioni riga/colonna nelle tabelle per la modalità navigazione in Internet Explorer e altri controlli MSHTML. (#778)
-- Nuova lingua: Aragonese
+- Nuove lingue: Aragonese, irlandese
 - Nuove tabelle Braille: Danese grado 2, Coreano grado 1. (#2737)
 - Supporto per i display Braille connessi tramite Bluetooth su computer che eseguono lo stack Bluetooth prodotto da Toshiba. (#2419)
 - Supporto per la selezione della porta per i Display Braille Freedom Scientific (Automatica, Usb o Bluetooth).
 - Supporto per i display Braille Braillenote della Humanware quando configurati per funzionare come periferica per screen reader. (#2012)
 - Supporto ai vecchi modelli Papenmeier utilizzati tramite porta seriale. (#2679)
 - Supporto alla scrittura diretta tramite display braille con tastiera in stile perkins. (#804)
-- - Nuove impostazioni della tastiera che consentono di selezionare se NVDA debba interrompere il parlato per i caratteri digitati e o il tasto ENTER. ;(# 698)
+- - Nuove impostazioni della tastiera che consentono di selezionare se NVDA debba interrompere il parlato per i caratteri digitati e o il tasto ENTER. (# 698)
 - Supporto per diversi browser basati su Google Chrome: Rockmelt, BlackHawk, Comodo Dragon e SRWare Iron. (#2236, #2813, #2814, #2815)
  
  
 == Cambiamenti ==
-- Aggiornato liblouis Braille Translator alla versione 2.5.2. ;(# 2737)
-- Il layout tastiera laptop è stato completamente riprogettato in modo da renderlo più intuitivo e coerente. ;(# 804)
-
+- Aggiornato liblouis Braille Translator alla versione 2.5.2. (# 2737)
+- Il layout tastiera laptop è stato completamente riprogettato in modo da renderlo più intuitivo e coerente. (# 804)
+- Aggiornata Espeak alla versione 1.47.05. (#2680)
+ 
  
  == Bug Corretti ==
 - Il tasto rapido per spostarsi di sezione in sezione ora funziona anche con Internet Explorer. (#2781)
@@ -56,7 +58,7 @@ Si prega di consultare il documento [Comandi rapidi keyCommands.html] per i nuov
 - NVDA non ha più problemi nell'avviarsi nel caso in cui un componente aggiuntivo non possa essere rimosso in quanto la directory che lo contiene è in uso da un'altra applicazione. (#2860)
 - Le etichette delle schede in Dropbox, ad esempio quelle nella finestra preferenze, possono ora essere raggiunte anche con la navigazione in linea.
 / Se la lingua di immissione viene modificata in un valore diverso da quello predefinito, NVDA individua correttamente i tasti per l'aiuto immissione e per i comandi.
-- Per le lingue come il tedesco in cui il (più) + è un tasto singolo  sulla tastiera, è ora possibile associare i comandi ad esso usando la parola "plus". ;(# 2898)
+- Per le lingue come il tedesco in cui il (più) + è un tasto singolo  sulla tastiera, è ora possibile associare i comandi ad esso usando la parola "plus". (# 2898)
 - In Internet Explorer e altri controlli MSHTML, i blocchi tra virgolette vengono  ora annunciati correttamente nella posizione appropriata. (#2888)
 - Il Display braille HumanWare Brailliant BI / B può ora essere selezionato quando il display è collegato tramite Bluetooth, ma non è mai stato collegato via USB.
 - L'operazione di filtraggio degli elementi nell'elenco elementi della modalità navigazione è stata migliorata. (#2951)
@@ -71,7 +73,12 @@ Si prega di consultare il documento [Comandi rapidi keyCommands.html] per i nuov
 - In IBM Lotus Symphony e Openoffice, lo spostamento del cursore di sistema provoca anche lo spostamento del cursore di controllo se necessario.
 - I contenuti di tipo Adobe Flash sono ora accessibili in Internet Explorer in Windows 8. (#2454)
 - Corretto il supporto Bluetooth per il display braille Trio della Papenmeier. (#2995)
-
+- Sistemato un problema che non permetteva l'utilizzo di alcune sintesi vocali Sapi5 come Koba Speech. (#2629)
+- Nelle applicazioni che utilizzano Java Access Bridge, ora il display braille viene aggiornato correttamente quando il cursore si sposta nei campi editazione. (# 3107)
+- In modalità navigazione, migliorato il supporto ai form che utilizzano le sezioni. (#2997)
+- Migliorata in Espeak la lettura carattere per carattere. (#3106)
+- NVDA ora è in grado di copiare la configurazione utente nella configurazione da usarsi per le schermate di logon, anche quando il percorso del profilo utente contiene caratteri non-ascii. (# 3092)
+- NVDA non si blocca più quando si utilizza l'immissione di caratteri asiatici in alcune applicazioni .NET. (# 3005)
 
 == Cambiamenti per sviluppatori ==
 - I driver dei display braille supportano la selezione manuale della porta. (#426)
@@ -80,7 +87,7 @@ Si prega di consultare il documento [Comandi rapidi keyCommands.html] per i nuov
 - Viene supportata l'immissione tramite tastiera braille. (#808)
  - L'immissione braille è gestita dalla classe brailleInput.BrailleInputGesture o una sottoclasse della stessa.
  - Le sottoclassi braille.BrailleDisplayGesture (come implementate nei driver dei display braille) possono anche ereditare da brailleInput.BrailleInputGesture. Ciò permette la gestione dei comandi dei display braille e dell'immissione braille dalla stessa classe gesture.
-- È ora possibile utilizzare comHelper.getActiveObject per ottenere un oggetto COM attivo da un processo normale quando NVDA è in esecuzione con privilegi uiAccess. ;(# 2483)
+- È ora possibile utilizzare comHelper.getActiveObject per ottenere un oggetto COM attivo da un processo normale quando NVDA è in esecuzione con privilegi uiAccess. (# 2483)
 
 
 = 2012.3 =

@@ -28,7 +28,7 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - Im Lesemodus für MSHTML (z. B. Internet Explorer) und Gecko (z. B. Firefox) wird nun die Existenz langer Beschreibungen gemeldet. Sie können die lange Beschreibung jedoch auch durch Drücken von NVDA+d in einem neuen Fenster öffnen. (#809)
 - Im Internet Explorer 9 und neuer werden Benachrichtigungen korrekt ausgegeben (wenn z. B. Inhalte oder herunterzuladene Dateien blockiert werden). (#2343)
 - Automatisches Ausgebe von Spalten- und Reihenüberschriften von Tabellen im Internet Explorer und anderen mshtml-Dokumenten wird unterstützt (#778)
-- Neue Sprache: Aragonesisch
+- Neue Sprache: Aragonesisch, irisch
 - neue Braille-Übersetzungstabellen: Dänische Kurzschrift, koreanische Vollschrift. (#2737)
 - Unterstützung für Bluetooth-Braillezeilen, die unter Verwendung des Bluetooth-Stacks von Toshiba mit dem Computer verbunden werden. (#2419)
 - Unterstützung für die Auswahl des Anschlusses bei FreedomScientific-Braillezeilen (automatisch, USB oder Bluetooth).
@@ -43,7 +43,7 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 == Änderungen ==
 - Liblouis Braille-Übersetzer auf 2.5.2 aktualisiert. (#2737)
 - Das Laptop-Tastaturschema wurde komplett überarbeitet, wodurch es intuitiver und konsistenter wird. (#804)
-- Espeak auf 1.47.04 aktualisiert. (#2680)
+- Espaek auf 1.47.05 aktualisiert. (#2680, #3124, #3141)
 -
 
 == Fehlerbehebungen ==
@@ -80,6 +80,7 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - Unterstützung von Landmark-Formularen. (#2997) 
 - Espeak behandet nun beim zeichenweisen Navigieren Zeichen aus fremden Sprachen besser (#3106)
 - das Kopieren der Benutzerkonfiguration in die Systemkonfiguration funktioniert jetzt auch, wenn der name des Benutzerprofilverzeichnisses nicht-ascii-Zeichen enthält (#3092)
+- NVDA wird nun nicht mehr abstürzen, wenn asiatische Zeichen in .net-Anwendungen eingegeben werden. (#3005)
 -
 
 == Änderungen für Entwickler ==

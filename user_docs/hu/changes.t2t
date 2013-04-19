@@ -36,6 +36,7 @@ Az IE-ben és más MS-html vezérlőkön az NVDA már automatikusan felolvassa a
 - A portkijelölés támogatása Freedom Scientific-féle braille kijelzőkön (automatikus, usb vagy bluetooth).
 - Papenmeier BRAILLEX braille kijelzők régebbi modelleinek támogatása (#2679).
 - Számítógépes braille bevitel támogatása olyan braile kijelzőknél, melyeknek saját braille billentyűzetük van.(#808)
+- A Humanware BrailleNote sorozat kijelzőinek támogatása, ha azok braille terminálként viselkednek képernyőolvasók használatakor. (#2012)
 - Új billentyűzet-beállítások, melyek segítségével meghatározható, hogy az NVDA a beszédet megszakítsa-e billentyűleütéskor, illetve az enter használata során(#698).
 - A program támogatja Google Chrome alapú böngészőket, pl. Rockmelt, BlackHawk, Comodo Dragon and SRWare Iron. (#2236, #2813, #2814, #2815)
  
@@ -43,7 +44,7 @@ Az IE-ben és más MS-html vezérlőkön az NVDA már automatikusan felolvassa a
 == Változások ==
 - Frissítették a Lib-Louis braille fordítót a 2.5.2. verzióra (#2737).
 - A laptop billentyűkiosztást teljesen újratervezték, hogy az minél magától értetődőbb és logikusabb legyen. (#804)
-- Az eSpeak beszédszintetizátor frissítve lett az 1.47.04-es verzióra. (#2680)
+- Az eSpeak beszédszintetizátor frissítve lett az 1.47.05-es verzióra. (#2680)
 
 
 == Javítások ==
@@ -68,6 +69,14 @@ Az IE-ben és más MS-html vezérlőkön az NVDA már automatikusan felolvassa a
 - Javítva lett a Microsoft Sapi 5 hangok kezelése, úgy mint a Koba Speech 2 hangjai. (#2629)
 - Azon alkalmazásoknál, amik a  Java AccessBridge kiegészítőt használják, a braille kijelző már frissül, ha az áttekintő kurzor egy szerkeszthető mezőbe lép.  (#3107)
 - Az űrlap jelzőpont támogatása azon web-dokumentumokban, amik támogatják a jelzőpontokat. (#2997)
+- Az olvasási szöveg most már helyesen hangzik el olyan beviteli módoknál, mint pl. az Easy Dots IME XP esetén.
+- A javaslatlista  Windows 7 esetén mostantól már helyesen hangzik el a balra és jobbra nyilakkal történő oldalváltoztatáskor, valamint a legelső megnyitáskor a home billentyű segítségével, az egyszerűsített Kínai Microsoft Pinyin beviteli művelet használatakor.
+- Testreszabott írásjelek mentése esetén a haladó "preserve" mező már nem törlődik. (#2852)
+- A frissítések keresésének kikapcsolása esetén az NVDA-t már nem kell újraindítani a változások életbe léptetéséhez.
+- A HumanWare Brailliant BI/B sorozatú braille kijelző driver most már akkor is kiválasztható Bluetooth használatakor, ha az előtte nem volt USB portra csatlakoztatva.
+- Az elemlista nagybetűs szövegű szűrése esetén a találatok a kisbetűs szűréshez hasonlóan működnek, a kis- és nagybetűk figyelmen kívül hagyásával. Előzőleg az NVDA nem jelzett találatot. (#2951)
+- Ha rövidítéseket tartalmazó braille tábla használatakor az a kurzornál lévő szó átalakítása számítógépes braille jelekké opció engedélyezve van, a braille kurzor pozíciója helyesen jelenik meg olyan szavak után, melyekben egy karakter brailleben több karakterként jelenik meg (pl. nagybetű, számjel, stb.). (#2947)
+- Az elemcsoportok jelzése már nem okoz hibát listanézetek (SysListview32) esetén, 64 bites operációs rendszer használatakor.
 - Az eSpeak szintetizátora mostantól jobban kezeli az ismeretlen karakterek bemondását (pl. elmondja az idegen betű nevét vagy értékét, annak generikus neve helyett).  (#3106)
 - Az NVDA többé már nem fagy le a felhasználói beállítások átmásolásakor a bejelentkező és egyéb biztonsági képernyők használatához, ha a felhasználó neve tartalmaz nem-ascii karaktereket.  (#3092)
 

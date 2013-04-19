@@ -11,7 +11,7 @@
  == Importante ==
 
 === Novo Leiaute de teclado Laptop ===
-O leiaute de teclado laptop foi completamente redesenhado com vistas a tornar-se mais intuitivo e consistente.
+O leiaute de teclado laptop foi completamente redesenhado com vista a tornar-se mais intuitivo e consistente.
 Esse novo esquema usa as setas em combinação com a tecla NVDA e outras teclas modificadoras para os comandos de exploração e navegação de objetos.
 
 
@@ -32,35 +32,37 @@ Por favor consulte o documento da [Referência Rápida de Comandos keyCommands.h
 - No modo de navegação para o MSHTML (como o  Internet Explorer) e Gecko (Firefox), a existência de descrições longas agora é anunciada. Também é possível abrir a descrição longa numa nova janela pressionando NVDA+d. (#809)
 - Notificações no Internet Explorer 9 e posteriores (tais como bloqueio de conteúdos ou downloads de arquivos) agora são anunciadas. (#2343) 
 - O anúncio automático dos cabeçalhos de linhas e colunas das tabelas agora é suportado para documentos do modo de navegação  no Internet Explorer e outros controles MSHTML. (#778) 
-- Novo idioma: Aragonês, Irlandês.
-- Nova tabela de tradução braille: Dinamarquês grau 2. 
+- Novos idiomas: Aragonês, Irlandês.
+- Novas tabelas de tradução braille: Dinamarquês grau 2, Coreano grau 1. (#2737)
 - Suporte para linhas braille conectadas via bluetooth em computadores que usem dispositivos Bluetooth para o Windows fabricados pela Toshiba. (#2419)
+- Novas opções de teclado que permitem escolher se o NVDA deve interromper a fala quando são digitados caracteres e/ou a tecla Enter. (#698)
 - Suporte para a seleção de porta quando se usa linhas da freedom Scientific  (Automática, USB ou Bluetooth). 
 - Suporte para a família de notetakers BrailleNote da Humanware quando usados com função de terminal braille para leitores de telas. (#2012)
 - Suporte para modelos antigos das linhas braille Papenmeier BRAILLEX. (#2679)
 - Suporte para entrada de braille de computador em  linhas que possuam um teclado braille. (#808)
 - Suporte para vários navegadores  baseados no Google Chrome: Rockmelt, BlackHawk, Comodo Dragon e SRWare Iron. (#2236, #2813, #2814, #2815)
-- Corrigido o suporte via Bluetooth  para a linha braille Papenmeier Braillex Trio. (#2995)
 
 
 == Alterações ==
 - Atualizado o transcritor braille liblouis para a versão 2.5.2.
-- O leiaute de teclado laptop foi completamente redesenhado com vistas a tornar-se mais intuitivo e consistente. (#804)
-- Atualizado o sintetizador eSpeak para a versão 1.47.01. (#2680) 
-
+- O leiaute de teclado laptop foi completamente redesenhado com vista a tornar-se mais intuitivo e consistente. (#804)
+- Atualizado o sintetizador eSpeak para a versão 1.47.05. (#2680, #3124, #3141)
+ 
 
 == Correção de Falhas ==
 - As teclas de navegação rápida para saltar para o separador anterior e o seguinte no modo de navegação agora funcionam no Internet Explorer e outros controles MSHTML. (#2781)
-- Caso o NVDA precise retornar ao eSpeak ou à opção sem fala devido à falha num sintetizador selecionado quando o NVDA é iniciado, a configuração já não é atualizada para definir o sintetizador que falhou como o escolhido, o que significa que agora o sintetizador original será novamente escolhido na próxima vez que o NVDA for iniciado. (#2589) 
+- Caso o NVDA precise retornar ao eSpeak ou à opção sem fala devido à falha num sintetizador selecionado quando o NVDA é iniciado, a configuração já não é atualizada para definir o sintetizador que o substituiu como o escolhido, o que significa que agora o sintetizador original será novamente testado na próxima vez que o NVDA for iniciado. (#2589) 
 - Caso o NVDA volte à configuração sem braille devido a alguma falha na linha braille configurada a quando do início do NVDA, a linha configurada já não é definida automaticamente  para sem braille. Isso significa que agora, a opção original será novamente escolhida na próxima vez que o NVDA for iniciado. (#2264) 
-- No modo de navegação em aplicativos da Mozilla, atualizações em tabelas agora são exibidas  corretamente. Por exemplo, em  célilas atualizadas, as coordenadas das linhas e colunas são anunciadas e a navegação da tabela funciona como deveria. (#2784) 
+- No modo de navegação em aplicativos da Mozilla, atualizações em tabelas agora são exibidas  corretamente. Por exemplo, em  células atualizadas, as coordenadas das linhas e colunas são anunciadas e a navegação pela tabela funciona como deveria. (#2784) 
 - No modo de navegação em navegadores web , certos gráficos clicáveis não etiquetados que anteriormente não eram expostos agora o são corretamente. (#2838) 
 - Versões anteriores e mais recentes do SecureCRT agora são suportadas. (#2800) ----
 - Em métodos de entrada tais como o Easy Dots IME no Windows XP, a cadeia de leitura agora é anunciada corretamente. 
-
+- A lista de sugestões  no  método de entrada Microsoft Pinyin para Chinês Simplificado no Windows 7 agora é lida corretamente quando se muda  de página com as setas para a direita e esquerda, bem como ao abri-la num primeiro momento com a tecla Home.
+- Quando as informações de personalizações de pontuação são salvas, o campo avançado "preserve" já não é removido. (#2852)
 - Quando a procura automática por atualização é desabilitada, o NVDA já não precisa ser reiniciado para que a alteração faça efeito completamente. 
 - O NVDA já não falha ao iniciar caso um complemento não possa ser removido pelo fato de sua pasta estar sendo usada no momento por outro aplicativo. (#2860) 
 - As etiquetas das guias no diálogo de preferências do DropBox agora podem ser vistas usando a revisão plana. 
+- Caso o idioma de entrada seja alterado para outro que não o padrão, o NVDA agora detecta corretamente as teclas em comandos e no modo de ajuda de entrada.
 - Para idiomas como o alemão onde o sinal de + (plus, mais) consiste de uma única tecla no teclado, agora é possível vincular comandos a este sinal usando a palavra "plus". (#2898)
 - No Internet Explorer e outros controles MSHTML, os blocos de citação agora são anunciados apropriadamente. (#2888)
 - O driver para as linhas braille HumanWare Brailliant BI/B series agora pode ser selecionado quando a linha é conectada via Bluetooth mas nunca havia sido conectada via USB.
@@ -81,6 +83,7 @@ Por favor consulte o documento da [Referência Rápida de Comandos keyCommands.h
 Suporte para marcas de formulários em documentos no modo de navegação, caso suportem marcas. (#2997) 
  - O driver para o sintetizador eSpeak agora controla a leitura por caractere mais apropriadamente (isto é, anuncia o nome de uma letra ou seu valor ao invés de falar apenas seu som ou seu nome genérico). (#3106)
 - O NVDA já não falha ao copiar configurações do usuário para uso no logon e outras telas seguras, quando o caminho do perfio do usuário contém caracteres não-ascii. (#3092)
+- O NVDA já não trava quando se usa a entrada de caracteres Asiáticos  em alguns aplicativos .NET. (#3005)
 
  
  == Alterações Específicas para Desenvolvedores ==

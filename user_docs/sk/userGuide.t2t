@@ -86,7 +86,7 @@ Okrem toho, že nie je možné automaticky spustiť NVDA počas prihlásenia ale
 - Nemožnosť pracovať s aplikáciami, ktoré bežia správami administrátora, ak spustená verzia NVDA tiež nemá práva administrátora (čo sa však neodporúča).
 - Nemožnosť čítať obrazovku na prepnutie užívateľského účtu (UAC) pri pokuse spustiť aplikáciu s právami administrátora.
 - Nefunguje používanie dotykovej klávesnice v systéme Windows 8.
-- Nemôžete využívať režim prehliadania a čítanie napísaných znakov vo Windows Store v systéme Windows 8.
+- Nie je možné využívať režim prehliadania a čítanie napísaných znakov vo Windows Store v systéme Windows 8.
 
 
 ++ Inštalácia NVDA ++
@@ -325,7 +325,7 @@ Pre pohyb po objektoch použite nasledujúce príkazy:
 | Nadradený objekt | NVDA+numpad8 | NVDA+shift+šípka hore | Švihnutie hore | Prejde na objekt, ktorý obsahuje aktuálny navigačný objekt |
 | Predchádzajúci objekt | NVDA+numpad4 | NVDA+shift+ľavá šípka | Švihnutie vľavo | Prejde na predchádzajúci objekt od navigačného objektu |
 | nasledujúci objekt | NVDA+numpad6 | NVDA+shift+pravá šípka | Švihnutie vpravo | Prejde na nasledujúci objekt od navigačného objektu |
-| Prvý podradený objekt | NVDA+numpad2 | NVDA+shift+šípka dole | Švihnutie dolu | Pohyb na prvý objekt, ktorý je vo vnútri navigačného objektu |
+| Prvý podradený objekt | NVDA+numpad2 | NVDA+shift+šípka dolu | Švihnutie dolu | Pohyb na prvý objekt, ktorý je vo vnútri navigačného objektu |
 | navigačný objekt na fokus | NVDA+numpadMínus | NVDA+backspace | Nie je | Premiestni navigačný objekt na prvok, ktorý má systémový fokus. Ak je zobrazený systémový kurzor, pokúsi sa nastaviť na jeho pozíciu aj prehliadací kurzor |
 | Aktivovať navigačný objekt | NVDA+numpadEnter | NVDA+enter | Dvojité klepnutie | Aktivuje prvok práve zameraný objektovou navigáciou - rovnaké ako stlačenie klávesu enter alebo dvojité kliknutie po zameraní kurzorom myši. |
 | Fokus alebo systémový kurzor na pozíciu prehliadacieho kurzora | NVDA+shift+numpad mínus | NVDA+shift+backspace | Nie je | Po prvom stlačení nastaví fokus na navigačný objekt, po druhom stlačení sa pokúsi umiestniť systémový kurzor na pozíciu prehliadacieho kurzora |
@@ -352,7 +352,7 @@ Na navigáciu v texte je možné použiť nasledovné príkazy:
 | Prehliadací kurzor do prvého riadku | shift+numpad7 | NVDA+ctrl+home | Nie je | Presunie prehliadací kurzor do prvého riadku textu |
 | Prehliadací kurzor do predchádzajúceho riadku | numpad7 | NVDA+šípka hore | | Švihnutie hore (textový režim) | Presunie prehliadací kurzor do predchádzajúceho riadku textu |
 | Aktuálny riadok prehliadacieho kurzora | numpad8 | NVDA+shift+bodka | Nie je | Oznámi riadok, na ktorý ukazuje prehliadací kurzor. Dvojnásobné stlačenie vyhláskuje riadok. Stlačené tri krát rýchlo za sebou foneticky vyhláskuje riadok. |
-| Prehliadací kurzor do nasledujúceho riadku | numpad9 | NVDA+šípka dole | Švihnutie dolu (textový režim) | Presunie prehliadací kurzor do nasledujúceho riadku textu |
+| Prehliadací kurzor do nasledujúceho riadku | numpad9 | NVDA+šípka dolu | Švihnutie dolu (textový režim) | Presunie prehliadací kurzor do nasledujúceho riadku textu |
 | Prehliadací kurzor do posledného riadku | shift+numpad9 | NVDA+ctrl+end | Nie je | Presunie prehliadací kurzor do posledného riadku textu |
 | Prehliadací kurzor na predchádzajúce slovo | numpad4 | NVDA+ctrl+ľavá šípka | Švihnutie vľavo dvoma prstami (textový režim) | Presunie prehliadací kurzor na predchádzajúce slovo textu |
 | Aktuálne slovo prehliadacieho kurzora | numpad5 | NVDA+ctrl+bodka | Nie je | Oznámi slovo, na ktoré práve ukazuje prehliadací kurzor. Dvojnásobné stlačenie vyhláskuje slovo. Stlačené tri krát rýchlo za sebou foneticky vyhláskuje aktuálne slovo. |
@@ -1719,7 +1719,7 @@ Mali by ste si stiahnuť najnovšiu inštalačnú verziu, ktorá bude pomenovan�
 Počas konfigurácie riadku a portu dávajte veľký pozor na presné dodržiavanie inštrukcií, hlavne ak pripájate riadok cez USB a už máte nainštalované ovládače od výrobcu.
 
 Riadky, ktoré podporujú písanie pomocou vstavanej klávesnice sa riadia nastavením BRLTTY.
-Nastavenie výstupnej prekladovejtabuľky v NVDA preto nemá na nastavenie riadka vplyv.
+Nastavenie vstupnej prekladovejtabuľky v NVDA preto nemá na nastavenie riadka vplyv.
 
 Nasledujú brltty klávesové skratky pre NVDA.
 Prosím prečítajte si [dokumentáciu klávesov brltty http://mielke.cc/brltty/doc/drivers/] pre viac informácií o tom, ako sú príkazy brltty mapované na tlačidlá skutočných zobrazovačov.

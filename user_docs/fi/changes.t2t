@@ -43,7 +43,7 @@ Katso uudet näppäinkomennot [komentojen pikaoppaasta. keyCommands.html]
 == Muutokset ==
 - Liblouis-pistekääntäjä päivitetty versioksi 2.5.2. (#2737)
 - Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin uudelleen, jotta se olisi intuitiivisempi ja johdonmukaisempi. (#804)
-- eSpeak-puhesyntetisaattori päivitetty versioksi 1.47.04. (#2680)
+- eSpeak-puhesyntetisaattori päivitetty versioksi 1.47.07. (#2680, #3124, #3132, #3141, #3143)
 
 
 == Korjatut ohjelmavirheet ==
@@ -80,6 +80,7 @@ Katso uudet näppäinkomennot [komentojen pikaoppaasta. keyCommands.html]
 - Lomake-maamerkkiä tuetaan nyt maamerkkejä tukevissa selaustiladokumenteissa. (#2997)
 - eSpeak-syntetisaattoriajuri käsittelee nyt merkeittäin lukemista asianmukaisemmin (esim. lukee vierasperäisen kirjaimen nimen tai arvon sen äänen tai yleisnimen sijaan). (#3106)
 - Käyttäjän asetusten kopiointi kirjautumisikkunassa ja muissa suojatuissa ruuduissa käytettäväksi ei enää epäonnistu, kun käyttäjäprofiilin hakemistopolku sisältää muita kuin ASCII-merkkejä. (#3092)
+- NVDA ei jää enää jumiin joissakin .NET-sovelluksissa aasialaisten merkkien syöttöä käytettäessä. (#3005)
 
 
 = 2012.3 =
@@ -510,7 +511,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teksti
 - Näppäinohjeen uusi nimi on syöteohje, koska se käsittelee muistakin syötelaitteista kuin näppäimistöltä annettavia komentoja.
 - Komennon sijaintia NVDA:n koodissa ei enää sanota syöteohjeessa, koska se ei ole tärkeää käyttäjälle. Tieto tästä kirjataan kuitenkin lokiin kehittäjiä ja edistyneitä käyttäjiä varten.
 - Kun NVDA havaitsee jääneensä jumiin, NVDA-näppäinten käsittelyä jatketaan, vaikka kaikki muut näppäimet välitetäänkin suoraan Windowsin käsiteltäväksi. Tämä estää käyttäjää NVDA-näppäintä painaessaan ottamasta tahattomasti käyttöön esim. Caps Lockia. (#939)
-- Jos näppäimiä pidetään alhaalla "välitä seuraava näppäinpainallus" -komennon jälkeen, kaikki näppäimet (toistuvat painallukset mukaan lukien) välitetään Windowsille, kunnes viimeinen näppäin vapautetaan.
+- Jos näppäimiä pidetään alhaalla Ohita seuraava näppäinpainallus -komennon jälkeen, kaikki näppäimet (toistuvat painallukset mukaan lukien) välitetään Windowsille, kunnes viimeinen näppäin vapautetaan.
 - Myös kaikki toistuvat näppäinpainallukset välitetään nyt Windowsin käsiteltäväksi, mikäli NVDA-näppäintä painetaan nopeasti kaksi kertaa peräkkäin ja kun sitä pidetään alhaalla toisella painalluksella.
 - Äänenvoimakkuuden lisäys ja vähennys- sekä mykistysnäppäimet  ilmoitetaan nyt syöteohjeessa.
 
@@ -1078,7 +1079,7 @@ Saadaksesi lisätietoja eSpeakista tai ladataksesi sen muita versioita, käy oso
 - Korjattu Windows Live Messengerin ja MSN Messengerin vika, joka aiheutti virheitä liikuttaessa yhteystietoluettelossa nuolinäppäimillä ylös ja alas.
 - Uudet viestit luetaan nyt automaattisesti Windows Live Messengerissä. Toimii toistaiseksi vain englanninkielisissä versioissa.
 - Windows Live Messengerin keskusteluhistoriaikkunaa voidaan nyt lukea nuolinäppäimillä. Toimii toistaiseksi vain englanninkielisissä versioissa.
-- Lisätty komento "välitä seuraava näppäinpainallus" (Insert+F2). Kun tätä näppäinyhdistelmää painetaan, seuraavaksi painettu näppäin välitetään suoraan Windowsin käsiteltäväksi. Tästä on hyötyä sovelluksissa, joissa on painettava jotain sellaista näppäinyhdistelmää, joka on NVDA:n käytössä.
+- Lisätty komento "Ohita seuraava näppäinpainallus" (Insert+F2). Kun tätä näppäinyhdistelmää painetaan, seuraavaksi painettu näppäin välitetään suoraan Windowsin käsiteltäväksi. Tästä on hyötyä sovelluksissa, joissa on painettava jotain sellaista näppäinyhdistelmää, joka on NVDA:n käytössä.
 - NVDA ei enää jumiudu yli minuutiksi avattaessa suuria asiakirjoja Wordissa.
 - Korjattu ongelma, joka aiheutti Wordissa pois taulukosta ja takaisin siirryttäessä sen, ettei nykyistä rivin ja sarakkeen numeroa luettu, jos siirryttiin takaisin samaan soluun.
 - Jos NVDA:ta käynnistettäessä on käytössä puhesyntetisaattori, jota ei ole tai joka ei toimi, jokin SAPI 5 -syntetisaattori yritetään ladata sen sijaan. Jos sellaisen lataaminen ei onnistu, käytettäväksi syntetisaattoriksi asetetaan "ei puhetta".
