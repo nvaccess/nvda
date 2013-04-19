@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NVDA 2013.1-5975\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2013-03-21 19:28+1000\n"
-"PO-Revision-Date: 2013-04-11 16:50-0000\n"
+"PO-Revision-Date: 2013-04-19 18:58-0000\n"
 "Last-Translator: Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -1789,8 +1789,7 @@ msgid ""
 "keyboard will tell you what script is associated with that input, if any."
 msgstr ""
 "Tosaigh nó múch cabhair an ionchuir.  Nuair a bhíonn sí ar siúil, inseoidh "
-"ionchur ar bith (mar shampla ag brú cnaipe ar an méarchlár) duit cén script "
-"a bhaineann leis."
+"ionchur ar bith (mar shampla ag brú chrach ar an"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:59
@@ -1865,8 +1864,8 @@ msgid ""
 "Announces the current selection in edit controls and documents. If there is "
 "no selection it says so."
 msgstr ""
-"Fógair an roghnúchn sa rialú eagarthóireachta agus cáipéisí.  Mura bhfuil "
-"roghnúchán ar bith ann, deirtear nach bhfuil."
+"Fógair an roghnúchán reatha sa rialú eagarthóireachta, agus  in sna "
+"cháipéisí.  Mura bhfuil roghnúchán ar bith ann, deirt"
 
 #: globalCommands.py:142
 msgid ""
@@ -1954,8 +1953,8 @@ msgstr "leibhéal siombalach %s"
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
-"Rothaigh trí leibhéil na siombail cainte a chinneann ar na siombailí a bheith "
-"le rá"
+"Rothaigh trí leibhéil na siombail cainte a chinneann ar na siombailí a "
+"bheith le rá"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 #: globalCommands.py:246
@@ -1989,8 +1988,8 @@ msgid ""
 "Moves to flat review for the screen (or document if currently inside one) "
 "and positions the review cursor at the location of the current object"
 msgstr ""
-"Bog go dtí an t-athbhreithniú cothrom le haghaidh an scáileáin (nó na cáipéise más "
-"i gceann acu faoi láthair) agus cuir an cúrsóir athbhreithnithe ag ionad an réada"
+"Bog go dtí an athbhreithniú cothrom le haghaidh an scáileáin nó na cáipéise "
+"má táthar istigh i gceachtar acu faoi látha"
 
 #. Translators: Reported when there is no object at flat review position.
 #: globalCommands.py:288
@@ -2002,8 +2001,8 @@ msgid ""
 "Moves navigator object to the object represented by the text at the position "
 "of the review cursor within flat review"
 msgstr ""
-"Bog an réad nascleantóra go dtí an réad atá léirithe sa téacs ag ionad "
-"an chúrsóra athbhreithnithe laistigh den athbhreithniú cothrom"
+"Bog an réad nascleantóra go dtí an réad atá léirithe sa téacs ag ionad an "
+"chúrsóra athbhreithnithe laistigh den athbhreithniú cothrom"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -2045,6 +2044,9 @@ msgid ""
 "{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
 "screen, height is {height:.1f} per cent of screen"
 msgstr ""
+"Imeall an réada suite {left:.1f} faoin gcéad ó imeall clé an scáileáin.  "
+"{top:.1f} faoin gcéad ó bharr an scáileáin.  Is é an leithead ná {width:.1f} "
+"faoin gcéad an scáileáin.  Is é an air"
 
 #: globalCommands.py:348
 msgid "Reports the hight, width and position of the current navigator object"
@@ -2085,6 +2087,9 @@ msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
+"\tBrúigh uair amháin chun fócas an mhéarchláir a bhogadh go dtí réad an "
+"nascleantóra.  Brúigh faoi dhó chun carat an chórais a shocrú mar ionad "
+"chúrsóra an "
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 #: globalCommands.py:398
@@ -2166,6 +2171,9 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
+"Tuairiscigh líne an réada nascleantóra reatha san áit ina bhfuil an cúrsóir "
+"athbhreithnithe suite: Ma brúitear faoi dhó an eochair seo, litrífear an "
+"líne reatha.  Brúigh trí huaire í agu"
 
 #. Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container.
 #: globalCommands.py:515 globalCommands.py:523 globalCommands.py:557
@@ -2203,6 +2211,9 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
+"Abair focal an réada nascleantóra reatha san áit ina bhfuil cúrsóir an "
+"athbhreithnithe suite.  Brúigh faoi dhó chun an focal a litriú.  Brúigh trí "
+"huaire chun an focal a litriú ag déanamh cur síos ar na carachtair.  "
 
 #: globalCommands.py:559
 msgid ""
@@ -2239,6 +2250,10 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
+"Tuairiscigh an carachtar ag réad reatha an nascleantóra in san áit ina "
+"bhfuil cúrsóir an athbhreithnithe suite.  Brúigh faoi dhó chun cur síos nó "
+"sampla an charactair sin a dhéanamh.  Má brúitear trí huaire í, "
+"tuairiscítear luach uimhruichiúil an charactair sa chóras deac"
 
 #: globalCommands.py:614 globalCommands.py:631 appModules\totalcmd.py:37
 msgid "right"
@@ -2383,6 +2398,8 @@ msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
+"Taifead eolas ar réad reatha an nascleantóra a bheas áisiúil ag an lucht "
+"forbacha, agus gníomhachtaigh amharcán an ia"
 
 #. Translators: A mode where no progress bar updates are given.
 #: globalCommands.py:824
@@ -2425,6 +2442,8 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
+"\tTosaigh nó múch tuairisceáil ar athraithe na hinneachar dinimiciúila, mar "
+"shampla téacs nua in san fhuinneog dos "
 
 #. Translators: presented when toggled.
 #: globalCommands.py:855
@@ -2440,6 +2459,8 @@ msgstr "bogann an charait an cursóir athbhreithnithe"
 msgid ""
 "Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
+"Tosaigh nó múch gluaiseacht chúrsóra an athbhreithnithe mar gheall ar "
+"gluaiseacht an charait"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:867
@@ -2455,6 +2476,8 @@ msgstr "bogann an fócas an réad nascleantóra"
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
+"Tosaigh nó múch gluaiseacht chúrsóra an nascleantóra mar gheall ar athraithe "
+"an fhócais"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 #: globalCommands.py:887
