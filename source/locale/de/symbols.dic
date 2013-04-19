@@ -17,7 +17,6 @@ symbols:
 ? sentence ending	Fragezeichen
 ; phrase ending	Semikolon
 : phrase ending	Doppelpunkt
-; phrase ending	Semikolon
 date separator		none	always
 in-word '	Apostroph
 
@@ -37,6 +36,8 @@ in-word '	Apostroph
 $	Dollar
 £	Pfund Sterling
 €	Euro
+¢	sent
+¥	Yenn
 %	Prozent
 &	Und
 '	Apostroph
@@ -67,38 +68,37 @@ _	Unterstrich
 ~	Tilde
 
 # Weitere Zeichen
-•	Aufzählungszeichen	some
+•	Aufzählungszeichen
 …	Punkt Punkt Punkt
 ...	Punkt Punkt Punkt
-	Aufzählungszeichen	some
+	Aufzählungszeichen
 “	Anführungszeichen oben
-”	Anführungszeichen unten
-‘	Anführungszeichen oben 
+”	Anführungszeichen unten	all
+‘	Anführungszeichen oben
 ’	Anführungszeichen unten
+„	Anführungszeichen unten	all
 –	Strich
 —	Gedankenstrich
 ●	Kreis
 ¨	Trema
 ‏	Von rechts nach links Markierung
 ‎	Von links nach rechts Markierung
-■	Schwarzes Quadrat 
+■	Schwarzes Quadrat
 ➔	Pfeil nach rechts
 →	Pfeil nach rechts
-§	Paragraf	some
-¥	Yen	all	norep
-¢	Cent	all	norep
-°	Grad	most
+§	Paragraf
+°	Grad
 Þ	Aufzählung	some
 «	Doppelte gewinkelte Klammer auf	most
 »	Doppelte gewinkelte Klammer zu	most
-µ	My	most
-¹	Hoch Eins	some
-²	Hoch Zwei	some
-³	Hoch Drei	some
-®	Eingetragenes Warenzeichen	some
-™	Eingetragenes Warenzeichen	some
-©	Copyright	some
-±	Plus Minus	some
-×	Mal	some
-÷	Durch	some
+µ	My
+¹	Hoch Eins
+²	Hoch Zwei
+³	Hoch Drei
+®	Eingetragenes Warenzeichen
+™	Eingetragenes Warenzeichen
+©	Copyright
+±	Plus Minus
+×	Mal
+÷	Durch
 
