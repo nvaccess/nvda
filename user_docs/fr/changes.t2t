@@ -29,7 +29,7 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - En mode navigation dans les documents MSHTML (ex : Internet Explorer) et Gecko (ex : Firefox), l'existence des longues descriptions est maintenant annoncée. Il est aussi possible d'ouvrir les longues descriptions dans une nouvelle fenêtre en appuyant sur NVDA+D. (#809)
 - Les notifications dans Internet Explorer 9 et plus récent sont maintenant lues (comme les fenêtres publicitaires bloquées ou les téléchargements). (#2343)
 - L'annonce automatique du titre des lignes et colonnes d'un tableau est maintenant supportée dans Internet Explorer et les autres contrôles MSHTML. (#778)
-- Nouvelle langue : Aragonais.
+- Nouvelles langues : Aragonais, Irlandais.
 - Nouvelles tables Braille : Dannois Grade 2, Coréen Grade 1. (#2737)
 - Support des afficheurs Braille connectés via le Bluetooth sur les ordinateurs utilisant Bluetooth Stack for Windows by Toshiba. (#2419)
 - Support de la sélection du port pour les afficheurs freedom Scientific (Automatique, USB ou Bluetooth).
@@ -43,7 +43,7 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 == Changements ==
 - LibLouis Braille Translator mis à jours vers la version 1.5.2. (#2737)
 - La disposition clavier ordinateur portable a été revue pour être plus intuitive et cohérente. (#804)
-- Mise à jours de la synthèse vocale eSpeak vers la version 1.47.01. (#2680)
+- Mise à jours de la synthèse vocale eSpeak vers la version 1.47.07. (#2680, #3124, #3132, #3141, #3143)
 
 
 == Corrections de Bogues ==
@@ -78,6 +78,9 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - Corrigée l'impossibilité d'utiliser certaines voix Microsoft SAPI version 5 tel que les voix Koba Speech 2. (#2629)
 - Dans les applications utilisant Java Access Bridge, l'afficheur braille s'actualise correctement lorsque le curseur se déplace dans une zone d'édition. (#3107)
 - Support du repère form en mode navigation dans les documents supportant les repères. (#2997)
+- Le pilote de synthèse vocale espeak supporte mieux le mode épellation (ex : annonce la valeur de la lettre plutôt que sa phonéthique).  (#3106)
+- NVDA n'échoue plus lors de la copie de la configuration utilisateur pour utilisation à l'écran de connexion et les autres écrans sécurisés lorsque le chemin du profile contient des des caractères non ASCII. (#3092)
+- NVDA ne se fige plus lorsque l'on saisi des caractères asiatiques dans certaines applications .NET. (#3005)
 
 
 == Changements pour les développeurs ==
