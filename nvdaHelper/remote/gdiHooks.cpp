@@ -47,8 +47,36 @@ wchar_t* WA_strncpy(wchar_t* dest, const wchar_t* source, size_t size) {
 map<HWND,int> windowsForTextChangeNotifications;
 map<HWND,RECT> textChangeNotifications;
 UINT_PTR textChangeNotifyTimerID=0;
-DWORD tls_index_inTextOutHook=TLS_OUT_OF_INDEXES;
+DWORD tls_index_textInsertionsCount=TLS_OUT_OF_INDEXES;
 DWORD tls_index_curScriptTextOutScriptAnalysis=TLS_OUT_OF_INDEXES;
+
+class TextInsertionTracker {
+	private:
+	int _initialRefCount;
+	bool _wasFirst;
+	public:
+	TextInsertionTracker(): _initialRefCount(0), _wasFirst(false)  {
+		_initialRefCount=(int)TlsGetValue(tls_index_textInsertionsCount);
+		if(_initialRefCount==0) {
+			_initialRefCount=1;
+			TlsSetValue(tls_index_textInsertionsCount,(LPVOID)_initialRefCount);
+			_wasFirst=true;
+		} else {
+			_wasFirst=false;
+		}
+	}
+	~TextInsertionTracker() {
+		if(_wasFirst) TlsSetValue(tls_index_textInsertionsCount,(LPVOID)0);
+	}
+	static void reportTextInsertion() {
+		int newRefCount=(int)TlsGetValue(tls_index_textInsertionsCount);
+		if(newRefCount>0) TlsSetValue(tls_index_textInsertionsCount,(LPVOID)(newRefCount+1));
+	}
+	bool hasTrackedTextInsertion() {
+		int newRefCount=(int)TlsGetValue(tls_index_textInsertionsCount);
+		return newRefCount>_initialRefCount;
+	}
+};
 
 void CALLBACK textChangeNotifyTimerProc(HWND hwnd, UINT msg, UINT_PTR timerID, DWORD time) {
 	map<HWND,RECT> tempMap;
@@ -428,6 +456,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		formatInfo.color=GetTextColor(hdc);
 		formatInfo.backgroundColor=GetBkColor(hdc);
 		model->insertChunk(textRect,baselinePoint.y,newText,characterEndXArray,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
+		TextInsertionTracker::reportTextInsertion();
 		HWND hwnd=WindowFromDC(hdc);
 		if(hwnd) queueTextChangeNotify(hwnd,textRect);
 	}
@@ -468,10 +497,13 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	UINT textAlign=GetTextAlign(hdc);
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
-	TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
 	//Call the real function
-	BOOL res=realFunction(hdc,x,y,lpString,cbCount);
-	TlsSetValue(tls_index_inTextOutHook,(LPVOID)0);
+	BOOL res;
+	{
+		TextInsertionTracker tracker; 
+		res=realFunction(hdc,x,y,lpString,cbCount);
+		if(tracker.hasTrackedTextInsertion()) return res;
+	}
 	//If the real function did not work, or the arguments are not sane, then stop here
 	if(res==0||!lpString||cbCount<=0) return res;
 	displayModel_t* model=acquireDisplayModel(hdc);
@@ -502,7 +534,12 @@ template<typename WA_POLYTEXT> BOOL WINAPI hookClass_PolyTextOut<WA_POLYTEXT>::f
 		GetCurrentPositionEx(hdc,&curPos);
 	}
 	//Call the real function
-	BOOL res=realFunction(hdc,pptxt,cStrings);
+	BOOL res;
+	{
+		TextInsertionTracker tracker;
+		res=realFunction(hdc,pptxt,cStrings);
+		if(tracker.hasTrackedTextInsertion()) return res;
+	}
 	//If the draw did not work, or there are no strings, then  stop here
 	if(res==0||cStrings==0||!pptxt) return res;
 	//Get or create a display model for this DC. If we can't get one then stop here
@@ -602,11 +639,14 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 	POINT pos={x,y};
 	if(textAlign&TA_UPDATECP) GetCurrentPositionEx(hdc,&pos);
 	//Call the real function
-	BOOL res=realFunction(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
+	BOOL res;
+	{
+		TextInsertionTracker tracker;
+		res=realFunction(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
+		if(tracker.hasTrackedTextInsertion()) return res;
+	}
 	//If the real function did not work, or the arguments are not sane, or only glyphs were provided, then stop here. 
 	if(res==0) return res;
-	//If we are being called from within a call to TextOut, do not do anything more as our TextOut code will record the text
-	if((int)TlsGetValue(tls_index_inTextOutHook)==1) return res;
 	//try to get or create a displayModel for this device context
 	displayModel_t* model=acquireDisplayModel(hdc);
 	//If we can't get a display model then stop here
@@ -872,9 +912,12 @@ typedef HRESULT(WINAPI *ScriptStringOut_funcType)(SCRIPT_STRING_ANALYSIS,int,int
 ScriptStringOut_funcType real_ScriptStringOut=NULL;
 HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UINT uOptions,const RECT *prc,int iMinSel,int iMaxSel,BOOL fDisabled) {
 	//Call the real ScriptStringOut
-	//TlsSetValue(tls_index_inTextOutHook,(LPVOID)1);
-	HRESULT res=real_ScriptStringOut(ssa,iX,iY,uOptions,prc,iMinSel,iMaxSel,fDisabled);
-	TlsSetValue(tls_index_inTextOutHook,(LPVOID)0);
+	HRESULT res;
+	{
+		TextInsertionTracker tracker;
+		res=real_ScriptStringOut(ssa,iX,iY,uOptions,prc,iMinSel,iMaxSel,fDisabled);
+		if(tracker.hasTrackedTextInsertion()) return res;
+	}
 	//If ScriptStringOut was successful we can go on
 	//We also need to acquire access to our Script analysis map
 	if(res!=S_OK||!ssa||!allow_ScriptStringAnalyseArgsByAnalysis) return res;
@@ -896,11 +939,13 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 		return res;
 	}
 	BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
+	//The next two extTextOutHelper calls must keep their direction argument as 1. 
+	//This is because ScriptStringAnalyze gave us a string in logical order and therefore we need to make sure that NVDA does not try to detect and possibly reverse.
 	if(i->second.iCharset==-1) { //Unicode
-		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),CP_THREAD_ACP,NULL,i->second.cString,NULL,false);
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),CP_THREAD_ACP,NULL,i->second.cString,NULL,1);
 	} else { // character set
 		int codePage=charSetToCodePage(i->second.iCharset);
-		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(char*)(i->second.pString),codePage,NULL,i->second.cString,NULL,false);
+		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(char*)(i->second.pString),codePage,NULL,i->second.cString,NULL,1);
 	}
 	model->release();
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
@@ -917,7 +962,6 @@ HRESULT WINAPI fake_ScriptTextOut(const HDC hdc, SCRIPT_CACHE* psc, int x, int y
 	TlsSetValue(tls_index_curScriptTextOutScriptAnalysis,NULL);
 	return res;
 }
-
 
 //ScrollWindow hook function
 typedef BOOL(WINAPI *ScrollWindow_funcType)(HWND,int,int,const RECT*, const RECT*);
@@ -997,7 +1041,7 @@ BOOL WINAPI fake_DestroyWindow(HWND hwnd) {
 }
 
 void gdiHooks_inProcess_initialize() {
-	tls_index_inTextOutHook=TlsAlloc();
+	tls_index_textInsertionsCount=TlsAlloc();
 	tls_index_curScriptTextOutScriptAnalysis=TlsAlloc();
 	//Initialize the timer for text change notifications
 	textChangeNotifyTimerID=SetTimer(NULL,NULL,50,textChangeNotifyTimerProc);
@@ -1054,6 +1098,6 @@ void gdiHooks_inProcess_terminate() {
 	allow_ScriptStringAnalyseArgsByAnalysis=FALSE;
 	ScriptStringAnalyseArgsByAnalysis.clear();
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
-	TlsFree(tls_index_inTextOutHook);
+	TlsFree(tls_index_textInsertionsCount);
 	TlsFree(tls_index_curScriptTextOutScriptAnalysis);
 }
