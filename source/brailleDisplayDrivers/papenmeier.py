@@ -95,8 +95,8 @@ def brl_poll(dev):
 			if status[0][1] == 'K' or status[0][1] == 'L': l = (2*(((ord(status[0][2]) - 0x50) << 4) + (ord(status[0][3]) - 0x50)) +1)
 			else: l=6
 			status.append(dev.read(l))
-		if ord(status[-1][-1]) == ETX:
-			return "".join(status)[1:-1] # strip STX and ETX
+			if ord(status[-1][-1]) == ETX:
+				return "".join(status)[1:-1] # strip STX and ETX
 	return ""
 
 def brl_decode_trio(keys):
