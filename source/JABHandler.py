@@ -463,7 +463,8 @@ def event_stateChange(vmID,accContext,oldState,newState):
 def internal_event_caretChange(vmID, event,source,oldPos,newPos):
 	if oldPos<0 and newPos>=0:
 		internalQueueFunction(event_gainFocus,vmID,source)
-	internalQueueFunction(event_caret,vmID,source)
+	else:
+		internalQueueFunction(event_caret,vmID,source)
 	bridgeDll.releaseJavaObject(vmID,event)
 
 def event_caret(vmID, accContext):

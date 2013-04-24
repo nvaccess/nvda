@@ -1237,8 +1237,9 @@ Sia i modelli BC640 che BC680 prodotti dalla [Optelec http://www.optelec.com/] s
 Per un corretto funzionamento non si avrà bisogno di alcun driver aggiuntivo. 
 Semplicemente collegare la Barra Braille e configurare NVDA selezionando tale dispositivo.
 
-Sebbene questi display possiedano una tastiera braille, gestiscono autonomamente la procedura di traduzione dal braille al testo.
+Poichè questi display possiedano una tastiera braille, gestiscono autonomamente la procedura di traduzione dal braille al testo.
 Pertanto, le impostazioni di immissione tabella braille in NVDA non sono rilevanti.
+
 Segue un elenco dei tasti associati con NVDA:
 Si prega di consultare la documentazione della propria barra braille per avere informazioni sulla loro posizione.
 %kc:beginInclude
@@ -1510,6 +1511,7 @@ Se BrxCom è installato, NVDA lo utilizzerà.
 BrxCom è un utility che permette di gestire la scrittura tramite i tasti braille indipendentemente dallo screen reader in uso.
 Verrà realizzata presto da Papenmeier una nuova versione di BrXcom che funzioni con NVDA 
 In ogni caso, la scrittura tramite tastiera sarà sempre disponibile per i dispositivi Trio anche senza la presenza di BrxCom.
+
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
 Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
 la serie C è l'unica eccezione alla regola.
@@ -1543,7 +1545,7 @@ Seguono i comandi per i Display Papenmeier associati con NVDA:
 | Route to braille cell | routing |
 | Annuncia il carattere attuale sul cursore di controllo | l1 |
 | Attiva l'oggetto corrente | l2 |
-| Attiva navigazione in linea | r1 |
+| Attiva navigazione in linea/focus | r1 |
 | Annuncia Titolo | l1+up |
 | Annuncia barra di stato | l2+down |
 | Spostarsi all'oggetto contenitore | up2 |
@@ -1560,7 +1562,6 @@ Partendo da sinistra verso destra, essi sono:
 - spazio
 - right thumb key (rt)
 -
-
 Attualmente, il tasto right Thumb key non viene utilizzato.
 I tasti più interni svolgono la funzione di barra spaziatrice.
 
@@ -1631,35 +1632,35 @@ Dispositivi con EAB
 
 BRAILLEX Tiny:
 || Nome | Tasto |
-| Report current character in review | l1 |
-| Activate current navigator object | l2 |
-| Scroll braille display back | left |
-| Scroll braille display forward | right |
-| Move braille display to previous line | up |
-| Move braille display to next line | dn |
-| Toggle braille tethered to | r2 |
-| Move to flat review / focus | r1 |
-| Move to containing object | r1+up |
-| Move to first contained object | r1+dn |
-| Move to previous object | r1+left |
-| Move to next object | r1+right |
-| Report text formatting | reportf |
+| Annuncia carattere attuale in modalità navigazione | l1 |
+| Attiva oggetto corrente | l2 |
+| Scorri display braille indietro | left |
+| Scorri display braille avanti | right |
+| Sposta display braille alla riga precedente | up |
+| Sposta display braille alla riga successiva | dn |
+| Commuta inseguimento braille | r2 |
+| Navigazione in linea / focus | r1 |
+| Spostarsi all'oggetto contenitore | r1+up |
+| Spostarsi al primo oggetto contenuto | r1+dn |
+| Spostarsi all'oggetto precedente | r1+left |
+| Spostarsi all'oggetto successivo  | r1+right |
+| Annuncia formattazione testo | reportf |
 
 BRAILLEX 2D Screen:
 || Nome | Tasto |
-| Report current character in review | l1 |
-| Activate current navigator object | l2 |
-| Toggle braille tethered to | r2 |
-| Report text formatting | reportf |
-| Move braille display to previous line | up |
-| Scroll braille display back | left |
-| Move to flat review / focus | r1 |
-| Scroll braille display forward | right |
-| Move braille display to next line | dn |
-| Move to next object | left2 |
-| Move to containing object | up2 |
-| Move to first contained object | dn2 |
-| Move to previous object | right2 |
+| Annuncia carattere attuale in modalità navigazione | l1 |
+| Attiva oggetto corrente | l2 |
+| Commuta inseguimento braille | r2 |
+| Annuncia formattazione testo | reportf |
+| Sposta display braille alla riga precedente | up |
+| Sposta display braille indietro | left |
+| Commuta modalità in linea / focus | r1 |
+| Sposta display braille avanti | right |
+| Sposta display braille alla riga successiva | dn |
+| Spostarsi all'oggetto successivo | left2 |
+| Spostarsi all'oggetto contenitore | up2 |
+| Spostarsi al primo oggetto contenuto | dn2 |
+| Spostarsi all'oggetto precedente | right2 |
 %kc:endInclude
 
 ++ HumanWare BrailleNote ++
