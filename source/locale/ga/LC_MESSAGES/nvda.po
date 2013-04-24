@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NVDA 2013.1-5975\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2013-03-21 19:28+1000\n"
-"PO-Revision-Date: 2013-04-19 18:58-0000\n"
+"PO-Revision-Date: 2013-04-23 17:36-0000\n"
 "Last-Translator: Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -2296,10 +2296,13 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
+"\tTéir idir an dá mhódh cainte (bíp agus caint).  Nuair a bhítear múchta, ní "
+"dhéarfaidh NVDA dada; má táthar i módh na bípeanna, déanfaidh NVDA bíp ag "
+"gach aon líne in áit labhairt mar ba ghnáthach leis"
 
 #: globalCommands.py:668
 msgid "Moves the focus to the next closest document that contains the focus"
-msgstr ""
+msgstr "\tBog an fócas go dtí an cháipéis is gaire ina bhfuil an "
 
 #: globalCommands.py:680
 msgid ""
@@ -2308,6 +2311,10 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
+"Téir idir módh an bhrabhsála agus módh an fhócais.  Sa mhód an fhócais, "
+"rachaidh na heochracha go díreach ar aghaidh go dtí an clár feidhmeach ionas "
+"go ligtear duit daghláil le rialú.  Isitih i módh an bhrabhsála is féidir "
+"leat an cháipéis a thaisteal le eochair an chúrsóra nascleantóra."
 
 #: globalCommands.py:684
 msgid "Quits NVDA!"
@@ -2426,6 +2433,8 @@ msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
+"Téir idir bípeanna, caint, bípeanna agus caint, agus múchta ar fad, maidir "
+"le tuairscí bharra an fhoráis."
 
 #. Translators: presented when the present dynamic changes is toggled.
 #: globalCommands.py:843
@@ -2442,8 +2451,8 @@ msgid ""
 "Toggles on and off the reporting of dynamic content changes, such as new "
 "text in dos console windows"
 msgstr ""
-"\tTosaigh nó múch tuairisceáil ar athraithe na hinneachar dinimiciúila, mar "
-"shampla téacs nua in san fhuinneog dos "
+"Tosaigh nó múch tuairisceáil ar athraithe na hinneachar dinimiciúila, mar "
+"shampla téacs nua in san fhuinneog dos cons"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:855
@@ -2584,6 +2593,9 @@ msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
 msgstr ""
+"Brúigh uair amháin chun an chumraíocht seo a fhilleadh ar an chumraíocht is "
+"déanaí sábháilte.  Brúigh faoi dhó chun filleadh ar an gcumraíocht "
+"réamhshocraithe"
 
 #: globalCommands.py:973
 msgid "Activates the NVDA Python Console, primarily useful for development"
@@ -2606,6 +2618,8 @@ msgstr "Braille nasctha le %s"
 #: globalCommands.py:984
 msgid "Toggle tethering of braille between the focus and the review position"
 msgstr ""
+"Scoránaigh ceangailt an bhraille idir an fócas agus an t-ionad "
+"athbhreithnithe"
 
 #. Translators: Presented when there is no text on the clipboard.
 #: globalCommands.py:993
@@ -2634,6 +2648,8 @@ msgid ""
 "Marks the current position of the review cursor as the start of text to be "
 "copied"
 msgstr ""
+"Comharthaigh ionad reatha an chúrsóra athbhreithnithe mar tús an téacs a "
+"bheith cíopeáilte."
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 #: globalCommands.py:1012
@@ -2660,6 +2676,9 @@ msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
 msgstr ""
+"Aisghabh an téacs ón comhar tosaithe is déanaí socraithe go dtí (agus san "
+"áireamh) ionad reatha an chúrsóra aithbhreithnithe.  Agus déan cóip go dtí "
+"an ghearrthaisce."
 
 #: globalCommands.py:1033
 msgid "Scrolls the braille display back"
@@ -2672,6 +2691,8 @@ msgstr "Scrollaigh an taispeántas Braille ar aghaidh"
 #: globalCommands.py:1043
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
+"Rodaigh an cúrsór chuig an réada faoin chealla bhraille seo nó "
+"gníomhachtaigh an réada."
 
 #: globalCommands.py:1048
 msgid "Moves the braille display to the previous line"
@@ -2716,6 +2737,8 @@ msgid ""
 "Reports the new object or content under your finger if different to where "
 "your finger was last"
 msgstr ""
+"Tuairiscigh an réada nua nó an t-inneachar faoi do mhéar má tá sé éagsúil "
+"leis an dheireannach ina raibh do mhéar."
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 #: installer.py:159 gui\__init__.py:350
