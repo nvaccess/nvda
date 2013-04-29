@@ -103,7 +103,14 @@ def HTMLNodeFromIAccessible(IAccessibleObject):
 
 def locateHTMLElementByID(document,ID):
 	try:
-		element=document.getElementsByName(ID).item(0)
+		elements=document.getElementsByName(ID)
+		if elements is not None:
+			element=elements.item(0)
+		else: #probably IE 10 in standards mode (#3151)
+			try:
+				element=document.all.item(ID)
+			except:
+				element=None
 	except COMError as e:
 		log.debugWarning("document.getElementsByName failed with COMError %s"%e)
 		element=None
@@ -122,6 +129,8 @@ def locateHTMLElementByID(document,ID):
 		frames=document.getElementsByTagName(tag)
 	except COMError as e:
 		log.debugWarning("document.getElementsByTagName failed with COMError %s"%e)
+		return None
+	if not frames: #frames can be None in IE 10
 		return None
 	for frame in frames:
 		try:

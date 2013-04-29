@@ -125,6 +125,25 @@ def copyUserConfig(destPath):
 			destFilePath=os.path.join(destPath,os.path.relpath(sourceFilePath,sourcePath))
 			tryCopyFile(sourceFilePath,destFilePath)
 
+def removeOldProgramFiles(destPath):
+	# #3181: Remove espeak-data\voices except for variants.
+	# Otherwise, there will be duplicates if voices have been moved in this new eSpeak version.
+	root = os.path.join(destPath, "synthDrivers", "espeak-data", "voices")
+	try:
+		files = set(os.listdir(root))
+	except OSError:
+		pass
+	else:
+		# Don't remove variants.
+		files.discard("!v")
+		for fn in files:
+			fn = os.path.join(root, fn)
+			# No need to use tryRemoveFile here because these files should never be locked.
+			if os.path.isdir(fn):
+				shutil.rmtree(fn)
+			else:
+				os.remove(fn)
+
 uninstallerRegInfo={
 	"DisplayName":versionInfo.name,
 	"DisplayVersion":versionInfo.version,
@@ -329,6 +348,7 @@ def install(shouldCreateDesktopShortcut=True,shouldRunAtLogon=True):
 			tryRemoveFile(f)
 	if prevInstallPath:
 		removeOldLoggedFiles(prevInstallPath)
+	removeOldProgramFiles(installDir)
 	copyProgramFiles(installDir)
 	for f in ("nvda_UIAccess.exe","nvda_noUIAccess.exe"):
 		f=os.path.join(installDir,f)
@@ -361,6 +381,7 @@ def createPortableCopy(destPath,shouldCopyUserConfig=True):
 		f=os.path.join(destPath,f)
 		if os.path.isfile(f):
 			tryRemoveFile(f)
+	removeOldProgramFiles(destPath)
 	copyProgramFiles(destPath)
 	tryCopyFile(os.path.join(destPath,"nvda_noUIAccess.exe"),os.path.join(destPath,"nvda.exe"))
 	if shouldCopyUserConfig:

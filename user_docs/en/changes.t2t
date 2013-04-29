@@ -63,6 +63,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 
 
 == Bug Fixes ==
+- its possible to use browse mode for pages in Internet Explorer 10 when in standards mode e.g. www.gmail.com login page. (#3151)
 - The quick navigation keys for jumping to the next or previous separator in Browse Mode now work in Internet Explorer and other MSHTML controls. (#2781)
 - If NVDA falls back to eSpeak or no speech due to the configured speech synthesizer failing when NVDA starts, the configured choice is no longer automatically set to the fallback synthesizer. This means that now, the original synthesizer will be tried again next time NVDA starts. (#2589)
 - If NVDA falls back to no braille due to the configured braille display failing when NVDA starts, the configured display is no longer automatically set to no braille. This means that now, the original display will be tried again next time NVDA starts. (#2264)
