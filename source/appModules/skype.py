@@ -12,8 +12,13 @@ import winUser
 class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
-		if controlTypes.STATE_FOCUSED in obj.states and obj.role not in (controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM):
+		if controlTypes.STATE_FOCUSED in obj.states and obj.role not in (controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENUBAR):
+			# The window handle reported by Skype accessibles is sometimes incorrect.
+			# This object is focused, so we can override with the focus window.
 			obj.windowHandle=winUser.getGUIThreadInfo(None).hwndFocus
 			obj.windowClassName=winUser.getClassName(obj.windowHandle)
-		if obj.value and obj.windowClassName in ("TMainUserList", "TConversationList", "TInboxList", "TActiveConversationList", "TConversationsControl") and not obj.role in (controlTypes.ROLE_MENUBAR, controlTypes.ROLE_MENUITEM, controlTypes.ROLE_POPUPMENU):
+		if obj.value and obj.windowClassName in ("TMainUserList", "TConversationList", "TInboxList", "TActiveConversationList", "TConversationsControl"):
+			# The name and value both include the user's name, so kill the value to avoid doubling up.
+			# The value includes the Skype name,
+			# but we care more about the additional info (e.g. new event count) included in the name.
 			obj.value=None
