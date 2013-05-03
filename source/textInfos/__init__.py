@@ -137,24 +137,24 @@ class Point(object):
 		self.x=x
 		self.y=y
 
-class Points(object):
-	"""Represents two points on the screen."""
+class Rect(object):
+	"""Represents a rectangle on the screen."""
 
-	def __init__(self,startX,startY,endX,endY):
+	def __init__(self, left, top, right, bottom):
 		"""
-		@param startX: the x coordinate of the first point.
-		@type startX: int
-		@param startY: The y coordinate of the first point.
-		@type startY: int
-		@param endX: the x coordinate of the second point.
-		@type endX: int
-		@param endY: the y coordinate of the second point.
-		@type endY: int
+		@param left: The x coordinate of the upper left corner of the rectangle.
+		@type left: int
+		@param top: The y coordinate of the upper left corner of the rectangle.
+		@type top: int
+		@param right: The x coordinate of the lower right corner of the rectangle.
+		@type right: int
+		@param bottom: The y coordinate of the lower right corner of the rectangle.
+		@type bottom: int
 		"""
-		self.startX=startX
-		self.startY=startY
-		self.endX=endX
-		self.endY=endY
+		self.left = left
+		self.top = top
+		self.right = right
+		self.bottom = bottom
 
 class Bookmark(baseObject.AutoPropertyObject):
 	"""Represents a static absolute position in some text.
