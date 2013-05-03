@@ -443,7 +443,10 @@ class MSHTML(IAccessible):
 
 	def _get_location(self):
 		if self.HTMLNodeName and not self.HTMLNodeName.startswith('#'):
-			r=self.HTMLNode.getBoundingClientRect()
+			try:
+				r=self.HTMLNode.getBoundingClientRect()
+			except COMError:
+				return None
 			width=r.right-r.left
 			height=r.bottom-r.top
 			p=ctypes.wintypes.POINT(x=r.left,y=r.top)
