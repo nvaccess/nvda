@@ -567,7 +567,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		left,top=embedRangeObj.GetPoint(comInterfaces.tom.tomStart)
 		right,bottom=embedRangeObj.GetPoint(comInterfaces.tom.tomEnd)
 		import displayModel
-		label=displayModel.getWindowTextInRect(self.obj.appModule.helperLocalBindingHandle, self.obj.windowHandle, left, top, right, bottom+10,1,1)[0]
+		label=displayModel.DisplayModelTextInfo(self.obj, textInfos.Rect(left, top, right, bottom+10)).text
 		if label and not label.isspace():
 			return label
 		try:
