@@ -55,7 +55,8 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 			return
 		self.oldCount = newCount
 		if not config.conf["presentation"]["reportDynamicContentChanges"]:
-			# optimisation: If we're not reporting new messages, just make sure we set state correctly ofr next time.
+			# optimisation: If we're not reporting new messages,
+			# just make sure we set state correctly for next time.
 			self.oldLastMessageText = self.getLastMessageText()
 			return
 
@@ -95,7 +96,7 @@ class AppModule(appModuleHandler.AppModule):
 			# This object is focused, so we can override with the focus window.
 			obj.windowHandle=winUser.getGUIThreadInfo(None).hwndFocus
 			obj.windowClassName=winUser.getClassName(obj.windowHandle)
-		if obj.value and obj.windowClassName in ("TMainUserList", "TchatOutputList", "TInboxList", "TActivechatOutputList", "TConversationsControl"):
+		if obj.value and obj.windowClassName in ("TMainUserList", "TConversationList", "TInboxList", "TActiveConversationList", "TConversationsControl"):
 			# The name and value both include the user's name, so kill the value to avoid doubling up.
 			# The value includes the Skype name,
 			# but we care more about the additional info (e.g. new event count) included in the name.
