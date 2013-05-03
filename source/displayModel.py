@@ -150,18 +150,31 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	minHorizontalWhitespace=8
 	minVerticalWhitespace=32
 
+	def __init__(self, obj, position):
+		if isinstance(position, textInfos.Rect):
+			self._location = position.left, position.top, position.right, position.bottom
+			position = textInfos.POSITION_ALL
+		else:
+			self._location = None
+		super(DisplayModelTextInfo, self).__init__(obj, position)
+
 	_cache__storyFieldsAndRects = True
 	def _get__storyFieldsAndRects(self):
-		try:
-			left, top, width, height = self.obj.location
-		except TypeError:
-			# No location; nothing we can do.
-			return [],[],[]
+		if self._location:
+			left, top, right, bottom = self._location
+		else:
+			try:
+				left, top, width, height = self.obj.location
+			except TypeError:
+				# No location; nothing we can do.
+				return [],[],[]
+			right = left + width
+			bottom = top + height
 		bindingHandle=self.obj.appModule.helperLocalBindingHandle
 		if not bindingHandle:
 			log.debugWarning("AppModule does not have a binding handle")
 			return [],[],[]
-		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, left + width, top + height,self.minHorizontalWhitespace,self.minVerticalWhitespace)
+		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace)
 		if not text:
 			return [],[],[]
 		text="<control>%s</control>"%text
