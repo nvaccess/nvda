@@ -150,13 +150,26 @@ inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
  * @param points a pointer to the points you wish to convert.
  * @param count the number of points you want to convert.
  */
-void dcPointsToScreenPoints(HDC hdc, POINT* points, int count) {
+void dcPointsToScreenPoints(HDC hdc, POINT* points, int count,bool relative) {
+	//Convert to logical points to device points 
+	//Includes origins and scaling for window and viewport, and also world transformation 
 	LPtoDP(hdc,points,count);
-	POINT dcOrgPoint;
-	GetDCOrgEx(hdc,&dcOrgPoint);
-	for(int i=0;i<count;++i) {
-		points[i].x+=dcOrgPoint.x;
-		points[i].y+=dcOrgPoint.y;
+	if(relative) {
+		//Do what we did with the points, but with 0,0, and then subtract that from all points
+		POINT origPoint={0,0};
+		LPtoDP(hdc,&origPoint,1);
+		for(int i=0;i<count;++i) {
+			points[i].x-=origPoint.x;
+			points[i].y-=origPoint.y;
+		}
+	} else { //absolute
+		//LptoDp does not take the final DC origin in to account, so plus that to all points here to make them completely screen absolute
+		POINT dcOrgPoint;
+		GetDCOrgEx(hdc,&dcOrgPoint);
+		for(int i=0;i<count;++i) {
+			points[i].x+=dcOrgPoint.x;
+			points[i].y+=dcOrgPoint.y;
+		}
 	}
 }
 
@@ -351,7 +364,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//If a rectangle was provided, convert it to screen coordinates
 	if(lprc) {
 		clearRect=*lprc;
-		dcPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2);
+		dcPointsToScreenPoints(hdc,(LPPOINT)&clearRect,2,false);
 		//Also if opaquing is requested, clear this rectangle in the given display model
 		if(fuOptions&ETO_OPAQUE) model->clearRectangle(clearRect);
 	}
@@ -392,7 +405,7 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		long acY=tm.tmHeight;
 		for(int i=0;i<cbCount;++i) {
 			characterExtents[i].x=(acX+=lpdx[(fuOptions&ETO_PDY)?(i*2):i]);
-			if(fuOptions&ETO_PDY) characterExtents[i].y=(acY+=lpdx[(i*2)+1]);
+			//if(fuOptions&ETO_PDY) characterExtents[i].y=(acY+=lpdx[(i*2)+1]);
 		}
 		resultTextSize->cx=acX;
 		resultTextSize->cy=acY;
@@ -409,8 +422,8 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		}
 		free(characterExtentsX);
 	}
-	//Convert the character extents from logical to physical points but keep them relative 
-	LPtoDP(hdc,characterExtents,cbCount);
+	//Convert the character extents from logical to physical points, but keep them relative
+	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
 	//are we writing a transparent background?
 	if(tm.tmCharSet!=SYMBOL_CHARSET&&!(fuOptions&ETO_OPAQUE)&&(GetBkMode(hdc)==TRANSPARENT)) {
 		//Find out if the text we're writing is just whitespace
@@ -446,8 +459,8 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 	//We must store chunks using device coordinates, not logical coordinates, as its possible for the DC's viewport to move or resize.
 	//For example, in Windows 7, menu items are always drawn at the same DC coordinates, but the DC is moved downward each time.
 	POINT baselinePoint={textRect.left,textRect.top+tm.tmAscent};
-	dcPointsToScreenPoints(hdc,&baselinePoint,1);
-	dcPointsToScreenPoints(hdc,(LPPOINT)&textRect,2);
+	dcPointsToScreenPoints(hdc,&baselinePoint,1,false);
+	dcPointsToScreenPoints(hdc,(LPPOINT)&textRect,2,false);
 	//Calculate the real physical baselineFromTop
 	//Clear a space for the text in the model, though take clipping in to account
 	RECT tempRect;
@@ -599,7 +612,7 @@ int WINAPI fake_FillRect(HDC hdc, const RECT* lprc, HBRUSH hBrush) {
 	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
 	if(!model) return res;
 	RECT rect=*lprc;
-	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2);
+	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2,false);
 	model->clearRectangle(rect);
 	model->release();
 	return res;
@@ -617,7 +630,7 @@ BOOL WINAPI fake_PatBlt(HDC hdc, int nxLeft, int nxTop, int nWidth, int nHeight,
 	displayModel_t* model=acquireDisplayModel(hdc,TRUE);
 	if(!model) return res;
 	RECT rect={nxLeft,nxTop,nxLeft+nWidth,nxTop+nHeight};
-	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2);
+	dcPointsToScreenPoints(hdc,(LPPOINT)&rect,2,false);
 	model->clearRectangle(rect);
 	model->release();
 	return res;
@@ -761,10 +774,10 @@ void StretchBlt_helper(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int 
 	}
 	RECT srcRect={nXSrc,nYSrc,nXSrc+nWidthSrc,nYSrc+nHeightSrc};
 	//we record chunks using device coordinates -- DCs can move/resize
-	dcPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2);
+	dcPointsToScreenPoints(hdcSrc,(LPPOINT)&srcRect,2,false);
 	RECT destRect={nXDest,nYDest,nXDest+nWidthDest,nYDest+nHeightDest};
 	//we record chunks using device coordinates -- DCs can move/resize
-	dcPointsToScreenPoints(hdcDest,(LPPOINT)&destRect,2);
+	dcPointsToScreenPoints(hdcDest,(LPPOINT)&destRect,2,false);
 	if(destInvertBefore) {
 		destModel->copyRectangle(destRect,TRUE,TRUE,TRUE,destRect,NULL,NULL);
 	}
