@@ -55,7 +55,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 				item.field['direction']=lastDirection
 			lastDirection=direction
 	# For fields that are rtl, reverse their text, their rects, and the order of consecutive rtl fields 
-	lastEndOffset=0
+	lastEndOffset=startOffset
 	runDirection=None
 	runStartIndex=None
 	runStartOffset=None
