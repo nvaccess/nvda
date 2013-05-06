@@ -19,28 +19,12 @@ import config
 class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 
 	def startMonitoring(self):
-		self.oldCount = self.childCount
-		self.oldLastMessageText = self.getLastMessageText()
+		self.oldLastMessageText = None
+		self.update()
 		displayModel.requestTextChangeNotifications(self, True)
 
 	def stopMonitoring(self):
 		displayModel.requestTextChangeNotifications(self, False)
-
-	def getLastMessageText(self):
-		ia = self.IAccessibleObject
-		for c in xrange(self.childCount, -1, -1):
-			if ia.accRole(c) == oleacc.ROLE_SYSTEM_LISTITEM:
-				return ia.accName(c)
-		return None
-
-	def getOldLastMessageId(self):
-		if not self.oldLastMessageText:
-			return None
-		ia = self.IAccessibleObject
-		for c in xrange(self.childCount, -1, -1):
-			if ia.accName(c) == self.oldLastMessageText:
-				return c
-		return None
 
 	def reportMessage(self, text):
 		if text.startswith("["):
@@ -48,40 +32,42 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 			text = text.split("] ", 1)[1]
 		ui.message(text)
 
-	def handleChange(self):
-		newCount = self.childCount
-		if newCount == self.oldCount:
-			# optimisation: If the count is the same, there's no change.
-			return
-		self.oldCount = newCount
-		if not config.conf["presentation"]["reportDynamicContentChanges"]:
-			# optimisation: If we're not reporting new messages,
-			# just make sure we set state correctly for next time.
-			self.oldLastMessageText = self.getLastMessageText()
-			return
+	def update(self):
+		reportNew = config.conf["presentation"]["reportDynamicContentChanges"] and self.oldLastMessageText
 
 		# Ideally, we'd determine new messages based just on the change in child count,
 		# but children can be inserted in the middle when messages are expanded.
-		oldLastMessageId = self.getOldLastMessageId()
-		if not oldLastMessageId:
-			self.oldLastMessageText = self.getLastMessageText()
-			return
+		# Therefore, we have to use message text.
+		newCount = self.childCount
 		ia = self.IAccessibleObject
-		text = None
-		for c in xrange(oldLastMessageId + 1, newCount + 1):
-			if ia.accRole(c) != oleacc.ROLE_SYSTEM_LISTITEM:
+		if reportNew:
+			newMessages = []
+		# The list is chronological and we're looking for new messages,
+		# so scan the list in reverse.
+		for c in xrange(self.childCount, -1, -1):
+			if ia.accRole(c) != oleacc.ROLE_SYSTEM_LISTITEM or ia.accState(c) & oleacc.STATE_SYSTEM_UNAVAILABLE:
 				# Not a message.
 				continue
 			text = ia.accName(c)
 			if not text:
 				continue
-			self.reportMessage(text)
-		if text:
-			self.oldLastMessageText = text
+			if text == self.oldLastMessageText:
+				# No more new messages.
+				break
+			if not reportNew:
+				# If we're not reporting new messages, just update state for next time.
+				self.oldLastMessageText = text
+				return
+			newMessages.append(text)
+
+		if newMessages:
+			self.oldLastMessageText = newMessages[0]
+			for text in reversed(newMessages):
+				self.reportMessage(text)
 
 	def event_textChange(self):
 		# This event is called from another thread, but this needs to run in the main thread.
-		queueHandler.queueFunction(queueHandler.eventQueue, self.handleChange)
+		queueHandler.queueFunction(queueHandler.eventQueue, self.update)
 
 class AppModule(appModuleHandler.AppModule):
 
