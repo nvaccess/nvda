@@ -77,7 +77,7 @@ class AppModule(appModuleHandler.AppModule):
 		self.chatOutputList = None
 
 	def event_NVDAObject_init(self,obj):
-		if controlTypes.STATE_FOCUSED in obj.states and obj.role not in (controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENUBAR):
+		if obj.event_objectID is None and controlTypes.STATE_FOCUSED in obj.states and obj.role not in (controlTypes.ROLE_POPUPMENU,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENUBAR):
 			# The window handle reported by Skype accessibles is sometimes incorrect.
 			# This object is focused, so we can override with the focus window.
 			obj.windowHandle=winUser.getGUIThreadInfo(None).hwndFocus
