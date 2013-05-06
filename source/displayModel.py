@@ -96,7 +96,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 		for si,so,ei,eo in reversed(reorderList):
 			newCommandList.extend(yieldListRange(commandList,si,ei))
 			newRects.extend(yieldListRange(rects,so,eo))
-		# Finally update the original command list and rect list replacing the old content for this passage with the reordered runs
+		# Update the original command list and rect list replacing the old content for this passage with the reordered runs
 		commandList[startIndex:endIndex]=newCommandList
 		rects[startOffset:endOffset]=newRects
 
@@ -107,11 +107,11 @@ _textChangeNotificationObjs=[]
 
 def initialize():
 	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow
-	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
-def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace):
-	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace)
+def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True):
+	text, cpBuf = watchdog.cancellableExecute(_getWindowTextInRect, bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace)
 	if not text or not cpBuf:
 		return u"",[]
 
@@ -149,6 +149,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 
 	minHorizontalWhitespace=8
 	minVerticalWhitespace=32
+	stripOuterWhitespace=True
 
 	def __init__(self, obj, position):
 		if isinstance(position, textInfos.Rect):
@@ -174,7 +175,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		if not bindingHandle:
 			log.debugWarning("AppModule does not have a binding handle")
 			return [],[],[]
-		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace)
+		text,rects=getWindowTextInRect(bindingHandle, self.obj.windowHandle, left, top, right, bottom, self.minHorizontalWhitespace, self.minVerticalWhitespace,self.stripOuterWhitespace)
 		if not text:
 			return [],[],[]
 		text="<control>%s</control>"%text
@@ -199,6 +200,10 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				if baseline!=lineBaseline:
 					if lineBaseline is not None:
 						processFieldsAndRectsRangeReadingdirection(commandList,rects,lineStartIndex,lineStartOffset,index,lastEndOffset)
+						#Convert the whitespace at the end of the line into a line feed
+						item=commandList[index-1]
+						if isinstance(item,basestring) and len(item)==1 and item.isspace():
+							commandList[index-1]=u'\n'
 						lineEndOffsets.append(lastEndOffset)
 					if baseline is not None:
 						lineStartIndex=index
@@ -353,6 +358,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 
 	minHorizontalWhitespace=1
 	minVerticalWhitespace=4
+	stripOuterWhitespace=False
 
 	def _findCaretOffsetFromLocation(self,caretRect,validateBaseline=True,validateDirection=True):
 		for charOffset, ((charLeft, charTop, charRight, charBottom),charBaseline,charDirection) in enumerate(self._getStoryOffsetLocations()):

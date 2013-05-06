@@ -337,7 +337,7 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			text.append(curLineText);
 			characterLocations.insert(characterLocations.end(),curLineCharacterLocations.begin(),curLineCharacterLocations.end());
 			//Add a linefeed to complete the line
-			generateWhitespaceXML(curLineBaseline,text);
+			if(!stripOuterWhitespace) generateWhitespaceXML(curLineBaseline,text);
 			tempCharLocation.left=lastChunkRight;
 			tempCharLocation.top=curLineBaseline-1;
 			tempCharLocation.right=rect.right;

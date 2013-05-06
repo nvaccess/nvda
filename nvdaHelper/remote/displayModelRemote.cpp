@@ -28,7 +28,7 @@ BOOL CALLBACK EnumChildWindowsProc(HWND hwnd, LPARAM lParam) {
 	return TRUE;
 }
 
-error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, const int minHorizontalWhitespace, const int minVerticalWhitespace, BSTR* textBuf, BSTR* characterLocationsBuf) {
+error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, const long windowHandle, const int left, const int top, const int right, const int bottom, const int minHorizontalWhitespace, const int minVerticalWhitespace, const boolean stripOuterWhitespace, BSTR* textBuf, BSTR* characterLocationsBuf) {
 	HWND hwnd=(HWND)windowHandle;
 	deque<HWND> windowDeque;
 	EnumChildWindows(hwnd,EnumChildWindowsProc,(LPARAM)&windowDeque);
@@ -61,7 +61,7 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	if(tempModel) {
 		wstring text;
 		deque<RECT> characterLocations;
-		tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,hasDescendantWindows,text,characterLocations);
+		tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace!=0,text,characterLocations);
 		if(hasDescendantWindows) {
 			tempModel->requestDelete();
 		} else {
