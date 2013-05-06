@@ -87,6 +87,9 @@ class AppModule(appModuleHandler.AppModule):
 			# The value includes the Skype name,
 			# but we care more about the additional info (e.g. new event count) included in the name.
 			obj.value=None
+		elif isinstance(obj, NVDAObjects.IAccessible.IAccessible) and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_PANE and not obj.name:
+			# Prevent extraneous reporting of pane when tabbing through a conversation form.
+			obj.shouldAllowIAccessibleFocusEvent = False
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "TChatContentControl" and obj.role == controlTypes.ROLE_LIST:
