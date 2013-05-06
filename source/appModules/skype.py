@@ -40,8 +40,7 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 		# Therefore, we have to use message text.
 		newCount = self.childCount
 		ia = self.IAccessibleObject
-		if reportNew:
-			newMessages = []
+		newMessages = []
 		# The list is chronological and we're looking for new messages,
 		# so scan the list in reverse.
 		for c in xrange(self.childCount, -1, -1):
@@ -54,14 +53,15 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 			if text == self.oldLastMessageText:
 				# No more new messages.
 				break
-			if not reportNew:
-				# If we're not reporting new messages, just update state for next time.
-				self.oldLastMessageText = text
-				return
 			newMessages.append(text)
+			if not reportNew:
+				# If we're not reporting new messages, we don't need to go any further than the last message.
+				break
 
 		if newMessages:
 			self.oldLastMessageText = newMessages[0]
+			if not reportNew:
+				return
 			for text in reversed(newMessages):
 				self.reportMessage(text)
 
