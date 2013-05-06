@@ -406,7 +406,10 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 		except LookupError:
 			pass
 		# Find a character offset where the caret overlaps vertically, overlaps horizontally, but does not care about baseline or reading order (probably vertical whitespace -- blank lines)
-		return self._findCaretOffsetFromLocation(caretRect,validateBaseline=False,validateDirection=False)
+		try:
+			return self._findCaretOffsetFromLocation(caretRect,validateBaseline=False,validateDirection=False)
+		except LookupError:
+			raise RuntimeError
 
 	def _setCaretOffset(self,offset):
 		rects=self._storyFieldsAndRects[1]
