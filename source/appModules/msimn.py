@@ -93,7 +93,6 @@ class MessageListItem(sysListView32.ListItem):
 		info=displayModel.DisplayModelTextInfo(self,textInfos.POSITION_FIRST)
 		info.expand(textInfos.UNIT_CHARACTER)
 		fields=info.getTextWithFields()
-		print fields
 		try:
 			isUnread=fields[0].field['bold']
 		except:
