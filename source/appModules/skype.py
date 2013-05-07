@@ -5,6 +5,7 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+from comtypes import COMError
 import appModuleHandler
 import controlTypes
 import winUser
@@ -44,8 +45,12 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 		# The list is chronological and we're looking for new messages,
 		# so scan the list in reverse.
 		for c in xrange(self.childCount, -1, -1):
-			if ia.accRole(c) != oleacc.ROLE_SYSTEM_LISTITEM or ia.accState(c) & oleacc.STATE_SYSTEM_UNAVAILABLE:
-				# Not a message.
+			try:
+				if ia.accRole(c) != oleacc.ROLE_SYSTEM_LISTITEM or ia.accState(c) & oleacc.STATE_SYSTEM_UNAVAILABLE:
+					# Not a message.
+					continue
+			except COMError:
+				# The child probably disappeared after we fetched childCount.
 				continue
 			text = ia.accName(c)
 			if not text:
