@@ -337,12 +337,14 @@ void displayModel_t::renderText(const RECT& rect, const int minHorizontalWhitesp
 			text.append(curLineText);
 			characterLocations.insert(characterLocations.end(),curLineCharacterLocations.begin(),curLineCharacterLocations.end());
 			//Add a linefeed to complete the line
-			if(!stripOuterWhitespace) generateWhitespaceXML(curLineBaseline,text);
-			tempCharLocation.left=lastChunkRight;
-			tempCharLocation.top=curLineBaseline-1;
-			tempCharLocation.right=rect.right;
-			tempCharLocation.bottom=curLineBaseline+1;
-			characterLocations.push_back(tempCharLocation);
+			if(!stripOuterWhitespace) {
+				generateWhitespaceXML(curLineBaseline,text);
+				tempCharLocation.left=lastChunkRight;
+				tempCharLocation.top=curLineBaseline-1;
+				tempCharLocation.right=rect.right;
+				tempCharLocation.bottom=curLineBaseline+1;
+				characterLocations.push_back(tempCharLocation);
+			}
 			//Reset the current line values
 			curLineText.clear();
 			curLineCharacterLocations.clear();
