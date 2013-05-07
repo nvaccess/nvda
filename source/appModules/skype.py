@@ -95,23 +95,26 @@ class AppModule(appModuleHandler.AppModule):
 		if obj.windowClassName == "TChatContentControl" and obj.role == controlTypes.ROLE_LIST:
 			clsList.insert(0, ChatOutputList)
 
+	def conversationMaybeFocused(self, obj):
+		if not isinstance(obj, NVDAObjects.IAccessible.IAccessible) or obj.windowClassName != "TConversationForm" or obj.IAccessibleRole != oleacc.ROLE_SYSTEM_CLIENT:
+			# This isn't a Skype conversation.
+			return
+
+		# The user has entered a Skype conversation.
+		window = obj.windowHandle
+		self.chatWindow = window
+		try:
+			self.chatOutputList = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
+				windowUtils.findDescendantWindow(window, className="TChatContentControl"),
+				winUser.OBJID_CLIENT, 1)
+		except LookupError:
+			pass
+		else:
+			self.chatOutputList.startMonitoring()
+
 	def event_focusEntered(self, obj, nextHandler):
-		if isinstance(obj, NVDAObjects.IAccessible.IAccessible) and obj.windowClassName == "TConversationForm" and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
-			# The user has entered a Skype conversation.
-			self.chatWindow = obj.windowHandle
-			try:
-				self.chatOutputList = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
-					windowUtils.findDescendantWindow(obj.windowHandle, className="TChatContentControl"),
-					winUser.OBJID_CLIENT, 1)
-			except LookupError:
-				pass
-			else:
-				self.chatOutputList.startMonitoring()
+		self.conversationMaybeFocused(obj)
 		nextHandler()
-	# A conversation might have its own top level window,
-	# but foreground changes often trigger gainFocus instead of focusEntered.
-	# Therefore, explicitly treat foreground events as focusEntered.
-	event_foreground = event_focusEntered
 
 	def conversationLostFocus(self):
 		self.chatWindow = None
@@ -121,6 +124,9 @@ class AppModule(appModuleHandler.AppModule):
 	def event_gainFocus(self, obj, nextHandler):
 		if self.chatWindow and not winUser.isDescendantWindow(self.chatWindow, obj.windowHandle):
 			self.conversationLostFocus()
+		# A conversation might have its own top level window,
+		# but foreground changes often trigger gainFocus instead of focusEntered.
+		self.conversationMaybeFocused(obj)
 		nextHandler()
 
 	def event_appModule_loseFocus(self):
