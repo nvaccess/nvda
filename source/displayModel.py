@@ -354,7 +354,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _get_clipboardText(self):
 		return super(DisplayModelTextInfo,self).clipboardText.replace('\0',' ')
 
-	def _getTextChunks(self,unit):
+	def getTextInChunks(self,unit):
 		#Specifically handle the line unit as we have the line offsets pre-calculated, and we can not guarantee lines end with \n
 		if unit is textInfos.UNIT_LINE:
 			text=self.text
@@ -367,6 +367,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				relStart=relEnd
 				if lineEndOffset>=self._endOffset:
 					return
+			return
 		for chunk in super(DisplayModelTextInfo,self)._getTextInChunks(unit):
 			yield chunk
 
