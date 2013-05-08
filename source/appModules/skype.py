@@ -55,6 +55,12 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 			text = ia.accName(c)
 			if not text:
 				continue
+			if text.startswith("[] "):
+				# When timestamps are disabled,
+				# Skype initially prefixes outgoing messages with "[] ".
+				# However, the prefix silently disappears shortly afterwards.
+				# Remove it so we aren't affected by it.
+				text = text[3:]
 			if text == self.oldLastMessageText:
 				# No more new messages.
 				break
