@@ -1,4 +1,5 @@
 #NVDAObjects/window.py
+#NVDAObjects/window.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2006-2007 NVDA Contributors <http://www.nvda-project.org/>
 #This file is covered by the GNU General Public License.
@@ -387,9 +388,6 @@ class DisplayModelLiveText(LiveText, Window):
 	def stopMonitoring(self):
 		super(DisplayModelLiveText, self).stopMonitoring()
 		displayModel.requestTextChangeNotifications(self, False)
-
-	def _getTextLines(self):
-		return self.displayText.splitlines()
 
 windowClassMap={
 	"EDIT":"Edit",
