@@ -98,7 +98,6 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self._getOffsetsFromFieldIdentifier(docHandle,ID)
 
 	def _getOffsetsFromNVDAObject(self, obj):
-		ancestorCount = 0
 		while True:
 			try:
 				return self._getOffsetsFromNVDAObjectInBuffer(obj)
@@ -106,12 +105,8 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 				pass
 			# Interactive list/combo box descendants aren't rendered into the buffer, even though they are still considered part of it.
 			# Use the list/combo box in this case.
-			if ancestorCount == 2:
-				# This is not a list/combo box descendant.
-				break
 			obj = obj.parent
-			ancestorCount += 1
-			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX):
+			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_GROUPING):
 				break
 		raise LookupError
 
