@@ -21,7 +21,8 @@
 - More accurate reading and cursor tracking in  various input fields for recent versions of Skype, such as chat and search fields. (#1601, #3036)
 - In the Skype recent conversations list, the number of new events is now read for each conversation if relevant. (#1446)
 - Improvements to cursor tracking and reading order for right-to-left text from the screen. E.g. Editing Arabic text in  Microsoft Excel. (#1601) 
-
+- quick navigation to buttons and form fields will now locate links marked as buttons for accessibility purposes in Internet Explorer. (#2750)
+   
 
 == Changes for Developers ==
 - windowUtils.findDescendantWindow has been added to search for a descendant window (HWND) matching the specified visibility, control ID and/or class name.
