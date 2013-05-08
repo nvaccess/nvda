@@ -103,10 +103,10 @@ class VirtualBufferTextInfo(textInfos.offsets.OffsetsTextInfo):
 				return self._getOffsetsFromNVDAObjectInBuffer(obj)
 			except LookupError:
 				pass
-			# Interactive list/combo box descendants aren't rendered into the buffer, even though they are still considered part of it.
-			# Use the list/combo box in this case.
+			# Interactive list/combo box/tree view descendants aren't rendered into the buffer, even though they are still considered part of it.
+			# Use the container in this case.
 			obj = obj.parent
-			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_GROUPING):
+			if not obj or obj.role not in (controlTypes.ROLE_LIST, controlTypes.ROLE_COMBOBOX, controlTypes.ROLE_GROUPING, controlTypes.ROLE_TREEVIEW, controlTypes.ROLE_TREEVIEWITEM):
 				break
 		raise LookupError
 

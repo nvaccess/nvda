@@ -490,7 +490,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 		isVisible = false;
 	} else {
 		isVisible = width > 0 && height > 0;
-		if (IA2TextIsUnneededSpace || role == ROLE_SYSTEM_COMBOBOX || (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) || role == IA2_ROLE_EMBEDDED_OBJECT || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG)
+		if (IA2TextIsUnneededSpace || role == ROLE_SYSTEM_COMBOBOX || (role == ROLE_SYSTEM_LIST && !(states & STATE_SYSTEM_READONLY)) || role == IA2_ROLE_EMBEDDED_OBJECT || role == ROLE_SYSTEM_APPLICATION || role == ROLE_SYSTEM_DIALOG || role == ROLE_SYSTEM_OUTLINE)
 			renderChildren = false;
 		else {
 			if(pacc->get_accChildCount(&childCount)==S_OK) {

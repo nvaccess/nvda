@@ -22,7 +22,8 @@
 - In the Skype recent conversations list, the number of new events is now read for each conversation if relevant. (#1446)
 - Improvements to cursor tracking and reading order for right-to-left text from the screen. E.g. Editing Arabic text in  Microsoft Excel. (#1601) 
 - quick navigation to buttons and form fields will now locate links marked as buttons for accessibility purposes in Internet Explorer. (#2750)
-   
+- In browse mode, the content inside tree views is no longer rendered, as a flattened representation isn't useful. You can press enter on a tree view to interact with it in focus mode. (#3023)
+
 
 == Changes for Developers ==
 - windowUtils.findDescendantWindow has been added to search for a descendant window (HWND) matching the specified visibility, control ID and/or class name.
