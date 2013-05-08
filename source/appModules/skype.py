@@ -110,8 +110,12 @@ class AppModule(appModuleHandler.AppModule):
 		if not isinstance(obj, NVDAObjects.IAccessible.IAccessible) or obj.windowClassName != "TConversationForm" or obj.IAccessibleRole != oleacc.ROLE_SYSTEM_CLIENT:
 			# This isn't a Skype conversation.
 			return
-
 		# The user has entered a Skype conversation.
+
+		if self.chatWindow:
+			# Another conversation was already focused and hasn't been cleaned up yet.
+			self.conversationLostFocus()
+
 		window = obj.windowHandle
 		self.chatWindow = window
 		try:
