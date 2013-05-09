@@ -22,7 +22,7 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 	def startMonitoring(self):
 		self.oldLastMessageText = None
 		self.oldSecondLastMessageText = None
-		self.update()
+		self.update(initial=True)
 		displayModel.requestTextChangeNotifications(self, True)
 
 	def stopMonitoring(self):
@@ -34,8 +34,8 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 			text = text.split("] ", 1)[1]
 		ui.message(text)
 
-	def update(self):
-		reportNew = config.conf["presentation"]["reportDynamicContentChanges"] and self.oldLastMessageText
+	def update(self, initial=False):
+		reportNew = not initial and config.conf["presentation"]["reportDynamicContentChanges"]
 
 		# Ideally, we'd determine new messages based just on the change in child count,
 		# but children can be inserted in the middle when messages are expanded.
