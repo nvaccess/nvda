@@ -21,6 +21,7 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 
 	def startMonitoring(self):
 		self.oldLastMessageText = None
+		self.oldSecondLastMessageText = None
 		self.update()
 		displayModel.requestTextChangeNotifications(self, True)
 
@@ -39,9 +40,9 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 		# Ideally, we'd determine new messages based just on the change in child count,
 		# but children can be inserted in the middle when messages are expanded.
 		# Therefore, we have to use message text.
-		newCount = self.childCount
 		ia = self.IAccessibleObject
 		newMessages = []
+		lastWasEdited = False
 		# The list is chronological and we're looking for new messages,
 		# so scan the list in reverse.
 		for c in xrange(self.childCount, -1, -1):
@@ -64,17 +65,35 @@ class ChatOutputList(NVDAObjects.IAccessible.IAccessible):
 			if text == self.oldLastMessageText:
 				# No more new messages.
 				break
+			if text == self.oldSecondLastMessageText and len(newMessages) == 1:
+				# We didn't match the last message, but this is the second last message.
+				# This means the last message must have been edited, so stop here.
+				lastWasEdited = True
+				break
 			newMessages.append(text)
-			if not reportNew:
-				# If we're not reporting new messages, we don't need to go any further than the last message.
+			if not reportNew and (self.oldLastMessageText or len(newMessages) > 1):
+				# If we're not reporting new messages, we only need to go
+				# far enough so that we have the second last message.
 				break
 
-		if newMessages:
-			self.oldLastMessageText = newMessages[0]
-			if not reportNew:
-				return
-			for text in reversed(newMessages):
-				self.reportMessage(text)
+		if not newMessages:
+			return
+
+		oldLast = self.oldLastMessageText
+		self.oldLastMessageText = newMessages[0]
+		if not lastWasEdited:
+			try:
+				self.oldSecondLastMessageText = newMessages[1]
+			except IndexError:
+				# There was only one new message,
+				# so the second last is the old last.
+				self.oldSecondLastMessageText = oldLast
+
+		if not reportNew:
+			return
+
+		for text in reversed(newMessages):
+			self.reportMessage(text)
 
 	def event_textChange(self):
 		# This event is called from another thread, but this needs to run in the main thread.
