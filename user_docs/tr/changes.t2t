@@ -43,7 +43,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 == Changes ==
 - Updated liblouis braille translator to 2.5.2. (#2737)
 - The laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent. (#804)
-- Updated eSpeak speech synthesizer to 1.47.07. (#2680, #3124, #3132, #3141, #3143)
+- Updated eSpeak speech synthesizer to 1.47.11. (#2680, #3124, #3132, #3141, #3143, #3172)
 
 
 == Bug Fixes ==
@@ -81,6 +81,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - The eSpeak synthesizer driver now handles reading by character more appropriately (e.g. announcing a foreign letter's name or value rather than just its sound or generic name). (#3106)
 - NVDA no longer fails to copy user settings for use on logon and other secure screens when the user's profile path contains non-ASCII characters. (#3092)
 - NVDA no longer freezes when using Asian character input in some .NET applications. (#3005)
+- it is now possible to use browse mode for pages in Internet Explorer 10 when in standards mode; e.g. www.gmail.com login page. (#3151)
 
 
 == Changes for Developers ==
