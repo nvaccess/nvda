@@ -46,15 +46,6 @@ negative number	マイナス	none	norep
 数字の間の全角カンマ		none	always
 
 # Other characters
-•	ナカテン	most
-…	サンテン
-	ナカテン	most
-“	ヒダリニジューインヨーフ	most
-”	ミギニジューインヨーフ	most
-–	エンダッシュ
-—	エムダッシュ
-●	クロマル
-¨	ウムラウト	all
 
 # Whitespace
 \0	ブランク	char
@@ -109,37 +100,21 @@ _	アンダーライン	some
 
 # Other characters
 •	バレット	most
-…	サンテン
 ...	ドットドットドット
 	バレット
 ◦	バレット
 ▪	バレット
-“	ヒダリニジューインヨーフ	most
-”	ミギニジューインヨーフ	most
-‘	ヒダリインヨーフ	most
-’	ミギインヨーフ	most
 –	エンダッシュ
 —	エムダッシュ
-●	クロマル
 ‎	ヒダリカラミギマーク	char
 ‏	ミギカラヒダリマーク	char
-■	クロシカク
 ➔	ミギヤジルシ
-§	セクション
-°	ド	all
-≪	ヒジョーニチイサイ
-≫	ヒジョーニオオキイ
-μ	マイクロ	all
 ¹	ウワツキイチ	all
 ²	ウワツキニ	all
 ³	ウワツキサン	all
 ®	アール
 ™	ティーエム
 ©	シー
-±	プラスマイナス	all
-×	カケル	all
-÷	ワル	all
-→	ミギヤジルシ
 ✓	チェック
 ✔	チェック
 
@@ -167,6 +142,8 @@ _	アンダーライン	some
 ；	セミコロン	some
 ？	ギモンフ	some
 ！	カンタンフ	some
+゙	ダクテン	char	always
+゚	ハンダクテン	char	always
 ゛	ダクテン	char	always
 ゜	ハンダクテン	char	always
 ´	アクサンテギュー	most
@@ -214,9 +191,9 @@ _	アンダーライン	some
 』	ニジューカギトジ	most
 【	クロカッコ	most
 】	クロカッコトジ	most
-＋	プラス	all
-－	マイナス	all
-±	プラスマイナス	all
+＋	プラス	some
+－	マイナス	some
+±	プラスマイナス	some
 ×	カケル	some
 ÷	ワル	some
 ＝	イコール	some
@@ -233,10 +210,10 @@ _	アンダーライン	some
 ′	フン	all
 ″	ビョー	all
 ℃	ドシー	all
-％	パーセント	all
+％	パーセント	some
 ＃	シャープ	some
-＆	アンド	all
-＊	アスタリスク	all
+＆	アンド	some
+＊	アスタリスク	some
 ＠	アット	some
 §	セクション	all
 ☆	ホシ	some
