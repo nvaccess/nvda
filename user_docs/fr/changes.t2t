@@ -43,7 +43,7 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 == Changements ==
 - LibLouis Braille Translator mis à jours vers la version 1.5.2. (#2737)
 - La disposition clavier ordinateur portable a été revue pour être plus intuitive et cohérente. (#804)
-- Mise à jours de la synthèse vocale eSpeak vers la version 1.47.07. (#2680, #3124, #3132, #3141, #3143)
+- Mise à jours de la synthèse vocale eSpeak vers la version 1.47.11. (#2680, #3124, #3132, #3141, #3143, #3172)
 
 
 == Corrections de Bogues ==
@@ -81,6 +81,7 @@ Lisez le document [Résumé des commandes keyCommands.html] pour les nouveaux ra
 - Le pilote de synthèse vocale espeak supporte mieux le mode épellation (ex : annonce la valeur de la lettre plutôt que sa phonéthique).  (#3106)
 - NVDA n'échoue plus lors de la copie de la configuration utilisateur pour utilisation à l'écran de connexion et les autres écrans sécurisés lorsque le chemin du profile contient des des caractères non ASCII. (#3092)
 - NVDA ne se fige plus lorsque l'on saisi des caractères asiatiques dans certaines applications .NET. (#3005)
+- Il est maintenant possible d'utiliser le mode navigation pour les pages sous Internet Explorer 10 lorsque l'on est en mode standard ; Ex : la page de connexion de www.gmail.com. (#3151)
 
 
 == Changements pour les développeurs ==

@@ -3,47 +3,47 @@
 
 %!includeconf: ../changes.t2tconf
 = 2013.1 =
-Schwerpunkte dieser Version sind u.a. ein intuitiveres Tastaturschema für Laptops; grundlegende Unterstützung für Microsoft Powerpoint; Unterstützung für lange Beschreibungen in Web-Browsern; sowie die Unterstützung für die Eingabe von Computerbraille mit Hilfe von Braillezeilen, die eine Brailletastatur besitzen.
+Schwerpunkte dieser Version sind u. a. ein intuitiveres Tastaturschema für Laptops; grundlegende Unterstützung für Microsoft Powerpoint; Unterstützung für lange Beschreibungen in Web-Browsern; sowie die Unterstützung für die Eingabe von Computerbraille mit Hilfe von Braillezeilen, die eine Brailletastatur besitzen.
 
-== wichtig ==
+== Wichtig ==
 
-=== neues Laptop-Tastaturschema ===
+=== Neues Laptop-Tastaturschema ===
 Das Laptop-Tastaturschema wurde überarbeitet, sodass es intuitiver und konsistenter wird.
-So werden z.B. die Pfeiltasten in Kombination mit der NVDA-Taste und anderen Umschaltern zum Betrachten von Text verwendet.
+So werden z. B. die Pfeiltasten in Kombination mit der NVDA-Taste und anderen Umschaltern zum Betrachten von Text verwendet.
 
 Folgende Änderungen wurden an häufig verwendeten Befehlen vorgenommen:
 || Name | Tastenkombination |
-| alles ansagen | NVDA+a |
-| aktuelle Zeile lesen | NVDA+l |
-| aktuelle Textauswahl lesen | NVDA+shift+s |
-| Statuszeile vorlesen | NVDA+Umschalt+ende |
+| Alles ansagen | NVDA+A |
+| Aktuelle Zeile lesen | NVDA+L |
+| Aktuelle Textauswahl lesen | NVDA+Umschalt+S |
+| Statuszeile vorlesen | NVDA+Umschalt+Ende |
 Zudem wurden die Befehle für die objektnavigation, zum Betrachten von Text, für Mausaktionen sowie der Sprachausgaben-Einstellungsring geändert.
-Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] nach.
+Für weitere Informationen sehen Sie in der [Befehlsreferenz keyCommands.html] nach.
 
 
 == Neue Funktionen ==
-- Grundlegende Unterstützung für das Lesen und bearbeiten von Microsoft PowerPoint-Präsentationen. (#501)
+- Grundlegende Unterstützung für das Lesen und Bearbeiten von Microsoft PowerPoint-Präsentationen. (#501)
 - Unterstützung für den automatischen Sprachenwechsel beim Lesen von Dokumenten in Microsoft Word. (#2047) 
 - Grundlegende Unterstützung beim Lesen und Schreiben von Nachrichten in Lotus Notes 8.5. (#543)
 - Im Lesemodus für MSHTML (z. B. Internet Explorer) und Gecko (z. B. Firefox) wird nun die Existenz langer Beschreibungen gemeldet. Sie können die lange Beschreibung jedoch auch durch Drücken von NVDA+d in einem neuen Fenster öffnen. (#809)
 - Im Internet Explorer 9 und neuer werden Benachrichtigungen korrekt ausgegeben (wenn z. B. Inhalte oder herunterzuladene Dateien blockiert werden). (#2343)
 - Automatisches Ausgebe von Spalten- und Reihenüberschriften von Tabellen im Internet Explorer und anderen mshtml-Dokumenten wird unterstützt (#778)
-- Neue Sprache: Aragonesisch, irisch
-- neue Braille-Übersetzungstabellen: Dänische Kurzschrift, koreanische Vollschrift. (#2737)
+- Neue Sprache: Aragonesisch, Irisch
+- Neue Braille-Übersetzungstabellen: Dänische Kurzschrift, koreanische Vollschrift. (#2737)
 - Unterstützung für Bluetooth-Braillezeilen, die unter Verwendung des Bluetooth-Stacks von Toshiba mit dem Computer verbunden werden. (#2419)
 - Unterstützung für die Auswahl des Anschlusses bei FreedomScientific-Braillezeilen (automatisch, USB oder Bluetooth).
-- Unterstützung für  Notizgeräte der Braillenote Familie von Humanware, wenn diese als Braillezeile für einen Bildschirmleser arbeiten. (#2012)
-- Unterstützung für die Auswahl der Schnittstelle, die für Braillezeilen von Freedom Scientific genutzt werden soll (automatisch, USB, Bluetooth). 
+- Unterstützung für Notizgeräte der Braillenote Familie von Humanware, wenn diese als Braillezeile für einen Bildschirmleser arbeiten. (#2012)
+- Unterstützung für die Auswahl der Schnittstelle, die für Braillezeilen von FreedomScientific genutzt werden soll (automatisch, USB, Bluetooth). 
 - Unterstützung für ältere Papenmeier-Braillezeilen (#2679)
 - Unterstützung für die Eingabe von Computer-Braille für Braillezeilen, die eine Braille-Tastatur besitzen. (#808)
-- neue Tastaturoptionen erlauben das Unterbrechen der Sprache beim Eingeben von Zeichen Bzw. beim Drücken der Eingabetaste. (#698)
+- Neue Tastaturoptionen erlauben das Unterbrechen der Sprache beim Eingeben von Zeichen bzw. beim Drücken der Eingabetaste. (#698)
 - Unterstützung für zahlreiche Chrome-basierte Browser: Rockmelt, BlackHawk, Comodo Dragon und SRWare Iron. (#2236, #2813, #2814, #2815)
 -
 
 == Änderungen ==
 - Liblouis Braille-Übersetzer auf 2.5.2 aktualisiert. (#2737)
 - Das Laptop-Tastaturschema wurde komplett überarbeitet, wodurch es intuitiver und konsistenter wird. (#804)
-- Espaek auf 1.47.05 aktualisiert. (#2680, #3124, #3141)
+- Die Sprachausgabe eSpeak auf Version 1.47.11 aktualisiert. (#2680, #3124, #3132, #3141, #3143)
 -
 
 == Fehlerbehebungen ==
@@ -56,31 +56,32 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
 - Die einfachen Punkte (IME) werden nun unter XP beim Lesen korrekt ausgegeben.
 - Die Kandidatenliste in den Eingabemethoden von Microsoft Pinyin (vereinfachtes Chinesisch) unter Windows 7 werden bei Seitenänderungen durch Pfeiltasten nach links/rechts und Pos1 korrekt ausgegeben.
 - Beim Speichern der Aussprache benutzerdefinierter Symbole wird das Feld "beibehalten" nicht mehr entfernt. (#2852)
-- Wird die automatische Prüfung auf Aktualisierungen deaktiviert, muss NVDA nicht mehr neu gestartet werden, damit die Änderung wirksam wird.
+- Wird die automatische Prüfung auf Aktualisierungen deaktiviert, muss NVDA nicht mehr neu gestartet werden, damit die Änderung wirksam werden.
 - NVDA wird nun nicht mehr abstürzen, wenn bei der Deinstallation einer Erweiterung deren Ordner nicht gelöscht werden kann, weil er von einem anderen Programm verwendet wird. (#2860)
 - Die Beschriftungen der Registerkarten im Einstellungsdialog von Dropbox werden nun im Flächenmodus angezeigt.
 - Wenn die Eingabesprache gewechselt wurde, erkennt NVDA diese nun korrekt und kann sie für Befehle und der Eingabehilfe verwenden.
-- Für Sprachen wie z. B. deutsch, bei denen das Pluszeichen(+) eine einzelne Taste ist, ist es nun möglich, das Pluszeichen in Tastenkombinationen zu verwenden, in dem man das Wort "plus" verwendet. (#2898)
-- In Internetexplorer und anderen MSHTML Elementen werden Zitate nun angesagt, wenn Sie auftauchen. (#2888)
+- Für Sprachen wie z. B. Deutsch, bei denen das Pluszeichen (+) eine einzelne Taste ist, ist es nun möglich, das Pluszeichen in Tastenkombinationen zu verwenden, in dem man das Wort "plus" verwendet. (#2898)
+- Im Internet Explorer und anderen MSHTML-Elementen werden Zitate nun angesagt, wenn Sie auftauchen. (#2888)
 - Der Braillezeilentreiber für die HumanWare Brailliant BI/B serie  kann nun ausgewählt werden, wenn die Braillezeile  mittels Bluetooth verbunden wurde, aber noch nie  über USB verbunden wurde.
 - Wenn beim Eingeben eines Filterbegriffs in die Elementliste im lesemodus Großbuchstaben verwendet werden, wird nun ohne Berücksichtigung von Groß-/Kleinschreibung gefiltert (wie beim Eingeben von Kleinbuchstaben) (#2951)
-- in Mozilla-Browsern kann nun wieder der Lesemodus verwendet werden, wenn Flash-Inhalte den Fokus haben. (#2546)
+- In Mozilla-Browsern kann nun wieder der Lesemodus verwendet werden, wenn Flash-Inhalte den Fokus haben. (#2546)
 - Wenn Sie eine Kurzschrift-Übersetzungstabelle verwenden und die Option zum Ausschreiben des aktuellen Wortes in Computerbraille aktiviert ist, wird der Braille-Cursor nun korrekt gesetzt, wenn er hinter einem Wort steht, das ein Zeichen enthält, das durch mehrere Braille-Zeichen dargestellt wird. (z.B.  Großbuchstaben, Zahlenzeichen usw.). (#2947)
-- In Microsoft Word und in Internet Explorer wird markierter Text nun korrekt in Braille angezeigt.
+- In Microsoft Word und im Internet Explorer wird markierter Text nun korrekt in Braille angezeigt.
 - Wenn Sie eine Braillezeile benutzen, können Sie nun wieder Text rückwärts markieren, wenn Sie sich in Microsoft Word befinden.
-- Wenn sie in Scintilla-Eingabefeldern die Befehle zum Betrachten von Text verwenden oder Zeichen löschen, wird nvda Multibyte-Zeichen korrekt ausgeben. (#2855)
+- Wenn Sie in Scintilla-Eingabefeldern die Befehle zum Betrachten von Text verwenden oder Zeichen löschen, wird NVDA Multibyte-Zeichen korrekt ausgeben. (#2855)
 - Die Installation von NVDA wird nun nicht mehr fehlschlagen, wenn der Name des Benutzerprofilverzeichnisses bestimmte Multibyte-Zeichen enthält. (#2729)
 - Bei der Ausgabe von Gruppen in Listen-Steuerelementen (syslistview32) in 64-Bit-Anwendungen kommt es nun nicht mehr zu einem Fehler.
-- im Lesemodus von Mozilla-Anwendungen werden Textinhalte nun nicht mehr fälschlicherweise als deaktiviert angezeigt, auch wenn das selten der Fall ist. (#2959)
-- in IBM Lotus Symphony und Openoffice.org wird nun der NVDA-Cursor mitgezogen, wenn der Systemcursor bewegt wird.
-- Im Internet Explorer unter windows 8 sind Adobe-Flash-Inhalte nun zugänglich. (#2454)
+- Im Lesemodus von Mozilla-Anwendungen werden Textinhalte nun nicht mehr fälschlicherweise als deaktiviert angezeigt, auch wenn das selten der Fall ist. (#2959)
+- In IBM Lotus Symphony und Openoffice.org wird nun der NVDA-Cursor mitgezogen, wenn der Systemcursor bewegt wird.
+- Im Internet Explorer unter Windows 8 sind Adobe-Flash-Inhalte nun zugänglich. (#2454)
 - Bluetooth-Unterstützung für Papenmeier Braillex Trio korrigiert. (#2995)
 - Bestimmte Microsoft SAPI-5-Stimmen wie z. B. Stimmen von Koba Speech konnten von NVDA nicht verwendet werden. Dies wurde nun behoben (#2629).
 - In Java-Anwendungen wird nun die Braille-Anzeige korrekt aktualisiert, wenn Sie sich innerhalb von Textfeldern bewegen. (#3107)
 - Unterstützung von Landmark-Formularen. (#2997) 
-- Espeak behandet nun beim zeichenweisen Navigieren Zeichen aus fremden Sprachen besser (#3106)
-- das Kopieren der Benutzerkonfiguration in die Systemkonfiguration funktioniert jetzt auch, wenn der name des Benutzerprofilverzeichnisses nicht-ascii-Zeichen enthält (#3092)
+- Bessere Behandlung beim zeichenweises Navigieren mit eSpeak Zeichen aus Fremdsprachen (#3106)
+- Das Kopieren der Benutzerkonfiguration in die Systemkonfiguration funktioniert jetzt auch, wenn der name des Benutzerprofilverzeichnisses nicht-ascii-Zeichen enthält (#3092)
 - NVDA wird nun nicht mehr abstürzen, wenn asiatische Zeichen in .net-Anwendungen eingegeben werden. (#3005)
+- Im Internet Explorer 10 ist es jetzt auch im Standardmodus möglich den Lesemodus von NVDA zu benutzen (Beispiel: Die Anmeldeseite auf www.gmail.com). (#3151)
 -
 
 == Änderungen für Entwickler ==
@@ -88,8 +89,8 @@ Für weitere informationen sehen Sie in der  [Befehlsreferenz keyCommands.html] 
  - Dies ist für Braillezeilen sinnvoll, die an eine serielle Schnittstelle angeschlossen werden.
  - Hierfür können Sie die Klassenmethode getPossiblePorts aus der Klasse BrailleDisplayDriver verwenden.
 - Braille-Eingabe von Braille-Tastaturen wird nun unterstützt (#808)
- - Braille-eingaben werden in die Klasse  brailleInput.BrailleInputGesture oder eine abgeleitete Klasse eingeschlossen.
- - Unterklassen von  braille.BrailleDisplayGesture (wie sie z.B. in Braillezeilentreibern implementiert sind) können auch von  brailleInput.BrailleInputGesture ableiten. Dies ermöglicht die Verarbeitung von Braille-Navigationsbefehlen und Braille-Eingaben von ein und derselben Klasse.
+ - Braille-Eingaben werden in die Klasse brailleInput.BrailleInputGesture oder eine abgeleitete Klasse eingeschlossen.
+ - Unterklassen von  braille.BrailleDisplayGesture (wie sie z. B. in Braillezeilentreibern implementiert sind) können auch von  brailleInput.BrailleInputGesture ableiten. Dies ermöglicht die Verarbeitung von Braille-Navigationsbefehlen und Braille-Eingaben von ein und derselben Klasse.
  -
 - Sie können nun comHelper.getActiveObject verwenden, um ein Com-Objekt von einem normalen Prozess zu erstellen, wenn NVDA mit UIAccess-Berechtigungen ausgeführt wird. (#2483)
 -
@@ -104,11 +105,11 @@ Schwerpunkte in dieser Version sind: Unterstützung für asiatische Eingabemetod
  - Ansage der Leseketten.
 - Unterstrichener oder durchgestrichener Text wird nun in Dokumenten in Adobe Reader korrekt erkannt. (#2410)
 - Wenn die Einrastfunktion der Eingabehilfen in Windows aktiviert ist, verhält sich die NVDA-Taste nun wie andere Umschalt-Tasten. Das Heißt, dass Sie die NVDA-Taste nicht mehr gedrückt halten müssen, wenn Sie NVDA-Befehle ausführen möchten. (#230)
-- In Excel wird nun die automatische Angabe von Spalten- und Reihenüberschriften unterstützt. Drücken Sie NVDA+Umschalt+c, um die Reihe festzulegen, die Spaltenüberschriften enthält; Bzw. NVDA+Umschalt+r um die Spalte festzulegen, die die Reihenbeschriftungen enthält. Drücken Sie die entsprechende Tastenkombination zweimal, um die Zuweisungen zu löschen. (#1519)
+- In Excel wird nun die automatische Angabe von Spalten- und Reihenüberschriften unterstützt. Drücken Sie NVDA+Umschalt+C, um die Reihe festzulegen, die Spaltenüberschriften enthält; Bzw. NVDA+Umschalt+r um die Spalte festzulegen, die die Reihenbeschriftungen enthält. Drücken Sie die entsprechende Tastenkombination zweimal, um die Zuweisungen zu löschen. (#1519)
 - Unterstützung der Braillezeilen Braille Sense, Braille EDGE und SyncBraille der Firma HIMS. (#1266, #1267)
 - Wenn in Windows 8 Benachrichtigungen angezeigt werden, werden diese auch von NVDA ausgegeben, sofern die Option "Hilfe-Sprechblasen ansagen" in den Einstellungen zur Objektdarstellung aktiviert ist. (#2143)
 - Experimentelle Unterstützung für Sensorbildschirme (Touch Screens) in Windows 8. Hierzu zählen:
- - Das ausgeben von Text direkt unter Ihrem Finger, wenn Sie ihn über den Bildschirm bewegen
+ - Das Ausgeben von Text direkt unter Ihrem Finger, wenn Sie ihn über den Bildschirm bewegen
  - Viele Gesten zur Objektnavigation, zum Betrachten von Text und für andere NVDA-Befehle
 - Unterstützung für VipMud. (#1728)
 - Wenn in Adobe Reader einer Tabelle eine Zusammenfassung zugewiesen wurde, wird diese nun angezeigt. (#2465)

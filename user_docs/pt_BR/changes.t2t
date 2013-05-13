@@ -46,7 +46,7 @@ Por favor consulte o documento da [Referência Rápida de Comandos keyCommands.h
 == Alterações ==
 - Atualizado o transcritor braille liblouis para a versão 2.5.2.
 - O leiaute de teclado laptop foi completamente redesenhado com vista a tornar-se mais intuitivo e consistente. (#804)
-- Atualizado o sintetizador eSpeak para a versão 1.47.05. (#2680, #3124, #3141)
+- Atualizado o sintetizador eSpeak para a versão 1.47.11. (#2680, #3124, #3132, #3141, #3143), , #3172)
  
 
 == Correção de Falhas ==
@@ -84,7 +84,8 @@ Suporte para marcas de formulários em documentos no modo de navegação, caso s
  - O driver para o sintetizador eSpeak agora controla a leitura por caractere mais apropriadamente (isto é, anuncia o nome de uma letra ou seu valor ao invés de falar apenas seu som ou seu nome genérico). (#3106)
 - O NVDA já não falha ao copiar configurações do usuário para uso no logon e outras telas seguras, quando o caminho do perfio do usuário contém caracteres não-ascii. (#3092)
 - O NVDA já não trava quando se usa a entrada de caracteres Asiáticos  em alguns aplicativos .NET. (#3005)
-
+- Agora é possível usar o modo de navegação para páginas no Internet Explorer 10 em modos standards; isto é, como na página de login www.gmail.com. (#3151)
+ 
  
  == Alterações Específicas para Desenvolvedores ==
  

@@ -43,7 +43,7 @@ Por favor mira el documento [Referencia Rápida de Órdenes keyCommands.html] pa
 == Cambios ==
 - Actualizado el transcriptor braille liblouis a 2.5.2. (#2737)
 - La distribución de teclado portátil se ha rediseñado por completo para hacerla más intuitiva y consistente. (#804)
-- Actualizado el sintetizador de voz eSpeak a 1.47.07. (#2680, #3124, #3132, #3141, #3143)
+- Actualizado el sintetizador de voz eSpeak a 1.47.11. (#2680, #3124, #3132, #3141, #3143, #3172)
 
 
 == Corrección de Fallos ==
@@ -81,6 +81,7 @@ Por favor mira el documento [Referencia Rápida de Órdenes keyCommands.html] pa
 - El controlador del sintetizador de voz eSpeak ahora maneja la lectura por caracteres más apropiadamente (ej.: anuncia un nombre de letra extrangero o un valor en lugar de sólo su sonido o nombre genérico). (#3106)
 - NVDA ya no falla al copiar las opciones del usuario para utilizarlas en la autentificación y en otras pantallas seguras cuando la ruta del perfil del usuario contiene caracteres no ASCII. (#3092)
 - NVDA ya no se bloquea cuando se utiliza la entrada de caracteres asiáticos en algunas aplicaciones .NET. (#3005)
+- Ahora es posible utilizar el modo navegación para páginas en Internet Explorer 10 cuando se esté en modo estándar; ej.: www.gmail.com login page. (#3151)
 
 
 == Cambios para Desarrolladores ==
