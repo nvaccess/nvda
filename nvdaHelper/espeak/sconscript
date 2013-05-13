@@ -24,20 +24,26 @@ env.Append(CCFLAGS='/W0')
 env.Append(CPPDEFINES=[('BUILDING_DLL',1)])
 env.Prepend(CPPPATH='#include/espeak/platforms/windows/windows_dll/src')
 
-_espeakInstance=None
 def espeak_compileDict_action(target,source,env):
-	global _espeakInstance
-	if not _espeakInstance:
-		_espeakInstance=ctypes.cdll.LoadLibrary(espeakLib[0].abspath)
-		_espeakInstance.espeak_Initialize(0,0,synthDriversDir.abspath,0x8000)
-	lang=source[0].name.split('_')[0]
-	v=espeak_VOICE(languages=lang+'\x00')
-	if _espeakInstance.espeak_SetVoiceByProperties(ctypes.byref(v))!=0:
-		print "espeak_compileDict_action: failed to switch to language %s, skipping compilation"%lang
-		return
-	dictPath=os.path.split(source[0].abspath)[0]+'/'
-	if _espeakInstance.espeak_CompileDictionary(dictPath,None,0)!=0:
-		return 1
+	# We want the eSpeak dll to be freed after each dictionary.
+	# This is because it writes to stderr but doesn't flush it.
+	# Unfortunately, there's no way we can flush it or use a different stream
+	# because our eSpeak statically links the CRT.
+	espeak=ctypes.cdll.LoadLibrary(espeakLib[0].abspath)
+	espeak.espeak_Initialize(0,0,synthDriversDir.abspath,0x8000)
+	try:
+		lang=source[0].name.split('_')[0]
+		v=espeak_VOICE(languages=lang+'\x00')
+		if espeak.espeak_SetVoiceByProperties(ctypes.byref(v))!=0:
+			print "espeak_compileDict_action: failed to switch to language %s, skipping compilation"%lang
+			return
+		dictPath=os.path.split(source[0].abspath)[0]+'/'
+		if espeak.espeak_CompileDictionary(dictPath,None,0)!=0:
+			return 1
+	finally:
+		espeak.espeak_Terminate()
+		# ctypes doesn't ever unload dlls.
+		ctypes.windll.kernel32.FreeLibrary(espeak._handle)
 
 synthDriversDir=sourceDir.Dir('synthDrivers')
 espeakDataDir=synthDriversDir.Dir('espeak-data')
