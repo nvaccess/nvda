@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: NVDA 2013.1-5975\n"
 "Report-Msgid-Bugs-To: nvda-translations@freelists.org\n"
 "POT-Creation-Date: 2013-03-21 19:28+1000\n"
-"PO-Revision-Date: 2013-04-23 17:36-0000\n"
+"PO-Revision-Date: 2013-04-29 23:36-0000\n"
 "Last-Translator: Cearbhall O'Meadhra <cearbhall.omeadhra@blbc.ie>\n"
 "Language-Team: Gaeilge <ga@li.org>\n"
 "Language: ga\n"
@@ -2311,10 +2311,10 @@ msgid ""
 "with a control. When in browse mode, you can navigate the document with the "
 "cursor, quick navigation keys, etc."
 msgstr ""
-"Téir idir módh an bhrabhsála agus módh an fhócais.  Sa mhód an fhócais, "
-"rachaidh na heochracha go díreach ar aghaidh go dtí an clár feidhmeach ionas "
-"go ligtear duit daghláil le rialú.  Isitih i módh an bhrabhsála is féidir "
-"leat an cháipéis a thaisteal le eochair an chúrsóra nascleantóra."
+"Téir idir mód brabhsála agus mód an fhócais.  Sa mhód an fhócais, rachaidh "
+"na heochracha go díreach ar aghaidh go dtí an clár feidhmeach ionas go "
+"ligtear duit idirghníomhú le rialú.  Istigh i mód brabhsála is féidir leat "
+"an cháipéis a thaisteal le eochair an chúrsóra nascleantóra."
 
 #: globalCommands.py:684
 msgid "Quits NVDA!"
@@ -2691,7 +2691,7 @@ msgstr "Scrollaigh an taispeántas Braille ar aghaidh"
 #: globalCommands.py:1043
 msgid "Routes the cursor to or activates the object under this braille cell"
 msgstr ""
-"Rodaigh an cúrsór chuig an réada faoin chealla bhraille seo nó "
+"Ródaigh an cúrsór chuig an réada faoin chealla bhraille seo nó "
 "gníomhachtaigh an réada."
 
 #: globalCommands.py:1048
@@ -2738,7 +2738,7 @@ msgid ""
 "your finger was last"
 msgstr ""
 "Tuairiscigh an réada nua nó an t-inneachar faoi do mhéar má tá sé éagsúil "
-"leis an dheireannach ina raibh do mhéar."
+"leis an áit dheireannach ina raibh do mhéar."
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 #: installer.py:159 gui\__init__.py:350
@@ -3552,6 +3552,14 @@ msgid ""
 "develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
+"Ní foláir dúinn do chabhair chun go leannóimid leis na bhfeabhsúcháin a chur "
+"ar NVDA.\n"
+"Go formhór, braithimid ar síntiúis agus ar deontais.  Trí do bhronnadh, "
+"tacaíonn tú  an fhorbairt lánaimseartha.\n"
+"Fiú má bronntar fiú $10 le gach íoslód, beimid in ann ghnáthchostais an "
+"thionscnaimh a íoc.\n"
+"Glactar gach síntiús ag NV Access (an eagraíocht neamhbhrabúsach a "
+"fhorbraíonn NVDA). Míle buíochas as do chuid cabhrach."
 
 #. Translators: The title of the dialog requesting donations from users.
 #: updateCheck.py:384
@@ -3611,6 +3619,28 @@ msgid ""
 "donating to NV Access. You can do this by selecting Donate from the NVDA "
 "menu."
 msgstr ""
+"{LongName} ({name})\n"
+"Leagan: {version}\n"
+"URL: {url}\n"
+"{copyright}\n"
+"\n"
+"{name} atá clúdaithe leis an GNU Ceadúnas Ginearálta Poiblí (Leagan 2).  Tá "
+"tú anseo chun an bogearraí seo a roinnt nó a athrú in aon chaoi más maith "
+"leat chomh fada agus atá an ceadúnas in éineacht leis agus go gcuireann tú "
+"an bunchód ar fáil ag aon duine a bhfuil sé ag teastáil uathu.  Baineann sin "
+"le bunchóipeanna agus cóipeanna mhodhnaithe araon móide aon díothrach an "
+"tsaothar..\n"
+"Le breis sonraí a fháil is féidir leat amharc amharc ar an cheadúnas sa "
+"roghchlár “Cabhair”. \n"
+"Freisin is féidir leat amharc air ar líne ag: http://www.gnu.org/licenses/"
+"old-licenses/gpl-2.0.html\n"
+"\n"
+"{name} atá forbatha ag NV Access, eagraíocht neamhbhrabúsach a chaitheann a "
+"dúthracht le cabhrú agus cur chun cinn réitigh an tsaorchóid ar son na dall "
+"agus na daoine a bhfuil radharc oirbhearnach acu. \n"
+"Má tá NVDA áisiúil agat agus más maith leat go leanntar a feabhsuithe ar "
+"aghaidh, le do thoil, smaoinigh ar síntiús a thbhairt do NV Access. Chun go "
+"bhféadfá é seo a dhéanamh, roghnaigh Bronn as an roghchlár NVDA."
 
 #. Translators: a message announcing a candidate's character and description.
 #: NVDAObjects\behaviors.py:359
@@ -3934,7 +3964,7 @@ msgstr "Amharc sleamhnáin"
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:156
 msgid "Slide Master view"
-msgstr ""
+msgstr "Amharc an Máistir-Shleamhnán."
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:158
@@ -3964,7 +3994,7 @@ msgstr "Amharc sórtálaí sleamhnán"
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:168
 msgid "Title Master view"
-msgstr ""
+msgstr "Amharc an Máistir-theideal"
 
 #. Translators: a label for a particular view or pane in Microsoft PowerPoint
 #: appModules\powerpnt.py:170
@@ -4003,6 +4033,9 @@ msgid ""
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
 msgstr ""
+"Scoránaigh idir tuairisceáil nótaí an challaire nó inneachar an fhíor-"
+"shleamhnáin.  Ní athraíotar an méid atá infheicthe ar an scáileán, ach "
+"amháin an méid atá inléite ag NVDA."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #: appModules\powerpnt.py:754
@@ -4148,7 +4181,7 @@ msgstr "Samhlacha nua: Papenmeier BRAILLEX"
 #: brailleDisplayDrivers\papenmeier.py:461
 #: brailleDisplayDrivers\papenmeier_serial.py:158
 msgid "Route to and report formatting"
-msgstr ""
+msgstr "Ródaigh chuig agus déan tuairisc ar an fhormáidiú."
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\papenmeier_serial.py:61
@@ -4166,7 +4199,7 @@ msgstr "Cumraíocht curtha i bhfeidhm"
 
 #: gui\__init__.py:138
 msgid "Configuration restored to factory defaults"
-msgstr ""
+msgstr "Aischurtha  ag cumraíocht réamhshocraithe."
 
 #: gui\__init__.py:142
 msgid "Cannot save configuration - NVDA in secure mode"
@@ -4248,6 +4281,8 @@ msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
 msgstr ""
+"Cumraigh leagan amach an mhéarchláir, ag labhairt na carachtar clóscríofa, "
+"focail nó eochracha ordaithe."
 
 #: gui\__init__.py:293
 msgid "&Mouse settings..."
@@ -4255,7 +4290,7 @@ msgstr "Socruithe na &luiche..."
 
 #: gui\__init__.py:293
 msgid "Change reporting of mouse shape and object under mouse"
-msgstr ""
+msgstr "Athraigh tuairisceáil crutha na luiche agus an réada faoin luch."
 
 #: gui\__init__.py:295
 msgid "Review &cursor..."
@@ -4267,7 +4302,7 @@ msgstr "Cumraigh gluaiseacht an chursóra athbhreithnithe"
 
 #: gui\__init__.py:297
 msgid "&Input composition settings..."
-msgstr ""
+msgstr "&Socruithe chomhshuímh an ionchuir."
 
 #: gui\__init__.py:297
 msgid ""
