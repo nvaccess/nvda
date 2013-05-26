@@ -516,7 +516,13 @@ NVDA provides its own extra commands for some applications to make certain tasks
 | Set row headers | NVDA+shift+r | Pressing this once tells NVDA this is the column that contains row headers, which should be automatically announced when moving between rows after  this column. Pressing twice will clear the setting. | 
 %kc:endInclude
 
-++ foobar2000 ++
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Name | Key | Description |
+| Toggle speaker notes reading | control+shift+s | When in a running slide show, this command will toggle between the speaker notes for the slide and the content for the slide. This only affects what NVDA reads, not what is displayed on screen. | 
+%kc:endInclude
+
+++ Foobar2000 ++
 %kc:beginInclude
 || Name | Key | Description |
 | Report remaining time | control+shift+r | Reports the remaining time of the currently playing track, if any. |
