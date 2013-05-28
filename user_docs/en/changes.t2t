@@ -108,6 +108,7 @@ Please see the [Commands Quick Reference keyCommands.html] document for the new 
 - NVDA no longer fails to copy user settings for use on logon and other secure screens when the user's profile path contains non-ASCII characters. (#3092)
 - NVDA no longer freezes when using Asian character input in some .NET applications. (#3005)
 - it is now possible to use browse mode for pages in Internet Explorer 10 when in standards mode; e.g. www.gmail.com login page. (#3151)
+- Correct characters are produced when typing in NVDA's own user interface while using a Korean or Japanese input method while it is the default method. (#2909)
 
 
 == Changes for Developers ==
