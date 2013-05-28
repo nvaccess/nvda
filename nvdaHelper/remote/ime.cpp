@@ -410,10 +410,9 @@ bool hasValidIMEContext(HWND hwnd) {
 }
 
 static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
-	// Ignore messages with invalid HIMC
-	if(!hasValidIMEContext(hwnd)) return 0; 
 	switch (message) {
 		case WM_IME_NOTIFY:
+			if(!hasValidIMEContext(hwnd)) return 0;
 			switch (wParam) {
 				case IMN_SETOPENSTATUS:
 					handleOpenStatus(hwnd);
@@ -440,6 +439,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 			break;
 
 		case WM_IME_COMPOSITION:
+			if(!hasValidIMEContext(hwnd)) return 0;
 			curIMEWindow=hwnd;
 			if(!isTSFThread(true)) {\
 				if(lParam&GCS_COMPSTR||lParam&GCS_CURSORPOS) {
@@ -449,6 +449,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 			break;
 
 		case WM_IME_ENDCOMPOSITION:
+			if(!hasValidIMEContext(hwnd)) return 0;
 			if(curIMEWindow==hwnd) {
 				if(handleEndComposition(hwnd, wParam, lParam)) {
 					//Disable further typed character notifications produced by TSF
@@ -460,6 +461,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 
 		case WM_ACTIVATE:
 		case WM_SETFOCUS:
+			if(!hasValidIMEContext(hwnd)) return 0;
 			handleIMEConversionModeUpdate(hwnd,false);
 			if(!isTSFThread(true)) {
 				if (hwnd != GetFocus())  break;
