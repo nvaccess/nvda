@@ -2,14 +2,15 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited
+#Copyright (C) 2012-2013 NV Access Limited, Beqa Gozalishvili
 
+import os
 import wx
 import core
+import languageHandler
 import gui
 from logHandler import log
 import addonHandler
-
 
 class AddonsDialog(wx.Dialog):
 	_instance = None
@@ -48,6 +49,9 @@ class AddonsDialog(wx.Dialog):
 		self.removeButton.Disable()
 		self.removeButton.Bind(wx.EVT_BUTTON,self.OnRemoveClick)
 		entryButtonsSizer.Add(self.removeButton)
+		self.getAddonsButton=wx.Button(self,label=_("&Get add-ons..."))
+		self.getAddonsButton.Bind(wx.EVT_BUTTON,self.OnGetAddonsClick)
+		entryButtonsSizer.Add(self.getAddonsButton)
 		settingsSizer.Add(entryButtonsSizer)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
 		# Translators: The label of a button to close the Addons dialog.
@@ -204,6 +208,10 @@ Description: {description}
 		# Translators: title for the Addon Information dialog
 		title=_("Add-on Information")
 		gui.messageBox(message, title, wx.OK)
+
+	def OnGetAddonsClick(self,evt):
+		ADDONS_URL = "http://addons.nvda-project.org/index.{lang}.html"
+		os.startfile(ADDONS_URL.format(lang=languageHandler.getLanguage()))
 
 	def __del__(self):
 		AddonsDialog._instance = None
