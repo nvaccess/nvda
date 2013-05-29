@@ -4,6 +4,8 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
+import sys
+import os.path
 import gettext
 import glob
 import tempfile
@@ -11,7 +13,6 @@ import cPickle
 import inspect
 import itertools
 import collections
-import os.path
 import pkgutil
 import shutil
 from cStringIO import StringIO
@@ -25,7 +26,6 @@ import globalVars
 import languageHandler
 from logHandler import log
 import winKernel
-
 
 MANIFEST_FILENAME = "manifest.ini"
 stateFilename="addonsState.pickle"
@@ -312,12 +312,11 @@ def getCodeAddon(obj=None, frameDist=1):
 	@param frameDist: howmany frames is the caller code. Only change this for functions in this module.
 	@return: L{Addon} instance or None if no code does not belong to a add-on package.
 	@rtype: C{Addon}
-	 """
+	"""
 	global _availableAddons
 	if obj is None:
-		fileName = inspect.stack()[frameDist][1]
-	else:
-		fileName  = inspect.getfile(obj)
+		obj = sys._getframe(frameDist)
+	fileName  = inspect.getfile(obj)
 	dir= unicode(os.path.abspath(os.path.dirname(fileName)), "mbcs")
 	# if fileName is not a subdir of one of the addon paths
 	# It does not belong to an addon.
