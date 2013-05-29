@@ -39,6 +39,9 @@ class RequestHandler(SocketServer.StreamRequestHandler):
 		self._execDoneEvt.set()
 
 	def handle(self):
+		# #3126: Remove the default socket timeout.
+		# We can't use the class timeout attribute because None means don't set a timeout.
+		self.connection.settimeout(None)
 		self._keepRunning = True
 
 		try:
