@@ -27,6 +27,7 @@
 - Improvements to cursor tracking and reading order for right-to-left text from the screen. E.g. Editing Arabic text in  Microsoft Excel. (#1601) 
 - quick navigation to buttons and form fields will now locate links marked as buttons for accessibility purposes in Internet Explorer. (#2750)
 - In browse mode, the content inside tree views is no longer rendered, as a flattened representation isn't useful. You can press enter on a tree view to interact with it in focus mode. (#3023)
+- Pressing alt+downArrow or alt+upArrow to expand a combo box while in focus mode no longer incorrectly switches to browse mode. (#2340)
 
 
 == Changes for Developers ==

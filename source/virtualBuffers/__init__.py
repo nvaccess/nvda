@@ -1016,18 +1016,14 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
 	def script_collapseOrExpandControl(self, gesture):
-		if self.passThrough:
-			gesture.send()
-			if not self.disableAutoPassThrough:
-				self.passThrough = False
-				reportPassThrough(self)
-		else:
-			oldFocus = api.getFocusObject()
-			oldFocusStates = oldFocus.states
-			gesture.send()
-			if oldFocus.role == controlTypes.ROLE_COMBOBOX and controlTypes.STATE_COLLAPSED in oldFocusStates:
-				self.passThrough = True
-				reportPassThrough(self)
+		oldFocus = api.getFocusObject()
+		oldFocusStates = oldFocus.states
+		gesture.send()
+		if controlTypes.STATE_COLLAPSED in oldFocusStates:
+			self.passThrough = True
+		elif not self.disableAutoPassThrough:
+			self.passThrough = False
+		reportPassThrough(self)
 	script_collapseOrExpandControl.ignoreTreeInterceptorPassThrough = True
 
 	def _tabOverride(self, direction):
