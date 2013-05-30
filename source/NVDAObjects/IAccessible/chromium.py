@@ -7,6 +7,7 @@
 """NVDAObjects for the Chromium browser project
 """
 
+from comtypes import COMError
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf
@@ -15,7 +16,16 @@ from NVDAObjects.behaviors import Dialog
 class ChromeVBuf(GeckoVBuf):
 
 	def __contains__(self, obj):
-		return obj.windowHandle == self.rootNVDAObject.windowHandle
+		if obj.windowHandle != self.rootNVDAObject.windowHandle:
+			return False
+		accId = obj.IA2UniqueID
+		if accId == self.rootID:
+			return True
+		try:
+			self.rootNVDAObject.IAccessibleObject.accChild(accId)
+		except COMError:
+			return False
+		return True
 
 class Document(IAccessible):
 
