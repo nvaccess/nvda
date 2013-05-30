@@ -622,7 +622,7 @@ class MSHTML(IAccessible):
 			states.add(controlTypes.STATE_COLLAPSED)
 		ariaInvalid=self.HTMLAttributes['aria-invalid']
 		if ariaInvalid=="true":
-			states.add(controlTypes.STATE_INVALID)
+			states.add(controlTypes.STATE_INVALID_ENTRY)
 		ariaGrabbed=self.HTMLAttributes['aria-grabbed']
 		if ariaGrabbed=="true":
 			states.add(controlTypes.STATE_DRAGGING)
