@@ -20,6 +20,19 @@ def detectStringDirection(s):
 		if b in ('R','AL'): direction-=1
 	return direction
 
+def reverseAndNormalizeRtlString(s):
+	l=[]
+	for c in reversed(s):
+		#If this is an arabic presentation form b character (commenly given by Windows when converting from glyphs)
+		#Decompose it to its original basic arabic (non-presentational_ character.
+		if 0xfe70<=ord(c)<=0xfeff:
+			d=unicodedata.decomposition(c)
+			d=d.split(' ') if d else None
+			if d and len(d)==2 and d[0] in ('<initial>','<medial>','<final>','<isolated>'):
+				c=unichr(int(d[1],16))
+		l.append(c)
+	return u"".join(l)
+
 def yieldListRange(l,start,stop):
 	for x in xrange(start,stop):
 		yield l[x]
@@ -78,7 +91,7 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 							command=commandList[i]
 							text=commandList[i+1]
 							commandList[i+1]=command
-							commandList[i]="".join(reversed(text))
+							commandList[i]=reverseAndNormalizeRtlString(text)
 						#Reverse commandList
 						commandList[runStartIndex:index]=commandList[index-1:runStartIndex-1 if runStartIndex>0 else None:-1]
 					if overallDirection<0:
