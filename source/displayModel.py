@@ -20,9 +20,9 @@ def detectStringDirection(s):
 		if b in ('R','AL'): direction-=1
 	return direction
 
-def reverseAndNormalizeRtlString(s):
+def normalizeRtlString(s):
 	l=[]
-	for c in reversed(s):
+	for c in s:
 		#If this is an arabic presentation form b character (commenly given by Windows when converting from glyphs)
 		#Decompose it to its original basic arabic (non-presentational_ character.
 		if 0xfe70<=ord(c)<=0xfeff:
@@ -50,6 +50,9 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 			direction=curFormatField['direction']
 			if direction==0:
 				curFormatField['direction']=direction=detectStringDirection(item)
+			elif direction==-2: #numbers in an rtl context
+				curFormatField['direction']=direction=-1
+				curFormatField['shouldReverseText']=False
 			if direction<0:
 				containsRtl=True
 			overallDirection+=direction
@@ -87,11 +90,18 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 						#This run is rtl, so reverse its rects, the text within the fields, and the order of fields themselves
 						#Reverse rects
 						rects[runStartOffset:lastEndOffset]=rects[lastEndOffset-1:runStartOffset-1 if runStartOffset>0 else None:-1]
+						rectsStart=runStartOffset
 						for i in xrange(runStartIndex,index,2):
 							command=commandList[i]
 							text=commandList[i+1]
+							rectsEnd=rectsStart+len(text)
 							commandList[i+1]=command
-							commandList[i]=reverseAndNormalizeRtlString(text)
+							shouldReverseText=command.field.get('shouldReverseText',True)
+							commandList[i]=normalizeRtlString(text[::-1] if shouldReverseText else text)
+							if not shouldReverseText:
+								#Because all the rects in the run were already reversed, we need to undo that for this field
+								rects[rectsStart:rectsEnd]=rects[rectsEnd-1:rectsStart-1 if rectsStart>0 else None:-1]
+							rectsStart=rectsEnd
 						#Reverse commandList
 						commandList[runStartIndex:index]=commandList[index-1:runStartIndex-1 if runStartIndex>0 else None:-1]
 					if overallDirection<0:

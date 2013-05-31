@@ -387,6 +387,17 @@ void ExtTextOutHelper(displayModel_t* model, HDC hdc, int x, int y, const RECT* 
 		resultTextSize->cy=0;
 	}
 	if(!fromGlyphs) newText=wstring(lpString,cbCount);
+	//Windows reports reading direction wrong for a run containing numbers within RTL runs.
+	//Therefore for this case let NVDA decide the direction
+	if(direction==-1) {
+		for(int i=0;i<cbCount;++i) {
+			wchar_t c=newText[i];
+			if((c>=L'0'&&c<=L'9')||(c>=L'\x0660'&&c<=L'\x0669')) {
+				direction=-2;
+				break;
+			}
+		}
+	}
 	//Search for and remove the first & symbol if we have been requested to stip hotkey indicator.
 	if(stripHotkeyIndicator) {
 		size_t pos=newText.find(L'&');
