@@ -29,6 +29,7 @@
 - In browse mode, the content inside tree views is no longer rendered, as a flattened representation isn't useful. You can press enter on a tree view to interact with it in focus mode. (#3023)
 - Pressing alt+downArrow or alt+upArrow to expand a combo box while in focus mode no longer incorrectly switches to browse mode. (#2340)
 - in Internet Explorer 10, table cells no longer activate focus mode, unless they have been explicitly made focusable by the web author (#3248)
+- NVDA no longer fails to start if the system time is earlier than the last check for an update. (#3260)
 
 
 == Changes for Developers ==

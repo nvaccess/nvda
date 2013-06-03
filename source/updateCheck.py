@@ -143,8 +143,12 @@ class AutoUpdateChecker(UpdateChecker):
 	def __init__(self):
 		self._checkTimer = wx.PyTimer(self.check)
 		# Set the initial check based on the last check time.
-		secs = CHECK_INTERVAL - int(min(time.time() - state["lastCheck"], CHECK_INTERVAL))
-		self._checkTimer.Start(secs * 1000, True)
+		# #3260: If the system time is earlier than the last check,
+		# treat the last check as being right now (so the next will be tomorrow).
+		secsSinceLast = max(time.time() - state["lastCheck"], 0)
+		# The maximum time till the next check is CHECK_INTERVAL.
+		secsTillNext = CHECK_INTERVAL - int(min(secsSinceLast, CHECK_INTERVAL))
+		self._checkTimer.Start(secsTillNext * 1000, True)
 
 	def terminate(self):
 		self._checkTimer.Stop()
