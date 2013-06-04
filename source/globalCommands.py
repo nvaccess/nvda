@@ -473,7 +473,7 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_top(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
-		api.setReviewPosition(info.copy())
+		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("top"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
@@ -484,10 +484,11 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,-1)
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("top"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object and speaks it")
 
@@ -506,16 +507,17 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("bottom"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
 
 	def script_review_bottom(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
-		api.setReviewPosition(info.copy())
+		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("bottom"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
@@ -526,10 +528,11 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_WORD)
 		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,-1)
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("top"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_WORD)
 		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object and speaks it")
 
@@ -548,10 +551,11 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_WORD)
 		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("bottom"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_WORD)
 		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object and speaks it")
 
@@ -559,7 +563,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
-		api.setReviewPosition(info.copy())
+		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakMessage(_("left"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
@@ -578,7 +582,7 @@ class GlobalCommands(ScriptableObject):
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 		else:
-			api.setReviewPosition(charInfo.copy())
+			api.setReviewPosition(charInfo)
 			charInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	script_review_previousCharacter.__doc__=_("Moves the review cursor to the previous character of the current navigator object and speaks it")
@@ -613,7 +617,7 @@ class GlobalCommands(ScriptableObject):
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 		else:
-			api.setReviewPosition(charInfo.copy())
+			api.setReviewPosition(charInfo)
 			charInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	script_review_nextCharacter.__doc__=_("Moves the review cursor to the next character of the current navigator object and speaks it")
@@ -623,7 +627,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		info.collapse(end=True)
 		info.move(textInfos.UNIT_CHARACTER,-1)
-		api.setReviewPosition(info.copy())
+		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakMessage(_("right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
