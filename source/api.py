@@ -8,6 +8,7 @@
 
 import config
 import textInfos
+import review
 import globalVars
 from logHandler import log
 import ui
@@ -168,22 +169,15 @@ def getReviewPosition():
 		return globalVars.reviewPosition
 	else:
 		obj=globalVars.navigatorObject
-		ti=obj.treeInterceptor
-		if ti and not ti.passThrough and ti.isReady and ti.rootNVDAObject==obj:
-			obj=ti
-		try:
-			globalVars.reviewPosition=obj.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError, RuntimeError):
-			globalVars.reviewPosition=obj.makeTextInfo(textInfos.POSITION_FIRST)
-		globalVars.reviewPositionObj=globalVars.reviewPosition.obj
+		globalVars.reviewPosition,globalVars.reviewPositionObj=review.getPositionForCurrentMode(obj)
 		return globalVars.reviewPosition
 
-def setReviewPosition(reviewPosition):
-	"""Sets a TextInfo instance as the review position. It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
+def setReviewPosition(reviewPosition,clearNavigatorObject=True):
+	"""Sets a TextInfo instance as the review position. if clearNavigatorObject is true, It sets the current navigator object to None so that the next time the navigator object is asked for it fetches it from the review position.
 	"""
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
-	globalVars.navigatorObject=None
+	if clearNavigatorObject: globalVars.navigatorObject=None
 	import braille
 	braille.handler.handleReviewMove()
 
@@ -195,7 +189,10 @@ def getNavigatorObject():
 	if globalVars.navigatorObject:
 		return globalVars.navigatorObject
 	else:
-		obj=globalVars.reviewPosition.obj
+		try:
+			obj=globalVars.reviewPosition.NVDAObjectAtStart
+		except (NotImplementedError,LookupError):
+			obj=globalVars.reviewPosition.obj
 		globalVars.navigatorObject=getattr(obj,'rootNVDAObject',None) or obj
 		return globalVars.navigatorObject
 

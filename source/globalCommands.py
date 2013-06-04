@@ -11,6 +11,7 @@ import touchHandler
 import keyboardHandler
 import mouseHandler
 import eventHandler
+import review
 import controlTypes
 import api
 import textInfos
@@ -259,34 +260,29 @@ class GlobalCommands(ScriptableObject):
 		speech.speakObject(obj)
 	script_moveNavigatorObjectToMouse.__doc__=_("Sets the navigator object to the current object under the mouse pointer and speaks it")
 
-	def script_navigatorObject_moveToFlatReviewAtObjectPosition(self,gesture):
-		obj=api.getNavigatorObject()
-		pos=obj.flatReviewPosition
-		if pos:
-			api.setReviewPosition(pos)
-			pos=pos.copy()
-			obj=api.getNavigatorObject()
-			speech.speakObjectProperties(obj,name=True,role=True)
+	def script_reviewMode_next(self,gesture):
+		label=review.nextMode()
+		if label:
+			ui.message(label)
+			pos=api.getReviewPosition().copy()
 			pos.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(pos)
 		else:
-			# Translators: reported when object does not support flat review (example: some graphic window).
-			speech.speakMessage(_("No flat review for this object"))
-	script_navigatorObject_moveToFlatReviewAtObjectPosition.__doc__=_("Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object")
+			# Translators: reported when there are no other available review modes for this object 
+			ui.message(_("No next review mode"))
+	script_reviewMode_next.__doc__=_("Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object")
 
-	def script_navigatorObject_moveToObjectAtFlatReviewPosition(self,gesture):
-		pos=api.getReviewPosition()
-		try:
-			obj=pos.NVDAObjectAtStart
-		except NotImplementedError:
-			obj=None
-		if obj and obj!=pos.obj:
-			api.setNavigatorObject(obj)
-			speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
+	def script_reviewMode_previous(self,gesture):
+		label=review.nextMode(prev=True)
+		if label:
+			ui.message(label)
+			pos=api.getReviewPosition().copy()
+			pos.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(pos)
 		else:
-			# Translators: Reported when there is no object at flat review position.
-			speech.speakMessage(_("No object at flat review position"))
-	script_navigatorObject_moveToObjectAtFlatReviewPosition.__doc__=_("Moves navigator object to the object represented by the text at the position of the review cursor within flat review")
+			# Translators: reported when there are no  other available review modes for this object 
+			ui.message(_("No previous review mode"))
+	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -1232,12 +1228,12 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+f10": "review_copy",
 
 		# Flat review
-		"kb:NVDA+numpad7": "navigatorObject_moveToFlatReviewAtObjectPosition",
-		"kb(laptop):NVDA+pageUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
-		"ts(object):2finger_flickUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
-		"kb:NVDA+numpad1": "navigatorObject_moveToObjectAtFlatReviewPosition",
-		"kb(laptop):NVDA+pageDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
-		"ts(object):2finger_flickDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
+		"kb:NVDA+numpad7": "reviewMode_next",
+		"kb(laptop):NVDA+pageUp": "reviewMode_next",
+		"ts(object):2finger_flickUp": "reviewMode_next",
+		"kb:NVDA+numpad1": "reviewMode_previous",
+		"kb(laptop):NVDA+pageDown": "reviewMode_previous",
+		"ts(object):2finger_flickDown": "reviewMode_previous",
 
 		# Mouse
 		"kb:numpadDivide": "leftMouseClick",
