@@ -37,6 +37,7 @@ struct displayModelChunk_t{
 	std::deque<long> characterXArray;
 	displayModelFormatInfo_t formatInfo;
 	int direction;
+	HWND hwnd;
 	/**
  * Truncates the chunk's text so that only the text that fits in the resulting rectangle is left.  
  * @param truncatePointX the x position at which to truncate
@@ -58,6 +59,7 @@ typedef std::map<std::pair<int,int>,displayModelChunk_t*> displayModelChunksByPo
 class displayModel_t: public LockableAutoFreeObject  {
 	private:
 	displayModelChunksByPointMap_t chunksByYX; //indexes the chunks by y,x
+	HWND hwnd;
 
 	protected:
 
@@ -77,7 +79,7 @@ class displayModel_t: public LockableAutoFreeObject  {
 /**
  * constructor
  */
-	displayModel_t();
+	displayModel_t(HWND hwnd=NULL);
 
 /**
  * Finds out how many chunks this model contains.

@@ -127,7 +127,7 @@ inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
 		if(i!=displayModelsByWindow.end()) {
 			model=i->second;
 		} else if(!noCreate) {
-			model=new displayModel_t();
+			model=new displayModel_t(hwnd);
 			displayModelsByWindow.insert(make_pair(hwnd,model));
 		}
 		if(model) model->acquire();
