@@ -37,6 +37,22 @@ def yieldListRange(l,start,stop):
 	for x in xrange(start,stop):
 		yield l[x]
 
+def processWindowChunksInLine(commandList,rects,startIndex,startOffset,endIndex,endOffset):
+	windowStartIndex=startIndex
+	lastEndOffset=windowStartOffset=startOffset
+	lastHwnd=None
+	for index in xrange(startIndex,endIndex+1):
+		item=commandList[index] if index<endIndex else None
+		if isinstance(item,basestring):
+			lastEndOffset+=len(item)
+		else:
+			hwnd=item.field['hwnd'] if item else None
+			if lastHwnd is not None and hwnd!=lastHwnd:
+				processFieldsAndRectsRangeReadingdirection(commandList,rects,windowStartIndex,windowStartOffset,index,lastEndOffset)
+				windowStartIndex=index
+				windowStartOffset=lastEndOffset
+			lastHwnd=hwnd
+
 def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,startOffset,endIndex,endOffset):
 	containsRtl=False # True if any rtl text is found at all
 	curFormatField=None 
@@ -222,7 +238,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				baseline=curFormatField['baseline'] if curFormatField  else None
 				if baseline!=lineBaseline:
 					if lineBaseline is not None:
-						processFieldsAndRectsRangeReadingdirection(commandList,rects,lineStartIndex,lineStartOffset,index,lastEndOffset)
+						processWindowChunksInLine(commandList,rects,lineStartIndex,lineStartOffset,index,lastEndOffset)
 						#Convert the whitespace at the end of the line into a line feed
 						item=commandList[index-1]
 						if isinstance(item,basestring) and len(item)==1 and item.isspace():
@@ -304,6 +320,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 
 	def _normalizeFormatField(self,field):
 		field['bold']=True if field.get('bold')=="true" else False
+		field['hwnd']=int(field.get('hwnd','0'),16)
 		field['baseline']=int(field.get('baseline','-1'))
 		field['direction']=int(field.get('direction','0'))
 		field['italic']=True if field.get('italic')=="true" else False

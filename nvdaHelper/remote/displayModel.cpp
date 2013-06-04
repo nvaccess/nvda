@@ -28,6 +28,7 @@ using namespace std;
 void displayModelChunk_t::generateXML(wstring& text) {
 	wstringstream s;
 	s<<L"<text ";
+	s<<L"hwnd=\""<<hwnd<<L"\" ";
 	s<<L"baseline=\""<<baseline<<L"\" ";
 	s<<L"direction=\""<<direction<<L"\" ";
 	s<<L" font-name=\""<<formatInfo.fontName<<L"\" ";
@@ -65,7 +66,7 @@ void displayModelChunk_t::truncate(int truncatePointX, BOOL truncateBefore) {
 	}
 }
 
-displayModel_t::displayModel_t(): LockableAutoFreeObject(), chunksByYX() {
+displayModel_t::displayModel_t(HWND w): LockableAutoFreeObject(), chunksByYX(), hwnd(w) {
 	LOG_DEBUG(L"created instance at "<<this);
 }
 
@@ -110,6 +111,7 @@ void displayModel_t::insertChunk(const RECT& rect, int baseline, const wstring& 
 
 void displayModel_t::insertChunk(displayModelChunk_t* chunk) {
 	chunksByYX[make_pair(chunk->baseline,chunk->rect.left)]=chunk;
+	if(hwnd) chunk->hwnd=hwnd; 
 }
 
 void displayModel_t::clearAll() {
