@@ -41,6 +41,7 @@
 - No longer announce a particular special character (0x7f) when pressing control+backspace in some editors when speak typed characters is enabled. (#3315)
 - espeak no longer inappropriately changes in pitch, volume etc when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
 - In Java applications, changes to the label or value of the focused control is now announced automatically, and is reflected when further reviewing the control. (#3119)
+- In Scintilla controls, lines are now reported correctly when word wrap is enabled. (#885)
 
 
 == Changes for Developers ==

@@ -41,6 +41,8 @@ SCI_STYLEGETITALIC=2484
 SCI_STYLEGETUNDERLINE=2488
 SCI_WORDSTARTPOSITION=2266
 SCI_WORDENDPOSITION=2267
+SC_WRAP_NONE=0
+SCI_GETWRAPMODE=2269
 SCI_GETCODEPAGE=2137
 SCI_POSITIONAFTER=2418
 
@@ -182,6 +184,21 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
 
 	def _getLineOffsets(self,offset):
+		if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_GETWRAPMODE,None,None)!=SC_WRAP_NONE:
+			# Lines in Scintilla refer to document lines, not wrapped lines.
+			# There's no way to retrieve wrapped lines, so use screen coordinates.
+			y=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
+			top,left,width,height=self.obj.location
+			start = self._getOffsetFromPoint(0,y)
+			end=self._getOffsetFromPoint(width,y)
+			# If this line wraps to the next line,
+			# end is the first offset of the next line.
+			if watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,end)==y:
+				# This is the end of the document line.
+				# Include the EOL characters in the returned offsets.
+				end=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONAFTER,end,None)
+			return (start,end)
+
 		line=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_LINEFROMPOSITION,offset,0)
 		start=watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POSITIONFROMLINE,line,0)
 		end=start+watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_LINELENGTH,line,0)
