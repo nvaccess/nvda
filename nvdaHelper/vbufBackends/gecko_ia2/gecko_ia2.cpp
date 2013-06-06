@@ -274,6 +274,8 @@ bool isLabelVisible(IAccessible2* acc) {
 	VARIANT state;
 	res = targetAcc->get_accState(child, &state);
 	targetAcc->Release();
+	if (res != S_OK)
+		return false;
 	if (state.lVal & STATE_SYSTEM_INVISIBLE)
 		return false;
 	return true;
