@@ -108,6 +108,24 @@ def normalizeIA2TextFormatField(formatField):
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	detectFormattingAfterCursorMaybeSlow=False
+	#: Whether the server supports IA2_TEXT_OFFSET_CARET.
+	#: @type: bool
+	supportsSpecialCaretOffset = True
+
+	def __init__(self, obj, position):
+		# #3156: The position when the caret is at the end of a line (as occurs when you press the end key)
+		# often has the same offset as the start of the next line.
+		# This causes the wrong text to be reported when in this position.
+		# Therefore, we use IA2_TEXT_OFFSET_CARET (if supported) to retrieve certain units
+		# if this instance was created for the caret (_isCaret is True),
+		# since the application knows where the caret really is.
+		# It is set to False as soon as this instance is moved away
+		# and it is also set to False for copies.
+		self._isCaret = self.supportsSpecialCaretOffset and position == textInfos.POSITION_CARET
+		super(IA2TextTextInfo, self).__init__(obj, position)
+		if type(position) is type(self):
+			# Copies should never be linked to the caret.
+			self._isCaret = False
 
 	def _getOffsetFromPoint(self,x,y):
 		if self.obj.IAccessibleTextObject.nCharacters>0:
@@ -238,6 +256,8 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
 
 	def _getLineOffsets(self,offset):
+		if self._isCaret:
+			offset = IAccessibleHandler.IA2_TEXT_OFFSET_CARET
 		try:
 			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
 			return start,end
@@ -301,6 +321,23 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			pass
 
 		raise LookupError
+
+	def _setEndPointOffset(self, which, offset):
+		realAttr = "_real_%sOffset" % which
+		if self._isCaret:
+			if hasattr(self, realAttr):
+				# This instance is being moved and is no longer the caret.
+				self._isCaret = False
+		setattr(self, realAttr, offset)
+
+	def _set__startOffset(self, offset):
+		self._setEndPointOffset("start", offset)
+	def _get__startOffset(self):
+		return self._real_startOffset
+	def _set__endOffset(self, offset):
+		self._setEndPointOffset("end", offset)
+	def _get__endOffset(self):
+		return self._real_endOffset
 
 class IAccessible(Window):
 	"""

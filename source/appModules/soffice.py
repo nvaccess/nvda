@@ -78,6 +78,7 @@ class JAB_OOTableCell(JAB):
 			return 0
 
 class SymphonyTextInfo(IA2TextTextInfo):
+	supportsSpecialCaretOffset = False
 
 	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
 		obj = self.obj
