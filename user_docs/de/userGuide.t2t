@@ -141,8 +141,8 @@ Bitte schauen Sie erst auf der Homepage nach, ob ggf. etwas darüber bekannt ist
 
 Beim ersten Start von NVDA wird Ihnen eine Dialogbox mit einigen grundlegenden Informationen über die NVDA-Modifikationstaste und das NVDA-Menü angezeigt.
 (Bitte beachten Sie weitere Themenabschnitte.)
-Das Dialogfeld enthält zudem zwei Kontrollfelder.
-Mit dem Ersten können Sie festlegen, ob die Capslock-Taste (Dauergroßschreibtaste) als so genannte NVDA-Modifikationstaste agieren soll. Mit dem Zweiten legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
+Das Dialogfeld enthält zudem drei Kontrollfelder.
+Mit dem Ersten können Sie festlegen, ob die Capslock-Taste (Dauergroßschreibtaste) als so genannte NVDA-Modifikationstaste agieren soll. Mit dem zweiten Trontrollkästchen können Sie bestimmen, ob NVDA nach der Anmeldung automatisch gestartet werden soll. Diese Option steht nur bei installierten Versionen von NVDA zur Verfügung. Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
 
 ++ Über die NVDA-Tastenbefehle ++
 
@@ -228,8 +228,7 @@ In den Menüs bewegen Sie sich einfach mit den Pfeiltasten. Mit der Eingabetaste
 ++ Allgemeine Befehle für NVDA ++
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Geste | Beschreibung |
-| Sprechen stoppen | 
-| Steuerung | 2-Finger-tippen | Unterbricht augenblicklich den laufenden Sprechvorgang. |
+| Sprechen stoppen | Steuerung | 2-Finger-tippen | Unterbricht augenblicklich den laufenden Sprechvorgang. |
 | Sprechen anhalten | Umschalt | Umschalt | keine | Hält sofort den Lesevorgang an oder setzt bei erneutem Drücken den Lesevorgang fort (sofern das von der Sprachausgabe unterstützt wird). |
 | NVDA-Menü | NVDA+N | NVDA+N | 2-Finger-Doppel-Tippen | Öffnet das NVDA-Menü. von hier aus können Sie auf die Einstellungen, Extras, etc. zugreifen. |
 | Sprachmodus umschalten | NVDA+s | NVDA+S | keine | Schaltet den Sprachmodus zwischen Sprache, Signaltöne und aus um. |
@@ -556,7 +555,13 @@ Für bestimmte Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit -
 | Zeilenbeschriftungen festlegen | NVDA+Umschalt+r | Wenn Sie diese Tastenkombination einmal drücken, teilen Sie NVDA mit, dass Sie sich auf derjenigen Spalte befinden, die die Beschriftungen für die Zeilen enthält. Diese Beschriftungen werden automatisch gelesen, wenn Sie außerhalb dieser Spalte navigieren. Zweimaliges Drücken dieser Tastenkombination löscht diese Zuweisung. | 
 %kc:endInclude
 
-++ foobar2000 ++
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Name | Key | Description
+| Notizen des Vortragenden anzeigen | strg+Umschalt+s | Mit dieser Tastenkombination können Sie zwischen Ihren Notizen und dem eigentlichen Folieninhalt umschalten, während eine Präsentation abläuft. Dies wirkt sich nicht auf die Anzeige am Bildschirm aus, sondern lediglich auf die Anzeige innerhalb von NVDA. |
+%kc:endInclude
+
+++ Foobar2000 ++
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
 | verbleibende Zeit ausgeben | strg+umschalt+r | Falls grade ein Titel abgespielt wird, wird die verbleibende Zeit ausgegeben. |
@@ -795,7 +800,7 @@ Diese Option legt fest, ob das Wort, welches sich unter dem Cursor befindet, in 
 Diese Option ist ein numerisches Feld, in dem sich die Cursor-Blinkfrequenz in Millisekunden anpassen lässt.
 
 ==== Anzeigedauer für Meldungen (in Sekunden) ====
-Dieses numerische Eingabefeld legt fest, wie lange Meldungen von NVDA auf der Braillezeile angezeigt werden sollen. Wenn eine Blitzmeldung erscheint, kann diese durch Drücken einer Routingtaste geschlossen werden. Durch Drücken einer Navigationstaste kann die anzeigedauer einer Blitzmeldung verlängert werden.
+Dieses numerische Eingabefeld legt fest, wie lange Meldungen von NVDA auf der Braillezeile angezeigt werden sollen. Wenn eine Blitzmeldung erscheint, kann diese durch Drücken einer Routingtaste geschlossen werden. Durch Drücken einer Navigationstaste kann die anzeigedauer einer Blitzmeldung verlängert werden. Um die Anzeige von Blitzmeldungen abzuschalten, geben Sie hier 0 an.
 
 %kc:setting
 ==== Braillezeile gekoppelt an ====[BrailleTether]
@@ -1159,7 +1164,7 @@ Diese Pakete werden von der NVDA-Nutzergemeinde bereitgestellt und können zusä
 
 Der Erweiterungs-manager enthält eine Liste aller Erweiterungen, die bereits in Ihrer benutzerspezifischen Konfiguration installiert sind.
 Für jede Erweiterung wird Ihnen der Name, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine Url als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und drücken Sie anschließend die Schaltfläche "über...".
-
+Um weitere Erweiterungen herunterzuladen und zu installieren, drücken Sie den Schalter "weitere Erweiterungen herungerladen...". Hiermit wird die Webseite für nvda-erweiterungen http://addons.nvda-project.org geöffnet. Falls Sie NVDA installiert haben, können Sie Erweiterungen direkt vom Browser aus installieren. Anderenfalls müssen Sie die Erweiterung speichern und wie unten beschrieben vorgehen, um eine Erweiterung zu installieren.
 Um eine Erweiterung zu installieren, drücken Sie den Schalter "installieren...".
 Jetzt können Sie auf Ihrem Rechner oder im Netzwerk nach der gewünschten Erweiterung (einer Datei mit der Endung .nvda-addon) suchen.
 Wenn Sie dann den Schalter Öffnen drückewn, werden Sie gefragt, ob Sie die Erweiterung wirklich installieren möchten.

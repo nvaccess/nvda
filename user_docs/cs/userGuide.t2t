@@ -23,7 +23,7 @@ Nejvýznamnější přednosti programu:
 - Podpora mnoha braillských řádků
 - Možnost spuštění programu z USB klíče nebo jiného přenosného zařízení bez nutnosti instalace
 - Snadný ozvučený instalátor
-- Přeložený do 41 jazyků
+- Přeložený do 43 jazyků
 - Podpora pro moderní operační systémy Windows a to jak pro 32 bitové, tak i 64 bitové verze
 - Možnost spouštění na přihlašovací a jiných zabezpečených obrazovkách systému Windows
 - Kompatibilita s různými rozhraními sloužícími na spřístupnění aplikací: Microsoft Active Accessibility, Java Access Bridge, IAccessible2 a UI Automation (UI Automation jen ve Windows 7 a novějších)
@@ -219,23 +219,23 @@ Po zobrazení nabídky programu NVDA můžete použít horní a dolní šipku pr
 
 ++ Základní klávesové zkratky ++
 %kc:beginInclude
-|| Název | Klávesová zkratka | Dotyk | Popis |
-| Zastavení řeči | Ctrl | Klepnutí dvěma prsty | Okamžitě zastaví řeč |
-| Pozastavení řeči | Shift | Žádný | Okamžitě pozastaví řeč. Po opětovném stisku klávesy bude řeč pokračovat od místa, na němž byla pozastavena (pokud to Vámi používaný hlasový výstup podporuje). |
-| Nabídka NVDA | NVDA+n | Dvojité klepnutí dvěma prsty | Zobrazí nabídku, ve které najdete položky pro nastavení, nástroje, nápovědu a další funkce programu NVDA. |
-| Režim řeči | NVDA+S | Žádný | Přepíná režim řeči mezi mluvení, pípání a vypnuto. Při vypnuté řeči je NVDA zticha, při pípání jsou hlášení nahrazena pípnutím a režim mluvení zajišťuje normální hlasovou odezvu. |
-| Výukový režim | NVDA+1 | Žádný | Tento příkaz zapíná a vypíná výukový režim. V tomto režimu NVDA oznámí název jakékoli stisknuté klávesy. V případě stisku kombinace kláves, která představuje jakýkoli příkaz programu NVDA, budou postupně přečteny názvy jednotlivých kláves a potom NVDA oznámí, o jaký příkaz se jedná. | 
-| Ukončení NVDA | NVDA+q | Žádný | Zde jsou dvě možnosti nastavení. Buď při stisku klávesy NVDA+q zazní znělka a program je ukončen, nebo se zobrazí dotaz, zda chceme NVDA ukončit. V obecném nastavení programu NVDA lze potvrzovací dialog před ukončením zapnout nebo vypnout. |
-| Propuštění následující klávesy | NVDA+F2 | Žádný | Další stisknutá klávesa nebude interpretována programem NVDA, ale bude předána ke zpracování ve Windows. | 
-| Režim spánku | NVDA+Shift+S | Žádný | Režim spánku deaktivuje všechny klávesové zkratky a hlasový i braillský výstup v aktuálně spuštěné aplikaci. Toto je užitečné např. v samoozvučujících aplikacích, které sami poskytují některý z těchto výstupů. Opětovným stiskem klávesové zkratky režim spánku deaktivujete. |
+|| Název | Klávesová zkratka pro desktop | Klávesová zkratka pro laptop | Dotyk | Popis |
+| Zastavení řeči | Ctrl | Ctrl | Klepnutí dvěma prsty | Okamžitě zastaví řeč |
+| Pozastavení řeči | Shift | Shift | Žádný | Okamžitě pozastaví řeč. Po opětovném stisku klávesy bude řeč pokračovat od místa, na němž byla pozastavena (pokud to Vámi používaný hlasový výstup podporuje). |
+| Nabídka NVDA | NVDA+n | NVDA+n | Dvojité klepnutí dvěma prsty | Zobrazí nabídku, ve které najdete položky pro nastavení, nástroje, nápovědu a další funkce programu NVDA. |
+| Režim řeči | NVDA+s | NVDA+s | Žádný | Přepíná režim řeči mezi mluvení, pípání a vypnuto. Při vypnuté řeči je NVDA zticha, při pípání jsou hlášení nahrazena pípnutím a režim mluvení zajišťuje normální hlasovou odezvu. |
+| Výukový režim | NVDA+1 | NVDA+1 | Žádný | Tento příkaz zapíná a vypíná výukový režim. V tomto režimu NVDA oznámí název jakékoli stisknuté klávesy. V případě stisku kombinace kláves, která představuje jakýkoli příkaz programu NVDA, budou postupně přečteny názvy jednotlivých kláves a potom NVDA oznámí, o jaký příkaz se jedná. | 
+| Ukončení NVDA | NVDA+q | NVDA+q | Žádný | Zde jsou dvě možnosti nastavení. Buď při stisku klávesy NVDA+q zazní znělka a program je ukončen, nebo se zobrazí dotaz, zda chceme NVDA ukončit. V obecném nastavení programu NVDA lze potvrzovací dialog před ukončením zapnout nebo vypnout. |
+| Propuštění následující klávesy | NVDA+F2 | NVDA+F2 | Žádný | Další stisknutá klávesa nebude interpretována programem NVDA, ale bude předána ke zpracování ve Windows. | 
+| Režim spánku | NVDA+Shift+s | NVDA+Shift+z | Žádný | Režim spánku deaktivuje všechny klávesové zkratky a hlasový i braillský výstup v aktuálně spuštěné aplikaci. Toto je užitečné např. v samoozvučujících aplikacích, které sami poskytují některý z těchto výstupů. Opětovným stiskem klávesové zkratky režim spánku deaktivujete. |
 %kc:endInclude
 
 ++ Ohlašování systémových informací ++
 %kc:beginInclude
 || Název | Klávesová zkratka | Popis |
 | Datum a čas | NVDA+F12 | Oznámí aktuální čas. Stiskne-li se dvakrát rychle po sobě, bude ohlášeno aktuální datum. |
-| Stav baterie | NVDA+Shift+B | Oznámí informace o stavu napájení. Buď oznámí stav nabití baterie v procentech, nebo oznámí napájení zapnuto. Je-li odpojeno napájení zesítě, potom kromě stavu baterie oznámí i zbývající čas provozu. |
-| Přečti text ve schránce | NVDA+C | Pokud je ve schránce windows nějaký text, NVDA jej přečte. Neobsahuje-li schránka žádný text, NVDA to oznámí. |
+| Stav baterie | NVDA+Shift+b | Oznámí informace o stavu napájení. Buď oznámí stav nabití baterie v procentech, nebo oznámí napájení zapnuto. Je-li odpojeno napájení zesítě, potom kromě stavu baterie oznámí i zbývající čas provozu. |
+| Přečti text ve schránce | NVDA+c | Pokud je ve schránce windows nějaký text, NVDA jej přečte. Neobsahuje-li schránka žádný text, NVDA to oznámí. |
 %kc:endInclude
 
 + Pohyb s NVDA +
@@ -254,11 +254,11 @@ Když NVDA ohlašuje zaměřený objekt, je obvykle oznámeno jeho jméno, typ, 
 
 Při pohybu po zaměřených objektech můžete použít několik užitečných příkazů: 
 %kc:beginInclude
-|| Název | Klávesová zkratka | Popis |
-| Přečti fokus | NVDA+Tab | ohlásí aktuálně zaměřený objekt, resp objekt, na kterém se nachází fokus. Stiskne-li se dvakrát rychle po sobě, informace bude vyhláskována. |
-| Přečti titulek | NVDA+t | Přečte titulek aktuálního aplikačního okna nebo okna v popředí. Stiskne-li se dvakrát rychle po sobě, titulek bude vyhláskován a trojitý stisk ho zkopíruje do schránky. |
-| Přečti aktivní okno | NVDA+b | Přečte obsah aktuálního okna v popředí. To může být užitečné např. při opětovném čtení informací v dialogových oknech. |
-| Přečti stavový řádek | NVDA+End | Přečte obsah stavového řádku aktuální aplikace, je-li dostupný. Tímto příkazem se ze stavového řádku stane prohlížený objekt. |
+|| Název | Klávesová zkratka pro desktop | Klávesová zkratka pro laptop | Popis |
+| Přečti fokus | NVDA+Tab | NVDA+Tab | ohlásí aktuálně zaměřený objekt, resp objekt, na kterém se nachází fokus. Stiskne-li se dvakrát rychle po sobě, informace bude vyhláskována. |
+| Přečti titulek | NVDA+t | NVDA+t | Přečte titulek aktuálního aplikačního okna nebo okna v popředí. Stiskne-li se dvakrát rychle po sobě, titulek bude vyhláskován a trojitý stisk ho zkopíruje do schránky. |
+| Přečti aktivní okno | NVDA+b | NVDA+b | Přečte obsah aktuálního okna v popředí. To může být užitečné např. při opětovném čtení informací v dialogových oknech. |
+| Přečti stavový řádek | NVDA+End | NVDA+Shift+End | Přečte obsah stavového řádku aktuální aplikace, je-li dostupný. Tímto příkazem se ze stavového řádku stane prohlížený objekt. |
 %kc:endInclude
 
 ++ Pohyb pomocí textového kurzoru ++[SystemCaret]
@@ -270,10 +270,10 @@ NVDA bude hlásit pohyb po znacích, slovech, řádcích, včetně označení a 
 
 V souvislosti  s textovým kurzorem poskytuje NVDA následující klávesové zkratky:
 %kc:beginInclude
-|| Název | Klávesová zkratka | popis |
-| Plynulé čtení | NVDA+šipka dolů | V editačních polích a dokumentech přečte text od polohy textového kurzoru do konce, přičemž se textový kurzor plynule posouvá po řádcích. |
-| Přečti aktuální řádek | NVDA+šipka nahoru | V editačních polích a dokumentech přečte aktuální řádek pod textovým kurzorem. Stiskne-li se dvakrát rychle po sobě, řádek bude vyhláskován. |
-| Přečti aktuální výběr | NVDA+Shift+šipka nahoru | V editačních polích a dokumentech přečte označený text. Jestliže není označeno nic, NVDA to ohlásí. |
+|| Název | Klávesová zkratka pro desktop | Klávesová zkratka pro laptop | popis |
+| Plynulé čtení | NVDA+šipka dolů | NVDA+a | V editačních polích a dokumentech přečte text od polohy textového kurzoru do konce, přičemž se textový kurzor plynule posouvá po řádcích. |
+| Přečti aktuální řádek | NVDA+šipka nahoru | NVDA+l | V editačních polích a dokumentech přečte aktuální řádek pod textovým kurzorem. Stiskne-li se dvakrát rychle po sobě, řádek bude vyhláskován. |
+| Přečti aktuální výběr | NVDA+Shift+šipka nahoru | NVDA+Shift+s | V editačních polích a dokumentech přečte označený text. Jestliže není označeno nic, NVDA to ohlásí. |
 
 
 Při pohybu v tabulkách jsou dostupné následující klávesové příkazy:
@@ -313,11 +313,11 @@ Pro pohyb po objektech použijte následující klávesové zkratky:
 
 %kc:beginInclude
 || Název | Klávesová zkratka pro desktop | Klávesová zkratka pro laptop | Dotyk | Popis |
-| aktuální prohlížený objekt | NVDA+numerická 5 | NVDA+Ctrl+i | Žádný | Ohlásí aktuální prohlížený objekt. Stiskne-li se dvakrát rychle po sobě, objekt bude vyhláskován a trojitý stisk ho zkopíruje do schránky. |
-| Nadřazený objekt | NVDA+numerická 8 | NVDA+Shift+i | Švihnutí nahoru | Přejde o úroveň výš na nadřazený objekt právě prohlíženého objektu. |
-| Předchozí objekt | NVDA+numerická 4 | NVDA+Ctrl+j | Švihnutí vlevo | Přejde na předchozí objekt od právě prohlíženého objektu. |
-| Následující objekt | NVDA+numerická 6 | Ctrl+NVDA+l | Švihnutí vpravo | Přejde na následující objekt od právě prohlíženého objektu. |
-| Podřazený objekt | NVDA+numerická 2 | NVDA+Shift+čárka | Švihnutí dolů | Přejde o úroveň níž na podřazený objekt právě prohlíženého objektu. |
+| aktuální prohlížený objekt | NVDA+numerická 5 | NVDA+Shift+o | Žádný | Ohlásí aktuální prohlížený objekt. Stiskne-li se dvakrát rychle po sobě, objekt bude vyhláskován a trojitý stisk ho zkopíruje do schránky. |
+| Nadřazený objekt | NVDA+numerická 8 | NVDA+Shift+šipka nahoru | Švihnutí nahoru | Přejde o úroveň výš na nadřazený objekt právě prohlíženého objektu. |
+| Předchozí objekt | NVDA+numerická 4 | NVDA+Shift+levá šipka | Švihnutí vlevo | Přejde na předchozí objekt od právě prohlíženého objektu. |
+| Následující objekt | NVDA+numerická 6 | NVDA+Shift+pravá šipka | Švihnutí vpravo | Přejde na následující objekt od právě prohlíženého objektu. |
+| Podřazený objekt | NVDA+numerická 2 | NVDA+Shift+šipka dolů | Švihnutí dolů | Přejde o úroveň níž na podřazený objekt právě prohlíženého objektu. |
 | Prohlížený objekt na fokus | NVDA+numerické mínus | NVDA+Backspace | Žádný | Prohlíženým objektem se stane zaměřený objekt, neboli objekt, který má fokus a je-li zobrazen textový kurzor, pak na jeho pozici bude přemístěn i čtecí kurzor. |
 | Předvolená akce | NVDA+numerický Enter | NVDA+Enter | Dvojité klepnutí | Provede výchozí akci právě prohlíženého objektu (např. je-li prohlíženým objektem tlačítko, tento příkaz simuluje stisk klávesy enter, či dvojklik) |
 | Fokus nebo textový kurzor na pozici čtecího kurzoru | NVDA+Shift+numerické mínus | NVDA+Shift+Backspace | Žádný | Stiskne-li se jednou, nastaví fokus na prohlížený objekt, stiskne-li se dvakrát rychle za sebou, přesune textový kurzor na pozici čtecího kurzoru. |
@@ -341,20 +341,20 @@ Pokud chcete text na braillském řádku přizpůsobit objektové navigaci a čt
 Pro prohlížení textu můžete použít následující klávesové příkazy:
 %kc:beginInclude
 || Název | Klávesová zkratka pro desktop | Klávesová zkratka pro laptop | Dotyk | Popis |
-| Horní řádek | Shift+numerická 7 | NVDA+7 | Žádný | Přesune čtecí kurzor na horní řádek právě prohlíženého objektu. |
-| Předchozí řádek | numerická 7 | NVDA+u | Švihnutí nahoru | Přesune čtecí kurzor na předchozí řádek právě prohlíženého objektu. |
-| Aktuální řádek | numerická 8 | NVDA+i | Žádný | Přečte aktuální řádek, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. Stiskne-li se dvakrát rychle po sobě, řádek bude vyhláskován a trojitý stisk ho vyhláskuje pomocí hláskovací tabulky. |
-| Následující řádek | numerická 9 | NVDA+o | Švihnutí dolů | Přesune čtecí kurzor na následující řádek právě prohlíženého objektu. |
-| Spodní řádek | Shift+numerická 9 | NVDA+9 | Žádný | Přesune čtecí kurzor na spodní řádek právě prohlíženého objektu. |
-| Předchozí slovo | numerická 4 | NVDA+j | Švihnutí dvěma prsty vlevo | Přesune čtecí kurzor na předchozí slovo právě prohlíženého objektu. |
-| Aktuální slovo | numerická 5 | NVDA+k | Žádný | Přečte aktuální slovo, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. Stiskne-li se dvakrát rychle po sobě, slovo bude vyhláskováno a trojitý stisk ho vyhláskuje pomocí hláskovací tabulky. |
-| Následující slovo | numerická 6 | NVDA+l | Švihnutí dvěma prsty vpravo | Přesune čtecí kurzor na následující slovo právě prohlíženého objektu. |
-| Začátek řádku | Shift+numerická 1 | NVDA+Shift+u | Žádný | Přesune čtecí kurzor na začátek aktuálního řádku v rámci prohlíženého objektu. |
-| Předchozí znak | numerická 1 | NVDA+m | Švihnutí vlevo | Přesune čtecí kurzor na předchozí znak právě prohlíženého objektu. |
-| Aktuální znak | numerická 2 | NVDA+čárka | Žádný | Přečte aktuální znak, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. Stiskne-li se dvakrát za sebou, bude znak ohlášen pomocí hláskovací tabulky a trojitý stisk ohlásí jeho ascii a hexadecimální hodnotu. |
-| Následující znak | numerická 3 | NVDA+tečka | Švihnutí vpravo | Přesune čtecí kurzor na následující znak právě prohlíženého objektu. |
-| Konec řádku | Shift+numerická 3 | NVDA+Shift+o | Žádný | Přesune čtecí kurzor na konec aktuálního řádku v rámci prohlíženého objektu. |
-| Plynulé čtení čtecím kurzorem | numerické plus | NVDA+Shift+šipka dolů | Švihnutí třemi prsty dolů | Přečte text od pozice čtecího kurzoru do konce, přičemž se čtecí kurzor plynule posouvá po řádcích. |
+| Horní řádek | Shift+numerická 7 | NVDA+Ctrl+Home | Žádný | Přesune čtecí kurzor na horní řádek právě prohlíženého objektu. |
+| Předchozí řádek | numerická 7 | NVDA+šipka nahoru | Švihnutí nahoru | Přesune čtecí kurzor na předchozí řádek právě prohlíženého objektu. |
+| Aktuální řádek | numerická 8 | NVDA+Shift+tečka | Žádný | Přečte aktuální řádek, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. Stiskne-li se dvakrát rychle po sobě, řádek bude vyhláskován a trojitý stisk ho vyhláskuje pomocí hláskovací tabulky. |
+| Následující řádek | numerická 9 | NVDA+šipka dolů | Švihnutí dolů | Přesune čtecí kurzor na následující řádek právě prohlíženého objektu. |
+| Spodní řádek | Shift+numerická 9 | NVDA+Ctrl+End | Žádný | Přesune čtecí kurzor na spodní řádek právě prohlíženého objektu. |
+| Předchozí slovo | numerická 4 | NVDA+Ctrl+levá šipka | Švihnutí dvěma prsty vlevo | Přesune čtecí kurzor na předchozí slovo právě prohlíženého objektu. |
+| Aktuální slovo | numerická 5 | NVDA+Ctrl+ tečka | Žádný | Přečte aktuální slovo, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. Stiskne-li se dvakrát rychle po sobě, slovo bude vyhláskováno a trojitý stisk ho vyhláskuje pomocí hláskovací tabulky. |
+| Následující slovo | numerická 6 | NVDA+Ctrl+pravá šipka | Švihnutí dvěma prsty vpravo | Přesune čtecí kurzor na následující slovo právě prohlíženého objektu. |
+| Začátek řádku | Shift+numerická 1 | NVDA+Home | Žádný | Přesune čtecí kurzor na začátek aktuálního řádku v rámci prohlíženého objektu. |
+| Předchozí znak | numerická 1 | NVDA+levá šipka | Švihnutí vlevo | Přesune čtecí kurzor na předchozí znak právě prohlíženého objektu. |
+| Aktuální znak | numerická 2 | NVDA+tečka | Žádný | Přečte aktuální znak, na němž se v rámci prohlíženého objektu nachází čtecí kurzor. Stiskne-li se dvakrát za sebou, bude znak ohlášen pomocí hláskovací tabulky a trojitý stisk ohlásí jeho ascii a hexadecimální hodnotu. |
+| Následující znak | numerická 3 | NVDA+pravá šipka | Švihnutí vpravo | Přesune čtecí kurzor na následující znak právě prohlíženého objektu. |
+| Konec řádku | Shift+numerická 3 | NVDA+End | Žádný | Přesune čtecí kurzor na konec aktuálního řádku v rámci prohlíženého objektu. |
+| Plynulé čtení čtecím kurzorem | numerické plus | NVDA+Shift+a | Švihnutí třemi prsty dolů | Přečte text od pozice čtecího kurzoru do konce, přičemž se čtecí kurzor plynule posouvá po řádcích. |
 | nastav značku na pozici čtecího kurzoru | NVDA+F9 | NVDA+F9 | Žádný | Umístí značku na aktuální pozici čtecího kurzoru označující začátek úseku textu ke zkopírování. |
 | Kopírování čtecím kurzorem | NVDA+F10 | NVDA+F10 | Žádný | Převezme text nacházející se mezi dříve umístěnou značkou a aktuální pozicí čtecího kurzoru včetně znaku na aktuální pozici a takto získaný úsek textu zkopíruje do schránky. |
 | přečti formátování textu | NVDA+f | NVDA+f | Žádný | Ohlásí formátování textu na pozici čtecího kurzoru. |
@@ -407,12 +407,12 @@ V dialogu [nastavení myši #MouseSettings] se dají dodatečně aktivovat.
 Ačkoli se pro tenhle způsob navigace běžně používá trackpad nebo myš, NVDA poskytuje několik klávesových příkazů, které simulují některé její funkce.
 %kc:beginInclude
 || Název | Klávesová zkratka pro desktop | Klávesová zkratka pro laptop | Popis |
-| Levý klik | numerické lomeno | NVDA+levá šipka | Klikne levým tlačítkem myši. Dvojkliku lze docílit dvojitým stiskem této klávesové zkratky. |
-| Uzamknout levé tlačítko myši | Shift+numerické lomeno | NVDA+Shift+levá šipka | Stiskne a uzamkne nebo opětovným stiskem uvolní levé tlačítko myši. Objekt přetáhnete tak, že stiskem této kombinace uzamknete (stisknete a podržíte) levé tlačítko myši, pak buď pohnete přímo myší, nebo použijete příkaz pro přesun ukazatele myši. |
-| Pravý klik | numerická hvězdička | NVDA+pravá šipka | Klikne pravým tlačítkem myši. |
-| Uzamknout pravé tlačítko myši | Shift+numerická hvězdička | NVDA+Shift+pravá šipka | Stiskne a uzamkne nebo opětovným stiskem uvolní pravé tlačítko myši. Objekt přetáhnete tak, že stiskem této kombinace uzamknete (stisknete a podržíte) pravé tlačítko myši, pak buď pohnete přímo myší, nebo použijete příkaz pro přesun ukazatele myši. |
-| Myš na prohlížený objekt | NVDA+numerické lomeno | NVDA+Shift+F9 | Přesune kurzor myši na prohlížený objekt na pozici čtecího kurzoru. |
-| Prohlížený objekt na myš | NVDA+numerická hvězdička | NVDA+Shift+F10 | Prohlíženým objektem se stane objekt pod kurzorem myši. |
+| Levý klik | numerické lomeno | NVDA+[ | Klikne levým tlačítkem myši. Dvojkliku lze docílit dvojitým stiskem této klávesové zkratky. |
+| Uzamknout levé tlačítko myši | Shift+numerické lomeno | NVDA+Ctrl+[ | Stiskne a uzamkne nebo opětovným stiskem uvolní levé tlačítko myši. Objekt přetáhnete tak, že stiskem této kombinace uzamknete (stisknete a podržíte) levé tlačítko myši, pak buď pohnete přímo myší, nebo použijete příkaz pro přesun ukazatele myši. |
+| Pravý klik | numerická hvězdička | NVDA+] | Klikne pravým tlačítkem myši. |
+| Uzamknout pravé tlačítko myši | Shift+numerická hvězdička | NVDA+Ctrl+] | Stiskne a uzamkne nebo opětovným stiskem uvolní pravé tlačítko myši. Objekt přetáhnete tak, že stiskem této kombinace uzamknete (stisknete a podržíte) pravé tlačítko myši, pak buď pohnete přímo myší, nebo použijete příkaz pro přesun ukazatele myši. |
+| Myš na prohlížený objekt | NVDA+numerické lomeno | NVDA+Shift+m | Přesune kurzor myši na prohlížený objekt na pozici čtecího kurzoru. |
+| Prohlížený objekt na myš | NVDA+numerická hvězdička | NVDA+Shift+n | Prohlíženým objektem se stane objekt pod kurzorem myši. |
 %kc:endInclude
 
 + Režim prohlížení +
@@ -440,6 +440,7 @@ Kromě toho si Přechod do formulářového režimu můžete také vynutit stisk
 | Hledat | NVDA+Ctrl+F | Zobrazí dialog, ve kterém můžete zadat text pro vyhledávání v aktuálním dokumentu |
 | Najít další | NVDA+F3 | Najde další výskyt textu, který byl předtím zadán při vyvolání dialogu hledat |
 | Najít předchozí | NVDA+Shift+F3 | Najde předchozí výskyt textu, který byl předtím zadán při vyvolání dialogu hledat |
+| dlouhý popis | NVDA+d | Otevře nové okno s dlouhým popisem pro prohlížený prvek, je-li k dispozici. | 
 %kc:endInclude
 
 
@@ -640,11 +641,11 @@ Pokud pozorujete problémy s vyslovováním jednotlivých písmen, zkuste tuto v
 +++ Kruh nastavení hlasového výstupu +++[SynthSettingsRing]
 Jestliže chcete změnit některé parametry hlasu, aniž byste museli vyvolávat dialog pro nastavení hlasu, můžete použít některé z klávesových zkratek dostupných kdekoli v systému při běhu NVDA.
 %kc:beginInclude
-|| Název | Klávesová zkratka | Popis |
-| následující hlasový parametr | NVDA+Ctrl+šipka vpravo | Přesune se na následující parametr v kruhu nastavení hlasového výstupu a oznámí jej. Z posledního parametru se NVDA automaticky přesune na první hlasový parametr. |
-| předchozí hlasový parametr | NVDA+Ctrl+šipka vlevo | Přesune se na předchozí parametr v kruhu nastavení hlasového výstupu a oznámí jej. Z prvního parametru se NVDA automaticky přesune na poslední hlasový parametr. |
-| Zvýšit hodnotu hlasového parametru | NVDA+Ctrl+šipka nahoru | Zvyšuje hodnotu aktuálně zvoleného parametru v kruhu nastavení hlasového výstupu. např. zrychlí tempo, vybere následující hlas, zesílí hlasitost |
-| Snížit hodnotu hlasového parametru | NVDA+Ctrl+šipka dolů | snižuje hodnotu aktuálně zvoleného parametru v kruhu nastavení hlasového výstupu. např. zpomalí tempo, vybere předchozí hlas, zeslabí hlasitost |
+|| Název | Klávesová zkratka pro desktop + Klávesová zkratka pro laptop | Popis |
+| následující hlasový parametr | NVDA+Ctrl+šipka vpravo | NVDA+Shift+Ctrl+šipka vpravo | Přesune se na následující parametr v kruhu nastavení hlasového výstupu a oznámí jej. Z posledního parametru se NVDA automaticky přesune na první hlasový parametr. |
+| předchozí hlasový parametr | NVDA+Ctrl+šipka vlevo | NVDA+Shift+Ctrl+šipka vlevo | Přesune se na předchozí parametr v kruhu nastavení hlasového výstupu a oznámí jej. Z prvního parametru se NVDA automaticky přesune na poslední hlasový parametr. |
+| Zvýšit hodnotu hlasového parametru | NVDA+Ctrl+šipka nahoru | NVDA+Shift+Ctrl+šipka nahoru | Zvyšuje hodnotu aktuálně zvoleného parametru v kruhu nastavení hlasového výstupu. např. zrychlí tempo, vybere následující hlas, zesílí hlasitost |
+| Snížit hodnotu hlasového parametru | NVDA+Ctrl+šipka dolů | NVDA+Shift+Ctrl+šipka dolů | snižuje hodnotu aktuálně zvoleného parametru v kruhu nastavení hlasového výstupu. např. zpomalí tempo, vybere předchozí hlas, zeslabí hlasitost |
 %kc:endInclude
 
 +++ Braillské nastavení +++
@@ -729,7 +730,7 @@ Zaškrtnutí tohoto políčka zajistí, že NVDA bude oznamovat tvar kurzoru my�
 %kc:setting
 ==== Oznamovat text pod kurzorem myši ====
 | Klávesová zkratka pro desktop | NVDA+M |
-| Klávesová zkratka pro laptop | NVDA+Shift+M |
+| Klávesová zkratka pro laptop | NVDA+M |
 
 Je-li tato volba zapnutá, NVDA bude oznamovat text, který se aktuálně nachází pod kurzorem myši. Takto můžete najít položky na obrazovce za pomoci myši a nemusíte použít objektovou navigaci. 
 
@@ -753,7 +754,7 @@ Toto dialogové okno obsahuje následující prvky:
 %kc:setting
 ==== Sledovat systémový fokus ====
 | Klávesová zkratka pro desktop | NVDA+7 |
-| Klávesová zkratka pro laptop | NVDA+Ctrl+7 |
+| Klávesová zkratka pro laptop | NVDA+7 |
 
 Jestliže je tato volba zapnutá, čtecí kurzor se bude pohybovat spolu se systémovým fokusem, takže bude vždy umístěn na stejném objektu, na kterém se fokus nachází.
 
@@ -794,7 +795,7 @@ Odškrtněte toto políčko, pokud si myslíte, že vás popisky objektů obtě�
 %kc:setting
 ==== Indikátor průběhu ====
 | Klávesová zkratka pro desktop | NVDA+U |
-| Klávesová zkratka pro laptop | NVDA+Ctrl+F2 |
+| Klávesová zkratka pro laptop | NVDA+u |
 
 Indikátor průběhu je ovládací prvek, který vzhledem poněkud připomíná pravítko. Při průběhu déle trvajících akcí se postupně lišta zvýrazňuje nebo se též zobrazují procenta dané akce. Platí to např. pro načítání webových stránek, kontrolu pošty, kopírování souborů atd. 
 
@@ -918,9 +919,9 @@ Pokud jste při nastavování programu udělali chybu a potřebujete se vrátit 
 
 Užitečné mohou být rovněž následující klávesové příkazy:
 %kc:beginInclude
-|| Název | Klávesová zkratka | Popis |
-| Uložit nastavení | NVDA+Ctrl+C | Uloží aktuální nastavení NVDA tak, aby se při ukončení NVDA neztratila |
-| Načíst uložené nastavení | NVDA+Ctrl+R | Načte naposledy uložené nastavení programu NVDA |
+|| Název | Klávesová zkratka pro desktop + Klávesová zkratka pro laptop | Popis |
+| Uložit nastavení | NVDA+Ctrl+c | NVDA+Ctrl+c | Uloží aktuální nastavení NVDA tak, aby se při ukončení NVDA neztratila |
+| Načíst uložené nastavení | NVDA+Ctrl+r | NVDA+Ctrl+r | Načte naposledy uložené nastavení programu NVDA |
 %kc:endInclude
 
 ++ Konfigurační soubory a uživatelské profily ++Qig, kterou najdete ve složce přenosné verze NVDA.
