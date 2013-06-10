@@ -6,9 +6,12 @@
 from collections import OrderedDict
 import api
 import winUser
+from NVDAObjects import NVDAObject
 from NVDAObjects.window import Window
+from treeInterceptorHandler import TreeInterceptor
 from displayModel import DisplayModelTextInfo
 import textInfos
+import config
 
 def getObjectPosition(obj):
 	"""
@@ -84,7 +87,11 @@ def getPositionForCurrentMode(obj):
 			return pos
 		mode-=1
 
-def setCurrentMode(mode):
+def getCurrentMode():
+	"""Fetches the ID of the current mode"""
+	return modes[_currentMode][0]
+
+def setCurrentMode(mode,updateReviewPosition=True):
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
 	@param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).
@@ -97,7 +104,7 @@ def setCurrentMode(mode):
 		ID,label,func=modes[mode]
 	else:
 		for index,(ID,label,func) in enumerate(modes):
-			if mode==label:
+			if mode==ID:
 				mode=index
 				break
 		else:
@@ -106,7 +113,7 @@ def setCurrentMode(mode):
 	pos=func(obj)
 	if pos:
 		_currentMode=mode
-		api.setReviewPosition(pos[0],clearNavigatorObject=False)
+		if updateReviewPosition: api.setReviewPosition(pos[0],clearNavigatorObject=False)
 		return label
 
 def nextMode(prev=False,startMode=None):
@@ -124,3 +131,33 @@ def nextMode(prev=False,startMode=None):
 		return None
 	label=setCurrentMode(newMode)
 	return label or nextMode(prev=prev,startMode=newMode)
+
+def handleCaretMove(pos):
+	"""
+	Instructs the review position to be updated due to caret movement.
+	@param pos: Either a TextInfo instance at the caret position, or an NVDAObject or TeeInterceptor who's caret position should be retreaved.
+	@type pos: L{textInfos.TextInfo} or L{NVDAObject} or L{TreeInterceptor}
+	"""
+	if not config.conf["reviewCursor"]["followCaret"]:
+		return
+	if isinstance(pos,textInfos.TextInfo):
+		info=pos
+		obj=pos.obj
+	else:
+		info=None
+		obj=pos
+	mode=getCurrentMode()
+	if isinstance(obj,NVDAObject):
+		if not mode=='object' or obj is not api.getNavigatorObject():
+			return
+	elif isinstance(obj,TreeInterceptor):
+		if mode not in ('object','document'):
+			return
+		if mode!='document':
+			setCurrentMode('document',updateReviewPosition=False)
+	if not info:
+		try:
+			info=obj.makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError,RuntimeError):
+			return
+	api.setReviewPosition(info)

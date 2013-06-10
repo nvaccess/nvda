@@ -13,6 +13,7 @@ import globalVars
 from logHandler import log
 import ui
 import treeInterceptorHandler
+import virtualBuffers
 import NVDAObjects
 import NVDAObjects.IAccessible
 import winUser
@@ -137,7 +138,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	globalVars.focusAncestors=ancestors
 	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
-		setNavigatorObject(obj if not obj.treeInterceptor or obj.treeInterceptor.passThrough or not obj.treeInterceptor.isReady else obj.treeInterceptor.rootNVDAObject)
+		setNavigatorObject(obj,isFocus=True)
 	return True
 
 def getFocusDifferenceLevel():
@@ -196,16 +197,31 @@ def getNavigatorObject():
 		globalVars.navigatorObject=getattr(obj,'rootNVDAObject',None) or obj
 		return globalVars.navigatorObject
 
-def setNavigatorObject(obj):
+def setNavigatorObject(obj,isFocus=False):
 	"""Sets an object to be the current navigator object. Navigator objects can be used to navigate around the operating system (with the number pad) with out moving the focus. It also sets the current review position to None so that next time the review position is asked for, it is created from the navigator object.  
 @param obj: the object that will be set as the current navigator object
 @type obj: NVDAObjects.NVDAObject  
+@param isFocus: true if the navigator object was set due to a focus change.
+@type isFocus: bool
 """
 	if not isinstance(obj,NVDAObjects.NVDAObject):
 		return False
 	globalVars.navigatorObject=obj
+	oldPos=globalVars.reviewPosition
+	oldPosObj=globalVars.reviewPositionObj
 	globalVars.reviewPosition=None
 	globalVars.reviewPositionObj=None
+	#Specifically handle when the navigator object is set due to a focus change in a virtualBuffer
+	#The focus change may have been becaus the caret was moved, which caused the focus change.
+	#If so, don't clober the review position as it will have been already set to a more accurate position.
+	if isFocus and oldPos and oldPos.obj is obj.treeInterceptor and isinstance(obj.treeInterceptor,virtualBuffers.VirtualBuffer):
+		try:
+			objPos=obj.treeInterceptor.makeTextInfo(obj)
+		except LookupError:
+			objPos=None
+		if objPos and objPos.isOverlapping(oldPos):
+			globalVars.reviewPosition=oldPos
+			globalVars.reviewPositionObj=oldPosObj
 	eventHandler.executeEvent("becomeNavigatorObject",obj)
 
 def isTypingProtected():

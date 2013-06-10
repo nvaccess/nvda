@@ -11,6 +11,7 @@
 
 import time
 import api
+import review
 from baseObject import ScriptableObject
 import braille
 import speech
@@ -78,8 +79,7 @@ class EditableText(ScriptableObject):
 				info = self.makeTextInfo(textInfos.POSITION_CARET)
 			except:
 				return
-		if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self:
-			api.setReviewPosition(info)
+		review.handleCaretMove(info)
 		if speakUnit:
 			info.expand(speakUnit)
 			speech.speakTextInfo(info, unit=speakUnit, reason=controlTypes.REASON_CARET)

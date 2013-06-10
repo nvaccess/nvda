@@ -10,6 +10,7 @@ import time
 import re
 import weakref
 from logHandler import log
+import review
 import eventHandler
 from displayModel import DisplayModelTextInfo
 import baseObject
@@ -863,11 +864,7 @@ This code is executed if a gain focus event is received by this object.
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
-			if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self: 
-				try:
-					api.setReviewPosition(self.makeTextInfo(textInfos.POSITION_CARET))
-				except (NotImplementedError, RuntimeError):
-					pass
+			review.handleCaretMove(self)
 
 	def _get_flatReviewPosition(self):
 		"""Locates a TextInfo positioned at this object, in the closest flat review."""
