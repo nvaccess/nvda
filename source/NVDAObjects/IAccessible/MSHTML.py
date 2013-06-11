@@ -787,6 +787,8 @@ class MSHTML(IAccessible):
 			return bool(attribs["href"])
 		if nodeName in ( "BODY", "OBJECT", "APPLET"):
 			return True
+		if nodeName=="IMG" and not self.HTMLNodeHasAncestorIAccessible and self.IAccessibleRole==oleacc.ROLE_SYSTEM_GRAPHIC and self.IAccessibleStates&oleacc.STATE_SYSTEM_FOCUSABLE:
+			return True
 		return self.HTMLNode.hasAttribute("tabindex")
 
 	def setFocus(self):

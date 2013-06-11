@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2012 NV Access Limited, Peter Vágner
+#Copyright (C) 2006-2013 NV Access Limited, Peter Vágner
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 """
@@ -24,11 +24,12 @@ import editableText
 from logHandler import log
 import api
 import ui
+import braille
 
 class ProgressBar(NVDAObject):
 
 	progressValueCache={} #key is made of "speech" or "beep" and an x,y coordinate, value is the last percentage
- 
+
 	def event_valueChange(self):
 		pbConf=config.conf["presentation"]["progressBarUpdates"]
 		states=self.states
@@ -40,6 +41,7 @@ class ProgressBar(NVDAObject):
 		except (AttributeError, ValueError):
 			log.debugWarning("Invalid value: %r" % val)
 			return super(ProgressBar, self).event_valueChange()
+		braille.handler.handleUpdate(self)
 		if not pbConf["reportBackgroundProgressBars"] and not self.isInForeground:
 			return
 		try:

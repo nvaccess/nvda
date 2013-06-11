@@ -468,7 +468,7 @@ the NVDAObject for IAccessible
 		elif windowClassName == "WebViewWindowClass":
 			from . import webKit
 			webKit.findExtraOverlayClasses(self, clsList)
-		elif windowClassName == "Chrome_RenderWidgetHostHWND":
+		elif windowClassName.startswith("Chrome_"):
 			from . import chromium
 			chromium.findExtraOverlayClasses(self, clsList)
 
