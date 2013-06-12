@@ -59,7 +59,6 @@ typedef std::map<std::pair<int,int>,displayModelChunk_t*> displayModelChunksByPo
 class displayModel_t: public LockableAutoFreeObject  {
 	private:
 	displayModelChunksByPointMap_t chunksByYX; //indexes the chunks by y,x
-	HWND hwnd;
 
 	protected:
 
@@ -76,7 +75,9 @@ class displayModel_t: public LockableAutoFreeObject  {
 
 	public:
 
-/**
+	HWND hwnd;
+
+	/**
  * constructor
  */
 	displayModel_t(HWND hwnd=NULL);
@@ -124,7 +125,7 @@ class displayModel_t: public LockableAutoFreeObject  {
 /**
  * Generates xml representing whitespace between chunks 
  */
-	void generateWhitespaceXML(long baseline, std::wstring& text);
+	void generateWhitespaceXML(HWND hwnd, long baseline, std::wstring& text);
 
 /**
  * Fetches the text contained in all chunks intersecting the given rectangle if provided, otherwize the text from all chunks in the model.
