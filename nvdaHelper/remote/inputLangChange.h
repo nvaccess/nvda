@@ -21,8 +21,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 //Event IDs
 #define EVENT_INPUTLANGCHANGE 0x1001
 
-extern LPARAM lastInputLangChange;
-
 void inputLangChange_inProcess_initialize();
 void inputLangChange_inProcess_terminate();
 

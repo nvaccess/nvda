@@ -533,14 +533,13 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 	}
 	//Re-enable IME conversion mode update reporting as input lang change window message disabled it while completing the switch
 	curTSFClsID=rClsID;
-	disableIMEConversionModeUpdateReporting=false;
 	if (IsEqualCLSID(rClsID, null_clsid)) {
 		hasActiveProfile = false;
 		// When switching to non-TSF profile, resend last input language
 		wchar_t buf[KL_NAMELENGTH];
 		GetKeyboardLayoutName(buf);
 		nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),
-				static_cast<unsigned long>(lastInputLangChange), buf);
+				(unsigned long)GetKeyboardLayout(0), buf);
 		handleIMEConversionModeUpdate(GetFocus(),true);
 		return S_OK;
 	}
@@ -555,7 +554,7 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 		BSTR desc = NULL;
 		profiles->GetLanguageProfileDescription(rClsID, lang, rProfGUID, &desc);
 		if (desc) {
-			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),static_cast<unsigned long>(lastInputLangChange), desc);
+			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),(unsigned long)GetKeyboardLayout(0), desc);
 			SysFreeString(desc);
 		}
 	}

@@ -85,9 +85,9 @@ static HWND candidateIMEWindow=0;
 static BOOL lastOpenStatus=true;
 static HMODULE gImm32Module = NULL;
 static DWORD lastConversionModeFlags=0;
-bool disableIMEConversionModeUpdateReporting=false;
 
 UINT wm_candidateChange=0;
+UINT wm_handleIMEConversionModeUpdate=0;
 
 static LPINPUTCONTEXT2 (WINAPI* immLockIMC)(HIMC) = NULL;
 static BOOL (WINAPI* immUnlockIMC)(HIMC) = NULL;
@@ -427,7 +427,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 					break;
 
 				case IMN_SETCONVERSIONMODE:
-					if(!disableIMEConversionModeUpdateReporting) handleIMEConversionModeUpdate(hwnd,true);
+					PostMessage(hwnd,wm_handleIMEConversionModeUpdate,0,0);
 					break;
 
 				case IMN_PRIVATE:
@@ -493,7 +493,9 @@ WCHAR* IME_getCompositionString() {
 
 LRESULT CALLBACK IME_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 	MSG* pmsg=(MSG*)lParam;
-	if(pmsg->message==wm_candidateChange) {
+	if(pmsg->message==wm_handleIMEConversionModeUpdate) {
+		handleIMEConversionModeUpdate(pmsg->hwnd,true);
+	} else if(pmsg->message==wm_candidateChange) {
 		handleCandidates(pmsg->hwnd);
 	} else {
 		handleCandidatesClosed(pmsg->hwnd);
@@ -504,6 +506,7 @@ LRESULT CALLBACK IME_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 
 void IME_inProcess_initialize() {
 	wm_candidateChange=RegisterWindowMessage(L"nvda_wm_candidateChange");
+	wm_handleIMEConversionModeUpdate=RegisterWindowMessage(L"nvda_wm_handleIMEConversionModeUpdate");
 	gImm32Module = LoadLibraryA("imm32.dll");
 	if (gImm32Module) {
 		immLockIMC    = (LPINPUTCONTEXT2 (WINAPI*)(HIMC))

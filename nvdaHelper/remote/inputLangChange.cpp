@@ -31,11 +31,6 @@ LRESULT CALLBACK inputLangChange_callWndProcHook(int code, WPARAM wParam, LPARAM
 			wchar_t buf[KL_NAMELENGTH];
 			GetKeyboardLayoutName(buf);
 			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),static_cast<unsigned long>(pcwp->lParam),buf);
-		} else {
-			//Disable IME conversion mode update reporting until TSF is switched to the new language
-			//As it should not be spoken before the language change
-			//TSFSink::OnActivated will re-enable it and for any conversion mode change to be reported
-			disableIMEConversionModeUpdateReporting=true;
 		}
 		lastInputLangChange=pcwp->lParam;
 	}

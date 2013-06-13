@@ -32,6 +32,8 @@
 - NVDA no longer fails to start if the system time is earlier than the last check for an update. (#3260)
 - If a progress bar is shown on a braille display, the braille display is updated when the progress bar changes. (#3258)
 - In browse mode in Mozilla applications, table captions are no longer rendered twice. In addition, the summary is rendered when there is also a caption. (#3196)
+- When changing input languages in Windows 8, NVDA now speaks the correct language rather than the one previous.
+- NVDA now announces IME conversion mode changes in Windows 8.
 
 
 == Changes for Developers ==
