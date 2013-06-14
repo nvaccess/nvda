@@ -190,10 +190,13 @@ def getNavigatorObject():
 	if globalVars.navigatorObject:
 		return globalVars.navigatorObject
 	else:
-		try:
-			obj=globalVars.reviewPosition.NVDAObjectAtStart
-		except (NotImplementedError,LookupError):
+		if review.getCurrentMode()=='object':
 			obj=globalVars.reviewPosition.obj
+		else:
+			try:
+				obj=globalVars.reviewPosition.NVDAObjectAtStart
+			except (NotImplementedError,LookupError):
+				obj=globalVars.reviewPosition.obj
 		globalVars.navigatorObject=getattr(obj,'rootNVDAObject',None) or obj
 		return globalVars.navigatorObject
 
