@@ -176,6 +176,7 @@ class SynthDriver(SynthDriver):
 		SynthDriver.VoiceSetting(),
 		SynthDriver.LanguageSetting(),
 		SynthDriver.RateSetting(),
+		# Translators: A setting for a speech synthesizer.
 		SynthSetting("accel",_("&Acceleration")),
 		SynthDriver.PitchSetting(),
 		SynthDriver.InflectionSetting(10),

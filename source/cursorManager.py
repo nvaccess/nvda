@@ -79,7 +79,9 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def doFindTextDialog(self):
 		d = wx.TextEntryDialog(gui.mainFrame, 
+			# Translators: Dialog text for NvDA's find command.
 			_("Type the text you wish to find"),
+			# Translators: Title of a dialog to find text.
 			_("Find"),
 			defaultValue=self._lastFindText)
 		def callback(result):
@@ -104,6 +106,7 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def script_find(self,gesture): 
 		self.doFindTextDialog()
+	# Translators: Input help message for NVDA's find command.
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
 	def script_findNext(self,gesture):
@@ -111,6 +114,7 @@ class CursorManager(baseObject.ScriptableObject):
 			self.doFindTextDialog()
 			return
 		self.doFindText(self._lastFindText)
+	# Translators: Input help message for find next command.
 	script_findNext.__doc__ = _("find the next occurrence of the previously entered text string from the current cursor's position")
 
 	def script_findPrevious(self,gesture):
@@ -118,6 +122,7 @@ class CursorManager(baseObject.ScriptableObject):
 			self.doFindTextDialog()
 			return
 		self.doFindText(self._lastFindText,reverse=True)
+	# Translators: Input help message for find previous command.
 	script_findPrevious.__doc__ = _("find the previous occurrence of the previously entered text string from the current cursor's position")
 
 	def script_moveByPage_back(self,gesture):
@@ -248,6 +253,7 @@ class CursorManager(baseObject.ScriptableObject):
 			speech.speakMessage(_("no selection"))
 			return
 		if info.copyToClipboard():
+			# Translators: Message presented when text has been copied to clipboard.
 			speech.speakMessage(_("copied to clipboard"))
 
 	__gestures = {

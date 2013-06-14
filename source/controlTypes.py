@@ -187,7 +187,7 @@ STATE_HASLONGDESC=0x400000000
 roleLabels={
 	# Translators: The word for an unknown control type.
 	ROLE_UNKNOWN:_("unknown"),
-	# Translators: The word for window of a program suchas document window.
+	# Translators: The word for window of a program such as document window.
 	ROLE_WINDOW:_("window"),
 	# Translators: Used to identify title bar of a program.
 	ROLE_TITLEBAR:_("title bar"),
@@ -303,21 +303,30 @@ roleLabels={
 	ROLE_GROUPING:_("grouping"),
 	# Translators: Identifies a property page such as drive properties dialog.
 	ROLE_PROPERTYPAGE:_("property page"),
+	# Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
 	ROLE_CANVAS:_("canvas"),
+	# Translators: Identifies a caption (usually a short text identifying a picture or a graphic on websites).
 	ROLE_CAPTION:_("caption"),
+	# Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 	ROLE_CHECKMENUITEM:_("check menu item"),
+	# Translators: Identifies a data edit field.
 	ROLE_DATEEDITOR:_("date edit"),
 	# Translators: Identifies an icon.
 	ROLE_ICON:_("icon"),
+	# Translators: Identifies a directory pane.
 	ROLE_DIRECTORYPANE:_("directory pane"),
-	# Translators: Identifies an embedded object such as flash content.
+	# Translators: Identifies an embedded object such as flash content on webpages.
 	ROLE_EMBEDDEDOBJECT:_("embedded object"),
+	# Translators: Identifies an end note.
 	ROLE_ENDNOTE:_("end note"),
+	# Translators: Identifies a footer (usually text).
 	ROLE_FOOTER:_("footer"),
+	# Translators: Identifies a foot note (text at the end of a passage or used for anotations).
 	ROLE_FOOTNOTE:_("foot note"),
 	# Translators: Reported for an object which is a glass pane; i.e.
 	# a pane that is guaranteed to be on top of all panes beneath it.
 	ROLE_GLASSPANE:_("glass pane"),
+	# Translators: Identifies a header (usually text at top of documents or on tops of pages).
 	ROLE_HEADER:_("header"),
 	# Translators: Identifies an image map (a type of graphical link).
 	ROLE_IMAGEMAP:_("image map"),
@@ -325,6 +334,7 @@ roleLabels={
 	ROLE_INPUTWINDOW:_("input window"),
 	# Translators: Identifies a label.
 	ROLE_LABEL:_("label"),
+	# Translators: Identifies a note field.
 	ROLE_NOTE:_("note"),
 	# Translators: Identifies a page.
 	ROLE_PAGE:_("page"),
@@ -338,6 +348,7 @@ roleLabels={
 	ROLE_EDITBAR:_("edit bar"),
 	# Translators: Identifies a terminal window such as command prompt.
 	ROLE_TERMINAL:_("terminal"),
+	# Translators: Identifies a rich edit box (an edit box which allows entering formatting commands in addition to text; encountered on webpages and NvDA log viewer).
 	ROLE_RICHEDIT:_("rich edit"),
 	ROLE_RULER:_("ruler"),
 	# Translators: Identifies a scroll pane.
@@ -356,6 +367,7 @@ roleLabels={
 	# but which can be undocked from or torn off the menu system
 	# to exist as a separate window.
 	ROLE_TEAROFFMENU:_("tear off menu"),
+	# Translators: Identifies a text frame (a frame window which contains text).
 	ROLE_TEXTFRAME:_("text frame"),
 	# Translators: Identifies a toggle button (a button used to toggle something).
 	ROLE_TOGGLEBUTTON:_("toggle button"),
@@ -389,7 +401,7 @@ roleLabels={
 	ROLE_IPADDRESS:_("IP address"),
 	# Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
 	ROLE_DESKTOPICON:_("desktop icon"),
-	# Translators: Identifies an alert message.
+	# Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 	ROLE_ALERT:_("alert"),
 	ROLE_INTERNALFRAME:_("IFrame"),
 	# Translators: Identifies desktop pane (the desktop window).
@@ -429,6 +441,7 @@ roleLabels={
 	ROLE_INDENT:_("indent"),
 	# Translators: Describes text formatting.
 	ROLE_ALIGNMENT:_("alignment"),
+	# Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
 	ROLE_ALERT:_("alert"),
 	ROLE_DATAGRID:_("data grid"),
 	ROLE_DATAITEM:_("data item"),
@@ -481,9 +494,13 @@ stateLabels={
 	# Translators: This is presented when an edit field allows typing multiple lines of text such as comment fields on websites.
 	STATE_MULTILINE:_("multi line"),
 	STATE_ICONIFIED:_("iconified"),
+	# Translators: Presented when the current control is located off screen.
 	STATE_OFFSCREEN:_("off screen"),
+	# Translators: Presented when the control allows selection such as text fields.
 	STATE_SELECTABLE:_("selectable"),
+	# Translators: Presented when a control can be moved to using system focus.
 	STATE_FOCUSABLE:_("focusable"),
+	# Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 	STATE_CLICKABLE:_("clickable"),
 	STATE_EDITABLE:_("editable"),
 	STATE_CHECKABLE:_("checkable"),

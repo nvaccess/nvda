@@ -25,7 +25,7 @@ def getReceivedMessageString(obj):
 	nameList.append(obj.senderName)
 	# Translators: This is presented in outlook or live mail, email subject
 	nameList.append(_("subject: %s")%obj.subject)
-	# Translators: This is presented in outlook or live mail, email received date/time.
+	# Translators: This is presented in outlook or live mail, email received time
 	nameList.append(_("received: %s")%obj.receivedTime)
 
 	text=", ".join(nameList)
@@ -40,7 +40,7 @@ def getSentMessageString(obj):
 	nameList=[]
 	nameList.append(obj.to)
 	nameList.append(_("subject: %s")%obj.subject)
-	# Translators: This is presented in outlook or live mail, email sent date/time.
+	# Translators: This is presented in outlook or live mail, email sent date
 	nameList.append(_("sent: %s")%obj.sentOn)
 	return ", ".join(nameList)
 

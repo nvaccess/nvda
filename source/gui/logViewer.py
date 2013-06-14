@@ -14,6 +14,7 @@ class LogViewer(wx.Frame):
 	"""
 
 	def __init__(self, parent):
+		# Translators: The title of the NVDA log viewer window.
 		super(LogViewer, self).__init__(parent, wx.ID_ANY, _("NVDA Log Viewer"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
@@ -26,6 +27,7 @@ class LogViewer(wx.Frame):
 
 		menuBar = wx.MenuBar()
 		menu = wx.Menu()
+		# Translators: The label for a menu item in NVDA log viewer to refresh log messages.
 		item = menu.Append(wx.ID_ANY, _("Refresh	F5"))
 		self.Bind(wx.EVT_MENU, self.refresh, item)
 		item = menu.Append(wx.ID_SAVEAS)
@@ -33,6 +35,7 @@ class LogViewer(wx.Frame):
 		menu.AppendSeparator()
 		item = menu.Append(wx.ID_EXIT, _("E&xit"))
 		self.Bind(wx.EVT_MENU, self.onClose, item)
+		# Translators: The title of a menu in NVDA Log Viewer.
 		menuBar.Append(menu, _("Log"))
 		self.SetMenuBar(menuBar)
 
@@ -63,6 +66,7 @@ class LogViewer(wx.Frame):
 		self.Destroy()
 
 	def onSaveAsCommand(self, evt):
+		# Translators: Label of a menu item in NVDA Log Viewer.
 		filename = wx.FileSelector(_("Save As"), default_filename="nvda.log", flags=wx.SAVE | wx.OVERWRITE_PROMPT, parent=self)
 		if not filename:
 			return
@@ -71,6 +75,7 @@ class LogViewer(wx.Frame):
 			# Therefore, do the encoding manually.
 			file(filename, "w").write(self.outputCtrl.GetValue().encode("UTF-8"))
 		except (IOError, OSError), e:
+			# Translators: Dialog text presented when NVDA cannot save a log file.
 			gui.messageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR, parent=self)
 
 	def onOutputChar(self, evt):

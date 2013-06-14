@@ -132,20 +132,25 @@ class MainFrame(wx.Frame):
 
 	def onRevertToSavedConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration)
+		# Translators: Reported when last saved configuration has been applied by using revert to saved configuration option in NVDA menu.
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration applied"))
 
 	def onRevertToDefaultConfigurationCommand(self,evt):
 		queueHandler.queueFunction(queueHandler.eventQueue,core.resetConfiguration,factoryDefaults=True)
+		# Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration restored to factory defaults"))
 
 	def onSaveConfigurationCommand(self,evt):
 		if globalVars.appArgs.secure:
+			# Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Cannot save configuration - NVDA in secure mode"))
 			return
 		try:
 			config.save()
+			# Translators: Reported when current configuration has been saved.
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration saved"))
 		except:
+			# Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
 	def _popupSettingsDialog(self, dialog, *args, **kwargs):
@@ -155,16 +160,20 @@ class MainFrame(wx.Frame):
 		try:
 			dialog(self, *args, **kwargs).Show()
 		except SettingsDialog.MultiInstanceError:
+			# Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 			messageBox(_("Please close the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR)
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
+		# Translators: Title for default speech dictionary dialog.
 		self._popupSettingsDialog(DictionaryDialog,_("Default dictionary"),speechDictHandler.dictionaries["default"])
 
 	def onVoiceDictionaryCommand(self,evt):
+		# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
 		self._popupSettingsDialog(DictionaryDialog,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
 
 	def onTemporaryDictionaryCommand(self,evt):
+		# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
 		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
 
 	def onExitCommand(self, evt):
@@ -172,6 +181,7 @@ class MainFrame(wx.Frame):
 		if config.conf["general"]["askToExit"]:
 			if isInMessageBox:
 				return
+			# Translators: Message shown to ask if user really wishes to quit NVDA.
 			if messageBox(_("Are you sure you want to quit NVDA?"), _("Exit NVDA"), wx.YES_NO|wx.ICON_WARNING) == wx.YES:
 				canExit=True
 		else:
@@ -216,6 +226,7 @@ class MainFrame(wx.Frame):
 		self._popupSettingsDialog(SpeechSymbolsDialog)
 
 	def onAboutCommand(self,evt):
+		# Translators: The title of the dialog to show about info for NVDA.
 		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
 	def onCheckForUpdateCommand(self, evt):
@@ -281,62 +292,86 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 		self.menu=wx.Menu()
 		menu_preferences=self.preferencesMenu=wx.Menu()
+		# Translators: The label for the menu item to open general Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("&General settings..."),_("General settings"))
 		self.Bind(wx.EVT_MENU, frame.onGeneralSettingsCommand, item)
+		# Translators: The label for the menu item to open Synthesizer settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("&Synthesizer..."),_("Change the synthesizer to be used"))
 		self.Bind(wx.EVT_MENU, frame.onSynthesizerCommand, item)
+		# Translators: The label for the menu item to open Voice Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("&Voice settings..."),_("Choose the voice, rate, pitch and volume to use"))
 		self.Bind(wx.EVT_MENU, frame.onVoiceCommand, item)
+		# Translators: The label for the menu item to open Braille Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("B&raille settings..."))
 		self.Bind(wx.EVT_MENU, frame.onBrailleCommand, item)
+		# Translators: The label for the menu item to open Keyboard Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("&Keyboard settings..."),_("Configure keyboard layout, speaking of typed characters, words or command keys"))
 		self.Bind(wx.EVT_MENU, frame.onKeyboardSettingsCommand, item)
+		# Translators: The label for the menu item to open Mouse Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY, _("&Mouse settings..."),_("Change reporting of mouse shape and object under mouse"))
 		self.Bind(wx.EVT_MENU, frame.onMouseSettingsCommand, item)
+		# Translators: The label for the menu item to open Review Cursor dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("Review &cursor..."),_("Configure how and when the review cursor moves")) 
 		self.Bind(wx.EVT_MENU, frame.onReviewCursorCommand, item)
+		# Translators: The label for the menu item to open Input Composition Settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("&Input composition settings..."),_("Configure how NVDA reports input composition and candidate selection for certain languages")) 
 		self.Bind(wx.EVT_MENU, frame.onInputCompositionCommand, item)
+		# Translators: The label for the menu item to open Object Presentation dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("&Object presentation..."),_("Change reporting of objects")) 
 		self.Bind(wx.EVT_MENU, frame.onObjectPresentationCommand, item)
+		# Translators: The label for the menu item to open Browse Mode settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("&Browse mode..."),_("Change virtual buffers specific settings")) 
 		self.Bind(wx.EVT_MENU, frame.onBrowseModeCommand, item)
+		# Translators: The label for the menu item to open Document Formatting settings dialog.
 		item = menu_preferences.Append(wx.ID_ANY,_("Document &formatting..."),_("Change settings of document properties")) 
 		self.Bind(wx.EVT_MENU, frame.onDocumentFormattingCommand, item)
 		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
+			# Translators: The label for the menu item to open Default speech dictionary dialog.
 			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Default dictionary..."),_("A dialog where you can set default dictionary by adding dictionary entries to the list"))
 			self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
+			# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 			item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Voice dictionary..."),_("A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"))
 			self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
+		# Translators: The label for the menu item to open Temporary speech dictionary dialog.
 		item = subMenu_speechDicts.Append(wx.ID_ANY,_("&Temporary dictionary..."),_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"))
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
+		# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 		menu_preferences.AppendMenu(wx.ID_ANY,_("Speech &dictionaries"),subMenu_speechDicts)
 		if not globalVars.appArgs.secure:
+			# Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
 			self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
+		# Translators: The label for Preferences submenu in NVDA menu.
 		self.menu.AppendMenu(wx.ID_ANY,_("&Preferences"),menu_preferences)
 
 		menu_tools = self.toolsMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
+			# Translators: The label for the menu item to open NVDA Log Viewer.
 			item = menu_tools.Append(wx.ID_ANY, _("View log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
+		# Translators: The label for the menu item to toggle Speech Viewer.
 		item=self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
 		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 		if not globalVars.appArgs.secure:
+			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
 			# Translators: The label of a menu item to open the Add-ons Manager.
 			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons"))
 			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
 		if not globalVars.appArgs.secure and getattr(sys,'frozen',None):
+			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("Create Portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
 			if not config.isInstalledCopy():
+				# Translators: The label for the menu item to install NVDA on the computer.
 				item = menu_tools.Append(wx.ID_ANY, _("&Install NVDA..."))
 				self.Bind(wx.EVT_MENU, frame.onInstallCommand, item)
+		# Translators: The label for the menu item to reload plugins.
 		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
 		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
+		# Translators: The label for the Tools submenu in NVDA menu.
 		self.menu.AppendMenu(wx.ID_ANY, _("Tools"), menu_tools)
 
 		menu_help = self.helpMenu = wx.Menu()
@@ -346,14 +381,18 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label of a menu item to open the Commands Quick Reference document.
 			item = menu_help.Append(wx.ID_ANY, _("Commands &Quick Reference"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("keyCommands.html")), item)
+			# Translators: The label for the menu item to open What's New document.
 			item = menu_help.Append(wx.ID_ANY, _("What's &new"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
 			item = menu_help.Append(wx.ID_ANY, _("NVDA web site"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
+			# Translators: The label for the menu item to view NVDA License document.
 			item = menu_help.Append(wx.ID_ANY, _("License"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
+			# Translators: The label for the menu item to view NVDA Contributors list document.
 			item = menu_help.Append(wx.ID_ANY, _("Contributors"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
+		# Translators: The label for the menu item to open NVDA Welcome Dialog.
 		item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog"))
 		self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
 		menu_help.AppendSeparator()
@@ -361,19 +400,26 @@ class SysTrayIcon(wx.TaskBarIcon):
 			# Translators: The label of a menu item to manually check for an updated version of NVDA.
 			item = menu_help.Append(wx.ID_ANY, _("Check for update..."))
 			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
+		# Translators: The label for the menu item to open About dialog to get information about NVDA.
 		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
+		# Translators: The label for the Help submenu in NVDA menu.
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 		self.menu.AppendSeparator()
+		# Translators: The label for the menu item to revert to saved configuration.
 		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
 		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
 		if not globalVars.appArgs.secure:
+			# Translators: The label for the menu item to reset settings to default settings.
+			# Here, default settings means settings that were there when the user first used NVDA.
 			item = self.menu.Append(wx.ID_ANY, _("&Reset configuration to factory defaults"),_("Reset all settings to default state"))
 			self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
+			# Translators: The label for the menu item to save current settings.
 			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
 		if not globalVars.appArgs.secure:
 			self.menu.AppendSeparator()
+			# Translators: The label for the menu item to open donate page.
 			item = self.menu.Append(wx.ID_ANY, _("Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
 		self.menu.AppendSeparator()
@@ -469,6 +515,7 @@ class WelcomeDialog(wx.Dialog):
 	)
 
 	def __init__(self, parent):
+		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 		super(WelcomeDialog, self).__init__(parent, wx.ID_ANY, _("Welcome to NVDA"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		welcomeText = wx.StaticText(self, wx.ID_ANY, self.WELCOME_MESSAGE)
@@ -483,6 +530,7 @@ class WelcomeDialog(wx.Dialog):
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		optionsSizer.Add(self.startAfterLogonCheckBox,flag=wx.TOP|wx.LEFT,border=10)
+		# Translators: This is a label for a checkbox in welcome dialog to show welcome dialog at startup.
 		self.showWelcomeDialogAtStartupCheckBox = wx.CheckBox(self, wx.ID_ANY, _("Show this dialog when NVDA starts"))
 		self.showWelcomeDialogAtStartupCheckBox.SetValue(config.conf["general"]["showWelcomeDialogAtStartup"])
 		optionsSizer.Add(self.showWelcomeDialogAtStartupCheckBox,flag=wx.TOP|wx.LEFT,border=10)
@@ -526,6 +574,7 @@ Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit y
 """)
 
 	def __init__(self, parent):
+		# Translators: The title of the dialog to tell users that there are erros in the configuration file.
 		super(ConfigFileErrorDialog, self).__init__(parent, wx.ID_ANY, _("Configuration File Error"))
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		messageText = wx.StaticText(self, wx.ID_ANY, self.MESSAGE)
@@ -560,10 +609,12 @@ class LauncherDialog(wx.Dialog):
 		super(LauncherDialog, self).__init__(parent, title=versionInfo.name)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
+		# Translators: The label of the license text which will be shown when NVDA installation program starts.
 		sizer = wx.StaticBoxSizer(wx.StaticBox(self, label=_("License Agreement")), wx.VERTICAL)
 		ctrl = wx.TextCtrl(self, size=(500, 400), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH)
 		ctrl.Value = codecs.open(getDocFilePath("copying.txt", False), "r", encoding="UTF-8").read()
 		sizer.Add(ctrl)
+		# Translators: The label for a checkbox in NvDA installation program to agree to the license agreement.
 		ctrl = self.licenseAgreeCheckbox = wx.CheckBox(self, label=_("I &agree"))
 		ctrl.Value = False
 		sizer.Add(ctrl)
@@ -572,14 +623,17 @@ class LauncherDialog(wx.Dialog):
 
 		sizer = wx.GridSizer(rows=2, cols=2)
 		self.actionButtons = []
+		# Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 		ctrl = wx.Button(self, label=_("&Install NVDA on this computer"))
 		sizer.Add(ctrl)
 		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, mainFrame.onInstallCommand))
 		self.actionButtons.append(ctrl)
+		# Translators: The label of the button in NVDA installation program to create a portable version of NVDA.
 		ctrl = wx.Button(self, label=_("Create &portable copy"))
 		sizer.Add(ctrl)
 		ctrl.Bind(wx.EVT_BUTTON, lambda evt: self.onAction(evt, mainFrame.onCreatePortableCopyCommand))
 		self.actionButtons.append(ctrl)
+		# Translators: The label of the button in NVDA installation program to continue using the installation program as a temporary copy of NVDA.
 		ctrl = wx.Button(self, label=_("&Continue running"))
 		sizer.Add(ctrl)
 		ctrl.Bind(wx.EVT_BUTTON, self.onContinueRunning)
