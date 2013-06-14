@@ -94,7 +94,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		elif ariaExpanded=="false":
 			states.add(controlTypes.STATE_COLLAPSED)
 		if attrs.get('HTMLAttrib::aria-invalid','false')=='true':
-			states.add(controlTypes.STATE_INVALID)
+			states.add(controlTypes.STATE_INVALID_ENTRY)
 		if attrs.get('HTMLAttrib::aria-multiline','false')=='true':
 			states.add(controlTypes.STATE_MULTILINE)
 		if attrs.get('HTMLAttrib::aria-dropeffect','none')!='none':
