@@ -35,7 +35,8 @@
 - When changing input languages in Windows 8, NVDA now speaks the correct language rather than the one previous.
 - NVDA now announces IME conversion mode changes in Windows 8.
 - NVDA no longer announces garbage on the Desktop when the Google Japanese or Atok IME input methods are in use. (#3234)
-
+- In Windows 7 and above, NVDA no longer inappropriately announces speech recognition or touch input as a keyboard language change.
+ 
 
 == Changes for Developers ==
 - windowUtils.findDescendantWindow has been added to search for a descendant window (HWND) matching the specified visibility, control ID and/or class name.
