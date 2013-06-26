@@ -63,7 +63,7 @@ def doInstall(createDesktopShortcut,startOnLogon,copyPortableConfig,isUpdate,sil
 		# Translators: The message displayed to the user after NVDA is installed
 		# and the installed copy is about to be started.
 		gui.messageBox(msg+_("Please press OK to start the installed copy."),
-			# Translators: The title of a dialolg presented to indicate a successful operation.
+			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"))
 	shellapi.ShellExecute(None, None,
 		os.path.join(installer.defaultInstallPath,'nvda.exe'),

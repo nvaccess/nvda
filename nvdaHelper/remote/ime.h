@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 void IME_inProcess_initialize();
 void IME_inProcess_terminate();
 extern HWND curIMEWindow;
-extern bool disableIMEConversionModeUpdateReporting;
+
 void handleIMEConversionModeUpdate(HWND hwnd, bool report);
 
 #endif

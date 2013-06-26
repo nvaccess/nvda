@@ -194,33 +194,40 @@ class SynthDriver(baseObject.AutoPropertyObject):
 	@classmethod
 	def LanguageSetting(cls):
 		"""Factory function for creating a language setting."""
+		# Translators: Label for a setting in voice settings dialog.
 		return SynthSetting("language",_("&Language"))
 
 	@classmethod
 	def VoiceSetting(cls):
 		"""Factory function for creating voice setting."""
+		# Translators: Label for a setting in voice settings dialog.
 		return SynthSetting("voice",_("&Voice"))
 	@classmethod
 	def VariantSetting(cls):
 		"""Factory function for creating variant setting."""
+		# Translators: Label for a setting in voice settings dialog.
 		return SynthSetting("variant",_("V&ariant"))
 
 	@classmethod
 	def RateSetting(cls,minStep=1):
 		"""Factory function for creating rate setting."""
+		# Translators: Label for a setting in voice settings dialog.
 		return NumericSynthSetting("rate",_("&Rate"),minStep=minStep)
 	@classmethod
 	def VolumeSetting(cls,minStep=1):
 		"""Factory function for creating volume setting."""
+		# Translators: Label for a setting in voice settings dialog.
 		return NumericSynthSetting("volume",_("V&olume"),minStep=minStep,normalStep=10)
 	@classmethod
 	def PitchSetting(cls,minStep=1):
 		"""Factory function for creating pitch setting."""
+		# Translators: Label for a setting in voice settings dialog.
 		return NumericSynthSetting("pitch",_("&Pitch"),minStep=minStep)
 
 	@classmethod
 	def InflectionSetting(cls,minStep=1):
 		"""Factory function for creating inflection setting."""
+		# Translators: Label for a setting in voice settings dialog.
 		return NumericSynthSetting("inflection",_("&Inflection"),minStep=minStep)
 
 	@classmethod

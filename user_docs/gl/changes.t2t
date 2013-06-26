@@ -3,6 +3,13 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1.1 =
+
+== Corrección de Erros ==
+- Prodúcense caracteres correctos cando se teclean na propria interfaz do NVDA mentres se utiliza  un método de entrada Coreano ou Xaponés mentres sexa o método predeterminado. (#2909)
+- En Internet Explorer e outros controis MSHTML, os campos marcados como contendo unha entrada inválida agora manéxanse correctamente. (#3256)
+
+
 = 2013.1 =
 O máis subliñable nesta versión inclúe unha distribución de teclado portátil máis intuitiva e consistente; soporte básico para o Microsoft PowerPoint; soporte para descripcións longas en navegadores web; e soporte para a entrada de braille computerizado para liñas braille que teñan un teclado braille.
 
@@ -76,8 +83,8 @@ Por favor mira o documento [Referencia Rápida de Ordes keyCommands.html] para a
 - O contido do Adobe Flash agora é accesible en Internet Explorer en Windows 8. (#2454)
 - Correxido o soporte Bluetooth para a Papenmeier Braillex Trio. (#2995)
 - Correxida a incapacidade para utilizar certas voces de Microsoft Speech API versión 5 como as voces de Koba Speech 2. (#2629)
-+- En aplicacións que utilicen o Java Access Bridge, agora as liñas braille actualízanse correctamente cando o cursor se mova en campos de texto editables . (#3107)
-+- Sopórtase o ponto de referencia en formulario en modo navegación en documentos que soporten pontos de referencia. (#2997) 
+- En aplicacións que utilicen o Java Access Bridge, agora as liñas braille actualízanse correctamente cando o cursor se mova en campos de texto editables . (#3107)
+- Sopórtase o ponto de referencia en formulario en modo navegación en documentos que soporten pontos de referencia. (#2997) 
 - O controlador do sintetizador de voz eSpeak agora manexa a lectura por caracteres máis apropriadamente (ex.: anuncia un nome de letra extranxeiro ou un valor en lugar de só o seu son ou nome xenérico). (#3106)
 - NVDA xa non falla ó copiar as opcións do usuario para utilizalas na autentificación e noutras pantallas seguras cando a ruta do perfil do usuario contén caracteres non ASCII. (#3092)
 - NVDA xa non se bloquea cando se utiliza a entrada de caracteres asiáticos nalgunhas aplicacións .NET. (#3005)
