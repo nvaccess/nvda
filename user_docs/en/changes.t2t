@@ -30,7 +30,13 @@
 - Pressing alt+downArrow or alt+upArrow to expand a combo box while in focus mode no longer incorrectly switches to browse mode. (#2340)
 - in Internet Explorer 10, table cells no longer activate focus mode, unless they have been explicitly made focusable by the web author (#3248)
 - NVDA no longer fails to start if the system time is earlier than the last check for an update. (#3260)
-
+- If a progress bar is shown on a braille display, the braille display is updated when the progress bar changes. (#3258)
+- In browse mode in Mozilla applications, table captions are no longer rendered twice. In addition, the summary is rendered when there is also a caption. (#3196)
+- When changing input languages in Windows 8, NVDA now speaks the correct language rather than the one previous.
+- NVDA now announces IME conversion mode changes in Windows 8.
+- NVDA no longer announces garbage on the Desktop when the Google Japanese or Atok IME input methods are in use. (#3234)
+- In Windows 7 and above, NVDA no longer inappropriately announces speech recognition or touch input as a keyboard language change.
+ 
 
 == Changes for Developers ==
 - windowUtils.findDescendantWindow has been added to search for a descendant window (HWND) matching the specified visibility, control ID and/or class name.
@@ -41,6 +47,7 @@
 
 == Bug Fixes ==
 - Correct characters are produced when typing in NVDA's own user interface while using a Korean or Japanese input method while it is the default method. (#2909)
+- In Internet Explorer and other MSHTML controls, fields marked as containing an invalid entry are now handled correctly. (#3256)
 
 
 = 2013.1 =

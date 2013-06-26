@@ -40,7 +40,7 @@ class SysListView32MenuItem(sysListView32.ListItemWithoutColumnSupport):
 
 class ClassicStartMenu(Window):
 	# Override the name, as Windows names this the "Application" menu contrary to all documentation.
-	# Translators: The title of the Start menu/screen in your language (only the word start).
+	# Translators: The title of Start menu/screen in your language (only the word start).
 	name = _("Start")
 
 	def event_gainFocus(self):

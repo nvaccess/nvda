@@ -85,9 +85,9 @@ static HWND candidateIMEWindow=0;
 static BOOL lastOpenStatus=true;
 static HMODULE gImm32Module = NULL;
 static DWORD lastConversionModeFlags=0;
-bool disableIMEConversionModeUpdateReporting=false;
 
 UINT wm_candidateChange=0;
+UINT wm_handleIMEConversionModeUpdate=0;
 
 static LPINPUTCONTEXT2 (WINAPI* immLockIMC)(HIMC) = NULL;
 static BOOL (WINAPI* immUnlockIMC)(HIMC) = NULL;
@@ -305,13 +305,18 @@ static bool handleCandidates(HWND hwnd) {
 
 	/* Make sure there is at least one candidate list */
 	DWORD count = 0;
-	DWORD len = ImmGetCandidateListCountW(imc, &count);
+	ImmGetCandidateListCountW(imc, &count);
 	if (!count) {
 		ImmReleaseContext(hwnd, imc);
 		return false;
 	}
 	candidateIMEWindow=hwnd;
 	/* Read first candidate list */
+	DWORD len = ImmGetCandidateList(imc, 0, NULL, 0);
+	if(!len) {
+		ImmReleaseContext(hwnd, imc);
+		return false;
+	}
 	CANDIDATELIST* list = (CANDIDATELIST*)malloc(len);
 	ImmGetCandidateList(imc, 0, list, len);
 	ImmReleaseContext(hwnd, imc);
@@ -324,30 +329,38 @@ static bool handleCandidates(HWND hwnd) {
 	} else if (pageEnd > list->dwCount) {
 		pageEnd = list->dwCount;
 	}
-
 	/* Concatenate currently shown candidates into a string */
-	WCHAR* cand_str = (WCHAR*)malloc(len);
-	WCHAR* ptr = cand_str;
-	for (DWORD n = list->dwPageStart, count = 0;  n < pageEnd;  ++n) {
+	size_t buflen = 0;
+	for (DWORD n = list->dwPageStart;  n < pageEnd; ++n) {
 		DWORD offset = list->dwOffset[n];
 		WCHAR* cand = (WCHAR*)(((char*)list) + offset);
 		size_t clen = wcslen(cand);
-		if (!clen)  continue;
-		CopyMemory(ptr, cand, (clen + 1) * sizeof(WCHAR));
-		if ((n + 1) < pageEnd)  ptr[clen] = '\n';
-		ptr += (clen + 1);
-		++count;
+		if(clen>0) {
+			buflen += ((clen + 1) * sizeof(WCHAR));
+		}
 	}
-	HKL kbd_layout = GetKeyboardLayout(0);
-	WCHAR filename[MAX_PATH + 1]={0};
-	ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH);
-	if(cand_str&&wcslen(cand_str)>0) {
+	WCHAR* cand_str = NULL;
+	if(buflen>0) {
+		cand_str=(WCHAR*)malloc(buflen);
+		WCHAR* ptr = cand_str;
+		for (DWORD n = list->dwPageStart; n < pageEnd;  ++n) {
+			DWORD offset = list->dwOffset[n];
+			WCHAR* cand = (WCHAR*)(((char*)list) + offset);
+			size_t clen = wcslen(cand);
+			if (!clen)  continue;
+			CopyMemory(ptr, cand, (clen + 1) * sizeof(WCHAR));
+			if ((n + 1) < pageEnd)  ptr[clen] = '\n';
+			ptr += (clen + 1);
+		}
+		HKL kbd_layout = GetKeyboardLayout(0);
+		WCHAR filename[MAX_PATH + 1]={0};
+		ImmGetIMEFileNameW(kbd_layout, filename, MAX_PATH);
 		nvdaControllerInternal_inputCandidateListUpdate(cand_str,selection,filename);
+		free(cand_str);
 	}
 	/* Clean up */
-	free(cand_str);
 	free(list);
-	return (count > 0);
+	return cand_str!=NULL;
 }
 
 static WCHAR* getCompositionString(HIMC imc, DWORD index) {
@@ -427,7 +440,7 @@ static LRESULT handleIMEWindowMessage(HWND hwnd, UINT message, WPARAM wParam, LP
 					break;
 
 				case IMN_SETCONVERSIONMODE:
-					if(!disableIMEConversionModeUpdateReporting) handleIMEConversionModeUpdate(hwnd,true);
+					PostMessage(hwnd,wm_handleIMEConversionModeUpdate,0,0);
 					break;
 
 				case IMN_PRIVATE:
@@ -493,7 +506,9 @@ WCHAR* IME_getCompositionString() {
 
 LRESULT CALLBACK IME_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 	MSG* pmsg=(MSG*)lParam;
-	if(pmsg->message==wm_candidateChange) {
+	if(pmsg->message==wm_handleIMEConversionModeUpdate) {
+		handleIMEConversionModeUpdate(pmsg->hwnd,true);
+	} else if(pmsg->message==wm_candidateChange) {
 		handleCandidates(pmsg->hwnd);
 	} else {
 		handleCandidatesClosed(pmsg->hwnd);
@@ -504,6 +519,7 @@ LRESULT CALLBACK IME_getMessageHook(int code, WPARAM wParam, LPARAM lParam) {
 
 void IME_inProcess_initialize() {
 	wm_candidateChange=RegisterWindowMessage(L"nvda_wm_candidateChange");
+	wm_handleIMEConversionModeUpdate=RegisterWindowMessage(L"nvda_wm_handleIMEConversionModeUpdate");
 	gImm32Module = LoadLibraryA("imm32.dll");
 	if (gImm32Module) {
 		immLockIMC    = (LPINPUTCONTEXT2 (WINAPI*)(HIMC))

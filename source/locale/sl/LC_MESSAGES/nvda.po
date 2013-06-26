@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-02 19:08+1000\n"
-"PO-Revision-Date: 2013-05-03 19:52+0100\n"
+"POT-Creation-Date: 2013-06-06 19:07+1000\n"
+"PO-Revision-Date: 2013-06-09 10:57+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: Slovenian\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
-#: IAccessibleHandler.py:673
+#: IAccessibleHandler.py:678
 msgid "Secure Desktop"
 msgstr "Varno namizje"
 
@@ -859,7 +859,7 @@ msgstr "oranžno"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
 #: compoundDocuments.py:403 globalCommands.py:133 speech.py:323 speech.py:515
-#: speech.py:531 appModules\powerpnt.py:717 virtualBuffers\__init__.py:745
+#: speech.py:531 appModules\powerpnt.py:736 virtualBuffers\__init__.py:740
 #, python-format
 msgid "selected %s"
 msgstr "označeno %s"
@@ -1757,28 +1757,28 @@ msgstr "Nalaganje NVDA. Prosimo, počakajte."
 msgid "NVDA started"
 msgstr "NVDA je v pogonu"
 
-#: cursorManager.py:81
+#: cursorManager.py:82
 msgid "Type the text you wish to find"
 msgstr "Natipkajte besedilo, ki ga želite najti"
 
-#: cursorManager.py:81
+#: cursorManager.py:83
 msgid "Find"
 msgstr "Najdi"
 
-#: cursorManager.py:99
+#: cursorManager.py:102
 #, python-format
 msgid "text \"%s\" not found"
 msgstr "besedilo \"%s\" se ni našlo"
 
-#: cursorManager.py:99
+#: cursorManager.py:102
 msgid "Find Error"
 msgstr "Najdi napako"
 
-#: cursorManager.py:104
+#: cursorManager.py:107
 msgid "find a text string from the current cursor position"
 msgstr "najdi niz besedila za trenutnim položajem utripalke"
 
-#: cursorManager.py:111
+#: cursorManager.py:114
 msgid ""
 "find the next occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -1786,7 +1786,7 @@ msgstr ""
 "najdi naslednji blok že prej vnesenega niza besedila od trenutnega položaja "
 "utripalke"
 
-#: cursorManager.py:118
+#: cursorManager.py:121
 msgid ""
 "find the previous occurrence of the previously entered text string from the "
 "current cursor's position"
@@ -1794,11 +1794,11 @@ msgstr ""
 "najdi predhodni blok že prej vnesenega niza besedila od trenutnega položaja "
 "utripalke"
 
-#: cursorManager.py:245 globalCommands.py:131
+#: cursorManager.py:248 globalCommands.py:131
 msgid "no selection"
 msgstr "brez označbe"
 
-#: cursorManager.py:248
+#: cursorManager.py:251
 msgid "copied to clipboard"
 msgstr "preslikano v odložišče"
 
@@ -2207,7 +2207,7 @@ msgstr ""
 
 #. Translators: a message reported when landing at the end of a browse mode document when trying to jump to the end of the current container.
 #: globalCommands.py:516 globalCommands.py:524 globalCommands.py:558
-#: virtualBuffers\__init__.py:1468
+#: virtualBuffers\__init__.py:1462
 msgid "bottom"
 msgstr "že spodaj"
 
@@ -2525,7 +2525,7 @@ msgid "no system battery"
 msgstr "brez sistemske baterije"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:891 NVDAObjects\behaviors.py:57
+#: globalCommands.py:891 NVDAObjects\behaviors.py:59
 #, python-format
 msgid "%d percent"
 msgstr "%d odstotkov"
@@ -2789,37 +2789,37 @@ msgstr ""
 "drugačen kot je bil tisti, kjer je bil vaš prst pred tem."
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
-#: installer.py:159 gui\__init__.py:350
+#: installer.py:178 gui\__init__.py:351
 msgid "NVDA web site"
 msgstr "Spletno mesto NVDA"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
-#: installer.py:161
+#: installer.py:180
 msgid "Uninstall NVDA"
 msgstr "Odstrani NVDA"
 
 #. Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
-#: installer.py:163
+#: installer.py:182
 msgid "Explore NVDA user configuration directory"
 msgstr "Razišči prostor uporabniških konfiguracije NVDA"
 
 #. Translators: The label of the NVDA Documentation menu in the Start Menu.
-#: installer.py:165
+#: installer.py:184
 msgid "Documentation"
 msgstr "Dokumentacija"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
-#: installer.py:167
+#: installer.py:186
 msgid "Commands Quick Reference"
 msgstr "Hitra referenca po ukazih"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
-#: installer.py:169 gui\__init__.py:343
+#: installer.py:188 gui\__init__.py:344
 msgid "User Guide"
 msgstr "Uporabniški vodič"
 
 #. Translators: A file extension label for NVDA add-on package.
-#: installer.py:220
+#: installer.py:239
 msgid "NVDA add-on package"
 msgstr "NVDA Paket Dodatka"
 
@@ -3158,7 +3158,6 @@ msgid "laptop"
 msgstr "prenosnik (razporeditev brez številskega dela)"
 
 #: keyboardHandler.py:361 synthSettingsRing.py:74 gui\settingsDialogs.py:1137
-#: virtualBuffers\__init__.py:863
 msgid "on"
 msgstr "vključeno"
 
@@ -3166,7 +3165,7 @@ msgstr "vključeno"
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
 #: keyboardHandler.py:361 synthSettingsRing.py:74 gui\settingsDialogs.py:793
-#: gui\settingsDialogs.py:1137 virtualBuffers\__init__.py:863
+#: gui\settingsDialogs.py:1137
 msgid "off"
 msgstr "izključeno"
 
@@ -3518,82 +3517,82 @@ msgstr "Napaka pri preverjanju za novo posodobitvijo"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:128 updateCheck.py:355 gui\__init__.py:148
-#: gui\__init__.py:157 gui\addonGui.py:84 gui\addonGui.py:123
+#: updateCheck.py:128 updateCheck.py:359 gui\__init__.py:149
+#: gui\__init__.py:158 gui\addonGui.py:88 gui\addonGui.py:127
 #: gui\installerGui.py:54 gui\installerGui.py:191 gui\installerGui.py:199
 #: gui\installerGui.py:230 gui\logViewer.py:74 gui\settingsDialogs.py:223
 msgid "Error"
 msgstr "Napaka"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
-#: updateCheck.py:174
+#: updateCheck.py:178
 msgid "NVDA Update"
 msgstr "NVDA Posodobitev"
 
 #. Translators: A message indicating that an updated version of NVDA is available.
 #. {version} will be replaced with the version; e.g. 2011.3.
-#: updateCheck.py:183
+#: updateCheck.py:187
 msgid "NVDA version {version} is available."
 msgstr "Na voljo je različica NVDA {version}"
 
 #. Translators: A message indicating that no update to NVDA is available.
-#: updateCheck.py:186
+#: updateCheck.py:190
 msgid "No update available."
 msgstr "Nobena posodobitev ni na voljo"
 
 #. Translators: The label of a button to download and install an NVDA update.
-#: updateCheck.py:192
+#: updateCheck.py:196
 msgid "Download and &install update"
 msgstr "Dolpotegni in &namesti posodobitev"
 
 #. Translators: The label of a button to download an NVDA update.
-#: updateCheck.py:195
+#: updateCheck.py:199
 msgid "&Download update"
 msgstr "&Dolpotegni posodobitev"
 
 #. Translators: The label of a button to remind the user later about performing some action.
-#: updateCheck.py:203
+#: updateCheck.py:207
 msgid "Remind me &later"
 msgstr "Opomni me &pozneje"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
-#: updateCheck.py:209 gui\addonGui.py:54
+#: updateCheck.py:213 gui\addonGui.py:58
 msgid "&Close"
 msgstr "&Zapri"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
-#: updateCheck.py:256
+#: updateCheck.py:260
 msgid "Downloading Update"
 msgstr "Prenašanje posodobitve"
 
 #. Translators: The progress message indicating that a connection is being established.
-#: updateCheck.py:258
+#: updateCheck.py:262
 msgid "Connecting"
 msgstr "Povezovanje"
 
 #. Translators: The progress message indicating that a download is in progress.
-#: updateCheck.py:335
+#: updateCheck.py:339
 msgid "Downloading"
 msgstr "Prenašanje"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
-#: updateCheck.py:354
+#: updateCheck.py:358
 msgid "Error downloading update."
 msgstr "Napaka pri dolpotegu posodobitve"
 
 #. Translators: The message presented when the update has been successfully downloaded
 #. and is about to be installed.
-#: updateCheck.py:362
+#: updateCheck.py:366
 msgid "Update downloaded. It will now be installed."
 msgstr "Posodobitev se je dolpotegnila. Le-ta se bo sedaj namestila."
 
 #. Translators: The title of the dialog displayed when the update is about to be installed.
-#: updateCheck.py:364
+#: updateCheck.py:368
 msgid "Install Update"
 msgstr "Namesti posodobitev"
 
-#: updateCheck.py:375
+#: updateCheck.py:379
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
 "This project relies primarily on donations and grants. By donating, you are "
@@ -3613,41 +3612,41 @@ msgstr ""
 "Hvala za vašo podporo."
 
 #. Translators: The title of the dialog requesting donations from users.
-#: updateCheck.py:384
+#: updateCheck.py:388
 msgid "Please Donate"
 msgstr "Prosimo, Prispevajte"
 
 #. Translators: The label of the button to donate
 #. in the "Please Donate" dialog.
-#: updateCheck.py:393
+#: updateCheck.py:397
 msgid "&Donate"
 msgstr "&Prispevaj"
 
 #. Translators: The label of the button to decline donation
 #. in the "Please Donate" dialog.
-#: updateCheck.py:398
+#: updateCheck.py:402
 msgid "&Not now"
 msgstr "&Ne zdaj"
 
 #. Translators: The label of a button to indicate that the user is finished donating
 #. in the "Please Donate" dialog.
-#: updateCheck.py:413
+#: updateCheck.py:417
 msgid "&Done"
 msgstr "&Končano"
 
-#: versionInfo.py:32
+#: versionInfo.py:31
 msgid "NonVisual Desktop Access"
 msgstr "NonVisual Desktop Access"
 
-#: versionInfo.py:40
+#: versionInfo.py:39
 msgid "A free and open source screen reader for Microsoft Windows"
 msgstr "Prost in odprtokoden bralnik zaslona za Microsoft Windows"
 
-#: versionInfo.py:43
+#: versionInfo.py:42
 msgid "Copyright (C) {years} NVDA Contributors"
 msgstr "Avtorske pravice (C) {years} NVDA Sodelujoči"
 
-#: versionInfo.py:45
+#: versionInfo.py:44
 msgid ""
 "{longName} ({name})\n"
 "Version: {version}\n"
@@ -3691,38 +3690,38 @@ msgstr ""
 "meniju NVDA."
 
 #. Translators: a message announcing a candidate's character and description.
-#: NVDAObjects\behaviors.py:359
+#: NVDAObjects\behaviors.py:361
 msgid "{symbol} as in {description}"
 msgstr "{symbol} kot v {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#: NVDAObjects\behaviors.py:364
+#: NVDAObjects\behaviors.py:366
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects\behaviors.py:412 virtualBuffers\__init__.py:1331
+#: NVDAObjects\behaviors.py:414 virtualBuffers\__init__.py:1325
 msgid "edge of table"
 msgstr "na robu tabele"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:438
+#: NVDAObjects\behaviors.py:440
 msgid "Moves the navigator object to the next column"
 msgstr "premakne predmet krmarjenja v naslednji stolpec"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:451
+#: NVDAObjects\behaviors.py:453
 msgid "Moves the navigator object to the previous column"
 msgstr "Premakne predmet krmarjenja v predhodni stolpec"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:472
+#: NVDAObjects\behaviors.py:474
 msgid "Moves the navigator object and focus to the next row"
 msgstr "premakne predmet krmarjenja in žarišče v naslednjo vrstico"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:478
+#: NVDAObjects\behaviors.py:480
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Premakne predmet krmarjenja in žarišče v predhodno vrstico"
 
@@ -4076,17 +4075,17 @@ msgid "Master Thumbnails"
 msgstr "Glavne miniaturne sličice"
 
 #. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-#: appModules\powerpnt.py:270
+#: appModules\powerpnt.py:271
 msgid "Waiting for Powerpoint..."
 msgstr "Čakanje na Powerpoint"
 
 #. Translators: the label for a slide in Microsoft PowerPoint.
-#: appModules\powerpnt.py:485
+#: appModules\powerpnt.py:499
 msgid "Slide {slideNumber}"
 msgstr "Diapozitiv {slideNumber}"
 
 #. Translators: The description for a script
-#: appModules\powerpnt.py:738
+#: appModules\powerpnt.py:757
 msgid ""
 "Toggles between reporting the speaker notes or the actual slide content. "
 "This does not change what is visible on-screen, but only what the user can "
@@ -4096,27 +4095,27 @@ msgstr ""
 "ne spreminja prikaza zaslona ampak samo, kaj prebere NVDA"
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
-#: appModules\powerpnt.py:757
+#: appModules\powerpnt.py:787
 msgid "Slide show notes - {slideName}"
 msgstr "Beležke o diaprojekciji - {slideName}"
 
 #. Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-#: appModules\powerpnt.py:760
+#: appModules\powerpnt.py:790
 msgid "Slide show - {slideName}"
 msgstr "Diaprojekcija - {slideName}"
 
 #. Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
-#: appModules\powerpnt.py:763
+#: appModules\powerpnt.py:793
 msgid "Slide Show - complete"
 msgstr "Diaprojekcija - končana"
 
 #. Translators: The message for no notes  for a slide in a slide show
-#: appModules\powerpnt.py:819
+#: appModules\powerpnt.py:849
 msgid "No notes"
 msgstr "Ni beležk"
 
 #. Translators: The message for an empty slide in a slide show
-#: appModules\powerpnt.py:822 appModules\powerpnt.py:823
+#: appModules\powerpnt.py:852 appModules\powerpnt.py:853
 msgid "Empty slide"
 msgstr "Prazen diapozitiv"
 
@@ -4251,90 +4250,90 @@ msgstr "starejši  modeli Papenmeier BRAILLEX"
 msgid "Seika braille displays"
 msgstr "brajeve vrstice Seika"
 
-#: gui\__init__.py:134
+#: gui\__init__.py:135
 msgid "Configuration applied"
 msgstr "Konfiguracija sprejeta"
 
-#: gui\__init__.py:138
+#: gui\__init__.py:139
 msgid "Configuration restored to factory defaults"
 msgstr "konfiguracija je obnovljena na tovarniške nastavitve"
 
-#: gui\__init__.py:142
+#: gui\__init__.py:143
 msgid "Cannot save configuration - NVDA in secure mode"
 msgstr ""
 "Nemogoče shraniti trenutno konfiguracijo, ker NVDA deluje v varnem načinu."
 
-#: gui\__init__.py:146
+#: gui\__init__.py:147
 msgid "Configuration saved"
 msgstr "Konfiguracija shranjena"
 
-#: gui\__init__.py:148
+#: gui\__init__.py:149
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
 "Nemogoče shraniti konfiguracijo - verjetno je datotečni sistem samo za branje"
 
-#: gui\__init__.py:157
+#: gui\__init__.py:158
 msgid "Please close the other NVDA settings dialog first"
 msgstr "Prosimo, najprej zaprite drugo pogovorno okno  NVDA nastavitev"
 
-#: gui\__init__.py:161
+#: gui\__init__.py:162
 msgid "Default dictionary"
 msgstr "Privzet slovar"
 
-#: gui\__init__.py:164
+#: gui\__init__.py:165
 #, python-format
 msgid "Voice dictionary (%s)"
 msgstr "(%s) slovar glasu"
 
-#: gui\__init__.py:167
+#: gui\__init__.py:168
 msgid "Temporary dictionary"
 msgstr "Začasen slovar"
 
-#: gui\__init__.py:174
+#: gui\__init__.py:175
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Ste prepričani, da želite zapustiti NVDA?"
 
-#: gui\__init__.py:174 gui\__init__.py:379
+#: gui\__init__.py:175 gui\__init__.py:380
 msgid "Exit NVDA"
 msgstr "Izhod iz NVDA"
 
-#: gui\__init__.py:218 gui\__init__.py:363
+#: gui\__init__.py:219 gui\__init__.py:364
 msgid "About NVDA"
 msgstr "O NVDA"
 
-#: gui\__init__.py:283
+#: gui\__init__.py:284
 msgid "&General settings..."
 msgstr "Splošne &nastavitve..."
 
-#: gui\__init__.py:283
+#: gui\__init__.py:284
 msgid "General settings"
 msgstr "Splošne nastavitve"
 
-#: gui\__init__.py:285
+#: gui\__init__.py:286
 msgid "&Synthesizer..."
 msgstr "&Sinteza..."
 
-#: gui\__init__.py:285
+#: gui\__init__.py:286
 msgid "Change the synthesizer to be used"
 msgstr "Zamenjaj sintezo v uporabi"
 
-#: gui\__init__.py:287
+#: gui\__init__.py:288
 msgid "&Voice settings..."
 msgstr "Nastavitve &glasu"
 
-#: gui\__init__.py:287
+#: gui\__init__.py:288
 msgid "Choose the voice, rate, pitch and volume to use"
 msgstr "Izberi glas, hitrost, višino in glasnost, ki jih želite uporabljati."
 
-#: gui\__init__.py:289
+#: gui\__init__.py:290
 msgid "B&raille settings..."
 msgstr "Nastavitve &Braja"
 
-#: gui\__init__.py:291
+#: gui\__init__.py:292
 msgid "&Keyboard settings..."
 msgstr "Nastavitve &tipkovnice..."
 
-#: gui\__init__.py:291
+#: gui\__init__.py:292
 msgid ""
 "Configure keyboard layout, speaking of typed characters, words or command "
 "keys"
@@ -4342,27 +4341,27 @@ msgstr ""
 "Nastavi razporeditev tipkovnice, izgovorjavo natipkanih znakov, besed, ali "
 "ukazov s tipkovnice"
 
-#: gui\__init__.py:293
+#: gui\__init__.py:294
 msgid "&Mouse settings..."
 msgstr "Nastavitve &miške"
 
-#: gui\__init__.py:293
+#: gui\__init__.py:294
 msgid "Change reporting of mouse shape and object under mouse"
 msgstr "Zamenjaj način poročanja o obliki miške in o predmetu pod njo"
 
-#: gui\__init__.py:295
+#: gui\__init__.py:296
 msgid "Review &cursor..."
 msgstr "preglej &Utripalko"
 
-#: gui\__init__.py:295
+#: gui\__init__.py:296
 msgid "Configure how and when the review cursor moves"
 msgstr "Nastavi kako in kdaj se premakne pregledniška utripalka"
 
-#: gui\__init__.py:297
+#: gui\__init__.py:298
 msgid "&Input composition settings..."
 msgstr "Nastavitve za vnos &več-znakovnih znakov"
 
-#: gui\__init__.py:297
+#: gui\__init__.py:298
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
 "certain languages"
@@ -4370,35 +4369,35 @@ msgstr ""
 "Določi, kako NVDA poroča o vhodni skladnji in o izbiri kandidata za različne "
 "jezike"
 
-#: gui\__init__.py:299
+#: gui\__init__.py:300
 msgid "&Object presentation..."
 msgstr "&Predstavitev predmeta..."
 
-#: gui\__init__.py:299
+#: gui\__init__.py:300
 msgid "Change reporting of objects"
 msgstr "Spremeni poročanje o predmetih"
 
-#: gui\__init__.py:301
+#: gui\__init__.py:302
 msgid "&Browse mode..."
 msgstr "Brs&kalniško delovanje..."
 
-#: gui\__init__.py:301
+#: gui\__init__.py:302
 msgid "Change virtual buffers specific settings"
 msgstr "Spremeni posebne nastavitve navideznega predpomnilnika"
 
-#: gui\__init__.py:303
+#: gui\__init__.py:304
 msgid "Document &formatting..."
 msgstr "Oblikovanje &dokumenta"
 
-#: gui\__init__.py:303
+#: gui\__init__.py:304
 msgid "Change settings of document properties"
 msgstr "Spremeni nastavitve lastnosti dokumenta"
 
-#: gui\__init__.py:307
+#: gui\__init__.py:308
 msgid "&Default dictionary..."
 msgstr "&Privzet slovar..."
 
-#: gui\__init__.py:307
+#: gui\__init__.py:308
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
@@ -4406,11 +4405,11 @@ msgstr ""
 "pogovorno okno, kjer se lahko nastavi privzet slovar tako, da se dodajo novi "
 "slovarski vnosi na seznam"
 
-#: gui\__init__.py:309
+#: gui\__init__.py:310
 msgid "&Voice dictionary..."
 msgstr "Slovar &glasu..."
 
-#: gui\__init__.py:309
+#: gui\__init__.py:310
 msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
@@ -4418,11 +4417,11 @@ msgstr ""
 "pogovorno okno, kjer se lahko nastavi poseben slovar za glas z dodajanjem "
 "slovarskih vnosov na seznam."
 
-#: gui\__init__.py:311
+#: gui\__init__.py:312
 msgid "&Temporary dictionary..."
 msgstr "&Začasen slovar..."
 
-#: gui\__init__.py:311
+#: gui\__init__.py:312
 msgid ""
 "A dialog where you can set temporary dictionary by adding dictionary entries "
 "to the edit box"
@@ -4430,118 +4429,118 @@ msgstr ""
 "pogovorno okno, kjer se lahko nastavi začasen slovar s pomočjo vnosov v "
 "vnosno polje."
 
-#: gui\__init__.py:313
+#: gui\__init__.py:314
 msgid "Speech &dictionaries"
 msgstr "Slovarji g&ovora"
 
-#: gui\__init__.py:315
+#: gui\__init__.py:316
 msgid "&Punctuation/symbol pronunciation..."
 msgstr "&Zgovornost/pripovedovanje simbolov..."
 
-#: gui\__init__.py:317
+#: gui\__init__.py:318
 msgid "&Preferences"
 msgstr "&Nastavitve"
 
-#: gui\__init__.py:321
+#: gui\__init__.py:322
 msgid "View log"
 msgstr "Preglej &dnevnik"
 
-#: gui\__init__.py:323
+#: gui\__init__.py:324
 msgid "Speech viewer"
 msgstr "Prikazovalnik &govora"
 
-#: gui\__init__.py:326
+#: gui\__init__.py:327
 msgid "Python console"
 msgstr "Python &konzola"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
-#: gui\__init__.py:329
+#: gui\__init__.py:330
 msgid "Manage &add-ons"
 msgstr "Upravljaj z &dodatki"
 
-#: gui\__init__.py:332
+#: gui\__init__.py:333
 msgid "Create Portable copy..."
 msgstr "Ustvari prenosljivo kopijo..."
 
-#: gui\__init__.py:335
+#: gui\__init__.py:336
 msgid "&Install NVDA..."
 msgstr "&Namesti NVDA..."
 
-#: gui\__init__.py:337
+#: gui\__init__.py:338
 msgid "Reload plugins"
 msgstr "Ponovno naloži vtičnike"
 
-#: gui\__init__.py:339
+#: gui\__init__.py:340
 msgid "Tools"
 msgstr "Orodja"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
-#: gui\__init__.py:346
+#: gui\__init__.py:347
 msgid "Commands &Quick Reference"
 msgstr "&Hitra referenca po ukazih"
 
-#: gui\__init__.py:348
+#: gui\__init__.py:349
 msgid "What's &new"
 msgstr "Kaj je &novega (Angleščina)"
 
-#: gui\__init__.py:352
+#: gui\__init__.py:353
 msgid "License"
 msgstr "Licenca"
 
-#: gui\__init__.py:354
+#: gui\__init__.py:355
 msgid "Contributors"
 msgstr "Sodelujoči"
 
-#: gui\__init__.py:356
+#: gui\__init__.py:357
 msgid "We&lcome dialog"
 msgstr "Pogovorno okno &Dobrodošlice"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
-#: gui\__init__.py:361
+#: gui\__init__.py:362
 msgid "Check for update..."
 msgstr "Preveri, če obstaja posodobitev..."
 
-#: gui\__init__.py:363
+#: gui\__init__.py:364
 msgid "About..."
 msgstr "O..."
 
-#: gui\__init__.py:365
+#: gui\__init__.py:366
 msgid "&Help"
 msgstr "&Pomoč"
 
-#: gui\__init__.py:367
+#: gui\__init__.py:368
 msgid "&Revert to saved configuration"
 msgstr "&Vrni na shranjeno konfiguracijo"
 
-#: gui\__init__.py:367
+#: gui\__init__.py:368
 msgid "Reset all settings to saved state"
 msgstr "Ponastavi vse nastavitve na shranjeno stanje"
 
-#: gui\__init__.py:370
+#: gui\__init__.py:371
 msgid "&Reset configuration to factory defaults"
 msgstr "Ponastavi konfiguracijo na &tovarniške prednastavljene"
 
-#: gui\__init__.py:370
+#: gui\__init__.py:371
 msgid "Reset all settings to default state"
 msgstr "Ponastavi vse nastavitve na privzeto stanje"
 
-#: gui\__init__.py:372
+#: gui\__init__.py:373
 msgid "&Save configuration"
 msgstr "Shrani zadnjo &konfiguracijo"
 
-#: gui\__init__.py:372
+#: gui\__init__.py:373
 msgid "Write the current configuration to nvda.ini"
 msgstr "Zapiši trenutno konfiguracijo v nvda.ini"
 
-#: gui\__init__.py:376
+#: gui\__init__.py:377
 msgid "Donate"
 msgstr "Prispevaj"
 
-#: gui\__init__.py:379 gui\__init__.py:578 gui\logViewer.py:34
+#: gui\__init__.py:380 gui\__init__.py:587 gui\logViewer.py:34
 msgid "E&xit"
 msgstr "Iz&hod"
 
-#: gui\__init__.py:462
+#: gui\__init__.py:463
 msgid ""
 "Welcome to NVDA!\n"
 "Most commands for controlling NVDA require you to hold down the NVDA key "
@@ -4563,25 +4562,30 @@ msgstr ""
 "S tega menija lahko upravljate z NVDA, pridobite pomoč in dostopate do "
 "drugih dejanj v NVDA.\n"
 
-#: gui\__init__.py:471
+#: gui\__init__.py:472
 msgid "Welcome to NVDA"
 msgstr "Dobrodošli v NVDA"
 
-#: gui\__init__.py:475
+#: gui\__init__.py:476
 msgid "Options"
 msgstr "Možnosti"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\__init__.py:476 gui\settingsDialogs.py:587
+#: gui\__init__.py:477 gui\settingsDialogs.py:587
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Uporabljaj Capslock kot tipko NVDA"
 
-#: gui\__init__.py:479
+#. Translators: The label of a check box in the Welcome dialog.
+#: gui\__init__.py:481 gui\settingsDialogs.py:161
+msgid "&Automatically start NVDA after I log on to Windows"
+msgstr "&Samodejno zaženi NVDA, ko se prijavim v Windows"
+
+#: gui\__init__.py:486
 msgid "Show this dialog when NVDA starts"
 msgstr "Pokaže to pogovorno okno, ko se NVDA zažene"
 
-#: gui\__init__.py:515
+#: gui\__init__.py:524
 msgid ""
 "Your configuration file contains errors. \n"
 "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
@@ -4593,85 +4597,89 @@ msgstr ""
 "'Prekliči', če želite vašo konfiguracijsko datoteko ročno urediti kasneje. \n"
 "Več podrobnosti o napakah lahko najdete v dnevniški datoteki.\n"
 
-#: gui\__init__.py:520
+#: gui\__init__.py:529
 msgid "Configuration File Error"
 msgstr "Napaka konfiguracijske datoteke"
 
-#: gui\__init__.py:554
+#: gui\__init__.py:563
 msgid "License Agreement"
 msgstr "Licenčna pogodba"
 
-#: gui\__init__.py:558
+#: gui\__init__.py:567
 msgid "I &agree"
 msgstr "Se &Strinjam"
 
-#: gui\__init__.py:566
+#: gui\__init__.py:575
 msgid "&Install NVDA on this computer"
 msgstr "&Namesti NVDA na ta računalnik"
 
-#: gui\__init__.py:570
+#: gui\__init__.py:579
 msgid "Create &portable copy"
 msgstr "Ustvari &Prenosljivo kopijo"
 
-#: gui\__init__.py:574
+#: gui\__init__.py:583
 msgid "&Continue running"
 msgstr "Nadaljuj z &opravilom"
 
 #. Translators: Announced periodically to indicate progress for an indeterminate progress bar.
-#: gui\__init__.py:664
+#: gui\__init__.py:673
 msgid "Please wait"
 msgstr "Prosimo, počakajte"
 
 #. Translators: The title of the Addons Dialog
-#: gui\addonGui.py:23
+#: gui\addonGui.py:24
 msgid "Add-ons Manager"
 msgstr "Upravitelj dodatkov"
 
 #. Translators: the label for the installed addons list in the addons manager.
-#: gui\addonGui.py:29
+#: gui\addonGui.py:30
 msgid "Installed Add-ons"
 msgstr "Nameščeni dodatki"
 
-#: gui\addonGui.py:32
+#: gui\addonGui.py:33
 msgid "Package"
 msgstr "Paket"
 
-#: gui\addonGui.py:33
+#: gui\addonGui.py:34
 msgid "Status"
 msgstr "Status"
 
-#: gui\addonGui.py:34
+#: gui\addonGui.py:35
 msgid "Version"
 msgstr "Različica"
 
-#: gui\addonGui.py:35
+#: gui\addonGui.py:36
 msgid "Author"
 msgstr "Avtor"
 
-#: gui\addonGui.py:40
+#: gui\addonGui.py:41
 msgid "&About add-on..."
 msgstr "&O dodatku..."
 
-#: gui\addonGui.py:44
+#: gui\addonGui.py:45
 msgid "&Install..."
 msgstr "&Namesti..."
 
-#: gui\addonGui.py:47 gui\settingsDialogs.py:1151
+#: gui\addonGui.py:48 gui\settingsDialogs.py:1151
 msgid "&Remove"
 msgstr "&Odstrani"
 
+#: gui\addonGui.py:52
+msgid "&Get add-ons..."
+msgstr "&Pridobi dodatke..."
+
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
-#: gui\addonGui.py:66
+#: gui\addonGui.py:70
 msgid "Choose Add-on Package File"
 msgstr "Izberi datoteko s paketom dodatka"
 
 #. Translators: the label for the NVDA add-on package file type in the Choose add-on dialog.
-#: gui\addonGui.py:68
+#: gui\addonGui.py:72
 msgid "NVDA Add-on Package (*.{ext})"
 msgstr "NVDA Paket Dodatka (*.{ext})"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
-#: gui\addonGui.py:82
+#: gui\addonGui.py:86
 #, python-format
 msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
@@ -4681,7 +4689,7 @@ msgstr ""
 "napačen tip datoteke"
 
 #. Translators: A message asking the user if they really wish to install an addon.
-#: gui\addonGui.py:88
+#: gui\addonGui.py:92
 msgid ""
 "Are you sure you want to install this add-on? Only install add-ons from "
 "trusted sources.\n"
@@ -4695,57 +4703,57 @@ msgstr ""
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
-#: gui\addonGui.py:90 gui\addonGui.py:103
+#: gui\addonGui.py:94 gui\addonGui.py:107
 msgid "Add-on Installation"
 msgstr "Namestitev dodatka"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
-#: gui\addonGui.py:101
+#: gui\addonGui.py:105
 msgid ""
 "A version of this add-on is already installed. Would you like to update it?"
 msgstr "Različica tega dodatka je že nameščena. Jo želite posodobiti?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
-#: gui\addonGui.py:109
+#: gui\addonGui.py:113
 msgid "Installing Add-on"
 msgstr "Nameščanje dodatka"
 
 #. Translators: The message displayed while an addon is being installed.
-#: gui\addonGui.py:111
+#: gui\addonGui.py:115
 msgid "Please wait while the add-on is being installed."
 msgstr "Prosimo, počakajte medtem, ko se dodatek namešča."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
-#: gui\addonGui.py:121
+#: gui\addonGui.py:125
 #, python-format
 msgid "Failed to install add-on  from %s"
 msgstr "Spodletela namestitev dodatka iz %s"
 
-#: gui\addonGui.py:137
+#: gui\addonGui.py:141
 msgid "Are you sure you wish to remove the selected add-on from NVDA?"
 msgstr "Ste prepričani, da želite odstraniti označen dodatek iz NVDA?"
 
-#: gui\addonGui.py:137
+#: gui\addonGui.py:141
 msgid "Remove Add-on"
 msgstr "Odstrani dodatek"
 
 #. Translators: The status shown for a newly installed addon before NVDA is restarted.
-#: gui\addonGui.py:147
+#: gui\addonGui.py:151
 msgid "install"
 msgstr "namesti"
 
 #. Translators: The status shown for an addon that has been marked as removed, before NVDA has been restarted.
-#: gui\addonGui.py:150
+#: gui\addonGui.py:154
 msgid "remove"
 msgstr "odstrani"
 
 #. Translators: The status shown for an addon when its currently running in NVDA.
-#: gui\addonGui.py:153
+#: gui\addonGui.py:157
 msgid "running"
 msgstr "teče"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
-#: gui\addonGui.py:184
+#: gui\addonGui.py:188
 msgid ""
 "Add-ons have been added or removed. You must restart NVDA for these changes "
 "to take effect. Would you like to restart now?"
@@ -4754,12 +4762,12 @@ msgstr ""
 "zagnati NVDA. Želite to storiti zdaj?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
-#: gui\addonGui.py:186
+#: gui\addonGui.py:190
 msgid "Restart NVDA"
 msgstr "NVDA ponovno zaženi"
 
 #. Translators: message shown in the Addon Information dialog.
-#: gui\addonGui.py:195
+#: gui\addonGui.py:199
 msgid ""
 "{summary} ({name})\n"
 "Version: {version}\n"
@@ -4772,12 +4780,12 @@ msgstr ""
 "Opis: {description}\n"
 
 #. Translators: the url part of the About Add-on information
-#: gui\addonGui.py:203
+#: gui\addonGui.py:207
 msgid "URL: {url}"
 msgstr "URL: {url}"
 
 #. Translators: title for the Addon Information dialog
-#: gui\addonGui.py:205
+#: gui\addonGui.py:209
 msgid "Add-on Information"
 msgstr "Informacija o dodatku"
 
@@ -5043,10 +5051,6 @@ msgstr "&Nivo prijave:"
 #: gui\settingsDialogs.py:151
 msgid "Log level"
 msgstr "Nivo prijave"
-
-#: gui\settingsDialogs.py:161
-msgid "&Automatically start NVDA after I log on to Windows"
-msgstr "&Samodejno zaženi NVDA, ko se prijavim v Windows"
 
 #: gui\settingsDialogs.py:166
 msgid ""
@@ -5519,7 +5523,7 @@ msgstr "Samodejno &Preberi vse, ko se stran naloži"
 #. browse mode settings dialog.
 #: gui\settingsDialogs.py:913
 msgid "Report l&ayout tables"
-msgstr "Poročaj o obliki &Tabel"
+msgstr "Poročaj o oblikovanju &Tabel"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -5877,93 +5881,97 @@ msgid "word"
 msgstr "beseda"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#: virtualBuffers\__init__.py:240 virtualBuffers\__init__.py:249
+#: virtualBuffers\__init__.py:235 virtualBuffers\__init__.py:244
 #, python-format
 msgid "%s landmark"
 msgstr "%s mejnik"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:274
+#: virtualBuffers\__init__.py:269
 msgid "Lin&ks"
 msgstr "&Povezave"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:277
+#: virtualBuffers\__init__.py:272
 msgid "&Headings"
 msgstr "&Naslovi"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:280
+#: virtualBuffers\__init__.py:275
 msgid "Lan&dmarks"
 msgstr "&Mejniki"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:289
+#: virtualBuffers\__init__.py:284
 msgid "Elements List"
 msgstr "Seznam elementov"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:294
+#: virtualBuffers\__init__.py:289
 msgid "Type:"
 msgstr "Tip:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:308
+#: virtualBuffers\__init__.py:303
 msgid "&Filter by:"
 msgstr "Preseji &med"
 
 #. Translators: The label of a button to activate an element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:318
+#: virtualBuffers\__init__.py:313
 msgid "&Activate"
 msgstr "&Sproži"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: virtualBuffers\__init__.py:323
+#: virtualBuffers\__init__.py:318
 msgid "&Move to"
 msgstr "&Premakni se na"
 
 #. Translators: Reported when a page reloads (example: after refreshing a webpage).
-#: virtualBuffers\__init__.py:645
+#: virtualBuffers\__init__.py:640
 msgid "Refreshed"
 msgstr "Osveženo"
 
 #. Translators: Reported while loading a document.
-#: virtualBuffers\__init__.py:651
+#: virtualBuffers\__init__.py:646
 msgid "Loading document..."
 msgstr "Nalaganje dokumenta..."
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-#: virtualBuffers\__init__.py:844
+#: virtualBuffers\__init__.py:839
 msgid "No long description"
 msgstr "Ni daljšega opisa"
 
 #. Translators: the description for the activateLongDescription script on virtualBuffers.
-#: virtualBuffers\__init__.py:846
+#: virtualBuffers\__init__.py:841
 msgid "Shows the long description at this position if one is found."
 msgstr "Pokaže daljši opis na tem položaju, če obstaja."
 
-#: virtualBuffers\__init__.py:851
+#: virtualBuffers\__init__.py:846
 msgid "activates the current object in the document"
 msgstr "Sproži trenutni predmet v dokumentu"
 
-#: virtualBuffers\__init__.py:859
+#: virtualBuffers\__init__.py:854
 msgid "Refreshes the document content"
 msgstr "Osveži vsebino dokumenta"
 
 #. Translators: Presented when use screen layout option is toggled.
-#: virtualBuffers\__init__.py:865
-#, python-format
-msgid "use screen layout %s"
-msgstr "Uporabi %s obliko zaslona"
+#: virtualBuffers\__init__.py:860
+msgid "use screen layout on"
+msgstr "Uporabljaj oblikovanje  po zaslonu vključeno"
 
-#: virtualBuffers\__init__.py:866
+#. Translators: Presented when use screen layout option is toggled.
+#: virtualBuffers\__init__.py:863
+msgid "use screen layout off"
+msgstr "Uporabljaj oblikovanje po zaslonu izključeno"
+
+#: virtualBuffers\__init__.py:864
 msgid ""
 "Toggles on and off if the screen layout is preserved while rendering the "
 "document content"
@@ -5971,73 +5979,73 @@ msgstr ""
 "Vključi/izključi, če je postavitev zaslona zavarovana med prilagajanjem "
 "vsebine dokumenta"
 
-#: virtualBuffers\__init__.py:950
+#: virtualBuffers\__init__.py:948
 msgid "Presents a list of links, headings or landmarks"
 msgstr "Predstavi seznam naslovov, povezav ali mejnikov"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: virtualBuffers\__init__.py:1323
+#: virtualBuffers\__init__.py:1317
 msgid "Not in a table cell"
 msgstr "ni v celici tabele"
 
-#: virtualBuffers\__init__.py:1341
+#: virtualBuffers\__init__.py:1335
 msgid "moves to the next table row"
 msgstr "premakne se v naslednjo vrstico v tabeli"
 
-#: virtualBuffers\__init__.py:1345
+#: virtualBuffers\__init__.py:1339
 msgid "moves to the previous table row"
 msgstr "premakne se v predhodno vrstico v tabeli"
 
-#: virtualBuffers\__init__.py:1349
+#: virtualBuffers\__init__.py:1343
 msgid "moves to the next table column"
 msgstr "premakne se v naslednji stolpec v tabeli"
 
-#: virtualBuffers\__init__.py:1353
+#: virtualBuffers\__init__.py:1347
 msgid "moves to the previous table column"
 msgstr "premakne se v predhodni stolpec v tabeli"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers\__init__.py:1448 virtualBuffers\__init__.py:1462
+#: virtualBuffers\__init__.py:1442 virtualBuffers\__init__.py:1456
 msgid "Not in a container"
 msgstr "Ni v vsebini"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: virtualBuffers\__init__.py:1455
+#: virtualBuffers\__init__.py:1449
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "premakne se na začetek vsebine na seznamu ali v tabeli"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: virtualBuffers\__init__.py:1473
+#: virtualBuffers\__init__.py:1467
 msgid "Moves past the end  of the container element, such as a list or table"
 msgstr "Premakne se na konec vsebine na seznamu ali v tabeli"
 
-#: virtualBuffers\__init__.py:1509
+#: virtualBuffers\__init__.py:1504
 msgid "moves to the next heading"
 msgstr "premakne se na naslednji naslov"
 
-#: virtualBuffers\__init__.py:1509
+#: virtualBuffers\__init__.py:1505
 msgid "no next heading"
 msgstr "ni naslednjega naslova"
 
-#: virtualBuffers\__init__.py:1510
+#: virtualBuffers\__init__.py:1506
 msgid "moves to the previous heading"
 msgstr "premakne se na predhodni naslov"
 
-#: virtualBuffers\__init__.py:1510
+#: virtualBuffers\__init__.py:1507
 msgid "no previous heading"
 msgstr "ni predhodnega naslova"
 
-#: virtualBuffers\__init__.py:1511
+#: virtualBuffers\__init__.py:1509
 msgid "moves to the next heading at level 1"
 msgstr "premakne se na naslednji naslov na nivoju 1"
 
-#: virtualBuffers\__init__.py:1511
+#: virtualBuffers\__init__.py:1510
 msgid "no next heading at level 1"
 msgstr "ni naslednjega naslova na nivoju 1"
 
-#: virtualBuffers\__init__.py:1512
+#: virtualBuffers\__init__.py:1511
 msgid "moves to the previous heading at level 1"
 msgstr "premakne se na predhodni naslov na nivoju 1"
 
@@ -6045,395 +6053,395 @@ msgstr "premakne se na predhodni naslov na nivoju 1"
 msgid "no previous heading at level 1"
 msgstr "ni predhodnega naslova na nivoju 1"
 
-#: virtualBuffers\__init__.py:1513
+#: virtualBuffers\__init__.py:1514
 msgid "moves to the next heading at level 2"
 msgstr "premakne se na naslednji naslov na nivoju 2"
 
-#: virtualBuffers\__init__.py:1513
+#: virtualBuffers\__init__.py:1515
 msgid "no next heading at level 2"
 msgstr "ni naslednjega naslova na nivoju 2"
 
-#: virtualBuffers\__init__.py:1514
+#: virtualBuffers\__init__.py:1516
 msgid "moves to the previous heading at level 2"
 msgstr "premakne se na predhodni naslov na nivoju 2"
 
-#: virtualBuffers\__init__.py:1514
+#: virtualBuffers\__init__.py:1517
 msgid "no previous heading at level 2"
 msgstr "ni predhodnega naslova na nivoju 2"
 
-#: virtualBuffers\__init__.py:1515
+#: virtualBuffers\__init__.py:1519
 msgid "moves to the next heading at level 3"
 msgstr "premakne se na naslednji naslov na nivoju 3"
 
-#: virtualBuffers\__init__.py:1515
+#: virtualBuffers\__init__.py:1520
 msgid "no next heading at level 3"
 msgstr "ni naslednjega naslova na nivoju 3"
 
-#: virtualBuffers\__init__.py:1516
+#: virtualBuffers\__init__.py:1521
 msgid "moves to the previous heading at level 3"
 msgstr "premakne se na predhodni naslov na nivoju 3"
 
-#: virtualBuffers\__init__.py:1516
+#: virtualBuffers\__init__.py:1522
 msgid "no previous heading at level 3"
 msgstr "ni predhodnega naslova na nivoju 3"
 
-#: virtualBuffers\__init__.py:1517
+#: virtualBuffers\__init__.py:1524
 msgid "moves to the next heading at level 4"
 msgstr "premakne se na naslednji naslov na nivoju 4"
 
-#: virtualBuffers\__init__.py:1517
+#: virtualBuffers\__init__.py:1525
 msgid "no next heading at level 4"
 msgstr "ni naslednjega naslova na nivoju 4"
 
-#: virtualBuffers\__init__.py:1518
+#: virtualBuffers\__init__.py:1526
 msgid "moves to the previous heading at level 4"
 msgstr "premakne se na predhodni naslov na nivoju 4"
 
-#: virtualBuffers\__init__.py:1518
+#: virtualBuffers\__init__.py:1527
 msgid "no previous heading at level 4"
 msgstr "ni predhodnega naslova na nivoju 4"
 
-#: virtualBuffers\__init__.py:1519
+#: virtualBuffers\__init__.py:1529
 msgid "moves to the next heading at level 5"
 msgstr "premakne se na naslednji naslov na nivoju 5"
 
-#: virtualBuffers\__init__.py:1519
+#: virtualBuffers\__init__.py:1530
 msgid "no next heading at level 5"
 msgstr "ni naslednjega naslova na nivoju 5"
 
-#: virtualBuffers\__init__.py:1520
+#: virtualBuffers\__init__.py:1531
 msgid "moves to the previous heading at level 5"
 msgstr "premakne se na predhodni naslov na nivoju 5"
 
-#: virtualBuffers\__init__.py:1520
+#: virtualBuffers\__init__.py:1532
 msgid "no previous heading at level 5"
 msgstr "ni predhodnega naslova na nivoju 5"
 
-#: virtualBuffers\__init__.py:1521
+#: virtualBuffers\__init__.py:1534
 msgid "moves to the next heading at level 6"
 msgstr "premakne se na naslednji naslov na nivoju 6"
 
-#: virtualBuffers\__init__.py:1521
+#: virtualBuffers\__init__.py:1535
 msgid "no next heading at level 6"
 msgstr "ni naslednjega naslova na nivoju 6"
 
-#: virtualBuffers\__init__.py:1522
+#: virtualBuffers\__init__.py:1536
 msgid "moves to the previous heading at level 6"
 msgstr "premakne se na predhodni naslov na nivoju 6"
 
-#: virtualBuffers\__init__.py:1522
+#: virtualBuffers\__init__.py:1537
 msgid "no previous heading at level 6"
 msgstr "ni predhodnega naslova na nivoju 6"
 
-#: virtualBuffers\__init__.py:1523
+#: virtualBuffers\__init__.py:1539
 msgid "moves to the next table"
 msgstr "premakne se na naslednjo tabelo"
 
-#: virtualBuffers\__init__.py:1523
+#: virtualBuffers\__init__.py:1540
 msgid "no next table"
 msgstr "ni naslednje tabele"
 
-#: virtualBuffers\__init__.py:1524
+#: virtualBuffers\__init__.py:1541
 msgid "moves to the previous table"
 msgstr "premakne se na predhodno tabelo"
 
-#: virtualBuffers\__init__.py:1524
+#: virtualBuffers\__init__.py:1542
 msgid "no previous table"
 msgstr "ni predhodne tabele"
 
-#: virtualBuffers\__init__.py:1525
+#: virtualBuffers\__init__.py:1545
 msgid "moves to the next link"
 msgstr "premakne se na naslednjo povezavo"
 
-#: virtualBuffers\__init__.py:1525
+#: virtualBuffers\__init__.py:1546
 msgid "no next link"
 msgstr "ni naslednje povezave"
 
-#: virtualBuffers\__init__.py:1526
+#: virtualBuffers\__init__.py:1547
 msgid "moves to the previous link"
 msgstr "premakne se na predhodno povezavo"
 
-#: virtualBuffers\__init__.py:1526
+#: virtualBuffers\__init__.py:1548
 msgid "no previous link"
 msgstr "ni predhodne povezave"
 
-#: virtualBuffers\__init__.py:1527
+#: virtualBuffers\__init__.py:1550
 msgid "moves to the next visited link"
 msgstr "premakne se na naslednjo (že) obiskano povezavo"
 
-#: virtualBuffers\__init__.py:1527
+#: virtualBuffers\__init__.py:1551
 msgid "no next visited link"
 msgstr "ni naslednje (že) obiskane povezave"
 
-#: virtualBuffers\__init__.py:1528
+#: virtualBuffers\__init__.py:1552
 msgid "moves to the previous visited link"
 msgstr "premakne se na predhodno (že) obiskano povezavo"
 
-#: virtualBuffers\__init__.py:1528
+#: virtualBuffers\__init__.py:1553
 msgid "no previous visited link"
 msgstr "ni predhodne (že) obiskane povezave"
 
-#: virtualBuffers\__init__.py:1529
+#: virtualBuffers\__init__.py:1555
 msgid "moves to the next unvisited link"
 msgstr "premakne se na naslednjo (še) neobiskano povezavo"
 
-#: virtualBuffers\__init__.py:1529
+#: virtualBuffers\__init__.py:1556
 msgid "no next unvisited link"
 msgstr "ni naslednje (še) neobiskane povezave"
 
-#: virtualBuffers\__init__.py:1530
+#: virtualBuffers\__init__.py:1557
 msgid "moves to the previous unvisited link"
 msgstr "premakne se na predhodno (še) neobiskano povezavo"
 
-#: virtualBuffers\__init__.py:1530
+#: virtualBuffers\__init__.py:1558
 msgid "no previous unvisited link"
 msgstr "ni predhodne (še) neobiskane povezave"
 
-#: virtualBuffers\__init__.py:1531
+#: virtualBuffers\__init__.py:1560
 msgid "moves to the next form field"
 msgstr "premakne se na naslednje polje v obrazcu"
 
-#: virtualBuffers\__init__.py:1531
+#: virtualBuffers\__init__.py:1561
 msgid "no next form field"
 msgstr "ni naslednjega polja v obrazcu"
 
-#: virtualBuffers\__init__.py:1532
+#: virtualBuffers\__init__.py:1562
 msgid "moves to the previous form field"
 msgstr "premakne se na predhodno polje v obrazcu"
 
-#: virtualBuffers\__init__.py:1532
+#: virtualBuffers\__init__.py:1563
 msgid "no previous form field"
 msgstr "ni predhodnega polja v obrazcu"
 
-#: virtualBuffers\__init__.py:1533
+#: virtualBuffers\__init__.py:1566
 msgid "moves to the next list"
 msgstr "premakne se na naslednji seznam"
 
-#: virtualBuffers\__init__.py:1533
+#: virtualBuffers\__init__.py:1567
 msgid "no next list"
 msgstr "ni naslednjega seznama"
 
-#: virtualBuffers\__init__.py:1534
+#: virtualBuffers\__init__.py:1568
 msgid "moves to the previous list"
 msgstr "premakne se na predhodni seznam"
 
-#: virtualBuffers\__init__.py:1534
+#: virtualBuffers\__init__.py:1569
 msgid "no previous list"
 msgstr "ni predhodnega seznama"
 
-#: virtualBuffers\__init__.py:1535
+#: virtualBuffers\__init__.py:1572
 msgid "moves to the next list item"
 msgstr "premakne se na naslednji element na seznamu"
 
-#: virtualBuffers\__init__.py:1535
+#: virtualBuffers\__init__.py:1573
 msgid "no next list item"
 msgstr "ni naslednjega elementa na seznamu"
 
-#: virtualBuffers\__init__.py:1536
+#: virtualBuffers\__init__.py:1574
 msgid "moves to the previous list item"
 msgstr "premakne se na predhodni element na seznamu"
 
-#: virtualBuffers\__init__.py:1536
+#: virtualBuffers\__init__.py:1575
 msgid "no previous list item"
 msgstr "ni predhodnega elementa na seznamu"
 
-#: virtualBuffers\__init__.py:1537
+#: virtualBuffers\__init__.py:1577
 msgid "moves to the next button"
 msgstr "premakne se na naslednji gumb"
 
-#: virtualBuffers\__init__.py:1537
+#: virtualBuffers\__init__.py:1578
 msgid "no next button"
 msgstr "ni naslednjega gumba"
 
-#: virtualBuffers\__init__.py:1538
+#: virtualBuffers\__init__.py:1579
 msgid "moves to the previous button"
 msgstr "premakne se na predhodni gumb"
 
-#: virtualBuffers\__init__.py:1538
+#: virtualBuffers\__init__.py:1580
 msgid "no previous button"
 msgstr "ni predhodnega gumba"
 
-#: virtualBuffers\__init__.py:1539
+#: virtualBuffers\__init__.py:1582
 msgid "moves to the next edit field"
 msgstr "premakne se na naslednje vnosno polje"
 
-#: virtualBuffers\__init__.py:1539
+#: virtualBuffers\__init__.py:1583
 msgid "no next edit field"
 msgstr "ni naslednjega vnosnega polja"
 
-#: virtualBuffers\__init__.py:1540
+#: virtualBuffers\__init__.py:1584
 msgid "moves to the previous edit field"
 msgstr "premakne se na predhodno vnosno polje"
 
-#: virtualBuffers\__init__.py:1540
+#: virtualBuffers\__init__.py:1585
 msgid "no previous edit field"
 msgstr "ni predhodnega vnosnega polja"
 
-#: virtualBuffers\__init__.py:1541
+#: virtualBuffers\__init__.py:1588
 msgid "moves to the next frame"
 msgstr "premakne se na naslednji okvir"
 
-#: virtualBuffers\__init__.py:1541
+#: virtualBuffers\__init__.py:1589
 msgid "no next frame"
 msgstr "ni naslednjega okvirja"
 
-#: virtualBuffers\__init__.py:1542
+#: virtualBuffers\__init__.py:1590
 msgid "moves to the previous frame"
 msgstr "premakne se na predhodni okvir"
 
-#: virtualBuffers\__init__.py:1542
+#: virtualBuffers\__init__.py:1591
 msgid "no previous frame"
 msgstr "ni predhodnega okvirja"
 
-#: virtualBuffers\__init__.py:1543
+#: virtualBuffers\__init__.py:1594
 msgid "moves to the next separator"
 msgstr "premakne se na naslednjo ločnico"
 
-#: virtualBuffers\__init__.py:1543
+#: virtualBuffers\__init__.py:1595
 msgid "no next separator"
 msgstr "ni naslednje ločnice"
 
-#: virtualBuffers\__init__.py:1544
+#: virtualBuffers\__init__.py:1596
 msgid "moves to the previous separator"
 msgstr "premakne se na predhodno ločnico"
 
-#: virtualBuffers\__init__.py:1544
+#: virtualBuffers\__init__.py:1597
 msgid "no previous separator"
 msgstr "ni predhodne ločnice"
 
-#: virtualBuffers\__init__.py:1545
+#: virtualBuffers\__init__.py:1599
 msgid "moves to the next radio button"
 msgstr "premakne se na naslednji radiogumb"
 
-#: virtualBuffers\__init__.py:1545
+#: virtualBuffers\__init__.py:1600
 msgid "no next radio button"
 msgstr "ni naslednjega radiogumba"
 
-#: virtualBuffers\__init__.py:1546
+#: virtualBuffers\__init__.py:1601
 msgid "moves to the previous radio button"
 msgstr "premakne se na predhodni radiogumb"
 
-#: virtualBuffers\__init__.py:1546
+#: virtualBuffers\__init__.py:1602
 msgid "no previous radio button"
 msgstr "ni predhodnega radiogumba na seznamu"
 
-#: virtualBuffers\__init__.py:1547
+#: virtualBuffers\__init__.py:1604
 msgid "moves to the next combo box"
 msgstr "premakne se na naslednji spustni seznam"
 
-#: virtualBuffers\__init__.py:1547
+#: virtualBuffers\__init__.py:1605
 msgid "no next combo box"
 msgstr "ni naslednjega spustnega seznama"
 
-#: virtualBuffers\__init__.py:1548
+#: virtualBuffers\__init__.py:1606
 msgid "moves to the previous combo box"
 msgstr "premakne se na predhodni spustni seznam"
 
-#: virtualBuffers\__init__.py:1548
+#: virtualBuffers\__init__.py:1607
 msgid "no previous combo box"
 msgstr "ni predhodnega spustnega seznama"
 
-#: virtualBuffers\__init__.py:1549
+#: virtualBuffers\__init__.py:1609
 msgid "moves to the next check box"
 msgstr "premakne se na naslednji izbirnik"
 
-#: virtualBuffers\__init__.py:1549
+#: virtualBuffers\__init__.py:1610
 msgid "no next check box"
 msgstr "ni naslednjega izbirnika"
 
-#: virtualBuffers\__init__.py:1550
+#: virtualBuffers\__init__.py:1611
 msgid "moves to the previous check box"
 msgstr "premakne se na predhodni izbirnik"
 
-#: virtualBuffers\__init__.py:1550
+#: virtualBuffers\__init__.py:1612
 msgid "no previous check box"
 msgstr "ni predhodnega izbirnika"
 
-#: virtualBuffers\__init__.py:1551
+#: virtualBuffers\__init__.py:1614
 msgid "moves to the next graphic"
 msgstr "premakne se na naslednjo grafiko"
 
-#: virtualBuffers\__init__.py:1551
+#: virtualBuffers\__init__.py:1615
 msgid "no next graphic"
 msgstr "ni naslednje grafike"
 
-#: virtualBuffers\__init__.py:1552
+#: virtualBuffers\__init__.py:1616
 msgid "moves to the previous graphic"
 msgstr "premakne se na predhodno grafiko"
 
-#: virtualBuffers\__init__.py:1552
+#: virtualBuffers\__init__.py:1617
 msgid "no previous graphic"
 msgstr "ni predhodne grafike"
 
-#: virtualBuffers\__init__.py:1553
+#: virtualBuffers\__init__.py:1619
 msgid "moves to the next block quote"
 msgstr "premakne se na naslednji citat"
 
-#: virtualBuffers\__init__.py:1553
+#: virtualBuffers\__init__.py:1620
 msgid "no next block quote"
 msgstr "ni naslednjega citata"
 
-#: virtualBuffers\__init__.py:1554
+#: virtualBuffers\__init__.py:1621
 msgid "moves to the previous block quote"
 msgstr "premakne se na predhodni citat"
 
-#: virtualBuffers\__init__.py:1554
+#: virtualBuffers\__init__.py:1622
 msgid "no previous block quote"
 msgstr "ni predhodnega citata"
 
-#: virtualBuffers\__init__.py:1555
+#: virtualBuffers\__init__.py:1624
 msgid "skips forward past a block of links"
 msgstr "(pre)skoči naprej za skupek povezav"
 
-#: virtualBuffers\__init__.py:1555
+#: virtualBuffers\__init__.py:1625
 msgid "no more text after a block of links"
 msgstr "ni več besedila po skupini povezav"
 
-#: virtualBuffers\__init__.py:1556
+#: virtualBuffers\__init__.py:1626
 msgid "skips backward past a block of links"
 msgstr "(pre)skoči nazaj pred skupek povezav"
 
-#: virtualBuffers\__init__.py:1556
+#: virtualBuffers\__init__.py:1627
 msgid "no more text before a block of links"
 msgstr "ni več besedila pred skupino povezav"
 
-#: virtualBuffers\__init__.py:1557
+#: virtualBuffers\__init__.py:1630
 msgid "moves to the next landmark"
 msgstr "premakne se na naslednji mejnik"
 
-#: virtualBuffers\__init__.py:1557
+#: virtualBuffers\__init__.py:1631
 msgid "no next landmark"
 msgstr "ni naslednjega mejnika"
 
-#: virtualBuffers\__init__.py:1558
+#: virtualBuffers\__init__.py:1632
 msgid "moves to the previous landmark"
 msgstr "premakne se na predhodni mejnik"
 
-#: virtualBuffers\__init__.py:1558
+#: virtualBuffers\__init__.py:1633
 msgid "no previous landmark"
 msgstr "ni predhodnega mejnika"
 
-#: virtualBuffers\__init__.py:1559
+#: virtualBuffers\__init__.py:1636
 msgid "moves to the next embedded object"
 msgstr "premakne se na naslednje vdelan predmet"
 
-#: virtualBuffers\__init__.py:1559
+#: virtualBuffers\__init__.py:1637
 msgid "no next embedded object"
 msgstr "ni naslednjega vdelanega predmeta"
 
-#: virtualBuffers\__init__.py:1560
+#: virtualBuffers\__init__.py:1638
 msgid "moves to the previous embedded object"
 msgstr "premakne se na predhodni vdelan predmet"
 
-#: virtualBuffers\__init__.py:1560
+#: virtualBuffers\__init__.py:1639
 msgid "no previous embedded object"
 msgstr "ni predhodnega vdelanega predmeta"
 
-#: virtualBuffers\__init__.py:1573
+#: virtualBuffers\__init__.py:1653
 msgid "focus mode"
 msgstr "žariščno delovanje"
 
-#: virtualBuffers\__init__.py:1573
+#: virtualBuffers\__init__.py:1655
 msgid "browse mode"
 msgstr "brskalniško delovanje"
 
@@ -6451,7 +6459,7 @@ msgstr "%s elementov"
 msgid "invoke"
 msgstr "kliči"
 
-#: NVDAObjects\window\__init__.py:376
+#: NVDAObjects\window\__init__.py:367
 msgid "Desktop"
 msgstr "Namizje"
 

@@ -16,6 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <wchar.h>
 #include <msctf.h>
+#include <common/log.h>
 #include <common/lock.h>
 #include "nvdaHelperRemote.h"
 #include "nvdaControllerInternal.h"
@@ -49,7 +50,7 @@ static sinkMap_t gTsfSinks;
 static LockableObject gTsfSinksLock;
 static PVOID gLastCompStr = NULL;
 
-class TsfSink : public ITfThreadMgrEventSink,public ITfActiveLanguageProfileNotifySink,public ITfTextEditSink, public ITfUIElementSink {
+class TsfSink : public ITfThreadMgrEventSink, public ITfActiveLanguageProfileNotifySink, public ITfTextEditSink, public ITfUIElementSink, public ITfInputProcessorProfileActivationSink {
 public:
 	TsfSink();
 	~TsfSink();
@@ -75,8 +76,8 @@ public:
 	// ITfTextEditSink methods
 	STDMETHODIMP OnEndEdit(ITfContext*, TfEditCookie, ITfEditRecord*);
 
-	// ITfActiveLanguageProfileNotifySink methods
-	STDMETHODIMP OnActivated(REFCLSID, REFGUID, BOOL);
+	STDMETHODIMP ITfActiveLanguageProfileNotifySink::OnActivated(REFCLSID, REFGUID, BOOL);
+	STDMETHODIMP ITfInputProcessorProfileActivationSink::OnActivated(DWORD dwProfileType, LANGID langId, REFCLSID rclsid, REFGUID catId, REFGUID guidProfile, HKL hkl, DWORD dwFlags);
 
 	// ITfUIElementSink methods
 	STDMETHODIMP BeginUIElement(DWORD, BOOL*);
@@ -174,8 +175,12 @@ bool TsfSink::Initialize() {
 				(ITfThreadMgrEventSink*)this, &mThreadMgrCookie);
 		}
 		if (hr == S_OK) {
-			hr = src->AdviseSink(IID_ITfActiveLanguageProfileNotifySink,
-				(ITfActiveLanguageProfileNotifySink*)this, &mLangProfCookie);
+			///For profile activations use ITfInputProcessProfileActivationSink if its available, otherwise ITfActiveLanguageNotifySink (usually on XP).
+			hr = src->AdviseSink(IID_ITfInputProcessorProfileActivationSink,(ITfInputProcessorProfileActivationSink*)this, &mLangProfCookie);
+			if(hr!=S_OK||mLangProfCookie==TF_INVALID_COOKIE) {
+				LOG_DEBUGWARNING(L"Cannot register ITfInputProcessorProfileActivationSink, trying ITfActiveLanguageProfileNotifySink instead");
+				hr = src->AdviseSink(IID_ITfActiveLanguageProfileNotifySink,(ITfActiveLanguageProfileNotifySink*)this, &mLangProfCookie);
+			}
 		}
 		if(isUIElementMgrSafe) {
 			if (hr == S_OK) {
@@ -287,6 +292,8 @@ STDMETHODIMP TsfSink::QueryInterface(REFIID riid, LPVOID* ppvObj) {
 		*ppvObj = (ITfThreadMgrEventSink*)this;
 	} else if (IsEqualIID(riid, IID_ITfActiveLanguageProfileNotifySink)) {
 		*ppvObj = (ITfActiveLanguageProfileNotifySink*)this;
+	} else if (IsEqualIID(riid, IID_ITfInputProcessorProfileActivationSink)) {
+		*ppvObj = (ITfInputProcessorProfileActivationSink*)this;
 	} else if (IsEqualIID(riid, IID_ITfTextEditSink)) {
 		*ppvObj = (ITfTextEditSink*)this;
 	} else if (IsEqualIID(riid, IID_ITfUIElementSink)) {
@@ -524,6 +531,8 @@ STDMETHODIMP TsfSink::OnEndEdit(
 	return S_OK;
 }
 
+//ITfActiveLanguageProfileNotifySink::OnActivated
+//To notify NVDA (in XP) of a TSF profile change
 STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activated) {
 	const CLSID null_clsid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
 	if (!activated) {
@@ -533,14 +542,13 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 	}
 	//Re-enable IME conversion mode update reporting as input lang change window message disabled it while completing the switch
 	curTSFClsID=rClsID;
-	disableIMEConversionModeUpdateReporting=false;
 	if (IsEqualCLSID(rClsID, null_clsid)) {
 		hasActiveProfile = false;
 		// When switching to non-TSF profile, resend last input language
 		wchar_t buf[KL_NAMELENGTH];
 		GetKeyboardLayoutName(buf);
 		nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),
-				static_cast<unsigned long>(lastInputLangChange), buf);
+				(unsigned long)GetKeyboardLayout(0), buf);
 		handleIMEConversionModeUpdate(GetFocus(),true);
 		return S_OK;
 	}
@@ -555,9 +563,52 @@ STDMETHODIMP TsfSink::OnActivated(REFCLSID rClsID, REFGUID rProfGUID, BOOL activ
 		BSTR desc = NULL;
 		profiles->GetLanguageProfileDescription(rClsID, lang, rProfGUID, &desc);
 		if (desc) {
-			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),static_cast<unsigned long>(lastInputLangChange), desc);
+			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),(unsigned long)GetKeyboardLayout(0), desc);
 			SysFreeString(desc);
 		}
+	}
+	profiles->Release();
+	handleIMEConversionModeUpdate(GetFocus(),true);
+	return S_OK;
+}
+
+//ITfInputProcessorProfileActivationSink::OnActivated
+//To notify NVDA (Win7 and above) of a TSF profile change
+STDMETHODIMP TsfSink::OnActivated(DWORD dwProfileType, LANGID langId, REFCLSID rclsid, REFGUID catId, REFGUID guidProfile, HKL hkl, DWORD dwFlags) {
+	const CLSID null_clsid = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
+	if(dwProfileType==TF_PROFILETYPE_KEYBOARDLAYOUT) {
+		//This is a normal keyboard layout so forget any last active TSF profile
+		hasActiveProfile=false;
+		curTSFClsID=null_clsid;
+		if(dwFlags&TF_IPSINK_FLAG_ACTIVE) {
+			//As its activating, report the layout change to NVDA
+			wchar_t buf[KL_NAMELENGTH];
+			GetKeyboardLayoutName(buf);
+			nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),(unsigned long)GetKeyboardLayout(0), buf);
+			handleIMEConversionModeUpdate(GetFocus(),true);
+		}
+		return S_OK;
+	}
+	//From here on this is a text service change
+	if(!IsEqualCLSID(catId,GUID_TFCAT_TIP_KEYBOARD)) {
+		//We don't handle anything other than keyboard text services (no speech etc)
+		return S_OK;
+	}
+	if(!(dwFlags&TF_IPSINK_FLAG_ACTIVE)) {
+		//This keyboard text service is deactivating
+		curTSFClsID=null_clsid;
+		hasActiveProfile=false;
+		return S_OK;
+	}
+	curTSFClsID=rclsid;
+	hasActiveProfile = true;
+	ITfInputProcessorProfiles* profiles = create_input_processor_profiles();
+	if (!profiles)  return S_OK;
+	BSTR desc = NULL;
+	profiles->GetLanguageProfileDescription(rclsid, langId, guidProfile, &desc);
+	if (desc) {
+		nvdaControllerInternal_inputLangChangeNotify(GetCurrentThreadId(),(unsigned long)GetKeyboardLayout(0), desc);
+		SysFreeString(desc);
 	}
 	profiles->Release();
 	handleIMEConversionModeUpdate(GetFocus(),true);
