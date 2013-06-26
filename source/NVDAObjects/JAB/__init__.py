@@ -206,11 +206,14 @@ class JAB(Window):
 			windowHandle=jabContext.hwnd
 		self.windowHandle=windowHandle
 		self.jabContext=jabContext
+		super(JAB,self).__init__(windowHandle=windowHandle)
 		try:
-			self._JABAccContextInfo=jabContext.getAccessibleContextInfo()
+			self._JABAccContextInfo
 		except RuntimeError:
 			raise InvalidNVDAObject("Could not get accessible context info")
-		super(JAB,self).__init__(windowHandle=windowHandle)
+
+	def _get__JABAccContextInfo(self):
+		return self.jabContext.getAccessibleContextInfo()
 
 	def _get_TextInfo(self):
 		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.ROLE_BUTTON,controlTypes.ROLE_MENUITEM,controlTypes.ROLE_MENU,controlTypes.ROLE_LISTITEM]:
