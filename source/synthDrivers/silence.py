@@ -10,6 +10,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 	"""A dummy synth driver used to disable speech in NVDA.
 	"""
 	name="silence"
+	# Translators: Description for a speech synthesizer.
 	description=_("No speech")
 
 	@classmethod

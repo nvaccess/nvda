@@ -112,18 +112,24 @@ class GeneralSettingsDialog(SettingsDialog):
 	# Translators: This is the label for the general settings dialog.
 	title = _("General Settings")
 	LOG_LEVELS = (
+		# Translators: One of the log levels of NVDA (the info mode shows info as NVDA runs).
 		(log.INFO, _("info")),
+		# Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
 		(log.DEBUGWARNING, _("debug warning")),
+		# Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
 		(log.IO, _("input/output")),
+		# Translators: One of the log levels of NVDA (the debug mode shows debug messages as NVDA runs).
 		(log.DEBUG, _("debug"))
 	)
 
 	def makeSettings(self, settingsSizer):
 		languageSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in general settings to select NVDA's interface language (once selected, NVDA must be restarted; the option user default means the user's Windows language will be used).
 		languageLabel=wx.StaticText(self,-1,label=_("&Language (requires restart to fully take effect):"))
 		languageSizer.Add(languageLabel)
 		languageListID=wx.NewId()
 		self.languageNames=languageHandler.getAvailableLanguages()
+		# Translators: The list of languages for NVDA.
 		self.languageList=wx.Choice(self,languageListID,name=_("Language"),choices=[x[1] for x in self.languageNames])
 		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
 		try:
@@ -136,18 +142,22 @@ class GeneralSettingsDialog(SettingsDialog):
 		if globalVars.appArgs.secure:
 			self.languageList.Disable()
 		settingsSizer.Add(languageSizer,border=10,flag=wx.BOTTOM)
+		# Translators: The label for a setting in general settings to save current configuration when NVDA exits (if it is not checked, user needs to save configuration before quitting NVDA).
 		self.saveOnExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Save configuration on exit"))
 		self.saveOnExitCheckBox.SetValue(config.conf["general"]["saveConfigurationOnExit"])
 		if globalVars.appArgs.secure:
 			self.saveOnExitCheckBox.Disable()
 		settingsSizer.Add(self.saveOnExitCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: The label for a setting in general settings to ask before quitting NVDA (if not checked, NVDA will exit without asking the user for confirmation).
 		self.askToExitCheckBox=wx.CheckBox(self,wx.NewId(),label=_("&Warn before exiting NVDA"))
 		self.askToExitCheckBox.SetValue(config.conf["general"]["askToExit"])
 		settingsSizer.Add(self.askToExitCheckBox,border=10,flag=wx.BOTTOM)
 		logLevelSizer=wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in general settings to select logging level of NVDA as it runs (available options and what they are logged are found under comments for the logging level messages themselves).
 		logLevelLabel=wx.StaticText(self,-1,label=_("L&ogging level:"))
 		logLevelSizer.Add(logLevelLabel)
 		logLevelListID=wx.NewId()
+		# Translators: A combo box to choose log level (possible options are info, debug warning, input/output and debug).
 		self.logLevelList=wx.Choice(self,logLevelListID,name=_("Log level"),choices=[name for level, name in self.LOG_LEVELS])
 		curLevel = log.getEffectiveLevel()
 		for index, (level, name) in enumerate(self.LOG_LEVELS):
@@ -158,23 +168,26 @@ class GeneralSettingsDialog(SettingsDialog):
 			log.debugWarning("Could not set log level list to current log level") 
 		logLevelSizer.Add(self.logLevelList)
 		settingsSizer.Add(logLevelSizer,border=10,flag=wx.BOTTOM)
+		# Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 		self.startAfterLogonCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("&Automatically start NVDA after I log on to Windows"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		settingsSizer.Add(self.startAfterLogonCheckBox)
+		# Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 		self.startOnLogonScreenCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Use NVDA on the Windows logon screen (requires administrator privileges)"))
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
 		if globalVars.appArgs.secure or not config.isServiceInstalled():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizer.Add(self.startOnLogonScreenCheckBox)
+		# Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 		self.copySettingsButton= wx.Button(self, wx.ID_ANY, label=_("Use currently saved settings on the logon and other secure screens (requires administrator privileges)"))
 		self.copySettingsButton.Bind(wx.EVT_BUTTON,self.onCopySettings)
 		if globalVars.appArgs.secure or not config.isServiceInstalled():
 			self.copySettingsButton.Disable()
 		settingsSizer.Add(self.copySettingsButton)
 		if updateCheck:
-			# Translators: The label of a checkbox to toggle automatic checking for updated versions of NVDA.
+			# Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 			item=self.autoCheckForUpdatesCheckBox=wx.CheckBox(self,label=_("Automatically check for &updates to NVDA"))
 			item.Value=config.conf["update"]["autoCheck"]
 			if globalVars.appArgs.secure:
@@ -188,7 +201,9 @@ class GeneralSettingsDialog(SettingsDialog):
 		for packageType in ('addons','appModules','globalPlugins','brailleDisplayDrivers','synthDrivers'):
 			if len(os.listdir(os.path.join(globalVars.appArgs.configPath,packageType)))>0:
 				if gui.messageBox(
+					# Translators: A message to warn the user when attempting to copy current settings to system settings.
 					_("Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"),
+					# Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 					_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
 				)==wx.NO:
 					return
@@ -220,8 +235,10 @@ class GeneralSettingsDialog(SettingsDialog):
 		progressDialog.done()
 		del progressDialog
 		if not res:
+			# Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
 			gui.messageBox(_("Error copying NVDA user settings"),_("Error"),wx.OK|wx.ICON_ERROR,self)
 		else:
+			# Translators: The message displayed when copying configuration to system settings was successful.
 			gui.messageBox(_("Successfully copied NVDA user settings"),_("Success"),wx.OK|wx.ICON_INFORMATION,self)
 
 	def onOk(self,evt):
@@ -252,7 +269,9 @@ class GeneralSettingsDialog(SettingsDialog):
 			updateCheck.initialize()
 		if self.oldLanguage!=newLanguage:
 			if gui.messageBox(
+				# Translators: The message displayed after NVDA interface language has been changed.
 				_("For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."),
+				# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 				_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING,self
 			)==wx.OK:
 				config.save()
@@ -444,18 +463,18 @@ class VoiceSettingsDialog(SettingsDialog):
 		#Create controls for Synth Settings
 		self.updateVoiceSettings()
 		# Translators: This is the label for a checkbox in the
-		# voice settings dialog.
+		# voice settings dialog (if checked, text will be read using the voice for the language of the text).
 		self.autoLanguageSwitchingCheckbox=wx.CheckBox(self,wx.NewId(),label=_("Automatic language switching (when supported)"))
 		self.autoLanguageSwitchingCheckbox.SetValue(config.conf["speech"]["autoLanguageSwitching"])
 		settingsSizer.Add(self.autoLanguageSwitchingCheckbox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
-		# voice settings dialog.
+		# voice settings dialog (if checked, different voices for dialects will be used to read text in that dialect).
 		self.autoDialectSwitchingCheckbox=wx.CheckBox(self,wx.NewId(),label=_("Automatic dialect switching (when supported)"))
 		self.autoDialectSwitchingCheckbox.SetValue(config.conf["speech"]["autoDialectSwitching"])
 		settingsSizer.Add(self.autoDialectSwitchingCheckbox,border=10,flag=wx.BOTTOM)
 		sizer=wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: This is the label for a combobox in the
-		# voice settings dialog.
+		# voice settings dialog (possible choices are none, some, most and all).
 		sizer.Add(wx.StaticText(self,wx.ID_ANY,label=_("Punctuation/symbol &level:")))
 		symbolLevelLabels=characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		self.symbolLevelList=wx.Choice(self,wx.ID_ANY,choices=[symbolLevelLabels[level] for level in characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS])
@@ -463,6 +482,7 @@ class VoiceSettingsDialog(SettingsDialog):
 		self.symbolLevelList.SetSelection(characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS.index(curLevel))
 		sizer.Add(self.symbolLevelList)
 		settingsSizer.Add(sizer,border=10,flag=wx.BOTTOM)
+		# Translators: This is a label for a setting in voice settings (an edit box to change voice pitch for capital letters; the higher the value, the pitch will be higher).
 		capPitchChangeLabel=wx.StaticText(self,-1,label=_("Capital pitch change percentage"))
 		settingsSizer.Add(capPitchChangeLabel)
 		self.capPitchChangeEdit=wx.TextCtrl(self,wx.NewId())
@@ -1093,17 +1113,22 @@ class DictionaryEntryDialog(wx.Dialog):
 		super(DictionaryEntryDialog,self).__init__(parent,title=title)
 		mainSizer=wx.BoxSizer(wx.VERTICAL)
 		settingsSizer=wx.BoxSizer(wx.VERTICAL)
+		# Translators: This is a label for an edit field in add dictionary entry dialog.
 		settingsSizer.Add(wx.StaticText(self,-1,label=_("&Pattern")))
 		self.patternTextCtrl=wx.TextCtrl(self,wx.NewId())
 		settingsSizer.Add(self.patternTextCtrl)
+		# Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
 		settingsSizer.Add(wx.StaticText(self,-1,label=_("&Replacement")))
 		self.replacementTextCtrl=wx.TextCtrl(self,wx.NewId())
 		settingsSizer.Add(self.replacementTextCtrl)
+		# Translators: This is a label for an edit field in add dictionary entry dialog.
 		settingsSizer.Add(wx.StaticText(self,-1,label=_("&Comment")))
 		self.commentTextCtrl=wx.TextCtrl(self,wx.NewId())
 		settingsSizer.Add(self.commentTextCtrl)
+		# Translators: This is a label for a checkbox in add dictionary entry dialog.
 		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Case &sensitive"))
 		settingsSizer.Add(self.caseSensitiveCheckBox)
+		# Translators: This is a label for a checkbox in add dictionary entry dialog.
 		self.regexpCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Regular &expression"))
 		settingsSizer.Add(self.regexpCheckBox)
 		mainSizer.Add(settingsSizer,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
@@ -1126,13 +1151,19 @@ class DictionaryDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		dictListID=wx.NewId()
 		entriesSizer=wx.BoxSizer(wx.VERTICAL)
+		# Translators: The label for the combo box of dictionary entries in speech dictionary dialog.
 		entriesLabel=wx.StaticText(self,-1,label=_("&Dictionary entries"))
 		entriesSizer.Add(entriesLabel)
 		self.dictList=wx.ListCtrl(self,dictListID,style=wx.LC_REPORT|wx.LC_SINGLE_SEL,size=(550,350))
+		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.InsertColumn(0,_("Comment"),width=150)
+		# Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 		self.dictList.InsertColumn(1,_("Pattern"),width=150)
+		# Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 		self.dictList.InsertColumn(2,_("Replacement"),width=150)
+		# Translators: The label for a column in dictionary entries list used to identify whether the entry is case sensitive or not.
 		self.dictList.InsertColumn(3,_("case"),width=50)
+		# Translators: The label for a column in dictionary entries list used to identify whether the entry is a regular expression or not.
 		self.dictList.InsertColumn(4,_("Regexp"),width=50)
 		self.offOn = (_("off"),_("on"))
 		for entry in self.tempSpeechDict:
@@ -1142,9 +1173,11 @@ class DictionaryDialog(SettingsDialog):
 		settingsSizer.Add(entriesSizer)
 		entryButtonsSizer=wx.BoxSizer(wx.HORIZONTAL)
 		addButtonID=wx.NewId()
+		# Translators: The label for a button in speech dictionaries dialog to add new entries.
 		addButton=wx.Button(self,addButtonID,_("&Add"),wx.DefaultPosition)
 		entryButtonsSizer.Add(addButton)
 		editButtonID=wx.NewId()
+		# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
 		editButton=wx.Button(self,editButtonID,_("&Edit"),wx.DefaultPosition)
 		entryButtonsSizer.Add(editButton)
 		removeButtonID=wx.NewId()
@@ -1222,6 +1255,7 @@ class BrailleSettingsDialog(SettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to choose a braille display.
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille &display:"))
 		driverList = braille.getDisplayList()
 		self.displayNames = [driver[0] for driver in driverList]
@@ -1237,6 +1271,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("&Port:"))
 		self.portsList = wx.Choice(self, wx.ID_ANY, choices=[])
 		sizer.Add(label)
@@ -1245,6 +1280,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		self.updatePossiblePorts()
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("&Output table:"))
 		self.tableNames = [table[0] for table in braille.TABLES]
 		self.tableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.TABLES])
@@ -1258,6 +1294,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("&Input table:"))
 		self.inputTableNames = [table[0] for table in braille.INPUT_TABLES]
 		self.inputTableList = wx.Choice(self, wx.ID_ANY, choices=[table[1] for table in braille.INPUT_TABLES])
@@ -1270,11 +1307,13 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer.Add(self.inputTableList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
+		# Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 		self.expandAtCursorCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("E&xpand to computer braille for the word at the cursor"))
 		self.expandAtCursorCheckBox.SetValue(config.conf["braille"]["expandAtCursor"])
 		settingsSizer.Add(self.expandAtCursorCheckBox, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Cursor blink rate (ms)"))
 		sizer.Add(label)
 		self.cursorBlinkRateEdit = wx.TextCtrl(self, wx.ID_ANY)
@@ -1283,6 +1322,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Message timeout (sec)"))
 		sizer.Add(label)
 		self.messageTimeoutEdit = wx.TextCtrl(self, wx.ID_ANY)
@@ -1291,6 +1331,7 @@ class BrailleSettingsDialog(SettingsDialog):
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
 		label = wx.StaticText(self, wx.ID_ANY, label=_("Braille tethered to:"))
 		self.tetherValues=[("focus",_("focus")),("review",_("review"))]
 		self.tetherList = wx.Choice(self, wx.ID_ANY, choices=[x[1] for x in self.tetherValues])
@@ -1304,10 +1345,12 @@ class BrailleSettingsDialog(SettingsDialog):
 		sizer.Add(self.tetherList)
 		settingsSizer.Add(sizer, border=10, flag=wx.BOTTOM)
 
+		# Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 		item = self.readByParagraphCheckBox = wx.CheckBox(self, label=_("Read by &paragraph"))
 		item.Value = config.conf["braille"]["readByParagraph"]
 		settingsSizer.Add(item, border=10, flag=wx.BOTTOM)
 
+		# Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 		item = self.wordWrapCheckBox = wx.CheckBox(self, label=_("Avoid splitting &words when possible"))
 		item.Value = config.conf["braille"]["wordWrap"]
 		settingsSizer.Add(item, border=10, flag=wx.BOTTOM)
@@ -1383,10 +1426,13 @@ class SpeechSymbolsDialog(SettingsDialog):
 		symbols = self.symbols = [copy.copy(symbol) for symbol in self.symbolProcessor.computedSymbols.itervalues()]
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for symbols list in symbol pronunciation dialog.
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Symbols")))
 		self.symbolsList = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_SINGLE_SEL, size=(360, 350))
+		# Translators: The label for a column in symbols list used to identify a symbol.
 		self.symbolsList.InsertColumn(0, _("Symbol"), width=150)
 		self.symbolsList.InsertColumn(1, _("Replacement"), width=150)
+		# Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 		self.symbolsList.InsertColumn(2, _("Level"), width=60)
 		for symbol in symbols:
 			item = self.symbolsList.Append((symbol.displayName,))
@@ -1396,6 +1442,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sizer.Add(self.symbolsList)
 		settingsSizer.Add(sizer)
 
+		# Translators: The label for the edit field in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSizer = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _("Change symbol")), wx.VERTICAL)
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Replacement")))
@@ -1404,6 +1451,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		sizer.Add(self.replacementEdit)
 		changeSizer.Add(sizer)
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
 		sizer.Add(wx.StaticText(self, wx.ID_ANY, _("&Level")))
 		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
 		self.levelList = wx.Choice(self, wx.ID_ANY,choices=[

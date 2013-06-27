@@ -3,6 +3,14 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.1.1 =
+
+== Hiba javítások ==
+
+- Gépeléskor már helyes betűk jelennek meg az NVDA saját felhasználói felületében, alapértelmezett Kóreai, vagy Japán beviteli nyelv esetén. (#2909)
+- Az Internet Explorer és egyéb MSHTML vezérlők érvénytelen bevitelnek jelölt mezői már megfelelően működnek. (#3256)
+
+
 = 2013.1 =
 
 E kiadás főb újdonságai: egy sokkal eredetibb és logikusabb laptop billentyűzetkiosztás; a Microsoft Powerpoint alapvető támogatása; a hosszú leírások támogatása a webböngészőkben; valamint a számítógépes braille bevitel támogatása azoknál a braille kijelzőknél, melyeknek van braille billentyűzetük. 
@@ -44,7 +52,7 @@ Az IE-ben és más MS-html vezérlőkön az NVDA már automatikusan felolvassa a
 == Változások ==
 - Frissítették a Lib-Louis braille fordítót a 2.5.2. verzióra (#2737).
 - A laptop billentyűkiosztást teljesen újratervezték, hogy az minél magától értetődőbb és logikusabb legyen. (#804)
-- Az eSpeak beszédszintetizátor frissítve lett az 1.47.05-es verzióra. (#2680)
+- Az eSpeak beszédszintetizátor frissítve lett az 1.47.09-es verzióra. (#2680, #3124, #3132, #3141, #3143, #3172)
 
 
 == Javítások ==
@@ -79,6 +87,7 @@ Az IE-ben és más MS-html vezérlőkön az NVDA már automatikusan felolvassa a
 - Az elemcsoportok jelzése már nem okoz hibát listanézetek (SysListview32) esetén, 64 bites operációs rendszer használatakor.
 - Az eSpeak szintetizátora mostantól jobban kezeli az ismeretlen karakterek bemondását (pl. elmondja az idegen betű nevét vagy értékét, annak generikus neve helyett).  (#3106)
 - Az NVDA többé már nem fagy le a felhasználói beállítások átmásolásakor a bejelentkező és egyéb biztonsági képernyők használatához, ha a felhasználó neve tartalmaz nem-ascii karaktereket.  (#3092)
+- Az NVDA már nem fagy le ázsiai karakterbevitel használatakor egyes .Net alkalmazásokban. (#3005)
 
 
 = 2012.3 =

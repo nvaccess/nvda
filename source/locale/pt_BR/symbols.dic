@@ -15,7 +15,7 @@ complexSymbols:
 # Others
 ponto decimal	(?<=\d)\.(?=\d)
 ' em palavra	(?<=[^\W_])['’]
-número negativo	(?<!\w)-(?=\d)
+número negativo	(?<!\w)-(?=[$£€¥]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -108,3 +108,6 @@ _	sublinhado	most
 ±	mais ou menos	most
 ×	vezes	most
 ÷	dividido por	most
+→	seta direita	some
+✓	marca	some
+✔	marca	some
