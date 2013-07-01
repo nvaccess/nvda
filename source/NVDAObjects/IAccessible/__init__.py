@@ -116,7 +116,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# #3156: The position when the caret is at the end of a line (as occurs when you press the end key)
 		# often has the same offset as the start of the next line.
 		# This causes the wrong text to be reported when in this position.
-		# Therefore, we use IA2_TEXT_OFFSET_CARET (if supported) to retrieve certain units
+		# Therefore, we use IA2_TEXT_OFFSET_CARET (if supported) when expanding to certain units
 		# if this instance was created for the caret (_isCaret is True),
 		# since the application knows where the caret really is.
 		# It is set to False as soon as this instance is moved away
@@ -145,6 +145,10 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return "mouseChunk"
 
 	def expand(self,unit):
+		if self._isCaret:
+			# #3156: Signal to _getSpecialOffset that we're expanding for the caret.
+			# This will be cleared when _startOffset is set.
+			self._isCaret="expanding"
 		if unit==self.unit_mouseChunk:
 			isMouseChunkUnit=True
 			oldStart=self._startOffset
@@ -234,45 +238,46 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return formatField,(startOffset,endOffset)
 
 	def _getCharacterOffsets(self,offset):
+		passOffset=self._getSpecialOffset(offset)
 		try:
-			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+			if passOffset>=0 and offset>=self.obj.IAccessibleTextObject.nCharacters:
 				return offset,offset+1
 		except COMError:
 			pass
 		try:
-			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)[0:2]
+			return self.obj.IAccessibleTextObject.TextAtOffset(passOffset,IAccessibleHandler.IA2_TEXT_BOUNDARY_CHAR)[0:2]
 		except COMError:
 			return super(IA2TextTextInfo,self)._getCharacterOffsets(offset)
 
 	def _getWordOffsets(self,offset):
+		passOffset=self._getSpecialOffset(offset)
 		try:
-			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+			if passOffset>=0 and offset>=self.obj.IAccessibleTextObject.nCharacters:
 				return offset,offset+1
 		except COMError:
 			pass
 		try:
-			return self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)[0:2]
+			return self.obj.IAccessibleTextObject.TextAtOffset(passOffset,IAccessibleHandler.IA2_TEXT_BOUNDARY_WORD)[0:2]
 		except COMError:
 			return super(IA2TextTextInfo,self)._getWordOffsets(offset)
 
 	def _getLineOffsets(self,offset):
-		if self._isCaret:
-			offset = IAccessibleHandler.IA2_TEXT_OFFSET_CARET
 		try:
-			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
+			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(self._getSpecialOffset(offset),IAccessibleHandler.IA2_TEXT_BOUNDARY_LINE)
 			return start,end
 		except COMError:
 			log.debugWarning("IAccessibleText::textAtOffset failed",exc_info=True)
 			return offset,offset+1
 
 	def _getSentenceOffsets(self,offset):
+		passOffset=self._getSpecialOffset(offset)
 		try:
-			if offset>=self.obj.IAccessibleTextObject.nCharacters:
+			if passOffset>=0 and offset>=self.obj.IAccessibleTextObject.nCharacters:
 				return offset,offset+1
 		except COMError:
 			pass
 		try:
-			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(offset,IAccessibleHandler.IA2_TEXT_BOUNDARY_SENTENCE)
+			start,end,text=self.obj.IAccessibleTextObject.TextAtOffset(passOffset,IAccessibleHandler.IA2_TEXT_BOUNDARY_SENTENCE)
 			if start==end:
 				raise NotImplementedError
 			return start,end
@@ -338,6 +343,16 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		self._setEndPointOffset("end", offset)
 	def _get__endOffset(self):
 		return self._real_endOffset
+
+	def _getSpecialOffset(self, origOffset):
+		"""Get the special offset (if any) to be used instead of the actual offset.
+		If there is no special offset, the original offset will be returned.
+		"""
+		if self._isCaret == "expanding":
+			# #3156: This instance is for the caret and we're expanding.
+			# Use IA2_TEXT_OFFSET_CARET for the most accurate result.
+			return IAccessibleHandler.IA2_TEXT_OFFSET_CARET
+		return origOffset
 
 class IAccessible(Window):
 	"""
