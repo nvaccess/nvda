@@ -42,6 +42,14 @@ badUIAWindowClassNames=[
 	"_WwG",
 ]
 
+NVDAUnitsToUIAUnits={
+	"character":TextUnit_Character,
+	"word":TextUnit_Word,
+	"line":TextUnit_Line,
+	"paragraph":TextUnit_Paragraph,
+	"readingChunk":TextUnit_Line,
+}
+
 UIAControlTypesToNVDARoles={
 	UIA_ButtonControlTypeId:controlTypes.ROLE_BUTTON,
 	UIA_CalendarControlTypeId:controlTypes.ROLE_CALENDAR,
