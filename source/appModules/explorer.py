@@ -9,12 +9,22 @@ import time
 import appModuleHandler
 import controlTypes
 import winUser
+import api
 import speech
 import eventHandler
 import mouseHandler
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import sysListView32, IAccessible
 from NVDAObjects.UIA import UIA
+
+# support for Win8 start screen search suggestions.
+class SuggestionListItem(UIA):
+
+	def event_UIA_elementSelected(self):
+		speech.cancelSpeech()
+		api.setNavigatorObject(self)
+		self.reportFocus()
+		super(SuggestionListItem,self).event_UIA_elementSelected()
 
 #win8hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
 class SearchBoxClient(IAccessible):
@@ -163,6 +173,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridGroup)
 			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.ROLE_PANE:
 				clsList.insert(0, ImmersiveLauncher)
+			elif uiaClassName=="ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
+				clsList.insert(0,SuggestionListItem)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
