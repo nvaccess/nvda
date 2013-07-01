@@ -104,7 +104,7 @@ UIAPropertyIdsToNVDAEventNames={
 
 UIAEventIdsToNVDAEventNames={
 	#UIA_Text_TextChangedEventId:"textChanged",
-	UIA_SelectionItem_ElementSelectedEventId:"stateChange",
+	UIA_SelectionItem_ElementSelectedEventId:"UIA_elementSelected",
 	UIA_MenuOpenedEventId:"gainFocus",
 	UIA_SelectionItem_ElementAddedToSelectionEventId:"stateChange",
 	UIA_SelectionItem_ElementRemovedFromSelectionEventId:"stateChange",
@@ -152,7 +152,7 @@ class UIAHandler(COMObject):
 			import UIAHandler
 			self.ItemIndex_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemIndex_Property_GUID),u"ItemIndex",1)
 			self.ItemCount_PropertyId=NVDAHelper.localLib.registerUIAProperty(byref(ItemCount_Property_GUID),u"ItemCount",1)
-			for propertyId in (UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_IsKeyboardFocusablePropertyId,UIA_IsPasswordPropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsSelectionItemPatternAvailablePropertyId,UIA_IsTextPatternAvailablePropertyId):
+			for propertyId in (UIA_AutomationIdPropertyId,UIA_ClassNamePropertyId,UIA_ControlTypePropertyId,UIA_IsKeyboardFocusablePropertyId,UIA_IsPasswordPropertyId,UIA_ProviderDescriptionPropertyId,UIA_ProcessIdPropertyId,UIA_IsSelectionItemPatternAvailablePropertyId,UIA_IsTextPatternAvailablePropertyId):
 				self.baseCacheRequest.addProperty(propertyId)
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue

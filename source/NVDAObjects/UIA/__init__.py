@@ -637,6 +637,9 @@ class UIA(Window):
 			parentCount+=1
 		return info
 
+	def event_UIA_elementSelected(self):
+		self.event_stateChange()
+
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithoutAutoSelectDetection):
 			return
