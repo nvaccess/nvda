@@ -24,14 +24,6 @@ import braille
 
 class UIATextInfo(textInfos.TextInfo):
 
-	NVDAUnitsToUIAUnits={
-		"character":UIAHandler.TextUnit_Character,
-		"word":UIAHandler.TextUnit_Word,
-		"line":UIAHandler.TextUnit_Line,
-		"paragraph":UIAHandler.TextUnit_Paragraph,
-		"readingChunk":UIAHandler.TextUnit_Line,
-	}
-
 	def _getFormatFieldAtRange(self,range,formatConfig):
 		formatField=textInfos.FormatField()
 		if formatConfig["reportFontName"]:
@@ -191,11 +183,11 @@ class UIATextInfo(textInfos.TextInfo):
 		return self._rangeObj.GetText(-1)
 
 	def expand(self,unit):
-		UIAUnit=self.NVDAUnitsToUIAUnits[unit]
+		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
 		self._rangeObj.ExpandToEnclosingUnit(UIAUnit)
 
 	def move(self,unit,direction,endPoint=None):
-		UIAUnit=self.NVDAUnitsToUIAUnits[unit]
+		UIAUnit=UIAHandler.NVDAUnitsToUIAUnits[unit]
 		if endPoint=="start":
 			res=self._rangeObj.MoveEndpointByUnit(UIAHandler.TextPatternRangeEndpoint_Start,UIAUnit,direction)
 		elif endPoint=="end":
@@ -644,6 +636,9 @@ class UIA(Window):
 			parent=parent.parent
 			parentCount+=1
 		return info
+
+	def event_UIA_elementSelected(self):
+		self.event_stateChange()
 
 	def event_valueChange(self):
 		if isinstance(self, EditableTextWithoutAutoSelectDetection):
