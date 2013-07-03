@@ -43,6 +43,7 @@
 - espeak no longer inappropriately changes in pitch, volume, etc. when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
 - In Java applications, changes to the label or value of the focused control are now announced automatically, and are reflected when subsequently querying the control. (#3119)
 - In Scintilla controls, lines are now reported correctly when word wrap is enabled. (#885)
+- In Mozilla applications, the name of read-only list items is now correctly reported; e.g. when navigating tweets in focus mode on twitter.com. (#3327)
 
 
 == Changes for Developers ==
