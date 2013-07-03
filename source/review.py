@@ -148,7 +148,7 @@ def handleCaretMove(pos):
 		obj=pos
 	mode=getCurrentMode()
 	if isinstance(obj,NVDAObject):
-		if not mode=='object':
+		if not mode=='object' or obj is not api.getNavigatorObject():
 			return
 	elif isinstance(obj,TreeInterceptor):
 		if mode not in ('object','document'):
