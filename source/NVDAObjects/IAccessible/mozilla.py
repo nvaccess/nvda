@@ -108,22 +108,6 @@ class Document(Mozilla):
 				return virtualBuffers.gecko_ia2.Gecko_ia2
 		return super(Document,self).treeInterceptorClass
 
-class ListItem(Mozilla):
-
-	def _get_name(self):
-		name=super(ListItem,self)._get_name()
-		if self.IAccessibleStates&oleacc.STATE_SYSTEM_READONLY:
-			children=super(ListItem,self)._get_children()
-			if len(children)>0 and (children[0].IAccessibleRole in ["bullet",oleacc.ROLE_SYSTEM_STATICTEXT]):
-				name=children[0].value
-		return name
-
-	def _get_children(self):
-		children=super(ListItem,self)._get_children()
-		if self.IAccessibleStates&oleacc.STATE_SYSTEM_READONLY and len(children)>0 and (children[0].IAccessibleRole in ("bullet",oleacc.ROLE_SYSTEM_STATICTEXT)):
-			del children[0]
-		return children
-
 class EmbeddedObject(Mozilla):
 
 	def _get_shouldAllowIAccessibleFocusEvent(self):
@@ -251,7 +235,6 @@ def findExtraOverlayClasses(obj, clsList):
 #: Maps IAccessible roles to NVDAObject overlay classes.
 _IAccessibleRolesToOverlayClasses = {
 	oleacc.ROLE_SYSTEM_ALERT: Dialog,
-	oleacc.ROLE_SYSTEM_LISTITEM: ListItem,
 	oleacc.ROLE_SYSTEM_DOCUMENT: Document,
 	IAccessibleHandler.IA2_ROLE_EMBEDDED_OBJECT: EmbeddedObject,
 	"embed": EmbeddedObject,
