@@ -214,6 +214,9 @@ def setNavigatorObject(obj,isFocus=False):
 	oldPosObj=globalVars.reviewPositionObj
 	globalVars.reviewPosition=None
 	globalVars.reviewPositionObj=None
+	# #3320: If in document review yet there is no document to review the mode should be forced to object. 
+	if review.getCurrentMode()=='document' and not obj.treeInterceptor:
+		review.setCurrentMode('object',False)
 	#Specifically handle when the navigator object is set due to a focus change in a virtualBuffer
 	#The focus change may have been becaus the caret was moved, which caused the focus change.
 	#If so, don't clober the review position as it will have been already set to a more accurate position.
