@@ -41,6 +41,7 @@
 - In Windows 7 and above, NVDA no longer inappropriately announces speech recognition or touch input as a keyboard language change.
 - In Scintilla controls, lines are now reported correctly when word wrap is enabled. (#885)
 - In Mozilla applications, the name of read-only list items is now correctly reported; e.g. when navigating tweets in focus mode on twitter.com. (#3327)
+- No longer announce a particular special character (0x7f) when pressing control+backspace in some editors when speak typed characters is enabled. (#3315)
 
 
 == Changes for Developers ==
