@@ -38,6 +38,7 @@
 - NVDA no longer announces garbage on the Desktop when the Google Japanese or Atok IME input methods are in use. (#3234)
 - In Windows 7 and above, NVDA no longer inappropriately announces speech recognition or touch input as a keyboard language change.
 - No longer announce a particular special character (0x7f) when pressing control+backspace in some editors when speak typed characters is enabled. (#3315)
+- espeak no longer inappropriately changes in pitch, volume etc when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
 
 
 == Changes for Developers ==
