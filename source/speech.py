@@ -541,6 +541,9 @@ def speakTypedCharacters(ch):
 	elif ch=="\b":
 		# Backspace, so remove the last character from our buffer.
 		del curWordChars[-1:]
+	elif ch==u'\u007f':
+		# delete character produced in some apps with control+backspace
+		return
 	elif len(curWordChars)>0:
 		typedWord="".join(curWordChars)
 		curWordChars=[]

@@ -59,7 +59,7 @@ class SynthDriver(SynthDriver):
 				s=unicode(item)
 				# Replace \01, as this is used for embedded commands.
 				#Also replace < and > as espeak handles xml
-				s.translate({ord(u'\01'):None,ord(u'<'):u'&lt;',ord(u'>'):u'&gt;'})
+				s=s.translate({ord(u'\01'):None,ord(u'<'):u'&lt;',ord(u'>'):u'&gt;'})
 				textList.append(s)
 			elif isinstance(item,speech.IndexCommand):
 				textList.append("<mark name=\"%d\" />"%item.index)

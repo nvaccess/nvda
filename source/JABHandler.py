@@ -174,6 +174,9 @@ class AccessibleActionsToDo(Structure):
 	)
 
 AccessBridge_FocusGainedFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64)
+AccessBridge_PropertyNameChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_wchar_p,c_wchar_p)
+AccessBridge_PropertyDescriptionChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_wchar_p,c_wchar_p)
+AccessBridge_PropertyValueChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_wchar_p,c_wchar_p)
 AccessBridge_PropertyStateChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_wchar_p,c_wchar_p)
 AccessBridge_PropertyCaretChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,c_int,c_int)
 AccessBridge_PropertyActiveDescendentChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JOBJECT64,JOBJECT64,JOBJECT64)
@@ -182,6 +185,9 @@ AccessBridge_PropertyActiveDescendentChangeFP=CFUNCTYPE(None,c_long,JOBJECT64,JO
 if bridgeDll:
 	_fixBridgeFunc(None,'Windows_run')
 	_fixBridgeFunc(None,'setFocusGainedFP',c_void_p)
+	_fixBridgeFunc(None,'setPropertyNameChangeFP',c_void_p)
+	_fixBridgeFunc(None,'setPropertyDescriptionChangeFP',c_void_p)
+	_fixBridgeFunc(None,'setPropertyValueChangeFP',c_void_p)
 	_fixBridgeFunc(None,'setPropertyStateChangeFP',c_void_p)
 	_fixBridgeFunc(None,'setPropertyCaretChangeFP',c_void_p)
 	_fixBridgeFunc(None,'setPropertyActiveDescendentChangeFP',c_void_p)
@@ -434,6 +440,42 @@ def internal_event_activeDescendantChange(vmID, event,source,oldDescendant,newDe
 	for accContext in [event,oldDescendant]:
 		bridgeDll.releaseJavaObject(vmID,accContext)
 
+@AccessBridge_PropertyNameChangeFP
+def event_nameChange(vmID,event,source,oldVal,newVal):
+	jabContext=JABContext(vmID=vmID,accContext=source)
+	focus=api.getFocusObject()
+	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
+		obj = focus
+	else:
+		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+	if obj:
+		eventHandler.queueEvent("nameChange", obj)
+	bridgeDll.releaseJavaObject(vmID,event)
+
+@AccessBridge_PropertyDescriptionChangeFP
+def event_descriptionChange(vmID,event,source,oldVal,newVal):
+	jabContext=JABContext(vmID=vmID,accContext=source)
+	focus=api.getFocusObject()
+	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
+		obj = focus
+	else:
+		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+	if obj:
+		eventHandler.queueEvent("descriptionChange", obj)
+	bridgeDll.releaseJavaObject(vmID,event)
+
+@AccessBridge_PropertyValueChangeFP
+def event_valueChange(vmID,event,source,oldVal,newVal):
+	jabContext=JABContext(vmID=vmID,accContext=source)
+	focus=api.getFocusObject()
+	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == jabContext:
+		obj = focus
+	else:
+		obj = NVDAObjects.JAB.JAB(jabContext=jabContext)
+	if obj:
+		eventHandler.queueEvent("valueChange", obj)
+	bridgeDll.releaseJavaObject(vmID,event)
+
 @AccessBridge_PropertyStateChangeFP
 def internal_event_stateChange(vmID,event,source,oldState,newState):
 	internalQueueFunction(event_stateChange,vmID,source,oldState,newState)
@@ -513,6 +555,9 @@ def initialize():
 	#Register java events
 	bridgeDll.setFocusGainedFP(internal_event_focusGained)
 	bridgeDll.setPropertyActiveDescendentChangeFP(internal_event_activeDescendantChange)
+	bridgeDll.setPropertyNameChangeFP(event_nameChange)
+	bridgeDll.setPropertyDescriptionChangeFP(event_descriptionChange)
+	bridgeDll.setPropertyValueChangeFP(event_valueChange)
 	bridgeDll.setPropertyStateChangeFP(internal_event_stateChange)
 	bridgeDll.setPropertyCaretChangeFP(internal_event_caretChange)
 	isRunning=True

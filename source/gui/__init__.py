@@ -161,7 +161,7 @@ class MainFrame(wx.Frame):
 			dialog(self, *args, **kwargs).Show()
 		except SettingsDialog.MultiInstanceError:
 			# Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
-			messageBox(_("Please close the other NVDA settings dialog first"),_("Error"),style=wx.OK | wx.ICON_ERROR)
+			messageBox(_("An NVDA settings dialog is already open. Please close it first."),_("Error"),style=wx.OK | wx.ICON_ERROR)
 		self.postPopup()
 
 	def onDefaultDictionaryCommand(self,evt):
