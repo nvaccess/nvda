@@ -61,6 +61,9 @@ error_status_t displayModelRemote_getWindowTextInRect(handle_t bindingHandle, co
 	if(tempModel) {
 		wstring text;
 		deque<RECT> characterLocations;
+		//if this is a temporary model, now correctly set its windowHandle before rendering the text.
+		//The windowHandle was not set at construction time as we did not want the inserted chunks to inherit this handle but instead keep their own.
+		if(hasDescendantWindows) tempModel->hwnd=(HWND)windowHandle;
 		tempModel->renderText(textRect,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace!=0,text,characterLocations);
 		if(hasDescendantWindows) {
 			tempModel->requestDelete();
