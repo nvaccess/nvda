@@ -951,9 +951,12 @@ This option allows you to specify whether content in browse mode should place co
 This checkbox toggles the automatic reading of a page after it loads in browse mode.
 This option is enabled by default.
 
-==== Report layout tables ====
-When disabled this option makes NVDA only report tables that contain tabular data (where it makes sense to know that this is a table).
-But if enabled, NVDA will also report tables used purely for visual presentation.
+==== Include layout tables ====
+This option affects how NVDA handles tables used purely for layout purposes.
+When on, NVDA will treat these as normal tables, reporting them based on [Document Formatting Settings #DocumentFormattingSettings] and locating them with quick navigation commands.
+When off, they will not be reported nor found with quick navigation.
+However, the content of the tables will still be included as normal text.
+This option is turned off by default.
 
 ==== Configuring reporting of fields such as links and headings ====
 Please see the options in the [Document Formatting Settings dialog #DocumentFormattingSettings] to configure the fields that are reported when navigating, such as links, headings and tables.

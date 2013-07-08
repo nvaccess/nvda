@@ -18,6 +18,7 @@
 
 == Changes ==
 - Performing a single finger flick left or right when in object mode now moves previous or next through a flattened view of the object navigation hierarchy. Use 2-finger flick left and right to perform the original previous/next object limited to the current hierarchycal level.
+- the Report layout tables checkbox found in the Browse Mode settings dialog has now been renamed to Include layout tables, to reflect that quick navigation also will not locate them if the checkbox is unchecked. (#3140)
 
 
 == Bug Fixes ==
@@ -36,7 +37,10 @@
 - NVDA now announces IME conversion mode changes in Windows 8.
 - NVDA no longer announces garbage on the Desktop when the Google Japanese or Atok IME input methods are in use. (#3234)
 - In Windows 7 and above, NVDA no longer inappropriately announces speech recognition or touch input as a keyboard language change.
- 
+- No longer announce a particular special character (0x7f) when pressing control+backspace in some editors when speak typed characters is enabled. (#3315)
+- espeak no longer inappropriately changes in pitch, volume etc when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
+- In Java applications, changes to the label or value of the focused control is now announced automatically, and is reflected when further reviewing the control. (#3119)
+
 
 == Changes for Developers ==
 - windowUtils.findDescendantWindow has been added to search for a descendant window (HWND) matching the specified visibility, control ID and/or class name.

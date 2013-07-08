@@ -20,9 +20,38 @@ def detectStringDirection(s):
 		if b in ('R','AL'): direction-=1
 	return direction
 
+def normalizeRtlString(s):
+	l=[]
+	for c in s:
+		#If this is an arabic presentation form b character (commenly given by Windows when converting from glyphs)
+		#Decompose it to its original basic arabic (non-presentational_ character.
+		if 0xfe70<=ord(c)<=0xfeff:
+			d=unicodedata.decomposition(c)
+			d=d.split(' ') if d else None
+			if d and len(d)==2 and d[0] in ('<initial>','<medial>','<final>','<isolated>'):
+				c=unichr(int(d[1],16))
+		l.append(c)
+	return u"".join(l)
+
 def yieldListRange(l,start,stop):
 	for x in xrange(start,stop):
 		yield l[x]
+
+def processWindowChunksInLine(commandList,rects,startIndex,startOffset,endIndex,endOffset):
+	windowStartIndex=startIndex
+	lastEndOffset=windowStartOffset=startOffset
+	lastHwnd=None
+	for index in xrange(startIndex,endIndex+1):
+		item=commandList[index] if index<endIndex else None
+		if isinstance(item,basestring):
+			lastEndOffset+=len(item)
+		else:
+			hwnd=item.field['hwnd'] if item else None
+			if lastHwnd is not None and hwnd!=lastHwnd:
+				processFieldsAndRectsRangeReadingdirection(commandList,rects,windowStartIndex,windowStartOffset,index,lastEndOffset)
+				windowStartIndex=index
+				windowStartOffset=lastEndOffset
+			lastHwnd=hwnd
 
 def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,startOffset,endIndex,endOffset):
 	containsRtl=False # True if any rtl text is found at all
@@ -37,6 +66,9 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 			direction=curFormatField['direction']
 			if direction==0:
 				curFormatField['direction']=direction=detectStringDirection(item)
+			elif direction==-2: #numbers in an rtl context
+				curFormatField['direction']=direction=-1
+				curFormatField['shouldReverseText']=False
 			if direction<0:
 				containsRtl=True
 			overallDirection+=direction
@@ -74,11 +106,18 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 						#This run is rtl, so reverse its rects, the text within the fields, and the order of fields themselves
 						#Reverse rects
 						rects[runStartOffset:lastEndOffset]=rects[lastEndOffset-1:runStartOffset-1 if runStartOffset>0 else None:-1]
+						rectsStart=runStartOffset
 						for i in xrange(runStartIndex,index,2):
 							command=commandList[i]
 							text=commandList[i+1]
+							rectsEnd=rectsStart+len(text)
 							commandList[i+1]=command
-							commandList[i]="".join(reversed(text))
+							shouldReverseText=command.field.get('shouldReverseText',True)
+							commandList[i]=normalizeRtlString(text[::-1] if shouldReverseText else text)
+							if not shouldReverseText:
+								#Because all the rects in the run were already reversed, we need to undo that for this field
+								rects[rectsStart:rectsEnd]=rects[rectsEnd-1:rectsStart-1 if rectsStart>0 else None:-1]
+							rectsStart=rectsEnd
 						#Reverse commandList
 						commandList[runStartIndex:index]=commandList[index-1:runStartIndex-1 if runStartIndex>0 else None:-1]
 					if overallDirection<0:
@@ -199,7 +238,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				baseline=curFormatField['baseline'] if curFormatField  else None
 				if baseline!=lineBaseline:
 					if lineBaseline is not None:
-						processFieldsAndRectsRangeReadingdirection(commandList,rects,lineStartIndex,lineStartOffset,index,lastEndOffset)
+						processWindowChunksInLine(commandList,rects,lineStartIndex,lineStartOffset,index,lastEndOffset)
 						#Convert the whitespace at the end of the line into a line feed
 						item=commandList[index-1]
 						if isinstance(item,basestring) and len(item)==1 and item.isspace():
@@ -281,6 +320,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 
 	def _normalizeFormatField(self,field):
 		field['bold']=True if field.get('bold')=="true" else False
+		field['hwnd']=int(field.get('hwnd','0'),16)
 		field['baseline']=int(field.get('baseline','-1'))
 		field['direction']=int(field.get('direction','0'))
 		field['italic']=True if field.get('italic')=="true" else False
