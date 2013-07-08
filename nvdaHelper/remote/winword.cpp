@@ -272,30 +272,38 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 			XMLStream<<L"_endOfNode=\"1\" ";
 		}
 	}
+	XMLStream<<L">";
+	XMLStream<<L"<control role=\"tableCell\" table-id=\"1\" ";
+	numTags+=1;
 	IDispatchPtr pDispatchCells=NULL;
 	IDispatchPtr pDispatchCell=NULL;
 	if(
 		_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_CELLS,VT_DISPATCH,&pDispatchCells)==S_OK&&pDispatchCells\
 		&&_com_dispatch_raw_method(pDispatchCells,wdDISPID_CELLS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchCell,L"\x0003",1)==S_OK&&pDispatchCell\
 		) {
-			numTags+=1;
-			XMLStream<<L"><control role=\"tableCell\" table-id=\"1\" ";
-			if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_ROWINDEX,VT_I4,&iVal)==S_OK) {
-				XMLStream<<L"table-rownumber=\""<<iVal<<L"\" ";
+		if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_ROWINDEX,VT_I4,&iVal)==S_OK) {
+			XMLStream<<L"table-rownumber=\""<<iVal<<L"\" ";
+		}
+		if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_COLUMNINDEX,VT_I4,&iVal)==S_OK) {
+			XMLStream<<L"table-columnnumber=\""<<iVal<<L"\" ";
+		}
+		IDispatchPtr pDispatchCellRange=NULL;
+		if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_RANGE,VT_DISPATCH,&pDispatchCellRange)==S_OK&&pDispatchCellRange) {
+			if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
+				XMLStream<<L"_startOfNode=\"1\" ";
 			}
-			if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_COLUMNINDEX,VT_I4,&iVal)==S_OK) {
-				XMLStream<<L"table-columnnumber=\""<<iVal<<L"\" ";
-			}
-			IDispatchPtr pDispatchCellRange=NULL;
-			if(_com_dispatch_raw_propget(pDispatchCell,wdDISPID_CELL_RANGE,VT_DISPATCH,&pDispatchCellRange)==S_OK&&pDispatchCellRange) {
-				if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
-					XMLStream<<L"_startOfNode=\"1\" ";
-				}
-				if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
-					XMLStream<<L"_endOfNode=\"1\" ";
-				}
+			if(_com_dispatch_raw_propget(pDispatchCellRange,wdDISPID_RANGE_END,VT_I4,&iVal)==S_OK&&iVal<=endOffset) {
+				XMLStream<<L"_endOfNode=\"1\" ";
 			}
 		}
+	} else {
+		if((_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeRowNumber)==S_OK)&&iVal>0) {
+			XMLStream<<L"table-rownumber=\""<<iVal<<L"\" ";
+		}
+		if((_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INFORMATION,DISPATCH_PROPERTYGET,VT_I4,&iVal,L"\x0003",wdStartOfRangeColumnNumber)==S_OK)&&iVal>0) {
+			XMLStream<<L"table-columnnumber=\""<<iVal<<L"\" ";
+		}
+	}
 	XMLStream<<L">";
 	return numTags;
 }
