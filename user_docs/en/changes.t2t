@@ -40,6 +40,8 @@
 - No longer announce a particular special character (0x7f) when pressing control+backspace in some editors when speak typed characters is enabled. (#3315)
 - espeak no longer inappropriately changes in pitch, volume etc when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
 - In Java applications, changes to the label or value of the focused control is now announced automatically, and is reflected when further reviewing the control. (#3119)
+- Performance improvements when navigating certain tables in Microsoft Word (#3326)
+- NVDA's table navigation commands (control+alt+arrows) function better in certain Microsoft Word tables where a cell spans multiple rows.
 
 
 == Changes for Developers ==
