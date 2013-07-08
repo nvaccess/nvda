@@ -8,6 +8,7 @@ import ctypes
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
+import operator
 import locale
 import languageHandler
 import ui
@@ -432,35 +433,36 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 		columnCount=commandList[1].field.get('table-columncount',1)
 		rowNumber=commandList[2].field.get('table-rownumber',1)
 		columnNumber=commandList[2].field.get('table-columnnumber',1)
-		if row:
-			rowNumber+=1 if forward else -1
-		else:
-			columnNumber+=1 if forward else -1
-		if rowNumber<1 or rowNumber>rowCount or columnNumber<1 or columnNumber>columnCount:
-			# Translators: The message reported when a user attempts to use a table movement command
-			# but the cursor can't be moved in that direction because it is at the edge of the table.
-			ui.message(_("Edge of table"))
-			return False
 		try:
 			table=info._rangeObj.tables[1]
 		except COMError:
 			log.debugWarning("Could not get MS Word table object indicated in XML")
 			ui.message(_("Not in table"))
 			return False
-		while (columnNumber if row else rowNumber)>0:
-			try:
-				cell=table.cell(rowNumber,columnNumber)
-				break
-			except COMError:
-				cell=None
-				if row:
-					columnNumber-=1
-				else:
-					rowNumber-=1
-		if not cell:
+		_cell=table.cell
+		getCell=lambda thisIndex,otherIndex: _cell(thisIndex,otherIndex) if row else _cell(otherIndex,thisIndex)
+		thisIndex=rowNumber if row else columnNumber
+		otherIndex=columnNumber if row else rowNumber
+		thisLimit=(rowCount if row else columnCount) if forward else 1
+		limitOp=operator.le if forward else operator.ge
+		incdecFunc=operator.add if forward else operator.sub
+		foundCell=None
+		curOtherIndex=otherIndex
+		while curOtherIndex>0:
+			curThisIndex=incdecFunc(thisIndex,1)
+			while limitOp(curThisIndex,thisLimit):
+				try:
+					foundCell=getCell(curThisIndex,curOtherIndex).range
+				except COMError:
+					pass
+				if foundCell: break
+				curThisIndex=incdecFunc(curThisIndex,1)
+			if foundCell: break
+			curOtherIndex-=1
+		if not foundCell:
 			ui.message(_("Edge of table"))
 			return False
-		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=cell.range)
+		newInfo=WordDocumentTextInfo(self,textInfos.POSITION_CARET,_rangeObj=foundCell)
 		speech.speakTextInfo(newInfo,reason=controlTypes.REASON_CARET)
 		newInfo.collapse()
 		newInfo.updateCaret()
