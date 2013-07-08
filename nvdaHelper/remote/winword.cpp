@@ -295,8 +295,8 @@ int generateTableXML(IDispatch* pDispatchRange, int startOffset, int endOffset, 
 					XMLStream<<L"_endOfNode=\"1\" ";
 				}
 			}
-			XMLStream<<L">";
 		}
+	XMLStream<<L">";
 	return numTags;
 }
 
