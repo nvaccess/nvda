@@ -46,6 +46,7 @@
 - In Java applications, changes to the label or value of the focused control is now announced automatically, and is reflected when further reviewing the control. (#3119)
 - Performance improvements when navigating certain tables in Microsoft Word (#3326)
 - NVDA's table navigation commands (control+alt+arrows) function better in certain Microsoft Word tables where a cell spans multiple rows.
+- If the Add-ons Manager is already open, activating it again (either from the Tools menu or by opening an add-on file) no longer fails or makes it impossible to close the Add-ons Manager. (#3351)
 
 
 == Changes for Developers ==
