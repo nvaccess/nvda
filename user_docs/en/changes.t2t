@@ -14,6 +14,7 @@
 - In the Add-ons Manager, there is now a Get Add-ons button to open the NVDA Add-ons web site where you can browse and download available add-ons. (#3209)
 - In the NVDA Welcome dialog which always appears the first time you run NVDA, you can now specify whether NVDA starts automatically after you log on to Windows. (#2234)
 - Sleep mode is automatically enabled when using Dolphin Cicero. (#2055)
+- The Freedom Scientific Focus 14 Blue and Focus 80 Blue braille displays, as well as the Focus 40 Blue in certain configurations that weren't supported previously, are now supported when connected via Bluetooth. (#3307)
 
 
 == Changes ==
@@ -40,7 +41,6 @@
 - No longer announce a particular special character (0x7f) when pressing control+backspace in some editors when speak typed characters is enabled. (#3315)
 - espeak no longer inappropriately changes in pitch, volume etc when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
 - In Java applications, changes to the label or value of the focused control is now announced automatically, and is reflected when further reviewing the control. (#3119)
-- The Freedom Scientific Focus 14 Blue and Focus 80 Blue braille displays, as well as the Focus 40 Blue in certain configurations that weren't supported previously, are now supported when connected via Bluetooth. (#3307)
 
 
 == Changes for Developers ==
