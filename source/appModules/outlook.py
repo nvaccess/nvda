@@ -86,7 +86,7 @@ class AppModule(appModuleHandler.AppModule):
 		windowClassName=obj.windowClassName
 		states=obj.states
 		controlID=obj.windowControlID
-		if role==controlTypes.ROLE_LISTITEM and windowClassName.startswith("REListBox"):
+		if role==controlTypes.ROLE_LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
 			clsList.insert(0,AutoCompleteListItem)
 		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
 			clsList.insert(0, AddressBookEntry)
@@ -211,6 +211,6 @@ class AutoCompleteListItem(IAccessible):
 	def event_stateChange(self):
 		states=self.states
 		focus=api.getFocusObject()
-		if focus.role==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
+		if (focus.role==controlTypes.ROLE_EDITABLETEXT or focus.role==controlTypes.ROLE_BUTTON) and controlTypes.STATE_SELECTED in states and controlTypes.STATE_INVISIBLE not in states and controlTypes.STATE_UNAVAILABLE not in states and controlTypes.STATE_OFFSCREEN not in states:
 			speech.cancelSpeech()
 			ui.message(self.name)
