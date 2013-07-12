@@ -34,6 +34,8 @@ import watchdog
 
 selOffsetsAtLastCaretEvent=None
 
+TA_BOTTOM=8
+
 #Edit control window messages
 EM_GETSEL=176
 EM_SETSEL=177
@@ -557,6 +559,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			o=None
 		if not o:
 			return None
+		# Outlook >=2007 exposes MSAA on its embedded objects thus we can use accName as the label
 		import oleacc
 		try:
 			label=o.QueryInterface(oleacc.IAccessible).accName(0);
@@ -564,12 +567,20 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			pass
 		if label:
 			return label
+		# Outlook 2003 and Outlook Express write the embedded object text to the display with GDI thus we can use display model 
 		left,top=embedRangeObj.GetPoint(comInterfaces.tom.tomStart)
-		right,bottom=embedRangeObj.GetPoint(comInterfaces.tom.tomEnd)
+		right,bottom=embedRangeObj.GetPoint(comInterfaces.tom.tomEnd|TA_BOTTOM)
+		# Outlook Express bug: when expanding to the first embedded object on lines after the first, the range's start coordinates are the start coordinates of the previous character (on the line above)
+		# Therefore if we detect this, collapse the range and try getting left and top again
+		if left>=right:
+			r=embedRangeObj.duplicate
+			r.collapse(1)
+			left,top=r.GetPoint(comInterfaces.tom.tomStart)
 		import displayModel
-		label=displayModel.DisplayModelTextInfo(self.obj, textInfos.Rect(left, top, right, bottom+10)).text
+		label=displayModel.DisplayModelTextInfo(self.obj, textInfos.Rect(left, top, right, bottom)).text
 		if label and not label.isspace():
 			return label
+		# Windows Live Mail exposes the label via the embedded object's data (IDataObject)
 		try:
 			dataObj=o.QueryInterface(oleTypes.IDataObject)
 		except comtypes.COMError:
@@ -586,6 +597,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				pass
 		if label:
 			return label
+		# As a final fallback (e.g. could not get display  model text for Outlook Express), use the embedded object's user type (e.g. "recipient").
 		try:
 			oleObj=o.QueryInterface(oleTypes.IOleObject)
 			label=oleObj.GetUserType(1)
