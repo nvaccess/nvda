@@ -4,7 +4,6 @@ import comtypes.client
 from comtypes import *
 import weakref
 import threading
-import re
 import time
 import api
 import queueHandler
@@ -23,8 +22,6 @@ StyleId_Heading1=70001
 StyleId_Heading9=70009
 ItemIndex_Property_GUID=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}")
 ItemCount_Property_GUID=GUID("{ABBF5C45-5CCC-47b7-BB4E-87CB87BBD162}")
-
-re_MSAAProxyProviderDescription=re.compile(r'Microsoft: (Annotation|MSAA) Proxy \(unmanaged:uiautomationcore.dll\)',re.IGNORECASE)
 
 badUIAWindowClassNames=[
 	"SysTreeView32",
@@ -260,22 +257,23 @@ class UIAHandler(COMObject):
 			return False
 		if processID==windll.kernel32.GetCurrentProcessId():
 			return False
-		#If the element has a window handle, whether it is a native element depends on whether the window natively supports UIA.
+		# Whether this is a native element depends on whether its window natively supports UIA.
 		try:
 			windowHandle=UIAElement.cachedNativeWindowHandle
 		except COMError:
 			windowHandle=None
-		if windowHandle:
-			return self.isUIAWindow(windowHandle)
-		try:
-			providerDescription=UIAElement.cachedProviderDescription
-		except COMError:
-			return True
-		if re_MSAAProxyProviderDescription.search(providerDescription):
-			# This is an MSAA proxy.
-			# Whether this is a native element depends on whether the nearest window handle natively supports UIA.
+		if not windowHandle:
+			# Some elements report no window handle, so use the nearest ancestor window handle in this case.
 			windowHandle=self.getNearestWindowHandle(UIAElement)
-			if not windowHandle:
-				return False
-			return self.isUIAWindow(windowHandle)
-		return True
+		if windowHandle:
+			if self.isUIAWindow(windowHandle):
+				return True
+			if winUser.getClassName(windowHandle)=="DirectUIHWND" and "IEFRAME.dll" in UIAElement.cachedProviderDescription and UIAElement.currentClassName in ("DownloadBox", "accessiblebutton", "DUIToolbarButton", "PushButton"):
+				# This is the IE 9 downloads list.
+				# #3354: UiaHasServerSideProvider returns false for the IE 9 downloads list window,
+				# so we'd normally use MSAA for this control.
+				# However, its MSAA implementation is broken (fires invalid events) if UIA is initialised,
+				# whereas its UIA implementation works correctly.
+				# Therefore, we must use UIA here.
+				return True
+		return False
