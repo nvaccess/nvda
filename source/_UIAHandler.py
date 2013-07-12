@@ -224,19 +224,29 @@ class UIAHandler(COMObject):
 			return
 		eventHandler.queueEvent(NVDAEventName,obj)
 
+	def _isUIAWindowHelper(self,hwnd):
+		# UIA in NVDA's process freezes in Windows 7 and below
+		if windll.kernel32.GetCurrentProcessId()==winUser.getWindowThreadProcessID(hwnd)[0]:
+			return False
+		import NVDAObjects.window
+		windowClass=NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd))
+		# There are certain window classes that just had bad UIA implementations
+		if windowClass in badUIAWindowClassNames:
+			return False
+		if windowClass=="NetUIHWND":
+			parentHwnd=winUser.getAncestor(hwnd,winUser.GA_ROOT)
+			# #2816: Outlook 2010 auto complete does not fire enough UIA events, IAccessible is better.
+			if winUser.getClassName(parentHwnd)=="Net UI Tool Window":
+				return False
+		# Ask the window if it supports UIA natively
+		return windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
+
 	def isUIAWindow(self,hwnd):
 		now=time.time()
 		v=self.UIAWindowHandleCache.get(hwnd,None)
 		if not v or (now-v[1])>0.5:
-			import NVDAObjects.window
-			if windll.kernel32.GetCurrentProcessId()==winUser.getWindowThreadProcessID(hwnd)[0]:
-				isUIA=False
-			elif NVDAObjects.window.Window.normalizeWindowClassName(winUser.getClassName(hwnd)) in badUIAWindowClassNames:
-				isUIA=False
-			else:
-				isUIA=windll.UIAutomationCore.UiaHasServerSideProvider(hwnd)
-			self.UIAWindowHandleCache[hwnd]=(isUIA,now)
-			return isUIA
+			v=self._isUIAWindowHelper(hwnd),now
+			self.UIAWindowHandleCache[hwnd]=v
 		return v[0]
 
 	def getNearestWindowHandle(self,UIAElement):
