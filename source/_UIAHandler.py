@@ -37,6 +37,7 @@ badUIAWindowClassNames=[
 	"RICHEDIT50W",
 	"SysListView32",
 	"_WwG",
+	"EXCEL7",
 ]
 
 NVDAUnitsToUIAUnits={
