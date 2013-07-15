@@ -43,6 +43,7 @@
 - espeak no longer inappropriately changes in pitch, volume etc when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
 - In Java applications, changes to the label or value of the focused control is now announced automatically, and is reflected when further reviewing the control. (#3119)
 - In Scintilla controls, lines are now reported correctly when word wrap is enabled. (#885)
+- In Internet Explorer, It is again not necessary to press tab to interact with an embedded object (such as Flash content) after pressing enter on it. (#3364)
 
 
 == Changes for Developers ==
