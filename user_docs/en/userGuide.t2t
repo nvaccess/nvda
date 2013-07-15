@@ -379,35 +379,39 @@ The layout is illustrated as follows:
 | Previous character | Current character | Next character |
 
 ++ Review Modes ++[ReviewModes]
-NVDA's review commands can review content within the current navigator object, current document, or screen, depending on the review mode selected.
+NVDA's [text review commands #ReviewingText] can review content within the current navigator object, current document or screen, depending on the review mode selected.
 Review modes are a replacement for the older Flat Review concept found in NVDA.
 
 The following commands switch between review modes:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
-| switch to next review mode | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | switches to the next available review mode higher than the current mode. | 
-| switch to previous review mode | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | switches to the next available review mode deeper than the current mode. |
+| switch to next review mode | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | switches to the next available review mode | 
+| switch to previous review mode | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | switches to the next available review mode |
 %kc:endInclude
 
 +++ Object Review +++[ObjectReview]
 While in object review mode, you are able to only review the content of the current [navigator object #ObjectNavigation].
-For objects such as edit fields or other basic document controls, this will generally be the text content.
-For other objects, this may be its name and or value.
+For objects such as editable text fields or other basic text controls, this will generally be the text content.
+For other objects, this may be the name and/or value.
 
 +++ Document Review +++[DocumentReview]
-When the [navigator object #ObjectNavigation] is within a browse mode document (e.g. web page) or another complex document containing many objects (e.g. Lotus Symphony documents), it is possible to switch to the document review mode.
+When the [navigator object #ObjectNavigation] is within a browse mode document (e.g. web page) or other complex document (e.g. a Lotus Symphony document), it is possible to switch to the document review mode.
 The document review mode allows you to review the text of the entire document.
+
 When switching from object review to document review, the review cursor is placed in the document at the position of the navigator object.
 When moving around the document with review commands, the navigator object is automatically updated to the object found at the current review cursor position.
+
 Note that NVDA will switch to document review from object review automatically when moving around browse mode documents.
 
 +++ Screen Review +++[ScreenReview]
-The screen review mode allows you to review visible text on the screen within the current application.
+The screen review mode allows you to review the text of the screen as it appears visually within the current application.
 This is similar to the screen review or mouse cursor functionality in many other Windows screen readers.
- When switching to screen review mode, the review cursor is placed at the screen position of the current [navigator object #ObjectNavigation].
- When moving around the screen with review commands, the navigator object is automatically updated to the deepest object found at the screen position of the review cursor.
-Note that in some newer applications, NVDA may not see some or all text available on screen, due to the use of newer screen drawing technologies which are impossible to support at this time.
-  
+
+When switching to screen review mode, the review cursor is placed at the screen position of the current [navigator object #ObjectNavigation].
+When moving around the screen with review commands, the navigator object is automatically updated to the deepest object found at the screen position of the review cursor.
+
+Note that in some newer applications, NVDA may not see some or all text displayed on the screen due to the use of newer screen drawing technologies which are impossible to support at this time.
+
 ++ Navigating with the Mouse ++
 When you move the Mouse, NVDA by default reports the text that is directly under the mouse pointer as the pointer moves over it.
 Where supported, NVDA will read the surrounding paragraph of text, though some controls may only read by line.
