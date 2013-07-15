@@ -303,7 +303,7 @@ def getStatusBar():
 		return None
 	left, top, width, height = location
 	bottom = top + height - 1
-	obj = NVDAObjects.IAccessible.getNVDAObjectFromPoint(left, bottom)
+	obj = getDesktopObject().objectFromPoint(left, bottom)
 
 	# We may have landed in a child of the status bar, so search the ancestry for a status bar.
 	while obj and not obj.role == controlTypes.ROLE_STATUSBAR:
