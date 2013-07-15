@@ -819,11 +819,11 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 
 	def _shouldSetFocusToObj(self, obj):
 		"""Determine whether an object should receive focus.
-		Subclasses should override this method.
+		Subclasses may extend or override this method.
 		@param obj: The object in question.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		return obj.role not in self.APPLICATION_ROLES and obj.isFocusable
+		return obj.role not in self.APPLICATION_ROLES and obj.isFocusable and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
 
 	def script_activateLongDesc(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)

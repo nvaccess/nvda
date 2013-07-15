@@ -145,7 +145,7 @@ class Gecko_ia2(VirtualBuffer):
 	def _shouldSetFocusToObj(self, obj):
 		if obj.role == controlTypes.ROLE_GRAPHIC and controlTypes.STATE_LINKED in obj.states:
 			return True
-		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj) and obj.role!=controlTypes.ROLE_EMBEDDEDOBJECT
+		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj)
 
 	def _activateLongDesc(self,controlField):
 		index=int(controlField['IAccessibleAction_showlongdesc'])

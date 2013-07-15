@@ -14,6 +14,8 @@
 - In the Add-ons Manager, there is now a Get Add-ons button to open the NVDA Add-ons web site where you can browse and download available add-ons. (#3209)
 - In the NVDA Welcome dialog which always appears the first time you run NVDA, you can now specify whether NVDA starts automatically after you log on to Windows. (#2234)
 - Sleep mode is automatically enabled when using Dolphin Cicero. (#2055)
+- The Windows x64 version of Miranda IM/Miranda NG is now supported. (#3296)
+- Search suggestions in the Windows 8.1 Start Screen are automatically reported. (#3322)
 
 
 == Changes ==
@@ -40,6 +42,7 @@
 - No longer announce a particular special character (0x7f) when pressing control+backspace in some editors when speak typed characters is enabled. (#3315)
 - espeak no longer inappropriately changes in pitch, volume etc when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
 - In Java applications, changes to the label or value of the focused control is now announced automatically, and is reflected when further reviewing the control. (#3119)
+- In Scintilla controls, lines are now reported correctly when word wrap is enabled. (#885)
 
 
 == Changes for Developers ==
@@ -48,10 +51,12 @@
 
 
 = 2013.1.1 =
+This release fixes the problem where NVDA crashed when started if configured to use the Irish language, as well as including updates to translations and some other bug fixes.
 
 == Bug Fixes ==
 - Correct characters are produced when typing in NVDA's own user interface while using a Korean or Japanese input method while it is the default method. (#2909)
 - In Internet Explorer and other MSHTML controls, fields marked as containing an invalid entry are now handled correctly. (#3256)
+- NVDA no longer crashes when started if it is configured to use the Irish language.
 
 
 = 2013.1 =
