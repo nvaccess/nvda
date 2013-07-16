@@ -13,7 +13,7 @@ If you are running a 64 bit version of Windows, you should install the 32 bit ve
 Earlier or later versions of these dependencies may work, but the version listed is the version that has been widely tested and is used for official builds.
 
 General dependencies:
-	* Python 2.7, version 2.7.3: http://www.python.org/
+	* Python 2.7, version 2.7.5: http://www.python.org/
 	* comtypes, version 0.6.2: http://www.sourceforge.net/projects/comtypes/
 	* wxPython 2.8 unicode (for Python 2.7), version 2.8.12.1: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.7), build 218: http://www.sourceforge.net/projects/pywin32/ 
