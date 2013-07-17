@@ -18,6 +18,12 @@
 
 == Changes ==
 - Performing a single finger flick left or right when in object mode now moves previous or next through a flattened view of the object navigation hyrarchi. Use 2-finger flick left and right to perform the original previous/next object limited to the current hyrarchical level.
+- Flat review has been replaced with object, document and screen review modes (#2996):
+	- object review reviews text just in that object, document review reviews all text in a browse mode document (if in one), screen review reviews text on the screen for the current application.
+	- The commands that used to move to/from flat review now toggle between these new review modes.
+	- The navigator object automatically follows the review cursor, so that it remains the deepest object at the review cursor's position, when in document or screen review modes.
+	- After switching to screen review mode, NVDA will stay in this mode until you explicitly switch back to document or object review modes. 
+	- When in document or object review modes, NVDa may automatically switch between these two modes depending on whether you are moving around a browse mode document or not.
 
 
 == Bug Fixes ==
