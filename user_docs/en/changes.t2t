@@ -57,6 +57,8 @@
 == Changes for Developers ==
 - windowUtils.findDescendantWindow has been added to search for a descendant window (HWND) matching the specified visibility, control ID and/or class name.
 - The remote Python console no longer times out after 10 seconds while waiting for input. (#3126)
+- Inclusion of the bisect module in binary builds is deprecated and may be removed in a future release. (#3368)
+ - Add-ons which depend on bisect (including the urllib2 module) should be updated to include this module.
 
 
 = 2013.1.1 =
