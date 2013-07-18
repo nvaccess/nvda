@@ -269,7 +269,7 @@ class UIA(Window):
 				pass
 		elif UIAControlType==UIAHandler.UIA_ListItemControlTypeId:
 			clsList.append(ListItem)
-		if self.UIAIsWindowElement and UIAClassName=="#32770":
+		if self.UIAIsWindowElement and UIAClassName in ("#32770","NUIDialog"):
 			clsList.append(Dialog)
 
 		clsList.append(UIA)
