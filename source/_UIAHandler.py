@@ -40,6 +40,7 @@ badUIAWindowClassNames=[
 	"RICHEDIT50W",
 	"SysListView32",
 	"_WwG",
+	"Button",
 ]
 
 NVDAUnitsToUIAUnits={
