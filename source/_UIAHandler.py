@@ -38,6 +38,7 @@ badUIAWindowClassNames=[
 	"SysListView32",
 	"_WwG",
 	"EXCEL7",
+	"Button",
 ]
 
 NVDAUnitsToUIAUnits={
