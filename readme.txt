@@ -28,9 +28,7 @@ General dependencies:
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
 	* liblouis, version 2.5.2:
 		* Official web site: http://www.liblouis.org/
-		* Download page: http://code.google.com/p/liblouis/downloads/list
-		* Download the liblouis source archive.
-		* Extract the contents of the top level directory in the archive into include\liblouis.
+		* This is included as a Git submodule.
 	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/
 		* Extract the archive into the root of your NVDA source distribution.
 	* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
