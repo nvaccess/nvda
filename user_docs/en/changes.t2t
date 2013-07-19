@@ -16,6 +16,7 @@
 - Sleep mode is automatically enabled when using Dolphin Cicero. (#2055)
 - The Windows x64 version of Miranda IM/Miranda NG is now supported. (#3296)
 - Search suggestions in the Windows 8.1 Start Screen are automatically reported. (#3322)
+- New braille translation tables: English (U.K.) computer braille, Korean grade 2, Russian braille for computer code.
 
 
 == Changes ==
@@ -28,6 +29,7 @@
  - The navigator object automatically follows the review cursor such that it remains the deepest object at the position of the review cursor when in document or screen review modes.
  - After switching to screen review mode, NVDA will stay in this mode until you explicitly switch back to document or object review mode.
  - When in document or object review mode, NVDA may automatically switch between these two modes depending on whether you are moving around a browse mode document or not.
+- Updated liblouis braille translator to 2.5.3. (#3371)
 
 
 == Bug Fixes ==
@@ -52,6 +54,7 @@
 - In Scintilla controls, lines are now reported correctly when word wrap is enabled. (#885)
 - In Mozilla applications, the name of read-only list items is now correctly reported; e.g. when navigating tweets in focus mode on twitter.com. (#3327)
 - Confirmation dialogs in Microsoft Office 2013 now have their content automatically read when they appear. 
+- Multiple spaces are no longer compressed to just one space on braille displays. (#1366)
 
 
 == Changes for Developers ==
