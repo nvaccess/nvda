@@ -22,12 +22,12 @@
 - On a touch screen, performing a single finger flick left or right when in object mode now moves previous or next through all objects, not just those in the current container. Use 2-finger flick left or right to perform the original action of moving to the previous or next object in the current container.
 - the Report layout tables checkbox found in the Browse Mode settings dialog has now been renamed to Include layout tables to reflect that quick navigation also will not locate them if the checkbox is unchecked. (#3140)
 - Performing a single finger flick left or right when in object mode now moves previous or next through a flattened view of the object navigation hyrarchi. Use 2-finger flick left and right to perform the original previous/next object limited to the current hyrarchical level.
-- Flat review has been replaced with object, document and screen review modes (#2996):
-	- object review reviews text just in that object, document review reviews all text in a browse mode document (if in one), screen review reviews text on the screen for the current application.
-	- The commands that used to move to/from flat review now toggle between these new review modes.
-	- The navigator object automatically follows the review cursor, so that it remains the deepest object at the review cursor's position, when in document or screen review modes.
-	- After switching to screen review mode, NVDA will stay in this mode until you explicitly switch back to document or object review modes. 
-	- When in document or object review modes, NVDa may automatically switch between these two modes depending on whether you are moving around a browse mode document or not.
+- Flat review has been replaced with object, document and screen review modes. (#2996)
+ - Object review reviews text just within the navigator object, document review reviews all text in a browse mode document (if any) and screen review reviews text on the screen for the current application.
+ - The commands that previously move to/from flat review now toggle between these new review modes.
+ - The navigator object automatically follows the review cursor such that it remains the deepest object at the position of the review cursor when in document or screen review modes.
+ - After switching to screen review mode, NVDA will stay in this mode until you explicitly switch back to document or object review mode.
+ - When in document or object review mode, NVDA may automatically switch between these two modes depending on whether you are moving around a browse mode document or not.
 
 
 == Bug Fixes ==
