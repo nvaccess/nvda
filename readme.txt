@@ -13,7 +13,7 @@ If you are running a 64 bit version of Windows, you should install the 32 bit ve
 Earlier or later versions of these dependencies may work, but the version listed is the version that has been widely tested and is used for official builds.
 
 General dependencies:
-	* Python 2.7, version 2.7.3: http://www.python.org/
+	* Python 2.7, version 2.7.5: http://www.python.org/
 	* comtypes, version 0.6.2: http://www.sourceforge.net/projects/comtypes/
 	* wxPython 2.8 unicode (for Python 2.7), version 2.8.12.1: http://www.wxpython.org/
 	* Python Windows Extensions (for Python 2.7), build 218: http://www.sourceforge.net/projects/pywin32/ 
@@ -28,9 +28,7 @@ General dependencies:
 		* Copy configobj.py and validate.py into the global Python site-packages directory.
 	* liblouis, version 2.5.2:
 		* Official web site: http://www.liblouis.org/
-		* Download page: http://code.google.com/p/liblouis/downloads/list
-		* Download the liblouis source archive.
-		* Extract the contents of the top level directory in the archive into include\liblouis.
+		* This is included as a Git submodule.
 	* NVDA media (images and sounds): http://www.nvda-project.org/nvda-media/
 		* Extract the archive into the root of your NVDA source distribution.
 	* System dlls not present on many systems: mfc90.dll, msvcp90.dll, msvcr90.dll, Microsoft.VC90.CRT.manifest:
