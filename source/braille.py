@@ -63,6 +63,9 @@ TABLES = (
 	("de-de-g2.ctb", _("German grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
+	("en-gb-comp8.ctb", _("English (U.K.) 8 dot computer braille"), True),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	("en-gb-g1.utb", _("English (U.K.) grade 1"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
@@ -138,7 +141,10 @@ TABLES = (
 	("it-it-comp8.utb", _("Italian 8 dot computer braille"), True),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	("ko.ctb", _("Korean grade 1"), False),
+	("ko-g1.ctb", _("Korean grade 1"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ko-g2.ctb", _("Korean grade 2"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("Lv-Lv-g1.utb", _("Latvian grade 1"), False),
@@ -175,6 +181,9 @@ TABLES = (
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("Pt-Pt-g2.ctb", _("Portuguese grade 2"), False),
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	("ru-compbrl.ctb", _("Russian braille for computer code"), False),
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
 	("ru-ru-g1.utb", _("Russian grade 1"), False),
