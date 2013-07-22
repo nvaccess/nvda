@@ -52,6 +52,8 @@
 - In Scintilla controls, lines are now reported correctly when word wrap is enabled. (#885)
 - In Mozilla applications, the name of read-only list items is now correctly reported; e.g. when navigating tweets in focus mode on twitter.com. (#3327)
 - Confirmation dialogs in Microsoft Office 2013 now have their content automatically read when they appear. 
+- Performance improvements when navigating certain tables in Microsoft Word (#3326)
+- NVDA's table navigation commands (control+alt+arrows) function better in certain Microsoft Word tables where a cell spans multiple rows.
 
 
 == Changes for Developers ==
