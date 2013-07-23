@@ -402,6 +402,8 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			self._start, self._startObj = self._findContentDescendant(obj.caretObject, textInfos.POSITION_CARET)
 			self._end = self._start
 			self._endObj = self._startObj
+		elif position == textInfos.POSITION_SELECTION:
+			self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(obj.caretObject.makeTextInfo(position), position)
 		else:
 			raise NotImplementedError
 
@@ -491,8 +493,11 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 
 		# Walk up the hierarchy until we find the start and end points.
 		while True:
-			expandTi = baseTi.copy()
-			expandTi.expand(unit)
+			if unit == textInfos.POSITION_SELECTION:
+				expandTi = obj.makeTextInfo(unit)
+			else:
+				expandTi = baseTi.copy()
+				expandTi.expand(unit)
 			allTi = obj.makeTextInfo(textInfos.POSITION_ALL)
 
 			if not start and findStart and expandTi.compareEndPoints(allTi, "startToStart") != 0:
@@ -555,7 +560,10 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			ti.expand(textInfos.UNIT_OFFSET)
 			if ti.text == u"\uFFFC":
 				start, startObj = self._findContentDescendant(ti.getEmbeddedObject(), startDescPos)
-				start.expand(unit)
+				if unit == textInfos.POSITION_SELECTION:
+					start = startObj.makeTextInfo(unit)
+				else:
+					start.expand(unit)
 			if not findEnd:
 				return start, startObj
 		if findEnd:
@@ -564,7 +572,10 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 			ti.move(textInfos.UNIT_OFFSET, -1, "start")
 			if ti.text == u"\uFFFC":
 				end, endObj = self._findContentDescendant(ti.getEmbeddedObject(), endDescPos)
-				end.expand(unit)
+				if unit == textInfos.POSITION_SELECTION:
+					end = endObj.makeTextInfo(unit)
+				else:
+					end.expand(unit)
 			if not findStart:
 				return end, endObj
 
