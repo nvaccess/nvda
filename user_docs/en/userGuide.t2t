@@ -302,7 +302,7 @@ In these cases, you can use object navigation.
 
 Object navigation allows you to move between and obtain information about individual [objects #Objects].
 When you move to an object, NVDA will report it similarly to the way it reports the system focus.
-For a way to review all text as it appears on the screen, you can instead use [flat review #FlatReview].
+For a way to review all text as it appears on the screen, you can instead use [screen review #ScreenReview].
 
 Rather than having to move back and forth between every single object on the system, the objects are organized hierarchically.
 This means that some objects contain other objects and you must move inside them to access the objects they contain.
@@ -313,7 +313,7 @@ You can then move past the list if you wish to access other objects.
 Similarly, a toolbar contains controls, so you must move inside the toolbar to access the controls in the toolbar.
 
 The object currently being reviewed is called the navigator object.
-Once you navigate to an object, you can review it using the [text review commands #ReviewingText].
+Once you navigate to an object, you can review its content using the [text review commands #ReviewingText] while in [Object review mode #ObjectReview].
 By default, the navigator object moves along with the System focus, though this behaviour can be toggled on and off.
 
 Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
@@ -337,7 +337,7 @@ To navigate by object, use the following commands:
 Note: numpad keys require numlock key to be turned off to work properly.
 
 ++ Reviewing Text ++[ReviewingText]
-NVDA allows you to read the contents of the current [navigator object #ObjectNavigation] (including [flat review #FlatReview]) by character, word or line.
+NVDA allows you to read the contents of the [screen #ScreenReview], current [document #DocumentReview] or current [object #ObjectReview] by character, word or line.
 This is mostly useful in places (including Windows command consoles) where there is no [system caret #SystemCaret].
 For example, you might use it to review the text of a long information message in a dialog.
 
@@ -378,27 +378,39 @@ The layout is illustrated as follows:
 | Previous word | Current word | Next word |
 | Previous character | Current character | Next character |
 
-++ Flat Review ++[FlatReview]
-While you can generally only review the content of a single [object #Objects], some objects allow you to review the content of objects inside them.
-Complex documents allow you to review their entire content and application windows allow you to review the text of the screen as it appears visually.
-This is called flat review.
-This is similar to the screen review or mouse cursor functionality in many other Windows screen readers.
+++ Review Modes ++[ReviewModes]
+NVDA's [text review commands #ReviewingText] can review content within the current navigator object, current document or screen, depending on the review mode selected.
+Review modes are a replacement for the older Flat Review concept found in NVDA.
 
-When you move to flat review, you will be positioned at the location of the current [navigator object #ObjectNavigation].
-If you haven't used object navigation, this will usually be the object that has the [focus #SystemFocus].
-For example, if the navigator object was a button, you will usually be positioned on the text of the button in flat review.
-You can then review the text using the [text review commands #ReviewingText].
-You can also navigate directly to the object encompassing the current position of the review cursor, allowing you to use [object navigation #ObjectNavigation] from there.
-
-Note that braille follows the [focus #SystemFocus] and [caret #SystemCaret] by default, rather than object navigation and text review.
-If you want it to follow object navigation and text review instead, you need to [configure braille to be tethered to #BrailleTether] review.
-
-The following two commands are used for switching to/from flat review:
+The following commands switch between review modes:
 %kc:beginInclude
 || Name | Desktop key | Laptop key | Touch | Description |
-| Move to flat review | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | Moves to flat review, placing you at the position of the current navigator object, allowing you to review the screen (or document if you are currently inside one) with the text review commands. |
-| Move to object from flat review | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | navigates to the object represented by the text at the current position of the review cursor in flat review |
+| switch to next review mode | NVDA+numpad7 | NVDA+pageUp | 2-finger flick up | switches to the next available review mode |
+| switch to previous review mode | NVDA+numpad1 | NVDA+pageDown | 2-finger flick down | switches to the previous available review mode |
 %kc:endInclude
+
++++ Object Review +++[ObjectReview]
+While in object review mode, you are able to only review the content of the current [navigator object #ObjectNavigation].
+For objects such as editable text fields or other basic text controls, this will generally be the text content.
+For other objects, this may be the name and/or value.
+
++++ Document Review +++[DocumentReview]
+When the [navigator object #ObjectNavigation] is within a browse mode document (e.g. web page) or other complex document (e.g. a Lotus Symphony document), it is possible to switch to the document review mode.
+The document review mode allows you to review the text of the entire document.
+
+When switching from object review to document review, the review cursor is placed in the document at the position of the navigator object.
+When moving around the document with review commands, the navigator object is automatically updated to the object found at the current review cursor position.
+
+Note that NVDA will switch to document review from object review automatically when moving around browse mode documents.
+
++++ Screen Review +++[ScreenReview]
+The screen review mode allows you to review the text of the screen as it appears visually within the current application.
+This is similar to the screen review or mouse cursor functionality in many other Windows screen readers.
+
+When switching to screen review mode, the review cursor is placed at the screen position of the current [navigator object #ObjectNavigation].
+When moving around the screen with review commands, the navigator object is automatically updated to the deepest object found at the screen position of the review cursor.
+
+Note that in some newer applications, NVDA may not see some or all text displayed on the screen due to the use of newer screen drawing technologies which are impossible to support at this time.
 
 ++ Navigating with the Mouse ++
 When you move the Mouse, NVDA by default reports the text that is directly under the mouse pointer as the pointer moves over it.

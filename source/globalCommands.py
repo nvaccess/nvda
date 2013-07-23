@@ -11,6 +11,7 @@ import touchHandler
 import keyboardHandler
 import mouseHandler
 import eventHandler
+import review
 import controlTypes
 import api
 import textInfos
@@ -278,36 +279,29 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for move navigator object to mouse command.
 	script_moveNavigatorObjectToMouse.__doc__=_("Sets the navigator object to the current object under the mouse pointer and speaks it")
 
-	def script_navigatorObject_moveToFlatReviewAtObjectPosition(self,gesture):
-		obj=api.getNavigatorObject()
-		pos=obj.flatReviewPosition
-		if pos:
-			api.setReviewPosition(pos)
-			pos=pos.copy()
-			obj=api.getNavigatorObject()
-			speech.speakObjectProperties(obj,name=True,role=True)
+	def script_reviewMode_next(self,gesture):
+		label=review.nextMode()
+		if label:
+			ui.message(label)
+			pos=api.getReviewPosition().copy()
 			pos.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(pos)
 		else:
-			# Translators: reported when object does not support flat review (example: some graphic window).
-			speech.speakMessage(_("No flat review for this object"))
-	# Translators: Input help mode message for move to flat review command.
-	script_navigatorObject_moveToFlatReviewAtObjectPosition.__doc__=_("Moves to flat review for the screen (or document if currently inside one) and positions the review cursor at the location of the current object")
+			# Translators: reported when there are no other available review modes for this object 
+			ui.message(_("No next review mode"))
+	script_reviewMode_next.__doc__=_("Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object")
 
-	def script_navigatorObject_moveToObjectAtFlatReviewPosition(self,gesture):
-		pos=api.getReviewPosition()
-		try:
-			obj=pos.NVDAObjectAtStart
-		except NotImplementedError:
-			obj=None
-		if obj and obj!=pos.obj:
-			api.setNavigatorObject(obj)
-			speech.speakObject(obj,reason=controlTypes.REASON_FOCUS)
+	def script_reviewMode_previous(self,gesture):
+		label=review.nextMode(prev=True)
+		if label:
+			ui.message(label)
+			pos=api.getReviewPosition().copy()
+			pos.expand(textInfos.UNIT_LINE)
+			speech.speakTextInfo(pos)
 		else:
-			# Translators: Reported when there is no object at flat review position.
-			speech.speakMessage(_("No object at flat review position"))
-	# Translators: Input help mode message for flat review to object command.
-	script_navigatorObject_moveToObjectAtFlatReviewPosition.__doc__=_("Moves navigator object to the object represented by the text at the position of the review cursor within flat review")
+			# Translators: reported when there are no  other available review modes for this object 
+			ui.message(_("No previous review mode"))
+	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -507,7 +501,7 @@ class GlobalCommands(ScriptableObject):
 
 	def script_review_top(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_FIRST)
-		api.setReviewPosition(info.copy())
+		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("top"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
@@ -519,10 +513,11 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,-1)
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("top"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to previous line command.
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object and speaks it")
@@ -543,17 +538,18 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
 		res=info.move(textInfos.UNIT_LINE,1)
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_LINE)
 		if res==0:
 			speech.speakMessage(_("bottom"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_LINE)
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to next line command.
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
 
 	def script_review_bottom(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
-		api.setReviewPosition(info.copy())
+		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_LINE)
 		speech.speakMessage(_("bottom"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
@@ -565,11 +561,12 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_WORD)
 		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,-1)
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_WORD)
 		if res==0:
 			# Translators: a message reported when review cursor is at the top line of the current navigator object.
 			speech.speakMessage(_("top"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_WORD)
 		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 	# Translators: Input help mode message for move review cursor to previous word command.
 	script_review_previousWord.__doc__=_("Moves the review cursor to the previous word of the current navigator object and speaks it")
@@ -590,10 +587,11 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_WORD)
 		info.collapse()
 		res=info.move(textInfos.UNIT_WORD,1)
-		api.setReviewPosition(info.copy())
-		info.expand(textInfos.UNIT_WORD)
 		if res==0:
 			speech.speakMessage(_("bottom"))
+		else:
+			api.setReviewPosition(info)
+		info.expand(textInfos.UNIT_WORD)
 		speech.speakTextInfo(info,reason=controlTypes.REASON_CARET,unit=textInfos.UNIT_WORD)
 	# Translators: Input help mode message for move review cursor to next word command.
 	script_review_nextWord.__doc__=_("Moves the review cursor to the next word of the current navigator object and speaks it")
@@ -602,7 +600,7 @@ class GlobalCommands(ScriptableObject):
 		info=api.getReviewPosition().copy()
 		info.expand(textInfos.UNIT_LINE)
 		info.collapse()
-		api.setReviewPosition(info.copy())
+		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakMessage(_("left"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
@@ -622,7 +620,7 @@ class GlobalCommands(ScriptableObject):
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 		else:
-			api.setReviewPosition(charInfo.copy())
+			api.setReviewPosition(charInfo)
 			charInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to previous character command.
@@ -659,7 +657,7 @@ class GlobalCommands(ScriptableObject):
 			reviewInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(reviewInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 		else:
-			api.setReviewPosition(charInfo.copy())
+			api.setReviewPosition(charInfo)
 			charInfo.expand(textInfos.UNIT_CHARACTER)
 			speech.speakTextInfo(charInfo,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to next character command.
@@ -670,7 +668,7 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_LINE)
 		info.collapse(end=True)
 		info.move(textInfos.UNIT_CHARACTER,-1)
-		api.setReviewPosition(info.copy())
+		api.setReviewPosition(info)
 		info.expand(textInfos.UNIT_CHARACTER)
 		speech.speakMessage(_("right"))
 		speech.speakTextInfo(info,unit=textInfos.UNIT_CHARACTER,reason=controlTypes.REASON_CARET)
@@ -1324,12 +1322,12 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+f10": "review_copy",
 
 		# Flat review
-		"kb:NVDA+numpad7": "navigatorObject_moveToFlatReviewAtObjectPosition",
-		"kb(laptop):NVDA+pageUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
-		"ts(object):2finger_flickUp": "navigatorObject_moveToFlatReviewAtObjectPosition",
-		"kb:NVDA+numpad1": "navigatorObject_moveToObjectAtFlatReviewPosition",
-		"kb(laptop):NVDA+pageDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
-		"ts(object):2finger_flickDown": "navigatorObject_moveToObjectAtFlatReviewPosition",
+		"kb:NVDA+numpad7": "reviewMode_next",
+		"kb(laptop):NVDA+pageUp": "reviewMode_next",
+		"ts(object):2finger_flickUp": "reviewMode_next",
+		"kb:NVDA+numpad1": "reviewMode_previous",
+		"kb(laptop):NVDA+pageDown": "reviewMode_previous",
+		"ts(object):2finger_flickDown": "reviewMode_previous",
 
 		# Mouse
 		"kb:numpadDivide": "leftMouseClick",

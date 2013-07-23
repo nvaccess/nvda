@@ -220,8 +220,8 @@ Description: {description}
 		gui.messageBox(message, title, wx.OK)
 
 	def OnGetAddonsClick(self,evt):
-		ADDONS_URL = "http://addons.nvda-project.org/index.{lang}.html"
-		os.startfile(ADDONS_URL.format(lang=languageHandler.getLanguage()))
+		ADDONS_URL = "http://addons.nvda-project.org"
+		os.startfile(ADDONS_URL)
 
 	def __del__(self):
 		AddonsDialog._instance = None

@@ -9,14 +9,22 @@ import time
 import appModuleHandler
 import controlTypes
 import winUser
+import api
 import speech
 import eventHandler
 import mouseHandler
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import sysListView32, IAccessible
-import UIAHandler
-if UIAHandler.isUIAAvailable:
-	from NVDAObjects.UIA import UIA
+from NVDAObjects.UIA import UIA
+
+# support for Win8 start screen search suggestions.
+class SuggestionListItem(UIA):
+
+	def event_UIA_elementSelected(self):
+		speech.cancelSpeech()
+		api.setNavigatorObject(self)
+		self.reportFocus()
+		super(SuggestionListItem,self).event_UIA_elementSelected()
 
 #win8hack: Class to disable incorrect focus on windows 8 search box (containing the already correctly focused edit field)
 class SearchBoxClient(IAccessible):
@@ -79,46 +87,45 @@ class NotificationArea(IAccessible):
 			return
 		super(NotificationArea, self).event_gainFocus()
 
-if UIAHandler.isUIAAvailable:
-	class GridTileElement(UIA):
+class GridTileElement(UIA):
 
-		role=controlTypes.ROLE_TABLECELL
+	role=controlTypes.ROLE_TABLECELL
 
-		def _get_description(self):
-			name=self.name
-			descriptionStrings=[]
-			for child in self.children:
-				description=child.basicText
-				if not description or description==name: continue
-				descriptionStrings.append(description)
-			return " ".join(descriptionStrings)
-			return description
+	def _get_description(self):
+		name=self.name
+		descriptionStrings=[]
+		for child in self.children:
+			description=child.basicText
+			if not description or description==name: continue
+			descriptionStrings.append(description)
+		return " ".join(descriptionStrings)
+		return description
 
-	class GridListTileElement(UIA):
-		role=controlTypes.ROLE_TABLECELL
-		description=None
+class GridListTileElement(UIA):
+	role=controlTypes.ROLE_TABLECELL
+	description=None
 
-	class GridGroup(UIA):
-		"""A group in the Windows 8 Start Menu.
-		"""
-		presentationType=UIA.presType_content
+class GridGroup(UIA):
+	"""A group in the Windows 8 Start Menu.
+	"""
+	presentationType=UIA.presType_content
 
-		#Normally the name is the first tile which is rather redundant
-		#However some groups have custom header text which should be read instead
-		def _get_name(self):
-			child=self.firstChild
-			if isinstance(child,UIA):
-				try:
-					automationID=child.UIAElement.currentAutomationID
-				except COMError:
-					automationID=None
-				if automationID=="GridListGroupHeader":
-					return child.name
+	#Normally the name is the first tile which is rather redundant
+	#However some groups have custom header text which should be read instead
+	def _get_name(self):
+		child=self.firstChild
+		if isinstance(child,UIA):
+			try:
+				automationID=child.UIAElement.currentAutomationID
+			except COMError:
+				automationID=None
+			if automationID=="GridListGroupHeader":
+				return child.name
 
-	class ImmersiveLauncher(UIA):
-		#When the win8 start screen openes, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
-		#Ignore focus events on this object.
-		shouldAllowUIAFocusEvent=False
+class ImmersiveLauncher(UIA):
+	#When the win8 start screen openes, focus correctly goes to the first tile, but then incorrectly back to the root of the window.
+	#Ignore focus events on this object.
+	shouldAllowUIAFocusEvent=False
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -156,7 +163,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, NotificationArea)
 				return
 
-		if UIAHandler.isUIAAvailable and isinstance(obj, UIA):
+		if isinstance(obj, UIA):
 			uiaClassName = obj.UIAElement.cachedClassName
 			if uiaClassName == "GridTileElement":
 				clsList.insert(0, GridTileElement)
@@ -166,6 +173,8 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridGroup)
 			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.ROLE_PANE:
 				clsList.insert(0, ImmersiveLauncher)
+			elif uiaClassName=="ListViewItem" and obj.UIAElement.cachedAutomationId.startswith('Suggestion_'):
+				clsList.insert(0,SuggestionListItem)
 
 	def event_NVDAObject_init(self, obj):
 		windowClass = obj.windowClassName
