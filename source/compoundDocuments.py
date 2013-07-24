@@ -747,7 +747,8 @@ class CompoundDocument(EditableText, TreeInterceptor):
 		return eventHandler.lastQueuedFocusObject
 
 	def event_treeInterceptor_gainFocus(self):
-		speech.speakObject(self.rootNVDAObject, reason=controlTypes.REASON_FOCUS)
+		# Don't use speakObject because this may speak the text using the object's TextInfo.
+		speech.speakObjectProperties(self.rootNVDAObject, name=True, description=True, role=True, states=True, reason=controlTypes.REASON_FOCUS)
 		try:
 			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		except RuntimeError:
