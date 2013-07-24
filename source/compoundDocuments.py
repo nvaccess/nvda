@@ -769,7 +769,10 @@ class CompoundDocument(EditableText, TreeInterceptor):
 	def event_caret(self, obj, nextHandler):
 		self.detectPossibleSelectionChange()
 		braille.handler.handleCaretMove(self)
-		caret = self.makeTextInfo(textInfos.POSITION_CARET)
+		try:
+			caret = self.makeTextInfo(textInfos.POSITION_CARET)
+		except RuntimeError:
+			return
 		review.handleCaretMove(caret)
 
 	def event_gainFocus(self, obj, nextHandler):
