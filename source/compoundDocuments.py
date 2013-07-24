@@ -382,6 +382,9 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 	def __init__(self, obj, position):
 		super(EmbeddedObjectCompoundTextInfo, self).__init__(obj, position)
 		rootObj = obj.rootNVDAObject
+		if isinstance(position, NVDAObject):
+			# FIXME
+			position = textInfos.POSITION_CARET
 		if isinstance(position, self.__class__):
 			self._start = position._start.copy()
 			self._startObj = position._startObj
