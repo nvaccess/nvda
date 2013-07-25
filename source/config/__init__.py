@@ -470,7 +470,7 @@ class ConfigManager(object):
 		self._pushProfile(conf)
 
 	def _pushProfile(self, profile):
-		self.profiles.append(conf)
+		self.profiles.append(profile)
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
 
