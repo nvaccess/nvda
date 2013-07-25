@@ -453,3 +453,98 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
 		addon.addToPackagePath(module)
+
+class ConfigManager(object):
+	"""Manages and provides access to configuration.
+	In addition to the base configuration, there can be multiple active configuration profiles.
+	Settings in more recently activated profiles take precedence,
+	with the base configuration being consulted last.
+	This allows a profile to override settings in profiles activated earlier and the base configuration.
+	A profile need only include a subset of the available settings.
+	"""
+
+	def __init__(self):
+		self.spec = confspec
+		self.profiles = []
+		self.validator = Validator()
+		self._pushProfile(conf)
+
+	def _pushProfile(self, profile):
+		self.profiles.append(conf)
+		# Reset the cache.
+		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
+
+	def deactivateProfile(self):
+		"""Deactivate the most recently activated profile.
+		@raise IndexError: If there is no profile to deactivate.
+		"""
+		if len(self.profiles) == 1:
+			raise IndexError("No profile to deactivate")
+		self.profiles.pop()
+		# Reset the cache.
+		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
+
+	def __getitem__(self, key):
+		return self.rootSection[key]
+
+class AggregatedSection(object):
+	"""A view of a section of configuration which aggregates settings from all active profiles.
+	"""
+
+	def __init__(self, manager, path, spec, profiles):
+		self.manager = manager
+		self.path = path
+		self.spec = spec
+		#: The relevant section in all of the profiles where it exists.
+		self.profiles = profiles
+		self._cache = {}
+
+	def __getitem__(self, key):
+		# Try the cache first.
+		try:
+			val = self._cache[key]
+		except KeyError:
+			pass
+		else:
+			if val is KeyError:
+				# We know there's no such setting.
+				raise KeyError(key)
+			return val
+
+		spec = self.spec.get(key)
+		foundSection = False
+		if isinstance(spec, dict):
+			foundSection = True
+
+		# Walk through the profiles looking for the key.
+		# If it's a section, collect that section from all profiles.
+		subProfiles = []
+		for profile in self.profiles:
+			try:
+				val = profile[key]
+			except KeyError:
+				continue
+			if isinstance(val, dict):
+				foundSection = True
+				subProfiles.append(val)
+			else:
+				# This is a setting.
+				return self._cacheLeaf(key, spec, val)
+
+		if not foundSection:
+			# The key doesn't exist, so cache this fact.
+			self._cache[key] = KeyError
+			raise KeyError(key)
+
+		if spec is None:
+			# Create this section in the config spec.
+			spec = self.spec[key] = {}
+		sect = self._cache[key] = AggregatedSection(self.manager, self.path + (key,), spec, subProfiles)
+		return sect
+
+	def _cacheLeaf(self, key, spec, val):
+		if spec:
+			# Validate and convert the value.
+			val = self.manager.validator.check(spec, val)
+		self._cache[key] = val
+		return val
