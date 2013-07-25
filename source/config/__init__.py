@@ -461,6 +461,7 @@ class ConfigManager(object):
 	with the base configuration being consulted last.
 	This allows a profile to override settings in profiles activated earlier and the base configuration.
 	A profile need only include a subset of the available settings.
+	Changed settings are written to the most recently activated profile.
 	"""
 
 	def __init__(self):
@@ -487,6 +488,9 @@ class ConfigManager(object):
 	def __getitem__(self, key):
 		return self.rootSection[key]
 
+	def __setitem__(self, key, val):
+		self.rootSection[key] = val
+
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
 	"""
@@ -495,7 +499,7 @@ class AggregatedSection(object):
 		self.manager = manager
 		self.path = path
 		self.spec = spec
-		#: The relevant section in all of the profiles where it exists.
+		#: The relevant section in all of the profiles.
 		self.profiles = profiles
 		self._cache = {}
 
@@ -522,7 +526,9 @@ class AggregatedSection(object):
 		for profile in reversed(self.profiles):
 			try:
 				val = profile[key]
-			except KeyError:
+			except (KeyError, TypeError):
+				# Indicate that this key doesn't exist in this profile.
+				subProfiles.append(None)
 				continue
 			if isinstance(val, dict):
 				foundSection = True
@@ -549,3 +555,40 @@ class AggregatedSection(object):
 			val = self.manager.validator.check(spec, val)
 		self._cache[key] = val
 		return val
+
+	def __setitem__(self, key, val):
+		spec = self.spec.get(key) if self.spec else None
+		if spec:
+			# Validate and convert the value.
+			val = self.manager.validator.check(spec, val)
+
+		try:
+			curVal = self[key]
+		except KeyError:
+			pass
+		else:
+			if val == curVal:
+				# The value isn't different, so there's nothing to do.
+				return
+
+		# Set this value in the most recently activated profile.
+		self._getUpdateSection()[key] = val
+		self._cache[key] = val
+
+	def _getUpdateSection(self):
+		profile = self.profiles[-1]
+		if profile is not None:
+			# This section already exists in the profile.
+			return profile
+
+		section = self.manager.rootSection
+		profile = section.profiles[-1]
+		for part in self.path:
+			parentProfile = profile
+			section = section[part]
+			profile = section.profiles[-1]
+			if profile is None:
+				# This section doesn't exist in the profile yet.
+				# Create it and update the AggregatedSection.
+				profile = parentProfile[part] = section.profiles[-1] = {}
+		return profile
