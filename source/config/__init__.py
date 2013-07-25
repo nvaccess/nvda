@@ -519,7 +519,7 @@ class AggregatedSection(object):
 		# Walk through the profiles looking for the key.
 		# If it's a section, collect that section from all profiles.
 		subProfiles = []
-		for profile in self.profiles:
+		for profile in reversed(self.profiles):
 			try:
 				val = profile[key]
 			except KeyError:
@@ -530,6 +530,7 @@ class AggregatedSection(object):
 			else:
 				# This is a setting.
 				return self._cacheLeaf(key, spec, val)
+		subProfiles.reverse()
 
 		if not foundSection:
 			# The key doesn't exist, so cache this fact.
