@@ -466,6 +466,9 @@ class ConfigManager(object):
 
 	def __init__(self):
 		self.spec = confspec
+		#: All loaded profiles by name.
+		self._profileCache = {}
+		#: The active profiles.
 		self.profiles = []
 		self.validator = Validator()
 		self._pushProfile(conf)
@@ -490,6 +493,38 @@ class ConfigManager(object):
 
 	def __setitem__(self, key, val):
 		self.rootSection[key] = val
+
+	def listProfiles(self):
+		for name in os.listdir(os.path.join(globalVars.appArgs.configPath, "profiles")):
+			name, ext = os.path.splitext(name)
+			if ext == ".ini":
+				yield name
+
+	def _getProfile(self, name):
+		try:
+			return self._profileCache[name]
+		except KeyError:
+			pass
+
+		# Load the profile.
+		fn = os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
+		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+		profile.newlines = "\r\n"
+		self._profileCache[name] = profile
+		return profile
+
+	def activateProfile(self, name):
+		"""Activate a profile, loading it if appropriate.
+		If the named profile doesn't exist, it will be created.
+		@param name: The name of the profile.
+		@type name: basestring
+		"""
+		self._pushProfile(self._getProfile(name))
+
+	def save(self):
+		"""Save the most recently activated profile to disk.
+		"""
+		self.profiles[-1].write()
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
@@ -545,7 +580,9 @@ class AggregatedSection(object):
 
 		if spec is None:
 			# Create this section in the config spec.
-			spec = self.spec[key] = {}
+			self.spec[key] = {}
+			# ConfigObj might have mutated this into a configobj.Section.
+			spec = self.spec[key]
 		sect = self._cache[key] = AggregatedSection(self.manager, self.path + (key,), spec, subProfiles)
 		return sect
 
@@ -590,5 +627,7 @@ class AggregatedSection(object):
 			if profile is None:
 				# This section doesn't exist in the profile yet.
 				# Create it and update the AggregatedSection.
-				profile = parentProfile[part] = section.profiles[-1] = {}
+				parentProfile[part] = {}
+				# ConfigObj might have mutated this into a configobj.Section.
+				profile = section.profiles[-1] = parentProfile[part]
 		return profile
