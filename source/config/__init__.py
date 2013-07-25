@@ -279,6 +279,11 @@ def getInstalledUserConfigPath():
 		return None
 
 def getUserDefaultConfigPath(useInstalledPathIfExists=False):
+	"""Get the default path for the user configuration directory.
+	This is the default path and doesn't reflect overriding from the command line,
+	which includes temporary copies.
+	Most callers will want the C{globalVars.appArgs.configPath variable} instead.
+	"""
 	installedUserConfigPath=getInstalledUserConfigPath()
 	if installedUserConfigPath and (isInstalledCopy() or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
 		return installedUserConfigPath

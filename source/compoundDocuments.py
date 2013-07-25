@@ -16,6 +16,7 @@ import braille
 from NVDAObjects import behaviors
 import api
 import config
+import review
 
 class CompoundTextInfo(textInfos.TextInfo):
 
@@ -408,8 +409,7 @@ class CompoundDocument(EditableText, TreeInterceptor):
 		self.detectPossibleSelectionChange()
 		braille.handler.handleCaretMove(self)
 		caret = self.makeTextInfo(textInfos.POSITION_CARET)
-		if config.conf["reviewCursor"]["followCaret"] and api.getNavigatorObject() is self.rootNVDAObject:
-			api.setReviewPosition(caret)
+		review.handleCaretMove(caret)
 
 	def event_gainFocus(self, obj, nextHandler):
 		if not isinstance(obj, behaviors.EditableText):
