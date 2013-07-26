@@ -168,6 +168,9 @@ class TextLeaf(Mozilla):
 	role = controlTypes.ROLE_STATICTEXT
 	beTransparentToMouse = True
 
+class BlockQuote(Mozilla):
+	role = controlTypes.ROLE_BLOCKQUOTE
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -197,6 +200,8 @@ def findExtraOverlayClasses(obj, clsList):
 			# This excludes a non-focusable @role="textbox".
 			if not (ia2States & IAccessibleHandler.IA2_STATE_EDITABLE):
 				cls = TextLeaf
+	elif iaRole == IAccessibleHandler.IA2_ROLE_SECTION and obj.IA2Attributes.get("tag", None) == "blockquote":
+		cls = BlockQuote
 	if not cls:
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
