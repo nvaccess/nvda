@@ -413,7 +413,13 @@ class EmbeddedObjectCompoundTextInfo(CompoundTextInfo):
 
 	def _findContentDescendant(self, obj, position):
 		while True:
-			ti = obj.makeTextInfo(position)
+			try:
+				ti = obj.makeTextInfo(position)
+			except RuntimeError:
+				if position == textInfos.POSITION_CARET:
+					# The insertion point is before this object, so this object has no caret.
+					# We always want to report the character immediately after the insertion point.
+					ti = obj.makeTextInfo(textInfos.POSITION_FIRST)
 			ti.expand(textInfos.UNIT_OFFSET)
 			if ti.text == u"\uFFFC":
 				obj = ti.getEmbeddedObject()
