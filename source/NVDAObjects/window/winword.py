@@ -136,7 +136,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_expandToLine(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,ctypes.byref(lineStart),ctypes.byref(lineEnd))
-		if res!=0 or (lineStart.value==lineEnd.value==-1): 
+		if res!=0 or lineStart.value==lineEnd.value or lineStart.value==-1 or lineEnd.value==-1: 
 			log.debugWarning("winword_expandToLine failed")
 			self._rangeObj.expand(wdParagraph)
 			return
