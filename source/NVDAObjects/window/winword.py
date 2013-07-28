@@ -81,6 +81,10 @@ wdPrimaryFooterStory=9
 wdPrimaryHeaderStory=7
 wdTextFrameStory=5
 
+wdFieldFormTextInput=70
+wdFieldFormCheckBox=71
+wdFieldFormDropDown=83
+
 storyTypeLocalizedLabels={
 	wdCommentsStory:_("Comments"),
 	wdEndnotesStory:_("Endnotes"),
@@ -92,6 +96,12 @@ storyTypeLocalizedLabels={
 	wdPrimaryFooterStory:_("Primary footer"),
 	wdPrimaryHeaderStory:_("Primary header"),
 	wdTextFrameStory:_("Text frame"),
+}
+
+wdFieldTypesToNVDARoles={
+	wdFieldFormTextInput:controlTypes.ROLE_EDITABLETEXT,
+	wdFieldFormCheckBox:controlTypes.ROLE_CHECKBOX,
+	wdFieldFormDropDown:controlTypes.ROLE_COMBOBOX,
 }
 
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
@@ -226,7 +236,16 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif role=="object":
 			role=controlTypes.ROLE_EMBEDDEDOBJECT
 		else:
-			role=controlTypes.ROLE_UNKNOWN
+			fieldType=int(field.pop('wdFieldType',-1))
+			role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
+			if fieldType==wdFieldFormCheckBox and int(field.get('wdFieldResult','0'))>0:
+				field['states']=set([controlTypes.STATE_CHECKED])
+			elif fieldType==wdFieldFormDropDown:
+				field['value']=field.get('wdFieldResult',None)
+		fieldStatusText=field.pop('wdFieldStatusText',None)
+		if fieldStatusText:
+			field['name']=fieldStatusText
+			field['alwaysReportName']=True
 		field['role']=role
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
