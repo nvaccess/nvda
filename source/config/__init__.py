@@ -471,12 +471,23 @@ class ConfigManager(object):
 		#: The active profiles.
 		self.profiles = []
 		self.validator = Validator()
-		self._pushProfile(conf)
+		self._initBaseConf()
 
 	def _pushProfile(self, profile):
 		self.profiles.append(profile)
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
+
+	def _initBaseConf(self, factoryDefaults=False):
+		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
+		if factoryDefaults:
+			profile = ConfigObj(None, indent_type="\t", encoding="UTF-8")
+			profile.filename = fn
+		else:
+			profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+		profile.newlines = "\r\n"
+		self._profileCache[None] = profile
+		self._pushProfile(profile)
 
 	def deactivateProfile(self):
 		"""Deactivate the most recently activated profile.
