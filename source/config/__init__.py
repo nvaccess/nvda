@@ -524,6 +524,9 @@ class ConfigManager(object):
 	def save(self):
 		"""Save the most recently activated profile to disk.
 		"""
+		if globalVars.appArgs.secure:
+			# Never save the config if running securely.
+			return
 		self.profiles[-1].write()
 
 class AggregatedSection(object):
