@@ -491,6 +491,12 @@ class ConfigManager(object):
 	def __getitem__(self, key):
 		return self.rootSection[key]
 
+	def __contains__(self, key):
+		return key in self.rootSection
+
+	def get(self, key, default=None):
+		return self.rootSection.get(key, default)
+
 	def __setitem__(self, key, val):
 		self.rootSection[key] = val
 
@@ -588,6 +594,19 @@ class AggregatedSection(object):
 			spec = self.spec[key]
 		sect = self._cache[key] = AggregatedSection(self.manager, self.path + (key,), spec, subProfiles)
 		return sect
+
+	def __contains__(self, key):
+		try:
+			self[key]
+			return True
+		except KeyError:
+			return False
+
+	def get(self, key, default=None):
+		try:
+			return self[key]
+		except KeyError:
+			return default
 
 	def _cacheLeaf(self, key, spec, val):
 		if spec:
