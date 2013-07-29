@@ -553,7 +553,7 @@ class AggregatedSection(object):
 	def __init__(self, manager, path, spec, profiles):
 		self.manager = manager
 		self.path = path
-		self.spec = spec
+		self._spec = spec
 		#: The relevant section in all of the profiles.
 		self.profiles = profiles
 		self._cache = {}
@@ -570,7 +570,7 @@ class AggregatedSection(object):
 				raise KeyError(key)
 			return val
 
-		spec = self.spec.get(key)
+		spec = self._spec.get(key)
 		foundSection = False
 		if isinstance(spec, dict):
 			foundSection = True
@@ -610,9 +610,9 @@ class AggregatedSection(object):
 
 		if spec is None:
 			# Create this section in the config spec.
-			self.spec[key] = {}
+			self._spec[key] = {}
 			# ConfigObj might have mutated this into a configobj.Section.
-			spec = self.spec[key]
+			spec = self._spec[key]
 		sect = self._cache[key] = AggregatedSection(self.manager, self.path + (key,), spec, subProfiles)
 		return sect
 
@@ -637,7 +637,7 @@ class AggregatedSection(object):
 		return val
 
 	def __setitem__(self, key, val):
-		spec = self.spec.get(key) if self.spec else None
+		spec = self._spec.get(key) if self.spec else None
 		if spec:
 			# Validate and convert the value.
 			val = self.manager.validator.check(spec, val)
@@ -674,3 +674,14 @@ class AggregatedSection(object):
 				# ConfigObj might have mutated this into a configobj.Section.
 				profile = section.profiles[-1] = parentProfile[part]
 		return profile
+
+	@property
+	def spec(self):
+		return self._spec
+
+	@spec.setter
+	def spec(self, val):
+		# This section is being replaced.
+		# Clear it and replace the content so it remains linked to the main spec.
+		self._spec.clear()
+		self._spec.update(val)
