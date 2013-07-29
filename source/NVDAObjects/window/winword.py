@@ -10,6 +10,7 @@ import comtypes.client
 import comtypes.automation
 import operator
 import locale
+import braille
 import languageHandler
 import ui
 import NVDAHelper
@@ -430,10 +431,10 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	def script_tab(self,gesture):
 		gesture.send()
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		if info._rangeObj.tables.count>0:
-			info.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		if not info.isCollapsed or info._rangeObj.tables.count>0:
+			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+		braille.handler.handleCaretMove(info)
 
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
