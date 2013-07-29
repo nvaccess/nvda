@@ -484,7 +484,11 @@ class ConfigManager(object):
 			profile = ConfigObj(None, indent_type="\t", encoding="UTF-8")
 			profile.filename = fn
 		else:
-			profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+			try:
+				profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+			except:
+				log.error("Error loading base configuration", exc_info=True)
+				return self._initBaseConf(factoryDefaults=True)
 		profile.newlines = "\r\n"
 		self._profileCache[None] = profile
 		self._pushProfile(profile)
