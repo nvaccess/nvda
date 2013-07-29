@@ -582,6 +582,16 @@ class AggregatedSection(object):
 				return self._cacheLeaf(key, spec, val)
 		subProfiles.reverse()
 
+		if not foundSection and spec:
+			# This might have a default.
+			try:
+				val = self.manager.validator.get_default_value(spec)
+			except KeyError:
+				pass
+			else:
+				self._cache[key] = val
+				return val
+
 		if not foundSection:
 			# The key doesn't exist, so cache this fact.
 			self._cache[key] = KeyError
