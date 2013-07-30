@@ -459,7 +459,7 @@ the NVDAObject for IAccessible
 			from .msOffice import BrokenMsoCommandBar
 			if BrokenMsoCommandBar.appliesTo(self):
 				clsList.append(BrokenMsoCommandBar)
-		elif windowClassName.startswith("Internet Explorer_"):
+		if windowClassName.startswith("Internet Explorer_"):
 			from . import MSHTML
 			MSHTML.findExtraIAccessibleOverlayClasses(self, clsList)
 		elif windowClassName == "AVL_AVView":
