@@ -552,6 +552,14 @@ class ConfigManager(object):
 			return
 		self.profiles[-1].write()
 
+	def reset(self, factoryDefaults=False):
+		"""Reset the configuration to saved settings or factory defaults.
+		@param factoryDefaults: C{True} to reset to factory defaults, C{False} to reset to saved configuration.
+		@type factoryDefaults: bool
+		"""
+		self.profiles = []
+		self._initBaseConf(factoryDefaults=factoryDefaults)
+
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
 	"""
