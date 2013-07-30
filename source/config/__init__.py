@@ -644,6 +644,27 @@ class AggregatedSection(object):
 
 	def __setitem__(self, key, val):
 		spec = self._spec.get(key) if self.spec else None
+		if isinstance(spec, dict) and not isinstance(val, dict):
+			raise ValueError("Value must be a section")
+
+		if isinstance(spec, dict) or isinstance(val, dict):
+			# The value is a section.
+			# Update the profile.
+			updateSect = self._getUpdateSection()
+			updateSect[key] = val
+			# ConfigObj will have mutated this into a configobj.Section.
+			val = updateSect[key]
+			cache = self._cache.get(key)
+			if cache and cache is not KeyError:
+				# An AggregatedSection has already been cached, so update it.
+				cache[key].profiles[-1] = val
+			elif cache is KeyError:
+				# This key now exists, so remove the cached non-existence.
+				del self._cache[key]
+			# If an AggregatedSection isn't already cached,
+			# An appropriate AggregatedSection will be created the next time this section is fetched.
+			return
+
 		if spec:
 			# Validate and convert the value.
 			val = self.manager.validator.check(spec, val)
