@@ -3,12 +3,74 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.2 =
+
+== Novas Características ==
+- Soporte para o Chromium Embedded Framework, que é un control de navegador web utilizado en varias aplicaciones. (#3108)
+- Nova variante de voz de eSpeak: Iven3.
+- No Skype, anúncianse automáticamente as mesaxes novas do chat mentras a conversación estea enfocada. (#2298)
+- Soporte para o Tween, incluindo o anunciado dos nomes de pestana e menor nivel de detalle cando se lean os twits.
+- Agora podes deshabilitar o amosado das mesaxes do NVDA nunha pantalla braille configurando a duración da mesaxe a 0 no diálogo de Opcións de Braille. (#2482)
+- No administrador de complementos, agora hai un botón Obter Complementos para abrir o sitio web dos Complementos do NVDA onde podes examinar y descargar os complementos dispoñibles. (#3209)
+- No diálogo de benvida do NVDA que sempre aparece a primeira vez que  executas o NVDA, agora podes especificar se NVDA se inicia automáticamente despois de autentificarte no Windows. (#2234)
+- O modo silencioso habilítase automáticamente cando se utilice Dolphin Cicero. (#2055)
+- Agora sopórtase a versión Windows x64 do Miranda IM/Miranda NG. (#3296)
+- Agora anúncianse automáticamente as suxerencias de busca na pantalla de inicio do  Windows 8.1. (#3322)
+
+
+== Cambios ==
+- nunha pantalla tactil, realizando un deslizamento cun so dedo cara a esquerda ou cara a dereita cando se estea en modo obxecto, agora móveste cara atrás ou adiante por  todos os obxectos e non só por aqueles que estean no mesmo contedor. Utiliza  un deslizamento con 2 dedos cara a esquerda ou cara a dereita para realizar a acción orixinal de anterior/seguinte obxecto limitado ó actual contedor.
+- A casiña de verificación Anunciar táboas de deseño que se atopa no diálogo Opcións do Modo Navegación  agora se renomeou como Incluir Táboas de Deseño para reflectir que a navegación rápida non as localizará se a casiña está desmarcada. (#3140)
+- Realizando un deslizamento cara a esquerda ou cara a dereita cun so dedo cando se estea no modo obxecto agora móvese cara anterior ou seguinte nunha vista cha da navegación de obxectos. Utiliza un deslizamento con 2 dedos cara a esquerda ou cara a dereita para levar a cabo a orde orixinal de obxecto anterior/seguinte limitada ó nível  actual.
+- A revisión cha foi reemplazada polos modos de revisión de obxectos, documentos e pantalla. (#2996)
+ - A revisión de obxectos revisa o texto só dentro do navegador de obxectos, a revisión de documentos revisa todo o texto nun documento en modo navegación (se hai algún) e a revisión de pantalla revisa o texto na pantalla para a aplicación actual.
+- As ordes que anteriormente movían cara ou dende revisión plana agora cambian entre estos novos modos de revisión.
+ - O navegador de obxectos segue automáticamente ó cursor de revisión de tal maneira que segue sendo o obxecto máis profundo na posición do cursor de revisión cando se está en modos de revisión de documentos ou de pantalla.
+- Despois de cambiar a modo revisión de pantalla, NVDA permanecerá neste modo hate que voltes explícitamente ós modos de revisión de documentos ou de obxectos.
+ - Cando se estea en modo de revisión de documentos ou de obxectos, NVDA poderá cambiar automáticamente entre estos dous modos dependendo de se estás movéndote por un documento do modo navegación ou non.
+
+
+== Corrección de Fallos ==
+- A activación dun obxecto agora anuncia a acción antes da activación, en lugar da acción despois da activación (ex.: expandir cando se expande en lugar de contraer). (#2982)
+- Unha lectura e seguemento do cursor máis precisos en diversos campos de entrada para as últimas versións de Skype, como chat e campos de busca. (#1601, #3036)
+- Na lista de conversacións recentes de Skype, o número de novos eventos agora lese en cada conversación, se procede. (#1446)
+- Melloras no control do cursor e a orde de lectura de texto de dereita a esquerda na pantalla. Ex.: Edición de texto en árabe no Microsoft Excel. (#1601) 
+- A navegación rápida en botóns e campos de formulario agora localizará as ligas marcadas como botóns para propósitos de accesibilidade en Internet Explorer. (#2750)
+- No modo navegación, o contido no interior das vistas en árbore xa non se procesa como unha representación cha, non é útil. Puedes premer Intro sobre unha vista en árbore para  interactuar con ela no  modo foco. (#3023)
+- Ó Premer alt+frecha abaixo ou alt+frecha arriba para expandir un cadro combinado mentres se estea no modo foco xa non cambia incorrectamente a modo navegación. (#2340)
+- En Internet Explorer 10, as celdas da táboa xa non activan o modo foco, a menos que se fixeran enfocables explícitamente polo autor da web (#3248)
+- NVDA xa non falla ó arrancar se a hora do sistema é anterior á última revisión dunha actualización. (#3260)
+- Se unha barra de progreso se amosa nunha pantalla Braille, o Braille actualízase cando cambie a barra de progreso. (#3258)
+- En modo navegación en aplicacións de Mozilla, os títulos das táboas xa non se procesan dúas veces. Ademáis, o índice procésase cando hai tamén un título. (#3196)
+- Ó cambiar a lingua de entrada de Windows 8, NVDA agora fala na lingua correcta en lugar de na anterior.
+- NVDA agora anuncia cambios no modo de conversión de IME en Windows 8.
+- NVDA xa non anuncia lixo no escritorio cando os métodos de entrada xaponeses Google ou IME ATOK están en uso. ;(# 3234)
+- En Windows 7 e superiores, NVDA xa non anuncia indebidamente o recoñecemento de voz ou a entrada táctil como un cambio de lingua do teclado.
+ - NVDA xa non anuncia un carácter especial (0x7f) cando se prema control+retroceso en algúns editores mentres Falar Caracteres ó Escreber estea habilitado. (#3315)
+- espeak xa non fai cambios inapropriados no ton, volume, etc. cando NVDA lea texto que conteña certos caracteres de control ou XML. (#3334) (regresión de #437)
+- En aplicacións Java, os cambios no nível ou no valor do control enfocado agora anúncianse automáticamente, e reflíctense ca subsiguinte saída do control. (#3119)
+- En controis Scintilla, as liñas agora anúncianse correctamente cando o corte de palabras está habilitado. (#885)
+- En aplicacións de Mozilla, o nome dos elementos de lista de só lectura agora anúnciase correctamente; ex.: cando se navega por twits no modo foco en twitter.com. (#3327)
+- Nos diálogos de Confirmación en Microsoft Office 2013 agora lese o seu contido automáticamente cando aparezan. 
+- Melloras no rendemento cando se navega por certas táboas en Microsoft Word. (#3326)
+- As ordes de navegación de táboas de NVDA (control+alt+flechas) funcionan mellor nalgunhas táboas de Microsoft Word cando unha celda abrangue varias filas.
+
+
+== Cambios para Desenvolvedores ==
+- Engadiuse windowUtils.findDescendantWindow para procurar unha ventá descendente (HWND) localizando a visivilidade especificada, identificador do control e/ou nome da clase.
+- A consola de python remota xa non espera despois de 10 segundos mentres agarda pola entrada. (#3126)
+- A inclusión do módulo bisect en compilacións binarias está en desuso e poderá eliminarse nunha versión futura. (#3368)
+ - Os complementos que dependan de bisect (incluindo o módulo urllib2) deberían actualizarse para incluir este módulo.
+
+
 = 2013.1.1 =
+Esta versión corrixe o problema onde o NVDA se colgaba ó iniciarse se se configuraba para utilizar a lingua irlandesa, así como inclúe actualizacións para traduccións e algunhas outras correccións de erros.
 
 == Corrección de Erros ==
+
 - Prodúcense caracteres correctos cando se teclean na propria interfaz do NVDA mentres se utiliza  un método de entrada Coreano ou Xaponés mentres sexa o método predeterminado. (#2909)
 - En Internet Explorer e outros controis MSHTML, os campos marcados como contendo unha entrada inválida agora manéxanse correctamente. (#3256)
-
+- NVDA xa non se colga cando se iniciou se se configurou para utilizar o idioma irlandés.
 
 = 2013.1 =
 O máis subliñable nesta versión inclúe unha distribución de teclado portátil máis intuitiva e consistente; soporte básico para o Microsoft PowerPoint; soporte para descripcións longas en navegadores web; e soporte para a entrada de braille computerizado para liñas braille que teñan un teclado braille.

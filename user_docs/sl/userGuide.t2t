@@ -79,7 +79,7 @@ Prenosljiva kopija omogoča samonamestitev kasneje na izbrani računalnik.
 Kakorkoli, če želite NVDA preslikati na medij, ki je samo za branje (CD ali drug), potem na medij zapišite samo paket, ki ste ga dolpotegnili.
 Poganjanje z medija, ki je samo za branje, trenutno ni podprto.
 
-Možno je uporabiti tudi začasno kopijo (na primer za demonstracijske prikaze), čeprav je pot zagona NVDA v tem načinu precej zamudno.
+Možno je uporabiti tudi začasno kopijo (na primer za demonstracijske prikaze), čeprav je pot zagona NVDA v tem načinu precej dolga.
 
 ++ Omejitve Začasne in Prenosljive Kopije ++
 Ločeno od tega, da se NVDA ne more samodejno zagnati med in ali po prijavi, imata prenosljiva in začasna kopija še naslednje omejitve:
@@ -95,9 +95,9 @@ Ločeno od tega, da se NVDA ne more samodejno zagnati med in ali po prijavi, ima
 
 Pogovorno okno namestitve, ki se prikaže, potrdi, ali želite namestiti NVDA in pove tudi ali bo ta namestitev posodobila prejšnjo namestitev.
 S pritiskom na gumb Nadaljuj, boste sprožili nameščanje NVDA.
-V tem pogovornem oknu je še nekaj možnosti, ki jih ta priročnik razloži spodaj.
+V tem pogovornem oknu je še nekaj možnosti, ki jih ta priročnik razloži v nadaljevanju.
 Ko je namestitev končana, se prikaže sporočilo o tem, da je namestitev končana.
-Pritisk na gumba V redu na tej točki bo ponovno zagnal na novo nameščeno kopijo NVDA.
+Pritisk na gumb V redu na tej točki bo ponovno zagnal na novo nameščeno kopijo NVDA.
 
 +++ Zagon ob Prijavi v Windows +++
 Ta možnost omogoča, da se lahko NVDA samodejno zažene medtem, ko ste na prijavnem zaslonu, še preden morate vnesti geslo za prijavo v sistem.
@@ -107,5 +107,122 @@ To vključuje tudi NUR nadzor in druge "varne" zaslone.
 Ta možnost omogoča izbiro, če želite, da mora NVDA ustvariti bližnjico na namizju za zagon NVDA.
 Ta bližnjica, če jo boste ustvarili, bo ustvarila tudi kombinacijo bližnjičnih tipk za zagon control+alt+n. S to kombinacijo tipk boste potem lahko NVDA zagnali, kadarkoli boste želeli.
 
-+++ Preslikaj Trenutno Konfiguracijo na Trenuten Uporabniški Račun +++
++++ Preslikaj Prenosljivo Konfiguracijo na Trenuten Uporabniški Račun +++
 Ta možnost vam omogoča izbiro ali mora ali pa ne NVDA preslikati trenutno uporabniško konfiguracijo v uporabi v konfiguracijo trenutno prijavljenega uporabnika za nameščeno kopijo NVDA.
+To ne bo preslikalo konfiguracije k ostalim uporabnikom tega sistema in niti ne bo preslikalo konfiguracije, ki se uporablja na prijavnem zaslonu in drugih varnih zaslonih.
+Ta možnost je na voljo samo ob namestitvi  s prenosljive kopije in ni na voljo ob namestitvi s pomočjo namestitvenega paketa, ki ste ga dolpotegnili.
+
+++ Ustvarjanje Prenosljive Kopije ++
+Če ustvarjate prenosljivo kopijo neposredno iz prenesenega paketa, preprosto pritisnite gumb Ustvari Prenosljivo Kopijo.
+Če ste že zaprli to pogovorno okno ali pa delate z že nameščeno kopijo NVDA, izberite Ustvari Prenosljivo kopijo menijski ukaz, ki ga najdete v meniju Orodja NVDA menija.
+
+Pogovorno okno, ki se prikaže, vam omogoča, da izberete, kje naj se prenosljiva kopija ustvari.
+To je lahko  imenik na vašem trdem disku, mesto USB Ključku ali na drugem prenosljivem mediju.
+Tukaj je tudi možnost izbire ali bi  NVDA morala, ali pa ne preslikati konfiguracijo trenutno prijavljenega uporabnika za uporabo v novo ustvarjeni prenosljivi kopiji.
+Ta možnost je na voljo samo v nameščeni kopiji. Ta ni na voljo v prenesenem paketu.
+Pritisk gumba Nadaljuj bo začel proces ustvarjanja prenosljive kopije.
+Ko je ustvarjanje končano, se bo prikazalo sporočilo, ki bo povedalo, da je bilo ustvarjanje uspešno.
+Pritisnite V redu, da zaprete to pogovorno okno.
+
++ Kako začeti z NVDA +
+
+++ Zagon NVDA ++
+Če ste namestili NVDA z namestitvenega paketa, potem je zagon NVDA preprost. Zaženete ga lahko s pritiskom kombinacije tipk control+alt+n ali pa z izbiro NVDA menija v Start meniju, kjer razprete seznam vseh nameščenih programov.
+Kot dodatno možnost lahko uporabite pogovorno okno Zaženi, kjer vnesete NVDA in pritisnete Enter.
+
+Za zagon prenosljive kopije pojdite v imenik, kjer ste ustvarili prenosljivo kopijo NVDA in pritisnite Enter nad NVDA.exe ali to ikono dvakrat kliknite.
+
+Ko se bo NVDA zagnala, boste slišali višajoč skupek tonov,  (ki povedo, da se NVDA nalaga).
+Odvisno od tega, kako hiter je vaš računalnik, ali teče NVDA preko USB ključka ali drugega počasnejšega medija, lahko mine nekaj trenutkov, da se NVDA zažene.
+Če to traja izjemno dolgo, potem bi morala NVDA sporočiti: "Nalaganje NVDA. Prosimo, počakajte..."
+
+Če ne slišite nič od tega, ali slišite Windows Zvok  "Napaka", ali nižajočo kombinacijo tonov, potem to pomeni, da je v NVDA napaka. To pomeni, da boste morda morali sporočiti "hrošča" razvijalcem.
+Prosimo, preglejte NVDA spletno mesto, da izveste, kako to narediti.
+
+Ko se NVDA zažene prvič, vas bo pozdravilo pogovorno okno, ki vas bo oskrbelo z nekaj osnovnimi informacijami o NVDA prikrojevalni tipki in o NVDA meniju.
+(Prosimo, glejte nadaljne razdelke o teh temah.)
+Pogovorno okno vsebuje tudi dva izbirnika
+Prvi sprašuje, če naj NVDA obravnava Capslock kot NVDA prikrojevalno tipko in druga sprašuje, če naj se to pogovorno okno pokaže vedno, ko se NVDA zažene.
+
+++ O NVDA tipkovničnih ukazih ++
+
++++ O NVDA Prikrojevalni Tipki +++
+Večina NVDA-posebnih tipkovničnih ukazov običajno sestoji iz pritiska posebne tipke imenovane prikrojevalna tipka NVDA v kombinaciji z eno ali več ostalimi tipkami.
+Izjema pri tem so ukazi za pregledovanje besedila. Ti uporabljajo samo tipke na številskem delu tipkovnice.
+
+NVDA se lahko nastavi tako, da se uporablja Glavni Insert, številski Insert, lahko pa tudi Capslock kot prikrojevalna NVDA tipka.
+
+Privzeto velja, da sta tako številski kot Glavni Insert prikrojevalni NVDA tipki.
+
+Če želite, da se ena od prikrojevalnih NVDA tipk obnaša kot je prvotno predvideno (npr. želite vključiti tipko Capslock, ko je Capslock nastavljena kot prikrojevalna tipka NVDA), potem izbrano tipko pritisnite dvakrat v hitrem zaporedju.
+
++++ Postavitve Tipkovnice +++
+Trenutno NVDA prihaja z dvema paketoma tipkovničnih ukazov.
+Obstaja postavitev za običajne tipkovnice (s številskim delom) in postavitev za prenosnike.
+Privzeto je NVDA nastavljena tako, da uporablja običajno postavitev tipk. Vedno pa lahko zamenjate postavitev tipk v Nastavitvah Tipkovnice, ki jih najdete pod Nastavitvami v NVDA meniju.
+
+Običajna postavitev se močno zanaša na številski del tipkovnice, kjer je Numlock izključen.
+Čeprav večina prenosnikov nima fizičnega številskega dela, nekateri prenosniki lahko tega oponašajo tako, da držite tipko FN in pritiskate črke in številke na desnem delu tipkovnice (7 8 9 u i o j k l itn).
+Če vaš prenosnik ne more tega narediti ali vam ne omogoča izklopa številk na številskem delu, potem morda želite preklopiti na postavitev prenosnik namesto običajne postavitve.
+
+++ NVDA Kretnje Dotika ++
+Če poganjate NVDA na napravi z zaslonom na dotik na operacijskem sistemu Windows 8 ali novejšem, lahko NVDA nadzirate tudi neposredno preko zaslona na dotik.
+Medtem, ko je NVDA vključena, bodo vsi dotiki zaslona šli neposredno na NVDA.
+Torej akcije, ki se izvajajo normalno brez NVDA, ne bodo delovale.
+
++++ Raziskovanje Zaslona +++
+Najbolj osnovna akcija, ki jo lahko izvedete z zaslonom na dotik, je naznanilo nadzora ali besedila na katerikoli točki zaslona.
+Če želite to narediti, postavite prst kamorkoli na zaslon.
+Lahko pa tudi obdržite prst na zaslonu in ga pomikate naokoli, da brebirate ostale možnosti nadzora ali besedilo , ki se nahaja pod prstom, ko se sprehajate nad njim.
+
++++ Kretnje Dotika +++
+Ko bodo NVDA ukazi opisani pozneje v tem vodiču, le ti lahko vsebujejo tudi kretnjo dotika, ki se lahko uporabi za sprožitev tega ukaza z zaslonom na dotik.
+Sledi nekaj napotkov, kako ravnati z različnimi kretnjami dotika.
+
+==== Tapi ====
+Hitro se dotaknite zaslona z eno ali več prstnimi konicami.
+
+Dotiku z enim prstom se preprosto pravi tap.
+Dotiku z dvema prstoma istočasno se pravi dvoprstni tap in podobno.
+
+Če se enak tap izvede enkrat ali večkrat znova v hitrem zaporedju, bo NVDA obravnavala namesto tega to kot več-dotikabilno kretnjo.
+Če se boste zaslona dotaknili dvakrat, bo to rezultiralo v dvojnem tapu ali dotiku.
+Trikratni dotik zaslona bo rezultiral v trojnem dotiku in podobno.
+Seveda, te večprstne kretnje zaznavajo tudi, koliko prstov uporabljate. Tako je možno, da imamo kretnje kot je dvoprstni trojni dotik (tap), štiriprstni dotik, itn.
+
+==== Švigi ====
+Hitro potegnite s prstom po zaslonu.
+
+Obstajajo štiri kretnje s švigi odvisno od smeri: švig levo, švig desno, švig gor in švig dol.
+
+Tako kot pri dotikih lahko kretnjo izvedemo z enim ali več prsti.
+Torej kretnje kot so dvoprstni švig gor ali štiriprstni švig gor sta možni poleg drugih.
+
++++ Delovanja Dotika +++
+Ker je precej več ukazov, kot mogočih kretenj dotika, ima NVDA več možnih načinov delovanj dotika, med katerimi lahko preklapljate, kar prinaša določene podvrste ukazov, ki so navolja za upravljanje na dotik.
+Dve delovanji sta delovanje besedila in predmetno delovanje.
+Določeni NVDA ukazi, ki so razvrščeni v tem dokumentu, lahko imajo delovanje dotika zapisano v oklepajih za kretnjo dotika.
+Na primer švig gor (delovanje besedila) pomeni, da se bo ukaz izvedel toda samo, ko bo NVDA v delovanju besedila.
+Če ukaz ne vsebuje podatka o delovanju, potem velja, da deluje v kateremkoli načinu delovanja.
+
+%kc:beginInclude
+Za preklop med delovanji dotika izvedite troprstni dotik.
+%kc:endInclude
+
+++ Delovanje Pomoči za Vnose ++
+
+
+
+
+
+
+
+++ NVDA Meni ++
+
+
+
+
+
+
+
+++ NVDA Osnovni ukazi ++

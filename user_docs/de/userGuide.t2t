@@ -299,7 +299,7 @@ In solchen Fällen können Sie die objektorientierte Navigation verwenden.
 
 Die Objektnavigation erlaubt das Bewegen zwischen Objekten und das Abrufen von Informationen über ein einzelnes [objekt #Objects].
 Wenn Sie sich zu einem objekt bewegen, wird NVDA Ihnen dies auf eine ähnliche Weise mitteilen, als hätten Sie den Systemfokus bewegt.
-Um inhalte so anzuzeigen, wie sie auf dem Bildschirm erscheinen, verwenden Sie stattdessen den  [Flächenmodus #FlatReview].
+Um inhalte so anzuzeigen, wie sie auf dem Bildschirm erscheinen, verwenden Sie stattdessen die [Bildschirmdarstellung #ScreenReview].
 
 Die Objekte sind innerhalb des Betriebssystems und der Anwendungen hierarchisch organisiert.
 Dies bedeutet, dass sie in manche Objekte "absteigen" müssen, um deren Inhalt zu sehen.
@@ -310,7 +310,7 @@ Nun können Sie sich über die Liste hinaus bewegen, um andere Objekte zu sehen.
 so ähnlich enthält eine Symbolleiste ebenfalls Steuerelemente und Sie müssen in die Symbolleiste "absteigen", um die einzelnen Elemente zu sehen.
 
 Das Objekt, das momentan angezeigt wird, wird als Navigator-Objekt bezeichnet.
-Wenn Sie sich zu einem Objekt bewegt haben, können Sie es sich mit den [Befehlen zum Betrachten von Text #ReviewingText] anschauen.
+Wenn Sie sich zu einem Objekt bewegt haben und der Modus [Objektdarstellung #ObjectReview] ist aktiv, können Sie sich das Objekt mit den [Befehlen zum Betrachten von Text #ReviewingText] anschauen.
 Standardmäßig folgt der Navigator dem Systemfokus, diese Kopplung kann jedoch ein- und ausgeschaltet werden.
 
 Bedenken Sie, dass die Braillezeile standardmäßig dem [Fokus #SystemFocus] und dem  [Systemcursor #SystemCaret] folgt, nicht jedoch dem Navigator oder dem nvda-Cursor.
@@ -334,7 +334,7 @@ Mit den folgenden Befehlen navigieren Sie zwischen den Objekten:
 Hinweis: Um die Tasten auf dem Nummernblock zu benutzen, muss dieser deaktiviert sein!
 
 ++ Befehle zum Betrachten von Text ++[ReviewingText]
-NVDA erlaubt Ihnen, den Inhalt des aktuellen  [navigatorobjekts #ObjectNavigation] (einschließlich [Flächenmodus #FlatReview]) zeichen-, wort- oder zeilenweise anzuzeigen.
+NVDA erlaubt Ihnen, den [Bildschirminhalt #ScreenReview], den Inhalt des aktuellen [Dokument #DocumentReview]s oder das aktuelle [Objekt #ObjectReview] zeichen-, wort- oder zeilenweise anzuzeigen.
 Dies ist zum Beispiel in Windows-Konsolenfenstern (der Eingabeaufforderung; CMD.exe) oder in anderen Anwendungen sinnvoll, in denen der  [System-Cursor #SystemCaret] nicht oder nur eingeschränkt verfügbar ist.
 Ein weiterer Anwendungsfall ist das Lesen von langen Meldungen in Dialogfeldern.
 
@@ -375,28 +375,39 @@ Das Layout ist wie folgt aufgebaut:
 | Vorheriges Wort | Aktuelles Wort | Nächstes Wort |
 | Vorheriges Zeichen | Aktuelles Zeichen | Nächstes Zeichen |
 
-++ Der Flächenmodus ++[FlatReview]
-Während sie sich normalerweise nur den Inhalt einzelner [Objekte #Objects] betrachten können, erlauben manche Objekte jedoch das Betrachten des gesamten Inhaltes (also einschließlich aller untergeordneten Objekte).
-Bei komplexen Dokumenten ist es so beispielsweise möglich, deren gesamten Inhalt zu erfassen. Anwendungsfenster können so ausgelesen werden, wie die darin enthaltenen Elemente visuell angeordnet sind.
-Dies wird als Flächenmodus bezeichnet.
-Dies funktioniert ähnlich eines Bildschirmbetrachters bzw. einer Maus-Emulation vieler Screenreader.
-
-Wenn Sie in den Flächenmodus wechseln, wird der Cursor an die Position des aktuellen [Navigatorobjekts #ObjectNavigation] gesetzt.
-Wenn Sie die Objektnavigation bis dahin noch nicht verwendet haben, ist dies üblicherweise das Objekt, das den [Fokus #SystemFocus] hat.
-Wenn das aktuelle Navigatorobjekt beispielsweise ein Schalter ist, wird der NVDA-Cursor auf die Beschriftung des Schalters gesetzt.
-Jetzt können Sie den Inhalt mit den [Befehlen zum Betrachten von Text #ReviewingText] anzeigen lassen.
-Umgekehrt können Sie von einer beliebigen Position im Flächenmodus aus den Navigator auf das zugrundeliegende Objekt setzen und von dort aus die  [Objektnavigation #ObjectNavigation] verwenden.
+++ Darstellungsmodi ++[ReviewModes]
+Abhängig vom eingestellten Darstellungsmodus können Sie mit NVDAs Befehlen zum Betrachten von Text im aktuellen Navigatorobjekt, im angezeigten dokument oder im Bildschirminhalt navigieren.
+Die Darstellungsmodi sind ein Ersatz für den in früheren Versionen von NVDA vorhandenen Flächenmodus.
 
 Bedenken Sie, dass die Braillezeile standardmäßig den  [Fokus #SystemFocus] und den  [Systemcursor #SystemCaret] verfolgt, nicht jedoch den Navigator oder den nvda-Cursor.
 Um die Anzeigen des Flächenmodus auch in Braille zu erhalten, müssen Sie die [Kopplung der Braillezeile konfigurieren #BrailleTether].
 
-Die folgenden zwei Tastenkombinationen werden zum Umschalten für den Flächenmodus verwendet:
+Verwenden Sie die folgenden beiden Befehle, um zwischen den Darstellungsmodi umzuschalten:
 %kc:beginInclude
 || Name | "Desktop"-Tastenkombination | "Laptop"-Tastenkombination | Geste | Beschreibung |
-| In den Flächenmodus wechseln | NVDA+Nummerntaste 7 | NVDA+Bild nach oben | nach oben streichen mit zwei Fingern | Wechselt in den Flächenmodus und positioniert Sie an die Stelle des aktuellen Navigator-Objektes. Von hier aus können Sie sich den Inhalt des bildschirms oder des angezeigten Dokuments mit Hilfe der Befehle zum Betrachten von Text ansehen. |
-| an der aktuellen Position im Flächenmodus zur Objektnavigation wechseln | NVDA+Nummerntaste 1 | NVDA+Bild nach unten | nach unten streichen mit zwei Fingern | bewegt den Navigator zu demjenigen Objekt, das sich an der aktuellen Position im Flächenmodus befindet. |
+| in den nächsten Darstellungsmodus wechseln | NVDA+Nummernblock 7 | NVDA+Seite auf |  mit 2 Fingern nach oben streichen | schaltet in den nächsthöheren Darstellungsmodus um | 
+| in den vorigen Darstellungsmodus wechseln | NVDA+Nummernblock1 | NVDA+Seite ab | mit 2 Fingern nach unten streichen | schaltet in einen niedrigeren Darstellungsmodus um. |
 %kc:endInclude
 
++++ Objektdarstellung +++[ObjectReview]
+Wenn Sie sich im Objektdarstellungsmodus befinden, können Sie den Inhalt des aktuellen [navigatorobjekts #ObjectNavigation] anzeigen lassen.
+Bei Eingabefeldern ist das üblicherweise der eingegebene Text.
+Bei anderen Objekten wird hier der Name und der Wert des objekts angezeigt.
+
++++ Dokumentdarstellung +++[DocumentReview]
+Wenn sich das aktuelle Navigatorobjekt in inem Dokument (Lotus-Symphony-Dokument, Webseiten o.ä.) befindet, können Sie in diesen Darstellungsmodus wechseln.
+Im Dokumentdarstellungsmodus können sie sich den Text des gesamten Dokuments anzeigen lassen.
+Wenn Sie vom Objektmodus aus in den Dokumentmodus wechseln, wird der NVDA-Cursor an die Position des aktuellen Navigatorobjekts gesetzt.
+Wenn Sie die Befehle zum Betrachten von Text verwenden, wird das Navigatorobjekt automatisch aktualisiert.
+NVDA wird automatisch in den Dokumentmodus wechseln, wenn Sie sich im Lesemodus befinden.
+
++++ Bildschirmdarstellung +++[ScreenReview]
+In diesem Modus können Sie sich den gesamten Bildschirminhalt der aktuellen Anwendung anzeigen lassen.
+Dies ähnelt den Bildschirmdarstellungs- und MauszeigerFunktionen vieler Windows-Bildschirmleseprogramme.
+Wenn Sie in den Bildschirmdarstellungsmodus wechseln, wird der NVDA-Cursor an die Position des aktuellen Navigatorobjekts gesetzt.
+Wenn Sie die Befehle zum Betrachten von Text verwenden, wird der Navigator automatisch auf das am meisten untergeordnete Objekt gesetzt, das sich an der Position des NVDA-Cursors befindet.
+Anmerkung: In einigen neueren Anwendungen kann NVDA möglicherweise nicht alle Inhalte im Bildschirm-darstellungsmodus darstellen. Dies liegt daran, dass diese Anwendungen Technologien zum Darstellen des Bildschirminhalts verwenden, die (noch) nicht unterstützt werden.
+  
 ++ Mit der Maus navigieren ++
 Wenn Sie den Mauszeiger über ein objekt hinwegbewegen, wird NVDA Informationen über dieses Objekt ausgeben.
 Sofern möglich, wird NVDA den umgebenden Textabsatz lesen, auch wenn sich einige Objekte nur zeilenweise auslesen lassen.
@@ -1010,9 +1021,12 @@ Diese Option legt fest, wie der Inhalt einer Seite in den Lesemodus übernommen 
 Wenn die Option aktiviert ist, bekommen Sie die Ansicht exakt so, wie sie am Bildschirm erscheint.
 Wenn die Option deaktiviert ist, werden alle Elemente wie beispielsweise Links im Textverlauf in einer neuen Zeile dargestellt.
 
-==== layouttabellen ansagen ====
-Wenn dieses Kontrollfeld deaktiviert ist, werden lediglich die Tabellen angesagt, in denen sich auch tatsächlich Text befindet.
-Wenn die Option aktiviert ist, werden auch Tabellen angesagt, die zur visuellen Gestaltung dienen.
+==== Layout-Tabellen einbeziehen ====
+Mit dieser Option können Sie bestimmen, wie NVDA mit Tabellen umgeht, die nur zu Gestaltungszwecken verwendet werden.
+Wenn die Option aktiviert ist, wird NVDA solche Tabellen auf der Grundlage der  [Einstellungen zur Dokumentformatierung #DocumentFormattingSettings] anzeigen und über die Schnellnavigationstasten zugänglich machen.
+Anderenfalls werden Layout-Tabellen weder angezeigt noch über die Schnellnavigationstasten zugänglich gemacht.
+Der Inhalt der Tabellen wird aber dennoch als noraler Text angezeigt.
+Die Option ist standardmäßig deaktiviert.
 
 ==== Automatisch alles lesen nach Aufruf einer Internetseite ====
 Diese Option steuert, ob dokumente automatisch gelesen werden sollen, sobald sie vollständig geladen sind. 
