@@ -85,6 +85,15 @@ wdTextFrameStory=5
 wdFieldFormTextInput=70
 wdFieldFormCheckBox=71
 wdFieldFormDropDown=83
+wdContentControlRichText=0
+wdContentControlText=1
+wdContentControlPicture=2
+wdContentControlComboBox=3
+wdContentControlDropdownList=4
+wdContentControlBuildingBlockGallery=5
+wdContentControlDate=6
+wdContentControlGroup=7
+wdContentControlCheckBox=8
 
 storyTypeLocalizedLabels={
 	wdCommentsStory:_("Comments"),
@@ -103,6 +112,17 @@ wdFieldTypesToNVDARoles={
 	wdFieldFormTextInput:controlTypes.ROLE_EDITABLETEXT,
 	wdFieldFormCheckBox:controlTypes.ROLE_CHECKBOX,
 	wdFieldFormDropDown:controlTypes.ROLE_COMBOBOX,
+}
+
+wdContentControlTypesToNVDARoles={
+	wdContentControlRichText:controlTypes.ROLE_EDITABLETEXT,
+	wdContentControlText:controlTypes.ROLE_EDITABLETEXT,
+	wdContentControlPicture:controlTypes.ROLE_GRAPHIC,
+	wdContentControlComboBox:controlTypes.ROLE_COMBOBOX,
+	wdContentControlDropdownList:controlTypes.ROLE_COMBOBOX,
+	wdContentControlDate:controlTypes.ROLE_EDITABLETEXT,
+	wdContentControlGroup:controlTypes.ROLE_GROUPING,
+	wdContentControlCheckBox:controlTypes.ROLE_CHECKBOX,
 }
 
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
@@ -236,16 +256,29 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			role=controlTypes.ROLE_EMBEDDEDOBJECT
 		else:
 			fieldType=int(field.pop('wdFieldType',-1))
-			role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
-			if fieldType==wdFieldFormCheckBox and int(field.get('wdFieldResult','0'))>0:
-				field['states']=set([controlTypes.STATE_CHECKED])
-			elif fieldType==wdFieldFormDropDown:
-				field['value']=field.get('wdFieldResult',None)
-		fieldStatusText=field.pop('wdFieldStatusText',None)
-		if fieldStatusText:
-			field['name']=fieldStatusText
-			field['alwaysReportName']=True
-		field['role']=role
+			if fieldType!=-1:
+				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
+				if fieldType==wdFieldFormCheckBox and int(field.get('wdFieldResult','0'))>0:
+					field['states']=set([controlTypes.STATE_CHECKED])
+				elif fieldType==wdFieldFormDropDown:
+					field['value']=field.get('wdFieldResult',None)
+			fieldStatusText=field.pop('wdFieldStatusText',None)
+			if fieldStatusText:
+				field['name']=fieldStatusText
+				field['alwaysReportName']=True
+			else:
+				fieldType=int(field.get('wdContentControlType',-1))
+				if fieldType!=-1:
+					role=wdContentControlTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
+					if role==controlTypes.ROLE_CHECKBOX:
+						fieldChecked=bool(int(field.get('wdContentControlChecked','0')))
+						if fieldChecked:
+							field['states']=set([controlTypes.STATE_CHECKED])
+					fieldTitle=field.get('wdContentControlTitle',None)
+					if fieldTitle:
+						field['name']=fieldTitle
+						field['alwaysReportName']=True
+		if role is not None: field['role']=role
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)

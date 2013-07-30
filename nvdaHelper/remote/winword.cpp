@@ -50,11 +50,17 @@ using namespace std;
 #define wdDISPID_RANGE_LANGUAGEID 153
 #define wdDISPID_RANGE_DUPLICATE 6
 #define wdDISPID_RANGE_FORMFIELDS 65
+#define wdDISPID_RANGE_CONTENTCONTROLS 424
 #define wdDISPID_FORMFIELDS_ITEM 0
 #define wdDISPID_FORMFIELD_RANGE 17
 #define wdDISPID_FORMFIELD_TYPE 0
 #define wdDISPID_FORMFIELD_RESULT 10
 #define wdDISPID_FORMFIELD_STATUSTEXT 8
+#define wdDISPID_CONTENTCONTROLS_ITEM 0
+#define wdDISPID_CONTENTCONTROL_RANGE 1
+#define wdDISPID_CONTENTCONTROL_TYPE 5
+#define wdDISPID_CONTENTCONTROL_CHECKED 28
+#define wdDISPID_CONTENTCONTROL_TITLE 12
 #define wdDISPID_STYLE_NAMELOCAL 0
 #define wdDISPID_RANGE_SPELLINGERRORS 316
 #define wdDISPID_SPELLINGERRORS_COUNT 1
@@ -207,12 +213,10 @@ BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, 
 		return false;
 	}
 	_com_dispatch_raw_method(pDispatchRange2,wdDISPID_RANGE_EXPAND,DISPATCH_METHOD,VT_EMPTY,NULL,L"\x0003",wdParagraph,1);
-	IDispatchPtr pDispatchFormFields=NULL;
-	if(_com_dispatch_raw_propget(pDispatchRange2,wdDISPID_RANGE_FORMFIELDS,VT_DISPATCH,&pDispatchFormFields)!=S_OK||!pDispatchFormFields) {
-		return false;
-	}
 	BOOL foundFormField=false;
-	for(int count=1;!foundFormField&&count<100;++count) {
+	IDispatchPtr pDispatchFormFields=NULL;
+	_com_dispatch_raw_propget(pDispatchRange2,wdDISPID_RANGE_FORMFIELDS,VT_DISPATCH,&pDispatchFormFields);
+	if(pDispatchFormFields) for(int count=1;!foundFormField&&count<100;++count) {
 		IDispatchPtr pDispatchFormField=NULL;
 		if(_com_dispatch_raw_method(pDispatchFormFields,wdDISPID_FORMFIELDS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchFormField,L"\x0003",count)!=S_OK||!pDispatchFormField) {
 			break;
@@ -234,6 +238,33 @@ BOOL generateFormFieldXML(IDispatch* pDispatchRange, wostringstream& XMLStream, 
 		if(fieldResult) SysFreeString(fieldResult);
 		if(fieldStatusText) SysFreeString(fieldStatusText);
 		_com_dispatch_raw_propget(pDispatchFormFieldRange,wdDISPID_RANGE_END,VT_I4,&chunkEnd);
+		_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,chunkEnd);
+		break;
+	}
+	if(foundFormField) return true;
+	IDispatchPtr pDispatchContentControls=NULL;
+	_com_dispatch_raw_propget(pDispatchRange2,wdDISPID_RANGE_CONTENTCONTROLS,VT_DISPATCH,&pDispatchContentControls);
+	if(pDispatchContentControls)for(int count=1;!foundFormField&&count<100;++count) {
+		IDispatchPtr pDispatchContentControl=NULL;
+		if(_com_dispatch_raw_method(pDispatchContentControls,wdDISPID_CONTENTCONTROLS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchContentControl,L"\x0003",count)!=S_OK||!pDispatchContentControl) {
+			break;
+		}
+		IDispatchPtr pDispatchContentControlRange=NULL;
+		if(_com_dispatch_raw_propget(pDispatchContentControl,wdDISPID_CONTENTCONTROL_RANGE,VT_DISPATCH,&pDispatchContentControlRange)!=S_OK||!pDispatchContentControlRange) {
+			break;
+		}
+		if(_com_dispatch_raw_method(pDispatchRange,wdDISPID_RANGE_INRANGE,DISPATCH_METHOD,VT_BOOL,&foundFormField,L"\x0009",pDispatchContentControlRange)!=S_OK||!foundFormField) {
+			continue;
+		}
+		long fieldType=-1;
+		_com_dispatch_raw_propget(pDispatchContentControl,wdDISPID_CONTENTCONTROL_TYPE,VT_I4,&fieldType);
+		BOOL fieldChecked=false;
+		_com_dispatch_raw_propget(pDispatchContentControl,wdDISPID_CONTENTCONTROL_CHECKED,VT_BOOL,&fieldChecked);
+		BSTR fieldTitle=NULL;
+		_com_dispatch_raw_propget(pDispatchContentControl,wdDISPID_CONTENTCONTROL_TITLE,VT_BSTR,&fieldTitle);
+		XMLStream<<L"<control wdContentControlType=\""<<fieldType<<L"\" wdContentControlChecked=\""<<fieldChecked<<L"\" wdContentControlTitle=\""<<(fieldTitle?fieldTitle:L"")<<L"\">";
+		if(fieldTitle) SysFreeString(fieldTitle);
+		_com_dispatch_raw_propget(pDispatchContentControlRange,wdDISPID_RANGE_END,VT_I4,&chunkEnd);
 		_com_dispatch_raw_propput(pDispatchRange,wdDISPID_RANGE_END,VT_I4,chunkEnd);
 		break;
 	}
