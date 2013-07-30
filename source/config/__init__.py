@@ -5,7 +5,6 @@ import globalVars
 import _winreg
 import ctypes
 import ctypes.wintypes
-from copy import deepcopy
 import os
 import sys
 from cStringIO import StringIO
@@ -13,32 +12,6 @@ from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
 import shlobj
-
-def validateConfig(configObj,validator,validationResult=None,keyList=None):
-	if validationResult is None:
-		validationResult=configObj.validate(validator,preserve_errors=True)
-	if validationResult is True:
-		return None #No errors
-	if validationResult is False:
-		return "Badly formed configuration file"
-	errorStrings=[]
-	for k,v in validationResult.iteritems():
-		if v is True:
-			continue
-		newKeyList=list(keyList) if keyList is not None else []
-		newKeyList.append(k)
-		if isinstance(v,dict):
-			errorStrings.extend(validateConfig(configObj[k],validator,v,newKeyList))
-		else:
-			#If a key is invalid configObj does not record its default, thus we need to get and set the default manually 
-			defaultValue=validator.get_default_value(configObj.configspec[k])
-			configObj[k]=defaultValue
-			if k not in configObj.defaults:
-				configObj.defaults.append(k)
-			errorStrings.append("%s: %s, defaulting to %s"%(k,v,defaultValue))
-	return errorStrings
-
-val = Validator()
 
 #: The configuration specification
 #: @type: ConfigObj
@@ -192,35 +165,10 @@ confspec.newlines = "\r\n"
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
 conf = None
-#: template config spec for concrete synthesizer's settings. It is used in SynthDriver.getConfigSpec() to build a real spec
-#: @type: L{configobj.Section}
-synthSpec=None
 
-def load(factoryDefaults=False):
-	"""Loads the configuration from the configFile.
-	It also takes note of the file's modification time so that L{save} won't lose any changes made to the file while NVDA is running. 
-	"""
-	global conf,synthSpec
-	configFileName=os.path.join(globalVars.appArgs.configPath,"nvda.ini")
-	if factoryDefaults:
-		conf = ConfigObj(None, configspec = confspec, indent_type = "\t", encoding="UTF-8")
-		conf.filename=configFileName
-	else:
-		try:
-			conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
-		except ConfigObjError as e:
-			conf = ConfigObj(None, configspec = confspec, indent_type = "\t", encoding="UTF-8")
-			conf.filename=configFileName
-			globalVars.configFileError="Error parsing configuration file: %s"%e
-	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
-	conf.newlines = "\r\n"
-	errorList=validateConfig(conf,val)
-	if synthSpec is None: 
-		synthSpec=deepcopy(conf["speech"].configspec["__many__"])
-	if errorList:
-		globalVars.configFileError="Errors in configuration file '%s':\n%s"%(conf.filename,"\n".join(errorList))
-	if globalVars.configFileError:
-		log.warn(globalVars.configFileError)
+def initialize():
+	global conf
+	conf = ConfigManager()
 
 def save():
 	"""Saves the configuration to the config file.

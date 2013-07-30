@@ -71,7 +71,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
-	config.load(factoryDefaults=factoryDefaults)
+	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
 	#Language
 	lang = config.conf["general"]["language"]
@@ -118,7 +118,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
 	log.debug("loading config")
 	import config
-	config.load()
+	config.initialize()
 	if not globalVars.appArgs.minimal:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")

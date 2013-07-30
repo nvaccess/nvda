@@ -27,8 +27,7 @@ def changeVoice(synth, voice):
 	if voice:
 		synth.voice = voice
 	c=config.conf["speech"][synth.name]
-	c.configspec=synth.getConfigSpec()
-	config.conf.validate(config.val, copy = True,section = c)
+	c.spec=synth.getConfigSpec()
 	#start or update the synthSettingsRing
 	if globalVars.settingsRing: globalVars.settingsRing.updateSupportedSettings(synth)
 	else:  globalVars.settingsRing = SynthSettingsRing(synth)
@@ -391,7 +390,7 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	def getConfigSpec(self):
-		spec=deepcopy(config.synthSpec)
+		spec=deepcopy(config.confspec["speech"]["__many__"])
 		for setting in self.supportedSettings:
 			spec[setting.name]=setting.configSpec
 		return spec
