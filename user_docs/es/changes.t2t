@@ -3,11 +3,73 @@ Qué hay de Nuevo en NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.2 =
+
+== Nuevas Características ==
+- Soporte para el Chromium Embedded Framework, que es un control de navegador web utilizado en varias aplicaciones. (#3108)
+- Nueva variante de voz de eSpeak: Iven3.
+- En Skype, se anuncian automáticamente los mensajes nuevos de chat mientras la conversación esté enfocada. (#2298)
+- Soporte para Tween, incluyendo el anunciado de los nombres de pestaña y menor nivel de detalle cuando se lean los twits.
+- Ahora puedes deshabilitar el mostrado de mensajes de NVDA en una línea braille configurando la duración del mensaje a 0 en el diálogo de Opciones de Braille. (#2482)
+- En el administrador de complementos, ahora hay un botón Obtener Complementos para abrir el sitio web de Complementos de NVDA donde puedes examinar y descargar los complementos disponibles. (#3209)
+- En el diálogo de bienvenida de NVDA que siempre aparece la primera vez que  ejecutas NVDA, ahora puedes especificar si NVDA se inicia automáticamente después de autentificarte en Windows. (#2234)
+- El modo silencioso se habilita automáticamente cuando se utilice Dolphin Cicero. (#2055)
+- Ahora se soporta la versión Windows x64 de Miranda IM/Miranda NG. (#3296)
+- Ahora se anuncian automáticamente las sugerencias de búsqueda en  la pantalla de inicio de  Windows 8.1. (#3322)
+
+
+== Cambios ==
+- En una pantalla táctil, realizando un deslizamiento con un solo dedo a la izquierda o a la derecha cuando se esté en modo objeto, ahora te mueves hacia atrás o adelante por  todos los objetos y no sólo por aquellos que estén en el mismo contenedor. Utiliza  un deslizamiento con 2 dedos a la izquierda o a la derecha para realizar la acción original de anterior/siguiente objeto limitado al actual contenedor.
+- La casilla de verificación Anunciar tablas de diseño que se encuentra en el diálogo Opciones de Modo Navegación  ahora se ha renombrado como Incluir Tablas de Diseño para reflejar que la navegación rápida no las localizará si la casilla está desmarcada. (#3140)
+- Realizando un deslizamiento a la izquierda o a la derecha con un solo dedo cuando se esté en modo objeto ahora se mueve a anterior o siguiente en una vista plana de la navegación de objetos. Utiliza un deslizamiento con 2 dedos a la izquierda o a la derecha para llevar a cabo la orden original de objeto anterior/siguiente limitada al nivel  actual.
+- La revisión plana ha sido reemplazada por los modos de revisión de objetos, documentos y pantalla. (#2996)
+ - La revisión de objetos revisa el texto sólo dentro del navegador de objetos, la revisión de documentos revisa todo el texto en un documento en modo navegación (si hay alguno) y la revisión de pantalla revisa el texto en la pantalla para la aplicación actual.
+- Las órdenes que anteriormente movían a o desde revisión plana ahora cambian entre estos nuevos modos de revisión.
+ - El navegador de objetos sigue automáticamente al cursor de revisión de tal manera que sigue siendo el objeto más profundo en la posición del cursor de revisión cuando se está en modos de revisión de documentos o de pantalla.
+- Después de cambiar a modo revisión de pantalla, NVDA permanecerá en este modo hasta que vuelvas explícitamente a los modos de revisión de documentos o de objetos.
+ - Cuando se esté en modo de revisión de documentos o de objetos, NVDA podrá cambiar automáticamente entre estos dos modos dependiendo de si estás moviéndote por un documento del modo navegación o no.
+
+
+== Corrección de Fallos ==
+- La activación de un objeto ahora anuncia la acción antes de la activación, en lugar de la acción después de la activación (ej.: expandir cuando se expande en lugar de contraer). (#2982)
+- Una lectura y seguimiento del cursor más precisos en diversos campos de entrada para las últimas versiones de Skype, tales como chat y campos de búsqueda. (#1601, #3036)
+- En la lista de conversaciones recientes de Skype, el número de nuevos eventos ahora se lee en cada conversación, si procede. (#1446)
+- Mejoras en el control del cursor y el orden de lectura de texto de derecha a izquierda en la pantalla. Ej.: Edición de texto en árabe en Microsoft Excel. (#1601) 
+- La navegación rápida en botones y campos de formulario ahora localizará los enlaces marcados como botones para propósitos de accesibilidad en Internet Explorer. (#2750)
+- En modo navegación, el contenido en el interior de vistas en árbol ya no se procesa como una representación plana, no es útil. Puedes pulsar Intro sobre una vista en árbol para  interactuar con ella en  modo foco. (#3023)
+- Al Pulsar alt+flecha abajo o alt+flecha arriba para expandir un cuadro combinado mientras se esté en modo foco ya no cambia incorrectamente a modo navegación. (#2340)
+- En Internet Explorer 10, las celdas de la tabla ya no activan el modo foco, a menos que se hayan hecho enfocables explícitamente por el autor de la web (#3248)
+- NVDA ya no falla al arrancar si la hora del sistema es anterior a la última revisión de una actualización. (#3260)
+- Si una barra de progreso se muestra en una línea Braille, el Braille se actualiza cuando cambie la barra de progreso. (#3258)
+- En modo navegación en aplicaciones de Mozilla, los títulos de las tablas ya no se procesan dos veces. Además, el índice se procesa cuando hay también un título. (#3196)
+- Al cambiar el idioma de entrada de Windows 8, NVDA ahora habla en el idioma correcto en lugar de en el anterior.
+- NVDA ahora anuncia cambios en el modo de conversión de IME en Windows 8.
+- NVDA ya no anuncia basura en el escritorio cuando los métodos de entrada japoneses Google o IME ATOK están en uso. ;(# 3234)
+- En Windows 7 y superiores, NVDA ya no anuncia indebidamente el reconocimiento de voz o la entrada táctil como un cambio de idioma del teclado.
+ - NVDA ya no anuncia un carácter especial (0x7f) cuando se pulse control+retroceso en algunos editores mientras Verbalizar Caracteres al Escribir esté habilitado. (#3315)
+- espeak ya no hace cambios inapropiados en el tono, volumen, etc. cuando NVDA lea texto que contenga ciertos caracteres de control o XML. (#3334) (regresión de #437)
+- En aplicaciones Java, los cambios en el nivel o en el valor del control enfocado ahora se anuncian automáticamente, y se reflejan con la subsiguiente salida del control. (#3119)
+- En controles Scintilla, las líneas ahora se anuncian correctamente cuando el corte de palabras está habilitado. (#885)
+- En aplicaciones de Mozilla, el nombre de los elementos de lista de sólo lectura ahora se anuncia correctamente; ej.: cuando se navega por twits en modo foco en twitter.com. (#3327)
+- En los diálogos de Confirmación en Microsoft Office 2013 ahora se lee su contenido automáticamente cuando aparezcan. 
+- Mejoras en el rendimiento cuando se navega por ciertas tablas en Microsoft Word. (#3326)
+- Las órdenes de navegación de tablas de NVDA (control+alt+flechas) funcionan mejor en algunas tablas de Microsoft Word cuando una celda abarca varias filas.
+
+
+== Cambios para Desarrolladores ==
+- Se ha añadido windowUtils.findDescendantWindow para buscar una ventana descendiente (HWND) localizando la visivilidad especificada, identificador del control y/o nombre de clase.
+- La consola de python remota ya no espera después de 10 segundos mientras aguarda por la entrada. (#3126)
+- La inclusión del módulo bisect en compilaciones binarias está en desuso y podrá eliminarse en una versión futura. (#3368)
+ - Los complementos que dependan de bisect (incluyendo el módulo urllib2) deberían actualizarse para incluir este módulo.
+
+
 = 2013.1.1 =
+Esta versión corrige el problema donde NVDA se colgaba al iniciarse si se configuraba para utilizar el idioma irlandés, así como incluye actualizaciones para traducciones y algunas otras correcciones de errores.
 
 == Corrección de Errores ==
 - Se producen caracteres correctos cuando se teclean en la propia interfaz de NVDA mientras se utiliza  un método de entrada Coreano o Japonés mientras sea el método predeterminado. (#2909)
 - En Internet Explorer y otros controles MSHTML, los campos marcados como conteniendo una entrada inválida ahora se manejan correctamente. (#3256)
+- NVDA ya no se cuelga cuando se inició si se configuró para utilizar el idioma irlandés.
 
 
 = 2013.1 =

@@ -141,8 +141,10 @@ Informácie o tom, ako chybu ohlásiť nájdete na stránkach NVDA.
 
 Keď sa NVDA spustí prvý krát, objaví sa uvítacie okno informujúce o použití tzv. klávesu NVDA a základné informácie o ponuke NVDA.
 Viac podrobností si môžete prečítať v nasledujúcich odsekoch.
-Ďalej toto okno obsahuje dve začiarkavacie políčka.
-Prvé políčko umožní zvoliť, či chcete používať capslock ako modifikačný kláves NVDA a druhé začiarkavacie políčko umožňuje nastaviť, či sa uvítacie okno má zobraziť po každom štarte NVDA. Jeho začiarknutím danú voľbu potvrdíme.
+Ďalej toto okno obsahuje tri začiarkavacie políčka.
+Prvé políčko umožní zvoliť, či chcete používať capslock ako modifikačný kláves NVDA.
+Druhé začiarkávacie pole rozhoduje o tom, či sa má NVDA spúšťať po prihlásení do systému Windows a je prístupné len v nainštalovanej verzii NVDA.
+Tretie začiarkavacie políčko umožňuje nastaviť, či sa uvítacie okno má zobraziť po každom štarte NVDA.
 
 ++ Klávesové skratky ++
 
@@ -350,7 +352,7 @@ Na navigáciu v texte je možné použiť nasledovné príkazy:
 %kc:beginInclude
 || Názov | Klávesová skratka pre desktop | Klávesová skratka pre Laptop | Dotikové gesto | Popis |
 | Prehliadací kurzor do prvého riadku | shift+numpad7 | NVDA+ctrl+home | Nie je | Presunie prehliadací kurzor do prvého riadku textu |
-| Prehliadací kurzor do predchádzajúceho riadku | numpad7 | NVDA+šípka hore | | Švihnutie hore (textový režim) | Presunie prehliadací kurzor do predchádzajúceho riadku textu |
+| Prehliadací kurzor do predchádzajúceho riadku | numpad7 | NVDA+šípka hore | Švihnutie hore (textový režim) | Presunie prehliadací kurzor do predchádzajúceho riadku textu |
 | Aktuálny riadok prehliadacieho kurzora | numpad8 | NVDA+shift+bodka | Nie je | Oznámi riadok, na ktorý ukazuje prehliadací kurzor. Dvojnásobné stlačenie vyhláskuje riadok. Stlačené tri krát rýchlo za sebou foneticky vyhláskuje riadok. |
 | Prehliadací kurzor do nasledujúceho riadku | numpad9 | NVDA+šípka dolu | Švihnutie dolu (textový režim) | Presunie prehliadací kurzor do nasledujúceho riadku textu |
 | Prehliadací kurzor do posledného riadku | shift+numpad9 | NVDA+ctrl+end | Nie je | Presunie prehliadací kurzor do posledného riadku textu |
@@ -514,6 +516,12 @@ NVDA pre niektoré aplikácie implementuje svoje vlastné príkazy, čím buď u
 || Názov | Klávesová skratka | Popis |
 | Nastaviť hlavičky stĺpcov | NVDA+shift+c | Stlačené raz nastavý aktuálny riadok ako riadok s hlavičkami tabuľky, takže NVDA bude oznamovať hlavičky pri pohybe medzi stĺpcami pod týmto rriadkom. Nastavenie vymažete dvojitým stlačením. |
 | Nastaviť hlavičky riadkov | NVDA+shift+r | Stlačené raz nastavý aktuálny stĺpec ako stĺpec s hlavičkami tabuľky, takže NVDA bude oznamovať hlavičky pri pohybe medzi riadkami. Nastavenie vymažete dvojitým stlačením. |
+%kc:endInclude
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Názov | Klávesová skratka | popis |
+| Zobraziť alebo skryť poznámky | ctrl+shift+s | keď máte spustenú prezentáciu, tento príkaz prepína medzi poznámkami pre aktuálnu snímku a obsahom aktuálnej snímky. Skratka má vplyv len na to, čo NVDA číta a nie na samotné zobrazenie snímky na obrazovke. |
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -730,7 +738,8 @@ Toto začiarkavacie políčko umožní zobrazovať aktuálne slovo v počítačo
 Ide o číselnú hodnotu, ktorá určuje frekvenciu blikania kurzora braillovského zobrazovača v milisekundách.
 
 ==== Zobrazovať správy (sek) ====
-Táto numerická hodnota určuje ako dlho majú na riadku byť zobrazované systémové správy.
+Táto numerická hodnota určuje ako dlho majú na riadku byť zobrazované správy NVDA.
+Nastavením hodnoty na 0 úplne vypnete zobrazovanie týchto správ.
 
 %kc:setting
 ==== Braillovský kurzor zviazaný s ====[BrailleTether]
@@ -943,8 +952,11 @@ Toto začiarkavacie políčko prepína automatické plynulé čítanie po načí
 Predvolene je začiarknuté.
 
 ==== Oznamovať tabuľky formujúce vzhľad ====
-Ak je táto voľba odčiarknutá NVDA bude oznamovať len tabuľky, ktoré obsahujú tabulárne dáta (kde je naozaj nevyhnutné vedieť, že ide o tabuľku).
-Naopak ak je voľba začiarknutá, NVDA bude oznamovať aj také tabuľky, ktoré slúžia čisto na dotvorenie vizuálnej prezentácie stránky.
+Táto voľba rozhoduje o tom, ako NVDA spracuje tabuľky určené výhradne na formovanie vzhľadu dokumentu.
+Ak voľbu začiarknete, NVDA tieto tabuľky spracuje štandardne podľa [nastavení čítania textu #DocumentFormattingSettings] a budete ich môcť nájsť pomocou rýchlej navigácie.
+Ak voľbu odčiarknete, NVDA ich nebude hlásiť ako tabuľky a nebudú sa dať nájsť pomocou rýchlej navigácie.
+obsah týchto tabuliek však bude NVDA zobrazovať ako čistý text.
+Táto možnosť je v predvolenom nastavení odčiarknutá.
 
 ==== Ohlásenie podrobných nastavení prvkov ====
 Môžete rozhodnúť, či bude NVDA oznamovať odkazy, nadpisy, tabuľky a podobne. Pozrite si časť [Nastavenia čítania textu #DocumentFormattingSettings].
@@ -989,9 +1001,9 @@ Takto môžete nastaviť:
 -
 
 ==== Oznamovať zmeny formátovania pri pohybe kurzorom ====
-Ak je zapnuté, NVDA sa pokúsi detekovať zmeny formátovania v celom riadku a počas čítania ich všetky oznámi. Toto  môže do určitej miery spomaliť odozvu.
+Ak je zapnuté, NVDA sa pokúsi nájsť zmeny formátovania v celom riadku a počas čítania ich všetky oznámi. Toto  môže do určitej miery spomaliť odozvu.
 
-Predvolene NVDA detekuje formátovacie možnosti na mieste systémového / prehliadacieho kurzora a voliteľne môže detekovať formátovacie možnosti v celom aktuálnom riadku ak to nespôsobí príliš veľké spomalenie.
+Predvolene NVDA deteguje formátovacie možnosti na mieste systémového / prehliadacieho kurzora a voliteľne môže detegovať formátovacie možnosti v celom aktuálnom riadku ak to nespôsobí príliš veľké spomalenie.
 
 Túto voľbu odporúčame použiť, keď kontrolujete dokumenty v aplikáciách ako Microsoft Word a formátovanie je pre vás dôležité.
 
@@ -1080,11 +1092,18 @@ Správcu doplnkov nájdete v podmenu nástroje. Umožňuje vám inštalovať dop
 Tieto doplnky vytvárajú používatelia NVDA. Doplnky môžu meniť alebo dopĺňať funkcie NVDA a takisto dopĺňať podporu pre hlasové syntetizéry a braillovské riadky.
 
 V správcovi doplnkov sa nachádza zoznam s doplnkami, ktoré sú nainštalované v aktuálnej konfigurácii NVDA.
-okrem názvu sa zobrazí aj verzia a autor doplnku. Popis a URL adresu môžete zistiť tak, že doplnok vyberiete a aktivujete tlačidlo O doplnku.
+Okrem názvu sa zobrazí aj verzia a autor doplnku. Popis a URL adresu môžete zistiť tak, že doplnok vyberiete a aktivujete tlačidlo O doplnku.
 
-Aby ste nainštalovali nový doplnok, aktivujte tlačidlo Nainštalovať.
+Ak si chcete pozrieť dostupné doplnky, aktivujte tlačidlo otvoriť stránku s doplnkami.
+Otvorí sa stránka s [doplnkami pre NVDA http://addons.nvda-project.org/].
+Ak máte NVDA nainštalované v systéme, môžete doplnok otvoriť priamo z webového prehliadača a popisovať podľa pokynov nižšie.
+Ak NVDA nemáte nainštalované, uložte súbor s doplnkom do počítača a pokračujte nasledovne.
+
+Aby ste nainštalovali doplnok stiahnutý zo stránky, aktivujte tlačidlo Nainštalovať.
 otvorí sa okno, v ktorom môžete vybrať požadovaný súbor vo vašom počítači alebo na sieti (s príponou nvda-addon).
-Po aktivovaní tlačidla otvoriť sa vás NVDA opýta, či si skutočne želáte nainštalovať zvolený doplnok.
+Po aktivovaní tlačidla otvoriť sa spustí inštalácia doplnku.
+
+Počas inštalácie sa NVDA opýta, či si skutočne želáte nainštalovať zvolený doplnok.
 Keďže funkcie doplnkov nie sú nijako obmedzované, doplnky teoreticky môžu mať prístup k vašim osobným dátam alebo k celému systému v prípade nainštalovanej verzie NVDA. Preto by ste mali  inštalovať doplnky zo zdrojov, ktorým dôverujete.
 Aby doplnok začal fungovať, je potrebné po inštalácii reštartovať NVDA.
 Kým NVDA nereštartujete, bude sa pri doplnku zobrazovať stav "Nainštalovaný".
@@ -1098,7 +1117,7 @@ Správcu doplnkov zatvoríte aktivovaním tlačidla Zatvoriť.
 Ak ste pridali alebo odstránili nejaké doplnky, NVDA sa vás opýta, či ho chcete reštartovať, aby boli uložené zmeny.
 
 V minulosti bolo možné funkcie NVDA rozšíriť nakopírovaním pluginov alebo ovládačov do používateľského priečinka s konfiguráciou NVDA.
-Táto verzia NVDA stále tieto pluginy a ovládače načíta, no nebudú zobrazené v okne správca doplnkov.
+Táto verzia NVDA stále tieto pluginy a ovládače načíta, no nebudú zobrazené v okne správcu doplnkov.
 Najlepšie je tieto súbory odstrániť a nahradiť ich skutočnými doplnkami hneď, ako budú k dispozícii.
 
 ++ Python konzola ++

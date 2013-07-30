@@ -68,21 +68,21 @@ Si vous n'avez pas encore une copie de NVDA, vous pouvez la télécharger sur [n
 Rendez-vous à la section "Download" où vous trouverez un lien pour le téléchargement de la dernière version de NVDA.
 
 Démarrer le fichier télécharger exécutera une version temporaire de NVDA.
-Vous aurez en suite le choix entre installer NVDA, créer une version portable, ou juste continuer à utiliser la version temporaire.
+Vous aurez en suite le choix entre installer NVDA, créer une copie portable, ou juste continuer à utiliser la version temporaire.
 
 Si vous avez prévu de toujours utiliser NVDA sur cette ordinateur, choisissez installer NVDA.
 Installer NVDA permettra plus de choses comme  son lancement après l'identification, il pourra lire les écran d'identification et de sécurité (ce qu'une version portable ou la version temporaire ne peuvent faire), et il sera accessible depuis des raccourcis dans le menu démarrer ou sur le bureau.
-La version installée permet aussi de créer une version portable à tout moment.
+La version installée permet aussi de créer une copie portable à tout moment.
 
-Si vous voulez prendre NVDA avec vous sur une clé USB ou un autre support accessible en écriture, vous devriez choisir de créer une version portable.
-La version portable peut aussi être installer sur n'importequel ordinateur à n'importequel moment.
+Si vous voulez prendre NVDA avec vous sur une clé USB ou un autre support accessible en écriture, vous devriez choisir de créer une copie portable.
+La copie portable peut aussi être installer sur n'importequel ordinateur à n'importequel moment.
 Cependant, si vous souhaitez copier NVDA sur un support en lecture seul comme un CD, vous devriez seulement copier le package téléchargé.
-Démarrer dirrectement la version portable depuis un support en lecture seule n'est pas supporté pour le moment.
+Démarrer dirrectement la copie portable depuis un support en lecture seule n'est pas supporté pour le moment.
   
 Utiliser la version temporaire de NVDA est aussi une option, par exemple pour une démonstration, car démarrer NVDA dans ce mode à chaque fois peut prendre beaucoup de temps.
 
 ++ Restrictions des versions portables et temporaires ++
-A part l'impossibilité de démarrer pendant ou après l'ouverture de session, les version portable et temporaire de NVDA ont également les restrictions suivantes :
+A part l'impossibilité de démarrer pendant ou après l'ouverture de session, les versions portables et temporaire de NVDA ont également les restrictions suivantes :
 - Impossible d'interagir avec les applications démarrées avec les privilèges administrateur, sauf biensur si NVDA a été démarré avec ces privilèges (non recommandé).
 - Impossible de lire les écrans de contrôle de compte utilisateur (UAC) lorsque l'on tente de démarrer une application avec les privilèges administrateur.
 - Windows 8 : impossible d'utiliser un écran tactile comme support d'entrée.
@@ -91,12 +91,12 @@ A part l'impossibilité de démarrer pendant ou après l'ouverture de session, l
 
 ++ Installer NVDA ++
 Si vous installez directement par le package téléchargé, cliquez sur le bouton Installer NVDA sur cet ordinateur.
-Si vous avez déjà fermé cette boîte de dialogue, ou si vous vvoulez l'installer à partir d'une version portable, allez dans le menu NVDA, cliquer sur "Outils", et choisissez "installer NVDA".
+Si vous avez déjà fermé cette boîte de dialogue, ou si vous vvoulez l'installer à partir d'une copie portable, allez dans le menu NVDA, cliquer sur "Outils", et choisissez "installer NVDA".
 
 La boîte de dialogue d'installation qui s'affichera vous demandera de confirmer l'installation, et vous signalera s'il s'agit de la mise à jour d'une installation existante.
 Cliquer sur le bouton Continuer installera NVDA.
 Deux options détaillées ci-dessous sont disponibles dans ce dialogue.
-Dès que l'installation est terminée, un message s'affichera vous signalant la fin de l'installation.
+Dès que l'installation sera terminée, un message s'affichera vous signalant la fin de l'installation.
 Cliquer sur OK démarrera la version nouvellement installée.
 
 +++ Utiliser NVDA sur l'écran de connexion à Windows +++
@@ -110,17 +110,17 @@ Si créé, ce raccourci aura la touche de raccourci control+alt+n assignée pour
 +++ Copier la configuration portable dans le compte de l'utilisateur en cours +++
 Cette option permet de choisir si NVDA doit ou non copier la configuration utilisateur depuis la copie de NVDA en cour d'exécution vers la configuration de l'utilisateur courant, pour la version installée de NVDA.
 Cela ne copiera  la configuration ni pour un autre utilisateur du système, ni pour la configuration du système dans le cas de l'utilisation dans l'identification windows ou les autres écrans sécurisés.
-Cette option n'est disponible que lorsque vous installez NVDA depuis une version portable, pas quand vous installez depuis le paquet téléchargé du lanceur.
+Cette option n'est disponible que lorsque vous installez NVDA depuis une copie portable, pas quand vous installez depuis le paquet téléchargé du lanceur.
 
-++ Créer une version portable ++
-Si vous voulez créer votre version depuis le package téléchargé, cliquez simplement sur le bouton Créer une version portable.
-Si vous avez déjà fermé cette boîte de dialogue ou si vous êtes dans une version installée, allez dans le menu NVDA, cliquer sur "Outils", et choisissez "Créer une version portable".
+++ Créer une copie portable ++
+Si vous voulez créer votre copie depuis le package téléchargé, cliquez simplement sur le bouton Créer une copie portable.
+Si vous avez déjà fermé cette boîte de dialogue ou si vous êtes dans une version installée, allez dans le menu NVDA, cliquer sur "Outils", et choisissez "Créer une copie portable".
 
-La boîte de dialogue qui s'affiche vous permet de choisir où créer la version portable.
+La boîte de dialogue qui s'affiche vous permet de choisir où créer la copie portable.
 Ce peut être un répertoire de votre disque dure, un chemin sur une clé USB ou un autre média portable.
-Vous pouvez choisir si oui ou non NVDA doit copier la configuration NVDA de l'utilisateur connecté pour l'utiliser avec la version portable nouvellement créée.
-Cette option n'est disponible que lorsque vous créez une version portable de NVDA depuis une version installée, pas quand vous créez une version portable depuis le paquet téléchargé du lanceur.
-Cliquer sur continuer créera la version portable.
+Vous pouvez choisir si oui ou non NVDA doit copier la configuration NVDA de l'utilisateur connecté pour l'utiliser avec la copie portable nouvellement créée.
+Cette option n'est disponible que lorsque vous créez une copie portable de NVDA depuis une copie installée, pas quand vous créez une copie portable depuis le paquet téléchargé du lanceur.
+Cliquer sur continuer créera la copie portable.
 Dès que la création est terminée, un message s'affiche.
 Cliquez sur OK pour fermer cette boîte de dialogue.
 
@@ -130,7 +130,7 @@ Cliquez sur OK pour fermer cette boîte de dialogue.
 Si NVDA a été installé à l'aide de l'installateur, alors il suffit, soit de frapper la combinaison control+alt+n, soit de choisir dans le menu Démarrer / Programmes / NVDA / NVDA. 
 Vous pouvez aussi taper NVDA dans le dialogue Exécuter puis appuyer sur Entrée.
 
-Pour démarrer la version portable, rendez-vous dans le dossier où NVDA a été décompressé, et appuyez sur  entrée ou double-cliquez sur nvda.exe.
+Pour démarrer la copie portable, rendez-vous dans le dossier où NVDA a été décompressé, et appuyez sur  entrée ou double-cliquez sur nvda.exe.
 
 Au démarrage de NVDA, on entend d'abord une série de sons ascendants (indiquant que NVDA se charge). 
 Suivant la rapidité de votre ordinateur, ou si vous exécutez NVDA à partir d'une clé USB ou d'un autre périphérique lent, le démarrage peut demander un certain temps. 
@@ -141,8 +141,10 @@ Rapportez-vous au site Web de NVDA pour les détails de la procédure.
 
 Quand NVDA démarre pour la première fois, vous êtes accueilli par une boîte de dialogue vous donnant des informations de base sur la touche NVDA et le menu NVDA. 
 Veuillez consulter les sections ci-après pour plus d'information sur ces sujets.
-La boîte de dialogue contient également deux cases à cocher. 
-La première vous permet de choisir si vous voulez utiliser la touche de verrouillage majuscules comme touche NVDA et la seconde permet d'indiquer si ce dialogue d'accueil doit apparaître à chaque démarrage.
+La boîte de dialogue contient également trois cases à cocher. 
+La première vous permet de choisir si vous voulez utiliser la touche de verrouillage majuscules comme touche NVDA.
+La deuxième spécifie si NVDA doit démarrer à l'ouverture de votre session et est disponible uniquement sur la version installée.
+La troisième permet d'indiquer si ce dialogue d'accueil doit apparaître à chaque démarrage.
 
 ++ À propos des commandes clavier de NVDA ++
 
@@ -516,6 +518,12 @@ NVDA fournit ses propres commandes additionnelles dans quelques applications pou
 | Définir les entêtes de lignes | NVDA+maj+r | Appuyer une fois permet de définir la colonne contenant les entêtes de lignnes, qui devraient automatiquement être annoncés en naviguant dans les cellules après cette colonne. Appuyer deux fois permet d'effacer le paramétrage. | 
 %kc:endInclude
 
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Nom | Touche | Description |
+| Basculer l'arrêt de la lecture vocale | control+maj+s | lorsque l'on est dans un diaporama en cour de lecture, cette commande basculera entre la parole pas pour la diaporama et le contenu pour celle-ci. Cela n'affecte que ce que NVDA lira, pas l'affichage à l'écran. |
+%kc:endInclude
+
 ++ foobar2000 ++
 %kc:beginInclude
 || Nom | Touche | Description |
@@ -731,6 +739,7 @@ Cette option est un champ numérique qui vous permet de modifier la vitesse de c
 
 ==== Durée d'affichage des messages (sec) ====
 Cette option est un champ numérique qui contrôle la durée d'affichage des messages système sur le terminal braille.
+ndiquer 0 désactive l'affichage de ces messages.
 
 %kc:setting
 ==== Braille suit ====
@@ -942,9 +951,12 @@ Cette option vous permet d'indiquer si vous voulez que les objets tels que les l
 Cette case à cocher active ou désactive la lecture automatique des pages après leur chargement en mode navigation.
 Cette option est activée par défaut.
 
-==== Annoncer les  tables de visualisation ====
-Quand cette option est désactivée, NVDA n'annonce que les tableaux de données quand il apparaît qu'il s'agit bien d'un tableau.
-Quand elle est activée, NVDA annonce également les tableaux utilisés simplement pour la présentation visuelle.
+==== Inclure les  tables de visualisation ====
+Cette option affecte la manière dont NVDA traite les tableaux seulement utilisés pour des raisons de présentation.
+Quand elle est activée, NVDA les traitera comme des tableaux normaux, les présentant en s'appuyant sur  les paramètres de [Mise en forme des Documents #DocumentFormattingSettings] et en les localisant avec les commandes de navigation rapide.
+Quand elle est désactivée, ils ne seront pas annoncés ou trouvables avec les commandes de navigation rapide. 
+Cependant, le contenu des tableaux sera toujours inclus sous forme de texte normal.
+Par défaut, cette option est désactivée.
 
 ==== Configurer l'annonce de champs tels que liens et titres ====
 Veuillez consulter les options dans le dialogue [Mise en forme des Documents #DocumentFormattingSettings] pour configurer les champs qui sont annoncés durant la navigation tels que les liens, les titres et les tableaux.
@@ -1044,11 +1056,11 @@ Les touches de commande suivantes sont également utiles :
 %kc:beginInclude
 || Nom | Touche Desktop | Touche Laptop | Description |
 | Sauvegarder la configuration | NVDA+control+c | NVDA+control+c | Sauvegarde votre configuration pour qu'elle ne soit pas perdue en quittant NVDA |
-| Réinitialiser la configuration | NVDA+control+r | NVDA+control+r | appuyez une fois pour réinitialiser à la configuration qui existait lors de votre dernière sauvegarde. Appuyez trois fois pour revenire à la configuration par défaut de NVDA. |
+| Réinitialiser la configuration | NVDA+control+r | NVDA+control+r | appuyez une fois pour réinitialiser à la configuration qui existait lors de votre dernière sauvegarde. Appuyez trois fois pour revenir à la configuration par défaut de NVDA. |
 %kc:endInclude
 
 ++ Fichiers de configuration et profils utilisateur ++
-Les versions portables de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire nommé userConfig situé dans le répertoire de votre version portable de NVDA.
+Les versions portables de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire nommé userConfig situé dans le répertoire de votre copie portable de NVDA.
 
 Les versions installées de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire spécial de NVDA situé dans votre profil utilisateur Windows.
 Cela signifie que chaque utilisateur du système peut avoir ses propres paramètres NVDA.
@@ -1082,9 +1094,16 @@ Ces paquets sont fournis par la communauté et contiennent du code qui peut ajou
 Le gestionnaire de Modules Complémentaires contient une liste affichant tous les Modules Complémentaires actuellement installés dans votre configuration utilisateur de NVDA.
 Un nom de paquet, la version et l'auteur sont affichés pour chaque Module Complémentaire, et des informations suplémentaires telle qu'une description et une URL peuvent être affichées en sélectionnant le Module Complémentaire et en activant le bouton À propos du Module Complémentaire...
 
+Pour naviguer et télécharger des modules complémentaires en ligne, cliquez sur le bouton Obtenir des modules complémentaires.
+Ce bouton ouvre la [page des modules complémentaires NVDA http://addons.nvda-project.org/].
+Si NVDA est installé sur votre système, vous pourrez ouvrire le module complémentaire directement depuis votre navigateur à fin de démarrer le processuce d'installation décrit plus loin.
+Autrement, enregistrez le fichier du module complémentaire et suivez les instructions ci-dessous.
+
 Pour ajouter un Module Complémentaire, cliquez sur le bouton Ajouter.
 Vous pourrez ainsi rechercher le paquet du Module Complémentaire (fichier .nvda-addon) sur votre ordinateur ou votre réseau.
-Après avoir cliquer sur Ouvrir, NVDA vous demandera si vous êtes sûr de vouloir installer le Module Complémentaire.
+Après avoir cliquer sur Ouvrir, le processuce d'installation commence.
+
+Quand un module complémentaire est sur le point d'être installé, NVDA vous demandera de confirmer que vous souhaitez installer ce module complémentaire.
 Comme les fonctionalités des Modules Complémentaires ne sont pas restraintes dans NVDA, ce qui implique en théorie qu'ils peuvent accéder à vos données ou à tout votre système pour une version installée, il est important de n'installer que des Module Complémentaires venant d'une source fiable.
 Dès que le Module Complémentaire est installé, NVDA doit redémarrer pour que le Module Complémentaire puisse s'activer.
 Ce Module Complémentaire aura l'état installer dans la liste jusqu'à ce que vous relanciez NVDA.
@@ -1163,9 +1182,9 @@ Ce synthétiseur ne supporte pas la [fonction d'épellation #VoiceSpellingFuncti
 ++ Nuance Vocalizer pour NVDA ++
 Nuance Vocalizer est une synthèse vocale commerciale de haute quallité développée par Nuance Communications, Inc., et mise en module complémentaires NVDA par Tiflotecnia, Lda.
 Il comprends plus de 50 voix différentes que vous pouvez installer, parlant plus de 30 langues.
-Tous les composants de la synthèse vocale et les voix sont sont sous forme de package de mocule complémentaires, ce qui permet une utilisation avec la version portable de NVDA.
+Tous les composants de la synthèse vocale et les voix sont sous forme de package de modules complémentaires, ce qui permet une utilisation avec la copie portable de NVDA.
 
-Vous pouvez obtenire plus d'informations sur Vocalizer pour NVDA, et  où l'acheter, sur le site internet [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Vous pouvez obtenir plus d'informations sur Vocalizer pour NVDA, et  où l'acheter, sur le site internet [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
 Un pourcentage des ventes de ce produit est donné à NVAccess, pour finencer le développement de NVDA.
 
 + Terminaux Braille pris en charge +[SupportedBrailleDisplays]
