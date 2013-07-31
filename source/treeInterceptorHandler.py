@@ -98,7 +98,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 	def _get_passThrough(self):
 		"""Whether most scripts should temporarily pass through this interceptor without being intercepted.
 		"""
-		return self._passThrough
+		return self._passThrough or not self.isReady
 
 	def _set_passThrough(self, state):
 		if self._passThrough == state:
