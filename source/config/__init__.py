@@ -582,6 +582,8 @@ class AggregatedSection(object):
 			yield key, val
 		# Walk through the profiles and spec looking for items not yet cached.
 		for profile in itertools.chain(reversed(self.profiles), (self._spec,)):
+			if not profile:
+				continue
 			for key in profile:
 				if key in keys:
 					continue
