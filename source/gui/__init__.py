@@ -146,7 +146,7 @@ class MainFrame(wx.Frame):
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Cannot save configuration - NVDA in secure mode"))
 			return
 		try:
-			config.save()
+			config.conf.save()
 			# Translators: Reported when current configuration has been saved.
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration saved"))
 		except:
@@ -548,7 +548,7 @@ class WelcomeDialog(wx.Dialog):
 			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
 		config.conf["general"]["showWelcomeDialogAtStartup"] = self.showWelcomeDialogAtStartupCheckBox.IsChecked()
 		try:
-			config.save()
+			config.conf.save()
 		except:
 			pass
 		self.Close()
@@ -586,7 +586,7 @@ Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit y
 
 	def onOk(self, evt):
 		globalVars.configFileError=None
-		config.save()
+		config.conf.save()
 		self.Close()
 
 	@classmethod

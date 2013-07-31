@@ -171,31 +171,6 @@ def initialize():
 	global conf
 	conf = ConfigManager()
 
-def save():
-	"""Saves the configuration to the config file.
-	"""
-	#We never want to save config if runing securely
-	if globalVars.appArgs.secure: return
-	global conf
-	if globalVars.configFileError:
-		raise RuntimeError("config file errors still exist")
-	if not os.path.isdir(globalVars.appArgs.configPath):
-		try:
-			os.makedirs(globalVars.appArgs.configPath)
-		except OSError, e:
-			log.warning("Could not create configuration directory")
-			log.debugWarning("", exc_info=True)
-			raise e
-	try:
-		# Copy default settings and formatting.
-		conf.validate(val, copy = True)
-		conf.write()
-		log.info("Configuration saved")
-	except Exception, e:
-		log.warning("Could not save configuration - probably read only file system")
-		log.debugWarning("", exc_info=True)
-		raise e
-
 def saveOnExit():
 	"""Save the configuration if configured to save on exit.
 	This should only be called if NVDA is about to exit.
@@ -203,7 +178,7 @@ def saveOnExit():
 	"""
 	if conf["general"]["saveConfigurationOnExit"]:
 		try:
-			save()
+			conf.save()
 		except:
 			pass
 
