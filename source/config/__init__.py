@@ -8,6 +8,7 @@ import ctypes.wintypes
 import os
 import sys
 from cStringIO import StringIO
+import itertools
 from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
@@ -597,6 +598,28 @@ class AggregatedSection(object):
 			val = self.manager.validator.check(spec, val)
 		self._cache[key] = val
 		return val
+
+	def iteritems(self):
+		keys = set()
+		# Start with the cached items.
+		for key, val in self._cache.iteritems():
+			keys.add(key)
+			yield key, val
+		# Walk through the profiles and spec looking for items not yet cached.
+		for profile in itertools.chain(reversed(self.profiles), (self._spec,)):
+			for key in profile:
+				if key in keys:
+					continue
+				keys.add(key)
+				# Use __getitem__ so caching, AggregatedSections, etc. are handled.
+				try:
+					yield key, self[key]
+				except KeyError:
+					# This could happen if the item is in the spec but there's no default.
+					pass
+
+	def copy(self):
+		return dict(self.iteritems())
 
 	def __setitem__(self, key, val):
 		spec = self._spec.get(key) if self.spec else None
