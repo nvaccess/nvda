@@ -75,7 +75,7 @@ def setSynth(name,isFallback=False):
 		prevSynthName = None
 	try:
 		newSynth=_getSynthDriver(name)()
-		if name in config.conf["speech"]:
+		if config.conf["speech"].isSet(name):
 			newSynth.loadSettings()
 		else:
 			# Create the new section.

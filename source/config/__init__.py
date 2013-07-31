@@ -567,6 +567,19 @@ class AggregatedSection(object):
 		except KeyError:
 			return default
 
+	def isSet(self, key):
+		"""Check whether a given key has been explicitly set.
+		This is sometimes useful because it can return C{False} even if there is a default for the key.
+		@return: C{True} if the key has been explicitly set, C{False} if not.
+		@rtype: bool
+		"""
+		for profile in self.profiles:
+			if not profile:
+				continue
+			if key in profile:
+				return True
+		return False
+
 	def _cacheLeaf(self, key, spec, val):
 		if spec:
 			# Validate and convert the value.
