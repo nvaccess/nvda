@@ -495,6 +495,8 @@ class ConfigManager(object):
 		@type factoryDefaults: bool
 		"""
 		self.profiles = []
+		# Signal that we're initialising.
+		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
 
 	def deleteProfile(self, name):
