@@ -395,11 +395,18 @@ class ConfigManager(object):
 		#: The active profiles.
 		self.profiles = []
 		self.validator = Validator()
+		self.rootSection = None
 		self._initBaseConf()
 
 	def _handleProfileSwitch(self):
+		init = self.rootSection is None
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
+		if init:
+			# We're still initialising, so don't notify anyone about this change.
+			return
+		import synthDriverHandler
+		synthDriverHandler.handleConfigProfileSwitch()
 
 	def _pushProfile(self, profile):
 		self.profiles.append(profile)

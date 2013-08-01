@@ -102,6 +102,13 @@ def setSynth(name,isFallback=False):
 			setSynth('silence',isFallback=True)
 		return False
 
+def handleConfigProfileSwitch():
+	conf = config.conf["speech"]
+	if conf["synth"] != _curSynth.name:
+		setSynth(conf["synth"])
+		return
+	_curSynth.loadSettings()
+
 class SynthSetting(object):
 	"""Represents a synthesizer setting such as voice or variant.
 	"""
