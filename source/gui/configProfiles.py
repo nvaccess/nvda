@@ -59,7 +59,9 @@ class ProfilesDialog(wx.Dialog):
 
 	def onNew(self, evt):
 		# Translators: The label of a field to enter the name of a new configuration profile.
-		with wx.TextEntryDialog(self, _("Profile name:")) as d:
+		with wx.TextEntryDialog(self, _("Profile name:"),
+				# Translators: The title of the dialog to create a new configuration profile.
+				_("New Profile")) as d:
 			if d.ShowModal() == wx.ID_CANCEL:
 				return
 			name = api.filterFileName(d.Value)
