@@ -283,6 +283,14 @@ class MainFrame(wx.Frame):
 		InstallerDialog(self).Show()
 		self.postPopup()
 
+	def onConfigProfilesCommand(self, evt):
+		if isInMessageBox:
+			return
+		self.prePopup()
+		from configProfiles import ProfilesDialog
+		ProfilesDialog(gui.mainFrame).Show()
+		self.postPopup()
+
 class SysTrayIcon(wx.TaskBarIcon):
 
 	def __init__(self, frame):
@@ -406,6 +414,9 @@ class SysTrayIcon(wx.TaskBarIcon):
 		# Translators: The label for the Help submenu in NVDA menu.
 		self.menu.AppendMenu(wx.ID_ANY,_("&Help"),menu_help)
 		self.menu.AppendSeparator()
+		# Translators: The label for the menu item to open the Configuration Profiles dialog.
+		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
+		self.Bind(wx.EVT_MENU, frame.onConfigProfilesCommand, item)
 		# Translators: The label for the menu item to revert to saved configuration.
 		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
 		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
