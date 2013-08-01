@@ -457,6 +457,7 @@ class ConfigManager(object):
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
+		profile.name = name
 		self._profileCache[name] = profile
 		return profile
 
