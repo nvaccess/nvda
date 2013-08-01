@@ -1,4 +1,4 @@
-#gui/__init__.py
+#gui/configProfiles.py
 #A part of NonVisual Desktop Access (NVDA)
 #Copyright (C) 2013 NV Access Limited
 #This file is covered by the GNU General Public License.
@@ -34,6 +34,10 @@ class ProfilesDialog(wx.Dialog):
 		# Translators: The label of a button to create a new configuration profile.
 		item = wx.Button(self, label=_("&New"))
 		item.Bind(wx.EVT_BUTTON, self.onNew)
+		sizer.Add(item)
+		# Translators: The label of a button to delete a configuration profile.
+		item = wx.Button(self, label=_("&Delete"))
+		item.Bind(wx.EVT_BUTTON, self.onDelete)
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 
@@ -74,3 +78,21 @@ class ProfilesDialog(wx.Dialog):
 		self.userProfile.Append(name)
 		self.userProfile.Selection = len(self.profiles) - 1
 		self.userProfile.SetFocus()
+
+	def onDelete(self, evt):
+		index = self.userProfile.Selection
+		if index == 0:
+			return
+		if gui.messageBox(
+			# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
+			_("Are you sure you want to delete this profile? This cannot be undone."),
+			# Translators: The title of the confirmation dialog for deletion of a configuration profile.
+			_("Confirm Deletion"),
+			wx.YES | wx.NO | wx.ICON_QUESTION
+		) == wx.NO:
+			return
+		name = self.profiles[index]
+		config.conf.deleteProfile(name)
+		del self.profiles[index]
+		self.userProfile.Delete(index)
+		self.userProfile.Selection = 0

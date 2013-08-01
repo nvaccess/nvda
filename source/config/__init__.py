@@ -397,10 +397,13 @@ class ConfigManager(object):
 		self.validator = Validator()
 		self._initBaseConf()
 
-	def _pushProfile(self, profile):
-		self.profiles.append(profile)
+	def _handleProfileSwitch(self):
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
+
+	def _pushProfile(self, profile):
+		self.profiles.append(profile)
+		self._handleProfileSwitch()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -425,8 +428,7 @@ class ConfigManager(object):
 		if len(self.profiles) == 1:
 			raise IndexError("No profile to deactivate")
 		self.profiles.pop()
-		# Reset the cache.
-		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
+		self._handleProfileSwitch()
 
 	def __getitem__(self, key):
 		return self.rootSection[key]
@@ -446,6 +448,9 @@ class ConfigManager(object):
 			if ext == ".ini":
 				yield name
 
+	def _getProfileFn(self, name):
+		return os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
+
 	def _getProfile(self, name):
 		try:
 			return self._profileCache[name]
@@ -453,7 +458,7 @@ class ConfigManager(object):
 			pass
 
 		# Load the profile.
-		fn = os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
+		fn = self._getProfileFn(name)
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", create_empty=True)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
@@ -484,6 +489,30 @@ class ConfigManager(object):
 		"""
 		self.profiles = []
 		self._initBaseConf(factoryDefaults=factoryDefaults)
+
+	def deleteProfile(self, name):
+		"""Delete a profile.
+		@param name: The name of the profile to delete.
+		@type name: basestring
+		@raise LookupError: If the profile doesn't exist.
+		"""
+		fn = self._getProfileFn(name)
+		if not os.path.isfile(fn):
+			raise LookupError("No such profile: %s" % name)
+		os.remove(fn)
+		try:
+			del self._profileCache[name]
+		except KeyError:
+			pass
+		# Check if this profile was active.
+		for index, profile in enumerate(self.profiles):
+			if profile.name == name:
+				break
+		else:
+			return
+		# Deactivate it.
+		del self.profiles[index]
+		self._handleProfileSwitch()
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
