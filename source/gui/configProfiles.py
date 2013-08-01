@@ -46,9 +46,11 @@ class ProfilesDialog(wx.Dialog):
 		self.userProfile.SetFocus()
 
 	def onOk(self, evt):
-		if self.userProfile.Selection == 0:
+		try:
 			config.conf.deactivateProfile()
-		else:
+		except IndexError:
+			pass
+		if self.userProfile.Selection != 0:
 			config.conf.activateProfile(self.profiles[self.userProfile.Selection])
 		self.Destroy()
 
