@@ -6,6 +6,8 @@
 
 import wx
 import config
+import api
+import gui
 
 class ProfilesDialog(wx.Dialog):
 
@@ -28,6 +30,13 @@ class ProfilesDialog(wx.Dialog):
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a button to create a new configuration profile.
+		item = wx.Button(self, label=_("&New"))
+		item.Bind(wx.EVT_BUTTON, self.onNew)
+		sizer.Add(item)
+		mainSizer.Add(sizer)
+
 		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
@@ -45,3 +54,19 @@ class ProfilesDialog(wx.Dialog):
 
 	def onCancel(self, evt):
 		self.Destroy()
+
+	def onNew(self, evt):
+		# Translators: The label of a field to enter the name of a new configuration profile.
+		with wx.TextEntryDialog(self, _("Profile name:")) as d:
+			if d.ShowModal() == wx.ID_CANCEL:
+				return
+			name = api.filterFileName(d.Value)
+		if name in self.profiles:
+			# Translators: An error displayed when the user attempts to create a profile which already exists.
+			gui.messageBox(_("That profile already exists. Please choose a different name."),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			return
+		self.profiles.append(name)
+		self.userProfile.Append(name)
+		self.userProfile.Selection = len(self.profiles) - 1
+		self.userProfile.SetFocus()
