@@ -454,7 +454,7 @@ class ConfigManager(object):
 
 		# Load the profile.
 		fn = os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
-		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", create_empty=True)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
 		profile.name = name
