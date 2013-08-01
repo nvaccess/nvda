@@ -16,6 +16,10 @@ Qué hay de Nuevo en NVDA
 - El modo silencioso se habilita automáticamente cuando se utilice Dolphin Cicero. (#2055)
 - Ahora se soporta la versión Windows x64 de Miranda IM/Miranda NG. (#3296)
 - Ahora se anuncian automáticamente las sugerencias de búsqueda en  la pantalla de inicio de  Windows 8.1. (#3322)
+- Soporte para navegar y editar hojas de cálculo en Microsoft Excel 2013. (#3360)
+- Las líneas braille Freedom Scientific Focus 14 Blue y Focus 80 Blue, así como la Focus 40 Blue en ciertas configuraciones que no se soportaba previamente, ahora se soportan cuando se conecten a través de Bluetooth. (#3307)
+- Ahora se anuncian las sugerencias de Autocompletado en Outlook 2010. (#2816)
+- Nuevas tablas de transcripción braille: Braille computerizado Inglés (U.K.), Coreano grado 2, braille ruso para código informático.
 
 
 == Cambios ==
@@ -28,6 +32,7 @@ Qué hay de Nuevo en NVDA
  - El navegador de objetos sigue automáticamente al cursor de revisión de tal manera que sigue siendo el objeto más profundo en la posición del cursor de revisión cuando se está en modos de revisión de documentos o de pantalla.
 - Después de cambiar a modo revisión de pantalla, NVDA permanecerá en este modo hasta que vuelvas explícitamente a los modos de revisión de documentos o de objetos.
  - Cuando se esté en modo de revisión de documentos o de objetos, NVDA podrá cambiar automáticamente entre estos dos modos dependiendo de si estás moviéndote por un documento del modo navegación o no.
+- Actualizado el transcriptor braille liblouis a 2.5.3. (#3371)
 
 
 == Corrección de Fallos ==
@@ -54,6 +59,11 @@ Qué hay de Nuevo en NVDA
 - En los diálogos de Confirmación en Microsoft Office 2013 ahora se lee su contenido automáticamente cuando aparezcan. 
 - Mejoras en el rendimiento cuando se navega por ciertas tablas en Microsoft Word. (#3326)
 - Las órdenes de navegación de tablas de NVDA (control+alt+flechas) funcionan mejor en algunas tablas de Microsoft Word cuando una celda abarca varias filas.
+- Si el administrador de complemenhtos está ya abierto, activarlo de nuevo (o desde el menú Herramientas o abriendo un fichero de complemento) ya no falla o no imposibilita cerrar dicho administrador de complementos. (#3351)
+- NVDA ya no se cuelga en ciertos diálogos cuando se esté utilizando el IME en Office 2010 con el japonés o el chino. (#3064)
+- Los espacios múltiples ya no se comprimen a un solo espacio en las líneas braille. (#1366)
+- Las Zend Eclipse PHP Developer Tools ahora funcionan igual que Eclipse. (#3353)
+- En Internet Explorer, ya no es necesario pulsar de nuevo tab para interactuar con un objeto integrado (tal como el contenido Flash) después de pulsar intro sobre él. (#3364)
 
 
 == Cambios para Desarrolladores ==

@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-29 19:08+1000\n"
-"PO-Revision-Date: 2013-07-19 13:38+0100\n"
+"PO-Revision-Date: 2013-07-31 16:58+0100\n"
 "Last-Translator: Michel Such <michel.such@free.fr>\n"
 "Language-Team: fra <LL@li.org>\n"
 "Language: fr_FR\n"
@@ -2021,33 +2021,29 @@ msgstr ""
 
 #. Translators: reported when there are no other available review modes for this object
 #: globalCommands.py:291
-#, fuzzy
 msgid "No next review mode"
-msgstr "&Mode de revue simple"
+msgstr "Plus de mode de revue"
 
 #: globalCommands.py:292
-#, fuzzy
 msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Active le mode revue à plat pour l'écran ou le document dans lequel on se "
-"trouve et positionne le curseur de revue sur l'objet courant"
+"Passe au mode de revue suivant (ex. objet, document ou écran) et place la "
+"position de revue au point de l'objet de navigation"
 
 #. Translators: reported when there are no  other available review modes for this object
 #: globalCommands.py:303
-#, fuzzy
 msgid "No previous review mode"
-msgstr "plus de cadre"
+msgstr "Plus de mode de revue"
 
 #: globalCommands.py:304
-#, fuzzy
 msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Active le mode revue à plat pour l'écran ou le document dans lequel on se "
-"trouve et positionne le curseur de revue sur l'objet courant"
+"Passe au mode de revue précédent (ex. objet, document ou écran) et place la "
+"position de revue au point de l'objet de navigation"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3307,19 +3303,16 @@ msgid "NVDA Python Console"
 msgstr "Console Python de NVDA"
 
 #: review.py:68
-#, fuzzy
 msgid "Object review"
-msgstr "Arborescence"
+msgstr "Revue de l'objet"
 
 #: review.py:69
-#, fuzzy
 msgid "Document review"
-msgstr "Mise en Forme des Documents"
+msgstr "Revue du document"
 
 #: review.py:70
-#, fuzzy
 msgid "Screen review"
-msgstr "Arborescence"
+msgstr "Revue de l'écran"
 
 #: scriptHandler.py:33
 #, python-format
@@ -5811,7 +5804,7 @@ msgstr "annoncer le numéro de &ligne"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1034
 msgid "Report l&ine indentation"
 msgstr "annoncer l'indentation des &lignes"
