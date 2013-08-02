@@ -24,6 +24,7 @@ class ProfilesDialog(wx.Dialog):
 		self.profiles = [_("(none)")]
 		self.profiles.extend(config.conf.listProfiles())
 		item = self.userProfile = wx.Choice(self, choices=self.profiles)
+		item.Bind(wx.EVT_CHOICE, self.onUserProfileChoice)
 		if len(config.conf.profiles) == 1:
 			item.Selection = 0
 		else:
@@ -37,7 +38,9 @@ class ProfilesDialog(wx.Dialog):
 		item.Bind(wx.EVT_BUTTON, self.onNew)
 		sizer.Add(item)
 		# Translators: The label of a button to delete a configuration profile.
-		item = wx.Button(self, label=_("&Delete"))
+		item = self.deleteButton = wx.Button(self, label=_("&Delete"))
+		if self.userProfile.Selection == 0:
+			item.Disable()
 		item.Bind(wx.EVT_BUTTON, self.onDelete)
 		sizer.Add(item)
 		mainSizer.Add(sizer)
@@ -82,8 +85,6 @@ class ProfilesDialog(wx.Dialog):
 
 	def onDelete(self, evt):
 		index = self.userProfile.Selection
-		if index == 0:
-			return
 		if gui.messageBox(
 			# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 			_("Are you sure you want to delete this profile? This cannot be undone."),
@@ -102,3 +103,6 @@ class ProfilesDialog(wx.Dialog):
 		self.userProfile.Delete(index)
 		self.userProfile.Selection = 0
 		self.userProfile.SetFocus()
+
+	def onUserProfileChoice(self, evt):
+		self.deleteButton.Enabled = evt.Selection > 0
