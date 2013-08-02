@@ -401,6 +401,8 @@ class ConfigManager(object):
 		self.validator = Validator()
 		self.rootSection = None
 		self._initBaseConf()
+		#: The names of all profiles that have been modified since they were last saved.
+		self._dirtyProfiles = set()
 
 	def _handleProfileSwitch(self):
 		init = self.rootSection is None
@@ -504,13 +506,29 @@ class ConfigManager(object):
 		"""
 		self._pushProfile(self._getProfile(name))
 
+	def _markWriteProfileDirty(self):
+		if len(self.profiles) == 1:
+			# There's nothing other than the base config, which is always saved anyway.
+			return
+		self._dirtyProfiles.add(self.profiles[-1].name)
+
 	def save(self):
-		"""Save the most recently activated profile to disk.
+		"""Save all modified profiles and the base configuration to disk.
 		"""
 		if globalVars.appArgs.secure:
 			# Never save the config if running securely.
 			return
-		self.profiles[-1].write()
+		try:
+			self.profiles[0].write()
+			log.info("Base configuration saved")
+			for name in self._dirtyProfiles:
+				self._profileCache[name].write()
+				log.info("Saved configuration profile %s" % name)
+			self._dirtyProfiles.clear()
+		except Exception as e:
+			log.warning("Error saving configuration; probably read only file system")
+			log.debugWarning("", exc_info=True)
+			raise e
 
 	def reset(self, factoryDefaults=False):
 		"""Reset the configuration to saved settings or factory defaults.
@@ -683,6 +701,7 @@ class AggregatedSection(object):
 			# Update the profile.
 			updateSect = self._getUpdateSection()
 			updateSect[key] = val
+			self.manager._markWriteProfileDirty()
 			# ConfigObj will have mutated this into a configobj.Section.
 			val = updateSect[key]
 			cache = self._cache.get(key)
@@ -711,6 +730,7 @@ class AggregatedSection(object):
 
 		# Set this value in the most recently activated profile.
 		self._getUpdateSection()[key] = val
+		self.manager._markWriteProfileDirty()
 		self._cache[key] = val
 
 	def _getUpdateSection(self):
