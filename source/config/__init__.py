@@ -411,6 +411,8 @@ class ConfigManager(object):
 			return
 		import synthDriverHandler
 		synthDriverHandler.handleConfigProfileSwitch()
+		import braille
+		braille.handler.handleConfigProfileSwitch()
 
 	def _pushProfile(self, profile):
 		self.profiles.append(profile)
