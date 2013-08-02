@@ -388,6 +388,10 @@ class ConfigManager(object):
 	Changed settings are written to the most recently activated profile.
 	"""
 
+	#: Sections that only apply to the base configuration;
+	#: i.e. they cannot be overridden in profiles.
+	BASE_ONLY_SECTIONS = {"general", "update", "upgrade"}
+
 	def __init__(self):
 		self.spec = confspec
 		#: All loaded profiles by name.
@@ -425,6 +429,18 @@ class ConfigManager(object):
 				return self._initBaseConf(factoryDefaults=True)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
+
+		for key in self.BASE_ONLY_SECTIONS:
+			# These sections are returned directly from the base config, so validate them here.
+			try:
+				sect = profile[key]
+			except KeyError:
+				profile[key] = {}
+				# ConfigObj mutates this into a configobj.Section.
+				sect = profile[key]
+			sect.configspec = self.spec[key]
+			profile.validate(self.validator, section=sect)
+
 		self._profileCache[None] = profile
 		self._pushProfile(profile)
 
@@ -438,6 +454,9 @@ class ConfigManager(object):
 		self._handleProfileSwitch()
 
 	def __getitem__(self, key):
+		if key in self.BASE_ONLY_SECTIONS:
+			# Return these directly from the base configuration.
+			return self.profiles[0][key]
 		return self.rootSection[key]
 
 	def __contains__(self, key):
