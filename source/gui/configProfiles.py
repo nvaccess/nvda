@@ -93,7 +93,11 @@ class ProfilesDialog(wx.Dialog):
 		) == wx.NO:
 			return
 		name = self.profiles[index]
-		config.conf.deleteProfile(name)
+		try:
+			config.conf.deleteProfile(name)
+		except LookupError:
+			# The profile hasn't been created yet.
+			pass
 		del self.profiles[index]
 		self.userProfile.Delete(index)
 		self.userProfile.Selection = 0
