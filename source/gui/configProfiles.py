@@ -37,6 +37,12 @@ class ProfilesDialog(wx.Dialog):
 		item = wx.Button(self, label=_("&New"))
 		item.Bind(wx.EVT_BUTTON, self.onNew)
 		sizer.Add(item)
+		# Translators: The label of a button to rename a configuration profile.
+		item = self.renameButton = wx.Button(self, label=_("&Rename"))
+		if self.userProfile.Selection == 0:
+			item.Disable()
+		item.Bind(wx.EVT_BUTTON, self.onRename)
+		sizer.Add(item)
 		# Translators: The label of a button to delete a configuration profile.
 		item = self.deleteButton = wx.Button(self, label=_("&Delete"))
 		if self.userProfile.Selection == 0:
@@ -105,4 +111,27 @@ class ProfilesDialog(wx.Dialog):
 		self.userProfile.SetFocus()
 
 	def onUserProfileChoice(self, evt):
-		self.deleteButton.Enabled = evt.Selection > 0
+		enable = evt.Selection > 0
+		self.deleteButton.Enabled = enable
+		self.renameButton.Enabled = enable
+
+	def onRename(self, evt):
+		index = self.userProfile.Selection
+		oldName = self.profiles[index]
+		# Translators: The label of a field to enter a new name for a configuration profile.
+		with wx.TextEntryDialog(self, _("New name:"),
+				# Translators: The title of the dialog to rename a configuration profile.
+				_("Rename Profile"), defaultValue=oldName) as d:
+			if d.ShowModal() == wx.ID_CANCEL:
+				return
+			newName = api.filterFileName(d.Value)
+		try:
+			config.conf.renameProfile(oldName, newName)
+		except ValueError:
+			gui.messageBox(_("That profile already exists. Please choose a different name."),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			return
+		self.profiles[index] = newName
+		self.userProfile.SetString(index, newName)
+		self.userProfile.Selection = index
+		self.userProfile.SetFocus()

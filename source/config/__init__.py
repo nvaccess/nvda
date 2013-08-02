@@ -564,6 +564,39 @@ class ConfigManager(object):
 		del self.profiles[index]
 		self._handleProfileSwitch()
 
+	def renameProfile(self, oldName, newName):
+		"""Rename a profile.
+		@param oldName: The current name of the profile.
+		@type oldName: basestring
+		@param newName: The new name for the profile.
+		@type newName: basestring
+		@raise LookupError: If the profile doesn't exist.
+		@raise ValueError: If a profile with the new name already exists.
+		"""
+		if newName == oldName:
+			return
+		oldFn = self._getProfileFn(oldName)
+		newFn = self._getProfileFn(newName)
+		if not os.path.isfile(oldFn):
+			raise LookupError("No such profile: %s" % oldName)
+		if os.path.isfile(newFn):
+			raise ValueError("A profile with the same name already exists: %s" % newName)
+
+		os.rename(oldFn, newFn)
+		try:
+			profile = self._profileCache.pop(oldName)
+		except KeyError:
+			# The profile hasn't been loaded, so there's nothing more to do.
+			return
+		profile.name = newName
+		self._profileCache[newName] = profile
+		try:
+			self._dirtyProfiles.remove(oldName)
+		except KeyError:
+			# The profile wasn't dirty.
+			return
+		self._dirtyProfiles.add(newName)
+
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
 	"""
