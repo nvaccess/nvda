@@ -97,3 +97,4 @@ class ProfilesDialog(wx.Dialog):
 		del self.profiles[index]
 		self.userProfile.Delete(index)
 		self.userProfile.Selection = 0
+		self.userProfile.SetFocus()
