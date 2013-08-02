@@ -141,8 +141,10 @@ Consultare il sito di NVDA su come procedere per farlo.
 
 Quando NVDA si avvia per la prima volta, sarete accolti da una finestra di benvenuto che fornirà informazioni basilari sulle impostazioni del tasto funzione "NVDA" e sul menu. 
 Si vedano le sezioni successive di questo documento per ulteriori dettagli. 
-La finestra di dialogo contiene due caselle di controllo.
-La prima consente di stabilire se NVDA debba usare il tasto "Blocca Maiuscole" come tasto funzione "NVDA", la seconda invece permette di decidere se questa finestra debba presentarsi ad ogni avvio dello Screen Reader.
+La finestra di dialogo contiene tre caselle di controllo.
+La prima consente di stabilire se NVDA debba usare il tasto "Blocca Maiuscole" come tasto funzione "NVDA".
+La seconda permette di specificare se NVDA debba avviarsi automaticamente dopo l'accesso a Windows ed è disponibile solo per le copie installate dello screen reader.
+La terza invece permette di decidere se questa finestra debba presentarsi ad ogni avvio dello Screen Reader.
  
 ++ Sui comandi da tastiera di NVDA ++
 
@@ -516,6 +518,12 @@ NVDA fornisce alcuni comandi per certe applicazioni in modo da facilitare gli ut
 | Imposta intestazioni riga | NVDA+shift+r | Premere una volta per dire a NVDA che questa è la colonna che contiene le intestazioni della riga, che dovranno essere annunciate automaticamente quando ci si sposta tra le righe sotto quella colonna. La doppia pressione cancellerà tale impostazione. | 
 %kc:endInclude
 
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Nome | Tasto | Descrizione |
+| Commuta lettura note | control+shift+s | Quando una presentazione è in esecuzione, questo comando permetterà di alternare tra le note del relatore della diapositiva e il contenuto della diapositiva stessa. Questo riguarda solo ciò che NVDA legge, non ciò che è visualizzato sullo schermo. |
+%kc:endInclude
+
 ++ foobar	2000 ++
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
@@ -730,7 +738,8 @@ Questa opzione permette la visualizzazione della parola sotto il cursore nel for
 Si tratta di un campo numerico che permette di modificare la velocità di lampeggio del cursore in millisecondi.
 
 ==== Timeout dei messaggi(sec) ====
-Si tratta di un campo numerico che controlla per quanto tempo i messaggi di sistema saranno mostrati sul Display Braille.
+Si tratta di un campo numerico che controlla per quanto tempo i messaggi di NVDA saranno mostrati sul Display Braille.
+Il valore 0 farà in modo che non verrà visualizzato più alcun messaggio.
 
 %kc:setting
 ==== Il display braille segue ====[BrailleTether]
@@ -1082,9 +1091,16 @@ Essi vengono prodotti  dalla comunità internazionale di NVDA  e contengono codi
 Il gestore di componenti aggiuntivi contiene un elenco che visualizza tutti i pacchetti installati nella propria cartella di configurazione di NVDA.
 Per ciascun componente, vengono mostrati il nome del pacchetto, la versione e l'autore, ed inoltre altre informazioni come la descrizione o l'URL possono essere visualizzate selezionando tale componente e cliccando sul pulsante "informazioni su".
 
-Per installare un componente aggiuntivo, premere il pulsante Installa.
+Per cercare e scaricare altri componenti aggiuntivi,  premere il pulsante Scarica Componenti aggiuntivi.
+Questo bottone aprirà la [Pagina componenti aggiuntivi di NVDA http://addons.nvda-project.org/].
+Se NVDA è installato sul sistema, è possibile aprire il componente aggiuntivo  direttamente dal browser per avviare il processo di installazione come descritto di seguito.
+Altrimenti, salvare il componente aggiuntivo e seguire le istruzioni fornite qui di seguito.
+
+Per installare un componente aggiuntivo ottenuto in precedenza, premere il pulsante Installa.
 Si aprirà una finestra nella quale sarà possibile cercare, sia nel proprio pc o in una rete locale, il pacchetto con estensione nvda-addon da installare.
-Una volta selezionato il pulsante Apri, NVDA chiederà una conferma del fatto che si voglia installare quel componente aggiuntivo.
+Una volta selezionato il pulsante Apri, il processo di installazione avrà inizio.
+
+Quando si sta per installare un componente aggiuntivo, NVDA chiederà conferma dell'operazione.
 Poiché le funzionalità dei componenti non sono soggette ad alcuna restrizione all'interno di NVDA, il che in teoria potrebbe comportare l'accesso ai propri dati personali o anche all'intero sistema se NVDA è stato installato nel pc, è molto importante installare pacchetti che provengono esclusivamente da una fonte sicura.
 Una volta che il pacchetto è stato installato, è necessario riavviare lo screen reader per poter fruire delle nuove funzionalità.
 Fino a quando non verrà effettuata tale operazione, accanto al componente aggiuntivo vi sarà la parola "installa".

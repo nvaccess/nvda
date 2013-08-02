@@ -43,7 +43,7 @@ NVDA obsługuje kody Brajla dla wielu języków, w tym podpisane i niepodpisane 
 ++ Licencja i Prawa Autorskie ++
 NVDA is copyright NVDA_COPYRIGHT_YEARS autorzy NVDA.
 
-NVDA 2006-2012 wszelkie prawa zastrzeżone.NVDA jest objęty przez GNU General Public License (wersja 2). Możesz za darmo udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu zainteresowanemu. Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a także każdego innego oprogramowania, które korzysta z kodu zaczerpniętego z tego programu. Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
+NVDA 2006-2013 wszelkie prawa zastrzeżone.NVDA jest objęty przez GNU General Public License (wersja 2). Możesz za darmo udostępniać ten program i dowolnie zmieniać go, pod warunkiem, że dołączysz do niego tę licencję oraz udostępnisz pełny kod źródłowy każdemu zainteresowanemu. Dotyczy to zarówno oryginalnej wersji programu, jak i jego zmienionych kopii, a także każdego innego oprogramowania, które korzysta z kodu zaczerpniętego z tego programu. Dokładne brzmienie licencji znajdziesz online: [Pełna treść licencji. http://www.gnu.org/licenses/old-licenses/gpl-2.0.html]
 
 + Wymagania Systemowe +
 - Systemy operacyjne: wsparcie wszystkich 32-bitowych i 64-bitowych wersji systemu Windows XP, Windows Vista i Windows 7 (w tym systemów operacyjnych dla serwerów).
@@ -92,7 +92,7 @@ W przypadku korzystania z wolniejszych nośników można usłyszeć komunikat: "
 
 Jeśli podczas uruchamiania programu nie usłyszałeś/aś powyższych komunikatów, ale dźwięk oznaczający błąd systemu Windows lub dźwięki o coraz niższej wysokości oznacza, to iż NVDA nie działa prawidłowo i należy zgłosić powstały problem do twórców programu. Więcej informacji o zgłaszaniu problemów znajdziesz na stronie projektu..
 
-Przy pierwszym uruchomieniu NVDA wyświetli ekran powitalny z podstawowymi informacjami o działaniu programu.  W oknie powitalnym możesz także za pomocą dwóch pól wyboru ustalić, czy klawisz Caps Lock ma zostać użyty jako specjalny klawisz NVDA oraz czy ekran powitalny ma być wyświetlany przy każdym uruchomieniu NVDA. Ustawienia te możesz w każdej chwili zmienić oraz wyświetlić okno powitalne ponownie za pomocą menu NVDA
+Przy pierwszym uruchomieniu, NVDA wyświetli ekran powitalny z podstawowymi informacjami o działaniu programu.  W oknie powitalnym możesz także za pomocą trzech pól wyboru ustalić, czy klawisz Caps Lock ma zostać użyty jako specjalny klawisz NVDA, czy ekran powitalny ma być wyświetlany przy każdym uruchomieniu programu oraz czy screenreader ma uruchamiać się samoczynnie pod czas startu systemu operacyjnego (nie dotyczy kopii przenośnej). Ustawienia te możesz w każdej chwili zmienić oraz wyświetlić okno powitalne ponownie za pomocą menu NVDA
 (więcej informacji w kolejnych rozdziałach).
 
 
@@ -844,7 +844,11 @@ Więcej informacji znajdziecie w sekcji development na oficjalnej stronie projek
 Po aktywacji tego polecenia wszystkie moduły aplikacji oraz wtyczki zostaną przeładowane bez potrzeby restartu nvda. Jest to użyteczne dla programistów.
 ++ Manager dodatków ++
 Manager dodatków znajduje się w menu narzędzia i pozwala zarządzać wtyczkami do programu rozwijanymi przez społeczność użytkowników. Wtyczki te mogą dodawać do screenreadera nowe funkcje, modyfikować aktualne działanie lub być np. sterownikami dla oficjalnie nie wspieranych monitorów brajlowskich albo syntezatorów mowy. Ze względów bezpieczeństwa radzimy jednak instalować wyłącznie wtyczki z zaufanych źródeł, ponieważ zainstalowany dodatek nie ma wewnątrz programu żadnych ograniczeń, może więc w teorii przejąć kontrolę nad twoim komputerem lub wykradać twoje osobiste dane.
+Aby zainstalowany dodatek zadziałał, zrestartuj NVDA. Jeśli tego nie zrobisz, na konieczność restartu wskarze status tej wtyczki w managerze.
 
+Aby usunąć wtyczkę, wybierz ją z listy i kliknij przycisk usuń. Podobnie jak przy instalowaniu dodatku, NVDA wymaga zrestartowania by wtyczka została całkowicie usunięta.
+Manager posiada także przycisk zamknij kończący jego pracę. Jeśli w trakcie pracy z managerem wykonano operacje na wtyczkach, przy zamykaniu kreator wyświetli okno umożliwiające zrestartowanie screenreadera.
+W przeszłości, rozszerzenie funkcjonalności programu było możliwe przez skopiowanie plików dodatków do katalogu konfiguracji nvda. Obecna wersja nadal potrafi ładować takie pliki, jednak nie widać ich w managerze wtyczek. Jeśli istnieje wtyczka będąca zamiennikiem dla tak zainstalowanego dodatku, usuń wcześniej skopiowane pliki z katalogu konfiguracji, i zainstaluj zamienną wtyczkę.
 
 
 + Obsługiwane Syntezatory Mowy +[SupportedSpeechSynths]

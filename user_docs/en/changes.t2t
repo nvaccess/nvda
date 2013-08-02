@@ -19,6 +19,8 @@
 - Support for navigating and editing spreadsheets in Microsoft Excel 2013. (#3360)
 - The Freedom Scientific Focus 14 Blue and Focus 80 Blue braille displays, as well as the Focus 40 Blue in certain configurations that weren't supported previously, are now supported when connected via Bluetooth. (#3307)
 - Auto complete suggestions are now reported in Outlook 2010. (#2816)
+- New braille translation tables: English (U.K.) computer braille, Korean grade 2, Russian braille for computer code.
+- New language: Farsi. (#1427)
 
 
 == Changes ==
@@ -30,6 +32,7 @@
  - The navigator object automatically follows the review cursor such that it remains the deepest object at the position of the review cursor when in document or screen review modes.
  - After switching to screen review mode, NVDA will stay in this mode until you explicitly switch back to document or object review mode.
  - When in document or object review mode, NVDA may automatically switch between these two modes depending on whether you are moving around a browse mode document or not.
+- Updated liblouis braille translator to 2.5.3. (#3371)
 
 
 == Bug Fixes ==
@@ -57,6 +60,10 @@
 - Performance improvements when navigating certain tables in Microsoft Word. (#3326)
 - NVDA's table navigation commands (control+alt+arrows) function better in certain Microsoft Word tables where a cell spans multiple rows.
 - If the Add-ons Manager is already open, activating it again (either from the Tools menu or by opening an add-on file) no longer fails or makes it impossible to close the Add-ons Manager. (#3351)
+- NVDA no longer freezes in certain dialogs when Japanese or Chinese Office 2010 IME is in use. (#3064)
+- Multiple spaces are no longer compressed to just one space on braille displays. (#1366)
+- Zend Eclipse PHP Developer Tools now functions the same as Eclipse. (#3353)
+- In Internet Explorer, It is again not necessary to press tab to interact with an embedded object (such as Flash content) after pressing enter on it. (#3364)
 
 
 == Changes for Developers ==

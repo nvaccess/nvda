@@ -3,11 +3,75 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.2 =
+
+== Uudet ominaisuudet ==
+- Tuki sisäänrakennetulle Chromium-sovelluskehykselle, joka on useissa sovelluksissa käytettävä verkkoselainsäädin. (#3108)
+- Uusi eSpeakin puheäänimuunnelma: Iven3.
+- Uudet chattiviestit luetaan Skypessä automaattisesti keskustelun ollessa aktiivisena. (#2298)
+- Lisätty twitter-asiakasohjelma Tweenin tuki, johon sisältyy välilehtien nimien lukeminen ja vähemmän puheliaisuutta twiittejä luettaessa.
+- NVDA:n ilmoitusten näyttäminen pistenäytöllä voidaan poistaa nyt käytöstä määrittämällä Pistenäytön asetukset -valintaikkunassa ilmoitusten aikakatkaisun arvoksi 0. (#2482)
+- Lisäosien hallinnassa on nyt Hae lisäosia -painike, joka avaa verkkosivun, josta lisäosia on mahdollista selata ja ladata. (#3209)
+- Tervetuloa-valintaikkunassa, joka tulee näkyviin aina ensimmäisellä NVDA:n käynnistyksellä, voidaan nyt määrittää, käynnistyykö NVDA automaattisesti Windowsiin kirjautumisen jälkeen. (#2234)
+- Unitila otetaan nyt automaattisesti käyttöön Dolphin Cicero -ohjelmistoa käytettäessä. (#2055)
+- Lisätty tuki Miranda IM:n/Miranda NG:n 64-bittiselle versiolle. (#3296)
+- Haun ehdotukset luetaan nyt automaattisesti Windows 8.1:n aloitusnäytössä. (#3322)
+- Support for navigating and editing spreadsheets in Microsoft Excel 2013. (#3360)
+- The Freedom Scientific Focus 14 Blue and Focus 80 Blue braille displays, as well as the Focus 40 Blue in certain configurations that weren't supported previously, are now supported when connected via Bluetooth. (#3307)
+- Auto complete suggestions are now reported in Outlook 2010. (#2816)
+- New braille translation tables: English (U.K.) computer braille, Korean grade 2, Russian braille for computer code.
+
+
+== Muutokset ==
+- Kosketusnäytöllä vasemmalle tai oikealle pyyhkäiseminen yhdellä sormella objektitilassa oltaessa siirtää nyt edelliseen tai seuraavaan kaikissa objekteissa, ei pelkästään nykyisessä säilössä. Alkuperäinen nykyisessä säilössä edelliseen tai seuraavaan objektiin siirtäminen suoritetaan pyyhkäisemällä vasemmalle tai oikealle kahdella sormella.
+- Selaustilan asetukset -valintaikkunasta löytyvän Lue asettelutaulukot -valintaruudun uudeksi nimeksi on nyt muutettu Sisällytä asettelutaulukot, jotta se kuvastaisi sitä, että jos tämä valintaruutu ei ole valittuna, niin asettelutaulukoita ei löydy myöskään pikanavigointikomennoilla. (#3140)
+- Kokonaistarkastelu on korvattu objektin-, asiakirjan- ja ruuduntarkastelutiloilla. (#2996)
+ - Objektitarkastelu lukee vain navigointiobjektissa olevaa tekstiä, asiakirjatarkastelu kaikkea mahdollisesti selaustiladokumentissa olevaa tekstiä ja ruututarkastelu ruudulla olevaa tekstiä nykyisessä sovelluksessa.
+ - Aiemmin kokonaistarkasteluun ja siitä pois siirtäneet komennot vaihtavat nyt näiden uusien tarkastelutilojen välillä.
+ - Navigointiobjekti seuraa automaattisesti tarkastelukohdistinta niin, että se pysyy syvimpänä tarkastelukohdistimen kohdalla olevana objektina asiakirja- tai ruututarkastelutiloissa oltaessa.
+ - NVDA pysyy ruututarkastelutilassa siihen vaihtamisen jälkeen kunnes vaihdetaan takaisin asiakirja- tai objektitarkastelutilaan.
+ - NVDA voi vaihtaa automaattisesti asiakirja- tai objektitarkastelutilassa oltaessa näiden kahden tilan välillä riippuen siitä, liikutaanko selaustiladokumentissa vai ei.
+- Liblouis-pistekääntäjä päivitetty  versioksi 2.5.3. (#3371)
+
+
+== Korjatut ohjelmavirheet ==
+- Toiminto luetaan nyt objektia aktivoitaessa ennen aktivointia sen sijaan, että toiminto luettaisiin aktivoinnin jälkeen (esim. puunäkymää avattaessa ilmoitetaan "avaa" sen sijaan, että ilmoitettaisiin sulje). (#2982)
+- Eri syöttökenttien, kuten chatti- ja haku, tarkempi lukeminen ja kohdistimen seuranta Skypen uusimmissa versioissa. (#1601, #3036)
+- Uusien tapahtumien määrä luetaan nyt Skypen uusimpien keskustelujen listassa jokaiselle keskustelulle, mikäli tarpeen. (#1446)
+- Parannuksia kohdistimen seurantaan ja lukemisjärjestykseen ruudulla olevalle oikealta vasemmalle luettavalle tekstille, esim. muokattaessa arabialaista tekstiä Microsoft Excelissä. (#1601)
+- Painikkeisiin ja lomakekenttiin pikanavigoiminen löytää nyt saavutettavuustarkoituksessa painikkeiksi merkityt linkit Internet Explorerissa. (#2750)
+- Puunäkymien sisältöä ei enää näytetä selaustilassa, sillä kokonaisesityksestä ei ole hyötyä. Puunäkymän kanssa voidaan olla vuorovaikutuksessa vuorovaikutustilassa painamalla Enteriä sen kohdalla. (#3023)
+- Alt+ala- tai ylänuolen painaminen vuorovaikutustilassa yhdistelmäruudun avaamiseksi ei enää vaihda virheellisesti selaustilaan. (#2340)
+- Taulukon solut eivät enää aktivoi Internet Explorer 10:ssä vuorovaikutustilaa, ellei verkkosivun tekijä ole nimenomaan tehnyt niistä aktivoitavia. (#3248)
+- NVDA:n käynnistäminen ei enää epäonnistu, mikäli järjestelmän päiväys tai kellonaika on aikaisempi kuin viimeisin päivitysten tarkistus. (#3260)
+- Mikäli pistenäytöllä näytetään edistymispalkki, näyttöä päivitetään palkin muuttuessa. (#3258)
+- Taulukon otsikoita ei enää näytetä kahdesti selaustilassa Mozilla-sovelluksissa. Lisäksi näytetään yhteenveto, mikäli taulukossa on otsikko. (#3196)
+- NVDA ilmoittaa nyt oikean kielen aiemmin käytössä olleen sijasta Windows 8:ssa syöttökieltä vaihdettaessa.
+- NVDA ilmoittaa nyt IME-muunnostilan vaihdokset Windows 8:ssa.
+- NVDA ei enää lue ylimääräistä työpöydällä Google Japanese tai Atok IME -syöttömenetelmiä käytettäessä. (#3234)
+- NVDA ei enää ilmoita virheellisesti puheentunnistusta tai kosketussyötettä näppäimistön kielen vaihdokseksi Windows 7:ssä ja uudemmissa.
+- NVDA ei enää lue tiettyä erikoismerkkiä (0x7f) painettaessa Ctrl+askelpalautin-näppäinyhdistelmää joissakin tekstieditoreissa lue kirjoitetut merkit -asetuksen ollessa käytössä. (#3315)
+- espeak ei enää vaihda virheellisesti äänenkorkeuttaan, voimakkuuttaan jne NVDA:n lukiessa tiettyjä ohjausmerkkejä tai XML-koodia sisältävää tekstiä. (#3334) (#437:n paluu)
+- Aktiivisen säätimen nimen tai arvon muutokset luetaan nyt Java-sovelluksissa automaattisesti sekä hyödynnetään myöhemmin kyseistä säädintä kyseltäessä. (#3119)
+- Rivit luetaan nyt oikein Scintilla-säätimissä automaattisen rivityksen ollessa käytössä. (#885)
+- Vain luku -listakohteiden nimi luetaan nyt oikein Mozilla-sovelluksissa, esim. liikuttaessa vuorovaikutustilassa twiiteissä twitter.com-sivulla. (#3327)
+- Microsoft Office 2013:n vahvistusvalintaikkunoiden sisältö luetaan nyt automaattisesti niiden tullessa näkyviin.
+- Suorituskyvyn parannuksia liikuttaessa tietyissä taulukoissa Microsoft Wordissa. (#3326)
+- NVDA:n taulukkonavigointikomennot (Ctrl+Alt+nuolet) toimivat paremmin sellaisissa Microsoft Word -taulukoissa, joissa solu jakaantuu usealle riville.
+- Mikäli Lisäosien hallinta on jo avoimena, sen uudelleen avaaminen (joko Työkalut-valikosta tai lisäosatiedoston avaamalla) ei enää epäonnistu tai tee mahdottomaksi sen sulkemista. (#3351)
+- NVDA ei enää hyydy tietyissä valintaikkunoissa japanin- tai kiinankielisen Office 2010:n IME:n ollessa käytössä. (#3064)
+- Useita välilyöntejä ei enää tiivistetä pistenäytöillä yhdeksi. (#1366)
+- Zend Eclipse PHP Developer Tools toimii nyt samalla tavalla kuin Eclipse. (#3353)
+- Sarkaimen painaminen ei ole tarpeen Internet Explorerissa vuorovaikutukseen upotettujen objektien (kuten Flash-sisällön) kanssa kun sen kohdalla on painettu Enteriä. (#3364)
+
+
 = 2013.1.1 =
+Tämä versio korjaa ongelman, joka aiheutti sen, että NVDA kaatui käynnistettäessä, mikäli käytettäväksi kieleksi oli määritetty iiri. Lisäksi tämä versio sisältää käännösten päivityksiä sekä joitakin muita ohjelmavirheiden korjauksia.
 
 == Korjatut ohjelmavirheet ==
 - Nyt tuotetaan asianmukaisia merkkejä kirjoitettaessa NVDA:n omassa käyttöliittymässä käytettäessä korealaista tai japanilaista syöttömenetelmää jommankumman ollessa oletusmenetelmänä. (#2909)
 - Kentät, jotka on merkitty virheellisen syötteen sisältäviksi, käsitellään nyt oikein Internet Explorerissa ja muissa MSHTML-säätimissä. (#3256)
+- NVDA ei enää kaadu käynnistettäessä, mikäli käytettäväksi kieleksi on määritetty iiri.
 
 
 = 2013.1 =
@@ -17,7 +81,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat intuitiivisempi ja johdonm
 
 === Uusi kannettavien tietokoneiden näppäimistöasettelu ===
 Kannettavien tietokoneiden näppäimistöasettelu on suunniteltu täysin uudelleen, jotta se olisi intuitiivisempi ja johdonmukaisempi.
-Uudessa asettelussa käytetään nuolinäppäimiä yhdessä NVDA-näppäimen kanssa sekä tekstinlukukomennoissa myös muita muokkausnäppäimiä.
+Uudessa asettelussa käytetään nuolinäppäimiä yhdessä NVDA-näppäimen kanssa sekä tekstintarkastelukomennoissa myös muita muokkausnäppäimiä.
 
 Huomaa seuraavat yleisimmin käytettyihin komentoihin tehdyt muutokset:
 || Nimi | Näppäinkomento |
@@ -25,7 +89,7 @@ Huomaa seuraavat yleisimmin käytettyihin komentoihin tehdyt muutokset:
 | Lue nykyinen rivi | NVDA+L |
 | Lue valittu teksti | NVDA+Shift+S |
 | Lue tilarivi | NVDA+Shift+End |
-Lisäksi mm. kaikki objektinavigointi-, tekstinluku-, hiiren napsautus- sekä syntetisaattorin asetusrenkaan komennot ovat muuttuneet.
+Lisäksi mm. kaikki objektinavigointi-, tekstintarkastelu-, hiiren napsautus- sekä syntetisaattorin asetusrenkaan komennot ovat muuttuneet.
 Katso uudet näppäinkomennot [komentojen pikaoppaasta. keyCommands.html]
 
 
@@ -350,7 +414,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen puhesyntetis
 - Dynaamisen sisällön muutoksia, kuten esim. DOS-konsoleissa, ei enää lueta, jos unitila on käytössä kyseisessä sovelluksessa. (#1662)
 - Alt+ylä- ja alt+alanuolten käyttäytymistä paranneltu selaustilassa yhdistelmäruutuja suljettaessa ja avattaessa. (#1630)
 - NVDA palautuu nyt paljon useammista tilanteista, kuten esim. vastaamasta lakanneista sovelluksista, jotka aiemmin aiheuttivat täydellisen jumiutumisen. (#1408)
-- NVDA lukee nyt Mozilla Geckon (Firefoxin jne) selaustiladokumenttien tietyt osat sellaisessa tilanteessa, jossa elementin tyyli on display:table. (#1373)
+- NVDA lukee nyt Mozilla Gecko -moottoria käyttävien sovellusten (esim. Firefoxin) selaustiladokumenttien tietyt osat sellaisessa tilanteessa, jossa elementin tyyli on display:table. (#1373)
 - NVDA ei enää lue nimisäätimiä kohdistuksen siirtyessä niiden sisään. Tämä saa loppumaan joidenkin lomakekenttien nimien kahteen kertaan lukemisen Firefoxissa (Gecko) ja Internet Explorerissa (MSHTML). (#1650)
 - NVDA lukee nyt Microsoft Excelissä solun, kun siihen  on liitetty tietoa Ctrl+v:llä. (#1781)
 - Adobe Readerissa ei enää lueta asiakirjasta epäolennaista tietoa siirryttäessä vuorovaikutustilassa eri sivulla olevaan säätimeen. (#1659)
@@ -429,7 +493,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat merkittävät välimerkkej
 - NVDA toimii nyt oikein selaustiladokumenteissa vain luku -tyyppiä olevissa muokattavissa tekstikentissä.
 - NVDA ei enää virheellisesti siirry pois vuorovaikutustilasta, kun aria-activedescendant-ominaisuus on asetettu, esim. täydennyslistan tullessa näkyviin joissakin automaattisen täydennyksen sisältävissä säätimissä.
 - Säädinten nimet ilmoitetaan nyt Adobe Readerissa kohdistusta siirrettäessä tai käytettäessä pikanavigointia selaustilassa.
-- Painikkeet ja linkit esitetään nyt oikein XFA PDF -asiakirjoissa Adobe Readerissa.
+- Painikkeet, linkit ja kuvat esitetään nyt oikein XFA PDF -asiakirjoissa Adobe Readerissa.
 - Kaikki elementit näytetään nyt omilla riveillään XFA PDF -asiakirjoissa Adobe Readerissa. Tämä muutos tehtiin, koska suuria osia (joskus jopa koko dokumentti) näytettiin ilman välejä yleisen rakenteen puutteen vuoksi.
 - Korjattu ongelmia siirrettäessä kohdistusta muokattaviin tekstikenttiin tai niistä pois XFA PDF -asiakirjoissa Adobe Readerissa.
 - Aktiivisen yhdistelmäruudun arvon muutokset ilmoitetaan nyt XFA PDF -asiakirjoissa Adobe Readerissa.
@@ -586,7 +650,7 @@ Tämän version merkittävimpiä uusia ominaisuuksia ovat huomattavasti yksinker
 - Taulukon rivien ja sarakkeiden otsikoiden lukeminen on nyt mahdollista. Asetus on määritettävissä Asiakirjojen muotoiluasetukset -valintaikkunasta.
  - Tätä tuetaan toistaiseksi vain Mozilla-sovelluksissa (Firefox 3.6.11 tai uudempi ja Thunderbird 3.1.5 tai uudempi). (#361)
 - Otettu käyttöön kokonaistarkastelun komennot: (#58)
- - NVDA+numeroryhmän 7: siirtää kokonaistarkasteluun ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstinlukukomennoilla.
+ - NVDA+numeroryhmän 7: siirtää kokonaistarkasteluun ja sijoittaa tarkastelukohdistimen nykyisen objektin kohdalle, mikä mahdollistaa koko ruudun tai asiakirjan lukemisen tekstintarkastelukomennoilla.
  - NVDA+numeroryhmän 1: siirtää tarkastelukohdistimen sen kohdalla olevan tekstin sisältävään objektiin, mikä mahdollistaa objekti kerrallaan liikkumisen kyseisestä kohdasta lähtien.
 - NVDA:n nykyiset asetukset voidaan kopioida suojatuissa ruuduissa käytettäväksi (esim. kirjautumisikkuna ja käyttäjätilien valvonnan kehotteet) painamalla Yleiset asetukset -valintaikkunassa olevaa painiketta.
 - Tuki Mozilla Firefox 4:lle.

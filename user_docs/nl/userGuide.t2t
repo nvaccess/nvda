@@ -119,8 +119,10 @@ Op de NVDA website kunt u lezen hoe u dit kunt doen.
 
 Wanneer NVDA de eerste keer start, komt u in het welkomstscherm van het programma dat u informatie geeft over de NVDA-toets en het NVDA-menu.
 Verderop in deze handleiding kunt u hier meer over lezen.
-Op het welkomstscherm treft u ook 2 selectievakjes aan.
-Als u het eerste vakje aankruist, wordt de CapsLock-toets ook als NVDA-toets gebruikt. Door het andere vakje aan te kruisen, zal het welkomstscherm steeds verschijnen bij het starten van NVDA.
+Op het welkomstscherm treft u ook 3 selectievakjes aan.
+Als u in het  eerste vakje een vinkje zet, wordt de CapsLock-toets ook als NVDA-toets gebruikt. Als u een vinkje in het tweede vakje zet, zal NVDA automatisch opstarten zodra u bij Windows bent aangemeld. Deze mogelijkheid is alleen beschikbaar voor de geïnstalleerde versie van NVDA. 
+Een vinkje in het derde selectievakje zorgt ervoor dat dit welkomsscherm verschijnt, telkens  wanneer NVDA wordt gestart.  
+
 
 ++ Over NVDA toetsenbordcommando’s ++
 
@@ -287,7 +289,7 @@ In deze gevallen kan objectnavigatie handig zijn.
 
 Objectnavigatie stelt u in staat om te navigeren naar afzonderlijke objecten en informatie over deze objecten op te vragen.
 NVDA meldt informatie over een object waar u met objectnavigatie naar toe gaat op een soortgelijke manier als informatie over de systeemfocus.
-Om alle tekst zoals deze op het scherm verschijnt te lezen kunt u, in plaats van object navigatie, [flat review #FlatReview] gebruiken.
+Om alle tekst zoals deze op het scherm verschijnt te lezen kunt u, in plaats van object navigatie, [Screen review (schermoverzicht) #FlatReview] gebruiken.
 
 De objecten van het besturingssysteem en van de programma's zijn hiërarchisch  gegroepeerd (Vergelijk de boomstructuur van Windows Verkenner met mappen en submappen die op hun beurt weer submappen kunnen bevatten).
 Dit betekent dat u naar een bepaald object navigeert om na te gaan welke objecten er eventueel in zijn opgenomen.
@@ -297,8 +299,8 @@ Als u zich op een lijstitem bevind, kunt u terug naar het bovenliggend object om
 Nu kunt u verder gaan naar een ander object (op hetzelfde niveau).
 Iets dergelijks geldt voor bv. een werkbalk. U gaat de werkbalk in, (navigeert naar het eerste subniveau (first child) om toegang te krijgen tot de bijbehorende besturingselementen.
 
-Het object dat op dit moment bekeken wordt in objectnavigatie wordt het navigator object genoemd.
-U kunt de tekst in het navigator object bekijken met de [commando's voor tekstnavigatie (review cursor) #ReviewingText].
+Het object dat op een gegeven moment bekeken wordt in objectnavigatie wordt het navigator object genoemd.
+Wanneer u naar een object navigeert, kuntu de inhoud ervan bekijken met de [commando's voorhet Nalezen van Tekst #ReviewingText] terwijl u zich in de [objectoverzichtmodus #ObjectReview] bevindt.
 Standaard wordt in NVDA de object navigator tegelijk met de systeemfocus verplaatst, maar deze koppeling kan aan- en uitgezet worden.
 
 Braille volgt normaalgesproken de [focus #SystemFocus] en [systeemcursor #SystemCaret] en niet de objectnavigatie en de review cursor.
@@ -322,7 +324,7 @@ Voor objectnavigatie zijn de volgende toetscombinaties beschikbaar:
 Let op: voor een goede werking van de numerieke toetsen moet NumLock uitgeschakeld worden.
 
 ++ Nalezen van tekst ++[ReviewingText]
-Met NVDA kunt u de inhoud van het huidige [navigator object #ObjectNavigation], inclusief [flat review #FlatReview],  per karakter, per woord of regel nalezen.
+Met NVDA kunt u de inhoud van het [scherm (schermoverzicht) #ScreenReview], het huidige [document (documentoverzicht) #DocumentReview] of het huidige [object #ObjectReview] ,  per karakter, per woord of regel nalezen.
 Dit is vooral handig in Windows-opdrachtvensters of andere plaatsen waar de [tekstcursor #SystemCaret] niet of slechts beperkt beschikbaar is.
 U kunt dit bijvoorbeeld gebruiken voor het lezen van een lang, informatief bericht in een dialoogvenster
 
@@ -363,27 +365,35 @@ Dit ziet er dan als volgt uit:
 | Vorig woord | Huidig woord | Volgend woord |
 | Vorig karakter | Huidige karakter | Volgende karakter |
 
-++ Flat Review (Volledig overzicht) ++[FlatReview]
-Meestal kunt u alleen de inhoud van een enkel [object #Objects] bekijken, voor sommige objecten is het echter mogelijk om de inhoud van onderliggende objecten te bekijken.
-In complexe documenten kunt u de gehele inhoud van het document lezen en in applicatie vensters kunt u de tekst binnen het venster lezen zoals deze op het scherm wordt weergegeven.
-Dit heet “flat review”.
-Dit is vergelijkbaar met de mogelijkheden voor het verkennen van het scherm of mogelijkheden voor muisbesturing zoals u deze in andere schermlezers aantreft.
+++ Leesoverzichtmodi (Review Modes) ++
+Met behulp van de [leesoverzichtcommando's #ReviewingText] van NVDA kan, afhankelijk van de geselecteerde leesoverzichtmodus, de inhoud van het huidige navigatorobject, het huidige document, of scherm worden nagelezen.
+De Leesoverzichtmodikomen in de plaats van wat eerder in NVDA  "Flat Revie"  (Volledig Overzicht) heette.
 
-U wordt op het [navigator object #ObjectNavigation] gepositioneerd wanneer flat review wordt ingeschakeld.
-Als u objectnavigatie nog niet gebruikt hebt, zal dit meestal het object met [focus #SystemFocus] zijn.
-Als het navigator object bijvoorbeeld een knop is, zal flat review de tekst van deze knop aangeven.
-U kunt vervolgens de tekst lezen met de [commando's voor tekstnavigatie #ReviewingText].
-U kunt ook direct naar het object op de huidige positie van de reviewcursor navigeren, zo kunt u [objectnavigatie #ObjectNavigation] vanaf daar gebruiken.
-
-Braille volgt normaalgesproken de [focus #SystemFocus] en [systeemcursor #SystemCaret] en niet de objectnavigatie en de review cursor.
-Als de braille uitvoer de objectnavigatie en tekst review moet volgen, [configureert u braille om de review cursor te volgen #BrailleTether].
-
-U kunt de volgende twee commando’s gebruiken om van en naar “flat review” te schakelen:
+U kunt de volgende commando’s gebruiken om van leesoverzichtmodus te wisselen:
 %kc:beginInclude
-|| Naam | Desktoptoets  | Laptoptoets | Beschrijving |
-| Overschakelen naar flat review | NVDA+numeriek7 |NVDA+PageUp | U gaat in de flat review modus navigator object en kunt het scherm(of het document als u zich daarin bevindt) met de leescursorcommando’s uitlezen. |
-| Terug naar object vanuit flat review modus | NVDA+numeriek1 | NVDA+pageDown | Hiermee navigeert u naar de positie van de leescursor in de tekst (“het object” genoemd) |
+ || Naam | Desktoptoets | Laptoptoets | Aanraakgebaar | Beschrijving |
+| Naar volgende leesoverzichtmodus schakelen | NVDA+numeriek7 | NVDA+pageUp | met 2 vingers omhoog vegen | hiermee wordt naar de volgende, beschikbare  modus geschakeld.  | 
+| Naar vorige leesoverzichtmodus schakelen | NVDA+numeriek1 | NVDA+pageDown | met 2 vingers omlaag vegen | hiermee wordt naar de vorige, beschikbare modus geschakeld. |
 %kc:endInclude
+
++++ Objectoverzicht (Object Review) +++[ObjectReview]
+In de objectoverzichtmodus kan alleen de inhoud van het huidige [navigatorobject #ObjectNavigation] worden bekeken.
+Voor objecten zoals bewerkbare invoervelden of andere eenvoudige bewerkingen gaat het daarbij in het algemeen om tekst.
+Bij andere objecten kan het gaan om de naam en of de waarde van het object.
+
++++ Documentoverzicht (Document Review) +++[DocumentReview]
+Wanneer het [navigatorobject #ObjectNavigation] zich binnen een bladermodusdocument bevindt (een webpagina bij voorbeeld) of een ander complex documentdat veel objecten bevat  (bij voorbeeldeen   Lotus Symphony document),  kan naar de documentoverzichtmodus worden overgeschakeld.
+In de documentoverzichtmodus kan de tekst van het gehele document worden bekeken.
+Wanneer wordt overgeschakeld van de objectoverzicht- naar de documentoverzichtmodus, komt de leescursor in het document op de plaats vanhet  navigatroobject te staan.
+Wanneer het document met de daarvoor bestemde leesoverzichtcommando's wordt verkend, wordt de plaats van het navigatorobject automatisch geactualiseerd zodat deze overeenkomt met deplaats van het object waar de leescursor bij staat. 
+Merk op dat NVDA automatisch vanuit objectoverzicht overschakelt naar documentoverzicht  wanneer bladermodusdocumenten worden verkend.
+
++++ Schermoverzicht (Screen Review) +++[ScreenReview]
+In de  schermoverzichtmodus kunt u tekst in de actieve toepassing verkennen die op het scherm te zien is.
+Dit komt overeen metschermoverzichtopties of de muiscursorfuncties zoals die in veel andere schermleesprogramma's worden geboden.
+Wanneer naar de schermoverzichtmodus wordt overgeschakeld, gaat de leescursor naar de plaats op het scherm waar het huidige [navigatorobject #ObjectNavigation] zich bevindt.
+Wanneer het scherm met de daarvoor bestemde leesoverzichtcommando's wordt verkend, wordt de plaats van het navigatorobject automatisch geactualiseerd, dat wil zeggen bij het diepst gelegen  object op het scherm waar de leescursor zich bevindt.
+Merk op dat NVDA bij sommige recente toepassingen tekst die op het scherm verschijnt slechts gedeeltelijk of soms helemaal niet leest. Dit heeft te maken met nieuwe schermtechnologie die op dit moment nog niet ondersteund kan worden.
 
 ++ Navigeren met de muis ++
 Door de muis over het scherm te verplaatsen wordt tekst die zich onder de muisaanwijzer bevindt voorgelezen.
@@ -499,6 +509,12 @@ NVDA beschikt over een aantal applicatie-specifieke commando's om het gebruik va
 || Naam | Toets | Beschrijving |
 | Kolomkoppen instellen | NVDA+shift+c | Door eenmaal drukken wordt aan NVDA doorgegeven dat dit de rij met kolomkoppen is, die automatisch moeten worden vermeld bij het gaan van kolom naar kolom  onder deze rij. Bij tweemaal drukken wordt de instelling opgeheven. | 
 | Rijkoppen instellen | NVDA+shift+r | Door eenmaal drukken wordt aan NVDA doorgegeven dat dit de kolom met rijkoppen is, die automatisch moeten worden vermeld bij het gaan van rij naar rij na deze kolom. Bij tweemaal drukken wordt de instelling opgeheven. | 
+%kc:endInclude
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Naam | Toets | Beschrijving |
+| Voorlezen aantekeningen van spreker in-/uitzetten | control+shift+s | Tijdens een presentatie kunt u met dit commando, of de aantekeningen bij een dia, of de tekst(inhoud) van de dia laten voorlezen. Dit heeft geen invloed op dat wat op het scherm getoond wordt.  | 
 %kc:endInclude
 
 ++ Foobar2000 ++
@@ -706,8 +722,8 @@ Door het selectievakje aan te vinken wordt het woord onder de cursor weergegeven
 In het invoerveld kunt u een getal invoeren dat de knippersnelheid van de cursor bepaalt in milliseconden.
 
 ==== Time-out voor berichten (sec.) ====
-In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang systeemberichten in het uitleesvenster worden weergegeven.
-
+In het invoerveld kunt u een getal invoeren waarmee u bepaalt hoe lang NVDA-berichten in het uitleesvenster worden weergegeven.
+Als u "0" als waarde invult, worden geen berichten getoond.
 %kc:setting
 ==== Braille volgkeuze ====[BrailleTether]
 Toets: NVDA+control+t
@@ -915,10 +931,13 @@ Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden
 Deze optie bepaalt of een pagina die geladen is in bladermodus automatisch wordt gelezen.
 Deze optie is standaard ingeschakeld.
 
-==== Lay-outtabellen weergeven====
-Als het selectievakje niet is aangekruist zal NVDA alleen dan tabelinformatie geven wanneer dat van belang is.
-Als het selectievakje is aangevinkt, zal NVDA ook tabellen melden die louter optisch van aard zijn. 
-
+==== Lay-outtabellen melden====
+Met deze optie kunt u bepalen hoe NVDA moet omgaan met tabellen die uitsluitend dienen ter ondersteuning van de layout.
+Wanneer Layout-tabellen melden is ingeschakeld, zal NVDA zulke tabellen als normale tabellen beschouwen. Hoe ze gemeld worden is afhankelijk van de [opmaakinstellingen #DocumentFormattingSettings] en met sneltoetscommando's kan men er naar toe navigeren.
+Wanneer deze optie niet ingeschakeld is, worden de tabellen niet gemeld en men kan  er niet naar toe navigeren.
+De inhoud wordt echterwel  als normale tekst weergegeven.
+Deze optie staat standaard uit.
+ 
 ==== Het melden van velden zoals links en koppen instellen====
 Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings] om de velden in te stellen die worden uitgesproken bij het navigeren, zoals links, koppen en tabellen.
 
@@ -1053,7 +1072,14 @@ Met "Add-ons Beheren" onder Extra in het NVDA menu kunt u uitbreidingspakketten 
 
 In het dialoogvenster "Add-ons Beheren" vindt u een lijst met alle geïnstalleerde Add-ons die op het moment in uw gebruikersconfiguratiemap staan. Van elke Add-on wordt de pakketnaam, versie en auteur weergegeven. Door een Add-on te selecteren en dan op de knop "Over Add-on" te klikken kunt u meer informatie opvragen, zoals een beschrijving  en de URL.
 
-U kunt een Add-on installeren door op de knop "Installeren" te klikken. Er wordt een venster geopend waarin u kunt bladeren naar een uitbreidingspakket (.nvda-addon bestand) dat ergens op uw computer of op een netwerk staat. Zodra u op de knop "Openen" drukt, zal NVDA vragen of u de desbetreffende Add-on daadwerkelijk wilt installeren. Aangezien de functionaliteit van Add-ons binnen NVDA niet beperkt wordt, wat in theorie inhoudt dat toegang verkregen wordt tot uw persoonlijke gegevens alsmede het gehele systeem, is het bij de geïnstalleerde versie van NVDA belangrijk alleen Add-ons te installeren waarvan u de herkomst vertrouwt. Als de Add-on eenmaal is geïnstalleerd, moet NVDA herstart worden om de Add-on te activeren. Zonder herstart zal voor die Add-on de status "Installeren" worden weergegeven.    
+U kunt op Internet naar beschikbare Add-ons bladeren en deze desgewenst installeren door op de knop "Add-ons toevoegen" te klikken. U komt nu op de [NVDA Add-ons pagina http://addons.nvda-project.org/]. 
+Als NVDA op uw computer is geïnstalleerd,kunt u een Add-on rechtstreeks vanuit de browser openen en installeren volgens de hieronder beschreven procedure.
+Werkt u met een draagbare kopie van NVDA, dan slaat u de Add-on op en volgt u onderstaande instructies.
+
+
+Om een eerder verkregen Add-on te installeren drukt u op de knop "Installeren". U gaat dan naar een uitbreidingspakket, een bestand met de extensie "*.nvda-addon", dat ergens op uw computer of op een netwerk staat. Zodra u op de knop "Openen" drukt, zal de installatieprocedure beginnen. 
+
+Bij aanvang van de installatie zal NVDA vragen of u de desbetreffende Add-on daadwerkelijk wilt installeren. Aangezien de functionaliteit van Add-ons binnen NVDA niet beperkt wordt, wat in theorie inhoudt dat toegang verkregen wordt tot uw persoonlijke gegevens alsmede het gehele systeem, is het bij de geïnstalleerde versie van NVDA belangrijk alleen Add-ons te installeren waarvan u de herkomst vertrouwt. Als de Add-on eenmaal is geïnstalleerd, moet NVDA herstart worden om de Add-on te activeren. Zonder herstart zal voor die Add-on de status "Installeren" worden weergegeven.    
 
 U kunt een Add-on verwijderen door deze in de lijst te selecteren en vervolgens op de knop "Verwijderen" te drukken. U wordt nu gevraagd of u de Add-on inderdaad wilt verwijderen. Als u de vraag met ja beantwoordt, wordt de Add-on verwijdert. Net zoals bij het installeren moet ook bij het verwijderen van een Add-on NVDA opnieuw gestart worden. Zolang dit niet gebeurt, wordt voor die Add-on als status "Verwijderen" weergegeven.  
 

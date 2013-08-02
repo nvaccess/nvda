@@ -141,8 +141,10 @@ Bunu nasıl yapacağınızı öğrenmek için lütfen NVDA web sayfasını ziyar
 
 NVDA ilk kez başladığında, NVDA değişken tuşu ve NVDA menüsü hakkında temel bilgiler veren bir iletişim kutusuyla karşılanacaksınız.
 Lütfen bu konularla ilgili sonraki bölümlere bakın.
-Bu iletişim kutusunda ayrıca 2 onay kutusu bulunmaktadır.
-Birincisi, büyük harf kilidi tuşunun NVDA tarafından değişken tuş olarak kullanılıp kullanılmayacağını kontrol ederken, ikincisi, karşılaştığınız hoşgeldin mesajının NVDA her açıldığında görüntülenip görüntülenmemesini kontrol eder.
+Bu iletişim kutusunda ayrıca üç onay kutusu bulunmaktadır.
+Birincisi, büyük harf kilidi tuşunun NVDA tarafından değişken tuş olarak kullanılıp kullanılmayacağını kontrol ederken.
+ikincisi, NVDA'nın Windows başladıktan sonra otomatik olarak devreye girmesiyle ilgilidir ve yalnızca kurulu NVDA kopyaları için geçerlidir.
+Üçüncüsü, karşılaştığınız hoşgeldin iletişim kutusunun NVDA her açıldığında görüntülenip görüntülenmemesini kontrol eder.
 
 ++ NVDA Klavye Komutları Hakkında ++
 
@@ -300,7 +302,7 @@ Aynı zamanda, normal şartlarda klavye ile ulaşamayacağınız [nesnelerle #Ob
 
 böylece, metinler, düğmeler, onay kutuları, kayan göstergeler, listeler ve düzenlenebilir metin alanları gibi nesneler arasında dolaşabilir, bunlar hakkında bilgi alabilir, mümkünse üzerine geldiğiniz nesneyle etkileşim  kurabilirsiniz.
 Nesne dolaşım komutlarını kullanarak bir nesnenin üzerine geldiğinizde, NVDA sistem imlecini hareket ettirdiğinizdekine benzer biçimde sizi bilgilendirecektir.
-Nesnelerle ilgili metni ekranda göründüğü şekliyle incelemek isterseniz, nesne sunucusunu kullanmak yerine [ekran inceleme kipine #FlatReview] geçebilirsiniz.
+Metni ekranda göründüğü şekliyle incelemek isterseniz, nesne sunucusunu kullanmak yerine [ekran inceleme kipine #ScreenReview] geçebilirsiniz.
 
 Nesne dolaşım özelliğiyle, ekrandaki tüm nesneler arasında tek tek dolaşmak yerine, hiyerarşik olarak gruplanmış nesneler arasında dolaşım olanağı sunulmaktadır.
 Yani, bir nesnenin içinde bulunan diğer nesnelere ulaşmak için o nesne içine girip  dolaşmanız gerekmektedir.
@@ -311,7 +313,7 @@ Bu şekilde, incelemekte olduğunuz uygulamanın liste ögeleri dışındaki kı
 Benzer biçimde, bir araç çubuğu da çeşitli kontrolleri kapsar ve  bu kontrollere erişebilmek için, araç çubuğu nesnesinin içine girmelisiniz.
 
 İncelenmekte olan nesneye dolaşım nesnesi denir. 
-Nesne dolaşım komutlarıyla bir nesne üzerine geldikten sonra, nesneyi [metin inceleme komutlarını #ReviewingText] kullanarak inceleyebilirsiniz.
+Nesne dolaşım komutlarıyla bir nesne üzerine geldikten sonra, nesneyi [metin inceleme komutlarını #ReviewingText] kullanarak [Nesne inceleme kipinde #ObjectReview] inceleyebilirsiniz.
 Varsayılan olarak, nesne sunucusu sistem odağıyla birlikte hareket eder; ancak bu özellik kapatılıp açılabilir.
 
 Braille'in varsayılan olarak nesne sunucusunu ve inceleme imlecini değil; [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
@@ -335,7 +337,7 @@ Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 Not: Numaratördeki tuşların düzgün çalışabilmesi için, numara kilidi kapalı olmalıdır.
 
 ++Metin inceleme ++[ReviewingText]
-NVDA üzerinde bulunduğunuz [nesnenin #ObjectNavigation] içeriğini ya da [ekran inceleme kipiyle #FlatReview] aktif ekranı, karakter karakter, sözcük sözcük, ya da satır satır incelemenize imkan vermektedir.
+NVDA üzerinde bulunduğunuz [ekranı #ScreenReview], aktif [belgeyi #DocumentReview] ya da üzerinde bulunduğunuz [nesneyi #ObjectReview] karakter karakter, sözcük sözcük, ya da satır satır incelemenize imkan vermektedir.
 Bu, windows komut konsolu ve sistem imlecinin çok kısıtlı olduğu veya hiç bulunmadığı pencereler gibi yerler için oldukça yararlıdır.
 Örneğin, bir iletişim kutusundaki uzun bir bilgi metnini incelemek için kullanabilirsiniz.
 
@@ -376,27 +378,39 @@ Düzen aşağıdaki biçimde gösterilmiştir:
 | Önceki sözcük | üzerinde bulunulan sözcük | Sonraki sözcük |
 | Önceki karakter | Üzerinde bulunulan karakter | Sonraki karakter |
 
-++ Ekran incelemesi ++[FlatReview]
-Genel olarak tek bir [nesnenin #Objects] içeriğini inceleyebilmenize rağmen, bazı nesneler, kapsadıkları nesneleri de incelemenize olanak tanır.
-Karmaşık belgelerin içeriğinin tamamını, ya da uygulama penceresiyle ilgili metnin tamamını, ekranda görüntülendiği şekliyle de inceleyebilirsiniz..
-Bu,  ekran incelemesi olarak adlandırılmaktadır.
-Bu özellik, başka  ekran okuyucularda bulunan inceleme imleci ya da fare imleciyle ilgili işlevlerle benzerlik göstermektedir.
+++ İnceleme Kipleri ++[ReviewModes]
+NVDA'nın inceleme komutları, seçilen kipe bağlı olarak, mevcut nesne, aktif belge, ya da  ekrandaki içeriği incelemenizi sağlar.
+İnceleme kipleri NVDA'daki eski flat review (ekran incelemesi) yerine kullanılmaya başlanmıştır.
 
-Ekran inceleme kipine geçtiğinizde, [nesne sunucusunun #ObjectNavigation] mevcut pozisyonunda konumlanırsınız.
-Nesne dolaşım  komutlarını kullanmadıysanız ve nesne sunucusu sistem odağını takip ediyorsa, ekran inceleme kipine geçtiğinizdeki konumunuz yüksek olasılıkla [sistem odağındaki #SystemFocus] nesne olacaktır.
-Örneğin, nesne sunucusu bir düğmenin üzerindeyse, ekran inceleme kipine geçtiğinizde bu düğmeyle ilgili metnin üzerinde olursunuz.
-Daha sonra, [metin inceleme tuşlarını  #ReviewingText] kullanarak nesneyle ilgili metnin yanısıra nesnenin bulunduğu ekranı inceleyebilirsiniz.
-Bu kipte ekranı incelerken, inceleme imlecinin mevcut pozisyonundaki nesneye atlayarak [nesne sunucusunu #ObjectNavigation] kullanmaya devam etmeniz de mümkündür.
-
-Braille'in varsayılan olarak nesne sunucusunu ve inceleme imlecini değil; [odağı #SystemFocus] ve [düzenleme imlecini #SystemCaret] takip ettiğini not edin.
-Nesne sunucusunu ve metin inceleme imlecini takip etmesini istiyorsanız, [braillein takip edeceği imleç #BrailleTether] olarak inceleme imlecini ayarlamalısınız.
-
-Aşağıdaki iki komutla, ekran incelemesine geçilebilir veya nesne sunucusu ekran inceleme imlecinin mevcut konumundaki nesneye taşınabilir:
+Aşağıdaki komutlarla, inceleme kipleri arasında geçiş yapılabilir:
 %kc:beginInclude
 || Ad | Masaüstü Kısayol tuşu | Dizüstü Kısayol tuşu | Dokunma hareketi | Tarif |
-| Ekran incelemesine geçiş | NVDA+numaratör7 | NVDA+önceki sayfa | iki parmakla yukarı kaydırma | Ekran incelemesi kipine geçer ve nesne sunucusunun en son üzerinde bulunduğu nesneyle ilgili ekranı incelemenizi sağlar. böylece tüm ekran içeriğini veya içinde  bulunduğunuz belgedeki metni, metin inceleme komutlarını kullanarak dolaşabilirsiniz. |
-| Ekran inceleme kipinden nesne sunucusuna geçiş | NVDA+numaratör1 | NVDA+sonraki sayfa  | iki parmakla aşağı kadırma | Ekran inceleme kipindeyken, inceleme imlecinin konumunda  bir nesne varsa, nesne sunucusunu bu nesnenin üzerine taşır |
+| Sonraki inceleme kipine geç | NVDA+numaratör7 | NVDA+önceki sayfa | iki parmakla yukarı kaydırma | varsa mevcut kipten sonraki inceleme kipine geçer. |
+| Önceki inceleme kipine geç | NVDA+numaratör1 | NVDA+sonraki sayfa  | iki parmakla aşağı kadırma | varsa mevcut kipten önceki inceleme kipine geçer. |
 %kc:endInclude
+
++++ Nesne İnceleme +++[ObjectReview]
+Nesne inceleme kipindeyken, yalnızca [mevcut nesne #ObjectNavigation] içindeki metni inceleyebilirsiniz.
+Yazı alanları ya da temel belge kontrolleri gibi nesneler için, bu genellikle  metinsel bir içeriktir.
+Başka nesneler için bu, nesne adı ya da değeri olabilir.
+
++++ Belge İncelemesi +++[DocumentReview]
+[mevcut nesne #ObjectNavigation] tarama kipindeki bir belge içindeyse (örneğin, web sayfası) ya da  birçok nesne içeren başka bir karmaşık belge (örneğin Lotus Symphony belgeleri), belge inceleme kipine geçmek mümkündür.
+Belge inceleme kipiyle açık dokümandaki tüm metni inceleyebilirsiniz.
+
+Nesne inceleme kipinden belge incelemeye geçtiğinizde , inceleme imleci nesne sunucusunun konumundaki metin üzerinde bulunur.
+Belge içinde inceleme imleciyle ilgili komutlarla hareket ederken, nesne sunucusunun konumu da otomatik olarak güncellenir.
+
+Tarama kipindeki belgeler incelenirken, NVDA'nın otomatik olarak nesne inceleme kipinden belge incelemeye geçeceğini not edin.
+
++++ Ekran İncelemesi +++[ScreenReview]
+Ekran inceleme kipi, aktif uygulama ekranında görünen metni incelemenizi sağlar.
+Bu, başka ekran okuyucularda bulunan, inceleme imleci ya da fare imleci gibi işlevlere benzer bir özelliktir.
+
+Ekran inceleme kipine geçildiğinde, inceleme imleci [nesne sunucusunun #ObjectNavigation] konumundaki nesne üzerinde bulunur.
+İnceleme komutlarıyla ekranda hareket edilirken, nesne sunucusunun konumu da otomatik olarak güncellenir.
+
+Bazı uygulamalar için, henüz desteklenmeyen ekran çizim teknolojileri kullanılmasından dolayı,  ekrandaki metnin tamamının gösterilemeyebileceğini not edin.
 
 ++ Fare ile Dolaşım ++
 Fare ile hareket ederken, varsayılan olarak NVDA, fare   ile üzerine gelinen   kontrolleri okur.
@@ -514,6 +528,12 @@ NVDA çeşitli işlemlerin yapılmasını kolaylaştırmak ya da ekran okuyucu k
 || Ad | Kısayol Tuşu | Tarif |
 | Sütun başlıklarını ayarla | NVDA+shift+c | Bir kez basıldığında mevcut satır sütun başlığı olarak ayarlanır ve sütunlar arasında dolaşılırken ayarlanan satırdaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
 | Satır başlıklarını ayarla | NVDA+shift+r | Bir kez basıldığında mevcut sütun satır başlığı olarak ayarlanır ve satırlar arasında dolaşılırken ayarlanan sütundaki bilgi otomatik olarak seslendirilir. İki kez basıldığında ayar sıfırlanır. | 
+%kc:endInclude
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Ad | Kısayol tuşu | Tarif |
+| Konuşmacı notları okuma modu | kontrol+shift+s | Aktif bir slayt gösterisi içindeyken, bu komut slayt içeriğinin mi yoksa konuşmacı notlarının mı seslendirileceğini belirler. Bu sadece NVDA'nın neyi seslendireceği ile ilgilidir, ekranda görüntülenen bilgi değişmez. | 
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -731,6 +751,7 @@ Bu seçenek, imleç inip çıkma hızının milisaniyede ne kadar hızlı olaca�
 
 ==== Mesaj Zaman Aşımı Saniyesi ====
 Bu seçenek, sistem mesajlarının braille ekranda ne kadar uzun süre gösterileceğini kontrol eden bir rakamsal alandır.
+0 yazılırsa mesajların gösterimi tamamen kapatılır.
 
 %kc:setting
 ==== Braille'in  İzleyeceği İmleç ====[BrailleTether]
@@ -942,9 +963,12 @@ Bu seçenek, tarama kipindeki bağlantı ve metin gibi içeriklerin her birinin 
 Bu onay kutusu tarama kipinde yüklenen sayfanın otomatik olarak okunmaya başlanmasıyla ilgili ayarı değiştirir.
 Bu seçenek varsayılan olarak etkindir.
 
-==== Düzenleme Tablolarını Bildir ====
-Devre dışı bırakıldığında, NVDA yalnızca çizelge biçiminde verileri olan ve tablo olduğunu bilmenin bir anlam taşıdığı tabloları belirtecektir.
-Ancak Etkinleştirildiğinde, NVDA salt görsel amaçlı olarak kullanılan tabloları da belirtir.
+==== Düzenleme Tablolarını Dahil Et ====
+Bu seçenek, sadece sayfa düzeniyle ilgili, veri içermeyen  tablolarla karşılaştığında NVDA'nın nasıl davranacağını etkiler.
+Açıksa, NVDA bu tablolarla karşılaştığında normal tablolara davrandığı gibi tepki verir, [Belge Format Ayarları #DocumentFormattingSettings] nasıl yapıldıysa o şekilde belirtir ve tek tuş dolaşımı ile bu tablolara da ulaşılır.
+Devre dışı bırakıldığında, NVDA sadece sayfa düzeniyle ilgili olarak oluşturulmuş tabloları bildirmez ve tek tuş dolaşımıyla da bu tablolara ulaşılmaz.
+Ancak, tablodaki metin normal metin olarak gösterilir.
+Bu seçenek varsayılan olarak kapalıdır.
 
 ==== Başlık ve Bağlantı gibi alanların belirtilmesini ayarlama ====
 Başlıklar, bağlantılar, tablolar ve listeler gibi kontrollerin seslendirilmesiyle ilgili ayarlar  için, lütfen  [Belge Formatları  İletişim Kutusu #DocumentFormattingSettings] içerisindeki seçeneklere bakın.
@@ -1082,9 +1106,16 @@ BU paketler camia tarafından sağlanırlar ve NVDA'nın özelliklerini gelişti
 Eklenti yöneticisi, mevcut kullanıcı konfigürasyon dizininde kurulu olan tüm eklentileri listeler. 
 Her bir eklenti için, Paket adı, versiyon ve yazar bilgisi gösterilir, Eklenti Hakkında düğmesine basılarak seçili eklentiye dair daha fazla bilgi alınabilir.
 
-Bir eklenti kurmak için Eklenti Kur düğmesini kullanın.
+Mevcut eklentileri online olarak inceleyip indirmek için, Eklenti edin düğmesine basın.
+Bu düğme  [NVDA Eklenti sayfasını  http://addons.nvda-project.org/] açar.
+Eğer  NVDA sisteminizde kuruluysa, eklenti kurulum sürecini aşağıdaki tarife uyarak doğrudan tarayıcınızda başlatabilirsiniz.
+Aksi halde, eklenti paketini bilgisayarınıza kaydedip aşağıdaki yönergeyi takip edin.
+
+Daha önce temin ettiğiniz bir eklentiyi kurmak için Eklenti Kur düğmesini kullanın.
 Bu, bilgisayarınızda ya da bağlı olduğunuz ağda kayıtlı olan bir NVDA eklenti paketini (.nvda-addon dosyası) bulmanız için bir iletişim kutusunu açacaktır.
-Eklenti paketini bulup Aç dediğinizde, NVDA bu eklentiyi kurmak istediğinize emin olup olmadığınızı sorar.
+Aç dediğinizde kurulum süreci başlar.
+
+Süreç başladıktan sonra, NVDA bu eklentiyi kurmak istediğinize emin olup olmadığınızı sorar.
 NVDA eklentilerinin işlevleri sınırlanmadığı için, sistemde kurulu olan NVDA kopyasıyla birlikte çalışan eklentilerin, en azından teoride kişisel bilgilerinize ya da tüm sisteminize ulaşması mümkün olduğundan, yalnızca güvendiğiniz kaynaklardan edindiğiniz eklentileri kurmanız çok önemlidir.
 Eklenti kurulduktan sonra, etkin olabilmesi için NVDA'nın yeniden başlatılması gerekir. 
 Bu yapılana kadar eklenti durumu kur olarak gösterilir.

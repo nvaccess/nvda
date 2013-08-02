@@ -141,8 +141,10 @@ Por favor investiga no sitio web de NVDA para saber como facer esto.
 
 Cando NVDA arranque por primeira vez, daráseche a benvida mediante un cadro de diálogo que che proporciona algunha información básica acerca da tecla modificadora de NVDA e do menú de NVDA. 
 (Pmira por favor seccións subseguintes acerca de estos temas). 
-O cadro de diálogo tamén contén dúas casiñas de verificación. 
-A primeira permíteche controlar se NVDA debería utilizar BloqMayus como unha tecla modificadora de NVDA, e a segunda permíteche controlar se este diálogo de benvida debería aparecer cada vez que NVDA arranque.
+O cadro de diálogo tamén contén tres casiñas de verificación. 
+A primeira permíteche controlar se NVDA debería utilizar BloqMayus como unha tecla modificadora do NVDA.
+A segunda especifica se NVDA debería arrancar automáticamente despois de autentificarte en Windows e só está dispoñible para copias instaladas do NVDA.
+A terceira permíteche controlar se este cadro de benvida debería aparecer cada vez que NVDA arranque.
 
 ++ Acerca de Ordes de teclado de NVDA ++
 
@@ -300,7 +302,7 @@ Nestos casos, podes utilizar a navegación de obxectos.
 
 A Navegación de obxectos permíteche moverte e obter información acerca de [obxectos #Objects] individuais.
 Cando te movas a un obxecto, NVDA anunciaráo de xeito similar ó anunciado do foco do sistema.
-Para unha maneira de revisar todo o texto segundo apareza na pantalla, podes utilizar no seu lugar [revisión chan #FlatReview].
+Para unha maneira de revisar todo o texto segundo apareza na pantalla, podes utilizar no seu lugar [revisión de pantalla  #ScreenReview].
 
 Máis que moverse cara atrás e adiante entre cada simple obxecto no sistema, os obxectos agrúpanse xerárquicamente.
 Esto significa que debes moverte dentro dalgúns obxectos para acceder ós obxectos que conteñan.
@@ -311,7 +313,7 @@ Tamén podes pasar a lista se desexas acceder a outros obxectos.
 De igual xeito, nunha barra de ferramentas que conteñña controis, debes moverte dentro da barra de ferramentas para acceder ós controis na mesma.
  
 O obxecto actualmente en revisión chámase navegador de objetos.
-Unha vez que navegues a un obxecto, podes revisalo utilizando as [ordes de revisión de texto #ReviewingText].
+Unha vez que navegues a un obxecto, podes revisar o seu contido utilizando as [ordes de revisión de texto #ReviewingText] mentres se estea en [modo revisión de obxectos #ObjectReview].
 De xeito predeterminado, o navegador de obxectos móvese xunto co foco  do Sistema, aíndaque este comportamento pode activarse e desactivarse.
 
 Ten en conta que o braille segue ó [foco #SystemFocus] e ó [cursor do sistema #SystemCaret] de forma predeterminada, en lugar de ó navegador de obxectos e revisión de texto.
@@ -335,7 +337,7 @@ Para navegar por obxectos, utiliza as seguintes ordes:
 nota: as teclas do teclado numérico requiren que a tecla BloqNum estea desactivada para funcionar apropriadamente.
 
 ++ Revisando o Texto ++[ReviewingText]
-NVDA permíteche ler o contido do actual [navegador de obxectos #ObjectNavigation] (incluíndo [revisión chan #FlatReview]) por carácteres, palabras ou liñas.
+NVDA permíteche ler o contido da [pantalla #ScreenReview], [documento actual #DocumentReview] ou [obxecto actual #ObjectReview] por caracteres, palabras ou liñas.
 Esto é principalmente útil en lugares (incluindo consolas de ordes de Windows) onde non hai [cursor do sistema #SystemCaret].
 Por exemplo, utilizaríalo para revisar o texto dunha mensaxe longa de información nun diálogo.
 
@@ -376,27 +378,35 @@ A disposición está ilustrada como segue:
 | Palabra anterior | Palabra actual | Palabra seguinte |
 | Caracter anterior | Caracter actual | Caracter seguinte |
 
-++ Revisión Chan ++[FlatReview]
-Mentres xeralmente só podes revisar o contido dun único [obxecto #Objects], algúns obxectos permítenche revisar o contido dos obxectos dentro deles.
-Os documentos conprexos permítenche revisar todo o seu contido e as ventás de aplicación permítenche revisar o texto da pantalla como apareza visualmente.
-Esto chámase revisión chan.
-Esto é semellante á revisión de pantalla ou á funcionalidade do cursor do rato en moitos outros lectores de pantalla para Windows.
+++ Modos de Revisión ++[ReviewModes]
+As ordes de revisión de texto do NVDA poden revisar o contido dentro do navegador de obxectos actual, documento actual, ou pantalla, dependendo do modo de revisión seleccionado.
+Os modos de revisión son un  reemplazo para o antiguo concepto de revisión cha do NVDA.
 
-Cando movas a revisión chan, colocaráseche na localización do actual [navegador de obxectos #ObjectNavigation].
-Se non utilizaches a navegación de obxectos, normalmente este será o obxecto que teña o [foco #SystemFocus].
-Por exemplo, se o navegador de obxectos fose un botón, normalmente colocaráseche no texto do botón na revisión chan.
-Entón podes revisar o texto utilizando as [ordes de revisión de texto #ReviewingText].
-Tamén podes navegar directamente ó obxecto que abrangue a posición actual do cursor de revisión, permitíndoche utilizar [navegación de obxectos #ObjectNavigation] dende alí.
-
-Ten en conta que o braille segue ó [foco #SystemFocus] e ó [cursor do sistema #SystemCaret] de forma predeterminada, en lugar de ó navegador de obxectos e revisión de texto.
-Se no seu lugar queres seguir ó navegador de obxectos e á revisión de texto, necesitas [configurar que o braille sega #BrailleTether] á revisión.
-
-As seguintes dúas ordes utilízanse para cambiar a e dende a revisión chan: 
+As ordes que seguen cambian entre os modos de revisión:
 %kc:beginInclude
-|| Nome | Tecla Sobremesa | Tecla Portátil | Tactil | Descripción |
-| Cambiar a revisión chan | NVDA+7 teclado numérico | NVDA+alt+7 | deslizar con 2 dedos arriba | Móvese á revisión chan, colocándote na posición do navegador de obxectos actual,  permitíndoche revisar a pantalla (ou documento se estás actualmente dentro dun), cas ordes de revisión de texto.
-| Mover a objeto dende revisión chan | NVDA+1 teclado numérico | NVDA+alt+j | deslizar con 2 dedos abaixo | navega ó obxecto representado polo texto na posición actual do cursor de revisión en revisión plana |
+|| Nome | Tecla Escritorio | Tecla Portátil | Tactil | Descripción |
+| Cambiar ó  modo de revisión seguinte | NVDA+7 teclado numérico | NVDA+repáx | deslizar 2 dedos arriba | cambia ó seguinte modo de revisión dispoñible. | 
+| cambiar ó modo de revisión anterior | NVDA+1 teclado numérico | NVDA+avPáx | deslizar 2 dedos cara abaixo | Cambia ó seguinte modo de revisión dispoñible. |
 %kc:endInclude
+
++++ Revisión de Obxectos +++[ObjectReview]
+Mentres se estea en modo revisión de obxectos, só poderás revisar o contido do actual [navegador de obxectos #ObjectNavigation].
+Para obxectos como campos de edición ou outros controis básicos de documento, Esto será xeralmente o contido de texto.
+Para outros obxectos, esto será o nome e ou valor.
+
++++ Revisión de Documentos +++[DocumentReview]
+Cando o [navegador de obxectos #ObjectNavigation] estea dentro dun documento en modo navegación (ex.: páxina web) ou outro documento complexo que conteña moitos obxectos (ex.: documentos de Lotus Symphony), é posible cambiar ó modo revisión de documentos.
+O modo revisión de documentos permíteche revisar o texto do documento enteiro.
+Cando se cambie dende revisión de obxectos á revisión de documentos, o cursor de revisión colócase no documento na posición do navegador de obxectos.
+Ó moverse polo documento cas ordes de revisión, o navegador de obxectos actualízase automáticamente ó obxecto que se atopa na  posición actual do cursor de revisión.
+Ten en conta que NVDA cambiará á revisión de documentos dende revisión de objetos automáticamente cando te movas polos documentos en modo navegación.
+
++++ Revisión de Pantalla +++[ScreenReview]
+O modo revisión de pantalla permíteche revisar o texto segundo apareza visiblemente na pantalla dentro da aplicación actual.
+Esto é similar á funcionalidade de revisión de pantalla ou cursor do rato en moitos outros lectores de pantalla para Windows.
+ Cando se cambia ó modo revisión de pantalla, o cursor de revisión colócase na posición de pantalla do actual [navegador de obxectos #ObjectNavigation].
+ Cando nos movamos pola pantalla cas ordes de revisión, o navegador de obxectos actualízase automáticamente ó obxecto máis profundo atopado na posición da pantalla do cursor de revisión.
+Ten en conta que nalgunhas aplicacións modernas, NVDA podería non ver algún ou todo o texto dispoñible na pantalla, debido ó uso das recentes tecnoloxías de dibuxo na pantalla que son imposibles de soportar en estos intres.
 
 ++ Navegando co Rato ++
 Cando moves o rato, NVDA informa de xeito predeterminado do texto que está directamente baixo o punteiro do mesmo, segundo se mova sobre el. 
@@ -514,6 +524,12 @@ NVDA proporciona as súas proprias ordes extra para algunhas aplicacións para f
 || Nome | Tecla | Descripción |
 | Configurar fila de cabeceiras de columna | NVDA+shift+c | Premendo esto unha vez di ó NVDA que esta é a fila que contén cabeceiras de columna, os que deberían anunciarse automáticamente cando te movas entre columnas por esta fila. Premendo dúas veces limpará a opción. | 
 | Configurar columna de cabeceiras de fila | NVDA+shift+r | Premendo esto unha vez  di ó NVDA que esta é a columna que contén cabeceiras de fila, os que se deberían anunciar automáticamente  cando te movas entre filas despois de esta columna. Premendo dúas veces limpará a opción. | 
+%kc:endInclude
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Nome | Tecla | Descripción |
+| conmutar lectura de notas do orador | control+shift+s | Cando se está nunha presentación en execución, esta orde conmutará entre as notas do orador para a diapositiva e o contido da diapositiva. Esto só afecta ó que le NVDA, non ó que se amosa na pantalla. | 
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -731,6 +747,7 @@ Esta opción é un campo numérico que che permite cambiar a velocidade de parpa
 
 ==== Duración da Mensaxe (en seg) ====
 Esta opción é un campo numérico que controla durante canto tempo se amosan as mensaxes do sistema na liña braille.
+Especifycando 0 deshabilítase o amosado destas mesaxes completamente.
 
 %kc:setting
 ==== O Braille segue a ====[BrailleTether]
@@ -942,9 +959,12 @@ Esta opción permíteche especificar se o contido no modo navegación debería c
 Esta casiña de verificación conmuta a fala automática dunha páxina despois de cargala en modo navegación.
 Esta opción está activada por defecto.
 
-==== Anunciar táboas de deseño ====
-Cando se desactiva esta opción fas que NVDA só anuncie táboas que conteñen datos tabulares (l que che da a coñecer que eso é una táboa). 
-pero se a activas, NVDA tamén anunciará táboas utilizadas puramente para representación visual.
+==== Incluir Táboas de Deseño ====
+Esta opción afecta a cómo NVDA manella as tablas utilizadas exclusivamente con fins de deseño.
+Cando está activada, NVDA trátaas como táboas normais, anunciándoas basándose nas [Opcións de Formato de Documento #DocumentFormattingSettings] e localizándoas cas ordes de navegación rápida.
+Cando está desactivada, non se anuncian nin se atopan ca navegación rápida.
+Sen embargo, o contido das táboas aínda se incluirá como texto normal.
+Esta opción está desactivada de forma predeterminada.
 
 ==== Configurando o anunciado de campos como ligas e cabeceiras ====
 Por favor atopa as novas opcións no [diálogo Opcións de Formato de documento #DocumentFormattingSettings]. 
@@ -1082,9 +1102,17 @@ Estos paquetes son proporcionados pola comunidade e conteñen código persoaliza
 O Administrador de Complementos contén unha lista que amosa todos os complementos instalados actualmente na túa configuración do usuario do NVDA. 
 Amósase un nome de paquete, versión e autor para cada complemento, aíndaque se pode ver máis información coma unha descripción e unha URL seleccionando o complemento e premendo o botón Acerca do complemento.
 
-Para instalar un Complemento, preme o botón Instalar.
-Esto permitirache examinar un paquete de complemento  (ficheiro .nvda-addon) no teu ordenador ou nunha red.
-Unha vez que premas Abrir, NVDA preguntarache  se realmente desexas instalar o complemento.
+Para examinar e descargar os complementos dispoñibles online, preme o botón Obter Complementos.
+Este botón abre a [páxina de complementos do NVDA http://addons.nvda-project.org/].
+Se NVDA está instalado no teu sistema, podes abrir directamente o complemento dende o examinador para comenzar o proceso de instalación como se describe a continuación.
+Pola contra, garda o paquete de complemento e segue as instruccións máis abaixo.
+
+Para instalar un complemento que conseguiches previamente, preme o botón Instalar.
+ Esto permitirache buscar un paquete de complemento (ficheiro .nvda-addon) en algún lugar do teu computador ou nunha rede.
+
+Unha vez premas Abrir, o proceso de instalación comezará.
+
+Cando un complemento se vai a instalar, NVDA primeiro pedirache que confirmes que realmente desexas instalalo.
 Debido a que a funcionalidade dos complementos non ten restriccións dentro do NVDA, o que en teoría podería incluir o acceso ós teus datos persoais ou incluso a todo o sistema se NVDA é unha copia instalada, é moi importante que instales só complementos dende fontes fiables.
 Unha vez que o complemento estea instalado, NVDA debe reiniciarse para que o complemento comece a súa execución. 
 Ata que o fagas, un estado de "instalar" amosarase para ese complemento na lista.
