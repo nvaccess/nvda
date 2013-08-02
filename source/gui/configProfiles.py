@@ -11,7 +11,17 @@ import gui
 
 class ProfilesDialog(wx.Dialog):
 
+	_instance = None
+	def __new__(cls, *args, **kwargs):
+		# Make this a singleton.
+		if ProfilesDialog._instance is None:
+			return super(ProfilesDialog, cls).__new__(cls, *args, **kwargs)
+		return ProfilesDialog._instance
+
 	def __init__(self, parent):
+		if ProfilesDialog._instance is not None:
+			return
+		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
 		super(ProfilesDialog, self).__init__(parent, title=_("Configuration Profiles"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -58,6 +68,9 @@ class ProfilesDialog(wx.Dialog):
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.userProfile.SetFocus()
+
+	def __del__(self):
+		ProfilesDialog._instance = None
 
 	def onOk(self, evt):
 		try:
