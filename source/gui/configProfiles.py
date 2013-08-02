@@ -20,6 +20,7 @@ class ProfilesDialog(wx.Dialog):
 		# Translators: The label of the user profile option in the Configuration Profiles dialog.
 		sizer.Add(wx.StaticText(self, label=_("&User profile:")))
 		# Translators: Indicates that no configuration profile is selected.
+		# In this case, the user's normal configuration will be used.
 		self.profiles = [_("(none)")]
 		self.profiles.extend(config.conf.listProfiles())
 		item = self.userProfile = wx.Choice(self, choices=self.profiles)
