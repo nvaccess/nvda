@@ -575,42 +575,6 @@ class WelcomeDialog(wx.Dialog):
 		d.Destroy()
 		mainFrame.postPopup()
 
-class ConfigFileErrorDialog(wx.Dialog):
-	"""A configuration file error dialog.
-	This dialog tells the user that their configuration file is broken.
-	"""
-
-	MESSAGE=_("""Your configuration file contains errors. 
-Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.
-""")
-
-	def __init__(self, parent):
-		# Translators: The title of the dialog to tell users that there are erros in the configuration file.
-		super(ConfigFileErrorDialog, self).__init__(parent, wx.ID_ANY, _("Configuration File Error"))
-		mainSizer=wx.BoxSizer(wx.VERTICAL)
-		messageText = wx.StaticText(self, wx.ID_ANY, self.MESSAGE)
-		mainSizer.Add(messageText,border=20,flag=wx.LEFT|wx.RIGHT|wx.TOP)
-		mainSizer.Add(self.CreateButtonSizer(wx.OK|wx.CANCEL),flag=wx.TOP|wx.BOTTOM|wx.ALIGN_CENTER_HORIZONTAL,border=20)
-		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
-		self.SetSizer(mainSizer)
-		mainSizer.Fit(self)
-
-	def onOk(self, evt):
-		globalVars.configFileError=None
-		config.conf.save()
-		self.Close()
-
-	@classmethod
-	def run(cls):
-		"""Prepare and display an instance of this dialog.
-		This does not require the dialog to be instantiated.
-		"""
-		mainFrame.prePopup()
-		d = cls(mainFrame)
-		d.ShowModal()
-		d.Destroy()
-		mainFrame.postPopup()
-
 class LauncherDialog(wx.Dialog):
 	"""The dialog that is displayed when NVDA is started from the launcher.
 	This displays the license and allows the user to install or create a portable copy of NVDA.

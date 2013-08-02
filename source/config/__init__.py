@@ -424,8 +424,10 @@ class ConfigManager(object):
 		else:
 			try:
 				profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+				self.baseConfigError = False
 			except:
 				log.error("Error loading base configuration", exc_info=True)
+				self.baseConfigError = True
 				return self._initBaseConf(factoryDefaults=True)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
