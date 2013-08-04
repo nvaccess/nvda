@@ -95,6 +95,47 @@ wdContentControlDate=6
 wdContentControlGroup=7
 wdContentControlCheckBox=8
 
+wdNoRevision=0
+wdRevisionInsert=1
+wdRevisionDelete=2
+wdRevisionProperty=3
+wdRevisionParagraphNumber=4
+wdRevisionDisplayField=5
+wdRevisionReconcile=6
+wdRevisionConflict=7
+wdRevisionStyle=8
+wdRevisionReplace=9
+wdRevisionParagraphProperty=10
+wdRevisionTableProperty=11
+wdRevisionSectionProperty=12
+wdRevisionStyleDefinition=13
+wdRevisionMovedFrom=14
+wdRevisionMovedTo=15
+wdRevisionCellInsertion=16
+wdRevisionCellDeletion=17
+wdRevisionCellMerge=18
+
+wdRevisionTypeLabels={
+	wdRevisionInsert:_("insertion"),
+	wdRevisionDelete:_("deletion"),
+	wdRevisionProperty:_("property"),
+	wdRevisionParagraphNumber:_("paragraph number"),
+	wdRevisionDisplayField:_("display field"),
+	wdRevisionReconcile:_("reconcile"),
+	wdRevisionConflict:_("conflict"),
+	wdRevisionStyle:_("style"),
+	wdRevisionReplace:_("replace"),
+	wdRevisionParagraphProperty:_("paragraph property"),
+	wdRevisionTableProperty:_("table property"),
+	wdRevisionSectionProperty:_("section property"),
+	wdRevisionStyleDefinition:_("style definition"),
+	wdRevisionMovedFrom:_("moved from"),
+	wdRevisionMovedTo:_("moved to"),
+	wdRevisionCellInsertion:_("cell insertion"),
+	wdRevisionCellDeletion:_("cell deletion"),
+	wdRevisionCellMerge:_("cell merge"),
+}
+
 storyTypeLocalizedLabels={
 	wdCommentsStory:_("Comments"),
 	wdEndnotesStory:_("Endnotes"),
@@ -159,6 +200,7 @@ formatConfigFlagsMap={
 	"reportComments":4096,
 	"reportHeadings":8192,
 	"autoLanguageSwitching":16384,	
+	"reportRevisions":32768,
 }
 
 class WordDocumentTextInfo(textInfos.TextInfo):
@@ -289,6 +331,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return field
 
 	def _normalizeFormatField(self,field):
+		revisionType=int(field.pop('wdRevisionType',0))
+		revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
+		if revisionLabel:
+			field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=colors.RGB.fromCOLORREF(int(color))		
