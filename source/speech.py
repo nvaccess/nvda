@@ -1060,6 +1060,15 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# %s will be replaced with the line number.
 			text=_("line %s")%lineNumber
 			textList.append(text)
+	if  formatConfig["reportRevisions"]:
+		revision=attrs.get("revision")
+		oldRevision=attrsCache.get("revision") if attrsCache is not None else None
+		if (revision or oldRevision is not None) and revision!=oldRevision:
+			# Translators: Reported when text is revised.
+			text=(_("revised %s"%revision) if revision
+				# Translators: Reported when text is not revised.
+				else _("unrevised"))
+			textList.append(text)
 	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")
 		oldBold=attrsCache.get("bold") if attrsCache is not None else None
