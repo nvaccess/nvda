@@ -715,6 +715,11 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 	def _getStoryText(self):
 		return self.obj.rootNVDAObject.basicText
 
+	def _getOffsetsFromNVDAObject(self,obj):
+		if obj==self.obj.rootNVDAObject:
+			return (0,self._getStoryLength())
+		raise LookupError
+
 class SlideShowTreeInterceptor(TreeInterceptor):
 	"""A TreeInterceptor for showing Slide show content. Has no caret navigation, a CursorManager must be used on top. """
 
