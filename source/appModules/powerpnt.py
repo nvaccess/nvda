@@ -52,7 +52,6 @@ class ppEApplicationSink(comtypes.COMObject):
 		oldFocus.treeInterceptor.rootNVDAObject.handleSlideChange()
 
 	def WindowSelectionChange(self,sel):
-		print sel
 		i=winUser.getGUIThreadInfo(0)
 		oldFocus=api.getFocusObject()
 		if not isinstance(oldFocus,Window) or i.hwndFocus!=oldFocus.windowHandle:
