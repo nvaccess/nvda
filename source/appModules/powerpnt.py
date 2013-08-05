@@ -599,7 +599,10 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		#Therefore walk through all the lines until one surrounds  the offset.
 		lines=self.obj.ppObject.textRange.lines()
 		length=lines.length
-		offset=min(offset,length-1)
+		# #3403: handle case where offset is at end of the text in in a control with only one line
+		# The offset should be limited to the last offset in the text, but only if the text does not end in a line feed.
+		if length and offset>=length and self._getTextRange(length-1,length)!='\n':
+			offset=min(offset,length-1)
 		for line in lines:
 			start=line.start-1
 			end=start+line.length
