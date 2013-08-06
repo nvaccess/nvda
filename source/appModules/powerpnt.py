@@ -1,6 +1,6 @@
 #appModules/powerpnt.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2012-2013 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -410,11 +410,19 @@ class DocumentWindow(PaneClassDC):
 
 	def handleSelectionChange(self):
 		"""Pushes focus to the newly selected object."""
-		obj=self.selection
-		if not obj:
-			obj=DocumentWindow(windowHandle=self.windowHandle)
-		if obj and obj!=api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			eventHandler.queueEvent("gainFocus",obj)
+		if getattr(self,"_isHandlingSelectionChange",False):
+			# #3394: A COM event can cause this function to run within itself.
+			# This can cause double speaking, so stop here if we're already running.
+			return
+		self._isHandlingSelectionChange=True
+		try:
+			obj=self.selection
+			if not obj:
+				obj=DocumentWindow(windowHandle=self.windowHandle)
+			if obj and obj!=eventHandler.lastQueuedFocusObject:
+				eventHandler.queueEvent("gainFocus",obj)
+		finally:
+			self._isHandlingSelectionChange=False
 
 	def event_gainFocus(self):
 		"""Bounces focus to the currently selected slide, shape or Text frame."""
