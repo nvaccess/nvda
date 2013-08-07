@@ -445,6 +445,7 @@ class DocumentWindow(PaneClassDC):
 		"kb:pageUp","kb:pageDown",
 		"kb:home","kb:control+home","kb:end","kb:control+end",
 		"kb:shift+home","kb:shift+control+home","kb:shift+end","kb:shift+control+end",
+		"kb:delete","kb:backspace",
 	)}
 
 class OutlinePane(EditableTextWithoutAutoSelectDetection,PaneClassDC):
@@ -501,7 +502,10 @@ class Slide(SlideBase):
 			title=self.ppObject.shapes.title.textFrame.textRange.text
 		except comtypes.COMError:
 			title=None
-		number=self.ppObject.slideNumber
+		try:
+			number=self.ppObject.slideNumber
+		except comtypes.COMError:
+			number=""
 		# Translators: the label for a slide in Microsoft PowerPoint.
 		name=_("Slide {slideNumber}").format(slideNumber=number)
 		if title:
