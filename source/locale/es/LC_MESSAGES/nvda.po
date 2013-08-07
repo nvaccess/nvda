@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-29 19:08+1000\n"
-"PO-Revision-Date: 2013-07-14 23:36+0100\n"
+"PO-Revision-Date: 2013-07-30 21:07+0100\n"
 "Last-Translator: Juan C. Buño <quetzatl@eresmas.net>\n"
 "Language-Team: equipo de traducción al español de NVDA <Quetzatl@eresmas."
 "net>\n"
@@ -2033,33 +2033,31 @@ msgstr ""
 
 #. Translators: reported when there are no other available review modes for this object
 #: globalCommands.py:291
-#, fuzzy
 msgid "No next review mode"
-msgstr "Modo de revisión simple"
+msgstr "No hay siguiente modo de revisión"
 
 #: globalCommands.py:292
-#, fuzzy
 msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Mueve la revisión plana por la pantalla (o documento si actualmente se está "
-"en uno) y pone el cursor de revisión en la localización del objeto actual"
+"Cambia al siguiente modo de revisión (es decir: objeto, documento o "
+"pantalla) y coloca la posición de revisión en el punto del navegador de "
+"objetos"
 
 #. Translators: reported when there are no  other available review modes for this object
 #: globalCommands.py:303
-#, fuzzy
 msgid "No previous review mode"
-msgstr "no hay marco anterior"
+msgstr "No hay modo de revisión anterior"
 
 #: globalCommands.py:304
-#, fuzzy
 msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Mueve la revisión plana por la pantalla (o documento si actualmente se está "
-"en uno) y pone el cursor de revisión en la localización del objeto actual"
+"Cambia al modo de revisión anterior (es  decir: objeto, documento o "
+"pantalla) y coloca la posición de revisión en el punto del navegador de "
+"objetos"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3330,19 +3328,16 @@ msgid "NVDA Python Console"
 msgstr "Consola Python para NVDA"
 
 #: review.py:68
-#, fuzzy
 msgid "Object review"
-msgstr "árbol"
+msgstr "Revisión de objetos"
 
 #: review.py:69
-#, fuzzy
 msgid "Document review"
-msgstr "Formateado de Documentos"
+msgstr "Revisión de documentos"
 
 #: review.py:70
-#, fuzzy
 msgid "Screen review"
-msgstr "árbol"
+msgstr "Revisión de pantalla"
 
 #: scriptHandler.py:33
 #, python-format
@@ -5832,7 +5827,7 @@ msgstr "Anunciar &números de línea"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1034
 msgid "Report l&ine indentation"
 msgstr "Anunciar sangría de la l&ínea"

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-29 19:08+1000\n"
-"PO-Revision-Date: 2013-02-19 16:35+0200\n"
+"PO-Revision-Date: 2013-08-01 01:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "Language: ar\n"
@@ -2009,33 +2009,29 @@ msgstr "نقل الكائن الحالي إلى موضع مؤشر الفأرة"
 
 #. Translators: reported when there are no other available review modes for this object
 #: globalCommands.py:291
-#, fuzzy
 msgid "No next review mode"
-msgstr "نمط الاستعراض البسيط"
+msgstr "لا يوجد نمط استعراض تالي"
 
 #: globalCommands.py:292
-#, fuzzy
 msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"الانتقال إلى الاستعراض المسطح للشاشة (أو للمستند إذا كنت بداخل مستند) ووضع "
-"مؤشر الاستعراض في موضع الكائن الحالي"
+"ينتقل إلى نمط الاستعراض التالي (على سبيل المثال نمط استعراض الكائن أو "
+"المستند أو الشاشة) ويضع مؤشر الاستعراض عند الكائن الحالي"
 
 #. Translators: reported when there are no  other available review modes for this object
 #: globalCommands.py:303
-#, fuzzy
 msgid "No previous review mode"
-msgstr "لا يوجد إطار سابق"
+msgstr "لا يوجد نمط استعراض سابق"
 
 #: globalCommands.py:304
-#, fuzzy
 msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"الانتقال إلى الاستعراض المسطح للشاشة (أو للمستند إذا كنت بداخل مستند) ووضع "
-"مؤشر الاستعراض في موضع الكائن الحالي"
+"ينتقل إلى نمط الاستعراض السابق (على سبيل المثال نمط استعراض الكائن أو "
+"المستند أو الشاشة) ويضع مؤشر الاستعراض عند الكائن الحالي"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -2761,25 +2757,22 @@ msgstr ""
 
 #. Translators: a message when there is no next object when navigating
 #: globalCommands.py:1172 globalCommands.py:1189
-#, fuzzy
 msgid "no next"
 msgstr "لا يوجد المزيد من الكائنات"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:1174
-#, fuzzy
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "تحريك الكائن الحالي إلى الكائن الذي يحويه"
+msgstr "يتحرك للكائن التالي وفقا للترتيب الشجري للكائنات"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:1191
-#, fuzzy
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "تحريك الكائن الحالي إلى الكائن الذي يحويه"
+msgstr "يتحرك للكائن السابق وفقا للترتيب الشجري للكائنات"
 
 #: globalCommands.py:1199
 #, python-format
@@ -3237,19 +3230,16 @@ msgid "NVDA Python Console"
 msgstr "بوابة لغة البرمجة بايثون"
 
 #: review.py:68
-#, fuzzy
 msgid "Object review"
-msgstr "عرض شجري"
+msgstr "استعراض الكائن"
 
 #: review.py:69
-#, fuzzy
 msgid "Document review"
-msgstr "تنسيق المستند"
+msgstr "استعراض المستند"
 
 #: review.py:70
-#, fuzzy
 msgid "Screen review"
-msgstr "عرض شجري"
+msgstr "استعراض الشاشة"
 
 #: scriptHandler.py:33
 #, python-format
@@ -4308,7 +4298,7 @@ msgstr "لا يمكن حفظ التعديلات- أغلب الظن أن ملف �
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 #: gui\__init__.py:164
 msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr ""
+msgstr "توجد محاورة إعدادات مفتوحة. يرجى إغلاقها أولا."
 
 #. Translators: Title for default speech dictionary dialog.
 #: gui\__init__.py:169
@@ -4751,9 +4741,8 @@ msgstr "إ&زالة"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 #: gui\addonGui.py:65
-#, fuzzy
 msgid "&Get add-ons..."
-msgstr "نبذة عن الإض&افة البرمجية..."
+msgstr "الح&صول على الإضافات البرمجية..."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 #: gui\addonGui.py:83
@@ -5624,9 +5613,8 @@ msgstr "القراءة الآلية للنص &فور تحميل الصفحة"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 #: gui\settingsDialogs.py:933
-#, fuzzy
 msgid "Include l&ayout tables"
-msgstr "الإعلام عن ال&جداول التنسيقية"
+msgstr "شمول ال&جداول التنسيقية"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -5714,7 +5702,7 @@ msgstr "الإعلام عن ر&قم السطر"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1034
 msgid "Report l&ine indentation"
 msgstr "الإعلان عن إزاحة الس&طر"
@@ -6093,15 +6081,13 @@ msgstr "تنشيط محتوى الصفحة"
 
 #. Translators: Presented when use screen layout option is toggled.
 #: virtualBuffers\__init__.py:862
-#, fuzzy
 msgid "use screen layout on"
-msgstr "استخدام عرض تنسيق الشاشة %s"
+msgstr "استخدام عرض تنسيق الشاشة تشغيل"
 
 #. Translators: Presented when use screen layout option is toggled.
 #: virtualBuffers\__init__.py:865
-#, fuzzy
 msgid "use screen layout off"
-msgstr "استخدام عرض تنسيق الشاشة %s"
+msgstr "استخدام عرض تنسيق الشاشة تعطيل"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 #: virtualBuffers\__init__.py:867

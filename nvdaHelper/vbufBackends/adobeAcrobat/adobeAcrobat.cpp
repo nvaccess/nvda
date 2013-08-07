@@ -498,10 +498,10 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			}
 			SysFreeString(tempBstr);
 		}
-	} else if (role == ROLE_SYSTEM_ROW) {
+	} else if (role == ROLE_SYSTEM_ROW&&tableInfo) {
 		++tableInfo->curRowNumber;
 		tableInfo->curColumnNumber = 0;
-	} else if (role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
+	} else if ((role == ROLE_SYSTEM_CELL || role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER)&&tableInfo) {
 		++tableInfo->curColumnNumber;
 		handleColsSpannedByPrevRows(*tableInfo);
 		wostringstream s;
