@@ -2,6 +2,54 @@
 
 
 %!includeconf: ../changes.t2tconf
+
+= 2013.2 =
+
+== Novità ==
+- Supporto al Framework Chromium, un tipo di controllo browser web utilizzato in svariate applicazioni. (#3108)
+- Nuova variante voce eSpeak: Iven3.
+- In Skype, i nuovi messaggi di chat vengono annunciati automaticamente durante la conversazione focalizzata. (# 2298)
+- Supporto per Tween, compresa la segnalazione dei nomi delle schede e meno verbosità durante la lettura dei tweet.
+- È ora possibile disabilitare la visualizzazione di messaggi NVDA su un display braille impostando il timeout messaggi a 0 nella finestra di dialogo Impostazioni Braille. (# 2482)
+- Nel Gestore componenti aggiuntivi, ora c'è un pulsante chiamato Preleva ulteriori componenti aggiuntivi  che aprirà il sito web dedicato da dove sarà possibile navigare e scaricare ulteriori script. (# 3209)
+- Nella finestra di dialogo  di benvenuto di NVDA che  appare sempre la prima volta che si esegue lo screen reader, sarà ora possibile specificare se NVDA debba avviarsi automaticamente dopo l'accesso a Windows. (# 2234)
+- La modalità riposo viene attivata di default ogni qualvolta si esegue Dolphin Cicero. (#2055)
+
+
+== Cambiamenti ==
+- L'azione di scorrimento a destra o a sinistra con un dito quando si opera in modalità oggetti ora permette di spostarsi tra di essi nella modalità in linea, seguendone la gerarchia degli stessi. Utilizzare lo scorrimento con due dita a destra o sinistra per spostarsi avanti e indietro tra gli oggetti nello stesso livello gerarchico.
+
+
+== Bug corretti ==
+- L'attivazione di un oggetto ora fa sì che venga annunciata prima l'azione rispetto all'attivazione stessa, (in sostanza in una visualizzazione ad albero, se si preme nvda+invio per espandere un ramo verrà annunciato espanso, non chiuso). (#2982)
+- Migliorata sensibilmente l'interazione con i campi d'immissione in Skype, quali chat o campi di ricerca. (#1601, #3036)
+- Nell'elenco delle conversazioni recenti di Skype, viene letto per ciascuna conversazione il numero di eventi, se rilevante. (#1446)
+- Migliorati sensibilmente inseguimento del cursore e lettura nei testi RTL, ad esempio modifica di fogli Excel in lingua araba. (#1601)
+- I comandi di navigazione veloce per bottoni e campi di form ora sono in grado di individuare collegamenti contrassegnati come pulsanti per motivi di accessibilità in Internet Explorer. (#2750)
+- In modalità navigazione, non viene più interpretato il contenuto all'interno di visualizzazioni ad albero. Per interagire con esse, premere invio in modalità focus. (#3023)
+- La pressione dei tasti alt-freccia giù o alt-freccia su in una casella combinata non causerà più erroneamente l'attivazione della modalità navigazione, quando ci si trovava in modalità focus. (#2340)
+- In Internet Explorer 10, le celle di una tabella non attiveranno più la modalità focus, a meno che l'autore della pagina web non le abbia esplicitamente dichiarate come focalizzabili. (#3248)
+- NVDA non si rifiuterà più di avviarsi se l'ora di sistema risulta precedente all'ultimo controllo fatto per la verifica di aggiornamenti. (#3260)
+- Se in un display braille viene visualizzata una barra di avanzamento, la barra braille viene aggiornata man mano che la barra di avanzamento cambia i valori. (#3258)
+- In modalità navigazione nelle applicazioni Mozilla, le didascalie delle tabelle non vengono più presentate due volte. (#3196)
+- Quando in Windows8 viene modificata la lingua di immissione, NVDA parlerà nella lingua corretta, non con la precedente. 
+- NVDA ora annuncia i cambiamenti della modalità di conversione IME in Windows 8.
+- NVDA non annuncia più caratteri incomprensibili sul desktop se viene utilizzato Google in versione giapponese oppure il metodo di immissione Atok.
+- In Windows7 e successivi, NVDA non annuncia più erroneamente riconoscimento vocale o immissione a tocco come una modifica della lingua di tastiera.
+ 
+
+== Cambiamenti per sviluppatori ==
+In inglese: - windowUtils.findDescendantWindow has been added to search for a descendant window (HWND) matching the specified visibility, control ID and/or class name.
+- La console remota Python non va più in timeout dopo 10 secondi mentre è in attesa di input. (#3126)
+ 
+
+= 2013.1.1 =
+
+== Bug corretti ==
+- quando si utilizza un metodo di immissione coreano o giapponese ed esso è il metodo predefinito, vengono prodotti correttamente i caratteri quando si digita nella propria interfaccia utente di NVDA. (#2909)
+- In Internet Explorer e altri controlli MSHTML, i campi contrassegnati come contenenti una voce non valida sono ora gestiti correttamente. (# 3256)
+
+
 = 2013.1 =
 Le caratteristiche più importanti di questa versione comprendono un layout tastiera per i portatili più coerente e intuitivo; il supporto di base per Microsoft PowerPoint; la gestione degli attributi longdesc nei browser web e il supporto per l'immissione del Braille computer per i display braille che dispongono una tastiera braille.
 

@@ -3,11 +3,78 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.2 =
+
+== Neue Funktionen ==
+- Unterstützung für das eingebettete Chromium-Framework, das in einigen Anwendungen zum Einsatz kommt. (#3108)
+- Neue eSpeak-Variante: Iven3.
+- Wenn sich ein Skype-Chat-Fenster im Vordergrund befindet, werden ankommende Nachrichten automatisch ausgegeben. (#2298)
+- Unterstützung für Tween, inkl. der Ausgabe von Registerkartennamen und weniger Ausführlichkeit bei der Ausgabe von Meldungen
+- Sie können die Anzeige von Braille-Blitzmeldungen abschalten, indem Sie in den Braille-Einstellungen die anzeigedauer von Meldungen auf 0 setzen. (#2482)
+- Im Dialog "Erweiterungen verwalten" gibt es jetzt einen neuen Schalter "weitere Erweiterungen herunterladen", über den Sie die Webseite für NVDA-Erweiterungen öffnen können. (#3209)
+- Im Willkommensdialog, welcher immer beim ersten Start von NVDA geöffnet wird, gibt es ein neues Kontrollkästchen, mit dessen Hilfe Sie festlegen können, ob NVDA nach der Anmeldung automatisch geladen werden soll. (#2234)
+- Bei der Verwendung von Dolphin Cicero wird automatisch der Schlafmodus aktiviert. (#2055)
+- Unterstützung für die 64-Bit-Versionen für Miranda und Miranda NG. (#3296)
+- im Windows 8.1-Startbildschirm werden nun Suchvorschläge automatisch angezeigt. (#3322)
+- Unterstützung beim Navigieren in und Bearbeiten von Tabellenblättern in Microsoft Excel 2013. (#3360)
+- verbesserte Unterstützung für Freedom Scientific Focus 14 blue, Focus 40 Blue und Focus 80 Blue (#3307)
+- Vorschläge zur Autovervollständigung  in Outlook 2010 werden angezeigt. (#2816)
+- neue Braille-Übersetzungstabellen: Computerbraille für Englisch (vereinigtes Königreich), koreanische Kurzschrift, russisches Computerbraille
+ 
+== Änderungen ==
+- Wenn Sie im Objektmodus mit einem Finger nach rechts/links streichen, verwendet NVDA eine vereinfachte Darstellung beim Navigieren zum nächsten/vorigen Objekt. Streichen Sie mit 2 Fingern nach rechts/links, um unter Berücksichtigung der Objekthierarchie zum nächsten/vorigen Objekt zu navigieren.
+- die Option "layouttabellen ansagen" wurde in "Layouttabellen einschließen" umbenannt. Hierdurch wird verdeutlicht,  dass Layouttabellen nicht angesprungen werden, wenn Sie die Schnellnavigationstasten verwenden, während diese Option deaktiviert ist. (#3140)
+- Der Flächenmodus wurde durch die Darstellungsmodi Objektdarstellung, Dokumentdarstellung und Bildschirmdarstellung ersetzt (#2996)
+ - Im Objektmodus können Sie sich den Inhalt des aktuellen Navigatorobjekts anzeigen lassen; im Dokumentmodus wird der Inhalt des gesamten Dokuments angezeigt; im Bildschirm-Darstellungsmodus wird der gesamte Bildschirminhalt der aktuellen Anwendung angezeigt
+ - Die Befehle zum Wechsel vom/in den Flächenmodus schalten nun zwischen den unterschiedlichen Darstellungsmodi um.
+ - Wenn Sie in die Modi Bildschirmdarstellung oder Dokumentdarstellung gewechselt haben nd die Befehle zum Betrachten von Text verwednen, wird der Navigator den NVDA-Cursor verfolgen und sich auf das am meisten untergeordnete Objekt setzen.
+ - Wenn Sie in den Modus Bildschirmdarstellung gewechselt haben, wird NVDA in diesem Modus bleiben, bis Sie zurück in den Modus Dokumentdarstellung oder Objektdarstellung wechseln.
+ - Wenn Sie sich im Dokument- oder Objektmodus befinden, wird NVDA zwischen den beiden Modi automatisch wechseln, abhängig davon, ob Sie sich im Lesemodus befinden oder nicht.
+- Liblouis auf 2.5.3 aktualisiert. (#3371)
+
+== Fehlerbehebungen ==
+- Beim Ausführen der Standardaktion mit einem Objekt wird der Name der Standardaktion (wie z. B. "erweitern" oder "reduzieren" bei Einträgen einer Baumstruktur) angegeben, noch bevor die Aktion ausgeführt wird. (#2982)
+- Präzise Cursorverfolgung in diversen Eingabefeldern innerhalb von Skype (wie z. B. Unterhaltungen, Suchfelder, etc.). (#1601, #3036)
+- Sofern relevant, wird in der Liste der Konversationen in skype die Anzahl der anstehenden Ereignisse (Neue Nachrichten, etc) angegeben. (#1446)
+- Verbesserte Cursorverfolgung für Sprachen mit Rechts-Links-Ausrichtung (wie z. B. Arabisch) in Microsoft Excel. (#1601)
+- Bei der Schnellnavigation für Formularfelder und Schalter werden nun auch Links angesprungen, die aus Gründen der Zugänglichkeit als Schalter ausgewiesen wurden. (#2750)
+- Im Lesemodus werden nun keine Baumstrukturen mehr verarbeitet, da dies nicht sinnvoll ist. Drücken Sie auf einer Baumstruktur die Eingabetaste, um in den Fokusmodus zu wechseln und mit der Baumstruktur zu interagieren. (#3023)
+- Beim Drücken von alt+Pfeil ab bzw. Alt+Pfeil auf zum Erweitern Bzw. Reduzieren von Kombinationsfeldern wird nun nicht mehr in den Lesemodus gewechselt. (#2340)
+- im Internet Explorer 10 wird beim Navigieren innerhalb von Tabellen nicht mehr automatisch in den Fokusmodus gewechselt, es sei denn, der Webentwickler hat bestimmte Zellen ausdrücklich als Fokussierbar gekennzeichnet. (#3248)
+- NVDA wird nun nicht mehr abstürzen, wenn die Systemzeit auf einen früheren Zeitpunkt eingestellt ist als der Zeitpunkt der letzten Prüfung auf Aktualisierungen. (#3260)
+- Wenn ein Fortschrittsbalken auf der Braillezeile angezeigt wird, wird die Braillezeile automatisch aktualisiert, wenn sich der Fortschrittsbalken ändert. (#3258)
+- in Mozilla-Anwendungen wird die Beschriftung von Tabellen nur noch einmal verarbeitet; außerdem wird die Zusammenfassung von Tabellen korrekt verarbeitet. (#3196)
+- Wenn sie in Windows 8 die Eingabesprache ändern, wird NVDA nun in der richtigen Sprache sprechen.
+- NVDA meldet nun eine Änderung des IME-Konvertierungsmodus in Windows 8, sobald Sie ihn ändern.
+- NVDA sagt auf dem Desktop keine unsinnigen Zeichen mehr an, wenn die Eingabemetoden Google Japanese oder Atok IME verwendet werden. (#3234)
+- Wenn Sie in Windows 7 oder neuer einen Touchscreen oder die Spracherkennung zur Dateneingabe verwenden, wird NVDA keinen Wechsel der Tastatursprache mehr melden.
+- Wenn die Ansage eingegebener Zeichen aktiviert ist und Sie drücken in bestimmten Eingabefeldern strg+Rücktaste, wird NVDA nicht mehr irrtümlich das Steuerzeichen 0x7f ansagen.
+- NVDA wird nun nicht mehr irrtümlich die Lautstärke, Tonhöhe oder die Sprechgeschwindigkeit ändern, wenn der zu sprechende Text bestimmte Steuerzeichen oder xml-Strukturen enthält. (#3334) (regression von #437)
+- in Java-Anwendungen wird eine Änderung der Beschriftung Bzw. des Wertes eines hervorgehobenen Steuerelements korrekt erkannt. (#3119)
+- Bei Scintilla-Steuerelementen werden die einzelnen Zeilen nun korrekt angezeigt, wenn der Wortumbruch aktiviert ist. (#885)
+- Wenn Sie sich mit Mozilla-Anwendungen auf Twitter.com im Fokusmodus durch die Meldungen bewegen, werden schreibgestützte Einträge nun korrekt erkannt. (#3327)
+- Bestätigungsdialoge in Office 2013 werden nun automatisch angezeigt.
+- Leistungsverbesserungen beim Navigieren in Tabellen in Microsoft Word (#3326)
+- Wenn sich in einer Microsoft-Word-Tabelle eine Zelle über mehrere Zeilen erstreckt, funktionieren nun die Tabellennavigationsbefehle (strg+alt+Pfeiltasten) korrekt.
+- Wenn der Erweiterungs-Manager bereits ausgeführt wird, führt ein erneutes Aktivieren des Erweiterungs-managers (entweder über extras --> Erweiterungen verwalten oder direkt aus dem Explorer heraus durch Öffnen einer .nvda-addon-Datei) nicht mehr zu einem Fehler. (#3351)
+- NVDA wird nicht mehr abstürzen, wenn Sie eine japanische oder chinesische Version von Office 2010 verwenden. (#3064)
+- mehrere leerzeichen werden in Braille nicht mehr zu einem Leerzeichen komprimiert. (#1366)
+- Die PHP-Entwicklungswerkzeuge von Eclipse funktionieren nun ähnlich wie Eclipse. (#3353)
+- Im Internet Explorer ist es nicht mehr nötig, Tab zu drücken, um mit eingebetteten Objekten wie Flash zu arbeiten. (#3364)
+
+== Änderungen für Entwickler ==
+- Mit windowUtils.findDescendantWindow können Sie ein Objekt (angegeben durch seine Zugriffsnummer) nach einem untergeordneten Objekt mit bestimmten Kriterien absuchen (Sichtbarkeit, Steuerelementnummer und/oder Klassenname).
+- Die Remote-Python-Konsole beendet sich nun nicht mehr nach 10 Sekunden, wenn sie auf eine Eingabe wartet. (#3126)
+- Das Modul bisect ist veraltet und wird demnächst aus dem Binärpaket von NVDA entfernt. (#3368)
+ - Erweiterungen, die Bisect (einschließlich urllib2) benötigen, sollten diese Module mitliefern.
+
 = 2013.1.1 =
+Neben anderen Fehlerkorrekturen und aktualisierten Übersetzungen wird in dieser Version von NVDA ein Problem behoben, wonach NVDA abgestürzt ist, wenn irisch als Landessprache eingestellt war.
 
 == Fehlerbehebungen ==
 - Wenn in NVDA-Dialogen bei der Eingabe von Zeichen eingabemethoden für koreanisch oder japanisch verwendet werden, werden nun die richtigen Zeichen erzeugt. (#2909)
 - Im Internet Explorer und anderen MSHTML-Dokumenten werden Eingabefelder korrekt angezeigt, wenn ungültige Werte eingegeben werden. (#3256)
+- nvda stürzt nun nicht mehr beim Start ab, wenn irisch als Landessprache eingestellt ist.
 
 
 = 2013.1 =
