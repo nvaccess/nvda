@@ -18,6 +18,7 @@ sourceFiles=[
 ]
 
 objFiles=[env.Object('_minHook_%s.obj'%x.replace('/','_'),minhookPath.File('src/%s'%x)) for x in sourceFiles]
+objFiles.append('dllmain.cpp')
 
 minHookLib=env.SharedLibrary(
 	target='minHook',
