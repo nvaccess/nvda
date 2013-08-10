@@ -27,14 +27,14 @@ class ProfilesDialog(wx.Dialog):
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label of the user profile option in the Configuration Profiles dialog.
-		sizer.Add(wx.StaticText(self, label=_("&User profile:")))
+		# Translators: The label of the profile list in the Configuration Profiles dialog.
+		sizer.Add(wx.StaticText(self, label=_("&Profile")))
 		# Translators: Indicates that no configuration profile is selected.
 		# In this case, the user's normal configuration will be used.
 		self.profiles = [_("(none)")]
 		self.profiles.extend(config.conf.listProfiles())
-		item = self.userProfile = wx.Choice(self, choices=self.profiles)
-		item.Bind(wx.EVT_CHOICE, self.onUserProfileChoice)
+		item = self.profileList = wx.Choice(self, choices=self.profiles)
+		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
 		if len(config.conf.profiles) == 1:
 			item.Selection = 0
 		else:
@@ -43,45 +43,51 @@ class ProfilesDialog(wx.Dialog):
 		mainSizer.Add(sizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a button to activate the selected profile.
+		item = wx.Button(self, label=_("&Activate"))
+		item.Bind(wx.EVT_BUTTON, self.onActivate)
+		sizer.Add(item)
+		self.AffirmativeId = item.Id
+		item.SetDefault()
 		# Translators: The label of a button to create a new configuration profile.
 		item = wx.Button(self, label=_("&New"))
 		item.Bind(wx.EVT_BUTTON, self.onNew)
 		sizer.Add(item)
 		# Translators: The label of a button to rename a configuration profile.
 		item = self.renameButton = wx.Button(self, label=_("&Rename"))
-		if self.userProfile.Selection == 0:
+		if self.profileList.Selection == 0:
 			item.Disable()
 		item.Bind(wx.EVT_BUTTON, self.onRename)
 		sizer.Add(item)
 		# Translators: The label of a button to delete a configuration profile.
 		item = self.deleteButton = wx.Button(self, label=_("&Delete"))
-		if self.userProfile.Selection == 0:
+		if self.profileList.Selection == 0:
 			item.Disable()
 		item.Bind(wx.EVT_BUTTON, self.onDelete)
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 
-		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL))
-		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
-		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		# Translators: The label of a button to close a dialog.
+		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
+		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
+		mainSizer.Add(item)
+		self.Bind(wx.EVT_CLOSE, lambda evt: self.Destroy())
+		self.EscapeId = wx.ID_CLOSE
 
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
-		self.userProfile.SetFocus()
+		self.profileList.SetFocus()
 
 	def __del__(self):
 		ProfilesDialog._instance = None
 
-	def onOk(self, evt):
+	def onActivate(self, evt):
 		try:
 			config.conf.deactivateProfile()
 		except IndexError:
 			pass
-		if self.userProfile.Selection != 0:
-			config.conf.activateProfile(self.profiles[self.userProfile.Selection])
-		self.Destroy()
-
-	def onCancel(self, evt):
+		if self.profileList.Selection != 0:
+			config.conf.activateProfile(self.profiles[self.profileList.Selection])
 		self.Destroy()
 
 	def onNew(self, evt):
@@ -98,12 +104,12 @@ class ProfilesDialog(wx.Dialog):
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
 		self.profiles.append(name)
-		self.userProfile.Append(name)
-		self.userProfile.Selection = len(self.profiles) - 1
-		self.userProfile.SetFocus()
+		self.profileList.Append(name)
+		self.profileList.Selection = len(self.profiles) - 1
+		self.profileList.SetFocus()
 
 	def onDelete(self, evt):
-		index = self.userProfile.Selection
+		index = self.profileList.Selection
 		if gui.messageBox(
 			# Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 			_("Are you sure you want to delete this profile? This cannot be undone."),
@@ -119,17 +125,17 @@ class ProfilesDialog(wx.Dialog):
 			# The profile hasn't been created yet.
 			pass
 		del self.profiles[index]
-		self.userProfile.Delete(index)
-		self.userProfile.Selection = 0
-		self.userProfile.SetFocus()
+		self.profileList.Delete(index)
+		self.profileList.Selection = 0
+		self.profileList.SetFocus()
 
-	def onUserProfileChoice(self, evt):
+	def onProfileListChoice(self, evt):
 		enable = evt.Selection > 0
 		self.deleteButton.Enabled = enable
 		self.renameButton.Enabled = enable
 
 	def onRename(self, evt):
-		index = self.userProfile.Selection
+		index = self.profileList.Selection
 		oldName = self.profiles[index]
 		# Translators: The label of a field to enter a new name for a configuration profile.
 		with wx.TextEntryDialog(self, _("New name:"),
@@ -145,6 +151,6 @@ class ProfilesDialog(wx.Dialog):
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
 		self.profiles[index] = newName
-		self.userProfile.SetString(index, newName)
-		self.userProfile.Selection = index
-		self.userProfile.SetFocus()
+		self.profileList.SetString(index, newName)
+		self.profileList.Selection = index
+		self.profileList.SetFocus()
