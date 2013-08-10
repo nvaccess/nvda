@@ -491,7 +491,7 @@ class ConfigManager(object):
 
 		# Load the profile.
 		fn = self._getProfileFn(name)
-		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", create_empty=True)
+		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=True)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
 		profile.name = name
@@ -500,7 +500,6 @@ class ConfigManager(object):
 
 	def activateProfile(self, name):
 		"""Activate a profile, loading it if appropriate.
-		If the named profile doesn't exist, it will be created.
 		@param name: The name of the profile.
 		@type name: basestring
 		"""
@@ -539,6 +538,18 @@ class ConfigManager(object):
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
+
+	def createProfile(self, name):
+		"""Create a profile.
+		@param name: The name of the profile ot create.
+		@type name: basestring
+		@raise ValueError: If a profile with this name already exists.
+		"""
+		fn = self._getProfileFn(name)
+		if os.path.isfile(fn):
+			raise ValueError("A profile with the same name already exists: %s" % name)
+		# Just create an empty file to make sure we can.
+		file(fn, "w")
 
 	def deleteProfile(self, name):
 		"""Delete a profile.

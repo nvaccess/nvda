@@ -98,7 +98,9 @@ class ProfilesDialog(wx.Dialog):
 			if d.ShowModal() == wx.ID_CANCEL:
 				return
 			name = api.filterFileName(d.Value)
-		if name in self.profiles:
+		try:
+			config.conf.createProfile(name)
+		except ValueError:
 			# Translators: An error displayed when the user attempts to create a profile which already exists.
 			gui.messageBox(_("That profile already exists. Please choose a different name."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
