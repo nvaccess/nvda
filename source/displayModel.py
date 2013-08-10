@@ -303,7 +303,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getStoryLength(self):
 		lineEndOffsets=self._storyFieldsAndRects[2]
 		if lineEndOffsets:
-			return lineEndOffsets[-1]+1
+			return lineEndOffsets[-1]
 		return 0
 
 	useUniscribe=False
@@ -380,8 +380,12 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 
 	def _getLineOffsets(self,offset):
 		lineEndOffsets=self._storyFieldsAndRects[2]
-		if not lineEndOffsets or offset>=lineEndOffsets[-1]:
+		if not lineEndOffsets:
 			return offset,offset+1
+		limit=lineEndOffsets[-1]
+		if not limit:
+			return offset,offset+1
+		offset=min(offset,limit-1)
 		startOffset=0
 		endOffset=0
 		for lineEndOffset in lineEndOffsets: 

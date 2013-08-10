@@ -43,9 +43,7 @@ General dependencies:
 	* Microsoft Windows SDK, version 7.0: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=c17ba869-9671-4330-a63e-1fd44e0e2505&displaylang=en
 		* You need to install both the 32 bit and 64 bit libraries and tools.
 	* MinHook, version 1.1.0: http://www.codeproject.com/KB/winsdk/LibMinHook.aspx
-		*Download the source archive. The file name is something like MinHook_110_src.zip depending on exact version.
-			* You will need an account on CodeProject to download from there.
-		* extract the libMinHook directory from the source archive into the NVDA include directory.
+		* This is included as a git submodule
 	* Boost C++ Libraries, version 1.47:
 		* You can download the latest Windows installer from http://www.boostpro.com/download
 		* On the components page of the installer, make sure to install at least all of the defaults (whatever is already checked).
