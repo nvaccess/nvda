@@ -8,6 +8,7 @@ import wx
 import config
 import api
 import gui
+from logHandler import log
 
 class ProfilesDialog(wx.Dialog):
 
@@ -87,7 +88,13 @@ class ProfilesDialog(wx.Dialog):
 		except IndexError:
 			pass
 		if self.profileList.Selection != 0:
-			config.conf.activateProfile(self.profiles[self.profileList.Selection])
+			try:
+				config.conf.activateProfile(self.profiles[self.profileList.Selection])
+			except:
+				# Translators: An error displayed when activating a profile fails.
+				gui.messageBox(_("Error activating profile."),
+					_("Error"), wx.OK | wx.ICON_ERROR)
+				return
 		self.Destroy()
 
 	def onNew(self, evt):
@@ -103,6 +110,12 @@ class ProfilesDialog(wx.Dialog):
 		except ValueError:
 			# Translators: An error displayed when the user attempts to create a profile which already exists.
 			gui.messageBox(_("That profile already exists. Please choose a different name."),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			return
+		except:
+			log.debugWarning("", exc_info=True)
+			# Translators: An error displayed when creating a profile fails.
+			gui.messageBox(_("Error creating profile - probably read only file system."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
 		self.profiles.append(name)
@@ -123,9 +136,11 @@ class ProfilesDialog(wx.Dialog):
 		name = self.profiles[index]
 		try:
 			config.conf.deleteProfile(name)
-		except LookupError:
-			# The profile hasn't been created yet.
-			pass
+		except:
+			log.debugWarning("", exc_info=True)
+			gui.messageBox(_("Error deleting profile."),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			return
 		del self.profiles[index]
 		self.profileList.Delete(index)
 		self.profileList.Selection = 0
@@ -150,6 +165,11 @@ class ProfilesDialog(wx.Dialog):
 			config.conf.renameProfile(oldName, newName)
 		except ValueError:
 			gui.messageBox(_("That profile already exists. Please choose a different name."),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			return
+		except:
+			log.debugWarning("", exc_info=True)
+			gui.messageBox(_("Error renaming profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
 		self.profiles[index] = newName
