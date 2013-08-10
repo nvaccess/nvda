@@ -28,6 +28,7 @@ import braille
 from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
+import scriptHandler
 
 #comtypes COM interface definition for Powerpoint application object's events 
 class EApplication(IDispatch):
@@ -435,6 +436,8 @@ class DocumentWindow(PaneClassDC):
 
 	def script_selectionChange(self,gesture):
 		gesture.send()
+		if scriptHandler.isScriptWaiting():
+			return
 		self.handleSelectionChange()
 	script_selectionChange.canPropagate=True
 

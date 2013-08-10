@@ -43,7 +43,7 @@ class NewLaptopKeyboardLayout(wx.Dialog):
 	def onClose(self, evt):
 		config.conf["upgrade"]["newLaptopKeyboardLayout"] = True
 		try:
-			config.save()
+			config.conf.save()
 		except:
 			pass
 		self.EndModal(0)
