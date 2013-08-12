@@ -13,6 +13,7 @@ from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
 import shlobj
+import baseObject
 
 #: The configuration specification
 #: @type: ConfigObj
@@ -159,6 +160,8 @@ confspec = ConfigObj(StringIO(
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
+
+[profileTriggers]
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
@@ -390,7 +393,7 @@ class ConfigManager(object):
 
 	#: Sections that only apply to the base configuration;
 	#: i.e. they cannot be overridden in profiles.
-	BASE_ONLY_SECTIONS = {"general", "update", "upgrade"}
+	BASE_ONLY_SECTIONS = {"general", "update", "upgrade", "profileTriggers"}
 
 	def __init__(self):
 		self.spec = confspec
@@ -483,6 +486,8 @@ class ConfigManager(object):
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
 		profile.name = name
+		profile.manual = False
+		profile.triggered = False
 		self._profileCache[name] = profile
 		return profile
 
@@ -495,9 +500,13 @@ class ConfigManager(object):
 		@type name: basestring
 		"""
 		if len(self.profiles) > 1:
-			del self.profiles[-1]
+			profile = self.profiles[-1]
+			if profile.manual:
+				del self.profiles[-1]
+				profile.manual = False
 		if name:
 			profile = self._getProfile(name)
+			profile.manual = True
 			self.profiles.append(profile)
 		self._handleProfileSwitch()
 
@@ -603,6 +612,27 @@ class ConfigManager(object):
 			# The profile wasn't dirty.
 			return
 		self._dirtyProfiles.add(newName)
+
+	def _triggerProfileEnter(self, name):
+		"""Called by L{ProfileTrigger.enter}}}.
+		"""
+		profile = self._getProfile(name)
+		profile.triggered = True
+		if len(self.profiles) > 1 and self.profiles[-1].manual:
+			# There's a manually activated profile.
+			# Manually activated profiles must be at the top of the stack, so insert this one below.
+			self.profiles.insert(-1, profile)
+		else:
+			self.profiles.append(profile)
+		self._handleProfileSwitch()
+
+	def _triggerProfileExit(self, name):
+		"""Called by L{ProfileTrigger.exit}}}.
+		"""
+		profile = self._getProfile(name)
+		profile.triggered = False
+		self.profiles.remove(profile)
+		self._handleProfileSwitch()
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
@@ -806,3 +836,44 @@ class AggregatedSection(object):
 		# Clear it and replace the content so it remains linked to the main spec.
 		self._spec.clear()
 		self._spec.update(val)
+
+class ProfileTrigger(object):
+	"""A trigger for automatic activation/deactivation of a configuration profile.
+	The user can associate a profile with a trigger.
+	When the trigger applies, the associated profile is activated.
+	When the trigger no longer applies, the profile is deactivated.
+	L{spec} is a string used to search for this trigger and must be implemented.
+	To signal that this trigger applies, call L{enter}.
+	To signal that it no longer applies, call L{exit}.
+	Alternatively, you can use this object as a context manager via the with statement;
+	i.e. this trigger will apply only inside the with block.
+	"""
+
+	@baseObject.Getter
+	def spec(self):
+		"""The trigger specification.
+		This is a string used to search for this trigger in the user's configuration.
+		@rtype: basestring
+		"""
+		raise NotImplementedError
+
+	def enter(self):
+		"""Signal that this trigger applies.
+		The associated profile (if any) will be activated.
+		"""
+		try:
+			self.profile = conf.profiles[0]["profileTriggers"][self.spec]
+		except KeyError:
+			self.profile = None
+			return
+		conf._triggerProfileEnter(self.profile)
+	__enter__ = enter
+
+	def exit(self):
+		"""Signal that this trigger no longer applies.
+		The associated profile (if any) will be deactivated.
+		"""
+		if not self.profile:
+			return
+		conf._triggerProfileExit(self.profile)
+	__exit__ = exit
