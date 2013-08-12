@@ -23,6 +23,7 @@ import win32con
 import eventHandler
 import braille
 import watchdog
+import appModuleHandler
 
 #User functions
 
@@ -109,14 +110,9 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	del ancestors[-1]
 	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
 	for removedMod in oldAppModuleSet-newAppModuleSet:
-		if not removedMod.sleepMode and hasattr(removedMod,'event_appModule_loseFocus'):
-			try:
-				removedMod.event_appModule_loseFocus()
-			except watchdog.CallCancelled:
-				pass
+		appModuleHandler.handleLoseFocus(removedMod)
 	for addedMod in newAppModuleSet-oldAppModuleSet:
-		if not addedMod.sleepMode and hasattr(addedMod,'event_appModule_gainFocus'):
-			addedMod.event_appModule_gainFocus()
+		appModuleHandler.handleGainFocus(addedMod)
 	try:
 		treeInterceptorHandler.cleanup()
 	except watchdog.CallCancelled:
