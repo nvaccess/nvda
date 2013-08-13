@@ -1,6 +1,6 @@
 #appModules/powerpnt.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2010 NVDA Contributors <http://www.nvda-project.org/>
+#Copyright (C) 2012-2013 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -28,6 +28,7 @@ import braille
 from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
+import scriptHandler
 
 #comtypes COM interface definition for Powerpoint application object's events 
 class EApplication(IDispatch):
@@ -52,7 +53,6 @@ class ppEApplicationSink(comtypes.COMObject):
 		oldFocus.treeInterceptor.rootNVDAObject.handleSlideChange()
 
 	def WindowSelectionChange(self,sel):
-		print sel
 		i=winUser.getGUIThreadInfo(0)
 		oldFocus=api.getFocusObject()
 		if not isinstance(oldFocus,Window) or i.hwndFocus!=oldFocus.windowHandle:
@@ -411,11 +411,19 @@ class DocumentWindow(PaneClassDC):
 
 	def handleSelectionChange(self):
 		"""Pushes focus to the newly selected object."""
-		obj=self.selection
-		if not obj:
-			obj=DocumentWindow(windowHandle=self.windowHandle)
-		if obj and obj!=api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
-			eventHandler.queueEvent("gainFocus",obj)
+		if getattr(self,"_isHandlingSelectionChange",False):
+			# #3394: A COM event can cause this function to run within itself.
+			# This can cause double speaking, so stop here if we're already running.
+			return
+		self._isHandlingSelectionChange=True
+		try:
+			obj=self.selection
+			if not obj:
+				obj=DocumentWindow(windowHandle=self.windowHandle)
+			if obj and obj!=eventHandler.lastQueuedFocusObject:
+				eventHandler.queueEvent("gainFocus",obj)
+		finally:
+			self._isHandlingSelectionChange=False
 
 	def event_gainFocus(self):
 		"""Bounces focus to the currently selected slide, shape or Text frame."""
@@ -428,6 +436,8 @@ class DocumentWindow(PaneClassDC):
 
 	def script_selectionChange(self,gesture):
 		gesture.send()
+		if scriptHandler.isScriptWaiting():
+			return
 		self.handleSelectionChange()
 	script_selectionChange.canPropagate=True
 
@@ -438,6 +448,7 @@ class DocumentWindow(PaneClassDC):
 		"kb:pageUp","kb:pageDown",
 		"kb:home","kb:control+home","kb:end","kb:control+end",
 		"kb:shift+home","kb:shift+control+home","kb:shift+end","kb:shift+control+end",
+		"kb:delete","kb:backspace",
 	)}
 
 class OutlinePane(EditableTextWithoutAutoSelectDetection,PaneClassDC):
@@ -494,7 +505,10 @@ class Slide(SlideBase):
 			title=self.ppObject.shapes.title.textFrame.textRange.text
 		except comtypes.COMError:
 			title=None
-		number=self.ppObject.slideNumber
+		try:
+			number=self.ppObject.slideNumber
+		except comtypes.COMError:
+			number=""
 		# Translators: the label for a slide in Microsoft PowerPoint.
 		name=_("Slide {slideNumber}").format(slideNumber=number)
 		if title:
@@ -599,7 +613,10 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		#Therefore walk through all the lines until one surrounds  the offset.
 		lines=self.obj.ppObject.textRange.lines()
 		length=lines.length
-		offset=min(offset,length-1)
+		# #3403: handle case where offset is at end of the text in in a control with only one line
+		# The offset should be limited to the last offset in the text, but only if the text does not end in a line feed.
+		if length and offset>=length and self._getTextRange(length-1,length)!='\n':
+			offset=min(offset,length-1)
 		for line in lines:
 			start=line.start-1
 			end=start+line.length
@@ -712,6 +729,11 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 
 	def _getStoryText(self):
 		return self.obj.rootNVDAObject.basicText
+
+	def _getOffsetsFromNVDAObject(self,obj):
+		if obj==self.obj.rootNVDAObject:
+			return (0,self._getStoryLength())
+		raise LookupError
 
 class SlideShowTreeInterceptor(TreeInterceptor):
 	"""A TreeInterceptor for showing Slide show content. Has no caret navigation, a CursorManager must be used on top. """

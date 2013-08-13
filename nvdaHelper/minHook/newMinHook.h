@@ -15,7 +15,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef NVDAHELPER_NEWMINHOOK_H
 #define NVDAHELPER_NEWMINHOOK_H
 
-#include <libMinHook/minHook.h>
+#include <minhook/libMinHook/minHook.h>
 
 //Some new batch calls
 MH_STATUS MH_EnableAllHooks();
