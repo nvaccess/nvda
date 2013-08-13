@@ -37,7 +37,7 @@ try:
 except ImportError:
 	_updateVersionFromVCS()
 description=_("A free and open source screen reader for Microsoft Windows")
-url="http://www.nvda-project.org/"
+url="http://www.nvaccess.org/"
 copyrightYears="2006-2013"
 copyright=_("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)

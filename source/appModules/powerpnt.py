@@ -28,6 +28,7 @@ import braille
 from cursorManager import ReviewCursorManager
 import controlTypes
 from logHandler import log
+import scriptHandler
 
 #comtypes COM interface definition for Powerpoint application object's events 
 class EApplication(IDispatch):
@@ -435,6 +436,8 @@ class DocumentWindow(PaneClassDC):
 
 	def script_selectionChange(self,gesture):
 		gesture.send()
+		if scriptHandler.isScriptWaiting():
+			return
 		self.handleSelectionChange()
 	script_selectionChange.canPropagate=True
 
@@ -445,6 +448,7 @@ class DocumentWindow(PaneClassDC):
 		"kb:pageUp","kb:pageDown",
 		"kb:home","kb:control+home","kb:end","kb:control+end",
 		"kb:shift+home","kb:shift+control+home","kb:shift+end","kb:shift+control+end",
+		"kb:delete","kb:backspace",
 	)}
 
 class OutlinePane(EditableTextWithoutAutoSelectDetection,PaneClassDC):
@@ -501,7 +505,10 @@ class Slide(SlideBase):
 			title=self.ppObject.shapes.title.textFrame.textRange.text
 		except comtypes.COMError:
 			title=None
-		number=self.ppObject.slideNumber
+		try:
+			number=self.ppObject.slideNumber
+		except comtypes.COMError:
+			number=""
 		# Translators: the label for a slide in Microsoft PowerPoint.
 		name=_("Slide {slideNumber}").format(slideNumber=number)
 		if title:
