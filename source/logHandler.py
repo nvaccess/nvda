@@ -32,7 +32,7 @@ def getCodePath(f):
 	@rtype: string
 	"""
 	fn=f.f_code.co_filename
-	if fn[0] != "<" and (not fn.startswith(sys.path[0] + "\\") or fn.startswith(globalVars.appArgs.configPath + "\\")):
+	if fn[0] != "<" and not fn.startswith(sys.path[0] + "\\"):
 		path="external:"
 	else:
 		path=""
