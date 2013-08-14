@@ -65,7 +65,7 @@ To use the Handy Tech braille display driver:
 		* Copy these files from the SDK's prog directory into NVDA's source\brailleDisplayDrivers\handyTech directory: HtBrailleDriverServer.dll, HtBrailleDriverServer.tlb, sbsupport.dll, dealers.dat
 	* If you want to be able to use this driver when running from source code, you will need to install the Handy Tech universal driver: ftp://ftp.handytech.de/public/Software/BrailleDriver/bsd1206a.exe
 
-To use the Baum, Brailliant B, hedo, Papenmeier and/or Seika braille display drivers:
+To use the Baum, BrailleNote, Brailliant B, hedo, Papenmeier and/or Seika braille display drivers:
 	* pyserial (for Python 2.x), version 2.5: http://pypi.python.org/pypi/pyserial
 
 To use the HIMS Braille Sense/Braille EDGE braille display driver:

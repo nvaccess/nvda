@@ -20,6 +20,7 @@
 - verbesserte Unterstützung für Freedom Scientific Focus 14 blue, Focus 40 Blue und Focus 80 Blue (#3307)
 - Vorschläge zur Autovervollständigung  in Outlook 2010 werden angezeigt. (#2816)
 - neue Braille-Übersetzungstabellen: Computerbraille für Englisch (vereinigtes Königreich), koreanische Kurzschrift, russisches Computerbraille
+- neue Sprache: Farsi. (#1427)
  
 == Änderungen ==
 - Wenn Sie im Objektmodus mit einem Finger nach rechts/links streichen, verwendet NVDA eine vereinfachte Darstellung beim Navigieren zum nächsten/vorigen Objekt. Streichen Sie mit 2 Fingern nach rechts/links, um unter Berücksichtigung der Objekthierarchie zum nächsten/vorigen Objekt zu navigieren.
@@ -61,7 +62,12 @@
 - mehrere leerzeichen werden in Braille nicht mehr zu einem Leerzeichen komprimiert. (#1366)
 - Die PHP-Entwicklungswerkzeuge von Eclipse funktionieren nun ähnlich wie Eclipse. (#3353)
 - Im Internet Explorer ist es nicht mehr nötig, Tab zu drücken, um mit eingebetteten Objekten wie Flash zu arbeiten. (#3364)
-
+- Beim Bearbeiten von Text in Powerpoint wird die letzte Zeile korrekt erkannt, auch wenn sie leer ist. (#3403)
+- In Powerpoint werden objekte nicht mehr fälschlicherweise zweimal angezeigt, wenn Sie sie bearbeiten wollen. (#3394)
+- NVDA bringt den Adobe reader nun nicht mehr zum Absturz, wenn fehlerhaft gestaltete Pdf-Dokumente geöffnet sind, die Tabellenzeilen außerhalb von Tabellen enthalten. (#3399)
+- Wenn Sie in Microsoft Powerpoint in der Miniaturansicht eine Folie löschen, wird nun die nächste Folie korrekt erkannt. (#3415)
+ 
+ 
 == Änderungen für Entwickler ==
 - Mit windowUtils.findDescendantWindow können Sie ein Objekt (angegeben durch seine Zugriffsnummer) nach einem untergeordneten Objekt mit bestimmten Kriterien absuchen (Sichtbarkeit, Steuerelementnummer und/oder Klassenname).
 - Die Remote-Python-Konsole beendet sich nun nicht mehr nach 10 Sekunden, wenn sie auf eine Eingabe wartet. (#3126)
