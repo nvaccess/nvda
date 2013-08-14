@@ -23,7 +23,7 @@ Lo mas resinyable incluye:
 - Suporte ta muitas linias de braille efímero incluindo a dentrada de braille computerizado ta linias braille que tiengan un teclau braille
 - Capacidat ta executar-se completament dende una memoria USB u atros meyos portables sin a necesidat d'instalación
 - Instalador parlante facil d'emplegar
-- Traduciu a 43 idiomas
+- Traduciu a 44 idiomas
 - Suporte ta Sistemas Operativos Windows modernos incluindo variants de 32 y 64 bit
 - Capacidat ta executar-se en finestras d'autentificación de Windows  y atras pantallas seguras 
 - Suporte ta interficies comunas d'accesibilidat tals como Microsoft Active Accessibility, Java Access Bridge, IAccessible2 y UI Automation
@@ -32,7 +32,7 @@ Lo mas resinyable incluye:
 
 ++ Internacionalización ++
 Ye important que qualsiquier persona en o mundo, sin importar qué idioma charre, tienga igual acceso a la tecnolochía. 
-Actualment NVDA ha estau traduciu a 42 idiomas amás de l'idioma anglés incluindo: Afrikáans, Albanés, Alemán, Amárico, Arabe, aragonés, Búlgaro, Checo, Chino Mandarín y Chino cantonés, Coreano, Crovata, Danés, eslovaco, Esloveno, Espanyol, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreu, Hindi, Holandés, Húngaro, Islandés, Italián, Chaponés, Nepalí, Noruego, Polaco, Portugués, Portugués d'o Brasil, Rumano, Ruso, Servio, Sueco, Ucrainés, Tamil, Tailandés, turco y Vietnamita,.
+Actualment NVDA ha estau traduciu a 44 idiomas amás de l'idioma anglés incluindo: Afrikáans, Albanés, Alemán, Amárico, Arabe, aragonés, Búlgaro, Checo, Chino Mandarín y Chino cantonés, Coreano, Crovata, Danés, eslovaco, Esloveno, Español, Farsi, Finlandés, Francés, Gallego, Georgiano, Griego, Hebreu, Hindi, Holandés, Húngaro, Irlandés, Islandés, Italián, Chaponés, Nepalí, Noruego, Polaco, Portugués, Portugués d'o Brasil, Rumano, Ruso, Servio, Sueco, Ucrainés, Tamil, Tailandés, turco y Vietnamita,.
 
 ++ Suporte de Sintesi de Voz ++
 Amás de proporcionar os suyos mensaches y interface en quantos idiomas, NVDA tamién puet posibilitar a l'usuario ta leyer contenius en qualsiquier idioma, tanto malas que tiengan un sintetizador de voz que pueda charrar ixe idioma en particular. 
@@ -141,8 +141,10 @@ Por favor investiga en o puesto Web de NVDA ta saber cómo fer isto.
 
 Quan NVDA ranque por primera vegada, se te dará a bienvenida por meyo d'un quadro de dialogo que te proporciona bella información basica sobre a tecla modificadera de NVDA y d'o menú de NVDA. 
 (Mira por favor seccions subsiguients sobre istos temas). 
-O quadro de dialogo tamién contién dos caixetas de verificación. 
-A primera te permite controlar si NVDA habría d'emplegar BloqMayus como una tecla modificadera de NVDA, y a segunda te permite controlar si iste dialogo de bienvenida habría d'amaneixer cada vegada que NVDA ranque.
+O quadro de dialogo tamién contién tres caixetas de verificación. 
+A primera te permite controlar si NVDA habría d'emplegar BloqMayus como una tecla modificadera de NVDA.
+A segunda especifica si NVDA habría de rancar automaticament dimpués d'autentificar-te en Windows y nomás ye disponible pa copias instaladas de NVDA.
+A tercera te permite controlar si iste dialogo de bienvenida habría d'amaneixer cada vegada que NVDA ranque.
 
 ++ Sobre Ordens de teclau de NVDA ++
 
@@ -300,7 +302,7 @@ En istos casos, puetz emplegar a navegación d'obchectos.
 
 A navegación d'obchectos te permite mover-te entre y obtener información sobre [obchectos #Objects] individuals.
 Quan te muevas a un obchecto, NVDA l'anunciará de modo semellant a l'anunciau d'o foco d'o sistema.
-Ta una traza de revisar tot o texto seguntes amaneixca en a pantalla, puetz emplegar a cambeo [revisión plana #FlatReview].
+Ta una traza de revisar tot o texto seguntes amaneixca en a pantalla, puetz fer servir en cuenta la [revisión de pantalla  #ScreenReview].
 
 Mas que mover-se dezaga y abant entre cada simple obchecto en o sistema, os obchectos s'agrupan hierarquicament.
 Isto significa que has de mover-te dentro de qualques obchectos ta accedir a os obchectos que contiengan.
@@ -311,7 +313,7 @@ Alavez puetz pasar d'a lista si deseyas accedir a atros obchectos.
 D'a mesma traza, en una barra de ferramientas que contién controls, has de mover-te dentro d'a barra de ferramientas ta accedir a os controls d'a mesma.
  
 L'obchecto actualment en revisión se diz navegador d'obchectos.
-Una vegada que navegues a un obchecto, puetz revisar-lo emplegando as [ordens de revisión de texto #ReviewingText].
+Una vegada que navegues enta un obchecto, puetz revisar o suyo conteniu emplegando as [ordens de revisión de texto #ReviewingText] mientras se siga en [modo revisión d'obchectos #ObjectReview].
 De traza predeterminada, o navegador d'obchectos se mueve de conchunta con o foco  d'o Sistema, encara que iste comportamiento puet activar-se y desactivar-se.
 
 Tien en cuenta que o braille sigue a o [foco #SystemFocus] y a o [cursor d'o sistema #SystemCaret] de forma predeterminada, en cuenta d'a o navegador d'obchectos y revisión de texto.
@@ -335,7 +337,7 @@ Ta navegar por obchectos, utiliza as siguients ordens:
 nota: as teclas d'o teclau numerico requieren que a tecla BloqNum siga desactivada ta funcionar apropiadament.
 
 ++ Revisando Texto ++[ReviewingText]
-NVDA te permite leyer o conteniu de l'actual [navegador d'obchectos #ObjectNavigation] (incluindo [revisión plana #FlatReview]) por caracters, parolas u linias.
+NVDA te permite leyer o conteniu d'a [pantalla #ScreenReview], [documento actual #DocumentReview] u l'[obchecto actual #ObjectReview] por caracters, parolas u linias.
 Isto ye prencipalment util en puestos (incluindo a consola d'o Dos de Windows) an no i haiga a existencia d'un  [cursor d'o sistema #SystemCaret].
 Por eixemplo, lo utilizarías ta revisar o texto d'un largo mensache d'información en un dialogo.
 
@@ -376,27 +378,39 @@ A distribución ye ilustrada d'a siguient traza:
 | Parola anterior | Parola actual | Parola siguient |
 | caracter anterior | caracter actual | caracter siguient |
 
-++ Revisión Plana ++[FlatReview]
-Mientres cheneralment solament puetz revisar o conteniu d'un solo [obchecto #Objects], qualques obchectos te permiten revisar o conteniu d'obchectos dentro d'ells.
-Os documentos conplejos te permiten revisar tot o suyo conteniu y as finestras d'aplicación te permiten revisar o texto d'a pantalla tal como amaneixca visualment.
-Isto se diz revisión plana.
-Isto ye semellant a la revisión de pantalla u a funcionalidat de cursor d'o churi en muitos atros lectors de pantalla ta Windows.
+++ Modos de Revisión ++[ReviewModes]
+As ordens de revisión de texto de NVDA pueden revisar o conteniu dentro d'o navegador d'obchectos actual, documento actual, u pantalla, dependendo d'o modo de revisión seleccionau.
+Os modos de revisión son un  reemplazo ta l'antigo concepto de revisión plana de NVDA.
 
-Quan muevas a revisión plana, se te colocará en a localización de l'actual [navegador d'obchectos #ObjectNavigation].
-Si no has utilizau a navegación d'obchectos, normalment este será l'obchecto que tienga o [foco #SystemFocus].
-Por eixemplo, si o navegador d'obchectos ise un botón, normalment se te colocará en o texto d'o botón en revisión plana.
-Alavez puetz revisar o texto emplegando as [ordens de revisión de texto #ReviewingText].
-Tamién puetz navegar dreitament a l'obchecto que abarca a posición actual d'o cursor de revisión, permitindo-te emplegar [navegación d'obchectos #ObjectNavigation] dende allí.
-
-Tien en cuenta que o braille sigue a o [foco #SystemFocus] y a o [cursor d'o sistema #SystemCaret] de forma predeterminada, en cuenta d'a o navegador d'obchectos y revisión de texto.
-Si en o suyo puesto quiers siguir a o navegador d'obchectos y a la revisión de texto, amenestes [configurar que o braille siga #BrailleTether] a la revisión.
-
-As siguients dos ordens s'utilizan ta cambiar a y dende a revisión plana:
+As ordens que siguen cambean entre os modos de revisión:
 %kc:beginInclude
 || Nombre | Tecla Escritorio | Tecla Portatil | Tactil | Descripción |
-| Cambiar a revisión plana | NVDA+7 teclau numerico | NVDA+AvPág | eslizar con 2 didos alto | Se mueve a revisión plana, colocando-te en a posición d'o navegador d'obchectos actual,  permitindo-te revisar a pantalla (u documento si yes actualment dentro d'un), con as ordens de revisión de texto. |
-| Mover a obchecto dende revisión plana | NVDA+1 teclau numerico | NVDA+rePág | eslizar con 2 didos abaixo | navega a l'obchecto representau por o texto en a posición actual d'o cursor de revisión en revisión plana |
+| Cambiar a lo  modo de revisión siguient | NVDA+7 teclau numerico | NVDA+rePach | eslizar 2 didos alto | cambea a lo siguient modo de revisión disponible. | 
+| cambiar a lo modo de revisión anterior | NVDA+1 teclau numerico | NVDA+avPach | eslizar 2 didos enta baixo | Cambea a l'anterior modo de revisión disponible. |
 %kc:endInclude
+
++++ Revisión d'Obchectos +++[ObjectReview]
+Mientras se siga en o modo revisión d'obchectos, solament podrás revisar o conteniu de l'actual [navegador d'obchectos #ObjectNavigation].
+Ta obchectos tals como campos d'edición u atros controls basicos de documento, Ixo será cheneralment o conteniu de texto.
+Ta atros obchectos, ixo será o nombre y u valor.
+
++++ Revisión de Documentos +++[DocumentReview]
+Quan o [navegador d'obchectos #ObjectNavigation] siga adentro d'un documento en o modo navegación (eix.: pachina web) u unatro documento complexo que contienga muitos obchectos (eix.: documentos de Lotus Symphony), ye posible cambiar a lo modo revisión de documentos.
+O modo revisión de documentos te permite revisar o texto d'o documento entero.
+
+Quan se cambee dende revisión d'obchectos a revisión de documentos, o cursor de revisión se coloca en o documento en a posición d'o navegador d'obchectos.
+A lo mover-se por o documento con os comandos de revisión, o navegador d'obchectos s'esviella automaticament ta l'obchecto que se troba en a posición  actual d'o cursor de revisión.
+
+Para cuenta que NVDA cambiará a revisión de documentos dende revisión d'obchectos automaticament quan te muevas por documentos en o modo navegación.
+
++++ Revisión de Pantalla +++[ScreenReview]
+O modo revisión de pantalla te permite revisar o texto tal como amaneixca visualment en a pantalla adentro de l'aplicación actual.
+Isto ye semellant a la funcionalidat de revisión de pantalla u cursor d'o churi en muitos atros lectors de pantalla ta Windows.
+ 
+ Quan se cambea a lo modo revisión de pantalla, o cursor de revisión se coloca en a posición de pantalla de l'actual [navegador d'obchectos #ObjectNavigation].
+ Quan nos movamos por a pantalla con as ordens de revisión, o navegador d'obchectos s'esviella automaticament ta l'obchecto trobau en a posición d'a pantalla d'o cursor de revisión.
+
+ Para cuenta que en qualques aplicacions modernas, NVDA podría no veyer belún u tot o texto disponible en a pantalla, a causa de l'uso d'as recients tecnolochías de dibuixo en pantalla que son imposibles de suportar en istos intes.
 
 ++ Navegando con o churi ++
 Quan mueves o churi, NVDA informa de forma predeterminada d'o texto que siga dreitament baixo o puntero d'o mesmo, seguntes se mueva sobre ell. 
@@ -512,8 +526,14 @@ NVDA proporciona as suyas propias ordens extra ta qualques aplicacions ta fer ma
 ++ Microsoft Excel ++
 %kc:beginInclude
 || Nombre | Tecla | Descripción |
-| Configurar ringlera de capiters de columna | NVDA+shift+c | Pretando isto una vegada diz a NVDA que ista ye a ringlera que contién capiters de columna, os quals habrían d'anunciar-se automaticament quan te muevas entre columnas por ista ringlera. Pretando dos vegadas limpiará a opción. | 
-| Configurar columna de capiters de ringlera | NVDA+shift+r | Pretando isto una vegada  diz a NVDA que ista ye a columna que contién capiters de ringlera, os que s'habrían d'anunciar automaticament  quan te muevas entre ringleras dimpués d'ista columna. Pretando dos vegadas limpiará a opción. | 
+| Configurar a ringlera de capiters de columna | NVDA+shift+c | Pretando isto una vegada diz a NVDA que ista ye a ringlera que contién capiters de columna, os quals habrían d'anunciar-se automaticament quan te muevas entre columnas por ista ringlera. Pretando dos vegadas limpiará a opción. | 
+| Configurar a columna de capiters de ringlera | NVDA+shift+r | Pretando isto una vegada  diz a NVDA que ista ye a columna que contién capiters de ringlera, os que s'habrían d'anunciar automaticament  quan te muevas entre ringleras dimpués d'ista columna. Pretando dos vegadas limpiará a opción. | 
+%kc:endInclude
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Nombre | Tecla | Descripción |
+| commutar a lectura de notas de l'orador | control+shift+s | Quan se ye en una presentación en execución, ista orden commutará entre las notas de l'orador ta la diapositiva y o conteniu d'a diapositiva. Isto solament afecta a o que leye NVDA, no a o que s'amuestra en a pantalla. | 
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -720,17 +740,18 @@ A tabla trigada s'utilizará ta transcribir a texto o braille introduciu en o te
 Actualment NVDA solament suporta a dentrada de braille computerizado, asinas que solament s'amostrarán tablas de braille computerizado de 8 puntos.
 Puetz mover-te entre as tablas braille en a lista emplegando as teclas de cursor.
 
-Tien en cuenta que ista opción solament ye util si a tuya linia braille tien un teclau tipo Perkins y si ista caracteristica se suporta por o controlador d'a linia braille.
+Para cuenta que ista opción solament ye util si a tuya linia braille tien un teclau tipo Perkins y si ista caracteristica ye suportada por o controlador d'a linia braille.
 Si a dentrada no se suporta en una linia que tienga un teclau braille, isto se notificará en a sección [Linias Braille Suportadas #SupportedBrailleDisplays].
 
  ==== Expandir a braille d'ordinador ta la parola en o cursor ====
 Ista opción permite a la parola que ye baixo o cursor estar amostrada en braille d'ordinador no contraito.
 
 ==== Velocidat de Parpagueo d'o Cursor ====
-Ista opción ye un campo numerico que te permite cambiar a velocidat de parpagueo d'o cursor en milésimas de segundo.
+Ista opción ye un campo numerico que te permite cambiar a velocidat de parpagueo d'o cursor en milesimas de segundo.
 
 ==== Duración d'o Mensache (en seg) ====
 Ista opción ye un campo numerico que controla entre quánto tiempo s'amuestran os mensaches d'o sistema en a linia braille.
+En especifycar 0 se deshabilita l'amostrau d'istos mensaches completament.
 
 %kc:setting
 ==== O Braille sigue a ====[BrailleTether]
@@ -942,9 +963,12 @@ Ista opción te permite especificar si o conteniu en o modo Navegación habría 
 Ista caixeta de verificación commuta a verbalización automatica d'una pachina dimpués de cargar-la en modo navegación.
 Ista opción ye activada por defecto.
 
-==== Anunciar tablas de disenyo ====
-Quan se desactiva ista opción fas que NVDA solament anuncie tablas que contiengan datos tabulares (o que te da a conoixer que ixo ye una tabla). 
-pero si l'activas, NVDA tamién anunciará tablas utilizadas purament ta representación visual.
+==== Incluir as Tablas de Disenyo ====
+Ista opción afecta a cómo NVDA manea as tablas utilizadas exclusivament con fins de disenyo.
+Quan ye activada, NVDA las tracta como tablas normals, anunciando-las basando-se en as [Opcions de Formato de Documento #DocumentFormattingSettings] y localizando-las con as ordens de navegación rapida.
+Quan ye desactivada, no s'anuncian ni se troban con a navegación rapida.
+Manimenos, o conteniu d'as tablas encara s'incluirá como texto normal.
+Ista opción ye desactivada de traza predeterminada.
 
 ==== Configurando l'anunciau de campos tals como vinclos y encabezaus ====
 Por favor troba as nuevas opcions en o [dialogo Opcions de Formato de documento #DocumentFormattingSettings]. 
@@ -1076,16 +1100,23 @@ Mientres o visualizador de voz ye activau, s'actualiza constantment ta amostrar-
 Manimenos, si fas clic u colocas o foco dentro d'o visualizador,  NVDA detendrá temporalment l'actualización d'o texto, tal que podrás seleccionar u copiar facilment o conteniu existent.
 
 ++ Administrador de Complementos ++
-L'Administrador de Complementos, a o que s'accedeix seleccionando Administrador de complementos baixo Ferramientas en o menú NVDA, te permite instalar y desinstalar paquetz de complementos ta NVDA.
+L'Administrador de Complementos, a lo que s'accedeix seleccionando Administrador de complementos baixo Ferramientas en o menú NVDA, te permite instalar y desinstalar paquetz de complementos ta NVDA.
 Istos paquetz son proporcionaus por a comunidat y contienen codigo personalizau que podrá adhibir u cambiar caracteristicas en NVDA u tamién proporcionan suporte ta linias Braille u sintetizadors de voz extra.
 
 L'Administrador de Complementos contién una lista que amuestra totz os complementos instalaus actualment en a tuya configuración d'usuario de NVDA. 
 S'amuestra un nombre de paquet, versión y autor ta cada complemento, encara que se puet veyer mas información tal como una descripción y una URL seleccionando o complemento y pretando o botón Sobre o complemento.
 
-Ta instalar un Complemento, preta o botón Instalar.
+Ta examinar y descargar os complementos disponibles online, preta o botón Obtener Complementos.
+Iste botón ubre a [pachina de complementos de NVDA http://addons.nvda-project.org/].
+Si NVDA ye instalau en o tuyo sistema, puetz ubrir dreitament o complemento dende o examinador ta prencipiar o proceso d'instalación como se describe contino.
+En caso contrario, alza o paquet de complemento y sigue as instruccions mas abaixo.
+
+Ta instalar un complemento que obteniés previament, preta o botón Instalar.
 Isto te permitirá examinar un paquet de complemento  (fichero .nvda-addon) en o tuyo ordinador u en un ret.
-Una vegada que pretes Ubrir, NVDA te preguntará  si realment deseyas instalar o complemento.
-A causa que a funcionalidat d'os complementos no tien restriccions dentro de NVDA, o qual en teoría podría incluir l'acceso a os tuyos datos personals u mesmo a tot o sistema si NVDA ye una copia instalada, ye muit important que instales solament complementos dende fuents fiables.
+Una vegada que pretes Ubrir, o proceso d'instalación empecipiará.
+
+Quan un complemento se va a instalar, NVDA en primeras te pedirá que confirmes que realment deseyas instalar-lo.
+A causa que a funcionalidat d'os complementos no tien restriccions adentro de NVDA, que en teoría podría incluir l'acceso a os tuyos datos personals u mesmo a tot o sistema si NVDA ye una copia instalada, ye muit important que instales nomás complementos dende fuents fiables.
 Una vegada que o complemento siga instalau, NVDA debe reiniciar-se ta que o complemento prencipie a suya execución. 
 Dica que lo faigas, un estau de "instalar" s'amostrará ta ixe complemento en a lista.
 

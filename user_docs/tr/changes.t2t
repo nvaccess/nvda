@@ -16,18 +16,23 @@
 - Sleep mode is automatically enabled when using Dolphin Cicero. (#2055)
 - The Windows x64 version of Miranda IM/Miranda NG is now supported. (#3296)
 - Search suggestions in the Windows 8.1 Start Screen are automatically reported. (#3322)
+- Support for navigating and editing spreadsheets in Microsoft Excel 2013. (#3360)
+- The Freedom Scientific Focus 14 Blue and Focus 80 Blue braille displays, as well as the Focus 40 Blue in certain configurations that weren't supported previously, are now supported when connected via Bluetooth. (#3307)
+- Auto complete suggestions are now reported in Outlook 2010. (#2816)
+- New braille translation tables: English (U.K.) computer braille, Korean grade 2, Russian braille for computer code.
+- New language: Farsi. (#1427)
 
 
 == Changes ==
 - On a touch screen, performing a single finger flick left or right when in object mode now moves previous or next through all objects, not just those in the current container. Use 2-finger flick left or right to perform the original action of moving to the previous or next object in the current container.
 - the Report layout tables checkbox found in the Browse Mode settings dialog has now been renamed to Include layout tables to reflect that quick navigation also will not locate them if the checkbox is unchecked. (#3140)
-- Performing a single finger flick left or right when in object mode now moves previous or next through a flattened view of the object navigation hyrarchi. Use 2-finger flick left and right to perform the original previous/next object limited to the current hyrarchical level.
 - Flat review has been replaced with object, document and screen review modes. (#2996)
  - Object review reviews text just within the navigator object, document review reviews all text in a browse mode document (if any) and screen review reviews text on the screen for the current application.
  - The commands that previously move to/from flat review now toggle between these new review modes.
  - The navigator object automatically follows the review cursor such that it remains the deepest object at the position of the review cursor when in document or screen review modes.
  - After switching to screen review mode, NVDA will stay in this mode until you explicitly switch back to document or object review mode.
  - When in document or object review mode, NVDA may automatically switch between these two modes depending on whether you are moving around a browse mode document or not.
+- Updated liblouis braille translator to 2.5.3. (#3371)
 
 
 == Bug Fixes ==
@@ -35,10 +40,10 @@
 - More accurate reading and cursor tracking in  various input fields for recent versions of Skype, such as chat and search fields. (#1601, #3036)
 - In the Skype recent conversations list, the number of new events is now read for each conversation if relevant. (#1446)
 - Improvements to cursor tracking and reading order for right-to-left text written to the screen; e.g. editing Arabic text in  Microsoft Excel. (#1601) 
-- quick navigation to buttons and form fields will now locate links marked as buttons for accessibility purposes in Internet Explorer. (#2750)
+- Quick navigation to buttons and form fields will now locate links marked as buttons for accessibility purposes in Internet Explorer. (#2750)
 - In browse mode, the content inside tree views is no longer rendered, as a flattened representation isn't useful. You can press enter on a tree view to interact with it in focus mode. (#3023)
 - Pressing alt+downArrow or alt+upArrow to expand a combo box while in focus mode no longer incorrectly switches to browse mode. (#2340)
-- in Internet Explorer 10, table cells no longer activate focus mode, unless they have been explicitly made focusable by the web author (#3248)
+- In Internet Explorer 10, table cells no longer activate focus mode, unless they have been explicitly made focusable by the web author. (#3248)
 - NVDA no longer fails to start if the system time is earlier than the last check for an update. (#3260)
 - If a progress bar is shown on a braille display, the braille display is updated when the progress bar changes. (#3258)
 - In browse mode in Mozilla applications, table captions are no longer rendered twice. In addition, the summary is rendered when there is also a caption. (#3196)
@@ -47,13 +52,18 @@
 - NVDA no longer announces garbage on the Desktop when the Google Japanese or Atok IME input methods are in use. (#3234)
 - In Windows 7 and above, NVDA no longer inappropriately announces speech recognition or touch input as a keyboard language change.
 - NVDA no longer announces a particular special character (0x7f) when pressing control+backspace in some editors when speak typed characters is enabled. (#3315)
-- espeak no longer inappropriately changes in pitch, volume, etc. when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
+- eSpeak no longer inappropriately changes in pitch, volume, etc. when NVDA reads text containing certain control characters or XML. (#3334) (regression of #437)
 - In Java applications, changes to the label or value of the focused control are now announced automatically, and are reflected when subsequently querying the control. (#3119)
 - In Scintilla controls, lines are now reported correctly when word wrap is enabled. (#885)
 - In Mozilla applications, the name of read-only list items is now correctly reported; e.g. when navigating tweets in focus mode on twitter.com. (#3327)
 - Confirmation dialogs in Microsoft Office 2013 now have their content automatically read when they appear. 
-- Performance improvements when navigating certain tables in Microsoft Word (#3326)
+- Performance improvements when navigating certain tables in Microsoft Word. (#3326)
 - NVDA's table navigation commands (control+alt+arrows) function better in certain Microsoft Word tables where a cell spans multiple rows.
+- If the Add-ons Manager is already open, activating it again (either from the Tools menu or by opening an add-on file) no longer fails or makes it impossible to close the Add-ons Manager. (#3351)
+- NVDA no longer freezes in certain dialogs when Japanese or Chinese Office 2010 IME is in use. (#3064)
+- Multiple spaces are no longer compressed to just one space on braille displays. (#1366)
+- Zend Eclipse PHP Developer Tools now functions the same as Eclipse. (#3353)
+- In Internet Explorer, It is again not necessary to press tab to interact with an embedded object (such as Flash content) after pressing enter on it. (#3364)
 
 
 == Changes for Developers ==

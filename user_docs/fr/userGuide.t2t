@@ -23,7 +23,7 @@ Ses points forts sont :
 - La prise en charge de nombreux afficheurs braille, incluant la saisie du braille informatique pour les afficheurs disposant d'un clavier braille
 - La possibilité de s'exécuter entièrement depuis une clé USB ou tout autre média portable sans avoir à installer
 - Un installateur parlant facile à utiliser
-- Une traduction dans 43 langues
+- Une traduction dans 44 langues
 - La prise en charge des environnements Windows modernes, incluant les versions 32 et 64 bits
 - L'accès à l'écran de connexion à Windows et aux autres écrans sécurisés
 - Prise en charge des interfaces d'accessibilités communes telles que Microsoft Active Accessibility, Java Access Bridge, IAccessible2 et UI Automation (UI Automation n'est supporté qu'à partir de Windows 7)
@@ -32,7 +32,7 @@ Ses points forts sont :
 
 ++ Internationalisation ++
 Il est important que chacun, partout dans le monde, quelle que soit sa langue, ait le même accès aux technologies. 
-A ce jour, NVDA a été traduit en 43 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, l'Aragonais, le Bulgare, le Chinois Traditionnel et simplifié, le Coréen, le Croate, le Danois, l'Espagnol, l'Éthiopien, le Finnois, le Français, le Galicien, le Grecque, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Irlandais, l'Islandais, l'Italien, le Japonais, le Néerlandais, le népalais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Slovénien, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
+A ce jour, NVDA a été traduit en 44 langues : l'Afrikaans, l'Albanais, l'Allemand, l'Arabe, l'Aragonais, le Bulgare, le Chinois Traditionnel et simplifié, le Coréen, le Croate, le Danois, l'Espagnol, l'Éthiopien, le Farsi, le Finnois, le Français, le Galicien, le Grecque, le Géorgien, l'Hébreu, le Hongrois, l'Hindi, l'Irlandais, l'Islandais, l'Italien, le Japonais, le Néerlandais, le népalais, le Norvégien, le Polonais, le Portugais, le Portugais Brésilien, le Roumain, le Russe, le Serbe, le Slovaque, le Slovénien, le Suédois, le Tamoul, le Tchèque, le Thaï, le Turc, l'Ukrainien et le Vietnamien.
 
 ++ Support des synthèses vocales ++
 En plus de proposer ses messages et son interface en plusieurs langues, NVDA permet également à l'utilisateur de lire les contenus dans n'importe quelle langue, dans la mesure où il possède un synthétiseur parlant cette langue.
@@ -302,7 +302,7 @@ Dans ces cas, vous pouvez utiliser la navigation par objet.
 
 La navigation par objet vous permet de vous déplacer parmi les différents (objets #Objects) et d'obtenir des informations à leur sujet.
 Quand vous atteignez un objet, NVDA l'annoncera de la même manière qu'il annonce le focus système.
-Si vous désirez explorer tout le texte tel qu'il se présente à l'écran, vous pouvez également utiliser la [revue à plat. #FlatReview]
+Si vous désirez explorer tout le texte tel qu'il se présente à l'écran, vous pouvez également utiliser la [revue de l'écran #ScreenReview].
 
  Pour ne pas avoir à errer entre tous les objets présents dans le système, ceux-ci sont groupés hiérarchiquement.
 Cela signifie que vous devez entrer dans certains objets pour voir les objets qu'ils contiennent.
@@ -313,7 +313,7 @@ Vous pourrez alors la quitter si vous désirez accéder à d'autres objets.
 De la même manière, une barre d'outils contient des contrôles, vous devrez donc entrer dans la barre d'outils pour accéder aux contrôles qu'elle contient.
 
 L'objet en cours de revue s'appelle l'objet navigateur.
-Quand vous atteignez un objet, vous pouvez l'examiner en utilisant les [commandes de revue de texte #ReviewingText].
+Quand vous atteignez un objet, vous pouvez examiner son contenu en utilisant les [commandes de revue de texte #ReviewingText] en étant en [mode Revue d'objet #ObjectReview].
 Par défaut, l'objet navigateur suit le focus système, mais ce comportement peut être désactivé.
 
 Note : Par défaut, le Braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
@@ -337,7 +337,7 @@ Pour naviguer par objet, utilisez les commandes suivantes :
 Note : Les touches du pavé numérique nécessitent de désactiver le verrouillage numérique pour fonctionner correctement.
 
 ++ Revue de Texte ++[ReviewingText]
-NVDA vous permet de lire le contenu de [l'objet navigateur courant #ObjectNavigation]  par caractère, mot ou ligne. 
+NVDA vous permet de lire le contenu de [l'écran #ScreenReview], du [document #DocumentReview] ou de [l'objet #ObjectReview] par caractère, mot ou ligne. 
 Ceci est particulièrement utile dans la console de commandes Windows et d'autres applications où le [curseur système #SystemCaret] est inexistant.
 Par exemple, cela peut servir à consulter le texte d'un long message dans un dialogue.
 
@@ -378,27 +378,39 @@ La disposition se présente ainsi :
 | Mot précédent | Mot courant | Mot suivant |
 | Caractère précédent | Caractère courant | Caractère suivant |
 
-++ Revue à Plat ++[FlatReview]
-Bien qu'en général on ne puisse explorer que le contenu d'un seul [objet #Objects], certains objets permettent d'explorer les objets qu'ils contiennent.
-Les documents complexes vous permettent d'explorer tout leur contenu et les fenêtres d'applications vous permettent d'explorer le texte tel qu'il apparaît visuellement.
-Cela s'appelle la revue à plat.
-C'est similaire aux fonctions revue d''écran ou curseur souris de beaucoup d'autres revues d'écran pour Windows.
+++ Modes de revue ++[ReviewMode]
+Les commandes de [revue #ReviewingText] de NVDA permettent de lire le contenu de l'objet courrant du navigateur, le document courrant ou l'écrant, selon le mode de revue sélectionné.
+Les modes de revue remplacent le concept de revue à plat que l'on connaissait dans NVDA.
 
-Quand vous passez en revue à plat, vous êtes positionné à l'endroit de [l'objet navigateur #ObjectNavigation]courant.
-Si vous n'avez pas utilisé la navigation par objet, ce sera généralement la position de l'objet qui a le [focus #SystemFocus].
-Par exemple, si l'objet navigateur était un bouton, vous serez généralement positionné sur le texte du bouton en revue à plat.
-Vous pouvez alors explorer le texte en utilisant les [commandes de revue de texte #ReviewingText].
-Vous pouvez aussi naviguer directement à l'objet situé à la position du curseur de revue, ce qui vous permet de passer en [navigation par objet #ObjectNavigation] depuis ce point.
-
-Note : Par défaut, le Braille suit le [focus #SystemFocus] et le [curseur système #SystemCaret] plutôt que la navigation par objet ou la revue de texte.
-Si vous voulez suivre la navigation par objet ou la revue de texte, vous devez [configurer le Braille pour qu'il soit attaché #BrailleTether] à la revue.
-
-les deux commandes suivantes sont utilisées pour la revue à plat :
+Les commandes suivantes basculent entre les modes de revue :
 %kc:beginInclude
 || Nom | Touche Desktop | Touche Laptop | Tactile | Description |
-| Passer en mode revue à plat | NVDA+pavnum7 | NVDA+PagePrec | Glisser vers le haut 2-doigts | Passe en mode revue à plat à la position de l'objet navigateur courant, vous permettant d'explorer le contenu de l'écran ou d'un document en utilisant les commandes de revue de texte |
-| Aller à un objet depuis le mode revue à plat | NVDA+pavnum1 | NVDA+PageSuiv | Glisser vers le bas 2-doigts | aller à l'objet représenté par le texte à la position du curseur de revue en mode revue à plat |
+| Passer au mode revue suivant | NVDA+pavnum7 | NVDA+PagePrec | Glisser vers le haut 2-doigts | Passe au mode de revue suivant disponible supérieur au mode actuel. |
+| Passer au mode revue précédent | NVDA+pavnum1 | NVDA+PageSuiv | Glisser vers le bas 2-doigts | Passe au mode de revue suivant disponible inférieur au mode actuel. |
 %kc:endInclude
+
++++ Revue d'objet +++[ObjectReview]
+En étant en mode revue d'objet, vous pouvez revoir seulement le contenu de [l'objet du navigateur #ObjectNavigation].
+Pour les objets comme les champs d'édition ou les documents basiques, cela sera généralement le texte conteni.
+Pour les autres objets, cela eut être le nom ou la valeur.
+
++++ Revue de document +++[DocumentReview]
+Quand [l'objet du navigateur #ObjectNavigation] est dans un document comme une page web ou un document complex (ex : document Lotus Symphony), il est possible de passer en mode revue de document.
+Le mode revue de document vous permet de relire le contenu du document en entier.
+
+En passant du mode revue d'objet au mode revue de document, le curseur de revue se place là où se trouve le navigateur d'objet.
+En bougeant le curseur de revue, le navigateur d'objet est déplacé à la même position que le curseur de revue.
+
+Notez que NVDA basculera automatiquement au mode revue de document depuis le mode revue objet en bougeant dans le document en mode navigation.
+
++++ Revue de l'écran +++[ScreenReview]
+Le mode revue de l'écran vous permet de lire le texte visible tel qu'il aparaît à l'écran dans l'application courrante.
+Cela est très cimilaire au fonctionnalités mode revue ou curseur souris des autres lecteur d'écran sous Windows.
+
+En basculant en mode revue de l'écran, le curseur de revue est placé à la position de [l'objet du navigateur #ObjectNavigation].
+En bougeant sur l'écran avec le curseur de revue, le navigateur d'objet est déplacé à l'objet le plus proche.
+
+Notez que dans certaines nouvelles applications, NVDA ne pourra pas lire tout ou une partie du texte à l'écran, étant donné qu'elles utilise des techniques d'affichage qui ne peuvent être gérées actuellement.
 
 ++ Naviguer avec la souris ++
 Lorsqu'on déplace la souris, NVDA annonce par défaut le texte se trouvant directement sous le pointeur de la souris. 
@@ -951,12 +963,12 @@ Cette option vous permet d'indiquer si vous voulez que les objets tels que les l
 Cette case à cocher active ou désactive la lecture automatique des pages après leur chargement en mode navigation.
 Cette option est activée par défaut.
 
-==== Inclure les  tables de visualisation ====
-Cette option affecte la manière dont NVDA traite les tableaux seulement utilisés pour des raisons de présentation.
-Quand elle est activée, NVDA les traitera comme des tableaux normaux, les présentant en s'appuyant sur  les paramètres de [Mise en forme des Documents #DocumentFormattingSettings] et en les localisant avec les commandes de navigation rapide.
-Quand elle est désactivée, ils ne seront pas annoncés ou trouvables avec les commandes de navigation rapide. 
-Cependant, le contenu des tableaux sera toujours inclus sous forme de texte normal.
-Par défaut, cette option est désactivée.
+==== annoncer les  tables de visualisation ====
+Cette option défini ce que NVDA doit faire des tableaux qui ne servent qu'à la présentation.
+Lorsque désactivée cette option fait que NVDA ne rapporte que les tableaux contenant des données tabulaires (quand il tombe sous le sens qu'il s'agit d'un tableau).
+Les autres tableaux sont affiché sous forme de texte normal.
+Si activée, cette option fera que NVDA annoncera vraiment tous les tableaux, y compris ceux servant uniquement à la présentation.
+Cette option est désactivée par défaut.
 
 ==== Configurer l'annonce de champs tels que liens et titres ====
 Veuillez consulter les options dans le dialogue [Mise en forme des Documents #DocumentFormattingSettings] pour configurer les champs qui sont annoncés durant la navigation tels que les liens, les titres et les tableaux.
@@ -1094,7 +1106,7 @@ Ces paquets sont fournis par la communauté et contiennent du code qui peut ajou
 Le gestionnaire de Modules Complémentaires contient une liste affichant tous les Modules Complémentaires actuellement installés dans votre configuration utilisateur de NVDA.
 Un nom de paquet, la version et l'auteur sont affichés pour chaque Module Complémentaire, et des informations suplémentaires telle qu'une description et une URL peuvent être affichées en sélectionnant le Module Complémentaire et en activant le bouton À propos du Module Complémentaire...
 
-Pour naviguer et télécharger des modules complémentaires en ligne, cliquez sur le bouton Obtenir des modules complémentaires.
+Pour télécharger des modules complémentaires mis à disposition par la comunauté, cliquez sur le bouton Obtenir des modules complémentaires.
 Ce bouton ouvre la [page des modules complémentaires NVDA http://addons.nvda-project.org/].
 Si NVDA est installé sur votre système, vous pourrez ouvrire le module complémentaire directement depuis votre navigateur à fin de démarrer le processuce d'installation décrit plus loin.
 Autrement, enregistrez le fichier du module complémentaire et suivez les instructions ci-dessous.

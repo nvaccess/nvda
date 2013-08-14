@@ -16,11 +16,23 @@ Quoi de Neuf dans NVDA
 - Le mode veille de NVDA est automatiquement activé lors de l'utilisation de Dolphin Cicero. (#2055)
 - La version Windows x64 de Miranda IM/Miranda NG est maintenant supportée. (#3296)
 - Les suggestions de recherche dans l'écran de démarrage de Windows 8.1  sont automatiquement annoncées. (#3322)
+- Support du parcourt et de l'édition des feuilles de calcul dans Microsoft Excel.
+- Les afficheurs brailles Freedom Scientific Focus 14 Blue and Focus 80 Blue, comme les Focus 40 Blue dans certaines configuration qui n'étaient pas supportées avant, sont maintenant supportées lorsque connectées via Bluetooth. (#3307)
+- Les suggestion d'auto-complétion sont amintenant annoncées dans Outlook 2010. (#2816)
+- Nouvelles tables braille : anglais (Angleterre) braille informatique, Coréen grade 2, Russe code braille informatique.
+- Nouvelle langue : Farsi. (#1427)
 
 
 == Changements ==
 - Sur un écran tactile, glisser une fois le doigt vers la gauche ou la droite lorsque l'on est en mode objet passe au mode revue précédent/suivant de l'objet. Utilisez deux doigts pour l'enciène méthode.
 - La case à cocher Annoncer les tables de visualisation qui se trouve dans le dialogue Mode Navigation a été renomméeeno Inclure les tables de visualisation pour indiquer que la navigation rapide ne les trouvera pas si la case est décochée. (#3140)
+- Le mode revue à plat a été remplacé par les modes revue d'objet, de document ou d'écran. (#2996)
+ - La revue d'objet permet de lire le texte de l'objet sous le navigateur, la revue de document tout le texte d'un document en mode navigation, et le mode revue de l'écran permet de lire tout le texte visible à l'écran de l'application en cours.
+ - Les commandes de la revue à plat sont maintenant utilisées pour basculer entre les modes de revue.
+ - Le navigateur d'objet suit automatiquement le curseur de revue lorsqu'en mode revue d'objet.
+ - Lorsqu'en mode revue de l'écran, celui-ci reste actif jusqu'à ce que vous en changiez.
+ - Lorsqu'en mode revue d'objet ou de document, NVDA peut automatiquement basculer d'un mode à l'autre celon que vous êtes ou non sur un document en mode navigation.
+- Librairie de traduction braille libLouis mise à jour vers la version 2.5.3. (#3371)
 
 
 == Corrections de Bogues ==
@@ -43,18 +55,35 @@ Quoi de Neuf dans NVDA
 - espeak ne change plus de hauteur, volume, etc. de manière inappropriée quand NVDA lit un texte contenant certain caractères de contrôle ou XML. (#3334) (régression de #437)
 - Dans les applications Java, les changements de l'étiquette ou de la valeur du contrôle en focus sont maintenant annoncés automatiquement,  et sont reflétés lors d'une interrogation ultérieure du contrôle. (#3119)
 - Dans les contrôles Scintilla, les lignes sont maintenant annoncées correctement quand le renvoi à la ligne automatique est activé. (#885)
+- Dans les applications Mozilla, le nom des listes en lecture seule est correctement annoncé ; ex : en navigant entre les tweets en mode focus sur Twitter.com. (#3327)
+- Le contenu des boîtes de confirmation Microsoft Office 2013 est maintenant automatiquement lu.
+- Amélioration des performences lors de la lecture de tableaux dans Microsoft Word. (#3326)
+- Les commandes de lectures de tableau de NVDA (control+alt+flèches) fonctionnent mieux dans certains tableaux Microsoft Word où une cellule prends plusieurs rangées.
+- Si le gestionnaire de modules complémentaires est déjà ouvert, l'activer à nouveau (par le menu outils ou en ouvrant un fichier .nvda-addon) n'échoue plus ou ne rends plus impossible la fermeture du gestionnaire de modules complémentaires. (#3351)
+- NVDA ne se fige plus dans les boîtes de dialogue quand l'IME Japonnais ou Chinois est utilisé dans Office. (#3064)
+- Les espaces multiples ne sont plus compressés en un seul en braille. (#1366)
+- Les outils pour développeurs Zend dans Eclipse PHP sont accessibles au même titre qu'Eclipse. (#3353)
+- Dans Internet Explorer, il n'est à nouveau plus nécessaire d'appuyer sur Tab pour interagir avec un objet intégré après avoir appuyé sur entré dessus. (#3364)
+- Lors de l'édition de texte dans Microsoft PowerPoint, la dernière ligne n'est plus rapportée comme la ligne du dessus, si la dernière ligne est blanche. (#3403)
+- Dans Microsoft PowerPoint, les objets ne sont plus parfois annoncé deux fois lorsqu'on les sélectionne ou qu'on choisi de les éditer. (#3394)
+- NVDA ne fait plus plenter ou figer Adobe Reader avec certains documents PDF mal formés contenant des lignes hors d'un tableau. (#3399)
+- NVDA détecte maintenant correctement le prochain slide ayant le focus lorsqu'on en supprime un dans la vue mignature de PowerPoint. (#3415)
 
 
 == Changements pour les développeurs ==
 - windowUtils.findDescendantWindow a été ajouté pour rechercher une fenêtre descendante (hwnd) spécifiant la même visibilité, type d'élément ou nom de classe.
 - La console python distante ne se ferme plus au bout de dix seconde si rien n'a été entré. (#3126)
+- L'inclusion du module bisect dans les binaires est maintenant dépréciée et pourrait être suprimée dans une future version. (#3368)
+ - Les modules complémentaires dépendant de bisect (incluant le module urllib2) devraient être mis à jour pour inclure 
 
 
 = 2013.1.1 =
+Cette version corrige le problème qui faisait que NVDA plentait au démarrage si configuré pour utiliser l'Irish, et des mise à jours de traduction ainsi que des corrections de bug mineurs.
 
 == Corrections de Bogues ==
 - Les caractères corrects sont affichés lorsque l'on saisit dans l'interface utilisateur de NVDA en utilisant une méthode de saisie Coréenne ou Japonnaise lorsque c'est la méthode par défaut. (#2909)
 - Dans Internet Explorer et les autres objets MSHTML, les champs marqués comme contenant une entrée invalide sont correctement gérés. (#3256)
+- NVDA ne plente lus au démarrage avec l'Irish.
 
 
 = 2013.1 =

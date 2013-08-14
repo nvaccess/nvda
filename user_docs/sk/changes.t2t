@@ -16,11 +16,23 @@
 - pri používaní Dolphin Cicero sa automaticky aktivuje režim spánku. (#2055)
 - odteraz je podporovaný program Miranda IM/Miranda NG v 64 bitovej verzii. (#3296)
 - návrhy pri hľadaní na prihlasovacej obrazovke v systéme Windows 8.1 sú čítané automaticky. (#3322)
+- Podpora pre navigáciu a vytváranie tabuliek v programe Microsoft Excel 2013. (#3360)
+- Riadky Focus 14 Blue a Focus 80 Blue, a takisto Focus 40 Blue v správnej konfigurácii, ktoré doteraz neboli podporované, sú odteraz podporované, ak sú pripojené cez Bluetooth. (#3307)
+- Návrhy adries sú oznamované v programe Outlook 2010. (#2816)
+- Nové prekladové brailovské tabuľky: Britská angličtina počítačový kód, Kórejský skratkopis, Ruský počítačový kód.
+- NVDA je preložené do Perzštiny. (#1427)
 
 
 == Zmeny ==
 - Švihnutie doprava alebo doľava v objektovom režime posúva dopredu alebo dozadu medzi všetkými objektami a nie len medzi objektami na rovnakej úrovni. Použite švihnutie dvoma prstami vľavo alebo vpravo na presúvanie medzi predošlým a nasledujúcim objektom na rovnakej úrovni.
 - Položka oznamovať tabuľky formujúce vzhľad (v nastaveniach režimu prehliadania) bola zmenená na zahrnúť tabuľky formujúce vzhľad, aby bolo jasné, že na nájdenie takýchto tabuliek sa nedajú použiť klávesy rýchlej navigácie, ak je táto možnosť odčiarknutá. (#3140)
+- Plošné prehliadanie bolo nahradené režimami prehliadania. (#2996)
+- Prehliadanie objektu zobrazí text aktuálneho navigačného objektu, prehliadanie dokumentu zobrazí obsah v režime prehliadania (ak je dostupný) a prehliadanie obrazovky zobrazí celé okno otvorenej aplikácie.
+- príkazy na prechod do a z plošného prehliadania odteraz slúžia na prepínanie režimov prehliadania.
+- Navigačný objekt sleduje prehliadací kurzor takže je vždy na najhlbšom objekte pri prehliadaní dokumentu alebo obrazovky.
+- Pri prepnutí do režimu prehliadania obrazovky NVDA ostane v tomto režime, až kým ho nezmeníte na režim prehliadania dokumentu alebo objektu.
+- Ak ste v režime prehliadania dokumentu alebo aktuálneho objektu, NVDA môže prepínať medzi týmito režimami v závislosti od toho, či ste v režime prehliadania.
+- Aktualizovaný prekladač liblouis na verziu 2.5.3. (#3371)
 
 
 == Opravy ==
@@ -43,6 +55,19 @@
 - eSpeak viac náhodne nemení výšku, hlasitosť a podobne pri čítaní riadiacich znakov alebo XML. (#3334) (zhoršenie k ticketu #437)
 - V Java aplikáciách sú automaticky oznamované zmeny popisu alebo hodnoty zameraného prvku a sú zohľadnené pri následnom spracovaní prvku. (#3119)
 - v Scintilla prvkoch sú správne oznamované riadky, ak je zapnuté zalamovanie riadkov. (#885)
+- NVDA správne interpretuje zoznamy iba na čítanie v Mozilla aplikáciách (napríklad pri čítaní tweetov na stránke twitter.com v režime fokusu). (#3327)
+- Obsah potvrdzovacích dialógov v Microsoft Office 2013 je automaticky oznamovaný.
+- Zvýšenie rýchlosti pri navigácii v tabuľkách v programe Microsoft Word. (#3326)
+- Navigácia po tabuľkách pomocou ctrl+alt+šípky vo wordovských tabuľkách so stĺpcami cez viacero riadkov je presnejšia.
+- Ak je otvorený správca doplnkov, pri otvorení nového okna správcu (cez nástroje alebo otvorením balíčka) NVDA neohlási chybu a umožní korektne zatvoriť všetky okná správcu. (#3351)
+- NVDA viac nezamrzne v dialógoch, v ktorých sa používa Japonská metóda vstupu Office 2010. (#3064)
+- Na brailovských riadkoch viac nie je nahrádzaných viacero medzier jednou medzerou. (#1366)
+- Vývojársky nástroj Zend Eclipse PHP funguje rovnako ako Eclipse. (#3353)
+- V prehliadači Internet explorer nie je viac potrebné stlačiť tabulátor pre interakciu s vnoreným prvkom (ako napr flas) ak už bol stlačený kláves enter. (#3364)
+- pri úprave textu v programe MS powerpoint NVDA neoznamuje posledný riadok ako predposledný, ak je posledný riadok prázdny. (#3403)
+- NVDA viac dvojnásobne neoznamuje vybraté objekty v MS Powerpointe. (#3394)
+- NVDA viac nespôsobí pád Acrobat Readeru pri dokumentoch, ktoré majú riadky mimo tabuľky. (#3399)
+- NVDA správne detekuje nasledujúcu snímku v MS Powerpointe v režime náhľadu. (#3415)
 
 
 = 2013.1.1 =
