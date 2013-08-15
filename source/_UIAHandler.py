@@ -130,11 +130,11 @@ class UIAHandler(COMObject):
 			raise self.MTAThreadInitException
 
 	def terminate(self):
-		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(self.MTAThread.ident,False,winKernel.SYNCHRONIZE))
+		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(winKernel.SYNCHRONIZE,False,self.MTAThread.ident))
 		self.MTAThreadStopEvent.set()
-		index=c_int()
-		#Wait for the MTAA thread to die (while still message pumping)
-		windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,5000,0)
+		#Wait for the MTA thread to die (while still message pumping)
+		if windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,5000,0)!=0:
+			log.debugWarning("Timeout or error while waiting for UIAHandler MTA thread")
 		windll.kernel32.CloseHandle(MTAThreadHandle)
 		del self.MTAThread
 
