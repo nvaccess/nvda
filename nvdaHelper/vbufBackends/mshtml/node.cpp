@@ -89,11 +89,6 @@ class CDispatchChangeSink : public IDispatch {
 		decBackendLibRefCount();
 	}
 
-	void onChange() {
-		LOG_DEBUG(L"Marking storage node as invalid");
-		this->storageNode->backend->invalidateSubtree(this->storageNode);
-	}
-
 	HRESULT STDMETHODCALLTYPE IUnknown::QueryInterface(REFIID riid, void** pvpObject) {
 		if(!pvpObject) return E_INVALIDARG;
 		*pvpObject=NULL;
@@ -124,8 +119,8 @@ class CDispatchChangeSink : public IDispatch {
 	}
 
 	HRESULT STDMETHODCALLTYPE IDispatch::Invoke(DISPID  dispIdMember, REFIID  riid, LCID  lcid, WORD  wFlags, DISPPARAMS FAR*  pDispParams, VARIANT FAR*  pVarResult, EXCEPINFO FAR*  pExcepInfo, unsigned int FAR*  puArgErr) {
-		if(1) { //dispIdMember==DISPID_HTMLELEMENTEVENTS2_ONPROPERTYCHANGE||dispIdMember==DISPID_IHTMLELEMENT2_ONPROPERTYCHANGE) {
-			this->onChange();
+		if(dispIdMember==DISPID_EVMETH_ONPROPERTYCHANGE||dispIdMember==DISPID_EVMETH_ONLOAD) {
+			this->storageNode->backend->invalidateSubtree(this->storageNode);
 			return S_OK;
 		}
 		return E_FAIL;
