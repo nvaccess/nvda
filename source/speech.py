@@ -559,6 +559,9 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	extraDetail=unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD)
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
+	if extraDetail:
+		formatConfig=formatConfig.copy()
+		formatConfig['extraDetail']=True
 	reportIndentation=unit==textInfos.UNIT_LINE and formatConfig["reportLineIndentation"]
 
 	speechSequence=[]
