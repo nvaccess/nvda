@@ -83,18 +83,18 @@ class ProfilesDialog(wx.Dialog):
 		ProfilesDialog._instance = None
 
 	def onActivate(self, evt):
+		sel = self.profileList.Selection
+		if sel == 0:
+			profile = None
+		else:
+			profile = self.profiles[sel]
 		try:
-			config.conf.deactivateProfile()
-		except IndexError:
-			pass
-		if self.profileList.Selection != 0:
-			try:
-				config.conf.activateProfile(self.profiles[self.profileList.Selection])
-			except:
-				# Translators: An error displayed when activating a profile fails.
-				gui.messageBox(_("Error activating profile."),
-					_("Error"), wx.OK | wx.ICON_ERROR)
-				return
+			config.conf.manualActivateProfile(profile)
+		except:
+			# Translators: An error displayed when activating a profile fails.
+			gui.messageBox(_("Error activating profile."),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			return
 		self.Destroy()
 
 	def onNew(self, evt):

@@ -416,10 +416,6 @@ class ConfigManager(object):
 		import braille
 		braille.handler.handleConfigProfileSwitch()
 
-	def _pushProfile(self, profile):
-		self.profiles.append(profile)
-		self._handleProfileSwitch()
-
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
 		if factoryDefaults:
@@ -448,15 +444,7 @@ class ConfigManager(object):
 			profile.validate(self.validator, section=sect)
 
 		self._profileCache[None] = profile
-		self._pushProfile(profile)
-
-	def deactivateProfile(self):
-		"""Deactivate the most recently activated profile.
-		@raise IndexError: If there is no profile to deactivate.
-		"""
-		if len(self.profiles) == 1:
-			raise IndexError("No profile to deactivate")
-		self.profiles.pop()
+		self.profiles.append(profile)
 		self._handleProfileSwitch()
 
 	def __getitem__(self, key):
@@ -498,12 +486,20 @@ class ConfigManager(object):
 		self._profileCache[name] = profile
 		return profile
 
-	def activateProfile(self, name):
-		"""Activate a profile, loading it if appropriate.
-		@param name: The name of the profile.
+	def manualActivateProfile(self, name):
+		"""Manually activate a profile.
+		Only one profile can be manually active at a time.
+		If another profile was manually activated, deactivate it first.
+		If C{name} is C{None}, a profile will not be activated.
+		@param name: The name of the profile or C{None} for no profile.
 		@type name: basestring
 		"""
-		self._pushProfile(self._getProfile(name))
+		if len(self.profiles) > 1:
+			del self.profiles[-1]
+		if name:
+			profile = self._getProfile(name)
+			self.profiles.append(profile)
+		self._handleProfileSwitch()
 
 	def _markWriteProfileDirty(self):
 		if len(self.profiles) == 1:
