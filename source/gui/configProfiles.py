@@ -54,6 +54,12 @@ class ProfilesDialog(wx.Dialog):
 		item = wx.Button(self, label=_("&New"))
 		item.Bind(wx.EVT_BUTTON, self.onNew)
 		sizer.Add(item)
+		# Translators: The label of a button to configure triggers for a configuration profile.
+		item = self.triggersButton = wx.Button(self, label=_("&Triggers"))
+		if self.profileList.Selection == 0:
+			item.Disable()
+		item.Bind(wx.EVT_BUTTON, self.onTriggers)
+		sizer.Add(item)
 		# Translators: The label of a button to rename a configuration profile.
 		item = self.renameButton = wx.Button(self, label=_("&Rename"))
 		if self.profileList.Selection == 0:
@@ -148,6 +154,7 @@ class ProfilesDialog(wx.Dialog):
 		enable = evt.Selection > 0
 		self.deleteButton.Enabled = enable
 		self.renameButton.Enabled = enable
+		self.triggersButton.Enabled = enable
 
 	def onRename(self, evt):
 		index = self.profileList.Selection
@@ -173,3 +180,67 @@ class ProfilesDialog(wx.Dialog):
 		self.profileList.SetString(index, newName)
 		self.profileList.Selection = index
 		self.profileList.SetFocus()
+
+	def onTriggers(self, evt):
+		self.Disable()
+		TriggersDialog(self, self.profileList.StringSelection).Show()
+
+class TriggersDialog(wx.Dialog):
+
+	def __init__(self, parent, profile):
+		super(TriggersDialog, self).__init__(parent,
+			# Translators: The title of the configuration profile triggers dialog.
+			# %s will be replaced with the name of the profile.
+			title=_("Triggers for Profile %s") % profile)
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		# Translators: The caption of the configuration profile triggers dialog.
+		mainSizer.Add(wx.StaticText(self, label=_("What should automatically trigger this profile?")))
+
+		self.profile = profile
+		triggers = self.triggers = set()
+		for trigger, matchProfile in config.conf["profileTriggers"].iteritems():
+			if matchProfile == profile:
+				triggers.add(trigger)
+
+		# Translators: The label of a group of controls related to applications in the configuration profile triggers dialog.
+		group = wx.StaticBoxSizer(wx.StaticBox(self, label=_("&Applications")), wx.HORIZONTAL)
+		item = self.appsList = wx.ListBox(self, choices=[trigger[4:] for trigger in triggers if trigger.startswith("app:")])
+		item.Selection = 0
+		group.Add(item)
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		# Translators: The label of a button to add an application trigger for a configuration profile.
+		item = wx.Button(self, label=_("Add"))
+		item.Bind(wx.EVT_BUTTON, self.onAddApp)
+		sizer.Add(item)
+		# Translators: The label of a button to remove an application trigger for a configuration profile.
+		item = wx.Button(self, label=_("Remove"))
+		item.Bind(wx.EVT_BUTTON, self.onRemoveApp)
+		sizer.Add(item)
+		group.Add(sizer)
+		mainSizer.Add(group)
+
+		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
+		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
+		mainSizer.Add(item)
+		self.Bind(wx.EVT_CLOSE, self.onClose)
+		self.EscapeId = wx.ID_CLOSE
+
+		mainSizer.Fit(self)
+		self.Sizer = mainSizer
+
+	def onClose(self, evt):
+		self.Parent.Enable()
+		self.Destroy()
+
+	def onAddApp(self, evt):
+		pass
+
+	def onRemoveApp(self, evt):
+		index = self.appsList.Selection
+		if index < 0:
+			return
+		app = self.appsList.GetString(index)
+		del config.conf["profileTriggers"]["app:%s" % app]
+		self.appsList.Delete(index)
+		self.appsList.SetFocus()
+		self.appsList.Selection = min(index, self.appsList.Count - 1)
