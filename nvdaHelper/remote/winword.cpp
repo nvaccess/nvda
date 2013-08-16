@@ -721,7 +721,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 				}
 				_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
 			}
-			XMLStream<<L"<text ";
+			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
 			XMLStream<<initialFormatAttribsStream.str();
 			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
 			XMLStream<<L">";

@@ -247,6 +247,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def getTextWithFields(self,formatConfig=None):
+		extraDetail=formatConfig.get('extraDetail',False) if formatConfig else False
 		if not formatConfig:
 			formatConfig=config.conf['documentFormatting']
 		formatConfig['autoLanguageSwitching']=config.conf['speech'].get('autoLanguageSwitching',False)
@@ -265,7 +266,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				if isinstance(field,textInfos.ControlField):
 					item.field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
-					item.field=self._normalizeFormatField(field)
+					item.field=self._normalizeFormatField(field,extraDetail=extraDetail)
 			elif index>0 and isinstance(item,basestring) and item.isspace():
 				 #2047: don't expose language for whitespace as its incorrect for east-asian languages 
 				lastItem=commandList[index-1]
@@ -330,11 +331,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['role']=controlTypes.ROLE_FRAME
 		return field
 
-	def _normalizeFormatField(self,field):
+	def _normalizeFormatField(self,field,extraDetail=False):
+		_startOffset=int(field.pop('_startOffset'))
+		_endOffset=int(field.pop('_endOffset'))
 		revisionType=int(field.pop('wdRevisionType',0))
 		revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
 		if revisionLabel:
-			field['revision']=revisionLabel
+			if extraDetail:
+				try:
+					r=self.obj.WinwordSelectionObject.range
+					r.setRange(_startOffset,_endOffset)
+					rev=r.revisions[0]
+					author=rev.author
+					date=rev.date
+				except COMError:
+					author=_("unknown author")
+					date=_("unknown date")
+				field['revision']=_("{revisionType} by {revisionAuthor} on {revisionDate}").format(revisionType=revisionLabel,revisionAuthor=author,revisionDate=date)
+			else:
+				field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=colors.RGB.fromCOLORREF(int(color))		
