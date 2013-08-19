@@ -57,22 +57,17 @@ class ProfilesDialog(wx.Dialog):
 		sizer.Add(item)
 		# Translators: The label of a button to configure triggers for a configuration profile.
 		item = self.triggersButton = wx.Button(self, label=_("&Triggers..."))
-		if self.profileList.Selection == 0:
-			item.Disable()
 		item.Bind(wx.EVT_BUTTON, self.onTriggers)
 		sizer.Add(item)
 		# Translators: The label of a button to rename a configuration profile.
 		item = self.renameButton = wx.Button(self, label=_("&Rename"))
-		if self.profileList.Selection == 0:
-			item.Disable()
 		item.Bind(wx.EVT_BUTTON, self.onRename)
 		sizer.Add(item)
 		# Translators: The label of a button to delete a configuration profile.
 		item = self.deleteButton = wx.Button(self, label=_("&Delete"))
-		if self.profileList.Selection == 0:
-			item.Disable()
 		item.Bind(wx.EVT_BUTTON, self.onDelete)
 		sizer.Add(item)
+		self.onProfileListChoice(None)
 		mainSizer.Add(sizer)
 
 		# Translators: The label of a button to close a dialog.
@@ -152,7 +147,7 @@ class ProfilesDialog(wx.Dialog):
 		self.profileList.SetFocus()
 
 	def onProfileListChoice(self, evt):
-		enable = evt.Selection > 0
+		enable = self.profileList.Selection > 0
 		self.deleteButton.Enabled = enable
 		self.renameButton.Enabled = enable
 		self.triggersButton.Enabled = enable
