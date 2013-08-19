@@ -302,7 +302,7 @@ V takýchto prípadoch môžete použiť objektovú navigáciu.
 
 Objektová navigácia vám umožní presúvať sa a získavať informácie o jednotlivých [objektoch #Objects].
 Pri zameraní objektu objektovou navigáciou, NVDA oznámi tento objekt podobne ako oznamuje systémový fokus.
-Ak si chcete len prečítať všetok text zobrazený na obrazovke, môžete tiež použiť [obrazovkové prezeranie #ScreenReview].
+Ak si chcete len prečítať všetok text zobrazený na obrazovke, môžete tiež použiť [prehliadanie obrazovky #ScreenReview].
 
 Aby nebolo nutné prechádzať vždy dopredu a dozadu cez každý objekt systému, objekty sú organizované hierarchicky.
 Toto znamená, že aby ste mohli skúmať objekty, ktoré obsahujú ďalšie objekty, musíte sa do niektorých z nich vnoriť.
@@ -337,7 +337,7 @@ Pre pohyb po objektoch použite nasledujúce príkazy:
 Všimnite si: Numerický blok musí byť vypnutý, aby všetky skratky fungovali korektne.
 
 ++ Prehliadanie textu ++[ReviewingText]
-NVDA umožňuje čítať obsah[obrazovky#ScreenReview], obsah aktuálneho [dokumentu #DocumentReview] alebo [objektu #ObjectReview] po slovách, riadkoch alebo aj po znakoch.
+NVDA umožňuje čítať obsah [obrazovky #ScreenReview], obsah aktuálneho [dokumentu #DocumentReview] alebo [objektu #ObjectReview] po slovách, riadkoch alebo aj po znakoch.
 Toto je užitočné v príkazovom riadku Windows, alebo na iných miestach, kde nie je dostupný [systémový kurzor #SystemCaret].
 Týmto spôsobom si napríklad môžete po častiach prečítať dlhšiu informatívnu správu v dialógových oknách.
 
@@ -380,22 +380,22 @@ Toto rozloženie je ilustrované v nasledujúcej tabuľke:
  
 ++ Režimi prehliadania ++[ReviewModes]
 Režimi prehliadania vám umožňujú [čítať obsah #ReviewingText] aktuálneho objektu, aktuálneho dokumentu alebo obrazovky, vzávislosti od toho, aký režim prehliadania si vyberiete.
-Režimi prehliadania nahradili doteraz používané plošné prezeranie.
+Režimi prehliadania nahradili doteraz používané plošné prehliadanie.
 
 Na prepínanie medzi režimami prehliadania použite nasledujúce klávesové skratky:
 %kc:beginInclude
 || názov | klávesová skratka pre Desktop | klávesová skratka pre Laptop | dotykové gesto | popis |
-| Nasledujúci režim prehliadania | NVDA+numpad7 | NVDA+pageUp | švihnutie dvomi prstami nahor | Prepne na najbližší  režim prezerania |
-| predchádzajúci režim prehliadania | NVDA+numpad1 | NVDA+pageDown | švihnutie dvomi prstami nadol| prepne na predchádzajúci režim prezerania |
+| Nasledujúci režim prehliadania | NVDA+numpad7 | NVDA+pageUp | švihnutie dvomi prstami nahor | Prepne na najbližší  režim prehliadania |
+| predchádzajúci režim prehliadania | NVDA+numpad1 | NVDA+pageDown | švihnutie dvomi prstami nadol | prepne na predchádzajúci režim prehliadania |
 %kc:endInclude
 
 +++ Prehliadanie objektu +++[ObjectReview]
 V prehliadaní objektu si môžete prezerať len navigačný objekt zameraný [objektovou navigáciou #ObjectNavigation].
 Pre editačné polia a iné vstupné prvky budete najčastejšie vidieť text konkrétneho prvku.
-pre iné objekty môžete vidieť ich popis, hodnotu alebo oboje.
+Pre iné objekty môžete vidieť ich popis, hodnotu alebo oboje.
 
 +++ Prehliadanie dokumentu +++[DocumentReview]
-Ak je [navigačný  objekt #ObjectNavigation] v režime prehliadania (napríklad na internetovej stránke), alebo v inom komplexnom dokumente (napríklad dokumenty programu Lotus Symphony), môžete sa prepnúť do režimu prezerania dokumentu.
+Ak je [navigačný  objekt #ObjectNavigation] v režime prehliadania (napríklad na internetovej stránke), alebo v inom komplexnom dokumente (napríklad dokumenty programu Lotus Symphony), môžete sa prepnúť do režimu prehliadania dokumentu.
 V tomto režime sa zobrazí text celého dokumentu.
 
 Ak sa z prehliadania objektu prepnete do prehliadania dokumentu, prehliadací kurzor sa presunie na miesto, kde je navigačný objekt.
@@ -405,10 +405,10 @@ Všimnite si, že NVDA sa automaticky prepne do prezerania dokumentu vždy, keď
 
 +++ Prehliadanie obrazovky +++[ScreenReview]
 Režim prehliadania obrazovky umožňuje prezerať text v okne práve otvorenej aplikácie tak, ako je viditeľný na obrazovke.
-toto funguje podobne, ako emulácia myši alebo virtualizácia okna v čítačoch obrazovky pre Windows.
+Toto funguje podobne, ako emulácia myši alebo virtualizácia okna v čítačoch obrazovky pre Windows.
 
 Ak sa prepnete do prehliadania obrazovky, prehliadací kurzor sa presunie na pozíciu [navigačného objektu #ObjectNavigation].
-Pri pohybe prehliadacím kurzorom sa aktuálny objekt presunie na objekt nájdený pod kurzorom.
+Pri pohybe prehliadacím kurzorom sa navigačný objekt presunie na objekt nájdený pod kurzorom.
 
 Všimnite si, že NVDA nedokáže rozpoznať text v niektorých nových aplikáciách, čo je spôsobené technikami vykreslovania, ktoré zatiaľ nie sú podporované.
 
