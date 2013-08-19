@@ -56,7 +56,7 @@ class ProfilesDialog(wx.Dialog):
 		item.Bind(wx.EVT_BUTTON, self.onNew)
 		sizer.Add(item)
 		# Translators: The label of a button to configure triggers for a configuration profile.
-		item = self.triggersButton = wx.Button(self, label=_("&Triggers"))
+		item = self.triggersButton = wx.Button(self, label=_("&Triggers..."))
 		if self.profileList.Selection == 0:
 			item.Disable()
 		item.Bind(wx.EVT_BUTTON, self.onTriggers)
