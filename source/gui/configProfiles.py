@@ -9,6 +9,7 @@ import config
 import api
 import gui
 from logHandler import log
+import appModuleHandler
 
 class ProfilesDialog(wx.Dialog):
 
@@ -233,7 +234,45 @@ class TriggersDialog(wx.Dialog):
 		self.Destroy()
 
 	def onAddApp(self, evt):
-		pass
+		# Translators: The title of a dialog to add an application which triggers a configuration profile.
+		d = wx.Dialog(self, title=_("Add Application"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a field to enter the name of an application to trigger a configuration profile.
+		sizer.Add(wx.StaticText(d, label=_("Application executable name (no extension):")))
+		# Let the user choose from running app modules.
+		item = self.addAppCombo = wx.ComboBox(d, style=wx.CB_DROPDOWN,
+			choices=[mod.appName for mod in appModuleHandler.runningTable.itervalues()])
+		sizer.Add(item)
+		mainSizer.Add(sizer)
+
+		mainSizer.Add(d.CreateButtonSizer(wx.OK | wx.CANCEL))
+
+		mainSizer.Fit(d)
+		d.Sizer = mainSizer
+		self.addAppCombo.SetFocus()
+
+		with d:
+			if d.ShowModal() == wx.ID_CANCEL:
+				return
+			app = self.addAppCombo.Value
+
+		if not app:
+			return
+		trigger = "app:%s" % app
+		if trigger in config.conf["profileTriggers"]:
+			# Translators: An error displayed when the user tries to add an application to trigger a configuration profile
+			# but that application is already associated with another profile.
+			gui.messageBox(_("That application is already associated with another profile"),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			return
+
+		config.conf["profileTriggers"][trigger] = self.profile
+		self.triggers.add(trigger)
+		self.appsList.Append(app)
+		self.appsList.Selection = self.appsList.Count - 1
+		self.appsList.SetFocus()
 
 	def onRemoveApp(self, evt):
 		index = self.appsList.Selection
