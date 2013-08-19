@@ -288,7 +288,8 @@ class MainFrame(wx.Frame):
 			return
 		self.prePopup()
 		from configProfiles import ProfilesDialog
-		ProfilesDialog(gui.mainFrame).Show()
+		# If this was called via a keyboard command (evt is None), use the current focus object.
+		ProfilesDialog(gui.mainFrame, useFocus=evt is None).Show()
 		self.postPopup()
 
 class SysTrayIcon(wx.TaskBarIcon):
