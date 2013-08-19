@@ -20,7 +20,8 @@ class ProfilesDialog(wx.Dialog):
 			return super(ProfilesDialog, cls).__new__(cls, *args, **kwargs)
 		return ProfilesDialog._instance
 
-	def __init__(self, parent):
+	def __init__(self, parent, useFocus=False):
+		self.focusWhenActivated = api.getFocusObject() if useFocus else None
 		if ProfilesDialog._instance is not None:
 			return
 		ProfilesDialog._instance = self
@@ -241,6 +242,8 @@ class TriggersDialog(wx.Dialog):
 		# Let the user choose from running app modules.
 		item = self.addAppCombo = wx.ComboBox(d, style=wx.CB_DROPDOWN | wx.CB_SORT,
 			choices=[mod.appName for mod in appModuleHandler.runningTable.itervalues()])
+		if self.Parent.focusWhenActivated:
+			item.Value = self.Parent.focusWhenActivated.appModule.appName
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 
