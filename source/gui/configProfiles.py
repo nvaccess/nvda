@@ -207,6 +207,7 @@ class TriggersDialog(wx.Dialog):
 		group = wx.StaticBoxSizer(wx.StaticBox(self, label=_("&Applications")), wx.HORIZONTAL)
 		item = self.appsList = wx.ListBox(self, choices=[trigger[4:] for trigger in triggers if trigger.startswith("app:")])
 		item.Selection = 0
+		item.Bind(wx.EVT_CHOICE, self.onAppsListChoice)
 		group.Add(item)
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: The label of a button to add an application trigger for a configuration profile.
@@ -214,11 +215,12 @@ class TriggersDialog(wx.Dialog):
 		item.Bind(wx.EVT_BUTTON, self.onAddApp)
 		sizer.Add(item)
 		# Translators: The label of a button to remove an application trigger for a configuration profile.
-		item = wx.Button(self, label=_("Remove"))
+		item = self.removeAppButton = wx.Button(self, label=_("Remove"))
 		item.Bind(wx.EVT_BUTTON, self.onRemoveApp)
 		sizer.Add(item)
 		group.Add(sizer)
 		mainSizer.Add(group)
+		self.onAppsListChoice(None)
 
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
 		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
@@ -272,14 +274,17 @@ class TriggersDialog(wx.Dialog):
 		self.triggers.add(trigger)
 		self.appsList.Append(app)
 		self.appsList.Selection = self.appsList.Count - 1
+		self.onAppsListChoice(None)
 		self.appsList.SetFocus()
 
 	def onRemoveApp(self, evt):
 		index = self.appsList.Selection
-		if index < 0:
-			return
 		app = self.appsList.GetString(index)
 		del config.conf["profileTriggers"]["app:%s" % app]
 		self.appsList.Delete(index)
 		self.appsList.SetFocus()
 		self.appsList.Selection = min(index, self.appsList.Count - 1)
+		self.onAppsListChoice(None)
+
+	def onAppsListChoice(self, evt):
+		self.removeAppButton.Enabled = self.appsList.Selection >= 0
