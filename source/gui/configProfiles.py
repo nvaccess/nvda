@@ -244,7 +244,7 @@ class TriggersDialog(wx.Dialog):
 		# Translators: The label of a field to enter the name of an application to trigger a configuration profile.
 		sizer.Add(wx.StaticText(d, label=_("Application executable name (no extension):")))
 		# Let the user choose from running app modules.
-		item = self.addAppCombo = wx.ComboBox(d, style=wx.CB_DROPDOWN,
+		item = self.addAppCombo = wx.ComboBox(d, style=wx.CB_DROPDOWN | wx.CB_SORT,
 			choices=[mod.appName for mod in appModuleHandler.runningTable.itervalues()])
 		sizer.Add(item)
 		mainSizer.Add(sizer)
