@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-11 19:09+1000\n"
-"PO-Revision-Date: 2013-08-01 01:29+0200\n"
+"PO-Revision-Date: 2013-08-15 13:35+0200\n"
 "Last-Translator: \n"
 "Language-Team: AR <arabictranslationteam@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -240,9 +240,8 @@ msgstr "ألماني بدون اختصارات"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:66
-#, fuzzy
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "إنجليزي أمريكي برايل الحاسوب 8 نقاط"
+msgstr "حاسوب برايل 8 نقاط إنجليزي (UK)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -402,9 +401,8 @@ msgstr "كوري بدون اختصارات"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:147
-#, fuzzy
 msgid "Korean grade 2"
-msgstr "كوري بدون اختصارات"
+msgstr "كوري باختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -482,7 +480,7 @@ msgstr "برتغالي بدون اختصارات"
 #. braille settings dialog.
 #: braille.py:186
 msgid "Russian braille for computer code"
-msgstr ""
+msgstr "برايل روسي لشفرة الحاسوب"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1906,8 +1904,8 @@ msgstr "المساعدة التفاعلية تعطيل"
 #. Translators: Input help mode message for toggle input help command.
 #: globalCommands.py:53
 msgid ""
-"Turns input help on or off. When on, any input such as pressing a key on the"
-" keyboard will tell you what script is associated with that input, if any."
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
 msgstr ""
 "تشغيل وتعطيل المساعدة التفاعليةففي وضع التشغيل ستخبرك بوظيفة أي مدخل كالضغط "
 "على أحد أزرار لوحة المفاتيح"
@@ -2103,8 +2101,8 @@ msgstr "مستوى قراءة الرموز %s"
 msgid ""
 "Cycles through speech symbol levels which determine what symbols are spoken"
 msgstr ""
-"التنقل بين مستويات نطق الرموز لتحديد كمية الرموز أو علامات الترقيم التي سيتم"
-" نطقها"
+"التنقل بين مستويات نطق الرموز لتحديد كمية الرموز أو علامات الترقيم التي سيتم "
+"نطقها"
 
 #. Translators: Reported when the object has no location for the mouse to move
 #. to it.
@@ -2179,9 +2177,9 @@ msgstr "نَسخ %s إلى الحافظة"
 #. command.
 #: globalCommands.py:342
 msgid ""
-"Reports the current navigator object. Pressing twice spells this "
-"information,and pressing three times Copies name and value of this  object "
-"to the clipboard"
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
 msgstr ""
 "الإعلان عن الكائن الحالي. بالضغط عليه مرتين سيقوم بتهجئته وبالضغط عليه ثلاث "
 "مرات سيقوم بنسخ اسم وقيمة الكائن إلى الحافظة"
@@ -2205,12 +2203,12 @@ msgstr "لا توجد بيانات عن الموضع من الشاشة"
 #: globalCommands.py:363
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of"
-" screen, height is {height:.1f} per cent of screen"
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
 msgstr ""
 "موقع الكائن على الشاشة {left:.1f} بالمائة من الحد الأيسر للشاشة, {top:.1f} "
-"بالمائة من الحد الأيمن للشاشة, العرض {width:.1f} بالمائة من الشاشة, "
-"والطول{height:.1f} بالمائة من الشاشة"
+"بالمائة من الحد الأيمن للشاشة, العرض {width:.1f} بالمائة من الشاشة, والطول"
+"{height:.1f} بالمائة من الشاشة"
 
 #. Translators: Input help mode message for report object dimensions command.
 #: globalCommands.py:365
@@ -2227,8 +2225,8 @@ msgstr "الانتقال للتحديد الحالي"
 #. focus command.
 #: globalCommands.py:378
 msgid ""
-"Sets the navigator object to the current focus, and the review cursor to the"
-" position of the caret inside it, if possible."
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
 msgstr ""
 "وضع مؤشر حركة الكائن عند مؤشر التحديد الحالي ووضع مؤشر الاستعراض عند مؤشر "
 "التحرير بداخله إذا كان ذلك ممكن"
@@ -2344,8 +2342,8 @@ msgstr "استعراض السطر الأول من الكائن الحالي"
 #. line command.
 #: globalCommands.py:523
 msgid ""
-"Moves the review cursor to the previous line of the current navigator object"
-" and speaks it"
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
 msgstr "استعراض السطر السابق للكائن الحالي"
 
 #. Translators: Input help mode message for read current line under review
@@ -2372,8 +2370,8 @@ msgstr "نهاية"
 #. command.
 #: globalCommands.py:548
 msgid ""
-"Moves the review cursor to the next line of the current navigator object and"
-" speaks it"
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
 msgstr "استعراض السطر التالي"
 
 #. Translators: Input help mode message for move review cursor to bottom line
@@ -2388,8 +2386,8 @@ msgstr "استعراض السطر الأخير"
 #. word command.
 #: globalCommands.py:572
 msgid ""
-"Moves the review cursor to the previous word of the current navigator object"
-" and speaks it"
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
 msgstr "استعراض الكلمة السابقة"
 
 #. Translators: Input help mode message for report current word under review
@@ -2401,15 +2399,14 @@ msgid ""
 "word using character descriptions"
 msgstr ""
 "نطق الكلمة الحالية الواقعة تحت مؤشر الاستعراض. بالضغط على هذا المفتاح مرتين "
-"متعاقبتين يقوم بتهجأتها وبالضغط عليه ثلاث مرات يقوم بتهجئة الكلمة تهجئة "
-"صوتية"
+"متعاقبتين يقوم بتهجأتها وبالضغط عليه ثلاث مرات يقوم بتهجئة الكلمة تهجئة صوتية"
 
 #. Translators: Input help mode message for move review cursor to next word
 #. command.
 #: globalCommands.py:597
 msgid ""
-"Moves the review cursor to the next word of the current navigator object and"
-" speaks it"
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
 msgstr "استعراض الكلمة التالية"
 
 #: globalCommands.py:605 globalCommands.py:618 appModules\totalcmd.py:35
@@ -2483,8 +2480,8 @@ msgstr "نمط النطق كلام"
 #. Translators: Input help mode message for toggle speech mode command.
 #: globalCommands.py:695
 msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA"
-" will not speak anything. If beeps then NVDA will simply beep each time it "
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr "الانتقال بين أنظمة النطق من صفير, وكلام, وصَمْت"
 
@@ -2584,8 +2581,8 @@ msgstr "لا يوجد عنوان"
 #: globalCommands.py:855
 msgid ""
 "Reports the title of the current application or foreground window. If "
-"pressed twice, spells the title. If pressed three times, copies the title to"
-" the clipboard"
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
 msgstr ""
 "الإعلام عن عنوان التطبيق الحالي أو النافذة المرئية. بالضغط عليه مرتين, يقوم "
 "بتهجئته, وبالضغط عليه ثلاث مرات ينسخ العنوان إلى حافظة الوندوز"
@@ -2607,8 +2604,8 @@ msgid ""
 msgstr ""
 "يسجل المعلومات حول الكائن الحالي ويقوم بتنشيط عارض تقارير البرنامج كي يمكن "
 "فحص المعلومات الواردة بها وهو أمر مفيد للمطورين.Logs information about the "
-"current navigator object which is useful to developers and activates the log"
-" viewer so the information can be examined\t."
+"current navigator object which is useful to developers and activates the log "
+"viewer so the information can be examined\t."
 
 #. Translators: A mode where no progress bar updates are given.
 #: globalCommands.py:881
@@ -2639,8 +2636,8 @@ msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
 msgstr ""
-"يَتَنَقَّل بالإعلام عن التغييرات في شريط التقدم بين صوت الصفير فقط, أو نطق "
-"النسبة المئوية فقط, أو عن طريق الاثنين معا, أو عن طريق التعطيل"
+"يَتَنَقَّل بالإعلام عن التغييرات في شريط التقدم بين صوت الصفير فقط, أو نطق النسبة "
+"المئوية فقط, أو عن طريق الاثنين معا, أو عن طريق التعطيل"
 
 #. Translators: presented when the present dynamic changes is toggled.
 #: globalCommands.py:901
@@ -2674,8 +2671,7 @@ msgstr "تغيير مؤشر الاستعراض وفقا لحركة مؤشر ال
 #. command.
 #: globalCommands.py:922
 msgid ""
-"Toggles on and off the movement of the review cursor due to the caret "
-"moving."
+"Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "تشغيل وتعطيل تحريك مؤشر الاستعراض وفقا لمؤشر التحرير."
 
 #. Translators: presented when toggled.
@@ -2828,8 +2824,8 @@ msgid ""
 "Pressing once reverts the current configuration to the most recently saved "
 "state. Pressing three times reverts to factory defaults."
 msgstr ""
-"بالضغط عليه مرة واحدة سيقوم بحفظ أحدث الإعدادات. بالضغط عليه ثلاث مرات سيعود"
-" بالبرنامج إلى الإعدادات الافتراضية."
+"بالضغط عليه مرة واحدة سيقوم بحفظ أحدث الإعدادات. بالضغط عليه ثلاث مرات سيعود "
+"بالبرنامج إلى الإعدادات الافتراضية."
 
 #. Translators: Input help mode message for activate python console command.
 #: globalCommands.py:1048
@@ -2924,8 +2920,7 @@ msgid ""
 "Retrieves the text from the previously set start marker up to and including "
 "the current position of the review cursor and copies it to the clipboard"
 msgstr ""
-"استرجاع النص بداية من علامة التحديد السابقة حتى موضع المؤشر ونسخه إلى "
-"الحافظة"
+"استرجاع النص بداية من علامة التحديد السابقة حتى موضع المؤشر ونسخه إلى الحافظة"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:1113
@@ -2966,8 +2961,8 @@ msgstr "تم إعادة تحميل الملحقات"
 #. Translators: Input help mode message for reload plugins command.
 #: globalCommands.py:1152
 msgid ""
-"Reloads app modules and global plugins without restarting NVDA, which can be"
-" Useful for developers"
+"Reloads app modules and global plugins without restarting NVDA, which can be "
+"Useful for developers"
 msgstr ""
 "إعادة تحميل الوحدات البرمجية والملحقات العالمية دون إعادة تشغيل NVDA مما "
 "يفيد المطورين"
@@ -3887,15 +3882,21 @@ msgstr "تثبيت التحديثات"
 #: updateCheck.py:379
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "نريد منك المساعدة من أجل الاستمرار في تطوير nvda.\n"
-"يعتمد هذا المشروع بشكل أساسي على التبرعات والمنح. فمن خلال قيامك بالتبرع, فإنك تساهم في تمويل تطوير NVDA بأجر كامل.\n"
-"إذا قمت بالتبرع ب$10 لكل مرة تحميل, سنكون قادرون على تغطية كل تكلفة هذا المشروع.\n"
-"تستقبل التبرعات منظمة NV Access, المنظمة الغير ربحية المسؤولة عن تطوير NVDA.\n"
+"يعتمد هذا المشروع بشكل أساسي على التبرعات والمنح. فمن خلال قيامك بالتبرع, "
+"فإنك تساهم في تمويل تطوير NVDA بأجر كامل.\n"
+"إذا قمت بالتبرع ب$10 لكل مرة تحميل, سنكون قادرون على تغطية كل تكلفة هذا "
+"المشروع.\n"
+"تستقبل التبرعات منظمة NV Access, المنظمة الغير ربحية المسؤولة عن تطوير "
+"NVDA.\n"
 "نشكرك على الدعم."
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -3941,12 +3942,21 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"{name} is developed by NV Access, a non-profit organisation committed to "
+"helping and promoting free and open source solutions for blind and vision "
+"impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider "
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "{longName} ({name})\n"
 "إصدار: {version}\n"
@@ -3954,12 +3964,22 @@ msgstr ""
 "URL: http://www.arabic-nvda.org\n"
 "{copyright}\n"
 "\n"
-"يخضع برنامج {name} للإصدار الثاني من رخصة جي أن يو العمومية GNU General Public License. وهي تقضي للمستخدم بكامل الحرية بتوزيع البرنامج أو تعديل مكوّناته البرمجية بأي طريقة شاء ما دام يُرفِق الرخصة مع البرنامج ويجعل مصدر الشفرة متاحًا لكل من يطلبه. وينطبق ذلك على كل من النسخة الأصلية والنسخة المعدَّلة من البرنامج بالإضافة إلى أية برامج تستعمل شفرة برمجية مأخوذة من هذا البرنامج.\n"
+"يخضع برنامج {name} للإصدار الثاني من رخصة جي أن يو العمومية GNU General "
+"Public License. وهي تقضي للمستخدم بكامل الحرية بتوزيع البرنامج أو تعديل "
+"مكوّناته البرمجية بأي طريقة شاء ما دام يُرفِق الرخصة مع البرنامج ويجعل مصدر "
+"الشفرة متاحًا لكل من يطلبه. وينطبق ذلك على كل من النسخة الأصلية والنسخة "
+"المعدَّلة من البرنامج بالإضافة إلى أية برامج تستعمل شفرة برمجية مأخوذة من هذا "
+"البرنامج.\n"
 "ولمزيد من المعلومات يمكنكم الاطلاع على الرخصة من خلال قائمة المساعدة\n"
-"كما يمكنكم الاطلاع عليها عبر الإنترنت فللترجمة باللغة العربية (لنصّ رخصة جينو العمومية http://www.linuxfuture.org/download/Arabic_GPL_2.0.htm)  وللاطلاع على الرخصة باللغة الانكليزية  (GNU General Public License Version 2 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"كما يمكنكم الاطلاع عليها عبر الإنترنت فللترجمة باللغة العربية (لنصّ رخصة جينو "
+"العمومية http://www.linuxfuture.org/download/Arabic_GPL_2.0.htm)  وللاطلاع "
+"على الرخصة باللغة الانكليزية  (GNU General Public License Version 2 http://"
+"www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"والمؤسسة التي تقوم بتطوير {name} هي مؤسسة NV Access وهي مؤسسة غير ربحية تهدف إلى العمل على تطوير حلول مفتوحة المصدر للمكفوفين وضعاف البصر.\n"
-"إذا كنت ممن يهمهم أمر البرنامج وتطويره برجاء التبرع لمؤسسة NV Access وذلك باختيار العنصر تبرع من قائمة NVDA الرئيسية.\n"
+"والمؤسسة التي تقوم بتطوير {name} هي مؤسسة NV Access وهي مؤسسة غير ربحية تهدف "
+"إلى العمل على تطوير حلول مفتوحة المصدر للمكفوفين وضعاف البصر.\n"
+"إذا كنت ممن يهمهم أمر البرنامج وتطويره برجاء التبرع لمؤسسة NV Access وذلك "
+"باختيار العنصر تبرع من قائمة NVDA الرئيسية.\n"
 "وللتبرع ل NVDA العربي يرجى زيارة موقعنا http://www.arabic-nvda.org"
 
 #. Translators: a message announcing a candidate's character and description.
@@ -4721,8 +4741,7 @@ msgstr "ال&معجم التلقائي..."
 msgid ""
 "A dialog where you can set default dictionary by adding dictionary entries "
 "to the list"
-msgstr ""
-"مُحاوَرَة تُمَكّنك من وضع معجم صوتي تلقائي عن طريق إضافة قواعد نطقية للقائمة"
+msgstr "مُحاوَرَة تُمَكّنك من وضع معجم صوتي تلقائي عن طريق إضافة قواعد نطقية للقائمة"
 
 #. Translators: The label for the menu item to open Voice specific speech
 #. dictionary dialog.
@@ -4735,8 +4754,8 @@ msgid ""
 "A dialog where you can set voice-specific dictionary by adding dictionary "
 "entries to the list"
 msgstr ""
-"مُحاوَرَة تُمَكّنك من وضع معجم صوتي خاص بالصوت الحالي عن طريق إضافة قواعد "
-"نطقية للقائمة"
+"مُحاوَرَة تُمَكّنك من وضع معجم صوتي خاص بالصوت الحالي عن طريق إضافة قواعد نطقية "
+"للقائمة"
 
 #. Translators: The label for the menu item to open Temporary speech
 #. dictionary dialog.
@@ -4746,11 +4765,10 @@ msgstr "معجم صوتي &مؤقت..."
 
 #: gui\__init__.py:337
 msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries"
-" to the edit box"
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
 msgstr ""
-"مُحاوَرَة تُمَكّنك من وضع معجم صوتي مؤقت عن طريق إضافة قواعد نطقية لمربع "
-"تحرير"
+"مُحاوَرَة تُمَكّنك من وضع معجم صوتي مؤقت عن طريق إضافة قواعد نطقية لمربع تحرير"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select
 #. speech dictionaries.
@@ -4896,17 +4914,24 @@ msgstr "ال&خروج من البرنامج"
 #: gui\__init__.py:509
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
 msgstr ""
 "أهلا وسهلا بكم في برنامج NVDA\n"
-". تتطلب معظم أوامر البرنامج الضغط على مفتاح NVDA قبيل الضغط على مفاتيح الاختصار الأخرى.\n"
-" ويقوم مفتاحي الإدراج سواء الواقع في اللوحة الرقمية أو الممتد بالعمل كمفتاح NVDA.\n"
+". تتطلب معظم أوامر البرنامج الضغط على مفتاح NVDA قبيل الضغط على مفاتيح "
+"الاختصار الأخرى.\n"
+" ويقوم مفتاحي الإدراج سواء الواقع في اللوحة الرقمية أو الممتد بالعمل كمفتاح "
+"NVDA.\n"
 " وكذلك بإمكانك ضبط البرنامج بحيث يستخدم مفتاح تكبير الحروف كمفتاح للبرنامج.\n"
-"وفي أي وقت يمكنك الضغط على مفتاح NVDA زائد حرف (N) لفتح قائمة البرنامج ومن ثم إجراء اية تعديلات تفضيلية أو الحصول على التعليمات الخاصة به أو الوصول لأية وظائف أخرى في البرنامج.\n"
+"وفي أي وقت يمكنك الضغط على مفتاح NVDA زائد حرف (N) لفتح قائمة البرنامج ومن "
+"ثم إجراء اية تعديلات تفضيلية أو الحصول على التعليمات الخاصة به أو الوصول "
+"لأية وظائف أخرى في البرنامج.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the
 #. first time.
@@ -4942,10 +4967,14 @@ msgstr "عرض هذه المُحاوَرَة عند بدأ تشغيل NVDA"
 #: gui\__init__.py:572
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
 msgstr ""
 "يحتوي ملف إعداداتك على أخطاء.\n"
-"اضغط موافق لمعالجة تلك الأخطاء أو اضغط إلغاء إذا كنت ترغب في كتابة ملف إعداداتك يدويا في وقت آخر لتصحيح الأخطاء. يمكنك الحصول على معلومات عن الأخطاء بالاطلاع على ملف تقارير البرنامج.\n"
+"اضغط موافق لمعالجة تلك الأخطاء أو اضغط إلغاء إذا كنت ترغب في كتابة ملف "
+"إعداداتك يدويا في وقت آخر لتصحيح الأخطاء. يمكنك الحصول على معلومات عن "
+"الأخطاء بالاطلاع على ملف تقارير البرنامج.\n"
 
 #. Translators: The title of the dialog to tell users that there are erros in
 #. the configuration file.
@@ -5075,7 +5104,8 @@ msgstr ""
 #. addon.
 #: gui\addonGui.py:105
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
@@ -5212,9 +5242,8 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"تعذر حذف أو استبدال أحد الملفات. ربما تعمل نسخة أخرى من NVDA على حساب مستخدم"
-" آخر. يرجى التأكد من تعطيل جميع نسخ NVDA العاملة وقم بإعادة التثبيت مرة "
-"أخرى."
+"تعذر حذف أو استبدال أحد الملفات. ربما تعمل نسخة أخرى من NVDA على حساب مستخدم "
+"آخر. يرجى التأكد من تعطيل جميع نسخ NVDA العاملة وقم بإعادة التثبيت مرة أخرى."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation
 #. fails
@@ -5505,8 +5534,8 @@ msgstr "تشغيل البرنامج عند شاشة الدخول إلى ويند
 #. secure screens such as User Account Control (UAC) dialog).
 #: gui\settingsDialogs.py:184
 msgid ""
-"Use currently saved settings on the logon and other secure screens (requires"
-" administrator privileges)"
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
 msgstr ""
 "استخدام الإعدادات المحفوظة حاليا في شاشة الدخول لويندوز وفي الشاشات الآمنة "
 "الأخرى (يتطلب صلاحيات إدارية)"
@@ -5527,8 +5556,8 @@ msgid ""
 "your settings?"
 msgstr ""
 "لقد تم اكتشاف احتواء مجلد الإعدادات الخاص بك على ملحقات برمجية إضافية. نسخ "
-"تلك الإعدادات إلى شاشات الدخول ربما يعرضك لخطورة أمنية. هل تريد الاستمرار في"
-" نسخ إعداداتك؟"
+"تلك الإعدادات إلى شاشات الدخول ربما يعرضك لخطورة أمنية. هل تريد الاستمرار في "
+"نسخ إعداداتك؟"
 
 #. Translators: The title of the warning dialog displayed when trying to copy
 #. settings for use in secure screens.
@@ -5552,8 +5581,8 @@ msgstr "يرجى الانتظار حتى الانتهاء من نسخ الإعد
 #. settings  fails
 #: gui\settingsDialogs.py:224
 msgid ""
-"Unable to copy a file. Perhaps it is currently being used by another process"
-" or you have run out of disc space on the drive you are copying to."
+"Unable to copy a file. Perhaps it is currently being used by another process "
+"or you have run out of disc space on the drive you are copying to."
 msgstr ""
 "تعذر نسخ أحد الملفات. ربما حدث هذا لأن هذا الملف مستخدم من قبل تطبيق آخر أو "
 "أن مساحة محرك الأقراص الذي تنسخ به غير كافية."
@@ -5601,8 +5630,8 @@ msgid ""
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
 "manually save and exit at a later time."
 msgstr ""
-"لتفعيل اللغة الجديدة, يجب حفظ الإعدادات وإعادة تشغيل البرنامج. قم بالضغط على"
-" مفتاح الإدخال لحفظ الإعدادات وإعادة تشغيل البرنامج، أو مفتاح الهروب لإلغاء "
+"لتفعيل اللغة الجديدة, يجب حفظ الإعدادات وإعادة تشغيل البرنامج. قم بالضغط على "
+"مفتاح الإدخال لحفظ الإعدادات وإعادة تشغيل البرنامج، أو مفتاح الهروب لإلغاء "
 "الأمر وحفظ التعديلات, وإعادة تشغيل البرنامج في وقت لاحق."
 
 #. Translators: The title of the dialog which appears when the user changed
@@ -6023,8 +6052,7 @@ msgstr "تنسيق المستند"
 #: gui\settingsDialogs.py:983
 msgid "Announce formatting changes after the cursor (can cause a lag)"
 msgstr ""
-"الإعلام عن التغييرات التنسيقية بعد موضع المؤشر (مما قد يسبب بطء في "
-"الاستجابة)"
+"الإعلام عن التغييرات التنسيقية بعد موضع المؤشر (مما قد يسبب بطء في الاستجابة)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -6084,7 +6112,7 @@ msgstr "الإعلام عن ر&قم السطر"
 #. dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of
 #. a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1034
 msgid "Report l&ine indentation"
 msgstr "الإعلان عن إزاحة الس&طر"
@@ -6344,11 +6372,15 @@ msgstr "مس&توى "
 #. Translators: Information about NVDA's new laptop keyboard layout.
 #: gui\upgradeAlerts.py:18
 msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more information."
+"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
+"order to make it more intuitive and consistent.\n"
+"If you use the laptop layout, please see the What's New document for more "
+"information."
 msgstr ""
-"في الإصدار 2013.1, قام المطورون بإعادة تصميم نمط الحواسب المحمولة تماما كي يكون أسرع وأكثر توافقا.\n"
-"فإذا كنت من مستخدمي نمط الحواسب المحمولة, يرجى قراءة ملف المستجدات لمزيد من المعلومات."
+"في الإصدار 2013.1, قام المطورون بإعادة تصميم نمط الحواسب المحمولة تماما كي "
+"يكون أسرع وأكثر توافقا.\n"
+"فإذا كنت من مستخدمي نمط الحواسب المحمولة, يرجى قراءة ملف المستجدات لمزيد من "
+"المعلومات."
 
 #. Translators: The title of a dialog providing information about NVDA's new
 #. laptop keyboard layout.
@@ -7194,8 +7226,8 @@ msgid ""
 "Pressing once will set the current row as the row where column headers "
 "should be found. Pressing twice clears the setting."
 msgstr ""
-"بالضغط عليه مرة واحدة سيجعل الصف الحالي هو الصف الذي ينبغي البحث من خلاله عن"
-" رءوس الأعمدة. وبالضغط عليه مرتين سيلغي الإعداد"
+"بالضغط عليه مرة واحدة سيجعل الصف الحالي هو الصف الذي ينبغي البحث من خلاله عن "
+"رءوس الأعمدة. وبالضغط عليه مرتين سيلغي الإعداد"
 
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
 #: NVDAObjects\window\excel.py:198
@@ -7295,8 +7327,8 @@ msgstr "HIMS SyncBraille"
 #~ msgstr "لا يوجد كائن في وضع الاستعراض المسطح"
 
 #~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the position"
-#~ " of the review cursor within flat review"
+#~ "Moves navigator object to the object represented by the text at the "
+#~ "position of the review cursor within flat review"
 #~ msgstr "تحريك الكائن المستعرض للكائن الذي يمثله النص في موضع مؤشر الاستعراض"
 
 #~ msgid "Please close the other NVDA settings dialog first"
@@ -7343,8 +7375,8 @@ msgstr "HIMS SyncBraille"
 #~ msgstr "%s مِن %s"
 
 #~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-on"
-#~ " and try again."
+#~ "This add-on seems to already be installed. Please remove the existing add-"
+#~ "on and try again."
 #~ msgstr ""
 #~ "يبدو أن الإضافة الجاري تنصيبها مثبتة بالفعل. يرجى حذف الإضافة الموجودة"
 
