@@ -747,7 +747,9 @@ class AggregatedSection(object):
 			cache = self._cache.get(key)
 			if cache and cache is not KeyError:
 				# An AggregatedSection has already been cached, so update it.
-				cache[key].profiles[-1] = val
+				cache = self._cache[key]
+				cache.profiles[-1] = val
+				cache._cache.clear()
 			elif cache is KeyError:
 				# This key now exists, so remove the cached non-existence.
 				del self._cache[key]
