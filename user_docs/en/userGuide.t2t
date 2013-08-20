@@ -1101,12 +1101,15 @@ Press the Close button to close the dialog.
 Pressing the Triggers button in the Configuration Profiles dialog allows you to specify triggers which automatically activate the selected profile.
 
 A specific trigger can only be associated with a single profile, but a single profile can be associated with several triggers.
+If a trigger is already associated with another profile, its option won't be available.
 
 The Applications grouping allows you to specify applications that should trigger the profile when you switch to them.
 Applications are specified by the name of their executable file (without the extension), which might be different to the actual name of the application.
 You can add and remove applications using the Add and Remove buttons, respectively.
 When you add an application, you can type an application executable name or you can select from applications to which you have switched recently.
 If you opened the Configuration Profiles dialog using the key command, the application executable name will be filled in already based on the application that was active when you opened the dialog.
+
+The Say all checkbox allows you to specify whether this profile should be triggered while reading with the say all command.
 
 Press the Close button to return to the Configuration Profiles dialog.
 
