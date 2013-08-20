@@ -627,6 +627,11 @@ class ConfigManager(object):
 			raise ValueError("A profile with the same name already exists: %s" % newName)
 
 		os.rename(oldFn, newFn)
+		# Update any associated triggers.
+		allTriggers = self.profiles[0]["profileTriggers"]
+		for trigSpec, trigProfile in allTriggers.iteritems():
+			if trigProfile == oldName:
+				allTriggers[trigSpec] = newName
 		try:
 			profile = self._profileCache.pop(oldName)
 		except KeyError:
