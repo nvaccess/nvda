@@ -895,7 +895,11 @@ class ProfileTrigger(object):
 		except KeyError:
 			self.profile = None
 			return
-		conf._triggerProfileEnter(self.profile)
+		try:
+			conf._triggerProfileEnter(self.profile)
+		except:
+			log.error("Error entering trigger %s, profile %s"
+				% (self.spec, self.profile), exc_info=True)
 	__enter__ = enter
 
 	def exit(self):
@@ -904,7 +908,11 @@ class ProfileTrigger(object):
 		"""
 		if not self.profile:
 			return
-		conf._triggerProfileExit(self.profile)
+		try:
+			conf._triggerProfileExit(self.profile)
+		except:
+			log.error("Error exiting trigger %s, profile %s"
+				% (self.spec, self.profile), exc_info=True)
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
