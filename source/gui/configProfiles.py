@@ -32,14 +32,14 @@ class ProfilesDialog(wx.Dialog):
 		sizer.Add(wx.StaticText(self, label=_("&Profile")))
 		# Translators: Indicates that no configuration profile is selected.
 		# In this case, the user's normal configuration will be used.
-		self.profiles = [_("(none)")]
-		self.profiles.extend(config.conf.listProfiles())
-		item = self.profileList = wx.Choice(self, choices=self.profiles)
+		profiles = [_("(none)")]
+		profiles.extend(config.conf.listProfiles())
+		item = self.profileList = wx.Choice(self, choices=profiles)
 		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
 		if len(config.conf.profiles) == 1:
 			item.Selection = 0
 		else:
-			item.Selection = self.profiles.index(config.conf.profiles[-1].name)
+			item.StringSelection = config.conf.profiles[-1].name
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 
@@ -87,7 +87,7 @@ class ProfilesDialog(wx.Dialog):
 		if sel == 0:
 			profile = None
 		else:
-			profile = self.profiles[sel]
+			profile = self.profileList.GetString(sel)
 		try:
 			config.conf.manualActivateProfile(profile)
 		except:
@@ -118,9 +118,8 @@ class ProfilesDialog(wx.Dialog):
 			gui.messageBox(_("Error creating profile - probably read only file system."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
-		self.profiles.append(name)
 		self.profileList.Append(name)
-		self.profileList.Selection = len(self.profiles) - 1
+		self.profileList.Selection = self.profileList.Count - 1
 		self.profileList.SetFocus()
 
 	def onDelete(self, evt):
@@ -133,7 +132,7 @@ class ProfilesDialog(wx.Dialog):
 			wx.YES | wx.NO | wx.ICON_QUESTION
 		) == wx.NO:
 			return
-		name = self.profiles[index]
+		name = self.profileList.StringSelection
 		try:
 			config.conf.deleteProfile(name)
 		except:
@@ -141,7 +140,6 @@ class ProfilesDialog(wx.Dialog):
 			gui.messageBox(_("Error deleting profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
-		del self.profiles[index]
 		self.profileList.Delete(index)
 		self.profileList.Selection = 0
 		self.profileList.SetFocus()
@@ -153,7 +151,7 @@ class ProfilesDialog(wx.Dialog):
 
 	def onRename(self, evt):
 		index = self.profileList.Selection
-		oldName = self.profiles[index]
+		oldName = self.profileList.GetString(index)
 		# Translators: The label of a field to enter a new name for a configuration profile.
 		with wx.TextEntryDialog(self, _("New name:"),
 				# Translators: The title of the dialog to rename a configuration profile.
@@ -172,7 +170,6 @@ class ProfilesDialog(wx.Dialog):
 			gui.messageBox(_("Error renaming profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
-		self.profiles[index] = newName
 		self.profileList.SetString(index, newName)
 		self.profileList.Selection = index
 		self.profileList.SetFocus()
