@@ -662,6 +662,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	//Walk the range from the given start to end by characterFormatting or word units
 	//And grab any text and formatting and generate appropriate xml
 	do {
+		int curDisabledFormatConfig=0;
 		//generated form field xml if in a form field
 		//Also automatically extends the range and chunkEndOffset to the end of the field
 		BOOL isFormField=generateFormFieldXML(pDispatchRange,XMLStream,chunkEndOffset);
@@ -694,6 +695,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 						noteCharOffset=i;
 						if(i==0) text[i]=L' ';
 						break;
+					}  else if(text[i]==L'\x0007'&&(chunkEndOffset-chunkStartOffset)==1) {
+						text[i]=L'\0';
+						//Collecting revision info does not work on cell delimiters
+						curDisabledFormatConfig|=formatConfig_reportRevisions;
 					}
 				}
 				isNoteChar=(noteCharOffset==0);
@@ -723,7 +728,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 			}
 			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
 			XMLStream<<initialFormatAttribsStream.str();
-			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
+			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig&(~curDisabledFormatConfig),XMLStream);
 			XMLStream<<L">";
 			if(firstLoop) {
 				formatConfig&=(~formatConfig_reportLists);
