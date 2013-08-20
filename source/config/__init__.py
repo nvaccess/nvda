@@ -592,6 +592,13 @@ class ConfigManager(object):
 			del self._profileCache[name]
 		except KeyError:
 			pass
+		# Remove any triggers associated with this profile.
+		allTriggers = self.profiles[0]["profileTriggers"]
+		# You can't delete from a dict while iterating through it.
+		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.iteritems()
+			if trigProfile == name]
+		for trigSpec in delTrigs:
+			del allTriggers[trigSpec]
 		# Check if this profile was active.
 		for index, profile in enumerate(self.profiles):
 			if profile.name == name:
@@ -889,7 +896,11 @@ class ProfileTrigger(object):
 		except KeyError:
 			self.profile = None
 			return
-		conf._triggerProfileEnter(self.profile)
+		try:
+			conf._triggerProfileEnter(self.profile)
+		except:
+			log.error("Error entering trigger %s, profile %s"
+				% (self.spec, self.profile), exc_info=True)
 	__enter__ = enter
 
 	def exit(self):
@@ -898,7 +909,11 @@ class ProfileTrigger(object):
 		"""
 		if not self.profile:
 			return
-		conf._triggerProfileExit(self.profile)
+		try:
+			conf._triggerProfileExit(self.profile)
+		except:
+			log.error("Error exiting trigger %s, profile %s"
+				% (self.spec, self.profile), exc_info=True)
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
