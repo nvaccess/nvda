@@ -219,6 +219,15 @@ class TriggersDialog(wx.Dialog):
 		mainSizer.Add(group)
 		self.onAppsListChoice(None)
 
+		# Translators: The label of a check box to specify say all as a trigger for a configuration profile.
+		item = self.sayAllToggle = wx.CheckBox(self, label=_("&Say all"))
+		if "sayAll" in triggers:
+			item.Value = True
+		elif "sayAll" in config.conf["profileTriggers"]:
+			# This trigger is associated with another profile already.
+			item.Disable()
+		mainSizer.Add(item)
+
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
 		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
 		mainSizer.Add(item)
@@ -229,6 +238,15 @@ class TriggersDialog(wx.Dialog):
 		self.Sizer = mainSizer
 
 	def onClose(self, evt):
+		triggers = config.conf["profileTriggers"]
+		if self.sayAllToggle.Value:
+			triggers["sayAll"] = self.profile
+		elif self.sayAllToggle.Enabled:
+			try:
+				del triggers["sayAll"]
+			except KeyError:
+				pass
+
 		self.Parent.Enable()
 		self.Destroy()
 
