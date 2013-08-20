@@ -187,7 +187,7 @@ def handleLoseFocus(mod):
 	mod._configProfileTrigger = None
 
 def handleGainFocus(mod):
-	trigger = mod._configProfileTrigger = AppConfigProfileTrigger(mod.appName)
+	trigger = mod._configProfileTrigger = AppProfileTrigger(mod.appName)
 	trigger.enter()
 	if not mod.sleepMode and hasattr(mod,'event_appModule_gainFocus'):
 		mod.event_appModule_gainFocus()
@@ -274,7 +274,7 @@ class AppModule(baseObject.ScriptableObject):
 		self.is64BitProcess = not res
 		return self.is64BitProcess
 
-class AppConfigProfileTrigger(config.ProfileTrigger):
+class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus.
 	"""
 
