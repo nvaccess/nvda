@@ -898,4 +898,6 @@ class ProfileTrigger(object):
 		if not self.profile:
 			return
 		conf._triggerProfileExit(self.profile)
-	__exit__ = exit
+
+	def __exit__(self, excType, excVal, traceback):
+		self.exit()
