@@ -1077,13 +1077,19 @@ Sometimes, you may wish to have different settings for different situations.
 For example, you may wish to have reporting of indentation enabled while you are editing or reporting of font attributes enabled while you are proofreading.
 NVDA allows you to do this using configuration profiles.
 
++++ Basic Management +++
 You manage configuration profiles by selecting "Configuration profiles" in the NVDA menu.
+You can also do this using a key command:
+%kc:beginInclude
+- NVDA+control+p: Show the Configuration Profiles dialog.
+-
+%kc:endInclude
 
 The first control in this dialog is the profile list from which you can select one of the available profiles.
-When you open the dialog, the last profile you activated is selected.
-You can activate the selected profile by pressing the Activate button.
-Once activated, any settings in this profile override the settings in your normal configuration.
-Also, any settings you change will be saved in this profile.
+When you open the dialog, the last manually activated profile is selected.
+You can manually activate the selected profile by pressing the Activate button.
+Once a profile is manually activated, any settings in that profile override the settings in your normal configuration.
+Also, any settings you change will be saved in that profile.
 
 To return to your normal configuration, select "(none)" in the profile list and activate it.
 
@@ -1091,6 +1097,25 @@ You can create a new profile by pressing the New button.
 To rename or delete a profile, press the Rename or Delete buttons, respectively.
 
 Press the Close button to close the dialog.
+
++++ Triggers +++
+Pressing the Triggers button in the Configuration Profiles dialog allows you to specify triggers which automatically activate the selected profile.
+
+A specific trigger can only be associated with a single profile, but a single profile can be associated with several triggers.
+If a trigger is already associated with another profile, its option won't be available.
+
+The Applications grouping allows you to specify applications that should trigger the profile when you switch to them.
+Applications are specified by the name of their executable file (without the extension), which might be different to the actual name of the application.
+You can add and remove applications using the Add and Remove buttons, respectively.
+When you add an application, you can type an application executable name or you can select from applications to which you have switched recently.
+If you opened the Configuration Profiles dialog using the key command, the application executable name will be filled in already based on the application that was active when you opened the dialog.
+
+The Say all checkbox allows you to specify whether this profile should be triggered while reading with the say all command.
+
+Press the Close button to return to the Configuration Profiles dialog.
+
+Note that changed settings are always saved to the manually activated profile.
+This means that to edit a triggered profile, you must manually activate it first.
 
 ++ Location of Configuration files ++
 Portable versions of NVDA store all settings, custom appModules and custom drivers in a directory called userConfig, found in the NVDA directory.

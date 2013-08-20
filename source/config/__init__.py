@@ -13,6 +13,7 @@ from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
 import shlobj
+import baseObject
 
 #: The configuration specification
 #: @type: ConfigObj
@@ -160,6 +161,8 @@ confspec = ConfigObj(StringIO(
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
+
+[profileTriggers]
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
@@ -386,12 +389,15 @@ class ConfigManager(object):
 	with the base configuration being consulted last.
 	This allows a profile to override settings in profiles activated earlier and the base configuration.
 	A profile need only include a subset of the available settings.
-	Changed settings are written to the most recently activated profile.
+	Profiles can be activated manually or automatically due to triggers.
+	There can only be one manually activated profile and it always has highest precedence.
+	Changed settings are written to the manually activated profile.
+	If there is none, they are written to the base configuration.
 	"""
 
 	#: Sections that only apply to the base configuration;
 	#: i.e. they cannot be overridden in profiles.
-	BASE_ONLY_SECTIONS = {"general", "update", "upgrade"}
+	BASE_ONLY_SECTIONS = {"general", "update", "upgrade", "profileTriggers"}
 
 	def __init__(self):
 		self.spec = confspec
@@ -399,6 +405,8 @@ class ConfigManager(object):
 		self._profileCache = {}
 		#: The active profiles.
 		self.profiles = []
+		#: The index of the profile being edited.
+		self.editProfileIndex = None
 		self.validator = Validator()
 		self.rootSection = None
 		self._initBaseConf()
@@ -416,10 +424,6 @@ class ConfigManager(object):
 		synthDriverHandler.handleConfigProfileSwitch()
 		import braille
 		braille.handler.handleConfigProfileSwitch()
-
-	def _pushProfile(self, profile):
-		self.profiles.append(profile)
-		self._handleProfileSwitch()
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
@@ -449,15 +453,8 @@ class ConfigManager(object):
 			profile.validate(self.validator, section=sect)
 
 		self._profileCache[None] = profile
-		self._pushProfile(profile)
-
-	def deactivateProfile(self):
-		"""Deactivate the most recently activated profile.
-		@raise IndexError: If there is no profile to deactivate.
-		"""
-		if len(self.profiles) == 1:
-			raise IndexError("No profile to deactivate")
-		self.profiles.pop()
+		self.profiles.append(profile)
+		self.editProfileIndex = 0
 		self._handleProfileSwitch()
 
 	def __getitem__(self, key):
@@ -496,21 +493,50 @@ class ConfigManager(object):
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
 		profile.name = name
+		profile.manual = False
+		profile.triggered = False
 		self._profileCache[name] = profile
 		return profile
 
-	def activateProfile(self, name):
-		"""Activate a profile, loading it if appropriate.
-		@param name: The name of the profile.
+	def manualActivateProfile(self, name):
+		"""Manually activate a profile.
+		Only one profile can be manually active at a time.
+		If another profile was manually activated, deactivate it first.
+		If C{name} is C{None}, a profile will not be activated.
+		@param name: The name of the profile or C{None} for no profile.
 		@type name: basestring
 		"""
-		self._pushProfile(self._getProfile(name))
+		if self.editProfileIndex > 0:
+			# The edit profile can only be the base config or a manually activated profile.
+			# It isn't currently the base config (0).
+			profile = self.profiles.pop()
+			profile.manual = False
+		if name:
+			profile = self._getProfile(name)
+			profile.manual = True
+			self.profiles.append(profile)
+			self.editProfileIndex = len(self.profiles) - 1
+		else:
+			self.editProfileIndex = 0
+		self._handleProfileSwitch()
 
-	def _markWriteProfileDirty(self):
-		if len(self.profiles) == 1:
-			# There's nothing other than the base config, which is always saved anyway.
+	def getManualProfile(self):
+		"""Get the name of the manually activated profile.
+		@return: The name of the profile or C{None} if no profile has been manually activated.
+		@rtype: basestring
+		"""
+		if self.editProfileIndex == 0:
+			# The edit profile can only be the base config or a manually activated profile.
+			# It is currently the base config.
+			return None
+		profile = self.profiles[self.editProfileIndex]
+		return profile.name
+
+	def _markEditProfileDirty(self):
+		if self.editProfileIndex == 0:
+			# This is the base config, which is always saved.
 			return
-		self._dirtyProfiles.add(self.profiles[-1].name)
+		self._dirtyProfiles.add(self.profiles[self.editProfileIndex].name)
 
 	def save(self):
 		"""Save all modified profiles and the base configuration to disk.
@@ -608,6 +634,27 @@ class ConfigManager(object):
 			# The profile wasn't dirty.
 			return
 		self._dirtyProfiles.add(newName)
+
+	def _triggerProfileEnter(self, name):
+		"""Called by L{ProfileTrigger.enter}}}.
+		"""
+		profile = self._getProfile(name)
+		profile.triggered = True
+		if self.editProfileIndex > 0:
+			# There's a manually activated profile.
+			# Manually activated profiles must be at the top of the stack, so insert this one below.
+			self.profiles.insert(-1, profile)
+		else:
+			self.profiles.append(profile)
+		self._handleProfileSwitch()
+
+	def _triggerProfileExit(self, name):
+		"""Called by L{ProfileTrigger.exit}}}.
+		"""
+		profile = self._getProfile(name)
+		profile.triggered = False
+		self.profiles.remove(profile)
+		self._handleProfileSwitch()
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
@@ -717,7 +764,8 @@ class AggregatedSection(object):
 		# Start with the cached items.
 		for key, val in self._cache.iteritems():
 			keys.add(key)
-			yield key, val
+			if val is not KeyError:
+				yield key, val
 		# Walk through the profiles and spec looking for items not yet cached.
 		for profile in itertools.chain(reversed(self.profiles), (self._spec,)):
 			if not profile:
@@ -746,13 +794,15 @@ class AggregatedSection(object):
 			# Update the profile.
 			updateSect = self._getUpdateSection()
 			updateSect[key] = val
-			self.manager._markWriteProfileDirty()
+			self.manager._markEditProfileDirty()
 			# ConfigObj will have mutated this into a configobj.Section.
 			val = updateSect[key]
 			cache = self._cache.get(key)
 			if cache and cache is not KeyError:
 				# An AggregatedSection has already been cached, so update it.
-				cache[key].profiles[-1] = val
+				cache = self._cache[key]
+				cache.profiles[self.manager.editProfileIndex] = val
+				cache._cache.clear()
 			elif cache is KeyError:
 				# This key now exists, so remove the cached non-existence.
 				del self._cache[key]
@@ -775,27 +825,28 @@ class AggregatedSection(object):
 
 		# Set this value in the most recently activated profile.
 		self._getUpdateSection()[key] = val
-		self.manager._markWriteProfileDirty()
+		self.manager._markEditProfileDirty()
 		self._cache[key] = val
 
 	def _getUpdateSection(self):
-		profile = self.profiles[-1]
+		editIndex = self.manager.editProfileIndex
+		profile = self.profiles[editIndex]
 		if profile is not None:
 			# This section already exists in the profile.
 			return profile
 
 		section = self.manager.rootSection
-		profile = section.profiles[-1]
+		profile = section.profiles[editIndex]
 		for part in self.path:
 			parentProfile = profile
 			section = section[part]
-			profile = section.profiles[-1]
+			profile = section.profiles[editIndex]
 			if profile is None:
 				# This section doesn't exist in the profile yet.
 				# Create it and update the AggregatedSection.
 				parentProfile[part] = {}
 				# ConfigObj might have mutated this into a configobj.Section.
-				profile = section.profiles[-1] = parentProfile[part]
+				profile = section.profiles[editIndex] = parentProfile[part]
 		return profile
 
 	@property
@@ -808,3 +859,46 @@ class AggregatedSection(object):
 		# Clear it and replace the content so it remains linked to the main spec.
 		self._spec.clear()
 		self._spec.update(val)
+
+class ProfileTrigger(object):
+	"""A trigger for automatic activation/deactivation of a configuration profile.
+	The user can associate a profile with a trigger.
+	When the trigger applies, the associated profile is activated.
+	When the trigger no longer applies, the profile is deactivated.
+	L{spec} is a string used to search for this trigger and must be implemented.
+	To signal that this trigger applies, call L{enter}.
+	To signal that it no longer applies, call L{exit}.
+	Alternatively, you can use this object as a context manager via the with statement;
+	i.e. this trigger will apply only inside the with block.
+	"""
+
+	@baseObject.Getter
+	def spec(self):
+		"""The trigger specification.
+		This is a string used to search for this trigger in the user's configuration.
+		@rtype: basestring
+		"""
+		raise NotImplementedError
+
+	def enter(self):
+		"""Signal that this trigger applies.
+		The associated profile (if any) will be activated.
+		"""
+		try:
+			self.profile = conf.profiles[0]["profileTriggers"][self.spec]
+		except KeyError:
+			self.profile = None
+			return
+		conf._triggerProfileEnter(self.profile)
+	__enter__ = enter
+
+	def exit(self):
+		"""Signal that this trigger no longer applies.
+		The associated profile (if any) will be deactivated.
+		"""
+		if not self.profile:
+			return
+		conf._triggerProfileExit(self.profile)
+
+	def __exit__(self, excType, excVal, traceback):
+		self.exit()

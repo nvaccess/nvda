@@ -25,6 +25,7 @@ import config
 import NVDAObjects #Catches errors before loading default appModule
 import api
 import appModules
+import watchdog
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
@@ -176,6 +177,21 @@ def terminate():
 			log.exception("Error terminating app module %r" % app)
 	runningTable.clear()
 
+def handleLoseFocus(mod):
+	if not mod.sleepMode and hasattr(mod,'event_appModule_loseFocus'):
+		try:
+			mod.event_appModule_loseFocus()
+		except watchdog.CallCancelled:
+			pass
+	mod._configProfileTrigger.exit()
+	mod._configProfileTrigger = None
+
+def handleGainFocus(mod):
+	trigger = mod._configProfileTrigger = AppProfileTrigger(mod.appName)
+	trigger.enter()
+	if not mod.sleepMode and hasattr(mod,'event_appModule_gainFocus'):
+		mod.event_appModule_gainFocus()
+
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
 	"""Base app module.
@@ -257,3 +273,10 @@ class AppModule(baseObject.ScriptableObject):
 			return False
 		self.is64BitProcess = not res
 		return self.is64BitProcess
+
+class AppProfileTrigger(config.ProfileTrigger):
+	"""A configuration profile trigger for when a particular application has focus.
+	"""
+
+	def __init__(self, appName):
+		self.spec = "app:%s" % appName
