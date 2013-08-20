@@ -591,6 +591,13 @@ class ConfigManager(object):
 			del self._profileCache[name]
 		except KeyError:
 			pass
+		# Remove any triggers associated with this profile.
+		allTriggers = self.profiles[0]["profileTriggers"]
+		# You can't delete from a dict while iterating through it.
+		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.iteritems()
+			if trigProfile == name]
+		for trigSpec in delTrigs:
+			del allTriggers[trigSpec]
 		# Check if this profile was active.
 		for index, profile in enumerate(self.profiles):
 			if profile.name == name:
