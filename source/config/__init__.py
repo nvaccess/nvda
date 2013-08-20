@@ -712,7 +712,8 @@ class AggregatedSection(object):
 		# Start with the cached items.
 		for key, val in self._cache.iteritems():
 			keys.add(key)
-			yield key, val
+			if val is not KeyError:
+				yield key, val
 		# Walk through the profiles and spec looking for items not yet cached.
 		for profile in itertools.chain(reversed(self.profiles), (self._spec,)):
 			if not profile:
