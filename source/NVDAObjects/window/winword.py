@@ -341,7 +341,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				try:
 					r=self.obj.WinwordSelectionObject.range
 					r.setRange(_startOffset,_endOffset)
-					rev=r.revisions[0]
+					rev=r.revisions.item(1)
 					author=rev.author
 					date=rev.date
 				except COMError:
