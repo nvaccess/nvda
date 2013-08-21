@@ -571,6 +571,8 @@ class ConfigManager(object):
 		@type name: basestring
 		@raise ValueError: If a profile with this name already exists.
 		"""
+		if globalVars.appArgs.secure:
+			return
 		fn = self._getProfileFn(name)
 		if os.path.isfile(fn):
 			raise ValueError("A profile with the same name already exists: %s" % name)
@@ -583,6 +585,8 @@ class ConfigManager(object):
 		@type name: basestring
 		@raise LookupError: If the profile doesn't exist.
 		"""
+		if globalVars.appArgs.secure:
+			return
 		fn = self._getProfileFn(name)
 		if not os.path.isfile(fn):
 			raise LookupError("No such profile: %s" % name)
@@ -617,6 +621,8 @@ class ConfigManager(object):
 		@raise LookupError: If the profile doesn't exist.
 		@raise ValueError: If a profile with the new name already exists.
 		"""
+		if globalVars.appArgs.secure:
+			return
 		if newName == oldName:
 			return
 		oldFn = self._getProfileFn(oldName)

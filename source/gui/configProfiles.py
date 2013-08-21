@@ -10,6 +10,7 @@ import api
 import gui
 from logHandler import log
 import appModuleHandler
+import globalVars
 
 class ProfilesDialog(wx.Dialog):
 
@@ -54,7 +55,7 @@ class ProfilesDialog(wx.Dialog):
 		self.AffirmativeId = item.Id
 		item.SetDefault()
 		# Translators: The label of a button to create a new configuration profile.
-		item = wx.Button(self, label=_("&New"))
+		item = newButton = wx.Button(self, label=_("&New"))
 		item.Bind(wx.EVT_BUTTON, self.onNew)
 		sizer.Add(item)
 		# Translators: The label of a button to configure triggers for a configuration profile.
@@ -69,7 +70,11 @@ class ProfilesDialog(wx.Dialog):
 		item = self.deleteButton = wx.Button(self, label=_("&Delete"))
 		item.Bind(wx.EVT_BUTTON, self.onDelete)
 		sizer.Add(item)
-		self.onProfileListChoice(None)
+		if globalVars.appArgs.secure:
+			for item in newButton, self.triggersButton, self.renameButton, self.deleteButton:
+				item.Disable()
+		else:
+			self.onProfileListChoice(None)
 		mainSizer.Add(sizer)
 
 		# Translators: The label of a button to close a dialog.
@@ -149,6 +154,8 @@ class ProfilesDialog(wx.Dialog):
 		self.profileList.SetFocus()
 
 	def onProfileListChoice(self, evt):
+		if globalVars.appArgs.secure:
+			return
 		enable = self.profileList.Selection > 0
 		self.deleteButton.Enabled = enable
 		self.renameButton.Enabled = enable
