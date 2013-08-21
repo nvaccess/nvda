@@ -16,6 +16,7 @@ import colors
 import eventHandler
 import gui
 import winUser
+from displayModel import DisplayModelTextInfo
 import controlTypes
 from . import Window
 from .. import NVDAObjectTextInfo
@@ -168,6 +169,22 @@ class ExcelCell(ExcelBase):
 		if rowHeaderColumn and columnNumber>rowHeaderColumn:
 			return self.excelCellObject.parent.cells(rowNumber,rowHeaderColumn).text
 
+	def _get_dropdown(self):
+		w=winUser.getAncestor(self.windowHandle,winUser.GA_ROOT)
+		if not w: return
+		obj=Window(windowHandle=w,chooseBestAPI=False)
+		if not obj: return
+		prev=obj.previous
+		if not prev or prev.windowClassName!='EXCEL:': return
+		return prev
+
+	def script_openDropdown(self,gesture):
+		gesture.send()
+		d=self.dropdown
+		if d:
+			d.parent=self
+			eventHandler.queueEvent("gainFocus",d)
+
 	def script_setColumnHeaderRow(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
 		tableID=self.tableID
@@ -290,6 +307,7 @@ class ExcelCell(ExcelBase):
 	__gestures = {
 		"kb:NVDA+shift+c": "setColumnHeaderRow",
 		"kb:NVDA+shift+r": "setRowHeaderColumn",
+		"kb:alt+downArrow":"openDropdown",
 	}
 
 class ExcelSelection(ExcelBase):
@@ -321,3 +339,100 @@ class ExcelSelection(ExcelBase):
 		if position==textInfos.POSITION_SELECTION:
 			position=textInfos.POSITION_ALL
 		return super(ExcelSelection,self).makeTextInfo(position)
+
+class ExcelDropdownItem(Window):
+
+	firstChild=None
+	lastChild=None
+	children=[]
+	role=controlTypes.ROLE_LISTITEM
+
+	def __init__(self,parent=None,name=None,states=None,index=None):
+		self.name=name
+		self.states=states
+		self.parent=parent
+		self.index=index
+		super(ExcelDropdownItem,self).__init__(windowHandle=parent.windowHandle)
+
+	def _get_previous(self):
+		newIndex=self.index-1
+		if newIndex>=0:
+			return self.parent.children[newIndex]
+
+	def _get_next(self):
+		newIndex=self.index+1
+		if newIndex<self.parent.childCount:
+			return self.parent.children[newIndex]
+
+	def _get_positionInfo(self):
+		return {'indexInGroup':self.index+1,'similarItemsInGroup':self.parent.childCount,}
+
+class ExcelDropdown(Window):
+
+	@classmethod
+	def kwargsFromSuper(cls,kwargs,relation=None):
+		return kwargs
+
+	role=controlTypes.ROLE_LIST
+	excelCell=None
+
+	def _get_children(self):
+		children=[]
+		index=0
+		states=set()
+		for item in DisplayModelTextInfo(self,textInfos.POSITION_ALL).getTextWithFields(): 
+			if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange":
+				states=set([controlTypes.STATE_SELECTABLE])
+				color=item.field.get('color',None)
+				if color is not None and color.red==color.green==color.blue==255:
+					states.add(controlTypes.STATE_SELECTED)
+			if isinstance(item,basestring):
+				obj=ExcelDropdownItem(parent=self,name=item,states=states,index=index)
+				children.append(obj)
+				index+=1
+		return children
+
+	def _get_childCount(self):
+		return len(self.children)
+
+	def _get_firstChild(self):
+		return self.children[0]
+	def _get_selection(self):
+		for child in self.children:
+			if controlTypes.STATE_SELECTED in child.states:
+				return child
+
+	def script_selectionChange(self,gesture):
+		gesture.send()
+		newFocus=self.selection or self
+		if eventHandler.lastQueuedFocusObject is newFocus: return
+		eventHandler.queueEvent("gainFocus",newFocus)
+	script_selectionChange.canPropagate=True
+
+	def script_closeDropdown(self,gesture):
+		gesture.send()
+		eventHandler.queueEvent("gainFocus",self.parent)
+	script_closeDropdown.canPropagate=True
+
+	__gestures={
+		"kb:downArrow":"selectionChange",
+		"kb:upArrow":"selectionChange",
+		"kb:leftArrow":"selectionChange",
+		"kb:rightArrow":"selectionChange",
+		"kb:home":"selectionChange",
+		"kb:end":"selectionChange",
+		"kb:escape":"closeDropdown",
+		"kb:enter":"closeDropdown",
+		"kb:space":"closeDropdown",
+	}
+
+	def event_gainFocus(self):
+		child=self.selection
+		if not child and self.childCount>0:
+			child=self.children[0]
+		if child:
+			eventHandler.queueEvent("focusEntered",self)
+			eventHandler.queueEvent("gainFocus",child)
+		else:
+			super(ExcelDropdown,self).event_gainFocus()
+			
