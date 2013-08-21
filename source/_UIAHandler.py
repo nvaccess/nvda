@@ -2,6 +2,7 @@ from ctypes import *
 from ctypes.wintypes import *
 import comtypes.client
 from comtypes import *
+import comtypes.git
 import weakref
 import threading
 import time
@@ -114,6 +115,26 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_ToolTipClosedEventId:"hide",
 }
 
+class GitObject(object):
+
+	def __init__(self, name):
+		self.name = name
+
+	def __set__(self, instance, value):
+		interface = value.__com_interface__
+		setattr(instance, "_%s_interface" % self.name, interface)
+		cookie = comtypes.git.RegisterInterfaceInGlobal(value, interface=interface)
+		setattr(instance, "_%s_cookie" % self.name, cookie)
+
+	def __get__(self, instance, owner):
+		if not instance:
+			return self
+		cookie = getattr(instance, "_%s_cookie" % self.name, None)
+		if not cookie:
+			raise AttributeError(self.name)
+		interface = getattr(instance, "_%s_interface" % self.name)
+		return comtypes.git.GetInterfaceFromGlobal(cookie, interface=interface)
+
 class UIAHandler(COMObject):
 	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler]
 
@@ -137,6 +158,10 @@ class UIAHandler(COMObject):
 		windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,5000,0)
 		windll.kernel32.CloseHandle(MTAThreadHandle)
 		del self.MTAThread
+
+	clientObject = GitObject("clientObject")
+	baseTreeWalker = GitObject("baseTreeWalker")
+	baseCacheRequest = GitObject("baseCacheRequest")
 
 	def MTAThreadFunc(self):
 		try:
