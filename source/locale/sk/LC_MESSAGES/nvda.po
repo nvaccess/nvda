@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-11 19:09+1000\n"
-"PO-Revision-Date: 2013-08-13 11:31+0100\n"
+"PO-Revision-Date: 2013-08-20 07:33+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -2136,21 +2136,21 @@ msgstr "Premiestni navigačný objekt na objekt, ktorý sa nachádza pod ukazova
 #. this object
 #: globalCommands.py:291
 msgid "No next review mode"
-msgstr "Žiadny nasledujúci režim prehliadania"
+msgstr "Žiadny nasledujúci režim prezerania"
 
 #: globalCommands.py:292
 msgid "Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
-msgstr "Prepína do nasledujúceho režimu prehliadania (napríklad pre aktuálny objekt, dokument alebo aktuálnu obrazovku) a nastaví pozíciu prehliadacieho kurzora na miesto objektu práve zameraného objektovou navigáciou"
+msgstr "Prepína do nasledujúceho režimu prezerania (napríklad pre aktuálny objekt, dokument alebo aktuálnu obrazovku) a nastaví pozíciu prezeracieho kurzora na miesto objektu práve zameraného objektovou navigáciou"
 
 #. Translators: reported when there are no  other available review modes for
 #. this object
 #: globalCommands.py:303
 msgid "No previous review mode"
-msgstr "Žiadny predchádzajúci režim prehliadania"
+msgstr "Žiadny predchádzajúci režim prezerania"
 
 #: globalCommands.py:304
 msgid "Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
-msgstr "Prepína do predchádzajúceho režimu prehliadania (napríklad pre aktuálny objekt, dokument alebo aktuálnu obrazovku) a nastaví pozíciu prehliadacieho kurzora na miesto objektu práve zameraného objektovou navigáciou"
+msgstr "Prepína do predchádzajúceho režimu prezerania (napríklad pre aktuálny objekt, dokument alebo aktuálnu obrazovku) a nastaví pozíciu prezeracieho kurzora na miesto objektu práve zameraného objektovou navigáciou"
 
 #. Translators: Reported when the user tries to perform a command related to
 #. the navigator object
@@ -2213,7 +2213,7 @@ msgstr "Premiestniť na fokus"
 #. focus command.
 #: globalCommands.py:378
 msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr "Premiestni navigačný objekt na objekt, ktorý má systémový fokus a pokúsi sa na pozíciu systémového kurzora nastaviť prehliadací kurzor."
+msgstr "Premiestni navigačný objekt na objekt, ktorý má systémový fokus a pokúsi sa na pozíciu systémového kurzora nastaviť prezerací kurzor."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move
@@ -2239,7 +2239,7 @@ msgstr "Žiadny kurzor"
 #. object command.
 #: globalCommands.py:403
 msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
-msgstr "Pri prvom stlačení nastaví systémový fokus na prvok zameraný objektovou navigáciou. Stlačené dva krát rýchlo za sebou presunie systémový kurzor na miesto, kam ukazuje prehliadací kurzor."
+msgstr "Pri prvom stlačení nastaví systémový fokus na prvok zameraný objektovou navigáciou. Stlačené dva krát rýchlo za sebou presunie systémový kurzor na miesto, kam ukazuje prezerací kurzor."
 
 #. Translators: Reported when there is no containing (parent) object such as
 #. when focused on desktop.
@@ -2315,19 +2315,19 @@ msgstr "vrch"
 #. command.
 #: globalCommands.py:509
 msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na vrchný riadok aktuálneho navigačného objektu a prečíta ho."
+msgstr "Premiestni prezerací kurzor na vrchný riadok aktuálneho navigačného objektu a prečíta ho."
 
 #. Translators: Input help mode message for move review cursor to previous
 #. line command.
 #: globalCommands.py:523
 msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na predchádzajúci riadok aktuálneho navigačného objektu a prečíta ho."
+msgstr "Premiestni prezerací kurzor na predchádzajúci riadok aktuálneho navigačného objektu a prečíta ho."
 
 #. Translators: Input help mode message for read current line under review
 #. cursor command.
 #: globalCommands.py:534
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr "Prečíta riadok aktuálneho navigačného objektu, na ktorý ukazuje prehliadací kurzor. Ak je tento príkaz stlačený 2 krát rýchlo za sebou, aktuálny riadok bude vyhláskovaný. Stlačené tri krát za sebou vyhláskuje aktuálny riadok foneticky."
+msgstr "Prečíta riadok aktuálneho navigačného objektu, na ktorý ukazuje prezerací kurzor. Ak je tento príkaz stlačený 2 krát rýchlo za sebou, aktuálny riadok bude vyhláskovaný. Stlačené tri krát za sebou vyhláskuje aktuálny riadok foneticky."
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
@@ -2344,31 +2344,31 @@ msgstr "spodok"
 #. command.
 #: globalCommands.py:548
 msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na nasledujúci riadok aktuálneho navigačného objektu a prečíta ho."
+msgstr "Premiestni prezerací kurzor na nasledujúci riadok aktuálneho navigačného objektu a prečíta ho."
 
 #. Translators: Input help mode message for move review cursor to bottom line
 #. command.
 #: globalCommands.py:557
 msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na spodný riadok aktuálneho navigačného objektu a prečíta ho."
+msgstr "Premiestni prezerací kurzor na spodný riadok aktuálneho navigačného objektu a prečíta ho."
 
 #. Translators: Input help mode message for move review cursor to previous
 #. word command.
 #: globalCommands.py:572
 msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na predchádzajúce slovo aktuálneho navigačného objektu a prečíta ho."
+msgstr "Premiestni prezerací kurzor na predchádzajúce slovo aktuálneho navigačného objektu a prečíta ho."
 
 #. Translators: Input help mode message for report current word under review
 #. cursor command.
 #: globalCommands.py:583
 msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
-msgstr "Prečíta riadok aktuálneho navigačného objektu, na ktorý ukazuje prehliadací kurzor. Ak je tento príkaz stlačený 2 krát rýchlo za sebou, aktuálny riadok bude vyhláskovaný. Stlačené tri krát za sebou vyhláskuje aktuálny riadok foneticky."
+msgstr "Prečíta riadok aktuálneho navigačného objektu, na ktorý ukazuje prezerací kurzor. Ak je tento príkaz stlačený 2 krát rýchlo za sebou, aktuálny riadok bude vyhláskovaný. Stlačené tri krát za sebou vyhláskuje aktuálny riadok foneticky."
 
 #. Translators: Input help mode message for move review cursor to next word
 #. command.
 #: globalCommands.py:597
 msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na nasledujúce slovo aktuálneho navigačného objektu a prečíta ho."
+msgstr "Premiestni prezerací kurzor na nasledujúce slovo aktuálneho navigačného objektu a prečíta ho."
 
 #: globalCommands.py:605
 #: globalCommands.py:618
@@ -2380,19 +2380,19 @@ msgstr "v ľavo"
 #. current line command.
 #: globalCommands.py:608
 msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na začiatok aktuálneho riadku v rámci aktuálneho navigačného objektu a prečíta aktuálny znak."
+msgstr "Premiestni prezerací kurzor na začiatok aktuálneho riadku v rámci aktuálneho navigačného objektu a prečíta aktuálny znak."
 
 #. Translators: Input help mode message for move review cursor to previous
 #. character command.
 #: globalCommands.py:627
 msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na predchádzajúci znak aktuálneho navigačného objektu a prečíta ho."
+msgstr "Premiestni prezerací kurzor na predchádzajúci znak aktuálneho navigačného objektu a prečíta ho."
 
 #. Translators: Input help mode message for report current character under
 #. review cursor command.
 #: globalCommands.py:645
 msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "Prečíta znak aktuálneho navigačného objektu, na ktorý ukazuje prehliadací kurzor. Stlačené 2 krát rýchlo za sebou oznány popis alebo príklad použitia tohoto znaku. Stlačené 3 krát rýchlo za sebou oznámi ASCII a hexa hodnotu aktuálneho znaku."
+msgstr "Prečíta znak aktuálneho navigačného objektu, na ktorý ukazuje prezerací kurzor. Stlačené 2 krát rýchlo za sebou oznány popis alebo príklad použitia tohoto znaku. Stlačené 3 krát rýchlo za sebou oznámi ASCII a hexa hodnotu aktuálneho znaku."
 
 #: globalCommands.py:655
 #: globalCommands.py:673
@@ -2404,13 +2404,13 @@ msgstr "v pravo"
 #. character command.
 #: globalCommands.py:664
 msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na nasledujúci znak aktuálneho navigačného objektu a prečíta ho."
+msgstr "Premiestni prezerací kurzor na nasledujúci znak aktuálneho navigačného objektu a prečíta ho."
 
 #. Translators: Input help mode message for move review cursor to end of
 #. current line command.
 #: globalCommands.py:676
 msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Premiestni prehliadací kurzor na koniec aktuálneho riadku v rámci aktuálneho navigačného objektu a prečíta aktuálny znak."
+msgstr "Premiestni prezerací kurzor na koniec aktuálneho riadku v rámci aktuálneho navigačného objektu a prečíta aktuálny znak."
 
 #. Translators: A speech mode which disables speech output.
 #: globalCommands.py:684
@@ -2449,22 +2449,22 @@ msgstr "Prepína medzi režimom fokusu a prehliadacím režimom. V režime fokus
 #. Translators: Input help mode message for quit NVDA command.
 #: globalCommands.py:731
 msgid "Quits NVDA!"
-msgstr "Ukončí NVDA."
+msgstr "Ukončí NVDA!"
 
 #. Translators: Input help mode message for show NVDA menu command.
 #: globalCommands.py:736
 msgid "Shows the NVDA menu"
-msgstr "Zobrazí ponuku NVDA."
+msgstr "Zobrazí ponuku NVDA"
 
 #. Translators: Input help mode message for say all in review cursor command.
 #: globalCommands.py:741
 msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "Prečíta text od pozície prehliadacieho kurzora do konca textu aktuálneho navigačného objektu pri čom sa prehliadací kurzor posúva."
+msgstr "Prečíta text od pozície prezeracieho kurzora do konca textu aktuálneho navigačného objektu pri čom sa prezerací kurzor posúva"
 
 #. Translators: Input help mode message for say all with system caret command.
 #: globalCommands.py:746
 msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr "Číta text od polohy systémového kurzora do konca, pri čom sa postupne tento posúva."
+msgstr "Číta text od polohy systémového kurzora do konca, pri čom sa postupne tento posúva"
 
 #. Translators: Reported when trying to obtain formatting information (such as
 #. font name, indentation and so on) but there is no formatting information
@@ -2476,7 +2476,7 @@ msgstr "Žiadne informácie o formátovaní"
 #. Translators: Input help mode message for report formatting command.
 #: globalCommands.py:783
 msgid "Reports formatting info for the current review cursor position within a document"
-msgstr "Oznamuje informácie o formátovaní vzhľadom na aktuálnu pozíciu prehliadacieho kurzora v dokumente"
+msgstr "Oznamuje informácie o formátovaní vzhľadom na aktuálnu pozíciu prezeracieho kurzora v dokumente"
 
 #. Translators: Input help mode message for report current focus command.
 #: globalCommands.py:795
@@ -2581,18 +2581,18 @@ msgstr "Prepína oznamovanie dynamických zmien  obsahu, napr. text v okne prík
 #. Translators: presented when toggled.
 #: globalCommands.py:914
 msgid "caret moves review cursor off"
-msgstr "Prehliadací kurzor nesleduje textový kurzor"
+msgstr "Prezerací kurzor nesleduje textový kurzor"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:918
 msgid "caret moves review cursor on"
-msgstr "Prehliadací kurzor sleduje textový kurzor"
+msgstr "prezerací kurzor sleduje textový kurzor"
 
 #. Translators: Input help mode message for toggle caret moves review cursor
 #. command.
 #: globalCommands.py:922
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Prepína automatické polohovanie prehliadacieho kurzora pri pohybe textovým kurzorom."
+msgstr "Prepína automatické polohovanie prezeracieho kurzora pri pohybe textovým kurzorom."
 
 #. Translators: presented when toggled.
 #: globalCommands.py:927
@@ -2746,7 +2746,7 @@ msgstr "Aktivuje Python konzolu NVDA, primárne použiteľnú pri vývoji."
 #: globalCommands.py:1053
 #: gui\settingsDialogs.py:1336
 msgid "review"
-msgstr "prehliadacím kurzorom"
+msgstr "prezeracím kurzorom"
 
 #: globalCommands.py:1056
 #: gui\settingsDialogs.py:1336
@@ -2764,7 +2764,7 @@ msgstr "Braillovský kurzor zviazaný s %s"
 #. (tethered means connected to or follows).
 #: globalCommands.py:1060
 msgid "Toggle tethering of braille between the focus and the review position"
-msgstr "Prepína automatické polohovanie braillovského kurzora buď na základe pozície systémového alebo prehliadacieho kurzora"
+msgstr "Prepína automatické polohovanie braillovského kurzora buď na základe pozície systémového alebo prezeracieho kurzora"
 
 #. Translators: Presented when there is no text on the clipboard.
 #: globalCommands.py:1069
@@ -2797,7 +2797,7 @@ msgstr "začiatok označený"
 #. starting point for text to be copied).
 #: globalCommands.py:1085
 msgid "Marks the current position of the review cursor as the start of text to be copied"
-msgstr "Označí aktuálnu pozíciu prehliadacieho kurzora ako začiatok textu, ktorý bude skopírovaný do schránky."
+msgstr "Označí aktuálnu pozíciu prezeracieho kurzora ako začiatok textu, ktorý bude skopírovaný do schránky."
 
 #. Translators: Presented when attempting to copy some review cursor text but
 #. there is no start marker.
@@ -2815,7 +2815,7 @@ msgstr "Začiatok musí byť pozícia v texte tohoto istého objektu"
 #. Translators: Presented when some review text has been copied to clipboard.
 #: globalCommands.py:1101
 msgid "Review selection copied to clipboard"
-msgstr "Výber prehliadacieho kurzora skopírovaný do schránky"
+msgstr "Výber prezeracieho kurzora skopírovaný do schránky"
 
 #. Translators: Presented when there is no text selection to copy from review
 #. cursor.
@@ -3371,15 +3371,15 @@ msgstr "NVDA python konzola"
 
 #: review.py:68
 msgid "Object review"
-msgstr "Prehliadanie objektu"
+msgstr "Prezeranie objektu"
 
 #: review.py:69
 msgid "Document review"
-msgstr "Prehliadanie dokumentu"
+msgstr "Prezeranie dokumentu"
 
 #: review.py:70
 msgid "Screen review"
-msgstr "Prehliadanie obrazovky"
+msgstr "prezeranie obrazovky"
 
 #: scriptHandler.py:33
 #, python-format
@@ -4577,11 +4577,11 @@ msgstr "Nastavuje oznamovanie zmeny tvaru kurzora myši a objektov pod kurzorom 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 #: gui\__init__.py:314
 msgid "Review &cursor..."
-msgstr "P&rehliadací kurzor a objektová navigácia..."
+msgstr "P&rezerací kurzor a objektová navigácia..."
 
 #: gui\__init__.py:314
 msgid "Configure how and when the review cursor moves"
-msgstr "Nastavuje kedy a ako sa aktualizuje prehliadací kurzor navigačného objektu"
+msgstr "Nastavuje kedy a ako sa aktualizuje prezerací kurzor navigačného objektu"
 
 #. Translators: The label for the menu item to open Input Composition Settings
 #. dialog.
@@ -5668,7 +5668,7 @@ msgstr "Úroveň jasu ovplyvňuje hlasitosť signalizácie"
 #. Translators: This is the label for the review cursor settings dialog.
 #: gui\settingsDialogs.py:730
 msgid "Review Cursor Settings"
-msgstr "Nastavenia Prehliadacieho Kurzora"
+msgstr "Nastavenia Prezeracieho Kurzora"
 
 #. Translators: This is the label for a checkbox in the
 #. review cursor settings dialog.
