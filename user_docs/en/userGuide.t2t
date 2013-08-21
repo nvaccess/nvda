@@ -1076,6 +1076,8 @@ Sometimes, you may wish to have different settings for different situations.
 For example, you may wish to have reporting of indentation enabled while you are editing or reporting of font attributes enabled while you are proofreading.
 NVDA allows you to do this using configuration profiles.
 
+Most settings can be changed in configuration profiles except for those in the General Settings dialog, which apply to the entirety of NVDA.
+
 +++ Basic Management +++
 You manage configuration profiles by selecting "Configuration profiles" in the NVDA menu.
 You can also do this using a key command:
@@ -1099,6 +1101,7 @@ Press the Close button to close the dialog.
 
 +++ Triggers +++
 Pressing the Triggers button in the Configuration Profiles dialog allows you to specify triggers which automatically activate the selected profile.
+If there is a manually activated profile, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.
 
 A specific trigger can only be associated with a single profile, but a single profile can be associated with several triggers.
 If a trigger is already associated with another profile, its option won't be available.
