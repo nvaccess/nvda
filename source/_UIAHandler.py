@@ -114,6 +114,39 @@ UIAEventIdsToNVDAEventNames={
 	#UIA_ToolTipClosedEventId:"hide",
 }
 
+class MtaObject(object):
+	CORE_THREAD_ID = windll.kernel32.GetCurrentThreadId()
+
+	def __init__(self, name):
+		self.name = name
+
+	def __set__(self, instance, value):
+		if windll.kernel32.GetCurrentThreadId() == self.CORE_THREAD_ID:
+			setattr(instance, "_%s_coreThreadObj" % self.name, value)
+			return
+
+		setattr(instance, "_%s_mtaThreadObj" % self.name, value)
+		stream = c_void_p()
+		oledll.ole32.CoMarshalInterThreadInterfaceInStream(byref(value._iid_), value, byref(stream))
+		setattr(instance, "_%s_stream" % self.name, stream)
+
+	def __get__(self, instance, owner):
+		if not instance:
+			return self
+		if windll.kernel32.GetCurrentThreadId() == self.CORE_THREAD_ID:
+			try:
+				return getattr(instance, "_%s_coreThreadObj" % self.name)
+			except AttributeError:
+				pass
+			stream = getattr(instance, "_%s_stream" % self.name)
+			mtaObj = getattr(instance, "_%s_mtaThreadObj" % self.name)
+			obj = type(mtaObj)()
+			oledll.ole32.CoGetInterfaceAndReleaseStream(stream, byref(mtaObj._iid_), byref(obj))
+			setattr(instance, "_%s_coreThreadObj" % self.name, obj)
+			return obj
+		else:
+			return getattr(instance, "_%s_mtaThreadObj" % self.name)
+
 class UIAHandler(COMObject):
 	_com_interfaces_=[IUIAutomationEventHandler,IUIAutomationFocusChangedEventHandler,IUIAutomationPropertyChangedEventHandler]
 
@@ -137,6 +170,10 @@ class UIAHandler(COMObject):
 		windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,5000,0)
 		windll.kernel32.CloseHandle(MTAThreadHandle)
 		del self.MTAThread
+
+	clientObject = MtaObject("clientObject")
+	baseTreeWalker = MtaObject("baseTreeWalker")
+	baseCacheRequest = MtaObject("baseCacheRequest")
 
 	def MTAThreadFunc(self):
 		try:

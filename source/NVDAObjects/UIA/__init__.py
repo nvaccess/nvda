@@ -236,6 +236,7 @@ class UIATextInfo(textInfos.TextInfo):
 	updateCaret = updateSelection
 
 class UIA(Window):
+	UIAElement = UIAHandler.MtaObject("UIAElement")
 
 	liveNVDAObjectTable=weakref.WeakValueDictionary()
 
@@ -310,7 +311,7 @@ class UIA(Window):
 			log.debugWarning("Could not get UIA element runtime Id",exc_info=True)
 			runtimeId=None
 
-		obj=cls.liveNVDAObjectTable.get(runtimeId,None) if runtimeId else None
+		obj=None#cls.liveNVDAObjectTable.get(runtimeId,None) if runtimeId else None
 		if not obj:
 			obj=super(UIA,cls).__new__(cls)
 			if not obj:
