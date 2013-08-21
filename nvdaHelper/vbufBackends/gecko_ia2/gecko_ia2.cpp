@@ -436,7 +436,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(IAccessible2* pacc,
 	if(pacc->get_accDescription(varChild,&rawDesc)==S_OK) {
 		if(this->hasEncodedAccDescription) {
 			if(wcsncmp(rawDesc,L"Description: ",13)==0)
-				description=&description[13];
+				description=&rawDesc[13];
 		} else
 			description=rawDesc;
 		parentNode->addAttribute(L"description",description);
