@@ -629,7 +629,9 @@ class ConfigManager(object):
 		newFn = self._getProfileFn(newName)
 		if not os.path.isfile(oldFn):
 			raise LookupError("No such profile: %s" % oldName)
-		if os.path.isfile(newFn):
+		# Windows file names are case insensitive,
+		# so only test for file existence if the names don't match case insensitively.
+		if oldName.lower() != newName.lower() and os.path.isfile(newFn):
 			raise ValueError("A profile with the same name already exists: %s" % newName)
 
 		os.rename(oldFn, newFn)
