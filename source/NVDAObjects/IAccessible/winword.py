@@ -6,6 +6,7 @@
 from comtypes import COMError
 import comtypes.automation
 import comtypes.client
+import ctypes
 import NVDAHelper
 from logHandler import log
 import oleacc
@@ -14,7 +15,6 @@ import speech
 import controlTypes
 import textInfos
 import eventHandler
-import wx
 
 from . import IAccessible
 from NVDAObjects.window.winword import WordDocument 
@@ -83,5 +83,10 @@ class ProtectedDocumentPane(IAccessible):
 			return
 		document=next((x for x in self.children if isinstance(x,WordDocument)), None)  
 		if document:
-			wx.CallLater(50, document.setFocus)
-
+			curThreadID=ctypes.windll.kernel32.GetCurrentThreadId()
+			ctypes.windll.user32.AttachThreadInput(curThreadID,document.windowThreadID,True)
+			ctypes.windll.user32.SetFocus(document.windowHandle)
+			ctypes.windll.user32.AttachThreadInput(curThreadID,document.windowThreadID,False)
+			if not document.WinwordWindowObject.active:
+				document.WinwordWindowObject.activate()
+				
