@@ -13,6 +13,8 @@ import winUser
 import speech
 import controlTypes
 import textInfos
+import eventHandler
+import wx
 
 from . import IAccessible
 from NVDAObjects.window.winword import WordDocument 
@@ -66,3 +68,20 @@ class SpellCheckErrorField(IAccessible,WordDocument):
 		if errorText:
 			speech.speakText(errorText)
 			speech.speakSpelling(errorText)
+
+
+class ProtectedDocumentPane(IAccessible):
+	"""The pane that gets focus in case a document opens in protected mode in word
+	This is mapped to the window class _WWB and role oleacc.ROLE_SYSTEM_CLIENT
+	"""
+	
+	def event_gainFocus(self):
+		"""On gaining focus, simply set the focus on a child of type word document. 
+		This is just a container window.
+		"""
+		if eventHandler.isPendingEvents("gainFocus"):
+			return
+		document=next((x for x in self.children if isinstance(x,WordDocument)), None)  
+		if document:
+			wx.CallLater(50, document.setFocus)
+
