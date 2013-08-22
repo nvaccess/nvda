@@ -27,6 +27,9 @@ import globalVars
 import languageHandler
 import controlTypes
 
+SCRCAT_KBEMU = _("Emulated system keyboard keys")
+SCRCAT_MISC = _("Miscellaneous")
+
 class NoInputGestureAction(LookupError):
 	"""Informs that there is no action to execute for a gesture.
 	"""
@@ -249,6 +252,16 @@ class GlobalGestureMap(object):
 				continue
 			yield cls, scriptName
 
+	def getScriptsForAllGestures(self):
+		"""Get all of the scripts and their gestures.
+		@return: The Python class, gesture and script name for each mapping;
+			the script name may be C{None} indicating that the gesture should be unbound for this class.
+		@rtype: generator of (class, str, str)
+		"""
+		for gesture in self._map:
+			for cls, scriptName in self.getScriptsForGesture(gesture):
+				yield cls, gesture, scriptName
+
 class InputManager(baseObject.AutoPropertyObject):
 	"""Manages functionality related to input from the user.
 	Input includes key presses on the keyboard, as well as key presses on Braille displays, etc.
@@ -378,6 +391,131 @@ class InputManager(baseObject.AutoPropertyObject):
 			gesture.send()
 		except NotImplementedError:
 			pass
+
+	def getAllGestureMappings(self, obj=None):
+		if not obj:
+			obj = api.getFocusObject()
+		return _AllGestureMappingsRetriever(obj).results
+
+class _AllGestureMappingsRetriever(object):
+
+	def __init__(self, obj):
+		self.results = {}
+		self.scriptInfo = {}
+		self.handledGestures = set()
+
+		self.addGlobalMap(manager.userGestureMap, byUser=True)
+		self.addGlobalMap(manager.localeGestureMap)
+		import braille
+		gmap = braille.handler.display.gestureMap
+		if gmap:
+			self.addGlobalMap(gmap)
+
+		# Global plugins.
+		import globalPluginHandler
+		for plugin in globalPluginHandler.runningPlugins:
+			self.addObjBindings(plugin)
+
+		# App module.
+		app = obj.appModule
+		if app:
+			self.addObjBindings(app)
+
+		# Tree interceptor.
+		ti = obj.treeInterceptor
+		if ti:
+			self.addObjBindings(ti)
+
+		# NVDAObject.
+		self.addObjBindings(obj)
+
+		# Global commands.
+		import globalCommands
+		self.addObjBindings(globalCommands.commands)
+
+	def addResult(self, scriptInfo):
+		self.scriptInfo[scriptInfo.cls, scriptInfo.scriptName] = scriptInfo
+		try:
+			cat = self.results[scriptInfo.category]
+		except KeyError:
+			cat = self.results[scriptInfo.category] = {}
+		cat[scriptInfo.displayName] = scriptInfo
+
+	def addGlobalMap(self, gmap, byUser=False):
+		for cls, gesture, scriptName in gmap.getScriptsForAllGestures():
+			key = (cls, gesture)
+			if key in self.handledGestures:
+				continue
+			self.handledGestures.add(key)
+			if scriptName is None:
+				# The global map specified that no script should execute for this gesture and object.
+				return
+			try:
+				scriptInfo = self.scriptInfo[cls, scriptName]
+			except KeyError:
+				if scriptName.startswith("kb:"):
+					scriptInfo = self.makeKbEmuScriptInfo(cls, scriptName)
+				else:
+					try:
+						script = getattr(cls, "script_%s" % scriptName)
+					except AttributeError:
+						continue
+					scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
+					if not scriptInfo:
+						continue
+				self.addResult(scriptInfo)
+			scriptInfo.gestures.append((gesture, byUser))
+
+	def makeKbEmuScriptInfo(self, cls, scriptName):
+		info = AllGesturesScriptInfo(cls, scriptName)
+		info.category = SCRCAT_KBEMU
+		info.displayName = scriptName[3:]
+		return info
+
+	def makeNormalScriptInfo(self, cls, scriptName, script):
+		info = AllGesturesScriptInfo(cls, scriptName)
+		info.category = self.getScriptCategory(cls, script)
+		try:
+			info.displayName = script.__doc__
+		except AttributeError:
+			return None
+		return info
+
+	def getScriptCategory(self, cls, script):
+		try:
+			return script.category
+		except AttributeError:
+			pass
+		try:
+			return cls.scriptCategory
+		except AttributeError:
+			pass
+		return SCRCAT_MISC
+
+	def addObjBindings(self, obj):
+		for gesture, script in obj._gestureMap.iteritems():
+			scriptName = script.__name__[7:]
+			cls = self.getScriptCls(script)
+			try:
+				scriptInfo = self.scriptInfo[cls, scriptName]
+			except KeyError:
+				scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
+				self.addResult(scriptInfo)
+			scriptInfo.gestures.append((gesture, False))
+
+	def getScriptCls(self, script):
+		name = script.__name__
+		for cls in script.im_class.__mro__:
+			if name in cls.__dict__:
+				return cls
+
+class AllGesturesScriptInfo(object):
+	__slots__ = ("cls", "scriptName", "category", "displayName", "gestures")
+	
+	def __init__(self, cls, scriptName):
+		self.cls = cls
+		self.scriptName = scriptName
+		self.gestures = []
 
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
