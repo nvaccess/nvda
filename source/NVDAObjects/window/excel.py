@@ -376,6 +376,12 @@ class ExcelDropdown(Window):
 	role=controlTypes.ROLE_LIST
 	excelCell=None
 
+	def _get__highlightColors(self):
+		background=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(13))
+		foreground=colors.RGB.fromCOLORREF(winUser.user32.GetSysColor(14))
+		self._highlightColors=(background,foreground)
+		return self._highlightColors
+
 	def _get_children(self):
 		children=[]
 		index=0
@@ -383,8 +389,9 @@ class ExcelDropdown(Window):
 		for item in DisplayModelTextInfo(self,textInfos.POSITION_ALL).getTextWithFields(): 
 			if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange":
 				states=set([controlTypes.STATE_SELECTABLE])
-				color=item.field.get('color',None)
-				if color is not None and color.red==color.green==color.blue==255:
+				foreground=item.field.get('color',None)
+				background=item.field.get('background-color',None)
+				if (background,foreground)==self._highlightColors: 
 					states.add(controlTypes.STATE_SELECTED)
 			if isinstance(item,basestring):
 				obj=ExcelDropdownItem(parent=self,name=item,states=states,index=index)
