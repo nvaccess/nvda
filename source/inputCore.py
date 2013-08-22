@@ -449,7 +449,7 @@ class _AllGestureMappingsRetriever(object):
 			self.handledGestures.add(key)
 			if scriptName is None:
 				# The global map specified that no script should execute for this gesture and object.
-				return
+				continue
 			try:
 				scriptInfo = self.scriptInfo[cls, scriptName]
 			except KeyError:
