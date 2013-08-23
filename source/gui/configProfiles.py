@@ -151,6 +151,7 @@ class ProfilesDialog(wx.Dialog):
 			return
 		self.profileList.Delete(index)
 		self.profileList.Selection = 0
+		self.onProfileListChoice(None)
 		self.profileList.SetFocus()
 
 	def onProfileListChoice(self, evt):
