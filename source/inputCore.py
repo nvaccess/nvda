@@ -27,7 +27,11 @@ import globalVars
 import languageHandler
 import controlTypes
 
+#: Script category for emulated keyboard keys.
+# Translators: The name of a category of NVDA commands.
 SCRCAT_KBEMU = _("Emulated system keyboard keys")
+#: Script category for miscellaneous commands.
+# Translators: The name of a category of NVDA commands.
 SCRCAT_MISC = _("Miscellaneous")
 
 class NoInputGestureAction(LookupError):
