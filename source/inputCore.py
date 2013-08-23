@@ -479,9 +479,8 @@ class _AllGestureMappingsRetriever(object):
 	def makeNormalScriptInfo(self, cls, scriptName, script):
 		info = AllGesturesScriptInfo(cls, scriptName)
 		info.category = self.getScriptCategory(cls, script)
-		try:
-			info.displayName = script.__doc__
-		except AttributeError:
+		info.displayName = script.__doc__
+		if not info.displayName:
 			return None
 		return info
 
@@ -504,6 +503,8 @@ class _AllGestureMappingsRetriever(object):
 				scriptInfo = self.scriptInfo[cls, scriptName]
 			except KeyError:
 				scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
+				if not scriptInfo:
+					continue
 				self.addResult(scriptInfo)
 			scriptInfo.gestures.append((gesture, False))
 
