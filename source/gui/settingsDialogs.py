@@ -30,6 +30,7 @@ try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
+import inputCore
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -1510,3 +1511,22 @@ class SpeechSymbolsDialog(SettingsDialog):
 			log.error("Error saving user symbols info: %s" % e)
 		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
 		super(SpeechSymbolsDialog, self).onOk(evt)
+
+class InputGesturesDialog(SettingsDialog):
+	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
+	title = _("Input Gestures")
+
+	def makeSettings(self, settingsSizer):
+		tree = self.tree = wx.TreeCtrl(self, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
+		self.treeRoot = tree.AddRoot("root")
+		settingsSizer.Add(tree, proportion=7, flag=wx.EXPAND)
+		gestures = inputCore.manager.getAllGestureMappings()
+		for category in sorted(gestures):
+			parent = tree.AppendItem(self.treeRoot, category)
+			commands = gestures[category]
+			for command in sorted(commands):
+				item = tree.AppendItem(parent, command)
+				self.tree.SetItemPyData(item, commands[command])
+
+	def postInit(self):
+		self.tree.SetFocus()
