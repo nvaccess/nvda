@@ -24,7 +24,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 - Annuncio automatico del testo sul quale è posizionato il mouse, con possibilità opzionale di conoscere la posizione del mouse stesso sullo schermo
 - Annuncio automatico della formattazione dei caratteri, ad esempio stile, dimensione, nome e errori ortografici
 - Supporto per molti Display Braille, compresa la possibilità di immettere testo usando la tastiera della barra braille se presente
-- Tradotto in 43 lingue
+- Tradotto in 44 lingue
 - Supporto ai sistemi operativi più moderni, comprese le edizioni a 32 e 64 bit
 - Gestione delle videate di logon e quelle relative alla sicurezza
 - Supporto alle più comuni interfacce per l'accessibilità, come Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (quest'ultima viene supportata a partire da Windows7 e successivi).
@@ -32,7 +32,7 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
   
 ++ Internazionalizzazione ++
 è importante che tutte le persone del mondo, indipendentemente dalla loro nazionalità e dalla lingua parlata, abbiano eguale accesso alle informazioni.
-Oltre all'inglese, NVDA è stato tradotto in 43 lingue ossia Afrikaans, Albanese, Amharic, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, Irlandese, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
+Oltre all'inglese, NVDA è stato tradotto in 43 lingue ossia Afrikaans, Albanese, Amharic, Arabo, Aragonese, portoghese-brasiliano, Bulgaro, croato, Ceco, Coreano, Danese, Dutch, farsi, finlandese, Francese, Galiziano, Georgiano, Greco, Ebraico, Hindi, Irlandese, ungherese, tedesco, Islandese, italiano, giapponese, Nepalese, Norvegese, Polacco, portoghese, Rumeno, russo, Serbo, slovacco, sloveno, Spagnolo, Svedese, cinese tradizionale, Tamil, Thai,  Taiwanese Mandarin, Turco, ucraino e vietnamita.
   
 ++ Sintesi vocali supportate ++
 Oltre a presentare i messaggi e l'interfaccia in svariate lingue, NVDA fornisce all'utente la possibilità di accedere ai contenuti di qualsiasi linguaggio, a patto che l'utente sia in possesso della sintesi vocale che parla quella determinata lingua.
@@ -301,9 +301,8 @@ Inoltre potrebbe essere necessario lavorare con [oggetti #Objects] che non posso
 In questi casi, si può utilizzare la navigazione ad oggetti.
 
 Essa permette di ottenere informazioni e spostarsi tra singoli [oggetti #Objects].
-
 Quando ci si sposta su un oggetto, NVDA lo annuncerà similmente a come avviene con il focus di sistema.
-Se invece si desidera esplorare il testo così come appare sullo schermo, è possibile utilizzare la [navigazione in linea #FlatReview].
+Se invece si desidera esplorare il testo così come appare sullo schermo, è possibile utilizzare la [navigazione in linea #ScreenReview].
 
 Onde evitare di doversi muovere indietro ed avanti tra ogni singolo oggetto del sistema, gli oggetti sono raggruppati in maniera gerarchica.
 Questo significa che alcuni oggetti contengono altri oggetti e che bisogna spostarvisi all'interno  per ottenerne le informazioni.
@@ -314,7 +313,7 @@ Sarà quindi necessario spostarsi tra l'elenco per raggiungere altri oggetti.
 Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'interno di essa per accedere ai controlli della stessa.
 
 L'oggetto che attualmente viene esplorato è chiamato navigatore ad oggetti.
-Una volta che viene raggiunto un oggetto, è possibile esplorarlo utilizzando i [comandi di revisione #ReviewingText].
+Una volta che viene raggiunto un oggetto, è possibile esplorarlo utilizzando i [comandi di esplorazione testo #ReviewingText] in [modalità navigazione ad oggetti #ObjectReview].
 Da impostazioni predefinite, il navigatore ad oggetti si sposta in concomitanza con il focus di sistema, tuttavia questo comportamento può essere modificato, attivando o disattivando la relativa opzione.
 Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
 Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
@@ -337,7 +336,7 @@ Nota, Per utilizzare il tastierino numerico, il tasto NumLock deve essere impost
 
 
 ++ Controllare il testo ++
-NVDA permette di leggere il contenuto dell' [oggetto corrente #ObjectNavigation] inclusa la [navigazione in linea #FlatReview]) carattere per carattere, parola per parola o riga per riga.
+NVDA consente di leggere il contenuto dello [schermo/navigazione in linea #ScreenReview], del [documento corrente #DocumentReview] o dell'[oggetto #ObjectReview] per carattere, parola o riga.
 Questo risulta utile principalmente nel prompt dei comandi di Windows o in tutte quelle situazioni dove il  [cursore di sistema #SystemCaret] non esiste o ha funzioni limitate.
 Ad esempio, può venir buono nel leggere il contenuto di lunghi testi in una finestra di dialogo.
 
@@ -377,28 +376,39 @@ Per aiutare l'utente a ricordare questi comandi, si tenga presente che i comandi
 | parola precedente | parola corrente | parola successiva |
 | carattere precedente | carattere corrente | carattere successivo |
 
+++ Le Modalità di esplorazione ++[ReviewModes]
+I [comandi di navigazione di NVDA #ReviewingText] permettono di esplorare il contenuto all'interno di un oggetto, del documento corrente o dello schermo, a seconda della modalità di esplorazione selezionata.
+Questi comandi di esplorazione vanno a sostituire la vecchia navigazione in linea presente in NVDA.
 
-++ Navigazione in linea ++
-Mentre è possibile controllare il contenuto di un singolo [oggetto #Objects], alcuni oggetti permettono anche di esplorare il contenuto presente in altri oggetti all'interno di essi.
-Molti Documenti complessi permettono di esplorare tutto il loro contenuto e le applicazioni di Windows consentono di esplorare il testo presente sullo schermo così come si presenta visivamente.
-Si tratta della navigazione in linea.
-Essa è molto simile a funzioni di controllo e di esplorazione presenti in altri screen reader, come ad esempio il cursore Jaws o cursore Window-Eyes.
-
-Quando si attiva la navigazione in linea, ci si troverà  alla posizione del [navigatore ad oggetti #ObjectNavigation].
-Se non si ha mai utilizzato la navigazione ad oggetti, la posizione coincide solitamente con quella ove si trova il [focus #SystemFocus].
-Per esempio, se l'oggetto è costituito da un bottone, si verrà posizionati all'interno del testo del bottone stesso, nella navigazione in linea.
-Da qui sarà possibile esplorare il testo utilizzando i [comandi di revisione #ReviewingText].
-
-Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
-Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
-
-I seguenti due comandi vengono utilizzati per attivare o meno la navigazione in linea:
+Si possono utilizzare i comandi seguenti per passare da una modalità all'altra:
 %kc:beginInclude
 || Nome | Layout Desktop | Layout Laptop | Tocco | Descrizione |
-| Passa alla navigazione in linea | NVDA+7 del tastierino numerico | NVDA+pagina su | Scorrimento in alto con due dita | Passa alla navigazione in linea, collocando l'utente alla posizione attuale del navigatore ad oggetti, permettendo di esplorare lo schermo (o il documento se ci si trova all'interno di esso) con i consueti comandi di revisione del testo usati dal cursore di controllo. |
-| Andare dalla navigazione in linea all'oggetto | NVDA+1 del tastierino numerico | NVDA+pagina giù | Scorrimento in basso con due dita | Attiva il navigatore ad oggetti a partire dalla posizione corrente nella navigazione in linea |
+| Passa alla modalità di esplorazione successiva | NVDA+7 del tastierino numerico | NVDA+pagina su | Scorrimento in alto con due dita | Passa alla modalità di esplorazione successiva. | 
+| Passa alla modalità di esplorazione precedente | NVDA+1 del tastierino numerico | NVDA+pagina giù | Scorrimento in basso con due dita | Passa alla modalità di esplorazione precedente. | 
 %kc:endInclude  
 
++++ Navigazione ad oggetti +++[ObjectReview]
+Quando ci si trova in modalità navigazione ad oggetti, è possibile esplorare il contenuto del [navigatore ad oggetti#ObjectNavigation].
+Per oggetti come campi editazione o altri controlli di base di un documento, il contenuto corrisponde in genere al testo stesso.
+Per altri oggetti, può corrispondere al loro nome o al valore.
+
++++ Esplorazione documento +++[DocumentReview]
+Quando il [navigatore ad oggetti#ObjectNavigation] si trova all'interno di un documento in modalità navigazione (ad esempio pagine web) o un altro documento complesso contenente numerosi oggetti (come documenti Lotus Symphony), è possibile passare alla modalità di esplorazione documento.
+La modalità di esplorazione documento consente di navigare all'interno del testo del documento.
+
+Quando si passa dalla modalità navigazione ad oggetti all'esplorazione documento, il cursore di controllo viene posizionato all'interno del documento, esattamente dove si trova il nnavigatore ad oggetti.
+Quando ci si sposta all'interno del documento con i comandi di esplorazione, la posizione del navigatore ad oggetti viene automaticamente aggiornata in concomitanza con l'oggetto individuato   dal cursore di controllo.
+
+Si noti che NVDA passerà automaticamente dalla navigazione ad oggetti all'esplorazione documento quando ci si sposta in modalità navigazione.
+
++++Esplorazione schermo (modalità in linea)+++
+La modalità di navigazione in linea, o esplorazione schermo, permette di intercettare qualsiasi testo visibile a schermo all'interno dell'applicazione corrente.
+è una funzione molto simile alla navigazione col mouse o con cursori speciali presente in altri screen reader, ad esempio cursore Jaws, cursore WE, etc.
+
+Quando si passa alla modalità in linea, il cursore di controllo viene posto alla posizione del [navigatore ad oggetti #ObjectNavigation].
+Se ci si sposta sullo schermo con il cursore di controllo, la posizione del navigatore ad oggetti verrà aggiornata di conseguenza.
+
+Si noti che in alcune applicazioni più recenti, NVDA potrebbe non intercettare tutto o parte del testo messo a disposizione da tali programmi, a causa delle nuove tecnologie usate per disegnare i caratteri, attualmente impossibili da gestire.
 
 ++ Esplorare con il mouse ++
 Quando si sposta il mouse, NVDA di default leggerà sempre il testo che si trova alla posizione del mouse stesso, man mano che esso viene spostato. 
@@ -952,8 +962,11 @@ Questa casella di controllo commuta la lettura automatica delle pagine web una v
 Essa risulta attiva da impostazioni predefinite.
   
 ==== leggi le tabelle di layout ====
-Quando questa casella di controllo è disattivata, NVDA riporterà all'utente soltanto le tabelle che contengono effettivamente dati. 
-è probabilmente la scelta consigliata, in ogni modo, se invece si attiva la casella di controllo, NVDA riporterà anche quelle tabelle che, pur non contenendo dati, esistono per uno scopo puramente visivo, magari per migliorare l'aspetto di una pagina web.
+Questa opzione ha effetto su come NVDA debba gestire le tabelle utilizzate esclusivamente a scopo di impaginazione.
+Quando la casella di controllo è attiva, NVDA le tratterà come tabelle normali, annunciandole secondo le impostazioni [formattazione documento #DocumentFormattingSettings] e individuandole con i tasti di navigazione veloce.
+Quando è disattiva, non verranno annunciate né individuate con la navigazione veloce.
+In ogni caso, il contenuto delle tabelle sarà comunque annunciato come testo normale.
+Questa opzione è disattivata di default.
   
 ==== Configurare l'annuncio di campi come links e intestazioni ====
 Si vedano le opzioni della sezione [Impostazioni formato documento #DocumentFormattingSettings] per configurare i campi che verranno annunciati quando si naviga, come link, intestazioni e tabelle

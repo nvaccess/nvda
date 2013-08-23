@@ -22,7 +22,7 @@ As características principais são:
 - Suporte para diversas linhas Braille, incluindo a introdução de texto através do teclado Braille, nas linhas que o possuem, usando Braille informático
 - Permite a sua execução directamente, através de dispositivos USB ou através de outros dispositivos portáteis, sem necessitar de instalação
 - Tem um instalador com voz e fácil de usar
-- Está traduzido em 42 idiomas
+- Está traduzido em 44 idiomas
 - Suporta os Sistemas Operativos Windows mais actuais, quer nas arquitecturas de 32 quer nas de 64 bits
 - Permite a sua execução nas janelas de início de sessão e noutros ecrãs, em ambientes seguros
 - Suporta as interfaces de acessibilidade mais comuns, tais como o Microsoft Active Accessibility, Java Access Bridge, IAccessible2 e UI Automation (o UI Automation é somente suportado no Windows 7 ou posteriores)
@@ -31,7 +31,7 @@ As características principais são:
 
 ++ Internacionalização ++
 É importante que as pessoas tenham o mesmo acesso às tecnologias, em qualquer parte do mundo, independentemente do idioma que falem.
-Para além do Inglês, o NVDA está traduzido em 42 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Castelhano, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Islandês, Italiano, Japonês, Nepalês, Norueguês, Polaco, Português de Portugal, Português do Brasil, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
+Para além do Inglês, o NVDA está traduzido em 44 idiomas, incluindo: Africânder, Albanês, Alemão, Amárico, Árabe, Aragonês, Búlgaro, Castelhano, Checo, Chinês Tradicional e simplificado, Coreano, Croata, Dinamarquês, Eslovaco, Esloveno, Finlandês, Francês, Galego, Grego, Georgiano, Hebraico, Holandês, Húngaro, Indiano, Islandês, Irlandês,, Italiano, Japonês, Nepalês, Norueguês, Perça, Polaco, Português de Portugal, Português do Brasil, Romeno, Russo, Sérvio, Sueco, Tailandês, Tamil, Turco, Ucraniano e Vietnamita.
 
 ++ Suporte de Sintetizadores de Voz ++
 Para além de fornecer as mensagens e interface em diversos idiomas, o NVDA também pode permitir ao utilizador a leitura em qualquer idioma, desde  que tenha um sintetizador de voz, que possa falar esse idioma.
@@ -118,7 +118,7 @@ O diálogo que surge permite-lhe definir onde a cópia portátil deve ser criada
 Poderá ser uma directoria, no seu disco rígido, ou uma localização, numa Pen USB, ou outro dispositivo portátil.
 Existe igualmente uma opção para escolher se o NVDA deverá ou não copiar a configuração do utilizador actual para ser usada na cópia portátil que é criada. Esta opção está apenas disponível, quando está a criar uma cópia portátil a partir duma cópia instalada; mas  não quando o faz a partir do pacote que descarregou.
 Pressionando Continuar,  criará a cópia portátil.
-Uma vez completada a criação, aparecerá uma mensagem a informá-lo que a mesma foi bem sucedida.
+Uma vez terminada a criação, aparecerá uma mensagem a informá-lo que a mesma foi bem sucedida.
 Pressione OK, para sair deste diálogo.
 
 + Começar Com O NVDA +
@@ -133,13 +133,15 @@ Assim que o software é executado, ouvirá, primeiramente, um conjunto de tons a
 Dependendo da rapidez do seu computador, ou se está a executar este leitor de ecrã através de um dispositivo USB ou de outro mais lento, poderá demorar uns momentos para iniciar.
 	Se o NVDA estiver a demorar um tempo maior que o previsto, o leitor de ecrã anunciará: "A carregar o NVDA. Por favor, aguarde..."
 
-Se não ouvir nada disto, ou escutar um som de erro do Windows, ou um conjunto de sons descendentes, isto quer dizer que o NVDA tem um erro e necessitará, possivelmente, de comunicar a falha aos programadores.
-Por favor, consulte as páginas da Net do NVDA, para saber como deve proceder.
+Se não ouvir nada disto, ou escutar um som de erro do Windows, ou um conjunto de sons descendentes, quer dizer que o NVDA tem um erro e necessitará, possivelmente, de comunicar a falha aos programadores.
+Por favor, consulte as páginas on-line do NVDA, para saber como deve proceder.
 
 Quando o NVDA for executado pela primeira vez, será saudado por uma caixa de diálogo que lhe fornecerá alguma informação básica sobre a tecla modificadora do NVDA e o menu deste leitor de ecrã. 
 (Por favor, veja as secções seguintes, sobre estes tópicos.)
-A caixa de diálogo contém também duas caixas de verificação.
-A primeira permite-lhe definir se o software utiliza o Caps Lock como uma tecla modificadora do NVDA, e a segunda se este diálogo de boas vindas aparecerá sempre que o NVDA for iniciado.
+A caixa de diálogo contém também três caixas de verificação.
+A primeira permite-lhe definir se o software utiliza o Caps Lock como uma tecla modificadora do NVDA.
+A segunda permite-lhe especificar se o NVDA deverá ser executado automaticamente, ao iniciar sessão no Windows; esta caixa de verificação só estará disponível em cópias instaladas do NVDA.
+A terceira permite-lhe definir se este diálogo de boas vindas aparecerá sempre que o NVDA for iniciado.
 
 ++ Acerca Dos Comandos De Teclado Do NVDA ++
 
@@ -296,7 +298,7 @@ Para estes casos, pode usar a navegação por objectos.
 
 A navegação por objectos permite-lhe mover-se entre [objectos #Objects] e obter informações sobre objectos individuais.
 Quando se move para um objecto, o NVDA apresenta-o de maneira semelhante à forma como dá a informação do foco do sistema.
-Para uma forma de rever todo o texto, tal como aparece no ecrã, pode  usar a [revisão plana #FlatReview].
+Para uma forma de rever todo o texto, tal como aparece no ecrã, pode  usar a [revisão de ecrãa #ScreenReview].
 
 Em vez de ter que se deslocar para trás e para a frente, entre cada objecto no sistema, os objectos estão organizados hierarquicamente.
 Isto significa que se deve mover para dentro de alguns objectos para aceder aos objectos que eles contêm.
@@ -307,7 +309,7 @@ Pode então mover-se para fora da lista, se pretender aceder a outros objectos.
 De forma similar, uma barra de ferramentas contém controlos; portanto deve mover-se para dentro da mesma, para aceder aos controlos da barra de ferramentas.
 
 O objecto, que está a ser revisto actualmente, denomina-se objecto de navegação.
-Uma vez que tenha navegado para um objecto, pode revê-lo com os comandos de [revisão de texto #ReviewingText].
+Uma vez que tenha navegado para um objecto, pode rever o seu conteúdo com os comandos de [revisão de texto #ReviewingText].
 Por padrão, a navegação de objectos acompanha o foco do sistema, embora este comportamento possa ser activado e desactivado.
 
 Note que, por padrão, o Braille acompanha o [foco #SystemFocus] e o [cursor do sistema #SystemCaret] e não a navegação por objectos e a revisão de texto.
@@ -330,8 +332,8 @@ Para navegar pelos objectos, utilize os seguintes comandos:
 Nota: As teclas do bloco numérico requerem que o numlock esteja desligado, para que possam trabalhar adequadamente.
 
 ++ Rever Texto ++[ReviewingText]
-O NVDA possibilita-lhe ler o conteúdo do [objecto de navegação #ObjectNavigation] actual (incluindo a [revisão plana #FlatReview]) por caracteres, palavras ou linhas.
-Isto é muito útil na consola de comandos do Windows e noutros locais, onde não há um [cursor do sistema #SystemCaret].
+O NVDA permite-lhe ler  o conteúdo do [ecrã #ScreenReview], [documento #DocumentReview] actual ou [objecto #ObjectReview] actual, por caracter, palavra ou linha.
+Isto é maioritariamente útil em algumas situações (incluindo a consola de comandos do Windows) onde não há um [cursor do sistema #SystemCaret].
 Por exemplo, poderá usá-la para rever o texto de uma mensagem, de uma informação longa num diálogo, etc.
 
 Quando move o cursor de revisão, o cursor do sistema não o acompanha. Assim, pode analisar o texto sem perder a posição de edição.
@@ -359,7 +361,7 @@ Os comandos seguintes estão disponíveis para a revisão de texto:
 | Mover para o fim da linha em revisão | Shift+3 do bloco numérico | NVDA+end | nenhum | Move o cursor de revisão para o fim da linha actual do texto |
 | Ler continuamente com a revisão | Mais do bloco numérico | NVDA+shift+a | Varrer para baixo com três dedos (modo de texto) | Lê a partir da posição actual do cursor de revisão e move-o até ao final do texto |
 | Copiar a partir do cursor de revisão | NVDA+F9 | NVDA+F9 | Nenhum | Inicia a cópia do texto a partir da posição actual do cursor de revisão. A cópia actual não será efectuada, até que informe o NVDA até onde é que pretende copiar |
-| Copiar até ao 	cursor de revisão | NVDA+F10 | NVDA+F10 | Nenhum | Copia a partir da posição definida, com a cópia a partir do cursor de revisão, até a posição actual do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows |
+| Copiar até ao cursor de revisão | NVDA+F10 | NVDA+F10 | Nenhum | Copia a partir da posição definida, com a cópia a partir do cursor de revisão, até a posição actual do mesmo. Após pressionar esta tecla, o texto será copiado para a área de transferência do Windows |
 | Anunciar formatação de texto | NVDA+f | NVDA+f | Nenhum | Anuncia a formatação do texto onde o cursor de revisão está posicionado actualmente |
 %kc:endInclude
 
@@ -371,28 +373,40 @@ A disposição é ilustrada como se segue:
 | Palavra anterior | Palavra actual | Próxima palavra |
 | Caracter anterior | Caracter actual | Próximo caracter |
 
-++ Revisão Plana ++[FlatReview]
-Apesar de geralmente apenas poder rever o conteúdo de um único [objecto #Objects], alguns objectos permitem-lhe rever o conteúdo de objectos no seu interior.
-Os documentos complexos permitem-lhe rever todo o seu conteúdo e as janelas das aplicações permitem-lhe rever o texto no ecrã, como ele aparece visualmente.
-Isto chama-se revisão plana.
-É semelhante à revisão do ecrã ou à funcionalidade do cursor do rato, em vários outros leitores de ecrã para o Windows.
+++ Modos de Revisão ++[ReviewModes]
+Os [comandos de revisão de texto #ReviewingText] do NVDA possibilitam-lhe rever o conteúdo presente no objecto de navegação actual, documento actual, ou do ecrã,  dependendo do modo de revisão seleccionado.
+Os modos de revisão são um substituto do conceito de revisão plana, existente anteriormente no NVDA.
+Os comandos seguintes alternam entre os modos de revisão: 
+ %kc:beginInclude
+ || Nome | Comando de Teclado de Desktop | Comando de Teclado de Laptop | Gesto | Descrição |
+ | Muda para o modo de revisão seguinte | NVDA+7 do bloco numérico | NVDA+pageUp | Varrer com dois dedos para cima | Muda para o modo de revisão seguinte disponível. | 
+| Muda para o modo de revisão anterior | NVDA+1 do bloco numérico | NVDA+pageDown | Varrer com dois dedos para baixo | Muda para o modo de revisão anterior disponível.  |
+ %kc:endInclude
+ 
++++ Revisão de objecto +++[ObjectReview]
+No modo de revisão de objecto, poderá rever apenas o conteúdo do [objecto de navegação #ObjectNavigation] actual.
+Para objectos básicos como campos de edição ou controlos de texto simples, isto será, geralmente, o seu conteúdo textual.
+Para outros objectos, tal poderá ser o nome e/ou valor do objecto.
 
-Quando se move para a revisão plana, será posicionado na localização do [objecto de navegação #ObjectNavigation] actual.
-Se não usou a navegação de objectos, será normalmente o objecto que tem o [foco #SystemFocus].
-Por exemplo, se o objecto de navegação era um botão, será posicionado usualmente no texto do botão, na revisão plana.
-Poderá então rever o texto, se utilizar os [comandos de revisão de texto #ReviewingText].
-Também pode navegar directamente para o objecto que contém a posição actual do cursor de revisão, permitindo que use aí a [navegação de objectos #ObjectNavigation].
++++ Revisão de Documento +++[DocumentReview]
+Quando o [objecto de navegação #ObjectNavigation] se encontrar num documento do navegador (por exemplo, numa página web) ou outro documento complexo contendo vários objectos (por exemplo, um documento do Lotus Symphony), será possível mudar para o modo de revisão de documento.
 
-Note que, por padrão, o Braille segue o [foco #SystemFocus] e o [cursor #SystemCaret], em vez da navegação por objectos e da revisão de texto.
-Se quer que o Braille siga a navegação por objectos e a revisão de texto, terá que [configurar o Braille para fixar para o #BrailleTether] cursor de revisão.
+O modo de revisão de documento permite-lhe rever todo o conteúdo do documento.
 
-Os dois comandos seguintes são utilizados para alternar entre de e para a revisão plana:
-%kc:beginInclude
-|| Nome | Comando de Teclado de Desktop | Comando de Teclado de Laptop | Toque | Descrição |
-| Alterar para a revisão plana | NVDA+7 do bloco numérico | NVDA+PageUp | Varrer para cima com dois dedos | Move para a revisão plana, colocando-o na posição do objecto de navegação, permitindo que reveja o ecrã (ou num documento se estiver actualmente em algum) com os comandos de revisão de texto |
-| Mover para o objecto a partir da revisão plana | NVDA+1 do bloco numérico | NVDA+PageDown | Varrer para baixo com dois dedos | Navega para o objecto representado pelo texto, na posição actual do cursor de revisão, na revisão plana |
-%kc:endInclude
+Ao mudar do modo de revisão de objecto para o modo de revisão de documento, o cursor é colocado na posição do objecto de navegação.
+Ao mover-se pelo documento com os comandos de revisão, o objecto de navegação é automaticamente actualizado para o objecto encontrado na posição actual do cursor de revisão.
+ 
+ Note que o NVDA mudará automaticamente para revisão de documento, a partir de revisão de objecto, quando se move por documentos do navegador.
 
++++ Revisão do Ecrã +++[ScreenReview]
+O modo de revisão do ecrã permite-lhe rever o texto que aparece visualmente no ecrã, dentro da aplicação actual.
+Isto é semilhante ao modo de revisão do ecrã, ou cursor do rato, encontrado noutros leitores de ecrã para Windows.
+
+Ao mudar para o modo de revisão do ecrã, o cursor de revisão é colocado na posição no ecrã do [objecto de navegação #ObjectNavigation] actual.
+Quando se mover pelo ecrã com os comandos de revisão, o objecto de navegação é automaticamente actualizado para o objecto mais interior, encontrado na posição no ecrã do cursor de revisão.
+
+Note que em algumas aplicações mais recentes, o NVDA poderá não reportar algum, ou todo o texto presente no ecrã, devido ao uso de novas tecnologias de desenho no ecrã, impossíveis de suportar de momento.
+  
 ++ Navegar com o Rato ++
 Quando move o ponteiro do rato, por padrão, o NVDA anuncia o texto directamente sob o ponteiro, enquanto o ponteiro do rato vai sendo movido pelo ecrã.
 Quando suportado, o NVDA irá ler  o parágrafo que engloba o texto, porém existem alguns controlos que podem apenas ser lidos por linha. 
@@ -510,6 +524,13 @@ O NVDA fornece comandos de teclado adicionais para algumas aplicações, que rea
 | Definir cabeçalhos de coluna | NVDA+shift+c | Pressionar uma vez informa o NVDA de que esta linha contém os cabeçalhos de coluna, que deverão ser automaticamente anunciados ao mover-se entre colunas abaixo desta linha. Pressionar duas vezes apagará esta definição. | 
 | Definir cabeçalhos de linha | NVDA+shift+r | Pressionar uma vez, Informa o NVDA de que esta coluna  contêm os cabeçalhos de linha, que deverão ser automaticamente anunciados ao mover-se por linhas à direita desta coluna. Pressionar duas vezes, apagará a definição. | 
 %kc:endInclude
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Nome | Comando de Teclado | Descrição |
+| Alterna a leitura das notas do apresentador | control+shift+s | Quando está a correr uma apresentação de diapositivos, este comando alternará entre ler as notas do apresentador para o diapositivo, ou o conteúdo do mesmo. Isto afecta apenas o que o NVDA lê, e não o que é mostrado no ecrã. | 
+%kc:endInclude
+
 
 ++ foobar2000 ++
 %kc:beginInclude
@@ -728,6 +749,7 @@ Esta opção é um campo numérico que lhe permite alterar a velocidade de inter
 
 ==== Tempo de Permanência de Mensagens (seg) ====
 Esta definição é um campo numérico que controla durante quanto tempo são apresentadas as mensagens do sistema na linha Braille.
+Especifique 0 para que estas mensagens não sejam mostradas de todo.
 
 %kc:setting
 ==== Fixar Braille Para ====
@@ -940,8 +962,13 @@ Esta opção permite especificar se o conteúdo no Buffer Virtual deve posiciona
 Esta caixa de verificação alterna entre activar ou não a leitura contínua de uma página, após ser carregada no modo de navegação.
 Esta opção está activa, por padrão.
 
-==== Anunciar tabelas de formatação ====
-Quando se desactiva esta opção, o NVDA anuncia apenas as tabelas que contêm dados tabulares (onde faz sentido discernir que se trata de uma tabela). Mas se a activar, o NVDA anunciará também tabelas utilizadas puramente para apresentação visual.
+==== Incluir Tabelas de Apresentação ====
+Esta opção afecta o modo como o NVDA processa usadas puramente para propósitos de apresentação.
+Quando activa, o NVDA  irá processá-las como tabelas comuns, anunciando-as baseado nas [Definições de Formatação de Documentos #DocumentFormattingSettings], e localizando-as com os comandos de navegação rápida.
+Quando inactiva, não serão anunciadas nem localizadas.
++Contudo, o conteúdo destas tabelas será incluído como texto normal.
+Esta opção está inactiva, por omissão.
+
 
 ==== Configurar O Anúncio de Campos Tais Como Links E Títulos ====
 Consulte por favor as opções no [diálogo "Formatação de documentos" #DocumentFormattingSettings] para configurar os campos que são anunciados enquanto navega, como links, títulos e tabelas.
@@ -1077,9 +1104,17 @@ Estes pacotes são fornecidos pela comunidade e contêm código personalizado, q
 O gestor de extras contém uma lista que mostra todos os extras actualmente instalados na sua pasta de configurações do NVDA.
 O nome do pacote, versão e autor são mostrados para cada extra, apesar de mais informações como uma descrição e URL poderem ser visualizadas, seleccionando o extra e pressionando o butão àcerca do extra.
 
+Para procurar extras disponíveis on-line, pressione o botão Obter Extras.
+Este botão abre a [Página de extras do NVDA http://addons.nvda-project.org/].
+Se o NVDA estiver instalado no seu sistema, poderá abrir o extra directamente pelo navegador, de modo a iniciar o processo de instalação, seguidamente descrito.
+Caso contrário, guarde o pacote do extra e siga as instruções abaixo.
+
+Para instalar um extra que obteve previamente, pressione o butão instalar.
 Para instalar um extra, pressione o butão instalar.
 Isto permitir-lhe-á procurar por um pacote de extras para o NVDA (ficheiro .nvda-addon) algures, no seu computador ou numa rede.
-Ao pressionar abrir, o NVDA questioná-lo-á se deseja realmente instalar o extra.
+Ao pressionar abrir, iniciar-se-á o processo de instalação.
+
+Quando um extra está a ser instalado, o NVDA perguntar-lhe-á se deseja realmente instalá-lo.
 Tendo em conta que a funcionalidade dos extras não é restrita no NVDA, o que em teoria pode incluir aceder a dados pessoais ou mesmo a todo o sistema, se o NVDA for uma cópia instalada, é muito importante instalar apenas extras de fontes em que confia.
 Uma vez o extra instalado, o NVDA terá que ser reiniciado, para que o extra possa ser executado.
 Até que o faça, o estado "instalar" será mostrado para esse extra, na lista.
@@ -1158,7 +1193,8 @@ Nuance Vocalizer é um sintetizador comercial, com vozes de alta qualidade, dese
 Contém cerca de 50 vozes, falando em mais de 30 idiomas, que pode instalar, segundo as suas necessidades e gostos.
 Quer os componentes do driver, quer as vozes estão empacotados em Extras, que permitem a sua utilização nas versões portáteis do NVDA.
 
-Pode obter mais informações sobre o Nuance Vocalizer para NVDA, e como o comprar na sua página web em [www.tiflotecnia.net http://www.tiflotecnia.net/].
+Pode obter mais informações sobre o Nuance Vocalizer para NVDA, e como o comprar na sua página web em [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+
 Uma percentagem das vendas deste produto é doada à NV Access, para financiar a continuação do desenvolvimento do leitor de ecrã NVDA.
 
 + Linhas Braille Suportadas +[SupportedBrailleDisplays]
