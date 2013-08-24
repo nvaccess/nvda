@@ -94,7 +94,6 @@ wdContentControlBuildingBlockGallery=5
 wdContentControlDate=6
 wdContentControlGroup=7
 wdContentControlCheckBox=8
-
 wdNoRevision=0
 wdRevisionInsert=1
 wdRevisionDelete=2
@@ -135,7 +134,11 @@ wdRevisionTypeLabels={
 	wdRevisionCellDeletion:_("cell deletion"),
 	wdRevisionCellMerge:_("cell merge"),
 }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> t1670
 storyTypeLocalizedLabels={
 	wdCommentsStory:_("Comments"),
 	wdEndnotesStory:_("Endnotes"),
@@ -341,7 +344,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				try:
 					r=self.obj.WinwordSelectionObject.range
 					r.setRange(_startOffset,_endOffset)
+<<<<<<< HEAD
 					rev=r.revisions[0]
+=======
+					rev=r.revisions.item(1)
+>>>>>>> t1670
 					author=rev.author
 					date=rev.date
 				except COMError:
