@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>, Aleksey Sadovoy <lex@onm.su>
+#Copyright (C) 2006-2013 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """Keyboard support"""
 
@@ -292,6 +292,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				return "plus"
 			return unichr(vkChar).lower()
 
+		if self.vkCode == 0xFF:
+			# #3468: This key is unknown to Windows.
+			# GetKeyNameText often returns something inappropriate in these cases
+			# due to disregarding the extended flag.
+			return "unknown_%x" % self.scanCode
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
 	def _get_modifierNames(self):
@@ -312,7 +317,10 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			key="+".join(self._keyNamesInDisplayOrder))
 
 	def _get_displayName(self):
-		return "+".join(localizedKeyLabels.get(key, key) for key in self._keyNamesInDisplayOrder)
+		return "+".join(
+			# Translators: Reported for an unknown key press.
+			_("unknown") if key.startswith("unknown_")
+			else localizedKeyLabels.get(key, key) for key in self._keyNamesInDisplayOrder)
 
 	def _get_identifiers(self):
 		keyNames = set(self.modifierNames)
@@ -327,6 +335,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
 			# Don't report volume controlling keys.
 			return False
+		if self.vkCode == 0xFF:
+			# #3468: This key is unknown to Windows.
+			# This could be for an event such as gyroscope movement,
+			# so don't report it.
+			return False
 		# Aside from space, a key name of more than 1 character is a command.
 		if self.vkCode != winUser.VK_SPACE and len(self.mainKeyName) > 1:
 			return True
@@ -340,6 +353,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if inputCore.manager.isInputHelpActive:
 			return self.SPEECHEFFECT_CANCEL
 		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
+			return None
+		if self.vkCode == 0xFF:
+			# #3468: This key is unknown to Windows.
+			# This could be for an event such as gyroscope movement,
+			# so don't interrupt speech.
 			return None
 		if not config.conf['keyboard']['speechInterruptForCharacters'] and (not self.shouldReportAsCommand or self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT)):
 			return None
