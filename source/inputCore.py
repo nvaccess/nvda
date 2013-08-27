@@ -418,24 +418,24 @@ class _AllGestureMappingsRetriever(object):
 		# Global plugins.
 		import globalPluginHandler
 		for plugin in globalPluginHandler.runningPlugins:
-			self.addObjBindings(plugin)
+			self.addObj(plugin)
 
 		# App module.
 		app = obj.appModule
 		if app:
-			self.addObjBindings(app)
+			self.addObj(app)
 
 		# Tree interceptor.
 		ti = obj.treeInterceptor
 		if ti:
-			self.addObjBindings(ti)
+			self.addObj(ti)
 
 		# NVDAObject.
-		self.addObjBindings(obj)
+		self.addObj(obj)
 
 		# Global commands.
 		import globalCommands
-		self.addObjBindings(globalCommands.commands)
+		self.addObj(globalCommands.commands)
 
 	def addResult(self, scriptInfo):
 		self.scriptInfo[scriptInfo.cls, scriptInfo.scriptName] = scriptInfo
@@ -495,24 +495,27 @@ class _AllGestureMappingsRetriever(object):
 			pass
 		return SCRCAT_MISC
 
-	def addObjBindings(self, obj):
-		for gesture, script in obj._gestureMap.iteritems():
-			scriptName = script.__name__[7:]
-			cls = self.getScriptCls(script)
-			try:
-				scriptInfo = self.scriptInfo[cls, scriptName]
-			except KeyError:
-				scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
-				if not scriptInfo:
+	def addObj(self, obj):
+		scripts = {}
+		for cls in obj.__class__.__mro__:
+			for scriptName, script in cls.__dict__.iteritems():
+				if not scriptName.startswith("script_"):
 					continue
-				self.addResult(scriptInfo)
+				scriptName = scriptName[7:]
+				try:
+					scriptInfo = self.scriptInfo[cls, scriptName]
+				except KeyError:
+					scriptInfo = self.makeNormalScriptInfo(cls, scriptName, script)
+					if not scriptInfo:
+						continue
+					self.addResult(scriptInfo)
+				scripts[script] = scriptInfo
+		for gesture, script in obj._gestureMap.iteritems():
+			try:
+				scriptInfo = scripts[script.__func__]
+			except KeyError:
+				continue
 			scriptInfo.gestures.append(gesture)
-
-	def getScriptCls(self, script):
-		name = script.__name__
-		for cls in script.im_class.__mro__:
-			if name in cls.__dict__:
-				return cls
 
 class AllGesturesScriptInfo(object):
 	__slots__ = ("cls", "scriptName", "category", "displayName", "gestures")
