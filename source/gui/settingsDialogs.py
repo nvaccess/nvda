@@ -1522,11 +1522,14 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.Add(tree, proportion=7, flag=wx.EXPAND)
 		gestures = inputCore.manager.getAllGestureMappings()
 		for category in sorted(gestures):
-			parent = tree.AppendItem(self.treeRoot, category)
+			treeCat = tree.AppendItem(self.treeRoot, category)
 			commands = gestures[category]
 			for command in sorted(commands):
-				item = tree.AppendItem(parent, command)
-				self.tree.SetItemPyData(item, commands[command])
+				treeCom = tree.AppendItem(treeCat, command)
+				commandInfo = commands[command]
+				tree.SetItemPyData(treeCom, commandInfo)
+				for gesture in commandInfo.gestures:
+					tree.AppendItem(treeCom, gesture)
 
 	def postInit(self):
 		self.tree.SetFocus()
