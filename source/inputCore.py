@@ -408,7 +408,7 @@ class _AllGestureMappingsRetriever(object):
 		self.scriptInfo = {}
 		self.handledGestures = set()
 
-		self.addGlobalMap(manager.userGestureMap, byUser=True)
+		self.addGlobalMap(manager.userGestureMap)
 		self.addGlobalMap(manager.localeGestureMap)
 		import braille
 		gmap = braille.handler.display.gestureMap
@@ -445,7 +445,7 @@ class _AllGestureMappingsRetriever(object):
 			cat = self.results[scriptInfo.category] = {}
 		cat[scriptInfo.displayName] = scriptInfo
 
-	def addGlobalMap(self, gmap, byUser=False):
+	def addGlobalMap(self, gmap):
 		for cls, gesture, scriptName in gmap.getScriptsForAllGestures():
 			key = (cls, gesture)
 			if key in self.handledGestures:
@@ -468,7 +468,7 @@ class _AllGestureMappingsRetriever(object):
 					if not scriptInfo:
 						continue
 				self.addResult(scriptInfo)
-			scriptInfo.gestures.append((gesture, byUser))
+			scriptInfo.gestures.append(gesture)
 
 	def makeKbEmuScriptInfo(self, cls, scriptName):
 		info = AllGesturesScriptInfo(cls, scriptName)
@@ -506,7 +506,7 @@ class _AllGestureMappingsRetriever(object):
 				if not scriptInfo:
 					continue
 				self.addResult(scriptInfo)
-			scriptInfo.gestures.append((gesture, False))
+			scriptInfo.gestures.append(gesture)
 
 	def getScriptCls(self, script):
 		name = script.__name__
