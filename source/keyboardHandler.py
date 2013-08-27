@@ -23,6 +23,7 @@ import inputCore
 import tones
 
 ignoreInjected=False
+_keySentByGesture=False
 
 # Fake vk codes.
 # These constants should be assigned to the name that NVDA will use for the key.
@@ -142,9 +143,14 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			currentModifiers.discard(stickyNVDAModifier)
 			stickyNVDAModifier = None
 
+		_keySentByGesture=False
 		try:
 			inputCore.manager.executeGesture(gesture)
 			trappedKeys.add(keyCode)
+			# NVDA handled the key press itself without sending it or any other key to the app.
+			# Send special reserved vkcode (0xff) to at least notify the app's key state that something happendd.
+			# #3472: allows alt and windows to be bound to scripts and stops control and shift from switching languages in cursorManager selection scripts 
+			if not _keySentByGesture: KeyboardInputGesture([],0xff,0,False).send()
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
@@ -361,7 +367,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			state=_("on") if toggleState else _("off")))
 
 	def send(self):
-		global ignoreInjected
+		global ignoreInjected, _keySentByGesture
 		keys = []
 		for vk, ext in self.generalizedModifiers:
 			if vk == VK_WIN:
@@ -387,6 +393,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# Send key up events for the keys in reverse order.
 			for vk, scan, ext in reversed(keys):
 				winUser.keybd_event(vk, scan, ext + 2, 0)
+			_keySentByGesture=True
 
 			if not queueHandler.isPendingItems(queueHandler.eventQueue):
 				time.sleep(0.01)
