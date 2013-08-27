@@ -827,6 +827,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: presented when the mouse tracking is toggled.
 			state = _("Mouse tracking off")
 			config.conf["mouse"]["enableMouseTracking"]=False
+			globalVars.mouseObject=None
 		else:
 			# Translators: presented when the mouse tracking is toggled.
 			state = _("Mouse tracking on")

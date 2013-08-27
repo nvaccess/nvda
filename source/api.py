@@ -149,6 +149,8 @@ def getFocusAncestors():
 
 def getMouseObject():
 	"""Returns the object that is directly under the mouse"""
+	if not globalVars.mouseObject:
+		return getDesktopObject().objectFromPoint(*winUser.getCursorPos())
 	return globalVars.mouseObject
 
 def setMouseObject(obj):

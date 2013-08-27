@@ -717,7 +717,11 @@ class MouseSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		config.conf["mouse"]["reportMouseShapeChanges"]=self.shapeCheckBox.IsChecked()
-		config.conf["mouse"]["enableMouseTracking"]=self.mouseTrackingCheckBox.IsChecked()
+		if self.mouseTrackingCheckBox.IsChecked():
+			config.conf["mouse"]["enableMouseTracking"]=True
+		else:
+			config.conf["mouse"]["enableMouseTracking"]=False
+			globalVars.mouseObject=None
 		config.conf["mouse"]["mouseTextUnit"]=self.textUnits[self.textUnitComboBox.GetSelection()]
 		config.conf["mouse"]["reportObjectRoleOnMouseEnter"]=self.reportObjectRoleCheckBox.IsChecked()
 		config.conf["mouse"]["audioCoordinatesOnMouseMove"]=self.audioCheckBox.IsChecked()
