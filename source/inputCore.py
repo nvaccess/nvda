@@ -266,6 +266,25 @@ class GlobalGestureMap(object):
 			for cls, scriptName in self.getScriptsForGesture(gesture):
 				yield cls, gesture, scriptName
 
+	def remove(self, gesture, module, className, script):
+		"""Remove a gesture mapping.
+		@param gesture: The gesture identifier.
+		@type gesture: str
+		@param module: The name of the Python module containing the target script.
+		@type module: str
+		@param className: The name of the class in L{module} containing the target script.
+		@type className: str
+		@param script: The name of the target script.
+		@type script: str
+		@raise ValueError: If the requested mapping does not exist.
+		"""
+		gesture = normalizeGestureIdentifier(gesture)
+		try:
+			scripts = self._map[gesture]
+		except KeyError:
+			raise ValueError("Mapping not found")
+		scripts.remove((module, className, script))
+
 class InputManager(baseObject.AutoPropertyObject):
 	"""Manages functionality related to input from the user.
 	Input includes key presses on the keyboard, as well as key presses on Braille displays, etc.

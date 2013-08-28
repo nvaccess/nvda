@@ -1544,6 +1544,7 @@ class InputGesturesDialog(SettingsDialog):
 		item = self.removeButton = wx.Button(self, label=_("&Remove"))
 		item.Bind(wx.EVT_BUTTON, self.onRemove)
 		item.Disable()
+		self.pendingRemoves = set()
 		sizer.Add(item)
 		settingsSizer.Add(sizer)
 
@@ -1562,4 +1563,23 @@ class InputGesturesDialog(SettingsDialog):
 		pass
 
 	def onRemove(self, evt):
-		pass
+		treeGes = self.tree.Selection
+		gesture = self.tree.GetItemPyData(treeGes)
+		treeCom = self.tree.GetItemParent(treeGes)
+		scriptInfo = self.tree.GetItemPyData(treeCom)
+		cls = scriptInfo.cls
+		module = cls.__module__
+		className = cls.__name__
+		self.pendingRemoves.add((gesture, module, className, scriptInfo.scriptName))
+		self.tree.Delete(treeGes)
+		self.tree.SetFocus()
+
+	def onOk(self, evt):
+		for gesture, module, className, scriptName in self.pendingRemoves:
+			try:
+				inputCore.manager.userGestureMap.remove(gesture, module, className, scriptName)
+			except ValueError:
+				# The user wants to unbind a gesture they didn't define.
+				inputCore.manager.userGestureMap.add(gesture, module, className, None)
+
+		super(InputGesturesDialog, self).onOk(evt)
