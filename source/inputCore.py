@@ -291,9 +291,10 @@ class InputManager(baseObject.AutoPropertyObject):
 	"""
 
 	def __init__(self):
-		#: Whether input help is enabled, wherein the function of each key pressed by the user is reported but not executed.
-		#: @type: bool
-		self.isInputHelpActive = False
+		#: The function to call when capturing gestures.
+		#: If it returns C{False}, normal execution will be prevented.
+		#: @type: callable
+		self._captureFunc = None
 		#: The gestures mapped for the NVDA locale.
 		#: @type: L{GlobalGestureMap}
 		self.localeGestureMap = GlobalGestureMap()
@@ -329,11 +330,13 @@ class InputManager(baseObject.AutoPropertyObject):
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
 			log.io("Input: %s" % gesture.logIdentifier)
 
-		if self.isInputHelpActive:
-			bypass = getattr(script, "bypassInputHelp", False)
-			queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass)
-			if not bypass:
-				return
+		if self._captureFunc:
+			try:
+				if self._captureFunc(gesture) is False:
+					return
+			except:
+				log.error("Error in capture function, disabling", exc_info=True)
+				self._captureFunc = None
 
 		if gesture.isModifier:
 			raise NoInputGestureAction
@@ -348,6 +351,23 @@ class InputManager(baseObject.AutoPropertyObject):
 			return
 
 		raise NoInputGestureAction
+
+	def _get_isInputHelpActive(self):
+		"""Whether input help is enabled, wherein the function of each key pressed by the user is reported but not executed.
+		@rtype: bool
+		"""
+		return self._captureFunc == self._inputHelpCaptor
+
+	def _set_isInputHelpActive(self, enable):
+		if enable:
+			self._captureFunc = self._inputHelpCaptor
+		elif self.isInputHelpActive:
+			self._captureFunc = None
+
+	def _inputHelpCaptor(self, gesture):
+		bypass = getattr(gesture.script, "bypassInputHelp", False)
+		queueHandler.queueFunction(queueHandler.eventQueue, self._handleInputHelp, gesture, onlyLog=bypass)
+		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
 		textList = [gesture.displayName]
