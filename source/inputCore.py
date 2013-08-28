@@ -515,6 +515,10 @@ class _AllGestureMappingsRetriever(object):
 				scriptInfo = scripts[script.__func__]
 			except KeyError:
 				continue
+			key = (scriptInfo.cls, gesture)
+			if key in self.handledGestures:
+				continue
+			self.handledGestures.add(key)
 			scriptInfo.gestures.append(gesture)
 
 class AllGesturesScriptInfo(object):
