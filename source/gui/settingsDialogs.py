@@ -1519,7 +1519,9 @@ class InputGesturesDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		tree = self.tree = wx.TreeCtrl(self, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
 		self.treeRoot = tree.AddRoot("root")
+		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=7, flag=wx.EXPAND)
+
 		gestures = inputCore.manager.getAllGestureMappings()
 		for category in sorted(gestures):
 			treeCat = tree.AppendItem(self.treeRoot, category)
@@ -1529,7 +1531,35 @@ class InputGesturesDialog(SettingsDialog):
 				commandInfo = commands[command]
 				tree.SetItemPyData(treeCom, commandInfo)
 				for gesture in commandInfo.gestures:
-					tree.AppendItem(treeCom, gesture)
+					treeGes = tree.AppendItem(treeCom, gesture)
+					tree.SetItemPyData(treeGes, gesture)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
+		item = self.addButton = wx.Button(self, label=_("&Add"))
+		item.Bind(wx.EVT_BUTTON, self.onAdd)
+		item.Disable()
+		sizer.Add(item)
+		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
+		item = self.removeButton = wx.Button(self, label=_("&Remove"))
+		item.Bind(wx.EVT_BUTTON, self.onRemove)
+		item.Disable()
+		sizer.Add(item)
+		settingsSizer.Add(sizer)
 
 	def postInit(self):
 		self.tree.SetFocus()
+
+	def onTreeSelect(self, evt):
+		item = evt.Item
+		data = self.tree.GetItemPyData(item)
+		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
+		isGesture = isinstance(data, basestring)
+		self.addButton.Enabled = isCommand or isGesture
+		self.removeButton.Enabled = isGesture
+
+	def onAdd(self, evt):
+		pass
+
+	def onRemove(self, evt):
+		pass
