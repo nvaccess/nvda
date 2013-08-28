@@ -89,7 +89,7 @@ def executeMouseMoveEvent(x,y):
 	y=min(max(screenTop,y),(screenTop+screenHeight)-1)
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
 		playAudioCoordinates(x,y,screenWidth,screenHeight,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
-	oldMouseObject=api.getMouseObject()
+	oldMouseObject=globalVars.mouseObject
 	mouseObject=desktopObject.objectFromPoint(x,y)
 	while mouseObject and mouseObject.beTransparentToMouse:
 		mouseObject=mouseObject.parent
@@ -111,15 +111,16 @@ def initialize():
 	global curMousePos, scrBmpObj
 	scrBmpObj=screenBitmap.ScreenBitmap(1,1)
 	(x,y)=winUser.getCursorPos()
-	desktopObject=api.getDesktopObject()
-	try:
-		mouseObject=desktopObject.objectFromPoint(x,y)
-	except:
-		log.exception("Error retrieving initial mouse object")
-		mouseObject=None
-	if not mouseObject:
-		mouseObject=api.getDesktopObject()
-	api.setMouseObject(mouseObject)
+	if config.conf['mouse']['enableMouseTracking']:
+		desktopObject=api.getDesktopObject()
+		try:
+			mouseObject=desktopObject.objectFromPoint(x,y)
+		except:
+			log.exception("Error retrieving initial mouse object")
+			mouseObject=None
+		if not mouseObject:
+			mouseObject=api.getDesktopObject()
+		api.setMouseObject(mouseObject)
 	curMousePos=(x,y)
 	winInputHook.initialize()
 	winInputHook.setCallbacks(mouse=internal_mouseEvent)

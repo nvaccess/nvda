@@ -210,7 +210,6 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	api.setDesktopObject(desktopObject)
 	api.setFocusObject(desktopObject)
 	api.setNavigatorObject(desktopObject)
-	api.setMouseObject(desktopObject)
 	import JABHandler
 	log.debug("initializing Java Access Bridge support")
 	try:
