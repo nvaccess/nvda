@@ -145,6 +145,13 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		try:
 			inputCore.manager.executeGesture(gesture)
 			trappedKeys.add(keyCode)
+			if canModifiersPerformAction(gesture.generalizedModifiers):
+				# #3472: These modifiers can perform an action if pressed alone
+				# and we've just consumed the main key.
+				# Send special reserved vkcode (0xff) to at least notify the app's key state that something happendd.
+				# This allows alt and windows to be bound to scripts and
+				# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
+				KeyboardInputGesture((),0xff,0,False).send()
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
@@ -211,6 +218,30 @@ def getInputHkl():
 	else:
 		thread = 0
 	return winUser.user32.GetKeyboardLayout(thread)
+
+def canModifiersPerformAction(modifiers):
+	"""Determine whether given generalized modifiers can perform an action if pressed alone.
+	For example, alt activates the menu bar if it isn't modifying another key.
+	"""
+	if inputCore.manager.isInputHelpActive:
+		return False
+	control = shift = other = False
+	for vk, ext in modifiers:
+		if vk in (winUser.VK_MENU, VK_WIN):
+			# Alt activates the menu bar.
+			# Windows activates the Start Menu.
+			return True
+		elif vk == winUser.VK_CONTROL:
+			control = True
+		elif vk == winUser.VK_SHIFT:
+			shift = True
+		elif (vk, ext) not in trappedKeys :
+			# Trapped modifiers aren't relevant.
+			other = True
+	if control and shift and not other:
+		# Shift+control switches keyboard layouts.
+		return True
+	return False
 
 class KeyboardInputGesture(inputCore.InputGesture):
 	"""A key pressed on the traditional system keyboard.
