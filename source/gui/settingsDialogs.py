@@ -1544,6 +1544,7 @@ class InputGesturesDialog(SettingsDialog):
 		item = self.removeButton = wx.Button(self, label=_("&Remove"))
 		item.Bind(wx.EVT_BUTTON, self.onRemove)
 		item.Disable()
+		self.pendingAdds = set()
 		self.pendingRemoves = set()
 		sizer.Add(item)
 		settingsSizer.Add(sizer)
@@ -1552,7 +1553,7 @@ class InputGesturesDialog(SettingsDialog):
 		self.tree.SetFocus()
 
 	def onTreeSelect(self, evt):
-		item = evt.Item
+		item = self.tree.Selection
 		data = self.tree.GetItemPyData(item)
 		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
 		isGesture = isinstance(data, basestring)
@@ -1560,17 +1561,40 @@ class InputGesturesDialog(SettingsDialog):
 		self.removeButton.Enabled = isGesture
 
 	def onAdd(self, evt):
-		pass
+		if inputCore.manager._captureFunc:
+			return
+
+		treeCom = self.tree.Selection
+		scriptInfo = self.tree.GetItemPyData(treeCom)
+		if not isinstance(scriptInfo, inputCore.AllGesturesScriptInfo):
+			treeCom = self.tree.GetItemParent(treeCom)
+			scriptInfo = self.tree.GetItemPyData(treeCom)
+		# Translators: The prompt to enter a gesture in the Input Gestures dialog.
+		treeGes = self.tree.AppendItem(treeCom, _("Enter input gesture:"))
+		self.tree.SelectItem(treeGes)
+		self.tree.SetFocus()
+
+		def addGestureCaptor(gesture):
+			if gesture.isModifier:
+				return False
+			inputCore.manager._captureFunc = None
+			wx.CallAfter(self._finishAdd, treeGes, scriptInfo, gesture)
+			return False
+		inputCore.manager._captureFunc = addGestureCaptor
+
+	def _finishAdd(self, treeGes, scriptInfo, gesture):
+		gestureId = gesture.logIdentifier
+		self.pendingAdds.add((gestureId, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
+		self.tree.SetItemText(treeGes, gesture.logIdentifier)
+		self.tree.SetItemPyData(treeGes, gestureId)
+		self.onTreeSelect(None)
 
 	def onRemove(self, evt):
 		treeGes = self.tree.Selection
 		gesture = self.tree.GetItemPyData(treeGes)
 		treeCom = self.tree.GetItemParent(treeGes)
 		scriptInfo = self.tree.GetItemPyData(treeCom)
-		cls = scriptInfo.cls
-		module = cls.__module__
-		className = cls.__name__
-		self.pendingRemoves.add((gesture, module, className, scriptInfo.scriptName))
+		self.pendingRemoves.add((gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
 		self.tree.Delete(treeGes)
 		self.tree.SetFocus()
 
@@ -1581,5 +1605,14 @@ class InputGesturesDialog(SettingsDialog):
 			except ValueError:
 				# The user wants to unbind a gesture they didn't define.
 				inputCore.manager.userGestureMap.add(gesture, module, className, None)
+
+		for gesture, module, className, scriptName in self.pendingAdds:
+			try:
+				# The user might have unbound this gesture,
+				# so remove this override first.
+				inputCore.manager.userGestureMap.remove(gesture, module, className, None)
+			except ValueError:
+				pass
+			inputCore.manager.userGestureMap.add(gesture, module, className, scriptName)
 
 		super(InputGesturesDialog, self).onOk(evt)

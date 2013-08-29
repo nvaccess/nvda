@@ -568,6 +568,14 @@ class AllGesturesScriptInfo(object):
 		self.scriptName = scriptName
 		self.gestures = []
 
+	@property
+	def moduleName(self):
+		return self.cls.__module__
+
+	@property
+	def className(self):
+		return self.cls.__name__
+
 def normalizeGestureIdentifier(identifier):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
 	Any items separated by a + sign after the source are considered to be of indeterminate order
