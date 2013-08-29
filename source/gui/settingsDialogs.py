@@ -1615,4 +1615,14 @@ class InputGesturesDialog(SettingsDialog):
 				pass
 			inputCore.manager.userGestureMap.add(gesture, module, className, scriptName)
 
+		if self.pendingAdds or self.pendingRemoves:
+			# Only save if there is something to save.
+			try:
+				inputCore.manager.userGestureMap.save()
+			except:
+				log.debugWarning("", exc_info=True)
+				# Translators: An error displayed when saving user defined input gestures fails.
+				gui.messageBox(_("Error saving user defined gestures - probably read only file system."),
+					_("Error"), wx.OK | wx.ICON-ERROR)
+
 		super(InputGesturesDialog, self).onOk(evt)

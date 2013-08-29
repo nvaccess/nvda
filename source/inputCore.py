@@ -137,6 +137,9 @@ class GlobalGestureMap(object):
 		#: Indicates that the last load or update contained an error.
 		#: @type: bool
 		self.lastUpdateContainedError = False
+		#: The file name for this gesture map, if any.
+		#: @type: basestring
+		self.fileName = None
 		if entries:
 			self.update(entries)
 
@@ -184,6 +187,7 @@ class GlobalGestureMap(object):
 		@param filename: The name of the file to load.
 		@type: str
 		"""
+		self.fileName = filename
 		try:
 			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
 		except (configobj.ConfigObjError,UnicodeDecodeError), e:
@@ -284,6 +288,40 @@ class GlobalGestureMap(object):
 		except KeyError:
 			raise ValueError("Mapping not found")
 		scripts.remove((module, className, script))
+
+	def save(self):
+		"""Save this gesture map to disk.
+		@precondition: L{load} must have been called.
+		"""
+		if globalVars.appArgs.secure:
+			return
+		if not self.fileName:
+			raise ValueError("No file name")
+		out = configobj.ConfigObj()
+		out.filename = self.fileName
+
+		for gesture, scripts in self._map.iteritems():
+			for module, className, script in scripts:
+				key = "%s.%s" % (module, className)
+				try:
+					outSect = out[key]
+				except KeyError:
+					out[key] = {}
+					outSect = out[key]
+				if script is None:
+					script = "None"
+				try:
+					outVal = outSect[script]
+				except KeyError:
+					# Write the first value as a string so configobj doesn't output a comma if there's only one value.
+					outVal = outSect[script] = gesture
+				else:
+					if isinstance(outVal, list):
+						outVal.append(gesture)
+					else:
+						outSect[script] = [outVal, gesture]
+
+		out.write()
 
 class InputManager(baseObject.AutoPropertyObject):
 	"""Manages functionality related to input from the user.
