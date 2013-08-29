@@ -296,7 +296,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# #3468: This key is unknown to Windows.
 			# GetKeyNameText often returns something inappropriate in these cases
 			# due to disregarding the extended flag.
-			return "unknown_%x" % self.scanCode
+			return "unknown_%02x" % self.scanCode
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
 	def _get_modifierNames(self):
@@ -319,7 +319,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _get_displayName(self):
 		return "+".join(
 			# Translators: Reported for an unknown key press.
-			_("unknown") if key.startswith("unknown_")
+			# %s will be replaced with the key code.
+			_("unknown %s") % key[8:] if key.startswith("unknown_")
 			else localizedKeyLabels.get(key, key) for key in self._keyNamesInDisplayOrder)
 
 	def _get_identifiers(self):
