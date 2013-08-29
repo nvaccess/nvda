@@ -473,14 +473,15 @@ class InputManager(baseObject.AutoPropertyObject):
 		except NotImplementedError:
 			pass
 
-	def getAllGestureMappings(self, obj=None):
+	def getAllGestureMappings(self, obj=None, ancestors=None):
 		if not obj:
 			obj = api.getFocusObject()
-		return _AllGestureMappingsRetriever(obj).results
+			ancestors = api.getFocusAncestors()
+		return _AllGestureMappingsRetriever(obj, ancestors).results
 
 class _AllGestureMappingsRetriever(object):
 
-	def __init__(self, obj):
+	def __init__(self, obj, ancestors):
 		self.results = {}
 		self.scriptInfo = {}
 		self.handledGestures = set()
@@ -509,6 +510,8 @@ class _AllGestureMappingsRetriever(object):
 
 		# NVDAObject.
 		self.addObj(obj)
+		for anc in reversed(ancestors):
+			self.addObj(anc, isAncestor=True)
 
 		# Global commands.
 		import globalCommands
@@ -572,11 +575,13 @@ class _AllGestureMappingsRetriever(object):
 			pass
 		return SCRCAT_MISC
 
-	def addObj(self, obj):
+	def addObj(self, obj, isAncestor=False):
 		scripts = {}
 		for cls in obj.__class__.__mro__:
 			for scriptName, script in cls.__dict__.iteritems():
 				if not scriptName.startswith("script_"):
+					continue
+				if isAncestor and not getattr(script, "canPropagate", False):
 					continue
 				scriptName = scriptName[7:]
 				try:
