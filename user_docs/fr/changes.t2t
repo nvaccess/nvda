@@ -11,21 +11,21 @@ Quoi de Neuf dans NVDA
 - Dans Skype, les nouveaux messages de conversation sont maintenant automatiquement rapportés lorsque la fenêtre de conversation est active. (#2298)
 - Support de Tween, incluant l'annonce du nom des onglets et moins de verbosité en lisant les tweets.
 - Vous pouvez maintenant désactiver l'affichage des messages NVDA en braille en mettant à 0 la durée d'affichage dans les préférences Braille. (#2482)
-- Dans le gestionnaire de modules complémentaires, il y a maintenant un bouton Obtenire des modules complémentaires qui ouvre le site des modules complémentaires NVDA à fin d'en installer. (#3209)
+- Dans le gestionnaire de modules complémentaires, il y a maintenant un bouton Obtenir des modules complémentaires qui ouvre le site des modules complémentaires NVDA à fin d'en installer. (#3209)
 - Dans la boîte de dialogue de bienvenue qui se lance au premier démarrage de NVDA, vous pouvez maintenant définir si NVDA doit démarrer après l'ouverture de votre session. (#2234)
 - Le mode veille de NVDA est automatiquement activé lors de l'utilisation de Dolphin Cicero. (#2055)
 - La version Windows x64 de Miranda IM/Miranda NG est maintenant supportée. (#3296)
 - Les suggestions de recherche dans l'écran de démarrage de Windows 8.1  sont automatiquement annoncées. (#3322)
-- Support du parcourt et de l'édition des feuilles de calcul dans Microsoft Excel.
+- Support du parcours et de l'édition des feuilles de calcul dans Microsoft Excel.
 - Les afficheurs brailles Freedom Scientific Focus 14 Blue and Focus 80 Blue, comme les Focus 40 Blue dans certaines configuration qui n'étaient pas supportées avant, sont maintenant supportées lorsque connectées via Bluetooth. (#3307)
-- Les suggestion d'auto-complétion sont amintenant annoncées dans Outlook 2010. (#2816)
+- Les suggestions d'auto-complétion sont maintenant annoncées dans Outlook 2010. (#2816)
 - Nouvelles tables braille : anglais (Angleterre) braille informatique, Coréen grade 2, Russe code braille informatique.
 - Nouvelle langue : Farsi. (#1427)
 
 
 == Changements ==
 - Sur un écran tactile, glisser une fois le doigt vers la gauche ou la droite lorsque l'on est en mode objet passe au mode revue précédent/suivant de l'objet. Utilisez deux doigts pour l'enciène méthode.
-- La case à cocher Annoncer les tables de visualisation qui se trouve dans le dialogue Mode Navigation a été renomméeeno Inclure les tables de visualisation pour indiquer que la navigation rapide ne les trouvera pas si la case est décochée. (#3140)
+- La case à cocher Annoncer les tables de visualisation qui se trouve dans le dialogue Mode Navigation a été renommée en Inclure les tables de visualisation pour indiquer que la navigation rapide ne les trouvera pas si la case est décochée. (#3140)
 - Le mode revue à plat a été remplacé par les modes revue d'objet, de document ou d'écran. (#2996)
  - La revue d'objet permet de lire le texte de l'objet sous le navigateur, la revue de document tout le texte d'un document en mode navigation, et le mode revue de l'écran permet de lire tout le texte visible à l'écran de l'application en cours.
  - Les commandes de la revue à plat sont maintenant utilisées pour basculer entre les modes de revue.
@@ -36,37 +36,37 @@ Quoi de Neuf dans NVDA
 
 
 == Corrections de Bogues ==
-- Activer un objet annonce maintenant l'action avant l'activation au lieux de l'inverse (ex : étendre lorsque l'on étend au lieux de réduir). (#2982)
+- Activer un objet annonce maintenant l'action avant l'activation au lieu de l'inverse (ex : étendre lorsque l'on étend au lieux de réduire). (#2982)
 - Meilleure gestion du curseur dans certaines zones d'édition Skype en version récentes, comme la zone de saisie des conversations et dans la recherche de contact. (#1601, #3036)
 - Dans la liste des actions récentes Skype, le nombre de nouveaux événements est affiché lorsqu'applicable. (#1446)
-- Meilleur gestion du curseur pour la lecture de droite à gauche de texte sur l'écran. Ex : éditer du texte en arabe dans Microsoft Excel. (#1601)
+- Meilleure gestion du curseur pour la lecture de droite à gauche de texte sur l'écran. Ex : éditer du texte en arabe dans Microsoft Excel. (#1601)
 - La navigation rapide vers les boutons et champs de formulaires localisera maintenant les liens marqués comme des boutons pour l'accessibilité dans Internet Explorer. (#2750)
 - En mode navigation, le contenu dans les arborescences n'est plus rendu, vu qu'une présentation à plat n'est pas utile. Vous pouvez appuyer sur entrée dans une arborescence pour interagir avec lorsqu'elle a le focus. (#3023)
-- Apuyer sur Alt+Bas ou haute dans une zone de liste en mode focus ne repasse plus incorrectement en mode navigation. (#2340)
-- Dans Internet Explorer 10, les célules de tableau n'activent plus le mode focus sauf si marquées comme activables par le développeur. (#3248)
+- Appuyer sur Alt+Bas ou haut dans une zone de liste en mode focus ne repasse plus incorrectement en mode navigation. (#2340)
+- Dans Internet Explorer 10, les cellules de tableau n'activent plus le mode focus sauf si marquées comme activables par le développeur. (#3248)
 - NVDA n'échoue plus au démarrage si l'heure système est antérieure à la dernière mise à jour. (#3260)
 - Si une barre de progression est affichée en braille, le braille est mis à jour avec la barre de progression. (#3258)
 - En mode navigation dans les applications Mozilla, les titre de tableau ne sont plus rendus deux fois. De plus, le résumé est aussi affiché s'il y a un titre. (#3196)
 - Lorsqu'on change de langue dans Windows 8, NVDA parle la bonne langue au lieux de ne pas en changer.
-- NVDA annonce les modes de convertion IME dans windows 8.
+- NVDA annonce les modes de conversion IME dans windows 8.
 - NVDA n'annonce plus du vide sur le bureau lorsque les méthodes Google Japonnaise ou Atok sont utilisées. (#3234)
 - Dans windows 7 et supérieur, NVDA n'annonce plus la reconnaissance vocale ou le tactile comme un changement de langue.
 - NVDA n'annonce plus un caractère spécial (0x7f) quand on presse control+retourArrière dans certains éditeurs quand l'écho caractères est activé. (#3315)
-- espeak ne change plus de hauteur, volume, etc. de manière inappropriée quand NVDA lit un texte contenant certain caractères de contrôle ou XML. (#3334) (régression de #437)
+- eSpeak ne change plus de hauteur, volume, etc. de manière inappropriée quand NVDA lit un texte contenant certains caractères de contrôle ou XML. (#3334) (régression de #437)
 - Dans les applications Java, les changements de l'étiquette ou de la valeur du contrôle en focus sont maintenant annoncés automatiquement,  et sont reflétés lors d'une interrogation ultérieure du contrôle. (#3119)
 - Dans les contrôles Scintilla, les lignes sont maintenant annoncées correctement quand le renvoi à la ligne automatique est activé. (#885)
 - Dans les applications Mozilla, le nom des listes en lecture seule est correctement annoncé ; ex : en navigant entre les tweets en mode focus sur Twitter.com. (#3327)
 - Le contenu des boîtes de confirmation Microsoft Office 2013 est maintenant automatiquement lu.
-- Amélioration des performences lors de la lecture de tableaux dans Microsoft Word. (#3326)
-- Les commandes de lectures de tableau de NVDA (control+alt+flèches) fonctionnent mieux dans certains tableaux Microsoft Word où une cellule prends plusieurs rangées.
-- Si le gestionnaire de modules complémentaires est déjà ouvert, l'activer à nouveau (par le menu outils ou en ouvrant un fichier .nvda-addon) n'échoue plus ou ne rends plus impossible la fermeture du gestionnaire de modules complémentaires. (#3351)
+- Amélioration des performances lors de la lecture de tableaux dans Microsoft Word. (#3326)
+- Les commandes de lecture de tableau de NVDA (control+alt+flèches) fonctionnent mieux dans certains tableaux Microsoft Word où une cellule prends plusieurs rangées.
+- Si le gestionnaire de modules complémentaires est déjà ouvert, l'activer à nouveau (par le menu outils ou en ouvrant un fichier .nvda-addon) n'échoue plus ou ne rend plus impossible la fermeture du gestionnaire de modules complémentaires. (#3351)
 - NVDA ne se fige plus dans les boîtes de dialogue quand l'IME Japonnais ou Chinois est utilisé dans Office. (#3064)
 - Les espaces multiples ne sont plus compressés en un seul en braille. (#1366)
 - Les outils pour développeurs Zend dans Eclipse PHP sont accessibles au même titre qu'Eclipse. (#3353)
 - Dans Internet Explorer, il n'est à nouveau plus nécessaire d'appuyer sur Tab pour interagir avec un objet intégré après avoir appuyé sur entré dessus. (#3364)
 - Lors de l'édition de texte dans Microsoft PowerPoint, la dernière ligne n'est plus rapportée comme la ligne du dessus, si la dernière ligne est blanche. (#3403)
 - Dans Microsoft PowerPoint, les objets ne sont plus parfois annoncé deux fois lorsqu'on les sélectionne ou qu'on choisi de les éditer. (#3394)
-- NVDA ne fait plus plenter ou figer Adobe Reader avec certains documents PDF mal formés contenant des lignes hors d'un tableau. (#3399)
+- NVDA ne fait plus planter ou figer Adobe Reader avec certains documents PDF mal formés contenant des lignes hors d'un tableau. (#3399)
 - NVDA détecte maintenant correctement le prochain slide ayant le focus lorsqu'on en supprime un dans la vue mignature de PowerPoint. (#3415)
 
 
