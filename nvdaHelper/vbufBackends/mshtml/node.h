@@ -24,7 +24,7 @@ class MshtmlVBufStorage_controlFieldNode_t : public VBufStorage_controlFieldNode
 
 	public:
 	MshtmlVBufBackend_t* backend;
-	IHTMLElement2* pHTMLElement2;
+	IHTMLDOMNode* pHTMLDOMNode;
 	IDispatch* propChangeSink;
 	IDispatch* loadSink;
 	IMarkupContainer2* pMarkupContainer2;
