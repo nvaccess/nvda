@@ -32,6 +32,9 @@ class CursorManager(baseObject.ScriptableObject):
 	@type selection: L{textInfos.TextInfo}
 	"""
 
+	# Translators: the script category for browse mode
+	scriptCategory=_("Browse mode")
+
 	_lastFindText=""
 
 	def __init__(self, *args, **kwargs):
