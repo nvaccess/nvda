@@ -17,7 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define WIN32_LEAN_AND_MEAN 
 #include <windows.h>
 #include <delayimp.h>
-#include <minHook/newMinHook.h>
+#include <minhook/include/minhook.h>
 #include "nvdaControllerInternal.h"
 #include <common/log.h>
 #include "dllmain.h"
@@ -32,6 +32,15 @@ moduleSet_t g_hookedModules;
 functionSet_t g_hookedFunctions;
 HMODULE minhookLibHandle=NULL;
 bool error_setNHFP=false;
+
+//function pointer typedefs for all minHook functions for use with getProcAddress
+typedef MH_STATUS(WINAPI *MH_Initialize_funcType)();
+typedef MH_STATUS(WINAPI *MH_Uninitialize_funcType)();
+typedef MH_STATUS(WINAPI *MH_CreateHook_funcType)(void*,void*,void**);
+typedef MH_STATUS(WINAPI *MH_EnableHook_funcType)(void*);
+typedef MH_STATUS(WINAPI *MH_DisableHook_funcType)(void*);
+typedef MH_STATUS(*MH_EnableAllHooks_funcType)();
+typedef MH_STATUS(*MH_DisableAllHooks_funcType)();
 
 #define defMHFP(funcName) funcName##_funcType funcName##_fp=NULL
 

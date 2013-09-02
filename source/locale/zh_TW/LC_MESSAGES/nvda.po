@@ -1,11 +1,11 @@
 # Copyright (C) 2006-2010 NVDA Contributors
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-11 19:09+1000\n"
-"PO-Revision-Date: 2013-04-09 22:54+0800\n"
+"PO-Revision-Date: 2013-08-21 22:20+0800\n"
 "Last-Translator: Aaron <waaron2000@yahoo.com>\n"
 "Language-Team: Jerry Wang @ TDTB <wangjanli@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -244,9 +244,8 @@ msgstr "德語二級點字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:66
-#, fuzzy
 msgid "English (U.K.) 8 dot computer braille"
-msgstr "美語八點電腦點字"
+msgstr "英式英語八點電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -406,9 +405,8 @@ msgstr "韓語一級點字"
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: braille.py:147
-#, fuzzy
 msgid "Korean grade 2"
-msgstr "韓語一級點字"
+msgstr "韓語二級點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -486,7 +484,7 @@ msgstr "葡萄牙語二級點字"
 #. braille settings dialog.
 #: braille.py:186
 msgid "Russian braille for computer code"
-msgstr ""
+msgstr "俄語電腦點字"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1267,8 +1265,8 @@ msgstr "目錄窗格"
 msgid "embedded object"
 msgstr "嵌入式物件"
 
-#. Translators: Identifies an end note.
 # 此處依其所在位置翻譯，有別於在微軟 word的譯名，雖然其原文相同。
+#. Translators: Identifies an end note.
 #: controlTypes.py:321
 msgid "end note"
 msgstr "章節附註"
@@ -1911,8 +1909,8 @@ msgstr "輸入說明關閉"
 #. Translators: Input help mode message for toggle input help command.
 #: globalCommands.py:53
 msgid ""
-"Turns input help on or off. When on, any input such as pressing a key on the"
-" keyboard will tell you what script is associated with that input, if any."
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
 msgstr "切換輸入說明開關，若開啟，例如每次按鍵會讀出相對應的按鍵名稱或其功能"
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will
@@ -2134,30 +2132,26 @@ msgstr "瀏覽游標移到鼠標所指的物件並讀出"
 #. Translators: reported when there are no other available review modes for
 #. this object
 #: globalCommands.py:291
-#, fuzzy
 msgid "No next review mode"
-msgstr "簡易瀏覽模式"
+msgstr "沒有下一個檢閱模式"
 
 #: globalCommands.py:292
-#, fuzzy
 msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
-msgstr "在目前畫面或文件啟動平面瀏覽"
+msgstr "選用下一個檢閱模式, 可選用的模式包括物件、文件和螢幕"
 
 #. Translators: reported when there are no  other available review modes for
 #. this object
 #: globalCommands.py:303
-#, fuzzy
 msgid "No previous review mode"
-msgstr "沒有前一個頁框了"
+msgstr "沒有上一個檢閱模式"
 
 #: globalCommands.py:304
-#, fuzzy
 msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
-msgstr "在目前畫面或文件啟動平面瀏覽"
+msgstr "選用上一個檢閱模式, 可選用的模式包括物件、文件和螢幕"
 
 #. Translators: Reported when the user tries to perform a command related to
 #. the navigator object
@@ -2178,10 +2172,11 @@ msgstr "%s已複製到剪貼簿"
 #. command.
 #: globalCommands.py:342
 msgid ""
-"Reports the current navigator object. Pressing twice spells this "
-"information,and pressing three times Copies name and value of this  object "
-"to the clipboard"
-msgstr "讀出目前瀏覽物件的粢訊，連按兩下拼讀物件名稱，連按三下複製物件名稱到剪貼簿"
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
+msgstr ""
+"讀出目前瀏覽物件的粢訊，連按兩下拼讀物件名稱，連按三下複製物件名稱到剪貼簿"
 
 #. Translators: Reported when attempting to find out the navigator object's
 #. dimensions (width, height) but cannot obtain object's location.
@@ -2202,11 +2197,11 @@ msgstr "沒有畫面的位置資訊"
 #: globalCommands.py:363
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of"
-" screen, height is {height:.1f} per cent of screen"
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
 msgstr ""
-"物件與螢幕左邊界距離為百分之{left:.1f}, 語螢幕上邊界距離為百分之{top:.1f}, 寬度為百分之{width:.1f}, "
-"高度為百分之{height:.1f}"
+"物件與螢幕左邊界距離為百分之{left:.1f}, 語螢幕上邊界距離為百分之{top:.1f}, 寬"
+"度為百分之{width:.1f}, 高度為百分之{height:.1f}"
 
 #. Translators: Input help mode message for report object dimensions command.
 #: globalCommands.py:365
@@ -2223,8 +2218,8 @@ msgstr "移到系統焦點"
 #. focus command.
 #: globalCommands.py:378
 msgid ""
-"Sets the navigator object to the current focus, and the review cursor to the"
-" position of the caret inside it, if possible."
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
 msgstr "將瀏覽游標移到目前系統焦點或編輯游標所在位置"
 
 #. Translators: Reported when:
@@ -2336,8 +2331,8 @@ msgstr "瀏覽游標移到第一行，並讀出。"
 #. line command.
 #: globalCommands.py:523
 msgid ""
-"Moves the review cursor to the previous line of the current navigator object"
-" and speaks it"
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
 msgstr "瀏覽游標移到上一行，並讀出。"
 
 #. Translators: Input help mode message for read current line under review
@@ -2362,8 +2357,8 @@ msgstr "到了底部"
 #. command.
 #: globalCommands.py:548
 msgid ""
-"Moves the review cursor to the next line of the current navigator object and"
-" speaks it"
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
 msgstr "瀏覽游標移到下一行，並讀出"
 
 #. Translators: Input help mode message for move review cursor to bottom line
@@ -2378,8 +2373,8 @@ msgstr "瀏覽游標移到最後一行，並讀出。"
 #. word command.
 #: globalCommands.py:572
 msgid ""
-"Moves the review cursor to the previous word of the current navigator object"
-" and speaks it"
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
 msgstr "瀏覽游標移到前一個字詞，並讀出。"
 
 #. Translators: Input help mode message for report current word under review
@@ -2395,8 +2390,8 @@ msgstr "讀出瀏覽游標所在的字詞，連按兩下拼讀字詞，連按三
 #. command.
 #: globalCommands.py:597
 msgid ""
-"Moves the review cursor to the next word of the current navigator object and"
-" speaks it"
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
 msgstr "瀏覽游標移到後一個字詞，並讀出。"
 
 #: globalCommands.py:605 globalCommands.py:618 appModules\totalcmd.py:35
@@ -2427,7 +2422,9 @@ msgid ""
 "cursor is situated. Pressing twice reports a description or example of that "
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
-msgstr "讀出瀏覽游標所在的字元，連按兩下讀出字詞解釋，連按三下讀出字元的十進位值和十六進位值。"
+msgstr ""
+"讀出瀏覽游標所在的字元，連按兩下讀出字詞解釋，連按三下讀出字元的十進位值和十"
+"六進位值。"
 
 #: globalCommands.py:655 globalCommands.py:673 appModules\totalcmd.py:37
 msgid "right"
@@ -2468,8 +2465,8 @@ msgstr "語音模式開啟"
 #. Translators: Input help mode message for toggle speech mode command.
 #: globalCommands.py:695
 msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA"
-" will not speak anything. If beeps then NVDA will simply beep each time it "
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr "切換語音模式，依序是關閉、嗶嗶聲、開啟"
 
@@ -2512,7 +2509,9 @@ msgstr "從目前瀏覽游標所在的文字往後報讀直到結尾，瀏覽游
 msgid ""
 "reads from the system caret up to the end of the text, moving the caret as "
 "it goes"
-msgstr "在可編輯方塊或文件中，從目前游標所在的位置往後讀出直到結尾，編輯游標會跟隨移動。"
+msgstr ""
+"在可編輯方塊或文件中，從目前游標所在的位置往後讀出直到結尾，編輯游標會跟隨移"
+"動。"
 
 #. Translators: Reported when trying to obtain formatting information (such as
 #. font name, indentation and so on) but there is no formatting information
@@ -2569,8 +2568,8 @@ msgstr "沒有標題"
 #: globalCommands.py:855
 msgid ""
 "Reports the title of the current application or foreground window. If "
-"pressed twice, spells the title. If pressed three times, copies the title to"
-" the clipboard"
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
 msgstr "讀出目前視窗標題，連按兩下拼讀標題，連按三下複製標題到剪貼簿。"
 
 #. Translators: Input help mode message for read foreground object command
@@ -2617,7 +2616,9 @@ msgstr "進度列改變時，發出嗶嗶聲並讀出來。"
 msgid ""
 "Toggles between beeps, speech, beeps and speech, and off, for reporting "
 "progress bar updates"
-msgstr "切換進度列改變時的報讀方式，依序包括：每隔某一百分比、發出嗶嗶聲、兩者皆報讀及沒有。"
+msgstr ""
+"切換進度列改變時的報讀方式，依序包括：每隔某一百分比、發出嗶嗶聲、兩者皆報讀"
+"及沒有。"
 
 #. Translators: presented when the present dynamic changes is toggled.
 #: globalCommands.py:901
@@ -2651,8 +2652,7 @@ msgstr "瀏覽游標跟隨編輯游標移動開啟"
 #. command.
 #: globalCommands.py:922
 msgid ""
-"Toggles on and off the movement of the review cursor due to the caret "
-"moving."
+"Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr "切換瀏覽游標跟隨編輯游標移動的開關"
 
 #. Translators: presented when toggled.
@@ -2938,31 +2938,29 @@ msgstr "已重新載入外掛程式"
 #. Translators: Input help mode message for reload plugins command.
 #: globalCommands.py:1152
 msgid ""
-"Reloads app modules and global plugins without restarting NVDA, which can be"
-" Useful for developers"
-msgstr "不需重啟NVDA即可重新載入應用程式模組及通用外掛程式，有利於 NVDA程式開發者"
+"Reloads app modules and global plugins without restarting NVDA, which can be "
+"Useful for developers"
+msgstr ""
+"不需重啟NVDA即可重新載入應用程式模組及通用外掛程式，有利於 NVDA程式開發者"
 
 #. Translators: a message when there is no next object when navigating
 #: globalCommands.py:1172 globalCommands.py:1189
-#, fuzzy
 msgid "no next"
-msgstr "沒有後一個物件了"
+msgstr "沒有下一個物件了"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:1174
-#, fuzzy
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "將瀏覽游標移到其母物件"
+msgstr "將瀏覽游標移到並讀出下一個項目"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:1191
-#, fuzzy
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "將瀏覽游標移到其母物件"
+msgstr "將瀏覽游標移到並讀出上一個項目"
 
 #: globalCommands.py:1199
 #, python-format
@@ -3444,19 +3442,16 @@ msgid "NVDA Python Console"
 msgstr "NVDA Python主控台"
 
 #: review.py:68
-#, fuzzy
 msgid "Object review"
-msgstr "樹狀檢視"
+msgstr "物件瀏覽"
 
 #: review.py:69
-#, fuzzy
 msgid "Document review"
-msgstr "文件格式"
+msgstr "文件瀏覽"
 
 #: review.py:70
-#, fuzzy
 msgid "Screen review"
-msgstr "樹狀檢視"
+msgstr "螢幕瀏覽"
 
 #: scriptHandler.py:33
 #, python-format
@@ -3861,13 +3856,17 @@ msgstr "安裝更新"
 #: updateCheck.py:379
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "我們需要您的贊助來持續改善NVDA，此專案主要依賴捐款及補助計畫。\n"
-"針對捐款，您可幫忙贊助一為全職的開發人員。即使每次下載就有美金十元的捐款，我門就可負擔所有接下來專案的費用。\n"
+"針對捐款，您可幫忙贊助一為全職的開發人員。即使每次下載就有美金十元的捐款，我"
+"門就可負擔所有接下來專案的費用。\n"
 "所有的捐款皆由 NV Access 收取，他是一個非營利組織主要負責開發NVDA。\n"
 "非常感謝您的支持。"
 
@@ -3914,24 +3913,37 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"{name} is developed by NV Access, a non-profit organisation committed to "
+"helping and promoting free and open source solutions for blind and vision "
+"impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider "
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "{longName} ({name})\n"
 "Version: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} 受 GNU 通用公共授權條款第二版所規範. 您可以自由分享或以任何方式修改本軟體, 前提是發布時必需包含該許可證, 同時公開原版與修改版的原始碼, 並加上任何用本軟體的原始碼所創造的軟體.\n"
+"{name} 受 GNU 通用公共授權條款第二版所規範. 您可以自由分享或以任何方式修改本"
+"軟體, 前提是發布時必需包含該許可證, 同時公開原版與修改版的原始碼, 並加上任何"
+"用本軟體的原始碼所創造的軟體.\n"
 "關於許可證的細節可以參考以下網頁:\n"
 "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
 "\n"
-"{name} 是由NV Access所開發。NV Access是一個致力於推廣視障者用自由開放軟體的非營利組織。\n"
-"若您覺得NVDA很實用，並且希望它繼續進步，請贊助 NV Access。您可選擇 [NVDA功能表] 中的 [連結至贊助NVDA英文網頁] 選項，即可開啟捐款頁面。"
+"{name} 是由NV Access所開發。NV Access是一個致力於推廣視障者用自由開放軟體的非"
+"營利組織。\n"
+"若您覺得NVDA很實用，並且希望它繼續進步，請贊助 NV Access。您可選擇 [NVDA功能"
+"表] 中的 [連結至贊助NVDA英文網頁] 選項，即可開啟捐款頁面。"
 
 #. Translators: a message announcing a candidate's character and description.
 #: NVDAObjects\behaviors.py:361
@@ -4340,7 +4352,9 @@ msgid ""
 "Toggles between reporting the speaker notes or the actual slide content. "
 "This does not change what is visible on-screen, but only what the user can "
 "read with NVDA"
-msgstr "切換讀出演講者備忘稿或實際投影片內容。此動作不影響螢幕上的視覺操作，只用於NVDA的報讀"
+msgstr ""
+"切換讀出演講者備忘稿或實際投影片內容。此動作不影響螢幕上的視覺操作，只用於"
+"NVDA的報讀"
 
 #. Translators: The title of the current slide (with notes) in a running Slide
 #. Show in Microsoft PowerPoint.
@@ -4541,7 +4555,7 @@ msgstr "無法儲存設定，可能是NVDA程式位於唯讀的檔案系統所�
 #. settings when general settings dialog is open).
 #: gui\__init__.py:164
 msgid "An NVDA settings dialog is already open. Please close it first."
-msgstr ""
+msgstr "另一個 NVDA 設定對話方塊已打開。請先把它關閉。"
 
 #. Translators: Title for default speech dictionary dialog.
 #: gui\__init__.py:169
@@ -4711,8 +4725,8 @@ msgstr "暫存字庫...(&T)"
 
 #: gui\__init__.py:337
 msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries"
-" to the edit box"
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
 msgstr "開啟暫存字庫的對話方塊，可新增項目至清單中。"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select
@@ -4859,15 +4873,19 @@ msgstr "結束(&X)"
 #: gui\__init__.py:509
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
 msgstr ""
 "歡迎使用 NVDA！\n"
 "多數的 NVDA 的按鍵指令需要同時按住一個 NVDA 鍵及其它的一個按鍵。\n"
-"所謂的 NVDA 鍵是指主鍵盤上的 insert 鍵和數字鍵盤的0（也是 insert 鍵），其預設狀態均是啟用。\n"
+"所謂的 NVDA 鍵是指主鍵盤上的 insert 鍵和數字鍵盤的0（也是 insert 鍵），其預設"
+"狀態均是啟用。\n"
 "您也可將 Caps Lock 設定為 NVDA 鍵。\n"
 "你可隨時按 NVDA+n 開啟 NVDA 的功能表，\n"
 "此功能表可讓你設定 NVDA 的各種選項、取得開發工具相關資訊及使用說明等資訊。\n"
@@ -4906,10 +4924,13 @@ msgstr "每當NVDA啟動時顯示此對話方塊"
 #: gui\__init__.py:572
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
 msgstr ""
 "您的程式設定檔有誤，\n"
-"可按'OK'修正這些錯誤，或按'Cancel'，然後手動編輯設定檔以修正這些錯誤。有關此錯誤更進一步的資訊請參閱程式記錄檔(log file)。\n"
+"可按'OK'修正這些錯誤，或按'Cancel'，然後手動編輯設定檔以修正這些錯誤。有關此"
+"錯誤更進一步的資訊請參閱程式記錄檔(log file)。\n"
 
 #. Translators: The title of the dialog to tell users that there are erros in
 #. the configuration file.
@@ -5009,9 +5030,8 @@ msgstr "移除(&R)"
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons
 #. website and get more add-ons.
 #: gui\addonGui.py:65
-#, fuzzy
 msgid "&Get add-ons..."
-msgstr "關於附加元件...(&A)"
+msgstr "獲取附加元件...(&G)"
 
 #. Translators: The message displayed in the dialog that allows you to choose
 #. an add-on package for installation.
@@ -5038,7 +5058,8 @@ msgstr "在%s開啟附加元件失敗 - 檔案遺失或無效的檔案格式"
 #. addon.
 #: gui\addonGui.py:105
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
@@ -5172,7 +5193,8 @@ msgid ""
 "NVDA may be running on another logged-on user account. Please make sure all "
 "installed copies of NVDA are shut down and try the installation again."
 msgstr ""
-"已安裝的程式無法被移除或覆蓋檔案，因有另一個NVDA程式可能會在另一個登入中的使用者帳戶上執行。請先確認所有已安裝的NVDA程式均已關閉，再試著安裝。"
+"已安裝的程式無法被移除或覆蓋檔案，因有另一個NVDA程式可能會在另一個登入中的使"
+"用者帳戶上執行。請先確認所有已安裝的NVDA程式均已關閉，再試著安裝。"
 
 #. Translators: the title of a retry cancel dialog when NVDA installation
 #. fails
@@ -5459,8 +5481,8 @@ msgstr "在登入畫面啟用 NVDA(需要系統管理員權限)"
 #. secure screens such as User Account Control (UAC) dialog).
 #: gui\settingsDialogs.py:184
 msgid ""
-"Use currently saved settings on the logon and other secure screens (requires"
-" administrator privileges)"
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
 msgstr "將目前儲存的設定套用到登入或其他安全畫面(需要系統管理員權限)"
 
 #. Translators: The label of a checkbox in general settings to toggle
@@ -5477,7 +5499,9 @@ msgid ""
 "Custom plugins were detected in your user settings directory. Copying these "
 "to the system profile could be a security risk. Do you still wish to copy "
 "your settings?"
-msgstr "在使用者設定目錄中偵測到自訂外掛程式，複製這些到系統設定資料夾內，可能導致安全上的風險，是否仍要複製此設定？"
+msgstr ""
+"在使用者設定目錄中偵測到自訂外掛程式，複製這些到系統設定資料夾內，可能導致安"
+"全上的風險，是否仍要複製此設定？"
 
 #. Translators: The title of the warning dialog displayed when trying to copy
 #. settings for use in secure screens.
@@ -5501,8 +5525,8 @@ msgstr "正在將設定複製到系統設定檔，請稍候。"
 #. settings  fails
 #: gui\settingsDialogs.py:224
 msgid ""
-"Unable to copy a file. Perhaps it is currently being used by another process"
-" or you have run out of disc space on the drive you are copying to."
+"Unable to copy a file. Perhaps it is currently being used by another process "
+"or you have run out of disc space on the drive you are copying to."
 msgstr "無法複製檔案，此檔案可能正被其他程序使用或磁碟的可用儲存空間不足。"
 
 #. Translators: the title of a retry cancel dialog when copying settings
@@ -5547,7 +5571,9 @@ msgid ""
 "For the new language to take effect, the configuration must be saved and "
 "NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
 "manually save and exit at a later time."
-msgstr "為了讓新設定的語言生效， 須儲存設定及重新啟動。 請按Enter鍵，或按取消，手動儲存並重新啟動NVDA。"
+msgstr ""
+"為了讓新設定的語言生效， 須儲存設定及重新啟動。 請按Enter鍵，或按取消，手動儲"
+"存並重新啟動NVDA。"
 
 #. Translators: The title of the dialog which appears when the user changed
 #. NVDA's interface language.
@@ -5935,9 +5961,8 @@ msgstr "頁面載入時，自動讀出全部內容(&S)"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 #: gui\settingsDialogs.py:933
-#, fuzzy
 msgid "Include l&ayout tables"
-msgstr "讀出排版表格(&A)"
+msgstr "報出排版表格(&A)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -6026,7 +6051,7 @@ msgstr "讀出第幾行(&L)"
 #. dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of
 #. a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1034
 msgid "Report l&ine indentation"
 msgstr "讀出行縮排(&I)"
@@ -6286,8 +6311,10 @@ msgstr "等級(&L)"
 #. Translators: Information about NVDA's new laptop keyboard layout.
 #: gui\upgradeAlerts.py:18
 msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more information."
+"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
+"order to make it more intuitive and consistent.\n"
+"If you use the laptop layout, please see the What's New document for more "
+"information."
 msgstr ""
 "在 NVDA 2013.1，為了使筆記型電腦的鍵盤配置更加直覺和一致，已徹底重新設計。\n"
 "若您需要使用筆記型電腦的鍵盤配置，請參閱\"新版資訊\"文件以取得更多訊息"
@@ -6438,15 +6465,13 @@ msgstr "更新文件內容"
 
 #. Translators: Presented when use screen layout option is toggled.
 #: virtualBuffers\__init__.py:862
-#, fuzzy
 msgid "use screen layout on"
-msgstr "使用螢幕實際配置%s"
+msgstr "使用螢幕實際配置"
 
 #. Translators: Presented when use screen layout option is toggled.
 #: virtualBuffers\__init__.py:865
-#, fuzzy
 msgid "use screen layout off"
-msgstr "使用螢幕實際配置%s"
+msgstr "不使用螢幕實際配置"
 
 #. Translators: the description for the toggleScreenLayout script on
 #. virtualBuffers.
@@ -7234,8 +7259,8 @@ msgstr "HIMS SyncBraille"
 #~ msgstr "在此平面瀏覽位置沒有物件"
 
 #~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the position"
-#~ " of the review cursor within flat review"
+#~ "Moves navigator object to the object represented by the text at the "
+#~ "position of the review cursor within flat review"
 #~ msgstr "從平面瀏覽將瀏覽游標移回到目前所指物件的文字"
 
 #~ msgid "Please close the other NVDA settings dialog first"
@@ -7279,8 +7304,8 @@ msgstr "HIMS SyncBraille"
 #~ msgstr "第%s項共%s項"
 
 #~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-on"
-#~ " and try again."
+#~ "This add-on seems to already be installed. Please remove the existing add-"
+#~ "on and try again."
 #~ msgstr "此附加元件似乎已經安裝了，請移除現有的附加元件後，再試著安裝。"
 
 #~ msgid "loads the saved NVDA configuration, overriding current changes"
