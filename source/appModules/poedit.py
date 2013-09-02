@@ -73,15 +73,14 @@ class AppModule(appModuleHandler.AppModule):
 				ui.message(obj.name + " " + obj.value)
 			except:
 				# Translators: this message is reported when there are no 
-				# comments to be presented to the user in the automatic 
-				# comments window in poedit.
-				ui.message(_("No automatic comments."))
+				# notes for translators to be presented to the user in Poedit.
+				ui.message(_("No notes for translators."))
 		else:
 			# Translators: this message is reported when NVDA is unable to find 
-			# the 'automatic comments' window in poedit.
-			ui.message(_("Could not find automatic comments window."))
+			# the 'Notes for translators' window in poedit.
+			ui.message(_("Could not find Notes for translators window."))
 	# Translators: The description of an NVDA command for Poedit.
-	script_reportAutoCommentsWindow.__doc__ = _("Reports any comments in the automatic comments window")
+	script_reportAutoCommentsWindow.__doc__ = _("Reports any notes for translators")
 
 	def script_reportCommentsWindow(self,gesture):
 		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 1, 0])
