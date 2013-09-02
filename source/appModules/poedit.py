@@ -15,6 +15,9 @@ import textInfos
 import tones
 import ui
 from NVDAObjects.IAccessible import sysListView32
+import windowUtils
+import NVDAObjects.IAccessible
+import winUser
 
 
 def getPath(obj, ancestor):
@@ -83,23 +86,22 @@ class AppModule(appModuleHandler.AppModule):
 	script_reportAutoCommentsWindow.__doc__ = _("Reports any notes for translators")
 
 	def script_reportCommentsWindow(self,gesture):
-		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 1, 0])
-		# if it isnt in the normal location, try to find it in the
-		# location of the automatic window.
-		if not obj: 
-			obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 0, 0])
-		if obj and obj.windowControlID == 105:
-			try:
-				ui.message(obj.name + " " + obj.value)
-			except:
-				# Translators: this message is reported when there are no
-				# comments to be presented to the user in the translator
-				# comments window in poedit.
-				ui.message(_("No comment."))
-		else:
+		try:
+			obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
+				windowUtils.findDescendantWindow(api.getForegroundObject().windowHandle, visible=True, controlID=104),
+				winUser.OBJID_CLIENT, 0)
+		except LookupError:
 			# Translators: this message is reported when NVDA is unable to find
 			# the 'comments' window in poedit.
 			ui.message(_("Could not find comment window."))
+			return None
+		try:
+			ui.message(obj.name + " " + obj.value)
+		except:
+			# Translators: this message is reported when there are no
+			# comments to be presented to the user in the translator
+			# comments window in poedit.
+			ui.message(_("No comment."))
 	# Translators: The description of an NVDA command for Poedit.
 	script_reportAutoCommentsWindow.__doc__ = _("Reports any comments in the comments window")
 
