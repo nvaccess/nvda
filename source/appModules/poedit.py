@@ -1,6 +1,6 @@
 #appModules/poedit.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012 Mesar Hameed <mhameed@src.gnome.org>
+#Copyright (C) 2012-2013 Mesar Hameed, NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -130,10 +130,10 @@ class PoeditListItem(sysListView32.ListItem):
 
 	def _get_isBold(self):
 		info=displayModel.DisplayModelTextInfo(self,position=textInfos.POSITION_FIRST)
-		info.expand(textInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_CHARACTER)
 		fields=info.getTextWithFields()
 		try:
-			return fields[1].field['bold']
+			return fields[0].field['bold']
 		except:
 			return False
 
