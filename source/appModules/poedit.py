@@ -68,10 +68,15 @@ def fetchObject(obj, path):
 class AppModule(appModuleHandler.AppModule):
 
 	def script_reportAutoCommentsWindow(self,gesture):
-		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 0, 0])
-		# check the controlid, because in certain situations 
-		# autoComments and comment windows change places.
-		if obj and obj.windowControlID == 102:
+		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 1])
+		if obj and obj.windowControlID != 101:
+			try:
+				obj = obj.next.firstChild
+			except AttributeError:
+				obj = None
+		elif obj:
+			obj = obj.firstChild
+		if obj:
 			try:
 				ui.message(obj.name + " " + obj.value)
 			except:
