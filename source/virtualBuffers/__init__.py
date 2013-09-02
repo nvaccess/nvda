@@ -564,6 +564,9 @@ class ElementsListDialog(wx.Dialog):
 
 class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInterceptor):
 
+	# Translators: the script category for browse mode
+	scriptCategory=_("Browse mode")
+
 	REASON_QUICKNAV = "quickNav"
 
 	TextInfo=VirtualBufferTextInfo
