@@ -113,19 +113,17 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if "SysListView32" in obj.windowClassName and obj.role==controlTypes.ROLE_LISTITEM:
 			clsList.insert(0,PoeditListItem)
-		if obj.role == controlTypes.ROLE_EDITABLETEXT:
-			if obj.windowControlID == 102:
-				# Translators: Automatic comments is the name of the poedit 
-				# window that displays comments extracted from code.
-				obj.name =  _("Automatic comments:")
-			if obj.windowControlID == 104:
-				# Translators: this is the label for the edit area in poedit 
-				# that contains a translation.
-				obj.name = _("Translation:")
-			if obj.windowControlID == 105:
-				# Translators: 'comments:' is the name of the poedit window 
-				# that displays comments entered by the translator.
-				obj.name = _("Comments:")
+
+	def event_NVDAObject_init(self, obj):
+		if obj.role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE in obj.states and obj.isInForeground:
+			# Oleacc often gets the name wrong.
+			# The label object is positioned just above the field on the screen.
+			l, t, w, h = obj.location
+			try:
+				obj.name = NVDAObjects.NVDAObject.objectFromPoint(l + 10, t - 10).name
+			except AttributeError:
+				pass
+			return
 
 class PoeditListItem(sysListView32.ListItem):
 
