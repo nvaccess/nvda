@@ -1036,6 +1036,11 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for apply last saved or default settings command.
 	script_revertConfiguration.__doc__ = _("Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults.")
 
+	def script_activateInputGesturesDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
+	# Translators: Input help mode message for go to Input Gestures dialog command.
+	script_activateInputGesturesDialog.__doc__ = _("Shows the NVDA input gestures dialog")
+
 	def script_activatePythonConsole(self,gesture):
 		if globalVars.appArgs.secure:
 			return
@@ -1356,6 +1361,7 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+o": "activateObjectPresentationDialog",
 		"kb:NVDA+control+b": "activateBrowseModeDialog",
 		"kb:NVDA+control+d": "activateDocumentFormattingDialog",
+		"kb:NVDA+control+i": "activateInputGesturesDialog",
 
 		# Save/reload configuration
 		"kb:NVDA+control+c": "saveConfiguration",
