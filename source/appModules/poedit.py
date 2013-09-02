@@ -1,6 +1,6 @@
 #appModules/poedit.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012 Mesar Hameed <mhameed@src.gnome.org>
+#Copyright (C) 2012-2013 Mesar Hameed, NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -15,6 +15,9 @@ import textInfos
 import tones
 import ui
 from NVDAObjects.IAccessible import sysListView32
+import windowUtils
+import NVDAObjects.IAccessible
+import winUser
 
 
 def getPath(obj, ancestor):
@@ -65,44 +68,47 @@ def fetchObject(obj, path):
 class AppModule(appModuleHandler.AppModule):
 
 	def script_reportAutoCommentsWindow(self,gesture):
-		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 0, 0])
-		# check the controlid, because in certain situations 
-		# autoComments and comment windows change places.
-		if obj and obj.windowControlID == 102:
+		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 1])
+		if obj and obj.windowControlID != 101:
+			try:
+				obj = obj.next.firstChild
+			except AttributeError:
+				obj = None
+		elif obj:
+			obj = obj.firstChild
+		if obj:
 			try:
 				ui.message(obj.name + " " + obj.value)
 			except:
 				# Translators: this message is reported when there are no 
-				# comments to be presented to the user in the automatic 
-				# comments window in poedit.
-				ui.message(_("No automatic comments."))
+				# notes for translators to be presented to the user in Poedit.
+				ui.message(_("No notes for translators."))
 		else:
 			# Translators: this message is reported when NVDA is unable to find 
-			# the 'automatic comments' window in poedit.
-			ui.message(_("Could not find automatic comments window."))
+			# the 'Notes for translators' window in poedit.
+			ui.message(_("Could not find Notes for translators window."))
 	# Translators: The description of an NVDA command for Poedit.
-	script_reportAutoCommentsWindow.__doc__ = _("Reports any comments in the automatic comments window")
+	script_reportAutoCommentsWindow.__doc__ = _("Reports any notes for translators")
 
 	def script_reportCommentsWindow(self,gesture):
-		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 1, 0])
-		# if it isnt in the normal location, try to find it in the
-		# location of the automatic window.
-		if not obj: 
-			obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 0, 0])
-		if obj and obj.windowControlID == 105:
-			try:
-				ui.message(obj.name + " " + obj.value)
-			except:
-				# Translators: this message is reported when there are no
-				# comments to be presented to the user in the translator
-				# comments window in poedit.
-				ui.message(_("No comment."))
-		else:
+		try:
+			obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
+				windowUtils.findDescendantWindow(api.getForegroundObject().windowHandle, visible=True, controlID=104),
+				winUser.OBJID_CLIENT, 0)
+		except LookupError:
 			# Translators: this message is reported when NVDA is unable to find
 			# the 'comments' window in poedit.
 			ui.message(_("Could not find comment window."))
+			return None
+		try:
+			ui.message(obj.name + " " + obj.value)
+		except:
+			# Translators: this message is reported when there are no
+			# comments to be presented to the user in the translator
+			# comments window in poedit.
+			ui.message(_("No comment."))
 	# Translators: The description of an NVDA command for Poedit.
-	script_reportAutoCommentsWindow.__doc__ = _("Reports any comments in the comments window")
+	script_reportCommentsWindow.__doc__ = _("Reports any comments in the comments window")
 
 	__gestures = {
 		"kb:control+shift+c": "reportCommentsWindow",
@@ -112,28 +118,26 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if "SysListView32" in obj.windowClassName and obj.role==controlTypes.ROLE_LISTITEM:
 			clsList.insert(0,PoeditListItem)
-		if obj.role == controlTypes.ROLE_EDITABLETEXT:
-			if obj.windowControlID == 102:
-				# Translators: Automatic comments is the name of the poedit 
-				# window that displays comments extracted from code.
-				obj.name =  _("Automatic comments:")
-			if obj.windowControlID == 104:
-				# Translators: this is the label for the edit area in poedit 
-				# that contains a translation.
-				obj.name = _("Translation:")
-			if obj.windowControlID == 105:
-				# Translators: 'comments:' is the name of the poedit window 
-				# that displays comments entered by the translator.
-				obj.name = _("Comments:")
+
+	def event_NVDAObject_init(self, obj):
+		if obj.role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE in obj.states and obj.isInForeground:
+			# Oleacc often gets the name wrong.
+			# The label object is positioned just above the field on the screen.
+			l, t, w, h = obj.location
+			try:
+				obj.name = NVDAObjects.NVDAObject.objectFromPoint(l + 10, t - 10).name
+			except AttributeError:
+				pass
+			return
 
 class PoeditListItem(sysListView32.ListItem):
 
 	def _get_isBold(self):
 		info=displayModel.DisplayModelTextInfo(self,position=textInfos.POSITION_FIRST)
-		info.expand(textInfos.UNIT_LINE)
+		info.expand(textInfos.UNIT_CHARACTER)
 		fields=info.getTextWithFields()
 		try:
-			return fields[1].field['bold']
+			return fields[0].field['bold']
 		except:
 			return False
 
