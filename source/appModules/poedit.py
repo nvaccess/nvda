@@ -108,7 +108,7 @@ class AppModule(appModuleHandler.AppModule):
 			# comments window in poedit.
 			ui.message(_("No comment."))
 	# Translators: The description of an NVDA command for Poedit.
-	script_reportAutoCommentsWindow.__doc__ = _("Reports any comments in the comments window")
+	script_reportCommentsWindow.__doc__ = _("Reports any comments in the comments window")
 
 	__gestures = {
 		"kb:control+shift+c": "reportCommentsWindow",
