@@ -33,6 +33,9 @@ SCRCAT_KBEMU = _("Emulated system keyboard keys")
 #: Script category for miscellaneous commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_MISC = _("Miscellaneous")
+#: Script category for Browse Mode  commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_BROWSEMODE = _("Browse mode")
 
 class NoInputGestureAction(LookupError):
 	"""Informs that there is no action to execute for a gesture.

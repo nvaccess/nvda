@@ -724,6 +724,7 @@ class GlobalCommands(ScriptableObject):
 		virtualBuffers.reportPassThrough(vbuf)
 	# Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 	script_toggleVirtualBufferPassThrough.__doc__=_("Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.")
+	script_toggleVirtualBufferPassThrough.category=inputCore.SCRCAT_BROWSEMODE
 
 	def script_quit(self,gesture):
 		gui.quit()
