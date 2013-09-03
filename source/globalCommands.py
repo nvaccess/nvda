@@ -49,6 +49,27 @@ SCRCAT_SYSTEMCARET = _("System caret")
 #: Script category for mouse commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_MOUSE = _("Mouse")
+#: Script category for mouse commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_SPEECH = _("Speech")
+#: Script category for configuration dialogs commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_CONFIG = _("Configuration")
+#: Script category for Braille commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_BRAILLE = _("Braille")
+#: Script category for tools commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_TOOLS = _("Tools")
+#: Script category for touch commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_TOUCH = _("Touch screen")
+#: Script category for focus commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_FOCUS = _("System focus")
+#: Script category for system status  commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_SYSTEM = _("System status")
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -169,6 +190,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(text)
 	# Translators: Input help mode message for report date and time command.
 	script_dateTime.__doc__=_("If pressed once, reports the current time. If pressed twice, reports the current date")
+	script_dateTime.category=SCRCAT_SYSTEM
 
 	def script_increaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
@@ -180,6 +202,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (settingName,settingValue))
 	# Translators: Input help mode message for increase synth setting value command.
 	script_increaseSynthSetting.__doc__=_("Increases the currently active setting in the synth settings ring")
+	script_increaseSynthSetting.category=SCRCAT_SPEECH
 
 	def script_decreaseSynthSetting(self,gesture):
 		settingName=globalVars.settingsRing.currentSettingName
@@ -190,6 +213,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (settingName,settingValue))
 	# Translators: Input help mode message for decrease synth setting value command.
 	script_decreaseSynthSetting.__doc__=_("Decreases the currently active setting in the synth settings ring")
+	script_decreaseSynthSetting.category=SCRCAT_SPEECH
 
 	def script_nextSynthSetting(self,gesture):
 		nextSettingName=globalVars.settingsRing.next()
@@ -200,6 +224,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s"%(nextSettingName,nextSettingValue))
 	# Translators: Input help mode message for next synth setting command.
 	script_nextSynthSetting.__doc__=_("Moves to the next available setting in the synth settings ring")
+	script_nextSynthSetting.category=SCRCAT_SPEECH
 
 	def script_previousSynthSetting(self,gesture):
 		previousSettingName=globalVars.settingsRing.previous()
@@ -210,6 +235,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s"%(previousSettingName,previousSettingValue))
 	# Translators: Input help mode message for previous synth setting command.
 	script_previousSynthSetting.__doc__=_("Moves to the previous available setting in the synth settings ring")
+	script_previousSynthSetting.category=SCRCAT_SPEECH
 
 	def script_toggleSpeakTypedCharacters(self,gesture):
 		if config.conf["keyboard"]["speakTypedCharacters"]:
@@ -223,6 +249,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 	# Translators: Input help mode message for toggle speaked typed characters command.
 	script_toggleSpeakTypedCharacters.__doc__=_("Toggles on and off the speaking of typed characters")
+	script_toggleSpeakTypedCharacters.category=SCRCAT_SPEECH
 
 	def script_toggleSpeakTypedWords(self,gesture):
 		if config.conf["keyboard"]["speakTypedWords"]:
@@ -236,6 +263,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 	# Translators: Input help mode message for toggle speak typed words command.
 	script_toggleSpeakTypedWords.__doc__=_("Toggles on and off the speaking of typed words")
+	script_toggleSpeakTypedWords.category=SCRCAT_SPEECH
 
 	def script_toggleSpeakCommandKeys(self,gesture):
 		if config.conf["keyboard"]["speakCommandKeys"]:
@@ -249,6 +277,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 	# Translators: Input help mode message for toggle speak command keys command.
 	script_toggleSpeakCommandKeys.__doc__=_("Toggles on and off the speaking of typed keys, that are not specifically characters")
+	script_toggleSpeakCommandKeys.category=SCRCAT_SPEECH
 
 	def script_cycleSpeechSymbolLevel(self,gesture):
 		curLevel = config.conf["speech"]["symbolLevel"]
@@ -265,6 +294,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("symbol level %s") % name)
 	# Translators: Input help mode message for cycle speech symbol level command.
 	script_cycleSpeechSymbolLevel.__doc__=_("Cycles through speech symbol levels which determine what symbols are spoken")
+	script_cycleSpeechSymbolLevel.category=SCRCAT_SPEECH
 
 	def script_moveMouseToNavigatorObject(self,gesture):
 		obj=api.getNavigatorObject() 
@@ -311,6 +341,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: reported when there are no other available review modes for this object 
 			ui.message(_("No next review mode"))
 	script_reviewMode_next.__doc__=_("Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object")
+	script_reviewMode_next.category=SCRCAT_TEXTREVIEW
 
 	def script_reviewMode_previous(self,gesture):
 		label=review.nextMode(prev=True)
@@ -323,6 +354,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: reported when there are no  other available review modes for this object 
 			ui.message(_("No previous review mode"))
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
+	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW
 
 	def script_navigatorObject_current(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -736,6 +768,7 @@ class GlobalCommands(ScriptableObject):
 		speech.speechMode=newMode
 	# Translators: Input help mode message for toggle speech mode command.
 	script_speechMode.__doc__=_("Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally.")
+	script_speechMode.category=SCRCAT_SPEECH
 
 	def script_moveToParentTreeInterceptor(self,gesture):
 		obj=api.getFocusObject()
@@ -754,6 +787,7 @@ class GlobalCommands(ScriptableObject):
 			wx.CallLater(50,eventHandler.executeEvent,"gainFocus",parent.treeInterceptor.rootNVDAObject)
 	# Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 	script_moveToParentTreeInterceptor.__doc__=_("Moves the focus to the next closest document that contains the focus")
+	script_moveToParentTreeInterceptor.category=SCRCAT_FOCUS
 
 	def script_toggleVirtualBufferPassThrough(self,gesture):
 		vbuf = api.getFocusObject().treeInterceptor
@@ -840,6 +874,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakMessage(_("no focus"))
 	# Translators: Input help mode message for report current focus command.
 	script_reportCurrentFocus.__doc__ = _("reports the object with focus")
+	script_reportCurrentFocus.category=SCRCAT_FOCUS
 
 	def script_reportStatusLine(self,gesture):
 		obj = api.getStatusBar()
@@ -868,6 +903,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakSpelling(text)
 	# Translators: Input help mode message for report status line text command.
 	script_reportStatusLine.__doc__ = _("reads the current application status bar and moves the navigator to it")
+	script_reportStatusLine.category=SCRCAT_FOCUS
 
 	def script_toggleMouseTracking(self,gesture):
 		if config.conf["mouse"]["enableMouseTracking"]:
@@ -901,6 +937,7 @@ class GlobalCommands(ScriptableObject):
 				ui.message(_("%s copied to clipboard")%title)
 	# Translators: Input help mode message for report title bar command.
 	script_title.__doc__=_("Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard")
+	script_title.category=SCRCAT_FOCUS
 
 	def script_speakForeground(self,gesture):
 		obj=api.getForegroundObject()
@@ -908,6 +945,7 @@ class GlobalCommands(ScriptableObject):
 			sayAllHandler.readObjects(obj)
 	# Translators: Input help mode message for read foreground object command (usually the foreground window).
 	script_speakForeground.__doc__ = _("speaks the current foreground object")
+	script_speakForeground.category=SCRCAT_FOCUS
 
 	def script_test_navigatorDisplayModelText(self,gesture):
 		obj=api.getNavigatorObject()
@@ -920,6 +958,7 @@ class GlobalCommands(ScriptableObject):
 		log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo), activateLogViewer=True)
 	# Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 	script_navigatorObject_devInfo.__doc__ = _("Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined.")
+	script_navigatorObject_devInfo.category=SCRCAT_TOOLS
 
 	def script_toggleProgressBarOutput(self,gesture):
 		outputMode=config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]
@@ -1005,6 +1044,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(text)
 	# Translators: Input help mode message for report battery status command.
 	script_say_battery_status.__doc__ = _("reports battery status and time remaining if AC is not plugged in")
+	script_say_battery_status.category=SCRCAT_SYSTEM
 
 	def script_passNextKeyThrough(self,gesture):
 		keyboardHandler.passNextKeyThrough()
@@ -1029,51 +1069,62 @@ class GlobalCommands(ScriptableObject):
 		ui.message(message)
 	# Translators: Input help mode message for report current program name and app module name command.
 	script_reportAppModuleInfo.__doc__ = _("Speaks the filename of the active application along with the name of the currently loaded appModule")
+	script_reportAppModuleInfo.category=SCRCAT_TOOLS
 
 	def script_activateGeneralSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onGeneralSettingsCommand, None)
 	# Translators: Input help mode message for go to general settings dialog command.
 	script_activateGeneralSettingsDialog.__doc__ = _("Shows the NVDA general settings dialog")
+	script_activateGeneralSettingsDialog.category=SCRCAT_CONFIG
+
 
 	def script_activateSynthesizerDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onSynthesizerCommand, None)
 	# Translators: Input help mode message for go to synthesizer dialog command.
 	script_activateSynthesizerDialog.__doc__ = _("Shows the NVDA synthesizer dialog")
+	script_activateSynthesizerDialog.category=SCRCAT_CONFIG
 
 	def script_activateVoiceDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onVoiceCommand, None)
 	# Translators: Input help mode message for go to voice settings dialog command.
 	script_activateVoiceDialog.__doc__ = _("Shows the NVDA voice settings dialog")
+	script_activateVoiceDialog.category=SCRCAT_CONFIG
 
 	def script_activateKeyboardSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onKeyboardSettingsCommand, None)
 	# Translators: Input help mode message for go to keyboard settings dialog command.
 	script_activateKeyboardSettingsDialog.__doc__ = _("Shows the NVDA keyboard settings dialog")
+	script_activateKeyboardSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateMouseSettingsDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onMouseSettingsCommand, None)
 	# Translators: Input help mode message for go to mouse settings dialog command.
 	script_activateMouseSettingsDialog.__doc__ = _("Shows the NVDA mouse settings dialog")
+	script_activateMouseSettingsDialog.category=SCRCAT_CONFIG
 
 	def script_activateObjectPresentationDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame. onObjectPresentationCommand, None)
 	# Translators: Input help mode message for go to object presentation dialog command.
 	script_activateObjectPresentationDialog.__doc__ = _("Shows the NVDA object presentation settings dialog")
+	script_activateObjectPresentationDialog.category=SCRCAT_CONFIG
 
 	def script_activateBrowseModeDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onBrowseModeCommand, None)
 	# Translators: Input help mode message for go to browse mode dialog command.
 	script_activateBrowseModeDialog.__doc__ = _("Shows the NVDA browse mode settings dialog")
+	script_activateBrowseModeDialog.category=SCRCAT_CONFIG
 
 	def script_activateDocumentFormattingDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 	# Translators: Input help mode message for go to document formatting dialog command.
 	script_activateDocumentFormattingDialog.__doc__ = _("Shows the NVDA document formatting settings dialog")
+	script_activateDocumentFormattingDialog.category=SCRCAT_CONFIG
 
 	def script_saveConfiguration(self,gesture):
 		wx.CallAfter(gui.mainFrame.onSaveConfigurationCommand, None)
 	# Translators: Input help mode message for save current configuration command.
 	script_saveConfiguration.__doc__ = _("Saves the current NVDA configuration")
+	script_saveConfiguration.category=SCRCAT_CONFIG
 
 	def script_revertConfiguration(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -1083,11 +1134,13 @@ class GlobalCommands(ScriptableObject):
 			gui.mainFrame.onRevertToDefaultConfigurationCommand(None)
 	# Translators: Input help mode message for apply last saved or default settings command.
 	script_revertConfiguration.__doc__ = _("Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults.")
+	script_revertConfiguration.category=SCRCAT_CONFIG
 
 	def script_activateInputGesturesDialog(self, gesture):
 		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
 	# Translators: Input help mode message for go to Input Gestures dialog command.
 	script_activateInputGesturesDialog.__doc__ = _("Shows the NVDA input gestures dialog")
+	script_activateInputGesturesDialog.category=SCRCAT_CONFIG
 
 	def script_activatePythonConsole(self,gesture):
 		if globalVars.appArgs.secure:
@@ -1099,6 +1152,7 @@ class GlobalCommands(ScriptableObject):
 		pythonConsole.activate()
 	# Translators: Input help mode message for activate python console command.
 	script_activatePythonConsole.__doc__ = _("Activates the NVDA Python Console, primarily useful for development")
+	script_activatePythonConsole.category=SCRCAT_TOOLS
 
 	def script_braille_toggleTether(self, gesture):
 		if braille.handler.tether == braille.handler.TETHER_FOCUS:
@@ -1111,6 +1165,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Braille tethered to %s") % tetherMsg)
 	# Translators: Input help mode message for toggle braille tether to command (tethered means connected to or follows).
 	script_braille_toggleTether.__doc__ = _("Toggle tethering of braille between the focus and the review position")
+	script_braille_toggleTether.category=SCRCAT_BRAILLE
 
 	def script_reportClipboardText(self,gesture):
 		try:
@@ -1129,6 +1184,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("The clipboard contains a large portion of text. It is %s characters long") % len(text))
 	# Translators: Input help mode message for report clipboard text command.
 	script_reportClipboardText.__doc__ = _("Reports the text on the Windows clipboard")
+	script_reportClipboardText.category=SCRCAT_SYSTEM
 
 	def script_review_markStartForCopy(self, gesture):
 		self._copyStartMarker = api.getReviewPosition().copy()
@@ -1167,34 +1223,40 @@ class GlobalCommands(ScriptableObject):
 	# Translators: Input help mode message for a braille command.
 	script_braille_scrollBack.__doc__ = _("Scrolls the braille display back")
 	script_braille_scrollBack.bypassInputHelp = True
+	script_braille_scrollBack.category=SCRCAT_BRAILLE
 
 	def script_braille_scrollForward(self, gesture):
 		braille.handler.scrollForward()
 	# Translators: Input help mode message for a braille command.
 	script_braille_scrollForward.__doc__ = _("Scrolls the braille display forward")
 	script_braille_scrollForward.bypassInputHelp = True
+	script_braille_scrollForward.category=SCRCAT_BRAILLE
 
 	def script_braille_routeTo(self, gesture):
 		braille.handler.routeTo(gesture.routingIndex)
 	# Translators: Input help mode message for a braille command.
 	script_braille_routeTo.__doc__ = _("Routes the cursor to or activates the object under this braille cell")
+	script_braille_routeTo.category=SCRCAT_BRAILLE
 
 	def script_braille_previousLine(self, gesture):
 		if braille.handler.buffer.regions: 
 			braille.handler.buffer.regions[-1].previousLine(start=True)
 	# Translators: Input help mode message for a braille command.
 	script_braille_previousLine.__doc__ = _("Moves the braille display to the previous line")
+	script_braille_previousLine.category=SCRCAT_BRAILLE
 
 	def script_braille_nextLine(self, gesture):
 		if braille.handler.buffer.regions: 
 			braille.handler.buffer.regions[-1].nextLine()
 	# Translators: Input help mode message for a braille command.
 	script_braille_nextLine.__doc__ = _("Moves the braille display to the next line")
+	script_braille_nextLine.category=SCRCAT_BRAILLE
 
 	def script_braille_dots(self, gesture):
 		brailleInput.handler.input(gesture.dots)
 	# Translators: Input help mode message for a braille command.
 	script_braille_dots.__doc__= _("Inputs braille dots via the braille keyboard")
+	script_braille_dots.category=SCRCAT_BRAILLE
 
 	def script_reloadPlugins(self, gesture):
 		import globalPluginHandler
@@ -1205,6 +1267,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Plugins reloaded"))
 	# Translators: Input help mode message for reload plugins command.
 	script_reloadPlugins.__doc__=_("Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers")
+	script_reloadPlugins.category=SCRCAT_TOOLS
 
 	def script_navigatorObject_nextInFlow(self,gesture):
 		curObject=api.getNavigatorObject()
@@ -1256,16 +1319,20 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("%s mode")%newMode)
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_touch_changeMode.__doc__=_("cycles between available touch modes")
+	script_touch_changeMode.category=SCRCAT_TOUCH
+
 
 	def script_touch_newExplore(self,gesture):
 		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y,new=True)
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_touch_newExplore.__doc__=_("Reports the object and content directly under your finger")
+	script_touch_newExplore.category=SCRCAT_TOUCH
 
 	def script_touch_explore(self,gesture):
 		touchHandler.handler.screenExplorer.moveTo(gesture.tracker.x,gesture.tracker.y)
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_touch_explore.__doc__=_("Reports the new object or content under your finger if different to where your finger was last")
+	script_touch_explore.category=SCRCAT_TOUCH
 
 	def script_touch_hoverUp(self,gesture):
 		#Specifically for touch typing with onscreen keyboard keys
@@ -1273,6 +1340,7 @@ class GlobalCommands(ScriptableObject):
 		import NVDAObjects.UIA
 		if isinstance(obj,NVDAObjects.UIA.UIA) and obj.UIAElement.cachedClassName=="CRootKey":
 			obj.doAction()
+	script_touch_hoverUp.category=SCRCAT_TOUCH
 
 	__gestures = {
 		# Basic
