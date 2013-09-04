@@ -70,6 +70,9 @@ SCRCAT_FOCUS = _("System focus")
 #: Script category for system status  commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_SYSTEM = _("System status")
+#: Script category for input  commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_INPUT = _("Input")
 
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus.
@@ -85,6 +88,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 	# Translators: Input help mode message for toggle input help command.
 	script_toggleInputHelp.__doc__=_("Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any.")
+	script_toggleInputHelp.category=SCRCAT_INPUT
+
 
 	def script_toggleCurrentAppSleepMode(self,gesture):
 		curFocus=api.getFocusObject()
@@ -981,6 +986,7 @@ class GlobalCommands(ScriptableObject):
 		config.conf["presentation"]["progressBarUpdates"]["progressBarOutputMode"]=outputMode
 	# Translators: Input help mode message for toggle progress bar output command.
 	script_toggleProgressBarOutput.__doc__=_("Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates")
+	script_toggleProgressBarOutput.category=SCRCAT_SPEECH
 
 	def script_toggleReportDynamicContentChanges(self,gesture):
 		if config.conf["presentation"]["reportDynamicContentChanges"]:
@@ -994,6 +1000,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 	# Translators: Input help mode message for toggle dynamic content changes command.
 	script_toggleReportDynamicContentChanges.__doc__=_("Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows")
+	script_toggleReportDynamicContentChanges.category=SCRCAT_SPEECH
 
 	def script_toggleCaretMovesReviewCursor(self,gesture):
 		if config.conf["reviewCursor"]["followCaret"]:
@@ -1007,6 +1014,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 	# Translators: Input help mode message for toggle caret moves review cursor command.
 	script_toggleCaretMovesReviewCursor.__doc__=_("Toggles on and off the movement of the review cursor due to the caret moving.")
+	script_toggleCaretMovesReviewCursor.category=SCRCAT_TEXTREVIEW
 
 	def script_toggleFocusMovesNavigatorObject(self,gesture):
 		if config.conf["reviewCursor"]["followFocus"]:
@@ -1020,6 +1028,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 	# Translators: Input help mode message for toggle focus moves navigator object command.
 	script_toggleFocusMovesNavigatorObject.__doc__=_("Toggles on and off the movement of the navigator object due to focus changes") 
+	script_toggleFocusMovesNavigatorObject.category=SCRCAT_OBJECTNAVIGATION
 
 	#added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	def script_say_battery_status(self,gesture):
@@ -1052,6 +1061,7 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Pass next key through"))
 	# Translators: Input help mode message for pass next key through command.
 	script_passNextKeyThrough.__doc__=_("The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows.")
+	script_passNextKeyThrough.category=SCRCAT_INPUT
 
 	def script_reportAppModuleInfo(self,gesture):
 		focus=api.getFocusObject()
