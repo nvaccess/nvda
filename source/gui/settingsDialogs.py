@@ -1531,7 +1531,7 @@ class InputGesturesDialog(SettingsDialog):
 				commandInfo = commands[command]
 				tree.SetItemPyData(treeCom, commandInfo)
 				for gesture in commandInfo.gestures:
-					treeGes = tree.AppendItem(treeCom, gesture)
+					treeGes = tree.AppendItem(treeCom, self._formatGesture(gesture))
 					tree.SetItemPyData(treeGes, gesture)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -1551,6 +1551,16 @@ class InputGesturesDialog(SettingsDialog):
 
 	def postInit(self):
 		self.tree.SetFocus()
+
+	def _formatGesture(self, identifier):
+		try:
+			source, main = inputCore.getDisplayTextForGestureIdentifier(identifier)
+			# Translators: Describes a gesture in the Input Gestures dialog.
+			# {main} is replaced with the main part of the gesture; e.g. alt+tab.
+			# {source} is replaced with the gesture's source; e.g. laptop keyboard.
+			return _("{main} ({source})").format(main=main, source=source)
+		except LookupError:
+			return identifier
 
 	def onTreeSelect(self, evt):
 		item = self.tree.Selection
@@ -1583,9 +1593,9 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager._captureFunc = addGestureCaptor
 
 	def _finishAdd(self, treeGes, scriptInfo, gesture):
-		gestureId = gesture.logIdentifier
+		gestureId = gesture.identifiers[0]
 		self.pendingAdds.add((gestureId, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
-		self.tree.SetItemText(treeGes, gesture.logIdentifier)
+		self.tree.SetItemText(treeGes, self._formatGesture(gestureId))
 		self.tree.SetItemPyData(treeGes, gestureId)
 		self.onTreeSelect(None)
 
