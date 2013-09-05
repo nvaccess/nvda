@@ -13,6 +13,7 @@ For example, it is used to execute gestures and handle input help.
 import sys
 import os
 import itertools
+import weakref
 import configobj
 import baseObject
 import scriptHandler
@@ -123,6 +124,22 @@ class InputGesture(baseObject.AutoPropertyObject):
 		@rtype: L{baseObject.ScriptableObject}
 		"""
 		return None
+
+	@classmethod
+	def getDisplayTextForIdentifier(cls, identifier):
+		"""Get the text to be presented to the user describing a given gesture identifier.
+		This should only be called for gesture identifiers associated with this class.
+		Most callers will want L{inputCore.getDisplayTextForIdentifier} instead.
+		The display text consists of two strings:
+		the gesture's source (e.g. "laptop keyboard")
+		and the specific gesture (e.g. "alt+tab").
+		@param identifier: The normalized gesture identifier in question.
+		@type identifier: basestring
+		@return: A tuple of (source, specificGesture).
+		@rtype: tuple of (basestring, basestring)
+		@raise Exception: If no display text can be determined.
+		"""
+		raise NotImplementedError
 
 class GlobalGestureMap(object):
 	"""Maps gestures to scripts anywhere in NVDA.
@@ -635,6 +652,59 @@ def normalizeGestureIdentifier(identifier):
 	# We use Python's set ordering.
 	main = "+".join(frozenset(main))
 	return u"{0}:{1}".format(prefix, main).lower()
+
+#: Maps registered source prefix strings to L{InputGesture} classes.
+gestureSources = weakref.WeakValueDictionary()
+
+def registerGestureSource(source, gestureCls):
+	"""Register an input gesture class for a source prefix string.
+	The specified gesture class will be used for queries regarding all gesture identifiers with the given source prefix.
+	For example, if "kb" is registered with the C{KeyboardInputGesture} class,
+	any queries for "kb:tab" or "kb(desktop):tab" will be directed to the C{KeyboardInputGesture} class.
+	If there is no exact match for the source, any parenthesised portion is stripped.
+	For example, for "br(baum):d1", if "br(baum)" isn't registered,
+	"br" will be used if it is registered.
+	This registration is used, for example, to get the display text for a gesture identifier.
+	@param source: The source prefix for associated gesture identifiers.
+	@type source: basestring
+	@param gestureCls: The input gesture class.
+	@type gestureCls: L{InputGesture}
+	"""
+	gestureSources[source] = gestureCls
+
+def _getGestureClsForIdentifier(identifier):
+	"""Get the registered gesture class for an identifier.
+	"""
+	source = identifier.split(":", 1)[0]
+	try:
+		return gestureSources[source]
+	except KeyError:
+		pass
+	genSource = source.split("(", 1)[0]
+	if genSource:
+		try:
+			return gestureSources[genSource]
+		except KeyError:
+			pass
+	raise LookupError("Gesture source not registered: %s" % source)
+
+def getDisplayTextForGestureIdentifier(identifier):
+	"""Get the text to be presented to the user describing a given gesture identifier.
+	The display text consists of two strings:
+	the gesture's source (e.g. "laptop keyboard")
+	and the specific gesture (e.g. "alt+tab").
+	@param identifier: The normalized gesture identifier in question.
+	@type identifier: basestring
+	@return: A tuple of (source, specificGesture).
+	@rtype: tuple of (basestring, basestring)
+	@raise LookupError: If no display text can be determined.
+	"""
+	gcls = _getGestureClsForIdentifier(identifier)
+	try:
+		return gcls.getDisplayTextForIdentifier(identifier)
+	except:
+		raise
+		raise LookupError("Couldn't get display text for identifier: %s" % identifier)
 
 #: The singleton input manager instance.
 #: @type: L{InputManager}
