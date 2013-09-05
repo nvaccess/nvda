@@ -1588,15 +1588,35 @@ class InputGesturesDialog(SettingsDialog):
 			if gesture.isModifier:
 				return False
 			inputCore.manager._captureFunc = None
-			wx.CallAfter(self._finishAdd, treeGes, scriptInfo, gesture)
+			wx.CallAfter(self._addCaptured, treeGes, scriptInfo, gesture)
 			return False
 		inputCore.manager._captureFunc = addGestureCaptor
 
-	def _finishAdd(self, treeGes, scriptInfo, gesture):
-		gestureId = gesture.identifiers[0]
-		self.pendingAdds.add((gestureId, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
-		self.tree.SetItemText(treeGes, self._formatGesture(gestureId))
-		self.tree.SetItemPyData(treeGes, gestureId)
+	def _addCaptured(self, treeGes, scriptInfo, gesture):
+		gids = gesture.identifiers
+		if len(gids) > 1:
+			# Multiple choices. Present them in a pop-up menu.
+			menu = wx.Menu()
+			for gid in gids:
+				disp = self._formatGesture(gid)
+				item = menu.Append(wx.ID_ANY, disp)
+				self.Bind(wx.EVT_MENU,
+					lambda evt: self._addChoice(treeGes, scriptInfo, gesture, gid, disp),
+					item)
+			self.PopupMenu(menu)
+			if not self.tree.GetItemPyData(treeGes):
+				# No item was selected, so use the first.
+				self._addChoice(treeGes, scriptInfo, gesture, gids[0],
+					self._formatGesture(gids[0]))
+			menu.Destroy()
+		else:
+			self._addChoice(treeGes, scriptInfo, gesture, gids[0],
+				self._formatGesture(gids[0]))
+
+	def _addChoice(self, treeGes, scriptInfo, gesture, gid, disp):
+		self.pendingAdds.add((gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
+		self.tree.SetItemText(treeGes, disp)
+		self.tree.SetItemPyData(treeGes, gid)
 		self.onTreeSelect(None)
 
 	def onRemove(self, evt):
