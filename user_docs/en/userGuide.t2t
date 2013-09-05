@@ -1056,6 +1056,26 @@ Using the Level field, you can adjust the lowest symbol level at which this symb
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
++++ Input Gestures (NVDA+control+i) +++
+In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
+
+Only commands that are applicable immediately before the dialog is opened are shown.
+Therefore, you should generally open this dialog using its key command so that all commands applicable to what you were just doing are shown.
+For example, if you want to customize commands related to browse mode, you should press the key command to open the Input Gestures dialog while you are in browse mode.
+
+The tree in this dialog lists all of the applicable NVDA commands grouped by category.
+Any gestures associated with a command are listed beneath the command.
+
+To add an input gesture to a command, select the command and press the Add button.
+Then, perform the input gesture you wish to associate; e.g. press a key on the keyboard or a button on a braille display.
+Often, a gesture can be interpreted in more than one way.
+For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
+In this case, a menu will appear allowing you to select the desired option.
+
+To remove a gesture from a command, select the gesture and press the Remove button.
+
+When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
+
 ++ Saving and Reloading the configuration ++
 By default NVDA will automatically save your settings on exit.
 Note, however, that this option can be changed under the general options in the preferences menu.
