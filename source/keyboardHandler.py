@@ -458,6 +458,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		names = []
 		main = None
 		try:
+			# If present, the NVDA key should appear first.
 			keys.remove("nvda")
 			names.append("NVDA")
 		except KeyError:
