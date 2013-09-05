@@ -1,6 +1,6 @@
 #appModules/nvda.py
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2011 NV Access Inc
+#Copyright (C) 2008-2013 NV Access Limited
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
@@ -8,13 +8,14 @@ import appModuleHandler
 import api
 import controlTypes
 import versionInfo
+import gui
 
 class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self, obj):
 		# It seems that context menus always get the name "context" and this cannot be overridden.
 		# Fudge the name of the NVDA system tray menu to make it more friendly.
-		if obj.role == controlTypes.ROLE_POPUPMENU:
+		if gui.mainFrame.sysTrayIcon.isMenuOpen and obj.role == controlTypes.ROLE_POPUPMENU:
 			parent = obj.parent
 			if parent and parent.parent==api.getDesktopObject():
 				obj.name=versionInfo.name
