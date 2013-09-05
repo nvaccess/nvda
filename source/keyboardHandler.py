@@ -452,7 +452,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				pass
 		if not dispSource:
 			# Translators: Used when describing keys on the system keyboard applying to all layouts.
-			dispSource = _("system keyboard")
+			dispSource = _("keyboard, all layouts")
 
 		keys = set(keys.split("+"))
 		names = []
