@@ -328,8 +328,8 @@ def installService(nvdaDir):
 	if not os.path.isfile(servicePath):
 		raise RuntimeError("Could not find service executable")
 	win32serviceutil.InstallService(None, NVDAService._svc_name_, NVDAService._svc_display_name_, startType=win32service.SERVICE_AUTO_START, exeName=servicePath,
-	# Translators: The NVDA service description
-	description=_(u"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure screens."))
+		# Translators: The description of the NVDA service.
+		description=_(u"Allows NVDA to run on the Windows Logon screen, UAC screen and other secure screens."))
 
 def removeService():
 	win32serviceutil.RemoveService(NVDAService._svc_name_)
