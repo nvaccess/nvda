@@ -21,13 +21,13 @@ import threading
 import time
 import cPickle
 import urllib
-import tempfile
 import wx
 import languageHandler
 import gui
 from logHandler import log
 import config
 import shellapi
+from downloader import FileDownloader
 
 #: The URL to use for update checks.
 CHECK_URL = "http://www.nvda-project.org/updateCheck"
@@ -236,131 +236,17 @@ class UpdateResultDialog(wx.Dialog):
 		saveState()
 		self.Close()
 
-class UpdateDownloader(object):
+class UpdateDownloader(FileDownloader):
 	"""Download and start installation of an updated version of NVDA, presenting appropriate user interface.
-	To use, call L{start} on an instance.
 	"""
 
-	def __init__(self, urls):
-		"""Constructor.
-		@param urls: URLs to try for the update file.
-		@type urls: list of str
-		"""
-		self.urls = urls
-		self.destPath = tempfile.mktemp(prefix="nvda_update_", suffix=".exe")
+	destSuffix = ".exe"
+	# Translators: The title of the dialog displayed while downloading an NVDA update.
+	progressTitle = _("Downloading Update")
+	# Translators: A message indicating that an error occurred while downloading an update to NVDA.
+	errorMessage = _("Error downloading update.")
 
-	def start(self):
-		"""Start the download.
-		"""
-		self._shouldCancel = False
-		# Use a timer because timers aren't re-entrant.
-		self._guiExecTimer = wx.PyTimer(self._guiExecNotify)
-		gui.mainFrame.prePopup()
-		# Translators: The title of the dialog displayed while downloading an NVDA update.
-		self._progressDialog = wx.ProgressDialog(_("Downloading Update"),
-			# Translators: The progress message indicating that a connection is being established.
-			_("Connecting"),
-			# PD_AUTO_HIDE is required because ProgressDialog.Update blocks at 100%
-			# and waits for the user to press the Close button.
-			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
-			parent=gui.mainFrame)
-		self._progressDialog.Raise()
-		t = threading.Thread(target=self._bg)
-		t.daemon = True
-		t.start()
-
-	def _guiExec(self, func, *args):
-		self._guiExecFunc = func
-		self._guiExecArgs = args
-		if not self._guiExecTimer.IsRunning():
-			self._guiExecTimer.Start(50, True)
-
-	def _guiExecNotify(self):
-		self._guiExecFunc(*self._guiExecArgs)
-
-	def _bg(self):
-		success=False
-		for url in self.urls:
-			try:
-				self._download(url)
-			except:
-				log.debugWarning("Error downloading %s" % url, exc_info=True)
-			else: #Successfully downloaded or canceled
-				if not self._shouldCancel:
-					success=True
-				break
-		else:
-			# None of the URLs succeeded.
-			self._guiExec(self._error)
-			return
-		if not success:
-			try:
-				os.remove(self.destPath)
-			except OSError:
-				pass
-			return
-		self._guiExec(self._downloadSuccess)
-
-	def _download(self, url):
-		remote = urllib.urlopen(url)
-		if remote.code != 200:
-			raise RuntimeError("Download failed with code %d" % remote.code)
-		# #2352: Some security scanners such as Eset NOD32 HTTP Scanner
-		# cause huge read delays while downloading.
-		# Therefore, set a higher timeout.
-		remote.fp._sock.settimeout(120)
-		size = int(remote.headers["content-length"])
-		local = file(self.destPath, "wb")
-		self._guiExec(self._downloadReport, 0, size)
-		read = 0
-		chunk=DOWNLOAD_BLOCK_SIZE
-		while True:
-			if self._shouldCancel:
-				return
-			if size -read <chunk:
-				chunk =size -read
-			block = remote.read(chunk)
-			if not block:
-				break
-			read += len(block)
-			if self._shouldCancel:
-				return
-			local.write(block)
-			self._guiExec(self._downloadReport, read, size)
-		if read < size:
-			raise RuntimeError("Content too short")
-		self._guiExec(self._downloadReport, read, size)
-
-	def _downloadReport(self, read, size):
-		if self._shouldCancel:
-			return
-		percent = int(float(read) / size * 100)
-		# Translators: The progress message indicating that a download is in progress.
-		cont, skip = self._progressDialog.Update(percent, _("Downloading"))
-		if not cont:
-			self._shouldCancel = True
-			self._stopped()
-
-	def _stopped(self):
-		self._guiExecTimer = None
-		self._guiExecFunc = None
-		self._guiExecArgs = None
-		self._progressDialog.Hide()
-		self._progressDialog.Destroy()
-		self._progressDialog = None
-		# Not sure why, but this doesn't work if we call it directly here.
-		wx.CallLater(50, gui.mainFrame.postPopup)
-
-	def _error(self):
-		self._stopped()
-		gui.messageBox(
-			# Translators: A message indicating that an error occurred while downloading an update to NVDA.
-			_("Error downloading update."),
-			_("Error"),
-			wx.OK | wx.ICON_ERROR)
-
-	def _downloadSuccess(self):
-		self._stopped()
+	def onSuccess(self):
 		# Translators: The message presented when the update has been successfully downloaded
 		# and is about to be installed.
 		gui.messageBox(_("Update downloaded. It will now be installed."),
