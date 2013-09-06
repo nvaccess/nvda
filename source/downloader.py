@@ -156,7 +156,9 @@ class FileDownloader(object):
 
 	def onError(self):
 		"""Called when the download fails.
+		The base implementation displays an error message dialog using L{errorMessage}.
 		Subclasses may override or extend this.
+		Note that the incomplete destination file is deleted separately.
 		"""
 		gui.messageBox(
 			self.errorMessage,
