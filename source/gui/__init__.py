@@ -434,7 +434,15 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 	def onActivate(self, evt):
 		mainFrame.prePopup()
+		import appModules.nvda
+		if not appModules.nvda.nvdaMenuIaIdentity:
+			# The NVDA app module doesn't know how to identify the NVDA menu yet.
+			# Signal that the NVDA menu has just been opened.
+			appModules.nvda.nvdaMenuIaIdentity = True
 		self.PopupMenu(self.menu)
+		if appModules.nvda.nvdaMenuIaIdentity is True:
+			# The NVDA menu didn't actually appear for some reason.
+			appModules.nvda.nvdaMenuIaIdentity = None
 		mainFrame.postPopup()
 
 def initialize():
