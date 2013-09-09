@@ -33,9 +33,9 @@ class ProfilesDialog(wx.Dialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of the profile list in the Configuration Profiles dialog.
 		sizer.Add(wx.StaticText(self, label=_("&Profile")))
-		# Translators: Indicates that no configuration profile is selected.
-		# In this case, the user's normal configuration will be used.
-		profiles = [_("(none)")]
+		# Translators: The item to select the user's normal configuration
+		# in the profile list in the Configuration Profiles dialog.
+		profiles = [_("(normal configuration)")]
 		profiles.extend(config.conf.listProfiles())
 		item = self.profileList = wx.Choice(self, choices=profiles)
 		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
