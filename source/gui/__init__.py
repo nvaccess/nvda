@@ -438,9 +438,6 @@ class SysTrayIcon(wx.TaskBarIcon):
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
 
-		# We need to know if an item gets activated before its real code runs.
-		self.menu.Bind(wx.EVT_MENU, self.onMenuItem)
-		self.isMenuOpen = False
 		self.Bind(wx.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
 
 	def Destroy(self):
@@ -449,15 +446,16 @@ class SysTrayIcon(wx.TaskBarIcon):
 
 	def onActivate(self, evt):
 		mainFrame.prePopup()
-		self.isMenuOpen = True
+		import appModules.nvda
+		if not appModules.nvda.nvdaMenuIaIdentity:
+			# The NVDA app module doesn't know how to identify the NVDA menu yet.
+			# Signal that the NVDA menu has just been opened.
+			appModules.nvda.nvdaMenuIaIdentity = True
 		self.PopupMenu(self.menu)
-		self.isMenuOpen = False
+		if appModules.nvda.nvdaMenuIaIdentity is True:
+			# The NVDA menu didn't actually appear for some reason.
+			appModules.nvda.nvdaMenuIaIdentity = None
 		mainFrame.postPopup()
-
-	def onMenuItem(self, evt):
-		# An item has been activated, so the menu has been closed.
-		self.isMenuOpen = False
-		evt.Skip()
 
 def initialize():
 	global mainFrame
