@@ -18,6 +18,7 @@ import speech
 import config
 import braille
 import controlTypes
+from inputCore import SCRCAT_BROWSEMODE
 
 class CursorManager(baseObject.ScriptableObject):
 	"""
@@ -31,6 +32,9 @@ class CursorManager(baseObject.ScriptableObject):
 	@ivar selection: The current caret/selection range.
 	@type selection: L{textInfos.TextInfo}
 	"""
+
+	# Translators: the script category for browse mode
+	scriptCategory=SCRCAT_BROWSEMODE
 
 	_lastFindText=""
 
