@@ -48,8 +48,8 @@ class ProfilesDialog(wx.Dialog):
 		mainSizer.Add(sizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label of a button to activate the selected profile.
-		item = wx.Button(self, label=_("&Activate"))
+		# Translators: The label of a button to activate (and therefore also edit) the selected profile.
+		item = wx.Button(self, label=_("&Activate/edit"))
 		item.Bind(wx.EVT_BUTTON, self.onActivate)
 		sizer.Add(item)
 		self.AffirmativeId = item.Id
