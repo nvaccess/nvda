@@ -232,9 +232,6 @@ class TriggersDialog(wx.Dialog):
 		item = self.sayAllToggle = wx.CheckBox(self, label=_("&Say all"))
 		if "sayAll" in triggers:
 			item.Value = True
-		elif "sayAll" in config.conf["profileTriggers"]:
-			# This trigger is associated with another profile already.
-			item.Disable()
 		mainSizer.Add(item)
 
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
@@ -248,13 +245,23 @@ class TriggersDialog(wx.Dialog):
 
 	def onClose(self, evt):
 		triggers = config.conf["profileTriggers"]
+		try:
+			trigOnOther = triggers["sayAll"] != self.profile
+		except KeyError:
+			trigOnOther = False
 		if self.sayAllToggle.Value:
+			if trigOnOther and gui.messageBox(
+				# Translators: A confirmation prompt that might be displayed when closing the configuration profile triggers dialog.
+				_("Say all is already associated with another profile.\n"
+					"If you continue, it will be removed from the other profile and associated with this one.\n"
+					"Are you sure you want to continue?"),
+				# Translators: The title of a confirmation prompt.
+				_("Confirm"), wx.YES | wx.NO | wx.ICON_WARNING, self
+			) == wx.NO:
+				return
 			triggers["sayAll"] = self.profile
-		elif self.sayAllToggle.Enabled:
-			try:
-				del triggers["sayAll"]
-			except KeyError:
-				pass
+		elif not trigOnOther:
+			del triggers["sayAll"]
 
 		self.Parent.Enable()
 		self.Destroy()
