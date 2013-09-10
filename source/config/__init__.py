@@ -9,6 +9,7 @@ import os
 import sys
 from cStringIO import StringIO
 import itertools
+import contextlib
 from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
@@ -408,11 +409,14 @@ class ConfigManager(object):
 		self.editProfileIndex = None
 		self.validator = Validator()
 		self.rootSection = None
+		self._shouldHandleProfileSwitch = True
 		self._initBaseConf()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles = set()
 
 	def _handleProfileSwitch(self):
+		if not self._shouldHandleProfileSwitch:
+			return
 		init = self.rootSection is None
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
@@ -674,6 +678,22 @@ class ConfigManager(object):
 		profile.triggered = False
 		self.profiles.remove(profile)
 		self._handleProfileSwitch()
+
+	@contextlib.contextmanager
+	def atomicProfileSwitch(self):
+		"""Indicate that multiple profile switches should be treated as one.
+		This is useful when multiple triggers may be exited/entered at once;
+		e.g. when switching applications.
+		While multiple switches aren't harmful, they might take longer;
+		e.g. unnecessarily switching speech synthesizers or braille displays.
+		This is a context manager to be used with the C{with} statement.
+		"""
+		self._shouldHandleProfileSwitch = False
+		try:
+			yield
+		finally:
+			self._shouldHandleProfileSwitch = True
+			self._handleProfileSwitch()
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
