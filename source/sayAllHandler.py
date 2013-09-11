@@ -146,7 +146,7 @@ def readTextHelper_generator(cursor):
 					if cursor!=CURSOR_CARET or config.conf["reviewCursor"]["followCaret"]:
 						api.setReviewPosition(updater)
 			elif not keepReading and lastReceivedIndex==lastSentIndex:
-				# All text has been spoken.
+				# All text has been sent to the synth.
 				# Turn the page and start again if the object supports it.
 				if isinstance(reader.obj,textInfos.DocumentWithPageTurns):
 					try:
@@ -161,6 +161,20 @@ def readTextHelper_generator(cursor):
 
 			while speech.isPaused:
 				yield
+			yield
+
+		# Wait until the synth has actually finished speaking.
+		# Otherwise, if there is a triggered profile with a different synth,
+		# we will switch too early and truncate speech (even up to several lines).
+		# Send another index and wait for it.
+		index=lastSentIndex+1
+		speech.speak([speech.IndexCommand(index)])
+		while speech.getLastSpeechIndex()<index:
+			yield
+			yield
+		# Some synths say they've handled the index slightly sooner than they actually have,
+		# so wait a bit longer.
+		for i in xrange(30):
 			yield
 
 class SayAllProfileTrigger(config.ProfileTrigger):
