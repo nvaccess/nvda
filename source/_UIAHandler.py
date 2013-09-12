@@ -167,7 +167,7 @@ class UIAHandler(COMObject):
 		self.clientObject.RemoveAllEventHandlers()
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
-		if not self.MTAThreadInitEvent.isSet:
+		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
 		if eventID==UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):
@@ -186,7 +186,7 @@ class UIAHandler(COMObject):
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
-		if not self.MTAThreadInitEvent.isSet:
+		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
 		if not self.isNativeUIAElement(sender):
@@ -211,7 +211,7 @@ class UIAHandler(COMObject):
 		eventHandler.queueEvent("gainFocus",obj)
 
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
-		if not self.MTAThreadInitEvent.isSet:
+		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)

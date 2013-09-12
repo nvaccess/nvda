@@ -1,12 +1,12 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-11 19:09+1000\n"
-"PO-Revision-Date: 2013-08-08 09:38+0100\n"
-"Last-Translator: david Parduhn <xkill85@gmx.net>\n"
+"PO-Revision-Date: 2013-08-15 15:21+0100\n"
+"Last-Translator: Bernd Dorer <bernd_dorer@yahoo.de>\n"
 "Language-Team: René Linke <rene.linke@blindzeln.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,8 +14,8 @@ msgstr ""
 "Language: de_DE\n"
 "X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: D:\\rechner\\nvda_quellen\\nvda\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: D:\\rechner\\nvda_quellen\\nvda\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure
 #. desktop screen is active.
@@ -67,7 +67,7 @@ msgstr ""
 #. mode.
 #: NVDAHelper.py:232 NVDAHelper.py:242
 msgid "alphanumeric"
-msgstr "alphanumrisch"
+msgstr "alphanumerisch"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 #: NVDAHelper.py:234
@@ -925,10 +925,10 @@ msgstr "%s markiert"
 msgid "unknown"
 msgstr "Unbekannt"
 
-#. Translators: The word for window of a program such as document window.
 # Deutsche Sprachdatei für NVDA
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 # Michael Curran <mick@kulgan.net> 2006
+#. Translators: The word for window of a program such as document window.
 #: controlTypes.py:191
 msgid "window"
 msgstr "Fenster"
@@ -1301,9 +1301,9 @@ msgstr "Überschrift"
 msgid "image map"
 msgstr "Grafischer Link"
 
-#. Translators: Identifies an input window.
 # Deutsche Sprachdatei für NVDA
 # Copyright © 2006 - 2010, das Deutsche NVDA-Team.
+#. Translators: Identifies an input window.
 #: controlTypes.py:334
 msgid "input window"
 msgstr "Eingabefenster"
@@ -1917,8 +1917,8 @@ msgstr "Eingabehilfe aus"
 #. Translators: Input help mode message for toggle input help command.
 #: globalCommands.py:53
 msgid ""
-"Turns input help on or off. When on, any input such as pressing a key on the"
-" keyboard will tell you what script is associated with that input, if any."
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
 msgstr ""
 "Schaltet die Eingabehilfe ein oder aus. Wenn eingeschaltet, wird die "
 "Funktion der gedrückten Tastenkombination angesagt."
@@ -2157,8 +2157,7 @@ msgstr "Ziehe Navigator zur Maus."
 msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
-msgstr ""
-"Zieht den Navigator zum Objekt unter dem Mauszeiger und liest ihn vor."
+msgstr "Zieht den Navigator zum Objekt unter dem Mauszeiger und liest ihn vor."
 
 #. Translators: reported when there are no other available review modes for
 #. this object
@@ -2207,9 +2206,9 @@ msgstr "%s in die Zwischenablage kopiert."
 #. command.
 #: globalCommands.py:342
 msgid ""
-"Reports the current navigator object. Pressing twice spells this "
-"information,and pressing three times Copies name and value of this  object "
-"to the clipboard"
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
 msgstr ""
 "Liest die Informationen zum aktuellen Objekt vor oder wenn die "
 "Tastenkombination drei Mal gedrückt wird, werden die Informationen in die "
@@ -2234,12 +2233,12 @@ msgstr "Keine Standortinformationen auf dem Bildschirm gefunden."
 #: globalCommands.py:363
 msgid ""
 "Object edges positioned {left:.1f} per cent from left edge of screen, "
-"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of"
-" screen, height is {height:.1f} per cent of screen"
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
 msgstr ""
-"Die Eckpositionen des Objekts sind {left:.1f} Prozent vom linken,  {top:.1f}"
-" Prozent vom oberen, {width:.1f} Prozent vom rechten und {height:.1f} "
-"Prozent vom unteren Bildschirmrand entfernt."
+"Die Eckpositionen des Objekts sind {left:.1f} Prozent vom linken,  {top:.1f} "
+"Prozent vom oberen, {width:.1f} Prozent vom rechten und {height:.1f} Prozent "
+"vom unteren Bildschirmrand entfernt."
 
 #. Translators: Input help mode message for report object dimensions command.
 #: globalCommands.py:365
@@ -2256,8 +2255,8 @@ msgstr "Zieht zum Fokus."
 #. focus command.
 #: globalCommands.py:378
 msgid ""
-"Sets the navigator object to the current focus, and the review cursor to the"
-" position of the caret inside it, if possible."
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
 msgstr ""
 "Setzt das Navigator-Objekt zum aktuellen Fokus und dem NVDA-Cursor zum "
 "System-Cursor, sofern möglich."
@@ -2354,8 +2353,8 @@ msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"Führt die Standardaktion mit dem aktuellen Objekt aus (z. B. aktiviert einen"
-" Schalter)."
+"Führt die Standardaktion mit dem aktuellen Objekt aus (z. B. aktiviert einen "
+"Schalter)."
 
 #. Translators: a message reported when review cursor is at the top line of
 #. the current navigator object.
@@ -2377,11 +2376,11 @@ msgstr ""
 #. line command.
 #: globalCommands.py:523
 msgid ""
-"Moves the review cursor to the previous line of the current navigator object"
-" and speaks it"
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
 msgstr ""
-"Zieht den NVDA-Cursor zur vorherigen Zeile im aktuellen Navigator-Objekt und"
-" liest diese vor."
+"Zieht den NVDA-Cursor zur vorherigen Zeile im aktuellen Navigator-Objekt und "
+"liest diese vor."
 
 #. Translators: Input help mode message for read current line under review
 #. cursor command.
@@ -2407,8 +2406,8 @@ msgstr "unten"
 #. command.
 #: globalCommands.py:548
 msgid ""
-"Moves the review cursor to the next line of the current navigator object and"
-" speaks it"
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
 msgstr ""
 "Zieht den NVDA-Cursor zur nächsten Zeile im aktuellen Navigator-Objekt und "
 "liest diesen vor."
@@ -2427,8 +2426,8 @@ msgstr ""
 #. word command.
 #: globalCommands.py:572
 msgid ""
-"Moves the review cursor to the previous word of the current navigator object"
-" and speaks it"
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
 msgstr ""
 "Zieht den NVDA-Cursor zum vorherigen Wort im aktuellen Navigator-Objekt und "
 "liest dieses vor."
@@ -2442,15 +2441,15 @@ msgid ""
 "word using character descriptions"
 msgstr ""
 "Liest das aktuelle Wort unter dem NVDA-Cursor im Navigatorobjekt vor. Bei "
-"zweimaligem Drücken wird das Wort buchstabiert. Bei dreimaligem Drücken wird"
-" das Wort phoneticch buchstabiert."
+"zweimaligem Drücken wird das Wort buchstabiert. Bei dreimaligem Drücken wird "
+"das Wort phoneticch buchstabiert."
 
 #. Translators: Input help mode message for move review cursor to next word
 #. command.
 #: globalCommands.py:597
 msgid ""
-"Moves the review cursor to the next word of the current navigator object and"
-" speaks it"
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
 msgstr ""
 "Zieht den NVDA-Cursor zum nächsten Wort im aktuellen Navigator-Objekt und "
 "liest dieses vor."
@@ -2488,8 +2487,8 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"Liest das aktuelle Zeichen unter dem NVDA-Cursor im Navigatorobjekt vor. Bei"
-" zweimaligem Drücken wird das zeichen phonetisch buchstabiert und ein "
+"Liest das aktuelle Zeichen unter dem NVDA-Cursor im Navigatorobjekt vor. Bei "
+"zweimaligem Drücken wird das zeichen phonetisch buchstabiert und ein "
 "Beispiel wird angesagt. Bei dreimaligem Drücken wird das Zeichen als "
 "Dezimal- und als Hexadezimalwert gesprochen."
 
@@ -2504,8 +2503,8 @@ msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr ""
-"Zieht den NVDA-Cursor zum nächsten Zeichen im aktuellen Navigator-Objekt und"
-" spricht es."
+"Zieht den NVDA-Cursor zum nächsten Zeichen im aktuellen Navigator-Objekt und "
+"spricht es."
 
 #. Translators: Input help mode message for move review cursor to end of
 #. current line command.
@@ -2514,8 +2513,8 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"Zieht den NVDA-Cursor zum Zeilenende im aktuellen Navigator-Objekt und liest"
-" das letzte Zeichen vor."
+"Zieht den NVDA-Cursor zum Zeilenende im aktuellen Navigator-Objekt und liest "
+"das letzte Zeichen vor."
 
 #. Translators: A speech mode which disables speech output.
 #: globalCommands.py:684
@@ -2536,10 +2535,11 @@ msgstr "Sprache an"
 #. Translators: Input help mode message for toggle speech mode command.
 #: globalCommands.py:695
 msgid ""
-"Toggles between the speech modes of off, beep and talk. When set to off NVDA"
-" will not speak anything. If beeps then NVDA will simply beep each time it "
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "Schaltet den Sprachmodus zwischen \"Signaltöne\", \"Sprache\" und \"Aus\" um."
+msgstr ""
+"Schaltet den Sprachmodus zwischen \"Signaltöne\", \"Sprache\" und \"Aus\" um."
 
 #. Translators: Input help mode message for move to next document with focus
 #. command, mostly used in web browsing to move from embedded object to the
@@ -2621,8 +2621,7 @@ msgstr "Keine Statuszeile vorhanden."
 #. Translators: Input help mode message for report status line text command.
 #: globalCommands.py:823
 msgid "reads the current application status bar and moves the navigator to it"
-msgstr ""
-"Liest die Statuszeile der Anwendung und bewegt den Navigator dort hin."
+msgstr "Liest die Statuszeile der Anwendung und bewegt den Navigator dort hin."
 
 #. Translators: presented when the mouse tracking is toggled.
 #: globalCommands.py:828
@@ -2649,8 +2648,8 @@ msgstr "Kein Titel."
 #: globalCommands.py:855
 msgid ""
 "Reports the title of the current application or foreground window. If "
-"pressed twice, spells the title. If pressed three times, copies the title to"
-" the clipboard"
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
 msgstr ""
 "Liest die Titelleiste der aktuellen Anwendung vor. Wird die "
 "Tastenkombination zwei Mal gedrückt, wird diese buchstabiert. Bei "
@@ -2740,8 +2739,7 @@ msgstr "nvda-cursor an Systemcursor gekoppelt"
 #. command.
 #: globalCommands.py:922
 msgid ""
-"Toggles on and off the movement of the review cursor due to the caret "
-"moving."
+"Toggles on and off the movement of the review cursor due to the caret moving."
 msgstr ""
 "Schaltet die Kopplung des NVDA-Cursors an den Systemcursor an oder aus."
 
@@ -2790,8 +2788,8 @@ msgstr "{hours:d} Stunden und {minutes:d} Minuten verbleiben"
 #: globalCommands.py:959
 msgid "reports battery status and time remaining if AC is not plugged in"
 msgstr ""
-"Sagt den Ladestand des Akkus und die verbleibende Zeit an, wenn das Netzteil"
-" nicht angeschlossen ist."
+"Sagt den Ladestand des Akkus und die verbleibende Zeit an, wenn das Netzteil "
+"nicht angeschlossen ist."
 
 #. Translators: Spoken to indicate that the next key press will be sent
 #. straight to the current program as though NVDA is not running.
@@ -2908,8 +2906,8 @@ msgstr ""
 #: globalCommands.py:1048
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr ""
-"Aktiviert die NVDA-Python-Konsole, die hauptsächlich für Entwickler nützlich"
-" ist."
+"Aktiviert die NVDA-Python-Konsole, die hauptsächlich für Entwickler nützlich "
+"ist."
 
 #: globalCommands.py:1053 gui\settingsDialogs.py:1336
 msgid "review"
@@ -3045,8 +3043,8 @@ msgstr "Plugins neu geladen"
 #. Translators: Input help mode message for reload plugins command.
 #: globalCommands.py:1152
 msgid ""
-"Reloads app modules and global plugins without restarting NVDA, which can be"
-" Useful for developers"
+"Reloads app modules and global plugins without restarting NVDA, which can be "
+"Useful for developers"
 msgstr ""
 "Lädt die Anwendungsmodule und die globalen Plugins neu ohne NVDA neu zu "
 "starten (hilfreich für die Entwickler)."
@@ -3271,10 +3269,10 @@ msgstr "Alt"
 msgid "shift"
 msgstr "Umschalt"
 
-#. Translators: This is the name of a key on the keyboard.
 # Deutsche Sprachdatei für NVDA
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 # Michael Curran <mick@kulgan.net> 2006
+#. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:55
 msgid "windows"
 msgstr "Windows"
@@ -3439,10 +3437,10 @@ msgstr "Linke Steuerungs-Taste"
 msgid "right control"
 msgstr "Rechte Steuerungs-Taste"
 
-#. Translators: This is the name of a key on the keyboard.
 # Deutsche Sprachdatei für NVDA
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 # Michael Curran <mick@kulgan.net> 2006
+#. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:123
 msgid "left windows"
 msgstr "Linke Windows-Taste"
@@ -3467,9 +3465,9 @@ msgstr "Linke Alt-Taste"
 msgid "right alt"
 msgstr "Rechte Alt-Taste"
 
-#. Translators: This is the name of a key on the keyboard.
 # Deutsche Sprachdatei für NVDA
 # Copyright © 2006 - 2010, das Deutsche NVDA-Team.
+#. Translators: This is the name of a key on the keyboard.
 #: keyLabels.py:133
 msgid "right windows"
 msgstr "Rechte Windows-Taste"
@@ -3969,8 +3967,7 @@ msgstr "Fehler beim Herunterladen der Aktualisierung."
 #. and is about to be installed.
 #: updateCheck.py:366
 msgid "Update downloaded. It will now be installed."
-msgstr ""
-"Die Aktualisierung wurde heruntergeladen. Installation wird gestartet."
+msgstr "Die Aktualisierung wurde heruntergeladen. Installation wird gestartet."
 
 #. Translators: The title of the dialog displayed when the update is about to
 #. be installed.
@@ -3981,15 +3978,21 @@ msgstr "Aktualisierung installieren"
 #: updateCheck.py:379
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "Damit NVDA weiter bestehen kann, brauchen wir Ihre Hilfe.\n"
-"Dieses Projekt lebt in erster Linie von Ihren Spenden. Indem Sie spenden, können Sie die Weiterentwicklung von NVDA sicherstellen.\n"
-"Selbst wenn Sie nur 10 Euro für jede heruntergeladene Version spenden, können wir alle laufenden Kosten decken.\n"
-"Ihre Spenden gehen hierbei an NV-Access, eine ehrenamtlich arbeitende Organisation, die NVDA weiterentwickelt.\n"
+"Dieses Projekt lebt in erster Linie von Ihren Spenden. Indem Sie spenden, "
+"können Sie die Weiterentwicklung von NVDA sicherstellen.\n"
+"Selbst wenn Sie nur 10 Euro für jede heruntergeladene Version spenden, "
+"können wir alle laufenden Kosten decken.\n"
+"Ihre Spenden gehen hierbei an NV-Access, eine ehrenamtlich arbeitende "
+"Organisation, die NVDA weiterentwickelt.\n"
 "Vielen Dank für Ihre Unterstützung!"
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -4037,22 +4040,44 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"{name} is developed by NV Access, a non-profit organisation committed to "
+"helping and promoting free and open source solutions for blind and vision "
+"impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider "
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "{longName} ({name})\n"
 "Version: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} untersteht der Gnu-Lizenz für freie Software (Version 2). Sie sind berechtigt, diese Software nach belieben weiterzugeben und zu ändern, solange Sie die Software zusammen mit einer Kopie dieser Lizenz und den ursprünglichen Quellcode herausgeben.Dies bezieht sich sowohl auf das Original sowie auch auf modifizierte Kopieen dieser Software sowie alle Weiterentwicklungen.\n"
-"Für weitere Informationen können Sie entweder die [englischsprachige http://www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle [deutsche http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. Die englische Originalversion besitzt nach wie vor die offizielle Rechtsgültigkeit.\n"
+"{name} untersteht der Gnu-Lizenz für freie Software (Version 2). Sie sind "
+"berechtigt, diese Software nach belieben weiterzugeben und zu ändern, "
+"solange Sie die Software zusammen mit einer Kopie dieser Lizenz und den "
+"ursprünglichen Quellcode herausgeben.Dies bezieht sich sowohl auf das "
+"Original sowie auch auf modifizierte Kopieen dieser Software sowie alle "
+"Weiterentwicklungen.\n"
+"Für weitere Informationen können Sie entweder die [englischsprachige http://"
+"www.gnu.org/licenses/old-licenses/gpl-2.0.html] Lizenz oder die inoffizielle "
+"[deutsche http://www.gnu.de/documents/gpl-2.0.de.html] Übersetzung lesen. "
+"Die englische Originalversion besitzt nach wie vor die offizielle "
+"Rechtsgültigkeit.\n"
 "\n"
-"{name} wird von NV Access entwickelt, einer ehrenamtlich arbeitenden Organisation, die freie und quelloffene Software für blinde und sehbehinderte entwickelt.Falls Sie NVDA nützlich finden und dessen Entwicklung fördern wollen, können Sie dies mit einer Spende tun. Dies können dies über den Menüpunkt Spenden im nvda-Menü tun."
+"{name} wird von NV Access entwickelt, einer ehrenamtlich arbeitenden "
+"Organisation, die freie und quelloffene Software für blinde und "
+"sehbehinderte entwickelt.Falls Sie NVDA nützlich finden und dessen "
+"Entwicklung fördern wollen, können Sie dies mit einer Spende tun. Dies "
+"können dies über den Menüpunkt Spenden im nvda-Menü tun."
 
 #. Translators: a message announcing a candidate's character and description.
 #: NVDAObjects\behaviors.py:361
@@ -4497,10 +4522,10 @@ msgstr "Keine Fußnoten"
 msgid "Empty slide"
 msgstr "Leere Folie"
 
-#. Translators: This is the name of a button in sound recorder.
 # Deutsche Sprachdatei für NVDA
 # Copyright (C) 2006-2007 Michael Curran <mick@kulgan.net>
 # Michael Curran <mick@kulgan.net> 2006
+#. Translators: This is the name of a button in sound recorder.
 #: appModules\sndrec32.py:12
 msgid "Rewind"
 msgstr "rücklauf"
@@ -4859,8 +4884,8 @@ msgstr "&Temporäres Wörterbuch"
 
 #: gui\__init__.py:337
 msgid ""
-"A dialog where you can set temporary dictionary by adding dictionary entries"
-" to the edit box"
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
 msgstr ""
 "Dialog zum Auswählen eines temporären Wörterbuchs, indem Einträge zur Liste "
 "hinzugefügt werden."
@@ -5009,11 +5034,14 @@ msgstr "&Beenden"
 #: gui\__init__.py:509
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
 msgstr ""
 "Willkommen bei NVDA!\n"
 "Für das Ausführen der meisten Befehle in NVDA\n"
@@ -5063,10 +5091,13 @@ msgstr "Dieses Dialogfeld beim Starten von NVDA anzeigen"
 #: gui\__init__.py:572
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
 msgstr ""
 "Ihre Konfigurationsdatei ist fehlerhaft.\n"
-"Klicken Sie auf 'OK', um den Fehler zu beheben oder auf 'Abbrechen', um die Konfigurationsdatei zu einem späteren Zeitpunkt manuell zu korrigieren.\n"
+"Klicken Sie auf 'OK', um den Fehler zu beheben oder auf 'Abbrechen', um die "
+"Konfigurationsdatei zu einem späteren Zeitpunkt manuell zu korrigieren.\n"
 "Weitere Details über die Fehler stehen in der Protokolldatei.\n"
 
 #. Translators: The title of the dialog to tell users that there are erros in
@@ -5168,7 +5199,7 @@ msgstr "&Entfernen"
 #. website and get more add-ons.
 #: gui\addonGui.py:65
 msgid "&Get add-ons..."
-msgstr "&weitere Erweiterungen herunterladen..."
+msgstr "Er&weiterungen herunterladen..."
 
 #. Translators: The message displayed in the dialog that allows you to choose
 #. an add-on package for installation.
@@ -5190,18 +5221,20 @@ msgid ""
 "Failed to open add-on package file at %s - missing file or invalid file "
 "format"
 msgstr ""
-"Fehler beim Öffnen der NVDA-Erweiterung  %s - fehlende datei oder ungültiges"
-" Dateiformat"
+"Fehler beim Öffnen der NVDA-Erweiterung  %s - fehlende datei oder ungültiges "
+"Dateiformat"
 
 #. Translators: A message asking the user if they really wish to install an
 #. addon.
 #: gui\addonGui.py:105
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"Möchten Sie die Erweiterung installieren? Installieren Sie nur Erweiterungen von vertrauenswürdigen Quellen.\n"
+"Möchten Sie die Erweiterung installieren? Installieren Sie nur Erweiterungen "
+"von vertrauenswürdigen Quellen.\n"
 "Erweiterung: {summary} {version}\n"
 "Autor: {author}"
 
@@ -5644,8 +5677,8 @@ msgstr ""
 #. secure screens such as User Account Control (UAC) dialog).
 #: gui\settingsDialogs.py:184
 msgid ""
-"Use currently saved settings on the logon and other secure screens (requires"
-" administrator privileges)"
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
 msgstr ""
 "A&ktuell gespeicherte Einstellungen im Anmeldebildschirm und bei "
 "Sicherheitsmeldungen verwenden (erfordert Administrationsberechtigungen!)"
@@ -5693,12 +5726,11 @@ msgstr ""
 #. settings  fails
 #: gui\settingsDialogs.py:224
 msgid ""
-"Unable to copy a file. Perhaps it is currently being used by another process"
-" or you have run out of disc space on the drive you are copying to."
+"Unable to copy a file. Perhaps it is currently being used by another process "
+"or you have run out of disc space on the drive you are copying to."
 msgstr ""
 "Eine Datei konnte nicht kopiert werden. Vielleicht wird sie von einem "
-"anderen Prozess verwendet, oder das Laufwerk, auf das Sie kopieren, ist "
-"voll."
+"anderen Prozess verwendet, oder das Laufwerk, auf das Sie kopieren, ist voll."
 
 #. Translators: the title of a retry cancel dialog when copying settings
 #. fails
@@ -6229,7 +6261,7 @@ msgstr "&Zeilennummern ansagen"
 #. dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of
 #. a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1034
 msgid "Report l&ine indentation"
 msgstr "Zeilen&einrückung ansagen"
@@ -6489,11 +6521,15 @@ msgstr "S&tufe"
 #. Translators: Information about NVDA's new laptop keyboard layout.
 #: gui\upgradeAlerts.py:18
 msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more information."
+"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
+"order to make it more intuitive and consistent.\n"
+"If you use the laptop layout, please see the What's New document for more "
+"information."
 msgstr ""
-"In NVDA 2013.1 wurde das Tastaturschema für laptops komplett überarbeitet, um die Bedienung zu vereinfachen und intuitiver zu gestalten.\n"
-"Wenn Sie das Laptop-Tastaturschema bisher verwendet haben, sehen Sie sich das Änderungsprotokoll für weitere Informationen an."
+"In NVDA 2013.1 wurde das Tastaturschema für laptops komplett überarbeitet, "
+"um die Bedienung zu vereinfachen und intuitiver zu gestalten.\n"
+"Wenn Sie das Laptop-Tastaturschema bisher verwendet haben, sehen Sie sich "
+"das Änderungsprotokoll für weitere Informationen an."
 
 #. Translators: The title of a dialog providing information about NVDA's new
 #. laptop keyboard layout.
@@ -7365,8 +7401,8 @@ msgid ""
 "should be found. Pressing twice clears the setting."
 msgstr ""
 "Bei einmaligem Drücken wird die aktuelle Spalte als Spalte festgelegt, in "
-"der sich die Reihenbeschriftungen befinden. Bei zweimaligem Drücken wird die"
-" Zuweisung wieder gelöscht."
+"der sich die Reihenbeschriftungen befinden. Bei zweimaligem Drücken wird die "
+"Zuweisung wieder gelöscht."
 
 #. Translators: This is presented in Excel when the current cell contains a
 #. formula.
@@ -7448,8 +7484,8 @@ msgstr "HIMS SyncBraille"
 #~ msgstr "Kein Objekt an der Position im Flächenmodus."
 
 #~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the position"
-#~ " of the review cursor within flat review"
+#~ "Moves navigator object to the object represented by the text at the "
+#~ "position of the review cursor within flat review"
 #~ msgstr ""
 #~ "Setzt das Navigator-Objekt an die Stelle des nvda-Cursors im Flächenmodus."
 

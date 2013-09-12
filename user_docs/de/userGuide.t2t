@@ -35,7 +35,7 @@ Bei all den Menschen auf der Welt ist es wichtig, egal welche Sprache sie sprech
 NVDA wurde bislang in 44 Sprachen übersetzt, darunter sind neben englisch: Afrikaans, Albanisch, amharisch, Arabisch, argonesisch, Brasilianisches Portugiesisch, Bulgarisch, Kroatisch, tschechisch, dänisch, Niederländisch, Farsi, Finnisch, Französisch, galizisch, Georgisch, griechisch, Deutsch, Hebräisch, Hindi, Ungarisch, irisch, Isländisch, Italienisch, Japanisch, koreanisch, nepalesisch, norwegisch, Polnisch, Portugiesisch, Rumänisch, Russisch, Serbisch, Slowakisch, slovenisch, Spanisch, Schwedisch, Tamil, Thai, Traditionelles und vereinfachtes Chinesisch, Türkisch, Ukrainisch und Vietnamesisch.
 
 ++ Unterstützung von Sprachausgaben ++
-Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser über eine Sprachausgabe für die betreffende Sprache verfügt.
+Zusätzlich zur Bereitstellung der Benutzeroberfläche in mehreren Sprachen kann der Benutzer in NVDA Text in jeder Sprache lesen, sofern dieser  eine Sprachausgabe für die betreffende Sprache verfügt.
 
 NVDA wird standardmäßig mit einer freien multilingualen Sprachausgabe, der [eSpeak http://espeak.sourceforge.net/download.html] ausgeliefert. Darüber hinaus kann NVDA sowohl mit SAPI 4.0 und 5.x als auch mit Audiologic und NewFon-Stimmen arbeiten.
 
@@ -142,9 +142,11 @@ Bitte schauen Sie erst auf der Homepage nach, ob ggf. etwas darüber bekannt ist
 Beim ersten Start von NVDA wird Ihnen eine Dialogbox mit einigen grundlegenden Informationen über die NVDA-Modifikationstaste und das NVDA-Menü angezeigt.
 (Bitte beachten Sie weitere Themenabschnitte.)
 Das Dialogfeld enthält zudem drei Kontrollfelder.
-Mit dem Ersten können Sie festlegen, ob die Capslock-Taste (Dauergroßschreibtaste) als so genannte NVDA-Modifikationstaste agieren soll. Mit dem zweiten Trontrollkästchen können Sie bestimmen, ob NVDA nach der Anmeldung automatisch gestartet werden soll. Diese Option steht nur bei installierten Versionen von NVDA zur Verfügung. Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
+Mit dem Ersten können Sie festlegen, ob die Dauergroßschreibtaste als so genannte NVDA-Modifikationstaste agieren soll.
+Mit dem zweiten Krontrollkästchen können Sie bestimmen, ob NVDA nach der Anmeldung automatisch gestartet werden soll. Diese Option steht nur bei installierten Versionen von NVDA zur Verfügung.
+Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkommensdialog angezeigt werden soll.
 
-++ Über die NVDA-Tastenbefehle ++
+++ Über die NVDA-Tastenkombinationen ++
 
 +++ Die NVDA-Modifikationstaste +++
 In NVDA bestehen die Tastenkombinationen zumeist aus einer oder mehreren Tasten in Kombination mit der sog. NVDA-Modifikationstaste.
@@ -376,11 +378,11 @@ Das Layout ist wie folgt aufgebaut:
 | Vorheriges Zeichen | Aktuelles Zeichen | Nächstes Zeichen |
 
 ++ Darstellungsmodi ++[ReviewModes]
-Abhängig vom eingestellten Darstellungsmodus können Sie mit NVDAs Befehlen zum Betrachten von Text im aktuellen Navigatorobjekt, im angezeigten dokument oder im Bildschirminhalt navigieren.
+Abhängig vom eingestellten Darstellungsmodus können Sie mit den Befehlen zum Betrachten von Text von NVDA im aktuellen Navigatorobjekt, im angezeigten dokument oder im Bildschirminhalt navigieren.
 Die Darstellungsmodi sind ein Ersatz für den in früheren Versionen von NVDA vorhandenen Flächenmodus.
 
 Bedenken Sie, dass die Braillezeile standardmäßig den  [Fokus #SystemFocus] und den  [Systemcursor #SystemCaret] verfolgt, nicht jedoch den Navigator oder den nvda-Cursor.
-Um die Anzeigen des Flächenmodus auch in Braille zu erhalten, müssen Sie die [Kopplung der Braillezeile konfigurieren #BrailleTether].
+Um die Anzeigen der Darstellungsmodi auch in Braille zu erhalten, müssen Sie die [Kopplung der Braillezeile konfigurieren #BrailleTether].
 
 Verwenden Sie die folgenden beiden Befehle, um zwischen den Darstellungsmodi umzuschalten:
 %kc:beginInclude
@@ -395,17 +397,21 @@ Bei Eingabefeldern ist das üblicherweise der eingegebene Text.
 Bei anderen Objekten wird hier der Name und der Wert des objekts angezeigt.
 
 +++ Dokumentdarstellung +++[DocumentReview]
-Wenn sich das aktuelle Navigatorobjekt in inem Dokument (Lotus-Symphony-Dokument, Webseiten o.ä.) befindet, können Sie in diesen Darstellungsmodus wechseln.
+Wenn sich das aktuelle Navigatorobjekt in einem komplexen Dokument (Lotus-Symphony-Dokument, Webseiten o.ä.) befindet, können Sie in diesen Darstellungsmodus wechseln.
 Im Dokumentdarstellungsmodus können sie sich den Text des gesamten Dokuments anzeigen lassen.
-Wenn Sie vom Objektmodus aus in den Dokumentmodus wechseln, wird der NVDA-Cursor an die Position des aktuellen Navigatorobjekts gesetzt.
+
+Wenn Sie von der Objektdarstellung aus in die Dokument-Darstellung wechseln, wird der NVDA-Cursor an die Position des aktuellen Navigatorobjekts gesetzt.
 Wenn Sie die Befehle zum Betrachten von Text verwenden, wird das Navigatorobjekt automatisch aktualisiert.
-NVDA wird automatisch in den Dokumentmodus wechseln, wenn Sie sich im Lesemodus befinden.
+
+NVDA wird automatisch in die Dokument-Darstellung wechseln, wenn Sie sich im Lesemodus befinden.
 
 +++ Bildschirmdarstellung +++[ScreenReview]
 In diesem Modus können Sie sich den gesamten Bildschirminhalt der aktuellen Anwendung anzeigen lassen.
 Dies ähnelt den Bildschirmdarstellungs- und MauszeigerFunktionen vieler Windows-Bildschirmleseprogramme.
-Wenn Sie in den Bildschirmdarstellungsmodus wechseln, wird der NVDA-Cursor an die Position des aktuellen Navigatorobjekts gesetzt.
+
+Wenn Sie in die Bildschirmdarstellung wechseln, wird der NVDA-Cursor an die Position des aktuellen Navigatorobjekts auf dem Bildschirm gesetzt.
 Wenn Sie die Befehle zum Betrachten von Text verwenden, wird der Navigator automatisch auf das Objekt gesetzt, das sich an der Position des NVDA-Cursors befindet.
+
 Anmerkung: In einigen neueren Anwendungen kann NVDA möglicherweise nicht alle Inhalte im Bildschirm-darstellungsmodus darstellen. Dies liegt daran, dass diese Anwendungen Technologien zum Darstellen des Bildschirminhalts verwenden, die (noch) nicht unterstützt werden.
   
 ++ Mit der Maus navigieren ++
@@ -568,7 +574,7 @@ Für bestimmte Anwendungen stellt NVDA zusätzliche Tastenkombinationen bereit -
 
 ++ Microsoft PowerPoint ++
 %kc:beginInclude
-|| Name | Key | Description
+|| Name | Tastenkombination | Beschreibung
 | Notizen des Vortragenden anzeigen | strg+Umschalt+s | Mit dieser Tastenkombination können Sie zwischen Ihren Notizen und dem eigentlichen Folieninhalt umschalten, während eine Präsentation abläuft. Dies wirkt sich nicht auf die Anzeige am Bildschirm aus, sondern lediglich auf die Anzeige innerhalb von NVDA. |
 %kc:endInclude
 
@@ -811,7 +817,8 @@ Diese Option legt fest, ob das Wort, welches sich unter dem Cursor befindet, in 
 Diese Option ist ein numerisches Feld, in dem sich die Cursor-Blinkfrequenz in Millisekunden anpassen lässt.
 
 ==== Anzeigedauer für Meldungen (in Sekunden) ====
-Dieses numerische Eingabefeld legt fest, wie lange Meldungen von NVDA auf der Braillezeile angezeigt werden sollen. Wenn eine Blitzmeldung erscheint, kann diese durch Drücken einer Routingtaste geschlossen werden. Durch Drücken einer Navigationstaste kann die anzeigedauer einer Blitzmeldung verlängert werden. Um die Anzeige von Blitzmeldungen abzuschalten, geben Sie hier 0 an.
+Dieses numerische Eingabefeld legt fest, wie lange Meldungen von NVDA auf der Braillezeile angezeigt werden sollen. Wenn eine Meldung erscheint, kann diese durch Drücken einer Routingtaste geschlossen werden. Durch Drücken einer Navigationstaste kann die anzeigedauer einer Meldung verlängert werden.
+Um die Anzeige von Meldungen abzuschalten, geben Sie hier 0 an.
 
 %kc:setting
 ==== Braillezeile gekoppelt an ====[BrailleTether]
@@ -1025,7 +1032,7 @@ Wenn die Option deaktiviert ist, werden alle Elemente wie beispielsweise Links i
 Mit dieser Option können Sie bestimmen, wie NVDA mit Tabellen umgeht, die nur zu Gestaltungszwecken verwendet werden.
 Wenn die Option aktiviert ist, wird NVDA solche Tabellen auf der Grundlage der  [Einstellungen zur Dokumentformatierung #DocumentFormattingSettings] anzeigen und über die Schnellnavigationstasten zugänglich machen.
 Anderenfalls werden Layout-Tabellen weder angezeigt noch über die Schnellnavigationstasten zugänglich gemacht.
-Der Inhalt der Tabellen wird aber dennoch als noraler Text angezeigt.
+Der Inhalt der Tabellen wird aber dennoch normal angezeigt.
 Die Option ist standardmäßig deaktiviert.
 
 ==== Automatisch alles lesen nach Aufruf einer Internetseite ====
@@ -1172,17 +1179,23 @@ Den Sprachbetrachter können Sie im NVDA-Menü unter "Extras einschalten und auc
 Während der Sprachbetrachter eingeschaltet ist, aktualisiert sich sogleich der Text beim Sprechen.
 Wenn Sie in das Fenster des Betrachters klicken, unterbricht NVDA augenblicklich die weitere Aktualisierung der gesprochenen Textdarstellungen, so dass Sie nun die entsprechenden Einträge markieren und in die Zwischenablage kopieren können.
 
-++ Der Erweiterungs-Manager ++
-Der Erweiterungs-Manager, den Sie über das Untermenü Extras im NVDA-Menü erreichen, erlaubt Ihnen, Erweiterungspakete für NVDA zu installieren und zu deinstallieren. 
+++ Erweiterungen verwalten ++
+Der Dialog Erweiterungen verwalten, den Sie über das Untermenü Extras im NVDA-Menü erreichen, erlaubt Ihnen, Erweiterungspakete für NVDA zu installieren und zu deinstallieren. 
 Diese Pakete werden von der NVDA-Nutzergemeinde bereitgestellt und können zusätzlichen Code enthalten, um NVDA-Funktionen zu verändern oder neue hinzuzufügen. Es ist auf diese Weise sogar möglich, neue Braillezeilen- oder Sprachausgabentreiber hinzuzufügen.
 
 Der Erweiterungs-manager enthält eine Liste aller Erweiterungen, die bereits in Ihrer benutzerspezifischen Konfiguration installiert sind.
 Für jede Erweiterung wird Ihnen der Name, die Versionsnummer und der Autor angezeigt. Sie können allerdings noch weitere Informationen wie eine Beschreibung und eine Url als Bezugsquelle abrufen. Wählen Sie hierzu die gewünschte Erweiterung aus und drücken Sie anschließend die Schaltfläche "über...".
-Um weitere Erweiterungen herunterzuladen und zu installieren, drücken Sie den Schalter "weitere Erweiterungen herungerladen...". Hiermit wird die Webseite für nvda-erweiterungen http://addons.nvda-project.org geöffnet. Falls Sie NVDA installiert haben, können Sie Erweiterungen direkt vom Browser aus installieren. Anderenfalls müssen Sie die Erweiterung speichern und wie unten beschrieben vorgehen, um eine Erweiterung zu installieren.
+Um weitere Erweiterungen herunterzuladen und zu installieren, drücken Sie den Schalter "Erweiterungen herunterladen...".
+Hiermit wird die Webseite für nvda-erweiterungen http://addons.nvda-project.org geöffnet.
+Falls Sie NVDA installiert haben, können Sie Erweiterungen direkt vom Browser aus installieren.
+Anderenfalls müssen Sie die Erweiterung speichern und wie unten beschrieben vorgehen, um eine Erweiterung zu installieren.
+
 Um eine Erweiterung zu installieren, drücken Sie den Schalter "installieren...".
 Jetzt können Sie auf Ihrem Rechner oder im Netzwerk nach der gewünschten Erweiterung (einer Datei mit der Endung .nvda-addon) suchen.
-Wenn Sie dann den Schalter Öffnen drückewn, werden Sie gefragt, ob Sie die Erweiterung wirklich installieren möchten.
-Da Erweiterungen den NVDA uneingeschränkt nutzen können, bedeutet dies theoretisch, dass die Erweiterungen auf Ihre persönlichen Daten (oder im Falle einer fest installierten Version) auf das gesamte System zugreifen können. Installieren Sie deshalb nur Erweiterungen aus vertrauenswürdigen Quellen.
+Wenn Sie dann den Schalter Öffnen drücken, beginnt der Installationsvorgang.
+
+Sie werden nun gefragt, ob Sie die Erweiterung wirklich installieren möchten.
+Da Erweiterungen  uneingeschränkt auf NVDA zugreifen können, bedeutet dies theoretisch, dass die Erweiterungen auf Ihre persönlichen Daten (oder im Falle einer fest installierten Version) auf das gesamte System zugreifen können. Installieren Sie deshalb nur Erweiterungen aus vertrauenswürdigen Quellen.
 Ist die Erweiterung dann installiert, muss NVDA neu gestartet werden, damit die Erweiterung ausgeführt wird.
 Solange sie den Neustart von NVDA nicht durchführen, wird Ihnen im Erweiterungs-Manager in der Spalte Status der Zustand "installieren" angezeigt.
 
