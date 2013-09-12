@@ -14,6 +14,8 @@
 - Zend Studio now functions the same as Eclipse. (#3420)
 - The changed state of certain checkboxes in the Microsoft Outlook 2010 message rules dialog are now reported automatically. (#3063)
 - NVDA will now report the pinned state for pinned controls such as tabs in Mozilla Firefox. (#3372)
+- It is now possible to bind scripts to keyboard gestures containing Alt and/or Windows keys as modifiers. Previously, if this was done, performing the script would cause the Start Menu or menu bar to be activated. (#3472)
+- Selecting text in browse mode documents (e.g. using control+shift+end) no longer causes the keyboard layout to be switched on systems with multiple keyboard layouts installed. (#3472)
 
 
 = 2013.2 =
