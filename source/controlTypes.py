@@ -183,6 +183,7 @@ STATE_SORTED_ASCENDING=0x100000000
 STATE_SORTED_DESCENDING=0x200000000
 STATES_SORTED=frozenset([STATE_SORTED,STATE_SORTED_ASCENDING,STATE_SORTED_DESCENDING])
 STATE_HASLONGDESC=0x400000000
+STATE_PINNED=0x800000000
 
 roleLabels={
 	# Translators: The word for an unknown control type.
@@ -514,6 +515,8 @@ stateLabels={
 	STATE_SORTED_DESCENDING:_("sorted descending"),
 	# Translators: a state that denotes that an object (usually a graphic) has a long description.
 	STATE_HASLONGDESC:_("has long description"),
+	# Translators: a state that denotes that an object is pinned in its current location 
+	STATE_PINNED:_("pinned"),
 }
 
 negativeStateLabels={
