@@ -116,23 +116,41 @@ wdRevisionCellDeletion=17
 wdRevisionCellMerge=18
 
 wdRevisionTypeLabels={
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionInsert:_("insertion"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionDelete:_("deletion"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionProperty:_("property"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionParagraphNumber:_("paragraph number"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionDisplayField:_("display field"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionReconcile:_("reconcile"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionConflict:_("conflict"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionStyle:_("style"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionReplace:_("replace"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionParagraphProperty:_("paragraph property"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionTableProperty:_("table property"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionSectionProperty:_("section property"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionStyleDefinition:_("style definition"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionMovedFrom:_("moved from"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionMovedTo:_("moved to"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionCellInsertion:_("cell insertion"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionCellDeletion:_("cell deletion"),
+	# Translators: Describes document revision in Microsoft Word.
 	wdRevisionCellMerge:_("cell merge"),
 }
 
@@ -345,8 +363,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					author=rev.author
 					date=rev.date
 				except COMError:
+					# Translators: Reported when no author information for document revision is found.
 					author=_("unknown author")
+					# Translators: Reported when no date information for document revision is found.
 					date=_("unknown date")
+				# Translators: Describes document revision in Microsoft Word (example output: cell merge by Mick Curran on September 1, 2013).
 				field['revision']=_("{revisionType} by {revisionAuthor} on {revisionDate}").format(revisionType=revisionLabel,revisionAuthor=author,revisionDate=date)
 			else:
 				field['revision']=revisionLabel
