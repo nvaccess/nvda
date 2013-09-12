@@ -144,6 +144,7 @@ confspec = ConfigObj(StringIO(
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
 	reportFontAttributes = boolean(default=false)
+	reportRevisions = boolean(default=false)
 	reportColor = boolean(default=False)
 	reportAlignment = boolean(default=false)
 	reportStyle = boolean(default=false)
