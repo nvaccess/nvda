@@ -177,20 +177,51 @@ def terminate():
 			log.exception("Error terminating app module %r" % app)
 	runningTable.clear()
 
-def handleLoseFocus(mod):
-	if not mod.sleepMode and hasattr(mod,'event_appModule_loseFocus'):
-		try:
-			mod.event_appModule_loseFocus()
-		except watchdog.CallCancelled:
-			pass
-	mod._configProfileTrigger.exit()
-	mod._configProfileTrigger = None
+def handleAppSwitch(oldMods, newMods):
+	newModsSet = set(newMods)
+	processed = set()
+	nextStage = []
 
-def handleGainFocus(mod):
-	trigger = mod._configProfileTrigger = AppProfileTrigger(mod.appName)
-	trigger.enter()
-	if not mod.sleepMode and hasattr(mod,'event_appModule_gainFocus'):
-		mod.event_appModule_gainFocus()
+	# Determine all apps that are losing focus and fire appropriate events.
+	for mod in reversed(oldMods):
+		if mod in processed:
+			# This app has already been handled.
+			continue
+		processed.add(mod)
+		if mod in newModsSet:
+			# This app isn't losing focus.
+			continue
+		processed.add(mod)
+		# This app is losing focus.
+		nextStage.append(mod)
+		if not mod.sleepMode and hasattr(mod,'event_appModule_loseFocus'):
+			try:
+				mod.event_appModule_loseFocus()
+			except watchdog.CallCancelled:
+				pass
+
+	with config.conf.atomicProfileSwitch():
+		# Exit triggers for apps that lost focus.
+		for mod in nextStage:
+			mod._configProfileTrigger.exit()
+			mod._configProfileTrigger = None
+
+		nextStage = []
+		# Determine all apps that are gaining focus and enter triggers.
+		for mod in newMods:
+			if mod in processed:
+				# This app isn't gaining focus or it has already been handled.
+				continue
+			processed.add(mod)
+			# This app is gaining focus.
+			nextStage.append(mod)
+			trigger = mod._configProfileTrigger = AppProfileTrigger(mod.appName)
+			trigger.enter()
+
+	# Fire appropriate events for apps gaining focus.
+	for mod in nextStage:
+		if not mod.sleepMode and hasattr(mod,'event_appModule_gainFocus'):
+			mod.event_appModule_gainFocus()
 
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):

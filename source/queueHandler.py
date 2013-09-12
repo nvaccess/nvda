@@ -73,4 +73,6 @@ def pumpAll():
 		except:
 			log.exception("error in generator %d"%ID)
 			del generators[ID]
+		# Lose our reference so Python can destroy the generator if appropriate.
+		del gen
 	flushQueue(eventQueue)

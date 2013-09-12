@@ -33,9 +33,9 @@ class ProfilesDialog(wx.Dialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of the profile list in the Configuration Profiles dialog.
 		sizer.Add(wx.StaticText(self, label=_("&Profile")))
-		# Translators: Indicates that no configuration profile is selected.
-		# In this case, the user's normal configuration will be used.
-		profiles = [_("(none)")]
+		# Translators: The item to select the user's normal configuration
+		# in the profile list in the Configuration Profiles dialog.
+		profiles = [_("(normal configuration)")]
 		profiles.extend(config.conf.listProfiles())
 		item = self.profileList = wx.Choice(self, choices=profiles)
 		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
@@ -48,8 +48,8 @@ class ProfilesDialog(wx.Dialog):
 		mainSizer.Add(sizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label of a button to activate the selected profile.
-		item = wx.Button(self, label=_("&Activate"))
+		# Translators: The label of a button to activate (and therefore also edit) the selected profile.
+		item = wx.Button(self, label=_("&Activate/edit"))
 		item.Bind(wx.EVT_BUTTON, self.onActivate)
 		sizer.Add(item)
 		self.AffirmativeId = item.Id
@@ -129,6 +129,7 @@ class ProfilesDialog(wx.Dialog):
 			return
 		self.profileList.Append(name)
 		self.profileList.Selection = self.profileList.Count - 1
+		self.onProfileListChoice(None)
 		self.profileList.SetFocus()
 
 	def onDelete(self, evt):
@@ -231,9 +232,6 @@ class TriggersDialog(wx.Dialog):
 		item = self.sayAllToggle = wx.CheckBox(self, label=_("&Say all"))
 		if "sayAll" in triggers:
 			item.Value = True
-		elif "sayAll" in config.conf["profileTriggers"]:
-			# This trigger is associated with another profile already.
-			item.Disable()
 		mainSizer.Add(item)
 
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
@@ -247,13 +245,23 @@ class TriggersDialog(wx.Dialog):
 
 	def onClose(self, evt):
 		triggers = config.conf["profileTriggers"]
+		try:
+			trigOnOther = triggers["sayAll"] != self.profile
+		except KeyError:
+			trigOnOther = False
 		if self.sayAllToggle.Value:
+			if trigOnOther and gui.messageBox(
+				# Translators: A confirmation prompt that might be displayed when closing the configuration profile triggers dialog.
+				_("Say all is already associated with another profile.\n"
+					"If you continue, it will be removed from the other profile and associated with this one.\n"
+					"Are you sure you want to continue?"),
+				# Translators: The title of a confirmation prompt.
+				_("Confirm"), wx.YES | wx.NO | wx.ICON_WARNING, self
+			) == wx.NO:
+				return
 			triggers["sayAll"] = self.profile
-		elif self.sayAllToggle.Enabled:
-			try:
-				del triggers["sayAll"]
-			except KeyError:
-				pass
+		elif not trigOnOther:
+			del triggers["sayAll"]
 
 		self.Parent.Enable()
 		self.Destroy()
