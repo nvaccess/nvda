@@ -1528,7 +1528,7 @@ class InputGesturesDialog(SettingsDialog):
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
 		settingsSizer.Add(tree, proportion=7, flag=wx.EXPAND)
 
-		gestures = inputCore.manager.getAllGestureMappings()
+		gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
 		for category in sorted(gestures):
 			treeCat = tree.AppendItem(self.treeRoot, category)
 			commands = gestures[category]
