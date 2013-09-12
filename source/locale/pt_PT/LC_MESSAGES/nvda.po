@@ -4,15 +4,15 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-29 19:08+1000\n"
-"PO-Revision-Date: 2013-04-20 23:39-0000\n"
-"Last-Translator: Rui Fontes <rui.fontes@tiflotecnia.com>\n"
+"PO-Revision-Date: 2013-08-08 16:51-0000\n"
+"Last-Translator: Diogo Costa <diogo@megatts.com>\n"
 "Language-Team: pt-PT <LL@li.org>\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 1.5.3\n"
+"X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -2029,33 +2029,29 @@ msgstr ""
 
 #. Translators: reported when there are no other available review modes for this object
 #: globalCommands.py:291
-#, fuzzy
 msgid "No next review mode"
-msgstr "Modo de revisão simples"
+msgstr "Sem modo de revisão seguinte"
 
 #: globalCommands.py:292
-#, fuzzy
 msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Altera para a revisão plana no ecrã (ou no documento se estiver em algum) e "
-"das posições do cursor de revisão na localização do objecto actual"
+"Muda para o modo de revisão seguinte (ex: objecto, documento ou ecrã) e "
+"coloca a posição de revisão no ponto do objecto de navegação"
 
 #. Translators: reported when there are no  other available review modes for this object
 #: globalCommands.py:303
-#, fuzzy
 msgid "No previous review mode"
-msgstr "não existe frame anterior"
+msgstr "Sem modo de revisão anterior"
 
 #: globalCommands.py:304
-#, fuzzy
 msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
 msgstr ""
-"Altera para a revisão plana no ecrã (ou no documento se estiver em algum) e "
-"das posições do cursor de revisão na localização do objecto actual"
+"Muda para o modo de revisão anterior (ex: objecto, documento ou ecrã) e "
+"coloca a posição de revisão no ponto do objecto de navegação"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -2841,25 +2837,26 @@ msgstr ""
 
 #. Translators: a message when there is no next object when navigating
 #: globalCommands.py:1172 globalCommands.py:1189
-#, fuzzy
 msgid "no next"
-msgstr "não existe objecto seguinte"
+msgstr "sem seguinte"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:1174
-#, fuzzy
 msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "Move a navegação de objectos para o objecto que o contém"
+msgstr ""
+"Move para o objecto seguinte na revisão plana da hierarquia de navegação do "
+"objecto"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:1191
-#, fuzzy
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
-msgstr "Move a navegação de objectos para o objecto que o contém"
+msgstr ""
+"Move para o objecto anterior na revisão plana da hierarquia de navegação do "
+"objecto"
 
 #: globalCommands.py:1199
 #, python-format
@@ -3317,19 +3314,16 @@ msgid "NVDA Python Console"
 msgstr "Consola de Pyton do NVDA"
 
 #: review.py:68
-#, fuzzy
 msgid "Object review"
-msgstr "vista em árvore"
+msgstr "Revisão de objecto"
 
 #: review.py:69
-#, fuzzy
 msgid "Document review"
-msgstr "Formatação de Documentos"
+msgstr "Revisão de documento"
 
 #: review.py:70
-#, fuzzy
 msgid "Screen review"
-msgstr "vista em árvore"
+msgstr "Revisão de ecrã"
 
 #: scriptHandler.py:33
 #, python-format
@@ -4390,6 +4384,7 @@ msgstr ""
 #: gui\__init__.py:164
 msgid "An NVDA settings dialog is already open. Please close it first."
 msgstr ""
+"Já está aberto um diálogo de definições do NVDA. Por favor, feche-o primeiro."
 
 #. Translators: Title for default speech dictionary dialog.
 #: gui\__init__.py:169
@@ -4841,9 +4836,8 @@ msgstr "&Remover"
 
 #. Translators: The label of a button in Add-ons Manager to open the Add-ons website and get more add-ons.
 #: gui\addonGui.py:65
-#, fuzzy
 msgid "&Get add-ons..."
-msgstr "&Acerca do extra..."
+msgstr "&Obter extras..."
 
 #. Translators: The message displayed in the dialog that allows you to choose an add-on package for installation.
 #: gui\addonGui.py:83
@@ -5731,9 +5725,8 @@ msgstr "&Ler continuamente ao carregar a página"
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 #: gui\settingsDialogs.py:933
-#, fuzzy
 msgid "Include l&ayout tables"
-msgstr "Anunciar &tabelas de formatação"
+msgstr "Incluir tabelas de &formatação"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -5822,7 +5815,7 @@ msgstr "Anunciar &números de linha"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1034
 msgid "Report l&ine indentation"
 msgstr "Anunciar &identação de linha"
@@ -6201,15 +6194,13 @@ msgstr "Actualiza o conteúdo do documento"
 
 #. Translators: Presented when use screen layout option is toggled.
 #: virtualBuffers\__init__.py:862
-#, fuzzy
 msgid "use screen layout on"
-msgstr "utilizar a disposição de ecrã %s"
+msgstr "utilizar a disposição de ecrã ligado"
 
 #. Translators: Presented when use screen layout option is toggled.
 #: virtualBuffers\__init__.py:865
-#, fuzzy
 msgid "use screen layout off"
-msgstr "utilizar a disposição de ecrã %s"
+msgstr "utilizar a disposição de ecrã desligado"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 #: virtualBuffers\__init__.py:867

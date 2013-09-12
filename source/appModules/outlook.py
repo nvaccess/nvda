@@ -86,7 +86,9 @@ class AppModule(appModuleHandler.AppModule):
 		windowClassName=obj.windowClassName
 		states=obj.states
 		controlID=obj.windowControlID
-		if role==controlTypes.ROLE_LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
+		if windowClassName=="REListBox20W" and role==controlTypes.ROLE_CHECKBOX:
+			clsList.insert(0,REListBox20W_CheckBox)
+		elif role==controlTypes.ROLE_LISTITEM and (windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")):
 			clsList.insert(0,AutoCompleteListItem)
 		if role==controlTypes.ROLE_LISTITEM and windowClassName=="OUTEXVLB":
 			clsList.insert(0, AddressBookEntry)
@@ -97,6 +99,16 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, MessageList_pre2003)
 			elif isinstance(obj,IAccessible) and obj.event_objectID==winUser.OBJID_CLIENT and obj.event_childID==0:
 				clsList.insert(0,SuperGridClient2010)
+
+class REListBox20W_CheckBox(IAccessible):
+
+	def script_checkbox(self, gesture):
+		gesture.send()
+		self.event_stateChange()
+
+	__gestures={
+		"kb:space":"checkbox",
+	}
 
 class SuperGridClient2010(IAccessible):
 
