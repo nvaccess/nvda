@@ -95,6 +95,47 @@ wdContentControlDate=6
 wdContentControlGroup=7
 wdContentControlCheckBox=8
 
+wdNoRevision=0
+wdRevisionInsert=1
+wdRevisionDelete=2
+wdRevisionProperty=3
+wdRevisionParagraphNumber=4
+wdRevisionDisplayField=5
+wdRevisionReconcile=6
+wdRevisionConflict=7
+wdRevisionStyle=8
+wdRevisionReplace=9
+wdRevisionParagraphProperty=10
+wdRevisionTableProperty=11
+wdRevisionSectionProperty=12
+wdRevisionStyleDefinition=13
+wdRevisionMovedFrom=14
+wdRevisionMovedTo=15
+wdRevisionCellInsertion=16
+wdRevisionCellDeletion=17
+wdRevisionCellMerge=18
+
+wdRevisionTypeLabels={
+	wdRevisionInsert:_("insertion"),
+	wdRevisionDelete:_("deletion"),
+	wdRevisionProperty:_("property"),
+	wdRevisionParagraphNumber:_("paragraph number"),
+	wdRevisionDisplayField:_("display field"),
+	wdRevisionReconcile:_("reconcile"),
+	wdRevisionConflict:_("conflict"),
+	wdRevisionStyle:_("style"),
+	wdRevisionReplace:_("replace"),
+	wdRevisionParagraphProperty:_("paragraph property"),
+	wdRevisionTableProperty:_("table property"),
+	wdRevisionSectionProperty:_("section property"),
+	wdRevisionStyleDefinition:_("style definition"),
+	wdRevisionMovedFrom:_("moved from"),
+	wdRevisionMovedTo:_("moved to"),
+	wdRevisionCellInsertion:_("cell insertion"),
+	wdRevisionCellDeletion:_("cell deletion"),
+	wdRevisionCellMerge:_("cell merge"),
+}
+
 storyTypeLocalizedLabels={
 	wdCommentsStory:_("Comments"),
 	wdEndnotesStory:_("Endnotes"),
@@ -159,6 +200,7 @@ formatConfigFlagsMap={
 	"reportComments":4096,
 	"reportHeadings":8192,
 	"autoLanguageSwitching":16384,	
+	"reportRevisions":32768,
 }
 
 class WordDocumentTextInfo(textInfos.TextInfo):
@@ -205,6 +247,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def getTextWithFields(self,formatConfig=None):
+		extraDetail=formatConfig.get('extraDetail',False) if formatConfig else False
 		if not formatConfig:
 			formatConfig=config.conf['documentFormatting']
 		formatConfig['autoLanguageSwitching']=config.conf['speech'].get('autoLanguageSwitching',False)
@@ -223,7 +266,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				if isinstance(field,textInfos.ControlField):
 					item.field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
-					item.field=self._normalizeFormatField(field)
+					item.field=self._normalizeFormatField(field,extraDetail=extraDetail)
 			elif index>0 and isinstance(item,basestring) and item.isspace():
 				 #2047: don't expose language for whitespace as its incorrect for east-asian languages 
 				lastItem=commandList[index-1]
@@ -288,7 +331,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['role']=controlTypes.ROLE_FRAME
 		return field
 
-	def _normalizeFormatField(self,field):
+	def _normalizeFormatField(self,field,extraDetail=False):
+		_startOffset=int(field.pop('_startOffset'))
+		_endOffset=int(field.pop('_endOffset'))
+		revisionType=int(field.pop('wdRevisionType',0))
+		revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
+		if revisionLabel:
+			if extraDetail:
+				try:
+					r=self.obj.WinwordSelectionObject.range
+					r.setRange(_startOffset,_endOffset)
+					rev=r.revisions.item(1)
+					author=rev.author
+					date=rev.date
+				except COMError:
+					author=_("unknown author")
+					date=_("unknown date")
+				field['revision']=_("{revisionType} by {revisionAuthor} on {revisionDate}").format(revisionType=revisionLabel,revisionAuthor=author,revisionDate=date)
+			else:
+				field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=colors.RGB.fromCOLORREF(int(color))		

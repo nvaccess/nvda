@@ -30,7 +30,7 @@ Főbb jellemzői:
 
 ++ Honosítás ++
 
-Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg 42 nyelvre lett lefordítva, többek között: Afrikai, Amhara, Aragóniai, Albán, Arab, Brazil Portugál, Bolgár, Horvát, Cseh, Dán, Holland, Finn, Francia, Galíciai, Görög, Grúz, Német, Héber, Indiai, Magyar, Olasz, Japán, Norvég, Kóreai, Nepáli, Lengyel, Portugál, Román, Orosz, Szerb, Szlovák, Szlovén, Spanyol, Svéd, Tamil, Hagyományos Kínai, Tájföldi, Ukrán és Vietnámi nyelvre, sőt még eszperantóra is.
+Fontos, hogy az emberek a világ bármely részén, nyelvi korlátok nélkül, egyenlően hozzáférhessenek a különböző, a technológia nyújtotta lehetőségekhez. Az NVDA jelenleg 43 nyelvre lett lefordítva, többek között: Afrikai, Amhara, Aragóniai, Albán, Arab, Brazil Portugál, Bolgár, Farsi, Horvát, Cseh, Dán, Holland, Finn, Francia, Galíciai, Görög, Grúz, Német, Héber, Indiai, Magyar, Olasz, Japán, Norvég, Kóreai, Nepáli, Lengyel, Portugál, Román, Orosz, Szerb, Szlovák, Szlovén, Spanyol, Svéd, Tamil, Hagyományos Kínai, Tájföldi, Ukrán és Vietnámi nyelvre, sőt még eszperantóra is.
 
 ++ Beszédszintetizátor Támogatás ++
 
@@ -367,25 +367,39 @@ Ha a fókusz szerkesztőmezőn áll és a rendszerkurzor mozog, az áttekintő k
 
 Előfordulhat, hogy egy szöveg bizonyos részeit szeretné kimásolni, amelyet az áttekintő kurzorral épp tanulmányoz. Pl. egy internetcímet, amit mások egy üzenetküldő programmal küldtek. A művelet megkezdéséhez helyezze az áttekintő kurzort a másolandó szöveg első karakteréhez, majd nyomja meg az NVDA+f9 billentyűkombinációt. Menjen el a másolandó szöveg végére, itt nyomja meg az NVDA+f10 billentyűkombinációt. (Ezzel megadta a kezdő és zárójelölőt úgy, ahogyan a régi típusú, pl. Ms-dos alatt futó szövegszerkesztőkben (Pl. Norton Editor) jelölt ki szöveget). A szöveget az NVDA automatikusan a vágólapra másolja, ahonnan azt szabványos vindows művelettel beillesztheti (control-v) bármelyik programba. Tartsa azonban szem előtt, hogy ha a program normál rendszerkurzort használ és lehetővé teszi a szabványos kijelölési és másolási parancsokat (controll+C), akkor használja inkább a szabványos parancsokat, mert azokkal esetenként jobb eredményt érhet el (pl. formázás megtartása, stb).
 
-++ Sík áttekintés ++[FlatReview]
+++ Áttekintő Módok ++[ReviewModes]
+Az NVDA [Szöveg áttekintő parancsai #ReviewingText] segítségével áttekinthető a navigátor kurzornál található elem, az aktuális dokumentum, vagy a képernyő, a kiválasztott áttekintési módtól függően.
+Az áttekintő módok az NVDA régebbi verzióiban található sík áttekintést helyettesítik.
 
-Általában csak egy [objektum #Objects] tartalmát van lehetősége áttekinteni, de néhány objektum támogatja a benne lévő objektumok áttekintését is.
-Összetett dokumentumok lehetővé teszik teljes szövegük áttekintését, ugyanígy az alkalmazásablakok szövege is áttekinthető, hasonlóképpen a képernyőn megjelenő elrendezéshez.
-Ezt síkáttekintésnek nevezzük.
-Működése hasonló, mint más Windows képernyőolvasók egérkurzora.
-
-A síkáttekintés aktiválásakor az áttekintőkurzor a [navigátorkurzor #ObjectNavigation] pozíciójánál található objektum szövegéhez kerül.
-Ha nem használta a navigátorkurzort, akkor ez általában a [fókusz #SystemFocus] pozíciójánál található objektum lesz.
-Pl. ha a fókusz egy gombon áll, a síkáttekintés aktiválásakor az áttekintőkurzor a gomb szövegére lép az adott alkalmazásablakban.
-Ekkor áttekintheti az ablak tartalmát az [áttekintési parancsok #ReviewingText] használatával.
-Szintén lehetősége van az áttekintőkurzornál található objektum szövegéről magára az objektumra ugrani. Ekkor ismét használni tudja a [navigátorkurzort #ObjectNavigation].
-
-Az alábbi két parancs használható a sík áttekintés ki/be kapcsolásához: 
+Az alábbi parancsokkal válthat az áttekintő módok között:
 %kc:beginInclude
-|| Funkció | Asztali billentyűparancs | Laptop billentyűparancs | Érintési parancs | Leírás |
-| Sík áttekintésre váltás az áttekintő kurzornál található objektumra ugrással | NVDA+7 a numerikus billentyűzeten | NVDA+pageup | kétujjas felfelé pöccintés | Ezzel a paranccsal áttekintheti az alkalmazás képernyőjét, vagy akár egy teljes dokumentumot, ha épp abban tartózkodik. |
-| Objektum áttekintésre váltás az áttekintő kurzor figyelembe vételével | NVDA+1 a numerikus billentyűzeten | NVDA+pagedown | két ujjas lefelé őöccintés | Az áttekintő kurzornál található szöveg objektumára lép, így az objektum szövege elolvasható, és az objektumonkénti ugrás is használható. |
+|| Név | Asztali Billentyűparancs | Laptop Billentyűparancs | Érintési parancs | Leírás |
+| Váltás a következő áttekintő módra | NVDA+numpad7 | NVDA+pageUp | Két ujjas felfelé pöccintés | Átvált a következő elérhető áttekintő módra |
+| Váltás az előző áttekintő módra | NVDA+numpad1 | NVDA+pageDown | 2 ujjas lefelé pöccintés | Átvált az előző elérhető áttekintő módra |
 %kc:endInclude
+
++++ Elem Áttekintés +++[ObjectReview]
+Elem áttekintő módban kizárólag a navigátor kurzornál található [elem #ObjectNavigation] tartalma érhető el.
+Szerkesztőmezők, vagy egyéb szövegmezők esetén ez általában a vezérlőelemekben található szöveg.
+Egyéb elemek esetén a tartalom lehet a vezérlőelemek neve és/vagy értéke is.
+
++++ Dokumentum Áttekintés +++[DocumentReview]
+Ha az aktuális [elem #ObjectNavigation] egy böngészőmóddal rendelkező dokumentum (pl. egy weboldal) vagy egyéb összetett dokumentum (pl. egy Lotus Symphony dokumentum), a dokumentum áttekintés mód elérhető.
+A dokumentum áttekintés mód segítségével egy dokumentum teljes egészében elolvasható, áttekinthető.
+
+Elem áttekintésről dokumentum áttekintésre váltáskor az áttekintő kurzor a navigátor kurzor jelenlegi pozíciójához kerül.
+Az áttekintési parancsok használatakor a navigátor kurzor az áttekintő kurzornál található elemhez kerül.
+
+Az NVDA elem áttekintés mód használatakor automatikusan Dokumentum Áttekintés módra vált, ha egy böngészőmóddal rendelkező dokumentumra lépünk.
+
++++ Képernyő Áttekintés +++[ScreenReview]
+A Képernyő Áttekintés mód segítségével áttekintheti a képernyő teljes tartalmát úgy, ahogyan az egy adott alkalmazás esetén a képernyőn is megjelenik.
+Ez a funkció hasonlóan működik más, Windows képernyőolvasókban megszokott funkciókhoz (pl. egér kurzor).
+
+Képernyő Áttekintés módra váltáskor az áttekintő kurzor a navigátor kurzor pozíciójánál található [elemhez #ObjectNavigation] kerül.
+Az áttekintési parancsok használatakor a navigátor kurzor az áttekintő kurzornál található elemhez kerül.
+
+Néhány újabb alkalmazás használatakor az NVDA esetenként nem képes felismerni a képernyőn található szöveg részét, vagy egészét. Ez az újabb képernyő kirajzoló technológiáknak köszönhető, melyek támogatása jelenleg nem lehetséges.
 
 ++ Navigáció az egérrel ++
 
@@ -1064,7 +1078,7 @@ A Newfon Sergey Shishmintzev által készített ingyenes, de kereskedelmi beszé
 
 ++ Vocalizer beszédhangok az NVDA-hoz ++
 
-A Nuance Vocalizer egy magas minőségű, kereskedelmi beszédszintetizátor, amit a  Nuance Communications, Inc. készített. A hozzátartozó drivert a Tiflotecnia, Lda. készítette. A szintetizátorhoz több mint 50 különböző beszédhangot telepíthet fel, mintegy harminc különböző nyelven. Mindegyik beszédhang kiegészítőként telepíthető, így a hordozható verzióval is használható. A hangokról és a vásárlás menetéről bővebb információt olvashat a [magyar forgalmazó http://vocalizer.nvda.hu] oldalán. Az összeg egy részét az NVDA további fejlesztésére fordítják.
+A Nuance Vocalizer egy magas minőségű, kereskedelmi beszédszintetizátor, amit a  Nuance Communications, Inc. készített. A hozzátartozó drivert a Tiflotecnia, Lda. készítette. A szintetizátorhoz több mint 50 külön	böző beszédhangot telepíthet fel, mintegy harminc különböző nyelven. Mindegyik beszédhang kiegészítőként telepíthető, így a hordozható verzióval is használható. A hangokról és a vásárlás menetéről bővebb információt olvashat a [magyar forgalmazó http://vocalizer.nvda.hu] oldalán. Az összeg egy részét az NVDA további fejlesztésére fordítják.
 
 + Támogatott braille kijelzők +[SupportedBrailleDisplays]
 
@@ -1076,7 +1090,7 @@ A Freedom Scientific Focus/Pacmate kijelzőket tudja használni az NVDA programm
 Ez ugyan a Focus 40 Blue kijelzőkhöz készült, de támogatja az összes többi Freedom Scientific terméket is.
 Megjegyzés: Ha ön 64 bites operációs rendszert használ, amire már fel van telepítve a kijelző drivere egy másik képernyőolvasóval együtt, az NVDA programhoz külön telepíteniekell az eszköz illesztőprogramját.
 
-Alapbeálítás szerint az NVDA ezeket a kijelzőket képes automatiusan felismerni és csatlakoztatni usb-n és bluetoothon keresztül is.
+Alapbeálítás szerint az NVDA ezeket a kijelzőket képes automatikusan felismerni és csatlakoztatni usb-n és bluetoothon keresztül is.
 Azonban a kijelző beállításainál kifejezetten meghatározható, hogy a kijelzőt bluetoothon vagy usb-n kívánja-e használni, ezzel tehát korlátozni lehet a kijelző használatát a kiválasztott csatolófelületre.
 Ez például hasznos lehet akkor, ha a Focus braille kijelzőt bluetooth-szal kívánja használni, de usb-n keresztül kívánja feltölteni.
 

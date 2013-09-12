@@ -7,10 +7,13 @@
 
 == New Features ==
 - Form fields are now reported in Microsoft word documents. (#2295)
+- NVDA can now announce revision information in Microsoft Word when Track Changes is enabled. Note that Report editor revisions in NVDA's document settings dialog (off by default) must be enabled also for them to be announced. (#1670)
 
 
 == Bug Fixes ==
 - Zend Studio now functions the same as Eclipse. (#3420)
+- The changed state of certain checkboxes in the Microsoft Outlook 2010 message rules dialog are now reported automatically. (#3063)
+- NVDA will now report the pinned state for pinned controls such as tabs in Mozilla Firefox. (#3372)
 
 
 = 2013.2 =
