@@ -36,6 +36,10 @@ using namespace std;
 #define wdDISPID_SELECTION_SETRANGE 100
 #define wdDISPID_SELECTION_STARTISACTIVE 404
 #define wdDISPID_RANGE_INRANGE 126
+#define wdDISPID_RANGE_DUPLICATE 6
+#define wdDISPID_RANGE_REVISIONS 150
+#define wdDISPID_REVISIONS_ITEM 0
+#define wdDISPID_REVISION_TYPE 4
 #define wdDISPID_RANGE_STORYTYPE 7
 #define wdDISPID_RANGE_MOVEEND 111
 #define wdDISPID_RANGE_COLLAPSE 101
@@ -154,6 +158,7 @@ using namespace std;
 #define formatConfig_reportComments 4096
 #define formatConfig_reportHeadings 8192
 #define formatConfig_reportLanguage 16384
+#define formatConfig_reportRevisions 32768
 
 #define formatConfig_fontFlags (formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor)
 #define formatConfig_initialFormatFlags (formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings)
@@ -286,6 +291,25 @@ int generateHeadingXML(IDispatch* pDispatchRange, wostringstream& XMLStream) {
 	}
 	XMLStream<<L"<control role=\"heading\" level=\""<<level<<L"\">";
 	return 1;
+}
+
+int getRevisionType(IDispatch* pDispatchOrigRange) {
+	IDispatchPtr pDispatchRange=NULL;
+	//If range is not duplicated here, revisions collection represents revisions at the start of the range when it was first created
+	if(_com_dispatch_raw_propget(pDispatchOrigRange,wdDISPID_RANGE_DUPLICATE,VT_DISPATCH,&pDispatchRange)!=S_OK||!pDispatchRange) {
+		return 0;
+	}
+	IDispatchPtr pDispatchRevisions=NULL;
+	if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_REVISIONS,VT_DISPATCH,&pDispatchRevisions)!=S_OK||!pDispatchRevisions) {
+		return 0;
+	}
+	IDispatchPtr pDispatchRevision=NULL;
+	if(_com_dispatch_raw_method(pDispatchRevisions,wdDISPID_REVISIONS_ITEM,DISPATCH_METHOD,VT_DISPATCH,&pDispatchRevision,L"\x0003",1)!=S_OK||!pDispatchRevision) {
+		return 0;
+	}
+	long revisionType=0;
+	_com_dispatch_raw_propget(pDispatchRevision,wdDISPID_REVISION_TYPE,VT_I4,&revisionType);
+	return revisionType;
 }
 
 int getHyperlinkCount(IDispatch* pDispatchRange) {
@@ -440,6 +464,10 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 	}
 	if((formatConfig&formatConfig_reportLinks)&&getHyperlinkCount(pDispatchRange)>0) {
 		formatAttribsStream<<L"link=\"1\" ";
+	}
+	if(formatConfig&formatConfig_reportRevisions) {
+		long revisionType=getRevisionType(pDispatchRange);
+		formatAttribsStream<<L"wdRevisionType=\""<<revisionType<<L"\" ";
 	}
 	if(formatConfig&formatConfig_reportStyle) {
 		IDispatchPtr pDispatchStyle=NULL;
@@ -634,6 +662,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 	//Walk the range from the given start to end by characterFormatting or word units
 	//And grab any text and formatting and generate appropriate xml
 	do {
+		int curDisabledFormatConfig=0;
 		//generated form field xml if in a form field
 		//Also automatically extends the range and chunkEndOffset to the end of the field
 		BOOL isFormField=generateFormFieldXML(pDispatchRange,XMLStream,chunkEndOffset);
@@ -666,6 +695,10 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 						noteCharOffset=i;
 						if(i==0) text[i]=L' ';
 						break;
+					}  else if(text[i]==L'\x0007'&&(chunkEndOffset-chunkStartOffset)==1) {
+						text[i]=L'\0';
+						//Collecting revision info does not work on cell delimiters
+						curDisabledFormatConfig|=formatConfig_reportRevisions;
 					}
 				}
 				isNoteChar=(noteCharOffset==0);
@@ -693,9 +726,9 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 				}
 				_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
 			}
-			XMLStream<<L"<text ";
+			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
 			XMLStream<<initialFormatAttribsStream.str();
-			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig,XMLStream);
+			generateXMLAttribsForFormatting(pDispatchRange,chunkStartOffset,chunkEndOffset,formatConfig&(~curDisabledFormatConfig),XMLStream);
 			XMLStream<<L">";
 			if(firstLoop) {
 				formatConfig&=(~formatConfig_reportLists);
