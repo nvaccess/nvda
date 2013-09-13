@@ -107,7 +107,7 @@ def handleConfigProfileSwitch():
 	if conf["synth"] != _curSynth.name:
 		setSynth(conf["synth"])
 		return
-	_curSynth.loadSettings()
+	_curSynth.loadSettings(onlyChanged=True)
 
 class SynthSetting(object):
 	"""Represents a synthesizer setting such as voice or variant.
@@ -452,24 +452,28 @@ class SynthDriver(baseObject.AutoPropertyObject):
 		for setting in self.supportedSettings:
 			conf[setting.name]=getattr(self,setting.name)
 
-	def loadSettings(self):
+	def loadSettings(self, onlyChanged=False):
 		c=config.conf["speech"][self.name]
 		if self.isSupported("voice"):
 			voice=c.get("voice",None)
-			try:
-				changeVoice(self,voice)
-			except:
-				log.warning("Invalid voice: %s" % voice)
-				# Update the configuration with the correct voice.
-				c["voice"]=self.voice
-				# We need to call changeVoice here so that required initialisation can be performed.
-				changeVoice(self,self.voice)
-		else:
+			if not onlyChanged or self.voice!=voice:
+				try:
+					changeVoice(self,voice)
+				except:
+					log.warning("Invalid voice: %s" % voice)
+					# Update the configuration with the correct voice.
+					c["voice"]=self.voice
+					# We need to call changeVoice here so that required initialisation can be performed.
+					changeVoice(self,self.voice)
+		elif not onlyChanged:
 			changeVoice(self,None)
 		for s in self.supportedSettings:
 			if s.name=="voice" or c[s.name] is None:
 				continue
-			setattr(self,s.name,c[s.name])
+			val=c[s.name]
+			if onlyChanged and getattr(self,s.name)==val:
+				continue
+			setattr(self,s.name,val)
 
 	def _get_initialSettingsRingSetting (self):
 		if not self.isSupported("rate") and len(self.supportedSettings)>0:
