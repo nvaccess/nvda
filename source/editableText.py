@@ -10,6 +10,7 @@
 """
 
 import time
+import sayAllHandler
 import api
 import review
 from baseObject import ScriptableObject
@@ -99,6 +100,7 @@ class EditableText(ScriptableObject):
 
 	def script_caret_moveByLine(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)
+	script_caret_moveByLine.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_caret_moveByCharacter(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_CHARACTER)
@@ -108,6 +110,8 @@ class EditableText(ScriptableObject):
 
 	def script_caret_moveByParagraph(self,gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH)
+	script_caret_moveByParagraph.resumeSayAllMode=sayAllHandler.CURSOR_CARET
+
 
 	def _backspaceScriptHelper(self,unit,gesture):
 		try:
