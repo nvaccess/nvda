@@ -261,7 +261,10 @@ class TriggersDialog(wx.Dialog):
 				return
 			triggers["sayAll"] = self.profile
 		elif not trigOnOther:
-			del triggers["sayAll"]
+			try:
+				del triggers["sayAll"]
+			except KeyError:
+				pass
 
 		self.Parent.Enable()
 		self.Destroy()
