@@ -410,12 +410,14 @@ class ConfigManager(object):
 		self.validator = Validator()
 		self.rootSection = None
 		self._shouldHandleProfileSwitch = True
+		self._pendingHandleProfileSwitch = False
 		self._initBaseConf()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles = set()
 
 	def _handleProfileSwitch(self):
 		if not self._shouldHandleProfileSwitch:
+			self._pendingHandleProfileSwitch = True
 			return
 		init = self.rootSection is None
 		# Reset the cache.
@@ -693,7 +695,9 @@ class ConfigManager(object):
 			yield
 		finally:
 			self._shouldHandleProfileSwitch = True
-			self._handleProfileSwitch()
+			if self._pendingHandleProfileSwitch:
+				self._handleProfileSwitch()
+				self._pendingHandleProfileSwitch = False
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
