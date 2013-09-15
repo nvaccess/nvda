@@ -46,7 +46,7 @@ def restart():
 	"""Restarts NVDA by starting a new copy with -r."""
 	if globalVars.appArgs.launcher:
 		import wx
-		globalVars.exitCode=2
+		globalVars.exitCode=3
 		wx.GetApp().ExitMainLoop()
 		return
 	import subprocess
