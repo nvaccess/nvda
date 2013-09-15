@@ -8,6 +8,7 @@ import appModuleHandler
 import api
 import controlTypes
 import versionInfo
+from NVDAObjects.IAccessible import IAccessible
 
 nvdaMenuIaIdentity = None
 
@@ -15,6 +16,8 @@ class AppModule(appModuleHandler.AppModule):
 
 	def isNvdaMenu(self, obj):
 		global nvdaMenuIaIdentity
+		if not isinstance(obj, IAccessible):
+			return False
 		if obj.IAccessibleIdentity == nvdaMenuIaIdentity:
 			return True
 		if nvdaMenuIaIdentity is not True:
