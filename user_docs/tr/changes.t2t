@@ -3,6 +3,22 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.3 =
+
+== New Features ==
+- Form fields are now reported in Microsoft word documents. (#2295)
+- NVDA can now announce revision information in Microsoft Word when Track Changes is enabled. Note that Report editor revisions in NVDA's document settings dialog (off by default) must be enabled also for them to be announced. (#1670)
+- Dropdown lists in Microsoft Excel 2003 through 2010 are now announced when opened and navigated around. (#3382)
+
+
+== Bug Fixes ==
+- Zend Studio now functions the same as Eclipse. (#3420)
+- The changed state of certain checkboxes in the Microsoft Outlook 2010 message rules dialog are now reported automatically. (#3063)
+- NVDA will now report the pinned state for pinned controls such as tabs in Mozilla Firefox. (#3372)
+- It is now possible to bind scripts to keyboard gestures containing Alt and/or Windows keys as modifiers. Previously, if this was done, performing the script would cause the Start Menu or menu bar to be activated. (#3472)
+- Selecting text in browse mode documents (e.g. using control+shift+end) no longer causes the keyboard layout to be switched on systems with multiple keyboard layouts installed. (#3472)
+
+
 = 2013.2 =
 
 == New Features ==
