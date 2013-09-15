@@ -82,8 +82,8 @@ ${GetParameters} $0
 Banner::destroy
 exec:
 execWait "$PLUGINSDIR\app\nvda_noUIAccess.exe $0 -r --launcher" $1
-;If exit code is 2 then execute again (restart)
-intcmp $1 2 exec +1
+;If exit code is 3 then execute again (restart)
+intcmp $1 3 exec +1
 SectionEnd
 
 var hmci
