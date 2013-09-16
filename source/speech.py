@@ -559,6 +559,9 @@ def speakTextInfo(info,useCache=True,formatConfig=None,unit=None,reason=controlT
 	extraDetail=unit in (textInfos.UNIT_CHARACTER,textInfos.UNIT_WORD)
 	if not formatConfig:
 		formatConfig=config.conf["documentFormatting"]
+	if extraDetail:
+		formatConfig=formatConfig.copy()
+		formatConfig['extraDetail']=True
 	reportIndentation=unit==textInfos.UNIT_LINE and formatConfig["reportLineIndentation"]
 
 	speechSequence=[]
@@ -1059,6 +1062,15 @@ def getFormatFieldSpeech(attrs,attrsCache=None,formatConfig=None,unit=None,extra
 			# Translators: Indicates the line number of the text.
 			# %s will be replaced with the line number.
 			text=_("line %s")%lineNumber
+			textList.append(text)
+	if  formatConfig["reportRevisions"]:
+		revision=attrs.get("revision")
+		oldRevision=attrsCache.get("revision") if attrsCache is not None else None
+		if (revision or oldRevision is not None) and revision!=oldRevision:
+			# Translators: Reported when text is revised.
+			text=(_("revised %s"%revision) if revision
+				# Translators: Reported when text is not revised.
+				else _("unrevised"))
 			textList.append(text)
 	if  formatConfig["reportFontAttributes"]:
 		bold=attrs.get("bold")

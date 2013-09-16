@@ -10,6 +10,7 @@ import comtypes.client
 import comtypes.automation
 import operator
 import locale
+import braille
 import languageHandler
 import ui
 import NVDAHelper
@@ -81,6 +82,78 @@ wdPrimaryFooterStory=9
 wdPrimaryHeaderStory=7
 wdTextFrameStory=5
 
+wdFieldFormTextInput=70
+wdFieldFormCheckBox=71
+wdFieldFormDropDown=83
+wdContentControlRichText=0
+wdContentControlText=1
+wdContentControlPicture=2
+wdContentControlComboBox=3
+wdContentControlDropdownList=4
+wdContentControlBuildingBlockGallery=5
+wdContentControlDate=6
+wdContentControlGroup=7
+wdContentControlCheckBox=8
+
+wdNoRevision=0
+wdRevisionInsert=1
+wdRevisionDelete=2
+wdRevisionProperty=3
+wdRevisionParagraphNumber=4
+wdRevisionDisplayField=5
+wdRevisionReconcile=6
+wdRevisionConflict=7
+wdRevisionStyle=8
+wdRevisionReplace=9
+wdRevisionParagraphProperty=10
+wdRevisionTableProperty=11
+wdRevisionSectionProperty=12
+wdRevisionStyleDefinition=13
+wdRevisionMovedFrom=14
+wdRevisionMovedTo=15
+wdRevisionCellInsertion=16
+wdRevisionCellDeletion=17
+wdRevisionCellMerge=18
+
+wdRevisionTypeLabels={
+	# Translators: a Microsoft Word revision type (inserted content) 
+	wdRevisionInsert:_("insertion"),
+	# Translators: a Microsoft Word revision type (deleted content) 
+	wdRevisionDelete:_("deletion"),
+	# Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
+	wdRevisionProperty:_("property"),
+	# Translators: a Microsoft Word revision type (changed paragraph number)
+	wdRevisionParagraphNumber:_("paragraph number"),
+	# Translators: a Microsoft Word revision type (display field)
+	wdRevisionDisplayField:_("display field"),
+	# Translators: a Microsoft Word revision type (reconcile) 
+	wdRevisionReconcile:_("reconcile"),
+	# Translators: a Microsoft Word revision type (conflicting revision)
+	wdRevisionConflict:_("conflict"),
+	# Translators: a Microsoft Word revision type (style change)
+	wdRevisionStyle:_("style"),
+	# Translators: a Microsoft Word revision type (replaced content) 
+	wdRevisionReplace:_("replace"),
+	# Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
+	wdRevisionParagraphProperty:_("paragraph property"),
+	# Translators: a Microsoft Word revision type (table)
+	wdRevisionTableProperty:_("table property"),
+	# Translators: a Microsoft Word revision type (section property) 
+	wdRevisionSectionProperty:_("section property"),
+	# Translators: a Microsoft Word revision type (style definition)
+	wdRevisionStyleDefinition:_("style definition"),
+	# Translators: a Microsoft Word revision type (moved from)
+	wdRevisionMovedFrom:_("moved from"),
+	# Translators: a Microsoft Word revision type (moved to)
+	wdRevisionMovedTo:_("moved to"),
+	# Translators: a Microsoft Word revision type (inserted table cell)
+	wdRevisionCellInsertion:_("cell insertion"),
+	# Translators: a Microsoft Word revision type (deleted table cell)
+	wdRevisionCellDeletion:_("cell deletion"),
+	# Translators: a Microsoft Word revision type (merged table cells)
+	wdRevisionCellMerge:_("cell merge"),
+}
+
 storyTypeLocalizedLabels={
 	wdCommentsStory:_("Comments"),
 	wdEndnotesStory:_("Endnotes"),
@@ -92,6 +165,23 @@ storyTypeLocalizedLabels={
 	wdPrimaryFooterStory:_("Primary footer"),
 	wdPrimaryHeaderStory:_("Primary header"),
 	wdTextFrameStory:_("Text frame"),
+}
+
+wdFieldTypesToNVDARoles={
+	wdFieldFormTextInput:controlTypes.ROLE_EDITABLETEXT,
+	wdFieldFormCheckBox:controlTypes.ROLE_CHECKBOX,
+	wdFieldFormDropDown:controlTypes.ROLE_COMBOBOX,
+}
+
+wdContentControlTypesToNVDARoles={
+	wdContentControlRichText:controlTypes.ROLE_EDITABLETEXT,
+	wdContentControlText:controlTypes.ROLE_EDITABLETEXT,
+	wdContentControlPicture:controlTypes.ROLE_GRAPHIC,
+	wdContentControlComboBox:controlTypes.ROLE_COMBOBOX,
+	wdContentControlDropdownList:controlTypes.ROLE_COMBOBOX,
+	wdContentControlDate:controlTypes.ROLE_EDITABLETEXT,
+	wdContentControlGroup:controlTypes.ROLE_GROUPING,
+	wdContentControlCheckBox:controlTypes.ROLE_CHECKBOX,
 }
 
 winwordWindowIid=GUID('{00020962-0000-0000-C000-000000000046}')
@@ -128,6 +218,7 @@ formatConfigFlagsMap={
 	"reportComments":4096,
 	"reportHeadings":8192,
 	"autoLanguageSwitching":16384,	
+	"reportRevisions":32768,
 }
 
 class WordDocumentTextInfo(textInfos.TextInfo):
@@ -136,7 +227,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		lineStart=ctypes.c_int()
 		lineEnd=ctypes.c_int()
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_expandToLine(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,self._rangeObj.start,ctypes.byref(lineStart),ctypes.byref(lineEnd))
-		if res!=0 or (lineStart.value==lineEnd.value==-1): 
+		if res!=0 or lineStart.value==lineEnd.value or lineStart.value==-1 or lineEnd.value==-1: 
 			log.debugWarning("winword_expandToLine failed")
 			self._rangeObj.expand(wdParagraph)
 			return
@@ -174,13 +265,12 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			raise NotImplementedError("position: %s"%position)
 
 	def getTextWithFields(self,formatConfig=None):
+		extraDetail=formatConfig.get('extraDetail',False) if formatConfig else False
 		if not formatConfig:
 			formatConfig=config.conf['documentFormatting']
 		formatConfig['autoLanguageSwitching']=config.conf['speech'].get('autoLanguageSwitching',False)
 		startOffset=self._rangeObj.start
 		endOffset=self._rangeObj.end
-		if startOffset==endOffset:
-			return []
 		text=BSTR()
 		formatConfigFlags=sum(y for x,y in formatConfigFlagsMap.iteritems() if formatConfig.get(x,False))
 		res=NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(self.obj.appModule.helperLocalBindingHandle,self.obj.windowHandle,startOffset,endOffset,formatConfigFlags,ctypes.byref(text))
@@ -194,7 +284,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				if isinstance(field,textInfos.ControlField):
 					item.field=self._normalizeControlField(field)
 				elif isinstance(field,textInfos.FormatField):
-					item.field=self._normalizeFormatField(field)
+					item.field=self._normalizeFormatField(field,extraDetail=extraDetail)
 			elif index>0 and isinstance(item,basestring) and item.isspace():
 				 #2047: don't expose language for whitespace as its incorrect for east-asian languages 
 				lastItem=commandList[index-1]
@@ -226,8 +316,30 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif role=="object":
 			role=controlTypes.ROLE_EMBEDDEDOBJECT
 		else:
-			role=controlTypes.ROLE_UNKNOWN
-		field['role']=role
+			fieldType=int(field.pop('wdFieldType',-1))
+			if fieldType!=-1:
+				role=wdFieldTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
+				if fieldType==wdFieldFormCheckBox and int(field.get('wdFieldResult','0'))>0:
+					field['states']=set([controlTypes.STATE_CHECKED])
+				elif fieldType==wdFieldFormDropDown:
+					field['value']=field.get('wdFieldResult',None)
+			fieldStatusText=field.pop('wdFieldStatusText',None)
+			if fieldStatusText:
+				field['name']=fieldStatusText
+				field['alwaysReportName']=True
+			else:
+				fieldType=int(field.get('wdContentControlType',-1))
+				if fieldType!=-1:
+					role=wdContentControlTypesToNVDARoles.get(fieldType,controlTypes.ROLE_UNKNOWN)
+					if role==controlTypes.ROLE_CHECKBOX:
+						fieldChecked=bool(int(field.get('wdContentControlChecked','0')))
+						if fieldChecked:
+							field['states']=set([controlTypes.STATE_CHECKED])
+					fieldTitle=field.get('wdContentControlTitle',None)
+					if fieldTitle:
+						field['name']=fieldTitle
+						field['alwaysReportName']=True
+		if role is not None: field['role']=role
 		storyType=int(field.pop('wdStoryType',0))
 		if storyType:
 			name=storyTypeLocalizedLabels.get(storyType,None)
@@ -237,7 +349,25 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['role']=controlTypes.ROLE_FRAME
 		return field
 
-	def _normalizeFormatField(self,field):
+	def _normalizeFormatField(self,field,extraDetail=False):
+		_startOffset=int(field.pop('_startOffset'))
+		_endOffset=int(field.pop('_endOffset'))
+		revisionType=int(field.pop('wdRevisionType',0))
+		revisionLabel=wdRevisionTypeLabels.get(revisionType,None)
+		if revisionLabel:
+			if extraDetail:
+				try:
+					r=self.obj.WinwordSelectionObject.range
+					r.setRange(_startOffset,_endOffset)
+					rev=r.revisions.item(1)
+					author=rev.author
+					date=rev.date
+				except COMError:
+					author=_("unknown author")
+					date=_("unknown date")
+				field['revision']=_("{revisionType} by {revisionAuthor} on {revisionDate}").format(revisionType=revisionLabel,revisionAuthor=author,revisionDate=date)
+			else:
+				field['revision']=revisionLabel
 		color=field.pop('color',None)
 		if color is not None:
 			field['color']=colors.RGB.fromCOLORREF(int(color))		
@@ -413,10 +543,10 @@ class WordDocument(EditableTextWithoutAutoSelectDetection, Window):
 
 	def script_tab(self,gesture):
 		gesture.send()
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		if info._rangeObj.tables.count>0:
-			info.expand(textInfos.UNIT_LINE)
-			speech.speakTextInfo(info,reason=controlTypes.REASON_CARET)
+		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		if not info.isCollapsed or info._rangeObj.tables.count>0:
+			speech.speakTextInfo(info,reason=controlTypes.REASON_FOCUS)
+		braille.handler.handleCaretMove(info)
 
 	def _moveInTable(self,row=True,forward=True):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
