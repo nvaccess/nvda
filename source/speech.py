@@ -888,7 +888,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 		formatConfig=config.conf["documentFormatting"]
 
 	presCat=attrs.getPresentationCategory(ancestorAttrs,formatConfig, reason=reason)
-	childCount=int(attrs.get('_childcount',"0"))
+	childControlCount=int(attrs.get('_childcontrolcount',"0"))
 	if reason==controlTypes.REASON_FOCUS or attrs.get('alwaysReportName',False):
 		name=attrs.get('name',"")
 	else:
@@ -945,7 +945,7 @@ def getControlFieldSpeech(attrs,ancestorAttrs,fieldType,formatConfig=None,extraD
 	if speakEntry and fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states:
 		# List.
 		# Translators: Speaks number of items in a list (example output: list with 5 items).
-		return roleText+" "+_("with %s items")%childCount
+		return roleText+" "+_("with %s items")%childControlCount
 	elif fieldType=="start_addedToControlFieldStack" and role==controlTypes.ROLE_TABLE and tableID:
 		# Table.
 		return " ".join((roleText, getSpeechTextForProperties(_tableID=tableID, rowCount=attrs.get("table-rowcount"), columnCount=attrs.get("table-columncount")),levelText))
