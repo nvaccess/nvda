@@ -929,6 +929,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		script = lambda self,gesture: self._quickNavScript(gesture, nodeType, "next", nextError, readUnit)
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
+		script.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 		setattr(cls, funcName, script)
 		cls.__gestures["kb:%s" % key] = scriptName
 		scriptName = "previous%s" % scriptSuffix
@@ -936,6 +937,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		script = lambda self,gesture: self._quickNavScript(gesture, nodeType, "previous", prevError, readUnit)
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
+		script.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 		setattr(cls, funcName, script)
 		cls.__gestures["kb:shift+%s" % key] = scriptName
 
@@ -1338,6 +1340,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 		self._tableMovementScriptHelper(axis="row", movement="next")
 	# Translators: the description for the next table row script on virtualBuffers.
 	script_nextRow.__doc__ = _("moves to the next table row")
+
 
 	def script_previousRow(self, gesture):
 		self._tableMovementScriptHelper(axis="row", movement="previous")

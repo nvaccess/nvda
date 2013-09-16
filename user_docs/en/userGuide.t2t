@@ -800,6 +800,9 @@ If on, this option will cause speech to be interrupted each time a character is 
 ==== Speech interrupt for Enter key ====
 If on, this option will cause speech to be interrupted each time the Enter key is pressed. This is on by default.
 
+==== Allow skim reading in Say All ====
+If on, certain navigation commands (such as quick navigation in browse mode or moving by line or paragraph) do not stop Say All, rather Say All jumps to the new position and continues reading.
+ 
 ==== Beep if Typing Lowercase Letters when Caps Lock is On ====
 When enabled, a warning beep will be heard if a letter is typed with the shift key while caps lock is on.
 Generally, typing shifted letters with caps lock is unintentional and is usually due to not realising that caps lock is enabled.

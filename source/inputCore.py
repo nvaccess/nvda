@@ -15,6 +15,7 @@ import os
 import itertools
 import weakref
 import configobj
+import sayAllHandler
 import baseObject
 import scriptHandler
 import queueHandler
@@ -48,6 +49,10 @@ class InputGesture(baseObject.AutoPropertyObject):
 	At the very least, subclasses must implement L{_get_identifiers} and L{_get_displayName}.
 	"""
 	cachePropertiesByDefault = True
+
+	#: indicates that sayAll was running before this gesture
+	#: @type: bool
+	wasInSayAll=False
 
 	def _get_identifiers(self):
 		"""The identifier(s) which will be used in input gesture maps to represent this gesture.
@@ -348,6 +353,10 @@ class InputManager(baseObject.AutoPropertyObject):
 	Input includes key presses on the keyboard, as well as key presses on Braille displays, etc.
 	"""
 
+	#: a modifier gesture was just executed while sayAll was running
+	#: @type: bool
+	lastModifierWasInSayAll=False
+
 	def __init__(self):
 		#: The function to call when capturing gestures.
 		#: If it returns C{False}, normal execution will be prevented.
@@ -378,6 +387,18 @@ class InputManager(baseObject.AutoPropertyObject):
 		focus = api.getFocusObject()
 		if focus.sleepMode is focus.SLEEP_FULL or (focus.sleepMode and not getattr(script, 'allowInSleepMode', False)):
 			raise NoInputGestureAction
+
+		wasInSayAll=False
+		if gesture.isModifier:
+			if not self.lastModifierWasInSayAll:
+				wasInSayAll=self.lastModifierWasInSayAll=sayAllHandler.isRunning()
+		elif self.lastModifierWasInSayAll:
+			wasInSayAll=True
+			self.lastModifierWasInSayAll=False
+		else:
+			wasInSayAll=sayAllHandler.isRunning()
+		if wasInSayAll:
+			gesture.wasInSayAll=True
 
 		speechEffect = gesture.speechEffectWhenExecuted
 		if speechEffect == gesture.SPEECHEFFECT_CANCEL:

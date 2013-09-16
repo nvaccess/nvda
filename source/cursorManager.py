@@ -12,6 +12,7 @@ A cursor manager provides caret navigation and selection commands for a virtual 
 import wx
 import baseObject
 import gui
+import sayAllHandler
 import textInfos
 import api
 import speech
@@ -131,9 +132,11 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def script_moveByPage_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
+	script_moveByPage_back.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_moveByPage_forward(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
+	script_moveByPage_forward.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_moveByCharacter_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_CHARACTER,-1,extraDetail=True,handleSymbols=True)
@@ -149,15 +152,19 @@ class CursorManager(baseObject.ScriptableObject):
 
 	def script_moveByLine_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,-1)
+	script_moveByLine_back.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_moveByLine_forward(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_LINE,1)
+	script_moveByLine_forward.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_moveByParagraph_back(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_PARAGRAPH,-1)
+	script_moveByParagraph_back.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_moveByParagraph_forward(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_PARAGRAPH,1)
+	script_moveByParagraph_forward.resumeSayAllMode=sayAllHandler.CURSOR_CARET
 
 	def script_startOfLine(self,gesture):
 		self._caretMovementScriptHelper(textInfos.UNIT_CHARACTER,posUnit=textInfos.UNIT_LINE,extraDetail=True,handleSymbols=True)
