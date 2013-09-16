@@ -116,41 +116,41 @@ wdRevisionCellDeletion=17
 wdRevisionCellMerge=18
 
 wdRevisionTypeLabels={
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (inserted content) 
 	wdRevisionInsert:_("insertion"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (deleted content) 
 	wdRevisionDelete:_("deletion"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 	wdRevisionProperty:_("property"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (changed paragraph number)
 	wdRevisionParagraphNumber:_("paragraph number"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (display field)
 	wdRevisionDisplayField:_("display field"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (reconcile) 
 	wdRevisionReconcile:_("reconcile"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (conflicting revision)
 	wdRevisionConflict:_("conflict"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (style change)
 	wdRevisionStyle:_("style"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (replaced content) 
 	wdRevisionReplace:_("replace"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 	wdRevisionParagraphProperty:_("paragraph property"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (table)
 	wdRevisionTableProperty:_("table property"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (section property) 
 	wdRevisionSectionProperty:_("section property"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (style definition)
 	wdRevisionStyleDefinition:_("style definition"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (moved from)
 	wdRevisionMovedFrom:_("moved from"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (moved to)
 	wdRevisionMovedTo:_("moved to"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (inserted table cell)
 	wdRevisionCellInsertion:_("cell insertion"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (deleted table cell)
 	wdRevisionCellDeletion:_("cell deletion"),
-	# Translators: Describes document revision in Microsoft Word.
+	# Translators: a Microsoft Word revision type (merged table cells)
 	wdRevisionCellMerge:_("cell merge"),
 }
 
@@ -363,11 +363,8 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					author=rev.author
 					date=rev.date
 				except COMError:
-					# Translators: Reported when no author information for document revision is found.
 					author=_("unknown author")
-					# Translators: Reported when no date information for document revision is found.
 					date=_("unknown date")
-				# Translators: Describes document revision in Microsoft Word (example output: cell merge by Mick Curran on September 1, 2013).
 				field['revision']=_("{revisionType} by {revisionAuthor} on {revisionDate}").format(revisionType=revisionLabel,revisionAuthor=author,revisionDate=date)
 			else:
 				field['revision']=revisionLabel
