@@ -3,6 +3,72 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.2 =
+
+== Nowe funkcje ==
+- Obsługa Chromium Embedded Framework - kontrolki przeglądarki sieciowej, używanej w niektórych programach. (#3108)
+- Nowy wariant Espeak: Iven3
+- Skype: nowe wiadomości w aktywnym oknie rozmowy tekstowej są wypowiadane automatycznie.  (#2298)
+- Obsługa Twin: odczyt nazw zakładek i mniejsza gadatliwość przy anonsowaniu tweetów.
+- Możesz teraz wyłączyć wyświetlanie komunikatów NVDA na monitorze brajlowskim. W ustawieniach brajla przestaw czas wygasania komunikatów na 0.  (#2482)
+- Okno zarządzania dodatkami rozbudowane o przycisk "Pobierz dodatki". Powoduje on otwarcie strony, na której można pobrać i zainstalować dodatki dla NVDA. (#3209)
+- W okienku "Witaj w NVDA",które pojawia się przy pierwszym uruchomieniu programu, możesz teraz określić, czy NVDA ma być uruchamiane automatycznie po zalogowaniu do systemu. (#2234)
+- w programie Dolphin Cicero automatycznie aktywny jest tryb uśpienia NVDA. (#2055)
+- 64-bitowe wersje Miranda IM/Miranda NG są teraz obsługiwane. (#3296)
+- Windows 8: odczytywane są automatycznie sugestie wyszukiwania na ekranie startowym.  (#3322)
+- Wsparcie nawigacji i edycji arkuszy w Microsoft Excel 2013.  (#3360)
+- Obsługa połączonych przez bluetooth Monitorów brajlowskich  produkcji Freedom Scientific: Focus 14 Blue i Focus 80 Blue, oraz Focus 40 Blue w niektórych konfiguracjach nie obsługiwanych poprzednio. (#3307)
+- Sugestie autouzupełniania są odczytywane w programie Outlook 2010. (#2816)
+- Nowe tablice brajlowskie: angielski brajl komputerowy, Koreański 2 stopnia, rosyjski brajl dla kodu komputerowego.
+- Nowy język: Farsi. (#1427)
+
+
+== Zmiany ==
+- Na ekranie dotykowym: machnięcie w lewo lub prawo pojedynczym palcem w trybie obiektów przesuwa do poprzedniego lub następnego poprzez wszystkie obiekty, nie tylko te w obecnym kontenerze.Machnięcie dwoma palcami wykonuje oryginalną akcję przechodzenia do poprzedniego lub następnego w aktualnym kontenerze.
+- Ustawienia przeglądania: pole wyboru "zgłaszaj układ tabeli"zmienione na "Dołącz układ tabeli", aby uwidocznić fakt, że klawisze szybkiej nawigacji nie będą wyszukiwać tych tabel, gdy to pole wyboru nie jest zaznaczone. (#3140)
+- Poziom podglądu zastąpiony przez tryby przeglądania obiektu, dokumentu i ekranu. (#2996)
+- Przeglądanie obiektu odczytuje tekst w obrębie wybranego obiektu, przeglądanie dokumentu odczytuje tekst w buforze trybu przeglądania aktualnego dokumentu (jeśli jest), a przeglądanie ekranu - prezentuje tekst okna bieżącej aplikacji.
+- Komendy, które wcześniej włączały i wyłączały poziom podglądu, teraz przełączają między wyżej omówionymi trybami.
+- W trybie przeglądania dokumentu i ekranu, obiekt nawigatora automatycznie podąża za kursorem podglądu, śledząc w ten sposób najniższy w chierarchii obiekt nawigacyjny.
+- Po przełączeniu się w tryb przeglądania ekranu, NVDA pozostaje w tym trybie do chwili ręcznego przełączenia w inny tryb.
+- W trybie przeglądania dokumentu lub obiektu, NVDA może przełączać się między tymi trybami zależnie od tego, czy przeglądasz jakiś dokument w trybie czytania.
+- Zaktualizowano bibliotekę tłumaczenia brajla liblouis do wersji 2.5.3. (#3371)
+
+
+== Poprawki błędów ==
+- Aktywowanie obiektu anonsuje akcję przed aktywacją, zamiast po niej (np. Rozwinięte, gdy rozwijasz, zamiast "Zwinięte"). (#2982)
+- Dokładniejsze odczytywanie i śledzenie kursora w różnych polach wprowadzania takich jak okno czatu, albo wyszukiwania dla ostatnich wersji Skype. (#1601, #3036)
+- Na liście ostatnich rozmów Skype, odczytywana jest liczba nowych zdarzeń dla każdej konwersacji jeśli ma to zastosowanie. (#1446)
+- Poprawki śledzenia kursora i kolejności odczytu dla tekstu napisanego od prawej do lewej; np. edycja tekstu arabskiego w Microsoft Excel. (#1601) 
+- Szybka nawigacja do przycisków i pól formularza uwzględnia linki oznaczone jako przyciski w przeglądarce Internet Explorer. (#2750)
+- W trybie przeglądania, treść wewnątrz widoków drzewa nie jest przedstawiana, gdyż spłaszczona reprezentacja niczemu nie służy. Możesz nacisnąć Enter na drzewie, aby pracować z nim w trybie formularzy. (#3023)
+- Klawisze alt+strzałka w górę lub w dół, rozwijające listę, nie przełączają od teraz do trybu przeglądania. (#2340)
+- W Internet Explorer 10, komórki tabeli nie aktywują trybu formularza, chyba, że zostały odpowiednio oznaczone jako kontrolki przez autora strony. (#3248)
+- Rozwiązane problemy z uruchomieniem NVDA, jeśli czas systemowy jest wcześniejszy od czasu ostatniego sprawdzania aktualizacji. (#3260)
+- Jeśli na monitorze brajlowskim wyświetlany jest pasek postępu, monitor jest odświeżany, gdy pasek postępu się zmieni. (#3258)
+- W trybie przeglądania dla aplikacji Mozilli, podpisy tabeli nie są od teraz prezentowane podwójnie. Ponadto, streszczenie jest prezentowane, jeśli istnieje również podpis. (#3196)
+- Jeśli zmieniono język wprowadzania w Windows 8, NVDA ogłasza aktualny język zamiast poprzedniego.
+- W Windows 8 NVDA teraz ogłasza zmiany trybu konwersji IME.
+- NVDA nie ogłasza śmieci na pulpicie, gdy używane są metody wprowadzania  Google japoński, albo Atok IME. (#3234)
+- W Windows 7 i wyższych, NVDA od teraz nie ogłasza rozpoznawania mowy albo gestów dotykowych jako zmian języka klawiatury.
+- NVDA nie ogłasza od teraz znaku specjalnego (0x7f) gdy naciśnięto ctrl+Backspace w niektórych edytorach przy włączonym wypowiadaniu wpisywanych znaków. (#3315)
+- Nie pojawiają się od teraz zmiany głośności, wysokości itp. głosu Espeak, gdy NVDA czyta tekst zawierający pewne znaki kontrolne lub XML. (#3334) (regresja #437)
+- W aplikacjach Java, zmiany nazwy lub tytułu aktualnej kontrolki są ogłaszane automatycznie i są odzwierciedlone przy odpytywaniu kontrolki. (#3119)
+- W kontrolkach Scintilla, linie są od teraz prawidłowo odczytywane przy włączonym zawijaniu wierszy. (#885)
+- W aplikacjach Mozilla, nazwa elementów listy tylko do odczytu jest teraz prawidłowo raportowana; np. gdy nawigujesz po tweetach w trybie formularzy w serwisie twitter.com. (#3327)
+- Microsoft Office 2013: okienka potwierdzeń  są teraz odczytywane automatycznie, gdy się pojawiają. 
+- Microsoft Word: poprawki wydajności podczas nawigacji niektórych tabel. (#3326)
+- Komendy NvDA nawigacji po tabeli (control+alt+strzałki) funkcjonują lepiej w niektórych tabelach Microsoft Word, w których komórka zajmuje wiele linii.
+- Jeśli Menedżer dodatków jest już otwarty, uruchomienie go ponownie (albo z menu Narzędzia, albo przez otwarcie pliku dodatku) nie powoduje od teraz problemów z zamknięciem Menedżera. (#3351)
+- Od teraz NVDA nie zawiesza się w niektórych okienkach dialogowych, gdy używane jest wprowadzanie japońskiego lub chińskiego IME Office 2010. (#3064)
+- Wielokrotne spacje nie są kompresowane do pojedynczej na monitorach brajlowskich. (#1366)
+- Narzędzia Zend Eclipse PHP Developer pracują teraz tak samo jak Eclipse. (#3353)
+- W Internet Explorer, ponownie nie jest konieczne naciśnięcie Tab by pracować z obiektem zagnieżdżonym(takim jak Flash) po uprzednim naciśnięciu na nim Enter. (#3364)
+- Podczas edycji tekstu w Microsoft PowerPoint, ostatnia linia nie jest od teraz czytana jako poprzednia, jeśli ostatnia linia jest pusta. (#3403)
+- W Microsoft PowerPoint, obiekty nie są od teraz wypowiadane czasem podwójnie gdy je zaznaczasz, lub chcesz edytować. (#3394)
+- NVDA nie powoduje od teraz awarii bądź zawieszania Adobe Readera przy czytaniu niektórych źle sformatowanych dokumentów PDF zawierających wiersze tabel poza tabelą. (#3399)
+- NVDA obecnie prawidłowo wykrywa następny slajd, gdy usuwany jest slajd w widoku miniatur Microsoft PowerPoint. (#3415)
+
 = 2013.1 =
 Najważniejsze zmiany w tej wersji to przeprojektowany układ klawiatóry dla laptopów (zmienionych skrutów szukaj w pliku keycommands.html w katalogu z instalacją NVDA) podstawowe wsparcie dla Microsoft Power Point, wsparcie długich opisów w przeglądarkach internetowych oraz możliwość wprowadzania znaków brajla komputerowego dla tych monitorów brajlowskich, które dają taką możliwość.
 
@@ -12,12 +78,12 @@ Najważniejsze zmiany w tej wersji to przeprojektowany układ klawiatóry dla la
 - Istnienie długich opisów w trybie przeglądania jest zgłaszane. Taki opis można pokazać w osobnym oknie. NVDA+D. (#809)
 - Odczyt powiadomień w Microsoft IE 9. (#2343).
 - Automatyczne zgłaszanie nagłówków i kolumn tabel w Ie. (#778).
-- Nowy Jezyk. Aragoński.
+- Nowy Język. Aragoński.
 - Nowe tablice brajlowskie. Duński stopnia II, Koreański I.
 - Wsparcie dla monitorów brajlowskich połączonych przez bluetooth do komputerów, na których bluetooth obsługuje Bluetooth Stack for Windows firmy Toshiba. (#2419)
 - Wybór portów przy monitorach Freedom Scientific.
 - Wsparcie dla notatników z rodziny BrailleNote firmy Humanvare.
-- Wsparcie starszych modelów Pappenmeyer Braillex. (#2679).
+- Wsparcie starszych modeli Pappenmeyer Braillex. (#2679).
 - Wsparcie dla wprowadzania znaków przy pomocy monitorów brajlowskich posiadających klawiatórę. (#808).
 
 
@@ -37,7 +103,7 @@ Najważniejsze nowości w tej wersji obejmują wsparcie dla wprowadzania znaków
 - Testowe wsparcie dla ekranów dotykowych komputerów działających pod Windows 8, włączając w to gesty odczytu tekstu, nawigacji po obiektach i wiele innych.
 - Wsparcie dla VIP Mud. (#1728).
 - Opis tabel w Adobe Readerze jest zgłaszany. (#2193, #2527, #2528).
-- Nowe języki, Koreański, Nepalski, Amharic.
+- Nowe języki: Koreański, Nepalski, amharski.
 - NVDA czyta sugestje autouzupełniania adresów email w programie MS Outlook 2007.
 - Nowe głosy espeaka: gene, gene2. (#2512)
 - Zgłaszanie numerów stron w Adobe Readerze. (#2534).
