@@ -207,8 +207,10 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	s<<L"isBlock=\""<<this->isBlock<<L"\" ";
 	s<<L"isHidden=\""<<this->isHidden<<L"\" ";
 	int childCount=0;
+	int childControlCount=0;
 	for(VBufStorage_fieldNode_t* child=this->firstChild;child!=NULL;child=child->next) {
 		++childCount;
+		if((child->length)>0&&child->firstChild) ++childControlCount;
 	}
 	int parentChildCount=1;
 	int indexInParent=0;
@@ -219,7 +221,7 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	for(VBufStorage_fieldNode_t* next=this->next;next!=NULL;next=next->next) {
 		++parentChildCount;
 	}
-	s<<L"_childcount=\""<<childCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
+	s<<L"_childcount=\""<<childCount<<L"\" _childcontrolcount=\""<<childControlCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
 	text+=s.str();
 	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();++i) {
 		text+=i->first;
