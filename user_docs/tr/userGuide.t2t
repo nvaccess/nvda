@@ -149,8 +149,8 @@ ikincisi, NVDA'nın Windows başladıktan sonra otomatik olarak devreye girmesiy
 ++ NVDA Klavye Komutları Hakkında ++
 
 +++ NVDA Tuşu +++
-Birçok NVDA'ya özel klavye komutu NVDA değişken tuşu adı verilen özel bir tuş ile klavyedeki başka bir tuşa basılarak meydana gelen kombinasyonlardan oluşmaktadır.
-bunun istisnaları numaratördeki tuşları kullanan metin inceleme komutlarıdır.
+Birçok NVDA'ya özel klavye komutu NVDA değişken tuşu adı verilen özel bir tuş ile klavyedeki başka tuşlara basılarak meydana gelen kombinasyonlardan oluşmaktadır.
+Masaüstü klavye düzeninde sadece numaratördeki tuşları kullanan metin inceleme komutları istisnai durumlardandır ve elbette başka istisnalar da olabilir.
 
 Numaratördeki insert, diğer insert, veya büyük harf kilidi tuşlarından birisi NVDA değişken tuşu olarak ayarlanabilir.
 
@@ -847,7 +847,7 @@ içinde aşağıdaki seçenekler mevcuttur:
 ==== Sistem Odağını Takip et ====
 Kısayol tuşu: NVDA+7 |
 
-Etkinleştirildiğinde, nesne sunucusu sistem (klavye) odağını takip eder.
+Etkinleştirildiği zaman, odak değiştiğinde inceleme imleci de sistem  odağının bulunduğu nesne üzerinde konumlanır.
 
 %kc:setting
 ==== Sistem Düzenleme İmlecini takip et ====
@@ -996,6 +996,7 @@ Buradaki birçok onay kutusu belge içinde imleci hareket ettirirken hangi tür 
 - Yazı tipi özellikleri
 - Metin hizzalaması
 - Renkler
+- editör değişiklikleri
 - Metin sitilleri
 - Yazım hataları
 - Sayfa numaraları
@@ -1080,7 +1081,7 @@ Kurulu bir NVDA sürümünde kendi ayarlarınızın olduğu dizine gitmek için,
 
 Logon ve Kullanıcı hesapları (UAC) gibi NVDA çalışırken kullanılan noktalardaki ayarlar, NVDA'nın kurulum dizinindeki systemConfig dizininde saklanmaktadır.
 Genellikle bu ayarlara dokunulmamalıdır.
-NVDA'nın logon ve kullanıcı hesapları ekranlarındaki ayarlarını değiştirmek için, önce NVDA ile Windows'da oturum açarken kullanılacak ayarları yapın, ve daha sonra NVDA genel ayarlar iletişim kutusundaki düğmeyi kullanarak NVDA'ya bu mevcut konfigürasyonu logon ekranına kopyalamasını söyleyin.
+NVDA'nın logon ve kullanıcı hesapları ekranlarındaki ayarlarını değiştirmek için, önce NVDA ile Windows'da oturum açarken kullanılacak ayarları yapın, AYARLARI KAYDEDİP daha sonra NVDA genel ayarlar iletişim kutusundaki düğmeyi kullanarak NVDA'ya bu mevcut konfigürasyonu logon ekranına kopyalamasını söyleyin.
 
 + Ekstra Araçlar +
 
@@ -1833,10 +1834,6 @@ Eğer bu bağlantıyı kaldırmak istiyorsanız, şu satırı ekleyebilirsiniz:
 	None = kb:NVDA+f12
 ```
 
-Scriptleri mevcut tüm tuşlara bağlamakta özgür olmanıza karşın, klavyedeki alt tuşunu kullanmak sorunlu olabilir.
-NVDA bir scripte bağlanmış olsalar bile, Şift, Alt Kontrol gibi değişken tuşları halen işletim sistemine göndermektedir.
-Bu nedenle, Alt tuşunu bir girdi hareketinde kullanırsanız, bu tuşa basmak scriptinizi etkinleştirmenin yanında menü çubuğunu da açabilir.
-Yani, Kontrol, Şift veya NVDA tuşlarını scriptlerde değişken tuş olarak kullanmak daha faydalı olacaktır.
 
 ++ Noktalama/imla Seslendirmesiyle İlgili İleri Düzey Ayarlamalar ++
 Noktalama ya da başka işaretlerin nasıl seslendirileceğiyle ilgili [Noktalama/imla sözlüğü #SymbolPronunciation] iletişim kutusunu kullanarak değiştirebileceğinizden daha fazla ayarlama da yapmanız mümkündür.
