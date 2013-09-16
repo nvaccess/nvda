@@ -14,8 +14,10 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <list>
 #include <windows.h>
+#include <objbase.h>
 #include <oleidl.h>
 #include <mshtml.h>
+#include <mshtmdid.h>
 #include <common/log.h>
 #include "mshtml.h"
 #include "node.h"
@@ -25,33 +27,66 @@ using namespace std;
 class CDispatchChangeSink : public IDispatch {
 	private:
 	ULONG refCount;
-	bool hasFired;
+	MshtmlVBufStorage_controlFieldNode_t* storageNode;
+	IConnectionPoint* pConnectionPoint;
+	DWORD dwCookie;
 
 	public:
-	MshtmlVBufStorage_controlFieldNode_t* storageNode;
-	bool allowDelete;
 
-	CDispatchChangeSink(MshtmlVBufStorage_controlFieldNode_t* storageNode):
-	refCount(1),
-	hasFired(false),
-	allowDelete(true) {
+	CDispatchChangeSink(MshtmlVBufStorage_controlFieldNode_t* storageNode) :
+	refCount(1), dwCookie(0), pConnectionPoint(NULL) {
 		nhAssert(storageNode);
 		this->storageNode=storageNode;
 		incBackendLibRefCount();
 	}
 
-	~CDispatchChangeSink() {
-		decBackendLibRefCount();
+	BOOL connect(IHTMLDOMNode* pHTMLDOMNode, REFIID iid) {
+		if(dwCookie) {
+			LOG_DEBUGWARNING(L"Already connected");
+			return false;
+		}
+		IHTMLElement* pHTMLElement=NULL;
+		pHTMLDOMNode->QueryInterface(IID_IHTMLElement,(void**)&pHTMLElement);
+		if(!pHTMLElement) {
+			LOG_DEBUGWARNING(L"QueryInterface to IHTMLElement failed");
+			return false;
+		}
+		IConnectionPointContainer* pConnectionPointContainer=NULL;
+		pHTMLElement->QueryInterface(IID_IConnectionPointContainer,(void**)&pConnectionPointContainer);
+		pHTMLElement->Release();
+		if(!pConnectionPointContainer) {
+			LOG_DEBUGWARNING(L"QueryInterface to IConnectionPointContainer failed");
+			return false;
+		}
+		IConnectionPoint* pConnectionPoint=NULL;
+		pConnectionPointContainer->FindConnectionPoint(iid,&pConnectionPoint);
+		pConnectionPointContainer->Release();
+		if(!pConnectionPoint) {
+			return false;
+		}
+		DWORD dwCookie=0;
+		pConnectionPoint->Advise(this,&dwCookie);
+		if(!dwCookie) {
+			pConnectionPoint->Release();
+			return false;
+		}
+		this->pConnectionPoint=pConnectionPoint;
+		this->dwCookie=dwCookie;
+		return true;
 	}
 
-	void onChange() {
-		if(hasFired||allowDelete) {
-			return;
-		}
-		hasFired=true;
-		LOG_DEBUG(L"Marking storage node as invalid");
-		this->storageNode->backend->invalidateSubtree(this->storageNode);
-		LOG_DEBUG(L"Done");
+	BOOL disconnect() {
+		if(this->dwCookie==0) return false;
+		this->pConnectionPoint->Unadvise(this->dwCookie);
+		this->dwCookie=0;
+		this->pConnectionPoint->Release();
+		this->pConnectionPoint=NULL;
+		return true;
+	}
+
+	~CDispatchChangeSink() {
+		this->disconnect();
+		decBackendLibRefCount();
 	}
 
 	HRESULT STDMETHODCALLTYPE IUnknown::QueryInterface(REFIID riid, void** pvpObject) {
@@ -77,28 +112,18 @@ class CDispatchChangeSink : public IDispatch {
 		if(this->refCount>0)
 			this->refCount--;
 		if(this->refCount==0) {
-			if (this->allowDelete) {
-				delete this;
-			} else {
-				#ifdef DEBUG
-				Beep(660,50);
-				#endif
-				LOG_DEBUG(L"refCount hit 0 before it should, not deleting, node info: " << this->storageNode->getDebugInfo());
-			}
+			delete this;
 			return 0;
 		}
 		return this->refCount;
 	}
 
 	HRESULT STDMETHODCALLTYPE IDispatch::Invoke(DISPID  dispIdMember, REFIID  riid, LCID  lcid, WORD  wFlags, DISPPARAMS FAR*  pDispParams, VARIANT FAR*  pVarResult, EXCEPINFO FAR*  pExcepInfo, unsigned int FAR*  puArgErr) {
-		if(dispIdMember==0) {
-			LOG_DEBUG(L"calling onChange");
-			this->onChange();
-			LOG_DEBUG(L"Done, returning S_OK");
+		if(dispIdMember==DISPID_EVMETH_ONPROPERTYCHANGE||dispIdMember==DISPID_EVMETH_ONLOAD) {
+			this->storageNode->backend->invalidateSubtree(this->storageNode);
 			return S_OK;
 		}
-		LOG_DEBUG(L"invoke called with unknown member ID, returning E_INVALIDARG");
-		return E_INVALIDARG;
+		return E_FAIL;
 	}
 
 	HRESULT STDMETHODCALLTYPE  IDispatch::GetTypeInfoCount(UINT* count) {
@@ -238,48 +263,22 @@ class CHTMLChangeSink : public IHTMLChangeSink {
 };
 
 MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlock, MshtmlVBufBackend_t* backend, IHTMLDOMNode* pHTMLDOMNode,const wstring& lang): VBufStorage_controlFieldNode_t(docHandle,ID,isBlock), language(lang) {
-	VARIANT_BOOL varBool;
 	nhAssert(backend);
 	nhAssert(pHTMLDOMNode);
 	this->backend=backend;
-	this->pHTMLElement2=NULL;
+	pHTMLDOMNode->AddRef();
+	this->pHTMLDOMNode=pHTMLDOMNode;
 	this->propChangeSink=NULL;
 	this->loadSink=NULL;
 	this->pHTMLChangeSink=NULL;
 	this->HTMLChangeSinkCookey=0;
-	pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&(this->pHTMLElement2));
-	if(!this->pHTMLElement2) {
-		LOG_DEBUG(L"Could not queryInterface from IHTMLDOMNode to IHTMLElement2");
-	}
-	if(this->pHTMLElement2) {
-		CDispatchChangeSink* propChangeSink=new CDispatchChangeSink(this);
-		// It seems that IE 6 sometimes calls Release() once too many times.
-		// We don't want propChangeSink to be deleted until we're finished with it.
-		propChangeSink->allowDelete=false;
-		if((pHTMLElement2->attachEvent(L"onpropertychange",propChangeSink,&varBool)==S_OK)&&varBool) {
-			this->propChangeSink=propChangeSink;
-		} else {
-			LOG_DEBUG(L"Error attaching onPropertyChange event sink to IHTMLElement2 at "<<pHTMLElement2);
-			propChangeSink->allowDelete=true;
-			propChangeSink->Release();
-		}
-	}
 	BSTR nodeName=NULL;
 	pHTMLDOMNode->get_nodeName(&nodeName);
-	if(nodeName!=NULL&&(_wcsicmp(nodeName,L"frame")==0||_wcsicmp(nodeName,L"iframe")==0||_wcsicmp(nodeName,L"img")==0||_wcsicmp(nodeName,L"input")==0)) {
-		if(this->pHTMLElement2) {
-			CDispatchChangeSink* loadSink=new CDispatchChangeSink(this);
-			// It seems that IE 6 sometimes calls Release() once too many times.
-			// We don't want loadSink to be deleted until we're finished with it.
-			loadSink->allowDelete=false;
-			if((pHTMLElement2->attachEvent(L"onload",loadSink,&varBool)==S_OK)&&varBool) {
-				this->loadSink=loadSink;
-			} else {
-				LOG_DEBUG(L"Error attaching onload event sink to IHTMLElement2 at "<<pHTMLElement2);
-				loadSink->allowDelete=true;
-				loadSink->Release();
-			}
-		}
+	CDispatchChangeSink* propChangeSink=new CDispatchChangeSink(this);
+	if(propChangeSink->connect(pHTMLDOMNode,IID_IDispatch)) {
+		this->propChangeSink=propChangeSink;
+	} else {
+		propChangeSink->Release();
 	}
 	if(nodeName!=NULL&&(_wcsicmp(nodeName,L"body")==0||_wcsicmp(nodeName,L"frameset")==0)) {
 		IHTMLDOMNode2* pHTMLDOMNode2=NULL;
@@ -317,23 +316,15 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(int d
  
 MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 	if(this->propChangeSink) {
-		nhAssert(this->pHTMLElement2);
-		if(pHTMLElement2->detachEvent(L"onpropertychange",this->propChangeSink)!=S_OK) {
-			LOG_DEBUG(L"Error detaching onpropertychange event sink from IHTMLElement2");
+		if(!(static_cast<CDispatchChangeSink*>(this->propChangeSink)->disconnect())) {
+			LOG_DEBUGWARNING(L"Failed to stop listening with HTMLElementEvents2 for node "<<this->getDebugInfo());
 		}
-		static_cast<CDispatchChangeSink*>(this->propChangeSink)->allowDelete=true;
 		this->propChangeSink->Release();
+		this->propChangeSink=NULL;
 	}
-	if(this->loadSink) {
-		nhAssert(this->pHTMLElement2);
-		if(pHTMLElement2->detachEvent(L"onload",this->loadSink)!=S_OK) {
-			LOG_DEBUG(L"Error detaching onload event sink from IHTMLElement2");
-		}
-		static_cast<CDispatchChangeSink*>(this->loadSink)->allowDelete=true;
-		this->loadSink->Release();
-	}
-	if(this->pHTMLElement2) {
-		this->pHTMLElement2->Release();
+	if(this->pHTMLDOMNode) {
+		this->pHTMLDOMNode->Release();
+		this->pHTMLDOMNode=NULL;
 	}
 	if(this->pHTMLChangeSink) {
 		nhAssert(this->pMarkupContainer2);
