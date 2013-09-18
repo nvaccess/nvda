@@ -39,11 +39,10 @@ class ProfilesDialog(wx.Dialog):
 		profiles.extend(config.conf.listProfiles())
 		item = self.profileList = wx.Choice(self, choices=profiles)
 		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
-		profile = config.conf.getManualProfile()
-		if profile:
-			item.StringSelection = profile
-		else:
+		if len(config.conf.profiles) == 1:
 			item.Selection = 0
+		else:
+			item.StringSelection = config.conf.profiles[-1].name
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 

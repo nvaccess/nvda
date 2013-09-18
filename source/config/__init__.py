@@ -389,10 +389,7 @@ class ConfigManager(object):
 	with the base configuration being consulted last.
 	This allows a profile to override settings in profiles activated earlier and the base configuration.
 	A profile need only include a subset of the available settings.
-	Profiles can be activated manually or automatically due to triggers.
-	There can only be one manually activated profile and it always has highest precedence.
-	Changed settings are written to the manually activated profile.
-	If there is none, they are written to the base configuration.
+	Changed settings are written to the most recently activated profile.
 	"""
 
 	#: Sections that only apply to the base configuration;
@@ -405,8 +402,6 @@ class ConfigManager(object):
 		self._profileCache = {}
 		#: The active profiles.
 		self.profiles = []
-		#: The index of the profile being edited.
-		self.editProfileIndex = None
 		self.validator = Validator()
 		self.rootSection = None
 		self._shouldHandleProfileSwitch = True
@@ -459,7 +454,6 @@ class ConfigManager(object):
 
 		self._profileCache[None] = profile
 		self.profiles.append(profile)
-		self.editProfileIndex = 0
 		self._handleProfileSwitch()
 
 	def __getitem__(self, key):
@@ -511,37 +505,22 @@ class ConfigManager(object):
 		@param name: The name of the profile or C{None} for no profile.
 		@type name: basestring
 		"""
-		if self.editProfileIndex > 0:
-			# The edit profile can only be the base config or a manually activated profile.
-			# It isn't currently the base config (0).
-			profile = self.profiles.pop()
-			profile.manual = False
+		if len(self.profiles) > 1:
+			profile = self.profiles[-1]
+			if profile.manual:
+				del self.profiles[-1]
+				profile.manual = False
 		if name:
 			profile = self._getProfile(name)
 			profile.manual = True
 			self.profiles.append(profile)
-			self.editProfileIndex = len(self.profiles) - 1
-		else:
-			self.editProfileIndex = 0
 		self._handleProfileSwitch()
 
-	def getManualProfile(self):
-		"""Get the name of the manually activated profile.
-		@return: The name of the profile or C{None} if no profile has been manually activated.
-		@rtype: basestring
-		"""
-		if self.editProfileIndex == 0:
-			# The edit profile can only be the base config or a manually activated profile.
-			# It is currently the base config.
-			return None
-		profile = self.profiles[self.editProfileIndex]
-		return profile.name
-
-	def _markEditProfileDirty(self):
-		if self.editProfileIndex == 0:
-			# This is the base config, which is always saved.
+	def _markWriteProfileDirty(self):
+		if len(self.profiles) == 1:
+			# There's nothing other than the base config, which is always saved anyway.
 			return
-		self._dirtyProfiles.add(self.profiles[self.editProfileIndex].name)
+		self._dirtyProfiles.add(self.profiles[-1].name)
 
 	def save(self):
 		"""Save all modified profiles and the base configuration to disk.
@@ -665,7 +644,7 @@ class ConfigManager(object):
 		"""
 		profile = self._getProfile(name)
 		profile.triggered = True
-		if self.editProfileIndex > 0:
+		if len(self.profiles) > 1 and self.profiles[-1].manual:
 			# There's a manually activated profile.
 			# Manually activated profiles must be at the top of the stack, so insert this one below.
 			self.profiles.insert(-1, profile)
@@ -837,14 +816,14 @@ class AggregatedSection(object):
 			# Update the profile.
 			updateSect = self._getUpdateSection()
 			updateSect[key] = val
-			self.manager._markEditProfileDirty()
+			self.manager._markWriteProfileDirty()
 			# ConfigObj will have mutated this into a configobj.Section.
 			val = updateSect[key]
 			cache = self._cache.get(key)
 			if cache and cache is not KeyError:
 				# An AggregatedSection has already been cached, so update it.
 				cache = self._cache[key]
-				cache.profiles[self.manager.editProfileIndex] = val
+				cache.profiles[-1] = val
 				cache._cache.clear()
 			elif cache is KeyError:
 				# This key now exists, so remove the cached non-existence.
@@ -868,28 +847,27 @@ class AggregatedSection(object):
 
 		# Set this value in the most recently activated profile.
 		self._getUpdateSection()[key] = val
-		self.manager._markEditProfileDirty()
+		self.manager._markWriteProfileDirty()
 		self._cache[key] = val
 
 	def _getUpdateSection(self):
-		editIndex = self.manager.editProfileIndex
-		profile = self.profiles[editIndex]
+		profile = self.profiles[-1]
 		if profile is not None:
 			# This section already exists in the profile.
 			return profile
 
 		section = self.manager.rootSection
-		profile = section.profiles[editIndex]
+		profile = section.profiles[-1]
 		for part in self.path:
 			parentProfile = profile
 			section = section[part]
-			profile = section.profiles[editIndex]
+			profile = section.profiles[-1]
 			if profile is None:
 				# This section doesn't exist in the profile yet.
 				# Create it and update the AggregatedSection.
 				parentProfile[part] = {}
 				# ConfigObj might have mutated this into a configobj.Section.
-				profile = section.profiles[editIndex] = parentProfile[part]
+				profile = section.profiles[-1] = parentProfile[part]
 		return profile
 
 	@property
