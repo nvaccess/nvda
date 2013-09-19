@@ -30,20 +30,18 @@ class ProfilesDialog(wx.Dialog):
 		# Translators: The title of the Configuration Profiles dialog.
 		super(ProfilesDialog, self).__init__(parent, title=_("Configuration Profiles"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		self.profileNames = [None]
+		self.profileNames.extend(config.conf.listProfiles())
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of the profile list in the Configuration Profiles dialog.
 		sizer.Add(wx.StaticText(self, label=_("&Profile")))
 		# Translators: The item to select the user's normal configuration
 		# in the profile list in the Configuration Profiles dialog.
-		profiles = [_("(normal configuration)")]
-		profiles.extend(config.conf.listProfiles())
-		item = self.profileList = wx.Choice(self, choices=profiles)
+		item = self.profileList = wx.Choice(self,
+			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames])
 		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
-		if len(config.conf.profiles) == 1:
-			item.Selection = 0
-		else:
-			item.StringSelection = config.conf.profiles[-1].name
+		item.Selection = self.profileNames.index(config.conf.profiles[-1].name)
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 
@@ -91,12 +89,45 @@ class ProfilesDialog(wx.Dialog):
 	def __del__(self):
 		ProfilesDialog._instance = None
 
+	def getProfileDisplay(self, name, includeStates=False):
+		# Translators: The item to select the user's normal configuration
+		# in the profile list in the Configuration Profiles dialog.
+		disp = name if name else _("(normal configuration)")
+		if includeStates:
+			disp += self.getProfileStates(name)
+		return disp
+
+	def getProfileStates(self, name):
+		try:
+			profile = config.conf.getProfile(name)
+		except KeyError:
+			return ""
+		states = []
+		editProfile = config.conf.profiles[-1]
+		if profile is editProfile:
+			# Translators: Reported for a profile which is being edited
+			# in the Configuration Profiles dialog.
+			states.append(_("editing"))
+		if name:
+			# This is a profile (not the normal configuration).
+			if profile.manual:
+				# Translators: Reported for a profile which has been manually activated
+				# in the Configuration Profiles dialog.
+				states.append(_("manual"))
+			if profile.triggered:
+				# Translators: Reported for a profile which has been triggered
+				# in the Configuration Profiles dialog.
+				states.append(_("triggered"))
+		if states:
+			return " (%s)" % ", ".join(states)
+		return ""
+
 	def onActivate(self, evt):
 		sel = self.profileList.Selection
 		if sel == 0:
 			profile = None
 		else:
-			profile = self.profileList.GetString(sel)
+			profile = self.profileNames[sel]
 		try:
 			config.conf.manualActivateProfile(profile)
 		except:
@@ -127,6 +158,7 @@ class ProfilesDialog(wx.Dialog):
 			gui.messageBox(_("Error creating profile - probably read only file system."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
+		self.profileNames.append(name)
 		self.profileList.Append(name)
 		self.profileList.Selection = self.profileList.Count - 1
 		self.onProfileListChoice(None)
@@ -142,7 +174,7 @@ class ProfilesDialog(wx.Dialog):
 			wx.YES | wx.NO | wx.ICON_QUESTION
 		) == wx.NO:
 			return
-		name = self.profileList.StringSelection
+		name = self.profileNames[index]
 		try:
 			config.conf.deleteProfile(name)
 		except:
@@ -150,6 +182,7 @@ class ProfilesDialog(wx.Dialog):
 			gui.messageBox(_("Error deleting profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
+		del self.profileNames[index]
 		self.profileList.Delete(index)
 		self.profileList.Selection = 0
 		self.onProfileListChoice(None)
@@ -165,7 +198,7 @@ class ProfilesDialog(wx.Dialog):
 
 	def onRename(self, evt):
 		index = self.profileList.Selection
-		oldName = self.profileList.GetString(index)
+		oldName = self.profileNames[index]
 		# Translators: The label of a field to enter a new name for a configuration profile.
 		with wx.TextEntryDialog(self, _("New name:"),
 				# Translators: The title of the dialog to rename a configuration profile.
@@ -184,13 +217,14 @@ class ProfilesDialog(wx.Dialog):
 			gui.messageBox(_("Error renaming profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
+		self.profileNames[index] = newName
 		self.profileList.SetString(index, newName)
 		self.profileList.Selection = index
 		self.profileList.SetFocus()
 
 	def onTriggers(self, evt):
 		self.Disable()
-		TriggersDialog(self, self.profileList.StringSelection).Show()
+		TriggersDialog(self, self.profileNames[self.profileList.Selection]).Show()
 
 class TriggersDialog(wx.Dialog):
 

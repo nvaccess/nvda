@@ -482,11 +482,12 @@ class ConfigManager(object):
 	def _getProfileFn(self, name):
 		return os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
 
-	def _getProfile(self, name):
+	def _getProfile(self, name, load=True):
 		try:
 			return self._profileCache[name]
 		except KeyError:
-			pass
+			if not load:
+				raise KeyError(name)
 
 		# Load the profile.
 		fn = self._getProfileFn(name)
@@ -498,6 +499,16 @@ class ConfigManager(object):
 		profile.triggered = False
 		self._profileCache[name] = profile
 		return profile
+
+	def getProfile(self, name):
+		"""Get a profile given its name.
+		This is useful for checking whether a profile has been manually activated or triggered.
+		@param name: The name of the profile.
+		@type name: basestring
+		@return: The profile object.
+		@raise KeyError: If the profile is not loaded.
+		"""
+		return self._getProfile(name, load=False)
 
 	def manualActivateProfile(self, name):
 		"""Manually activate a profile.
