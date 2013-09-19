@@ -22,14 +22,15 @@ class ProfilesDialog(wx.Dialog):
 			return super(ProfilesDialog, cls).__new__(cls, *args, **kwargs)
 		return ProfilesDialog._instance
 
-	def __init__(self, parent, useFocus=False):
-		self.focusWhenActivated = api.getFocusObject() if useFocus else None
+	def __init__(self, parent):
 		if ProfilesDialog._instance is not None:
 			return
 		ProfilesDialog._instance = self
 		# Translators: The title of the Configuration Profiles dialog.
 		super(ProfilesDialog, self).__init__(parent, title=_("Configuration Profiles"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		self.currentAppName = (gui.mainFrame.prevFocus or api.getFocusObject()).appModule.appName
 		self.profileNames = [None]
 		self.profileNames.extend(config.conf.listProfiles())
 
@@ -314,8 +315,7 @@ class TriggersDialog(wx.Dialog):
 		# Let the user choose from running app modules.
 		item = self.addAppCombo = wx.ComboBox(d, style=wx.CB_DROPDOWN | wx.CB_SORT,
 			choices=[mod.appName for mod in appModuleHandler.runningTable.itervalues()])
-		if self.Parent.focusWhenActivated:
-			item.Value = self.Parent.focusWhenActivated.appModule.appName
+		item.Value = self.Parent.currentAppName
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 
