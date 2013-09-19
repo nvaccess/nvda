@@ -200,6 +200,13 @@ def handleAppSwitch(oldMods, newMods):
 			except watchdog.CallCancelled:
 				pass
 
+	nvdaGuiLostFocus = nextStage and nextStage[-1].appName == "nvda"
+	if not nvdaGuiLostFocus and (not oldMods or oldMods[-1].appName != "nvda") and newMods[-1].appName == "nvda":
+		# NVDA's GUI just got focus.
+		import gui
+		if gui.shouldConfigProfileTriggersBeSuspended():
+			config.conf.suspendProfileTriggers()
+
 	with config.conf.atomicProfileSwitch():
 		# Exit triggers for apps that lost focus.
 		for mod in nextStage:
@@ -217,6 +224,11 @@ def handleAppSwitch(oldMods, newMods):
 			nextStage.append(mod)
 			trigger = mod._configProfileTrigger = AppProfileTrigger(mod.appName)
 			trigger.enter()
+
+	if nvdaGuiLostFocus:
+		import gui
+		if not gui.shouldConfigProfileTriggersBeSuspended():
+			config.conf.resumeProfileTriggers()
 
 	# Fire appropriate events for apps gaining focus.
 	for mod in nextStage:

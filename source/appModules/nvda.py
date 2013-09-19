@@ -8,6 +8,8 @@ import appModuleHandler
 import api
 import controlTypes
 import versionInfo
+import gui
+import config
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -26,3 +28,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	# Silence invisible unknowns for stateChange as well.
 	event_stateChange = event_gainFocus
+
+	def event_foreground         (self, obj, nextHandler):
+		if not gui.shouldConfigProfileTriggersBeSuspended():
+			config.conf.resumeProfileTriggers()

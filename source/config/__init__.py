@@ -10,6 +10,7 @@ import sys
 from cStringIO import StringIO
 import itertools
 import contextlib
+from collections import OrderedDict
 from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
@@ -406,6 +407,7 @@ class ConfigManager(object):
 		self.rootSection = None
 		self._shouldHandleProfileSwitch = True
 		self._pendingHandleProfileSwitch = False
+		self._suspendedTriggers = None
 		self._initBaseConf()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles = set()
@@ -639,10 +641,14 @@ class ConfigManager(object):
 			return
 		self._dirtyProfiles.add(newName)
 
-	def _triggerProfileEnter(self, name):
+	def _triggerProfileEnter(self, trigger):
 		"""Called by L{ProfileTrigger.enter}}}.
 		"""
-		profile = self._getProfile(name)
+		if self._suspendedTriggers is not None:
+			self._suspendedTriggers[trigger] = "enter"
+			return
+
+		profile = self._getProfile(trigger.profile)
 		profile.triggered = True
 		if len(self.profiles) > 1 and self.profiles[-1].manual:
 			# There's a manually activated profile.
@@ -652,10 +658,19 @@ class ConfigManager(object):
 			self.profiles.append(profile)
 		self._handleProfileSwitch()
 
-	def _triggerProfileExit(self, name):
+	def _triggerProfileExit(self, trigger):
 		"""Called by L{ProfileTrigger.exit}}}.
 		"""
-		profile = self._getProfile(name)
+		if self._suspendedTriggers is not None:
+			if trigger in self._suspendedTriggers:
+				# This trigger was entered and is now being exited.
+				# These cancel each other out.
+				del self._suspendedTriggers[trigger]
+			else:
+				self._suspendedTriggers[trigger] = "exit"
+			return
+
+		profile = self._getProfile(trigger.profile)
 		profile.triggered = False
 		self.profiles.remove(profile)
 		self._handleProfileSwitch()
@@ -677,6 +692,30 @@ class ConfigManager(object):
 			if self._pendingHandleProfileSwitch:
 				self._handleProfileSwitch()
 				self._pendingHandleProfileSwitch = False
+
+	def suspendProfileTriggers(self):
+		"""Suspend handling of profile triggers.
+		Any triggers that currently apply will continue to apply.
+		Subsequent enters or exits will not apply until triggers are resumed.
+		@see: L{resumeTriggers}
+		"""
+		if self._suspendedTriggers is not None:
+			return
+		self._suspendedTriggers = OrderedDict()
+
+	def resumeProfileTriggers(self):
+		"""Resume handling of profile triggers after previous suspension.
+		Any trigger enters or exits that occurred while triggers were suspended will be applied.
+		Trigger handling will then return to normal.
+		@see: L{suspendTriggers}
+		"""
+		if self._suspendedTriggers is None:
+			return
+		triggers = self._suspendedTriggers
+		self._suspendedTriggers = None
+		with self.atomicProfileSwitch():
+			for trigger, action in triggers.iteritems():
+				trigger.enter() if action == "enter" else trigger.exit()
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
@@ -911,7 +950,7 @@ class ProfileTrigger(object):
 			self.profile = None
 			return
 		try:
-			conf._triggerProfileEnter(self.profile)
+			conf._triggerProfileEnter(self)
 		except:
 			log.error("Error entering trigger %s, profile %s"
 				% (self.spec, self.profile), exc_info=True)
@@ -924,7 +963,7 @@ class ProfileTrigger(object):
 		if not self.profile:
 			return
 		try:
-			conf._triggerProfileExit(self.profile)
+			conf._triggerProfileExit(self)
 		except:
 			log.error("Error exiting trigger %s, profile %s"
 				% (self.spec, self.profile), exc_info=True)

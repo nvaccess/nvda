@@ -13,6 +13,7 @@ import appModuleHandler
 import globalVars
 
 class ProfilesDialog(wx.Dialog):
+	shouldSuspendConfigProfileTriggers = True
 
 	_instance = None
 	def __new__(cls, *args, **kwargs):

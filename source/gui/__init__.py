@@ -708,3 +708,18 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 			tones.beep(1760, 40)
 		self.Hide()
 		self.Destroy()
+
+def shouldConfigProfileTriggersBeSuspended():
+	"""Determine whether configuration profile triggers should be suspended in relation to NVDA's GUI.
+	For NVDA configuration dialogs, the configuration should remain the same as it was before the GUI was popped up
+	so the user can change settings in the correct profile.
+	Top-level windows that require this behavior should have a C{shouldSuspendConfigProfileTriggers} attribute set to C{True}.
+	Because these dialogs are often opened via the NVDA menu, this applies to the NVDA menu as well.
+	"""
+	if winUser.getGUIThreadInfo(ctypes.windll.kernel32.GetCurrentThreadId()).flags & 0x00000010:
+		# The NVDA menu is active.
+		return True
+	for window in wx.GetTopLevelWindows():
+		if window.IsShown() and getattr(window, "shouldSuspendConfigProfileTriggers", False):
+			return True
+	return False
