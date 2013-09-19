@@ -20,6 +20,7 @@ Qué hay de Nuevo en NVDA
 - Las líneas braille Freedom Scientific Focus 14 Blue y Focus 80 Blue, así como la Focus 40 Blue en ciertas configuraciones que no se soportaba previamente, ahora se soportan cuando se conecten a través de Bluetooth. (#3307)
 - Ahora se anuncian las sugerencias de Autocompletado en Outlook 2010. (#2816)
 - Nuevas tablas de transcripción braille: Braille computerizado Inglés (U.K.), Coreano grado 2, braille ruso para código informático.
+- Nuevo idioma: Farsi. (#1427)
 
 
 == Cambios ==
@@ -64,6 +65,10 @@ Qué hay de Nuevo en NVDA
 - Los espacios múltiples ya no se comprimen a un solo espacio en las líneas braille. (#1366)
 - Las Zend Eclipse PHP Developer Tools ahora funcionan igual que Eclipse. (#3353)
 - En Internet Explorer, ya no es necesario pulsar de nuevo tab para interactuar con un objeto integrado (tal como el contenido Flash) después de pulsar intro sobre él. (#3364)
+- Al editar texto en Microsoft PowerPoint, la última línea ya no se presenta como la línea anterior si la última línea está en blanco. (#3403)
+- En Microsoft PowerPoint, los objetos ya no  se verbalizan a veces  dos veces cuando los seleccionas o eliges para editar. (#3394)
+- NVDA ya no causa que Adobe Reader se bloquee o se cuelgue para ciertos documentos PDF mal formados que contengan filas fuera de las tablas. (#3399)
+- NVDA ahora detecta correctamente la siguiente diapositiva con el foco cuando se elimine una en  la  vista de miniaturas en Microsoft PowerPoint. (#3415)
 
 
 == Cambios para Desarrolladores ==

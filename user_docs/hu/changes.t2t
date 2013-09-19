@@ -3,6 +3,73 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.2 =
+
+== Újdonságok ==
+- A Chromium beágyazott keretrendszer támogatása, mely egy webböngésző-vezérlő (/ böngészőmotor /), ezt sok alkalmazás használja. (#3108)
+- Új eSpeak hangváltozat: Iven3.
+- A Skype-ban a program automatikusan felolvassa az új chatüzeneteket, ha a beszélgetésablak aktív. (#2298)
+- A Tween támogatása: beleértve a fülek nevének felolvasását, valamint kevesebb beszédet a bejegyzések felolvasásakor.
+- Tiltható az NVDA üzeneteinek a braille kijelzőn történő megjelenítése a braille beállítások párbeszédpanelen az "üzenet megjelenítésének időtartama másodpercben"  szerkesztőmezőben 0 másodperc megadásával. (#2482)
+- A bővítménykezelőbe beépítették a "bővítmények beszerzése" gombot, mely megnyitja az NVDA bővítmények weboldalát, ahol megtekinthetők és ahonnan letölthetők az elérhető bővítmények. (#3209)
+- Az NVDA üdvözlő képernyőjén, mely az NVDA első indításakor mindig megjelenik, most már beállítható, hogy az NVDA induljon el automatikusan a Windowsba történő bejelentkezés után. (#2234)
+-  Az NVDA automatikusan alvó módba kapcsol Dolphin Cicero használatakor. (#2055)
+- Az NVDA már támogatja a Miranda IM/Miranda NG Windows x64 alatt futó verzióját. (#3296)
+- Az NVDA már automatikusan felolvassa a Windows 8.1 kezdőképernyőjén a keresési javaslatokat. (#3322)
+- Az NVDA már támogatja Microsoft Excel 2013-ban a táblázatok / munkalapok szerkesztését és a rajtuk történő tájékozódást. (#3360)
+- A Freedom Scientific Focus 14 Blue és Focus 80 Blue braille kijelzőket, akárcsak a Focus 40 Blue kijelzőt, az NVDA most már megfelelően támogatja. Korábban ezeknél a kijelzőknél bizonyos konfigurációknál előfordult, hogy bluetooth kapcsolat esetén az NVDA nem kezelte őket megfelelően. #3307)
+- Az automatikus kiegészítés javaslatait az NVDA már felolvassa az Outlook 2010-ben. (#2816)
+- Új braille fordítási táblák kerültek a programba: egyesült királyságbeli 2. fokozatú angol számítógépi braille, koreai 2-es fokozat, orosz braille számítógépi kódokhoz.
+- Új nyelv: Farsi.
+
+
+== Változások ==
+- Érintő képernyőn az egy ujjas balra-jobbra pöccintés elemmód használatakor már az összes elem között mozog, nem csak az azonos szinten lévő között. Használja a két ujjas jobra-balra pöccintést az azonos szinten lévő elemek közötti mozgáshoz.
+- A böngészőmód beállításaiban a Report layout tables jelölőnégyzet átnevezésre került rétegződő táblázatokra, mert így egyértelműbbé vált, hogy a gyors navigáció nem érzékeli ezeket, ha a jelölőnégyzet nincs bejelölve. (ez a magyar fordításban semmilyen változást nem eredményezett). (#3140)
+- A sík áttekintést felváltották a dokumentum, elem és képernyőmódok. (#2996)
+ - Az elemmód a navigátor kurzornál lévő elemet, a dokumentummód (ha ez elérhető) a böngészőmódban hozzáférhető szövegeket, a képernyőmód pedig az alkalmazás teljes képernyőjét mutatja.
+ - Az eddigi sík áttekintésre használatos billentyűparancsok mostantól ezek között a módok között váltanak.
+ - A navigátor kurzor automatikusan követi az áttekintő kurzort, úgy hogy az a legbelső objektumban maradjon dokumentummód és képernyőmód használatakor.
+ - Képernyőmódra váltás után az NVDA ott fog maradni mindaddig, amíg vissza nem vált dokumentum vagy elemmódra.
+ - ha dokumentum vagy elemmódban van, az NVDA automatikusan vált a két mód között attól függően, hogy az böngészőmódban olvasható-e vagy sem.
+- A liblouis braille translatort a 2.5.3 verzióra frissítették. (#3371)
+
+
+== Hibajavítások ==
+- Egy elem aktiválásakor a művelet bemondása az aktiválás előtt történik, nem pedig utána, ahogyan az korábbi verziók esetén történt. Így mindig az elvégzett művelet neve hangzik el, nem pedig az elvégzés után elérhető művelet (pl. egy fanézet elemének kiterjesztésekor). (#2982)
+- Hatékonyabb navigálás és felolvasás újabb Skype verziók szerkesztőmezői esetén, mint pl. a keresés és a chat. (#1601, #3036)
+- Az NVDA már bemondja az elérhető új eseményeket a Skype korábbi beszélgetések listájában. (#1446)
+- Hatékonyabb kurzor követés és olvasási sorrend megállapítás a képernyő jobbról balra írt szövegei esetén (pl. arab szövegek szerkesztésekor a Microsoft Excel programban). (#1601) 
+- Gombokhoz, ill. űrlapmezőkhöz történő gyorsnavigáláskor az NVDA már helyesen határozza meg azokat a hivatkozásokat, melyek gombokként vannak megadva Internet Explorer esetén. (#2750)
+- Böngésző módban a fanézetek elemeit már nem dolgozza fel a program, mivel az elemek síkbéli nézete nem használható. Nyomja meg az enter billentyűt a vezérlőelem interaktív módban történő hozzáféréséhez. (#3023)
+- Az alt+le vagy alt+fel nyíl billentyűkombinációk, melyek egy kombinált listamezőt nyitnak vagy csuknak be, már nem váltanak interaktív módból böngésző módba. (#2340)
+- Az Internet Explorer 10 program táblázatainak cellái már nem aktiválják az interaktív módot, hacsak azok nem rendelkeznek webszerkesztő által meghatározott fókuszálható tulajdonsággal. (#3248)
+- Az NVDA most már helyesen elindul ha a rendszeridő régebbi, mint az utolsó frissítés ellenőrzésének ideje. (#3260)
+- Ha egy folyamatjelző látható Braille kijelzőn, a kijelző helyesen frissül annak megváltozásakor. (#3258)
+- Mozilla alkalmazások használatakor böngésző módban a táblázatok feliratai már nem jelennek meg kétszer. A táblázatok összegzése most már akkor is megjelenik, ha a táblázatok feliratot tartalmaznak. (#3196)
+- A Beviteli nyelv megváltoztatása esetén az NVDA már a jelenlegi nyelv nevét olvassa fel, az előző helyett Windows 8 használatakor.
+- Az NVDA már felolvassa az IME átalakítási módjait Windows 8 operációs rendszer használatakor.
+- Az NVDA már nem mond be értelmetlen szöveget az asztalon, amikor a Google japán vagy Atok IME beviteli műveleteket használjuk. (#3234)
+- Az NVDA már nem tekinti billentyűzet nyelvváltásnak a beszédfelismerési vagy az érintési bevitelt Windows 7 és újabb operációs rendszereken.
+- Az NVDA már nem mond be egyes szerkesztőmezőkben egy speciális karaktert (0x7f) control+backspace lenyomása esetén. (#3315)
+- Az espeak már nem változtat hangmagasságot, hangerőt, stb, egyes vezérlőkarakterek vagy XML felolvasásakor. (#3334) (a #437 változásai miatt)
+- A fókuszban lévő vezérlőelem címkéjének, vagy értékének változásakor ezek automatikusan elhangzanak, majd a későbbi vezérlőelem lekérdezéskor helyesen jelennek meg a Java alkalmazásokban. (#3119)
+- A Scintilla vezérlőelem sorai már helyesen hangzanak el ha a sortörés engedélyezve van. (#885)
+- A csak olvasható listaelemek neve már helyesen hangzik el Mozilla alkalmazások használatakor (pl. tweetek közötti navigáláskor interaktív mód esetén a twitter.com oldalon). (#3327)
+- A Microsoft Office 2013 megerősítő párbeszédpaneljeinek szövege most már automatikusan elhangzik.
+- Hatékonyabb működés egyes táblázatok navigálásakor a Microsoft Word programban. (#3326)
+- Az NVDA táblázat navigációs parancsai (control+alt+nyilak) hatékonyabban működnek egyes Microsoft Word táblázatok esetén, ahol a cellák több sorban helyezkednek el.
+- Ha a bővítménykezelő már nyitva van, újbóli megnyitása (az eszközök menü vagy egy kiegészítő megnyitásával) már nem okoz hibát vagy teszi bezárhatatlanná a bővítménykezelő ablakot. (#3351)
+- Az NVDA már nem fagy le egyes párbeszédpaneleken, ha japán vagy kínai Office 2010 IME van használatban. (#3064)
+- A szóköz karakterek már nem tömörítődnek össze egy szóköz karakterré braille kijelzőkön. (#1366)
+- A Zend Eclipse PHP Developer Tools már ugyanúgy működik, mint az Eclipse alkalmazás. (#3353)
+- Már ismételten nem szükséges megnyomni a Tab billentyűt a beágyazott objektumok (pl. flash tartalom) hozzáféréséhez az enter billentyű megnyomása után az Internet Explorer programban. (#3364)
+- Szöveg szerkesztésekor ha az utolsó sor üres, már nem hangzik el a felette lévő sor a Microsoft PowerPoint programban. (#3403)
+- Az elemek már nem hangzanak el kétszer kijelöléskor, vagy szerkesztéskor a Microsoft PowerPoint programban. (#3394)
+- Az NVDA már nem okozza az Adobe Reader lefagyását, vagy összeomlását egyes hibásan elkészített PDF dokumentumok esetén, ahol táblázatsorok a táblázaton kívül is szerepelnek. (#3399)
+- Az NVDA már helyesen felismeri a fókuszban lévő következő diát a Microsoft PowerPoint mozaik nézetében egy dia törlésekor. (#3415)
+
+
 = 2013.1.1 =
 
 == Hiba javítások ==

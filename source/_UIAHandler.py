@@ -130,11 +130,11 @@ class UIAHandler(COMObject):
 			raise self.MTAThreadInitException
 
 	def terminate(self):
-		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(self.MTAThread.ident,False,winKernel.SYNCHRONIZE))
+		MTAThreadHandle=HANDLE(windll.kernel32.OpenThread(winKernel.SYNCHRONIZE,False,self.MTAThread.ident))
 		self.MTAThreadStopEvent.set()
-		index=c_int()
-		#Wait for the MTAA thread to die (while still message pumping)
-		windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,5000,0)
+		#Wait for the MTA thread to die (while still message pumping)
+		if windll.user32.MsgWaitForMultipleObjects(1,byref(MTAThreadHandle),False,200,0)!=0:
+			log.debugWarning("Timeout or error while waiting for UIAHandler MTA thread")
 		windll.kernel32.CloseHandle(MTAThreadHandle)
 		del self.MTAThread
 
@@ -167,7 +167,7 @@ class UIAHandler(COMObject):
 		self.clientObject.RemoveAllEventHandlers()
 
 	def IUIAutomationEventHandler_HandleAutomationEvent(self,sender,eventID):
-		if not self.MTAThreadInitEvent.isSet:
+		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
 		if eventID==UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):
@@ -186,7 +186,7 @@ class UIAHandler(COMObject):
 		eventHandler.queueEvent(NVDAEventName,obj)
 
 	def IUIAutomationFocusChangedEventHandler_HandleFocusChangedEvent(self,sender):
-		if not self.MTAThreadInitEvent.isSet:
+		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
 		if not self.isNativeUIAElement(sender):
@@ -211,7 +211,7 @@ class UIAHandler(COMObject):
 		eventHandler.queueEvent("gainFocus",obj)
 
 	def IUIAutomationPropertyChangedEventHandler_HandlePropertyChangedEvent(self,sender,propertyId,newValue):
-		if not self.MTAThreadInitEvent.isSet:
+		if not self.MTAThreadInitEvent.isSet():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
 			return
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
