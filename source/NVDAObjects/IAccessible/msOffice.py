@@ -11,7 +11,7 @@ import winUser
 import api
 from . import IAccessible, getNVDAObjectFromEvent
 import speech
-from logHandler import log
+
 """Miscellaneous support for Microsoft Office applications.
 """
 
