@@ -10,7 +10,8 @@ import controlTypes
 import winUser
 import api
 from . import IAccessible, getNVDAObjectFromEvent
-
+import speech
+from logHandler import log
 """Miscellaneous support for Microsoft Office applications.
 """
 
@@ -78,3 +79,23 @@ class BrokenMsoCommandBar(IAccessible):
 		if name == "MSO Generic Control Container":
 			return None
 		return name
+
+class SDMSymbols(SDM):
+	def script_selectGraphic(self, gesture):
+		gesture.send()
+		if ("\n" in self.parent.description):
+			description=self.parent.description.split("\n")[1]
+			speech.speakText(description)
+
+	__selectGraphicGestures = (
+		"kb:downArrow",
+		"kb:upArrow",
+		"kb:home",
+		"kb:end",
+		"kb:leftArrow",
+		"kb:rightArrow",
+	)
+
+	def initOverlayClass(self):
+		for gesture in self.__selectGraphicGestures:
+			self.bindGesture(gesture, "selectGraphic")
