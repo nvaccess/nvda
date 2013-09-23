@@ -37,17 +37,16 @@ class ProfilesDialog(wx.Dialog):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of the profile list in the Configuration Profiles dialog.
 		sizer.Add(wx.StaticText(self, label=_("&Profile")))
-		item = self.profileList = wx.Choice(self,
+		item = self.profileList = wx.ListBox(self,
 			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames])
-		item.Bind(wx.EVT_CHOICE, self.onProfileListChoice)
+		item.Bind(wx.EVT_LISTBOX, self.onProfileListChoice)
 		item.Selection = self.profileNames.index(config.conf.profiles[-1].name)
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label of a button to activate (and therefore also edit) the selected profile.
-		item = wx.Button(self, label=_("&Activate/edit"))
-		item.Bind(wx.EVT_BUTTON, self.onActivate)
+		item = self.changeStateButton = wx.Button(self)
+		item.Bind(wx.EVT_BUTTON, self.onChangeState)
 		sizer.Add(item)
 		self.AffirmativeId = item.Id
 		item.SetDefault()
@@ -70,8 +69,7 @@ class ProfilesDialog(wx.Dialog):
 		if globalVars.appArgs.secure:
 			for item in newButton, self.triggersButton, self.renameButton, self.deleteButton:
 				item.Disable()
-		else:
-			self.onProfileListChoice(None)
+		self.onProfileListChoice(None)
 		mainSizer.Add(sizer)
 
 		# Translators: The label of a button to close a dialog.
@@ -121,12 +119,20 @@ class ProfilesDialog(wx.Dialog):
 			return " (%s)" % ", ".join(states)
 		return ""
 
-	def onActivate(self, evt):
+	def isProfileManual(self, name):
+		if not name:
+			return False
+		try:
+			profile = config.conf.getProfile(name)
+		except KeyError:
+			return False
+		return profile.manual
+
+	def onChangeState(self, evt):
 		sel = self.profileList.Selection
-		if sel == 0:
+		profile = self.profileNames[sel]
+		if self.isProfileManual(profile):
 			profile = None
-		else:
-			profile = self.profileNames[sel]
 		try:
 			config.conf.manualActivateProfile(profile)
 		except:
@@ -188,9 +194,21 @@ class ProfilesDialog(wx.Dialog):
 		self.profileList.SetFocus()
 
 	def onProfileListChoice(self, evt):
+		sel = self.profileList.Selection
+		enable = sel > 0
+		name = self.profileNames[sel]
+		if self.isProfileManual(name):
+			# Translators: The label of the button to manually deactivate the selected profile
+			# in the Configuration Profiles dialog.
+			label = _("Manual deactivate")
+		else:
+			# Translators: The label of the button to manually activate the selected profile
+			# in the Configuration Profiles dialog.
+			label = _("Manual activate/edit")
+		self.changeStateButton.Label = label
+		self.changeStateButton.Enabled = enable
 		if globalVars.appArgs.secure:
 			return
-		enable = self.profileList.Selection > 0
 		self.deleteButton.Enabled = enable
 		self.renameButton.Enabled = enable
 		self.triggersButton.Enabled = enable
