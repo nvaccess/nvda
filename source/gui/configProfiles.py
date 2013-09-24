@@ -66,15 +66,21 @@ class ProfilesDialog(wx.Dialog):
 
 		# Translators: The label of a button to manage triggers
 		# in the Configuration Profiles dialog.
-		item = triggersButton = wx.Button(self, label=_("&Triggers..."))
-		item.Bind(wx.EVT_BUTTON, self.onTriggers)
-		mainSizer.Add(item)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		triggersButton = wx.Button(self, label=_("&Triggers..."))
+		triggersButton.Bind(wx.EVT_BUTTON, self.onTriggers)
+		sizer.Add(triggersButton)
+		# Translators: The label of a checkbox in the Configuration Profiles dialog.
+		item = self.disableTriggersToggle = wx.CheckBox(self, label=_("Temporarily d&isable all triggers"))
+		item.Value = not config.conf.profileTriggersEnabled
+		sizer.Add(item)
+		mainSizer.Add(sizer)
 
 		# Translators: The label of a button to close a dialog.
 		item = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
 		item.Bind(wx.EVT_BUTTON, lambda evt: self.Close())
 		mainSizer.Add(item)
-		self.Bind(wx.EVT_CLOSE, lambda evt: self.Destroy())
+		self.Bind(wx.EVT_CLOSE, self.onClose)
 		self.EscapeId = wx.ID_CLOSE
 
 		if globalVars.appArgs.secure:
@@ -143,7 +149,7 @@ class ProfilesDialog(wx.Dialog):
 			gui.messageBox(_("Error activating profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR)
 			return
-		self.Destroy()
+		self.Close()
 
 	def onNew(self, evt):
 		self.Disable()
@@ -232,6 +238,13 @@ class ProfilesDialog(wx.Dialog):
 			False)
 		# Translators: Displayed for the configuration profile trigger for say all.
 		yield "sayAll", _("Say all"), True
+
+	def onClose(self, evt):
+		if self.disableTriggersToggle.Value:
+			config.conf.disableProfileTriggers()
+		else:
+			config.conf.enableProfileTriggers()
+		self.Destroy()
 
 class TriggerInfo(object):
 	__slots__ = ("spec", "display", "profile")
@@ -410,6 +423,9 @@ class NewProfileDialog(wx.Dialog):
 				parent.Enable()
 				self.Destroy()
 				return
+		else:
+			# Ensure triggers are enabled so the user can edit the profile.
+			config.conf.enableProfileTriggers()
 
 		# The user is done with the Profiles dialog;
 		# let them get on with editing the profile.

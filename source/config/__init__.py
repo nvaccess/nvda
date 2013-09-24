@@ -404,6 +404,9 @@ class ConfigManager(object):
 		self._profileCache = {}
 		#: The active profiles.
 		self.profiles = []
+		#: Whether profile triggers are enabled (read-only).
+		#: @type: bool
+		self.profileTriggersEnabled = True
 		self.validator = Validator()
 		self.rootSection = None
 		self._shouldHandleProfileSwitch = True
@@ -656,6 +659,8 @@ class ConfigManager(object):
 	def _triggerProfileEnter(self, trigger):
 		"""Called by L{ProfileTrigger.enter}}}.
 		"""
+		if not self.profileTriggersEnabled:
+			return
 		if self._suspendedTriggers is not None:
 			self._suspendedTriggers[trigger] = "enter"
 			return
@@ -673,6 +678,8 @@ class ConfigManager(object):
 	def _triggerProfileExit(self, trigger):
 		"""Called by L{ProfileTrigger.exit}}}.
 		"""
+		if not self.profileTriggersEnabled:
+			return
 		if self._suspendedTriggers is not None:
 			if trigger in self._suspendedTriggers:
 				# This trigger was entered and is now being exited.
@@ -728,6 +735,28 @@ class ConfigManager(object):
 		with self.atomicProfileSwitch():
 			for trigger, action in triggers.iteritems():
 				trigger.enter() if action == "enter" else trigger.exit()
+
+	def disableProfileTriggers(self):
+		"""Temporarily disable all profile triggers.
+		Any triggered profiles will be deactivated and subsequent triggers will not apply.
+		Call L{enableTriggers} to re-enable triggers.
+		"""
+		if not self.profileTriggersEnabled:
+			return
+		self.profileTriggersEnabled = False
+		for profile in self.profiles[1:]:
+			profile.triggered = False
+		if len(self.profiles) > 1 and self.profiles[-1].manual:
+			del self.profiles[1:-1]
+		else:
+			del self.profiles[1:]
+		self._suspendedTriggers = None
+		self._handleProfileSwitch()
+
+	def enableProfileTriggers(self):
+		"""Re-enable profile triggers after they were previously disabled.
+		"""
+		self.profileTriggersEnabled = True
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
