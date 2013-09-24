@@ -10,14 +10,29 @@
 - Nuova variante voce eSpeak: Iven3.
 - In Skype, i nuovi messaggi di chat vengono annunciati automaticamente durante la conversazione focalizzata. (# 2298)
 - Supporto per Tween, compresa la segnalazione dei nomi delle schede e meno verbosità durante la lettura dei tweet.
-- È ora possibile disabilitare la visualizzazione di messaggi NVDA su un display braille impostando il timeout messaggi a 0 nella finestra di dialogo Impostazioni Braille. (# 2482)
+- È ora possibile disabilitare la visualizzazione di messaggi di NVDA su un display braille impostando il timeout messaggi a 0 nella finestra di dialogo Impostazioni Braille. (# 2482)
 - Nel Gestore componenti aggiuntivi, ora c'è un pulsante chiamato Preleva ulteriori componenti aggiuntivi  che aprirà il sito web dedicato da dove sarà possibile navigare e scaricare ulteriori script. (# 3209)
 - Nella finestra di dialogo  di benvenuto di NVDA che  appare sempre la prima volta che si esegue lo screen reader, sarà ora possibile specificare se NVDA debba avviarsi automaticamente dopo l'accesso a Windows. (# 2234)
 - La modalità riposo viene attivata di default ogni qualvolta si esegue Dolphin Cicero. (#2055)
+- Viene ora supportata la versione a 64 bit di Miranda Im. (#3296)
+- Vengono annunciati automaticamente i suggerimenti nella schermata di Ricerca in Windows8. (#3322)
+- Supporto per la navigazione e la modifica di fogli di calcolo in Microsoft Excel 2013. (#3360)
+- Supporto migliorato per i display braille di Freedom Scientific Focus14 Blue e Focus 80 Blue, oltre che per la Focus40 Blue, in modalità Bluetooth. (#3307)
+- I suggerimenti di completamento automatico vengono ora riportati in Outlook 2010 . (#2816)
+- Nuove tabelle di traduzione Braille: English (UK) Computer Braille , coreano grado2, russo computer braille.
+- Nuova lingua: Farsi. (#1427)
 
 
 == Cambiamenti ==
 - L'azione di scorrimento a destra o a sinistra con un dito quando si opera in modalità oggetti ora permette di spostarsi tra di essi nella modalità in linea, seguendone la gerarchia degli stessi. Utilizzare lo scorrimento con due dita a destra o sinistra per spostarsi avanti e indietro tra gli oggetti nello stesso livello gerarchico.
+- La casella di controllo "Annuncia tabelle di layout", situata nelle impostazioni modalità navigazione, è stata migliorata in modo da escludere tali tabelle quando si usano i comandi di navigazione veloce, se la casella di controllo è disattivata. (#3140)
+- La navigazione in linea è stata sostituita con tre tipi di modalità: ad oggetti, documento e a schermo.  (#2996)
+ - La navigazione ad oggetti permette di esplorare il testo all'interno del navigatore ad oggetti, la navigazione documento consente di esplorare il testo in un documento in modalità navigazione (ad esempio una pagina web), mentre la modalità a schermo permette di controllare il testo presente in un'applicazione.
+ - I comandi che in precedenza consentivano di spostarsi o attivare la modalità in linea adesso permettono di passare tra queste tre nuove modalità.
+ - Il navigatore ad oggetti segue automaticamente il cursore di controllo in modo che  alla posizione di quel cursore coincida sempre l'oggetto principale in modalità documento o schermo.
+ - Una volta che si è passati in modalità a schermo, NVDA rimarrà in tale modalità fino a quando non si cambierà tipo di navigazione.
+ - NVDA inoltre potrebbe attivare automaticamente la modalità più appropriata quando ci si trova in navigazione ad oggetti o documento.
+- Liblouis Braille aggiornato alla versione 2.5.3. (#3371)
 
 
 == Bug corretti ==
@@ -36,12 +51,31 @@
 - NVDA ora annuncia i cambiamenti della modalità di conversione IME in Windows 8.
 - NVDA non annuncia più caratteri incomprensibili sul desktop se viene utilizzato Google in versione giapponese oppure il metodo di immissione Atok.
 - In Windows7 e successivi, NVDA non annuncia più erroneamente riconoscimento vocale o immissione a tocco come una modifica della lingua di tastiera.
- 
+- NVDA non annuncia più il carattere speciale (0x7F) premendo Ctrl + backspace in alcuni editor, quando l'opzione leggi i caratteri digitati è attiva. (#3315)
+- Espeak non emette più cambiamenti di tono, volume, etc, quando NVDA legge caratteri di controllo o xml. (#3334) (regressione di #437)
+- Nelle applicazioni Java, le modifiche all'etichetta o al valore del controllo focalizzato ora vengono annunciate automaticamente. (#3119)
+- Nei controlli Scintilla, le righe vengono annunciate correttamente quando è attiva la formattazione automatica. (#885)
+- Nelle applicazioni Mozilla, il nome delle voci di sola lettura  in un elenco è ora riportato correttamente: ad esempio durante la navigazione tweet in modalità focus su twitter.com. (#3327)
+- Le finestre di conferma in Office2013 vengono lette automaticamente.
+- Migliorate le prestazioni durante la navigazione nelle tabelle in Microsoft Word. (#3326)
+- Sistemato il funzionamento del comando CTRL+alt+frecce nell'esplorazione tabelle in alcune circostanze.
+- Se il gestore componenti aggiuntivi risulta già aperto, un tentativo di aprirlo una seconda volta non produce più errori. (#3351)
+- NVDA non si blocca più nel caso in cui si utilizzi Office 2010/2013 con il metodo di immissione cinese o giapponese. (#3064)
+- Nei display braille, più spazi non vengono più compressi in uno solo. (#1366)
+- Eclipse Zend PHP Developer Tools adesso funziona come Eclipse. (#3353)
+- In Internet Explorer, non è più necessario premere tab per interagire con un oggetto incorporato (ad esempio un contenuto Flash) dopo aver premuto il tasto Invio su di esso. ( # 3364)
+- Durante la modifica di un testo in Powerpoint, l'ultima riga non viene più considerata per errore uguale alla penultima, se la riga finale è vuota. (#3403)
+- In microsoft Powerpoint, gli oggetti non sono più annunciati due volte se selezionati. (#3394)
+- NVDA non provoca più il crash di Adobe Reader in presenza di documenti mal strutturati, con righe di tabelle al di fuori di esse. (#3399)
+- NVDA ora intercetta correttamente ladiapositiva successiva focalizzata quando ne viene eliminata una in visualizzazione anteprima. (#3415)
 
-== Cambiamenti per sviluppatori ==
-In inglese: - windowUtils.findDescendantWindow has been added to search for a descendant window (HWND) matching the specified visibility, control ID and/or class name.
-- La console remota Python non va più in timeout dopo 10 secondi mentre è in attesa di input. (#3126)
- 
+
+== Cambiamenti per sviluppatori in inglese==
+- windowUtils.findDescendantWindow has been added to search for a descendant window (HWND) matching the specified visibility, control ID and/or class name.
+- The remote Python console no longer times out after 10 seconds while waiting for input. (#3126)
+- Inclusion of the bisect module in binary builds is deprecated and may be removed in a future release. (#3368)
+ - Add-ons which depend on bisect (including the urllib2 module) should be updated to include this module.
+
 
 = 2013.1.1 =
 

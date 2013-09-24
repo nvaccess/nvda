@@ -116,23 +116,41 @@ wdRevisionCellDeletion=17
 wdRevisionCellMerge=18
 
 wdRevisionTypeLabels={
+	# Translators: a Microsoft Word revision type (inserted content) 
 	wdRevisionInsert:_("insertion"),
+	# Translators: a Microsoft Word revision type (deleted content) 
 	wdRevisionDelete:_("deletion"),
+	# Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 	wdRevisionProperty:_("property"),
+	# Translators: a Microsoft Word revision type (changed paragraph number)
 	wdRevisionParagraphNumber:_("paragraph number"),
+	# Translators: a Microsoft Word revision type (display field)
 	wdRevisionDisplayField:_("display field"),
+	# Translators: a Microsoft Word revision type (reconcile) 
 	wdRevisionReconcile:_("reconcile"),
+	# Translators: a Microsoft Word revision type (conflicting revision)
 	wdRevisionConflict:_("conflict"),
+	# Translators: a Microsoft Word revision type (style change)
 	wdRevisionStyle:_("style"),
+	# Translators: a Microsoft Word revision type (replaced content) 
 	wdRevisionReplace:_("replace"),
+	# Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
 	wdRevisionParagraphProperty:_("paragraph property"),
+	# Translators: a Microsoft Word revision type (table)
 	wdRevisionTableProperty:_("table property"),
+	# Translators: a Microsoft Word revision type (section property) 
 	wdRevisionSectionProperty:_("section property"),
+	# Translators: a Microsoft Word revision type (style definition)
 	wdRevisionStyleDefinition:_("style definition"),
+	# Translators: a Microsoft Word revision type (moved from)
 	wdRevisionMovedFrom:_("moved from"),
+	# Translators: a Microsoft Word revision type (moved to)
 	wdRevisionMovedTo:_("moved to"),
+	# Translators: a Microsoft Word revision type (inserted table cell)
 	wdRevisionCellInsertion:_("cell insertion"),
+	# Translators: a Microsoft Word revision type (deleted table cell)
 	wdRevisionCellDeletion:_("cell deletion"),
+	# Translators: a Microsoft Word revision type (merged table cells)
 	wdRevisionCellMerge:_("cell merge"),
 }
 

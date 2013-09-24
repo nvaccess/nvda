@@ -561,8 +561,12 @@ inline void fillTextFormattingForNode(IHTMLDOMNode* pHTMLDOMNode, VBufStorage_fi
 inline void fillTextFormattingForTextNode(VBufStorage_controlFieldNode_t* parentNode, VBufStorage_textFieldNode_t* textNode)
 	//text nodes don't support IHTMLElement2 interface, so using style information from parent node
 	{
-	IHTMLElement2* pHTMLElement2=(static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode))->pHTMLElement2;
-	fillTextFormatting_helper(pHTMLElement2,textNode);
+	IHTMLElement2* pHTMLElement2=NULL; 
+	static_cast<MshtmlVBufStorage_controlFieldNode_t*>(parentNode)->pHTMLDOMNode->QueryInterface(IID_IHTMLElement2,(void**)&pHTMLElement2);
+	if(pHTMLElement2) {
+		fillTextFormatting_helper(pHTMLElement2,textNode);
+		pHTMLElement2->Release();
+	}
 }
 
 const int TABLEHEADER_COLUMN = 0x1;
@@ -1227,11 +1231,11 @@ void MshtmlVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, in
 		LOG_DEBUG(L"Error getting document using WM_HTML_GETOBJECT");
 		return;
 	}
-IHTMLDOMNode* pHTMLDOMNode=NULL;
+	IHTMLDOMNode* pHTMLDOMNode=NULL;
 	if(oldNode!=NULL) {
-		IHTMLElement2* pHTMLElement2=(static_cast<MshtmlVBufStorage_controlFieldNode_t*>(oldNode))->pHTMLElement2;
-		nhAssert(pHTMLElement2);
-		pHTMLElement2->QueryInterface(IID_IHTMLDOMNode,(void**)&pHTMLDOMNode);
+		pHTMLDOMNode=(static_cast<MshtmlVBufStorage_controlFieldNode_t*>(oldNode))->pHTMLDOMNode;
+		nhAssert(pHTMLDOMNode);
+		pHTMLDOMNode->AddRef();
 	} else {
 		IHTMLDocument3* pHTMLDocument3=NULL;
 		if(ObjectFromLresult(res,IID_IHTMLDocument3,0,(void**)&pHTMLDocument3)!=S_OK) {

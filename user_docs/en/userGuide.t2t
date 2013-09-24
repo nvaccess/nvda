@@ -149,8 +149,8 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 ++ About NVDA keyboard commands ++
 
 +++ The NVDA Modifier Key +++
-Most NVDA-specific keyboard commands usually consist of pressing a particular key called the NVDA modifier key, in conjunction with one or more other keys.
-An exception to this are the text review commands which just use the numpad keys by themselves.
+Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
+Notable exceptions to this are the text review commands for desktop keyboards which just use the numpad keys by themselves, but there are some other exceptions as well.
 
 NVDA can be configured so that either the numpad Insert, Extended Insert, or capslock key can be used as the NVDA modifier key.
 
@@ -633,7 +633,7 @@ The Voice Settings dialog box contains the following options:
 ==== Voice ====
 The first option that you land on in this dialog is a combo box listing all the voices of the current synthesizer that you have installed.
 You can use the arrow keys to listen to all the various choices.
-Left and Up arrow take you up in the list, while right and down arrow moves you down in the list.
+Left and Up arrow take you up in the list, while right and down arrow move you down in the list.
 
 ==== Variant ====
 If you are using the Espeak synthesizer that is packaged with NVDA, this is a combo box that lets you select the Variant the synthesizer should speak with.
@@ -847,7 +847,7 @@ This dialog contains the following options:
 ==== Follow System Focus ====
 Key: NVDA+7
 
-When enabled, The review cursor will always be placed in the same object as the current system focus as it changes.
+When enabled, The review cursor will always be placed in the same object as the current system focus whenever the focus changes.
 
 %kc:setting
 ==== Follow System Caret ====
@@ -1150,9 +1150,9 @@ Installed versions of NVDA store all settings, custom appModules and custom driv
 This means that each user on the system can have their own NVDA settings.
 To get to your settings directory for an installed version of NVDA, on the start menu you can go to programs -> NVDA -> explore user configuration directory.
 
-Settings for NVDA when running on the logon or UAC screens is stored in the systemConfig directory in NVDA's installation directory.
-Usually this configuration should not be touched.
-To change how NVDA is configured on the logon/UAC screens, configure NVDA to how you wish while logged into Windows, and then instruct NVDA to copy the configuration to the logon screen by using the button in the General settings dialog.
+Settings for NVDA when running on the logon or UAC screens are stored in the systemConfig directory in NVDA's installation directory.
+Usually, this configuration should not be touched.
+To change NVDA's configuration on the logon/UAC screens, configure NVDA as you wish while logged into Windows, save the configuration, and then press the "Use currently saved settings on the logon and other secure screens" button in the General Settings dialog.
 
 + Extra Tools +
 
