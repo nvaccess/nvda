@@ -7,6 +7,7 @@
 import itertools
 import os
 import pkgutil
+import threading
 import wx
 import louis
 import keyboardHandler
@@ -1559,6 +1560,10 @@ class BrailleDisplayDriver(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	#: Does this driver participate in Probing:
+	#: @type: bool
+	canProbe = True
+
 	#: Global input gesture map for this display driver.
 	#: @type: L{inputCore.GlobalGestureMap}
 	gestureMap = None
@@ -1617,3 +1622,76 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		return handler.display.description, identifier.split(":", 1)[1]
 
 inputCore.registerGestureSource("br", BrailleDisplayGesture)
+
+class BrailleDisplayProber(object):
+	""" Probes for braille displays connected to the user machine. """
+	def __init__(self, active=False):
+		super(BrailleDisplayProber, self).__init__()
+		self._active = active
+		if active:
+			self._filter = lambda port : port != BrailleDisplayDriver.AUTOMATIC_PORT
+		else:
+			# Some drivers are returning capitalized versions of these.
+			self._filter = lambda port : port.lower() in ("usb", "bluetooth")
+		self._thread = None
+		self._stop = False
+		self.foundDisplayCallback = None
+		self.endProbingCallback = None
+
+	def probeGenerator(self):
+		for name, description in getDisplayList():
+			if self._stop:
+				raise StopIteration()
+			cls = _getDisplayDriver(name)
+			if not cls.canProbe:
+				continue
+			log.debug("Probing braille display %s", cls.name)
+			try:
+				for port, portDescription in cls.getPossiblePorts().iteritems():
+					# If stoped, get out of here.
+					if self._stop:
+						raise StopIteration()
+					if not self._filter(port):
+						continue
+					try:
+						display = cls(port=port)
+					except RuntimeError:
+						continue
+					# Found one
+					numCells = display.numCells
+					display.terminate()
+					yield cls, port, portDescription, numCells
+			except NotImplementedError:
+				# Fallback to old drivers that don't support port selection
+				try:
+					display = cls()
+				except RuntimeError:
+					continue
+				numCells = display.numCells
+				display.terminate()
+				yield cls, None, None, numCells
+
+	def probe(self):
+		log.debug("Start probing for braille displays.")
+		for cls, port, portDescription, numCells in self.probeGenerator():
+			if self.foundDisplayCallback:
+				wx.CallAfter(self.foundDisplayCallback, cls, port, portDescription, numCells)
+		log.debug("End probing for braille displays")
+
+	def startProbing(self):
+		self._thread = threading.Thread(target=self.probe)
+		self._thread.setDaemon(True)
+		self._stop = False
+		self._thread.start()
+
+	def stopProbing(self, wait=True):
+		self._stop = True
+		if wait and self._thread and self._thread.isAlive():
+			self._thread.join()
+
+	@property
+	def probing(self):
+		return self._thread and self._thread.isAlive()
+
+	def terminate():
+		self.stopProbing()

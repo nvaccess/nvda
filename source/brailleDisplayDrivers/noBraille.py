@@ -16,3 +16,5 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def check(cls):
 		return True
+
+	canProbe = False
