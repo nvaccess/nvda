@@ -147,6 +147,14 @@ ROLE_HEADERITEM=141
 ROLE_THUMB=142
 ROLE_CALENDAR=143
 
+ROLE_MATH_FRACTION = "math fraction"
+ROLE_MATH_IDENTIFIER = "math identifier"
+ROLE_MATH_NUMBER = "math number"
+ROLE_MATH_OPERATOR = "math operator"
+ROLE_MATH_ROW = "math row"
+ROLE_MATH_SQRT = "math sqrt"
+ROLE_MATH_SUPERSCRIPT = "math superscript"
+
 STATE_UNAVAILABLE=0X1
 STATE_FOCUSED=0X2
 STATE_SELECTED=0X4
@@ -449,6 +457,14 @@ roleLabels={
 	ROLE_HEADERITEM:_("header item"),
 	ROLE_THUMB:_("thumb control"),
 	ROLE_CALENDAR:_("calendar"),
+
+	ROLE_MATH_FRACTION: _("fraction"),
+	ROLE_MATH_IDENTIFIER: _("identifier"),
+	ROLE_MATH_NUMBER: _("number"),
+	ROLE_MATH_OPERATOR: _("operator"),
+	ROLE_MATH_ROW: _("sub expression"),
+	ROLE_MATH_SQRT: _("square root"),
+	ROLE_MATH_SUPERSCRIPT: _("superscript"),
 }
 
 stateLabels={
