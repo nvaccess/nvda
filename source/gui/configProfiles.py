@@ -169,6 +169,7 @@ class ProfilesDialog(wx.Dialog):
 			return
 		del self.profileNames[index]
 		self.profileList.Delete(index)
+		self.profileList.SetString(0, self.getProfileDisplay(None, includeStates=True))
 		self.profileList.Selection = 0
 		self.onProfileListChoice(None)
 		self.profileList.SetFocus()
