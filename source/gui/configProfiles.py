@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from collections import namedtuple
 import wx
 import config
 import api
@@ -147,31 +146,8 @@ class ProfilesDialog(wx.Dialog):
 		self.Destroy()
 
 	def onNew(self, evt):
-		# Translators: The label of a field to enter the name of a new configuration profile.
-		with wx.TextEntryDialog(self, _("Profile name:"),
-				# Translators: The title of the dialog to create a new configuration profile.
-				_("New Profile")) as d:
-			if d.ShowModal() == wx.ID_CANCEL:
-				return
-			name = api.filterFileName(d.Value)
-		try:
-			config.conf.createProfile(name)
-		except ValueError:
-			# Translators: An error displayed when the user attempts to create a profile which already exists.
-			gui.messageBox(_("That profile already exists. Please choose a different name."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
-			return
-		except:
-			log.debugWarning("", exc_info=True)
-			# Translators: An error displayed when creating a profile fails.
-			gui.messageBox(_("Error creating profile - probably read only file system."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
-			return
-		self.profileNames.append(name)
-		self.profileList.Append(name)
-		self.profileList.Selection = self.profileList.Count - 1
-		self.onProfileListChoice(None)
-		self.profileList.SetFocus()
+		self.Disable()
+		NewProfileDialog(self).Show()
 
 	def onDelete(self, evt):
 		index = self.profileList.Selection
@@ -247,12 +223,14 @@ class ProfilesDialog(wx.Dialog):
 		TriggersDialog(self).Show()
 
 	def getSimpleTriggers(self):
+		# Yields (spec, display, manualEdit)
 		yield ("app:%s" % self.currentAppName,
 			# Translators: Displayed for the configuration profile trigger for the current application.
 			# %s is replaced by the application executable name.
-			_("Current application (%s)") % self.currentAppName)
+			_("Current application (%s)") % self.currentAppName,
+			False)
 		# Translators: Displayed for the configuration profile trigger for say all.
-		yield "sayAll", _("Say all")
+		yield "sayAll", _("Say all"), True
 
 class TriggerInfo(object):
 	__slots__ = ("spec", "display", "profile")
@@ -273,7 +251,7 @@ class TriggersDialog(wx.Dialog):
 		triggers = self.triggers = []
 		confTrigs = config.conf["profileTriggers"]
 		# Handle simple triggers.
-		for spec, disp in parent.getSimpleTriggers():
+		for spec, disp, manualEdit in parent.getSimpleTriggers():
 			try:
 				profile = confTrigs[spec]
 			except KeyError:
@@ -343,3 +321,114 @@ class TriggersDialog(wx.Dialog):
 
 		self.Parent.Enable()
 		self.Destroy()
+
+class NewProfileDialog(wx.Dialog):
+
+	def __init__(self, parent):
+		# Translators: The title of the dialog to create a new configuration profile.
+		super(NewProfileDialog, self).__init__(parent, title=_("New Profile"))
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a field to enter the name of a new configuration profile.
+		sizer.Add(wx.StaticText(self, label=_("Profile name:")))
+		item = self.profileName = wx.TextCtrl(self)
+		sizer.Add(item)
+		mainSizer.Add(sizer)
+
+		# Translators: The label of a radio button to specify that a profile will be used for manual activation
+		# in the new configuration profile dialog.
+		self.triggers = triggers = [(None, _("Manual activation"), True)]
+		triggers.extend(parent.getSimpleTriggers())
+		item = self.triggerChoice = wx.RadioBox(self, label=_("Use this profile for:"),
+			choices=[trig[1] for trig in triggers])
+		item.Bind(wx.EVT_RADIOBOX, self.onTriggerChoice)
+		self.autoProfileName = ""
+		self.onTriggerChoice(None)
+		mainSizer.Add(item)
+
+		mainSizer.Add(self.CreateButtonSizer(wx.OK | wx.CANCEL))
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
+		mainSizer.Fit(self)
+		self.Sizer = mainSizer
+		self.profileName.SetFocus()
+
+	def onOk(self, evt):
+		confTrigs = config.conf["profileTriggers"]
+		spec, disp, manualEdit = self.triggers[self.triggerChoice.Selection]
+		if spec in confTrigs and gui.messageBox(
+			# Translators: The confirmation prompt presented when creating a new configuration profile
+			# and the selected trigger is already associated.
+			_("This trigger is already associated with another profile. "
+				"If you continue, it will be removed from that profile and associated with this one.\n"
+				"Are you sure you want to continue?"),
+			_("Warning"), wx.ICON_WARNING | wx.YES | wx.NO, self
+		) == wx.NO:
+			return
+
+		name = api.filterFileName(self.profileName.Value)
+		if not name:
+			return
+		try:
+			config.conf.createProfile(name)
+		except ValueError:
+			# Translators: An error displayed when the user attempts to create a configuration profile which already exists.
+			gui.messageBox(_("That profile already exists. Please choose a different name."),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			return
+		except:
+			log.debugWarning("", exc_info=True)
+			# Translators: An error displayed when creating a configuration profile fails.
+			gui.messageBox(_("Error creating profile - probably read only file system."),
+				_("Error"), wx.OK | wx.ICON_ERROR)
+			self.onCancel(evt)
+			return
+		if spec:
+			confTrigs[spec] = name
+
+		parent = self.Parent
+		if manualEdit:
+			if gui.messageBox(
+				# Translators: The prompt asking the user whether they wish to
+				# manually activate a configuration profile that has just been created.
+				_("To edit this profile, you will need to manually activate it. "
+					"Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
+					"Do you wish to manually activate it now?"),
+				# Translators: The title of the confirmation dialog for manual activation of a created profile.
+				_("Manual Activation"), wx.YES | wx.NO | wx.ICON_QUESTION
+			) == wx.YES:
+				config.conf.manualActivateProfile(name)
+			else:
+				# Return to the Profiles dialog.
+				parent.profileNames.append(name)
+				parent.profileList.Append(name)
+				parent.profileList.Selection = parent.profileList.Count - 1
+				parent.onProfileListChoice(None)
+				parent.profileList.SetFocus()
+				parent.Enable()
+				self.Destroy()
+				return
+
+		# The user is done with the Profiles dialog;
+		# let them get on with editing the profile.
+		parent.Destroy()
+
+	def onCancel(self, evt):
+		self.Parent.Enable()
+		self.Destroy()
+
+	def onTriggerChoice(self, evt):
+		spec, disp, manualEdit = self.triggers[self.triggerChoice.Selection]
+		if not spec:
+			# Manual activation shouldn't guess a name.
+			name = ""
+		elif spec.startswith("app:"):
+			name = spec[4:]
+		else:
+			name = disp
+		if self.profileName.Value == self.autoProfileName:
+			# The user hasn't changed the automatically filled value.
+			self.profileName.Value = name
+			self.profileName.SelectAll()
+		self.autoProfileName = name
