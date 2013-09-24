@@ -563,6 +563,7 @@ class ConfigManager(object):
 		@type factoryDefaults: bool
 		"""
 		self.profiles = []
+		self._profileCache.clear()
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
