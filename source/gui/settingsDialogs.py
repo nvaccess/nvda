@@ -52,6 +52,7 @@ class SettingsDialog(wx.Dialog):
 	_hasInstance=False
 
 	title = ""
+	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
 		if SettingsDialog._hasInstance:
