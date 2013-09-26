@@ -84,6 +84,9 @@ An NVDAObject for a window
 		if windowClassName=="EXCEL7" and (relation=='focus' or isinstance(relation,tuple)): 
 			from . import excel
 			yield excel.ExcelCell 
+		if windowClassName=="EXCEL:":
+			from .excel import ExcelDropdown as newCls
+			yield newCls
 		import JABHandler
 		if JABHandler.isJavaWindow(windowHandle):
 			import NVDAObjects.JAB

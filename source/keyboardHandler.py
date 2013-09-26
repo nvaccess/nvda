@@ -3,7 +3,7 @@
 #A part of NonVisual Desktop Access (NVDA)
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
-#Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>, James Teh <jamie@jantrid.net>, Peter Vágner <peter.v@datagate.sk>, Aleksey Sadovoy <lex@onm.su>
+#Copyright (C) 2006-2013 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 
 """Keyboard support"""
 
@@ -145,6 +145,13 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 		try:
 			inputCore.manager.executeGesture(gesture)
 			trappedKeys.add(keyCode)
+			if canModifiersPerformAction(gesture.generalizedModifiers):
+				# #3472: These modifiers can perform an action if pressed alone
+				# and we've just consumed the main key.
+				# Send special reserved vkcode (0xff) to at least notify the app's key state that something happendd.
+				# This allows alt and windows to be bound to scripts and
+				# stops control+shift from switching keyboard layouts in cursorManager selection scripts.
+				KeyboardInputGesture((),0xff,0,False).send()
 			return False
 		except inputCore.NoInputGestureAction:
 			if gesture.isNVDAModifierKey:
@@ -211,6 +218,30 @@ def getInputHkl():
 	else:
 		thread = 0
 	return winUser.user32.GetKeyboardLayout(thread)
+
+def canModifiersPerformAction(modifiers):
+	"""Determine whether given generalized modifiers can perform an action if pressed alone.
+	For example, alt activates the menu bar if it isn't modifying another key.
+	"""
+	if inputCore.manager.isInputHelpActive:
+		return False
+	control = shift = other = False
+	for vk, ext in modifiers:
+		if vk in (winUser.VK_MENU, VK_WIN):
+			# Alt activates the menu bar.
+			# Windows activates the Start Menu.
+			return True
+		elif vk == winUser.VK_CONTROL:
+			control = True
+		elif vk == winUser.VK_SHIFT:
+			shift = True
+		elif (vk, ext) not in trappedKeys :
+			# Trapped modifiers aren't relevant.
+			other = True
+	if control and shift and not other:
+		# Shift+control switches keyboard layouts.
+		return True
+	return False
 
 class KeyboardInputGesture(inputCore.InputGesture):
 	"""A key pressed on the traditional system keyboard.
@@ -292,6 +323,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				return "plus"
 			return unichr(vkChar).lower()
 
+		if self.vkCode == 0xFF:
+			# #3468: This key is unknown to Windows.
+			# GetKeyNameText often returns something inappropriate in these cases
+			# due to disregarding the extended flag.
+			return "unknown_%02x" % self.scanCode
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
 	def _get_modifierNames(self):
@@ -312,7 +348,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			key="+".join(self._keyNamesInDisplayOrder))
 
 	def _get_displayName(self):
-		return "+".join(localizedKeyLabels.get(key, key) for key in self._keyNamesInDisplayOrder)
+		return "+".join(
+			# Translators: Reported for an unknown key press.
+			# %s will be replaced with the key code.
+			_("unknown %s") % key[8:] if key.startswith("unknown_")
+			else localizedKeyLabels.get(key, key) for key in self._keyNamesInDisplayOrder)
 
 	def _get_identifiers(self):
 		keyNames = set(self.modifierNames)
@@ -327,6 +367,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
 			# Don't report volume controlling keys.
 			return False
+		if self.vkCode == 0xFF:
+			# #3468: This key is unknown to Windows.
+			# This could be for an event such as gyroscope movement,
+			# so don't report it.
+			return False
 		# Aside from space, a key name of more than 1 character is a command.
 		if self.vkCode != winUser.VK_SPACE and len(self.mainKeyName) > 1:
 			return True
@@ -340,6 +385,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if inputCore.manager.isInputHelpActive:
 			return self.SPEECHEFFECT_CANCEL
 		if self.isExtended and winUser.VK_VOLUME_MUTE <= self.vkCode <= winUser.VK_VOLUME_UP:
+			return None
+		if self.vkCode == 0xFF:
+			# #3468: This key is unknown to Windows.
+			# This could be for an event such as gyroscope movement,
+			# so don't interrupt speech.
 			return None
 		if not config.conf['keyboard']['speechInterruptForCharacters'] and (not self.shouldReportAsCommand or self.vkCode in (winUser.VK_SHIFT, winUser.VK_LSHIFT, winUser.VK_RSHIFT)):
 			return None
