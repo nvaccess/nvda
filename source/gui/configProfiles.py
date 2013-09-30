@@ -246,6 +246,15 @@ class ProfilesDialog(wx.Dialog):
 			config.conf.enableProfileTriggers()
 		self.Destroy()
 
+	def saveTriggers(self, parentWindow=None):
+		try:
+			config.conf.saveProfileTriggers()
+		except:
+			log.debugWarning("", exc_info=True)
+			# Translators: An error displayed when saving configuration profile triggers fails.
+			gui.messageBox(_("Error saving configuration profile triggers - probably read only file system."),
+				_("Error"), wx.OK | wx.ICON_ERROR, parent=parentWindow)
+
 class TriggerInfo(object):
 	__slots__ = ("spec", "display", "profile")
 
@@ -263,7 +272,7 @@ class TriggersDialog(wx.Dialog):
 
 		processed = set()
 		triggers = self.triggers = []
-		confTrigs = config.conf["profileTriggers"]
+		confTrigs = config.conf.triggersToProfiles
 		# Handle simple triggers.
 		for spec, disp, manualEdit in parent.getSimpleTriggers():
 			try:
@@ -323,7 +332,7 @@ class TriggersDialog(wx.Dialog):
 		trig.profile = self.Parent.profileNames[evt.Selection]
 
 	def onClose(self, evt):
-		confTrigs = config.conf["profileTriggers"]
+		confTrigs = config.conf.triggersToProfiles
 		for trig in self.triggers:
 			if trig.profile:
 				confTrigs[trig.spec] = trig.profile
@@ -332,6 +341,7 @@ class TriggersDialog(wx.Dialog):
 					del confTrigs[trig.spec]
 				except KeyError:
 					pass
+		self.Parent.saveTriggers(parentWindow=self)
 
 		self.Parent.Enable()
 		self.Destroy()
@@ -369,7 +379,7 @@ class NewProfileDialog(wx.Dialog):
 		self.profileName.SetFocus()
 
 	def onOk(self, evt):
-		confTrigs = config.conf["profileTriggers"]
+		confTrigs = config.conf.triggersToProfiles
 		spec, disp, manualEdit = self.triggers[self.triggerChoice.Selection]
 		if spec in confTrigs and gui.messageBox(
 			# Translators: The confirmation prompt presented when creating a new configuration profile
@@ -400,6 +410,7 @@ class NewProfileDialog(wx.Dialog):
 			return
 		if spec:
 			confTrigs[spec] = name
+			self.Parent.saveTriggers(parentWindow=self)
 
 		parent = self.Parent
 		if manualEdit:

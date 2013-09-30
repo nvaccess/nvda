@@ -396,7 +396,7 @@ class ConfigManager(object):
 
 	#: Sections that only apply to the base configuration;
 	#: i.e. they cannot be overridden in profiles.
-	BASE_ONLY_SECTIONS = {"general", "update", "upgrade", "profileTriggers"}
+	BASE_ONLY_SECTIONS = {"general", "update", "upgrade"}
 
 	def __init__(self):
 		self.spec = confspec
@@ -413,6 +413,9 @@ class ConfigManager(object):
 		self._pendingHandleProfileSwitch = False
 		self._suspendedTriggers = None
 		self._initBaseConf()
+		#: Maps triggers to profiles.
+		self.triggersToProfiles = None
+		self._loadProfileTriggers()
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles = set()
 
@@ -599,12 +602,14 @@ class ConfigManager(object):
 		except KeyError:
 			pass
 		# Remove any triggers associated with this profile.
-		allTriggers = self.profiles[0]["profileTriggers"]
+		allTriggers = self.triggersToProfiles
 		# You can't delete from a dict while iterating through it.
 		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.iteritems()
 			if trigProfile == name]
-		for trigSpec in delTrigs:
-			del allTriggers[trigSpec]
+		if delTrigs:
+			for trigSpec in delTrigs:
+				del allTriggers[trigSpec]
+			self.saveProfileTriggers()
 		# Check if this profile was active.
 		for index, profile in enumerate(self.profiles):
 			if profile.name == name:
@@ -639,10 +644,14 @@ class ConfigManager(object):
 
 		os.rename(oldFn, newFn)
 		# Update any associated triggers.
-		allTriggers = self.profiles[0]["profileTriggers"]
+		allTriggers = self.triggersToProfiles
+		saveTrigs = False
 		for trigSpec, trigProfile in allTriggers.iteritems():
 			if trigProfile == oldName:
 				allTriggers[trigSpec] = newName
+				saveTrigs = True
+		if saveTrigs:
+			self.saveProfileTriggers()
 		try:
 			profile = self._profileCache.pop(oldName)
 		except KeyError:
@@ -758,6 +767,33 @@ class ConfigManager(object):
 		"""Re-enable profile triggers after they were previously disabled.
 		"""
 		self.profileTriggersEnabled = True
+
+	def _loadProfileTriggers(self):
+		fn = os.path.join(globalVars.appArgs.configPath, "profileTriggers.ini")
+		try:
+			cobj = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+		except:
+			log.error("Error loading profile triggers", exc_info=True)
+			cobj = ConfigObj(None, indent_type="\t", encoding="UTF-8")
+			cobj.filename = fn
+		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
+		cobj.newlines = "\r\n"
+		try:
+			self.triggersToProfiles = cobj["triggersToProfiles"]
+		except KeyError:
+			cobj["triggersToProfiles"] = {}
+			# ConfigObj will have mutated this into a configobj.Section.
+			self.triggersToProfiles = cobj["triggersToProfiles"]
+
+	def saveProfileTriggers(self):
+		"""Save profile trigger information to disk.
+		This should be called whenever L{profilesToTriggers} is modified.
+		"""
+		if globalVars.appArgs.secure:
+			# Never save if running securely.
+			return
+		self.triggersToProfiles.parent.write()
+		log.info("Profile triggers saved")
 
 class AggregatedSection(object):
 	"""A view of a section of configuration which aggregates settings from all active profiles.
@@ -987,7 +1023,7 @@ class ProfileTrigger(object):
 		The associated profile (if any) will be activated.
 		"""
 		try:
-			self.profile = conf.profiles[0]["profileTriggers"][self.spec]
+			self.profile = conf.triggersToProfiles[self.spec]
 		except KeyError:
 			self.profile = None
 			return
