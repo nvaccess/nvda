@@ -10,6 +10,8 @@
 """
 
 import itertools
+import array
+import ctypes
 import ctypes.wintypes
 import os
 import sys
@@ -267,9 +269,58 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
+		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
+		# If the processHandle is greater than 0, we get application name and version by reading it in its main executable file
+		if self.processHandle >0:
+			# We define where to find the function GetModuleFileNameW
+			try:
+				GetModuleFileName = ctypes.windll.kernel32.GetModuleFileNameExW
+			except AttributeError:
+				GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
+			GetModuleFileName.restype = ctypes.wintypes.DWORD
+			# Create the buffer to get the executable name
+			exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+			if GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.wintypes.MAX_PATH) > 0:
+				fileName = exeFileName.value
+				# Get size needed for buffer (0 if no info)
+				size = ctypes.windll.version.GetFileVersionInfoSizeW(fileName, None)
+				if size:
+					# Create buffer
+					res = ctypes.create_string_buffer(size)
+					# Load file informations into buffer res
+					ctypes.windll.version.GetFileVersionInfoW(fileName, None, size, res)
+					r = ctypes.c_uint()
+					l = ctypes.c_uint()
+					l = ctypes.c_uint()
+					# Look for codepages
+					ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
+						ctypes.byref(r), ctypes.byref(l))
+					if l.value:
+						# Take the first codepage (what else ?)
+						codepages = array.array('H', ctypes.string_at(r.value, l.value))
+						codepage = tuple(codepages[:2].tolist())
+						# Extract product name and put it to self.productName
+						ctypes.windll.version.VerQueryValueW(res, (u'\\StringFileInfo\\%04x%04x\\'
+							+ u"ProductName") % codepage, ctypes.byref(r), ctypes.byref(l))
+						self.productName = ctypes.wstring_at(r.value, l.value-1)
+						# Extract product version and put it to self.productVersion
+						ctypes.windll.version.VerQueryValueW(res, (u'\\StringFileInfo\\%04x%04x\\'
+							+ u"ProductVersion") % codepage, ctypes.byref(r), ctypes.byref(l))
+						self.productVersion = ctypes.wstring_at(r.value, l.value-1)
+					else:
+						self.productName = None
+						self.productVersion = None
+				else:
+					self.productName = None
+					self.productVersion = None
+			else:
+				self.productName = None
+				self.productVersion = None
+		else:
+			self.productName = None
+			self.productVersion = None
 
 	def __repr__(self):
 		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
