@@ -653,13 +653,13 @@ class KeyboardSettingsDialog(SettingsDialog):
 
 	def onOk(self,evt):
 		# #2871: check wether at least one key is the nvda key.
-		if self.capsAsNVDAModifierCheckBox.IsChecked() == False and self.numpadInsertAsNVDAModifierCheckBox.IsChecked() == False and self.extendedInsertAsNVDAModifierCheckBox.IsChecked() == False:
-			log.error("Error when setting the key to use as NVDA key.") 
+		if not self.capsAsNVDAModifierCheckBox.IsChecked() and not self.numpadInsertAsNVDAModifierCheckBox.IsChecked() and not self.extendedInsertAsNVDAModifierCheckBox.IsChecked():
+			log.debugWarning("No NVDA key set")
 			gui.messageBox(
-							# Translators: Message to report wrong configuration of the NVDA key
-							_("At least one key must be used as NVDA key. Without that you won't be able to access the NVDA dialogs any more."), 
-							# Translators: The title of the message box
-							_("Error"), wx.OK|wx.ICON_ERROR,self)
+				# Translators: Message to report wrong configuration of the NVDA key
+				_("At least one key must be used as the NVDA key."), 
+				# Translators: The title of the message box
+				_("Error"), wx.OK|wx.ICON_ERROR,self)
 			return
 		layout=self.kbdNames[self.kbdList.GetSelection()]
 		config.conf['keyboard']['keyboardLayout']=layout
