@@ -76,7 +76,7 @@ class _LatexMaker(object):
 		if role == controlTypes.ROLE_WHITESPACE:
 			return
 		if role == controlTypes.ROLE_STATICTEXT:
-			self.out(obj.value.translate(self.CHARS))
+			self.out(obj.name.translate(self.CHARS))
 			return
 
 		try:

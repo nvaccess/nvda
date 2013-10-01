@@ -14,13 +14,9 @@ import controlTypes
 from . import IAccessible, Dialog, WindowRoot
 from logHandler import log
 from NVDAObjects.behaviors import RowWithFakeNavigation
-from comtypes.gen import ISimpleDOM
 from NVDAObjects.window import Window
 import mathml
 from mathPres import MathNVDAObject
-
-# ISimpleDOMNode constants
-NODETYPE_TEXT = 3
 
 class Mozilla(IAccessible):
 
@@ -172,88 +168,13 @@ class TextLeaf(Mozilla):
 	role = controlTypes.ROLE_STATICTEXT
 	beTransparentToMouse = True
 
-class MathNode(MathNVDAObject, Window):
-
-	def __init__(self, windowHandle=None, domNode=None):
-		super(MathNode, self).__init__(windowHandle=windowHandle)
-		self.domNode = domNode
+class MathNode(MathNVDAObject, Mozilla):
 
 	def _get_role(self):
-		info = self.domNode.nodeInfo
-		if info[5] == NODETYPE_TEXT:
-			if info[2].isspace():
-				return controlTypes.ROLE_WHITESPACE
-			return controlTypes.ROLE_STATICTEXT
-		return mathml.tagNamesToNVDARoles.get(info[0].lower(), controlTypes.ROLE_UNKNOWN)
-
-	def _get_value(self):
-		try:
-			return self.domNode.nodeInfo[2]
-		except COMError:
-			return None
-
-	def _makeRelatedObj(self, domNode):
-		if not domNode:
-			return None
-		return MathNode(windowHandle=self.windowHandle, domNode=domNode)
-
-	def _get_firstChild(self):
-		try:
-			return self._makeRelatedObj(self.domNode.firstChild)
-		except COMError:
-			return None
-
-	def _get_lastChild(self):
-		try:
-			return self._makeRelatedObj(self.domNode.lastChild)
-		except COMError:
-			return None
-
-	def _get_next(self):
-		try:
-			return self._makeRelatedObj(self.domNode.nextSibling)
-		except COMError:
-			return None
-
-	def _get_previous(self):
-		try:
-			return self._makeRelatedObj(self.domNode.previousSibling)
-		except COMError:
-			return None
-
-	def _get_parent(self):
-		try:
-			parent = self.domNode.parentNode
-		except COMError:
-			return None
-		if not parent:
-			return None
-		if parent.nodeInfo[0].lower() == "math":
-			try:
-				return IAccessible(IAccessibleObject=parent.QueryInterface(IAccessibleHandler.IAccessible2))
-			except:
-				return None
-		return MathNode(windowHandle=self.windowHandle, domNode=parent)
+		return mathml.tagNamesToNVDARoles.get(self.IA2Attributes["tag"], controlTypes.ROLE_UNKNOWN)
 
 class Equation(MathNVDAObject, Mozilla):
-
-	def initOverlayClass(self):
-		try:
-			self.domNode = self.IAccessibleObject.QueryInterface(ISimpleDOM.ISimpleDOMNode)
-		except COMError:
-			self.domNode = None
-
-	def _get_firstChild(self):
-		try:
-			return MathNode(windowHandle=self.windowHandle, domNode=self.domNode.firstChild)
-		except (COMError, AttributeError):
-			return None
-
-	def _get_lastChild(self):
-		try:
-			return MathNode(windowHandle=self.windowHandle, domNode=self.domNode.lastChild)
-		except (COMError, AttributeError):
-			return None
+	pass
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
@@ -284,6 +205,9 @@ def findExtraOverlayClasses(obj, clsList):
 			# This excludes a non-focusable @role="textbox".
 			if not (ia2States & IAccessibleHandler.IA2_STATE_EDITABLE):
 				cls = TextLeaf
+	elif iaRole == IAccessibleHandler.IA2_ROLE_TEXT_FRAME:
+		if obj.IA2Attributes.get("tag") in mathml.tagNamesToNVDARoles:
+			cls = MathNode
 	if not cls:
 		cls = _IAccessibleRolesToOverlayClasses.get(iaRole)
 	if cls:
