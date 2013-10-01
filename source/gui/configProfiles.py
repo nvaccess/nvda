@@ -147,7 +147,7 @@ class ProfilesDialog(wx.Dialog):
 		except:
 			# Translators: An error displayed when activating a profile fails.
 			gui.messageBox(_("Error activating profile."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
+				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
 		self.Close()
 
@@ -162,7 +162,7 @@ class ProfilesDialog(wx.Dialog):
 			_("Are you sure you want to delete this profile? This cannot be undone."),
 			# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 			_("Confirm Deletion"),
-			wx.YES | wx.NO | wx.ICON_QUESTION
+			wx.YES | wx.NO | wx.ICON_QUESTION, self
 		) == wx.NO:
 			return
 		name = self.profileNames[index]
@@ -171,7 +171,7 @@ class ProfilesDialog(wx.Dialog):
 		except:
 			log.debugWarning("", exc_info=True)
 			gui.messageBox(_("Error deleting profile."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
+				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
 		del self.profileNames[index]
 		self.profileList.Delete(index)
@@ -213,12 +213,12 @@ class ProfilesDialog(wx.Dialog):
 			config.conf.renameProfile(oldName, newName)
 		except ValueError:
 			gui.messageBox(_("That profile already exists. Please choose a different name."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
+				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
 		except:
 			log.debugWarning("", exc_info=True)
 			gui.messageBox(_("Error renaming profile."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
+				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
 		self.profileNames[index] = newName
 		self.profileList.SetString(index, newName)
@@ -246,6 +246,15 @@ class ProfilesDialog(wx.Dialog):
 			config.conf.enableProfileTriggers()
 		self.Destroy()
 
+	def saveTriggers(self, parentWindow=None):
+		try:
+			config.conf.saveProfileTriggers()
+		except:
+			log.debugWarning("", exc_info=True)
+			# Translators: An error displayed when saving configuration profile triggers fails.
+			gui.messageBox(_("Error saving configuration profile triggers - probably read only file system."),
+				_("Error"), wx.OK | wx.ICON_ERROR, parent=parentWindow)
+
 class TriggerInfo(object):
 	__slots__ = ("spec", "display", "profile")
 
@@ -263,7 +272,7 @@ class TriggersDialog(wx.Dialog):
 
 		processed = set()
 		triggers = self.triggers = []
-		confTrigs = config.conf["profileTriggers"]
+		confTrigs = config.conf.triggersToProfiles
 		# Handle simple triggers.
 		for spec, disp, manualEdit in parent.getSimpleTriggers():
 			try:
@@ -323,7 +332,7 @@ class TriggersDialog(wx.Dialog):
 		trig.profile = self.Parent.profileNames[evt.Selection]
 
 	def onClose(self, evt):
-		confTrigs = config.conf["profileTriggers"]
+		confTrigs = config.conf.triggersToProfiles
 		for trig in self.triggers:
 			if trig.profile:
 				confTrigs[trig.spec] = trig.profile
@@ -332,6 +341,7 @@ class TriggersDialog(wx.Dialog):
 					del confTrigs[trig.spec]
 				except KeyError:
 					pass
+		self.Parent.saveTriggers(parentWindow=self)
 
 		self.Parent.Enable()
 		self.Destroy()
@@ -369,7 +379,7 @@ class NewProfileDialog(wx.Dialog):
 		self.profileName.SetFocus()
 
 	def onOk(self, evt):
-		confTrigs = config.conf["profileTriggers"]
+		confTrigs = config.conf.triggersToProfiles
 		spec, disp, manualEdit = self.triggers[self.triggerChoice.Selection]
 		if spec in confTrigs and gui.messageBox(
 			# Translators: The confirmation prompt presented when creating a new configuration profile
@@ -389,17 +399,18 @@ class NewProfileDialog(wx.Dialog):
 		except ValueError:
 			# Translators: An error displayed when the user attempts to create a configuration profile which already exists.
 			gui.messageBox(_("That profile already exists. Please choose a different name."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
+				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
 		except:
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when creating a configuration profile fails.
 			gui.messageBox(_("Error creating profile - probably read only file system."),
-				_("Error"), wx.OK | wx.ICON_ERROR)
+				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			self.onCancel(evt)
 			return
 		if spec:
 			confTrigs[spec] = name
+			self.Parent.saveTriggers(parentWindow=self)
 
 		parent = self.Parent
 		if manualEdit:
@@ -410,7 +421,7 @@ class NewProfileDialog(wx.Dialog):
 					"Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
 					"Do you wish to manually activate it now?"),
 				# Translators: The title of the confirmation dialog for manual activation of a created profile.
-				_("Manual Activation"), wx.YES | wx.NO | wx.ICON_QUESTION
+				_("Manual Activation"), wx.YES | wx.NO | wx.ICON_QUESTION, self
 			) == wx.YES:
 				config.conf.manualActivateProfile(name)
 			else:
