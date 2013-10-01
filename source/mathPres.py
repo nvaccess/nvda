@@ -5,12 +5,22 @@
 #See the file COPYING for more details.
 #Copyright (C) 2013 NV Access Limited
 
+import sys
 import os
 import louis
-import latex_access.speech, latex_access.ueb
 from NVDAObjects import NVDAObject
 import controlTypes
 import braille
+
+import latex_access.path
+if getattr(sys, "frozen", None):
+	# This is a binary build.
+	# Fix the latex_access table path.
+	def get_path():
+		return os.path.join(sys.prefix, "latex_access")
+	latex_access.path.get_path = get_path
+import latex_access.speech
+import latex_access.ueb
 
 class MathNVDAObject(NVDAObject):
 

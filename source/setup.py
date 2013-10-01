@@ -185,7 +185,8 @@ setup(
 		("lib64", glob("lib64/*.dll") + glob("lib64/*.exe")),
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
-		("louis/tables",glob("louis/tables/*"))
+		("louis/tables",glob("louis/tables/*")),
+		("latex_access",glob("latex_access/*.table")),
 	] + (
 		getLocaleDataFiles()
 		+ getRecursiveDataFiles("synthDrivers", "synthDrivers",
