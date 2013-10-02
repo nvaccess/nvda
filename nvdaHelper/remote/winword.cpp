@@ -68,6 +68,9 @@ using namespace std;
 #define wdDISPID_STYLE_NAMELOCAL 0
 #define wdDISPID_RANGE_SPELLINGERRORS 316
 #define wdDISPID_SPELLINGERRORS_COUNT 1
+#define wdDISPID_RANGE_APPLICATION 1000
+#define wdDISPID_APPLICATION_ISSANDBOX 492
+
 #define wdDISPID_RANGE_FONT 5
 #define wdDISPID_FONT_COLOR 159
 #define wdDISPID_FONT_BOLD 130
@@ -516,11 +519,20 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 		}
 	} 
 	if(formatConfig&formatConfig_reportSpellingErrors) {
-		IDispatchPtr pDispatchSpellingErrors=NULL;
-		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)==S_OK&&pDispatchSpellingErrors) {
-			_com_dispatch_raw_propget(pDispatchSpellingErrors,wdDISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
-			if(iVal>0) {
-				formatAttribsStream<<L"invalid-spelling=\""<<iVal<<L"\" ";
+		IDispatchPtr pDispatchApplication=NULL;
+		if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_APPLICATION ,VT_DISPATCH,&pDispatchApplication)==S_OK && pDispatchApplication) {
+			bool isSandbox = true;
+			// We need to ironically enter the if block if the call to get IsSandbox property fails
+			// for backward compatibility because IsSandbox was introduced with word 2010 and earlier versions will return a failure for this property access.
+			// This however, means that if this property access fails for some reason in word 2010, then we will incorrectly enter this section.
+			if(_com_dispatch_raw_propget(pDispatchApplication,wdDISPID_APPLICATION_ISSANDBOX ,VT_BOOL,&isSandbox)!=S_OK || !isSandbox ) {
+				IDispatchPtr pDispatchSpellingErrors=NULL;
+				if(_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_SPELLINGERRORS,VT_DISPATCH,&pDispatchSpellingErrors)==S_OK&&pDispatchSpellingErrors) {
+					_com_dispatch_raw_propget(pDispatchSpellingErrors,wdDISPID_SPELLINGERRORS_COUNT,VT_I4,&iVal);
+					if(iVal>0) {
+						formatAttribsStream<<L"invalid-spelling=\""<<iVal<<L"\" ";
+					}
+				}
 			}
 		}
 	}
