@@ -191,6 +191,11 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 		if keyCode != stickyNVDAModifier:
 			currentModifiers.discard(keyCode)
 
+		# help inputCore  manage its sayAll state for keyboard modifiers -- inputCore itself has no concept of key releases
+		if not currentModifiers:
+			inputCore.manager.lastModifierWasInSayAll=False
+
+
 		if keyCode in trappedKeys:
 			trappedKeys.remove(keyCode)
 			return False

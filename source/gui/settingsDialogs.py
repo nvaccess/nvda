@@ -639,6 +639,11 @@ class KeyboardSettingsDialog(SettingsDialog):
 		settingsSizer.Add(self.speechInterruptForEnterCheckBox,border=10,flag=wx.BOTTOM)
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings dialog.
+		self.skimReadingInSayAllCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Allow skim &reading in Say All"))
+		self.skimReadingInSayAllCheckBox.SetValue(config.conf["keyboard"]["allowSkimReadingInSayAll"])
+		settingsSizer.Add(self.skimReadingInSayAllCheckBox,border=10,flag=wx.BOTTOM)
+		# Translators: This is the label for a checkbox in the
+		# keyboard settings dialog.
 		self.beepLowercaseCheckBox=wx.CheckBox(self,wx.NewId(),label=_("Beep if typing lowercase letters when caps lock is on"))
 		self.beepLowercaseCheckBox.SetValue(config.conf["keyboard"]["beepForLowercaseWithCapslock"])
 		settingsSizer.Add(self.beepLowercaseCheckBox,border=10,flag=wx.BOTTOM)
@@ -661,6 +666,7 @@ class KeyboardSettingsDialog(SettingsDialog):
 		config.conf["keyboard"]["speakTypedWords"]=self.wordsCheckBox.IsChecked()
 		config.conf["keyboard"]["speechInterruptForCharacters"]=self.speechInterruptForCharsCheckBox.IsChecked()
 		config.conf["keyboard"]["speechInterruptForEnter"]=self.speechInterruptForEnterCheckBox.IsChecked()
+		config.conf["keyboard"]["allowSkimReadingInSayAll"]=self.skimReadingInSayAllCheckBox.IsChecked()
 		config.conf["keyboard"]["beepForLowercaseWithCapslock"]=self.beepLowercaseCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"]=self.commandKeysCheckBox.IsChecked()
 		super(KeyboardSettingsDialog, self).onOk(evt)
