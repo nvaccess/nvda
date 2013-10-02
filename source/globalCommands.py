@@ -589,13 +589,8 @@ class GlobalCommands(ScriptableObject):
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to previous line command.
 	script_review_previousLine.__doc__=_("Moves the review cursor to the previous line of the current navigator object and speaks it")
-<<<<<<< HEAD
-	script_review_previousLine.category=SCRCAT_TEXTREVIEW
-	script_review_previousLine.resumeSayAllMode=sayAllHandler.CURSOR_REVIEW
-=======
 	script_review_previousLine.resumeSayAllMode=sayAllHandler.CURSOR_REVIEW
 	script_review_previousLine.category=SCRCAT_TEXTREVIEW
->>>>>>> master
 
 	def script_review_currentLine(self,gesture):
 		info=api.getReviewPosition().copy()
@@ -622,13 +617,8 @@ class GlobalCommands(ScriptableObject):
 		speech.speakTextInfo(info,unit=textInfos.UNIT_LINE,reason=controlTypes.REASON_CARET)
 	# Translators: Input help mode message for move review cursor to next line command.
 	script_review_nextLine.__doc__=_("Moves the review cursor to the next line of the current navigator object and speaks it")
-<<<<<<< HEAD
-	script_review_nextLine.category=SCRCAT_TEXTREVIEW
-	script_review_nextLine.resumeSayAllMode=sayAllHandler.CURSOR_REVIEW
-=======
 	script_review_nextLine.resumeSayAllMode=sayAllHandler.CURSOR_REVIEW
 	script_review_nextLine.category=SCRCAT_TEXTREVIEW
->>>>>>> master
 
 	def script_review_bottom(self,gesture):
 		info=api.getReviewPosition().obj.makeTextInfo(textInfos.POSITION_LAST)
