@@ -1611,3 +1611,9 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		if isinstance(display, baseObject.ScriptableObject):
 			return display
 		return super(BrailleDisplayGesture, self).scriptableObject
+
+	@classmethod
+	def getDisplayTextForIdentifier(cls, identifier):
+		return handler.display.description, identifier.split(":", 1)[1]
+
+inputCore.registerGestureSource("br", BrailleDisplayGesture)

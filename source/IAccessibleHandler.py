@@ -870,8 +870,14 @@ def getIAccIdentity(pacc,childID):
 	stringPtr,stringSize=IAccIdentityObject.getIdentityString(childID)
 	try:
 		if accPropServices:
-			hwnd,objectID,childID=accPropServices.DecomposeHwndIdentityString(stringPtr,stringSize)
-			return dict(windowHandle=hwnd,objectID=c_int(objectID).value,childID=childID)
+			try:
+				hwnd,objectID,childID=accPropServices.DecomposeHwndIdentityString(stringPtr,stringSize)
+				return dict(windowHandle=hwnd,objectID=c_int(objectID).value,childID=childID)
+			except COMError:
+				hmenu,childID=accPropServices.DecomposeHmenuIdentityString(stringPtr,stringSize)
+				# hmenu is a wireHMENU, but it seems we can just treat this as a number.
+				# comtypes transparently does this for wireHWND.
+				return dict(menuHandle=cast(hmenu,wintypes.HMENU).value,childID=childID)
 		stringPtr=cast(stringPtr,POINTER(c_char*stringSize))
 		fields=struct.unpack('IIiI',stringPtr.contents.raw)
 		d={}

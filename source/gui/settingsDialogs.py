@@ -30,6 +30,7 @@ try:
 	import updateCheck
 except RuntimeError:
 	updateCheck = None
+import inputCore
 
 class SettingsDialog(wx.Dialog):
 	"""A settings dialog.
@@ -1522,3 +1523,148 @@ class SpeechSymbolsDialog(SettingsDialog):
 			log.error("Error saving user symbols info: %s" % e)
 		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
 		super(SpeechSymbolsDialog, self).onOk(evt)
+
+class InputGesturesDialog(SettingsDialog):
+	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
+	title = _("Input Gestures")
+
+	def makeSettings(self, settingsSizer):
+		tree = self.tree = wx.TreeCtrl(self, style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_SINGLE)
+		self.treeRoot = tree.AddRoot("root")
+		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
+		settingsSizer.Add(tree, proportion=7, flag=wx.EXPAND)
+
+		gestures = inputCore.manager.getAllGestureMappings(obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors)
+		for category in sorted(gestures):
+			treeCat = tree.AppendItem(self.treeRoot, category)
+			commands = gestures[category]
+			for command in sorted(commands):
+				treeCom = tree.AppendItem(treeCat, command)
+				commandInfo = commands[command]
+				tree.SetItemPyData(treeCom, commandInfo)
+				for gesture in commandInfo.gestures:
+					treeGes = tree.AppendItem(treeCom, self._formatGesture(gesture))
+					tree.SetItemPyData(treeGes, gesture)
+
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
+		item = self.addButton = wx.Button(self, label=_("&Add"))
+		item.Bind(wx.EVT_BUTTON, self.onAdd)
+		item.Disable()
+		sizer.Add(item)
+		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
+		item = self.removeButton = wx.Button(self, label=_("&Remove"))
+		item.Bind(wx.EVT_BUTTON, self.onRemove)
+		item.Disable()
+		self.pendingAdds = set()
+		self.pendingRemoves = set()
+		sizer.Add(item)
+		settingsSizer.Add(sizer)
+
+	def postInit(self):
+		self.tree.SetFocus()
+
+	def _formatGesture(self, identifier):
+		try:
+			source, main = inputCore.getDisplayTextForGestureIdentifier(identifier)
+			# Translators: Describes a gesture in the Input Gestures dialog.
+			# {main} is replaced with the main part of the gesture; e.g. alt+tab.
+			# {source} is replaced with the gesture's source; e.g. laptop keyboard.
+			return _("{main} ({source})").format(main=main, source=source)
+		except LookupError:
+			return identifier
+
+	def onTreeSelect(self, evt):
+		item = self.tree.Selection
+		data = self.tree.GetItemPyData(item)
+		isCommand = isinstance(data, inputCore.AllGesturesScriptInfo)
+		isGesture = isinstance(data, basestring)
+		self.addButton.Enabled = isCommand or isGesture
+		self.removeButton.Enabled = isGesture
+
+	def onAdd(self, evt):
+		if inputCore.manager._captureFunc:
+			return
+
+		treeCom = self.tree.Selection
+		scriptInfo = self.tree.GetItemPyData(treeCom)
+		if not isinstance(scriptInfo, inputCore.AllGesturesScriptInfo):
+			treeCom = self.tree.GetItemParent(treeCom)
+			scriptInfo = self.tree.GetItemPyData(treeCom)
+		# Translators: The prompt to enter a gesture in the Input Gestures dialog.
+		treeGes = self.tree.AppendItem(treeCom, _("Enter input gesture:"))
+		self.tree.SelectItem(treeGes)
+		self.tree.SetFocus()
+
+		def addGestureCaptor(gesture):
+			if gesture.isModifier:
+				return False
+			inputCore.manager._captureFunc = None
+			wx.CallAfter(self._addCaptured, treeGes, scriptInfo, gesture)
+			return False
+		inputCore.manager._captureFunc = addGestureCaptor
+
+	def _addCaptured(self, treeGes, scriptInfo, gesture):
+		gids = gesture.identifiers
+		if len(gids) > 1:
+			# Multiple choices. Present them in a pop-up menu.
+			menu = wx.Menu()
+			for gid in gids:
+				disp = self._formatGesture(gid)
+				item = menu.Append(wx.ID_ANY, disp)
+				self.Bind(wx.EVT_MENU,
+					lambda evt: self._addChoice(treeGes, scriptInfo, gesture, gid, disp),
+					item)
+			self.PopupMenu(menu)
+			if not self.tree.GetItemPyData(treeGes):
+				# No item was selected, so use the first.
+				self._addChoice(treeGes, scriptInfo, gesture, gids[0],
+					self._formatGesture(gids[0]))
+			menu.Destroy()
+		else:
+			self._addChoice(treeGes, scriptInfo, gesture, gids[0],
+				self._formatGesture(gids[0]))
+
+	def _addChoice(self, treeGes, scriptInfo, gesture, gid, disp):
+		self.pendingAdds.add((gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
+		self.tree.SetItemText(treeGes, disp)
+		self.tree.SetItemPyData(treeGes, gid)
+		self.onTreeSelect(None)
+
+	def onRemove(self, evt):
+		treeGes = self.tree.Selection
+		gesture = self.tree.GetItemPyData(treeGes)
+		treeCom = self.tree.GetItemParent(treeGes)
+		scriptInfo = self.tree.GetItemPyData(treeCom)
+		self.pendingRemoves.add((gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
+		self.tree.Delete(treeGes)
+		self.tree.SetFocus()
+
+	def onOk(self, evt):
+		for gesture, module, className, scriptName in self.pendingRemoves:
+			try:
+				inputCore.manager.userGestureMap.remove(gesture, module, className, scriptName)
+			except ValueError:
+				# The user wants to unbind a gesture they didn't define.
+				inputCore.manager.userGestureMap.add(gesture, module, className, None)
+
+		for gesture, module, className, scriptName in self.pendingAdds:
+			try:
+				# The user might have unbound this gesture,
+				# so remove this override first.
+				inputCore.manager.userGestureMap.remove(gesture, module, className, None)
+			except ValueError:
+				pass
+			inputCore.manager.userGestureMap.add(gesture, module, className, scriptName)
+
+		if self.pendingAdds or self.pendingRemoves:
+			# Only save if there is something to save.
+			try:
+				inputCore.manager.userGestureMap.save()
+			except:
+				log.debugWarning("", exc_info=True)
+				# Translators: An error displayed when saving user defined input gestures fails.
+				gui.messageBox(_("Error saving user defined gestures - probably read only file system."),
+					_("Error"), wx.OK | wx.ICON-ERROR)
+
+		super(InputGesturesDialog, self).onOk(evt)
