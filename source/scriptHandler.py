@@ -7,6 +7,9 @@
 import time
 import weakref
 import inspect
+import config
+import speech
+import sayAllHandler
 import appModuleHandler
 import api
 import queueHandler
@@ -153,6 +156,12 @@ def executeScript(script,gesture):
 	if _isScriptRunning and lastScriptRef==scriptFunc:
 		return gesture.send()
 	_isScriptRunning=True
+	resumeSayAllMode=None
+	if config.conf['keyboard']['allowSkimReadingInSayAll']and gesture.wasInSayAll and getattr(script,'resumeSayAllMode',None)==sayAllHandler.lastSayAllMode:
+		resumeSayAllMode=sayAllHandler.lastSayAllMode
+	if resumeSayAllMode is not None:
+		oldSpeechMode=speech.speechMode
+		speech.speechMode=speech.speechMode_off
 	try:
 		scriptTime=time.time()
 		scriptRef=weakref.ref(scriptFunc)
@@ -167,6 +176,9 @@ def executeScript(script,gesture):
 		log.exception("error executing script: %s with gesture %r"%(script,gesture.displayName))
 	finally:
 		_isScriptRunning=False
+		if resumeSayAllMode is not None:
+			speech.speechMode=oldSpeechMode
+			sayAllHandler.readText(resumeSayAllMode)
 
 def getLastScriptRepeatCount():
 	"""The count of how many times the most recent script has been executed.
@@ -206,3 +218,4 @@ def isCurrentScript(scriptFunc):
 		log.debugWarning("Could not get unbound method from parent frame instance",exc_info=True)
 		return False
 	return givenFunc==realFunc
+

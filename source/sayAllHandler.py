@@ -19,6 +19,7 @@ CURSOR_CARET=0
 CURSOR_REVIEW=1
 
 _generatorID = None
+lastSayAllMode=None
 
 def _startGenerator(generator):
 	global _generatorID
@@ -90,6 +91,8 @@ def readObjectsHelper_generator(obj):
 		yield
 
 def readText(cursor):
+	global lastSayAllMode
+	lastSayAllMode=cursor
 	_startGenerator(readTextHelper_generator(cursor))
 
 def readTextHelper_generator(cursor):

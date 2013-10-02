@@ -390,7 +390,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 			item = menu_help.Append(wx.ID_ANY, _("L&icense"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
 			# Translators: The label for the menu item to view NVDA Contributors list document.
-			item = menu_help.Append(wx.ID_ANY, _("Contributors"))
+			item = menu_help.Append(wx.ID_ANY, _("C&ontributors"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
 		# Translators: The label for the menu item to open NVDA Welcome Dialog.
 		item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog"))
@@ -398,7 +398,7 @@ class SysTrayIcon(wx.TaskBarIcon):
 		menu_help.AppendSeparator()
 		if updateCheck:
 			# Translators: The label of a menu item to manually check for an updated version of NVDA.
-			item = menu_help.Append(wx.ID_ANY, _("Check for &update..."))
+			item = menu_help.Append(wx.ID_ANY, _("&Check for update..."))
 			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
 		# Translators: The label for the menu item to open About dialog to get information about NVDA.
 		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
