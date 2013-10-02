@@ -83,9 +83,9 @@ class BrokenMsoCommandBar(IAccessible):
 class SDMSymbols(SDM):
 	def script_selectGraphic(self, gesture):
 		gesture.send()
-		if ("\n" in self.parent.description):
-			description=self.parent.description.split("\n")[1]
-			speech.speakText(description)
+		description=self.parent.description.split("\n")[-3:-2]
+		if description:
+			speech.speakText(description[0])
 
 	__selectGraphicGestures = (
 		"kb:downArrow",
