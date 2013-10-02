@@ -130,6 +130,12 @@ class ScriptableObject(AutoPropertyObject):
 	They accept an L{inputCore.InputGesture} as their single argument.
 	Gesture bindings can be specified on the class by creating a C{__gestures} dict which maps gesture identifiers to script names.
 	They can also be bound on an instance using the L{bindGesture} method.
+	@cvar scriptCategory: If present, a translatable string displayed to the user
+		as the category for scripts in this class;
+		e.g. in the Input Gestures dialog.
+		This can be overridden for individual scripts
+		by setting a C{category} attribute on the script method.
+	@type scriptCategory: basestring
 	"""
 
 	def __init__(self):
