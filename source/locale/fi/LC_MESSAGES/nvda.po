@@ -5,11 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 19:09+1000\n"
-"PO-Revision-Date: 2013-08-15 13:07+0200\n"
-"Last-Translator: Jani Kinnunen\n"
+"POT-Creation-Date: 2013-09-17 19:08+1000\n"
+"PO-Revision-Date: 2013-09-27 09:10+0200\n"
+"Last-Translator: Jani Kinnunen <jani.kinnunen@wippies.fi>\n"
 "Language-Team: fi <jani.kinnunen@wippies.fi>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1528,7 +1527,8 @@ msgid "subscript"
 msgstr "alaindeksi"
 
 #. Translators: Describes style of text.
-#: controlTypes.py:440 NVDAObjects\window\winword.py:126
+#. Translators: a Microsoft Word revision type (style change)
+#: controlTypes.py:440 NVDAObjects\window\winword.py:134
 msgid "style"
 msgstr "tyyli"
 
@@ -1733,7 +1733,7 @@ msgstr "pitkä kuvaus saatavilla"
 #. Translators: a state that denotes that an object is pinned in its current location
 #: controlTypes.py:519
 msgid "pinned"
-msgstr ""
+msgstr "Kiinnitetty"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes.py:524
@@ -1929,13 +1929,14 @@ msgstr ""
 msgid ""
 "If pressed once, reports the current time. If pressed twice, reports the "
 "current date"
-msgstr "Lukee kerran painettaessa kellonajan, kahdesti painettaessa päiväyksen"
+msgstr ""
+"Lukee kerran painettaessa kellonajan ja kahdesti painettaessa päiväyksen."
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
 #: globalCommands.py:158 globalCommands.py:168 globalCommands.py:178
 #: globalCommands.py:188
 msgid "No settings"
-msgstr "Ei asetuksia käytettävissä"
+msgstr "Ei asetuksia"
 
 #. Translators: Input help mode message for increase synth setting value command.
 #: globalCommands.py:163
@@ -3271,14 +3272,21 @@ msgstr "pöytäkone"
 msgid "laptop"
 msgstr "kannettava"
 
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
+#. Translators: Reported for an unknown key press.
+#. %s will be replaced with the key code.
+#: keyboardHandler.py:354
+#, python-format
+msgid "unknown %s"
+msgstr "tuntematon %s"
+
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
 msgid "on"
 msgstr "päällä"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:813
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:813
 #: gui\settingsDialogs.py:1174
 msgid "off"
 msgstr "pois"
@@ -3501,15 +3509,14 @@ msgstr "rivi %s"
 
 #. Translators: Reported when text is revised.
 #: speech.py:1071
-#, fuzzy, python-format
+#, python-format
 msgid "revised %s"
-msgstr "tarkastelukohdistinta"
+msgstr "muutettu %s"
 
 #. Translators: Reported when text is not revised.
 #: speech.py:1073
-#, fuzzy
 msgid "unrevised"
-msgstr "tarkastelukohdistinta"
+msgstr "ei muutettu"
 
 #. Translators: Reported when text is not bolded.
 #: speech.py:1082
@@ -5804,9 +5811,8 @@ msgstr "Lue &värit"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui\settingsDialogs.py:1013
-#, fuzzy
 msgid "Report &editor revisions"
-msgstr "Lue otsi&kot"
+msgstr "Lue m&uokkaajan muutokset"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5834,7 +5840,7 @@ msgstr "Lue rivi&numerot"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1039
 msgid "Report l&ine indentation"
 msgstr "Lue rivien sise&nnykset"
@@ -6883,148 +6889,151 @@ msgstr "sisältää kaavan"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} / {lastAddress} {lastContent}"
 
-#: NVDAObjects\window\winword.py:119
-#, fuzzy
-msgid "insertion"
-msgstr "kappale"
-
+#. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:120
-#, fuzzy
-msgid "deletion"
-msgstr "del"
+msgid "insertion"
+msgstr "lisäys"
 
-#: NVDAObjects\window\winword.py:121
-#, fuzzy
-msgid "property"
-msgstr "ominaisuussivu"
-
+#. Translators: a Microsoft Word revision type (deleted content)
 #: NVDAObjects\window\winword.py:122
-#, fuzzy
-msgid "paragraph number"
-msgstr "kappale"
+msgid "deletion"
+msgstr "poisto"
 
-#: NVDAObjects\window\winword.py:123
-#, fuzzy
-msgid "display field"
-msgstr "näytön vieritys"
-
+#. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 #: NVDAObjects\window\winword.py:124
-msgid "reconcile"
-msgstr ""
+msgid "property"
+msgstr "ominaisuus"
 
-#: NVDAObjects\window\winword.py:125
-msgid "conflict"
-msgstr ""
+#. Translators: a Microsoft Word revision type (changed paragraph number)
+#: NVDAObjects\window\winword.py:126
+msgid "paragraph number"
+msgstr "kappalenumero"
 
-#: NVDAObjects\window\winword.py:127
-#, fuzzy
-msgid "replace"
-msgstr "Korvaava"
-
+#. Translators: a Microsoft Word revision type (display field)
 #: NVDAObjects\window\winword.py:128
-#, fuzzy
-msgid "paragraph property"
-msgstr "kappale"
+msgid "display field"
+msgstr "näyttökenttä"
 
-#: NVDAObjects\window\winword.py:129
-#, fuzzy
-msgid "table property"
-msgstr "taulukon alatunniste"
-
+#. Translators: a Microsoft Word revision type (reconcile)
 #: NVDAObjects\window\winword.py:130
-#, fuzzy
-msgid "section property"
-msgstr "valinta peruttu"
+msgid "reconcile"
+msgstr "yhteensovitus"
 
-#: NVDAObjects\window\winword.py:131
-msgid "style definition"
-msgstr ""
-
+#. Translators: a Microsoft Word revision type (conflicting revision)
 #: NVDAObjects\window\winword.py:132
-#, fuzzy
-msgid "moved from"
-msgstr "siirrä kohdistus"
+msgid "conflict"
+msgstr "ristiriita"
 
-#: NVDAObjects\window\winword.py:133
-#, fuzzy
-msgid "moved to"
-msgstr "siirrä kohdistukseen"
-
-#: NVDAObjects\window\winword.py:134
-#, fuzzy
-msgid "cell insertion"
-msgstr "Kiih&tyvyys:"
-
-#: NVDAObjects\window\winword.py:135
-#, fuzzy
-msgid "cell deletion"
-msgstr "ei valintaa"
-
+#. Translators: a Microsoft Word revision type (replaced content)
 #: NVDAObjects\window\winword.py:136
-msgid "cell merge"
-msgstr ""
+msgid "replace"
+msgstr "korvaus"
 
+#. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
+#: NVDAObjects\window\winword.py:138
+msgid "paragraph property"
+msgstr "kappaleen ominaisuus"
+
+#. Translators: a Microsoft Word revision type (table)
 #: NVDAObjects\window\winword.py:140
+msgid "table property"
+msgstr "taulukon ominaisuus"
+
+#. Translators: a Microsoft Word revision type (section property)
+#: NVDAObjects\window\winword.py:142
+msgid "section property"
+msgstr "osan ominaisuus"
+
+#. Translators: a Microsoft Word revision type (style definition)
+#: NVDAObjects\window\winword.py:144
+msgid "style definition"
+msgstr "tyylimääritys"
+
+#. Translators: a Microsoft Word revision type (moved from)
+#: NVDAObjects\window\winword.py:146
+msgid "moved from"
+msgstr "siirretty kohteesta"
+
+#. Translators: a Microsoft Word revision type (moved to)
+#: NVDAObjects\window\winword.py:148
+msgid "moved to"
+msgstr "siirretty kohteeseen"
+
+#. Translators: a Microsoft Word revision type (inserted table cell)
+#: NVDAObjects\window\winword.py:150
+msgid "cell insertion"
+msgstr "solujen lisäys"
+
+#. Translators: a Microsoft Word revision type (deleted table cell)
+#: NVDAObjects\window\winword.py:152
+msgid "cell deletion"
+msgstr "solujen poisto"
+
+#. Translators: a Microsoft Word revision type (merged table cells)
+#: NVDAObjects\window\winword.py:154
+msgid "cell merge"
+msgstr "solujen yhdistäminen"
+
+#: NVDAObjects\window\winword.py:158
 msgid "Comments"
 msgstr "Kommentit"
 
-#: NVDAObjects\window\winword.py:141
+#: NVDAObjects\window\winword.py:159
 msgid "Endnotes"
 msgstr "Loppuviitteet"
 
-#: NVDAObjects\window\winword.py:142
+#: NVDAObjects\window\winword.py:160
 msgid "Even pages footer"
 msgstr "Parillisten sivujen alatunniste"
 
-#: NVDAObjects\window\winword.py:143
+#: NVDAObjects\window\winword.py:161
 msgid "Even pages header"
 msgstr "Parillisten sivujen ylätunniste"
 
-#: NVDAObjects\window\winword.py:144
+#: NVDAObjects\window\winword.py:162
 msgid "First page footer"
 msgstr "Ensimmäisen sivun alatunniste"
 
-#: NVDAObjects\window\winword.py:145
+#: NVDAObjects\window\winword.py:163
 msgid "First page header"
 msgstr "Ensimmäisen sivun ylätunniste"
 
-#: NVDAObjects\window\winword.py:146
+#: NVDAObjects\window\winword.py:164
 msgid "Footnotes"
 msgstr "Alaviitteet"
 
-#: NVDAObjects\window\winword.py:147
+#: NVDAObjects\window\winword.py:165
 msgid "Primary footer"
 msgstr "Ensisijainen alatunniste"
 
-#: NVDAObjects\window\winword.py:148
+#: NVDAObjects\window\winword.py:166
 msgid "Primary header"
 msgstr "Ensisijainen ylätunniste"
 
-#: NVDAObjects\window\winword.py:149
+#: NVDAObjects\window\winword.py:167
 msgid "Text frame"
 msgstr "Tekstikehys"
 
-#: NVDAObjects\window\winword.py:348
-#, fuzzy
+#: NVDAObjects\window\winword.py:366
 msgid "unknown author"
-msgstr "tuntematon väri"
+msgstr "tuntematon muokkaaja"
 
-#: NVDAObjects\window\winword.py:349
-#, fuzzy
+#: NVDAObjects\window\winword.py:367
 msgid "unknown date"
-msgstr "tuntematon"
+msgstr "tuntematon päiväys"
 
-#: NVDAObjects\window\winword.py:350
+#: NVDAObjects\window\winword.py:368
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr ""
+"Muutos: {revisionType}, muokkaaja: {revisionAuthor}, päiväys: {revisionDate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:542 NVDAObjects\window\winword.py:552
+#: NVDAObjects\window\winword.py:560 NVDAObjects\window\winword.py:570
 msgid "Not in table"
 msgstr "Ei taulukossa"
 
-#: NVDAObjects\window\winword.py:575
+#: NVDAObjects\window\winword.py:593
 msgid "Edge of table"
 msgstr "Taulukon reuna"
 

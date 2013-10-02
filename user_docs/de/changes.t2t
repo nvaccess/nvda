@@ -3,6 +3,22 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.3 =
+
+== neue Funktionen ==
+- in Microsoft Word werden Formularfelder erkannt. (#2295)
+- Wenn die Funktion "Änderungen verfolgen" aktiviert ist, werden Revisionen in Microsoft Word angezeigt. Bedenken Sie, dass Sie die Angabe von Editor-Revisionen aktivieren müssen, damit diese Änderung wirksam wird. (#1670)
+- Beim Navigieren in und Bearbeiten von Microsoft Excel-Dokumenten werden Kombinationsfelder angezeigt. (#3382)
+
+
+== Fehlerbehebungen ==
+- Zend Studio funktioniert nun wie Eclipse. (#3420)
+- Die Statusänderungen von Kontrollkästchen in Microsoft Outlook 2010 wird nun korrekt erkannt. (#3063)
+- NVDA erkennt nun den Status "angeheftet" für angeheftete Stueerelemente wie z.B. Registerkarten in Firefox. (#3372)
+- Es ist nun möglich, Scripts an Tastenkombinationen mit Alt oder der Windows-Taste zuzuweisen. Bisher wurde in solchen Fällen das Startmenü Bzw. die Menüleiste der Anwendung angezeigt. (#3472)
+- Das Markieren von Text im Lesemodus mit strg+Umschalt+End verursacht kein versehentliches Umschalten des Tastaturschemas mehr. (#3472)
+- beim Beenden von NVDA stürzt der Internet Explorer nicht mehr ab. (#3397)
+
 = 2013.2 =
 
 == Neue Funktionen ==
@@ -65,7 +81,7 @@
 - Die PHP-Entwicklungswerkzeuge von Eclipse funktionieren nun ähnlich wie Eclipse. (#3353)
 - Im Internet Explorer ist es nicht mehr nötig, Tab zu drücken, um mit eingebetteten Objekten wie Flash zu arbeiten. (#3364)
 - Beim Bearbeiten von Text in Powerpoint wird die letzte Zeile korrekt erkannt, auch wenn sie leer ist. (#3403)
-- In Powerpoint werden objekte nicht mehr fälschlicherweise zweimal angezeigt, wenn Sie sie bearbeiten wollen. (#3394)
+- In Powerpoint werden objekte nicht mehr fälschlicherweise zweimal angezeigt, wenn Sie sie auswählen oder bearbeiten wollen. (#3394)
 - NVDA bringt den Adobe reader nun nicht mehr zum Absturz, wenn fehlerhaft gestaltete Pdf-Dokumente geöffnet sind, die Tabellenzeilen außerhalb von Tabellen enthalten. (#3399)
 - Wenn Sie in Microsoft Powerpoint in der Miniaturansicht eine Folie löschen, wird nun die nächste Folie korrekt erkannt. (#3415)
  

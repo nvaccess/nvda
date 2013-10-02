@@ -150,7 +150,7 @@ Een vinkje in het derde selectievakje zorgt ervoor dat dit welkomsscherm verschi
 
 +++ De NVDA programmatoets +++
 Voor de meeste commando’s binnen NVDA drukt u op één bepaalde toets, de NVDA programmatoets (of kortweg NVDA-toets) in combinatie met één of meer andere toetsen.
-Een uitzondering hierop zijn de commando’s die gebruikt worden om tekst te laten voorlezen. Hiervoor gebruikt u alleen de toetsen van het numerieke toetsenbord zonder de NVDA programmatoets.
+Een van de uitzonderingen hierop zijn de commando’s die gebruikt worden om tekst te laten voorlezen. Hiervoor gebruikt u alleen de toetsen van het numerieke toetsenbord zonder de NVDA programmatoets. 
 
 U kunt NVDA zo configureren dat of de numerieke Insert-toets, de uitgebreide Insert-toets of de CapsLock-toets als NVDA programmatoets wordt gebruikt.
 
@@ -709,7 +709,7 @@ In het algemeen is het aan te bevelen dit selectievakje aan te vinken. Er zijn e
 Merk op dat deze functionaliteit voor het Engels van groot belang is, maar dat dit bij het Nederlands nauwelijks of niet het geval is.
 
 +++ Synth settings ring +++[SynthSettingsRing]
-Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster “Steminstellingen”, kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
+Om spraakinstellingen snel aan te passen zonder dat u gebruik maakt van het dialoogvenster “rij/kolomkoppen”, kunt u te allen tijde beschikken over een aantal toetscombinaties terwijl u met NVDA werkt:
 %kc:beginInclude
 || Naam | Desktoptoets | Laptoptoets | Beschrijving |
 | Naar volgende synthesizerinstelling gaan | NVDA+control+pijl rechts | NVDA+shift+control+pijl rechts | Hiermee wordt steeds een volgende spraakinstelling gekozen. Na de laatst beschikbare instelling begint u weer vooraan enz. |
@@ -860,7 +860,7 @@ In het dialoogvenster treft u de volgende keuzemogelijkheden aan:
 ==== Volg de systeemfocus====
 Toets : NVDA+7
 
-Als het selectievakje is aangevinkt zal de leescursor (reviewcursor) steeds meegaan met de toetsenbord- of systeemfocus, dus ook als deze laatste verandert.
+Wanneer deze optie is ingeschakeld,wordt de leescursor (review cursor) altijd in hetzelfde object geplaatst als de systeemfocus telkens wanneer de focus zich wijzigt.
 
 %kc:setting
 ====Systeemcursor volgen====
@@ -1009,13 +1009,14 @@ U kunt de vermelding laten horen van:
 - Lettertype-eigenschappen
 - Tekstuitlijning
 - Kleuren
+- Aangebrachte wijzigingen in de tekst
 - Tekststijl
 - Spelfouten
 - Paginanummers
 - Regelnummers
 - Regel inspringen
 - Tabellen
-- Rij/kolomkoppen van tabellen
+- Rij- en kolomhoofdingen van tabellen
 - Tabel celcoördinaten
 - Links
 - Koppen
@@ -1093,7 +1094,7 @@ U vindt de configuratiemap  door op de pc of laptop via Start naar Programma's t
 
 De NVDA-instellingen voor inlog- en UAC-schermen zijn opgeslagen in de systemConfig-map die zich in de hoofdmap van de NVDA-installatie bevindt.
 In het algemeen moet u niets veranderen aan deze configuratie.
-Om de instellingen van NVDA voor het inlogscherm of de UAC-schermen (gebruikersaccountbeheer) aan te passen, brengt u de gewenste wijzigingen aan terwijl u bij Windows bent ingelogd. Vervolgens kopieert u de configuratie naar het inlogscherm door in het dialoogvenster Algemene Instellingen op de daarvoor bestemde knop te drukken.
+Om de instellingen van NVDA voor het inlogscherm of de UAC-schermen (gebruikersaccountbeheer) aan te passen, brengt u de gewenste wijzigingen aan terwijl u bij Windows bent ingelogd. Vervolgens slaat u de configuratie op  waarna u in het dialoogvenster Algemene Instellingen op de knop "Huidige Instellingen van NVDA gebruiken bij Windows-aanmelding",  drukt.
 
 + Het menu Extra +
 
@@ -1826,7 +1827,6 @@ Opmerking : De oorspronkelijke toetscombinatie NVDA+F12 voor het weergeven datum
       None = kb:NVDA+f12
 ```
  
-Hoewel het in principe mogelijk is elke beschikbare toets aan een bepaald script toe te wijzen, kan dit soms tot problemen leiden als de ALT-toets hierbij wordt ingesteld. Functies van modificerende toetsen zoals ALT worden door NVDA aan het besturingssysteem doorgegeven, ook als deze aan een script zijn toegewezen. Vandaar dat bij toepassing van de ALT-toets het kan voorkomen dat naast de uitvoering van het aan de toetscombinatie gekoppelde script, ook de menubalk wordt geactiveerd. Om eventuele problemen te voorkomen kunt u het beste alleen de Shift, Ctrl en NVDA-toets gebruiken als modificerende toetsen.
 
 ++ Meer uitgebreide aanpassing van de uitspraak van leestekens en  symbolen ++
 Behalve in het [dialoogvenster Uitspraak van Interpunctie en Symbolen #SymbolPronunciation] zijn er nog andere mogelijkheden om de uitspraak van leestekens te beïnvloeden.

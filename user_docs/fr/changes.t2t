@@ -3,6 +3,25 @@ Quoi de Neuf dans NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.3 =
+
+== Nouvelles Fonctionnalités ==
+- Les champs de formulaires sont maintenant annoncés dans les documents Microsoft Word. (#2295)
+- NVDA peut maintenant annoncer les informations de révision dans Microsoft Word lorsque le suivi des modifications est activé. Notez que annoncer les révisions de l'éditeur dans la boîte de dialogue Paramètres de préférences de mise en forme des document de NVDA (désactivée par défaut) doit être activé également pour qu'elles soient annoncées. (#1670)
+- Les listes déroulantes dans Microsoft Excel 2003 à 2010 sont maintenant annoncés lors de leur ouverture et lorsque l'on navigue autour. (#3382)
+
+
+== Corrections de Bogues ==
+- Zend Studio fonctionne maintenant de la même manière qu'Eclipse. (#3420)
+- Le changement d'état de certaines cases à cocher dans la boîte de dialogue des règles de messages de Microsoft Outlook 2010 est maintenant annoncé. (#3063)
+- NVDA signale maintenant l'état épinglé pour des éléments épinglés comme des onglets dans Mozilla Firefox. (# 3372)
+- Il est maintenant possible de lier des scripts à des touches de raccourci contenant les touches Alt et/ou Windows comme modificateurs. précédemment, si cela était fait, l'exécution de ces script causait l'activation de la barre de menus ou du menu démarrer. (#3472)
+- Sélectionnez du texte dans des documents en mode navigation (ex : en utilisant ctrl+maj+fin) ne cause plus le changement de disposition du clavier dans les systèmes ayant plusieurs dispositions clavier installées. (#3472)
+- Internet Explorer ne devrait plus se bloquer ou devenir inutilisable lors de la fermeture de NVDA. (#3397)
+- certains gestes physique et autres événements sur certains ordinateurs récents ne sont plus considérés comme des appuis de touches inappropriés. Auparavant, ceux-ci arrêtaient la parole et parfois déclenchaient des commandes NVDA. (#3468)
+- NVDA se comporte maintenant comme prévu dans Poedit 1.5.7. Les utilisateurs utilisant des versions antérieures devront mettre à jour poedit. (#3485)
+
+
 = 2013.2 =
 
 == Nouvelles Fonctionnalités ==

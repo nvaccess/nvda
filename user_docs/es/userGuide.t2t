@@ -20,7 +20,7 @@ Lo más reseñable incluye:
 - Sintetizador de voz integrado que soporta sobre 43 idiomas
 - anunciado de formato de texto donde esté disponible tal como nombre y tamaño de la fuente, estilo y errores de ortografía
 - Anunciado automático de texto bajo el ratón e indicación opcional audible  de la posición del ratón
-- Soporte para muchas líneas de braille efímero incluyendo la entrada de braille computerizado para líneas braille que tengan un teclado braille
+- Soporte para muchas pantallas de braille efímero incluyendo la entrada de braille computerizado para pantallas braille que tengan un teclado braille
 - Capacidad para ejecutarse completamente desde una memoria USB u otros medios portables sin la necesidad de instalación
 - Instalador parlante fácil de utilizar
 - Traducido a 44 idiomas
@@ -42,8 +42,8 @@ NVDA está integrado con [eSpeak http://espeak.sourceforge.net/], un sintetizado
 Se puede encontrar información acerca de otros sintetizadores de voz que soporta NVDA en la sección [Sintetizadores de Voz soportados #SupportedSpeechSynths].
 
 ++ Soporte Braille ++
-Para usuarios que posean una línea de braille efímero, NVDA puede mostrar su información en braille. 
-Por favor mira la sección [Líneas Braille Soportadas #SupportedBrailleDisplays] para información acerca de las líneas braille soportadas.
+Para usuarios que posean una pantalla de braille efímero, NVDA puede mostrar su información en braille. 
+Por favor mira la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para información acerca de las pantallas braille soportadas.
 
 NVDA soporta códigos braille para muchos idiomas, incluyendo códigos braille contraído, no contraído y computerizado para algunos idiomas.
 
@@ -150,7 +150,7 @@ La tercera te permite controlar si este cuadro de bienvenida debería aparecer c
 
 +++ La Tecla Modificadora NVDA +++ 
 La mayoría de las órdenes específicas de teclado de NVDA consisten normalmente en la pulsación de la tecla modificadora de NVDA, junto con una o más teclas. 
-Una excepción de esto son las órdenes de revisión de texto que sólo utilizan las teclas del teclado numérico. 
+Una notable excepción a  esto son las órdenes de revisión de texto para teclados de escritorio que sólo utilizan las teclas del teclado numérico en sí mismas, pero hay algunas otras excepciones también.. 
 
 NVDA puede configurarse tal que o la tecla Insert del teclado numérico, la Insert del extendido, o la BloqMayus puedan utilizarse como la tecla modificadora de NVDA.
 
@@ -633,7 +633,7 @@ El cuadro de diálogo de opciones de voz contiene las siguientes opciones:
 ==== Voz ====
 La primera opción que obtienes en este diálogo es un cuadro combinado, que lista todas las voces del sintetizador actual que tienes instalado. 
 Puedes utilizar las teclas de cursor para escuchar todas las varias elecciones. 
-Las flechas izquierda y arriba suben por la lista, mientras que las flechas derecha y abajo mueven hacia abajo por la lista.
+Las flechas izquierda y arriba suben por la lista, mientras que las flechas derecha y abajo bajan por la lista.
 
 ==== Variante ====
 Si estás utilizando el sintetizador Espeak empaquetado junto con NVDA, este es un cuadro combinado que te permite seleccionar la variante con la que el sintetizador debería hablar. 
@@ -707,41 +707,41 @@ Si deseas cambiar rápidamente opciones de voz  sin ir al diálogo de Opciones d
 +++ Opciones de Braille +++
 El cuadro de diálogo de Opciones de braille puede ser invocado yendo al menú preferencias y entonces ir a la opción opciones de braille.
 
-==== Línea Braille ====
-La primera opción con la que te encontrarás en el diálogo de opciones de braille es un cuadro combinado que dice "Línea braille". 
-Se te presentará con varias opciones dependiendo de cuántas líneas braille haya disponibles en tu sistema.
+==== Pantalla Braille ====
+La primera opción con la que te encontrarás en el diálogo de opciones de braille es un cuadro combinado que dice "Pantalla braille". 
+Se te presentará con varias opciones dependiendo de cuántas pantallas braille haya disponibles en tu sistema.
 Muévete entre estas opciones con las flechas.
 
 Sin braille significa que no estás utilizando braille.
 
-Por favor mira la sección [Líneas Braille Soportadas #SupportedBrailleDisplays] para más información acerca de las líneas braille soportadas.
+Por favor mira la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para más información acerca de las pantallas braille soportadas.
 
 ==== Puerto ====
-Esta opción, si está disponible, te permite elegir qué puerto o tipo de conexión se utilizará para comunicar con la línea braille que tengas seleccionada.
-Es un cuadro combinado que contiene las opciones posibles para tu línea braille.
+Esta opción, si está disponible, te permite elegir qué puerto o tipo de conexión se utilizará para comunicar con la pantalla braille que tengas seleccionada.
+Es un cuadro combinado que contiene las opciones posibles para tu pantalla braille.
 
 De forma predeterminada, NVDA emplea la detección de puerto automática, lo cual significa que la conexión con el dispositivo braille se establecerá automáticamente escaneando los dispositivos USB y bluetooth disponibles en tu sistema.
-Por lo tanto, para algunas líneas braille, podrás elegir explícitamente qué puerto debería utilizarse.
-Opciones comunes son "Automático" (que dice a NVDA que emplee el procedimiento de selección de puerto predeterminado automático), "USB", "Bluetooth" y los puertos de comunicación serie si tu línea braille soportan este tipo de comunicación.
+Por lo tanto, para algunas pantallas braille, podrás elegir explícitamente qué puerto debería utilizarse.
+Opciones comunes son "Automático" (que dice a NVDA que emplee el procedimiento de selección de puerto predeterminado automático), "USB", "Bluetooth" y los puertos de comunicación serie si tu pantalla braille soporta este tipo de comunicación.
 
-Esta opción no estaría disponible si tu línea braille sólo soporta detección de puerto automática.
+Esta opción no estaría disponible si tu pantalla braille sólo soporta detección de puerto automática.
 
-Podrás consultar la documentación para tu línea braille en la sección [Líneas Braille Soportadas #SupportedBrailleDisplays] para informarte de más detalles sobre los tipos soportados de puertos y comunicación disponibles.
+Podrás consultar la documentación para tu pantalla braille en la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays] para informarte de más detalles sobre los tipos soportados de puertos y comunicación disponibles.
 
 ==== Tabla de Salida ====
 La siguiente opción que vendrá en este diálogo es el cuadro combinado de la tabla de salida braille.
 En este cuadro combinado, encontrarás tablas braille, estándares braille y grados para diferentes idiomas.
-La tabla elegida se utilizará para transcribir texto a braille para presentarlo en la línea braille.
+La tabla elegida se utilizará para transcribir texto a braille para presentarlo en la pantalla braille.
 Puedes moverte entre las tablas braille en la lista utilizando las teclas de cursor.
 
 ==== Tabla de Entrada ====
 Complementariamente con la opción anterior, el siguiente ajuste que encontrarás es el cuadro combinado de la tabla de entrada braille.
-La tabla elegida se utilizará para transcribir a texto el braille introducido en el teclado tipo perkins de la línea braille.
+La tabla elegida se utilizará para transcribir a texto el braille introducido en el teclado tipo perkins de la pantalla braille.
 Actualmente NVDA sólo soporta la entrada de braille computerizado, así que sólo se mostrarán tablas de braille computerizado de 8 puntos.
 Puedes moverte entre las tablas braille en la lista utilizando las teclas de cursor.
 
-Ten en cuenta que esta opción sólo es útil si tu línea braille tiene un teclado tipo Perkins y si esta característica se soporta por el controlador de la línea braille.
-Si la entrada no se soporta en una línea que tenga un teclado braille, esto se notificará en la sección [Líneas Braille Soportadas #SupportedBrailleDisplays].
+Ten en cuenta que esta opción sólo es útil si tu pantalla braille tiene un teclado tipo Perkins y si esta característica está soportada por el controlador de la pantalla braille.
+Si la entrada no se soporta en una pantalla que tenga un teclado braille, esto se notificará en la sección [Pantallas Braille Soportadas #SupportedBrailleDisplays].
 
  ==== Expandir a braille de ordenador para la palabra en el cursor ====
 Esta opción permite a la palabra que está bajo el cursor ser mostrada en braille de ordenador no contraído.
@@ -750,19 +750,19 @@ Esta opción permite a la palabra que está bajo el cursor ser mostrada en brail
 Esta opción es un campo numérico que te permite cambiar la velocidad de parpadeo del cursor en milésimas de segundo.
 
 ==== Duración del Mensaje (en seg) ====
-Esta opción es un campo numérico que controla durante cuánto tiempo se muestran los mensajes del sistema en la línea braille.
+Esta opción es un campo numérico que controla durante cuánto tiempo se muestran los mensajes del sistema en la pantalla braille.
 Especifycando 0 se deshabilita el mostrado de estos mensajes completamente.
 
 %kc:setting
 ==== El Braille sigue a ====[BrailleTether]
 Tecla: NVDA+control+t
 
-Esta opción te permite elegir si la línea braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión.
+Esta opción te permite elegir si la pantalla braille seguirá al foco del sistema, o si seguirá al navegador de objetos / cursor de revisión.
 
 ==== Leer por Párrafo ====
 Si está activado, el braille se mostrará por párrafos en lugar de por líneas.
 También, las órdenes de línea siguiente y anterior moverán por párrafos en concordancia.
-Esto significa que no tienes desplazamiento de la línea braille al final de cada línea incluso cuándo haya más texto del que cabe en la línea braille.
+Esto significa que no tienes desplazamiento de la pantalla braille al final de cada línea incluso cuando haya más texto del que quepa en la pantalla braille.
 Esto podría permitir una lectura más fluida de grandes cantidades de texto.
 Esto está desactivado de forma predeterminada.
 
@@ -847,7 +847,7 @@ Este diálogo contiene las siguientes opciones:
 ==== Seguir al Foco Del sistema ====
 Tecla: NVDA+7
 
-Cuando se activa, el cursor de revisión siempre se colocará en el mismo objeto tan pronto como el actual foco del sistema cambie.
+Cuando se activa, el cursor de revisión siempre se colocará en el mismo objeto que el actual foco del sistema siempre que  éste  cambie.
 
 %kc:setting
 ==== Seguir al Cursor del Sistema ====
@@ -996,6 +996,7 @@ Puedes configurar el anunciado de:
 - Atributos de fuente
 - Alineación del texto
 - Colores
+- Revisiones del editor
 - Estilo del texto
 - Errores de ortografía
 - Números de página
@@ -1080,7 +1081,7 @@ Para optener tu directorio de opciones para una versión instalada de NVDA, en e
    
 Las opciones para NVDA cuando se ejecuta en las pantallas de autentificación (logon) o de UAC se almacenan en el directorio SystemConfig en el directorio de instalación de NVDA.
 Normalmente esta configuración no debería ser tocada.
-Para cambiar cómo se configura NVDA en las pantallas de logon/UAC, configura a NVDA cómo desees mientras estás autentificado en Windows, y luego manda a NVDA copiar la configuración a la pantalla de autentificación (logon) utilizando el botón en el diálogo Opciones Generales.
+Para cambiar cómo se configura NVDA en las pantallas de logon/UAC, configura a NVDA cómo desees mientras estás autentificado en Windows, guarda la configuración y luego pulsa el botón "Utilizar ajustes guardados actualmente en el inicio de sesión y otras pantallas seguras en el diálogo Opciones Generales.
 
 + Herramientas Extra +
 
@@ -1101,7 +1102,7 @@ No obstante, si haces clic o colocas el foco dentro del visualizador,  NVDA dete
 
 ++ Administrador de Complementos ++
 El Administrador de Complementos, al que se accede seleccionando Administrador de complementos bajo Herramientas en el menú NVDA, te permite instalar y desinstalar paquetes de complementos para NVDA.
-Estos paquetes son proporcionados por la comunidad y contienen código personalizado que podrá añadir o cambiar características en NVDA o también proporcionan soporte para líneas Braille o sintetizadores de voz extra.
+Estos paquetes son proporcionados por la comunidad y contienen código personalizado que podrá añadir o cambiar características en NVDA o también proporcionan soporte para pantallas Braille o sintetizadores de voz extra.
 
 El Administrador de Complementos contiene una lista que muestra todos los complementos instalados actualmente en tu configuración de usuario de NVDA. 
 Se muestra un nombre de paquete, versión y autor para cada complemento, aunque se puede ver más información tal como una descripción y una URL seleccionando el complemento y pulsando el botón Acerca del complemento.
@@ -1199,28 +1200,28 @@ Todos los componentes y voces del sintetizador se agrupan en paquetes de complem
 Puedes obtener más información acerca de Nuance Vocalizer para NVDA y de cómo comprarlo, en su sitio web en [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
 Un porcentaje de las ventas de este producto se dona a NV Access, para financiar el desarrollo del Lector de Pantalla  NVDA.
 
-+ Líneas Braille Soportadas +[SupportedBrailleDisplays]
-Esta sección contiene información acerca de las líneas braille soportadas por NVDA.
++ Pantallas Braille Soportadas +[SupportedBrailleDisplays]
+Esta sección contiene información acerca de las pantallas braille soportadas por NVDA.
 
 ++ Series de la Freedom Scientific Focus/PAC Mate ++
-Todas las líneas Focus y PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] se soportan.
-Necesitarás los controladores de líneas braille de Freedom Scientific instalados en tu sistema.
+Todas las pantallas Focus y PAC Mate de [Freedom Scientific http://www.freedomscientific.com/] están soportadas.
+Necesitarás los controladores de pantallas braille de Freedom Scientific instalados en tu sistema.
 Si no los tienes todavía, puedes obtenerlos desde http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
-Aunque esta página sólo menciona la línea Focus 40 Blue, el controlador soporta todas las líneas de Freedom Scientific.
-Si tu sistema ejecuta un Windows de 64 bit y los controladores ya se instalaron por otro lector de pantalla, posiblemente todavía necesitarás instalar los controladores desde este enlace, puesto que los ficheros que requiere NVDA posiblemente no fueron instalados por el otro lector de pantalla.
+Aunque esta página sólo menciona la pantalla Focus 40 Blue, el controlador soporta todas las pantallas de Freedom Scientific.
+Si tu sistema ejecuta un Windows de 64 bit y los controladores ya se instalaron por otro lector de pantalla, posiblemente todavía necesitarás instalar los controladores desde este enlace, puesto que los ficheros que requiere NVDA posiblemente no fueran instalados por el otro lector de pantalla.
 
-Predeterminadamente, NVDA puede detectar automáticamente y conectarse a estas líneas tanto a través de USB como de bluetooth.
-No obstante, cuando se configura la línea, puedes seleccionar explícitamente los puertos "USB" o "Bluetooth" para restringir el tipo de conexión a utilizar.
-Esto podría ser útil si quieres conectar la línea focus a NVDA utilizando bluetooth, y todavía podrías cargarla utilizando la energía del USB desde tu ordenador.
+De manera predeterminada, NVDA puede detectar automáticamente y conectarse a estas pantallas tanto a través de USB como de bluetooth.
+No obstante, cuando se configura la pantalla, puedes seleccionar explícitamente los puertos "USB" o "Bluetooth" para restringir el tipo de conexión a utilizar.
+Esto podría ser útil si quieres conectar la pantalla focus a NVDA utilizando bluetooth, y todavía podrías cargarla utilizando la energía del USB desde tu ordenador.
 
-Seguidamente van las asociaciones de teclas para esta línea con NVDA.
-Por favor mira la documentación de la línea para descriptciones de dónde pueden encontrarse estas teclas.
+Seguidamente van las asociaciones de teclas para esta pantalla con NVDA.
+Por favor mira la documentación de la pantalla para descriptciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | tecla |
-| Desplazar línea braille atrás | sensorSuperior1 (primera celda en la línea) |
-| Desplazar línea braille adelante | sensorSuperior20/40/80 (última celda en la línea) |
-| Desplazar línea braille atrás | barraDeAvance izquierda |
-| Desplazar línea braille adelante | barraDeAvance derecha |
+| Desplazar pantalla braille atrás | sensorSuperior1 (primera celda en la pantalla) |
+| Desplazar pantalla braille adelante | sensorSuperior20/40/80 (última celda en la pantalla) |
+| Desplazar pantalla braille atrás | barraDeAvance izquierda |
+| Desplazar pantalla braille adelante | barraDeAvance derecha |
 | Conmutar seguimiento de braille | leftGDFButton+rightGDFButton |
 | Conmutar acción de rueda izquierda | pulsar rueda izquierda |
 | Moverse hacia atrás utilizando acción de rueda izquierda | rueda izquierda hacia arriba |
@@ -1252,33 +1253,33 @@ Por favor mira la documentación de la línea para descriptciones de dónde pued
 | Anunciar Línea Actual | barra espaciadora braille+punto1+punto4 |
 | Menú NVDA | barra espaciadora braille+punto1+punto3+punto4+punto5 |
 
-Para los modelos más recientes de la Focus que contienen teclas de balancines (focus 40, focus 80 y focus blue):
+Para los modelos más recientes de la Focus que contengan teclas de balancines (focus 40, focus 80 y focus blue):
 || Nombre | Tecla |
-| Mover línea braille a la línea anterior | balancín izquierdo arriba, balancín derecho arriba |
-| Mover línea braille a la línea siguiente | balancín izquierdo abajo, balancín derecho abajo |
+| Mover pantalla braille a la línea anterior | balancín izquierdo arriba, balancín derecho arriba |
+| Mover pantalla braille a la línea siguiente | balancín izquierdo abajo, balancín derecho abajo |
 
 Sólo para la Focus 80:
 || Nombre | Tecla |
-| Desplazar línea braille atrás | barra frontal izquierda arriba, barra frontal derecha arriba |
-| Desplazar línea braille adelante | barra frontal izquierda abajo, barra frontal derecha abajo |
+| Desplazar pantalla braille atrás | barra frontal izquierda arriba, barra frontal derecha arriba |
+| Desplazar pantalla braille adelante | barra frontal izquierda abajo, barra frontal derecha abajo |
 %kc:endInclude
 
 ++ Optelec ALVA BC640/680 ++
-Ambas líneas ALVA BC640 y BC680 de [Optelec http://www.optelec.com/] se soportan.
-No necesitas instalar ningún controlador en especial para utilizar estas líneas.
-Sólo enchufa la línea y configura NVDA para utilizarla.
+Ambas pantallas ALVA BC640 y BC680 de [Optelec http://www.optelec.com/] están soportadas.
+No necesitas instalar ningún controlador en especial para utilizar estas pantallas.
+Sólo enchufa la pantalla y configura NVDA para utilizarla.
 
-Mientras estas líneas tengan un teclado braille, manejan la transcripción de braille a texto por sí mismas.
+Dado que estas pantallas tienen un teclado braille, manejarán la transcripción de braille a texto por sí mismas.
 Por lo tanto, la configuración de la tabla de entrada braille de NVDA es irrelevante.
 
-Seguidamente van las asignaciones de teclas para esta línea con NVDA.
-Por favor mira la documentación de la línea para descripciones de dónde pueden encontrarse estas teclas.
+Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
+Por favor mira la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar línea braille hacia atrás | t1 |
-| Mover la línea braille a la línea anterior | t2 |
-| Mover la línea braille a la línea siguiente | t4 |
-| Desplazar línea braille hacia adelante | t5 |
+| Desplazar pantalla braille hacia atrás | t1 |
+| Mover la pantalla braille a la línea anterior | t2 |
+| Mover la pantalla braille a la línea siguiente | t4 |
+| Desplazar pantalla braille hacia adelante | t5 |
 | Guiar a la celda braille | sensor |
 | tecla shift+tab | sp1 |
 | tecla alt | sp2 |
@@ -1295,20 +1296,20 @@ Por favor mira la documentación de la línea para descripciones de dónde puede
 | tecla alt+tab | sp2+sp4 |
 %kc:endInclude
 
-++ Líneas Handy Tech ++
-NVDA soporta todas las líneas de [Handy Tech http://www.handytech.de/].
-Para algunas líneas antiguas USB, necesitarás instalar los controladores USB de Handy Tech en tu sistema.
+++ Pantallas Handy Tech ++
+NVDA soporta todas las pantallas de [Handy Tech http://www.handytech.de/].
+Para algunas pantallas antiguas USB, necesitarás instalar los controladores USB de Handy Tech en tu sistema.
 
 La entrada Braille  todavía no está soportada.
 
-Seguidamente van las asignaciones de teclas para esta línea con NVDA.
-Por favor mira la documentación de la línea para descripciones de dónde pueden encontrarse estas teclas.
+Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
+Por favor mira la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar la línea braille hacia atrás | izquierda, arriba |
-| Desplazar la línea braille hacia adelante | Derecha, abajo |
-| Mover la línea braille a la línea anterior | b4 |
-| Mover la línea braille a la línea siguiente | b5 |
+| Desplazar la pantalla braille hacia atrás | izquierda, arriba |
+| Desplazar la pantalla braille hacia adelante | Derecha, abajo |
+| Mover la pantalla braille a la línea anterior | b4 |
+| Mover la pantalla braille a la línea siguiente | b5 |
 | Guiar a la celda braille | sensor |
 | tecla shift+tab | esc |
 | tecla alt | b2+b4+b5 |
@@ -1322,18 +1323,18 @@ Por favor mira la documentación de la línea para descripciones de dónde puede
 %kc:endInclude
 
 ++ MDV Lilli ++
-La línea braille Lilli disponible desde [MDV http://www.mdvbologna.it/] se soporta.
-No necesitas instalar ningún controlador específico para utilizar esta línea.
-Solo enchufa la línea y configura NVDA para utilizarla.
+La pantalla braille Lilli disponible desde [MDV http://www.mdvbologna.it/] se soporta.
+No necesitas instalar ningún controlador específico para utilizar esta pantalla.
+Solo enchufa la pantalla y configura NVDA para utilizarla.
 
-Seguidamente van las asignaciones de teclas para esta línea con NVDA.
-Porfavor mira la documentación de la línea para descripciones de dónde se pueden encontrar estas teclas.
+Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
+Porfavor mira la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
 %kc:beginInclude
 || Nombre | tecla |
-| Desplazar hacia atrás línea braille | LF |
-| Desplazar hacia adelante línea braille | RG |
-| Mover línea braille a línea anterior | UP |
-| Mover línea braille a línea siguiente | DN |
+| Desplazar hacia atrás pantalla braille | LF |
+| Desplazar hacia adelante pantalla braille | RG |
+| Mover pantalla braille a línea anterior | UP |
+| Mover pantalla braille a línea siguiente | DN |
 | Enrutar hacia la celda braille | route |
 | Tecla shift+tab | SLF |
 | Tecla tab | SRG |
@@ -1341,29 +1342,29 @@ Porfavor mira la documentación de la línea para descripciones de dónde se pue
 | Tecla alt+shift+tab | SUP |
 %kc:endInclude
 
-++ Líneas braille Baum/Humanware/APH ++
-Varias líneas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] y [APH http://www.aph.org/] están soportadas cuando se conectan a través del USB o del bluetooth.
+++ Pantallas braille Baum/Humanware/APH ++
+Varias pantallas braille de [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] y [APH http://www.aph.org/] están soportadas cuando se conecten a través del USB o del bluetooth.
 Estas incluyen:
 - Baum: SuperVario, PocketVario
 - HumanWare: Brailliant, BrailleConnect
 - APH: Refreshabraille
 -
-Algunas otras líneas manufacturadas por Baum también podrían funcionar, aunque no han sido probadas.
+Algunas otras pantallas manufacturadas por Baum también podrían funcionar, aunque no han sido probadas.
 
 Si conectas a través de USB, primero debes instalar los controladores USB proporcionados por el fabricante.
 Para la APH Refreshabraille, el modo USB debe ajustarse a serie.
 
-Seguidamente van las asignaciones de teclas para esta línea con NVDA.
-Por favor mira la documentación de la línea braille para descriptciones de dónde se pueden encontrar estas teclas.
+Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
+Por favor mira la documentación de la pantalla braille para descriptciones de dónde se pueden encontrar estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar línea braille hacia atrás | d2 |
-| Desplazar línea braille hacia adelante | d5 |
-| Mover la línea braille a la línea anterior | d1 |
-| Mover la línea brailla a la línea siguiente | d3 |
+| Desplazar pantalla braille hacia atrás | d2 |
+| Desplazar pantalla braille hacia adelante | d5 |
+| Mover la pantalla braille a la línea anterior | d1 |
+| Mover la pantalla braille a la línea siguiente | d3 |
 | Guiar a la celda braille | sensor |
 
-Para líneas que tengan un joystick:
+Para pantallas que tengan un joystick:
 || Nombre | Tecla |
 | Tecla flecha arriba | arriba |
 | Tecla flecha abajo | abajo |
@@ -1376,14 +1377,14 @@ Para líneas que tengan un joystick:
 La hedo ProfiLine USB de [hedo Reha-Technik  http://www.hedo.de/] está soportada.
 Primero debes instalar los controladores USB proporcionados por el fabricante.
 
-Seguidamente van las asignaciones de teclas para esta línea con NVDA.
-Por favor mira la documentación de la línea para descripciones de dónde se pueden encontrar estas teclas.
+Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
+Por favor mira la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar línea braille atrás | K1 |
-| Desplazar línea braille hacia adelante | K3 |
-| Mover línea braille a línea anterior | B2 |
-| Mover línea braille a siguiente línea | B5 |
+| Desplazar pantalla braille atrás | K1 |
+| Desplazar pantalla braille hacia adelante | K3 |
+| Mover pantalla braille a línea anterior | B2 |
+| Mover pantalla braille a siguiente línea | B5 |
 | Enrutar a la celda braille | sensores |
 | Conmutar seguimiento braille | K2 |
 | Leer todo | B6 |
@@ -1393,31 +1394,31 @@ Por favor mira la documentación de la línea para descripciones de dónde se pu
 Se soporta la hedo MobilLine USB de [hedo Reha-Technik http://www.hedo.de/].
 Primero debes instalar los controladores USB proporcionados por el fabricante.
 
-Seguidamente van las asignaciones de teclas para esta línea con NVDA.
-Por favor mira la documentación de la línea para descripciones de dónde pueden encontrarse estas teclas.
+Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
+Por favor mira la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar línea braille atrás | K1 |
-| Desplazar línea braille adelante | K3 |
-| Mover línea braille a línea anterior | B2 |
-| Mover línea braille a siguiente línea | B5 |
+| Desplazar pantalla braille atrás | K1 |
+| Desplazar pantalla braille adelante | K3 |
+| Mover pantalla braille a línea anterior | B2 |
+| Mover pantalla braille a siguiente línea | B5 |
 | Ir a celda braille | sensores |
 | Conmutar seguimiento de braille | K2 |
 | Leer todo | B6 |
 %kc:endInclude
 
 ++ HumanWare Brailliant Series BI/B ++
-Las líneas braille Brailliant series BI y B de [HumanWare http://www.humanware.com/], incluyendo BI 32, BI 40 y B 80, están soportadas cuando se conectan a través del USB o bluetooth.
+Las pantallas braille Brailliant series BI y B de [HumanWare http://www.humanware.com/], incluyendo BI 32, BI 40 y B 80, están soportadas cuando se conectan a través del USB o bluetooth.
 Si la conectas a través de USB, primero debes instalar los controladores USB proporcionados por el fabricante.
 
-Seguidamente van las asignaciones de teclas para esta línea con NVDA.
-Por favor mira la documentación de la línea para descripciones de dónde pueden encontrarse estas teclas.
+Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
+Por favor mira la documentación de la pantalla para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar línea braille hacia atrás | izquierda |
-| Desplazar línea braille hacia adelante | derecha |
-| Mover línea braille a la línea anterior | arriba |
-| Mover línea braille a la línea siguiente | abajo |
+| Desplazar pantalla braille hacia atrás | izquierda |
+| Desplazar pantalla braille hacia adelante | derecha |
+| Mover pantalla braille a la línea anterior | arriba |
+| Mover pantalla braille a la línea siguiente | abajo |
 | Guiar hasta la celda braille | sensores |
 | Activar/desactivar seguimiento de braille | arriba+abajo |
 | tecla flecha arriba | espacio+punto1 |
@@ -1437,17 +1438,17 @@ Por favor mira la documentación de la línea para descripciones de dónde puede
 %kc:endInclude
 
 ++ Series de la HIMS Braille Sense/Braille EDGE ++
-NVDA soporta las líneas Braille Sense y Braille EDGE de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
+NVDA soporta las pantallas Braille Sense y Braille EDGE de [Hims http://www.hims-inc.com/] cuando se conectan a través de USB o bluetooth. 
 Si se conectan a través de USB, necesitarás instalar los controladores USB de HIMS en el sistema.
 
-Seguidamente van las asignaciones de teclas para estas líneas con NVDA.
-Por favor mira la documentación de las líneas para descripciones de dónde pueden encontrarse estas teclas.
+Seguidamente van las asignaciones de teclas para estas pantallas con NVDA.
+Por favor mira la documentación de las pantallas para descripciones de dónde pueden encontrarse estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar atrás línea braille | desplazador izquierdo abajo |
-| Desplazar adelante línea braille | desplazador derecho abajo |
-| Mover línea braille a la línea anterior | desplazador izquierdo arriba |
-| Mover línea braille a la línea siguiente | desplazador derecho arriba|
+| Desplazar atrás pantalla braille | desplazador izquierdo abajo |
+| Desplazar adelante pantalla braille | desplazador derecho abajo |
+| Mover pantalla braille a la línea anterior | desplazador izquierdo arriba |
+| Mover pantalla braille a la línea siguiente | desplazador derecho arriba|
 | Ir a la celda braille | sensores |
 | tecla shift+tab | punto1+punto2+Espacio |
 | tecla alt | punto1+punto3+punto4+Espacio |
@@ -1497,31 +1498,31 @@ Por favor mira la documentación de las líneas para descripciones de dónde pue
 %kc:endInclude
 
 ++ HIMS SyncBraille ++
-NVDA soporta la línea SyncBraille de [HIMS http://www.hims-inc.com/].
+NVDA soporta la pantalla SyncBraille de [HIMS http://www.hims-inc.com/].
 Necesitarás instalar los controladores USB de HIMS en el sistema.
 
-Seguidamente van las asignaciones de teclas para esta línea con NVDA.
-Por favor mira la documentación de la línea para descripciones de dónde se pueden encontrar estas teclas.
+Seguidamente van las asignaciones de teclas para esta pantalla con NVDA.
+Por favor mira la documentación de la pantalla para descripciones de dónde se pueden encontrar estas teclas.
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar línea braille hacia atrás | desplazador abajo de la izquierda |
-| Desplazar línea braille hacia adelante | desplazador abajo de la derecha |
+| Desplazar pantalla braille hacia atrás | desplazador abajo de la izquierda |
+| Desplazar pantalla braille hacia adelante | desplazador abajo de la derecha |
 | Ir a la celda braille | sensores |
 %kc:endInclude
 
-++ Líneas Braille Seika ++
-Se soportan las líneas braille Seika Versión 3, 4 y 5 (40 celdas) y Seika80 (80 celdas) de [Nippon Telesoft http://www.nippontelesoft.com/].
-Puedes encontrar más información acerca de estas líneas en http://www.seika-braille.com/.
+++ Pantallas Braille Seika ++
+Se soportan las pantallas braille Seika Versión 3, 4 y 5 (40 celdas) y Seika80 (80 celdas) de [Nippon Telesoft http://www.nippontelesoft.com/].
+Puedes encontrar más información acerca de estas pantallas en http://www.seika-braille.com/.
 Primero debes instalar los controladores USB proporcionados por el fabricante.
 
-Seguidamente van las asignaciones de teclas para esta línea con NVDA.
-Por favor mira la documentación de la línea para descripciones de dónde se encuentran estas teclas.
+Seguidamente van las asignaciones de teclas para estas pantallas con NVDA.
+Por favor mira la documentación de las pantallas para descripciones de dónde se encuentran estas teclas.
 %kc:beginInclude
 || Nombre | tecla |
-| Desplazar línea braille atrás | izquierda |
-| Desplazar línea braille adelante | derecha |
-| Mover línea braille a la línea anterior | b3 |
-| Mover línea braille a la siguiente línea | b4 |
+| Desplazar pantalla braille atrás | izquierda |
+| Desplazar pantalla braille adelante | derecha |
+| Mover pantalla braille a la línea anterior | b3 |
+| Mover pantalla braille a la siguiente línea | b4 |
 | Conmutar seguimiento del braille  | b5 |
 | Leer todo | b6 |
 | tab | b1 |
@@ -1531,8 +1532,8 @@ Por favor mira la documentación de la línea para descripciones de dónde se en
 | Ir a la celda braille | sensores |
 %kc:endInclude
 
-++ Modelos más recientes de Papenmeier BRAILLEX ++
-Se soportan las siguientes líneas Braille: 
+++ Modelos modernos de Papenmeier BRAILLEX ++
+Se soportan las siguientes pantallas Braille: 
 - BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 - BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
 - BRAILLEX Trio (USB y bluetooth)
@@ -1547,11 +1548,11 @@ La mayoría de los dispositivos tienen una Barra de Acceso Fácil (EAB) que perm
 La EAB puede moverse en cuatro direcciones donde en general cada dirección tiene dos posiciones.
 La serie c es la única excepción a esta regla.
 
-La serie c y algunas otras líneas tienen dos filas de sensores por lo que la fila superior se utiliza para anunciar información de formato.
+La serie c y algunas otras pantallas tienen dos filas de sensores por lo que la fila superior se utiliza para anunciar información de formato.
 Manteniendo pulsada una de las teclas superiores y pulsando la EAB en los dispositivos de la serie c se emula la segunda posición.
 Pulsando y manteniendo las teclas arriba, abajo, derecha e izquierda (o la EAB) se causa que la acción correspondiente se repita. 
 
-Generalmente, las siguientes teclas están disponibles en estas líneas braille:
+Generalmente, las siguientes teclas están disponibles en estas pantallas braille:
 || Nombre | Tecla |
 | l1 | Tecla izquierda frontal |
 | l2 | Tecla izquierda trasera |
@@ -1569,10 +1570,10 @@ Generalmente, las siguientes teclas están disponibles en estas líneas braille:
 Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar línea braille atrás | izquierda |
-| Desplazar línea braille adelante | derecha |
-| Mover línea braille a la línea anterior | arriba |
-| Mover línea braille a la línea siguiente | dn |
+| Desplazar pantalla braille atrás | izquierda |
+| Desplazar pantalla braille adelante | derecha |
+| Mover pantalla braille a la línea anterior | arriba |
+| Mover pantalla braille a la línea siguiente | dn |
 | Ir a la celda braille | sensores |
 | Anunciar carácter actual en revisión  | l1 |
 | Activar actual navegador de objetos  | l2 |
@@ -1587,7 +1588,7 @@ Seguidamente van las asignaciones de órdenes de la Papenmeier para NVDA:
 %kc:endInclude
 
 El modelo Trio tiene cuatro teclas adicionales que están delante del teclado braille.
-Estas son (ordenadas de izquierda a derecha):
+Estas están (ordenadas de izquierda a derecha):
 - tecla de pulgar izquierdo (lt)
 - espacio
 - espacio
@@ -1612,20 +1613,20 @@ Las teclas interiores se mapean a espacio.
 %kc:endInclude 
 
 ++ Modelos Antiguos Papenmeier Braille BRAILLEX ++
-Se soportan las siguientes líneas Braille: 
+Se soportan las siguientes pantallas Braille: 
 - BRAILLEX EL 80, EL 2D-80, EL 40 P
 - BRAILLEX Tiny, 2D Screen
 -
 
-Ten en cuenta que estas líneas sólo se pueden conectar a través de un puerto serie.
-Por lo tanto, deberías seleccionar el puerto al cual se conecta la línea antes de haber elegido este controlador en el diálogo Opciones de Braille.
+Ten en cuenta que estas pantallas sólo se pueden conectar a través de un puerto serie.
+Por lo tanto, deberías seleccionar el puerto al cual se conecta la pantalla antes de haber elegido este controlador en el diálogo Opciones de Braille.
 
 Algunos de estos dispositivos tienen una barra de acceso rápido (EAB) que permite un accionamiento rápido e intuitivo.
 El EAB se puede mover en cuatro direcciones donde, generalmente, cada dirección tiene dos movimientos.
 Pulsando y manteniendo las teclas Arriba, abajo, derecha e izquierda (o EAB) se hace que la acción correspondiente sea repetida.
 Los dispositivos más antiguos no tienen una EAB; se utilizan, en su lugar, teclas frontales .
 
-Generalmente, las siguientes teclas están disponibles en las líneas braille:
+Generalmente, las siguientes teclas están disponibles en las pantallas braille:
 
 || Nombre | Tecla |
 | l1 | Tecla frontal izquierda |
@@ -1646,10 +1647,10 @@ Seguidamente van las asignaciones de órdenes de las Papenmeier para NVDA:
 %kc:beginInclude
 Dispositivos con EAB:
 || Nombre | Tecla |
-| Desplazar la línea braille atrás | izquierda |
-| Desplazar la línea braille adelante | derecha |
-| Mover la línea braille a la línea anterior | arriba |
-| Mover la línea braille a la línea siguiente | abajo |
+| Desplazar la pantalla braille atrás | izquierda |
+| Desplazar la pantalla braille adelante | derecha |
+| Mover la pantalla braille a la línea anterior | arriba |
+| Mover la pantalla braille a la línea siguiente | abajo |
 | Ir a la celda braille | sensores |
 | Anunciar carácter actual en revisión | l1 |
 | Activar navegador de objetos actual | l2 |
@@ -1666,10 +1667,10 @@ BRAILLEX Tiny:
 || Nombre | Tecla |
 | Anunciar carácter actual en revisión | l1 |
 | Activar navegador de objetos actual | l2 |
-| Desplazar línea braille atrás | left |
-| Desplazar línea braille adelante | right |
-| Mover línea braille a la línea anterior | up |
-| Mover línea braille a la línea siguiente | dn |
+| Desplazar pantalla braille atrás | left |
+| Desplazar pantalla braille adelante | right |
+| Mover pantalla braille a la línea anterior | up |
+| Mover pantalla braille a la línea siguiente | dn |
 | Activar y desactivar seguimiento de braille | r2 |
 | Moverse al modo de revisión pplana / foco | r1 |
 | Moverse al objeto contenedor | r1+up |
@@ -1684,11 +1685,11 @@ BRAILLEX 2D Screen:
 | Activar navegador de objetos actual | l2 |
 | Activar o desactivar seguimiento de braille | r2 |
 | Anunciar formato de texto | reportf |
-| Mover línea braille a la línea anterior| up |
-| Desplazar línea braille atrás | left |
+| Mover pantalla braille a la línea anterior| up |
+| Desplazar pantalla braille atrás | left |
 | Moverse a revisión plana / foco | r1 |
-| Desplazar línea braille adelante | right |
-| Mover línea braille a la línea siguiente | dn |
+| Desplazar pantalla braille adelante | right |
+| Mover pantalla braille a la línea siguiente | dn |
 | Moverse al objeto siguiente | left2 |
 | Moverse al objeto contenedor | up2 |
 | Moverse al primer objeto contenido | dn2 |
@@ -1717,10 +1718,10 @@ Por favor mira la documentación del BrailleNote para encontrar dónde se locali
 
 %kc:beginInclude
 || Nombre | Tecla |
-| Desplazar atrás línea braille | retroceder |
-| Desplazar adelante línea braille | avanzar |
-| Mover línea braille a la línea anterior | anterior |
-| Mover línea braille a la línea siguiente | siguiente |
+| Desplazar atrás pantalla braille | retroceder |
+| Desplazar adelante pantalla braille | avanzar |
+| Mover pantalla braille a la línea anterior | anterior |
+| Mover pantalla braille a la línea siguiente | siguiente |
 | Llevar a la celda braille | sensores |
 | Activar y desactivar seguimiento de braille | anterior+siguiente |
 | Tecla flecha arriba | espacio+punto1 |
@@ -1744,22 +1745,22 @@ Por favor mira la documentación del BrailleNote para encontrar dónde se locali
 %kc:endInclude
 
 ++ BRLTTY ++
-[BRLTTY http://mielke.cc/brltty/] es un programa por separado que puede utilizarse para soportar muchas líneas braille.
+[BRLTTY http://mielke.cc/brltty/] es un programa por separado que puede utilizarse para soportar muchas pantallas braille.
 Para utilizar esto, necesitas instalar [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
 Deberías descargar e instalar el último paquete instalable, que se llamará, por ejemplo, brltty-win-4.2-2.exe.
 Cuando configures la línea y puerto a utilizar,  asegúrate de prestar gran atención a las instrucciones, especialmente si estás utilizando una línea USB y ya tienes los controladores del fabricante instalados.
 
-Para líneas que tengan un teclado braille, BRLTTY actualmente maneja la entrada braille por sí mismo.
+Para pantallas que tengan un teclado braille, BRLTTY actualmente maneja la entrada braille por sí mismo.
 Por lo tanto, la opción tabla braille de entrada de NVDA es irrelevante.
 
 Seguidamente van las asignaciones a órdenes BRLTTY para NVDA.
 Por favor mira [la documentación de tablas de teclas de BRLTTY http://mielke.cc/brltty/doc/drivers/] para información acerca de cómo están mapeadas las órdenes de BRLTTY para controlar las líneas braille.
 %kc:beginInclude
 || Nombre | orden de BRLTTY |
-| Desplazar línea braille hacia atrás | fwinlt (va a la izquierda una ventana) |
-| Desplazar línea braille hacia la derecha | fwinrt (va una ventana hacia la derecha) |
-| Mover la línea braille a la línea anterior | lnup (va una línea hacia arriba) |
-| Mover línea braille a la siguiente línea | lndn (va una línea hacia abajo) |
+| Desplazar pantalla braille hacia atrás | fwinlt (va a la izquierda una ventana) |
+| Desplazar pantalla braille hacia la derecha | fwinrt (va una ventana hacia la derecha) |
+| Mover la pantalla braille a la línea anterior | lnup (va una línea hacia arriba) |
+| Mover pantalla braille a la siguiente línea | lndn (va una línea hacia abajo) |
 | Guiar a la celda braille | route (lleva el cursor al carácter) |
 %kc:endInclude
 
@@ -1786,8 +1787,8 @@ Los identificadores de gesto consisten en un código de dispositivo de dos letra
 La parte entre paréntesis es la distribución de teclado y es opcional.
 Si no se especificó, el gesto se aplicará a todas las distribuciones de teclado.
 La cadena después de los dos puntos es uno o más nombres de teclas separados por un signo más (+).
-- Para gestos de líneas braille, el código de dispositivo es br.
-La parte entre paréntesis identifica la línea braille específica y es obligatoria.
+- Para gestos de pantallas braille, el código de dispositivo es br.
+La parte entre paréntesis identifica la pantalla braille específica y es obligatoria.
 La cadena después de los dos puntos es uno o más nombres de tecla separados por un signo más (+).
 - Para gestos táctiles, el código de dispositivo es ts.
 La parte entre paréntesis es el modo táctil y es opcional.
@@ -1832,11 +1833,6 @@ Si quisieras eliminar esta combinación, añadirías la línea siguiente:
 ```
 	None = kb:NVDA+f12
 ```
-
-Aunque eres libre de tener scripts vinculados a cualquier tecla disponible, podrá ser problemático utilizar la tecla alt en el teclado.
-NVDA todavía envía teclas modificadoras (tales como shift, control y alt) al Sistema Operativo, aún si eventúan en un script.
-De esta manera, si utilizas alt en un gesto, pulsando esta tecla la combinación podrá activar la barra de menú, tanto como ejecutar el script.
-Por lo tanto, probablemente es mejor sólo utilizar Shift, control y la tecla modificadora NVDA como modificadores.
 
 ++ Personalización Avanzada de Pronunciación de Símbolos ++
 Es posible personalizar la pronunciación de la puntuación y otros símbolos más allá de lo que puede hacerse utilizando el [diálogo Pronunciación de Puntuación y símbolos #SymbolPronunciation].

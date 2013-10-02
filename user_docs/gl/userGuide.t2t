@@ -150,7 +150,7 @@ A terceira permíteche controlar se este cadro de benvida debería aparecer cada
 
 +++ A Tecla Modificadora NVDA +++ 
 A maioría das ordes específicas de teclado do NVDA consisten normalmente na pulsación da tecla modificadora de NVDA, xunto cunha ou máis teclas. 
-Unha excepción desto son as ordes de revisión de texto que só utilizan as teclas do teclado numérico. 
+Unha notable excepción desto son as ordes de revisión de texto para teclados de escritorio que só utilizan as teclas do teclado numérico por si mesmas, pero hai algunhas outras excepcións tamén.. 
 
 NVDA pode configurarse tal que ou a tecla Insert do teclado numérico, a Insert do extendido, ou a BloqMayus podan utilizarse como a tecla modificadora do NVDA.
 
@@ -633,7 +633,7 @@ O cadro de diálogo de opcións de voz contén as seguintes opcións:
 ==== Voz ====
 A primeira opción que obtés neste diálogo é un cadro combinado, que lista todas as voces do sintetizador actual que tes instalado. 
 Podes utilizar as teclas de cursor para escoitar todas as varias eleccións. 
-As flechas esquerda e arriba suben pola lista, mentres que as flechas dereita e abaixo moven cara abaixo pola lista.
+As flechas esquerda e arriba suben pola lista, mentres que as flechas dereita e abaixo baixan pola lista.
 
 ==== Variante ====
 Se estás utilizando o sintetizador Espeak empaquetado xunto co NVDA, este é un cadro combinado que che permite seleccionar a variante ca que o sintetizador debería falar. 
@@ -847,7 +847,7 @@ Este diálogo contén as seguintes opcións:
 ==== Seguir ó Foco Do sistema ====
 Tecla: NVDA+7
 
-Cando se activa, o cursor de revisión sempre se colocará no mesmo obxecto tan pronto como o actual foco do sistema cambie.
+Cando se activa, o cursor de revisión sempre se colocará no mesmo obxecto que o actual foco do sistema sempre que este cambie.
 
 %kc:setting
 ==== Seguir ó Cursor do Sistema ====
@@ -996,6 +996,7 @@ Podes configurar o anunciado de:
 - Atributos de fonte
 - Alineamento do texto
 - Cores
+- Revisións do editor
 - Estilo do texto
 - Erros de ortografía
 - Números de páxina
@@ -1113,7 +1114,6 @@ Pola contra, garda o paquete de complemento e segue as instruccións máis abaix
 
 Para instalar un complemento que conseguiches previamente, preme o botón Instalar.
  Esto permitirache buscar un paquete de complemento (ficheiro .nvda-addon) en algún lugar do teu computador ou nunha rede.
-
 Unha vez premas Abrir, o proceso de instalación comezará.
 
 Cando un complemento se vai a instalar, NVDA primeiro pedirache que confirmes que realmente desexas instalalo.
@@ -1834,19 +1834,14 @@ Se quixeras eliminar esta combinación, engadirías a liña seguinte:
 	None = kb:NVDA+f12
 ```
 
-Aínda que eres libre de ter scripts vinculados a calquera tecla dispoñible, poderá seren problemático utilizar a tecla alt no teclado.
-NVDA aínda envía teclas modificadoras (como shift, control e alt) ó Sistema Operativo, aínda se eventúan en un script.
-Deste xeito, se utilizas alt nun xesto, premendo esta tecla a combinación poderá activar a barra de menú, tanto como executar o script.
-Polo tanto, probablemente é mellor só utilizar Shift, control e a tecla modificadora NVDA como modificadores.
+++ Persoalización Avanzada da Pronunciación de Símbolos ++
+É posible persoalizar a pronunciación da pontoación e outros símbolos máis aló do que pode facerse utilizando o [diálogo Pronunciación de Pontoación e símbolos #SymbolPronunciation].
+Por exemplo, podes especificar se o símbolo dibuxado debería enviarse ó sintetizador (ex. para causar unha pausa ou cambio na entoación) e podes engadir símbolos persoalizados. 
 
-++ Advanced Customization of Symbol Pronunciation ++
-It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
-For example, you can specify whether the raw symbol should be sent to the synthesizer (e.g. to cause a pause or change in inflection) and you can add custom symbols.
-
-To do this, you must edit the symbol pronunciation information file in your NVDA user configuration directory.
-The file is called symbols-xx.dic, where xx is the language code.
-The format of this file is documented in the Symbol Pronunciation section of the NVDA Developer Guide, which is available from [the Development section of the NVDA web site NVDA_URLwiki/Development].
-However, it is not possible for users to define complex symbols.
+Para facer esto, debes editar o ficheiro de información de pronunciación de símbolos no teu directorio de configuración de usuario do NVDA.
+O ficheiro chámase symbols-xx.dic, onde xx é o código de lingua.
+O formato de este ficheiro documentóuse na sección Symbol Pronunciation da Guía de Desenrolo do NVDA, que está dispoñible dende [A sección do desenrolador do sitio Web do NVDA NVDA_URLwiki/Development].
+Polo tanto, non é posible para os usuarios definir símbolos comprexos. 
 
 + Información Adicional +
 Se requires información adicional ou asistencia referente ó NVDA, por favor visita o sitio Web de NVDA en NVDA_URL.

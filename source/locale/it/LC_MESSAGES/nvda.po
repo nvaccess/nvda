@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 19:09+1000\n"
-"PO-Revision-Date: 2013-08-19 08:29+0100\n"
+"POT-Creation-Date: 2013-09-17 19:08+1000\n"
+"PO-Revision-Date: 2013-09-30 09:43+0100\n"
 "Last-Translator: Simone Dal Maso <simone.dalmaso@juvox.it>\n"
 "Language-Team: Italian NVDA Community <info@nvda.it>\n"
 "Language: it_IT\n"
@@ -1526,7 +1526,8 @@ msgid "subscript"
 msgstr "pedice"
 
 #. Translators: Describes style of text.
-#: controlTypes.py:440 NVDAObjects\window\winword.py:126
+#. Translators: a Microsoft Word revision type (style change)
+#: controlTypes.py:440 NVDAObjects\window\winword.py:134
 msgid "style"
 msgstr "Stile"
 
@@ -1731,7 +1732,7 @@ msgstr "contiene una descrizione"
 #. Translators: a state that denotes that an object is pinned in its current location
 #: controlTypes.py:519
 msgid "pinned"
-msgstr ""
+msgstr "Fisso"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes.py:524
@@ -3263,14 +3264,21 @@ msgstr "Desktop"
 msgid "laptop"
 msgstr "Laptop"
 
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
+#. Translators: Reported for an unknown key press.
+#. %s will be replaced with the key code.
+#: keyboardHandler.py:354
+#, python-format
+msgid "unknown %s"
+msgstr "%s sconosciuto"
+
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
 msgid "on"
 msgstr "Attivato"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:813
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:813
 #: gui\settingsDialogs.py:1174
 msgid "off"
 msgstr "Disattivato"
@@ -3493,15 +3501,14 @@ msgstr "Riga %s"
 
 #. Translators: Reported when text is revised.
 #: speech.py:1071
-#, fuzzy, python-format
+#, python-format
 msgid "revised %s"
-msgstr "cursore di controllo"
+msgstr "%s revisionato"
 
 #. Translators: Reported when text is not revised.
 #: speech.py:1073
-#, fuzzy
 msgid "unrevised"
-msgstr "cursore di controllo"
+msgstr "Non revisionato"
 
 #. Translators: Reported when text is not bolded.
 #: speech.py:1082
@@ -5822,9 +5829,8 @@ msgstr "Leggi i &colori"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui\settingsDialogs.py:1013
-#, fuzzy
 msgid "Report &editor revisions"
-msgstr "Leggi le &intestazioni"
+msgstr "Leggi le revisioni"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5852,7 +5858,7 @@ msgstr "Leggi i numeri di &riga"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1039
 msgid "Report l&ine indentation"
 msgstr "Annuncia r&ientri riga"
@@ -6905,148 +6911,150 @@ msgstr "Con formula"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} fino a {lastAddress} {lastContent}"
 
-#: NVDAObjects\window\winword.py:119
-#, fuzzy
-msgid "insertion"
-msgstr "Sezione"
-
+#. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:120
-#, fuzzy
-msgid "deletion"
-msgstr "Cancella"
+msgid "insertion"
+msgstr "Inserimento"
 
-#: NVDAObjects\window\winword.py:121
-#, fuzzy
-msgid "property"
-msgstr "Pagina proprieta'"
-
+#. Translators: a Microsoft Word revision type (deleted content)
 #: NVDAObjects\window\winword.py:122
-#, fuzzy
-msgid "paragraph number"
-msgstr "Paragrafo"
+msgid "deletion"
+msgstr "Cancellazione"
 
-#: NVDAObjects\window\winword.py:123
-#, fuzzy
-msgid "display field"
-msgstr "Scorrimento display"
-
+#. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 #: NVDAObjects\window\winword.py:124
-msgid "reconcile"
-msgstr ""
+msgid "property"
+msgstr "Proprietà"
 
-#: NVDAObjects\window\winword.py:125
-msgid "conflict"
-msgstr ""
+#. Translators: a Microsoft Word revision type (changed paragraph number)
+#: NVDAObjects\window\winword.py:126
+msgid "paragraph number"
+msgstr "Numero paragrafo"
 
-#: NVDAObjects\window\winword.py:127
-#, fuzzy
-msgid "replace"
-msgstr "Voce in sostituzione"
-
+#. Translators: a Microsoft Word revision type (display field)
 #: NVDAObjects\window\winword.py:128
-#, fuzzy
-msgid "paragraph property"
-msgstr "Paragrafo"
+msgid "display field"
+msgstr "Campo visualizzato"
 
-#: NVDAObjects\window\winword.py:129
-#, fuzzy
-msgid "table property"
-msgstr "Piede della tabella"
-
+#. Translators: a Microsoft Word revision type (reconcile)
 #: NVDAObjects\window\winword.py:130
-#, fuzzy
-msgid "section property"
-msgstr "Selezione cancellata"
+msgid "reconcile"
+msgstr "Risoluzione"
 
-#: NVDAObjects\window\winword.py:131
-msgid "style definition"
-msgstr ""
-
+#. Translators: a Microsoft Word revision type (conflicting revision)
 #: NVDAObjects\window\winword.py:132
-#, fuzzy
-msgid "moved from"
-msgstr "Sposta il focus"
+msgid "conflict"
+msgstr "Conflitto"
 
-#: NVDAObjects\window\winword.py:133
-#, fuzzy
-msgid "moved to"
-msgstr "Vai al focus"
-
-#: NVDAObjects\window\winword.py:134
-#, fuzzy
-msgid "cell insertion"
-msgstr "&Accelerazione"
-
-#: NVDAObjects\window\winword.py:135
-#, fuzzy
-msgid "cell deletion"
-msgstr "Nessuna selezione"
-
+#. Translators: a Microsoft Word revision type (replaced content)
 #: NVDAObjects\window\winword.py:136
-msgid "cell merge"
-msgstr ""
+msgid "replace"
+msgstr "Sostituire"
 
+#. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
+#: NVDAObjects\window\winword.py:138
+msgid "paragraph property"
+msgstr "Proprietà paragrafo"
+
+#. Translators: a Microsoft Word revision type (table)
 #: NVDAObjects\window\winword.py:140
+msgid "table property"
+msgstr "Proprietà tabella"
+
+#. Translators: a Microsoft Word revision type (section property)
+#: NVDAObjects\window\winword.py:142
+msgid "section property"
+msgstr "Proprietà sezione"
+
+#. Translators: a Microsoft Word revision type (style definition)
+#: NVDAObjects\window\winword.py:144
+msgid "style definition"
+msgstr "Definizione stile"
+
+#. Translators: a Microsoft Word revision type (moved from)
+#: NVDAObjects\window\winword.py:146
+msgid "moved from"
+msgstr "Spostato da"
+
+#. Translators: a Microsoft Word revision type (moved to)
+#: NVDAObjects\window\winword.py:148
+msgid "moved to"
+msgstr "Spostato a"
+
+#. Translators: a Microsoft Word revision type (inserted table cell)
+#: NVDAObjects\window\winword.py:150
+msgid "cell insertion"
+msgstr "Inserimento cella"
+
+#. Translators: a Microsoft Word revision type (deleted table cell)
+#: NVDAObjects\window\winword.py:152
+msgid "cell deletion"
+msgstr "Cancellazione cella"
+
+#. Translators: a Microsoft Word revision type (merged table cells)
+#: NVDAObjects\window\winword.py:154
+msgid "cell merge"
+msgstr "Unione cella"
+
+#: NVDAObjects\window\winword.py:158
 msgid "Comments"
 msgstr "Commenti"
 
-#: NVDAObjects\window\winword.py:141
+#: NVDAObjects\window\winword.py:159
 msgid "Endnotes"
 msgstr "Note a fine testo"
 
-#: NVDAObjects\window\winword.py:142
+#: NVDAObjects\window\winword.py:160
 msgid "Even pages footer"
 msgstr "Piè di pagine pari"
 
-#: NVDAObjects\window\winword.py:143
+#: NVDAObjects\window\winword.py:161
 msgid "Even pages header"
 msgstr "Intestazione pagine pari"
 
-#: NVDAObjects\window\winword.py:144
+#: NVDAObjects\window\winword.py:162
 msgid "First page footer"
 msgstr "Piè di prima pagina"
 
-#: NVDAObjects\window\winword.py:145
+#: NVDAObjects\window\winword.py:163
 msgid "First page header"
 msgstr "Intestazione prima pagina"
 
-#: NVDAObjects\window\winword.py:146
+#: NVDAObjects\window\winword.py:164
 msgid "Footnotes"
 msgstr "Note a piè di pagina"
 
-#: NVDAObjects\window\winword.py:147
+#: NVDAObjects\window\winword.py:165
 msgid "Primary footer"
 msgstr "Piè di pagina principale"
 
-#: NVDAObjects\window\winword.py:148
+#: NVDAObjects\window\winword.py:166
 msgid "Primary header"
 msgstr "Intestazione principale"
 
-#: NVDAObjects\window\winword.py:149
+#: NVDAObjects\window\winword.py:167
 msgid "Text frame"
 msgstr "Frame testo"
 
-#: NVDAObjects\window\winword.py:348
-#, fuzzy
+#: NVDAObjects\window\winword.py:366
 msgid "unknown author"
-msgstr "Colore sconosciuto"
+msgstr "Autore sconosciuto"
 
-#: NVDAObjects\window\winword.py:349
-#, fuzzy
+#: NVDAObjects\window\winword.py:367
 msgid "unknown date"
-msgstr "Sconosciuto"
+msgstr "Data sconosciuta"
 
-#: NVDAObjects\window\winword.py:350
+#: NVDAObjects\window\winword.py:368
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr ""
+msgstr "{revisionType} di {revisionAuthor} in data {revisionDate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:542 NVDAObjects\window\winword.py:552
+#: NVDAObjects\window\winword.py:560 NVDAObjects\window\winword.py:570
 msgid "Not in table"
 msgstr "Non in una tabella"
 
-#: NVDAObjects\window\winword.py:575
+#: NVDAObjects\window\winword.py:593
 msgid "Edge of table"
 msgstr "Bordo della tabella"
 

@@ -7,15 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 19:09+1000\n"
-"PO-Revision-Date: 2013-09-15 11:46+0100\n"
-"Last-Translator: Bart Simons <bart@bartsimons.be>\n"
-"Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/projects/p/nvda/language/nl/)\n"
+"POT-Creation-Date: 2013-09-17 19:08+1000\n"
+"PO-Revision-Date: 2013-09-27 08:32+0100\n"
+"Last-Translator: Leonard de Ruijter <mail@leonardderuijter.nl>\n"
+"Language-Team: Dutch <nvda-nl@googlegroups.com> (http://www.transifex.net/"
+"projects/p/nvda/language/nl/)\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
 #: IAccessibleHandler.py:679
@@ -43,8 +45,7 @@ msgid "Half shaped mode"
 msgstr "Halve xmodus"
 
 #. Translators: For Japanese character input: half-shaped (single-byte) alpha numeric (roman/english) mode.
-#: NVDAHelper.py:228
-#: NVDAHelper.py:238
+#: NVDAHelper.py:228 NVDAHelper.py:238
 msgid "half alphanumeric"
 msgstr "half alfanumeriek"
 
@@ -54,8 +55,7 @@ msgid "half katakana"
 msgstr "half katakana"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
-#: NVDAHelper.py:232
-#: NVDAHelper.py:242
+#: NVDAHelper.py:232 NVDAHelper.py:242
 msgid "alphanumeric"
 msgstr "alfanumeriek"
 
@@ -147,8 +147,7 @@ msgstr "zoeken"
 
 #. Translators: Reported for the form landmark, normally found on web pages.
 #. Translators: Identifies a form (controls such as edit boxes, combo boxes and so on).
-#: aria.py:81
-#: controlTypes.py:268
+#: aria.py:81 controlTypes.py:268
 msgid "form"
 msgstr "formulier"
 
@@ -282,7 +281,7 @@ msgstr "Spaans graad 1"
 #. braille settings dialog.
 #: braille.py:93
 msgid "Estonian grade 0"
-msgstr "Estisch graad 0"
+msgstr "Ests graad 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -365,7 +364,7 @@ msgstr "Hongaars graad 1"
 #. braille settings dialog.
 #: braille.py:135
 msgid "Icelandic 8 dot computer braille"
-msgstr "Ijslands 8 punt computerbraille"
+msgstr "IJslands 8 punt computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -685,8 +684,7 @@ msgstr "blnk"
 #. Separate strings have now been defined for commonly negated states (e.g. not selected and not checked),
 #. but this still might be used in some other cases.
 #. %s will be replaced with the negated state.
-#: braille.py:467
-#: speech.py:821
+#: braille.py:467 speech.py:821
 #, python-format
 msgid "not %s"
 msgstr "niet %s"
@@ -697,8 +695,7 @@ msgstr "niet %s"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#: braille.py:483
-#: speech.py:832
+#: braille.py:483 speech.py:832
 msgid "{number} of {total}"
 msgstr "{number} van {total}"
 
@@ -752,8 +749,7 @@ msgstr "punt"
 
 #. Translators: Reported when braille space is pressed in input help mode.
 #. Translators: This is the name of a key on the keyboard.
-#: brailleInput.py:99
-#: keyLabels.py:63
+#: brailleInput.py:99 keyLabels.py:63
 msgid "space"
 msgstr "spatie"
 
@@ -884,13 +880,8 @@ msgid "orange"
 msgstr "oranje"
 
 #. Translators: This is spoken to indicate what has been selected. for example 'selected hello world'
-#: compoundDocuments.py:404
-#: globalCommands.py:141
-#: speech.py:323
-#: speech.py:515
-#: speech.py:531
-#: appModules\powerpnt.py:758
-#: virtualBuffers\__init__.py:741
+#: compoundDocuments.py:404 globalCommands.py:141 speech.py:323 speech.py:515
+#: speech.py:531 appModules\powerpnt.py:758 virtualBuffers\__init__.py:741
 #, python-format
 msgid "selected %s"
 msgstr "%s geselecteerd"
@@ -948,17 +939,16 @@ msgstr "knop"
 #. Translators: Text used to identify menu bar of a program.
 #: controlTypes.py:210
 msgid "menu bar"
-msgstr "menu balk"
+msgstr "menubalk"
 
 #. Translators: Used to identify a menu item such as an item in file menu.
 #: controlTypes.py:212
 msgid "menu item"
-msgstr "menu item"
+msgstr "menu-item"
 
 #. Translators: The word used for menus such as edit menu.
 #. Translators: Identifies a menu such as file menu.
-#: controlTypes.py:214
-#: controlTypes.py:415
+#: controlTypes.py:214 controlTypes.py:415
 msgid "menu"
 msgstr "menu"
 
@@ -975,7 +965,7 @@ msgstr "lijst"
 #. Translators: Used to identify a list item such as email list items.
 #: controlTypes.py:220
 msgid "list item"
-msgstr "lijst item"
+msgstr "lijstitem"
 
 #. Translators: The word used to identify graphics such as webpage graphics.
 #: controlTypes.py:222
@@ -985,7 +975,7 @@ msgstr "afbeelding"
 #. Translators: Used to identify help balloon (a circular window with helpful text such as notification text).
 #: controlTypes.py:224
 msgid "help balloon"
-msgstr "help ballon"
+msgstr "helpballon"
 
 #. Translators: Used to identify a tooltip (a small window with additional text about selected item such as file information).
 #: controlTypes.py:226
@@ -993,8 +983,7 @@ msgid "tool tip"
 msgstr "flitsbericht"
 
 #. Translators: Identifies a link in webpage documents.
-#: controlTypes.py:228
-#: speech.py:1151
+#: controlTypes.py:228 speech.py:1151
 msgid "link"
 msgstr "link"
 
@@ -1006,7 +995,7 @@ msgstr "boomstructuur"
 #. Translators: Identifies a tree view item.
 #: controlTypes.py:232
 msgid "tree view item"
-msgstr "boomstructuur item"
+msgstr "boomstructuuritem"
 
 #. Translators: The word presented for tabs in a tab enabled window.
 #: controlTypes.py:234
@@ -1067,7 +1056,7 @@ msgstr "frame"
 #. Translators: Identifies a tool bar.
 #: controlTypes.py:256
 msgid "tool bar"
-msgstr "knoppenbalk"
+msgstr "werkbalk"
 
 #. Translators: Identifies a column header in tables and spreadsheets.
 #: controlTypes.py:258
@@ -1082,7 +1071,7 @@ msgstr "rijhoofding"
 #. Translators: Identifies a drop down button (a button that, when clicked, opens a menu of its own).
 #: controlTypes.py:262
 msgid "drop down button"
-msgstr "uitschuif knop"
+msgstr "uitschuifknop"
 
 #. Translators: Identifies an element.
 #: controlTypes.py:264
@@ -1130,8 +1119,7 @@ msgid "heading 6"
 msgstr "kop niveau 6"
 
 #. Translators: Identifies a paragraph (a group of text surrounded by blank lines).
-#: controlTypes.py:284
-#: textInfos\__init__.py:202
+#: controlTypes.py:284 textInfos\__init__.py:202
 msgid "paragraph"
 msgstr "paragraaf"
 
@@ -1185,7 +1173,7 @@ msgstr "groepering"
 #. Translators: Identifies a property page such as drive properties dialog.
 #: controlTypes.py:306
 msgid "property page"
-msgstr "eigenschappen blad"
+msgstr "eigenschappenblad"
 
 #. Translators: Identifies a canvas element on webpages (a box with some background color with some text drawn on the box, like a canvas).
 #: controlTypes.py:308
@@ -1200,12 +1188,12 @@ msgstr "bijschrift"
 #. Translators: Identifies a check menu item (a menu item with a checkmark as part of the menu item's name).
 #: controlTypes.py:312
 msgid "check menu item"
-msgstr "selecteer menu item"
+msgstr "selecteer menu-item"
 
 #. Translators: Identifies a data edit field.
 #: controlTypes.py:314
 msgid "date edit"
-msgstr "datum invoerveld"
+msgstr "datuminvoerveld"
 
 #. Translators: Identifies an icon.
 #: controlTypes.py:316
@@ -1218,8 +1206,7 @@ msgid "directory pane"
 msgstr "mappenlijst"
 
 #. Translators: Identifies an embedded object such as flash content on webpages.
-#: controlTypes.py:320
-#: NVDAObjects\window\edit.py:625
+#: controlTypes.py:320 NVDAObjects\window\edit.py:625
 msgid "embedded object"
 msgstr "ingebed object"
 
@@ -1231,7 +1218,7 @@ msgstr "eindnoot"
 #. Translators: Identifies a footer (usually text).
 #: controlTypes.py:324
 msgid "footer"
-msgstr "voet tekst"
+msgstr "voettekst"
 
 #. Translators: Identifies a foot note (text at the end of a passage or used for anotations).
 #: controlTypes.py:326
@@ -1247,7 +1234,7 @@ msgstr "glas venster"
 #. Translators: Identifies a header (usually text at top of documents or on tops of pages).
 #: controlTypes.py:331
 msgid "header"
-msgstr "kop"
+msgstr "koptekst"
 
 #. Translators: Identifies an image map (a type of graphical link).
 #: controlTypes.py:333
@@ -1257,7 +1244,7 @@ msgstr "afbeeldingen map"
 #. Translators: Identifies an input window.
 #: controlTypes.py:335
 msgid "input window"
-msgstr "invoer venster"
+msgstr "invoervenster"
 
 #. Translators: Identifies a label.
 #: controlTypes.py:337
@@ -1277,7 +1264,7 @@ msgstr "pagina"
 #. Translators: Identifies a radio menu item.
 #: controlTypes.py:343
 msgid "radio menu item"
-msgstr "keuzerondjes menu item"
+msgstr "keuzerondjes menu-item"
 
 #: controlTypes.py:344
 msgid "layered pane"
@@ -1348,7 +1335,7 @@ msgstr "Ontkoppel van menu"
 #. Translators: Identifies a text frame (a frame window which contains text).
 #: controlTypes.py:372
 msgid "text frame"
-msgstr "tekst frame"
+msgstr "tekstframe"
 
 #. Translators: Identifies a toggle button (a button used to toggle something).
 #: controlTypes.py:374
@@ -1363,8 +1350,7 @@ msgstr "begrenzing"
 msgid "caret"
 msgstr "dakje"
 
-#: controlTypes.py:377
-#: textInfos\__init__.py:199
+#: controlTypes.py:377 textInfos\__init__.py:199
 msgid "character"
 msgstr "karakter"
 
@@ -1386,7 +1372,7 @@ msgstr "draaiknop"
 
 #: controlTypes.py:382
 msgid "drop list"
-msgstr "uitklap lijst"
+msgstr "uitklaplijst"
 
 #: controlTypes.py:383
 msgid "split button"
@@ -1394,7 +1380,7 @@ msgstr "splitsknop"
 
 #: controlTypes.py:384
 msgid "menu button"
-msgstr "menu knop"
+msgstr "menuknop"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 #: controlTypes.py:386
@@ -1413,7 +1399,7 @@ msgstr "greep"
 #. Translators: Identifies a hot key field (a field where one can enter a hot key for something, such as assigning shortcut for icons on the desktop).
 #: controlTypes.py:391
 msgid "hot key field"
-msgstr "sneltoets veld"
+msgstr "sneltoetsveld"
 
 #: controlTypes.py:392
 msgid "indicator"
@@ -1442,7 +1428,7 @@ msgstr "boomstructuurknop"
 #. Translators: Identifies an IP address (an IP address field element).
 #: controlTypes.py:402
 msgid "IP address"
-msgstr "IP adres"
+msgstr "IP-adres"
 
 #. Translators: Identifies a desktop icon (the icons on the desktop such as computer and various shortcuts for programs).
 #: controlTypes.py:404
@@ -1451,8 +1437,7 @@ msgstr "bureaublad icoon"
 
 #. Translators: Identifies an alert message such as file download alert in Internet explorer 9 and above.
 #. Translators: Identifies an alert window or bar (usually on Internet Explorer 9 and above for alerts such as file downloads or pop-up blocker).
-#: controlTypes.py:406
-#: controlTypes.py:446
+#: controlTypes.py:406 controlTypes.py:446
 msgid "alert"
 msgstr "bericht"
 
@@ -1471,11 +1456,11 @@ msgstr "optie venster"
 
 #: controlTypes.py:411
 msgid "color chooser"
-msgstr "kleuren kiezer"
+msgstr "kleurenkiezer"
 
 #: controlTypes.py:412
 msgid "file chooser"
-msgstr "bestand kiezer"
+msgstr "bestandenkiezer"
 
 #: controlTypes.py:413
 msgid "filler"
@@ -1483,19 +1468,18 @@ msgstr "opvuller"
 
 #: controlTypes.py:416
 msgid "panel"
-msgstr "panneel"
+msgstr "paneel"
 
 #. Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 #: controlTypes.py:418
 msgid "password edit"
-msgstr "wachtwoord invoerveld"
+msgstr "wachtwoordinvoerveld"
 
 #: controlTypes.py:419
 msgid "font chooser"
-msgstr "lettertype kiezer"
+msgstr "lettertypekiezer"
 
-#: controlTypes.py:420
-#: textInfos\__init__.py:201
+#: controlTypes.py:420 textInfos\__init__.py:201
 msgid "line"
 msgstr "lijn"
 
@@ -1511,8 +1495,7 @@ msgstr "grootte lettertype"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is bolded.
-#: controlTypes.py:426
-#: speech.py:1080
+#: controlTypes.py:426 speech.py:1080
 msgid "bold"
 msgstr "vet"
 
@@ -1529,30 +1512,28 @@ msgstr "onderstrepen"
 #. Translators: Describes text formatting.
 #: controlTypes.py:432
 msgid "foreground color"
-msgstr "voorgrond kleur"
+msgstr "voorgrondkleur"
 
 #. Translators: Describes text formatting.
 #: controlTypes.py:434
 msgid "background color"
-msgstr "achtergrond kleur"
+msgstr "achtergrondkleur"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for superscript text.
-#: controlTypes.py:436
-#: speech.py:1116
+#: controlTypes.py:436 speech.py:1116
 msgid "superscript"
 msgstr "superscript"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported for subscript text.
-#: controlTypes.py:438
-#: speech.py:1119
+#: controlTypes.py:438 speech.py:1119
 msgid "subscript"
 msgstr "subscript"
 
 #. Translators: Describes style of text.
-#: controlTypes.py:440
-#: NVDAObjects\window\winword.py:126
+#. Translators: a Microsoft Word revision type (style change)
+#: controlTypes.py:440 NVDAObjects\window\winword.py:134
 msgid "style"
 msgstr "stijl"
 
@@ -1568,15 +1549,15 @@ msgstr "uitlijning"
 
 #: controlTypes.py:447
 msgid "data grid"
-msgstr "data raster"
+msgstr "dataraster"
 
 #: controlTypes.py:448
 msgid "data item"
-msgstr "data item"
+msgstr "data-item"
 
 #: controlTypes.py:449
 msgid "header item"
-msgstr "header item"
+msgstr "headeritem"
 
 #: controlTypes.py:450
 msgid "thumb control"
@@ -1594,7 +1575,7 @@ msgstr "niet beschikbaar"
 #. Translators: This is presented when a control has focus.
 #: controlTypes.py:458
 msgid "focused"
-msgstr "gefocuseerd"
+msgstr "gefocust"
 
 #. Translators: This is presented when the control is selected.
 #: controlTypes.py:460
@@ -1619,7 +1600,7 @@ msgstr "ingeschakeld"
 #. Translators: This is presented when a three state check box is half checked.
 #: controlTypes.py:468
 msgid "half checked"
-msgstr "gedeeltelijk aangekruist"
+msgstr "gedeeltelijk ingeschakeld"
 
 #. Translators: This is presented when the control is a read-only control such as read-only edit box.
 #: controlTypes.py:470
@@ -1708,7 +1689,7 @@ msgstr "selecteerbaar"
 #. Translators: Presented when a control can be moved to using system focus.
 #: controlTypes.py:503
 msgid "focusable"
-msgstr "focuseerbaar"
+msgstr "focusbaar"
 
 #. Translators: Presented when a control allows clicking via mouse (mostly presented on web controls).
 #: controlTypes.py:505
@@ -1752,12 +1733,12 @@ msgstr "aflopend gesorteerd"
 #. Translators: a state that denotes that an object (usually a graphic) has a long description.
 #: controlTypes.py:517
 msgid "has long description"
-msgstr "Heeft een uitgebreide beschrijving"
+msgstr "bevat uitgebreide beschrijving"
 
 #. Translators: a state that denotes that an object is pinned in its current location
 #: controlTypes.py:519
 msgid "pinned"
-msgstr ""
+msgstr "vastgemaakt"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes.py:524
@@ -1817,23 +1798,30 @@ msgstr "zoek een stuk tekst vanaf de huidige cursor positie"
 
 #. Translators: Input help message for find next command.
 #: cursorManager.py:118
-msgid "find the next occurrence of the previously entered text string from the current cursor's position"
-msgstr "zoek het volgende voorkomen van de eerder ingevoerde zoekterm, vanaf de huidige cursorpositie"
+msgid ""
+"find the next occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"zoek het volgende voorkomen van de eerder ingevoerde zoekterm, vanaf de "
+"huidige cursorpositie"
 
 #. Translators: Input help message for find previous command.
 #: cursorManager.py:126
-msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
-msgstr "Zoek naar het vorige voorkomen van het eerder ingevoerde stuk tekst, vanaf de huidige cursorpositie"
+msgid ""
+"find the previous occurrence of the previously entered text string from the "
+"current cursor's position"
+msgstr ""
+"Zoek naar het vorige voorkomen van het eerder ingevoerde stuk tekst, vanaf "
+"de huidige cursorpositie"
 
-#: cursorManager.py:253
-#: globalCommands.py:139
+#: cursorManager.py:253 globalCommands.py:139
 msgid "no selection"
 msgstr "geen selectie"
 
 #. Translators: Message presented when text has been copied to clipboard.
 #: cursorManager.py:257
 msgid "copied to clipboard"
-msgstr "naar het klembord gekopiëerd"
+msgstr "naar het klembord gekopieerd"
 
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:47
@@ -1847,8 +1835,13 @@ msgstr "Invoerhulp uit"
 
 #. Translators: Input help mode message for toggle input help command.
 #: globalCommands.py:53
-msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Schakelt de invoerhulp in en uit. Wanneer de hulp ingeschakeld is, zal elke ingedrukte toets (indien toegewezen) resulteren in de weergave van het hieraan verbonden script."
+msgid ""
+"Turns input help on or off. When on, any input such as pressing a key on the "
+"keyboard will tell you what script is associated with that input, if any."
+msgstr ""
+"Schakelt de invoerhulp in en uit. Wanneer de hulp ingeschakeld is, zal elke "
+"ingedrukte toets (indien toegewezen) resulteren in de weergave van het "
+"hieraan verbonden script."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:61
@@ -1867,8 +1860,12 @@ msgstr "Schakelt slaapmodus aan of uit voor de actieve applicatie."
 
 #. Translators: Input help mode message for report current line command.
 #: globalCommands.py:87
-msgid "Reports the current line under the application cursor. Pressing this key twice will spell the current line"
-msgstr "Geeft de regel weer waarop de cursor zich bevindt. Bij dubbeldruk wordt de regel gespeld."
+msgid ""
+"Reports the current line under the application cursor. Pressing this key "
+"twice will spell the current line"
+msgstr ""
+"Geeft de regel weer waarop de cursor zich bevindt. Bij dubbeldruk wordt de "
+"regel gespeld."
 
 #. Translators: Reported when left mouse button is clicked.
 #: globalCommands.py:91
@@ -1878,7 +1875,9 @@ msgstr "linker klik"
 #. Translators: Input help mode message for left mouse click command.
 #: globalCommands.py:95
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Klikt een keer met de linker muisknop op de huidige positie van de muisaanwijzer."
+msgstr ""
+"Klikt een keer met de linker muisknop op de huidige positie van de "
+"muisaanwijzer."
 
 #. Translators: Reported when right mouse button is clicked.
 #: globalCommands.py:99
@@ -1888,7 +1887,9 @@ msgstr "rechter klik"
 #. Translators: Input help mode message for right mouse click command.
 #: globalCommands.py:103
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "Klikt een keer met de rechter muisknop op de huidige positie van de muisaanwijzer."
+msgstr ""
+"Klikt een keer met de rechter muisknop op de huidige positie van de "
+"muisaanwijzer."
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 #: globalCommands.py:108
@@ -1922,18 +1923,24 @@ msgstr "Vasthouden of loslaten van de rechter muisknop"
 
 #. Translators: Input help mode message for report current selection command.
 #: globalCommands.py:143
-msgid "Announces the current selection in edit controls and documents. If there is no selection it says so."
-msgstr "Leest de huidige selectie voor binnen invoervelden en documenten. Als er niets is geselecteerd, dan wordt dit gemeld."
+msgid ""
+"Announces the current selection in edit controls and documents. If there is "
+"no selection it says so."
+msgstr ""
+"Leest de huidige selectie voor binnen invoervelden en documenten. Als er "
+"niets is geselecteerd, dan wordt dit gemeld."
 
 #. Translators: Input help mode message for report date and time command.
 #: globalCommands.py:152
-msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "Eén keer drukken, geeft de huidige tijd weer. Twee keer drukken, geeft de huidige datum weer."
+msgid ""
+"If pressed once, reports the current time. If pressed twice, reports the "
+"current date"
+msgstr ""
+"Eén keer drukken, geeft de huidige tijd weer. Twee keer drukken, geeft de "
+"huidige datum weer."
 
 #. Translators: Reported when there are no settings to configure in synth settings ring (example: when there is no setting for language).
-#: globalCommands.py:158
-#: globalCommands.py:168
-#: globalCommands.py:178
+#: globalCommands.py:158 globalCommands.py:168 globalCommands.py:178
 #: globalCommands.py:188
 msgid "No settings"
 msgstr "Geen instellingen"
@@ -2000,7 +2007,9 @@ msgstr "commandotoetsen uitspreken"
 
 #. Translators: Input help mode message for toggle speak command keys command.
 #: globalCommands.py:232
-msgid "Toggles on and off the speaking of typed keys, that are not specifically characters"
+msgid ""
+"Toggles on and off the speaking of typed keys, that are not specifically "
+"characters"
 msgstr "In en uitschakelen van het uitspreken van commandotoetsen"
 
 #. Translators: Reported when the user cycles through speech symbol levels
@@ -2013,8 +2022,11 @@ msgstr "symboolniveau %s"
 
 #. Translators: Input help mode message for cycle speech symbol level command.
 #: globalCommands.py:248
-msgid "Cycles through speech symbol levels which determine what symbols are spoken"
-msgstr "Loopt door de spraak symboolniveau's die bepalen welke symbolen worden uitgesproken"
+msgid ""
+"Cycles through speech symbol levels which determine what symbols are spoken"
+msgstr ""
+"Loopt door de spraak symboolniveau's die bepalen welke symbolen worden "
+"uitgesproken"
 
 #. Translators: Reported when the object has no location for the mouse to move to it.
 #: globalCommands.py:264
@@ -2033,8 +2045,12 @@ msgstr "Verplaats navigator object naar muisaanwijzer"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 #: globalCommands.py:280
-msgid "Sets the navigator object to the current object under the mouse pointer and speaks it"
-msgstr "Verplaatst het navigator object naar het object dat zich onder de muisaanwijzer bevindt, en spreekt he tuit"
+msgid ""
+"Sets the navigator object to the current object under the mouse pointer and "
+"speaks it"
+msgstr ""
+"Verplaatst het navigator object naar het object dat zich onder de "
+"muisaanwijzer bevindt, en spreekt het uit"
 
 #. Translators: reported when there are no other available review modes for this object
 #: globalCommands.py:291
@@ -2042,8 +2058,12 @@ msgid "No next review mode"
 msgstr "Geen volgende leesoverzichtmodus"
 
 #: globalCommands.py:292
-msgid "Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
-msgstr "Schakelt naar de volgende leesoverzichtmodus (b.v. document, object of scherm) en positioneert de leescursor op de locatie van het navigator object"
+msgid ""
+"Switches to the next review mode (e.g. object, document or screen) and "
+"positions the review position at the point of the navigator object"
+msgstr ""
+"Schakelt naar de volgende leesoverzichtmodus (b.v. document, object of "
+"scherm) en positioneert de leescursor op de locatie van het navigator object"
 
 #. Translators: reported when there are no  other available review modes for this object
 #: globalCommands.py:303
@@ -2051,31 +2071,36 @@ msgid "No previous review mode"
 msgstr "Geen vorige leesoverzichtmodus"
 
 #: globalCommands.py:304
-msgid "Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object"
-msgstr "Schakelt naar de vorige leesoverzichtmodus (b.v. document, object of scherm) en positioneert de leescursor op de locatie van het huidige navigator object"
+msgid ""
+"Switches to the previous review mode (e.g. object, document or screen) and "
+"positions the review position at the point of the navigator object"
+msgstr ""
+"Schakelt naar de vorige leesoverzichtmodus (b.v. document, object of scherm) "
+"en positioneert de leescursor op de locatie van het huidige navigator object"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
-#: globalCommands.py:311
-#: globalCommands.py:347
-#: globalCommands.py:408
-#: globalCommands.py:424
-#: globalCommands.py:440
-#: globalCommands.py:456
+#: globalCommands.py:311 globalCommands.py:347 globalCommands.py:408
+#: globalCommands.py:424 globalCommands.py:440 globalCommands.py:456
 msgid "no navigator object"
 msgstr "geen navigator object"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
-#: globalCommands.py:338
-#: globalCommands.py:853
+#: globalCommands.py:338 globalCommands.py:853
 #, python-format
 msgid "%s copied to clipboard"
-msgstr "%s naar het klembord gekopiëerd"
+msgstr "%s naar het klembord gekopieerd"
 
 #. Translators: Input help mode message for report current navigator object command.
 #: globalCommands.py:342
-msgid "Reports the current navigator object. Pressing twice spells this information,and pressing three times Copies name and value of this  object to the clipboard"
-msgstr "Geeft het huidige navigator object weer. Bij tweemaal drukken, wordt deze informatie gespeld. Drie keer drukken kopieert de naam en de waarde van dit object naar het klembord."
+msgid ""
+"Reports the current navigator object. Pressing twice spells this information,"
+"and pressing three times Copies name and value of this  object to the "
+"clipboard"
+msgstr ""
+"Geeft het huidige navigator object weer. Bij tweemaal drukken, wordt deze "
+"informatie gespeld. Drie keer drukken kopieert de naam en de waarde van dit "
+"object naar het klembord."
 
 #. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
 #: globalCommands.py:351
@@ -2089,13 +2114,22 @@ msgstr "Geen informatie over de locatie van het scherm"
 
 #. Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 #: globalCommands.py:363
-msgid "Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen"
-msgstr "Object is als volgt gepositioneerd: {left:.1f} percent van de linkerrand van het scherm, {top:.1f} percent van de bovenrand van het scherm, breedte is {width:.1f} percent van het scherm, hoogte is {height:.1f} percent van het scherm."
+msgid ""
+"Object edges positioned {left:.1f} per cent from left edge of screen, "
+"{top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of "
+"screen, height is {height:.1f} per cent of screen"
+msgstr ""
+"Object is als volgt gepositioneerd: {left:.1f} percent van de linkerrand van "
+"het scherm, {top:.1f} percent van de bovenrand van het scherm, breedte is "
+"{width:.1f} percent van het scherm, hoogte is {height:.1f} percent van het "
+"scherm."
 
 #. Translators: Input help mode message for report object dimensions command.
 #: globalCommands.py:365
 msgid "Reports the hight, width and position of the current navigator object"
-msgstr "Geeft de hoogte, de breette en de positie weer van het huidige navigator object"
+msgstr ""
+"Geeft de hoogte, de breette en de positie weer van het huidige navigator "
+"object"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 #: globalCommands.py:375
@@ -2104,14 +2138,18 @@ msgstr "verplaats naar focus"
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 #: globalCommands.py:378
-msgid "Sets the navigator object to the current focus, and the review cursor to the position of the caret inside it, if possible."
-msgstr "Verplaatst het navigator object naar het object dat zich onder de muisaanwijzer bevindt en verplaatst indien mogelijk de leescursor naar de positie van de cursor daarbinnen."
+msgid ""
+"Sets the navigator object to the current focus, and the review cursor to the "
+"position of the caret inside it, if possible."
+msgstr ""
+"Verplaatst het navigator object naar het object dat de focus heeft en "
+"verplaatst indien mogelijk de leescursor naar de positie van de cursor "
+"daarbinnen."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
 #. 2. Trying to move focus to navigator object but there is no focus.
-#: globalCommands.py:386
-#: globalCommands.py:793
+#: globalCommands.py:386 globalCommands.py:793
 msgid "no focus"
 msgstr "geen focus"
 
@@ -2127,8 +2165,13 @@ msgstr "Geen focus"
 
 #. Translators: Input help mode message for move focus to current navigator object command.
 #: globalCommands.py:403
-msgid "Pressed once Sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
-msgstr "Eenmaal drukken, verplaatst de toetsenbordfocus naar het navigator object, tweemaal drukken, verplaatst de systeemcursor naar de positie van de leescursor."
+msgid ""
+"Pressed once Sets the keyboard focus to the navigator object, pressed twice "
+"sets the system caret to the position of the review cursor"
+msgstr ""
+"Eenmaal drukken, verplaatst de toetsenbordfocus naar het navigator object, "
+"tweemaal drukken, verplaatst de systeemcursor naar de positie van de "
+"leescursor."
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 #: globalCommands.py:417
@@ -2182,102 +2225,158 @@ msgstr "Geen actie"
 
 #. Translators: Input help mode message for activate current object command.
 #: globalCommands.py:500
-msgid "Performs the default action on the current navigator object (example: presses it if it is a button)."
-msgstr "Voert de standaardactie uit op het huidige navigatorobject (bijvoorbeeld, indrukken als het om een knop gaat)."
+msgid ""
+"Performs the default action on the current navigator object (example: "
+"presses it if it is a button)."
+msgstr ""
+"Voert de standaardactie uit op het huidige navigatorobject (bijvoorbeeld, "
+"indrukken als het om een knop gaat)."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
-#: globalCommands.py:506
-#: globalCommands.py:517
-#: globalCommands.py:566
+#: globalCommands.py:506 globalCommands.py:517 globalCommands.py:566
 msgid "top"
 msgstr "bovenaan"
 
 #. Translators: Input help mode message for move review cursor to top line command.
 #: globalCommands.py:509
-msgid "Moves the review cursor to the top line of the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar de eerste regel van het navigator object, en spreekt deze uit"
+msgid ""
+"Moves the review cursor to the top line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Verplaatst de leescursor naar de eerste regel van het navigator object, en "
+"spreekt deze uit"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 #: globalCommands.py:523
-msgid "Moves the review cursor to the previous line of the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar de vorige regel van het navigator object, en spreek deze uit"
+msgid ""
+"Moves the review cursor to the previous line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Verplaatst de leescursor naar de vorige regel van het navigator object, en "
+"spreek deze uit"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 #: globalCommands.py:534
-msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr "Geeft de huidige regel van het navigator object weer waar de leescursor zich bevind. Tweemaal drukken, spelt de regel. Driemaal drukken, spelt de regel met omschrijvingen van karakters."
+msgid ""
+"Reports the line of the current navigator object where the review cursor is "
+"situated. If this key is pressed twice, the current line will be spelled. "
+"Pressing three times will spell the line using character descriptions."
+msgstr ""
+"Geeft de huidige regel van het navigator object weer waar de leescursor zich "
+"bevind. Tweemaal drukken, spelt de regel. Driemaal drukken, spelt de regel "
+"met omschrijvingen van karakters."
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
 #. Landing at the end of a browse mode document when trying to jump to the end of the current container.
-#: globalCommands.py:542
-#: globalCommands.py:554
-#: globalCommands.py:591
+#: globalCommands.py:542 globalCommands.py:554 globalCommands.py:591
 #: virtualBuffers\__init__.py:1472
 msgid "bottom"
 msgstr "onderaan"
 
 #. Translators: Input help mode message for move review cursor to next line command.
 #: globalCommands.py:548
-msgid "Moves the review cursor to the next line of the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar de volgende regel van het navigator object, en spreekt deze uit"
+msgid ""
+"Moves the review cursor to the next line of the current navigator object and "
+"speaks it"
+msgstr ""
+"Verplaatst de leescursor naar de volgende regel van het navigator object, en "
+"spreekt deze uit"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 #: globalCommands.py:557
-msgid "Moves the review cursor to the bottom line of the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar de laatste regel van het navigator object, en spreekt deze uit"
+msgid ""
+"Moves the review cursor to the bottom line of the current navigator object "
+"and speaks it"
+msgstr ""
+"Verplaatst de leescursor naar de laatste regel van het navigator object, en "
+"spreekt deze uit"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
 #: globalCommands.py:572
-msgid "Moves the review cursor to the previous word of the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar het vorige woord van het navigator object, en spreekt het uit"
+msgid ""
+"Moves the review cursor to the previous word of the current navigator object "
+"and speaks it"
+msgstr ""
+"Verplaatst de leescursor naar het vorige woord van het navigator object, en "
+"spreekt het uit"
 
 #. Translators: Input help mode message for report current word under review cursor command.
 #: globalCommands.py:583
-msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
-msgstr "Meldt het huidige woord van het navigator object waar de leescursor zich bevindt. Tweemaal drukken, spelt het woord. Driemaal drukken, spelt het woord met omschrijvingen van karakters."
+msgid ""
+"Speaks the word of the current navigator object where the review cursor is "
+"situated. Pressing twice spells the word. Pressing three times spells the "
+"word using character descriptions"
+msgstr ""
+"Meldt het huidige woord van het navigator object waar de leescursor zich "
+"bevindt. Tweemaal drukken, spelt het woord. Driemaal drukken, spelt het "
+"woord met omschrijvingen van karakters."
 
 #. Translators: Input help mode message for move review cursor to next word command.
 #: globalCommands.py:597
-msgid "Moves the review cursor to the next word of the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar het volgende woord van het navigator object, en spreekt het uit."
+msgid ""
+"Moves the review cursor to the next word of the current navigator object and "
+"speaks it"
+msgstr ""
+"Verplaatst de leescursor naar het volgende woord van het navigator object, "
+"en spreekt het uit."
 
-#: globalCommands.py:605
-#: globalCommands.py:618
-#: appModules\totalcmd.py:35
+#: globalCommands.py:605 globalCommands.py:618 appModules\totalcmd.py:35
 msgid "left"
 msgstr "links"
 
 #. Translators: Input help mode message for move review cursor to start of current line command.
 #: globalCommands.py:608
-msgid "Moves the review cursor to the first character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar het eerste karakter van de huidige regel van het navigator object, en spreekt het uit"
+msgid ""
+"Moves the review cursor to the first character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Verplaatst de leescursor naar het eerste karakter van de huidige regel van "
+"het navigator object, en spreekt het uit"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 #: globalCommands.py:627
-msgid "Moves the review cursor to the previous character of the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar het vorige karakter van de huidige regel van het navigator object, en spreekt het uit"
+msgid ""
+"Moves the review cursor to the previous character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Verplaatst de leescursor naar het vorige karakter van de huidige regel van "
+"het navigator object, en spreekt het uit"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 #: globalCommands.py:645
-msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "Geeft het karakter van het huidige navigator object, waarop de leescursor zich bevindt, weer. Bij dubbeldruk wordt een omschrijving van het karakter gegeven, bij drie maal drukken wordt de hexa-decimale- en ascii waarde van het karakter uitgesproken"
+msgid ""
+"Reports the character of the current navigator object where the review "
+"cursor is situated. Pressing twice reports a description or example of that "
+"character. Pressing three times reports the numeric value of the character "
+"in decimal and hexadecimal"
+msgstr ""
+"Geeft het karakter van het huidige navigator object, waarop de leescursor "
+"zich bevindt, weer. Bij dubbeldruk wordt een omschrijving van het karakter "
+"gegeven, bij drie maal drukken wordt de hexa-decimale- en ascii waarde van "
+"het karakter uitgesproken"
 
-#: globalCommands.py:655
-#: globalCommands.py:673
-#: appModules\totalcmd.py:37
+#: globalCommands.py:655 globalCommands.py:673 appModules\totalcmd.py:37
 msgid "right"
 msgstr "rechts"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 #: globalCommands.py:664
-msgid "Moves the review cursor to the next character of the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar het volgende karakter van het navigator object, en spreekt het uit"
+msgid ""
+"Moves the review cursor to the next character of the current navigator "
+"object and speaks it"
+msgstr ""
+"Verplaatst de leescursor naar het volgende karakter van het navigator "
+"object, en spreekt het uit"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 #: globalCommands.py:676
-msgid "Moves the review cursor to the last character of the line where it is situated in the current navigator object and speaks it"
-msgstr "Verplaatst de leescursor naar het laatste karakter van de huidige regel van het navigator object, en spreekt het uit"
+msgid ""
+"Moves the review cursor to the last character of the line where it is "
+"situated in the current navigator object and speaks it"
+msgstr ""
+"Verplaatst de leescursor naar het laatste karakter van de huidige regel van "
+"het navigator object, en spreekt het uit"
 
 #. Translators: A speech mode which disables speech output.
 #: globalCommands.py:684
@@ -2296,8 +2395,15 @@ msgstr "spraakmodus Spreek"
 
 #. Translators: Input help mode message for toggle speech mode command.
 #: globalCommands.py:695
-msgid "Toggles between the speech modes of off, beep and talk. When set to off NVDA will not speak anything. If beeps then NVDA will simply beep each time it its supposed to speak something. If talk then NVDA wil just speak normally."
-msgstr "Schakelt tussen de verschillende spraakmodi: uit, pieptonen en spreek. Bij \"uit\" zal NVDA niets uitspreken. Bij \"pieptonen\" hoort u een pieptoon telkens er iets door NVDA uitgesproken zou worden. Bij \"spreek\" zal NVDA gewoon spreken"
+msgid ""
+"Toggles between the speech modes of off, beep and talk. When set to off NVDA "
+"will not speak anything. If beeps then NVDA will simply beep each time it "
+"its supposed to speak something. If talk then NVDA wil just speak normally."
+msgstr ""
+"Schakelt tussen de verschillende spraakmodi: uit, pieptonen en spreek. Bij "
+"\"uit\" zal NVDA niets uitspreken. Bij \"pieptonen\" hoort u een pieptoon "
+"telkens er iets door NVDA uitgesproken zou worden. Bij \"spreek\" zal NVDA "
+"gewoon spreken"
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 #: globalCommands.py:713
@@ -2306,8 +2412,16 @@ msgstr "Verplaatst de focus naar het dichtsbijzijnde document dat focus heeft"
 
 #. Translators: Input help mode message for toggle focus and browse mode command in web browsing and other situations.
 #: globalCommands.py:726
-msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Schakelt tussen bladermodus en focusmodus. Bij \"focusmodus\" worden alle toetsaanslagen rechtstreeks naar het programma verzonden zodat dit bediend kan worden. In \"bladermodus\" kunt u doorheen documenten navigeren door middel van de pijltjes- of navigatietoetsen."
+msgid ""
+"Toggles between browse mode and focus mode. When in focus mode, keys will "
+"pass straight through to the application, allowing you to interact directly "
+"with a control. When in browse mode, you can navigate the document with the "
+"cursor, quick navigation keys, etc."
+msgstr ""
+"Schakelt tussen bladermodus en focusmodus. Bij \"focusmodus\" worden alle "
+"toetsaanslagen rechtstreeks naar het programma verzonden zodat dit bediend "
+"kan worden. In \"bladermodus\" kunt u door documenten navigeren door middel "
+"van de pijltjes- of navigatietoetsen."
 
 #. Translators: Input help mode message for quit NVDA command.
 #: globalCommands.py:731
@@ -2321,13 +2435,21 @@ msgstr "Toont het NVDA menu"
 
 #. Translators: Input help mode message for say all in review cursor command.
 #: globalCommands.py:741
-msgid "reads from the review cursor  up to end of current text, moving the review cursor as it goes"
-msgstr "Leest vanaf de leescursor tot aan het einde van het document, waarbij de leescursor tegelijkertijd verplaatst zal worden"
+msgid ""
+"reads from the review cursor  up to end of current text, moving the review "
+"cursor as it goes"
+msgstr ""
+"Leest vanaf de leescursor tot aan het einde van het document, waarbij de "
+"leescursor tegelijkertijd verplaatst zal worden"
 
 #. Translators: Input help mode message for say all with system caret command.
 #: globalCommands.py:746
-msgid "reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr "Leest vanaf de systeemcursor tot aan het einde van het document, waarbij de systeemcursor verplaatst zal worden"
+msgid ""
+"reads from the system caret up to the end of the text, moving the caret as "
+"it goes"
+msgstr ""
+"Leest vanaf de systeemcursor tot aan het einde van het document, waarbij de "
+"systeemcursor verplaatst zal worden"
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 #: globalCommands.py:778
@@ -2336,13 +2458,17 @@ msgstr "Geen opmaakinformatie"
 
 #. Translators: Input help mode message for report formatting command.
 #: globalCommands.py:783
-msgid "Reports formatting info for the current review cursor position within a document"
-msgstr "Geeft informatie weer over de opmaak op de huidige leescursor positie binnen het document"
+msgid ""
+"Reports formatting info for the current review cursor position within a "
+"document"
+msgstr ""
+"Geeft informatie weer over de opmaak op de huidige leescursor positie binnen "
+"het document"
 
 #. Translators: Input help mode message for report current focus command.
 #: globalCommands.py:795
 msgid "reports the object with focus"
-msgstr "Geeft het gefocuseerde object weer"
+msgstr "Geeft het object weer dat de focus heeft"
 
 #. Translators: Reported when there is no status line for the current program or window.
 #: globalCommands.py:816
@@ -2352,7 +2478,8 @@ msgstr "Geen statusregel gevonden"
 #. Translators: Input help mode message for report status line text command.
 #: globalCommands.py:823
 msgid "reads the current application status bar and moves the navigator to it"
-msgstr "Leest de statusbalk van de huidige applicatie en plaatst de navigator daar"
+msgstr ""
+"Leest de statusbalk van de huidige applicatie en plaatst de navigator daar"
 
 #. Translators: presented when the mouse tracking is toggled.
 #: globalCommands.py:828
@@ -2367,7 +2494,9 @@ msgstr "Muis volgen aan"
 #. Translators: Input help mode message for toggle mouse tracking command.
 #: globalCommands.py:836
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "In- en uitschakelen van de weergave van informatie bij het bewegen van de muis"
+msgstr ""
+"In- en uitschakelen van de weergave van informatie bij het bewegen van de "
+"muis"
 
 #. Translators: Reported when there is no title text for current program or window.
 #: globalCommands.py:845
@@ -2376,8 +2505,14 @@ msgstr "geen titel"
 
 #. Translators: Input help mode message for report title bar command.
 #: globalCommands.py:855
-msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
-msgstr "Meldt de titel van de actieve toepassing of van het scherm in de voorgrond. Tweemaal drukken, spelt de titel. Driemaal drukken, kopiëert de titel naar het klembord."
+msgid ""
+"Reports the title of the current application or foreground window. If "
+"pressed twice, spells the title. If pressed three times, copies the title to "
+"the clipboard"
+msgstr ""
+"Meldt de titel van de actieve toepassing of van het scherm in de voorgrond. "
+"Tweemaal drukken, spelt de titel. Driemaal drukken, kopiëert de titel naar "
+"het klembord."
 
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 #: globalCommands.py:862
@@ -2386,33 +2521,43 @@ msgstr "Spreekt het huidige object uit dat zich op de voorgrond bevindt"
 
 #. Translators: Input help mode message for developer info for current navigator object command, used by developers to examine technical info on navigator object. This command also serves as a shortcut to open NVDA log viewer.
 #: globalCommands.py:874
-msgid "Logs information about the current navigator object which is useful to developers and activates the log viewer so the information can be examined."
-msgstr "Logt ten behoeve van ontwikkelaars de informatie over het huidige navigatie object en activeert het logscherm zodat de informatie bestudeerd kan worden."
+msgid ""
+"Logs information about the current navigator object which is useful to "
+"developers and activates the log viewer so the information can be examined."
+msgstr ""
+"Logt ten behoeve van ontwikkelaars de informatie over het huidige navigatie "
+"object en activeert het logscherm zodat de informatie bestudeerd kan worden."
 
 #. Translators: A mode where no progress bar updates are given.
 #: globalCommands.py:881
 msgid "no progress bar updates"
-msgstr "geen updates van voortschreidingsbalken"
+msgstr "geen voortgangsbalkupdates"
 
 #. Translators: A mode where progress bar updates will be spoken.
 #: globalCommands.py:885
 msgid "speak progress bar updates"
-msgstr "Uitspreken van updates van voortschreidingsbalken"
+msgstr "Uitspreken van updates van voortgansbalken"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 #: globalCommands.py:889
 msgid "beep for progress bar updates"
-msgstr "pieptoon wanneer voortschreidingsbalk update"
+msgstr "pieptoon wanneer voortgansbalk update"
 
 #. Translators: A mode where both speech and beeps will indicate progress bar updates.
 #: globalCommands.py:893
 msgid "beep and speak progress bar updates"
-msgstr "Spreekt updates van voortschreidingsbalken uit, en speelt tegelijkertijd een piepsignaal af"
+msgstr ""
+"Spreekt updates van voortgangsbalken uit, en speelt tegelijkertijd een "
+"piepsignaal af"
 
 #. Translators: Input help mode message for toggle progress bar output command.
 #: globalCommands.py:896
-msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "Schakelt tussen \"pieptonen\", \"uitspreken\", \"pieptonen en uitspreken\" en \"uit\" voor de weergave van updates van voortschreidingsbalken"
+msgid ""
+"Toggles between beeps, speech, beeps and speech, and off, for reporting "
+"progress bar updates"
+msgstr ""
+"Schakelt tussen \"pieptonen\", \"uitspreken\", \"pieptonen en uitspreken\" "
+"en \"uit\" voor de weergave van updates van voortgangsbalken"
 
 #. Translators: presented when the present dynamic changes is toggled.
 #: globalCommands.py:901
@@ -2426,8 +2571,12 @@ msgstr "veranderingen van dynamische inhoud weergeven"
 
 #. Translators: Input help mode message for toggle dynamic content changes command.
 #: globalCommands.py:909
-msgid "Toggles on and off the reporting of dynamic content changes, such as new text in dos console windows"
-msgstr "In en uitschakelen van de weergave van veranderingen van dynamische inhoud, zoals bij DOS-vensters bijvoorbeeld"
+msgid ""
+"Toggles on and off the reporting of dynamic content changes, such as new "
+"text in dos console windows"
+msgstr ""
+"In en uitschakelen van de weergave van veranderingen van dynamische inhoud, "
+"zoals bij DOS-vensters bijvoorbeeld"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:914
@@ -2441,8 +2590,11 @@ msgstr "systeemcursor verplaatst leescursor"
 
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 #: globalCommands.py:922
-msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "In- en uitschakelen van het bewegen van de leescursor wanneer de systeemcursor beweegt"
+msgid ""
+"Toggles on and off the movement of the review cursor due to the caret moving."
+msgstr ""
+"In- en uitschakelen van het bewegen van de leescursor wanneer de "
+"systeemcursor beweegt"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:927
@@ -2456,8 +2608,11 @@ msgstr "focus verplaatst navigator object"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 #: globalCommands.py:935
-msgid "Toggles on and off the movement of the navigator object due to focus changes"
-msgstr "In- en uitschakelen van het verplaatsen van het navigator object bij focus veranderingen"
+msgid ""
+"Toggles on and off the movement of the navigator object due to focus changes"
+msgstr ""
+"In- en uitschakelen van het verplaatsen van het navigator object bij focus "
+"veranderingen"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
 #: globalCommands.py:948
@@ -2465,8 +2620,7 @@ msgid "no system battery"
 msgstr "geen accu gevonden"
 
 #. Translators: This is presented to inform the user of the current battery percentage.
-#: globalCommands.py:951
-#: NVDAObjects\behaviors.py:59
+#: globalCommands.py:951 NVDAObjects\behaviors.py:59
 #, python-format
 msgid "%d percent"
 msgstr "%d procent"
@@ -2484,7 +2638,9 @@ msgstr "{hours:d} uur en {minutes:d} minuten resterend"
 #. Translators: Input help mode message for report battery status command.
 #: globalCommands.py:959
 msgid "reports battery status and time remaining if AC is not plugged in"
-msgstr "Geeft de batterijstatus, en de resterende tijd weer wanneer er geen netstroom is"
+msgstr ""
+"Geeft de batterijstatus, en de resterende tijd weer wanneer er geen "
+"netstroom is"
 
 #. Translators: Spoken to indicate that the next key press will be sent straight to the current program as though NVDA is not running.
 #: globalCommands.py:964
@@ -2493,8 +2649,12 @@ msgstr "Volgende toets doorgeven"
 
 #. Translators: Input help mode message for pass next key through command.
 #: globalCommands.py:966
-msgid "The next key that is pressed will not be handled at all by NVDA, it will be passed directly through to Windows."
-msgstr "De volgende toetsaanslag wordt niet door NVDA verwerkt, maar rechtstreeks aan Windows doorgegeven"
+msgid ""
+"The next key that is pressed will not be handled at all by NVDA, it will be "
+"passed directly through to Windows."
+msgstr ""
+"De volgende toetsaanslag wordt niet door NVDA verwerkt, maar rechtstreeks "
+"aan Windows doorgegeven"
 
 #. Translators: Indicates the name of the current program (example output: Currently running application is explorer.exe).
 #. Note that it does not give friendly name such as Windows Explorer; it presents the file name of the current application.
@@ -2502,7 +2662,7 @@ msgstr "De volgende toetsaanslag wordt niet door NVDA verwerkt, maar rechtstreek
 #: globalCommands.py:974
 #, python-format
 msgid "Currently running application is %s"
-msgstr "De applicatie die mommenteel uitgevoerd wordt is %s"
+msgstr "De applicatie die momenteel uitgevoerd wordt is %s"
 
 #. Translators: Indicates the name of the appModule for the current program (example output: and currently loaded module is explorer).
 #. For example, the complete message for Windows explorer is: Currently running application is explorer.exe and currently loaded module is explorer.
@@ -2510,12 +2670,16 @@ msgstr "De applicatie die mommenteel uitgevoerd wordt is %s"
 #: globalCommands.py:980
 #, python-format
 msgid " and currently loaded module is %s"
-msgstr " en de module die mommenteel gebruikt wordt, is %s"
+msgstr " en de module die momenteel gebruikt wordt, is %s"
 
 #. Translators: Input help mode message for report current program name and app module name command.
 #: globalCommands.py:983
-msgid "Speaks the filename of the active application along with the name of the currently loaded appModule"
-msgstr "Spreekt de bestandsnaam uit van de huidige applicatie, en geeft weer welke appModule hiervoor geladen werd"
+msgid ""
+"Speaks the filename of the active application along with the name of the "
+"currently loaded appModule"
+msgstr ""
+"Spreekt de bestandsnaam uit van de huidige applicatie, en geeft weer welke "
+"appModule hiervoor geladen werd"
 
 #. Translators: Input help mode message for go to general settings dialog command.
 #: globalCommands.py:988
@@ -2545,7 +2709,8 @@ msgstr "Toont het dialoogvenster met muisinstellingen van NVDA"
 #. Translators: Input help mode message for go to object presentation dialog command.
 #: globalCommands.py:1013
 msgid "Shows the NVDA object presentation settings dialog"
-msgstr "Toont het dialoogvenster met de NVDA-instellingen voor de objectweergave"
+msgstr ""
+"Toont het dialoogvenster met de NVDA-instellingen voor de objectweergave"
 
 #. Translators: Input help mode message for go to browse mode dialog command.
 #: globalCommands.py:1018
@@ -2564,21 +2729,23 @@ msgstr "Slaat de huidige NVDA configuratie op"
 
 #. Translators: Input help mode message for apply last saved or default settings command.
 #: globalCommands.py:1037
-msgid "Pressing once reverts the current configuration to the most recently saved state. Pressing three times reverts to factory defaults."
-msgstr "Eenmaal drukken, zet de huidige configuratie terug naar de laatst opgeslagen waarden. Driemaal drukken, keert terug naar de fabrieksinstellingen."
+msgid ""
+"Pressing once reverts the current configuration to the most recently saved "
+"state. Pressing three times reverts to factory defaults."
+msgstr ""
+"Eenmaal drukken, zet de huidige configuratie terug naar de laatst opgeslagen "
+"waarden. Driemaal drukken, keert terug naar de fabrieksinstellingen."
 
 #. Translators: Input help mode message for activate python console command.
 #: globalCommands.py:1048
 msgid "Activates the NVDA Python Console, primarily useful for development"
 msgstr "Activeert de NVDA python console, vooral bedoeld voor ontwikkeling"
 
-#: globalCommands.py:1053
-#: gui\settingsDialogs.py:1342
+#: globalCommands.py:1053 gui\settingsDialogs.py:1342
 msgid "review"
 msgstr "lees"
 
-#: globalCommands.py:1056
-#: gui\settingsDialogs.py:1342
+#: globalCommands.py:1056 gui\settingsDialogs.py:1342
 msgid "focus"
 msgstr "focus"
 
@@ -2602,7 +2769,8 @@ msgstr "Er staat geen tekst op het klembord"
 #. Example output: The clipboard contains a large portion of text. It is 2300 characters long.
 #: globalCommands.py:1076
 #, python-format
-msgid "The clipboard contains a large portion of text. It is %s characters long"
+msgid ""
+"The clipboard contains a large portion of text. It is %s characters long"
 msgstr "Het klembord bevat een groot stuk tekst: het bevat %s karakters"
 
 #. Translators: Input help mode message for report clipboard text command.
@@ -2617,8 +2785,12 @@ msgstr "Begin gemarkeerd"
 
 #. Translators: Input help mode message for mark review cursor position for copy command (that is, marks the current review cursor position as the starting point for text to be copied).
 #: globalCommands.py:1085
-msgid "Marks the current position of the review cursor as the start of text to be copied"
-msgstr "Markeert de huidige positie van de leescursor als beginpunt om tekst te kopiëren"
+msgid ""
+"Marks the current position of the review cursor as the start of text to be "
+"copied"
+msgstr ""
+"Markeert de huidige positie van de leescursor als beginpunt om tekst te "
+"kopiëren"
 
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
 #: globalCommands.py:1090
@@ -2642,8 +2814,13 @@ msgstr "Geen tekst om te kopiëren"
 
 #. Translators: Input help mode message for copy selected review cursor text to clipboard command.
 #: globalCommands.py:1108
-msgid "Retrieves the text from the previously set start marker up to and including the current position of the review cursor and copies it to the clipboard"
-msgstr "Haalt de tekst op vanaf de eerder ingestelde startpositie tot aan en met inbegrip van, de huidige positie van de leescursor en kopieert deze naar het klembord."
+msgid ""
+"Retrieves the text from the previously set start marker up to and including "
+"the current position of the review cursor and copies it to the clipboard"
+msgstr ""
+"Haalt de tekst op vanaf de eerder ingestelde startpositie tot aan en met "
+"inbegrip van, de huidige positie van de leescursor en kopieert deze naar het "
+"klembord."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:1113
@@ -2658,7 +2835,8 @@ msgstr "Schuift de brailleleesregel voorwaards"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:1125
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr "Verplaatst de cursor naar, of activeert het object onder deze braillecel"
+msgstr ""
+"Verplaatst de cursor naar, of activeert het object onder deze braillecel"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:1131
@@ -2682,24 +2860,35 @@ msgstr "Plugins zijn opnieuw geladen"
 
 #. Translators: Input help mode message for reload plugins command.
 #: globalCommands.py:1152
-msgid "Reloads app modules and global plugins without restarting NVDA, which can be Useful for developers"
-msgstr "Herlaadt applicatiemodules en actieve plugins zonder NVDA opnieuw te starten, dit kan handig zijn voor ontwikkelaars"
+msgid ""
+"Reloads app modules and global plugins without restarting NVDA, which can be "
+"Useful for developers"
+msgstr ""
+"Herlaadt applicatiemodules en actieve plugins zonder NVDA opnieuw te "
+"starten, dit kan handig zijn voor ontwikkelaars"
 
 #. Translators: a message when there is no next object when navigating
-#: globalCommands.py:1172
-#: globalCommands.py:1189
+#: globalCommands.py:1172 globalCommands.py:1189
 msgid "no next"
 msgstr "Geen volgend"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:1174
-msgid "Moves to the next object in a flattened view of the object navigation hierarchy"
-msgstr "Gaat naar het volgende object in een platte weergave van de object navigatie hiërarchie"
+msgid ""
+"Moves to the next object in a flattened view of the object navigation "
+"hierarchy"
+msgstr ""
+"Gaat naar het volgende object in een platte weergave van de object navigatie "
+"hiërarchie"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:1191
-msgid "Moves to the previous object in a flattened view of the object navigation hierarchy"
-msgstr "Gaat naar het vorige object in een platte weergave van de object navigatie hiërarchie"
+msgid ""
+"Moves to the previous object in a flattened view of the object navigation "
+"hierarchy"
+msgstr ""
+"Gaat naar het vorige object in een platte weergave van de object navigatie "
+"hiërarchie"
 
 #: globalCommands.py:1199
 #, python-format
@@ -2718,12 +2907,15 @@ msgstr "Geeft het object of de inhoud direct onder uw vinger weer"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:1211
-msgid "Reports the new object or content under your finger if different to where your finger was last"
-msgstr "Toont het nieuwe object of de nieuwe inhoud onder uw vinger als het anders is dan waar uv vinger eerder was"
+msgid ""
+"Reports the new object or content under your finger if different to where "
+"your finger was last"
+msgstr ""
+"Toont het nieuwe object of de nieuwe inhoud onder uw vinger als het anders "
+"is dan waar uv vinger eerder was"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
-#: installer.py:178
-#: gui\__init__.py:387
+#: installer.py:178 gui\__init__.py:387
 msgid "NVDA web site"
 msgstr "NVDA website"
 
@@ -2748,8 +2940,7 @@ msgid "Commands Quick Reference"
 msgstr "Overzicht commando's"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
-#: installer.py:188
-#: gui\__init__.py:379
+#: installer.py:188 gui\__init__.py:379
 msgid "User Guide"
 msgstr "Gebruikershandleiding"
 
@@ -2761,22 +2952,22 @@ msgstr "NVDA add-on pakket"
 #. Translators: This is the name of the back key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:9
 msgid "back"
-msgstr "Terug"
+msgstr "vorige"
 
 #. Translators: This is the name of the forward key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:11
 msgid "forward"
-msgstr "Volgende"
+msgstr "volgende"
 
 #. Translators: This is the name of the refresh key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:13
 msgid "refresh"
-msgstr "Vernieuw"
+msgstr "Vernieuwen"
 
 #. Translators: This is the name of the stop key found on multimedia keyboards for controlling the web-browser.
 #: keyLabels.py:15
 msgid "browser stop"
-msgstr "Stop browser"
+msgstr "stop browser"
 
 #. Translators: This is the name of the back key found on multimedia keyboards to goto the search page of the web-browser.
 #: keyLabels.py:17
@@ -3089,18 +3280,21 @@ msgstr "Desktop"
 msgid "laptop"
 msgstr "Laptop"
 
-#: keyboardHandler.py:392
-#: synthSettingsRing.py:74
-#: gui\settingsDialogs.py:1174
+#. Translators: Reported for an unknown key press.
+#. %s will be replaced with the key code.
+#: keyboardHandler.py:354
+#, python-format
+msgid "unknown %s"
+msgstr "Onbekend %s"
+
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
 msgid "on"
 msgstr "ingeschakeld"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:392
-#: synthSettingsRing.py:74
-#: gui\settingsDialogs.py:813
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:813
 #: gui\settingsDialogs.py:1174
 msgid "off"
 msgstr "uitgeschakeld"
@@ -3177,9 +3371,7 @@ msgstr "Emuleert het drukken van %s op het toetsenbord"
 
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
-#: speech.py:164
-#: speech.py:346
-#: speech.py:763
+#: speech.py:164 speech.py:346 speech.py:763
 msgid "blank"
 msgstr "leeg"
 
@@ -3224,22 +3416,19 @@ msgid "done dragging"
 msgstr "klaar met slepen"
 
 #. Translators: Speaks the item level in treeviews (example output: level 2).
-#: speech.py:838
-#: speech.py:842
+#: speech.py:838 speech.py:842
 #, python-format
 msgid "level %s"
 msgstr "niveau %s"
 
 #. Translators: Speaks current row number (example output: row 3).
-#: speech.py:856
-#: speech.py:1207
+#: speech.py:856 speech.py:1207
 #, python-format
 msgid "row %s"
 msgstr "rij %s"
 
 #. Translators: Speaks current column number (example output: column 3).
-#: speech.py:864
-#: speech.py:1203
+#: speech.py:864 speech.py:1203
 #, python-format
 msgid "column %s"
 msgstr "kolom %s"
@@ -3268,8 +3457,7 @@ msgid "with %s items"
 msgstr "met %s items"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-#: speech.py:975
-#: speech.py:1151
+#: speech.py:975 speech.py:1151
 #, python-format
 msgid "out of %s"
 msgstr "buiten %s"
@@ -3285,7 +3473,7 @@ msgstr "pagina %s"
 #: speech.py:1008
 #, python-format
 msgid "heading level %d"
-msgstr "Kopniveau %d"
+msgstr "Kop niveau %d"
 
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
@@ -3331,12 +3519,12 @@ msgstr "regel %s"
 #: speech.py:1071
 #, python-format
 msgid "revised %s"
-msgstr ""
+msgstr "gewijzigd %s"
 
 #. Translators: Reported when text is not revised.
 #: speech.py:1073
 msgid "unrevised"
-msgstr ""
+msgstr "niet gewijzigd"
 
 #. Translators: Reported when text is not bolded.
 #: speech.py:1082
@@ -3410,7 +3598,7 @@ msgstr "standaard uitlijning"
 #. Translators: Reported when text contains a comment.
 #: speech.py:1158
 msgid "has comment"
-msgstr "heeft commentaar"
+msgstr "bevat opmerking"
 
 #. Translators: Reported when text contains a spelling error.
 #: speech.py:1166
@@ -3479,7 +3667,7 @@ msgstr "Bezig met het controleren op updates"
 #. Translators: The progress message displayed while manually checking for an NVDA update.
 #: updateCheck.py:119
 msgid "Checking for update"
-msgstr "Bezig met het controleren op updates"
+msgstr "Bezig met het controleren op update"
 
 #. Translators: A message indicating that an error occurred while checking for an update to NVDA.
 #: updateCheck.py:126
@@ -3488,18 +3676,10 @@ msgstr "Er is een fout opgetreden tijdens het controleren op updates"
 
 #. Translators: The title of an error message dialog.
 #. Translators: The title of a dialog presented when an error occurs.
-#: updateCheck.py:128
-#: updateCheck.py:359
-#: gui\__init__.py:154
-#: gui\__init__.py:164
-#: gui\addonGui.py:101
-#: gui\addonGui.py:140
-#: gui\installerGui.py:54
-#: gui\installerGui.py:191
-#: gui\installerGui.py:199
-#: gui\installerGui.py:230
-#: gui\logViewer.py:79
-#: gui\settingsDialogs.py:239
+#: updateCheck.py:128 updateCheck.py:359 gui\__init__.py:154
+#: gui\__init__.py:164 gui\addonGui.py:101 gui\addonGui.py:140
+#: gui\installerGui.py:54 gui\installerGui.py:191 gui\installerGui.py:199
+#: gui\installerGui.py:230 gui\logViewer.py:79 gui\settingsDialogs.py:239
 msgid "Error"
 msgstr "Fout"
 
@@ -3536,10 +3716,9 @@ msgstr "Herinner mij hier &later aan"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The label of a button to close the Addons dialog.
-#: updateCheck.py:213
-#: gui\addonGui.py:71
+#: updateCheck.py:213 gui\addonGui.py:71
 msgid "&Close"
-msgstr "&Sluit"
+msgstr "&Sluiten"
 
 #. Translators: The title of the dialog displayed while downloading an NVDA update.
 #: updateCheck.py:260
@@ -3575,15 +3754,21 @@ msgstr "Installeer update"
 #: updateCheck.py:379
 msgid ""
 "We need your help in order to continue to improve NVDA.\n"
-"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
-"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
-"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
+"This project relies primarily on donations and grants. By donating, you are "
+"helping to fund full time development.\n"
+"If even $10 is donated for every download, we will be able to cover all of "
+"the ongoing costs of the project.\n"
+"All donations are received by NV Access, the non-profit organisation which "
+"develops NVDA.\n"
 "Thank you for your support."
 msgstr ""
 "We hebben uw hulp nodig om NVDA te blijven verbeteren.\n"
-"Dit project steunt voornamelijk op donaties en giften. Door een gift over te maken, steunt u rechtstreeks de verdere ontwikkeling.\n"
-"Zelfs als voor elke download slechts 10 dollar wordt geschonken, zijn we in staat alle lopende kosten van het project te dekken.\n"
-"Alle giften worden ontvangen door NV Access, de stichting die NVDA ontwikkelt.\n"
+"Dit project steunt voornamelijk op donaties en giften. Door een gift over te "
+"maken, steunt u rechtstreeks de verdere ontwikkeling.\n"
+"Zelfs als voor elke download slechts 10 dollar wordt geschonken, zijn we in "
+"staat alle lopende kosten van het project te dekken.\n"
+"Alle giften worden ontvangen door NV Access, de stichting die NVDA "
+"ontwikkelt.\n"
 "Dank u voor uw steun."
 
 #. Translators: The title of the dialog requesting donations from users.
@@ -3628,24 +3813,42 @@ msgid ""
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is developed by NV Access, a non-profit organisation committed to helping and promoting free and open source solutions for blind and vision impaired people.\n"
-"If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
+"{name} is developed by NV Access, a non-profit organisation committed to "
+"helping and promoting free and open source solutions for blind and vision "
+"impaired people.\n"
+"If you find NVDA useful and want it to continue to improve, please consider "
+"donating to NV Access. You can do this by selecting Donate from the NVDA "
+"menu."
 msgstr ""
 "{longName} ({name})\n"
 "Versie: {version}\n"
 "URL: {url}\n"
 "{copyright}\n"
 "\n"
-"{name} is covered by the GNU General Public License (Version 2). You are free to share or change this software in any way you like as long as it is accompanied by the license and you make all source code available to anyone who wants it. This applies to both original and modified copies of this software, plus any derivative works.\n"
+"{name} is covered by the GNU General Public License (Version 2). You are "
+"free to share or change this software in any way you like as long as it is "
+"accompanied by the license and you make all source code available to anyone "
+"who wants it. This applies to both original and modified copies of this "
+"software, plus any derivative works.\n"
 "For further details, you can view the license from the Help menu.\n"
-"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n"
+"It can also be viewed online at: http://www.gnu.org/licenses/old-licenses/"
+"gpl-2.0.html\n"
 "\n"
-"{name} is ontwikkeld door NV Access, een vrijwilligersorganisatie met als missie gratis en open source oplossingen voor blinden en slechtzienden te ontwikkelen en te promoten.\n"
-"Als u NVDA nuttig vindt en wilt dat het blijvend wordt verbeterd, denk er dan aub aan om een gift over te maken aan NV Access. Dit kunt u doen door in het NVDA menu te kiezen voor Doneer."
+"{name} is ontwikkeld door NV Access, een vrijwilligersorganisatie met als "
+"missie gratis en open source oplossingen voor blinden en slechtzienden te "
+"ontwikkelen en te promoten.\n"
+"Als u NVDA nuttig vindt en wilt dat het blijvend wordt verbeterd, denk er "
+"dan aub aan om een gift over te maken aan NV Access. Dit kunt u doen door in "
+"het NVDA menu te kiezen voor Doneer."
 
 #. Translators: a message announcing a candidate's character and description.
 #: NVDAObjects\behaviors.py:361
@@ -3659,8 +3862,7 @@ msgstr "{number} {candidate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: NVDAObjects\behaviors.py:414
-#: virtualBuffers\__init__.py:1329
+#: NVDAObjects\behaviors.py:414 virtualBuffers\__init__.py:1329
 msgid "edge of table"
 msgstr "Grens van tabel"
 
@@ -3691,8 +3893,7 @@ msgstr "Samenstelling"
 
 #. Translators: The label for a 'candidate' list that shows a choice of symbols a user can choose from when typing east-Asian characters into a document.
 #. Translators: A label for a 'candidate' list which contains symbols the user can choose from  when typing east-asian characters into a document.
-#: NVDAObjects\inputComposition.py:103
-#: NVDAObjects\IAccessible\mscandui.py:44
+#: NVDAObjects\inputComposition.py:103 NVDAObjects\IAccessible\mscandui.py:44
 #: NVDAObjects\IAccessible\mscandui.py:203
 msgid "Candidate"
 msgstr "Kandidaat"
@@ -3714,17 +3915,16 @@ msgstr "Er wordt geen nummer afgespeeld"
 #. Translators: The description of an NVDA command for Foobar 2000.
 #: appModules\foobar2000.py:52
 msgid "Reports the remaining time of the currently playing track, if any"
-msgstr "Meldt de resterende tijd van het nummer dat op dit moment wordt afgespeeld"
+msgstr ""
+"Meldt de resterende tijd van het nummer dat op dit moment wordt afgespeeld"
 
 #. Translators: This is presented to inform the user that no instant message has been received.
-#: appModules\miranda32.py:118
-#: appModules\vipmud.py:33
+#: appModules\miranda32.py:118 appModules\vipmud.py:33
 msgid "No message yet"
 msgstr "Nog geen bericht"
 
 #. Translators: The description of an NVDA command to view one of the recent messages.
-#: appModules\miranda32.py:120
-#: appModules\vipmud.py:34
+#: appModules\miranda32.py:120 appModules\vipmud.py:34
 msgid "Displays one of the recent messages"
 msgstr "Toont een van de recente berichten"
 
@@ -3754,8 +3954,7 @@ msgid "Subject:"
 msgstr "Onderwerp:"
 
 #. Translators: This is presented in outlook or live mail, email sender
-#: appModules\msimn.py:31
-#: appModules\msimn.py:47
+#: appModules\msimn.py:31 appModules\msimn.py:47
 msgid "From:"
 msgstr "Van:"
 
@@ -3795,14 +3994,12 @@ msgid "BCC:"
 msgstr "BCC:"
 
 #. Translators: Displayed in outlook or live mail to indicate an email is unread
-#: appModules\msimn.py:111
-#: appModules\outlook.py:33
+#: appModules\msimn.py:111 appModules\outlook.py:33
 msgid "unread"
 msgstr "ongelezen"
 
 #. Translators: This is presented in outlook or live mail, email subject
-#: appModules\outlook.py:27
-#: appModules\outlook.py:42
+#: appModules\outlook.py:27 appModules\outlook.py:42
 #, python-format
 msgid "subject: %s"
 msgstr "onderwerp: %s"
@@ -3829,42 +4026,43 @@ msgstr "verzonden: %s"
 #. comments window in poedit.
 #: appModules\poedit.py:78
 msgid "No automatic comments."
-msgstr "Geen automatisch commentaar."
+msgstr "Geen automatische opmerkingen."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'automatic comments' window in poedit.
 #: appModules\poedit.py:82
 msgid "Could not find automatic comments window."
-msgstr "Kon het venster voor automatisch commentaar niet vinden."
+msgstr "Kon het venster voor automatische opmerkingen niet vinden."
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:84
 msgid "Reports any comments in the automatic comments window"
-msgstr "Geeft alle commentaren in het venster voor automatische commentaren weer"
+msgstr ""
+"Geeft alle opmerkingen in het venster voor automatische commentaren weer"
 
 #. Translators: this message is reported when there are no
 #. comments to be presented to the user in the translator
 #. comments window in poedit.
 #: appModules\poedit.py:99
 msgid "No comment."
-msgstr "Geen commentaar."
+msgstr "Geen copmerking."
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
 #: appModules\poedit.py:103
 msgid "Could not find comment window."
-msgstr "Kon het venster voor commentaar niet vinden."
+msgstr "Kon het venster voor opmerkingen niet vinden."
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:105
 msgid "Reports any comments in the comments window"
-msgstr "Geeft alle commentaren in het venster voor commentaren weer"
+msgstr "Geeft alle opmerkingen in het venster voor opmerkingen weer"
 
 #. Translators: Automatic comments is the name of the poedit
 #. window that displays comments extracted from code.
 #: appModules\poedit.py:119
 msgid "Automatic comments:"
-msgstr "Automatisch commentaar:"
+msgstr "Automatische opmerkingen:"
 
 #. Translators: this is the label for the edit area in poedit
 #. that contains a translation.
@@ -3876,7 +4074,7 @@ msgstr "Vertaling:"
 #. that displays comments entered by the translator.
 #: appModules\poedit.py:127
 msgid "Comments:"
-msgstr "Commentaar:"
+msgstr "Opmerkingen:"
 
 #. Translators: Describes a type of placeholder shape in Microsoft PowerPoint.
 #: appModules\powerpnt.py:95
@@ -4040,8 +4238,14 @@ msgstr "Dia {slideNumber}"
 
 #. Translators: The description for a script
 #: appModules\powerpnt.py:779
-msgid "Toggles between reporting the speaker notes or the actual slide content. This does not change what is visible on-screen, but only what the user can read with NVDA"
-msgstr "Schakelt tussen de weergave van de notities en de eigenlijke inhoud van de dia. Dit verandert niet wat op het scherm te zien is, maar enkel wat de NVDA-gebruiker leest."
+msgid ""
+"Toggles between reporting the speaker notes or the actual slide content. "
+"This does not change what is visible on-screen, but only what the user can "
+"read with NVDA"
+msgstr ""
+"Schakelt tussen de weergave van de notities en de eigenlijke inhoud van de "
+"dia. Dit verandert niet wat op het scherm te zien is, maar enkel wat de NVDA-"
+"gebruiker leest."
 
 #. Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 #: appModules\powerpnt.py:809
@@ -4064,8 +4268,7 @@ msgid "No notes"
 msgstr "Geen notities"
 
 #. Translators: The message for an empty slide in a slide show
-#: appModules\powerpnt.py:874
-#: appModules\powerpnt.py:875
+#: appModules\powerpnt.py:874 appModules\powerpnt.py:875
 msgid "Empty slide"
 msgstr "Lege dia"
 
@@ -4130,8 +4333,7 @@ msgstr "Baum/HumanWare/APH brailleleesregels"
 
 #. Translators: Name of a serial communications port.
 #. Translators: Name of a serial communications port
-#: brailleDisplayDrivers\baum.py:108
-#: brailleDisplayDrivers\brailleNote.py:136
+#: brailleDisplayDrivers\baum.py:108 brailleDisplayDrivers\brailleNote.py:136
 #: brailleDisplayDrivers\papenmeier_serial.py:73
 msgid "Serial: {portName}"
 msgstr "Serieel: {portName}"
@@ -4224,7 +4426,9 @@ msgstr "Configuratie opgeslagen"
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 #: gui\__init__.py:154
 msgid "Could not save configuration - probably read only file system"
-msgstr "De configuratie kon niet opgeslagen worden - waarschijnlijk een alleen-lezen bestandsysteem"
+msgstr ""
+"De configuratie kon niet opgeslagen worden - waarschijnlijk een alleen-lezen "
+"bestandsysteem"
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 #: gui\__init__.py:164
@@ -4252,14 +4456,12 @@ msgstr "Tijdelijk woordenboek"
 msgid "Are you sure you want to quit NVDA?"
 msgstr "Weet u zeker dat u NVDA wilt afsluiten?"
 
-#: gui\__init__.py:185
-#: gui\__init__.py:426
+#: gui\__init__.py:185 gui\__init__.py:426
 msgid "Exit NVDA"
 msgstr "NVDA afsluiten"
 
 #. Translators: The title of the dialog to show about info for NVDA.
-#: gui\__init__.py:230
-#: gui\__init__.py:404
+#: gui\__init__.py:230 gui\__init__.py:404
 msgid "About NVDA"
 msgstr "Over NVDA"
 
@@ -4301,8 +4503,12 @@ msgid "&Keyboard settings..."
 msgstr "&Toetsenbord..."
 
 #: gui\__init__.py:308
-msgid "Configure keyboard layout, speaking of typed characters, words or command keys"
-msgstr "Configureer toetsenbordindeling en het uitspreken van getypte karakters, woorden of commandotoetsen"
+msgid ""
+"Configure keyboard layout, speaking of typed characters, words or command "
+"keys"
+msgstr ""
+"Configureer toetsenbordindeling en het uitspreken van getypte karakters, "
+"woorden of commandotoetsen"
 
 #. Translators: The label for the menu item to open Mouse Settings dialog.
 #: gui\__init__.py:311
@@ -4311,7 +4517,9 @@ msgstr "&Muis..."
 
 #: gui\__init__.py:311
 msgid "Change reporting of mouse shape and object under mouse"
-msgstr "Wijzig de weergave van de vorm van de muisaanwijzer en van het object dat zich onder de muisaanwijzer bevindt"
+msgstr ""
+"Wijzig de weergave van de vorm van de muisaanwijzer en van het object dat "
+"zich onder de muisaanwijzer bevindt"
 
 #. Translators: The label for the menu item to open Review Cursor dialog.
 #: gui\__init__.py:314
@@ -4328,8 +4536,12 @@ msgid "&Input composition settings..."
 msgstr "&Invoersamenstelling..."
 
 #: gui\__init__.py:317
-msgid "Configure how NVDA reports input composition and candidate selection for certain languages"
-msgstr "Configureer hoe NVDA invoersamenstelling en selectie van kandidaten meldt voor bepaalde talen"
+msgid ""
+"Configure how NVDA reports input composition and candidate selection for "
+"certain languages"
+msgstr ""
+"Configureer hoe NVDA invoersamenstelling en selectie van kandidaten meldt "
+"voor bepaalde talen"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 #: gui\__init__.py:320
@@ -4364,8 +4576,12 @@ msgid "&Default dictionary..."
 msgstr "&Standaardwoordenboek..."
 
 #: gui\__init__.py:331
-msgid "A dialog where you can set default dictionary by adding dictionary entries to the list"
-msgstr "Een dialoogvenster waar u het standaardwoordenboek kunt instellen door woordenboekregels aan de lijst toe te voegen"
+msgid ""
+"A dialog where you can set default dictionary by adding dictionary entries "
+"to the list"
+msgstr ""
+"Een dialoogvenster waar u het standaardwoordenboek kunt instellen door "
+"woordenboekregels aan de lijst toe te voegen"
 
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 #: gui\__init__.py:334
@@ -4373,8 +4589,12 @@ msgid "&Voice dictionary..."
 msgstr "Stem-a&fhankelijk woordenboek..."
 
 #: gui\__init__.py:334
-msgid "A dialog where you can set voice-specific dictionary by adding dictionary entries to the list"
-msgstr "Een dialoogvenster waar u het stem-afhankelijk woordenboek kunt instellen door woordenboekregels toe te voegen aan de lijst"
+msgid ""
+"A dialog where you can set voice-specific dictionary by adding dictionary "
+"entries to the list"
+msgstr ""
+"Een dialoogvenster waar u het stem-afhankelijk woordenboek kunt instellen "
+"door woordenboekregels toe te voegen aan de lijst"
 
 #. Translators: The label for the menu item to open Temporary speech dictionary dialog.
 #: gui\__init__.py:337
@@ -4382,8 +4602,12 @@ msgid "&Temporary dictionary..."
 msgstr "&Tijdelijk woordenboek"
 
 #: gui\__init__.py:337
-msgid "A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"
-msgstr "Een dialoogvenster waar u het tijdelijke woordenboek kunt instellen door woordenboekregels toe te voegen aan het invoerveld"
+msgid ""
+"A dialog where you can set temporary dictionary by adding dictionary entries "
+"to the edit box"
+msgstr ""
+"Een dialoogvenster waar u het tijdelijke woordenboek kunt instellen door "
+"woordenboekregels toe te voegen aan het invoerveld"
 
 #. Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
 #: gui\__init__.py:340
@@ -4438,7 +4662,7 @@ msgstr "Plugins herladen"
 #. Translators: The label for the Tools submenu in NVDA menu.
 #: gui\__init__.py:375
 msgid "Tools"
-msgstr "&Extra"
+msgstr "Extra"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 #: gui\__init__.py:382
@@ -4513,27 +4737,32 @@ msgstr "De huidige instellingen naar nvda.ini wegschrijven"
 msgid "Donate"
 msgstr "Doneren"
 
-#: gui\__init__.py:426
-#: gui\__init__.py:641
-#: gui\logViewer.py:36
+#: gui\__init__.py:426 gui\__init__.py:641 gui\logViewer.py:36
 msgid "E&xit"
 msgstr "A&fsluiten"
 
 #: gui\__init__.py:509
 msgid ""
 "Welcome to NVDA!\n"
-"Most commands for controlling NVDA require you to hold down the NVDA key while pressing other keys.\n"
-"By default, the numpad insert and main insert keys may both be used as the NVDA key.\n"
+"Most commands for controlling NVDA require you to hold down the NVDA key "
+"while pressing other keys.\n"
+"By default, the numpad insert and main insert keys may both be used as the "
+"NVDA key.\n"
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
-"From this menu, you can configure NVDA, get help and access other NVDA functions.\n"
+"From this menu, you can configure NVDA, get help and access other NVDA "
+"functions.\n"
 msgstr ""
 "Welkom bij NVDA!\n"
-"Om NVDA commando's uit te voeren dient u de NVDA-toets in te drukken samen met de andere toetsen die deel uitmaken van de sneltoetscombinatie.\n"
-" Als standaard instelling kunnen zowel de nummerieke, alsook de standaard insert-toets gebruikt worden.\n"
-"NVDA kan ook geconfigureerd worden om de Capslock-toets als NVDA-toets te gebruiken.\n"
+"Om NVDA commando's uit te voeren dient u de NVDA-toets in te drukken samen "
+"met de andere toetsen die deel uitmaken van de sneltoetscombinatie.\n"
+" Als standaard instelling kunnen zowel de nummerieke, alsook de standaard "
+"insert-toets gebruikt worden.\n"
+"NVDA kan ook geconfigureerd worden om de Capslock-toets als NVDA-toets te "
+"gebruiken.\n"
 "Om het NVDA menu te openen, drukt u \"NVDA-toets+n\"\n"
-"Via dit menu kunt u NVDA configureren, de help raadplegen en andere functies uitvoeren.\n"
+"Via dit menu kunt u NVDA configureren, de help raadplegen en andere functies "
+"uitvoeren.\n"
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\__init__.py:519
@@ -4546,15 +4775,13 @@ msgstr "Opties"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
-#: gui\__init__.py:524
-#: gui\settingsDialogs.py:607
+#: gui\__init__.py:524 gui\settingsDialogs.py:607
 msgid "Use CapsLock as an NVDA modifier key"
 msgstr "Capslock als NVDA-toets gebruiken"
 
 #. Translators: The label of a check box in the Welcome dialog.
 #. Translators: The label for a setting in general settings to allow NVDA to start after logging onto Windows (if checked, NvDA will start automatically after loggin into Windows; if not, user must start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
-#: gui\__init__.py:528
-#: gui\settingsDialogs.py:172
+#: gui\__init__.py:528 gui\settingsDialogs.py:172
 msgid "&Automatically start NVDA after I log on to Windows"
 msgstr "NVDA &automatisch starten nadat ik me bij windows heb aangemeld"
 
@@ -4566,10 +4793,14 @@ msgstr "Dit dialoogvenster tonen bij het starten van NVDA"
 #: gui\__init__.py:572
 msgid ""
 "Your configuration file contains errors. \n"
-"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually edit your config file at a later stage to make corrections. More details about the errors can be found in the log file.\n"
+"Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
+"edit your config file at a later stage to make corrections. More details "
+"about the errors can be found in the log file.\n"
 msgstr ""
 "Uw configuratiebestand bevat fouten. \n"
-"Klik 'Ok' om deze fouten op te lossen, of klik 'annuleren' als u op een later ogenblik uw configuratiebestand manueel wilt bijwerken om correcties uit te voeren. Meer details over de fouten vindt u in het logbestand.\n"
+"Klik 'Ok' om deze fouten op te lossen, of klik 'annuleren' als u op een "
+"later ogenblik uw configuratiebestand handmatig wilt bijwerken om correcties "
+"uit te voeren. Meer details over de fouten vindt u in het logbestand.\n"
 
 #. Translators: The title of the dialog to tell users that there are erros in the configuration file.
 #: gui\__init__.py:578
@@ -4649,8 +4880,7 @@ msgstr "&Installeren..."
 #. Translators: The label for a button to remove either:
 #. Remove the selected add-on in Add-ons Manager dialog.
 #. Remove a speech dictionary entry.
-#: gui\addonGui.py:60
-#: gui\settingsDialogs.py:1190
+#: gui\addonGui.py:60 gui\settingsDialogs.py:1190
 msgid "&Remove"
 msgstr "&Verwijderen"
 
@@ -4672,30 +4902,36 @@ msgstr "NVDA Add-on Pakket (*.{ext})"
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
 #: gui\addonGui.py:99
 #, python-format
-msgid "Failed to open add-on package file at %s - missing file or invalid file format"
-msgstr "Kon het add-on package bestand niet openen van %s - bestand ontbreekt of het bestandsformaat is ongeldig"
+msgid ""
+"Failed to open add-on package file at %s - missing file or invalid file "
+"format"
+msgstr ""
+"Kon het add-on package bestand niet openen van %s - bestand ontbreekt of het "
+"bestandsformaat is ongeldig"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui\addonGui.py:105
 msgid ""
-"Are you sure you want to install this add-on? Only install add-ons from trusted sources.\n"
+"Are you sure you want to install this add-on? Only install add-ons from "
+"trusted sources.\n"
 "Addon: {summary} {version}\n"
 "Author: {author}"
 msgstr ""
-"Weet u zeker dat u deze add-on wilt installeren? Installeer alleen add-ons van bronnen die u vertrouwt.\n"
+"Weet u zeker dat u deze add-on wilt installeren? Installeer alleen add-ons "
+"van bronnen die u vertrouwt.\n"
 "Add-on: {summary} {version}\n"
 "Auteur: {author}"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
 #. Translators: A title for the dialog  asking if the user wishes to update a previously installed add-on with this one.
-#: gui\addonGui.py:107
-#: gui\addonGui.py:120
+#: gui\addonGui.py:107 gui\addonGui.py:120
 msgid "Add-on Installation"
 msgstr "Installatie van Add-on"
 
 #. Translators: A message asking if the user wishes to update a previously installed add-on with this one.
 #: gui\addonGui.py:118
-msgid "A version of this add-on is already installed. Would you like to update it?"
+msgid ""
+"A version of this add-on is already installed. Would you like to update it?"
 msgstr "Van deze add-on is al een versie geïnstalleerd. Wilt u deze bijwerken?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
@@ -4739,8 +4975,12 @@ msgstr "Werkend"
 
 #. Translators: A message asking the user if they wish to restart NVDA as addons have been added or removed.
 #: gui\addonGui.py:201
-msgid "Add-ons have been added or removed. You must restart NVDA for these changes to take effect. Would you like to restart now?"
-msgstr "Add-ons zijn toegevoegd of verwijderd. U moet NVDA herstarten voordat de wijzigingen van kracht zijn. Wilt u nu herstarten?"
+msgid ""
+"Add-ons have been added or removed. You must restart NVDA for these changes "
+"to take effect. Would you like to restart now?"
+msgstr ""
+"Add-ons zijn toegevoegd of verwijderd. U moet NVDA herstarten voordat de "
+"wijzigingen van kracht zijn. Wilt u nu herstarten?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 #: gui\addonGui.py:203
@@ -4792,20 +5032,30 @@ msgstr "NVDA wordt geïnstalleerd. Even geduld alstublieft"
 
 #. Translators: a message dialog asking to retry or cancel when NVDA install fails
 #: gui\installerGui.py:44
-msgid "The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again."
-msgstr "De installatie is niet in staat een bestand te verwijderen of te overschrijven. Misschien is er een andere NVDA-versie actief op een ander aangemeld gebruikersprofiel. Zorg er aub voor dat alle geïnstalleerde versies van NVDA uitgeschakeld zijn en herbegin de installatie."
+msgid ""
+"The installation is unable to remove or overwrite a file. Another copy of "
+"NVDA may be running on another logged-on user account. Please make sure all "
+"installed copies of NVDA are shut down and try the installation again."
+msgstr ""
+"De installatie is niet in staat een bestand te verwijderen of te "
+"overschrijven. Misschien is er een andere NVDA-versie actief op een ander "
+"aangemeld gebruikersprofiel. Zorg er aub voor dat alle geïnstalleerde "
+"versies van NVDA uitgeschakeld zijn en herbegin de installatie."
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:46
-#: gui\installerGui.py:224
+#: gui\installerGui.py:46 gui\installerGui.py:224
 msgid "File in Use"
 msgstr "Bestand in gebruik"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui\installerGui.py:52
-msgid "The installation of NVDA failed. Please check the Log Viewer for more information."
-msgstr "De installatie van NVDA is mislukt. Bekijk aub de Log Viewer voor meer informatie."
+msgid ""
+"The installation of NVDA failed. Please check the Log Viewer for more "
+"information."
+msgstr ""
+"De installatie van NVDA is mislukt. Bekijk aub de Log Viewer voor meer "
+"informatie."
 
 #. Translators: The message displayed when NVDA has been successfully installed.
 #: gui\installerGui.py:60
@@ -4824,9 +5074,7 @@ msgid "Please press OK to start the installed copy."
 msgstr "Druk OK om de geïnstalleerde kopie te starten."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
-#: gui\installerGui.py:67
-#: gui\installerGui.py:237
-#: gui\settingsDialogs.py:242
+#: gui\installerGui.py:67 gui\installerGui.py:237 gui\settingsDialogs.py:242
 msgid "Success"
 msgstr "Gelukt"
 
@@ -4842,13 +5090,21 @@ msgstr "Druk op de knop Doorgaan om NVDA op uw harde schijf te installeren."
 
 #. Translators: An informational message in the Install NVDA dialog.
 #: gui\installerGui.py:88
-msgid "A previous copy of NVDA has been found on your system. This copy will be updated."
-msgstr "Er is een oudere versie van NVDA gevonden op uw systeem. Deze versie wordt bijgewerkt"
+msgid ""
+"A previous copy of NVDA has been found on your system. This copy will be "
+"updated."
+msgstr ""
+"Er is een oudere versie van NVDA gevonden op uw systeem. Deze versie wordt "
+"bijgewerkt"
 
 #. Translators: a message in the installer telling the user NVDA is now located in a different place.
 #: gui\installerGui.py:91
-msgid "The installation path for NVDA has changed. it will now  be installed in {path}"
-msgstr "Het installatiepad voor NVDA is gewijzigd. Het wordt nu geïnstalleerd op {path}"
+msgid ""
+"The installation path for NVDA has changed. it will now  be installed in "
+"{path}"
+msgstr ""
+"Het installatiepad voor NVDA is gewijzigd. Het wordt nu geïnstalleerd op "
+"{path}"
 
 #. Translators: The label of a checkbox option in the Install NVDA dialog.
 #: gui\installerGui.py:96
@@ -4871,8 +5127,7 @@ msgid "Copy &portable configuration to current user account"
 msgstr "Kopieer de &draagbare configuratie naar de huidige gebruikersaccount"
 
 #. Translators: The label of a button to continue with the operation.
-#: gui\installerGui.py:118
-#: gui\installerGui.py:167
+#: gui\installerGui.py:118 gui\installerGui.py:167
 msgid "&Continue"
 msgstr "&Doorgaan"
 
@@ -4883,8 +5138,12 @@ msgstr "Draagbare NVDA aanmaken"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
 #: gui\installerGui.py:145
-msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
-msgstr "Om een draagbare versie van NVDA aan te maken, kiest u een map en andere voorkeuren en dan klikt u op Doorgaan"
+msgid ""
+"To create a portable copy of NVDA, please select the path and other options "
+"and then press Continue"
+msgstr ""
+"Om een draagbare versie van NVDA aan te maken, kiest u een map en andere "
+"voorkeuren en dan klikt u op Doorgaan"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
@@ -4929,7 +5188,8 @@ msgstr "Bezig met aanmaken van Draagbare Versie"
 #. Translators: The message displayed while a portable copy of NVDA is bieng created.
 #: gui\installerGui.py:214
 msgid "Please wait while a portable copy of NVDA is created."
-msgstr "Een draagbare versie van NVDA wordt aangemaakt. Even geduld alstublieft."
+msgstr ""
+"Een draagbare versie van NVDA wordt aangemaakt. Even geduld alstublieft."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
 #: gui\installerGui.py:222
@@ -4989,7 +5249,7 @@ msgstr "Informatie"
 #. Translators: One of the log levels of NVDA (the debug warning shows debugging messages and warnings as NVDA runs).
 #: gui\settingsDialogs.py:118
 msgid "debug warning"
-msgstr "Debug waarschuwing"
+msgstr "debugwaarschuwing"
 
 #. Translators: One of the log levels of NVDA (the input/output shows keyboard commands and/or braille commands as well as speech and/or braille output of NVDA).
 #: gui\settingsDialogs.py:120
@@ -5033,13 +5293,18 @@ msgstr "Niveau van loggen"
 
 #. Translators: The label for a setting in general settings to allow NVDA to come up in Windows login screen (useful if user needs to enter passwords or if multiple user accounts are present to allow user to choose the correct account).
 #: gui\settingsDialogs.py:178
-msgid "Use NVDA on the Windows logon screen (requires administrator privileges)"
+msgid ""
+"Use NVDA on the Windows logon screen (requires administrator privileges)"
 msgstr "NVDA gebruiken bij windows-aan&melding (administrator rechten vereist)"
 
 #. Translators: The label for a button in general settings to copy current user settings to system settings (to allow current settings to be used in secure screens such as User Account Control (UAC) dialog).
 #: gui\settingsDialogs.py:184
-msgid "Use currently saved settings on the logon and other secure screens (requires administrator privileges)"
-msgstr "Huidige instellingen van NVDA gebruiken bij windows-aan&melding (administrative rechten vereist)"
+msgid ""
+"Use currently saved settings on the logon and other secure screens (requires "
+"administrator privileges)"
+msgstr ""
+"Huidige instellingen van NVDA gebruiken bij windows-aan&melding "
+"(administrative rechten vereist)"
 
 #. Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 #: gui\settingsDialogs.py:191
@@ -5048,8 +5313,14 @@ msgstr "Automatisch controleren op NVDA &updates"
 
 #. Translators: A message to warn the user when attempting to copy current settings to system settings.
 #: gui\settingsDialogs.py:205
-msgid "Custom plugins were detected in your user settings directory. Copying these to the system profile could be a security risk. Do you still wish to copy your settings?"
-msgstr "Er zijn plugins aanwezig in de gebruikersconfiguratiemap. Het kopiëren van deze plugins naar de systeemdirectory kan een beveiligingsrisico vormen. Wilt u nog steeds uw instellingen kopieeren?"
+msgid ""
+"Custom plugins were detected in your user settings directory. Copying these "
+"to the system profile could be a security risk. Do you still wish to copy "
+"your settings?"
+msgstr ""
+"Er zijn plugins aanwezig in de gebruikersconfiguratiemap. Het kopiëren van "
+"deze plugins naar de systeemdirectory kan een beveiligingsrisico vormen. "
+"Wilt u nog steeds uw instellingen kopieeren?"
 
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 #: gui\settingsDialogs.py:207
@@ -5064,12 +5335,19 @@ msgstr "Instellingen kopiëren"
 #. Translators: The message displayed while settings are being copied to the system configuration (for use on Windows logon etc)
 #: gui\settingsDialogs.py:215
 msgid "Please wait while settings are copied to the system configuration."
-msgstr "Even geduld terwijl instellingen worden gekopiëerd naar de systeemconfiguratie."
+msgstr ""
+"Even geduld terwijl instellingen worden gekopieerd naar de "
+"systeemconfiguratie."
 
 #. Translators: a message dialog asking to retry or cancel when copying settings  fails
 #: gui\settingsDialogs.py:224
-msgid "Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to."
-msgstr "Een bestand kan niet worden gekopieerd. Misschien is het momenteel in gebruik door een ander proces of u heeft onvoldoende vrije schijfruimte op de schijf waarnaar u kopieert."
+msgid ""
+"Unable to copy a file. Perhaps it is currently being used by another process "
+"or you have run out of disc space on the drive you are copying to."
+msgstr ""
+"Een bestand kan niet worden gekopieerd. Misschien is het momenteel in "
+"gebruik door een ander proces of u heeft onvoldoende vrije schijfruimte op "
+"de schijf waarnaar u kopieert."
 
 #. Translators: the title of a retry cancel dialog when copying settings  fails
 #: gui\settingsDialogs.py:226
@@ -5079,7 +5357,8 @@ msgstr "Fout bij het kopiëren"
 #. Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
 #: gui\settingsDialogs.py:239
 msgid "Error copying NVDA user settings"
-msgstr "Er is een fout opgetreden bij het kopiëren van NVDA gebruikersinstellingen"
+msgstr ""
+"Er is een fout opgetreden bij het kopiëren van NVDA gebruikersinstellingen"
 
 #. Translators: The message displayed when copying configuration to system settings was successful.
 #: gui\settingsDialogs.py:242
@@ -5105,8 +5384,15 @@ msgstr "Onvoldoende rechten"
 
 #. Translators: The message displayed after NVDA interface language has been changed.
 #: gui\settingsDialogs.py:273
-msgid "For the new language to take effect, the configuration must be saved and NVDA must be restarted. Press enter to save and restart NVDA, or cancel to manually save and exit at a later time."
-msgstr "Om de nieuwe taal-instelling toe te passen, moet de huidige configuratie opgeslagen, en NVDA opnieuw gestart worden. Druk op \"OK\" om de configuratie nu op te slaan en NVDA te herstarten, of druk op \"Annuleren\" om dit op een later tijdstip te doen."
+msgid ""
+"For the new language to take effect, the configuration must be saved and "
+"NVDA must be restarted. Press enter to save and restart NVDA, or cancel to "
+"manually save and exit at a later time."
+msgstr ""
+"Om de nieuwe taal-instelling toe te passen, moet de huidige configuratie "
+"opgeslagen, en NVDA opnieuw gestart worden. Druk op \"OK\" om de "
+"configuratie nu op te slaan en NVDA te herstarten, of druk op \"Annuleren\" "
+"om dit op een later tijdstip te doen."
 
 #. Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 #: gui\settingsDialogs.py:275
@@ -5246,7 +5532,8 @@ msgstr "Spraakonderbreking bij drukken van Enter"
 #. keyboard settings dialog.
 #: gui\settingsDialogs.py:642
 msgid "Beep if typing lowercase letters when caps lock is on"
-msgstr "Piep als kleine letters worden getypt terwijl caps lock is ingeschakeld"
+msgstr ""
+"Piep als kleine letters worden getypt terwijl caps lock is ingeschakeld"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -5327,7 +5614,7 @@ msgstr "Volg &muisaanwijzer"
 #. review cursor settings dialog.
 #: gui\settingsDialogs.py:750
 msgid "Simple review mode"
-msgstr "Eenvoudige review mode"
+msgstr "Eenvoudige leesoverzichtmodus"
 
 #. Translators: This is the label for the Input Composition settings dialog.
 #: gui\settingsDialogs.py:766
@@ -5350,7 +5637,9 @@ msgstr "Kondig &geselecteerde kandidaat aan"
 #. Input composition settings dialog.
 #: gui\settingsDialogs.py:781
 msgid "Always include short character &description when announcing candidates"
-msgstr "Altijd korte karakter&beschrijving toevoegen bij het aankondigen van kandidaten"
+msgstr ""
+"Altijd korte karakter&beschrijving toevoegen bij het aankondigen van "
+"kandidaten"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
@@ -5418,7 +5707,8 @@ msgstr "&Positie-informatie van object weergeven"
 #. object presentation settings dialog.
 #: gui\settingsDialogs.py:851
 msgid "Guess object &position information when unavailable"
-msgstr "&Informatie over de positie van een object raden als die niet beschikbaar is"
+msgstr ""
+"&Informatie over de positie van een object raden als die niet beschikbaar is"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5430,13 +5720,13 @@ msgstr "Object&beschrijvingen weergeven"
 #. object presentation settings dialog.
 #: gui\settingsDialogs.py:862
 msgid "Progress &bar output:"
-msgstr "Weergave van &voortschreidingsbalk:"
+msgstr "Weergave van &voortgangsbalk:"
 
 #. Translators: This is the name of a combobox in the
 #. object presentation settings dialog.
 #: gui\settingsDialogs.py:867
 msgid "Progress bar output"
-msgstr "Weergave voortschreidingsbalk"
+msgstr "Weergave voortgangsbalk"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5512,7 +5802,9 @@ msgstr "Documentopmaak"
 #. document formatting settings dialog.
 #: gui\settingsDialogs.py:983
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Wijzigingen van opmaak achter de cursor weergeven (kan vertragingen veroorzaken)"
+msgstr ""
+"Wijzigingen van opmaak achter de cursor weergeven (kan vertragingen "
+"veroorzaken)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5548,7 +5840,7 @@ msgstr "&Kleuren melden"
 #. document formatting settings dialog.
 #: gui\settingsDialogs.py:1013
 msgid "Report &editor revisions"
-msgstr ""
+msgstr "Aangebrachte &wijzigingen in de tekst melden "
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5566,7 +5858,7 @@ msgstr "Spel&fouten melden"
 #. document formatting settings dialog.
 #: gui\settingsDialogs.py:1028
 msgid "Report &pages"
-msgstr "&Pagina's melden"
+msgstr "&Paginanummers melden"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5646,15 +5938,14 @@ msgid "&Pattern"
 msgstr "&Patroon"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:1127
-#: gui\settingsDialogs.py:1454
+#: gui\settingsDialogs.py:1127 gui\settingsDialogs.py:1454
 msgid "&Replacement"
 msgstr "&Vervanging"
 
 #. Translators: This is a label for an edit field in add dictionary entry dialog.
 #: gui\settingsDialogs.py:1131
 msgid "&Comment"
-msgstr "&Commentaar"
+msgstr "&Opmerking"
 
 #. Translators: This is a label for a checkbox in add dictionary entry dialog.
 #: gui\settingsDialogs.py:1135
@@ -5674,7 +5965,7 @@ msgstr "&Woordenboekregels"
 #. Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 #: gui\settingsDialogs.py:1165
 msgid "Comment"
-msgstr "Commentaar"
+msgstr "Opmerking"
 
 #. Translators: The label for a column in dictionary entries list used to identify pattern (original word or a pattern).
 #: gui\settingsDialogs.py:1167
@@ -5682,8 +5973,7 @@ msgid "Pattern"
 msgstr "Patroon"
 
 #. Translators: The label for a column in dictionary entries list and in a list of symbols from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:1169
-#: gui\settingsDialogs.py:1440
+#: gui\settingsDialogs.py:1169 gui\settingsDialogs.py:1440
 msgid "Replacement"
 msgstr "Vervanging"
 
@@ -5809,11 +6099,15 @@ msgstr "&Niveau"
 #. Translators: Information about NVDA's new laptop keyboard layout.
 #: gui\upgradeAlerts.py:18
 msgid ""
-"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in order to make it more intuitive and consistent.\n"
-"If you use the laptop layout, please see the What's New document for more information."
+"In NVDA 2013.1, the laptop keyboard layout has been completely redesigned in "
+"order to make it more intuitive and consistent.\n"
+"If you use the laptop layout, please see the What's New document for more "
+"information."
 msgstr ""
-"In NVDA 2013.1 is de toetsenbordindeling voor laptops grondig gewijzigd om ze meer intuïtief en consistenter te maken.\n"
-"Als u de indeling voor laptops gebruikt, lees dan het document dat beschrijft wat er nieuw is in deze versie."
+"In NVDA 2013.1 is de toetsenbordindeling voor laptops grondig gewijzigd om "
+"ze meer intuïtief en consistenter te maken.\n"
+"Als u de indeling voor laptops gebruikt, lees dan het document dat "
+"beschrijft wat er nieuw is in deze versie."
 
 #. Translators: The title of a dialog providing information about NVDA's new laptop keyboard layout.
 #: gui\upgradeAlerts.py:24
@@ -5869,8 +6163,7 @@ msgid "word"
 msgstr "woord"
 
 #. Translators: This is spoken and brailled to indicate a landmark (example output: main landmark).
-#: virtualBuffers\__init__.py:236
-#: virtualBuffers\__init__.py:245
+#: virtualBuffers\__init__.py:236 virtualBuffers\__init__.py:245
 #, python-format
 msgid "%s landmark"
 msgstr "oriëntatiepunt %s"
@@ -5964,8 +6257,12 @@ msgstr "scherm layout uit"
 
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
 #: virtualBuffers\__init__.py:867
-msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
-msgstr "In en uitschakelen van het behouden van de scherm lay-out tijdens het vernieuwen van het document"
+msgid ""
+"Toggles on and off if the screen layout is preserved while rendering the "
+"document content"
+msgstr ""
+"In en uitschakelen van het behouden van de scherm lay-out tijdens het "
+"vernieuwen van het document"
 
 #. Translators: the description for the elements list dialog script on virtualBuffers.
 #: virtualBuffers\__init__.py:952
@@ -6000,20 +6297,21 @@ msgstr "Navigeert naar de vorige kolom van de tabel"
 
 #. Translators: Reported when the user attempts to move to the start or end of a container (list, table, etc.)
 #. But there is no container.
-#: virtualBuffers\__init__.py:1450
-#: virtualBuffers\__init__.py:1464
+#: virtualBuffers\__init__.py:1450 virtualBuffers\__init__.py:1464
 msgid "Not in a container"
 msgstr "Niet in een container"
 
 #. Translators: Description for the Move to start of container command in browse mode.
 #: virtualBuffers\__init__.py:1457
 msgid "Moves to the start of the container element, such as a list or table"
-msgstr "Gaat naar het begin van het container element, zoals een lijst of tabel"
+msgstr ""
+"Gaat naar het begin van het container element, zoals een lijst of tabel"
 
 #. Translators: Description for the Move past end of container command in browse mode.
 #: virtualBuffers\__init__.py:1477
 msgid "Moves past the end  of the container element, such as a list or table"
-msgstr "Gaat voorbij het einde van het container element, zoals een lijst of tabel"
+msgstr ""
+"Gaat voorbij het einde van het container element, zoals een lijst of tabel"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: virtualBuffers\__init__.py:1515
@@ -6560,17 +6858,19 @@ msgstr "activeren"
 msgid "Desktop"
 msgstr "Bureaublad"
 
-#: NVDAObjects\window\edit.py:260
-#: NVDAObjects\window\edit.py:261
+#: NVDAObjects\window\edit.py:260 NVDAObjects\window\edit.py:261
 msgid "default color"
 msgstr "standaardkleur"
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
-#: NVDAObjects\window\excel.py:193
-#: NVDAObjects\window\excel.py:210
-msgid "Cannot set headers. Please enable reporting of table headers in Document Formatting Settings"
-msgstr "Kan geen hoofdingen instellen. Schakel het melden van tabelhoofdingen in bij de Documentopmaak instellingen"
+#: NVDAObjects\window\excel.py:193 NVDAObjects\window\excel.py:210
+msgid ""
+"Cannot set headers. Please enable reporting of table headers in Document "
+"Formatting Settings"
+msgstr ""
+"Kan geen hoofdingen instellen. Schakel het melden van tabelhoofdingen in bij "
+"de Documentopmaak instellingen"
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #: NVDAObjects\window\excel.py:198
@@ -6583,8 +6883,12 @@ msgid "Cleared column header row"
 msgstr "Dit is niet langer de rij die kolomhoofdingen bevat."
 
 #: NVDAObjects\window\excel.py:203
-msgid "Pressing once will set the current row as the row where column headers should be found. Pressing twice clears the setting."
-msgstr "Een keer drukken, stelt de huidige rij in als de rij die de kolomhoofdingen bevat. Tweemaal drukken, maakt de instelling ongedaan."
+msgid ""
+"Pressing once will set the current row as the row where column headers "
+"should be found. Pressing twice clears the setting."
+msgstr ""
+"Een keer drukken, stelt de huidige rij in als de rij die de kolomhoofdingen "
+"bevat. Tweemaal drukken, maakt de instelling ongedaan."
 
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
 #: NVDAObjects\window\excel.py:215
@@ -6597,8 +6901,12 @@ msgid "Cleared row header column"
 msgstr "Dit is niet langer de kolom die rijhoofdingen bevat."
 
 #: NVDAObjects\window\excel.py:220
-msgid "Pressing once will set the current column as the column where row headers should be found. Pressing twice clears the setting."
-msgstr "Een keer drukken, stelt de huidige kolom in als de kolom die de rijhoofdingen bevat. Tweemaal drukken, maakt de instelling ongedaan."
+msgid ""
+"Pressing once will set the current column as the column where row headers "
+"should be found. Pressing twice clears the setting."
+msgstr ""
+"Een keer drukken, stelt de huidige kolom in als de kolom die de "
+"rijhoofdingen bevat. Tweemaal drukken, maakt de instelling ongedaan."
 
 #. Translators: This is presented in Excel when the current cell contains a formula.
 #: NVDAObjects\window\excel.py:285
@@ -6610,134 +6918,150 @@ msgstr "bevat formule"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "van {firstAddress} {firstContent} tot {lastAddress} {lastContent}"
 
-#: NVDAObjects\window\winword.py:119
-msgid "insertion"
-msgstr ""
-
+#. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:120
-msgid "deletion"
-msgstr ""
+msgid "insertion"
+msgstr "invoeging"
 
-#: NVDAObjects\window\winword.py:121
+#. Translators: a Microsoft Word revision type (deleted content)
+#: NVDAObjects\window\winword.py:122
+msgid "deletion"
+msgstr "verwijdering"
+
+#. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
+#: NVDAObjects\window\winword.py:124
 msgid "property"
 msgstr "eigenschap"
 
-#: NVDAObjects\window\winword.py:122
+#. Translators: a Microsoft Word revision type (changed paragraph number)
+#: NVDAObjects\window\winword.py:126
 msgid "paragraph number"
-msgstr ""
+msgstr "paragraafnummer"
 
-#: NVDAObjects\window\winword.py:123
-msgid "display field"
-msgstr ""
-
-#: NVDAObjects\window\winword.py:124
-msgid "reconcile"
-msgstr ""
-
-#: NVDAObjects\window\winword.py:125
-msgid "conflict"
-msgstr ""
-
-#: NVDAObjects\window\winword.py:127
-msgid "replace"
-msgstr ""
-
+#. Translators: a Microsoft Word revision type (display field)
 #: NVDAObjects\window\winword.py:128
+msgid "display field"
+msgstr "veldweergave"
+
+#. Translators: a Microsoft Word revision type (reconcile)
+#: NVDAObjects\window\winword.py:130
+msgid "reconcile"
+msgstr "overeenstemming"
+
+#. Translators: a Microsoft Word revision type (conflicting revision)
+#: NVDAObjects\window\winword.py:132
+msgid "conflict"
+msgstr "conflict"
+
+#. Translators: a Microsoft Word revision type (replaced content)
+#: NVDAObjects\window\winword.py:136
+msgid "replace"
+msgstr "vervanging"
+
+#. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
+#: NVDAObjects\window\winword.py:138
 msgid "paragraph property"
 msgstr "paragraafeigenschap"
 
-#: NVDAObjects\window\winword.py:129
+#. Translators: a Microsoft Word revision type (table)
+#: NVDAObjects\window\winword.py:140
 msgid "table property"
 msgstr "tabeleigenschap"
 
-#: NVDAObjects\window\winword.py:130
+#. Translators: a Microsoft Word revision type (section property)
+#: NVDAObjects\window\winword.py:142
 msgid "section property"
-msgstr ""
+msgstr "sectieeigenschap"
 
-#: NVDAObjects\window\winword.py:131
+#. Translators: a Microsoft Word revision type (style definition)
+#: NVDAObjects\window\winword.py:144
 msgid "style definition"
-msgstr ""
+msgstr "stijldefinitie"
 
-#: NVDAObjects\window\winword.py:132
+#. Translators: a Microsoft Word revision type (moved from)
+#: NVDAObjects\window\winword.py:146
 msgid "moved from"
-msgstr ""
+msgstr "verplaatst van"
 
-#: NVDAObjects\window\winword.py:133
+#. Translators: a Microsoft Word revision type (moved to)
+#: NVDAObjects\window\winword.py:148
 msgid "moved to"
-msgstr ""
+msgstr "verplaatst naar"
 
-#: NVDAObjects\window\winword.py:134
+#. Translators: a Microsoft Word revision type (inserted table cell)
+#: NVDAObjects\window\winword.py:150
 msgid "cell insertion"
-msgstr ""
+msgstr "celinvoeging"
 
-#: NVDAObjects\window\winword.py:135
+#. Translators: a Microsoft Word revision type (deleted table cell)
+#: NVDAObjects\window\winword.py:152
 msgid "cell deletion"
-msgstr ""
+msgstr "celverwijdering"
 
-#: NVDAObjects\window\winword.py:136
+#. Translators: a Microsoft Word revision type (merged table cells)
+#: NVDAObjects\window\winword.py:154
 msgid "cell merge"
-msgstr ""
+msgstr "celsamenvoeging"
 
-#: NVDAObjects\window\winword.py:140
+#: NVDAObjects\window\winword.py:158
 msgid "Comments"
-msgstr "Commentaar"
+msgstr "Opmerkingen"
 
-#: NVDAObjects\window\winword.py:141
+#: NVDAObjects\window\winword.py:159
 msgid "Endnotes"
 msgstr "Eindnoten"
 
-#: NVDAObjects\window\winword.py:142
+#: NVDAObjects\window\winword.py:160
 msgid "Even pages footer"
 msgstr "Voettekst op even pagina's"
 
-#: NVDAObjects\window\winword.py:143
+#: NVDAObjects\window\winword.py:161
 msgid "Even pages header"
 msgstr "Koptekst op even pagina's"
 
-#: NVDAObjects\window\winword.py:144
+#: NVDAObjects\window\winword.py:162
 msgid "First page footer"
 msgstr "Voettekst op eerste pagina"
 
-#: NVDAObjects\window\winword.py:145
+#: NVDAObjects\window\winword.py:163
 msgid "First page header"
 msgstr "Koptekst op eerste pagina"
 
-#: NVDAObjects\window\winword.py:146
+#: NVDAObjects\window\winword.py:164
 msgid "Footnotes"
 msgstr "Voetnoten"
 
-#: NVDAObjects\window\winword.py:147
+#: NVDAObjects\window\winword.py:165
 msgid "Primary footer"
 msgstr "Voettekst op eerste pagina"
 
-#: NVDAObjects\window\winword.py:148
+#: NVDAObjects\window\winword.py:166
 msgid "Primary header"
 msgstr "Koptekst op eerste pagina"
 
-#: NVDAObjects\window\winword.py:149
+#: NVDAObjects\window\winword.py:167
 msgid "Text frame"
 msgstr "Tekstkader"
 
-#: NVDAObjects\window\winword.py:348
+#: NVDAObjects\window\winword.py:366
 msgid "unknown author"
 msgstr "auteur onbekend"
 
-#: NVDAObjects\window\winword.py:349
+#: NVDAObjects\window\winword.py:367
 msgid "unknown date"
 msgstr "Datum onbekend"
 
-#: NVDAObjects\window\winword.py:350
+#: NVDAObjects\window\winword.py:368
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} door {revisionAuthor} op {revisionDate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:542
-#: NVDAObjects\window\winword.py:552
+#: NVDAObjects\window\winword.py:560 NVDAObjects\window\winword.py:570
 msgid "Not in table"
 msgstr "Niet in een tabel"
 
-#: NVDAObjects\window\winword.py:575
+#: NVDAObjects\window\winword.py:593
 msgid "Edge of table"
 msgstr "Tabelrand"
 

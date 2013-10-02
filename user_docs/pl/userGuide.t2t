@@ -26,7 +26,7 @@ Najważniejsze właściwości NVDA to:
 - Tłumaczenie na 44 języki
 - Wsparcie dla współczesnych systemów operacyjnych Windows, zarówno 32 jak i 64 bitowych
 - Możliwość dostępu do ekranu logowania w systemie oraz innych zabezpieczonych ekranów.
-- Wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge. UI Automation i iAccessible2 są także wspierane, jednak ich obsługa dostępna jest tylko pod kontrolą systemu Windows7 i wyższych.
+- Wsparcie dla wspólnych interfejsów dostępności, takich jak Microsoft Active Accessibility, Java Access Bridge, iAccessible2, UI Automation. UI Automation jest obsługiwany tylko pod kontrolą systemów Windows 7 i wyższych.
 - Wsparcie dla wiersza poleceń systemu Windows i aplikacji konsolowych.
 -
 
@@ -149,8 +149,8 @@ Trzecie pole wyboru określa czy to okienko dialogowe ma się pojawiać przy ka�
 ++ Polecenia klawiszowe w NVDA ++
 
 +++ Klawisz komend NVDA +++
-Większość poleceń programu NVDA składa się z kombinacji klawiszy, w tym specjalnego klawisza NVDA.
-Wyjątkiem są polecenia przeglądu tekstu, które przypisane są do pojedynczych klawiszy numerycznych.
+Większość poleceń programu NVDA wymaga naciśnięcia specjalnego klawisza zwanego klawiszem NVDA w połączeniu z innymi klawiszami.
+Wyjątkiem są polecenia przeglądu tekstu, które przypisane są do pojedynczych klawiszy numerycznych, oraz niektóre inne polecenia.
 
 Można skonfigurować NVDA tak, by klawisz Insert znajdujący się na klawiaturze numerycznej, jak i klawisz Insert znajdujący się w pobliżu klawiszy strzałek, albo klawisz Capslock mogły zostać użyte jako specjalny klawisz poleceń NVDA.
 
@@ -462,7 +462,7 @@ Dodatkowo możesz wymusić tryb formularza, który pozostanie wówczas aktywny d
 | Znajdź | NVDA+kontrol+f | Pojawia się okno dialogowe, w którym można wpisać tekst, aby przeszukać aktualny dokument |
 | Znajdź następny | NVDA+f3 | Znajduje w dokumencie następne wystąpienie wyszukiwanego wcześniej tekstu |
 | Znajdź poprzedni | NVDA+shift+f3 | Znajduje w dokumencie poprzednie wystąpienie wyszukiwanego wcześniej tekstu |
-| otwórz długi opis| NVDA+d | otwiera nowe okno zawierające długi opis elementu, na którym się znajdujesz (jeśli dla tego elementu długi opis został zdefiniowany) | 
+| otwórz długi opis | NVDA+d | otwiera nowe okno zawierające długi opis elementu, na którym się znajdujesz (jeśli dla tego elementu długi opis został zdefiniowany) | 
 %kc:endInclude
 
 
@@ -847,7 +847,7 @@ Zawiera następujące opcje:
 ==== Śledź punkt uwagi ====
 Skrót Klawiszowy: NVDA+7
 
-Gdy opcja jest włączona, kursor przeglądu zawsze zostanie w tym samym obiekcie, gdy aktualny punkt uwagi się zmienia.
+Gdy opcja jest włączona, kursor przeglądu zawsze zostanie umieszczony w tym samym obiekcie, w którym znajduje się punkt uwagi, gdy aktualny punkt uwagi się zmieni.
 
 %kc:setting
 ==== Śledź kursor systemu ====
@@ -996,6 +996,7 @@ Możemy w ten sposób skonfigurować odczytywanie:
 - Atrybutów czcionki
 - Wyrównania tekstu
 - Kolorów
+- zmian edycyjnych
 - Stylu tekstu
 - Błędów pisowni
 - numerów stron
@@ -1833,10 +1834,6 @@ Jeśli chcesz usunąć to powiązanie, dodaj poniższą linię:
 	None = kb:NVDA+f12
 ```
 
-O ile możesz mieć skrypty powiązane z dowolnymi dostępnymi klawiszami,problematyczne może okazać się użycie klawisza alt na klawiaturze.
-NVDA wysyła do systemu operacyjnego klawisze modyfikatorów (takie jak shift, control i alt), nawet jeśli wywołują one jakiś skrypt.
-Jeśli więc użyjesz klawisza alt w zdarzeniu wejścia, naciśnięcie tej kombinacji klawiszy może aktywować pasek menu, a przy tym uruchomić przypisany skrypt.
-Najlepiej więc po prostu używać jako modyfikatorów Shift, control i klawisza NVDA.
 
 ++ Zaawansowana edycja wymowy symboli ++
 Możliwa jest  edycja wymowy symboli wykraczająca poza to, co daje okno dialogowe [Wymowa znaków i symboli #SymbolPronunciation]. 

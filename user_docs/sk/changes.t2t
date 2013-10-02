@@ -3,7 +3,26 @@
 
 %!includeconf: ../changes.t2tconf
 
-= 2013.2 =
+= 2013.3 =
+
+== Nové vlastnosti ==
+- NVDa oznamuje polia formulárov v dokumentoch programu Microsoft word. (#2295)
+- NVDA odteraz môže oznamovať revízie dokumentu v programe Microsot Word, ak je v MS office zapnuté sledovanie zmien. Je však potrebné tiež začiarknuť možnosť sledovať zmeny v nastaveniach čítania textu. Položka je predvolene odčiarknutá. (#1670)
+- Rozbaľovacie zoznamy v programe Microsoft Excel 2003 až 2010 sú oznamované pri otvorení a navigácii. (#3382)
+
+
+== Opravy ==
+- Zend Studio funguje tak, ako Eclipse. (#3420)
+- NVDA automaticky oznamuje zmenu niektorých začiarkávacích polí pri vytváraní pravidiel v MS Outlooku 2010. (#3063)
+- NVDA oznámi pripnutie prvkov, ak sú prvky pripnuté, napríklad záložky V aplikácii Mozilla Firefox. (#3372)
+- odteraz je možné priradiť skriptom klávesovú skratku obsahujúcu modifikátori alt a windows. Doteraz použitie takýchto skratiek spôsobilo otvorenie panela ponúk alebo ponuky štart. (#3472)
+- Výber textu v režime prehliadania pomocou skratky ctrl+shift+end viac nespôsobí nečakanú zmenu rozloženia klávesnice v systémoch, v ktorých je nainštalovaných viacero rozložení klávesnice. (#3472)
+- Internet explorer nezamrzne alebo nespadne po ukončení NVDA.
+- Fyzické pohyby alebo iné udalosti na nových počítačoch nie sú spracované ako príkazy z klávesnice. Toto spôsobovalo prerušovanie reči alebo nečakané spúšťanie príkazov NVDA. (#3468)
+- NVDA správne pracuje v programe Poedit 1.5.7. Tí, ktorí používajú staršie verzie musia aktualizovať na aktuálnu verziu. (#3485)
+
+
+== 2013.2 =
 
 == Nové vlastnosti ==
 - Podpora pre Chromium Framework, čo je webový prvok, ktorý využívajú mnohé aplikácie. (#3108)

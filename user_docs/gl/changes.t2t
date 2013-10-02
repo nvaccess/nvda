@@ -3,6 +3,25 @@ Que hai de Novo no NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.3 =
+
+== Novas Características ==
+- Os campos de formulario  agora anúncianse nos documentos de Microsoft word. (#2295)
+- As listas despregables no Microsoft Excel 2003 ó 2010 agora anúncianse cando se abran e naveguen. (#3382)
+
+
+== Corrección de fallos ==
+- Zend Studio agora funciona igual que Eclipse. (#3420)
+- O cambio de estado de certas casiñas de verificación no diálogo de regras de correo do Microsoft Outlook 2010 agora anúnciase automáticamente. (#3063)
+- NVDA agora anunciará o estado fixado para controis fixos como  pestanas en Mozilla Firefox. (#3372)
+- NVDA agora pode anunciar información de revisión no Microsoft Word cando o Control de Cambios  estea habilitado. Ten en conta que Anunciar revisións do editor debe estar habilitado no diálogo de formateado de documentos do NVDA (desactivado predeterminadamente) tamén para que sexan anunciados. (#1670)
+- Agora é posible vincular scripts a xestos de teclado que conteñan as teclas Alt e/ou Windows como modificadoras. Anteriormente, se se facía esto, a execución do script causaba a activación do menú Inicio ou da barra de menú. (#3472)
+- Ó seleccionar texto en documentos en modo navegación (por exemplo ó utilizar control+shift+fin) xa non causa que se cambie a distribución de teclado en sistemas con varias distribucións de teclado instaladas. (#3472)
+- Internet Explorer xa non debería colgarse ou voltarse inusable  cando se pecha NVDA. (#3397)
+- O movemento físico e outros eventos nalgúns ordenadores modernos xa  non se trata como pulsacións de teclas inapropriadas. Anteriormente, esto silenciaba a voz e algunhas veces facía funcionar ordes do NVDA. (#3468)
+- NVDA agora compórtase como se esperaba enPoedit 1.5.7. os usuarios que utilicen versións anteriores necesitarán actualizar. (#3485)
+
+
 = 2013.2 =
 
 == Novas Características ==
