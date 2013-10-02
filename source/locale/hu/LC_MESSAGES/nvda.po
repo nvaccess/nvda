@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 19:09+1000\n"
+"POT-Creation-Date: 2013-09-17 19:08+1000\n"
 "PO-Revision-Date: 2013-08-25 11:16+0100\n"
 "Last-Translator: Erion <None>\n"
 "Language-Team: NVDA Honosítási project <nvda@nvda.hu>\n"
@@ -1527,7 +1527,8 @@ msgid "subscript"
 msgstr "alsó index"
 
 #. Translators: Describes style of text.
-#: controlTypes.py:440 NVDAObjects\window\winword.py:126
+#. Translators: a Microsoft Word revision type (style change)
+#: controlTypes.py:440 NVDAObjects\window\winword.py:134
 msgid "style"
 msgstr "stílus"
 
@@ -3250,14 +3251,21 @@ msgstr "Asztal"
 msgid "laptop"
 msgstr "Laptop"
 
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
+#. Translators: Reported for an unknown key press.
+#. %s will be replaced with the key code.
+#: keyboardHandler.py:354
+#, fuzzy, python-format
+msgid "unknown %s"
+msgstr "ismeretlen"
+
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
 msgid "on"
 msgstr "bekapcsolva"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:813
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:813
 #: gui\settingsDialogs.py:1174
 msgid "off"
 msgstr "kikapcsolva"
@@ -6886,148 +6894,165 @@ msgstr "képletet tartalmaz"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} től {lastAddress} {lastContent} ig"
 
-#: NVDAObjects\window\winword.py:119
+#. Translators: a Microsoft Word revision type (inserted content)
+#: NVDAObjects\window\winword.py:120
 #, fuzzy
 msgid "insertion"
 msgstr "bekezdés"
 
-#: NVDAObjects\window\winword.py:120
+#. Translators: a Microsoft Word revision type (deleted content)
+#: NVDAObjects\window\winword.py:122
 #, fuzzy
 msgid "deletion"
 msgstr "delete"
 
-#: NVDAObjects\window\winword.py:121
+#. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
+#: NVDAObjects\window\winword.py:124
 #, fuzzy
 msgid "property"
 msgstr "tulajdonságlap"
 
-#: NVDAObjects\window\winword.py:122
+#. Translators: a Microsoft Word revision type (changed paragraph number)
+#: NVDAObjects\window\winword.py:126
 #, fuzzy
 msgid "paragraph number"
 msgstr "bekezdés"
 
-#: NVDAObjects\window\winword.py:123
+#. Translators: a Microsoft Word revision type (display field)
+#: NVDAObjects\window\winword.py:128
 #, fuzzy
 msgid "display field"
 msgstr "Kijelző görgetés"
 
-#: NVDAObjects\window\winword.py:124
+#. Translators: a Microsoft Word revision type (reconcile)
+#: NVDAObjects\window\winword.py:130
 msgid "reconcile"
 msgstr ""
 
-#: NVDAObjects\window\winword.py:125
+#. Translators: a Microsoft Word revision type (conflicting revision)
+#: NVDAObjects\window\winword.py:132
 msgid "conflict"
 msgstr ""
 
-#: NVDAObjects\window\winword.py:127
+#. Translators: a Microsoft Word revision type (replaced content)
+#: NVDAObjects\window\winword.py:136
 #, fuzzy
 msgid "replace"
 msgstr "Behelyettesített kifejezés"
 
-#: NVDAObjects\window\winword.py:128
+#. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
+#: NVDAObjects\window\winword.py:138
 #, fuzzy
 msgid "paragraph property"
 msgstr "bekezdés"
 
-#: NVDAObjects\window\winword.py:129
+#. Translators: a Microsoft Word revision type (table)
+#: NVDAObjects\window\winword.py:140
 #, fuzzy
 msgid "table property"
 msgstr "táblázat lábléc"
 
-#: NVDAObjects\window\winword.py:130
+#. Translators: a Microsoft Word revision type (section property)
+#: NVDAObjects\window\winword.py:142
 #, fuzzy
 msgid "section property"
 msgstr "a kijelölés törölve"
 
-#: NVDAObjects\window\winword.py:131
+#. Translators: a Microsoft Word revision type (style definition)
+#: NVDAObjects\window\winword.py:144
 msgid "style definition"
 msgstr ""
 
-#: NVDAObjects\window\winword.py:132
+#. Translators: a Microsoft Word revision type (moved from)
+#: NVDAObjects\window\winword.py:146
 #, fuzzy
 msgid "moved from"
 msgstr "a kurzor áthelyezése"
 
-#: NVDAObjects\window\winword.py:133
+#. Translators: a Microsoft Word revision type (moved to)
+#: NVDAObjects\window\winword.py:148
 #, fuzzy
 msgid "moved to"
 msgstr "áthelyezés az aktív elemhez"
 
-#: NVDAObjects\window\winword.py:134
+#. Translators: a Microsoft Word revision type (inserted table cell)
+#: NVDAObjects\window\winword.py:150
 #, fuzzy
 msgid "cell insertion"
 msgstr "&Gyorsítás"
 
-#: NVDAObjects\window\winword.py:135
+#. Translators: a Microsoft Word revision type (deleted table cell)
+#: NVDAObjects\window\winword.py:152
 #, fuzzy
 msgid "cell deletion"
 msgstr "nincs kijelölés"
 
-#: NVDAObjects\window\winword.py:136
+#. Translators: a Microsoft Word revision type (merged table cells)
+#: NVDAObjects\window\winword.py:154
 msgid "cell merge"
 msgstr ""
 
-#: NVDAObjects\window\winword.py:140
+#: NVDAObjects\window\winword.py:158
 msgid "Comments"
 msgstr "Megjegyzés"
 
-#: NVDAObjects\window\winword.py:141
+#: NVDAObjects\window\winword.py:159
 msgid "Endnotes"
 msgstr "végjegyzet"
 
-#: NVDAObjects\window\winword.py:142
+#: NVDAObjects\window\winword.py:160
 msgid "Even pages footer"
 msgstr "Páros oldal lábléc"
 
-#: NVDAObjects\window\winword.py:143
+#: NVDAObjects\window\winword.py:161
 msgid "Even pages header"
 msgstr "Páros oldal fejléc"
 
-#: NVDAObjects\window\winword.py:144
+#: NVDAObjects\window\winword.py:162
 msgid "First page footer"
 msgstr "Első oldal lábléc"
 
-#: NVDAObjects\window\winword.py:145
+#: NVDAObjects\window\winword.py:163
 msgid "First page header"
 msgstr "Első oldal fejléc"
 
-#: NVDAObjects\window\winword.py:146
+#: NVDAObjects\window\winword.py:164
 msgid "Footnotes"
 msgstr "lábjegyzet"
 
-#: NVDAObjects\window\winword.py:147
+#: NVDAObjects\window\winword.py:165
 msgid "Primary footer"
 msgstr "elsődleges lábléc"
 
-#: NVDAObjects\window\winword.py:148
+#: NVDAObjects\window\winword.py:166
 msgid "Primary header"
 msgstr "elsődleges fejléc"
 
-#: NVDAObjects\window\winword.py:149
+#: NVDAObjects\window\winword.py:167
 msgid "Text frame"
 msgstr "szövegkeret"
 
-#: NVDAObjects\window\winword.py:348
+#: NVDAObjects\window\winword.py:366
 #, fuzzy
 msgid "unknown author"
 msgstr "ismeretlen szín"
 
-#: NVDAObjects\window\winword.py:349
+#: NVDAObjects\window\winword.py:367
 #, fuzzy
 msgid "unknown date"
 msgstr "ismeretlen"
 
-#: NVDAObjects\window\winword.py:350
+#: NVDAObjects\window\winword.py:368
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr ""
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:542 NVDAObjects\window\winword.py:552
+#: NVDAObjects\window\winword.py:560 NVDAObjects\window\winword.py:570
 msgid "Not in table"
 msgstr "csak táblázatban használható"
 
-#: NVDAObjects\window\winword.py:575
+#: NVDAObjects\window\winword.py:593
 msgid "Edge of table"
 msgstr "a táblázat széle"
 

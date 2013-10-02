@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 19:09+1000\n"
-"PO-Revision-Date: 2013-09-12 23:59-0800\n"
+"POT-Creation-Date: 2013-09-17 19:08+1000\n"
+"PO-Revision-Date: 2013-09-25 15:20-0800\n"
 "Last-Translator: Joseph Lee <joseph.lee22590@gmail.com>\n"
 "Language-Team: NVDA Korean users and translations forum <joseph."
 "lee22590@gmail.com, nvda-korean@freelists.org>\n"
@@ -1531,7 +1531,8 @@ msgid "subscript"
 msgstr "subscript"
 
 #. Translators: Describes style of text.
-#: controlTypes.py:440 NVDAObjects\window\winword.py:126
+#. Translators: a Microsoft Word revision type (style change)
+#: controlTypes.py:440 NVDAObjects\window\winword.py:134
 msgid "style"
 msgstr "스타일"
 
@@ -1736,7 +1737,7 @@ msgstr "상세 설명 있음"
 #. Translators: a state that denotes that an object is pinned in its current location
 #: controlTypes.py:519
 msgid "pinned"
-msgstr ""
+msgstr "핕됨"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes.py:524
@@ -3228,14 +3229,21 @@ msgstr "desktop"
 msgid "laptop"
 msgstr "laptop"
 
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
+#. Translators: Reported for an unknown key press.
+#. %s will be replaced with the key code.
+#: keyboardHandler.py:354
+#, python-format
+msgid "unknown %s"
+msgstr "%s 키 인식 불가"
+
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
 msgid "on"
 msgstr "on"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:813
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:813
 #: gui\settingsDialogs.py:1174
 msgid "off"
 msgstr "off"
@@ -3458,15 +3466,14 @@ msgstr "줄 %s"
 
 #. Translators: Reported when text is revised.
 #: speech.py:1071
-#, fuzzy, python-format
+#, python-format
 msgid "revised %s"
-msgstr "리뷰"
+msgstr "내용 변경: %s됨"
 
 #. Translators: Reported when text is not revised.
 #: speech.py:1073
-#, fuzzy
 msgid "unrevised"
-msgstr "리뷰"
+msgstr "내용 변경 않됨"
 
 #. Translators: Reported when text is not bolded.
 #: speech.py:1082
@@ -5760,7 +5767,7 @@ msgstr "문자 색깔 알림 (&C)"
 #. document formatting settings dialog.
 #: gui\settingsDialogs.py:1013
 msgid "Report &editor revisions"
-msgstr "문서 리비전 알림 (&&E)"
+msgstr "문서 변경 추적 알림 (&&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -6837,149 +6844,151 @@ msgstr "수식 있음"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} 에서 {lastAddress} {lastContent}"
 
-#: NVDAObjects\window\winword.py:119
-#, fuzzy
-msgid "insertion"
-msgstr "section"
-
+#. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:120
-#, fuzzy
-msgid "deletion"
-msgstr "딜리트"
+msgid "insertion"
+msgstr "내용 삽입"
 
-#: NVDAObjects\window\winword.py:121
-#, fuzzy
-msgid "property"
-msgstr "속성 페이지"
-
+#. Translators: a Microsoft Word revision type (deleted content)
 #: NVDAObjects\window\winword.py:122
-#, fuzzy
-msgid "paragraph number"
-msgstr "문단"
+msgid "deletion"
+msgstr "내용 삭제"
 
-#: NVDAObjects\window\winword.py:123
-#, fuzzy
-msgid "display field"
-msgstr "디스플레이 스크롤"
-
+#. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 #: NVDAObjects\window\winword.py:124
-msgid "reconcile"
-msgstr ""
+msgid "property"
+msgstr "내용 속성 변경"
 
-#: NVDAObjects\window\winword.py:125
-msgid "conflict"
-msgstr ""
+#. Translators: a Microsoft Word revision type (changed paragraph number)
+#: NVDAObjects\window\winword.py:126
+msgid "paragraph number"
+msgstr "문단 수 변경"
 
-#: NVDAObjects\window\winword.py:127
-#, fuzzy
-msgid "replace"
-msgstr "변경값"
-
+#. Translators: a Microsoft Word revision type (display field)
 #: NVDAObjects\window\winword.py:128
-#, fuzzy
-msgid "paragraph property"
-msgstr "문단"
+msgid "display field"
+msgstr "디스플레이 필드 변경"
 
-#: NVDAObjects\window\winword.py:129
-#, fuzzy
-msgid "table property"
-msgstr "테이블 바닥글"
-
+#. Translators: a Microsoft Word revision type (reconcile)
 #: NVDAObjects\window\winword.py:130
-#, fuzzy
-msgid "section property"
-msgstr "선택 해제됨"
+msgid "reconcile"
+msgstr "조정됨"
 
-#: NVDAObjects\window\winword.py:131
-msgid "style definition"
-msgstr ""
-
+#. Translators: a Microsoft Word revision type (conflicting revision)
 #: NVDAObjects\window\winword.py:132
-#, fuzzy
+msgid "conflict"
+msgstr "일치하지 않음"
+
+#. Translators: a Microsoft Word revision type (replaced content)
+#: NVDAObjects\window\winword.py:136
+msgid "replace"
+msgstr "내용 수정"
+
+#. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
+#: NVDAObjects\window\winword.py:138
+msgid "paragraph property"
+msgstr "문단 속성 변경"
+
+#. Translators: a Microsoft Word revision type (table)
+#: NVDAObjects\window\winword.py:140
+msgid "table property"
+msgstr "표 속성 변경"
+
+#. Translators: a Microsoft Word revision type (section property)
+#: NVDAObjects\window\winword.py:142
+msgid "section property"
+msgstr "섹션 속성 변경"
+
+#. Translators: a Microsoft Word revision type (style definition)
+#: NVDAObjects\window\winword.py:144
+msgid "style definition"
+msgstr "스타일 설정"
+
+#. Translators: a Microsoft Word revision type (moved from)
+#: NVDAObjects\window\winword.py:146
 msgid "moved from"
-msgstr "포커스 이동"
+msgstr "내용 위치 변경"
 
-#: NVDAObjects\window\winword.py:133
-#, fuzzy
+#. Translators: a Microsoft Word revision type (moved to)
+#: NVDAObjects\window\winword.py:148
 msgid "moved to"
-msgstr "포커스로 이동"
+msgstr "내용 위치 변경"
 
-#: NVDAObjects\window\winword.py:134
-#, fuzzy
+#. Translators: a Microsoft Word revision type (inserted table cell)
+#: NVDAObjects\window\winword.py:150
 msgid "cell insertion"
-msgstr "&Acceleration"
+msgstr "표 셀 삽입"
 
 # Literally means, "no contents selcted".
-#: NVDAObjects\window\winword.py:135
-#, fuzzy
+#. Translators: a Microsoft Word revision type (deleted table cell)
+#: NVDAObjects\window\winword.py:152
 msgid "cell deletion"
-msgstr "선택된 내용이 없습니다."
+msgstr "표 셀 삭제"
 
-#: NVDAObjects\window\winword.py:136
+#. Translators: a Microsoft Word revision type (merged table cells)
+#: NVDAObjects\window\winword.py:154
 msgid "cell merge"
-msgstr ""
+msgstr "셀 병합"
 
-#: NVDAObjects\window\winword.py:140
+#: NVDAObjects\window\winword.py:158
 msgid "Comments"
 msgstr "Comments"
 
-#: NVDAObjects\window\winword.py:141
+#: NVDAObjects\window\winword.py:159
 msgid "Endnotes"
 msgstr "Endnotes"
 
-#: NVDAObjects\window\winword.py:142
+#: NVDAObjects\window\winword.py:160
 msgid "Even pages footer"
 msgstr "Even pages footer"
 
-#: NVDAObjects\window\winword.py:143
+#: NVDAObjects\window\winword.py:161
 msgid "Even pages header"
 msgstr "Even pages header"
 
-#: NVDAObjects\window\winword.py:144
+#: NVDAObjects\window\winword.py:162
 msgid "First page footer"
 msgstr "First page footer"
 
-#: NVDAObjects\window\winword.py:145
+#: NVDAObjects\window\winword.py:163
 msgid "First page header"
 msgstr "First page header"
 
-#: NVDAObjects\window\winword.py:146
+#: NVDAObjects\window\winword.py:164
 msgid "Footnotes"
 msgstr "Footnotes"
 
-#: NVDAObjects\window\winword.py:147
+#: NVDAObjects\window\winword.py:165
 msgid "Primary footer"
 msgstr "Primary footer"
 
-#: NVDAObjects\window\winword.py:148
+#: NVDAObjects\window\winword.py:166
 msgid "Primary header"
 msgstr "Primary header"
 
-#: NVDAObjects\window\winword.py:149
+#: NVDAObjects\window\winword.py:167
 msgid "Text frame"
 msgstr "텍스트 프레임"
 
-#: NVDAObjects\window\winword.py:348
-#, fuzzy
+#: NVDAObjects\window\winword.py:366
 msgid "unknown author"
-msgstr "알 수 없는 색상"
+msgstr "글쓴이 알 수 없음"
 
-#: NVDAObjects\window\winword.py:349
-#, fuzzy
+#: NVDAObjects\window\winword.py:367
 msgid "unknown date"
-msgstr "알 수 없음"
+msgstr "날짜 알 수 없음"
 
-#: NVDAObjects\window\winword.py:350
+#: NVDAObjects\window\winword.py:368
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "리비전: {revisionType}; 저자: {revisionAuthor}; 날짜: {revisionDate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:542 NVDAObjects\window\winword.py:552
+#: NVDAObjects\window\winword.py:560 NVDAObjects\window\winword.py:570
 msgid "Not in table"
 msgstr "테이블 아님"
 
-#: NVDAObjects\window\winword.py:575
+#: NVDAObjects\window\winword.py:593
 msgid "Edge of table"
 msgstr "테이블 가장자리"
 

@@ -3,6 +3,25 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.3 =
+
+== Nowe funkcje ==
+- W dokumentach Microsoft word zgłaszane są pola formularza. (#2295)
+- Microsoft Word: NVDA może informować o zmianach w dokumencie,  gdy włączone jest śledzenie zmian. Aby ta funkcja działała, należy zaznaczyć pole wyboru "zgłaszaj zmiany edycyjne" (domyślnie niezaznaczone) w menu NVDA Ustawienia: Formatowanie dokumentów. (#1670)
+- Listy rozwijane w Microsoft Excel 2003 do 2010 są teraz czytane przy otwieraniu i nawigacji wewnątrz nich. (#3382)
+
+
+== Poprawki błędów ==
+- Zend Studio obecnie działa tak samo jak Eclipse. (#3420)
+- W okienku reguł wiadomości Microsoft Outlook 2010, zmieniony stan pewnych pól wyboru zgłaszany jest automatycznie. (#3063)
+- NVDA obecnie będzie ogłaszać stan przypiętych kontrolek,  takich jak karty w Mozilla Firefox. (#3372)
+- Możliwe jest od teraz powiązanie skryptów ze skrótami klawiszowymi zawierającymi klawisze Alt i/lub Windows jako modyfikatory. Dawniej, jeśli zostało to zrobione, wykonanie skryptu powodowało również otwarcie menu start, lub paska menu. (#3472)
+- Zaznaczanie tekstu w dokumentach trybu czytania (np. użycie control+shift+end) nie powoduje przełączenia układu klawiatury na systemach z zainstalowanymi wieloma układami klawiatury. (#3472)
+- Internet Explorer : rozwiązany problem awarii przeglądarki przy zamykaniu NVDA. (#3397)
+- Fizyczne przemieszczenia i inne zdarzenia na niektórych nowych komputerach, nie są od teraz traktowane jako naciśnięcia klawiszy. Dotychczas powodowały wyciszenie mowy i czasami uruchomienie innych komend NVDA. (#3468)
+- NVDA teraz zachowuje się zgodnie z oczekiwaniami w programie Poedit 1.5.7. Użytkownicy korzystający ze starszych wersji powinni zaktualizować program. (#3485)
+
+
 = 2013.2 =
 
 == Nowe funkcje ==
@@ -69,25 +88,103 @@
 - NVDA nie powoduje od teraz awarii bądź zawieszania Adobe Readera przy czytaniu niektórych źle sformatowanych dokumentów PDF zawierających wiersze tabel poza tabelą. (#3399)
 - NVDA obecnie prawidłowo wykrywa następny slajd, gdy usuwany jest slajd w widoku miniatur Microsoft PowerPoint. (#3415)
 
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html}, aby je przeczytać.
+
+
+= 2013.1.1 =
+Ta wersja rozwiązuje problem awarii NVDA podczas uruchamiania, jeśli w ustawieniach wybrany był Język irlandzki, zawiera również aktualizacje tłumaczeń, oraz inne poprawki.
+
+== Poprawki błędów ==
+- Generowane są prawidłowe znaki podczas wpisywania w okienkach NVDA, jeśli używane są jako domyślne koreańskie lub japońskie metody wprowadzania tekstu . (#2909)
+- W programie Internet Explorer i innych kontrolkach MSHTML, pola oznaczone jako zawierające nieprawidłową wartość są teraz prawidłowo obsługiwane. (#3256)
+- Rozwiązany problem awarii NVDA podczas uruchamiania, jeśli w ustawieniach wybrany był Język irlandzki.
+
+
 = 2013.1 =
-Najważniejsze zmiany w tej wersji to przeprojektowany układ klawiatóry dla laptopów (zmienionych skrutów szukaj w pliku keycommands.html w katalogu z instalacją NVDA) podstawowe wsparcie dla Microsoft Power Point, wsparcie długich opisów w przeglądarkach internetowych oraz możliwość wprowadzania znaków brajla komputerowego dla tych monitorów brajlowskich, które dają taką możliwość.
+Najważniejsze zmiany w tej wersji to bardziej intuicyjny i jednolity układ klawiatury dla laptopa; podstawowe wsparcie dla Microsoft Power Point; wsparcie długich opisów w przeglądarkach internetowych oraz możliwość wprowadzania znaków brajla komputerowego dla monitorów brajlowskich wyposażonych w klawiaturę.
+
+== Ważne ==
+
+=== Nowy układ klawiatury dla laptopa ===
+Układ klawiatury dla laptopa został całkowicie przeprojektowany, aby uczynić go bardziej intuicyjnym i jednolitym.
+Komendy przeglądu w nowym układzie używają klawiszy strzałek w połączeniu z klawiszem NVDA i innymi modyfikatorami.
+
+Proszę zwrócić uwagę na następujące zmiany najczęściej używanych poleceń:
+|| Działanie | Klawisze |
+| Czytaj wszystko | NVDA+a |
+| Czytaj bieżącą linię | NVDA+l |
+| Odczytaj aktualnie zaznaczony tekst | NVDA+shift+s |
+| Odczytaj pasek stanu | NVDA+shift+end |
+Dodatkowo, oprócz innych zmian, zmodyfikowano wszystkie polecenia nawigacji obiektów, przeglądu tekstu, kliknięć myszy i parametrów syntezatora.
+Wszystkie zmiany znajdują się w [Liście klawiszy poleceń keyCommands.html].
+
 
 == Nowe funkcje ==
 - Podstawowe wsparcie edycji i odczytu prezentacji Microsoft Poverpoint. (#501).
 - Podstawowe wsparcie dla pisania i odczytu wiadomości w Lotus Notes 8.5. (#543)
-- Istnienie długich opisów w trybie przeglądania jest zgłaszane. Taki opis można pokazać w osobnym oknie. NVDA+D. (#809)
-- Odczyt powiadomień w Microsoft IE 9. (#2343).
-- Automatyczne zgłaszanie nagłówków i kolumn tabel w Ie. (#778).
-- Nowy Język. Aragoński.
-- Nowe tablice brajlowskie. Duński stopnia II, Koreański I.
+- Wsparcie automatycznej zmiany języków podczas czytania dokumentów w Microsoft Word. (#2047) 
+- W trybie czytania w kontrolkach MSHTML (np. Internet Explorer) i Gecko (np. Firefox), zgłaszane jest istnienie długich opisów. Można również otworzyć długi opis w nowym oknie naciskając NVDA+d. (#809)
+- Wypowiadane są powiadomienia w Internet Explorer 9 i wyższych (takie jak blokowanie treści, albo pobieranie pliku). (#2343)
+- Automatyczny odczyt nagłówków kolumn i wierszy tabeli jest obsługiwany dla dokumentów trybu czytania w Internet Explorer i innych kontrolkach MSHTML. (#778)
+- Nowe języki: aragoński, irlandzki
+- Nowe tablice brajlowskie: Duński stopnia 2, Koreański  stopień 1. (#2737)
 - Wsparcie dla monitorów brajlowskich połączonych przez bluetooth do komputerów, na których bluetooth obsługuje Bluetooth Stack for Windows firmy Toshiba. (#2419)
-- Wybór portów przy monitorach Freedom Scientific.
-- Wsparcie dla notatników z rodziny BrailleNote firmy Humanvare.
+- Wybór portów dla monitorów Freedom Scientific.
+- Wsparcie dla notatników z rodziny BrailleNote firmy Humanvare działających w roli terminala brajlowskiego dla programu odczytu ekranu. (#2012)
 - Wsparcie starszych modeli Pappenmeyer Braillex. (#2679).
 - Wsparcie dla wprowadzania znaków przy pomocy monitorów brajlowskich posiadających klawiatórę. (#808).
+- Nowe ustawienie klawiatury, umożliwiające wybór czy NVDA  powinien przerywać mowę przy wpisywaniu znaków  i/lub klawisza Enter. (#698)
+- Obsługa kilku przeglądarek opartych na Google Chrome: Rockmelt, BlackHawk, Comodo Dragon i SRWare Iron. (#2236, #2813, #2814, #2815)
 
 
+== Zmiany ==
+- Zaktualizowano liblouis braille translator to 2.5.2. (#2737)
+- Układ klawiatury dla laptopa został całkowicie przeprojektowany, aby uczynić go bardziej intuicyjnym i jednolitym. (#804)
+- Zaktualizowano syntezator eSpeak do wersji 1.47.11. (#2680, #3124, #3132, #3141, #3143, #3172)
 
+
+== Poprawki błędów ==
+- Klawisze szybkiej nawigacji przenoszące do poprzedniego i następnego separatora w trybie czytania, teraz działają w Internet Explorer i innych kontrolkach MSHTML. (#2781)
+- Jeśli NVDA musi użyć eSpeak lub trybu "bez mowy" w związku z problemami uruchomienia skonfigurowanego syntezatora, skonfigurowane ustawienie nie jest zmieniane na zapasowy syntezator. Oznacza to, że od teraz skonfigurowany syntezator będzie użyty przy następnym uruchomieniu NVDA. (#2589)
+- Jeśli NVDA musi użyć trybu "bez brajla" w związku z problemami uruchomienia skonfigurowanego monitora brajlowskiego, skonfigurowane ustawienie nie jest zmieniane na bez brajla. Oznacza to, że od teraz skonfigurowany monitor będzie użyty przy następnym uruchomieniu NVDA. (#2264)
+- W trybie czytania w aplikacjach Mozilla, aktualizacje tabel są teraz prawidłowo odczytywane. Dla przykładu w zaktualizowanych komórkach współrzędne wiersza i kolumny są odczytywane i nawigacja w tabeli działa prawidłowo. (#2784)
+- W trybie czytania w przeglądarkach internetowych, niektóre typy nienazwanych klikalnych obrazków są odczytywane. (#2838)
+- Starsze i nowsze wersje SecureCRT są teraz obsługiwane. (#2800)
+- Dla metod wprowadzania takich jak Easy Dots IME w XP, łańcuch odczytu jest obecnie prawidłowo anonsowany.
+- Lista znaków kandydujących w metodzie wprowadzania Microsoft Pinyin dla języka chiński uproszczony w Windows 7 jest teraz prawidłowo odczytywana przy zmianie stron strzałkami w lewo i prawo, oraz po pierwszym otwarciu klawiszem Home.
+- Jeśli zapisana jest wymowa znaku użytkownika, zaawansowane pole "zachowaj" nie jest usuwane. (#2852)
+- Po wyłączeniu sprawdzania aktualizacji, NVDA nie musi być uruchomiony ponownie aby ta zmiana została w pełni uwzględniona.
+- NVDA nie ma od teraz problemu z uruchomieniem jeśli dodatek nie może zostać usunięty w związku z używaniem folderu dodatku przez inną aplikację. (#2860)
+- Nazwy stron w ustawieniach DropBoxmogą być teraz odczytywane w widoku ekranu.
+- Jeśli język wprowadzania został zmieniony na inny niż domyślny, NVDA wykrywa prawidłowo klawisze poleceń i trybu pomocy.
+- Dla języków takich jak niemiecki, w których znak + (plus)  jest pojedynczym klawiszem na klawiaturze, możliwe jest od teraz powiązanie komend z tym klawiszem przy użyciu słowa "plus". (#2898)
+- W Internet Explorer i innych kontrolkach MSHTML, bloki cytatu są prawidłowo odczytywane. (#2888)
+- Sterownik monitora HumanWare Brailliant BI/B series może być teraz wybrany gdy monitor jest podłączony przez Bluetooth, a nigdy nie był podłączony przez USB.
+- Filtrowanie elementów w trybie czytania z tekstem napisanym dużymi literami, zwraca teraz  wyniki z pominięciem wielkości liter, zamiast pustej listy. (#2951)
+- W przeglądarkach Mozilla, tryb czytania może być ponownie użyty, jeśli w punkcie uwagi znajduje się zawartość Flash. (#2546)
+- Gdy używana jest tablica skrótów brajlowskich, przy włączonym rozwijaniu słowa pod kursorem do brajla komputerowego, kursor brajlowski jest prawidłowo ustawiany gdy umieszczony zostanie za słowem, w którym  jeden znak jest przedstawiany na kilku komórkach brajlowskich (np. znak dużej litery, znak cyfry etc.). (#2947)
+- Zaznaczenie tekstu jest prawidłowo przedstawiane na monitorach brajlowskich w aplikacjach takich jak Microsoft word 2003 i pola edycji w Internet Explorer.
+- Możliwe jest ponownie zaznaczanie tekstu w tył w Microsoft Word przy włączonym brajlu.
+- Przy przeglądaniu lub kasowaniu znaków w kontrolce edycyjnej Scintilla, NVDA prawidłowo odczytuje znaki wielobajtowe. (#2855)
+- Rozwiązany problem instalacji NVDA, gdy ścieżka profilu użytkownika zawierała niektóre znaki wielobajtowe. (#2729)
+- Zgłaszanie grup dla kontrolek widoku listy (SysListview32) w 64-bitowych  aplikacjach, nie powoduje od teraz błędu.
+- W trybie czytania w aplikacjach Mozilla , zawartość tekstowa nie jest od teraz traktowana jako edytowalna, co zdarzało się dawniej w rzadkich przypadkach. (#2959)
+- W IBM Lotus Symphony i OpenOffice, przesuwanie kursora w razie potrzeby przemieszcza punkt przeglądu.
+- Zawartość Adobe Flash jest teraz dostępna w Internet Explorer pod Windows 8. (#2454)
+- Naprawiona obsługa Bluetooth dla monitora Papenmeier Braillex Trio. (#2995)
+- Naprawiona niemożność używania niektórych głosów Microsoft Speech API version 5 takich jak głosy Koba Speech 2. (#2629)
+- W aplikacjach używających Java Access Bridge, monitory brajlowskie są prawidłowo aktualizowane podczas ruchów kursora w polach edycji. (#3107)
+- Obsługa punktu orientacyjnego formularz w dokumentach trybu czytania, które obsługują punkty orientacyjne. (#2997) 
+- Sterownik syntezatora eSpeak teraz obsługuje bardziej odpowiednio odczyt znakami (np. ogłaszając nazwę lub wartość zagranicznej litery zamiast jej brzmienia lub nazwy ogólnej). (#3106)
+- Rozwiązany problem błędu kopiowania ustawień użytkownika NVDA do użycia na ekranie logowania i innych zabezpieczonych ekranach, gdy ścieżka folderu użytkownika zawierała znaki inne niż ASCII. (#3092)
+- NVDA nie zawiesza się, gdy używane jest wprowadzanie znaków azjatyckich w niektórych aplikacjach .NET. (#3005)
+- Możliwe jest teraz używanie trybu czytania na stronach w Internet Explorer 10 w trybie zgodności; np. strona logowania www.gmail.com. (#3151)
+
+
+== Zmiany dla programistów ==
+Informacje techniczne nie zostały przetłumaczone, proszę zajrzeć do [Angielskiej listy zmian ../en/changes.html}, aby je przeczytać.
 
 
 =2012.3=

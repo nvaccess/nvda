@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA master-9280,3350d74\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 19:09+1000\n"
-"PO-Revision-Date: 2013-09-13 01:13+0330\n"
+"POT-Creation-Date: 2013-09-17 19:08+1000\n"
+"PO-Revision-Date: 2013-09-27 15:01+0330\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1530,7 +1530,8 @@ msgid "subscript"
 msgstr "زیر نویس"
 
 #. Translators: Describes style of text.
-#: controlTypes.py:440 NVDAObjects\window\winword.py:126
+#. Translators: a Microsoft Word revision type (style change)
+#: controlTypes.py:440 NVDAObjects\window\winword.py:134
 msgid "style"
 msgstr "سبک"
 
@@ -2031,7 +2032,7 @@ msgstr "نشانگر موشواره را به چیز کنونی که جا‌به
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 #: globalCommands.py:275
 msgid "Move navigator object to mouse"
-msgstr "چیز جا‌به‌جا شونده را به زیر نشانگر موشواره جا‌به‌جا می‌کند"
+msgstr "چیز بازبینی‌شده را به زیر نشانگر موشواره جا‌به‌جا می‌کند"
 
 #. Translators: Input help mode message for move navigator object to mouse command.
 #: globalCommands.py:280
@@ -2039,8 +2040,8 @@ msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
-"چیز جا‌به‌جا شونده را در زیر چیزی که اکنون در زیر نشانگر موشواره است٬ جای "
-"می‌دهد و آن را می‌خواند"
+"چیز بازبینی‌شده را در زیر چیزی که اکنون در زیر نشانگر موشواره است٬ جای می‌دهد "
+"و آن را می‌خواند"
 
 #. Translators: reported when there are no other available review modes for this object
 #: globalCommands.py:291
@@ -2053,7 +2054,7 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "به چیز پَس‌تر که بازنگری شدنی است٬ جایگردان می‌شود. --مانند: چیز٬ رسانهیا برگه‌ی "
-"نمایش-- و سپس چیز بازنگری شده را در جای چیز جا‌به‌جا شونده‌ی کنونی٬ جای می‌دهد"
+"نمایش-- و سپس چیز بازنگری شده را در جای چیز بازبینی‌شده‌ی کنونی٬ جای می‌دهد"
 
 #. Translators: reported when there are no  other available review modes for this object
 #: globalCommands.py:303
@@ -2066,7 +2067,7 @@ msgid ""
 "positions the review position at the point of the navigator object"
 msgstr ""
 "به چیز پیش‌تر که بازنگری شدنی است٬ جایگردان می‌شود. --مانند: چیز٬ رسانهیا "
-"برگه‌ی نمایش-- و سپس چیز بازنگری شده را در جای چیز جا‌به‌جا شونده‌ی کنونی٬ جای "
+"برگه‌ی نمایش-- و سپس چیز بازنگری شده را در جای چیز بازبینی‌شده‌ی کنونی٬ جای "
 "می‌دهد"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
@@ -2074,7 +2075,7 @@ msgstr ""
 #: globalCommands.py:311 globalCommands.py:347 globalCommands.py:408
 #: globalCommands.py:424 globalCommands.py:440 globalCommands.py:456
 msgid "no navigator object"
-msgstr "چیز جا‌به‌جا شونده ای در میان نیست"
+msgstr "چیز بازبینی‌شده ای در میان نیست"
 
 #. Translators: Indicates something has been copied to clipboard (example output: title text copied to clipboard).
 #: globalCommands.py:338 globalCommands.py:853
@@ -2089,13 +2090,13 @@ msgid ""
 "and pressing three times Copies name and value of this  object to the "
 "clipboard"
 msgstr ""
-"چیز جا‌به‌جا شونده‌ی کنونی را می‌خواند. دو بار اگر فشار دهید٬ آن را هِجی می‌کند. "
-"سه بار اگر فشار دهید٬ داده‌ی پیرامون آن چیز را در بریده‌دان٬ روگیری می‌کند"
+"چیز بازبینی‌شده‌ی کنونی را می‌خواند. دو بار اگر فشار دهید٬ آن را هِجی می‌کند. سه "
+"بار اگر فشار دهید٬ داده‌ی پیرامون آن چیز را در بریده‌دان٬ روگیری می‌کند"
 
 #. Translators: Reported when attempting to find out the navigator object's dimensions (width, height) but cannot obtain object's location.
 #: globalCommands.py:351
 msgid "No location information for navigator object"
-msgstr "داده ای پیرامون جای چیز جا‌به‌جا شونده در میان نیست"
+msgstr "داده ای پیرامون جای چیز بازبینی‌شده در میان نیست"
 
 #. Translators: Reported when attempting to find out the navigator object's dimensions but the screen does not provide location information.
 #: globalCommands.py:356
@@ -2116,7 +2117,7 @@ msgstr ""
 #. Translators: Input help mode message for report object dimensions command.
 #: globalCommands.py:365
 msgid "Reports the hight, width and position of the current navigator object"
-msgstr "پهنا و بلندا و جایگاه چیز جا‌به‌جا شونده‌ی کنونی را گزارش می‌دهد"
+msgstr "پهنا و بلندا و جایگاه چیز بازبینی‌شده‌ی کنونی را گزارش می‌دهد"
 
 #. Translators: Reported when attempting to move the navigator object to focus.
 #: globalCommands.py:375
@@ -2129,7 +2130,7 @@ msgid ""
 "Sets the navigator object to the current focus, and the review cursor to the "
 "position of the caret inside it, if possible."
 msgstr ""
-"چیز جا‌به‌جا شونده‌ی کنونی را به نشانگاه جانشانی می‌کند؛ و نشانگر بازبین را نیز "
+"چیز بازبینی‌شده‌ی کنونی را به نشانگاه جانشانی می‌کند؛ و نشانگر بازبین را نیز "
 "اگر شدنی باشد٬ بر روی هشتک درون آن چیز جای می‌دهد."
 
 #. Translators: Reported when:
@@ -2155,7 +2156,7 @@ msgid ""
 "Pressed once Sets the keyboard focus to the navigator object, pressed twice "
 "sets the system caret to the position of the review cursor"
 msgstr ""
-"یک بار فشار٬ نشانگر تخته کلید را بر روی چیز جا‌به‌جا شونده جای می‌دهد؛ دو بار "
+"یک بار فشار٬ نشانگر تخته کلید را بر روی چیز بازبینی‌شده جای می‌دهد؛ دو بار "
 "فشار٬ هشتک سامانه را در جای نشانگر بازبین می‌گذارد"
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
@@ -2167,7 +2168,7 @@ msgstr "هیچ چیز در بر گیرنده‌ای نیست"
 #: globalCommands.py:419
 msgid "Moves the navigator object to the object containing it"
 msgstr ""
-"چیز جا‌به‌جا شونده را به جایگاه چیزی که آن درونش جا گرفته بود٬ جا‌به‌جا می‌کند"
+"چیز بازبینی‌شده را به جایگاه چیزی که آن درونش جا گرفته بود٬ جا‌به‌جا می‌کند"
 
 #. Translators: Reported when there is no next object (current object is the last object).
 #: globalCommands.py:433
@@ -2177,7 +2178,7 @@ msgstr "چیزی در پس نیست"
 #. Translators: Input help mode message for move to next object command.
 #: globalCommands.py:435
 msgid "Moves the navigator object to the next object"
-msgstr "چیز جا‌به‌جا شونده را به جایگاه چیز پَس‌تر جا‌به‌جا می‌کند"
+msgstr "چیز بازبینی‌شده را به جایگاه چیز پَس‌تر جا‌به‌جا می‌کند"
 
 #. Translators: Reported when there is no previous object (current object is the first object).
 #: globalCommands.py:449
@@ -2187,7 +2188,7 @@ msgstr "چیزی در پیش نیست"
 #. Translators: Input help mode message for move to previous object command.
 #: globalCommands.py:451
 msgid "Moves the navigator object to the previous object"
-msgstr "چیز جا‌به‌جا شونده را به جایگاه چیز پیش‌تر جا‌به‌جا می‌کند"
+msgstr "چیز بازبینی‌شده را به جایگاه چیز پیش‌تر جا‌به‌جا می‌کند"
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 #: globalCommands.py:465
@@ -2197,7 +2198,7 @@ msgstr "چیزی در درون نیست"
 #. Translators: Input help mode message for move to first child object command.
 #: globalCommands.py:467
 msgid "Moves the navigator object to the first object inside it"
-msgstr "چیز جا‌به‌جا شونده را بر روی نخستین چیزی که در آن است٬ جا می‌دهد"
+msgstr "چیز بازبینی‌شده را بر روی نخستین چیزی که در آن است٬ جا می‌دهد"
 
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 #: globalCommands.py:471
@@ -2215,7 +2216,7 @@ msgid ""
 "Performs the default action on the current navigator object (example: "
 "presses it if it is a button)."
 msgstr ""
-"کار پیشنمود را روی چیز جا‌به‌جا شدنی انجام می‌دهد. برای نمونه اگر دکمه باشد٬ "
+"کار پیشنمود را روی چیز بازبینی‌شده انجام می‌دهد. برای نمونه اگر دکمه باشد٬ "
 "فشار داده می‌شود."
 
 #. Translators: a message reported when review cursor is at the top line of the current navigator object.
@@ -2229,7 +2230,7 @@ msgid ""
 "Moves the review cursor to the top line of the current navigator object and "
 "speaks it"
 msgstr ""
-"نشانگر بازبین را روی بالاترین خط از چیز جا‌به‌جا شونده جای داده و آن را می‌خواند"
+"نشانگر بازبین را روی بالاترین خط از چیز بازبینی‌شده جای داده و آن را می‌خواند"
 
 #. Translators: Input help mode message for move review cursor to previous line command.
 #: globalCommands.py:523
@@ -2237,7 +2238,7 @@ msgid ""
 "Moves the review cursor to the previous line of the current navigator object "
 "and speaks it"
 msgstr ""
-"نشانگر بازبین را روی خط پیشین از چیز جا‌به‌جا شونده جای داده و آن را می‌خواند"
+"نشانگر بازبین را روی خط پیشین از چیز بازبینی‌شده جای داده و آن را می‌خواند"
 
 #. Translators: Input help mode message for read current line under review cursor command.
 #: globalCommands.py:534
@@ -2246,7 +2247,7 @@ msgid ""
 "situated. If this key is pressed twice, the current line will be spelled. "
 "Pressing three times will spell the line using character descriptions."
 msgstr ""
-"خط کنونی چیز جا‌به‌جا شونده را در جایی که نشانگر بازبین جای گرفته است٬ گزارش "
+"خط کنونی چیز بازبینی‌شده را در جایی که نشانگر بازبین جای گرفته است٬ گزارش "
 "می‌دهد. اگر این دکمه دوبار تند فشار داده شود٬ خط هِجی خواهد شد. سه بار که این "
 "دکمه فشار داده شود٬ این خط را با ویژه‌واژه‌های پیرامون هر واج٬ هِجی می‌کند."
 
@@ -2264,7 +2265,7 @@ msgid ""
 "Moves the review cursor to the next line of the current navigator object and "
 "speaks it"
 msgstr ""
-"نشانگر بازبین را روی خط پَس‌تر از چیز جا‌به‌جا شونده جای داده و آن را می‌خواند"
+"نشانگر بازبین را روی خط پَس‌تر از چیز بازبینی‌شده جای داده و آن را می‌خواند"
 
 #. Translators: Input help mode message for move review cursor to bottom line command.
 #: globalCommands.py:557
@@ -2272,7 +2273,7 @@ msgid ""
 "Moves the review cursor to the bottom line of the current navigator object "
 "and speaks it"
 msgstr ""
-"نشانگر بازبین را روی خط پایینی از چیز جا‌به‌جا شونده جای داده و آن را می‌خواند"
+"نشانگر بازبین را روی خط پایینی از چیز بازبینی‌شده جای داده و آن را می‌خواند"
 
 #. Translators: Input help mode message for move review cursor to previous word command.
 #: globalCommands.py:572
@@ -2280,7 +2281,7 @@ msgid ""
 "Moves the review cursor to the previous word of the current navigator object "
 "and speaks it"
 msgstr ""
-"نشانگر بازبین را روی واژه‌ی پیشین از چیز جا‌به‌جا شونده جای داده و آن را می‌خواند"
+"نشانگر بازبین را روی واژه‌ی پیشین از چیز بازبینی‌شده جای داده و آن را می‌خواند"
 
 #. Translators: Input help mode message for report current word under review cursor command.
 #: globalCommands.py:583
@@ -2289,7 +2290,7 @@ msgid ""
 "situated. Pressing twice spells the word. Pressing three times spells the "
 "word using character descriptions"
 msgstr ""
-"واژه‌ی چیز جا‌به‌جا شونده‌ی کنونی‌ای که نشانگر بازبین در آنجا جای گرفته است را "
+"واژه‌ی چیز بازبینی‌شده‌ی کنونی‌ای که نشانگر بازبین در آنجا جای گرفته است را "
 "می‌خواند. دو بار فشار داده شود٬ واژه را هِجی می‌کند. سه بار فشار داده شود٬ واژه "
 "را با ویژه‌واژه‌های پیرامون هر واج٬ هِجی می‌کند."
 
@@ -2299,7 +2300,7 @@ msgid ""
 "Moves the review cursor to the next word of the current navigator object and "
 "speaks it"
 msgstr ""
-"نشانگر بازبین را روی واژه‌ی پَس‌تر از چیز جا‌به‌جا شونده جای داده و آن را می‌خواند"
+"نشانگر بازبین را روی واژه‌ی پَس‌تر از چیز بازبینی‌شده جای داده و آن را می‌خواند"
 
 #: globalCommands.py:605 globalCommands.py:618 appModules\totalcmd.py:35
 msgid "left"
@@ -2311,8 +2312,8 @@ msgid ""
 "Moves the review cursor to the first character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"نشانگر بازبین را در چیز جا‌به‌جا شونده‌ی کنونی به نخستین واج از خطی که روی آن "
-"است برده و آن واج را می‌خواند"
+"نشانگر بازبین را در چیز بازبینی‌شده‌ی کنونی به نخستین واج از خطی که روی آن است "
+"برده و آن واج را می‌خواند"
 
 #. Translators: Input help mode message for move review cursor to previous character command.
 #: globalCommands.py:627
@@ -2320,7 +2321,7 @@ msgid ""
 "Moves the review cursor to the previous character of the current navigator "
 "object and speaks it"
 msgstr ""
-"نشانگر بازبین را روی واج پیشین از چیز جا‌به‌جا شونده جای داده و آن را می‌خواند"
+"نشانگر بازبین را روی واج پیشین از چیز بازبینی‌شده جای داده و آن را می‌خواند"
 
 #. Translators: Input help mode message for report current character under review cursor command.
 #: globalCommands.py:645
@@ -2330,7 +2331,7 @@ msgid ""
 "character. Pressing three times reports the numeric value of the character "
 "in decimal and hexadecimal"
 msgstr ""
-"واجی که در زیر نشانگر بازبین بر روی چیز جا‌به‌جا شونده است را گزارش می‌دهد. اگر "
+"واجی که در زیر نشانگر بازبین بر روی چیز بازبینی‌شده است را گزارش می‌دهد. اگر "
 "دو بار فشار داده شود٬ ویژه‌واژه‌ی پیرامون آن واج را گزارش می‌دهد. اگر سه بار "
 "فشار داده شود٬ ارزش شماره‌ای آن واج را بر پایه‌ی شانزده‌تایی و ده‌تایی٬ گزارش "
 "می‌دهد."
@@ -2345,7 +2346,7 @@ msgid ""
 "Moves the review cursor to the next character of the current navigator "
 "object and speaks it"
 msgstr ""
-"نشانگر بازبین را روی واج پَس‌تر از چیز جا‌به‌جا شونده جای داده و آن را می‌خواند"
+"نشانگر بازبین را روی واج پَس‌تر از چیز بازبینی‌شده جای داده و آن را می‌خواند"
 
 #. Translators: Input help mode message for move review cursor to end of current line command.
 #: globalCommands.py:676
@@ -2353,8 +2354,8 @@ msgid ""
 "Moves the review cursor to the last character of the line where it is "
 "situated in the current navigator object and speaks it"
 msgstr ""
-"نشانگر بازبین را در چیز جا‌به‌جا شونده‌ی کنونی به واپسین واج از خطی که روی آن "
-"است برده و آن واج را می‌خواند"
+"نشانگر بازبین را در چیز بازبینی‌شده‌ی کنونی به واپسین واج از خطی که روی آن است "
+"برده و آن واج را می‌خواند"
 
 #. Translators: A speech mode which disables speech output.
 #: globalCommands.py:684
@@ -2501,7 +2502,7 @@ msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
-"داده‌های پیرامون چیز جا‌به‌جا شونده را در گاه‌نگار درون می‌کند که برای "
+"داده‌های پیرامون چیز بازبینی‌شده را در گاه‌نگار درون می‌کند که برای "
 "پیشرفت‌دهندگان می‌تواند سودمند باشد؛ و گاه‌نگارنما را کارا کرده و داده‌ها "
 "می‌تواند در آن‌جا بررسی شود."
 
@@ -2573,19 +2574,19 @@ msgstr ""
 #. Translators: presented when toggled.
 #: globalCommands.py:927
 msgid "focus moves navigator object off"
-msgstr "خاموشی جا‌به‌جا شدن چیز جا‌به‌جا شونده با نشان"
+msgstr "خاموشی جا‌به‌جا شدن چیز بازبینی‌شده با نشان"
 
 #. Translators: presented when toggled.
 #: globalCommands.py:931
 msgid "focus moves navigator object on"
-msgstr "روشنی جا‌به‌جا شدن چیز جا‌به‌جا شونده با نشان"
+msgstr "روشنی جا‌به‌جا شدن چیز بازبینی‌شده با نشان"
 
 #. Translators: Input help mode message for toggle focus moves navigator object command.
 #: globalCommands.py:935
 msgid ""
 "Toggles on and off the movement of the navigator object due to focus changes"
 msgstr ""
-"روشنی و خاموشی جا‌به‌جا شدن چیز جا‌به‌جا شونده٬ همراه با دگرگونی نشان را "
+"روشنی و خاموشی جا‌به‌جا شدن چیز بازبینی‌شدهه٬ همراه با دگرگونی نشان را "
 "جایگردانی می‌کند"
 
 #. Translators: This is presented when there is no battery such as desktop computers and laptops with battery pack removed.
@@ -3254,14 +3255,21 @@ msgstr "میز کار"
 msgid "laptop"
 msgstr "رایانه‌ی کیفی"
 
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
+#. Translators: Reported for an unknown key press.
+#. %s will be replaced with the key code.
+#: keyboardHandler.py:354
+#, python-format
+msgid "unknown %s"
+msgstr "%s ناشناخته"
+
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
 msgid "on"
 msgstr "روشن"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:813
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:813
 #: gui\settingsDialogs.py:1174
 msgid "off"
 msgstr "خاموش"
@@ -3838,22 +3846,22 @@ msgstr "لبه جدول"
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:440
 msgid "Moves the navigator object to the next column"
-msgstr "چیز جا‌به‌جا شونده را به ستون پَس‌تر جا‌به‌جا می‌کند"
+msgstr "چیز بازبینی‌شده را به ستون پَس‌تر جا‌به‌جا می‌کند"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:453
 msgid "Moves the navigator object to the previous column"
-msgstr "چیز جا‌به‌جا شونده را به ستون پیش‌تر جا‌به‌جا می‌کند"
+msgstr "چیز بازبینی‌شده را به ستون پیش‌تر جا‌به‌جا می‌کند"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:474
 msgid "Moves the navigator object and focus to the next row"
-msgstr "چیز جا‌به‌جا شونده و نشان را به خط پَس‌تر جا‌به‌جا می‌کند"
+msgstr "چیز بازبینی‌شده و نشان را به خط پَس‌تر جا‌به‌جا می‌کند"
 
 #. Translators: The description of an NVDA command.
 #: NVDAObjects\behaviors.py:480
 msgid "Moves the navigator object and focus to the previous row"
-msgstr "چیز جا‌به‌جا شونده و نشان را به خط پیش‌تر جا‌به‌جا می‌کند"
+msgstr "چیز بازبینی‌شده و نشان را به خط پیش‌تر جا‌به‌جا می‌کند"
 
 #. Translators: The label for a 'composition' Window that appears when the user is typing one or more east-Asian characters into a document.
 #: NVDAObjects\inputComposition.py:47
@@ -4434,7 +4442,7 @@ msgstr "خاموش کردن ان‌وی‌دی‌ای"
 #. Translators: The title of the dialog to show about info for NVDA.
 #: gui\__init__.py:230 gui\__init__.py:404
 msgid "About NVDA"
-msgstr "در باره‌ی ان‌وی‌دی‌دی"
+msgstr "در باره‌ی ان‌وی‌دی‌ای"
 
 #. Translators: The label for the menu item to open general Settings dialog.
 #: gui\__init__.py:296
@@ -6887,133 +6895,150 @@ msgstr "فرمول دارد"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} تا {lastAddress} {lastContent}"
 
-#: NVDAObjects\window\winword.py:119
+#. Translators: a Microsoft Word revision type (inserted content)
+#: NVDAObjects\window\winword.py:120
 msgid "insertion"
 msgstr "بخش"
 
-#: NVDAObjects\window\winword.py:120
+#. Translators: a Microsoft Word revision type (deleted content)
+#: NVDAObjects\window\winword.py:122
 msgid "deletion"
 msgstr "پاک کردن"
 
-#: NVDAObjects\window\winword.py:121
+#. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
+#: NVDAObjects\window\winword.py:124
 msgid "property"
 msgstr "ویژگی"
 
-#: NVDAObjects\window\winword.py:122
+#. Translators: a Microsoft Word revision type (changed paragraph number)
+#: NVDAObjects\window\winword.py:126
 msgid "paragraph number"
 msgstr "شماره‌ی بند"
 
-#: NVDAObjects\window\winword.py:123
+#. Translators: a Microsoft Word revision type (display field)
+#: NVDAObjects\window\winword.py:128
 msgid "display field"
 msgstr "جایگاه نمایان‌سازی"
 
-#: NVDAObjects\window\winword.py:124
+#. Translators: a Microsoft Word revision type (reconcile)
+#: NVDAObjects\window\winword.py:130
 msgid "reconcile"
 msgstr "همسو کردن"
 
-#: NVDAObjects\window\winword.py:125
+#. Translators: a Microsoft Word revision type (conflicting revision)
+#: NVDAObjects\window\winword.py:132
 msgid "conflict"
 msgstr "درگیری"
 
-#: NVDAObjects\window\winword.py:127
+#. Translators: a Microsoft Word revision type (replaced content)
+#: NVDAObjects\window\winword.py:136
 msgid "replace"
 msgstr "جایگزین کردن"
 
-#: NVDAObjects\window\winword.py:128
+#. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
+#: NVDAObjects\window\winword.py:138
 msgid "paragraph property"
 msgstr "ویژگی بند"
 
-#: NVDAObjects\window\winword.py:129
+#. Translators: a Microsoft Word revision type (table)
+#: NVDAObjects\window\winword.py:140
 msgid "table property"
 msgstr "ویژگی جدول"
 
-#: NVDAObjects\window\winword.py:130
+#. Translators: a Microsoft Word revision type (section property)
+#: NVDAObjects\window\winword.py:142
 msgid "section property"
 msgstr "ویژگی بخش"
 
-#: NVDAObjects\window\winword.py:131
+#. Translators: a Microsoft Word revision type (style definition)
+#: NVDAObjects\window\winword.py:144
 msgid "style definition"
 msgstr "شناساندن سَبک"
 
-#: NVDAObjects\window\winword.py:132
+#. Translators: a Microsoft Word revision type (moved from)
+#: NVDAObjects\window\winword.py:146
 msgid "moved from"
 msgstr "جا‌به‌جا شدن از"
 
-#: NVDAObjects\window\winword.py:133
+#. Translators: a Microsoft Word revision type (moved to)
+#: NVDAObjects\window\winword.py:148
 msgid "moved to"
 msgstr "جا‌به‌جا شدن به"
 
-#: NVDAObjects\window\winword.py:134
+#. Translators: a Microsoft Word revision type (inserted table cell)
+#: NVDAObjects\window\winword.py:150
 msgid "cell insertion"
 msgstr "جای‌گذاری خانه"
 
-#: NVDAObjects\window\winword.py:135
+#. Translators: a Microsoft Word revision type (deleted table cell)
+#: NVDAObjects\window\winword.py:152
 msgid "cell deletion"
 msgstr "پاک کردن خانه"
 
-#: NVDAObjects\window\winword.py:136
+#. Translators: a Microsoft Word revision type (merged table cells)
+#: NVDAObjects\window\winword.py:154
 msgid "cell merge"
 msgstr "یکی کردن خانه‌ها"
 
-#: NVDAObjects\window\winword.py:140
+#: NVDAObjects\window\winword.py:158
 msgid "Comments"
 msgstr "بیش‌گویه‌ها"
 
-#: NVDAObjects\window\winword.py:141
+#: NVDAObjects\window\winword.py:159
 msgid "Endnotes"
 msgstr "یادداشت‌ها"
 
-#: NVDAObjects\window\winword.py:142
+#: NVDAObjects\window\winword.py:160
 msgid "Even pages footer"
 msgstr "پانوشته‌ی برگه‌ها با شماره‌ی جفت"
 
-#: NVDAObjects\window\winword.py:143
+#: NVDAObjects\window\winword.py:161
 msgid "Even pages header"
 msgstr "سرنوشته‌ی برگه‌ها با شماره‌ی جفت"
 
-#: NVDAObjects\window\winword.py:144
+#: NVDAObjects\window\winword.py:162
 msgid "First page footer"
 msgstr "پانوشته‌ی برگه‌ی نخست"
 
-#: NVDAObjects\window\winword.py:145
+#: NVDAObjects\window\winword.py:163
 msgid "First page header"
 msgstr "سرنوشته‌ی برگه‌ی نخست"
 
-#: NVDAObjects\window\winword.py:146
+#: NVDAObjects\window\winword.py:164
 msgid "Footnotes"
 msgstr "پانوشته‌ها"
 
-#: NVDAObjects\window\winword.py:147
+#: NVDAObjects\window\winword.py:165
 msgid "Primary footer"
 msgstr "پانوشته‌ی نخستین"
 
-#: NVDAObjects\window\winword.py:148
+#: NVDAObjects\window\winword.py:166
 msgid "Primary header"
 msgstr "سرنوشته‌ی نخستین"
 
-#: NVDAObjects\window\winword.py:149
+#: NVDAObjects\window\winword.py:167
 msgid "Text frame"
 msgstr "قاب نوشتار"
 
-#: NVDAObjects\window\winword.py:348
+#: NVDAObjects\window\winword.py:366
 msgid "unknown author"
 msgstr "نویسنده‌ی ناشناس"
 
-#: NVDAObjects\window\winword.py:349
+#: NVDAObjects\window\winword.py:367
 msgid "unknown date"
 msgstr "تاریخ ناشناس"
 
-#: NVDAObjects\window\winword.py:350
+#: NVDAObjects\window\winword.py:368
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} به دست {revisionAuthor} در {revisionDate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:542 NVDAObjects\window\winword.py:552
+#: NVDAObjects\window\winword.py:560 NVDAObjects\window\winword.py:570
 msgid "Not in table"
 msgstr "بیرون از جدول"
 
-#: NVDAObjects\window\winword.py:575
+#: NVDAObjects\window\winword.py:593
 msgid "Edge of table"
 msgstr "لبه‌ی جدول"
 

@@ -150,7 +150,7 @@ Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkom
 
 +++ Die NVDA-Modifikationstaste +++
 In NVDA bestehen die Tastenkombinationen zumeist aus einer oder mehreren Tasten in Kombination mit der sog. NVDA-Modifikationstaste.
-Die Befehle zum Lesen in einem Text werden hingegen mit den Tasten des Nummernblocks bedient.
+Die Befehle zum Lesen von Text werden auf Desktop-Tastaturen hingegen mit den Tasten des Nummernblocks bedient. Des weiteren gibt es einige weitere Ausnahmen.
 
 NVDA kann so eingestellt werden, dass die Einfügentaste des Nummernblocks, die Einfügen-Taste der erweiterten Tastatur und die Dauergroßschreibtaste jeweils als NVDA-Modifikationstasten fungieren.
 
@@ -918,7 +918,7 @@ Dieses Dialogfeld enthält die folgenden Optionen:
 ==== Systemfokus verfolgen ====
 Tastenkombination: NVDA+7
 
-Wenn eingeschaltet, platziert sich der nvda-Cursor immer auf dem Objekt, das den Fokus besitzt.
+Wenn eingeschaltet, platziert sich der nvda-Cursor immer auf dem Objekt, das den Fokus besitzt, sobald sich der Fokus ändert.
 
 %kc:setting
 ==== System-Cursor verfolgen ====
@@ -1945,11 +1945,9 @@ Anmerkung: Die Original-Tastenkombination NVDA+F12 zum Anzeigen der Uhrzeit und 
 	None = kb:NVDA+f12
 ```
 
-Obwohl Sie ein Script prinzipiell an jede beliebige Tastenkombination zuweisen können, könnte es mit Tastenkombinationen in Verbindung mit der Alt-Taste vereinzelt zu Probleme kommen, da NVDA die Umschalt-Tasten wie Alt, Umschalt, STRG oder dem Modifikator (NVDA-Taste) an das Betriebssystem weiterreicht, selbst wenn bereits ein Script zugewiesen wurde.
-Wenn Sie eine solche Tastenkombination drücken, könnte es vorkommen, dass sowohl die Menüleiste der Anwendung aktiviert wie auch das Script ausgeführt wird. In solchen Fällen ist es anzuraten, nur Umschalttasten wie Umschalt, STRG oder die NVDA-Taste zu verwenden.
 
 +++ Hinweise zur Zusammensetzung von Touchscreen-Gestennamen +++
-Wenn Sie eine Touchscren-Geste an ein Script zuweisen wollen, müssen Sie den namen der Geste wie folgt zusamensetzen:
+Wenn Sie eine Touchscren-Geste an ein Script zuweisen wollen, müssen Sie den namen der Geste wie folgt zusammensetzen:
 [Finger]_[Anzahl]_Aktion
 Hierbei Gilt:
 - Finger: Gibt die Anzahl der Finger an, mit denen die Geste ausgeführt werden muss. Fehlt dieser Teil, wird eine Geste mit einem einzigen Finger angenommen. Die angabe der Anzahl der Finger muss in der Form Nfinger erfolgen, wobei N 1 oder größer sein kann.

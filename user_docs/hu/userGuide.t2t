@@ -817,7 +817,7 @@ Ez a párbeszédablak az alábbi beállításokat tartalmazza:
 ==== A billentyűzet követése====
 Billentyűparancs: NVDA+7
 
-A beállítás engedélyezésével az áttekintő kurzor mindig az aktív elem szövegét mutatja.
+A beállítás engedélyezésével az áttekintő kurzor mindig az aktív elem szövegét mutatja, vagyis azt, ahol a rendszerkurzor található.
 
 %kc:setting
 ==== A rendszer kurzor követése ====
@@ -957,6 +957,7 @@ Be lehet állítani a:
 - betűtípus állapota,
 - színek jelzése,
 - szövegigazítás,
+- szerkesztői változások jelzése,
 - helyesírási hibák,
 - oldalszámok,
 - sorok száma,
@@ -1015,6 +1016,10 @@ Néhány billentyűparancs a segítségére lehet:
 A hordozható verziókban az összes beállítás, driver és script egy userconfig könyvtárban kapott helyet, ami az NVDA könyvtárában található.
 
 Ezzel szemben a telepítős változat fájljai a felhasználó profiljának könyvtárában találhatóak. Ez azt jelenti, hogy ha ugyanazon a gépen több felhasználó is telepítette az NVDA programot, a beállításaikat az NVDA külön kezeli. Ezt a mappát elérheti a start menü-programok-NVDA-A felhasználói beállítások tallózása menüpontot megnyitva.
+
+Az NVDA beállításai a bejelentkező képernyők használatához a program könyvtárában található.
+A konfiguráció módosítása kívülről nem ajánllott.
+A megváltoztatáshoz állítsa be a kívánt beállítást az NVDA programban, mentse el a módosításokat, majd nyomja meg a "Az aktuális beállítások használata a bejelentkező és egyéb biztonsági képernyőkön" gombot az általános beállítások menüben.
 
 + Extra Eszközök +
 
@@ -1485,10 +1490,6 @@ Ha szeretné eltávolítani ezt a billentyűparancsot, adja hozzá a fájlhoz a 
 	None = kb:NVDA+f12
 ```
 
-Bár tetszőlegesen akármely billentyűt használhatja billentyűparancs megadáskor, előfordulhat, hogy az Alt billentyű nem megfelelően működik önálló módosítóként.
-Az NVDA változatlanul továbbküldi a billentyűparancsokat az operációs rendszernek, még akkor is ha azok egy szkripthez vannak társítva.
-Így ha az Alt billentyűt használja önálló parancsként egyes alkalmazások menüsora fókuszt kaphat, a szkript aktiválása mellett.
-Ezért az NVDA, shift és ctrl billentyűk használata módosítóbillentyűkként erősen ajánlott.
 
 ++ Az írásjelek haladó testreszabása ++
 
@@ -1499,6 +1500,7 @@ Ehhez az NVDA írásjel konfigurációs fájl szerkesztése szükséges, melyet 
 A fájl neve symbols-xx.dic, ahol xx a nyelvi kódot helyettesíti (pl. hu).
 A fájl formája az NVDA fejlesztői útmutatójának Írásjelkiejtés fejezetében található [az NVDA weboldalának fejlesztői címén NVDA_URLwiki/Development].
 Érdemes megjegyezni, hogy összetett szimbólumok megadása jelenleg nem lehetséges.
+
 
 + További információk +
 

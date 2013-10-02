@@ -150,7 +150,7 @@ La troisième permet d'indiquer si ce dialogue d'accueil doit apparaître à cha
 
 +++ La touche NVDA +++
 La plupart des commandes spécifiques de NVDA se font en appuyant sur la touche NVDA en conjonction avec une ou plusieurs autres touches. 
-Les fonctions de revue de texte qui n'utilisent que le pavé numérique  constituent une exception.
+Les fonctions de revue de texte qui n'utilisent que le pavé numérique  constituent une des quelques exception.
 
 NVDA peut être configuré pour que les touches Insert du pavé numérique, Insert du clavier étendu ou verrouillage majuscules puissent être utilisés comme touche NVDA.
 
@@ -408,7 +408,7 @@ Le mode revue de l'écran vous permet de lire le texte visible tel qu'il aparaî
 Cela est très cimilaire au fonctionnalités mode revue ou curseur souris des autres lecteur d'écran sous Windows.
 
 En basculant en mode revue de l'écran, le curseur de revue est placé à la position de [l'objet du navigateur #ObjectNavigation].
-En bougeant sur l'écran avec le curseur de revue, le navigateur d'objet est déplacé à l'objet le plus proche.
+En se déplaçant sur l'écran avec le curseur de revue, le navigateur d'objet est déplacé à l'objet trouvé à la position du curseur de revue.
 
 Notez que dans certaines nouvelles applications, NVDA ne pourra pas lire tout ou une partie du texte à l'écran, étant donné qu'elles utilise des techniques d'affichage qui ne peuvent être gérées actuellement.
 
@@ -847,7 +847,7 @@ ce dialogue contient les options suivantes :
 ==== Suivre le focus système ====
 Raccourci clavier : NVDA+7
 
-Quand l'option est activée, le curseur de revue est toujours placé dans le même objet que le focus système quand il change.
+Quand cette option est activée, le curseur de revue est toujours placé dans le même objet que le focus système quand il change.
 
 %kc:setting
 ==== Suivre le curseur système ====
@@ -996,6 +996,7 @@ On peut configurer les annonces suivantes :
 - attributs de la police
 - alignement du texte
 - couleurs
+- Les révisions dans l'éditeur
 - style du texte
 - fautes d'orthographe
 - numéro de page
@@ -1080,7 +1081,7 @@ Pour accéder à votre répertoire de paramètres pour une version installée de
 
 Les paramètres qu'utilise NVDA quand il s'exécute sur l'écran de connexion ou l'écran UAC sont enregistrés dans le répertoire systemConfig situé dans le répertoire nVDA. 
 En général, cette configuration n'a pas à être modifiée.
-Pour modifier cette configuration, configurez nVDA à votre convenance puis demandez à NVDA de copier la configuration sur l'écran de connexion en utilisant le bouton à cet effet dans le dialogue Paramètres généraux.
+Pour modifier cette configuration, configurez nVDA à votre convenance, Sauvegardez la configuration puis cliquez sur  le bouton "Utiliser les paramètres NVDA actuellement sauvegardés pour l'écran de connexion à Windows (nécessite des privilèges administrateur)" dans le dialogue Paramètres généraux.
 
 + Outils Additionnels +
 
@@ -1833,10 +1834,6 @@ Si vous voulez supprimer cette assignation, ajoutez la ligne suivante :
 	None = kb:NVDA+f12
 ```
 
-Bien que vous puissiez assigner un script à n'importe quelle touche, il peut être problématique d'utiliser la touche alt du clavier.
-NVDA passe les touches telles que alt, maj et ctrl au système d'exploitation même si elles doivent déclencher un script.
-Ainsi, si vous utilisez la touche alt dans une combinaison, il se peut qu'elle ouvre la barre de menu tout en déclenchant le script.
-il est donc préférable de n'utiliser que maj, ctrl ou la touche NVDA.
 
 ++ Personnalisation Avancée de la Prononciation des Symboles ++
 Il est possible de personnaliser la prononciation des ponctuations et autres symboles au-delà de ce que permet le dialogue [Prononciation des symboles et ponctuations #SymbolPronunciation].
