@@ -272,6 +272,10 @@ class AppModule(baseObject.ScriptableObject):
 		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
+
+	def _setProductInfo(self):
+		"""Set productName and productVersion attributes.
+		"""
 		# If the processHandle is greater than 0, we get application name and version by reading it in its main executable file
 		if self.processHandle >0:
 			# We define where to find the function GetModuleFileNameW
@@ -321,6 +325,14 @@ class AppModule(baseObject.ScriptableObject):
 		else:
 			self.productName = None
 			self.productVersion = None
+
+	def _get_productName(self):
+		self._setProductInfo()
+		return self.productName
+
+	def _get_productVersion(self):
+		self._setProductInfo()
+		return self.productVersion
 
 	def __repr__(self):
 		return "<%r (appName %r, process ID %s) at address %x>"%(self.appModuleName,self.appName,self.processID,id(self))
