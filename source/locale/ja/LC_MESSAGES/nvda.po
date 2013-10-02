@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 19:09+1000\n"
-"PO-Revision-Date: 2013-08-13 18:04+0900\n"
+"POT-Creation-Date: 2013-09-17 19:08+1000\n"
+"PO-Revision-Date: 2013-09-25 17:08+0900\n"
 "Last-Translator: Takuya Nishimoto <nishimotz@gmail.com>\n"
 "Language-Team: NVDA Japanese Team <nishimotz@gmail.com>\n"
 "Language: ja\n"
@@ -1529,7 +1529,8 @@ msgid "subscript"
 msgstr "サブスクリプト"
 
 #. Translators: Describes style of text.
-#: controlTypes.py:440 NVDAObjects\window\winword.py:126
+#. Translators: a Microsoft Word revision type (style change)
+#: controlTypes.py:440 NVDAObjects\window\winword.py:134
 msgid "style"
 msgstr "スタイル"
 
@@ -1591,7 +1592,7 @@ msgstr "押されました"
 #. Translators: This is presented when a check box is checked.
 #: controlTypes.py:466
 msgid "checked"
-msgstr "チェック"
+msgstr "チェックあり"
 
 #. Translators: This is presented when a three state check box is half checked.
 #: controlTypes.py:468
@@ -1606,12 +1607,12 @@ msgstr "読み取り専用"
 #. Translators: This is presented when a tree view or submenu item is expanded.
 #: controlTypes.py:472
 msgid "expanded"
-msgstr "オープン"
+msgstr "展開されています"
 
 #. Translators: This is presented when a tree view or submenu is collapsed.
 #: controlTypes.py:474
 msgid "collapsed"
-msgstr "クローズ"
+msgstr "畳まれています"
 
 #. Translators: This is presented when a control or a document becomes invisible.
 #: controlTypes.py:476
@@ -1734,7 +1735,7 @@ msgstr "詳細説明あり"
 #. Translators: a state that denotes that an object is pinned in its current location
 #: controlTypes.py:519
 msgid "pinned"
-msgstr ""
+msgstr "ピンどめ"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 #: controlTypes.py:524
@@ -2196,7 +2197,7 @@ msgstr "ナビゲーターオブジェクトを最初の子オブジェクトに
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
 #: globalCommands.py:471
 msgid "activate"
-msgstr "実行"
+msgstr "アクティベート"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 #: globalCommands.py:498
@@ -3226,14 +3227,21 @@ msgstr "デスクトップ"
 msgid "laptop"
 msgstr "ラップトップ"
 
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
+#. Translators: Reported for an unknown key press.
+#. %s will be replaced with the key code.
+#: keyboardHandler.py:354
+#, python-format
+msgid "unknown %s"
+msgstr "不明 %s"
+
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
 msgid "on"
 msgstr "オン"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:813
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:813
 #: gui\settingsDialogs.py:1174
 msgid "off"
 msgstr "オフ"
@@ -3456,15 +3464,14 @@ msgstr "行%s"
 
 #. Translators: Reported when text is revised.
 #: speech.py:1071
-#, fuzzy, python-format
+#, python-format
 msgid "revised %s"
-msgstr "レビュー"
+msgstr "変更 %s"
 
 #. Translators: Reported when text is not revised.
 #: speech.py:1073
-#, fuzzy
 msgid "unrevised"
-msgstr "レビュー"
+msgstr "未変更"
 
 #. Translators: Reported when text is not bolded.
 #: speech.py:1082
@@ -5618,7 +5625,7 @@ msgstr "オブジェクト位置情報の通知(&P)"
 #. object presentation settings dialog.
 #: gui\settingsDialogs.py:851
 msgid "Guess object &position information when unavailable"
-msgstr "不可能な場合オブジェクトの位置を予想する(&P)"
+msgstr "オブジェクトの位置を推測する(&P)"
 
 #. Translators: This is the label for a checkbox in the
 #. object presentation settings dialog.
@@ -5747,9 +5754,8 @@ msgstr "色を通知(&C)"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 #: gui\settingsDialogs.py:1013
-#, fuzzy
 msgid "Report &editor revisions"
-msgstr "見出しの通知(&H)"
+msgstr "校閲者による更新の通知(&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5777,7 +5783,7 @@ msgstr "行番号の通知(&L)"
 
 #. Translators: This message is presented in the document formatting settings dialogue
 #. If this option is selected, NVDA will cound the leading spaces and tabs of a line and speak it.
-#. 
+#.
 #: gui\settingsDialogs.py:1039
 msgid "Report l&ine indentation"
 msgstr "行インデントの通知(&I)"
@@ -6115,7 +6121,7 @@ msgstr "フィルター:(&F)"
 #. in the browse mode Elements List dialog.
 #: virtualBuffers\__init__.py:314
 msgid "&Activate"
-msgstr "開く(&A)"
+msgstr "アクティベート(&A)"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
@@ -6823,148 +6829,150 @@ msgstr "数式があります"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} から {lastAddress} {lastContent}"
 
-#: NVDAObjects\window\winword.py:119
-#, fuzzy
-msgid "insertion"
-msgstr "セクション"
-
+#. Translators: a Microsoft Word revision type (inserted content)
 #: NVDAObjects\window\winword.py:120
-#, fuzzy
-msgid "deletion"
-msgstr "デリート"
+msgid "insertion"
+msgstr "挿入"
 
-#: NVDAObjects\window\winword.py:121
-#, fuzzy
-msgid "property"
-msgstr "プロパティページ"
-
+#. Translators: a Microsoft Word revision type (deleted content)
 #: NVDAObjects\window\winword.py:122
-#, fuzzy
-msgid "paragraph number"
-msgstr "段落"
+msgid "deletion"
+msgstr "削除"
 
-#: NVDAObjects\window\winword.py:123
-#, fuzzy
-msgid "display field"
-msgstr "ディスプレイのスクロール"
-
+#. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
 #: NVDAObjects\window\winword.py:124
-msgid "reconcile"
-msgstr ""
+msgid "property"
+msgstr "プロパティ"
 
-#: NVDAObjects\window\winword.py:125
-msgid "conflict"
-msgstr ""
+#. Translators: a Microsoft Word revision type (changed paragraph number)
+#: NVDAObjects\window\winword.py:126
+msgid "paragraph number"
+msgstr "段落番号"
 
-#: NVDAObjects\window\winword.py:127
-#, fuzzy
-msgid "replace"
-msgstr "読み"
-
+#. Translators: a Microsoft Word revision type (display field)
 #: NVDAObjects\window\winword.py:128
-#, fuzzy
-msgid "paragraph property"
-msgstr "段落"
+msgid "display field"
+msgstr "フィールド表示"
 
-#: NVDAObjects\window\winword.py:129
-#, fuzzy
-msgid "table property"
-msgstr "テーブルフッター"
-
+#. Translators: a Microsoft Word revision type (reconcile)
 #: NVDAObjects\window\winword.py:130
-#, fuzzy
-msgid "section property"
-msgstr "選択項目削除"
+msgid "reconcile"
+msgstr "解決"
 
-#: NVDAObjects\window\winword.py:131
-msgid "style definition"
-msgstr ""
-
+#. Translators: a Microsoft Word revision type (conflicting revision)
 #: NVDAObjects\window\winword.py:132
-#, fuzzy
-msgid "moved from"
-msgstr "フォーカスを移動"
+msgid "conflict"
+msgstr "競合"
 
-#: NVDAObjects\window\winword.py:133
-#, fuzzy
-msgid "moved to"
-msgstr "フォーカス位置に移動"
-
-#: NVDAObjects\window\winword.py:134
-#, fuzzy
-msgid "cell insertion"
-msgstr "加速度(&A)"
-
-#: NVDAObjects\window\winword.py:135
-#, fuzzy
-msgid "cell deletion"
-msgstr "選択なし"
-
+#. Translators: a Microsoft Word revision type (replaced content)
 #: NVDAObjects\window\winword.py:136
-msgid "cell merge"
-msgstr ""
+msgid "replace"
+msgstr "置換"
 
+#. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
+#: NVDAObjects\window\winword.py:138
+msgid "paragraph property"
+msgstr "段落プロパティ"
+
+#. Translators: a Microsoft Word revision type (table)
 #: NVDAObjects\window\winword.py:140
+msgid "table property"
+msgstr "テーブルプロパティ"
+
+#. Translators: a Microsoft Word revision type (section property)
+#: NVDAObjects\window\winword.py:142
+msgid "section property"
+msgstr "セクションプロパティ"
+
+#. Translators: a Microsoft Word revision type (style definition)
+#: NVDAObjects\window\winword.py:144
+msgid "style definition"
+msgstr "スタイル定義"
+
+#. Translators: a Microsoft Word revision type (moved from)
+#: NVDAObjects\window\winword.py:146
+msgid "moved from"
+msgstr "移動元"
+
+#. Translators: a Microsoft Word revision type (moved to)
+#: NVDAObjects\window\winword.py:148
+msgid "moved to"
+msgstr "移動先"
+
+#. Translators: a Microsoft Word revision type (inserted table cell)
+#: NVDAObjects\window\winword.py:150
+msgid "cell insertion"
+msgstr "セル挿入"
+
+#. Translators: a Microsoft Word revision type (deleted table cell)
+#: NVDAObjects\window\winword.py:152
+msgid "cell deletion"
+msgstr "セル削除"
+
+#. Translators: a Microsoft Word revision type (merged table cells)
+#: NVDAObjects\window\winword.py:154
+msgid "cell merge"
+msgstr "セル結合"
+
+#: NVDAObjects\window\winword.py:158
 msgid "Comments"
 msgstr "コメント"
 
-#: NVDAObjects\window\winword.py:141
+#: NVDAObjects\window\winword.py:159
 msgid "Endnotes"
 msgstr "エンドノート"
 
-#: NVDAObjects\window\winword.py:142
+#: NVDAObjects\window\winword.py:160
 msgid "Even pages footer"
 msgstr "奇数ページフッター"
 
-#: NVDAObjects\window\winword.py:143
+#: NVDAObjects\window\winword.py:161
 msgid "Even pages header"
 msgstr "奇数ページヘッダー"
 
-#: NVDAObjects\window\winword.py:144
+#: NVDAObjects\window\winword.py:162
 msgid "First page footer"
 msgstr "先頭ページフッター"
 
-#: NVDAObjects\window\winword.py:145
+#: NVDAObjects\window\winword.py:163
 msgid "First page header"
 msgstr "先頭ページヘッダー"
 
-#: NVDAObjects\window\winword.py:146
+#: NVDAObjects\window\winword.py:164
 msgid "Footnotes"
 msgstr "脚注"
 
-#: NVDAObjects\window\winword.py:147
+#: NVDAObjects\window\winword.py:165
 msgid "Primary footer"
 msgstr "プライマリーフッター"
 
-#: NVDAObjects\window\winword.py:148
+#: NVDAObjects\window\winword.py:166
 msgid "Primary header"
 msgstr "プライマリーヘッダー"
 
-#: NVDAObjects\window\winword.py:149
+#: NVDAObjects\window\winword.py:167
 msgid "Text frame"
 msgstr "テキストフレーム"
 
-#: NVDAObjects\window\winword.py:348
-#, fuzzy
+#: NVDAObjects\window\winword.py:366
 msgid "unknown author"
-msgstr "不明な色"
+msgstr "著者不明"
 
-#: NVDAObjects\window\winword.py:349
-#, fuzzy
+#: NVDAObjects\window\winword.py:367
 msgid "unknown date"
-msgstr "未定義"
+msgstr "日付不明"
 
-#: NVDAObjects\window\winword.py:350
+#: NVDAObjects\window\winword.py:368
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
-msgstr ""
+msgstr "{revisionType} 更新者 {revisionAuthor} 更新日 {revisionDate}"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:542 NVDAObjects\window\winword.py:552
+#: NVDAObjects\window\winword.py:560 NVDAObjects\window\winword.py:570
 msgid "Not in table"
 msgstr "テーブル内ではありません"
 
-#: NVDAObjects\window\winword.py:575
+#: NVDAObjects\window\winword.py:593
 msgid "Edge of table"
 msgstr "テーブルの端"
 

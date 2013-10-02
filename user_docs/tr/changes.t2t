@@ -17,6 +17,9 @@
 - NVDA will now report the pinned state for pinned controls such as tabs in Mozilla Firefox. (#3372)
 - It is now possible to bind scripts to keyboard gestures containing Alt and/or Windows keys as modifiers. Previously, if this was done, performing the script would cause the Start Menu or menu bar to be activated. (#3472)
 - Selecting text in browse mode documents (e.g. using control+shift+end) no longer causes the keyboard layout to be switched on systems with multiple keyboard layouts installed. (#3472)
+- Internet Explorer should no longer crash or become unusable when closing NVDA. (#3397)
+- Physical movement and other events on some newer computers are no longer treated as inappropriate key presses. Previously, this silenced speech and sometimes triggered NVDA commands. (#3468)
+- NVDA now behaves as expected in Poedit 1.5.7. Users using earlier versions will need to update. (#3485)
 
 
 = 2013.2 =

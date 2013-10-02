@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 19:09+1000\n"
-"PO-Revision-Date: 2013-09-12 20:58+0200\n"
+"POT-Creation-Date: 2013-09-17 19:08+1000\n"
+"PO-Revision-Date: 2013-09-25 20:00+0200\n"
 "Last-Translator: Çağrı Doğan <cagrid@hotmail.com>\n"
 "Language-Team: NVDA_TR <cagrid@hotmail.com>\n"
 "Language: tr_TR\n"
@@ -1527,7 +1527,8 @@ msgid "subscript"
 msgstr "altsimge"
 
 #. Translators: Describes style of text.
-#: controlTypes.py:440 NVDAObjects\window\winword.py:126
+#. Translators: a Microsoft Word revision type (style change)
+#: controlTypes.py:440 NVDAObjects\window\winword.py:134
 msgid "style"
 msgstr "Stil"
 
@@ -3226,14 +3227,21 @@ msgstr "masa üstü"
 msgid "laptop"
 msgstr "dizüstü"
 
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
+#. Translators: Reported for an unknown key press.
+#. %s will be replaced with the key code.
+#: keyboardHandler.py:354
+#, python-format
+msgid "unknown %s"
+msgstr "bilinmeyen %s"
+
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:1174
 msgid "on"
 msgstr "Açık"
 
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:392 synthSettingsRing.py:74 gui\settingsDialogs.py:813
+#: keyboardHandler.py:411 synthSettingsRing.py:74 gui\settingsDialogs.py:813
 #: gui\settingsDialogs.py:1174
 msgid "off"
 msgstr "Kapalı"
@@ -6845,133 +6853,150 @@ msgstr "formül var"
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
 msgstr "{firstAddress} {firstContent} ve {lastAddress} {lastContent} arasında"
 
-#: NVDAObjects\window\winword.py:119
+#. Translators: a Microsoft Word revision type (inserted content)
+#: NVDAObjects\window\winword.py:120
 msgid "insertion"
 msgstr "ekleme"
 
-#: NVDAObjects\window\winword.py:120
+#. Translators: a Microsoft Word revision type (deleted content)
+#: NVDAObjects\window\winword.py:122
 msgid "deletion"
 msgstr "silme"
 
-#: NVDAObjects\window\winword.py:121
+#. Translators: a Microsoft Word revision type (changed content property, e.g. font, color)
+#: NVDAObjects\window\winword.py:124
 msgid "property"
 msgstr "özellik"
 
-#: NVDAObjects\window\winword.py:122
+#. Translators: a Microsoft Word revision type (changed paragraph number)
+#: NVDAObjects\window\winword.py:126
 msgid "paragraph number"
 msgstr "Paragraf numarası"
 
-#: NVDAObjects\window\winword.py:123
+#. Translators: a Microsoft Word revision type (display field)
+#: NVDAObjects\window\winword.py:128
 msgid "display field"
 msgstr "Görüntüleme alanı"
 
-#: NVDAObjects\window\winword.py:124
+#. Translators: a Microsoft Word revision type (reconcile)
+#: NVDAObjects\window\winword.py:130
 msgid "reconcile"
 msgstr "Bağdaştır"
 
-#: NVDAObjects\window\winword.py:125
+#. Translators: a Microsoft Word revision type (conflicting revision)
+#: NVDAObjects\window\winword.py:132
 msgid "conflict"
 msgstr "Bağdaşmazlık"
 
-#: NVDAObjects\window\winword.py:127
+#. Translators: a Microsoft Word revision type (replaced content)
+#: NVDAObjects\window\winword.py:136
 msgid "replace"
 msgstr "olarak değiştir"
 
-#: NVDAObjects\window\winword.py:128
+#. Translators: a Microsoft Word revision type (changed paragraph property, e.g. alignment)
+#: NVDAObjects\window\winword.py:138
 msgid "paragraph property"
 msgstr "Paragraf özelliği"
 
-#: NVDAObjects\window\winword.py:129
+#. Translators: a Microsoft Word revision type (table)
+#: NVDAObjects\window\winword.py:140
 msgid "table property"
 msgstr "tablo özelliği"
 
-#: NVDAObjects\window\winword.py:130
+#. Translators: a Microsoft Word revision type (section property)
+#: NVDAObjects\window\winword.py:142
 msgid "section property"
 msgstr "bölüm özelliği"
 
-#: NVDAObjects\window\winword.py:131
+#. Translators: a Microsoft Word revision type (style definition)
+#: NVDAObjects\window\winword.py:144
 msgid "style definition"
 msgstr "stil tanımı"
 
-#: NVDAObjects\window\winword.py:132
+#. Translators: a Microsoft Word revision type (moved from)
+#: NVDAObjects\window\winword.py:146
 msgid "moved from"
 msgstr "buradan taşındı"
 
-#: NVDAObjects\window\winword.py:133
+#. Translators: a Microsoft Word revision type (moved to)
+#: NVDAObjects\window\winword.py:148
 msgid "moved to"
 msgstr "buraya taşındı"
 
-#: NVDAObjects\window\winword.py:134
+#. Translators: a Microsoft Word revision type (inserted table cell)
+#: NVDAObjects\window\winword.py:150
 msgid "cell insertion"
 msgstr "hücre ekleme"
 
-#: NVDAObjects\window\winword.py:135
+#. Translators: a Microsoft Word revision type (deleted table cell)
+#: NVDAObjects\window\winword.py:152
 msgid "cell deletion"
 msgstr "hücre silme"
 
-#: NVDAObjects\window\winword.py:136
+#. Translators: a Microsoft Word revision type (merged table cells)
+#: NVDAObjects\window\winword.py:154
 msgid "cell merge"
 msgstr "hücre birleştirme"
 
-#: NVDAObjects\window\winword.py:140
+#: NVDAObjects\window\winword.py:158
 msgid "Comments"
 msgstr "Yorumlar"
 
-#: NVDAObjects\window\winword.py:141
+#: NVDAObjects\window\winword.py:159
 msgid "Endnotes"
 msgstr "son notlar"
 
-#: NVDAObjects\window\winword.py:142
+#: NVDAObjects\window\winword.py:160
 msgid "Even pages footer"
 msgstr "çift sayfa altlığı"
 
-#: NVDAObjects\window\winword.py:143
+#: NVDAObjects\window\winword.py:161
 msgid "Even pages header"
 msgstr "Çift sayfa başlığı"
 
-#: NVDAObjects\window\winword.py:144
+#: NVDAObjects\window\winword.py:162
 msgid "First page footer"
 msgstr "İlk sayfa altlığı"
 
-#: NVDAObjects\window\winword.py:145
+#: NVDAObjects\window\winword.py:163
 msgid "First page header"
 msgstr "İlk sayfa başlığı"
 
-#: NVDAObjects\window\winword.py:146
+#: NVDAObjects\window\winword.py:164
 msgid "Footnotes"
 msgstr "dipnotlar"
 
-#: NVDAObjects\window\winword.py:147
+#: NVDAObjects\window\winword.py:165
 msgid "Primary footer"
 msgstr "Birincil altlık"
 
-#: NVDAObjects\window\winword.py:148
+#: NVDAObjects\window\winword.py:166
 msgid "Primary header"
 msgstr "Birincil başlık"
 
-#: NVDAObjects\window\winword.py:149
+#: NVDAObjects\window\winword.py:167
 msgid "Text frame"
 msgstr "metin çerçevesi"
 
-#: NVDAObjects\window\winword.py:348
+#: NVDAObjects\window\winword.py:366
 msgid "unknown author"
 msgstr "bilinmeyen yazar"
 
-#: NVDAObjects\window\winword.py:349
+#: NVDAObjects\window\winword.py:367
 msgid "unknown date"
 msgstr "Bilinmeyen tarih"
 
-#: NVDAObjects\window\winword.py:350
+#: NVDAObjects\window\winword.py:368
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} {revisionAuthor} tarafından {revisionDate} tarihinde"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. when the cursor is not withnin a table.
-#: NVDAObjects\window\winword.py:542 NVDAObjects\window\winword.py:552
+#: NVDAObjects\window\winword.py:560 NVDAObjects\window\winword.py:570
 msgid "Not in table"
 msgstr "Bir tabloda değil"
 
-#: NVDAObjects\window\winword.py:575
+#: NVDAObjects\window\winword.py:593
 msgid "Edge of table"
 msgstr "tablo sınırı"
 

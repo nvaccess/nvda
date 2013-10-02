@@ -994,6 +994,7 @@ Ad esempio, se attiviamo la casella di controllo "Leggi il nome del font", NVDA 
 - attributi carattere
 - Allineamento testo
 - Colori
+- Revisioni
 - stile del testo
 - Errori ortografici
 - Numeri di pagina
@@ -1829,11 +1830,6 @@ Nel caso si desideri rimuovere tale associazione, bisogna aggiungere le righe se
 ```
 	None = kb:NVDA+f12
 ```
-
-Sebbene vi sia la possibilità di associare gli scripts a qualsiasi tasto disponibile, potrebbe risultare complesso servirsi del tasto alt. 
-Infatti, NVDA invia ancora i tasti speciali (come Shift, Control e Alt) al sistema operativo, anche se questi vengono usati in uno script.
-Quindi, se si utilizza il tasto Alt in una gesture, la pressione della combinazione di tasti può attivare la barra dei menu, o anche eseguire lo script.
-Comunque, si consiglia di servirsi dei tasti Shift, Control e NVDA come tasti speciali.
 
 ++ Personalizzazione avanzata dei simboli di punteggiatura ++
 in aggiunta a ciò che abbiamo visto nella [Finestra di dialogo Pronuncia Punteggiatura/Simboli #SymbolPronunciation], è possibile personalizzare la punteggiatura ed altri simboli in maniera diversa.
