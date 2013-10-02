@@ -1060,6 +1060,25 @@ Using the Level field, you can adjust the lowest symbol level at which this symb
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
++++ Input Gestures +++
+In this dialog, you can customize the input gestures (keys on the keyboard, buttons on a braille display, etc.) for NVDA commands.
+
+Only commands that are applicable immediately before the dialog is opened are shown.
+For example, if you want to customize commands related to browse mode, you should open the Input Gestures dialog while you are in browse mode.
+
+The tree in this dialog lists all of the applicable NVDA commands grouped by category.
+Any gestures associated with a command are listed beneath the command.
+
+To add an input gesture to a command, select the command and press the Add button.
+Then, perform the input gesture you wish to associate; e.g. press a key on the keyboard or a button on a braille display.
+Often, a gesture can be interpreted in more than one way.
+For example, if you pressed a key on the keyboard, you may wish it to be specific to the current keyboard layout (e.g. desktop or laptop) or you may wish it to apply for all layouts.
+In this case, a menu will appear allowing you to select the desired option.
+
+To remove a gesture from a command, select the gesture and press the Remove button.
+
+When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
+
 ++ Saving and Reloading the configuration ++
 By default NVDA will automatically save your settings on exit.
 Note, however, that this option can be changed under the general options in the preferences menu.
@@ -1768,75 +1787,6 @@ Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/driv
 %kc:endInclude
 
 + Advanced Topics +
-
-++ Remapping Key Assignments and Other Input Gestures ++
-Users are able to provide or override mappings of input gestures (such as key presses) to scripts in a special file in the user's NVDA configuration directory.
-This file is called gestures.ini.
-
-This file uses standard ini syntax.
-The file may contain multiple sections and each section may have one or more entries.
-
-Each section provides mappings for scripts in a particular Python module and class inside NVDA.
-- The section name should be the Python module and class separated by a dot (.).
-- The key of each entry is the name of the script to which input gestures should be bound.
-Alternatively, you can use None to unbind input gestures from a script to which they were previously bound.
-Each entry key can only be listed once per section, including None.
-- The entry value is a comma (,) separated list of gesture identifiers for the input gestures that should be bound.
-Gesture identifiers ending in a comma must be enclosed in quotes (" or ').
--
-
-Gesture identifiers consist of a two letter device code; a sub-device, layout or mode in brackets; a colon; and then a type-specific string identifying the actual input, such as key or touch gesture names.
-- For keyboard gestures, the device code is kb.
-The part in brackets is the keyboard layout and is optional.
-If not specified, the gesture will apply to all keyboard layouts.
-The string after the colon is one or more key names separated by a plus (+) sign.
-- For braille display gestures, the device code is br.
-The part in brackets identifies the specific braille display and is mandatory.
-The string after the colon is one or more key names separated by a plus (+) sign.
-- For touch gestures, the device code is ts.
-The part in brackets is the touch mode and is optional.
-The string after the colon is a touch gesture; e.g. double_tap, 2fingerflickUp or 3finger_tap.
--
-
-In order to discover gesture identifiers, script names and the class and module in which they are contained, you can:
-+ Turn on Input Help.
-+ Activate the gesture (press the key, touch the screen, etc.).
-+ Turn off input help.
-+ Activate View log in the NVDA Tools menu.
-+ Examine the recent log entries.
-One of these should provide information about the input gesture you sent, including the module.class and script if it is bound to one.
-+
-
-Following is an example of how you could bind NVDA+shift+t to the date time script.
-
-To find out the correct script name and module.class for date time, you would turn on Input Help and press NVDA+f12 (as this is the current gesture for the date time script).
-You would then turn off Input Help and examine the log viewer.
-
-Towards the bottom, you would see:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-From this, you can see that the script name is dateTime and the module.class is globalCommands.GlobalCommands.
-
-If the file does not yet exist, you would create a text file called gestures.ini in the user configuration directory and add the following content:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-This would bind the key press NVDA+shift+t (in any keyboard layout) to the dateTime script.
-
-Note that the original NVDA+f12 binding would still work.
-If you wanted to remove this binding, you would add the following line:
-
-```
-	None = kb:NVDA+f12
-```
-
 
 ++ Advanced Customization of Symbol Pronunciation ++
 It is possible to customize the pronunciation of punctuation and other symbols beyond what can be done using the [Punctuation/symbol pronunciation #SymbolPronunciation] dialog.
