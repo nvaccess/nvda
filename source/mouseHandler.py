@@ -11,6 +11,7 @@ import winUser
 import queueHandler
 import api
 import screenBitmap
+import screenExplorer
 import speech
 import globalVars
 import eventHandler
@@ -31,6 +32,7 @@ mouseMoved=False
 curMouseShape=""
 mouseShapeChanged=0
 scrBmpObj=None
+mouseScreenExplorer=None
 #: The time (in seconds) at which the last mouse event occurred.
 #: @type: float
 lastMouseEventTime=0
@@ -89,6 +91,8 @@ def executeMouseMoveEvent(x,y):
 	y=min(max(screenTop,y),(screenTop+screenHeight)-1)
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
 		playAudioCoordinates(x,y,screenWidth,screenHeight,config.conf['mouse']['audioCoordinates_detectBrightness'],config.conf['mouse']['audioCoordinates_blurFactor'])
+	mouseScreenExplorer.moveTo(x,y)
+	return
 	oldMouseObject=api.getMouseObject()
 	mouseObject=desktopObject.objectFromPoint(x,y)
 	while mouseObject and mouseObject.beTransparentToMouse:
@@ -108,8 +112,9 @@ def executeMouseMoveEvent(x,y):
 #Register internal mouse event
 
 def initialize():
-	global curMousePos, scrBmpObj
+	global curMousePos, scrBmpObj, mouseScreenExplorer
 	scrBmpObj=screenBitmap.ScreenBitmap(1,1)
+	mouseScreenExplorer=screenExplorer.ScreenExplorer()
 	(x,y)=winUser.getCursorPos()
 	desktopObject=api.getDesktopObject()
 	try:
