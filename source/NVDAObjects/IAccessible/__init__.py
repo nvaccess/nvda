@@ -438,8 +438,12 @@ the NVDAObject for IAccessible
 			from . import mozilla
 			mozilla.findExtraOverlayClasses(self, clsList)
 		elif windowClassName.startswith('bosa_sdm'):
-			from .msOffice import SDM
-			clsList.append(SDM)
+			if role==oleacc.ROLE_SYSTEM_GRAPHIC:
+				from .msOffice import SDMSymbols
+				clsList.append(SDMSymbols)
+			else:
+				from .msOffice import SDM
+				clsList.append(SDM)
 		elif windowClassName == "DirectUIHWND" and role == oleacc.ROLE_SYSTEM_TEXT:
 			from NVDAObjects.window import DisplayModelEditableText
 			clsList.append(DisplayModelEditableText)
