@@ -40,11 +40,21 @@ class ExcelBase(Window):
 
 	@staticmethod
 	def getCellAddress(cell, external=False,format=xlA1):
-		return cell.Address(False, False, format, external)
+		text=cell.Address(False, False, format, external)
+		textList=text.split(':')
+		if len(textList)==2:
+			text=_("%s through %s")%(textList[0],textList[1])
+		return text
 
 	def fireFocusOnSelection(self):
 		selection=self.excelWindowObject.Selection
-		if selection.Count>1:
+		try:
+			isMerged=selection.mergeCells
+		except (COMError,NameError):
+			isMerged=False
+		if isMerged:
+			obj=ExcelMergedCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection.item(1))
+		elif selection.Count>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
 		else:
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
@@ -443,4 +453,8 @@ class ExcelDropdown(Window):
 			eventHandler.queueEvent("gainFocus",child)
 		else:
 			super(ExcelDropdown,self).event_gainFocus()
-			
+
+class ExcelMergedCell(ExcelCell):
+
+	def _get_cellCoordsText(self):
+		return self.getCellAddress(self.excelCellObject.mergeArea) 
