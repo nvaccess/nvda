@@ -164,8 +164,6 @@ confspec = ConfigObj(StringIO(
 
 [upgrade]
 	newLaptopKeyboardLayout = boolean(default=false)
-
-[profileTriggers]
 """
 ), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"
