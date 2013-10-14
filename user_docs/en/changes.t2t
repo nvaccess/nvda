@@ -24,6 +24,7 @@
 - NVDA now behaves as expected in Poedit 1.5.7. Users using earlier versions will need to update. (#3485)
 - NVDA can now read protected documents in Microsoft Word 2010,  no longer causing Microsoft Word to crash. (#1686)
 - If an unknown command line switch is given when launching the NVDA distribution package, it no longer causes an endless loop of error message dialogs. (#3463)
+-NVDA no longer fails to report alt text of graphics and objects in Microsoft Word if the alt text contains quotes or other non-standard characters. (#3579)
 
 
 == Changes for Developers ==
