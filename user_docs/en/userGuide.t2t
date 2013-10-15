@@ -782,6 +782,10 @@ If this checkbox is checked, the extended insert key (usually found above the ar
 ==== Use numpad insert as an NVDA modifier key ====
 If this checkbox is checked, the insert key on the number pad can be used as an NVDA modifier key.
 
+If no key is chosen as the NVDA key it may be impossible to access certain NVDA commands.
+Therefore, The Keyboard Settings dialog will display an error message if all keys are unselected when pressing Ok.
+After dismissing the error message, you must select at least one before being able to press Ok to dismiss the dialog properly.
+
 %kc:setting
 ==== Speak Typed Characters ====
 Key: NVDA+2
