@@ -121,6 +121,7 @@ class ExcelWorksheet(ExcelBase):
 		"kb:control+space",
 		"kb:control+pageUp",
 		"kb:control+pageDown",
+		"kb:control+a",
 		"kb:control+v",
 	)
 
