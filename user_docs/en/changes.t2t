@@ -32,6 +32,7 @@
 - The number of items for certain horizontal lists in Browse mode is now correct. Previously it may have been double the actual amount. (#2151)
 - When pressing control+a in a Microsoft Excel worksheet, the updated selection will now be reported. (#3043)
 - NVDA can now correctly read XHTML documents in Microsoft Internet Explorer and other MSHTML controls. (#3542)
+- Keyboard settings dialog: if no key has been chosen to be used as the NVDA key, an error is presented to the user when dismissing the dialog. At least one key must be chosen for proper usage of NVDA. (#2871)
 
 
 == Changes for Developers ==
