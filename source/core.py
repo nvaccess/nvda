@@ -28,10 +28,19 @@ import addonHandler
 def doStartupDialogs():
 	import config
 	import gui
+	# Translators: The title of the dialog to tell users that there are erros in the configuration file.
+	if config.conf.baseConfigError:
+		import wx
+		gui.messageBox(
+			# Translators: A message informing the user that there are errors in the configuration file.
+			_("Your configuration file contains errors. "
+				"Your configuration has been reset to factory defaults.\n"
+				"More details about the errors can be found in the log file."),
+			# Translators: The title of the dialog to tell users that there are errors in the configuration file.
+			_("Configuration File Error"),
+			wx.OK | wx.ICON_EXCLAMATION)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		gui.WelcomeDialog.run()
-	if globalVars.configFileError:
-		gui.ConfigFileErrorDialog.run()
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx
@@ -71,7 +80,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("terminating addonHandler")
 	addonHandler.terminate()
 	log.debug("Reloading config")
-	config.load(factoryDefaults=factoryDefaults)
+	config.conf.reset(factoryDefaults=factoryDefaults)
 	logHandler.setLogLevelFromConfig()
 	#Language
 	lang = config.conf["general"]["language"]
@@ -118,7 +127,7 @@ This initializes all modules such as audio, IAccessible, keyboard, mouse, and GU
 	log.info("Config dir: %s"%os.path.abspath(globalVars.appArgs.configPath))
 	log.debug("loading config")
 	import config
-	config.load()
+	config.initialize()
 	if not globalVars.appArgs.minimal:
 		try:
 			nvwave.playWaveFile("waves\\start.wav")

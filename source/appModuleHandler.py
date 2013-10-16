@@ -25,6 +25,7 @@ import config
 import NVDAObjects #Catches errors before loading default appModule
 import api
 import appModules
+import watchdog
 
 #Dictionary of processID:appModule paires used to hold the currently running modules
 runningTable={}
@@ -176,6 +177,64 @@ def terminate():
 			log.exception("Error terminating app module %r" % app)
 	runningTable.clear()
 
+def handleAppSwitch(oldMods, newMods):
+	newModsSet = set(newMods)
+	processed = set()
+	nextStage = []
+
+	# Determine all apps that are losing focus and fire appropriate events.
+	for mod in reversed(oldMods):
+		if mod in processed:
+			# This app has already been handled.
+			continue
+		processed.add(mod)
+		if mod in newModsSet:
+			# This app isn't losing focus.
+			continue
+		processed.add(mod)
+		# This app is losing focus.
+		nextStage.append(mod)
+		if not mod.sleepMode and hasattr(mod,'event_appModule_loseFocus'):
+			try:
+				mod.event_appModule_loseFocus()
+			except watchdog.CallCancelled:
+				pass
+
+	nvdaGuiLostFocus = nextStage and nextStage[-1].appName == "nvda"
+	if not nvdaGuiLostFocus and (not oldMods or oldMods[-1].appName != "nvda") and newMods[-1].appName == "nvda":
+		# NVDA's GUI just got focus.
+		import gui
+		if gui.shouldConfigProfileTriggersBeSuspended():
+			config.conf.suspendProfileTriggers()
+
+	with config.conf.atomicProfileSwitch():
+		# Exit triggers for apps that lost focus.
+		for mod in nextStage:
+			mod._configProfileTrigger.exit()
+			mod._configProfileTrigger = None
+
+		nextStage = []
+		# Determine all apps that are gaining focus and enter triggers.
+		for mod in newMods:
+			if mod in processed:
+				# This app isn't gaining focus or it has already been handled.
+				continue
+			processed.add(mod)
+			# This app is gaining focus.
+			nextStage.append(mod)
+			trigger = mod._configProfileTrigger = AppProfileTrigger(mod.appName)
+			trigger.enter()
+
+	if nvdaGuiLostFocus:
+		import gui
+		if not gui.shouldConfigProfileTriggersBeSuspended():
+			config.conf.resumeProfileTriggers()
+
+	# Fire appropriate events for apps gaining focus.
+	for mod in nextStage:
+		if not mod.sleepMode and hasattr(mod,'event_appModule_gainFocus'):
+			mod.event_appModule_gainFocus()
+
 #base class for appModules
 class AppModule(baseObject.ScriptableObject):
 	"""Base app module.
@@ -257,3 +316,10 @@ class AppModule(baseObject.ScriptableObject):
 			return False
 		self.is64BitProcess = not res
 		return self.is64BitProcess
+
+class AppProfileTrigger(config.ProfileTrigger):
+	"""A configuration profile trigger for when a particular application has focus.
+	"""
+
+	def __init__(self, appName):
+		self.spec = "app:%s" % appName

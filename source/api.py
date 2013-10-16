@@ -23,6 +23,7 @@ import win32con
 import eventHandler
 import braille
 import watchdog
+import appModuleHandler
 
 #User functions
 
@@ -65,7 +66,7 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 	#add the old focus to the old focus ancestors, but only if its not None (is none at NVDA initialization)
 	if globalVars.focusObject: 
 		oldFocusLine.append(globalVars.focusObject)
-	oldAppModuleSet=set(o.appModule for o in oldFocusLine if o and o.appModule)
+	oldAppModules=[o.appModule for o in oldFocusLine if o and o.appModule]
 	ancestors=[]
 	tempObj=obj
 	matchedOld=False
@@ -105,18 +106,10 @@ Before overriding the last object, this function calls event_loseFocus on the ob
 		container=tempObj.container
 		tempObj.container=container # Cache the parent.
 		tempObj=container
+	newAppModules=[o.appModule for o in ancestors if o and o.appModule]
 	#Remove the final new ancestor as this will be the new focus object
 	del ancestors[-1]
-	newAppModuleSet=set(o.appModule for o in ancestors+[obj] if o and o.appModule)
-	for removedMod in oldAppModuleSet-newAppModuleSet:
-		if not removedMod.sleepMode and hasattr(removedMod,'event_appModule_loseFocus'):
-			try:
-				removedMod.event_appModule_loseFocus()
-			except watchdog.CallCancelled:
-				pass
-	for addedMod in newAppModuleSet-oldAppModuleSet:
-		if not addedMod.sleepMode and hasattr(addedMod,'event_appModule_gainFocus'):
-			addedMod.event_appModule_gainFocus()
+	appModuleHandler.handleAppSwitch(oldAppModules,newAppModules)
 	try:
 		treeInterceptorHandler.cleanup()
 	except watchdog.CallCancelled:
