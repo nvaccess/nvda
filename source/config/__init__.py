@@ -5,40 +5,17 @@ import globalVars
 import _winreg
 import ctypes
 import ctypes.wintypes
-from copy import deepcopy
 import os
 import sys
 from cStringIO import StringIO
+import itertools
+import contextlib
+from collections import OrderedDict
 from configobj import ConfigObj, ConfigObjError
 from validate import Validator
 from logHandler import log
 import shlobj
-
-def validateConfig(configObj,validator,validationResult=None,keyList=None):
-	if validationResult is None:
-		validationResult=configObj.validate(validator,preserve_errors=True)
-	if validationResult is True:
-		return None #No errors
-	if validationResult is False:
-		return "Badly formed configuration file"
-	errorStrings=[]
-	for k,v in validationResult.iteritems():
-		if v is True:
-			continue
-		newKeyList=list(keyList) if keyList is not None else []
-		newKeyList.append(k)
-		if isinstance(v,dict):
-			errorStrings.extend(validateConfig(configObj[k],validator,v,newKeyList))
-		else:
-			#If a key is invalid configObj does not record its default, thus we need to get and set the default manually 
-			defaultValue=validator.get_default_value(configObj.configspec[k])
-			configObj[k]=defaultValue
-			if k not in configObj.defaults:
-				configObj.defaults.append(k)
-			errorStrings.append("%s: %s, defaulting to %s"%(k,v,defaultValue))
-	return errorStrings
-
-val = Validator()
+import baseObject
 
 #: The configuration specification
 #: @type: ConfigObj
@@ -194,60 +171,10 @@ confspec.newlines = "\r\n"
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigObj
 conf = None
-#: template config spec for concrete synthesizer's settings. It is used in SynthDriver.getConfigSpec() to build a real spec
-#: @type: L{configobj.Section}
-synthSpec=None
 
-def load(factoryDefaults=False):
-	"""Loads the configuration from the configFile.
-	It also takes note of the file's modification time so that L{save} won't lose any changes made to the file while NVDA is running. 
-	"""
-	global conf,synthSpec
-	configFileName=os.path.join(globalVars.appArgs.configPath,"nvda.ini")
-	if factoryDefaults:
-		conf = ConfigObj(None, configspec = confspec, indent_type = "\t", encoding="UTF-8")
-		conf.filename=configFileName
-	else:
-		try:
-			conf = ConfigObj(configFileName, configspec = confspec, indent_type = "\t", encoding="UTF-8")
-		except ConfigObjError as e:
-			conf = ConfigObj(None, configspec = confspec, indent_type = "\t", encoding="UTF-8")
-			conf.filename=configFileName
-			globalVars.configFileError="Error parsing configuration file: %s"%e
-	# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
-	conf.newlines = "\r\n"
-	errorList=validateConfig(conf,val)
-	if synthSpec is None: 
-		synthSpec=deepcopy(conf["speech"].configspec["__many__"])
-	if errorList:
-		globalVars.configFileError="Errors in configuration file '%s':\n%s"%(conf.filename,"\n".join(errorList))
-	if globalVars.configFileError:
-		log.warn(globalVars.configFileError)
-
-def save():
-	"""Saves the configuration to the config file.
-	"""
-	#We never want to save config if runing securely
-	if globalVars.appArgs.secure: return
+def initialize():
 	global conf
-	if globalVars.configFileError:
-		raise RuntimeError("config file errors still exist")
-	if not os.path.isdir(globalVars.appArgs.configPath):
-		try:
-			os.makedirs(globalVars.appArgs.configPath)
-		except OSError, e:
-			log.warning("Could not create configuration directory")
-			log.debugWarning("", exc_info=True)
-			raise e
-	try:
-		# Copy default settings and formatting.
-		conf.validate(val, copy = True)
-		conf.write()
-		log.info("Configuration saved")
-	except Exception, e:
-		log.warning("Could not save configuration - probably read only file system")
-		log.debugWarning("", exc_info=True)
-		raise e
+	conf = ConfigManager()
 
 def saveOnExit():
 	"""Save the configuration if configured to save on exit.
@@ -256,7 +183,7 @@ def saveOnExit():
 	"""
 	if conf["general"]["saveConfigurationOnExit"]:
 		try:
-			save()
+			conf.save()
 		except:
 			pass
 
@@ -309,7 +236,7 @@ def initConfigPath(configPath=None):
 		configPath=globalVars.appArgs.configPath
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
-	for subdir in ("addons", "appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins"):
+	for subdir in ("addons", "appModules","brailleDisplayDrivers","speechDicts","synthDrivers","globalPlugins","profiles"):
 		subdir=os.path.join(configPath,subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
@@ -455,3 +382,668 @@ def addConfigDirsToPythonPackagePath(module, subdir=None):
 	import addonHandler
 	for addon in addonHandler.getRunningAddons():
 		addon.addToPackagePath(module)
+
+class ConfigManager(object):
+	"""Manages and provides access to configuration.
+	In addition to the base configuration, there can be multiple active configuration profiles.
+	Settings in more recently activated profiles take precedence,
+	with the base configuration being consulted last.
+	This allows a profile to override settings in profiles activated earlier and the base configuration.
+	A profile need only include a subset of the available settings.
+	Changed settings are written to the most recently activated profile.
+	"""
+
+	#: Sections that only apply to the base configuration;
+	#: i.e. they cannot be overridden in profiles.
+	BASE_ONLY_SECTIONS = {"general", "update", "upgrade"}
+
+	def __init__(self):
+		self.spec = confspec
+		#: All loaded profiles by name.
+		self._profileCache = {}
+		#: The active profiles.
+		self.profiles = []
+		#: Whether profile triggers are enabled (read-only).
+		#: @type: bool
+		self.profileTriggersEnabled = True
+		self.validator = Validator()
+		self.rootSection = None
+		self._shouldHandleProfileSwitch = True
+		self._pendingHandleProfileSwitch = False
+		self._suspendedTriggers = None
+		self._initBaseConf()
+		#: Maps triggers to profiles.
+		self.triggersToProfiles = None
+		self._loadProfileTriggers()
+		#: The names of all profiles that have been modified since they were last saved.
+		self._dirtyProfiles = set()
+
+	def _handleProfileSwitch(self):
+		if not self._shouldHandleProfileSwitch:
+			self._pendingHandleProfileSwitch = True
+			return
+		init = self.rootSection is None
+		# Reset the cache.
+		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
+		if init:
+			# We're still initialising, so don't notify anyone about this change.
+			return
+		import synthDriverHandler
+		synthDriverHandler.handleConfigProfileSwitch()
+		import braille
+		braille.handler.handleConfigProfileSwitch()
+
+	def _initBaseConf(self, factoryDefaults=False):
+		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
+		if factoryDefaults:
+			profile = ConfigObj(None, indent_type="\t", encoding="UTF-8")
+			profile.filename = fn
+		else:
+			try:
+				profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+				self.baseConfigError = False
+			except:
+				log.error("Error loading base configuration", exc_info=True)
+				self.baseConfigError = True
+				return self._initBaseConf(factoryDefaults=True)
+		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
+		profile.newlines = "\r\n"
+
+		for key in self.BASE_ONLY_SECTIONS:
+			# These sections are returned directly from the base config, so validate them here.
+			try:
+				sect = profile[key]
+			except KeyError:
+				profile[key] = {}
+				# ConfigObj mutates this into a configobj.Section.
+				sect = profile[key]
+			sect.configspec = self.spec[key]
+			profile.validate(self.validator, section=sect)
+
+		self._profileCache[None] = profile
+		self.profiles.append(profile)
+		self._handleProfileSwitch()
+
+	def __getitem__(self, key):
+		if key in self.BASE_ONLY_SECTIONS:
+			# Return these directly from the base configuration.
+			return self.profiles[0][key]
+		return self.rootSection[key]
+
+	def __contains__(self, key):
+		return key in self.rootSection
+
+	def get(self, key, default=None):
+		return self.rootSection.get(key, default)
+
+	def __setitem__(self, key, val):
+		self.rootSection[key] = val
+
+	def listProfiles(self):
+		for name in os.listdir(os.path.join(globalVars.appArgs.configPath, "profiles")):
+			name, ext = os.path.splitext(name)
+			if ext == ".ini":
+				yield name
+
+	def _getProfileFn(self, name):
+		return os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
+
+	def _getProfile(self, name, load=True):
+		try:
+			return self._profileCache[name]
+		except KeyError:
+			if not load:
+				raise KeyError(name)
+
+		# Load the profile.
+		fn = self._getProfileFn(name)
+		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=True)
+		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
+		profile.newlines = "\r\n"
+		profile.name = name
+		profile.manual = False
+		profile.triggered = False
+		self._profileCache[name] = profile
+		return profile
+
+	def getProfile(self, name):
+		"""Get a profile given its name.
+		This is useful for checking whether a profile has been manually activated or triggered.
+		@param name: The name of the profile.
+		@type name: basestring
+		@return: The profile object.
+		@raise KeyError: If the profile is not loaded.
+		"""
+		return self._getProfile(name, load=False)
+
+	def manualActivateProfile(self, name):
+		"""Manually activate a profile.
+		Only one profile can be manually active at a time.
+		If another profile was manually activated, deactivate it first.
+		If C{name} is C{None}, a profile will not be activated.
+		@param name: The name of the profile or C{None} for no profile.
+		@type name: basestring
+		"""
+		if len(self.profiles) > 1:
+			profile = self.profiles[-1]
+			if profile.manual:
+				del self.profiles[-1]
+				profile.manual = False
+		if name:
+			profile = self._getProfile(name)
+			profile.manual = True
+			self.profiles.append(profile)
+		self._handleProfileSwitch()
+
+	def _markWriteProfileDirty(self):
+		if len(self.profiles) == 1:
+			# There's nothing other than the base config, which is always saved anyway.
+			return
+		self._dirtyProfiles.add(self.profiles[-1].name)
+
+	def save(self):
+		"""Save all modified profiles and the base configuration to disk.
+		"""
+		if globalVars.appArgs.secure:
+			# Never save the config if running securely.
+			return
+		try:
+			self.profiles[0].write()
+			log.info("Base configuration saved")
+			for name in self._dirtyProfiles:
+				self._profileCache[name].write()
+				log.info("Saved configuration profile %s" % name)
+			self._dirtyProfiles.clear()
+		except Exception as e:
+			log.warning("Error saving configuration; probably read only file system")
+			log.debugWarning("", exc_info=True)
+			raise e
+
+	def reset(self, factoryDefaults=False):
+		"""Reset the configuration to saved settings or factory defaults.
+		@param factoryDefaults: C{True} to reset to factory defaults, C{False} to reset to saved configuration.
+		@type factoryDefaults: bool
+		"""
+		self.profiles = []
+		self._profileCache.clear()
+		# Signal that we're initialising.
+		self.rootSection = None
+		self._initBaseConf(factoryDefaults=factoryDefaults)
+
+	def createProfile(self, name):
+		"""Create a profile.
+		@param name: The name of the profile ot create.
+		@type name: basestring
+		@raise ValueError: If a profile with this name already exists.
+		"""
+		if globalVars.appArgs.secure:
+			return
+		fn = self._getProfileFn(name)
+		if os.path.isfile(fn):
+			raise ValueError("A profile with the same name already exists: %s" % name)
+		# Just create an empty file to make sure we can.
+		file(fn, "w")
+
+	def deleteProfile(self, name):
+		"""Delete a profile.
+		@param name: The name of the profile to delete.
+		@type name: basestring
+		@raise LookupError: If the profile doesn't exist.
+		"""
+		if globalVars.appArgs.secure:
+			return
+		fn = self._getProfileFn(name)
+		if not os.path.isfile(fn):
+			raise LookupError("No such profile: %s" % name)
+		os.remove(fn)
+		try:
+			del self._profileCache[name]
+		except KeyError:
+			pass
+		# Remove any triggers associated with this profile.
+		allTriggers = self.triggersToProfiles
+		# You can't delete from a dict while iterating through it.
+		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.iteritems()
+			if trigProfile == name]
+		if delTrigs:
+			for trigSpec in delTrigs:
+				del allTriggers[trigSpec]
+			self.saveProfileTriggers()
+		# Check if this profile was active.
+		for index, profile in enumerate(self.profiles):
+			if profile.name == name:
+				break
+		else:
+			return
+		# Deactivate it.
+		del self.profiles[index]
+		self._handleProfileSwitch()
+
+	def renameProfile(self, oldName, newName):
+		"""Rename a profile.
+		@param oldName: The current name of the profile.
+		@type oldName: basestring
+		@param newName: The new name for the profile.
+		@type newName: basestring
+		@raise LookupError: If the profile doesn't exist.
+		@raise ValueError: If a profile with the new name already exists.
+		"""
+		if globalVars.appArgs.secure:
+			return
+		if newName == oldName:
+			return
+		oldFn = self._getProfileFn(oldName)
+		newFn = self._getProfileFn(newName)
+		if not os.path.isfile(oldFn):
+			raise LookupError("No such profile: %s" % oldName)
+		# Windows file names are case insensitive,
+		# so only test for file existence if the names don't match case insensitively.
+		if oldName.lower() != newName.lower() and os.path.isfile(newFn):
+			raise ValueError("A profile with the same name already exists: %s" % newName)
+
+		os.rename(oldFn, newFn)
+		# Update any associated triggers.
+		allTriggers = self.triggersToProfiles
+		saveTrigs = False
+		for trigSpec, trigProfile in allTriggers.iteritems():
+			if trigProfile == oldName:
+				allTriggers[trigSpec] = newName
+				saveTrigs = True
+		if saveTrigs:
+			self.saveProfileTriggers()
+		try:
+			profile = self._profileCache.pop(oldName)
+		except KeyError:
+			# The profile hasn't been loaded, so there's nothing more to do.
+			return
+		profile.name = newName
+		self._profileCache[newName] = profile
+		try:
+			self._dirtyProfiles.remove(oldName)
+		except KeyError:
+			# The profile wasn't dirty.
+			return
+		self._dirtyProfiles.add(newName)
+
+	def _triggerProfileEnter(self, trigger):
+		"""Called by L{ProfileTrigger.enter}}}.
+		"""
+		if not self.profileTriggersEnabled:
+			return
+		if self._suspendedTriggers is not None:
+			self._suspendedTriggers[trigger] = "enter"
+			return
+
+		profile = self._getProfile(trigger.profile)
+		profile.triggered = True
+		if len(self.profiles) > 1 and self.profiles[-1].manual:
+			# There's a manually activated profile.
+			# Manually activated profiles must be at the top of the stack, so insert this one below.
+			self.profiles.insert(-1, profile)
+		else:
+			self.profiles.append(profile)
+		self._handleProfileSwitch()
+
+	def _triggerProfileExit(self, trigger):
+		"""Called by L{ProfileTrigger.exit}}}.
+		"""
+		if not self.profileTriggersEnabled:
+			return
+		if self._suspendedTriggers is not None:
+			if trigger in self._suspendedTriggers:
+				# This trigger was entered and is now being exited.
+				# These cancel each other out.
+				del self._suspendedTriggers[trigger]
+			else:
+				self._suspendedTriggers[trigger] = "exit"
+			return
+
+		profile = self._getProfile(trigger.profile)
+		profile.triggered = False
+		self.profiles.remove(profile)
+		self._handleProfileSwitch()
+
+	@contextlib.contextmanager
+	def atomicProfileSwitch(self):
+		"""Indicate that multiple profile switches should be treated as one.
+		This is useful when multiple triggers may be exited/entered at once;
+		e.g. when switching applications.
+		While multiple switches aren't harmful, they might take longer;
+		e.g. unnecessarily switching speech synthesizers or braille displays.
+		This is a context manager to be used with the C{with} statement.
+		"""
+		self._shouldHandleProfileSwitch = False
+		try:
+			yield
+		finally:
+			self._shouldHandleProfileSwitch = True
+			if self._pendingHandleProfileSwitch:
+				self._handleProfileSwitch()
+				self._pendingHandleProfileSwitch = False
+
+	def suspendProfileTriggers(self):
+		"""Suspend handling of profile triggers.
+		Any triggers that currently apply will continue to apply.
+		Subsequent enters or exits will not apply until triggers are resumed.
+		@see: L{resumeTriggers}
+		"""
+		if self._suspendedTriggers is not None:
+			return
+		self._suspendedTriggers = OrderedDict()
+
+	def resumeProfileTriggers(self):
+		"""Resume handling of profile triggers after previous suspension.
+		Any trigger enters or exits that occurred while triggers were suspended will be applied.
+		Trigger handling will then return to normal.
+		@see: L{suspendTriggers}
+		"""
+		if self._suspendedTriggers is None:
+			return
+		triggers = self._suspendedTriggers
+		self._suspendedTriggers = None
+		with self.atomicProfileSwitch():
+			for trigger, action in triggers.iteritems():
+				trigger.enter() if action == "enter" else trigger.exit()
+
+	def disableProfileTriggers(self):
+		"""Temporarily disable all profile triggers.
+		Any triggered profiles will be deactivated and subsequent triggers will not apply.
+		Call L{enableTriggers} to re-enable triggers.
+		"""
+		if not self.profileTriggersEnabled:
+			return
+		self.profileTriggersEnabled = False
+		for profile in self.profiles[1:]:
+			profile.triggered = False
+		if len(self.profiles) > 1 and self.profiles[-1].manual:
+			del self.profiles[1:-1]
+		else:
+			del self.profiles[1:]
+		self._suspendedTriggers = None
+		self._handleProfileSwitch()
+
+	def enableProfileTriggers(self):
+		"""Re-enable profile triggers after they were previously disabled.
+		"""
+		self.profileTriggersEnabled = True
+
+	def _loadProfileTriggers(self):
+		fn = os.path.join(globalVars.appArgs.configPath, "profileTriggers.ini")
+		try:
+			cobj = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
+		except:
+			log.error("Error loading profile triggers", exc_info=True)
+			cobj = ConfigObj(None, indent_type="\t", encoding="UTF-8")
+			cobj.filename = fn
+		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
+		cobj.newlines = "\r\n"
+		try:
+			self.triggersToProfiles = cobj["triggersToProfiles"]
+		except KeyError:
+			cobj["triggersToProfiles"] = {}
+			# ConfigObj will have mutated this into a configobj.Section.
+			self.triggersToProfiles = cobj["triggersToProfiles"]
+
+	def saveProfileTriggers(self):
+		"""Save profile trigger information to disk.
+		This should be called whenever L{profilesToTriggers} is modified.
+		"""
+		if globalVars.appArgs.secure:
+			# Never save if running securely.
+			return
+		self.triggersToProfiles.parent.write()
+		log.info("Profile triggers saved")
+
+class AggregatedSection(object):
+	"""A view of a section of configuration which aggregates settings from all active profiles.
+	"""
+
+	def __init__(self, manager, path, spec, profiles):
+		self.manager = manager
+		self.path = path
+		self._spec = spec
+		#: The relevant section in all of the profiles.
+		self.profiles = profiles
+		self._cache = {}
+
+	def __getitem__(self, key):
+		# Try the cache first.
+		try:
+			val = self._cache[key]
+		except KeyError:
+			pass
+		else:
+			if val is KeyError:
+				# We know there's no such setting.
+				raise KeyError(key)
+			return val
+
+		spec = self._spec.get(key)
+		foundSection = False
+		if isinstance(spec, dict):
+			foundSection = True
+
+		# Walk through the profiles looking for the key.
+		# If it's a section, collect that section from all profiles.
+		subProfiles = []
+		for profile in reversed(self.profiles):
+			try:
+				val = profile[key]
+			except (KeyError, TypeError):
+				# Indicate that this key doesn't exist in this profile.
+				subProfiles.append(None)
+				continue
+			if isinstance(val, dict):
+				foundSection = True
+				subProfiles.append(val)
+			else:
+				# This is a setting.
+				return self._cacheLeaf(key, spec, val)
+		subProfiles.reverse()
+
+		if not foundSection and spec:
+			# This might have a default.
+			try:
+				val = self.manager.validator.get_default_value(spec)
+			except KeyError:
+				pass
+			else:
+				self._cache[key] = val
+				return val
+
+		if not foundSection:
+			# The key doesn't exist, so cache this fact.
+			self._cache[key] = KeyError
+			raise KeyError(key)
+
+		if spec is None:
+			# Create this section in the config spec.
+			self._spec[key] = {}
+			# ConfigObj might have mutated this into a configobj.Section.
+			spec = self._spec[key]
+		sect = self._cache[key] = AggregatedSection(self.manager, self.path + (key,), spec, subProfiles)
+		return sect
+
+	def __contains__(self, key):
+		try:
+			self[key]
+			return True
+		except KeyError:
+			return False
+
+	def get(self, key, default=None):
+		try:
+			return self[key]
+		except KeyError:
+			return default
+
+	def isSet(self, key):
+		"""Check whether a given key has been explicitly set.
+		This is sometimes useful because it can return C{False} even if there is a default for the key.
+		@return: C{True} if the key has been explicitly set, C{False} if not.
+		@rtype: bool
+		"""
+		for profile in self.profiles:
+			if not profile:
+				continue
+			if key in profile:
+				return True
+		return False
+
+	def _cacheLeaf(self, key, spec, val):
+		if spec:
+			# Validate and convert the value.
+			val = self.manager.validator.check(spec, val)
+		self._cache[key] = val
+		return val
+
+	def iteritems(self):
+		keys = set()
+		# Start with the cached items.
+		for key, val in self._cache.iteritems():
+			keys.add(key)
+			if val is not KeyError:
+				yield key, val
+		# Walk through the profiles and spec looking for items not yet cached.
+		for profile in itertools.chain(reversed(self.profiles), (self._spec,)):
+			if not profile:
+				continue
+			for key in profile:
+				if key in keys:
+					continue
+				keys.add(key)
+				# Use __getitem__ so caching, AggregatedSections, etc. are handled.
+				try:
+					yield key, self[key]
+				except KeyError:
+					# This could happen if the item is in the spec but there's no default.
+					pass
+
+	def copy(self):
+		return dict(self.iteritems())
+
+	def __setitem__(self, key, val):
+		spec = self._spec.get(key) if self.spec else None
+		if isinstance(spec, dict) and not isinstance(val, dict):
+			raise ValueError("Value must be a section")
+
+		if isinstance(spec, dict) or isinstance(val, dict):
+			# The value is a section.
+			# Update the profile.
+			updateSect = self._getUpdateSection()
+			updateSect[key] = val
+			self.manager._markWriteProfileDirty()
+			# ConfigObj will have mutated this into a configobj.Section.
+			val = updateSect[key]
+			cache = self._cache.get(key)
+			if cache and cache is not KeyError:
+				# An AggregatedSection has already been cached, so update it.
+				cache = self._cache[key]
+				cache.profiles[-1] = val
+				cache._cache.clear()
+			elif cache is KeyError:
+				# This key now exists, so remove the cached non-existence.
+				del self._cache[key]
+			# If an AggregatedSection isn't already cached,
+			# An appropriate AggregatedSection will be created the next time this section is fetched.
+			return
+
+		if spec:
+			# Validate and convert the value.
+			val = self.manager.validator.check(spec, val)
+
+		try:
+			curVal = self[key]
+		except KeyError:
+			pass
+		else:
+			if val == curVal:
+				# The value isn't different, so there's nothing to do.
+				return
+
+		# Set this value in the most recently activated profile.
+		self._getUpdateSection()[key] = val
+		self.manager._markWriteProfileDirty()
+		self._cache[key] = val
+
+	def _getUpdateSection(self):
+		profile = self.profiles[-1]
+		if profile is not None:
+			# This section already exists in the profile.
+			return profile
+
+		section = self.manager.rootSection
+		profile = section.profiles[-1]
+		for part in self.path:
+			parentProfile = profile
+			section = section[part]
+			profile = section.profiles[-1]
+			if profile is None:
+				# This section doesn't exist in the profile yet.
+				# Create it and update the AggregatedSection.
+				parentProfile[part] = {}
+				# ConfigObj might have mutated this into a configobj.Section.
+				profile = section.profiles[-1] = parentProfile[part]
+		return profile
+
+	@property
+	def spec(self):
+		return self._spec
+
+	@spec.setter
+	def spec(self, val):
+		# This section is being replaced.
+		# Clear it and replace the content so it remains linked to the main spec.
+		self._spec.clear()
+		self._spec.update(val)
+
+class ProfileTrigger(object):
+	"""A trigger for automatic activation/deactivation of a configuration profile.
+	The user can associate a profile with a trigger.
+	When the trigger applies, the associated profile is activated.
+	When the trigger no longer applies, the profile is deactivated.
+	L{spec} is a string used to search for this trigger and must be implemented.
+	To signal that this trigger applies, call L{enter}.
+	To signal that it no longer applies, call L{exit}.
+	Alternatively, you can use this object as a context manager via the with statement;
+	i.e. this trigger will apply only inside the with block.
+	"""
+
+	@baseObject.Getter
+	def spec(self):
+		"""The trigger specification.
+		This is a string used to search for this trigger in the user's configuration.
+		@rtype: basestring
+		"""
+		raise NotImplementedError
+
+	def enter(self):
+		"""Signal that this trigger applies.
+		The associated profile (if any) will be activated.
+		"""
+		try:
+			self.profile = conf.triggersToProfiles[self.spec]
+		except KeyError:
+			self.profile = None
+			return
+		try:
+			conf._triggerProfileEnter(self)
+		except:
+			log.error("Error entering trigger %s, profile %s"
+				% (self.spec, self.profile), exc_info=True)
+	__enter__ = enter
+
+	def exit(self):
+		"""Signal that this trigger no longer applies.
+		The associated profile (if any) will be deactivated.
+		"""
+		if not self.profile:
+			return
+		try:
+			conf._triggerProfileExit(self)
+		except:
+			log.error("Error exiting trigger %s, profile %s"
+				% (self.spec, self.profile), exc_info=True)
+
+	def __exit__(self, excType, excVal, traceback):
+		self.exit()

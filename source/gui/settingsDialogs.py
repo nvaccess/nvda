@@ -52,6 +52,7 @@ class SettingsDialog(wx.Dialog):
 	_hasInstance=False
 
 	title = ""
+	shouldSuspendConfigProfileTriggers = True
 
 	def __new__(cls, *args, **kwargs):
 		if SettingsDialog._hasInstance:
@@ -275,7 +276,7 @@ class GeneralSettingsDialog(SettingsDialog):
 				# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
 				_("Language Configuration Change"),wx.OK|wx.CANCEL|wx.ICON_WARNING,self
 			)==wx.OK:
-				config.save()
+				config.conf.save()
 				queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
 		super(GeneralSettingsDialog, self).onOk(evt)
 

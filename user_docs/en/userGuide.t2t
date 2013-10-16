@@ -1098,7 +1098,78 @@ The following NVDA key commands are also useful:
 | Revert  configuration | NVDA+control+r | NVDA+control+r | Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults. |
 %kc:endInclude
 
-++ Configuration files and user profiles ++
+++ Configuration Profiles ++
+Sometimes, you may wish to have different settings for different situations.
+For example, you may wish to have reporting of indentation enabled while you are editing or reporting of font attributes enabled while you are proofreading.
+NVDA allows you to do this using configuration profiles.
+
+A configuration profile contains only those settings which are changed while the profile is being edited.
+Most settings can be changed in configuration profiles except for those in the General Settings dialog, which apply to the entirety of NVDA.
+
+Configuration profiles can be manually activated.
+They can also be activated automatically due to triggers such as switching to a particular application.
+
++++ Basic Management +++
+You manage configuration profiles by selecting "Configuration profiles" in the NVDA menu.
+You can also do this using a key command:
+%kc:beginInclude
+- NVDA+control+p: Show the Configuration Profiles dialog.
+-
+%kc:endInclude
+
+The first control in this dialog is the profile list from which you can select one of the available profiles.
+When you open the dialog, the profile you are currently editing is selected.
+Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.
+
+To rename or delete a profile, press the Rename or Delete buttons, respectively.
+
+Press the Close button to close the dialog.
+
++++ Creating a Profile +++
+To create a profile, press the New button.
+
+In the New Profile dialog, you can enter a name for the profile.
+You can also select how this profile should be used.
+If you only want to use this profile manually, select Manual activation, which is the default.
+Otherwise, select a trigger which should automatically activate this profile.
+For convenience, if you haven't entered a name for the profile, selecting a trigger will fill in the name accordingly.
+See [below #ConfigProfileTriggers] for more information about triggers.
+
+Pressing OK will create the profile and close the Configuration Profiles dialog so you can edit it.
+
++++ Manual Activation +++[ConfigProfileManual]
+You can manually activate a profile by selecting a profile and pressing the Manual activate/edit button.
+Once activated, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.
+Also, any settings you change will be saved in that profile.
+To deactivate a manually activated profile, select it in the Configuration Profiles dialog and press the Manual deactivate button.
+
++++ Triggers +++[ConfigProfileTriggers]
+Pressing the Triggers button in the Configuration Profiles dialog allows you to change the profiles which should be automatically activated for various triggers.
+
+The Triggers list shows the available triggers, which are as follows:
+- Current application: Triggered when you switch to the current application.
+- Say all: Triggered while reading with the say all command.
+-
+
+To change the profile which should be automatically activated for a trigger, select the trigger and then select the desired profile from the Profile list.
+You can select (normal configuration) if you don't want a profile to be used.
+
+Press the Close button to return to the Configuration Profiles dialog.
+
++++ Editing a Profile +++
+If you have manually activated a profile, any settings you change will be saved to that profile.
+Otherwise, any settings you change will be saved to the most recently triggered profile.
+For example, if you have associated a profile with the Notepad application and you switch to Notepad, any changed settings will be saved to that profile.
+Finally, if there is neither a manually activated nor a triggered profile, any settings you change will be saved to your normal configuration.
+
+To edit the profile associated with say all, you must [manually activate #ConfigProfileManual] that profile.
+
++++ Temporarily Disabling Triggers +++
+Sometimes, it is useful to temporarily disable all triggers.
+For example, you might wish to edit a manually activated profile or your normal configuration without triggered profiles interfering.
+You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
+
+++ Location of Configuration files ++
 Portable versions of NVDA store all settings, custom appModules and custom drivers in a directory called userConfig, found in the NVDA directory.
 
 Installed versions of NVDA store all settings, custom appModules and custom drivers in a special NVDA directory located in your Windows user profile.

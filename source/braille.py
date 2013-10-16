@@ -1462,6 +1462,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# We're reviewing a different object.
 			self._doNewObject(getFocusRegions(reviewPos.obj, review=True))
 
+	def handleConfigProfileSwitch(self):
+		display = config.conf["braille"]["display"]
+		if display != self.display.name:
+			self.setDisplayByName(display)
+
 def initialize():
 	global handler
 	config.addConfigDirsToPythonPackagePath(brailleDisplayDrivers)

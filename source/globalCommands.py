@@ -1348,6 +1348,11 @@ class GlobalCommands(ScriptableObject):
 			obj.doAction()
 	script_touch_hoverUp.category=SCRCAT_TOUCH
 
+	def script_activateConfigProfilesDialog(self, gesture):
+		wx.CallAfter(gui.mainFrame.onConfigProfilesCommand, None)
+	# Translators: Describes the command to open the Configuration Profiles dialog.
+	script_activateConfigProfilesDialog.__doc__ = _("Shows the NVDA Configuration Profiles dialog")
+	
 	__gestures = {
 		# Basic
 		"kb:NVDA+n": "showGui",
@@ -1488,9 +1493,10 @@ class GlobalCommands(ScriptableObject):
 		"kb:NVDA+control+b": "activateBrowseModeDialog",
 		"kb:NVDA+control+d": "activateDocumentFormattingDialog",
 
-		# Save/reload configuration
+		# Configuration management
 		"kb:NVDA+control+c": "saveConfiguration",
 		"kb:NVDA+control+r": "revertConfiguration",
+		"kb:NVDA+control+p": "activateConfigProfilesDialog",
 
 		# Settings
 		"kb:NVDA+2": "toggleSpeakTypedCharacters",
