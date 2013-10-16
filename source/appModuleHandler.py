@@ -278,15 +278,20 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		# If the processHandle is greater than 0, we get application name and version by reading it in its main executable file
 		if self.processHandle >0:
-			# We define where to find the function GetModuleFileNameW
-			try:
-				GetModuleFileName = ctypes.windll.kernel32.GetModuleFileNameExW
-			except AttributeError:
-				GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
-			GetModuleFileName.restype = ctypes.wintypes.DWORD
+			# Choose the right function to use to get the executable file name
+			if sys.getwindowsversion().major > 5:
+				# For Windows Vista and higher, use QueryFullProcessImageName function
+				GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
+			else:
+				# We define where to find the function GetModuleFileNameW for Windows prior to Vista
+				try:
+					GetModuleFileName = ctypes.windll.kernel32.GetModuleFileNameExW
+				except AttributeError:
+					GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
 			# Create the buffer to get the executable name
 			exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-			if GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.wintypes.MAX_PATH) > 0:
+			length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
+			if GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.byref(length)) > 0:
 				fileName = exeFileName.value
 				# Get size needed for buffer (0 if no info)
 				size = ctypes.windll.version.GetFileVersionInfoSizeW(fileName, None)
