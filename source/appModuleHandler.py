@@ -314,17 +314,13 @@ class AppModule(baseObject.ScriptableObject):
 							+ u"ProductVersion") % codepage, ctypes.byref(r), ctypes.byref(l))
 						self.productVersion = ctypes.wstring_at(r.value, l.value-1)
 					else:
-						self.productName = None
-						self.productVersion = None
+						raise Exception("No codepage.")
 				else:
-					self.productName = None
-					self.productVersion = None
+					raise Exception("No version informations.")
 			else:
-				self.productName = None
-				self.productVersion = None
+				raise ctypes.WinError()
 		else:
-			self.productName = None
-			self.productVersion = None
+			raise Exception("processHandle is 0")
 
 	def _get_productName(self):
 		self._setProductInfo()
