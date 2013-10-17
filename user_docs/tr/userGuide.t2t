@@ -800,6 +800,9 @@ Açıksa,, bu seçenek bir karaktere basıldığında konuşmanın durmasına ne
 ==== Enter tuşuna basıldığında konuşmayı durdur ====
 Açıksa, bu seçenek enter tuşuna basıldığında konuşmanın durmasına neden olur. Varsayılan olarak açıktır.
 
+==== Tümünü okurken atlamaya izin ver ====
+Açıksa, tümünü okuma komutu verildiğinde belli dolaşma komutları kullanıldığı zaman (örneğin  tarama kipinde hızlı dolaşım tuşları  ya da  paragraf   veya satır değiştirme komutları) konuşma durdurulmaz, yerine   okuma atlanılan konumdan itibaren  devam eder.
+
 ==== Büyük Harf Kilidi Açıkken, şifte basılarak küçük harf Yazılırsa Bip Sesi Çıkar ====
 Etkinleştirildiğinde, büyük harf kilidi açıkken şift tuşuyla birlikte bir harfe basıldığında uyarı bipi duyulacaktır.
 Genellikle, büyük harf kilidi açıkken şiftle birlikte bir harf yazmak istem dışıdır ve çoğunlukla büyük harf kilidinin açık olduğunun farkında olunmamasından kaynaklanır.
@@ -1056,6 +1059,25 @@ Olarak değiştir alanı, NVDA'nın sözkonusu işaretle karşılaştığında n
 Düzey alanı ise, işaretin seslendirilmesini istediğiniz en düşük imla seslendirme düzeyini belirlemenize imkan verir.
 
 Bu ayarlamaları yaptıktan sonra tamam düğmesine basarak değişiklikleri kaydedebilir; iptal düğmesiyle de değişiklik öncesi ayarlara geri dönebilirsiniz.
+
++++ Girdi Hareketleri +++
+Bu iletişim kutusunda, NVDA komutları için kullanılan hareketleri (klavyedeki tuşlar, braille ekrandaki düğmeler , vs.) özelleştirebilirsiniz.
+
+Sadece, iletişim kutusu açılmadan önce kullanılabilen  komutlar gösterilir.
+Örneğin, tarama kipiyle ilgili hareketleri özelleştirmek istiyorsanız, girdi hareketleri iletişim kutusunu tarama kipindeyken açmalısınız.
+
+BU diyalogdaki ağaç, kullanılabilen NVDA komutlarını kategoriler altında gruplanmış olarak listeler.
+Bir komutla ilişkili hareketler o komutun altında listelenir.
+
+Bir komuta girdi hareketi eklemek için, komutun üzerindeyken ekle düğmesine basın.
+Daha sonra, eklemek istediğiniz girdi hareketini yapın; örneğin klavyede tuş ya da tuş kombinasyonuna ya da braille ekranda düğmeye basın.
+Çoğu kez, bir hareket birden fazla şekilde değerlendirilebilir .
+Örneğin, klavyede bir tuşa bastıysanız, onun sadece mevcut klavye düzeni için geçerli olmasını isteyebilirsiniz (masaüstü ya da dizüstü düzenleri) ya da tüm düzenler için kaydedebilirsiniz.
+Bu durumda,, seçim yapmanız  için bir menü belirir.
+
+Bir komutla ilgili hareketi silmek için, hareket  seçiliyken  kaldır tuşuna basın.
+
+Değişiklikleri yaptıktan sonra, kaydetmek için tamam, vazgeçmek için iptal tuşuna basın .
 
 ++ Konfigürasyonu Kaydetme ve Yeniden Yükleme ++
 Varsayılan olarak, NVDA kapatılırken, konfigürasyonda yaptığınız değişiklikler kalıcı olarak kaydedilir.
@@ -1765,75 +1787,6 @@ Lütfen [BRLTTY tuş tabloları yardımına  http://mielke.cc/brltty/doc/drivers
 %kc:endInclude
 
 + İleri Düzey Konular +
-
-++ Tuş kombinasyonlarını Değiştirme ve Diğer Girdi Hareketleri ++
-Kullanıcılar scriptlerdeki tuş komutlarını NVDA kullanıcı dizinindeki özel bir dosyadan değiştirebilir veya yeni tuşlar sağlayabilirler.
-Bu dosyaya gestures.ini denmektedir.
-
-Bu dosya standart ini sözdizimini kullanmaktadır.
-Dosya birden fazla bölüm içerebilir ve  her bir bölümde bir ya da birden fazla girdi olabilir.
-
-Her bölüm, NVDA içindeki belirli bir Pithon modül ve sınıfındaki scriptler için tuşları belirtir.
-- Bölüm adı nokta (.) ile ayrılmış Pithon adı ve Sınıfı olmalıdır.
-- Her girdinin anahtarı , mevcut kısayol tuşuyla  etkinleştirilen scriptin adıdır.
-Alternatif olarak, bir kısayol tuşunu daha önce bağlı olduğu scriptten ayırmak için none kullanabilirsiniz.
-Lütfen, None anahtarını bir dosya içerisinde yalnızca bir kez kullanabileceğinizi not edin. Birden fazla kısayol tuşunu etkisiz kılmak için script adlarını virgül (,) ile ayırarak listeleyip None anahtarına atayabilirsiniz.
-- Script için kullanılacak kısayol tuşlarının  listelenmesinde  ayraç olarak kullanılan girdi değeri (,) virgüldür.
-liste ayracı olarak kullanılan virgülden farklı bir amaçla kullanıldığının anlaşılması için, Virgülün (,) kullanıldığı kısayol belirtenleri tek tırnak (apostrof) içine alınabilir.
--
-
-Tuş göstergeleri ya da hareketler 2 harften oluşan araç kodu (Klavye için, kb, braille için, br ve dokunma hareketi için ts), parantez içinde bir alt araç veya klavye düzeni, bir iki nokta işareti ve artı (+) işaretiyle ayrılmış tuş değerlerinden oluşmaktadır.
-- Klavye girdileri için araç kodu  kb harfleridir.
-Klavye tuş göstergeleri için [] köşeli parantez içindeki değer klavye düzenini belirtir ve isteğe bağlıdır.
-Bir değer belirtilmezse, düzenleme tüm klavye düzenleri için geçerli olur.
-İki nokta üstüste işaretinden sonraki ifade artı işareti (+) ile ayrılmış bir ya da birden fazla tuş adıdır
-- Braille ekran girdileri için  araç kodu br harfleridir.
-Braille tuş göstergeleri içinse köşeli parantez içindeki değer braille ekranı belirtir ve değer belirtilmesi zorunludur.
-İki nokta üstüste işaretinden sonraki ifade artı işareti (+) ile ayrılmış bir ya da birden fazla tuş adıdır
-- Dokunma hareketleri için , araç kodu ts harfleridir.
-Dokunma hareketleri için, parantez içindeki kısım dokunma kipini belirtir ve isteğe bağlıdır.
-İki nokta üstüste işaretinden sonraki ifade de double_tap, 2fingerflickUp ya da  3finger_tap gibi bir dokunma hareketidir.
--
-
-Girdi göstergelerini, script adlarını, ve içinde bulundukları class ve modülleri keşfetmek için şunları yapın:
-+ Girdi Yardımını açın.
-+ Girdi hareketini etkinleştirin (istediğiniz tuşa veya tuş kombinasyonuna basın ya da bir dokunma hareketi yapın).
-+ Girdi Yardımını kapatın.
-+ NVDA araçlar menüsünden kayıt görüntüleyi (log görüntüle) açın.
-+ Son girilen kayıtları inceleyin.
-Bu kayıtlardan birisinde, bastığınız tuş kombinasyonu, ve eğer varsa bağlı olduğu script, modül ve sınıf bilgisi yer alacaktır.
-+
-
-Aşağıda NVDA+Şift+T tuşlarını DateTime (tarih saat) scriptine nasıl bağlayabileceğinizin örneği bulunmaktadır.
-
-Tarih Saat için doğru script adı, modül ve sınıfı bulmak için, önce girdi yardım kipini açıp, Tarih saatin tuş kombinasyonu olan NVDA+f12'ye basın.
-Daha sonra girdi yardım kipini kapatın ve log (kayıt) görüntüleyicisini inceleyin.
-
-Sonlara doğru şunu göreceksiniz:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Buradan, script adının dateTime olduğunu, Modül.sınıfın ise globalCommands.GlobalCommands olduğunu anlayabilirsiniz.
-
-Eğer dosya henüz yoksa, NVDA User Configuration Directory içersinde gestures.ini adında bir metin dosyası oluşturabilir ve içine şunu ekleyebilirsiniz:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-Bu, tüm klavye düzenlerinde NVDA+Şift+t tuşlarını tarih saati söylemek üzere ayarlayacak ve bu tuşları DateTime scriptine bağlayacaktır.
-
-Halen Özgün NVDA+F12 bağlantısının çalıştığını aklınızda tutun.
-Eğer bu bağlantıyı kaldırmak istiyorsanız, şu satırı ekleyebilirsiniz:
-
-```
-	None = kb:NVDA+f12
-```
-
 
 ++ Noktalama/imla Seslendirmesiyle İlgili İleri Düzey Ayarlamalar ++
 Noktalama ya da başka işaretlerin nasıl seslendirileceğiyle ilgili [Noktalama/imla sözlüğü #SymbolPronunciation] iletişim kutusunu kullanarak değiştirebileceğinizden daha fazla ayarlama da yapmanız mümkündür.
