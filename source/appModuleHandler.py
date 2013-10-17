@@ -276,56 +276,53 @@ class AppModule(baseObject.ScriptableObject):
 	def _setProductInfo(self):
 		"""Set productName and productVersion attributes.
 		"""
-		# If the processHandle is greater than 0, we get application name and version by reading it in its main executable file
-		if self.processHandle >0:
-			# Choose the right function to use to get the executable file name
-			if sys.getwindowsversion().major > 5:
-				# For Windows Vista and higher, use QueryFullProcessImageName function
-				GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
-			else:
-				# We define where to find the function GetModuleFileNameW for Windows prior to Vista
-				try:
-					GetModuleFileName = ctypes.windll.kernel32.GetModuleFileNameExW
-				except AttributeError:
-					GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
-			# Create the buffer to get the executable name
-			exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
-			length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
-			if GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.byref(length)) > 0:
-				fileName = exeFileName.value
-				# Get size needed for buffer (0 if no info)
-				size = ctypes.windll.version.GetFileVersionInfoSizeW(fileName, None)
-				if size:
-					# Create buffer
-					res = ctypes.create_string_buffer(size)
-					# Load file informations into buffer res
-					ctypes.windll.version.GetFileVersionInfoW(fileName, None, size, res)
-					r = ctypes.c_uint()
-					l = ctypes.c_uint()
-					l = ctypes.c_uint()
-					# Look for codepages
-					ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
-						ctypes.byref(r), ctypes.byref(l))
-					if l.value:
-						# Take the first codepage (what else ?)
-						codepages = array.array('H', ctypes.string_at(r.value, l.value))
-						codepage = tuple(codepages[:2].tolist())
-						# Extract product name and put it to self.productName
-						ctypes.windll.version.VerQueryValueW(res, (u'\\StringFileInfo\\%04x%04x\\'
-							+ u"ProductName") % codepage, ctypes.byref(r), ctypes.byref(l))
-						self.productName = ctypes.wstring_at(r.value, l.value-1)
-						# Extract product version and put it to self.productVersion
-						ctypes.windll.version.VerQueryValueW(res, (u'\\StringFileInfo\\%04x%04x\\'
-							+ u"ProductVersion") % codepage, ctypes.byref(r), ctypes.byref(l))
-						self.productVersion = ctypes.wstring_at(r.value, l.value-1)
-					else:
-						raise Exception("No codepage.")
-				else:
-					raise Exception("No version informations.")
-			else:
-				raise ctypes.WinError()
+		# Sometimes (I.E. when NVDA starts) handle is 0, so stop if it is the case
+		if not self.processHandle:
+			raise RuntimeError("processHandle is 0")
+		# Choose the right function to use to get the executable file name
+		if sys.getwindowsversion().major > 5:
+			# For Windows Vista and higher, use QueryFullProcessImageName function
+			GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
 		else:
-			raise Exception("processHandle is 0")
+			# We define where to find the function GetModuleFileNameW for Windows prior to Vista
+			try:
+				GetModuleFileName = ctypes.windll.kernel32.GetModuleFileNameExW
+			except AttributeError:
+				GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
+		# Create the buffer to get the executable name
+		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
+		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
+		if not GetModuleFileName(self.processHandle, 0, exeFileName, ctypes.byref(length)):
+			raise ctypes.WinError()
+		fileName = exeFileName.value
+		# Get size needed for buffer (0 if no info)
+		size = ctypes.windll.version.GetFileVersionInfoSizeW(fileName, None)
+		if not size:
+			raise RuntimeError("No version information")
+		# Create buffer
+		res = ctypes.create_string_buffer(size)
+		# Load file informations into buffer res
+		ctypes.windll.version.GetFileVersionInfoW(fileName, None, size, res)
+		r = ctypes.c_uint()
+		l = ctypes.c_uint()
+		# Look for codepages
+		ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
+		ctypes.byref(r), ctypes.byref(l))
+		if not l.value:
+			raise RuntimeError("No codepage")
+		# Take the first codepage (what else ?)
+		codepage = array.array('H', ctypes.string_at(r.value, 4))
+		codepage = "%04x%04x" % tuple(codepage)
+		# Extract product name and put it to self.productName
+		ctypes.windll.version.VerQueryValueW(res,
+			u'\\StringFileInfo\\%s\\ProductName' % codepage,
+			ctypes.byref(r), ctypes.byref(l))
+		self.productName = ctypes.wstring_at(r.value, l.value-1)
+		# Extract product version and put it to self.productVersion
+		ctypes.windll.version.VerQueryValueW(res,
+			u'\\StringFileInfo\\%s\\ProductVersion' % codepage,
+			ctypes.byref(r), ctypes.byref(l))
+		self.productVersion = ctypes.wstring_at(r.value, l.value-1)
 
 	def _get_productName(self):
 		self._setProductInfo()
