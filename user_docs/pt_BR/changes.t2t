@@ -13,17 +13,28 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - Campos de formulário agora são anunciados em documentos do Microsoft word. (#2295)
 - O NVDA agora consegue anunciar informações de revisão no Microsoft Word quando monitorar alterações está abilitado. Note que Anunciar revisões de editores, no diálogo de opções de documento do NVDA (desligada por padrão), tem que também estar abilitada para que elas sejam anunciadas. (#1670)
 - Listas suspensas no Microsoft Excel 2003 a 2010 são agora anunciadas quando abertas e se navega ao longo delas. (#3382)
+- Uma nova opção no diálogo de opções de teclado, "Permitir leitura dinâmica durante a leitura contínua", possibilita navegar ao longo dum documento com os comandos de navegação rápida e linha / parágrafo em modo de navegação e manter-se em leitura contínua. Essa opção vem desligada por padrão. (#2766)
+- Existe agora um diálogo de gestos para entrada com o fim de possibilitar uma personalização mais simples dos gestos de entrada (tais como as teclas do teclado) para comandos do NVDA. (#1532)
 
 
 == Correção de falhas ==
 - O Zend Studio agora funciona igual ao Eclipse. (#3420)
 - O estado alterado de certas caixas de seleção do diálogo de regras para mensagens do Microsoft Outlook 2010 agora é anunciado automaticamente. (#3063)
 - O NVDA vai agora anunciar o estado "pregado" para controles pregados como as abas no Mozilla Firefox. (#3372)
-- Agora é possível associar scripts a gestos de teclado que contenham Alt e/ou Windows como teclas modificadoras. Se isso fosse feito antes, executar o script faria com que fosse ativado o Menu Iniciar ou a barra de menus. (#3472)
-- Selecionar texto em documentos em modo de navegação (usando por exemplo control+shift+end) não faz mais mudar a disposição de teclado em sistemas com várias disposições de teclado instaladas. (#3472)
+- Agora é possível associar scripts a gestos de teclado que contenham Alt e/ou Windows como teclas modificadoras. Se isso fosse feito anteriormente, executar o script faria com que fosse ativado o Menu Iniciar ou a barra de menus. (#3472)
+- Selecionar textos em documentos no modo de navegação (usando por exemplo control+shift+end) já não altera a disposição de teclado em sistemas com várias disposições de teclado instaladas. (#3472)
 - O Internet Explorer não deve mais travar ou ficar inutilizado ao fechar o NVDA. (#3397)
 - Movimentos físicos e outros eventos em computadores recentes não são mais tratados como pressionamentos inapropriados de teclas. Anteriormente, os mesmos silenciavam a fala e às vezes chamavam comandos do NVDA. (#3468)
 - Agora o NVDA se comporta como esperado no Poedit 1.5.7. Usuários de versões mais antigas terão de atualizar. (#3485)
+- O NVDA agora consegue ler documentos protegidos no Microsoft Word 2010, não mais fazendo o Microsoft Word travar. (#1686)
+- Caso seja fornecida uma opção de linha de comando desconhecida ao carregar o pacote de distribuição do NVDA, entra não entra mais num ciclo infinito de diálogos de mensagem de erro. (#3463)
+
+
+== Alterações específicas para desenvolvedores ==
+
+
+Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
+- Você pode especificar a categoria a ser mostrada ao usuário para scripts usando o atributo scriptCategory em classes  ScriptableObject e o atributo category em métodos script. Consulte a documentação da baseObject.ScriptableObject para mais detalhes. (#1532)
 
 
 = 2013.2 =
@@ -82,18 +93,21 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - Diálogos de confirmação no Microsoft Office 2013 agora têm seu conteúdo automaticamente lido quando aparecem.
 - Melhorias de desempenho ao navegar em certas tabelas no Microsoft Word. (#3326)
 - Os comandos de navegação em tabelas do NVDA (control+alt+setas) funcionam melhor em certas tabelas do Microsoft Word nas quais uma célula abrange várias linhas.
-- Caso o gestor de complementos já esteja aberto, ativá-lo de novo (seja pelo menu ferramentas ou abrindo um arquivo de complemento) não mais falha nem torna impossível fechar o gestor de complementos. (#3351)
+- Caso o gestor de complementos já esteja aberto, ativá-lo de novo (seja pelo menu ferramentas ou abrindo um arquivo de complemento) não mais causa falha nem torna impossível fechar o gestor de complementos. (#3351)
 - O NVDA não congela mais em certos diálogos quando o IME Chinês ou Japonês do Office 2010 está em uso. (#3064)
 - Vários espaços não são mais comprimidos para um só espaço em linhas braile. (#1366)
-- O Zend Eclipse PHP Developer Tools agora funciona do mesmo jeito que o Eclipse. (#3353)
+- O Zend Eclipse PHP Developer Tools agora funciona da mesma forma que o Eclipse. (#3353)
 - No Internet Explorer, voltou a não ser necessário pressionar tab para interagir com um objeto embutido (como o conteúdo Flash) depois de pressionar Enter nele. (#3364)
-- Ao editar texto no Microsoft PowerPoint, a última linha não é mais anunciada como a linha acima se a linha final estiver em branco. (#3403)
+- Ao editar textos no Microsoft PowerPoint, a última linha não é mais anunciada como a linha acima se a linha final estiver em branco. (#3403)
 - No Microsoft PowerPoint, os objetos não são mais falados em dobro às vezes quando você os seleciona ou escolhe editá-los. (#3394)
-- O NVDA não faz mais o Adobe Reader encerrar ou congelar em certos documentos PDF mal-feitos que contém linhas do lado de fora de tabelas. (#3399)
-- O NVDA agora detecta corretamente o próximo slaide com foco ao apagar um slaide na vista de miniaturas do Microsoft PowerPoint. (#3415)
+- O NVDA não faz mais o Adobe Reader encerrar ou congelar em certos documentos PDF mal-feitos que contém linhas fora de tabelas. (#3399)
+- O NVDA agora detecta corretamente o próximo slaide com foco ao apagar um slaide no visualizador de miniaturas do Microsoft PowerPoint. (#3415)
 
 
 == Alterações Específicas Para desenvolvedores ==
+
+
+ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - windowUtils.findDescendantWindow foi adicionado para buscar uma janela descendente (HWND) que corresponda à visibilidade especificada, ID de controle e/ou nome de classe.
 - O console Python remoto não tem mais o tempo limite de 10 segundos ao esperar entrada. (#3126)
 - A inclusão do módulo bisect compilado em forma binária foi descontinuada e pode ser removido em versões futuras. (#3368)

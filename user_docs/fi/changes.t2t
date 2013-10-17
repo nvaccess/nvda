@@ -7,8 +7,11 @@
 
 == Uudet ominaisuudet ==
 - Lomakekentät luetaan nyt Microsoft word -asiakirjoissa. (#2295)
-- NVDA voi nyt lukea muokkaustietoja Microsoft Wordissa, kun muutosten jäljittäminen on käytössä. Huomaa, että NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunan Lue muokkaajan muokkaukset -asetuksen on myös oltava käytössä näiden tietojen lukemiseksi (oletusarvoisesti pois käytöstä). (#1670)
+- NVDA lukee nyt muokkaustiedot Microsoft Wordissa, kun muutosten jäljittäminen on käytössä. Huomaa, että NVDA:n Asiakirjojen muotoiluasetukset -valintaikkunan Lue muokkaajan muokkaukset -asetuksen on myös oltava käytössä näiden tietojen lukemiseksi (oletusarvoisesti pois käytöstä). (#1670)
 - Microsoft Excel 2003-2010:n pudotuslistat luetaan nyt avattaessa ja niissä liikuttaessa. (#3382)
+- Näppäimistöasetukset-valintaikkunan uusi "Käytä pikalukua Lue kaikki -toiminnossa" -asetus mahdollistaa asiakirjassa liikkumisen selaustilan pikanavigoinnilla sekä riveittäin / kappaleittain siirtävillä komennoilla Lue kaikki -toiminnon aikana. Asetus on oletusarvoisesti pois käytöstä. (#2766)
+- Syöte-eleet-valintaikkuna mahdollistaa helpomman NVDA-komennoissa käytettävien syöte-eleiden (kuten näppäimistön näppäinten) mukauttamisen. (#1532)
+- Asetusprofiilit mahdollistavat eri asetukset eri tilanteissa. Profiilit voidaan ottaa käyttöön manuaalisesti tai automaattisesti (esim. tietyssä sovelluksessa). (#87, #667, #1913)
 
 
 == Korjatut ohjelmavirheet ==
@@ -20,6 +23,13 @@
 - Internet Explorerin ei pitäisi enää kaatua tai muuttua käyttökelvottomaksi, kun NVDA suljetaan. (#3397)
 - Fyysisiä liikkeitä ja muita tapahtumia ei enää käsitellä väärinä näppäinpainalluksina joissakin uudemmissa tietokoneissa. Aiemmin tämä vaiensi puheen sekä suoritti toisinaan NVDA-komentoja. (#3468)
 - NVDA toimii nyt odotetusti Poedit 1.5.7:ssä. Aiempia versioita käyttävien on päivitettävä. (#3485)
+- NVDA lukee nyt suojattuja asiakirjoja Microsoft Word 2010:ssä, eikä aiheuta enää Wordin kaatumista. (#1686)
+- Mikäli NVDA:n jakelupakettia käynnistettäessä annetaan tuntematon komentorivivalitsin, se ei enää aiheuta virheilmoitusvalintaikkunoita päättymättömänä silmukkana. (#3463)
+- Kuvien ja objektien alt-tekstin lukeminen ei enää epäonnistu Microsoft Wordissa, mikäli alt-teksti sisältää lainausmerkkejä tai muita epästandardeja merkkejä. (#3579)
+- Vaakasuuntaisissa listoissa olevien kohteiden määrä on nyt oikein selaustilassa. Aiemmin todellinen määrä saattoi kaksinkertaistua. (#2151)
+- Päivitetty valinta luetaan nyt painettaessa Control+A-näppäinyhdistelmää Microsoft Excel -työkirjassa. (#3043)
+- NVDA lukee nyt oikein XHTML-asiakirjoja Microsoft Internet Explorerissa ja muissa MSHTML-säätimissä. (#3542)
+- Näppäimistöasetukset-valintaikkuna: mikäli NVDA-näppäimenä käytettävää näppäintä ei ole valittu, käyttäjälle näytetään virheilmoitus valintaikkunaa suljettaessa. Vähintään yksi näppäin on valittava NVDA:n asianmukaisen käytön varmistamiseksi. (#2871)
 
 
 = 2013.2 =
@@ -330,7 +340,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat pistenäytön sujuvampi lu
 
 == Uudet ominaisuudet ==
 - NVDA voi kertoa järjestyksessä nykyisen rivin alussa olevien sisennysten ja välilyöntien määrän. Asetus voidaan ottaa käyttöön Lue rivien sisennykset -valintaruudulla Asiakirjojen muotoiluasetukset -valintaikkunasta. (#373)
-- NVDA havaitsee nyt vaihtoehtoisen näppäimistösyöte-emulaation, kuten ruutunäppäimistöjen ja puheentunnistusohjelmistojen, tuottamat näppäinpainallukset.
+- NVDA havaitsee nyt vaihtoehtoisen näppäimistösyöte-emulaation, kuten ruutunäppäimistöjen ja puheentunnistusohjelmistojen tuottamat näppäinpainallukset.
 - NVDA havaitsee nyt värit Windowsin komentokonsoleissa.
 - Lihavointi, kursiivi ja alleviivaus ilmaistaan nyt pistenäytöllä käytettävässä pistetaulukossa määritetyillä merkeillä. (#538)
 - Microsoft Word -asiakirjoissa luetaan nyt paljon enemmän tietoja, mukaan lukien:
@@ -526,7 +536,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat merkittävät välimerkkej
 - Kielissä, joissa käytetään välilyöntiä numeroiden ryhmittelyyn ja tuhaterottimena (kuten ranska ja saksa), eri tekstiosissa olevia numeroita ei enää lueta yksittäisenä numerona. Tämä oli erityisen ongelmallista numeroita sisältävissä taulukon soluissa. (#555)
 - Alkiot, joissa on ARIA-kuvausrooli, luokitellaan nyt Internet Explorerissa ja muissa MSHTML-säätimissä kiinteäksi tekstiksi, ei muokkauskentiksi.
 - Korjattu erilaisia ongelmia painettaessa sarkainta kohdistuksen ollessa selaustila-asiakirjassa (esim. virheellinen siirtäminen osoitepalkkiin Internet Explorerissa). (#720, #1367)
-- Syötekomennot  kirjataan lokiin syöteohjeessa, vaikka niiden skriptit ohittaisivat sen, kuten komennot pistenäytön eteen- ja taaksepäin vierittämiseksi.
+- Syöte-eleet  kirjataan lokiin syöteohjeessa, vaikka niiden skriptit ohittaisivat sen, kuten komennot pistenäytön eteen- ja taaksepäin vierittämiseksi.
 - Kun toimintonäppäintä pidetään alhaalla syöteohjetilassa, NVDA ei enää ilmoita ikään kuin se olisi itsensä toimintonäppäin, esim. NVDA+NVDA.
 - Yhdistelmäruutuihin siirtyminen toimii nyt Adobe Reader -asiakirjoissa C- ja Shift+C-pikanavigointikomennoilla.
 - Valittavissa olevien taulukon rivien tila ilmoitetaan nyt samalla tavalla kuin lista- ja puunäkymäkohteissa.
@@ -577,7 +587,7 @@ Tämä julkaisu korjaa muutamia versiosta 2011.1 löydettyjä tietoturva- ja mui
 - Kun komentonäppäinten lukeminen on otettu käyttöön, Shift-näppäimen kanssa painettuja merkkejä ei enää virheellisesti  sanota komentonäppäimiksi. (#1422)
 - Kun komentonäppäinten lukeminen on otettu käyttöön, välilyönnin painaminen yhdessä muiden muokkausnäppäinten kuin Shiftin kanssa (kuten Control ja Alt) ilmoitetaan nyt komentonäppäimeksi. (#1424)
 - Lokiin kirjaaminen on nyt kokonaan poissa käytöstä kirjautumisikkunassa ja muissa suojatuissa ruuduissa, koska se on tietoturvariski. (#1435)
-- Syötekomennot kirjataan nyt käyttöohjeen mukaisesti lokiin syöteohjetilassa, vaikka niitä ei olisikaan määritelty mihinkään skriptiin. (#1425)
+- Syöte-eleet kirjataan nyt käyttöohjeen mukaisesti lokiin syöteohjetilassa, vaikka niitä ei olisikaan määritelty mihinkään komentoon. (#1425)
 
 
 = 2011.1 =
@@ -588,7 +598,7 @@ Tämän version tärkeimpiä uusia ominaisuuksia ovat automaattinen uuden teksti
  - Tätä tuetaan alustavasti standardinmukaisissa muokattavissa IAccessible2-tekstisäätimissä (sellaisissa kuin Mozilla-sovelluksissa), RichEdit-säätimissä (sellaisissa kuin WordPadissa) ja IBM Lotus Symphonyn tekstisäätimissä.
 - Näennäispuskureissa on nyt mahdollista valita tekstiä sivu kerrallaan (näppäimillä Shift+Page down ja Shift+Page up) sekä kappale kerrallaan (näppäimillä Shift+Control+alanuoli ja Shift+Control+ylänuoli). (#639)
 - NVDA lukee nyt automaattisesti näytölle tulevan uuden tekstin mIRC:issä, PuTTY:ssä, Tera Termissä ja SecureCRT:ssä. (#936)
-- Uusien näppäinkomentojen lisääminen tai  olemassa olevien muuttaminen on nyt mahdollista  kaikille NVDA:n komennoille käyttäjän syötekomentokartan avulla. (#194)
+- Uusien näppäinkomentojen lisääminen tai  olemassa olevien muuttaminen on nyt mahdollista  kaikille NVDA:n komennoille käyttäjän syöte-elekartan avulla. (#194)
 - Tuki yleisliitännäisille, joiden avulla NVDA:han on mahdollista  lisätä toimintoja, jotka ovat käytettävissä kaikissa sovelluksissa. (#281)
 - Pieniä kirjaimia kirjoitettaessa Shift-näppäin pohjassa kuuluu nyt äänimerkki Capslockin ollessa käytössä. Tämä asetus voidaan poistaa käytöstä Näppäimistöasetukset-valintaikkunasta. (#663)
 - Pakotetut sivunvaihdot luetaan nyt Microsoft Wordissa rivi kerrallaan liikuttaessa. (#758)

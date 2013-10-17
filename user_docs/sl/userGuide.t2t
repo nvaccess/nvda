@@ -43,7 +43,7 @@ Informacije o drugih govornih sintezah, ki jih podpira NVDA, lahko najdete v raz
 
 ++ Podpora Brajici ++
 Za tiste, ki posedujejo brajevo vrstico, NVDA lahko prikazuje sporočila in druge aktivnosti tudi na njih.
-Prosimo, oglejte si [Podprte Brajeve Vrstice #SupportedBrailleDisplays] razdelek za več informacij o podprtih brajevih vrsticah.
+Prosimo, oglejte si razdelek [Podprte Brajeve Vrstice #SupportedBrailleDisplays] za več informacij o podprtih brajevih vrsticah.
 
 NVDA podpira precej brajevih kodnih tabel vključno z računalniškimi, kratkopisnimi in normalnimi za veliko jezikov.
 
@@ -76,7 +76,7 @@ Nameščena kopija NVDA omogoča, da si sami iz nje kadarkoli izdelate prenoslji
 
 Če želite s seboj vzeti NVDA na USB ključku ali drugem zapisljivem mediju, potem morate izbrati ustvari prenosljivo kopijo.
 Prenosljiva kopija omogoča samonamestitev kasneje na izbrani računalnik.
-Kakorkoli, če želite NVDA preslikati na medij, ki je samo za branje (CD ali drug), potem na medij zapišite samo paket, ki ste ga dolpotegnili.
+Kakorkoli, če želite NVDA preslikati na medij, ki je samo za branje (CD ali drug), potem na medij zapišite samo paket, ki ste ga prenesli.
 Poganjanje z medija, ki je samo za branje, trenutno ni podprto.
 
 Možno je uporabiti tudi začasno kopijo (na primer za demonstracijske prikaze), čeprav je pot zagona NVDA v tem načinu precej dolga.
@@ -110,7 +110,7 @@ Ta bližnjica, če jo boste ustvarili, bo ustvarila tudi kombinacijo bližnjičn
 +++ Preslikaj Prenosljivo Konfiguracijo na Trenuten Uporabniški Račun +++
 Ta možnost vam omogoča izbiro ali mora ali pa ne NVDA preslikati trenutno uporabniško konfiguracijo v uporabi v konfiguracijo trenutno prijavljenega uporabnika za nameščeno kopijo NVDA.
 To ne bo preslikalo konfiguracije k ostalim uporabnikom tega sistema in niti ne bo preslikalo konfiguracije, ki se uporablja na prijavnem zaslonu in drugih varnih zaslonih.
-Ta možnost je na voljo samo ob namestitvi  s prenosljive kopije in ni na voljo ob namestitvi s pomočjo namestitvenega paketa, ki ste ga dolpotegnili.
+Ta možnost je na voljo samo ob namestitvi  s prenosljive kopije in ni na voljo ob namestitvi s pomočjo namestitvenega paketa, ki ste ga prenesli.
 
 ++ Ustvarjanje Prenosljive Kopije ++
 Če ustvarjate prenosljivo kopijo neposredno iz prenesenega paketa, preprosto pritisnite gumb Ustvari Prenosljivo Kopijo.
@@ -302,7 +302,7 @@ V takih primerih lahko uporabite krmarjenje po predmetih.
 
 Krmarjenje po predmetih vam omogoča premikanje med in zajemanje informacij o posameznih [predmetih #Objects].
 Ko se premaknete na predmet, bo NVDA to poročala tako, kot to dela ob sistemskem žarišču.
-Ko želite pregledati vse besedilo, kako izgleda na zaslonu, takrat namesto tega uporabite[nestrukturiran pregled #FlatReview].
+Za pregled vsega besedila, kot izgleda na zaslonu, lahko namesto tega uporabite [pregled zaslona #ScreenReview].
 
 Vsakič, ko se premikate nazaj in naprej med predmeti, se pomikate med predmeti na istem nivoju, ker so predmeti v sistemu organizirani v hierarhiji.
 To pomeni, da nekateri predmeti vsebujejo druge predmete in tako morate vstopiti v prve predmete, da dobite dostop do drugih.
@@ -313,7 +313,7 @@ Tako se potem lahko pomikate po prejšnjem seznamu, če želite dostopiti do dru
 Podobno je z orodno vrstico, ki vsebuje kontrolnike. Tako morate vstopiti na orodno vrstico za dostop do kontrolnikov.
 
 Predmet, ki ga pravkar pregledujete nosi ime predmet krmarjenja.
-Ko enkrat pristanete na predmetu, ga lahko pregledate z uporabo [ukazov za pregled besedila #ReviewingText].
+Ko se enkrat premaknete na predmet, njegovo vsebino lahko pregledujete z uporabo [ukazov za pregled besedila #ReviewingText] medtem, ko ste v [Delovanju pregleda predmeta #ObjectReview].
 Privzeto vedenje je nastavljeno tako, da sistemsko žarišče potuje vzdolž predmeta krmarjenja, to stikalo pa lahko vključite ali izključite.
 
 Opozarjamo, da braj privzeto sledi [žarišču #SystemFocus] in [kazalki #SystemCaret], kakor pa predmetom krmarjenja in pregledu besedila.
@@ -329,7 +329,7 @@ Za pomik po predmetih, uporabite naslednje ukaze:
 | Premakni se na naslednji predmet | NVDA+številski del6 | NVDA+shift+rightArrow | švig desno (delovanje predmeta) | Premik na predmet za  trenutnim predmetom krmarjenja |
 | Premakni se na prvi predmet z vsebino | NVDA+številski del2 | NVDA+shift+downArrow | švig dol (delovanje predmeta) | Premik na prvi predmet, ki je del vsebine trenutnega predmeta krmarjenja |
 | Premakni se na predmet v žarišču | NVDA+številski delMinus | NVDA+vračalka | brez | Premik na predmet, ki vsebuje trenutno sistemsko žarišče ter postavi pregledno utripalko na položaj sistemske kazalke, če se prikazuje |
-| Sproži trenutni predmet krmarjenja | NVDA+številski delEnter | NVDA+enter | dvojni tap | Sproži trenuten predmet krmarjenja (podobno kot pri klikih z miško ali pritisku pritisku preslednice, ko vsebuje sistemsko žarišče) |
+| Sproži trenutni predmet krmarjenja | NVDA+številski delEnter | NVDA+enter | dvojni tap | Sproži trenuten predmet krmarjenja (podobno kot pri klikih z miško ali pritisku preslednice, ko vsebuje sistemsko žarišče) |
 | Premakni Sistemsko žarišče ali kazalko na trenuten položaj pregleda | NVDA+shift+številski delMinus | NVDA+shift+vračalka | brez | enojni pritisk Premakne Sistemsko žarišče na trenutni predmet krmarjenja, dvojni pritisk premakne sistemsko kazalko na položaj pregledne utripalke |
 | Sporoči dimenzijo predmeta krmarjenja | NVDA+številski delDelete | NVDA+delete | brez | Sporoča dimenzije trenutnega predmeta krmarjenja, ki jih zaseda na zaslonu v odstotkih, (vključno z razdaljo od levega in zgornjega roba zaslona ter njegovo višino in širino) |
 %kc:endInclude
@@ -337,7 +337,7 @@ Za pomik po predmetih, uporabite naslednje ukaze:
 Opozarjamo, da mora biti številski del izključen za pravilno delovanje tipk na tem delu.
 
 ++ Pregledovanje Besedila ++[ReviewingText]
-NVDA vam omogoča, da prebirate [predmet krmarjenja #ObjectNavigation] (vključno z [nestrukturiranim pregledom #FlatReview]) znak za znakom, besedo za besedo ali vrstico za vrstico.
+NVDA vam omogoča prebiranje vsebine [zaslona #ScreenReview], trenutnega [dokumenta #DocumentReview] ali trenutnega [predmeta #ObjectReview] znak po znak, besedo po besedo ali vrstico po vrstico.
 To je uporabno predvsem na prostorih (vključno z ukaznimi konzolami Oken) kjer ni na voljo [sistemska kazalka #SystemCaret].
 To lahko uporabljate na primer pri pregledu daljšega besedila v sporočilu z informacijami, ki ga prikaže pogovorno okno.
 
@@ -378,27 +378,35 @@ Dober način za pomnenje osnovnih ukazov za pomik po besedilu ob uporabi Običaj
 | Predhodna beseda | Trenutna beseda | Naslednja beseda |
 | Predhodni znak | Trenutni znak | Naslednji znak |
 
-++ Nestrukturiran Pregled ++[FlatReview]
+++ Delovanja Pregleda ++[ReviewModes]
+Z NVDA ukazi za pregled lahko pregledujete vsebino znotraj trenutnega predmeta krmarjenja, trenutnega dokumenta ali zaslona odvisno od tega, kateri pregled je trenutno izbran.
+Delovanja pregleda so zamenjava za starejši koncept nestrukturiranega pregleda obstajajočega v NVDA že prej.
 
+Sledeči ukazi preklapljajo med delovanji pregleda:
+%kc:beginInclude
+|| Ime | Običajna razporeditev | razporeditev Prenosnik | Dotik | Opis |
+| preklop na naslednje delovanje pregleda | NVDA+številski del7 | NVDA+stranGor | dvoprsti švig gor | preklopi na naslednje delovanje pregleda na voljo bolj splošno od trenutnega delovanja pregleda. | 
+| preklop na predhodno delovanje pregleda | NVDA+številski del1 | NVDA+stranDol | dvoprsti švig dol | preklopi na naslednje delovanje pregleda bolj globoko kot je trenutno delovanje.. |
+%kc:endInclude
 
++++ Pregled Predmeta +++[ObjectReview]
+Ko ste v delovanju pregledovanja predmetov, lahko pregledujete samo vsebino trenutnega  [predmeta krmarjenja #ObjectNavigation].
+Za predmete, kot so polja za urejanje ali drugi osnovni kontrolniki dokumenta, bo to običajno vsebina besedilo.
+Za druge predmete je to ime predmeta ali njegova vrednost.
 
++++ Pregled Dokumenta +++[DocumentReview]
+Ko je [predmet krmarjenja #ObjectNavigation] del dokumenta, ki se pregleduje skozi brskalniško delovanje (kot je spletna stran) ali drug zahtevnejši dokument, ki vsebuje več predmetov (kot so Lotus Symphony dokumenti), je mogoče preklopiti v delovanje pregleda dokumenta.
+Delovanje pregleda dokumenta vam omogoča pregled besedila znotraj celotnega dokumenta.
+Ko se preklaplja iz pregleda predmeta v pregled dokumenta, se pregledna utripalka postavi na položaj predmeta krmarjenja v dokumentu.
+Ko se premikate po dokumentu z uporabo ukazov za pregled, se predmet krmarjenja samodejno zlije s predmetom, ki je trenutno na položaju pregledne utripalke.
+Opozarjamo, da NVDA samodejno preklopi v pregled dokumenta iz pregleda predmeta, ko se pregledujejo dokumenti v brskalniškem delovanju.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
++++ Pregled Zaslona +++[ScreenReview]
+Delovanje pregleda zaslona vam omogoča pregled vidnega besedila na zaslonu v trenutnem programu.
+To je podobno pregledovanju zaslona ali funkciji miškine kazalke v mnogih drugih okenskih bralnikih zaslona.
+ Ko se preklaplja v delovanje pregleda zaslona, se pregledna utripalka postavi na zaslonski položaj trenutnega [predmeta krmarjenja #ObjectNavigation].
+Ko se premikate po zaslonu z uporabo ukazov za pregled, se predmet krmarjenja samodejno zlije z najglobjim predmetom, ki obstaja na zaslonskem položaju pregledne utripalke.
+Opozarjamo, da NVDA v nekaterih novejših programih mogoče ne bo videla nekaj ali pa celo celotnega besedila, ki je lahko na zaslonu, zaradi uporabe novejših tehnologij za izrisovanje po zaslonu, kar trenutno ni možno podpreti.
 
 ++ Krmarjenje z Miško ++
 Ko premikate miško, NVDA privzeto poroča o besedilu, ki je neposredno pod miškinim kazalcem, ko se kazalec pomika nad njim.
@@ -930,47 +938,46 @@ Ko je to omogočeno, NVDA naznani vse pritiske na tipkovnici, ki niso nujno pove
 
 
 
++++ Nastavitve Brskalniškega Delovanja (NVDA+control+b) +++
+Pogovorno okno nastavitev brskalniškega delovanja lahko najdete v nastavitvah pod "Brskalniško delovanje...".
 
+Pogovorno okno vsebuje naslednje možnosti:
 
+==== Največje Število Znakov na Eno Vrstico ====
+To polje določa največjo možno dolžino vrstice v brskalniškem delovanju (v znakih).
 
+==== Največje Število Vrstic na Stran ====
+To polje nastavi število vrstic, ki jih boste s pritiskom tipk stran gor ali stran dol preskočili, ko boste v brskalniškem delovanju.
 
+%kc:setting
+==== Uporabljaj oblikovanje po zaslonu ====
+Tipka: NVDA+v
 
+Ta možnost vam omogoča, da se odločite, ali naj se postavitev vsebine, kot so povezave in druga polja, v brskalniškem delovanju zgleduje po postavitvi na zaslonu, ali naj se elementi postavijo vsak v svojo vrsto. Če je možnost izbrana, potem NVDA prikazuje elemente, tako, kot so na zaslonu, če ni izbrana, potem polja postavlja vsakega v novo vrsto.
 
+==== Samodejno Izgovori Vse ob končanju nalaganja strani ====
+Ta možnost vklaplja samodejno branje, ko se stran naloži v brskalniško delovanje.
+Privzeto je ta možnost vključena.
 
+==== Poročaj o tabelah namenjenih oblikovanju ====
+Ko je ta možnost izključena, NVDA prikazuje samo tabele, kjer obstajajo signali, da je to tabela s podatki.
+Ampak, ko je ta možnost vključena, NVDA prikaže tudi tabele, ki so primarno namenjene vizualni predstavitvi.
 
+==== Nastavljanje poročanja o poljih, kot so povezave in naslovi ====
+Prosimo, oglejte si možnosti v [pogovornem oknu Nastavitev Oblikovanja Dokumentov #DocumentFormattingSettings] za nastavljanje poročanja o elementih ob navigaciji, kot so povezave, naslovi in tabele.
 
+==== Samodejno delovanje žarišča ob spremembah žarišča ====
+Ta možnost omogoča klic delovanja žarišča, če se žarišče spremeni.
+Na primer, ko ste na spletni strani in pritisnete tipko tab in pristanete v obrazcu, ko je ta možnost izbrana, se bo delovanje žarišča samodejno vključilo.
 
+==== Samodejno delovanje žarišča ob premiku kazalke ====
+Ta možnost, ko je izbrana, omogoča NVDA, da vstopa in zapušča delovanje žarišča tudi s puščicami.
+Na primer, ko se premikate s puščicami po spletni strani in vstopite na polje za urejanje, bo NVDA samodejno vklopila delovanje žarišča. Ko s puščicami izstopite iz polja za urejanje, bo NVDA preklopila nazaj v brskalniško delovanje. 
 
+==== Zvočna indikacija delovanja Žarišča in Brskalniškega delovanja ====
+Če je ta možnost izbrana, bo NVDA oddajala posebne zvoke ob preklopu med brskalniškim delovanjem in delovanjem žarišča namesto govornega obvestila o spremembi.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
++++ Nastavitve Oblikovanja Dokumentov (NVDA+control+d) +++[DocumentFormattingSettings]
 
 
 
@@ -1091,7 +1098,7 @@ Te dodatke je oskrbela skupnost in vsebujejo prilagojeno kodo, ki lahko doda ali
 Upravitelj dodatkov vsebuje seznam, ki prikazuje vse dodatke trenutno nameščene v vaši NVDA uporabniški konfiguraciji.
 Ime paketa, njegova različica in avtorji se pokažejo ob vsakem paketu, ostale informacije, kot je opis in URL so vidne ob izbiri dodatka in pritisku gumba O dodatku.
 
-Za brskanje in dolpoteg dodatkov, ki so na voljo na spletu, pritisnite gumb Pridobi dodatke.
+Za brskanje in prenos dodatkov, ki so na voljo na spletu, pritisnite gumb Pridobi dodatke.
 Ta gumb odpre [stran z dodatki za NVDA http://addons.nvda-project.org/].
 Če je NVDA nameščena v vaš računalnik, lahko dodatek odprete neposredno iz brskalnika in tako pričnete potek namestitve opisane spodaj.
 V nasprotnem primeru shranite paket z dodatkom in sledite spodnjim navodilom.

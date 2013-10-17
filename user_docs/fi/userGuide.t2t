@@ -216,7 +216,7 @@ Tässä käyttöoppaassa mainitaan useita näppäinkomentoja ja kosketuseleitä,
 
 Syöteohje otetaan käyttöön painamalla NVDA+1.
 Se poistetaan käytöstä painamalla uudelleen NVDA+1.
-Kun syöteohje on käytössä, NVDA kertoo mitä tahansa syötekomentoa suoritettaessa, kuten näppäintä painettaessa tai kosketuselettä käytettäessä, sen suorittaman toiminnon, mikäli kyseiseen komentoon on sellainen määritelty.
+Kun syöteohje on käytössä, NVDA kertoo mitä tahansa syöte-elettä suoritettaessa, kuten näppäintä painettaessa tai kosketuselettä käytettäessä sen suorittaman toiminnon, mikäli kyseiseen komentoon on sellainen määritelty.
 Varsinaisia komentoja ei suoriteta syöteohjetilassa.
 
 ++ NVDA-valikko ++
@@ -800,6 +800,9 @@ Jos tämä valintaruutu on valittuna, puhe keskeytetään joka kerta kun näppä
 ==== Keskeytä puhe Enter-näppäintä painettaessa ====
 Jos tämä valintaruutu on valittuna, puhe keskeytetään joka kerta Enter-näppäintä painettaessa. Asetus on oletusarvoisesti käytössä.
 
+==== Käytä pikalukua Lue kaikki -toiminnossa ====
+Jos tämä asetus on käytössä, niin tietyt navigointikomennot (kuten selaustilan pikanavigointi tai riveittäin/kappaleittain liikkuminen) eivät keskeytä Lue kaikki -toimintoa, vaan siirtävät uuteen sijaintiin, jonka jälkeen lukemista jatketaan.
+
 ==== Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä ====
 Kun tämä asetus on käytössä, kirjoitettaessa kirjaimia Shift-näppäin pohjassa kuuluu varoitusäänimerkki, Jos Caps Lock on päällä.
 Shift-näppäin pohjassa kirjoittaminen Caps Lockin ollessa päällä on yleensä tahatonta ja johtuu tavallisesti siitä, ettei sen tajua olevan käytössä.
@@ -1056,6 +1059,25 @@ Korvaava-kentän avulla voidaan muuttaa tekstiä, joka puhutaan kyseisen symboli
 Taso-kentän avulla voidaan säätää alin taso, jolla symboli puhutaan.
 
 Muutokset tallennetaan painamalla OK-painiketta tai kumotaan painamalla Peruuta.
+
++++ Syöte-eleet +++
+Tässä valintaikkunassa voidaan mukauttaa NVDA-komennoissa käytettäviä syöte-eleitä (näppäimistön näppäimiä, pistenäytön painikkeita jne.).
+
+Vain sellaiset komennot näytetään, jotka ovat käytettävissä valintaikkunaa avattaessa.
+Jos esimerkiksi halutaan mukauttaa selaustilaan liittyviä komentoja, on Syöte-eleet-valintaikkuna avattava selaustilassa oltaessa.
+
+Tämän valintaikkunan puunäkymässä näytetään kaikki käytettävissä olevat NVDA-komennot kategorioihin ryhmiteltyinä.
+Kaikki komentoon liitetyt syöte-eleet näytetään kyseisen komennon alapuolella.
+
+Syöte-ele lisätään komentoon valitsemalla haluttu komento ja painamalla Lisää-painiketta.
+Tämän jälkeen suoritetaan haluttu syöte-ele (ts. painetaan näppäimistön näppäintä tai pistenäytön painiketta.
+Ele voidaan usein tulkita useammalla kuin yhdellä tavalla.
+Jos esimerkiksi painetaan näppäimistön näppäintä, sen saatetaan haluta toimivan jossain tietyssä näppäimistöasettelussa (esim. pöytäkone tai kannettava) tai kaikissa asetteluissa.
+Tässä tapauksessa näkyviin tulee valikko, josta voidaan valita haluttu vaihtoehto.
+
+Syöte-ele poistetaan komennosta valitsemalla se ja painamalla Poista-painiketta.
+
+Tehdyt muutokset tallennetaan painamalla OK-painiketta tai hylätään painamalla Peruuta.
 
 ++ Asetusten tallentaminen ja palauttaminen ++
 NVDA tallentaa asetukset automaattisesti suljettaessa.
@@ -1766,76 +1788,7 @@ Katso [BRLTTY:n näppäintaulukoiden ohjetta http://mielke.cc/brltty/doc/drivers
 
 + Edistyneet aiheet +
 
-++ Näppäinyhdistelmien ja muiden syötekomentojen uudelleenmäärittely ++
-Käyttäjät voivat lisätä omia tai muuttaa nykyisiä NVDA:n skripteihin liitettyjä syötekomentojen määrittelyjä (kuten näppäinyhdistelmiä) erityiseen käyttäjän asetushakemistossa olevaan tiedostoon.
-Tämä tiedosto on nimeltään gestures.ini.
-
-Tiedosto käyttää standardinmukaista ini-syntaksia.
-Tiedostossa voi olla useita lohkoja ja kussakin lohkossa voi olla yksi tai useampia avainsanoja.
-
-Jokaisessa lohkossa on määrittelyt tiettyyn NVDA:n Python-moduulissa ja luokassa oleviin skripteihin.
-Lohkon nimi koostuu Python-moduulista ja -luokasta, jotka erotetaan toisistaan pisteellä.
-- Avainsana on skriptin nimi, jonka syötekomennot halutaan määrittää.
-Skripteistä on mahdollista poistaa niille määritellyt syötekomennot käyttämällä None-erikoisskriptiä.
-Kukin avainsana, None mukaan lukien, voi olla samassa lohkossa vain kerran.
-- Avainsanan arvo koostuu pilkulla erotetuista komentotunnisteista, jotka edustavat määriteltäviä syötekomentoja.
-Pilkkuun päättyvät komentotunnisteet on laitettava lainaus- (") tai heittomerkkien (') sisään.
--
-
- Komentotunnisteet koostuvat kaksikirjaimisesta laitekoodista, suluissa olevasta alilaitteesta, näppäimistöasettelusta tai tilasta, kaksoispisteestä sekä tyyppikohtaisesta merkkijonosta, joka määrittää yhden tai useamman syötteen, kuten näppäimen tai kosketuseleen nimen.
-- Näppäimistön syötekomennoissa laitekoodi on kb.
-Suluissa oleva osa määrittää näppäimistöasettelun, joka on valinnainen.
-Jos tätä ei määritetä, syötekomentoa käytetään kaikissa näppäimistöasetteluissa.
-Kaksoispisteen jälkeen oleva merkkijono koostuu yhdestä tai useammasta plusmerkillä erotellusta näppäimen nimestä.
-- Pistenäytön syötekomennoissa laitekoodi on br.
-Suluissa oleva osa määrittää halutun pistenäytön, joka on pakollinen.
-Kaksoispisteen jälkeen oleva merkkijono koostuu yhdestä tai useammasta plusmerkillä erotellusta näppäimen nimestä.
-- Kosketussyötekomennoissa laitekoodi on ts.
-Suluissa oleva osa määrittää kosketustilan, joka on valinnainen.
-Kaksoispisteen jälkeen oleva merkkijono on kosketusele, esim. double_tap, 2fingerflickUp tai 3finger_tap.
--
-
-Komentotunnisteiden ja skriptien sekä luokan ja moduulin nimi saadaan selville seuraavasti:
-+ Otetaan syöteohje käyttöön.
-+ Aktivoidaan haluttu syötekomento (näppäintä painamalla, näyttöä koskettamalla jne).
-+ Poistetaan syöteohje käytöstä.
-+ Avataan Näytä loki -toiminto NVDA:n Työkalut-valikosta.
-+ Tutkitaan viimeisimpiä lokimerkintöjä.
-Jossakin näistä merkinnöistä pitäisi olla tiedot käytetystä syötekomennosta, mukaan lukien moduuli.luokka sekä skripti, mikäli kyseiseen syötekomentoon on sellainen määritelty.
-+
-
-Seuraavassa on esimerkki siitä, miten NVDA+Shift+T-näppäinyhdistelmä määritetään päiväys ja aika -skriptiin.
-
-Oikea skriptin nimi ja moduuli.luokka saadaan selville ottamalla käyttöön syöteohje ja painamalla NVDA+F12, koska se on nykyinen päiväys ja aika -skriptiin määritelty syötekomento.
-Tämän jälkeen syöteohje poistetaan käytöstä ja tutkitaan lokia.
-
-Lokin loppupuolella näkyy seuraavaa:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):NVDA+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Tästä nähdään, että skriptin nimi on dateTime ja moduuli.luokka on globalCommands.GlobalCommands.
-
-Mikäli tiedostoa ei vielä ole, käyttäjän asetushakemistoon tulee luoda tekstitiedosto nimeltä gestures.ini, johon lisätään seuraavat rivit:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-Tämä määrittää dateTime-skriptiin näppäinyhdistelmän NVDA+Shift+T missä tahansa näppäimistöasettelussa.
- 
-HUOM: Alkuperäinen NVDA+F12-näppäinyhdistelmä toimii edelleen.
-Mikäli tämä määrittely halutaan poistaa, tiedostoon tulee lisätä seuraava rivi:
-
-```
-	None = kb:NVDA+f12
-```
-
-
-++ edistynyt symboleiden puhumisen mukauttaminen ++
+++ Edistynyt symboleiden puhumisen mukauttaminen ++
 Välimerkkien ja muiden symboleiden lukutapaa voidaan mukauttaa enemmänkin kuin mitä [Välimerkkien ja symboleiden puhuminen #Symboleidenpuhuminen] -valintaikkunassa on mahdollista.
 Voidaan esimerkiksi määrittää, lähetetäänkö symboli syntetisaattorille sellaisenaan (esim. tauon tai äänensävyn muutoksen aikaansaamiseksi) ja lisätä omia symboleita.
 

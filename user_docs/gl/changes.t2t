@@ -8,6 +8,9 @@ Que hai de Novo no NVDA
 == Novas Características ==
 - Os campos de formulario  agora anúncianse nos documentos de Microsoft word. (#2295)
 - As listas despregables no Microsoft Excel 2003 ó 2010 agora anúncianse cando se abran e naveguen. (#3382)
+- Unha nova opción 'Permitir Lectura superficial en falar Todo' no diálogo Opcións de Teclado permite a navegación por un documento cas ordes de navegación rápida do modo navegación e movementos de liña / parágrafo, mentres permañece lendo todo. Esta opción está desactivada de maneira predeterminada. (#2766) 
+- Agora hai un diálogo Xestos de Entrada para permitir a persoalización sinxela dos xestos de entrada(como teclas no teclado) para ordes do NVDA. (#1532)
+- Agora podes ter diferentes opcións para diferentes situacións utilizando perfiles de configuración. Os perfiles pódense activar de xeito manual ou automático (ex.: para unha aplicación en particular). (#87, #667, #1913)
 
 
 == Corrección de fallos ==
@@ -20,6 +23,17 @@ Que hai de Novo no NVDA
 - Internet Explorer xa non debería colgarse ou voltarse inusable  cando se pecha NVDA. (#3397)
 - O movemento físico e outros eventos nalgúns ordenadores modernos xa  non se trata como pulsacións de teclas inapropriadas. Anteriormente, esto silenciaba a voz e algunhas veces facía funcionar ordes do NVDA. (#3468)
 - NVDA agora compórtase como se esperaba enPoedit 1.5.7. os usuarios que utilicen versións anteriores necesitarán actualizar. (#3485)
+- NVDA agora pode ler documentos protexidos en Microsoft Word 2010,  non causando xa que Microsoft Word se bloquee. (#1686)
+- Se se da un parámetro de línea de comando descoñecido ó executar o paquete de distribución de NVDA, xa non se provoca un bucle sen fin de diálogos de mesaxes de erro. (# 3463)- 
+-NVDA xa non falla ó anunciar o texto alternativo dos gráficos e obxectos en Microsoft Word se o texto alternativo contén comiñas ou outros caracteres non estándar. (#3579)
+- O número de elementos de certas listas horizontais en modo navegación agora está correcto. Anteriormente podía ter sido o doble da cantidade real. (#2151)
+- Ó premer control+e nunha folla de cálculo de Microsoft Excel, agora anunciarase a selección actualizada. (#3043)
+- NVDA agora pode ler correctamente os documentos XHTML en Microsoft Internet Explorer e outros controis MSHTML. (#3542)
+- Diálogo de Opcións de teclado: se non se seleccionou ningunha tecla para ser utilizada como a tecla NVDA, preséntase un erro ó usuario cando se descarte o diálogo. Polo menos unha das teclas debe ser seleccionada para o uso apropriado do NVDA. (#2871)
+
+
+== Cambios para Desenroladores ==
+- Podes especificar a categoría a ser amosada ó usuario polos scripts utilizando o atributo scriptCategory en clases ScriptableObject e o atributo category en métodos de script. Mira a documentación para baseObject.ScriptableObject para máis detalles. (#1532)
 
 
 = 2013.2 =

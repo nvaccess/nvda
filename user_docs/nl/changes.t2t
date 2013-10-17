@@ -3,6 +3,39 @@ Wat is Nieuw in NVDA
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.3 =
+
+== Nieuwe Functies ==
+- Formuliervelden worden nu gemeld in Microsoft word documenten. (#2295)
+- NVDA kan nu revision information aankondigen in Microsoft Word als Track Changes is ingeschakeld. Note that Report editor revisions in NVDA's document settings dialog (off by default) must be enabled also for them to be announced. (#1670)
+- Dropdown lijsten in Microsoft Excel 2003 tot 2010 worden nu aangekondigd bij het openen en navigeren. (#3382)
+- Een nieuwe optie 'Doorbladeren tijdens automatisch lezen toestaan' in het dialoogvenster Toetsenbordinstellingen laat toe door een document te navigeren met bladermodus quick navigation en line / paragraph movement commando's, terwijl u in say all blijft. Deze optie is standaard uitgeschakeld. (#2766) 
+- Er is nu een Invoergebaren dialoogvenster to allow simpler customization van de invoergebaren (zoals toetsen op het toetsenbord) voor NVDA commando's. (#1532)
+- U kan nu verschillende instellingen hebben voor verschillende situaties door configuration profiles te gebruikern. Profiles kunnen manueel of automatisch geactivateerd worden (v.b. voor een bepaalde toepassing). (#87, #667, #1913)
+
+
+== Opgeloste problemen ==
+- Zend Studio werkt nu hetzelfde als Eclipse. (#3420)
+- Als de status verandert van bepaalde selectievakjes in het dialoogvenster Berichtregels van Microsoft Outlook 2010 wordt dat nu automatisch gemeld. (#3063)
+- NVDA meldt nu de pinned status voor pinned controls zoals tabs in Mozilla Firefox. (#3372)
+- Het is nu mogelijk to bind scripts to keyboard gestures containing Alt and/or Windows keys as modifiers. Previously, if this was done, performing het script would cause het Startmenu of de menubalk to be activated. (#3472)
+- Het selecteren van tekst in bladermodus documenten (v.b. met control+shift+end) veroorzaakt geen verandering meer van de toetsenbordindeling op systemen waarop meerdere toetsenbordindelingen zijn geïnstalleerd. (#3472)
+- Internet Explorer zou niet langer mogen vastlopen of onbruikbaar worden bij het afsluiten van NVDA. (#3397)
+- Physical movement and other events on some newer computers are no longer treated as inappropriate key presses. Previously, this silenced speech and sometimes triggered NVDA commands. (#3468)
+- NVDA gedraagt zich nu als verwacht in Poedit 1.5.7. Gebruikers van oudere versies zullen moeten updaten. (#3485)
+- NVDA kan nu beveiligde documenten lezen in Microsoft Word 2010,  no longer causing Microsoft Word to crash. (#1686)
+- Als een onbekende commandline swiwtch wordt gegeven when launching het NVDA distribution package, it niet langer causes een eindeloze loop van dialoogvenster met foutboodschappen. (#3463)
+-NVDA niet langer fails to report alt text of graphics and objects in Microsoft Word if the alt text contains quotes or other non-standard characters. (#3579)
+- The number of items for certain horizontal lists in Browse mode is now correct. Previously it may have been double the actual amount. (#2151)
+- When pressing control+a in a Microsoft Excel worksheet, the updated selection will now be reported. (#3043)
+- NVDA can now correctly read XHTML documents in Microsoft Internet Explorer and other MSHTML controls. (#3542)
+- Keyboard settings dialog: if no key has been chosen to be used as the NVDA key, an error is presented to de gebruiker when dismissing the dialog. At least one key must be chosen for proper usage of NVDA. (#2871)
+
+
+== Veranderingen voor Ontwikkelaars ==
+Deze zijn niet vertaald. We verwijzen naar de Engelstalige versie van dit document.
+
+
 = 2013.2 =
 
 == Nieuwe Functies ==
@@ -773,7 +806,7 @@ Deze versie focuses vooral on bug fixes en verbeteringen aan de gebruikservaring
 - De extremely verbose toetsenbord help bericht in de Windows 7 Start menu is niet langer gemeld.
 - De Display synth has nu been replaced met een nieuwe Speech Viewer. To activate it, choose Speech Viewer in het menu Extra. De speech viewer can be used ongeacht welke speech synthesizer u gebruikt. (#44)
 - Berichten op de brailleleesregel will automatisch be dismissed if de gebruiker presses een toets that resulteert in een change zoals de focus moving. Vroeger het bericht would altijd stay around voor its configured time.
-- Setting whether braille should be tethered to de focus of de leescursor (NVDA+control+t) can nu be also set in het braille instellingen dialoogvenster, en is also nu saved in de user's configuratie.
+- Setting whether braille should be tethered to de focus of de leescursor (NVDA+control+t) kan nu ook worden ingesteld in het braille instellingen dialoogvenster, en wordt nu ook opgeslagen in de configuratie van de gebruiker.
 - eSpeak speech synthesiser bijgewerkt naar 1.43.
 - liblouis braille translator bijgewerkt naar 1.8.0.
 - In virtuele buffers, de reporting of elements when moving by karakter of woord is sterk verbeterd. Vroeger werd veel overbodige informatie gemeld en de reporting was erg verschillend to that when moving per regel. (#490)
@@ -875,7 +908,7 @@ Belangrijke hoogtepunten in deze versie zijn ondersteuning voor 64 bit edities v
 - Backspace is nu handled correct when speaking typed words. (#306)
 - Don't incorrect report "Start menu" voor bepaalde contextmenu's in Windows Explorer/the Windows shell. (#257)
 - NVDA nu correct handles ARIA labels in Mozilla Gecko als er geen andere nuttige inhoud is. (#156)
-- NVDA niet langer foutief enables focusmodus automatisch voor bewerkbare tekstvelden which update their value als de focus verandert; b.v. http://tigerdirect.com/. (#220)
+- NVDA niet langer foutief enables focusmodus automatisch voor bewerkbare tekstvelden which update hun waarde als de focus verandert; b.v. http://tigerdirect.com/. (#220)
 - NVDA will nu attempt to herstellen van sommige situaties which would vroeger veroorzaken it to freeze completely. Het kan tot 10 seconden duren voor NVDA zo'n vastloper detecteert en ervan herstelt.
 - When de NVDA taal is set to "User default", use de user's Windows  display taal instelling in plaats van de Windows locale instelling. (#353)
 - NVDA nu recognises de existence of controls in AIM 7.

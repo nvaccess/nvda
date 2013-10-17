@@ -800,7 +800,10 @@ Si cette option est activée, la parole sera interrompue à chaque fois qu'un ca
 ==== Interruption de la parole à l'appui de la touche entrer ====
 Si cette option est activée, la parole sera interrompue à chaque fois que la touche entrer est appuyée. Cette option est activée par défaut.
 
-==== Émettre un bip si on entre une lettre minuscule quand le verrouillage majuscule est activé ====
+==== Permet la lecture rapide en mode dire tout ====
+Si activé, certaines commandes de navigation (comme les touches de navigation rapide en mode navigation ou changer de ligne ou de paragraphe) ne stop pas la lecture en mode dire tout, mais continu la lecture à la nouvelle position.
+
+==== Émettre un bip à la frappe d'un caractère minuscule quand le verrouillage majuscule est activé ====
 Quand cette case est cochée, un bip d'avertissement est émis si on entre une lettre en combinaison avec la touche maj alors que le verrouillage majuscule est activé.
 Généralement, cela n'est pas intentionnel est provient du fait qu'on a oublié que le verrouillage majuscule était activé.
 Cela peut donc être utile d'en être averti.
@@ -1056,6 +1059,25 @@ Le champ Remplacement vous permet de modifier le texte qui doit être prononcé 
 En utilisant le champ Niveau, vous pouvez ajuster le niveau minimum auquel ce symbole doit être annoncé.
 
 Quand vous avez fini, cliquez sur le bouton Accepter pour sauvegarder vos modifications, ou le bouton Annuler pour les supprimer.
+
++++ Gestes de saisie +++
+Dans cette boîte de dialogue, vous pouvez configurer les gestes d'entrée (raccourcis clavier, boutons d'un afficheur braille etc) pour les commandes NVDA.
+
+Seules les commandes qui sont applicables immédiatement avant l'ouverture de la boîte de dialogue sont affichées.
+Par exemple, si vous souhaitez personnaliser des commandes liées au mode navigation, vous devez ouvrir le dialogue des gestes d'entrée lorsque vous êtes en mode navigation.
+
+L'arborescence de cette boîte de dialogue répertorie toutes les commandes NVDA applicables regroupés par catégorie.
+Tous les gestes associés à une commande sont énumérés au niveau suivant la commande.
+
+Pour ajouter un geste d'entrée à une commande, sélectionnez la commande et appuyez sur le bouton Ajouter.
+Ensuite, effectuez le geste d'entrée que vous souhaitez associer, par exemple appuyez sur une touche du clavier ou un bouton sur l'afficheur braille.
+Parfois, un geste peut être interprété de plusieurs façons.
+Dans ce cas, un menu apparaît, vous permettant de sélectionner l'option désirée.
+
+Pour supprimer un geste d'une commande, sélectionnez le geste et appuyez sur le bouton Supprimer.
+
+Lorsque vous avez terminé vos modifications, appuyez sur le bouton Accepter pour les sauvegarder ou sur le bouton Annuler pour les ignorer.
+
 
 ++ Sauvegarder et recharger la configuration ++
 Par défaut NVDA sauvegarde automatiquement vos paramètres.
@@ -1765,75 +1787,6 @@ Veuillez consulter la [documentation tableau des touches de BRLTTY http://mielke
 %kc:endInclude
 
 + Fonctions Avancées +
-
-++ Redéfinir les Assignations de Touches et les Autres Gestes de Commande ++
-L'utilisateur peut ajouter ou réassigner des gestes de commande (telles que des touches de commande) aux scripts dans un fichier spécial situé dans le répertoire de configuration NVDA de l'utilisateur.
-Ce fichier s'appelle gestures.ini.
-
-Ce fichier utilise la syntaxe standard des fichiers .ini.
-Le fichier peut contenir plusieurs sections et chaque section peut contenir une ou plusieurs entrées.
-
-Chaque section contient les assignations pour un script dans un module et une classe python particulier de NVDA.
-- Le nom de la section doit être le nom du module et la classe séparés par un point (.).
-- La clé de chaque entrée est le nom du script auquel le geste de commande doit être assigné.
-Alternativement, on peut utiliser None pour désassigner un geste d'un script auquel il était précédemment assigné.
-Chaque entrée ne peut apparaître qu'une fois par section, y compris None.
-- La valeur de chaque entrée est une liste d'identifiants de gestes séparés par une virgule, pour chaque geste de commande qui doit être assigné.
-Les identifiants de geste terminés par une virgule doivent être entourés de quotes (" ou ').
--
-
-Les identifiants de geste comprennent un code de matériel sur deux lettres (kb pour clavier, br pour terminal braille et ts pour écran tactile), un sous-code une disposition entre parenthèses, le signe deux-points, puis un ou plusieurs noms de touches Braille, clavier ou tactile séparés par le signe plus (+).
-- Pour un raccourci clavier, le code est kb.
-La partie entre parenthèses correspond à la disposition clavier et est optionnelle.
-Si elle n'est pas indiquée, le geste s'appliquera à toutes les configurations clavier.
-La chaîne après la virgule est un ou plusieurs noms de touches du clavier séparées par un signe plus (+).
-- Pour les gestes s'appliquant au terrminal braille, le code est br.
-La partie entre parenthèses indique le terminal braille spécifique est est obligatoire.
-La chaîne après la virgule est un ou plusieurs noms de touches du terminal Braille séparées par un signe plus (+).
-- Pour les gestes tactiles, le code est ts.
-La partie entre parenthèses spécifie le mode tactile à utiliser et est optionnelle.
-La partie après la virgule est un geste tactile comme double_tap (double clic), 2fingerflickUp (Glisser vers le haut 2-doigts), ou 3finger_tap (clic 3-doigt) par exemples.
--
-
-Pour découvrir les identifiants de gestes, les noms de scripts, les noms de classes et de modules qui les contiennent, vous pouvez :
-+ Activer l'aide des commandes.
-+ Activer le geste (appuyez sur la touche, toucher l'écran tactile etc).
-+ Désactiver l'aide des commandes.
-+ Activer la visionneuse de journal dans le menu outils de NVDA.
-+ Examiner les entrées récentes du journal.
-L'une d'entre elle devrait vous donner des informations au sujet du geste de commande que vous venez d'entrer, incluant le module, la classe et le script s'il est assigné.
-+
-
-Voici un exemple de la manière dont vous pourriez assigner NVDA+maj+t au script donnant la date et l'heure.
-
-Pour trouver le nom du script, module.class pour date time, vous devez activer l'aide des commandes puis appuyer sur NVDA+f12 qui est le geste standard pour le script date time.
-Désactivez ensuite l'aide des commandes puis ouvrez la visionneuse de journal.
-
-Vers la fin du journal, vous devriez voir :
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Vous pouvez en déduire que le nom du script est dateTime et que le module.class est globalCommands.globalCommands.
-
-Si le fichier n'existe pas encore, vous devez créer un fichier nommé gestures.ini dans le répertoire de configuration utilisateur et y insérer les lignes suivantes :
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+maj+t
-```
-
-Cela assignera la combinaison NVDA+maj+t (dans toutes les configurations de clavier) au script dateTime.
-
-Notez que l'assignation originale NVDA+f12 fonctionnera toujours.
-Si vous voulez supprimer cette assignation, ajoutez la ligne suivante :
-
-```
-	None = kb:NVDA+f12
-```
-
 
 ++ Personnalisation Avancée de la Prononciation des Symboles ++
 Il est possible de personnaliser la prononciation des ponctuations et autres symboles au-delà de ce que permet le dialogue [Prononciation des symboles et ponctuations #SymbolPronunciation].
