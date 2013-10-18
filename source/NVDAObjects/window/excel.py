@@ -7,6 +7,7 @@
 from comtypes import COMError
 import comtypes.automation
 import wx
+import time
 import re
 import oleacc
 import ui
@@ -14,6 +15,8 @@ import config
 import textInfos
 import colors
 import eventHandler
+import api
+from logHandler import log
 import gui
 import winUser
 from displayModel import DisplayModelTextInfo
@@ -180,21 +183,42 @@ class ExcelCell(ExcelBase):
 		if rowHeaderColumn and columnNumber>rowHeaderColumn:
 			return self.excelCellObject.parent.cells(rowNumber,rowHeaderColumn).text
 
-	def _get_dropdown(self):
+	def _getDropdown(self):
 		w=winUser.getAncestor(self.windowHandle,winUser.GA_ROOT)
-		if not w: return
+		if not w:
+			log.debugWarning("Could not get ancestor window (GA_ROOT)")
+			return
 		obj=Window(windowHandle=w,chooseBestAPI=False)
-		if not obj: return
-		prev=obj.previous
-		if not prev or prev.windowClassName!='EXCEL:': return
-		return prev
+		if not obj:
+			log.debugWarning("Could not instnaciate NVDAObject for ancestor window")
+			return
+		threadID=obj.windowThreadID
+		while not eventHandler.isPendingEvents("gainFocus"):
+			obj=obj.previous
+			if not obj or not isinstance(obj,Window) or obj.windowThreadID!=threadID:
+				log.debugWarning("Could not locate dropdown list in previous objects")
+				return
+			if obj.windowClassName=='EXCEL:':
+				break
+		return obj
 
 	def script_openDropdown(self,gesture):
 		gesture.send()
-		d=self.dropdown
-		if d:
-			d.parent=self
-			eventHandler.queueEvent("gainFocus",d)
+		count=0
+		d=None
+		while count<5:
+			d=self._getDropdown()
+			if d:
+				break
+			count+=1
+			log.debugWarning("get dropdown fail %d"%count)
+			api.processPendingEvents(processEventQueue=False)
+			time.sleep(0.1)
+		if not d:
+			log.debugWarning("Failed to get dropDown, giving up")
+			return
+		d.parent=self
+		eventHandler.queueEvent("gainFocus",d)
 
 	def script_setColumnHeaderRow(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
