@@ -226,7 +226,7 @@ def getBulletText(ppBulletFormat):
 
 def getPpObjectModel(windowHandle):
 	"""
-	Fetches the Powerpoint object model from a given PaneClassDC window.
+	Fetches the Powerpoint object model from a given window.
 	"""
 	try:
 		pDispatch=oleacc.AccessibleObjectFromWindow(windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
@@ -896,6 +896,13 @@ class AppModule(appModuleHandler.AppModule):
 	ppApplication=None
 	_ppEApplicationConnectionPoint=None
 
+	def isBadUIAWindow(self,hwnd):
+		# PowerPoint 2013 implements UIA support for its slides etc on an mdiClass window. However its far from complete.
+		# We must disable it in order to fall back to our own code.
+		if winUser.getClassName(hwnd)=='mdiClass':
+			return True
+		return super(AppModule,self).isBadUIAWindow(hwnd)
+
 	def fetchPpObjectModel(self,windowHandle):
 		m=getPpObjectModel(windowHandle)
 		if m:
@@ -907,7 +914,7 @@ class AppModule(appModuleHandler.AppModule):
 		return m
 
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
-		if obj.windowClassName=="paneClassDC" and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
+		if obj.windowClassName in ("paneClassDC","mdiClass") and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
 			m=self.fetchPpObjectModel(obj.windowHandle)
 			if m:
 				try:
