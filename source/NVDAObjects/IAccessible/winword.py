@@ -58,6 +58,10 @@ class SpellCheckErrorField(IAccessible,WordDocument_WwN):
 			speech.speakText(errorText)
 			speech.speakSpelling(errorText)
 
+	def isDuplicateIAccessibleEvent(self,obj):
+		""" We return false here because the spell	checker window raises the focus event every time the value changes instead of the value changed event 
+		regardless of the fact that this window already has the focus."""
+		return False
 
 class ProtectedDocumentPane(IAccessible):
 	"""The pane that gets focus in case a document opens in protected mode in word
