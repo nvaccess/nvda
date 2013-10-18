@@ -241,7 +241,14 @@ class ExcelCell(ExcelBase):
 		self.excelCellObject=excelCellObject
 		super(ExcelCell,self).__init__(windowHandle=windowHandle)
 
-	role=controlTypes.ROLE_TABLECELL
+	def _get_role(self):
+		try:
+			linkCount=self.excelCellObject.hyperlinks.count
+		except (COMError,NameError,AttributeError):
+			linkCount=None
+		if linkCount:
+			return controlTypes.ROLE_LINK
+		return controlTypes.ROLE_TABLECELL
 
 	TextInfo=ExcelCellTextInfo
 
@@ -255,8 +262,6 @@ class ExcelCell(ExcelBase):
 			#When cutting and pasting the old selection can become broken
 			return False
 		return thisAddr==otherAddr
-
-	name=None
 
 	def _get_cellCoordsText(self):
 		return self.getCellAddress(self.excelCellObject) 
@@ -277,8 +282,7 @@ class ExcelCell(ExcelBase):
 		ID="%s %s"%(ID,self.windowHandle)
 		return ID
 
-		
-	def _get_value(self):
+	def _get_name(self):
 		return self.excelCellObject.Text
 
 	def _get_description(self):
