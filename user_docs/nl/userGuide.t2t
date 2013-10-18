@@ -813,6 +813,10 @@ Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer
 ==== Spraak onderbreken  bij drukken van Enter-toets ====
 Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer de Enter-toets wordt ingedrukt. Deze instelling staat standaard "aan".   
 
+==== Skimmen bij Alles Voorlezen toestaan ====
+Als dit selectievakje is aangevinkt,zullen navigatieopdrachten zoals snel navigeren in bladermodus of verplaatsen per regelof alinea er niet toe leiden dat Alles Voorlezen wordt gestopt. 
+Het is veeleer zo dat Alles Voorlezen naar de nieuwe positie springt waar het lezen wordt voortgezet.
+
 ==== Piep bij het typen van kleine letters terwijl capslock is ingeschakeld ====
 Als deze optie is geactiveerd, zal NVDA piepen bij het typen van letters in combinatie met de shift toets als capslock is ingeschakeld.
 Meestal is het niet de bedoeling om letters in combinatie met de shift toets te typen als capslock is ingeschakeld, u heeft capslock dan wellicht per ongeluk aangezet.
@@ -914,9 +918,9 @@ U kunt kiezen uit
 - Pieptonen + uitspreken: U hoort zowel pieptonen  als gesproken info over de voortgang van het proces.
 -
 
-==== Achtergrond voortschrijdingsbalken weergeven ====
-Als dit selectievakje is aangekruist blijft NVDA veranderingen in een voortschrijdingsbalk weergeven, ook als deze niet langer op de voorgrond aanwezig is.
-Als u een venster met een voortschrijdingsbalk minimaliseert of naar een ander venster overschakelt, zal NVDA de veranderingen in de voortschrijdingsbalk toch bijhouden terwijl u met iets anders bezig bent. 
+==== Achtergrond voortgangsbalken weergeven ====
+Als dit selectievakje is aangekruist blijft NVDA veranderingen in een voortgangsbalk weergeven, ook als deze niet langer op de voorgrond aanwezig is.
+Als u een venster met een voortgangsbalk minimaliseert of naar een ander venster overschakelt, zal NVDA de veranderingen in de voortgangsbalk toch bijhouden terwijl u met iets anders bezig bent. 
 
 %kc:setting
 ==== Dynamische inhoudsveranderingen melden ====
@@ -1069,6 +1073,25 @@ Het vervangen door veld stelt u in staat om de uitspraak van het symbool aan te 
 Het niveau veld bepaalt het minimumniveau waarop dit symbool wordt uitgesproken.
 
 Als u klaar bent kunnen de wijzigingen met de OK knop worden opgeslagen, of door middel van de Annuleren knop worden teruggedraaid.
+
++++ Invoerkoppelingen +++
+In dit dialoogvenster  kunt u toetsen voor invoerkoppelingen op het toetsenbord,  knoppen op de brailleleesregel, etc. instellen voor het uitvoeren vanNVDA  commando's.
+
+Alleen commando's die toepasbaar zijn vlak voordat u  het dialoogvenster  opent, worden getoond.
+Als u bij voorbeeld commando's wilt instellen die te maken hebben met bladermodus, dan moet u het dialoogvenster  Ïnvoerkoppelingen  openen,wanneer u zich in de bladermodus bevindt.
+
+De boomstructuur in dit dialoogvenster toont alle beschikbare NVDA commando's die per categorie gegroepeerd zijn.
+Onder elk commando treft u de ermee verbonden koppeling aan.
+
+Om een invoerkoppeling aan een commando toe te voegenselecteert u het commando en drukt u op de knop Toevoegen.
+Breng vervolgens de gewenste invoerkoppeling aan; bij voorbeeld door het indrukken van een toets op het toetsenbord of een knop op een brailleleesregel.
+Vaak kan de reikwijdte van een invoerkoppeling verschillen.
+Als u bij voorbeeld een toets op het toetsenbord indrukt,wilt u mogelijk dat dit specifiek voor de huidige toetsenbordindeling geldt (d.w.z. desktop of laptop) of mogelijk wilt u dat dit voor beide geldt.
+Desgewenst kunt u via een menu de relevante optie instellen.
+
+Om de aan een commando verbonden invoerkoppeling ongedaan te maken, selecteert u de invoerkoppeling en drukt u op de knop Ongedaan maken.
+
+Als u klaar bent met het aanbrengen van de wijzigingen drukt u op de knop OK om de wijzigingen op te slaan of op de knop Annuleren als u geen wijzigingen wilt doorvoeren.
 
 ++ De configuratie opslaan en opnieuw laden ++
 Als er wijzigingen worden aangebracht in de instellingen van NVDA worden deze  automatisch opgeslagen bij het afsluiten van het programma.

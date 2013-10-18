@@ -150,7 +150,7 @@ A tercera te permite controlar si iste dialogo de bienvenida habría d'amaneixer
 
 +++ A Tecla Modificadera NVDA +++ 
 A mayoría d'as ordens especificas de teclau de NVDA consisten normalment en a pulsación d'a tecla modificadera de NVDA, de conchunta con una u mas teclas. 
-Una excepción d'isto son as ordens de revisión de texto que nomás fan servir as teclas d'o teclau numerico. 
+Una notable excepción a  isto son as ordens de revisión de texto ta teclaus d'escritorio que nomás emplegan as teclas d'o teclau numerico en ellas mesmas, pero bi ha belatras excepcions tamién. 
 
 NVDA puet configurar-se de traza que a tecla Insert d'o teclau numerico, a Insert de l'extendiu, u a BloqMayus puedan emplegar-se como a tecla modificadera de NVDA.
 
@@ -408,7 +408,7 @@ O modo revisión de pantalla te permite revisar o texto tal como amaneixca visua
 Isto ye semellant a la funcionalidat de revisión de pantalla u cursor d'o churi en muitos atros lectors de pantalla ta Windows.
  
  Quan se cambea a lo modo revisión de pantalla, o cursor de revisión se coloca en a posición de pantalla de l'actual [navegador d'obchectos #ObjectNavigation].
- Quan nos movamos por a pantalla con as ordens de revisión, o navegador d'obchectos s'esviella automaticament ta l'obchecto trobau en a posición d'a pantalla d'o cursor de revisión.
+ Quan nos movamos por a pantalla con as ordens de revisión, o navegador d'obchectos s'esviella automaticament a l'obchecto trobau en a posición d'a pantalla d'o cursor de revisión.
 
  Para cuenta que en qualques aplicacions modernas, NVDA podría no veyer belún u tot o texto disponible en a pantalla, a causa de l'uso d'as recients tecnolochías de dibuixo en pantalla que son imposibles de suportar en istos intes.
 
@@ -633,11 +633,11 @@ O quadro de dialogo d'opcions de voz contién as siguients opcions:
 ==== Voz ====
 A primera opción que obtiens en iste dialogo ye un quadro combinau, que lista todas as voces d'o sintetizador actual que tiens instalau. 
 Puetz emplegar as teclas de cursor ta escuitar todas as varias eslecions. 
-As flechas cucha y alto puyan por a lista, mientras que as flechas dreita y abaixo mueven enta baixo por a lista.
+As flechas cucha y alto puyan por a lista, mientras que as flechas dreita y abaixo en baixan.
 
 ==== Variant ====
 Si yes emplegando o sintetizador Espeak empaquetau de conchunta con NVDA, Iste ye un quadro combinau que te permite seleccionar a variant con a quala o sintetizador habría de charrar. 
-As variants d'Espeak son pro pareixidas a las voces, pero proporcionan atributos licherament diferents ta la voz d'ESpeak. 
+As variants d'Espeak son prou pareixidas a las voces, pero proporcionan atributos licherament diferents ta la voz d'ESpeak. 
 Qualques variants sonarán como un hombre, qualques como una muller, y qualques como si tenesen carraspera.
 
 ==== Velocidat ====
@@ -773,23 +773,27 @@ Contiene as siguients opcions:
 ==== Disposición d'o Teclau ====
 Iste quadro combinau te permite trigar qué tipo de distribución de teclau habría d'emplegar NVDA. Actualment totz dos que vienen con NVDA son Sobremesa y Portatil.
 
-==== Utilizar BloqMayus como una tecla modificadera de NVDA ====
+==== Emplegar o  Bloqueyo de mayusclas como tecla modificadera de NVDA ====
 Si ista caixeta de verificación ye marcada, o BloqMayus puet emplegar-se como una tecla modificadera de NVDA.
 
-==== Utilizar l'insert extendiu como una tecla modificadera de NVDA ====
+==== Emplegar l'insertar d'o teclau estendillau como tecla modificadera de NVDA ====
 Si ista caixeta de verificación ye marcada, a tecla insert (normalment trobada dencima d'as teclas de flecha, amán d'inicio y fin) puet emplegar-se como una tecla modificadera de NVDA.
 
-==== Utilizar insert d'o teclau numerico como tecla modificadera de NVDA ====
+==== Emplegar l'insertar d'o teclau numerico como tecla modificadera de NVDA ====
 Si ista caixeta de verificación ye marcada, a tecla insert d'o teclau numerico puet emplegar-se como una tecla modificadera de NVDA.
 
+Si no se triga garra tecla como a tecla NVDA podría estar imposible accedir a bellas ordens de NVDA.
+Por tant, o dialogo Opcions de Teclau amostrará un mensache d'error si todas as teclas son sin trigar  quan se prete l'Acceptar.
+Dimpués de zarrar o mensache d'error, has de'n trigar a lo menos una antis de poder pretar l'Acceptar ta zarrar o dialogo correctament.
+
 %kc:setting
-==== Charrar caracters en escribir ====
+==== Charrar os caracters en escribir-los ====
 Tecla: NVDA+2
 
 Quan ye marcada significa que NVDA anunciará totz os caracters seguntes los escribas en o teclau. 
 
 %kc:setting
-==== Charrar parolas en escribir ====
+==== Charrar as parolas en escribir-las ====
 Tecla: NVDA+3
 
 Quan siga marcada significa que l'NVDA anunciará todas as parolas en escribir-las en o teclau. 
@@ -800,13 +804,16 @@ Si ye activada, ista opción causará que a voz s'ature cada vegada que s'escrib
 ==== Aturar a Voz quan se preta a Tecla Enter ====
 Si ye activada, ista opción causará que a voz s'ature cada vegada que se prete a tecla Enter. Isto ye activau de traza predeterminada.
 
-==== chuflar si se Teclean Letras Minusclas Quan BloqMayus ye Activau ====
+==== Permitir a lectura superficial en charrar-lo Tot ====
+Si ye activada, bellas ordens de navegación (tals como a navegación rapida en modo navegación u lo movimiento por linias u por paragrafos) no aturan  o charrar-lo Tot, en cuenta charrar-lo Tot blinca  ta la nueva posición y i contina leyendo.
+
+==== chuflar si se Tecleyan Letras Minusclas Quan o BloqMayus siga Activau ====
 Quan ye activada, s'escuitará un chufliu d'aviso si s'escribe una letra con a tecla shift entre que BloqMayus ye activada.
-Cheneralment, escribir letras en mayusclas con BloqMayus ye inintencionado y normalment ye a causa de no revisar que o BloqMayus siga activau.
-Por tanto, puet estar pro util estar gritau sobre isto.
+Cheneralment, escribir letras en mayusclas con BloqMayus ye desintencionau y normalment ye a causa de no revisar que o BloqMayus siga activau.
+Por tant, puet estar prou util estar alvertiu sobre isto.
 
 %kc:setting
-==== Charrar teclas d'ordens ====
+==== Charrar as teclas d'ordens ====
 Tecla: NVDA+4
 
 Quan ye marcada significa que NVDA anunciará todas as teclas que no sigan caracters en escribir-las en o teclau. Isto incluye combinacions de teclas tals como control mas qualsiquier atra letra. 
@@ -847,7 +854,7 @@ Iste dialogo contién as siguients opcions:
 ==== Siguir a lo Foco d'o sistema ====
 Tecla: NVDA+7
 
-Quan s'activa, o cursor de revisión siempre se colocará en o mesmo obchecto tant pronto como l'actual foco d'o sistema cambee.
+Quan s'activa, o cursor de revisión siempre se colocará en o mesmo obchecto que l'actual foco d'o sistema siempre que  iste  cambee.
 
 %kc:setting
 ==== Siguir a lo Cursor d'o Sistema ====
@@ -996,6 +1003,7 @@ Puetz configurar l'anunciau de:
 - Atributos de fuent
 - Aliniación d'o texto
 - Colors
+- Revisions de l'editor
 - Estilo d'o texto
 - Errors d'ortografía
 - Numeros de pachina
@@ -1056,9 +1064,28 @@ Fendo servir o campo Ran, puetz achustar o ran mas baixo d'o simbolo a o como is
 
 Quan remates, preta o botón Acceptar ta alzar os tuyos cambeos u o botón Cancelar ta descartar-los.
 
++++ Cenyos de Dentrada +++
+En iste dialogo, puetz personalizar os cenyos de dentrada (teclas en o teclau, botons en a pantalla braille, etc.) ta ordens de NVDA.
+
+Nomás s'amuestran as ordens que s'apliquen immediatament antis que o dialogo s'ubra.
+Por eixemplo, si quiers personalizar ordens relacionadas con o modo navegación, habrías d'ubrir o dialogo Cenyos de dentrada mientras sigas en modo navegación.
+
+L'arbol en iste quadro de dialogo amuestra todas as ordens de NVDA aplicables agrupadas por categoría.
+Qualsiquier cenyo asociau con una orden se lista baixo ixa orden.
+
+Ta adhibir un cenyo de dentrada a una orden, selecciona la orden y preta lo botón Adhibir.
+Contino, realiza o cenyo de dentrada que deseyes asociar, por eixemplo, preta una tecla d'o teclau u un botón en una pantalla Braille.
+A ormino, un cenyo puet interpretar-se de mas d'una traza.
+Por eixemplo, si has pretau una tecla en o teclau, puet que deseyes que siga especifica ta la distribución de teclau actual (por eixemplo, d'escritorio u portatil) u puet que deseyes que s'aplique a todas as distribucions.
+En iste caso, amaneixerá un menú que te permite seleccionar a opción deseyada.
+
+Ta borrar un cenyo d'una orden, selecciona lo cenyo y preta o botón Eliminar.
+
+Quan haigas rematau de realizar cambeos, preta o botón Acceptar ta alzar-los u o botón Cancelar ta descartar-los.
+
 ++ Alzando y Recargando a configuración ++
 De forma predeterminada NVDA alzará automaticament as tuyas opcions en salir.
-Tien en cuenta, manimenos, que ista opción predeterminada puet estar cambiada baixo as opcions chenerals en o menú preferencias. 
+Para cuenta, manimenos, que ista opción predeterminada puet estar cambiada baixo as opcions chenerals en o menú preferencias. 
 Ta alzar as opcions manualment en qualsiquier ocasión, triga l'elemento Alzar a configuración en o menú NVDA.
 
 Si t'entivocas con as tuyas opcions y amenestes tornar a las opcions alzadas, puetz trigar l'elemento "tornar a la configuración alzada" en o menú NVDA.
@@ -1071,7 +1098,80 @@ As siguients teclas d'ordens de NVDA tamién son utils:
 | Revertir a configuración | NVDA+control+r | NVDA+control+r | Pretando una vegada reinicia a tuya configuración a quan la alcés por zaguera vegada. Pretando tres vegadas la reiniciará a las valors predeterminadas de fabrica. |
 %kc:endInclude
 
-++ Fichers de Configuración y Perfils d'Usuario ++
+++ Perfils de Configuración ++
+A vegadas, ye posible que deseyes tener diferents configuracions ta diferents situacions.
+Por eixemplo, ye posible que deseyes tener l'anunciau de sangría habilitau mientras yes editando u l'anunciau d'os atributos d'a fuent activau mientras yes correchindo.
+NVDA te permite fer isto utilizando perfils de configuración.
+
+Un perfil de configuración contién nomás as opcions que se cambean mientras que o perfil ye estando editau.
+A mayoría d'as opcions se pueden cambiar en os perfils de configuración con excepción d'aquellas que sigan en o quadro de dialogo de configuración cheneral, as que s'aplican a la totalidat de NVDA.
+
+Os perfils de configuración pueden estar enchegaus manualment.
+Tamién se pueden enchegar de forma automatica a causa de disparadores tals como o cambeo a una aplicación en particular.
+
++++ Manello Basico +++
+Manellas os perfils de configuración seleccionando "Perfils de Configuración" en o menú NVDA.
+Tamién puetz fer isto utilizando una orden de teclau:
+%kc:beginInclude
+- NVDA+control+p: Amuestra o quadro de dialogo Perfils de configuración.
+-
+%kc:endInclude
+
+O primer control d'iste dialogo ye a lista de perfils que se puet seleccionar un d'os perfils disponibles.
+Quan ubras o dialogo, se selecciona o perfil que sigas editando actualment.
+Tamién s'amuestra información adicional ta perfils activos, indicando si s'activoron manualment, se disparoron y/u si son estando editaus.
+
+Ta cambiar o nombre d'un perfil u eliminar-lo, preta os botons Renombrar u Eliminar, respectivament.
+
+Preta o botón Zarrar ta zarrar o dialogo.
+
++++ Creyando un Perfil +++
+Ta creyar un perfil, preta o botón Nuevo.
+
+En o quadro de dialogo Nuevo perfil, puetz introducir un nombre ta lo perfil.
+Tamién puetz seleccionar cómo cal usar iste perfil.
+Si nomás deseyas fer servir iste perfil manualment, selecciona enchegau manual, que ye a valor predeterminada.
+En caso contrario, selecciona o disparador que habría d'activar automaticament iste perfil.
+Ta mayor comodidat, si no s'ha introduciu un nombre ta lo perfil, en seleccionar un disparador se replenará un nombre en conseqüencia.
+Mira [mas abaixo #ConfigProfileTriggers] ta mas información sobre os disparadors.
+
+Pretando l'Acceptar se creyará o perfil y se zarrará o quadro de dialogo de configuración de perfils ta que puedas editar-lo.
+
++++ Enchegau Manual +++[ConfigProfileManual]
+Puetz enchegar manualment un perfil seleccionando un perfil y pretando o botón enchegau Manual/edición..
+Una vegada enchegau, encara se pueden enchegar belatros perfils a causa d'os disparadors, pero as opcions d'o perfil enchegau manualment tienen prioridat.
+Amás, as opcions que modifiques s'alzarán en ixe perfil.
+Ta desenchegar un perfil enchegau manualment, selecciona-lo en o quadro de dialogo Perfils de configuración y preta o botón desenchegau Manual.
+
++++ Disparadors +++[ConfigProfileTriggers]
+A lo pretar o botón de Disparadors en o quadro de dialogo Perfils de configuración te permite cambiar os perfils que han d'estar activaus automaticament por diversos disparadors.
+
+A lista de disparadors amuestra os disparadors disponibles, que son os siguients:
+- Aplicación actual: Se dispara quan se cambee a l'aplicación actual.
+- Charrar-lo tot: Se dispara entre a lectura con a orden charrar-lo Tot.
+-
+
+Ta cambiar o perfil que debe estar activau automaticament por un disparador, selecciona o disparador y dimpués selecciona o perfil deseyau en a lista de perfils.
+Puetz seleccionar (configuración normal) si no quiers utilizar un perfil.
+
+Preta lo botón Zarrar ta tornar a o quadro de dialogo de perfils de configuración.
+
++++ Editando un Perfil +++
+Si has activau manualment un perfil, as opcions que modifiques s'alzarán en ixe perfil.
+En caso contrario, as opcions que se modifiquen s'alzarán en o perfil disparau mas recientment.
+Por eixemplo, si has asociau un perfil con l'aplicación Bloc de notas y cambeas a o Bloc de notas, as opcions modificadas s'alzarán en ixe perfil.
+Por zaguer, si no bi ha garra perfil enchegau manualment ni un disparau, as opcions que se modifiquen s'alzarán en a configuración normal.
+
+Ta editar o perfil asociau a charrar-lo tot, has d'[enchegar manualment #ConfigProfileManual] ixe perfil.
+
++++ Desenchegar Temporalment os Disparadors +++
+A vegadas, ye util desactivar temporalment totz os disparadors.
+Por eixemplo, podrías deseyar editar un perfil enchegau manualment u a configuración normal, sin perfils disparadors interferindo.
+Puetz fer isto marcando a caixeta de verificación Desactivar Temporalment Totz os Disparadors en o quadro de dialogo  de perfils de configuración.
+
+++ Ubicación d'os Fichers de Configuración++
+As versions portatils de NVDA almagazenan todas as suyas opcions,  appModules personals y controladors personals en un directorio clamau userConfig, que se troba en o directorio de NVDA.
+
 As versions portatils de NVDA almagazenan todas as suyas opcions,  appModules personals y controladors personals en un directorio clamau userConfig, que se troba en o directorio de NVDA.
 
 As versions instaladas de NVDA almagazenan todas as suyas opcions, appModules personals y controladors personals en un directorio especial de NVDA localizau en o tuyo perfil d'usuario de Windows. 
@@ -1079,8 +1179,8 @@ Isto significa que cada usuario en o sistema puet tener as suyas propias opcions
 Ta optener o tuyo directorio d'opcions ta una versión instalada de NVDA, en o menú d'Inicio puetz ir a programas -> NVDA -> explorar directorio de configuración d'usuario.
    
 As opcions ta NVDA quan s'executa en as pantallas d'autentificación (logon) u de UAC s'almagazenan en o directorio SystemConfig en o directorio d'instalación de NVDA.
-Normalment ista configuración no habría d'estar tocada.
-Ta cambiar cómo se configura NVDA en as pantallas de logon/UAC, configura a NVDA cómo deseyes mientras yes autentificau en Windows, y dimpués manda a NVDA copiar a configuración a la pantalla d'autentificación (logon) emplegando o botón en o dialogo Opcions Chenerals.
+Normalment ista configuración no habría a tocar-se.
+Ta cambiar cómo se configura NVDA en as pantallas de logon/UAC, configura l'NVDA cómo deseyes mientras yes autentificau en Windows, alza a configuración y dimpués preta lo botón "Emplegar as opcions actualment alzadas en l'autentificación (logon) y atras pantallas seguras en o dialogo Opcions Chenerals.
 
 + Ferramientas Extra +
 
@@ -1713,7 +1813,7 @@ Si te yes connectando emplegando un puerto serie (u un convertidor d'USB a serie
 Antes de connectar o tuyo BrailleNote Apex emplegando o suyo client d'interface USB, has d'instalar os controladors proporcionaus por HumanWare.
 
 Seguidament van as asignacions d'ordens d'o BrailleNote ta NVDA.
-Por favor mira a documentación d'o BrailleNote ta trobar án se localizan istas teclas.
+Por favor mira a documentación d'o BrailleNote ta trobar do se localizan istas teclas.
 
 %kc:beginInclude
 || Nombre | Tecla |
@@ -1764,79 +1864,6 @@ Por favor mira [a documentación de tablas de teclas de BRLTTY http://mielke.cc/
 %kc:endInclude
 
 + Temas Abanzaus +
-
-++ Remapeando Asignacions de Teclas y atros Cenyos de Dentrada ++
-Os usuarios podrán proporcionar u sobrescribir mapeados d'os cenyos de dentrada (tals como pretau de teclas) ta scripts en un fichero especial en o directorio de configuración de l'usuario de NVDA.
-Iste fichero se diz gestures.ini.
-
-Iste fichero utiliza a sintaxi estandar d'os fichers ini.
-O fichero podrá contener multiples seccions y cada sección podrá tener una u mas dentradas.
-
-Cada sección proporciona mapeados ta scripts en un modulo particular python y clase dentro de NVDA.
-- O nombre de sección habría d'estar o modulo Python y clase deseparaus por un punto (.).
-- A tecla de cada dentrada ye o nombre d'o script con o qual deseyas que os cenyos habrían de concordar.
-Alternativament, puetz emplegar None ta desvincular cenyos de dentrada d'un script a o que yeran vinculaus anteriorment.
-Cada dentrada de tecla solament puet listar-se una vegada por sección, incluindo None.
-- A valor de cada tecla ye una lista separada con coma (,) d'identificadors  d'o cenyo os quals represientan os distintos cenyos de dentrada que habrían de vincular-se con ixe script en particular.
-Os identificadors de cenyo que rematan en una coma han d'encerrarse entre cometas (" u ').
--
-
-Os identificadors de cenyo consisten en un codigo de dispositivo de dos letras; un sub-dispositivo, distribución u modo entre parentesi; uns dos puntos; y dimpués un tipo especifico de cadena identifycando a dentrada actual, tal como nombres de cenyos de tecla u tactils.
-- Ta cenyos de teclau, o codigo de dispositivo ye kb.
-A parti entre parentesi ye a distribución de teclau y ye opcional.
-Si no s'especificó, o cenyo s'aplicará a todas as distribucions de teclau.
-A cadena dimpués de totz dos puntos ye un u mas nombres de teclas deseparaus por un signo mas (+).
-- Ta cenyos de linias braille, o codigo de dispositivo ye br.
-A parti entre parentesi identifica a linia braille especifica y ye obligatoria.
-A cadena dimpués de totz dos puntos ye un u mas nombres de tecla deseparaus por un signo mas (+).
-- Ta cenyos tactils, o codigo de dispositivo ye ts.
-A parti entre parentesi ye o modo tactil y ye opcional.
-A cadena dimpués de totz dos puntos ye un cenyo tactil tal como double_tap, 2fingerflickUp, u 3finger_tap como en os eixemplos.
--
-
-De cara a trobar os identificadors de cenyo asinas como os nombres de scripts y a clase y o modulo en o qual son contenius puetz:
-+ Activar l'Aduya de dentrada.
-+ Activar o cenyo (pretar a tecla, tocar a pantalla, etc.).
-+ Desactivar l'Aduya de Dentrada.
-+ Activar Veyer log en o menú ferramientas.
-+ examinar as dentradas recients d'o log.
-Una d'istas proporcionaría información sobre o cenyo de dentrada que ninviés, incluindo o modulo.clase y script si ye vinculau a un.
-+
-
-Seguidament va un eixemplo de cómo podrías vincular NVDA+shift+t a o script calendata hora.
-
-Ta trobar o  nombre y modulo.clase y script correcto ta calendata hora, activarías Aduya de Dentrada y pretarías NVDA+f12 (meso que ista ye o cenyo actual ta o script calendata hora).
-Alavez amortarías Aduya de Dentrada y examinarías o visualizador d'o log.
-
-Ent'o fondo, podrías veyer:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Con isto, puetz veyer que o nombre d'o script ye dateTime y o modulo.clase ye globalCommands.GlobalCommands.
-
-Si o fichero no esiste encara, creyarías un fichero de texto clamau gestures.ini en o directorio de configuración de l'usuario y adhibirías o conteniu siguient:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-Isto vincularía o pretau d'as teclas NVDA+shift+t (en qualsiquier distribución de teclau) a o script dateTime.
-
-Tien en cuenta que a combinación orichinal NVDA+f12 encara funcionaría.
-Si quereses eliminar ista combinación, adhibirías a linia siguient:
-
-```
-	None = kb:NVDA+f12
-```
-
-Encara que yes libre de tener scripts vinculaus a qualsiquier tecla disponible, podrá estar problematico emplegar a tecla alt en o teclau.
-NVDA encara ninvia teclas modificaderas (tals como shift, control y alt) a o Sistema Operativo, encara si eventúan en un script.
-D'ista traza, si utilizas alt en un cenyo, pretando ista tecla a combinación podrá activar a barra de menú, tanto como executar o script.
-Por tanto, prebablement ye millor solament emplegar Shift, control y a tecla modificadera NVDA como modificadors.
 
 ++ Personalización Abanzada de Pronuncia de Simbolos ++
 Ye posible personalizar a pronuncia d'a puntuación y atros simbolos dillá d'o que puet fer-se emplegando o [dialogo Pronuncia de Puntuación y simbolos #SymbolPronunciation].
