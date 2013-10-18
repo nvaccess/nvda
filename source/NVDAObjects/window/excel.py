@@ -291,9 +291,23 @@ class ExcelCell(ExcelBase):
 	def _get_value(self):
 		return self.excelCellObject.Text
 
-	def _get_description(self):
-		# Translators: This is presented in Excel when the current cell contains a formula.
-		return _("has formula") if self.excelCellObject.HasFormula else ""
+	def _get_states(self):
+		states=super(ExcelCell,self).states
+		if self.excelCellObject.HasFormula:
+			states.add(controlTypes.STATE_HASFORMULA)
+		try:
+			validationType=self.excelCellObject.validation.type
+		except (COMError,NameError,AttributeError):
+			validationType=None
+		if validationType==3:
+			states.add(controlTypes.STATE_HASPOPUP)
+		try:
+			comment=self.excelCellObject.comment
+		except (COMError,NameError,AttributeError):
+			comment=None
+		if comment:
+			states.add(controlTypes.STATE_HASCOMMENT)
+		return states
 
 	def _get_parent(self):
 		worksheet=self.excelCellObject.Worksheet
