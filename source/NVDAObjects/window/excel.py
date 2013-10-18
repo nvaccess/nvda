@@ -42,13 +42,13 @@ class ExcelBase(Window):
 	def getCellAddress(cell, external=False,format=xlA1):
 		return cell.Address(False, False, format, external)
 
-	def fireFocusOnSelection(self):
+	def _getSelection(self):
 		selection=self.excelWindowObject.Selection
 		if selection.Count>1:
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
 		else:
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
-		eventHandler.executeEvent("gainFocus",obj)
+		return obj
 
 class Excel7Window(ExcelBase):
 	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
@@ -57,7 +57,9 @@ class Excel7Window(ExcelBase):
 		return self.excelWindowObjectFromWindow(self.windowHandle)
 
 	def event_gainFocus(self):
-		self.fireFocusOnSelection()
+		selection=self._getSelection()
+		if selection:
+			eventHandler.executeEvent('gainFocus',selection)
 
 class ExcelWorksheet(ExcelBase):
 
@@ -83,11 +85,26 @@ class ExcelWorksheet(ExcelBase):
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
 
 	def script_changeSelection(self,gesture):
+		oldSelection=self._getSelection()
 		gesture.send()
 		if scriptHandler.isScriptWaiting():
 			# Prevent lag if keys are pressed rapidly.
 			return
-		self.fireFocusOnSelection()
+		count=0
+		import eventHandler
+		import time
+		import api
+		newSelection=None
+		while count<5 or eventHandler.isPendingEvents('gainFocus'):
+			newSelection=self._getSelection()
+			if newSelection and newSelection!=oldSelection:
+				break
+			count+=1
+			api.processPendingEvents(processEventQueue=False)
+			time.sleep(0.025)
+		if newSelection:
+			eventHandler.executeEvent('gainFocus',newSelection)
+		
 	script_changeSelection.canPropagate=True
 
 	__changeSelectionGestures = (
