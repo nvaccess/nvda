@@ -432,7 +432,7 @@ roleLabels={
 	ROLE_FILLER:_("filler"),
 	# Translators: Identifies a menu such as file menu.
 	ROLE_MENU:_("menu"),
-# Translators: Identifies a panel control (usually a vertical and sometimes horizontal panel for grouping related options).
+	# Translators: Identifies a panel control for grouping related options.
 	ROLE_PANEL:_("panel"),
 	# Translators: Identifies a password field (a protected edit field for entering passwords such as when logging into web-based email sites).
 	ROLE_PASSWORDEDIT:_("password edit"),
@@ -538,7 +538,7 @@ stateLabels={
 	STATE_SORTED_DESCENDING:_("sorted descending"),
 	# Translators: a state that denotes that an object (usually a graphic) has a long description.
 	STATE_HASLONGDESC:_("has long description"),
-	# Translators: a state that denotes that an object is pinned in its current location 
+	# Translators: a state that denotes that an object is pinned in its current location
 	STATE_PINNED:_("pinned"),
 }
 
