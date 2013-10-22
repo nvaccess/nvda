@@ -610,13 +610,14 @@ class ConfigManager(object):
 				del allTriggers[trigSpec]
 			self.saveProfileTriggers()
 		# Check if this profile was active.
-		for index, profile in enumerate(self.profiles):
-			if profile.name == name:
-				break
-		else:
+		wasActive = False
+		for index in xrange(len(self.profiles) - 1, -1, -1):
+			if self.profiles[index].name == name:
+				# Deactivate it.
+				del self.profiles[index]
+				wasActive = True
+		if not wasActive:
 			return
-		# Deactivate it.
-		del self.profiles[index]
 		self._handleProfileSwitch()
 
 	def renameProfile(self, oldName, newName):
