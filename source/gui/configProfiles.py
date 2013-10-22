@@ -225,7 +225,7 @@ class ProfilesDialog(wx.Dialog):
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
 		self.profileNames[index] = newName
-		self.profileList.SetString(index, newName)
+		self.profileList.SetString(index, self.getProfileDisplay(newName, includeStates=True))
 		self.profileList.Selection = index
 		self.profileList.SetFocus()
 
