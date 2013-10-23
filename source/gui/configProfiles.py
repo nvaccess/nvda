@@ -193,7 +193,7 @@ class ProfilesDialog(wx.Dialog):
 		else:
 			# Translators: The label of the button to manually activate the selected profile
 			# in the Configuration Profiles dialog.
-			label = _("Manual activate/edit")
+			label = _("Manual activate")
 		self.changeStateButton.Label = label
 		self.changeStateButton.Enabled = enable
 		if globalVars.appArgs.secure:
