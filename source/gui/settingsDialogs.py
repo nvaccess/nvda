@@ -1675,6 +1675,6 @@ class InputGesturesDialog(SettingsDialog):
 				log.debugWarning("", exc_info=True)
 				# Translators: An error displayed when saving user defined input gestures fails.
 				gui.messageBox(_("Error saving user defined gestures - probably read only file system."),
-					_("Error"), wx.OK | wx.ICON-ERROR)
+					_("Error"), wx.OK | wx.ICON_ERROR)
 
 		super(InputGesturesDialog, self).onOk(evt)
