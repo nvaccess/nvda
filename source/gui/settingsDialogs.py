@@ -1623,19 +1623,19 @@ class InputGesturesDialog(SettingsDialog):
 				disp = self._formatGesture(gid)
 				item = menu.Append(wx.ID_ANY, disp)
 				self.Bind(wx.EVT_MENU,
-					lambda evt: self._addChoice(treeGes, scriptInfo, gesture, gid, disp),
+					lambda evt, gid=gid, disp=disp: self._addChoice(treeGes, scriptInfo, gid, disp),
 					item)
 			self.PopupMenu(menu)
 			if not self.tree.GetItemPyData(treeGes):
 				# No item was selected, so use the first.
-				self._addChoice(treeGes, scriptInfo, gesture, gids[0],
+				self._addChoice(treeGes, scriptInfo, gids[0],
 					self._formatGesture(gids[0]))
 			menu.Destroy()
 		else:
-			self._addChoice(treeGes, scriptInfo, gesture, gids[0],
+			self._addChoice(treeGes, scriptInfo, gids[0],
 				self._formatGesture(gids[0]))
 
-	def _addChoice(self, treeGes, scriptInfo, gesture, gid, disp):
+	def _addChoice(self, treeGes, scriptInfo, gid, disp):
 		entry = (gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
 		try:
 			# If this was just removed, just undo it.
