@@ -1636,7 +1636,12 @@ class InputGesturesDialog(SettingsDialog):
 				self._formatGesture(gids[0]))
 
 	def _addChoice(self, treeGes, scriptInfo, gesture, gid, disp):
-		self.pendingAdds.add((gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
+		entry = (gid, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
+		try:
+			# If this was just removed, just undo it.
+			self.pendingRemoves.remove(entry)
+		except KeyError:
+			self.pendingAdds.add(entry)
 		self.tree.SetItemText(treeGes, disp)
 		self.tree.SetItemPyData(treeGes, gid)
 		self.onTreeSelect(None)
@@ -1646,7 +1651,12 @@ class InputGesturesDialog(SettingsDialog):
 		gesture = self.tree.GetItemPyData(treeGes)
 		treeCom = self.tree.GetItemParent(treeGes)
 		scriptInfo = self.tree.GetItemPyData(treeCom)
-		self.pendingRemoves.add((gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName))
+		entry = (gesture, scriptInfo.moduleName, scriptInfo.className, scriptInfo.scriptName)
+		try:
+			# If this was just added, just undo it.
+			self.pendingAdds.remove(entry)
+		except KeyError:
+			self.pendingRemoves.add(entry)
 		self.tree.Delete(treeGes)
 		self.tree.SetFocus()
 
