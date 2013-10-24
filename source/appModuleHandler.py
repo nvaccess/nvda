@@ -269,7 +269,10 @@ class AppModule(baseObject.ScriptableObject):
 		#: The application name.
 		#: @type: str
 		self.appName=appName
-		self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
+		if sys.getwindowsversion().major > 5:
+			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION,False,processID)
+		else:
+			self.processHandle=winKernel.openProcess(winKernel.SYNCHRONIZE|winKernel.PROCESS_QUERY_INFORMATION|winKernel.PROCESS_VM_READ,False,processID)
 		self.helperLocalBindingHandle=None
 		self._inprocRegistrationHandle=None
 
