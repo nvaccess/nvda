@@ -25,6 +25,8 @@ def update(obj):
 	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
 	ti=obj.treeInterceptor
 	if not ti:
+		if not obj.shouldCreateTreeInterceptor:
+			return None
 		try:
 			newClass=obj.treeInterceptorClass
 		except NotImplementedError:

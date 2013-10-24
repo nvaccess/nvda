@@ -310,6 +310,15 @@ class NVDAObject(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError
 
+	#: Whether to create a tree interceptor for this object.
+	#: This is only relevant if L{treeInterceptorClass} is valid.
+	#: Normally, this should be C{True}.
+	#: However, for some objects (e.g. ARIA applications), a tree interceptor shouldn't be used by default,
+	#: but the user may wish to override this.
+	#: In this case, this can be set to C{False} and updated later.
+	#: @type: bool
+	shouldCreateTreeInterceptor = True
+
 	def _get_treeInterceptor(self):
 		"""Retreaves the treeInterceptor associated with this object.
 		If a treeInterceptor has not been specifically set, the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
