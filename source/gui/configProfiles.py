@@ -122,7 +122,7 @@ class ProfilesDialog(wx.Dialog):
 				# in the Configuration Profiles dialog.
 				states.append(_("manual"))
 			if profile.triggered:
-				# Translators: Reported for a profile which has been triggered
+				# Translators: Reported for a profile which is currently triggered
 				# in the Configuration Profiles dialog.
 				states.append(_("triggered"))
 		if states:
