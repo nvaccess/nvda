@@ -405,10 +405,13 @@ class MSHTML(IAccessible):
 						pass
 
 	def _get_treeInterceptorClass(self):
-		if self.role==controlTypes.ROLE_DOCUMENT and not self.isContentEditable:
+		if self.role in (controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG) and not self.isContentEditable:
 			import virtualBuffers.MSHTML
 			return virtualBuffers.MSHTML.MSHTML
 		return super(MSHTML,self).treeInterceptorClass
+
+	def _get_shouldCreateTreeInterceptor(self):
+		return self.role == controlTypes.ROLE_DOCUMENT
 
 	def _get_HTMLAttributes(self):
 		return HTMLAttribCache(self.HTMLNode)
