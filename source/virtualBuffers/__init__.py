@@ -588,6 +588,7 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			self.rootNVDAObject.appModule._vbufRememberedCaretPositions = {}
 		self._lastCaretPosition = None
 		self.rootIdentifiers[self.rootDocHandle, self.rootID] = self
+		self._enteringFromOutside = True
 
 	def prepare(self):
 		self.shouldPrepare=False
@@ -1091,6 +1092,8 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 			gesture.send()
 
 	def event_focusEntered(self,obj,nextHandler):
+		if obj==self.rootNVDAObject:
+			self._enteringFromOutside = True
 		if self.passThrough:
 			 nextHandler()
 
@@ -1120,12 +1123,15 @@ class VirtualBuffer(cursorManager.CursorManager, treeInterceptorHandler.TreeInte
 				log.exception("Error executing focusEntered event: %s" % parent)
 
 	def event_gainFocus(self, obj, nextHandler):
+		enteringFromOutside=self._enteringFromOutside
+		self._enteringFromOutside=False
 		if not self.isReady:
 			if self.passThrough:
 				nextHandler()
 			return
-		if not self.passThrough and self._lastFocusObj==obj:
-			# This was the last non-document node with focus, so don't handle this focus event.
+		if enteringFromOutside and not self.passThrough and self._lastFocusObj==obj:
+			# We're entering the document from outside (not returning from an inside object/application; #3145)
+			# and this was the last non-root node with focus, so ignore this focus event.
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
 			return
