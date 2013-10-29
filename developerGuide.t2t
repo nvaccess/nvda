@@ -359,9 +359,11 @@ Some examples of gesture string identifiers are:
 - "kb(laptop):NVDA+t"
 -
 
-Currently, the only input sources in NVDA are:
-- kb: keyboard input
-- br: braille input
+Currently, the input sources in NVDA are:
+- kb: system keyboard input
+- br: braille display controls
+- ts: touch screen
+- bk: braille keyboard input
 -
 
 When NVDA receives input, it looks for a matching gesture binding in a particular order.
@@ -457,6 +459,7 @@ If an event for an NVDA Object is defined on a Global Plugin, App Module or Tree
 Some common NVDA Object events are:
 - foreground: this NVDA Object has become the new foreground object; i.e. active top-level object
 - gainFocus
+- focusEntered: Focus has moved inside this object; i.e. it is an ancestor of the focus object
 - loseFocus
 - nameChange
 - valueChange
