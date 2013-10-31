@@ -1140,7 +1140,9 @@ Pressing OK will create the profile and close the Configuration Profiles dialog 
 +++ Manual Activation +++[ConfigProfileManual]
 You can manually activate a profile by selecting a profile and pressing the Manual activate button.
 Once activated, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.
-Also, any settings you change will be saved in that profile.
+For example, if a profile is triggered for the current application and reporting of links is enabled in that profile but disabled it in the manually activated profile, links will not be reported.
+However, if you have changed the voice in the triggered profile but have never changed it in the manually activated profile, the voice from the triggered profile will be used.
+Any settings you change will be saved in the manually activated profile.
 To deactivate a manually activated profile, select it in the Configuration Profiles dialog and press the Manual deactivate button.
 
 +++ Triggers +++[ConfigProfileTriggers]
