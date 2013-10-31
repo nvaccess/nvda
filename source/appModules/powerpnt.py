@@ -884,11 +884,11 @@ class AppModule(appModuleHandler.AppModule):
 
 	def _get_ppApplication(self):
 		try:
-			app=comHelper.getActiveObject('powerPoint.application',dynamic=True)
+			app=comHelper.getActiveObject(u'powerPoint.application',dynamic=True,appModule=self)
 		except:
 			if not self.hasTriedPpAppSwitch:
 				self._registerCOMWithFocusJuggle()
-				app=comHelper.getActiveObject('powerPoint.application',dynamic=True)
+				app=comHelper.getActiveObject(u'powerPoint.application',dynamic=True,appModule=self)
 			else:
 				return
 		if app:
