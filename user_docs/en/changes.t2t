@@ -30,6 +30,8 @@
 - When pressing control+a in a Microsoft Excel worksheet, the updated selection will now be reported. (#3043)
 - NVDA can now correctly read XHTML documents in Microsoft Internet Explorer and other MSHTML controls. (#3542)
 - Keyboard settings dialog: if no key has been chosen to be used as the NVDA key, an error is presented to the user when dismissing the dialog. At least one key must be chosen for proper usage of NVDA. (#2871)
+- In Microsoft Excel, NVDA now announces merged cells differently to multiple selected cells. (#3567)
+- The browse mode cursor is no longer positioned incorrectly when leaving a dialog or application inside the document. (#3145)
 
 
 == Changes for Developers ==

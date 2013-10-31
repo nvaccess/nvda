@@ -64,9 +64,10 @@ class ProfilesDialog(wx.Dialog):
 		sizer.Add(item)
 		mainSizer.Add(sizer)
 
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label of a button to manage triggers
 		# in the Configuration Profiles dialog.
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# See the Configuration Profiles section of the User Guide for details.
 		triggersButton = wx.Button(self, label=_("&Triggers..."))
 		triggersButton.Bind(wx.EVT_BUTTON, self.onTriggers)
 		sizer.Add(triggersButton)
@@ -121,7 +122,7 @@ class ProfilesDialog(wx.Dialog):
 				# in the Configuration Profiles dialog.
 				states.append(_("manual"))
 			if profile.triggered:
-				# Translators: Reported for a profile which has been triggered
+				# Translators: Reported for a profile which is currently triggered
 				# in the Configuration Profiles dialog.
 				states.append(_("triggered"))
 		if states:
@@ -145,7 +146,7 @@ class ProfilesDialog(wx.Dialog):
 		try:
 			config.conf.manualActivateProfile(profile)
 		except:
-			# Translators: An error displayed when activating a profile fails.
+			# Translators: An error displayed when activating a configuration profile fails.
 			gui.messageBox(_("Error activating profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
@@ -170,6 +171,7 @@ class ProfilesDialog(wx.Dialog):
 			config.conf.deleteProfile(name)
 		except:
 			log.debugWarning("", exc_info=True)
+			# Translators: An error displayed when deleting a configuration profile fails.
 			gui.messageBox(_("Error deleting profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
@@ -191,7 +193,7 @@ class ProfilesDialog(wx.Dialog):
 		else:
 			# Translators: The label of the button to manually activate the selected profile
 			# in the Configuration Profiles dialog.
-			label = _("Manual activate/edit")
+			label = _("Manual activate")
 		self.changeStateButton.Label = label
 		self.changeStateButton.Enabled = enable
 		if globalVars.appArgs.secure:
@@ -212,6 +214,8 @@ class ProfilesDialog(wx.Dialog):
 		try:
 			config.conf.renameProfile(oldName, newName)
 		except ValueError:
+			# Translators: An error displayed when renaming a configuration profile
+			# and a profile with the new name already exists.
 			gui.messageBox(_("That profile already exists. Please choose a different name."),
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
@@ -221,7 +225,7 @@ class ProfilesDialog(wx.Dialog):
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
 		self.profileNames[index] = newName
-		self.profileList.SetString(index, newName)
+		self.profileList.SetString(index, self.getProfileDisplay(newName, includeStates=True))
 		self.profileList.Selection = index
 		self.profileList.SetFocus()
 

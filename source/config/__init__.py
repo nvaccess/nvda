@@ -610,14 +610,21 @@ class ConfigManager(object):
 				del allTriggers[trigSpec]
 			self.saveProfileTriggers()
 		# Check if this profile was active.
-		for index, profile in enumerate(self.profiles):
+		delProfile = None
+		for index in xrange(len(self.profiles) - 1, -1, -1):
+			profile = self.profiles[index]
 			if profile.name == name:
-				break
-		else:
+				# Deactivate it.
+				del self.profiles[index]
+				delProfile = profile
+		if not delProfile:
 			return
-		# Deactivate it.
-		del self.profiles[index]
 		self._handleProfileSwitch()
+		if self._suspendedTriggers:
+			# Remove any suspended triggers referring to this profile.
+			for trigger in self._suspendedTriggers.keys():
+				if trigger._profile == delProfile:
+					del self._suspendedTriggers[trigger]
 
 	def renameProfile(self, oldName, newName):
 		"""Rename a profile.
@@ -674,7 +681,7 @@ class ConfigManager(object):
 			self._suspendedTriggers[trigger] = "enter"
 			return
 
-		profile = self._getProfile(trigger.profile)
+		profile = trigger._profile = self._getProfile(trigger.profileName)
 		profile.triggered = True
 		if len(self.profiles) > 1 and self.profiles[-1].manual:
 			# There's a manually activated profile.
@@ -698,7 +705,9 @@ class ConfigManager(object):
 				self._suspendedTriggers[trigger] = "exit"
 			return
 
-		profile = self._getProfile(trigger.profile)
+		profile = trigger._profile
+		if not profile:
+			return
 		profile.triggered = False
 		self.profiles.remove(profile)
 		self._handleProfileSwitch()
@@ -1022,9 +1031,9 @@ class ProfileTrigger(object):
 		The associated profile (if any) will be activated.
 		"""
 		try:
-			self.profile = conf.triggersToProfiles[self.spec]
+			self.profileName = conf.triggersToProfiles[self.spec]
 		except KeyError:
-			self.profile = None
+			self.profileName = None
 			return
 		try:
 			conf._triggerProfileEnter(self)
@@ -1037,13 +1046,13 @@ class ProfileTrigger(object):
 		"""Signal that this trigger no longer applies.
 		The associated profile (if any) will be deactivated.
 		"""
-		if not self.profile:
+		if not self.profileName:
 			return
 		try:
 			conf._triggerProfileExit(self)
 		except:
 			log.error("Error exiting trigger %s, profile %s"
-				% (self.spec, self.profile), exc_info=True)
+				% (self.spec, self.profileName), exc_info=True)
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
