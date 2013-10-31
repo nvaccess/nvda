@@ -43,7 +43,8 @@ class ExcelBase(Window):
 		text=cell.Address(False, False, format, external)
 		textList=text.split(':')
 		if len(textList)==2:
-			text=_("%s through %s")%(textList[0],textList[1])
+			# Translators: Used to express an address range in excel.
+			text=_("{start} through {end}").format(start=textList[0], end=textList[1])
 		return text
 
 	def fireFocusOnSelection(self):
@@ -269,7 +270,7 @@ class ExcelCell(ExcelBase):
 	name=None
 
 	def _get_cellCoordsText(self):
-		return self.getCellAddress(self.excelCellObject) 
+		return self.getCellAddress(self.excelCellObject)
 
 	def _get__rowAndColumnNumber(self):
 		rc=self.excelCellObject.address(False,False,xlRC,False)
@@ -287,7 +288,7 @@ class ExcelCell(ExcelBase):
 		ID="%s %s"%(ID,self.windowHandle)
 		return ID
 
-		
+
 	def _get_value(self):
 		return self.excelCellObject.Text
 
@@ -397,12 +398,12 @@ class ExcelDropdown(Window):
 		children=[]
 		index=0
 		states=set()
-		for item in DisplayModelTextInfo(self,textInfos.POSITION_ALL).getTextWithFields(): 
+		for item in DisplayModelTextInfo(self,textInfos.POSITION_ALL).getTextWithFields():
 			if isinstance(item,textInfos.FieldCommand) and item.command=="formatChange":
 				states=set([controlTypes.STATE_SELECTABLE])
 				foreground=item.field.get('color',None)
 				background=item.field.get('background-color',None)
-				if (background,foreground)==self._highlightColors: 
+				if (background,foreground)==self._highlightColors:
 					states.add(controlTypes.STATE_SELECTED)
 			if isinstance(item,basestring):
 				obj=ExcelDropdownItem(parent=self,name=item,states=states,index=index)
@@ -457,4 +458,4 @@ class ExcelDropdown(Window):
 class ExcelMergedCell(ExcelCell):
 
 	def _get_cellCoordsText(self):
-		return self.getCellAddress(self.excelCellObject.mergeArea) 
+		return self.getCellAddress(self.excelCellObject.mergeArea)
