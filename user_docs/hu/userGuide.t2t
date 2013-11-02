@@ -742,6 +742,8 @@ Ha ez a jelölőnégyzet be van jelölve, a normál insert billentyű használha
 
 Ha ez a jelölőnégyzet be van jelölve, a numerikus billentyűzeten lévő insert használható Nvda billentyűként.
 
+Ha egyik lehetőséget se jelölte be NVDA gombként, nem lesznek elérhetőek az NVDA specifikus billentyűparancsok. Az ablak bezárásakor az NVDA erről értesíti is a felhasználót.
+
 %kc:setting
 =====  Betűk bemondása gépeléskor =====
 Billentyűparancs: NVDA+2
@@ -754,11 +756,15 @@ Billentyűparancs: NVDA+3
 
 E jelölőnégyzet bejelölése esetén az Nvda elmondja a begépelt szavakat. A szavakat értelemszerűen a szóközök és az írásjelek határolják el egymástól.
 
-==== A beszéd megszakítása karakterek begépelésekor ====
-Ha be van kapcsolva, ez a parancs azt idézi elő, hogy a beszéd minden egyes karakter begírásakor megszakad. Ez az alapértelmezett beállítás.
+===== A beszéd megszakítása karakterek begépelésekor ====
+Ha be van kapcsolva, ez a parancs azt idézi elő, hogy a beszéd minden egyes karakter beírásakor megszakad. Ez az alapértelmezett beállítás.
 
-==== A beszéd megszakítása az enter bilentyű megnyomásakor ====
+===== A beszéd megszakítása az enter bilentyű megnyomásakor ====
 Ha be van kapcsolva, ez a parancs azt idézi elő, hogy a beszéd minden alkalommal megszakad, ha az entert megnyomjuk. Ez az alapértelmezett beállítás.
+
+===== Az átfutó felolvasás engedélyezése folyamatos felolvasás közben =====
+
+Ha ez a funkció be van kapcsolva, bizonyos navigációs parancsok (pl. böngészőmódban a gyors navigációs billentyűk, vagy a sorról sorra, bekezdésről bekezdésre lépés) nem állítja meg a folyamatos felolvasást, hanem a folyamatos felolvasáskor a program az új pozícióra ugrik, és a felolvasást onnan folytatja.
 
 ===== Hangjelzés kisbetűk gépelésekor a capslock bekapcsolt állapotában =====
 
@@ -998,6 +1004,16 @@ Az NVDA kivételszótárai azonban ennél jóval többre képesek. A párbeszéd
 
 Ezen a párbeszédablakon beállítható, hogy a különböző írásjelek szintenként hogyan hangozzanak el a program használatakor. Az írásjelek listából kiválasztható az önnek megfelelő írásjel. Egy tab billentyű lenyomásával a behelyettesített kifejezésre léphet, ahol átírható az ottlévő kifejezés. A tab billentyű ismételt lenyomásával megadható az írásjel szintje, mely az írásjel a beállított szinttől kezdődő kiejtését határozza meg. Az Igen gomb lenyomásával elmenthetők a változtatások, a mégsem gomb lenyomásával pedig visszatérhet az előző állapothoz.
 
++++ Beviteli parancsok +++
+
+Ezen a párbeszédpanelen testre szabhatók az NVDA beviteli parancsai (a billentyűparancsok a billentyűzeten, a gombokhoz kötött funkciók a braille kijelzőn, stb.) az NVDA parancsainak használatához. A program csak azokat a parancsokat mutatja, amelyek azonnal alkalmazhatók, mielőtt a párbeszédpanelt megnyitjuk. Például, ha a böngészőmódhoz kapcsolódó parancsokat szeretnénk megváltoztatni, a párbeszédpanelt úgy kell megnyitnunk, hogy már böngészőmódban vagyunk. 
+
+a párbeszédablakban lévő fanézet kategóriák szerint csoportosítva listázza az összes alkalmazható NVDA-parancsot. Minden beviteli parancs egy vezérlőparancshoz van társítva. Ahhoz, hogy egy vezérlőparancshoz egy beviteli parancsot hozzáadjunk, válasszuk ki a vezérlőparancsot, nyomjuk meg a hozzáadás gombot, majd adjuk meg azt a beviteli parancsot, amelyet a vezérlőparancshoz kívánunk társítani, például nyomjunk meg egy billentyűt a billentyűzeten, egy gombot a braille kijelzőn. Gyakran előfordul, hogy egy vezérlőparancshoz több beviteli parancsot kell társítanunk. Például: ha ilyenkor leütünk egy billentyűt a billentyűzeten, meghatározhatjuk, hogy az a használt billentyűzet-kiosztásban (asztali vagy laptop), netán az összes kiosztásban alkalmazandó legen. Ebben az esetben egy menü jelenik meg, melyen kiválaszthatjuk a kívánt működési módot.
+
+Egy beviteli parancsot úgy választhatunk le a vezérlőparancsról, ha kiválasztjuk és az eltávolítás gombot megnyomjuk. 
+
+Ha befejeztük a változtatásokat, az igen gombbal mentsük el azokat, ha szeretnénk őket elvetni, használjuk a mégsem gombot. 
+
 ++ A Beállítások Elmentése És Betöltése ++
 
 Az NVDA elmenti automatikusan a módosításokat, amit a beállítások menüben kikapcsolhat.  Ha az NVDA csak olvasható fájlrendszerből - pl. CD-ről -  fut, a beállításokat nem lehet elmenteni.
@@ -1011,7 +1027,65 @@ Néhány billentyűparancs a segítségére lehet:
 | Az elmentett beállítások visszaállítása | NVDA+control+r | NVDA+control+r | Egyszeri megnyomásra a visszaállítja az utoljára elmentett beállításokra, háromszori lenyomásra az alap beállításokra. |
 %kc:endInclude
 
-++ A konfigurációs fájlok és a felhasználói profilok ++
+++ Beállítási profilok ++
+
+Néha a különböző helyzetekben különböző beállításokra van szükség. Például szükségünk van arra, hogy a program felolvassa az igazításokat és betűtípusokat szövegszerkesztéskor vagy a szöveg formázásának vagy helyesírásának ellenőrzésekor. Az NVDA lehetővé teszi ezt a beállítás-profilok (a továbbiakban: profil) használatával. 
+
+Egy profil csak azokat a beállításokat tartalmazza, amelyek a profil szerkesztésekor megváltoztak. A profilokban szinte minden beállítás megváltoztatható, kivéve az általános beállításokat, mert azok az NVDA egészére hatással vannak. 
+
+a profilokat kézzel lehet aktiválni. A profilok automatikusan is aktiválhatók, ha megadjuk a profil alkalmazási feltételeit (a továbbiakban: feltétel), például ilyen feltétel, hogy a profil csak az adott alkalmazásra lépéskor vagy az alkalmazás indításakor lépjen működésbe. 
+
++++ Alapvető beállítások +++
+
+a profilokat az NVDA menü profilok testreszabása párbeszédpanelén lehet létrehozni, szerkeszteni, törölni stb. A párbeszédpanelt a következő billentyűparanccsal is megnyithatjuk:
+%kc:beginInclude
+- NVDA+kontrol+p: Megjeleníti a Profilok testreszabása párbeszédpanelt
+-
+%kc:endInclude
+
+az első vezérlőelem ezen a párbeszédpanelen a profilok listája, melyből kiválaszthatjuk a rendelkezésre álló profilt. A párbeszédpanel megnyitásakor az aktuálisan szerkesztett profilt jelöli ki a program. A profilokhoz további információkat is megjeleníthet a képernyőolvasó. Például, hogy kézzel kell bekapcsolni, feltételtől függően kapcsol be, vagy éppen szerkesztés alatt van.
+
+A profil törléséhez vagy átnevezéséhez értelemszerűen nyomjuk meg a törlés vagy az átnevezés gombot. A párbeszédpanel bezárásához nyomjuk meg a bezárás gombot. 
+
++++ Profil készítése +++
+
+Profil készítéséhez nyomjuk meg az új gombot. 
+az új profil párbeszédpanelen  adjuk meg a profil nevét. Kiválasztható, hogy a profilt hogyan használjuk. Ha a profilt kézi használatúra szeretnénk állítani (a továbbiakban: kézi profil), a "használja ezt a profilt a következőhöz" kombinált listamezőben válasszuk ki a "kézi aktiválás" lehetőséget, ez az alapértelmezett beállítás. Egyéb esetben válasszunk egy feltételt, amely automatikusan alkalmazza a profilt (a továbbiakban: automatikus profil). Ha nem töltjük ki a profil nevét, de választunk egy feltételt, a program - kényelmi okokból - a profilt a feltételnek megfelelően nevezi el. További információkért tanulmányozza a feltételekről szóló fejezetet.
+
+Az ok gomb megnyomásával a profil létrejön és a párbeszédpanel bezáródik. Ettől kezdve a profil szerkeszthető. 
+
++++ A profil kézi bekapcsolása +++
+
+a profilt úgy lehet kézzel bekapcsolni, hogy a profilok testreszabása párbeszédpanelen kiválasztjuk, és megnyomjuk a kézi aktiválás gombot. Ha a profil aktív, további profilokat is bekapcsolhat a program, ha fennállnak annak feltételei, azonban ha megváltoztatunk egy beállítást, az csak a kézi profilban változik meg, valamint a program a kézi profilba menti el a változtatást.
+
+A kézi profil kikapcsolásához a profilok testreszabása párbeszédpanelen válasszuk ki azt, majd nyomjuk meg a kézi kikapcsolás gombot. 
+
++++ Feltételek +++
+
+a profilok testreszabása párbeszédpanelen a feltételek gomb megnyomását követően megváltoztathatók az automatikus profilok.
+
+A feltételek listája tartalmazza az elérhető feltételeket, melyek a következők: 
+- aktuális alkalmazás: akkor aktiválja a megadott profilt, ha az aktuális alkalmazásra kapcsolunk. 
+- Folyamatos felolvasás: akkor kapcsolja be a profilt, ha a folyamatos felolvasás parancsot alkalmazzuk. 
+-
+
+Ha szeretnénk megváltoztatni egy automatikus profilt, válasszuk ki a feltételt, majd a feltételhez tartozó profilok listájából azt a profilt, amelyet meg szeretnénk változtatni.
+
+Ha azt szeretnénk, hogy az adott feltétel ne kapcsoljon be egy profilt sem, válasszuk ki a feltételt a feltételek listájából, majd az alapértelmezett beállítás lehetőséget a profil kombinált listamezőből. Ezt követően a bezárás gombbal térhetünk vissza a profilok testreszabása párbeszédpanelhez. 
+
++++ Profil szerkesztése +++
+
+Ha kézzel aktiváltunk egy profilt, a program minden változtatást ebbe a profilba ment el. Egyéb esetben a program a leggyakrabban használt automatikus profilokba menti a változtatásokat.
+
+Ha például a jegyzettömbhöz készítettünk egy profilt és átkapcsolunk a jegyzettömbre, a program minden változtatást a jegyzettömb profiljába ment el. Végül, ha sem kézi, sem automatikus profilt nem készítettünk, a program a változtatásokat az alapértelmezett profilba menti el. 
+
+ahhoz, hogy a folyamatos felolvasás profilját szerkesszük meg, kézzel be kell kapcsolnunk azt. 
+
++++ a feltételek ideiglenes felfüggesztése +++
+
+Néha szükség lehet arra, hogy minden feltételt felfüggesszünk. Ilyen eset, ha például szerkeszteni szeretnénk egy kézi profilt, vagy az alapértelmezett konfiguráció beállítását szeretnénk megváltoztatni anélkül, hogy ütközne bármely automatikus profillal. Ezt úgy érhetjük el, ha a profilok testreszabása párbeszédpanelen bejelöljük az összes feltétel ideiglenes kikapcsolása jelölőnégyzetet. 
+
+++ A konfigurációs fájlok helye ++
 
 A hordozható verziókban az összes beállítás, driver és script egy userconfig könyvtárban kapott helyet, ami az NVDA könyvtárában található.
 
@@ -1432,64 +1506,6 @@ Alább a BRLTTY billentyűparancsait olvashatja, a kijelzők helyes beállítás
 %kc:endInclude
 
 + Haladó témák +
-
-++ Billentyű- és egyéb beviteli parancsok módosítása ++
-
-Lehetőség van az NVDA beviteli parancsainak (pl. billentyűparancsok) szerkesztésére, vagy újak létrehozására. A parancsok szkriptekhez társíthatóak, egy ún. konfigurációs fájl segítségével, mely gestures.ini néven az NVDA felhasználói beállítások mappájában található.
-
-A fájl az ini fájloktól megszokottan épül fel.
-Egy vagy akár több szakasz is megadható, mely tartalmazhat egy vagy több elemet.
-
-A megadott szakasz egy NVDA szkriptfájlhoz tartozik, mely általában több szkriptet tartalmaz.
-- Neve egy Python modul és annak egy osztálya, ponttal elválasztva.
-- A szakaszon belül, minden elem kulcsa (az egyenlőség jel bal oldala) a társítandó szkript neve.
-A None kulcsszó használatával egy adott billentyűparancsot szabadíthatunk fel, ami előzőleg egy szkripthez volt társítva.
-Minden kulcsszó, a None-t is beleértve, csak egyszer szerepelhet egy szakaszon belül.
-- Az elem értéke (az egyenlőség jel jobb oldala) vesszővel elválasztott beviteli azonosítókat tartalmaz.
-Ha az azonosító vesszővel végződik, idézőjelek (") vagy aposztrofok (') közé kell zárni.
--
-
-A beviteli parancsok egy eszközkóddal kezdődnek (kb a billentyűparancsokhoz,  br a braille kijelzőkhöz, ts az érintő képernyőkhöz), opcionálisan megadható egy aleszköz kód vagy billentyűzetkiosztás szögletes zárójelek között, kettőspont (:), végül pedig egy vagy több billentyűnév egy plusz (+) jellel elválasztva.
-
-Beviteli azonosítók, modul, osztály és szkriptnevek megállapításához:
-+ Kapcsolja be a bevitelsúgót.
-+ Aktiválja a beviteli parancsot (nyomja le a billentyűt, vagy használja az érintő képernyőt).
-+ Kapcsolja ki a bevitelsúgót.
-+ Aktiválja a naplónézőt az NVDA Eszközök menüjében.
-+ Nézze végig a legutolsó bejegyzéseket.
-Ezek egyike tartalmazza a leütött billentyűparancs nevét, a szkript nevét és a modul.osztály nevet ha a beviteli parancs már egy szkripthez van rendelve .
-+
-
-Nézzünk egy példát, hogyan lehet az NVDA+Shift+T billentyűparancsot hozzárendelni a dátum és idő szkripthez.
-
-A szkript, modul.osztály nevének megállapításához aktiválja a bevitelsúgót, majd nyomja le az NVDA+f12 billentyűparancsot (jelenleg ez a dátum/idő szkript billentyűparancsa).
-Kapcsolja ki a bevitelsúgót és a naplónézőben tekintse meg a legfrissebb bejegyzéseket.
-
-A napló vége körül a következőkhöz hasonlót talál:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Ebből megállapítható, hogy a szkript neve dateTime, a modul.osztály pedig globalCommands.GlobalCommands.
-
-Ha a fájl nem létezik, hozzon létre egyet gestures.ini néven a felhasználói beállítások mappájában és adja hozzá a következőket:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-Ezzel  a paranccsal a dateTime szkripthez rendeli az NVDA+shift+t parancsot (bármilyen kiosztásban).
-
-Megjegyzés: az eredeti NVDA+f12 billentyűparancs változatlanul működik.
-Ha szeretné eltávolítani ezt a billentyűparancsot, adja hozzá a fájlhoz a következőt:
-
-```
-	None = kb:NVDA+f12
-```
-
 
 ++ Az írásjelek haladó testreszabása ++
 
