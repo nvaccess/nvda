@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 4 aprile 2013, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 29 ottobre 2013, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
@@ -780,6 +780,10 @@ Se questa casella di controllo viene attivata, il tasto insert, generalmente sit
 ==== Utilizza insert del tastierino numerico come tasto funzione di NVDA ====
 Se questa casella di controllo viene attivata, il tasto insert del tastierino numerico agirà come tasto funzione di NVDA.
 
+Se non viene selezionato alcun tasto che agisca come tasto NVDA, potrebbe risultare impossibile accedere ad alcuni comandi dello screen reader.
+Pertanto, verrà visualizzato un messaggio d'errore nell'eventualità tutti i tasti siano deselezionati.
+Una volta chiusa la finestra d'errore, è obbligatorio selezionare un tasto funzione di NVDA per proseguire.
+
 %kc:setting
 ==== Leggi i caratteri digitati ====
 Tasto: NVDA+2
@@ -797,6 +801,9 @@ Questa opzione, se attiva, interrompe la lettura della sintesi vocale non appena
 
 ==== Il tasto invio interrompe la voce ====
 Questa opzione, se attiva, interrompe la lettura della sintesi vocale non appena viene premuto il tasto invio. L'opzione è attivata di default.
+ 
+==== Consentire navigazione rapida in modalità dire tutto ====
+ Se attivata, alcuni tasti di navigazione (ad esempio i comandi di navigazione rapida nei browser, oppure lo spostarsi per righe o paragrafi) non fermeranno più la lettura, che continuerà dalla nuova posizione raggiunta.
  
  ==== Emetti un beep alla scrittura di lettere minuscole quando il tasto blocca maiuscole è attivo ====
 Quando abilitato, si udirà un segnale acustico ogni qualvolta verrà digitata una lettera assieme al tasto Shift (maiuscolo) quando il blocca maiuscole è attivo.
@@ -1054,6 +1061,25 @@ Il campo "voce in sostituzione" permette di cambiare il testo che deve essere pr
 Utilizzando il campo "livello", è possibile stabilire il livello più basso dal quale il simbolo dovrà essere annunciato.
 
 Una volta terminate le modifiche, premere il pulsante OK per salvare i cambiamenti oppure il bottone Annulla per annullare l'operazione.
+
++++ Tasti e gesti di immissione +++
+In questa finestra di dialogo, è possibile personalizzare i gesti di immissione quali tasti della tastiera, pulsanti di un display braille, etc, per i comandi di NVDA.
+
+è importante notare che saranno mostrati e quindi applicabili soltanto i comandi appartenenti all'applicazione che si stava usando prima di aprire questa finestra di dialogo.
+Ad esempio, se si volessero personalizzare i comandi relativi alla modalità navigazione, sarà necessario aprire la finestra di dialogo "tasti e gesti di immissione" mentre ci si trova in modalità navigazione.
+
+La visualizzazione ad albero di questo elenco mostra tutti i comandi di NVDA applicabili, raggruppati per categorie.
+Eventuali gesti associati a un comando sono elencati sotto il comando stesso.
+
+Per aggiungere un gesto d'immissione per un comando, selezionare il comando e premere il pulsante Aggiungi.
+Quindi, eseguire il gesto diimmissione che si desidera associare, ad esempio, premere un tasto sulla tastiera o un pulsante su un display braille.
+Spesso, un gesto può essere interpretato in svariati modi.
+Ad esempio, se viene premuto un tasto sulla tastiera, lo si potrebbe voler associare al layout desktop, oppure a quello laptop, o a entrambi.
+In questo caso, viene visualizzato un menu che consente di selezionare l'opzione desiderata.
+
+Per rimuovere un gesto da un comando, selezionare il gesto e premere il pulsante Rimuovi.
+
+Al termine delle modifiche, premere il pulsante OK per salvarle, o il tasto Annulla per non modificare alcunché.
 
 ++ Salvare e caricare la configurazione ++
 NVDA salva automaticamente le impostazioni correnti all'uscita.
@@ -1762,75 +1788,6 @@ Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/drivers/] p
 %kc:endInclude
 
 + Argomenti avanzati +
-
-++ Riassegnamento di tasti e note sull'immissione di gesti ++
-Gli utenti hanno la possibilità di inserire o sovrascrivere i gesti (ad esempio la pressione di un tasto) in unos peciale file di scripts nella cartella che contiene le configurazioni di NVDA per l'utente.
-Questo file si chiama gestures.ini.
-
-Esso utilizza la sintassi standard dei file .ini.
-Il file può contenere più sezioni e ciascuna sezione può possedere diverse voci.
-
-Ciascuna sezione fornisce le mappature per gli scripts in un modulo e classe particolare in Python all'interno di NVDA.
-- Il nome della sezione dovrà essere composto dal modulo e la classe Python separate da un punto (.).
-- Il tasto di ciascuna voce dovrà essere composto dal nome dello script al quale le gesture saranno  assegnate.
-In alternativa, si può usare la parola none per slegare le gesture da uno script verso il quale erano state legate in precedenza.
-Ciascun tasto può venir elencato solo una volta per sezione, inclusa la parola none.
-- Il valore deve contenere un elenco di identificatori di gesture separate da virgole (,) per le gesture verso cui legarsi.
-Gli identificatori di gesture terminanti con una virgola devonoessere racchiusi tra virgolette o apostrofi (" o ' ).
--
-
-Gli identificatori di gesture consistono in un codice di due lettere che si riferiscono al dispositivo in questione (kb per la tastiera, br per i display braille e ts per i dispositivi a tocco), di un dispositivo secondario opzionale o un layout tastiera tra parentesi tonde, il segno dei DuePunti, ed infine uno o più nomi di tasti separati dal segno più (+).
-- Per le gesture tastiera, il codice del dispositivo è kb.
-la parte tra parentesi è il layout tastiera e comunque risulta opzionale.
-Se non specificato, le gesture si applicheranno a tutti i layout tastiera.
-La stringa dopo i duepunti è costituita da uno o più tasti separati da un (+)
-- Per le gesture braille, il codice del dispositivo è br.
-la parte tra parentesi rappresenta il Display Braille specifico ed è obbligatoria.
-La stringa dopo i due punti è costituita da uno o più nomi di tasti separati dal segno più (+).
-- Per le gesture a tocco, il codice del dispositivo è ts.
-la parte tra parentesi rappresenta la modalità di tocco ed è opzionale.
-La stringa dopo i due punti è costituita da un gesto a tocco; ad esempio double_tap, 2fingerflickUp o 3finger_tap.
--
-
-Per scoprire gli identificatori di gesture, i nomi di script e classe e modulo a cui appartengono, fare come segue:
-+ Attivare l'aiuto Immissione dati, conosciuto anche come aiuto tastiera.
-+ Attivare la gesture (premere il tasto, toccare lo schermo, etc).
-+ Disattivare l'aiuto immissione dati.
-+ Attivare il visualizzatore log situato nel menù strumenti di NVDA.
-+ Esaminare i valori più recenti.
-Uno di questi dovrebbe fornire informazioni sulla gesture appena eseguita, incluse module.class e script.
-+
-
-Segue un esempio di come sia possibile legare la combinazione di tasti NVDA+Shift+T allo script controllo data e ora.
-
-Per rintracciare il nome corretto dello script e l'accoppiata module.class per la funzione Data Ora, è necessario attivare l'aiuto immissione dati e premere NVDA+f12 (in quanto corrisponde alla gesture attuale per lo script data ora).
-Disattivare poi l'aiuto immissione dati ed esaminare il testo nel visualizzatore log.
-
-Verso la fine, incontriamo:
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-Da ciò si evince che il nome dello script è dateTime, e module.class è globalCommands.GlobalCommands.
-
-Se il file non esiste ancora, è necessario creare un file denominato gestures.ini nella cartella configurazione utente di NVDA ed aggiungere le righe seguenti:
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-Questo associerà la pressione della combinazione di tasti NVDA+Shift+t (in qualsiasi layout tastiera) allo script dateTime.
-
-Si noti che la combinazione originale NVDA+f12 continuerà a funzionare ancora.
-Nel caso si desideri rimuovere tale associazione, bisogna aggiungere le righe seguenti:
-
-```
-	None = kb:NVDA+f12
-```
-
 ++ Personalizzazione avanzata dei simboli di punteggiatura ++
 in aggiunta a ciò che abbiamo visto nella [Finestra di dialogo Pronuncia Punteggiatura/Simboli #SymbolPronunciation], è possibile personalizzare la punteggiatura ed altri simboli in maniera diversa.
 Per esempio, è possibile specificare se inviare o meno un simbolo non processato al sintetizzatore, per modificare parametri come l'inflessione o provocare una pausa.

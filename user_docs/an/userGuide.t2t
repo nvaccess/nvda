@@ -1027,7 +1027,7 @@ De forma predeterminada, NVDA detectará o formato en a posición d'o cursor d'o
  
 Activa ista opción mientras comprebas a lectura de documentos en aplicacions tals como Microsoft Word, an o formato siga important.
 
-+++ Diccionarios d'o Fabla +++
++++ Diccionarios d'a Fabla +++
 O menú de Diccionarios d'a fabla, (trobau en o menú Preferencias) contién dialogos que te permiten controlar o modo en que NVDA pronuncia parolas u frases particulars. 
 Bi ha actualment tres tipos diferents de diccionarios d'a fabla. 
 son:
@@ -1039,8 +1039,8 @@ son:
 Totz os dialogos de diccionario contienen una lista de reglas que serán utilizadas ta procesar a voz. 
 O dialogo tamién contién os botons Adhibir, Editar y Eliminar.
 
-Ta adhibir una nueva regla a o diccionario, preta o botón Adhibir, y replena os campos d'o quadro de dialogo que amaneixe y alavez preta Acceptar. 
-Alavez berás a tuya nueva regla en a lista de reglas. 
+Ta adhibir un nuevo regle a lo diccionario, preta o botón Adhibir, y replena os campos d'o quadro de dialogo que amaneix y allora preta Acceptar. 
+Allora berás o tuya nueva regle en a lista de regles. 
 Asinasmesmo ta asegurar-te que a tuya regla ye actualment alzada, asegura-te de pretar Acceptar ta salir completament d'o dialogo de diccionario Una vegada haigas finalizau d'adhibir/editar reglas.
 
 As reglas ta os diccionarios de voz de NVDA te permiten cambiar una cadena de caracters por unatra. 
@@ -1062,7 +1062,7 @@ Ta cambiar un simbolo, en primeras selecciona-lo en a lísta de Simbolos.
 O campo Reemplazar te permite cambiar o texto que habría de verbalizarse en cuenta d'iste simbolo.
 Fendo servir o campo Ran, puetz achustar o ran mas baixo d'o simbolo a o como iste simbolo habría de charrar-se.
 
-Quan remates, preta o botón Acceptar ta alzar os tuyos cambeos u o botón Cancelar ta descartar-los.
+Quan remates, preta o botón Acceptar ta alzar os tuyos cambeos u lo botón Cancelar ta descartar-los.
 
 +++ Cenyos de Dentrada +++
 En iste dialogo, puetz personalizar os cenyos de dentrada (teclas en o teclau, botons en a pantalla braille, etc.) ta ordens de NVDA.
@@ -1138,9 +1138,11 @@ Mira [mas abaixo #ConfigProfileTriggers] ta mas información sobre os disparador
 Pretando l'Acceptar se creyará o perfil y se zarrará o quadro de dialogo de configuración de perfils ta que puedas editar-lo.
 
 +++ Enchegau Manual +++[ConfigProfileManual]
-Puetz enchegar manualment un perfil seleccionando un perfil y pretando o botón enchegau Manual/edición..
+Puetz enchegar manualment un perfil seleccionando un perfil y pretando lo botón enchegau Manual.
 Una vegada enchegau, encara se pueden enchegar belatros perfils a causa d'os disparadors, pero as opcions d'o perfil enchegau manualment tienen prioridat.
-Amás, as opcions que modifiques s'alzarán en ixe perfil.
+Por eixemplo, si un perfil se dispara ta l'aplicación actual y l'anunciau de vinclos ye activau en ixe perfil, pero desactivau en o perfil activau manualment, os vinclos no s'anunciarán.
+Manimenos, si has cambiau a voz en o perfil disparau, pero nunca no s'ha cambiau en o perfil activau manualment, se ferá servir a voz a partir d'o perfil disparau.
+As valors que se modifiquen s'alzarán en o perfil activau manualment.
 Ta desenchegar un perfil enchegau manualment, selecciona-lo en o quadro de dialogo Perfils de configuración y preta o botón desenchegau Manual.
 
 +++ Disparadors +++[ConfigProfileTriggers]
@@ -1170,8 +1172,6 @@ Por eixemplo, podrías deseyar editar un perfil enchegau manualment u a configur
 Puetz fer isto marcando a caixeta de verificación Desactivar Temporalment Totz os Disparadors en o quadro de dialogo  de perfils de configuración.
 
 ++ Ubicación d'os Fichers de Configuración++
-As versions portatils de NVDA almagazenan todas as suyas opcions,  appModules personals y controladors personals en un directorio clamau userConfig, que se troba en o directorio de NVDA.
-
 As versions portatils de NVDA almagazenan todas as suyas opcions,  appModules personals y controladors personals en un directorio clamau userConfig, que se troba en o directorio de NVDA.
 
 As versions instaladas de NVDA almagazenan todas as suyas opcions, appModules personals y controladors personals en un directorio especial de NVDA localizau en o tuyo perfil d'usuario de Windows. 

@@ -7,10 +7,11 @@ Quoi de Neuf dans NVDA
 
 == Nouvelles Fonctionnalités ==
 - Les champs de formulaires sont maintenant annoncés dans les documents Microsoft Word. (#2295)
-- NVDA peut maintenant annoncer les informations de révision dans Microsoft Word lorsque le suivi des modifications est activé. Notez que annoncer les révisions de l'éditeur dans la boîte de dialogue Paramètres de préférences de mise en forme des document de NVDA (désactivée par défaut) doit être activé également pour qu'elles soient annoncées. (#1670)
-- Les listes déroulantes dans Microsoft Excel 2003 à 2010 sont maintenant annoncés lors de leur ouverture et lorsque l'on navigue autour. (#3382)
-- Une nouvelle option "Permettre la lecture rapide dans dire tout" dans la boîte de dialogue de configuration du clavier permet de naviguer dans un document avec les commandes de navigation rapides en mode navigation, ou de se déplacer entre les lignes ou paragraphes tout en restant dans dire tout. Cette option est désactivée par défaut. (#2766)
+- NVDA peut maintenant annoncer les informations de révision dans Microsoft Word lorsque le suivi des modifications est activé. Notez qu'annoncer les révisions de l'éditeur dans la boîte de dialogue Paramètres de préférences de mise en forme des document de NVDA (désactivée par défaut) doit être activée également pour qu'elles soient annoncées. (#1670)
+- Les listes déroulantes dans Microsoft Excel 2003 à 2010 sont maintenant annoncées lors de leur ouverture et lorsqu'on navigue autour. (#3382)
+- Une nouvelle option "Permettre le survol dans dire tout" dans la boîte de dialogue de configuration du clavier permet de naviguer dans un document avec les commandes de navigation rapide en mode navigation, ou de se déplacer entre les lignes ou paragraphes tout en restant dans dire tout. Cette option est désactivée par défaut. (#2766)
 - Il existe maintenant une boîte de dialogue Geste de Saisie qui permet une configuration plus aisée des gestes d'entrée (comme les touches de raccourcis clavier) des commandes NVDA. (#1532)
+- Il est maintenant possible d'avoir des paramètres différents pour différentes situations à l'aide de profils de configuration. Les profils peuvent être activés manuellement ou automatiquement (par exemple pour une application particulière). (#87, #667, #1913)
 
 
 == Corrections de Bogues ==
@@ -18,12 +19,19 @@ Quoi de Neuf dans NVDA
 - Le changement d'état de certaines cases à cocher dans la boîte de dialogue des règles de messages de Microsoft Outlook 2010 est maintenant annoncé. (#3063)
 - NVDA signale maintenant l'état épinglé pour des éléments épinglés comme des onglets dans Mozilla Firefox. (#3372)
 - Il est maintenant possible de lier des scripts à des touches de raccourci contenant les touches Alt et/ou Windows comme modificateurs. précédemment, si cela était fait, l'exécution de ces script causait l'activation de la barre de menus ou du menu démarrer. (#3472)
-- Sélectionnez du texte dans des documents en mode navigation (ex : en utilisant ctrl+maj+fin) ne cause plus le changement de disposition du clavier dans les systèmes ayant plusieurs dispositions clavier installées. (#3472)
+- Sélectionner du texte dans des documents en mode navigation (ex : en utilisant ctrl+maj+fin) ne cause plus le changement de disposition du clavier dans les systèmes ayant plusieurs dispositions clavier installées. (#3472)
 - Internet Explorer ne devrait plus se bloquer ou devenir inutilisable lors de la fermeture de NVDA. (#3397)
-- certains gestes physique et autres événements sur certains ordinateurs récents ne sont plus considérés comme des appuis de touches inappropriés. Auparavant, ceux-ci arrêtaient la parole et parfois déclenchaient des commandes NVDA. (#3468)
+- certains gestes physiques et autres événements sur certains ordinateurs récents ne sont plus considérés comme des appuis de touches inappropriés. Auparavant, ceux-ci arrêtaient la parole et parfois déclenchaient des commandes NVDA. (#3468)
 - NVDA se comporte maintenant comme prévu dans Poedit 1.5.7. Les utilisateurs utilisant des versions antérieures devront mettre à jour poedit. (#3485)
 - NVDA peut maintenant lire des documents protégés dans Microsoft Word 2010, ne causant plus aucun plentage de Microsoft Word. (#1686)
-- Passer un paramètre de ligne de commande inconnue au package de distribution de NVDA ne provoque plus une boucle sans fin de boîte de dialogues de message d'erreur. (#3463)
+- Passer un paramètre de ligne de commande inconnue au package de distribution de NVDA ne provoque plus une boucle sans fin de boîtes de dialogue de message d'erreur. (#3463)
+- NVDA n'échou plus lors de l'annonce du text alt des graphiques et des objets dans Microsoft Word si le texte alt contient des guillemets ou d'autres caractères non-standards. (#3579)
+- Le nombre d'éléments pour certaines listes horizontales en mode Navigation est maintenant correct. Auparavant, il pouvait être le double de la quantité réelle. (#2151)
+- Lorsque vous appuyez sur Ctrl + A dans une feuille de calcul Microsoft Excel, la sélection mise à jour sera maintenant signalée. (#3043)
+- NVDA peut maintenant lire correctement les documents XHTML dans Microsoft Internet Explorer et autres contrôles MSHTML. (#3542)
+- dialogue des paramètres du clavier : si aucune touche n'a été choisi pour être utilisé comme touche NVDA, une erreur est présentée à l'utilisateur lorsqu'il a fermé la boîte de dialogue. Au moins une touche doit être choisie pour utiliser correctement NVDA. (#2871)
+- Dans Microsoft Excel, NVDA annonce maintenant  les cellules fusionnées de manière différente que plusieurs cellules sélectionnées. (#3567)
+- Le curseur du mode navigation n'est plus incorrectement positionné en quittant une boîte de dialogue ou une application du document. (#3145)
 
 
 == Changements pour les développeurs ==
