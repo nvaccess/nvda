@@ -247,6 +247,10 @@ class PaneClassDC(Window):
 		self.currentSlide=SlideBase(windowHandle=self.windowHandle,documentWindow=self,ppObject=ppSlide)
 		return self.currentSlide
 
+	def _get_ppVersionMajor(self):
+		self.ppVersionMajor=int(self.ppObjectModel.application.version.split('.')[0])
+		return self.ppVersionMajor
+
 class DocumentWindow(PaneClassDC):
 	"""Represents the document window for a presentation. Bounces focus to the currently selected slide, shape or text frame."""
 
@@ -292,7 +296,7 @@ class DocumentWindow(PaneClassDC):
 		sel=self.ppSelection
 		selType=sel.type
 		#MS Powerpoint 2007 and below does not correctly indecate text selection in the notes page when in normal view
-		if selType==0 and self.appModule.ppVersionMajor<=12:
+		if selType==0 and self.ppVersionMajor<=12:
 			if self.ppActivePaneViewType==ppViewNotesPage and self.ppDocumentViewType==ppViewNormal:
 				selType=ppSelectionText
 		if selType==ppSelectionShapes: #Shape
@@ -859,6 +863,8 @@ class SlideShowWindow(PaneClassDC):
 class AppModule(appModuleHandler.AppModule):
 
 	hasTriedPpAppSwitch=False
+	_ppApplicationWindow=None
+	_ppApplication=None
 	_ppEApplicationConnectionPoint=None
 
 	def isBadUIAWindow(self,hwnd):
@@ -882,50 +888,90 @@ class AppModule(appModuleHandler.AppModule):
 		d.Destroy()
 		gui.mainFrame.postPopup()
 
-	def _get_ppApplication(self):
+	def _getPpObjectModelFromWindow(self,windowHandle):
+		"""
+		Fetches the Powerpoint object model from a given window.
+		"""
 		try:
-			app=comHelper.getActiveObject(u'powerPoint.application',dynamic=True,appModule=self)
-		except:
-			if not self.hasTriedPpAppSwitch:
-				self._registerCOMWithFocusJuggle()
-				app=comHelper.getActiveObject(u'powerPoint.application',dynamic=True,appModule=self)
-			else:
-				return
-		if app:
-			self.ppApplication=app
-			sink=ppEApplicationSink().QueryInterface(comtypes.IUnknown)
-			self._ppEApplicationConnectionPoint=comtypes.client._events._AdviseConnection(app,EApplication,sink)
-		return app
+			pDispatch=oleacc.AccessibleObjectFromWindow(windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
+			return comtypes.client.dynamic.Dispatch(pDispatch)
+		except: 
+			log.debugWarning("Could not get MS Powerpoint object model",exc_info=True)
+			return None
 
-	def _get_ppVersionMajor(self):
-		self.ppVersionMajor=int(self.ppApplication.version.split('.')[0])
-		return self.ppVersionMajor
+	_ppApplicationFromROT=None
 
-		
+	def _getPpObjectModelFromROT(self,useRPC=False):
+		if not self._ppApplicationFromROT:
+			try:
+				self._ppApplicationFromROT=comHelper.getActiveObject(u'powerPoint.application',dynamic=True,appModule=self if useRPC else None)
+			except:
+				log.debugWarning("Could not get active object via RPC")
+				return None
+		try:
+			pres=self._ppApplicationFromROT.activePresentation
+		except (comtypes.COMError,NameError,AttributeError):
+			log.debugWarning("No active presentation")
+			return None
+		try:
+			ppSlideShowWindow=pres.slideShowWindow
+		except (comtypes.COMError,NameError,AttributeError):
+			log.debugWarning("Could not get slideShowWindow")
+			ppSlideShowWindow=None
+		isActiveSlideShow=False
+		if ppSlideShowWindow:
+			try:
+				isActiveSlideShow=ppSlideShowWindow.active
+			except comtypes.COMError:
+				log.debugWarning("slideShowWindow.active",exc_info=True)
+		if isActiveSlideShow:
+			return ppSlideShowWindow
+		try:
+			window=pres.windows.item(1)
+		except (comtypes.COMError,NameError,AttributeError):
+			window=None
+		return window
+
+	def _fetchPpObjectModelHelper(self,windowHandle=None):
+		m=None
+		# Its only safe to get the object model from PowerPoint 2003 to 2010 windows.
+		# In PowerPoint 2013 protected mode it causes security/stability issues
+		if windowHandle and winUser.getClassName(windowHandle)=="paneClassDC":
+			m=self._getPpObjectModelFromWindow(windowHandle)
+		if not m:
+			m=self._getPpObjectModelFromROT(useRPC=True)
+		if not m:
+			m=self._getPpObjectModelFromROT()
+		return m
+
+	def fetchPpObjectModel(self,windowHandle=None):
+		m=self._fetchPpObjectModelHelper(windowHandle=windowHandle)
+		if not m and not self.hasTriedPpAppSwitch:
+			self._registerCOMWithFocusJuggle()
+			m=self._fetchPpObjectModelHelper(windowHandle=windowHandle)
+		if m:
+			if windowHandle!=self._ppApplicationWindow or not self._ppApplication:
+				self._ppApplicationWindow=windowHandle
+				self._ppApplication=m.application
+				sink=ppEApplicationSink().QueryInterface(comtypes.IUnknown)
+				self._ppEApplicationConnectionPoint=comtypes.client._events._AdviseConnection(self._ppApplication,EApplication,sink)
+		return m
+
 	def chooseNVDAObjectOverlayClasses(self,obj,clsList):
 		if obj.windowClassName in objectModelWindowClasses and isinstance(obj,IAccessible) and not isinstance(obj,PpObject) and obj.event_objectID==winUser.OBJID_CLIENT and controlTypes.STATE_FOCUSED in obj.states:
-			app=self.ppApplication
-			if not app:
+			m=self.fetchPpObjectModel(windowHandle=obj.windowHandle)
+			if not m:
+				log.debugWarning("no object model")
 				return
 			try:
-				ppSlideShowWindow=app.activePresentation.slideShowWindow
-			except (comtypes.COMError,NameError,AttributeError):
-				ppSlideShowWindow=None
-			if ppSlideShowWindow and ppSlideShowWindow.active:
-				m=ppSlideShowWindow
+				ppActivePaneViewType=m.activePane.viewType
+			except comtypes.COMError:
+				ppActivePaneViewType=None
+			if ppActivePaneViewType is None:
 				clsList.insert(0,SlideShowWindow)
+			elif ppActivePaneViewType==ppViewOutline:
+				clsList.insert(0,OutlinePane)
 			else:
-				m=app.activePresentation.windows.item(1)
-				if m:
-					try:
-						ppActivePaneViewType=m.activePane.viewType
-					except comtypes.COMError:
-						ppActivePaneViewType=None
-					if ppActivePaneViewType==ppViewOutline:
-						clsList.insert(0,OutlinePane)
-					else:
-						clsList.insert(0,DocumentWindow)
-					obj.ppActivePaneViewType=ppActivePaneViewType
-				else:
-					clsList.insert(0,PaneClassDC)
+				clsList.insert(0,DocumentWindow)
+			obj.ppActivePaneViewType=ppActivePaneViewType
 			obj.ppObjectModel=m
