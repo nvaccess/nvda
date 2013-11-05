@@ -227,7 +227,7 @@ Vous pouvez également y accéder par la barre des tâches système.
 Faites un clic droit sur l'icône de NVDA située dans la barre des tâches système, ou accédez à la barre des tâches système en appuyant sur Windows+b,,Appuyez sur flècheBas jusqu'à atteindre l'icône NVDA puis appuyez sur la touche Application généralement située à côté de la touche Control de droite.
  Quand le menu apparaît, vous pouvez utiliser les flèches pour naviguer dans le menu, et la touche entrée pour activer un élément.
 
-++ Commande de base ++
+++ Commandes de base ++
 %kc:beginInclude
 || Nom | Ordinateur de bureau | Ordinateur portable | Tactile | Description |
 | Arrêt parole | Control | Control | Clic 2-doigts | Arrêt instantané de la parole |
@@ -520,7 +520,7 @@ Une touche de commande permet de retourner à la page contenant l'objet embarqu�
 | Aller au document contenant l'objet | NVDA+control+espace | Retire le focus à l'objet embarqué en cours et le rend au document contenant l'objet |
 %kc:endInclude
 
-+ Commandes NVDA Spécifiques à Certaines Applictions +
++ Commandes NVDA Spécifiques à Certaines Applications +
 NVDA fournit ses propres commandes additionnelles dans quelques applications pour rendre certaines tâches plus faciles ou pour donner accès à certaines fonctions qui ne seraient pas accessibles autrement.
 
 ++ Microsoft Excel ++
@@ -782,6 +782,10 @@ Quand cette case est cochée, Insert du clavier étendu, généralement situé a
 ==== Utiliser insert du pavé numérique comme touche NVDA ====
 Si cette case est cochée, la touche Insert du pavé numérique peut être utilisée comme touche NVDA.
 
+Si aucune touche n'est choisie pour être la touche NVDA, il peut être impossible d'accéder à certaines commandes NVDA.
+Par conséquent, la boîte de dialogue Paramètres du clavier affichera un message d'erreur si aucune touche n'est sélectionnée en appuyant sur OK.
+Après avoir fermé le message d'erreur, vous devrez sélectionner au moins une touche avant de pouvoir appuyer sur OK pour fermer la boîte de dialogue correctement.
+
 %kc:setting
 ==== Echo clavier par caractère ====
 Touche : NVDA+2
@@ -800,8 +804,8 @@ Si cette option est activée, la parole sera interrompue à chaque fois qu'un ca
 ==== Interruption de la parole à l'appui de la touche entrer ====
 Si cette option est activée, la parole sera interrompue à chaque fois que la touche entrer est appuyée. Cette option est activée par défaut.
 
-==== Permet la lecture rapide en mode dire tout ====
-Si activé, certaines commandes de navigation (comme les touches de navigation rapide en mode navigation ou changer de ligne ou de paragraphe) ne stop pas la lecture en mode dire tout, mais continu la lecture à la nouvelle position.
+==== Permettre le survol en mode dire tout ====
+Si cette option est activée, certaines commandes de navigation (telles que les touches de navigation rapide en mode navigation ou l'exploration par ligne ou par paragraphe) n'arrêtent pas dire tout, qui reprend plutôt la lecture à la nouvelle position.
 
 ==== Émettre un bip à la frappe d'un caractère minuscule quand le verrouillage majuscule est activé ====
 Quand cette case est cochée, un bip d'avertissement est émis si on entre une lettre en combinaison avec la touche maj alors que le verrouillage majuscule est activé.
@@ -1072,12 +1076,12 @@ Tous les gestes associés à une commande sont énumérés au niveau suivant la 
 Pour ajouter un geste d'entrée à une commande, sélectionnez la commande et appuyez sur le bouton Ajouter.
 Ensuite, effectuez le geste d'entrée que vous souhaitez associer, par exemple appuyez sur une touche du clavier ou un bouton sur l'afficheur braille.
 Parfois, un geste peut être interprété de plusieurs façons.
+Par exemple, si vous avez appuyé sur une touche du clavier, vous voudrez peut-être qu'elle soit spécifique à la configuration du clavier actuel (par exemple, ordinateur de bureau ou portable) ou vous voudrez peut-être l'appliquer pour toutes les configurations.
 Dans ce cas, un menu apparaît, vous permettant de sélectionner l'option désirée.
 
 Pour supprimer un geste d'une commande, sélectionnez le geste et appuyez sur le bouton Supprimer.
 
 Lorsque vous avez terminé vos modifications, appuyez sur le bouton Accepter pour les sauvegarder ou sur le bouton Annuler pour les ignorer.
-
 
 ++ Sauvegarder et recharger la configuration ++
 Par défaut NVDA sauvegarde automatiquement vos paramètres.
@@ -1094,16 +1098,89 @@ Les touches de commande suivantes sont également utiles :
 | Réinitialiser la configuration | NVDA+control+r | NVDA+control+r | appuyez une fois pour réinitialiser à la configuration qui existait lors de votre dernière sauvegarde. Appuyez trois fois pour revenir à la configuration par défaut de NVDA. |
 %kc:endInclude
 
-++ Fichiers de configuration et profils utilisateur ++
+++ Profils de configuration ++
+Parfois, vous pouvez souhaiter avoir des paramètres différents pour des situations différentes.
+Par exemple, vous pourriez avoir l'annonce d'indentation activée pendant que vous éditez ou l'annonce des attributs de la police activée pendant que vous corrigez.
+NVDA vous permet de faire cela en utilisant des profils de configuration.
+
+Un profil de configuration contient uniquement les paramètres qui sont modifiés alors que le profil est en cours d'édition.
+La plupart des paramètres peuvent être modifiés dans les profils de configuration à l'exception de ceux dans la boîte de dialogue Paramètres généraux, qui s'appliquent à l'ensemble de NVDA.
+
+Les profils de configuration peuvent être activés manuellement.
+Ils peuvent également être activés automatiquement grâce à des déclencheurs tels que le passage à une application particulière.
+
++++ Gestion basique +++
+Vous pouvez gérer les profils de configuration en sélectionnant "profils de configuration" dans le menu NVDA.
+Vous pouvez aussi le faire en utilisant un raccourci clavier :
+%kc:beginInclude
+- NVDA+control+p : Afficher la boîte de dialogue Profils de configuration.
+-
+%kc:endInclude
+
+Le premier élément dans cette boîte de dialogue est la liste des profils à partir de laquelle vous pouvez sélectionner un des profils disponibles.
+Lorsque vous ouvrez la boîte de dialogue, le profil en cours d'édition est sélectionné.
+Des informations complémentaires sont également indiquées pour les profils actifs, indiquant s'ils sont activés manuellement, déclenchés et/ou en cours d'édition.
+
+Pour renommer ou supprimer un profil, appuyez sur le bouton renommer ou supprimer, respectivement.
+
+Appuyez sur le bouton Fermer pour fermer la boîte de dialogue.
+
++++ Création d'un profil +++
+Pour créer un profil, appuyez sur le bouton Nouveau.
+
+Dans la boîte de dialogue Nouveau profil, vous pouvez entrer un nom pour le profil.
+Vous pouvez également choisir comment ce profil doit être utilisé.
+Si vous ne souhaitez utiliser ce profil que manuellement, sélectionnez activation manuelle, qui est la valeur par défaut.
+Sinon, sélectionnez un déclencheur qui doit activer automatiquement ce profil.
+Pour plus de commodité, si vous n'avez pas saisi un nom pour le profil, sélectionner un déclencheur remplira le nom en conséquence.
+Reportez-vous [ci-dessous #ConfigProfileTriggers] pour plus d'information.
+
+Appuyer sur Accepter crée le profil et ferme la boîte de dialogue de configuration de sorte que vous pouvez le modifier.
+
++++ Activation manuelle +++[ConfigProfileManual]
+Vous pouvez activer manuellement un profil en sélectionnant un profil et en cliquant sur le bouton Activation manuelle.
+Une fois activé, d'autres profils peuvent toujours être activés par des déclencheurs, mais les paramètres dans le profil activé manuellement remplacent eux des profiles activés par ces déclencheurs.
+Par exemple, si un profil est déclenché pour l'application actuelle et que l'annonce des liens est activée dans ce profil mais désactivé dans le profil activé manuellement, les liens ne seront pas annoncés.
+Toutefois, si vous avez changé la voix dans le profil déclenchée mais que vous ne l'avez jamais changé dans le profil activé manuellement, la voix du profil déclenchée sera utilisé.
+Tous les paramètres que vous modifier seront sauvegardées dans le profil activé manuellement.
+Pour désactiver un profil activé manuellement, sélectionnez-le dans la boîte de dialogue Profils de configuration et appuyez sur le bouton désactiver manuellement.
+
++++ Déclencheurs +++[ConfigProfileTriggers]
+En appuyant sur le bouton Déclencheurs dans la boîte de dialogue Profils de configuration, vous pouvez modifier les profils qui doivent être activés automatiquement par divers déclencheurs.
+
+La liste des Déclencheurs affiche les déclencheurs disponibles, qui sont comme suit :
+- Application en cours : déclenché lors de l'activation de l'application en cours.
+- Dire tout: déclenchée lors de la lecture avec la commande Dire Tout.
+-
+
+Pour modifier le profil qui doit être automatiquement activé par un déclencheur, sélectionnez le déclencheur, puis sélectionnez le profil désiré dans la liste des profils.
+Vous pouvez sélectionner (configuration normale) si vous ne voulez pas utiliser de profil.
+
+Cliquez sur le bouton Fermer pour revenir à la boîte de dialogue Profils de configuration.
+
++++ éditer un profil +++
+Si vous avez activé manuellement un profil, les paramètres modifiés seront sauvegardés dans ce profil.
+Autrement, tous les paramètres modifiés seront sauvegardés dans le profil le plus récemment déclenché.
+Par exemple, si vous avez associé un profil avec l'application Bloc-notes et vous basculer vers le Bloc-notes, tous les paramètres modifiés seront sauvegardés dans ce profil.
+Enfin, s'il n'y a ni profil activé manuellement, ni profil déclenché, tous les paramètres que vous modifierez seront sauvegardés dans votre configuration normale.
+
+pour éditer le profil utilisé dans Dire Tout, vous devez [activer manuellement #ConfigProfileManual] ce profil.
+
++++ désactiver temporairement tous les déclencheurs +++
+Parfois, il peut être utile de désactiver temporairement les déclencheurs.
+Par exemple, vous voudrez peut-être modifier un profil activé manuellement ou votre configuration normale sans profils déclenchées interférents.
+Vous pouvez le faire en cochant la case Désactiver temporairement tous les déclencheurs dans la boîte de dialogue Profils de configuration.
+
+++ Emplacement des fichiers de configuration ++
 Les versions portables de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire nommé userConfig situé dans le répertoire de votre copie portable de NVDA.
 
 Les versions installées de NVDA enregistrent tous les paramètres, modules d'applications personnalisés et pilotes personnalisés dans un répertoire spécial de NVDA situé dans votre profil utilisateur Windows.
 Cela signifie que chaque utilisateur du système peut avoir ses propres paramètres NVDA.
 Pour accéder à votre répertoire de paramètres pour une version installée de NVDA, depuis le menu Démarrer vous pouvez aller à Tous les programmes -> NVDA -> Explorer les paramètres utilisateur.
 
-Les paramètres qu'utilise NVDA quand il s'exécute sur l'écran de connexion ou l'écran UAC sont enregistrés dans le répertoire systemConfig situé dans le répertoire nVDA. 
+Les paramètres qu'utilise NVDA quand il s'exécute sur l'écran de connexion ou l'écran UAC sont enregistrés dans le répertoire systemConfig situé dans le répertoire nVDA.
 En général, cette configuration n'a pas à être modifiée.
-Pour modifier cette configuration, configurez nVDA à votre convenance, Sauvegardez la configuration puis cliquez sur  le bouton "Utiliser les paramètres NVDA actuellement sauvegardés pour l'écran de connexion à Windows (nécessite des privilèges administrateur)" dans le dialogue Paramètres généraux.
+Pour modifier cette configuration, configurez nVDA à votre convenance, Sauvegardez la configuration puis cliquez sur le bouton "Utiliser les paramètres NVDA actuellement sauvegardés pour l'écran de connexion à Windows (nécessite des privilèges administrateur)" dans le dialogue Paramètres généraux.
 
 + Outils Additionnels +
 

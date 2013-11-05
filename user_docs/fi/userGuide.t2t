@@ -39,11 +39,11 @@ Sen lisäksi, että NVDA:n ilmoitukset ja käyttöliittymä on käännetty useil
 
 NVDA:n mukana tulee [eSpeak http://espeak.sourceforge.net/], monikielinen, ilmainen ja avoimen lähdekoodin puhesyntetisaattori.
 
-Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesyntetisaattorit #Tuetutpuhesyntetisaattorit] -kappaleesta.
+Tietoja muista NVDA:n tukemista puhesyntetisaattoreista löytyy [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleesta.
 
 ++ Pistenäyttötuki ++
 NVDA voi tulostaa tietonsa pistekirjoituksella niille käyttäjille, joilla on pistenäyttö.
-Katso [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaletta saadaksesi tietoja tuetuista pistenäytöistä.
+Katso [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaletta saadaksesi tietoja tuetuista pistenäytöistä.
 
 NVDA tukee useiden kielten pistekirjoitusjärjestelmiä, mukaan lukien lyhennepistekirjoitusta, tavallista sekä monissa kielissä tietokonemerkistöä.
 
@@ -251,12 +251,12 @@ Kun valikko tulee näkyviin, siinä voidaan liikkua nuolinäppäimillä ja valit
 + NVDA:lla liikkuminen +
 NVDA:n avulla voidaan tutkia järjestelmää ja liikkua siinä useilla tavoilla sekä normaali vuorovaikutus että tekstin tarkastelu mukaan lukien.
 
-++ Objektit ++[Objektit]
+++ Objektit ++[Objects]
 Jokainen sovellus ja itse käyttöjärjestelmä koostuvat useista objekteista.
 Objekti on yksittäinen kohde, kuten tekstikatkelma, painike, valintaruutu, liukusäädin, lista tai muokattava tekstikenttä.
 
-++ Järjestelmäkohdistuksella liikkuminen ++[Jarjestelmakohdistus]
-Järjestelmäkohdistus, tunnetaan myös yksinkertaisesti kohdistuksena, on [objekti #Objektit], joka vastaanottaa näppäimistön näppäinpainallukset.
+++ Järjestelmäkohdistuksella liikkuminen ++[SystemFocus]
+Järjestelmäkohdistus, tunnetaan myös yksinkertaisesti kohdistuksena, on [objekti #Objects], joka vastaanottaa näppäimistön näppäinpainallukset.
 Jos esimerkiksi kirjoitetaan muokattavaan tekstikenttään, kohdistus on kyseisessä kentässä.
 
 Yleisin tapa liikkua NVDA:lla Windowsissa on käyttää tavallisia näppäinkomentoja, kuten sarkain ja Shift+sarkain eteen- ja taaksepäin säätimien välillä liikkumiseen, painamalla Alt valikkoriville siirtymiseen, käyttämällä nuolinäppäimiä valikoissa liikkumiseen ja Alt+sarkain avointen sovellusten välillä siirtymiseen.
@@ -271,8 +271,8 @@ Joitakin hyödyllisiä näppäinkomentoja kohdistuksella navigoitaessa:
 | Lue tilarivi | NVDA+End | NVDA+Shift+End | Lukee tilarivin, mikäli NVDA löytää sen, ja siirtää lisäksi navigointiobjektin sen kohdalle. |
 %kc:endInclude
 
-++ Järjestelmäkohdistimella liikkuminen ++[Jarjestelmakohdistin]
-Kun [kohdistus #Jarjestelmakohdistus] on navigoinnin ja/tai tekstin muokkaamisen mahdollistavassa [objektissa #Objektit], tekstissä voidaan liikkua järjestelmäkohdistinta käyttäen (tunnetaan myös muokkauskohdistimena).
+++ Järjestelmäkohdistimella liikkuminen ++[SystemCaret]
+Kun [kohdistus #SystemFocus] on navigoinnin ja/tai tekstin muokkaamisen mahdollistavassa [objektissa #Objects], tekstissä voidaan liikkua järjestelmäkohdistinta käyttäen (tunnetaan myös muokkauskohdistimena).
 
 Kun kohdistus on järjestelmäkohdistimen sisältävässä objektissa, tekstissä liikkumiseen voidaan käyttää nuoli-, page up-, page down-, home- sekä end-näppäimiä jne.
 Tekstiä voidaan myös muokata, mikäli säädin tukee sitä.
@@ -294,16 +294,16 @@ Taulukoissa ovat käytettävissä lisäksi seuraavat näppäinkomennot:
 | Siirrä seuraavalle riville | Control+Alt+alanuoli | Siirtää järjestelmäkohdistimen seuraavalle riville pysyen samassa sarakkeessa. |
 %kc:endInclude
 
-++ Objektinavigointi ++[Objektinavigointi]
-Sovelluksia käytetään enimmäkseen komennoilla, jotka siirtävät [kohdistusta #Jarjestelmakohdistus] ja [kohdistinta #Jarjestelmakohdistin].
+++ Objektinavigointi ++[]
+Sovelluksia käytetään enimmäkseen komennoilla, jotka siirtävät [kohdistusta #SystemFocus] ja [kohdistinta #SystemCaret].
 Toisinaan voi kuitenkin olla tarpeen tutkia nykyistä sovellusta tai käyttöjärjestelmää ilman, että kohdistus tai kohdistin liikkuu.
-Saatat myös haluta siirtyä [objekteihin #Objektit], joihin ei pääse normaalisti näppäimistöllä.
+Saatat myös haluta siirtyä [objekteihin #Objects], joihin ei pääse normaalisti näppäimistöllä.
   Tällaisissa tapauksissa voidaan käyttää objektinavigointia.
 
-Objektinavigoinnin avulla on mahdollista liikkua yksittäisten [objektien #Objektit] välillä ja saada niistä tietoja.
+Objektinavigoinnin avulla on mahdollista liikkua yksittäisten [objektien #Objects] välillä ja saada niistä tietoja.
 Kun objektiin siirrytään, NVDA lukee sen samalla tavalla kuin järjestelmäkohdistuksenkin.
 Tekstiä voidaan myös tarkastella sellaisena kuin se näkyy ruudulla.
-Tähän käytetään objektinavigoinnin asemesta [ruututarkastelua #Ruututarkastelu].
+Tähän käytetään objektinavigoinnin asemesta [ruututarkastelua #ScreenReview].
 
 Objektit on ryhmitelty hierarkisesti sen sijaan, että niiden välillä liikuttaisiin edestakaisin.
 Tämä tarkoittaa, että jotkin objektit sisältävät muita objekteja, ja että on siirryttävä niiden sisään, jotta päästäisiin edelleen niiden sisältämiin objekteihin.
@@ -314,11 +314,11 @@ Tämän jälkeen siitä voidaan siirtyä pois, mikäli halutaan päästä muihin
 Myös työkalupalkki sisältää säätimiä, joten niihin pääsemiseksi on siirryttävä kyseisen työkalupalkin sisään.
 
 Nykyistä tarkasteltavaa objektia kutsutaan navigointiobjektiksi.
-Kun objektiin siirrytään, sitä voidaan tarkastella [tekstintarkastelukomennoilla #Tekstintarkastelu] [objektintarkastelutilassa #Objektitarkastelu] oltaessa.
+Kun objektiin siirrytään, sitä voidaan tarkastella [tekstintarkastelukomennoilla #ReviewingText] [objektintarkastelutilassa #ObjectReview] oltaessa.
 Navigointiobjekti liikkuu oletusarvoisesti järjestelmäkohdistuksen mukana, mutta tämä asetus voidaan poistaa myös käytöstä.
 
-Huomaa, että pistenäyttö seuraa oletusarvoisesti [kohdistusta #Jarjestelmakohdistus] ja [kohdistinta #Jarjestelmakohdistin] objektinavigoinnin ja tekstintarkastelukohdan sijaan.
-Mikäli pistenäytön halutaan kuitenkin seuraavan objektinavigointia tai tekstinlukukohtaa, on se [määritettävä seuraamaan #Pistenayttoseuraa] tarkastelukohdistinta.
+Huomaa, että pistenäyttö seuraa oletusarvoisesti objektinavigoinnin ja tekstintarkastelukohdan sijasta [kohdistusta #SystemFocus] ja [kohdistinta #SystemCaret].
+Mikäli pistenäytön halutaan kuitenkin seuraavan objektinavigointia ja tekstinlukukohtaa, on se [määritettävä seuraamaan #BrailleTether] tarkastelukohdistinta.
 
 Seuraavia komentoja käytetään objekteittain liikkumiseen:
 %kc:beginInclude
@@ -336,17 +336,17 @@ Seuraavia komentoja käytetään objekteittain liikkumiseen:
 
 Huomautus: Numlockin on oltava pois päältä, jotta numeronäppäimistön näppäimet toimisivat oikein.
 
-++ Tekstin tarkastelu ++[Tekstintarkastelu]
-NVDA:lla on mahdollista lukea [ruutua #Ruututarkastelu], nykyistä [asiakirjaa #Asiakirjatarkastelu] tai nykyistä [objektia #Objektitarkastelu] merkeittäin, sanoittain tai riveittäin.
-Tästä on eniten hyötyä paikoissa, joissa ei ole [järjestelmäkohdistinta #Jarjestelmakohdistin] (Windowsin komentokehote mukaan lukien).
+++ Tekstin tarkastelu ++[ReviewingText]
+NVDA:lla on mahdollista lukea [ruutua #ScreenReview], nykyistä [asiakirjaa #DocumentReview] tai nykyistä [objektia #ObjectReview] merkeittäin, sanoittain tai riveittäin.
+Tästä on eniten hyötyä paikoissa, joissa ei ole [järjestelmäkohdistinta #SystemCaret] (Windowsin komentokehote mukaan lukien).
 Tätä voidaan käyttää esim. valintaikkunassa olevan ilmoituksen lukemiseen.
 
 Kun tarkastelukohdistinta siirretään, järjestelmäkohdistin ei seuraa mukana, joten tekstin tarkastelu onnistuu muokkauskohtaa menettämättä.
 Kun järjestelmäkohdistin liikkuu, tarkastelukohdistin seuraa kuitenkin oletusarvoisesti mukana.
 Tätä asetusta voidaan myös muuttaa.
 
-Huomaa, että pistenäyttö seuraa oletusarvoisesti [kohdistusta #Jarjestelmakohdistus] ja [kohdistinta #Jarjestelmakohdistin] objektinavigoinnin ja tekstintarkastelukohdan sijaan.
-Mikäli pistenäytön halutaan kuitenkin seuraavan objektinavigointia tai tekstintarkastelukohtaa, on se [määritettävä seuraamaan #Pistenayttoseuraa] tarkastelukohdistinta.
+Huomaa, että pistenäyttö seuraa oletusarvoisesti objektinavigoinnin ja tekstintarkastelukohdan sijasta [kohdistusta #SystemFocus] ja [kohdistinta #SystemCaret].
+Mikäli pistenäytön halutaan kuitenkin seuraavan objektinavigointia ja tekstintarkastelukohtaa, on se [määritettävä seuraamaan #BrailleTether] tarkastelukohdistinta.
 
 Seuraavat tekstintarkastelukomennot ovat käytettävissä:
 %kc:beginInclude
@@ -378,8 +378,8 @@ Asettelua kuvataan seuraavasti:
 | Edellinen sana | Nykyinen sana | Seuraava sana |
 | Edellinen merkki | Nykyinen merkki | Seuraava merkki |
 
-++ Tarkastelutilat ++[Tarkastelutilat]
-NVDA:n [tekstintarkastelukomennot #Tekstintarkastelu] lukevat tekstiä nykyisessä navigointiobjektissa, asiakirjassa tai ruudussa valitusta tarkastelutilasta riippuen.
+++ Tarkastelutilat ++[ReviewModes]
+NVDA:n [tekstintarkastelukomennot #ReviewingText] lukevat tekstiä valitusta tarkastelutilasta riippuen joko nykyisessä navigointiobjektissa, asiakirjassa tai ruudussa.
 Tarkastelutilat korvaavat aiemman kokonaistarkastelutoiminnon.
 
 Seuraavat komennot vaihtavat tarkastelutilojen välillä:
@@ -389,13 +389,13 @@ Seuraavat komennot vaihtavat tarkastelutilojen välillä:
 | Vaihda edelliseen tarkastelutilaan | NVDA+numeronäppäimistön 1 | NVDA+Page down | Pyyhkäisy alas kahdella sormella | Vaihtaa edelliseen käytettävissä olevaan tarkastelutilaan. |
 %kc:endInclude
  
-+++ Objektitarkastelu +++[Objektitarkastelu]
-Objektintarkastelutilassa voidaan tarkastella vain nykyisen [navigointiobjektin #Objektinavigointi] sisältöä.
-Sellaisissa objekteissa kuin muokattavat tekstikentät tai muut perustekstisäätimet se on yleensä niiden tekstisisältöä.
++++ Objektitarkastelu +++[ObjectReview]
+Objektintarkastelutilassa voidaan tarkastella vain nykyisen [navigointiobjektin #ObjectNavigation] sisältöä.
+Tämä on yleensä tekstiä sellaisissa objekteissa kuin muokattavat tekstikentät tai muut perustekstisäätimet.
 Muissa objekteissa sisältöä voivat olla kyseisten objektien nimi ja/tai arvo.
 
-+++ Asiakirjatarkastelu +++[Asiakirjatarkastelu]
-[Navigointiobjektin #Objektinavigointi] ollessa selaustila-asiakirjassa (esim. verkkosivulla) tai muussa monisisältöisessä asiakirjassa (esim. Lotus Symphony -asiakirjassa) on mahdollista vaihtaa asiakirjan tarkastelutilaan.
++++ Asiakirjatarkastelu +++[DocumentReview]
+[Navigointiobjektin #ObjectNavigation] ollessa selaustila-asiakirjassa (esim. verkkosivulla) tai muussa monisisältöisessä asiakirjassa (esim. Lotus Symphony -asiakirjassa) on mahdollista vaihtaa asiakirjan tarkastelutilaan.
 Tässä tilassa voidaan tarkastella koko asiakirjan sisältöä.
 
 Kun objektitarkastelusta vaihdetaan asiakirjatarkasteluun, tarkastelukohdistin sijoitetaan asiakirjassa navigointiobjektin kohdalle.
@@ -403,11 +403,11 @@ Navigointiobjekti siirretään automaattisesti tarkastelukohdistimen nykyisessä
 
 Huomaa, että NVDA vaihtaa automaattisesti objektitarkastelusta asiakirjatarkasteluun selaustila-asiakirjoissa liikuttaessa.
 
-+++ Ruututarkastelu +++[Ruututarkastelu]
++++ Ruututarkastelu +++[ScreenReview]
 Ruuduntarkastelutilan avulla on mahdollista tarkastella ruudulla olevaa tekstiä sellaisena kuin se näkyy visuaalisesti nykyisessä sovelluksessa.
 Tämä muistuttaa useiden muiden Windows-ruudunlukuohjelmien ruuduntarkastelu- tai hiirikohdistintoimintoa.
 
-Tarkastelukohdistin sijoitetaan ruuduntarkastelutilaan vaihdettaessa ruudulla nykyisen [navigointiobjektin #Objektinavigointi] kohdalle.
+Tarkastelukohdistin sijoitetaan ruuduntarkastelutilaan vaihdettaessa ruudulla nykyisen [navigointiobjektin #ObjectNavigation] kohdalle.
 Kun ruudulla liikutaan tarkastelukomennoilla, navigointiobjekti siirretään automaattisesti tarkastelukohdistimen kohdalla olevaan objektiin.
 
 Huomaa, että NVDA ei saata pystyä lukemaan kaikkea tai mitään ruudulla olevaa tekstiä joissakin uudemmissa sovelluksissa edistyneempien ruudunpiirtomenetelmien vuoksi, joita ei toistaiseksi tueta.
@@ -417,16 +417,16 @@ Kun hiirtä liikutetaan, NVDA lukee oletusarvoisesti suoraan sen alla olevan tek
 NVDA lukee myös hiirikohdistinta ympäröivän tekstikappaleen mikäli mahdollista.
 Joissakin säätimissä lukeminen on tosin mahdollista vain riveittäin.
 
-NVDA voidaan määrittää kertomaan myös hiiren alla olevan [objektin #Objektit] tyypin (esim. lista, painike jne).
+NVDA voidaan määrittää kertomaan myös hiiren alla olevan [objektin #Objects] tyypin (esim. lista, painike jne).
 Tästä voi olla hyötyä täysin sokeille käyttäjille, sillä joskus pelkän tekstin lukeminen ei riitä.
 
 NVDA tarjoaa käyttäjille tavan ymmärtää, missä hiiri on ruudun mittojen suhteen soittamalla hiiren nykyiset koordinaatit äänimerkkeinä.
 Mitä ylempänä hiiri on ruudulla, sitä korkeampia äänimerkit ovat.
 Mitä enemmän vasemmalla tai oikealla hiiri on ruudulla, sitä enemmän vasemmalta tai oikealta ääni kuuluu (olettaen, että käytössä on stereokaiuttimet tai kuulokkeet).
 
-Nämä lisäominaisuudet eivät ole oletusarvoisesti käytössä, mutta ne voidaan ottaa tarvittaessa käyttöön [Hiiriasetukset #Hiiriasetukset]-valintaikkunasta, joka löytyy NVDA:n Asetukset-valikosta.
+Nämä lisäominaisuudet eivät ole oletusarvoisesti käytössä, mutta ne voidaan ottaa tarvittaessa käyttöön [Hiiriasetukset #MouseSettings]-valintaikkunasta, joka löytyy NVDA:n Asetukset-valikosta.
 
-Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kosketuslevyä, on NVDA:ssa joitakin sen käyttöön tarkoitettuja näppäinkomentoja:
+Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kosketuslevyä, on NVDA:ssa joitakin hiiren käyttöön tarkoitettuja näppäinkomentoja:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
 | Vasemman hiiripainikkeen napsautus | Numeronäppäimistön kautta | NVDA+Ö | Napsauttaa kerran hiiren vasenta painiketta. Kaksoisnapsautus tehdään painamalla tätä näppäinkomentoa kaksi kertaa nopeasti peräkkäin. |
@@ -442,7 +442,7 @@ Monimutkaiset, ei-muokattavat asiakirjat kuten verkkosivut, näytetään NVDA:ss
 Näihin kuuluvat Mozilla Firefox-, Internet Explorer-, Google Chrome- ja Adobe Reader -asiakirjat sekä Flash-sisältö.
 
 Selaustilassa asiakirjan sisältö on käytettävissä kokonaisesityksenä, jossa voidaan liikkua nuolinäppäimillä, aivan kuin se olisi tavallinen tekstiasiakirja.
-Kaikki NVDA:n [järjestelmäkohdistimen #Jarjestelmakohdistin] näppäinkomennot, kuten esim. lue kaikki, lue muotoilutiedot, taulukoissa liikkumiseen käytettävät komennot jne, toimivat tässä tilassa.
+Kaikki NVDA:n [järjestelmäkohdistimen #SystemCaret] näppäinkomennot, kuten esim. lue kaikki, lue muotoilutiedot, taulukoissa liikkumiseen käytettävät komennot jne, toimivat tässä tilassa.
 Asiakirjassa liikuttaessa luetaan siinä olevan tekstin lisäksi myös muita tietoja, kuten onko kohdalla oleva teksti linkki, otsikko tms.
 
 Toisinaan on tarpeen olla suorassa vuorovaikutuksessa tällaisissa asiakirjoisssa olevien säädinten kanssa.
@@ -456,7 +456,7 @@ Vuorovaikutustila voidaan lisäksi pakottaa käyttöön manuaalisesti, jolloin s
 
 %kc:beginInclude
 || Nimi | Näppäinkomento | Kuvaus |
-| Vaihda selaus- ja vuorovaikutustilan välillä | NVDA+välilyönti | Vaihtaa vuorovaikutus- ja selaustilan välillä. |
+| Vaihda selaus- ja vuorovaikutustilojen välillä | NVDA+välilyönti | Vaihtaa vuorovaikutus- ja selaustilojen välillä. |
 | Poistu vuorovaikutustilasta | Esc | Siirtää takaisin selaustilaan, mikäli NVDA siirtyi aiemmin automaattisesti vuorovaikutustilaan. |
 | Päivitä selaustila-asiakirja | NVDA+F5 | Lataa uudelleen nykyisen asiakirjan sisällön (hyödyllistä, jos sivulta vaikuttaa puuttuvan jotakin). |
 | Etsi | NVDA+Control+F | Avaa valintaikkunan, jossa voidaan etsiä tekstiä nykyisestä asiakirjasta. |
@@ -485,7 +485,7 @@ Sellaisinaan nämä komennot siirtävät seuraavan ja Shift-näppäimen kanssa p
 - x: valintaruutu
 - c: yhdistelmäruutu
 - r: valintapainike
-- q: sisennyksellinen kappaleenvaihto
+- q: sisennetty kappale
 - s: erotin
 - m: kehys
 - g: kuva
@@ -616,7 +616,7 @@ Jos syntetisaattorin lataamisessa ilmenee virhe, siitä ilmoittava viesti näyte
 ==== Syntetisaattori ====
 Tästä yhdistelmäruudusta voidaan valita, mitä puhesyntetisaattoria NVDA käyttää puheen tuottamiseen.
 
-Lista NVDA:n tukemista puhesyntetisaattoreista on [Tuetut puhesyntetisaattorit #Tuetutpuhesyntetisaattorit] -kappaleessa.
+Lista NVDA:n tukemista puhesyntetisaattoreista on [Tuetut puhesyntetisaattorit #SupportedSpeechSynths] -kappaleessa.
 
 Eräs tässä listassa aina näkyvä vaihtoehto on "Ei puhetta", joka mahdollistaa NVDA:n käytön täysin ilman puhetta.
 Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta pelkästään pistenäytön avulla tai näkeville kehittäjille, jotka käyttävät pelkkää Näytä puhe -toimintoa.
@@ -624,9 +624,9 @@ Tästä voi olla hyötyä jollekulle, joka haluaa käyttää NVDA:ta pelkästä�
 ==== Äänilaite ====
 Tästä voidaan valita, mitä äänikorttia NVDA:ssa valittuna olevan puhesyntetisaattorin tulisi käyttää.
 
-+++ Ääniasetukset (NVDA+Control+V) +++[Aaniasetukset]
++++ Ääniasetukset (NVDA+Control+V) +++[VoiceSettings]
 Ääniasetukset-valintaikkuna, joka löytyy Asetukset-valikosta, sisältää asetuksia, joilla voidaan vaikuttaa siihen, miltä puhe kuulostaa.
-Saadaksesi tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa, katso [Syntetisaattorin asetusrengas #Syntetisaattorinasetusrengas] -kappaletta.
+Saadaksesi tietoja nopeammasta vaihtoehtoisesta tavasta puheparametrien säätämiseen mistä tahansa, katso [Syntetisaattorin asetusrengas #SynthSettingsRing] -kappaletta.
 
 Valintaikkuna sisältää seuraavat asetukset:
 
@@ -684,7 +684,7 @@ Tavallisesti NVDA nostaa hieman äänenkorkeutta jokaisen ison kirjaimen kohdall
 Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin joka kerta, kun iso kirjain luetaan.
 Kuten Sano iso ennen isoja kirjaimia -asetus, tämäkin on käyttökelpoinen puhesyntetisaattoreilla, jotka eivät pysty nostamaan äänenkorkeuttaan isojen kirjainten kohdalla.
 
-==== Käytä tavaustoimintoa, mikäli mahdollista ====[Tavaustoiminto]
+==== Käytä tavaustoimintoa, mikäli mahdollista ====[VoiceSpellingFunctionality]
 Jotkin sanat koostuvat vain yhdestä kirjaimesta, mutta se lausutaan eri tavalla riippuen siitä, puhutaanko se yksittäisenä merkkinä (kuten tavattaessa) tai sanana.
 Esimerkiksi englanninkielessä "a" on sekä kirjain että sana.
 Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tilanteet toisistaan, mikäli se vain tukee tätä.
@@ -694,7 +694,7 @@ Tämä asetus tulisi tavallisesti ottaa käyttöön.
 Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa käytössä, koska sitä ei ole toteutettu niissä kunnolla.
 Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
 
-+++ Syntetisaattorin asetusrengas +++[Syntetisaattorinasetusrengas]
++++ Syntetisaattorin asetusrengas +++[SynthSettingsRing]
 NVDA:ssa on joitakin näppäinkomentoja, joiden avulla voidaan siirtyä missä tahansa yleisimpien puheasetusten välillä, jos niitä halutaan muuttaa nopeasti menemättä Ääniasetukset-valintaikkunaan:
 %kc:beginInclude
 || Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kuvaus |
@@ -714,7 +714,7 @@ Vaihtoehtojen välillä liikutaan nuolinäppäimillä.
 
 "Ei pistenäyttöä" tarkoittaa, että pistenäyttöä ei käytetä.
 
-Katso [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaleesta lisätietoja tuetuista pistenäytöistä.
+Katso [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta lisätietoja tuetuista pistenäytöistä.
 
 ==== Portti ====
 Tällä asetuksella voidaan, jos se on käytettävissä, valita, mitä porttia tai yhteystyyppiä käytetään valitun pistenäytön kanssa kommunikointiin.
@@ -726,7 +726,7 @@ Vaihtoehtoina ovat "Automaattinen" (joka käskee NVDA:ta käyttämään oletusar
 
 Tämä vaihtoehto ei ole käytettävissä, mikäli pistenäyttö tukee vain automaattista portintunnistusta.
 
-Katso [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaleesta lisätietoja pistenäyttösi tukemista kommunikointityypeistä ja käytettävissä olevista porteista.
+Katso [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleesta lisätietoja pistenäyttösi tukemista kommunikointityypeistä ja käytettävissä olevista porteista.
 
 ==== Tulostustaulukko ====
 Seuraavana tässä valintaikkunassa on "Tulostustaulukko"-yhdistelmäruutu.
@@ -741,7 +741,7 @@ NVDA tukee tällä hetkellä ainoastaan tietokonemerkistöllä syöttämistä, j
 Vaihtoehtojen välillä voidaan liikkua nuolinäppäimillä.
 
 Huomaa, että tästä vaihtoehdosta on hyötyä vain, jos pistenäytössä on Perkins-tyylinen -näppäimistö ja mikäli näytön ajuri tukee tätä ominaisuutta.
-Mikäli pistenäppäimistön sisältävä pistenäyttö ei tue syöttämistä, siitä huomautetaan [Tuetut pistenäytöt #Tuetutpistenaytot] -kappaleessa.
+Mikäli pistenäppäimistön sisältävä pistenäyttö ei tue syöttöä, siitä huomautetaan [Tuetut pistenäytöt #SupportedBrailleDisplays] -kappaleessa.
 
 ==== Laajenna kohdistimen kohdalla oleva sana ====
 Kun tämä asetus on käytössä, kohdistimen alla oleva sana näytetääntavallisella tietokonemerkistöllä.
@@ -754,7 +754,7 @@ Tämä asetus säätää sitä, kuinka kauan NVDA:n ilmoitukset näkyvät pisten
 Jos arvoksi määritetään 0, ilmoitusten näyttäminen poistetaan kokonaan käytöstä.
 
 %kc:setting
-==== Pistenäyttö seuraa ====[Pistenayttoseuraa]
+==== Pistenäyttö seuraa ====[BrailleTether]
 Pikanäppäin: NVDA+Control+T
 
 Tällä asetuksella voidaan valita, seuraako pistenäyttö järjestelmän kohdistusta vai navigointiobjektia/tarkastelukohdistinta.
@@ -781,6 +781,10 @@ Jos tämä valintaruutu on valittuna, laajennettua Insert-näppäintä (löytyy 
 
 ==== Käytä numeronäppäimistön Insert-näppäintä NVDA-näppäimenä ====
 Jos tämä valintaruutu on valittuna, numeronäppäimistön Insert-näppäintä voidaan käyttää NVDA-näppäimenä.
+
+Mikäli NVDA-näppäimeksi ei ole valittu mitään näppäintä, tiettyjen NVDA-komentojen käyttäminen voi olla mahdotonta.
+Tämän vuoksi Näppäimistöasetukset-valintaikkuna näyttää virheilmoituksen, mikäli kaikki näppäimet ovat valitsematta OK-painiketta painettaessa.
+Kun virheilmoitus on kuitattu, vähintään yksi näppäin on valittava ennen kuin tehdyt muutokset voidaan hyväksyä ja valintaikkuna sulkea asianmukaisesti OK-painiketta painamalla.
 
 %kc:setting
 ==== Lue kirjoitetut merkit ====
@@ -814,7 +818,7 @@ Pikanäppäin: NVDA+4
 
 Kun tämä valintaruutu on valittuna, NVDA puhuu kaikki painetut näppäimet, jotka eivät ole merkkejä. Näitä ovat sellaiset näppäinyhdistelmät kuin Control+jokin muu kirjain.
 
-+++ Hiiriasetukset (NVDA+Control+M) +++[Hiiriasetukset]
++++ Hiiriasetukset (NVDA+Control+M) +++[MouseSettings]
 Hiiriasetukset-valintaikkuna löytyy Asetukset-valikon "Hiiri..." -kohdasta.
 Se sisältää seuraavat asetukset:
 
@@ -862,7 +866,7 @@ Kun tämä asetus on käytössä, tarkastelukohdistin siirretään automaattises
 Kun tämä asetus on käytössä, tarkastelukohdistin seuraa hiirtä sen liikkuessa.
 
 ==== Yksinkertainen objektinavigointi ====
-Kun tämä asetus on käytössä, NVDA suodattaa objektihierarkiasta pois sellaiset objektit, joilla ei ole merkitystä käyttäjälle, esim. näkymättömät tai sellaiset, joita käytetään asettelutarkoituksiin.
+Kun tämä asetus on käytössä, NVDA suodattaa objektihierarkiasta pois sellaiset objektit, joilla ei ole merkitystä käyttäjälle, esim. näkymättömät tai asettelutarkoituksiin käytettävät.
 
 +++ Objektien lukuasetukset (NVDA+Control+O) +++
 Tämä valintaikkuna löytyy Asetukset-valikosta kohdasta "Objektien lukeminen...".
@@ -968,13 +972,13 @@ Asetus on oletusarvoisesti käytössä.
 
 ==== Sisällytä asettelutaulukot ====
 Tämä asetus vaikuttaa siihen, miten NVDA käsittelee puhtaasti visuaaliseen esittämiseen käytettäviä taulukoita.
-Kun asetus on käytössä, NVDA käsittelee niitä normaaleina taulukkoina (ts. lukee [asiakirjojen muotoiluasetusten #Asiakirjojenmuotoiluasetukset] mukaisesti sekä löytää ne pikanavigointikomennoilla).
-Kun asetus on pois käytöstä, asettelutaulukoita ei lueta eikä löydetä pikanavigointikomennoilla.
+Kun asetus on käytössä, NVDA käsittelee niitä normaaleina taulukkoina (ts. lukee [asiakirjojen muotoiluasetusten #DocumentFormattingSettings] mukaisesti sekä löytää ne pikanavigointikomennoilla).
+Kun asetus on poissa käytöstä, asettelutaulukoita ei lueta eikä löydetä pikanavigointikomennoilla.
 Taulukoiden sisältö näytetään kuitenkin tavallisena tekstinä.
-Asetus on oletusarvoisesti pois käytöstä.
+Asetus on oletusarvoisesti poissa käytöstä.
 
 ==== Elementtien lukemisen määrittäminen ====
-Katso [Asiakirjojen muotoiluasetukset -valintaikkunassa #Asiakirjojenmuotoiluasetukset] olevia asetuksia määrittääksesi luettavat elementit, kuten linkit, otsikot ja taulukot.
+Katso [Asiakirjojen muotoiluasetukset -valintaikkunassa #DocumentFormattingSettings] olevia asetuksia määrittääksesi luettavat elementit, kuten linkit, otsikot ja taulukot.
   
 ==== Automaattinen vuorovaikutustila kohdistuksen muuttuessa ====
 Kun tämä valintaruutu on valittuna, vuorovaikutustila otetaan käyttöön, jos kohdistus muuttuu.
@@ -987,7 +991,7 @@ Jos esim. verkkosivua nuolinäppäimillä selattaessa tullaan muokkauskentän ko
 ==== Ilmaise vuorovaikutus- ja selaustilat äänimerkillä ====
 Jos tämä asetus on käytössä, NVDA soittaa äänimerkin vaihtaessaan selaus- ja vuorovaikutustilojen välillä sen sijaan, että siitä ilmoitettaisiin puheella.
 
-+++ Asiakirjojen muotoiluasetukset (NVDA+Control+D) +++[Asiakirjojenmuotoiluasetukset]
++++ Asiakirjojen muotoiluasetukset (NVDA+Control+D) +++[DocumentFormattingSettings]
 Tämä valintaikkuna löytyy Asetukset-valikon "Asiakirjojen muotoilu..." -kohdasta.
 
 Useimmilla tämän valintaikkunan valintaruuduilla voidaan määrittää, minkä tyyppisiä muotoilutietoja halutaan kuulla automaattisesti liikutettaessa kohdistinta asiakirjoissa.
@@ -1011,7 +1015,7 @@ Seuraavien tietojen lukeminen voidaan määrittää:
 - Linkit
 - Otsikot
 - Listat
-- Sisennykselliset kappaleenvaihdot
+- Sisennetyt kappaleet
 - Kiintopisteet
 - Kehykset
 -
@@ -1051,7 +1055,7 @@ Toisella tämän valintaikkunan valintaruudulla voidaan määrittää, onko korv
 Säännöllinen lauseke on erikoismerkkejä sisältävä merkkiyhdistelmä, jonka avulla voidaan täsmätä useampaan kuin yhteen merkkiin kerrallaan, pelkkiin numeroihin tai pelkkiin kirjaimiin.
 Säännöllisiä lausekkeita ei käsitellä tässä käyttöoppaassa, mutta internetistä löytyy useita asiaa käsitteleviä oppaita.
 
-+++ Välimerkkien ja symboleiden puhuminen +++[Symboleidenpuhuminen]
++++ Välimerkkien ja symboleiden puhuminen +++[SymbolPronunciation]
 Tässä valintaikkunassa voidaan muuttaa välimerkkien ja muiden symboleiden lukutapaa sekä tasoa, jolla ne puhutaan.
 
 Symbolia muutetaan valitsemalla se Symbolit-listasta.
@@ -1085,7 +1089,7 @@ Huomaa kuitenkin, että tätä asetusta voidaan muuttaa Yleiset asetukset -valin
 Asetukset voidaan tallentaa manuaalisesti milloin tahansa valitsemalla NVDA-valikosta Tallenna asetukset -vaihtoehto.
 
 Mikäli asetuksia muutettaessa sattuu erehdys, tallennetut asetukset voidaan palauttaa valitsemalla NVDA-valikosta Palauta tallennetut asetukset.
-Asetukset voidaan lisäksi palauttaa alkuperäisiin oletusarvoihinsa valitsemalla vaihtoehto Palauta oletusasetukset, joka löytyy myös NVDA-valikosta.
+Asetukset voidaan lisäksi palauttaa alkuperäisiin oletusarvoihin valitsemalla vaihtoehto Palauta oletusasetukset, joka löytyy myös NVDA-valikosta.
 
 Seuraavista näppäinkomennoista voi myös olla hyötyä:
 %kc:beginInclude
@@ -1094,10 +1098,83 @@ Seuraavista näppäinkomennoista voi myös olla hyötyä:
 | Palauta asetukset | NVDA+Control+R | NVDA+Control+R | Palauttaa kerran painettaessa viimeksi tallennetut asetukset. Kolmesti painaminen palauttaa oletusasetukset. |
 %kc:endInclude
 
-++ Asetustiedostot ja käyttäjäprofiilit ++
-NVDA:n massamuistiversiot tallentavat kaikki asetukset, käyttäjän omat sovellusmoduulit ja ajurit hakemistossaan olevaan userConfig-nimiseen hakemistoon.
+++ Asetusprofiilit ++
+Voit joskus tarvita eri asetuksia eri tilanteissa.
+Saatat esimerkiksi haluta, että sisennysten lukeminen on käytössä tekstiä muokattaessa tai että fonttimääreiden lukeminen on käytössä asiakirjaa oikoluettaessa.
+Tämä on mahdollista NVDA:n asetusprofiileja käyttäen.
 
-Asennetut NVDA:n versiot tallentavat kaikki asetukset, käyttäjän omat sovellusmoduulit ja ajurit erityiseen Windowsin käyttäjäprofiilissa olevaan NVDA-hakemistoon.
+Asetusprofiili sisältää vain ne asetukset, joita profiilia muokattaessa muutetaan.
+Useimpia asetuksia voidaan muuttaa asetusprofiileissa, paitsi Yleiset asetukset -valintaikkunassa olevia, joita käytetään kaikkialla.
+
+Asetusprofiilit voidaan ottaa käyttöön manuaalisesti.
+Ne voidaan ottaa käyttöön myös automaattisesti käynnistimien, kuten tiettyyn sovellukseen siirtymisen  johdosta.
+
++++ Perushallinta +++
+Asetusprofiileja hallitaan valitsemalla NVDA-valikosta "Asetusprofiilit..."-vaihtoehto.
+Voit käyttää myös näppäinkomentoa:
+%kc:beginInclude
+- NVDA+Control+P: Näyttää Asetusprofiilit-valintaikkunan.
+-
+%kc:endInclude
+
+Tämän valintaikkunan ensimmäinen säädin on profiililista, josta voit valita jonkin käytettävissä olevista profiileista.
+Tällä hetkellä muokkaamasi profiili on valittuna valintaikkunaa avatessasi.
+Käytössä olevista profiileista näytetään myös lisätietoa, joka ilmaisee, ovatko ne manuaalisesti tai käynnistimellä käyttöönotettavia ja/tai muokattavia.
+
+Voit uudelleennimetä tai poistaa profiilin painamalla Nimeä uudelleen- tai Poista-painikkeita.
+
+Sulje valintaikkuna painamalla Sulje-painiketta.
+
++++ Profiilin luominen +++
+Luo profiili painamalla Uusi-painiketta.
+
+Uusi profiili -valintaikkunassa voit kirjoittaa profiilille nimen.
+Voit myös valita, miten profiilia tulisi käyttää.
+Mikäli haluat käyttää profiilia vain manuaalisesti, valitse Ota käyttöön manuaalisesti, joka on oletusarvoisesti valittuna.
+Valitse muussa tapauksessa käynnistin, jonka tulisi ottaa profiili automaattisesti käyttöön.
+Mikäli et ole kirjoittanut profiilille nimeä, käynnistimen valitseminen täyttää sen puolestasi.
+Katso [alta #ConfigProfileTriggers] lisätietoja käynnistimistä.
+
+Luo profiili ja sulje valintaikkuna painamalla OK, jonka jälkeen voit muokata profiilia.
+
++++ Manuaalinen käyttöönotto +++[ConfigProfileManual]
+Voit ottaa profiilin käyttöön manuaalisesti valitsemalla sen ja painamalla Käytä manuaalisesti -painiketta.
+Muita profiileja voidaan edelleen ottaa käyttöön käynnistimien avulla, mutta manuaalisesti käyttöönotetun profiilin asetukset ovat etusijalla.
+Jos esimerkiksi linkkien lukeminen on käytössä nykyiselle sovellukselle käynnistimellä käyttöönotettavassa profiilissa mutta poissa käytöstä manuaalisesti käyttöönotettavassa, linkkejä ei tällöin lueta.
+Mikäli olet kuitenkin vaihtanut puheääntä käynnistimellä käyttöönotettavassa profiilissa mutta et manuaalisesti käyttöönotetussa, tällöin käytetään käynnistimellä käyttöönotettavan profiilin puheääntä.
+Muokkaamasi asetukset tallennetaan manuaalisesti käyttöönottamaasi profiiliin.
+Voit poistaa manuaalisesti käyttöönotetun profiilin käytöstä valitsemalla sen Asetusprofiilit-valintaikkunasta ja painamalla Poista käytöstä manuaalisesti -painiketta.
+
++++ ´Käynnistimet +++[ConfigProfileTriggers]
+Voit vaihtaa eri käynnistimillä käyttöönotettavia profiileja painamalla Asetusprofiilit-valintaikkunassa Käynnistimet-painiketta.
+
+Käynnistimet-lista näyttää käytettävissä olevat käynnistimet, joita ovat:
+- Nykyinen sovellus: Käytetään siirtyessäsi nykyiseen sovellukseen.
+- Lue kaikki: Käytetään Lue kaikki -komennolla luettaessa.
+-
+
+Voit vaihtaa käynnistimellä automaattisesti käyttöönotettavaa profiilia valitsemalla ensin käynnistimen ja sitten Profiili-yhdistelmäruudusta haluamasi profiilin.
+Mikäli et halua käyttää profiilia, voit valita (normaalit asetukset) -vaihtoehdon.
+
+Palaa Asetusprofiilit-valintaikkunaan painamalla Sulje.
+
++++ Profiilin muokkaaminen +++
+Jos olet ottanut profiilin käyttöön manuaalisesti, kaikki muuttamasi asetukset tallennetaan siihen.
+Muussa tapauksessa asetukset tallennetaan viimeisimpään käynnistimellä käyttöönotettuun profiiliin.
+Jos esimerkiksi olet liittänyt profiilin Muistio-sovellukseen, kaikki muutetut asetukset tallennetaan tähän profiiliin Muistion ollessa aktiivisena.
+Mikäli manuaalisesti tai käynnistimellä käyttöönotettavaa profiilia ei ole, kaikki muuttamasi asetukset tallennetaan normaaleihin asetuksiin.
+
+Voit muokata lue kaikki -toimintoon liitettyä profiilia [ottamalla sen käyttöön manuaalisesti. #ConfigProfileManual]
+
++++ Käynnistimien tilapäinen käytöstäpoistaminen +++
+Kaikkien käynnistimien käytöstäpoistaminen voi joskus olla tarpeen.
+Saatat esimerkiksi haluta muokata manuaalisesti käyttöönotettua profiilia tai normaaleja asetuksiasi ilman, että käynnistimillä käyttöönotettavat profiilit häiritsevät.
+Voit tehdä tämän valitsemalla Asetusprofiilit-valintaikkunassa Poista kaikki käynnistimet käytöstä tilapäisesti -valintaruudun.
+
+++ Asetustiedostojen sijainti ++
+NVDA:n massamuistiversio tallentaa kaikki asetuksensa, käyttäjän omat sovellusmoduulit ja ajurit hakemistossaan olevaan userConfig-nimiseen hakemistoon.
+
+Asennettu NVDA:n versio tallentaa kaikki asetuksensa, käyttäjän omat sovellusmoduulit ja ajurit erityiseen Windowsin käyttäjäprofiilissa olevaan NVDA-hakemistoon.
 Tämä tarkoittaa, että jokaisella järjestelmän käyttäjällä voi olla omat NVDA-asetuksensa.
 Asennetun NVDA:n asetushakemistoon päästään valitsemalla Käynnistä-valikosta Ohjelmat -> NVDA -> Selaa käyttäjän asetushakemistoa.
 
@@ -1162,7 +1239,7 @@ Katso lisätietoja kehittäjän oppaasta [NVDA:n verkkosivuston Development-osio
 ++ Lataa liitännäiset uudelleen ++
 Tällä voidaan ladata uudelleen sovellusmoduulit ja yleisliitännäiset ilman NVDA:n uudelleenkäynnistystä, mistä voi olla hyötyä kehittäjille.
 
-+ Tuetut puhesyntetisaattorit +[Tuetutpuhesyntetisaattorit]
++ Tuetut puhesyntetisaattorit +[SupportedSpeechSynths]
 Tässä kappaleessa on tietoja NVDA:n tukemista puhesyntetisaattoreista.
 Kattavampi luettelo ilmaisista ja kaupallisista syntetisaattoreista, joita on mahdollista ostaa ja ladata NVDA:lla käytettäväksi, on osoitteessa [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
 
@@ -1179,14 +1256,14 @@ Valittavissa on myös useita muunnelmia, jotka saavat puheäänen kuulostamaan e
 ++ Microsoft Speech API versio 4 (SAPI 4) ++
 SAPI4 on Microsoftin vanhempi ohjelmistopuhesyntetisaattoreiden standardi.
 Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Ääniasetukset-valintaikkunasta #Ääniasetukset] tai [Syntetisaattorin asetusrenkaasta #Syntetisaattorinasetusrengas]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Ääniasetukset-valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI4-syntetisaattoreiden puheäänet.
 
 Mikäli SAPI 4 -puheääniä on asennettuna, mutta syntetisaattori ei näy NVDA:n syntetisaattorilistassa, on asennettava SAPI 4.0:n ajonaikaiset binäärit, jotka ovat ladattavissa osoitteesta http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
 
 ++ Microsoft Speech API versio 5 (SAPI 5) ++
 SAPI 5 on Microsoftin standardi ohjelmistopuhesyntetisaattoreille.
 Monia tätä standardia noudattavia puhesyntetisaattoreita voidaan ostaa tai ladata ilmaiseksi eri yrityksiltä ja verkkosivustoilta. Tietokoneellasi on myös luultavasti esiasennettuna vähintään yksi SAPI 5 -puheääni.
-Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Ääniasetukset-valintaikkunasta #Ääniasetukset] tai [Syntetisaattorin asetusrenkaasta #Syntetisaattorinasetusrengas]) sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
+Kun NVDA:ssa käytetään tätä syntetisaattoria, käytettävissä olevien puheäänten lista (valitaan [Ääniasetukset-valintaikkunasta #VoiceSettings] tai [Syntetisaattorin asetusrenkaasta #SynthSettingsRing]) sisältää kaikkien asennettujen SAPI5-syntetisaattoreiden puheäänet.
 
 ++ Microsoft Speech Platform ++
 Microsoft Speech Platform tarjoaa useille kielille puheääniä, joita käytetään tavallisesti palvelinpohjaisten puhesovellusten kehittämiseeen.
@@ -1206,13 +1283,13 @@ Tämä on kaupallinen italiankielinen puhesyntetisaattori.
 Se on asennettava tietokoneelle, jotta sitä voidaan käyttää NVDA:lla.
 Katso lisätietoja Audiologicin verkkosivustolta osoitteesta www.audiologic.it.
 
-Tämä syntetisaattori ei tue [tavaustoimintoa #Tavaustoiminto].
+Tämä syntetisaattori ei tue [tavaustoimintoa #VoiceSpellingFunctionality].
 
-++ Newfon ++[Newfon]
+++ Newfon ++
 Newfon on Sergey Shishmintzevin tekemä ilmainen venäjää ja ukrainaa puhuva syntetisaattori.
 Se on ladattavissa venäläisen NVDA-yhteisösivuston lataukset-osiosta osoitteesta http://ru.nvda-community.org/?page_id=10
 
-Tämä syntetisaattori ei tue [tavaustoimintoa #Tavaustoiminto].
+Tämä syntetisaattori ei tue [tavaustoimintoa #VoiceSpellingFunctionality].
 
 ++ Nuance Vocalizer for NVDA ++
 Nuance Vocalizer on Nuance Communications, Inc.:n kehittämä ja Tiflotecnia, Lda:n erityisesti NVDA:ta varten paketoima kaupallinen ja korkealaatuinen puhesyntetisaattori.
@@ -1222,7 +1299,7 @@ Kaikki syntetisaattorin osat ja puheäänet toimitetaan lisäosapaketteina, mik�
 Saat lisätietoja Nuance Vocalizer for NVDA:sta ja sen ostamisesta tuotteen verkkosivustolta osoitteesta [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
 Prosenttiosuus tämän tuotteen myynnistä lahjoitetaan NV Accessille NVDA:n jatkokehityksen rahoittamiseksi.
 
-+ Tuetut pistenäytöt +[Tuetutpistenaytot]
++ Tuetut pistenäytöt +[SupportedBrailleDisplays]
 Tässä kappaleessa on tietoja NVDA:n tukemista pistenäytöistä.
 
 ++ Freedom Scientific Focus/PAC Mate ++
@@ -1396,7 +1473,7 @@ Malleissa, joissa on ohjaustappi:
 %kc:endInclude
 
 ++ hedo ProfiLine USB ++
-[Hedo Reha-Technikin  http://www.hedo.de/] hedo ProfiLine USB -pistenäyttöä tuetaand.
+[Hedo Reha-Technikin  http://www.hedo.de/] hedo ProfiLine USB -pistenäyttöä tuetaan.
 Sen käyttämiseksi on asennettava valmistajan toimittamat USB-ajurit.
 
 Seuraavassa on tämän pistenäytön näppäinkomennot NVDA:ta käytettäessä.
@@ -1460,7 +1537,7 @@ Katso näytön käyttöohjeesta kuvaukset näppäinten paikoista.
 %kc:endInclude
 
 ++ HIMS Braille Sense/Braille EDGE ++
-NVDA tukee [HIMS:in http://www.hims-inc.com/] Braille Sense- ja Braille EDGE -pistenäyttöjä USB-liitännällä tai Bluetoothilla kytkettyinä.
+NVDA tukee [HIMS:in http://www.hims-inc.com/] Braille Sense- ja Braille EDGE -pistenäyttöjä USB-liitäntää tai Bluetooth-yhteyttä käytettäessä.
 Mikäli käytetään USB-liitäntää, on tietokoneelle asennettava HIMS:in ajurit.
 
 Seuraavassa on näiden pistenäyttöjen näppäinkomennot NVDA:ta käytettäessä.
@@ -1727,7 +1804,7 @@ Seuraavia malleja tuetaan:
 - BrailleNote Apex (USB- ja bluetooth-liitännät)
 -
 
-Käytettävä portti on määritettävä pistenäytön asetuksista, jos laitteesi tukee useampaa kuin yhtä liitäntätyyppiä.
+Käytettävä portti on määritettävä pistenäytön omista asetuksista, jos laitteesi tukee useampaa kuin yhtä liitäntätyyppiä.
 Katso lisätietoja BrailleNoten käsikirjasta.
 Portin määrittäminen voi olla tarpeen myös NVDA:n Pistenäytön asetukset -valintaikkunassa.
 Mikäli laite on liitetty USB:llä tai bluetoothilla, voidaan portiksi määrittää käytettävissä olevista vaihtoehdoista riippuen "Automaattinen", "USB" tai "Bluetooth".
@@ -1789,7 +1866,7 @@ Katso [BRLTTY:n näppäintaulukoiden ohjetta http://mielke.cc/brltty/doc/drivers
 + Edistyneet aiheet +
 
 ++ Edistynyt symboleiden puhumisen mukauttaminen ++
-Välimerkkien ja muiden symboleiden lukutapaa voidaan mukauttaa enemmänkin kuin mitä [Välimerkkien ja symboleiden puhuminen #Symboleidenpuhuminen] -valintaikkunassa on mahdollista.
+Välimerkkien ja muiden symboleiden lukutapaa voidaan mukauttaa enemmänkin kuin mitä [Välimerkkien ja symboleiden puhuminen #SymbolPronunciation] -valintaikkunassa on mahdollista.
 Voidaan esimerkiksi määrittää, lähetetäänkö symboli syntetisaattorille sellaisenaan (esim. tauon tai äänensävyn muutoksen aikaansaamiseksi) ja lisätä omia symboleita.
 
 Tämä tehdään muokkaamalla NVDA:n käyttäjän asetushakemistossa olevaa symbolitiedostoa.

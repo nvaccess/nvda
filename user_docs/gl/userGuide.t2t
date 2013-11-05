@@ -220,11 +220,11 @@ Mentres esteas na axuda de entrada, premendo calquera tecla ou realizando calque
 As ordes actuais non se executarán mentres se esté no modo de axuda de entrada.
 
 ++ O Menú NVDA ++
-O menú NVDA permíteche controlar as opcións do NVDA, acceder á axuda, gardar/voltar á túa configuración, Modificar os diccionarios da fala, ler o ficheiro do log, e saír do NVDA.
+O menú NVDA permíteche controlar as opcións do NVDA, acceder á axuda, gardar/voltar á túa configuración, Modificar os diccionarios da fala, ler o ficheiro do rexistro, e saír do NVDA.
 
 Para despregar o menú NVDA dende calquer lugar de Windows mentres NVDA se está a executar, preme NVDA+n no teclado ou realiza un doble toque con 2 dedos na pantalla tactil.
 Tamén podes despregar o menú NVDA a través da bandexa de sistema de windows. 
-Ou facendo clic co o botón dereito sobre o icono NVDA atopado na bandexa de sistema, ou accediendo á bandexa de sistema premendo a tecla co logo de windows+B, flecha abaixo ata o icono de  NVDA e premendo a tecla aplicacións atopada seguidamente á tecla de control da dereita na maioría dos teclados. 
+Ou facendo clic co o botón dereito sobre o icono NVDA atopado na bandexa de sistema, ou accedendo á bandexa de sistema premendo a tecla co logo de windows+B, flecha abaixo ata o icono de  NVDA e premendo a tecla aplicacións atopada seguidamente á tecla de control da dereita na maioría dos teclados. 
 Cando apareza o menú, podes utilizar as teclas de cursor para navegar polo menú, e a tecla intro para activar un elemento. 
 
 ++ Ordes Básicas do NVDA ++
@@ -586,8 +586,8 @@ Esta opción é unha casiña de verificación que, cando se marca, di ó NVDA qu
 Esta opción é unha casiña de verificación que che permite elexir se si ou se non apareze un diálogo cando saias do NVDA que che pregunte se che gostaría saír ou non do NVDA. 
 Cando estea marcada, un diálogo aparecerá cando intentes saír do NVDA preguntándoche se queres ou non saír.
 
-==== Nivel do Log ====
-Este é un cadro combinado que che permite elexir canto NVDA porá no log segundo se executa. 
+==== Nivel do Rexistro ====
+Este é un cadro combinado que che permite elexir canto NVDA porá no rexistro segundo se executa. 
 Xeralmente os usuarios non deberían necesitar tocar esto xa que non é demasiado amigable. 
 Sen embargo se queres proporcionar información nun informe sobre un fallo etc, entón poderá ser unha boa opción.
 
@@ -1138,9 +1138,11 @@ Mira [máis abaixo #ConfigProfileTriggers] para máis información acerca dos di
 Premendo Aceptar crearase o perfil e pecharase o cadro de diálogo de configuración de perfiles para que podas editalo.
 
 +++ Activación Manual +++[ConfigProfileManual]
-Podes activar manualmente un perfil seleccionando un perfil e premendo o botón Activación Manual/edición.
+Podes activar manualmente un perfil seleccioanndo un perfil e premendo o botón Activación Manual.
 Unha vez activado, aínda se poden activar outros perfiles debido ós disparadores, pero as opcións do perfil activado manualmente teñen prioridade.
-Ademáis, as opcións que modifiques gardaranse nese perfil.
+Por exemplo, se un perfil se dispara para a aplicación actual e o anunciado de ligas está activado nese perfil, pero desactivado no perfil activado manualmente, as ligas non se anunciarán.
+Nembargantes, se cambiaches a voz no perfil disparado, pero nunca se cambióu no perfil activado manualmente, utilizarase a voz a partires do perfil disparado.
+Os valores que se modifiquen gardaranse no perfil activado manualmente.
 Para desactivar un perfil activado manualmente, selecciónao no cadro de diálogo Perfiles de configuración e preme o botón desactivar Manual.
 
 +++ Disparadores +++[ConfigProfileTriggers]
@@ -1182,11 +1184,11 @@ Para cambiar como se configura NVDA nas pantallas de logon/UAC, configura a NVDA
 
 + Ferramentas Extra +
 
-++ Visualizador do Log ++
-O visualizador do log, atopado en Ferramentas no menú NVDA, permítenche ver toda a saída que ocurrira ata agora dende cando iniciaches NVDA por última vez.
+++ Visualizador do Rexistro ++
+O visualizador do rexistro, atopado en Ferramentas no menú NVDA, permítenche ver toda a saída que ocurrira ata agora dende cando iniciaches NVDA por última vez.
 
-Ademáis de ler o contido, tamén podes gardar unha copia do ficheiro do log, ou refrescar o visualizador tal que se amose a saída máis recente dende que o visualizador do Log foi aberto.
-Estas accións están dispoñibles baixo o menú de visualizador do Log.
+Ademáis de ler o contido, tamén podes gardar unha copia do ficheiro do rexistro, ou refrescar o visualizador tal que se amose a saída máis recente dende que o visualizador do rexistro foi aberto.
+Estas accións están dispoñibles baixo o menú de visualizador do Rexistro.
 
 ++ Visualizador de Voz ++
 Para desenroladores de Software videntes ou xente demostrando NVDA a unha audiencia vidente, está dispoñible unha ventá flotante que che permite ver todo o texto que NVDA estea falando actualmente.
