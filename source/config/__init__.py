@@ -709,7 +709,12 @@ class ConfigManager(object):
 		if not profile:
 			return
 		profile.triggered = False
-		self.profiles.remove(profile)
+		try:
+			self.profiles.remove(profile)
+		except ValueError:
+			# This is probably due to the user resetting the configuration.
+			log.debugWarning("Profile not active when exiting trigger")
+			return
 		self._handleProfileSwitch()
 
 	@contextlib.contextmanager
