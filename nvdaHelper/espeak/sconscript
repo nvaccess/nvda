@@ -85,7 +85,7 @@ tempSrcDir=Dir('src')
 
 #make a temp copy of src, but using the windows dll version of speech.h
 winFiles=['speech.h','stdafx.h']
-for f in env.Glob(espeakRepo.Dir('src/*').abspath):
+for f in env.Glob(espeakRepo.abspath+'/src/*'):
 	if f.name.lower() in winFiles: continue
 	env.Command(tempSrcDir.File(f.name),f,Copy('$TARGET','$SOURCE'))
 for f in winFiles:
@@ -128,16 +128,16 @@ phonemeAndDictDataFiles=[env.Command(espeakDataDir.File(f.name),f,Copy('$TARGET'
 recursiveCopy(espeakRepo.Dir('espeak-data\\voices'),espeakDataDir.Dir('voices'))
 
 #Copy in the extra variants
-for f in env.Glob(Dir('variants').abspath+'\\*'):
+for f in env.Glob(Dir('variants').abspath+'/*'):
 	env.Command(espeakDataDir.File('voices\\!v\\%s'%f.name),f,Copy("$TARGET","$SOURCE"))
 
 #Compile all dictionaries
-for f in env.Glob(espeakRepo.Dir('dictsource/*_rules').abspath):
+for f in env.Glob(espeakRepo.abspath+'/dictsource/*_rules'):
 	extraSources=[] #[f.File(f.name.split('_')[0]+x) for x in '_list','_listx']
 	dictFile=env.Command(espeakDataDir.File(f.name.split('_')[0]+'_dict'),[f,[x for x in extraSources if os.path.isfile(x.abspath)]],espeak_compileDict_action)
 	env.Depends(dictFile,[espeakLib,espeakDataDir.Dir('voices'),phonemeAndDictDataFiles])
 	#Dictionaries can not be compiled in parallel, force SCons not to do this
-	env.SideEffect('_espeak_compileDict',dictFile)
+	#env.SideEffect('_espeak_compileDict',dictFile)
 
 env.Requires(synthDriversDir,espeakDataDir)
 env.Install(synthDriversDir,espeakLib)
