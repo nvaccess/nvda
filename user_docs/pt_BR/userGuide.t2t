@@ -784,6 +784,10 @@ Se esta caixa de seleção estiver marcada, a tecla Insert extendida (que encont
 ==== Usar Insert do Teclado Numérico Como uma Tecla Modificadora do NVDA ====
 Se esta caixa de seleção estiver marcada, o Insert do bloco numérico poderá também ser utilizado como uma tecla modificadora do NVDA.
 
+Caso nenhuma tecla seja escolhida como modificadora do NVDA, poderá ser impossível executar certos comandos.
+Por isso, o Diálogo de Opções de Teclado exibirá uma mensagem de erro se todas as teclas estiverem desselecionadas quando você pressionar Ok.
+ Após fechar a mensagem de erro, será necessário selecionar pelo menos uma destas para então poder pressionar Ok e fechar corretamente o diálogo.
+
 %kc:setting
 ==== Falar Caracteres Digitados ====
 Tecla: NVDA+2
@@ -795,6 +799,9 @@ Consiste numa caixa de seleção que quando marcada informa ao NVDA para anuncia
 Tecla: NVDA+3
 
 Quando está selecionada faz com que o NVDA anuncie todas as palavras que você introduzir através do teclado.
+
+==== Permitir Ler Dinamicamente Durante a Leitura Contínua ====
+Se ativada, certos comandos de navegação (tais como os de navegação rápida no modo de navegação ou mover-se por linha ou parágrafo) não interromperão a leitura contínua, e ao invés disso, a leitura contínua saltará para a nova posição e continuará a leitura.
 
 ==== Apita se digitar letras minúsculas com caps lock ligado ====
 Quando marcada, um beep de alerta será ouvido caso digite uma letra em conjunto com a tecla shift.

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr 2013.1:6039\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-09-23 13:59+0545\n"
+"PO-Revision-Date: 2013-11-04 08:37+0545\n"
 "Last-Translator: Him Prasad Gautam <drishtibachak@gmail.com>\n"
 "Language-Team: हिम प्रसाद गौतम <himjee@yahoo.com>\n"
 "Language: Nepali\n"
@@ -1445,12 +1445,13 @@ msgid "not checked"
 msgstr "टिक छैन"
 
 #. Translators: A message informing the user that there are errors in the configuration file.
-#, fuzzy
 msgid ""
 "Your configuration file contains errors. Your configuration has been reset "
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
-msgstr "सङ्केत नक्सा फाइलमा गल्ती छ । विस्तृत विवरण त्रुटी लगत पुस्तिकामा हेर्नु होला ।"
+msgstr ""
+"तपाइको अभियोजन फाइलमा त्रुटी छ ।तपाइको अनुकूलन कारखानाको अनुकूलनमा बदलियो ।\n"
+"गल्तिको विस्तृत विवरण लगत फाइलमा उल्लिखित छ ।"
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -1514,36 +1515,30 @@ msgid "copied to clipboard"
 msgstr "क्लिप पाटीमा प्रतिलिपि उतारियो"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Text review"
-msgstr "वस्तुको समीक्षा"
+msgstr "पाठ समीक्षा"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Object navigation"
-msgstr "विचरण"
+msgstr "वस्तु विचरण"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "System caret"
-msgstr "प्रणाली &Caret पछ्याऊ ।"
+msgstr "प्रणाली Caret"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Mouse"
-msgstr ""
+msgstr "सुलसुले"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Speech"
-msgstr "मौनता"
+msgstr "वाचन"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Configuration"
-msgstr "अभियोजन बचत गरियो"
+msgstr "अभियोजन"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Braille"
 msgstr "ब्रेल"
 
@@ -1553,23 +1548,20 @@ msgid "Tools"
 msgstr "औजारहरू"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Touch screen"
-msgstr "पर्दा बन्द छ ।"
+msgstr "स्पर्स पर्दा"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "System focus"
-msgstr "प्रणाली &केन्द्रीयता पछ्याऊ ।"
+msgstr "प्रणाली केन्द्रीयता"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "System status"
-msgstr "स्थिति पट्टी"
+msgstr "प्रणाली स्थिति "
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Input"
-msgstr ""
+msgstr "लगानी"
 
 #. Translators: This will be presented when the input help is toggled.
 msgid "input help on"
@@ -2427,21 +2419,18 @@ msgstr ""
 "दिनेछ ।"
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
-#, fuzzy
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "नेत्रवाणीको सामान्य अनुकूलताको पातो देखाउने छ ।"
+msgstr "नेत्रवाणी अभियोजनको पार्श्वचित्र पातो देखाउने छ ।"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Emulated system keyboard keys"
-msgstr "%s लाई थिच्दा प्रणाली कुञ्जीपाटीलाई उत्तेजित गर्छ"
+msgstr "अनुकरणीत प्रणाली कुञ्जीपाटी कुञ्जी"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Miscellaneous"
-msgstr ""
+msgstr "विविध"
 
 #. Translators: The name of a category of NVDA commands.
-#, fuzzy
 msgid "Browse mode"
 msgstr "उघार्ने मुद्रा"
 
@@ -2740,9 +2729,9 @@ msgstr "ल्यापटप"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#, fuzzy, python-format
+#, python-format
 msgid "unknown %s"
-msgstr "अज्ञात"
+msgstr "अज्ञात %s"
 
 msgid "on"
 msgstr "लाग्यो"
@@ -2758,12 +2747,11 @@ msgstr "खुल्यो"
 #. For example, in English, this might produce "laptop keyboard".
 #, python-format
 msgid "%s keyboard"
-msgstr ""
+msgstr "%s कुञ्जीपाटी"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#, fuzzy
 msgid "keyboard, all layouts"
-msgstr "&कुञ्जीपाटीको रूपरेखा"
+msgstr "कुञ्जीपाटी, सबै रूपरेखाहरू"
 
 #. Translators: The name of a language supported by NVDA.
 msgctxt "languageName"
@@ -2800,11 +2788,12 @@ msgid "%s cursor"
 msgstr "%s कर्सर"
 
 #. Translators: The description of the NVDA service.
-#, fuzzy
 msgid ""
 "Allows NVDA to run on the Windows Logon screen, UAC screen and other secure "
 "screens."
-msgstr "सन्झ्याल आरम्भ पर्दामा नेत्रवाणीलाइ सक्रिय बनाउ (प्रशासकीय अधिकार चाहिन्छ)"
+msgstr ""
+"नेत्रवाणीलाई सञ्झ्याल पर्दा, उपभोक्ता खाता नियन्त्रण पर्दा र अरू सुरक्षित पर्दामा कार्य "
+"गर्न सक्षम बनाउँछ ।"
 
 msgid "Type help(object) to get help about object."
 msgstr "वस्तु बारे जानकारी लीन help टङ्कण गर्ने (वस्तु) "
@@ -3371,18 +3360,16 @@ msgstr "पठाएको %s "
 #. Translators: this message is reported when there are no
 #. notes for translators to be presented to the user in Poedit.
 msgid "No notes for translators."
-msgstr ""
+msgstr "अनुवादकलाई कुनै टीप्पणी छैन ।"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'Notes for translators' window in poedit.
-#, fuzzy
 msgid "Could not find Notes for translators window."
-msgstr "प्रतिक्रिया सण्झ्याल फेला परेन ।"
+msgstr "अनुवादको सञ्झ्यालमा कुनै पनि टिप्पणी पाइएन ।"
 
 #. Translators: The description of an NVDA command for Poedit.
-#, fuzzy
 msgid "Reports any notes for translators"
-msgstr "&पढिरहेको पदावलीमा आएको परिवर्तन बताउ ।"
+msgstr "अनुवादकलाई कुनै टिप्पणि बताइ दिन्छ ।"
 
 #. Translators: this message is reported when NVDA is unable to find
 #. the 'comments' window in poedit.
@@ -3827,7 +3814,7 @@ msgstr "सङ्केत र &चिन्हको उच्चारण"
 
 #. Translators: The label for the menu item to open the Input Gestures dialog.
 msgid "I&nput gestures..."
-msgstr ""
+msgstr "&लगानी सङ्केत"
 
 #. Translators: The label for Preferences submenu in NVDA menu.
 msgid "&Preferences"
@@ -3869,28 +3856,24 @@ msgstr "आदेशको &छरितो सन्दर्भसूची"
 msgid "What's &new"
 msgstr "&नयाँ के छ ?"
 
-#, fuzzy
 msgid "NVDA &web site"
-msgstr "नेत्रवाणीको वेभ साइट"
+msgstr "नेत्रवाणीको &वेभ साइट"
 
 #. Translators: The label for the menu item to view NVDA License document.
-#, fuzzy
 msgid "L&icense"
-msgstr "इजाजत"
+msgstr "&इजाजत"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
-#, fuzzy
 msgid "C&ontributors"
-msgstr "योगदान दिनेहरू"
+msgstr "&योगदान कर्ताहरू"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
 msgid "We&lcome dialog"
 msgstr "&स्वागत पाटी"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
-#, fuzzy
 msgid "&Check for update..."
-msgstr "अद्यावधिक जाँच्ने काम गर"
+msgstr "&अद्यावधिक जाँच्ने काम गर"
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
@@ -3901,9 +3884,8 @@ msgid "&Help"
 msgstr "&सहयोग"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
-#, fuzzy
 msgid "&Configuration profiles..."
-msgstr "अभियोजन लागू हुन्छ"
+msgstr "&अभियोजन पार्श्वचित्र"
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
@@ -4144,158 +4126,146 @@ msgid "Add-on Information"
 msgstr "थप-साधन सम्बन्धी जानकारी "
 
 #. Translators: The title of the Configuration Profiles dialog.
-#, fuzzy
 msgid "Configuration Profiles"
-msgstr "अभियोजन लागू हुन्छ"
+msgstr "अभियोजन पार्श्वचित्र"
 
 #. Translators: The label of the profile list in the Configuration Profiles dialog.
 msgid "&Profile"
-msgstr ""
+msgstr "&पार्श्वचित्र"
 
 #. Translators: The label of a button to create a new configuration profile.
 msgid "&New"
-msgstr ""
+msgstr "&नयाँ"
 
 #. Translators: The label of a button to rename a configuration profile.
 msgid "&Rename"
-msgstr ""
+msgstr "&नामाकरण"
 
 #. Translators: The label of a button to delete a configuration profile.
-#, fuzzy
 msgid "&Delete"
-msgstr "Delete"
+msgstr "&मेटाउ"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr ""
+msgstr "&उतेजना"
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr ""
+msgstr "अस्थायी &असक्षम सबै  उतेजकहरू "
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
-#, fuzzy
 msgid "(normal configuration)"
-msgstr "अभियोजन लाइ &बचत गर"
+msgstr "साधारण अभियोजन"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
-#, fuzzy
 msgid "editing"
 msgstr "सम्पादन"
 
 #. Translators: Reported for a profile which has been manually activated
 #. in the Configuration Profiles dialog.
 msgid "manual"
-msgstr ""
+msgstr "मानवीय"
 
 #. Translators: Reported for a profile which is currently triggered
 #. in the Configuration Profiles dialog.
 msgid "triggered"
-msgstr ""
+msgstr "उतेजित"
 
 #. Translators: An error displayed when activating a configuration profile fails.
-#, fuzzy
 msgid "Error activating profile."
-msgstr "%s भाषाको फाइलमा गल्ती पाइयो"
+msgstr "पार्श्वचित्र सक्रियतामा त्रुटी ।"
 
 #. Translators: The confirmation prompt displayed when the user requests to delete a configuration profile.
 msgid "Are you sure you want to delete this profile? This cannot be undone."
-msgstr ""
+msgstr "यो पार्श्वचित्र मेटाउने कुरामा तपाई  पक्का हुनु हुन्छ? यसलाई उल्टाउन सकिदैन ने!"
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
-#, fuzzy
 msgid "Confirm Deletion"
-msgstr "अभियोजन बचत गरियो"
+msgstr "हटाउने यकिन ।"
 
 #. Translators: An error displayed when deleting a configuration profile fails.
-#, fuzzy
 msgid "Error deleting profile."
-msgstr "अद्यावधिक डाउनलोडमा गल्ती "
+msgstr "पार्श्वचित्रलाई मेटाउँदा त्रुटी"
 
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
-#, fuzzy
 msgid "Manual deactivate"
-msgstr "सक्रिय बनाउ"
+msgstr "मानवीय निस्क्रियता"
 
 #. Translators: The label of the button to manually activate the selected profile
 #. in the Configuration Profiles dialog.
-#, fuzzy
 msgid "Manual activate"
-msgstr "सक्रिय बनाउ"
+msgstr "मानविय सक्रियता"
 
 #. Translators: The label of a field to enter a new name for a configuration profile.
 msgid "New name:"
-msgstr ""
+msgstr "नयाँ नाम"
 
 #. Translators: The title of the dialog to rename a configuration profile.
 msgid "Rename Profile"
-msgstr ""
+msgstr "पार्श्वचित्रको नामाकरण"
 
 #. Translators: An error displayed when renaming a configuration profile
 #. and a profile with the new name already exists.
 #. Translators: An error displayed when the user attempts to create a configuration profile which already exists.
 msgid "That profile already exists. Please choose a different name."
-msgstr ""
+msgstr "यो पार्श्वचित्र पहिले नै विद्यमान छ । कृपया फरक नाम रोज्नु होस् ।"
 
-#, fuzzy
 msgid "Error renaming profile."
-msgstr "अद्यावधिक डाउनलोडमा गल्ती "
+msgstr "पार्श्वचित्रको नामाकरण गर्दा त्रुटी"
 
 #. Translators: Displayed for the configuration profile trigger for the current application.
 #. %s is replaced by the application executable name.
-#, fuzzy, python-format
+#, python-format
 msgid "Current application (%s)"
-msgstr "हाल चालू अनुप्रयोग %s हो ।"
+msgstr "चालू अनुप्रयोग %s "
 
 #. Translators: Displayed for the configuration profile trigger for say all.
 msgid "Say all"
-msgstr ""
+msgstr "सबै बताउ"
 
 #. Translators: An error displayed when saving configuration profile triggers fails.
-#, fuzzy
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
-msgstr "अभियोजन बचत गर्न सकिएन- फाइल पठनिय प्रकृतिको भएर पो हो कि ।"
+msgstr "पार्श्वचित्र उतेजक अभियोजन बचतमा त्रुटी - सम्भवतः यो पठनीय मात्र फाइल हुनु पर्छ ।"
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
-msgstr ""
+msgstr "उतेजक पार्श्वचित्र"
 
 #. Translators: Displayed for a configuration profile trigger for an application.
 #. %s is replaced by the application executable name.
-#, fuzzy, python-format
+#, python-format
 msgid "%s application"
-msgstr "अनुप्रयोग"
+msgstr "%s अनुप्रयोग"
 
 #. Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 msgid "Triggers"
-msgstr ""
+msgstr "उतेजक"
 
 #. Translators: The label of the profile list in the Configuration Profile Triggers dialog.
 msgid "Profile"
-msgstr ""
+msgstr "पार्श्वचित्र"
 
 #. Translators: The title of the dialog to create a new configuration profile.
 msgid "New Profile"
-msgstr ""
+msgstr "नयाँ पार्श्वचित्र"
 
 #. Translators: The label of a field to enter the name of a new configuration profile.
 msgid "Profile name:"
-msgstr ""
+msgstr "पार्श्वचित्रको नाम"
 
 #. Translators: The label of a radio button to specify that a profile will be used for manual activation
 #. in the new configuration profile dialog.
-#, fuzzy
 msgid "Manual activation"
-msgstr "चलायमान"
+msgstr "मानिविय सक्रियता"
 
 msgid "Use this profile for:"
-msgstr ""
+msgstr "यो पार्श्वचित्रको प्रयोग गर"
 
 #. Translators: The confirmation prompt presented when creating a new configuration profile
 #. and the selected trigger is already associated.
@@ -4304,15 +4274,17 @@ msgid ""
 "will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
+"यो उतेजक पहिले अर्कै पार्श्वचित्र सित आवद्ध छ । यदी यसलाई लिइयो भने, यो उतेजक त्यस "
+"पार्श्वचित्रबाट हटेर यस सित आवद्ध हुने छ ।\n"
+"के यसै उतेजकलाई राख्ने हो?"
 
 #. Translators: The title of the warning dialog displayed when trying to copy settings for use in secure screens.
 msgid "Warning"
 msgstr "चेतावनी"
 
 #. Translators: An error displayed when creating a configuration profile fails.
-#, fuzzy
 msgid "Error creating profile - probably read only file system."
-msgstr "अभियोजन बचत गर्न सकिएन- फाइल पठनिय प्रकृतिको भएर पो हो कि ।"
+msgstr "पार्श्वचित्र सिर्जनामा त्रुटी - सम्भवतः यो पठनीय मात्र फाइल हुनु पर्छ ।"
 
 #. Translators: The prompt asking the user whether they wish to
 #. manually activate a configuration profile that has just been created.
@@ -4322,11 +4294,13 @@ msgid ""
 "usage.\n"
 "Do you wish to manually activate it now?"
 msgstr ""
+"यो पार्श्वचित्रलाई सम्पादन गर्न यसलाई मानविय रूपले नै सक्रिय बनाउनु पर्छ । सम्पादन सकिए "
+"पछीयसलाई साधारण रूपले काम गर्न तपाईले मानवीय रुपले निस्क्रिय बनाउनु पर्छ ।nके तपाइ "
+"मानवीय रुपले नै  यसलाई सक्रिय बनाउन चाहनु हुन्छ ?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
-#, fuzzy
 msgid "Manual Activation"
-msgstr "चलायमान"
+msgstr "मानिविय सक्रियता"
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 msgid "Updating NVDA"
@@ -4748,7 +4722,7 @@ msgstr "Enter कुञ्जीका लागि वाचन अवरूद
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr ""
+msgstr "सबै बताइने अवस्थामा वाचन &योजना अनुमति देउ"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -4762,7 +4736,7 @@ msgstr "आदेश &कुञ्जी बताउ"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 msgid "At least one key must be used as the NVDA key."
-msgstr ""
+msgstr "कम्तिमा एउटा कुञ्जीलाई नेत्रवाणी कुञ्जी बनाउनै पर्छ ।"
 
 #. Translators: This is the label for the mouse settings dialog.
 msgid "Mouse Settings"
@@ -5219,22 +5193,21 @@ msgstr "&तह"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for commands.
 msgid "Input Gestures"
-msgstr ""
+msgstr "सङ्केत लगानी"
 
 #. Translators: Describes a gesture in the Input Gestures dialog.
 #. {main} is replaced with the main part of the gesture; e.g. alt+tab.
 #. {source} is replaced with the gesture's source; e.g. laptop keyboard.
 msgid "{main} ({source})"
-msgstr ""
+msgstr "{main} ({source})"
 
 #. Translators: The prompt to enter a gesture in the Input Gestures dialog.
 msgid "Enter input gesture:"
-msgstr ""
+msgstr "लगानी सङ्केत प्रविष्टी गर्नु होस्:"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
-#, fuzzy
 msgid "Error saving user defined gestures - probably read only file system."
-msgstr "अभियोजन बचत गर्न सकिएन- फाइल पठनिय प्रकृतिको भएर पो हो कि ।"
+msgstr "उपभोक्ता रोजाई सङ्केत बचतमा त्रुटी - सम्भवतः यो पठनीय मात्र फाइल हुनु पर्छ ।"
 
 #. Translators: Information about NVDA's new laptop keyboard layout.
 msgid ""
@@ -5850,7 +5823,7 @@ msgstr "निर्धारित रङ्ग"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
-msgstr ""
+msgstr "{start} देखि {end} सम्म"
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
