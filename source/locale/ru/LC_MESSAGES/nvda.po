@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-10-31 18:57+0300\n"
+"PO-Revision-Date: 2013-11-08 13:23+0300\n"
 "Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
 "Language: Russian\n"
@@ -50,31 +50,31 @@ msgstr "alphanumeric"
 
 #. Translators: For Japanese character input: Hiragana input mode.
 msgid "hiragana"
-msgstr "hiragana"
+msgstr "хирагана"
 
 #. Translators: For Japanese character input: Katacana input mode.
 msgid "katakana"
-msgstr "katakana"
+msgstr "катакана"
 
 #. Translators: For Japanese character input: half katakana roman input mode.
 msgid "half katakana roman"
-msgstr "half katakana roman"
+msgstr "смешанный ввод катакана латинскими"
 
 #. Translators: For Japanese character input: Hiragana Roman input mode.
 msgid "hiragana roman"
-msgstr "hiragana roman"
+msgstr "хирагана латинскими"
 
 #. Translators: For Japanese character input: Katacana Roman input mode.
 msgid "katakana roman"
-msgstr "katakana roman"
+msgstr "катакана латинскими"
 
 #. Translators: a message when the IME open status changes to opened
 msgid "IME opened"
-msgstr "IME открыто"
+msgstr "Редактор метода ввода  открыт"
 
 #. Translators: a message when the IME open status changes to closed
 msgid "IME closed"
-msgstr "IME закрыто"
+msgstr "Редактор метода ввода закрыт"
 
 #. Translators: the label for an unknown language when switching input methods.
 msgid "unknown language"
@@ -1888,7 +1888,7 @@ msgstr "&Активировать"
 
 #. Translators: the message reported when there is no action to perform on the review position or navigator object.
 msgid "No action"
-msgstr "No action"
+msgstr "Нет действия"
 
 #. Translators: Input help mode message for activate current object command.
 msgid ""
@@ -2841,7 +2841,7 @@ msgstr "Сербский (Латинский)"
 
 #. Translators: the label for the Windows default NVDA interface language.
 msgid "User default"
-msgstr "поумолчанию"
+msgstr "По умолчанию"
 
 #. Translators: Reported when mouse cursor shape changes (example output: edit cursor).
 #, python-format
@@ -3288,7 +3288,7 @@ msgstr ""
 
 #. Translators: a message announcing a candidate's character and description.
 msgid "{symbol} as in {description}"
-msgstr "{symbol} as in {description}"
+msgstr "{symbol} как в {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
 msgid "{number} {candidate}"
@@ -3818,7 +3818,7 @@ msgstr "Настроить как и в каких случаях перемещ
 
 #. Translators: The label for the menu item to open Input Composition Settings dialog.
 msgid "&Input composition settings..."
-msgstr "&Настройки формирования ввода..."
+msgstr "&Формирование ввода азиатских символов..."
 
 msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
@@ -4074,7 +4074,7 @@ msgstr "Пакет"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
 msgid "Status"
-msgstr "Статус"
+msgstr "Состояние"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's version (example: version is 0.3).
 msgid "Version"
@@ -4818,12 +4818,12 @@ msgstr "прерывание речи для набираемых символо
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Speech interrupt for Enter key"
-msgstr "прерывание речи по клавише \"Enter\""
+msgstr "прерывание речи по клавише \"Ввод\""
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
 msgid "Allow skim &reading in Say All"
-msgstr "Разрешить беглое про&чтение в режиме \"читать всё\""
+msgstr "Разрешить беглое &чтение в режиме \"Читать всё\""
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings dialog.
@@ -4910,27 +4910,27 @@ msgstr "Настройки формирования ввода"
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Automatically report all available &candidates"
-msgstr "Автоматически сообщать о всех доступных &вариантах"
+msgstr "Автоматически читать все доступные &варианты"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Announce &selected candidate"
-msgstr "Объявлять вы&бранный вариант"
+msgstr "Читать вы&бранный вариант"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Always include short character &description when announcing candidates"
-msgstr "Всегда включать краткое &описание иероглифа при объявлении варианта"
+msgstr "Всегда включать краткое &описание иероглифа при чтении вариантов"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &reading string"
-msgstr "Сообщать об изменениях при &чтении строки"
+msgstr "Читать изменения строки пре&дварительного формирования"
 
 #. Translators: This is the label for a checkbox in the
 #. Input composition settings dialog.
 msgid "Report changes to the &composition string"
-msgstr "Сообщать об изменениях при &формировании строки"
+msgstr "Читать изменения строки формирования вв&ода"
 
 #. Translators: This is the label for the object presentation dialog.
 msgid "Object Presentation"
@@ -5031,7 +5031,7 @@ msgstr "Автоматическое &чтение страницы при ее 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
 msgid "Include l&ayout tables"
-msgstr "Включать м&акетные таблицы"
+msgstr "Включать таблицы, используем&ые для разметки"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings dialog.
@@ -5055,7 +5055,7 @@ msgstr "Форматирование документа"
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
 msgid "Announce formatting changes after the cursor (can cause a lag)"
-msgstr "Читать изменения формата после курсора (может вызвать отставание"
+msgstr "Читать изменения формата после курсора (может вызвать отставание)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings dialog.
@@ -5257,7 +5257,7 @@ msgstr "Привязать брайль к:"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 msgid "Read by &paragraph"
-msgstr "Читать по &параграфам"
+msgstr "Читать по &абзацам"
 
 #. Translators: The label for a setting in braille settings to enable word wrap (try to avoid spliting words at the end of the braille display).
 msgid "Avoid splitting &words when possible"

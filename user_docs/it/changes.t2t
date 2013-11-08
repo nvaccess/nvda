@@ -3,6 +3,42 @@
 
 %!includeconf: ../changes.t2tconf
 
+= 2013.3 =
+
+== Novità ==
+- Nei documenti Microsoft Word vengono ora annunciati i campi dei form (#2295)
+- Nvda è ora in grado di annunciare le informazioni di revisione in Microsoft Word quando tieni traccia delle modifiche è attivo. Si noti che affinché tali informazioni siano lette, è necessario abilitare anche l'opzione leggi revisioni (disattivata di default) nella finestra di dialogo impostazioni documento di NVDA (1670)
+- Vengono gestiti correttamente gli elenchi a tendina a partire da Microsoft Excel 2003 fino al 2010, sia nell'apertura che nell'esplorazione (#3382)
+- Nelle impostazioni tastiera è stata aggiunta una nuova opzione chiamata 'consenti lettura veloce in modalità dire tutto', che permette l'esplorazione di un documento in modalità navigazione tramite i comandi rapidi di navigazione e movimento in lettura per righe / paragrafi, mentre si rimane in modalità dire tutto. Questa opzione è disattivata di default. (#2766)
+- è stata introdotta la voce 'gesti e tasti di immissione' per permettere una personalizzazione facilitata dei tasti rapidi o dei gesti (come la pressione di un tasto sulla tastiera) per i comandi di NVDA. (#1532)
+- Ora si possono avere, grazie ai profili, configurazioni diverse a seconda della situazione in cui ci si trova. I profili possono essere attivati manualmente, oppure in concomitanza di un determinato evento (per esempio un'applicazione specifica) (#87, #667, #1913)
+- In Microsoft Excel, le celle che contengono collegamenti vengono ora annunciate correttamente come link. (#3072)
+- In Microsoft Excel, viene annunciata all'utente l'esistenza di un commento in una cella. (#2921)
+
+== Bug corretti ==
+- Zend studio ora funziona allo stesso modo di Eclipse. (#3420)
+- Viene annunciato correttamente il cambiamento di stato di alcune caselle di controllo nella finestra di dialogo regole in Outlook 2010. (#3063)
+- NVDA annuncia lo stato 'bloccato' per alcuni controlli presenti in Firefox. (#3372)
+- è ora possibile associare script a combinazioni di tasti che contengano anche alt o il tasto Windows.  In precedenza, se ad esempio veniva premuto il tasto alt in uno script, ciò avrebbe causato l'apertura di un menu. (#3472)
+- La selezione del testo per i documenti in modalità navigazione (ad esempio con ctrl+shift+fine) non provoca più il cambio layout tastiera nei sistemi dove ve n'era installato più d'uno. (#3472)
+- Internet Explorer non provocherà più errori alla chiusura di NVDA. (#3397)
+- In alcuni computer molto nuovi, i movimenti fisici ed altri eventi non vengono più considerati come se si trattasse di pressioni di tasti. Talvolta infatti questo errato comportamento portava allo zittimento della sintesi vocale. (#3468)
+- NVDA si comporta correttamente in Poedit 1.5.7. Se vi sono utenti che utilizzano versioni meno recenti dovrebbero aggiornare. (#3485)
+- NVDA è in grado di leggere documenti protetti in Microsoft Word 2010, senza che quest'ultimo vada in crash. (#1686)
+- Se il pacchetto d'installazione di NVDA viene eseguito con un parametro sconosciuto dalla riga di comando, NVDA non andrà più in un loop senza fine. (#3463)
+- NVDA non commette più errori nell'annunciare testo alternativo o grafici e oggetti in Microsoft Word se l'attributo alt Text contiene virgolette o caratteri non standard. (#3579)
+- è stato corretto il calcolo del numero di elementi negli elenchi orizzontali nella modalità navigazione. (#2151)
+- Quando si preme ctrl+a in un foglio di lavoro in Microsoft Excel, viene letta correttamente la selezione aggiornata. (#3043)
+- NVDA ora è in grado di leggere correttamente documenti XHTML in Microsoft Internet Explorer e altri controlli MSHTML. (#3542)
+- Finestra di dialogo Impostazioni tastiera: Se non viene selezionato alcun tasto che agisca come tasto NVDA, potrebbe risultare impossibile accedere ad alcuni comandi dello screen reader. Pertanto, verrà visualizzato un messaggio d'errore nell'eventualità tutti i tasti siano deselezionati.
+- In Microsoft Excel, NVDA ora distingue correttamente tra l'unione di celle e selezione di celle multiple. (#3567)
+- Il cursore in modalità navigazione non viene più posizionato in maniera errata all'uscita da una finestra di dialogo o da un'applicazione interna del documento. (#3145)
+
+
+== Cambiamenti per sviluppatori(in inglese) ==
+- You can specify the category to be displayed to the user for scripts using the scriptCategory attribute on ScriptableObject classes and the category attribute on script methods. See the documentation for baseObject.ScriptableObject for more details. (#1532)
+
+
 = 2013.2 =
 
 == Novità ==
