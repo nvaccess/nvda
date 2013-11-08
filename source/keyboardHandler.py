@@ -519,11 +519,13 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		except KeyError:
 			pass
 		for key in keys:
+			try:
+				# vkCodes.byName values are (vk, ext)
+				vk = vkCodes.byName[key][0]
+			except KeyError:
+				# This could be a fake vk.
+				vk = key
 			label = localizedKeyLabels.get(key, key)
-			vk = vkCodes.byName.get(key)
-			# vkCodes.byName values are (vk, ext)
-			if vk:
-				vk = vk[0]
 			if vk in cls.NORMAL_MODIFIER_KEYS:
 				names.append(label)
 			else:
