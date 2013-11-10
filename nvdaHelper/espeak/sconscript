@@ -24,7 +24,7 @@ def recursiveCopy(sourceDir,targetDir):
 def _compilePhonemeAndDictData_buildEmitter(target,source,env):
 	#dictSources=[File(x) for x in glob(source[0].abspath+"\\*_*")]
 	#dictSources=env.Glob(source[0].abspath+'\\*_*')
-	phsource=source[1]
+	phsource=env.Flatten([[Dir(topDir).File(f) for f in files] for topDir,subdirs,files in os.walk(source[1].abspath)])
 	sources=[phsource]
 	targets=[target[0].File(f) for f in ['intonations','phondata','phondata-manifest','phonindex','phontab']]
 	if False: #for dictName in set(f.name.split('_')[0] for f in dictSources):
