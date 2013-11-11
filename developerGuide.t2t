@@ -380,6 +380,7 @@ The order for gesture binding lookup is:
 You should specify a description of the script in the function's docstring which describes the command for users.
 For example, this is reported to users when in Input Help mode and shown in the Input Gestures dialog.
 You specify the docstring by setting a "__doc__" attribute on the script function.
+The script will not appear in the Input Gestures dialog unless this is specified.
 
 You can also specify a category for a script so that it can be grouped with other similar scripts.
 For example, a script in a global plugin which adds browse mode quick navigation keys may be categorized under the "Browse mode" category.

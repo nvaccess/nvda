@@ -38,6 +38,8 @@
 
 == Changes for Developers ==
 - You can specify the category to be displayed to the user for scripts using the scriptCategory attribute on ScriptableObject classes and the category attribute on script methods. See the documentation for baseObject.ScriptableObject for more details. (#1532)
+- config.save is deprecated and may be removed in a future release. Use config.conf.save instead. (#667)
+- config.validateConfig is deprecated and may be removed in a future release. Add-ons which need this should provide their own implementation. (#667, #3632)
 
 
 = 2013.2 =
