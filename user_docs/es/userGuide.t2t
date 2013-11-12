@@ -220,7 +220,7 @@ Mientras estés en la ayuda de entrada, pulsando cualquier tecla o realizando cu
 Las órdenes actuales no se ejecutarán mientras se esté en el modo de ayuda de entrada.
 
 ++ El Menú NVDA ++
-El menú NVDA te permite controlar las opciones de NVDA, acceder a la ayuda, guardar/volver a tu configuración, Modificar los diccionarios del habla, leer el fichero del log, y salir de NVDA.
+El menú NVDA te permite controlar las opciones de NVDA, acceder a la ayuda, guardar/volver a tu configuración, Modificar los diccionarios del habla, leer el fichero de registro, y salir de NVDA.
 
 Para desplegar el menú NVDA desde cualquier lugar de Windows mientras NVDA se esté ejecutando, pulsa NVDA+n en el teclado o realiza un doble toque con 2 dedos en la pantalla táctil. 
 También puedes desplegar el menú NVDA a través de la bandeja de sistema de Windows. 
@@ -586,8 +586,8 @@ Esta opción es una casilla de verificación que, cuando se marca, dice a NVDA q
 Esta opción es una casilla de verificación que te permite elegir si sí o si no aparece un diálogo cuando salgas de NVDA que te pregunte si te gustaría salir o no de NVDA. 
 Cuando esté marcada, un diálogo aparecerá cuando intentes salir de NVDA preguntándote si quieres o no salir.
 
-==== Nivel del Log ====
-Este es un cuadro combinado que te permite elegir cuánto NVDA pondrá en el log según se ejecuta. 
+==== Nivel del Registro ====
+Este es un cuadro combinado que te permite elegir cuánta info pondrá NVDA en el registro según se ejecute. 
 Generalmente los usuarios no deberían necesitar tocar esto ya que no es demasiado amigable. 
 Sin embargo si estás queriendo proporcionar información en un informe sobre un fallo etc., entonces podrá ser una buena opción.
 
@@ -1138,9 +1138,11 @@ Mira [más abajo #ConfigProfileTriggers] para más información acerca de los di
 Pulsando Aceptar se creará el perfil y se cerrará el cuadro de diálogo de configuración de perfiles para que puedas editarlo.
 
 +++ Activación Manual +++[ConfigProfileManual]
-Puedes activar manualmente un perfil seleccionando un perfil y pulsando el botón Activación Manual/edición.
+Puedes activar manualmente un perfil seleccionándolo y pulsando el botón Activación Manual.
 Una vez activado, todavía se pueden activar otros perfiles debido a los disparadores, pero las opciones del perfil activado manualmente tienen prioridad.
-Además, las opciones que modifiques se guardarán en ese perfil.
+Por ejemplo, si un perfil se dispara para la aplicación actual y el anunciado de enlaces está activado en ese perfil, pero desactivado en el perfil activado manualmente, los enlaces no se anunciarán.
+Sin embargo, si has cambiado la voz en el perfil disparado, pero nunca se ha cambiado en el perfil activado manualmente, se utilizará la voz a partir del perfil disparado.
+Los valores que se modifiquen se guardarán en el perfil activado manualmente.
 Para desactivar un perfil activado manualmente, selecciónalo en el cuadro de diálogo Perfiles de configuración y pulsa el botón desactivar Manual.
 
 +++ Disparadores +++[ConfigProfileTriggers]
@@ -1178,15 +1180,15 @@ Para optener tu directorio de opciones para una versión instalada de NVDA, en e
    
 Las opciones para NVDA cuando se ejecuta en las pantallas de autentificación (logon) o de UAC se almacenan en el directorio SystemConfig en el directorio de instalación de NVDA.
 Normalmente esta configuración no debería ser tocada.
-Para cambiar cómo se configura NVDA en las pantallas de logon/UAC, configura a NVDA cómo desees mientras estás autentificado en Windows, guarda la configuración y luego pulsa el botón "Utilizar ajustes guardados actualmente en el inicio de sesión y otras pantallas seguras en el diálogo Opciones Generales.
+Para cambiar cómo se configura NVDA en las pantallas de logon/UAC, configura a NVDA como desees mientras estás autentificado en Windows, guarda la configuración y luego pulsa el botón "Utilizar ajustes guardados actualmente en el inicio de sesión y otras pantallas seguras en el diálogo Opciones Generales.
 
 + Herramientas Extra +
 
-++ Visualizador del Log ++
-El visualizador del log, encontrado en Herramientas en el menú NVDA, te permiten ver toda la salida que haya ocurrido hasta ahora desde cuando iniciaste NVDA por última vez.
+++ Visualizador del Registro ++
+El visualizador del Registro, encontrado en Herramientas en el menú NVDA, te permite ver toda la salida que haya ocurrido hasta ahora desde cuando iniciaste NVDA por última vez.
 
-Además de leer el contenido, también puedes guardar una copia del fichero de log, o refrescar el visualizador tal que se muestre la salida más reciente desde que el visualizador de Log fue abierto.
-Estas acciones están disponibles bajo el menú de visualizador de Log.
+Además de leer el contenido, también puedes guardar una copia del fichero de registro, o refrescar el visualizador tal que se muestre la salida más reciente desde que el visualizador de registro fue abierto.
+Estas acciones están disponibles bajo el menú de visualizador de Registro.
 
 ++ Visualizador de Voz ++
 Para desarrolladores de Software videntes o gente demostrando NVDA a una audiencia vidente, está disponible una ventana flotante que te permite ver todo el texto que NVDA esté verbalizando actualmente.

@@ -876,7 +876,7 @@ Wenn diese Option aktiviert ist, wird die Sprache jedesmal unterbrochen, wenn Si
 ==== Sprache beim Drücken der Eingabetaste unterbrechen ====
 Ist diese Option aktiviert, so wird die Sprache jedesmal unterbrochen, wenn Sie die Eingabetaste drücken. Diese Option ist standardmäßig aktiviert.
 
-==== Navigation während des Lesens erlauben ====
+==== Navigation während "alles lesen" erlauben ====
 Wenn diese Option aktiviert ist, Unterbrechen Navigationsbefehle nun nicht mehr den Lesevorgang beim Lesen eines Dokuments mit nvda+Pfeil ab. Hierzu gehören sowohl die Schnellnavigationstasten als auch die Befhle zum Navigieren zwischen Zeilen und  Absätzen. Diese Option ist standardmäßig deaktiviert.
  
 ==== Signaltöne beim Eingeben von Kleinbuchstaben abspielen, wenn die Dauergroßschreibung aktiv ist ====
@@ -1213,8 +1213,10 @@ Weiter Informationen über Auslöser finden Sie  [weiter unten #ConfigProfileTri
 Wenn Sie den Dialog mit OK schließen, wird auch der Konfigurationsprofil-Dialog geschlossen, sodass sie das Profil bearbeiten können.
 
 +++ manuelle Aktivierung +++[ConfigProfileManual]
-Sie können ein Konfigurationsprofil manuell aktivieren, indem Sie den Schalter "manuell aktivieren/bearbeiten" verwenden.
+Sie können ein Konfigurationsprofil manuell aktivieren, indem Sie den Schalter "manuell aktivieren" verwenden.
 Wenn Sie einmal ein Profil manuell aktiviert haben, sind Auslöser für automatisch aktivierte profile zwar weiterhin aktiv, Einstellungen in manuell aktivierten Profilen haben jedoch Vorrang.
+Beispiel 1: gegeben sei ein automatisch aktiviertes Profil für die aktuelle Anwendung, in dem die Ansage von Links aktiviert ist. Außerdem sei ein manuell aktiviertes Profil gegeben, in dem die Ansage von Links deaktiviert ist. In diesem Fall werden Links nicht angesagt.
+Beispiel 2: Sie haben in einem automatisch aktivierten Profil für die aktuelle Anwendung die Stimmeneinstellungen geändert. In einem manuell aktivierten (und momentan aktien) Profil haben Sie die Stimmeneinstellungen jedoch noch nie aufgerufen. In diesem Fall wird die Stimme ausgelöst durch das automatisch aktivierte Profil geändert.
 Jegliche Einstellungen, die sie ab sofort ändern, werden im manuell aktivierten Profil gespeichert.
 Um ein manuell aktiviertes Profil wieder zu deaktivieren, drücken Sie den Schalter "manuell deaktivieren".
 

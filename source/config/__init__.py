@@ -17,6 +17,39 @@ from logHandler import log
 import shlobj
 import baseObject
 
+def validateConfig(configObj,validator,validationResult=None,keyList=None):
+	"""
+	@deprecated: Add-ons which need this should provide their own implementation.
+	"""
+	import warnings
+	warnings.warn("config.validateConfig deprecated. Callers should provide their own implementation.",
+		DeprecationWarning, 2)
+	if validationResult is None:
+		validationResult=configObj.validate(validator,preserve_errors=True)
+	if validationResult is True:
+		return None #No errors
+	if validationResult is False:
+		return "Badly formed configuration file"
+	errorStrings=[]
+	for k,v in validationResult.iteritems():
+		if v is True:
+			continue
+		newKeyList=list(keyList) if keyList is not None else []
+		newKeyList.append(k)
+		if isinstance(v,dict):
+			errorStrings.extend(validateConfig(configObj[k],validator,v,newKeyList))
+		else:
+			#If a key is invalid configObj does not record its default, thus we need to get and set the default manually 
+			defaultValue=validator.get_default_value(configObj.configspec[k])
+			configObj[k]=defaultValue
+			if k not in configObj.defaults:
+				configObj.defaults.append(k)
+			errorStrings.append("%s: %s, defaulting to %s"%(k,v,defaultValue))
+	return errorStrings
+
+#: @deprecated: Use C{conf.validator} instead.
+val = Validator()
+
 #: The configuration specification
 #: @type: ConfigObj
 confspec = ConfigObj(StringIO(
@@ -175,6 +208,15 @@ conf = None
 def initialize():
 	global conf
 	conf = ConfigManager()
+
+def save():
+	"""
+	@deprecated: Use C{conf.save} instead.
+	"""
+	import warnings
+	warnings.warn("config.save deprecated. Use config.conf.save instead.",
+		DeprecationWarning, 2)
+	conf.save()
 
 def saveOnExit():
 	"""Save the configuration if configured to save on exit.
@@ -406,7 +448,7 @@ class ConfigManager(object):
 		#: Whether profile triggers are enabled (read-only).
 		#: @type: bool
 		self.profileTriggersEnabled = True
-		self.validator = Validator()
+		self.validator = val
 		self.rootSection = None
 		self._shouldHandleProfileSwitch = True
 		self._pendingHandleProfileSwitch = False
@@ -610,14 +652,21 @@ class ConfigManager(object):
 				del allTriggers[trigSpec]
 			self.saveProfileTriggers()
 		# Check if this profile was active.
-		for index, profile in enumerate(self.profiles):
+		delProfile = None
+		for index in xrange(len(self.profiles) - 1, -1, -1):
+			profile = self.profiles[index]
 			if profile.name == name:
-				break
-		else:
+				# Deactivate it.
+				del self.profiles[index]
+				delProfile = profile
+		if not delProfile:
 			return
-		# Deactivate it.
-		del self.profiles[index]
 		self._handleProfileSwitch()
+		if self._suspendedTriggers:
+			# Remove any suspended triggers referring to this profile.
+			for trigger in self._suspendedTriggers.keys():
+				if trigger._profile == delProfile:
+					del self._suspendedTriggers[trigger]
 
 	def renameProfile(self, oldName, newName):
 		"""Rename a profile.
@@ -674,7 +723,7 @@ class ConfigManager(object):
 			self._suspendedTriggers[trigger] = "enter"
 			return
 
-		profile = self._getProfile(trigger.profile)
+		profile = trigger._profile = self._getProfile(trigger.profileName)
 		profile.triggered = True
 		if len(self.profiles) > 1 and self.profiles[-1].manual:
 			# There's a manually activated profile.
@@ -698,9 +747,16 @@ class ConfigManager(object):
 				self._suspendedTriggers[trigger] = "exit"
 			return
 
-		profile = self._getProfile(trigger.profile)
+		profile = trigger._profile
+		if not profile:
+			return
 		profile.triggered = False
-		self.profiles.remove(profile)
+		try:
+			self.profiles.remove(profile)
+		except ValueError:
+			# This is probably due to the user resetting the configuration.
+			log.debugWarning("Profile not active when exiting trigger")
+			return
 		self._handleProfileSwitch()
 
 	@contextlib.contextmanager
@@ -1022,9 +1078,9 @@ class ProfileTrigger(object):
 		The associated profile (if any) will be activated.
 		"""
 		try:
-			self.profile = conf.triggersToProfiles[self.spec]
+			self.profileName = conf.triggersToProfiles[self.spec]
 		except KeyError:
-			self.profile = None
+			self.profileName = None
 			return
 		try:
 			conf._triggerProfileEnter(self)
@@ -1037,13 +1093,13 @@ class ProfileTrigger(object):
 		"""Signal that this trigger no longer applies.
 		The associated profile (if any) will be deactivated.
 		"""
-		if not self.profile:
+		if not self.profileName:
 			return
 		try:
 			conf._triggerProfileExit(self)
 		except:
 			log.error("Error exiting trigger %s, profile %s"
-				% (self.spec, self.profile), exc_info=True)
+				% (self.spec, self.profileName), exc_info=True)
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()

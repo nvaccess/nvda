@@ -795,6 +795,15 @@ Door dit selectievakje aan te kruisen wordt de uitgebreide Insert- (INS-) toets 
 ==== Numerieke Insert-toets als NVDA-toets gebruiken ====
 Door het selectievakje aan te kruisen wordt de Insert-toets op het numerieke toetsenbord als NVDA-toets ingesteld.
 
+Als er geen toets als NVDA-toets wordt gekozen, zijn bepaalde 
+commando's mogelijk niet beschikbaar.
+Er zal dan ook een foutmelding verschijnen in het dialoogvenster 
+Muisinstellingen zodra er op OK wordt gedrukt terwijl geen enkele toets 
+is aangevinkt.
+Nadat u via OK het venster met de foutmelding hebt gesloten, moet u 
+van tenminste één toets het selectievakje aanvinken voordat u het dialoogvenster correct kunt 
+afsluiten met de OK-knop.
+
 %kc:setting
 ==== Getypte karakters uitspreken ====
 Toets: NVDA+2
@@ -1108,7 +1117,80 @@ De volgende toetscombinaties kunnen ook handig zijn:
 | Configuratie terugzetten | NVDA+control+r | NVDA+control+r | Door eenmaal drukken  worden de instellingen hersteld zoals deze waren toen u de configuratie de laatste keer hebt opgeslagen. Bij driemaal drukken worden de fabrieksinstellingen hersteld. |
 %kc:endInclude
 
-++ Configuratiebestanden en gebruikersprofielen ++
+++ Configuratieprofielen ++
+Het kan voorkomen dat u bepaalde instellingen wilt die gelden voor bepaalde situaties.
+Zo kan het zijn dat u wilt dat "inspringen melden" aan staat als u een tekst aan het bewerken bent, of dat het melden van opmaakeigenschappen zoals lettertype, grootte, etc. is ingeschakeld als u tekst naleest ter correctie.
+Dit kunt u in NVDA doen met behulp van configuratieprofielen.
+
+Een configuratieprofiel bevat uitsluitend de instellingen die gewijzigd worden bij het bewerken van het profiel.
+De meeste instellingen kunnen in een configuratieprofiel worden aangepast behalve waar het gaat om instellingen die gelden voor NVDA in zijn geheel. Deze vindt u onder de kop Algemeen bij Opties in het NVDA-menu.
+
+U kunt Configuratieprofielen handmatig activeren.
+Ze kunnen ook automatisch geactiveerd  "worden met behulp van een zogenaamde "trigger". Het overschakelen naar een applicatie, bij voorbeeld, kan de "trigger" zijn die een bepaald configuratieprofiel activeert.
+
++++ Basisbeheer +++
+U kunt configuratieprofielen beheren door in het NVDA-menu Configuratieprofielen te selecteren.
+U kunt hiervoor ook de volgende toetscombinatie gebruiken:
+%kc:beginInclude
+- NVDA+control+p: Het dialoogvenster Configuratieprofielen  weergeven.
+-
+%kc:endInclude
+
+Het eerste element in dit dialoogvenster is de profiellijst waaruit u een van de beschikbare profielen kunt selecteren.
+Bij het openen van het dialoogvenster wordt het profiel dat u aan het bewerken bent, geselecteerd.
+Verder wordt van de actieve profielen aangegeven of ze handmatig, of automatisch (via trigger),  worden aangezet en / of dat ze in bewerking zijn.
+
+U kunt een profiel hernoemen of verwijderen door respectievelijk op de knop "Hernoemen" of "Verwijderen" te drukken.
+
+U sluit het dialoogvenster met de knop "Sluiten".
+
++++ Een Profiel aanmaken +++
+U kunt een profiel aanmaken door op de knop "Nieuw" te drukken.
+
+In het dialoogvenster Nieuw Profiel, kunt u een naam voor het profiel opgeven.
+Hier selecteert u ook hoe dit profiel gebruikt moet worden.
+Als u het profiel uitsluitend handmatig wilt gebruiken, selecteert u "handmatigactiveren", wat de standaardinstelling is.
+In het andere geval selecteert u een trigger die dit profiel automatisch moet activeren.
+Als u geen naam voor het profiel hebt ingevoerd, zal gemakshalve bij het selecteren van een trigger de ermee verbonden naam worden overgenomen.
+Ga naar [ #ConfigProfileTriggers] hierna voor meer informatie over triggers.
+
+Door op OK te drukken wordt het profiel aangemaakt en het dialoogvenster gesloten. Vervolgens kunt u het profiel bewerken.
+
++++ Handmatig activeren +++[ConfigProfileManual]
+U kunt  een profiel handmatig activeren  door een profiel te selecteren en dan op de knop Handmatig Activeren te drukken
+Naast een handmatig geactiveerd profiel blijft het mogelijk met behulp van triggers andere profielen aan te zetten, maar de instellingen van een handmatig geactiveerd profiel krijgen prioriteit ten koste van de automatische instellingen. 
+Als er bij voorbeeld voor de huidige toepassing een profiel automatisch (via een trigger)is geactiveerd en als in dat profiel het melden van links is ingeschakeld terwijl in het handmatig geactiveerde profiel dit niet is gebeurd, dan worden links niet gemeld. 
+Als u echter de stem in het via een trigger geactiveerde profiel hebt veranderd, maar als u die niet gewijzigd hebt in het handmatig geactiveerde profiel, dan zal de stem uit het automatisch (via trigger) geactiveerde profiel worden gebruikt. 
+Instellingen die u wijzigt worden opgeslagen in het handmatig geactiveerde profiel.
+U kunt een dergelijk profiel déactiveren door het te selecteren  en op de knop "Handmatig déactiveren" te drukken.
+
++++ Triggers +++[ConfigProfileTriggers]
+Door in het dialoogvenster Configuratieprofielen op de knop Triggers te drukken, kunt u instellen welke profielen met behulp van de verschillende triggers automatisch geactiveerd moeten worden.
+
+In de lijst staan de volgende beschikbare Triggers: 
+- Huidige toepassing: wordt ingeschakeld wanneer u de toepassing start.
+- Alles voorlezen : wordt geactiveerd bij gebruik van het commando Alles voorlezen.
+-
+
+Om het profiel te wijzigen dat automatisch moet worden geactiveerd voor een bepaalde triggerselecteert u eerst de trigger en vervolgens het gewenste profiel in de lijst met profielen. 
+Als u niet wilt dat er een profiel wordt gebruikt, selecteert u "Normale Configuratie".
+
+Druk op de knop Sluiten om naar het dialoogvenster Configuratieprofielen terug te gaan.
+
++++ Een Profiel bewerken +++
+Als u handmatig een profiel hebt geactiveerd, worden alle door u gewijzigde instellingen in dat profiel opgeslagen.
+Als dat niet het geval is,zullen wijzigingen die u in de instellingen aanbrengt worden opgeslagen in het meest recente door een trigger geactiveerde profiel.
+Als u bij voorbeeld een profiel gekoppeld hebt aan de toepassing Kladblok, dan zullen, zodra u naar Kladblok overschakelt,  gewijzigde instellingen naar dat profiel worden opgeslagen.
+Als er geen handmatig geactiveerd profiel is, en er ook geen sprake is van een automatisch geactiveerd profiel dan worden gewijzigde instellingen opgeslagen in de normale configuratie. 
+
+Om het profiel dat gekoppeld is aan alles voorlezen te bewerken, moet u dat profiel [#ConfigProfileManual handmatig activeren]. 
+
++++ Triggers tijdelijk uitschakelen +++
+Het kan van pas komen dat alle triggers tijdelijk kunnen worden uitgeschakeld. 
+U wilt bij voorbeeld een handmatig geactiveerd profiel of de normale configuratie bewerken zonder last te hebben van door triggers geactiveerde profielen 
+Dit kunt u doen door een vinkje te zetten in het selectievakje bij "Alle triggers tijdelijk uitschakelen" in het dialoogvenster Configuratieprofielen.
+
+++ De Locatie van Configuratiebestanden ++
 Als u een draagbare versie van NVDA hebt, worden alle instellingen, door de gebruiker gedefinieerde app-modules en aangepaste drivers opgeslagen in een sub-map genaamd user config. Deze map bevindt zich in de NVDA hoofdmap.
 
 Als u NVDA op een laptop of pc hebt geïnstalleerd, worden alle instellingen, door de gebruiker gedefinieerde app-modules en aangepaste drivers  opgeslagen in een aparte map die te vinden is in de map van de aangemelde gebruiker onder de Windows gebruikersprofielen.

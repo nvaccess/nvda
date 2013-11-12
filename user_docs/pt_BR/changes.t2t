@@ -11,11 +11,14 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
 == Novas características ==
 - Campos de formulário agora são anunciados em documentos do Microsoft word. (#2295)
-- O NVDA agora consegue anunciar informações de revisão no Microsoft Word quando monitorar alterações está abilitado. Note que Anunciar revisões de editores, no diálogo de opções de documento do NVDA (desligada por padrão), tem que também estar abilitada para que elas sejam anunciadas. (#1670)
+- O NVDA agora anuncia informações de revisão no Microsoft Word quando monitorar alterações está abilitado. Note que Anunciar revisões de editores, no diálogo de opções de documento do NVDA (desativada por padrão), tem que também estar abilitada para que elas sejam anunciadas. (#1670)
 - Listas suspensas no Microsoft Excel 2003 a 2010 são agora anunciadas quando abertas e se navega ao longo delas. (#3382)
-- Uma nova opção no diálogo de opções de teclado, "Permitir leitura dinâmica durante a leitura contínua", possibilita navegar ao longo dum documento com os comandos de navegação rápida e linha / parágrafo em modo de navegação e manter-se em leitura contínua. Essa opção vem desligada por padrão. (#2766)
-- Existe agora um diálogo de gestos para entrada com o fim de possibilitar uma personalização mais simples dos gestos de entrada (tais como as teclas do teclado) para comandos do NVDA. (#1532)
-
+- Uma nova opção no diálogo de opções de teclado, "Permitir leitura dinâmica durante a leitura contínua", possibilita navegar ao longo dum documento com os comandos de navegação rápida e linha / parágrafo em modo de navegação e manter-se em leitura contínua. Essa opção está desativada por padrão. (#2766)
+- Existe agora um diálogo de gestos de entrada com o fim de possibilitar uma personalização mais simples dos gestos de entrada (tais como as teclas do teclado) para comandos do NVDA. (#1532)
+- Agora é possível ter diferentes configurações para diferentes situações usando perfis de configuração. Os Perfis podem ser ativados manualmente ou automaticamente (isto é, para um aplicativo em particular). (#87, #667, #1913)
+ - No Microsoft Excel, as células que são links agora são anunciadas como links. (#3042)
+- No Microsoft Excel, a existência de comentários numa célula agora é anunciada para o usuário. (#2921)
+ 
 
 == Correção de falhas ==
 - O Zend Studio agora funciona igual ao Eclipse. (#3420)

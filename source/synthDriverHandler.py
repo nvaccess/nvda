@@ -18,6 +18,7 @@ import speechDictHandler
 import synthDrivers
 
 _curSynth=None
+_audioOutputDevice=None
 
 def initialize():
 	config.addConfigDirsToPythonPackagePath(synthDrivers)
@@ -59,7 +60,7 @@ def getSynth():
 	return _curSynth
 
 def setSynth(name,isFallback=False):
-	global _curSynth
+	global _curSynth,_audioOutputDevice
 	if name is None: 
 		_curSynth.terminate()
 		_curSynth=None
@@ -88,6 +89,7 @@ def setSynth(name,isFallback=False):
 			changeVoice(newSynth,voice)
 			newSynth.saveSettings() #save defaults
 		_curSynth=newSynth
+		_audioOutputDevice=config.conf["speech"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"]=name
 		log.info("Loaded synthDriver %s"%name)
@@ -104,7 +106,7 @@ def setSynth(name,isFallback=False):
 
 def handleConfigProfileSwitch():
 	conf = config.conf["speech"]
-	if conf["synth"] != _curSynth.name:
+	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
 		setSynth(conf["synth"])
 		return
 	_curSynth.loadSettings(onlyChanged=True)

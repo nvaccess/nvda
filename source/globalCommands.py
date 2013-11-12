@@ -345,6 +345,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: reported when there are no other available review modes for this object 
 			ui.message(_("No next review mode"))
+	# Translators: Script help message for next review mode command.
 	script_reviewMode_next.__doc__=_("Switches to the next review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object")
 	script_reviewMode_next.category=SCRCAT_TEXTREVIEW
 
@@ -358,6 +359,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: reported when there are no  other available review modes for this object 
 			ui.message(_("No previous review mode"))
+	# Translators: Script help message for previous review mode command.
 	script_reviewMode_previous.__doc__=_("Switches to the previous review mode (e.g. object, document or screen) and positions the review position at the point of the navigator object") 
 	script_reviewMode_previous.category=SCRCAT_TEXTREVIEW
 
@@ -1163,9 +1165,11 @@ class GlobalCommands(ScriptableObject):
 	def script_braille_toggleTether(self, gesture):
 		if braille.handler.tether == braille.handler.TETHER_FOCUS:
 			braille.handler.tether = braille.handler.TETHER_REVIEW
+			# Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 			tetherMsg = _("review")
 		else:
 			braille.handler.tether = braille.handler.TETHER_FOCUS
+			# Translators: One of the options for tethering braille (see the comment on "braille tethered to" message for more information).
 			tetherMsg = _("focus")
 		# Translators: Reports which position braille is tethered to (braille can be tethered to either focus or review position).
 		ui.message(_("Braille tethered to %s") % tetherMsg)
@@ -1322,6 +1326,7 @@ class GlobalCommands(ScriptableObject):
 		index=(index+1)%len(touchHandler.availableTouchModes)
 		newMode=touchHandler.availableTouchModes[index]
 		touchHandler.handler._curTouchMode=newMode
+		# Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
 		ui.message(_("%s mode")%newMode)
 	# Translators: Input help mode message for a touchscreen gesture.
 	script_touch_changeMode.__doc__=_("cycles between available touch modes")

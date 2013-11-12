@@ -11,6 +11,8 @@ Qué hay de Nuevo en NVDA
 - Una nueva opción 'Permitir Lectura superficial en Verbalizar Todo' en el diálogo Opciones de Teclado permite la navegación por un documento con las órdenes de navegación rápida del modo navegación y movimientos de línea / párrafo, mientras permanece leyendo todo. Esta opción está desactivada de forma predeterminada. (#2766) 
 - Ahora hay un diálogo Gestos de Entrada para permitir la fácil personalización de los gestos de entrada(tales como teclas en el teclado) para órdenes de NVDA. (#1532)
 - Ahora puedes tener diferentes opciones para diferentes situaciones utilizando perfiles de configuración. Los perfiles se pueden activar de forma manual o automática(ej.: para una aplicación en particular). (#87, #667, #1913)
+- En Microsoft Excel, las celdas que son enlaces ahora se anuncian como enlaces. (#3042)
+- En Microsoft Excel, ahora se anuncia al usuario la existencia de comentarios en una celda. (#2921)
 
 
 == Corrección de fallos ==
@@ -30,6 +32,8 @@ Qué hay de Nuevo en NVDA
 - Al presionar control+e en una hoja de cálculo de Microsoft Excel, ahora se anunciará la selección actualizada. (#3043)
 - NVDA ahora puede leer correctamente los documentos XHTML en Microsoft Internet Explorer y otros controles MSHTML. (#3542)
 - Diálogo de Opciones de teclado: si no se ha seleccionado ninguna tecla para ser utilizada como la tecla NVDA, se presenta un error al usuario cuando se descarte el diálogo. Al menos una de las teclas debe ser seleccionada para el uso apropiado de NVDA. (#2871)
+- En Microsoft Excel, NVDA ahora anuncia celdas fusionadas de manera diferente a múltiples celdas seleccionadas. (#3567)
+- El cursor de modo navegación  ya no se coloca incorrectamente cuando se abandona un diálogo o aplicación dentro del documento. (#3145)
 
 
 == Cambios para Desarrolladores ==
@@ -318,7 +322,7 @@ Lo subrayable de esta versión incluye el soporte para la entrada de caracteres 
 
 
 == Cambios para Desarrolladores ==
-- El anterior fichero log ahora se copia en nvda-old.log en la inicialización de NVDA. Por lo tanto, si NVDA se bloquea o se reinicia, el registro de información  de esa sesión todavía es accesible para su inspección. (#916)
+- El anterior fichero de registro ahora se copia en nvda-old.log en la inicialización de NVDA. Por lo tanto, si NVDA se bloquea o se reinicia, el registro de información  de esa sesión todavía es accesible para su inspección. (#916)
 - La obtención de la propiedad de rol en chooseNVDAObjectOverlayClasses ya no causa que el rol sea incorrecto y por lo tanto no se anuncie en foco para ciertos objetos tales como consolas de órdenes de Windows y controles de Scintilla. (#2569)
 - Los menús de NVDA Preferencias, Herramientas y Ayuda ahora son accesibles como atributos en gui.mainFrame.sysTrayIcon llamándose preferencesMenu, toolsMenu y helpMenu, respectivamente. Esto permite a los plugins añadir elementos mucho más fácilmente a estos menús.
 - El script navigatorObject_doDefaultAction en globalCommands ha sido renombrado a review_activate.
@@ -442,12 +446,12 @@ Lo subrayable de esta versión incluye características para una lectura más fl
 - Los documentos de Microsoft Word se tratan correctamente como multi-línea. Esto causa que el braille se comporte de manera más adecuada cuando un documento se enfoque.
 - En Microsoft Internet Explorer, ya no ocurren errores cuando se enfoca sobre ciertos controles raros. (#2121)
 - Cambiar la puntuación y símbolos por el usuario ahora tendrá efecto inmediato, en lugar de requerir un reinicio de NVDA, o que se desactive el cambio automático de idioma.
-- Cuando se utiliza eSpeak, la voz ya no queda en silencio en algunos casos en el diálogo Guardar Como... del Visualizador de Log de NVDA. (#2145)
+- Cuando se utiliza eSpeak, la voz ya no queda en silencio en algunos casos en el diálogo Guardar Como... del Visualizador de Registro de NVDA. (#2145)
 
 
 == Cambios para desarrolladores ==
 - Ahora hay una Consola Python remota para situaciones donde la depuración remota es útil. Mira la Developer Guide para detalles.
-- La ruta base del código de NVDA ahora se quitó de los tracebacks en el log para mejorar legibilidad. (#1880)
+- La ruta base del código de NVDA ahora se quitó de los tracebacks en el registro para mejorar legibilidad. (#1880)
 - Los objetos TextInfo ahora tienen un método activate() para activar la posición representada por el TextInfo.
  - Esto se utiliza por el braille para activar la posición utilizando teclas de guiado del cursor en una pantalla braille. No obstante, podría haber otras llamadas en el futuro.
 - Los treeInterceptors y los NVDAObjects que sólo exponen una página de texto a la vez pueden soportar el cambio automático de página durante leer todo utilizando el textInfos.DocumentWithPageTurns mezclado. (#1978)
@@ -634,7 +638,7 @@ Lo subrayable en esta revisión incluye mejoras mayores concernientes a la puntu
 - Se han resuelto algunos problemas de conexión de USB con la pantalla braille MDV Lilli. (#241)
 - En Internet explorer y otros controles MSHTML, los espacios ya no se ignoran en modo navegación en ciertos casos (es decir después de un enlace).
 - En Internet Explorer y otros controles MSHTML, han sido eliminados algunos extraños cambios de línea en modo navegación. Específicamente, elementos HTML con un estilo de pantalla None ya no fuerza un salto de línea. (#1685)
-- Si NVDA no es capaz de iniciarse, el fracaso para reproducir el sonido de parada crítica de Windows ya no anula el mensaje de error crítico en el fichero de log.
+- Si NVDA no es capaz de iniciarse, el fracaso para reproducir el sonido de parada crítica de Windows ya no anula el mensaje de error crítico en el fichero de registro.
 
 
 == Cambios para Desarrolladores ==
@@ -809,7 +813,7 @@ Las características más notables de esta versión incluyen una gran simplifica
 - En el diálogo de sintetizadores de NVDA, ahora sólo se muestra el sintetizador listado. Anteriormente, se prefijaba con el nombre del controlador, que sólo es relevante internamente.
 - Cuando se está en aplicaciones empotradas o modos virtuales dentro de otro modo virtual (ej.: Flash), ahora puedes presionar nvda+control+espacio para salir de la aplicación empotrada o modo virtual, al documento principal. Anteriormente, nvda+espacio  se utilizaba para esto. Ahora nvda+espacio es sólo específicamente para conmutar los modos revisión/foco en los modos virtuales.
 - Si al visor de voz (activable en el menú Herramientas) se le dió el foco (ej.: it se hizo clic) el texto nuevo no aparecerá en el control hasta que el foco se mueva. Esto se permite para seleccionar el texto con mayor facilidad (ej.: para copiar).
-- El visualizador de Log y la consola de Python se maximizan cuando se activen.
+- El visualizador de registro y la consola de Python se maximizan cuando se activen.
 - Cuando se enfoca una hoja de cálculo en MS Excel, y hay más de una celda seleccionada, se anuncia el alcance de la selección, en lugar de sólo la celda activa. (#763)
 - El guardado de la configuración, y el cambio de opciones sensibles en particular, ahora se desactiva cuando se ejecute en modo seguro (en las pantallas de autentificación/UAC).
 - Actualizado el sintetizador de voz eSpeak a 1.44.01.
@@ -1013,7 +1017,7 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - Se mejora la carga y descarga de los appModules.
 - La orden de título (NVDA+t) ahora sólo informa del título en lugar de todo el objeto. Si el objeto en primer plano no tiene nombre, se utiliza el nombre de proceso de la aplicación.
 - En lugar de activar y desactivar el paso a través del modo virtual, NVDA ahora anuncia modo foco (paso por modo virtual activado) y modo revisión (paso por modo virtual desactivado).
-- Las voces ahora se guardan en el fichero de configuración por ID en lugar de por index. Esto hace las opciones de voz más seguras a través de los cambios de los sistemas y las configuraciones. La opción de voz no se preservará en todas las configuraciones y un error podrá mostrarse en el log la primera vez que un sintetizador sea utilizado. (#19)
+- Las voces ahora se guardan en el fichero de configuración por ID en lugar de por index. Esto hace las opciones de voz más seguras a través de los cambios de los sistemas y las configuraciones. La opción de voz no se preservará en todas las configuraciones y un error podrá mostrarse en el registro la primera vez que un sintetizador sea utilizado. (#19)
 - El nivel de un elemento de vista de árbol ahora es anunciado primero si ha cambiado desde el elemento enfocado anteriormente para todas las vistas en árbol. Anteriormente, esto sólo ocurría para vistas en árbol nativas de Windows (SysTreeView32).
 
 
@@ -1023,7 +1027,7 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - Eliminación de retraso cuando se mueva por otras unidades que no sean caracter (palabra, línea, etc.) hacia el final de los documentos de texto plano largos en los modos virtuales de Mozilla Gecko. (#155)
 - Si verbalizar palabras al escribir está habilitado, anuncia la palabra cuando se presione intro.
 - Corregidos algunos grupos de sucesiones de caracteres en documentos enriquecidos. preferencias de Formato de Documentos. Esto incluye modos virtuales de Mozilla Gecko.
-- El visualizador de log de NVDA ahora utiliza cuadros multilínea en lugar de sólo editar para mostrar el log. Esto mejora la lectura por palabras con NVDA y le permite leer el texto del log más allá de los 65535 bytes.
+- El visualizador de registro de NVDA ahora utiliza cuadros multilínea en lugar de sólo editar para mostrar el registro. Esto mejora la lectura por palabras con NVDA y te permite leer el texto del registro más allá de los 65535 bytes.
 - Corregidos algunos fallos relacionados con objetos empotrados en controles de edición multilínea.
 - NVDA ahora lee los números de página en Microsoft Word. (#120)
 - Se corrige el fallo cuando tabulando a una casilla de verificación verificada en un modo virtual de Mozilla Gecko y presionando espacio no anunciaba que la casilla de verificación estaba siendo desverificada.
@@ -1083,7 +1087,7 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 - Mejorada la exactitud del seguimiento del foco y la actualización del foco cuando se navega en modos virtuales de Mozilla Gecko.
 - Añadido un script encontrarAnterior (shift+NVDA+f3) para utilizar en el nuevo modo virtual 
 - Mejorada la lentitud en diálogos Mozilla Gecko (en Firefox y Thunderbird). (#66)
-- Añadida la capacidad para ver el fichero log actual para NVDA. Puede ser encontrado en el menú NVDA -> Herramientas
+- Añadida la capacidad para ver el fichero registro actual para NVDA. Puede ser encontrado en el menú NVDA -> Herramientas
 - Scripts tales como decir fecha y hora tienen en cuenta ahora el idioma actual; puntuación y ordenamiento de las palabras ahora reflejan el idioma
 - El cuadro combinado de idioma en el diálogo de Opciones Generales de NVDA muestra ahora los nombres de idioma completo para facilidad de uso
 - Cuando se revisa texto en el navegador de objetos actual, el texto está siempre actualizado si cambia dinámicamente. Ej.: revisando el texto de un elemento de lista en la Bandeja de Tareas. (#15)
@@ -1222,7 +1226,7 @@ Lo más resaltable de esta versión incluye el soporte para ediciones de 64 bit 
 
 == Interface del Usuario ==
 - Eliminada la ventana de interface de NVDA, y reemplazada con un simple menú de NVDA desplegable.
-- El diálogo opciones de Interface de NVDA es ahora llamado Opciones Generales. También contiene una opción extra: un cuadro combinado para ajustar el nivel del log, para que los mensajes puedan ir al fichero de log de NVDA. Nota que el fichero de log de NVDA es ahora llamado nvda.log no debug.log.
+- El diálogo opciones de Interface de NVDA es ahora llamado Opciones Generales. También contiene una opción extra: un cuadro combinado para ajustar el nivel del registro, para que los mensajes puedan ir al fichero de registro de NVDA. Nota que el fichero de registro de NVDA es ahora llamado nvda.log no debug.log.
 - Eliminada la casilla de verificación Anunciar nombres de grupos de objetos del diálogo Opciones de presentación de objetos, el anunciado de nombres de objetos es ahora manejado diferentemente.
 
 
