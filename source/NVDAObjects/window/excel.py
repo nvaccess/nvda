@@ -50,7 +50,7 @@ class ExcelBase(Window):
 			text=_("{start} through {end}").format(start=textList[0], end=textList[1])
 		return text
 
-	def fireFocusOnSelection(self):
+	def _getSelection(self):
 		selection=self.excelWindowObject.Selection
 		try:
 			isMerged=selection.mergeCells
@@ -62,7 +62,7 @@ class ExcelBase(Window):
 			obj=ExcelSelection(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelRangeObject=selection)
 		else:
 			obj=ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=selection)
-		eventHandler.executeEvent("gainFocus",obj)
+		return obj
 
 class Excel7Window(ExcelBase):
 	"""An overlay class for Window for the EXCEL7 window class, which simply bounces focus to the active excel cell."""
@@ -71,7 +71,9 @@ class Excel7Window(ExcelBase):
 		return self.excelWindowObjectFromWindow(self.windowHandle)
 
 	def event_gainFocus(self):
-		self.fireFocusOnSelection()
+		selection=self._getSelection()
+		if selection:
+			eventHandler.executeEvent('gainFocus',selection)
 
 class ExcelWorksheet(ExcelBase):
 
@@ -97,11 +99,27 @@ class ExcelWorksheet(ExcelBase):
 		return ExcelCell(windowHandle=self.windowHandle,excelWindowObject=self.excelWindowObject,excelCellObject=cell)
 
 	def script_changeSelection(self,gesture):
+		oldSelection=self._getSelection()
 		gesture.send()
-		if scriptHandler.isScriptWaiting():
-			# Prevent lag if keys are pressed rapidly.
-			return
-		self.fireFocusOnSelection()
+		import eventHandler
+		import time
+		import api
+		newSelection=None
+		curTime=startTime=time.time()
+		while (curTime-startTime)<=0.15:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			if eventHandler.isPendingEvents('gainFocus'):
+				return
+			newSelection=self._getSelection()
+			if newSelection and newSelection!=oldSelection:
+				break
+			api.processPendingEvents(processEventQueue=False)
+			time.sleep(0.015)
+			curTime=time.time()
+		if newSelection:
+			eventHandler.executeEvent('gainFocus',newSelection)
 	script_changeSelection.canPropagate=True
 
 	__changeSelectionGestures = (
@@ -205,16 +223,20 @@ class ExcelCell(ExcelBase):
 
 	def script_openDropdown(self,gesture):
 		gesture.send()
-		count=0
 		d=None
-		while count<5:
+		curTime=startTime=time.time()
+		while (curTime-startTime)<=0.25:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			if eventHandler.isPendingEvents('gainFocus'):
+				return
 			d=self._getDropdown()
 			if d:
 				break
-			count+=1
-			log.debugWarning("get dropdown fail %d"%count)
 			api.processPendingEvents(processEventQueue=False)
-			time.sleep(0.1)
+			time.sleep(0.025)
+			curTime=time.time()
 		if not d:
 			log.debugWarning("Failed to get dropDown, giving up")
 			return
