@@ -101,24 +101,25 @@ class ExcelWorksheet(ExcelBase):
 	def script_changeSelection(self,gesture):
 		oldSelection=self._getSelection()
 		gesture.send()
-		if scriptHandler.isScriptWaiting():
-			# Prevent lag if keys are pressed rapidly.
-			return
-		count=0
 		import eventHandler
 		import time
 		import api
 		newSelection=None
-		while count<5 or eventHandler.isPendingEvents('gainFocus'):
+		curTime=startTime=time.time()
+		while (curTime-startTime)<=0.15:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			if eventHandler.isPendingEvents('gainFocus'):
+				return
 			newSelection=self._getSelection()
 			if newSelection and newSelection!=oldSelection:
 				break
-			count+=1
 			api.processPendingEvents(processEventQueue=False)
-			time.sleep(0.025)
+			time.sleep(0.015)
+			curTime=time.time()
 		if newSelection:
 			eventHandler.executeEvent('gainFocus',newSelection)
-		
 	script_changeSelection.canPropagate=True
 
 	__changeSelectionGestures = (
@@ -222,16 +223,20 @@ class ExcelCell(ExcelBase):
 
 	def script_openDropdown(self,gesture):
 		gesture.send()
-		count=0
 		d=None
-		while count<5:
+		curTime=startTime=time.time()
+		while (curTime-startTime)<=0.25:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			if eventHandler.isPendingEvents('gainFocus'):
+				return
 			d=self._getDropdown()
 			if d:
 				break
-			count+=1
-			log.debugWarning("get dropdown fail %d"%count)
 			api.processPendingEvents(processEventQueue=False)
-			time.sleep(0.1)
+			time.sleep(0.025)
+			curTime=time.time()
 		if not d:
 			log.debugWarning("Failed to get dropDown, giving up")
 			return
