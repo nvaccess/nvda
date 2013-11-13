@@ -645,7 +645,8 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 
 		// Get the name.
 		BSTR name = NULL;
-		if (states & STATE_SYSTEM_FOCUSABLE && (res = pacc->get_accName(varChild, &name)) != S_OK) {
+		// #3645: We need to test accName for graphics.
+		if ((states & STATE_SYSTEM_FOCUSABLE || role == ROLE_SYSTEM_GRAPHIC) && (res = pacc->get_accName(varChild, &name)) != S_OK) {
 			LOG_DEBUG(L"IAccessible::get_accName returned " << res);
 			name = NULL;
 		}
@@ -656,7 +657,9 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 
 		bool useNameAsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON ||
 			role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON ||
-			role == ROLE_SYSTEM_GRAPHIC;
+			// #3645: Test accName, as IPDDomNode::GetName might return meaningless "mc-ref"
+			// but accName doesn't.
+			(role == ROLE_SYSTEM_GRAPHIC && name);
 
 		if (name && !useNameAsContent) {
 			parentNode->addAttribute(L"name", name);
