@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2008-2013 NV Access Limited, Aleksey Sadovoy.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -91,6 +91,13 @@ IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
 	return domNode;
 }
 
+inline void nullifyEmpty(BSTR* text) {
+	if (*text && SysStringLen(*text) == 0) {
+		SysFreeString(*text);
+		*text = NULL;
+	}
+}
+
 inline void processText(BSTR inText, wstring& outText) {
 	for (wchar_t* ch = inText; *ch; ++ch) {
 		switch (*ch) {
@@ -106,7 +113,7 @@ inline void processText(BSTR inText, wstring& outText) {
 VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 	VBufStorage_controlFieldNode_t* parentNode, VBufStorage_fieldNode_t* previousNode,
 	IPDDomNode* domNode, IPDDomElement* domElement,
-	bool fallBackToName, wstring& lang, int flags, wstring* pageNum
+	bool nameIsContent, wstring& lang, int flags, wstring* pageNum
 ) {
 	HRESULT res;
 	VBufStorage_fieldNode_t* tempNode;
@@ -161,29 +168,31 @@ VBufStorage_fieldNode_t* renderText(VBufStorage_buffer_t* buffer,
 				continue;
 			}
 			// Recursive call: render text for this child and its descendants.
-			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, NULL, fallBackToName, lang, flags, pageNum))
+			if (tempNode = renderText(buffer, parentNode, previousNode, domChild, NULL, nameIsContent, lang, flags, pageNum))
 				previousNode = tempNode;
 			domChild->Release();
 		}
 	} else {
 
 		// We don't need to descend, so add the font info and text for this node.
-		if (!text)
-			domNode->GetTextContent(&text);
-
 		if (!text) {
-			// GetTextContent() failed or returned nothing.
-			// This should mean there is no text.
-			// However, GetValue() or GetName() sometimes works nevertheless, so try it.
-			if (fallBackToName)
+			if (nameIsContent) {
+				// #3640: For nodes where the name is generally the content,
+				// explicitly use the name, as GetTextContent might return something else.
 				domNode->GetName(&text);
-			else
+				nullifyEmpty(&text);
+			}
+			if (!text) {
+				domNode->GetTextContent(&text);
+				nullifyEmpty(&text);
+			}
+			if (!nameIsContent && !text) {
+				// GetTextContent() failed or returned nothing.
+				// This should mean there is no text.
+				// However, GetValue() sometimes works nevertheless, so try it.
 				domNode->GetValue(&text);
-		}
-
-		if (text && SysStringLen(text) == 0) {
-			SysFreeString(text);
-			text = NULL;
+				nullifyEmpty(&text);
+			}
 		}
 
 		if (text) {
@@ -649,10 +658,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 			LOG_DEBUG(L"IAccessible::get_accName returned " << res);
 			name = NULL;
 		}
-		if(name && SysStringLen(name) == 0) {
-			SysFreeString(name);
-			name = NULL;
-		}
+		nullifyEmpty(&name);
 
 		bool useNameAsContent = role == ROLE_SYSTEM_LINK || role == ROLE_SYSTEM_PUSHBUTTON ||
 			role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON ||

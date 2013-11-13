@@ -34,6 +34,7 @@
 - Keyboard settings dialog: if no key has been chosen to be used as the NVDA key, an error is presented to the user when dismissing the dialog. At least one key must be chosen for proper usage of NVDA. (#2871)
 - In Microsoft Excel, NVDA now announces merged cells differently to multiple selected cells. (#3567)
 - The browse mode cursor is no longer positioned incorrectly when leaving a dialog or application inside the document. (#3145)
+- Fixed an issue where the HumanWare Brailliant BI/B series braille display driver wasn't presented as an option in the Braille Settings dialog on some systems, even though such a display was connected via USB.
 
 
 == Changes for Developers ==

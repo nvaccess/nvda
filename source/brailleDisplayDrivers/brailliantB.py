@@ -71,8 +71,11 @@ def _getPorts():
 					keyName = _winreg.EnumKey(rootKey, index)
 				except WindowsError:
 					break
-				with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
-					yield "USB", _winreg.QueryValueEx(paramsKey, "PortName")[0]
+				try:
+					with _winreg.OpenKey(rootKey, os.path.join(keyName, "Device Parameters")) as paramsKey:
+						yield "USB", _winreg.QueryValueEx(paramsKey, "PortName")[0]
+				except WindowsError:
+					continue
 
 	# Bluetooth.
 	for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
