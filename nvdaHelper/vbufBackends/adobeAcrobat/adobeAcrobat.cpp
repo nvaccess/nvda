@@ -675,14 +675,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		}
 
 		// Hereafter, tempNode is the text node (if any).
-		tempNode = NULL;
-		if (role == ROLE_SYSTEM_RADIOBUTTON || role == ROLE_SYSTEM_CHECKBUTTON) {
-			// Acrobat renders "Checked"/"Unchecked" as the text for radio buttons/check boxes, which is not what we want.
-			// Render the name (if any) as the text for radio buttons and check boxes.
-			if (name && (tempNode = buffer->addTextFieldNode(parentNode, previousNode, name)))
-				addAttrsToTextNode(tempNode);
-		} else
-			tempNode = renderText(buffer, parentNode, previousNode, domNode, domElement, useNameAsContent, parentNode->language, textFlags, pageNum);
+		tempNode = renderText(buffer, parentNode, previousNode, domNode, domElement, useNameAsContent, parentNode->language, textFlags, pageNum);
 		if (tempNode) {
 			// There was text.
 			previousNode = tempNode;
