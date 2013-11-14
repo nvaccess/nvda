@@ -287,11 +287,7 @@ class AppModule(baseObject.ScriptableObject):
 			# For Windows Vista and higher, use QueryFullProcessImageName function
 			GetModuleFileName = ctypes.windll.Kernel32.QueryFullProcessImageNameW
 		else:
-			# We define where to find the function GetModuleFileNameW for Windows prior to Vista
-			try:
-				GetModuleFileName = ctypes.windll.kernel32.GetModuleFileNameExW
-			except AttributeError:
-				GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
+			GetModuleFileName = ctypes.windll.psapi.GetModuleFileNameExW
 		# Create the buffer to get the executable name
 		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
 		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
