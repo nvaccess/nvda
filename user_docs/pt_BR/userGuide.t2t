@@ -551,6 +551,7 @@ O NVDA fornece seus próprios comandos adicionais para alguns aplicativos com vi
 || Nome | Tecla | Descrição |
 | Anunciar Janela de Comentários  | control+shift+c | Anuncia qualquer comentário na janela de comentários. |
 | Anunciar Janela de comentários automáticos | control+shift+a | Anuncia qualquer comentário na janela de comentários automáticos. |
+| Anunciar notas para tradutores | control+shift+a | Anuncia quaisquer notas para tradutores. |
 %kc:endInclude
 
 + Configurando o NVDA +
@@ -1062,9 +1063,28 @@ Para mudar um sinal, selecione-o na lista de sinais.
   
 Após finalizar, pressione ok para salvar as alterações ou cancelar  caso queira descartá-las.
 
++++ Gestos de Entrada +++
+Nesse diálogo, é possível personalizar os gestos de entrada (teclas do teclado, botões da linha braille, etc.) para comandos do NVDA.
+
+Somente comandos que são aplicábeis imediatamente antes do diálogo ser aberto serão mostrados.
+Por exemplo, se você deseja personalizar comandos relacionados com o modo de navegação, é necessário abrir o Diálogo de Gestos de Entrada enquanto está no modo de navegação.
+
+A árvore nesse diálogo lista todos os comandos aplicáveis do NVDA agrupados por categoria.
+ Quaisquer gestos associados a um comando são listados abaixo do comando.
+
+Para adicionar um gesto de entrada para um comando, selecione o comando e pressione o botão Adicionar.
+Em seguida, execute o gesto de entrada que deseja associar, isto é, pressione uma tecla do teclado ou um botão da linha braille.
+Usuualmente, um gesto pode ser interpretado em mais de uma forma.
+Por exemplo, ao pressionar uma tecla do teclado, você pode querer que ela seja especificamente para o esquema de teclado atual (desktop ou laptop) ou pode querer que esta se aplique a todos os esquemas.
+Nesse caso, um menu aparecerá permitindo-lhe selecionar a opção desejada.
+
+Para remover o gesto de um comando, selecione-o e pressione o botão Remover.
+
+Ao finalizar as alterações, pressione o botão OK para salvá-las ou cancelar para descartá-las.
+
 ++ Salvando e Restaurando Configurações ++
 Por padrão, este programa salva automaticamente suas configurações ao ser encerrado.
-Note, porém, que esta opção pode ser alterada em Opções gerais que se encontra no menu Preferências.
+Note, porém, que esta opção pode ser alterada nas Opções gerais que se encontram no menu Preferências.
 Para salvar opções a qualquer momento escolha o item Salvar opções que se encontra no Menu do NVDA.
 
 Se costuma cometer erros  em suas configurações e precisa retornar às opções salvas, pode sempre escolher o item "voltar à configuração salva" no menu deste software.
@@ -1078,11 +1098,84 @@ As seguintes teclas de atalho do NVDA também são úteis:
 | Voltar à Configuração Salva | NVDA+control+r | NVDA+control+r | Pressionada uma vez retorna suas configurações para aquelas salvas da última vez. Pressionando-se 3 vezes irá retorná-las aos padrões originais. |
 %kc:endInclude
 
-++ Arquivos de Configuração e Perfis do Utilizador ++
-Versões portáteis do NVDA armazenam todas as opções, appModules personalizadas e drivers personalizados numa pasta chamada userConfig que se pode encontrar na pasta do NVDA.
++++ Perfis de Configuração ++
+Algumas vezes, você pode querer ter diferentes configurações para diferentes situações.
+Por exemplo, pode pretender que o anúncio da indentação esteja ativado enquanto você está editando ou que o anúncio dos atributos da fonte esteja ativado enquanto você está fazendo uma revisão.
+O NVDA lhe permite fazer isso usando os perfis de configuração.
+Um perfil de configuração contém somente aquelas opções que são alteradas enquanto o perfil está sendo editado.
+Maior parte das opções pode ser alterada em perfis de configuração, com exceção àquelas do Diálogo de Opções Gerais, as quais aplicam-se a todo o NVDA.
+
+Os perfis de configuração podem ser ativados manualmente.
+Podem também ser ativados automaticamente através dos disparadores, como quando se alterna para um aplicativo em particular.
+
++++ Gerenciamento Básico +++
+Você pode gerenciar os perfis de configuração selecionando "Perfis de Configuração" no menu do NVDA.
+ é também possível fazer isso usando um comando de teclado:
+%kc:beginInclude
+- NVDA+control+p: Exibe o Diálogo de Perfis de Configuração.
+-
+%kc:endInclude
+
+O primeiro controle nesse diálogo é a lista de perfis de onde você pode selecionar um dos perfis disponíveis.
+  ao abrir o diálogo, o perfil que você atualmente está editando é selecionado.
+Também são mostradas informações adicionais sobre os perfis ativos, indicando se estes são ativados manualmente, disparados e/ou sendo editados.
+
+Para renomear ou apagar um perfil, pressione os botões Renomear ou apagar, respectivamente.
+
+Pressione o botão fechar para sair do diálogo.
+
++++ Criando um Perfil +++
+Para criar um perfil, pressione o botão Novo.
+
+No diálogo de Novo Perfil, é possível atribuir um nome para o perfil.
+Você também pode selecionar como esse perfil deve ser usado.
+Se deseja usar esse perfil manualmente, selecione Ativação Manual, que é a opção padrão.
+Caso contrário, selecione um disparador que deve ativar automaticamente esse perfil.
+Por conveniência, caso não tenha atribuído um nome para o perfil, selecionando um disparador irá usar o nome em conformidade com este.
+Consulte [a seção abaixo #ConfigProfileTriggers] para mais informações sobre disparadores.
+
+Ao pressionar OK criará o perfil e o Diálogo de Perfis de Configuração será fechado de modo que você possa editá-lo.
+
++++ Ativação Manual +++[ConfigProfileManual]
+Você pode ativar um perfil manualmente selecionando um perfil e pressionando o botão  ativar manualmente.
+Uma vez ativado, outros perfis continuarão podendo ser ativados através dos disparadores, mas quaisquer configurações no perfil ativado manualmente as substituirão.
+além disso, quaisquer configurações que você alterar serão salvas naquele perfil.
+Por exemplo, caso um perfil tenha sido disparado para o aplicativo atual e o anúncio de links estiver abilitado naquele perfil mas desabilitado no perfil ativado manualmente, os links não serão anunciados.
+Todavia, caso você tenha alterado a voz para o perfil disparado mas jamais o tenha alterado no perfil ativado manualmente, a voz usada para o perfil disparado será usada.
+Quaisquer configurações que você alterar serão salvas no perfil ativado manualmente.
+Para desativar um perfil ativado manualmente, selecione-o no Diálogo de Perfis de Configuração e pressione o botão desativar manualmente.
+
+++++ Disparadores +++[ConfigProfileTriggers]
+Pressionando o botão disparadores no Diálogo de Perfis de Configuração lhe permite alterar os perfis que devem ser ativados automaticamente  para vários disparadores.
+
+a lista de disparadores exibe os disparadores disponíveis, que funcionam da seguinte forma:
+- Aplicativo atual: disparado quando você alterna para o Aplicativo atual.
+- Leitura Contínua: disparado enquanto se lê com o comando de leitura contínua.
+-
+
+Para alteraro perfil que deve ser ativado automaticamente  para um disparador, selecione o disparador e em seguida selecione o perfil desejado na lista de Perfis.
+Você pode selecionar (configuração normal) caso não queira que um perfil seja usado.
+
+Pressione o botão fechar para retornar ao Diálogo de Perfis de Configuração.
+
++++ Editando um Perfil +++
+Caso você tenha ativado um perfil manualmente, quaisquer configurações alteradas serão salvas para aquele perfil.
+Do contrário, quaisquer configurações que você alterar serão salvas para o perfil mais recentemente disparado.
+Por exemplo, se você tiver associado um perfil ao applicativo Notepad e alternar para o Notepad, quaisquer configurações alteradas serão salvas para aquele perfil.
+Finalmente, se não existir um perfil ativado manualmente nem um perfil que possua disparador, quaisquer configurações alteradas serão salvas para sua configuração normal.
+
+Para editar o perfil associado com a leitura contínua, é necessário [ativar manualmente #ConfigProfileManual] aquele perfil.
+
++++ Desabilitando Temporariamente os Disparadores +++
+Alguma vezes, é útil desabilitar temporariamente todos os disparadores.
+Por exemplo, você pode querer editar um perfil ativado manualmente  ou sua  configuração normal sem a interferência de perfis com disparadores.
+é possível fazer isso marcando a caixa de seleção Desabilitar Temporariamente Todos os Disparadores no diálogo de Perfis de Configuração.
+
+++ Localização dos Arquivos de Configuração ++
+Versões portáteis do NVDA armazenam todas as opções, appModules e drivers personalizados numa pasta chamada userConfig que se pode encontrar na pasta do NVDA.
 
 Versões instaláveis armazenam suas opções, appModules e drivers personalizados numa pasta especial do NVDA localizada no seu perfil de utilizador do Windows.
-Isto quer dizer que cada utilizador do sistema pode ter suas próprias opções do NVDA.
+Isto quer dizer que cada usuário do sistema pode ter suas próprias opções do NVDA.
 Para acessar a pasta de suas opções do NVDA de uma versão instalada, no Menu Iniciar pode ir aos programas -> NVDA -> Explorar a pasta de opções do NVDA. 
 
 As opções para o NVDA quando executado na tela de logon ou telas UAC são armazenadas na pasta systemConfig que se encontra na pasta de instalação do NVDA.
@@ -1097,16 +1190,16 @@ O Visualizador de Registo encontra-se no submenu Ferramentas do Menu do NVDA e p
 Além de ler o conteúdo, este também pode salvar uma cópia do arquivo de registo, ou atualizar o visualizador de forma a apresentar a saída mais recente desde que o Visualizador de Registo foi aberto.
 Estas ações encontram-se disponíveis no menu Registo do visualizador.
 
-++ Exibidor de Fala ++
+++ O Exibidor de Fala ++
 Para os programadores com visão ou para as pessoas que demonstram o NVDA para grupos sem quaisquer problemas relacionados com a visão, está disponível uma janela que lhes permite ver todo o texto que o NVDA fala no momento.
 
 Para ativar o exibidor de fala marque o item de menu "exibidor de fala" nas Ferramentas do Menu do NVDA.
-Ao desmarcar este item você o desativa.
+Ao desmarcar este item você o desativará.
 
 Enquanto o exibidor de fala estiver ativado, o mesmo atualizar-se-á constantemente para apresentar-lhe o texto mais recente que está sendo falado.
 Contudo, se clicar ou se o cursor ficar no visualizador, o NVDA parará temporariamente a atualização do texto, de modo que possa selecionar facilmente ou copiar o conteúdo existente. 
 
-++ Gerenciador de Complementos ++
+++ O Gerenciador de Complementos ++
 O gerenciador de complementos, que pode ser acessado selecionando Gerir Complementos no submenu ferramentas no menu do NVDA, permite-lhe instalar e desinstalar pacotes contendo complementos para o NVDA.
 Esses pacotes são fornecidos pela comunidade e contém códigos com personalizações que podem acrescentar  ou modificar recursos do NVDA ou mesmo fornecer suporte para linhas Braille ou sintetizadores de voz extras.
 
@@ -1137,8 +1230,8 @@ No passado foi possível extender as funcionalidades do NVDA copiando plugins e 
 Embora nessa versão do NVDA continue sendo possível carregá-los, eles não serão mostrados no gerenciador de complementos. 
 Recomenda-se remover esses arquivos de suas configurações do usuário e instalar o complemento apropriado caso algum esteja disponível.
 
-++ Console Python ++
-o Console Python do NVDA encontra-se dentro das Ferramentas de seu menu.
+++ O Console Python ++
+o Console Python do NVDA encontra-se dentro das Ferramentas, em seu menu.
 É uma ferramenta de programação muito útil para deporação, inspeção interna geral do NVDA ou exploração da hierarquia de acessibilidade de uma aplicação.
 Para mais informações, consulte por favor o [Guia do Desenvolvedor que encontra-se disponível na seção Desenvolvimento no site do NVDA NVDA_URLwiki/Development].
 

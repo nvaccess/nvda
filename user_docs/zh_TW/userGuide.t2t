@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION 用戶指南 
-(最後更新日期：2013年4月28日)
+(最後更新日期：2013年11月14日)
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION 指令快速參考
@@ -7,7 +7,7 @@
 = 目錄 =[toc]
 %%toc
 
-+ 簡介 +
++ 簡介 +	
 NVDA 非視覺桌面存取系統(Nonvisual Desktop Access)，是一款免費且開放原始碼，而用於微軟視窗作業系統的螢幕報讀軟體。
 透過合成語音及點字，NVDA可以讓視障者不必花比一般明眼人更多的錢，即可存取使用任何執行微軟視窗作業系統的電腦。
 NVDA是由[NV Access http://www.nvaccess.org/]所開發，並包含來自NVDA社群參與者的許多貢獻和回饋。
@@ -17,7 +17,7 @@ NVDA 可提供視障者操作微軟視窗作業系統及其它應用程式。
 
 主要特色包括：
 - 支援多種熱門應用程式，包括網頁瀏覽器、郵件軟體、線上聊天軟體及Office套裝軟體。
-- 內建的語音合成器支援超過43種語言。
+- 內建的語音合成器支援超過44種語言。
 - 報讀文字格式。例如字型名稱、大小、樣式、拼字錯誤等。
 - 自動讀出鼠標所指的文字，並可透過聲音提示鼠標所在位置。
 - 支援多種點字顯示器，包括含有點字鍵盤的點字顯示器。
@@ -32,7 +32,7 @@ NVDA 可提供視障者操作微軟視窗作業系統及其它應用程式。
 
 ++ 國際化 ++
 讓世界上所有的人，不管使用何種語言，都可以無障礙的公平使用科技是極為重要的。
-NVDA 目前除了英文版外，已被翻譯成42種語言，包括：南非荷蘭文、阿爾巴尼亞文、阿比西尼亞、阿拉伯文、阿拉貢文、巴西文、葡萄牙文、保加利亞文、克羅埃西亞文、捷克文、丹麥文、荷蘭文、芬蘭文、法文、加利西亞文、喬治亞文、德文、希伯來文、印度文、匈牙利文、冰島文、義大利文、日文、波蘭文、葡萄牙文、羅馬尼亞文、俄文、塞爾維亞文、斯洛伐克文、斯洛維尼亞文、西班牙文、瑞典文、泰文、正體中文、簡體中文、土耳其文、烏克蘭文、越南文、阿比西尼亞、韓文及尼泊爾文等。
+NVDA 目前除了英文版外，已被翻譯成44種語言，包括：南非荷蘭文、阿爾巴尼亞文、阿比西尼亞、阿拉伯文、阿拉貢文、巴西文、葡萄牙文、保加利亞文、克羅埃西亞文、捷克文、丹麥文、荷蘭文、Farsi、芬蘭文、法文、加利西亞文、喬治亞文、德文、希伯來文、印度文、匈牙利文、冰島文、義大利文、日文、波蘭文、葡萄牙文、羅馬尼亞文、俄文、塞爾維亞文、斯洛伐克文、斯洛維尼亞文、西班牙文、瑞典文、泰文、正體中文、簡體中文、土耳其文、烏克蘭文、越南文、阿比西尼亞、韓文及尼泊爾文等。
 
 ++ 語音合成器支援 ++
 除了提供前述多國文字訊息與使用者介面外，只要能取得到並安裝在電腦上，透過語音合成介面程式的選擇，NVDA 也提供使用者採用不同的語言及不同的語音合成器，以便可讀取文件或物件的內容。
@@ -140,16 +140,18 @@ NVDA受到「GNU 通用公共授權條款(第二版)」所保護。
 請連上 NVDA 官網查看如何回報程式錯誤的方式。
 
 當首次啟動 NVDA會跳出一個歡迎的對話方塊，其內包含了 NVDA的基本資訊及如何將鍵盤按鍵設定等，(請參見以下章節以進一步了解其操作方式。)
-在此對話方塊還包括二個核取方塊。
-第一個是，[將 Caps Lock 鍵設為 NVDA 鍵]，第二個是，[每當 NVDA 啟動時顯示此對話方塊]。
+在此對話方塊還包括三個核取方塊。
+第一個是，[將 Caps Lock 鍵設為 NVDA 鍵]，
+第二個是，[NVDA會自動啟動當您登入Windows後並且使用 NVDA 安裝版。]。
+第三個是，[每當 NVDA 啟動時顯示此對話方塊]。
 
 
 ++ 有關 NVDA 按鍵指令 ++
 
 +++ NVDA 組合鍵 +++
-除了在編輯區瀏覽文件僅需按數字鍵盤上的單一按鍵外，通常大多數的NVDA 相關快速鍵均需同時按一個名為 NVDA 組合鍵的特殊鍵，外加另一個按鍵。
+wjl大多數的NVDA 相關快速鍵均需同時按一個名為 NVDA 組合鍵的特殊鍵，外加另一個或二個按鍵，但有少數例外，最顯著的例子是在桌上型電腦上僅按數字鍵盤上的單一按鍵，移動「瀏覽游標」來讀取文字。
 
-NVDA 可以被設定使用數字鍵盤 Insert、主鍵盤上的 Insert、或者 CapsLock 鍵，作為 NVDA 組合鍵。
+NVDA 可設定數字鍵盤上的 Insert、主鍵盤上的 Insert、或者 CapsLock 鍵等三個按鍵，以作為 NVDA 組合鍵。wjl
 
 預設狀況是將前述的主鍵盤上的 Insert及數字鍵盤上的Insert設為 NVDA 組合鍵，簡稱為 NVDA 鍵。
 
@@ -300,7 +302,7 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 
 物件瀏覽可以讓您在各個物件間移動，並讀取相關的資訊。
 當你移動到某一物件時，NVDA 會以類似於報讀系統焦點的方式來報讀此項物件。
-若您只想要報讀螢幕上所顯示出的文字，則可以使用另一項功能「[平面瀏覽 #FlatReview]」。
+若您只想要報讀螢幕上所顯示出的文字，則可以使用另一項功能「[平面瀏覽 #FlatReview]」。 [flat review #FlatReview] 改為 [screen review #ScreenReview].
 
 為了免除需逐一在各個物件間移動的不便，物件通常會用分層的方式組織起來。
 也就是說，某些物件內包含著其他的物件，您必須進入一物件後，才能存取其所包含的子物件。
@@ -316,8 +318,6 @@ NVDA 可讓使用者以不同的方式在系統間導航並與之互動，包括
 
 值得注意的是：點字焦點或游標預設是跟隨系統焦點與編輯游標，而不是瀏覽焦點或游標。若想改變此設定，可開啟偏好設定內的「點字設定」來修改。
 要瀏覽物件，可利用以下的指令：
-
-下列的指令可以用於瀏覽物件：
 
 %kc:beginInclude
 || 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 觸控 | 說明 |
@@ -381,8 +381,8 @@ NVDA 允許您以逐一字元、逐一字詞及逐行方式讀出目前所在[�
 你可以瀏覽複雜文件的整份內容，也可以瀏覽應用程式視窗上所顯示的文字。
 這個功能稱為平面瀏覽。
 這類似於其他報讀軟體中的螢幕瀏覽或滑鼠指標功能。
-
 當移動到平面瀏覽時，你的焦點將會移至到目前的[瀏覽物件 #ObjectNavigation]上。
+
 若你尚未使用物件瀏覽，這通常會變成有[焦點 #SystemFocus]的物件。
 例如，瀏覽物件是按鈕的話，啟用平面瀏覽後，焦點將會在按鈕的文字上。
 接著，你就可以利用[文字瀏覽命令 #ReviewingText]，來瀏覽當中的文字。
@@ -397,6 +397,33 @@ NVDA 允許您以逐一字元、逐一字詞及逐行方式讀出目前所在[�
 | 切換到平面瀏覽 | NVDA+數字鍵盤7 | NVDA+PageUp | 二根手指向上撥動 | 切換到平面瀏覽模式，將瀏覽游標停在目前瀏覽物件的位置上，如果目前是在瀏覽文件的情況下，則使用者可利用瀏覽游標來瀏覽整個文件視窗。 |
 | 從平面瀏覽切換到物件上 | NVDA+數字鍵盤1 | NVDA+PageDown | 二根手指向下撥動 | 從平面瀏覽模式切換到瀏覽游標所在文字的物件上。 |
 %kc:endInclude
+
+++ 平面瀏覽 ++[FlatReview]
+當您只能瀏覽單一[物件 #Objects]的內容，一些物件可讓您瀏覽物件本身的內容。
+較複雜的文件可允許您瀏覽整個內容，並且應用程式視窗可讓您瀏覽螢幕視覺上出現的文字。
+這就稱為平面瀏覽。
+這類似於螢幕瀏覽或在許多其他報讀軟體的滑鼠游標功能。
+
+
+當您移動平面柳覽，您可被定位在目前[瀏覽游標 #ObjectNavigation]的位置。
+若您尚未使用瀏覽游標，這通常會變成有[焦點 #SystemFocus]的物件。
+舉例來說，若瀏覽物件有一個按鈕，您通常可在平面瀏覽時將其定位在按鈕上的文字。
+然後您可藉由[文字瀏覽命令 #ReviewingText]來進行文字瀏覽。
+您也可直接瀏覽包覆在目前瀏覽游標位置的物件，這可讓您從這使用[物件瀏覽 #ObjectNavigation]。
+
+
+請注意點字是按照預設的[焦點 #SystemFocus]和[游標 #SystemCaret]，而不是物件瀏覽和文字瀏覽。
+若您要讓他按照物件瀏覽和文字瀏覽，您必須到[調整點字游標跟隨 #BrailleTether]瀏覽。
+
+
+下列的二個快速鍵可以切換平面瀏覽：
+%kc:beginInclude 
+|| 名稱 | 桌上型電腦快速鍵 | 筆記型電腦快速鍵 | 觸控 | 說明 |
+| 移到平面瀏覽 | NVDA+數字鍵盤7 | NVDA+pageUp | 二根手指向上撥動 | 移到平面瀏覽，取代目前瀏覽物件的位置，讓您可用文字瀏覽指令來瀏覽螢幕(或您已開啟的文件)。
+| 從平面瀏覽移到物件 | 數字鍵盤7 | NVDA+pageDown | 二根手指向下撥動 | 在瀏覽物件時用在平面瀏覽下在目前的位置使用瀏覽游標。
+The following two commands are used for switching to/from flat review:
+%kc:beginInclude
+
 
 ++ 滑鼠瀏覽 ++
 當您移動鼠標時，NVDA 的預設狀況會讀出鼠標所指位置附近的文字，可將其設定讀出不同的範圍，
@@ -514,6 +541,12 @@ NVDA額外提供了一些應用程式專用的指令，可以更方便地執行�
 || 名稱 | 快速鍵 | 說明 |
 | 設置欄標題 | NVDA+shift+c | 按一下告訴 NVDA 這是包含欄標題的列, 當移動在這列下方的欄之間應該要自動讀出 。 連續按二下即清除此設定。
 | 設置列標題 | NVDA+shift+r | 按一下告訴 NVDA 這是包含列標題的欄, 當移動在這欄右方的列之間應該要自動讀出 。 連續按二下即清除此設定。 | 
+%kc:endInclude
+
+++ Microsoft PowerPoint ++
+%kc:beginInclude
+|| Name | Key | Description |
+| 切換投影片講稿 | control+shift+s | 當投影片撥放時，此快速鍵可切換投影片講稿及內容。| 
 %kc:endInclude
 
 ++ foobar2000 ++
@@ -730,7 +763,8 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 此為一個可編輯的數字方塊，設定點字游標閃示的時間長短，以毫秒為單位。
  
 ====訊息顯示的時間====
-此為一個可編輯的數字方塊，可設定系統訊息在點字顯示器上呈現的時間長短，以秒為單位。
+此為一個可編輯的數字方塊，可設定NVDA訊息在點字顯示器上呈現的時間長短，以秒為單位。
+
 
 %kc:setting
 ==== 點字游標跟隨 ====
@@ -761,6 +795,10 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 ====將數字鍵盤的 Insert 鍵設為 NVDA 鍵====
 若核取此控制項，則「數字鍵盤 Insert 鍵」可作為 NVDA 組合鍵。
 
+若前述三個核取方塊控制項均沒有核取，則有些 NVDA 的指令鍵將無法執行，
+故在按 Ok 按鈕時，系統會跳出一個錯誤訊息，
+在將此錯誤訊息解除後，您必須核取前述三個控制項的其中一個才按 Ok按鈕，此對話方塊方可順利設定完成。
+
 %kc:setting
 ====讀出輸入字元====
 快速鍵: NVDA+2
@@ -779,6 +817,10 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 ==== 按下Enter鍵時中斷報讀 ====
 當開啟時，此選項可在每次按下Enter鍵時中斷報讀，預設為開啟。
 
+==== 讀出全部時允許跳讀 ====
+當開啟時，在某些瀏覽報讀模式下，若再按逐行或捸段瀏覽的按鍵，並不會停止全篇報讀，而是跳至下一個行或段落的開頭，接著往下報讀。
+
+
 ==== 大寫鍵鎖定時，輸入小寫字母會發出嗶嗶聲 ====
 當啟用時，如果大寫鍵為鎖定狀態，按住shift鍵輸入英文字母時，將會聽到警示用的嗶嗶聲。
 一般而言，會在大寫鎖定的狀態下按住shift輸入字母，常是因為使用者沒有注意到輸入狀態已被鎖定為大寫。
@@ -794,9 +836,9 @@ NVDA目前只支援電腦點字輸入，所以在此下拉方塊只呈現那些�
 此對話方塊位於偏好設定的"滑鼠設定..."中。
 它包括了以下的控制項：
 
-====讀出鼠標型態的改變====
-若核取此控制項，則每次鼠標的型態改變時會讀出。
-在視窗作業系統上的鼠標，其型態會隨系統狀態而改變，如可編輯狀態或某程式載入中。
+====讀出鼠標圖案的改變====
+若核取此控制項，則每次鼠標的圖案改變時會讀出。
+在視窗作業系統上的鼠標，其圖案會隨系統狀態而改變，如可編輯狀態或某程式載入中。
 
 %kc:setting
 ====啟動讀出鼠標所指文字或物件====
@@ -848,9 +890,9 @@ Key: NVDA+7
 此為一核取方塊，若勾選則 NVDA 會讀出在螢幕上出現的工具提示訊息。
 許多視窗作業系統上的應用程式或控制項會提供一個小的工具提示訊息，當鼠標移到該物件附近時，即會報讀出來。
 
-====讀出氣泡提示====
-若核取此控制項則當氣泡提示視窗出現時會報讀出來。
-氣泡提示視窗與工具提示訊息視窗類似，但通常其尺寸略大，提供與系統事件相關的訊息，如區域網路連線或與系統安全相關的警告訊息。
+====讀出氣球提示====
+若核取此控制項則當氣球提示視窗出現時會報讀出來。
+氣球提示視窗與工具提示訊息視窗類似，但通常其尺寸略大，提供與系統事件相關的訊息，如區域網路連線或與系統安全相關的警告訊息。
 
 ====讀出物件的便捷鍵====
 若核取此控制項，NVDA 會將物件或控制項及其連帶的便捷鍵一起讀出，
@@ -943,8 +985,12 @@ Key: NVDA+u
 此選項預設為開啟。
 
 ====讀出排版表格====
-此為一核取方塊的控制項，若沒有勾選則NVDA 僅報讀那些資料表格。
-此為一般常見的表格。若核取此控制項，則瀏覽游標遇到網頁上的排版表格也會讀出來。
+此選項會影響NVDA如何處理單純用於排版為目的之表格。
+當選項打開，NVDA會視同它們為一般表格。會用[文件格式設定 #DocumentFormattingSettings]報讀，並且用快速瀏覽指令來定位它們。
+當選項關閉，它們就不會用快速瀏覽被報讀或找到。
+然而，表格內的內容仍會被視同一般文字。
+此選項預設為關閉。
+
 
 ====讀出連結、標題之類的元件====
 請參見 [文件格式設定 #DocumentFormattingSettings]，以決定瀏覽時是否要讀出連結、標題、表格等。
@@ -972,6 +1018,9 @@ Key: NVDA+u
 - 字體屬性
 - 文字對齊方式
 - 顏色
+- 編修版次
+- editor revisions
+
 - 文字樣式
 - 拼寫錯誤
 - 頁碼
@@ -1030,7 +1079,21 @@ NVDA提供的這個功能相當強，您也可以設定 [大小寫需相符] ，
 接著在「代替文字」中變更想報讀的文字；
 接著可至「符號等級設定」，變更想讀出符號的最低等級。
 
-若完成所有要修改的符號，可按 OK 按鈕，以儲存設定，若不想變更，則按 Cancel  按鈕。 
+若完成所有的修改，可按 OK 按鈕，以儲存設定，若不想變更，則按 Cancel  按鈕。 
+
+wjl+++ 手勢輸入 +++
+此對話方塊允許您變更手勢按鍵對應於像點顯器等設備上的 NVDA指令。
+
+在對話方塊開啟後，僅有那些在當前情境下，可適用的手勢指令會顯示，例如當你要設定瀏覽模式下的某些指令，則在開啟此「手勢輸入」的對話方塊前，應先切換到瀏覽模式。
+
+此對話方塊依類別將所有可適用的指令以樹狀結構方式全部列出，任何與NVDA指令相對應的手勢均列於該指令的下方。
+
+若要針對某一指令新增對應的手勢，則先選取該指令，接著按「新增」按鈕然後輸入，例如：按下鍵盤上的一個按鍵，或是點顯器上的一個按鈕。通常一個手勢指令可設定成適用於不同的狀況，例如：如果您是在鍵盤上按某一個鍵，可設定成僅適用於目前的鍵盤的配置，譬如是在「桌上型電腦」或」筆記型電腦」上的配置，也可將其設定於倆種均適用。在此狀況下，會提供一個下拉選單供選擇。
+
+若要將一個手勢指令刪除，則選定該項手勢後，再按「刪除」的按扭。
+
+若完成所有的修改，可按 OK 按鈕，以儲存設定，若不想變更，則按 Cancel  按鈕。wjl 
+
 
 ++ 儲存與還原設定 ++
 預設情況下，當您退出 NVDA 時，本身會自動儲存您所作的一些設定變更。
@@ -1047,6 +1110,131 @@ NVDA提供的這個功能相當強，您也可以設定 [大小寫需相符] ，
 | 還原設定 | NVDA+Ctrl+r | NVDA+Ctrl+r | 按一次回復到最後一次儲存的設定。連續按三次回復到出廠預設值。 |
 %kc:endInclude
 
+wjl++ 設定檔 ++
+有時候，您可能希望在不同的情境下有不同的設定，例如：當在編輯文件時，希望讀出行縮排的功能是啟動的；或當在校稿文件時，讀出格式資訊的功能是啟動的。NVDA 允許您使用修改「設定檔」這個功能。
+
+「設定檔」僅包括那些被編輯過的設定值。除了」一般設定」因適用於所有的 NVDA不能被修改外，在設定檔內多數的設定值均可修改。
+
+設定檔可手動啟動，也可以採自動啟動，例如：切換到其它的應用程式時。
+
++ 基本管理原則++
+您可開啟 NVDA 功能表中的「設定」檔來管理，或利用按鍵指令。
+%kc:beginInclude
+- NVDA+control+p:顯示」設定檔」對話方塊
+%kc:endInclude
+
+在這個對話方塊的第一個控制項是「檔案」清單，您可從此清單中找出想要編輯的項目。
+
+當您開啟這個對話方塊時，正在編輯的「設定檔」即被選取了，額外的資訊也顯示此作用中的「設定檔」是手動啟用或是在編輯中。
+
+若要重新命名或是刪除，則分別按「重新命名」或「刪除」的按鈕。
+
+若要關閉此對話方塊，則按「關閉」按紐。
+
++++ 產生新設定檔 +++
+要產生新設定檔，按「新增」按鈕。
+
+在新增設定檔的對話方塊，您可輸入其名稱，
+您也可以選取此設定檔要如何使用的選項。
+如果您僅需手動啟用此設定檔，此為預設選項，則選擇「手動」，否則選擇一個可啟用的項目。
+
+為方便起見，如果您沒有在名稱列輸入字串，則會自動填入選定的啟用項目的名稱做為該設定檔的名稱。
+ 請見 [below #ConfigProfileTriggers]以得知更多有關「啟用」的資訊 
+
+按OK按鈕將新增設定檔，並關閉其對話方塊，因此，您可開始進行編輯的動作。
+
+ +++手動啟用設定檔 +++[ConfigProfileManual]
+藉由選擇一個手動啟用設定檔及按「手動啟用」按鈕，您可手動啟用這個設定檔。
+一旦啟用，其它的設定檔仍然可被啟用，不過採「手動啟用」的設定檔可蓋過其它的設定。
+而且所有修改過的設定值均會被儲存。
+要解除一項已手動啟用的設定檔，需先選擇該項目後，再於對話方塊內按「手動解除」的按鈕。
+
++++ 啟用 +++[ConfigProfileTriggers]
+在對話方塊內按「啟用」按鈕，將允許您自動啟用在不同狀況下的設定，
+
+「啟用」為一清單列表，包括以下項目：
+目前的應用程式：當切換到目前的應用程式
+啟用全篇報讀：當以全篇報讀方式讀取內容時
+
+要變更設定檔使其可自動啟用，可先選擇所要的項目，接著從前述的清單列表中選擇其中的一個項目即可。
+如果您並不想要使用這個設定檔，則可選擇（一般設定）。
+
+按」關閉」按鈕，以回到「設定檔」的對話方塊。
+
++++ 編輯一個設定檔 +++
+如果您曾針對某一設定檔手動啟用，所有的設定值會被儲存於那個設定檔。
+否則所有您變更的設定值會被儲存於最近自動「啟用」的檔案內。
+舉例說明：如果您有一個與「記事本」應用程式相關的設定檔，任何設定值的變更均會被儲存於該設定檔。最後，若沒有手動且沒有自動產生設定檔，則所有的設定值變更均會被儲存於「一般」設定檔內。
+
+若要新增一個與全篇報讀相關的設定檔，您需要手動新增該設定檔。
+
+
++++ 暫時解除啟用 +++
+有時將所有的設定暫時全部解除對於操作是有幫助的。
+例如：您也許想編輯一個手動啟用的設定檔，或一般設定檔，而不會影響到自動啟用的設定檔。 
+您可以利用在「設定檔」對話方塊裡，勾選「暫時解除啟用」的核取方塊，來達此目標。WJL
+
+
++++ Basic Management +++
+You manage configuration profiles by selecting "Configuration profiles" in the NVDA menu.
+You can also do this using a key command:
+%kc:beginInclude
+- NVDA+control+p: Show the Configuration Profiles dialog.
+-
+%kc:endInclude
+
+The first control in this dialog is the profile list from which you can select one of the available profiles.
+When you open the dialog, the profile you are currently editing is selected.
+Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.
+
+To rename or delete a profile, press the Rename or Delete buttons, respectively.
+
+Press the Close button to close the dialog.
+
++++ Creating a Profile +++
+To create a profile, press the New button.
+
+In the New Profile dialog, you can enter a name for the profile.
+You can also select how this profile should be used.
+If you only want to use this profile manually, select Manual activation, which is the default.
+Otherwise, select a trigger which should automatically activate this profile.
+For convenience, if you haven't entered a name for the profile, selecting a trigger will fill in the name accordingly.
+See [below #ConfigProfileTriggers] for more information about triggers.
+
+Pressing OK will create the profile and close the Configuration Profiles dialog so you can edit it.
+
++++ Manual Activation +++[ConfigProfileManual]
+You can manually activate a profile by selecting a profile and pressing the Manual activate/edit button.
+Once activated, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.
+Also, any settings you change will be saved in that profile.
+To deactivate a manually activated profile, select it in the Configuration Profiles dialog and press the Manual deactivate button.
+
++++ Triggers +++[ConfigProfileTriggers]
+Pressing the Triggers button in the Configuration Profiles dialog allows you to change the profiles which should be automatically activated for various triggers.
+
+The Triggers list shows the available triggers, which are as follows:
+- Current application: Triggered when you switch to the current application.
+- Say all: Triggered while reading with the say all command.
+-
+
+To change the profile which should be automatically activated for a trigger, select the trigger and then select the desired profile from the Profile list.
+You can select (normal configuration) if you don't want a profile to be used.
+
+Press the Close button to return to the Configuration Profiles dialog.
+
++++ Editing a Profile +++
+If you have manually activated a profile, any settings you change will be saved to that profile.
+Otherwise, any settings you change will be saved to the most recently triggered profile.
+For example, if you have associated a profile with the Notepad application and you switch to Notepad, any changed settings will be saved to that profile.
+Finally, if there is neither a manually activated nor a triggered profile, any settings you change will be saved to your normal configuration.
+
+To edit the profile associated with say all, you must [manually activate #ConfigProfileManual] that profile.
+
++++ Temporarily Disabling Triggers +++
+Sometimes, it is useful to temporarily disable all triggers.
+For example, you might wish to edit a manually activated profile or your normal configuration without triggered profiles interfering.
+You can do this by checking the Temporarily disable all triggers checkbox in the Configuration Profiles dialog.
+
 ++ 設定檔與使用者資料 ++
 NVDA 可攜式版將所有的設定、自訂應用模組與自定驅動程式都儲存在 NVDA 目錄下的一個名為userConfig(使用者設定)的目錄中。
 
@@ -1055,7 +1243,7 @@ NVDA 可攜式版將所有的設定、自訂應用模組與自定驅動程式都
 在安裝版中，你可以從 [開始] 功能表進到 [所有程式] ->  [NVDA] 中，找到使用者設定檔目錄。
 
 關於登入畫面或者 UAC 畫面中的 NVDA 使用設定，儲存在 NVDA 安裝目錄中的systemConfig（系統設定）目錄下。
-通常這個設定檔不應該被編輯。
+通常這個設定檔不應被編輯。
 若要更改登入畫面／UAC 畫面的設定，必須要先設定好從 Windows 登入畫面的 NVDA 設定，然後使用在偏好設定子功能表內一般設定對話方塊下的按鈕，下指令給 NVDA，將設定儲存提供給登入畫面使用 。
 
 + 附加工具 +
@@ -1082,9 +1270,17 @@ NVDA 功能表的 [工具] 選項中的 [附加元件管理員]，可讓您安�
 附加元件管理員有提供一個在您的使用者設定檔中所有已安裝的附加元件清單。
 包括每一個附加元件的名稱，版本及作者。更詳細的說明可點選附加元件裡的[關於附加元件]按鈕。
 
+
+欲瀏覽或下載線上附加元件，請點選[取得]附加元件按鈕。
+此按鈕位於 [NVDA 附加元件頁面 http://addons.nvda-project.org/]。
+若NVDA已安裝在您的系統，您可直接從瀏覽器打開附加元件來開始進行下列操作說明。
+除此之外，請儲存附加檔案套件並按照以下操作說明。
 欲安裝附加元件，請點選[安裝]按鈕。
 這可讓你在您的電腦或網路上去瀏覽附加元件 (.nvda-addon 檔案)
 一旦按下[開啟]，NVDA會詢問您是否希望安裝附加元件。
+當附加元件已被安裝，NVDA首先會詢問您確認您真的希望安裝此附加元件。
+
+
 請確認下載的附加元件來自可信任的來源。
 一旦安裝完成，必須重新啟動NVDA以便讓已安裝的附加元件開始運作，直到執行完以上步驟，
 已安裝的附加元件清單中該項目的狀態會顯示安裝。
@@ -1733,79 +1929,7 @@ NVDA 支援 BrailleNote notetakers，請參閱網址[Humanware http://www.humanw
 %kc:endInclude
 
 + 進階主題 +
-
-++ 按鍵重新對應與其它輸入手勢（Input Gesture） ++
-使用者可以一個存在於NVDA使用者設定目錄的特別檔案中，新增或者覆蓋已有的輸入手勢（如按鍵組合）與指令碼之間的對應關係。
-這個檔案被稱為gestures.ini。
-
-
-這個檔案使用標準的 ini 語法。
-每個小節中，含有在某個NVDA特定Python模組(module)與類別(class)的指令碼對應。
-
-
-
-
-每一小節應以Python模組與類別中間外加一點（.）的方式命名。
-- 每一個小節的鍵名就是你想要鍵結的指令碼名稱。
-- 每一個鍵值是一個由逗點（,）分隔用來表示各式各樣鍵結到特定的指令碼的輸入手勢的識別符的清單。
-- 當啟用按鍵指令說明模式下，按下任一組合按鍵及開啟事件檢視記錄，將可使你得知正在使用的輸入手勢識別符。
-
-
-
-每一小節應以Python模組與類別中間外加一點（.）的方式命名。
-- 以逗點結束的手勢識別符則需加上單( ')或雙引號(")。
-- 一個檔案可提供多個小節，每一小節可提供多個鍵。
-- 輸入手勢識別符含有兩個字母的裝置碼 （kb 指的是鍵盤與 br 指的是點字顯示器，
-- 一個在括號中可選擇的次裝置或鍵盤配置，一個冒號，與一個或多個由加號（＋）所分開的鍵名。
-
-
-
-
-
-
-為了能找到輸入手勢識別符，同時也能找到指令碼與類別名稱以及包含它們的模組，
-+ 你可以開啟按鍵說明模式，然後輸入手勢（按下按鍵），
-+ 接著關閉按鍵說明模式後，開啟工具功能表下的檢視事件記錄，檢查最近增加的記錄。
-+ 其中一個應該會提供你所輸入手勢的資訊，
-+ 包含相關程式模組、類別及有鍵結的指令碼。
-
-
-
-
-
-下列是一個你如何將 NVDA+shift+t 鍵結到處理日期時間的指令碼的範例。
-
-為了要找到處理日期時間的正確指令碼名稱以及模組、類別，
-你必須開啟按鍵說明模式，按下 NVDA+f12 （因為這是目前處理日期時間指令碼的輸入手勢）。然後關閉按鍵說明模式，檢查事件記錄檢視器。
-
-直接移到底端，你會看到：
-
-```
-INFO - inputCore.InputManager._handleInputHelp (13:17:22):
-Input help: gesture kb(desktop):nvda+f12, bound to script dateTime on globalCommands.GlobalCommands
-```
-
-從這裡，你可以看到指令碼名稱是 dateTime 以及模組、類別是 globalCommands.GlobalCommands。
-
-假如這個檔案尚未存在，你必須在使用者設定目錄下新建一個命名為 gestures.ini 的檔案，並且加入下面的內容：
-
-```
-[globalCommands.GlobalCommands]
-	dateTime = kb:NVDA+shift+t
-```
-
-這將會使按鍵 NVDA+shift+t （在任何的鍵盤配置中）鍵結到 dateTime 的指令碼。  
-
-你也可以使用 None 這個特別的指令碼，
-來取消一個輸入手勢與在模組與類別中的任何鍵結指令碼之間的關連。 
-
-
-	None = kb:NVDA+f12
-
-雖然你可以自由的將指令碼設定成任意可使用的按鍵，
-但若搭配使用鍵盤上的 alt 這個按鍵，可能會產生問題。
-因為 NVDA除執行所設定的指令外，
-也會將含有組合鍵（如 shift、ctrl 與 alt等）的訊息送到作業系統處理，而這些鍵最後結果仍會作用在指令碼上。因此，假如你使用 alt 在輸入手勢上，按下這個組合鍵可能除了執行指令碼外也會同時啟動功能表列上的選項。所以，最好僅使用含 shift、ctrl 與 NVDA 鍵作為 NVDA 的組合鍵。
+wjl此子小節全數刪除wjl
 
 ++ 符號讀音的進階自訂 ++
 您也可以自訂在[標點符號/特殊符號讀音 #SymbolPronunciation]的對話方塊中，所無法設定的標點及其他符號的讀音。

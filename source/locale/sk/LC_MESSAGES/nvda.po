@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-02 18:21+0100\n"
+"PO-Revision-Date: 2013-11-12 11:46+0100\n"
 "Last-Translator: Ondrej Rosík <ondrej.rosik@gmail.com>\n"
 "Language-Team: sk <http://nvda.venik.org>\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr "IME otvorené"
 
 #. Translators: a message when the IME open status changes to closed
 msgid "IME closed"
-msgstr "IME z"
+msgstr "IME zatvorené"
 
 #. Translators: the label for an unknown language when switching input methods.
 msgid "unknown language"
@@ -1123,7 +1123,7 @@ msgstr "diagram"
 
 #. Translators: Identifies a dial object.
 msgid "dial"
-msgstr ""
+msgstr "číselník"
 
 #. Translators: Identifies a drop list.
 msgid "drop list"
@@ -1135,7 +1135,7 @@ msgstr "prepínacie tlačidlo"
 
 #. Translators: Identifies a menu button (a button which opens a menu of items).
 msgid "menu button"
-msgstr "tlačidlo menu"
+msgstr "tlačidlo ponuky"
 
 #. Translators: Reported for a button which expands a grid when it is pressed.
 msgid "drop down button grid"
@@ -1602,8 +1602,8 @@ msgstr "ľavý klik"
 #. Translators: Input help mode message for left mouse click command.
 msgid "Clicks the left mouse button once at the current mouse position"
 msgstr ""
-"Simuluje klik ľavým tlačidlom myši na mieste, kde sa práve nachádza "
-"ukazovateľ."
+"Simuluje klik ľavým tlačidlom na mieste, kde sa práve nachádza "
+"kurzor myši."
 
 #. Translators: Reported when right mouse button is clicked.
 msgid "right click"
@@ -1612,8 +1612,8 @@ msgstr "pravý klik"
 #. Translators: Input help mode message for right mouse click command.
 msgid "Clicks the right mouse button once at the current mouse position"
 msgstr ""
-"Simuluje klik pravým tlačidlom myši na mieste, kde sa práve nachádza "
-"ukazovateľ."
+"Simuluje klik pravým tlačidlom na mieste, kde sa práve nachádza "
+"kurzor myši."
 
 #. Translators: This is presented when the left mouse button lock is released (used for drag and drop).
 msgid "left mouse button unlock"
@@ -1731,7 +1731,7 @@ msgstr "Objekt nemá informáciu o pozícii."
 
 #. Translators: Input help mode message for move mouse to navigator object command.
 msgid "Moves the mouse pointer to the current navigator object"
-msgstr "Premiestni ukazovateľ myši na miesto zamerané objektovou navigáciou."
+msgstr "Premiestni kurzor myši na miesto zamerané objektovou navigáciou."
 
 #. Translators: Reported when attempting to move the navigator object to the object under mouse pointer.
 msgid "Move navigator object to mouse"
@@ -1742,7 +1742,7 @@ msgid ""
 "Sets the navigator object to the current object under the mouse pointer and "
 "speaks it"
 msgstr ""
-"Premiestni navigačný objekt na objekt, ktorý sa nachádza pod ukazovateľom "
+"Premiestni navigačný objekt na objekt, ktorý sa nachádza pod kurzorom "
 "myši a prečíta ho."
 
 #. Translators: reported when there are no other available review modes for this object
@@ -2044,9 +2044,9 @@ msgid ""
 "will not speak anything. If beeps then NVDA will simply beep each time it "
 "its supposed to speak something. If talk then NVDA wil just speak normally."
 msgstr ""
-"Prepína režimy reči medzi vypnuté, pípanie a hlas. Ak je nastavené vypnuté "
+"Prepína režimy reči medzi ticho, pípanie a reč. Ak je nastavené ticho "
 "nvda nebude hovoriť. Ak pípanie, NVDA zapípa vždy, keď by mal niečo povedať. "
-"Hlas znamená reč hlasového výstupu."
+"Reč znamená hlasový výstup."
 
 #. Translators: Input help mode message for move to next document with focus command, mostly used in web browsing to move from embedded object to the webpage document.
 msgid "Moves the focus to the next closest document that contains the focus"
@@ -2441,14 +2441,14 @@ msgid ""
 "Moves to the next object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"Presunie na nasledujúci objekt v plošnom zobrazení v hierarchii objektov"
+"Prejde na nasledujúci objekt v plošnom zobrazení v hierarchii objektov"
 
 #. Translators: Input help mode message for a touchscreen gesture.
 msgid ""
 "Moves to the previous object in a flattened view of the object navigation "
 "hierarchy"
 msgstr ""
-"presunie na predchádzajúci objekt v plošnom zobrazení objektov v hierarchii "
+"Prejde na predchádzajúci objekt v plošnom zobrazení v hierarchii "
 "objektov"
 
 #. Translators: Cycles through available touch modes (a group of related touch gestures; example output: "object mode"; see the user guide for more information on touch modes).
@@ -3169,7 +3169,7 @@ msgstr "Pripája sa"
 
 #. Translators: The progress message indicating that a download is in progress.
 msgid "Downloading"
-msgstr "Sťahujem"
+msgstr "Prebieha sťahovanie"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 msgid "Error downloading update."
@@ -3814,8 +3814,7 @@ msgid ""
 "Configure how NVDA reports input composition and candidate selection for "
 "certain languages"
 msgstr ""
-"Nastavuje oznamovanie zadávania textu skladaním a zoznamu návrhov pre niekto"
-"\tré jazyky"
+"Nastavuje oznamovanie zadávania textu skladaním a zoznamu návrhov pre niektoré jazyky"
 
 #. Translators: The label for the menu item to open Object Presentation dialog.
 msgid "&Object presentation..."
@@ -3967,7 +3966,7 @@ msgid "&Reset configuration to factory defaults"
 msgstr "&obnoviť predvolené nastavenia"
 
 msgid "Reset all settings to default state"
-msgstr "Chcete obnoviť predvolené nastavenia"
+msgstr "Obnový všetky nastavenia na pôvodné hodnoty"
 
 #. Translators: The label for the menu item to save current settings.
 msgid "&Save configuration"
@@ -5910,7 +5909,7 @@ msgstr "Predvolená farba"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
-msgstr ""
+msgstr "{start} do {end}"
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.

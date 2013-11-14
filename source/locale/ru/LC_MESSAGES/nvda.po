@@ -4,16 +4,16 @@ msgstr ""
 "Project-Id-Version: NVDA bzr main:5884\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-08 13:23+0300\n"
+"PO-Revision-Date: 2013-11-10 21:34+0400\n"
 "Last-Translator: Ruslan Kolodyazhni <eye0@rambler.ru>\n"
 "Language-Team: \n"
-"Language: Russian\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Initial-Author: Dmitry Kaslin <dak1968@gmail.com>\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-Bookmarks: 343,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #. Translators: Message to indicate User Account Control (UAC) or other secure desktop screen is active.
@@ -22,7 +22,7 @@ msgstr "Защищённый рабочий Стол"
 
 #. Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters.
 msgid "Native input"
-msgstr "Native input"
+msgstr "Исходный ввод"
 
 #. Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
 msgid "Alpha numeric input"
@@ -1133,7 +1133,7 @@ msgstr "Наборный диск"
 
 #. Translators: Identifies a drop list.
 msgid "drop list"
-msgstr "Сбросить список"
+msgstr "выпадающий список"
 
 #. Translators: Identifies a split button (a control which performs different actions when different parts are clicked).
 msgid "split button"
@@ -1450,8 +1450,9 @@ msgid ""
 "to factory defaults.\n"
 "More details about the errors can be found in the log file."
 msgstr ""
-"Ваш файл конфигурации содержит ошибки.\n"
-"Лог содержит более подробную информацию о них"
+"Ваш файл конфигурации содержит ошибки. Конфигурация сброшена к заводским "
+"настройкам.\n"
+"Более подробную информацию об ошибках можно найти в журнале."
 
 #. Translators: The title of the dialog to tell users that there are errors in the configuration file.
 msgid "Configuration File Error"
@@ -1761,7 +1762,9 @@ msgstr "Нет следующего режима просмотра"
 msgid ""
 "Switches to the next review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
-msgstr "///"
+msgstr ""
+"Переключается на следующий режим просмотра (например, объект, документ или "
+"экран) и располагает позицию обзора в точке объекта навигатора"
 
 #. Translators: reported when there are no  other available review modes for this object
 msgid "No previous review mode"
@@ -1771,7 +1774,9 @@ msgstr "Нет предыдущего режима просмотра"
 msgid ""
 "Switches to the previous review mode (e.g. object, document or screen) and "
 "positions the review position at the point of the navigator object"
-msgstr "///"
+msgstr ""
+"Переключается на предыдущий режим просмотра (например, объект, документ или "
+"экран) и располагает позицию обзора в точке объекта навигатора"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -2145,8 +2150,8 @@ msgid ""
 "Logs information about the current navigator object which is useful to "
 "developers and activates the log viewer so the information can be examined."
 msgstr ""
-"Добавляет в файл отчета информацию о текущем объекте навигатора, которая "
-"может быть полезной разработчикам и активирует просмотрщижурнала для ее "
+"Добавляет в файл журнала информацию о текущем объекте навигатора, которая "
+"может быть полезной разработчикам и активирует просмотрщик журнала для её "
 "просмотра"
 
 #. Translators: A mode where no progress bar updates are given.
@@ -2504,7 +2509,7 @@ msgstr "Документация"
 
 #. Translators: The label of the Start Menu item to open the Commands Quick Reference document.
 msgid "Commands Quick Reference"
-msgstr "Список горячих клавиш"
+msgstr "Краткий Справочник Команд"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to open the user guide).
 msgid "User Guide"
@@ -2520,7 +2525,7 @@ msgstr "Назад"
 
 #. Translators: This is the name of the forward key found on multimedia keyboards for controlling the web-browser.
 msgid "forward"
-msgstr "Вперед"
+msgstr "Вперёд"
 
 #. Translators: This is the name of the refresh key found on multimedia keyboards for controlling the web-browser.
 msgid "refresh"
@@ -3899,7 +3904,7 @@ msgstr "&Параметры"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
-msgstr "Просмотреть log"
+msgstr "Просмотреть журнал..."
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
@@ -3911,7 +3916,7 @@ msgstr "Консоль Python"
 
 #. Translators: The label of a menu item to open the Add-ons Manager.
 msgid "Manage &add-ons"
-msgstr "Управление &дополнениями"
+msgstr "Управление &дополнениями..."
 
 #. Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 msgid "Create Portable copy..."
@@ -3927,7 +3932,7 @@ msgstr "Перезагрузить плагины"
 
 #. Translators: The label of a menu item to open the Commands Quick Reference document.
 msgid "Commands &Quick Reference"
-msgstr "Список &горячих клавиш NVDA"
+msgstr "&Краткий Справочник команд"
 
 #. Translators: The label for the menu item to open What's New document.
 msgid "What's &new"
@@ -4240,7 +4245,7 @@ msgstr "Временно зап&ретить все Триггеры"
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
 msgid "(normal configuration)"
-msgstr "(общая конфигурация)"
+msgstr "(конфигурация по умолчанию)"
 
 #. Translators: Reported for a profile which is being edited
 #. in the Configuration Profiles dialog.
@@ -4278,12 +4283,12 @@ msgstr "Не удалось удалить профиль."
 #. Translators: The label of the button to manually deactivate the selected profile
 #. in the Configuration Profiles dialog.
 msgid "Manual deactivate"
-msgstr "Д&еактивировать вручную"
+msgstr "Ручная д&еактивация"
 
 #. Translators: The label of the button to manually activate the selected profile
 #. in the Configuration Profiles dialog.
 msgid "Manual activate"
-msgstr "Ручная активация"
+msgstr "Ручна&я активация"
 
 #. Translators: The label of a field to enter a new name for a configuration profile.
 msgid "New name:"

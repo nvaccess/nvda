@@ -1,7 +1,21 @@
-﻿complexSymbols:
+﻿#locale/pl/symbols.dic
+#A part of NonVisual Desktop Access (NVDA)
+#Copyright (c) 2011-2012 NVDA Contributors
+#This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
 # Others
-decimal point	(?<=\d)\,(?=\d)
+decimal point	(?<=\d)\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)-(?=[$£€¥]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -14,9 +28,10 @@ symbols:
 : phrase ending	dwukropek	most	always
 decimal point		none	always
 in-word '	apostrof	all	norep
+negative number	minus	none	norep
 
 # Whitespace
-\0	biała spacja
+\0	biała spacja	char	# null
 \t	tab
 \n	koniec linii	char
 \f	podział strony	none
@@ -28,20 +43,23 @@ in-word '	apostrof	all	norep
 !	wykrzyknik	all
 "	cudzysłów	most
 \#	hash	most
-$	dolar	some
+$	dolar	all	norep
+£	funt	all	norep
 €	euro	some
+¢	Centy	all	norep
+¥	Jen	all	norep
 %	procent	some
 &	and	some
-'	apostrof	some
+'	apostrof	all
 (	lewy nawias	most
 )	prawy nawias	most
 *	gwiazdka	most
 +	plus	most
 ,	przecinek	all	always
--	minus	all
-.	kropka	all
+-	minus	most
+.	kropka	some
 /	slesz	some
-:	dwukropek	most
+:	dwukropek	most	norep
 ;	średnik	most
 <	mniejsze	most
 >	więkrze	most
@@ -50,8 +68,7 @@ $	dolar	some
 @	małpa	some
 [	lewy kwadratowy	most
 ]	prawy kwadratowy	most
-"	cudzysłów	most
-\	bekslesz	most
+\\	bekslesz	most
 ^	daszek	most
 _	podkreślacz	most
 `	akcent	most
@@ -60,18 +77,40 @@ _	podkreślacz	most
 |	kreska pionowa	most
 ~	tylda	most
 
-
 # Other characters
 •	punktor	some
 …	wielokropek	all	always
-«	podwujny cudzysłów otwierający	most
-»	podwujny cudzysłów zamykający	most
-‰	promil	most
-÷	dzielenie	some
-×	razy	some
+...	kropka kropka kropka	all	always
+	punktor	some
+“	lewy cudzysłów	most
+”	prawy cudzysłów	most
+‘	lewy apostrof	most
+’	prawy apostrof	most
+–	półpauza	most
+—	myślnik	most
+●	kółko	most
+¨	diereza	most
+‎	znak lewa do prawej	char
+‏	znak prawa do lewej	char
+■	czarny kwadrat	some
+➔	strzałka w prawo	some
+§	sekcja	all
 °	stopień	some
-±	plus minus	some
+«	podwujny cudzysłów otwierający
+»	podwujny cudzysłów zamykający
+µ	mikro	some
+¹	indeks górny 1	some
+²	indeks górny 2	some
+³	indeks górny 3	some
+®	zarejestrowany	some
 ™	znak handlowy	some
-©	znak praw autorskich	some
+©	Znak praw autorskich	some
+±	Plus Minus	most
+×	razy	most
+÷	dzielenie	most
+→	strzałka w prawo	some
+✓	check	some
+✔	check	some
+‰	promil	most
 ó	u kreska	char	always
 Ó	u kreska	char	always

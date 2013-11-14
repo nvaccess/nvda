@@ -34,10 +34,13 @@ Qué hay de Nuevo en NVDA
 - Diálogo de Opciones de teclado: si no se ha seleccionado ninguna tecla para ser utilizada como la tecla NVDA, se presenta un error al usuario cuando se descarte el diálogo. Al menos una de las teclas debe ser seleccionada para el uso apropiado de NVDA. (#2871)
 - En Microsoft Excel, NVDA ahora anuncia celdas fusionadas de manera diferente a múltiples celdas seleccionadas. (#3567)
 - El cursor de modo navegación  ya no se coloca incorrectamente cuando se abandona un diálogo o aplicación dentro del documento. (#3145)
+- Se ha solucionado un problema por el que el controlador de  las pantallas braille series de la HumanWare Brailliant BI / B no se presenta como una opción en el cuadro de diálogo Opciones de Braille en algunos sistemas, a pesar de que dicha pantalla se conecte a través de USB.
 
 
 == Cambios para Desarrolladores ==
 - Puedes especificar la categoría a mostrar al usuario por los scripts utilizando el atributo scriptCategory en clases ScriptableObject y el atributo category en métodos de script. Mira la documentación para baseObject.ScriptableObject para más detalles. (#1532)
+- config.save está en desuso y puede ser eliminada en futuras versiones. Utiliza config.conf.save en su lugar. (#667)
+- config.validateConfig está en desuso y puede ser eliminada en futuras versiones. Los complementos que necesiten esto deben proporcionar su propia implementación. (#667, #3632)
 
 
 = 2013.2 =

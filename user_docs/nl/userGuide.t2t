@@ -500,7 +500,7 @@ Om naar het eerstvolgende element te springen gebruikt u uitsluitend één van d
 - x: checkbox (selectievakje)
 - c: combo box (vervolgkeuzelijst)
 - r: radio button (keuzerondje)
-- q: block quote (blokcitaat)
+- q: block quote (citaatblok)
 - s: separator (scheiding)
 - m: frame (kader)
 - g: graphic (afbeelding)
@@ -568,8 +568,8 @@ Merk op dat de opdracht "Resterende tijd melden" alleen werkt met de standaard o
 ++ Poedit ++
 %kc:beginInclude
 || Naam | Toets | Omschrijving |
-| Commentaarvenster melden | control+shift+c | Meldt commentaar in het commentaarvenster. |
-| Automatisch commentaarvenster melden | control+shift+a | Meldt commentaar in het automatische commentaarvenster. |
+| Commentaarvenster melden | control+shift+c | Meldt eventueel commentaar in het commentaarvenster. |
+| Opmerkingen voor vertalers melden | control+shift+a | Meldt eventuele opmerkingen voor vertalers.
 %kc:endInclude
 
 + NVDA configureren +
@@ -610,7 +610,7 @@ Als u het selectievakje aanvinkt, zal NVDA automatisch worden gestart zodra u zi
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
 ==== NVDA gebruiken bij Windows aanmelding(administratieve rechten vereist) ====
-Als u zich bij Windows aanmeldt met een gebruikersnaam en een wachtwoord, dan zal  NVDA samen met Windows bij aanmelding worden gestart. Hiervoor moet u het selectievakje aankruisen.
+Als u zich bij Windows aanmeldt met een gebruikersnaam en een wachtwoord, dan zal  NVDA samen met Windows bij aanmelding worden gestart. Hiervoor moet u het selectievakje inschakelen.
 Deze optie is alleen beschikbaar als NVDA op uw PC is geïnstalleerd, dus niet voor de draagbare versie.
 
 ==== De momenteel opgeslagen instellingen gebruiken in het aanmeldvenster en andere beveiligde schermen ====
@@ -787,13 +787,13 @@ U treft er de volgende keuzemogelijkheden aan:
 Dit is een vervolgkeuzelijst waarin u het type toetsenbordindeling kiest dat u wilt gebruiken. Momenteel zijn er in NVDA twee types beschikbaar: desktop en laptop. 
 
 ==== CapsLock als NVDA-toets gebruiken ====
-Als het selectievakje wordt aangekruist, is CapsLock als NVDA-toets ingesteld. 
+Als het selectievakje wordt ingeschakeld, is CapsLock als NVDA-toets ingesteld. 
 
 ==== Uitgebreide Insertt-toets als NVDA-toets gebruiken ====
-Door dit selectievakje aan te kruisen wordt de uitgebreide Insert- (INS-) toets als NVDA-toets gebruikt. De uitgebreide INS-toets zit meestal boven de pijltjestoetsen bij de Home en End-toetsen 
+Door dit selectievakje in te schakelen wordt de uitgebreide Insert- (INS-) toets als NVDA-toets gebruikt. De uitgebreide INS-toets zit meestal boven de pijltjestoetsen bij de Home en End-toetsen 
 
 ==== Numerieke Insert-toets als NVDA-toets gebruiken ====
-Door het selectievakje aan te kruisen wordt de Insert-toets op het numerieke toetsenbord als NVDA-toets ingesteld.
+Door het selectievakje in te schakelen wordt de Insert-toets op het numerieke toetsenbord als NVDA-toets ingesteld.
 
 Als er geen toets als NVDA-toets wordt gekozen, zijn bepaalde 
 commando's mogelijk niet beschikbaar.
@@ -808,13 +808,13 @@ afsluiten met de OK-knop.
 ==== Getypte karakters uitspreken ====
 Toets: NVDA+2
 
-Door het selectievakje aan te kruisen worden alle karakters die u op het toetsenbord typt uitgesproken.
+Door het selectievakje in te schakelen worden alle karakters die u op het toetsenbord typt uitgesproken.
 
 %kc:setting
 ==== Getypte woorden uitspreken ====
 Toets: NVDA+3
 
-Door dit selectievakje aan te kruisen wordt elk woord dat u getypt hebt uitgesproken.
+Door dit selectievakje in te schakelen wordt elk woord dat u getypt hebt uitgesproken.
 
 ==== Spraak onderbreken bij het typen van karakters ====
 Als dit selectievakje is aangevinkt, wordt de spraak onderbroken telkens wanneer er een letterteken wordt getypt. Deze instelling staat standaard "aan".   
@@ -835,34 +835,34 @@ Daarom kan het handig zijn om hierover gewaarschuwd te worden.
 ==== Commandotoetsen uitspreken ====
 Toets: NVDA+4
 
-Door het selectievakje aan te kruisen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter. 
+Door het selectievakje in te schakelen worden alle niet-karaktertoetsen (bij voorbeeld de pijltjestoetsen, de DEL-toets, etc.) uitgesproken. Dit geldt ook voor, bij voorbeeld, de Ctrl-toets in combinatie met een letter. 
 
 +++ Muisinstellingen(NVDA+control+m) +++[MouseSettings]
 Het dialoogvenster Muisinstellingen vindt u in het NVDA-menu onder Opties waar u vervolgens Muis selecteert.
 U treft er de volgende keuzemogelijkheden aan:
 
 ==== Veranderingen van muisaanwijzervorm weergeven====
-Als het selectievakje is aangekruist, zal NVDA elke verandering die optreedt in de vorm van de muisaanwijzer melden.
+Als het selectievakje is ingeschakeld, zal NVDA elke verandering die optreedt in de vorm van de muisaanwijzer melden.
 In Windows verandert de vorm van de muisaanwijzer om aan te geven waar de computer mee bezig is, zoals met het laden van iets of om te laten weten dat u tekst kunt invoeren.
 
 %kc:setting
 ==== De muis volgen activeren====
  Toets : NVDA+m |
 
-Door het selectievakje aan te kruisen wordt de tekst gelezen die zich onder de muisaanwijzer bevindt bij verplaatsing van de muis over het scherm. U kunt dus naar iets zoeken door de muis zelf te verplaatsen in plaats van zoeken met objectnavigatie.
+Door het selectievakje in te schakelen wordt de tekst gelezen die zich onder de muisaanwijzer bevindt bij verplaatsing van de muis over het scherm. U kunt dus naar iets zoeken door de muis zelf te verplaatsen in plaats van zoeken met objectnavigatie.
 
 ==== Resolutie van teksteenheid====
 Als u ervoor gekozen hebt om de tekst onder de muis te laten uitspreken, kunt u hier instellen hoeveel tekst moet worden uitgesproken.
 U hebt de keuze uit karakter, woord, regel en alinea.
 
 ==== Rol weergeven wanneer muisaanwijzer zich binnen een object bevind ====
-Als dit selectievakje is aangekruist, zal NVDA de rol (type) van het object weergeven bij verplaatsing van de muis binnen het object.
+Als dit selectievakje is ingeschakeld, zal NVDA de rol (type) van het object weergeven bij verplaatsing van de muis binnen het object.
 
 ==== Geluidscoördinatie gebruiken bij verplaatsen muis====
-Als het selectievakje is aangekruist laat NVDA pieptonen horen bij het verplaatsen van de muis. Met behulp van deze signalen kan de gebruiker bepalen waar de muis zich op het scherm bevindt.
+Als het selectievakje is ingeschakeld laat NVDA pieptonen horen bij het verplaatsen van de muis. Met behulp van deze signalen kan de gebruiker bepalen waar de muis zich op het scherm bevindt.
 
 ==== Schermhelderheid bepaalt Volume audio-coördinatie ====
-Als het selectievakje “geluidscoördinatie gebruiken bij verplaatsen muis” is aangevinkt, dan zal het aankruisen van dit selectievakje ervoor zorgen dat het volume van de pieptonen wordt bepaald door de schermhelderheid onder de muis.
+Als het selectievakje “geluidscoördinatie gebruiken bij verplaatsen muis” is ingeschakeld, dan zal het inschakelen van dit selectievakje ervoor zorgen dat het volume van de pieptonen wordt bepaald door de schermhelderheid onder de muis.
 Deze functies staan standaard uit.
 
 +++ Instellingen review cursor (leescursor)+++
@@ -915,20 +915,20 @@ Als deze optie is ingeschakeld, zal positie-informatie voor meer objecten (zoals
 Vink dit selectievakje niet aan als u, behalve de naam van het object, geen extra informatie hoeft te horen. 
 
 %kc:setting
-==== Weergave voortschrijdingsbalk ====
+==== Weergave voortgangsbalk ====
 Toets : NVDA+u
 
-Via de vervolgkeuzelijst kunt u kiezen hoe u wilt worden geïnformeerd over de voortgang van de voortschrijdingsbalk.
+Via de vervolgkeuzelijst kunt u kiezen hoe u wilt worden geïnformeerd over de voortgang van de voortgangsbalk.
 
 U kunt kiezen uit
-- uit: veranderingen in voortschrijdingsbalken worden niet gemeld.
+- uit: veranderingen in voortgangsbalken worden niet gemeld.
 - uitspreken: u hoort het percentage dat aangeeft hoe ver het proces is gevorderd. Elke verandering wordt gemeld.
-- Pieptoon: Bij elke verandering in de voortschrijdingsbalk zal NVDA een pieptoon laten horen. Hoe hoger de toon, hoe verder de balk gevuld raakt.
+- Pieptoon: Bij elke verandering in de voortgangsbalk zal NVDA een pieptoon laten horen. Hoe hoger de toon, hoe verder de balk gevuld raakt.
 - Pieptonen + uitspreken: U hoort zowel pieptonen  als gesproken info over de voortgang van het proces.
 -
 
 ==== Achtergrond voortgangsbalken weergeven ====
-Als dit selectievakje is aangekruist blijft NVDA veranderingen in een voortgangsbalk weergeven, ook als deze niet langer op de voorgrond aanwezig is.
+Als dit selectievakje is ingeschakeld blijft NVDA veranderingen in een voortgangsbalk weergeven, ook als deze niet langer op de voorgrond aanwezig is.
 Als u een venster met een voortgangsbalk minimaliseert of naar een ander venster overschakelt, zal NVDA de veranderingen in de voortgangsbalk toch bijhouden terwijl u met iets anders bezig bent. 
 
 %kc:setting
@@ -983,7 +983,7 @@ Hoewel er in bladermodus eigenlijk geen echte pagina-indeling bestaat, kunt u hi
 ==== Schermlay-out gebruiken ====
 Toets: NVDA+v
 
-Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. Als het selectievakje is aangekruist blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
+Hiermee kunt u bepalen hoe de inhoud van een document in bladermodus moet worden weergegeven. Wilt u dat inhoud zoals links en andere velden op een aparte regel komen te staan of moet alles blijven zoals het wordt getoond. Als het selectievakje is ingeschakeld blijft alles staan zoals weergegeven. Als u het vinkje weghaalt, worden de velden op aparte regels getoond.
 
 ==== Automatisch lezen zodra een pagina geladen is ====
 Deze optie bepaalt of een pagina die geladen is in bladermodus automatisch wordt gelezen.
@@ -1001,20 +1001,20 @@ Zie de opties in het [dialoogvenster Documentopmaak #DocumentFormattingSettings]
 
 ==== Automatische focusmodus bij focuswijzigingen====
 Hiermee wordt de focusmodus automatisch geactiveerd bij focusveranderingen.
-Als het selectievakje is aangekruist, zal de focusmodus automatisch worden geactiveerd wanneer u in een webpagina bij voorbeeld in een formulierveld terecht komt door op TAB te drukken.
+Als het selectievakje is ingeschakeld, zal de focusmodus automatisch worden geactiveerd wanneer u in een webpagina bij voorbeeld in een formulierveld terecht komt door op TAB te drukken.
 
 ==== Automatische focusmodus bij cursorbeweging====
-Als het selectievakje is aangekruist, zal NVDA de focusmodus vanzelf aanpassen bij gebruik van de pijltjestoetsen.
+Als het selectievakje is ingeschakeld, zal NVDA de focusmodus vanzelf aanpassen bij gebruik van de pijltjestoetsen.
 Als u bij voorbeeld met de pijltjestoetsen door een webpagina bladert en u in een invoerveld belandt, komt u automatisch in de focusmodus. Als u het invoerveld uitgaat, keert u weer terug in de bladermodus (ook wel surfmodus genoemd).  
 
 ==== Audiomarkering voor focus- en surfmodus====
-Als het selectievakje is aangekruist, hoort u een bepaald geluid als gewisseld wordt tussen de focus- en bladermodus in een document. Dit komt dan in de plaats van een uitgesproken wijziging van de focus. 
+Als het selectievakje is ingeschakeld, hoort u een bepaald geluid als gewisseld wordt tussen de focus- en bladermodus in een document. Dit komt dan in de plaats van een uitgesproken wijziging van de focus. 
 
 +++ Documentopmaakinstellingen (NVDA+control+d) +++[DocumentFormattingSettings]
 U vindt het dialoogvenster Documentopmaak in het NVDA-menu onder Opties. 
 
 U kunt de meeste selectievakjes gebruiken om te bepalen welke informatie over de opmaak van een document u wilt horen als u de cursor in het document verplaatst.
-Als u bij voorbeeld Lettertype vermelden aankruist, wordt de naam hiervan gemeld telkens wanneer u bij een ander lettertype terecht komt.
+Als u bij voorbeeld Lettertype vermelden inschakelt, wordt de naam hiervan gemeld telkens wanneer u bij een ander lettertype terecht komt.
 
 U kunt de vermelding laten horen van:
 - Lettertype

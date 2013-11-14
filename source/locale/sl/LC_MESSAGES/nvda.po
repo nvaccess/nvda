@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5895\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-11-07 22:28+0100\n"
+"POT-Creation-Date: 2013-11-13 19:08+1000\n"
+"PO-Revision-Date: 2013-11-13 20:25+0100\n"
 "Last-Translator: Jožef Gregorc <jozko.gregorc[@]guest.arnes.si\n"
 "Language-Team: Sl <nvda_slo[@]googlegroups.com>\n"
 "Language: Slovenian\n"
@@ -1464,6 +1464,15 @@ msgstr "obstaja daljši opis"
 #. Translators: a state that denotes that an object is pinned in its current location
 msgid "pinned"
 msgstr "Pripeto"
+
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "vsebuje formulo"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "Vsebuje komentar"
 
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
@@ -3105,10 +3114,6 @@ msgstr "obojestranska poravnava"
 msgid "align default"
 msgstr "privzeta poravnava"
 
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "Vsebuje komentar"
-
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
 msgstr "napaka v črkovanju"
@@ -3615,10 +3620,6 @@ msgstr "Miniaturne sličice"
 msgid "Master Thumbnails"
 msgstr "Glavne miniaturne sličice"
 
-#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
-msgid "Waiting for Powerpoint..."
-msgstr "Čakanje na Powerpoint"
-
 #. Translators: the label for a slide in Microsoft PowerPoint.
 msgid "Slide {slideNumber}"
 msgstr "Diapozitiv {slideNumber}"
@@ -3651,6 +3652,10 @@ msgstr "Ni beležk"
 #. Translators: The message for an empty slide in a slide show
 msgid "Empty slide"
 msgstr "Prazen diapozitiv"
+
+#. Translators: A title for a dialog shown while Microsoft PowerPoint initializes
+msgid "Waiting for Powerpoint..."
+msgstr "Čakanje na Powerpoint"
 
 #. Translators: This is the name of a button in sound recorder.
 msgid "Rewind"
@@ -5929,7 +5934,7 @@ msgstr "ni predhodnega mejnika"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 msgid "moves to the next embedded object"
-msgstr "premakne se na naslednje vdelan predmet"
+msgstr "premakne se na naslednji vdelan predmet"
 
 #. Translators: Message presented when the browse mode element is not found.
 msgid "no next embedded object"
@@ -6009,10 +6014,6 @@ msgid ""
 msgstr ""
 "Enojni pritisk nastavi stolpec kot stolpec, kjer bi morale biti glave "
 "vrstic, dvojni pritisk izniči to nastavitev."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "vsebuje formulo"
 
 # lahko tudi ... skozi ...
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'

@@ -1,5 +1,5 @@
 ﻿NVDA NVDA_VERSION Manuale Utente
-Ultimo Aggiornamento del manuale originale: 29 ottobre 2013, traduzione a cura di Simone Dal Maso e Gianluca Casalino
+Ultimo Aggiornamento del manuale originale: 13 novembre 2013, traduzione a cura di Simone Dal Maso e Gianluca Casalino
 
 %!includeconf: ../userGuide.t2tconf
 %kc:title: NVDA NVDA_VERSION Guida rapida ai comandi 
@@ -301,7 +301,7 @@ Inoltre potrebbe essere necessario lavorare con [oggetti #Objects] che non posso
 In questi casi, si può utilizzare la navigazione ad oggetti.
 
 Essa permette di ottenere informazioni e spostarsi tra singoli [oggetti #Objects].
-Quando ci si sposta su un oggetto, NVDA lo annuncerà similmente a come avviene con il focus di sistema.
+Quando ci si sposta su un oggetto, NVDA lo annuncerà allo stesso modo a come avviene con il focus di sistema.
 Se invece si desidera esplorare il testo così come appare sullo schermo, è possibile utilizzare la [navigazione in linea #ScreenReview].
 
 Onde evitare di doversi muovere indietro ed avanti tra ogni singolo oggetto del sistema, gli oggetti sono raggruppati in maniera gerarchica.
@@ -315,10 +315,12 @@ Allo stesso modo, se si incontra una barra degli strumenti, bisogna entrare all'
 L'oggetto che attualmente viene esplorato è chiamato navigatore ad oggetti.
 Una volta che viene raggiunto un oggetto, è possibile esplorarlo utilizzando i [comandi di esplorazione testo #ReviewingText] in [modalità navigazione ad oggetti #ObjectReview].
 Da impostazioni predefinite, il navigatore ad oggetti si sposta in concomitanza con il focus di sistema, tuttavia questo comportamento può essere modificato, attivando o disattivando la relativa opzione.
+
 Si noti che il display braille da impostazioni predefinite segue il [focus #SystemFocus] e il [Cursore di Sistema #SystemCaret], piuttosto che il Navigatore ad oggetti  o la Navigazione in linea.
 Se si desidera che il braille segua invece la navigazione ad oggetti o quella in linea, sarà necessario modificare l'opzione "Il Display Braille Segue", impostandola su "cursore di controllo".
 
 Per navigare ad oggetti, utilizzare i tasti seguenti:
+
 %kc:beginInclude
 || Nome | layout Desktop | layout Laptop | Tocco | Descrizione |
 | Legge l'oggetto corrente | NVDA+5 del tastierino numerico | NVDA+shift+o | Nessuno | Annuncia l'oggetto corrente. Premendolo due volte ne fa lo spelling, mentre premendolo tre volte copia il nome dell'oggetto ed il suo valore negli appunti |
@@ -333,7 +335,6 @@ Per navigare ad oggetti, utilizzare i tasti seguenti:
 %kc:endInclude
 
 Nota, Per utilizzare il tastierino numerico, il tasto NumLock deve essere impostato su spento.
-
 
 ++ Controllare il testo ++
 NVDA consente di leggere il contenuto dello [schermo/navigazione in linea #ScreenReview], del [documento corrente #DocumentReview] o dell'[oggetto #ObjectReview] per carattere, parola o riga.
@@ -371,7 +372,8 @@ Sono disponibili i seguenti tasti caldi per esplorare il testo:
  
 Si noti che per un corretto funzionamento il tasto Numlock del tastierino numerico deve essere impostato su spento.
 
-Per aiutare l'utente a ricordare questi comandi, si tenga presente che i comandi di base di controllo del testo sono organizzati in una griglia di tre per tre, dove dall'alto verso il basso abbiamo righe, parole e caratteri, mentre da sinistra a destra abbiamo precedente, attuale e successivo. Il layout può essere descritto come segue:
+Per aiutare l'utente a ricordare questi comandi, si tenga presente che i comandi di base di controllo del testo sono organizzati in una griglia di tre per tre, dove dall'alto verso il basso abbiamo righe, parole e caratteri, mentre da sinistra a destra abbiamo precedente, attuale e successivo.
+Il layout può essere descritto come segue:
 | riga precedente | riga corrente | riga successiva |
 | parola precedente | parola corrente | parola successiva |
 | carattere precedente | carattere corrente | carattere successivo |
@@ -552,7 +554,7 @@ Nota: Questo tasto caldo funziona soltanto se la barra di stato di Foobar ha il 
 %kc:beginInclude
 || Nome | Tasto | Descrizione |
 | Annuncia finestra commenti | control+shift+c | Annuncia qualsiasi commento all'interno della finestra commenti. |
-| Annuncia finestra commenti automatici | control+shift+a | Annuncia ogni commento presente nella finestra commenti automatici. |
+| Annuncia note per traduttori | control+shift+a | Annuncia ogni nota presente per traduttori. |
 %kc:endInclude
 
 + Configurare NVDA +
@@ -1096,10 +1098,83 @@ I seguenti tasti rapidi risultano molto utili:
 | Torna alla configurazione salvata | NVDA+Control+r | NVDA+Control+r | Ripristina la configurazione di NVDA risalente all'ultima volta che essa è stata salvata. Premere tre volte in rapida successione per ripristinare le impostazioni di configurazione predefinite |
 %kc:endInclude
 
-++ File di configurazione e profili utente ++
-Le versioni portabili di NVDA registrano tutte le impostazioni, i moduli personalizzati per le applicazioni e i drivers in una cartella chiamata userConfig, situata nella directory di NVDA.
+++ Profili di configurazione ++
+Talvolta, può accadere di aver bisogno di impostazioni differenti in base a cosa si stia usando o cosa si stia facendo.
+Ad esempio, si potrebbe volere che NVDA legga i rientri mentre si sta modificando un documento, oppure annunci gli errori di ortografia durante la correzione.
+NVDA permette di effettuare questo genere di operazioni tramite la funzione profili di configurazione.
 
-Le versioni installer di NVDA registrano tutte le impostazioni, i moduli personalizzati per le applicazioni e i drivers in una cartella speciale situata nei profili utente di Windows. 
+Un profilo di configurazione contiene soltanto quelle impostazioni che sono state cambiate mentre si modificava il profilo.
+La maggior parte delle impostazioni può essere modificata nei profili, ad eccezione di quelle nella finestra di dialogo impostazioni generali, in quanto influiscono sul comportamento totale di NVDA.
+
+I profili possono essere anche attivati manualmente.
+Inoltre essi possono venir attivati automaticamente nel caso si verifichino degli eventi, come l'apertura di un programma particolare.
+
++++ Gestione di base +++
+è possibile gestire i profili di configurazione attraverso la voce "profili di configurazione..." nel menu di NVDA.
+è attivabile anche con un tasto caldo:
+%kc:beginInclude
+- NVDA+control+p: Visualizza la finestra profili di configurazione.
+-
+%kc:endInclude
+
+Il primo controllo in questa finestra di dialogo è l'elenco profili dal quale è possibile selezionare uno dei profili disponibili.
+Quando si apre la finestra di dialogo, viene selezionato il profilo che si sta modificando.
+Vengono visualizzate anche ulteriori informazioni per i profili attivi, che indicano il relativo stato, se in fase di modifica, se vi sono eventi associati e se si tratta di un profilo manuale.
+
+Per rinominare o eliminare un profilo, premere rispettivamente i pulsanti Rinomina o Elimina.
+
+Premere il pulsante Chiudi per chiudere la finestra.
+
++++ Creazione di un profilo +++
+Per creare un profilo, premere il pulsante Nuovo.
+
+Nella finestra di dialogo Nuovo profilo, è possibile immettere un nome per il profilo stesso.
+È anche possibile selezionare come dovrebbe essere utilizzato questo profilo.
+Se si desidera utilizzarlo solo manualmente, selezionare Attivazione manuale, che è l'impostazione predefinita.
+In caso contrario, selezionare un evento che dovrebbe attivare automaticamente questo profilo.
+Per comodità, se non è stato immesso un nome per il profilo, esso sarà generato assieme all'evento che verrà associato.
+Si veda [più sotto #ConfigProfileTriggers] per ulteriori informazioni sugli eventi.
+
+Premendo infine il pulsante OK, il profilo sarà creato, la finestra di dialogo chiusa, permettendo quindi la modifica del profilo stesso.
+
++++ Attivazione manuale +++[ConfigProfileManual]
+È possibile attivare manualmente un profilo selezionandolo e premendo il pulsante attivazione manuale.
+Una volta attivato, potranno essere attivati anche altri profili nel caso si verifichino eventi ad essi associati, ma qualsiasi impostazione presente nel profilo attivato manualmente sovrascrive e ha la precedenza rispetto agli altri.
+Ad esempio, se un profilo è configurato per attivarsi con l'applicazione corrente e l'annuncio dei link è abilitato in quel profilo, ma non in quello attivato manualmente,  i link non saranno letti.
+Tuttavia, se è stata cambiata la voce nel profilo che si attiva automaticamente in base agli eventi, e quel parametro non  è stato toccato nel profilo che si abilita in modo manuale, verrà regolarmente utilizzata la voce del profilo automatico.
+Tutte le impostazioni modificate verranno salvate nel profilo attivato manualmente.
+Per disattivare un profilo attivato manualmente, selezionarlo nella finestra di dialogo Profili di configurazione e premere il pulsante disattivazione manuale.
+
++++ Eventi +++[ConfigProfileTriggers]
+La pressione del pulsante Eventi nella finestra di dialogo Profili di configurazione consente di modificare i profili che devono essere attivati automaticamente per vari eventi.
+
+La lista Eventi mostra gli eventi disponibili, che sono i seguenti:
+- Applicazione corrente: attivato quando si passa all'applicazione corrente.
+- Dire tutto: attivato durante la lettura in modalità dire tutto.
+-
+
+Per cambiare il profilo che dovrebbe essere attivato automaticamente per un evento, selezionare l'evento e quindi scegliere il profilo desiderato dall'elenco Profili.
+È possibile selezionare (configurazione normale) se non si desidera utilizzare alcun profilo.
+
+Premere il pulsante Chiudi per tornare alla finestra di dialogo Profili di configurazione.
+
++++ Modifica di un profilo +++
+Se è stato attivato manualmente un profilo, le impostazioni modificate verranno salvate per quel profilo.
+In caso contrario, le impostazioni modificate verranno salvate nel profilo attivato automaticamente più di recente.
+Ad esempio, se si è associato un profilo con l'applicazione Blocco note e si passa a Blocco note, le impostazioni modificate verranno salvate per quel profilo.
+Infine, se non vi è né un profilo attivato manualmente, né uno  attivato con eventi, le impostazioni modificate vengono salvate nella configurazione normale.
+
+Per modificare il profilo associato alla modalità dire tutto, è necessario [attivare manualmente #ConfigProfileManual] quel profilo.
+
++++ Disattivazione temporanea degli eventi +++
+Talvolta, può risultare utile disattivare tutti gli eventi.
+Ad esempio, si potrebbe voler modificare un profilo attivato manualmente o la configurazione generale di NVDA senza che gli eventi interferiscano.
+è possibile farlo marcando la casella di controllo Disattiva temporaneamente tutti gli eventi nella finestra di dialogo Profili di configurazione.
+
+++ Posizione dei file di configurazione ++
+Le versioni portabili di NVDA registrano tutte le impostazioni, i moduli personalizzati per le applicazioni e i driver in una cartella chiamata userConfig, situata nella directory di NVDA.
+
+Le versioni installer di NVDA registrano tutte le impostazioni, i moduli personalizzati per le applicazioni e i driver in una cartella speciale situata nei profili utente di Windows. 
 Ciò significa che ciascun utente del sistema potrà avere le proprie impostazioni. 
 Per accedere a tale cartella, sarà sufficiente aprire il menu avvio, selezionare programmi - NVDA- esplora le impostazioni utente.
 
@@ -1648,10 +1723,10 @@ Inoltre, è anche necessario selezionare la porta esatta alla quale la barra bra
 La maggior parte dei dispositivi è dotata di una barra di navigazione facilitata (EAB) che permette di svolgere le operazioni in una modalità molto più rapida ed intuitiva..
 Questa barra può essere spostata in quattro direzioni e ciascuna direzione ha due posizioni.
 La pressione prolungata verso l'alto, basso, destra o sinistra dei tasti o della EAB fa in modo che l'azione corrispondente venga ripetuta.
-
 I dispositivi più vecchi non sono equipaggiati con la EAB. Vengono utilizzati i tasti frontali.
 
 In genere, sono disponibili i seguenti tasti in questi display braille::
+
 || Nome | Tasto |
 | l1 | Tasto sinistro frontale |
 | l2 | Tasto sinistro posteriore |
@@ -1667,6 +1742,7 @@ In genere, sono disponibili i seguenti tasti in questi display braille::
 | dn2 | 2 Scatti in basso |
 
 Seguono i comandi per i Display Papenmeier associati con NVDA:
+
 %kc:beginInclude
 Dispositivi con EAB
 || Nome | Tasto |
@@ -1788,6 +1864,7 @@ Si legga la [tabella dei tasti di Brltty http://mielke.cc/brltty/doc/drivers/] p
 %kc:endInclude
 
 + Argomenti avanzati +
+
 ++ Personalizzazione avanzata dei simboli di punteggiatura ++
 in aggiunta a ciò che abbiamo visto nella [Finestra di dialogo Pronuncia Punteggiatura/Simboli #SymbolPronunciation], è possibile personalizzare la punteggiatura ed altri simboli in maniera diversa.
 Per esempio, è possibile specificare se inviare o meno un simbolo non processato al sintetizzatore, per modificare parametri come l'inflessione o provocare una pausa.

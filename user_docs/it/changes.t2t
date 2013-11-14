@@ -33,10 +33,13 @@
 - Finestra di dialogo Impostazioni tastiera: Se non viene selezionato alcun tasto che agisca come tasto NVDA, potrebbe risultare impossibile accedere ad alcuni comandi dello screen reader. Pertanto, verrà visualizzato un messaggio d'errore nell'eventualità tutti i tasti siano deselezionati.
 - In Microsoft Excel, NVDA ora distingue correttamente tra l'unione di celle e selezione di celle multiple. (#3567)
 - Il cursore in modalità navigazione non viene più posizionato in maniera errata all'uscita da una finestra di dialogo o da un'applicazione interna del documento. (#3145)
+- Sistemato un problema che non faceva apparire il display braille HumanWare Brailliant BI/B series nell'elenco delle barre disponibili, sebbene esso fosse correttamente connesso.
 
 
 == Cambiamenti per sviluppatori(in inglese) ==
 - You can specify the category to be displayed to the user for scripts using the scriptCategory attribute on ScriptableObject classes and the category attribute on script methods. See the documentation for baseObject.ScriptableObject for more details. (#1532)
+- config.save is deprecated and may be removed in a future release. Use config.conf.save instead. (#667)
+- config.validateConfig is deprecated and may be removed in a future release. Add-ons which need this should provide their own implementation. (#667, #3632)
 
 
 = 2013.2 =

@@ -12,6 +12,8 @@
 - Az átfutás engedélyezése a folyamatos felolvasáskor funkció használatakor lehetőség van a gyors navigációs billentyűkkel mozogni a dokumentumban úgy, hogy a felolvasás nem áll le. Alapértelmezetten ez a funkció ki van kapcsolva, bekapcsolható a billentyűzet beállítások párbeszédpanelén. (#2766) 
 - Mostantól megváltoztathatóak az NVDA parancsai a beállítások - beviteli parancsok párbeszédpanelén. (#1532)
 - Készíthet különböző szituációkhoz különböző beállításokat a profilok létrehozásával. Ezek kézzel is, de akár egy program fókuszba kerülésével is aktiválhatók. (#87, #667, #1913)
+- Ha a Microsoft Excel cellájában link található, az mostantól hivatkozásként kerül bemondásra. (#3042)
+- A Microsoft Excel programban, ha egy cellához tartozik megjegyzés, akkor ez bemondásra kerül. (#2921)
 
 
 == Hiba javítások ==
@@ -31,6 +33,8 @@
 - Az NVDA már helyesen olvassa az XHTML dokumentumokat a Microsoft Internet Explorer programban és más MSHTML vezérlőkben. (#3542)
 - Billentyűzet beállítások párbeszédpanel: Amennyiben nincs kiválasztva az NVDA gombként használni kívánt billentyű, egy hibaüzenet figyelmezteti a felhasználót a párbeszédpanel elhagyásakor. Legalább egy billentyűt ki kell választani az NVDA rendeltetésszerű használatához. (#2871)
 - A Microsoft Excel programban az NVDA most már egymástól megkülönböztetve jelzi az egyesített cellákat és az együttesen kijelölt cellákat. (#3567)
+- A böngészőód kurzora most már jó helyre kerül egy a dokumentum belsejében található alkalmazás, vagy párbeszédablakból való visszalépéskor. (#3145)
+- Javításra került az a hiba, ami miatt Egyes konfiguráción nem jelent meg a HumanWare Brailliant BI/B series braille kijelző a Braille beállítások párbeszédablakában.
 
 
 = 2013.2 =

@@ -1,4 +1,4 @@
-﻿Руководство пользователя NVDA NVDA_VERSION
+Руководство пользователя NVDA NVDA_VERSION
 
 
 %!includeconf: ../userGuide.t2tconf
@@ -330,7 +330,7 @@ NVDA озвучивает ваши перемещения по символам,
 | Перейти на первый дочерний объект | NVDA+numpad2 | NVDA+shift+стрелка_вниз | Пролистать вниз (просмотр объекта) | Устанавливает  навигатор на первый объект, который содержится в  текущем |
 | Перейти на объект, содержащий фокус | NVDA+numpadMinus | NVDA+backspace | ---- | Устанавливает навигатор на объект в фокусе и просмотровый курсор в позицию системного курсора в этом объекте, если это возможно. |
 | Активировать текущий объект навигатора | NVDA+numpadEnter | NVDA+enter | Коснуться дважды | Активирует текущий объект навигатора  (Подобно щелчку мыши или нажатие "Пробел", когда объект находится в системном фокусе) |
-| Переместить системный фокус или курсор в текущую позицию просмотрового курсора | NVDA+shift+numpadMinus | NVDA+shift+backspace | ---- | одиночное нажатие перемещает системный фокус на текущий объект навигатора, двойное нажатие перемещает системный курсор в пазицию просмотрового курсора |
+| Переместить системный фокус или курсор в текущую позицию просмотрового курсора | NVDA+shift+numpadMinus | NVDA+shift+backspace | ---- | одиночное нажатие перемещает системный фокус на текущий объект навигатора, двойное нажатие перемещает системный курсор в позицию просмотрового курсора |
 | Читать расположение объекта навигатора | NVDA+numpadDelete | NVDA+delete | ---- | Читает текущее расположение и размеры объекта навигатора в процентах (включая расстояние  от левого и верхнего краев экрана, а также высоту и ширину объекта) |
 %kc:endInclude
 
@@ -355,7 +355,7 @@ NVDA позволяет вам читать содержимое [экрана #
 | Перейти к предыдущей строке в режиме текстового просмотра | numpad7 | NVDA+стрелка_вверх | Пролистать вверх (просмотр текста) | Перемещает просмотровый курсор на предыдущую строку навигатора и читает ее |
 | Читать текущую строку в режиме текстового просмотра | numpad8 | NVDA+shift+. | ---- | Читает строку под просмотровым курсором объекта навигатора. Двойное нажатие произносит ее по буквам. Тройное нажатие читает фонетическое описание символов. |
 | Перейти к следующей строке в режиме текстового просмотра | numpad9 | NVDA+стрелка_вниз | Пролистать вниз (просмотр текста) | Перемещает просмотровый курсор на следующую строку навигатора и читает ее |
-| Перейти к последней строке в режиме текстового просмотра| shift+numpad9 | NVDA+control+end | ---- | Перемещает просмотровый курсор на последнюю строку навигатора и читает ее |
+| Перейти к последней строке в режиме текстового просмотра | shift+numpad9 | NVDA+control+end | ---- | Перемещает просмотровый курсор на последнюю строку навигатора и читает ее |
 | Перейти к предыдущему слову в режиме текстового просмотра | numpad4 | NVDA+control+стрелка_влево | Пролистать двумя пальцами влево (просмотр текста) | Перемещает просмотровый курсор на предыдущее слово навигатора и читает его |
 | Читать текущее слово в режиме текстового просмотра | numpad5 | NVDA+control+. | ---- | Читает строку под просмотровым курсором объекта навигатора. Двойное нажатие произносит ее по буквам. тройное нажатие читает фонетическое описание символов. |
 | Перейти к следующему слову в режиме текстового просмотра | numpad6 | NVDA+control+стрелка_вправо | Пролистать двумя пальцами вправо (просмотр текста) | Перемещает просмотровый курсор на следующее слово навигатора и читает его |
@@ -466,11 +466,11 @@ NVDA также может быть настроен таким образом, 
 %kc:endInclude
 
 
-++ Однобуквенная навигация ++
+++ Однобуквенная навигация (навигация в HTML-документах) ++
 В режиме обзора для ускоренной навигации по определенным полям в документе в NVDA можно также использовать однобуквенные команды.
 
 %kc:beginInclude
-Следующие клавиши сами по себе перепрыгивают к доступному элементу, а в сочитании с клавишей "shift" переходят на предыдущий элемент:
+Следующие клавиши сами по себе перепрыгивают к доступному элементу, а в сочитании с клавишей "shift" переходят на предыдущий элемент в HTML-документах:
 - h: заголовок
 - l: список
 - i: элемент списка
@@ -495,8 +495,8 @@ NVDA также может быть настроен таким образом, 
 -
 Для перемещения на начало или конец содержимого элементов такие как списки и таблицы:
 || Название | Клавиша | Описание |
-| Перейти на начало содержимого | shift+comma | Переходит на начало содержимого элемента (список, таблица и т. д.) от позиции курсора |
-| Перейти за конец содержимого | comma | Переходит за конец содержимого элемента (список, таблица и т. д.) от позиции курсора |
+| Перейти на начало содержимого | shift+запятая | Переходит на начало содержимого элемента (список, таблица и т. д.) от позиции курсора |
+| Перейти за конец содержимого | запятая | Переходит за конец содержимого элемента (список, таблица и т. д.) от позиции курсора |
 %kc:endInclude
 
 ++ Диалоговое окно  со списком элементов ++
@@ -554,7 +554,7 @@ NVDA также может быть настроен таким образом, 
 %kc:beginInclude
 || Название | Клавиша | Описание |
 | Читать окно примечаний | control+shift+c | Читает содержимое в окне примечаний. |
-| Читать окно автоматических примечаний | control+shift+a | Читает содержимое в окне автоматических примечаний. |
+| Читать заметки для переводчиков | control+shift+a | Читает заметки для переводчиков. |
 %kc:endInclude
 
 + Настройка  NVDA +
@@ -918,7 +918,7 @@ NVDA спросит вас, хотите ли вы перезапустить п
 
 Переключает озвучивание нового содержимого в отдельных объектах таких как консольные терминалы, и элементы управления, содержащие историю в чат-программах.
 
-+++ Настройки формирования ввода... +++
++++ Настройки формирования ввода +++
 Это диалоговое окно можно найти в "Параметры > Формирование ввода азиатских символов...".
 При помощи этого диалогового окна вы можете управлять, как NVDA следует читать ввод азиатских символов, такие как IME или методы ввода в текстовых службах.
 Обратите внимание, что в связи с тем, что методы ввода во многом зависят от имеющихся возможностей и от того, насколько они передают информацию, скорее всего, потребуется настроить эти параметры отдельно для каждого метода ввода, чтобы получить наиболее эффективный метод при наборе текста.
@@ -1097,3 +1097,784 @@ NVDA не учитывает регистр букв по умолчанию.
 | Сохранить конфигурацию | NVDA+control+c | NVDA+control+c | Сохраняет вашу текущую конфигурацию так, что она не будет потеряна при завершении работы NVDA |
 | Вернуться к сохраненной конфигурации | NVDA+control+r | NVDA+control+r | Одиночное нажатие возвращает к последней сохраненной конфигурации. Двойное нажатие Тройное нажатие сбрасывает к заводским настройкам. |
 %kc:endInclude
+
+++ Профили конфигурации ++
+Иногда, возможно, вы пожелаете иметь разные настройки на разные случаи жизни при работе с NVDA.
+Например, вы хотите разрешить NVDA читать отступы при редактировании текста или же разрешить чтение аттрибутов шрифта при чтении корректур.
+При помощи NVDA вы можете осуществить это, воспользовавшись пунктом меню "Профили конфигурации...".
+
+Профиль конфигурации содержит только те настройки, которые изменяются при редактировании текущего профиля.
+Большинство настроек можно изменить в профилях конфигурации за исключением тех, которые находятся в диалоговом окне "Общие настройки...", и применяются ко всей программе глобально.
+
+Профили конфигурации можно активировать вручную.
+Они могут активироваться также автоматически, благодаря триггерам (автопереключателям по событию), таких как  переключение на отдельное приложение.
+
++++ Основное управление +++
+Для управления профилями конфигурации выберите в меню NVDA пункт меню "Профили конфигурации...".
+Вы также можете воспользоваться горячей клавишей для выбора этого пункта меню:
+%kc:beginInclude
+- NVDA+control+p: Показывает диалоговое окно "Профили Конфигурации".
+-
+%kc:endInclude
+
+Первый элемент в данном диалоговом окне - это список "Профили", в котором можно выбрать один из доступных профилей.
+При открытии этого диалогового окна, выбирается тот профиль, который в данный момент редактируется вами.
+Для активных профилей также показывается дополнительная информация, активированы ли они вручную, запущены и/или в данный момент редактируются.
+
+Чтобы переименовать или удалить профиль, нажмите кнопки "Переименовать" или "Удалить" соответственно.
+
+Для закрытия этого диалогового окна нажмите кнопку "Закрыть".
+
++++ Создание профиля +++
+Для создания нового профиля нажмите кнопку "Создать".
+
+В диалоговом окне "Новый профиль" вы можете ввести имя профиля.
+Вы также можете выбрать, как этот профиль следует использовать.
+Если вы хотите использовать этот профиль только вручную, выберите радиокнопку "Активация вручную", которая установлена по умолчанию.
+Иначе выберите радиокнопку "работающее приложение (название текущего приложения), которая автоматически активирует этот профиль (прим. пер. при загрузке приложения, для которого был создан профиль, NVDA автоматически активирует этот профиль для данного приложения).
+Если вы не ввели имя для нового профиля, то для удобства, при выборе вышеуказанной радиокнопки, поле редактирования автоматически заполнится названием работающего приложения.
+Для дальнейшей информации о триггерах смотрите [ниже #ConfigProfileTriggers].
+
+Нажатием кнопки "ОК" вы создадите новый профиль и закроете это диалоговое окно, и далее вы можете редактировать его.
+
++++ Ручная активация +++[ConfigProfileManual]
+Вы можете вручную активировать профиль, выбрав его и нажав кнопку "Ручная активация".
+Как только вы активируете профиль вручную, он будет перекрывать одинаковые параметры в других профилях, которые все еще могут автоматически активироваться, благодаря  триггерам.
+Например, если профиль запущен работающим приложением и чтение ссылок разрешено в этом профиле, но при этом в профиле ручной активации чтение ссылок запрещено, то ссылки уже не будут читаться в профиле, который был запущен работающим приложением.
+Однако, если вы изменили голос в профиле, запущенном работающим приложением, и при этом голос не менялся в профиле ручной активации, будет использоваться все же голос из профиля, который был запущен приложением.
+Любые настройки, которые вы меняете, будут сохраняться в профиле ручной активации.
+Для деактивации профиля ручной активации выберите его в диалоговом окне "Профили Конфигурации" и нажмите кнопку "Ручная деактивация".
+
++++ Триггеры +++[ConfigProfileTriggers]
+Нажатием кнопки "Триггеры" в диалоговом окне "Профили Конфигурации" вы можете изменять профили, которые следует  автоматически активировать для разных триггеров (прим. пер. триггер - это переключатель автоматической активации профиля по какому-либо событию, например, при загрузке приложения автоматически активируется профиль для этого приложения, если он, разумеется, был создан ранее и событием в данном случае является запуск приложения.).
+
+В списке "Триггеры" показываются следующие доступные триггеры:
+- Работающее приложение (имя работающего приложения): срабатывает при переключении на работающее приложение.
+- Читать все: срабатывает для команд "Читать все".
+-
+
+Для изменения профиля, который должен быть активирован автоматически для триггера, выберите триггер, а затем выберите желаемый профиль в комбинированном списке "Профили".
+Вы можете выбрать "(профиль по умолчанию)", если не хотите использовать какой-либо профиль.
+
+Нажмите кнопку "Закрыть" для возврата в диалоговое окно "Профили Конфигурации".
+
++++ Редактирование профиля +++
+Если вы вручную активировали профиль, то любые настройки, которые вы изменяете, будут сохраняться в этом профиле.
+Иначе, настройки будут сохранены в недавно запущенном профиле.
+Например, если вы связали профиль с приложением "Notepad" (блокнот) и переключаетесь на него, то изменяемые настройки будут сохраняться в профиле для работающего приложения "Notepad" (блокнот).
+И, наконец, если нет ни вручную активированного, ни запущенного профиля, то изменяемые настройки будут сохраняться уже в конфигурации по умолчанию.
+
+Для редактирования профиля, связанного с командами "Читать все" вы должны [вручную активировать #ConfigProfileManual] этот профиль.
+
++++ Временный запрет триггеров +++
+Иногда, бывает полезным временно запретить все триггеры.
+Например, вы, предположим, захотите отредактировать вручную активированный профиль или конфигурацию по умолчанию, так чтобы запущенные профили не мешали.
+Вы можете осуществить это отметив флажок "Временно запретить все Триггеры" в диалоговом окне "Профили Конфигурации".
+
+++ Расположение файлов конфигурации ++
+Переносные версии NVDA сохраняют все свои настройки в папках "./userConfig/appModules" и "./userConfig/synthDrivers".
+
+Установленные версии NVDA сохраняют все свои настройки в этих же папках, но эти папки расположены уже в специальной пользовательской папке Windows.
+Это означает, что каждый пользователь в системе может иметь свои собственные настройки для NVDA.
+Чтобы найти папку с вашими настройками для для установленной версии NVDA выберите в главном меню "Программы -> NVDA -> Просмотреть папку пользовательских настроек NVDA".
+
+Настройки NVDA, которые срабатывают на экране входа в Windows или на экранах управления учетными записями (UAC), хранятся в папке "systemConfig", куда установлена программа NVDA.
+Обычно, эту конфигурацию не следует трогать.
+Для изменения настроек, которые срабатывают на экране входа в Windows или на экранах управления учетными записями (UAC), сконфигурируйте NVDA, как вы пожелаете, затем сохраните конфигурацию и нажмите кнопку "Использовать последнюю сохраненную конфигурацию как конфигурацию NVDA на экране входа в систему и других защищенных экранах (требуются права администратора)" в диалоговом окне "Общие настройки".
+
++ Сервис +
+
+++ Просмотрщик  журнала ++
+При помощи просмотрщика журнала, который можно найти  в меню NVDA "Сервис -> Просмотреть журнал...", вы можете просматривать весь записываемый вывод, происходивший с момента начала загрузки программы NVDA и до текущего момента.
+
+Помимо чтения содержимого вы также можете сохранять копию файла журнала или же обновлять просмотрщик, так чтобы он показывал самый актуальный записываемый вывод с момента открытия просмотрщика журнала.
+Эти опции доступны в меню просмотрщика журнала.
+
+++ Просмотрщик речи ++
+Для зрячих разработчиков программного обеспечения или для людей, демонстрирующих работу NVDA зрячей аудитории, доступно всплывающее окно, в котором вы можете просматривать весь текст, проговариваемый NVDA на текущий момент времени.
+
+Чтобы активировать просмотрщик речи, установите галочку на пункте меню NVDA "Сервис -> Просмотрщик речи".
+Сбросьте галочку на пункте меню NVDA "Сервис -> Просмотрщик речи", чтобы деактивировать просмотрщик речи.
+
+Пока просмотрщик речи активирован, он постоянно обновляется, чтобы вы могли видеть текст, проговариваемый NVDA на текущий момент времени.
+Но если вы произведете щелчок или переместите системный фокус внутри просмотрщика, NVDA временно прекратить обновлять текст, так что у вас появится возможность легко выделить и скопировать существующее содержимое.
+
+++  Менеджер дополнений ++
+При помощи менеджера дополнений (меню NVDA "Сервис -> Управление дополнениями...") вы можете устанавливать и удалять пакеты дополнений для NVDA.
+Эти пакеты предоставляются сообществом, и содержат специальный код, который может добавить или изменить функции в NVDA или даже обеспечить поддержку дополнительных дисплеев Брайля или синтезаторов речи.
+
+Менеджер дополнений содержит список, который отображает все дополнения, установленные в настоящее время в NVDA.
+Имя пакета, версия и имя автора показаны для каждого дополнения, хотя более полную информацию, такую как описание и "URL" можно просмотреть, выбрав дополнения и нажав на кнопку "О дополнении...".
+
+Для просмотра и загрузки доступных дополнений в в сети интернет, нажмите кнопку "Получить дополнения...".
+Этой кнопкой вы откроете [веб-страницу дополнений для NVDA http://addons.nvda-project.org/].
+Если программа NVDA установлена на вашу систему, вы можете открыть дополнение прямо из браузера, чтобы начать процесс установки, как описано ниже.
+В противном случае, сохраните пакет дополнения и следуйте инструкциям ниже.
+
+Для установки прежде полученного дополнения, нажмите кнопку "Установить...".
+Это позволит вам выбрать пакет дополнения (.NVDA-файл дополнения)  на вашем компьютере или в сети.
+Как вы нажмете кнопку "Открыть", начнется процесс установки.
+ 
+ Перед началом установки NVDA сначала попросит подтвердить, что вы, действительно, хотите установить это дополнение.
+Поскольку функциональность дополнений не ограничивается рамками программы NVDA, и в теории может включать в себя доступ к вашим личным данным или даже ко всей системе, если в NVDA устанавливается копия дополнения, то очень важно устанавливать дополнения только из источников, которым вы доверяете.
+После того как дополнение было установлено, NVDA должен быть перезапущен, для того чтобы дополнение начало работать.
+Пока вы производите установку дополнения, для него будет отображаться статус "Установка" в списке дополнений.
+
+Чтобы удалить дополнение, выберите дополнение из списка и нажмите кнопку "Удалить".
+NVDA спросит, хотите ли вы, действительно, сделать это.
+Как и при установке, NVDA должен быть перезапущен для того чтобы дополнение было полностью удалено. 
+Пока вы удаляете это дополнение, для него в списке будет отображаться статус "Удаление".
+
+Менеджер дополнений также имеет кнопку "Закрыть", для того чтобы закрыть диалоговое окно.
+Если вы установили или удалили дополнение, NVDA сначала спросит вас, хотите ли вы перезагрузить программу, для того чтобы изменения вступили в силу.
+
+В прошлом было возможным расширить функциональность NVDA, копируя отдельные плагины и драйверы в папку настроек NVDA.
+Несмотря на то, что эта версия NVDA может все еще загрузить их, они не будут показаны в менеджере дополнений.
+Лучше удалить эти файлы из вашей конфигурации и установить соответствующее дополнение, если оно доступно.
+
+++ Консоль Python ++
+Консоль Python NVDA(меню NVDA "Сервис -> Консоль Python") является инструментом разработки, который полезен для отладки, общих внутренних компонентов NVDA или проверки доступности иерархии приложения.
+Для получения дополнительной информации см. Руководство разработчика, которое доступно на вебсайте NVDA в разделе ["Разработка" NVDA_URLwiki/Development].
+
+++ Перезагрузить плагины ++
+При помощи этого пункта меню вы можете перезагрузить глобальные модули и модули для приложений, не перезапуская NVDA, это может быть полезным для разработчиков.
+
++ Поддерживаемые синтезаторы речи +[SupportedSpeechSynths]
+Этот раздел содержит информацию о синтезаторах речи, поддерживаемых NVDA.
+Более обширный список свободных и коммерческих синтезаторов, которые можете купить и загрузить для использования в NVDA, см. на странице [http://www.nvda-project.org/wiki/ExtraVoices http://www.nvda-project.org/wiki/ExtraVoices].
+
+++ eSpeak ++
+Синтезатор [eSpeak http://espeak.sourceforge.net/] встроен непосредственно в NVDA и не требует установки других специальных драйверов или компонентов.
+NVDA запускается с использованием eSpeak по умолчанию.
+Поскольку этот синтезатор встроен в NVDA, это отличный выбор при работе NVDA с флэш-накопителя USB в других системах.
+
+Каждый голос, который идет с eSpeak, говорит на разном языке.
+Есть более чем 43 различных языков, поддерживаемые eSpeak.
+
+Есть также много различных вариантов, которые могут быть выбраны для изменения звука речи.
+
+++ Microsoft Speech API version 4 (SAPI 4) ++
+SAPI 4 является более старым стандартом Microsoft для синтезаторов речи программного обеспечения.
+Многие синтезаторы речи, которые соответствуют этому стандарту, могут быть куплены или загружены бесплатно у различных компаний и на веб-сайтах.
+При использовании этого синтезатора с NVDA, имеющиеся голоса (доступные из диалогового окна [Настроек голоса #VoiceSettings] или [Кольца настроек синтезатора #SynthSettingsRing]) будет содержать все голоса из всех установленных SAPI 4 движков найденых в вашей системе.
+
+Если у вас установлены SAPI 4 голоса, но синтезатор не появляется в списке синтезаторов NVDA, установите библиотеку для поддержки SAPI 4.0 доступную по адресу http://activex.microsoft.com/activex/controls/sapi/spchapi.exe.
+
+++ Microsoft Speech API version 5 (SAPI 5) ++
+SAPI 5 является стандартом Microsoft для синтезаторов речи программного обеспечения.
+Многие синтезаторы речи, которые соответствуют этому стандарту, могут быть куплены или загружены бесплатно у различных компаний и на веб-сайтах, хотя Ваша система будет, вероятно, уже идти по крайней мере с одним предустановленным SAPI 5 голосом.
+При использовании этого синтезатора с NVDA, имеющиеся голоса (доступные из диалогового окна [Настроек голоса #VoiceSettings] или [Кольца настроек синтезатора #SynthSettingsRing]) будет содержать все голоса из всех установленных SAPI 5 движков найденых в вашей системе.
+
+++ Microsoft Speech Platform ++
+Microsoft Speech Platform обеспечивает голоса для многих языков, которые обычно используются в разработке серверных речевых приложений.
+Эти голоса могут также использоваться с NVDA.
+
+Для использования этих голосов вы должны установить два компонента:
+- Microsoft Speech Platform - Runtime (Version 11) , x86: http://www.microsoft.com/download/en/details.aspx?id=27225
+- Microsoft Speech Platform - Runtime Languages (Version 11): http://www.microsoft.com/download/en/details.aspx?id=27224
+ - Эта страница содержит много файлов и для распознавания речи и для преобразования текста в речь.
+ Выберите файлы, содержащие данные TTS для требуемых языков/речи.
+ Например, файл MSSpeech_TTS_en-US_ZiraPro.msi голос англиского языка.
+ -
+-
+
+++ Audiologic Tts3 ++
+Это коммерческий синтезатор речи специально для Итальянского языка.
+Вы должны установить синтезатор на вашу систему для того, чтобы использовать его с NVDA.
+Для получения дополнительной информации, посетите веб-сайт Audiologic по адресу www.audiologic.it.
+
+Этот синтезатор не поддерживает [функцию посимвольного чтения #VoiceSpellingFunctionality].
+
+++ Newfon ++
+Newfon это бесплатный коммерческий синтезатор разработанный Сергеем Шишминцевым, который поддерживает русский и Украинские языки.
+Чтобы загрузить данный синтезатор, посетите раздел загрузок на сайте Русского сообщества NVDA: http://ru.nvda-community.org/?page_id=10
+
+Этот синтезатор не поддерживает [функцию посимвольного чтения #VoiceSpellingFunctionality].
+
+++ Nuance Vocalizer для NVDA ++
+Nuance Vocalizer это коммерческий синтезатор речи с высококачественными голосами, разрабатываемый компанией Nuance Communications, inc., который комплектуется специально для NVDA компанией Tiflotecnia, Lda.
+Он содержит более 50 раззных голосов, говорящих на более чем 30 языках, доступные для установки.
+Все компоненты и голоса синтезатора речи поставляются в виде пакетов дополнений, которые можно использовать в переносных версиях NVDA.
+
+Для получения дополнительной информации о Nuance Vocalizer для NVDA, и по вопросам приобретения этого продукта, посетите веб-сайт [www.vocalizer-nvda.com http://www.vocalizer-nvda.com/].
+Процент от продаж этого продукта жертвуется в фонд компании NV Access для дальнейшего развития ппрограммы NVDA.
+
++ Поддерживаемые брайлевские дисплеи (оставлено без перевода)+[SupportedBrailleDisplays]
+Этот раздел содержит информацию о брайлевских дисплеях, поддерживаемых NVDA.
+
+++ Freedom Scientific Focus/PAC Mate Series ++
+Все брайлевские дисплеи Focus и PAC Mate от компании [Freedom Scientific http://www.freedomscientific.com/] поддерживаются по USB- и bluetooth-подключению.
+На вашей системе должны быть установлены драйвера брайлевских дисплеев компании Freedom Scientific.
+Если у вас еще нет этих драйверов, то вы можете их скачать по ссылке http://www.freedomscientific.com/downloads/focus-40-blue/focus-40-blue-downloads.asp.
+Несмотря на то, что на этой страничке упоминается лишь брайлевский дисплей Focus 40 Blue, драйвера поддерживают все дисплеи компании Freedom Scientific.
+Если у вас 64-разрядная операционная система Windows, и драйверы были уже установлены другой программой экранного доступа, то вам, вероятнее всего, все еще потребуется установить драйвера по вышеупомянутой ссылке, так как файлы, необходимые для NVDA вряд ли были установлены другой программой экранного доступа.
+
+По умолчанию NVDA автоматически определяет и устанавливает соединение с этими дисплеями как по USB-, так и по bluetooth-связи.
+Однако, при настройке дисплея вы можете точно выбрать порты "USB" или "Bluetooth" для ограничения использования типов связи.
+Это может быть полезным, если вы хотите соединить дисплей focus к программе NVDA по bluetooth-связи, при этом заряжая его через USB-порт.
+
+В NVDA используются следующие комбинации клавиш для этого дисплея.
+Для описания расположения клавиш, пожалуйста, обратитесь к руководству для брайлевского дисплея.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | topRouting1 (first cell on display) |
+| Scroll braille display forward | topRouting20/40/80 (last cell on display) |
+| Scroll braille display back | leftAdvanceBar |
+| Scroll braille display forward | rightAdvanceBar |
+| Toggle braille tethered to | leftGDFButton+rightGDFButton |
+| Toggle left wiz wheel action | leftWizWheelPress |
+| Move back using left wiz wheel action | leftWizWheelUp |
+| Move forward using left wiz wheel action | leftWizWheelDown |
+| Toggle right wiz wheel action | rightWizWheelPress |
+| Move back using right wiz wheel action | rightWizWheelUp |
+| Move forward using right wiz wheel action | rightWizWheelDown |
+| Route to braille cell | routing |
+| backspace key | dot7 |
+| enter key | dot8 |
+| shift+tab key | brailleSpaceBar+dot1+dot2 |
+| tab key | brailleSpaceBar+dot4+dot5 |
+| upArrow key | brailleSpaceBar+dot1 |
+| downArrow key | brailleSpaceBar+dot4 |
+| control+leftArrow key | brailleSpaceBar+dot2 |
+| control+rightArrow key | brailleSpaceBar+dot5 |
+| leftArrow | brailleSpaceBar+dot3 |
+| rightArrow key | brailleSpaceBar+dot6 |
+| home key | brailleSpaceBar+dot1+dot3 |
+| end key | brailleSpaceBar+dot4+dot6 |
+| control+home key | brailleSpaceBar+dot1+dot2+dot3 |
+| control+end key | brailleSpaceBar+dot4+dot5+dot6 |
+| alt key | brailleSpaceBar+dot1+dot3+dot4 |
+| alt+tab key | brailleSpaceBar+dot2+dot3+dot4+dot5 |
+| escape key | brailleSpaceBar+dot1+dot5 |
+| windows key | brailleSpaceBar+dot2+dot4+dot5+dot6 |
+| space key | brailleSpaceBar |
+| windows+d key (minimize all applications) | brailleSpaceBar+dot1+dot2+dot3+dot4+dot5+dot6 |
+| Report Current Line | brailleSpaceBar+dot1+dot4 |
+| NVDA menu | brailleSpaceBar+dot1+dot3+dot4+dot5 |
+
+For newer Focus models that contain rocker bar keys (focus 40, focus 80 and focus blue):
+|| Name | Key |
+| Move braille display to previous line | leftRockerBarUp, rightRockerBarUp |
+| Move braille display to next line | leftRockerBarDown, rightRockerBarDown |
+
+For Focus 80 only:
+|| Name | Key |
+| Scroll braille display back | leftBumperBarUp, rightBumperBarUp |
+| Scroll braille display forward | leftBumperBarDown, rightBumperBarDown |
+%kc:endInclude
+
+++ Optelec ALVA BC640/680 ++
+Both the ALVA BC640 and BC680 displays from [Optelec http://www.optelec.com/] are supported when connected via USB or bluetooth.
+You do not need any specific drivers to be installed to use these displays.
+Just plug in the display and configure NVDA to use it.
+
+While these displays do have a braille keyboard, they handle translation from braille to text themselves.
+Therefore, NVDA's braille input table setting is not relevant.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | t1 |
+| Move braille display to previous line | t2 |
+| Move braille display to next line | t4 |
+| Scroll braille display forward | t5 |
+| Route to braille cell | routing |
+| shift+tab key | sp1 |
+| alt key | sp2 |
+| escape key | sp3 |
+| tab key | sp4 |
+| upArrow key | spUp |
+| downArrow key | spDown |
+| leftArrow key | spLeft |
+| rightArrow key | spRight |
+| enter key | spEnter |
+| NVDA Menu | sp1+sp3 |
+| windows+d key (minimize all applications) | sp1+sp4 |
+| windows key | sp2+sp3 |
+| alt+tab key | sp2+sp4 |
+%kc:endInclude
+
+++ Handy Tech Displays ++
+NVDA supports all displays from [Handy Tech http://www.handytech.de/] when connected via USB or bluetooth.
+For older USB displays, you will need to install the USB drivers from Handy Tech on your system.
+
+Braille input is not yet supported.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left, up |
+| Scroll braille display forward | right, down |
+| Move braille display to previous line | b4 |
+| Move braille display to next line | b5 |
+| Route to braille cell | routing |
+| shift+tab key | esc |
+| alt key | b2+b4+b5 |
+| escape key | b4+b6 |
+| tab key | enter |
+| enter key | esc+enter |
+| upArrow key | leftSpace |
+| downArrow key | rightSpace |
+| NVDA Menu | b2+b4+b5+b6 |
+| Handy Tech configuration | b4+b8 |
+%kc:endInclude
+
+++ MDV Lilli ++
+The Lilli braille display available from [MDV http://www.mdvbologna.it/] is supported.
+You do not need any specific drivers to be installed to use this display.
+Just plug in the display and configure NVDA to use it.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display backward | LF |
+| Scroll braille display forward | RG |
+| Move braille display to previous line | UP |
+| Move braille display to next line | DN |
+| Route to braille cell | route |
+| shift+tab key | SLF |
+| tab key | SRG |
+| alt+tab key | SDN |
+| alt+shift+tab key | SUP |
+%kc:endInclude
+
+++ Baum/Humanware/APH Braille Displays ++
+Several [Baum http://www.baum.de/cms/en/], [HumanWare http://www.humanware.com/] and [APH http://www.aph.org/] displays are supported when connected via USB or bluetooth.
+These include:
+- Baum: SuperVario, PocketVario
+- HumanWare: Brailliant, BrailleConnect
+- APH: Refreshabraille
+-
+Some other displays manufactured by Baum may also work, though this has not been tested.
+
+If connecting via USB, you must first install the USB drivers provided by the manufacturer.
+For the APH Refreshabraille, the USB mode must be set to serial.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | d2 |
+| Scroll braille display forward | d5 |
+| Move braille display to previous line | d1 |
+| Move braille display to next line | d3 |
+| Route to braille cell | routing |
+
+For displays which have a joystick:
+|| Name | Key |
+| upArrow key | up |
+| downArrow key | down |
+| leftArrow key | left |
+| rightArrow key | right |
+| enter key | select |
+%kc:endInclude
+
+++ hedo ProfiLine USB ++
+The hedo ProfiLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
+You must first install the USB drivers provided by the manufacturer.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | K1 |
+| Scroll braille display forward | K3 |
+| Move braille display to previous line | B2 |
+| Move braille display to next line | B5 |
+| Route to braille cell | routing |
+| Toggle braille tethered to | K2 |
+| Say all | B6 |
+%kc:endInclude
+
+++ hedo MobilLine USB ++
+The hedo MobilLine USB from [hedo Reha-Technik http://www.hedo.de/] is supported.
+You must first install the USB drivers provided by the manufacturer.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | K1 |
+| Scroll braille display forward | K3 |
+| Move braille display to previous line | B2 |
+| Move braille display to next line | B5 |
+| Route to braille cell | routing |
+| Toggle braille tethered to | K2 |
+| Say all | B6 |
+%kc:endInclude
+
+++ HumanWare Brailliant BI/B Series ++
+The Brailliant BI and B series of displays from [HumanWare http://www.humanware.com/], including the BI 32, BI 40 and B 80, are supported when connected via USB or bluetooth.
+If connecting via USB, you must first install the USB drivers provided by the manufacturer.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | down |
+| Route to braille cell | routing |
+| Toggle braille tethered to | up+down |
+| upArrow key | space+dot1 |
+| downArrow key | space+dot4 |
+| leftArrow key | space+dot3 |
+| rightArrow key | space+dot6 |
+| NVDA Menu | c1+c3+c4+c5 (command n) |
+| shift+tab key | space+dot1+dot3 |
+| tab key | space+dot4+dot6 |
+| alt key | space+dot1+dot3+dot4 (space+m) |
+| escape key | space+dot1+dot5 (space+e) |
+| enter key | dot8 |
+| windows+d key (minimize all applications) | c1+c4+c5 (command d) |
+| windows key | space+dot3+dot4 |
+| alt+tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| Say all | c1+c2+c3+c4+c5+c6 |
+%kc:endInclude
+
+++ HIMS Braille Sense/Braille EDGE Series ++
+NVDA supports Braille Sense and Braille EDGE displays from [Hims http://www.hims-inc.com/] when connected via USB or bluetooth. 
+If connecting via USB, you will need to install the USB drivers from HIMS on your system.
+
+Following are the key assignments for these displays with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Move braille display to previous line | left side scroll up |
+| Move braille display to next line | right side scroll up |
+| Route to braille cell | routing |
+| shift+tab key | dot1+dot2+space |
+| alt key | dot1+dot3+dot4+Space |
+| escape key | dot1+dot5+Space |
+| tab key | dot4+dot5+Space |
+| enter key | dot8 |
+| backspace key | dot7 |
+| upArrow key | dot1+Space |
+| downArrow key | dot4+Space |
+| capsLock | dot1+dot3+dot6+space |
+| shift+alt+tab key | advance2+advance3+advance1 |
+| alt+tab key | advance2+advance3 |
+| end key | dot4+dot6+space |
+| Control+end key | dot4+dot5+dot6+space |
+| home key | dot1+dot3+space |
+| control+home key | dot1+dot2+dot3+space |
+| leftArrow key | dot3+space |
+| control+shift+leftArrow key | dot2+dot8+space+advance1 |
+| control+leftArrow key | dot2+space |
+| shift+alt+leftArrow key | dot2+dot7+advance1 |
+| alt+leftArrow key | dot2+dot7 |
+| rightArrow key | dot6+space |
+| control+shift+rightArrow key | dot5+dot8+space+advance1 |
+| control+rightArrow key | dot5+space |
+| shift+alt+rightArrow key | dot5+dot7+advance1 |
+| alt+rightArrow key | dot5+dot7 |
+| pageUp key | dot1+dot2+dot6+space |
+| control+pageUp key | dot1+dot2+dot6+dot8+space |
+| control+shift+upArrow key | dot2+dot3+dot8+space+advance1 |
+| control+upArrow key | dot2+dot3+space |
+| shift+alt+upArrow key | dot2+dot3+dot7+advance1 |
+| alt+upArrow key | dot2+dot3+dot7 |
+| shift+upArrow key | left side scroll down + space |
+| pageDown key | dot3+dot4+dot5+space |
+| control+pagedown key | dot3+dot4+dot5+dot8+space |
+| control+shift+downArrow key | dot5+dot6+dot8+space+advance1 |
+| control+downArrow key | dot5+dot6+space |
+| shift+alt+downArrow key | dot5+dot6+dot7+advance1 |
+| alt+downArrow key | dot5+dot6+dot7 |
+| shift+downArrow key | right side scroll down + space |
+| delete key | dot1+dot3+dot5+space |
+| f1 key | dot1+dot2+dot5+space |
+| f3 key | dot1+dot2+dot4+dot8 |
+| f4 key | dot7+advance3 |
+| windows+b key | dot1+dot2+advance1 |
+| windows+d key | dot1+dot4+dot5+advance1 |
+%kc:endInclude
+
+++ HIMS SyncBraille ++
+NVDA supports the SyncBraille Display from [HIMS http://www.hims-inc.com/].
+You will need to install the USB drivers from HIMS on your system.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left side scroll down |
+| Scroll braille display forward | right side scroll down |
+| Route to braille cell | routing |
+%kc:endInclude
+
+++ Seika Braille Displays ++
+The Seika Version 3, 4 and 5 (40 cells) and Seika80 (80 cells) braille displays from [Nippon Telesoft http://www.nippontelesoft.com/] are supported.
+You can find more information about these displays at http://www.seika-braille.com/.
+You must first install the USB drivers provided by the manufacturer.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | b3 |
+| Move braille display to next line | b4 |
+| Toggle braille tethered to | b5 |
+| Say all | b6 |
+| tab | b1 |
+| shift+tab | b2 |
+| alt+tab | b1+b2 |
+| NVDA Menu | left+right |
+| Route to braille cell | routing |
+%kc:endInclude
+
+++ Papenmeier BRAILLEX Newer Models ++
+The following Braille displays are supported: 
+- BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
+- BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
+- BRAILLEX Trio (USB and bluetooth)
+-
+
+If BrxCom is installed, NVDA will use BrxCom.
+BrxCom is a tool that allows you to use the Braille input independently from a screen reader.
+A new version of BrxCom which works with NVDA will be released by Papenmeier soon.  
+However, braille input is possible with the Trio device without BrxCom.
+
+Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
+The EAB can be moved in four directions where generally each direction has two switches.
+The c-series is the only exception to this rule.
+
+The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
+Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.
+Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
+
+Generally, the following keys are available on these braille displays:
+|| Name | Key |
+| l1 | Left front key |
+| l2 | Left rear key |
+| r1 | Right front key |
+| r2 | Right rear key |
+| up | 1 Step up |
+| up2 | 2 Steps up |
+| left | 1 Step left |
+| left2 | 2 Steps left |
+| right | 1 Step right |
+| right2 | 2 Steps right |
+| dn | 1 Step down |
+| dn2 | 2 Steps down |
+
+Following are the Papenmeier command assignments for NVDA:
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Route to braille cell | routing |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Move to flat review/focus | r1 |
+| Report title | l1+up |
+| Report Status Bar | l2+down |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to previous object | left2 |
+| Move to next object | right2 |
+| Report text formatting | upper routing row |
+%kc:endInclude
+
+The Trio model has four additional keys which are in front of the braille keyboard.
+These are (ordered from left to right):
+- left thumb key (lt)
+- space
+- space
+- right thumb key (rt)
+-
+Currently, the right thumb key is not in use.
+The inner keys are both mapped to space.
+
+%kc:beginInclude
+|| Name | Key |
+| backspace key | dot 7 |
+| enter key | dot 8 |
+| escape key | space with dot 7 |
+| upArrow key | space with dot 2 |
+| leftArrow key | space with dot 1 |
+| rightArrow key | space with dot 4 |
+| downArrow | space with dot 5 |
+| control key | lt+dot2 |
+| alt key | lt+dot3 |
+| control+escape key | space with dot 1 2 3 4 5 6 |
+| tab key | space with dot 3 7 |
+%kc:endInclude 
+
+++ Papenmeier Braille BRAILLEX Older Models ++
+The following Braille displays are supported: 
+- BRAILLEX EL 80, EL 2D-80, EL 40 P
+- BRAILLEX Tiny, 2D Screen
+-
+
+Note that these displays can only be connected via a serial port.
+Therefore, you should select the port to which the display is connected after you have chosen this driver in the Braille Settings dialogue.
+
+Some of these devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
+The EAB can be moved in four directions where generally each direction has two switches.
+Pressing and holding the up, down, right and left keys (or EAB) causes the corresponding action to be repeated.
+Older devices do not have an EAB; front keys are used instead.
+
+Generally, the following keys are available on braille displays:
+
+|| Name | Key |
+| l1 | Left front key |
+| l2 | Left rear key |
+| r1 | Right front key |
+| r2 | Right rear key |
+| up | 1 Step up |
+| up2 | 2 Steps up |
+| left | 1 Step left |
+| left2 | 2 Steps left |
+| right | 1 Step right |
+| right2 | 2 Steps right |
+| dn | 1 Step down |
+| dn2 | 2 Steps down |
+
+Following are the Papenmeier command assignments for NVDA:
+
+%kc:beginInclude
+Devices with EAB:
+|| Name | Key |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Route to braille cell | routing |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Move to flat review / focus | r1 |
+| Report title | l1up |
+| Report Status Bar | l2down |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to next object | right2 |
+| Move to previous object | left2 |
+| Report text formatting | Upper routing strip |
+
+BRAILLEX Tiny:
+|| Name | Key |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Scroll braille display back | left |
+| Scroll braille display forward | right |
+| Move braille display to previous line | up |
+| Move braille display to next line | dn |
+| Toggle braille tethered to | r2 |
+| Move to flat review / focus | r1 |
+| Move to containing object | r1+up |
+| Move to first contained object | r1+dn |
+| Move to previous object | r1+left |
+| Move to next object | r1+right |
+| Report text formatting | reportf |
+
+BRAILLEX 2D Screen:
+|| Name | Key |
+| Report current character in review | l1 |
+| Activate current navigator object | l2 |
+| Toggle braille tethered to | r2 |
+| Report text formatting | reportf |
+| Move braille display to previous line | up |
+| Scroll braille display back | left |
+| Move to flat review / focus | r1 |
+| Scroll braille display forward | right |
+| Move braille display to next line | dn |
+| Move to next object | left2 |
+| Move to containing object | up2 |
+| Move to first contained object | dn2 |
+| Move to previous object | right2 |
+%kc:endInclude
+
+++ HumanWare BrailleNote ++
+NVDA supports the BrailleNote notetakers from [Humanware http://www.humanware.com] when acting as a display terminal for a screen reader.
+The following models are supported:
+- BrailleNote Classic (serial connection only)
+- BrailleNote PK (Serial and bluetooth connections)
+- BrailleNote MPower (Serial and bluetooth connections)
+- BrailleNote Apex (USB and Bluetooth connections)
+-
+
+If your device supports more than one type of connection, when connecting your BrailleNote to NVDA, you must set the braille terminal port in braille terminal options.
+Please check the BrailleNote manual for details.
+In NVDA, you may also need to set the port in the Braille Settings dialog.
+If you are connecting via USB or bluetooth, you can set the port to "Automatic", "USB" or "Bluetooth", depending on the available choices.
+If connecting using a legacy serial port (or a USB to serial converter) or if none of the previous options appear, you must explicitly choose the communication port to be used from the list of hardware ports.
+
+Before connecting your BrailleNote Apex using its USB client interface, you must install the drivers provided by HumanWare.
+
+Following are the BrailleNote command assignments for NVDA.
+Please check your BrailleNote's documentation to find where these keys are located.
+
+%kc:beginInclude
+|| Name | Key |
+| Scroll braille display back | back |
+| Scroll braille display forward | advance |
+| Move braille display to previous line | previous |
+| Move braille display to next line | next |
+| Route to braille cell | routing |
+| Toggle braille tethered to | previous+next |
+| Up arrow key | space+dot1 |
+| Down arrow key | space+dot4 |
+| Left Arrow key | space+dot3 |
+| Right arrow key | space+dot6 |
+| Page up key | space+dot1+dot3 |
+| Page down key | space+dot4+dot6 |
+| Home key | space+dot1+dot2 |
+| End key | space+dot4+dot5 |
+| Control+home keys | space+dot1+dot2+dot3 |
+| Control+end keys | space+dot4+dot5+dot6 |
+| Space key | space |
+| Enter key | space+dot8 |
+| Backspace key | space+dot7 |
+| Tab key | space+dot2+dot3+dot4+dot5 (space+t) |
+| Shift+tab keys | space+dot1+dot2+dot5+dot6 |
+| Windows key | space+dot2+dot4+dot5+dot6 (space+w) |
+| Alt key | space+dot1+dot3+dot4 (space+m) |
+| Toggle input help | space+dot2+dot3+dot6 (space+lower h) |
+%kc:endInclude
+
+++ BRLTTY ++
+[BRLTTY http://mielke.cc/brltty/] is a separate program which can be used to support many more braille displays.
+In order to use this, you need to install [BRLTTY for Windows http://brl.thefreecat.org/brltty/].
+You should download and install the latest installer package, which will be named, for example, brltty-win-4.2-2.exe.
+When configuring the display and port to use, be sure to pay close attention to the instructions, especially if you are using a USB display and already have the manufacturer's drivers installed.
+
+For displays which have a braille keyboard, BRLTTY currently handles braille input itself.
+Therefore, NVDA's braille input table setting is not relevant.
+
+Following are the BRLTTY command assignments for NVDA.
+Please see the [BRLTTY key tables documentation http://mielke.cc/brltty/doc/drivers/] for information about how BRLTTY commands are mapped to controls on braille displays.
+%kc:beginInclude
+|| Name | BRLTTY command |
+| Scroll braille display back | fwinlt (go left one window) |
+| Scroll braille display forward | fwinrt (go right one window) |
+| Move braille display to previous line | lnup (go up one line) |
+| Move braille display to next line | lndn (go down one line) |
+| Route to braille cell | route (bring cursor to character) |
+%kc:endInclude
+
++ Дополнительные темы +
+
+++ Продвинутая настройка произношения символов ++
+Имеется возможность настроить произношение пунктуации и других символов, которые не сделать в диалоговом окне ["Произношение символов" #SymbolPronunciation] dialog.
+Например, вы можете указать, следует ли посылать синтезатору речи необработанный символ (напр. чтобы вызвать паузу или же изменить интонацию), а также вы можете добавить символы, определяемые пользователем.
+
+Для осуществления таких действий вы должны отредактировать информационный файл произношения символов в папке пользовательских настроек NVDA.
+Файл называется "symbols-xx.dic", где "xx" код языка.
+О формате файла можно прочитать в руководстве разработчика NVDA, в разделе "Произношение символов", он доступен [в разделе разработка веб-сайта NVDA NVDA_URLwiki/Development].
+Однако, пользователи не смогут определять составные символы.
+
++ Дополнительная информация +
+Если требуется дополнительная информации или помощь по программе  NVDA, посетите  веб-сайт NVDA NVDA_URL.
+На веб-сайте вы можете найти дополнительную документацию, а также техническую поддержку и ресурсы сообщества.
+Этот сайт также предоставляет информацию и ресурсы относительно разработки NVDA.

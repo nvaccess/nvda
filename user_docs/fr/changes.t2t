@@ -34,10 +34,13 @@ Quoi de Neuf dans NVDA
 - dialogue des paramètres du clavier : si aucune touche n'a été choisie pour être utilisée comme touche NVDA, une erreur est présentée à l'utilisateur lorsqu'il a fermé la boîte de dialogue. Au moins une touche doit être choisie pour utiliser correctement NVDA. (#2871)
 - Dans Microsoft Excel, NVDA annonce maintenant  les cellules fusionnées de manière différente que plusieurs cellules sélectionnées. (#3567)
 - Le curseur du mode navigation n'est plus incorrectement positionné en quittant une boîte de dialogue ou une application du document. (#3145)
+- Correction d'un problème où le pilote Braille des afficheures braille HumanWare de séries Brailliant BI/B n'était pas affiché comme choix possible dans la boîte de dialogue des paramètres braille sur certains systèmes, même si un tel afficheur est connecté via USB.
 
 
 == Changements pour les développeurs ==
 - On peut maintenant spécifier la catégorie affichée à l'utilisateur pour les scripts en utilisant l'attribut scriptCategory de la classe ScriptableObject et l'attribut category sur les méthodes de scripts. Reportez-vous à la documentation de baseObject.ScriptableObject pour plus de détails. (#1532)
+- config.save est obsolète et pourrait être supprimée dans une version future. Utilisez plutôt config.conf.save. (#667)
+- config.validateConfig est obsolète et pourrait être supprimée dans une version future. Les modules complémentaires utilisant cette fonction devraient proposer leur propre implémentation. (#667, #3632)
 
 
 = 2013.2 =

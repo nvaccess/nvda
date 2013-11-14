@@ -5,11 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NVDA bzr main:5822\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-31 21:12+1000\n"
-"PO-Revision-Date: 2013-10-21 06:28+0200\n"
+"POT-Creation-Date: 2013-11-08 23:57+1000\n"
+"PO-Revision-Date: 2013-11-13 06:18+0200\n"
 "Last-Translator: Zahari Yurukov <zahari.yurukov@gmail.com>\n"
 "Language-Team: Български <>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1433,6 +1432,15 @@ msgstr "има подробно описание"
 msgid "pinned"
 msgstr "прикрепен"
 
+#. Translators: a state that denotes the existance of a formula on a spreadsheet cell
+msgid "has formula"
+msgstr "съдържа формула"
+
+#. Translators: a state that denotes the existance of a comment.
+#. Translators: Reported when text contains a comment.
+msgid "has comment"
+msgstr "Има Коментар"
+
 #. Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 msgid "not selected"
 msgstr "немаркиран"
@@ -2472,7 +2480,7 @@ msgstr ""
 
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "Показва прозореца с профилите от настройки на NVDA"
+msgstr "Показва прозореца с конфигурационните профили на NVDA"
 
 #. Translators: The name of a category of NVDA commands.
 msgid "Emulated system keyboard keys"
@@ -2488,7 +2496,7 @@ msgstr "Режим на разглеждане"
 
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 msgid "NVDA web site"
-msgstr "Уеб сайтът на NVDA"
+msgstr "&Уеб сайтът на NVDA"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 msgid "Uninstall NVDA"
@@ -3058,10 +3066,6 @@ msgstr "подравнен двустранно"
 #. Translators: Reported when text has reverted to default alignment.
 msgid "align default"
 msgstr "подравнен по подразбиране"
-
-#. Translators: Reported when text contains a comment.
-msgid "has comment"
-msgstr "Има Коментар"
 
 #. Translators: Reported when text contains a spelling error.
 msgid "spelling error"
@@ -3722,8 +3726,8 @@ msgstr "Настройките са запазени"
 #. Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 msgid "Could not save configuration - probably read only file system"
 msgstr ""
-"Не мога да запазя настройките - вероятно заради режим само за четене на "
-"файловата система."
+"Грешка при запазване на настройките - вероятно заради режим само за четене "
+"на файловата система."
 
 #. Translators: Message shown when attempting to open another NVDA settings dialog when one is already open (example: when trying to open keyboard settings when general settings dialog is open).
 msgid "An NVDA settings dialog is already open. Please close it first."
@@ -3888,7 +3892,7 @@ msgstr "&Настройки"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 msgid "View log"
-msgstr "Виж протоко&ла"
+msgstr "Преглед на протоко&ла"
 
 #. Translators: The label for the menu item to toggle Speech Viewer.
 msgid "Speech viewer"
@@ -3927,23 +3931,23 @@ msgstr "Уеб сайтът на NVDA"
 
 #. Translators: The label for the menu item to view NVDA License document.
 msgid "L&icense"
-msgstr "Лиценз"
+msgstr "&Лиценз"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 msgid "C&ontributors"
-msgstr "Сътрудници"
+msgstr "&Сътрудници"
 
 #. Translators: The label for the menu item to open NVDA Welcome Dialog.
 msgid "We&lcome dialog"
-msgstr "Начален диалог"
+msgstr "&Начален диалог"
 
 #. Translators: The label of a menu item to manually check for an updated version of NVDA.
 msgid "&Check for update..."
-msgstr "Проверка за обновления..."
+msgstr "Проверка за &обновления..."
 
 #. Translators: The label for the menu item to open About dialog to get information about NVDA.
 msgid "About..."
-msgstr "За програмата..."
+msgstr "&За програмата..."
 
 #. Translators: The label for the Help submenu in NVDA menu.
 msgid "&Help"
@@ -3951,7 +3955,7 @@ msgstr "&Помощ"
 
 #. Translators: The label for the menu item to open the Configuration Profiles dialog.
 msgid "&Configuration profiles..."
-msgstr "&Профили от настройки..."
+msgstr "&Конфигурационни профили..."
 
 #. Translators: The label for the menu item to revert to saved configuration.
 msgid "&Revert to saved configuration"
@@ -4196,7 +4200,7 @@ msgstr "Информация за добавката"
 
 #. Translators: The title of the Configuration Profiles dialog.
 msgid "Configuration Profiles"
-msgstr "Профили от настройки"
+msgstr "Конфигурационни профили"
 
 #. Translators: The label of the profile list in the Configuration Profiles dialog.
 msgid "&Profile"
@@ -4208,21 +4212,21 @@ msgstr "&Нов"
 
 #. Translators: The label of a button to rename a configuration profile.
 msgid "&Rename"
-msgstr "&Преименуване"
+msgstr "&Преименувай"
 
 #. Translators: The label of a button to delete a configuration profile.
 msgid "&Delete"
-msgstr "&Изтриване"
+msgstr "&Изтрий"
 
 #. Translators: The label of a button to manage triggers
 #. in the Configuration Profiles dialog.
 #. See the Configuration Profiles section of the User Guide for details.
 msgid "&Triggers..."
-msgstr "&Тригъри..."
+msgstr "&Превключватели..."
 
 #. Translators: The label of a checkbox in the Configuration Profiles dialog.
 msgid "Temporarily d&isable all triggers"
-msgstr "Временно &изключване на всички тригъри"
+msgstr "Временно &изключване на всички превключватели"
 
 #. Translators: The item to select the user's normal configuration
 #. in the profile list in the Configuration Profiles dialog.
@@ -4242,7 +4246,7 @@ msgstr "ръчно"
 #. Translators: Reported for a profile which is currently triggered
 #. in the Configuration Profiles dialog.
 msgid "triggered"
-msgstr "задействано"
+msgstr "задействан"
 
 #. Translators: An error displayed when activating a configuration profile fails.
 msgid "Error activating profile."
@@ -4269,9 +4273,8 @@ msgstr "Ръчно деактивиране"
 
 #. Translators: The label of the button to manually activate the selected profile
 #. in the Configuration Profiles dialog.
-#, fuzzy
 msgid "Manual activate"
-msgstr "Ръчно деактивиране"
+msgstr "Ръчно активиране"
 
 #. Translators: The label of a field to enter a new name for a configuration profile.
 msgid "New name:"
@@ -4304,12 +4307,12 @@ msgstr "Прочитане на всичко"
 msgid ""
 "Error saving configuration profile triggers - probably read only file system."
 msgstr ""
-"Грешка при запазване на тригърите за профила от настройки - вероятно заради "
+"Грешка при запазване на превключвателите за профила от настройки - вероятно заради "
 "режим само за четене на файловата система."
 
 #. Translators: The title of the configuration profile triggers dialog.
 msgid "Profile Triggers"
-msgstr "Тригъри за профила"
+msgstr "Превключватели за профила"
 
 #. Translators: Displayed for a configuration profile trigger for an application.
 #. %s is replaced by the application executable name.
@@ -4319,7 +4322,7 @@ msgstr "%s приложение"
 
 #. Translators: The label of the triggers list in the Configuration Profile Triggers dialog.
 msgid "Triggers"
-msgstr "Тригъри"
+msgstr "Превключватели"
 
 #. Translators: The label of the profile list in the Configuration Profile Triggers dialog.
 msgid "Profile"
@@ -4348,7 +4351,7 @@ msgid ""
 "will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Този тригър вече е асоцийран с друг профил. Ако продължите, тригъра ще бъде "
+"Този превключвател вече е асоцийран с друг профил. Ако продължите, превключвателя ще бъде "
 "премахнат от стария профил и добавен към този.\n"
 "Сигурен ли сте, че желаете да продължите?"
 
@@ -4359,7 +4362,7 @@ msgstr "Предупреждение"
 #. Translators: An error displayed when creating a configuration profile fails.
 msgid "Error creating profile - probably read only file system."
 msgstr ""
-"Не мога да създам профила - вероятно заради режим само за четене на "
+"Грешка при създаването на профила - вероятно заради режим само за четене на "
 "файловата система."
 
 #. Translators: The prompt asking the user whether they wish to
@@ -5294,8 +5297,8 @@ msgstr "Въведете жест на въвеждане:"
 #. Translators: An error displayed when saving user defined input gestures fails.
 msgid "Error saving user defined gestures - probably read only file system."
 msgstr ""
-"Не мога да запазя потребителските жестове на въвеждане - вероятно заради "
-"режим само за четене на файловата система."
+"Грешка при запазване на потребителските жестове на въвеждане - вероятно "
+"заради режим само за четене на файловата система."
 
 #. Translators: Information about NVDA's new laptop keyboard layout.
 msgid ""
@@ -5915,7 +5918,7 @@ msgstr "цвят по подразбиране"
 
 #. Translators: Used to express an address range in excel.
 msgid "{start} through {end}"
-msgstr ""
+msgstr "{start} до {end}"
 
 #. Translators: a message reported in the SetColumnHeaderRow script for Excel.
 #. Translators: a message reported in the SetRowHeaderColumn script for Excel.
@@ -5955,10 +5958,6 @@ msgid ""
 msgstr ""
 "Определя тази колона като колоната, където се намират заглавията на "
 "редовете. Двукратно натискане нулира тази настройка."
-
-#. Translators: This is presented in Excel when the current cell contains a formula.
-msgid "has formula"
-msgstr "съдържа формула"
 
 #. Translators: This is presented in Excel to show the current selection, for example 'a1 c3 through a10 c10'
 msgid "{firstAddress} {firstContent} through {lastAddress} {lastContent}"
@@ -6066,7 +6065,7 @@ msgid "unknown author"
 msgstr "непознат автор"
 
 msgid "unknown date"
-msgstr "непозната дата"
+msgstr "неизвестна дата"
 
 msgid "{revisionType} by {revisionAuthor} on {revisionDate}"
 msgstr "{revisionType} от {revisionAuthor} на {revisionDate}"
@@ -6086,103 +6085,3 @@ msgstr "HIMS Braille серии Sense и Braille EDGE "
 #. Translators: The name of a braille display.
 msgid "HIMS SyncBraille"
 msgstr "HIMS SyncBraille"
-
-#, fuzzy
-#~ msgid "%s through %s"
-#~ msgstr "%s %s до %s %s"
-
-#~ msgid "Manual activate/edit"
-#~ msgstr "Ръчно активиране/редактиране"
-
-#~ msgid "No automatic comments."
-#~ msgstr "Няма автоматични коментари."
-
-#~ msgid "Could not find automatic comments window."
-#~ msgstr "Прозорецът за автоматични коментари не може да бъде намерен"
-
-#~ msgid "Reports any comments in the automatic comments window"
-#~ msgstr "Докладва всички коментари от прозореца за автоматични коментари"
-
-#~ msgid "Automatic comments:"
-#~ msgstr "Автоматични коментари:"
-
-#~ msgid "Translation:"
-#~ msgstr "Превод:"
-
-#~ msgid "Comments:"
-#~ msgstr "Коментари:"
-
-#~ msgid ""
-#~ "Your configuration file contains errors. \n"
-#~ "Press 'Ok' to fix these errors, or press 'Cancel' if you wish to manually "
-#~ "edit your config file at a later stage to make corrections. More details "
-#~ "about the errors can be found in the log file.\n"
-#~ msgstr ""
-#~ "Вашият конфигурационен файл съдържа грешки. \n"
-#~ "Натиснете 'Ok', за да поправите тези грешки, или натиснете 'Cancel',  ако "
-#~ "искате на по-късен етап ръчно да направите корекции в конфигурационния "
-#~ "файл. Повече детайли за тези грешки може да намерите в протоколния файл.\n"
-
-#~ msgid "No flat review for this object"
-#~ msgstr "Няма равнинен преглед за този обект"
-
-#~ msgid "No object at flat review position"
-#~ msgstr "Няма обект на позицията на равнинния преглед"
-
-#~ msgid ""
-#~ "Moves navigator object to the object represented by the text at the "
-#~ "position of the review cursor within flat review"
-#~ msgstr ""
-#~ "Премества курсора до обекта, представен от текста, върху който е "
-#~ "позициониран курсорът за преглед при равнинния преглед"
-
-#~ msgid "Please close the other NVDA settings dialog first"
-#~ msgstr "Моля, първо затворете останалите прозорци за настройка на NVDA."
-
-#~ msgid "Translation &table:"
-#~ msgstr "Таблица на превода:"
-
-#~ msgid "layout %s"
-#~ msgstr "Подреждане %s"
-
-#~ msgid "%s of %s"
-#~ msgstr "%s от %s"
-
-#~ msgid "default action failed"
-#~ msgstr "Действието по подразбиране се провали"
-
-#~ msgid "beeps"
-#~ msgstr "бибипкане"
-
-#~ msgid "talk"
-#~ msgstr "Говор"
-
-#~ msgid "loads the saved NVDA configuration, overriding current changes"
-#~ msgstr ""
-#~ "Зарежда последно запазените настройки, презаписвайки текущите промени"
-
-#~ msgid "Badly formed configuration file"
-#~ msgstr "Лошо попълнен конфигурационен файл"
-
-#~ msgid "%s: %s, defaulting to %s"
-#~ msgstr "%s: %s, подразбиращ се до  %s"
-
-#~ msgid "Error parsing configuration file: %s"
-#~ msgstr "Грешка при обработката на конфигурационния файл: %s"
-
-#~ msgid ""
-#~ "Errors in configuration file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Грешка в конфигурационния файл '%s':\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "This add-on seems to already be installed. Please remove the existing add-"
-#~ "on and try again."
-#~ msgstr ""
-#~ "Тази добавка изглежда вече е била инсталирана. Моля премахнете "
-#~ "съществуващата добавка със същото име и опитайте отново."
-
-#~ msgid "Follow &keyboard focus"
-#~ msgstr "Следвай системния &фокус"
