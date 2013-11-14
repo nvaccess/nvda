@@ -148,7 +148,7 @@ Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start der Willkom
 
 ++ Über die NVDA-Tastenkombinationen ++
 
-+++ Die NVDA-Modifikationstaste +++
++++ Die NVDA-modifikationstaste +++
 In NVDA bestehen die Tastenkombinationen zumeist aus einer oder mehreren Tasten in Kombination mit der sog. NVDA-Modifikationstaste.
 Die Befehle zum Lesen von Text werden auf Desktop-Tastaturen hingegen mit den Tasten des Nummernblocks bedient. Des weiteren gibt es einige weitere Ausnahmen.
 
@@ -596,7 +596,7 @@ Hinweis: Der Befehl "verbleibende Zeit ausgeben" funktioniert nur, wenn die Stan
 %kc:beginInclude
 || Name | Tastenkombination | Beschreibung |
 | Kommentare ausgeben | Steuerung+Umschalt+c | Gibt alle Kommentare aus. |
-| Automatische Kommentare ausgeben | Steuerung+Umschalt+a | Gibt alle automatischen Kommentare aus. |
+| Anmerkungen für Übersetzer ausgeben | Steuerung+Umschalt+a | Gibt alle Anmerkungen für Übersetzer aus. |
 %kc:endInclude
 
 + bekannte Probleme +
@@ -852,9 +852,10 @@ Wenn dieses Kontrollfeld aktiviert ist, können Sie die Einfüge-Taste der erwei
 
 ==== Einfügetaste des Nummernblocks als NVDA-Taste verwenden ====
 Wenn dieses Kontrollfeld aktiviert ist, können Sie die Einfüge-Taste des Nummernblocks als NVDA-Taste verwenden.
+
 Wenn Sie keine dieser Tasten als NVDA-Tasten festlegen, können Sie nicht mehr auf bestimmte Funktionen von NVDA zugreifen.
 Aus diesem Grund wird eine Fehlermeldung angezeigt, wenn Sie keine Taste als NVDA-Taste verwenden. 
-Legen Sie daher immer mindestens eine Taste als NVDA-Taste fest, nachdem Sie die Fehlermeldung mit OK geeschlossen haben.
+Legen Sie daher immer mindestens eine Taste als NVDA-Taste fest, nachdem Sie die Fehlermeldung mit OK geschlossen haben.
 
 
 %kc:setting
@@ -877,7 +878,7 @@ Wenn diese Option aktiviert ist, wird die Sprache jedesmal unterbrochen, wenn Si
 Ist diese Option aktiviert, so wird die Sprache jedesmal unterbrochen, wenn Sie die Eingabetaste drücken. Diese Option ist standardmäßig aktiviert.
 
 ==== Navigation während "alles lesen" erlauben ====
-Wenn diese Option aktiviert ist, Unterbrechen Navigationsbefehle nun nicht mehr den Lesevorgang beim Lesen eines Dokuments mit nvda+Pfeil ab. Hierzu gehören sowohl die Schnellnavigationstasten als auch die Befhle zum Navigieren zwischen Zeilen und  Absätzen. Diese Option ist standardmäßig deaktiviert.
+Wenn diese Option aktiviert ist, Unterbrechen Navigationsbefehle nun nicht mehr den Lesevorgang beim Lesen eines Dokuments mit nvda+Pfeil ab. Hierzu gehören sowohl die Schnellnavigationstasten als auch die Befehle zum Navigieren zwischen Zeilen und  Absätzen. Diese Option ist standardmäßig deaktiviert.
  
 ==== Signaltöne beim Eingeben von Kleinbuchstaben abspielen, wenn die Dauergroßschreibung aktiv ist ====
 Wenn aktiviert, hören Sie einen Warnton, wenn Sie einen Buchstaben mit der Umschalttaste drücken, während die Dauergroßschreibung eingeschaltet ist.
@@ -1071,7 +1072,7 @@ Konfigurieren können Sie die Meldungen von:
 - Schriftattribute
 - Ausrichtung
 - Farben
-- Änderungen am Text (Revisionen)
+- Editor-Revisionen
 - Layout
 - Rechtschreibfehler
 - Seitenwechsel
@@ -1143,8 +1144,8 @@ Anmerkung: Das Dialogfeld erlaubt lediglich ein Bearbeiten der vorhandenen Sonde
 +++ Eingaben +++
 In diesem Dialog können Sie Eingaben (Tastenkombinationen, Tasten an einer Braillezeile, Aktionen an einem Touchscreen) an NVDA-Befehle zuweisen.
 
-Es werden nur unmttelbar zuweisbare Befehle angezeigt.
-Wenn Sie beispielsweise einen Befehl neu zuweisen wollen, der sch auf den Lesemodus bezieht, sollten Sie den dialog aufrufen, während Sie sich im Lesemodus befinden.
+Es werden nur unmittelbar zuweisbare Befehle angezeigt.
+Wenn Sie beispielsweise einen Befehl neu zuweisen wollen, der sich auf den Lesemodus bezieht, sollten Sie den dialog aufrufen, während Sie sich im Lesemodus befinden.
 
 Die Baumansicht im Dialog Zeigt alle verfügbaren NVDA-Befehle - gruppiert nach Kategorien an.
 Unterhalb eines jeden Befehls werden die zugewiesenen Eingabeaktionen angezeigt (sofern vorhanden).
@@ -1156,7 +1157,7 @@ Bei Tastenkombinationen kann es beispielsweise sinnvoll sein, das Tastaturschema
 
 Um eine Tastenkombination von einem Befehl zu entfernen, wählen Sie sie aus und drücken Sie anschließend den Schalter "Entfernen".
 
-Um die Änderungen zu übernehemen, drücken Sie "ok" oder drücken Sie "abbrechen", um die Änderungen zu verwerfen.
+Um die Änderungen zu übernehmen, drücken Sie "ok" oder drücken Sie "abbrechen", um die Änderungen zu verwerfen.
 
 
 ++ laden und speichern der Konfiguration ++
@@ -1180,10 +1181,11 @@ Manchmal möchten Sie unterschiedliche Einstellungen in unterschiedlichen Situat
 Zum Korrekturlesen ist es beispielsweise sinnvoll, Einrückungen und Schriftattribute angesagt zu bekommen.
 In NVDA können sie hierfür Konfigurationsprofile verwenden.
 
-Ein Konfigurationsprofil enthält alle Einstellungen von NVDA ausgenommen die Einstellungen des Dialogs "allgemein".
+Ein Konfigurationsprofil enthält nur die geänderten Einstellungen.
+In Konfigurationsprofilen können die meisten Einstellungen geändert werden. Eine Ausnahme sind die allgemeinen Einstellungen, da diese NVDA generell betreffen.
 
 Konfigurationsprofile können manuell aktiviert werden.
-Außerdem können Sie solche Profile aber auch automatisch aktivieren (beispelsweise beim Wechsel in eine bestimmte Anwendung).
+Außerdem können Sie solche Profile aber auch automatisch aktivieren (beispielsweise beim Wechsel in eine bestimmte Anwendung).
 
 +++ Verwalten von Konfigurationsprofilen +++
 Konfigurationsprofile werden über den Menüpunkt "Konfigurationsprofile" im NVDA-Menü verwaltet. 
@@ -1208,21 +1210,20 @@ Außerdem können Sie bestimmen, wie dieses Profil verwendet werden soll.
 Wenn sie vorhaben, das Profil manuell zu aktivieren, wählen Sie "manuelle Aktivierung" aus.
 Wählen Sie anderenfalls einen Auslöser aus, durch den das Profil automatisch aktiviert werden soll.
 Wenn Sie keinen Namen vergeben und einen Auslöser auswählen, wird automatisch ein passender name für das Profil eingetragen.
-Weiter Informationen über Auslöser finden Sie  [weiter unten #ConfigProfileTriggers].
+Weitere Informationen über Auslöser finden Sie  [weiter unten #ConfigProfileTriggers].
 
-Wenn Sie den Dialog mit OK schließen, wird auch der Konfigurationsprofil-Dialog geschlossen, sodass sie das Profil bearbeiten können.
+Wenn Sie den Dialog mit OK schließen, wird das Profil erstellt und der Dialog Konfigurationsprofile geschlossen, sodass sie das Profil bearbeiten können.
 
 +++ manuelle Aktivierung +++[ConfigProfileManual]
 Sie können ein Konfigurationsprofil manuell aktivieren, indem Sie den Schalter "manuell aktivieren" verwenden.
 Wenn Sie einmal ein Profil manuell aktiviert haben, sind Auslöser für automatisch aktivierte profile zwar weiterhin aktiv, Einstellungen in manuell aktivierten Profilen haben jedoch Vorrang.
 Beispiel 1: gegeben sei ein automatisch aktiviertes Profil für die aktuelle Anwendung, in dem die Ansage von Links aktiviert ist. Außerdem sei ein manuell aktiviertes Profil gegeben, in dem die Ansage von Links deaktiviert ist. In diesem Fall werden Links nicht angesagt.
-Beispiel 2: Sie haben in einem automatisch aktivierten Profil für die aktuelle Anwendung die Stimmeneinstellungen geändert. In einem manuell aktivierten (und momentan aktien) Profil haben Sie die Stimmeneinstellungen jedoch noch nie aufgerufen. In diesem Fall wird die Stimme ausgelöst durch das automatisch aktivierte Profil geändert.
+Beispiel 2: Sie haben in einem automatisch aktivierten Profil für die aktuelle Anwendung die Stimmeneinstellungen geändert. In einem manuell aktivierten (und momentan aktiven) Profil haben Sie die Stimmeneinstellungen jedoch noch nie aufgerufen. In diesem Fall wird die Stimme ausgelöst durch das automatisch aktivierte Profil geändert.
 Jegliche Einstellungen, die sie ab sofort ändern, werden im manuell aktivierten Profil gespeichert.
 Um ein manuell aktiviertes Profil wieder zu deaktivieren, drücken Sie den Schalter "manuell deaktivieren".
 
 +++ Auslöser +++[ConfigProfileTriggers]
 Mit diesem  Schalter können Sie einen Auslöser bestimmen, über den ein Profil automatisch aktiviert werden soll.
-
 
 Folgende Auslöser stehen zur Verfügung:
 - aktuelle Anwendung; wird ausgelöst, wenn Sie in die aktuelle Anwendung wechseln

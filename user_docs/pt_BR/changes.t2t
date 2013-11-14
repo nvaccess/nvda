@@ -15,7 +15,7 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - Listas suspensas no Microsoft Excel 2003 a 2010 são agora anunciadas quando abertas e se navega ao longo delas. (#3382)
 - Uma nova opção no diálogo de opções de teclado, "Permitir leitura dinâmica durante a leitura contínua", possibilita navegar ao longo dum documento com os comandos de navegação rápida e linha / parágrafo em modo de navegação e manter-se em leitura contínua. Essa opção está desativada por padrão. (#2766)
 - Existe agora um diálogo de gestos de entrada com o fim de possibilitar uma personalização mais simples dos gestos de entrada (tais como as teclas do teclado) para comandos do NVDA. (#1532)
-- Agora é possível ter diferentes configurações para diferentes situações usando perfis de configuração. Os Perfis podem ser ativados manualmente ou automaticamente (isto é, para um aplicativo em particular). (#87, #667, #1913)
+- Agora é possível ter diferentes opções para diferentes situações usando perfis de configuração. Os Perfis podem ser ativados manualmente ou automaticamente (isto é, para um aplicativo em particular). (#87, #667, #1913)
  - No Microsoft Excel, as células que são links agora são anunciadas como links. (#3042)
 - No Microsoft Excel, a existência de comentários numa célula agora é anunciada para o usuário. (#2921)
  
@@ -29,8 +29,16 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 - O Internet Explorer não deve mais travar ou ficar inutilizado ao fechar o NVDA. (#3397)
 - Movimentos físicos e outros eventos em computadores recentes não são mais tratados como pressionamentos inapropriados de teclas. Anteriormente, os mesmos silenciavam a fala e às vezes chamavam comandos do NVDA. (#3468)
 - Agora o NVDA se comporta como esperado no Poedit 1.5.7. Usuários de versões mais antigas terão de atualizar. (#3485)
-- O NVDA agora consegue ler documentos protegidos no Microsoft Word 2010, não mais fazendo o Microsoft Word travar. (#1686)
+- O NVDA agora consegue ler documentos protegidos no Microsoft Word 2010 sem ffazer com que o Microsoft Word trave. (#1686)
 - Caso seja fornecida uma opção de linha de comando desconhecida ao carregar o pacote de distribuição do NVDA, entra não entra mais num ciclo infinito de diálogos de mensagem de erro. (#3463)
+- O NVDA já não deixa de anunciar textos de descrições de gráficos e objetos no Microsoft Word caso os mesmos contenham aspas ou outros caracteres não padrão. (#3579)
+- O número de itens de certas listas horizontais em modo de navegação agora fica correto. Anteriormente poderia ser o dobro da quantidade real. (#2151)
+- Ao pressionar control+a numa planilha do Microsoft Excel, a seleção atualizada agora será anunciada. (#3043)
+- O NVDA agora pode ler corretamente documentos XHTML no Microsoft Internet Explorer e em outros controles MSHTML. (#3542)
+- Diálogo de opções de teclado: Se nenhuma tecla for escolhida para uso como tecla do NVDA, um erro é apresentado ao usuário ao fechar o diálogo. Deve ser escolhida pelo menos uma tecla para uso adequado do NVDA. (#2871)
+- No Microsoft Excel, o NVDA agora anuncia células mescladas de modo diferente de várias células selecionadas. (#3567)
+- O cursor do modo de navegação já não é posicionado incorretamente quando se encerra um diálogo ou aplicativo dentro do documento. (#3145)
+- Corrigido um problema no qual o driver da linha braile HumanWare Brailliant BI/B series não era apresentado como opção no diálogo de opções de braile em alguns sistemas, mesmo que essa linha estivesse conectada via USB.
 
 
 == Alterações específicas para desenvolvedores ==
@@ -38,6 +46,8 @@ Traduzido por Marlin Rodrigues da Silva e Cleverson Casarin Uliana
 
 Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 - Você pode especificar a categoria a ser mostrada ao usuário para scripts usando o atributo scriptCategory em classes  ScriptableObject e o atributo category em métodos script. Consulte a documentação da baseObject.ScriptableObject para mais detalhes. (#1532)
+- config.save foi descontinuado e pode ser removido numa versão futura. Use config.conf.save em seu lugar. (#667)
+- config.validateConfig foi descontinuado e pode ser removido numa versão futura. Complementos que precisem do mesmo devem prover implementações próprias. (#667, #3632)
 
 
 = 2013.2 =

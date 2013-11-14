@@ -6,12 +6,12 @@
 = 2013.3 =
 
 == Nové vlastnosti ==
-- NVDa oznamuje polia formulárov v dokumentoch programu Microsoft word. (#2295)
+- NVDA oznamuje polia formulárov v dokumentoch programu Microsoft word. (#2295)
 - NVDA odteraz môže oznamovať revízie dokumentu v programe Microsot Word, ak je v MS office zapnuté sledovanie zmien. Je však potrebné tiež začiarknuť možnosť sledovať zmeny v nastaveniach čítania textu. Položka je predvolene odčiarknutá. (#1670)
 - Rozbaľovacie zoznamy v programe Microsoft Excel 2003 až 2010 sú oznamované pri otvorení a navigácii. (#3382)
-- V dialógu nastavenia klávesnice pribudlo začiarkávacie pole "povoliť rýchle čítanie", ktoré umožňuje pohyb v režime prehliadania pomocou rýchlej navigácie a príkazov na prechod po riadkoch a odsekoch, pričom stále ostáva aktívne plynulé čítanie. Toto je predvolene vypnuté. (#2766)
+- V dialógu nastavenia klávesnice pribudlo začiarkávacie pole "povoliť rýchlu navigáciu počas plynulého čítania", ktoré umožňuje pohyb v režime prehliadania pomocou rýchlej navigácie a príkazov na prechod po riadkoch a odsekoch, pričom stále ostáva aktívne plynulé čítanie. Toto je predvolene vypnuté. (#2766)
 - Dialóg klávesové skratky umožňuje jednoduché nastavenie klávesových skratiek pre príkazy NVDA.
-- Odteraz môžete mať pre rôzne situácie rôzne profily. Profily môžete aktivovať ručne, alebo automaticky (napríklad po prechode do konkrétnej aplikácie). (#87, #667, #1913)
+- Odteraz môžete mať pre rôzne situácie rôzne používateľské profily. Profily môžete aktivovať ručne, alebo automaticky (napríklad po prechode do konkrétnej aplikácie). (#87, #667, #1913)
 - V programe Microsoft Excel sú správne oznamované bunky, ktoré sú odkazmi, ako odkazy. (#3042)
 - V Aplikácii MS Excel sú oznamované informácie o existencii komentárov. (#2921)
 
@@ -31,9 +31,10 @@
 - NVDA oznamuje správny počet položiek v horizontálnych zoznamoch v režime prehliadania. Doteraz často oznamoval dvojnásobok reálnej hodnoty. (#2151)
 - Ak stlačíte ctrl+a v zošite programu Excel, NVDA oznámy aktualizovaný výber. (#3043)
 - NVDA dokáže správne čítať XHTML dokumenty v prehliadači Microsoft Internet explorer a iných MSHTML prvkoch. (#3542)
-- V nastaveniach klávesnice NVDA musí byť zvolený aspoň jeden kláves NVDA. V opačnom prípade sa pri pokuse zatvoriť dialóg zobarzí chybové hlásenie. (#2871)
+- V nastaveniach klávesnice NVDA musí byť zvolený aspoň jeden kláves NVDA. V opačnom prípade sa pri pokuse zatvoriť dialóg zobrazí chybové hlásenie. (#2871)
 - V dokumentoch programu Microsoft Excel NVDA správne rozlišuje zlúčené bunky a viacero vybratých buniek. (#3567)
 - Kurzor v režime prehliadania je umiestnený správne, ak opustíte dialóg alebo aplikáciu v dokumente. (#3145)
+- Opravená chyba, keď sa riadok HumanWare Brailliant série BI/B nezobrazil v nastaveniach brailu, hoci bol nainštalovaný a pripojený cez USB.
 
 
 == 2013.2 =
@@ -59,9 +60,9 @@
 == Zmeny ==
 - Švihnutie doprava alebo doľava v objektovom režime posúva dopredu alebo dozadu medzi všetkými objektami a nie len medzi objektami na rovnakej úrovni. Použite švihnutie dvoma prstami vľavo alebo vpravo na presúvanie medzi predošlým a nasledujúcim objektom na rovnakej úrovni.
 - Položka oznamovať tabuľky formujúce vzhľad (v nastaveniach režimu prehliadania) bola zmenená na zahrnúť tabuľky formujúce vzhľad, aby bolo jasné, že na nájdenie takýchto tabuliek sa nedajú použiť klávesy rýchlej navigácie, ak je táto možnosť odčiarknutá. (#3140)
-- Plošné prehliadanie bolo nahradené režimami prehliadania. (#2996)
-- Prehliadanie objektu zobrazí text aktuálneho navigačného objektu, prehliadanie dokumentu zobrazí obsah v režime prehliadania (ak je dostupný) a prehliadanie obrazovky zobrazí celé okno otvorenej aplikácie.
-- príkazy na prechod do a z plošného prehliadania odteraz slúžia na prepínanie režimov prehliadania.
+- Plošné prehliadanie bolo nahradené režimami prezerania. (#2996)
+- Prezerania objektu zobrazí text aktuálneho navigačného objektu, prezerania dokumentu zobrazí obsah v režime prehliadania (ak je dostupný) a prezeranie obrazovky zobrazí celé okno otvorenej aplikácie.
+- príkazy na prechod do a z plošného prehliadania odteraz slúžia na prepínanie režimov prezerania.
 - Navigačný objekt sleduje prehliadací kurzor takže je vždy na najhlbšom objekte pri prehliadaní dokumentu alebo obrazovky.
 - Pri prepnutí do režimu prehliadania obrazovky NVDA ostane v tomto režime, až kým ho nezmeníte na režim prehliadania dokumentu alebo objektu.
 - Ak ste v režime prehliadania dokumentu alebo aktuálneho objektu, NVDA môže prepínať medzi týmito režimami v závislosti od toho, či ste v režime prehliadania.
