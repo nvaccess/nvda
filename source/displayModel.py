@@ -372,7 +372,8 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getOffsetsFromNVDAObject(self,obj):
 		l=obj.location
 		if not l:
-			raise RuntimeError
+			log.debugWarning("object has no location")
+			raise LookupError
 		x=l[0]+(l[2]/2)
 		y=l[1]+(l[3]/2)
 		offset=self._getClosestOffsetFromPoint(x,y)
